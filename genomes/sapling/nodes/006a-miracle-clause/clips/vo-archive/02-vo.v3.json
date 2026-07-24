@@ -1,0 +1,106 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v2",
+ "lines": [
+  {
+   "who": "MAGISTRATE",
+   "text": "Settlement, Shade. Founded",
+   "start": 0.0,
+   "end": 2.235,
+   "chunks": [
+    {
+     "text": "Settlement, Shade.",
+     "start": 0.0,
+     "end": 1.605
+    },
+    {
+     "text": "Founded",
+     "start": 1.605,
+     "end": 2.235
+    }
+   ]
+  },
+  {
+   "who": "VO",
+   "text": "yesterday, structures one-ish, population three. (a page turns)",
+   "start": 2.735,
+   "end": 5.736,
+   "chunks": [
+    {
+     "text": "yesterday, structures one-ish, population three.",
+     "start": 2.735,
+     "end": 5.25
+    },
+    {
+     "text": "(a page turns)",
+     "start": 5.25,
+     "end": 5.735
+    }
+   ]
+  },
+  {
+   "who": "VO",
+   "text": "Occupation of resident number three: \"answers questions.\"",
+   "start": 6.236,
+   "end": 9.588,
+   "chunks": [
+    {
+     "text": "Occupation of resident number three: \"answers questions.\"",
+     "start": 6.236,
+     "end": 9.588
+    }
+   ]
+  },
+  {
+   "who": "MAGISTRATE",
+   "text": "Well?",
+   "start": 10.088,
+   "end": 10.728,
+   "chunks": [
+    {
+     "text": "Well?",
+     "start": 10.088,
+     "end": 10.728
+    }
+   ]
+  },
+  {
+   "who": "MAGISTRATE",
+   "text": "\u2026So the assessor hasn't been drinking. Pity. That was the",
+   "start": 11.228,
+   "end": 14.085,
+   "chunks": [
+    {
+     "text": "\u2026So the assessor hasn't been drinking.",
+     "start": 11.228,
+     "end": 12.898
+    },
+    {
+     "text": "Pity.",
+     "start": 12.898,
+     "end": 13.375
+    },
+    {
+     "text": "That was the",
+     "start": 13.375,
+     "end": 14.085
+    }
+   ]
+  },
+  {
+   "who": "VO",
+   "text": "tidy explanation.",
+   "start": 14.585,
+   "end": 15.846,
+   "chunks": [
+    {
+     "text": "tidy explanation.",
+     "start": 14.585,
+     "end": 15.846
+    }
+   ]
+  }
+ ],
+ "total_s": 16.146
+}
