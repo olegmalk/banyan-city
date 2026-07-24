@@ -1,0 +1,14 @@
+# Leaf metadata — every render publishes its full provenance (§7.2)
+leaf: 002a-t0-b
+node: "002a"
+tier: T0
+form: text-script
+content: ../node.md
+author: steward (model-written to SCRIPT-SPEC.md; molt successor of 002a-t0-a, sap event 002)
+model: claude-fable-5
+prompt: banyan-repair-brief-001.md §5-6 + leaves/002a-seed.md (verbatim source)
+seed: none
+cost_usd: 0.00
+status: live
+platform_urls: []
+comprehension_gate: passed 2026-07-25 (sap/gate-t0-b-transcript.md)
