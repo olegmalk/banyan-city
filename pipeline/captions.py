@@ -7,12 +7,57 @@ Lives in its own module so the TTS venv can import it without pillow."""
 import re
 
 CAPTION_MAX_WORDS = 7
+GAG_PAREN_WORDS = 3  # parentheticals longer than this are always direction
+_PRONOUNS = {"he", "she", "they", "it", "we", "i"}
+_STAGE_VERBS = {"looks", "looking", "writes", "writing", "consults",
+                "consulting", "stands", "standing", "turns", "turning",
+                "points", "pointing", "nods", "nodding", "gestures",
+                "gesturing", "pauses", "pausing", "glances", "glancing",
+                "paces", "pacing", "beat", "whisper", "whispering",
+                "muttering", "emerging", "wounded"}
+
+
+def _is_direction(inner: str) -> bool:
+    """Stage direction vs beat-gag. Direction is pronoun- or verb-led
+    ('he writes', 'writing', 'consulting clipboard') or long; gags are the
+    world's timed responses as noun phrases ('no leaf', 'nothing',
+    'aggressively nothing') and stay in the caption."""
+    words = inner.lower().split()
+    if not words:
+        return False
+    if len(words) > GAG_PAREN_WORDS:
+        return True
+    return (words[0] in _PRONOUNS or words[0] in _STAGE_VERBS
+            or words[0].endswith("ing"))
+
+
+def split_caption_display(text: str) -> tuple:
+    """(speech, directions) for a caption chunk. Stage-direction
+    parentheticals leaking out of the script read as nonsense when burned
+    in as dialogue (founder wince, 2026-07-25: 'this is literally just the
+    script being put as dialogue'). They come OUT of the caption and render
+    in the action style instead; beat-gag parentheticals stay inline."""
+    directions = []
+    def pull(m):
+        inner = m.group(0)[1:-1].strip()
+        if _is_direction(inner):
+            directions.append(inner)
+            return " "
+        return m.group(0)
+    speech = re.sub(r"\([^)]+\)", pull, text)
+    speech = re.sub(r"\s+", " ", speech)
+    speech = re.sub(r"—\s*—", "—", speech)          # residue of '— (…) —'
+    speech = re.sub(r"^[—\s,]+|[—\s,]+$", "", speech)
+    return speech, directions
 
 
 def caption_chunks(text: str, max_words: int = CAPTION_MAX_WORDS) -> list:
     """Split a line into caption units: on sentence ends, then clause marks,
     then a hard word cap, so each unit rasterizes to <=2 lines at caption
     size. Never loses or reorders a word."""
+    # parenthetical groups are atomic: never split inside '(...)' — a cap
+    # boundary mid-parenthetical wrapped stage direction across chunks
+    text = re.sub(r"\([^)]+\)", lambda m: m.group(0).replace(" ", "\x01"), text)
     units = []
     for sent in re.split(r"(?<=[.!?…])\s+", text.strip()):
         if not sent.split():
@@ -42,7 +87,8 @@ def caption_chunks(text: str, max_words: int = CAPTION_MAX_WORDS) -> list:
             orphan = sent_units.pop()
             sent_units[-1] += " " + orphan
         units.extend(sent_units)
-    return units or [text.strip()]
+    units = [u.replace("\x01", " ") for u in units]
+    return units or [text.replace("\x01", " ").strip()]
 
 
 def chunk_spans(text: str, w0: float, w1: float) -> list:

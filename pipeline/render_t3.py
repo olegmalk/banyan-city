@@ -53,7 +53,8 @@ import yaml
 from PIL import Image, ImageDraw, ImageFont
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from captions import CAPTION_MAX_WORDS, caption_chunks, chunk_spans  # noqa: E402,F401 — shared with synth_vo
+from captions import (CAPTION_MAX_WORDS, caption_chunks, chunk_spans,  # noqa: E402,F401 — shared with synth_vo
+                      split_caption_display)
 from render_t1 import extract_script, parse_frames, strip_inline_md  # noqa: E402
 from render_t2 import ffmpeg_exe  # noqa: E402 — shared resolver: bundled imageio-ffmpeg, else PATH
 
@@ -513,15 +514,25 @@ def render_beat(beat: dict, num: int, dur: float, clips: list, workdir: Path,
             # half-open [start, end) windows per chunk avoid the 1-frame
             # flash where two captions overlap at an inclusive boundary
             for k, (chunk, s, e) in enumerate(spans):
-                # name tag on the line's first chunk, and only when the
-                # speaker changes — steady exchanges stay uncluttered
-                tag = label if (k == 0 and who != prev_who) else ""
-                png = text_png(chunk, workdir / f"cap-{num:02d}-{j}-{k}.png",
-                               CAPTION_SIZE, ink, CAPTION_BG,
-                               max_w=CAPTION_MAX_W, bold=True,
-                               label=tag, label_color=label_color)
-                layers.append((png, "(W-w)/2", f"H-h-{CAPTION_MARGIN}",
-                               f"gte(t,{s:.2f})*lt(t,{e:.2f})"))
+                # the caption shows what the voice SAYS; long parentheticals
+                # are stage direction and render in the action style instead
+                speech, directions = split_caption_display(chunk)
+                if speech:
+                    # name tag on the line's first chunk, and only when the
+                    # speaker changes — steady exchanges stay uncluttered
+                    tag = label if (k == 0 and who != prev_who) else ""
+                    png = text_png(speech, workdir / f"cap-{num:02d}-{j}-{k}.png",
+                                   CAPTION_SIZE, ink, CAPTION_BG,
+                                   max_w=CAPTION_MAX_W, bold=True,
+                                   label=tag, label_color=label_color)
+                    layers.append((png, "(W-w)/2", f"H-h-{CAPTION_MARGIN}",
+                                   f"gte(t,{s:.2f})*lt(t,{e:.2f})"))
+                for di, d in enumerate(directions):
+                    png = text_png(d, workdir / f"dir-{num:02d}-{j}-{k}-{di}.png",
+                                   CAPTION_SIZE - 6, ACTION_INK, (0, 0, 0, 150),
+                                   max_w=CAPTION_MAX_W)
+                    layers.append((png, "(W-w)/2", "(H-h)*0.44",
+                                   f"gte(t,{s:.2f})*lt(t,{e:.2f})"))
             prev_who = who
 
     # stage-direction captions (cycle 006): the tree's entire performance —

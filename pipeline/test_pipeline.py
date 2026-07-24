@@ -84,6 +84,19 @@ def test_caption_chunks():
     check("tiny sentences never fold across boundaries (004 caption wall)",
           rapid[0] == "Newhaven!" and len(rapid) == 5)
     check("empty-ish input survives", t3.caption_chunks("  ") == [""])
+    atomic = t3.caption_chunks("Subject: (he looks at the scavenger for a long moment) …weed warden. Provisional.")
+    check("chunker never splits inside a parenthetical",
+          all(c.count("(") == c.count(")") for c in atomic))
+    sp, dr = t3.split_caption_display("Subject: (he looks at the scavenger for a long moment) …weed warden.")
+    check("long parenthetical leaves the caption", sp == "Subject: …weed warden." and
+          dr == ["he looks at the scavenger for a long moment"])
+    sp2, dr2 = t3.split_caption_display("(no leaf) Greenrest?")
+    check("gag parenthetical stays inline", sp2 == "(no leaf) Greenrest?" and dr2 == [])
+    sp3, dr3 = t3.split_caption_display("Occupations: farmer — (he writes) — and…")
+    check("short pronoun-led direction still leaves the caption",
+          "(he writes)" not in sp3 and dr3 == ["he writes"])
+    sp4, dr4 = t3.split_caption_display("Fine. (aggressively nothing)")
+    check("noun-phrase gag survives", "(aggressively nothing)" in sp4 and dr4 == [])
     check("captions clear the platform chrome (>=20% bottom margin)",
           t3.CAPTION_MARGIN >= int(t3.HEIGHT * 0.20))
     check("caption box narrower than the action-rail line",
