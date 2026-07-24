@@ -1,0 +1,1 @@
+Same wake-up. He experiments: grow, sense, wait. Nothing responds — until sunset, when the world briefly renders wireframes: every plant, rock, and passing creature outlined in faint lines and numbers. It looks exactly like a debug overlay. Episode ends: one wireframe label hangs over his own trunk, half-corrupted, reading: ADMIN(?)

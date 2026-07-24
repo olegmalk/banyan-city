@@ -3,7 +3,7 @@ leaf: 002c-t0-a
 node: "002c"
 tier: T0
 form: text-script
-content: ../node.md
+content: 002c-t0-a.md
 author: founder (human-written)
 model: none
 prompt: none
@@ -11,3 +11,5 @@ seed: none
 cost_usd: 0.00
 status: live
 platform_urls: []
+molted: 2026-07-25   # sap event 002 (banyan-repair-brief-001.md); alive per R6
+sap_event: sap/event-002-founder-comprehension.yaml
