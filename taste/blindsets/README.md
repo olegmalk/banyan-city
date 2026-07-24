@@ -11,7 +11,7 @@ diff a rule, bump the taste-file version, re-run.
 ## Format
 
 ```yaml
-taste_file: taste/sapling.founder.v0.2.md
+taste_file: taste/sapling.founder.v0.3.md
 target_pct: 90
 items:
   - id: bs-001

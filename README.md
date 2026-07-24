@@ -59,7 +59,7 @@ No permission, no notice, no shame. A fork is how the forest spreads. Contributi
 ## How curation works (the short version)
 
 - **Citizens screen.** Rendered candidates enter a public queue; the crowd rates and **narrows** — it does not decide.
-- **The taste file decides.** The author's extracted rules ([taste/sapling.founder.v0.2.md](taste/sapling.founder.v0.2.md)) are applied to the shortlist; every selection commit cites the rule IDs that drove it.
+- **The taste file decides.** The author's extracted rules ([taste/sapling.founder.v0.3.md](taste/sapling.founder.v0.3.md)) are applied to the shortlist; every selection commit cites the rule IDs that drove it.
 - **The human amends rules, never commits.** If a selection feels wrong, the fix is a public diff to the taste file — the log stands.
 - **Disagreement is exit, not override.** Don't like the trunk? Water a rival branch.
 

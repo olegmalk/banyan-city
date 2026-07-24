@@ -390,7 +390,7 @@ no git commands, just the form.)</p>
 for anyone's episode. Want it <em>filmed</em>? <a href="{REPO_URL}/blob/main/REGROW.md">Render
 it yourself with free tools</a> — or let watering fund it.</p>
 <p><strong>5 · The tree decides its place.</strong> Readers react (💧 on each episode page);
-the crowd narrows; the author's <a href="{REPO_URL}/blob/main/taste/sapling.founder.v0.2.md">public
+the crowd narrows; the author's <a href="{REPO_URL}/blob/main/taste/sapling.founder.v0.3.md">public
 taste rules</a> pick what leads the canon — citing which rule drove the call, in the commit log.
 Branches that don't lead are <strong>never deleted</strong>: they stay alive, watchable, and can
 take the lead later if readers water them.</p>

@@ -157,7 +157,7 @@ files the PR credited to you.
   form ([CONTRIBUTING.md](CONTRIBUTING.md)), landing in the node's
   `sap/screening.yaml`. Screening narrows; it doesn't decide.
 - **The taste file decides.** The author's extracted rules
-  ([`taste/sapling.founder.v0.2.md`](taste/sapling.founder.v0.2.md)) are
+  ([`taste/sapling.founder.v0.3.md`](taste/sapling.founder.v0.3.md)) are
   applied to the shortlist; selection commits cite rule IDs
   ([README](README.md#how-curation-works-the-short-version)).
 - **Leading leaf is a taste call.** Which render fronts the node page is the

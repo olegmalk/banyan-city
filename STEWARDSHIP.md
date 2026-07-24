@@ -1,7 +1,7 @@
 # Stewardship — who tends this tree, and how
 
 **Author of record:** the founder. The taste is theirs: extracted into
-[PRD.md](PRD.md) and [taste/sapling.founder.v0.2.md](taste/sapling.founder.v0.2.md)
+[PRD.md](PRD.md) and [taste/sapling.founder.v0.3.md](taste/sapling.founder.v0.3.md)
 (R1–R6), which remain the constitution of every decision below.
 
 **Delegated steward:** the author-agent (the model, operating in this

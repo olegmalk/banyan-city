@@ -1,0 +1,17 @@
+# Sap event 002 — founder review of the Phase-0 expanded scripts
+# Recorded per banyan-repair-brief-001.md §1 (the tree's first molt).
+event: 002
+date_reviewed: pre-2026-07-25   # brief issued 2026-07-25
+source: founding author, direct review
+verbatim: >
+  "The first four episodes was such shit. It cannot make sense of
+  anything which is happening."
+reinforced_by: >
+  Founder, 2026-07-25 in-session: "these episodes are usually really
+  hard to understand and sometimes feels like just nonsense."
+diagnosis: comprehension failure (R7 — a stranger always knows what's happening)
+consequences:
+  - taste rule R7 adopted (taste/sapling.founder.v0.3.md)
+  - SCRIPT-SPEC.md instated (brief §5)
+  - this node's t0-a script molted; successor gated on the
+    context-free comprehension test (brief §6.4)

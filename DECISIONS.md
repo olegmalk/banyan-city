@@ -161,3 +161,31 @@ slates. Steward read: **not yet** — publish criteria, proposed:
 
 Publishing is a `render`, within steward authority once criteria are met — but
 criterion 4 keeps the trunk's first video a founder call. Amendable per Guideline 6.
+
+---
+
+## 2026-07-25 — The first molt (Repair Brief 001)
+
+The founding author issued `banyan-repair-brief-001.md` after reviewing
+the four Phase-0 expanded scripts (001, 002a, 002b, 002c): comprehension
+failure (sap event 002, recorded per node). Executed by the steward at
+the founder's direct order:
+
+- **Taste v0.3 adopted** — R7, "a stranger always knows what's
+  happening" (mystery is a statable question; confusion is not). The
+  steward's earlier v0.3 draft proposal (mystery-vs-relationship) is
+  superseded in numbering only; it remains open as an R8 candidate.
+- **SCRIPT-SPEC.md instated** (brief §5) — the previously missing T0
+  script format: filmable beats, R7 cold open, POV device, causality,
+  comprehension gate before commit.
+- **Seed integrity repaired** — the §2 canonical texts were never in the
+  repo verbatim; instated as seed leaves in the four nodes.
+- **Molt** — the four Phase-0 scripts archived as molted leaves (R6,
+  nothing deleted); successor scripts written to spec and committed only
+  after passing the context-free comprehension gate (transcripts in
+  sap/). 001/002b published video leaves remain takes of the molted
+  script era; molt scripts are canon for future renders.
+- **PRD provenance flagged** — repo `PRD.md` was agent-committed at
+  Phase 0; the author-supplied `banyan-city-PRD.md` master is not in the
+  repo. Awaiting the author's original for byte-canonical commit
+  (repair-001-audit.md).

@@ -41,7 +41,7 @@ Growing the tree (fully sanctioned, no permission needed — Guideline 1):
 node dir under `genomes/sapling/nodes/` (`node.md` with R1 state change + R5
 hook, `leaves/`, `sap/`), entry in `lineage.yaml` with `parent:`, reactions
 issue (see any `sap/reactions.yaml`), T1+T2 render, lint, push. Cite taste
-rules (`taste/sapling.founder.v0.2.md`); label model provenance.
+rules (`taste/sapling.founder.v0.3.md`); label model provenance.
 
 ## Render routes (2026-07-19, verified — `pipeline/t3-trials/free-routes.md`)
 
