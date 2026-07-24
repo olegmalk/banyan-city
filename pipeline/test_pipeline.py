@@ -170,9 +170,9 @@ def test_clean_speech_drops_parentheticals():
 def test_node_001_beats_parse():
     md = (REPO / "genomes/sapling/nodes/001-capability-inventory/node.md").read_text()
     beats = parse_frames(extract_script(md))
-    check("node 001 parses 5 beats", len(beats) == 5)
+    check("node 001 parses 7 beats (t0-b molt)", len(beats) == 7)
     total = sum(t3.beat_duration(b["slug"], b["items"]) for b in beats)
-    check("node 001 total ≈ 85s script time", total == 85.0)
+    check("node 001 total = 80s script time (t0-b molt)", total == 80.0)
     # every beat has a nonempty slug
     check("all beats have slugs", all(b["slug"].strip() for b in beats))
 
@@ -198,13 +198,12 @@ def test_generate_shots_parsing():
     from generate_shots import parse_shots
     md = (REPO / "genomes/sapling/nodes/001-capability-inventory/shots.md").read_text()
     shots = parse_shots(md)
-    check("shots.md parses 5 beats", len(shots) == 5)
-    check("beat numbering 1..5", [s["num"] for s in shots] == [1, 2, 3, 4, 5])
+    check("shots.md parses 7 beats (t0-b molt)", len(shots) == 7)
+    check("beat numbering 1..7", [s["num"] for s in shots] == [1, 2, 3, 4, 5, 6, 7])
     check("prompts nonempty + vertical", all("9:16" in s["prompt"] for s in shots))
-    # style v2 (2026-07-19) reset all 001 beats to needs-footage: the v1
-    # photoreal clips are archived evidence, not v2 footage — so no beat
-    # parses as done until anime clips exist
-    check("done-status parsed", [s["done"] for s in shots] == [False] * 5)
+    # the t0-b molt shot list (2026-07-25) awaits the regrow era: no beat
+    # parses as done until footage for the new skeleton exists
+    check("done-status parsed", [s["done"] for s in shots] == [False] * 7)
 
 
 def test_budget_guard():

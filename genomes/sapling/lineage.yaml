@@ -11,7 +11,7 @@ nodes:
     parent: null              # root of the tree
     trunk: true
     status: hot
-    leaves: [001-t0-a, 001-t1-a, 001-t2-a, 001-t3-a, 001-t3-b, 001-t3-c]
+    leaves: [001-seed, 001-t0-a, 001-t1-a, 001-t2-a, 001-t3-a, 001-t3-b, 001-t3-c, 001-t0-b]
 
   - id: "002a"
     released: 2026-07-10
@@ -20,7 +20,7 @@ nodes:
     parent: "001"
     trunk: false              # alive per R6; trunk for 002 generation is 002b (see edl.md)
     status: hot
-    leaves: [002a-t0-a, 002a-t1-a, 002a-t2-a]
+    leaves: [002a-seed, 002a-t0-a, 002a-t1-a, 002a-t2-a, 002a-t0-b]
 
   - id: "002b"
     released: 2026-07-10
@@ -29,7 +29,7 @@ nodes:
     parent: "001"
     trunk: true               # steward trunk call 2026-07-11 — see genomes/sapling/edl.md
     status: hot
-    leaves: [002b-t0-a, 002b-t1-a, 002b-t2-a, 002b-t3-a, 002b-t3-b]
+    leaves: [002b-seed, 002b-t0-a, 002b-t1-a, 002b-t2-a, 002b-t3-a, 002b-t3-b, 002b-t0-b]
 
   - id: "002c"
     released: 2026-07-10
@@ -38,7 +38,7 @@ nodes:
     parent: "001"
     trunk: false
     status: hot
-    leaves: [002c-t0-a, 002c-t1-a, 002c-t2-a]
+    leaves: [002c-seed, 002c-t0-a, 002c-t1-a, 002c-t2-a, 002c-t0-b]
 
   - id: "003a"
     released: 2026-07-11
