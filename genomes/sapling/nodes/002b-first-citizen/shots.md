@@ -27,7 +27,16 @@ Status legend: ✅ generated · ⬜ needs footage
 
 ---
 
-## Beat 01 — RECAP / ARRIVAL (0:00–0:05) ⬜ needs footage
+## Beat 01 — COLD OPEN (0:00–0:05) ⬜ needs footage
+
+Script beat: macro on the sapling and its one fig — the premise and the
+episode's payoff planted in the first five seconds (R7).
+
+```
+Vertical 9:16 macro shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds with large empty areas, gentle pastel-leaning palette. A tiny mascot-simple banyan sapling — thin curved trunk, two oversized expressive leaves, no face — sways gently in a green field; on its thinnest branch hangs one small ripe fig, catching warm morning light, slightly heavier than the branch wants to hold. The fig bobs with each sway. Peach and gold washes, vast empty watercolor sky. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+```
+
+## Beat 02 — THE FUGITIVE (0:05–0:20) ⬜ needs footage
 
 Script beat: the footsteps from 001 arrive — small, fast, panicked. Something
 dives into frame. Footage needs urgency entering a calm frame.
@@ -36,7 +45,7 @@ dives into frame. Footage needs urgency entering a calm frame.
 Vertical 9:16 shot, enormous empty field as a soft watercolor wash of warm peach and gold morning light with long soft shadows, a tiny mascot-simple sapling — thin curved trunk, one oversized expressive leaf, ~40cm tall — alone at center frame, static camera. Suddenly a small, round goblin — enormous ears, huge expressive eyes, one broken tusk, patchwork cloak in faded greens and browns — sprints into frame from the side at full panicked speed, skids in the grass, and dives behind the tiny sapling. A few simple cartoon dust puffs and grass flecks kicked up. Hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds with large empty areas, gentle pastel-leaning palette, expressive minimal faces. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 02 — THE FUGITIVE (0:05–0:20) ⬜ needs footage
+## Beat 03 — THE PATROL (0:20–0:40) ⬜ needs footage
 
 Script beat: the goblin hides behind a trunk that covers one-sixth of him while
 two mismatched patrol guards jog past and argue. Comedy of scale; the guards'
@@ -46,7 +55,7 @@ dialogue is carried by captions — footage needs the visual gag and the search.
 Vertical 9:16 shot, morning field in warm peach and gold watercolor washes with long soft shadows. A small, round goblin — enormous ears, huge expressive eyes, one broken tusk, patchwork cloak in faded greens and browns — presses his back against the pencil-thin curved trunk of a tiny 40cm mascot-simple sapling, sucking in his belly, absurdly failing to hide — the tiny tree covers almost none of him. In the background two patrol guards drawn as round, harmless shapes in mismatched, ill-fitting armor jog past, stop, and scan the field; one consults a clipboard made of tree bark. They gesture at each other in disagreement. Deadpan comedic staging, static camera. Hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds with large empty areas, gentle pastel-leaning palette, expressive minimal faces. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 03 — THE LONELY MONOLOGUE (0:20–0:50) ⬜ needs footage
+## Beat 04 — THE LONELY MONOLOGUE (0:40–1:00) ⬜ needs footage
 
 Script beat: danger passed; the scavenger sits in the sapling's tiny shade,
 knees up around his ears, and talks to a plant because it's the only thing
@@ -57,7 +66,7 @@ smallness, warmth, and practiced loneliness.
 Vertical 9:16 intimate shot, midday: high flat greens, pale blue-white sky, minimal shadow. A small, round goblin — enormous ears, huge expressive eyes, one broken tusk, patchwork cloak in faded greens and browns — sits curled in the one tiny patch of shade under a 40cm mascot-simple sapling, knees pulled up to his ears to fit into it, with the practiced ease of someone used to small shelters. He talks quietly to the little tree, picking at the dirt, glancing around embarrassed. Vast empty watercolor-wash field behind, the single oversized leaf above him. Gentle, lonely, tender tone, slow imperceptible push-in. Hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds with large empty areas, gentle pastel-leaning palette, expressive minimal faces. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 04 — THE ANSWER (0:50–1:10) ⬜ needs footage
+## Beat 05 — THE ANSWER (1:00–1:15) ⬜ needs footage
 
 Script beat: the sapling spends everything it owns — one fig, released from
 the thinnest branch, bonking off the scavenger's head. Footage needs the
@@ -67,7 +76,7 @@ deliberateness of the drop (this is a *decision*, not wind).
 Vertical 9:16 extreme close-up: high on the thinnest branch of a tiny 40cm mascot-simple sapling hangs one small ripe fig, trembling slightly, rimmed by warm amber afternoon light against a soft watercolor-wash sky. The camera holds on the fig as the stem slowly, deliberately lets go — the fig drops out of frame. Cut within the same take to a low wide angle: the fig bounces softly off the head of a small, round goblin — enormous ears, huge expressive eyes, one broken tusk, patchwork cloak in faded greens and browns — who was walking away, and lands in the grass at his feet. He stops mid-step. Hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds with large empty areas, gentle pastel-leaning palette, expressive minimal faces. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 05 — THE HOOK (1:10–1:25) ⬜ needs footage
+## Beat 06 — THE HOOK (1:15–1:30) ⬜ needs footage
 
 Script beat: "…Did you just *answer* me?" — the fig held up like evidence, the
 empty field, and one leaf tilting in absolute stillness. The franchise's
@@ -81,7 +90,7 @@ Vertical 9:16 shot, late afternoon sliding from amber into indigo, silhouettes r
 
 ## Progress
 
-0 of 5 beats generated. Generating footage is a paid action wherever it runs
+0 of 6 beats generated for the t0-b molt script (2026-07-25); the published t3 leaves were assembled from t0-a-era clips. Generating footage is a paid action wherever it runs
 (platform credits or API) — a founder call per the spend rules
 (STEWARDSHIP.md §4, `pipeline/budget.yaml`); this list exists so that call is
 one command, not a writing session. Platform choice tracks
