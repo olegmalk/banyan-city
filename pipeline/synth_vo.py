@@ -388,7 +388,7 @@ def main() -> int:
                  "directed": "synth_vo v3", "lines": manifest,
                  "actions": actions,
                  "total_s": round(cursor, 3)}, indent=1))
-            print(f"{slug} beat {beat_num:02d}: {len(entries)} lines, "
+            print(f"{slug} beat {beat_num:02d}: {len(manifest)} lines, "
                   f"{cursor:.1f}s [{engine.name}]")
     print("VO_DONE")
     return 0
