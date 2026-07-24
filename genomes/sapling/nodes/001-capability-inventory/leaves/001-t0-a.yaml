@@ -3,7 +3,7 @@ leaf: 001-t0-a
 node: "001"
 tier: T0                # text script — a real render, cheapest tier
 form: text-script
-content: ../node.md
+content: 001-t0-a.md
 author: founder (human-written)
 model: none
 prompt: none
@@ -11,3 +11,5 @@ seed: none
 cost_usd: 0.00
 status: live            # live | ring (archived)
 platform_urls: []       # T0 leaves live in Layer 1 only
+molted: 2026-07-25   # sap event 002 (banyan-repair-brief-001.md); alive per R6
+sap_event: sap/event-002-founder-comprehension.yaml

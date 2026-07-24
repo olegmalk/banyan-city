@@ -1,121 +1,104 @@
 # Node 001 — Capability Inventory
 
 **Tree:** Sapling · **Parent:** none (root) · **Trunk:** yes · **Status:** hot
-**This file is a T0 leaf.** Text is a real render — the cheapest tier.
+**This file is a T0 leaf** (`001-t0-b`, molt successor per SCRIPT-SPEC.md).
 **Format:** 9:16 vertical · 60–90s · VO-driven
 
 ---
 
 ## State change (R1)
 
-Protagonist goes from *dead engineer* to *rooted sapling who knows his exact verbs*: he can **sense** and he can **grow** — and nothing else. The world state, his self-knowledge, and the audience's contract with the series all change in one episode.
+He finishes the inventory of his new existence: dead engineer → living
+tree, capabilities exactly two (sense, grow). And the world stops being
+empty — something out there is walking toward him.
 
 ## Hook (R5)
 
-The inventory itself. The audience completes it with him: `MOVE`, `FIGHT`, `FLEE` — all undefined. Every story they've ever seen gave the hero at least one exit. This one is rooted. Whatever comes next, he will be there when it arrives — and something is already arriving.
+Footsteps, approaching, felt through the soil. He cannot move. Whatever
+is coming, arrives next episode. The question a viewer can state: *who
+is coming toward the tree that can't run?*
 
 ---
 
 ## Script
 
-**COLD OPEN — 0:00–0:12**
+**COLD OPEN — 0:00–0:05**
 
-BLACK. The sound of one mechanical keyboard, very fast, then stopping.
+Macro shot: a tiny two-leaf banyan sapling alone in a vast green field,
+trembling in the wind.
 
-CLOSE: a monitor in a dark apartment. A terminal. `deploy --prod --force`. A spinner. 3:07 a.m.
+> **VO (dry, tired, engineer):** Yesterday I died fixing a server at 3 a.m. Today I am a tree. Nobody has apologized.
 
-> **VO (tired, flat):** Production went down at 2:41. It's the retry loop. It's always the retry loop.
+**THE CRASH — 0:05–0:15**
 
-The spinner resolves: `✓ deploy succeeded`. A sharp breath in — the frame tips sideways — the mug hits the floor before he does.
+Hard cut, memory: a dark office. A man slumps at a desk lit by one
+monitor full of red error text. His mug tips and falls. Cut to black on
+the mug hitting the floor.
 
-> **VO:** Huh. Green.
+> **VO:** Last log entry of my previous life: the retry loop. It's always the retry loop.
 
-Cut to black on the sound of a cooling fan spinning down.
+**REBOOT — 0:15–0:25**
 
-**WAKE — 0:12–0:28**
+Back to the field, morning light. The same sapling, small and absurd
+under an enormous sky. A bird lands on its top leaf, bends it, leaves.
 
-Blinding green blur. Focus pulls: we are two centimeters off the ground, looking up through one trembling leaf at a sky that is *too* blue. Wind. Birdsong compiled by someone who never heard a bird.
+> **VO:** New hardware. Rebooted somewhere with better lighting and no keyboard. Fine. Every system gets one question first: what can it actually *do?*
 
-> **VO:** Okay. Hospital ceiling. That's fine. Hospitals are green now.
+**INVENTORY: SENSE — 0:25–0:40**
 
-The leaf — *his* leaf — twitches when he panics. The camera shakes with it.
+The view dives underground — a glowing root-map spreading through dark
+soil: water veins, stones, worm tunnels, all faintly lit.
 
-> **VO:** Scream. — No mouth. Run. — No legs. Flail?? — …I appear to be flailing one (1) leaf.
-
-**INCIDENT RESPONSE — 0:28–0:40**
-
-The trembling stops. Beat of stillness.
-
-> **VO:** Right. Sev-1. You know the drill. Nobody panics on my incidents, including me. Step one: stop screaming — done, involuntarily. Step two: what do we actually know?
-
-On-screen text, rendered like a terminal, types over the shot:
+> **VO:** Capability one: sense. I can feel the water table. I can feel every stone in this field. I can feel a worm having a bad day.
 
 ```
 $ whoami
 sapling (ficus. probably.)
 ```
 
-**THE INVENTORY — 0:40–1:05**
+**INVENTORY: GROW — 0:40–0:55**
 
-Quick rhythmic sequence, one capability per beat, terminal lines stacking up the side of the frame:
+Timelapse: sun arcs overhead three times. On the sapling, one (1) new
+leaf slowly unfurls, bright and proud.
 
-*He pushes attention downward.* The image blooms: an underground root-map, veins of dark water, mineral glitter, and — far off — a rhythmic *thump* felt as rings of light through soil.
+> **VO:** Capability two: grow. Three days of full effort. Output: one leaf. I have shipped slower features, but not many.
 
-> **VO:** Sense. I can taste the water table. I can feel the ground. Something with feet is walking, about… four hundred meters northeast. Noted.
+**THE WHOLE API — 0:55–1:05**
 
-```
-SENSE   ✓  roots / air / vibration
-```
+Wide shot: the sapling, the field, the huge indifferent sky. The wind
+moves the grass in slow waves.
 
-*He pushes outward.* Nothing. He pushes harder — timelapse: sun arcs three times — one (1) new leaf unfurls, smug and bright.
+> **VO:** Move — no. Fight — no. Flee — obviously no. Speak — no. Sense and grow. …That's the whole API.
 
-> **VO:** Grow. Works. Latency: three days. Throughput: one leaf. I've shipped on worse.
+**THE HOOK — 1:05–1:20**
 
-```
-GROW    ✓  slow. directional.
-```
+Underground view again: at the far edge of the root-map, rhythmic
+tremors pulse through the soil — step, step, step — each pulse lighting
+the roots like a ping. Above ground, the sapling's leaves stand
+perfectly still.
 
-*He tries everything else.* Each attempt is one hard cut and one line:
-
-```
-MOVE    ✗  undefined
-FIGHT   ✗  undefined
-FLEE    ✗  undefined
-SPEAK   ✗  undefined
-```
-
-> **VO:** …That's the whole API.
-
-**REALIZATION / HOOK — 1:05–1:25**
-
-Slow push-in on the tiny sapling, alone in an enormous field. The terminal lines fade until only two remain: `SENSE ✓` and `GROW ✓`.
-
-> **VO:** Every problem I ever had — the job, the pager, the retry loop — I solved it the same way, eventually. I walked away.
-
-Beat.
-
-> **VO:** New constraint. Whatever comes over that hill — a storm, an axe, a war, a conversation — I will be *here* for all of it. I can't leave. I can only make this spot… worth staying in.
-
-Underground: the far-off *thump-thump* of footsteps, closer now. The rings of light through the soil grow brighter, faster —
-
-> **VO (quiet):** Something's coming.
+> **VO:** Correction. New input on the sensor. Footsteps. Heavy, headed here. I have two capabilities, and neither of them is *hide.*
 
 SMASH TO BLACK.
 
-```
-GROW    ✓
-```
-
 ---
 
-## Continuations
+## Provenance
 
-Three sibling branches continue this moment — all alive per R6, none rejected:
-[002a — The Broken Channel](../002a-broken-channel/node.md) · [002b — The First Citizen](../002b-first-citizen/node.md) · [002c — ADMIN(?)](../002c-admin-wireframe/node.md)
+Molt successor script (`t0-b`), steward-written (model: claude-fable-5)
+to `SCRIPT-SPEC.md` from the shared premise seed (`leaves/001-seed.md`,
+verbatim founding text). Predecessor script archived as
+`leaves/001-t0-a.md` (molted 2026-07-25, sap event 002). Published video
+leaves 001-t3-a/b/c are takes of the t0-a era.
 
 ## Taste-rule notes
 
-- **R1:** state changes — he dies; he learns his verbs; the world registers his existence (approaching vibration).
-- **R2:** no antagonist; the pressure is a constraint, not a villain.
-- **R3:** panic resolved by the absurdity of flailing one (1) leaf; the tone contract is set here.
-- **R5:** hook = the inventory + the approaching footsteps; both are real state changes, not teases.
+- **R7:** cold open re-grounds the premise in 5s (one shot + one VO
+  line); every beat answers "what is happening and why"; the hook is a
+  statable question.
+- **R1:** state change = inventory complete + the world produces its
+  first event aimed at him.
+- **R3:** comedy lives in the VO-vs-world gap (one leaf in three days;
+  "no keyboard").
+- **R5:** hook is a real state change (approaching contact), on screen,
+  unambiguous.

@@ -1,0 +1,15 @@
+# Leaf metadata — every render publishes its full provenance (§7.2)
+# The canonical founding text (brief §2, 'leaf-0001') — IMMUTABLE.
+# Expansions are always new leaf files, never edits to this.
+leaf: 001-seed
+node: "001"
+tier: T0
+form: seed-text
+content: 001-seed.md
+author: founding author (human-written, instated verbatim from banyan-repair-brief-001.md §2)
+model: none
+prompt: none
+seed: none
+cost_usd: 0.00
+status: live
+platform_urls: []

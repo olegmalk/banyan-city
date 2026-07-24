@@ -1,0 +1,1 @@
+An engineer dies debugging production at 3am and reincarnates in another world as a banyan sapling. Can't move, can't fight, can't flee — can only sense, grow, and make the space around him worth staying in.
