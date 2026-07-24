@@ -50,6 +50,8 @@ from render_t2 import clean_speech, load_voices, speaker_key, voice_for  # noqa:
 
 GAP_DEFAULT, GAP_TRAIL, GAP_SNAP, GAP_BEAT = 0.50, 0.35, 0.18, 1.2
 SNAP_WORDS = 4          # both lines this short → rapid exchange
+ACTION_MAX_WORDS = 14   # stage directions this short become on-screen beats
+ACTION_MIN_HOLD = 1.4   # seconds a displayed action owns the track
 TRIM_THRESH = 0.003     # amplitude floor for head/tail engine silence
 TRIM_PAD_S = 0.04
 CACHE = Path.home() / ".cache" / "banyan-tts"
@@ -181,6 +183,28 @@ def is_beat_pause(action_text: str) -> bool:
     return bool(action_text) and action_text.strip().rstrip(".").lower() in ("beat", "a beat")
 
 
+def displayable_action(action_text: str) -> str | None:
+    """Short stage directions become on-screen beats (cycle 006: the tree's
+    entire performance — 'One leaf tilts.' — lived in action lines that
+    never reached the viewer). Long paragraphs are camera direction and
+    stay off screen; their FIRST sentence is used when it is short enough."""
+    t = action_text.strip()
+    if not t or is_beat_pause(t):
+        return None
+    first = re.split(r"(?<=[.!?…])\s+", t)[0]
+    if re.search(r"\b(camera|frame|shot|close-up|wide|montage|cut to|we see)\b",
+                 first, re.I):
+        return None  # camera direction — production language, not story
+    if len(first.split()) <= ACTION_MAX_WORDS:
+        return first
+    return None
+
+
+def action_hold(text: str) -> float:
+    """Seconds a displayed stage direction owns: reading time + a breath."""
+    return max(ACTION_MIN_HOLD, 0.28 * len(text.split()) + 0.6)
+
+
 LONG_LINE_WORDS = 22   # chatterbox generations past ~250 sampling steps die
 CHUNK_JOIN_GAP = 0.12  # breath between stitched chunk takes
 
@@ -289,29 +313,48 @@ def main() -> int:
         clips_dir = node_dir / "clips"
         clips_dir.mkdir(exist_ok=True)
         for beat_num, f in enumerate(frames, start=1):
-            # walk items in order: lines speak; a 'Beat.' action between
-            # lines becomes the next line's breath
-            entries, pending_beat = [], False
+            # walk items in order: lines speak; short stage directions
+            # become timed on-screen beats (cycle 006 — the tree's replies
+            # lived in actions that never reached the viewer); a 'Beat.'
+            # becomes the next line's breath
+            events, pending_beat = [], False
             for it in f["items"]:
                 if it[0] == "action":
-                    pending_beat = pending_beat or is_beat_pause(strip_inline_md(it[1]))
+                    t = strip_inline_md(it[1])
+                    if is_beat_pause(t):
+                        pending_beat = True
+                        continue
+                    disp = displayable_action(t)
+                    if disp:
+                        events.append(("action", disp))
                 elif it[0] == "line":
                     text = strip_inline_md(it[2])
                     if clean_speech(text):
-                        entries.append((it[1], text, pending_beat))
+                        events.append(("line", it[1], text, pending_beat))
                         pending_beat = False
-            if not entries:
+            if not any(e[0] == "line" for e in events):
                 continue
 
-            sr, pieces, manifest, cursor, prev_text = 24000, [], [], 0.0, None
-            for raw_who, text, beat_pause in entries:
+            sr = engine.sr
+            pieces, manifest, actions, cursor, prev_text = [], [], [], 0.0, None
+            for ev in events:
+                if ev[0] == "action":
+                    hold = action_hold(ev[1])
+                    pieces.append(np.zeros(int(hold * sr), dtype=np.float32))
+                    actions.append({"text": ev[1],
+                                    "start": round(cursor + 0.05, 3),
+                                    "end": round(cursor + hold, 3)})
+                    cursor += hold
+                    prev_text = None  # the beat resets exchange rhythm
+                    continue
+                _, raw_who, text, beat_pause = ev
                 who = speaker_key(raw_who) or "VO"
                 voice, base = voice_for(who, vcfg)
                 print(f"    {slug} b{beat_num:02d} {who} ({voice}) "
                       f"{len(text.split())}w…", flush=True)
                 spd = pacing(base, raw_who, text)
                 direction = direction_for(raw_who, text)
-                samples, sr, rel_spans = synth_line(engine, text, voice, spd, direction)
+                samples, _, rel_spans = synth_line(engine, text, voice, spd, direction)
                 gap = gap_before(prev_text, text, beat_pause)
                 if gap:
                     pieces.append(np.zeros(int(gap * sr), dtype=samples.dtype))
@@ -342,7 +385,8 @@ def main() -> int:
             wav.unlink()
             (clips_dir / f"{beat_num:02d}-vo.json").write_text(json.dumps(
                 {"cast": "voices.yaml", "engine": engine.name,
-                 "directed": "synth_vo v2", "lines": manifest,
+                 "directed": "synth_vo v3", "lines": manifest,
+                 "actions": actions,
                  "total_s": round(cursor, 3)}, indent=1))
             print(f"{slug} beat {beat_num:02d}: {len(entries)} lines, "
                   f"{cursor:.1f}s [{engine.name}]")

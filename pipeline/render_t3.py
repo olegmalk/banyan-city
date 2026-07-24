@@ -74,6 +74,28 @@ CAPTION_MARGIN = int(HEIGHT * 0.22)
 CAPTION_MAX_W = WIDTH - 160
 PINGPONG_MAX_S = 16.0  # reverse buffers raw frames; skip palindrome past this
 
+# speaker attribution (cycle 006): the tree's inner voice is tinted its own
+# green and carries no label; every other speaker gets a colored name tag.
+VO_INK = (196, 232, 205, 255)            # pale leaf-green — the tree thinking
+ACTION_INK = (147, 196, 160, 255)        # stage-direction captions
+SPEAKER_COLORS = {
+    "SCAVENGER": (240, 200, 100, 255),   # warm amber
+    "FARMER": (222, 171, 128, 255),      # clay
+    "ASSESSOR": (168, 190, 230, 255),    # ledger blue
+    "MAGISTRATE": (216, 160, 230, 255),  # seal violet
+    "GUARD 1": (170, 196, 210, 255),
+    "GUARD 2": (150, 176, 190, 255),
+}
+FALLBACK_COLORS = [(235, 180, 180, 255), (180, 225, 235, 255), (225, 225, 160, 255)]
+
+
+def speaker_style(who: str) -> tuple:
+    """(label, label_color, text_color) for a caption chunk."""
+    if not who or who == "VO":
+        return "", None, VO_INK
+    color = SPEAKER_COLORS.get(who) or FALLBACK_COLORS[hash(who) % len(FALLBACK_COLORS)]
+    return f"{who}:", color, INK
+
 MONO_FONTS = [
     "/System/Library/Fonts/Menlo.ttc",                       # macOS
     "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf",   # debian/ubuntu CI
@@ -306,16 +328,28 @@ def wrap(text: str, font: ImageFont.FreeTypeFont, max_w: int) -> list:
 
 
 def text_png(text: str, path: Path, size: int, fg: tuple, bg: tuple,
-             max_w: int = WIDTH - 100, pad: int = 18, bold: bool = False) -> Path:
-    """Rasterize a text block into a tight RGBA panel."""
+             max_w: int = WIDTH - 100, pad: int = 18, bold: bool = False,
+             label: str = "", label_color: tuple = None) -> Path:
+    """Rasterize a text block into a tight RGBA panel. An optional `label`
+    ("SCAVENGER:") renders inline before the text in `label_color` — speaker
+    attribution, the unanimous #1 fix from the cycle-006 cold-viewer tests
+    (three viewers, three episodes: every comprehension break traced to not
+    knowing who was talking)."""
     font = mono_bold(size) if bold else mono_font(size)
-    lines = wrap(text, font, max_w - 2 * pad)
+    full = f"{label} {text}".strip() if label else text
+    lines = wrap(full, font, max_w - 2 * pad)
     lh = size + 8
     w = min(max_w, max(font.getbbox(l)[2] for l in lines) + 2 * pad)
     img = Image.new("RGBA", (w, lh * len(lines) + 2 * pad), bg)
     d = ImageDraw.Draw(img)
     for i, l in enumerate(lines):
-        d.text((pad, pad + i * lh), l, font=font, fill=fg)
+        if i == 0 and label and l.startswith(label):
+            d.text((pad, pad + i * lh), label, font=font,
+                   fill=label_color or fg)
+            x_after = pad + font.getbbox(label + " ")[2]
+            d.text((x_after, pad + i * lh), l[len(label):].lstrip(), font=font, fill=fg)
+        else:
+            d.text((pad, pad + i * lh), l, font=font, fill=fg)
     img.save(path)
     return path
 
@@ -456,11 +490,14 @@ def render_beat(beat: dict, num: int, dur: float, clips: list, workdir: Path,
         layers.append((png, "36", str(y), f"gte(t,{dur * 0.3:.2f})"))
         y += Image.open(png).height + 24
 
-    lines = [i[2] for i in beat["items"] if i[0] == "line"]
+    lines = [(i[1], i[2]) for i in beat["items"] if i[0] == "line"]
     if lines:
         timed = (manifest or {}).get("lines")
-        for j, text in enumerate(lines):
+        prev_who = None
+        for j, (raw_who, text) in enumerate(lines):
             entry = timed[j] if (timed and len(timed) == len(lines)) else None
+            who = (entry or {}).get("who") or re.sub(r"\s*\(.*$", "", raw_who).strip().upper() or "VO"
+            label, label_color, ink = speaker_style(who)
             if entry and entry.get("chunks"):
                 # measured on the synthesized voice (synth_vo) — exact sync
                 spans = [(c["text"], c["start"], c["end"]) for c in entry["chunks"]]
@@ -476,11 +513,26 @@ def render_beat(beat: dict, num: int, dur: float, clips: list, workdir: Path,
             # half-open [start, end) windows per chunk avoid the 1-frame
             # flash where two captions overlap at an inclusive boundary
             for k, (chunk, s, e) in enumerate(spans):
+                # name tag on the line's first chunk, and only when the
+                # speaker changes — steady exchanges stay uncluttered
+                tag = label if (k == 0 and who != prev_who) else ""
                 png = text_png(chunk, workdir / f"cap-{num:02d}-{j}-{k}.png",
-                               CAPTION_SIZE, INK, CAPTION_BG,
-                               max_w=CAPTION_MAX_W, bold=True)
+                               CAPTION_SIZE, ink, CAPTION_BG,
+                               max_w=CAPTION_MAX_W, bold=True,
+                               label=tag, label_color=label_color)
                 layers.append((png, "(W-w)/2", f"H-h-{CAPTION_MARGIN}",
                                f"gte(t,{s:.2f})*lt(t,{e:.2f})"))
+            prev_who = who
+
+    # stage-direction captions (cycle 006): the tree's entire performance —
+    # 'One leaf tilts.' — lived in action lines that never reached the
+    # screen; synth_vo now times short ones into the track as `actions`
+    for j, a in enumerate((manifest or {}).get("actions") or []):
+        png = text_png(a["text"], workdir / f"act-{num:02d}-{j}.png",
+                       CAPTION_SIZE - 6, ACTION_INK, (0, 0, 0, 150),
+                       max_w=CAPTION_MAX_W)
+        layers.append((png, "(W-w)/2", "(H-h)*0.44",
+                       f"gte(t,{a['start']:.2f})*lt(t,{a['end']:.2f})"))
 
     layers += list(extra_layers or [])
 
