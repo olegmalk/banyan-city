@@ -1,0 +1,33 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "SCAVENGER",
+   "text": "Were you the fruit? Did you MEAN to hit my head?",
+   "start": 3.96,
+   "end": 7.07,
+   "chunks": [
+    {
+     "text": "Were you the fruit?",
+     "start": 3.96,
+     "end": 5.184
+    },
+    {
+     "text": "Did you MEAN to hit my head?",
+     "start": 5.184,
+     "end": 7.07
+    }
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "text": "He holds the fig up beside the bare branch it fell from.",
+   "start": 0.05,
+   "end": 3.96
+  }
+ ],
+ "total_s": 7.37
+}

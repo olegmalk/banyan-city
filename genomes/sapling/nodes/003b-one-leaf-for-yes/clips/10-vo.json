@@ -1,0 +1,33 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "VO",
+   "text": "He has independently derived a one-bit protocol. I have onboarded senior engineers with less.",
+   "start": 2.0,
+   "end": 7.615,
+   "chunks": [
+    {
+     "text": "He has independently derived a one-bit protocol.",
+     "start": 2.0,
+     "end": 5.068
+    },
+    {
+     "text": "I have onboarded senior engineers with less.",
+     "start": 5.068,
+     "end": 7.615
+    }
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "text": "The leaf tilts again, unmistakable.",
+   "start": 0.05,
+   "end": 2.0
+  }
+ ],
+ "total_s": 7.915
+}

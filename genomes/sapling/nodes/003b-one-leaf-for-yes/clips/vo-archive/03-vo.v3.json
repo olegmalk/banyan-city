@@ -1,0 +1,125 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v2",
+ "lines": [
+  {
+   "who": "SCAVENGER",
+   "text": "The patrol comes through here every few days. Everywhere else, I'm\u2026 (he gestures at all of himself) \u2026a filing problem. A thing with no form.",
+   "start": 0.0,
+   "end": 5.96,
+   "chunks": [
+    {
+     "text": "The patrol comes through here every few days.",
+     "start": 0.0,
+     "end": 1.853
+    },
+    {
+     "text": "Everywhere else, I'm\u2026",
+     "start": 1.853,
+     "end": 3.366
+    },
+    {
+     "text": "(he gestures at all of himself) \u2026a filing problem.",
+     "start": 3.366,
+     "end": 4.692
+    },
+    {
+     "text": "A thing with no form.",
+     "start": 4.692,
+     "end": 5.96
+    }
+   ]
+  },
+  {
+   "who": "SCAVENGER",
+   "text": "Can I stay? Here. By you. I'd keep the weeds off. I'm quiet. Mostly.",
+   "start": 6.46,
+   "end": 10.997,
+   "chunks": [
+    {
+     "text": "Can I stay?",
+     "start": 6.46,
+     "end": 7.213
+    },
+    {
+     "text": "Here.",
+     "start": 7.213,
+     "end": 8.167
+    },
+    {
+     "text": "By you.",
+     "start": 8.167,
+     "end": 8.77
+    },
+    {
+     "text": "I'd keep the weeds off.",
+     "start": 8.77,
+     "end": 9.673
+    },
+    {
+     "text": "I'm quiet.",
+     "start": 9.673,
+     "end": 10.585
+    },
+    {
+     "text": "Mostly.",
+     "start": 10.585,
+     "end": 10.997
+    }
+   ]
+  },
+  {
+   "who": "VO",
+   "text": "Every problem I ever had, I solved by walking away. He can't walk away either \u2014 everywhere he goes is somebody else's field. Verbs: sense, grow. Neither one says shelter.",
+   "start": 11.497,
+   "end": 23.847,
+   "chunks": [
+    {
+     "text": "Every problem I ever had,",
+     "start": 11.497,
+     "end": 13.44
+    },
+    {
+     "text": "I solved by walking away.",
+     "start": 13.44,
+     "end": 15.313
+    },
+    {
+     "text": "He can't walk away either \u2014",
+     "start": 15.313,
+     "end": 16.927
+    },
+    {
+     "text": "everywhere he goes is somebody else's field.",
+     "start": 16.927,
+     "end": 20.346
+    },
+    {
+     "text": "Verbs: sense, grow.",
+     "start": 20.346,
+     "end": 22.367
+    },
+    {
+     "text": "Neither one says shelter.",
+     "start": 22.367,
+     "end": 23.847
+    }
+   ]
+  },
+  {
+   "who": "VO",
+   "text": "\u2026Growth includes deciding what to grow toward.",
+   "start": 24.347,
+   "end": 27.153,
+   "chunks": [
+    {
+     "text": "\u2026Growth includes deciding what to grow toward.",
+     "start": 24.347,
+     "end": 27.153
+    }
+   ]
+  }
+ ],
+ "total_s": 27.453
+}

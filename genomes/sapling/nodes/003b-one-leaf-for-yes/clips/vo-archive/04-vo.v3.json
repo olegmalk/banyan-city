@@ -1,0 +1,54 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v2",
+ "lines": [
+  {
+   "who": "SCAVENGER",
+   "text": "You know what this is now, right? A resident, a landmark, and a water source down the way. That's not a camp anymore.",
+   "start": 0.0,
+   "end": 7.194,
+   "chunks": [
+    {
+     "text": "You know what this is now, right?",
+     "start": 0.0,
+     "end": 1.956
+    },
+    {
+     "text": "A resident, a landmark,",
+     "start": 1.956,
+     "end": 3.797
+    },
+    {
+     "text": "and a water source down the way.",
+     "start": 3.797,
+     "end": 5.581
+    },
+    {
+     "text": "That's not a camp anymore.",
+     "start": 5.581,
+     "end": 7.194
+    }
+   ]
+  },
+  {
+   "who": "SCAVENGER",
+   "text": "Every city needs a name. I hereby name this place\u2014",
+   "start": 7.694,
+   "end": 11.321,
+   "chunks": [
+    {
+     "text": "Every city needs a name.",
+     "start": 7.694,
+     "end": 9.512
+    },
+    {
+     "text": "I hereby name this place\u2014",
+     "start": 9.512,
+     "end": 11.322
+    }
+   ]
+  }
+ ],
+ "total_s": 11.621
+}

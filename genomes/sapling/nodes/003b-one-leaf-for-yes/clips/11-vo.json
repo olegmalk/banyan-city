@@ -1,0 +1,38 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "SCAVENGER",
+   "text": "Are you a spirit? A demon? A god?",
+   "start": 3.68,
+   "end": 6.839,
+   "chunks": [
+    {
+     "text": "Are you a spirit?",
+     "start": 3.68,
+     "end": 5.014
+    },
+    {
+     "text": "A demon?",
+     "start": 5.014,
+     "end": 5.92
+    },
+    {
+     "text": "A god?",
+     "start": 5.92,
+     "end": 6.839
+    }
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "text": "The scavenger paces, firing questions, scratching a tally into the dirt.",
+   "start": 0.05,
+   "end": 3.68
+  }
+ ],
+ "total_s": 7.139
+}
