@@ -6,23 +6,17 @@
   {
    "who": "GUARD 1",
    "text": "So we confiscate the apple.",
-   "start": 2.56,
-   "end": 4.166,
+   "start": 0.0,
+   "end": 1.56,
    "chunks": [
     {
      "text": "So we confiscate the apple.",
-     "start": 2.56,
-     "end": 4.166
+     "start": 0.0,
+     "end": 1.56
     }
    ]
   }
  ],
- "actions": [
-  {
-   "text": "Guard 1 points at the scavenger, decisive.",
-   "start": 0.05,
-   "end": 2.56
-  }
- ],
- "total_s": 4.466
+ "actions": [],
+ "total_s": 1.86
 }

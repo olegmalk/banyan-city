@@ -1,0 +1,43 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "SCAVENGER",
+   "text": "If anyone asks \u2014 you didn't see me. Which is true. You're a plant.",
+   "start": 3.12,
+   "end": 7.593,
+   "chunks": [
+    {
+     "text": "If anyone asks \u2014",
+     "start": 3.12,
+     "end": 4.63
+    },
+    {
+     "text": "you didn't see me.",
+     "start": 4.63,
+     "end": 5.791
+    },
+    {
+     "text": "Which is true.",
+     "start": 5.791,
+     "end": 6.695
+    },
+    {
+     "text": "You're a plant.",
+     "start": 6.695,
+     "end": 7.593
+    }
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "text": "The scavenger stands, brushes off, and turns to go.",
+   "start": 0.05,
+   "end": 3.12
+  }
+ ],
+ "total_s": 7.893
+}

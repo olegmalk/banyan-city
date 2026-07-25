@@ -1,0 +1,33 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "SCAVENGER",
+   "text": "One: I have finally lost it. Two: you're in there.",
+   "start": 3.96,
+   "end": 7.52,
+   "chunks": [
+    {
+     "text": "One: I have finally lost it.",
+     "start": 3.96,
+     "end": 5.876
+    },
+    {
+     "text": "Two: you're in there.",
+     "start": 5.876,
+     "end": 7.52
+    }
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "text": "He crouches until he is eye to eye with the little tree.",
+   "start": 0.05,
+   "end": 3.96
+  }
+ ],
+ "total_s": 7.82
+}

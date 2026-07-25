@@ -6,33 +6,27 @@
   {
    "who": "GUARD 2",
    "text": "Technically not theft. He ate it on the spot. That reclassifies it as unlicensed consumption.",
-   "start": 3.68,
-   "end": 9.976,
+   "start": 0.0,
+   "end": 6.048,
    "chunks": [
     {
      "text": "Technically not theft.",
-     "start": 3.68,
-     "end": 5.325
+     "start": 0.0,
+     "end": 1.362
     },
     {
      "text": "He ate it on the spot.",
-     "start": 5.325,
-     "end": 6.625
+     "start": 1.362,
+     "end": 2.863
     },
     {
      "text": "That reclassifies it as unlicensed consumption.",
-     "start": 6.625,
-     "end": 9.976
+     "start": 2.863,
+     "end": 6.048
     }
    ]
   }
  ],
- "actions": [
-  {
-   "text": "GUARD 2 turns over a clipboard made of bark and reads.",
-   "start": 0.05,
-   "end": 3.68
-  }
- ],
- "total_s": 10.276
+ "actions": [],
+ "total_s": 6.348
 }

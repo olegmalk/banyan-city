@@ -1,0 +1,33 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "GUARD 2",
+   "text": "There's no form for that. There's barely a form for the apple.",
+   "start": 3.4,
+   "end": 6.503,
+   "chunks": [
+    {
+     "text": "There's no form for that.",
+     "start": 3.4,
+     "end": 4.561
+    },
+    {
+     "text": "There's barely a form for the apple.",
+     "start": 4.561,
+     "end": 6.503
+    }
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "text": "Guard 2 flips the clipboard around: the back is blank.",
+   "start": 0.05,
+   "end": 3.4
+  }
+ ],
+ "total_s": 6.803
+}

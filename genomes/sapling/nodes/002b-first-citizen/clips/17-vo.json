@@ -6,38 +6,32 @@
   {
    "who": "SCAVENGER",
    "text": "If anyone asks \u2014 you didn't see me. Which is true. You're a plant.",
-   "start": 3.12,
-   "end": 7.593,
+   "start": 0.0,
+   "end": 3.811,
    "chunks": [
     {
      "text": "If anyone asks \u2014",
-     "start": 3.12,
-     "end": 4.63
+     "start": 0.0,
+     "end": 1.187
     },
     {
      "text": "you didn't see me.",
-     "start": 4.63,
-     "end": 5.791
+     "start": 1.187,
+     "end": 2.18
     },
     {
      "text": "Which is true.",
-     "start": 5.791,
-     "end": 6.695
+     "start": 2.18,
+     "end": 3.025
     },
     {
      "text": "You're a plant.",
-     "start": 6.695,
-     "end": 7.593
+     "start": 3.025,
+     "end": 3.811
     }
    ]
   }
  ],
- "actions": [
-  {
-   "text": "The scavenger stands, brushes off, and turns to go.",
-   "start": 0.05,
-   "end": 3.12
-  }
- ],
- "total_s": 7.893
+ "actions": [],
+ "total_s": 4.111
 }

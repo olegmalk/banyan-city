@@ -1,0 +1,38 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "VO",
+   "text": "I am a dead engineer inside this tree. Yesterday I spent my only fruit on a stranger's head.",
+   "start": 1.4,
+   "end": 6.376,
+   "chunks": [
+    {
+     "text": "I am a dead engineer inside this tree.",
+     "start": 1.4,
+     "end": 3.789
+    },
+    {
+     "text": "Yesterday I spent my only fruit on",
+     "start": 3.789,
+     "end": 5.565
+    },
+    {
+     "text": "a stranger's head.",
+     "start": 5.565,
+     "end": 6.376
+    }
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "text": "Dawn.",
+   "start": 0.05,
+   "end": 1.4
+  }
+ ],
+ "total_s": 6.676
+}

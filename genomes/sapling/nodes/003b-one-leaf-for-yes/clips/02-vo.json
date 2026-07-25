@@ -7,21 +7,21 @@
    "who": "SCAVENGER",
    "text": "I've thought about it all night. There are only two possibilities.",
    "start": 0.0,
-   "end": 3.872,
+   "end": 4.226,
    "chunks": [
     {
      "text": "I've thought about it all night.",
      "start": 0.0,
-     "end": 1.773
+     "end": 1.687
     },
     {
      "text": "There are only two possibilities.",
-     "start": 1.773,
-     "end": 3.872
+     "start": 1.687,
+     "end": 4.226
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 4.172
+ "total_s": 4.526
 }

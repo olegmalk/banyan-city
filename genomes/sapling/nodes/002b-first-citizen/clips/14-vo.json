@@ -6,33 +6,27 @@
   {
    "who": "SCAVENGER",
    "text": "It was one apple. It fell off the cart. On the ground, that's \u2014 that's foraging.",
-   "start": 2.84,
-   "end": 9.11,
+   "start": 0.0,
+   "end": 5.141,
    "chunks": [
     {
      "text": "It was one apple.",
-     "start": 2.84,
-     "end": 4.757
+     "start": 0.0,
+     "end": 1.256
     },
     {
      "text": "It fell off the cart.",
-     "start": 4.757,
-     "end": 6.678
+     "start": 1.256,
+     "end": 2.706
     },
     {
      "text": "On the ground, that's \u2014 that's foraging.",
-     "start": 6.678,
-     "end": 9.11
+     "start": 2.706,
+     "end": 5.142
     }
    ]
   }
  ],
- "actions": [
-  {
-   "text": "He picks at the dirt, embarrassed, glancing around.",
-   "start": 0.05,
-   "end": 2.84
-  }
- ],
- "total_s": 9.41
+ "actions": [],
+ "total_s": 5.441
 }

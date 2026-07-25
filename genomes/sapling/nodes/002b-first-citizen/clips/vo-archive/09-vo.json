@@ -1,0 +1,28 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "GUARD 1",
+   "text": "\u2026We confiscate the goblin?",
+   "start": 2.56,
+   "end": 3.929,
+   "chunks": [
+    {
+     "text": "\u2026We confiscate the goblin?",
+     "start": 2.56,
+     "end": 3.929
+    }
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "text": "Guard 1's face works through it, slowly.",
+   "start": 0.05,
+   "end": 2.56
+  }
+ ],
+ "total_s": 4.229
+}

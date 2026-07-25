@@ -1,0 +1,38 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "SCAVENGER",
+   "text": "It was one apple. It fell off the cart. On the ground, that's \u2014 that's foraging.",
+   "start": 2.84,
+   "end": 9.11,
+   "chunks": [
+    {
+     "text": "It was one apple.",
+     "start": 2.84,
+     "end": 4.757
+    },
+    {
+     "text": "It fell off the cart.",
+     "start": 4.757,
+     "end": 6.678
+    },
+    {
+     "text": "On the ground, that's \u2014 that's foraging.",
+     "start": 6.678,
+     "end": 9.11
+    }
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "text": "He picks at the dirt, embarrassed, glancing around.",
+   "start": 0.05,
+   "end": 2.84
+  }
+ ],
+ "total_s": 9.41
+}

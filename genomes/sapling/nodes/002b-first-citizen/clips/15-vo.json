@@ -7,26 +7,26 @@
    "who": "SCAVENGER",
    "text": "You're a good listener. The last three people I talked to filed a report.",
    "start": 0.0,
-   "end": 3.748,
+   "end": 4.258,
    "chunks": [
     {
      "text": "You're a good listener.",
      "start": 0.0,
-     "end": 1.072
+     "end": 1.027
     },
     {
      "text": "The last three people I talked to",
-     "start": 1.072,
-     "end": 2.72
+     "start": 1.027,
+     "end": 2.767
     },
     {
      "text": "filed a report.",
-     "start": 2.72,
-     "end": 3.748
+     "start": 2.767,
+     "end": 4.258
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 4.048
+ "total_s": 4.558
 }

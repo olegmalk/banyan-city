@@ -6,33 +6,27 @@
   {
    "who": "VO",
    "text": "I am a dead engineer inside this tree. Yesterday I spent my only fruit on a stranger's head.",
-   "start": 1.4,
-   "end": 6.376,
+   "start": 0.0,
+   "end": 5.553,
    "chunks": [
     {
      "text": "I am a dead engineer inside this tree.",
-     "start": 1.4,
-     "end": 3.789
+     "start": 0.0,
+     "end": 2.437
     },
     {
      "text": "Yesterday I spent my only fruit on",
-     "start": 3.789,
-     "end": 5.565
+     "start": 2.437,
+     "end": 4.527
     },
     {
      "text": "a stranger's head.",
-     "start": 5.565,
-     "end": 6.376
+     "start": 4.527,
+     "end": 5.553
     }
    ]
   }
  ],
- "actions": [
-  {
-   "text": "Dawn.",
-   "start": 0.05,
-   "end": 1.4
-  }
- ],
- "total_s": 6.676
+ "actions": [],
+ "total_s": 5.853
 }
