@@ -1,174 +1,27 @@
 {
  "cast": "voices.yaml",
  "engine": "chatterbox-0.5B",
- "directed": "synth_vo v2",
+ "directed": "synth_vo v3",
  "lines": [
   {
    "who": "SCAVENGER",
-   "text": "So we test it. Like the patrol tests coins. (beat) If you can hear me\u2026 move one leaf.",
+   "text": "I've thought about it all night. There are only two possibilities.",
    "start": 0.0,
-   "end": 4.139,
+   "end": 3.872,
    "chunks": [
     {
-     "text": "So we test it.",
+     "text": "I've thought about it all night.",
      "start": 0.0,
-     "end": 0.799
+     "end": 1.773
     },
     {
-     "text": "Like the patrol tests coins.",
-     "start": 0.799,
-     "end": 2.126
-    },
-    {
-     "text": "(beat) If you can hear me\u2026",
-     "start": 2.126,
-     "end": 3.234
-    },
-    {
-     "text": "move one leaf.",
-     "start": 3.234,
-     "end": 4.139
-    }
-   ]
-  },
-  {
-   "who": "SCAVENGER",
-   "text": "One leaf for yes. Nothing for no. Deal?",
-   "start": 4.639,
-   "end": 7.839,
-   "chunks": [
-    {
-     "text": "One leaf for yes.",
-     "start": 4.639,
-     "end": 6.069
-    },
-    {
-     "text": "Nothing for no.",
-     "start": 6.069,
-     "end": 7.637
-    },
-    {
-     "text": "Deal?",
-     "start": 7.637,
-     "end": 7.839
-    }
-   ]
-  },
-  {
-   "who": "VO",
-   "text": "He's building a protocol. This creature the patrol calls vermin has independently derived a one-bit communication protocol. I've onboarded senior engineers with less.",
-   "start": 8.339,
-   "end": 18.496,
-   "chunks": [
-    {
-     "text": "He's building a protocol.",
-     "start": 8.339,
-     "end": 9.608
-    },
-    {
-     "text": "This creature the patrol calls vermin has",
-     "start": 9.608,
-     "end": 12.208
-    },
-    {
-     "text": "independently derived a one-bit communication protocol.",
-     "start": 12.208,
-     "end": 15.633
-    },
-    {
-     "text": "I've onboarded senior engineers with less.",
-     "start": 15.633,
-     "end": 18.496
-    }
-   ]
-  },
-  {
-   "who": "SCAVENGER",
-   "text": "Are you a spirit? (nothing) A demon? (nothing) A god? (nothing \u2014 then, reluctantly, half a tilt)",
-   "start": 18.996,
-   "end": 21.924,
-   "chunks": [
-    {
-     "text": "Are you a spirit?",
-     "start": 18.996,
-     "end": 19.555
-    },
-    {
-     "text": "(nothing) A demon?",
-     "start": 19.555,
-     "end": 20.101
-    },
-    {
-     "text": "(nothing) A god?",
-     "start": 20.101,
-     "end": 20.601
-    },
-    {
-     "text": "(nothing \u2014 then, reluctantly,",
-     "start": 20.601,
-     "end": 21.512
-    },
-    {
-     "text": "half a tilt)",
-     "start": 21.512,
-     "end": 21.924
-    }
-   ]
-  },
-  {
-   "who": "SCAVENGER",
-   "text": "\u2026We'll circle back to that one.",
-   "start": 22.424,
-   "end": 23.864,
-   "chunks": [
-    {
-     "text": "\u2026We'll circle back to that one.",
-     "start": 22.424,
-     "end": 23.864
-    }
-   ]
-  },
-  {
-   "who": "SCAVENGER",
-   "text": "Were you the fruit? (yes) Did it hurt? (nothing) Did you MEAN to hit my head? (a very long pause \u2014 then yes)",
-   "start": 24.364,
-   "end": 28.021,
-   "chunks": [
-    {
-     "text": "Were you the fruit?",
-     "start": 24.364,
-     "end": 25.108
-    },
-    {
-     "text": "(yes) Did it hurt?",
-     "start": 25.108,
-     "end": 25.752
-    },
-    {
-     "text": "(nothing) Did you MEAN to hit my head?",
-     "start": 25.752,
-     "end": 27.532
-    },
-    {
-     "text": "(a very long pause \u2014 then yes)",
-     "start": 27.532,
-     "end": 28.021
-    }
-   ]
-  },
-  {
-   "who": "SCAVENGER",
-   "text": "I knew it!",
-   "start": 28.521,
-   "end": 29.538,
-   "chunks": [
-    {
-     "text": "I knew it!",
-     "start": 28.521,
-     "end": 29.538
+     "text": "There are only two possibilities.",
+     "start": 1.773,
+     "end": 3.872
     }
    ]
   }
  ],
- "total_s": 29.838
+ "actions": [],
+ "total_s": 4.172
 }

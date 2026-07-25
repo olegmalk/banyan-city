@@ -24,6 +24,17 @@ unloads itself. The earlier cloud routines are dead (environment deleted).
 | 6 | 2026-07-25 21:00 | 006a — The Miracle Clause | `banyan-006a-episode.mp4` | F |
 | 7 | 2026-07-26 21:00 | 007a — The Demo (finale) | `banyan-007a-episode.mp4` | G |
 
+> **Open, and the founder's call (2026-07-25):** slots 5-7 are staged as
+> **pre-molt cuts** — 4 to 6 shots each, which is the exact thing dad
+> flagged ("the video is not matching the audio at all"). Cycle 007 rewrote
+> all seven scripts to one shot per beat, but the footage for the new cuts
+> does not exist yet (166 shots, rendering started on the free Kaggle
+> floor). So the choice is: keep the daily cadence and post cuts we already
+> know are the weak version, or pause the drops until the re-rendered
+> episodes exist and lose the posting rhythm. Not a steward decision either
+> way — posting is founder-only, and so is deciding to stop. The reminder
+> agent keeps firing at 21:00 until told otherwise.
+
 After #7: the season supercut (`banyan-sapling-season-1-COMPLETE.mp4`,
 10:41) as a "binge the whole season" post, and the fork post — "the tree
 chose A" runbook in `launch-kit.md` §5. Reschedule = edit this table +

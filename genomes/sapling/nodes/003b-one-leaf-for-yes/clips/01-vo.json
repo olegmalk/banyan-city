@@ -1,41 +1,38 @@
 {
  "cast": "voices.yaml",
  "engine": "chatterbox-0.5B",
- "directed": "synth_vo v2",
+ "directed": "synth_vo v3",
  "lines": [
   {
-   "who": "SCAVENGER",
-   "text": "Okay. I've thought about it all night, and there are only two possibilities. One: I have finally lost it. Two: you're in there.",
-   "start": 0.0,
-   "end": 8.799,
+   "who": "VO",
+   "text": "I am a dead engineer inside this tree. Yesterday I spent my only fruit on a stranger's head.",
+   "start": 1.4,
+   "end": 6.376,
    "chunks": [
     {
-     "text": "Okay.",
-     "start": 0.0,
-     "end": 0.928
+     "text": "I am a dead engineer inside this tree.",
+     "start": 1.4,
+     "end": 3.789
     },
     {
-     "text": "I've thought about it all night,",
-     "start": 0.928,
-     "end": 2.96
+     "text": "Yesterday I spent my only fruit on",
+     "start": 3.789,
+     "end": 5.565
     },
     {
-     "text": "and there are only two possibilities.",
-     "start": 2.96,
-     "end": 5.098
-    },
-    {
-     "text": "One: I have finally lost it.",
-     "start": 5.098,
-     "end": 7.222
-    },
-    {
-     "text": "Two: you're in there.",
-     "start": 7.222,
-     "end": 8.799
+     "text": "a stranger's head.",
+     "start": 5.565,
+     "end": 6.376
     }
    ]
   }
  ],
- "total_s": 9.099
+ "actions": [
+  {
+   "text": "Dawn.",
+   "start": 0.05,
+   "end": 1.4
+  }
+ ],
+ "total_s": 6.676
 }
