@@ -31,6 +31,27 @@ This changes who *executes*; it does not change whose taste governs.
 5. **What belongs to citizens stays with citizens.** Guideline 6
    amendments, the D6 rename, and the D7 stewarding entity are not the
    steward's to decide, only to facilitate.
+6. **The narrative is approved before any media is produced.** (Added
+   2026-07-26 at the founder's instruction, prompted by his father's
+   review.) The steward may write and revise scripts freely — that is
+   Guideline 1 work. It may **not** synthesize voice, render footage, or
+   assemble an episode from a script the founder has not read and
+   approved. Approval is per node and is recorded in the T0 leaf yaml
+   (`approved_by: founder`, with the date); an unapproved script is a
+   draft no matter how finished it looks.
+
+   Why this rule exists, stated plainly so it is not softened later: on
+   the night of 2026-07-25 the steward rewrote all seven trunk scripts,
+   synthesized voice for every one of them, and spent 8.7 GPU-hours
+   rendering footage — for scripts the author had never read. The work
+   was not wasted, but the order was wrong, and nothing in this document
+   forbade it. Producing media is the expensive, hard-to-reverse half;
+   the author's read is the cheap half. The cheap half goes first.
+
+   Corollary on *whose* approval: this gate is the founder's. Family and
+   contributors may review, request, and be listened to — their notes
+   have driven most of the loop's cycles — but a script becomes
+   producible only when the author of record says so.
 
 ## Provenance
 

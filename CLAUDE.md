@@ -12,6 +12,13 @@ every push to main). Read `PROMISE.md` first — it is canonical. Then
   posting/announcing on the founder's accounts, credential changes, taste-axis
   scores and trunk/graft calls (R4 — taste belongs to the author), governance
   changes, opening money rails (D5 confirm + payment link are human steps).
+- **Narrative approval precedes media** (STEWARDSHIP.md §6, added 2026-07-26):
+  scripts may be written and revised freely, but **no voice synthesis, no
+  footage render, no episode assembly from a script the founder has not read
+  and approved.** Approval is recorded per node in the T0 leaf
+  (`approved_by: founder` + date). Writing is cheap and reversible; media is
+  neither. On 2026-07-25 seven scripts were voiced and 8.7 GPU-hours rendered
+  before the author had read any of them — that is what this rule prevents.
 - **Spend guards are code:** `pipeline/budget.yaml` caps ($/run and lifetime);
   `generate_shots.py` refuses without explicit `--yes` and logs to
   `ledger/render-spend.csv`. A FAL key may exist in gitignored `.env` — its
