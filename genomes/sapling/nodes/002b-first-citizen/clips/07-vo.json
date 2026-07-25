@@ -1,0 +1,28 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "GUARD 1",
+   "text": "So we confiscate the apple.",
+   "start": 2.56,
+   "end": 4.166,
+   "chunks": [
+    {
+     "text": "So we confiscate the apple.",
+     "start": 2.56,
+     "end": 4.166
+    }
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "text": "Guard 1 points at the scavenger, decisive.",
+   "start": 0.05,
+   "end": 2.56
+  }
+ ],
+ "total_s": 4.466
+}

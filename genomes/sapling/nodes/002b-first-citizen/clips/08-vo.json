@@ -1,0 +1,28 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "GUARD 2",
+   "text": "The apple is inside him, Dren.",
+   "start": 3.68,
+   "end": 5.422,
+   "chunks": [
+    {
+     "text": "The apple is inside him, Dren.",
+     "start": 3.68,
+     "end": 5.422
+    }
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "text": "Guard 2 lowers the clipboard and points at the scavenger's belly.",
+   "start": 0.05,
+   "end": 3.68
+  }
+ ],
+ "total_s": 5.722
+}

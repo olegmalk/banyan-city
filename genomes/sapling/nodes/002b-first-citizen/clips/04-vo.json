@@ -1,77 +1,38 @@
 {
  "cast": "voices.yaml",
  "engine": "chatterbox-0.5B",
- "directed": "synth_vo v2",
+ "directed": "synth_vo v3",
  "lines": [
   {
    "who": "VO",
-   "text": "Wait.",
-   "start": 0.0,
-   "end": 0.474,
+   "text": "Worst stealth plan I have ever seen \u2014 and I once watched an architect hide an outage in a footnote.",
+   "start": 2.56,
+   "end": 7.893,
    "chunks": [
     {
-     "text": "Wait.",
-     "start": 0.0,
-     "end": 0.474
-    }
-   ]
-  },
-  {
-   "who": "VO",
-   "text": "Inventory check. Verbs: sense, grow. Neither says speak. But growth includes\u2026 release. One fruit. It's literally everything I own.",
-   "start": 0.974,
-   "end": 8.93,
-   "chunks": [
-    {
-     "text": "Inventory check.",
-     "start": 0.974,
-     "end": 1.833
+     "text": "Worst stealth plan I have ever seen",
+     "start": 2.56,
+     "end": 4.873
     },
     {
-     "text": "Verbs: sense, grow.",
-     "start": 1.833,
-     "end": 3.249
+     "text": "\u2014 and I once watched an architect",
+     "start": 4.873,
+     "end": 6.367
     },
     {
-     "text": "Neither says speak.",
-     "start": 3.249,
-     "end": 4.604
-    },
-    {
-     "text": "But growth includes\u2026",
-     "start": 4.604,
-     "end": 5.704
-    },
-    {
-     "text": "release.",
-     "start": 5.704,
-     "end": 6.652
-    },
-    {
-     "text": "One fruit.",
-     "start": 6.652,
-     "end": 7.32
-    },
-    {
-     "text": "It's literally everything I own.",
-     "start": 7.32,
-     "end": 8.93
-    }
-   ]
-  },
-  {
-   "who": "VO",
-   "text": "He said ground fruit is foraging.",
-   "start": 10.13,
-   "end": 11.992,
-   "chunks": [
-    {
-     "text": "He said ground fruit is foraging.",
-     "start": 10.13,
-     "end": 11.993
+     "text": "hide an outage in a footnote.",
+     "start": 6.367,
+     "end": 7.893
     }
    ]
   }
  ],
- "total_s": 12.292
+ "actions": [
+  {
+   "text": "The scavenger holds his breath, eyes darting.",
+   "start": 0.05,
+   "end": 2.56
+  }
+ ],
+ "total_s": 8.193
 }

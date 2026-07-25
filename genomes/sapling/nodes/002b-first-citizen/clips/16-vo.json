@@ -1,0 +1,43 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "VO",
+   "text": "He talks to me because I'm the only thing here that won't file a report. Buddy, I wish I could. I can't even wave.",
+   "start": 3.68,
+   "end": 10.877,
+   "chunks": [
+    {
+     "text": "He talks to me because I'm the",
+     "start": 3.68,
+     "end": 5.63
+    },
+    {
+     "text": "only thing here that won't file a report.",
+     "start": 5.63,
+     "end": 7.86
+    },
+    {
+     "text": "Buddy, I wish I could.",
+     "start": 7.86,
+     "end": 9.618
+    },
+    {
+     "text": "I can't even wave.",
+     "start": 9.618,
+     "end": 10.877
+    }
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "text": "Close on the sapling's leaf; the scavenger sits blurred behind it.",
+   "start": 0.05,
+   "end": 3.68
+  }
+ ],
+ "total_s": 11.177
+}

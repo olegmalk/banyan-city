@@ -187,6 +187,16 @@ def check_clips_dir(clips_dir: Path | None) -> None:
 
 AUDIO_EXT = ("mp3", "wav", "m4a", "aac", "ogg")
 AUDIO_SR = 44100
+# short-form platforms normalize to about -14 LUFS; sitting under it just makes
+# the episode quieter than everything around it in the feed.
+LOUDNESS_TARGET = -14.0
+LIMIT_MASTER = 0.86   # -1.31 dBFS, ceiling during loudnorm's own 192k pass
+# loudnorm's TP target is deliberately looser than the old -1.5: the limiter
+# above holds the real ceiling, and a tight TP target makes loudnorm clamp its
+# own gain and undershoot the loudness target instead.
+TP_TARGET = -1.0
+LOUDNESS_TOL = 0.3    # qa_episode's window around the target
+
 
 
 def find_audio(clips_dir: Path, num: int) -> Path | None:
@@ -324,6 +334,26 @@ def loudnorm_measure(track: Path) -> dict | None:
     if any(k not in data or "inf" in str(data[k]) for k in keys):
         return None  # unmeasurable (e.g. digital silence) — caller falls back
     return data
+
+
+def integrated_lufs(track: Path) -> float | None:
+    """Measured integrated loudness of a finished track, via ebur128.
+
+    loudnorm cannot be trusted to land on its target: in linear mode it clamps
+    its own gain against the true-peak ceiling and then reports a
+    `target_offset` it never applied. On 001 that left the master at -15.4 LUFS
+    against a -14 target (caught by qa_episode 2026-07-25). So the master is
+    measured after the fact and the shortfall corrected as a plain gain."""
+    r = subprocess.run([FFMPEG, "-hide_banner", "-nostats", "-i", str(track),
+                        "-af", "ebur128=framelog=quiet", "-f", "null", "-"],
+                       capture_output=True, text=True)
+    hits = re.findall(r"I:\s*(-?[\d.]+)\s*LUFS", r.stderr)
+    if not hits:
+        return None
+    try:
+        return float(hits[-1])
+    except ValueError:
+        return None
 
 
 def wrap(text: str, font: ImageFont.FreeTypeFont, max_w: int) -> list:
@@ -710,7 +740,10 @@ def main() -> int:
         # digitally silent, fading out over the end card — then two-pass
         # loudnorm brings the master to short-form platform level.
         total_s = sum(d for _, d, _ in timeline)
-        mixed = workdir / "mixed.m4a"
+        # the pre-master stays PCM: mastering is measure-then-correct, and
+        # measuring an AAC generation you are about to re-encode both lies a
+        # little and costs a generation of quality for nothing
+        mixed = workdir / "mixed.wav"
         r = subprocess.run(
             [FFMPEG, "-y", "-i", str(atrack), "-f", "lavfi", "-i",
              f"anoisesrc=color=brown:seed=42:r=24000:d={total_s:.2f}",
@@ -719,25 +752,66 @@ def main() -> int:
              f"afade=t=out:st={max(total_s - 3.0, 0):.2f}:d=3[wind];"
              "[0:a][wind]amix=inputs=2:duration=first:normalize=0[mix]",
              "-map", "[mix]", "-ar", str(AUDIO_SR), "-ac", "2",
-             "-c:a", "aac", "-b:a", "160k", str(mixed)],
+             "-c:a", "pcm_s16le", str(mixed)],
             capture_output=True, text=True)
         if r.returncode:
             raise SystemExit(f"bed mix failed:\n{r.stderr[-1500:]}")
-        af = "loudnorm=I=-14:TP=-1.5:LRA=11"
         measured = loudnorm_measure(mixed)
-        if measured:  # linear gain — dynamic single-pass pumps on dialogue
-            af += (f":measured_I={measured['input_i']}:measured_TP={measured['input_tp']}"
-                   f":measured_LRA={measured['input_lra']}"
-                   f":measured_thresh={measured['input_thresh']}"
-                   f":offset={measured['target_offset']}:linear=true")
-        # limiter runs at loudnorm's internal 192k — limiting AFTER the final
-        # downsample flat-tops the wave and true peak explodes (+1.5 dBTP
-        # measured; caught by qa_episode). The ~0.5 dB left after the 44.1k
-        # resample is absorbed by the lower loudnorm TP target above.
-        af += ",alimiter=limit=0.86:level=0"
-        r = subprocess.run([FFMPEG, "-y", "-i", str(video), "-i", str(mixed),
+        master = workdir / "master.wav"
+
+        def master_pass(offset) -> str:
+            """One mastering pass at loudnorm's internal 192k, limiter included.
+
+            The limiter MUST live in this filter chain: limiting after the 44.1k
+            downsample flat-tops the wave and true peak explodes (+1.5 dBTP the
+            first time, 0.1 dBTP when retried on 2026-07-25 — both caught by
+            qa_episode)."""
+            af = f"loudnorm=I={LOUDNESS_TARGET:g}:TP={TP_TARGET}:LRA=11"
+            if measured:  # linear gain — dynamic single-pass pumps on dialogue
+                af += (f":measured_I={measured['input_i']}:measured_TP={measured['input_tp']}"
+                       f":measured_LRA={measured['input_lra']}"
+                       f":measured_thresh={measured['input_thresh']}"
+                       f":offset={offset:.2f}:linear=true")
+            af += f",alimiter=limit={LIMIT_MASTER}:level=0"
+            r = subprocess.run([FFMPEG, "-y", "-i", str(mixed), "-af", af,
+                                "-ar", str(AUDIO_SR), "-c:a", "pcm_s16le", str(master)],
+                               capture_output=True, text=True)
+            if r.returncode:
+                raise SystemExit(f"master failed:\n{r.stderr[-1500:]}")
+            return af
+
+        # loudnorm does not land on its target: in linear mode it clamps its own
+        # gain against the true-peak ceiling and then reports a target_offset it
+        # never applied, which left 001 at -15.4 LUFS against -14 (qa_episode,
+        # 2026-07-25). So measure the master and feed the shortfall back through
+        # loudnorm's own offset until it lands, rather than bolting a gain stage
+        # onto the end where it would wreck the peak.
+        offset = float(measured["target_offset"]) if measured else 0.0
+        prev = None
+        for attempt in range(3):
+            master_pass(offset)
+            got = integrated_lufs(master)
+            if got is None:
+                break
+            if abs(got - LOUDNESS_TARGET) <= LOUDNESS_TOL:
+                if attempt:
+                    print(f"  master {got:+.1f} LUFS after {attempt + 1} passes")
+                break
+            # peak-bound material never reaches the target: every extra dB of
+            # gain is eaten by the limiter, so the passes converge somewhere
+            # short of it. Stop when a pass stops buying loudness and say where
+            # it landed, instead of burning encodes on an asymptote.
+            if prev is not None and got - prev < 0.15:
+                print(f"  master {got:+.1f} LUFS — peak-bound, {LOUDNESS_TARGET:g} "
+                      f"unreachable without squashing the peaks further")
+                break
+            shortfall = LOUDNESS_TARGET - got
+            print(f"  master measured {got:+.1f} LUFS — re-mastering {shortfall:+.2f} dB")
+            prev = got
+            offset = max(-6.0, min(6.0, offset + shortfall))
+        r = subprocess.run([FFMPEG, "-y", "-i", str(video), "-i", str(master),
                             "-map", "0:v", "-map", "1:a", "-c:v", "copy",
-                            "-af", af, "-ar", str(AUDIO_SR),
+                            "-ar", str(AUDIO_SR),
                             "-c:a", "aac", "-b:a", "160k", "-shortest",
                             "-movflags", "+faststart", str(out)], capture_output=True, text=True)
         if r.returncode:
