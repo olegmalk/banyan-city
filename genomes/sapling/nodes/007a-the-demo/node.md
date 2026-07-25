@@ -48,7 +48,7 @@ MIRACLE-004: leaf choreography ..... IN PROGRESS
 
 The goblin taps the last line with a stick, briefing his troops.
 
-> **VO:** Fourteen days to ship a miracle. So we did what every team does with an impossible deadline: cut scope until the miracle was a *demo*.
+> **VO:** Fourteen days to ship a miracle, the magistrate said, or we're a weed with paperwork. So we did what every team does with an impossible deadline: cut scope until the miracle was a *demo*.
 
 **FROM THE TOP — 0:19–0:25**
 
@@ -132,11 +132,13 @@ He counts them off, not selling anything now.
 
 He touches his own chest where the fig once hit him.
 
-> **SCAVENGER:** A fig, once — when nobody else in the world would give me anything. That's the whole tree.
+> **SCAVENGER:** A fig, once — you *threw* it at me — when nobody else in the world would give me anything. That's the whole tree.
 
 **LETTING GO — 2:03–2:10**
 
 Underground: two weeks of hoarded light rushes up through the roots all at once.
+
+> **VO:** Two weeks of growth, saved up in the dark. All of it. Now.
 
 **THE ORCHARD — 2:10–2:18**
 
@@ -185,7 +187,7 @@ The farmer picks up his jug and does not look at anyone.
 
 Long hold on the kneeling figure in the dawn light.
 
-> **VO:** Patrol wanted taxes. Assessor wanted a count. Magistrate wanted a category. I could give all of those. …What does *she* want?
+> **VO:** Taxes I could pay. A count I could stand still for. A category I could fit inside. …What does *she* want?
 
 SMASH TO BLACK.
 

@@ -6,27 +6,33 @@
   {
    "who": "GUARD 1",
    "text": "He went this way. I saw him. Apple thief.",
-   "start": 0.0,
-   "end": 2.39,
+   "start": 3.4,
+   "end": 6.125,
    "chunks": [
     {
      "text": "He went this way.",
-     "start": 0.0,
-     "end": 0.826
+     "start": 3.4,
+     "end": 4.369
     },
     {
      "text": "I saw him.",
-     "start": 0.826,
-     "end": 1.579
+     "start": 4.369,
+     "end": 5.273
     },
     {
      "text": "Apple thief.",
-     "start": 1.579,
-     "end": 2.39
+     "start": 5.273,
+     "end": 6.125
     }
    ]
   }
  ],
- "actions": [],
- "total_s": 2.69
+ "actions": [
+  {
+   "text": "Two PATROL GUARDS jog in and halt, scanning the field.",
+   "start": 0.05,
+   "end": 3.4
+  }
+ ],
+ "total_s": 6.425
 }

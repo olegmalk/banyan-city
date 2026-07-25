@@ -47,7 +47,7 @@ Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded c
 
 ## Beat 03 — CUT SCOPE (0:13–0:19) ⬜ needs footage
 
-Line/beat: the tree's scope-cutting line. Camera on the goblin briefing his troops.
+Line/beat: the tree's scope-cutting line, now naming who set the deadline and what failing costs. Camera keeps the TREE in frame — it is the one speaking.
 
 ```
 Vertical 9:16 medium shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small round goblin taps a stick twice against the last line of a charcoal-scrawled plank and turns to brief a tree like a general addressing troops — the TREE fills the near half of the frame, trunk and crown sharp, the goblin small beside it, lantern light on his enormous ears. Deadpan authority. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
@@ -175,7 +175,7 @@ Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded c
 
 ## Beat 19 — A FIG, ONCE (1:55–2:03) ⬜ needs footage
 
-Line/beat: "A fig, once — when nobody would give me anything." Camera on his hand touching his chest.
+Line/beat: "A fig, once — you threw it at me…" Camera on the dried fig in one hand, the other pressed where it struck him.
 
 ```
 Vertical 9:16 medium close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin holds an old dried blackened fig in one hand and presses his other flat against his chest where it once struck him, looking down at the fig, not at anyone. Moonlight, quiet, still. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
@@ -183,7 +183,7 @@ Vertical 9:16 medium close-up, hand-drawn 2D anime style, low detail: flat cel-s
 
 ## Beat 20 — LETTING GO (2:03–2:10) ⬜ needs footage
 
-Line/beat: no dialogue — the decision. Camera underground as two weeks of stored light releases.
+Line/beat: the tree naming what this costs ("two weeks of growth… all of it"). Camera underground as the stored light releases — the line is what teaches the viewer that the light is a price.
 
 ```
 Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. Beneath a tree in an underground cross-section, hoarded teal light that has been pooling in the roots surges upward all at once through the trunk in one great rush. Near-black soil, brilliant release. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
@@ -255,7 +255,7 @@ Vertical 9:16 medium shot, hand-drawn 2D anime style, low detail: flat cel-shade
 
 ## Beat 29 — WHAT DOES SHE WANT (3:05–3:13) ⬜ needs footage
 
-Line/beat: the tree's closing question. Camera long-holding the kneeling figure.
+Line/beat: the tree's closing question, recast so it needs no prior episode. Camera long-holding the kneeling figure.
 
 ```
 Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A long unbroken hold on a kneeling travel-worn figure at the edge of a clearing as dawn light strengthens across her back and the fig-littered grass around her, nothing moving but the light. Quiet, open-ended. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
