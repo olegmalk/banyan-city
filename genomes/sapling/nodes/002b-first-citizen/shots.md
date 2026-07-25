@@ -1,27 +1,19 @@
-# Node 002b — shot list (per-beat generation prompts)
+# Node 002b — shot list (21 shots, 1:1 with the script's beats)
 
-The **whole episode** as a shot list — one generation prompt per script beat,
-so node 002b (the trunk's second node) can be rendered end-to-end and
-assembled by `pipeline/render_t3.py`. Same rules as node 001's list: base
-footage only (no burned-in text, no spoken dialogue — post adds caption
-overlays and VO), 9:16 vertical, ~10s per shot, one take.
+Rebuilt 2026-07-25 for loop cycle 007. The previous list was 6 shots for
+102 seconds — one image per scene, which is why the picture did not follow
+the script. This list is **one shot per beat, 3–6s, camera on the
+referent of that beat's line** (SCRIPT-SPEC.md "one beat = one shot").
 
-**Character continuity (paste into any beat that shows him):** the scavenger
-is a small, round goblin — enormous ears that act like a second face, one
-broken tusk, huge expressive eyes, patchwork cloak in faded greens and
-browns. The sapling is a tiny mascot-simple tree, ~40cm, thin curved trunk
-with a single oversized expressive leaf (plus, this episode only, one small
-fig) — never a face; its acting is leaf angle and timing. Keeping these
-clauses verbatim across beats and platforms is the cheap half of character
-consistency; the taste axes (motion/look) judge the rest.
+Base footage only: no burned-in text, no dialogue — post adds captions and
+VO. 9:16 vertical. Each prompt's FIRST sentence states the primary action
+(motion grammar, `style.md`), so the model does not render a still.
 
-**Naming for assembly:** save each clip as `NN-slug.mp4` in a clips dir, then:
-`python3 pipeline/render_t3.py sapling 002b --clips <dir> --out episode.mp4`
-render_t3 fits each clip to its beat's script duration; any missing beat
-renders as a slate, so partial shot lists still assemble.
+**Assembly:** save each clip as `NN-slug.mp4` in a clips dir, then
+`python3 pipeline/render_t3.py sapling 002b --clips <dir> --out ep.mp4`
 
-**Voice (optional):** drop `NN-vo.mp3` beside a clip and it's muxed on that
-beat; silent stays watchable (captions carry VO and dialogue).
+**Free render path:** `pipeline/kaggle/wan-t2v-kaggle.ipynb` with
+`NODE = "002b"` — 21 shots ≈ 8–15 h of Kaggle's free weekly GPU.
 
 Status legend: ✅ generated · ⬜ needs footage
 
@@ -29,74 +21,184 @@ Status legend: ✅ generated · ⬜ needs footage
 
 ## Beat 01 — COLD OPEN (0:00–0:05) ⬜ needs footage
 
-Script beat: macro on the sapling and its one fig — the premise and the
-episode's payoff planted in the first five seconds (R7).
+Line: the tree's first VO. Camera on the TREE and the fig — premise and the ending's payoff in one frame.
 
 ```
-Vertical 9:16 macro shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds with large empty areas, gentle pastel-leaning palette. A tiny mascot-simple banyan sapling — thin curved trunk, two oversized expressive leaves, no face — sways gently in a green field; on its thinnest branch hangs one small ripe fig, catching warm morning light, slightly heavier than the branch wants to hold. The fig bobs with each sway. Peach and gold washes, vast empty watercolor sky. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 macro shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds with large empty areas, gentle pastel-leaning palette. A tiny mascot-simple banyan sapling — thin curved trunk, two oversized expressive leaves, no face — sways in the wind, and on its thinnest branch one small ripe fig bobs with each sway, slightly heavier than the branch wants to hold. Vast empty green field, peach and gold morning washes. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 02 — THE FUGITIVE (0:05–0:20) ⬜ needs footage
+## Beat 02 — THE SPRINT (0:05–0:09) ⬜ needs footage
 
-Script beat: the footsteps from 001 arrive — small, fast, panicked. Something
-dives into frame. Footage needs urgency entering a calm frame.
-
-```
-Vertical 9:16 shot, enormous empty field as a soft watercolor wash of warm peach and gold morning light with long soft shadows, a tiny mascot-simple sapling — thin curved trunk, one oversized expressive leaf, ~40cm tall — alone at center frame, static camera. Suddenly a small, round goblin — enormous ears, huge expressive eyes, one broken tusk, patchwork cloak in faded greens and browns — sprints into frame from the side at full panicked speed, skids in the grass, and dives behind the tiny sapling. A few simple cartoon dust puffs and grass flecks kicked up. Hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds with large empty areas, gentle pastel-leaning palette, expressive minimal faces. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
-```
-
-## Beat 03 — THE PATROL (0:20–0:40) ⬜ needs footage
-
-Script beat: the goblin hides behind a trunk that covers one-sixth of him while
-two mismatched patrol guards jog past and argue. Comedy of scale; the guards'
-dialogue is carried by captions — footage needs the visual gag and the search.
+No dialogue — pure action. Camera wide so the dive reads.
 
 ```
-Vertical 9:16 shot, morning field in warm peach and gold watercolor washes with long soft shadows. A small, round goblin — enormous ears, huge expressive eyes, one broken tusk, patchwork cloak in faded greens and browns — presses his back against the pencil-thin curved trunk of a tiny 40cm mascot-simple sapling, sucking in his belly, absurdly failing to hide — the tiny tree covers almost none of him. In the background two patrol guards drawn as round, harmless shapes in mismatched, ill-fitting armor jog past, stop, and scan the field; one consults a clipboard made of tree bark. They gesture at each other in disagreement. Deadpan comedic staging, static camera. Hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds with large empty areas, gentle pastel-leaning palette, expressive minimal faces. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 wide shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small round goblin — enormous ears, huge expressive eyes, one broken tusk, patchwork cloak in faded greens and browns — sprints into frame at full panicked speed, skids in the grass kicking up simple cartoon dust puffs, and dives behind a tiny 40cm mascot-simple sapling. Static camera, empty morning field. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 04 — THE LONELY MONOLOGUE (0:40–1:00) ⬜ needs footage
+## Beat 03 — BAD COVER (0:09–0:14) ⬜ needs footage
 
-Script beat: danger passed; the scavenger sits in the sapling's tiny shade,
-knees up around his ears, and talks to a plant because it's the only thing
-that won't file a report. The episode's emotional center — footage needs
-smallness, warmth, and practiced loneliness.
+Line: "A creature is using me as cover. I am forty centimeters tall." Camera on the size mismatch the line describes.
 
 ```
-Vertical 9:16 intimate shot, midday: high flat greens, pale blue-white sky, minimal shadow. A small, round goblin — enormous ears, huge expressive eyes, one broken tusk, patchwork cloak in faded greens and browns — sits curled in the one tiny patch of shade under a 40cm mascot-simple sapling, knees pulled up to his ears to fit into it, with the practiced ease of someone used to small shelters. He talks quietly to the little tree, picking at the dirt, glancing around embarrassed. Vast empty watercolor-wash field behind, the single oversized leaf above him. Gentle, lonely, tender tone, slow imperceptible push-in. Hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds with large empty areas, gentle pastel-leaning palette, expressive minimal faces. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small round goblin — enormous ears, one broken tusk, patchwork cloak — crouches lower and lower behind the pencil-thin trunk of a tiny 40cm mascot-simple sapling, sucking in his belly, absurdly failing to hide as the tiny tree covers almost none of him. Deadpan comedic staging, static camera. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 05 — THE ANSWER (1:00–1:15) ⬜ needs footage
+## Beat 04 — THE FOOTNOTE (0:14–0:19) ⬜ needs footage
 
-Script beat: the sapling spends everything it owns — one fig, released from
-the thinnest branch, bonking off the scavenger's head. Footage needs the
-deliberateness of the drop (this is a *decision*, not wind).
+Line: the architect/footnote joke. Camera close on the held breath.
 
 ```
-Vertical 9:16 extreme close-up: high on the thinnest branch of a tiny 40cm mascot-simple sapling hangs one small ripe fig, trembling slightly, rimmed by warm amber afternoon light against a soft watercolor-wash sky. The camera holds on the fig as the stem slowly, deliberately lets go — the fig drops out of frame. Cut within the same take to a low wide angle: the fig bounces softly off the head of a small, round goblin — enormous ears, huge expressive eyes, one broken tusk, patchwork cloak in faded greens and browns — who was walking away, and lands in the grass at his feet. He stops mid-step. Hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds with large empty areas, gentle pastel-leaning palette, expressive minimal faces. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small round goblin's face fills the frame as he holds his breath, cheeks puffed, huge expressive eyes darting left and right, enormous ears twitching at every sound. Slow push-in, dappled morning light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 06 — THE HOOK (1:15–1:30) ⬜ needs footage
+## Beat 05 — THE PATROL (0:19–0:24) ⬜ needs footage
 
-Script beat: "…Did you just *answer* me?" — the fig held up like evidence, the
-empty field, and one leaf tilting in absolute stillness. The franchise's
-signature gesture; the leaf tilt must read as intentional.
+Line: GUARD 1, "Apple thief." Camera on the guards arriving.
 
 ```
-Vertical 9:16 shot, late afternoon sliding from amber into indigo, silhouettes reading before faces, absolute stillness — no wind, grass frozen. A small, round goblin — enormous ears, huge expressive eyes, one broken tusk, patchwork cloak in faded greens and browns — stands facing a tiny 40cm mascot-simple sapling, holding a small fig up in both hands like evidence, wide-eyed. Slow push-in past him toward the sapling's single oversized leaf. In the dead-still air, the one leaf slowly, deliberately tilts to one side — an unmistakable intentional gesture from a plant; its expression is pure pose, never a face. Hold on the tilted leaf. Quiet awe, warm low amber light. Hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds with large empty areas, gentle pastel-leaning palette, expressive minimal faces. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. Two patrol guards drawn as round harmless shapes in mismatched ill-fitting armor jog into frame and halt, heads turning as they scan an empty morning field; one carries a clipboard made of tree bark. Wide static camera, long soft shadows. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+```
+
+## Beat 06 — THE CLIPBOARD (0:24–0:30) ⬜ needs footage
+
+Line: GUARD 2 reclassifying the crime. Camera on the clipboard — the thing the line is about.
+
+```
+Vertical 9:16 medium close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A round guard in mismatched armor turns over a clipboard made of tree bark and traces a line on it with one finger as he reads, brow furrowed with bureaucratic seriousness. The clipboard fills the lower third of the frame. Slow drift in. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+```
+
+## Beat 07 — CONFISCATE (0:30–0:34) ⬜ needs footage
+
+Line: "So we confiscate the apple." Camera on the pointing guard.
+
+```
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A round guard in mismatched armor thrusts one arm out decisively, pointing off-frame, chin raised with the confidence of a man who believes he has solved the problem. His partner's shoulder is just visible at frame edge. Static camera, morning field. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+```
+
+## Beat 08 — INSIDE HIM (0:34–0:38) ⬜ needs footage
+
+Line: "The apple is inside him, Dren." Camera follows the pointing finger to the goblin's belly.
+
+```
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A round guard lowers his bark clipboard and points flatly at the round belly of a small goblin in a patchwork cloak, who looks down at himself. Deadpan two-shot, no movement but the pointing arm. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+```
+
+## Beat 09 — THE PAUSE (0:38–0:43) ⬜ needs footage
+
+Line: "…We confiscate the goblin?" Camera close on the guard's slow realisation.
+
+```
+Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A round guard's face works slowly through an idea: eyes drifting, mouth opening slightly, helmet slipping a fraction as he tilts his head. Held close-up, minimal motion, comic timing. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+```
+
+## Beat 10 — NO FORM (0:43–0:48) ⬜ needs footage
+
+Line: "There's no form for that." Camera on the blank back of the clipboard.
+
+```
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A round guard flips his bark clipboard around and holds up its completely blank back toward his partner, shaking it once for emphasis. The blank board dominates the frame. Static camera. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+```
+
+## Beat 11 — THEY LEAVE (0:48–0:53) ⬜ needs footage
+
+Line: the tree's "trapped in a workflow." Camera on the departing guards.
+
+```
+Vertical 9:16 wide shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. Two round guards in mismatched armor walk away from camera across an empty field, gesturing at each other in continuing disagreement, growing smaller as they go. Static wide camera, long morning shadows stretching behind them. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+```
+
+## Beat 12 — RELATED (0:53–0:57) ⬜ needs footage
+
+Line: the tree's. Camera ON THE TREE for the tree's own line — framed TIGHT on the leaves, because the scavenger is still hidden behind the trunk and a wide shot would read as him having left (caught by the comprehension gate).
+
+```
+Vertical 9:16 tight close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. Clouds drift and blur behind the two oversized leaves of a tiny mascot-simple sapling that fill the frame and stay utterly still — no trunk base, no ground, no other character visible. The stillness of the tree against a moving sky. Very slow push-in. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+```
+
+## Beat 13 — THE SHADE (0:57–1:03) ⬜ needs footage
+
+Line: "…Thanks for the shade." Camera on the goblin folding into the tiny shade.
+
+```
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small round goblin slides down the trunk of a tiny 40cm sapling and folds himself into its single small patch of shade, pulling his knees up around his enormous ears with the practised ease of someone used to tiny shelters. Midday light, high flat greens. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+```
+
+## Beat 14 — THE DEFENSE (1:03–1:09) ⬜ needs footage
+
+Line: the apple defence. Camera on his hands in the dirt — embarrassment made physical.
+
+```
+Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin's clawed fingers pick and scratch at loose dirt, flicking pebbles aside, while above them his face glances away, embarrassed, then back down. Intimate low close-up, shallow flat background. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+```
+
+## Beat 15 — GOOD LISTENER (1:09–1:15) ⬜ needs footage
+
+Line: "You're a good listener." Camera holds BOTH of them — the conversation is the subject.
+
+```
+Vertical 9:16 two-shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin tips his head back and looks up at the tiny sapling beside him, talking, gesturing loosely with one hand; the sapling's two oversized leaves hang above him in frame. Warm midday light, gentle and lonely tone, slow imperceptible push-in. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+```
+
+## Beat 16 — WHY (1:15–1:21) ⬜ needs footage
+
+Line: the tree's longest thought. Camera ON THE LEAF, goblin blurred behind.
+
+```
+Vertical 9:16 extreme close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. One oversized green leaf of a tiny sapling fills the frame and turns very slightly in still air, its edge catching light; far behind it, out of focus and small, a goblin shape sits talking in flat pastel blur. Shallow depth, quiet, held. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+```
+
+## Beat 17 — GOODBYE (1:21–1:26) ⬜ needs footage
+
+Line: "you didn't see me." Camera on him standing to leave.
+
+```
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small round goblin pushes himself up to standing, brushes dust off his patchwork cloak with two quick swipes, and turns away from the tiny sapling toward the open field. Static camera, afternoon light warming toward amber. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+```
+
+## Beat 18 — THE DECISION (1:26–1:32) ⬜ needs footage
+
+Line: the tree deciding to spend everything. Camera on the FIG — the thing being spent.
+
+```
+Vertical 9:16 extreme close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. One small ripe fig trembles on the thinnest branch of a tiny sapling, its stem flexing under the weight, rimmed by warm amber afternoon light against a soft wash sky. The trembling grows; the stem bends further. Held macro, no cut. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+```
+
+## Beat 19 — THE DROP (1:32–1:36) ⬜ needs footage
+
+No dialogue — the physical event. Deliberately WIDE (the gate flagged a scale jump from the previous macro): tree and scavenger must share one frame so cause and effect read in a single take.
+
+```
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small ripe fig drops from a tiny sapling's branch, bounces softly off the head of a small round goblin walking away below, and lands in the grass at his feet as he stops mid-step. Single continuous take, static camera, amber afternoon. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+```
+
+## Beat 20 — EVIDENCE (1:36–1:42) ⬜ needs footage
+
+Line: "…Did you just answer me?" Camera on the goblin holding the fig like evidence.
+
+```
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small round goblin crouches, picks a fig up out of the grass with both hands, straightens, and raises it in front of him like evidence, huge eyes widening as he looks up at a bare branch above. Amber sliding toward indigo. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+```
+
+## Beat 21 — THE ANSWER (1:42–1:47) ⬜ needs footage
+
+The tree's reply, and the show's signature gesture. Camera ON THE LEAF; the tilt must read as intentional.
+
+```
+Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. In dead-still air with the grass frozen, one oversized leaf of a tiny sapling tilts slowly and deliberately to one side — an unmistakably intentional gesture from a plant — then holds, motionless. Low amber light, quiet awe, no wind anywhere in frame. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ---
 
 ## Progress
 
-0 of 6 beats generated for the t0-b molt script (2026-07-25); the published t3 leaves were assembled from t0-a-era clips. Generating footage is a paid action wherever it runs
-(platform credits or API) — a founder call per the spend rules
-(STEWARDSHIP.md §4, `pipeline/budget.yaml`); this list exists so that call is
-one command, not a writing session. Platform choice tracks
-[D8](../../../../DECISIONS.md): whatever wins the trials renders these five.
+0 of 21 generated. This is the first shot list built to the cycle-007
+density rule and it is the intended first job for the free Kaggle path
+(`NODE = "002b"`). Provenance for each generated clip goes in a sibling
+`NN-slug.meta.yaml` (platform, model, prompt, cost) so `render_t3.py`
+records per-beat sources in the leaf (§7.2).
 
-Provenance for any generated beat goes in a sibling `NN-slug.meta.yaml`
-(platform, model, prompt, cost) so `render_t3.py` records per-beat sources in
-the T3 leaf. A full set here + node 001's remaining beats 03/05 = the trunk's
-first two episodes fully filmed.
+Character consistency across 21 shots is the known risk (cycle-001
+verified defect): the same goblin must survive twenty generations. Wan
+1.3B on Kaggle has no reference-image conditioning, so expect drift and
+judge on material — if it breaks the episode, reference conditioning
+becomes the next blocking task rather than a backlog item.

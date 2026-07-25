@@ -29,7 +29,7 @@ nodes:
     parent: "001"
     trunk: true               # steward trunk call 2026-07-11 — see genomes/sapling/edl.md
     status: hot
-    leaves: [002b-seed, 002b-t0-a, 002b-t1-a, 002b-t2-a, 002b-t3-a, 002b-t3-b, 002b-t0-b]
+    leaves: [002b-seed, 002b-t0-a, 002b-t1-a, 002b-t2-a, 002b-t3-a, 002b-t3-b, 002b-t0-b, 002b-t0-c]
 
   - id: "002c"
     released: 2026-07-10

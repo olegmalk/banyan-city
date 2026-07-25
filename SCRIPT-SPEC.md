@@ -17,6 +17,26 @@ camera can see and a speaker can hear. **If it can't be filmed, it can't
 be written.** No abstract narration of themes, no interiority except
 through the POV device below.
 
+### One beat = one shot (added 2026-07-25, loop cycle 007)
+
+**A beat is a single shot, 3–6 seconds, carrying at most two spoken
+lines.** A beat with seven lines is not a beat; it is a scene, and the
+renderer will hold one image on screen while the story moves past it.
+Measured on the first filmed season: one shot every 18 seconds carrying
+4.4 lines each, against a short-form norm of a cut every 1.5–3s — the
+founding author's verdict was *"the video is not matching the audio at
+all… random video playing that isn't correlating to the script."*
+
+Two rules follow, and both are checkable:
+
+1. **The camera is on the referent.** Whatever the line is *about* is
+   what the frame shows. When the protagonist thinks, the shot is on the
+   protagonist — his lines are the ones most often orphaned, and he is
+   the character a viewer must learn to read.
+2. **A 60–90s episode is therefore 15–25 beats**, not 4–7. Its shot list
+   (`shots.md`) is 1:1 with its beats — same numbers, same time ranges,
+   one generation prompt each.
+
 *(Repo note: story-critical physical performance — "One leaf tilts." —
 must be written as a primary, filmable beat action, never buried inside a
 camera-direction paragraph. The pipeline renders short stage directions

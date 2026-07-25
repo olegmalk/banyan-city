@@ -1,0 +1,14 @@
+# Leaf metadata — every render publishes its full provenance (§7.2)
+leaf: 002b-t0-c
+node: "002b"
+tier: T0
+form: text-script
+content: ../node.md
+author: steward (model-written to SCRIPT-SPEC.md 'one beat = one shot'; successor of 002b-t0-b)
+model: claude-fable-5
+prompt: loop cycle 007 (shot density) + leaves/002b-seed.md (verbatim source)
+seed: none
+cost_usd: 0.00
+status: live
+platform_urls: []
+comprehension_gate: passed 2026-07-25 (sap/gate-t0-c-transcript.md; 2 camera flags fixed pre-render)
