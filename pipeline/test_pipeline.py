@@ -509,6 +509,40 @@ def test_pingpong_loop_seams(tmp: Path):
     check("covered beat is never ping-ponged", not covered)
 
 
+def test_kaggle_notebook_cells_parse():
+    """The free-render notebook must be syntactically valid — it shipped
+    2026-07-19 with a truncated string on its config line and nobody ran it
+    until 2026-07-25, when the founder hit SyntaxError on cell 1. Parsed the
+    way Jupyter parses (IPython transformer if available, else a magic-aware
+    strip), so `%pip` lines and their backslash continuations don't false-alarm."""
+    import json
+    import re
+    nb_path = REPO / "pipeline" / "kaggle" / "wan-t2v-kaggle.ipynb"
+    nb = json.loads(nb_path.read_text())
+    try:
+        from IPython.core.inputtransformer2 import TransformerManager
+        prep = TransformerManager().transform_cell
+    except ImportError:
+        def prep(src):
+            return re.sub(r"^\s*[%!].*(?:\\\n.*)*$", "pass", src, flags=re.M)
+    bad = []
+    for i, c in enumerate(nb["cells"]):
+        if c.get("cell_type") != "code":
+            continue
+        try:
+            compile(prep("".join(c["source"])), f"cell{i}", "exec")
+        except SyntaxError as e:
+            bad.append(f"cell {i} line {e.lineno}: {e.msg}")
+    check("kaggle notebook cells all parse", not bad)
+    if bad:
+        print("      " + "; ".join(bad))
+    # the config cell's repo URL must be a complete, cloneable string
+    cfg = "".join(nb["cells"][1]["source"])
+    m = re.search(r'REPO_URL\s*=\s*"([^"]*)"', cfg)
+    check("REPO_URL is a closed string ending in .git",
+          bool(m) and m.group(1).endswith(".git"))
+
+
 def main():
     import tempfile
     test_beat_duration_from_timecode()
@@ -521,6 +555,7 @@ def main():
         test_pingpong_loop_seams(Path(td))
     test_wrap_never_drops_words()
     test_caption_chunks()
+    test_kaggle_notebook_cells_parse()
     test_parse_frames_bold_emphasis_in_quote()
     test_parse_frames_bold_line_needs_timing()
     test_build_shots_merges_continuations()
