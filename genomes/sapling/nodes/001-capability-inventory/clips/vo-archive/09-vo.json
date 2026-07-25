@@ -1,0 +1,28 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "VO",
+   "text": "Capability one: sense.",
+   "start": 3.96,
+   "end": 5.758,
+   "chunks": [
+    {
+     "text": "Capability one: sense.",
+     "start": 3.96,
+     "end": 5.758
+    }
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "text": "Underground: root filaments light up one by one, spreading through dark soil.",
+   "start": 0.05,
+   "end": 3.96
+  }
+ ],
+ "total_s": 6.058
+}

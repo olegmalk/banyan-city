@@ -1,9 +1,9 @@
 # Node 007a — The Demo
 
 **Tree:** Sapling · **Parent:** [006a — The Miracle Clause](../006a-miracle-clause/node.md) · **Trunk:** undecided · **Status:** hot
-**This file is a T0 leaf** (`007a-t0-b`, shot-granular per SCRIPT-SPEC.md). Steward-authored continuation under taste file v0.2, deepening the
+**This file is a T0 leaf** (`007a-t0-b`, shot-granular per SCRIPT-SPEC.md). Steward-authored continuation under taste file v0.3 (R7), deepening the
 006a line so the founder's trunk call between the 006 siblings can be felt on more material (R4).
-**Format:** 9:16 vertical · ~150s · VO + dialogue · 26 beats = 26 shots
+**Format:** 9:16 vertical · ~193s · VO + dialogue · 29 beats = 29 shots
 
 ---
 

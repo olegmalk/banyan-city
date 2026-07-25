@@ -7,31 +7,31 @@
    "who": "VO",
    "text": "Correction. New input on the sensor. Footsteps. Heavy, headed here.",
    "start": 0.0,
-   "end": 4.041,
+   "end": 4.684,
    "chunks": [
     {
      "text": "Correction.",
      "start": 0.0,
-     "end": 0.727
+     "end": 0.936
     },
     {
      "text": "New input on the sensor.",
-     "start": 0.727,
-     "end": 2.167
+     "start": 0.936,
+     "end": 2.427
     },
     {
      "text": "Footsteps.",
-     "start": 2.167,
-     "end": 2.923
+     "start": 2.427,
+     "end": 3.26
     },
     {
      "text": "Heavy, headed here.",
-     "start": 2.923,
-     "end": 4.041
+     "start": 3.26,
+     "end": 4.684
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 4.341
+ "total_s": 4.984
 }

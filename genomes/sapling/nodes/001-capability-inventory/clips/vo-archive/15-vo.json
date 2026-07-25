@@ -7,31 +7,31 @@
    "who": "VO",
    "text": "Move \u2014 no. Fight \u2014 no. Flee \u2014 obviously no. Speak \u2014 no.",
    "start": 0.0,
-   "end": 4.978,
+   "end": 4.499,
    "chunks": [
     {
      "text": "Move \u2014 no.",
      "start": 0.0,
-     "end": 1.194
+     "end": 0.897
     },
     {
      "text": "Fight \u2014 no.",
-     "start": 1.194,
-     "end": 1.896
+     "start": 0.897,
+     "end": 2.288
     },
     {
      "text": "Flee \u2014 obviously no.",
-     "start": 1.896,
-     "end": 3.567
+     "start": 2.288,
+     "end": 3.475
     },
     {
      "text": "Speak \u2014 no.",
-     "start": 3.567,
-     "end": 4.978
+     "start": 3.475,
+     "end": 4.499
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 5.277
+ "total_s": 4.799
 }

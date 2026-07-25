@@ -6,17 +6,23 @@
   {
    "who": "VO",
    "text": "I can feel a worm having a bad day.",
-   "start": 0.0,
-   "end": 2.022,
+   "start": 4.24,
+   "end": 6.665,
    "chunks": [
     {
      "text": "I can feel a worm having a bad day.",
-     "start": 0.0,
-     "end": 2.022
+     "start": 4.24,
+     "end": 6.665
     }
    ]
   }
  ],
- "actions": [],
- "total_s": 2.322
+ "actions": [
+  {
+   "text": "A single worm pushes past a root filament, lighting it as it goes.",
+   "start": 0.05,
+   "end": 4.24
+  }
+ ],
+ "total_s": 6.965
 }

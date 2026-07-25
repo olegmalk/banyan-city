@@ -34,7 +34,7 @@ Status legend: ✅ generated · ⬜ needs footage
 Line/beat: the premise, at night. Camera on the tree over the scrawled plank.
 
 ```
-Vertical 9:16 shot, moonlit night, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A man-height tree with a full small crown stands over a wooden plank leaning against a crooked lean-to, the plank covered in charcoal scrawl, its leaves shifting faintly in cool blue light. Slow push-in, deep indigo palette with silver rim light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 shot, clear starlit night before moonrise, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A man-height tree with a full small crown stands over a wooden plank leaning against a crooked lean-to, the plank covered in charcoal scrawl, its leaves shifting faintly in cool blue light. Slow push-in, deep indigo palette lit only by starlight and a low lantern — NO moon in frame or in the light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 02 — THE BACKLOG (0:06–0:13) ⬜ needs footage
@@ -42,7 +42,7 @@ Vertical 9:16 shot, moonlit night, hand-drawn 2D anime style, low detail: flat c
 Line/beat: no dialogue — post burns in the list. Camera close on the plank.
 
 ```
-Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A charcoal-scrawled wooden plank fills the frame in moonlight, covered in four rough handwritten rows of abstract cel-shaded marks with three struck through, a stick tip resting against the last one. No legible letters — post adds the text. Held macro. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A charcoal-scrawled wooden plank fills the frame in low lantern light, covered in four rough handwritten rows of abstract cel-shaded marks with three struck through, a stick tip resting against the last one. No legible letters — post adds the text. Held macro. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 03 — CUT SCOPE (0:13–0:19) ⬜ needs footage
@@ -50,7 +50,7 @@ Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded c
 Line/beat: the tree's scope-cutting line. Camera on the goblin briefing his troops.
 
 ```
-Vertical 9:16 medium shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small round goblin taps a stick twice against the last line of a charcoal-scrawled plank and turns to address a tree and a seated farmer like a general briefing troops, moonlight on his enormous ears. Deadpan authority. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 medium shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small round goblin taps a stick twice against the last line of a charcoal-scrawled plank and turns to brief a tree like a general addressing troops — the TREE fills the near half of the frame, trunk and crown sharp, the goblin small beside it, lantern light on his enormous ears. Deadpan authority. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 04 — FROM THE TOP (0:19–0:25) ⬜ needs footage
@@ -58,7 +58,7 @@ Vertical 9:16 medium shot, hand-drawn 2D anime style, low detail: flat cel-shade
 Line/beat: "From the top! And — ripple!" Camera on the raised stick and the leaves drawing in.
 
 ```
-Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin raises a stick overhead like a conductor's baton and holds it trembling at the top of the beat while, above him, the leaves of a man-height tree visibly gather and tense. Moonlit clearing, held anticipation. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin raises a stick overhead like a conductor's baton and holds it trembling at the top of the beat while, above him, the leaves of a man-height tree visibly gather and tense. Starlit clearing, no moon yet, held anticipation. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 05 — THE RIPPLE (0:25–0:31) ⬜ needs footage
@@ -66,7 +66,7 @@ Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded color
 Line/beat: no dialogue — the rehearsal. Camera following the wave up the branches until it stalls.
 
 ```
-Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A wave of movement travels up a tree's branches leaf by leaf in sequence, each pair tilting after the last — then the wave stops dead halfway up, leaves frozen mid-gesture. Camera tilts up with the wave. Silver moonlight. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A wave of movement travels up a tree's THREE clearly separated side branches in sequence, the lowest first, each tilting after the last — then the wave stops dead halfway up, leaves frozen mid-gesture. Camera tilts up with the wave, counting the branches it passes. Starlight and lantern glow, no moon. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 06 — BRANCH THREE (0:31–0:37) ⬜ needs footage
@@ -74,7 +74,7 @@ Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded color
 Line/beat: "Branch three is our weakest performer!" Camera on the stick jabbing at one branch.
 
 ```
-Vertical 9:16 medium close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin jabs a stick repeatedly toward one specific branch of a tree, gesticulating with his other hand in theatrical outrage, ears flared. Moonlight, comic energy. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 medium close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin taps a stick up three clearly separated branches, one-two-three, and jabs it at the third — which alone hangs limp — gesticulating with his other hand in theatrical outrage, ears flared. Lantern light, comic energy. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 07 — GIVEN NOTES (0:37–0:44) ⬜ needs footage
@@ -82,7 +82,7 @@ Vertical 9:16 medium close-up, hand-drawn 2D anime style, low detail: flat cel-s
 Line/beat: the tree's 'I am being given notes' line. Camera on the guilty branch.
 
 ```
-Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. One branch of a tree hangs limp and unmoving in still moonlit air, its leaves drooping slightly lower than its neighbours' — unrepentant. Tight framing, faint silver edge light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. One branch hangs limp and unmoving, its leaves drooping lower than its neighbours' — unrepentant — while behind it, soft and out of focus, the small goblin is still gesticulating with his stick. Framing holds both: the accused branch sharp, the management blurred behind it. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 08 — MIRACLES DON'T REHEARSE (0:44–0:50) ⬜ needs footage
@@ -90,7 +90,7 @@ Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded c
 Line/beat: "Miracles don't rehearse." Camera on the farmer on his stump.
 
 ```
-Vertical 9:16 medium shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A broad squarish farmer in a straw hat sits on a stump with arms crossed and a clay jug at his feet, saying something short without uncrossing his arms. Night, moonlight on the hat brim. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 medium shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A broad squarish farmer in a straw hat sits on a stump with arms crossed and a clay jug at his feet, saying something short without uncrossing his arms. Night, lantern light on the hat brim. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 09 — DAWN TWILIGHT (0:50–0:56) ⬜ needs footage
@@ -98,7 +98,7 @@ Vertical 9:16 medium shot, hand-drawn 2D anime style, low detail: flat cel-shade
 Line/beat: "Sunrise rehearses. It's called dawn twilight." Camera on the goblin, certain.
 
 ```
-Vertical 9:16 medium close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin turns sharply with his stick raised and delivers a completely certain correction, chin up, one finger extended, absolutely convinced of himself. Moonlit night. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 medium close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin turns sharply with his stick raised and delivers a completely certain correction, chin up, one finger extended, absolutely convinced of himself. Starlit night, no moon. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 10 — FULL MOON (0:56–1:02) ⬜ needs footage
@@ -106,7 +106,7 @@ Vertical 9:16 medium close-up, hand-drawn 2D anime style, low detail: flat cel-s
 Line/beat: no dialogue — the deadline arrives. Camera on the moon clearing the horizon.
 
 ```
-Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A full moon lifts clear of a flat horizon and silver light floods across an empty field, shadows swinging long and blue as it rises. Wide, slow, cold light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A full moon lifts clear of a flat horizon for the FIRST time this night and cold silver light floods a field that was starlit a moment ago, shadows swinging long and blue. Unmistakably moonrise, not dawn: the sky above stays deep night-blue, stars still visible. Wide, slow, cold light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 11 — THE CHAIR (1:02–1:09) ⬜ needs footage
@@ -162,7 +162,7 @@ Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded color
 Line/beat: "There's no trick, ma'am. He gives things." Camera close on him telling the truth.
 
 ```
-Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin's face, all performance gone out of it, speaks quietly and directly toward someone off-frame, shoulders dropped, stick forgotten in one hand. Moonlight, tender framing. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin's face, all performance gone out of it, speaks quietly toward someone off-frame, shoulders dropped, stick forgotten — the tree's trunk rising close behind his shoulder, unmistakably the subject he is talking about. Moonlight, tender framing. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 18 — SHADE, WATER, ANSWERS (1:48–1:55) ⬜ needs footage
@@ -178,7 +178,7 @@ Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded c
 Line/beat: "A fig, once — when nobody would give me anything." Camera on his hand touching his chest.
 
 ```
-Vertical 9:16 medium close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin lifts one hand and presses it flat against his own chest where something once struck him, holding it there, looking down. Moonlight, quiet, still. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 medium close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin holds an old dried blackened fig in one hand and presses his other flat against his chest where it once struck him, looking down at the fig, not at anyone. Moonlight, quiet, still. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 20 — LETTING GO (2:03–2:10) ⬜ needs footage
@@ -210,7 +210,7 @@ Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded c
 Line/beat: no dialogue — the callback. Camera on the fig coming loose into her hand at head height.
 
 ```
-Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A robed magistrate rises from her chair and walks in under laden branches, and a single fig detaches and drops straight into her raised palm at exactly head height. She closes her fingers around it. Moonlight, one continuous take. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A robed magistrate rises and steps close to a man-height tree, having to stoop slightly to bring her face level with the fruit-heavy branches — she does NOT walk under it, the crown is barely above her head. A single fig detaches unbidden and drops into her hand where it hangs at her side. She looks at it before she closes her fingers. Moonlight, one continuous take. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 24 — WONDER VERIFIED (2:31–2:39) ⬜ needs footage
@@ -234,7 +234,7 @@ Vertical 9:16 extreme close-up, hand-drawn 2D anime style, low detail: flat cel-
 Line/beat: no dialogue — dawn, and a surplus. Camera low across the littered clearing.
 
 ```
-Vertical 9:16 low wide shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. Dawn light spreads across a clearing scattered with dozens of fallen figs lying in the grass like dropped coins, the tree above them bare-leafed and spent. Slow drift, peach and gold. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 low wide shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. The last figs let go one after another and drop into the grass as dawn light spreads, until dozens lie scattered like dropped coins beneath a tree whose leaves hang pale and spent but still on their branches. Slow drift, peach and gold. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 27 — THE STRANGER (2:51–2:58) ⬜ needs footage
@@ -250,7 +250,7 @@ Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded color
 Line/beat: "That's the first one." / "First what?" Camera on the farmer picking up his jug.
 
 ```
-Vertical 9:16 medium shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A broad straw-hatted farmer bends, picks up his clay jug, settles it on one shoulder and walks out of frame without looking at anyone, jaw set. Dawn light, grim and unhurried. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 medium shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A broad straw-hatted farmer picks up his clay jug and settles it on one shoulder, and the small goblin turns to him mid-step — both in frame, the farmer already walking, the goblin's question following him. The farmer does not look back. Dawn light, grim and unhurried. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 29 — WHAT DOES SHE WANT (3:05–3:13) ⬜ needs footage
