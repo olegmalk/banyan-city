@@ -36,10 +36,15 @@ REF_TEXT = ("The town was quiet that evening. Someone had left a lantern "
 # inside a 20 Hz band (tree 118, guard 121, assessor 127, farmer 127,
 # scavenger 136) — the acoustic cause of the founder's "voices are mixed
 # up." Offsets below are sized to put every character in its OWN band:
-# farmer ~95, tree ~118 (untouched — released identity), assessor ~150,
-# scavenger ~180, magistrate ~206. Re-measure after any change.
+# Calibrated against RENDERED audio (chatterbox tracks the ref loosely:
+# measured ref -> rendered was 104->93, 116->108, 174->180, 200->189).
+# Target rendered bands: farmer ~95, tree ~108 (ref untouched — released
+# identity), assessor ~130, scavenger ~168, magistrate ~208. Two earlier
+# passes each fixed one collision and created another (scavenger vs
+# assessor, then scavenger vs magistrate) — always re-run qa_voices on a
+# freshly synthesized episode, not just on the refs.
 VOICE_SHAPING = {
-    "am_puck":     {"speed": 1.12, "pitch": +7.0, "text": (
+    "am_puck":     {"speed": 1.12, "pitch": +7.5, "text": (
         "Okay okay okay — hear me out. It fell off the cart! On the ground! "
         "That's basically public property. You know what, forget the apple. "
         "This is the best day I've had in three weeks, and one of those days "
@@ -49,12 +54,12 @@ VOICE_SHAPING = {
         "it doesn't. Weeds come, they get pulled. You want something said, "
         "say it plain, and don't waste my morning. Harvest won't wait on "
         "either of us, and the cart doesn't load itself.")},
-    "bm_daniel":   {"speed": 1.0, "pitch": +3.5, "text": (
+    "bm_daniel":   {"speed": 1.0, "pitch": +1.5, "text": (
         "Item one: a dwelling, category shack, occupancy one. Item two: "
         "three rocks, noted individually. Item three: one tree, deciduous, "
         "responsive. Occupation: answers questions. Everything is in order "
         "when everything is written down. I will now count the fence posts.")},
-    "bf_isabella": {"speed": 1.05, "pitch": 0.0, "text": (
+    "bf_isabella": {"speed": 1.05, "pitch": +2.0, "text": (
         "The law does not concern itself with whether a thing is unusual. "
         "It concerns itself with which category the thing belongs to. Bring "
         "me the correct form, and the correct form will be considered, in "
