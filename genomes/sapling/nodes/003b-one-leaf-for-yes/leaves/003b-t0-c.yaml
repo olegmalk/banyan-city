@@ -11,4 +11,4 @@ seed: none
 cost_usd: 0.00
 status: live
 platform_urls: []
-comprehension_gate: pending
+comprehension_gate: passed 2026-07-25 (sap/gate-t0-c-transcript.md; 10 craft flags fixed pre-render)

@@ -2,7 +2,7 @@
 
 **Tree:** Sapling · **Parent:** [002b — The First Citizen](../002b-first-citizen/node.md) · **Trunk:** yes · **Status:** hot
 **This file is a T0 leaf** (`003b-t0-c`, shot-granular per SCRIPT-SPEC.md).
-**Format:** 9:16 vertical · ~112s · VO + dialogue · 20 beats = 20 shots
+**Format:** 9:16 vertical · ~119s · VO + dialogue · 21 beats = 21 shots
 
 ---
 
@@ -25,9 +25,9 @@ this place going to be called?*
 
 **COLD OPEN — 0:00–0:05**
 
-The fig, uneaten, held in two green hands at dawn; a tiny two-leaf sapling behind it.
+Dawn. The sapling — thin trunk, two oversized leaves, one thin branch now bare — with the scavenger's green hands cradling its fig in the foreground.
 
-> **VO (dry, tired, engineer):** I am a dead engineer in a tree. Yesterday I dropped my only fruit on someone's head.
+> **VO (dry, tired, engineer):** I am a dead engineer inside this tree. Yesterday I spent my only fruit on a stranger's head.
 
 **EVIDENCE RETURNED — 0:05–0:10**
 
@@ -63,75 +63,79 @@ In dead-still air, one leaf tilts — and holds.
 
 **NO WIND — 0:35–0:40**
 
-The scavenger's ears go flat; he looks around at grass that isn't moving at all.
+His ears go flat; he checks the grass — not one blade is moving.
+
+**THE PROTOCOL — 0:40–0:45**
+
+He leans in close to the leaves, lowering his voice like a man making a treaty.
 
 > **SCAVENGER (whisper):** One leaf for yes. Nothing for no. Deal?
 
-**DEAL — 0:40–0:45**
+**DEAL — 0:45–0:50**
 
 The leaf tilts again, unmistakable.
 
 > **VO:** He has independently derived a one-bit protocol. I have onboarded senior engineers with less.
 
-**THE INTERROGATION — 0:45–0:52**
+**THE INTERROGATION — 0:50–0:57**
 
 The scavenger paces, firing questions, scratching a tally into the dirt.
 
 > **SCAVENGER:** Are you a spirit? A demon? A god?
 
-**HALF A TILT — 0:52–0:57**
+**HALF A TILT — 0:57–1:02**
 
 The leaf stays still — then gives the smallest, most reluctant half-tilt.
 
 > **SCAVENGER:** …We'll circle back to that one.
 
-**THE FIG QUESTION — 0:57–1:03**
+**THE FIG QUESTION — 1:02–1:08**
 
 He holds the fig up beside the bare branch it fell from.
 
 > **SCAVENGER:** Were you the fruit? Did you MEAN to hit my head?
 
-**GUILTY — 1:03–1:08**
+**GUILTY — 1:08–1:13**
 
 A very long pause on the leaf — then it tilts.
 
 > **SCAVENGER (delighted, outraged):** I *knew* it!
 
-**THE FILING PROBLEM — 1:08–1:15**
+**THE FILING PROBLEM — 1:13–1:20**
 
-The energy drops. He sits, picking at the dirt, and gestures at all of himself.
+The energy drops. He sits back against the trunk and gestures at all of himself with both hands.
 
-> **SCAVENGER:** Everywhere else, I'm a filing problem. A thing with no form.
+> **SCAVENGER:** The patrol has a form for apples. There isn't one for me.
 
-**THE ASK — 1:15–1:21**
+**THE ASK — 1:20–1:26**
 
 He doesn't look up. His hands keep working the dirt.
 
 > **SCAVENGER:** Can I stay? Here. By you. I'd keep the weeds off.
 
-**THE BUDGET — 1:21–1:27**
+**THE BUDGET — 1:26–1:32**
 
-Underground: the root glow is thin and low — one clean signal left today.
+Ground level, both of them in frame: the goblin sitting with his back to the trunk, the sapling beside his shoulder.
 
 > **VO:** Every problem I ever had, I solved by walking away. He can't walk away either.
 
-**TOWARD — 1:27–1:33**
+**TOWARD — 1:32–1:39**
 
-Close on the two leaves, both trembling on the edge of moving.
+Underground: the root glow is thin and guttering — one clean signal left today — while above, both leaves tremble on the edge of moving.
 
-> **VO:** Verbs: sense, grow. Neither says *shelter*. …But growth includes deciding what to grow *toward*.
+> **VO:** I can sense and I can grow. Neither one is *shelter*. …But growing means choosing what to grow *toward*.
 
-**TWO LEAVES — 1:33–1:38**
+**TWO LEAVES — 1:39–1:44**
 
-Both leaves tilt at once — tomorrow's budget spent on emphasis.
+Both leaves tilt at once — and at the base of the trunk the last teal glow in the soil dims and goes out.
 
-**THE LEAN-TO — 1:38–1:45**
+**THE LEAN-TO — 1:44–1:52**
 
 Timelapse: the scavenger drags deadfall against a rock, building badly, tongue out with effort.
 
-> **SCAVENGER:** A resident, a landmark, and water down the way. That's not a camp anymore.
+> **SCAVENGER:** A resident, a landmark, and a tree that answers. That's not a camp anymore.
 
-**THE HOOK — 1:45–1:52**
+**THE HOOK — 1:52–1:59**
 
 Dusk. He raises the fig like a founding charter over the lean-to and the tree.
 
@@ -157,7 +161,7 @@ that era.
 
 ## Taste-rule notes
 
-- **Cycle 007 (shot density):** 20 beats / ~112s = a cut every 5.6s, ≤1
+- **Cycle 007 (shot density):** 21 beats / ~119s = a cut every 5.7s, ≤1
   spoken line each. The protocol scene is now shot-per-exchange — the
   question, the cost underground, the tilt, the reaction — instead of one
   held wide across the whole montage, which is what made it unreadable.
