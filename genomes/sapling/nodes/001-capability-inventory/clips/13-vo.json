@@ -1,0 +1,33 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "VO",
+   "text": "Capability two: grow. Three days of full effort.",
+   "start": 4.52,
+   "end": 8.16,
+   "chunks": [
+    {
+     "text": "Capability two: grow.",
+     "start": 4.52,
+     "end": 6.285
+    },
+    {
+     "text": "Three days of full effort.",
+     "start": 6.285,
+     "end": 8.16
+    }
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "text": "The sun arcs overhead three times as one new leaf unfurls from a bud.",
+   "start": 0.05,
+   "end": 4.52
+  }
+ ],
+ "total_s": 8.46
+}

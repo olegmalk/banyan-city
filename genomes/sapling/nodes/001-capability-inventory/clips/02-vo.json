@@ -1,54 +1,28 @@
 {
  "cast": "voices.yaml",
  "engine": "chatterbox-0.5B",
- "directed": "synth_vo v2",
+ "directed": "synth_vo v3",
  "lines": [
   {
    "who": "VO",
-   "text": "Okay. Hospital ceiling. That's fine. Hospitals are green now.",
-   "start": 0.0,
-   "end": 3.16,
+   "text": "Nobody has apologized.",
+   "start": 1.44,
+   "end": 3.014,
    "chunks": [
     {
-     "text": "Okay. Hospital ceiling. That's fine.",
-     "start": 0.0,
-     "end": 2.039
-    },
-    {
-     "text": "Hospitals are green now.",
-     "start": 2.039,
-     "end": 3.16
-    }
-   ]
-  },
-  {
-   "who": "VO",
-   "text": "Scream. \u2014 No mouth. Run. \u2014 No legs. Flail?? \u2014 \u2026I appear to be flailing one (1) leaf.",
-   "start": 3.66,
-   "end": 8.602,
-   "chunks": [
-    {
-     "text": "Scream.",
-     "start": 3.66,
-     "end": 4.374
-    },
-    {
-     "text": "\u2014 No mouth. Run.",
-     "start": 4.374,
-     "end": 5.715
-    },
-    {
-     "text": "\u2014 No legs. Flail??",
-     "start": 5.715,
-     "end": 6.955
-    },
-    {
-     "text": "\u2014 \u2026I appear to be flailing one (1) leaf.",
-     "start": 6.955,
-     "end": 8.602
+     "text": "Nobody has apologized.",
+     "start": 1.44,
+     "end": 3.014
     }
    ]
   }
  ],
- "total_s": 8.902
+ "actions": [
+  {
+   "text": "The leaves steady.",
+   "start": 0.05,
+   "end": 1.44
+  }
+ ],
+ "total_s": 3.314
 }

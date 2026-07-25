@@ -46,7 +46,7 @@ def kaggle(*args, check=True):
     return (r.stdout + r.stderr).strip()
 
 
-def set_node(node: str) -> None:
+def set_node(node: str, steps: int | None = None) -> None:
     """Point the notebook's config cell at a node before pushing."""
     nb_path = HERE / "wan-t2v-kaggle.ipynb"
     nb = json.loads(nb_path.read_text())
@@ -54,9 +54,11 @@ def set_node(node: str) -> None:
     for i, line in enumerate(cell):
         if line.startswith("NODE"):
             cell[i] = f'NODE   = "{node}"        # any node id with a shots.md\n'
+        elif steps and line.startswith("STEPS"):
+            cell[i] = f"STEPS  = {steps}            # 30 = faster/rougher, 50 = slower/cleaner\n"
     nb["cells"][1]["source"] = cell
     nb_path.write_text(json.dumps(nb, indent=1))
-    print(f"notebook set to NODE = {node!r}")
+    print(f"notebook set to NODE = {node!r}" + (f", STEPS = {steps}" if steps else ""))
 
 
 def main() -> int:
@@ -65,8 +67,11 @@ def main() -> int:
     cmd = sys.argv[1]
 
     if cmd == "push":
-        if len(sys.argv) > 2:
-            set_node(sys.argv[2])
+        steps = None
+        if "--steps" in sys.argv:
+            steps = int(sys.argv[sys.argv.index("--steps") + 1])
+        if len(sys.argv) > 2 and not sys.argv[2].startswith("--"):
+            set_node(sys.argv[2], steps)
         print(kaggle("kernels", "push", "-p", str(HERE)))
         print("queued — GPU jobs wait for a free slot; check with: status")
         return 0

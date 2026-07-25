@@ -1,82 +1,33 @@
 {
  "cast": "voices.yaml",
  "engine": "chatterbox-0.5B",
- "directed": "synth_vo v2",
+ "directed": "synth_vo v3",
  "lines": [
   {
    "who": "VO",
-   "text": "Sense. I can taste the water table. I can feel the ground. Something with feet is walking, about\u2026 four hundred meters northeast. Noted.",
-   "start": 0.0,
-   "end": 7.378,
+   "text": "The retry loop. It's always the retry loop.",
+   "start": 3.68,
+   "end": 6.477,
    "chunks": [
     {
-     "text": "Sense.",
-     "start": 0.0,
-     "end": 0.732
+     "text": "The retry loop.",
+     "start": 3.68,
+     "end": 4.931
     },
     {
-     "text": "I can taste the water table.",
-     "start": 0.732,
-     "end": 2.088
-    },
-    {
-     "text": "I can feel the ground.",
-     "start": 2.088,
-     "end": 3.578
-    },
-    {
-     "text": "Something with feet is walking, about\u2026",
-     "start": 3.578,
-     "end": 5.439
-    },
-    {
-     "text": "four hundred meters northeast. Noted.",
-     "start": 5.439,
-     "end": 7.378
-    }
-   ]
-  },
-  {
-   "who": "VO",
-   "text": "Grow. Works. Latency: three days. Throughput: one leaf. I've shipped on worse.",
-   "start": 7.878,
-   "end": 13.147,
-   "chunks": [
-    {
-     "text": "Grow. Works.",
-     "start": 7.878,
-     "end": 9.333
-    },
-    {
-     "text": "Latency: three days.",
-     "start": 9.333,
-     "end": 10.593
-    },
-    {
-     "text": "Throughput: one leaf.",
-     "start": 10.593,
-     "end": 11.909
-    },
-    {
-     "text": "I've shipped on worse.",
-     "start": 11.909,
-     "end": 13.147
-    }
-   ]
-  },
-  {
-   "who": "VO",
-   "text": "\u2026That's the whole API.",
-   "start": 13.647,
-   "end": 16.109,
-   "chunks": [
-    {
-     "text": "\u2026That's the whole API.",
-     "start": 13.647,
-     "end": 16.109
+     "text": "It's always the retry loop.",
+     "start": 4.931,
+     "end": 6.477
     }
    ]
   }
  ],
- "total_s": 16.409
+ "actions": [
+  {
+   "text": "Close on the monitor: the same error repeating down the screen.",
+   "start": 0.05,
+   "end": 3.68
+  }
+ ],
+ "total_s": 6.777
 }

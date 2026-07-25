@@ -1,0 +1,28 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "VO",
+   "text": "I can feel a worm having a bad day.",
+   "start": 4.24,
+   "end": 6.665,
+   "chunks": [
+    {
+     "text": "I can feel a worm having a bad day.",
+     "start": 4.24,
+     "end": 6.665
+    }
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "text": "A single worm pushes past a root filament, lighting it as it goes.",
+   "start": 0.05,
+   "end": 4.24
+  }
+ ],
+ "total_s": 6.965
+}

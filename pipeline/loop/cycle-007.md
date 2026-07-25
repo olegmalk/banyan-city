@@ -66,8 +66,55 @@ Consequences, honestly:
    conditioning (verified cycle-001 backlog) is no longer optional; it
    ships with the density fix or the density fix makes drift worse.
 
+## The fix, as executed (2026-07-25)
+
+All seven trunk nodes molted to `SCRIPT-SPEC.md`. Dialogue is verbatim in
+every case; what changed is where the camera points. Measured after:
+
+| node | length | shots before | shots after | cut every | lines/shot |
+|---|---|---|---|---|---|
+| 001  | 88s  | 5 | 18 | 4.9s | 0.89 |
+| 002b | 107s | 5 | 21 | 5.1s | 0.86 |
+| 003b | 119s | 4 | 21 | 5.7s | 0.81 |
+| 004  | 117s | 4 | 21 | 5.6s | 0.86 |
+| 005  | 149s | 4 | 25 | 6.0s | 1.08 |
+| 006a | 189s | 6 | 31 | 6.1s | 0.94 |
+| 007a | 193s | 7 | 29 | 6.7s | 0.66 |
+
+**Season: 35 shots → 166 shots, measured.** One shot every 18 seconds
+carrying 4.4 lines became one every 5.8s carrying 0.87. Total runtime grew
+595s → 962s: the episodes are longer because a shot now gets time to read,
+not because dialogue was added (144 lines across the trunk, none invented —
+the count moves only where a long line was split at its natural break). Each node was read by a
+context-free cold viewer before commit and its faults fixed pre-render;
+the transcripts are in each node's `sap/`.
+
+Two canon-level defects surfaced during the rewrite and were fixed in
+`style.md`: the tree's **size was never defined** anywhere in the series
+(a sprout and a shade-giving tree are different characters, and the town
+is named Shade) — now a growth ladder from ~15cm at 001 to ~1.6m at the
+finale; and the motion grammar was implicit, so prompts described
+tableaux instead of actions. Still open and reserved to the author (R4):
+**the protagonist has no name.**
+
+## What the rewrite cost, discovered downstream
+
+1. **Every VO track in the season is stale.** VO is synthesized per beat
+   as `NN-vo.mp3`; the old files are numbered against a 4–7 beat
+   structure and the scripts now have 18–31. Re-voicing the trunk is
+   ~150 lines of local Chatterbox time, not a re-tag.
+2. **All 166 shots need footage.** Nothing carries forward — 001's
+   surviving clips are v1 photoreal, archived by design.
+3. **Kaggle interactive sessions produce nothing fetchable.** The
+   founder's first real run (2026-07-25) rendered a beat in a browser
+   tab; when the tab closed the session died, and `kernels output` 404s
+   because there is no saved version. Batch (`kernels push`) is the only
+   mode that yields retrievable clips. `run_remote.py push <node>
+   --steps N` now drives it headless; 001 is queued at STEPS=25.
+
 ## Status
 
-Diagnosis logged. Next: line-granular shot list for the front door (001,
-whose molt script is already R7-compliant) as the template, then Kaggle
-validation. No assembly-side work is scheduled — it cannot fix this.
+Diagnosis fixed at the level it was diagnosed: script and shot list, not
+assembly. Green on lint and the 28 tests. Awaiting footage and a founder
+screening (R4) — the verdict on whether the picture now matches the
+script cannot be self-assessed.

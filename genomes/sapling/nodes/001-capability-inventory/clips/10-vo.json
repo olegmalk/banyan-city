@@ -1,0 +1,33 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "VO",
+   "text": "I can feel the water table. I can feel every stone in this field.",
+   "start": 3.96,
+   "end": 7.795,
+   "chunks": [
+    {
+     "text": "I can feel the water table.",
+     "start": 3.96,
+     "end": 5.525
+    },
+    {
+     "text": "I can feel every stone in this field.",
+     "start": 5.525,
+     "end": 7.795
+    }
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "text": "Veins of dark water glow into view beneath the roots, mapping themselves.",
+   "start": 0.05,
+   "end": 3.96
+  }
+ ],
+ "total_s": 8.095
+}

@@ -92,3 +92,46 @@ lineage-derived live-fork banner.
 
 Superseded by later blocks above: the 006 trunk call (made 07-22) and the
 "no social distribution yet" decision (distribution began 07-23).
+
+## The molt (2026-07-25, night — cycle 007 executed)
+
+Dad's verdict on 2026-07-25 — *"the video is not matching the audio at all,
+or the script; it feels like a random video playing that isn't correlating"*
+— was diagnosed as **shot starvation** and fixed at the script level.
+`SCRIPT-SPEC.md` now governs T0 ("one beat = one shot", 3–6s, ≤2 spoken
+lines, camera on the referent), and **all seven trunk nodes are molted**:
+001, 002b, 003b, 004, 005, 006a, 007a. Measured: 35 shots → **166 shots**,
+one cut every 19.2s → **5.8s**, 5.0 spoken lines per shot → **0.87**. No
+dialogue was invented; the predecessor T0 leaf of each node is archived
+whole and marked `superseded_by` (R6). Full numbers in
+`pipeline/loop/cycle-007.md`.
+
+Two canon defects fixed while rewriting: the tree's **size had never been
+defined** in a series whose town is named Shade (now a growth ladder in
+`style.md`, ~15cm at 001 → ~1.6m at the finale), and motion grammar was
+implicit so prompts described tableaux. Every rewrite was gated by a
+context-free cold reader before commit; transcripts in each node's `sap/`.
+**Open and reserved to the author (R4): the protagonist has no name.**
+
+What the molt costs, discovered after:
+
+- **All 166 shots need footage.** Nothing carries forward.
+- **Every VO track is stale.** VO is per-beat `NN-vo.mp3`; the existing
+  files are numbered against the old 4–7 beat structure. Re-voicing the
+  trunk is ~150 lines of local Chatterbox time.
+- **Kaggle interactive sessions yield nothing.** The founder's first real
+  run rendered a beat in a browser tab; the session died with the tab and
+  `kernels output` 404s — there is no saved version to fetch, so that clip
+  is gone. **Batch (`kernels push`) is the only mode that produces
+  retrievable output.** `run_remote.py push <node> --steps N` drives it
+  headless from this machine; the notebook now re-zips after every clip and
+  logs per-shot minutes, so a 12-hour cap costs one clip, not the run.
+
+In flight tonight: **001 queued on Kaggle batch at STEPS=25, 18 shots**
+(status RUNNING, first genuinely headless render) and 001's VO being rebuilt
+against the new script. Founder screening (R4) is the gate on whether the
+picture now matches — it cannot be self-assessed.
+
+Kaggle: token lives in `~/.kaggle/kaggle.json` (founder action). **The
+access token pasted into the 2026-07-25 session transcript must be
+rotated** — credentials in a transcript are burned.

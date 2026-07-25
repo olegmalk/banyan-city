@@ -5,18 +5,18 @@
  "lines": [
   {
    "who": "VO",
-   "text": "Last log entry of my previous life.",
+   "text": "The local wildlife has already filed me under furniture.",
    "start": 0.0,
-   "end": 2.344,
+   "end": 3.118,
    "chunks": [
     {
-     "text": "Last log entry of my previous life.",
+     "text": "The local wildlife has already filed me under furniture.",
      "start": 0.0,
-     "end": 2.344
+     "end": 3.118
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 2.644
+ "total_s": 3.418
 }
