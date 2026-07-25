@@ -1,9 +1,9 @@
 # Node 007a — The Demo
 
 **Tree:** Sapling · **Parent:** [006a — The Miracle Clause](../006a-miracle-clause/node.md) · **Trunk:** undecided · **Status:** hot
-**This file is a T0 leaf.** Steward-authored continuation under taste file v0.2, deepening the
+**This file is a T0 leaf** (`007a-t0-b`, shot-granular per SCRIPT-SPEC.md). Steward-authored continuation under taste file v0.2, deepening the
 006a line so the founder's trunk call between the 006 siblings can be felt on more material (R4).
-**Format:** 9:16 vertical · 60–90s · VO + dialogue
+**Format:** 9:16 vertical · ~150s · VO + dialogue · 26 beats = 26 shots
 
 ---
 
@@ -27,97 +27,165 @@ knows how to give* — and more are behind her on the road.
 
 ## Script
 
-**COLD OPEN — 0:00–0:10**
+**COLD OPEN — 0:00–0:06**
 
-Night. A plank propped against the lean-to, covered in charcoal scrawl — the
-**miracle backlog**. The scavenger presents it to the tree and the farmer like
-a general briefing troops:
+Night. A plank leans against the lean-to, covered in charcoal scrawl; a man-height tree stands over it.
+
+> **VO (dry, tired, engineer):** I died an engineer and woke up as this tree. Tonight I have a deadline.
+
+**THE BACKLOG — 0:06–0:13**
+
+Close on the plank: four items, three struck through.
 
 ```
-MIRACLE-001: water → wine .......... blocked (no wine, no budget)
+MIRACLE-001: water → wine .......... blocked (no wine)
 MIRACLE-002: levitating stones ..... blocked (Farmer said no)
 MIRACLE-003: prophecy .............. blocked (legal review)
 MIRACLE-004: leaf choreography ..... IN PROGRESS
 ```
 
-> **VO:** Two weeks to ship a miracle. So we did what every team does with an
-> impossible deadline: cut scope until the miracle was a *demo*.
+**CUT SCOPE — 0:13–0:19**
 
-**THE REHEARSALS — 0:10–0:30**
+The goblin taps the last line with a stick, briefing his troops.
 
-Montage, deadpan. The scavenger conducts with a stick; the tree's leaves
-ripple in sequence — a wave traveling up the branches. Take after take:
+> **VO:** Fourteen days to ship a miracle. So we did what every team does with an impossible deadline: cut scope until the miracle was a *demo*.
 
-> **SCAVENGER:** From the top! And — ripple! *(the ripple stalls halfway)*
-> You dropped it at branch three again! Branch three is our weakest performer!
-> **VO:** I am being given notes. By a goblin. With a stick. …Branch three
-> *is* our weakest performer though.
+**FROM THE TOP — 0:19–0:25**
+
+He raises the stick like a conductor; the leaves gather.
+
+> **SCAVENGER:** From the top! And — ripple!
+
+**THE RIPPLE — 0:25–0:31**
+
+A wave travels up the branches, leaf by leaf — and stalls halfway.
+
+**BRANCH THREE — 0:31–0:37**
+
+He jabs the stick at one particular branch, outraged.
+
+> **SCAVENGER:** You dropped it at branch three again! Branch three is our weakest performer!
+
+**GIVEN NOTES — 0:37–0:44**
+
+Close on the offending branch, its leaves hanging limp and unrepentant.
+
+> **VO:** I am being given notes. By a goblin. With a stick. …Branch three *is* our weakest performer, though.
+
+**MIRACLES DON'T REHEARSE — 0:44–0:50**
 
 The farmer watches from a stump, arms crossed, jug at his feet.
 
 > **FARMER:** Miracles don't rehearse.
+
+**DAWN TWILIGHT — 0:50–0:56**
+
+The goblin turns, stick raised, absolutely certain.
+
 > **SCAVENGER:** Everything rehearses. Sunrise rehearses. It's called *dawn twilight.*
 
-**THE DEMO — 0:30–0:55**
+**FULL MOON — 0:56–1:02**
 
-Full moon, silver light. The **MAGISTRATE** arrives, unfolds a small
-travelling chair, and sits.
+The moon clears the horizon, full, and silver light floods the clearing.
+
+**THE CHAIR — 1:02–1:09**
+
+The MAGISTRATE unfolds a small travelling chair, sits, and crosses her ankles.
 
 > **MAGISTRATE:** Impress me. I brought a chair.
 
-The scavenger, sweating, raises the stick. The leaves gather— and the **wind
-picks up.** The whole field ripples. Every tree on the horizon does the
-choreography. The one rehearsed wave is indistinguishable from weather.
+**THE CUE — 1:09–1:15**
+
+The goblin raises the stick, sweating; the leaves draw in and hold.
+
+**THE WIND — 1:15–1:22**
+
+Wind sweeps the whole field — and every tree on the horizon performs the choreography at once.
 
 > **VO:** Two weeks rehearsing in stillness. Nobody booked the *wind.*
 
-The scavenger flails — narrating harder, conducting bigger, at one point
-gesturing at the moon as if he ordered it. The magistrate's expression does
-not change. The farmer covers his eyes.
+**FLAILING — 1:22–1:29**
 
-**THE TRUE THING — 0:55–1:15**
+He conducts bigger and bigger, narrating over the noise, and finally gestures at the moon as if he ordered it.
 
-The wind dies. Silence. The scavenger's arms drop. And he stops performing —
-the same energy-drop he had in the shade in 002b, the truth-voice:
+**NO REACTION — 1:29–1:35**
 
-> **SCAVENGER:** …There's no trick, ma'am. He doesn't *do* wonders. He gives
-> things. Shade. Water. Answers. A fig, once — *(he touches his chest where
-> it bonked him)* — when nobody else in the world would give me anything.
-> That's all he does. That's the whole tree.
+The magistrate, seated, does not move. The farmer covers his eyes.
 
-Beat. And in the moonlit stillness — the tree, who has been quietly hoarding
-two weeks of growth for exactly this — **lets go**: every branch blooms and
-fruits at once. Figs swelling in real time, dozens of them, out of season,
-silver in the full moon. The cost is visible: the leaves droop as it happens.
-Spending everything, again.
+**THE WIND DIES — 1:35–1:41**
 
-> **VO (very quiet):** He said the fig was the whole tree. Fine. Then here's
-> the whole tree.
+The field goes still. The goblin's arms come down.
 
-The magistrate rises from her chair. Walks under the branches. A fig comes
-loose and she catches it — *bonk-height, deliberate.* She looks at it a long
-moment.
+**NO TRICK — 1:41–1:48**
 
-> **MAGISTRATE (writing):** "Wonder verified. Orchard, single specimen,
-> fruiting out of season before an officer of rank." *(beat, quieter)* "…And
-> it shares."
+He stops performing entirely; his voice drops into the truth-voice.
 
-**THE HOOK — 1:15–1:25**
+> **SCAVENGER:** …There's no trick, ma'am. He doesn't *do* wonders. He gives things.
 
-Dawn. The clearing littered with figs like dropped coins. And at the
-clearing's edge — exactly where every arrival has ever stopped — a **stranger
-kneels**, hood down, travel-worn, waiting. Not counting, not assessing.
-*Praying.*
+**SHADE, WATER, ANSWERS — 1:48–1:55**
+
+He counts them off, not selling anything now.
+
+> **SCAVENGER:** Shade. Water. Answers.
+
+**A FIG, ONCE — 1:55–2:03**
+
+He touches his own chest where the fig once hit him.
+
+> **SCAVENGER:** A fig, once — when nobody else in the world would give me anything. That's the whole tree.
+
+**LETTING GO — 2:03–2:10**
+
+Underground: two weeks of hoarded light rushes up through the roots all at once.
+
+**THE ORCHARD — 2:10–2:18**
+
+Every branch blooms and fruits at once — dozens of figs swelling in real time, silver in the moonlight.
+
+> **VO (very quiet):** He said the fig was the whole tree. Fine. Then here's the whole tree.
+
+**THE COST — 2:18–2:24**
+
+The leaves droop as the fruit swells: everything spent, again.
+
+**SHE CATCHES ONE — 2:24–2:31**
+
+The magistrate rises, walks under the branches, and a fig comes loose into her hand at exactly head height.
+
+**WONDER VERIFIED — 2:31–2:39**
+
+She writes standing up, the form against her forearm.
+
+> **MAGISTRATE:** "Wonder verified. Orchard, single specimen, fruiting out of season before an officer of rank."
+
+**AND IT SHARES — 2:39–2:45**
+
+She looks at the fig in her hand, then adds one more line, quieter.
+
+> **MAGISTRATE:** "…And it shares."
+
+**THE FIGS — 2:45–2:51**
+
+Dawn. The clearing is littered with figs like dropped coins.
+
+**THE STRANGER — 2:51–2:58**
+
+At the clearing's edge a hooded stranger kneels, hood down, travel-worn — not counting, not assessing. Praying.
 
 > **SCAVENGER (whisper):** …Who's that?
+
+**THE FIRST ONE — 2:58–3:05**
+
+The farmer picks up his jug and does not look at anyone.
+
 > **FARMER (grim):** Word travels. That's the first one.
 > **SCAVENGER:** First *what?*
 
-The farmer picks up his jug and doesn't answer. Long hold on the kneeling
-figure.
+**WHAT DOES SHE WANT — 3:05–3:13**
 
-> **VO:** Patrol wanted taxes. Assessor wanted a count. Magistrate wanted a
-> category. I could give all of those. …What does *she* want?
+Long hold on the kneeling figure in the dawn light.
+
+> **VO:** Patrol wanted taxes. Assessor wanted a count. Magistrate wanted a category. I could give all of those. …What does *she* want?
 
 SMASH TO BLACK.
 

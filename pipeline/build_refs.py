@@ -38,8 +38,9 @@ REF_TEXT = ("The town was quiet that evening. Someone had left a lantern "
 # up." Offsets below are sized to put every character in its OWN band:
 # Calibrated against RENDERED audio (chatterbox tracks the ref loosely:
 # measured ref -> rendered was 104->93, 116->108, 174->180, 200->189).
-# Target rendered bands: farmer ~95, tree ~108 (ref untouched — released
-# identity), assessor ~130, scavenger ~168, magistrate ~208. Two earlier
+# Target rendered bands: farmer ~87, tree ~108 (ref untouched — released
+# identity), assessor ~132, scavenger ~163, magistrate ~190. Verified on
+# re-voiced 005: -5st left the farmer only 7 Hz under the tree, so -7.5st. Two earlier
 # passes each fixed one collision and created another (scavenger vs
 # assessor, then scavenger vs magistrate) — always re-run qa_voices on a
 # freshly synthesized episode, not just on the refs.
@@ -49,7 +50,7 @@ VOICE_SHAPING = {
         "That's basically public property. You know what, forget the apple. "
         "This is the best day I've had in three weeks, and one of those days "
         "included a moat. A MOAT. I'm not even joking, ask anyone.")},
-    "bm_george":   {"speed": 0.95, "pitch": -5.0, "text": (
+    "bm_george":   {"speed": 0.95, "pitch": -7.5, "text": (
         "Field started drinking again. Don't much care why. Rain comes, or "
         "it doesn't. Weeds come, they get pulled. You want something said, "
         "say it plain, and don't waste my morning. Harvest won't wait on "

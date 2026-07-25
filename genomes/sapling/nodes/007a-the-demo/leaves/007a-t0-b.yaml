@@ -1,0 +1,17 @@
+# Leaf metadata — every render publishes its full provenance (§7.2)
+leaf: 007a-t0-b
+node: "007a"
+tier: T0
+form: text-script
+content: ../node.md
+author: steward (model-written to SCRIPT-SPEC.md 'one beat = one shot'; successor of 007a-t0-a)
+model: claude-fable-5
+prompt: loop cycle 007 (shot density) + 007a-t0-a dialogue verbatim + style.md growth ladder (~1.6m, fig-bearing)
+seed: none
+cost_usd: 0.00
+status: live
+platform_urls: []
+notes: >-
+  29 beats / 193s = a cut every 6.7s at 0.66 spoken lines per shot — the
+  season's lowest line density. Above the spec's 3-6s band by design: the
+  orchard bloom and the closing hold on the pilgrim are deliberately long.

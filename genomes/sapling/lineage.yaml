@@ -137,7 +137,7 @@ nodes:
     parent: "006a"
     trunk: true               # sole continuation of the 006a tip (precedent: 003b) — edl.md 2026-07-22
     status: hot
-    leaves: [007a-t0-a, 007a-t1-a, 007a-t2-a, 007a-t3-a, 007a-t3-b]
+    leaves: [007a-t0-a, 007a-t0-b, 007a-t1-a, 007a-t2-a, 007a-t3-a, 007a-t3-b]
 
   - id: "007b"
     released: 2026-07-19
