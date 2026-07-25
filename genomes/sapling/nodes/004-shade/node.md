@@ -1,83 +1,135 @@
 # Node 004 — Shade
 
 **Tree:** Sapling · **Parent:** [003b — One Leaf for Yes](../003b-one-leaf-for-yes/node.md) · **Trunk:** yes · **Status:** hot
-**This file is a T0 leaf.** Steward-authored trunk continuation under taste file v0.2 (see `../../edl.md`).
-**Format:** 9:16 vertical · 60–90s · VO + dialogue
+**This file is a T0 leaf** (`004-t0-b`, shot-granular per SCRIPT-SPEC.md).
+**Format:** 9:16 vertical · ~105s · VO + dialogue · 19 beats = 19 shots
 
 ---
 
 ## State change (R1)
 
-The place gets its **name** — chosen by the tree itself through the protocol —
-and its **second citizen**: the farmer arrives following the mended water, and
-the two humans of this story meet for the first time. A settlement now exists
-that outsiders can refer to; which, per the hook, means bureaucracy can too.
+The place gets its **name** — chosen by the tree itself through the
+protocol — and its **second citizen**: the farmer arrives following the
+mended water, and the two humans of this story meet for the first time. A
+settlement now exists that outsiders can refer to; which, per the hook,
+means bureaucracy can too.
 
 ## Hook (R5)
 
-Naming the place made it *legible*. The farmer's parting line — the assessor
-walks the valley after every harvest, and now there's something on the map to
-assess. The town is one day old and already has a tax problem. (The audience
-knows the scavenger's entire criminal history is one apple.)
+Naming the place made it *legible*. The assessor counts everything with a
+name, and yesterday there was nothing here to count. The question a viewer
+can state: *what happens when the tax man reaches a town that is one tree,
+one goblin and a lean-to?*
 
 ---
 
 ## Script
 
-**RECAP BEAT — 0:00–0:08**
+**COLD OPEN — 0:00–0:05**
 
-The raised fig. The held breath from 003b.
+The goblin holds a fig aloft over a tiny two-leaf sapling and a crooked lean-to; he freezes mid-ceremony.
 
 > **SCAVENGER:** I hereby name this place… uh.
 
-He lowers the fig.
+**NOTHING PREPARED — 0:05–0:10**
+
+He lowers the fig, deflating.
 
 > **SCAVENGER:** …I had something prepared.
 
-**THE NAMING — 0:08–0:40**
+**THE TREE, WATCHING — 0:10–0:15**
 
-He paces the tiny territory — lean-to, cairn-sized clearing, tree — auditioning names at the sapling like a founder pitching investors:
+The sapling's two leaves hang perfectly level, waiting.
 
-> **SCAVENGER:** Newhaven! *(no leaf)* Greenrest? *(nothing)* Fig… holm? *(aggressively nothing)*
->
-> **SCAVENGER (wounded):** Everything cannot be a no. You are a *plant*. Where did you get *opinions*?
+> **VO (dry, tired, engineer):** I died an engineer and woke up as this tree. Today my only citizen is naming the town.
 
-> **VO:** Every one of those is the name of a place that already exists somewhere, waiting to disappoint someone. Name the thing after what it *does*, like every good system since the dawn of—
+**NEWHAVEN — 0:15–0:20**
 
-The scavenger flops down against the trunk, defeated, out of the midday sun.
+He paces the tiny clearing, pitching at the tree like a founder at investors.
+
+> **SCAVENGER:** Newhaven!
+
+**NO LEAF — 0:20–0:24**
+
+Close on the leaves: dead still. No answer at all.
+
+**GREENREST — 0:24–0:29**
+
+He tries again, arms wide, more hopeful than before.
+
+> **SCAVENGER:** Greenrest?
+
+**FIGHOLM — 0:29–0:34**
+
+He points at the fig, reaching now.
+
+> **SCAVENGER:** Fig… holm?
+
+**AGGRESSIVELY NOTHING — 0:34–0:39**
+
+The leaves stay absolutely motionless — a stillness that reads as an opinion.
+
+> **SCAVENGER (wounded):** Everything cannot be a no. You are a *plant*.
+
+**NAME IT FOR WHAT IT DOES — 0:39–0:45**
+
+Underground: the root map glows, patient and systematic.
+
+> **VO:** Name the thing after what it *does*, like every good system since the dawn of—
+
+**THE COLLAPSE — 0:45–0:51**
+
+He flops down against the trunk, out of the midday sun, giving up.
 
 > **SCAVENGER (muttering):** …Whatever. It's just shade.
 
-**Both leaves tilt at once.**
+**BOTH LEAVES — 0:51–0:56**
 
-The scavenger goes very still. Looks up.
+Both leaves tilt at once, emphatically, in still air.
 
-> **SCAVENGER: **Shade?* That's not a name, that's a — *(the leaves tilt again, emphatic)* — okay! Okay. Shade.
+**SHADE? — 0:56–1:02**
 
-He stands, raises the fig with far less ceremony and far more meaning:
+He goes very still, then looks up at the leaves above him.
 
-> **SCAVENGER:** Welcome to Shade. Population: one. Amenities: *(gestures at everything)* shade.
+> **SCAVENGER:** *Shade?* That's not a name, that's a—
 
-> **VO:** Named after the first thing I ever gave anyone. Approved unanimously by the housing committee, which is me. …I'd have accepted `prod-east-1`, but this is better.
+**EMPHATIC — 1:02–1:07**
 
-**THE SECOND CITIZEN — 0:40–1:08**
+The leaves tilt again, harder, insisting.
 
-A sound — boots. The scavenger dives behind the trunk (still hiding one-sixth of him). But it isn't the patrol.
+> **SCAVENGER:** Okay! Okay. Shade.
 
-It's the **FARMER**, walking the damp line upstream, exactly the way he traced it in the sibling world the audience may have seen — following the water that shouldn't exist to the tree it leads to. He stops at the clearing's edge: the lean-to, the cairn, the goblin visibly failing to hide.
+**WELCOME TO SHADE — 1:07–1:13**
 
-A long mutual stare. The audience braces.
+He stands and raises the fig again — less ceremony, more meaning — gesturing at the whole tiny territory.
+
+> **SCAVENGER:** Welcome to Shade. Population: one. Amenities: shade.
+
+**THE FIRST GIFT — 1:13–1:19**
+
+Close on the bare branch where the fig grew.
+
+> **VO:** Named after the first thing I ever gave anyone. I'd have accepted `prod-east-1`, but this is better.
+
+**BOOTS — 1:19–1:24**
+
+Heavy boots stop at the clearing's edge; the goblin dives behind the trunk, hiding one-sixth of himself.
+
+**THE FARMER — 1:24–1:30**
+
+A sun-cracked farmer stands looking at the lean-to, the cairn, and the visibly failing hiding place.
 
 > **FARMER:** …You the one who's been keeping the weeds off this stretch?
-> **SCAVENGER (from behind the tree):** Depends who's asking.
-> **FARMER:** Man whose field started drinking again.
 
-He sets down what he's carrying — a clay jug and half a loaf — at the base of the trunk, next to the cairn stones. Not charity. *Tribute.* Then, gruff, to the tree, refusing eye contact with anyone:
+**THE TRIBUTE — 1:30–1:37**
 
-> **FARMER:** Tell no one.
-> **SCAVENGER (emerging, delighted):** He talks to it too! Oh, this is the best day of my—
+He sets a clay jug and half a loaf at the base of the trunk, beside the cairn stones, refusing eye contact.
 
-Above them, just for a single frame at the horizon-touch of sunset, the world *flickers* — a wireframe pulse the two of them don't notice and the audience does. Over the clearing, a brand-new label renders and folds away:
+> **FARMER:** Man whose field started drinking again. Tell no one.
+
+**REGISTERED — 1:37–1:44**
+
+At the horizon-touch of sunset the world flickers to wireframe for a single frame, a label folding open over the clearing and away.
 
 ```
 SHADE · settlement(?) · pop. 2
@@ -85,19 +137,11 @@ SHADE · settlement(?) · pop. 2
 
 > **VO (quiet):** The system just… registered us. We're on the map.
 
-**THE HOOK — 1:08–1:25**
+**THE HOOK — 1:44–1:51**
 
-The farmer shoulders his empty sack to leave, then stops. Turns back. The kind of pause that ruins evenings.
+The farmer stops on his way out, turns back, and looks at the lean-to, the cairn, the goblin with his fig.
 
-> **FARMER:** You should know. After harvest, the assessor walks the valley. Counts everything with a name.
-
-Beat. He looks at the lean-to. The cairn. The goblin holding a fig like a scepter.
-
-> **FARMER:** …Yesterday there was nothing here to count.
-
-He walks off into the dusk. The scavenger looks at the tree. The tree's leaves are very still.
-
-> **SCAVENGER (small voice):** …Can you un-name a town?
+> **FARMER:** After harvest, the assessor counts everything with a name. Yesterday there was nothing here to count.
 
 SMASH TO BLACK.
 
@@ -107,28 +151,34 @@ SHADE · pop. 2 · TAXABLE: pending
 
 ---
 
-## Lineage notes
+## Provenance
 
-**Parent:** 003b (trunk). **Grafts absorbed:** the mended water and the
-farmer's cairn arrive from the 002a/003a line (the branch stays alive; its
-events are now trunk-visible canon); the sunset wireframe from the 002c/003c
-line registers the settlement (`settlement(?)` — the system's uncertainty
-glyph now hangs over the town as well as the tree). **Anticipated:** the
-assessor is the patrol's paperwork made ambulatory — Shade's first
-existential threat is a form.
+Shot-granular successor (`004-t0-b`), steward-written (model:
+claude-fable-5) to `SCRIPT-SPEC.md` "one beat = one shot" from `004-t0-a`
+(the Phase-0-era script, whose beats and jokes survive intact) and
+committed nodes 001/002b/003b. Loop cycle 007 — the founding author's
+verdict that the picture did not correlate with the script. The naming
+montage was one held shot across four rejected names; each name and each
+refusal now has its own frame. Predecessor archived as
+`leaves/004-t0-a.md`; published video leaves 004-t3-a/b are takes of that
+era.
+
+## Siblings
+
+[004a — Ticket One](../004a-ticket-one/node.md) · [004c-y](../004c-y/node.md) · [004c-n](../004c-n/node.md)
 
 ## Taste-rule notes
 
-- **R1:** the place is named, registered, and populated by two — three
-  irreversible changes, each with a cost attached.
-- **R2:** the looming antagonist is an *assessor* — a man who counts things.
-  Nobody in this story will ever be evil; they will all be thorough.
-- **R3:** the naming resolves by deflation (grand ceremony → "it's just
-  shade" → unanimous approval by the housing committee, which is me).
-- **R5:** the hook is a real state change — legibility. Being on the map is
-  the price of being a place.
-
-## Provenance
-
-Steward-authored trunk continuation (see `leaves/004-t0-a.yaml` and
-`STEWARDSHIP.md`); taste of record remains the founder's v0.2.
+- **Cycle 007 (shot density):** 19 beats / ~105s = a cut every 5.5s, ≤1
+  spoken line each. Every refusal ("no leaf", "aggressively nothing") is
+  now a shot of the leaves, so the tree visibly participates in the scene
+  it is the subject of.
+- **R7:** the cold open shows the ceremony already in progress and the
+  third beat states the premise plainly over the tree itself; the hook is
+  a statable question.
+- **R1:** the name exists; population 2; the settlement is on the map.
+- **R2:** the farmer's tribute is gruff, not warm; the coming threat is a
+  schema, not a villain.
+- **R3:** the naming resolves by absurdity — the town is named after the
+  only thing the tree ever gave anyone.
+- **R5:** hook is a real state change: legibility, and therefore taxation.

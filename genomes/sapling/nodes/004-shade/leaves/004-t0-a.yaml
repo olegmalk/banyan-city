@@ -3,7 +3,7 @@ leaf: 004-t0-a
 node: "004"
 tier: T0
 form: text-script
-content: ../node.md
+content: 004-t0-a.md
 author: claude-fable-5 (delegated steward — see STEWARDSHIP.md and genomes/sapling/edl.md)
 model: claude-fable-5
 prompt: trunk continuation of 003b under taste file sapling.founder.v0.2, grafting 002a/002c motifs
@@ -11,3 +11,4 @@ seed: none
 cost_usd: 0.00
 status: live
 platform_urls: []
+superseded_by: 004-t0-b   # cycle 007 shot-density rewrite; alive per R6

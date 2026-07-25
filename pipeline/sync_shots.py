@@ -22,7 +22,14 @@ REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "pipeline"))
 from render_t1 import extract_script, parse_frames, strip_inline_md  # noqa: E402
 
-HEADING = re.compile(r"^## Beat (\d+) — (.*?)(?: \((\d+:\d{2}[–-]\d+:\d{2})\))?( .*)?$", re.M)
+# Match the WHOLE heading line and rebuild it from the script. An earlier
+# version tried to capture title / range / status separately with an optional
+# range group; non-greedy title + optional range made the title stop at the
+# first word and the rest land in "status", which then got re-appended —
+# producing "COLD OPEN (0:00–0:05) OPEN (0:00–0:05)". The status marker is
+# recovered by searching for its glyph instead of by position.
+HEADING = re.compile(r"^## Beat \d+ — .*$", re.M)
+STATUS = re.compile(r"([⬜✅].*)$")
 
 
 def beats_of(node_dir: Path) -> list:
@@ -60,7 +67,8 @@ def main() -> int:
     new, last = [], 0
     for i, m in enumerate(headings):
         title, rng = beats[i]
-        status = (m.group(4) or " ⬜ needs footage").rstrip()
+        st = STATUS.search(m.group(0))
+        status = f" {st.group(1).strip()}" if st else " ⬜ needs footage"
         new.append(text[last:m.start()])
         new.append(f"## Beat {i + 1:02d} — {title} ({rng}){status}")
         last = m.end()

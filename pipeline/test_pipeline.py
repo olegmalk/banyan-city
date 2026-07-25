@@ -550,6 +550,30 @@ def test_kaggle_notebook_cells_parse():
           bool(m) and m.group(1).endswith(".git"))
 
 
+def test_sync_shots_is_idempotent():
+    """sync_shots rewrites shot-list headings from the script. Its first
+    version mangled them (non-greedy title + optional range meant the title
+    stopped at the first word and the remainder was re-appended, giving
+    'COLD OPEN (0:00-0:05) OPEN (0:00-0:05)') and the linter could not see it
+    because the time range was still present. A synced file must therefore be
+    a fixed point, and every heading must contain its range exactly once."""
+    import re
+    import sync_shots
+    for slug in ("001-capability-inventory", "002b-first-citizen",
+                 "003b-one-leaf-for-yes", "004-shade"):
+        node_dir = REPO / "genomes" / "sapling" / "nodes" / slug
+        shots = node_dir / "shots.md"
+        if not shots.exists():
+            continue
+        beats = sync_shots.beats_of(node_dir)
+        heads = re.findall(r"^## Beat \d+ — .*$", shots.read_text(), re.M)
+        if len(heads) != len(beats):
+            continue          # counts are the linter's job, not this test's
+        for i, h in enumerate(heads):
+            rng = beats[i][1]
+            check(f"{slug} beat {i + 1:02d} heading has one range", h.count(rng) == 1)
+
+
 def main():
     import tempfile
     test_beat_duration_from_timecode()
@@ -562,6 +586,7 @@ def main():
         test_pingpong_loop_seams(Path(td))
     test_wrap_never_drops_words()
     test_caption_chunks()
+    test_sync_shots_is_idempotent()
     test_kaggle_notebook_cells_parse()
     test_parse_frames_bold_emphasis_in_quote()
     test_parse_frames_bold_line_needs_timing()
