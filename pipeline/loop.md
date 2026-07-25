@@ -44,5 +44,6 @@ The episode being remade is just the loop's test bench.
 | Cycle | Diagnosed | Top defects | Fixes | Verdict |
 |---|---|---|---|---|
 | 001 | 2026-07-23 | silent 2.5s open; −22 LUFS + dead-air holes; wall-of-text captions (15 confirmed, `loop/cycle-001.md`) | 3 chosen, all render_t3 assembly — v3 re-cuts at $0 | **KEPT** (founder, 2026-07-23: "indeed it is better") |
+| 007 | 2026-07-25 | **shot density: one shot every 18s carrying 4.4 lines — the picture cannot follow the script** (dad: "random video not correlating") | structural: shot-per-moment shot lists + render capacity; no assembly fix exists | diagnosis logged, `loop/cycle-007.md` |
 | 002 | 2026-07-23 (founder winces on v3) | captions offset from voice; voice very emotionless | measured chunk sync + directed pauses/speed (`synth_vo.py`) | founder on v4: "i dont see a difference" — rhythm wasn't the ceiling, the engine was → cycle 003 |
 | 003 | 2026-07-23 | kokoro cannot act (engine ceiling) | second engine: Chatterbox 0.5B local/MPS, cloned from kokoro cast refs (`build_refs.py`), per-line emotion direction from script cues | founder on v5: "it is improving for sure" — KEPT; rolling to eps 2–7 |
