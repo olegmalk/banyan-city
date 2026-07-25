@@ -6,17 +6,23 @@
   {
    "who": "VO",
    "text": "Nobody has apologized.",
-   "start": 0.0,
-   "end": 1.504,
+   "start": 1.44,
+   "end": 3.014,
    "chunks": [
     {
      "text": "Nobody has apologized.",
-     "start": 0.0,
-     "end": 1.504
+     "start": 1.44,
+     "end": 3.014
     }
    ]
   }
  ],
- "actions": [],
- "total_s": 1.804
+ "actions": [
+  {
+   "text": "The leaves steady.",
+   "start": 0.05,
+   "end": 1.44
+  }
+ ],
+ "total_s": 3.314
 }

@@ -7,21 +7,21 @@
    "who": "VO",
    "text": "Yesterday I died fixing a server. Today I am a tree.",
    "start": 0.0,
-   "end": 3.793,
+   "end": 3.728,
    "chunks": [
     {
      "text": "Yesterday I died fixing a server.",
      "start": 0.0,
-     "end": 2.165
+     "end": 2.285
     },
     {
      "text": "Today I am a tree.",
-     "start": 2.165,
-     "end": 3.793
+     "start": 2.285,
+     "end": 3.728
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 4.093
+ "total_s": 4.028
 }

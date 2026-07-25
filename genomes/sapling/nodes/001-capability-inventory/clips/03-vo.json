@@ -7,16 +7,16 @@
    "who": "VO",
    "text": "Last log entry of my previous life.",
    "start": 0.0,
-   "end": 2.344,
+   "end": 1.988,
    "chunks": [
     {
      "text": "Last log entry of my previous life.",
      "start": 0.0,
-     "end": 2.344
+     "end": 1.988
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 2.644
+ "total_s": 2.288
 }
