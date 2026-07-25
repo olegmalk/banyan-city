@@ -91,9 +91,16 @@ FALLBACK_COLORS = [(235, 180, 180, 255), (180, 225, 235, 255), (225, 225, 160, 2
 
 
 def speaker_style(who: str) -> tuple:
-    """(label, label_color, text_color) for a caption chunk."""
+    """(label, label_color, text_color) for a caption chunk.
+
+    The protagonist is tagged like everyone else. Leaving his inner voice
+    untagged (cycle 006, first pass) backfired: in caption grammar an
+    untagged line means "same speaker, continuing", so a cold viewer
+    assigned every one of his thoughts — including the closing punchline —
+    to whoever spoke last (verified, cold-viewer re-test 2026-07-25).
+    THE TREE also tells a first-time viewer what the protagonist IS."""
     if not who or who == "VO":
-        return "", None, VO_INK
+        return "THE TREE:", VO_INK, VO_INK
     color = SPEAKER_COLORS.get(who) or FALLBACK_COLORS[hash(who) % len(FALLBACK_COLORS)]
     return f"{who}:", color, INK
 
@@ -255,7 +262,13 @@ def previously_line(genome_dir: Path, node: dict, all_nodes: list) -> str | None
     text = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", m.group(1))
     text = re.sub(r"[*_`>#]", "", text).replace("\n", " ").strip()
     first = re.split(r"(?<=[.!?])\s", text)[0]
-    return (first[:110] + "…") if len(first) > 110 else first
+    # truncate on a WORD boundary: a mid-word cut ("becomes the fi…") on the
+    # one line meant to orient a new viewer reads as a rendering fault
+    # (cold-viewer re-test, 2026-07-25). The overlay wraps, so allow more.
+    if len(first) <= 150:
+        return first
+    cut = first[:150].rsplit(" ", 1)[0]
+    return cut.rstrip(" ,;:") + "…"
 
 
 def vo_manifest(clips_dir: Path, num: int) -> dict | None:
