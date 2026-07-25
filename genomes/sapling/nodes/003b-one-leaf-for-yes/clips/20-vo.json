@@ -1,0 +1,38 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "SCAVENGER",
+   "text": "A resident, a landmark, and a tree that answers. That's not a camp anymore.",
+   "start": 4.52,
+   "end": 10.05,
+   "chunks": [
+    {
+     "text": "A resident, a landmark,",
+     "start": 4.52,
+     "end": 6.359
+    },
+    {
+     "text": "and a tree that answers.",
+     "start": 6.359,
+     "end": 8.643
+    },
+    {
+     "text": "That's not a camp anymore.",
+     "start": 8.643,
+     "end": 10.05
+    }
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "text": "Timelapse: the scavenger drags deadfall against a rock, building badly, tongue out with effort.",
+   "start": 0.05,
+   "end": 4.52
+  }
+ ],
+ "total_s": 10.35
+}

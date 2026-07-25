@@ -23,71 +23,59 @@ is coming toward the tree that can't run?*
 ## Script
 
 **COLD OPEN — 0:00–0:05**
-
 A tiny two-leaf banyan sapling trembles in the wind, alone in a vast green field.
 
 > **VO (dry, tired, engineer):** Yesterday I died fixing a server. Today I am a tree.
 
-**NO APOLOGY — 0:05–0:09**
-
+**NO APOLOGY — 0:05–0:10**
 The leaves steady. The field is enormous and completely empty around it.
 
 > **VO:** Nobody has apologized.
 
-**THE DESK — 0:09–0:14**
-
+**THE DESK — 0:10–0:15**
 Memory: a man types fast in a dark office, face lit by one monitor of red error text.
 
 > **VO:** Last log entry of my previous life.
 
-**THE RETRY LOOP — 0:14–0:18**
-
+**THE RETRY LOOP — 0:15–0:22**
 Close on the monitor: the same error repeating down the screen.
 
 > **VO:** The retry loop. It's always the retry loop.
 
-**THE FALL — 0:18–0:23**
-
+**THE FALL — 0:22–0:27**
 Wide, the desk in profile: the man sways and drops out of frame; his mug tips off the edge and shatters.
 
-**REBOOT — 0:23–0:28**
-
+**REBOOT — 0:27–0:34**
 Back in the field: sunlight sweeps across the sapling as morning arrives.
 
 > **VO:** New hardware. Rebooted somewhere with better lighting.
 
-**THE BIRD — 0:28–0:33**
-
+**THE BIRD — 0:34–0:39**
 A bird lands on the top leaf, bends it flat, and flies off; the leaf springs back.
 
 > **VO:** The local wildlife has already filed me under *furniture*.
 
-**NO HANDS — 0:33–0:38**
-
+**NO HANDS — 0:39–0:44**
 Close on a bare twig tip, exactly where a hand would be, twitching in the wind.
 
 > **VO:** No hands. No keyboard. So: what can this thing actually *do?*
 
-**ROOTS WAKE — 0:38–0:43**
-
+**ROOTS WAKE — 0:44–0:51**
 Underground: root filaments light up one by one, spreading through dark soil.
 
 > **VO:** Capability one: sense.
 
-**THE WATER TABLE — 0:43–0:48**
-
+**THE WATER TABLE — 0:51–0:59**
 Veins of dark water glow into view beneath the roots, mapping themselves.
 
 > **VO:** I can feel the water table. I can feel every stone in this field.
 
-**THE WORM — 0:48–0:52**
-
+**THE WORM — 0:59–1:07**
 A single worm pushes past a root filament, lighting it as it goes.
 
 > **VO:** I can feel a worm having a bad day.
 
-**WHOAMI — 0:52–0:56**
-
+**WHOAMI — 1:07–1:12**
 The sapling's shadow sweeps across the grass as the sun moves — hours passing in one held frame.
 
 ```
@@ -95,38 +83,32 @@ $ whoami
 sapling (ficus. probably.)
 ```
 
-**THE TIMELAPSE — 0:56–1:02**
-
+**THE TIMELAPSE — 1:12–1:20**
 The sun arcs overhead three times as one new leaf unfurls from a bud.
 
 > **VO:** Capability two: grow. Three days of full effort.
 
-**ONE LEAF — 1:02–1:07**
-
+**ONE LEAF — 1:20–1:29**
 Close on the new leaf, bright and proud and very small.
 
 > **VO:** Output: one leaf. I have shipped slower features. Not many.
 
-**THE WHOLE API — 1:07–1:13**
-
+**THE WHOLE API — 1:29–1:34**
 The trunk strains and bows against nothing, roots pulling taut in the soil — and nothing happens.
 
 > **VO:** Move — no. Fight — no. Flee — obviously no. Speak — no.
 
-**SENSE AND GROW — 1:13–1:18**
-
+**SENSE AND GROW — 1:34–1:39**
 Wide: one small living thing at the centre of an enormous indifferent field.
 
 > **VO:** Sense and grow. …That's the whole API.
 
-**THE TREMOR — 1:18–1:24**
-
+**THE TREMOR — 1:39–1:45**
 Underground: rings of light pulse in from the far edge — step, step, step — brightening as they near the roots.
 
 > **VO:** Correction. New input on the sensor. Footsteps. Heavy, headed here.
 
-**NOT HIDE — 1:24–1:28**
-
+**NOT HIDE — 1:45–1:51**
 Above ground the leaves stand perfectly still while the far grass bends in a line.
 
 > **VO:** I have two capabilities, and neither of them is *hide.*

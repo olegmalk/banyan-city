@@ -1,0 +1,38 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "SCAVENGER",
+   "text": "Okay! Okay. Shade.",
+   "start": 2.28,
+   "end": 4.04,
+   "chunks": [
+    {
+     "text": "Okay!",
+     "start": 2.28,
+     "end": 2.757
+    },
+    {
+     "text": "Okay.",
+     "start": 2.757,
+     "end": 3.311
+    },
+    {
+     "text": "Shade.",
+     "start": 3.311,
+     "end": 4.04
+    }
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "text": "The leaves tilt again, harder, insisting.",
+   "start": 0.05,
+   "end": 2.28
+  }
+ ],
+ "total_s": 4.34
+}

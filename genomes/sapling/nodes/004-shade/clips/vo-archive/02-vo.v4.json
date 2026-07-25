@@ -1,0 +1,209 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v2",
+ "lines": [
+  {
+   "who": "SCAVENGER",
+   "text": "Newhaven! (no leaf) Greenrest? (nothing) Fig\u2026 holm? (aggressively nothing)",
+   "start": 0.0,
+   "end": 2.548,
+   "chunks": [
+    {
+     "text": "Newhaven!",
+     "start": 0.0,
+     "end": 0.796
+    },
+    {
+     "text": "(no leaf) Greenrest?",
+     "start": 0.796,
+     "end": 1.387
+    },
+    {
+     "text": "(nothing) Fig\u2026",
+     "start": 1.387,
+     "end": 1.776
+    },
+    {
+     "text": "holm?",
+     "start": 1.776,
+     "end": 2.134
+    },
+    {
+     "text": "(aggressively nothing)",
+     "start": 2.134,
+     "end": 2.548
+    }
+   ]
+  },
+  {
+   "who": "SCAVENGER",
+   "text": "Everything cannot be a no. You are a plant. Where did you get opinions?",
+   "start": 3.048,
+   "end": 6.807,
+   "chunks": [
+    {
+     "text": "Everything cannot be a no.",
+     "start": 3.048,
+     "end": 4.538
+    },
+    {
+     "text": "You are a plant.",
+     "start": 4.538,
+     "end": 5.605
+    },
+    {
+     "text": "Where did you get opinions?",
+     "start": 5.605,
+     "end": 6.807
+    }
+   ]
+  },
+  {
+   "who": "VO",
+   "text": "Every one of those is the name of a place that already exists somewhere, waiting to disappoint someone. Name the thing after what it does, like every good system since the dawn of\u2014",
+   "start": 7.307,
+   "end": 16.892,
+   "chunks": [
+    {
+     "text": "Every one of those is the name",
+     "start": 7.307,
+     "end": 9.021
+    },
+    {
+     "text": "of a place that already exists somewhere,",
+     "start": 9.021,
+     "end": 11.116
+    },
+    {
+     "text": "waiting to disappoint someone.",
+     "start": 11.116,
+     "end": 12.902
+    },
+    {
+     "text": "Name the thing after what it does,",
+     "start": 12.902,
+     "end": 15.001
+    },
+    {
+     "text": "like every good system since the dawn of\u2014",
+     "start": 15.001,
+     "end": 16.892
+    }
+   ]
+  },
+  {
+   "who": "SCAVENGER",
+   "text": "\u2026Whatever. It's just shade.",
+   "start": 17.242,
+   "end": 20.442,
+   "chunks": [
+    {
+     "text": "\u2026Whatever.",
+     "start": 17.242,
+     "end": 18.829
+    },
+    {
+     "text": "It's just shade.",
+     "start": 18.829,
+     "end": 20.442
+    }
+   ]
+  },
+  {
+   "who": "SCAVENGER",
+   "text": "Shade? That's not a name, that's a \u2014 (the leaves tilt again, emphatic) \u2014 okay! Okay. Shade.",
+   "start": 20.942,
+   "end": 24.613,
+   "chunks": [
+    {
+     "text": "Shade?",
+     "start": 20.942,
+     "end": 21.392
+    },
+    {
+     "text": "That's not a name,",
+     "start": 21.392,
+     "end": 21.819
+    },
+    {
+     "text": "that's a \u2014 (the leaves tilt again,",
+     "start": 21.819,
+     "end": 22.914
+    },
+    {
+     "text": "emphatic) \u2014 okay!",
+     "start": 22.914,
+     "end": 23.835
+    },
+    {
+     "text": "Okay.",
+     "start": 23.835,
+     "end": 24.32
+    },
+    {
+     "text": "Shade.",
+     "start": 24.32,
+     "end": 24.613
+    }
+   ]
+  },
+  {
+   "who": "SCAVENGER",
+   "text": "Welcome to Shade. Population: one. Amenities: (gestures at everything) shade.",
+   "start": 25.113,
+   "end": 29.266,
+   "chunks": [
+    {
+     "text": "Welcome to Shade.",
+     "start": 25.113,
+     "end": 26.414
+    },
+    {
+     "text": "Population: one.",
+     "start": 26.414,
+     "end": 27.955
+    },
+    {
+     "text": "Amenities: (gestures at everything) shade.",
+     "start": 27.955,
+     "end": 29.266
+    }
+   ]
+  },
+  {
+   "who": "VO",
+   "text": "Named after the first thing I ever gave anyone. Approved unanimously by the housing committee, which is me. \u2026I'd have accepted prod-east-1, but this is better.",
+   "start": 29.766,
+   "end": 39.114,
+   "chunks": [
+    {
+     "text": "Named after the first thing I ever gave anyone.",
+     "start": 29.766,
+     "end": 32.409
+    },
+    {
+     "text": "Approved unanimously by the housing committee,",
+     "start": 32.409,
+     "end": 34.64
+    },
+    {
+     "text": "which is me.",
+     "start": 34.64,
+     "end": 35.842
+    },
+    {
+     "text": "\u2026I'd have accepted prod-east-1,",
+     "start": 35.842,
+     "end": 37.765
+    },
+    {
+     "text": "but this is better.",
+     "start": 37.765,
+     "end": 39.114
+    }
+   ]
+  }
+ ],
+ "total_s": 39.414
+}

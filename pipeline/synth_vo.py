@@ -335,6 +335,16 @@ def main() -> int:
                         events.append(("line", it[1], text, pending_beat))
                         pending_beat = False
             if not any(e[0] == "line" for e in events):
+                # A beat with nothing to say must not keep the take it had
+                # BEFORE the script changed. Skipping quietly here is how 007a
+                # ended up playing its closing line ("…Who's that?") at beat 5:
+                # the molt renumbered the beats, this beat lost its dialogue,
+                # and the stale 05-vo.mp3 sat there for render_t3 to find.
+                # Archived, not deleted (R6).
+                if (clips_dir / f"{beat_num:02d}-vo.mp3").exists():
+                    print(f"    {slug} b{beat_num:02d} has no spoken line — "
+                          "archiving the stale take")
+                    archive(clips_dir, beat_num)
                 continue
 
             sr = engine.sr
@@ -392,6 +402,19 @@ def main() -> int:
                  "total_s": round(cursor, 3)}, indent=1))
             print(f"{slug} beat {beat_num:02d}: {len(manifest)} lines, "
                   f"{cursor:.1f}s [{engine.name}]")
+
+        # takes numbered past the last beat are leftovers from a shorter cut of
+        # the script; render_t3 would never reach them, but they make the clips
+        # dir lie about what the episode contains
+        for stray in sorted(clips_dir.glob("*-vo.mp3")):
+            try:
+                n = int(stray.name[:2])
+            except ValueError:
+                continue
+            if n > len(frames):
+                print(f"    {slug} b{n:02d} is past the last beat "
+                      f"({len(frames)}) — archiving")
+                archive(clips_dir, n)
     print("VO_DONE")
     return 0
 

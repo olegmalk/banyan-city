@@ -1,0 +1,39 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v2",
+ "lines": [
+  {
+   "who": "SCAVENGER",
+   "text": "I hereby name this place\u2026 uh.",
+   "start": 0.0,
+   "end": 1.912,
+   "chunks": [
+    {
+     "text": "I hereby name this place\u2026",
+     "start": 0.0,
+     "end": 1.426
+    },
+    {
+     "text": "uh.",
+     "start": 1.426,
+     "end": 1.912
+    }
+   ]
+  },
+  {
+   "who": "SCAVENGER",
+   "text": "\u2026I had something prepared.",
+   "start": 2.412,
+   "end": 3.688,
+   "chunks": [
+    {
+     "text": "\u2026I had something prepared.",
+     "start": 2.412,
+     "end": 3.687
+    }
+   ]
+  }
+ ],
+ "total_s": 3.988
+}

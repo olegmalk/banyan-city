@@ -1,106 +1,38 @@
 {
  "cast": "voices.yaml",
  "engine": "chatterbox-0.5B",
- "directed": "synth_vo v2",
+ "directed": "synth_vo v3",
  "lines": [
   {
-   "who": "FARMER",
-   "text": "\u2026You the one who's been keeping the weeds off this stretch?",
-   "start": 0.0,
-   "end": 3.299,
-   "chunks": [
-    {
-     "text": "\u2026You the one who's been keeping the",
-     "start": 0.0,
-     "end": 2.012
-    },
-    {
-     "text": "weeds off this stretch?",
-     "start": 2.012,
-     "end": 3.299
-    }
-   ]
-  },
-  {
-   "who": "SCAVENGER",
-   "text": "Depends who's asking.",
-   "start": 3.799,
-   "end": 4.797,
-   "chunks": [
-    {
-     "text": "Depends who's asking.",
-     "start": 3.799,
-     "end": 4.797
-    }
-   ]
-  },
-  {
-   "who": "FARMER",
-   "text": "Man whose field started drinking again.",
-   "start": 5.297,
-   "end": 7.777,
-   "chunks": [
-    {
-     "text": "Man whose field started drinking again.",
-     "start": 5.297,
-     "end": 7.777
-    }
-   ]
-  },
-  {
-   "who": "FARMER",
-   "text": "Tell no one.",
-   "start": 8.277,
-   "end": 9.776,
-   "chunks": [
-    {
-     "text": "Tell no one.",
-     "start": 8.277,
-     "end": 9.777
-    }
-   ]
-  },
-  {
-   "who": "SCAVENGER",
-   "text": "He talks to it too! Oh, this is the best day of my\u2014",
-   "start": 10.276,
-   "end": 14.774,
-   "chunks": [
-    {
-     "text": "He talks to it too!",
-     "start": 10.276,
-     "end": 11.616
-    },
-    {
-     "text": "Oh, this is the best day of my\u2014",
-     "start": 11.616,
-     "end": 14.774
-    }
-   ]
-  },
-  {
    "who": "VO",
-   "text": "The system just\u2026 registered us. We're on the map.",
-   "start": 15.124,
-   "end": 18.739,
+   "text": "I died an engineer and woke up as this tree. Today my only citizen is naming the town.",
+   "start": 3.68,
+   "end": 9.293,
    "chunks": [
     {
-     "text": "The system just\u2026",
-     "start": 15.124,
-     "end": 16.553
+     "text": "I died an engineer and woke up",
+     "start": 3.68,
+     "end": 5.497
     },
     {
-     "text": "registered us.",
-     "start": 16.553,
-     "end": 17.502
+     "text": "as this tree.",
+     "start": 5.497,
+     "end": 6.418
     },
     {
-     "text": "We're on the map.",
-     "start": 17.502,
-     "end": 18.739
+     "text": "Today my only citizen is naming the town.",
+     "start": 6.418,
+     "end": 9.293
     }
    ]
   }
  ],
- "total_s": 19.039
+ "actions": [
+  {
+   "text": "The young tree's small crown of leaves hangs perfectly level, waiting.",
+   "start": 0.05,
+   "end": 3.68
+  }
+ ],
+ "total_s": 9.593
 }

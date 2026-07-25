@@ -5,23 +5,23 @@
  "lines": [
   {
    "who": "SCAVENGER",
-   "text": "I hereby name this place\u2026 uh.",
+   "text": "\u2026Whatever. It's just shade.",
    "start": 0.0,
-   "end": 2.52,
+   "end": 2.026,
    "chunks": [
     {
-     "text": "I hereby name this place\u2026",
+     "text": "\u2026Whatever.",
      "start": 0.0,
-     "end": 1.972
+     "end": 0.711
     },
     {
-     "text": "uh.",
-     "start": 1.972,
-     "end": 2.52
+     "text": "It's just shade.",
+     "start": 0.711,
+     "end": 2.026
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 2.82
+ "total_s": 2.326
 }
