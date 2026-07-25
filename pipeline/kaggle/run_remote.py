@@ -6,6 +6,7 @@ to babysit a browser tab. Requires the Kaggle CLI and an API token in
 `~/.kaggle/kaggle.json` (a founder action — tokens are credentials).
 
     python3 pipeline/kaggle/run_remote.py push 002b     # queue a GPU run
+    python3 pipeline/kaggle/run_remote.py push 001 --steps 25 --beats "[1]"
     python3 pipeline/kaggle/run_remote.py status        # one-line state
     python3 pipeline/kaggle/run_remote.py watch         # poll until it ends
     python3 pipeline/kaggle/run_remote.py fetch <dir>   # download the clips
@@ -46,7 +47,7 @@ def kaggle(*args, check=True):
     return (r.stdout + r.stderr).strip()
 
 
-def set_node(node: str, steps: int | None = None) -> None:
+def set_node(node: str, steps: int | None = None, beats: str | None = None) -> None:
     """Point the notebook's config cell at a node before pushing."""
     nb_path = HERE / "wan-t2v-kaggle.ipynb"
     nb = json.loads(nb_path.read_text())
@@ -54,11 +55,15 @@ def set_node(node: str, steps: int | None = None) -> None:
     for i, line in enumerate(cell):
         if line.startswith("NODE"):
             cell[i] = f'NODE   = "{node}"        # any node id with a shots.md\n'
+        elif beats and line.startswith("BEATS"):
+            cell[i] = f"BEATS  = {beats}          # e.g. [1, 3] or None for all beats without status \u2705\n"
         elif steps and line.startswith("STEPS"):
             cell[i] = f"STEPS  = {steps}            # 30 = faster/rougher, 50 = slower/cleaner\n"
     nb["cells"][1]["source"] = cell
     nb_path.write_text(json.dumps(nb, indent=1))
-    print(f"notebook set to NODE = {node!r}" + (f", STEPS = {steps}" if steps else ""))
+    print(f"notebook set to NODE = {node!r}"
+          + (f", STEPS = {steps}" if steps else "")
+          + (f", BEATS = {beats}" if beats else ""))
 
 
 def main() -> int:
@@ -67,11 +72,16 @@ def main() -> int:
     cmd = sys.argv[1]
 
     if cmd == "push":
-        steps = None
+        steps = beats = None
         if "--steps" in sys.argv:
             steps = int(sys.argv[sys.argv.index("--steps") + 1])
+        if "--beats" in sys.argv:
+            # a one-beat push is the cheap way to prove the chain (import, memory
+            # strategy, per-shot minutes, retrievable output) before committing
+            # a session to a full episode
+            beats = sys.argv[sys.argv.index("--beats") + 1]
         if len(sys.argv) > 2 and not sys.argv[2].startswith("--"):
-            set_node(sys.argv[2], steps)
+            set_node(sys.argv[2], steps, beats)
         print(kaggle("kernels", "push", "-p", str(HERE)))
         print("queued — GPU jobs wait for a free slot; check with: status")
         return 0

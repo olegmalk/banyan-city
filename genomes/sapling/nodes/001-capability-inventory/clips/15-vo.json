@@ -1,0 +1,37 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "VO",
+   "text": "Move \u2014 no. Fight \u2014 no. Flee \u2014 obviously no. Speak \u2014 no.",
+   "start": 0.0,
+   "end": 4.499,
+   "chunks": [
+    {
+     "text": "Move \u2014 no.",
+     "start": 0.0,
+     "end": 0.897
+    },
+    {
+     "text": "Fight \u2014 no.",
+     "start": 0.897,
+     "end": 2.288
+    },
+    {
+     "text": "Flee \u2014 obviously no.",
+     "start": 2.288,
+     "end": 3.475
+    },
+    {
+     "text": "Speak \u2014 no.",
+     "start": 3.475,
+     "end": 4.499
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 4.799
+}

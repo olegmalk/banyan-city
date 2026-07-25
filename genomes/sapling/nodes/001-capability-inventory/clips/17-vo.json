@@ -1,0 +1,37 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "VO",
+   "text": "Correction. New input on the sensor. Footsteps. Heavy, headed here.",
+   "start": 0.0,
+   "end": 4.684,
+   "chunks": [
+    {
+     "text": "Correction.",
+     "start": 0.0,
+     "end": 0.936
+    },
+    {
+     "text": "New input on the sensor.",
+     "start": 0.936,
+     "end": 2.427
+    },
+    {
+     "text": "Footsteps.",
+     "start": 2.427,
+     "end": 3.26
+    },
+    {
+     "text": "Heavy, headed here.",
+     "start": 3.26,
+     "end": 4.684
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 4.984
+}

@@ -109,15 +109,38 @@ def test_caption_chunks():
 
 def test_parse_frames_bold_emphasis_in_quote():
     # regression: a quote line opening with bold emphasis ('> **fires**. rest')
-    # is a wrapped speech continuation — only a colon marks a new speaker
+    # is a wrapped speech continuation — only a colon marks a new speaker.
+    # It MERGES into the line above: markdown hard-wraps, and an unattributed
+    # fragment gets cast as the narrator by synth_vo and captioned mid-sentence
+    # (found 2026-07-25 — 8 such fragments across the branch nodes).
     md = ("**SCENE — 0:00–0:12**\n"
           "\n"
           "> **ROOT:** the line before\n"
           "> **fires**. rest of the sentence\n")
     items = parse_frames(md)[0]["items"]
-    check("colon quote parses as speaker line", items[0] == ("line", "ROOT", "the line before"))
-    check("bold-emphasis quote is speakerless", items[1][:2] == ("line", ""))
-    check("bold-emphasis quote keeps its text", items[1][2] == "**fires**. rest of the sentence")
+    check("wrapped quote merges into one spoken line", len(items) == 1)
+    check("the merged line keeps its speaker", items[0][:2] == ("line", "ROOT"))
+    check("the merged line keeps both halves",
+          items[0][2] == "the line before **fires**. rest of the sentence")
+
+    # ...but a blank line between quotes still means two separate lines
+    md2 = ("**SCENE — 0:00–0:12**\n"
+           "\n"
+           "> **ROOT:** first\n"
+           "\n"
+           "> **ROOT:** second\n")
+    items2 = parse_frames(md2)[0]["items"]
+    check("a blank line still separates two quotes", len(items2) == 2)
+
+    # an action paragraph between quotes must not let a later wrap merge across it
+    md3 = ("**SCENE — 0:00–0:12**\n"
+           "\n"
+           "> **ROOT:** spoken\n"
+           "He turns away.\n"
+           "> orphaned fragment\n")
+    items3 = parse_frames(md3)[0]["items"]
+    check("an action between quotes blocks the merge",
+          [i[0] for i in items3] == ["line", "action", "line"])
 
 
 def test_parse_frames_bold_line_needs_timing():

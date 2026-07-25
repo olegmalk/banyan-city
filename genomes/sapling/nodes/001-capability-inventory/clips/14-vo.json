@@ -1,0 +1,38 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "VO",
+   "text": "Output: one leaf. I have shipped slower features. Not many.",
+   "start": 3.68,
+   "end": 8.066,
+   "chunks": [
+    {
+     "text": "Output: one leaf.",
+     "start": 3.68,
+     "end": 5.27
+    },
+    {
+     "text": "I have shipped slower features.",
+     "start": 5.27,
+     "end": 7.178
+    },
+    {
+     "text": "Not many.",
+     "start": 7.178,
+     "end": 8.066
+    }
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "text": "Close on the new leaf, bright and proud and very small.",
+   "start": 0.05,
+   "end": 3.68
+  }
+ ],
+ "total_s": 8.366
+}

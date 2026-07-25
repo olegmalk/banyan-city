@@ -68,6 +68,12 @@ def parse_frames(script: str) -> list:
     frames = []
     current = None
     par_break = True
+    # a blockquote that markdown hard-wrapped is still ONE spoken line. Without
+    # this, every wrapped line after the first became ("line", "", text) — an
+    # unattributed fragment, which synth_vo casts as the narrator and captions
+    # show mid-sentence. Cleared by a blank line or any other element, so two
+    # quotes separated by a blank stay two lines.
+    quote_open = False
     lines = script.splitlines()
     i = 0
     while i < len(lines):
@@ -85,6 +91,7 @@ def parse_frames(script: str) -> list:
         elif current is not None:
             if not line.strip():
                 par_break = True
+                quote_open = False
             elif line.strip().startswith("```"):
                 block = []
                 i += 1
@@ -93,6 +100,7 @@ def parse_frames(script: str) -> list:
                     i += 1
                 current["items"].append(("overlay", "\n".join(block)))
                 par_break = True
+                quote_open = False
             elif line.strip().startswith(">"):
                 text = re.sub(r"^>\s?", "", line.strip())
                 # a speaker heading always carries a colon (inside or right
@@ -102,17 +110,23 @@ def parse_frames(script: str) -> list:
                      or re.match(r"\*\*(.+?)\*\*\s*[:：]\s*(.*)", text))
                 if m:
                     current["items"].append(("line", m.group(1).rstrip(":"), m.group(2)))
+                elif text and quote_open and current["items"] and current["items"][-1][0] == "line":
+                    prev = current["items"][-1]
+                    current["items"][-1] = ("line", prev[1], (prev[2] + " " + text).strip())
                 elif text:
                     current["items"].append(("line", "", text))
                 par_break = True
+                quote_open = True
             elif line.strip().startswith("#"):
                 par_break = True
+                quote_open = False
             else:
                 if not par_break and current["items"] and current["items"][-1][0] == "action":
                     current["items"][-1] = ("action", current["items"][-1][1] + " " + line.strip())
                 else:
                     current["items"].append(("action", line.strip()))
                 par_break = False
+                quote_open = False
         i += 1
     return frames
 
