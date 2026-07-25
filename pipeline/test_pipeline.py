@@ -107,6 +107,26 @@ def test_caption_chunks():
           all(abs(spans[i][2] - spans[i + 1][1]) < 1e-6 for i in range(len(spans) - 1)))
 
 
+def test_footage_must_match_its_beat():
+    """Footage is found by beat NUMBER, and rewrites renumber beats.
+
+    After the cycle-007 molt, 31 of the season's 35 clips sat on a beat they
+    were never made for: 05-realization-hook.mp4 — episode 1's ENDING — would
+    have played over new beat 5, the man dying at his desk. Same defect class as
+    the orphaned voice takes, caught for audio and missed for video."""
+    check("the shot made for this beat is kept",
+          t3.footage_matches_beat(Path("05-the-fall.mp4"), "THE FALL — 0:22–0:27"))
+    check("an alt take of the right beat is kept",
+          t3.footage_matches_beat(Path("05-the-fall-alt1.mp4"), "THE FALL — 0:22–0:27"))
+    check("the episode's ending must not play over the death scene",
+          not t3.footage_matches_beat(Path("05-realization-hook.mp4"), "THE FALL — 0:22–0:27"))
+    check("footage for a scene that became several shots is rejected",
+          not t3.footage_matches_beat(Path("04-the-inventory.mp4"), "THE RETRY LOOP — 0:17–0:22"))
+    check("punctuation in a beat title does not break the match",
+          t3.footage_matches_beat(Path("03-the-tree-watching.mp4"), "THE TREE, WATCHING — 0:10–0:15"))
+    check("an unnamed clip is not rejected", t3.footage_matches_beat(Path("07.mp4"), "ANYTHING — 0:00–0:05"))
+
+
 def test_displayable_action_is_the_trees_voice_only():
     """The tree has no mouth: its answers are stage directions, so those reach
     the screen and own a silent beat. Everything else must not.
@@ -658,6 +678,7 @@ def main():
     test_caption_chunks()
     test_sync_shots_is_idempotent()
     test_kaggle_notebook_cells_parse()
+    test_footage_must_match_its_beat()
     test_displayable_action_is_the_trees_voice_only()
     test_parse_frames_bold_emphasis_in_quote()
     test_parse_frames_bold_line_needs_timing()

@@ -171,6 +171,29 @@ def find_clip(clips_dir: Path, num: int) -> Path | None:
     return hits[0] if hits else None
 
 
+def slug_key(s: str) -> str:
+    return re.sub(r"[^a-z0-9]", "", s.lower())
+
+
+def footage_matches_beat(clip: Path, beat_slug: str) -> bool:
+    """Is this clip actually the shot for THIS beat, or just the same number?
+
+    Footage is found by beat NUMBER, and a rewrite renumbers beats. After the
+    cycle-007 molt, 31 of the season's 35 clips landed on a beat they were never
+    made for — `05-realization-hook.mp4`, the footage for episode 1's ENDING,
+    would have played over new beat 5, the man dying at his desk. The clip's own
+    filename records the beat it was made for, so compare them and say so.
+
+    This is the same defect class as the orphaned voice takes (cycle 008): the
+    molt renumbered beats and stale media stayed behind at its old index. That
+    was caught for audio and not for video, which is why this check exists."""
+    made_for = slug_key(clip.stem[3:].split("-alt")[0])
+    now = slug_key(beat_slug.split("—")[0])
+    if not made_for or not now:
+        return True
+    return made_for.startswith(now[:10]) or now.startswith(made_for[:10])
+
+
 def check_clips_dir(clips_dir: Path | None) -> None:
     """An explicit --clips that doesn't exist or holds no per-beat footage is
     almost certainly a typo'd path: rendering on would silently produce an
@@ -670,9 +693,19 @@ def main() -> int:
         prev = previously_line(genome_dir, node, lineage["nodes"])
         title_ovl = title_overlay_png(node, prev, workdir / "title-ovl.png")
 
+    mismatched = []
     for i, beat in enumerate(beats, 1):
         dur = beat_duration(beat["slug"], beat["items"])
         beat_clips = find_clips(args.clips, i)
+        # footage is found by beat NUMBER, so stale footage from a previous cut
+        # of the script lands on whatever beat now holds its index. Slating an
+        # empty beat is honest; playing the wrong shot over a line is exactly
+        # the "random video that isn't correlating" the founder reported.
+        wrong = [c for c in beat_clips if not footage_matches_beat(c, strip_inline_md(beat["slug"]))]
+        if wrong:
+            mismatched += [(i, strip_inline_md(beat["slug"]).split("—")[0].strip(), c.name)
+                           for c in wrong]
+            beat_clips = [c for c in beat_clips if c not in wrong]
         if not beat_clips:
             missing += 1
         # audio: a pre-supplied per-beat track wins; else generate VO via TTS
@@ -706,6 +739,15 @@ def main() -> int:
                         **({"voice_engine": manifest["engine"]}
                            if manifest and manifest.get("engine") else {}),
                         **beat_provenance(beat_clips)})
+
+    if mismatched:
+        print(f"  IGNORED {len(mismatched)} clip(s) made for a different beat "
+              "(a rewrite renumbered the beats; slating instead):")
+        for n, title, name in mismatched[:8]:
+            print(f"    beat {n:02d} {title} <- {name}")
+        if len(mismatched) > 8:
+            print(f"    … and {len(mismatched) - 8} more")
+        print("    archive them: genomes/<g>/nodes/<n>/clips/footage-archive/")
 
     if not args.no_cards:
         end = card_png([
