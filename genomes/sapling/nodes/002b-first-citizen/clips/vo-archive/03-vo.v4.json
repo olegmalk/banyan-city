@@ -6,22 +6,28 @@
   {
    "who": "VO",
    "text": "A creature is using me as cover. I am forty centimeters tall.",
-   "start": 0.0,
-   "end": 4.5,
+   "start": 3.96,
+   "end": 7.688,
    "chunks": [
     {
      "text": "A creature is using me as cover.",
-     "start": 0.0,
-     "end": 2.571
+     "start": 3.96,
+     "end": 5.854
     },
     {
      "text": "I am forty centimeters tall.",
-     "start": 2.571,
-     "end": 4.5
+     "start": 5.854,
+     "end": 7.688
     }
    ]
   }
  ],
- "actions": [],
- "total_s": 4.8
+ "actions": [
+  {
+   "text": "The scavenger crouches behind a trunk that hides roughly one-sixth of him.",
+   "start": 0.05,
+   "end": 3.96
+  }
+ ],
+ "total_s": 7.988
 }
