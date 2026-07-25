@@ -1,8 +1,8 @@
 # Node 005 — The Assessor
 
 **Tree:** Sapling · **Parent:** [004 — Shade](../004-shade/node.md) · **Trunk:** yes · **Status:** hot
-**This file is a T0 leaf.** Steward-authored trunk continuation under taste file v0.2 (see `../../edl.md`).
-**Format:** 9:16 vertical · 60–90s · VO + dialogue
+**This file is a T0 leaf** (`005-t0-b`, shot-granular per SCRIPT-SPEC.md). Steward-authored trunk continuation under taste file v0.2 (see `../../edl.md`).
+**Format:** 9:16 vertical · ~143s · VO + dialogue · 24 beats = 24 shots
 
 ---
 
@@ -24,85 +24,148 @@ line, someone with real power reads it next episode.
 
 ## Script
 
-**COLD OPEN — 0:00–0:10**
+**COLD OPEN — 0:00–0:05**
 
-Dawn over Shade: lean-to, cairn, jug, tree. Wide and peaceful — and into frame,
-walking the exact center of the road like a metronome, comes the **ASSESSOR**:
-dust-grey robes, a ledger chained to his belt, a quill worn down to a stub. He
-stops at the clearing's edge and *counts under his breath* before saying a word.
+Dawn over Shade: a knee-high young tree with a small crown, a crooked lean-to, a three-stone cairn, a clay jug.
 
-> **VO:** The farmer said "after harvest." It is not after harvest. Which means
-> the kingdom's bureaucracy runs *ahead* of schedule. I have chills.
+> **VO (dry, tired, engineer):** I died an engineer and woke up as this tree. My town is one day old.
 
-**THE ASSESSMENT — 0:10–0:45**
+**THE METRONOME — 0:05–0:11**
 
-Rapid-fire, deadpan. The assessor works; the SCAVENGER orbits him in rising panic;
-the FARMER (arrived with the jug refill, now trapped in a civic event) stonewalls.
+Down the exact centre of the road walks the ASSESSOR — dust-grey robes, a ledger chained to his belt, a stub of quill.
+
+> **VO:** The farmer said "after harvest." It is not after harvest.
+
+**COUNTING BEFORE SPEAKING — 0:11–0:17**
+
+He stops at the clearing's edge and counts under his breath, lips moving, before saying a word.
+
+> **VO:** Which means the kingdom's bureaucracy runs *ahead* of schedule. I have chills.
+
+**SETTLEMENT NAME — 0:17–0:22**
+
+The scavenger, cornered, gives it up.
 
 > **ASSESSOR:** Settlement name?
 > **SCAVENGER:** …Shade.
-> **ASSESSOR (writing):** Shade. Founded?
-> **SCAVENGER:** Yesterday.
-> **ASSESSOR (not looking up):** Structures?
-> **SCAVENGER:** One. Ish.
-> **ASSESSOR (glancing at the lean-to):** "Ish" is not a load rating.
 
-He measures the lean-to with a knotted string. He counts the cairn — *individually,
-all three stones*. He holds the string against the tree's trunk, and up.
+**FOUNDED — 0:22–0:27**
+
+The quill scratches. The assessor does not look up.
+
+> **ASSESSOR:** Founded?
+> **SCAVENGER:** Yesterday.
+
+**STRUCTURES — 0:27–0:32**
+
+He glances at the lean-to, which sags in response.
+
+> **ASSESSOR:** Structures?
+> **SCAVENGER:** One. Ish.
+
+**NOT A LOAD RATING — 0:32–0:38**
+
+He measures the lean-to's sagging pole with a knotted string.
+
+> **ASSESSOR:** "Ish" is not a load rating.
+
+**THREE STONES — 0:38–0:44**
+
+He counts the cairn stones — individually, touching each one with the quill.
+
+**ORCHARD, SINGLE SPECIMEN — 0:44–0:50**
+
+He holds the knotted string against the young tree's trunk, then measures upward into the crown.
 
 > **ASSESSOR:** Orchard, single specimen. Yield?
-> **SCAVENGER (too fast):** None! No yield. Zero fruit. Historically.
-> **ASSESSOR (slowly turning a ledger page):** …I have here a prior record. One
-> apple. Unlicensed consumption. Subject: *(he looks at the scavenger for a
-> long, terrible moment)* …description matches.
 
-Silence. The farmer looks at the scavenger. The scavenger looks at the ground.
+**NO YIELD — 0:50–0:56**
+
+The scavenger's hands go up much too fast.
+
+> **SCAVENGER:** None! No yield. Zero fruit. Historically.
+
+**THE PRIOR RECORD — 0:56–1:03**
+
+The assessor turns a ledger page slowly; the old entry is a single line of script.
+
+> **ASSESSOR:** …I have here a prior record. One apple. Unlicensed consumption.
+
+**DESCRIPTION MATCHES — 1:03–1:09**
+
+He raises his eyes from the page to the scavenger and holds the look.
+
+> **ASSESSOR:** Subject: …description matches.
+
+**GROUND FRUIT — 1:09–1:15**
+
+The scavenger studies the dirt, all the fight gone out of him.
 
 > **SCAVENGER (quietly):** It fell off the cart. Ground fruit is foraging.
-> **FARMER (arms crossed, to the assessor):** He keeps the weeds off. Whole stretch.
-> **ASSESSOR (writing, without emotion):** "Community service. Ongoing."
+
+**THE FARMER SPEAKS — 1:15–1:21**
+
+The farmer, arms crossed, addresses the assessor without moving otherwise.
+
+> **FARMER:** He keeps the weeds off. Whole stretch.
+
+**COMMUNITY SERVICE — 1:21–1:27**
+
+The quill writes two words into the ledger, unhurried.
+
+> **ASSESSOR:** "Community service. Ongoing."
+
+**A PAYMENT PLAN — 1:27–1:32**
+
+Close on the young tree's leaves, motionless, taking it in.
 
 > **VO:** That's not mercy. That's worse. That's a *payment plan.*
 
-**THE FORM FAILS — 0:45–1:05**
+**OCCUPATIONS — 1:32–1:39**
 
-The assessor reaches the ledger's settlement schema and begins to visibly suffer.
+The assessor reaches the settlement schema and writes, then stalls over the second line.
 
-> **ASSESSOR:** Population: two. Occupations: farmer — *(he writes)* — and…
-> *(looking at the scavenger)* …weed warden. Provisional. Water source?
+> **ASSESSOR:** Population: two. Occupations: farmer — and… weed warden. Provisional.
+
+**WATER SOURCE — 1:39–1:45**
+
+He looks up from the ledger, quill poised.
+
+> **ASSESSOR:** Water source?
 > **FARMER:** The channel mended itself.
-> **ASSESSOR (quill stopping):** Channels do not mend themselves.
+
+**CHANNELS DO NOT — 1:45–1:51**
+
+The quill stops mid-word. He looks at the farmer, then out at the damp field line.
+
+> **ASSESSOR:** Channels do not mend themselves.
 > **FARMER (flatly):** This one did.
 
-The assessor looks at the farmer. At the damp field line. At the tree. All
-afternoon — the audience realizes it in a two-second montage — he has been
-*watching leaves move in still air* every time a question was answered.
+**HE'S BEEN WATCHING — 1:51–1:58**
 
-> **VO:** Oh no. He counts things for a living. He's been counting my tells since
-> he arrived.
+Quick cuts, from his eyeline: the tree's leaves moving in dead-still air — once, twice, three times, each time an answer was given.
 
-**THE QUESTION — 1:05–1:25**
+> **VO:** Oh no. He counts things for a living. He's been counting my tells since he arrived.
 
-The assessor walks to the tree. Adjusts his robes. And with the exhausted
-professionalism of a man who has assessed stranger things than a talking tree —
-or is determined to look like he has — addresses it directly:
+**AND YOU — 1:58–2:04**
+
+The assessor walks up to the tree, adjusts his robes, and addresses it directly.
 
 > **ASSESSOR:** And you. Occupation?
 
-Beat. The scavenger holds his breath. The farmer holds his breath. One leaf,
-slowly, deliberately, tilts.
+**ONE LEAF — 2:04–2:10**
 
-The assessor nods as if that were an answer — *maybe it was* — and writes one
-line we never see. Closes the ledger. Chains it.
+Three held faces — goblin, farmer, assessor — then one leaf tilts, slowly and deliberately.
 
-> **ASSESSOR (leaving, over his shoulder):** The magistrate reviews all new
-> settlements. She will want to see this one *personally.*
+**POPULATION THREE — 2:10–2:17**
 
-He pauses at the clearing's edge, precisely where he entered.
+He writes one line we never see, closes the ledger, chains it, and pauses at the clearing's edge exactly where he entered.
 
-> **ASSESSOR:** …Population three.
+> **ASSESSOR:** The magistrate reviews all new settlements. She will want to see this one *personally.* …Population three.
 
-He walks off into the morning. Long hold on the tree.
+**CALLED A LOT OF THINGS — 2:17–2:23**
+
+Long hold on the young tree alone in the morning light.
 
 > **VO:** I've been called a lot of things. "Population" is new.
 
@@ -113,6 +176,19 @@ SHADE · pop. 3 (official) · MAGISTRATE: incoming
 ```
 
 ---
+
+## Provenance
+
+Shot-granular successor (`005-t0-b`), steward-written (model:
+claude-fable-5) to `SCRIPT-SPEC.md` "one beat = one shot" from `005-t0-a`
+(the Phase-0-era script, whose dialogue survives verbatim) and the canon
+growth ladder in `style.md`. Loop cycle 007: the assessment was 4 shots
+carrying 30 lines — 7.5 lines per image, the worst density in the season —
+so every question and every answer now has its own frame. The episode runs
+longer than the 85s original because the exchanges are no longer stacked on
+one held wide; dialogue is unchanged. Predecessor archived as
+`leaves/005-t0-a.md`; published video leaves 005-t3-a/b are takes of that
+era.
 
 ## Lineage notes
 
