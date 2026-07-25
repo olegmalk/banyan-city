@@ -66,7 +66,12 @@ EMOTION_HINTS = {
     ("tired", "weary", "sigh"):                   (0.45, 0.45),
     ("angry", "furious", "snaps"):                (1.00, 0.28),
 }
-EMOTION_DEFAULT = (0.65, 0.35)  # gentle storyteller lean, not monotone
+# The house register is DEADPAN (R3: comedy from the gap between a dry
+# report and an absurd world). A "storyteller lean" default (0.65) put the
+# wrong emotion on every unmarked line — founder, 2026-07-25: "voices are
+# giving off the wrong emotions which makes it confusing." Unmarked lines
+# are dry; only explicit script cues push a performance.
+EMOTION_DEFAULT = (0.40, 0.50)
 
 
 def direction_for(raw_who: str, text: str) -> tuple:
@@ -77,14 +82,11 @@ def direction_for(raw_who: str, text: str) -> tuple:
         if any(k in hint for k in keys):
             ex, cfg = e, c
             break
-    if text.rstrip().endswith("!"):
-        ex += 0.15
-    elif text.rstrip().endswith("?"):
-        ex += 0.05
+    # No punctuation-guessed emotion: this script uses '!' and CAPS for
+    # bureaucratic emphasis, not shouting, and guessing put the wrong
+    # performance on straight lines. Only '…' (hesitation) survives, as pace.
     if "…" in text or "..." in text:
-        cfg += 0.05  # hesitation reads better a touch slower
-    if re.search(r"\b[A-Z]{3,}\b", text):
-        ex += 0.10   # caps emphasis
+        cfg += 0.05
     return min(max(ex, 0.30), 1.20), min(max(cfg, 0.20), 0.60)
 
 

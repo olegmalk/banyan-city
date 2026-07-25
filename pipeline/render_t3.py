@@ -527,23 +527,19 @@ def render_beat(beat: dict, num: int, dur: float, clips: list, workdir: Path,
                                    label=tag, label_color=label_color)
                     layers.append((png, "(W-w)/2", f"H-h-{CAPTION_MARGIN}",
                                    f"gte(t,{s:.2f})*lt(t,{e:.2f})"))
-                for di, d in enumerate(directions):
-                    png = text_png(d, workdir / f"dir-{num:02d}-{j}-{k}-{di}.png",
-                                   CAPTION_SIZE - 6, ACTION_INK, (0, 0, 0, 150),
-                                   max_w=CAPTION_MAX_W)
-                    layers.append((png, "(W-w)/2", "(H-h)*0.44",
-                                   f"gte(t,{s:.2f})*lt(t,{e:.2f})"))
+                # `directions` are deliberately NOT rendered: on-screen text
+                # nobody speaks reads as noise (founder, 2026-07-25:
+                # "sometimes I see subtitles on the screen which aren't
+                # said"). They are dropped from the caption and stay in the
+                # script for the camera to perform.
+                del directions
             prev_who = who
 
-    # stage-direction captions (cycle 006): the tree's entire performance —
-    # 'One leaf tilts.' — lived in action lines that never reached the
-    # screen; synth_vo now times short ones into the track as `actions`
-    for j, a in enumerate((manifest or {}).get("actions") or []):
-        png = text_png(a["text"], workdir / f"act-{num:02d}-{j}.png",
-                       CAPTION_SIZE - 6, ACTION_INK, (0, 0, 0, 150),
-                       max_w=CAPTION_MAX_W)
-        layers.append((png, "(W-w)/2", "(H-h)*0.44",
-                       f"gte(t,{a['start']:.2f})*lt(t,{a['end']:.2f})"))
+    # NOTE: manifest `actions` (short stage directions) keep their timed
+    # PAUSE in the audio — the tree's beat still lands — but are no longer
+    # burned in as text. Unspoken on-screen text confused the founder more
+    # than the missing beat did (2026-07-25). If the tree's performance
+    # needs to read, it has to be in the FOOTAGE (regrow-era shot grammar).
 
     layers += list(extra_layers or [])
 
