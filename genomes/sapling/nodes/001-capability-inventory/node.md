@@ -1,8 +1,8 @@
 # Node 001 — Capability Inventory
 
 **Tree:** Sapling · **Parent:** none (root) · **Trunk:** yes · **Status:** hot
-**This file is a T0 leaf** (`001-t0-b`, molt successor per SCRIPT-SPEC.md).
-**Format:** 9:16 vertical · 60–90s · VO-driven
+**This file is a T0 leaf** (`001-t0-c`, shot-granular per SCRIPT-SPEC.md).
+**Format:** 9:16 vertical · ~82s · VO-driven · 18 beats = 18 shots
 
 ---
 
@@ -24,60 +24,112 @@ is coming toward the tree that can't run?*
 
 **COLD OPEN — 0:00–0:05**
 
-Macro shot: a tiny two-leaf banyan sapling alone in a vast green field,
-trembling in the wind.
+A tiny two-leaf banyan sapling trembles in the wind, alone in a vast green field.
 
-> **VO (dry, tired, engineer):** Yesterday I died fixing a server at 3 a.m. Today I am a tree. Nobody has apologized.
+> **VO (dry, tired, engineer):** Yesterday I died fixing a server at 3 a.m. Today I am a tree.
 
-**THE CRASH — 0:05–0:15**
+**NO APOLOGY — 0:05–0:09**
 
-Hard cut, memory: a dark office. A man slumps at a desk lit by one
-monitor full of red error text. His mug tips and falls. Cut to black on
-the mug hitting the floor.
+The leaves steady. The field is enormous and completely empty around it.
 
-> **VO:** Last log entry of my previous life: the retry loop. It's always the retry loop.
+> **VO:** Nobody has apologized.
 
-**REBOOT — 0:15–0:25**
+**THE DESK — 0:09–0:14**
 
-Back to the field, morning light. The same sapling, small and absurd
-under an enormous sky. A bird lands on its top leaf, bends it, leaves.
+Memory: a man types fast in a dark office, face lit by one monitor of red error text.
 
-> **VO:** New hardware. Rebooted somewhere with better lighting and no keyboard. Fine. Every system gets one question first: what can it actually *do?*
+> **VO:** Last log entry of my previous life.
 
-**INVENTORY: SENSE — 0:25–0:40**
+**THE RETRY LOOP — 0:14–0:18**
 
-The view dives underground — a glowing root-map spreading through dark
-soil: water veins, stones, worm tunnels, all faintly lit.
+Close on the monitor: the same error repeating down the screen.
 
-> **VO:** Capability one: sense. I can feel the water table. I can feel every stone in this field. I can feel a worm having a bad day.
+> **VO:** The retry loop. It's always the retry loop.
+
+**THE FALL — 0:18–0:23**
+
+The man sways and drops out of frame; his mug tips off the desk and shatters.
+
+**REBOOT — 0:23–0:28**
+
+Back in the field: sunlight sweeps across the sapling as morning arrives.
+
+> **VO:** New hardware. Rebooted somewhere with better lighting.
+
+**THE BIRD — 0:28–0:33**
+
+A bird lands on the top leaf, bends it flat, and flies off; the leaf springs back.
+
+> **VO:** And no keyboard.
+
+**THE QUESTION — 0:33–0:38**
+
+The sapling holds still, small and absurd under a huge sky.
+
+> **VO:** Every system gets one question first: what can it actually *do?*
+
+**ROOTS WAKE — 0:38–0:43**
+
+Underground: root filaments light up one by one, spreading through dark soil.
+
+> **VO:** Capability one: sense.
+
+**THE WATER TABLE — 0:43–0:48**
+
+Veins of dark water glow into view beneath the roots, mapping themselves.
+
+> **VO:** I can feel the water table. I can feel every stone in this field.
+
+**THE WORM — 0:48–0:52**
+
+A single worm pushes past a root filament, lighting it as it goes.
+
+> **VO:** I can feel a worm having a bad day.
+
+**WHOAMI — 0:52–0:56**
+
+The sapling in the field, unchanged, patient.
 
 ```
 $ whoami
 sapling (ficus. probably.)
 ```
 
-**INVENTORY: GROW — 0:40–0:55**
+**THE TIMELAPSE — 0:56–1:02**
 
-Timelapse: sun arcs overhead three times. On the sapling, one (1) new
-leaf slowly unfurls, bright and proud.
+The sun arcs overhead three times as one new leaf unfurls from a bud.
 
-> **VO:** Capability two: grow. Three days of full effort. Output: one leaf. I have shipped slower features, but not many.
+> **VO:** Capability two: grow. Three days of full effort.
 
-**THE WHOLE API — 0:55–1:05**
+**ONE LEAF — 1:02–1:07**
 
-Wide shot: the sapling, the field, the huge indifferent sky. The wind
-moves the grass in slow waves.
+Close on the new leaf, bright and proud and very small.
 
-> **VO:** Move — no. Fight — no. Flee — obviously no. Speak — no. Sense and grow. …That's the whole API.
+> **VO:** Output: one leaf. I have shipped slower features. Not many.
 
-**THE HOOK — 1:05–1:20**
+**THE WHOLE API — 1:07–1:13**
 
-Underground view again: at the far edge of the root-map, rhythmic
-tremors pulse through the soil — step, step, step — each pulse lighting
-the roots like a ping. Above ground, the sapling's leaves stand
-perfectly still.
+Wind moves slow waves through the grass around the motionless sapling.
 
-> **VO:** Correction. New input on the sensor. Footsteps. Heavy, headed here. I have two capabilities, and neither of them is *hide.*
+> **VO:** Move — no. Fight — no. Flee — obviously no. Speak — no.
+
+**SENSE AND GROW — 1:13–1:18**
+
+Wide: one small living thing at the centre of an enormous indifferent field.
+
+> **VO:** Sense and grow. …That's the whole API.
+
+**THE TREMOR — 1:18–1:24**
+
+Underground: rings of light pulse in from the far edge — step, step, step — brightening as they near the roots.
+
+> **VO:** Correction. New input on the sensor. Footsteps. Heavy, headed here.
+
+**NOT HIDE — 1:24–1:28**
+
+Above ground the leaves stand perfectly still while the far grass bends in a line.
+
+> **VO:** I have two capabilities, and neither of them is *hide.*
 
 SMASH TO BLACK.
 
@@ -85,20 +137,26 @@ SMASH TO BLACK.
 
 ## Provenance
 
-Molt successor script (`t0-b`), steward-written (model: claude-fable-5)
-to `SCRIPT-SPEC.md` from the shared premise seed (`leaves/001-seed.md`,
-verbatim founding text). Predecessor script archived as
-`leaves/001-t0-a.md` (molted 2026-07-25, sap event 002). Published video
-leaves 001-t3-a/b/c are takes of the t0-a era.
+Shot-granular successor (`001-t0-c`), steward-written (model:
+claude-fable-5) to `SCRIPT-SPEC.md` "one beat = one shot" from the shared
+premise seed (`leaves/001-seed.md`, verbatim founding text). Same content
+as `001-t0-b` (the morning's molt), re-cut into 18 filmable shots of 4–6s
+so the camera follows the dialogue — loop cycle 007, founding author's
+verdict that the picture did not correlate with the script. Predecessors
+archived: `leaves/001-t0-a.md` (Phase 0), `leaves/001-t0-b.md` (molt).
+Published video leaves 001-t3-a/b/c are takes of earlier script eras.
 
 ## Taste-rule notes
 
-- **R7:** cold open re-grounds the premise in 5s (one shot + one VO
-  line); every beat answers "what is happening and why"; the hook is a
-  statable question.
-- **R1:** state change = inventory complete + the world produces its
-  first event aimed at him.
-- **R3:** comedy lives in the VO-vs-world gap (one leaf in three days;
-  "no keyboard").
-- **R5:** hook is a real state change (approaching contact), on screen,
-  unambiguous.
+- **Cycle 007 (shot density):** 18 beats / ~82s = a cut every 4.6s, one
+  spoken line each, and every beat's camera is on the referent of its
+  line (the monitor for the retry loop, the worm for the worm, the new
+  leaf for the leaf).
+- **R7:** cold open states died-engineer-now-tree in the first line over
+  the tree itself; the two capabilities are each shown as they are named;
+  the hook is a statable question.
+- **R1:** inventory complete + the world produces its first event aimed
+  at him.
+- **R3:** comedy is the VO-vs-world gap — three days of effort for one
+  leaf, "and no keyboard."
+- **R5:** hook is a real state change (approaching contact), on screen.

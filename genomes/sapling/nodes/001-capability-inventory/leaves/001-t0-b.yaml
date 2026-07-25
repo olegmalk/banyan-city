@@ -3,7 +3,7 @@ leaf: 001-t0-b
 node: "001"
 tier: T0
 form: text-script
-content: ../node.md
+content: 001-t0-b.md
 author: steward (model-written to SCRIPT-SPEC.md; molt successor of 001-t0-a, sap event 002)
 model: claude-fable-5
 prompt: banyan-repair-brief-001.md §5-6 + leaves/001-seed.md (verbatim source)
@@ -12,3 +12,4 @@ cost_usd: 0.00
 status: live
 platform_urls: []
 comprehension_gate: passed 2026-07-25 (sap/gate-t0-b-transcript.md)
+superseded_by: 001-t0-c   # cycle 007 shot-density rewrite; alive per R6

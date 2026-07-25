@@ -183,9 +183,15 @@ def test_clean_speech_drops_parentheticals():
 def test_node_001_beats_parse():
     md = (REPO / "genomes/sapling/nodes/001-capability-inventory/node.md").read_text()
     beats = parse_frames(extract_script(md))
-    check("node 001 parses 7 beats (t0-b molt)", len(beats) == 7)
+    check("node 001 parses 18 beats (t0-c, one beat = one shot)", len(beats) == 18)
     total = sum(t3.beat_duration(b["slug"], b["items"]) for b in beats)
-    check("node 001 total = 80s script time (t0-b molt)", total == 80.0)
+    check("node 001 runtime 88s at ~4.9s/shot (cycle 007)", total == 88.0)
+
+    # cycle 007: the density rule is the fix for "the video doesn't match the
+    # script" — assert it on the front door so a scene-sized beat can't return
+    lines = sum(1 for b in beats for i in b["items"] if i[0] == "line")
+    check("001 cuts at least every 6s", total / len(beats) <= 6.0)
+    check("001 carries <=2 lines per shot", lines / len(beats) <= 2.0)
     # every beat has a nonempty slug
     check("all beats have slugs", all(b["slug"].strip() for b in beats))
 
@@ -211,12 +217,13 @@ def test_generate_shots_parsing():
     from generate_shots import parse_shots
     md = (REPO / "genomes/sapling/nodes/001-capability-inventory/shots.md").read_text()
     shots = parse_shots(md)
-    check("shots.md parses 7 beats (t0-b molt)", len(shots) == 7)
-    check("beat numbering 1..7", [s["num"] for s in shots] == [1, 2, 3, 4, 5, 6, 7])
+    check("shots.md parses 18 beats (1:1 with script)", len(shots) == 18)
+    check("beat numbering is 1..N with no gaps",
+          [s["num"] for s in shots] == list(range(1, len(shots) + 1)))
     check("prompts nonempty + vertical", all("9:16" in s["prompt"] for s in shots))
     # the t0-b molt shot list (2026-07-25) awaits the regrow era: no beat
     # parses as done until footage for the new skeleton exists
-    check("done-status parsed", [s["done"] for s in shots] == [False] * 7)
+    check("done-status parsed", [s["done"] for s in shots] == [False] * len(shots))
 
 
 def test_budget_guard():
