@@ -3,7 +3,7 @@
 **Tree:** Sapling · **Parent:** [005 — The Assessor](../005-the-assessor/node.md) · **Trunk:** undecided · **Status:** hot
 **This file is a T0 leaf** (`006a-t0-b`, shot-granular per SCRIPT-SPEC.md). Steward-authored candidate under taste file v0.2 — one of an R4
 sibling pair (006a/006b); the trunk call between them is reserved to the founder (see `../../edl.md`).
-**Format:** 9:16 vertical · ~180s · VO + dialogue · 29 beats = 29 shots
+**Format:** 9:16 vertical · ~189s · VO + dialogue · 31 beats = 31 shots
 
 ---
 
@@ -43,15 +43,17 @@ The farmer walks in and sets a second clay jug down beside the first, squaring i
 
 The goblin drags a branch across the dirt, sweeping the clearing smooth.
 
-> **VO:** I've seen this before. It's called audit prep. You cannot mop your way out of one. Everyone tries.
+> **VO:** I've seen this before. It's called audit prep. Everyone tries.
 
 **SHE IS EARLY — 0:17–0:23**
 
-The MAGISTRATE is already inside the settlement — travel-worn robes of office, a seal on a chain, reading the assessor's ledger as she walks.
+The MAGISTRATE is already inside the settlement — travel-worn robes of office, a seal of office on a chain, reading the assessor's ledger as she walks.
+
+> **VO:** That is a magistrate. The assessor writes things down. She decides what they *are*.
 
 **REFLEX — 0:23–0:28**
 
-The goblin dives behind the tree out of pure reflex — then remembers he is official, and emerges to stand at approximate attention.
+The goblin dives behind the lean-to out of pure reflex — then remembers the assessor gave him a job, and emerges to stand at approximate attention.
 
 **READING THE FILE — 0:28–0:35**
 
@@ -61,13 +63,13 @@ She reads without looking up; the page turns under her thumb.
 
 **RESIDENT NUMBER THREE — 0:35–0:41**
 
-Close on the ledger page: one line of script under her thumb.
+She stops walking and reads the last line twice, her thumb marking the place.
 
 > **MAGISTRATE:** Occupation of resident number three: *"answers questions."*
 
 **WELL? — 0:41–0:47**
 
-She closes the ledger with one hand and looks up into the tree's crown.
+She closes the ledger with one hand and looks straight into the crown, level with her own face.
 
 > **MAGISTRATE:** Well?
 
@@ -77,7 +79,7 @@ In still air, one leaf tilts — and holds.
 
 **THE TIDY EXPLANATION — 0:52–0:58**
 
-Her face does almost nothing; something behind it recalculates.
+She takes the quill from behind her ear, looks at it, and puts it back — the only sign of a mind changing.
 
 > **MAGISTRATE:** …So the assessor hasn't been drinking. Pity. That was the tidy explanation.
 
@@ -110,7 +112,7 @@ She looks at the tree's trunk, then at the ground it stands in.
 
 The goblin gestures between himself and the tree, improvising.
 
-> **SCAVENGER:** He's more of a roommate—
+> **SCAVENGER:** No — no, he's not livestock, he's more of a *roommate*—
 
 **DO YOU HAVE A DEED — 1:28–1:34**
 
@@ -122,7 +124,7 @@ She stops and holds out one empty hand for a document.
 
 He searches his patchwork cloak, then produces a single fig and offers it.
 
-> **SCAVENGER:** …I have a fig.
+> **SCAVENGER:** …I have a fig. He grew it.
 
 **THE ANSWER ARRIVES — 1:40–1:47**
 
@@ -132,7 +134,7 @@ She stops pacing and looks slowly at the jugs at the roots, the cairn, the two o
 
 **SHRINE — 1:47–1:52**
 
-She says the word up into the crown.
+She says the word straight into the crown.
 
 > **MAGISTRATE:** *Shrine.*
 
@@ -140,62 +142,70 @@ She says the word up into the crown.
 
 Close on the leaves, motionless, absorbing it.
 
-> **VO:** Engineer. Tree. Town. And now a *church*. This career trajectory has stopped being a line and become a scribble.
+> **VO:** Engineer. Tree. Town. Now a *church*. My career has stopped being a line.
 
-**FEE-EXEMPT — 1:58–2:04**
+**THE FORM — 1:58–2:04**
 
-She fills the form as she recites; behind her the farmer's shoulders drop for the first time in two episodes.
+She draws a folded form from inside her robes, opens it flat against her forearm, and starts filling it as she recites; behind her the farmer's crossed arms come loose.
 
 > **MAGISTRATE:** Shrine grounds are fee-exempt. Shrines require registered upkeep. Therefore—
 
-**CONGRATULATIONS — 2:04–2:11**
-
-She holds out a sealed slip of paper to the goblin, who takes it in both hands.
-
-> **MAGISTRATE:** Shrines have keepers. Congratulations. Your community service is reclassified: *employment.*
-
-**A LINE ITEM — 2:11–2:17**
-
-He holds the paper flat on both palms as if it might evaporate.
-
-> **SCAVENGER (quietly, wrecked):** I've never been a line item before.
-
-**DO YOU CONSENT — 2:17–2:23**
+**DO YOU CONSENT — 2:04–2:10**
 
 She turns to the tree, pen ready over the consent field.
 
 > **MAGISTRATE:** Registration requires consent of the venerated object. Do you consent?
 
-**CONSENT RECORDED — 2:23–2:30**
+**CONSENT RECORDED — 2:10–2:17**
 
-One leaf tilts. She notes it, then presses a stamp onto the page.
+One leaf tilts against the sky. Her pen moves once.
 
 > **MAGISTRATE:** Consent recorded. First signature I've taken all year that didn't argue.
 
-**THE CLAUSE — 2:30–2:38**
+**THE STAMP — 2:17–2:22**
+
+She presses a wax stamp onto the page and lifts it away clean.
+
+**CONGRATULATIONS — 2:22–2:29**
+
+She tears the slip free and holds it out; the goblin takes it in both hands.
+
+> **MAGISTRATE:** Shrines have keepers. Congratulations. The assessor's community service is reclassified: *employment.*
+
+**A LINE ITEM — 2:29–2:36**
+
+He turns the paper over once, finds the seal on the back, and stops.
+
+> **SCAVENGER (quietly, wrecked):** I've never been a line item before.
+
+**THE CLAUSE — 2:36–2:43**
 
 She stops on the form's final line and, for the first time, looks faintly entertained.
 
-> **MAGISTRATE:** One formality. Registration is provisional until the shrine demonstrates one "verified wonder, witnessed by an officer of rank." I return at the full moon.
+> **MAGISTRATE:** One formality. Provisional until the shrine demonstrates a "verified wonder, witnessed by an officer of rank." Fourteen nights.
 
-**SURPRISE ME — 2:38–2:45**
+**SURPRISE ME — 2:43–2:49**
 
-The goblin waves the paper after her, panicking; she does not turn around.
+The goblin hurries two steps after her, waving the paper; she keeps walking.
 
 > **SCAVENGER:** What— what qualifies? Is there a list? A form?
 > **MAGISTRATE:** Surprise me.
 
-**THE DEDICATION LINE — 2:45–2:53**
+**A NORMAL RELEASE — 2:49–2:56**
 
-At the clearing's edge — exactly where the assessor paused — she stops and looks back at the tree.
+She walks away up the road; the goblin stares at his paper and the farmer looks up at the tree.
 
-> **MAGISTRATE:** The dedication line I leave blank. Shrines declare *to whom* at consecration. Those words outlive towns.
+> **VO:** Fourteen days to ship a miracle. No spec. One reviewer. …So — a normal release.
 
-**A NORMAL RELEASE — 2:53–3:00**
+**THE DEDICATION LINE — 2:56–3:04**
 
-She walks off up the road. The goblin looks at his paper; the farmer looks at the tree; the leaves are very still.
+At the clearing's edge she stops, turns, and speaks back across the distance.
 
-> **VO:** Two weeks to ship a miracle. No spec. One reviewer. …So — a normal release.
+> **MAGISTRATE:** One thing. The dedication line I left blank — shrines declare *to whom*. Those words outlive towns.
+
+**BLANK — 3:04–3:09**
+
+Close on the paper in the goblin's hands: one ruled line, empty.
 
 SMASH TO BLACK.
 

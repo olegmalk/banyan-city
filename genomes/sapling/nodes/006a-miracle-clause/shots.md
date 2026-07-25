@@ -188,31 +188,15 @@ Line/beat: the tree's career-trajectory joke. Camera on motionless leaves absorb
 Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. The leaves of a man-height tree hold completely motionless, taking something in, while far behind them out of focus a robed figure begins writing. Shallow depth, quiet. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 21 — FEE-EXEMPT (1:58–2:04) ⬜ needs footage
+## Beat 21 — THE FORM (1:58–2:04) ⬜ needs footage
 
-Line/beat: "Shrine grounds are fee-exempt." Camera holding her form-filling AND the farmer's shoulders dropping.
-
-```
-Vertical 9:16 medium shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A robed magistrate writes briskly on a form held against her forearm while behind her a broad straw-hatted farmer's shoulders visibly drop and his arms uncross for the first time. Both in one frame. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
-```
-
-## Beat 22 — CONGRATULATIONS (2:04–2:11) ⬜ needs footage
-
-Line/beat: "Your community service is reclassified: employment." Camera on the sealed slip changing hands.
+Line: "Shrine grounds are fee-exempt. Shrines require registered upkeep." Camera on the form coming OUT — the gate flagged that it materialised from nowhere two thirds in, then ran the rest of the episode.
 
 ```
-Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A sealed slip of paper passes from an adult hand into two small green clawed hands, which close around it carefully from underneath. Tight on the exchange, wax seal catching light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 medium shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A robed magistrate draws a folded form from inside her robes, snaps it open flat against her forearm and begins writing as she speaks, while behind her a broad straw-hatted farmer's crossed arms come loose at his sides. Both in one frame, morning light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 23 — A LINE ITEM (2:11–2:17) ⬜ needs footage
-
-Line/beat: "I've never been a line item before." Camera on him holding the paper flat on both palms.
-
-```
-Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin holds a sealed paper flat across both open palms and stares down at it without touching its surface, as if it might evaporate; his ears drop slowly. Tight, tender framing. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
-```
-
-## Beat 24 — DO YOU CONSENT (2:17–2:23) ⬜ needs footage
+## Beat 22 — DO YOU CONSENT (2:04–2:10) ⬜ needs footage
 
 Line/beat: "Do you consent?" Camera on her turning to the tree, pen poised over the field.
 
@@ -220,7 +204,7 @@ Line/beat: "Do you consent?" Camera on her turning to the tree, pen poised over 
 Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A robed magistrate turns squarely to face a man-height tree and holds a pen poised above a form, addressing the tree directly and waiting. Two-shot of woman and tree, morning light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 25 — CONSENT RECORDED (2:23–2:30) ⬜ needs footage
+## Beat 23 — CONSENT RECORDED (2:10–2:17) ⬜ needs footage
 
 Line/beat: "First signature I've taken all year that didn't argue." Camera on the leaf, then the stamp.
 
@@ -228,7 +212,31 @@ Line/beat: "First signature I've taken all year that didn't argue." Camera on th
 Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. One leaf tilts in still air and, in the same unbroken frame below it, a hand presses a wax stamp down onto a form and lifts it away. Answer and record in one take. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 26 — THE CLAUSE (2:30–2:38) ⬜ needs footage
+## Beat 24 — THE STAMP (2:17–2:22) ⬜ needs footage
+
+No dialogue — the authorising act, now AFTER the consent (the gate caught the old order: she sealed and handed over the document before recording the consent that authorises it, in a script whose whole joke is procedural correctness).
+
+```
+Vertical 9:16 extreme close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A wax stamp presses down onto a form held flat against a forearm and lifts away clean, leaving a raised seal, the paper flexing once under the pressure. Tight macro on stamp and page. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+```
+
+## Beat 25 — CONGRATULATIONS (2:22–2:29) ⬜ needs footage
+
+Line/beat: "Your community service is reclassified: employment." Camera on the sealed slip changing hands.
+
+```
+Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A sealed slip of paper passes from an adult hand into two small green clawed hands, which close around it carefully from underneath. Tight on the exchange, wax seal catching light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+```
+
+## Beat 26 — A LINE ITEM (2:29–2:36) ⬜ needs footage
+
+Line/beat: "I've never been a line item before." Camera on him holding the paper flat on both palms.
+
+```
+Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin holds a sealed paper flat across both open palms and stares down at it without touching its surface, as if it might evaporate; his ears drop slowly. Tight, tender framing. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+```
+
+## Beat 27 — THE CLAUSE (2:36–2:43) ⬜ needs footage
 
 Line/beat: "provisional until the shrine demonstrates one verified wonder." Camera on her finger stopping on the final line.
 
@@ -236,7 +244,7 @@ Line/beat: "provisional until the shrine demonstrates one verified wonder." Came
 Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A finger travels down a printed form and stops dead on the last line, and above it a magistrate's mouth curves very slightly for the first time. Page and lower face in frame. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 27 — SURPRISE ME (2:38–2:45) ⬜ needs footage
+## Beat 28 — SURPRISE ME (2:43–2:49) ⬜ needs footage
 
 Line/beat: "Is there a list? A form?" / "Surprise me." Camera on the goblin waving paper at her retreating back.
 
@@ -244,32 +252,41 @@ Line/beat: "Is there a list? A form?" / "Surprise me." Camera on the goblin wavi
 Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin hurries two steps after a departing robed figure, waving a sealed paper over his head and calling out, while she walks on without turning around. Depth: him near, her going. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 28 — THE DEDICATION LINE (2:45–2:53) ⬜ needs footage
+## Beat 29 — A NORMAL RELEASE (2:49–2:56) ⬜ needs footage
 
-Line/beat: "Those words outlive towns." Camera on her stopped at the clearing's edge, looking back.
-
-```
-Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. At the exact edge of the clearing a robed magistrate stops, turns her head back toward a man-height tree, and speaks once across the distance. Long lens compression, dust in the air, morning light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
-```
-
-## Beat 29 — A NORMAL RELEASE (2:53–3:00) ⬜ needs footage
-
-Line/beat: the tree's closing joke. Camera wide: her leaving, the two of them, the still tree.
+Line: the tree's closing joke. Camera wide: her leaving, the two of them, the still tree.
 
 ```
-Vertical 9:16 wide shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A robed figure walks away up a dirt road while a small goblin stares at a paper in his hands and a straw-hatted farmer looks up at a man-height tree whose leaves are completely still. Held wide, morning light lengthening. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 wide shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A robed figure walks away up a dirt road while a small goblin stares at the paper in his hands and a straw-hatted farmer looks up at a man-height tree whose leaves are completely still. Held wide, morning light lengthening. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+```
+
+## Beat 30 — THE DEDICATION LINE (2:56–3:04) ⬜ needs footage
+
+Line: "Those words outlive towns." Camera on her stopped at the clearing's edge, speaking back — the episode's last spoken line (the gate: the VO joke was burying it).
+
+```
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. At the edge of the clearing a robed magistrate stops, turns, and speaks once back across the distance toward a man-height tree, dust hanging in the light between them. Long-lens compression, morning light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+```
+
+## Beat 31 — BLANK (3:04–3:09) ⬜ needs footage
+
+No dialogue — the final image is the unanswered question. Camera on the empty ruled line.
+
+```
+Vertical 9:16 extreme close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A sealed paper lies open across two small green hands and the camera settles on one ruled line left completely empty, the hands trembling very slightly. Held macro, morning light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ---
 
 ## Progress
 
-0 of 29 generated for the `006a-t0-b` skeleton — the largest shot list in
+0 of 31 generated for the `006a-t0-b` skeleton — the largest shot list in
 the tree. Provenance for each generated clip goes in a sibling
 `NN-slug.meta.yaml` (platform, model, prompt, cost) so `render_t3.py`
 records per-beat sources in the leaf (§7.2).
 
-Consistency risks: the magistrate appears in 18 shots (a cold viewer of the
+Consistency risks: the magistrate appears in 19 shots (a cold viewer of the
 old cut reported *four* different-looking magistrates), the ledger/form/seal
-props recur in nine, and the tree must stay man-height throughout. Wan 1.3B
-has no reference-image conditioning; judge on material.
+props recur in eleven, and the tree must stay man-height throughout — never
+"looked up into", since her face is level with the crown. Wan 1.3B has no
+reference-image conditioning; judge on material.
