@@ -9,3 +9,7 @@ __pycache__/
 node_modules/
 package.json
 package-lock.json
+
+# Kaggle API token lives in ~/.kaggle, never here
+kaggle.json
+access_token
