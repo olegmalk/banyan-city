@@ -7,53 +7,53 @@
    "who": "FARMER",
    "text": "Infrastructure.",
    "start": 1.4,
-   "end": 2.419,
+   "end": 2.472,
    "chunks": [
     {
      "text": "Infrastructure.",
      "start": 1.4,
-     "end": 2.419
+     "end": 2.472
     }
    ]
   },
   {
    "who": "VO",
    "text": "I've seen this before. It's called audit prep. You cannot mop your",
-   "start": 2.919,
-   "end": 6.482,
+   "start": 2.972,
+   "end": 7.428,
    "chunks": [
     {
      "text": "I've seen this before.",
-     "start": 2.919,
-     "end": 4.044
+     "start": 2.972,
+     "end": 4.491
     },
     {
      "text": "It's called audit prep.",
-     "start": 4.044,
-     "end": 5.383
+     "start": 4.491,
+     "end": 5.937
     },
     {
      "text": "You cannot mop your",
-     "start": 5.383,
-     "end": 6.483
+     "start": 5.937,
+     "end": 7.429
     }
    ]
   },
   {
    "who": "VO",
    "text": "way out of one. Everyone tries.",
-   "start": 6.982,
-   "end": 9.122,
+   "start": 7.928,
+   "end": 10.109,
    "chunks": [
     {
      "text": "way out of one.",
-     "start": 6.982,
-     "end": 7.641
+     "start": 7.928,
+     "end": 9.052
     },
     {
      "text": "Everyone tries.",
-     "start": 7.641,
-     "end": 9.123
+     "start": 9.052,
+     "end": 10.108
     }
    ]
   }
@@ -65,5 +65,5 @@
    "end": 1.4
   }
  ],
- "total_s": 9.422
+ "total_s": 10.409
 }

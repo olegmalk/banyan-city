@@ -2,7 +2,7 @@
 
 **Tree:** Sapling · **Parent:** [003b — One Leaf for Yes](../003b-one-leaf-for-yes/node.md) · **Trunk:** yes · **Status:** hot
 **This file is a T0 leaf** (`004-t0-b`, shot-granular per SCRIPT-SPEC.md).
-**Format:** 9:16 vertical · ~105s · VO + dialogue · 19 beats = 19 shots
+**Format:** 9:16 vertical · ~117s · VO + dialogue · 21 beats = 21 shots
 
 ---
 
@@ -27,7 +27,7 @@ one goblin and a lean-to?*
 
 **COLD OPEN — 0:00–0:05**
 
-The goblin holds a fig aloft over a tiny two-leaf sapling and a crooked lean-to; he freezes mid-ceremony.
+The goblin holds a fig aloft over a knee-high young tree, a crooked lean-to and a three-stone cairn; he freezes mid-ceremony.
 
 > **SCAVENGER:** I hereby name this place… uh.
 
@@ -39,7 +39,7 @@ He lowers the fig, deflating.
 
 **THE TREE, WATCHING — 0:10–0:15**
 
-The sapling's two leaves hang perfectly level, waiting.
+The young tree's small crown of leaves hangs perfectly level, waiting.
 
 > **VO (dry, tired, engineer):** I died an engineer and woke up as this tree. Today my only citizen is naming the town.
 
@@ -51,7 +51,7 @@ He paces the tiny clearing, pitching at the tree like a founder at investors.
 
 **NO LEAF — 0:20–0:24**
 
-Close on the leaves: dead still. No answer at all.
+Close on one leaf, side-on: it holds dead level while the grass below it moves.
 
 **GREENREST — 0:24–0:29**
 
@@ -67,19 +67,19 @@ He points at the fig, reaching now.
 
 **AGGRESSIVELY NOTHING — 0:34–0:39**
 
-The leaves stay absolutely motionless — a stillness that reads as an opinion.
+Extreme close on a stem joint: not one fibre moves. A stillness with an opinion in it.
 
 > **SCAVENGER (wounded):** Everything cannot be a no. You are a *plant*.
 
 **NAME IT FOR WHAT IT DOES — 0:39–0:45**
 
-Underground: the root map glows, patient and systematic.
+The tree's one patch of shade lies on the grass, sharp-edged in the midday sun.
 
 > **VO:** Name the thing after what it *does*, like every good system since the dawn of—
 
 **THE COLLAPSE — 0:45–0:51**
 
-He flops down against the trunk, out of the midday sun, giving up.
+He flops down against the trunk, into the shade patch, out of the low afternoon sun, giving up.
 
 > **SCAVENGER (muttering):** …Whatever. It's just shade.
 
@@ -107,13 +107,13 @@ He stands and raises the fig again — less ceremony, more meaning — gesturing
 
 **THE FIRST GIFT — 1:13–1:19**
 
-Close on the bare branch where the fig grew.
+The goblin's bare feet, planted in the shade patch on the grass.
 
 > **VO:** Named after the first thing I ever gave anyone. I'd have accepted `prod-east-1`, but this is better.
 
 **BOOTS — 1:19–1:24**
 
-Heavy boots stop at the clearing's edge; the goblin dives behind the trunk, hiding one-sixth of himself.
+Wide at grass level: heavy boots stop at the clearing's edge as the goblin dives behind a trunk that hides a third of him.
 
 **THE FARMER — 1:24–1:30**
 
@@ -121,13 +121,19 @@ A sun-cracked farmer stands looking at the lean-to, the cairn, and the visibly f
 
 > **FARMER:** …You the one who's been keeping the weeds off this stretch?
 
-**THE TRIBUTE — 1:30–1:37**
+**THE WATER — 1:30–1:36**
 
-He sets a clay jug and half a loaf at the base of the trunk, beside the cairn stones, refusing eye contact.
+Underground: a root runs west and a dark damp line spreads through pale soil toward a distant field.
+
+> **VO:** I have been moving water toward his field for three days. Nobody asked me to. He noticed.
+
+**THE TRIBUTE — 1:36–1:43**
+
+He sets a clay jug and half a loaf at the base of the trunk, beside the cairn, and looks at the tree — not the goblin — when he says it.
 
 > **FARMER:** Man whose field started drinking again. Tell no one.
 
-**REGISTERED — 1:37–1:44**
+**REGISTERED — 1:43–1:50**
 
 At the horizon-touch of sunset the world flickers to wireframe for a single frame, a label folding open over the clearing and away.
 
@@ -135,9 +141,9 @@ At the horizon-touch of sunset the world flickers to wireframe for a single fram
 SHADE · settlement(?) · pop. 2
 ```
 
-> **VO (quiet):** The system just… registered us. We're on the map.
+> **VO (quiet):** Population two. There is one goblin here. …It counted *me*.
 
-**THE HOOK — 1:44–1:51**
+**THE HOOK — 1:50–1:57**
 
 The farmer stops on his way out, turns back, and looks at the lean-to, the cairn, the goblin with his fig.
 
@@ -169,7 +175,7 @@ era.
 
 ## Taste-rule notes
 
-- **Cycle 007 (shot density):** 19 beats / ~105s = a cut every 5.5s, ≤1
+- **Cycle 007 (shot density):** 21 beats / ~117s = a cut every 5.6s, ≤1
   spoken line each. Every refusal ("no leaf", "aggressively nothing") is
   now a shot of the leaves, so the tree visibly participates in the scene
   it is the subject of.

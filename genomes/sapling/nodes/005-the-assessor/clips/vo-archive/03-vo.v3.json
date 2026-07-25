@@ -1,0 +1,124 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v2",
+ "lines": [
+  {
+   "who": "ASSESSOR",
+   "text": "Population: two. Occupations: farmer \u2014 (he writes) \u2014 and\u2026",
+   "start": 0.0,
+   "end": 3.353,
+   "chunks": [
+    {
+     "text": "Population: two.",
+     "start": 0.0,
+     "end": 1.52
+    },
+    {
+     "text": "Occupations: farmer \u2014 (he writes) \u2014 and\u2026",
+     "start": 1.52,
+     "end": 3.353
+    }
+   ]
+  },
+  {
+   "who": "VO",
+   "text": "(looking at the scavenger) \u2026weed warden. Provisional. Water source?",
+   "start": 3.703,
+   "end": 5.921,
+   "chunks": [
+    {
+     "text": "(looking at the scavenger) \u2026weed warden.",
+     "start": 3.703,
+     "end": 4.79
+    },
+    {
+     "text": "Provisional.",
+     "start": 4.79,
+     "end": 5.202
+    },
+    {
+     "text": "Water source?",
+     "start": 5.202,
+     "end": 5.921
+    }
+   ]
+  },
+  {
+   "who": "FARMER",
+   "text": "The channel mended itself.",
+   "start": 6.421,
+   "end": 8.301,
+   "chunks": [
+    {
+     "text": "The channel mended itself.",
+     "start": 6.421,
+     "end": 8.301
+    }
+   ]
+  },
+  {
+   "who": "ASSESSOR",
+   "text": "Channels do not mend themselves.",
+   "start": 8.801,
+   "end": 10.568,
+   "chunks": [
+    {
+     "text": "Channels do not mend themselves.",
+     "start": 8.801,
+     "end": 10.568
+    }
+   ]
+  },
+  {
+   "who": "FARMER",
+   "text": "This one did.",
+   "start": 11.068,
+   "end": 11.975,
+   "chunks": [
+    {
+     "text": "This one did.",
+     "start": 11.068,
+     "end": 11.975
+    }
+   ]
+  },
+  {
+   "who": "VO",
+   "text": "Oh no. He counts things for a living. He's been counting my tells since",
+   "start": 12.475,
+   "end": 16.595,
+   "chunks": [
+    {
+     "text": "Oh no.",
+     "start": 12.475,
+     "end": 13.532
+    },
+    {
+     "text": "He counts things for a living.",
+     "start": 13.532,
+     "end": 14.94
+    },
+    {
+     "text": "He's been counting my tells since",
+     "start": 14.94,
+     "end": 16.595
+    }
+   ]
+  },
+  {
+   "who": "VO",
+   "text": "he arrived.",
+   "start": 17.095,
+   "end": 18.015,
+   "chunks": [
+    {
+     "text": "he arrived.",
+     "start": 17.095,
+     "end": 18.015
+    }
+   ]
+  }
+ ],
+ "total_s": 18.315
+}

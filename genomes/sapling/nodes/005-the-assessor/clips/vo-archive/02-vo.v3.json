@@ -1,0 +1,286 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v2",
+ "lines": [
+  {
+   "who": "ASSESSOR",
+   "text": "Settlement name?",
+   "start": 0.0,
+   "end": 0.994,
+   "chunks": [
+    {
+     "text": "Settlement name?",
+     "start": 0.0,
+     "end": 0.994
+    }
+   ]
+  },
+  {
+   "who": "SCAVENGER",
+   "text": "\u2026Shade.",
+   "start": 1.174,
+   "end": 3.154,
+   "chunks": [
+    {
+     "text": "\u2026Shade.",
+     "start": 1.174,
+     "end": 3.154
+    }
+   ]
+  },
+  {
+   "who": "ASSESSOR",
+   "text": "Shade. Founded?",
+   "start": 3.334,
+   "end": 4.672,
+   "chunks": [
+    {
+     "text": "Shade.",
+     "start": 3.334,
+     "end": 3.997
+    },
+    {
+     "text": "Founded?",
+     "start": 3.997,
+     "end": 4.672
+    }
+   ]
+  },
+  {
+   "who": "SCAVENGER",
+   "text": "Yesterday.",
+   "start": 4.852,
+   "end": 5.958,
+   "chunks": [
+    {
+     "text": "Yesterday.",
+     "start": 4.852,
+     "end": 5.958
+    }
+   ]
+  },
+  {
+   "who": "ASSESSOR",
+   "text": "Structures?",
+   "start": 6.138,
+   "end": 6.892,
+   "chunks": [
+    {
+     "text": "Structures?",
+     "start": 6.138,
+     "end": 6.892
+    }
+   ]
+  },
+  {
+   "who": "SCAVENGER",
+   "text": "One. Ish.",
+   "start": 7.072,
+   "end": 8.508,
+   "chunks": [
+    {
+     "text": "One.",
+     "start": 7.072,
+     "end": 7.974
+    },
+    {
+     "text": "Ish.",
+     "start": 7.974,
+     "end": 8.507
+    }
+   ]
+  },
+  {
+   "who": "ASSESSOR",
+   "text": "\"Ish\" is not a load rating.",
+   "start": 9.008,
+   "end": 10.892,
+   "chunks": [
+    {
+     "text": "\"Ish\" is not a load rating.",
+     "start": 9.008,
+     "end": 10.892
+    }
+   ]
+  },
+  {
+   "who": "ASSESSOR",
+   "text": "Orchard, single specimen. Yield?",
+   "start": 11.392,
+   "end": 13.91,
+   "chunks": [
+    {
+     "text": "Orchard, single specimen.",
+     "start": 11.392,
+     "end": 12.823
+    },
+    {
+     "text": "Yield?",
+     "start": 12.823,
+     "end": 13.91
+    }
+   ]
+  },
+  {
+   "who": "SCAVENGER",
+   "text": "None! No yield. Zero fruit. Historically.",
+   "start": 14.41,
+   "end": 17.6,
+   "chunks": [
+    {
+     "text": "None!",
+     "start": 14.41,
+     "end": 15.23
+    },
+    {
+     "text": "No yield.",
+     "start": 15.23,
+     "end": 15.789
+    },
+    {
+     "text": "Zero fruit.",
+     "start": 15.789,
+     "end": 16.537
+    },
+    {
+     "text": "Historically.",
+     "start": 16.537,
+     "end": 17.6
+    }
+   ]
+  },
+  {
+   "who": "ASSESSOR",
+   "text": "\u2026I have here a prior record. One",
+   "start": 18.1,
+   "end": 20.597,
+   "chunks": [
+    {
+     "text": "\u2026I have here a prior record.",
+     "start": 18.1,
+     "end": 20.153
+    },
+    {
+     "text": "One",
+     "start": 20.153,
+     "end": 20.597
+    }
+   ]
+  },
+  {
+   "who": "VO",
+   "text": "apple. Unlicensed consumption. Subject: (he looks at the scavenger for a",
+   "start": 21.097,
+   "end": 25.242,
+   "chunks": [
+    {
+     "text": "apple.",
+     "start": 21.097,
+     "end": 21.438
+    },
+    {
+     "text": "Unlicensed consumption.",
+     "start": 21.438,
+     "end": 23.849
+    },
+    {
+     "text": "Subject: (he looks at the scavenger for a",
+     "start": 23.849,
+     "end": 25.242
+    }
+   ]
+  },
+  {
+   "who": "VO",
+   "text": "long, terrible moment) \u2026description matches.",
+   "start": 25.742,
+   "end": 28.967,
+   "chunks": [
+    {
+     "text": "long, terrible moment) \u2026description matches.",
+     "start": 25.742,
+     "end": 28.968
+    }
+   ]
+  },
+  {
+   "who": "SCAVENGER",
+   "text": "It fell off the cart. Ground fruit is foraging.",
+   "start": 29.467,
+   "end": 32.042,
+   "chunks": [
+    {
+     "text": "It fell off the cart.",
+     "start": 29.467,
+     "end": 30.616
+    },
+    {
+     "text": "Ground fruit is foraging.",
+     "start": 30.616,
+     "end": 32.042
+    }
+   ]
+  },
+  {
+   "who": "FARMER",
+   "text": "He keeps the weeds off. Whole stretch.",
+   "start": 32.542,
+   "end": 35.441,
+   "chunks": [
+    {
+     "text": "He keeps the weeds off.",
+     "start": 32.542,
+     "end": 33.767
+    },
+    {
+     "text": "Whole stretch.",
+     "start": 33.767,
+     "end": 35.441
+    }
+   ]
+  },
+  {
+   "who": "ASSESSOR",
+   "text": "\"Community service. Ongoing.\"",
+   "start": 35.941,
+   "end": 38.098,
+   "chunks": [
+    {
+     "text": "\"Community service.",
+     "start": 35.941,
+     "end": 37.239
+    },
+    {
+     "text": "Ongoing.\"",
+     "start": 37.239,
+     "end": 38.098
+    }
+   ]
+  },
+  {
+   "who": "VO",
+   "text": "That's not mercy. That's worse. That's a payment plan.",
+   "start": 38.598,
+   "end": 41.154,
+   "chunks": [
+    {
+     "text": "That's not mercy.",
+     "start": 38.598,
+     "end": 39.609
+    },
+    {
+     "text": "That's worse.",
+     "start": 39.609,
+     "end": 40.238
+    },
+    {
+     "text": "That's a payment plan.",
+     "start": 40.238,
+     "end": 41.154
+    }
+   ]
+  }
+ ],
+ "total_s": 41.454
+}

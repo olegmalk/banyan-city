@@ -7,97 +7,97 @@
    "who": "MAGISTRATE",
    "text": "Settlement, Shade. Founded",
    "start": 1.44,
-   "end": 4.435,
+   "end": 3.951,
    "chunks": [
     {
      "text": "Settlement, Shade.",
      "start": 1.44,
-     "end": 3.539
+     "end": 3.219
     },
     {
      "text": "Founded",
-     "start": 3.539,
-     "end": 4.435
+     "start": 3.219,
+     "end": 3.951
     }
    ]
   },
   {
    "who": "VO",
    "text": "yesterday, structures one-ish, population three. (a page turns)",
-   "start": 4.935,
-   "end": 8.611,
+   "start": 4.451,
+   "end": 7.678,
    "chunks": [
     {
      "text": "yesterday, structures one-ish, population three.",
-     "start": 4.935,
-     "end": 8.015
+     "start": 4.451,
+     "end": 7.125
     },
     {
      "text": "(a page turns)",
-     "start": 8.015,
-     "end": 8.611
+     "start": 7.125,
+     "end": 7.678
     }
    ]
   },
   {
    "who": "VO",
    "text": "Occupation of resident number three: \"answers questions.\"",
-   "start": 9.111,
-   "end": 12.071,
+   "start": 8.178,
+   "end": 11.355,
    "chunks": [
     {
      "text": "Occupation of resident number three: \"answers questions.\"",
-     "start": 9.111,
-     "end": 12.071
+     "start": 8.178,
+     "end": 11.355
     }
    ]
   },
   {
    "who": "MAGISTRATE",
    "text": "Well?",
-   "start": 16.311,
-   "end": 17.045,
+   "start": 15.595,
+   "end": 16.183,
    "chunks": [
     {
      "text": "Well?",
-     "start": 16.311,
-     "end": 17.044
+     "start": 15.595,
+     "end": 16.182
     }
    ]
   },
   {
    "who": "MAGISTRATE",
    "text": "\u2026So the assessor hasn't been drinking. Pity. That was the",
-   "start": 18.485,
-   "end": 23.209,
+   "start": 17.623,
+   "end": 21.221,
    "chunks": [
     {
      "text": "\u2026So the assessor hasn't been drinking.",
-     "start": 18.485,
-     "end": 20.548
+     "start": 17.623,
+     "end": 19.502
     },
     {
      "text": "Pity.",
-     "start": 20.548,
-     "end": 21.395
+     "start": 19.502,
+     "end": 19.985
     },
     {
      "text": "That was the",
-     "start": 21.395,
-     "end": 23.21
+     "start": 19.985,
+     "end": 21.222
     }
    ]
   },
   {
    "who": "VO",
    "text": "tidy explanation.",
-   "start": 23.709,
-   "end": 24.787,
+   "start": 21.721,
+   "end": 22.993,
    "chunks": [
     {
      "text": "tidy explanation.",
-     "start": 23.709,
-     "end": 24.787
+     "start": 21.721,
+     "end": 22.992
     }
    ]
   }
@@ -110,14 +110,14 @@
   },
   {
    "text": "She closes the ledger and looks at the tree for a long moment.",
-   "start": 12.121,
-   "end": 16.311
+   "start": 11.405,
+   "end": 15.595
   },
   {
    "text": "One leaf tilts.",
-   "start": 17.095,
-   "end": 18.485
+   "start": 16.233,
+   "end": 17.623
   }
  ],
- "total_s": 25.087
+ "total_s": 23.293
 }

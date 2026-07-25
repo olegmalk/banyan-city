@@ -90,3 +90,30 @@ the founder's visual bible above always wins on look.
    shifting light, one leaf breathing, plus a perceptible camera move.
    A held breath must still be alive on a phone screen.
 3. `pipeline/lint_genome.py` warns (advisory, never failing) on both.
+
+## Canonical growth ladder (per node) — steward, 2026-07-25
+
+Growth is the protagonist's only verb, so his **size is continuity**, and it
+was never written down. The result was a contradiction a cold reader caught
+in 004: the same tree described as a two-leaf sprout *and* as something with
+a trunk to lean on, leaves overhead, and enough shade to sit in — in a town
+named Shade. No animator can draw that. This ladder is the fix; every shot
+prompt states the node's row verbatim.
+
+| Node | Height | Canopy | Notes |
+|---|---|---|---|
+| 001 | ~15 cm | two oversized cotyledon leaves | a sprout; no trunk, no branch |
+| 002a/b/c | ~40 cm | two leaves + one thin side-branch | the branch is where the fig grew and fell |
+| 003b | ~55 cm | three leaves, bare fig branch | tall enough to cast a hand-sized shadow |
+| 004 | **~90 cm (knee-high)** | five or six leaves in a small crown | casts one real shade patch, big enough for a sitting goblin — this is why the town is called Shade |
+| 005 | ~1.2 m | small crown, first woody bark | the assessor can call it "one specimen" without irony |
+| 006a/007a | ~1.6 m | full small crown, side branches | a shrine you can stand under; fig-bearing |
+
+Two rules follow:
+
+1. **Never write "tiny sapling" past 003b.** From 004 he is a young tree.
+   The comedy of smallness lives in 001–003; from 004 the comedy is
+   bureaucratic, not physical.
+2. **The shade patch is a prop.** From 004 onward it exists on the ground,
+   it is small, and characters use it. It is the town's namesake and the
+   first thing he ever gave anyone.

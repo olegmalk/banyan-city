@@ -1,0 +1,56 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "VO",
+   "text": "The farmer said \"after harvest.\" It is not after harvest. Which means",
+   "start": 2.56,
+   "end": 7.197,
+   "chunks": [
+    {
+     "text": "The farmer said \"after harvest.\" It is",
+     "start": 2.56,
+     "end": 5.069
+    },
+    {
+     "text": "not after harvest.",
+     "start": 5.069,
+     "end": 6.435
+    },
+    {
+     "text": "Which means",
+     "start": 6.435,
+     "end": 7.197
+    }
+   ]
+  },
+  {
+   "who": "VO",
+   "text": "the kingdom's bureaucracy runs ahead of schedule. I have chills.",
+   "start": 7.697,
+   "end": 11.278,
+   "chunks": [
+    {
+     "text": "the kingdom's bureaucracy runs ahead of schedule.",
+     "start": 7.697,
+     "end": 10.273
+    },
+    {
+     "text": "I have chills.",
+     "start": 10.273,
+     "end": 11.278
+    }
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "text": "Dawn over Shade: lean-to, cairn, jug, tree.",
+   "start": 0.05,
+   "end": 2.56
+  }
+ ],
+ "total_s": 11.578
+}

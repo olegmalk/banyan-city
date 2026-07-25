@@ -1,0 +1,115 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "ASSESSOR",
+   "text": "And you. Occupation?",
+   "start": 2.28,
+   "end": 3.821,
+   "chunks": [
+    {
+     "text": "And you.",
+     "start": 2.28,
+     "end": 2.964
+    },
+    {
+     "text": "Occupation?",
+     "start": 2.964,
+     "end": 3.821
+    }
+   ]
+  },
+  {
+   "who": "ASSESSOR",
+   "text": "The magistrate reviews all new",
+   "start": 5.221,
+   "end": 7.065,
+   "chunks": [
+    {
+     "text": "The magistrate reviews all new",
+     "start": 5.221,
+     "end": 7.065
+    }
+   ]
+  },
+  {
+   "who": "VO",
+   "text": "settlements. She will want to see this one personally.",
+   "start": 7.565,
+   "end": 10.578,
+   "chunks": [
+    {
+     "text": "settlements.",
+     "start": 7.565,
+     "end": 8.513
+    },
+    {
+     "text": "She will want to see this one personally.",
+     "start": 8.513,
+     "end": 10.578
+    }
+   ]
+  },
+  {
+   "who": "ASSESSOR",
+   "text": "\u2026Population three.",
+   "start": 13.978,
+   "end": 15.087,
+   "chunks": [
+    {
+     "text": "\u2026Population three.",
+     "start": 13.978,
+     "end": 15.087
+    }
+   ]
+  },
+  {
+   "who": "VO",
+   "text": "I've been called a lot of things. \"Population\" is new.",
+   "start": 17.367,
+   "end": 20.324,
+   "chunks": [
+    {
+     "text": "I've been called a lot of things.",
+     "start": 17.367,
+     "end": 18.894
+    },
+    {
+     "text": "\"Population\" is new.",
+     "start": 18.894,
+     "end": 20.324
+    }
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "text": "The assessor walks to the tree.",
+   "start": 0.05,
+   "end": 2.28
+  },
+  {
+   "text": "Beat.",
+   "start": 3.871,
+   "end": 5.221
+  },
+  {
+   "text": "He pauses at the clearing's edge, precisely where he entered.",
+   "start": 10.628,
+   "end": 13.978
+  },
+  {
+   "text": "He walks off into the morning.",
+   "start": 15.137,
+   "end": 17.367
+  },
+  {
+   "text": "SMASH TO BLACK.",
+   "start": 20.374,
+   "end": 21.764
+  }
+ ],
+ "total_s": 22.064
+}
