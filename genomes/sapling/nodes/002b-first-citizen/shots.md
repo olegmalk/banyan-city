@@ -27,7 +27,7 @@ Line: the tree's first VO. Camera on the TREE and the fig — premise and the en
 Vertical 9:16 macro shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds with large empty areas, gentle pastel-leaning palette. A tiny mascot-simple banyan sapling — thin curved trunk, two oversized expressive leaves, no face — sways in the wind, and on its thinnest branch one small ripe fig bobs with each sway, slightly heavier than the branch wants to hold. Vast empty green field, peach and gold morning washes. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 02 — THE SPRINT (0:05–0:09) ⬜ needs footage
+## Beat 02 — THE SPRINT (0:05–0:10) ⬜ needs footage
 
 No dialogue — pure action. Camera wide so the dive reads.
 
@@ -35,7 +35,7 @@ No dialogue — pure action. Camera wide so the dive reads.
 Vertical 9:16 wide shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small round goblin — enormous ears, huge expressive eyes, one broken tusk, patchwork cloak in faded greens and browns — sprints into frame at full panicked speed, skids in the grass kicking up simple cartoon dust puffs, and dives behind a tiny 40cm mascot-simple sapling. Static camera, empty morning field. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 03 — BAD COVER (0:09–0:14) ⬜ needs footage
+## Beat 03 — BAD COVER (0:10–0:18) ⬜ needs footage
 
 Line: "A creature is using me as cover. I am forty centimeters tall." Camera on the size mismatch the line describes.
 
@@ -43,7 +43,7 @@ Line: "A creature is using me as cover. I am forty centimeters tall." Camera on 
 Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small round goblin — enormous ears, one broken tusk, patchwork cloak — crouches lower and lower behind the pencil-thin trunk of a tiny 40cm mascot-simple sapling, sucking in his belly, absurdly failing to hide as the tiny tree covers almost none of him. Deadpan comedic staging, static camera. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 04 — THE FOOTNOTE (0:14–0:19) ⬜ needs footage
+## Beat 04 — THE FOOTNOTE (0:18–0:27) ⬜ needs footage
 
 Line: the architect/footnote joke. Camera close on the held breath.
 
@@ -51,7 +51,7 @@ Line: the architect/footnote joke. Camera close on the held breath.
 Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small round goblin's face fills the frame as he holds his breath, cheeks puffed, huge expressive eyes darting left and right, enormous ears twitching at every sound. Slow push-in, dappled morning light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 05 — THE PATROL (0:19–0:24) ⬜ needs footage
+## Beat 05 — THE PATROL (0:27–0:34) ⬜ needs footage
 
 Line: GUARD 1, "Apple thief." Camera on the guards arriving.
 
@@ -59,7 +59,7 @@ Line: GUARD 1, "Apple thief." Camera on the guards arriving.
 Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. Two patrol guards drawn as round harmless shapes in mismatched ill-fitting armor jog into frame and halt, heads turning as they scan an empty morning field; one carries a clipboard made of tree bark. Wide static camera, long soft shadows. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 06 — THE CLIPBOARD (0:24–0:30) ⬜ needs footage
+## Beat 06 — THE CLIPBOARD (0:34–0:45) ⬜ needs footage
 
 Line: GUARD 2 reclassifying the crime. Camera on the clipboard — the thing the line is about.
 
@@ -67,7 +67,7 @@ Line: GUARD 2 reclassifying the crime. Camera on the clipboard — the thing the
 Vertical 9:16 medium close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A round guard in mismatched armor turns over a clipboard made of tree bark and traces a line on it with one finger as he reads, brow furrowed with bureaucratic seriousness. The clipboard fills the lower third of the frame. Slow drift in. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 07 — CONFISCATE (0:30–0:34) ⬜ needs footage
+## Beat 07 — CONFISCATE (0:45–0:50) ⬜ needs footage
 
 Line: "So we confiscate the apple." Camera on the pointing guard.
 
@@ -75,7 +75,7 @@ Line: "So we confiscate the apple." Camera on the pointing guard.
 Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A round guard in mismatched armor thrusts one arm out decisively, pointing off-frame, chin raised with the confidence of a man who believes he has solved the problem. His partner's shoulder is just visible at frame edge. Static camera, morning field. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 08 — INSIDE HIM (0:34–0:38) ⬜ needs footage
+## Beat 08 — INSIDE HIM (0:50–0:56) ⬜ needs footage
 
 Line: "The apple is inside him, Dren." Camera follows the pointing finger to the goblin's belly.
 
@@ -83,7 +83,7 @@ Line: "The apple is inside him, Dren." Camera follows the pointing finger to the
 Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A round guard lowers his bark clipboard and points flatly at the round belly of a small goblin in a patchwork cloak, who looks down at himself. Deadpan two-shot, no movement but the pointing arm. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 09 — THE PAUSE (0:38–0:43) ⬜ needs footage
+## Beat 09 — THE PAUSE (0:56–1:01) ⬜ needs footage
 
 Line: "…We confiscate the goblin?" Camera close on the guard's slow realisation.
 
@@ -91,7 +91,7 @@ Line: "…We confiscate the goblin?" Camera close on the guard's slow realisatio
 Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A round guard's face works slowly through an idea: eyes drifting, mouth opening slightly, helmet slipping a fraction as he tilts his head. Held close-up, minimal motion, comic timing. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 10 — NO FORM (0:43–0:48) ⬜ needs footage
+## Beat 10 — NO FORM (1:01–1:08) ⬜ needs footage
 
 Line: "There's no form for that." Camera on the blank back of the clipboard.
 
@@ -99,7 +99,7 @@ Line: "There's no form for that." Camera on the blank back of the clipboard.
 Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A round guard flips his bark clipboard around and holds up its completely blank back toward his partner, shaking it once for emphasis. The blank board dominates the frame. Static camera. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 11 — THEY LEAVE (0:48–0:53) ⬜ needs footage
+## Beat 11 — THEY LEAVE (1:08–1:13) ⬜ needs footage
 
 Line: the tree's "trapped in a workflow." Camera on the departing guards.
 
@@ -107,7 +107,7 @@ Line: the tree's "trapped in a workflow." Camera on the departing guards.
 Vertical 9:16 wide shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. Two round guards in mismatched armor walk away from camera across an empty field, gesturing at each other in continuing disagreement, growing smaller as they go. Static wide camera, long morning shadows stretching behind them. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 12 — RELATED (0:53–0:57) ⬜ needs footage
+## Beat 12 — RELATED (1:13–1:18) ⬜ needs footage
 
 Line: the tree's. Camera ON THE TREE for the tree's own line — framed TIGHT on the leaves, because the scavenger is still hidden behind the trunk and a wide shot would read as him having left (caught by the comprehension gate).
 
@@ -115,7 +115,7 @@ Line: the tree's. Camera ON THE TREE for the tree's own line — framed TIGHT on
 Vertical 9:16 tight close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. Clouds drift and blur behind the two oversized leaves of a tiny mascot-simple sapling that fill the frame and stay utterly still — no trunk base, no ground, no other character visible. The stillness of the tree against a moving sky. Very slow push-in. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 13 — THE SHADE (0:57–1:03) ⬜ needs footage
+## Beat 13 — THE SHADE (1:18–1:22) ⬜ needs footage
 
 Line: "…Thanks for the shade." Camera on the goblin folding into the tiny shade.
 
@@ -123,7 +123,7 @@ Line: "…Thanks for the shade." Camera on the goblin folding into the tiny shad
 Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small round goblin slides down the trunk of a tiny 40cm sapling and folds himself into its single small patch of shade, pulling his knees up around his enormous ears with the practised ease of someone used to tiny shelters. Midday light, high flat greens. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 14 — THE DEFENSE (1:03–1:09) ⬜ needs footage
+## Beat 14 — THE DEFENSE (1:22–1:31) ⬜ needs footage
 
 Line: the apple defence. Camera on his hands in the dirt — embarrassment made physical.
 
@@ -131,7 +131,7 @@ Line: the apple defence. Camera on his hands in the dirt — embarrassment made 
 Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin's clawed fingers pick and scratch at loose dirt, flicking pebbles aside, while above them his face glances away, embarrassed, then back down. Intimate low close-up, shallow flat background. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 15 — GOOD LISTENER (1:09–1:15) ⬜ needs footage
+## Beat 15 — GOOD LISTENER (1:31–1:36) ⬜ needs footage
 
 Line: "You're a good listener." Camera holds BOTH of them — the conversation is the subject.
 
@@ -139,7 +139,7 @@ Line: "You're a good listener." Camera holds BOTH of them — the conversation i
 Vertical 9:16 two-shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin tips his head back and looks up at the tiny sapling beside him, talking, gesturing loosely with one hand; the sapling's two oversized leaves hang above him in frame. Warm midday light, gentle and lonely tone, slow imperceptible push-in. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 16 — WHY (1:15–1:21) ⬜ needs footage
+## Beat 16 — WHY (1:36–1:48) ⬜ needs footage
 
 Line: the tree's longest thought. Camera ON THE LEAF, goblin blurred behind.
 
@@ -147,7 +147,7 @@ Line: the tree's longest thought. Camera ON THE LEAF, goblin blurred behind.
 Vertical 9:16 extreme close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. One oversized green leaf of a tiny sapling fills the frame and turns very slightly in still air, its edge catching light; far behind it, out of focus and small, a goblin shape sits talking in flat pastel blur. Shallow depth, quiet, held. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 17 — GOODBYE (1:21–1:26) ⬜ needs footage
+## Beat 17 — GOODBYE (1:48–1:56) ⬜ needs footage
 
 Line: "you didn't see me." Camera on him standing to leave.
 
@@ -155,7 +155,7 @@ Line: "you didn't see me." Camera on him standing to leave.
 Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small round goblin pushes himself up to standing, brushes dust off his patchwork cloak with two quick swipes, and turns away from the tiny sapling toward the open field. Static camera, afternoon light warming toward amber. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 18 — THE DECISION (1:26–1:32) ⬜ needs footage
+## Beat 18 — THE DECISION (1:56–2:03) ⬜ needs footage
 
 Line: the tree deciding to spend everything. Camera on the FIG — the thing being spent.
 
@@ -163,7 +163,7 @@ Line: the tree deciding to spend everything. Camera on the FIG — the thing bei
 Vertical 9:16 extreme close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. One small ripe fig trembles on the thinnest branch of a tiny sapling, its stem flexing under the weight, rimmed by warm amber afternoon light against a soft wash sky. The trembling grows; the stem bends further. Held macro, no cut. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 19 — THE DROP (1:32–1:36) ⬜ needs footage
+## Beat 19 — THE DROP (2:03–2:08) ⬜ needs footage
 
 No dialogue — the physical event. Deliberately WIDE (the gate flagged a scale jump from the previous macro): tree and scavenger must share one frame so cause and effect read in a single take.
 
@@ -171,7 +171,7 @@ No dialogue — the physical event. Deliberately WIDE (the gate flagged a scale 
 Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small ripe fig drops from a tiny sapling's branch, bounces softly off the head of a small round goblin walking away below, and lands in the grass at his feet as he stops mid-step. Single continuous take, static camera, amber afternoon. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 20 — EVIDENCE (1:36–1:42) ⬜ needs footage
+## Beat 20 — EVIDENCE (2:08–2:11) ⬜ needs footage
 
 Line: "…Did you just answer me?" Camera on the goblin holding the fig like evidence.
 
@@ -179,7 +179,7 @@ Line: "…Did you just answer me?" Camera on the goblin holding the fig like evi
 Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small round goblin crouches, picks a fig up out of the grass with both hands, straightens, and raises it in front of him like evidence, huge eyes widening as he looks up at a bare branch above. Amber sliding toward indigo. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 21 — THE ANSWER (1:42–1:47) ⬜ needs footage
+## Beat 21 — THE ANSWER (2:11–2:16) ⬜ needs footage
 
 The tree's reply, and the show's signature gesture. Camera ON THE LEAF; the tilt must read as intentional.
 

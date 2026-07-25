@@ -25,123 +25,102 @@ fugitive talk to each other?*
 ## Script
 
 **COLD OPEN — 0:00–0:05**
-
 A tiny two-leaf banyan sapling sways in a green field; one small fig hangs on its thinnest branch.
 
 > **VO (dry, tired, engineer):** I used to be an engineer. Now I'm a tree. Total assets: two leaves and one fig.
 
-**THE SPRINT — 0:05–0:09**
-
+**THE SPRINT — 0:05–0:10**
 A SCAVENGER — goblin-ish, enormous ears, one broken tusk, patchwork cloak — sprints into frame, skids, and dives behind the sapling's thin trunk.
 
-**BAD COVER — 0:09–0:14**
-
+**BAD COVER — 0:10–0:18**
 The scavenger crouches behind a trunk that hides roughly one-sixth of him.
 
 > **VO:** A creature is using me as cover. I am forty centimeters tall.
 
-**THE FOOTNOTE — 0:14–0:19**
-
+**THE FOOTNOTE — 0:18–0:27**
 The scavenger holds his breath, eyes darting.
 
 > **VO:** Worst stealth plan I have ever seen — and I once watched an architect hide an outage in a *footnote*.
 
-**THE PATROL — 0:19–0:24**
-
+**THE PATROL — 0:27–0:34**
 Two PATROL GUARDS jog in and halt, scanning the field. Their armor doesn't match.
 
 > **GUARD 1:** He went this way. I saw him. Apple thief.
 
-**THE CLIPBOARD — 0:24–0:30**
-
+**THE CLIPBOARD — 0:34–0:45**
 GUARD 2 turns over a clipboard made of bark and reads.
 
 > **GUARD 2:** Technically not theft. He *ate* it on the spot. That reclassifies it as unlicensed consumption.
 
-**CONFISCATE — 0:30–0:34**
-
+**CONFISCATE — 0:45–0:50**
 Guard 1 points at the scavenger, decisive.
 
 > **GUARD 1:** So we confiscate the apple.
 
-**INSIDE HIM — 0:34–0:38**
-
+**INSIDE HIM — 0:50–0:56**
 Guard 2 lowers the clipboard and points at the scavenger's belly.
 
 > **GUARD 2:** The apple is *inside him*, Dren.
 
-**THE PAUSE — 0:38–0:43**
-
+**THE PAUSE — 0:56–1:01**
 Guard 1's face works through it, slowly.
 
 > **GUARD 1:** …We confiscate the goblin?
 
-**NO FORM — 0:43–0:48**
-
+**NO FORM — 1:01–1:08**
 Guard 2 flips the clipboard around: the back is blank.
 
 > **GUARD 2:** There's no form for that. There's *barely* a form for the apple.
 
-**THEY LEAVE — 0:48–0:53**
-
+**THEY LEAVE — 1:08–1:13**
 The guards walk away arguing, backs to camera, genuinely trying to do their jobs.
 
 > **VO:** Nobody in this scene is evil. Everybody in this scene is trapped in a workflow.
 
-**RELATED — 0:53–0:57**
-
+**RELATED — 1:13–1:18**
 Tight on the sapling's two leaves, perfectly still — the scavenger is still crouched behind the trunk, below frame.
 
 > **VO:** I have never related to a fantasy world more.
 
-**THE SHADE — 0:57–1:03**
-
+**THE SHADE — 1:18–1:22**
 The scavenger slides down the trunk and folds into the sapling's tiny shade, knees up around his ears.
 
 > **SCAVENGER:** …Thanks for the shade.
 
-**THE DEFENSE — 1:03–1:09**
-
+**THE DEFENSE — 1:22–1:31**
 He picks at the dirt, embarrassed, glancing around.
 
 > **SCAVENGER:** It was *one* apple. It fell off the cart. On the ground, that's — that's foraging.
 
-**GOOD LISTENER — 1:09–1:15**
-
+**GOOD LISTENER — 1:31–1:36**
 He looks up at the sapling; both of them share the frame.
 
 > **SCAVENGER:** You're a good listener. The last three people I talked to filed a report.
 
-**WHY — 1:15–1:21**
-
+**WHY — 1:36–1:48**
 Close on the sapling's leaf; the scavenger sits blurred behind it.
 
 > **VO:** He talks to me because I'm the only thing here that won't file a report. Buddy, I *wish* I could. I can't even wave.
 
-**GOODBYE — 1:21–1:26**
-
+**GOODBYE — 1:48–1:56**
 The scavenger stands, brushes off, and turns to go.
 
 > **SCAVENGER:** If anyone asks — you didn't see me. Which is true. You're a plant.
 
-**THE DECISION — 1:26–1:32**
-
+**THE DECISION — 1:56–2:03**
 Extreme close-up: the one fig on the thinnest branch, stem trembling.
 
 > **VO:** Wait. Growth includes *release*. One fruit — everything I own. He said ground fruit is foraging.
 
-**THE DROP — 1:32–1:36**
-
+**THE DROP — 2:03–2:08**
 Wider — the whole sapling and the scavenger below it in one frame: the stem lets go, the fig falls, bounces off his head, and lands in the grass at his feet.
 
-**EVIDENCE — 1:36–1:42**
-
+**EVIDENCE — 2:08–2:11**
 The scavenger picks the fig up with both hands and looks up at the bare branch.
 
 > **SCAVENGER (whisper):** …Did you just *answer* me?
 
-**THE ANSWER — 1:42–1:47**
-
+**THE ANSWER — 2:11–2:16**
 The sapling's leaf, in absolutely still air, tilts — and holds.
 
 ```

@@ -1,0 +1,27 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "FARMER",
+   "text": "Man whose field started drinking again. Tell no one.",
+   "start": 0.0,
+   "end": 4.519,
+   "chunks": [
+    {
+     "text": "Man whose field started drinking again.",
+     "start": 0.0,
+     "end": 3.199
+    },
+    {
+     "text": "Tell no one.",
+     "start": 3.199,
+     "end": 4.519
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 4.819
+}

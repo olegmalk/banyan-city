@@ -43,6 +43,35 @@ camera-direction paragraph. The pipeline renders short stage directions
 as on-screen beats; long paragraphs are treated as production language
 and never reach the viewer.)*
 
+### Time ranges are measured, never authored (added 2026-07-25)
+
+A beat heading carries a range (`COLD OPEN — 0:00–0:05`) and it is **output,
+not input**. Write the beats; then re-voice the node and run
+
+```
+python3 pipeline/retime_beats.py <genome> <node>   # ranges from measured voice
+python3 pipeline/sync_shots.py  <genome> <node>    # propagate into shots.md
+```
+
+Hand-written ranges are guesses, and they were wrong every time we checked:
+nine of 001's eighteen beats held more voice than their window allowed, so the
+assembler stretched the slots and the episode ran 133s against a script that
+said 88s. Every density number computed from those ranges — seconds per cut,
+lines per shot — described an episode that did not exist.
+
+`retime_beats.py` predicts each slot with `fit_duration`, the same function
+`render_t3` sizes slots with, so the paper timing equals the assembled
+runtime. It caps nothing: a beat whose voice runs 20s gets a 20s range and is
+reported as over the 6s bound, because that beat is carrying too much material
+and the honest fixes are a shorter line or a cut inside the line — both the
+author's call (R4), never a silent adjustment of the number.
+
+It also refuses to run when voice and script disagree in either direction: a
+beat with a line and no take, or **a take on a beat with no line**. The second
+is the dangerous one. Beats are renumbered by rewrites, and a beat that loses
+its dialogue used to keep the take from the previous cut — which is how 007a
+came to play its closing line at beat 5.
+
 ## Cold open (R7, first ~5 seconds)
 
 Every episode — every one, because platform feeds serve episodes out of

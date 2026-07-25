@@ -1,0 +1,27 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "FARMER",
+   "text": "\u2026You the one who's been keeping the weeds off this stretch?",
+   "start": 0.0,
+   "end": 3.25,
+   "chunks": [
+    {
+     "text": "\u2026You the one who's been keeping the",
+     "start": 0.0,
+     "end": 2.116
+    },
+    {
+     "text": "weeds off this stretch?",
+     "start": 2.116,
+     "end": 3.25
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 3.55
+}

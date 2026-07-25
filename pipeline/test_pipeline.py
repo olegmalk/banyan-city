@@ -107,6 +107,49 @@ def test_caption_chunks():
           all(abs(spans[i][2] - spans[i + 1][1]) < 1e-6 for i in range(len(spans) - 1)))
 
 
+def test_displayable_action_is_the_trees_voice_only():
+    """The tree has no mouth: its answers are stage directions, so those reach
+    the screen and own a silent beat. Everything else must not.
+
+    Cycle 006 surfaced them with a blocklist of camera words, which admitted
+    nearly every short action — 258 of 271 across the genome — and each one
+    took 3.6-4.5s of silence with a caption nobody speaks. That is both founder
+    complaints in one mechanism ("no sound for like 3 seconds straight", "the
+    script being put as dialogue"). It is an allowlist now."""
+    sys.path.insert(0, str(REPO / "pipeline"))
+    import direction as d
+
+    keep = [
+        "One leaf tilts against the sky.",
+        "In dead-still air, one leaf tilts — and holds.",
+        "Both leaves tilt at once, emphatically, in still air.",
+        "The leaf stays still — then gives the smallest, most reluctant half-tilt.",
+    ]
+    for s in keep:
+        check(f"kept: {s[:34]}", d.displayable_action(s) == s)
+
+    drop = [
+        # camera direction: 'close on' was missing from the old blocklist,
+        # which only had 'close-up'
+        "Close on the sapling's leaf; the scavenger sits blurred behind it.",
+        # another character's business, even though it names a branch
+        "He holds the fig up beside the bare branch it fell from.",
+        # scenery/timelapse, even though a leaf unfurls in it
+        "The sun arcs overhead three times as one new leaf unfurls from a bud.",
+        # the tree is present but not answering
+        "The sapling stands alone in a vast green field.",
+        # production language
+        "Wide, the desk in profile: the man sways and drops out of frame.",
+    ]
+    for s in drop:
+        check(f"dropped: {s[:34]}", d.displayable_action(s) is None)
+
+    check("a 'Beat.' is a pause, not a caption", d.displayable_action("Beat.") is None)
+    # a silent hold past a couple of seconds reads as the video having stalled
+    check("hold is capped", d.action_hold("word " * 40) == d.ACTION_MAX_HOLD)
+    check("hold has a floor", d.action_hold("One leaf tilts.") >= d.ACTION_MIN_HOLD)
+
+
 def test_parse_frames_bold_emphasis_in_quote():
     # regression: a quote line opening with bold emphasis ('> **fires**. rest')
     # is a wrapped speech continuation — only a colon marks a new speaker.
@@ -615,6 +658,7 @@ def main():
     test_caption_chunks()
     test_sync_shots_is_idempotent()
     test_kaggle_notebook_cells_parse()
+    test_displayable_action_is_the_trees_voice_only()
     test_parse_frames_bold_emphasis_in_quote()
     test_parse_frames_bold_line_needs_timing()
     test_build_shots_merges_continuations()

@@ -23,120 +23,99 @@ this place going to be called?*
 
 ## Script
 
-**COLD OPEN — 0:00–0:05**
-
+**COLD OPEN — 0:00–0:07**
 Dawn. The sapling — thin trunk, two oversized leaves, one thin branch now bare — with the scavenger's green hands cradling its fig in the foreground.
 
 > **VO (dry, tired, engineer):** I am a dead engineer inside this tree. Yesterday I spent my only fruit on a stranger's head.
 
-**EVIDENCE RETURNED — 0:05–0:10**
-
+**EVIDENCE RETURNED — 0:07–0:12**
 The scavenger sets the fig down at the base of the trunk, deliberately, like evidence.
 
 > **SCAVENGER:** I've thought about it all night. There are only two possibilities.
 
-**TWO POSSIBILITIES — 0:10–0:15**
-
+**TWO POSSIBILITIES — 0:12–0:20**
 He crouches until he is eye to eye with the little tree.
 
 > **SCAVENGER:** One: I have finally lost it. Two: you're in there.
 
-**THE TEST — 0:15–0:20**
-
+**THE TEST — 0:20–0:29**
 He sits cross-legged in front of the sapling, businesslike, ears forward.
 
 > **SCAVENGER:** So we test it. Like the patrol tests coins.
 
-**MOVE ONE LEAF — 0:20–0:25**
-
+**MOVE ONE LEAF — 0:29–0:35**
 Close on his face, waiting; his ears twitch once.
 
 > **SCAVENGER:** If you can hear me… move one leaf.
 
-**THE COST — 0:25–0:30**
-
+**THE COST — 0:35–0:40**
 Underground: root filaments flare as the sapling gathers everything it has into one push.
 
-**THE TILT — 0:30–0:35**
-
+**THE TILT — 0:40–0:45**
 In dead-still air, one leaf tilts — and holds.
 
-**NO WIND — 0:35–0:40**
-
+**NO WIND — 0:45–0:50**
 His ears go flat; he checks the grass — not one blade is moving.
 
-**THE PROTOCOL — 0:40–0:45**
-
+**THE PROTOCOL — 0:50–0:55**
 He leans in close to the leaves, lowering his voice like a man making a treaty.
 
 > **SCAVENGER (whisper):** One leaf for yes. Nothing for no. Deal?
 
-**DEAL — 0:45–0:50**
-
+**DEAL — 0:55–1:03**
 The leaf tilts again, unmistakable.
 
 > **VO:** He has independently derived a one-bit protocol. I have onboarded senior engineers with less.
 
-**THE INTERROGATION — 0:50–0:57**
-
+**THE INTERROGATION — 1:03–1:10**
 The scavenger paces, firing questions, scratching a tally into the dirt.
 
 > **SCAVENGER:** Are you a spirit? A demon? A god?
 
-**HALF A TILT — 0:57–1:02**
-
+**HALF A TILT — 1:10–1:17**
 The leaf stays still — then gives the smallest, most reluctant half-tilt.
 
 > **SCAVENGER:** …We'll circle back to that one.
 
-**THE FIG QUESTION — 1:02–1:08**
-
+**THE FIG QUESTION — 1:17–1:24**
 He holds the fig up beside the bare branch it fell from.
 
 > **SCAVENGER:** Were you the fruit? Did you MEAN to hit my head?
 
-**GUILTY — 1:08–1:13**
-
+**GUILTY — 1:24–1:30**
 A very long pause on the leaf — then it tilts.
 
 > **SCAVENGER (delighted, outraged):** I *knew* it!
 
-**THE FILING PROBLEM — 1:13–1:20**
-
+**THE FILING PROBLEM — 1:30–1:36**
 The energy drops. He sits back against the trunk and gestures at all of himself with both hands.
 
 > **SCAVENGER:** The patrol has a form for apples. There isn't one for me.
 
-**THE ASK — 1:20–1:26**
-
+**THE ASK — 1:36–1:42**
 He doesn't look up. His hands keep working the dirt.
 
 > **SCAVENGER:** Can I stay? Here. By you. I'd keep the weeds off.
 
-**THE BUDGET — 1:26–1:32**
-
+**THE BUDGET — 1:42–1:47**
 Ground level, both of them in frame: the goblin sitting with his back to the trunk, the sapling beside his shoulder.
 
 > **VO:** Every problem I ever had, I solved by walking away. He can't walk away either.
 
-**TOWARD — 1:32–1:39**
-
+**TOWARD — 1:47–1:53**
 Underground: the root glow is thin and guttering — one clean signal left today — while above, both leaves tremble on the edge of moving.
 
 > **VO:** I can sense and I can grow. Neither one is *shelter*. …But growing means choosing what to grow *toward*.
 
-**TWO LEAVES — 1:39–1:44**
-
+**TWO LEAVES — 1:53–1:58**
 Both leaves tilt at once — and at the base of the trunk the last teal glow in the soil dims and goes out.
 
-**THE LEAN-TO — 1:44–1:52**
-
+**THE LEAN-TO — 1:58–2:09**
 Timelapse: the scavenger drags deadfall against a rock, building badly, tongue out with effort.
 
 > **SCAVENGER:** A resident, a landmark, and a tree that answers. That's not a camp anymore.
 
-**THE HOOK — 1:52–1:59**
-
+**THE HOOK — 2:09–2:18**
 Dusk. He raises the fig like a founding charter over the lean-to and the tree.
 
 > **SCAVENGER:** Every city needs a name. I hereby name this place—
