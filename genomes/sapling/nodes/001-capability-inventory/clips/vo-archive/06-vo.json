@@ -6,22 +6,28 @@
   {
    "who": "VO",
    "text": "New hardware. Rebooted somewhere with better lighting.",
-   "start": 0.0,
-   "end": 3.324,
+   "start": 3.96,
+   "end": 6.769,
    "chunks": [
     {
      "text": "New hardware.",
-     "start": 0.0,
-     "end": 1.048
+     "start": 3.96,
+     "end": 5.094
     },
     {
      "text": "Rebooted somewhere with better lighting.",
-     "start": 1.048,
-     "end": 3.324
+     "start": 5.094,
+     "end": 6.769
     }
    ]
   }
  ],
- "actions": [],
- "total_s": 3.623
+ "actions": [
+  {
+   "text": "Back in the field: sunlight sweeps across the sapling as morning arrives.",
+   "start": 0.05,
+   "end": 3.96
+  }
+ ],
+ "total_s": 7.069
 }
