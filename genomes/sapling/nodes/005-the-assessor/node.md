@@ -2,7 +2,7 @@
 
 **Tree:** Sapling · **Parent:** [004 — Shade](../004-shade/node.md) · **Trunk:** yes · **Status:** hot
 **This file is a T0 leaf** (`005-t0-b`, shot-granular per SCRIPT-SPEC.md). Steward-authored trunk continuation under taste file v0.2 (see `../../edl.md`).
-**Format:** 9:16 vertical · ~143s · VO + dialogue · 24 beats = 24 shots
+**Format:** 9:16 vertical · ~149s · VO + dialogue · 25 beats = 25 shots
 
 ---
 
@@ -44,14 +44,14 @@ He stops at the clearing's edge and counts under his breath, lips moving, before
 
 **SETTLEMENT NAME — 0:17–0:22**
 
-The scavenger, cornered, gives it up.
+The SCAVENGER — a small round goblin, enormous ears, one broken tusk, patchwork cloak — steps out from behind the tree into full frame, cornered, and gives it up.
 
 > **ASSESSOR:** Settlement name?
 > **SCAVENGER:** …Shade.
 
 **FOUNDED — 0:22–0:27**
 
-The quill scratches. The assessor does not look up.
+The goblin answers in frame; behind his shoulder, unnoticed, one leaf of the young tree twitches.
 
 > **ASSESSOR:** Founded?
 > **SCAVENGER:** Yesterday.
@@ -71,11 +71,11 @@ He measures the lean-to's sagging pole with a knotted string.
 
 **THREE STONES — 0:38–0:44**
 
-He counts the cairn stones — individually, touching each one with the quill.
+He counts the cairn stones one by one with the quill point — and behind him a leaf moves again in still air.
 
 **ORCHARD, SINGLE SPECIMEN — 0:44–0:50**
 
-He holds the knotted string against the young tree's trunk, then measures upward into the crown.
+He crouches on his heels beside the knee-high tree, licks the quill, and writes it down without measuring anything at all.
 
 > **ASSESSOR:** Orchard, single specimen. Yield?
 
@@ -89,7 +89,7 @@ The scavenger's hands go up much too fast.
 
 The assessor turns a ledger page slowly; the old entry is a single line of script.
 
-> **ASSESSOR:** …I have here a prior record. One apple. Unlicensed consumption.
+> **ASSESSOR:** Noted. Separately — I have a prior record here. Not the tree's. One apple.
 
 **DESCRIPTION MATCHES — 1:03–1:09**
 
@@ -103,67 +103,71 @@ The scavenger studies the dirt, all the fight gone out of him.
 
 > **SCAVENGER (quietly):** It fell off the cart. Ground fruit is foraging.
 
-**THE FARMER SPEAKS — 1:15–1:21**
+**THE FARMER — 1:15–1:20**
 
-The farmer, arms crossed, addresses the assessor without moving otherwise.
+Boots and a straw hat at the clearing's edge: the FARMER, broad and squarish, arms already crossed, has been standing there the whole time.
+
+**THE FARMER SPEAKS — 1:20–1:26**
+
+He addresses the assessor without uncrossing his arms, only his jaw moving.
 
 > **FARMER:** He keeps the weeds off. Whole stretch.
 
-**COMMUNITY SERVICE — 1:21–1:27**
+**COMMUNITY SERVICE — 1:26–1:32**
 
-The quill writes two words into the ledger, unhurried.
+The quill writes three unhurried words into the ledger.
 
 > **ASSESSOR:** "Community service. Ongoing."
 
-**A PAYMENT PLAN — 1:27–1:32**
+**A PAYMENT PLAN — 1:32–1:37**
 
 Close on the young tree's leaves, motionless, taking it in.
 
 > **VO:** That's not mercy. That's worse. That's a *payment plan.*
 
-**OCCUPATIONS — 1:32–1:39**
+**OCCUPATIONS — 1:37–1:44**
 
 The assessor reaches the settlement schema and writes, then stalls over the second line.
 
 > **ASSESSOR:** Population: two. Occupations: farmer — and… weed warden. Provisional.
 
-**WATER SOURCE — 1:39–1:45**
+**WATER SOURCE — 1:44–1:50**
 
-He looks up from the ledger, quill poised.
+The assessor looks up, quill poised — then the farmer, in frame beside him, answers it.
 
 > **ASSESSOR:** Water source?
 > **FARMER:** The channel mended itself.
 
-**CHANNELS DO NOT — 1:45–1:51**
+**CHANNELS DO NOT — 1:50–1:56**
 
 The quill stops mid-word. He looks at the farmer, then out at the damp field line.
 
 > **ASSESSOR:** Channels do not mend themselves.
 > **FARMER (flatly):** This one did.
 
-**HE'S BEEN WATCHING — 1:51–1:58**
+**HE'S BEEN WATCHING — 1:56–2:03**
 
-Quick cuts, from his eyeline: the tree's leaves moving in dead-still air — once, twice, three times, each time an answer was given.
+The assessor stops writing and simply looks at the tree — a long, unhurried, professional look.
 
-> **VO:** Oh no. He counts things for a living. He's been counting my tells since he arrived.
+> **VO:** Oh no. He counts things for a living. He has been counting my tells since he arrived.
 
-**AND YOU — 1:58–2:04**
+**AND YOU — 2:03–2:09**
 
-The assessor walks up to the tree, adjusts his robes, and addresses it directly.
+He walks up to the tree, kneels on one knee to bring his face level with its crown, and addresses it directly.
 
 > **ASSESSOR:** And you. Occupation?
 
-**ONE LEAF — 2:04–2:10**
+**ONE LEAF — 2:09–2:16**
 
-Three held faces — goblin, farmer, assessor — then one leaf tilts, slowly and deliberately.
+One held wide: goblin, farmer and kneeling assessor all motionless around the tree — then one leaf tilts, slowly and deliberately.
 
-**POPULATION THREE — 2:10–2:17**
+**POPULATION THREE — 2:16–2:23**
 
 He writes one line we never see, closes the ledger, chains it, and pauses at the clearing's edge exactly where he entered.
 
 > **ASSESSOR:** The magistrate reviews all new settlements. She will want to see this one *personally.* …Population three.
 
-**CALLED A LOT OF THINGS — 2:17–2:23**
+**CALLED A LOT OF THINGS — 2:23–2:29**
 
 Long hold on the young tree alone in the morning light.
 
@@ -182,8 +186,7 @@ SHADE · pop. 3 (official) · MAGISTRATE: incoming
 Shot-granular successor (`005-t0-b`), steward-written (model:
 claude-fable-5) to `SCRIPT-SPEC.md` "one beat = one shot" from `005-t0-a`
 (the Phase-0-era script, whose dialogue survives verbatim) and the canon
-growth ladder in `style.md`. Loop cycle 007: the assessment was 4 shots
-carrying 30 lines — 7.5 lines per image, the worst density in the season —
+growth ladder in `style.md`. Loop cycle 007: the assessment was 4 shots carrying 30 lines — 7.5 lines per image, the worst density in the season —
 so every question and every answer now has its own frame. The episode runs
 longer than the 85s original because the exchanges are no longer stacked on
 one held wide; dialogue is unchanged. Predecessor archived as
