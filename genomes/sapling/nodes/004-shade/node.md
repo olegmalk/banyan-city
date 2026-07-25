@@ -107,7 +107,7 @@ A sun-cracked farmer stands looking at the lean-to, the cairn, and the visibly f
 **THE WATER — 1:21–1:27**
 Underground: a root runs west and a dark damp line spreads through pale soil toward a distant field.
 
-> **VO:** I have been moving water toward his field for three days. Nobody asked me to. He noticed.
+> **VO:** I have been growing roots west for three days. The water followed them. Nobody asked me to. He noticed.
 
 **THE TRIBUTE — 1:27–1:32**
 He sets a clay jug and half a loaf at the base of the trunk, beside the cairn, and looks at the tree — not the goblin — when he says it.
