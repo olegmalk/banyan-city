@@ -1,0 +1,14 @@
+# Leaf metadata — every render publishes its full provenance (§7.2)
+leaf: 006a-t0-b
+node: "006a"
+tier: T0
+form: text-script
+content: ../node.md
+author: steward (model-written to SCRIPT-SPEC.md 'one beat = one shot'; successor of 006a-t0-a)
+model: claude-fable-5
+prompt: loop cycle 007 (shot density) + 006a-t0-a dialogue verbatim + style.md growth ladder
+seed: none
+cost_usd: 0.00
+status: live
+platform_urls: []
+comprehension_gate: pending

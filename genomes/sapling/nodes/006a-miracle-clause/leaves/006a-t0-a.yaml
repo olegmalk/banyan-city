@@ -3,7 +3,7 @@ leaf: 006a-t0-a
 node: "006a"
 tier: T0
 form: text-script
-content: ../node.md
+content: 006a-t0-a.md
 author: claude-fable-5 (delegated steward — see STEWARDSHIP.md and genomes/sapling/edl.md)
 model: claude-fable-5
 prompt: R4 sibling candidate continuing 005 under taste file sapling.founder.v0.2 (pays the magistrate hook — civic-comedy payment; trunk call reserved to founder)
@@ -11,3 +11,4 @@ seed: none
 cost_usd: 0.00
 status: live
 platform_urls: []
+superseded_by: 006a-t0-b   # cycle 007 shot-density rewrite; alive per R6

@@ -1,9 +1,9 @@
 # Node 006a — The Miracle Clause
 
 **Tree:** Sapling · **Parent:** [005 — The Assessor](../005-the-assessor/node.md) · **Trunk:** undecided · **Status:** hot
-**This file is a T0 leaf.** Steward-authored candidate under taste file v0.2 — one of an R4
+**This file is a T0 leaf** (`006a-t0-b`, shot-granular per SCRIPT-SPEC.md). Steward-authored candidate under taste file v0.2 — one of an R4
 sibling pair (006a/006b); the trunk call between them is reserved to the founder (see `../../edl.md`).
-**Format:** 9:16 vertical · 60–90s · VO + dialogue
+**Format:** 9:16 vertical · ~180s · VO + dialogue · 29 beats = 29 shots
 
 ---
 
@@ -27,111 +27,175 @@ keeper's papers down with it.
 
 ## Script
 
-**COLD OPEN — 0:00–0:10**
+**COLD OPEN — 0:00–0:05**
 
-Morning. Shade is being *staged*. The scavenger re-stacks the cairn's three
-stones by size, steps back, re-stacks them by color. The farmer arrives and
-sets a second jug beside the first.
+A tree the height of a man, small crown, side branches; below it a goblin re-stacks three cairn stones by size, steps back, and re-stacks them by colour.
+
+> **VO (dry, tired, engineer):** I died an engineer and woke up as this tree. This morning my town is being *staged*.
+
+**AUDIT PREP — 0:05–0:11**
+
+The farmer walks in and sets a second clay jug down beside the first, squaring it up.
 
 > **FARMER:** Infrastructure.
 
-> **VO:** I've seen this before. It's called audit prep. You cannot mop your
-> way out of one. Everyone tries.
+**YOU CANNOT MOP — 0:11–0:17**
 
-**THE ARRIVAL — 0:10–0:30**
+The goblin drags a branch across the dirt, sweeping the clearing smooth.
 
-She is early. The **MAGISTRATE** comes up the road reading the assessor's
-ledger as she walks — no metronome precision, no pause at the clearing's edge;
-she is simply, suddenly, *inside* the settlement, mid-file. Travel-worn robes
-of office. A seal on a chain. The scavenger dives behind the tree out of pure
-reflex, then — remembering he is now official — emerges and stands at
-approximately attention.
+> **VO:** I've seen this before. It's called audit prep. You cannot mop your way out of one. Everyone tries.
 
-> **MAGISTRATE (reading, not looking up):** Settlement, Shade. Founded
-> yesterday, structures one-*ish*, population three. *(a page turns)*
-> Occupation of resident number three: *"answers questions."*
+**SHE IS EARLY — 0:17–0:23**
 
-She closes the ledger and looks at the tree for a long moment.
+The MAGISTRATE is already inside the settlement — travel-worn robes of office, a seal on a chain, reading the assessor's ledger as she walks.
+
+**REFLEX — 0:23–0:28**
+
+The goblin dives behind the tree out of pure reflex — then remembers he is official, and emerges to stand at approximate attention.
+
+**READING THE FILE — 0:28–0:35**
+
+She reads without looking up; the page turns under her thumb.
+
+> **MAGISTRATE:** Settlement, Shade. Founded yesterday, structures one-*ish*, population three.
+
+**RESIDENT NUMBER THREE — 0:35–0:41**
+
+Close on the ledger page: one line of script under her thumb.
+
+> **MAGISTRATE:** Occupation of resident number three: *"answers questions."*
+
+**WELL? — 0:41–0:47**
+
+She closes the ledger with one hand and looks up into the tree's crown.
 
 > **MAGISTRATE:** Well?
 
-One leaf tilts.
+**ONE LEAF — 0:47–0:52**
 
-> **MAGISTRATE:** …So the assessor hasn't been drinking. Pity. That was the
-> tidy explanation.
+In still air, one leaf tilts — and holds.
 
-**THE HEARING — 0:30–1:00**
+**THE TIDY EXPLANATION — 0:52–0:58**
 
-She paces the clearing and the law breaks down in real time, rapid-fire,
-deadpan:
+Her face does almost nothing; something behind it recalculates.
 
-> **MAGISTRATE:** It cannot be a *resident* — residents owe hearth tax, and it
-> has no hearth. It cannot be *property* — property is claimed, and whoever
-> claims it inherits liability for one (1) documented apple incident.
-> **SCAVENGER (helpfully):** No takers.
-> **MAGISTRATE:** Shocking. It cannot be *livestock* — livestock can be moved.
-> Can it be moved?
+> **MAGISTRATE:** …So the assessor hasn't been drinking. Pity. That was the tidy explanation.
+
+**NOT A RESIDENT — 0:58–1:04**
+
+She begins to pace, counting categories off on her fingers.
+
+> **MAGISTRATE:** It cannot be a *resident* — residents owe hearth tax, and it has no hearth.
+
+**NOT PROPERTY — 1:04–1:11**
+
+She turns on her heel, one finger raised.
+
+> **MAGISTRATE:** It cannot be *property* — whoever claims it inherits liability for one documented apple incident.
+
+**NO TAKERS — 1:11–1:16**
+
+The goblin raises a hand halfway, then puts it down.
+
+> **SCAVENGER:** No takers.
+> **MAGISTRATE:** Shocking.
+
+**NOT LIVESTOCK — 1:16–1:22**
+
+She looks at the tree's trunk, then at the ground it stands in.
+
+> **MAGISTRATE:** It cannot be *livestock* — livestock can be moved. Can it be moved?
+
+**A ROOMMATE — 1:22–1:28**
+
+The goblin gestures between himself and the tree, improvising.
+
 > **SCAVENGER:** He's more of a roommate—
-> **MAGISTRATE:** Roommates are a tenancy. Tenancies have deeds. Do you have
-> a deed?
-> **SCAVENGER (beat):** …I have a fig.
 
-She stops pacing. Looks at the tree. Looks at the jug-tribute at its roots, the
-cairn, the two humans who have arranged their entire lives around it in a day.
+**DO YOU HAVE A DEED — 1:28–1:34**
 
-> **MAGISTRATE (slowly, the answer arriving):** The kingdom has exactly one
-> category for a thing that stands in one place, belongs to no one, and
-> answers questions.
+She stops and holds out one empty hand for a document.
 
-Beat.
+> **MAGISTRATE:** Roommates are a tenancy. Tenancies have deeds. Do you have a deed?
+
+**I HAVE A FIG — 1:34–1:40**
+
+He searches his patchwork cloak, then produces a single fig and offers it.
+
+> **SCAVENGER:** …I have a fig.
+
+**THE ANSWER ARRIVES — 1:40–1:47**
+
+She stops pacing and looks slowly at the jugs at the roots, the cairn, the two of them — a life arranged around a tree in one day.
+
+> **MAGISTRATE:** The kingdom has exactly one category for a thing that stands in one place, belongs to no one, and answers questions.
+
+**SHRINE — 1:47–1:52**
+
+She says the word up into the crown.
 
 > **MAGISTRATE:** *Shrine.*
 
-> **VO:** Engineer. Tree. Town. And now a *church*. This career trajectory has
-> stopped being a line and become a scribble.
+**A SCRIBBLE — 1:52–1:58**
 
-The consequences cascade — she recites them like a checkout receipt while
-filling the form: shrine grounds are fee-exempt *(the farmer exhales for the
-first time in two episodes)*; shrines require registered upkeep; therefore—
+Close on the leaves, motionless, absorbing it.
 
-> **MAGISTRATE (to the scavenger):** Shrines have keepers. Congratulations.
-> Your community service is reclassified: *employment.*
+> **VO:** Engineer. Tree. Town. And now a *church*. This career trajectory has stopped being a line and become a scribble.
 
-She hands him a slip of paper with a seal on it. The scavenger holds it in
-both hands like it might evaporate.
+**FEE-EXEMPT — 1:58–2:04**
+
+She fills the form as she recites; behind her the farmer's shoulders drop for the first time in two episodes.
+
+> **MAGISTRATE:** Shrine grounds are fee-exempt. Shrines require registered upkeep. Therefore—
+
+**CONGRATULATIONS — 2:04–2:11**
+
+She holds out a sealed slip of paper to the goblin, who takes it in both hands.
+
+> **MAGISTRATE:** Shrines have keepers. Congratulations. Your community service is reclassified: *employment.*
+
+**A LINE ITEM — 2:11–2:17**
+
+He holds the paper flat on both palms as if it might evaporate.
 
 > **SCAVENGER (quietly, wrecked):** I've never been a line item before.
 
-> **MAGISTRATE (to the tree):** Registration requires consent of the venerated
-> object. Do you consent?
+**DO YOU CONSENT — 2:17–2:23**
 
-One leaf tilts. She notes it.
+She turns to the tree, pen ready over the consent field.
 
-> **MAGISTRATE:** Consent recorded. *(dry)* First signature I've taken all
-> year that didn't argue.
+> **MAGISTRATE:** Registration requires consent of the venerated object. Do you consent?
 
-**THE CLAUSE — 1:00–1:25**
+**CONSENT RECORDED — 2:23–2:30**
 
-She stamps the form, then stops on the final line — and for the first time,
-looks faintly entertained.
+One leaf tilts. She notes it, then presses a stamp onto the page.
 
-> **MAGISTRATE:** One formality. Registration is provisional until the shrine
-> demonstrates one — *(reading)* — "verified wonder, witnessed by an officer
-> of rank." I return at the full moon.
+> **MAGISTRATE:** Consent recorded. First signature I've taken all year that didn't argue.
+
+**THE CLAUSE — 2:30–2:38**
+
+She stops on the form's final line and, for the first time, looks faintly entertained.
+
+> **MAGISTRATE:** One formality. Registration is provisional until the shrine demonstrates one "verified wonder, witnessed by an officer of rank." I return at the full moon.
+
+**SURPRISE ME — 2:38–2:45**
+
+The goblin waves the paper after her, panicking; she does not turn around.
 
 > **SCAVENGER:** What— what qualifies? Is there a list? A form?
-> **MAGISTRATE (already leaving):** Surprise me.
+> **MAGISTRATE:** Surprise me.
 
-At the clearing's edge she pauses — exactly where the assessor paused.
+**THE DEDICATION LINE — 2:45–2:53**
 
-> **MAGISTRATE:** The dedication line I leave blank. Shrines declare *to whom*
-> at consecration. …Think carefully. Those words outlive towns.
+At the clearing's edge — exactly where the assessor paused — she stops and looks back at the tree.
 
-She walks off into the morning. The scavenger looks at his paper. The farmer
-looks at the tree. The tree's leaves are very still.
+> **MAGISTRATE:** The dedication line I leave blank. Shrines declare *to whom* at consecration. Those words outlive towns.
 
-> **VO:** Two weeks to ship a miracle. No spec. One reviewer. …So — a normal
-> release.
+**A NORMAL RELEASE — 2:53–3:00**
+
+She walks off up the road. The goblin looks at his paper; the farmer looks at the tree; the leaves are very still.
+
+> **VO:** Two weeks to ship a miracle. No spec. One reviewer. …So — a normal release.
 
 SMASH TO BLACK.
 
@@ -140,6 +204,17 @@ SHADE · shrine (provisional) · MIRACLE: due full moon
 ```
 
 ---
+
+## Provenance
+
+Shot-granular successor (`006a-t0-b`), steward-written (model:
+claude-fable-5) to `SCRIPT-SPEC.md` "one beat = one shot" from `006a-t0-a`
+(dialogue verbatim) and the canon growth ladder in `style.md`. Loop cycle
+007: the hearing was 23 lines across two shots of "she paces the clearing"
+— 10.25 lines per image, the worst in the season — so each legal category
+she rules out now gets its own frame, and the tree is on camera for every
+one of its own answers. Predecessor archived as `leaves/006a-t0-a.md`;
+published video leaves 006a-t3-a/b are takes of that era.
 
 ## Lineage notes
 
