@@ -6,28 +6,22 @@
   {
    "who": "SCAVENGER",
    "text": "So we test it. Like the patrol tests coins.",
-   "start": 3.68,
-   "end": 7.643,
+   "start": 0.0,
+   "end": 3.456,
    "chunks": [
     {
      "text": "So we test it.",
-     "start": 3.68,
-     "end": 5.173
+     "start": 0.0,
+     "end": 1.775
     },
     {
      "text": "Like the patrol tests coins.",
-     "start": 5.173,
-     "end": 7.643
+     "start": 1.775,
+     "end": 3.456
     }
    ]
   }
  ],
- "actions": [
-  {
-   "text": "He sits cross-legged in front of the sapling, businesslike, ears forward.",
-   "start": 0.05,
-   "end": 3.68
-  }
- ],
- "total_s": 7.943
+ "actions": [],
+ "total_s": 3.756
 }

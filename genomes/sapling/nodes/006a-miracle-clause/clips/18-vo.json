@@ -1,0 +1,37 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "MAGISTRATE",
+   "text": "The kingdom has exactly one category for a thing that stands in one place, belongs to no one, and answers questions.",
+   "start": 0.0,
+   "end": 6.317,
+   "chunks": [
+    {
+     "text": "The kingdom has exactly one category for",
+     "start": 0.0,
+     "end": 2.42
+    },
+    {
+     "text": "a thing that stands in one place,",
+     "start": 2.42,
+     "end": 4.079
+    },
+    {
+     "text": "belongs to no one,",
+     "start": 4.079,
+     "end": 4.947
+    },
+    {
+     "text": "and answers questions.",
+     "start": 4.947,
+     "end": 6.317
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 6.617
+}

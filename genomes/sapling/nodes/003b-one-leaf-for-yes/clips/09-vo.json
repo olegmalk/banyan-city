@@ -7,26 +7,26 @@
    "who": "SCAVENGER",
    "text": "One leaf for yes. Nothing for no. Deal?",
    "start": 0.0,
-   "end": 3.01,
+   "end": 3.313,
    "chunks": [
     {
      "text": "One leaf for yes.",
      "start": 0.0,
-     "end": 1.151
+     "end": 1.596
     },
     {
      "text": "Nothing for no.",
-     "start": 1.151,
-     "end": 2.47
+     "start": 1.596,
+     "end": 2.636
     },
     {
      "text": "Deal?",
-     "start": 2.47,
-     "end": 3.01
+     "start": 2.636,
+     "end": 3.313
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 3.31
+ "total_s": 3.613
 }

@@ -7,21 +7,21 @@
    "who": "FARMER",
    "text": "Man whose field started drinking again. Tell no one.",
    "start": 0.0,
-   "end": 4.519,
+   "end": 4.135,
    "chunks": [
     {
      "text": "Man whose field started drinking again.",
      "start": 0.0,
-     "end": 3.199
+     "end": 3.372
     },
     {
      "text": "Tell no one.",
-     "start": 3.199,
-     "end": 4.519
+     "start": 3.372,
+     "end": 4.135
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 4.819
+ "total_s": 4.435
 }

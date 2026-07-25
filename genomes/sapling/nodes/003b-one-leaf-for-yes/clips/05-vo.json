@@ -6,28 +6,22 @@
   {
    "who": "SCAVENGER",
    "text": "If you can hear me\u2026 move one leaf.",
-   "start": 3.12,
-   "end": 5.202,
+   "start": 0.0,
+   "end": 2.42,
    "chunks": [
     {
      "text": "If you can hear me\u2026",
-     "start": 3.12,
-     "end": 4.29
+     "start": 0.0,
+     "end": 1.279
     },
     {
      "text": "move one leaf.",
-     "start": 4.29,
-     "end": 5.202
+     "start": 1.279,
+     "end": 2.42
     }
    ]
   }
  ],
- "actions": [
-  {
-   "text": "Close on his face, waiting; his ears twitch once.",
-   "start": 0.05,
-   "end": 3.12
-  }
- ],
- "total_s": 5.502
+ "actions": [],
+ "total_s": 2.72
 }

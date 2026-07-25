@@ -1,0 +1,28 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "SCAVENGER",
+   "text": "I knew it!",
+   "start": 3.68,
+   "end": 4.813,
+   "chunks": [
+    {
+     "text": "I knew it!",
+     "start": 3.68,
+     "end": 4.813
+    }
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "text": "A very long pause on the leaf \u2014 then it tilts.",
+   "start": 0.05,
+   "end": 3.68
+  }
+ ],
+ "total_s": 5.113
+}

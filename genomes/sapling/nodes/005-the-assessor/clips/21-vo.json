@@ -1,0 +1,32 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "VO",
+   "text": "Oh no. He counts things for a living. He has been counting my tells since he arrived.",
+   "start": 0.0,
+   "end": 4.247,
+   "chunks": [
+    {
+     "text": "Oh no.",
+     "start": 0.0,
+     "end": 0.598
+    },
+    {
+     "text": "He counts things for a living.",
+     "start": 0.598,
+     "end": 1.796
+    },
+    {
+     "text": "He has been counting my tells since he arrived.",
+     "start": 1.796,
+     "end": 4.248
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 4.547
+}

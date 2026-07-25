@@ -25,150 +25,125 @@ line, someone with real power reads it next episode.
 ## Script
 
 **COLD OPEN — 0:00–0:05**
-
 Dawn over Shade: a knee-high young tree with a small crown, a crooked lean-to, a three-stone cairn, a clay jug.
 
 > **VO (dry, tired, engineer):** I died an engineer and woke up as this tree. My town is one day old.
 
-**THE METRONOME — 0:05–0:11**
-
+**THE METRONOME — 0:05–0:10**
 Down the exact centre of the road walks the ASSESSOR — dust-grey robes, a ledger chained to his belt, a stub of quill.
 
 > **VO:** The farmer said "after harvest." It is not after harvest.
 
-**COUNTING BEFORE SPEAKING — 0:11–0:17**
-
+**COUNTING BEFORE SPEAKING — 0:10–0:15**
 He stops at the clearing's edge and counts under his breath, lips moving, before saying a word.
 
 > **VO:** Which means the kingdom's bureaucracy runs *ahead* of schedule. I have chills.
 
-**SETTLEMENT NAME — 0:17–0:22**
-
+**SETTLEMENT NAME — 0:15–0:19**
 The SCAVENGER — a small round goblin, enormous ears, one broken tusk, patchwork cloak — steps out from behind the tree into full frame, cornered, and gives it up.
 
 > **ASSESSOR:** Settlement name?
 > **SCAVENGER:** …Shade.
 
-**FOUNDED — 0:22–0:27**
-
+**FOUNDED — 0:19–0:23**
 The goblin answers in frame; behind his shoulder, unnoticed, one leaf of the young tree twitches.
 
 > **ASSESSOR:** Founded?
 > **SCAVENGER:** Yesterday.
 
-**STRUCTURES — 0:27–0:32**
-
+**STRUCTURES — 0:23–0:28**
 He glances at the lean-to, which sags in response.
 
 > **ASSESSOR:** Structures?
 > **SCAVENGER:** One. Ish.
 
-**NOT A LOAD RATING — 0:32–0:38**
-
+**NOT A LOAD RATING — 0:28–0:32**
 He measures the lean-to's sagging pole with a knotted string.
 
 > **ASSESSOR:** "Ish" is not a load rating.
 
-**THREE STONES — 0:38–0:44**
-
+**THREE STONES — 0:32–0:37**
 He counts the cairn stones one by one with the quill point — and behind him a leaf moves again in still air.
 
-**ORCHARD, SINGLE SPECIMEN — 0:44–0:50**
-
+**ORCHARD, SINGLE SPECIMEN — 0:37–0:42**
 He crouches on his heels beside the knee-high tree, licks the quill, and writes it down without measuring anything at all.
 
 > **ASSESSOR:** Orchard, single specimen. Yield?
 
-**NO YIELD — 0:50–0:56**
-
+**NO YIELD — 0:42–0:47**
 The scavenger's hands go up much too fast.
 
 > **SCAVENGER:** None! No yield. Zero fruit. Historically.
 
-**THE PRIOR RECORD — 0:56–1:03**
-
+**THE PRIOR RECORD — 0:47–0:52**
 The assessor turns a ledger page slowly; the old entry is a single line of script.
 
 > **ASSESSOR:** Noted. Separately — I have a prior record here. Not the tree's. One apple.
 
-**DESCRIPTION MATCHES — 1:03–1:09**
-
+**DESCRIPTION MATCHES — 0:52–0:56**
 He raises his eyes from the page to the scavenger and holds the look.
 
 > **ASSESSOR:** Subject: …description matches.
 
-**GROUND FRUIT — 1:09–1:15**
-
+**GROUND FRUIT — 0:56–1:01**
 The scavenger studies the dirt, all the fight gone out of him.
 
 > **SCAVENGER (quietly):** It fell off the cart. Ground fruit is foraging.
 
-**THE FARMER — 1:15–1:20**
-
+**THE FARMER — 1:01–1:06**
 Boots and a straw hat at the clearing's edge: the FARMER, broad and squarish, arms already crossed, has been standing there the whole time.
 
-**THE FARMER SPEAKS — 1:20–1:26**
-
+**THE FARMER SPEAKS — 1:06–1:11**
 He addresses the assessor without uncrossing his arms, only his jaw moving.
 
 > **FARMER:** He keeps the weeds off. Whole stretch.
 
-**COMMUNITY SERVICE — 1:26–1:32**
-
+**COMMUNITY SERVICE — 1:11–1:16**
 The quill writes three unhurried words into the ledger.
 
 > **ASSESSOR:** "Community service. Ongoing."
 
-**A PAYMENT PLAN — 1:32–1:37**
-
+**A PAYMENT PLAN — 1:16–1:21**
 Close on the young tree's leaves, motionless, taking it in.
 
 > **VO:** That's not mercy. That's worse. That's a *payment plan.*
 
-**OCCUPATIONS — 1:37–1:44**
-
+**OCCUPATIONS — 1:21–1:26**
 The assessor reaches the settlement schema and writes, then stalls over the second line.
 
 > **ASSESSOR:** Population: two. Occupations: farmer — and… weed warden. Provisional.
 
-**WATER SOURCE — 1:44–1:50**
-
+**WATER SOURCE — 1:26–1:31**
 The assessor looks up, quill poised — then the farmer, in frame beside him, answers it.
 
 > **ASSESSOR:** Water source?
 > **FARMER:** The channel mended itself.
 
-**CHANNELS DO NOT — 1:50–1:56**
-
+**CHANNELS DO NOT — 1:31–1:36**
 The quill stops mid-word. He looks at the farmer, then out at the damp field line.
 
 > **ASSESSOR:** Channels do not mend themselves.
 > **FARMER (flatly):** This one did.
 
-**HE'S BEEN WATCHING — 1:56–2:03**
-
+**HE'S BEEN WATCHING — 1:36–1:41**
 The assessor stops writing and simply looks at the tree — a long, unhurried, professional look.
 
 > **VO:** Oh no. He counts things for a living. He has been counting my tells since he arrived.
 
-**AND YOU — 2:03–2:09**
-
+**AND YOU — 1:41–1:45**
 He walks up to the tree, kneels on one knee to bring his face level with its crown, and addresses it directly.
 
 > **ASSESSOR:** And you. Occupation?
 
-**ONE LEAF — 2:09–2:16**
-
+**ONE LEAF — 1:45–1:50**
 One held wide: goblin, farmer and kneeling assessor all motionless around the tree — then one leaf tilts, slowly and deliberately.
 
-**POPULATION THREE — 2:16–2:23**
-
+**POPULATION THREE — 1:50–1:56**
 He writes one line we never see, closes the ledger, chains it, and pauses at the clearing's edge exactly where he entered.
 
 > **ASSESSOR:** The magistrate reviews all new settlements. She will want to see this one *personally.* …Population three.
 
-**CALLED A LOT OF THINGS — 2:23–2:29**
-
+**CALLED A LOT OF THINGS — 1:56–2:01**
 Long hold on the young tree alone in the morning light.
 
 > **VO:** I've been called a lot of things. "Population" is new.

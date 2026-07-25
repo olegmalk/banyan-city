@@ -1,0 +1,42 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "VO",
+   "text": "Engineer. Tree. Town. Now a church. My career has stopped being a line.",
+   "start": 0.0,
+   "end": 4.947,
+   "chunks": [
+    {
+     "text": "Engineer.",
+     "start": 0.0,
+     "end": 0.695
+    },
+    {
+     "text": "Tree.",
+     "start": 0.695,
+     "end": 1.347
+    },
+    {
+     "text": "Town.",
+     "start": 1.347,
+     "end": 1.907
+    },
+    {
+     "text": "Now a church.",
+     "start": 1.907,
+     "end": 2.771
+    },
+    {
+     "text": "My career has stopped being a line.",
+     "start": 2.771,
+     "end": 4.947
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 5.247
+}

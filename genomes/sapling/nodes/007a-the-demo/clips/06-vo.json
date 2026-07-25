@@ -1,0 +1,27 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "SCAVENGER",
+   "text": "You dropped it at branch three again! Branch three is our weakest performer!",
+   "start": 0.0,
+   "end": 4.181,
+   "chunks": [
+    {
+     "text": "You dropped it at branch three again!",
+     "start": 0.0,
+     "end": 2.2
+    },
+    {
+     "text": "Branch three is our weakest performer!",
+     "start": 2.2,
+     "end": 4.181
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 4.481
+}

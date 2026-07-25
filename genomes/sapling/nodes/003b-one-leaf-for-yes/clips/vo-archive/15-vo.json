@@ -1,0 +1,33 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "SCAVENGER",
+   "text": "The patrol has a form for apples. There isn't one for me.",
+   "start": 1.44,
+   "end": 5.139,
+   "chunks": [
+    {
+     "text": "The patrol has a form for apples.",
+     "start": 1.44,
+     "end": 3.432
+    },
+    {
+     "text": "There isn't one for me.",
+     "start": 3.432,
+     "end": 5.139
+    }
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "text": "The energy drops.",
+   "start": 0.05,
+   "end": 1.44
+  }
+ ],
+ "total_s": 5.439
+}

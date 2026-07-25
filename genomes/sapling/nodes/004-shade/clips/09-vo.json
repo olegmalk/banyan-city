@@ -7,21 +7,21 @@
    "who": "VO",
    "text": "Name the thing after what it does, like every good system since the dawn of\u2014",
    "start": 0.0,
-   "end": 4.19,
+   "end": 3.995,
    "chunks": [
     {
      "text": "Name the thing after what it does,",
      "start": 0.0,
-     "end": 1.796
+     "end": 1.862
     },
     {
      "text": "like every good system since the dawn of\u2014",
-     "start": 1.796,
-     "end": 4.19
+     "start": 1.862,
+     "end": 3.995
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 4.49
+ "total_s": 4.295
 }

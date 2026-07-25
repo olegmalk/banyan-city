@@ -1,0 +1,38 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "VO",
+   "text": "Named after the first thing I ever gave anyone. I'd have accepted prod-east-1, but this is better.",
+   "start": 3.96,
+   "end": 9.224,
+   "chunks": [
+    {
+     "text": "Named after the first thing I ever gave anyone.",
+     "start": 3.96,
+     "end": 6.288
+    },
+    {
+     "text": "I'd have accepted prod-east-1,",
+     "start": 6.288,
+     "end": 8.213
+    },
+    {
+     "text": "but this is better.",
+     "start": 8.213,
+     "end": 9.224
+    }
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "text": "The goblin's bare feet, planted in the shade patch on the grass.",
+   "start": 0.05,
+   "end": 3.96
+  }
+ ],
+ "total_s": 9.524
+}

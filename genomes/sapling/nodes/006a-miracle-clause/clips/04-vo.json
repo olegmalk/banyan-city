@@ -4,189 +4,29 @@
  "directed": "synth_vo v3",
  "lines": [
   {
-   "who": "MAGISTRATE",
-   "text": "One formality. Registration is provisional until the shrine",
+   "who": "VO",
+   "text": "That is a magistrate. The assessor writes things down. She decides what they are.",
    "start": 0.0,
-   "end": 3.881,
+   "end": 4.325,
    "chunks": [
     {
-     "text": "One formality.",
+     "text": "That is a magistrate.",
      "start": 0.0,
-     "end": 1.266
+     "end": 1.403
     },
     {
-     "text": "Registration is provisional until the shrine",
-     "start": 1.266,
-     "end": 3.881
-    }
-   ]
-  },
-  {
-   "who": "VO",
-   "text": "demonstrates one \u2014 (reading) \u2014 \"verified wonder, witnessed by an officer",
-   "start": 4.381,
-   "end": 7.988,
-   "chunks": [
-    {
-     "text": "demonstrates one \u2014 (reading) \u2014",
-     "start": 4.381,
-     "end": 5.636
+     "text": "The assessor writes things down.",
+     "start": 1.403,
+     "end": 2.824
     },
     {
-     "text": "\"verified wonder, witnessed by an officer",
-     "start": 5.636,
-     "end": 7.988
-    }
-   ]
-  },
-  {
-   "who": "VO",
-   "text": "of rank.\" I return at the full moon.",
-   "start": 8.488,
-   "end": 10.671,
-   "chunks": [
-    {
-     "text": "of rank.\" I return at the full moon.",
-     "start": 8.488,
-     "end": 10.67
-    }
-   ]
-  },
-  {
-   "who": "SCAVENGER",
-   "text": "What\u2014 what qualifies? Is there a list? A form?",
-   "start": 11.171,
-   "end": 15.186,
-   "chunks": [
-    {
-     "text": "What\u2014 what qualifies?",
-     "start": 11.171,
-     "end": 13.069
-    },
-    {
-     "text": "Is there a list?",
-     "start": 13.069,
-     "end": 14.388
-    },
-    {
-     "text": "A form?",
-     "start": 14.388,
-     "end": 15.187
-    }
-   ]
-  },
-  {
-   "who": "MAGISTRATE",
-   "text": "Surprise me.",
-   "start": 15.686,
-   "end": 16.478,
-   "chunks": [
-    {
-     "text": "Surprise me.",
-     "start": 15.686,
-     "end": 16.478
-    }
-   ]
-  },
-  {
-   "who": "MAGISTRATE",
-   "text": "The dedication line I leave blank. Shrines declare to whom",
-   "start": 20.438,
-   "end": 24.279,
-   "chunks": [
-    {
-     "text": "The dedication line I leave blank.",
-     "start": 20.438,
-     "end": 22.758
-    },
-    {
-     "text": "Shrines declare to whom",
-     "start": 22.758,
-     "end": 24.28
-    }
-   ]
-  },
-  {
-   "who": "VO",
-   "text": "at consecration. \u2026Think carefully. Those words outlive towns.",
-   "start": 24.779,
-   "end": 28.858,
-   "chunks": [
-    {
-     "text": "at consecration.",
-     "start": 24.779,
-     "end": 25.912
-    },
-    {
-     "text": "\u2026Think carefully.",
-     "start": 25.912,
-     "end": 26.949
-    },
-    {
-     "text": "Those words outlive towns.",
-     "start": 26.949,
-     "end": 28.857
-    }
-   ]
-  },
-  {
-   "who": "VO",
-   "text": "Two weeks to ship a miracle. No spec. One reviewer. \u2026So \u2014 a normal",
-   "start": 31.138,
-   "end": 35.239,
-   "chunks": [
-    {
-     "text": "Two weeks to ship a miracle.",
-     "start": 31.138,
-     "end": 32.535
-    },
-    {
-     "text": "No spec.",
-     "start": 32.535,
-     "end": 33.361
-    },
-    {
-     "text": "One reviewer.",
-     "start": 33.361,
-     "end": 34.119
-    },
-    {
-     "text": "\u2026So \u2014 a normal",
-     "start": 34.119,
-     "end": 35.239
-    }
-   ]
-  },
-  {
-   "who": "VO",
-   "text": "release.",
-   "start": 35.739,
-   "end": 36.453,
-   "chunks": [
-    {
-     "text": "release.",
-     "start": 35.739,
-     "end": 36.452
+     "text": "She decides what they are.",
+     "start": 2.824,
+     "end": 4.325
     }
    ]
   }
  ],
- "actions": [
-  {
-   "text": "At the clearing's edge she pauses \u2014 exactly where the assessor paused.",
-   "start": 16.528,
-   "end": 20.438
-  },
-  {
-   "text": "She walks off into the morning.",
-   "start": 28.908,
-   "end": 31.138
-  },
-  {
-   "text": "SMASH TO BLACK.",
-   "start": 36.503,
-   "end": 37.893
-  }
- ],
- "total_s": 38.193
+ "actions": [],
+ "total_s": 4.625
 }

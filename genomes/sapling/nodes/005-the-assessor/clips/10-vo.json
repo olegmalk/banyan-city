@@ -1,0 +1,37 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "SCAVENGER",
+   "text": "None! No yield. Zero fruit. Historically.",
+   "start": 0.0,
+   "end": 4.036,
+   "chunks": [
+    {
+     "text": "None!",
+     "start": 0.0,
+     "end": 0.91
+    },
+    {
+     "text": "No yield.",
+     "start": 0.91,
+     "end": 2.138
+    },
+    {
+     "text": "Zero fruit.",
+     "start": 2.138,
+     "end": 3.239
+    },
+    {
+     "text": "Historically.",
+     "start": 3.239,
+     "end": 4.036
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 4.336
+}

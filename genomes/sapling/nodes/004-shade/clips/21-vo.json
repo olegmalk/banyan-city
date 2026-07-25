@@ -7,27 +7,21 @@
    "who": "FARMER",
    "text": "After harvest, the assessor counts everything with a name. Yesterday there was nothing here to count.",
    "start": 0.0,
-   "end": 5.894,
+   "end": 6.036,
    "chunks": [
     {
      "text": "After harvest, the assessor counts everything with a name.",
      "start": 0.0,
-     "end": 3.608
+     "end": 3.845
     },
     {
      "text": "Yesterday there was nothing here to count.",
-     "start": 3.608,
-     "end": 5.894
+     "start": 3.845,
+     "end": 6.036
     }
    ]
   }
  ],
- "actions": [
-  {
-   "text": "SMASH TO BLACK.",
-   "start": 5.944,
-   "end": 7.334
-  }
- ],
- "total_s": 7.634
+ "actions": [],
+ "total_s": 6.336
 }

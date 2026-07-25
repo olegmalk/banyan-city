@@ -1,0 +1,35 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "SCAVENGER",
+   "text": "No takers.",
+   "start": 0.0,
+   "end": 0.918,
+   "chunks": [
+    {
+     "text": "No takers.",
+     "start": 0.0,
+     "end": 0.918
+    }
+   ]
+  },
+  {
+   "who": "MAGISTRATE",
+   "text": "Shocking.",
+   "start": 1.098,
+   "end": 1.687,
+   "chunks": [
+    {
+     "text": "Shocking.",
+     "start": 1.098,
+     "end": 1.687
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 1.987
+}

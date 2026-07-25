@@ -6,38 +6,32 @@
   {
    "who": "SCAVENGER",
    "text": "Can I stay? Here. By you. I'd keep the weeds off.",
-   "start": 1.72,
-   "end": 5.257,
+   "start": 0.0,
+   "end": 3.563,
    "chunks": [
     {
      "text": "Can I stay?",
-     "start": 1.72,
-     "end": 2.527
+     "start": 0.0,
+     "end": 0.949
     },
     {
      "text": "Here.",
-     "start": 2.527,
-     "end": 3.144
+     "start": 0.949,
+     "end": 1.579
     },
     {
      "text": "By you.",
-     "start": 3.144,
-     "end": 3.918
+     "start": 1.579,
+     "end": 2.343
     },
     {
      "text": "I'd keep the weeds off.",
-     "start": 3.918,
-     "end": 5.257
+     "start": 2.343,
+     "end": 3.563
     }
    ]
   }
  ],
- "actions": [
-  {
-   "text": "He doesn't look up.",
-   "start": 0.05,
-   "end": 1.72
-  }
- ],
- "total_s": 5.557
+ "actions": [],
+ "total_s": 3.863
 }

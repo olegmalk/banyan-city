@@ -1,0 +1,22 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "SCAVENGER",
+   "text": "I've never been a line item before.",
+   "start": 0.0,
+   "end": 2.351,
+   "chunks": [
+    {
+     "text": "I've never been a line item before.",
+     "start": 0.0,
+     "end": 2.351
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 2.651
+}

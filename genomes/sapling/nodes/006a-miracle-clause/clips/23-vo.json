@@ -1,0 +1,33 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "MAGISTRATE",
+   "text": "Consent recorded. First signature I've taken all year that didn't argue.",
+   "start": 2.2,
+   "end": 6.749,
+   "chunks": [
+    {
+     "text": "Consent recorded.",
+     "start": 2.2,
+     "end": 3.398
+    },
+    {
+     "text": "First signature I've taken all year that didn't argue.",
+     "start": 3.398,
+     "end": 6.749
+    }
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "text": "One leaf tilts against the sky.",
+   "start": 0.05,
+   "end": 2.2
+  }
+ ],
+ "total_s": 7.049
+}

@@ -1,0 +1,33 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "SCAVENGER",
+   "text": "So we test it. Like the patrol tests coins.",
+   "start": 3.68,
+   "end": 7.643,
+   "chunks": [
+    {
+     "text": "So we test it.",
+     "start": 3.68,
+     "end": 5.173
+    },
+    {
+     "text": "Like the patrol tests coins.",
+     "start": 5.173,
+     "end": 7.643
+    }
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "text": "He sits cross-legged in front of the sapling, businesslike, ears forward.",
+   "start": 0.05,
+   "end": 3.68
+  }
+ ],
+ "total_s": 7.943
+}

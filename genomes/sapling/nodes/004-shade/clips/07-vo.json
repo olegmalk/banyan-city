@@ -6,28 +6,22 @@
   {
    "who": "SCAVENGER",
    "text": "Fig\u2026 holm?",
-   "start": 2.56,
-   "end": 3.914,
+   "start": 0.0,
+   "end": 0.915,
    "chunks": [
     {
      "text": "Fig\u2026",
-     "start": 2.56,
-     "end": 3.324
+     "start": 0.0,
+     "end": 0.582
     },
     {
      "text": "holm?",
-     "start": 3.324,
-     "end": 3.914
+     "start": 0.582,
+     "end": 0.915
     }
    ]
   }
  ],
- "actions": [
-  {
-   "text": "He points at the fig, reaching now.",
-   "start": 0.05,
-   "end": 2.56
-  }
- ],
- "total_s": 4.214
+ "actions": [],
+ "total_s": 1.215
 }

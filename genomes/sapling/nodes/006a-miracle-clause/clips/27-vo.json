@@ -1,0 +1,32 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "MAGISTRATE",
+   "text": "One formality. Provisional until the shrine demonstrates a \"verified wonder, witnessed by an officer of rank.\" Fourteen nights.",
+   "start": 0.0,
+   "end": 8.514,
+   "chunks": [
+    {
+     "text": "One formality.",
+     "start": 0.0,
+     "end": 0.863
+    },
+    {
+     "text": "Provisional until the shrine demonstrates a \"verified",
+     "start": 0.863,
+     "end": 4.402
+    },
+    {
+     "text": "wonder, witnessed by an officer of rank.\" Fourteen nights.",
+     "start": 4.402,
+     "end": 8.514
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 8.814
+}

@@ -1,0 +1,115 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "ASSESSOR",
+   "text": "And you. Occupation?",
+   "start": 2.28,
+   "end": 3.888,
+   "chunks": [
+    {
+     "text": "And you.",
+     "start": 2.28,
+     "end": 2.945
+    },
+    {
+     "text": "Occupation?",
+     "start": 2.945,
+     "end": 3.888
+    }
+   ]
+  },
+  {
+   "who": "ASSESSOR",
+   "text": "The magistrate reviews all new",
+   "start": 5.288,
+   "end": 7.163,
+   "chunks": [
+    {
+     "text": "The magistrate reviews all new",
+     "start": 5.288,
+     "end": 7.162
+    }
+   ]
+  },
+  {
+   "who": "VO",
+   "text": "settlements. She will want to see this one personally.",
+   "start": 7.663,
+   "end": 10.69,
+   "chunks": [
+    {
+     "text": "settlements.",
+     "start": 7.663,
+     "end": 8.683
+    },
+    {
+     "text": "She will want to see this one personally.",
+     "start": 8.683,
+     "end": 10.69
+    }
+   ]
+  },
+  {
+   "who": "ASSESSOR",
+   "text": "\u2026Population three.",
+   "start": 14.09,
+   "end": 15.255,
+   "chunks": [
+    {
+     "text": "\u2026Population three.",
+     "start": 14.09,
+     "end": 15.255
+    }
+   ]
+  },
+  {
+   "who": "VO",
+   "text": "I've been called a lot of things. \"Population\" is new.",
+   "start": 17.535,
+   "end": 21.77,
+   "chunks": [
+    {
+     "text": "I've been called a lot of things.",
+     "start": 17.535,
+     "end": 19.784
+    },
+    {
+     "text": "\"Population\" is new.",
+     "start": 19.784,
+     "end": 21.769
+    }
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "text": "The assessor walks to the tree.",
+   "start": 0.05,
+   "end": 2.28
+  },
+  {
+   "text": "Beat.",
+   "start": 3.938,
+   "end": 5.288
+  },
+  {
+   "text": "He pauses at the clearing's edge, precisely where he entered.",
+   "start": 10.74,
+   "end": 14.09
+  },
+  {
+   "text": "He walks off into the morning.",
+   "start": 15.305,
+   "end": 17.535
+  },
+  {
+   "text": "SMASH TO BLACK.",
+   "start": 21.82,
+   "end": 23.21
+  }
+ ],
+ "total_s": 23.51
+}

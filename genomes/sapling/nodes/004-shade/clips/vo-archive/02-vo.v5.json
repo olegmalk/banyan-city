@@ -1,0 +1,28 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "SCAVENGER",
+   "text": "\u2026I had something prepared.",
+   "start": 2.0,
+   "end": 3.572,
+   "chunks": [
+    {
+     "text": "\u2026I had something prepared.",
+     "start": 2.0,
+     "end": 3.572
+    }
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "text": "He lowers the fig, deflating.",
+   "start": 0.05,
+   "end": 2.0
+  }
+ ],
+ "total_s": 3.872
+}

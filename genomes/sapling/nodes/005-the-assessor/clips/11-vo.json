@@ -1,0 +1,37 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "ASSESSOR",
+   "text": "Noted. Separately \u2014 I have a prior record here. Not the tree's. One apple.",
+   "start": 0.0,
+   "end": 4.484,
+   "chunks": [
+    {
+     "text": "Noted.",
+     "start": 0.0,
+     "end": 0.602
+    },
+    {
+     "text": "Separately \u2014 I have a prior record here.",
+     "start": 0.602,
+     "end": 2.51
+    },
+    {
+     "text": "Not the tree's.",
+     "start": 2.51,
+     "end": 3.562
+    },
+    {
+     "text": "One apple.",
+     "start": 3.562,
+     "end": 4.484
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 4.784
+}

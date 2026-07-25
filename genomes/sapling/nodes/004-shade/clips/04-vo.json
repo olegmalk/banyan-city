@@ -6,23 +6,17 @@
   {
    "who": "SCAVENGER",
    "text": "Newhaven!",
-   "start": 4.52,
-   "end": 5.714,
+   "start": 0.0,
+   "end": 0.836,
    "chunks": [
     {
      "text": "Newhaven!",
-     "start": 4.52,
-     "end": 5.714
+     "start": 0.0,
+     "end": 0.836
     }
    ]
   }
  ],
- "actions": [
-  {
-   "text": "He paces the tiny clearing, pitching at the tree like a founder at investors.",
-   "start": 0.05,
-   "end": 4.52
-  }
- ],
- "total_s": 6.014
+ "actions": [],
+ "total_s": 1.136
 }

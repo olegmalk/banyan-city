@@ -1,0 +1,32 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "ASSESSOR",
+   "text": "The magistrate reviews all new settlements. She will want to see this one personally. \u2026Population three.",
+   "start": 0.0,
+   "end": 5.326,
+   "chunks": [
+    {
+     "text": "The magistrate reviews all new settlements.",
+     "start": 0.0,
+     "end": 2.212
+    },
+    {
+     "text": "She will want to see this one personally.",
+     "start": 2.212,
+     "end": 4.131
+    },
+    {
+     "text": "\u2026Population three.",
+     "start": 4.131,
+     "end": 5.326
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 5.626
+}

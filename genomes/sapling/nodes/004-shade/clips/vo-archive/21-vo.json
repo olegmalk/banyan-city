@@ -1,0 +1,33 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "FARMER",
+   "text": "After harvest, the assessor counts everything with a name. Yesterday there was nothing here to count.",
+   "start": 0.0,
+   "end": 5.894,
+   "chunks": [
+    {
+     "text": "After harvest, the assessor counts everything with a name.",
+     "start": 0.0,
+     "end": 3.608
+    },
+    {
+     "text": "Yesterday there was nothing here to count.",
+     "start": 3.608,
+     "end": 5.894
+    }
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "text": "SMASH TO BLACK.",
+   "start": 5.944,
+   "end": 7.334
+  }
+ ],
+ "total_s": 7.634
+}

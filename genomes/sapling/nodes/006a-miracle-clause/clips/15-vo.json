@@ -1,0 +1,27 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "SCAVENGER",
+   "text": "No \u2014 no, he's not livestock, he's more of a roommate\u2014",
+   "start": 0.0,
+   "end": 3.238,
+   "chunks": [
+    {
+     "text": "No \u2014 no, he's not livestock,",
+     "start": 0.0,
+     "end": 2.106
+    },
+    {
+     "text": "he's more of a roommate\u2014",
+     "start": 2.106,
+     "end": 3.238
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 3.538
+}

@@ -1,0 +1,32 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "SCAVENGER",
+   "text": "Shade. Water. Answers.",
+   "start": 0.0,
+   "end": 2.44,
+   "chunks": [
+    {
+     "text": "Shade.",
+     "start": 0.0,
+     "end": 0.913
+    },
+    {
+     "text": "Water.",
+     "start": 0.913,
+     "end": 1.707
+    },
+    {
+     "text": "Answers.",
+     "start": 1.707,
+     "end": 2.44
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 2.74
+}

@@ -1,0 +1,22 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "MAGISTRATE",
+   "text": "Occupation of resident number three: \"answers questions.\"",
+   "start": 0.0,
+   "end": 3.611,
+   "chunks": [
+    {
+     "text": "Occupation of resident number three: \"answers questions.\"",
+     "start": 0.0,
+     "end": 3.611
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 3.911
+}

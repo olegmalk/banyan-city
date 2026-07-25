@@ -6,28 +6,22 @@
   {
    "who": "SCAVENGER",
    "text": "Shade? That's not a name, that's a\u2014",
-   "start": 3.96,
-   "end": 6.989,
+   "start": 0.0,
+   "end": 2.974,
    "chunks": [
     {
      "text": "Shade?",
-     "start": 3.96,
-     "end": 5.185
+     "start": 0.0,
+     "end": 0.986
     },
     {
      "text": "That's not a name, that's a\u2014",
-     "start": 5.185,
-     "end": 6.989
+     "start": 0.986,
+     "end": 2.974
     }
    ]
   }
  ],
- "actions": [
-  {
-   "text": "He goes very still, then looks up at the leaves above him.",
-   "start": 0.05,
-   "end": 3.96
-  }
- ],
- "total_s": 7.289
+ "actions": [],
+ "total_s": 3.274
 }

@@ -1,0 +1,32 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "MAGISTRATE",
+   "text": "\u2026So the assessor hasn't been drinking. Pity. That was the tidy explanation.",
+   "start": 0.0,
+   "end": 5.019,
+   "chunks": [
+    {
+     "text": "\u2026So the assessor hasn't been drinking.",
+     "start": 0.0,
+     "end": 2.278
+    },
+    {
+     "text": "Pity.",
+     "start": 2.278,
+     "end": 2.934
+    },
+    {
+     "text": "That was the tidy explanation.",
+     "start": 2.934,
+     "end": 5.019
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 5.319
+}

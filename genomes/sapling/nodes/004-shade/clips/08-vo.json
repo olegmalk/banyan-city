@@ -6,28 +6,22 @@
   {
    "who": "SCAVENGER",
    "text": "Everything cannot be a no. You are a plant.",
-   "start": 3.4,
-   "end": 7.007,
+   "start": 0.0,
+   "end": 4.037,
    "chunks": [
     {
      "text": "Everything cannot be a no.",
-     "start": 3.4,
-     "end": 5.646
+     "start": 0.0,
+     "end": 2.148
     },
     {
      "text": "You are a plant.",
-     "start": 5.646,
-     "end": 7.007
+     "start": 2.148,
+     "end": 4.037
     }
    ]
   }
  ],
- "actions": [
-  {
-   "text": "Extreme close on a stem joint: not one fibre moves.",
-   "start": 0.05,
-   "end": 3.4
-  }
- ],
- "total_s": 7.307
+ "actions": [],
+ "total_s": 4.337
 }

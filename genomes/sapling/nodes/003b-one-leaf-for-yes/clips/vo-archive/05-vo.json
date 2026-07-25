@@ -1,0 +1,33 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "SCAVENGER",
+   "text": "If you can hear me\u2026 move one leaf.",
+   "start": 3.12,
+   "end": 5.202,
+   "chunks": [
+    {
+     "text": "If you can hear me\u2026",
+     "start": 3.12,
+     "end": 4.29
+    },
+    {
+     "text": "move one leaf.",
+     "start": 4.29,
+     "end": 5.202
+    }
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "text": "Close on his face, waiting; his ears twitch once.",
+   "start": 0.05,
+   "end": 3.12
+  }
+ ],
+ "total_s": 5.502
+}

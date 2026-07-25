@@ -1,0 +1,35 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "ASSESSOR",
+   "text": "Channels do not mend themselves.",
+   "start": 0.0,
+   "end": 1.836,
+   "chunks": [
+    {
+     "text": "Channels do not mend themselves.",
+     "start": 0.0,
+     "end": 1.836
+    }
+   ]
+  },
+  {
+   "who": "FARMER",
+   "text": "This one did.",
+   "start": 2.336,
+   "end": 3.437,
+   "chunks": [
+    {
+     "text": "This one did.",
+     "start": 2.336,
+     "end": 3.438
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 3.737
+}

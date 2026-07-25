@@ -6,33 +6,27 @@
   {
    "who": "VO",
    "text": "Named after the first thing I ever gave anyone. I'd have accepted prod-east-1, but this is better.",
-   "start": 3.96,
-   "end": 9.224,
+   "start": 0.0,
+   "end": 5.96,
    "chunks": [
     {
      "text": "Named after the first thing I ever gave anyone.",
-     "start": 3.96,
-     "end": 6.288
+     "start": 0.0,
+     "end": 2.847
     },
     {
      "text": "I'd have accepted prod-east-1,",
-     "start": 6.288,
-     "end": 8.213
+     "start": 2.847,
+     "end": 4.594
     },
     {
      "text": "but this is better.",
-     "start": 8.213,
-     "end": 9.224
+     "start": 4.594,
+     "end": 5.96
     }
    ]
   }
  ],
- "actions": [
-  {
-   "text": "The goblin's bare feet, planted in the shade patch on the grass.",
-   "start": 0.05,
-   "end": 3.96
-  }
- ],
- "total_s": 9.524
+ "actions": [],
+ "total_s": 6.26
 }

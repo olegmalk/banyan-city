@@ -6,28 +6,22 @@
   {
    "who": "SCAVENGER",
    "text": "Were you the fruit? Did you MEAN to hit my head?",
-   "start": 3.96,
-   "end": 7.07,
+   "start": 0.0,
+   "end": 2.809,
    "chunks": [
     {
      "text": "Were you the fruit?",
-     "start": 3.96,
-     "end": 5.184
+     "start": 0.0,
+     "end": 1.442
     },
     {
      "text": "Did you MEAN to hit my head?",
-     "start": 5.184,
-     "end": 7.07
+     "start": 1.442,
+     "end": 2.809
     }
    ]
   }
  ],
- "actions": [
-  {
-   "text": "He holds the fig up beside the bare branch it fell from.",
-   "start": 0.05,
-   "end": 3.96
-  }
- ],
- "total_s": 7.37
+ "actions": [],
+ "total_s": 3.109
 }

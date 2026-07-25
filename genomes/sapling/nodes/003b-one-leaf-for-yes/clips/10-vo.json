@@ -7,17 +7,17 @@
    "who": "VO",
    "text": "He has independently derived a one-bit protocol. I have onboarded senior engineers with less.",
    "start": 2.0,
-   "end": 7.615,
+   "end": 8.012,
    "chunks": [
     {
      "text": "He has independently derived a one-bit protocol.",
      "start": 2.0,
-     "end": 5.068
+     "end": 5.392
     },
     {
      "text": "I have onboarded senior engineers with less.",
-     "start": 5.068,
-     "end": 7.615
+     "start": 5.392,
+     "end": 8.012
     }
    ]
   }
@@ -29,5 +29,5 @@
    "end": 2.0
   }
  ],
- "total_s": 7.915
+ "total_s": 8.312
 }

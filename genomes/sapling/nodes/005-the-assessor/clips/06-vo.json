@@ -1,0 +1,40 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "ASSESSOR",
+   "text": "Structures?",
+   "start": 0.0,
+   "end": 0.767,
+   "chunks": [
+    {
+     "text": "Structures?",
+     "start": 0.0,
+     "end": 0.767
+    }
+   ]
+  },
+  {
+   "who": "SCAVENGER",
+   "text": "One. Ish.",
+   "start": 0.947,
+   "end": 2.429,
+   "chunks": [
+    {
+     "text": "One.",
+     "start": 0.947,
+     "end": 1.694
+    },
+    {
+     "text": "Ish.",
+     "start": 1.694,
+     "end": 2.429
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 2.729
+}

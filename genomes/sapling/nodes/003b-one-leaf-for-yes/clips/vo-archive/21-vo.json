@@ -1,0 +1,38 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "SCAVENGER",
+   "text": "Every city needs a name. I hereby name this place\u2014",
+   "start": 1.4,
+   "end": 5.501,
+   "chunks": [
+    {
+     "text": "Every city needs a name.",
+     "start": 1.4,
+     "end": 3.344
+    },
+    {
+     "text": "I hereby name this place\u2014",
+     "start": 3.344,
+     "end": 5.501
+    }
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "text": "Dusk.",
+   "start": 0.05,
+   "end": 1.4
+  },
+  {
+   "text": "SMASH TO BLACK on the breath before the name.",
+   "start": 5.551,
+   "end": 8.621
+  }
+ ],
+ "total_s": 8.921
+}

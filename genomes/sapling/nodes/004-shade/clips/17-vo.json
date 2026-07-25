@@ -7,21 +7,21 @@
    "who": "FARMER",
    "text": "\u2026You the one who's been keeping the weeds off this stretch?",
    "start": 0.0,
-   "end": 3.25,
+   "end": 4.402,
    "chunks": [
     {
      "text": "\u2026You the one who's been keeping the",
      "start": 0.0,
-     "end": 2.116
+     "end": 2.506
     },
     {
      "text": "weeds off this stretch?",
-     "start": 2.116,
-     "end": 3.25
+     "start": 2.506,
+     "end": 4.402
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 3.55
+ "total_s": 4.702
 }

@@ -1,0 +1,32 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "MAGISTRATE",
+   "text": "Roommates are a tenancy. Tenancies have deeds. Do you have a deed?",
+   "start": 0.0,
+   "end": 4.1,
+   "chunks": [
+    {
+     "text": "Roommates are a tenancy.",
+     "start": 0.0,
+     "end": 1.224
+    },
+    {
+     "text": "Tenancies have deeds.",
+     "start": 1.224,
+     "end": 2.457
+    },
+    {
+     "text": "Do you have a deed?",
+     "start": 2.457,
+     "end": 4.1
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 4.4
+}

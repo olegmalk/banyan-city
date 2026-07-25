@@ -7,21 +7,21 @@
    "who": "SCAVENGER",
    "text": "\u2026Whatever. It's just shade.",
    "start": 0.0,
-   "end": 2.026,
+   "end": 2.35,
    "chunks": [
     {
      "text": "\u2026Whatever.",
      "start": 0.0,
-     "end": 0.711
+     "end": 0.992
     },
     {
      "text": "It's just shade.",
-     "start": 0.711,
-     "end": 2.026
+     "start": 0.992,
+     "end": 2.35
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 2.326
+ "total_s": 2.65
 }

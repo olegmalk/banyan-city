@@ -27,14 +27,12 @@ knows how to give* — and more are behind her on the road.
 
 ## Script
 
-**COLD OPEN — 0:00–0:06**
-
+**COLD OPEN — 0:00–0:05**
 Night. A plank leans against the lean-to, covered in charcoal scrawl; a man-height tree stands over it.
 
 > **VO (dry, tired, engineer):** I died an engineer and woke up as this tree. Tonight I have a deadline.
 
-**THE BACKLOG — 0:06–0:13**
-
+**THE BACKLOG — 0:05–0:10**
 Close on the plank: four items, three struck through.
 
 ```
@@ -44,147 +42,120 @@ MIRACLE-003: prophecy .............. blocked (legal review)
 MIRACLE-004: leaf choreography ..... IN PROGRESS
 ```
 
-**CUT SCOPE — 0:13–0:19**
-
+**CUT SCOPE — 0:10–0:22**
 The goblin taps the last line with a stick, briefing his troops.
 
 > **VO:** Fourteen days to ship a miracle, the magistrate said, or we're a weed with paperwork. So we did what every team does with an impossible deadline: cut scope until the miracle was a *demo*.
 
-**FROM THE TOP — 0:19–0:25**
-
+**FROM THE TOP — 0:22–0:27**
 He raises the stick like a conductor; the leaves gather.
 
 > **SCAVENGER:** From the top! And — ripple!
 
-**THE RIPPLE — 0:25–0:31**
-
+**THE RIPPLE — 0:27–0:32**
 A wave travels up the branches, leaf by leaf — and stalls halfway.
 
-**BRANCH THREE — 0:31–0:37**
-
+**BRANCH THREE — 0:32–0:37**
 He jabs the stick at one particular branch, outraged.
 
 > **SCAVENGER:** You dropped it at branch three again! Branch three is our weakest performer!
 
-**GIVEN NOTES — 0:37–0:44**
-
+**GIVEN NOTES — 0:37–0:43**
 Close on the offending branch, its leaves hanging limp and unrepentant.
 
 > **VO:** I am being given notes. By a goblin. With a stick. …Branch three *is* our weakest performer, though.
 
-**MIRACLES DON'T REHEARSE — 0:44–0:50**
-
+**MIRACLES DON'T REHEARSE — 0:43–0:47**
 The farmer watches from a stump, arms crossed, jug at his feet.
 
 > **FARMER:** Miracles don't rehearse.
 
-**DAWN TWILIGHT — 0:50–0:56**
-
+**DAWN TWILIGHT — 0:47–0:52**
 The goblin turns, stick raised, absolutely certain.
 
 > **SCAVENGER:** Everything rehearses. Sunrise rehearses. It's called *dawn twilight.*
 
-**FULL MOON — 0:56–1:02**
-
+**FULL MOON — 0:52–0:57**
 The moon clears the horizon, full, and silver light floods the clearing.
 
-**THE CHAIR — 1:02–1:09**
-
+**THE CHAIR — 0:57–1:02**
 The MAGISTRATE unfolds a small travelling chair, sits, and crosses her ankles.
 
 > **MAGISTRATE:** Impress me. I brought a chair.
 
-**THE CUE — 1:09–1:15**
-
+**THE CUE — 1:02–1:07**
 The goblin raises the stick, sweating; the leaves draw in and hold.
 
-**THE WIND — 1:15–1:22**
-
+**THE WIND — 1:07–1:12**
 Wind sweeps the whole field — and every tree on the horizon performs the choreography at once.
 
 > **VO:** Two weeks rehearsing in stillness. Nobody booked the *wind.*
 
-**FLAILING — 1:22–1:29**
-
+**FLAILING — 1:12–1:17**
 He conducts bigger and bigger, narrating over the noise, and finally gestures at the moon as if he ordered it.
 
-**NO REACTION — 1:29–1:35**
-
+**NO REACTION — 1:17–1:22**
 The magistrate, seated, does not move. The farmer covers his eyes.
 
-**THE WIND DIES — 1:35–1:41**
-
+**THE WIND DIES — 1:22–1:27**
 The field goes still. The goblin's arms come down.
 
-**NO TRICK — 1:41–1:48**
-
+**NO TRICK — 1:27–1:32**
 He stops performing entirely; his voice drops into the truth-voice.
 
 > **SCAVENGER:** …There's no trick, ma'am. He doesn't *do* wonders. He gives things.
 
-**SHADE, WATER, ANSWERS — 1:48–1:55**
-
+**SHADE, WATER, ANSWERS — 1:32–1:36**
 He counts them off, not selling anything now.
 
 > **SCAVENGER:** Shade. Water. Answers.
 
-**A FIG, ONCE — 1:55–2:03**
-
+**A FIG, ONCE — 1:36–1:45**
 He touches his own chest where the fig once hit him.
 
 > **SCAVENGER:** A fig, once — you *threw* it at me — when nobody else in the world would give me anything. That's the whole tree.
 
-**LETTING GO — 2:03–2:10**
-
+**LETTING GO — 1:45–1:50**
 Underground: two weeks of hoarded light rushes up through the roots all at once.
 
 > **VO:** Two weeks of growth, saved up in the dark. All of it. Now.
 
-**THE ORCHARD — 2:10–2:18**
-
+**THE ORCHARD — 1:50–1:55**
 Every branch blooms and fruits at once — dozens of figs swelling in real time, silver in the moonlight.
 
 > **VO (very quiet):** He said the fig was the whole tree. Fine. Then here's the whole tree.
 
-**THE COST — 2:18–2:24**
-
+**THE COST — 1:55–2:00**
 The leaves droop as the fruit swells: everything spent, again.
 
-**SHE CATCHES ONE — 2:24–2:31**
-
+**SHE CATCHES ONE — 2:00–2:05**
 The magistrate rises, walks under the branches, and a fig comes loose into her hand at exactly head height.
 
-**WONDER VERIFIED — 2:31–2:39**
-
+**WONDER VERIFIED — 2:05–2:12**
 She writes standing up, the form against her forearm.
 
 > **MAGISTRATE:** "Wonder verified. Orchard, single specimen, fruiting out of season before an officer of rank."
 
-**AND IT SHARES — 2:39–2:45**
-
+**AND IT SHARES — 2:12–2:16**
 She looks at the fig in her hand, then adds one more line, quieter.
 
 > **MAGISTRATE:** "…And it shares."
 
-**THE FIGS — 2:45–2:51**
-
+**THE FIGS — 2:16–2:21**
 Dawn. The clearing is littered with figs like dropped coins.
 
-**THE STRANGER — 2:51–2:58**
-
+**THE STRANGER — 2:21–2:24**
 At the clearing's edge a hooded stranger kneels, hood down, travel-worn — not counting, not assessing. Praying.
 
 > **SCAVENGER (whisper):** …Who's that?
 
-**THE FIRST ONE — 2:58–3:05**
-
+**THE FIRST ONE — 2:24–2:29**
 The farmer picks up his jug and does not look at anyone.
 
 > **FARMER (grim):** Word travels. That's the first one.
 > **SCAVENGER:** First *what?*
 
-**WHAT DOES SHE WANT — 3:05–3:13**
-
+**WHAT DOES SHE WANT — 2:29–2:36**
 Long hold on the kneeling figure in the dawn light.
 
 > **VO:** Taxes I could pay. A count I could stand still for. A category I could fit inside. …What does *she* want?

@@ -7,26 +7,26 @@
    "who": "SCAVENGER",
    "text": "Welcome to Shade. Population: one. Amenities: shade.",
    "start": 0.0,
-   "end": 5.127,
+   "end": 4.766,
    "chunks": [
     {
      "text": "Welcome to Shade.",
      "start": 0.0,
-     "end": 1.531
+     "end": 1.266
     },
     {
      "text": "Population: one.",
-     "start": 1.531,
-     "end": 3.447
+     "start": 1.266,
+     "end": 2.958
     },
     {
      "text": "Amenities: shade.",
-     "start": 3.447,
-     "end": 5.127
+     "start": 2.958,
+     "end": 4.766
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 5.427
+ "total_s": 5.066
 }

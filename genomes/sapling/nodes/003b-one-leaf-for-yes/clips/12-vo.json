@@ -6,13 +6,13 @@
   {
    "who": "SCAVENGER",
    "text": "\u2026We'll circle back to that one.",
-   "start": 3.96,
-   "end": 5.462,
+   "start": 2.2,
+   "end": 3.983,
    "chunks": [
     {
      "text": "\u2026We'll circle back to that one.",
-     "start": 3.96,
-     "end": 5.462
+     "start": 2.2,
+     "end": 3.983
     }
    ]
   }
@@ -21,8 +21,8 @@
   {
    "text": "The leaf stays still \u2014 then gives the smallest, most reluctant half-tilt.",
    "start": 0.05,
-   "end": 3.96
+   "end": 2.2
   }
  ],
- "total_s": 5.762
+ "total_s": 4.283
 }

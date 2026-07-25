@@ -6,33 +6,27 @@
   {
    "who": "VO",
    "text": "I died an engineer and woke up as this tree. Today my only citizen is naming the town.",
-   "start": 3.68,
-   "end": 9.293,
+   "start": 0.0,
+   "end": 5.38,
    "chunks": [
     {
      "text": "I died an engineer and woke up",
-     "start": 3.68,
-     "end": 5.497
+     "start": 0.0,
+     "end": 1.915
     },
     {
      "text": "as this tree.",
-     "start": 5.497,
-     "end": 6.418
+     "start": 1.915,
+     "end": 2.908
     },
     {
      "text": "Today my only citizen is naming the town.",
-     "start": 6.418,
-     "end": 9.293
+     "start": 2.908,
+     "end": 5.38
     }
    ]
   }
  ],
- "actions": [
-  {
-   "text": "The young tree's small crown of leaves hangs perfectly level, waiting.",
-   "start": 0.05,
-   "end": 3.68
-  }
- ],
- "total_s": 9.593
+ "actions": [],
+ "total_s": 5.68
 }

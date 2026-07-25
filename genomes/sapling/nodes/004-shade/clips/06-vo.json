@@ -7,16 +7,16 @@
    "who": "SCAVENGER",
    "text": "Greenrest?",
    "start": 0.0,
-   "end": 0.862,
+   "end": 0.983,
    "chunks": [
     {
      "text": "Greenrest?",
      "start": 0.0,
-     "end": 0.862
+     "end": 0.983
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 1.162
+ "total_s": 1.283
 }

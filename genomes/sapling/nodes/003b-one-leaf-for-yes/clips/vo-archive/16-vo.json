@@ -1,0 +1,43 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "SCAVENGER",
+   "text": "Can I stay? Here. By you. I'd keep the weeds off.",
+   "start": 1.72,
+   "end": 5.257,
+   "chunks": [
+    {
+     "text": "Can I stay?",
+     "start": 1.72,
+     "end": 2.527
+    },
+    {
+     "text": "Here.",
+     "start": 2.527,
+     "end": 3.144
+    },
+    {
+     "text": "By you.",
+     "start": 3.144,
+     "end": 3.918
+    },
+    {
+     "text": "I'd keep the weeds off.",
+     "start": 3.918,
+     "end": 5.257
+    }
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "text": "He doesn't look up.",
+   "start": 0.05,
+   "end": 1.72
+  }
+ ],
+ "total_s": 5.557
+}

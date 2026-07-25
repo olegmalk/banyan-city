@@ -1,0 +1,32 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "VO",
+   "text": "He said the fig was the whole tree. Fine. Then here's the whole tree.",
+   "start": 0.0,
+   "end": 3.711,
+   "chunks": [
+    {
+     "text": "He said the fig was the whole tree.",
+     "start": 0.0,
+     "end": 2.105
+    },
+    {
+     "text": "Fine.",
+     "start": 2.105,
+     "end": 2.596
+    },
+    {
+     "text": "Then here's the whole tree.",
+     "start": 2.596,
+     "end": 3.711
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 4.011
+}

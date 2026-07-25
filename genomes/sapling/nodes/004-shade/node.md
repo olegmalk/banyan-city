@@ -26,115 +26,95 @@ one goblin and a lean-to?*
 ## Script
 
 **COLD OPEN — 0:00–0:05**
-
 The goblin holds a fig aloft over a knee-high young tree, a crooked lean-to and a three-stone cairn; he freezes mid-ceremony.
 
 > **SCAVENGER:** I hereby name this place… uh.
 
-**NOTHING PREPARED — 0:05–0:10**
-
+**NOTHING PREPARED — 0:05–0:09**
 He lowers the fig, deflating.
 
 > **SCAVENGER:** …I had something prepared.
 
-**THE TREE, WATCHING — 0:10–0:15**
-
+**THE TREE, WATCHING — 0:09–0:15**
 The young tree's small crown of leaves hangs perfectly level, waiting.
 
 > **VO (dry, tired, engineer):** I died an engineer and woke up as this tree. Today my only citizen is naming the town.
 
-**NEWHAVEN — 0:15–0:20**
-
+**NEWHAVEN — 0:15–0:18**
 He paces the tiny clearing, pitching at the tree like a founder at investors.
 
 > **SCAVENGER:** Newhaven!
 
-**NO LEAF — 0:20–0:24**
-
+**NO LEAF — 0:18–0:23**
 Close on one leaf, side-on: it holds dead level while the grass below it moves.
 
-**GREENREST — 0:24–0:29**
-
+**GREENREST — 0:23–0:26**
 He tries again, arms wide, more hopeful than before.
 
 > **SCAVENGER:** Greenrest?
 
-**FIGHOLM — 0:29–0:34**
-
+**FIGHOLM — 0:26–0:29**
 He points at the fig, reaching now.
 
 > **SCAVENGER:** Fig… holm?
 
-**AGGRESSIVELY NOTHING — 0:34–0:39**
-
+**AGGRESSIVELY NOTHING — 0:29–0:34**
 Extreme close on a stem joint: not one fibre moves. A stillness with an opinion in it.
 
 > **SCAVENGER (wounded):** Everything cannot be a no. You are a *plant*.
 
-**NAME IT FOR WHAT IT DOES — 0:39–0:45**
-
+**NAME IT FOR WHAT IT DOES — 0:34–0:39**
 The tree's one patch of shade lies on the grass, sharp-edged in the midday sun.
 
 > **VO:** Name the thing after what it *does*, like every good system since the dawn of—
 
-**THE COLLAPSE — 0:45–0:51**
-
+**THE COLLAPSE — 0:39–0:44**
 He flops down against the trunk, into the shade patch, out of the low afternoon sun, giving up.
 
 > **SCAVENGER (muttering):** …Whatever. It's just shade.
 
-**BOTH LEAVES — 0:51–0:56**
-
+**BOTH LEAVES — 0:44–0:49**
 Both leaves tilt at once, emphatically, in still air.
 
-**SHADE? — 0:56–1:02**
-
+**SHADE? — 0:49–0:54**
 He goes very still, then looks up at the leaves above him.
 
 > **SCAVENGER:** *Shade?* That's not a name, that's a—
 
-**EMPHATIC — 1:02–1:07**
-
+**EMPHATIC — 0:54–0:59**
 The leaves tilt again, harder, insisting.
 
 > **SCAVENGER:** Okay! Okay. Shade.
 
-**WELCOME TO SHADE — 1:07–1:13**
-
+**WELCOME TO SHADE — 0:59–1:04**
 He stands and raises the fig again — less ceremony, more meaning — gesturing at the whole tiny territory.
 
 > **SCAVENGER:** Welcome to Shade. Population: one. Amenities: shade.
 
-**THE FIRST GIFT — 1:13–1:19**
-
+**THE FIRST GIFT — 1:04–1:11**
 The goblin's bare feet, planted in the shade patch on the grass.
 
 > **VO:** Named after the first thing I ever gave anyone. I'd have accepted `prod-east-1`, but this is better.
 
-**BOOTS — 1:19–1:24**
-
+**BOOTS — 1:11–1:16**
 Wide at grass level: heavy boots stop at the clearing's edge as the goblin dives behind a trunk that hides a third of him.
 
-**THE FARMER — 1:24–1:30**
-
+**THE FARMER — 1:16–1:21**
 A sun-cracked farmer stands looking at the lean-to, the cairn, and the visibly failing hiding place.
 
 > **FARMER:** …You the one who's been keeping the weeds off this stretch?
 
-**THE WATER — 1:30–1:36**
-
+**THE WATER — 1:21–1:27**
 Underground: a root runs west and a dark damp line spreads through pale soil toward a distant field.
 
 > **VO:** I have been moving water toward his field for three days. Nobody asked me to. He noticed.
 
-**THE TRIBUTE — 1:36–1:43**
-
+**THE TRIBUTE — 1:27–1:32**
 He sets a clay jug and half a loaf at the base of the trunk, beside the cairn, and looks at the tree — not the goblin — when he says it.
 
 > **FARMER:** Man whose field started drinking again. Tell no one.
 
-**REGISTERED — 1:43–1:50**
-
+**REGISTERED — 1:32–1:37**
 At the horizon-touch of sunset the world flickers to wireframe for a single frame, a label folding open over the clearing and away.
 
 ```
@@ -143,8 +123,7 @@ SHADE · settlement(?) · pop. 2
 
 > **VO (quiet):** Population two. There is one goblin here. …It counted *me*.
 
-**THE HOOK — 1:50–1:57**
-
+**THE HOOK — 1:37–1:44**
 The farmer stops on his way out, turns back, and looks at the lean-to, the cairn, the goblin with his fig.
 
 > **FARMER:** After harvest, the assessor counts everything with a name. Yesterday there was nothing here to count.

@@ -6,13 +6,13 @@
   {
    "who": "SCAVENGER",
    "text": "I knew it!",
-   "start": 3.68,
-   "end": 4.813,
+   "start": 2.2,
+   "end": 3.062,
    "chunks": [
     {
      "text": "I knew it!",
-     "start": 3.68,
-     "end": 4.813
+     "start": 2.2,
+     "end": 3.062
     }
    ]
   }
@@ -21,8 +21,8 @@
   {
    "text": "A very long pause on the leaf \u2014 then it tilts.",
    "start": 0.05,
-   "end": 3.68
+   "end": 2.2
   }
  ],
- "total_s": 5.113
+ "total_s": 3.361
 }

@@ -1,0 +1,28 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "SCAVENGER",
+   "text": "Newhaven!",
+   "start": 4.52,
+   "end": 5.714,
+   "chunks": [
+    {
+     "text": "Newhaven!",
+     "start": 4.52,
+     "end": 5.714
+    }
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "text": "He paces the tiny clearing, pitching at the tree like a founder at investors.",
+   "start": 0.05,
+   "end": 4.52
+  }
+ ],
+ "total_s": 6.014
+}

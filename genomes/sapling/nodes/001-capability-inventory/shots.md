@@ -25,7 +25,7 @@ Line: "Yesterday I died fixing a server. Today I am a tree." Camera on the tree 
 Vertical 9:16 macro shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds with large empty areas, gentle pastel-leaning palette. A tiny mascot-simple banyan sapling — thin curved trunk, two oversized expressive leaves, no face — trembles and shivers in a gust of wind, filling the lower half of the frame, alone in a vast green field under an enormous flat watercolor sky. Peach and gold morning light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 02 — NO APOLOGY (0:05–0:10) ⬜ needs footage
+## Beat 02 — NO APOLOGY (0:05–0:09) ⬜ needs footage
 
 Line: "Nobody has apologized." Camera pulls back to show how empty the world is.
 
@@ -33,7 +33,7 @@ Line: "Nobody has apologized." Camera pulls back to show how empty the world is.
 Vertical 9:16 wide shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. The wind dies and a tiny sapling's two leaves settle into stillness at the centre of an enormous empty field, the camera drifting slowly backward to reveal more and more emptiness around it — no buildings, no people, no path. Morning washes of peach and pale green. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 03 — THE DESK (0:10–0:15) ⬜ needs footage
+## Beat 03 — THE DESK (0:09–0:13) ⬜ needs footage
 
 Line: "Last log entry of my previous life." Camera on the man at the monitor — the memory.
 
@@ -41,7 +41,7 @@ Line: "Last log entry of my previous life." Camera on the man at the monitor —
 Vertical 9:16 shot, night interior, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A tired male engineer in his 30s types fast on a mechanical keyboard, shoulders hunched, face underlit by the cold teal glow of a monitor filled with red error text. A cramped dark apartment in flat deep indigo, 3 a.m. exhaustion, one mug beside his hand. Static camera. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 04 — THE RETRY LOOP (0:15–0:22) ⬜ needs footage
+## Beat 04 — THE RETRY LOOP (0:13–0:18) ⬜ needs footage
 
 Line: "It's always the retry loop." Camera ON THE SCREEN — the thing the line names.
 
@@ -49,7 +49,7 @@ Line: "It's always the retry loop." Camera ON THE SCREEN — the thing the line 
 Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, gentle pastel palette. Simplified blocks of red error text scroll and repeat down a monitor screen, the same shape of line appearing again and again, reflected faintly in the dark room. Abstract cel-shaded UI shapes only — no legible letters. Slow push-in on the screen, teal glow spilling past its edges. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 05 — THE FALL (0:22–0:27) ⬜ needs footage
+## Beat 05 — THE FALL (0:18–0:23) ⬜ needs footage
 
 No dialogue — the death. WIDE, desk in profile, so the sway and the falling mug are one take (the gate flagged this as the episode's only continuity risk).
 
@@ -57,7 +57,7 @@ No dialogue — the death. WIDE, desk in profile, so the sway and the falling mu
 Vertical 9:16 WIDE shot with the desk seen in profile, night interior, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A hunched engineer sways once and drops sideways out of frame; his ceramic mug tips off the desk edge, falls, and shatters on the floor in a few simple flat shards. The empty chair rocks. The monitor keeps glowing teal over the emptied desk. Static camera, held after he is gone. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 06 — REBOOT (0:27–0:34) ⬜ needs footage
+## Beat 06 — REBOOT (0:23–0:28) ⬜ needs footage
 
 Line: "Rebooted somewhere with better lighting." Camera on the light arriving.
 
@@ -65,7 +65,7 @@ Line: "Rebooted somewhere with better lighting." Camera on the light arriving.
 Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. Warm sunrise light sweeps across a green field from one side to the other, lighting a tiny mascot-simple sapling as it passes and throwing its long shadow across the grass. Night blues wash out into peach and gold. Slow, gentle, dawn arriving. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 07 — THE BIRD (0:34–0:39) ⬜ needs footage
+## Beat 07 — THE BIRD (0:28–0:33) ⬜ needs footage
 
 Line: "filed me under furniture." Camera on the bird using the tree as furniture — the picture IS the joke now (the gate found the old keyboard line had no image behind it).
 
@@ -73,7 +73,7 @@ Line: "filed me under furniture." Camera on the bird using the tree as furniture
 Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small round bird flutters down and lands on the top leaf of a tiny mascot-simple sapling, bending the leaf flat under its weight, hops once, then takes off — the leaf springing back upright behind it. Bright morning field, deadpan comic timing. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 08 — NO HANDS (0:39–0:44) ⬜ needs footage
+## Beat 08 — NO HANDS (0:33–0:38) ⬜ needs footage
 
 Line: "No hands. No keyboard. So: what can this thing actually do?" Camera on the twig tip where a hand would be — this replaces a redundant wide AND gives the keyboard joke an image.
 
@@ -81,7 +81,7 @@ Line: "No hands. No keyboard. So: what can this thing actually do?" Camera on th
 Vertical 9:16 extreme close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. The bare tip of a thin twig twitches and flexes in the wind, filling the frame — held at the exact height and angle a human hand would be, with nothing at the end of it. Shallow blurred field behind, morning light. Quiet, deadpan, slightly sad. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 09 — ROOTS WAKE (0:44–0:51) ⬜ needs footage
+## Beat 09 — ROOTS WAKE (0:38–0:42) ⬜ needs footage
 
 Line: "Capability one: sense." Camera underground as the sense switches on.
 
@@ -89,7 +89,7 @@ Line: "Capability one: sense." Camera underground as the sense switches on.
 Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, gentle pastel palette. Glowing teal root filaments light up one after another and spread outward through near-black soil in an underground cross-section, the illumination travelling away from a tiny sapling above the soil line like a system coming online. Bioluminescent teal and green on dark, slow push-in. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 10 — THE WATER TABLE (0:51–0:59) ⬜ needs footage
+## Beat 10 — THE WATER TABLE (0:42–0:47) ⬜ needs footage
 
 Line: "the water table… every stone in this field." Camera on BOTH — the gate caught the old prompt showing only water while the line promised stones.
 
@@ -97,7 +97,7 @@ Line: "the water table… every stone in this field." Camera on BOTH — the gat
 Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, gentle pastel palette. Veins of dark water brighten into view beneath a network of glowing roots while simple rounded stones light up one after another as the sensing sweeps past them — an underground map drawing itself. Deep near-black soil, shimmering flat water shapes, sparse mineral glints. Slow lateral camera drift. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 11 — THE WORM (0:59–1:07) ⬜ needs footage
+## Beat 11 — THE WORM (0:47–0:52) ⬜ needs footage
 
 Line: "a worm having a bad day." Camera on the worm — the joke's subject.
 
@@ -105,7 +105,7 @@ Line: "a worm having a bad day." Camera on the worm — the joke's subject.
 Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, gentle pastel palette. A single simple cartoon worm pushes and squirms past a glowing teal root filament in dark soil, brushing it so the filament flares brighter as it passes. Comic, small, deadpan. Tight underground framing, near-black background. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 12 — WHOAMI (1:07–1:12) ⬜ needs footage
+## Beat 12 — WHOAMI (0:52–0:57) ⬜ needs footage
 
 Terminal overlay beat ($ whoami). The frame shows TIME PASSING (shadow sweep) rather than 'unchanged' — the gate flagged four dead seconds on a static frame.
 
@@ -113,7 +113,7 @@ Terminal overlay beat ($ whoami). The frame shows TIME PASSING (shadow sweep) ra
 Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. The long shadow of a tiny mascot-simple sapling sweeps slowly across flat-color grass as the sun crosses the sky — hours compressed into one held frame, the tree itself motionless at centre. Clean uncluttered composition with generous empty space in the upper frame for an overlay. Warm light shifting through the shot. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 13 — THE TIMELAPSE (1:12–1:20) ⬜ needs footage
+## Beat 13 — THE TIMELAPSE (0:57–1:02) ⬜ needs footage
 
 Line: "Capability two: grow. Three days of full effort." Camera on time passing and the bud opening.
 
@@ -121,7 +121,7 @@ Line: "Capability two: grow. Three days of full effort." Camera on time passing 
 Vertical 9:16 timelapse, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. The sun arcs overhead three times in accelerating sweeps of peach, gold and indigo while a single new leaf slowly unfurls from a bud on a tiny sapling — the only thing changing besides the light. Static camera, patient, funny in its smallness. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 14 — ONE LEAF (1:20–1:29) ⬜ needs footage
+## Beat 14 — ONE LEAF (1:02–1:07) ⬜ needs footage
 
 Line: "Output: one leaf." Camera close on the single new leaf.
 
@@ -129,7 +129,7 @@ Line: "Output: one leaf." Camera close on the single new leaf.
 Vertical 9:16 extreme close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, gentle pastel palette. One brand-new bright green leaf finishes uncurling and settles, catching the light along its edge, filling the frame against a soft blurred watercolor sky. Small, proud, slightly ridiculous. Held macro with a faint breathing motion. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 15 — THE WHOLE API (1:29–1:34) ⬜ needs footage
+## Beat 15 — THE WHOLE API (1:07–1:12) ⬜ needs footage
 
 Line: "Move — no. Fight — no. Flee — no. Speak — no." Camera on the tree TRYING and failing — the gate found three near-identical wides in a row here.
 
@@ -137,7 +137,7 @@ Line: "Move — no. Fight — no. Flee — no. Speak — no." Camera on the tree
 Vertical 9:16 medium close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A tiny sapling's thin trunk strains and bows hard to one side as if trying with everything it has to move, its two leaves quivering with effort and the soil visibly tugging around its roots — then it springs back, having gone nowhere. Comic, effortful, futile. Midday light, tight framing on trunk and root line. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 16 — SENSE AND GROW (1:34–1:39) ⬜ needs footage
+## Beat 16 — SENSE AND GROW (1:12–1:17) ⬜ needs footage
 
 Line: "That's the whole API." Camera widest — one small living thing, huge indifferent world.
 
@@ -145,7 +145,7 @@ Line: "That's the whole API." Camera widest — one small living thing, huge ind
 Vertical 9:16 extreme wide shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. Clouds sweep their shadows across an enormous empty field while one tiny fragile sapling holds its place at the centre, dwarfed to almost nothing by the landscape and the vast flat sky. Lonely, quietly epic, slow push-in. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 17 — THE TREMOR (1:39–1:45) ⬜ needs footage
+## Beat 17 — THE TREMOR (1:17–1:22) ⬜ needs footage
 
 Line: "Footsteps. Heavy, headed here." Camera underground on the pulses arriving.
 
@@ -153,7 +153,7 @@ Line: "Footsteps. Heavy, headed here." Camera underground on the pulses arriving
 Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, gentle pastel palette. Concentric rings of soft light pulse in rhythmically from the far edge of an underground cross-section — step, step, step — each wave rolling closer and lighting the glowing teal root filaments brighter as it passes beneath a tiny sapling silhouette above the soil line. Tension built by rhythm alone. Bioluminescent teal on near-black. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 18 — NOT HIDE (1:45–1:51) ⬜ needs footage
+## Beat 18 — NOT HIDE (1:22–1:27) ⬜ needs footage
 
 Line: "neither of them is hide." Camera above ground: stillness against an approach on the horizon.
 

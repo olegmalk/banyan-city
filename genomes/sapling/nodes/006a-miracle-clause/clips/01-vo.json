@@ -4,66 +4,29 @@
  "directed": "synth_vo v3",
  "lines": [
   {
-   "who": "FARMER",
-   "text": "Infrastructure.",
-   "start": 1.4,
-   "end": 2.472,
-   "chunks": [
-    {
-     "text": "Infrastructure.",
-     "start": 1.4,
-     "end": 2.472
-    }
-   ]
-  },
-  {
    "who": "VO",
-   "text": "I've seen this before. It's called audit prep. You cannot mop your",
-   "start": 2.972,
-   "end": 7.428,
+   "text": "I died an engineer and woke up as this tree. This morning my town is being staged.",
+   "start": 0.0,
+   "end": 5.557,
    "chunks": [
     {
-     "text": "I've seen this before.",
-     "start": 2.972,
-     "end": 4.491
+     "text": "I died an engineer and woke up",
+     "start": 0.0,
+     "end": 2.045
     },
     {
-     "text": "It's called audit prep.",
-     "start": 4.491,
-     "end": 5.937
+     "text": "as this tree.",
+     "start": 2.045,
+     "end": 3.015
     },
     {
-     "text": "You cannot mop your",
-     "start": 5.937,
-     "end": 7.429
-    }
-   ]
-  },
-  {
-   "who": "VO",
-   "text": "way out of one. Everyone tries.",
-   "start": 7.928,
-   "end": 10.109,
-   "chunks": [
-    {
-     "text": "way out of one.",
-     "start": 7.928,
-     "end": 9.052
-    },
-    {
-     "text": "Everyone tries.",
-     "start": 9.052,
-     "end": 10.108
+     "text": "This morning my town is being staged.",
+     "start": 3.015,
+     "end": 5.557
     }
    ]
   }
  ],
- "actions": [
-  {
-   "text": "Morning.",
-   "start": 0.05,
-   "end": 1.4
-  }
- ],
- "total_s": 10.409
+ "actions": [],
+ "total_s": 5.857
 }

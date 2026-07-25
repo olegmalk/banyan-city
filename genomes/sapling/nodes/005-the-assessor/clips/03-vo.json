@@ -4,133 +4,24 @@
  "directed": "synth_vo v3",
  "lines": [
   {
-   "who": "ASSESSOR",
-   "text": "Population: two. Occupations: farmer \u2014 (he writes) \u2014 and\u2026",
-   "start": 3.96,
-   "end": 7.468,
-   "chunks": [
-    {
-     "text": "Population: two.",
-     "start": 3.96,
-     "end": 5.224
-    },
-    {
-     "text": "Occupations: farmer \u2014 (he writes) \u2014 and\u2026",
-     "start": 5.224,
-     "end": 7.468
-    }
-   ]
-  },
-  {
    "who": "VO",
-   "text": "(looking at the scavenger) \u2026weed warden. Provisional. Water source?",
-   "start": 7.818,
-   "end": 10.155,
+   "text": "Which means the kingdom's bureaucracy runs ahead of schedule. I have chills.",
+   "start": 0.0,
+   "end": 4.222,
    "chunks": [
     {
-     "text": "(looking at the scavenger) \u2026weed warden.",
-     "start": 7.818,
-     "end": 8.551
+     "text": "Which means the kingdom's bureaucracy runs ahead of schedule.",
+     "start": 0.0,
+     "end": 3.226
     },
     {
-     "text": "Provisional.",
-     "start": 8.551,
-     "end": 9.257
-    },
-    {
-     "text": "Water source?",
-     "start": 9.257,
-     "end": 10.155
-    }
-   ]
-  },
-  {
-   "who": "FARMER",
-   "text": "The channel mended itself.",
-   "start": 10.655,
-   "end": 12.935,
-   "chunks": [
-    {
-     "text": "The channel mended itself.",
-     "start": 10.655,
-     "end": 12.935
-    }
-   ]
-  },
-  {
-   "who": "ASSESSOR",
-   "text": "Channels do not mend themselves.",
-   "start": 13.435,
-   "end": 15.16,
-   "chunks": [
-    {
-     "text": "Channels do not mend themselves.",
-     "start": 13.435,
-     "end": 15.161
-    }
-   ]
-  },
-  {
-   "who": "FARMER",
-   "text": "This one did.",
-   "start": 15.66,
-   "end": 16.548,
-   "chunks": [
-    {
-     "text": "This one did.",
-     "start": 15.66,
-     "end": 16.548
-    }
-   ]
-  },
-  {
-   "who": "VO",
-   "text": "Oh no. He counts things for a living. He's been counting my tells since",
-   "start": 18.828,
-   "end": 22.335,
-   "chunks": [
-    {
-     "text": "Oh no.",
-     "start": 18.828,
-     "end": 19.822
-    },
-    {
-     "text": "He counts things for a living.",
-     "start": 19.822,
-     "end": 20.983
-    },
-    {
-     "text": "He's been counting my tells since",
-     "start": 20.983,
-     "end": 22.334
-    }
-   ]
-  },
-  {
-   "who": "VO",
-   "text": "he arrived.",
-   "start": 22.835,
-   "end": 23.707,
-   "chunks": [
-    {
-     "text": "he arrived.",
-     "start": 22.835,
-     "end": 23.707
+     "text": "I have chills.",
+     "start": 3.226,
+     "end": 4.222
     }
    ]
   }
  ],
- "actions": [
-  {
-   "text": "The assessor reaches the ledger's settlement schema and begins to visibly suffer.",
-   "start": 0.05,
-   "end": 3.96
-  },
-  {
-   "text": "The assessor looks at the farmer.",
-   "start": 16.598,
-   "end": 18.828
-  }
- ],
- "total_s": 24.007
+ "actions": [],
+ "total_s": 4.522
 }
