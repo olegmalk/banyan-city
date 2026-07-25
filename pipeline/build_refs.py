@@ -32,18 +32,24 @@ REF_TEXT = ("The town was quiet that evening. Someone had left a lantern "
 # + a small pitch offset widen the separation the clone locks onto. The
 # narrator bm_fable stays untouched — that voice is the tree's released
 # identity. Offsets are semitones, applied losslessly via resample+tempo.
+# Measured 2026-07-25 (`pipeline/qa_voices.py`): the whole male cast landed
+# inside a 20 Hz band (tree 118, guard 121, assessor 127, farmer 127,
+# scavenger 136) — the acoustic cause of the founder's "voices are mixed
+# up." Offsets below are sized to put every character in its OWN band:
+# farmer ~95, tree ~118 (untouched — released identity), assessor ~150,
+# scavenger ~180, magistrate ~206. Re-measure after any change.
 VOICE_SHAPING = {
-    "am_puck":     {"speed": 1.12, "pitch": +2.5, "text": (
+    "am_puck":     {"speed": 1.12, "pitch": +7.0, "text": (
         "Okay okay okay — hear me out. It fell off the cart! On the ground! "
         "That's basically public property. You know what, forget the apple. "
         "This is the best day I've had in three weeks, and one of those days "
         "included a moat. A MOAT. I'm not even joking, ask anyone.")},
-    "bm_george":   {"speed": 0.95, "pitch": -2.0, "text": (
+    "bm_george":   {"speed": 0.95, "pitch": -5.0, "text": (
         "Field started drinking again. Don't much care why. Rain comes, or "
         "it doesn't. Weeds come, they get pulled. You want something said, "
         "say it plain, and don't waste my morning. Harvest won't wait on "
         "either of us, and the cart doesn't load itself.")},
-    "bm_daniel":   {"speed": 1.0, "pitch": -1.0, "text": (
+    "bm_daniel":   {"speed": 1.0, "pitch": +3.5, "text": (
         "Item one: a dwelling, category shack, occupancy one. Item two: "
         "three rocks, noted individually. Item three: one tree, deciduous, "
         "responsive. Occupation: answers questions. Everything is in order "
