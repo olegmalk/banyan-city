@@ -46,8 +46,8 @@ REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "pipeline"))
 from captions import caption_chunks  # noqa: E402
 from direction import (ACTION_MAX_HOLD, ACTION_MAX_WORDS,  # noqa: E402,F401
-                       ACTION_MIN_HOLD, action_hold, displayable_action,
-                       is_beat_pause)
+                       ACTION_MIN_HOLD, action_hold,
+                       displayable_action, is_beat_pause)
 from render_t1 import extract_script, parse_frames, strip_inline_md  # noqa: E402
 from render_t2 import clean_speech, load_voices, speaker_key, voice_for  # noqa: E402
 
@@ -180,3 +180,223 @@ def gap_before(prev_text: str | None, cur_text: str, beat_pause: bool) -> float:
     return GAP_DEFAULT
 
 
+
+
+
+
+
+
+LONG_LINE_WORDS = 22   # chatterbox generations past ~250 sampling steps die
+CHUNK_JOIN_GAP = 0.12  # breath between stitched chunk takes
+
+
+def measured_chunks(engine, text: str, voice: str, spd: float, direction: tuple,
+                    start: float, end: float) -> list:
+    """Caption chunks timed by their own measured synthesis, scaled into
+    the line's real speech window [start, end]."""
+    chunks = caption_chunks(strip_inline_md(text))
+    if len(chunks) == 1:
+        return [{"text": chunks[0], "start": round(start, 3), "end": round(end, 3)}]
+    durs = []
+    for c in chunks:
+        speak = clean_speech(c)
+        if not speak:
+            # display-only stage direction ('(aggressively nothing)') —
+            # nominal read time, the voice never says it
+            durs.append(0.6)
+            continue
+        samples, sr = engine.synth(speak, voice, spd, direction)
+        durs.append(len(trim_silence(samples, sr)) / sr)
+    total = sum(durs) or 1.0
+    spans, t = [], start
+    for c, d in zip(chunks, durs):
+        dt = (end - start) * d / total
+        spans.append({"text": c, "start": round(t, 3), "end": round(t + dt, 3)})
+        t += dt
+    return spans
+
+
+def synth_line(engine, text: str, voice: str, spd: float, direction: tuple):
+    """One line's audio + caption spans (relative to the line's own start).
+
+    Short lines: one generate, chunks measured separately (their takes are
+    only used for timing). LONG lines on chatterbox are built by STITCHING
+    the chunk takes themselves: a single long generation dies silently on
+    MPS at ~250 sampling steps (the 002b saga — five identical deaths),
+    and stitching also makes caption timing exact rather than measured."""
+    chunks = caption_chunks(strip_inline_md(text))
+    speak_full = clean_speech(text)
+    long_line = (engine.name.startswith("chatterbox")
+                 and len(speak_full.split()) > LONG_LINE_WORDS
+                 and len(chunks) > 1)
+    if not long_line:
+        samples, sr = engine.synth(speak_full, voice, spd, direction)
+        samples = trim_silence(samples, sr)
+        dur = len(samples) / sr
+        return samples, sr, measured_chunks(engine, text, voice, spd,
+                                            direction, 0.0, dur)
+    takes = []
+    for c in chunks:
+        speak = clean_speech(c)
+        if not speak:
+            takes.append((c, None))
+            continue
+        s, sr = engine.synth(speak, voice, spd, direction)
+        takes.append((c, trim_silence(s, sr)))
+    sr = engine.sr
+    ref = next(s for _, s in takes if s is not None)
+    gap = np.zeros(int(CHUNK_JOIN_GAP * sr), dtype=ref.dtype)
+    hold = np.zeros(int(0.5 * sr), dtype=ref.dtype)  # display-only chunk
+    pieces, spans, t = [], [], 0.0
+    for i, (c, s) in enumerate(takes):
+        seg = s if s is not None else hold
+        spans.append({"text": c, "start": round(t, 3),
+                      "end": round(t + len(seg) / sr + CHUNK_JOIN_GAP, 3)})
+        pieces.append(seg)
+        t += len(seg) / sr
+        if i < len(takes) - 1:
+            pieces.append(gap)
+            t += CHUNK_JOIN_GAP
+    spans[-1]["end"] = round(t, 3)
+    return np.concatenate(pieces), sr, spans
+
+
+def archive(clips_dir: Path, beat_num: int) -> None:
+    arch = clips_dir / "vo-archive"
+    for ext in ("mp3", "json"):
+        old = clips_dir / f"{beat_num:02d}-vo.{ext}"
+        if not old.exists():
+            continue
+        arch.mkdir(exist_ok=True)
+        dest, n = arch / old.name, 2
+        while dest.exists():
+            dest = arch / f"{old.stem}.v{n}.{ext}"
+            n += 1
+        old.rename(dest)
+
+
+def main() -> int:
+    p = argparse.ArgumentParser(description=__doc__,
+                                formatter_class=argparse.RawDescriptionHelpFormatter)
+    p.add_argument("ffmpeg")
+    p.add_argument("genome")
+    p.add_argument("slugs", nargs="+")
+    p.add_argument("--engine", choices=["kokoro", "chatterbox"], default="kokoro")
+    args = p.parse_args()
+
+    engine = KokoroEngine() if args.engine == "kokoro" else ChatterboxEngine()
+    genome_dir = REPO / "genomes" / args.genome
+    vcfg = load_voices(genome_dir)
+
+    for slug in args.slugs:
+        node_dir = genome_dir / "nodes" / slug
+        frames = parse_frames(extract_script((node_dir / "node.md").read_text()))
+        clips_dir = node_dir / "clips"
+        clips_dir.mkdir(exist_ok=True)
+        for beat_num, f in enumerate(frames, start=1):
+            # walk items in order: lines speak; short stage directions
+            # become timed on-screen beats (cycle 006 — the tree's replies
+            # lived in actions that never reached the viewer); a 'Beat.'
+            # becomes the next line's breath
+            events, pending_beat = [], False
+            for it in f["items"]:
+                if it[0] == "action":
+                    t = strip_inline_md(it[1])
+                    if is_beat_pause(t):
+                        pending_beat = True
+                        continue
+                    disp = displayable_action(t)
+                    if disp:
+                        events.append(("action", disp))
+                elif it[0] == "line":
+                    text = strip_inline_md(it[2])
+                    if clean_speech(text):
+                        events.append(("line", it[1], text, pending_beat))
+                        pending_beat = False
+            if not any(e[0] == "line" for e in events):
+                # A beat with nothing to say must not keep the take it had
+                # BEFORE the script changed. Skipping quietly here is how 007a
+                # ended up playing its closing line ("…Who's that?") at beat 5:
+                # the molt renumbered the beats, this beat lost its dialogue,
+                # and the stale 05-vo.mp3 sat there for render_t3 to find.
+                # Archived, not deleted (R6).
+                if (clips_dir / f"{beat_num:02d}-vo.mp3").exists():
+                    print(f"    {slug} b{beat_num:02d} has no spoken line — "
+                          "archiving the stale take")
+                    archive(clips_dir, beat_num)
+                continue
+
+            sr = engine.sr
+            pieces, manifest, actions, cursor, prev_text = [], [], [], 0.0, None
+            for ev in events:
+                if ev[0] == "action":
+                    hold = action_hold(ev[1])
+                    pieces.append(np.zeros(int(hold * sr), dtype=np.float32))
+                    actions.append({"text": ev[1],
+                                    "start": round(cursor + 0.05, 3),
+                                    "end": round(cursor + hold, 3)})
+                    cursor += hold
+                    prev_text = None  # the beat resets exchange rhythm
+                    continue
+                _, raw_who, text, beat_pause = ev
+                who = speaker_key(raw_who) or "VO"
+                voice, base = voice_for(who, vcfg)
+                print(f"    {slug} b{beat_num:02d} {who} ({voice}) "
+                      f"{len(text.split())}w…", flush=True)
+                spd = pacing(base, raw_who, text)
+                direction = direction_for(raw_who, text)
+                samples, _, rel_spans = synth_line(engine, text, voice, spd, direction)
+                gap = gap_before(prev_text, text, beat_pause)
+                if gap:
+                    pieces.append(np.zeros(int(gap * sr), dtype=samples.dtype))
+                    cursor += gap
+                start = cursor
+                cursor += len(samples) / sr
+                manifest.append({
+                    "who": who, "text": text,
+                    "start": round(start, 3), "end": round(cursor, 3),
+                    "chunks": [{"text": c["text"],
+                                "start": round(start + c["start"], 3),
+                                "end": round(start + c["end"], 3)}
+                               for c in rel_spans],
+                })
+                pieces.append(samples)
+                prev_text = text
+            # short settle so the last word never clips at the beat edge
+            pieces.append(np.zeros(int(0.30 * sr), dtype=pieces[-1].dtype))
+            cursor += 0.30
+
+            archive(clips_dir, beat_num)
+            audio = np.concatenate(pieces)
+            wav = clips_dir / "tmp.wav"
+            sf.write(str(wav), audio, sr)
+            mp3 = clips_dir / f"{beat_num:02d}-vo.mp3"
+            subprocess.run([args.ffmpeg, "-y", "-loglevel", "error", "-i", str(wav),
+                            "-c:a", "libmp3lame", "-q:a", "4", str(mp3)], check=True)
+            wav.unlink()
+            (clips_dir / f"{beat_num:02d}-vo.json").write_text(json.dumps(
+                {"cast": "voices.yaml", "engine": engine.name,
+                 "directed": "synth_vo v3", "lines": manifest,
+                 "actions": actions,
+                 "total_s": round(cursor, 3)}, indent=1))
+            print(f"{slug} beat {beat_num:02d}: {len(manifest)} lines, "
+                  f"{cursor:.1f}s [{engine.name}]")
+
+        # takes numbered past the last beat are leftovers from a shorter cut of
+        # the script; render_t3 would never reach them, but they make the clips
+        # dir lie about what the episode contains
+        for stray in sorted(clips_dir.glob("*-vo.mp3")):
+            try:
+                n = int(stray.name[:2])
+            except ValueError:
+                continue
+            if n > len(frames):
+                print(f"    {slug} b{n:02d} is past the last beat "
+                      f"({len(frames)}) — archiving")
+                archive(clips_dir, n)
+    print("VO_DONE")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
