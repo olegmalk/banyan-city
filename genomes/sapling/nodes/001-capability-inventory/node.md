@@ -26,7 +26,7 @@ is coming toward the tree that can't run?*
 
 A tiny two-leaf banyan sapling trembles in the wind, alone in a vast green field.
 
-> **VO (dry, tired, engineer):** Yesterday I died fixing a server at 3 a.m. Today I am a tree.
+> **VO (dry, tired, engineer):** Yesterday I died fixing a server. Today I am a tree.
 
 **NO APOLOGY — 0:05–0:09**
 
@@ -48,7 +48,7 @@ Close on the monitor: the same error repeating down the screen.
 
 **THE FALL — 0:18–0:23**
 
-The man sways and drops out of frame; his mug tips off the desk and shatters.
+Wide, the desk in profile: the man sways and drops out of frame; his mug tips off the edge and shatters.
 
 **REBOOT — 0:23–0:28**
 
@@ -60,13 +60,13 @@ Back in the field: sunlight sweeps across the sapling as morning arrives.
 
 A bird lands on the top leaf, bends it flat, and flies off; the leaf springs back.
 
-> **VO:** And no keyboard.
+> **VO:** The local wildlife has already filed me under *furniture*.
 
-**THE QUESTION — 0:33–0:38**
+**NO HANDS — 0:33–0:38**
 
-The sapling holds still, small and absurd under a huge sky.
+Close on a bare twig tip, exactly where a hand would be, twitching in the wind.
 
-> **VO:** Every system gets one question first: what can it actually *do?*
+> **VO:** No hands. No keyboard. So: what can this thing actually *do?*
 
 **ROOTS WAKE — 0:38–0:43**
 
@@ -88,7 +88,7 @@ A single worm pushes past a root filament, lighting it as it goes.
 
 **WHOAMI — 0:52–0:56**
 
-The sapling in the field, unchanged, patient.
+The sapling's shadow sweeps across the grass as the sun moves — hours passing in one held frame.
 
 ```
 $ whoami
@@ -109,7 +109,7 @@ Close on the new leaf, bright and proud and very small.
 
 **THE WHOLE API — 1:07–1:13**
 
-Wind moves slow waves through the grass around the motionless sapling.
+The trunk strains and bows against nothing, roots pulling taut in the soil — and nothing happens.
 
 > **VO:** Move — no. Fight — no. Flee — obviously no. Speak — no.
 
