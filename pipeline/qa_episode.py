@@ -43,8 +43,10 @@ QUIET_MAX_S = 3.5           # longest allowed quiet-vs-bed stretch
 # Luma spread (90th percentile minus 10th) below this is a blank field, not a
 # shot. A numerically failed generation still writes a valid, mid-grey,
 # perfectly "fine" mp4 — the grey Wan render measured a spread of ~20 where
-# real cel-shaded frames run 90-200.
-FLAT_STDDEV = 45.0
+# real frames in this style run a median of 52-144 (measured across the 31
+# archived clips); dead grey runs 14-22. 35 separates them with room on both
+# sides — and this style is deliberately soft pastel, so a high floor false-alarms.
+FLAT_STDDEV = 35.0
 CAPTION_WORD_CAP = 7 + 2    # chunker cap + orphan-fold margin
 
 results = []
