@@ -76,6 +76,11 @@ def spread_of(frame) -> float:
     a = np.asarray(frame, dtype=np.float32)
     if not np.isfinite(a).all():
         return 0.0
+    # must be LUMA: the threshold is calibrated on the archived clips' luma
+    # spread, and measuring RGB percentiles instead inflates it with colour —
+    # a blank frame read 28 in RGB against 18 in luma, and so passed a floor of 35
+    if a.ndim == 3 and a.shape[-1] >= 3:
+        a = a[..., 0] * 0.299 + a[..., 1] * 0.587 + a[..., 2] * 0.114
     lo, hi = np.percentile(a, 10), np.percentile(a, 90)
     return float(hi - lo) * (255.0 if a.max() <= 1.001 else 1.0)
 
