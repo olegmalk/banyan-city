@@ -25,7 +25,7 @@ line, someone with real power reads it next episode.
 ## Script
 
 **COLD OPEN — 0:00–0:05**
-Dawn over Shade: a chest-high young tree with a small crown, a crooked lean-to, a three-stone cairn, a clay jug.
+Dawn over Shade: a knee-high young tree with a small crown, a crooked lean-to, a three-stone cairn, a clay jug.
 
 > **VO (dry, tired, engineer):** I died an engineer and woke up as this tree. My town is one day old.
 
@@ -66,7 +66,7 @@ He measures the lean-to's sagging pole with a knotted string.
 He counts the cairn stones one by one with the quill point — and behind him a leaf moves again in still air.
 
 **ORCHARD, SINGLE SPECIMEN — 0:37–0:42**
-He crouches on his heels beside the chest-high tree, licks the quill, and writes it down without measuring anything at all.
+He crouches on his heels beside the knee-high tree, licks the quill, and writes it down without measuring anything at all.
 
 > **ASSESSOR:** Orchard, single specimen. Yield?
 

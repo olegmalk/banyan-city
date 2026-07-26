@@ -26,7 +26,7 @@ sunset?*
 
 **COLD OPEN — 0:00–0:05**
 
-Macro shot: a small young banyan tree alone in a huge field,
+Macro shot: a tiny two-leaf banyan sapling alone in a huge field,
 straining — visibly, absurdly, its whole small body tensed.
 
 > **VO (dry, tired, engineer):** Engineer, died, reincarnated as a tree. Capabilities: sense and grow. Day nine: I am testing for an undocumented third.

@@ -23,7 +23,7 @@ is coming toward the tree that can't run?*
 ## Script
 
 **COLD OPEN — 0:00–0:05**
-A small young banyan tree, thin-stemmed with one little round crown, trembles in the wind, alone in a vast green field.
+A tiny two-leaf banyan sapling trembles in the wind, alone in a vast green field.
 
 > **VO (dry, tired, engineer):** Yesterday I died fixing a server. Today I am a tree.
 

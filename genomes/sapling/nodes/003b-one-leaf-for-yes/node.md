@@ -24,7 +24,7 @@ this place going to be called?*
 ## Script
 
 **COLD OPEN — 0:00–0:06**
-Dawn. The young tree — thin trunk, a small round crown, one thin branch now bare — with the scavenger's green hands cradling its fig in the foreground.
+Dawn. The sapling — thin trunk, two oversized leaves, one thin branch now bare — with the scavenger's green hands cradling its fig in the foreground.
 
 > **VO (dry, tired, engineer):** I am a dead engineer inside this tree. Yesterday I spent my only fruit on a stranger's head.
 

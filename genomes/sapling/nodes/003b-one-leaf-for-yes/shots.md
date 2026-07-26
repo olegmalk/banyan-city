@@ -13,7 +13,7 @@ action (motion grammar, `style.md`).
 **Character continuity (anime model sheet, `style.md`):** the scavenger is
 a small round goblin — enormous ears that act like a second face, one
 broken tusk, huge expressive eyes, patchwork cloak in faded greens and
-browns. The sapling is a tiny simple stylised tree, ~75cm — thin curved trunk, TWO
+browns. The sapling is a tiny mascot-simple tree, ~40cm — thin curved trunk, TWO
 oversized expressive leaves, no face, and ONE thin bare side-branch (the
 fig grew there and fell in 002b). Every beat must show the same object:
 two leaves, one bare branch. All its acting is leaf angle and timing.
@@ -30,7 +30,7 @@ Status legend: ✅ generated · ⬜ needs footage
 Line: premise + fig recap. Camera on the fig in the GOBLIN's hands with the tree's bare branch visible behind — the gate misread the hands as the tree's.
 
 ```
-Vertical 9:16 macro shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin's two green clawed hands cradle a single ripe fig, turning it slowly in dawn light; behind them stands a tiny young tree with a small round leafy crown and one thin bare side-branch. Cool dawn blues warming into peach. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 macro shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin's two green clawed hands cradle a single ripe fig, turning it slowly in dawn light; behind them stands a tiny mascot-simple banyan sapling with two oversized leaves and one thin bare side-branch. Cool dawn blues warming into peach. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 02 — EVIDENCE RETURNED (0:06–0:11) ⬜ needs footage
@@ -38,7 +38,7 @@ Vertical 9:16 macro shot, hand-drawn 2D anime style, low detail: flat cel-shaded
 Line: "only two possibilities." Camera on the fig being set down at the trunk.
 
 ```
-Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small round goblin — enormous ears, one broken tusk, patchwork cloak — crouches and sets a ripe fig down carefully at the base of a young tree's trunk, then adjusts its position twice, like evidence being logged. Dawn field, low warm light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small round goblin — enormous ears, one broken tusk, patchwork cloak — crouches and sets a ripe fig down carefully at the base of a tiny sapling's trunk, then adjusts its position twice, like evidence being logged. Dawn field, low warm light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 03 — TWO POSSIBILITIES (0:11–0:16) ⬜ needs footage
@@ -46,7 +46,7 @@ Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded color
 Line: "One: I have lost it. Two: you're in there." Camera eye-to-eye with the tree.
 
 ```
-Vertical 9:16 close two-shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin lowers himself until his huge eyes are level with the two leaves of a young tree and stares straight into it, unblinking, his enormous ears slowly rising. Profile framing, tree and goblin sharing the frame equally. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 close two-shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin lowers himself until his huge eyes are level with the two leaves of a tiny sapling and stares straight into it, unblinking, his enormous ears slowly rising. Profile framing, tree and goblin sharing the frame equally. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 04 — THE TEST (0:16–0:21) ⬜ needs footage
@@ -54,7 +54,7 @@ Vertical 9:16 close two-shot, hand-drawn 2D anime style, low detail: flat cel-sh
 Line: "So we test it." Camera BEHIND him over his shoulder (the gate flagged beats 03/04 as the same 'man arranges himself' shot) — we see what he sees.
 
 ```
-Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. Seen from behind over a small goblin's shoulder and enormous ears: he settles cross-legged on the grass and squares up to a young tree that sits small and centred in his view, the field opening out around it. Dawn light, static camera. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. Seen from behind over a small goblin's shoulder and enormous ears: he settles cross-legged on the grass and squares up to a tiny sapling that sits small and centred in his view, the field opening out around it. Dawn light, static camera. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 05 — MOVE ONE LEAF (0:21–0:26) ⬜ needs footage
@@ -70,7 +70,7 @@ Vertical 9:16 extreme close-up, hand-drawn 2D anime style, low detail: flat cel-
 No dialogue — the effort nobody can see. Camera underground.
 
 ```
-Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, gentle pastel palette. Glowing teal root filaments pull tight and flare brighter and brighter beneath a young tree in an underground cross-section, light gathering then rushing upward through the trunk like effort being spent. Near-black soil, bioluminescent teal, rising intensity. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, gentle pastel palette. Glowing teal root filaments pull tight and flare brighter and brighter beneath a tiny sapling in an underground cross-section, light gathering then rushing upward through the trunk like effort being spent. Near-black soil, bioluminescent teal, rising intensity. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 07 — THE TILT (0:31–0:36) ⬜ needs footage
@@ -78,7 +78,7 @@ Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded color
 No dialogue — the answer. FRAMING 1 of 5 tilts: side-on macro, leaf filling the frame (each tilt gets a distinct scale/angle — the gate found them identical).
 
 ```
-Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. In dead-still air with every blade of grass frozen, one oversized leaf of a young tree tilts slowly and deliberately to one side, then holds, motionless. Unmistakably a choice, not a breeze. Dawn light, quiet. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. In dead-still air with every blade of grass frozen, one oversized leaf of a tiny sapling tilts slowly and deliberately to one side, then holds, motionless. Unmistakably a choice, not a breeze. Dawn light, quiet. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 08 — NO WIND (0:36–0:41) ⬜ needs footage
@@ -86,7 +86,7 @@ Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded c
 Line: "One leaf for yes. Nothing for no. Deal?" Camera on him checking a windless world.
 
 ```
-Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin's enormous ears flatten back against his head as he turns to scan an utterly still field — not one blade of grass moving, no birds — then turns slowly back toward the young tree. Dawn light, uncanny stillness everywhere. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin's enormous ears flatten back against his head as he turns to scan an utterly still field — not one blade of grass moving, no birds — then turns slowly back toward the tiny sapling. Dawn light, uncanny stillness everywhere. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 09 — THE PROTOCOL (0:41–0:46) ⬜ needs footage
@@ -94,7 +94,7 @@ Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded color
 Line: "One leaf for yes. Nothing for no. Deal?" Camera on him leaning in to make the treaty — the gate caught the old cut showing him check the grass while this line played.
 
 ```
-Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin leans in slowly until his face is right beside the a small round leafy crown of a young tree and speaks low and carefully, one hand raised as if setting terms. Conspiratorial, tender, dawn light. Tight two-shot. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin leans in slowly until his face is right beside the two oversized leaves of a tiny sapling and speaks low and carefully, one hand raised as if setting terms. Conspiratorial, tender, dawn light. Tight two-shot. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 10 — DEAL (0:46–0:55) ⬜ needs footage
@@ -110,7 +110,7 @@ Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded c
 Line: "Are you a spirit? A demon? A god?" Camera on him pacing and tallying.
 
 ```
-Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin paces briskly back and forth in front of a young tree, gesturing with one hand as he fires off questions, stopping on each pass to scratch another tally mark into the dirt with a stick. Comic rhythm, morning field. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin paces briskly back and forth in front of a tiny sapling, gesturing with one hand as he fires off questions, stopping on each pass to scratch another tally mark into the dirt with a stick. Comic rhythm, morning field. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 12 — HALF A TILT (1:00–1:05) ⬜ needs footage
@@ -142,7 +142,7 @@ Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded c
 Line: "Everywhere else, I'm a filing problem." Camera on him gesturing at himself, deflated.
 
 ```
-Vertical 9:16 medium shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin sits down heavily beside a young tree, all the energy gone out of him, gestures loosely at his own patchwork body with both hands, then lets them drop into his lap. Quiet, tender, flat midday light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 medium shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin sits down heavily beside a tiny sapling, all the energy gone out of him, gestures loosely at his own patchwork body with both hands, then lets them drop into his lap. Quiet, tender, flat midday light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 16 — THE ASK (1:20–1:25) ⬜ needs footage
@@ -166,7 +166,7 @@ Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded color
 Line: "growth includes deciding what to grow toward." Camera on both leaves on the edge of a decision.
 
 ```
-Vertical 9:16 extreme close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. Both oversized leaves of a young tree quiver and strain at their stems, right on the edge of moving, in air that is completely still — a decision being made, not a wind blowing. Tight macro, warm afternoon light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 extreme close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. Both oversized leaves of a tiny sapling quiver and strain at their stems, right on the edge of moving, in air that is completely still — a decision being made, not a wind blowing. Tight macro, warm afternoon light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 19 — TWO LEAVES (1:37–1:42) ⬜ needs footage
@@ -182,7 +182,7 @@ Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded c
 Line: "That's not a camp anymore." Camera on the building going up, badly.
 
 ```
-Vertical 9:16 timelapse, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin drags deadfall branches one at a time and leans them against a rock beside a young tree, building a crooked little lean-to that sags and gets propped up again, tongue out in concentration as the afternoon light shifts. Comic, warm, visibly incompetent construction. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 timelapse, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin drags deadfall branches one at a time and leans them against a rock beside a tiny sapling, building a crooked little lean-to that sags and gets propped up again, tongue out in concentration as the afternoon light shifts. Comic, warm, visibly incompetent construction. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 21 — THE HOOK (1:48–1:53) ⬜ needs footage
@@ -190,7 +190,7 @@ Vertical 9:16 timelapse, hand-drawn 2D anime style, low detail: flat cel-shaded 
 Line: "I hereby name this place—" Camera on the fig raised over the settlement at dusk.
 
 ```
-Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin plants his feet, draws himself up to full height and raises a single ripe fig above his head like a founding charter, the crooked lean-to and the young tree silhouetted beside him. Dusk palette sliding amber into indigo, ceremonial and absurd. Slow push-in. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin plants his feet, draws himself up to full height and raises a single ripe fig above his head like a founding charter, the crooked lean-to and the tiny sapling silhouetted beside him. Dusk palette sliding amber into indigo, ceremonial and absurd. Slow push-in. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ---

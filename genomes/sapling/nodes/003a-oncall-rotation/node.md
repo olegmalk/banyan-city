@@ -64,7 +64,7 @@ QUEUE: 14 open
 
 **HOOK — 1:05–1:25**
 
-Slow push-in on the young tree. The farmer's cairn in the foreground. Fourteen points of light pulsing patiently on the horizon like a pager going off in every direction at once.
+Slow push-in on the tiny sapling. The farmer's cairn in the foreground. Fourteen points of light pulsing patiently on the horizon like a pager going off in every direction at once.
 
 > **VO:** I died at 3:07 a.m., on call, alone, fixing a broken system nobody else would touch.
 

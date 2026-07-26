@@ -26,7 +26,7 @@ and what does it want with him?*
 
 **COLD OPEN — 0:00–0:05**
 
-Macro shot: a small young banyan tree at the edge of a field of
+Macro shot: a tiny two-leaf banyan sapling at the edge of a field of
 grey dust, trembling in a dry wind.
 
 > **VO (dry, tired, engineer):** I died an engineer and woke up a tree. Two capabilities: sense, and grow. Today, a production incident found me anyway.
