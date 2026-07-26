@@ -69,28 +69,35 @@ def measured(slug):
     return len(frames), end, lines
 
 DECISIONS = [
-  ("Does the tree want anything?", "story",
+  ("Does the tree want anything?", "DECIDED &mdash; applied",
    "A stranger who read all seven in order said the active want from episode 3 to 6 belongs to the "
    "<em>goblin</em> — a legal place to exist — and that the tree is his narrator. The tree is asked "
    "questions and consents; its big act of will in 006a is signing a form. The one place it makes a "
    "costly decision alone is the finale.",
-   ["Give the tree one want across all seven — “keep the goblin safe” is already half-written in 003b — "
-    "and let it fail at it once, on screen, before the finale.",
-    "Leave it. The tree is a narrator by design and the goblin is the engine.",
-    "Something else you have in mind."],
-   "The first. It's the difference between a protagonist and a camera with opinions."),
-  ("Does anyone get a name?", "story",
+   ["<strong>Chosen:</strong> one want across all seven — keep the goblin safe — and it fails once, "
+    "on screen, before the finale.",
+    "Applied in <strong>002b</strong>, where the want is now stated rather than implied: “One fruit — "
+    "everything I own. <em>If they take him, I am alone in a field again.</em>”",
+    "And in <strong>005</strong>, a new beat where it fails: the assessor surfaces the warrant, the "
+    "goblin quietly repeats the tree&rsquo;s own loophole, and the leaf holds dead still — “One leaf "
+    "for yes. One for no. <em>There is no leaf for he was starving.</em>” Then the farmer says the "
+    "thing the tree couldn&rsquo;t. A human does what the protagonist cannot."],
+   "Done. The payoff in the finale already existed — it just had nothing to pay off until now."),
+  ("Does anyone get a name?", "DECIDED &mdash; needs the name",
    "Nobody is named in seven episodes — except <strong>“Dren”</strong>, a patrol guard in episode 2 "
    "who never returns. So it isn't a rule, it's an omission: the show is willing to name people, it "
    "just never names anyone who matters. A viewer can't discuss it without saying “the goblin”, which "
    "flattens the character you work hardest on — and 006a's payload (“I've never been a line item "
    "before”) is undercut because we've never had anything to call him but his species.",
-   ["Have the magistrate read the keeper's name off the form aloud in 006a — the exact beat where he "
-    "becomes a line item.",
-    "Name him earlier, so the whole back half can use it.",
-    "Keep everyone unnamed and cut “Dren” so the rule is at least consistent."],
-   "The first. It costs one line and pays off the scene you already wrote."),
-  ("004, 005 and 006a are the same episode three times.", "structure",
+   ["<strong>Chosen:</strong> the magistrate reads the keeper&rsquo;s name off the form aloud in "
+    "006a, at the beat where he becomes a line item.",
+    "Blocked on one thing only — <strong>what the name is</strong>. That&rsquo;s the co-lead of your "
+    "show and I&rsquo;m not picking it in the dark.",
+    "The register the world already uses: the one existing personal name is “Dren”, a guard; places "
+    "are plain English (Shade, Figholm, Greenrest). So: short, blunt, and slightly funny read off a "
+    "government form."],
+   "Give me the name and it&rsquo;s one line. If you&rsquo;d rather I choose, say so and I will."),
+  ("004, 005 and 006a are the same episode three times.", "waiting on your read",
    "An official with a document walks into the clearing, asks questions, a leaf tilts, the official "
    "writes it down, a monospace card updates, smash to black. Three times running. Related: four "
    "episodes open with the literally identical sentence, “I died an engineer and woke up as this tree.”",

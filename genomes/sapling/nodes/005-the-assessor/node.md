@@ -90,10 +90,16 @@ The scavenger studies the dirt, all the fight gone out of him.
 
 > **SCAVENGER (quietly):** It fell off the cart. Ground fruit is foraging.
 
-**THE FARMER — 1:01–1:06**
+**NO LEAF FOR THAT — 1:01–1:05**
+
+The leaf, held dead still. For the first time it has been asked a question it cannot answer.
+
+> **VO:** One leaf for yes. One for no. There is no leaf for *he was starving*.
+
+**THE FARMER — 1:05–1:10**
 Boots and a straw hat at the clearing's edge: the FARMER, broad and squarish, arms already crossed, has been standing there the whole time.
 
-**THE FARMER SPEAKS — 1:06–1:11**
+**THE FARMER SPEAKS — 1:10–1:15**
 He addresses the assessor without uncrossing his arms, only his jaw moving.
 
 > **FARMER:** He keeps the weeds off. Whole stretch.

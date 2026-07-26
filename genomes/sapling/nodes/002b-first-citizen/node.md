@@ -110,7 +110,7 @@ The scavenger stands, brushes off, and turns to go.
 **THE DECISION — 1:27–1:34**
 Extreme close-up: the one fig on the thinnest branch, stem trembling.
 
-> **VO:** Wait. Growth includes *release*. One fruit — everything I own. He said ground fruit is foraging.
+> **VO:** Wait. Growth includes *release*. One fruit — everything I own. He said ground fruit is foraging. If they take him, I am alone in a field again.
 
 **THE DROP — 1:34–1:39**
 Wider — the whole sapling and the scavenger below it in one frame: the stem lets go, the fig falls, bounces off his head, and lands in the grass at his feet.

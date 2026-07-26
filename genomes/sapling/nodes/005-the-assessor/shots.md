@@ -119,13 +119,21 @@ Vertical 9:16 extreme close-up, hand-drawn 2D anime style, low detail: flat cel-
 
 ## Beat 12 — DESCRIPTION MATCHES (0:52–0:56) ⬜ needs footage
 
+Line/beat: the tree's want failing out loud — "there is no leaf for *he was starving*." Camera tight on the motionless leaf; the answer it cannot give is the shot.
+
+```
+Vertical 9:16 extreme close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A single leaf on a knee-high young tree holds absolutely still in bright afternoon air while, far behind it and thrown out of focus, two small figures face each other. Nothing in the frame moves at all — the stillness is the point, not a pause before motion. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+```
+
+## Beat 13 — GROUND FRUIT (0:56–1:01) ⬜ needs footage
+
 Line: "Subject: …description matches." Camera on the assessor's eyes lifting to the goblin.
 
 ```
 Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, gentle pastel palette. A thin man's eyes lift slowly from a ledger page and settle directly on someone off-frame, holding the look without expression while nothing else moves. Terrible patience. Tight on the upper face. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 13 — GROUND FRUIT (0:56–1:01) ⬜ needs footage
+## Beat 14 — NO LEAF FOR THAT (1:01–1:05) ⬜ needs footage
 
 Line: "It fell off the cart. Ground fruit is foraging." Camera down on the goblin studying the dirt.
 
@@ -133,7 +141,7 @@ Line: "It fell off the cart. Ground fruit is foraging." Camera down on the gobli
 Vertical 9:16 shot from above, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. Looking down on a small goblin who stares at the ground and drags one clawed toe through the dust, all his energy gone, ears flat against his skull. Overhead angle, small in frame. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 14 — THE FARMER (1:01–1:06) ⬜ needs footage
+## Beat 15 — THE FARMER (1:05–1:10) ⬜ needs footage
 
 No dialogue — establishing. Camera on the farmer, who has been standing there the whole time (the gate: both answerers were disembodied voices for a viewer).
 
@@ -141,7 +149,7 @@ No dialogue — establishing. Camera on the farmer, who has been standing there 
 Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. At the clearing's edge a broad squarish farmer in a straw hat shifts his weight once, arms already folded across his chest, having clearly been standing there watching for some time. Three lines for his whole face, permanently unimpressed. Morning light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 15 — THE FARMER SPEAKS (1:06–1:11) ⬜ needs footage
+## Beat 16 — THE FARMER SPEAKS (1:10–1:15) ⬜ needs footage
 
 Line: "He keeps the weeds off. Whole stretch." Camera on the farmer, arms crossed.
 
@@ -149,7 +157,7 @@ Line: "He keeps the weeds off. Whole stretch." Camera on the farmer, arms crosse
 Vertical 9:16 medium shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A broad squarish farmer in a straw hat stands with arms folded and says something short without uncrossing them or changing his face, only his jaw moving. Immovable, unimpressed, morning light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 16 — COMMUNITY SERVICE (1:11–1:16) ⬜ needs footage
+## Beat 17 — COMMUNITY SERVICE (1:11–1:16) ⬜ needs footage
 
 Line: "'Community service. Ongoing.'" Camera on the quill writing THREE words (the gate caught 'two' in a film about a man who counts accurately).
 
@@ -157,7 +165,7 @@ Line: "'Community service. Ongoing.'" Camera on the quill writing THREE words (t
 Vertical 9:16 extreme close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, gentle pastel palette. A stub of quill writes three short unhurried words onto a ledger page, presses a final dot, and lifts away. Abstract cel-shaded strokes, no legible letters. Tight macro on nib and page. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 17 — A PAYMENT PLAN (1:16–1:21) ⬜ needs footage
+## Beat 18 — A PAYMENT PLAN (1:16–1:21) ⬜ needs footage
 
 Line: the tree's "that's a payment plan." Camera ON THE TREE.
 
@@ -165,7 +173,7 @@ Line: the tree's "that's a payment plan." Camera ON THE TREE.
 Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. The small crown of a waist-high young tree holds completely motionless while, far behind it and out of focus, grey and straw-hatted shapes stand about a clearing. Stillness that is listening rather than resting. Slow push-in. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 18 — OCCUPATIONS (1:21–1:26) ⬜ needs footage
+## Beat 19 — OCCUPATIONS (1:21–1:26) ⬜ needs footage
 
 Line: "Population: two. Occupations: farmer — and… weed warden." Camera on the schema page and the stall.
 
@@ -173,7 +181,7 @@ Line: "Population: two. Occupations: farmer — and… weed warden." Camera on t
 Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, gentle pastel palette. A quill writes one line briskly on a ruled ledger page, then stops dead over the line below it and hovers there, unmoving, ink gathering at the nib. The hesitation is the whole shot. Tight macro. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 19 — WATER SOURCE (1:26–1:31) ⬜ needs footage
+## Beat 20 — WATER SOURCE (1:26–1:31) ⬜ needs footage
 
 Line: "Water source?" / "The channel mended itself." BOTH men in frame — the gate would have assigned this line to the goblin, which wrecks the beat.
 
@@ -181,7 +189,7 @@ Line: "Water source?" / "The channel mended itself." BOTH men in frame — the g
 Vertical 9:16 medium close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A thin grey-robed man raises his head from the ledger and holds his quill poised, and in the same frame beside him a broad straw-hatted farmer answers without uncrossing his arms. Two-shot, both faces readable. Morning light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 20 — CHANNELS DO NOT (1:31–1:36) ⬜ needs footage
+## Beat 21 — CHANNELS DO NOT (1:31–1:36) ⬜ needs footage
 
 Line: "Channels do not mend themselves." / "This one did." Camera on the damp field line he turns to look at.
 
@@ -189,7 +197,7 @@ Line: "Channels do not mend themselves." / "This one did." Camera on the damp fi
 Vertical 9:16 wide shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A dark damp line of soil runs away across pale dry fields toward the horizon, grass along it greener than everywhere else, the whole landscape quietly contradicting somebody. Held wide, morning light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 21 — HE'S BEEN WATCHING (1:36–1:41) ⬜ needs footage
+## Beat 22 — HE'S BEEN WATCHING (1:36–1:41) ⬜ needs footage
 
 Line: "He has been counting my tells since he arrived." ONE take: he simply stops and looks at the tree (the gate: the old montage was unfilmable AND contradicted the earlier motionless shot).
 
@@ -197,7 +205,7 @@ Line: "He has been counting my tells since he arrived." ONE take: he simply stop
 Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A thin grey-robed man stops writing mid-stroke, lowers the quill, and turns his head to look directly at a knee-high young tree — a long, unhurried, professional look, nothing else moving in frame. Held single take. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 22 — AND YOU (1:41–1:45) ⬜ needs footage
+## Beat 23 — AND YOU (1:41–1:45) ⬜ needs footage
 
 Line: "And you. Occupation?" Camera on him KNEELING to the tree's height — posture stated, per the growth ladder.
 
@@ -205,7 +213,7 @@ Line: "And you. Occupation?" Camera on him KNEELING to the tree's height — pos
 Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A thin grey-robed man walks up to a knee-high young tree, kneels down on one knee to bring his face level with its small crown, straightens his robes with two precise tugs, and addresses it directly with the ledger open in one hand. Absurd formality, held two-shot. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 23 — ONE LEAF (1:45–1:50) ⬜ needs footage
+## Beat 24 — ONE LEAF (1:45–1:50) ⬜ needs footage
 
 No dialogue — the answer. ONE held wide (the gate flagged 'three held faces' as three singles plus an insert, i.e. cuts).
 
@@ -213,7 +221,7 @@ No dialogue — the answer. ONE held wide (the gate flagged 'three held faces' a
 Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. In one unbroken wide frame a small goblin, a straw-hatted farmer and a kneeling grey-robed man hold utterly still around a knee-high young tree — and one leaf in its crown tilts slowly and deliberately in dead-still air. Nothing else moves. Morning light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 24 — POPULATION THREE (1:50–1:56) ⬜ needs footage
+## Beat 25 — POPULATION THREE (1:50–1:56) ⬜ needs footage
 
 Line: "The magistrate… will want to see this one personally. …Population three." Camera on the ledger closing and chaining.
 
@@ -221,7 +229,7 @@ Line: "The magistrate… will want to see this one personally. …Population thr
 Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, gentle pastel palette. A heavy ledger swings shut with a puff of dust and a chain is clipped through its cover, grey-sleeved hands working with practised finality before turning away. Tight on hands, book and chain. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 25 — CALLED A LOT OF THINGS (1:56–2:01) ⬜ needs footage
+## Beat 26 — CALLED A LOT OF THINGS (1:56–2:01) ⬜ needs footage
 
 Line: "'Population' is new." Camera alone on the tree — the episode's last image is the protagonist.
 
