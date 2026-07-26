@@ -23,6 +23,13 @@ The founder's approval gate (STEWARDSHIP.md §6) applies here as much as
 anywhere: this refuses to render a node whose T0 leaf is not stamped
 `approved_by: founder`. `--smoke` is exempt because it renders no episode
 content — it draws a style card to prove the pipeline works.
+
+**Run ONE of these at a time.** MPS shares the machine's unified memory with
+everything else, so a second render — or a Chatterbox voice run, which also
+lives on MPS — turns a comfortable job into an out-of-memory error that reads
+like a configuration problem. It is not one: on 2026-07-26 a 512x512 x16 job
+died reporting "MPS allocated 12.57 GB, other allocations 25.09 GB" on a 32 GB
+machine, and the 25 GB was three of my own concurrent jobs.
 """
 
 import argparse
