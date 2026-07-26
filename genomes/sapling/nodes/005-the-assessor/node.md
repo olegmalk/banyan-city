@@ -104,6 +104,8 @@ He addresses the assessor without uncrossing his arms, only his jaw moving.
 
 > **FARMER:** He keeps the weeds off. Whole stretch.
 
+> **VO:** He said he wouldn't bring his name. He brought it.
+
 **COMMUNITY SERVICE — 1:11–1:16**
 The quill writes three unhurried words into the ledger.
 

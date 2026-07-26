@@ -173,13 +173,45 @@ Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded color
 
 ## Beat 19 — THE TRIBUTE (1:27–1:32) ⬜ needs footage
 
+Line/beat: the tree asking for something, for the first time in the series. Camera on the leaf as it tilts, with the goblin reacting at the edge of frame.
+
+```
+Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A single leaf on a knee-high young tree tilts deliberately in completely still golden evening air and holds the position, while at the edge of the frame a small round goblin straightens up sharply, recognising it. The leaf moves; nothing else does. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+```
+
+## Beat 20 — THE ASK (1:32–1:37) ⬜ needs footage
+
+Line/beat: the goblin translating the tree's question. Camera on him speaking carefully to the farmer, the tree behind him in frame — the questioner and its voice together.
+
+```
+Vertical 9:16 medium shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small round goblin speaks carefully up at a broad straw-hatted farmer, hands open and low, not pushing — and directly behind the goblin the knee-high tree stands sharp in frame, the two of them addressing the farmer together. Warm low evening light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+```
+
+## Beat 21 — WOULD YOU SAY SO (1:37–1:43) ⬜ needs footage
+
+Line/beat: "I'll bring water. I'm not bringing my name." Camera on the farmer, who looks at the jug and the road — anywhere but the tree.
+
+```
+Vertical 9:16 medium close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A broad straw-hatted farmer looks down at a clay jug at his feet, then away toward an empty road, deliberately not turning toward the tree beside him; his jaw sets and he answers without meeting anything. Long evening shadows, warm amber light, quiet refusal. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+```
+
+## Beat 22 — THE REFUSAL (1:43–1:49) ⬜ needs footage
+
+Line/beat: the tree hearing no. Camera tight on the leaf that does not move — the show's own grammar used for a refusal.
+
+```
+Vertical 9:16 extreme close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A single leaf hangs completely motionless in still golden air, no tilt, no tremor, the light going orange around it as the sun drops. Absolute stillness held for the whole shot. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+```
+
+## Beat 23 — WHAT A NO LOOKS LIKE (1:49–1:53) ⬜ needs footage
+
 Line: "Man whose field started drinking again. Tell no one." Camera on the jug and loaf being set down.
 
 ```
 Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A broad farmer crouches and sets a clay jug and half a loaf of bread down at the base of a young tree beside three cairn stones, straightens up, and looks directly up into its crown — not at the goblin. Not charity — tribute. Late golden light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 20 — REGISTERED (1:32–1:37) ⬜ needs footage
+## Beat 24 — REGISTERED (1:53–1:58) ⬜ needs footage
 
 Line: "The system just… registered us." Camera on the world flickering to wireframe — post adds the label.
 
@@ -187,7 +219,7 @@ Line: "The system just… registered us." Camera on the world flickering to wire
 Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. As the sun touches the horizon the whole clearing flickers for an instant into a green wireframe lattice — grass as vectors, lean-to as simple edges, the young tree as a glowing outline — then snaps back to ordinary dusk. Clean uncluttered upper frame for an overlay. Amber into indigo. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 21 — THE HOOK (1:37–1:44) ⬜ needs footage
+## Beat 25 — THE HOOK (1:58–2:05) ⬜ needs footage
 
 Line: "the assessor counts everything with a name." Camera on the farmer turning back at the edge of the clearing.
 

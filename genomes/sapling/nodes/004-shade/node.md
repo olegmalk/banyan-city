@@ -114,7 +114,31 @@ He sets a clay jug and half a loaf at the base of the trunk, beside the cairn, a
 
 > **FARMER:** Man whose field started drinking again. Tell no one.
 
-**REGISTERED — 1:32–1:37**
+**THE ASK — 1:32–1:37**
+
+In still air, one leaf tilts — and holds. The goblin, who knows what that means now, straightens up.
+
+> **SCAVENGER:** He's asking you something.
+
+**WOULD YOU SAY SO — 1:37–1:43**
+
+The goblin translating, careful, not pushing — this is the first thing the tree has ever asked anyone for.
+
+> **SCAVENGER:** If somebody official came. Would you say you knew us? Out loud?
+
+**THE REFUSAL — 1:43–1:49**
+
+The farmer looks at the jug he just set down, then at the road. He doesn't look at the tree for this one.
+
+> **FARMER:** I'll bring water. I'm not bringing my name.
+
+**WHAT A NO LOOKS LIKE — 1:49–1:53**
+
+Close on the leaf, which does not tilt, does not move, and has nothing to answer with.
+
+> **VO:** I asked for one thing. Turns out I can hear no perfectly well.
+
+**REGISTERED — 1:53–1:58**
 At the horizon-touch of sunset the world flickers to wireframe for a single frame, a label folding open over the clearing and away.
 
 ```
@@ -123,7 +147,7 @@ SHADE · settlement(?) · pop. 2
 
 > **VO (quiet):** Population two. There is one goblin here. …It counted *me*.
 
-**THE HOOK — 1:37–1:44**
+**THE HOOK — 1:58–2:05**
 The farmer stops on his way out, turns back, and looks at the lean-to, the cairn, the goblin with his fig.
 
 > **FARMER:** After harvest, the assessor counts everything with a name. Yesterday there was nothing here to count.
