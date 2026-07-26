@@ -36,7 +36,11 @@ import re
 # Same instruction as the style bible's opening sentence, in a fraction of the
 # tokens. Comma-separated tags are what SD1.5 was trained on; the prose version
 # spends its budget on grammar the text encoder does not use.
-STYLE_TAG = "flat 2d anime, cel shaded, bold lineart, pastel, soft watercolor background"
+# Style sits at the END so it modifies rather than becomes the subject (leading
+# with it produced abstract lineart and no sapling). But trailing style is weakly
+# weighted, and vanilla SD1.5 defaulted to watercolour painting, so the tag is
+# front-loaded with the two words that matter most and repeated compactly.
+STYLE_TAG = "anime cel shading, flat colour, bold clean lineart, 2d animation still, pastel"
 
 # The style preamble ends at the first sentence break after the palette phrase.
 _STYLE_END = re.compile(r"(?:pastel[^.]*palette|gentle pastel[^.]*)\.\s*", re.I)
