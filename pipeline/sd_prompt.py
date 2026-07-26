@@ -53,6 +53,21 @@ _SHOT = re.compile(r"^vertical\s+9\s*:\s*16\s+([^,]+?)\s*,", re.I)
 
 MAX_TOKENS = 77
 
+# SD1.5 has a very strong "tree" prior, and 001 asks for a 15 cm two-leaf sprout.
+# Adjectives do not beat a prior — a negative prompt does. But this cannot be
+# global: the growth ladder wants a man-height tree by 007a, so excluding "mature
+# tree" everywhere would break the finale. These terms are added ONLY when the
+# beat's own text says the subject is small.
+_SMALL = re.compile(r"\b(sapling|seedling|sprout|two[- ]leaf|tiny|15\s*cm|40\s*cm|"
+                    r"knee-high|small plant)\b", re.I)
+SCALE_NEGATIVES = ("mature tree, large tree, tall tree, thick trunk, full canopy, "
+                   "forest, bush, shrubbery")
+
+
+def extra_negatives(prompt: str) -> str:
+    """Negative terms this beat needs on top of the renderer's standard ones."""
+    return SCALE_NEGATIVES if _SMALL.search(prompt) else ""
+
 
 _TOKENIZER = None
 _TOKENIZER_TRIED = False
