@@ -135,3 +135,57 @@ picture now matches — it cannot be self-assessed.
 Kaggle: token lives in `~/.kaggle/kaggle.json` (founder action). **The
 access token pasted into the 2026-07-25 session transcript must be
 rotated** — credentials in a transcript are burned.
+
+## The renderer works (2026-07-26)
+
+**A free renderer exists.** AnimateDiff on an SD1.5 checkpoint, on Kaggle's free
+T4, produces a coherent on-genre shot in **~80 seconds** at $0. Beat 1 of 001
+assembles end to end: captioned 9:16 episode, title overlay, voice in sync, all
+twelve `qa_episode` checks green. Twenty beats is roughly half an hour of compute,
+so the whole season is a few hours rather than a week.
+
+Working configuration, every element of which cost a push to find:
+
+- **AnimateDiff, not Wan 2.1.** Wan is trained in bf16 and no Kaggle free
+  accelerator has bf16 (T4 is sm_75, P100 sm_60, bf16 starts at Ampere sm_80). In
+  fp16 it decodes flat grey.
+- **512x512, 16 frames** — the motion module's native size. `render_t3` does the
+  9:16 framing, verified with real footage.
+- **The checkpoint must be probed, not assumed.** `Counterfeit-V2.5` renders
+  beautiful stills and produces NOTHING once the motion adapter is attached. The
+  notebook now animates 8 frames per candidate and takes the first that yields a
+  picture. `Lykon/dreamshaper-8` works; vanilla SD1.5 works (watercolour house
+  style); Counterfeit does not.
+- **Prompts are compressed for CLIP's 77 tokens** (`pipeline/sd_prompt.py`). All
+  182 ran 113-145 tokens, so the model never saw the action. Order is **subject,
+  then framing, then style** — whatever leads becomes the composition.
+- **Negations move to the negative prompt.** "no buildings, no people" in a
+  positive prompt asks *for* them.
+- **`transformers` shims:** `FLAX_WEIGHTS_NAME` and `CLIPFeatureExtractor` no
+  longer exist; diffusers 0.33 imports both. Checkpoints load with
+  `feature_extractor=None`.
+- **The checkout goes to `/kaggle/tmp`**, never `/kaggle/working` — Kaggle
+  publishes the working dir as output and caps its file count, and a repo checkout
+  there crowded the clips out entirely.
+
+**The tree got bigger, by founder decision.** SD1.5 will not draw a 15 cm two-leaf
+sprout as a character — five attempts gave abstract lineart, a leaf close-up, and
+a lilypad, and negative-prompting "mature tree" made the trunk *thicker*. The
+growth ladder in `style.md` now starts at ~60 cm and rises to 1.6 m, and the whole
+genome's prompts and scripts were swept to match. The pathetic miniature scale was
+a steward invention of 2026-07-25, not something the scripts required.
+
+**Local rendering is off the table.** AnimateDiff on this M1 Pro measured 4-5
+minutes *per denoising step* — ~1.5 h per clip, ~30 h per episode, and it made the
+machine unusable. `render_local.py` refuses without an explicit flag. Kaggle's T4
+is the right compute; Kaggle also remains the citizen-reproducible path.
+
+**Pending before any episode is assembled:** the trunk needs re-voicing. Every
+story decision of 2026-07-25/26 changed lines — 001's restored want, Jerry in
+006a, the new beat in 005, the roots-west fix in 004, 002b's height — and
+`retime_beats` now refuses when a take does not say what the script says. That is
+a ~1 hour MPS job.
+
+**Still unsolved:** character consistency across 166 shots. SD1.5 has no
+reference-image conditioning; four recurring characters have to look like
+themselves in every shot. Predicted by cycle-007, untouched by any prompt fix.

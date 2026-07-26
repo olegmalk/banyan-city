@@ -203,3 +203,65 @@ need restructuring: a compact style tag, the action early, and the "no
 photorealism / no text" tail moved into the negative prompt where it belongs
 (it is already there, so the tail is pure waste). This is very likely a
 contributor to the mush, and it costs nothing to fix.
+
+## Addendum 3 (2026-07-26): the renderer works, and what it cost to find out
+
+Seventeen pushes to get one picture. The pipeline now renders a coherent,
+on-genre shot in about 80 seconds on Kaggle's free T4, assembles to a captioned
+9:16 episode, and passes all twelve QA checks. What follows is what was actually
+wrong, in the order it was found, because almost none of it was where I looked.
+
+| attempt | what I believed | what was true |
+|---|---|---|
+| 1–6 | Kaggle config, memory, dtype | all real bugs, none of them the blocker |
+| 7 | Wan needs bf16 | true, and fatal: no free GPU has bf16 |
+| 8–11 | AnimateDiff resolution | real: 432x768 x24 is 2.5x the module's native size |
+| 12 | the VAE is destroying good latents | **wrong** — final latents at std 0.357 were themselves flat, and I read a decreasing curve as healthy because I wanted to |
+| 13 | prompt truncation | real: all 182 prompts ran 113-145 tokens against CLIP's 77, so the model never saw the ACTION |
+| 14 | style tag first protects it | backfired: whatever leads the prompt BECOMES the subject — abstract lineart, then a leaf close-up |
+| 15 | negative prompts beat priors | **wrong** — "no mature tree" produced a thicker trunk |
+| 16 | **the checkpoint and adapter are an incompatible pairing** | correct, and found by bisecting rather than guessing |
+| 17 | prompts were being delivered | **wrong** — the notebook clones from GitHub and I had not committed |
+
+### The three habits that cost the most
+
+**I built alarms instead of instruments.** Every guard reported *that* a render
+failed — blank frame, wrong contrast, bad exit code. None reported *where*. Thirty
+lines printing latent statistics settled in one run what six pushes could not, and
+bisecting (plain still, no adapter → adapter on vanilla SD1.5) settled the rest.
+The lesson is not "add more checks"; it is that a check which cannot localise a
+fault is nearly worthless.
+
+**I shipped fixes to the file I was not running.** The resolution fix went into
+`render_local.py` while I pushed the notebook. The prompt rewrite went into a
+working tree the remote cannot see. Both produced *unchanged output*, which reads
+as "the fix did nothing" rather than "the fix never arrived" — the most expensive
+possible failure mode. `run_remote` now refuses to push with uncommitted prompt
+changes, and says why.
+
+**I compared quantities that were not the same quantity.** The blank guard
+measured RGB spread against a threshold calibrated on LUMA spread — 28 versus 18
+on the same frame — so the notebook passed a grey clip that qa_episode failed.
+Not a threshold to tune; the wrong measurement.
+
+### And the failure mode no automated check caught at all
+
+Contrast cannot see meaning. A vivid abstract batik pattern scored 153 and passed
+every gate I own. A leaf on a lilypad scored 36 and passed. The founder looked at
+the contact sheet and said "that looks like a leaf on a lilypad", which was worth
+more than every number I had produced. **Every render now goes to him as a contact
+sheet.** That is the check.
+
+### Where the remaining work is
+
+Five beats of 001 rendered: three match their beat well, one is washed out
+(multiple trees where there should be one), one does not depict its action. So
+roughly 60% first-pass usable, and the gap is prompt craft rather than plumbing.
+
+Guards learned to distinguish a broken SYSTEM from one bad INPUT: a blank beat is
+now kept as `.SUSPECT`, skipped, and reported, and the run only aborts if most
+beats fail. One awkward prompt had been costing the other nineteen.
+
+Still open: character consistency across 166 shots with no reference-image
+conditioning, which is the problem cycle-007 predicted would arrive once shot
+counts rose, and which no prompt tweak addresses.
