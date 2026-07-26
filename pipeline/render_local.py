@@ -44,6 +44,7 @@ import yaml
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "pipeline"))
 from generate_shots import parse_shots  # noqa: E402
+from sd_prompt import compress  # noqa: E402 — CLIP stops at 77 tokens
 
 BASES = ["gsdf/Counterfeit-V2.5", "Lykon/dreamshaper-8",
          "stable-diffusion-v1-5/stable-diffusion-v1-5"]
@@ -232,14 +233,17 @@ def main() -> int:
     for s in todo:
         dest = out / f"{s['num']:02d}-{s['slug']}.mp4"
         print(f"beat {s['num']:02d} ({s['slug']}) …", flush=True)
-        spread = render(pipe, torch, s["prompt"], s["num"], dest)
+        ptext, dropped = compress(s["prompt"])
+        if dropped:
+            print(f"  (dropped, too long: {' '.join(dropped)[:100]})")
+        spread = render(pipe, torch, ptext, s["num"], dest)
         if spread < BLANK_SPREAD:
             print("  stopping: a blank generation means the stack is wrong, not this beat")
             return 1
         dest.with_suffix(".meta.yaml").write_text(
             "# Shot provenance (§7.2)\n" + yaml.safe_dump({
                 "platform": "local-apple-mps", "model": f"AnimateDiff {ADAPTER} on {base}",
-                "prompt": s["prompt"], "negative_prompt": NEG, "seed": SEED + s["num"],
+                "prompt": ptext, "prompt_source": s["prompt"], "negative_prompt": NEG, "seed": SEED + s["num"],
                 "steps": STEPS, "frames": FRAMES, "fps": FPS,
                 "cost_usd": 0.00, "generated": str(date.today()),
             }, sort_keys=False))

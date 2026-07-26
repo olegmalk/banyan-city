@@ -72,6 +72,25 @@ def main() -> int:
     cmd = sys.argv[1]
 
     if cmd == "push":
+        # STEWARDSHIP.md §6 applies to the remote path too — it is the same media.
+        # `--technical-validation` renders ONE beat to prove the stack and must say
+        # so out loud; it is not a licence to produce an episode.
+        node_arg = sys.argv[2] if len(sys.argv) > 2 and not sys.argv[2].startswith("--") else None
+        if node_arg:
+            sys.path.insert(0, str(REPO / "pipeline"))
+            from render_local import approved
+            ok, detail = approved("sapling", node_arg)
+            if not ok:
+                if "--technical-validation" not in sys.argv:
+                    raise SystemExit(
+                        f"{node_arg} is NOT approved for production — {detail}\n"
+                        "STEWARDSHIP.md §6: the founder reads and approves the narrative\n"
+                        "before voice, footage or assembly is made from it.\n\n"
+                        "To render one beat as a stack test, pass --technical-validation.")
+                print(f"TECHNICAL VALIDATION: {node_arg} is unapproved ({detail}).\n"
+                      "  Rendering to prove the pipeline, NOT to produce the episode.\n"
+                      "  The episode still needs the founder's stamp.")
+
         steps = beats = None
         if "--steps" in sys.argv:
             steps = int(sys.argv[sys.argv.index("--steps") + 1])

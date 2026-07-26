@@ -107,6 +107,55 @@ def test_caption_chunks():
           all(abs(spans[i][2] - spans[i + 1][1]) < 1e-6 for i in range(len(spans) - 1)))
 
 
+def test_sd_prompt_fits_clip_and_keeps_the_action():
+    """SD1.5's text encoder stops at 77 tokens; shots.md prompts run 113-145.
+
+    Raw, the tail is silently discarded — and since ~45 tokens of style preamble
+    come first, what gets discarded is the ACTION. Measured 2026-07-26: beat 1 of
+    001 was cut at "two oversized expressive leaves, no [CUT] face — trembles and
+    shivers in a gust of wind…", so the renderer never saw the movement, the
+    framing or the light.
+    """
+    sys.path.insert(0, str(REPO / "pipeline"))
+    from generate_shots import parse_shots
+    from sd_prompt import MAX_TOKENS, STYLE_TAG, _token_estimate, compress
+
+    raw = ("Vertical 9:16 macro shot, hand-drawn 2D anime style, low detail: flat "
+           "cel-shaded colors, bold clean linework, single shadow tone, simplified "
+           "shapes, soft watercolor-wash background, gentle pastel palette. A tiny "
+           "sapling trembles in a gust of wind, alone in a vast green field. Peach "
+           "morning light. No photorealism, no 3D render look, no heavy texture. "
+           "9:16 vertical, no text.")
+    out, dropped = compress(raw)
+    check("compressed prompt fits CLIP", _token_estimate(out) <= MAX_TOKENS)
+    check("the style instruction survives, compactly", out.startswith(STYLE_TAG))
+    check("the shot type survives — framing is not decoration", "macro shot" in out)
+    check("THE ACTION SURVIVES", "trembles in a gust of wind" in out)
+    check("the negative-prompt tail is dropped", "photorealism" not in out.lower())
+    check("'no text' is dropped too", "no text" not in out.lower())
+
+    # the regression that mattered most: an over-cautious token estimate once
+    # judged a 55-token prompt as too long and dropped EVERY action sentence,
+    # leaving only style tags — strictly worse than the truncation it prevented
+    check("compression never strips the prompt down to style alone",
+          len(out) > len(STYLE_TAG) + 20)
+
+    # and it holds across the whole genome, not just one hand-made case
+    worst = 0
+    stripped = []
+    for node in sorted((REPO / "genomes/sapling/nodes").iterdir()):
+        f = node / "shots.md"
+        if not f.exists():
+            continue
+        for s in parse_shots(f.read_text()):
+            c, _ = compress(s["prompt"])
+            worst = max(worst, _token_estimate(c))
+            if len(c) <= len(STYLE_TAG) + 20:
+                stripped.append(f"{node.name} beat {s['num']}")
+    check(f"every prompt in the genome fits (worst {worst})", worst <= MAX_TOKENS)
+    check(f"no prompt is reduced to style alone ({len(stripped)} were)", not stripped)
+
+
 def test_footage_must_match_its_beat():
     """Footage is found by beat NUMBER, and rewrites renumber beats.
 
@@ -685,6 +734,7 @@ def main():
     test_caption_chunks()
     test_sync_shots_is_idempotent()
     test_kaggle_notebook_cells_parse()
+    test_sd_prompt_fits_clip_and_keeps_the_action()
     test_footage_must_match_its_beat()
     test_displayable_action_is_the_trees_voice_only()
     test_parse_frames_bold_emphasis_in_quote()
