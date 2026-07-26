@@ -40,6 +40,11 @@ WIDTH, HEIGHT = 720, 1280
 CHROME_BAND = 0.22          # platform UI safe area (bottom fraction)
 LUFS_TARGET, LUFS_TOL = -14.0, 1.3
 QUIET_MAX_S = 3.5           # longest allowed quiet-vs-bed stretch
+# Luma spread (90th percentile minus 10th) below this is a blank field, not a
+# shot. A numerically failed generation still writes a valid, mid-grey,
+# perfectly "fine" mp4 — the grey Wan render measured a spread of ~20 where
+# real cel-shaded frames run 90-200.
+FLAT_STDDEV = 45.0
 CAPTION_WORD_CAP = 7 + 2    # chunker cap + orphan-fold margin
 
 results = []
@@ -122,7 +127,42 @@ def qa_episode(video: Path, clips_dir: Path | None, ffmpeg: str) -> None:
     record(ep, "open not too dark", mean_luma >= 0.25 * 255,
            f"mean luma {mean_luma:.0f}/255", warn=True)
 
+    # --- the picture actually contains a picture ---
+    # A generation can fail NUMERICALLY and still write a perfectly valid mp4:
+    # on 2026-07-26 the first Kaggle Wan render produced 5 seconds of flat grey
+    # (stddev 5 of 255, luma range 86-132) and every check here passed, because
+    # mid-grey is neither too dark nor frozen nor silent. It looked like success
+    # in the log, in the file size, and in the QA report. Contrast is the check
+    # that catches an empty frame: real cel-shaded animation runs stddev 40-70,
+    # and anything under FLAT_STDDEV is a blank field, not a shot.
+    r = ff(["-i", str(video), "-vf", f"fps=1/{max(1, int(dur // 6) or 1)},signalstats,metadata=print",
+            "-f", "null", "-"], ffmpeg)
+    lows = [float(v) for v in re.findall(r"YLOW=(\d+\.?\d*)", r.stderr)]
+    highs = [float(v) for v in re.findall(r"YHIGH=(\d+\.?\d*)", r.stderr)]
+    devs = [h - l for l, h in zip(lows, highs)]
+    worst = min(devs) if devs else None
+    flat = [f"{d:.0f}" for d in devs if d < FLAT_STDDEV]
+    # An assembled episode legitimately contains near-flat frames — slates are
+    # designed placeholders for beats with no footage yet — so there it is a
+    # warning that reports how much of the episode is empty. On a RAW generator
+    # clip there is no such excuse: flat means the generation failed, and that
+    # is a hard failure. The clip level is where this defect is born, so that is
+    # where the gate belongs.
+    is_episode = bool(m) and (int(m[1]), int(m[2])) == (WIDTH, HEIGHT)
+    record(ep, "frames carry a picture", not flat and worst is not None,
+           (f"{len(flat)}/{len(devs)} frames blank, lowest contrast {worst:.0f}"
+            + (" (slates?)" if is_episode else " — GENERATION FAILED")
+            if flat else f"lowest contrast {worst:.0f}" if worst is not None
+            else "unmeasured"),
+           warn=is_episode)
+
     # --- captions in the chrome band ---
+    if not m or (int(m[1]), int(m[2])) != (WIDTH, HEIGHT):
+        # a raw generator clip is not an assembled episode; the chrome band
+        # only means something at the delivery resolution
+        record(ep, "captions clear chrome band", True,
+               f"skipped ({m.group(0) if m else '?'}, not an episode)")
+        return
     try:
         from PIL import Image
         import tempfile
