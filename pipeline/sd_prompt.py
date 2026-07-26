@@ -64,9 +64,25 @@ SCALE_NEGATIVES = ("mature tree, large tree, tall tree, thick trunk, full canopy
                    "forest, bush, shrubbery")
 
 
+# "no buildings, no people, no path" in a POSITIVE prompt asks for buildings,
+# people and a path: SD1.5 has no notion of negation, it just sees the nouns. Beat 2
+# of 001 said exactly that and came back blank (2026-07-26). These clauses are
+# pulled out of the positive prompt and appended to the negative one, which is the
+# only place a "not" means anything.
+_NEGATION = re.compile(r",?\s*\bno\s+([a-z][a-z\- ]{1,24}?)(?=,|\.|$)", re.I)
+
+
+def _negated_nouns(text: str) -> list:
+    return [m.group(1).strip() for m in _NEGATION.finditer(text)]
+
+
 def extra_negatives(prompt: str) -> str:
     """Negative terms this beat needs on top of the renderer's standard ones."""
-    return SCALE_NEGATIVES if _SMALL.search(prompt) else ""
+    parts = []
+    if _SMALL.search(prompt):
+        parts.append(SCALE_NEGATIVES)
+    parts += _negated_nouns(prompt)
+    return ", ".join(parts)
 
 
 _TOKENIZER = None
@@ -116,6 +132,10 @@ def compress(prompt: str) -> tuple:
     m = _SHOT.search(text)
     if m:
         shot = m.group(1).strip()
+        # "Vertical 9:16 shot," carries no framing information; ", shot," in the
+        # tail is noise the model has to spend attention on
+        if shot.lower() in ("shot", "shots"):
+            shot = ""
     m = _STYLE_END.search(text)
     action = text[m.end():] if m else text
 
@@ -131,6 +151,8 @@ def compress(prompt: str) -> tuple:
 
     for _ in range(2):   # the tail sometimes arrives as two sentences
         action = _TAIL.sub("", action).strip()
+    # negations move to the negative prompt (see _NEGATION above)
+    action = _NEGATION.sub("", action).strip().rstrip(",")
 
     # SUBJECT FIRST, style last. CLIP weights early tokens most heavily, so the
     # opening of the prompt becomes the composition. Leading with the style tag —
