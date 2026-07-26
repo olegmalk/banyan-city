@@ -123,8 +123,12 @@ def compress(prompt: str) -> tuple:
     # moot — got exactly what it asked for on 2026-07-26: "bold lineart, pastel,
     # soft watercolor background" drawn literally as cream squiggles on a green
     # wash, contrast 153 and no sapling anywhere in it. Vivid, and meaningless.
-    tail = f", {STYLE_TAG}"
-    head = f"{shot}. " if shot else ""
+    # ORDER: subject, then framing, then style. Whatever leads becomes the
+    # composition — leading with STYLE_TAG produced abstract lineart and no
+    # sapling; leading with "macro shot." produced an extreme close-up of leaves
+    # and no sapling either. The subject is the only thing that should be first.
+    tail = (f", {shot}" if shot else "") + f", {STYLE_TAG}"
+    head = ""
     dropped = []
     sentences = [s for s in re.split(r"(?<=[.!?])\s+", action) if s.strip()]
 
