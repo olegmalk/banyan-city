@@ -19,10 +19,10 @@ Status legend: ✅ generated · ⬜ needs footage
 
 ## Beat 01 — COLD OPEN (0:00–0:05) ⬜ needs footage
 
-Line: "Yesterday I died fixing a server. Today I am a tree." Camera on the tree — the premise IS the image.
+Line: "Yesterday I died fixing a server. Today I am a tree." Camera on the sapling, small in a moving field — the premise IS the image, and the grass gives the shot something to move.
 
 ```
-Vertical 9:16 macro shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds with large empty areas, gentle pastel-leaning palette. A single tiny green seedling no taller than the grass around it — one thin bending stem and two big round leaves, nothing else — shivers and trembles in a gust of wind, very small and low in the bottom of the frame, an empty grass field stretching away flat behind it. Peach and gold morning light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 wide shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds with large empty areas, gentle pastel-leaning palette. Tall green grass bending in waves under a huge pale sky of drifting clouds, one tiny two-leaf seedling trembling low in the frame. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 02 — NO APOLOGY (0:05–0:09) ⬜ needs footage
