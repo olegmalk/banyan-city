@@ -1,0 +1,220 @@
+#!/usr/bin/env python3
+"""Render a node's shots locally on Apple MPS — the $0 path with a fast loop.
+
+Same contract as `kaggle/wan-t2v-kaggle.ipynb`: reads the node's `shots.md`,
+writes `NN-slug.mp4` plus a `NN-slug.meta.yaml` of provenance (§7.2) into a
+directory `render_t3.py --clips` can consume, skips clips that already exist so
+an interrupted run resumes, and refuses to accept a blank generation.
+
+Why this exists next to the notebook. Kaggle is the *citizen-reproducible* path
+and stays (WATERING.md: anyone can rebuild the season with a free account, no
+card). But it is a terrible path to ITERATE on: every attempt is a push, a
+ten-minute wait, a fetch, and a log to argue with. Thirteen pushes on
+2026-07-25/26 to get one clip, and most of the failures were bugs that a local
+run would have surfaced in seconds — a wrong accelerator name, a gated
+checkpoint, a mis-calibrated guard of my own. Locally the loop is: run, look.
+
+Both are $0. The difference is the feedback loop, and that is the whole cost.
+
+    python3 pipeline/render_local.py sapling 001 [--beats 1,2] [--out DIR]
+    python3 pipeline/render_local.py --smoke        # prove the stack, no node
+
+The founder's approval gate (STEWARDSHIP.md §6) applies here as much as
+anywhere: this refuses to render a node whose T0 leaf is not stamped
+`approved_by: founder`. `--smoke` is exempt because it renders no episode
+content — it draws a style card to prove the pipeline works.
+"""
+
+import argparse
+import re
+import sys
+from datetime import date
+from pathlib import Path
+
+import numpy as np
+import yaml
+
+REPO = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(REPO / "pipeline"))
+from generate_shots import parse_shots  # noqa: E402
+
+BASES = ["gsdf/Counterfeit-V2.5", "Lykon/dreamshaper-8",
+         "stable-diffusion-v1-5/stable-diffusion-v1-5"]
+ADAPTER = "guoyww/animatediff-motion-adapter-v1-5-3"
+NEG = ("photorealistic, 3d render, text, watermark, signature, low quality, blurry, "
+       "extra limbs, deformed, jpeg artifacts, realistic skin texture")
+# The v1.5 motion module is trained at 512x512 / 16 frames. Asking for 432x768 x24
+# — 2.5x the pixels and 1.5x the frames — produced mottled grey on a T4 and a
+# 19 GB attention allocation on MPS. Stay at native and let render_t3 do the 9:16
+# framing, which it already does for every clip (scale + centre-crop).
+FRAMES, FPS, STEPS = 16, 8, 25
+HEIGHT, WIDTH = 512, 512
+SEED = 20260719
+# Calibrated on the 31 archived clips of this style: per-frame luma spread runs a
+# median of 52-144. Dead grey runs 14-22. Judged on the median across frames,
+# because real clips dip for a single frame while their medians sit far higher.
+BLANK_SPREAD = 35.0
+
+SMOKE_PROMPT = (
+    "Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, "
+    "bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash "
+    "background, gentle pastel palette. A single small tree stands alone in a wide green "
+    "field, its leaves shifting in a light breeze, clouds drifting behind it. "
+    "No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.")
+
+
+def spread_of(frame) -> float:
+    """Luma spread (90th percentile minus 10th) of one frame, 0-255."""
+    a = np.asarray(frame, dtype=np.float32)
+    if not np.isfinite(a).all():
+        return 0.0
+    lo, hi = np.percentile(a, 10), np.percentile(a, 90)
+    return float(hi - lo) * (255.0 if a.max() <= 1.001 else 1.0)
+
+
+def _shim_transformers():
+    """Define the constants newer transformers removed and diffusers still imports.
+
+    `transformers.utils.FLAX_WEIGHTS_NAME` is gone from current releases, and
+    diffusers imports it at module load, so `from diffusers import
+    AnimateDiffPipeline` dies with an ImportError that mentions neither library's
+    real problem. Same failure as on Kaggle's batch image. These are plain
+    filename constants and nothing here reads a flax or tf checkpoint, so define
+    what is missing rather than repinning transformers — a repin drags tokenizers
+    and risks the torch/MPS pair the voice engine depends on.
+    """
+    import transformers.utils as tu
+    for name, val in (("FLAX_WEIGHTS_NAME", "flax_model.msgpack"),
+                      ("TF2_WEIGHTS_NAME", "tf_model.h5"),
+                      ("TF_WEIGHTS_NAME", "model.ckpt")):
+        if not hasattr(tu, name):
+            setattr(tu, name, val)
+
+
+def load_pipe():
+    import torch
+    _shim_transformers()
+    from diffusers import AnimateDiffPipeline, DDIMScheduler, MotionAdapter
+
+    if not torch.backends.mps.is_available():
+        raise SystemExit("no MPS device — this script is the Apple-Silicon path")
+    adapter = MotionAdapter.from_pretrained(ADAPTER, torch_dtype=torch.float16)
+    pipe = base = None
+    for cand in BASES:
+        try:
+            pipe = AnimateDiffPipeline.from_pretrained(
+                cand, motion_adapter=adapter, torch_dtype=torch.float16)
+            base = cand
+            break
+        except Exception as e:  # gated repo, network, missing revision
+            print(f"  {cand} unavailable ({type(e).__name__}) — next", flush=True)
+    if pipe is None:
+        raise SystemExit(f"none of {BASES} loaded; all gated or offline?")
+    # the sampler AnimateDiff's motion module was tuned against; the default
+    # produces mush at low step counts
+    pipe.scheduler = DDIMScheduler.from_config(
+        pipe.scheduler.config, clip_sample=False, timestep_spacing="linspace",
+        beta_schedule="linear", steps_offset=1)
+    pipe.enable_vae_slicing()
+    pipe.enable_attention_slicing()      # MPS holds the whole frame stack otherwise
+    pipe.to("mps")
+    print(f"pipeline ready on MPS — AnimateDiff on {base}")
+    return pipe, base, torch
+
+
+def approved(genome: str, node: str) -> tuple:
+    """(is_approved, detail) from the node's newest T0 leaf yaml."""
+    nodes = REPO / "genomes" / genome / "nodes"
+    d = next((x for x in sorted(nodes.iterdir()) if x.is_dir() and x.name.startswith(node)), None)
+    if not d:
+        raise SystemExit(f"no node dir starting with {node!r}")
+    leaves = sorted((d / "leaves").glob(f"{node}-t0-*.yaml"))
+    if not leaves:
+        return False, "no T0 leaf found"
+    meta = yaml.safe_load(leaves[-1].read_text()) or {}
+    who = str(meta.get("approved_by", "none"))
+    return who.startswith("founder"), f"{leaves[-1].name}: approved_by: {who}"
+
+
+def render(pipe, torch, prompt: str, num: int, dest: Path) -> float:
+    import time
+    from diffusers.utils import export_to_video
+    t0 = time.time()
+    g = torch.Generator(device="cpu").manual_seed(SEED + num)
+    frames = pipe(prompt=prompt, negative_prompt=NEG, height=HEIGHT, width=WIDTH,
+                  num_frames=FRAMES, num_inference_steps=STEPS,
+                  guidance_scale=7.5, generator=g).frames[0]
+    spreads = [spread_of(f) for f in frames[::max(1, len(frames) // 8)]]
+    spread = float(np.median(spreads))
+    # written either way: a guard that deletes its own evidence turns an
+    # ambiguous reading into an unanswerable one
+    out = dest if spread >= BLANK_SPREAD else dest.with_suffix(".SUSPECT.mp4")
+    export_to_video(frames, str(out), fps=FPS)
+    print(f"  {out.name} in {(time.time()-t0)/60:.1f} min, contrast {spread:.0f}"
+          + ("" if spread >= BLANK_SPREAD else "  <-- BLANK, kept for inspection"),
+          flush=True)
+    return spread
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__,
+                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("genome", nargs="?")
+    ap.add_argument("node", nargs="?")
+    ap.add_argument("--beats", help="comma-separated beat numbers; default all pending")
+    ap.add_argument("--out", help="output dir; default the node's clips/")
+    ap.add_argument("--smoke", action="store_true",
+                    help="render one style card to prove the stack; renders no episode content")
+    args = ap.parse_args()
+
+    pipe, base, torch = load_pipe()
+
+    if args.smoke:
+        dest = Path(args.out or ".") / "smoke-animatediff.mp4"
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        s = render(pipe, torch, SMOKE_PROMPT, 0, dest)
+        print("\nstack works." if s >= BLANK_SPREAD else
+              "\nstack loads but generates blank frames — not a node problem.")
+        return 0 if s >= BLANK_SPREAD else 1
+
+    if not (args.genome and args.node):
+        raise SystemExit("need <genome> <node>, or --smoke")
+
+    ok, detail = approved(args.genome, args.node)
+    if not ok:
+        raise SystemExit(
+            f"{args.node} is NOT approved for production — {detail}\n"
+            "STEWARDSHIP.md §6: the founder reads and approves the narrative before\n"
+            "any voice, footage or assembly is made from it. Bring them the script."
+        )
+
+    nodes = REPO / "genomes" / args.genome / "nodes"
+    d = next(x for x in sorted(nodes.iterdir()) if x.is_dir() and x.name.startswith(args.node))
+    shots = parse_shots((d / "shots.md").read_text())
+    want = {int(x) for x in args.beats.split(",")} if args.beats else None
+    out = Path(args.out) if args.out else d / "clips"
+    out.mkdir(parents=True, exist_ok=True)
+
+    todo = [s for s in shots if (want is None and not s["done"]) or (want and s["num"] in want)]
+    todo = [s for s in todo if not (out / f"{s['num']:02d}-{s['slug']}.mp4").exists()]
+    print(f"{len(todo)} beat(s) to render for {d.name} -> {out}")
+
+    for s in todo:
+        dest = out / f"{s['num']:02d}-{s['slug']}.mp4"
+        print(f"beat {s['num']:02d} ({s['slug']}) …", flush=True)
+        spread = render(pipe, torch, s["prompt"], s["num"], dest)
+        if spread < BLANK_SPREAD:
+            print("  stopping: a blank generation means the stack is wrong, not this beat")
+            return 1
+        dest.with_suffix(".meta.yaml").write_text(
+            "# Shot provenance (§7.2)\n" + yaml.safe_dump({
+                "platform": "local-apple-mps", "model": f"AnimateDiff {ADAPTER} on {base}",
+                "prompt": s["prompt"], "negative_prompt": NEG, "seed": SEED + s["num"],
+                "steps": STEPS, "frames": FRAMES, "fps": FPS,
+                "cost_usd": 0.00, "generated": str(date.today()),
+            }, sort_keys=False))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
