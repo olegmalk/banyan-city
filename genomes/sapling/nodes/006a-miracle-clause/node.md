@@ -145,12 +145,14 @@ She presses a wax stamp onto the page and lifts it away clean.
 **CONGRATULATIONS — 2:03–2:10**
 She tears the slip free and holds it out; the goblin takes it in both hands.
 
-> **MAGISTRATE:** Shrines have keepers. Congratulations. The assessor's community service is reclassified: *employment.*
+> **MAGISTRATE:** Shrines have keepers. Keeper of record — *Jerry*. Congratulations. The assessor's community service is reclassified: *employment.*
 
 **A LINE ITEM — 2:10–2:15**
 He turns the paper over once, finds the seal on the back, and stops.
 
 > **SCAVENGER (quietly, wrecked):** I've never been a line item before.
+
+> **VO (quiet):** Jerry. Six days, and I never asked.
 
 **THE CLAUSE — 2:15–2:24**
 She stops on the form's final line and, for the first time, looks faintly entertained.

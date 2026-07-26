@@ -230,7 +230,7 @@ Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded c
 
 ## Beat 26 — A LINE ITEM (2:10–2:15) ⬜ needs footage
 
-Line/beat: "I've never been a line item before." Camera on him holding the paper flat on both palms.
+Line/beat: the goblin hearing his own name said by the state, and the tree realising it never asked. Camera close on his face, the sealed slip in both hands.
 
 ```
 Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin holds a sealed paper flat across both open palms and stares down at it without touching its surface, as if it might evaporate; his ears drop slowly. Tight, tender framing. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
