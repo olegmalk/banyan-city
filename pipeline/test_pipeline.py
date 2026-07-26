@@ -128,7 +128,9 @@ def test_sd_prompt_fits_clip_and_keeps_the_action():
            "9:16 vertical, no text.")
     out, dropped = compress(raw)
     check("compressed prompt fits CLIP", _token_estimate(out) <= MAX_TOKENS)
-    check("the style instruction survives, compactly", out.startswith(STYLE_TAG))
+    check("the style instruction survives, compactly", STYLE_TAG in out)
+    # subject first: leading with style made SD draw the style as the subject
+    check("the subject leads, the style trails", out.index("trembles") < out.index(STYLE_TAG))
     check("the shot type survives — framing is not decoration", "macro shot" in out)
     check("THE ACTION SURVIVES", "trembles in a gust of wind" in out)
     check("the negative-prompt tail is dropped", "photorealism" not in out.lower())

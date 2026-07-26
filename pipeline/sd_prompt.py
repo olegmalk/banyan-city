@@ -113,14 +113,21 @@ def compress(prompt: str) -> tuple:
     for _ in range(2):   # the tail sometimes arrives as two sentences
         action = _TAIL.sub("", action).strip()
 
-    head = f"{STYLE_TAG}, {shot}. " if shot else f"{STYLE_TAG}. "
+    # SUBJECT FIRST, style last. CLIP weights early tokens most heavily, so the
+    # opening of the prompt becomes the composition. Leading with the style tag —
+    # which I did to protect it from truncation, before compression made truncation
+    # moot — got exactly what it asked for on 2026-07-26: "bold lineart, pastel,
+    # soft watercolor background" drawn literally as cream squiggles on a green
+    # wash, contrast 153 and no sapling anywhere in it. Vivid, and meaningless.
+    tail = f", {STYLE_TAG}"
+    head = f"{shot}. " if shot else ""
     dropped = []
     sentences = [s for s in re.split(r"(?<=[.!?])\s+", action) if s.strip()]
 
     # Drop trailing sentences until it fits — but NEVER below one. Style words
     # with no action is the failure this whole module exists to prevent, so the
     # first sentence is not negotiable.
-    while len(sentences) > 1 and _token_estimate(head + " ".join(sentences)) > MAX_TOKENS:
+    while len(sentences) > 1 and _token_estimate(head + " ".join(sentences) + tail) > MAX_TOKENS:
         dropped.append(sentences.pop())
 
     # If that one sentence is still too long (12 of the genome's 182 prompts open
@@ -128,15 +135,18 @@ def compress(prompt: str) -> tuple:
     # subject and verb live at the front of these sentences and the trailing
     # clauses are lighting and mood, so this loses the least — and it still never
     # cuts mid-phrase, which is exactly what CLIP's own truncation does.
-    if sentences and _token_estimate(head + sentences[0]) > MAX_TOKENS:
+    if sentences and _token_estimate(head + sentences[0] + tail) > MAX_TOKENS:
         clauses = [c.strip() for c in sentences[0].split(",") if c.strip()]
-        while len(clauses) > 1 and _token_estimate(head + ", ".join(clauses)) > MAX_TOKENS:
+        while len(clauses) > 1 and _token_estimate(head + ", ".join(clauses) + tail) > MAX_TOKENS:
             dropped.append(clauses.pop())
         sentences[0] = ", ".join(clauses)
         if not sentences[0].endswith((".", "!", "?")):
             sentences[0] += "."
 
     out = (head + " ".join(sentences)).strip()
+    if out.endswith("."):
+        out = out[:-1]
+    out = (out + tail).strip()
     return out, list(reversed(dropped))
 
 
