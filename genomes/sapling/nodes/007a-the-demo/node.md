@@ -63,7 +63,7 @@ He jabs the stick at one particular branch, outraged.
 **GIVEN NOTES — 0:37–0:43**
 Close on the offending branch, its leaves hanging limp and unrepentant.
 
-> **VO:** I am being given notes. By a goblin. With a stick. …Branch three *is* our weakest performer, though.
+> **VO:** I am being given notes. By a goblin. With a stick. Branch three has been dark for a week because every leaf I move tonight is one I can't spend on the fourteenth.
 
 **MIRACLES DON'T REHEARSE — 0:43–0:47**
 The farmer watches from a stump, arms crossed, jug at his feet.

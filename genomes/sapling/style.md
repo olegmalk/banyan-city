@@ -91,6 +91,25 @@ the founder's visual bible above always wins on look.
    A held breath must still be alive on a phone screen.
 3. `pipeline/lint_genome.py` warns (advisory, never failing) on both.
 
+## Why the tree grows (added 2026-07-26, founder decision)
+
+Growth had a ladder but no **cause**, so the jump from waist-high at 005 to a
+man's height at 006a read as an error rather than an event. The cause is now
+canon and stated on screen once, in 005: the tree redirected groundwater toward
+the farmer's field in 004 by growing roots west, and that water feeds it too —
+*"His field drinks. So do I. That is why I am taller this week than I have any
+right to be."*
+
+Two things follow, and both are drawable:
+
+- Growth is **not** uniform over time. It tracks input. A well-watered stretch
+  shows a real jump; a spent or hoarding stretch shows none.
+- Growth can be **withheld**. In 007a the tree banks two weeks of it for the
+  demo, and branch three is visibly starved *because* of it — thin and half-bare
+  where the others are full. That is the same currency 003b established, where
+  one leaf-tilt spent the whole day's reserve, and it is why the finale's bloom
+  costs something.
+
 ## Canonical growth ladder (per node) — steward, 2026-07-25
 
 Growth is the protagonist's only verb, so his **size is continuity**, and it

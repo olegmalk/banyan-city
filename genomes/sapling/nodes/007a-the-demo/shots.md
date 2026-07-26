@@ -74,7 +74,7 @@ Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded color
 Line/beat: "Branch three is our weakest performer!" Camera on the stick jabbing at one branch.
 
 ```
-Vertical 9:16 medium close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin taps a stick up three clearly separated branches, one-two-three, and jabs it at the third — which alone hangs limp — gesticulating with his other hand in theatrical outrage, ears flared. Lantern light, comic energy. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 medium close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin taps a stick up three clearly separated branches, one-two-three, and jabs it at the third — which alone hangs limp, its leaves visibly sparse and darker than the others, a branch being starved — gesticulating with his other hand in theatrical outrage, ears flared. Lantern light, comic energy. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 07 — GIVEN NOTES (0:37–0:43) ⬜ needs footage
@@ -82,7 +82,7 @@ Vertical 9:16 medium close-up, hand-drawn 2D anime style, low detail: flat cel-s
 Line/beat: the tree's 'I am being given notes' line. Camera on the guilty branch.
 
 ```
-Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. One branch hangs limp and unmoving, its leaves drooping lower than its neighbours' — unrepentant — while behind it, soft and out of focus, the small goblin is still gesticulating with his stick. Framing holds both: the accused branch sharp, the management blurred behind it. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. One branch hangs limp and unmoving, thin and half-bare where the others are full — not lazy, underfed — while behind it, soft and out of focus, the small goblin is still gesticulating with his stick. Framing holds both: the accused branch sharp, the management blurred behind it. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 08 — MIRACLES DON'T REHEARSE (0:43–0:47) ⬜ needs footage

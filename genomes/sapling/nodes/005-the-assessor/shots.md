@@ -95,10 +95,10 @@ Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded c
 
 ## Beat 09 — ORCHARD, SINGLE SPECIMEN (0:37–0:42) ⬜ needs footage
 
-Line: "Orchard, single specimen. Yield?" Camera on him CROUCHING beside the knee-high tree — no string this time (the gate: two identical knotted-string shots twelve seconds apart).
+Line: "Orchard, single specimen. Yield?" Camera on him CROUCHING beside the waist-high tree — no string this time (the gate: two identical knotted-string shots twelve seconds apart).
 
 ```
-Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A grey-robed man crouches down on his heels beside a knee-high young tree, licks the stub of his quill, and writes without measuring anything at all — the tree apparently beneath measurement. His posture explicit: folded down to the tree's height. Morning light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A grey-robed man crouches down on his heels beside a waist-high young tree, licks the stub of his quill, and writes without measuring anything at all — the tree apparently beneath measurement. His posture explicit: folded down to the tree's height. Morning light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 10 — NO YIELD (0:42–0:47) ⬜ needs footage
@@ -122,7 +122,7 @@ Vertical 9:16 extreme close-up, hand-drawn 2D anime style, low detail: flat cel-
 Line/beat: the tree's want failing out loud — "there is no leaf for *he was starving*." Camera tight on the motionless leaf; the answer it cannot give is the shot.
 
 ```
-Vertical 9:16 extreme close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A single leaf on a knee-high young tree holds absolutely still in bright afternoon air while, far behind it and thrown out of focus, two small figures face each other. Nothing in the frame moves at all — the stillness is the point, not a pause before motion. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 extreme close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A single leaf on a waist-high young tree holds absolutely still in bright afternoon air while, far behind it and thrown out of focus, two small figures face each other. Nothing in the frame moves at all — the stillness is the point, not a pause before motion. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 13 — GROUND FRUIT (0:56–1:01) ⬜ needs footage
@@ -202,7 +202,7 @@ Vertical 9:16 wide shot, hand-drawn 2D anime style, low detail: flat cel-shaded 
 Line: "He has been counting my tells since he arrived." ONE take: he simply stops and looks at the tree (the gate: the old montage was unfilmable AND contradicted the earlier motionless shot).
 
 ```
-Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A thin grey-robed man stops writing mid-stroke, lowers the quill, and turns his head to look directly at a knee-high young tree — a long, unhurried, professional look, nothing else moving in frame. Held single take. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A thin grey-robed man stops writing mid-stroke, lowers the quill, and turns his head to look directly at a waist-high young tree — a long, unhurried, professional look, nothing else moving in frame. Held single take. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 23 — AND YOU (1:41–1:45) ⬜ needs footage
@@ -210,7 +210,7 @@ Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded color
 Line: "And you. Occupation?" Camera on him KNEELING to the tree's height — posture stated, per the growth ladder.
 
 ```
-Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A thin grey-robed man walks up to a knee-high young tree, kneels down on one knee to bring his face level with its small crown, straightens his robes with two precise tugs, and addresses it directly with the ledger open in one hand. Absurd formality, held two-shot. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A thin grey-robed man walks up to a waist-high young tree, kneels down on one knee to bring his face level with its small crown, straightens his robes with two precise tugs, and addresses it directly with the ledger open in one hand. Absurd formality, held two-shot. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 24 — ONE LEAF (1:45–1:50) ⬜ needs footage
@@ -218,7 +218,7 @@ Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded color
 No dialogue — the answer. ONE held wide (the gate flagged 'three held faces' as three singles plus an insert, i.e. cuts).
 
 ```
-Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. In one unbroken wide frame a small goblin, a straw-hatted farmer and a kneeling grey-robed man hold utterly still around a knee-high young tree — and one leaf in its crown tilts slowly and deliberately in dead-still air. Nothing else moves. Morning light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. In one unbroken wide frame a small goblin, a straw-hatted farmer and a kneeling grey-robed man hold utterly still around a waist-high young tree — and one leaf in its crown tilts slowly and deliberately in dead-still air. Nothing else moves. Morning light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 25 — POPULATION THREE (1:50–1:56) ⬜ needs footage

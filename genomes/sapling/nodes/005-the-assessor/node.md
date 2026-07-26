@@ -106,6 +106,8 @@ He addresses the assessor without uncrossing his arms, only his jaw moving.
 
 > **VO:** He said he wouldn't bring his name. He brought it.
 
+> **VO:** His field drinks. So do I. That is why I am taller this week than I have any right to be.
+
 **COMMUNITY SERVICE — 1:11–1:16**
 The quill writes three unhurried words into the ledger.
 
@@ -119,7 +121,7 @@ Close on the young tree's leaves, motionless, taking it in.
 **OCCUPATIONS — 1:21–1:26**
 The assessor reaches the settlement schema and writes, then stalls over the second line.
 
-> **ASSESSOR:** Population: two. Occupations: farmer — and… weed warden. Provisional.
+> **ASSESSOR:** Population: two. Neither of them the tree. Occupations: farmer — non-resident — and… weed warden. Provisional.
 
 **WATER SOURCE — 1:26–1:31**
 The assessor looks up, quill poised — then the farmer, in frame beside him, answers it.
