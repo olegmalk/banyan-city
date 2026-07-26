@@ -123,3 +123,35 @@ All four fixes are in and verified by measurement; lint and the pipeline tests
 (219 checks) are green, read as their own step. Re-voicing and re-timing the
 trunk with the final rules is in flight. The verdict on whether picture and
 sound now match the script is the founder's (R4) and cannot be self-assessed.
+
+## Addendum (2026-07-26): the free tier cannot run this model
+
+Wan 2.1 T2V produced blank grey on Kaggle's T4 twice — once with the whole
+pipeline in fp16 (luma spread 14 of 255) and again with the VAE forced to fp32
+(spread 22). The VAE was not the problem. The transformer is.
+
+Wan 2.1 is released and trained in **bfloat16**. fp16 has the same 16 bits but a
+far smaller exponent range, so activations that are fine in bf16 overflow to inf
+and then NaN, which decodes to a flat mid-grey frame. The fix is to run it in
+bf16 — and:
+
+| Kaggle free accelerator | arch | bf16? |
+|---|---|---|
+| Tesla T4 | sm_75 (Turing) | **no** — bf16 arrives with Ampere, sm_80 |
+| Tesla P100 | sm_60 (Pascal) | no, and current torch ships no kernels for it |
+| TPU v3-8 | — | not a CUDA path for this pipeline |
+
+**There is no bf16 GPU on Kaggle's free tier.** fp32 would be numerically safe
+and is ~8x slower on a T4 (roughly 4 hours per 5-second shot against 29 minutes),
+which cannot finish an episode inside a 12-hour session.
+
+So the $0 floor is not "Wan on Kaggle". It is a model that is fp16-native. The
+obvious candidate is **AnimateDiff on an anime-tuned SD1.5 checkpoint**: SD1.5 is
+fp16-safe by design, runs fast on a T4, and — the part that matters more than
+speed — flat cel-shaded anime is exactly what those checkpoints are good at,
+which is closer to `style.md` than a general-purpose video model was ever going
+to get. CogVideoX-2B is the fallback (fp16 supported, unlike the bf16 5B).
+
+Cost of learning this: about 9.5 GPU-hours of the weekly 30, six pushes, and one
+false success report. The guard that now aborts on a blank frame is the reason
+the next wrong model costs one clip instead of a session.
