@@ -121,18 +121,29 @@ prompt states the node's row verbatim.
 
 | Node | Height | Canopy | Notes |
 |---|---|---|---|
-| 001 | ~15 cm | two oversized cotyledon leaves | a sprout; no trunk, no branch |
-| 002a/b/c | ~40 cm | two leaves + one thin side-branch | the branch is where the fig grew and fell |
-| 003b | ~55 cm | three leaves, bare fig branch | tall enough to cast a hand-sized shadow |
-| 004 | **~90 cm (knee-high)** | five or six leaves in a small crown | casts one real shade patch, big enough for a sitting goblin — this is why the town is called Shade |
-| 005 | ~1.2 m | small crown, first woody bark | the assessor can call it "one specimen" without irony |
+| 001 | ~60 cm (shin-high) | a small round crown on a thin bending stem | a young tree, not a seedling — see the renderer note below |
+| 002a/b/c | ~75 cm | small crown + one thin side-branch | the branch is where the fig grew and fell |
+| 003b | ~90 cm | fuller crown, bare fig branch | casts a real hand-sized shadow |
+| 004 | **~1.1 m (knee-high)** | five or six leaves in a small crown | casts one real shade patch, big enough for a sitting goblin — this is why the town is called Shade |
+| 005 | ~1.3 m | small crown, first woody bark | the assessor can call it "one specimen" without irony |
 | 006a/007a | ~1.6 m | full small crown, side branches | a shrine you can stand under; fig-bearing |
 
 Two rules follow:
 
-1. **Never write "tiny sapling" past 003b.** From 004 he is a young tree.
-   The comedy of smallness lives in 001–003; from 004 the comedy is
-   bureaucratic, not physical.
+1. **Never write "tiny sapling", "seedling" or "sprout" anywhere.** Not even in
+   001. This is a renderer constraint discovered the hard way on 2026-07-26:
+   SD1.5 will not draw a 15 cm two-leaf sprout as a character. Five attempts
+   produced a leaf on a lilypad, a botanical specimen, or abstract lineart, and
+   negative-prompting "mature tree" made the tree *larger*. Ask it for a small
+   young TREE — stem, small round crown, sky, ground — and it renders that
+   reliably and on-style in about 80 seconds.
+
+   The ladder above was rewritten to start where the tool is strong rather than
+   where a spec sheet wished it would be. The comedy of smallness survives: the
+   tree is still dwarfed by an empty field, still grows one leaf in three days,
+   still gets called "one specimen" by a man with a ledger. What is lost is the
+   *pathetic* miniature scale, which was a steward invention of 2026-07-25 and
+   never something the scripts required.
 2. **The shade patch is a prop.** From 004 onward it exists on the ground,
    it is small, and characters use it. It is the town's namesake and the
    first thing he ever gave anyone.

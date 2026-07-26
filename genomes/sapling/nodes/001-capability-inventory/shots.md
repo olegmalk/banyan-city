@@ -22,7 +22,7 @@ Status legend: ✅ generated · ⬜ needs footage
 Line: "Yesterday I died fixing a server. Today I am a tree." Camera on the tree — the premise IS the image.
 
 ```
-Vertical 9:16 macro shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds with large empty areas, gentle pastel-leaning palette. A single tiny green seedling no taller than the grass around it — one thin bending stem and two big round leaves, nothing else — shivers and trembles in a gust of wind, very small and low in the bottom of the frame, an empty grass field stretching away flat behind it. Peach and gold morning light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 wide shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds with large empty areas, gentle pastel-leaning palette. A small young tree with a thin bending stem and one small round leafy crown shivers and sways in a gust of wind, standing alone and dwarfed in the middle of an enormous flat green field under a huge pale sky. Peach and gold morning light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 02 — NO APOLOGY (0:05–0:09) ⬜ needs footage
@@ -30,7 +30,7 @@ Vertical 9:16 macro shot, hand-drawn 2D anime style, low detail: flat cel-shaded
 Line: "Nobody has apologized." Camera pulls back to show how empty the world is.
 
 ```
-Vertical 9:16 wide shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. The wind dies and a tiny sapling's two leaves settle into stillness at the centre of an enormous empty field, the camera drifting slowly backward to reveal more and more emptiness around it — no buildings, no people, no path. Morning washes of peach and pale green. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 wide shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. The wind dies and a small young tree's two leaves settle into stillness at the centre of an enormous empty field, the camera drifting slowly backward to reveal more and more emptiness around it — no buildings, no people, no path. Morning washes of peach and pale green. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 03 — THE DESK (0:09–0:13) ⬜ needs footage
@@ -62,7 +62,7 @@ Vertical 9:16 WIDE shot with the desk seen in profile, night interior, hand-draw
 Line: "Rebooted somewhere with better lighting." Camera on the light arriving.
 
 ```
-Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. Warm sunrise light sweeps across a green field from one side to the other, lighting a tiny mascot-simple sapling as it passes and throwing its long shadow across the grass. Night blues wash out into peach and gold. Slow, gentle, dawn arriving. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. Warm sunrise light sweeps across a green field from one side to the other, lighting a tiny small young tree as it passes and throwing its long shadow across the grass. Night blues wash out into peach and gold. Slow, gentle, dawn arriving. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 07 — THE BIRD (0:28–0:33) ⬜ needs footage
@@ -70,7 +70,7 @@ Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded color
 Line: "filed me under furniture." Camera on the bird using the tree as furniture — the picture IS the joke now (the gate found the old keyboard line had no image behind it).
 
 ```
-Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small round bird flutters down and lands on the top leaf of a tiny mascot-simple sapling, bending the leaf flat under its weight, hops once, then takes off — the leaf springing back upright behind it. Bright morning field, deadpan comic timing. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small round bird flutters down and lands on the top leaf of a tiny small young tree, bending the leaf flat under its weight, hops once, then takes off — the leaf springing back upright behind it. Bright morning field, deadpan comic timing. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 08 — NO HANDS (0:33–0:38) ⬜ needs footage
@@ -86,7 +86,7 @@ Vertical 9:16 extreme close-up, hand-drawn 2D anime style, low detail: flat cel-
 Line: "Capability one: sense." Camera underground as the sense switches on.
 
 ```
-Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, gentle pastel palette. Glowing teal root filaments light up one after another and spread outward through near-black soil in an underground cross-section, the illumination travelling away from a tiny sapling above the soil line like a system coming online. Bioluminescent teal and green on dark, slow push-in. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, gentle pastel palette. Glowing teal root filaments light up one after another and spread outward through near-black soil in an underground cross-section, the illumination travelling away from a small young tree above the soil line like a system coming online. Bioluminescent teal and green on dark, slow push-in. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 10 — THE WATER TABLE (0:42–0:47) ⬜ needs footage
@@ -110,7 +110,7 @@ Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded c
 Terminal overlay beat ($ whoami). The frame shows TIME PASSING (shadow sweep) rather than 'unchanged' — the gate flagged four dead seconds on a static frame.
 
 ```
-Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. The long shadow of a tiny mascot-simple sapling sweeps slowly across flat-color grass as the sun crosses the sky — hours compressed into one held frame, the tree itself motionless at centre. Clean uncluttered composition with generous empty space in the upper frame for an overlay. Warm light shifting through the shot. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. The long shadow of a tiny small young tree sweeps slowly across flat-color grass as the sun crosses the sky — hours compressed into one held frame, the tree itself motionless at centre. Clean uncluttered composition with generous empty space in the upper frame for an overlay. Warm light shifting through the shot. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 13 — THE TIMELAPSE (0:57–1:02) ⬜ needs footage
@@ -118,7 +118,7 @@ Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded color
 Line: "Capability two: grow. Three days of full effort." Camera on time passing and the bud opening.
 
 ```
-Vertical 9:16 timelapse, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. The sun arcs overhead three times in accelerating sweeps of peach, gold and indigo while a single new leaf slowly unfurls from a bud on a tiny sapling — the only thing changing besides the light. Static camera, patient, funny in its smallness. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 timelapse, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. The sun arcs overhead three times in accelerating sweeps of peach, gold and indigo while a single new leaf slowly unfurls from a bud on a small young tree — the only thing changing besides the light. Static camera, patient, funny in its smallness. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 14 — ONE LEAF (1:02–1:07) ⬜ needs footage
@@ -134,15 +134,15 @@ Vertical 9:16 extreme close-up, hand-drawn 2D anime style, low detail: flat cel-
 Line: "Move — no. Fight — no. Flee — no. Speak — no." Camera on the tree TRYING and failing — the gate found three near-identical wides in a row here.
 
 ```
-Vertical 9:16 medium close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A tiny sapling's thin trunk strains and bows hard to one side as if trying with everything it has to move, its two leaves quivering with effort and the soil visibly tugging around its roots — then it springs back, having gone nowhere. Comic, effortful, futile. Midday light, tight framing on trunk and root line. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 medium close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small young tree's thin trunk strains and bows hard to one side as if trying with everything it has to move, its two leaves quivering with effort and the soil visibly tugging around its roots — then it springs back, having gone nowhere. Comic, effortful, futile. Midday light, tight framing on trunk and root line. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 16 — SENSE AND GROW (1:12–1:17) ⬜ needs footage
 
-Line: "I solved it the same way, eventually. I walked away." Camera wide on the tiny sapling with an empty road leaving frame — the leaving is the image, and it is the one thing it can no longer do.
+Line: "I solved it the same way, eventually. I walked away." Camera wide on the small young tree with an empty road leaving frame — the leaving is the image, and it is the one thing it can no longer do.
 
 ```
-Vertical 9:16 extreme wide shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A single tiny two-leaf sapling stands at the centre of an enormous empty green field while a dirt road runs away from it out of the frame toward a pale horizon, nothing travelling on it. Faint wind across the grass, the sapling barely moving. Lonely, still, cool afternoon light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 extreme wide shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A single small young tree stands at the centre of an enormous empty green field while a dirt road runs away from it out of the frame toward a pale horizon, nothing travelling on it. Faint wind across the grass, the sapling barely moving. Lonely, still, cool afternoon light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 17 — I ALWAYS LEFT (1:17–1:23) ⬜ needs footage
@@ -150,7 +150,7 @@ Vertical 9:16 extreme wide shot, hand-drawn 2D anime style, low detail: flat cel
 Line: "I can't leave. I can only make this spot worth staying in." Camera low at the roots — the want of the whole series, and it is a shot of holding on.
 
 ```
-Vertical 9:16 low macro shot at soil level, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. Thin pale roots of a tiny sapling grip dark crumbling earth, tightening visibly, a few grains of soil shifting as they take hold. Warm low light raking across the ground, shallow depth of field, the field beyond thrown soft. Quiet determination. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 low macro shot at soil level, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. Thin pale roots of a small young tree grip dark crumbling earth, tightening visibly, a few grains of soil shifting as they take hold. Warm low light raking across the ground, shallow depth of field, the field beyond thrown soft. Quiet determination. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 18 — WORTH STAYING IN (1:23–1:30) ⬜ needs footage
@@ -166,7 +166,7 @@ Vertical 9:16 extreme wide shot, hand-drawn 2D anime style, low detail: flat cel
 Line: "Footsteps. Heavy, headed here." Camera underground on the pulses arriving.
 
 ```
-Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, gentle pastel palette. Concentric rings of soft light pulse in rhythmically from the far edge of an underground cross-section — step, step, step — each wave rolling closer and lighting the glowing teal root filaments brighter as it passes beneath a tiny sapling silhouette above the soil line. Tension built by rhythm alone. Bioluminescent teal on near-black. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, gentle pastel palette. Concentric rings of soft light pulse in rhythmically from the far edge of an underground cross-section — step, step, step — each wave rolling closer and lighting the glowing teal root filaments brighter as it passes beneath a small young tree silhouette above the soil line. Tension built by rhythm alone. Bioluminescent teal on near-black. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 20 — NOT HIDE (1:35–1:40) ⬜ needs footage
@@ -174,7 +174,7 @@ Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded color
 Line: "neither of them is hide." Camera above ground: stillness against an approach on the horizon.
 
 ```
-Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A tiny sapling's leaves hold dead still in the foreground while, far away on the horizon behind it, a line of tall grass bends and parts in sequence as something unseen approaches. Dusk palette sliding amber into indigo, silhouettes reading before detail. Slow push-in, quietly ominous. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small young tree's leaves hold dead still in the foreground while, far away on the horizon behind it, a line of tall grass bends and parts in sequence as something unseen approaches. Dusk palette sliding amber into indigo, silhouettes reading before detail. Slow push-in, quietly ominous. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ---
