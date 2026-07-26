@@ -1,7 +1,7 @@
 {
   "id": "banyancity/banyan-animatediff",
   "title": "banyan-animatediff",
-  "code_file": "animatediff-kaggle.ipynb",
+  "code_file": "render-kaggle.ipynb",
   "language": "python",
   "kernel_type": "notebook",
   "is_private": true,

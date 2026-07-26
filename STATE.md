@@ -15,7 +15,7 @@ API, native 9:16, watermark-off default, ~1,650 free video-seconds for new
 accounts (90 days, no card; amount needs console confirmation). Adapter
 live: `generate_shots.py --provider wan` (+`--quota-covered` ledger mode,
 founder-attested, still behind `--yes`). Permanent $0 floor:
-`pipeline/kaggle/animatediff-kaggle.ipynb` (open Wan 1.3B on free Kaggle GPU).
+`pipeline/kaggle/render-kaggle.ipynb` (open Wan 1.3B on free Kaggle GPU).
 
 **DONE 2026-07-20 (small hours):** THE WHOLE TRUNK IS FILMED AND LIVE.
 001-t3-b (founder-released, v2 cut) + 002b/003b/004/005 t3-a leaves — all

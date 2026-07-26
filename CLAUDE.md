@@ -61,7 +61,7 @@ always-loaded file goes stale and starts contradicting itself.
 Standing constraints (these do not expire):
 
 - **Free provider quota is SPENT** (~$35 list, $0 billed, ledgered). Next
-  renders = Kaggle ($0 floor: `pipeline/kaggle/animatediff-kaggle.ipynb`), paid
+  renders = Kaggle ($0 floor: `pipeline/kaggle/render-kaggle.ipynb`), paid
   (founder go only), or watering. Never assume quota remains.
 - **MAKING ERA CLOSED by design** — no episode 8 until sap says so.
 - **Style is v2: low-detail anime** — `genomes/sapling/style.md` is the

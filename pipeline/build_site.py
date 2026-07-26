@@ -278,7 +278,7 @@ ledger</a>. Or water with <strong>compute</strong>: re-render a leaf with your o
         water_html = f"""<h2>Water this branch</h2>
 <p class="notice">💧 Money watering opens soon (one founder key-turn away). Watering with
 <strong>compute</strong> is open now: re-render any leaf of this node with your own key or free GPU
-(<a href="{REPO_URL}/blob/main/pipeline/kaggle/animatediff-kaggle.ipynb">the Kaggle notebook</a> runs at
+(<a href="{REPO_URL}/blob/main/pipeline/kaggle/render-kaggle.ipynb">the Kaggle notebook</a> runs at
 $0) and submit it — provenance in, ledger row yours.
 <a href="{REPO_URL}/blob/main/WATERING.md">How watering works →</a></p>"""
 

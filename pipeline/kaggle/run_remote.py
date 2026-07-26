@@ -49,7 +49,7 @@ def kaggle(*args, check=True):
 
 def set_node(node: str, steps: int | None = None, beats: str | None = None) -> None:
     """Point the notebook's config cell at a node before pushing."""
-    nb_path = HERE / "animatediff-kaggle.ipynb"
+    nb_path = HERE / "render-kaggle.ipynb"
     nb = json.loads(nb_path.read_text())
     cell = nb["cells"][1]["source"]
     for i, line in enumerate(cell):

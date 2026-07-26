@@ -27,7 +27,7 @@ Two things are canon and travel with every prompt:
 
 ### Route A — free: the Kaggle notebook ($0, anyone)
 
-[`pipeline/kaggle/animatediff-kaggle.ipynb`](pipeline/kaggle/animatediff-kaggle.ipynb)
+[`pipeline/kaggle/render-kaggle.ipynb`](pipeline/kaggle/render-kaggle.ipynb)
 renders `shots.md` prompts with open Apache-2.0 Wan 2.1 weights on Kaggle's
 free GPU quota (30 h/week). Exact steps:
 

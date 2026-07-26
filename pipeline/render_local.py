@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Render a node's shots locally on Apple MPS — the $0 path with a fast loop.
 
-Same contract as `kaggle/animatediff-kaggle.ipynb`: reads the node's `shots.md`,
+Same contract as `kaggle/render-kaggle.ipynb`: reads the node's `shots.md`,
 writes `NN-slug.mp4` plus a `NN-slug.meta.yaml` of provenance (§7.2) into a
 directory `render_t3.py --clips` can consume, skips clips that already exist so
 an interrupted run resumes, and refuses to accept a blank generation.
