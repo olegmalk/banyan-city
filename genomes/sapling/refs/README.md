@@ -21,14 +21,27 @@ Replacing a reference re-casts that character everywhere, which is a taste call
 (R4) and belongs to the founder. Adding one for the farmer, the magistrate and the
 assessor is the obvious next step once the goblin proves the mechanism.
 
-## A reference is copied entirely, background included
+## A reference transfers TONE as well as identity
 
-The first version of `jerry.png` was cropped loosely from a rendered frame that
-happened to contain a stone arch behind him. Every shot conditioned on it came back
-with a soft circular vignette — IP-Adapter was reproducing the reference faithfully,
-including the part that was scenery. It is a character reference, so it must contain
-the character and as little else as possible: figure centred, plain ground, no
-props, no framing device, no distinctive lighting.
+Two things get copied, and the second one surprised me.
+
+**Composition.** `jerry.png` was first cropped loosely from a rendered frame that
+happened to contain a stone arch, and every conditioned shot came back with a soft
+circular vignette. IP-Adapter was reproducing the reference faithfully, scenery
+included.
+
+**Contrast.** So I re-cropped tight to the figure to remove the arch — and 3 of 4
+beats came back BLANK (luma spread 17-27, against 38-62 with the loose crop). The
+tight crop was a pale figure on flat grey, and a flat reference produces flat
+output. The arch was noise; the tonal structure around it was load-bearing.
+
+The reference in place is therefore the LOOSE crop, because it renders. Its
+vignette is a known cosmetic artefact, accepted until a reference is made properly.
+
+**Making one properly** means rendering a character sheet on purpose — the figure
+centred on a plain but not washed ground, with real light and shadow — rather than
+harvesting a frame from an episode. That is the open task, and it is cheap: one
+render, then every shot the character appears in inherits it.
 
 ## Strength
 
