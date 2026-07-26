@@ -22,7 +22,7 @@ Status legend: ✅ generated · ⬜ needs footage
 Line: "Yesterday I died fixing a server. Today I am a tree." Camera on the sapling, small in a moving field — the premise IS the image, and the grass gives the shot something to move.
 
 ```
-Vertical 9:16 wide shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds with large empty areas, gentle pastel-leaning palette. Tall green grass bending in waves under a huge pale sky of drifting clouds, one tiny two-leaf seedling trembling low in the frame. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 wide shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds with large empty areas, gentle pastel-leaning palette. One tiny two-leaf seedling trembling in the wind, close in the foreground, tall grass bending in waves behind it, wide green meadow, drifting clouds, huge pale sky. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 02 — NO APOLOGY (0:05–0:09) ⬜ needs footage
