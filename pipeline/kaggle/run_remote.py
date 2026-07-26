@@ -98,9 +98,16 @@ def main() -> int:
         # which read as "the fix did nothing" rather than "the fix never arrived".
         if node_arg:
             import subprocess as _sp
-            _dirty = _sp.run(["git", "status", "--porcelain", "--",
-                              "genomes", "pipeline"], cwd=REPO,
-                             capture_output=True, text=True).stdout.strip()
+            # The notebook itself is UPLOADED by `kernels push`, so its own edits
+            # are already delivered — and set_node() rewrites it on every push,
+            # which would otherwise make the guard refuse every second push. What
+            # the remote reads from GitHub is genomes/ (the prompts) and the
+            # pipeline modules the notebook imports from the clone.
+            _dirty = "\n".join(
+                l for l in _sp.run(["git", "status", "--porcelain", "--",
+                                    "genomes", "pipeline"], cwd=REPO,
+                                   capture_output=True, text=True).stdout.splitlines()
+                if not l.endswith(".ipynb")).strip()
             _ahead = _sp.run(["git", "log", "--oneline", "origin/main..HEAD"],
                              cwd=REPO, capture_output=True, text=True).stdout.strip()
             if _dirty or _ahead:
