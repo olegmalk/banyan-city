@@ -91,6 +91,31 @@ def main() -> int:
                       "  Rendering to prove the pipeline, NOT to produce the episode.\n"
                       "  The episode still needs the founder's stamp.")
 
+        # The notebook renders what GITHUB has, because it clones the repo — so an
+        # uncommitted local edit is invisible to it. On 2026-07-26 a rewritten beat-1
+        # prompt was pushed as a kernel without being committed, the render used the
+        # old prompt, and the output came back byte-identical to the previous run,
+        # which read as "the fix did nothing" rather than "the fix never arrived".
+        if node_arg:
+            import subprocess as _sp
+            _dirty = _sp.run(["git", "status", "--porcelain", "--",
+                              "genomes", "pipeline"], cwd=REPO,
+                             capture_output=True, text=True).stdout.strip()
+            _ahead = _sp.run(["git", "log", "--oneline", "origin/main..HEAD"],
+                             cwd=REPO, capture_output=True, text=True).stdout.strip()
+            if _dirty or _ahead:
+                what = []
+                if _dirty:
+                    what.append(f"{len(_dirty.splitlines())} uncommitted file(s)")
+                if _ahead:
+                    what.append(f"{len(_ahead.splitlines())} unpushed commit(s)")
+                raise SystemExit(
+                    "REFUSING: " + " and ".join(what) + " — the notebook clones from\n"
+                    "GitHub, so it would render the OLD prompts and the result would look\n"
+                    "like your change had no effect.\n\n"
+                    + ("\n".join("  " + l for l in _dirty.splitlines()[:8]) + "\n" if _dirty else "")
+                    + "\nCommit and push first, then push the kernel.")
+
         steps = beats = None
         if "--steps" in sys.argv:
             steps = int(sys.argv[sys.argv.index("--steps") + 1])

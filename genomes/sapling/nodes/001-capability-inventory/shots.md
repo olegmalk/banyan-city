@@ -22,7 +22,7 @@ Status legend: ✅ generated · ⬜ needs footage
 Line: "Yesterday I died fixing a server. Today I am a tree." Camera on the tree — the premise IS the image.
 
 ```
-Vertical 9:16 macro shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds with large empty areas, gentle pastel-leaning palette. A tiny mascot-simple banyan sapling — thin curved trunk, two oversized expressive leaves, no face — trembles and shivers in a gust of wind, filling the lower half of the frame, alone in a vast green field under an enormous flat watercolor sky. Peach and gold morning light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 macro shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds with large empty areas, gentle pastel-leaning palette. A single tiny green seedling no taller than the grass around it — one thin bending stem and two big round leaves, nothing else — shivers and trembles in a gust of wind, very small and low in the bottom of the frame, an empty grass field stretching away flat behind it. Peach and gold morning light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 02 — NO APOLOGY (0:05–0:09) ⬜ needs footage
