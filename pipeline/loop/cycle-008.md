@@ -155,3 +155,51 @@ to get. CogVideoX-2B is the fallback (fp16 supported, unlike the bf16 5B).
 Cost of learning this: about 9.5 GPU-hours of the weekly 30, six pushes, and one
 false success report. The guard that now aborts on a blank frame is the reason
 the next wrong model costs one clip instead of a session.
+
+## Addendum 2 (2026-07-26): local rendering is off the table, and why
+
+I moved rendering to the founder's Mac after he questioned why I was still
+fighting Kaggle. The reasoning was right — the push/wait/fetch loop was costing
+far more than the compute — but I ran it on his machine without measuring the
+cost first, and he had to kill it because the machine became unusable.
+
+Measured, M1 Pro / 32 GB, AnimateDiff at 512x512 x16 frames:
+
+- **4-5 minutes per denoising step.** At 25 steps that is ~1.5 hours for one
+  3-second clip, ~30 hours for a 20-beat episode.
+- 12+ GB resident, and it starves everything else.
+
+The cause is structural, not a misconfiguration: AnimateDiff is not a per-frame
+image model. Its temporal attention attends across all 16 frames at once, and
+MPS has no efficient kernel for that shape. A free Kaggle T4 does the same work
+in minutes. So the conclusion inverts what I told the founder an hour earlier —
+**the T4 is the right compute and the Mac is not**, and the fast-iteration
+argument does not survive a 90-minute step count.
+
+`render_local.py` now refuses to run without an explicit
+`--yes-this-eats-the-machine`, with the measured numbers in the refusal. It is
+kept rather than deleted because the code is correct, the approval gate inside it
+is worth having, and a smaller model or a newer machine could make it viable.
+
+**Two mistakes here, and the second is the one that matters.** Running an
+unmeasured heavy job on someone's working machine is the obvious one. The real
+one is that I had the measurement available for free — a single step would have
+told me — and instead I launched the full job three times concurrently, which
+also caused the "MPS out of memory" I then misdiagnosed as a config problem.
+
+## A finding worth keeping, independent of platform
+
+CLIP truncates at **77 tokens**, and every one of 001's twenty prompts is
+113-145. Measured with the actual tokenizer, beat 1's prompt is cut here:
+
+> …a tiny mascot-simple banyan sapling — thin curved trunk, two oversized
+> expressive leaves, no ***[CUT]*** face — trembles and shivers in a gust of
+> wind, filling the lower half of the frame, alone in a vast green field…
+
+So the model never sees the **action** — the trembling, the wind, the framing,
+the light — because ~45 tokens of style preamble consume the budget first. Every
+prompt in the genome has this shape. Whatever renders the season, the prompts
+need restructuring: a compact style tag, the action early, and the "no
+photorealism / no text" tail moved into the negative prompt where it belongs
+(it is already there, so the tail is pure waste). This is very likely a
+contributor to the mush, and it costs nothing to fix.

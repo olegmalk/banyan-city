@@ -172,7 +172,30 @@ def main() -> int:
     ap.add_argument("--out", help="output dir; default the node's clips/")
     ap.add_argument("--smoke", action="store_true",
                     help="render one style card to prove the stack; renders no episode content")
+    ap.add_argument("--yes-this-eats-the-machine", action="store_true",
+                    help="required: acknowledge the measured cost below before running")
     args = ap.parse_args()
+
+    # MEASURED, 2026-07-26, M1 Pro / 32 GB: 4-5 MINUTES PER DENOISING STEP at
+    # 512x512 x16 frames. At 25 steps that is ~1.5 hours for ONE 3-second clip,
+    # ~30 hours for a 20-beat episode, while holding 12+ GB of unified memory and
+    # starving everything else on the machine. The founder had to kill it.
+    #
+    # AnimateDiff's temporal attention is the reason: it is not a per-frame image
+    # model, it attends across all 16 frames at once, and MPS has no efficient
+    # kernel for that shape. A free Kaggle T4 does the same work in minutes.
+    #
+    # So this path is NOT the render path. It is kept because the code is correct
+    # and the approval gate in it is worth having, and because a future Mac or a
+    # smaller model may make it viable. It refuses to run without the flag.
+    if not args.yes_this_eats_the_machine:
+        raise SystemExit(
+            "REFUSING. Measured on this machine: 4-5 minutes per step, ~1.5 h per\n"
+            "3-second clip, ~30 h per episode, 12+ GB resident. It makes the machine\n"
+            "unusable and was killed by the founder on 2026-07-26.\n\n"
+            "Render on the free Kaggle T4 instead:\n"
+            "  python3 pipeline/kaggle/run_remote.py push <node>\n\n"
+            "If you genuinely mean to run it here, pass --yes-this-eats-the-machine.")
 
     pipe, base, torch = load_pipe()
 
