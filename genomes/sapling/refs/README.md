@@ -15,8 +15,27 @@ is conditioned on it:
 
 | file | character | source |
 |---|---|---|
-| `jerry.png` | the goblin keeper — small, hooded, enormous ears, patchwork cloak | frame from 002b beat 3, the closest render to `style.md`'s model sheet |
+| `jerry.png` | the goblin keeper — small, hooded, enormous ears, pale cloak | frame from 002b beat 3, tightly cropped to the figure |
 
 Replacing a reference re-casts that character everywhere, which is a taste call
 (R4) and belongs to the founder. Adding one for the farmer, the magistrate and the
 assessor is the obvious next step once the goblin proves the mechanism.
+
+## A reference is copied entirely, background included
+
+The first version of `jerry.png` was cropped loosely from a rendered frame that
+happened to contain a stone arch behind him. Every shot conditioned on it came back
+with a soft circular vignette — IP-Adapter was reproducing the reference faithfully,
+including the part that was scenery. It is a character reference, so it must contain
+the character and as little else as possible: figure centred, plain ground, no
+props, no framing device, no distinctive lighting.
+
+## Strength
+
+`IPA_SCALE` in the notebook. Measured on four beats of 002b:
+
+| scale | identity | composition |
+|---|---|---|
+| 0 (none) | four different characters | free |
+| 0.6 | consistent | reference dictates it — a sprint and a close-up both became a centred standing figure, and two of four went blank |
+| **0.35** | consistent | prompt drives it again; a close-up stayed a close-up |
