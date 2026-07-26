@@ -1,7 +1,7 @@
 {
-  "id": "banyancity/banyan-wan-t2v",
-  "title": "banyan-wan-t2v",
-  "code_file": "wan-t2v-kaggle.ipynb",
+  "id": "banyancity/banyan-animatediff",
+  "title": "banyan-animatediff",
+  "code_file": "animatediff-kaggle.ipynb",
   "language": "python",
   "kernel_type": "notebook",
   "is_private": true,

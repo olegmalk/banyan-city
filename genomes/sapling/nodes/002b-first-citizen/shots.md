@@ -12,7 +12,7 @@ VO. 9:16 vertical. Each prompt's FIRST sentence states the primary action
 **Assembly:** save each clip as `NN-slug.mp4` in a clips dir, then
 `python3 pipeline/render_t3.py sapling 002b --clips <dir> --out ep.mp4`
 
-**Free render path:** `pipeline/kaggle/wan-t2v-kaggle.ipynb` with
+**Free render path:** `pipeline/kaggle/animatediff-kaggle.ipynb` with
 `NODE = "002b"` — 21 shots ≈ 8–15 h of Kaggle's free weekly GPU.
 
 Status legend: ✅ generated · ⬜ needs footage

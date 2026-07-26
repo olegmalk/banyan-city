@@ -49,7 +49,7 @@ def kaggle(*args, check=True):
 
 def set_node(node: str, steps: int | None = None, beats: str | None = None) -> None:
     """Point the notebook's config cell at a node before pushing."""
-    nb_path = HERE / "wan-t2v-kaggle.ipynb"
+    nb_path = HERE / "animatediff-kaggle.ipynb"
     nb = json.loads(nb_path.read_text())
     cell = nb["cells"][1]["source"]
     for i, line in enumerate(cell):
@@ -92,7 +92,7 @@ def main() -> int:
 
     if cmd == "log":
         out = kaggle("kernels", "output", SLUG, "-p", "/tmp/kaggle-log", check=False)
-        logf = Path("/tmp/kaggle-log/banyan-wan-t2v.log")
+        logf = Path("/tmp/kaggle-log/banyan-animatediff.log")
         if logf.exists():
             print(logf.read_text()[-4000:])
         else:

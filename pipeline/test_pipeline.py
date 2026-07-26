@@ -621,7 +621,7 @@ def test_kaggle_notebook_cells_parse():
     strip), so `%pip` lines and their backslash continuations don't false-alarm."""
     import json
     import re
-    nb_path = REPO / "pipeline" / "kaggle" / "wan-t2v-kaggle.ipynb"
+    nb_path = REPO / "pipeline" / "kaggle" / "animatediff-kaggle.ipynb"
     nb = json.loads(nb_path.read_text())
     try:
         from IPython.core.inputtransformer2 import TransformerManager

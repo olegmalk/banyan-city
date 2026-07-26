@@ -41,6 +41,7 @@ every push to main). Read `PROMISE.md` first — it is canonical. Then
 | `python3 pipeline/render_t1.py sapling <id>` | script → storyboard leaf |
 | `python3 pipeline/render_t2.py sapling <id>` | storyboard → silent animatic (needs playwright chromium; portable path fallback) |
 | `python3 pipeline/render_t3.py sapling <id> --clips <dir> [--out x.mp4]` | per-beat clips → captioned 9:16 episode w/ title+end cards; slate for missing beats; muxes `NN-vo.mp3` audio in sync; `--out` = bench, no leaf |
+| `<cb-venv>/bin/python3 pipeline/render_local.py sapling <id>` | shots.md → clips, AnimateDiff on Apple MPS ($0, fast loop; refuses unapproved nodes) |
 | `python3 pipeline/generate_shots.py sapling <id> --provider fal\|veo\|kling --yes` | shots.md → API clips (PAID — founder go only) |
 | `python3 pipeline/t3-trials/intake.py <file> <platform> <A\|B\|C>` | archive a manual trial clip w/ provenance |
 
@@ -60,7 +61,7 @@ always-loaded file goes stale and starts contradicting itself.
 Standing constraints (these do not expire):
 
 - **Free provider quota is SPENT** (~$35 list, $0 billed, ledgered). Next
-  renders = Kaggle ($0 floor: `pipeline/kaggle/wan-t2v-kaggle.ipynb`), paid
+  renders = Kaggle ($0 floor: `pipeline/kaggle/animatediff-kaggle.ipynb`), paid
   (founder go only), or watering. Never assume quota remains.
 - **MAKING ERA CLOSED by design** — no episode 8 until sap says so.
 - **Style is v2: low-detail anime** — `genomes/sapling/style.md` is the
