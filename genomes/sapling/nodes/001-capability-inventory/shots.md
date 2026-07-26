@@ -139,13 +139,29 @@ Vertical 9:16 medium close-up, hand-drawn 2D anime style, low detail: flat cel-s
 
 ## Beat 16 — SENSE AND GROW (1:12–1:17) ⬜ needs footage
 
+Line: "I solved it the same way, eventually. I walked away." Camera wide on the tiny sapling with an empty road leaving frame — the leaving is the image, and it is the one thing it can no longer do.
+
+```
+Vertical 9:16 extreme wide shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A single tiny two-leaf sapling stands at the centre of an enormous empty green field while a dirt road runs away from it out of the frame toward a pale horizon, nothing travelling on it. Faint wind across the grass, the sapling barely moving. Lonely, still, cool afternoon light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+```
+
+## Beat 17 — I ALWAYS LEFT (1:17–1:23) ⬜ needs footage
+
+Line: "I can't leave. I can only make this spot worth staying in." Camera low at the roots — the want of the whole series, and it is a shot of holding on.
+
+```
+Vertical 9:16 low macro shot at soil level, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. Thin pale roots of a tiny sapling grip dark crumbling earth, tightening visibly, a few grains of soil shifting as they take hold. Warm low light raking across the ground, shallow depth of field, the field beyond thrown soft. Quiet determination. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+```
+
+## Beat 18 — WORTH STAYING IN (1:23–1:30) ⬜ needs footage
+
 Line: "That's the whole API." Camera widest — one small living thing, huge indifferent world.
 
 ```
 Vertical 9:16 extreme wide shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. Clouds sweep their shadows across an enormous empty field while one tiny fragile sapling holds its place at the centre, dwarfed to almost nothing by the landscape and the vast flat sky. Lonely, quietly epic, slow push-in. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 17 — THE TREMOR (1:17–1:22) ⬜ needs footage
+## Beat 19 — THE TREMOR (1:30–1:35) ⬜ needs footage
 
 Line: "Footsteps. Heavy, headed here." Camera underground on the pulses arriving.
 
@@ -153,7 +169,7 @@ Line: "Footsteps. Heavy, headed here." Camera underground on the pulses arriving
 Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, gentle pastel palette. Concentric rings of soft light pulse in rhythmically from the far edge of an underground cross-section — step, step, step — each wave rolling closer and lighting the glowing teal root filaments brighter as it passes beneath a tiny sapling silhouette above the soil line. Tension built by rhythm alone. Bioluminescent teal on near-black. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 18 — NOT HIDE (1:22–1:27) ⬜ needs footage
+## Beat 20 — NOT HIDE (1:35–1:40) ⬜ needs footage
 
 Line: "neither of them is hide." Camera above ground: stillness against an approach on the horizon.
 

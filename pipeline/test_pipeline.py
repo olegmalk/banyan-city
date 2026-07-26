@@ -269,7 +269,11 @@ def test_clean_speech_drops_parentheticals():
 def test_node_001_beats_parse():
     md = (REPO / "genomes/sapling/nodes/001-capability-inventory/node.md").read_text()
     beats = parse_frames(extract_script(md))
-    check("node 001 parses 18 beats (t0-c, one beat = one shot)", len(beats) == 18)
+    # NOT a literal count: story decisions add and remove beats (the founder's
+    # "give the tree one want" restored two beats to 001 on 2026-07-26), and a
+    # pinned number only ever means "someone edited the script", which is fine.
+    # The invariants are the shape and the 1:1 mapping, asserted below.
+    check("node 001 is shot-granular, not scene-granular", 15 <= len(beats) <= 30)
     total = sum(t3.beat_duration(b["slug"], b["items"]) for b in beats)
 
     # cycle 007: the density rule is the fix for "the video doesn't match the
@@ -307,7 +311,10 @@ def test_generate_shots_parsing():
     from generate_shots import parse_shots
     md = (REPO / "genomes/sapling/nodes/001-capability-inventory/shots.md").read_text()
     shots = parse_shots(md)
-    check("shots.md parses 18 beats (1:1 with script)", len(shots) == 18)
+    script_beats = len(parse_frames(extract_script(
+        (REPO / "genomes/sapling/nodes/001-capability-inventory/node.md").read_text())))
+    check("shots.md is 1:1 with the script (the invariant, not a fixed count)",
+          len(shots) == script_beats)
     check("beat numbering is 1..N with no gaps",
           [s["num"] for s in shots] == list(range(1, len(shots) + 1)))
     check("prompts nonempty + vertical", all("9:16" in s["prompt"] for s in shots))

@@ -103,12 +103,24 @@ Wide: one small living thing at the centre of an enormous indifferent field.
 
 > **VO:** Sense and grow. …That's the whole API.
 
-**THE TREMOR — 1:17–1:22**
+**I ALWAYS LEFT — 1:17–1:23**
+
+Wide and still: one small living thing at the centre of an enormous field, and an empty road running out of frame.
+
+> **VO:** Every problem I ever had — the job, the pager, the retry loop — I solved it the same way, eventually. I walked away.
+
+**WORTH STAYING IN — 1:23–1:30**
+
+Low at the base of the trunk: roots gripping soil, holding on to the one patch of ground it has.
+
+> **VO:** I can't leave. I can only make this spot worth staying in.
+
+**THE TREMOR — 1:30–1:35**
 Underground: rings of light pulse in from the far edge — step, step, step — brightening as they near the roots.
 
 > **VO:** Correction. New input on the sensor. Footsteps. Heavy, headed here.
 
-**NOT HIDE — 1:22–1:27**
+**NOT HIDE — 1:35–1:40**
 Above ground the leaves stand perfectly still while the far grass bends in a line.
 
 > **VO:** I have two capabilities, and neither of them is *hide.*
