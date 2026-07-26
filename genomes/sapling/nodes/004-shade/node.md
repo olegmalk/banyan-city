@@ -26,7 +26,7 @@ one goblin and a lean-to?*
 ## Script
 
 **COLD OPEN — 0:00–0:05**
-The goblin holds a fig aloft over a knee-high young tree, a crooked lean-to and a three-stone cairn; he freezes mid-ceremony.
+The goblin holds a fig aloft over a waist-high young tree, a crooked lean-to and a three-stone cairn; he freezes mid-ceremony.
 
 > **SCAVENGER:** I hereby name this place… uh.
 

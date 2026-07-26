@@ -99,6 +99,31 @@ def planned(d: Path) -> tuple:
             vdur = vdur or clip_seconds(vo) or 0.0
         elif spoken:
             gaps.append(f"beat {i:02d} {title}: has a spoken line but no {vo.name}")
+        # The take must say what the script says, not merely exist. Presence-only
+        # checking let 002b keep a recorded "I am forty centimeters tall" after the
+        # script was changed to seventy-five (2026-07-26) — the episode would have
+        # spoken a number the script no longer contains, silently, and every
+        # existing guard would have passed it.
+        if vo.exists():
+            man = clips / f"{i:02d}-vo.json"
+            if man.exists():
+                try:
+                    said = " ".join(
+                        strip_inline_md(str(l.get("text", "")))
+                        for l in (json.loads(man.read_text()).get("lines") or []))
+                except (ValueError, json.JSONDecodeError):
+                    said = ""
+                for it in f["items"]:
+                    if it[0] != "line":
+                        continue
+                    want = strip_inline_md(it[2]).strip()
+                    core = re.sub(r"[^a-z0-9 ]", "", want.lower())[:40]
+                    if core and core not in re.sub(r"[^a-z0-9 ]", "", said.lower()):
+                        gaps.append(
+                            f"beat {i:02d} {title}: the take does not say what the "
+                            f"script says — script has \"{want[:48]}…\"")
+                        break
+
         if vo.exists() and not spoken:
             # the reverse mismatch, and the nastier one: a beat that lost its
             # dialogue in a rewrite keeps the old take and the episode speaks a

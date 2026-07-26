@@ -122,11 +122,11 @@ prompt states the node's row verbatim.
 | Node | Height | Canopy | Notes |
 |---|---|---|---|
 | 001 | ~60 cm (shin-high) | a small round crown on a thin bending stem | a young tree, not a seedling — see the renderer note below |
-| 002a/b/c | ~75 cm | small crown + one thin side-branch | the branch is where the fig grew and fell |
-| 003b | ~90 cm | fuller crown, bare fig branch | casts a real hand-sized shadow |
-| 004 | **~1.1 m (knee-high)** | five or six leaves in a small crown | casts one real shade patch, big enough for a sitting goblin — this is why the town is called Shade |
-| 005 | ~1.3 m | small crown, first woody bark | the assessor can call it "one specimen" without irony |
-| 006a/007a | ~1.6 m | full small crown, side branches | a shrine you can stand under; fig-bearing |
+| 002a/b/c | ~75 cm (knee-high) | small crown + one thin side-branch | the branch is where the fig grew and fell |
+| 003b | ~90 cm (thigh-high) | fuller crown, bare fig branch | casts a real hand-sized shadow |
+| 004 | **~1.1 m (waist-high)** | five or six leaves in a small crown | casts one real shade patch, big enough for a sitting goblin — this is why the town is called Shade |
+| 005 | ~1.3 m (chest-high) | small crown, first woody bark | the assessor can call it "one specimen" without irony |
+| 006a/007a | ~1.6 m (man-height) | full small crown, side branches | a shrine you can stand under; fig-bearing |
 
 Two rules follow:
 

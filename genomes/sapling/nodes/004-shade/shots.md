@@ -14,9 +14,9 @@ sentence carries the primary action (motion grammar, `style.md`).
 scavenger is a small round goblin — enormous expressive ears that act like
 a second face, huge eyes, one broken tusk, patchwork cloak in faded greens
 and browns. The farmer is a broad squarish silhouette in a straw hat, three
-lines for his whole face, permanently unimpressed, carrying a clay jug. The tree at THIS node is knee-high (~90cm) with five or six leaves in a
+lines for his whole face, permanently unimpressed, carrying a clay jug. The tree at THIS node is waist-high (~1.1m) with five or six leaves in a
 small crown and one real shade patch on the ground — see the growth ladder
-in `../../style.md`; a cold reader caught the old 'tiny two-leaf sapling'
+in `../../style.md`; a cold reader caught the old 'waist-high young tree'
 contradicting a trunk to lean on and a town named Shade. Never a face.
 Beside it: a crooked lean-to and a small three-stone cairn.
 
@@ -32,7 +32,7 @@ Status legend: ✅ generated · ⬜ needs footage
 Line: "I hereby name this place… uh." Camera on the ceremony freezing mid-air.
 
 ```
-Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small round goblin raises a ripe fig high above his head in both hands with ceremonial flourish beside a knee-high young tree, a crooked lean-to and a three-stone cairn — then stops dead, arms still up, mouth open, momentum gone. Morning field, comic freeze. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small round goblin raises a ripe fig high above his head in both hands with ceremonial flourish beside a waist-high young tree, a crooked lean-to and a three-stone cairn — then stops dead, arms still up, mouth open, momentum gone. Morning field, comic freeze. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 02 — NOTHING PREPARED (0:05–0:09) ⬜ needs footage
@@ -48,7 +48,7 @@ Vertical 9:16 medium shot, hand-drawn 2D anime style, low detail: flat cel-shade
 Line: the tree's premise line. Camera ON THE TREE — level leaves, waiting.
 
 ```
-Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. The small crown of a knee-high young tree hangs perfectly level and motionless while grass sways gently around its trunk below — the stillness of something waiting to be addressed. Slow push-in, morning light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. The small crown of a waist-high young tree hangs perfectly level and motionless while grass sways gently around its trunk below — the stillness of something waiting to be addressed. Slow push-in, morning light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 04 — NEWHAVEN (0:15–0:18) ⬜ needs footage
@@ -64,7 +64,7 @@ Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded color
 No dialogue — the refusal. FRAMING 1 of 4 refusals: side-on macro, leaves dead level.
 
 ```
-Vertical 9:16 macro close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. Seen side-on and very close, ONE broad leaf of a knee-high young tree holds absolutely level and motionless while the grass below it is visibly moving — a refusal expressed as stillness. Held macro, no camera move. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 macro close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. Seen side-on and very close, ONE broad leaf of a waist-high young tree holds absolutely level and motionless while the grass below it is visibly moving — a refusal expressed as stillness. Held macro, no camera move. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 06 — GREENREST (0:23–0:26) ⬜ needs footage
@@ -96,7 +96,7 @@ Vertical 9:16 extreme macro, hand-drawn 2D anime style, low detail: flat cel-sha
 Line: the tree's systems aside. Camera underground on the patient root map.
 
 ```
-Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, gentle pastel palette. The sharp-edged patch of shade cast by a knee-high young tree lies on flat-color grass, its outline creeping slowly as the sun moves — the one thing this tree demonstrably does. Bright midday light all around it. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, gentle pastel palette. The sharp-edged patch of shade cast by a waist-high young tree lies on flat-color grass, its outline creeping slowly as the sun moves — the one thing this tree demonstrably does. Bright midday light all around it. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 10 — THE COLLAPSE (0:39–0:44) ⬜ needs footage
@@ -104,7 +104,7 @@ Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded color
 Line: "…Whatever. It's just shade." Camera on him giving up into the shade.
 
 ```
-Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin slumps down the trunk of a knee-high young tree and lands in its small patch of shade, all four limbs going loose, head tipping back against the bark in defeat. Harsh flat midday light outside the shade patch. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin slumps down the trunk of a waist-high young tree and lands in its small patch of shade, all four limbs going loose, head tipping back against the bark in defeat. Harsh flat midday light outside the shade patch. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 11 — BOTH LEAVES (0:44–0:49) ⬜ needs footage
@@ -112,7 +112,7 @@ Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded color
 No dialogue — the answer at last. FRAMING 3 of 4: wide enough to hold both leaves and his head below.
 
 ```
-Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. The whole small crown of a knee-high young tree tilts sharply at the same instant, every leaf together and unmistakably, directly above the slumped head of a goblin sitting at its base. Air completely still. Framed to hold leaves and head in one shot. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. The whole small crown of a waist-high young tree tilts sharply at the same instant, every leaf together and unmistakably, directly above the slumped head of a goblin sitting at its base. Air completely still. Framed to hold leaves and head in one shot. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 12 — SHADE? (0:49–0:54) ⬜ needs footage
@@ -136,7 +136,7 @@ Vertical 9:16 low upward shot, hand-drawn 2D anime style, low detail: flat cel-s
 Line: "Welcome to Shade. Population: one. Amenities: shade." Camera wide on the whole tiny territory.
 
 ```
-Vertical 9:16 wide shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin rises to his feet and sweeps one arm slowly across the whole of his territory — a knee-high young tree, a crooked lean-to, a three-stone cairn, and a great deal of empty field — raising the fig with quiet pride. Midday, generous empty space. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 wide shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin rises to his feet and sweeps one arm slowly across the whole of his territory — a waist-high young tree, a crooked lean-to, a three-stone cairn, and a great deal of empty field — raising the fig with quiet pride. Midday, generous empty space. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 15 — THE FIRST GIFT (1:04–1:11) ⬜ needs footage
@@ -176,7 +176,7 @@ Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded color
 Line/beat: the tree asking for something, for the first time in the series. Camera on the leaf as it tilts, with the goblin reacting at the edge of frame.
 
 ```
-Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A single leaf on a knee-high young tree tilts deliberately in completely still golden evening air and holds the position, while at the edge of the frame a small round goblin straightens up sharply, recognising it. The leaf moves; nothing else does. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A single leaf on a waist-high young tree tilts deliberately in completely still golden evening air and holds the position, while at the edge of the frame a small round goblin straightens up sharply, recognising it. The leaf moves; nothing else does. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 20 — THE ASK (1:32–1:37) ⬜ needs footage
@@ -184,7 +184,7 @@ Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded c
 Line/beat: the goblin translating the tree's question. Camera on him speaking carefully to the farmer, the tree behind him in frame — the questioner and its voice together.
 
 ```
-Vertical 9:16 medium shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small round goblin speaks carefully up at a broad straw-hatted farmer, hands open and low, not pushing — and directly behind the goblin the knee-high tree stands sharp in frame, the two of them addressing the farmer together. Warm low evening light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 medium shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small round goblin speaks carefully up at a broad straw-hatted farmer, hands open and low, not pushing — and directly behind the goblin the waist-high tree stands sharp in frame, the two of them addressing the farmer together. Warm low evening light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 21 — WOULD YOU SAY SO (1:37–1:43) ⬜ needs footage

@@ -25,7 +25,7 @@ fugitive talk to each other?*
 ## Script
 
 **COLD OPEN — 0:00–0:06**
-A tiny two-leaf banyan sapling sways in a green field; one small fig hangs on its thinnest branch.
+A small young banyan tree sways in a green field; one small fig hangs on its thinnest branch.
 
 > **VO (dry, tired, engineer):** I used to be an engineer. Now I'm a tree. Total assets: two leaves and one fig.
 
@@ -35,7 +35,7 @@ A SCAVENGER — goblin-ish, enormous ears, one broken tusk, patchwork cloak — 
 **BAD COVER — 0:11–0:16**
 The scavenger crouches behind a trunk that hides roughly one-sixth of him.
 
-> **VO:** A creature is using me as cover. I am forty centimeters tall.
+> **VO:** A creature is using me as cover. I am seventy-five centimeters tall.
 
 **THE FOOTNOTE — 0:16–0:22**
 The scavenger holds his breath, eyes darting.
