@@ -1,0 +1,8 @@
+# Shot provenance (7.2)
+platform: local-deterministic
+model: none — code (PIL push-in + glow breathing over the APPROVED still)
+input_still: 01-the-keyboard.png
+frames: 96
+fps: 24
+cost_usd: 0
+note: zero generation loss; every pixel is the founder-approved frame
