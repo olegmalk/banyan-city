@@ -95,6 +95,65 @@ _TEXT_SUBJECT = re.compile(
     r"code|command line|prompt line|dashboard|readout|sign|label)\b", re.I)
 
 
+# Animagine XL 3.1 is trained on Danbooru captions, where the presence and number of
+# PEOPLE is declared by a count tag — `1boy`, `1girl`, `multiple boys` — before anything
+# else in the caption. Prose alone leaves the human optional: beat 4 of 001 asks for "a
+# hunched man at a desk tipping sideways out of his chair" and on 2026-07-27 rendered the
+# desk, the chair and the flying papers with NOBODY IN THEM. The furniture was correct
+# and the man simply was not there. 93 of the genome's 177 prompts open on a person, so
+# this is not an edge case; it is over half the show.
+_MALE = r"man|men|boy|boys|he|his|him|father|husband|king|lord|gentleman"
+_FEMALE = r"woman|women|girl|girls|she|her|mother|wife|queen|lady"
+# Goblins, magistrates and assessors are people for framing purposes but their gender is
+# not stated in the scripts, and `1other` is a real Danbooru tag for exactly this case.
+_OTHER = (r"goblin|goblins|farmer|magistrate|assessor|scavenger|keeper|villagers?|"
+          r"guards?|stranger|figure|silhouette|person|people|crowd|someone|child|children")
+_PLURAL = r"\b(men|women|boys|girls|goblins|guards|villagers|people|crowd|children)\b"
+# Only tags I am confident exist in the Danbooru vocabulary. "two patrol guards" is 2, not
+# a crowd, so an explicit number is used when the prompt gives one; anything vaguer falls
+# back to the "multiple"/"crowd" forms rather than inventing "3others".
+_NUMBER = {"two": 2, "three": 3, "four": 4, "five": 5, "six": 6}
+
+
+def _tag_from_clause(first: str) -> str:
+    """The count tag for a single leading clause. Kept separate from count_tag() because
+    compress() needs it on a clause it has already parsed — going back through compress()
+    to find the clause would recurse forever."""
+    # A possessive is not the subject. Beat 7 of 006a is a close-up of a ledger page
+    # "beneath a woman's thumb" — a woman is present, but the page is the shot, and
+    # declaring `1girl` would put a whole woman in it. Same for beat 14 of 002b, a
+    # close-up of "a small goblin's clawed fingers": the hands are the subject, and beat 1
+    # of 001 proves a pair of hands renders correctly with no count tag at all.
+    plural = bool(re.search(_PLURAL, first, re.I))
+    first = re.sub(r"\b[\w-]+'s\b", "", first)
+    n = next((v for w, v in _NUMBER.items() if re.search(rf"\b{w}\b", first, re.I)), None)
+    for pat, one, two, many in ((_MALE, "1boy", "2boys", "multiple boys"),
+                                (_FEMALE, "1girl", "2girls", "multiple girls"),
+                                (_OTHER, "1other", "2others", "crowd")):
+        if re.search(rf"\b({pat})\b", first, re.I):
+            if not plural:
+                return one
+            return two if n == 2 else many
+    return ""
+
+
+def count_tag(prompt: str) -> str:
+    """The Danbooru count tag for this beat's subject, or "" if nobody is in it.
+
+    Scoped to the first clause for the same reason as suppressed_negatives: "a hunched
+    silhouette faintly reflected" in beat 2 is lighting, not a character, and declaring
+    `1boy` there would put a man in a shot that is meant to be an empty terminal.
+
+    Reads the tag off compress()'s output rather than re-deriving it from the raw prompt,
+    so the two can never disagree — an earlier version re-parsed the compressed text and
+    reported zero tags genome-wide, because the text it scanned already began with
+    "1boy, " and a word boundary does not split "1boy".
+    """
+    m = re.match(r"(1boy|1girl|1other|2boys|2girls|2others|"
+                 r"multiple boys|multiple girls|crowd),", compress(prompt)[0])
+    return m.group(1) if m else ""
+
+
 def suppressed_negatives(prompt: str) -> list:
     """Standard negative terms this beat's SUBJECT needs removed to be drawable.
 
@@ -212,6 +271,16 @@ def compress(prompt: str) -> tuple:
     head = f"{shot[0].upper() + shot[1:]} of " if shot else ""
     dropped = []
     sentences = [s for s in re.split(r"(?<=[.!?])\s+", action) if s.strip()]
+
+    # The Danbooru count tag goes ahead of even the framing: it declares WHETHER there is
+    # a person at all, which is prior to how they are framed. Two or three tokens, and
+    # it is the difference between a man tipping out of his chair and an empty chair.
+    if sentences:
+        tag = _tag_from_clause(sentences[0].split(",")[0])
+        if tag:
+            # these prompts are read by humans in the provenance leaves, so keep the
+            # capitalisation sane once the tag owns the front of the line
+            head = f"{tag}, " + (head[0].lower() + head[1:] if head else "")
 
     # Drop trailing sentences until it fits — but NEVER below one. Style words
     # with no action is the failure this whole module exists to prevent, so the

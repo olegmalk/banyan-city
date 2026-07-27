@@ -149,6 +149,28 @@ def test_sd_prompt_fits_clip_and_keeps_the_action():
     check("a screen subject un-negates 'text'",
           "text" in suppressed_negatives("Vertical 9:16 close shot. A terminal spinner "
                                          "resolving into a finished line. No text."))
+    # Animagine is Danbooru-trained: people are declared by a count tag before anything
+    # else. Beat 4 of 001 asks for a man tipping out of his chair and rendered the desk,
+    # the chair and the flying papers with NOBODY in them (2026-07-27) — the furniture was
+    # right and the man was simply absent. 93 of the genome's 177 prompts open on a person.
+    from sd_prompt import count_tag
+    STYLE = ("Vertical 9:16 medium shot, flat cel-shaded colors, bold clean linework, "
+             "gentle pastel palette. ")
+    check("a person in the subject is declared",
+          count_tag(STYLE + "A hunched man tips sideways out of his chair.") == "1boy")
+    check("an explicit count is honoured, not rounded up to a crowd",
+          count_tag(STYLE + "Two patrol guards in armor jog into frame and halt.") == "2others")
+    check("gender left unstated stays unstated",
+          count_tag(STYLE + "A small round goblin crouches lower in the grass.") == "1other")
+    # a possessive is not the subject — these two would put a whole person in a shot
+    # that is framed on an object or a pair of hands
+    check("a possessive does not summon a person",
+          count_tag(STYLE + "A line of script sits on a ledger page beneath a woman's thumb.") == "")
+    check("a body-part shot needs no count tag",
+          count_tag(STYLE + "A pair of hands hammering on a mechanical keyboard.") == "")
+    check("and a shot with nobody in it gets no tag",
+          count_tag(STYLE + "An empty dirt road running away toward a pale horizon.") == "")
+
     check("a mere mention of a monitor does NOT un-negate it",
           suppressed_negatives("Vertical 9:16 close shot. A pair of hands on a keyboard, "
                                "faint monitor glow on his knuckles. No text.") == [])
