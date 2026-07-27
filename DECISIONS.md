@@ -189,3 +189,48 @@ the founder's direct order:
   Phase 0; the author-supplied `banyan-city-PRD.md` master is not in the
   repo. Awaiting the author's original for byte-canonical commit
   (repair-001-audit.md).
+
+## D10 — Four of episode 1's beats hold more voice than one shot can cover (OPEN)
+
+**Raised by the steward 2026-07-27, and open because the fix is the founder's.**
+
+`retime_beats` measures 001's approved voice at 96s over 15 beats, and four beats
+run far past the 6s one-shot spec:
+
+| beat | measured | lines |
+|---|---|---|
+| 08 SEV-1 | 11.9s | 1 |
+| 10 SENSE | 9.3s | 1 |
+| 13 I ALWAYS LEFT | 8.5s | 1 |
+| 14 WORTH STAYING IN | 12.6s | 1 |
+
+Stable Video Diffusion produces ~3.6s of footage per clip (25 frames at 7fps), so
+beat 14 is one shot looping three and a half times under a single line. That is
+visible, and it is the kind of thing dad's original complaint was about.
+
+**I tried to fix it inside the pipeline and the test suite correctly stopped me.**
+The attempt was a second angle per long beat (`08-sev-1-alt1.mp4`), which
+`render_t3.find_clips` already knows how to sequence before it loops anything. But
+SCRIPT-SPEC.md §2 makes shots.md **1:1 with the beats** — same numbers, same
+ranges, one prompt each — and `test_generate_shots_parsing` asserts it. That
+invariant exists *because* of the complaint it would have been papering over:
+"random video playing that isn't correlating to the script." Reverted in full.
+
+The spec's own answer to a beat with too much material is its other rule: a 60–90s
+episode is **15–25 beats**. Beat 14 wants to be two beats, not one beat with two
+shots. But that is a change to the script of an **approved** node, so under
+STEWARDSHIP §6 it needs the founder, not the steward.
+
+**Three ways out, founder's pick:**
+
+1. **Split the four beats in the script** (→ 19 beats), re-voice 001, re-run
+   `retime_beats`, re-approve. Spec-clean, and the episode gets a faster cut.
+2. **Ship it looping** for now and revisit. Costs nothing, and the loop is most
+   visible on 14 — which is the beat carrying the series' want, so it is the worst
+   place to have it.
+3. **Amend SCRIPT-SPEC §2** to allow coverage shots within a beat. Cheapest to
+   build, and it weakens the rule that exists to keep footage tied to the script.
+
+I would take (1) — the beats are long because they are carrying real weight, and
+splitting them is what the spec would say if asked. But it edits an approved
+script, so it waits.
