@@ -60,7 +60,9 @@ always-loaded file goes stale and starts contradicting itself.
 
 Standing constraints (these do not expire):
 
-- **Free provider quota is SPENT** (~$35 list, $0 billed, ledgered). Next
+- **Free provider quota is SPENT** ($0.40 billed lifetime — the 2026-07-27
+  wan pilot; stated list values sum to ≥$20, but 36 of 57 early ledger rows
+  never recorded one, so any single 'total list value' figure is a guess). Next
   renders = Kaggle ($0 floor: `pipeline/kaggle/render-kaggle.ipynb`), paid
   (founder go only), or watering. Never assume quota remains.
 - **MAKING ERA CLOSED by design** — no episode 8 until sap says so.
