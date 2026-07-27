@@ -49,6 +49,9 @@ def main() -> int:
     ap.add_argument("node")
     ap.add_argument("--beat", type=int, required=True)
     ap.add_argument("--steps", type=int, default=30)
+    ap.add_argument("--cfg", type=float, default=7.5)
+    ap.add_argument("--card-neg", action="store_true",
+                    help="use Animagine's model-card negative list instead of ours")
     ap.add_argument("--seed-bump", type=int, default=0,
                     help="try a different composition without touching the prompt")
     ap.add_argument("--note", default="", help="tag for the output filename")
@@ -76,7 +79,12 @@ def main() -> int:
         ptext, dropped = a.raw, []
     else:
         ptext, dropped = compress(shot["prompt"])
-    neg = NEG
+    # the model card's own negative list — what its showcase examples were made with
+    CARD_NEG = ("nsfw, lowres, bad anatomy, bad hands, text, error, missing fingers, "
+                "extra digit, fewer digits, cropped, worst quality, low quality, "
+                "normal quality, jpeg artifacts, signature, watermark, username, "
+                "blurry, artist name")
+    neg = CARD_NEG if a.card_neg else NEG
     for term in suppressed_negatives(shot["prompt"]):
         neg = neg.replace(term + ", ", "")
     extra = extra_negatives(shot["prompt"])
@@ -110,7 +118,7 @@ def main() -> int:
     t1 = time.time()
     g = torch.Generator(device="cpu").manual_seed(SEED + a.beat + a.seed_bump)
     img = pipe(prompt=ptext, negative_prompt=neg, width=STILL_W, height=STILL_H,
-               num_inference_steps=a.steps, guidance_scale=7.5,
+               num_inference_steps=a.steps, guidance_scale=a.cfg,
                generator=g).images[0]
     DROPS.mkdir(exist_ok=True)
     tag = f"-{a.note.replace(' ', '-')}" if a.note else ""
