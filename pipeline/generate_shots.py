@@ -236,7 +236,7 @@ def gen_fal(prompt: str, model: str, dur: int, image: Path | None = None) -> tup
     raise RuntimeError("fal: generation timed out")
 
 
-def gen_wan(prompt: str, model: str, dur: int) -> tuple:
+def gen_wan(prompt: str, model: str, dur: int, image: Path | None = None) -> tuple:
     """Alibaba Cloud Model Studio (DashScope intl) — wan2.x text-to-video.
     Needs DASHSCOPE_API_KEY (Singapore-region workspace; the new-account free
     quota covers video — see pipeline/t3-trials/free-routes.md).
@@ -254,11 +254,30 @@ def gen_wan(prompt: str, model: str, dur: int) -> tuple:
         raise SystemExit("wan: set DASHSCOPE_API_KEY (Model Studio console, Singapore region)")
     base = os.environ.get("DASHSCOPE_BASE_URL", "https://dashscope-intl.aliyuncs.com").rstrip("/")
     model = model or "wan2.7-t2v"
+    img_url = None
+    if image is not None:
+        # DashScope i2v takes a URL; approved stills are PUBLIC on the site by
+        # design (the board), so the canonical copy is its own hosting. Verify it
+        # serves before spending.
+        rel = image.resolve().relative_to((REPO / "genomes").resolve())
+        genome, _, node_name = rel.parts[0], rel.parts[1], rel.parts[2]
+        img_url = f"https://banyan.city/{genome}/{node_name}-media/{image.name}"
+        chk = urllib.request.Request(img_url, method="HEAD")
+        with urllib.request.urlopen(chk) as r:
+            assert r.status == 200
+        if "-t2v" in model:
+            model = model.replace("-t2v", "-i2v")
     req = urllib.request.Request(
         f"{base}/api/v1/services/aigc/video-generation/video-synthesis",
         data=json.dumps({
             "model": model,
-            "input": {"prompt": prompt},
+            # wan2.7 renamed the i2v image field: "Field required: input.media"
+            # (verified the hard way, 2026-07-28, $0 billed on the failed task)
+            # wan2.7 i2v schema (Model Studio image-to-video API reference, verified
+            # 2026-07-28): media = list of {type, url}; the still is the first frame.
+            "input": ({"prompt": prompt,
+                       "media": [{"type": "first_frame", "url": img_url}]}
+                      if img_url else {"prompt": prompt}),
             "parameters": {"resolution": "720P", "ratio": "9:16",
                            "duration": max(2, min(15, dur)),
                            "prompt_extend": True, "watermark": False},
