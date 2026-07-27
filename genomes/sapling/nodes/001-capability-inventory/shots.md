@@ -61,7 +61,7 @@ thick curved glazed ceramic shards of a broken coffee mug scattered flat on dark
 Line: 'Hospital ceiling. Hospitals are green now.' The wrong-ceiling joke IS the shot.
 
 ```
-extreme close-up of the underside of one giant green leaf filling the entire frame edge to edge, glowing backlit veins, tiny patches of vivid blue sky in the corners, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No woman, no girl, no person, no people, no figure, no grass. No photorealism, no 3D render look. 9:16 vertical, no text.
+first person view lying on the ground looking straight up, one huge green leaf directly overhead spread across the sky like a ceiling, sunlight glowing through the leaf veins, deep blue sky beyond, worm's eye view, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people, no girl, no plant pot, no stem in frame, no grass. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 ## Beat 07 — FLAILING ONE (1) LEAF (0:29–0:36) ⬜ needs footage
 
@@ -119,7 +119,7 @@ an empty dirt road running straight to a pale horizon across windswept grass fie
 Line: 'I can only make this spot worth staying in.' The want of the series, as a grip.
 
 ```
-macro close-up of thin white plant roots weaving between dark soil crumbs and gripping them tight, fine root hairs, warm low side light, sharp detail, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No fabric, no cloth, no feet, no skin, no people, no sky. No photorealism, no 3D render look. 9:16 vertical, no text.
+underground side view, dark brown soil, thin pale roots curling around and gripping small soil clumps, tightening, fine root hairs, warm light glinting between soil grains, quiet, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No feet, no hands, no fabric, no people, no sky. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 ## Beat 15 — SOMETHING'S COMING (1:32–1:36) ⬜ needs footage
 
@@ -127,5 +127,5 @@ Line: 'Something is coming.' Camera underground; the footsteps are felt, not see
 The approaching RINGS are a POST overlay, brighter/faster than beat 10's (same mechanism).
 
 ```
-dark underground soil texture filling the whole frame at night, side view, pale roots reaching down, faint warm glow bleeding in from the right edge deep in the earth, dust grains suspended, ominous quiet, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people, no figure, no cave, no portal, no eye, no sky, no comic panels. No photorealism, no 3D render look. 9:16 vertical, no text.
+underground side view, dark soil filling the frame, thin pale roots, rings of warm orange light pulsing through the earth from the right, closer and brighter, soil grains trembling, ominous, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people, no girl, no figure, no silhouette, no sky, no cave. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
