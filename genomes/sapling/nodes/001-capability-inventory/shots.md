@@ -98,7 +98,7 @@ Vertical 9:16 low close shot, hand-drawn 2D anime style, low detail: flat cel-sh
 Line: 'Sense. I can taste the water table.' Camera underground - the sense IS the image.
 
 ```
-Vertical 9:16 underground cross-section, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds, gentle pastel-leaning palette. Pale roots spreading through dark soil while veins of water glint and rings of light pulse inward through the earth toward them, mineral specks catching, near-black ground. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 underground cross-section, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds, gentle pastel-leaning palette. A solid wall of dark soil filling the entire frame, seen from the side like a cutaway, pale thin roots threading down through it while glinting water veins and rings of light pulse sideways through the earth toward them, mineral specks catching. No sky, no stars, no lightning, no outer space, no horizon. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 11 — GROW (1:02–1:08) ⬜ needs footage
@@ -114,7 +114,7 @@ Vertical 9:16 close shot, hand-drawn 2D anime style, low detail: flat cel-shaded
 Line: 'That is the whole API.' Camera on the strain that achieves nothing.
 
 ```
-Vertical 9:16 close shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds, gentle pastel-leaning palette. A thin sapling stem straining and bowing hard against nothing, roots pulling taut in the soil, grass still, nothing else moving, pale sky. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 close shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds, gentle pastel-leaning palette. A thin sapling stem in open ground straining and bowing hard against nothing, roots pulling taut in bare soil, grass still, nothing else moving, pale sky. No flowerpot, no planter, no windowsill, no indoors. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 13 — I ALWAYS LEFT (1:11–1:20) ⬜ needs footage
@@ -138,5 +138,5 @@ Vertical 9:16 low macro shot, hand-drawn 2D anime style, low detail: flat cel-sh
 Line: 'Something is coming.' Camera underground; the footsteps are felt, not seen.
 
 ```
-Vertical 9:16 underground cross-section, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds, gentle pastel-leaning palette. Rings of light pulsing through dark soil toward pale roots, brighter and faster with each pulse, soil grains trembling, near-black earth. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 underground cross-section, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds, gentle pastel-leaning palette. A solid wall of dark soil filling the entire frame, seen from the side like a cutaway, rings of light pulsing sideways through the earth toward pale thin roots, brighter and faster with each pulse, soil grains trembling. No sky, no stars, no comet, no outer space, no horizon. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
