@@ -12,3 +12,4 @@ cost_usd: 0.00
 status: live
 platform_urls: []
 comprehension_gate: passed 2026-07-25 (sap/gate-t0-c-transcript.md; 6 flags fixed pre-render)
+superseded_by: 001-t0-d   # founder restored the original first-person opening; alive per R6

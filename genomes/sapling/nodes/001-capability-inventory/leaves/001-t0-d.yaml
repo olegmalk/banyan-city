@@ -1,0 +1,22 @@
+# Leaf metadata — every render publishes its full provenance (§7.2)
+leaf: 001-t0-d
+node: "001"
+tier: T0
+form: text-script
+content: ../node.md
+author: founder's original dialogue, re-cut shot-granular by the steward
+model: claude-fable-5
+prompt: >-
+  founder 2026-07-27 — "it should start on the desk", "in first person", "not a
+  recap". The original 001-t0-a dialogue restored verbatim and re-cut to
+  SCRIPT-SPEC's one beat = one shot; the molt's paraphrases discarded.
+seed: none
+cost_usd: 0.00
+status: live
+platform_urls: []
+approved_by: none          # STEWARDSHIP.md §6 — DRAFT until the founder has read it
+notes: >-
+  15 beats, 11 spoken lines. Chronological: the desk, the retry loop, the fall,
+  then the reveal. "Yesterday I died fixing a server. Today I am a tree." is gone —
+  it was a summary of events the audience had not yet seen, which is what read as a
+  recap; the fall now shows it and "Huh. Green." lands instead.

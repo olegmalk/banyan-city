@@ -22,112 +22,118 @@ is coming toward the tree that can't run?*
 
 ## Script
 
-**THE DESK — 0:09–0:13**
-Memory: a man types fast in a dark office, face lit by one monitor of red error text.
+**THE KEYBOARD — 0:00–0:04**
 
-> **VO:** Last log entry of my previous life.
+BLACK. One mechanical keyboard, very fast — then it stops.
 
-**THE RETRY LOOP — 0:13–0:18**
-Close on the monitor: the same error repeating down the screen.
+**THREE OH SEVEN — 0:04–0:11**
 
-> **VO:** The retry loop. It's always the retry loop.
+Close on a monitor in a dark apartment: a terminal, `deploy --prod --force`, a spinner. 3:07 a.m.
 
-**THE FALL — 0:18–0:23**
-Wide, the desk in profile: the man sways and drops out of frame; his mug tips off the edge and shatters.
+> **VO (tired, flat):** Production went down at 2:41. It's the retry loop. It's always the retry loop.
 
-**TODAY I AM A TREE — 0:00–0:05**
-A tiny two-leaf banyan sapling trembles in the wind, alone in a vast green field.
+**DEPLOY SUCCEEDED — 0:11–0:15**
 
-> **VO (dry, tired, engineer):** Yesterday I died fixing a server. Today I am a tree.
+The spinner resolves.
 
-**REBOOT — 0:23–0:28**
-Back in the field: sunlight sweeps across the sapling as morning arrives.
+```
+✓ deploy succeeded
+```
 
-> **VO:** New hardware. Rebooted somewhere with better lighting.
+**THE FALL — 0:15–0:20**
 
-**NO APOLOGY — 0:05–0:09**
-The leaves steady. The field is enormous and completely empty around it.
+A sharp breath in — the frame tips sideways — the mug hits the floor before he does.
 
-> **VO:** Nobody has apologized.
+**HUH. GREEN. — 0:20–0:24**
 
-**THE BIRD — 0:28–0:33**
-A bird lands on the top leaf, bends it flat, and flies off; the leaf springs back.
+Black, and the sound of a cooling fan spinning down.
 
-> **VO:** The local wildlife has already filed me under *furniture*.
+> **VO:** Huh. Green.
 
-**NO HANDS — 0:33–0:38**
-Close on a bare twig tip, exactly where a hand would be, twitching in the wind.
+**TOO BLUE — 0:24–0:31**
 
-> **VO:** No hands. No keyboard. So: what can this thing actually *do?*
+Blinding green blur. Focus pulls: two centimetres off the ground, looking up through one trembling leaf at a sky that is *too* blue.
 
-**ROOTS WAKE — 0:38–0:42**
-Underground: root filaments light up one by one, spreading through dark soil.
+> **VO:** Okay. Hospital ceiling. That's fine. Hospitals are green now.
 
-> **VO:** Capability one: sense.
+**FLAILING ONE (1) LEAF — 0:31–0:39**
 
-**THE WATER TABLE — 0:42–0:47**
-Veins of dark water glow into view beneath the roots, mapping themselves.
+The leaf — *his* leaf — twitches when he panics, and the camera shakes with it.
 
-> **VO:** I can feel the water table. I can feel every stone in this field.
+> **VO:** Scream. — No mouth. Run. — No legs. Flail?? — …I appear to be flailing one (1) leaf.
 
-**THE WORM — 0:47–0:52**
-A single worm pushes past a root filament, lighting it as it goes.
+**SEV-1 — 0:39–0:48**
 
-> **VO:** I can feel a worm having a bad day.
+The trembling stops. A beat of stillness.
 
-**WHOAMI — 0:52–0:57**
-The sapling's shadow sweeps across the grass as the sun moves — hours passing in one held frame.
+> **VO:** Right. Sev-1. You know the drill. Nobody panics on my incidents, including me. Step one: stop screaming — done, involuntarily. Step two: what do we actually know?
+
+**WHOAMI — 0:48–0:53**
+
+Terminal text types itself over the shot.
 
 ```
 $ whoami
 sapling (ficus. probably.)
 ```
 
-**THE TIMELAPSE — 0:57–1:02**
-The sun arcs overhead three times as one new leaf unfurls from a bud.
+**SENSE — 0:53–1:03**
 
-> **VO:** Capability two: grow. Three days of full effort.
+He pushes attention downward and the image blooms: an underground root-map, veins of dark water, mineral glitter, and far off a rhythmic thump felt as rings of light through soil.
 
-**ONE LEAF — 1:02–1:07**
-Close on the new leaf, bright and proud and very small.
+> **VO:** Sense. I can taste the water table. I can feel the ground. Something with feet is walking, about… four hundred meters northeast. Noted.
 
-> **VO:** Output: one leaf. I have shipped slower features. Not many.
+```
+SENSE   ✓  roots / air / vibration
+```
 
-**THE WHOLE API — 1:07–1:12**
-The trunk strains and bows against nothing, roots pulling taut in the soil — and nothing happens.
+**GROW — 1:03–1:12**
 
-> **VO:** Move — no. Fight — no. Flee — obviously no. Speak — no.
+He pushes outward. Nothing. He pushes harder — the sun arcs three times and one new leaf unfurls, smug and bright.
 
-**SENSE AND GROW — 1:12–1:17**
-Wide: one small living thing at the centre of an enormous indifferent field.
+> **VO:** Grow. Works. Latency: three days. Throughput: one leaf. I've shipped on worse.
 
-> **VO:** Sense and grow. …That's the whole API.
+```
+GROW    ✓  slow. directional.
+```
 
-**I ALWAYS LEFT — 1:17–1:23**
+**UNDEFINED — 1:12–1:18**
 
-Wide and still: one small living thing at the centre of an enormous field, and an empty road running out of frame.
+He tries everything else. The trunk strains against nothing and nothing happens.
+
+```
+MOVE    ✗  undefined
+FIGHT   ✗  undefined
+FLEE    ✗  undefined
+SPEAK   ✗  undefined
+```
+
+> **VO:** …That's the whole API.
+
+**I ALWAYS LEFT — 1:18–1:26**
+
+The sapling, and an empty road running out of frame.
 
 > **VO:** Every problem I ever had — the job, the pager, the retry loop — I solved it the same way, eventually. I walked away.
 
-**WORTH STAYING IN — 1:23–1:30**
+**WORTH STAYING IN — 1:26–1:37**
 
-Low at the base of the trunk: roots gripping soil, holding on to the one patch of ground it has.
+Low at the base of the trunk: roots gripping soil, holding on to the one patch of ground they have.
 
-> **VO:** I can't leave. I can only make this spot worth staying in.
+> **VO:** New constraint. Whatever comes over that hill — a storm, an axe, a war, a conversation — I will be *here* for all of it. I can't leave. I can only make this spot… worth staying in.
 
-**THE TREMOR — 1:30–1:35**
-Underground: rings of light pulse in from the far edge — step, step, step — brightening as they near the roots.
+**SOMETHING'S COMING — 1:37–1:44**
 
-> **VO:** Correction. New input on the sensor. Footsteps. Heavy, headed here.
+Underground: the far-off thump-thump is closer now, the rings of light through the soil brighter and faster.
 
-**NOT HIDE — 1:35–1:40**
-Above ground the leaves stand perfectly still while the far grass bends in a line.
-
-> **VO:** I have two capabilities, and neither of them is *hide.*
+> **VO (quiet):** Something's coming.
 
 SMASH TO BLACK.
 
----
+```
+GROW    ✓
+```
+
 
 ## Provenance
 

@@ -11,7 +11,7 @@ nodes:
     parent: null              # root of the tree
     trunk: true
     status: hot
-    leaves: [001-seed, 001-t0-a, 001-t1-a, 001-t2-a, 001-t3-a, 001-t3-b, 001-t3-c, 001-t0-b, 001-t0-c]
+    leaves: [001-seed, 001-t0-a, 001-t1-a, 001-t2-a, 001-t3-a, 001-t3-b, 001-t3-c, 001-t0-b, 001-t0-c, 001-t0-d]
 
   - id: "002a"
     released: 2026-07-10
