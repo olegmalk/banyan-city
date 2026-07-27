@@ -279,7 +279,14 @@ def compress(prompt: str) -> tuple:
     # the end was a standalone leading SENTENCE ("macro shot.") which left the subject
     # stranded in third position; folding it into the phrase keeps the subject noun at
     # token 3-4, where it still governs the composition.
-    tail = f", {STYLE_TAG}"
+    # A prompt that already carries its own style words gets NO house tag appended.
+    # The founder killed the flat/low-detail look on 2026-07-27 and 001's shot list is
+    # now written in the model's native tag dialect, style included ("masterpiece" is
+    # the marker — every native-dialect prompt carries it). Appending STYLE_TAG on top
+    # was re-injecting "flat colour, 2d animation still" into the exact frames that
+    # were redrawn to escape it. Old prose prompts (unapproved nodes) keep the tag
+    # until their own restyle pass.
+    tail = "" if "masterpiece" in text.lower() else f", {STYLE_TAG}"
     # `head` is threaded through every token estimate below, so the framing prefix is
     # counted against the 77-token budget rather than pushing the prompt over it after
     # the fitting loop has already run.
