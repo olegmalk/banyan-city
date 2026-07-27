@@ -54,6 +54,10 @@ def main() -> int:
                     help="use Animagine's model-card negative list instead of ours")
     ap.add_argument("--extra-neg", default="",
                     help="append these terms to the negative prompt for this draw")
+    ap.add_argument("--count", type=int, default=1,
+                    help="draw N seed-variants in one model load — loading costs ~90s, "
+                         "drawing ~2.5min, so 4 variants cost ~11min not ~16. Pick-of-N "
+                         "beats judging one take.")
     ap.add_argument("--seed-bump", type=int, default=0,
                     help="try a different composition without touching the prompt")
     ap.add_argument("--note", default="", help="tag for the output filename")
@@ -133,35 +137,42 @@ def main() -> int:
     pipe.to("mps")
     print(f"pipeline ready in {time.time()-t0:.0f}s")
 
-    t1 = time.time()
-    g = torch.Generator(device="cpu").manual_seed(SEED + a.beat + a.seed_bump)
+    base_img = None
     if a.init:
         from PIL import Image
         base_img = Image.open(a.init).convert("RGB").resize((STILL_W, STILL_H))
-        img = pipe(prompt=ptext, negative_prompt=neg, image=base_img,
-                   strength=a.strength, num_inference_steps=a.steps,
-                   guidance_scale=a.cfg, generator=g).images[0]
-    else:
-        img = pipe(prompt=ptext, negative_prompt=neg, width=STILL_W, height=STILL_H,
-                   num_inference_steps=a.steps, guidance_scale=a.cfg,
-                   generator=g).images[0]
+    outs = []
+    for i in range(max(1, a.count)):
+        t1 = time.time()
+        g = torch.Generator(device="cpu").manual_seed(SEED + a.beat + a.seed_bump + i * 1000)
+        if base_img is not None:
+            img = pipe(prompt=ptext, negative_prompt=neg, image=base_img,
+                       strength=a.strength, num_inference_steps=a.steps,
+                       guidance_scale=a.cfg, generator=g).images[0]
+        else:
+            img = pipe(prompt=ptext, negative_prompt=neg, width=STILL_W, height=STILL_H,
+                       num_inference_steps=a.steps, guidance_scale=a.cfg,
+                       generator=g).images[0]
+        outs.append((i, img))
     DROPS.mkdir(exist_ok=True)
-    tag = f"-{a.note.replace(' ', '-')}" if a.note else ""
-    out = DROPS / (f"STILL-{a.node.split('-')[0]}-{a.beat:02d}-{shot['slug']}"
-                   f"{tag}-{date.today():%H%M}.png")
-    # timestamped name: iterations of one beat must sit side by side, not overwrite
-    out = out.with_name(out.name.replace(f"{date.today():%H%M}",
-                                         time.strftime("%H%M")))
     from render_local import spread_of
-    spread = spread_of(img)
-    if spread < 20:
-        out = out.with_name("BLANK-" + out.name)
-        print(f"WARNING: luma spread {spread:.0f} — this frame is blank/black, "
-              "do not send it to review")
-    img.save(out)
-    print(f"{out.name} in {(time.time()-t1)/60:.1f} min, contrast {spread:.0f} — opening")
     import subprocess
-    subprocess.run(["open", str(out)])
+    tag = f"-{a.note.replace(' ', '-')}" if a.note else ""
+    opened = []
+    for i, img in outs:
+        var = f"-s{i}" if len(outs) > 1 else ""
+        out = DROPS / (f"STILL-{a.node.split('-')[0]}-{a.beat:02d}-{shot['slug']}"
+                       f"{tag}{var}-{time.strftime('%H%M')}.png")
+        spread = spread_of(img)
+        if spread < 20:
+            out = out.with_name("BLANK-" + out.name)
+            print(f"WARNING: variant {i} luma spread {spread:.0f} — blank, not for review")
+        img.save(out)
+        print(f"{out.name}  contrast {spread:.0f}")
+        if spread >= 20:
+            opened.append(str(out))
+    if opened:
+        subprocess.run(["open"] + opened)
     return 0
 
 
