@@ -118,7 +118,13 @@ def harvest_screening(genome_dirs: list) -> int:
         for k, v in scores.items():
             entry["sums"][k] = entry["sums"].get(k, 0) + v
         if note:
-            entry["winces"].append({"issue": issue["number"], "note": note[:500]})
+            # ISSUE NUMBER ONLY — never the text. This harvester auto-commits daily
+            # with no human in the loop, and R6 makes every commit permanent: a
+            # malicious "wince" (a real name, an address, a slur) pasted into a
+            # public issue would have entered the repo forever within 24h
+            # (principles audit 2026-07-27, finding #2). The text stays on GitHub,
+            # where it can be moderated and where its author controls it.
+            entry["winces"].append({"issue": issue["number"], "has_note": True})
 
     changed = 0
     for genome_dir in genome_dirs:

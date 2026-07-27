@@ -1,5 +1,8 @@
 # Sapling — visual style bible (v2: low-detail anime)
 
+> **⚠ STALE (2026-07-27):** the founder killed this flat/low-detail look after live screening — see `STATE.md` (2026-07-27 evening) and the live shot boards for the current detailed cinematic look. The v3 rewrite of this document awaits the founder (taste, R4). Do not render from this.
+
+
 **Decided by the founder, 2026-07-19** (direct instruction to the steward:
 "not a realistic theme — a low detail anime theme"). This supersedes the v1
 photoreal-fantasy look used in the first trial clips and shot lists. Style is

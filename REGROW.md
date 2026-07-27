@@ -19,7 +19,7 @@ Two things are canon and travel with every prompt:
 
 - **The prompts themselves** — run them verbatim, then improve execution
   (model, seed, steps), not intent.
-- **The style bible** — [`genomes/sapling/style.md`](genomes/sapling/style.md)
+- **The style bible** — [`genomes/sapling/style.md (⚠ stale — v2 look killed 2026-07-27, see STATE.md; v3 pending)`](genomes/sapling/style.md (⚠ stale — v2 look killed 2026-07-27, see STATE.md; v3 pending))
   (low-detail anime, v2). Style is a taste axis (R4); a regrow in a different
   style is a fork of taste, not a regrow.
 
@@ -63,7 +63,7 @@ the caps in `pipeline/budget.yaml`, and writes `NN-slug.mp4` +
 Platform free tier, local ComfyUI, whatever you've got. The contract:
 
 - Run the `shots.md` prompts **verbatim** (they carry the
-  [style bible](genomes/sapling/style.md) block).
+  [style bible](genomes/sapling/style.md (⚠ stale — v2 look killed 2026-07-27, see STATE.md; v3 pending)) block).
 - 9:16 vertical, ~10 s per beat, base footage only — no burned-in text, no
   dialogue; post adds overlays, captions, VO.
 - Save as `NN-slug.mp4` (`NN` = beat number) and write `NN-slug.meta.yaml`

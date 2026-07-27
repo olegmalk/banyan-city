@@ -7,7 +7,7 @@ image-to-video — the still IS the shot). Kaggle has no persistent disk; the re
 is the resume mechanism, same as clips/.
 
 Provenance: drawn by cagliostrolab/animagine-xl-3.1 from the beat's shots.md
-prompt (see git history for the exact prompt at approval time), steps 40, cfg 7,
+prompt (see git history for the exact prompt at approval time), steps 40, cfg 7.5,
 seed 20260719+beat.
 
 To REVOKE an approval: delete the PNG here (git records it, R6 keeps history).

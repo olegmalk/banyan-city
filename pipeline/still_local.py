@@ -48,7 +48,7 @@ def main() -> int:
     ap.add_argument("genome")
     ap.add_argument("node")
     ap.add_argument("--beat", type=int, required=True)
-    ap.add_argument("--steps", type=int, default=30)
+    ap.add_argument("--steps", type=int, default=40)  # the published recipe (board)
     ap.add_argument("--cfg", type=float, default=7.5)
     ap.add_argument("--card-neg", action="store_true",
                     help="use Animagine's model-card negative list instead of ours")

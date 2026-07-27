@@ -64,8 +64,10 @@ Standing constraints (these do not expire):
   renders = Kaggle ($0 floor: `pipeline/kaggle/render-kaggle.ipynb`), paid
   (founder go only), or watering. Never assume quota remains.
 - **MAKING ERA CLOSED by design** — no episode 8 until sap says so.
-- **Style is v2: low-detail anime** — `genomes/sapling/style.md` is the
-  visual bible. 001's photoreal Veo clips are archived v1 evidence; do not
+- **Style: v2 low-detail was KILLED by the founder 2026-07-27** (unreadable on
+  screening); current look = detailed cinematic anime, native-tag dialect — see
+  STATE.md 2026-07-27 and the live shot boards. `style.md` v3 rewrite pending
+  (founder's, R4); its v2 text is stale. 001's photoreal Veo clips are archived v1 evidence; do not
   imitate them.
 - **THE LOOP is the standing process** (dad's directive, `pipeline/loop.md`):
   diagnose→fix-in-pipeline→re-render→founder screens→log. Each cycle's
@@ -79,13 +81,9 @@ Standing constraints (these do not expire):
   grounds, founder accepted.
 - Warm new social accounts 2-3 days before posting links.
 
-Local dev: T2 stills need `T2_NPM_DIR` → dir with `npm install playwright`;
-voice needs `T2_TTS_PYTHON` → python3.13 venv with `pip install kokoro-onnx
-soundfile` + model files in `~/.cache/banyan-tts/` (kokoro-v1.0.onnx,
-voices-v1.0.bin — free download, kokoro-onnx GitHub releases; tts_kokoro.py
-self-heals the espeak data-path quirk). Chatterbox VO needs `cb-venv`
-(python3.11: chatterbox-tts + `setuptools<81` for perth; `torch.load`
-patched to `map_location` cpu), refs in `~/.cache/banyan-tts/cb-refs/`.
-Pipeline python deps in a venv (markdown, pyyaml, pillow, imageio-ffmpeg).
+Local dev environment (playwright, kokoro/Chatterbox voice venvs, model file
+paths) is in the `render-env-setup` skill — load it before any render or VO
+step, or when one fails on a missing binary, env var, or model file.
+
 Run tests as their own step and read the exit code BEFORE committing —
 piping to tail masks failures (this bit twice on 2026-07-19).
