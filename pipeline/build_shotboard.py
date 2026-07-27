@@ -46,25 +46,38 @@ def beat_neg(prompt: str) -> str:
     return f"{neg}, {extra}" if extra else neg
 
 
-def img_tag(p: Path, w: int = 240) -> str:
+def img_tag(p: Path, w: int = 240, rel: str = "") -> str:
+    """rel="" embeds base64 (self-contained local file); rel=prefix links the
+    copied file instead — the site build copies media next to the page."""
     if not p.exists():
         return '<div class="noimg">no approved still yet — still in review</div>'
+    if rel:
+        return f'<img width="{w}" src="{rel}/{p.name}" alt="{p.name}">'
     b64 = base64.b64encode(p.read_bytes()).decode()
     return f'<img width="{w}" src="data:image/png;base64,{b64}" alt="{p.name}">'
 
 
-def main() -> int:
-    ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("genome")
-    ap.add_argument("node")
-    ap.add_argument("--out", default="")
-    a = ap.parse_args()
+def take_cells(takes_clips: Path, num: int, slug: str, rel: str) -> str:
+    """Motion takes for a beat, newest engines first, each with its sidecar link."""
+    if not takes_clips.is_dir() or not rel:
+        return ""
+    vids = sorted(takes_clips.glob(f"{num:02d}-{slug}.*.mp4"))
+    if not vids:
+        return ""
+    cells = "".join(
+        f'<div><video width="200" controls muted loop src="{rel}-clips/{v.name}"></video>'
+        f'<br><small>{html.escape(v.suffixes[-2].lstrip("."))} · '
+        f'<a href="{rel}-clips/{v.with_suffix("").name}.meta.yaml">provenance</a></small></div>'
+        for v in vids)
+    return f'<h3>Motion takes</h3><div class="cols">{cells}</div>'
 
-    nodes = REPO / "genomes" / a.genome / "nodes"
-    d = next(x for x in sorted(nodes.iterdir())
-             if x.is_dir() and x.name.startswith(a.node))
+
+def board_html(genome: str, d: Path, rel: str = "") -> str:
+    """The full page HTML. rel='' → self-contained (base64); rel='NAME' → site
+    mode, images at NAME/ and clips at NAME-clips/ next to the page."""
     shots = parse_shots((d / "shots.md").read_text())
     stills_dir = d / "stills"
+    a = type("A", (), {"genome": genome})  # keep the fork-text f-string working
 
     rows = []
     for s in shots:
@@ -77,7 +90,7 @@ def main() -> int:
   <h2>Beat {s['num']:02d} — {html.escape(s['slug'].replace('-', ' ').upper())}
       <span class="tag {'ok' if approved else 'wip'}">{'STILL APPROVED' if approved else 'STILL IN REVIEW'}</span></h2>
   <div class="cols">
-    <div class="col">{img_tag(still)}</div>
+    <div class="col">{img_tag(still, rel=rel)}</div>
     <div class="col recipe">
       <h3>Recipe — reproduce or beat it</h3>
       <p><b>Still model:</b> {STILL_MODEL}<br>
@@ -92,6 +105,7 @@ def main() -> int:
          {html.escape(MOTION['note'])}</p>
     </div>
   </div>
+  {take_cells(d / "takes" / "clips", s["num"], s["slug"], rel)}
   <details><summary>Fork this beat</summary>
     <ol>
       <li><b>Better take, same recipe:</b> generate with the still + prompts above
@@ -107,8 +121,7 @@ def main() -> int:
   </details>
 </section>""")
 
-    out = Path(a.out) if a.out else REPO / f"shotboard-{a.node.split('-')[0]}.html"
-    out.write_text(f"""<!doctype html><meta charset="utf-8">
+    return f"""<!doctype html><meta charset="utf-8">
 <title>Shot board — {html.escape(d.name)}</title>
 <style>
  body{{font:15px/1.5 -apple-system,system-ui,sans-serif;margin:2rem auto;max-width:960px;
@@ -127,8 +140,21 @@ def main() -> int:
 Take the still and the prompts, generate a better take with <i>your</i> tools and
 credits, and submit it — the beat is the fork unit. Built {date.today()} (D11).</p>
 {''.join(rows)}
-""")
-    print(f"✓ shot board: {out} ({out.stat().st_size // 1024} KB, {len(shots)} beats)")
+"""
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("genome")
+    ap.add_argument("node")
+    ap.add_argument("--out", default="")
+    a = ap.parse_args()
+    nodes = REPO / "genomes" / a.genome / "nodes"
+    d = next(x for x in sorted(nodes.iterdir())
+             if x.is_dir() and x.name.startswith(a.node))
+    out = Path(a.out) if a.out else REPO / f"shotboard-{a.node.split('-')[0]}.html"
+    out.write_text(board_html(a.genome, d))
+    print(f"✓ shot board: {out} ({out.stat().st_size // 1024} KB)")
     return 0
 
 

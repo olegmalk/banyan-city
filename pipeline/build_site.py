@@ -641,7 +641,29 @@ def main() -> None:
         gdir = OUT / g["tree"]["id"]
         gdir.mkdir()
         for n in g["nodes"].values():
-            (gdir / f"{n['slug']}.html").write_text(render_node_page(g, n))
+            _page = render_node_page(g, n)
+            if (g["dir"] / "nodes" / n["slug"] / "shots.md").exists():
+                _page = _page.replace(
+                    "</nav>",
+                    f'</nav><p><a href="{n["slug"]}-shots.html">🎬 Shot board — '
+                    "every beat's recipe &amp; takes, forkable</a></p>", 1)
+            (gdir / f"{n['slug']}.html").write_text(_page)
+            # D11: the shot board — every beat's full recipe + takes, forkable
+            # by anyone. The repo is the process; the site renders the process.
+            node_dir = g["dir"] / "nodes" / n["slug"]
+            if (node_dir / "shots.md").exists():
+                from build_shotboard import board_html
+                media = f"{n['slug']}-media"
+                (gdir / f"{n['slug']}-shots.html").write_text(
+                    board_html(g["tree"]["id"], node_dir, rel=media))
+                if (node_dir / "stills").is_dir():
+                    (gdir / media).mkdir(exist_ok=True)
+                    for f in (node_dir / "stills").glob("*.png"):
+                        shutil.copy(f, gdir / media / f.name)
+                if (node_dir / "takes" / "clips").is_dir():
+                    (gdir / f"{media}-clips").mkdir(exist_ok=True)
+                    for f in (node_dir / "takes" / "clips").iterdir():
+                        shutil.copy(f, gdir / f"{media}-clips" / f.name)
             # publish renderable leaf artifacts (html storyboards, animatics…)
             for l in n["leaf_meta"]:
                 content = str(l.get("content", ""))

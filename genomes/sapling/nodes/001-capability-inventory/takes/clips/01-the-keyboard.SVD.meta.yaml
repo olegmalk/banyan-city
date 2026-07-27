@@ -1,0 +1,17 @@
+# Shot provenance (§7.2)
+platform: kaggle-free-gpu
+model: 'still: cagliostrolab/animagine-xl-3.1 (+IP-Adapter 0.35) | motion: stabilityai/stable-video-diffusion-img2vid-xt'
+prompt: 1boy, solo, dark silhouette, glasses, messy hair, hood down, hands typing
+  fast on a mechanical keyboard, one glowing monitor with code, dark apartment, night,
+  city lights through blinds, cinematic lighting, detailed, newest, masterpiece, best
+  quality, very aesthetic
+negative_prompt: photorealistic, 3d render, abstract, text, watermark, signature,
+  low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture
+seed: 20260720
+steps: 40
+frames: 25
+fps: 7
+motion_bucket_id: 160
+measured_motion: 9.57
+cost_usd: 0.0
+generated: '2026-07-27'
