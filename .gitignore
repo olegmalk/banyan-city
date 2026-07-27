@@ -17,3 +17,7 @@ access_token
 # macOS Finder junk — was tracked, and every render session dirtied it,
 # which made the "uncommitted changes" render guard cry wolf.
 .DS_Store
+
+# Local narrative review page (build_review.py). Not published: it contains the
+# unapproved draft scripts, and it dirties the tree the render guard checks.
+sapling-narrative.html
