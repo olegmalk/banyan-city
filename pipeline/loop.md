@@ -65,6 +65,12 @@ model the $0 constraint and the free T4 could run. The rejection was instant
 and the options list ("what free buys / what $5-12 per episode buys") only came
 out afterwards. That inverts the review gate.
 
+**A spend authorization names the engine and the amount, exactly as pitched.**
+If either changes — the engine is blocked, a cheaper one is reachable, the price
+moved — the work STOPS and the substitution is re-asked in plain words. On
+2026-07-28 the steward ran $0.40 of wan under a Kling authorization because
+wan's key existed; the founder's anger was correct and this line is its record.
+
 **When a constraint (money, hardware) forces less than the best available tool
 on the critical path, the tradeoff goes to the founder BEFORE the work is made
 — what the constraint costs in quality, what lifting it costs in dollars. The
