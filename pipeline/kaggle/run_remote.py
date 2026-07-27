@@ -100,6 +100,15 @@ def main() -> int:
                       "  Rendering to prove the pipeline, NOT to produce the episode.\n"
                       "  The episode still needs the founder's stamp.")
 
+                # The flag PROMISES one beat; until 2026-07-28 nothing enforced it
+                # and --beats defaulted to all — one flag away from rendering a
+                # whole unapproved episode (principles audit). The promise is code now.
+                if "--beats" not in sys.argv:
+                    sys.argv += ["--beats", "[1]"]
+                elif sys.argv[sys.argv.index("--beats") + 1].count(",") > 0:
+                    raise SystemExit("TECHNICAL VALIDATION is ONE beat by definition — "
+                                     "pick one.")
+
         # The notebook renders what GITHUB has, because it clones the repo — so an
         # uncommitted local edit is invisible to it. On 2026-07-26 a rewritten beat-1
         # prompt was pushed as a kernel without being committed, the render used the
