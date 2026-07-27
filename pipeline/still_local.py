@@ -99,6 +99,12 @@ def main() -> int:
     except Exception:
         pipe = StableDiffusionXLPipeline.from_pretrained(
             BASE, torch_dtype=torch.float16, use_safetensors=True)
+    # SDXL's original VAE overflows in float16 and decodes to SOLID BLACK — the first
+    # local still (2026-07-27) came back 832x1216 of pure #000. Kaggle's T4 dodges it
+    # (its notebook run upcasts); MPS does not. The community fp16-safe VAE is the fix.
+    from diffusers import AutoencoderKL
+    pipe.vae = AutoencoderKL.from_pretrained("madebyollin/sdxl-vae-fp16-fix",
+                                             torch_dtype=torch.float16)
     pipe.enable_attention_slicing()
     pipe.enable_vae_slicing()
     pipe.to("mps")
@@ -116,8 +122,14 @@ def main() -> int:
     # timestamped name: iterations of one beat must sit side by side, not overwrite
     out = out.with_name(out.name.replace(f"{date.today():%H%M}",
                                          time.strftime("%H%M")))
+    from render_local import spread_of
+    spread = spread_of(img)
+    if spread < 20:
+        out = out.with_name("BLANK-" + out.name)
+        print(f"WARNING: luma spread {spread:.0f} — this frame is blank/black, "
+              "do not send it to review")
     img.save(out)
-    print(f"{out.name} in {(time.time()-t1)/60:.1f} min — opening")
+    print(f"{out.name} in {(time.time()-t1)/60:.1f} min, contrast {spread:.0f} — opening")
     import subprocess
     subprocess.run(["open", str(out)])
     return 0
