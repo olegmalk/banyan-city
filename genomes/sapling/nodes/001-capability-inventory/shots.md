@@ -17,23 +17,7 @@ Status legend: ✅ generated · ⬜ needs footage
 
 ---
 
-## Beat 01 — COLD OPEN (0:00–0:05) ⬜ needs footage
-
-Line: "Yesterday I died fixing a server. Today I am a tree." Camera on the sapling, small in a moving field — the premise IS the image, and the grass gives the shot something to move.
-
-```
-Vertical 9:16 wide shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds with large empty areas, gentle pastel-leaning palette. One small two-leaf seedling filling the lower third of the frame, its leaves trembling and shaking in the wind, tall grass bending in waves just behind it, distant meadow, drifting clouds, pale morning sky. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
-```
-
-## Beat 02 — NO APOLOGY (0:05–0:09) ⬜ needs footage
-
-Line: "Nobody has apologized." Camera pulls back to show how empty the world is.
-
-```
-Vertical 9:16 extreme wide shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds with large empty areas, gentle pastel-leaning palette. An enormous empty green field with wind moving across the grass in slow waves, no tree, no buildings, no people, only distance, a low pale horizon and clouds drifting overhead. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
-```
-
-## Beat 03 — THE DESK (0:09–0:13) ⬜ needs footage
+## Beat 01 — THE DESK (0:09–0:13) ⬜ needs footage
 
 Line: "Last log entry of my previous life." Camera on the man at the monitor — the memory.
 
@@ -41,7 +25,7 @@ Line: "Last log entry of my previous life." Camera on the man at the monitor —
 Vertical 9:16 shot, night interior, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A tired male engineer in his 30s types fast on a mechanical keyboard, shoulders hunched, face underlit by the cold teal glow of a monitor filled with red error text. A cramped dark apartment in flat deep indigo, 3 a.m. exhaustion, one mug beside his hand. Static camera. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 04 — THE RETRY LOOP (0:13–0:18) ⬜ needs footage
+## Beat 02 — THE RETRY LOOP (0:13–0:18) ⬜ needs footage
 
 Line: "It's always the retry loop." Camera ON THE SCREEN — the thing the line names.
 
@@ -49,7 +33,7 @@ Line: "It's always the retry loop." Camera ON THE SCREEN — the thing the line 
 Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, gentle pastel palette. Simplified blocks of red error text scroll and repeat down a monitor screen, the same shape of line appearing again and again, reflected faintly in the dark room. Abstract cel-shaded UI shapes only — no legible letters. Slow push-in on the screen, teal glow spilling past its edges. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 05 — THE FALL (0:18–0:23) ⬜ needs footage
+## Beat 03 — THE FALL (0:18–0:23) ⬜ needs footage
 
 No dialogue — the death. WIDE, desk in profile, so the sway and the falling mug are one take (the gate flagged this as the episode's only continuity risk).
 
@@ -57,12 +41,28 @@ No dialogue — the death. WIDE, desk in profile, so the sway and the falling mu
 Vertical 9:16 WIDE shot with the desk seen in profile, night interior, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A hunched engineer sways once and drops sideways out of frame; his ceramic mug tips off the desk edge, falls, and shatters on the floor in a few simple flat shards. The empty chair rocks. The monitor keeps glowing teal over the emptied desk. Static camera, held after he is gone. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 06 — REBOOT (0:23–0:28) ⬜ needs footage
+## Beat 04 — TODAY I AM A TREE (0:00–0:05) ⬜ needs footage
+
+Line: "Yesterday I died fixing a server. Today I am a tree." Camera on the sapling, small in a moving field — the premise IS the image, and the grass gives the shot something to move.
+
+```
+Vertical 9:16 wide shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds with large empty areas, gentle pastel-leaning palette. One small two-leaf seedling filling the lower third of the frame, its leaves trembling and shaking in the wind, tall grass bending in waves just behind it, distant meadow, drifting clouds, pale morning sky. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+```
+
+## Beat 05 — REBOOT (0:23–0:28) ⬜ needs footage
 
 Line: "Rebooted somewhere with better lighting." Camera on the light arriving.
 
 ```
 Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. Warm sunrise light sweeps across a green field from one side to the other, lighting a tiny mascot-simple sapling as it passes and throwing its long shadow across the grass. Night blues wash out into peach and gold. Slow, gentle, dawn arriving. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+```
+
+## Beat 06 — NO APOLOGY (0:05–0:09) ⬜ needs footage
+
+Line: "Nobody has apologized." Camera pulls back to show how empty the world is.
+
+```
+Vertical 9:16 extreme wide shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds with large empty areas, gentle pastel-leaning palette. An enormous empty green field with wind moving across the grass in slow waves, no tree, no buildings, no people, only distance, a low pale horizon and clouds drifting overhead. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 07 — THE BIRD (0:28–0:33) ⬜ needs footage

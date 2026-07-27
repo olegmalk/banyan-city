@@ -22,16 +22,6 @@ is coming toward the tree that can't run?*
 
 ## Script
 
-**COLD OPEN — 0:00–0:05**
-A tiny two-leaf banyan sapling trembles in the wind, alone in a vast green field.
-
-> **VO (dry, tired, engineer):** Yesterday I died fixing a server. Today I am a tree.
-
-**NO APOLOGY — 0:05–0:09**
-The leaves steady. The field is enormous and completely empty around it.
-
-> **VO:** Nobody has apologized.
-
 **THE DESK — 0:09–0:13**
 Memory: a man types fast in a dark office, face lit by one monitor of red error text.
 
@@ -45,10 +35,20 @@ Close on the monitor: the same error repeating down the screen.
 **THE FALL — 0:18–0:23**
 Wide, the desk in profile: the man sways and drops out of frame; his mug tips off the edge and shatters.
 
+**TODAY I AM A TREE — 0:00–0:05**
+A tiny two-leaf banyan sapling trembles in the wind, alone in a vast green field.
+
+> **VO (dry, tired, engineer):** Yesterday I died fixing a server. Today I am a tree.
+
 **REBOOT — 0:23–0:28**
 Back in the field: sunlight sweeps across the sapling as morning arrives.
 
 > **VO:** New hardware. Rebooted somewhere with better lighting.
+
+**NO APOLOGY — 0:05–0:09**
+The leaves steady. The field is enormous and completely empty around it.
+
+> **VO:** Nobody has apologized.
 
 **THE BIRD — 0:28–0:33**
 A bird lands on the top leaf, bends it flat, and flies off; the leaf springs back.
