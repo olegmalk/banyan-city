@@ -52,3 +52,30 @@ render, then every shot the character appears in inherits it.
 | 0 (none) | four different characters | free |
 | 0.6 | consistent | reference dictates it — a sprint and a close-up both became a centred standing figure, and two of four went blank |
 | **0.35** | consistent | prompt drives it again; a close-up stayed a close-up |
+
+## `style-plate.png` — one look for the whole show (empty slot, founder's pick)
+
+The founder's verdict on the first assembled cut of episode 1 was that it read as
+fifteen unrelated AI images. Prompt fixes make each shot *correct*; they do not
+make fifteen shots a *family*. The same mechanism that keeps a character consistent
+can keep a look consistent: condition every beat on one image that defines the
+palette and light.
+
+So the renderer now looks for `style-plate.png` in this directory. If it is here,
+every beat that has no character reference of its own inherits it at
+`STYLE_SCALE = 0.30` — deliberately below the 0.35 used for faces, because a plate
+must tint the palette, not dictate content. A beat with a character reference keeps
+using that instead; a character's identity outranks the house style.
+
+Nothing else changes. The slot is empty and the feature is inert until a file
+exists, because **which frame IS the show is a taste call (R4) and belongs to the
+founder, not the renderer.** The mechanism is ready so that answering it is a file
+drop and a commit, not a code change.
+
+To use it: pick the frame that looks most like the show, save it here as
+`style-plate.png`, commit, push, re-render. To stop using it: delete the file.
+
+Same caveat as above applies with more force, since this one touches every shot —
+a reference transfers tone and background, so a plate cropped from a dark interior
+will darken outdoor beats. Prefer a plate whose light is typical of the show rather
+than the single prettiest frame.
