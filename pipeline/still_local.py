@@ -87,6 +87,8 @@ def main() -> int:
         print(f"  dropped for budget: {' '.join(dropped)[:120]}")
 
     import torch
+    from render_local import _shim_transformers
+    _shim_transformers()  # diffusers imports constants newer transformers removed
     from diffusers import StableDiffusionXLPipeline
     if not torch.backends.mps.is_available():
         raise SystemExit("no MPS — this is the Apple-Silicon fast loop")
