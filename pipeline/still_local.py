@@ -55,6 +55,15 @@ def main() -> int:
     ap.add_argument("--seed-bump", type=int, default=0,
                     help="try a different composition without touching the prompt")
     ap.add_argument("--note", default="", help="tag for the output filename")
+    ap.add_argument("--init", default="",
+                    help="img2img: start from this approved frame and repaint only "
+                         "--strength of it. THE way to change one aspect (the guy, the "
+                         "palette) without redrawing the world — a changed word in "
+                         "txt2img redraws everything, which is how an approved scene "
+                         "got wrecked on 2026-07-27 while only the character was meant "
+                         "to change.")
+    ap.add_argument("--strength", type=float, default=0.45,
+                    help="img2img only: 0.3 = touch-up, 0.5 = real change, 0.8 = mostly new")
     ap.add_argument("--raw", default="",
                     help="EXPERIMENT: send this prompt verbatim instead of the beat's "
                          "shots.md prompt — for A/B-ing prompt dialects in the fast "
@@ -108,8 +117,13 @@ def main() -> int:
     # fp32 weighs ~13 GB, which unified memory holds if this is the ONLY job — see the
     # one-at-a-time warning in the header. Slower per step is an acceptable price; a
     # black frame is not a faster iteration, it is zero iterations.
-    pipe = StableDiffusionXLPipeline.from_pretrained(
-        BASE, torch_dtype=torch.float32, use_safetensors=True)
+    if a.init:
+        from diffusers import StableDiffusionXLImg2ImgPipeline
+        pipe = StableDiffusionXLImg2ImgPipeline.from_pretrained(
+            BASE, torch_dtype=torch.float32, use_safetensors=True)
+    else:
+        pipe = StableDiffusionXLPipeline.from_pretrained(
+            BASE, torch_dtype=torch.float32, use_safetensors=True)
     pipe.enable_attention_slicing()
     pipe.enable_vae_slicing()
     pipe.to("mps")
@@ -117,9 +131,16 @@ def main() -> int:
 
     t1 = time.time()
     g = torch.Generator(device="cpu").manual_seed(SEED + a.beat + a.seed_bump)
-    img = pipe(prompt=ptext, negative_prompt=neg, width=STILL_W, height=STILL_H,
-               num_inference_steps=a.steps, guidance_scale=a.cfg,
-               generator=g).images[0]
+    if a.init:
+        from PIL import Image
+        base_img = Image.open(a.init).convert("RGB").resize((STILL_W, STILL_H))
+        img = pipe(prompt=ptext, negative_prompt=neg, image=base_img,
+                   strength=a.strength, num_inference_steps=a.steps,
+                   guidance_scale=a.cfg, generator=g).images[0]
+    else:
+        img = pipe(prompt=ptext, negative_prompt=neg, width=STILL_W, height=STILL_H,
+                   num_inference_steps=a.steps, guidance_scale=a.cfg,
+                   generator=g).images[0]
     DROPS.mkdir(exist_ok=True)
     tag = f"-{a.note.replace(' ', '-')}" if a.note else ""
     out = DROPS / (f"STILL-{a.node.split('-')[0]}-{a.beat:02d}-{shot['slug']}"
