@@ -151,8 +151,9 @@ def board_html(genome: str, d: Path, rel: str = "") -> str:
   <details><summary>🛠 Take this task (no money — bring your tools, your key, or free compute)</summary>
     <ol>
       <li><b>Your own tools:</b> feed the still + prompts above to any generator you
-          already use (Kling, Runway, Pika…), then submit the clip via a GitHub issue
-          with a link — say the beat number and what you used.</li>
+          already use (Kling, Runway, Pika…), then submit via a GitHub issue with a link — a human screens it and runs
+          <code>pipeline/intake_take.py</code>, which files it with provenance and a
+          ledger credit in your name.</li>
       <li><b>Your own API key:</b> clone the repo, put <code>FAL_KEY=…</code> in
           <code>.env</code>, run
           <code>python3 pipeline/generate_shots.py {a.genome} {d.name.split('-')[0]} --provider fal --beats {s_num:02d} --from-stills --yes</code>
