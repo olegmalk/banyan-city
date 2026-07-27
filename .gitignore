@@ -13,3 +13,7 @@ package-lock.json
 # Kaggle API token lives in ~/.kaggle, never here
 kaggle.json
 access_token
+
+# macOS Finder junk — was tracked, and every render session dirtied it,
+# which made the "uncommitted changes" render guard cry wolf.
+.DS_Store
