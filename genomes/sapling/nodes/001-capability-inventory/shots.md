@@ -47,28 +47,28 @@ computer monitor close-up filling the frame, terminal window, command finishing,
 no dialogue - the death, in one shot. The mug reaches the floor before he does.
 
 ```
-1boy, solo, glasses, messy hair, losing his balance and collapsing sideways off a tipping chair at a desk, chair falling over with him, slumping, a ceramic mug knocked off the desk mid-air, dark room, monitor glow, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No wind, no standing. No photorealism, no 3D render look. 9:16 vertical, no text.
+1boy, solo, adult man, mature tired face, glasses, messy hair, collapsing sideways off a tipping chair at a desk, chair falling with him, eyes closing, a mug knocked off the desk mid-air, dark room, monitor glow, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No child, no kid, no blush, no wind. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 ## Beat 05 — HUH. GREEN. (0:21–0:24) ⬜ needs footage
 
 Line: 'Huh. Green.' Camera low on the floor; the cooling fan winds down over black.
 
 ```
-many broken ceramic shards scattered flat across a wooden floor in near darkness, pieces of a destroyed mug lying apart, spilled coffee, a dying screen glow, low camera angle, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No intact mug, no upright mug, no kintsugi, no cracks. No photorealism, no 3D render look. 9:16 vertical, no text.
+thick curved glazed ceramic shards of a broken coffee mug scattered flat on dark wooden floorboards, a puddle of spilled coffee, near darkness, dying screen glow, low camera angle, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No paper, no cards, no intact mug, no kintsugi. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 ## Beat 06 — TOO BLUE (0:24–0:29) ⬜ needs footage
 
 Line: 'Hospital ceiling. Hospitals are green now.' The wrong-ceiling joke IS the shot.
 
 ```
-one enormous green leaf seen from directly below, backlit, filling most of the frame against a flat vivid blue sky, sunlight through the leaf veins, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people, no girl, no grass, no clouds, no other plants. No photorealism, no 3D render look. 9:16 vertical, no text.
+extreme close-up of the underside of one giant green leaf filling the entire frame edge to edge, glowing backlit veins, tiny patches of vivid blue sky in the corners, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No woman, no girl, no person, no people, no figure, no grass. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 ## Beat 07 — FLAILING ONE (1) LEAF (0:29–0:36) ⬜ needs footage
 
 Line: 'I appear to be flailing one (1) leaf.' The flail is the joke - camera on the leaf.
 
 ```
-a single small leaf on a thin stem mid-whip, bent hard to one side, slight motion blur only on the leaf tip, clearly visible leaf, calm meadow, blue sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people, no speed lines, no light streaks. No photorealism, no 3D render look. 9:16 vertical, no text.
+low angle shot of one tiny sprout with a single leaf bent hard sideways, dynamic pose, centered, clear grass field, vivid blue sky, clean composition, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people, no hands, no speed lines, no trees. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 ## Beat 08 — SEV-1 (0:36–0:47) ⬜ needs footage
 
@@ -89,21 +89,21 @@ a tiny two-leaf green sprout standing alone in short grass, centered, quiet empt
 Line: 'Sense. I can taste the water table.' Camera underground - the sense IS the image.
 
 ```
-cross-section of earth like an ant farm, thin strip of grass and sky at the very top, layered brown soil below, thin white roots reaching down, small glowing blue water veins between soil layers, soft rings of light in the earth, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people, no girl, no cave, no crystals, no purple. No photorealism, no 3D render look. 9:16 vertical, no text.
+underground side view, dark brown soil filling the whole frame, a network of thin pale roots spreading downward from the top edge, tiny glowing blue water droplets along the roots, deep darkness below, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No cave, no tunnel, no burrow, no eye, no portal, no people, no sky. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 ## Beat 11 — GROW (1:02–1:08) ⬜ needs footage
 
 Line: 'Latency: three days. Throughput: one leaf.' Timelapse on the one new leaf.
 
 ```
-a tiny sprout with one brand new bright leaf unfurling, low close shot, sun arc light trails across the sky behind it, fast moving clouds, triumphant, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people, no girl, no tree, no giant plant. No photorealism, no 3D render look. 9:16 vertical, no text.
+macro close-up of a tiny green sprout, one brand new bright leaf unfurling at its tip, morning dew drops, soft golden morning light, gentle pale sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people, no hands, no girl, no light trails, no tree. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 ## Beat 12 — UNDEFINED (1:08–1:11) ⬜ needs footage
 
 Line: 'That is the whole API.' Camera on the strain that achieves nothing.
 
 ```
-a thin green sapling stem growing from flat bare brown soil, bowing and straining hard to one side against nothing, taut ground, everything still, pale sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No sphere, no planet, no orb, no flowerpot, no people. No photorealism, no 3D render look. 9:16 vertical, no text.
+a single thin green plant stem bent into a tense arc, growing from cracked flat dirt ground, minimalist empty scene, pale grey sky, quiet, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No person, no figure, no cloak, no ghost, no sphere, no flowerpot. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 ## Beat 13 — I ALWAYS LEFT (1:11–1:20) ⬜ needs footage
 
@@ -117,12 +117,12 @@ an empty dirt road running straight to a pale horizon across windswept grass fie
 Line: 'I can only make this spot worth staying in.' The want of the series, as a grip.
 
 ```
-extreme macro of thin white plant roots wrapping and gripping into dark crumbling soil, loose grains shifting, warm low golden light, shallow depth of field, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No feet, no toes, no skin, no flesh, no hands, no people. No photorealism, no 3D render look. 9:16 vertical, no text.
+macro close-up of thin white plant roots weaving between dark soil crumbs and gripping them tight, fine root hairs, warm low side light, sharp detail, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No fabric, no cloth, no feet, no skin, no people, no sky. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 ## Beat 15 — SOMETHING'S COMING (1:32–1:36) ⬜ needs footage
 
 Line: 'Something is coming.' Camera underground; the footsteps are felt, not seen.
 
 ```
-cross-section of earth like an ant farm, thin strip of dark night grass at the top, layered brown soil below, pale roots, bright rings of light pulsing through the earth toward the roots, closer and brighter, ominous, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people, no girl, no cave, no crystals, no lightning. No photorealism, no 3D render look. 9:16 vertical, no text.
+underground side view at night, dark soil filling the frame, pale roots to the left, one bright warm orange glow approaching from the right side deep in the earth, dust trembling, ominous quiet, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No eye, no portal, no burrow, no comic panels, no split frame, no people, no sky. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
