@@ -141,6 +141,19 @@ def test_sd_prompt_fits_clip_and_keeps_the_action():
     check("THE ACTION SURVIVES", "trembles in a gust of wind" in out)
     check("the negative-prompt tail is dropped", "photorealism" not in out.lower())
 
+    # compress() once anchored the style preamble on "pastel...palette" alone — the first
+    # prompt rewritten WITHOUT that phrase (beat 1, 2026-07-27) kept its style sentence
+    # and lost its action to the token budget. The preamble must be recognised by what it
+    # is, not by one phrase every prompt happened to share until one didn't.
+    no_palette = ("Vertical 9:16 medium shot, hand-drawn 2D anime style, low detail: "
+                  "flat cel-shaded colors, bold clean linework, minimal shading (single "
+                  "shadow tone), simplified shapes. A man hunched at a desk typing fast "
+                  "on a glowing keyboard, deep blue night. No photorealism. 9:16 "
+                  "vertical, no text.")
+    out2, _ = compress(no_palette)
+    check("a prompt with no palette phrase keeps its ACTION", "hunched at a desk" in out2)
+    check("...and still sheds its style preamble", "hand-drawn" not in out2)
+
     # Beat 3 of 001 is a terminal resolving a line of output — its subject IS text on a
     # screen — and it rendered as abstract magenta shapes because `text` was negated
     # twice: once by the standard negative, once by shots.md's boilerplate "no text"

@@ -26,7 +26,7 @@ Status legend: ✅ generated · ⬜ needs footage
 no dialogue - the sound is the cold open. Camera on the hands; the typing stopping is the cut.
 
 ```
-Vertical 9:16 close shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds, gentle pastel-leaning palette. A pair of hands hammering fast on a mechanical keyboard in near-darkness, keys visibly moving, faint monitor glow on his knuckles, dark room, deep indigo. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 medium shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes. A man hunched at a desk in a dark room at night, typing fast on a glowing keyboard, seen from behind over his shoulder, his silhouette sharp against one bright monitor, deep blue night, strong contrast between screen light and darkness. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 02 — THREE OH SEVEN (0:05–0:11) ⬜ needs footage

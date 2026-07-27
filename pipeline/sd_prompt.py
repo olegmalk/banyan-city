@@ -45,11 +45,22 @@ import re
 # training captions on an aesthetic scale and expects them at inference). Omitting them
 # on 2026-07-26 got the exact failure its card warns about — flat abstract shapes in a
 # garish palette. `abstract` is correspondingly in the negative, notebook side.
+# "pastel" left the global tag on 2026-07-27: forced onto the night beats ("dark room,
+# near-darkness, deep indigo") it produced grey-lavender mush the founder could not read
+# — "i can barely make anything out of it", on all three frames he reviewed. Daytime
+# prompts still carry their own palette words; the tag no longer overrules a dark scene.
 STYLE_TAG = ("anime cel shading, flat colour, bold clean lineart, 2d animation still, "
-             "pastel, masterpiece, best quality")
+             "masterpiece, best quality")
 
-# The style preamble ends at the first sentence break after the palette phrase.
+# The style preamble ends at the first sentence break after the palette phrase — OR, when
+# a prompt has no palette phrase, at the end of a first sentence that is unmistakably the
+# style boilerplate. Anchoring on "pastel...palette" alone was brittle: the first prompt
+# rewritten without it (beat 1, 2026-07-27) kept its style sentence and lost its ACTION to
+# the token budget — the exact failure this module exists to prevent, reintroduced by
+# depending on one phrase every prompt happened to share until one didn't.
 _STYLE_END = re.compile(r"(?:pastel[^.]*palette|gentle pastel[^.]*)\.\s*", re.I)
+_STYLE_SENTENCE = re.compile(
+    r"^[^.!?]*\banime style\b[^.!?]*(?:\([^)]*\)[^.!?]*)*[.!?]\s*", re.I)
 # Everything the negative prompt already covers, and which CLIP truncated anyway.
 _TAIL = re.compile(
     r"\s*(?:No photorealism[^.]*\.|no 3d render look[^.]*\.|"
@@ -228,7 +239,11 @@ def compress(prompt: str) -> tuple:
         if shot.lower() in ("shot", "shots"):
             shot = ""
     m = _STYLE_END.search(text)
-    action = text[m.end():] if m else text
+    if m:
+        action = text[m.end():]
+    else:
+        m2 = _STYLE_SENTENCE.match(text)
+        action = text[m2.end():] if m2 else text
 
     # The style preamble comes in two shapes. Molted shot lists use the documented
     # long form ending in "gentle pastel palette."; older branch-node prompts are
