@@ -21,3 +21,6 @@ access_token
 # Local narrative review page (build_review.py). Not published: it contains the
 # unapproved draft scripts, and it dirties the tree the render guard checks.
 sapling-narrative.html
+
+# Local shot-board pages (build_shotboard.py) — same reason as the review page
+shotboard-*.html

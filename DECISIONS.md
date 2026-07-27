@@ -234,3 +234,34 @@ STEWARDSHIP §6 it needs the founder, not the steward.
 I would take (1) — the beats are long because they are carrying real weight, and
 splitting them is what the spec would say if asked. But it edits an approved
 script, so it waits.
+
+## D11 — The shot board: crowd-powered generation is the main artifact (RESOLVED, founder 2026-07-27)
+
+Founder directive, verbatim intent: *"we need a multiplayer system where multiple
+people can come and implement this video generation. They take the inputs like
+images and the prompt you generate, and then they run it through the system you
+suggest with their tokens and credits… If somebody doesn't like the first four
+seconds, they should be able to submit their own version… This is the main
+artifact you should be building. Not trying to mindlessly for the first week to
+generate stupid videos."*
+
+This resolves priority, and it is not new scope — it is WATERING.md's "compute
+as watering" promoted from Phase-3 roadmap to the present deliverable:
+
+1. **Full transparency.** Every beat publishes its complete generation recipe:
+   input still, exact positive prompt as sent, exact negative prompt, model,
+   seed, steps, cfg, resolution, fps. The founder — and any stranger — can see
+   and reproduce everything. (§7.2 was always this; now it is the interface,
+   not just the record.)
+2. **The beat is the fork unit.** ~4 seconds of screen time, one still, one
+   prompt. Anyone may submit an alternative take of a beat (their own credits,
+   any platform) or a corrected prompt for it, with provenance
+   (t3-trials/intake.py normalizes; the ledger records compute-as-watering).
+3. **Taste stays the founder's (R4).** The crowd widens the option pool; the
+   founder's verdict picks what the show keeps. Screening weights per D3.
+4. **The steward's job order:** build/maintain the board and the intake rails
+   first; generate clips himself second (as one contributor among many, on the
+   $0 default).
+
+The steward is also directed to be strict and push back on nonsense — the
+founder's own asks included.
