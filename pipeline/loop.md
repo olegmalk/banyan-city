@@ -38,6 +38,25 @@ whole* — all the diagnosis happened after the hour was spent. The directive:
   output only when a kernel ends, so its floor is ~25 min per look — use it to
   mass-produce what the founder already approved frame by frame.
 
+## Review gates are BLOCKING, and the steward summons the founder (dad, 2026-07-27)
+
+The founder is not an engineer and will naturally delegate everything and come
+back late — that is exactly how the two rejected remakes happened. So the loop
+does not trust delegation past a risky artefact:
+
+- **These wait for founder eyes, always:** any first still of a beat, any
+  character image (casting is R4 taste), any change to the show's look (style
+  plate, palette, model swap), any assembled episode. The pipeline STOPS at
+  these; it never proceeds on the steward's own judgment of "looks fine" — the
+  steward's metrics famously cannot see meaning (cycle-008, cycle-009).
+- **The steward actively summons the founder** when a review artefact is
+  waiting: a push notification naming what needs a verdict. If he doesn't
+  answer, it stays blocked and the steward works on something unblocked —
+  proceeding past the gate is never the answer to a slow reviewer.
+- **Verdicts are cheap on purpose.** One image, one question, "keep" or "kill
+  + one reason". Thirty seconds of founder eyes at the right moment beats an
+  hour of compute at the wrong one.
+
 ## Rules
 
 - **Benchmark: episode 001** (the front door — every viewer judges the
