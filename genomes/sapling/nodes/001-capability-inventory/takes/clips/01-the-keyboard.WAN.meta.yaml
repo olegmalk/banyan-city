@@ -1,0 +1,12 @@
+# Shot provenance (§7.2)
+platform: alibaba-model-studio
+model: wan2.7-i2v-2026-04-25
+cost_note: free new-account quota while it lasts, then ~$0.10/s; see console billing
+shot_beat: 1
+prompt: 1boy, solo, dark silhouette, glasses, messy hair, hood down, hands typing
+  fast on a mechanical keyboard, one glowing monitor with code, dark apartment, night,
+  city lights through blinds, cinematic lighting, detailed, newest, masterpiece, best
+  quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+duration_s: 4
+aspect: '9:16'
+date: '2026-07-27'
