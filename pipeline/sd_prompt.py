@@ -316,6 +316,18 @@ def compress(prompt: str) -> tuple:
         if not sentences[0].endswith((".", "!", "?")):
             sentences[0] += "."
 
+    # Last resort: a single clause can still overflow when the counter is the calibrated
+    # estimate (CI has no transformers; the estimate reads ~5% high). Two genome prompts
+    # sat exactly there on 2026-07-27 — fine by the real tokenizer, 81 by the estimate,
+    # and nothing left to drop — so "fits" silently became "fits on machines with
+    # transformers". Words come off the END, where the mood adjectives live; the subject
+    # holds the front. Floor of 8 words so the fallback can never gut the action.
+    while (len(sentences) == 1 and len(sentences[0].split()) > 8
+           and _token_estimate(head + sentences[0] + tail) > MAX_TOKENS):
+        words = sentences[0].rstrip(".!?").split()
+        dropped.append(words[-1])
+        sentences[0] = " ".join(words[:-1]) + "."
+
     body = " ".join(sentences).strip()
     if head and body:
         body = body[0].lower() + body[1:]

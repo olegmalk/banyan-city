@@ -38,7 +38,6 @@ import sys
 from datetime import date
 from pathlib import Path
 
-import numpy as np
 import yaml
 
 REPO = Path(__file__).resolve().parent.parent
@@ -73,6 +72,12 @@ SMOKE_PROMPT = (
 
 def spread_of(frame) -> float:
     """Luma spread (90th percentile minus 10th) of one frame, 0-255."""
+    # numpy is imported HERE, not at module level: test_pipeline imports this module
+    # for the S6 approval gate, and CI installs only pyyaml/pillow/markdown. The
+    # module-level import turned every push from 15:39 to 18:10 on 2026-07-27 red --
+    # ~20 failure mails in the founder's inbox -- while passing locally, because the
+    # local venv has numpy. Only the render path needs it; the gate does not.
+    import numpy as np
     a = np.asarray(frame, dtype=np.float32)
     if not np.isfinite(a).all():
         return 0.0
@@ -166,6 +171,7 @@ def render(pipe, torch, prompt: str, num: int, dest: Path) -> float:
                   num_frames=FRAMES, num_inference_steps=STEPS,
                   guidance_scale=7.5, generator=g).frames[0]
     spreads = [spread_of(f) for f in frames[::max(1, len(frames) // 8)]]
+    import numpy as np
     spread = float(np.median(spreads))
     # written either way: a guard that deletes its own evidence turns an
     # ambiguous reading into an unanswerable one
