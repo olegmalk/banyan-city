@@ -66,7 +66,7 @@ Vertical 9:16 close shot, hand-drawn 2D anime style, low detail: flat cel-shaded
 Line: 'Hospital ceiling. Hospitals are green now.' The wrong-ceiling joke IS the shot.
 
 ```
-Vertical 9:16 low close shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds, gentle pastel-leaning palette. One single trembling green leaf shaking in the wind seen from directly beneath, filling the whole upper frame against a flat impossibly blue sky, nothing else in shot. No grass, no field, no other leaves, no plants. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 low close shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds, gentle pastel-leaning palette. One enormous green leaf trembling and shaking in the wind, so close it fills almost the entire frame edge to edge, seen from directly beneath against a flat impossibly blue sky. No grass, no field, no other leaves, no plants, no clouds. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 07 — FLAILING ONE (1) LEAF (0:29–0:36) ⬜ needs footage
