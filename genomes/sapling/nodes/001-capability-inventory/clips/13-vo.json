@@ -5,23 +5,38 @@
  "lines": [
   {
    "who": "VO",
-   "text": "Capability two: grow. Three days of full effort.",
+   "text": "Every problem I ever had \u2014 the job, the pager, the retry loop \u2014 I solved it the same way, eventually. I walked away.",
    "start": 0.0,
-   "end": 3.738,
+   "end": 7.8,
    "chunks": [
     {
-     "text": "Capability two: grow.",
+     "text": "Every problem I ever had \u2014",
      "start": 0.0,
-     "end": 1.581
+     "end": 1.712
     },
     {
-     "text": "Three days of full effort.",
-     "start": 1.581,
-     "end": 3.738
+     "text": "the job, the pager,",
+     "start": 1.712,
+     "end": 3.432
+    },
+    {
+     "text": "the retry loop \u2014",
+     "start": 3.432,
+     "end": 4.656
+    },
+    {
+     "text": "I solved it the same way, eventually.",
+     "start": 4.656,
+     "end": 6.836
+    },
+    {
+     "text": "I walked away.",
+     "start": 6.836,
+     "end": 7.8
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 4.038
+ "total_s": 8.1
 }

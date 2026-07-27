@@ -5,23 +5,43 @@
  "lines": [
   {
    "who": "VO",
-   "text": "I can feel the water table. I can feel every stone in this field.",
+   "text": "Sense. I can taste the water table. I can feel the ground. Something with feet is walking, about\u2026 four hundred meters northeast. Noted.",
    "start": 0.0,
-   "end": 4.122,
+   "end": 8.568,
    "chunks": [
     {
-     "text": "I can feel the water table.",
+     "text": "Sense.",
      "start": 0.0,
-     "end": 1.759
+     "end": 0.733
     },
     {
-     "text": "I can feel every stone in this field.",
-     "start": 1.759,
-     "end": 4.122
+     "text": "I can taste the water table.",
+     "start": 0.733,
+     "end": 2.533
+    },
+    {
+     "text": "I can feel the ground.",
+     "start": 2.533,
+     "end": 3.895
+    },
+    {
+     "text": "Something with feet is walking, about\u2026",
+     "start": 3.895,
+     "end": 6.2
+    },
+    {
+     "text": "four hundred meters northeast.",
+     "start": 6.2,
+     "end": 7.785
+    },
+    {
+     "text": "Noted.",
+     "start": 7.785,
+     "end": 8.568
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 4.422
+ "total_s": 8.868
 }

@@ -213,7 +213,11 @@ AUDIO_SR = 44100
 # short-form platforms normalize to about -14 LUFS; sitting under it just makes
 # the episode quieter than everything around it in the feed.
 LOUDNESS_TARGET = -14.0
-LIMIT_MASTER = 0.86   # -1.31 dBFS, ceiling during loudnorm's own 192k pass
+LIMIT_MASTER = 0.80   # -1.94 dBFS, ceiling during loudnorm's own 192k pass.
+                      # 0.86 was not enough headroom once the loudness loop
+                      # started winning: episode 1 reached -14.2 LUFS after three
+                      # passes and true peak came out at +0.1 dBTP, because AAC
+                      # overshoots the limiter by roughly a decibel.
 # loudnorm's TP target is deliberately looser than the old -1.5: the limiter
 # above holds the real ceiling, and a tight TP target makes loudnorm clamp its
 # own gain and undershoot the loudness target instead.

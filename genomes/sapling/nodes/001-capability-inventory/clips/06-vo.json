@@ -5,23 +5,33 @@
  "lines": [
   {
    "who": "VO",
-   "text": "New hardware. Rebooted somewhere with better lighting.",
+   "text": "Okay. Hospital ceiling. That's fine. Hospitals are green now.",
    "start": 0.0,
-   "end": 3.324,
+   "end": 3.679,
    "chunks": [
     {
-     "text": "New hardware.",
+     "text": "Okay.",
      "start": 0.0,
-     "end": 1.048
+     "end": 0.289
     },
     {
-     "text": "Rebooted somewhere with better lighting.",
-     "start": 1.048,
-     "end": 3.324
+     "text": "Hospital ceiling.",
+     "start": 0.289,
+     "end": 1.228
+    },
+    {
+     "text": "That's fine.",
+     "start": 1.228,
+     "end": 2.779
+    },
+    {
+     "text": "Hospitals are green now.",
+     "start": 2.779,
+     "end": 3.679
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 3.623
+ "total_s": 3.979
 }

@@ -1,0 +1,32 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "VO",
+   "text": "No hands. No keyboard. So: what can this thing actually do?",
+   "start": 0.0,
+   "end": 3.84,
+   "chunks": [
+    {
+     "text": "No hands.",
+     "start": 0.0,
+     "end": 0.797
+    },
+    {
+     "text": "No keyboard.",
+     "start": 0.797,
+     "end": 1.665
+    },
+    {
+     "text": "So: what can this thing actually do?",
+     "start": 1.665,
+     "end": 3.84
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 4.14
+}

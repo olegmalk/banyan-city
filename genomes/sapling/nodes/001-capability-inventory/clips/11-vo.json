@@ -5,18 +5,38 @@
  "lines": [
   {
    "who": "VO",
-   "text": "I can feel a worm having a bad day.",
+   "text": "Grow. Works. Latency: three days. Throughput: one leaf. I've shipped on worse.",
    "start": 0.0,
-   "end": 2.022,
+   "end": 5.2,
    "chunks": [
     {
-     "text": "I can feel a worm having a bad day.",
+     "text": "Grow.",
      "start": 0.0,
-     "end": 2.022
+     "end": 0.528
+    },
+    {
+     "text": "Works.",
+     "start": 0.528,
+     "end": 1.248
+    },
+    {
+     "text": "Latency: three days.",
+     "start": 1.248,
+     "end": 2.71
+    },
+    {
+     "text": "Throughput: one leaf.",
+     "start": 2.71,
+     "end": 4.119
+    },
+    {
+     "text": "I've shipped on worse.",
+     "start": 4.119,
+     "end": 5.2
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 2.322
+ "total_s": 5.5
 }

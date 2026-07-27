@@ -22,54 +22,45 @@ is coming toward the tree that can't run?*
 
 ## Script
 
-**THE KEYBOARD — 0:00–0:04**
-
+**THE KEYBOARD — 0:00–0:05**
 BLACK. One mechanical keyboard, very fast — then it stops.
 
-**THREE OH SEVEN — 0:04–0:11**
-
+**THREE OH SEVEN — 0:05–0:11**
 Close on a monitor in a dark apartment: a terminal, `deploy --prod --force`, a spinner. 3:07 a.m.
 
 > **VO (tired, flat):** Production went down at 2:41. It's the retry loop. It's always the retry loop.
 
-**DEPLOY SUCCEEDED — 0:11–0:15**
-
+**DEPLOY SUCCEEDED — 0:11–0:16**
 The spinner resolves.
 
 ```
 ✓ deploy succeeded
 ```
 
-**THE FALL — 0:15–0:20**
-
+**THE FALL — 0:16–0:21**
 A sharp breath in — the frame tips sideways — the mug hits the floor before he does.
 
-**HUH. GREEN. — 0:20–0:24**
-
+**HUH. GREEN. — 0:21–0:24**
 Black, and the sound of a cooling fan spinning down.
 
 > **VO:** Huh. Green.
 
-**TOO BLUE — 0:24–0:31**
-
+**TOO BLUE — 0:24–0:29**
 Blinding green blur. Focus pulls: two centimetres off the ground, looking up through one trembling leaf at a sky that is *too* blue.
 
 > **VO:** Okay. Hospital ceiling. That's fine. Hospitals are green now.
 
-**FLAILING ONE (1) LEAF — 0:31–0:39**
-
+**FLAILING ONE (1) LEAF — 0:29–0:36**
 The leaf — *his* leaf — twitches when he panics, and the camera shakes with it.
 
 > **VO:** Scream. — No mouth. Run. — No legs. Flail?? — …I appear to be flailing one (1) leaf.
 
-**SEV-1 — 0:39–0:48**
-
+**SEV-1 — 0:36–0:47**
 The trembling stops. A beat of stillness.
 
 > **VO:** Right. Sev-1. You know the drill. Nobody panics on my incidents, including me. Step one: stop screaming — done, involuntarily. Step two: what do we actually know?
 
-**WHOAMI — 0:48–0:53**
-
+**WHOAMI — 0:47–0:52**
 Terminal text types itself over the shot.
 
 ```
@@ -77,8 +68,7 @@ $ whoami
 sapling (ficus. probably.)
 ```
 
-**SENSE — 0:53–1:03**
-
+**SENSE — 0:52–1:02**
 He pushes attention downward and the image blooms: an underground root-map, veins of dark water, mineral glitter, and far off a rhythmic thump felt as rings of light through soil.
 
 > **VO:** Sense. I can taste the water table. I can feel the ground. Something with feet is walking, about… four hundred meters northeast. Noted.
@@ -87,8 +77,7 @@ He pushes attention downward and the image blooms: an underground root-map, vein
 SENSE   ✓  roots / air / vibration
 ```
 
-**GROW — 1:03–1:12**
-
+**GROW — 1:02–1:08**
 He pushes outward. Nothing. He pushes harder — the sun arcs three times and one new leaf unfurls, smug and bright.
 
 > **VO:** Grow. Works. Latency: three days. Throughput: one leaf. I've shipped on worse.
@@ -97,8 +86,7 @@ He pushes outward. Nothing. He pushes harder — the sun arcs three times and on
 GROW    ✓  slow. directional.
 ```
 
-**UNDEFINED — 1:12–1:18**
-
+**UNDEFINED — 1:08–1:11**
 He tries everything else. The trunk strains against nothing and nothing happens.
 
 ```
@@ -110,20 +98,17 @@ SPEAK   ✗  undefined
 
 > **VO:** …That's the whole API.
 
-**I ALWAYS LEFT — 1:18–1:26**
-
+**I ALWAYS LEFT — 1:11–1:20**
 The sapling, and an empty road running out of frame.
 
 > **VO:** Every problem I ever had — the job, the pager, the retry loop — I solved it the same way, eventually. I walked away.
 
-**WORTH STAYING IN — 1:26–1:37**
-
+**WORTH STAYING IN — 1:20–1:32**
 Low at the base of the trunk: roots gripping soil, holding on to the one patch of ground they have.
 
 > **VO:** New constraint. Whatever comes over that hill — a storm, an axe, a war, a conversation — I will be *here* for all of it. I can't leave. I can only make this spot… worth staying in.
 
-**SOMETHING'S COMING — 1:37–1:44**
-
+**SOMETHING'S COMING — 1:32–1:36**
 Underground: the far-off thump-thump is closer now, the rings of light through the soil brighter and faster.
 
 > **VO (quiet):** Something's coming.
