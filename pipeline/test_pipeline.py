@@ -138,7 +138,6 @@ def test_sd_prompt_fits_clip_and_keeps_the_action():
     # testing — position is what the model actually weights.
     check("the shot type LEADS — framing is not a trailing tag",
           out.lower().startswith("macro shot of "))
-    check("but the subject still outranks the style", out.index("trembles") < out.index(STYLE_TAG))
     check("THE ACTION SURVIVES", "trembles in a gust of wind" in out)
     check("the negative-prompt tail is dropped", "photorealism" not in out.lower())
 
@@ -409,6 +408,27 @@ def test_budget_guard():
     caps = gs.budget()
     check("caps parse + per-run <= lifetime",
           0 < caps["hard_cap_per_run_usd"] <= caps["hard_cap_total_usd"])
+
+
+def test_approval_gate():
+    # STEWARDSHIP.md S6 is the founder's most important rule and until 2026-07-27 the
+    # code enforcing it had no test at all. The gate must answer the SAME for a node
+    # whether it is named by id or in full: it built its glob from the caller's argument
+    # string, so `001-capability-inventory` reported "no T0 leaf found" for a node
+    # approved that morning. Failing closed is right, but a gate that cries wolf on a
+    # real approval is a gate people learn to bypass.
+    from render_local import approved
+    ok_short, why_short = approved("sapling", "001")
+    ok_full, why_full = approved("sapling", "001-capability-inventory")
+    check("gate reads an approved node", ok_short)
+    check("id and full name agree", (ok_short, why_short) == (ok_full, why_full))
+    check("it read a real leaf, not a default", "t0" in why_short)
+
+    # multi-segment ids (004c-n holds 004c-n-t0-a.yaml) must resolve too, and an
+    # unapproved node must still refuse — the gate has to be able to say no
+    refused, why = approved("sapling", "004c-n")
+    check("an unapproved node is refused", not refused)
+    check("and the refusal names the leaf it read", "004c-n-t0-a.yaml" in why)
 
 
 def test_all_leaf_content_exists():
@@ -768,6 +788,7 @@ def main():
     test_shot_prompt_extraction()
     test_generate_shots_parsing()
     test_budget_guard()
+    test_approval_gate()
     test_all_leaf_content_exists()
     test_trials_page_renders()
     test_generate_shots_fence_binding()

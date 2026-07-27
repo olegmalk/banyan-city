@@ -141,7 +141,15 @@ def approved(genome: str, node: str) -> tuple:
     d = next((x for x in sorted(nodes.iterdir()) if x.is_dir() and x.name.startswith(node)), None)
     if not d:
         raise SystemExit(f"no node dir starting with {node!r}")
-    leaves = sorted((d / "leaves").glob(f"{node}-t0-*.yaml"))
+    # Glob for ANY t0 yaml rather than building the prefix from the caller's argument.
+    # Leaf ids are not the dir name (dir `001-capability-inventory` holds `001-t0-d.yaml`)
+    # and are not uniformly the first segment either (`004c-n` holds `004c-n-t0-a.yaml`),
+    # so `f"{node}-t0-*.yaml"` found nothing whenever the node was named in full: on
+    # 2026-07-27 `push 001-capability-inventory` reported "no T0 leaf found" for a node
+    # the founder had approved that morning. It failed closed, which is the right
+    # direction to fail, but a gate that misreads a real approval as a missing one
+    # teaches people to reach for the override. leaves/ belongs to one node — just read it.
+    leaves = sorted((d / "leaves").glob("*-t0-*.yaml"))
     if not leaves:
         return False, "no T0 leaf found"
     meta = yaml.safe_load(leaves[-1].read_text()) or {}
