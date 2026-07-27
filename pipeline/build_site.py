@@ -140,7 +140,7 @@ def page(title: str, body: str, depth: int = 0, path: str = "", desc: str = "") 
 </head>
 <body>
 <main>
-<nav class="crumbs"><a href="{root}index.html">🌳 {REPO_NAME}</a> · <a href="{root}city.html">the city</a> · <a href="{REPO_URL}">source</a></nav>
+<nav class="crumbs"><a href="{root}index.html">🌳 {REPO_NAME}</a> · <a href="{root}city.html">the city</a> · <a href="{root}machine.html">how it works</a> · <a href="{REPO_URL}">source</a></nav>
 {body}
 <footer>Everything here is auditable in <a href="{REPO_URL}">git</a>.
 Branch anything. Fork everything. · <a href="{root}city.html">The Promise</a></footer>
@@ -455,6 +455,11 @@ def render_index(genomes: list) -> str:
         if lead and not hero_video:
             hero_video = (f'<video controls playsinline preload="metadata" '
                           f'src="{g["tree"]["id"]}/leaves/{html.escape(str(lead["content"]))}"></video>')
+    workshop = ('<p class="notice">🎬 <strong>The workshop is open:</strong> every episode '
+                'publishes its full generation recipe — stills, prompts, settings, takes. '
+                '<a href="sapling/001-capability-inventory-shots.html">See episode 1\'s shot board</a>, '
+                'bring your own tools, and <a href="machine.html">read how the whole machine works</a>.</p>')
+    sections.append(workshop)
     for g in genomes:
         t = g["tree"]
         tree_html = "<ul class='tree'>" + "".join(node_card(t["id"], r, 0) for r in g["roots"]) + "</ul>"
@@ -630,6 +635,11 @@ def main() -> None:
     (OUT / "watch.html").write_text(render_watch(genomes))
     (OUT / "create.html").write_text(render_create())
     (OUT / "city.html").write_text(render_city())
+    (OUT / "machine.html").write_text(page(
+        "The Machine — how this operates",
+        md_to_html((REPO / "MACHINE.md").read_text()),
+        path="machine.html",
+        desc="The whole loop on one page: script, approval, stills, takes, assembly, reactions, branching."))
     (OUT / "feed.xml").write_text(render_feed(genomes))
     (OUT / ".nojekyll").write_text("")
     og = REPO / "assets" / "og.png"          # social-share image referenced by page() meta
