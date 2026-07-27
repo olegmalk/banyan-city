@@ -202,6 +202,11 @@ def chips(n: dict) -> str:
 
 
 def node_card(genome_id: str, n: dict, depth: int) -> str:
+    # D11: the workshop is a first-class destination — every node with a shot
+    # list advertises its board from the front page, not two clicks deep.
+    board = (f' · <a href="{genome_id}/{html.escape(n["slug"])}-shots.html">🎬 shot board</a>'
+             if (REPO / "genomes" / genome_id / "nodes" / n["slug"] / "shots.md").exists()
+             else "")
     teaser = f'<div class="teaser">{html.escape((n["teaser"][:160] + "…") if len(n["teaser"]) > 160 else n["teaser"])}</div>' if n["teaser"] else ""
     react = f' · <a href="{html.escape(n["reactions"]["url"])}">💧 react</a>' if n.get("reactions") else ""
     kids = ""
@@ -211,7 +216,7 @@ def node_card(genome_id: str, n: dict, depth: int) -> str:
 {chips(n)}
 <div class="title"><a href="{genome_id}/{html.escape(n['slug'])}.html">{html.escape(n['title'])}</a></div>
 {teaser}
-<div class="meta">{len(n['leaf_meta'])} {'leaf' if len(n['leaf_meta']) == 1 else 'leaves'} · <a href="{genome_id}/{html.escape(n['slug'])}.html">read</a>{react}</div>
+<div class="meta">{len(n['leaf_meta'])} {'leaf' if len(n['leaf_meta']) == 1 else 'leaves'} · <a href="{genome_id}/{html.escape(n['slug'])}.html">read</a>{board}{react}</div>
 </div>{kids}</li>"""
 
 
