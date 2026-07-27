@@ -57,6 +57,20 @@ does not trust delegation past a risky artefact:
   + one reason". Thirty seconds of founder eyes at the right moment beats an
   hour of compute at the wrong one.
 
+## Constraints are decisions, and decisions go to the founder first (2026-07-27)
+
+The founder judged the first motion clip without knowing it was made at the
+bottom of the quality ladder — SVD, chosen silently because it was the best
+model the $0 constraint and the free T4 could run. The rejection was instant
+and the options list ("what free buys / what $5-12 per episode buys") only came
+out afterwards. That inverts the review gate.
+
+**When a constraint (money, hardware) forces less than the best available tool
+on the critical path, the tradeoff goes to the founder BEFORE the work is made
+— what the constraint costs in quality, what lifting it costs in dollars. The
+steward never silently picks the floor and lets the founder discover the
+ceiling.** The $0 default stands; hiding it does not.
+
 ## Rules
 
 - **Benchmark: episode 001** (the front door — every viewer judges the
