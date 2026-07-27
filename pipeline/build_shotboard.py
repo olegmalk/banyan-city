@@ -31,7 +31,7 @@ from sd_prompt import compress, extra_negatives, suppressed_negatives  # noqa: E
 NEG = ("photorealistic, 3d render, abstract, text, watermark, signature, low quality, "
        "blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture")
 STILL_MODEL = "cagliostrolab/animagine-xl-3.1"
-STILL = {"width": 832, "height": 1216, "steps": 40, "cfg": 7.0, "seed_base": 20260719}
+STILL = {"width": 832, "height": 1216, "steps": 40, "cfg": 7.5, "seed_base": 20260719}
 MOTION = {"engine": "LTX-Video (Lightricks/LTX-Video) under evaluation; "
                     "prior takes: Stable Video Diffusion",
           "size": "512x768", "note": "commercial platforms welcome — Kling, Veo, "

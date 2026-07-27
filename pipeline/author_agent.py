@@ -203,6 +203,11 @@ def cmd_blindset(args) -> int:
 
 
 def main() -> int:
+    # Runs against the CALLER's ANTHROPIC_API_KEY by design (WATERING.md: compute
+    # as watering) — but it must say so before it bills them (audit finding #6).
+    if "--yes" not in sys.argv:
+        raise SystemExit("author_agent calls the Anthropic API on YOUR key (your money,"
+                         " your contribution). Re-run with --yes to acknowledge.")
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = parser.add_subparsers(dest="cmd", required=True)
     s = sub.add_parser("select", help="select the canonical leaf for a node")

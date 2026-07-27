@@ -669,6 +669,17 @@ def main() -> int:
     p.add_argument("--suffix", default="a", help="leaf suffix (default a)")
     p.add_argument("--no-cards", action="store_true", help="skip title/end cards")
     args = p.parse_args()
+
+    # STEWARDSHIP §6: narrative approval precedes media. This tool was one of the
+    # three that made 8.7 GPU-hours of media from unread scripts on 2026-07-25 and
+    # still had no gate on 2026-07-27 (principles audit, finding #1). One gate, one
+    # implementation: render_local.approved().
+    from render_local import approved as _approved
+    _ok, _detail = _approved(args.genome, args.node)
+    if not _ok:
+        raise SystemExit(f"{args.node} is NOT approved — {_detail}\n"
+                         "STEWARDSHIP.md §6: no episode assembly from an unread script\n"
+                         "(bench cuts included — a cut IS media).")
     check_clips_dir(args.clips)
 
     genome_dir = REPO / "genomes" / args.genome

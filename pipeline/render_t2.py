@@ -317,8 +317,18 @@ def build_audio_track(ff: str, video: Path, shots: list, workdir: Path) -> None:
 
 
 def tts_openai(text: str, out: Path) -> float:
-    """Narrate one frame via OpenAI TTS. Returns cost estimate (USD)."""
+    """Narrate one frame via OpenAI TTS. Returns cost estimate (USD).
+
+    PAID. Guarded since the 2026-07-27 principles audit (finding #6): this
+    function billed whatever OPENAI_API_KEY was present the moment --tts openai
+    was passed — no --yes, no cap, no ledger row, while CLAUDE.md promises
+    "spend guards are code". Spend is founder-authorized only; the voice engine
+    is Chatterbox (local, $0) — this path exists for provenance of old leaves.
+    """
     import urllib.request
+    if "--yes" not in sys.argv:
+        raise SystemExit("--tts openai is PAID (≈$12/1M chars) and needs an explicit "
+                         "--yes (founder authorization). The $0 path is Chatterbox.")
     key = os.environ["OPENAI_API_KEY"]
     req = urllib.request.Request(
         "https://api.openai.com/v1/audio/speech",

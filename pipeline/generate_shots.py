@@ -316,6 +316,17 @@ def main() -> int:
                         "ledger records $0.00 (with the list-price noted) and the money caps "
                         "don't count it. Still requires --yes. Do NOT pass once quota is exhausted.")
     args = p.parse_args()
+
+    # STEWARDSHIP §6: narrative approval precedes media. This tool was one of the
+    # three that made 8.7 GPU-hours of media from unread scripts on 2026-07-25 and
+    # still had no gate on 2026-07-27 (principles audit, finding #1). One gate, one
+    # implementation: render_local.approved().
+    from render_local import approved as _approved
+    _ok, _detail = _approved(args.genome, args.node)
+    if not _ok:
+        raise SystemExit(f"{args.node} is NOT approved — {_detail}\n"
+                         "STEWARDSHIP.md §6: no PAID footage from an unread script.")
+
     if args.quota_covered and args.provider != "wan":
         p.error("--quota-covered applies only to --provider wan — the sole provider "
                 "with a free quota (pipeline/t3-trials/free-routes.md)")

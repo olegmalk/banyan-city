@@ -288,6 +288,16 @@ def main() -> int:
     genome_dir = REPO / "genomes" / args.genome
     vcfg = load_voices(genome_dir)
 
+    # STEWARDSHIP §6: narrative approval precedes media. This tool was one of the
+    # three that made 8.7 GPU-hours of media from unread scripts on 2026-07-25 and
+    # still had no gate on 2026-07-27 (principles audit, finding #1). One gate, one
+    # implementation: render_local.approved().
+    from render_local import approved as _approved
+    for slug in args.slugs:
+        _ok, _detail = _approved(args.genome, slug)
+        if not _ok:
+            raise SystemExit(f"{slug} is NOT approved — {_detail}\n"
+                             "STEWARDSHIP.md §6: no voice from an unread script.")
     for slug in args.slugs:
         node_dir = genome_dir / "nodes" / slug
         frames = parse_frames(extract_script((node_dir / "node.md").read_text()))
