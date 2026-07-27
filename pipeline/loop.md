@@ -22,6 +22,22 @@ The episode being remade is just the loop's test bench.
 5. **LOG** — `pipeline/loop/cycle-NNN.md`: defects found → fixes applied →
    what the founder felt → what the numbers did. Then go to 1.
 
+## Cadence (founder's dad, 2026-07-27): iterate in minutes, not episodes
+
+Two full remakes of 001 were rendered end-to-end and each was rejected *as a
+whole* — all the diagnosis happened after the hour was spent. The directive:
+**iterate every ~5 minutes with the founder looking.** In practice:
+
+- **A still is the unit of review, not an episode.** Draw one beat's frame
+  (`pipeline/still_local.py`, MPS, minutes), founder verdicts it, fix the
+  prompt, redraw. Cheap stage catches the miss 8x cheaper than motion and
+  ~100x cheaper than an assembled episode.
+- **A beat earns animation only after its still is approved.** SVD cannot fix
+  a wrong picture; it can only move it.
+- **Kaggle is the batch confirmer, not the iteration loop.** It publishes
+  output only when a kernel ends, so its floor is ~25 min per look — use it to
+  mass-produce what the founder already approved frame by frame.
+
 ## Rules
 
 - **Benchmark: episode 001** (the front door — every viewer judges the
