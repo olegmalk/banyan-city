@@ -234,3 +234,34 @@ show's look, conditioned into every beat at ~0.3 — is the remaining answer to
 **Still pending:** re-voicing the trunk (002b–007a) — every story decision of
 2026-07-25/26 left those takes stale, and `retime_beats` now refuses when a take
 does not say what the script says. ~1 h MPS job.
+
+## 2026-07-27 evening — the founder took the wheel, and the look changed
+
+**The visual language is new.** Roman reviewed ~10 iteration rounds live (dad's
+directive: iterate in minutes, founder reviews everything) and killed the flat/
+low-detail/pastel look — "i can barely make anything out of it". The approved
+look is Animagine XL 3.1's native register: full cinematic detail, real light,
+tag-dialect prompts. 001's shot list is rewritten in it. `style.md` is now STALE
+(still describes the killed look); its v3 rewrite awaits the founder's word.
+Cast locked: protagonist = glasses, messy hair, hoodie with hood DOWN.
+
+**Stills approval state, episode 1:** beats 1/2/3/8/9/13 approved and committed
+as canonical pixels in `nodes/001-*/stills/` — the notebook reuses a committed
+still rather than redrawing, so approval binds pixels, not prompts. Beats
+4/5/6/7/10/11/12/14/15 in round 4 (pick-of-4 seeds, kernel v46). Standing
+lesson after three all-miss rounds: the model draws what anime is full of and
+gambles on rare compositions — so story-critical graphics (10/15's sonar rings)
+moved to deterministic POST overlays, and stubborn beats get seed-variants, not
+rewording.
+
+**Process now enforced in loop.md:** stills are the review unit; a beat earns
+motion only after its still is approved; review gates BLOCK; the steward
+summons the founder (push notification) and never proceeds past a gate because
+the reviewer is slow. Batches run on Kaggle (STILLS_ONLY mode, SEEDS_PER_BEAT
+dial) — never on the founder's Mac after the fan incident; local MPS is for
+single frames only (still_local.py, fp32 — fp16 NaNs to black on this machine).
+
+**CI incident:** lint-genome was red 15:39–18:10 across ~20 pushes (numpy import
+CI lacks; estimate-vs-exact token counter divergence) and the founder found out
+from his inbox. Fixed both, plus the habit: `gh run list` after every push, and
+a CI-simulation venv holding exactly what the workflow installs.
