@@ -176,8 +176,15 @@ def gen_veo(prompt: str, model: str, dur: int) -> tuple:
     raise RuntimeError("veo: generation timed out")
 
 
-def gen_fal(prompt: str, model: str, dur: int) -> tuple:
-    """fal.ai aggregator queue API. Needs FAL_KEY; --model picks the hosted model."""
+def gen_fal(prompt: str, model: str, dur: int, image: Path | None = None) -> tuple:
+    """fal.ai aggregator queue API. Needs FAL_KEY; --model picks the hosted model.
+
+    With `image` (a founder-approved still), the call is IMAGE-to-video: the
+    approved pixels are the shot, the API only moves them — same contract as
+    the free engines, so a paid take competes on the board like any other.
+    The still travels as a data URI (fal accepts them; no third-party hosting
+    of unpublished frames).
+    """
     key = os.environ.get("FAL_KEY")
     if not key:
         raise SystemExit("fal: set FAL_KEY (fal.ai/dashboard/keys)")
@@ -194,6 +201,12 @@ def gen_fal(prompt: str, model: str, dur: int) -> tuple:
     #   veo3.1:    duration "4s"/"6s"/"8s", resolution, generate_audio
     # generate_audio=false everywhere — the T3 post pipeline owns sound.
     payload = {"prompt": prompt, "aspect_ratio": "9:16", "generate_audio": False}
+    if image is not None:
+        import base64
+        b64 = base64.b64encode(image.read_bytes()).decode()
+        payload["image_url"] = f"data:image/png;base64,{b64}"
+        if "text-to-video" in model:
+            model = model.replace("text-to-video", "image-to-video")
     if "veo" in model:
         payload["duration"] = f"{dur if dur in (4, 6, 8) else 8}s"
         payload["resolution"] = "720p"
@@ -308,6 +321,10 @@ def main() -> int:
     p.add_argument("--clips-dir", type=Path, default=None,
                    help="where clips land (default: <node>/clips/)")
     p.add_argument("--duration", type=int, default=DEFAULT_DURATION)
+    p.add_argument("--from-stills", action="store_true",
+                   help="image-to-video from the node's founder-APPROVED stills "
+                        "(nodes/<node>/stills/NN-slug.png); refuses beats with no "
+                        "approved still — approval binds pixels (fal provider only)")
     p.add_argument("--dry-run", action="store_true")
     p.add_argument("--yes", action="store_true",
                    help="REQUIRED to spend: confirms the printed estimate. No flag, no API call.")
@@ -387,8 +404,16 @@ def main() -> int:
     gen = PROVIDERS[args.provider]
     for s in todo:
         print(f"  beat {s['num']:02d} ({s['slug']}) … ", end="", flush=True)
+        _img = None
+        if args.from_stills:
+            _img = node_dir / "stills" / f"{s['num']:02d}-{s['slug']}.png"
+            if not _img.exists():
+                raise SystemExit(f"beat {s['num']:02d}: no APPROVED still — the paid "
+                                 "rail only animates founder-approved pixels.")
         try:
-            url, meta = gen(s["prompt"], args.model, args.duration)
+            url, meta = (gen(s["prompt"], args.model, args.duration, image=_img)
+                         if args.from_stills else
+                         gen(s["prompt"], args.model, args.duration))
         except RuntimeError as e:
             raise SystemExit(f"\nbeat {s['num']:02d} ({s['slug']}): {e}") from e
         beat_est = round(eff_dur * rate, 2)

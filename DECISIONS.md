@@ -266,3 +266,15 @@ as watering" promoted from Phase-3 roadmap to the present deliverable:
 
 The steward is also directed to be strict and push back on nonsense — the
 founder's own asks included.
+
+## D12 — No money rails: contributors are people with tasks (RESOLVED, dad's direction affirmed by the founder in-session, 2026-07-27)
+
+The watering MONEY rail (D5's payment half) is parked indefinitely. A contributor
+is a **person with a task**: they take a beat off the shot board and bring their
+own tools, their own API key (billed by their own provider, never held by us), or
+their own free compute (fork the Kaggle notebook under their own account). All
+contributions land in the ledger as `type: compute`, credited by name — visible
+and branch-ordering without any money touching the project. Rationale: same
+power for everyone, very simple, and no payment custody in a family project.
+The founders' own spend (the $15 motion authorization) remains separate,
+founder-authorized, capped, and ledgered as before.

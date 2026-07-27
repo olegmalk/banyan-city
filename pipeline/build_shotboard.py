@@ -123,6 +123,7 @@ def board_html(genome: str, d: Path, rel: str = "") -> str:
         neg = beat_neg(s["prompt"])
         still = stills_dir / f"{s['num']:02d}-{s['slug']}.png"
         approved = still.exists()
+        s_num = s["num"]
         rows.append(f"""
 <section class="beat" id="beat-{s['num']:02d}">
   <h2>Beat {s['num']:02d} — {html.escape(s['slug'].replace('-', ' ').upper())}
@@ -147,17 +148,23 @@ def board_html(genome: str, d: Path, rel: str = "") -> str:
   {'' if approved else variant_cells(d / "takes" / "stills", s["num"], rel)}
   {f'<p class="vote">🗳 <b>Vote:</b> comment <code>beat {s["num"]:02d}: A</code> (or B/C/D, or <code>none</code> + why) on <a href="{vote_url}">the reactions thread</a> — every vote counts the same way, the founder&#39;s included (weights per D3).</p>' if not approved and vote_url else ''}
   {take_cells(d / "takes" / "clips", s["num"], s["slug"], rel)}
-  <details><summary>Fork this beat</summary>
+  <details><summary>🛠 Take this task (no money — bring your tools, your key, or free compute)</summary>
     <ol>
-      <li><b>Better take, same recipe:</b> generate with the still + prompts above
-          on your platform and credits, then submit the clip
-          (<code>pipeline/t3-trials/intake.py</code> normalizes; provenance required:
-          platform, model, your prompt if changed, cost).</li>
-      <li><b>Better prompt:</b> edit this beat's fence in
-          <code>genomes/{a.genome}/nodes/{d.name}/shots.md</code> and open a PR —
-          prompts are text; the diff is the review.</li>
-      <li><b>What decides:</b> the founder's screening (R4); contributions land in
-          the ledger as compute-watering (WATERING.md).</li>
+      <li><b>Your own tools:</b> feed the still + prompts above to any generator you
+          already use (Kling, Runway, Pika…), then submit the clip via a GitHub issue
+          with a link — say the beat number and what you used.</li>
+      <li><b>Your own API key:</b> clone the repo, put <code>FAL_KEY=…</code> in
+          <code>.env</code>, run
+          <code>python3 pipeline/generate_shots.py {a.genome} {d.name.split('-')[0]} --provider fal --beats {s_num:02d} --from-stills --yes</code>
+          — your provider bills <i>you</i>, the tool stamps provenance and a
+          <code>type: compute</code> ledger credit in your name. Your key never
+          leaves your machine.</li>
+      <li><b>Free compute:</b> fork <code>pipeline/kaggle/render-kaggle.ipynb</code>
+          on your own Kaggle account and run it there.</li>
+      <li><b>Better prompt instead:</b> edit this beat's fence in
+          <code>genomes/{a.genome}/nodes/{d.name}/shots.md</code>, open a PR.</li>
+      <li><b>What decides:</b> the founder's screening (R4). Nothing you submit is
+          published before a human screens it.</li>
     </ol>
   </details>
 </section>""")
