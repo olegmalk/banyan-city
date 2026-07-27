@@ -1,0 +1,10 @@
+# Shot provenance (7.2)
+cost_usd: 0
+fps: 24
+frames: 97
+model: 'still: cagliostrolab/animagine-xl-3.1 | motion: Lightricks/LTX-Video'
+platform: kaggle-free-gpu
+prompt: a young man typing rapidly on a keyboard, his fingers move quickly over the
+  keys, slight shoulder movement, the monitor glow flickers gently on his hoodie,
+  steady locked camera, smooth consistent motion
+seed: 20260720

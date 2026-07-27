@@ -237,7 +237,7 @@ does not say what the script says. ~1 h MPS job.
 
 ## 2026-07-27 evening — the founder took the wheel, and the look changed
 
-**The visual language is new.** Roman reviewed ~10 iteration rounds live (dad's
+**The visual language is new.** The founder reviewed ~10 iteration rounds live (dad's
 directive: iterate in minutes, founder reviews everything) and killed the flat/
 low-detail/pastel look — "i can barely make anything out of it". The approved
 look is Animagine XL 3.1's native register: full cinematic detail, real light,
