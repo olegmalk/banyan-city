@@ -48,15 +48,24 @@ def kaggle(*args, check=True):
 
 
 def set_node(node: str, steps: int | None = None, beats: str | None = None) -> None:
-    """Point the notebook's config cell at a node before pushing."""
+    """Point the notebook's config cell at a node before pushing.
+
+    BEATS is rewritten on EVERY push, including to None when --beats is omitted. It used
+    to be left alone unless a new value was given, so a push meant to render a whole
+    episode silently inherited the previous run's three-beat test subset \u2014 and reported
+    success, because rendering three of fifteen beats is not an error, just the wrong job.
+    Sticky config that looks like a full run is the same class of bug as the uncommitted
+    prompt: the output is plausible and the discrepancy is invisible.
+    """
     nb_path = HERE / "render-kaggle.ipynb"
     nb = json.loads(nb_path.read_text())
     cell = nb["cells"][1]["source"]
     for i, line in enumerate(cell):
         if line.startswith("NODE"):
             cell[i] = f'NODE   = "{node}"        # any node id with a shots.md\n'
-        elif beats and line.startswith("BEATS"):
-            cell[i] = f"BEATS  = {beats}          # e.g. [1, 3] or None for all beats without status \u2705\n"
+        elif line.startswith("BEATS"):
+            cell[i] = (f"BEATS  = {beats or None}          "
+                       "# e.g. [1, 3] or None for all beats without status \u2705\n")
         elif steps and line.startswith("STEPS"):
             cell[i] = f"STEPS  = {steps}            # 30 = faster/rougher, 50 = slower/cleaner\n"
     nb["cells"][1]["source"] = cell
