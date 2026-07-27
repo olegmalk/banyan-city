@@ -93,18 +93,15 @@ def main() -> int:
     if not torch.backends.mps.is_available():
         raise SystemExit("no MPS — this is the Apple-Silicon fast loop")
     t0 = time.time()
-    try:
-        pipe = StableDiffusionXLPipeline.from_pretrained(
-            BASE, torch_dtype=torch.float16, variant="fp16", use_safetensors=True)
-    except Exception:
-        pipe = StableDiffusionXLPipeline.from_pretrained(
-            BASE, torch_dtype=torch.float16, use_safetensors=True)
-    # SDXL's original VAE overflows in float16 and decodes to SOLID BLACK — the first
-    # local still (2026-07-27) came back 832x1216 of pure #000. Kaggle's T4 dodges it
-    # (its notebook run upcasts); MPS does not. The community fp16-safe VAE is the fix.
-    from diffusers import AutoencoderKL
-    pipe.vae = AutoencoderKL.from_pretrained("madebyollin/sdxl-vae-fp16-fix",
-                                             torch_dtype=torch.float16)
+    # float32, deliberately. In fp16 on this machine's MPS the render came back SOLID
+    # BLACK twice on 2026-07-27 — first the stock SDXL VAE's known fp16 overflow, and
+    # after swapping in the fp16-safe VAE (madebyollin/sdxl-vae-fp16-fix) STILL contrast
+    # 0, i.e. the UNet itself NaNs in half precision (torch 2.6 + MPS + SDXL attention).
+    # fp32 weighs ~13 GB, which unified memory holds if this is the ONLY job — see the
+    # one-at-a-time warning in the header. Slower per step is an acceptable price; a
+    # black frame is not a faster iteration, it is zero iterations.
+    pipe = StableDiffusionXLPipeline.from_pretrained(
+        BASE, torch_dtype=torch.float32, use_safetensors=True)
     pipe.enable_attention_slicing()
     pipe.enable_vae_slicing()
     pipe.to("mps")
