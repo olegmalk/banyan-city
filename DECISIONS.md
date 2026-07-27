@@ -235,9 +235,10 @@ I would take (1) — the beats are long because they are carrying real weight, a
 splitting them is what the spec would say if asked. But it edits an approved
 script, so it waits.
 
-## D11 — The shot board: crowd-powered generation is the main artifact (RESOLVED, founder 2026-07-27)
+## D11 — The shot board: crowd-powered generation is the main artifact (directed by dad 2026-07-27; awaiting founder ratification)
 
-Founder directive, verbatim intent: *"we need a multiplayer system where multiple
+Dad's directive (relayed in-session; Roman flagged the authorship afterward),
+verbatim intent: *"we need a multiplayer system where multiple
 people can come and implement this video generation. They take the inputs like
 images and the prompt you generate, and then they run it through the system you
 suggest with their tokens and credits… If somebody doesn't like the first four
