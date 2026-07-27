@@ -22,7 +22,7 @@ Status legend: ✅ generated · ⬜ needs footage
 Line: "Yesterday I died fixing a server. Today I am a tree." Camera on the sapling, small in a moving field — the premise IS the image, and the grass gives the shot something to move.
 
 ```
-Vertical 9:16 wide shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds with large empty areas, gentle pastel-leaning palette. One tiny two-leaf seedling trembling in the wind, close in the foreground, tall grass bending in waves behind it, wide green meadow, drifting clouds, huge pale sky. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 wide shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds with large empty areas, gentle pastel-leaning palette. One small two-leaf seedling filling the lower third of the frame, its leaves trembling and shaking in the wind, tall grass bending in waves just behind it, distant meadow, drifting clouds, pale morning sky. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 02 — NO APOLOGY (0:05–0:09) ⬜ needs footage
@@ -30,7 +30,7 @@ Vertical 9:16 wide shot, hand-drawn 2D anime style, low detail: flat cel-shaded 
 Line: "Nobody has apologized." Camera pulls back to show how empty the world is.
 
 ```
-Vertical 9:16 wide shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. The wind dies and a tiny sapling's two leaves settle into stillness at the centre of an enormous empty field, the camera drifting slowly backward to reveal more and more emptiness around it — no buildings, no people, no path. Morning washes of peach and pale green. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 extreme wide shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds with large empty areas, gentle pastel-leaning palette. An enormous empty green field with wind moving across the grass in slow waves, no tree, no buildings, no people, only distance, a low pale horizon and clouds drifting overhead. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 03 — THE DESK (0:09–0:13) ⬜ needs footage
@@ -110,7 +110,7 @@ Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded c
 Terminal overlay beat ($ whoami). The frame shows TIME PASSING (shadow sweep) rather than 'unchanged' — the gate flagged four dead seconds on a static frame.
 
 ```
-Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. The long shadow of a tiny mascot-simple sapling sweeps slowly across flat-color grass as the sun crosses the sky — hours compressed into one held frame, the tree itself motionless at centre. Clean uncluttered composition with generous empty space in the upper frame for an overlay. Warm light shifting through the shot. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 low close shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds with large empty areas, gentle pastel-leaning palette. The long shadow of a small seedling sweeping slowly across flat sunlit grass as the light shifts, the seedling's thin stem and two leaves close at the edge of frame, blades of grass stirring. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 13 — THE TIMELAPSE (0:57–1:02) ⬜ needs footage
@@ -142,7 +142,7 @@ Vertical 9:16 medium close-up, hand-drawn 2D anime style, low detail: flat cel-s
 Line: "I solved it the same way, eventually. I walked away." Camera wide on the tiny sapling with an empty road leaving frame — the leaving is the image, and it is the one thing it can no longer do.
 
 ```
-Vertical 9:16 extreme wide shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A single tiny two-leaf sapling stands at the centre of an enormous empty green field while a dirt road runs away from it out of the frame toward a pale horizon, nothing travelling on it. Faint wind across the grass, the sapling barely moving. Lonely, still, cool afternoon light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 close shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds with large empty areas, gentle pastel-leaning palette. One small two-leaf seedling close in frame, leaves lifting and settling in a faint breeze, an out-of-focus green field and a dirt road behind it, pale horizon, quiet light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 17 — I ALWAYS LEFT (1:17–1:23) ⬜ needs footage
@@ -158,7 +158,7 @@ Vertical 9:16 low macro shot at soil level, hand-drawn 2D anime style, low detai
 Line: "That's the whole API." Camera widest — one small living thing, huge indifferent world.
 
 ```
-Vertical 9:16 extreme wide shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. Clouds sweep their shadows across an enormous empty field while one tiny fragile sapling holds its place at the centre, dwarfed to almost nothing by the landscape and the vast flat sky. Lonely, quietly epic, slow push-in. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 low macro shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds with large empty areas, gentle pastel-leaning palette. Thin pale roots of a small seedling gripping dark crumbling soil, tightening, loose grains shifting, blades of grass moving around the stem, warm low raking light, shallow focus. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 19 — THE TREMOR (1:30–1:35) ⬜ needs footage

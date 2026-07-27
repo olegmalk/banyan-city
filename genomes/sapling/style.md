@@ -110,6 +110,33 @@ Two things follow, and both are drawable:
   one leaf-tilt spent the whole day's reserve, and it is why the finale's bloom
   costs something.
 
+## A shot is a subject OR a vista — never a small subject inside one
+
+Discovered 2026-07-26/27 across five renders of the same beat. SD1.5 will draw a
+subject close, and it will draw an empty landscape, and asked for "one tiny sapling
+alone in a vast field" it draws the **field** and omits the sapling entirely. At
+512x768 a genuinely tiny thing is a few pixels; the model resolves the composition
+it can see. Rewording does not fix it — subject-first, environment-first, scale
+negatives and four phrasings all produced either a landscape with no tree or a
+specimen on a void.
+
+So the smallness is carried by the **cut**, not by one frame:
+
+- a beat whose line is about the tree -> **close on the tree**, with grass, sky or
+  soil moving behind it (which is also what gives SVD something to animate)
+- a beat whose line is about the emptiness -> **wide of the empty field, no tree in
+  it at all**
+- where the contrast is the point -> both, as consecutive beats
+
+This is why cycle-007's density rule pays for itself twice: with 20 beats instead of
+5, an idea can afford two shots, and "a tiny thing in an enormous world" is a cut
+rather than a compromise.
+
+Prompt structure that follows from it, in order: **subject, then setting as trailing
+tags, then style.** Whatever leads the prompt becomes the composition — leading with
+the style tag produced abstract lineart, leading with the shot type produced a macro
+of leaves, and leading with the meadow produced a meadow with no sapling.
+
 ## Canonical growth ladder (per node) — steward, 2026-07-25
 
 Growth is the protagonist's only verb, so his **size is continuity**, and it
