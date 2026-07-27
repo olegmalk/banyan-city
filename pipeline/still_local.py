@@ -52,6 +52,11 @@ def main() -> int:
     ap.add_argument("--seed-bump", type=int, default=0,
                     help="try a different composition without touching the prompt")
     ap.add_argument("--note", default="", help="tag for the output filename")
+    ap.add_argument("--raw", default="",
+                    help="EXPERIMENT: send this prompt verbatim instead of the beat's "
+                         "shots.md prompt — for A/B-ing prompt dialects in the fast "
+                         "loop. The winner gets written back into shots.md; canon "
+                         "renders never use --raw.")
     a = ap.parse_args()
 
     ok, detail = approved(a.genome, a.node)
@@ -67,7 +72,10 @@ def main() -> int:
     if not shot:
         raise SystemExit(f"no beat {a.beat} in {d.name}/shots.md")
 
-    ptext, dropped = compress(shot["prompt"])
+    if a.raw:
+        ptext, dropped = a.raw, []
+    else:
+        ptext, dropped = compress(shot["prompt"])
     neg = NEG
     for term in suppressed_negatives(shot["prompt"]):
         neg = neg.replace(term + ", ", "")
