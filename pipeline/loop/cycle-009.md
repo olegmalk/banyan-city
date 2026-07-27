@@ -142,7 +142,47 @@ on the wrong stage.
 - SDXL + SVD confirmed as the stack: real motion, and a coherent style family
   across shots, which was the "fifteen unrelated AI images" complaint.
 - Five prompt/gate fixes committed; 244 checks pass, lint clean.
-- Re-render of beats 1/3/4/6 in flight for the like-for-like verdict.
+- Re-render of beats 1/3/4/6 done — verdict below.
 - **Open, and the founder's call:** a style plate — one image defining the show's
   look, conditioned into every beat via IP-Adapter at ~0.3 — needs him to pick
   which frame *is* the show. That is a taste judgement (R4), not mine to make.
+
+## Addendum — v39: two of four fixed, and the fault the fixes revealed
+
+Same four beats, prompts repaired. Motion held (median 13.1). Beat 3's contrast went
+66 → 110, which is what un-negating `text` should do.
+
+| beat | v38 | v39 |
+|---|---|---|
+| 01 keyboard | hands on a keyboard, correct | correct, cleaner |
+| 03 deploy-succeeded | abstract magenta shapes | **an actual screen**, teal display, cursor — no terminal text yet |
+| 04 the-fall | abstract grey mush | **the room opens up** — desk, chair, papers lifting — and *nobody in it* |
+| 06 too-blue | a field of blades | still a field of blades |
+
+Beat 4 is the interesting one. The framing fix worked exactly as intended — a medium
+shot that shows the desk, the chair and the papers coming off it — and the man the
+beat is *about* is absent. Correct furniture, no person.
+
+**Animagine is Danbooru-trained, and in that vocabulary a person is declared by a
+count tag** — `1boy`, `1girl`, `2others` — before anything else in the caption.
+Without one, the human is optional scenery. None of my prompts had one, and **93 of
+the genome's 177 prompts open on a person.** Over half the show was asking for
+people in a dialect the model does not read that way.
+
+That is the second time this cycle the fault was me not reading how this model
+expects to be addressed — the booster tags and `abstract` negative were the first.
+The lesson is cheap and I keep re-learning it expensively: **read the model card
+before blaming the model.**
+
+Fixed with the same first-clause scoping used for `text`, plus a possessive rule,
+because a false positive here is as bad as a miss: a ledger page "beneath a woman's
+thumb" must not summon a whole woman, and a close-up of "a goblin's clawed fingers"
+stays a shot of hands. Beat 1 of 001 is the proof — a pair of hands renders
+correctly with no count tag at all, so body-part shots are left alone.
+
+Beat 6 barely moved because "grass blades swaying at the edges" was out-competing
+the single leaf that is the subject; the frame filled with what the clause named.
+Cut, with grass/field/other-leaves in the negative.
+
+**Standing shape of this cycle:** every fix so far has been the renderer speaking
+the model's language, not a change to the show. Nothing in the narrative moved.
