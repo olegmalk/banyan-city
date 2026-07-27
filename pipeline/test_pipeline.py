@@ -131,9 +131,28 @@ def test_sd_prompt_fits_clip_and_keeps_the_action():
     check("the style instruction survives, compactly", STYLE_TAG in out)
     # subject first: leading with style made SD draw the style as the subject
     check("the subject leads, the style trails", out.index("trembles") < out.index(STYLE_TAG))
-    check("the shot type survives — framing is not decoration", "macro shot" in out)
+    # Framing must not merely survive, it must LEAD. As a trailing tag it survived this
+    # assertion for weeks and was still ignored by the renderer: every SDXL test beat on
+    # 2026-07-26 came back an extreme macro crop, including a "medium shot" of a man that
+    # drew a close-up of his chair. "Present in the string" was never the property worth
+    # testing — position is what the model actually weights.
+    check("the shot type LEADS — framing is not a trailing tag",
+          out.lower().startswith("macro shot of "))
+    check("but the subject still outranks the style", out.index("trembles") < out.index(STYLE_TAG))
     check("THE ACTION SURVIVES", "trembles in a gust of wind" in out)
     check("the negative-prompt tail is dropped", "photorealism" not in out.lower())
+
+    # Beat 3 of 001 is a terminal resolving a line of output — its subject IS text on a
+    # screen — and it rendered as abstract magenta shapes because `text` was negated
+    # twice: once by the standard negative, once by shots.md's boilerplate "no text"
+    # (which means "no burned-in caption", a render_t3 concern, not an image-model one).
+    from sd_prompt import suppressed_negatives
+    check("a screen subject un-negates 'text'",
+          "text" in suppressed_negatives("Vertical 9:16 close shot. A terminal spinner "
+                                         "resolving into a finished line. No text."))
+    check("a mere mention of a monitor does NOT un-negate it",
+          suppressed_negatives("Vertical 9:16 close shot. A pair of hands on a keyboard, "
+                               "faint monitor glow on his knuckles. No text.") == [])
     check("'no text' is dropped too", "no text" not in out.lower())
 
     # the regression that mattered most: an over-cautious token estimate once

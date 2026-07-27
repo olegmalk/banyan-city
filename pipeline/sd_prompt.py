@@ -40,7 +40,13 @@ import re
 # with it produced abstract lineart and no sapling). But trailing style is weakly
 # weighted, and vanilla SD1.5 defaulted to watercolour painting, so the tag is
 # front-loaded with the two words that matter most and repeated compactly.
-STYLE_TAG = "anime cel shading, flat colour, bold clean lineart, 2d animation still, pastel"
+# The trailing "masterpiece, best quality" are not decoration and not wishful: they are
+# the booster tags Animagine XL 3.1 was explicitly trained with (its model card scores
+# training captions on an aesthetic scale and expects them at inference). Omitting them
+# on 2026-07-26 got the exact failure its card warns about — flat abstract shapes in a
+# garish palette. `abstract` is correspondingly in the negative, notebook side.
+STYLE_TAG = ("anime cel shading, flat colour, bold clean lineart, 2d animation still, "
+             "pastel, masterpiece, best quality")
 
 # The style preamble ends at the first sentence break after the palette phrase.
 _STYLE_END = re.compile(r"(?:pastel[^.]*palette|gentle pastel[^.]*)\.\s*", re.I)
@@ -76,13 +82,39 @@ def _negated_nouns(text: str) -> list:
     return [m.group(1).strip() for m in _NEGATION.finditer(text)]
 
 
+# Some beats ARE the thing the standard negative prompt forbids. Beat 3 of 001 is a
+# terminal resolving a line of output — its entire subject is text on a screen — and
+# it came back (2026-07-26) as abstract magenta shapes, because `text` sits in the
+# renderer's standard negative AND shots.md's boilerplate "no text" (which means "no
+# burned-in caption") got extracted into the negative on top of it. Forbidding the
+# subject twice is a reliable way to not draw it. When the shot is a screen, `text`
+# has to come OUT of the negative — the caption ban belongs to render_t3, which
+# draws captions itself, not to the image model.
+_TEXT_SUBJECT = re.compile(
+    r"\b(terminal|console|screen|monitor|cursor|spinner|logs?|stack trace|"
+    r"code|command line|prompt line|dashboard|readout|sign|label)\b", re.I)
+
+
+def suppressed_negatives(prompt: str) -> list:
+    """Standard negative terms this beat's SUBJECT needs removed to be drawable.
+
+    Scoped to the FIRST CLAUSE, because a passing mention is not a subject: beats 1 and
+    4 of 001 say "faint monitor glow on his knuckles" and "cold monitor light" — the
+    monitor is lighting, not the shot. Un-negating `text` for those would only invite
+    the model to scribble gibberish signage into a shot that never asked for any.
+    """
+    body = re.sub(r"^[a-z ]*shot of ", "", compress(prompt)[0], flags=re.I)
+    return ["text"] if _TEXT_SUBJECT.search(body.split(",")[0]) else []
+
+
 def extra_negatives(prompt: str) -> str:
     """Negative terms this beat needs on top of the renderer's standard ones."""
     parts = []
     if _SMALL.search(prompt):
         parts.append(SCALE_NEGATIVES)
     parts += _negated_nouns(prompt)
-    return ", ".join(parts)
+    blocked = set(suppressed_negatives(prompt))
+    return ", ".join(p for p in parts if p.lower() not in blocked)
 
 
 _TOKENIZER = None
@@ -164,8 +196,20 @@ def compress(prompt: str) -> tuple:
     # composition — leading with STYLE_TAG produced abstract lineart and no
     # sapling; leading with "macro shot." produced an extreme close-up of leaves
     # and no sapling either. The subject is the only thing that should be first.
-    tail = (f", {shot}" if shot else "") + f", {STYLE_TAG}"
-    head = ""
+    # FRAMING LEADS, but as the head of the subject's own noun phrase — "Medium shot
+    # of a hunched man tipping out of his chair", not "Medium shot." then the subject.
+    # As a trailing tag (", medium shot" at the end, where this used to be) framing has
+    # almost no weight: on 2026-07-26 all four SDXL test beats came back as extreme
+    # macro crops regardless of what they asked for, including a "medium shot" of a man
+    # that rendered as a close-up of a chair. The earlier failure that pushed framing to
+    # the end was a standalone leading SENTENCE ("macro shot.") which left the subject
+    # stranded in third position; folding it into the phrase keeps the subject noun at
+    # token 3-4, where it still governs the composition.
+    tail = f", {STYLE_TAG}"
+    # `head` is threaded through every token estimate below, so the framing prefix is
+    # counted against the 77-token budget rather than pushing the prompt over it after
+    # the fitting loop has already run.
+    head = f"{shot[0].upper() + shot[1:]} of " if shot else ""
     dropped = []
     sentences = [s for s in re.split(r"(?<=[.!?])\s+", action) if s.strip()]
 
@@ -188,7 +232,10 @@ def compress(prompt: str) -> tuple:
         if not sentences[0].endswith((".", "!", "?")):
             sentences[0] += "."
 
-    out = (head + " ".join(sentences)).strip()
+    body = " ".join(sentences).strip()
+    if head and body:
+        body = body[0].lower() + body[1:]
+    out = (head + body).strip()
     if out.endswith("."):
         out = out[:-1]
     out = (out + tail).strip()
