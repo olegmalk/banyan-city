@@ -68,7 +68,7 @@ extreme close-up of the underside of one giant green leaf filling the entire fra
 Line: 'I appear to be flailing one (1) leaf.' The flail is the joke - camera on the leaf.
 
 ```
-low angle shot of one tiny sprout with a single leaf bent hard sideways, dynamic pose, centered, clear grass field, vivid blue sky, clean composition, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people, no hands, no speed lines, no trees. No photorealism, no 3D render look. 9:16 vertical, no text.
+one tiny sprout alone in a grass field, its single leaf bent far over to one side, mid-motion, low angle, vivid blue sky, simple clear composition, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people, no hands, no figure, no falling person, no trees. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 ## Beat 08 — SEV-1 (0:36–0:47) ⬜ needs footage
 
@@ -87,9 +87,11 @@ a tiny two-leaf green sprout standing alone in short grass, centered, quiet empt
 ## Beat 10 — SENSE (0:52–1:02) ⬜ needs footage
 
 Line: 'Sense. I can taste the water table.' Camera underground - the sense IS the image.
+The pulsing footstep-RINGS are a POST overlay (deterministic, like the terminal cards) —
+three founder-rejected rounds proved the model cannot be trusted to draw them.
 
 ```
-underground side view, dark brown soil filling the whole frame, a network of thin pale roots spreading downward from the top edge, tiny glowing blue water droplets along the roots, deep darkness below, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No cave, no tunnel, no burrow, no eye, no portal, no people, no sky. No photorealism, no 3D render look. 9:16 vertical, no text.
+dark underground soil texture filling the whole frame, side view, thin pale roots reaching down through the earth, small glowing blue water droplets between soil grains, quiet darkness, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people, no cave, no portal, no eye, no sky, no lightning. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 ## Beat 11 — GROW (1:02–1:08) ⬜ needs footage
 
@@ -122,7 +124,8 @@ macro close-up of thin white plant roots weaving between dark soil crumbs and gr
 ## Beat 15 — SOMETHING'S COMING (1:32–1:36) ⬜ needs footage
 
 Line: 'Something is coming.' Camera underground; the footsteps are felt, not seen.
+The approaching RINGS are a POST overlay, brighter/faster than beat 10's (same mechanism).
 
 ```
-underground side view at night, dark soil filling the frame, pale roots to the left, one bright warm orange glow approaching from the right side deep in the earth, dust trembling, ominous quiet, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No eye, no portal, no burrow, no comic panels, no split frame, no people, no sky. No photorealism, no 3D render look. 9:16 vertical, no text.
+dark underground soil texture filling the whole frame at night, side view, pale roots reaching down, faint warm glow bleeding in from the right edge deep in the earth, dust grains suspended, ominous quiet, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people, no figure, no cave, no portal, no eye, no sky, no comic panels. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
