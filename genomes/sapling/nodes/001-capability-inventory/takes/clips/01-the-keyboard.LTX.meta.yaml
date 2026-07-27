@@ -9,3 +9,9 @@ prompt: 1boy, solo, dark silhouette, glasses, messy hair, hood down, hands typin
   city lights through blinds, cinematic lighting, detailed, newest, masterpiece, best
   quality, very aesthetic
 seed: 20260720
+input_still: 01-the-keyboard.png
+negative_prompt: worst quality, inconsistent motion, blurry, jittery, distorted
+steps: 30
+width: 512
+height: 768
+note: backfilled 2026-07-28 from kernel v50 config (audit finding)
