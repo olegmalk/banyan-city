@@ -189,3 +189,48 @@ a ~1 hour MPS job.
 **Still unsolved:** character consistency across 166 shots. SD1.5 has no
 reference-image conditioning; four recurring characters have to look like
 themselves in every shot. Predicted by cycle-007, untouched by any prompt fix.
+
+## 2026-07-27 — SDXL + SVD is the render stack, and two stale entries above
+
+**The renderer changed.** SD1.5 was only ever in the pipeline because AnimateDiff
+required an SD1.5 checkpoint; when AnimateDiff was dropped for being "cool looking
+static", its dependency stayed and went unexamined for a cycle. Stage 1 is now
+Animagine XL 3.1 (SDXL anime finetune) at 832×1216, stage 2 is Stable Video
+Diffusion at 512×768, both on Kaggle's free T4. Measured: ~30 s per still, 4.3 min
+per clip, **median frame-to-frame motion 11.3 where AnimateDiff measured 0.1–1.0
+on the same beats.** Full diagnosis in `pipeline/loop/cycle-009.md`.
+
+Five fixes went with it, four of them faults of mine that no metric caught:
+`text` was being negated on beats whose subject *is* a screen; framing was a
+trailing tag and therefore ignored (a "medium shot" of a man drew his chair);
+Animagine's booster tags and its `abstract` negative were missing; provenance
+logged the global negative rather than the per-beat one actually sent (§7.2); and
+the §6 approval gate could not read an approval it had been given — it built its
+leaf glob from the caller's argument string, so `push 001` passed and
+`push 001-capability-inventory` reported "no T0 leaf found" for the same approved
+node. It failed closed, but it now globs the node's own `leaves/` dir, and §6 has
+a test for the first time.
+
+**Correction to the entry above — the growth ladder was reverted by the founder.**
+This log still says the ladder "now starts at ~60 cm and rises to 1.6 m". It does
+not. The founder's answer was *"no, i prefered the sapling idea, lets revert"*, and
+`style.md` is canonical: 001 is **~15 cm, two cotyledon leaves, no trunk**. The
+sprout then rendered fine under SDXL, so the argument that the story had to change
+to suit the renderer was wrong on the facts as well as out of my lane (R4).
+
+**Correction — character consistency is no longer unsolved for want of a mechanism.**
+That entry says "SD1.5 has no reference-image conditioning". SDXL does: IP-Adapter
+is wired into the notebook, loaded before cpu-offload and only when a beat in the
+run needs a reference. Scale 0.35 carries identity without hijacking the pose (0.6
+does hijack it), and a reference transfers tone and background as well as face.
+Jerry has a reference plate in `genomes/sapling/refs/`. Not yet proven across a
+whole episode.
+
+**Open, and a founder call (R4):** a *style plate* — one image that defines the
+show's look, conditioned into every beat at ~0.3 — is the remaining answer to
+"looks like fifteen unrelated AI images". It needs the founder to say which frame
+*is* the show. That is taste, not stewardship.
+
+**Still pending:** re-voicing the trunk (002b–007a) — every story decision of
+2026-07-25/26 left those takes stale, and `retime_beats` now refuses when a take
+does not say what the script says. ~1 h MPS job.
