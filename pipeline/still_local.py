@@ -52,6 +52,8 @@ def main() -> int:
     ap.add_argument("--cfg", type=float, default=7.5)
     ap.add_argument("--card-neg", action="store_true",
                     help="use Animagine's model-card negative list instead of ours")
+    ap.add_argument("--extra-neg", default="",
+                    help="append these terms to the negative prompt for this draw")
     ap.add_argument("--seed-bump", type=int, default=0,
                     help="try a different composition without touching the prompt")
     ap.add_argument("--note", default="", help="tag for the output filename")
@@ -99,6 +101,8 @@ def main() -> int:
     extra = extra_negatives(shot["prompt"])
     if extra:
         neg = f"{neg}, {extra}"
+    if a.extra_neg:
+        neg = f"{neg}, {a.extra_neg}"
     print(f"beat {a.beat:02d} {shot['slug']}\n  POS: {ptext}\n  NEG: {neg}")
     if dropped:
         print(f"  dropped for budget: {' '.join(dropped)[:120]}")
