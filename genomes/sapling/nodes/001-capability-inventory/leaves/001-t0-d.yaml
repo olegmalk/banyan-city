@@ -14,7 +14,7 @@ seed: none
 cost_usd: 0.00
 status: live
 platform_urls: []
-approved_by: none          # STEWARDSHIP.md §6 — DRAFT until the founder has read it
+approved_by: founder       # 2026-07-27, read and approved: "episode 1 looks good, you can do it"
 notes: >-
   15 beats, 11 spoken lines. Chronological: the desk, the retry loop, the fall,
   then the reveal. "Yesterday I died fixing a server. Today I am a tree." is gone —
