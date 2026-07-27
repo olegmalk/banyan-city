@@ -72,11 +72,49 @@ def take_cells(takes_clips: Path, num: int, slug: str, rel: str) -> str:
     return f'<h3>Motion takes</h3><div class="cols">{cells}</div>'
 
 
+def beat_notes(shots_md: str) -> dict:
+    """num → the human note between the beat heading and its prompt fence —
+    the INTENT ('Line: ... Camera on ...') a voter needs to judge any image."""
+    import re
+    notes = {}
+    heads = list(re.finditer(r"^## Beat (\d+) — [^\n]*$", shots_md, re.M))
+    for i, h in enumerate(heads):
+        end = heads[i + 1].start() if i + 1 < len(heads) else len(shots_md)
+        body = shots_md[h.end():end]
+        fence = body.find("```")
+        note = body[:fence if fence >= 0 else len(body)].strip()
+        notes[int(h.group(1))] = note
+    return notes
+
+
+def variant_cells(takes_stills: Path, num: int, rel: str) -> str:
+    """Candidate stills for an unapproved beat, labelled A/B/C…, votable."""
+    if not takes_stills.is_dir():
+        return ""
+    files = sorted(f for f in takes_stills.glob(f"{num:02d}-*.png"))
+    if not files:
+        return ""
+    cells = "".join(
+        f'<figure><img width="170" src="{rel}-takes/{f.name}" alt="{f.name}">'
+        f'<figcaption><b>{chr(65 + i)}</b></figcaption></figure>'
+        if rel else
+        f'<figure>{img_tag(f, 170)}<figcaption><b>{chr(65 + i)}</b></figcaption></figure>'
+        for i, f in enumerate(files))
+    return f'<h3>Candidates — vote below</h3><div class="cols variants">{cells}</div>'
+
+
 def board_html(genome: str, d: Path, rel: str = "") -> str:
     """The full page HTML. rel='' → self-contained (base64); rel='NAME' → site
     mode, images at NAME/ and clips at NAME-clips/ next to the page."""
-    shots = parse_shots((d / "shots.md").read_text())
+    raw = (d / "shots.md").read_text()
+    shots = parse_shots(raw)
+    notes = beat_notes(raw)
     stills_dir = d / "stills"
+    import yaml as _yaml
+    try:
+        vote_url = _yaml.safe_load((d / "sap" / "reactions.yaml").read_text())["url"]
+    except Exception:
+        vote_url = ""
     a = type("A", (), {"genome": genome})  # keep the fork-text f-string working
 
     rows = []
@@ -89,6 +127,7 @@ def board_html(genome: str, d: Path, rel: str = "") -> str:
 <section class="beat" id="beat-{s['num']:02d}">
   <h2>Beat {s['num']:02d} — {html.escape(s['slug'].replace('-', ' ').upper())}
       <span class="tag {'ok' if approved else 'wip'}">{'STILL APPROVED' if approved else 'STILL IN REVIEW'}</span></h2>
+  <p class="intent"><b>This beat:</b> {html.escape(notes.get(s['num'], '') or '(no note)')}</p>
   <div class="cols">
     <div class="col">{img_tag(still, rel=rel)}</div>
     <div class="col recipe">
@@ -105,6 +144,8 @@ def board_html(genome: str, d: Path, rel: str = "") -> str:
          {html.escape(MOTION['note'])}</p>
     </div>
   </div>
+  {'' if approved else variant_cells(d / "takes" / "stills", s["num"], rel)}
+  {f'<p class="vote">🗳 <b>Vote:</b> comment <code>beat {s["num"]:02d}: A</code> (or B/C/D, or <code>none</code> + why) on <a href="{vote_url}">the reactions thread</a> — every vote counts the same way, the founder&#39;s included (weights per D3).</p>' if not approved and vote_url else ''}
   {take_cells(d / "takes" / "clips", s["num"], s["slug"], rel)}
   <details><summary>Fork this beat</summary>
     <ol>
@@ -131,6 +172,9 @@ def board_html(genome: str, d: Path, rel: str = "") -> str:
  .cols{{display:flex;gap:1.2rem;flex-wrap:wrap}} .col{{flex:1;min-width:260px}}
  .tag{{font-size:.7em;padding:.15em .6em;border-radius:99px;vertical-align:middle}}
  .ok{{background:#1d4d2b}} .wip{{background:#4d3a1d}}
+ .intent{{background:#14141c;padding:.5rem .8rem;border-radius:6px}}
+ .variants figure{{margin:0;text-align:center}}
+ .vote{{background:#12202b;padding:.5rem .8rem;border-radius:6px}}
  .noimg{{width:240px;height:350px;display:flex;align-items:center;justify-content:center;
         background:#1a1a22;border-radius:6px;color:#888;text-align:center;font-size:.85em}}
  img{{border-radius:6px}} details{{margin:.6rem 0 1.2rem}} summary{{cursor:pointer;color:#8ab4ff}}

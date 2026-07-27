@@ -675,6 +675,10 @@ def main() -> None:
                     (gdir / media).mkdir(exist_ok=True)
                     for f in (node_dir / "stills").glob("*.png"):
                         shutil.copy(f, gdir / media / f.name)
+                if (node_dir / "takes" / "stills").is_dir():
+                    (gdir / f"{media}-takes").mkdir(exist_ok=True)
+                    for f in (node_dir / "takes" / "stills").glob("*.png"):
+                        shutil.copy(f, gdir / f"{media}-takes" / f.name)
                 if (node_dir / "takes" / "clips").is_dir():
                     (gdir / f"{media}-clips").mkdir(exist_ok=True)
                     for f in (node_dir / "takes" / "clips").iterdir():
