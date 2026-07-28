@@ -57,6 +57,15 @@ def ring_overlay(size, phase: float, brightness: float):
 
 def animate(still: Path, num: int, dest: Path) -> None:
     src = Image.open(still).convert("RGB")
+    if num == 15:
+        # Beat 15's canon still IS beat 10's frame darkened with baked rings (the
+        # founder's approved callback, 2026-07-28: "oh, smart. keep it."). The
+        # motion take rebuilds the ring-FREE base and animates the rings fresh —
+        # faster and brighter than beat 10's — so they pulse instead of freezing,
+        # and nothing is drawn twice.
+        base10 = still.parent / "10-sense.png"
+        if base10.exists():
+            src = ImageEnhance.Brightness(Image.open(base10).convert("RGB")).enhance(0.72)
     W, H = src.size
     right = num % 2 == 0        # alternate drift so cuts don't feel cloned
     with tempfile.TemporaryDirectory() as td:
@@ -74,7 +83,8 @@ def animate(still: Path, num: int, dest: Path) -> None:
                 g = 1.0 + 0.03 * math.sin(2 * math.pi * 1.4 * (i / FPS)) * (0.4 + 0.6 * ease)
                 frame = ImageEnhance.Brightness(frame).enhance(g)
             if num in RINGS:
-                frame = ImageChops.add(frame, ring_overlay((W, H), (i / FPS) * 0.35, 0.9))
+                speed, bright = (0.7, 1.0) if num == 15 else (0.35, 0.9)
+                frame = ImageChops.add(frame, ring_overlay((W, H), (i / FPS) * speed, bright))
             frame.save(Path(td) / f"f{i:04d}.png")
         # imported here, not at module level: test_pipeline imports this module
         # for its gate checks, and CI installs no imageio_ffmpeg (the numpy
