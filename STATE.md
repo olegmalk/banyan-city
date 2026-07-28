@@ -294,3 +294,12 @@ QA 12 checks green. Bench render, founder screening pending.
 
 **Money to date, total:** $0.68 estimated/ledgered ($0.28 authorized Hailuo +
 $0.40 unauthorized wan). fal balance ~$9.72 in reserve, founder-named spends only.
+
+**Self-hosted Wan 2.2 verdict (2026-07-28, four takes, all documented):** the
+5B model loads and runs on the free T4 (12.7 min/clip, subprocess-isolated
+diffusers ≥0.35, sequential offload) but outputs BLACK — the bf16-native
+weights NaN in fp16, and the T4 has neither bf16 nor room for fp32. Free
+self-hosted wan on Kaggle: **not viable.** The wan family stays reachable two
+ways only: contributors' own fresh-account quotas (a suggested route on render
+requests), and paid API at founder-named spend. The notebook's wan22 branch
+stays as the documented experiment.
