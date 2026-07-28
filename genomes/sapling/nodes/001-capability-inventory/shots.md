@@ -47,7 +47,7 @@ computer monitor close-up filling the frame, terminal window, command finishing,
 no dialogue - the death, in one shot. The mug reaches the floor before he does.
 
 ```
-1boy, solo, adult man, mature tired face, glasses, messy hair, collapsing sideways off a tipping chair at a desk, chair falling with him, eyes closing, a mug knocked off the desk mid-air, dark room, monitor glow, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No child, no kid, no blush, no wind. No photorealism, no 3D render look. 9:16 vertical, no text.
+1boy, solo, adult man, glasses, messy hair, eyes closed, unconscious, slumping sideways off his chair, sliding toward the floor, one arm hanging limp, papers scattering, dark room, monitor glow, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No eyes open, no awake, no lying on the desk, no on the table, no standing. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 ## Beat 05 — HUH. GREEN. (0:21–0:24) ⬜ needs footage
 
@@ -61,14 +61,14 @@ thick curved glazed ceramic shards of a broken coffee mug scattered flat on dark
 Line: 'Hospital ceiling. Hospitals are green now.' The wrong-ceiling joke IS the shot.
 
 ```
-no humans, plant focus, leaf, from below, giant green leaf spread overhead like a ceiling, backlit glowing veins, vivid blue sky, sunlight filtering through the leaf, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No girl, no person, no people. No photorealism, no 3D render look. 9:16 vertical, no text.
+no humans, plant focus, one single giant leaf seen from directly below, spread overhead like a ceiling, backlit glowing veins, vivid blue sky at the edges, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No multiple leaves, no foliage, no plant, no tree, no grass, no girl. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 ## Beat 07 — FLAILING ONE (1) LEAF (0:29–0:36) ⬜ needs footage
 
 Line: 'I appear to be flailing one (1) leaf.' The flail is the joke - camera on the leaf.
 
 ```
-a single small leaf on a thin stem bent far over to one side, caught in a gust, a few grass blades leaning with it, calm short grass, pale blue sky, quiet, low close shot, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people, no girl, no hands, no legs, no figure, no trees. No photorealism, no 3D render look. 9:16 vertical, no text.
+no humans, plant focus, a single leaf on one thin visible stem bent far to the side in a gust of wind, short calm grass below, pale blue sky, low close shot, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No legs, no feet, no person, no girl, no hands. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 ## Beat 08 — SEV-1 (0:36–0:47) ⬜ needs footage
 
