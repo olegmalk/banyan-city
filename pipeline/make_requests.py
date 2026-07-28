@@ -31,31 +31,6 @@ from generate_shots import parse_shots  # noqa: E402
 
 SITE = "https://banyan.city"
 
-# Per-beat MOTION prompts — what should MOVE, for image-to-video fulfillers.
-# (Scene composition lives in the still; these describe only the motion.)
-MOTION = {
-    1: "the young man types rapidly, fingers moving over the keys, slight "
-       "shoulder movement, monitor glow flickers gently, camera locked",
-    2: "green terminal text scrolls slowly on the monitor, the hooded man's "
-       "silhouette shifts subtly, faint steam rises from the mug, camera locked",
-    3: "the terminal text settles, the cursor blinks steadily, the screen glow "
-       "breathes very gently, camera locked",
-    5: "the dying screen glow flickers and fades across the shards, dust motes "
-       "drift in the last light, camera locked",
-    8: "the leaf holds almost perfectly still, dust motes settle slowly in the "
-       "sunlight, grass sways very gently behind, camera locked",
-    9: "the sprout's two leaves stir very slightly, morning light shimmers, "
-       "grass moves gently, camera locked",
-    10: "the thin roots tremble subtly, water glints slide between soil grains, "
-        "dust drifts slowly, no light rays, camera locked",
-    11: "the new leaf unfurls slowly and settles upright, dew drops glisten, "
-        "soft light shifts, camera locked",
-    12: "the bent stem strains and quivers against nothing, a few soil grains "
-        "shift at its base, everything else still, camera locked",
-    13: "wind sweeps the grass in slow waves, clouds drift, dust stirs faintly "
-        "on the empty road, no people appear, camera locked",
-}
-
 BODY = """A take is requested for this beat. Generate with YOUR tools ({d12}), drag the
 resulting video file into a comment below (or link it), and say what you used.
 
@@ -93,6 +68,7 @@ def main() -> int:
     nodes = REPO / "genomes" / a.genome / "nodes"
     d = next(x for x in sorted(nodes.iterdir())
              if x.is_dir() and x.name.startswith(a.node))
+    MOTION = (yaml.safe_load((d / "motion.yaml").read_text()) or {}).get("motion_prompts", {})
     want = {int(b) for b in a.beats.split(",") if b.strip()} if a.beats else None
 
     labels = gh("label", "list", "--json", "name")

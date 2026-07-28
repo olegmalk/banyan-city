@@ -108,6 +108,9 @@ def board_html(genome: str, d: Path, rel: str = "") -> str:
     """The full page HTML. rel='' → self-contained (base64); rel='NAME' → site
     mode, images at NAME/ and clips at NAME-clips/ next to the page."""
     raw = (d / "shots.md").read_text()
+    _mo = d / "motion.yaml"
+    motion_prompts = ((yaml.safe_load(_mo.read_text()) or {}).get("motion_prompts", {})
+                      if _mo.exists() else {})
     _rq = d / "requests.yaml"
     requests = ((yaml.safe_load(_rq.read_text()) or {}).get("render_requests", {})
                 if _rq.exists() else {})
@@ -145,8 +148,10 @@ def board_html(genome: str, d: Path, rel: str = "") -> str:
       <pre>{html.escape(pos)}</pre>
       <p><b>Negative prompt:</b></p>
       <pre>{html.escape(neg)}</pre>
-      <p><b>Motion:</b> {html.escape(MOTION['engine'])} at {MOTION['size']}.<br>
-         {html.escape(MOTION['note'])}</p>
+      <p><b>Motion prompt (for image-to-video):</b></p>
+      <pre>{html.escape(motion_prompts.get(s['num'], '(push-in only — deterministic)'))}</pre>
+      <p><b>Motion engines so far:</b> POST (deterministic, the prototype default),
+         plus any AI take below — beat them with anything.</p>
     </div>
   </div>
   {'' if approved else variant_cells(d / "takes" / "stills", s["num"], rel)}
