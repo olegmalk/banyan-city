@@ -140,7 +140,7 @@ def page(title: str, body: str, depth: int = 0, path: str = "", desc: str = "") 
 </head>
 <body>
 <main>
-<nav class="crumbs"><a href="{root}index.html">🌳 {REPO_NAME}</a> · <a href="{root}city.html">the city</a> · <a href="{root}machine.html">⚙️ the machine</a> · <a href="{REPO_URL}">source</a></nav>
+<nav class="crumbs"><a href="{root}index.html">🌳 {REPO_NAME}</a> · <a href="{root}city.html">the city</a> · <a href="{root}machine.html">⚙️ the machine</a> · <a href="{root}status.html">📊 status</a> · <a href="{REPO_URL}">source</a></nav>
 {body}
 <footer>Everything here is auditable in <a href="{REPO_URL}">git</a>.
 Branch anything. Fork everything. · <a href="{root}city.html">The Promise</a></footer>
@@ -639,6 +639,8 @@ def main() -> None:
     (OUT / "watch.html").write_text(render_watch(genomes))
     (OUT / "create.html").write_text(render_create())
     (OUT / "city.html").write_text(render_city())
+    from build_status import build as _build_status
+    _build_status(OUT)
     (OUT / "machine.html").write_text(page(
         "The Machine — how this operates",
         md_to_html((REPO / "MACHINE.md").read_text()),
