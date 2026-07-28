@@ -61,7 +61,7 @@ thick curved glazed ceramic shards of a broken coffee mug scattered flat on dark
 Line: 'Hospital ceiling. Hospitals are green now.' The wrong-ceiling joke IS the shot.
 
 ```
-first person view lying on the ground looking straight up, one huge green leaf directly overhead spread across the sky like a ceiling, sunlight glowing through the leaf veins, deep blue sky beyond, worm's eye view, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people, no girl, no plant pot, no stem in frame, no grass. No photorealism, no 3D render look. 9:16 vertical, no text.
+no humans, plant focus, leaf, from below, giant green leaf spread overhead like a ceiling, backlit glowing veins, vivid blue sky, sunlight filtering through the leaf, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No girl, no person, no people. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 ## Beat 07 — FLAILING ONE (1) LEAF (0:29–0:36) ⬜ needs footage
 
