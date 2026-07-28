@@ -29,7 +29,6 @@ import tempfile
 from datetime import date
 from pathlib import Path
 
-import imageio_ffmpeg
 from PIL import Image, ImageChops, ImageDraw, ImageEnhance, ImageFilter
 
 REPO = Path(__file__).resolve().parent.parent
@@ -77,6 +76,10 @@ def animate(still: Path, num: int, dest: Path) -> None:
             if num in RINGS:
                 frame = ImageChops.add(frame, ring_overlay((W, H), (i / FPS) * 0.35, 0.9))
             frame.save(Path(td) / f"f{i:04d}.png")
+        # imported here, not at module level: test_pipeline imports this module
+        # for its gate checks, and CI installs no imageio_ffmpeg (the numpy
+        # lesson of 2026-07-27, applied before the inbox fills this time)
+        import imageio_ffmpeg
         ff = imageio_ffmpeg.get_ffmpeg_exe()
         subprocess.run([ff, "-y", "-hide_banner", "-loglevel", "error",
                         "-framerate", str(FPS), "-i", str(Path(td) / "f%04d.png"),
