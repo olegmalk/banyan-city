@@ -148,7 +148,7 @@ def board_html(genome: str, d: Path, rel: str = "") -> str:
   {'' if approved else variant_cells(d / "takes" / "stills", s["num"], rel)}
   {f'<p class="vote">🗳 <b>Vote:</b> comment <code>beat {s["num"]:02d}: A</code> (or B/C/D, or <code>none</code> + why) on <a href="{vote_url}">the reactions thread</a> — every vote counts the same way, the founder&#39;s included (weights per D3).</p>' if not approved and vote_url else ''}
   {take_cells(d / "takes" / "clips", s["num"], s["slug"], rel)}
-  <details><summary>🛠 Take this task (no money — bring your tools, your key, or free compute)</summary>
+  <details open><summary>🛠 Think you can beat the current take? (~$0.28 on your own key — recipe below)</summary>
     <ol>
       <li><b>Your own tools:</b> feed the still + prompts above to any generator you
           already use (Kling, Runway, Pika…), then submit via a GitHub issue with a link — a human screens it and runs

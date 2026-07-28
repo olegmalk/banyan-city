@@ -1,7 +1,7 @@
 # Shot provenance (7.2)
 platform: local-deterministic
 model: none — code (post_motion.py: smoothstep push-in, glow breathing)
-input_still: 01-the-keyboard.png
+input_still: 03-deploy-succeeded.png
 frames: 144
 fps: 24
 cost_usd: 0
