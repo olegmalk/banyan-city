@@ -1,0 +1,12 @@
+# Shot provenance (§7.2)
+platform: fal.ai
+model: fal-ai/minimax/hailuo-2.3/standard/image-to-video
+cost_note: per-run billing; see fal.ai model page
+shot_beat: 1
+prompt: 1boy, solo, dark silhouette, glasses, messy hair, hood down, hands typing
+  fast on a mechanical keyboard, one glowing monitor with code, dark apartment, night,
+  city lights through blinds, cinematic lighting, detailed, newest, masterpiece, best
+  quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+duration_s: 6
+aspect: '9:16'
+date: '2026-07-28'
