@@ -68,7 +68,7 @@ first person view lying on the ground looking straight up, one huge green leaf d
 Line: 'I appear to be flailing one (1) leaf.' The flail is the joke - camera on the leaf.
 
 ```
-one tiny sprout alone in a grass field, its single leaf bent far over to one side, mid-motion, low angle, vivid blue sky, simple clear composition, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people, no hands, no figure, no falling person, no trees. No photorealism, no 3D render look. 9:16 vertical, no text.
+a single small leaf on a thin stem bent far over to one side, caught in a gust, a few grass blades leaning with it, calm short grass, pale blue sky, quiet, low close shot, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people, no girl, no hands, no legs, no figure, no trees. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 ## Beat 08 — SEV-1 (0:36–0:47) ⬜ needs footage
 
