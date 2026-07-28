@@ -265,3 +265,32 @@ single frames only (still_local.py, fp32 — fp16 NaNs to black on this machine)
 CI lacks; estimate-vs-exact token counter divergence) and the founder found out
 from his inbox. Fixed both, plus the habit: `gh run list` after every push, and
 a CI-simulation venv holding exactly what the workflow installs.
+
+## 2026-07-28 — the marketplace closed its first loops, and the prototype exists
+
+**Stills: 11 of 15 canon** (founder votes via the public thread, both his
+accounts). Cast locked: protagonist = candidate A (`refs/protagonist.png`),
+delegated by the founder ("all valid"); the notebook conditions 1boy/glasses/
+hoodie beats on him. Open ballots: 04 (cast-conditioned candidates), 06
+(native `no humans` dialect after five failed English rounds), 07 (beat-8
+vocabulary — the previous "round 3" accidentally re-rolled the old prompt,
+founder caught it), 15 (deterministic proposal: beat 10's approved pixels +
+closer rings).
+
+**The request marketplace is live and proven** (dad's design): render-request
+issues per beat, board banners, drag-a-file fulfillment, screening, intake
+with provenance + compute-credit ledger rows. First three loops closed same
+day by the founder himself (PixVerse daily credits, $0): beats 02, 08, 13.
+
+**Motion:** POST (deterministic, post_motion.py) is the prototype's default by
+founder decision. Paid takes exist as benchmarks (Hailuo $0.28 — authorized;
+wan2.7 $0.40 — the unauthorized substitution, recorded in loop.md). PixVerse
+free tier: generation free, watermark-free download paywalled. Veo free tier:
+found already dead. Tencent: WeChat-locked. Self-hosted Wan 2.2 5B test on the
+T4: in flight.
+
+**PROTOTYPE-001.mp4 assembled** ($0): 15 beats, ~103s, 11 real + 4 slates,
+QA 12 checks green. Bench render, founder screening pending.
+
+**Money to date, total:** $0.68 estimated/ledgered ($0.28 authorized Hailuo +
+$0.40 unauthorized wan). fal balance ~$9.72 in reserve, founder-named spends only.
