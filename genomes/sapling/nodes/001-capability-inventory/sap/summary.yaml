@@ -1,9 +1,9 @@
 # Sap summary — open data, written by pipeline/harvest_sap.py
-harvested_at: '2026-07-10T03:07:44Z'
+harvested_at: '2026-07-28T06:40:01Z'
 channel:
   github_issue: 1
   url: https://github.com/olegmlkvorg/banyan-city/issues/1
-comments: 0
+comments: 7
 reactions:
   '+1': 0
   '-1': 0
