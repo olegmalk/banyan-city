@@ -445,6 +445,28 @@ def test_budget_guard():
           0 < caps["hard_cap_per_run_usd"] <= caps["hard_cap_total_usd"])
 
 
+def test_marketplace_tools():
+    # The request/fulfill loop is the main artifact (D11/D12) — its pure logic
+    # deserves the same guardrails as the render pipeline.
+    import intake_take  # noqa: F401 — must import without heavy deps
+    import make_requests
+    import post_motion
+    # motion.yaml is the single source of motion direction: every beat covered
+    import yaml as _y
+    mo = _y.safe_load((REPO / "genomes/sapling/nodes/001-capability-inventory/motion.yaml").read_text())
+    mp = mo["motion_prompts"]
+    check("motion.yaml covers all 15 beats", sorted(mp) == list(range(1, 16)))
+    check("every motion prompt locks the camera",
+          all("camera locked" in v for v in mp.values()))
+    # post_motion animates ONLY approved pixels — §6 for the deterministic path
+    src = (REPO / "pipeline/post_motion.py").read_text()
+    check("post_motion imports the approval gate", "from render_local import approved" in src)
+    # intake credits the ledger with type: compute (D12 — visible contribution)
+    src2 = (REPO / "pipeline/intake_take.py").read_text()
+    check("intake writes compute-credit ledger rows", "compute" in src2 and "watering.csv" in src2)
+    check("intake records a human screener", "screened_by" in src2)
+
+
 def test_approval_gate():
     # STEWARDSHIP.md S6 is the founder's most important rule and until 2026-07-27 the
     # code enforcing it had no test at all. The gate must answer the SAME for a node
@@ -823,6 +845,7 @@ def main():
     test_shot_prompt_extraction()
     test_generate_shots_parsing()
     test_budget_guard()
+    test_marketplace_tools()
     test_approval_gate()
     test_all_leaf_content_exists()
     test_trials_page_renders()
