@@ -17,6 +17,7 @@ screening decides what the show keeps.
 
 import argparse
 import base64
+import yaml
 import html
 import sys
 from datetime import date
@@ -107,12 +108,14 @@ def board_html(genome: str, d: Path, rel: str = "") -> str:
     """The full page HTML. rel='' → self-contained (base64); rel='NAME' → site
     mode, images at NAME/ and clips at NAME-clips/ next to the page."""
     raw = (d / "shots.md").read_text()
+    _rq = d / "requests.yaml"
+    requests = ((yaml.safe_load(_rq.read_text()) or {}).get("render_requests", {})
+                if _rq.exists() else {})
     shots = parse_shots(raw)
     notes = beat_notes(raw)
     stills_dir = d / "stills"
-    import yaml as _yaml
     try:
-        vote_url = _yaml.safe_load((d / "sap" / "reactions.yaml").read_text())["url"]
+        vote_url = yaml.safe_load((d / "sap" / "reactions.yaml").read_text())["url"]
     except Exception:
         vote_url = ""
     a = type("A", (), {"genome": genome})  # keep the fork-text f-string working
@@ -128,6 +131,7 @@ def board_html(genome: str, d: Path, rel: str = "") -> str:
 <section class="beat" id="beat-{s['num']:02d}">
   <h2>Beat {s['num']:02d} — {html.escape(s['slug'].replace('-', ' ').upper())}
       <span class="tag {'ok' if approved else 'wip'}">{'STILL APPROVED' if approved else 'STILL IN REVIEW'}</span></h2>
+  {f'<p class="request">🎬 <b>OPEN REQUEST:</b> this beat wants a take — <a href="https://github.com/olegmlkvorg/banyan-city/issues/{requests[s["num"]]}">bring your AI and fulfill it</a> (your tools, your credit, your name in the ledger)</p>' if s["num"] in requests else ''}
   <p class="intent"><b>This beat:</b> {html.escape(notes.get(s['num'], '') or '(no note)')}</p>
   <div class="cols">
     <div class="col">{img_tag(still, rel=rel)}</div>
@@ -182,6 +186,7 @@ def board_html(genome: str, d: Path, rel: str = "") -> str:
  .ok{{background:#1d4d2b}} .wip{{background:#4d3a1d}}
  .intent{{background:#14141c;padding:.5rem .8rem;border-radius:6px}}
  .variants figure{{margin:0;text-align:center}}
+ .request{{background:#2b1d12;padding:.5rem .8rem;border-radius:6px}}
  .vote{{background:#12202b;padding:.5rem .8rem;border-radius:6px}}
  .noimg{{width:240px;height:350px;display:flex;align-items:center;justify-content:center;
         background:#1a1a22;border-radius:6px;color:#888;text-align:center;font-size:.85em}}

@@ -130,6 +130,10 @@ def main() -> int:
             url = gh("issue", "create", "--title", title, "--body", body,
                      "--label", "render-request")
             print(f"✓ {url}")
+            rq = d / "requests.yaml"
+            reqs = (yaml.safe_load(rq.read_text()) if rq.exists() else {}) or {}
+            reqs.setdefault("render_requests", {})[num] = int(url.rstrip("/").rsplit("/", 1)[-1])
+            rq.write_text(yaml.safe_dump(reqs, sort_keys=True))
         made += 1
     print(f"{made} request(s)")
     return 0
