@@ -112,7 +112,7 @@ def render_task(task: dict, courier: Courier, device: str, dtype) -> None:
 
     d = REPO / "genomes/sapling/nodes" / task["node"]
     leaves = sorted((d / "leaves").glob("*-t0-*.yaml"))
-    who = str((yaml.safe_load(leaves[-1].read_text()) or {}).get(
+    who = str((yaml.safe_load(leaves[-1].read_text(encoding="utf-8")) or {}).get(
         "approved_by", "none")) if leaves else "none"
     if not who.startswith("founder"):
         raise SystemExit(f"{task['node']} NOT founder-approved — STEWARDSHIP §6")
@@ -123,7 +123,10 @@ def render_task(task: dict, courier: Courier, device: str, dtype) -> None:
     pipe.to(device)
     courier.mark(f"MODEL_LOADED {device}/{dtype}".replace("torch.", ""))
 
-    shots = {s["num"]: s for s in parse_shots((d / "shots.md").read_text())}
+    # encoding pinned: Windows defaults to cp1252, which mangles the em-dash
+    # in "## Beat NN —" headings and parse_shots finds zero beats (KeyError,
+    # the msi worker's first-light failure, 2026-07-29)
+    shots = {s["num"]: s for s in parse_shots((d / "shots.md").read_text(encoding="utf-8"))}
     for num in [int(b) for b in str(task["beats"]).split(",")]:
         s = shots[num]
         ptext, _ = compress(s["prompt"])
@@ -168,12 +171,17 @@ def main() -> int:
             tid = str(task.get("id"))
             if tid in done_ids or task.get("worker", "any") not in ("any", a.name):
                 continue
+            # render from CURRENT main, not whatever checkout the machine was
+            # born with (the msi's first task ran from its USB-era files)
+            sh("git", "checkout", "-q", "main", check=False)
+            sh("git", "reset", "-q", "--hard", "origin/main", check=False)
             courier.mark(f"STARTED task={tid} beats={task.get('beats')} on {device}")
             try:
                 render_task(task, courier, device, dtype)
                 courier.mark(f"DONE task={tid}")
-            except Exception as e:                # noqa: BLE001 — ship it, don't die
-                courier.say(f"ERROR: {e!r}")
+            except Exception:                     # noqa: BLE001 — ship it, don't die
+                import traceback
+                courier.say(traceback.format_exc())
                 courier.mark(f"FAIL task={tid}")
             done_ids.add(tid)
         if a.once:
