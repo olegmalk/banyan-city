@@ -28,3 +28,4 @@
 23:24:17Z STARTED task=ref2-field-night beats= on cuda
 23:24:31Z MODEL_LOADED cuda/bfloat16
 23:25:56Z DONE task=ref2-field-night
+23:26:01Z STARTED task=ref2-field-rain beats= on cuda
