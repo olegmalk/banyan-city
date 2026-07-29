@@ -8,3 +8,4 @@
   00-cmp2-fast-s0.png in 37s
   00-budget-5s-s0.png in 7s
   00-budget-10s-s0.png in 12s
+  00-budget-15s-s0.png in 16s
