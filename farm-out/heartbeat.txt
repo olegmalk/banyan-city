@@ -32,3 +32,4 @@
 20:38:53Z MODEL_LOADED mps/float32
 20:54:25Z DONE task=dad-60s-all-beats
 22:28:47Z STARTED task=ref2-roots-wide beats= on mps
+22:28:59Z MODEL_LOADED mps/float32
