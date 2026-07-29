@@ -29,3 +29,9 @@
   00-ref-sapling-40cm-s3.png in 13s
   00-ref-sapling-40cm-s4.png in 14s
   00-ref-sapling-40cm-s5.png in 13s
+  00-ref-sapling-90cm-s0.png in 14s
+  00-ref-sapling-90cm-s1.png in 13s
+  00-ref-sapling-90cm-s2.png in 13s
+  00-ref-sapling-90cm-s3.png in 14s
+  00-ref-sapling-90cm-s4.png in 13s
+  00-ref-sapling-90cm-s5.png in 14s
