@@ -341,3 +341,27 @@ benched; this Mac = voice/assembly/orchestration.
 
 **Fixed in pipeline:** post_motion sidecars wrote illegal YAML (unquoted
 colons) — writer quoted, 14 files healed.
+
+## 2026-07-30 (night shift) — the honest bake-off and the reference library
+
+**Model bake-off, invalidated then redone:** the first "4-model" bake-off
+compared Animagine 3.1 with itself — the msi worker ran stale code that
+ignored the model dial (md5 proof: identical checksums). Canary-verified
+worker update, then the REAL runs: Animagine 4.0, Illustrious XL, NoobAI XL
+on beats 1/6/9, same seeds, checksums distinct. Gallery:
+banyan-drops/model-bakeoff.html. NoobAI ran handicapped (v-pred model,
+eps sampler) — flagged in the gallery, not judged. FOUNDER VERDICT PENDING.
+
+**World-reference library:** 36 anchors committed to nodes/001.../refs/
+(growth ladder 40/90cm, field noon/night/rain/dusk, wider roots) — $0,
+farm-rendered. img2img raw material for future consistency.
+
+**Worker hardening (night's lessons):** task-id filename prefix for
+model tasks (collisions ate two rounds), canary-verification after code
+pushes (self-update can't bootstrap itself onto pre-update workers),
+md5 distinctness checks in any A/B. M2/M3-Pro measured for dad's decision:
+122s full / 62s working / 37s floor per image; ANE dead end (2x slower);
+decision card + extensive 3-tier 15-beat gallery in banyan-drops.
+
+**Fleet:** msi 13.5 s/img · m3pro(m2) 125 s · m1pro 178 s · RunPod reserve
+$9.55. Total project cash still ~$1.20.
