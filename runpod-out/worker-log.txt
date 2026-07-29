@@ -7,3 +7,4 @@ WARNING: Running pip as the 'root' user can result in broken permissions and con
 
 [notice] A new release of pip is available: 23.3.1 -> 26.1.2
 [notice] To update, run: python -m pip install --upgrade pip
+NVIDIA GeForce RTX 4090
