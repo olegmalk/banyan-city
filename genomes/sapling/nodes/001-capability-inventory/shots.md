@@ -68,7 +68,7 @@ no humans, plant focus, pov from inside tall grass, camera on the ground pointin
 Line: 'I appear to be flailing one (1) leaf.' The flail is the joke - camera on the leaf.
 
 ```
-no humans, plant focus, a single leaf on one thin visible stem bent far to the side in a gust of wind, short calm grass below, pale blue sky, low close shot, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No legs, no feet, no person, no girl, no hands. No photorealism, no 3D render look. 9:16 vertical, no text.
+no humans, plant focus, extreme close-up macro shot, one single young leaf on a thin stem whipping sideways mid-motion, motion blur on the leaf tip, the leaf nearly filling the frame, soft out-of-focus pale blue sky behind, morning light rim on the leaf edge, dynamic angle, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No wide shot, no field, no many leaves, no person, no girl, no hands. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 ## Beat 08 — SEV-1 (0:35–0:48) ⬜ needs footage
 
