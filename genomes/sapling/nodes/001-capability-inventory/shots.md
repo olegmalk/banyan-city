@@ -61,7 +61,7 @@ thick curved glazed ceramic shards of a broken coffee mug scattered flat on dark
 Line: 'Hospital ceiling. Hospitals are green now.' The wrong-ceiling joke IS the shot.
 
 ```
-no humans, plant focus, from below, worm's-eye view, the translucent underside of one giant leaf filling the sky, sunlight shining through the leaf, glowing veins like a ceiling lamp, deep blue morning sky around the edges, a few tall grass blades leaning into frame, lens flare, dappled light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No tree, no trunk, no city, no balloons, no flowers, no 1girl. No photorealism, no 3D render look. 9:16 vertical, no text.
+no humans, sky, a vast empty clear blue morning sky filling the whole frame, seen from the ground looking straight up, one single soft-focus leaf tip curling into the top corner of the frame, thin drifting clouds, gentle sunlight, dreamy, minimalist composition, negative space, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No forest, no tree, no branches, no grass, no many leaves, no plants filling the frame. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 ## Beat 07 — FLAILING ONE (1) LEAF (0:29–0:35) ⬜ needs footage
 
