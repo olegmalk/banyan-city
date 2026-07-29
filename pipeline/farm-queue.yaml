@@ -1,14 +1,6 @@
-# model bake-off: current 3.1 vs Animagine 4.0, three scene types,
-# same seeds, full quality — founder screens the winner
 tasks:
-  - id: bake-31
+  - id: bake-31-redo
     worker: msi
     node: 001-capability-inventory
     beats: "1,6,9"
     seeds: 2
-  - id: bake-40
-    worker: msi
-    node: 001-capability-inventory
-    beats: "1,6,9"
-    seeds: 2
-    model: cagliostrolab/animagine-xl-4.0
