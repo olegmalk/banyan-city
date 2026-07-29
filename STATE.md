@@ -303,3 +303,41 @@ self-hosted wan on Kaggle: **not viable.** The wan family stays reachable two
 ways only: contributors' own fresh-account quotas (a suggested route on render
 requests), and paid API at founder-named spend. The notebook's wan22 branch
 stays as the documented experiment.
+
+## 2026-07-29 — the day the machine grew hands
+
+**Episode 1 remake: ALL 15 BEATS CANON.** Final rounds: 04-D (implied hand at
+the keyboard, after wide-shot and violent-still directions both died in
+votes), 06-B (one pale leaf in mostly-blue — 9 rounds, the episode's
+stubbornest shot), 07-A (macro flail, differentiated from 08 per founder),
+08-A (true-scale rebuild from 09's frame; old too-tall canon REVOKED and
+archived). Screening cut assembled (~132s, new voice, audio-mux bug caught in
+QA: VO lives in clips/, takes assembly must copy it beside the takes) and
+delivered to the founder. D10 (loop vs split on 08/10/13/14) surfaces at
+screening.
+
+**RunPod lane: PROVEN.** 14 fires today. The heartbeat courier
+(runpod_boot.sh) turned silent $0.22 corpses into named bugs at ~$0.01 each:
+unpinned diffusers needed torch>=2.5 (pin to 0.29.2 era), stale results
+branch fooled the watcher (clear before fire), community 3090 pool had broken
+drivers (CUDA preflight + poisoned-rung auto-climb), community supply flaky
+(--secure flag: SECURE 4090 = instant match, ~$0.03/round). Delivered rounds
+for beats 04, 06 (×4), 07. Day's total RunPod spend ~$0.25; balance $9.55±.
+
+**The farm was born.** farm_worker.py = universal heartbeat worker (cuda/mps,
+§6 gate, farm-queue.yaml on main, results on farm-results-<name>) — doubles
+as the future contributor compute daemon (D11/D12). MSI Vector 16 HX (RTX
+5070 Ti 12GB) enrollment: USB bundle (git bundle beats exFAT ._ pollution;
+model-cache carried to skip the 7GB pull), dedicated deploy key (id
+158682502, revocable alone), setup doc pipeline/farm-setup-windows.md
+(founder-requested: generalize to farm-join.md after onboarding, USB
+choreography moves out of the repo). Onboarding stalled at torch WinError
+1114 → VC++ redist upgraded → retry pending. Roster: MSI = primary once
+lit; Dan's M1 16GB = overnight tier (needs his yes); Olivia's M1 8GB =
+benched; this Mac = voice/assembly/orchestration.
+
+**Marketplace:** founder fulfilled beats 05 + 11 via PixVerse (requests
+19/23 closed, artovonmago compute credits ×2 — five fulfillments lifetime).
+
+**Fixed in pipeline:** post_motion sidecars wrote illegal YAML (unquoted
+colons) — writer quoted, 14 files healed.
