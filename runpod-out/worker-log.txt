@@ -1,0 +1,9 @@
+Warning: Permanently added 'github.com' (ED25519) to the list of known hosts.
+remote: 
+remote: Create a pull request for 'runpod-results' on GitHub by visiting:        
+remote:      https://github.com/olegmlkvorg/banyan-city/pull/new/runpod-results        
+remote: 
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+
+[notice] A new release of pip is available: 23.3.1 -> 26.1.2
+[notice] To update, run: python -m pip install --upgrade pip
