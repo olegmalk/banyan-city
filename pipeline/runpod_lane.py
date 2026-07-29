@@ -81,14 +81,18 @@ def cmd_render(beats: str, seeds: int) -> int:
     # live fire (2026-07-29) died on "machine does not have the resources" with
     # a 40GB disk ask. 25GB fits the model + deps comfortably.
     pod = None
-    for gpu in (GPU, "NVIDIA RTX A5000", "NVIDIA GeForce RTX 3090"):
+    # (gpu, cloud) ladder: community first (cheap), secure last (reliable) —
+    # the second fire found community sold out across three GPU types.
+    LADDER = [(GPU, "COMMUNITY"), ("NVIDIA RTX A5000", "COMMUNITY"),
+              ("NVIDIA GeForce RTX 3090", "COMMUNITY"), (GPU, "SECURE")]
+    for gpu, cloud in LADDER:
         for attempt in range(3):
             try:
                 data = gql("""
 mutation($input: PodFindAndDeployOnDemandInput) {
   podFindAndDeployOnDemand(input: $input) { id costPerHr machine { gpuDisplayName } }
 }""", {"input": {
-                    "cloudType": "COMMUNITY", "gpuTypeId": gpu, "gpuCount": 1,
+                    "cloudType": cloud, "gpuTypeId": gpu, "gpuCount": 1,
                     "volumeInGb": 0, "containerDiskInGb": 25,
                     "name": f"banyan-render-{int(time.time())}",
                     "imageName": IMAGE,
@@ -98,10 +102,15 @@ mutation($input: PodFindAndDeployOnDemandInput) {
                 pod = data["podFindAndDeployOnDemand"]
                 break
             except SystemExit as e:
-                if "does not have the resources" not in str(e):
-                    raise
-                print(f"  host too small ({gpu}, try {attempt+1}) — rematching")
-                time.sleep(3)
+                msg = str(e)
+                if "does not have the resources" in msg:
+                    print(f"  host too small ({gpu}/{cloud}, try {attempt+1}) — rematching")
+                    time.sleep(3)
+                    continue
+                if "no longer any instances" in msg or "SUPPLY" in msg:
+                    print(f"  {gpu}/{cloud}: sold out — next rung")
+                    break
+                raise
         if pod:
             break
     if not pod:
