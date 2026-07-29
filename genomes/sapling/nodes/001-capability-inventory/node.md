@@ -48,7 +48,7 @@ Black, and the sound of a cooling fan spinning down.
 **TOO BLUE — 0:24–0:29**
 Blinding green blur. Focus pulls: two centimetres off the ground, looking up through one trembling leaf at a sky that is *too* blue.
 
-> **VO:** Okay. Hospital ceiling. That's fine. Hospitals are green now.
+> **VO:** Okay. Hospital ceiling. That's fine. Hospitals are blue now.
 
 **FLAILING ONE (1) LEAF — 0:29–0:35**
 The leaf — *his* leaf — twitches when he panics, and the camera shakes with it.

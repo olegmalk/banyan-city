@@ -282,7 +282,11 @@ def main() -> int:
     p.add_argument("genome")
     p.add_argument("slugs", nargs="+")
     p.add_argument("--engine", choices=["kokoro", "chatterbox"], default="kokoro")
+    p.add_argument("--beats", default="",
+                   help="comma list — resynth ONLY these beats (surgical retake "
+                        "after a screening note; default: all)")
     args = p.parse_args()
+    only_beats = {int(b) for b in args.beats.split(",") if b.strip()}
 
     engine = KokoroEngine() if args.engine == "kokoro" else ChatterboxEngine()
     genome_dir = REPO / "genomes" / args.genome
@@ -304,6 +308,8 @@ def main() -> int:
         clips_dir = node_dir / "clips"
         clips_dir.mkdir(exist_ok=True)
         for beat_num, f in enumerate(frames, start=1):
+            if only_beats and beat_num not in only_beats:
+                continue
             # walk items in order: lines speak; short stage directions
             # become timed on-screen beats (cycle 006 — the tree's replies
             # lived in actions that never reached the viewer); a 'Beat.'
