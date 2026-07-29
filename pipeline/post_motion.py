@@ -129,9 +129,10 @@ def main() -> int:
         dest.with_suffix("").with_suffix(".meta.yaml").write_text(
             "# Shot provenance (7.2)\n"
             "platform: local-deterministic\n"
-            "model: none — code (post_motion.py: smoothstep push-in"
+            # quoted — the value contains a colon, which unquoted breaks YAML
+            "model: 'none — code (post_motion.py: smoothstep push-in"
             + (", glow breathing" if s["num"] in GLOW else "")
-            + (", sonar-ring overlay" if s["num"] in RINGS else "") + ")\n"
+            + (", sonar-ring overlay" if s["num"] in RINGS else "") + ")'\n"
             f"input_still: {still.name}\n"
             f"frames: {FRAMES}\nfps: {FPS}\ncost_usd: 0\n"
             f"date: {date.today().isoformat()}\n")

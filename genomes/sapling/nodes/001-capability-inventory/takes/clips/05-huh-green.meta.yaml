@@ -1,6 +1,6 @@
 # Shot provenance (7.2)
 platform: local-deterministic
-model: none — code (post_motion.py: smoothstep push-in)
+model: 'none — code (post_motion.py: smoothstep push-in)'
 input_still: 05-huh-green.png
 frames: 144
 fps: 24

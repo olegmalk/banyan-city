@@ -1,6 +1,6 @@
 # Shot provenance (§7.2)
 platform: kaggle-free-gpu
-model: 'still: cagliostrolab/animagine-xl-3.1 (no conditioning — the hardcoded '+IP-Adapter' string was wrong; audit finding #4) | motion: stabilityai/stable-video-diffusion-img2vid-xt'
+model: ' ''still: cagliostrolab/animagine-xl-3.1 (no conditioning — the hardcoded ''+IP-Adapter'' string was wrong; audit finding #4) | motion: stabilityai/stable-video-diffusion-img2vid-xt'''
 prompt: 1boy, solo, dark silhouette, glasses, messy hair, hood down, hands typing
   fast on a mechanical keyboard, one glowing monitor with code, dark apartment, night,
   city lights through blinds, cinematic lighting, detailed, newest, masterpiece, best
