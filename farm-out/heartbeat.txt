@@ -7,3 +7,4 @@
 22:44:16Z STARTED task=canary beats=9 on cuda
 22:59:06Z MODEL_LOADED cuda/bfloat16
 22:59:23Z DONE task=canary
+22:59:27Z STARTED task=bo2-a40 beats=1,6,9 on cuda
