@@ -7,41 +7,41 @@
    "who": "VO",
    "text": "Sense. I can taste the water table. I can feel the ground. Something with feet is walking, about\u2026 four hundred meters northeast. Noted.",
    "start": 0.0,
-   "end": 9.824,
+   "end": 8.568,
    "chunks": [
     {
      "text": "Sense.",
      "start": 0.0,
-     "end": 0.983
+     "end": 0.733
     },
     {
      "text": "I can taste the water table.",
-     "start": 0.983,
-     "end": 2.863
+     "start": 0.733,
+     "end": 2.533
     },
     {
      "text": "I can feel the ground.",
-     "start": 2.863,
-     "end": 4.315
+     "start": 2.533,
+     "end": 3.895
     },
     {
      "text": "Something with feet is walking, about\u2026",
-     "start": 4.315,
-     "end": 7.256
+     "start": 3.895,
+     "end": 6.2
     },
     {
      "text": "four hundred meters northeast.",
-     "start": 7.256,
-     "end": 9.169
+     "start": 6.2,
+     "end": 7.785
     },
     {
      "text": "Noted.",
-     "start": 9.169,
-     "end": 9.824
+     "start": 7.785,
+     "end": 8.568
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 10.124
+ "total_s": 8.868
 }

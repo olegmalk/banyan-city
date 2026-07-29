@@ -7,16 +7,16 @@
    "who": "VO",
    "text": "Something's coming.",
    "start": 0.0,
-   "end": 1.279,
+   "end": 1.07,
    "chunks": [
     {
      "text": "Something's coming.",
      "start": 0.0,
-     "end": 1.279
+     "end": 1.07
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 1.579
+ "total_s": 1.37
 }

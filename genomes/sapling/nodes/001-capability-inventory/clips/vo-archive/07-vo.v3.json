@@ -7,41 +7,41 @@
    "who": "VO",
    "text": "Scream. \u2014 No mouth. Run. \u2014 No legs. Flail?? \u2014 \u2026I appear to be flailing one (1) leaf.",
    "start": 0.0,
-   "end": 5.434,
+   "end": 5.424,
    "chunks": [
     {
      "text": "Scream.",
      "start": 0.0,
-     "end": 0.729
+     "end": 0.626
     },
     {
      "text": "\u2014 No mouth.",
-     "start": 0.729,
-     "end": 1.487
+     "start": 0.626,
+     "end": 1.509
     },
     {
      "text": "Run.",
-     "start": 1.487,
-     "end": 2.103
+     "start": 1.509,
+     "end": 2.061
     },
     {
      "text": "\u2014 No legs.",
-     "start": 2.103,
-     "end": 2.924
+     "start": 2.061,
+     "end": 2.883
     },
     {
      "text": "Flail??",
-     "start": 2.924,
-     "end": 3.648
+     "start": 2.883,
+     "end": 3.429
     },
     {
      "text": "\u2014 \u2026I appear to be flailing one (1) leaf.",
-     "start": 3.648,
-     "end": 5.434
+     "start": 3.429,
+     "end": 5.424
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 5.734
+ "total_s": 5.724
 }

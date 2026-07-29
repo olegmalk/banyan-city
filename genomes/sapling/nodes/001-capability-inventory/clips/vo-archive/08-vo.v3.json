@@ -7,41 +7,41 @@
    "who": "VO",
    "text": "Right. Sev-1. You know the drill. Nobody panics on my incidents, including me. Step one: stop screaming \u2014 done, involuntarily. Step two: what do we actually know?",
    "start": 0.0,
-   "end": 12.208,
+   "end": 11.213,
    "chunks": [
     {
      "text": "Right.",
      "start": 0.0,
-     "end": 0.8
+     "end": 0.76
     },
     {
      "text": "Sev-1.",
-     "start": 0.8,
-     "end": 1.82
+     "start": 0.76,
+     "end": 1.8
     },
     {
      "text": "You know the drill.",
-     "start": 1.82,
-     "end": 3.013
+     "start": 1.8,
+     "end": 2.787
     },
     {
      "text": "Nobody panics on my incidents, including me.",
-     "start": 3.013,
-     "end": 6.052
+     "start": 2.787,
+     "end": 5.612
     },
     {
      "text": "Step one: stop screaming \u2014 done, involuntarily.",
-     "start": 6.052,
-     "end": 9.621
+     "start": 5.612,
+     "end": 8.894
     },
     {
      "text": "Step two: what do we actually know?",
-     "start": 9.621,
-     "end": 12.208
+     "start": 8.894,
+     "end": 11.213
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 12.508
+ "total_s": 11.513
 }

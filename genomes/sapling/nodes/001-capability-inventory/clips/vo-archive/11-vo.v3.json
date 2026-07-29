@@ -7,36 +7,36 @@
    "who": "VO",
    "text": "Grow. Works. Latency: three days. Throughput: one leaf. I've shipped on worse.",
    "start": 0.0,
-   "end": 4.67,
+   "end": 5.2,
    "chunks": [
     {
      "text": "Grow.",
      "start": 0.0,
-     "end": 0.413
+     "end": 0.528
     },
     {
      "text": "Works.",
-     "start": 0.413,
-     "end": 1.07
+     "start": 0.528,
+     "end": 1.248
     },
     {
      "text": "Latency: three days.",
-     "start": 1.07,
-     "end": 2.257
+     "start": 1.248,
+     "end": 2.71
     },
     {
      "text": "Throughput: one leaf.",
-     "start": 2.257,
-     "end": 3.708
+     "start": 2.71,
+     "end": 4.119
     },
     {
      "text": "I've shipped on worse.",
-     "start": 3.708,
-     "end": 4.669
+     "start": 4.119,
+     "end": 5.2
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 4.97
+ "total_s": 5.5
 }
