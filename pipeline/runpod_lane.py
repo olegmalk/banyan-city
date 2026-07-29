@@ -70,14 +70,17 @@ def cmd_render(beats: str, seeds: int, init: str = "", strength: float = 0.5) ->
     bal = balance()
     print(f"balance ${bal:.2f} · evening cap ${EVENING_CAP_USD:.2f}")
     key_b64 = base64.b64encode((Path.home() / ".ssh" / "banyan_runpod_deploy").read_bytes()).decode()
-    script = (
-        "bash -c '"
-        "set -e; cd /workspace; "
-        "git clone --depth 1 https://github.com/olegmlkvorg/banyan-city.git; "
-        "cd banyan-city; pip -q install diffusers transformers accelerate safetensors pyyaml markdown; "
-        f"BEATS={beats} SEEDS={seeds} INIT={init} STRENGTH={strength} "
-        "DEPLOY_KEY=$DEPLOY_KEY python3 pipeline/runpod_render.py'"
-    )
+    # dockerArgs stays minimal — every past silent death lived in this string's
+    # quoting. All logic is in runpod_boot.sh (versioned, heartbeats every
+    # stage); all parameters travel as pod env vars, never inline shell.
+    script = ("bash -c 'cd /workspace && "
+              "git clone --depth 1 https://github.com/olegmlkvorg/banyan-city.git && "
+              "bash banyan-city/pipeline/runpod_boot.sh'")
+    pod_env = [{"key": "DEPLOY_KEY", "value": key_b64},
+               {"key": "BEATS", "value": beats},
+               {"key": "SEEDS", "value": str(seeds)},
+               {"key": "INIT", "value": init},
+               {"key": "STRENGTH", "value": str(strength)}]
     # community hosts vary wildly; ask lean, retry across GPU types — the first
     # live fire (2026-07-29) died on "machine does not have the resources" with
     # a 40GB disk ask. 25GB fits the model + deps comfortably.
@@ -98,7 +101,7 @@ mutation($input: PodFindAndDeployOnDemandInput) {
                     "name": f"banyan-render-{int(time.time())}",
                     "imageName": IMAGE,
                     "dockerArgs": script,
-                    "env": [{"key": "DEPLOY_KEY", "value": key_b64}],
+                    "env": pod_env,
                 }})
                 pod = data["podFindAndDeployOnDemand"]
                 break
@@ -117,27 +120,38 @@ mutation($input: PodFindAndDeployOnDemandInput) {
     if not pod:
         raise SystemExit("no suitable community host found — try again in a few minutes")
     print(f"pod {pod['id']} on {pod['machine']['gpuDisplayName']} @ ${pod['costPerHr']}/hr")
-    print("watching the runpod-results branch; stop anytime with: runpod_lane.py stop")
+    print("watching heartbeats on the runpod-results branch; stop anytime with: runpod_lane.py stop")
     t0 = time.time()
     rate = float(pod["costPerHr"])
+    QUIET_LIMIT = 8 * 60          # no NEW heartbeat for this long = dead worker
+    last_beat, last_change = "", time.time()
     try:
         while True:
-            time.sleep(45)
+            time.sleep(30)
             mins = (time.time() - t0) / 60
             if mins / 60 * rate > EVENING_CAP_USD:
                 print("EVENING CAP REACHED — terminating")
                 break
-            r = subprocess.run(["git", "ls-remote", "origin", "runpod-results"],
-                               cwd=REPO, capture_output=True, text=True)
-            head = r.stdout.split()[0] if r.stdout.strip() else ""
-            if head and head != getattr(cmd_render, "_seen", ""):
-                if getattr(cmd_render, "_started", None) is None:
-                    cmd_render._started = head  # branch may pre-exist; wait for a NEW head
-                    cmd_render._seen = head
-                    continue
+            subprocess.run(["git", "fetch", "-q", "origin", "runpod-results"],
+                           cwd=REPO, capture_output=True)
+            hb = subprocess.run(["git", "show", "origin/runpod-results:runpod-out/heartbeat.txt"],
+                                cwd=REPO, capture_output=True, text=True).stdout.strip()
+            if hb != last_beat:
+                for line in hb[len(last_beat):].strip().splitlines():
+                    print(f"  ♥ {line}", flush=True)
+                last_beat, last_change = hb, time.time()
+            tail = hb.splitlines()[-1] if hb else ""
+            if "DONE" in tail:
                 print("RESULTS ARRIVED")
                 break
-            cmd_render._seen = head
+            if "FAIL" in tail:
+                print("WORKER FAILED — log is on the branch: "
+                      "git show origin/runpod-results:runpod-out/worker-log.txt")
+                break
+            if time.time() - last_change > QUIET_LIMIT:
+                stage = tail or "never sent STARTED (boot/clone/quoting problem)"
+                print(f"NO HEARTBEAT for {QUIET_LIMIT//60} min — last stage: {stage} — terminating")
+                break
     finally:
         gql("mutation($id: String!) { podTerminate(input: {podId: $id}) }", {"id": pod["id"]})
         mins = (time.time() - t0) / 60

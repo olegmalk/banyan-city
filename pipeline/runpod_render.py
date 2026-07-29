@@ -11,12 +11,10 @@ to the board, and terminates the pod — every minute ledgered.
 Runs from a clean clone; expects env:
   BEATS      comma list, e.g. "4,7"
   SEEDS      variants per beat (default 4)
-  DEPLOY_KEY base64 ed25519 private key for the repo (contents-scoped courier)
+(delivery + DEPLOY_KEY handling live in runpod_boot.sh, the heartbeat courier)
 """
 
-import base64
 import os
-import subprocess
 import sys
 import time
 from pathlib import Path
@@ -85,21 +83,9 @@ def main() -> int:
             img.save(f)
             print(f"  {f.name} in {time.time()-t0:.0f}s", flush=True)
 
-    # courier: push results to the branch, then the controller takes over
-    key = REPO / ".courier_key"
-    key.write_bytes(base64.b64decode(os.environ["DEPLOY_KEY"]))
-    key.chmod(0o600)
-    env = {**os.environ,
-           "GIT_SSH_COMMAND": f"ssh -i {key} -o StrictHostKeyChecking=no"}
-    run = lambda *a: subprocess.run(a, cwd=REPO, env=env, check=True)
-    run("git", "config", "user.email", "runpod@banyan.city")
-    run("git", "config", "user.name", "runpod-courier")
-    run("git", "remote", "set-url", "origin", "git@github.com:olegmlkvorg/banyan-city.git")
-    run("git", "checkout", "-B", "runpod-results")
-    run("git", "add", "runpod-out")
-    run("git", "commit", "-m", f"runpod candidates: beats {os.environ['BEATS']}")
-    run("git", "push", "-f", "origin", "runpod-results")
-    print("RESULTS_PUSHED", flush=True)
+    # delivery is runpod_boot.sh's job now (heartbeat courier, set up before
+    # anything can fail) — this process only renders and reports
+    print("RENDER_COMPLETE", flush=True)
     return 0
 
 

@@ -47,7 +47,7 @@ computer monitor close-up filling the frame, terminal window, command finishing,
 no dialogue - the death, in one shot. The mug reaches the floor before he does.
 
 ```
-1boy, solo, adult man, glasses, messy hair, eyes closed, unconscious, slumping sideways off his chair, sliding toward the floor, one arm hanging limp, papers scattering, dark room, monitor glow, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No eyes open, no awake, no lying on the desk, no on the table, no standing. No photorealism, no 3D render look. 9:16 vertical, no text.
+wide shot, from across the room, 1boy, solo, small distant figure of an adult man slumped motionless over his desk, face hidden, head down on the desk, dark empty office at night, single glowing monitor the only light source, long shadows, papers scattered across the floor, high ceiling, lonely, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No close-up, no face visible, no horror, no standing, no awake. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 ## Beat 05 — HUH. GREEN. (0:20–0:24) ⬜ needs footage
 
