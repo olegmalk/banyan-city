@@ -9,3 +9,4 @@
 19:57:33Z DONE task=cmp2-full
 19:57:38Z STARTED task=cmp2-fast beats= on mps
 19:57:46Z MODEL_LOADED mps/float32
+19:58:27Z DONE task=cmp2-fast

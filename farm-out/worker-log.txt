@@ -5,3 +5,4 @@
   00-ref-field-dusk-s1.png in 122s
   00-ref-field-dusk-s2.png in 122s
   00-cmp2-full-s0.png in 122s
+  00-cmp2-fast-s0.png in 37s
