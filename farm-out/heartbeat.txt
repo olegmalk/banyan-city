@@ -4,3 +4,4 @@
 19:47:50Z STARTED task=ref-field-dusk beats= on mps
 19:48:00Z MODEL_LOADED mps/float32
 19:54:08Z DONE task=ref-field-dusk
+19:55:18Z STARTED task=cmp2-full beats= on mps

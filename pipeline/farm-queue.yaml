@@ -52,3 +52,20 @@ tasks:
     slug: ref-field-dusk
     prompt: "no humans, the wide grass field at dusk, deep purple and orange sky, first stars appearing, the small sprout in silhouette against the last light, calm, vast, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people, no city, no trees. No photorealism, no 3D render look. 9:16 vertical, no text."
     seeds: 3
+  - id: cmp2-full
+    worker: m2
+    node: 001-capability-inventory
+    beats: ""
+    slug: cmp2-full
+    prompt: "1boy, solo, dark silhouette, glasses, messy hair, hood down, hands typing fast on a mechanical keyboard, one glowing monitor with code, dark apartment, night, city lights through blinds, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text."
+    seeds: 1
+  - id: cmp2-fast
+    worker: m2
+    node: 001-capability-inventory
+    beats: ""
+    slug: cmp2-fast
+    prompt: "1boy, solo, dark silhouette, glasses, messy hair, hood down, hands typing fast on a mechanical keyboard, one glowing monitor with code, dark apartment, night, city lights through blinds, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text."
+    seeds: 1
+    steps: 20
+    width: 640
+    height: 960
