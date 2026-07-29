@@ -28,7 +28,9 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent
 API = "https://api.runpod.io/graphql"
 GPU = "NVIDIA GeForce RTX 4090"
-IMAGE = "runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04"
+# cuda 11.8 runs on nearly any community driver — the 12.4 image hit
+# "CUDA unknown error" on a 3090 host whose driver predated it (fire 7)
+IMAGE = "runpod/pytorch:2.1.0-py3.10-cuda11.8.0-devel-ubuntu22.04"
 EVENING_CAP_USD = 5.00
 LEDGER = REPO / "ledger" / "render-spend.csv"
 

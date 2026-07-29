@@ -41,6 +41,9 @@ pip -q install 'diffusers==0.29.2' 'transformers==4.44.2' 'accelerate==0.33.0' \
     safetensors pyyaml markdown >>"$LOG" 2>&1 \
     && mark DEPS_OK || { mark DEPS_FAIL; exit 1; }
 
+python3 -c "import torch; torch.zeros(1).cuda(); print(torch.cuda.get_device_name())" >>"$LOG" 2>&1 \
+    && mark CUDA_OK || { mark CUDA_FAIL; exit 1; }
+
 python3 pipeline/runpod_render.py >>"$LOG" 2>&1 \
     && mark RENDER_OK || { mark RENDER_FAIL; exit 1; }
 
