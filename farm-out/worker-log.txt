@@ -23,3 +23,9 @@
   bo2-noob-06-too-blue-s1.png in 13s
   bo2-noob-09-whoami-s0.png in 13s
   bo2-noob-09-whoami-s1.png in 13s
+  00-ref-sapling-40cm-s0.png in 14s
+  00-ref-sapling-40cm-s1.png in 13s
+  00-ref-sapling-40cm-s2.png in 13s
+  00-ref-sapling-40cm-s3.png in 13s
+  00-ref-sapling-40cm-s4.png in 14s
+  00-ref-sapling-40cm-s5.png in 13s
