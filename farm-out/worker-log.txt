@@ -11,3 +11,18 @@
   00-budget-15s-s0.png in 16s
   00-budget-20s-s0.png in 21s
   00-budget-25s-s0.png in 26s
+  01-the-keyboard-s0.png in 15s
+  02-three-oh-seven-s0.png in 15s
+  03-deploy-succeeded-s0.png in 15s
+  04-the-fall-s0.png in 15s
+  05-huh-green-s0.png in 15s
+  06-too-blue-s0.png in 15s
+  07-flailing-one-s0.png in 15s
+  08-sev-1-s0.png in 15s
+  09-whoami-s0.png in 15s
+  10-sense-s0.png in 15s
+  11-grow-s0.png in 15s
+  12-undefined-s0.png in 15s
+  13-i-always-left-s0.png in 15s
+  14-worth-staying-in-s0.png in 15s
+  15-something-s-coming-s0.png in 15s
