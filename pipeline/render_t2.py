@@ -217,11 +217,34 @@ def speaker_key(who: str) -> str:
     return re.sub(r"\s*\(.*$", "", who.strip()).strip().upper()
 
 
+_ONES = ["zero", "one", "two", "three", "four", "five", "six", "seven",
+         "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen",
+         "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"]
+_TENS = {2: "twenty", 3: "thirty", 4: "forty", 5: "fifty"}
+
+
+def _spoken_time(m: re.Match) -> str:
+    """2:41 → 'two forty-one'; 3:07 → 'three oh seven' — the TTS reads a
+    colon time as an integer otherwise ('two thousand forty-one', the
+    founder's screening note of 2026-07-29)."""
+    h, mm = int(m.group(1)), int(m.group(2))
+    hour = _ONES[h] if h < 20 else str(h)
+    if mm == 0:
+        return f"{hour} hundred"
+    if mm < 10:
+        return f"{hour} oh {_ONES[mm]}"
+    if mm < 20:
+        return f"{hour} {_ONES[mm]}"
+    tens, ones = divmod(mm, 10)
+    return f"{hour} {_TENS[tens]}" + (f"-{_ONES[ones]}" if ones else "")
+
+
 def clean_speech(text: str) -> str:
     """What the voice says: drop stage-direction parentheticals and on-screen
     punctuation art; the card still shows the full text."""
     t = re.sub(r"\([^)]*\)", " ", text)
     t = t.replace("—", ", ").replace("…", "...")
+    t = re.sub(r"\b(\d{1,2}):([0-5]\d)\b", _spoken_time, t)
     return re.sub(r"\s+", " ", t).strip(" -,")
 
 

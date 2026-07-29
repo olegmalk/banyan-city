@@ -7,26 +7,26 @@
    "who": "VO",
    "text": "Production went down at 2:41. It's the retry loop. It's always the retry loop.",
    "start": 0.0,
-   "end": 4.707,
+   "end": 4.081,
    "chunks": [
     {
      "text": "Production went down at 2:41.",
      "start": 0.0,
-     "end": 1.808
+     "end": 1.812
     },
     {
      "text": "It's the retry loop.",
-     "start": 1.808,
-     "end": 3.026
+     "start": 1.812,
+     "end": 2.848
     },
     {
      "text": "It's always the retry loop.",
-     "start": 3.026,
-     "end": 4.707
+     "start": 2.848,
+     "end": 4.081
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 5.007
+ "total_s": 4.381
 }
