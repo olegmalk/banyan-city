@@ -77,19 +77,35 @@ def cmd_render(beats: str, seeds: int) -> int:
         "cd banyan-city; pip -q install diffusers transformers accelerate safetensors pyyaml markdown; "
         f"BEATS={beats} SEEDS={seeds} DEPLOY_KEY=$DEPLOY_KEY python3 pipeline/runpod_render.py'"
     )
-    data = gql("""
+    # community hosts vary wildly; ask lean, retry across GPU types — the first
+    # live fire (2026-07-29) died on "machine does not have the resources" with
+    # a 40GB disk ask. 25GB fits the model + deps comfortably.
+    pod = None
+    for gpu in (GPU, "NVIDIA RTX A5000", "NVIDIA GeForce RTX 3090"):
+        for attempt in range(3):
+            try:
+                data = gql("""
 mutation($input: PodFindAndDeployOnDemandInput) {
   podFindAndDeployOnDemand(input: $input) { id costPerHr machine { gpuDisplayName } }
 }""", {"input": {
-        "cloudType": "COMMUNITY", "gpuTypeId": GPU, "gpuCount": 1,
-        "volumeInGb": 0, "containerDiskInGb": 40,
-        "minVcpuCount": 4, "minMemoryInGb": 16,
-        "name": f"banyan-render-{int(time.time())}",
-        "imageName": IMAGE,
-        "dockerArgs": script,
-        "env": [{"key": "DEPLOY_KEY", "value": key_b64}],
-    }})
-    pod = data["podFindAndDeployOnDemand"]
+                    "cloudType": "COMMUNITY", "gpuTypeId": gpu, "gpuCount": 1,
+                    "volumeInGb": 0, "containerDiskInGb": 25,
+                    "name": f"banyan-render-{int(time.time())}",
+                    "imageName": IMAGE,
+                    "dockerArgs": script,
+                    "env": [{"key": "DEPLOY_KEY", "value": key_b64}],
+                }})
+                pod = data["podFindAndDeployOnDemand"]
+                break
+            except SystemExit as e:
+                if "does not have the resources" not in str(e):
+                    raise
+                print(f"  host too small ({gpu}, try {attempt+1}) — rematching")
+                time.sleep(3)
+        if pod:
+            break
+    if not pod:
+        raise SystemExit("no suitable community host found — try again in a few minutes")
     print(f"pod {pod['id']} on {pod['machine']['gpuDisplayName']} @ ${pod['costPerHr']}/hr")
     print("watching the runpod-results branch; stop anytime with: runpod_lane.py stop")
     t0 = time.time()
