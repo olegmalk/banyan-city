@@ -26,3 +26,18 @@
   13-i-always-left-s0.png in 15s
   14-worth-staying-in-s0.png in 15s
   15-something-s-coming-s0.png in 15s
+  01-the-keyboard-s0.png in 62s
+  02-three-oh-seven-s0.png in 62s
+  03-deploy-succeeded-s0.png in 63s
+  04-the-fall-s0.png in 62s
+  05-huh-green-s0.png in 62s
+  06-too-blue-s0.png in 62s
+  07-flailing-one-s0.png in 62s
+  08-sev-1-s0.png in 62s
+  09-whoami-s0.png in 62s
+  10-sense-s0.png in 62s
+  11-grow-s0.png in 62s
+  12-undefined-s0.png in 62s
+  13-i-always-left-s0.png in 62s
+  14-worth-staying-in-s0.png in 62s
+  15-something-s-coming-s0.png in 62s
