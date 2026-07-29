@@ -69,6 +69,11 @@ def log_spend(minutes: float, rate: float, note: str):
 def cmd_render(beats: str, seeds: int, init: str = "", strength: float = 0.5) -> int:
     bal = balance()
     print(f"balance ${bal:.2f} · evening cap ${EVENING_CAP_USD:.2f}")
+    # a stale runpod-results branch is a landmine: fire 6 (2026-07-29) read
+    # fire 5's old RENDER_FAIL heartbeat and killed a healthy 1-minute-old pod
+    subprocess.run(["git", "push", "-q", "origin", ":runpod-results"],
+                   cwd=REPO, capture_output=True)
+    print("stale results branch cleared")
     key_b64 = base64.b64encode((Path.home() / ".ssh" / "banyan_runpod_deploy").read_bytes()).decode()
     # dockerArgs stays minimal — every past silent death lived in this string's
     # quoting. All logic is in runpod_boot.sh (versioned, heartbeats every
@@ -136,6 +141,8 @@ mutation($input: PodFindAndDeployOnDemandInput) {
                            cwd=REPO, capture_output=True)
             hb = subprocess.run(["git", "show", "origin/runpod-results:runpod-out/heartbeat.txt"],
                                 cwd=REPO, capture_output=True, text=True).stdout.strip()
+            if not hb.startswith(last_beat):
+                last_beat = ""    # branch was rewritten (fresh worker) — start over
             if hb != last_beat:
                 for line in hb[len(last_beat):].strip().splitlines():
                     print(f"  ♥ {line}", flush=True)
