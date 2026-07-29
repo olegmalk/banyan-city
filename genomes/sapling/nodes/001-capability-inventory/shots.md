@@ -47,7 +47,7 @@ computer monitor close-up filling the frame, terminal window, command finishing,
 no dialogue - the death, in one shot. The mug reaches the floor before he does.
 
 ```
-wide shot, from across the room, 1boy, solo, small distant figure of an adult man slumped motionless over his desk, face hidden, head down on the desk, dark empty office at night, single glowing monitor the only light source, long shadows, papers scattered across the floor, high ceiling, lonely, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No close-up, no face visible, no horror, no standing, no awake. No photorealism, no 3D render look. 9:16 vertical, no text.
+close-up on the side of an office chair, a man's limp hand hanging straight down past the armrest, relaxed open fingers, motionless, sleeve of a rumpled shirt, papers settled on the dark floor below, cold monitor glow from above, dark room at night, dramatic shadows, shallow depth of field, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No face, no head, no full body, no horror, no blood, no standing. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 ## Beat 05 — HUH. GREEN. (0:20–0:24) ⬜ needs footage
 
@@ -61,7 +61,7 @@ thick curved glazed ceramic shards of a broken coffee mug scattered flat on dark
 Line: 'Hospital ceiling. Hospitals are green now.' The wrong-ceiling joke IS the shot.
 
 ```
-no humans, plant focus, one single giant leaf seen from directly below, spread overhead like a ceiling, backlit glowing veins, vivid blue sky at the edges, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No multiple leaves, no foliage, no plant, no tree, no grass, no girl. No photorealism, no 3D render look. 9:16 vertical, no text.
+no humans, plant focus, from below, worm's-eye view, the translucent underside of one giant leaf filling the sky, sunlight shining through the leaf, glowing veins like a ceiling lamp, deep blue morning sky around the edges, a few tall grass blades leaning into frame, lens flare, dappled light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No tree, no trunk, no city, no balloons, no flowers, no 1girl. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 ## Beat 07 — FLAILING ONE (1) LEAF (0:29–0:35) ⬜ needs footage
 
