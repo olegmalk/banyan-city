@@ -189,6 +189,8 @@ def main() -> int:
     ap.add_argument("--seeds", type=int, default=4)
     ap.add_argument("--init", default="", help="repo-relative init image (img2img)")
     ap.add_argument("--strength", type=float, default=0.5)
+    ap.add_argument("--secure", action="store_true",
+                    help="skip the community lottery, go straight to SECURE")
     a = ap.parse_args()
     if a.cmd == "status":
         print(f"balance ${balance():.2f}")
@@ -202,7 +204,11 @@ def main() -> int:
         return 0
     if not a.beats:
         raise SystemExit("--beats required")
-    return cmd_render(a.beats, a.seeds, a.init, a.strength)
+    community = tuple((g, c) for g, c in
+                      [(GPU, "COMMUNITY"), ("NVIDIA RTX A5000", "COMMUNITY"),
+                       ("NVIDIA GeForce RTX 3090", "COMMUNITY"),
+                       ("NVIDIA RTX A4500", "COMMUNITY")]) if a.secure else ()
+    return cmd_render(a.beats, a.seeds, a.init, a.strength, avoid=community)
 
 
 if __name__ == "__main__":
