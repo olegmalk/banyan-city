@@ -109,7 +109,9 @@ def render_task(task: dict, courier: Courier, device: str, dtype) -> None:
     NEG = ("photorealistic, 3d render, abstract, text, watermark, signature, "
            "low quality, blurry, extra limbs, deformed, jpeg artifacts, "
            "realistic skin texture")
-    BASE, SEED = "cagliostrolab/animagine-xl-3.1", 20260719
+    # task may name another OPEN model (bake-offs); default = house model
+    BASE = task.get("model") or "cagliostrolab/animagine-xl-3.1"
+    SEED = 20260719
 
     d = REPO / "genomes/sapling/nodes" / task["node"]
     leaves = sorted((d / "leaves").glob("*-t0-*.yaml"))

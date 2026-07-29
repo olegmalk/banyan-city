@@ -1,9 +1,14 @@
-# dad's extensive test, column 3: all beats at the 60-second spec
-# (20 steps, full 832x1216 resolution — the proven working setting)
+# model bake-off: current 3.1 vs Animagine 4.0, three scene types,
+# same seeds, full quality — founder screens the winner
 tasks:
-  - id: dad-60s-all-beats
-    worker: m2
+  - id: bake-31
+    worker: msi
     node: 001-capability-inventory
-    beats: "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15"
-    seeds: 1
-    steps: 20
+    beats: "1,6,9"
+    seeds: 2
+  - id: bake-40
+    worker: msi
+    node: 001-capability-inventory
+    beats: "1,6,9"
+    seeds: 2
+    model: cagliostrolab/animagine-xl-4.0
