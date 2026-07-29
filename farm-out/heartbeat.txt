@@ -17,3 +17,4 @@
 23:17:36Z MODEL_LOADED cuda/bfloat16
 23:18:59Z DONE task=bo2-noob
 23:19:05Z STARTED task=ref2-sapling-40cm beats= on cuda
+23:19:18Z MODEL_LOADED cuda/bfloat16
