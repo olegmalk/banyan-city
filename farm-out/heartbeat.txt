@@ -17,3 +17,4 @@
 20:05:16Z MODEL_LOADED mps/float32
 20:05:32Z DONE task=budget-10s
 20:05:37Z STARTED task=budget-15s beats= on mps
+20:05:43Z MODEL_LOADED mps/float32
