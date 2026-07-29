@@ -1,36 +1,9 @@
-# M2 push-test matrix v2 (distinct slugs so every image survives)
+# recover the baseline image for the quality panel
 tasks:
-  - id: m2v2-baseline
+  - id: m2v2-baseline-recover
     worker: m2
     node: 001-capability-inventory
     beats: ""
     slug: m2test-baseline
     prompt: "a tiny two-leaf green sprout standing alone in short grass, centered, quiet empty composition, soft pale morning sky, gentle light, low close shot, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text."
     seeds: 1
-  - id: m2v2-20steps
-    worker: m2
-    node: 001-capability-inventory
-    beats: ""
-    slug: m2test-20steps
-    prompt: "a tiny two-leaf green sprout standing alone in short grass, centered, quiet empty composition, soft pale morning sky, gentle light, low close shot, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text."
-    seeds: 1
-    steps: 20
-  - id: m2v2-small
-    worker: m2
-    node: 001-capability-inventory
-    beats: ""
-    slug: m2test-small
-    prompt: "a tiny two-leaf green sprout standing alone in short grass, centered, quiet empty composition, soft pale morning sky, gentle light, low close shot, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text."
-    seeds: 1
-    width: 640
-    height: 960
-  - id: m2v2-fast
-    worker: m2
-    node: 001-capability-inventory
-    beats: ""
-    slug: m2test-fast
-    prompt: "a tiny two-leaf green sprout standing alone in short grass, centered, quiet empty composition, soft pale morning sky, gentle light, low close shot, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text."
-    seeds: 1
-    steps: 20
-    width: 640
-    height: 960
