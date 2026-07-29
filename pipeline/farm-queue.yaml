@@ -1,10 +1,4 @@
 # The farm's work queue — workers poll this file on origin/main every minute.
 # Entry shape is documented in farm_worker.py. The steward queues and clears
 # tasks; results arrive on farm-results-<worker> branches with heartbeats.
-tasks:
-  - id: msi-speedtest-1
-    worker: msi
-    node: 001-capability-inventory
-    beats: "9"
-    seeds: 2
-
+tasks: []
