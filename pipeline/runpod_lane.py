@@ -68,7 +68,8 @@ def log_spend(minutes: float, rate: float, note: str):
     return est
 
 
-def cmd_render(beats: str, seeds: int, init: str = "", strength: float = 0.5) -> int:
+def cmd_render(beats: str, seeds: int, init: str = "", strength: float = 0.5,
+               avoid: tuple = ()) -> int:
     bal = balance()
     print(f"balance ${bal:.2f} · evening cap ${EVENING_CAP_USD:.2f}")
     # a stale runpod-results branch is a landmine: fire 6 (2026-07-29) read
@@ -95,8 +96,9 @@ def cmd_render(beats: str, seeds: int, init: str = "", strength: float = 0.5) ->
     # (gpu, cloud) ladder: community first (cheap), secure last (reliable) —
     # the second fire found community sold out across three GPU types.
     LADDER = [(GPU, "COMMUNITY"), ("NVIDIA RTX A5000", "COMMUNITY"),
-              ("NVIDIA GeForce RTX 3090", "COMMUNITY"), (GPU, "SECURE")]
-    for gpu, cloud in LADDER:
+              ("NVIDIA GeForce RTX 3090", "COMMUNITY"),
+              ("NVIDIA RTX A4500", "COMMUNITY"), (GPU, "SECURE")]
+    for gpu, cloud in [r for r in LADDER if r not in avoid]:
         for attempt in range(3):
             try:
                 data = gql("""
@@ -132,6 +134,7 @@ mutation($input: PodFindAndDeployOnDemandInput) {
     rate = float(pod["costPerHr"])
     QUIET_LIMIT = 8 * 60          # no NEW heartbeat for this long = dead worker
     last_beat, last_change = "", time.time()
+    cuda_poisoned = False
     try:
         while True:
             time.sleep(30)
@@ -153,6 +156,12 @@ mutation($input: PodFindAndDeployOnDemandInput) {
             if "DONE" in tail:
                 print("RESULTS ARRIVED")
                 break
+            if "CUDA_FAIL" in tail:
+                # a whole community pool can share broken drivers (2× in a row,
+                # 2026-07-29) — retry on the NEXT rung, don't re-roll this one
+                print(f"CUDA_FAIL on {gpu}/{cloud} — rung poisoned, climbing")
+                cuda_poisoned = True
+                break
             if "FAIL" in tail:
                 print("WORKER FAILED — log is on the branch: "
                       "git show origin/runpod-results:runpod-out/worker-log.txt")
@@ -166,6 +175,9 @@ mutation($input: PodFindAndDeployOnDemandInput) {
         mins = (time.time() - t0) / 60
         est = log_spend(mins, rate, f"stills round beats {beats}")
         print(f"pod terminated · {mins:.0f} min · ~${est:.2f} ledgered")
+    if cuda_poisoned:
+        return cmd_render(beats, seeds, init, strength,
+                          avoid=avoid + ((gpu, cloud),))
     return 0
 
 
