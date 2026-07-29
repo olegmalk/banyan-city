@@ -11,3 +11,9 @@
   bo2-a40-06-too-blue-s1.png in 13s
   bo2-a40-09-whoami-s0.png in 13s
   bo2-a40-09-whoami-s1.png in 13s
+  bo2-illust-01-the-keyboard-s0.png in 14s
+  bo2-illust-01-the-keyboard-s1.png in 13s
+  bo2-illust-06-too-blue-s0.png in 13s
+  bo2-illust-06-too-blue-s1.png in 13s
+  bo2-illust-09-whoami-s0.png in 13s
+  bo2-illust-09-whoami-s1.png in 13s
