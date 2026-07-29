@@ -35,6 +35,7 @@ Queue entry shape (pipeline/farm-queue.yaml):
 """
 
 import argparse
+import os
 import subprocess
 import sys
 import time
@@ -180,8 +181,15 @@ def main() -> int:
                 continue
             # render from CURRENT main, not whatever checkout the machine was
             # born with (the msi's first task ran from its USB-era files)
+            before = Path(__file__).read_bytes()
             sh("git", "checkout", "-q", "main", check=False)
             sh("git", "reset", "-q", "--hard", "origin/main", check=False)
+            if Path(__file__).read_bytes() != before:
+                # our own code changed — a running process can't hot-swap its
+                # source (the 2026-07-29 lesson: workers synced the new file
+                # but kept executing the old one from memory). Relaunch.
+                print("farm_worker.py updated — restarting myself", flush=True)
+                os.execv(sys.executable, [sys.executable] + sys.argv)
             courier.mark(f"STARTED task={tid} beats={task.get('beats')} on {device}")
             try:
                 render_task(task, courier, device, dtype)
