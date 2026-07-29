@@ -4,3 +4,4 @@
   bake-illustrious2-06-too-blue-s1.png in 13s
   bake-illustrious2-09-whoami-s0.png in 13s
   bake-illustrious2-09-whoami-s1.png in 13s
+  canary-09-whoami-s0.png in 14s
