@@ -34,3 +34,4 @@
 22:28:47Z STARTED task=ref2-roots-wide beats= on mps
 22:28:59Z MODEL_LOADED mps/float32
 22:35:09Z DONE task=ref2-roots-wide
+22:35:12Z STARTED task=ref2-field-dusk beats= on mps
