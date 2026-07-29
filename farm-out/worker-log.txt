@@ -35,3 +35,9 @@
   00-ref-sapling-90cm-s3.png in 14s
   00-ref-sapling-90cm-s4.png in 13s
   00-ref-sapling-90cm-s5.png in 14s
+  00-ref-field-noon-s0.png in 14s
+  00-ref-field-noon-s1.png in 13s
+  00-ref-field-noon-s2.png in 13s
+  00-ref-field-noon-s3.png in 13s
+  00-ref-field-noon-s4.png in 14s
+  00-ref-field-noon-s5.png in 14s

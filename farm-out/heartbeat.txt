@@ -24,3 +24,4 @@
 23:22:27Z DONE task=ref2-sapling-90cm
 23:22:33Z STARTED task=ref2-field-noon beats= on cuda
 23:22:47Z MODEL_LOADED cuda/bfloat16
+23:24:12Z DONE task=ref2-field-noon
