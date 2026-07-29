@@ -1,44 +1,36 @@
-# M2 push-test matrix (dad's buy decision, 2026-07-29 night): same beat-9
-# image at four speed settings — times + pixels for the quality panel.
-# World-ref batch continues on msi below.
+# M2 push-test matrix v2 (distinct slugs so every image survives)
 tasks:
-  - id: m2-push-a-baseline
-    worker: m2
-    node: 001-capability-inventory
-    beats: "9"
-    seeds: 1
-  - id: m2-push-b-20steps
-    worker: m2
-    node: 001-capability-inventory
-    beats: "9"
-    seeds: 1
-    steps: 20
-  - id: m2-push-c-small
-    worker: m2
-    node: 001-capability-inventory
-    beats: "9"
-    seeds: 1
-    width: 640
-    height: 960
-  - id: m2-push-d-fast
-    worker: m2
-    node: 001-capability-inventory
-    beats: "9"
-    seeds: 1
-    steps: 20
-    width: 640
-    height: 960
-  - id: ref-roots-wide
+  - id: m2v2-baseline
     worker: m2
     node: 001-capability-inventory
     beats: ""
-    slug: ref-roots-wide
-    prompt: "no humans, dark underground cross-section, a wider web of pale young roots reaching down through rich soil, tiny glowing blue water droplets between soil grains, quiet darkness, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No cave, no sky, no people. No photorealism, no 3D render look. 9:16 vertical, no text."
-    seeds: 3
-  - id: ref-field-dusk
+    slug: m2test-baseline
+    prompt: "a tiny two-leaf green sprout standing alone in short grass, centered, quiet empty composition, soft pale morning sky, gentle light, low close shot, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text."
+    seeds: 1
+  - id: m2v2-20steps
     worker: m2
     node: 001-capability-inventory
     beats: ""
-    slug: ref-field-dusk
-    prompt: "no humans, the wide grass field at dusk, deep purple and orange sky, first stars appearing, the small sprout in silhouette against the last light, calm, vast, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people, no city, no trees. No photorealism, no 3D render look. 9:16 vertical, no text."
-    seeds: 3
+    slug: m2test-20steps
+    prompt: "a tiny two-leaf green sprout standing alone in short grass, centered, quiet empty composition, soft pale morning sky, gentle light, low close shot, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text."
+    seeds: 1
+    steps: 20
+  - id: m2v2-small
+    worker: m2
+    node: 001-capability-inventory
+    beats: ""
+    slug: m2test-small
+    prompt: "a tiny two-leaf green sprout standing alone in short grass, centered, quiet empty composition, soft pale morning sky, gentle light, low close shot, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text."
+    seeds: 1
+    width: 640
+    height: 960
+  - id: m2v2-fast
+    worker: m2
+    node: 001-capability-inventory
+    beats: ""
+    slug: m2test-fast
+    prompt: "a tiny two-leaf green sprout standing alone in short grass, centered, quiet empty composition, soft pale morning sky, gentle light, low close shot, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text."
+    seeds: 1
+    steps: 20
+    width: 640
+    height: 960
