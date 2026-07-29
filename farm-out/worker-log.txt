@@ -47,3 +47,9 @@
   00-ref-field-night-s3.png in 13s
   00-ref-field-night-s4.png in 14s
   00-ref-field-night-s5.png in 14s
+  00-ref-field-rain-s0.png in 14s
+  00-ref-field-rain-s1.png in 13s
+  00-ref-field-rain-s2.png in 13s
+  00-ref-field-rain-s3.png in 14s
+  00-ref-field-rain-s4.png in 14s
+  00-ref-field-rain-s5.png in 13s
