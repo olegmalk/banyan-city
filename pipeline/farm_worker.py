@@ -160,7 +160,10 @@ def render_task(task: dict, courier: Courier, device: str, dtype) -> None:
                 kw["width"] = int(task.get("width", 832))
                 kw["height"] = int(task.get("height", 1216))
             img = pipe(**kw).images[0]
-            f = courier.out / f"{num:02d}-{s['slug']}-s{k}.png"
+            # model-override tasks prefix outputs with their task id --
+            # two models on the same beats otherwise overwrite each other
+            prefix = f"{task.get('id')}-" if task.get("model") else ""
+            f = courier.out / f"{prefix}{num:02d}-{s['slug']}-s{k}.png"
             img.save(f)
             courier.say(f"  {f.name} in {time.time()-t0:.0f}s")
 

@@ -1,15 +1,7 @@
-# open-model bake-off round 2, overnight: the other two 2026 contenders.
-# If a repo isn't diffusers-format the task FAILs fast and the heartbeat says so.
 tasks:
-  - id: bake-illustrious
+  - id: bake-illustrious2
     worker: msi
     node: 001-capability-inventory
     beats: "1,6,9"
     seeds: 2
     model: OnomaAIResearch/Illustrious-xl-early-release-v0
-  - id: bake-noobai
-    worker: msi
-    node: 001-capability-inventory
-    beats: "1,6,9"
-    seeds: 2
-    model: Laxhar/noobai-XL-1.1
