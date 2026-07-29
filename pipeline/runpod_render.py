@@ -35,6 +35,9 @@ SEED = 20260719
 def main() -> int:
     beats = [int(b) for b in os.environ["BEATS"].split(",")]
     seeds = int(os.environ.get("SEEDS", "4"))
+    # img2img: INIT is a repo-relative image path (the clone has it), STRENGTH 0-1.
+    init_rel = os.environ.get("INIT", "")
+    strength = float(os.environ.get("STRENGTH", "0.5"))
     node = os.environ.get("NODE", "001-capability-inventory")
     d = REPO / "genomes/sapling/nodes" / node
 
@@ -46,10 +49,10 @@ def main() -> int:
         raise SystemExit(f"{node} is NOT founder-approved ({who}) — STEWARDSHIP §6")
 
     import torch
-    from diffusers import StableDiffusionXLPipeline
+    from diffusers import StableDiffusionXLImg2ImgPipeline, StableDiffusionXLPipeline
     dtype = torch.bfloat16 if torch.cuda.get_device_capability()[0] >= 8 else torch.float16
-    pipe = StableDiffusionXLPipeline.from_pretrained(BASE, torch_dtype=dtype,
-                                                     use_safetensors=True)
+    cls = StableDiffusionXLImg2ImgPipeline if init_rel else StableDiffusionXLPipeline
+    pipe = cls.from_pretrained(BASE, torch_dtype=dtype, use_safetensors=True)
     pipe.to("cuda")
     print(f"pipeline ready ({dtype})", flush=True)
 
@@ -68,9 +71,16 @@ def main() -> int:
         for k in range(seeds):
             t0 = time.time()
             g = torch.Generator(device="cpu").manual_seed(SEED + num + k * 1000)
-            img = pipe(prompt=ptext, negative_prompt=neg, width=832, height=1216,
-                       num_inference_steps=40, guidance_scale=7.5,
-                       generator=g).images[0]
+            if init_rel:
+                from PIL import Image
+                base_img = Image.open(REPO / init_rel).convert("RGB").resize((832, 1216))
+                img = pipe(prompt=ptext, negative_prompt=neg, image=base_img,
+                           strength=strength, num_inference_steps=40,
+                           guidance_scale=7.5, generator=g).images[0]
+            else:
+                img = pipe(prompt=ptext, negative_prompt=neg, width=832, height=1216,
+                           num_inference_steps=40, guidance_scale=7.5,
+                           generator=g).images[0]
             f = outdir / f"{num:02d}-{s['slug']}-s{k}.png"
             img.save(f)
             print(f"  {f.name} in {time.time()-t0:.0f}s", flush=True)

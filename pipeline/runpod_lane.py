@@ -66,7 +66,7 @@ def log_spend(minutes: float, rate: float, note: str):
     return est
 
 
-def cmd_render(beats: str, seeds: int) -> int:
+def cmd_render(beats: str, seeds: int, init: str = "", strength: float = 0.5) -> int:
     bal = balance()
     print(f"balance ${bal:.2f} · evening cap ${EVENING_CAP_USD:.2f}")
     key_b64 = base64.b64encode((Path.home() / ".ssh" / "banyan_runpod_deploy").read_bytes()).decode()
@@ -75,7 +75,8 @@ def cmd_render(beats: str, seeds: int) -> int:
         "set -e; cd /workspace; "
         "git clone --depth 1 https://github.com/olegmlkvorg/banyan-city.git; "
         "cd banyan-city; pip -q install diffusers transformers accelerate safetensors pyyaml markdown; "
-        f"BEATS={beats} SEEDS={seeds} DEPLOY_KEY=$DEPLOY_KEY python3 pipeline/runpod_render.py'"
+        f"BEATS={beats} SEEDS={seeds} INIT={init} STRENGTH={strength} "
+        "DEPLOY_KEY=$DEPLOY_KEY python3 pipeline/runpod_render.py'"
     )
     # community hosts vary wildly; ask lean, retry across GPU types — the first
     # live fire (2026-07-29) died on "machine does not have the resources" with
@@ -151,6 +152,8 @@ def main() -> int:
     ap.add_argument("cmd", choices=["render", "status", "stop"])
     ap.add_argument("--beats", default="")
     ap.add_argument("--seeds", type=int, default=4)
+    ap.add_argument("--init", default="", help="repo-relative init image (img2img)")
+    ap.add_argument("--strength", type=float, default=0.5)
     a = ap.parse_args()
     if a.cmd == "status":
         print(f"balance ${balance():.2f}")
@@ -164,7 +167,7 @@ def main() -> int:
         return 0
     if not a.beats:
         raise SystemExit("--beats required")
-    return cmd_render(a.beats, a.seeds)
+    return cmd_render(a.beats, a.seeds, a.init, a.strength)
 
 
 if __name__ == "__main__":
