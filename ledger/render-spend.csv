@@ -58,3 +58,17 @@ date,node,beat,provider,model,est_usd,note
 2026-07-27,001,01,wan,wan2.7-i2v-2026-04-25,0.40,
 2026-07-28,001,01,fal,fal-ai/minimax/hailuo-2.3/standard/image-to-video,0.34,
 2026-07-29,001,00,runpod,rtx-a5000+3090,0.22,"fires 3+4: pods launched with swallowed output, workers never delivered, terminated"
+2026-07-29,001,00,runpod,rtx4090,0.01,"stills round beats 4 (2 min @ $0.22/hr)"
+2026-07-29,001,00,runpod,rtx4090,0.00,"stills round beats 4 (1 min @ $0.22/hr)"
+2026-07-29,001,00,runpod,rtx4090,0.02,"stills round beats 4 (6 min @ $0.22/hr)"
+2026-07-29,001,00,runpod,rtx4090,0.01,"stills round beats 4 (3 min @ $0.22/hr)"
+2026-07-29,001,00,runpod,rtx4090,0.01,"stills round beats 4,6 (4 min @ $0.22/hr)"
+2026-07-29,001,00,runpod,rtx4090,0.01,"stills round beats 6 (3 min @ $0.22/hr)"
+2026-07-29,001,00,runpod,rtx4090,0.01,"stills round beats 6 (2 min @ $0.22/hr)"
+2026-07-29,001,00,runpod,rtx4090,0.01,"stills round beats 6 (3 min @ $0.22/hr)"
+2026-07-29,001,00,runpod,rtx4090,0.02,"stills round beats 6 (4 min @ $0.22/hr)"
+2026-07-29,001,00,runpod,rtx4090,0.03,"stills round beats 6 (8 min @ $0.19/hr)"
+2026-07-29,001,00,runpod,rtx4090,0.03,"stills round beats 6 (2 min @ $0.69/hr)"
+2026-07-29,001,00,runpod,rtx4090,0.03,"stills round beats 6 (3 min @ $0.69/hr)"
+2026-07-29,001,00,runpod,rtx4090,0.02,"stills round beats 6 (2 min @ $0.69/hr)"
+2026-07-29,001,00,runpod,rtx4090,0.07,"stills round beats 7 (6 min @ $0.69/hr)"
