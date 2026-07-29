@@ -35,7 +35,10 @@ git remote set-url origin git@github.com:olegmlkvorg/banyan-city.git
 git checkout -qB runpod-results
 mark "STARTED beats=${BEATS:-?} gpu=$(nvidia-smi --query-gpu=name --format=csv,noheader 2>/dev/null || echo none)"
 
-pip -q install diffusers transformers accelerate safetensors pyyaml markdown >>"$LOG" 2>&1 \
+# PINNED to the torch-2.4 era — unpinned diffusers pulls a build that needs
+# torch>=2.5 (DTensor) and dies on import; that was the silent pod-killer
+pip -q install 'diffusers==0.29.2' 'transformers==4.44.2' 'accelerate==0.33.0' \
+    safetensors pyyaml markdown >>"$LOG" 2>&1 \
     && mark DEPS_OK || { mark DEPS_FAIL; exit 1; }
 
 python3 pipeline/runpod_render.py >>"$LOG" 2>&1 \
