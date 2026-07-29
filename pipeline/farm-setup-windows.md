@@ -20,16 +20,23 @@ Close and reopen the terminal afterward so both are on PATH.
 
 ## 2. Get the repo and the courier key
 
+The USB stick carries three things: `banyan.bundle` (the whole repo as one
+file — a plain folder copy of a git repo gets corrupted by macOS `._`
+metadata on exFAT, the bundle is immune), `farm_deploy_key`, and
+`model-cache` (skips the 7 GB download).
+
 ```powershell
 mkdir C:\banyan-farm
 cd C:\banyan-farm
-git clone https://github.com/olegmlkvorg/banyan-city.git
+git clone D:\banyan.bundle banyan-city    # adjust D: to the stick's letter
 cd banyan-city
+git checkout main
 ```
 
-Copy the courier key file (`farm_deploy_key`, hand-carried from the
-steward's Mac — USB stick or local file share, **never** chat/email/repo)
-to `C:\banyan-farm\farm_deploy_key`, then:
+Copy `farm_deploy_key` from the stick to `C:\banyan-farm\farm_deploy_key`,
+and copy the stick's `model-cache` folder to
+`C:\Users\<you>\.cache\huggingface\hub\models--cagliostrolab--animagine-xl-3.1`
+(create the folders if missing). Then:
 
 ```powershell
 git config core.sshCommand "ssh -i C:/banyan-farm/farm_deploy_key -o StrictHostKeyChecking=no"
