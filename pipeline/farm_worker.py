@@ -148,13 +148,15 @@ def render_task(task: dict, courier: Courier, device: str, dtype) -> None:
             t0 = time.time()
             g = torch.Generator(device="cpu").manual_seed(SEED + num + k * 1000)
             kw = dict(prompt=ptext, negative_prompt=neg,
-                      num_inference_steps=40, guidance_scale=7.5, generator=g)
+                      num_inference_steps=int(task.get("steps", 40)),
+                      guidance_scale=7.5, generator=g)
             if init_rel:
                 from PIL import Image
                 kw["image"] = Image.open(REPO / init_rel).convert("RGB").resize((832, 1216))
                 kw["strength"] = float(task.get("strength", 0.5))
             else:
-                kw["width"], kw["height"] = 832, 1216
+                kw["width"] = int(task.get("width", 832))
+                kw["height"] = int(task.get("height", 1216))
             img = pipe(**kw).images[0]
             f = courier.out / f"{num:02d}-{s['slug']}-s{k}.png"
             img.save(f)

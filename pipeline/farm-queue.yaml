@@ -1,43 +1,33 @@
-# The farm's work queue — workers poll this file on origin/main every minute.
-# Overnight 2026-07-29→30: the world-reference library — reusable anchors of
-# episode 1's APPROVED world (growth-ladder stages, light and weather moods)
-# for img2img consistency in future rounds. No unapproved narrative (§6).
+# M2 push-test matrix (dad's buy decision, 2026-07-29 night): same beat-9
+# image at four speed settings — times + pixels for the quality panel.
+# World-ref batch continues on msi below.
 tasks:
-  - id: ref-sapling-40cm
-    worker: msi
+  - id: m2-push-a-baseline
+    worker: m2
     node: 001-capability-inventory
-    beats: ""
-    slug: ref-sapling-40cm
-    prompt: "no humans, plant focus, a young knee-high sapling with a thin flexible stem and several bright green leaves, standing alone in a wide grass field, golden morning light, gentle sky, low close shot, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No tree, no forest, no people. No photorealism, no 3D render look. 9:16 vertical, no text."
-    seeds: 6
-  - id: ref-sapling-90cm
-    worker: msi
+    beats: "9"
+    seeds: 1
+  - id: m2-push-b-20steps
+    worker: m2
     node: 001-capability-inventory
-    beats: ""
-    slug: ref-sapling-90cm
-    prompt: "no humans, plant focus, a waist-high young tree with a slender trunk and a small crown of fresh green leaves, alone in a wide grass field, soft afternoon light, low angle, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No forest, no large tree, no people. No photorealism, no 3D render look. 9:16 vertical, no text."
-    seeds: 6
-  - id: ref-field-noon
-    worker: msi
+    beats: "9"
+    seeds: 1
+    steps: 20
+  - id: m2-push-c-small
+    worker: m2
     node: 001-capability-inventory
-    beats: ""
-    slug: ref-field-noon
-    prompt: "no humans, a wide open grass field under a bright blue midday sky, small white clouds, the tiny two-leaf sprout visible in the foreground grass, vivid daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people, no buildings, no trees. No photorealism, no 3D render look. 9:16 vertical, no text."
-    seeds: 6
-  - id: ref-field-night
-    worker: msi
+    beats: "9"
+    seeds: 1
+    width: 640
+    height: 960
+  - id: m2-push-d-fast
+    worker: m2
     node: 001-capability-inventory
-    beats: ""
-    slug: ref-field-night
-    prompt: "no humans, the grass field at night under a deep starry sky, moonlight silvering the grass blades, the tiny sprout silhouetted in the foreground, quiet, serene, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people, no city, no lights. No photorealism, no 3D render look. 9:16 vertical, no text."
-    seeds: 6
-  - id: ref-field-rain
-    worker: msi
-    node: 001-capability-inventory
-    beats: ""
-    slug: ref-field-rain
-    prompt: "no humans, the grass field in soft grey rain, raindrops on bending grass blades, the small sprout glistening wet in the foreground, overcast sky, melancholic mood, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people, no umbrella, no city. No photorealism, no 3D render look. 9:16 vertical, no text."
-    seeds: 6
+    beats: "9"
+    seeds: 1
+    steps: 20
+    width: 640
+    height: 960
   - id: ref-roots-wide
     worker: m2
     node: 001-capability-inventory
