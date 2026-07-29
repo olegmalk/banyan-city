@@ -39,7 +39,9 @@ def gql(query: str, variables=None):
         raise SystemExit("set RUNPOD_API_KEY (it lives in .env)")
     req = urllib.request.Request(
         API, data=json.dumps({"query": query, "variables": variables or {}}).encode(),
-        headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"})
+        headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json",
+                 # Cloudflare 403s the default python-urllib agent; curl-style UA passes
+                 "User-Agent": "curl/8.4.0"})
     with urllib.request.urlopen(req) as r:
         out = json.load(r)
     if out.get("errors"):
