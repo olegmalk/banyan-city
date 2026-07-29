@@ -1,3 +1,6 @@
   00-ref-roots-wide-s0.png in 124s
   00-ref-roots-wide-s1.png in 122s
   00-ref-roots-wide-s2.png in 123s
+  00-ref-field-dusk-s0.png in 122s
+  00-ref-field-dusk-s1.png in 122s
+  00-ref-field-dusk-s2.png in 122s
