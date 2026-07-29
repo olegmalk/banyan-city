@@ -127,8 +127,15 @@ def render_task(task: dict, courier: Courier, device: str, dtype) -> None:
     # in "## Beat NN —" headings and parse_shots finds zero beats (KeyError,
     # the msi worker's first-light failure, 2026-07-29)
     shots = {s["num"]: s for s in parse_shots((d / "shots.md").read_text(encoding="utf-8"))}
-    for num in [int(b) for b in str(task["beats"]).split(",")]:
-        s = shots[num]
+    # a task may carry its own prompt (world-reference renders anchored to an
+    # APPROVED node's world — §6 checked above; slug names the output)
+    if task.get("prompt"):
+        jobs = [{"num": 0, "slug": task.get("slug", "custom"),
+                 "prompt": task["prompt"]}]
+    else:
+        jobs = [shots[int(b)] for b in str(task["beats"]).split(",")]
+    for s in jobs:
+        num = s["num"]
         ptext, _ = compress(s["prompt"])
         neg = NEG
         for term in suppressed_negatives(s["prompt"]):
