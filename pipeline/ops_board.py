@@ -32,15 +32,41 @@ def sh(cmd):
         return ""
 
 
+BEAT_NAMES = {4: "his death at the desk", 6: "waking under the leaf-ceiling",
+              7: "the panicked leaf-flail", 8: "the leaf goes still (sev-1)",
+              9: "the quiet whoami sprout", 15: "the footsteps get closer"}
+TACTICS = {"photobash": "repainting a collage built from the real approved leaf",
+           "photobash2": "repainting a collage built from the real approved leaf",
+           "scale-from9": "rebuilding at the true 15cm scale, from beat 9's approved frame",
+           "violent-still": "the death-pose round — dramatic, not napping",
+           "from8": "same field as beat 8, leaf mid-whip",
+           "sketch": "repainting a hand-drawn layout"}
+
+
 def running_jobs():
-    out = sh("ps -axo etime,command | grep -E 'still_local|post_motion|synth_vo|runpod_lane' | grep -v grep")
+    """Only ACTUAL renders — a queued waiter loop contains the same script name
+    in its command string and once masqueraded as a 20-minute job (2026-07-29)."""
+    out = sh("ps -axo etime,command | grep -E 'still_local|post_motion|synth_vo|runpod_lane'"
+             " | grep -v grep | grep -v 'while pgrep' | grep -v '/bin/zsh'")
     jobs = []
     for line in out.splitlines():
         parts = line.strip().split(None, 1)
-        if len(parts) == 2 and "python" in parts[1].lower():
-            m = re.search(r"--beat (\d+).*?--note (\S+)", parts[1])
-            what = f"beat {m.group(1)} ({m.group(2)})" if m else parts[1].split("/")[-1][:60]
-            jobs.append((parts[0], what))
+        if len(parts) != 2 or "python" not in parts[1].split()[0].lower():
+            continue
+        m = re.search(r"--beat (\d+).*?--note (\S+)", parts[1])
+        if m:
+            num, note = int(m.group(1)), m.group(2)
+            what = (f"Drawing candidates for beat {num:02d} — "
+                    f"{BEAT_NAMES.get(num, '')} — {TACTICS.get(note, note)}")
+        elif "post_motion" in parts[1]:
+            what = "Animating an approved still (deterministic camera move, $0)"
+        elif "synth_vo" in parts[1]:
+            what = "Recording the narrator (voice engine, per-line emotion)"
+        elif "runpod_lane" in parts[1]:
+            what = "Rented-GPU round in progress (see RunPod balance below)"
+        else:
+            what = parts[1].split("/")[-1][:60]
+        jobs.append((parts[0], what))
     return jobs
 
 
