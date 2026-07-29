@@ -29,3 +29,4 @@
 20:26:22Z MODEL_LOADED mps/float32
 20:30:16Z DONE task=dad-15s-all-beats
 20:38:46Z STARTED task=dad-60s-all-beats beats=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15 on mps
+20:38:53Z MODEL_LOADED mps/float32
