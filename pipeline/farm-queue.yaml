@@ -69,3 +69,53 @@ tasks:
     steps: 20
     width: 640
     height: 960
+  - id: budget-5s
+    worker: m2
+    node: 001-capability-inventory
+    beats: ""
+    slug: budget-5s
+    prompt: "a tiny two-leaf green sprout standing alone in short grass, centered, quiet empty composition, soft pale morning sky, gentle light, low close shot, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text."
+    seeds: 1
+    steps: 3
+    width: 640
+    height: 960
+  - id: budget-10s
+    worker: m2
+    node: 001-capability-inventory
+    beats: ""
+    slug: budget-10s
+    prompt: "a tiny two-leaf green sprout standing alone in short grass, centered, quiet empty composition, soft pale morning sky, gentle light, low close shot, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text."
+    seeds: 1
+    steps: 6
+    width: 640
+    height: 960
+  - id: budget-15s
+    worker: m2
+    node: 001-capability-inventory
+    beats: ""
+    slug: budget-15s
+    prompt: "a tiny two-leaf green sprout standing alone in short grass, centered, quiet empty composition, soft pale morning sky, gentle light, low close shot, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text."
+    seeds: 1
+    steps: 8
+    width: 640
+    height: 960
+  - id: budget-20s
+    worker: m2
+    node: 001-capability-inventory
+    beats: ""
+    slug: budget-20s
+    prompt: "a tiny two-leaf green sprout standing alone in short grass, centered, quiet empty composition, soft pale morning sky, gentle light, low close shot, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text."
+    seeds: 1
+    steps: 11
+    width: 640
+    height: 960
+  - id: budget-25s
+    worker: m2
+    node: 001-capability-inventory
+    beats: ""
+    slug: budget-25s
+    prompt: "a tiny two-leaf green sprout standing alone in short grass, centered, quiet empty composition, soft pale morning sky, gentle light, low close shot, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text."
+    seeds: 1
+    steps: 14
+    width: 640
+    height: 960
