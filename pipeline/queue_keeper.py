@@ -37,8 +37,36 @@ def cycle():
             return f"queue busy ({len(undone)} live)"
     stamp = int(time.time())
     seed_base = 20260719 + (stamp % 100000) * 100   # fresh seeds every round
-    tasks = "# auto-refill by queue_keeper — rotating world bank\ntasks:\n"
-    tasks += f"""  - id: keep-m1pro-{stamp}
+    # PRODUCTION rotation (founder 2026-07-30: "keep the msi working — let's
+    # produce"), all §6-legal on the approved episode 1:
+    #   - fresh candidate frames for the OPEN render requests (ballot fodder)
+    #   - hi-res (1080x1576) upgrade candidates for every canon beat, five
+    #     beats per round, for the pending founder hi-res review
+    # The world bank keeps only a small m1pro share (refs stay useful).
+    OPEN_BEATS = "3,6,7,9,10,12,14"                 # requests.yaml, node 001
+    HIRES = ["1,2,3,4,5", "6,7,8,9,10", "11,12,13,14,15"][stamp // 180 % 3]
+    tasks = "# auto-refill by queue_keeper — PRODUCTION rotation\ntasks:\n"
+    tasks += f"""  - id: prod-open-msi-{stamp}
+    worker: msi
+    node: 001-capability-inventory
+    beats: "{OPEN_BEATS}"
+    seeds: 6
+    seed_base: {seed_base}
+  - id: prod-hires-msi-{stamp}
+    worker: msi
+    node: 001-capability-inventory
+    beats: "{HIRES}"
+    width: 1080
+    height: 1576
+    seeds: 4
+    seed_base: {seed_base + 31}
+  - id: prod-open-m1pro-{stamp}
+    worker: m1pro
+    node: 001-capability-inventory
+    beats: "{OPEN_BEATS}"
+    seeds: 2
+    seed_base: {seed_base + 63}
+  - id: keep-m1pro-{stamp}
     worker: m1pro
     node: 001-capability-inventory
     beats: ""
@@ -46,16 +74,6 @@ def cycle():
     prompt: "{PROMPTS['keep-macro-dew']}"
     seeds: 2
     seed_base: {seed_base + 7}
-"""
-    for slug, prompt in PROMPTS.items():
-        tasks += f"""  - id: {slug}-{stamp}
-    worker: msi
-    node: 001-capability-inventory
-    beats: ""
-    slug: {slug}
-    prompt: "{prompt}"
-    seeds: 15
-    seed_base: {seed_base}
 """
     Q.write_text(tasks)
     subprocess.run(["git", "add", str(Q)], cwd=REPO)
