@@ -1,22 +1,22 @@
-# PRODUCTION — founder directive 2026-07-30: "let's produce"
+# auto-refill by queue_keeper — PRODUCTION rotation (per-worker)
 tasks:
-  - id: prod-open-msi-1785431597
-    worker: msi
-    node: 001-capability-inventory
-    beats: "3,6,7,9,10,12,14"
-    seeds: 6
-    seed_base: 23420419
-  - id: prod-hires-msi-1785431597
-    worker: msi
-    node: 001-capability-inventory
-    beats: "1,2,3,4,5"
-    width: 1080
-    height: 1576
-    seeds: 4
-    seed_base: 23420450
-  - id: prod-open-m1pro-1785431597
-    worker: m1pro
-    node: 001-capability-inventory
-    beats: "3,6,7,9,10,12,14"
-    seeds: 2
-    seed_base: 23420482
+- id: prod-open-m1pro-1785431597
+  worker: m1pro
+  node: 001-capability-inventory
+  beats: 3,6,7,9,10,12,14
+  seeds: 2
+  seed_base: 23420482
+- id: prod-open-msi-1785434851
+  worker: msi
+  node: 001-capability-inventory
+  beats: 3,6,7,9,10,12,14
+  seeds: 6
+  seed_base: 23745819
+- id: prod-hires-msi-1785434851
+  worker: msi
+  node: 001-capability-inventory
+  beats: 11,12,13,14,15
+  width: 1080
+  height: 1576
+  seeds: 4
+  seed_base: 23745850
