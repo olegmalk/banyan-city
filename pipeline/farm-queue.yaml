@@ -1,152 +1,23 @@
-# msi standing workload: hi-res canon upgrade candidates (founder approves any swap)
+# msi: apartment world bank (beats 1-4 setting, approved node 001)
 tasks:
-  - id: hires-01
+  - id: bank-apartment-dawn
     worker: msi
     node: 001-capability-inventory
-    beats: "1"
-    seeds: 2
-    steps: 30
-    init: genomes/sapling/nodes/001-capability-inventory/stills/01-the-keyboard.png
-    strength: 0.35
-    width: 1080
-    height: 1576
-  - id: hires-02
+    beats: ""
+    slug: bank-apartment-dawn
+    prompt: "no humans, a dark cluttered studio apartment at dawn, pale light through blinds striping the desk and monitor, empty office chair, coffee mug, quiet aftermath mood, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people, no body. No photorealism, no 3D render look. 9:16 vertical, no text."
+    seeds: 10
+  - id: bank-desk-detail
     worker: msi
     node: 001-capability-inventory
-    beats: "2"
-    seeds: 2
-    steps: 30
-    init: genomes/sapling/nodes/001-capability-inventory/stills/02-three-oh-seven.png
-    strength: 0.35
-    width: 1080
-    height: 1576
-  - id: hires-03
+    beats: ""
+    slug: bank-desk-detail
+    prompt: "no humans, extreme close-up of a cluttered desk, mechanical keyboard, sticky notes, tangled cables, cold monitor glow, dark room, lived-in detail, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people, no hands. No photorealism, no 3D render look. 9:16 vertical, no text."
+    seeds: 10
+  - id: bank-window-city
     worker: msi
     node: 001-capability-inventory
-    beats: "3"
-    seeds: 2
-    steps: 30
-    init: genomes/sapling/nodes/001-capability-inventory/stills/03-deploy-succeeded.png
-    strength: 0.35
-    width: 1080
-    height: 1576
-  - id: hires-04
-    worker: msi
-    node: 001-capability-inventory
-    beats: "4"
-    seeds: 2
-    steps: 30
-    init: genomes/sapling/nodes/001-capability-inventory/stills/04-the-fall.png
-    strength: 0.35
-    width: 1080
-    height: 1576
-  - id: hires-05
-    worker: msi
-    node: 001-capability-inventory
-    beats: "5"
-    seeds: 2
-    steps: 30
-    init: genomes/sapling/nodes/001-capability-inventory/stills/05-huh-green.png
-    strength: 0.35
-    width: 1080
-    height: 1576
-  - id: hires-06
-    worker: msi
-    node: 001-capability-inventory
-    beats: "6"
-    seeds: 2
-    steps: 30
-    init: genomes/sapling/nodes/001-capability-inventory/stills/06-too-blue.png
-    strength: 0.35
-    width: 1080
-    height: 1576
-  - id: hires-07
-    worker: msi
-    node: 001-capability-inventory
-    beats: "7"
-    seeds: 2
-    steps: 30
-    init: genomes/sapling/nodes/001-capability-inventory/stills/07-flailing-one.png
-    strength: 0.35
-    width: 1080
-    height: 1576
-  - id: hires-08
-    worker: msi
-    node: 001-capability-inventory
-    beats: "8"
-    seeds: 2
-    steps: 30
-    init: genomes/sapling/nodes/001-capability-inventory/stills/08-sev-1.png
-    strength: 0.35
-    width: 1080
-    height: 1576
-  - id: hires-09
-    worker: msi
-    node: 001-capability-inventory
-    beats: "9"
-    seeds: 2
-    steps: 30
-    init: genomes/sapling/nodes/001-capability-inventory/stills/09-whoami.png
-    strength: 0.35
-    width: 1080
-    height: 1576
-  - id: hires-10
-    worker: msi
-    node: 001-capability-inventory
-    beats: "10"
-    seeds: 2
-    steps: 30
-    init: genomes/sapling/nodes/001-capability-inventory/stills/10-sense.png
-    strength: 0.35
-    width: 1080
-    height: 1576
-  - id: hires-11
-    worker: msi
-    node: 001-capability-inventory
-    beats: "11"
-    seeds: 2
-    steps: 30
-    init: genomes/sapling/nodes/001-capability-inventory/stills/11-grow.png
-    strength: 0.35
-    width: 1080
-    height: 1576
-  - id: hires-12
-    worker: msi
-    node: 001-capability-inventory
-    beats: "12"
-    seeds: 2
-    steps: 30
-    init: genomes/sapling/nodes/001-capability-inventory/stills/12-undefined.png
-    strength: 0.35
-    width: 1080
-    height: 1576
-  - id: hires-13
-    worker: msi
-    node: 001-capability-inventory
-    beats: "13"
-    seeds: 2
-    steps: 30
-    init: genomes/sapling/nodes/001-capability-inventory/stills/13-i-always-left.png
-    strength: 0.35
-    width: 1080
-    height: 1576
-  - id: hires-14
-    worker: msi
-    node: 001-capability-inventory
-    beats: "14"
-    seeds: 2
-    steps: 30
-    init: genomes/sapling/nodes/001-capability-inventory/stills/14-worth-staying-in.png
-    strength: 0.35
-    width: 1080
-    height: 1576
-  - id: hires-15
-    worker: msi
-    node: 001-capability-inventory
-    beats: "15"
-    seeds: 2
-    steps: 30
-    init: genomes/sapling/nodes/001-capability-inventory/stills/15-something-s-coming.png
-    strength: 0.35
-    width: 1080
-    height: 1576
+    beats: ""
+    slug: bank-window-city
+    prompt: "no humans, city lights at 3am seen through apartment blinds, bokeh, dark interior silhouetted in the foreground, lonely night mood, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people. No photorealism, no 3D render look. 9:16 vertical, no text."
+    seeds: 10

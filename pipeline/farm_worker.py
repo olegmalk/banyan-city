@@ -211,6 +211,7 @@ def main() -> int:
             done_ids.add(tid)
         if a.once:
             return 0
+        print(f"[{time.strftime('%H:%M:%S')}] polling — queue empty for me, {len(done_ids)} task(s) done this session", flush=True)
         time.sleep(POLL_SECONDS)
 
 
