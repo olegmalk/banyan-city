@@ -58,3 +58,18 @@
   00-keep-field-gold-s12.png in 218s
   00-keep-field-gold-s13.png in 218s
   00-keep-field-gold-s14.png in 218s
+  00-keep-sky-moods-s0.png in 219s
+  00-keep-sky-moods-s1.png in 218s
+  00-keep-sky-moods-s2.png in 218s
+  00-keep-sky-moods-s3.png in 218s
+  00-keep-sky-moods-s4.png in 218s
+  00-keep-sky-moods-s5.png in 218s
+  00-keep-sky-moods-s6.png in 218s
+  00-keep-sky-moods-s7.png in 218s
+  00-keep-sky-moods-s8.png in 218s
+  00-keep-sky-moods-s9.png in 218s
+  00-keep-sky-moods-s10.png in 218s
+  00-keep-sky-moods-s11.png in 218s
+  00-keep-sky-moods-s12.png in 218s
+  00-keep-sky-moods-s13.png in 218s
+  00-keep-sky-moods-s14.png in 218s
