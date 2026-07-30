@@ -497,7 +497,8 @@ def card_clip(pngs_and_durs: list, workdir: Path, tag: str) -> Path:
 
 
 def render_beat(beat: dict, num: int, dur: float, clips: list, workdir: Path,
-                manifest: dict | None = None, extra_layers: list | None = None) -> Path:
+                manifest: dict | None = None, extra_layers: list | None = None,
+                tag_speakers: bool = True) -> Path:
     """Encode one beat: fitted footage (or slate) + overlays + captions.
     Multiple clips per beat are sequenced (concat) to fill the slot; only the
     full sequence loops (anime-idiomatic hold) — never a freeze. Captions
@@ -583,8 +584,13 @@ def render_beat(beat: dict, num: int, dur: float, clips: list, workdir: Path,
                 speech, directions = split_caption_display(chunk)
                 if speech:
                     # name tag on the line's first chunk, and only when the
-                    # speaker changes — steady exchanges stay uncluttered
-                    tag = label if (k == 0 and who != prev_who) else ""
+                    # speaker changes — steady exchanges stay uncluttered.
+                    # A ONE-VOICE episode gets no tags at all: on 001 every
+                    # caption read "THE TREE:" from the first frame, which
+                    # cold-read viewers took for a captioning bug AND which
+                    # spoiled the reincarnation 40s before the episode earns
+                    # it (three independent naive readers, 2026-07-30).
+                    tag = label if (tag_speakers and k == 0 and who != prev_who) else ""
                     png = text_png(speech, workdir / f"cap-{num:02d}-{j}-{k}.png",
                                    CAPTION_SIZE, ink, CAPTION_BG,
                                    max_w=CAPTION_MAX_W, bold=True,
@@ -702,6 +708,14 @@ def main() -> int:
         prev = previously_line(genome_dir, node, lineage["nodes"])
         title_ovl = title_overlay_png(node, prev, workdir / "title-ovl.png")
 
+    # one voice for the whole episode → no speaker tags anywhere (see the
+    # caption code): tags only earn their space when there is an exchange
+    voices = {re.sub(r"\s*\(.*$", "", it[1]).strip().upper()
+              for b in beats for it in b["items"] if it[0] == "line"}
+    tag_speakers = len(voices) > 1
+    if not tag_speakers:
+        print(f"  one voice ({', '.join(voices) or 'none'}) — speaker tags off")
+
     mismatched = []
     for i, beat in enumerate(beats, 1):
         dur = beat_duration(beat["slug"], beat["items"])
@@ -741,7 +755,8 @@ def main() -> int:
         extra = ([(title_ovl, "(W-w)/2", "110", "lt(t,2.8)")]
                  if i == 1 and title_ovl else None)
         timeline.append((render_beat(beat, i, dur, beat_clips, workdir, manifest,
-                                     extra_layers=extra), dur, audio))
+                                     extra_layers=extra, tag_speakers=tag_speakers),
+                         dur, audio))
         sources.append({"beat": i, "slug": strip_inline_md(beat["slug"]),
                         "clip": "+".join(c.name for c in beat_clips) if beat_clips else "slate (no footage yet)",
                         "audio": audio.name if audio else "none",
