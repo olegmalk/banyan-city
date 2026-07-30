@@ -18,3 +18,5 @@
   09-whoami-s1.png in 7s
   10-sense-s0.png in 7s
   10-sense-s1.png in 7s
+  11-grow-s0.png in 8s
+  11-grow-s1.png in 7s
