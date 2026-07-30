@@ -83,3 +83,13 @@
   00-bank-field-winter-s7.png in 14s
   00-bank-field-winter-s8.png in 14s
   00-bank-field-winter-s9.png in 14s
+  00-bank-city-distance-s0.png in 14s
+  00-bank-city-distance-s1.png in 13s
+  00-bank-city-distance-s2.png in 14s
+  00-bank-city-distance-s3.png in 14s
+  00-bank-city-distance-s4.png in 14s
+  00-bank-city-distance-s5.png in 14s
+  00-bank-city-distance-s6.png in 14s
+  00-bank-city-distance-s7.png in 14s
+  00-bank-city-distance-s8.png in 14s
+  00-bank-city-distance-s9.png in 14s
