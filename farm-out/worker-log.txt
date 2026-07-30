@@ -12,3 +12,5 @@
   06-too-blue-s1.png in 7s
   07-flailing-one-s0.png in 8s
   07-flailing-one-s1.png in 7s
+  08-sev-1-s0.png in 8s
+  08-sev-1-s1.png in 7s
