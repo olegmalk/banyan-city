@@ -40,10 +40,10 @@ The spinner resolves.
 **THE FALL — 0:15–0:20**
 A sharp breath in — the frame tips sideways — the mug hits the floor before he does.
 
-**HUH. GREEN. — 0:20–0:24**
+**HUH. BLUE. — 0:20–0:24**
 Black, and the sound of a cooling fan spinning down.
 
-> **VO:** Huh. Green.
+> **VO:** Huh. Blue.
 
 **TOO BLUE — 0:24–0:29**
 Blinding green blur. Focus pulls: two centimetres off the ground, looking up through one trembling leaf at a sky that is *too* blue.
