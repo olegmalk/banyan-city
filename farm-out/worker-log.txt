@@ -18,3 +18,13 @@
   00-bank-desk-detail-s7.png in 13s
   00-bank-desk-detail-s8.png in 14s
   00-bank-desk-detail-s9.png in 14s
+  00-bank-window-city-s0.png in 14s
+  00-bank-window-city-s1.png in 13s
+  00-bank-window-city-s2.png in 13s
+  00-bank-window-city-s3.png in 13s
+  00-bank-window-city-s4.png in 13s
+  00-bank-window-city-s5.png in 13s
+  00-bank-window-city-s6.png in 14s
+  00-bank-window-city-s7.png in 14s
+  00-bank-window-city-s8.png in 13s
+  00-bank-window-city-s9.png in 14s
