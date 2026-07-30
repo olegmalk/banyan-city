@@ -204,16 +204,23 @@ def main() -> int:
                 continue
             # render from CURRENT main, not whatever checkout the machine was
             # born with (the msi's first task ran from its USB-era files)
-            before = Path(__file__).read_bytes()
+            # fingerprint EVERY pipeline module, not just this file: video_task
+            # and wan_i2v changed while this process kept its already-imported
+            # video_task in memory, so a new script ran against old caller code
+            # (2026-07-30 canary 2, exit 2 on missing --stage)
+            def _fp():
+                return sorted((p.name, p.stat().st_mtime_ns, p.stat().st_size)
+                              for p in Path(__file__).parent.glob("*.py"))
+            before = _fp()
             # sync code files from main WITHOUT switching branches: a branch
             # switch deletes farm-out (tracked here, absent on main), which is
             # how each task erased its predecessors' results (2026-07-29 late)
             sh("git", "checkout", "-q", "origin/main", "--", ".", check=False)
-            if Path(__file__).read_bytes() != before:
-                # our own code changed — a running process can't hot-swap its
-                # source (the 2026-07-29 lesson: workers synced the new file
-                # but kept executing the old one from memory). Relaunch.
-                print("farm_worker.py updated — restarting myself", flush=True)
+            if _fp() != before:
+                # a running process can't hot-swap its source or its imports
+                # (the 2026-07-29 lesson: workers synced the new file but kept
+                # executing the old one from memory). Relaunch.
+                print("pipeline code updated — restarting myself", flush=True)
                 os.execv(sys.executable, [sys.executable] + sys.argv)
             courier.mark(f"STARTED task={tid} beats={task.get('beats')} on {device}")
             try:
