@@ -365,3 +365,31 @@ decision card + extensive 3-tier 15-beat gallery in banyan-drops.
 
 **Fleet:** msi 13.5 s/img · m3pro(m2) 125 s · m1pro 178 s · RunPod reserve
 $9.55. Total project cash still ~$1.20.
+
+## 2026-07-30 — the grove at night (site redesign, commit b3e18b1)
+
+Dad flagged the episode page: "UX of this page is complete garbage." Ultracode
+run: 4 stranger-eyes audits → 4 Opus implementers (one per page family,
+exclusive file ownership) → 3 adversarial verifiers before push.
+
+- **One design system** (`pipeline/site_theme.py`): serif story / mono
+  receipts / sap-amber CTAs / forest-dark + grain; light mode kept; zero
+  external assets. All builders import it.
+- **Watch = walk the tree** (Roman's directive: "really redesign, think of
+  some new thing"): every episode ends on its scripted cliffhanger question,
+  the real branches are doors, growing tips invite "write what happens next."
+  Stateless trail URLs at `watch/<slug>.html`; straight-line binge kept at
+  `watch/season.html`.
+- **Banyan City = the place, Sapling = the series** (Roman's correction) —
+  chrome de-conflated everywhere.
+- Episode pages: one player, receipts one fold down. Shot board eager weight
+  49 MB → ~0.4 MB. Status speaks plain English. Lab: base64 → `lab/img/`
+  (69 tracked JPEGs), money figures reconciled to the ledger ($1.24 total).
+- Link gate now sweeps all 69 published pages (href/src/poster) and fails the
+  build loudly. The verifier caught untracked `site_theme.py` + `lab/img/`
+  before CI could die on a clean checkout — that check earned its cost.
+
+Founder-facing: the stranger-review found product-level gaps that are NOT
+steward calls: audience thread separate from ballot threads, one public word
+for scene/shot/beat, episode-status wording ("final" vs "working cut").
+Logged for the next founder session.
