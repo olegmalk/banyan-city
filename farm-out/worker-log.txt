@@ -1,0 +1,13 @@
+$ C:\banyan-video\venv\Scripts\python.exe C:\banyan-farm\banyan-city\pipeline\wan_i2v.py --stage encode --embeds C:\banyan-video\embeds-10.pt�
+encoded to C:\banyan-video\embeds-10.pt (1, 226, 4096)
+[transformers] `CLIPImageProcessor` requires torchvision (not installed); falling back to `CLIPImageProcessorPil` for backward compatibility. Install torchvision to use the default backend, or import `CLIPImageProcessorPil` directly to silence this warning.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+Loading pipeline components...:   0%|          | 0/3 [00:00<?, ?it/s]
+
+Loading weights:   0%|          | 0/242 [00:00<?, ?it/s][A
+Loading weights: 100%|██████████| 242/242 [00:00<00:00, 4630.68it/s]
+
+Loading pipeline components...:  33%|███▎      | 1/3 [00:00<00:00,  3.44it/s]
+Loading pipeline components...: 100%|██████████| 3/3 [00:01<00:00,  2.14it/s]
+Loading pipeline components...: 100%|██████████| 3/3 [00:01<00:00,  2.22it/s]
