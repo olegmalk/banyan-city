@@ -75,6 +75,37 @@ def branch_heartbeat(branch):
     return txt.strip().splitlines()[-1] if txt.strip() else ""
 
 
+def queue_tasks() -> list:
+    """The live work list (pipeline/farm-queue.yaml on main), public raw —
+    the bird's-eye should say WHAT is being rendered and WHY (founder,
+    2026-07-30), and the queue file is where the why lives."""
+    import yaml as _yaml
+    txt = _get(f"https://raw.githubusercontent.com/{GH}/main/pipeline/farm-queue.yaml")
+    try:
+        return (_yaml.safe_load(txt) or {}).get("tasks") or []
+    except Exception:
+        return []
+
+
+def task_story(t: dict) -> tuple:
+    """(what, why) in a stranger's words, from a queue task's own fields."""
+    tid = str(t.get("id", ""))
+    beats = str(t.get("beats") or "").strip()
+    shots = f"shots {beats.replace(',', ', ')}" if beats else "world scenery"
+    seeds = int(t.get("seeds", 4))
+    if tid.startswith("prod-open"):
+        return (f"{seeds} candidate frames each for {shots}",
+                "these shots are open requests — the author wants a better frame, and new takes feed the next vote")
+    if tid.startswith("prod-hires"):
+        w, h = t.get("width", 832), t.get("height", 1216)
+        return (f"high-res ({w}×{h}) frames for {shots}",
+                "sharper versions of finished scenes, for the author's picture-quality review")
+    if tid.startswith(("keep", "ref")):
+        return (f"{seeds} background-art studies ({str(t.get('slug', '')).replace('keep-', '').replace('-', ' ')})",
+                "world-reference art — the bank every future shot borrows its look from")
+    return (f"{seeds} frames for {shots}", "queued by the studio")
+
+
 # ---------------------------------------------------------------- citizens ---
 URL_RE = re.compile(r"\(?\bhttps?://\S+\)?")
 VOTE_RE = re.compile(r"^\s*\d{1,2}\s*:")
@@ -131,11 +162,12 @@ def latest_thread_comments(n=3):
 
 
 # ---------------------------------------------------------------- machines ---
-def machine_state(branch_tail: str) -> tuple:
+def machine_state(branch_tail: str, queue: list | None = None) -> tuple:
     """(css_state, human sentence, raw heartbeat for a title attribute).
 
-    Heartbeat lines look like `11:32:16Z STARTED task=keep-m1pro-1785411074 …`.
-    None of that reaches the page: unix-epoch task IDs read as an error dump.
+    Heartbeat lines look like `11:32:16Z STARTED task=keep-m1pro-1785431597 …`.
+    The epoch ID never reaches the page — but it DOES get matched against the
+    live queue so a working machine says what it is making and why.
     """
     if not branch_tail:
         return "asleep", "offline — has not checked in yet", ""
@@ -154,6 +186,13 @@ def machine_state(branch_tail: str) -> tuple:
     working = ("STARTED" in branch_tail or "MODEL_LOADED" in branch_tail)
     scene = re.search(r"beats?=\s*(\d+)", branch_tail)
     if age < 360 and working:
+        # name the actual job from the queue: what it makes, and why
+        tid = re.search(r"task=([\w.-]+)", branch_tail)
+        entry = next((t for t in (queue or [])
+                      if str(t.get("id")) == (tid.group(1) if tid else "")), None)
+        if entry:
+            what, _why = task_story(entry)
+            return "working", f"making {what}", branch_tail
         job = f"rendering scene {int(scene.group(1)):02d}" if scene else \
             "rendering a round of candidate frames"
         return "working", job, branch_tail
@@ -266,6 +305,11 @@ SIM_CSS = """
 .summary { font: 600 .84rem/1.7 var(--mono); color: var(--muted); }
 .summary b { color: var(--leaf); }
 @media (min-width: 620px) { .bld { flex: 0 1 180px; } }
+.prod-row { background: linear-gradient(180deg, var(--panel-2), var(--panel));
+  border: 1px solid var(--line); border-radius: 14px; padding: .7rem .95rem;
+  margin: .6rem 0; font-size: .92rem; }
+.prod-row .why { color: var(--muted); font-size: .84rem; }
+.whyfoot { font: 500 .8rem/1.7 var(--mono); color: var(--faint); }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; } }
 """
 
@@ -300,16 +344,32 @@ def build(out_dir: Path):
                      + f'<a href="{_e(hero["page"])}">Watch it &rarr;</a>')
 
     # --- the town: our machines, in sentences a stranger can read ---
+    queue = queue_tasks()
     town, seen_states = "", []
     for b in farm_branches():
         key = b.split("farm-results-")[-1]
         nice, emoji = MACHINES.get(key, (key, "🏠"))
-        state, cap, raw = machine_state(branch_heartbeat(b))
+        state, cap, raw = machine_state(branch_heartbeat(b), queue)
         seen_states.append(state)
         smoke = '<div class="smoke">💨</div>' if state == "working" else ""
         town += (f'<div class="bld {state}" title="{_e(raw)}">{smoke}'
                  f'<div class="ico">{emoji}</div><div class="nm">{_e(nice)}</div>'
                  f'<div class="cap">{_e(cap)}</div></div>')
+
+    # --- what is being rendered, and why (founder, 2026-07-30) ---
+    prod_rows = ""
+    for t in queue:
+        what, why = task_story(t)
+        wkey = str(t.get("worker", "any"))
+        wnice = MACHINES.get(wkey, (wkey, "🏠"))[0]
+        prod_rows += (f'<div class="prod-row"><b>{_e(wnice)}</b> · {_e(what)}'
+                      f'<br><span class="why">{_e(why)}</span></div>')
+    production = (f'<h2>🏭 In production right now</h2>{prod_rows}'
+                  '<p class="whyfoot">Finished frames land on each machine\'s courier branch, '
+                  'get checked, and show up as choices on the '
+                  '<a href="sapling/001-capability-inventory-shots.html">shot board</a> — '
+                  'the author (and anyone watching) picks what survives.</p>'
+                  ) if prod_rows else ""
     town_legend = " · ".join(STATE_WORDS[s] for s in STATE_WORDS if s in seen_states) \
         or "no machine has checked in yet"
 
@@ -385,6 +445,7 @@ everything else runs on the family's own machines for free</p>
 <div class="sky"><div class="cloudgpu">☁️<small>cloud GPU — standing by (unused)</small></div></div>
 <div class="town">{town}</div>
 <p class="legend">{town_legend}</p>
+{production}
 
 <div class="panel" style="padding:1rem 1.2rem;margin:1.6rem 0">
   <h2 style="margin:.1rem 0 .4rem">Take part</h2>
