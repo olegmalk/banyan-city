@@ -43,3 +43,4 @@
 08:13:12Z STARTED task=bank-city-distance beats= on cuda
 08:13:28Z MODEL_LOADED cuda/bfloat16
 08:15:47Z DONE task=bank-city-distance
+08:21:21Z STARTED task=hires-01 beats=1 on cuda

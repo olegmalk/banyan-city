@@ -154,7 +154,8 @@ def render_task(task: dict, courier: Courier, device: str, dtype) -> None:
                       guidance_scale=7.5, generator=g)
             if init_rel:
                 from PIL import Image
-                kw["image"] = Image.open(REPO / init_rel).convert("RGB").resize((832, 1216))
+                kw["image"] = Image.open(REPO / init_rel).convert("RGB").resize(
+                    (int(task.get("width", 832)), int(task.get("height", 1216))))
                 kw["strength"] = float(task.get("strength", 0.5))
             else:
                 kw["width"] = int(task.get("width", 832))
