@@ -37,6 +37,7 @@ def cycle():
     if not idle_workers:
         return f"queue busy ({sum(len(v) for v in undone_by_worker.values())} live)"
     kept = [tk for v in undone_by_worker.values() for tk in v]
+    stamp = int(time.time())
     seed_base = 20260719 + (stamp % 100000) * 100   # fresh seeds every round
     # PRODUCTION rotation (founder 2026-07-30: "keep the msi working — let's
     # produce"), all §6-legal on the approved episode 1:
