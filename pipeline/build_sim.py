@@ -1,22 +1,54 @@
 #!/usr/bin/env python3
-"""banyan city, the sim — a game-like visualization of the whole studio
-(dad's directive 2026-07-30). Everything is live data dressed as a tiny city:
-the episode is a tree growing leaves, machines are buildings that glow and
-puff smoke while rendering, the cloud GPU is a cloud, decisions are quests,
-voters are citizens. Pure CSS/emoji — no external assets (public-site CSP)."""
+"""banyan city, THE STUDIO — one page that shows the show being made.
+
+Dad asked for the sim (2026-07-30) and it stays: the episode is a tree growing
+leaves, our machines are buildings that glow while they render, the cloud GPU is
+a cloud, the author's open decisions are quests, the people voting on the
+reactions thread are citizens. Pure CSS + emoji — the public-site CSP allows no
+external asset, and nothing here needs JavaScript.
+
+The stranger-eyes audit (2026-07-30) rebuilt the page's priorities:
+  1. the episode plays FIRST — a visitor from TikTok came for a cartoon;
+  2. every visible string is plain English (scene, final, waiting for…), model
+     codenames only ever appear prefixed "animated by:";
+  3. no internal log tokens, no task IDs, no unexplained pills;
+  4. one primary action (watch), everything machine-facing below the fold.
+
+Data comes from `build_status.py` (repo files) and the PUBLIC GitHub API only —
+the deploy server has no local git refs and no `gh` CLI.
+"""
 import html
-import subprocess
+import json
+import re
+import sys
 import time
+import urllib.request
 from pathlib import Path
 
-import yaml
-
 REPO = Path(__file__).resolve().parent.parent
-
-import json
-import urllib.request
+sys.path.insert(0, str(REPO / "pipeline"))
+from site_theme import THEME_CSS  # noqa: E402  the one visual language
 
 GH = "olegmlkvorg/banyan-city"
+CANONICAL = "https://banyan.city"
+PAGE = "status.html"
+# One name for this page, used in the <title>, the <h1> and our own nav.
+PAGE_NAME = "the studio"
+DESC = ("Sapling, the AI-animated micro-drama growing in Banyan City. This is the "
+        "studio floor: episode 1 playing, every scene's state, the machines that "
+        "render it, and what the author still has to decide.")
+
+# The family's machines, named for people who do not live here.
+MACHINES = {
+    "m1pro": ("the studio laptop", "🏛"),
+    "m2": ("the spare laptop", "🏢"),
+    "msi": ("the fast-GPU laptop", "🏭"),
+}
+STATE_WORDS = {  # css state → the legend under the town
+    "working": "glowing = rendering right now",
+    "idle": "dim = switched on, nothing to do",
+    "asleep": "faded = offline",
+}
 
 
 def _get(url):
@@ -43,163 +75,362 @@ def branch_heartbeat(branch):
     return txt.strip().splitlines()[-1] if txt.strip() else ""
 
 
+# ---------------------------------------------------------------- citizens ---
+URL_RE = re.compile(r"\(?\bhttps?://\S+\)?")
+VOTE_RE = re.compile(r"^\s*\d{1,2}\s*:")
+
+
+def humanise(body: str) -> str:
+    """A thread comment as a speech bubble: no markdown, no half-eaten URLs.
+
+    The bubbles used to ship raw ('🗳 **Final two ballots** (board: https://ban…')
+    which made the liveliest part of the page look broken.
+    """
+    # markdown links first: URL_RE would otherwise eat "(…)" and leave "[words]"
+    text = re.sub(r"!?\[([^\]]*)\]\([^)]*\)", r"\1", body or "")  # links/images → their words
+    text = URL_RE.sub("", text)                                 # bare URLs, brackets and all
+    text = re.sub(r"[*_`>#\[\]]+", "", text)                    # bold, headers, quotes, leftovers
+    text = re.sub(r"\(\s*(board|thread|here)?\s*:?\s*\)", "", text)  # emptied parentheses
+    # "(board: https://… )" loses its closing bracket with the URL, leaving an
+    # orphaned "(board:" mid-sentence — drop any such label with no ")" ahead.
+    text = re.sub(r"\(\s*[\w ]{0,14}:\s*(?![^()]*\))", "", text)
+    text = " ".join(text.split())
+    # a stripped URL can leave a sentence hanging on its conjunction ("… board and")
+    text = re.sub(r"[\s,:;—-]*\b(and|at|in|on|see|via)?[\s,:;—-]*$", "", text)
+    if len(text) > 96:                                          # truncate on a word
+        text = text[:96].rsplit(" ", 1)[0] + "…"
+    return text
+
+
+def is_vote_tally(body: str) -> bool:
+    """'06: lets use B. 07: A' — a private ballot log, unreadable out of context."""
+    lines = [ln for ln in (body or "").splitlines() if ln.strip()]
+    return bool(lines) and sum(1 for ln in lines if VOTE_RE.match(ln)) >= len(lines) / 2
+
+
 def latest_thread_comments(n=3):
+    """(author, sentence, permalink) for the newest readable comments."""
     raw = _get(f"https://api.github.com/repos/{GH}/issues/1/comments?per_page=100")
     try:
-        cs = json.loads(raw)[-n:]
-        return [(c["user"]["login"], c["body"][:80].replace("\n", " ")) for c in cs]
+        cs = json.loads(raw)
     except Exception:
         return []
+    out = []
+    for c in reversed(cs):
+        body = c.get("body") or ""
+        if is_vote_tally(body):
+            continue
+        said = humanise(body)
+        if not said:
+            continue
+        out.append((c.get("user", {}).get("login", "someone"), said,
+                    c.get("html_url", f"https://github.com/{GH}/issues/1")))
+        if len(out) == n:
+            break
+    return list(reversed(out))
 
 
-def sh(cmd):
-    try:
-        return subprocess.run(cmd, shell=True, capture_output=True, text=True,
-                              timeout=20, cwd=REPO).stdout.strip()
-    except Exception:
-        return ""
-
-
+# ---------------------------------------------------------------- machines ---
 def machine_state(branch_tail: str) -> tuple:
-    """(css_state, caption) from a worker's last heartbeat line."""
+    """(css_state, human sentence, raw heartbeat for a title attribute).
+
+    Heartbeat lines look like `11:32:16Z STARTED task=keep-m1pro-1785411074 …`.
+    None of that reaches the page: unix-epoch task IDs read as an error dump.
+    """
     if not branch_tail:
-        return "asleep", "no heartbeat yet"
+        return "asleep", "offline — has not checked in yet", ""
     try:
         hh, mm, ss = branch_tail.split("Z")[0].split(":")
-        beat_age = (time.gmtime().tm_hour * 3600 + time.gmtime().tm_min * 60 + time.gmtime().tm_sec) - \
-                   (int(hh) * 3600 + int(mm) * 60 + int(ss))
-        if beat_age < 0:
-            beat_age += 86400
+        now = time.gmtime()
+        age = (now.tm_hour * 3600 + now.tm_min * 60 + now.tm_sec) - \
+              (int(hh) * 3600 + int(mm) * 60 + int(ss))
+        if age < 0:
+            age += 86400
     except Exception:
-        beat_age = 9999
+        age = 9999
+    mins = max(age, 0) // 60
+    ago = "just now" if mins < 1 else (f"{mins} min ago" if mins < 90
+                                       else f"{mins // 60} h ago")
     working = ("STARTED" in branch_tail or "MODEL_LOADED" in branch_tail)
-    if beat_age < 360 and working:
-        return "working", branch_tail.split("Z ", 1)[-1][:46]
-    if beat_age < 1800:
-        return "idle", "resting — " + branch_tail.split("Z ", 1)[-1][:38]
-    return "asleep", "asleep for a while"
+    scene = re.search(r"beats?=\s*(\d+)", branch_tail)
+    if age < 360 and working:
+        job = f"rendering scene {int(scene.group(1)):02d}" if scene else \
+            "rendering a round of candidate frames"
+        return "working", job, branch_tail
+    if age < 1800:
+        return "idle", f"idle — last job finished {ago}", branch_tail
+    return "asleep", f"offline — last seen {ago}", branch_tail
 
 
-def plain_tables_html():
-    from build_status import beat_state, ESTIMATES
-    d = REPO / "genomes/sapling/nodes/001-capability-inventory"
-    rows, canon, total = beat_state(d)
-    est = "".join(f"<tr><td>{html.escape(a)}</td><td>{html.escape(b)}</td></tr>" for a, b in ESTIMATES)
-    return (f"<h2>📋 Per-beat state</h2><table style='width:100%;font-size:.8rem' border=0>"
-            f"<tr><th>Beat</th><th>Still</th><th>Motion</th><th>Request</th><th>Blocked on</th></tr>"
-            + "".join(rows) +
-            f"</table><h2>💰 Stage costs (measured)</h2><table style='font-size:.8rem'>{est}</table>")
+# ------------------------------------------------------------------- pieces ---
+def _e(s):
+    return html.escape(str(s))
+
+
+def scene_list_html(rows: list) -> str:
+    """One line per scene, no table — a 5-column grid was unreadable at 390px
+    and `overflow-x:hidden` on <body> silently clipped it. Columns that are
+    empty for every scene are simply not written."""
+    from build_status import request_url
+    items = []
+    for r in rows:
+        bits = []
+        if r["animations"]:
+            bits.append("animated by: " + ", ".join(r["animations"]))
+        if r["candidates"]:
+            bits.append(f'{r["candidates"]} rival frames tried')
+        if r["waiting_for"]:
+            bits.append("waiting for " + r["waiting_for"])
+        meta = " · ".join(bits)
+        chip = ('<span class="chip trunk">final</span>' if r["final"]
+                else '<span class="chip hot">in progress</span>')
+        ask = ""
+        if r["request"]:  # one honest link instead of a bare issue number
+            ask = f' <a href="{_e(request_url(r["request"]))}">open request &rarr;</a>'
+        items.append(
+            f'<li><b>Scene {r["num"]:02d} · {_e(r["name"])}</b> {chip}'
+            + (f'<div class="mono">{_e(meta)}{ask}</div>' if meta or ask else "")
+            + "</li>")
+    return f'<ol class="scenes">{"".join(items)}</ol>'
+
+
+def steps_table_html(steps: list) -> str:
+    """Named columns, and a heading that admits most values are durations."""
+    body = "".join(f"<tr><td>{_e(a)}</td><td class='mono'>{_e(b)}</td></tr>" for a, b in steps)
+    return ('<div class="scroll"><table><tr><th>Step</th><th>Time &amp; cost</th></tr>'
+            f"{body}</table></div>")
+
+
+def quests_html(inbox: list) -> str:
+    """The author's own decision list. Read-only for everyone else — the old
+    board offered five identical gold 'look →' links for tasks a visitor cannot
+    do, two of them into a raw GitHub file listing."""
+    if not inbox:
+        return '<p class="notice">Nothing waiting — the city runs itself today.</p>'
+    out = []
+    for q in inbox:
+        link, label = q.get("public"), "look at it &rarr;"
+        if link and "/tree/" in link:      # a directory of .md files is not a page
+            label = "read it on GitHub &rarr;"
+        a = f' <a href="{_e(link)}">{label}</a>' if link else ""
+        out.append(f'<li><b>{_e(q.get("title", ""))}</b>{a}'
+                   f'<div class="mono">{_e(q.get("detail", ""))}</div></li>')
+    return f'<ol class="quests">{"".join(out)}</ol>'
+
+
+SIM_CSS = """
+/* ---- the studio, drawn as a town (page-specific; tokens from the theme) ---- */
+.sky { position: relative; height: 92px; overflow: hidden; border-radius: 18px;
+  border: 1px solid var(--line-soft); margin: .4rem 0 -.6rem;
+  background: radial-gradient(420px 120px at 70% 120%, var(--bg-glow), transparent 70%); }
+.sky::after { content: "✦ ✧ ✦ ✧ ✦"; position: absolute; top: 10px; left: 8%;
+  letter-spacing: 4.5vw; color: var(--leaf-dim); font-size: .8rem; }
+.cloudgpu { position: absolute; right: 6%; top: 12px; text-align: center; font-size: 1.9rem;
+  line-height: 1; }
+.cloudgpu small { display: block; font: 600 .62rem/1.5 var(--mono); color: var(--faint);
+  letter-spacing: .04em; }
+.grove { text-align: center; margin: 0 0 1.2rem; }
+.canopy { display: grid; grid-template-columns: repeat(5, 2.1rem); gap: .1rem;
+  justify-content: center; }
+.leaf { font-size: 1.45rem; text-decoration: none; }
+.leaf.bud { filter: grayscale(1) brightness(.5); }
+.trunky { font-size: 4.4rem; line-height: 1; }
+.grove .label { font: 600 .8rem/1.6 var(--mono); color: var(--muted); }
+.town { display: flex; flex-wrap: wrap; gap: .7rem; justify-content: center; margin: 1rem 0 .5rem; }
+.bld { flex: 1 1 45%; max-width: 200px; text-align: center; padding: .7rem .6rem;
+  border: 1px solid var(--line); border-radius: 14px;
+  background: linear-gradient(180deg, var(--panel-2), var(--panel)); }
+.bld .ico { font-size: 2.3rem; line-height: 1.1; }
+.bld .nm { font: 700 .78rem/1.4 var(--mono); }
+.bld .cap { font: 500 .72rem/1.45 var(--mono); color: var(--faint); min-height: 2.2em; }
+.bld.working { border-color: var(--sap); box-shadow: 0 0 22px -6px rgba(255,199,106,.45); }
+.bld.working .nm { color: var(--sap); }
+.bld.idle { opacity: .9; }
+.bld.asleep { opacity: .5; filter: grayscale(.7); }
+.smoke { height: 1.1rem; animation: puff 2.4s linear infinite; }
+@keyframes puff { 0% { opacity: .9; transform: translateY(0) } 100% { opacity: 0; transform: translateY(-11px) } }
+.spend { font: 600 .8rem/1.6 var(--mono); color: var(--faint); text-align: center; }
+.spend b { color: var(--sap); }
+.scenes, .quests { list-style: none; padding: 0; margin: .4rem 0 0; }
+.scenes li, .quests li { padding: .55rem 0; border-bottom: 1px solid var(--line-soft); }
+.scenes li:last-child, .quests li:last-child { border-bottom: 0; }
+.mono { font: 500 .76rem/1.6 var(--mono); color: var(--faint); }
+.scroll { overflow-x: auto; }
+.citizens { display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center; }
+.citizen { flex: 1 1 45%; max-width: 210px; text-align: center; }
+.citizen .bubble { display: block; background: var(--panel-2); border: 1px solid var(--line);
+  color: var(--ink); border-radius: 12px; padding: .45rem .6rem; font-size: .78rem;
+  text-align: left; }
+.citizen .spr { font-size: 1.7rem; line-height: 1.4; }
+.citizen small { font: 600 .7rem/1.4 var(--mono); color: var(--faint); display: block; }
+.summary { font: 600 .84rem/1.7 var(--mono); color: var(--muted); }
+.summary b { color: var(--leaf); }
+@media (min-width: 620px) { .bld { flex: 0 1 180px; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; } }
+"""
+
+
+# only build once per output directory: build_site.py calls build_status.build()
+# (which delegates here) and then build_sim.build(), and each pass would hit the
+# GitHub API again for the same snapshot.
+_BUILT = set()
 
 
 def build(out_dir: Path):
-    d = REPO / "genomes/sapling/nodes/001-capability-inventory"
-    canon = len(list((d / "stills").glob("[0-9]*.png")))
-    spend = 0.0
-    for line in (REPO / "ledger/render-spend.csv").read_text().splitlines()[1:]:
-        if line.strip():
-            try:
-                spend += float(line.split(",")[5])
-            except (ValueError, IndexError):
-                pass
-    try:
-        inbox = (yaml.safe_load((REPO / "pipeline/pending-founder.yaml").read_text()) or {}).get("pending") or []
-    except Exception:
-        inbox = []
-    machines = []
-    EMOJI = {"msi": "🏭", "m2": "🏢", "m1pro": "🏛"}
-    for b in farm_branches():
-        name = b.split("farm-results-")[-1]
-        state, cap = machine_state(branch_heartbeat(b))
-        machines.append((name, EMOJI.get(name, "🏠"), state, cap))
-    comments = latest_thread_comments()
+    import build_status as data
+    out_dir = Path(out_dir)
+    if str(out_dir.resolve()) in _BUILT:
+        return
+    rows = data.scenes()
+    tot = data.summary(rows)
+    hero = data.hero()
+    spend, inbox = data.spend(), data.inbox()
 
+    # --- the grove: 15 leaves, each one an actual scene you can go look at ---
     leaves = "".join(
-        f'<div class="leaf {"grown" if i < canon else "bud"}" style="--i:{i}">🍃</div>'
-        for i in range(15))
-    def _q(q):
-        link = q.get("public")
-        a = f' <a style="color:#ffd76a" href="{html.escape(link)}">look &rarr;</a>' if link else ""
-        return (f'<div class="quest">\U0001F4DC <b>{html.escape(q.get("title",""))}</b>{a}<br>'
-                f'<small>{html.escape(q.get("detail",""))}</small></div>')
-    quests = "".join(_q(q) for q in inbox) or '<div class="quest">no quests - the city runs itself</div>'
-    town = "".join(
-        f'<div class="bld {st}"><div class="smoke">{"💨" if st == "working" else ""}</div>'
-        f'<div class="ico">{em}</div><div class="nm">{html.escape(n)}</div>'
-        f'<div class="cap">{html.escape(c)}</div></div>'
-        for n, em, st, c in machines)
-    citizens = "".join(
-        f'<div class="citizen" style="--d:{i}"><div class="bubble">{html.escape(b2)}…</div>'
-        f'<div class="spr">{"🧑‍🌾" if i % 2 else "🧙"}</div><small>{html.escape(a)}</small></div>'
-        for i, (a, b2) in enumerate(comments))
+        f'<a class="leaf {"grown" if r["final"] else "bud"}" '
+        f'href="{_e(hero["board"])}#beat-{r["num"]:02d}" '
+        f'title="Scene {r["num"]:02d} — {_e(r["name"])} · '
+        f'{"final" if r["final"] else "waiting for " + r["waiting_for"]}">🍃</a>'
+        for r in rows)
+    done = tot["final"] == tot["total"]
+    grove_caption = (f'Episode {hero["number"]} — '
+                     + (f'all {tot["total"]} scenes finished. '
+                        if done else f'{tot["final"]} of {tot["total"]} scenes finished. ')
+                     + f'<a href="{_e(hero["page"])}">Watch it &rarr;</a>')
 
-    out = f"""<!doctype html><html><head><meta charset="utf-8">
+    # --- the town: our machines, in sentences a stranger can read ---
+    town, seen_states = "", []
+    for b in farm_branches():
+        key = b.split("farm-results-")[-1]
+        nice, emoji = MACHINES.get(key, (key, "🏠"))
+        state, cap, raw = machine_state(branch_heartbeat(b))
+        seen_states.append(state)
+        smoke = '<div class="smoke">💨</div>' if state == "working" else ""
+        town += (f'<div class="bld {state}" title="{_e(raw)}">{smoke}'
+                 f'<div class="ico">{emoji}</div><div class="nm">{_e(nice)}</div>'
+                 f'<div class="cap">{_e(cap)}</div></div>')
+    town_legend = " · ".join(STATE_WORDS[s] for s in STATE_WORDS if s in seen_states) \
+        or "no machine has checked in yet"
+
+    citizens = "".join(
+        f'<div class="citizen"><a class="bubble" href="{_e(url)}">{_e(said)}</a>'
+        f'<div class="spr">{"🧑‍🌾" if i % 2 else "🧙"}</div><small>{_e(who)}</small></div>'
+        for i, (who, said, url) in enumerate(latest_thread_comments()))
+    if not citizens:
+        citizens = '<p class="notice">The reactions thread is quiet right now.</p>'
+
+    player = (f'<figure class="phone"><video controls playsinline preload="metadata" '
+              f'poster="{_e(hero["poster"])}" src="{_e(hero["video"])}"></video>'
+              f'<figcaption>Episode {hero["number"]} · “{_e(hero["title"])}” — '
+              f'the working cut, {tot["final"]}/{tot["total"]} scenes final</figcaption></figure>'
+              ) if hero["video"] else (
+        f'<p><a class="btn" href="{_e(hero["watch"])}">▶ Watch episode {hero["number"]} &rarr;</a></p>')
+
+    waiting = (f'{tot["awaiting_render"]} waiting on a render · '
+               f'{tot["awaiting_pick"]} waiting on the author to pick')
+
+    out = f"""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>banyan city — the sim</title>
-<style>
- body {{ margin:0; font-family:-apple-system,system-ui,sans-serif; color:#e8f0e8;
-        background: linear-gradient(#0b1026 0%, #16233f 45%, #1d3a2a 78%, #142718 100%);
-        min-height:100vh; overflow-x:hidden; }}
- .sky {{ position:relative; height:120px; }}
- .cloudgpu {{ position:absolute; left:8%; top:30px; font-size:2.2rem; animation: drift 22s linear infinite; }}
- .cloudgpu small {{ font-size:.65rem; display:block; color:#9fb4d8; }}
- @keyframes drift {{ 0%{{transform:translateX(0)}} 50%{{transform:translateX(70vw)}} 100%{{transform:translateX(0)}} }}
- .stars::after {{ content:"✦ ✧ ✦ ✧ ✦"; letter-spacing:5vw; color:#5b6f9e; position:absolute; top:12px; left:10vw; }}
- h1 {{ text-align:center; margin:.2rem 0 0; font-size:1.25rem; }}
- .coins {{ position:fixed; top:10px; right:14px; background:#00000055; border-radius:20px; padding:.3rem .8rem; }}
- .grove {{ display:flex; justify-content:center; align-items:flex-end; margin-top:-10px; }}
- .tree {{ text-align:center; }}
- .trunky {{ font-size:5rem; }}
- .canopy {{ display:grid; grid-template-columns:repeat(5,2.2rem); gap:.15rem; justify-content:center; }}
- .leaf {{ font-size:1.5rem; animation: sway 3.4s ease-in-out infinite; animation-delay: calc(var(--i) * .2s); }}
- .leaf.bud {{ filter:grayscale(1) brightness(.5); }}
- @keyframes sway {{ 0%,100%{{transform:rotate(-6deg)}} 50%{{transform:rotate(8deg)}} }}
- .label {{ color:#a9d3a9; font-size:.85rem; }}
- .town {{ display:flex; gap:1.2rem; justify-content:center; flex-wrap:wrap; margin:1.4rem 1rem; }}
- .bld {{ width:170px; background:#0f1b2e; border:1px solid #29405e; border-radius:12px; padding:.7rem; text-align:center; position:relative; }}
- .bld .ico {{ font-size:2.6rem; }}
- .bld.working {{ box-shadow:0 0 18px #ffd76a55; border-color:#ffd76a; }}
- .bld.working .ico {{ animation: chug .8s ease-in-out infinite; }}
- @keyframes chug {{ 0%,100%{{transform:translateY(0)}} 50%{{transform:translateY(-4px)}} }}
- .bld.idle {{ opacity:.85; }}
- .bld.asleep {{ opacity:.45; filter:grayscale(.7); }}
- .bld.asleep::after {{ content:"💤"; position:absolute; top:6px; right:8px; }}
- .smoke {{ height:1.2rem; animation: puff 2s linear infinite; }}
- @keyframes puff {{ 0%{{opacity:.9; transform:translateY(0)}} 100%{{opacity:0; transform:translateY(-10px)}} }}
- .nm {{ font-weight:700; }}
- .cap {{ font-size:.72rem; color:#9fb4d8; min-height:2.1em; }}
- .row {{ display:flex; gap:1.2rem; flex-wrap:wrap; justify-content:center; align-items:flex-start; margin:0 1rem 2rem; }}
- .panel {{ background:#00000040; border-radius:14px; padding: .9rem 1.1rem; max-width:380px; }}
- .panel h2 {{ font-size:.95rem; margin:.1rem 0 .5rem; color:#ffd76a; }}
- .quest {{ background:#2a2113; border:1px solid #6b5427; border-radius:8px; padding:.5rem .6rem; margin:.4rem 0; font-size:.85rem; }}
- .citizen {{ display:inline-block; text-align:center; margin:.4rem; animation: bob 2.6s ease-in-out infinite; animation-delay: calc(var(--d) * .4s); }}
- @keyframes bob {{ 0%,100%{{transform:translateY(0)}} 50%{{transform:translateY(-3px)}} }}
- .bubble {{ background:#fff; color:#222; border-radius:10px; padding:.35rem .5rem; font-size:.7rem; max-width:150px; margin-bottom:.2rem; }}
- .spr {{ font-size:1.8rem; }}
- footer {{ text-align:center; color:#7b8fa8; font-size:.75rem; padding-bottom:1.2rem; }}
-</style></head><body>
-<div class="sky stars"><div class="cloudgpu">☁️<small>RunPod — reserve</small></div></div>
-<h1>🌳 banyan city — the living studio</h1>
-<div class="coins">🪙 ${spend:.2f} lifetime</div>
-<div class="grove"><div class="tree">
-  <div class="canopy">{leaves}</div>
-  <div class="trunky">🌳</div>
-  <div class="label">episode 001 — {canon}/15 beats grown</div>
-</div></div>
-<div class="town">{town}</div>
-<div class="row">
-  <div class="panel"><h2>📜 Quest board (the author's)</h2>{quests}</div>
-  <div class="panel"><h2>🗣 Citizens on the thread</h2>{citizens}
-    <p><a style="color:#ffd76a" href="https://github.com/olegmlkvorg/banyan-city/issues/1">join them →</a></p></div>
+<meta name="description" content="{_e(DESC)}">
+<link rel="canonical" href="{CANONICAL}/{PAGE}">
+<link rel="alternate" type="application/rss+xml" title="new nodes" href="{CANONICAL}/feed.xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Banyan City">
+<meta property="og:title" content="Banyan City — {PAGE_NAME}">
+<meta property="og:description" content="{_e(DESC)}">
+<meta property="og:url" content="{CANONICAL}/{PAGE}">
+<meta property="og:image" content="{CANONICAL}/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Banyan City — {PAGE_NAME}">
+<meta name="twitter:description" content="{_e(DESC)}">
+<meta name="twitter:image" content="{CANONICAL}/og.png">
+<title>Banyan City — {PAGE_NAME}</title>
+<style>{THEME_CSS}{SIM_CSS}</style>
+</head>
+<body>
+<main>
+<nav class="crumbs"><a href="index.html">🌳 banyan-city</a> · <a href="watch.html">▶ watch</a>
+ · <a href="city.html">the city</a> · <a href="machine.html">⚙️ how it works</a>
+ · <b>🏗 {PAGE_NAME}</b> · <a href="https://github.com/{GH}">source</a></nav>
+
+<div class="rise">
+<p class="eyebrow">Banyan City · {PAGE_NAME}</p>
+<h1>{PAGE_NAME.title()}</h1>
+<p class="lede">{data.PITCH}</p>
 </div>
-<div class="row"><div class="panel" style="max-width:820px">{{plain_tables}}</div></div>
+
+<div class="rise">
+{player}
+<p style="text-align:center">
+  <a class="btn" href="{_e(hero["watch"])}">▶ Watch episode {hero["number"]}</a>
+  <a class="btn ghost" href="{_e(hero["board"])}">🎬 See how it was made</a>
+</p>
+<p class="spend">total spent on renders so far: <b>${spend:.2f}</b> —
+everything else runs on the family's own machines for free</p>
+</div>
+
+<h2 class="rise">The episode, growing</h2>
+<div class="grove rise">
+  <div class="canopy">{leaves}</div>
+  <div class="trunky"><a href="{_e(hero["page"])}" title="Episode {hero["number"]}">🌳</a></div>
+  <div class="label">{grove_caption}</div>
+</div>
+
+<h2>The machines</h2>
+<div class="sky"><div class="cloudgpu">☁️<small>cloud GPU — standing by (unused)</small></div></div>
+<div class="town">{town}</div>
+<p class="legend">{town_legend}</p>
+
+<div class="panel" style="padding:1rem 1.2rem;margin:1.6rem 0">
+  <h2 style="margin:.1rem 0 .4rem">Take part</h2>
+  <p style="margin:.2rem 0 .8rem;color:var(--muted)">Nothing here is locked. Pick a scene,
+  make a better version of it, and hand it in — or write the next episode yourself.</p>
+  <p><a class="btn ghost" href="{_e(hero["board"])}">🎬 Scene-by-scene shot board</a>
+     <a class="btn ghost" href="create.html">✍️ Write your own episode</a>
+     <a class="btn ghost" href="https://github.com/{GH}/issues/1">💬 Say what you think</a></p>
+</div>
+
+<h2>Every scene, and what it is waiting for</h2>
+<p class="summary"><b>All {tot["final"]} of {tot["total"]} scenes are final</b> · {waiting}</p>
+<details class="drawer"><summary>Open the scene-by-scene list</summary>
+<div class="drawer-body">{scene_list_html(rows)}</div></details>
+
+<h2>How long each step takes (and what it costs)</h2>
+{steps_table_html(data.STEPS)}
+
+<details class="drawer"><summary>What the author still has to decide — read-only</summary>
+<div class="drawer-body">
+<p class="mono">These are calls only the author can make; the rest of the city keeps moving while
+they wait.</p>
+{quests_html(inbox)}</div></details>
+
+<h2>People on the reactions thread</h2>
+<div class="citizens">{citizens}</div>
+<p style="text-align:center"><a href="https://github.com/{GH}/issues/1">join them &rarr;</a></p>
+
+<p class="legend">{data.LEGEND}</p>
 <footer>snapshot {time.strftime('%Y-%m-%d %H:%M')} · rebuilt on every push · the whole repo IS the show —
-<a style="color:#ffd76a" href="index.html">the city</a> · <a style="color:#ffd76a" href="lab/index.html">the lab</a> · <a style="color:#ffd76a" href="machine.html">how it works</a></footer>
-</body></html>"""
-    out = out.replace("{plain_tables}", plain_tables_html())
+<a href="index.html">the city</a> · <a href="lab/index.html">the lab</a> ·
+<a href="machine.html">how it works</a></footer>
+</main>
+</body>
+</html>"""
     (out_dir / "status.html").write_text(out)
+    # sim.html is a permanent redirect target only — "the sim" is a dev codeword.
     (out_dir / "sim.html").write_text(
-        '<!doctype html><meta http-equiv="refresh" content="0;url=status.html">')
-    print(f"✓ status.html (sim) — {canon}/15 leaves, {len(machines)} buildings")
+        '<!doctype html><html lang="en"><head><meta charset="utf-8">'
+        '<meta http-equiv="refresh" content="0;url=status.html">'
+        '<link rel="canonical" href="https://banyan.city/status.html">'
+        '<title>Banyan City — the studio</title></head><body>'
+        '<p>This page moved: <a href="status.html">the studio &rarr;</a></p>'
+        '</body></html>')
+    _BUILT.add(str(out_dir.resolve()))
+    print(f"✓ status.html (the studio) — {tot['final']}/{tot['total']} scenes final, "
+          f"{len(seen_states)} machines")
 
 
 if __name__ == "__main__":

@@ -1,14 +1,19 @@
 #!/usr/bin/env python3
-"""The status page — progress, estimates, bottlenecks, visible to everyone.
+"""Status DATA — what is finished, what is waiting, what each step costs.
 
 Dad's ask (2026-07-28): clearly see what is running, what is blocked on whom,
-and where the time goes. Build-time snapshot from repo state; regenerated on
-every push like the rest of the site.
+and where the time goes. The page itself is composed by `build_sim.py` from the
+helpers in this file. Until 2026-07-30 both modules wrote `_site/status.html`,
+so build_sim silently overwrote everything edited here — one generator, one
+file, from now on (stranger-eyes audit).
+
+House rule for anything a visitor reads: plain English. Internally a shot is a
+"beat" and an approved frame is "canon"; on the page they are a **scene** and
+**final**. Model codenames survive only with a prefix that explains them
+("animated by: POST, LTX"). Repo files + the public GitHub API only — the
+deploy server has no local git refs and no `gh` CLI.
 """
-import html
-import subprocess
 import sys
-import time
 from pathlib import Path
 
 import yaml
@@ -17,122 +22,159 @@ REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "pipeline"))
 from generate_shots import parse_shots  # noqa: E402
 
-# measured medians from the ledgered runs of 2026-07-27/28
-ESTIMATES = [
-    ("Candidate stills round (Kaggle, 4 seeds/beat)", "~15 min incl. queue"),
-    ("Founder verdict on a ballot", "minutes of attention — the real variable"),
-    ("POST motion take (deterministic)", "~1 min, $0"),
-    ("Paid API motion take (e.g. Hailuo)", "~3 min, ~$0.28"),
-    ("Full prototype assembly + QA", "~4 min, $0"),
+GH_URL = "https://github.com/olegmlkvorg/banyan-city"
+REQUESTS_URL = f"{GH_URL}/issues?q=label%3Arender-request"
+THREAD_URL = f"{GH_URL}/issues/1"
+GENOME = "sapling"
+EPISODE = REPO / "genomes/sapling/nodes/001-capability-inventory"
+
+# What a stranger who arrived from TikTok is owed, in one breath.
+PITCH = ("Sapling — the first series growing in Banyan City — is an AI-animated "
+         "micro-drama about an engineer who wakes up as a tree. It branches: you "
+         "watch, you react, and the story grows a new limb. This page is the "
+         "workshop floor — the show being made, live.")
+# "beat" and "canon" are translated away in our own labels, but they survive in
+# quoted thread comments — so the legend names them once instead of leaving a
+# stranger to guess (stranger-eyes audit, 2026-07-30).
+LEGEND = ("<b>scene</b> = one shot of an episode (the crew says <b>beat</b>) · "
+          "<b>final</b> = the author approved it (the crew says <b>canon</b>) · "
+          "<b>take</b> = one attempt at a scene, anyone may hand one in")
+
+# Measured medians from the ledgered runs of 2026-07-27/28, written as
+# step → time & money so the two columns actually have names (they used to
+# ship headerless under a heading that said "costs" over mostly durations).
+STEPS = [
+    ("A round of candidate frames for one scene (free GPU)", "~15 min including queue time"),
+    ("The author looking at a round and picking a winner", "minutes of attention — the real variable"),
+    ("Animating a chosen frame on our own machines", "~1 min · $0"),
+    ("Animating a chosen frame with a paid AI service", "~3 min · about $0.28"),
+    ("Assembling the whole episode and checking it", "~4 min · $0"),
 ]
+ESTIMATES = STEPS  # older name, kept so nothing importing it breaks
 
 
-def beat_state(d: Path):
-    shots = parse_shots((d / "shots.md").read_text())
+def scenes(d: Path = None) -> list:
+    """One dict per scene of the episode — the whole state of the show.
+
+    final       : the author has approved this scene's frame
+    candidates  : how many rival frames are waiting for that call
+    animations   : which engines have produced a moving version (codenames)
+    request     : issue number where anyone can hand one in
+    waiting_for : plain-English bottleneck, "" when the scene is done
+    """
+    d = d or EPISODE
     reqs = {}
     rq = d / "requests.yaml"
     if rq.exists():
         reqs = (yaml.safe_load(rq.read_text()) or {}).get("render_requests", {})
-    rows = []
-    for s in shots:
-        num = s["num"]
-        canon = (d / "stills" / f"{num:02d}-{s['slug']}.png").exists()
-        cands = len(list((d / "takes" / "stills").glob(f"{num:02d}-*.png"))) if (d / "takes" / "stills").is_dir() else 0
-        takes = [t.suffixes[-2].lstrip(".") for t in (d / "takes" / "clips").glob(f"{num:02d}-*.mp4")] if (d / "takes" / "clips").is_dir() else []
-        if canon:
-            still = "✅ canon"
-        elif cands:
-            still = f"🗳 ballot open ({cands} candidates)"
-        else:
-            still = "⬜ none"
-        motion = ", ".join(sorted(set(takes))) or "—"
-        req = f'<a href="https://github.com/olegmlkvorg/banyan-city/issues/{reqs[num]}">#{reqs[num]}</a>' if num in reqs else "—"
-        blocked = "founder vote" if not canon and cands else ("—" if canon else "render")
-        rows.append(f"<tr><td>{num:02d}</td><td>{still}</td><td>{html.escape(motion)}</td>"
-                    f"<td>{req}</td><td>{blocked}</td></tr>")
-    return rows, sum(1 for s in shots if (d / "stills" / f"{s['num']:02d}-{s['slug']}.png").exists()), len(shots)
+    cand_dir, clip_dir = d / "takes" / "stills", d / "takes" / "clips"
+    out = []
+    for s in parse_shots((d / "shots.md").read_text()):
+        num, slug = s["num"], s["slug"]
+        final = (d / "stills" / f"{num:02d}-{slug}.png").exists()
+        cands = len(list(cand_dir.glob(f"{num:02d}-*.png"))) if cand_dir.is_dir() else 0
+        anims = sorted({t.suffixes[-2].lstrip(".") for t in clip_dir.glob(f"{num:02d}-*.mp4")}) \
+            if clip_dir.is_dir() else []
+        out.append({
+            "num": num,
+            "slug": slug,
+            "name": slug.replace("-", " "),
+            "final": final,
+            "candidates": cands,
+            "animations": anims,
+            "request": reqs.get(num),
+            "waiting_for": "" if final else ("the author's pick" if cands else "a render"),
+        })
+    return out
 
 
-def spend():
-    led = REPO / "ledger" / "render-spend.csv"
+def request_url(num) -> str:
+    """Where a stranger hands in a take for a scene ("open request" on the page)."""
+    return f"{GH_URL}/issues/{num}"
+
+
+def hero(d: Path = None) -> dict:
+    """The episode itself — what belongs above everything machine-facing.
+
+    Returns the newest LIVE full-episode video (top tier wins, then the later
+    leaf letter), its poster still, and the pages a visitor can go to. Paths are
+    relative to _site/ so status.html can play the file build_site.py copies.
+    """
+    d = d or EPISODE
+    slug, media = d.name, f"{GENOME}/{d.name}-media"
+    pick = None  # (sortable rank, relative video path)
+    for f in sorted((d / "leaves").glob("*.yaml")):
+        try:
+            meta = yaml.safe_load(f.read_text()) or {}
+        except Exception:
+            continue
+        content = str(meta.get("content", ""))
+        if meta.get("status") != "live" or not content.endswith(".mp4"):
+            continue
+        rank = (str(meta.get("tier", "")) == "T3", f.name)
+        if pick is None or rank > pick[0]:
+            pick = (rank, f"{GENOME}/leaves/{content}")
+    stills = sorted((d / "stills").glob("[0-9]*.png"))
+    title = slug.split("-", 1)[-1].replace("-", " ")
+    try:  # the author's own title for the episode, never rewritten here (R4)
+        for n in (yaml.safe_load((REPO / f"genomes/{GENOME}/lineage.yaml").read_text())
+                  or {}).get("nodes", []):
+            if n.get("slug") == slug:
+                title = n.get("title") or title
+                break
+    except Exception:
+        pass
+    return {
+        "number": 1,
+        "title": title,
+        "video": pick[1] if pick else None,
+        "poster": f"{media}/{stills[0].name}" if stills else None,
+        "page": f"{GENOME}/{slug}.html",
+        "board": f"{GENOME}/{slug}-shots.html",
+        "watch": "watch.html",
+    }
+
+
+def summary(rows: list) -> dict:
+    """The one line that replaces fifteen near-identical table rows."""
+    return {
+        "total": len(rows),
+        "final": sum(1 for r in rows if r["final"]),
+        "awaiting_render": sum(1 for r in rows if r["waiting_for"] == "a render"),
+        "awaiting_pick": sum(1 for r in rows if r["waiting_for"] == "the author's pick"),
+    }
+
+
+def spend() -> float:
+    """Lifetime cash actually billed by any render provider, from the ledger."""
     total = 0.0
+    led = REPO / "ledger" / "render-spend.csv"
+    if not led.exists():
+        return total
     for line in led.read_text().splitlines()[1:]:
         if line.strip():
-            total += float(line.split(",")[5])
+            try:
+                total += float(line.split(",")[5])
+            except (ValueError, IndexError):
+                pass
     return total
 
 
+def inbox() -> list:
+    """The author's decision queue — written for strangers in the yaml itself."""
+    try:
+        return (yaml.safe_load((REPO / "pipeline/pending-founder.yaml").read_text())
+                or {}).get("pending") or []
+    except Exception:
+        return []
+
+
 def build(out_dir: Path):
-    d = REPO / "genomes/sapling/nodes/001-capability-inventory"
-    rows, canon, total = beat_state(d)
-    birdseye = birdseye_sections(REPO)
-    est = "".join(f"<tr><td>{html.escape(a)}</td><td>{html.escape(b)}</td></tr>" for a, b in ESTIMATES)
-    body = f"""<!doctype html><meta charset="utf-8"><title>Status — the machine at work</title>
-<style>body{{font:15px/1.5 -apple-system,system-ui,sans-serif;margin:2rem auto;max-width:900px;background:#0e0e12;color:#e8e8ee;padding:0 1rem}}
-table{{border-collapse:collapse;width:100%;margin:1rem 0}}td,th{{border:1px solid #333;padding:.4rem .6rem;text-align:left;font-size:.9em}}
-h1{{font-size:1.4rem}}.big{{font-size:1.6rem}}</style>
-<h1>⚙️ Status — episode 001</h1>
-<p class="big">{canon} / {total} beats canon · lifetime cash spend: ${spend():.2f}</p>
-<p>Snapshot generated {time.strftime('%Y-%m-%d %H:%M')} (rebuilds on every push).
-Pipeline: one free GPU lane (serialized) + the
-<a href="https://github.com/olegmlkvorg/banyan-city/issues?q=label%3Arender-request">request marketplace</a>
-(parallel, human-powered). The dominant bottleneck is whatever the Blocked-on
-column says most often.</p>
-{birdseye}<h2>Per-beat state</h2>
-<table><tr><th>Beat</th><th>Still</th><th>Motion takes</th><th>Open request</th><th>Blocked on</th></tr>
-{''.join(rows)}</table>
-<h2>Stage estimates (measured)</h2>
-<table><tr><th>Stage</th><th>Cost</th></tr>{est}</table>
-<p><a href="index.html">← the city</a> · <a href="machine.html">how the machine works</a></p>"""
-    (out_dir / "status.html").write_text(body)
-    print(f"✓ status.html — {canon}/{total} canon, ${spend():.2f} lifetime")
-
-
-
-
-def birdseye_sections(repo):
-    """The public bird's-eye (founder directive 2026-07-30): inbox, fleet,
-    latest thread activity. Public-safe only — no local paths, no keys."""
-    import subprocess, html as h
-    import yaml as y
-    def sh(cmd):
-        try:
-            return subprocess.run(cmd, shell=True, capture_output=True, text=True,
-                                  timeout=20, cwd=repo).stdout.strip()
-        except Exception:
-            return ""
-    out = ""
-    # founder inbox
-    try:
-        inbox = (y.safe_load((repo / "pipeline/pending-founder.yaml").read_text()) or {}).get("pending") or []
-    except Exception:
-        inbox = []
-    out += "<h2>🕊 Waiting on the author</h2><ul>"
-    out += "".join(f"<li><b>{h.escape(i.get('title',''))}</b> — {h.escape(i.get('detail',''))}</li>" for i in inbox) or "<li>nothing — the machine waits on no one</li>"
-    out += "</ul>"
-    # fleet
-    sh("git fetch -q origin 'refs/heads/farm-results-*:refs/remotes/origin/farm-results-*'")
-    rows = ""
-    for b in sh("git branch -r | grep farm-results || true").splitlines():
-        b = b.strip(); name = b.split("farm-results-")[-1]
-        hb = sh(f"git show {b}:farm-out/heartbeat.txt 2>/dev/null | tail -1") or "no heartbeat"
-        rows += f"<tr><td><b>{h.escape(name)}</b></td><td>{h.escape(hb)}</td></tr>"
-    try:
-        q = (y.safe_load((repo / "pipeline/farm-queue.yaml").read_text()) or {}).get("tasks") or []
-        qtxt = ", ".join(t0.get("id","?") for t0 in q) or "empty (auto-refills)"
-    except Exception:
-        qtxt = "unknown"
-    out += f"<h2>🖥 The farm (family machines rendering the show)</h2><table>{rows}</table><p><small>queue: {h.escape(qtxt)}</small></p>"
-    # latest thread activity
-    cs = sh("gh issue view 1 --json comments -q '.comments[-4:][] | .author.login + \"|\" + (.createdAt|.[0:16]) + \"|\" + (.body|.[0:100])' 2>/dev/null")
-    rows = ""
-    for l in cs.splitlines():
-        if l.count("|") >= 2:
-            a, w, b2 = l.split("|", 2)
-            rows += f"<tr><td><b>{h.escape(a)}</b><br><small>{h.escape(w)}</small></td><td>{h.escape(b2)}…</td></tr>"
-    out += f"<h2>🗳 Latest on the reactions thread</h2><table>{rows}</table>"
-    out += "<p><a href='https://github.com/olegmlkvorg/banyan-city/issues/1'>join the thread</a> · <a href='sapling/001-capability-inventory-shots.html'>the shot board</a></p>"
-    return out
+    """Kept so build_site.py's call order stays valid. The page is written by
+    build_sim.build() — which reads this module — so there is exactly one
+    generator for _site/status.html."""
+    from build_sim import build as build_page
+    build_page(out_dir)
 
 
 if __name__ == "__main__":
