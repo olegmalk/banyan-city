@@ -1,8 +1,7 @@
-# canary 2: two-process encode/render (the 16GB machine died with an
-# access violation holding the text encoder and transformer at once),
-# and a 480x832 draft bucket to prove the path before any 720p batch.
+# canary 3: same two-process render, now with a worker that restarts on
+# ANY pipeline change (canary 2 ran new wan_i2v.py against old caller).
 tasks:
-- id: vid-canary2-1785443128
+- id: vid-canary3-1785443368
   worker: msi
   video: true
   node: 001-capability-inventory
