@@ -111,7 +111,7 @@ def render_task(task: dict, courier: Courier, device: str, dtype) -> None:
            "realistic skin texture")
     # task may name another OPEN model (bake-offs); default = house model
     BASE = task.get("model") or "cagliostrolab/animagine-xl-3.1"
-    SEED = 20260719
+    SEED = int(task.get("seed_base", 20260719))
 
     d = REPO / "genomes/sapling/nodes" / task["node"]
     leaves = sorted((d / "leaves").glob("*-t0-*.yaml"))
