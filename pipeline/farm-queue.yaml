@@ -1,30 +1,152 @@
-# standing MSI workload: deep world seed bank (value: option depth for future picks)
+# msi standing workload: hi-res canon upgrade candidates (founder approves any swap)
 tasks:
-  - id: bank-sapling-40cm
+  - id: hires-01
     worker: msi
     node: 001-capability-inventory
-    beats: ""
-    slug: bank-sapling-40cm
-    prompt: "no humans, plant focus, a young knee-high sapling with a thin flexible stem and several bright green leaves, standing alone in a wide grass field, golden morning light, gentle sky, low close shot, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No tree, no forest, no people. No photorealism, no 3D render look. 9:16 vertical, no text."
-    seeds: 10
-  - id: bank-field-storm
+    beats: "1"
+    seeds: 2
+    steps: 30
+    init: genomes/sapling/nodes/001-capability-inventory/stills/01-the-keyboard.png
+    strength: 0.35
+    width: 1080
+    height: 1576
+  - id: hires-02
     worker: msi
     node: 001-capability-inventory
-    beats: ""
-    slug: bank-field-storm
-    prompt: "no humans, the wide grass field under heavy storm clouds, wind bending all the grass one direction, dramatic grey-green light, the small sprout holding on in the foreground, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people, no lightning bolts, no city. No photorealism, no 3D render look. 9:16 vertical, no text."
-    seeds: 10
-  - id: bank-field-winter
+    beats: "2"
+    seeds: 2
+    steps: 30
+    init: genomes/sapling/nodes/001-capability-inventory/stills/02-three-oh-seven.png
+    strength: 0.35
+    width: 1080
+    height: 1576
+  - id: hires-03
     worker: msi
     node: 001-capability-inventory
-    beats: ""
-    slug: bank-field-winter
-    prompt: "no humans, the grass field dusted with frost at dawn, pale cold light, frozen dew on the grass blades, the small sprout rimed with frost but green, quiet, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No snow drifts, no people, no trees. No photorealism, no 3D render look. 9:16 vertical, no text."
-    seeds: 10
-  - id: bank-city-distance
+    beats: "3"
+    seeds: 2
+    steps: 30
+    init: genomes/sapling/nodes/001-capability-inventory/stills/03-deploy-succeeded.png
+    strength: 0.35
+    width: 1080
+    height: 1576
+  - id: hires-04
     worker: msi
     node: 001-capability-inventory
-    beats: ""
-    slug: bank-city-distance
-    prompt: "no humans, the wide grass field with a distant city skyline on the horizon, hazy morning light, the tiny sprout in the foreground grass, scale contrast, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people, no roads, no cars. No photorealism, no 3D render look. 9:16 vertical, no text."
-    seeds: 10
+    beats: "4"
+    seeds: 2
+    steps: 30
+    init: genomes/sapling/nodes/001-capability-inventory/stills/04-the-fall.png
+    strength: 0.35
+    width: 1080
+    height: 1576
+  - id: hires-05
+    worker: msi
+    node: 001-capability-inventory
+    beats: "5"
+    seeds: 2
+    steps: 30
+    init: genomes/sapling/nodes/001-capability-inventory/stills/05-huh-green.png
+    strength: 0.35
+    width: 1080
+    height: 1576
+  - id: hires-06
+    worker: msi
+    node: 001-capability-inventory
+    beats: "6"
+    seeds: 2
+    steps: 30
+    init: genomes/sapling/nodes/001-capability-inventory/stills/06-too-blue.png
+    strength: 0.35
+    width: 1080
+    height: 1576
+  - id: hires-07
+    worker: msi
+    node: 001-capability-inventory
+    beats: "7"
+    seeds: 2
+    steps: 30
+    init: genomes/sapling/nodes/001-capability-inventory/stills/07-flailing-one.png
+    strength: 0.35
+    width: 1080
+    height: 1576
+  - id: hires-08
+    worker: msi
+    node: 001-capability-inventory
+    beats: "8"
+    seeds: 2
+    steps: 30
+    init: genomes/sapling/nodes/001-capability-inventory/stills/08-sev-1.png
+    strength: 0.35
+    width: 1080
+    height: 1576
+  - id: hires-09
+    worker: msi
+    node: 001-capability-inventory
+    beats: "9"
+    seeds: 2
+    steps: 30
+    init: genomes/sapling/nodes/001-capability-inventory/stills/09-whoami.png
+    strength: 0.35
+    width: 1080
+    height: 1576
+  - id: hires-10
+    worker: msi
+    node: 001-capability-inventory
+    beats: "10"
+    seeds: 2
+    steps: 30
+    init: genomes/sapling/nodes/001-capability-inventory/stills/10-sense.png
+    strength: 0.35
+    width: 1080
+    height: 1576
+  - id: hires-11
+    worker: msi
+    node: 001-capability-inventory
+    beats: "11"
+    seeds: 2
+    steps: 30
+    init: genomes/sapling/nodes/001-capability-inventory/stills/11-grow.png
+    strength: 0.35
+    width: 1080
+    height: 1576
+  - id: hires-12
+    worker: msi
+    node: 001-capability-inventory
+    beats: "12"
+    seeds: 2
+    steps: 30
+    init: genomes/sapling/nodes/001-capability-inventory/stills/12-undefined.png
+    strength: 0.35
+    width: 1080
+    height: 1576
+  - id: hires-13
+    worker: msi
+    node: 001-capability-inventory
+    beats: "13"
+    seeds: 2
+    steps: 30
+    init: genomes/sapling/nodes/001-capability-inventory/stills/13-i-always-left.png
+    strength: 0.35
+    width: 1080
+    height: 1576
+  - id: hires-14
+    worker: msi
+    node: 001-capability-inventory
+    beats: "14"
+    seeds: 2
+    steps: 30
+    init: genomes/sapling/nodes/001-capability-inventory/stills/14-worth-staying-in.png
+    strength: 0.35
+    width: 1080
+    height: 1576
+  - id: hires-15
+    worker: msi
+    node: 001-capability-inventory
+    beats: "15"
+    seeds: 2
+    steps: 30
+    init: genomes/sapling/nodes/001-capability-inventory/stills/15-something-s-coming.png
+    strength: 0.35
+    width: 1080
+    height: 1576
