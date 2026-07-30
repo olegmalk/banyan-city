@@ -16,3 +16,5 @@
   08-sev-1-s1.png in 7s
   09-whoami-s0.png in 7s
   09-whoami-s1.png in 7s
+  10-sense-s0.png in 7s
+  10-sense-s1.png in 7s
