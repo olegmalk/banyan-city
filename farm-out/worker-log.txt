@@ -8,3 +8,5 @@
   04-the-fall-s1.png in 7s
   05-huh-green-s0.png in 7s
   05-huh-green-s1.png in 7s
+  06-too-blue-s0.png in 7s
+  06-too-blue-s1.png in 7s
