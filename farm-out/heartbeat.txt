@@ -32,3 +32,4 @@
 23:26:14Z MODEL_LOADED cuda/bfloat16
 23:27:38Z DONE task=ref2-field-rain
 08:04:23Z STARTED task=bank-sapling-40cm beats= on cuda
+08:05:13Z MODEL_LOADED cuda/bfloat16
