@@ -21,6 +21,9 @@ events:
   - {beat: 4, sfx: room_hum, start: 0.0, dur: 1.7, gain_db: -26}   # ALL sound dies at the tip-over (ear)
   - {beat: 4, sfx: mug_hit, start: 2.4, gain_db: -12}              # the mug, alone in the quiet (ear)
   - {beat: 5, sfx: fan_spindown, start: 0.3, dur: 3.4, gain_db: -20}  # the machine switching off
+  - {beat: 9, sfx: terminal_keys, start: 0.3, dur: 2.4, gain_db: -24}  # "$ whoami" types itself
+  - {beat: 10, sfx: footsteps_soil, start: 3.0, dur: 7.0, period: 1.9, gain_db: -23}  # 400m away, felt not heard
+  - {beat: 15, sfx: footsteps_soil, start: 0.2, dur: 3.4, period: 1.1, grow: 1.2, gain_db: -14}  # closer, faster — the hook IS this sound
 
 # the whisper wind bed is silent through the death — the world (and its
 # wind) only returns with the too-blue sky of beat 6

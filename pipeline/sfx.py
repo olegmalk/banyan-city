@@ -116,11 +116,61 @@ def fan_spindown(path: Path, dur: float) -> Path:
     return _write(path, 0.4 * x / (np.abs(x).max() or 1))
 
 
+def footsteps_soil(path: Path, dur: float, period: float = 1.5,
+                   grow: float = 0.0) -> Path:
+    """Footsteps felt THROUGH SOIL, not heard through air: paired low thumps
+    (a walker's two feet) with no transient click — pressure, not impact.
+    `grow` > 0 swells the level across the cue (beat 15: it's getting closer)."""
+    rng = np.random.default_rng(9)
+    n = int(dur * SR)
+    x = np.zeros(n)
+    t = 0.35
+    step = 0
+    while t < dur - 0.3:
+        i = int(t * SR)
+        kn = int(0.28 * SR)
+        if i + kn >= n:
+            break
+        tt = np.arange(kn) / SR
+        f = rng.uniform(52, 62)
+        thump = np.sin(2 * np.pi * f * tt) * _env(kn, 0.012, 0.07)
+        thump += 0.3 * rng.standard_normal(kn) * _env(kn, 0.008, 0.03)  # soil grit
+        amp = rng.uniform(0.8, 1.0) * (1.0 + grow * (t / dur))
+        x[i:i + kn] += amp * thump
+        # thump-THUMP: the second foot lands close behind the first
+        step += 1
+        t += (0.34 if step % 2 else period)
+    return _write(path, 0.85 * x / (np.abs(x).max() or 1))
+
+
+def terminal_keys(path: Path, dur: float) -> Path:
+    """Text typing ITSELF: softer, steadier, more distant than human typing —
+    the machine's voice, not the engineer's hands."""
+    rng = np.random.default_rng(15)
+    n = int(dur * SR)
+    x = np.zeros(n)
+    t = 0.2
+    while t < dur - 0.1:
+        i = int(t * SR)
+        kn = int(0.02 * SR)
+        if i + kn >= n:
+            break
+        click = rng.standard_normal(kn) * _env(kn, 0.0004, 0.003)
+        f = rng.uniform(2400, 3200)
+        click += 0.35 * np.sin(2 * np.pi * f * np.arange(kn) / SR) * _env(kn, 0.0003, 0.002)
+        x[i:i + kn] += rng.uniform(0.5, 0.8) * click
+        t += rng.uniform(0.05, 0.075)          # metronomic: no human jitter
+    return _write(path, 0.35 * x / (np.abs(x).max() or 1))
+
+
 SYNTHS = {
     "room_hum": lambda p, dur=2.0, **kw: room_hum(p, dur),
     "keyboard": lambda p, dur=4.0, stop_at=None, **kw: keyboard(p, dur, stop_at),
     "mug_hit": lambda p, **kw: mug_hit(p),
     "fan_spindown": lambda p, dur=3.0, **kw: fan_spindown(p, dur),
+    "footsteps_soil": lambda p, dur=6.0, period=1.5, grow=0.0, **kw:
+        footsteps_soil(p, dur, period, grow),
+    "terminal_keys": lambda p, dur=3.0, **kw: terminal_keys(p, dur),
 }
 
 

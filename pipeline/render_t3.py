@@ -832,8 +832,11 @@ def main() -> int:
                 dur = ev.get("dur")
                 dur = rdurs[b - 1] if dur in (None, "full") else float(dur)
                 wav = workdir / f"sfx-{j:02d}-{name}.wav"
-                _sfx.SYNTHS[name](wav, dur=dur,
-                                  stop_at=(float(ev["stop_at"]) if ev.get("stop_at") else None))
+                # everything that isn't placement is a synth parameter
+                # (stop_at, period, grow, …) — passed straight through
+                params = {k: v for k, v in ev.items()
+                          if k not in ("beat", "sfx", "start", "dur", "gain_db")}
+                _sfx.SYNTHS[name](wav, dur=dur, **params)
                 at = offs[b - 1] + float(ev.get("start", 0))
                 gain = float(ev.get("gain_db", -18))
                 i = add_input("-i", str(wav))

@@ -71,3 +71,16 @@ When a moment is boring, read the script again before adding anything —
 episode 1's sound design was already written, in stage directions nobody
 had built. And: silence needs something to be the absence OF; the room hum
 exists so its death is audible.
+
+## Addendum — v7b: ALL the scripted sounds (founder: "did you add all the sounds?")
+
+v7 built only the death sequence. The script writes three more cues, now in:
+- **beat 09** `terminal_keys` — "$ whoami" types itself: softer and steadier
+  than the human typing of beat 1 (the machine's voice, not his hands).
+- **beat 10** `footsteps_soil` — "something with feet is walking, ~400m":
+  paired low thumps (52-62 Hz, no click transient — pressure through soil,
+  felt not heard), distant, under the SENSE bloom.
+- **beat 15** the same walker, closer: faster period, swelling level, -14 dB —
+  the episode now ENDS on the hook's sound, thump-THUMP into the smash to
+  black. sfx events pass arbitrary synth params (period, grow) through
+  sound.yaml. QA 12/12. Delivered as v7b.
