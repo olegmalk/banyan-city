@@ -641,6 +641,8 @@ def main() -> None:
     (OUT / "city.html").write_text(render_city())
     from build_status import build as _build_status
     _build_status(OUT)
+    from build_sim import build as _build_sim
+    _build_sim(OUT)
     (OUT / "machine.html").write_text(page(
         "The Machine — how this operates",
         md_to_html((REPO / "MACHINE.md").read_text()),
