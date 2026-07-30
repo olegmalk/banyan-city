@@ -53,3 +53,13 @@
   00-ref-field-rain-s3.png in 14s
   00-ref-field-rain-s4.png in 14s
   00-ref-field-rain-s5.png in 13s
+  00-bank-sapling-40cm-s0.png in 14s
+  00-bank-sapling-40cm-s1.png in 13s
+  00-bank-sapling-40cm-s2.png in 13s
+  00-bank-sapling-40cm-s3.png in 13s
+  00-bank-sapling-40cm-s4.png in 13s
+  00-bank-sapling-40cm-s5.png in 14s
+  00-bank-sapling-40cm-s6.png in 14s
+  00-bank-sapling-40cm-s7.png in 13s
+  00-bank-sapling-40cm-s8.png in 13s
+  00-bank-sapling-40cm-s9.png in 13s
