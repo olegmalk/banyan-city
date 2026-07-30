@@ -2,3 +2,5 @@
   01-the-keyboard-s1.png in 7s
   02-three-oh-seven-s0.png in 7s
   02-three-oh-seven-s1.png in 7s
+  03-deploy-succeeded-s0.png in 7s
+  03-deploy-succeeded-s1.png in 7s
