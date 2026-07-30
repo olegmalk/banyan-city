@@ -63,3 +63,13 @@
   00-bank-sapling-40cm-s7.png in 13s
   00-bank-sapling-40cm-s8.png in 13s
   00-bank-sapling-40cm-s9.png in 13s
+  00-bank-field-storm-s0.png in 14s
+  00-bank-field-storm-s1.png in 13s
+  00-bank-field-storm-s2.png in 14s
+  00-bank-field-storm-s3.png in 14s
+  00-bank-field-storm-s4.png in 14s
+  00-bank-field-storm-s5.png in 14s
+  00-bank-field-storm-s6.png in 14s
+  00-bank-field-storm-s7.png in 14s
+  00-bank-field-storm-s8.png in 14s
+  00-bank-field-storm-s9.png in 14s
