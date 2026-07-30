@@ -1,23 +1,34 @@
-# msi: apartment world bank (beats 1-4 setting, approved node 001)
+# auto-refill by queue_keeper — rotating world bank
 tasks:
-  - id: bank-apartment-dawn
+  - id: keep-m1pro-1785407031
+    worker: m1pro
+    node: 001-capability-inventory
+    beats: ""
+    slug: keep-macro-dew
+    prompt: "no humans, macro close-up of dew drops on young green leaves, morning light refracting, soft bokeh grass behind, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people, no hands. No photorealism, no 3D render look. 9:16 vertical, no text."
+    seeds: 2
+    seed_base: 20963826
+  - id: keep-field-gold-1785407031
     worker: msi
     node: 001-capability-inventory
     beats: ""
-    slug: bank-apartment-dawn
-    prompt: "no humans, a dark cluttered studio apartment at dawn, pale light through blinds striping the desk and monitor, empty office chair, coffee mug, quiet aftermath mood, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people, no body. No photorealism, no 3D render look. 9:16 vertical, no text."
-    seeds: 10
-  - id: bank-desk-detail
+    slug: keep-field-gold
+    prompt: "no humans, the wide grass field in late golden hour, long shadows, the tiny sprout glowing rim-lit in the foreground, warm cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people, no trees. No photorealism, no 3D render look. 9:16 vertical, no text."
+    seeds: 15
+    seed_base: 20963819
+  - id: keep-sky-moods-1785407031
     worker: msi
     node: 001-capability-inventory
     beats: ""
-    slug: bank-desk-detail
-    prompt: "no humans, extreme close-up of a cluttered desk, mechanical keyboard, sticky notes, tangled cables, cold monitor glow, dark room, lived-in detail, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people, no hands. No photorealism, no 3D render look. 9:16 vertical, no text."
-    seeds: 10
-  - id: bank-window-city
+    slug: keep-sky-moods
+    prompt: "no humans, dramatic sky over the grass field, towering clouds catching colored light, the sprout small against the vastness, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people, no city. No photorealism, no 3D render look. 9:16 vertical, no text."
+    seeds: 15
+    seed_base: 20963819
+  - id: keep-macro-dew-1785407031
     worker: msi
     node: 001-capability-inventory
     beats: ""
-    slug: bank-window-city
-    prompt: "no humans, city lights at 3am seen through apartment blinds, bokeh, dark interior silhouetted in the foreground, lonely night mood, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people. No photorealism, no 3D render look. 9:16 vertical, no text."
-    seeds: 10
+    slug: keep-macro-dew
+    prompt: "no humans, macro close-up of dew drops on young green leaves, morning light refracting, soft bokeh grass behind, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people, no hands. No photorealism, no 3D render look. 9:16 vertical, no text."
+    seeds: 15
+    seed_base: 20963819
