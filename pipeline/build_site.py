@@ -643,6 +643,10 @@ def main() -> None:
     _build_status(OUT)
     from build_sim import build as _build_sim
     _build_sim(OUT)
+    import shutil as _sh
+    if (REPO / 'lab').is_dir():
+        _sh.copytree(REPO / 'lab', OUT / 'lab', dirs_exist_ok=True)
+        print('✓ lab/ published')
     (OUT / "machine.html").write_text(page(
         "The Machine — how this operates",
         md_to_html((REPO / "MACHINE.md").read_text()),

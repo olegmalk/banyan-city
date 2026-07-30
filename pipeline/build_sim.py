@@ -116,10 +116,12 @@ def build(out_dir: Path):
     leaves = "".join(
         f'<div class="leaf {"grown" if i < canon else "bud"}" style="--i:{i}">🍃</div>'
         for i in range(15))
-    quests = "".join(
-        f'<div class="quest">📜 <b>{html.escape(q.get("title",""))}</b><br>'
-        f'<small>{html.escape(q.get("detail",""))[:90]}</small></div>'
-        for q in inbox) or '<div class="quest">✨ no quests — the city runs itself</div>'
+    def _q(q):
+        link = q.get("public")
+        a = f' <a style="color:#ffd76a" href="{html.escape(link)}">look &rarr;</a>' if link else ""
+        return (f'<div class="quest">\U0001F4DC <b>{html.escape(q.get("title",""))}</b>{a}<br>'
+                f'<small>{html.escape(q.get("detail",""))}</small></div>')
+    quests = "".join(_q(q) for q in inbox) or '<div class="quest">no quests - the city runs itself</div>'
     town = "".join(
         f'<div class="bld {st}"><div class="smoke">{"💨" if st == "working" else ""}</div>'
         f'<div class="ico">{em}</div><div class="nm">{html.escape(n)}</div>'
@@ -191,7 +193,7 @@ def build(out_dir: Path):
 </div>
 <div class="row"><div class="panel" style="max-width:820px">{{plain_tables}}</div></div>
 <footer>snapshot {time.strftime('%Y-%m-%d %H:%M')} · rebuilt on every push · the whole repo IS the show —
-<a style="color:#ffd76a" href="index.html">the city</a> · <a style="color:#ffd76a" href="machine.html">how it works</a></footer>
+<a style="color:#ffd76a" href="index.html">the city</a> · <a style="color:#ffd76a" href="lab/index.html">the lab</a> · <a style="color:#ffd76a" href="machine.html">how it works</a></footer>
 </body></html>"""
     out = out.replace("{plain_tables}", plain_tables_html())
     (out_dir / "status.html").write_text(out)
