@@ -127,11 +127,54 @@ def open_ballots():
     return [w[0] for w in waiting]
 
 
+
+
+def fleet():
+    """Every farm worker's last heartbeat, from its results branch."""
+    sh(f"cd {REPO} && git fetch -q origin 'refs/heads/farm-results-*:refs/remotes/origin/farm-results-*' 2>/dev/null")
+    out = sh(f"cd {REPO} && git branch -r | grep farm-results || true")
+    rows = []
+    for b in out.splitlines():
+        b = b.strip()
+        name = b.split("farm-results-")[-1]
+        hb = sh(f"cd {REPO} && git show {b}:farm-out/heartbeat.txt 2>/dev/null | tail -1")
+        rows.append((name, hb or "no heartbeat"))
+    return rows
+
+
+def queue_now():
+    try:
+        import yaml as _y
+        q = (_y.safe_load((REPO / "pipeline/farm-queue.yaml").read_text()) or {}).get("tasks") or []
+        return [f"{t.get('id')} → {t.get('worker')}" for t in q]
+    except Exception:
+        return []
+
+
+def founder_inbox():
+    try:
+        import yaml as _y
+        d = _y.safe_load((REPO / "pipeline/pending-founder.yaml").read_text()) or {}
+        return d.get("pending") or []
+    except Exception:
+        return []
+
+
+def latest_comments(n=4):
+    out = sh("cd %s && gh issue view 1 --json comments -q "
+             "'.comments[-%d:][] | .author.login + \"|\" + (.createdAt|.[0:16]) + \"|\" + (.body|.[0:110])'" % (REPO, n))
+    return [l.split("|", 2) for l in out.splitlines() if l.count("|") >= 2]
+
+
 def main():
     jobs = running_jobs()
     canon, total = canon_count()
     rp_bal, rp_pods = runpod()
     author, when, body = last_thread_comment()
+    workers = fleet()
+    queue = queue_now()
+    inbox = founder_inbox()
+    comments = latest_comments()
     ballots = sorted(set(open_ballots()))
 
     jobs_html = "".join(f"<tr><td>{html.escape(e)}</td><td>{html.escape(w)}</td></tr>"
@@ -159,6 +202,19 @@ a{{color:#e8a15c}} .big{{font-size:1.5rem}} li{{margin:.2rem 0}}</style>
 <table><tr><td width=90><b>elapsed</b></td><td><b>job</b></td></tr>{jobs_html}</table>
 <h2>Your moves, in parallel</h2>
 <ul>{''.join(f'<li>{m}</li>' for m in moves)}</ul>
+
+<h2>🕊 Founder inbox — decisions only you can make</h2>
+<ul>{''.join(f"<li><b>{html.escape(i.get('title',''))}</b> — {html.escape(i.get('detail',''))} <small>(since {i.get('since')})</small></li>" for i in inbox) or '<li>— empty: the machine is not waiting on you —</li>'}</ul>
+<h2>Farm fleet</h2>
+<table>{''.join(f"<tr><td width=90><b>{html.escape(n)}</b></td><td>{html.escape(h)}</td></tr>" for n, h in workers) or '<tr><td>no workers seen</td></tr>'}</table>
+<p class="meta">queue: {html.escape(' · '.join(queue) if queue else 'empty')}</p>
+<h2>Latest on the reactions thread</h2>
+<table>{''.join(f"<tr><td width=110><b>{html.escape(a)}</b><br><small>{html.escape(w)}</small></td><td>{html.escape(b)}…</td></tr>" for a, w, b in comments)}</table>
+<h2>Fresh artifacts (banyan-drops)</h2>
+<ul>
+<li><a href="model-bakeoff.html">model bake-off gallery</a> · <a href="m2-decision-card.html">M2 decision card</a> · <a href="extensive-15s-test.html">3-tier episode test</a> · <a href="fleet-benchmark.html">fleet benchmark</a></li>
+<li>episode: <a href="ep1-remake-screening-v6.mp4">v6 screening cut</a> · <a href="banyan-ep1-remake.mp4">presentation copy</a></li>
+</ul>
 <h2>Resources</h2>
 <ul>
 <li>Kaggle GPU: <b>0 / 30 h</b> weekly — resets ~weekend</li>
