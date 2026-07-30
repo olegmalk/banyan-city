@@ -40,3 +40,23 @@
   prod-open-msi-1785434851-14-worth-staying-in-s3.png in 14s
   prod-open-msi-1785434851-14-worth-staying-in-s4.png in 14s
   prod-open-msi-1785434851-14-worth-staying-in-s5.png in 14s
+  prod-hires-msi-1785434851-11-grow-s0.png in 32s
+  prod-hires-msi-1785434851-11-grow-s1.png in 30s
+  prod-hires-msi-1785434851-11-grow-s2.png in 30s
+  prod-hires-msi-1785434851-11-grow-s3.png in 30s
+  prod-hires-msi-1785434851-12-undefined-s0.png in 30s
+  prod-hires-msi-1785434851-12-undefined-s1.png in 30s
+  prod-hires-msi-1785434851-12-undefined-s2.png in 30s
+  prod-hires-msi-1785434851-12-undefined-s3.png in 30s
+  prod-hires-msi-1785434851-13-i-always-left-s0.png in 30s
+  prod-hires-msi-1785434851-13-i-always-left-s1.png in 30s
+  prod-hires-msi-1785434851-13-i-always-left-s2.png in 30s
+  prod-hires-msi-1785434851-13-i-always-left-s3.png in 30s
+  prod-hires-msi-1785434851-14-worth-staying-in-s0.png in 30s
+  prod-hires-msi-1785434851-14-worth-staying-in-s1.png in 30s
+  prod-hires-msi-1785434851-14-worth-staying-in-s2.png in 30s
+  prod-hires-msi-1785434851-14-worth-staying-in-s3.png in 30s
+  prod-hires-msi-1785434851-15-something-s-coming-s0.png in 30s
+  prod-hires-msi-1785434851-15-something-s-coming-s1.png in 30s
+  prod-hires-msi-1785434851-15-something-s-coming-s2.png in 30s
+  prod-hires-msi-1785434851-15-something-s-coming-s3.png in 30s
