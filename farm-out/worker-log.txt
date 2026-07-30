@@ -43,3 +43,18 @@
   00-keep-macro-dew-s12.png in 13s
   00-keep-macro-dew-s13.png in 13s
   00-keep-macro-dew-s14.png in 13s
+  00-keep-field-gold-s0.png in 219s
+  00-keep-field-gold-s1.png in 218s
+  00-keep-field-gold-s2.png in 218s
+  00-keep-field-gold-s3.png in 218s
+  00-keep-field-gold-s4.png in 218s
+  00-keep-field-gold-s5.png in 218s
+  00-keep-field-gold-s6.png in 218s
+  00-keep-field-gold-s7.png in 218s
+  00-keep-field-gold-s8.png in 218s
+  00-keep-field-gold-s9.png in 218s
+  00-keep-field-gold-s10.png in 218s
+  00-keep-field-gold-s11.png in 218s
+  00-keep-field-gold-s12.png in 218s
+  00-keep-field-gold-s13.png in 218s
+  00-keep-field-gold-s14.png in 218s
