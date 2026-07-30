@@ -1,26 +1,38 @@
 #!/usr/bin/env python3
-"""Static-site generator — Phase 1: the tree becomes visible.
+"""Static-site generator — the show first, the receipts one fold down.
 
 Reads every genome under genomes/ and renders _site/:
-    index.html                the city gate: lineage tree, explorable
-    city.html                 Promise + Guidelines + Vocabulary
-    <genome>/<slug>.html      one page per node: script, leaves, sap
+    index.html                the gate: logline, season rail, the whole tree
+    watch.html                the vertical binge feed (season 1, in order)
+    create.html               write your own episode (on-page, no git)
+    city.html                 Promise + Guidelines + Glossary
+    machine.html              how the loop runs
+    trials/index.html         the open video-model bake-off
+    <genome>/<slug>.html      one page per episode: film, then script, then receipts
 
 Design constraints:
-  - no build framework, no client JS required, no external assets
+  - no build framework, no client JS *required* (the binge feed adds a tiny
+    progressive-enhancement script and works fine without it)
+  - one shared visual language: pipeline/site_theme.py (never fork the palette)
   - works for any genome that passes lint_genome.py (a fork changes
     content, not this script)
-  - a non-git citizen can read the story and react (Phase 1 acceptance)
+  - a non-git citizen can watch the show, read it, and react (Phase 1)
+  - a stranger from TikTok meets story words first; leaf/sap/trunk/T0–T3 are
+    translated in place and only kept inside the technical drawers
 """
 
 import html
 import os
 import re
 import shutil
+import struct
+import subprocess
 from pathlib import Path
 
 import markdown
 import yaml
+
+from site_theme import THEME_CSS
 
 REPO = Path(__file__).resolve().parent.parent
 OUT = REPO / "_site"
@@ -30,78 +42,182 @@ REPO_URL = f"https://github.com/{GH_REPO}"
 REPO_NAME = GH_REPO.split("/")[-1]
 CANONICAL = "https://banyan.city"  # canonical host; Pages stays as free mirror
 MD = markdown.Markdown(extensions=["tables", "fenced_code"])
+FFMPEG = shutil.which("ffmpeg")  # optional: posters degrade to no poster
 
-CSS = """
-:root {
-  --bg: #0e1410; --panel: #151d17; --ink: #e6efe8; --muted: #93a698;
-  --leaf: #6fce8a; --leaf-dim: #2e5c3d; --amber: #e8b464; --line: #263529;
-  --code-bg: #0a0f0b;
+# The stranger's vocabulary: every internal tier gets a plain word.
+TIER_WORDS = {"T0": "script", "T1": "storyboard", "T2": "animatic", "T3": "film"}
+# Why an alternate cut exists, when its own metadata doesn't say.
+WHY_BY_TIER = {
+    "T3": "an earlier filmed cut of the same script — kept so you can see what changed",
+    "T2": "the voiced animatic: the script on screen, made before any footage existed",
+    "T1": "the storyboard pass — one frame per beat",
 }
-@media (prefers-color-scheme: light) {
-  :root {
-    --bg: #f6f8f4; --panel: #ffffff; --ink: #1d2a20; --muted: #5b6f60;
-    --leaf: #1e7a3f; --leaf-dim: #bcd9c5; --amber: #a06510; --line: #d8e2da;
-    --code-bg: #eef2ec;
-  }
+LEGEND = ('<p class="legend"><b>version</b> = one render of an episode · '
+          '<b>sap</b> = your reactions · <b>canon</b> = the cut that leads the story · '
+          '<b>branch</b> = someone else’s continuation, still alive</p>')
+
+# Shared language lives in site_theme.py; only page-specific rules go here.
+CSS = THEME_CSS + """
+/* ---- the gate ---- */
+.hero { text-align: center; margin: 1.2rem 0 2.4rem; }
+.hero .seal { font-size: 2.2rem; line-height: 1; }
+.hero h1 { margin: .2rem 0 .5rem; }
+.logline { font-family: var(--display); font-size: clamp(1.18rem, 4.4vw, 1.5rem);
+  line-height: 1.4; color: var(--ink); max-width: 22em; margin: .6rem auto 0;
+  text-wrap: pretty; }
+.hero .sub { color: var(--muted); font-size: 1rem; max-width: 26em; margin: .7rem auto 0; }
+.hero .cta { margin: 1.1rem 0 .2rem; }
+.smallprint { font: 500 .8rem/1.6 var(--mono); color: var(--faint); max-width: 40em; }
+.smallprint a { color: var(--muted); }
+
+/* ---- season rail: bigger thumbs, episode numbers, real frames ---- */
+.season { display: flex; gap: .9rem; overflow-x: auto; padding: .4rem .2rem 1rem;
+  scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; }
+.season figure { margin: 0; flex: 0 0 168px; scroll-snap-align: start; }
+.season video { width: 168px; aspect-ratio: 9 / 16; object-fit: cover; display: block;
+  background: var(--code-bg); border: 1px solid var(--line); border-radius: 14px; }
+.season figcaption { font: 600 .74rem/1.45 var(--mono); color: var(--muted); margin-top: .45rem; }
+.season .n { color: var(--sap); }
+
+/* ---- how it works: three plain cards ---- */
+.how { display: grid; gap: .8rem; grid-template-columns: 1fr; margin: 1rem 0; }
+@media (min-width: 620px) { .how { grid-template-columns: repeat(3, 1fr); } }
+.how .card .k { font: 700 .7rem/1 var(--mono); letter-spacing: .16em; text-transform: uppercase;
+  color: var(--sap); }
+.how .card p { margin: .45rem 0 0; font-size: .95rem; color: var(--muted); }
+
+/* ---- the fork at the tip, as an event ---- */
+.fork { background: linear-gradient(180deg, rgba(255,199,106,.10), var(--panel));
+  border: 1px solid var(--sap-deep); border-radius: 16px; padding: 1rem 1.15rem; }
+.fork .k { font: 700 .7rem/1 var(--mono); letter-spacing: .16em; text-transform: uppercase;
+  color: var(--sap); }
+.fork p { margin: .5rem 0 0; font-size: .96rem; }
+
+/* ---- the tree: a rail on wide screens, a flat list on a phone ---- */
+.tree { list-style: none; padding-left: 0; margin: 1.2rem 0; }
+.tree ul { list-style: none; padding-left: .85rem; border-left: 2px solid var(--leaf-dim);
+  margin-left: .55rem; }
+.tree li { margin: .7rem 0; }
+.tree .card { padding: .85rem 1rem; }
+.tree .lineage { font: 600 .72rem/1.5 var(--mono); color: var(--faint);
+  letter-spacing: .04em; text-transform: uppercase; margin-bottom: .3rem; }
+@media (max-width: 600px) {
+  /* depth as indentation is unreadable at 390px — flatten, keep the parent label */
+  .tree ul { padding-left: 0; margin-left: 0; border-left: 0; }
+  .tree .card .meta { line-height: 1.9; }
 }
-* { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--ink);
-  font: 17px/1.65 Georgia, 'Times New Roman', serif; }
-main { max-width: 720px; margin: 0 auto; padding: 2rem 1.25rem 5rem; }
-a { color: var(--leaf); text-decoration: none; }
-a:hover { text-decoration: underline; }
-h1, h2, h3 { line-height: 1.25; font-weight: 600; }
-h1 { font-size: 1.9rem; margin: 0.5rem 0; }
-hr { border: 0; border-top: 1px solid var(--line); margin: 2rem 0; }
-blockquote { margin: 1rem 0; padding: 0.1rem 1.1rem; border-left: 3px solid var(--leaf-dim);
-  color: var(--muted); background: var(--panel); border-radius: 0 8px 8px 0; }
-code, pre { font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 0.85em; }
-pre { background: var(--code-bg); border: 1px solid var(--line); border-radius: 8px;
-  padding: 0.9rem 1.1rem; overflow-x: auto; color: var(--leaf); }
-table { border-collapse: collapse; width: 100%; font-size: 0.92em; display: block; overflow-x: auto; }
-th, td { border: 1px solid var(--line); padding: 0.45rem 0.7rem; text-align: left; }
-th { background: var(--panel); }
-.crumbs { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.5rem;
-  font-family: ui-monospace, Menlo, monospace; }
-.chip { display: inline-block; font: 600 0.72rem/1 ui-monospace, Menlo, monospace;
-  padding: 0.3rem 0.55rem; border-radius: 999px; border: 1px solid var(--line);
-  color: var(--muted); vertical-align: middle; margin-right: 0.35rem; }
-.chip.hot { color: var(--amber); border-color: var(--amber); }
-.chip.trunk { color: var(--leaf); border-color: var(--leaf); }
-.tree { list-style: none; padding-left: 0; margin: 1.5rem 0; }
-.tree ul { list-style: none; padding-left: 1.4rem; border-left: 2px solid var(--leaf-dim); margin-left: 0.9rem; }
-.tree li { margin: 0.8rem 0; }
-.card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
-  padding: 0.9rem 1.1rem; }
-.card .title { font-size: 1.1rem; font-weight: 600; }
-.card .teaser { color: var(--muted); font-size: 0.92rem; margin: 0.35rem 0 0.5rem; }
-.card .meta { font-size: 0.85rem; }
-.hero { text-align: center; margin: 2.5rem 0 3rem; }
-.hero .seal { font-size: 2.6rem; }
-.hero p { color: var(--muted); max-width: 34em; margin: 0.8rem auto; }
-.btn { display: inline-block; background: var(--leaf); color: var(--bg); font-weight: 700;
-  padding: 0.6rem 1.2rem; border-radius: 10px; margin: 0.3rem; }
-.btn:hover { text-decoration: none; opacity: 0.9; }
-.btn.ghost { background: transparent; color: var(--leaf); border: 1px solid var(--leaf); }
-footer { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--line);
-  color: var(--muted); font-size: 0.85rem; text-align: center; }
-.notice { background: var(--panel); border: 1px dashed var(--leaf-dim); border-radius: 12px;
-  padding: 0.9rem 1.1rem; font-size: 0.92rem; color: var(--muted); }
-.hero video { width: 100%; max-width: 300px; border-radius: 16px;
-  border: 1px solid var(--line); margin: 1rem auto 0.4rem; display: block; }
-.season { display: flex; gap: 0.8rem; overflow-x: auto; padding: 0.6rem 0 1rem; }
-.season figure { margin: 0; flex: 0 0 172px; }
-.season video { width: 172px; border-radius: 12px; border: 1px solid var(--line); display: block; }
-.season figcaption { font: 600 0.75rem/1.35 ui-monospace, Menlo, monospace;
-  color: var(--muted); margin-top: 0.4rem; }
-.season figcaption a { color: var(--leaf); }
-.binge { max-width: 420px; margin: 0 auto; }
-.binge figure { margin: 0 0 2.4rem; }
-.binge video { width: 100%; aspect-ratio: 9 / 16; object-fit: contain; display: block;
-  background: var(--code-bg); border: 1px solid var(--line); border-radius: 16px; }
-.binge figcaption { font: 600 0.8rem/1.4 ui-monospace, Menlo, monospace;
-  color: var(--muted); margin-top: 0.5rem; }
-.binge figcaption a { color: var(--leaf); }
+
+/* ---- the machine strip: a card with an icon, not another dashed box ---- */
+.strip { display: flex; gap: .9rem; align-items: flex-start; padding: 1rem 1.15rem; }
+.strip .ic { font-size: 1.5rem; line-height: 1.2; }
+.strip p { margin: .35rem 0 0; font-size: .95rem; color: var(--muted); }
+
+/* ---- episode page ---- */
+.epnav { display: flex; flex-wrap: wrap; gap: .6rem; margin: 1.4rem 0; }
+.epnav a { flex: 1 1 240px; padding: .7rem .9rem; border: 1px solid var(--line);
+  border-radius: 12px; background: var(--panel); }
+.epnav .k { display: block; font: 700 .68rem/1.6 var(--mono); letter-spacing: .14em;
+  text-transform: uppercase; color: var(--faint); }
+.actions { margin: 1rem 0 .2rem; }
+.screenplay p > strong:first-child { display: block; font: 700 .78rem/1.7 var(--mono);
+  letter-spacing: .1em; color: var(--sap); }
+.drawer-body h2 { font-size: 1.05rem; margin: 1.5rem 0 .4rem; }
+.drawer-body h3 { font-size: .98rem; }
+.drawer-body > :first-child { margin-top: .2rem; }
+.cuts { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+@media (min-width: 620px) { .cuts { grid-template-columns: 1fr 1fr; } }
+.cuts .phone { margin: 0 auto; max-width: 240px; }
+.cuts figcaption { text-align: left; }
+.cuts .why { color: var(--muted); font-family: var(--body); font-size: .88rem;
+  letter-spacing: 0; text-transform: none; display: block; margin-top: .3rem; }
+
+/* ---- the walk: watching IS walking the tree ---- */
+body.walk main { max-width: 560px; }
+.trail { font: 700 .72rem/2 var(--mono); letter-spacing: .12em; text-transform: uppercase;
+  color: var(--faint); margin: .2rem 0 0; }
+.trail a { color: var(--muted); }
+.trail .here { color: var(--sap); }
+.walk-meta { font: 600 .78rem/1.7 var(--mono); color: var(--faint); text-align: center;
+  margin: .2rem 0 0; }
+.phone.big { max-width: 360px; }
+.cliff { text-align: center; margin: 2.2rem 0 1rem; }
+.cliff .k { font: 700 .68rem/1 var(--mono); letter-spacing: .22em; text-transform: uppercase;
+  color: var(--faint); }
+.cliff .q { font-family: var(--display); font-style: italic;
+  font-size: clamp(1.3rem, 5vw, 1.7rem); line-height: 1.35; margin: .7rem auto 0;
+  max-width: 20em; text-wrap: balance; }
+.fork-line { text-align: center; font: 700 .74rem/1.6 var(--mono); letter-spacing: .14em;
+  text-transform: uppercase; color: var(--sap); margin: 1.4rem 0 .2rem; }
+.doors { display: grid; gap: .9rem; grid-template-columns: 1fr; margin: 1rem 0 1.6rem; }
+a.door { display: flex; gap: .9rem; align-items: center; padding: .8rem .95rem;
+  background: linear-gradient(180deg, var(--panel-2), var(--panel));
+  border: 1px solid var(--line); border-radius: 16px; color: var(--ink);
+  transition: transform .15s ease, border-color .15s ease; }
+a.door:hover { text-decoration: none; transform: translateY(-2px); border-color: var(--sap); }
+a.door img, a.door .ph { width: 62px; aspect-ratio: 9 / 16; object-fit: cover; flex: 0 0 62px;
+  border-radius: 10px; border: 1px solid var(--line); background: var(--code-bg); }
+a.door .ph { display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+a.door .t { display: block; font-family: var(--display); font-size: 1.08rem; line-height: 1.25; }
+a.door .d { display: block; color: var(--muted); font-size: .85rem; margin-top: .2rem; }
+a.door .go { display: block; font: 700 .68rem/1 var(--mono); letter-spacing: .14em;
+  text-transform: uppercase; color: var(--sap); margin-top: .45rem; }
+a.door.canon { border-color: var(--sap-deep);
+  background: linear-gradient(180deg, rgba(255,199,106,.09), var(--panel)); }
+.doors.now a.door { border-color: var(--sap); }
+.tip { text-align: center; padding: 1.6rem 1.15rem; margin: 1.2rem 0; }
+.tip .seed { font-size: 2rem; line-height: 1; }
+.walk-foot { text-align: center; font: 600 .78rem/2 var(--mono); color: var(--faint);
+  margin-top: 1.6rem; }
+.walk-foot a { color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { a.door { transition: none; } }
+
+/* ---- the binge feed: one vertical snap column ---- */
+html:has(body.feed) { scroll-snap-type: y proximity; }
+body.feed main { max-width: 460px; }
+.ep { min-height: 100dvh; display: flex; flex-direction: column; justify-content: center;
+  scroll-snap-align: center; scroll-snap-stop: always; padding: .5rem 0 1rem; }
+.ep .phone { max-width: 340px; margin: .6rem auto; }
+.ep .bar { font: 700 .72rem/1 var(--mono); letter-spacing: .18em; text-transform: uppercase;
+  color: var(--sap); text-align: center; }
+.ep figcaption a { color: var(--leaf); }
+
+/* ---- trials: nine columns become cards on a phone ---- */
+.clips { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1rem 0; }
+.clips .phone { margin: 0; flex: 1 1 200px; max-width: 232px; }
+.scores { font-size: .86em; }
+.scores td[data-label="notes"] { color: var(--muted); }
+@media (max-width: 640px) {
+  .scores { display: block; }
+  .scores thead { display: none; }
+  .scores tbody { display: block; }
+  .scores tr { display: block; background: var(--panel); border: 1px solid var(--line);
+    border-radius: 14px; padding: .5rem .8rem; margin: .8rem 0; }
+  .scores td { display: flex; justify-content: space-between; gap: 1rem;
+    border-bottom: 1px solid var(--line-soft); padding: .35rem 0; }
+  .scores td:last-child { border-bottom: 0; display: block; }
+  .scores td::before { content: attr(data-label); font: 700 .68rem/1.7 var(--mono);
+    letter-spacing: .1em; text-transform: uppercase; color: var(--faint); }
+}
+
+/* ---- create: numbered steps + the on-page submission form ---- */
+.steps { list-style: none; counter-reset: step; padding: 0; margin: 1.2rem 0; }
+.steps li { counter-increment: step; position: relative; padding: .95rem 1.1rem .95rem 3.1rem;
+  background: linear-gradient(180deg, var(--panel-2), var(--panel));
+  border: 1px solid var(--line); border-radius: 16px; margin: .7rem 0; }
+.steps li::before { content: counter(step); position: absolute; left: 1rem; top: .95rem;
+  font: 700 .95rem/1.55 var(--mono); color: var(--sap-ink); background: var(--sap);
+  width: 1.6rem; height: 1.6rem; text-align: center; border-radius: 999px; }
+.steps b { font-family: var(--display); font-size: 1.05rem; }
+form.compose { background: linear-gradient(180deg, var(--panel-2), var(--panel));
+  border: 1px solid var(--line); border-radius: 18px; padding: 1.1rem 1.15rem; margin: 1.2rem 0; }
+form.compose label { display: block; margin: .9rem 0 0; font: 700 .74rem/1.9 var(--mono);
+  letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+form.compose input, form.compose textarea { width: 100%; margin-top: .3rem;
+  background: var(--code-bg); color: var(--ink); border: 1px solid var(--line);
+  border-radius: 10px; padding: .6rem .7rem; font: 16px/1.55 var(--body); }
+form.compose textarea { font: 15px/1.6 var(--mono); resize: vertical; }
+form.compose button { margin-top: 1rem; border: 0; cursor: pointer; }
+form.compose .hint { font: 500 .78rem/1.6 var(--mono); color: var(--faint); margin: .5rem 0 0; }
 """
 
 
@@ -109,7 +225,8 @@ DEFAULT_DESC = ("Story trees that branch instead of running linear — AI-render
                 "micro-drama, curated by one human's taste, every decision auditable in git.")
 
 
-def page(title: str, body: str, depth: int = 0, path: str = "", desc: str = "") -> str:
+def page(title: str, body: str, depth: int = 0, path: str = "", desc: str = "",
+         body_class: str = "", tail: str = "") -> str:
     root = "../" * depth
     desc = (desc or DEFAULT_DESC).strip()
     if len(desc) > 200:
@@ -117,6 +234,16 @@ def page(title: str, body: str, depth: int = 0, path: str = "", desc: str = "") 
     url = f"{CANONICAL}/{path}"
     og_image = f"{CANONICAL}/og.png"
     esc_t, esc_d = html.escape(title), html.escape(desc)
+    cls = f' class="{body_class}"' if body_class else ""
+    # Viewer-facing chrome: the two pages a stranger wants (watch, write) are in
+    # the nav on every page; the build dashboard moved to the footer.
+    nav = (f'<nav class="crumbs"><a href="{root}index.html">🌳 {REPO_NAME}</a> · '
+           f'<a href="{root}watch.html">watch</a> · '
+           f'<a href="{root}index.html#episodes">episodes</a> · '
+           f'<a href="{root}create.html">write an episode</a> · '
+           f'<a href="{root}machine.html">how it works</a> · '
+           f'<a href="{root}city.html">the rules</a> · '
+           f'<a href="{REPO_URL}">source</a></nav>')
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -134,24 +261,55 @@ def page(title: str, body: str, depth: int = 0, path: str = "", desc: str = "") 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{esc_t}">
 <meta name="twitter:description" content="{esc_d}">
-<meta name="twitter:image" content="{og_image}">
 <title>{esc_t}</title>
 <style>{CSS}</style>
 </head>
-<body>
+<body{cls}>
 <main>
-<nav class="crumbs"><a href="{root}index.html">🌳 {REPO_NAME}</a> · <a href="{root}city.html">the city</a> · <a href="{root}machine.html">⚙️ the machine</a> · <a href="{root}status.html">📊 status</a> · <a href="{REPO_URL}">source</a></nav>
+{nav}
 {body}
 <footer>Everything here is auditable in <a href="{REPO_URL}">git</a>.
-Branch anything. Fork everything. · <a href="{root}city.html">The Promise</a></footer>
+Branch anything. Fork everything.<br>
+<a href="{root}city.html#promise">The Promise</a> ·
+<a href="{root}city.html#glossary">Glossary</a> ·
+<a href="{root}status.html">🏛 the studio — watch it being made</a> ·
+<a href="{root}feed.xml">RSS</a></footer>
 </main>
-</body>
+{tail}</body>
 </html>"""
 
 
-def md_to_html(text: str) -> str:
+def md_to_html(text: str, base: str = "") -> str:
+    """Markdown → html, with bare repo-file links pointed at GitHub.
+
+    machine.html and the trials README link plain `WATERING.md`-style paths.
+    Those files are never copied into _site, so the honest fix is to send the
+    reader to the file itself in the repo (`base` = the file's repo-relative
+    directory) instead of publishing a 404 on an auditability page.
+    """
     MD.reset()
-    return MD.convert(text)
+    out = MD.convert(text)
+
+    def _fix(m: re.Match) -> str:
+        href = m.group(1)
+        if href.startswith(("http", "#", "mailto:", "/")) or href.endswith((".html", ".xml")):
+            return m.group(0)
+        path = f"{base.rstrip('/')}/{href}" if base else href
+        while "/../" in path:  # normalise ../ against base
+            path = re.sub(r"[^/]+/\.\./", "", path, count=1)
+        return f'href="{REPO_URL}/blob/main/{path}"'
+
+    return re.sub(r'href="([^"]+)"', _fix, out)
+
+
+def demote(html_text: str) -> str:
+    """Push an embedded document's headings down one level.
+
+    A repo file rendered inside a page brings its own `<h1>`; three of those on
+    city.html (and two more inside the trials drawers) read as three documents
+    stapled together, and a screen reader hears three page titles.
+    """
+    return re.sub(r"<(/?)h([1-5])\b", lambda m: f"<{m.group(1)}h{int(m.group(2)) + 1}", html_text)
 
 
 def strip_md(text: str) -> str:
@@ -165,6 +323,154 @@ def extract_section(md_text: str, heading_prefix: str) -> str:
     return strip_md(m.group(1)) if m else ""
 
 
+def split_sections(md_text: str) -> list:
+    """node.md → [(heading, markdown)]; the first item's heading is ''."""
+    parts, head, buf = [], "", []
+    for line in md_text.splitlines():
+        if line.startswith("## "):
+            parts.append((head, "\n".join(buf).strip()))
+            head, buf = line[3:].strip(), []
+        else:
+            buf.append(line)
+    parts.append((head, "\n".join(buf).strip()))
+    return parts
+
+
+# ---------------------------------------------------------------- media facts
+
+def mp4_seconds(p: Path):
+    """Duration from the mp4 header itself — no ffprobe on the deploy box.
+
+    A viewer deserves to know whether an episode is 20 seconds or 5 minutes
+    before committing, and the deploy container has no media tools at all.
+    """
+    try:
+        with p.open("rb") as f:
+            blob = f.read(2 << 20)
+            i = blob.find(b"mvhd")
+            if i < 0:                       # moov at the tail (non-faststart)
+                f.seek(max(0, p.stat().st_size - (2 << 20)))
+                blob = f.read()
+                i = blob.find(b"mvhd")
+                if i < 0:
+                    return None
+        o = i + 4
+        if blob[o] == 1:
+            scale = struct.unpack(">I", blob[o + 20:o + 24])[0]
+            units = struct.unpack(">Q", blob[o + 24:o + 32])[0]
+        else:
+            scale = struct.unpack(">I", blob[o + 12:o + 16])[0]
+            units = struct.unpack(">I", blob[o + 16:o + 20])[0]
+        secs = units / scale if scale else 0
+        return secs if 0.5 < secs < 7200 else None
+    except Exception:
+        return None
+
+
+def dur_label(secs) -> str:
+    if not secs:
+        return ""
+    m, s = divmod(int(round(secs)), 60)
+    return f"{m}:{s:02d}" if m else f"{s}s"
+
+
+_POSTERS: dict = {}
+_STILLS: dict = {}
+
+
+def first_still(node_dir: Path):
+    """A founder-approved still to stand in for a video frame.
+
+    The canonical host builds without ffmpeg, so the ffmpeg path alone would
+    publish an animated series as a grid of black rectangles exactly where it
+    matters. The middle still of an episode reads better as a poster than its
+    opening frame (episode 1 opens on black).
+    """
+    key = str(node_dir)
+    if key not in _STILLS:
+        pngs = sorted((node_dir / "stills").glob("*.png")) if (node_dir / "stills").is_dir() else []
+        _STILLS[key] = pngs[len(pngs) // 2] if pngs else None
+    return _STILLS[key]
+
+
+def poster(src: Path, rel: str, fallback: Path | None = None):
+    """One frame per clip so a phone shows a picture, not a black rectangle.
+
+    ffmpeg is optional (Vercel's build image has none): a missing binary or a
+    failed extract falls back to the episode's approved still, and only when
+    there is neither does the player render without a poster.
+    """
+    if rel in _POSTERS:
+        return _POSTERS[rel]
+    got = None
+    if OUT.exists():
+        dst = OUT / rel
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        if FFMPEG and src.exists():
+            try:
+                subprocess.run([FFMPEG, "-loglevel", "error", "-y", "-ss", "1", "-i", str(src),
+                                "-frames:v", "1", "-vf", "scale=360:-2", "-q:v", "6", str(dst)],
+                               check=True, timeout=90)
+                if dst.exists() and dst.stat().st_size:
+                    got = rel
+            except Exception:
+                got = None
+        if got is None and fallback is not None and fallback.exists():
+            alt = rel.rsplit(".", 1)[0] + fallback.suffix
+            shutil.copy(fallback, OUT / alt)
+            got = alt
+    _POSTERS[rel] = got
+    return got
+
+
+def poster_attr(rel, prefix: str = "") -> str:
+    return f' poster="{prefix}{rel}"' if rel else ""
+
+
+DATE_RE = re.compile(r"(20\d\d-\d\d(?:-\d\d)?)")
+
+
+def leaf_date(l: dict) -> str:
+    for k in ("released", "note", "form", "status", "author", "model"):
+        m = DATE_RE.search(str(l.get(k) or ""))
+        if m:
+            return m.group(1)
+    return ""
+
+
+def cost_label(l: dict) -> str:
+    c = float(l.get("cost_usd") or 0)
+    return "$0 to make" if c == 0 else f"${c:.2f} to make"
+
+
+def stage_word(l: dict) -> str:
+    return TIER_WORDS.get(str(l.get("tier")), str(l.get("tier")))
+
+
+def footage_line(l: dict) -> str:
+    """What actually differs between two old cuts of the same script: the camera.
+
+    An assembled film's own `model:` field reads "per-beat — see sources", so the
+    distinguishing fact lives in the per-beat sources list.
+    """
+    plats, voices = [], []
+    for s in l.get("sources") or []:
+        p = str(s.get("platform") or s.get("model") or "").strip()
+        if p and p not in plats:
+            plats.append(p)
+        v = str(s.get("voice_engine") or "").strip()
+        if v and v not in voices:
+            voices.append(v)
+    bits = []
+    if plats:
+        bits.append("shot on " + ", ".join(plats[:2]))
+    if voices:
+        bits.append("voiced by " + voices[0])
+    return ", ".join(bits)
+
+
+# ------------------------------------------------------------------- genome io
+
 def load_genome(genome_dir: Path) -> dict:
     tree = yaml.safe_load((genome_dir / "tree.yaml").read_text())
     lineage = yaml.safe_load((genome_dir / "lineage.yaml").read_text())
@@ -172,60 +478,225 @@ def load_genome(genome_dir: Path) -> dict:
     for n in lineage["nodes"]:
         node_dir = genome_dir / "nodes" / n["slug"]
         n["md"] = (node_dir / "node.md").read_text()
-        n["teaser"] = extract_section(n["md"], "Hook")
+        hook = extract_section(n["md"], "Hook")
+        n["hook_raw"] = hook
+        # "The question a viewer can state:" is a writing rule (R5), not a
+        # sentence for a viewer — keep the question, drop the shop talk.
+        n["teaser"] = re.sub(r"\s*The question a viewer can state:\s*", " ",
+                             hook, flags=re.I).strip()
         n["children"] = []
         n["leaf_meta"] = []
+        n["dir"] = node_dir
         for leaf_id in n.get("leaves") or []:
             f = node_dir / "leaves" / f"{leaf_id}.yaml"
             if f.exists():
-                n["leaf_meta"].append(yaml.safe_load(f.read_text()))
+                meta = yaml.safe_load(f.read_text())
+                content = str(meta.get("content", ""))
+                if content.endswith(".mp4"):
+                    meta["seconds"] = mp4_seconds(node_dir / "leaves" / content)
+                n["leaf_meta"].append(meta)
         reactions = node_dir / "sap" / "reactions.yaml"
         n["reactions"] = yaml.safe_load(reactions.read_text()) if reactions.exists() else None
         summary = node_dir / "sap" / "summary.yaml"
         n["sap"] = yaml.safe_load(summary.read_text()) if summary.exists() else None
         screening = node_dir / "sap" / "screening.yaml"
         n["screening"] = yaml.safe_load(screening.read_text()) if screening.exists() else None
+        n["has_board"] = (node_dir / "shots.md").exists()
         nodes[n["id"]] = n
     for n in nodes.values():
         if n.get("parent"):
-            nodes[n["parent"]]["children"].append(n)
+            p = nodes[n["parent"]]
+            p["children"].append(n)
+            n["parent_title"] = p["title"]
     roots = [n for n in nodes.values() if not n.get("parent")]
     return {"tree": tree["tree"], "config": tree, "nodes": nodes, "roots": roots, "dir": genome_dir}
 
 
 def chips(n: dict) -> str:
+    """Badges that can actually differ between episodes.
+
+    The old `hot` chip was on all sixteen nodes at once — a status light that
+    is always on tells a reader nothing, so it only shows when it isn't `hot`.
+    """
     out = f'<span class="chip">{html.escape(n["id"])}</span>'
     if n.get("trunk"):
-        out += '<span class="chip trunk">trunk</span>'
-    out += f'<span class="chip {html.escape(n["status"])}">{html.escape(n["status"])}</span>'
+        out += '<span class="chip trunk">canon</span>'
+    if str(n.get("status")) != "hot":
+        out += f'<span class="chip">{html.escape(str(n["status"]))}</span>'
     return out
+
+
+def trunk_chain(g: dict) -> list:
+    chain, cur = [], next((r for r in g["roots"] if r.get("trunk")), None)
+    while cur:
+        chain.append(cur)
+        cur = next((c for c in cur["children"] if c.get("trunk")), None)
+    return chain
+
+
+def live_videos(n: dict) -> list:
+    return [l for l in n["leaf_meta"]
+            if str(l.get("content", "")).endswith(".mp4") and l.get("status") == "live"]
+
+
+def lead_take(n: dict):
+    """The one cut a stranger should see: newest, highest-tier, live."""
+    vids = sorted(live_videos(n), key=lambda l: (str(l.get("tier")), str(l.get("leaf"))))
+    return vids[-1] if vids else None
+
+
+def best_t3(n: dict) -> dict | None:
+    vids = [l for l in n["leaf_meta"] if str(l.get("tier")) == "T3"
+            and str(l.get("content", "")).endswith(".mp4") and l.get("status") == "live"]
+    return vids[-1] if vids else None
+
+
+def episode_no(g: dict, n: dict):
+    """Position on the canon path, or None for a branch off it."""
+    for i, t in enumerate(trunk_chain(g), 1):
+        if t["id"] == n["id"]:
+            return i
+    return None
+
+
+def eyebrow_for(g: dict, n: dict) -> str:
+    gid = g["tree"]["title"].upper()
+    ep = episode_no(g, n)
+    if ep:
+        return f"EPISODE {ep} · {gid} · CANON"
+    if n.get("parent"):
+        p = g["nodes"][n["parent"]]
+        pep = episode_no(g, p)
+        where = f"EPISODE {pep}" if pep else f"“{p['title'].upper()}”"
+        return f"A BRANCH OF {where} · {gid}"
+    return f"{gid} · BRANCH"
 
 
 def node_card(genome_id: str, n: dict, depth: int) -> str:
     # D11: the workshop is a first-class destination — every node with a shot
     # list advertises its board from the front page, not two clicks deep.
     board = (f' · <a href="{genome_id}/{html.escape(n["slug"])}-shots.html">🎬 shot board</a>'
-             if (REPO / "genomes" / genome_id / "nodes" / n["slug"] / "shots.md").exists()
-             else "")
+             if n.get("has_board") else "")
     teaser = f'<div class="teaser">{html.escape((n["teaser"][:160] + "…") if len(n["teaser"]) > 160 else n["teaser"])}</div>' if n["teaser"] else ""
     react = f' · <a href="{html.escape(n["reactions"]["url"])}">💧 react</a>' if n.get("reactions") else ""
+    # the parent label carries lineage on a phone, where the rail is flattened
+    lineage = (f'<div class="lineage">continues {html.escape(str(n["parent"]))} — '
+               f'{html.escape(str(n.get("parent_title", "")))}</div>' if n.get("parent")
+               else '<div class="lineage">the first episode</div>')
     kids = ""
     if n["children"]:
         kids = "<ul>" + "".join(node_card(genome_id, c, depth) for c in n["children"]) + "</ul>"
+    n_vers = len(n["leaf_meta"])
     return f"""<li><div class="card">
+{lineage}
 {chips(n)}
 <div class="title"><a href="{genome_id}/{html.escape(n['slug'])}.html">{html.escape(n['title'])}</a></div>
 {teaser}
-<div class="meta">{len(n['leaf_meta'])} {'leaf' if len(n['leaf_meta']) == 1 else 'leaves'} · <a href="{genome_id}/{html.escape(n['slug'])}.html">read</a>{board}{react}</div>
+<div class="meta"><a href="{genome_id}/{html.escape(n['slug'])}.html">read / watch</a> · {n_vers} {'version' if n_vers == 1 else 'versions'}{board}{react}</div>
 </div>{kids}</li>"""
 
 
+# ------------------------------------------------------------------ node pages
+
 def render_node_page(g: dict, n: dict) -> str:
     genome_id = g["tree"]["id"]
-    body_html = md_to_html(n["md"])
-    # rewrite sibling links (../<slug>/node.md) to site pages
-    body_html = re.sub(r'href="\.\./([^/"]+)/node\.md"', r'href="\1.html"', body_html)
+    ep = episode_no(g, n)
+    ep_word = f"Episode {ep}" if ep else f"Branch {n['id']}"
 
+    def md_chunk(text: str) -> str:
+        out = md_to_html(text, base=f"genomes/{genome_id}/nodes/{n['slug']}")
+        # sibling links (../<slug>/node.md) become site pages
+        return re.sub(r'href="[^"]*?/?([^/"]+)/node\.md"', r'href="\1.html"', out)
+
+    sections = split_sections(n["md"])
+    preamble = re.sub(r"^#\s+[^\n]*\n", "", sections[0][1]).strip().strip("-").strip()
+    story_md, prod_md = [], ([("The file's own header", preamble)] if preamble else [])
+    for head, text in sections[1:]:
+        if not text:
+            continue
+        (story_md if head.startswith(("State change", "Hook", "Script")) else prod_md).append((head, text))
+
+    # 1 — one player, the current lead cut, with a plain caption
+    lead = lead_take(n)
+    player_html = ""
+    if lead:
+        src = f'leaves/{html.escape(str(lead["content"]))}'
+        pos = poster(n["dir"] / "leaves" / str(lead["content"]),
+                     f"{genome_id}/posters/{lead['leaf']}.jpg", first_still(n["dir"]))
+        bits = [ep_word, dur_label(lead.get("seconds")), cost_label(lead)]
+        cap = " · ".join(b for b in bits if b)
+        player_html = (
+            f'<figure class="phone"><video controls playsinline preload="metadata"'
+            f'{poster_attr(pos, "../")} src="{src}"></video>'
+            f'<figcaption>{html.escape(cap)} · {html.escape(stage_word(lead))} '
+            f'<span class="chip">{html.escape(str(lead["leaf"]))}</span></figcaption></figure>')
+
+    # 2 — the action row: react, branch, workshop, rate this cut
+    acts = []
+    if n.get("reactions"):
+        acts.append(f'<a class="btn" href="{html.escape(n["reactions"]["url"])}">💧 React</a>')
+    acts.append('<a class="btn ghost" href="../create.html">✍️ Branch this episode</a>')
+    if n.get("has_board"):
+        acts.append(f'<a class="btn ghost" href="{html.escape(n["slug"])}-shots.html">'
+                    '🎬 Shot board</a>')
+    if lead:
+        rate = (f"{REPO_URL}/issues/new?template=screening.yml"
+                f"&title=screening%3A%20{lead['leaf']}&leaf={lead['leaf']}")
+        acts.append(f'<a class="btn ghost" href="{rate}">★ Rate this cut</a>')
+    actions = f'<p class="actions">{" ".join(acts)}</p>'
+
+    # 3 — other cuts, one fold down, each with a date, a length and a reason
+    others = [l for l in live_videos(n) if not lead or l["leaf"] != lead["leaf"]]
+    others.sort(key=lambda l: (str(l.get("tier")), str(l.get("leaf"))), reverse=True)
+    cuts_html = ""
+    if others:
+        figs = []
+        for l in others:
+            pos = poster(n["dir"] / "leaves" / str(l["content"]),
+                         f"{genome_id}/posters/{l['leaf']}.jpg", first_still(n["dir"]))
+            why = str(l.get("note") or WHY_BY_TIER.get(str(l.get("tier")))
+                      or l.get("form") or "").strip().replace("\n", " ")
+            if len(why) > 180:
+                why = why[:177].rstrip() + "…"
+            if not l.get("note") and footage_line(l):
+                why = f"{why} — {footage_line(l)}"   # two old cuts differ by camera
+            meta = " · ".join(b for b in [str(l["leaf"]), stage_word(l),
+                                          dur_label(l.get("seconds")),
+                                          leaf_date(l), cost_label(l)] if b)
+            figs.append(
+                f'<figure class="phone"><video controls playsinline preload="none"'
+                f'{poster_attr(pos, "../")} src="leaves/{html.escape(str(l["content"]))}"></video>'
+                f'<figcaption>{html.escape(meta)}<span class="why">{html.escape(why)}</span>'
+                f'</figcaption></figure>')
+        cuts_html = (f'<details class="drawer"><summary>Other cuts of this episode '
+                     f'({len(others)})</summary><div class="drawer-body">'
+                     f'<p class="smallprint">Nothing is deleted here: every earlier cut stays '
+                     f'watchable, so you can see what changed and why.</p>'
+                     f'<div class="cuts">{"".join(figs)}</div></div></details>')
+
+    # 4 — where this episode sits in the story
+    nav_bits = []
+    if n.get("parent"):
+        p = g["nodes"][n["parent"]]
+        pep = episode_no(g, p)
+        nav_bits.append(f'<a href="{html.escape(p["slug"])}.html"><span class="k">'
+                        f'← {"Episode " + str(pep) if pep else "Continues from"}</span>'
+                        f'{html.escape(p["title"])}</a>')
+    for c in sorted(n["children"], key=lambda c: not c.get("trunk")):  # canon first
+        cep = episode_no(g, c)
+        nav_bits.append(f'<a href="{html.escape(c["slug"])}.html"><span class="k">'
+                        f'{"Episode " + str(cep) + " →" if cep else "Continues as →"}</span>'
+                        f'{html.escape(c["title"])}</a>')
+    epnav = f'<nav class="epnav">{"".join(nav_bits)}</nav>' if nav_bits else ""
+
+    # 5 — the script, behind a spoiler guard (it ends on the cliffhanger)
+    story_html = ""
+    if story_md:
+        inner = "".join(f'<h2>{html.escape(h)}</h2>{md_chunk(t)}' for h, t in story_md)
+        story_html = (f'<details class="drawer"><summary>Read the full script — spoilers'
+                      f'</summary><div class="drawer-body screenplay">{inner}</div></details>')
+
+    # 6 — the receipts: every render of this episode and what it cost
     def leaf_cell(l):
         content = str(l.get("content", ""))
         if content.endswith(".html"):
@@ -243,86 +714,102 @@ def render_node_page(g: dict, n: dict) -> str:
         return f'{means}<a href="{url}">rate</a>'
 
     leaves_rows = "".join(
-        f"<tr><td>{leaf_cell(l)}</td><td>{html.escape(str(l['tier']))}</td>"
-        f"<td>{html.escape(str(l['form']))}</td><td>${l['cost_usd']:.2f}</td>"
+        f"<tr><td>{leaf_cell(l)}</td><td>{html.escape(stage_word(l))}</td>"
+        f"<td>{html.escape(str(l['form']))}</td>"
+        f"<td>{html.escape(dur_label(l.get('seconds')) or '—')}</td>"
+        f"<td>${l['cost_usd']:.2f}</td>"
         f"<td>{html.escape(str(l['status']))}</td><td>{screen_cell(l)}</td></tr>"
         for l in n["leaf_meta"]
     )
-    vids = [l for l in n["leaf_meta"]
-            if str(l.get("content", "")).endswith(".mp4") and l.get("status") == "live"]
-    vids.sort(key=lambda l: str(l.get("tier")), reverse=True)  # highest tier first
-    players = "".join(
-        f'<figure style="display:inline-block;margin:0.4rem 0.6rem 0.4rem 0">'
-        f'<video controls playsinline preload="metadata" style="width:100%;max-width:360px;border-radius:12px;border:1px solid var(--line)" '
-        f'src="leaves/{html.escape(str(l["content"]))}"></video>'
-        f'<figcaption class="chip">{html.escape(str(l["tier"]))} · {html.escape(str(l["form"]))}</figcaption></figure>'
-        for l in vids)
-    player_html = (f"<h2>Watch</h2>{players}"
-                   f'<p class="notice">The highest $0 render of this node — every episode is watchable '
-                   f'before a dollar is spent; the full script it was cut from is below.</p>'
-                   if players else "")
-    leaves_html = f"""<h2>Leaves (renders of this node)</h2>
-<table><tr><th>leaf</th><th>tier</th><th>form</th><th>cost</th><th>status</th><th>screening</th></tr>{leaves_rows}</table>
-<p class="notice">Every render publishes its prompt, model, seed, and cost — this table is the audit trail.
-<strong>Screening:</strong> rate any leaf (continuity, character, vibe) — the crowd narrows the shortlist,
-the taste file decides. Ratings are harvested into this node's <code>sap/screening.yaml</code>.
-Higher-tier leaves (animatic, video) arrive with a published per-render budget.</p>"""
+    receipts_html = f"""<details class="drawer"><summary>Every render &amp; its receipt
+({len(n['leaf_meta'])})</summary><div class="drawer-body">
+<p class="smallprint">A <em>leaf</em> is one render of this episode — script, storyboard, animatic
+or film. Every one publishes its prompt, model, seed and cost: this table is the audit trail.</p>
+<table><tr><th>version</th><th>stage</th><th>form</th><th>length</th><th>cost</th><th>status</th><th>screening</th></tr>{leaves_rows}</table>
+<p class="smallprint"><strong>Screening:</strong> rate any version (continuity, character, vibe) — the
+crowd narrows the shortlist, the author's taste file decides. Ratings are harvested into this
+episode's <code>sap/screening.yaml</code>.</p></div></details>"""
 
+    # 7 — watering (compute is always open; money waits on a founder key-turn)
     rail = (g["config"].get("watering_rail") or {})
     link, confirmed = rail.get("payment_link"), rail.get("confirmed_by_founder")
     if link and confirmed:
-        water_html = f"""<h2>Water this branch</h2>
-<p><a class="btn" href="{html.escape(str(link))}">💧 Fund a render of {html.escape(n['id'])}</a></p>
-<p class="notice">Watering funds <strong>specific renders</strong>, split
+        water_body = f"""<p><a class="btn" href="{html.escape(str(link))}">💧 Fund a render of {html.escape(n['id'])}</a></p>
+<p class="smallprint">Watering funds <strong>specific renders</strong>, split
 <code>costs-first-70-30-v1</code> (the render's published cost is reimbursed first; the remainder
 splits 70% author / 30% commons). Mention <code>{html.escape(n['id'])}</code> with your
 contribution — every drop lands in the <a href="{REPO_URL}/blob/main/ledger/watering.csv">public
-ledger</a>. Or water with <strong>compute</strong>: re-render a leaf with your own key and submit it
+ledger</a>. Or water with <strong>compute</strong>: re-render a version with your own key and submit it
 (<a href="{REPO_URL}/blob/main/WATERING.md">how →</a>).</p>"""
     else:
-        water_html = f"""<h2>Water this branch</h2>
-<p class="notice">💧 Money watering opens soon (one founder key-turn away). Watering with
-<strong>compute</strong> is open now: re-render any leaf of this node with your own key or free GPU
-(<a href="{REPO_URL}/blob/main/pipeline/kaggle/render-kaggle.ipynb">the Kaggle notebook</a> runs at
-$0) and submit it — provenance in, ledger row yours.
+        water_body = f"""<p class="smallprint">💧 Money watering opens soon (one founder key-turn away).
+Watering with <strong>compute</strong> is open now: re-render any version of this episode with your own
+key or free GPU (<a href="{REPO_URL}/blob/main/pipeline/kaggle/render-kaggle.ipynb">the Kaggle
+notebook</a> runs at $0) and submit it — provenance in, ledger row yours.
 <a href="{REPO_URL}/blob/main/WATERING.md">How watering works →</a></p>"""
+    water_html = (f'<details class="drawer"><summary>Water this branch</summary>'
+                  f'<div class="drawer-body">{water_body}</div></details>')
 
+    # 8 — reactions: two counts, never a contradiction
     react_html = ""
     if n.get("reactions"):
         vitals = ""
         if n.get("sap"):
             s = n["sap"]
-            emoji = {"+1": "👍", "-1": "👎", "laugh": "😄", "confused": "😕", "heart": "❤️", "hooray": "🎉", "rocket": "🚀", "eyes": "👀"}
-            counts = " ".join(f"{emoji[k]} {v}" for k, v in s["reactions"].items() if v) or "no reactions yet — be the first drop"
-            vitals = f"""<p><span class="chip">{counts}</span> <span class="chip">💬 {s['comments']} comments</span>
-<span class="chip">harvested {html.escape(str(s['harvested_at'])[:10])}</span></p>"""
-        react_html = f"""<h2>Sap (your reactions)</h2>
+            emoji = {"+1": "👍", "-1": "👎", "laugh": "😄", "confused": "😕", "heart": "❤️",
+                     "hooray": "🎉", "rocket": "🚀", "eyes": "👀"}
+            picked = " ".join(f"{emoji[k]} {v}" for k, v in s["reactions"].items() if v)
+            total = s.get("reactions_total", sum(s["reactions"].values()))
+            drops = picked or f"💧 {total} reactions"
+            vitals = (f'<p><span class="chip">{drops}</span>'
+                      f'<span class="chip">💬 {s["comments"]} comments</span>'
+                      f'<span class="chip">harvested {html.escape(str(s["harvested_at"])[:10])}</span></p>')
+        react_html = f"""<h2>Sap — the reactions to this episode</h2>
 {vitals}
-<p><a class="btn" href="{html.escape(n['reactions']['url'])}">💧 React / comment on this node</a></p>
-<p class="notice">Reactions are open data (Guideline 4): they order this branch against its siblings.
-Harvested daily into this node's <code>sap/summary.yaml</code> by CI.
-No account? Just tell someone about it — word of mouth is sap too.</p>"""
+<p><a class="btn" href="{html.escape(n['reactions']['url'])}">💧 React / comment</a></p>
+<p class="smallprint">Reactions are public and they order this branch against its rivals —
+counted into the tree once a day. Commenting needs a free GitHub account; no account?
+Just tell someone about it — word of mouth is sap too.</p>"""
 
-    kids = ""
-    if n["children"]:
-        links = " · ".join(f'<a href="{html.escape(c["slug"])}.html">{html.escape(c["id"])} — {html.escape(c["title"])}</a>' for c in n["children"])
-        kids = f"<p><strong>Continues as:</strong> {links}</p>"
-    parent_link = ""
-    if n.get("parent"):
-        p = g["nodes"][n["parent"]]
-        parent_link = f'<p><strong>Parent:</strong> <a href="{html.escape(p["slug"])}.html">{html.escape(p["id"])} — {html.escape(p["title"])}</a></p>'
+    # 9 — production detail, jargon and all, one fold down
+    prod_html = ""
+    if prod_md:
+        inner = "".join(f'<h2>{html.escape(h)}</h2>{md_chunk(t)}' for h, t in prod_md)
+        board_line = (f'<p><a href="{html.escape(n["slug"])}-shots.html">🎬 Shot board — every beat’s '
+                      f'recipe &amp; takes, forkable →</a></p>' if n.get("has_board") else "")
+        prod_html = (f'<details class="drawer"><summary>Production notes &amp; provenance</summary>'
+                     f'<div class="drawer-body"><p class="smallprint">House shorthand: a '
+                     f'<em>node</em> is an episode, a <em>leaf</em> is one render of it, '
+                     f'<em>T0–T3</em> are the stages script → storyboard → animatic → film, and '
+                     f'R1/R4/R5/R7 are numbered taste rules in the author’s public taste file.</p>'
+                     f'{board_line}{inner}</div></details>')
 
-    body = f"""<p>{chips(n)}</p>
+    # a stranger lands here first from a shared link — one line says what show
+    # this is and where its beginning lives, before the episode's own hook
+    premise = (f'<p class="smallprint">From <strong>{html.escape(g["tree"]["title"])}</strong>, '
+               f'a series growing in Banyan City: an engineer wakes up as a tree, and the '
+               f'audience picks the story\'s path. '
+               f'<a href="../watch.html">Walk it from the start →</a></p>')
+    body = f"""<p class="eyebrow">{html.escape(eyebrow_for(g, n))}</p>
+<h1>{html.escape(n['title'])}</h1>
+<p class="lede">{html.escape(n['teaser'])}</p>
+{premise}
+<p>{chips(n)}</p>
 {player_html}
-{body_html}
-<hr>
-{parent_link}{kids}
-{leaves_html}
+{actions}
+{cuts_html}
+{epnav}
+{story_html}
 {react_html}
+{receipts_html}
 {water_html}
-<h2>Branch this node</h2>
-<p class="notice">Anyone may continue this moment differently. Declare <code>{html.escape(n['id'])}</code> as your parent —
-that's the only obligation. <a href="../create.html">Write your own episode →</a></p>"""
+{prod_html}
+<div class="card strip"><div class="ic">✍️</div><div>
+<div class="title">Continue this episode your way</div>
+<p>Anyone may continue this moment differently. Declare <code>{html.escape(n['id'])}</code> as your
+parent — that is the only obligation. Rival continuations live side by side; none gets deleted.</p>
+<p><a class="btn ghost" href="../create.html">Write your own episode →</a></p></div></div>
+{LEGEND}"""
     return page(f"{n['id']} — {n['title']} · {g['tree']['title']}", body, depth=1,
                 path=f"{g['tree']['id']}/{n['slug']}.html", desc=n.get("teaser") or "")
 
@@ -340,65 +827,83 @@ def live_fork(g: dict):
     return None
 
 
-def trunk_chain(g: dict) -> list:
-    chain, cur = [], next((r for r in g["roots"] if r.get("trunk")), None)
-    while cur:
-        chain.append(cur)
-        cur = next((c for c in cur["children"] if c.get("trunk")), None)
-    return chain
-
-
-def best_t3(n: dict) -> dict | None:
-    vids = [l for l in n["leaf_meta"] if str(l.get("tier")) == "T3"
-            and str(l.get("content", "")).endswith(".mp4") and l.get("status") == "live"]
-    return vids[-1] if vids else None
-
-
 def season_strip(g: dict) -> str:
     figs = []
+    gid = g["tree"]["id"]
     for i, n in enumerate(trunk_chain(g), 1):
         leaf = best_t3(n)
         if not leaf:
             continue
-        gid = g["tree"]["id"]
+        pos = poster(n["dir"] / "leaves" / str(leaf["content"]),
+                     f"{gid}/posters/{leaf['leaf']}.jpg", first_still(n["dir"]))
+        dur = dur_label(leaf.get("seconds"))
         figs.append(
-            f'<figure><video controls playsinline preload="metadata" '
+            f'<figure><video controls playsinline preload="none"{poster_attr(pos)} '
             f'src="{gid}/leaves/{html.escape(str(leaf["content"]))}"></video>'
-            f'<figcaption>ep {i} · <a href="{gid}/{html.escape(n["slug"])}.html">'
-            f'{html.escape(n["title"])}</a></figcaption></figure>')
+            f'<figcaption><span class="n">EP {i}</span> · '
+            f'<a href="{gid}/{html.escape(n["slug"])}.html">{html.escape(n["title"])}</a>'
+            f'{" · " + dur if dur else ""}</figcaption></figure>')
     return f'<div class="season">{"".join(figs)}</div>' if figs else ""
 
 
+# ----------------------------------------------------------------- flat pages
+
 def render_create() -> str:
-    """The participation storefront: how to write your own episode (or plant
-    your own tree), in plain words, with the security model spelled out."""
-    body = f"""<h1>✍️ Write your own episode</h1>
-<p class="notice">Every episode of this tree can be continued <em>differently</em> — by you.
+    """The participation storefront: write an episode right here, no git, and
+    the security model spelled out in plain words."""
+    body = f"""<p class="eyebrow">ANYONE CAN WRITE THE NEXT ONE</p>
+<h1>✍️ Write your own episode</h1>
+<p class="lede">Every episode of this show can be continued <em>differently</em> — by you.
 No permission needed, no writing credits checked. The tree polices lineage, never direction.</p>
 
-<h2>The five steps</h2>
-<p><strong>1 · Pick your parent.</strong> Any episode — the latest, or one from way back whose
-story you'd have turned another way. Your episode declares which one it continues. That
-declaration is the only obligation in the entire system.</p>
-<p><strong>2 · Write it.</strong> A ~90-second script (<code>node.md</code> — copy any
-existing episode's file as a template). Two rules bind everyone, including the AI steward:
-something real must change (a relationship, the world, what someone knows), and it must end
-on a hook that's a real state change, not a tease.</p>
-<p><strong>3 · Submit it.</strong> Two doors:</p>
-<p>· <strong>Git door:</strong> fork the <a href="{REPO_URL}">repo</a>, add your node folder +
-one line in <code>lineage.yaml</code> naming your parent, open a pull request.<br>
-· <strong>No-git door:</strong> paste your script into
-<a href="{REPO_URL}/issues/new?template=branch-submission.yml">this form</a> — the steward
-turns it into a proper branch with your name on it. (Takes any free GitHub account —
-no git commands, just the form.)</p>
-<p><strong>4 · It gets rendered.</strong> The $0 pipeline (storyboard → voiced animatic) runs
-for anyone's episode. Want it <em>filmed</em>? <a href="{REPO_URL}/blob/main/REGROW.md">Render
-it yourself with free tools</a> — or let watering fund it.</p>
-<p><strong>5 · The tree decides its place.</strong> Readers react (💧 on each episode page);
-the crowd narrows; the author's <a href="{REPO_URL}/blob/main/taste/sapling.founder.v0.3.md">public
-taste rules</a> pick what leads the canon — citing which rule drove the call, in the commit log.
-Branches that don't lead are <strong>never deleted</strong>: they stay alive, watchable, and can
-take the lead later if readers water them.</p>
+<h2>Write it here</h2>
+<form class="compose" action="{REPO_URL}/issues/new" method="get">
+<input type="hidden" name="template" value="branch-submission.yml">
+<label>Which episode does yours continue?
+<input name="parent" placeholder="004, or 006a — any episode id from the tree" required></label>
+<label>Your episode’s title
+<input name="title" placeholder="branch: The Second Sunset"></label>
+<label>Your episode — script, beats or prose (300–500 words ≈ 90 seconds)
+<textarea name="story" rows="10" placeholder="Two things every episode needs: something must CHANGE (the world, a relationship, or what someone knows), and it must end on a real hook — not a tease."></textarea></label>
+<label>How to credit you
+<input name="credit" placeholder="@yourhandle — authorship is permanent and public"></label>
+<button class="btn" type="submit">Send it to the tree →</button>
+<p class="hint">Submitting opens a pre-filled public thread on the repo with your text in it — a free
+account, no git commands, nothing installed. The steward turns it into a real branch with your name in
+the metadata. Nothing you write here is sent anywhere until you press the button.</p>
+</form>
+
+<h2>What happens to it</h2>
+<ol class="steps">
+<li><b>Pick your parent.</b> Any episode — the latest, or one from way back whose story you'd have
+turned another way. Your episode declares which one it continues. That declaration is the only
+obligation in the entire system.</li>
+<li><b>Write it.</b> A ~90-second script. Two rules bind everyone, including the AI steward:
+something real must change (a relationship, the world, what someone knows), and it must end on a hook
+that's a real state change, not a tease.</li>
+<li><b>It gets rendered.</b> The $0 pipeline (storyboard → voiced animatic) runs for anyone's
+episode. Want it <em>filmed</em>? <a href="{REPO_URL}/blob/main/REGROW.md">Render it yourself with
+free tools</a> — or let watering fund it.</li>
+<li><b>The tree decides its place.</b> Readers react (💧 on each episode page); the crowd narrows;
+the author's <a href="{REPO_URL}/blob/main/taste/sapling.founder.v0.3.md">public taste rules</a> pick
+what leads the canon — citing which rule drove the call, in the commit log. Branches that don't lead
+are <strong>never deleted</strong>: they stay alive, watchable, and can take the lead later if
+readers water them.</li>
+</ol>
+
+<h2>Has anyone actually done this?</h2>
+<p class="card strip"><span class="ic">🎬</span><span>Straight answer: <strong>no reader-written
+episode has landed yet — yours would be the first.</strong> What <em>has</em> landed is crowd
+<em>footage</em>: several shots in episode 1's current cut were made by someone else on their own
+tools and handed back, credited per shot on the
+<a href="sapling/001-capability-inventory-shots.html">shot board</a> and in the film's provenance.
+Same door, same rules, one step earlier in the pipeline.</span></p>
+
+<h2>The advanced door: git</h2>
+<p class="smallprint">If you already live in a terminal: fork the <a href="{REPO_URL}">repo</a>, add
+your node folder + one line in <code>lineage.yaml</code> naming your parent, open a pull request.
+The <a href="{REPO_URL}/issues/new?template=branch-submission.yml">plain form</a> above is the same
+door without the plumbing.</p>
 
 <h2>"Wait — can anyone just edit the story?"</h2>
 <p class="notice">No. The repo is world-<em>readable</em>, but only the founder can merge.
@@ -414,128 +919,395 @@ is the checklist, and the taste-extraction interview turns <em>your</em> instinc
 <em>your</em> rulebook. The one unamendable rule of this place is that this right can never
 be revoked.</p>
 
-<p><a class="btn" href="{REPO_URL}/issues/new?template=branch-submission.yml">Submit an episode
-(no git needed)</a> <a class="btn ghost" href="watch.html">▶ Watch the season first</a></p>"""
+<p><a class="btn ghost" href="watch.html">▶ Watch the season first</a></p>
+{LEGEND}"""
     return page("Write your own episode — Banyan City", body, path="create.html",
                 desc="Continue any episode of the tree your way — no permission needed. "
-                     "Fork, write, declare your parent. The tree decides in the open.")
+                     "Write it on the page, declare your parent. The tree decides in the open.")
+
+
+FEED_JS = """<script>
+/* Progressive enhancement only: with JS off the feed is seven ordinary players
+   in story order, and CSS scroll-snap still does the paging. */
+(function () {
+  var eps = [].slice.call(document.querySelectorAll('.ep'));
+  if (!eps.length || !('IntersectionObserver' in window)) return;
+  var vids = eps.map(function (s) { return s.querySelector('video'); });
+  vids.forEach(function (v) {
+    if (!v) return;
+    v.addEventListener('click', function () { v.muted = false; }, { once: true });
+    v.addEventListener('ended', function () {
+      var i = vids.indexOf(v);
+      if (eps[i + 1]) eps[i + 1].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  });
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      var v = e.target.querySelector('video');
+      if (!v) return;
+      if (e.isIntersecting && e.intersectionRatio > 0.6) {
+        var i = vids.indexOf(v), nx = vids[i + 1];
+        if (nx && nx.preload === 'none') nx.preload = 'metadata';
+        v.muted = true;                       /* autoplay needs muted */
+        var p = v.play(); if (p && p.catch) p.catch(function () {});
+      } else if (!v.paused) { v.pause(); }
+    });
+  }, { threshold: [0, 0.6] });
+  eps.forEach(function (s) { io.observe(s); });
+})();
+</script>"""
+
+
+# --------------------------------------------------------------- the walk
+# Watching IS walking the tree. Every episode ends on its own cliffhanger
+# question; the real branches of the story appear as doors; you pick one and
+# keep walking. The path back to the root is unique (it's a tree), so the
+# trail needs no state, no account, no JS — every step is a shareable URL.
+# Dead ends aren't dead: a growing tip is the invitation to write the next
+# branch. This page family is the product's thesis made navigable.
+
+WALK_JS = """<script>
+/* Enhancement only: when the episode ends, bring the fork into view. */
+document.addEventListener('DOMContentLoaded', () => {
+  const v = document.querySelector('.phone.big video');
+  const next = document.querySelector('.doors') || document.querySelector('.tip');
+  if (v && next) v.addEventListener('ended', () => {
+    next.classList.add('now');
+    next.scrollIntoView({behavior: 'smooth', block: 'center'});
+  });
+});
+</script>"""
+
+
+def ancestors(g: dict, n: dict) -> list:
+    """Root-first chain of parents above n (n itself excluded)."""
+    chain, cur = [], n
+    while cur.get("parent"):
+        cur = g["nodes"][cur["parent"]]
+        chain.append(cur)
+    return chain[::-1]
+
+
+def door_thumb(g: dict, c: dict):
+    """A frame of the branch behind the door, when one exists."""
+    gid = g["tree"]["id"]
+    lt = lead_take(c)
+    if lt:
+        return poster(c["dir"] / "leaves" / str(lt["content"]),
+                      f"{gid}/posters/{lt['leaf']}.jpg", first_still(c["dir"]))
+    st = first_still(c["dir"])
+    if st is not None and st.exists() and OUT.exists():
+        rel = f"{gid}/posters/door-{c['slug']}{st.suffix}"
+        (OUT / rel).parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy(st, OUT / rel)
+        return rel
+    return None
+
+
+def hook_question(n: dict) -> str:
+    """The cliffhanger, in the script's own words, as one question."""
+    t = n.get("hook_raw") or ""
+    m = re.search(r"question a viewer can state:\s*(.+)$", t, re.I | re.S)
+    q = m.group(1).strip() if m else ""
+    if not q:
+        qs = re.findall(r"[^.?!]+\?", t)
+        q = qs[-1].strip() if qs else ""
+    q = q.rstrip(".").strip()
+    if q and not q.endswith("?"):
+        q += "?"
+    return (q[:1].upper() + q[1:]) if q else ""
+
+
+def last_fork(g: dict, n: dict):
+    """Nearest ancestor where the story split — where a walker backtracks to."""
+    for a in reversed(ancestors(g, n)):
+        if len(a["children"]) >= 2:
+            return a
+    return None
+
+
+def render_walk(g: dict, n: dict, path: str) -> str:
+    """One step of the walk: the episode, its question, the doors."""
+    gid = g["tree"]["id"]
+    series = g["tree"]["title"]
+    depth = path.count("/")
+    root = "../" * depth
+
+    def walk_href(other: dict) -> str:
+        # the root step lives at watch.html; every other step under watch/
+        if not other.get("parent"):
+            return f"{root}watch.html"
+        return (f"{other['slug']}.html" if depth else f"watch/{other['slug']}.html")
+
+    chain = trunk_chain(g)
+    ep_no = (chain.index(n) + 1) if n in chain else 0
+
+    # the trail: unique path from the root to here — stateless by tree-ness
+    ancs = ancestors(g, n)
+    trail_bits = [f'<a href="{walk_href(a)}">{html.escape(a["id"])}</a>' for a in ancs]
+    trail_bits.append(f'<span class="here">{html.escape(n["id"])} · you are here</span>')
+    trail = f'<p class="trail rise">🌳 {" → ".join(trail_bits)}</p>'
+
+    # the player — or, for a written-but-unfilmed branch, the honest state
+    leaf = lead_take(n)
+    if leaf:
+        pos = poster(n["dir"] / "leaves" / str(leaf["content"]),
+                     f"{gid}/posters/{leaf['leaf']}.jpg", first_still(n["dir"]))
+        bits = [f"episode {ep_no} on the canon path" if ep_no else f"a branch of {n['parent']}",
+                dur_label(leaf.get("seconds")), stage_word(leaf)]
+        player = (f'<figure class="phone big rise"><video controls playsinline preload="metadata"'
+                  f'{poster_attr(pos, root)} src="{root}{gid}/leaves/{html.escape(str(leaf["content"]))}">'
+                  f'</video></figure>'
+                  f'<p class="walk-meta">{html.escape(" · ".join(b for b in bits if b))}</p>')
+    else:
+        player = (f'<div class="panel tip rise"><div class="seed">📜</div>'
+                  f'<p>This branch exists as a <strong>script</strong> so far — no film yet. '
+                  f'<a href="{root}{gid}/{html.escape(n["slug"])}.html">Read it →</a> '
+                  f'(anyone may render it; the page shows how).</p></div>')
+
+    # the cliffhanger, verbatim from the script's hook
+    q = hook_question(n)
+    cliff = (f'<div class="cliff rise"><p class="k">the episode ends on a question</p>'
+             f'<p class="q">{html.escape(q)}</p></div>') if q else ""
+
+    # the doors: the story's real branches
+    kids = sorted(n["children"], key=lambda c: (not c.get("trunk"), c["id"]))
+    if kids:
+        many = len(kids) > 1
+        fork_line = (f'<p class="fork-line">the story splits {len(kids)} ways — pick yours</p>'
+                     if many else '<p class="fork-line">the story continues</p>')
+        doors = []
+        for c in kids:
+            th = door_thumb(g, c)
+            img = (f'<img src="{root}{th}" alt="" loading="lazy" width="62" height="110">'
+                   if th else '<span class="ph">🌿</span>')
+            crown = ' <span class="chip trunk">canon</span>' if c.get("trunk") else ""
+            teaser = c["teaser"]
+            if len(teaser) > 110:   # cut at a word, not mid-syllable
+                teaser = teaser[:110].rsplit(" ", 1)[0] + "…"
+            doors.append(
+                f'<a class="door{" canon" if c.get("trunk") else ""}" href="{walk_href(c)}">{img}'
+                f'<span><span class="t">{html.escape(c["title"])}{crown}</span>'
+                f'<span class="d">{html.escape(teaser)}</span>'
+                f'<span class="go">▶ walk this way</span></span></a>')
+        fork = fork_line + f'<div class="doors{" multi" if many else ""}">{"".join(doors)}</div>'
+        if many:
+            fork += ('<p class="smallprint" style="text-align:center">Both stay alive whichever '
+                     'you pick — the crowd\'s reactions decide which leads the canon.</p>')
+    else:
+        bk = last_fork(g, n)
+        back = (f' <a class="btn ghost" href="{walk_href(bk)}">↩ back to the last fork</a>'
+                if bk else "")
+        fork = (f'<div class="panel tip rise"><div class="seed">🌱</div>'
+                f'<p><strong>You\'ve reached a growing tip of the tree.</strong><br>'
+                f'No one has written what happens after this — yet.</p>'
+                f'<p><a class="btn" href="{root}create.html">✍️ Write what happens next</a>{back}</p>'
+                f'<p class="smallprint">Your continuation becomes a real branch of {html.escape(series)}: '
+                f'rendered, published, and walkable right here.</p></div>')
+
+    foot = (f'<p class="walk-foot"><a href="{root}{gid}/{html.escape(n["slug"])}.html">script, versions '
+            f'&amp; receipts →</a> · <a href="{root}watch.html">start over at the root</a> · '
+            f'<a href="{root}watch/season.html">play the canon path straight through →</a></p>')
+
+    title_no = f"Ep {ep_no} — " if ep_no else ""
+    body = f"""{trail}
+<h1 style="text-align:center">{html.escape(n['title'])}</h1>
+{player}
+{cliff}
+{fork}
+{foot}"""
+    return page(f"{title_no}{n['title']} — walk {series}", body, depth=depth, path=path,
+                desc=n["teaser"] or f"Walk {series}: every episode ends on a question, "
+                                    "and the branches are doors.",
+                body_class="walk", tail=WALK_JS)
 
 
 def render_watch(genomes: list) -> str:
-    """One-thumb binge page: the trunk's official T3 cut of every episode,
-    top to bottom in story order — no tree, no tables, just the season."""
-    figs = []
+    """The walk's front door: the root episode IS the watch page."""
+    g = genomes[0]
+    r = next((x for x in g["roots"] if x.get("trunk")), g["roots"][0])
+    return render_walk(g, r, "watch.html")
+
+
+def render_season(genomes: list) -> str:
+    """The straight line, for people who just want the canon cut in order:
+    one vertical snap feed, each episode a screen, the next plays itself."""
+    eps = []
     for g in genomes:
         gid = g["tree"]["id"]
-        for i, n in enumerate(trunk_chain(g), 1):
+        for n in trunk_chain(g):
             leaf = best_t3(n)
-            if not leaf:
-                continue
-            figs.append(
-                f'<figure><video controls playsinline preload="metadata" '
-                f'src="{gid}/leaves/{html.escape(str(leaf["content"]))}"></video>'
-                f'<figcaption>ep {i} · <a href="{gid}/{html.escape(n["slug"])}.html">'
-                f'{html.escape(n["title"])}</a></figcaption></figure>')
-    body = f"""<h1>▶ Season 1, all episodes</h1>
-<p class="notice">The trunk's official cut of each episode, in order — every one a $0 render,
-every one re-renderable. Scripts, provenance, and rival branches live on each episode's page.</p>
-<div class="binge">{''.join(figs)}</div>
-<p><a class="btn ghost" href="index.html">← Back to the tree</a></p>"""
-    return page("Watch — Banyan City, Season 1", body, path="watch.html",
-                desc="Binge Season 1 of Banyan City: the trunk's official episodes, "
-                     "in order, in one vertical feed.")
+            if leaf:
+                eps.append((gid, g["tree"]["title"], n, leaf))
+    total = len(eps)
+    figs = []
+    for i, (gid, series, n, leaf) in enumerate(eps, 1):
+        pos = poster(n["dir"] / "leaves" / str(leaf["content"]),
+                     f"{gid}/posters/{leaf['leaf']}.jpg", first_still(n["dir"]))
+        dur = dur_label(leaf.get("seconds"))
+        # only the first two episodes fetch up front; the rest load as you go
+        pre = "metadata" if i <= 2 else "none"
+        figs.append(
+            f'<section class="ep" id="ep{i}">'
+            f'<p class="bar">ep {i} of {total}{" · " + dur if dur else ""}</p>'
+            f'<figure class="phone"><video controls playsinline preload="{pre}"{poster_attr(pos, "../")} '
+            f'src="../{gid}/leaves/{html.escape(str(leaf["content"]))}"></video>'
+            f'<figcaption>{html.escape(n["title"])} · '
+            f'<a href="../{gid}/{html.escape(n["slug"])}.html">script, versions &amp; branches →</a>'
+            f'</figcaption></figure></section>')
+    series = genomes[0]["tree"]["title"] if genomes else "the season"
+    body = f"""<p class="eyebrow">{html.escape(series.upper())} · {total} EPISODES · THE CANON PATH, IN ORDER</p>
+<h1>▶ Play it straight through</h1>
+<p class="lede">The cut that leads the story, start to finish. Scroll down — the next one starts
+itself. Prefer to choose at every cliffhanger? <a href="../watch.html">Walk the tree instead →</a></p>
+<p class="smallprint">Each episode autoplays muted as it comes into view — tap the picture for sound.
+(No JavaScript? Same episodes, played by hand.)</p>
+{''.join(figs)}
+<p><a class="btn ghost" href="../watch.html">🌳 Walk the tree</a>
+<a class="btn ghost" href="../create.html">✍️ Write the next one</a></p>
+{LEGEND}"""
+    return page(f"{series}, season 1 — straight through", body, depth=1, path="watch/season.html",
+                desc=f"Binge {series}: the canon cut of every episode, in order, "
+                     "in one vertical feed.",
+                body_class="feed", tail=FEED_JS)
 
 
 def render_index(genomes: list) -> str:
-    sections = []
-    hero_video = ""
+    hero_video, hero_cap = "", ""
     for g in genomes:
         chain = trunk_chain(g)
         lead = best_t3(chain[0]) if chain else None
         if lead and not hero_video:
-            hero_video = (f'<video controls playsinline preload="metadata" '
-                          f'src="{g["tree"]["id"]}/leaves/{html.escape(str(lead["content"]))}"></video>')
-    workshop = (
-        '<h2>⚙️ The Machine</h2>'
-        '<p class="notice"><strong>This show makes itself in public, and anyone can work on it.</strong> '
-        'Every episode publishes its complete recipe — approved frames, exact prompts, every take with provenance. '
-        'Open <a href="machine.html">The Machine</a> to see how the whole loop runs, '
-        'browse <a href="sapling/001-capability-inventory-shots.html">episode 1\'s shot board</a> to see it live, '
-        'or grab an <a href="https://github.com/olegmlkvorg/banyan-city/issues?q=is%3Aissue+is%3Aopen+label%3Arender-request">open render request</a> '
-        'and hand back a take made with your own tools — your name goes in the public ledger.</p>')
-    sections.append(workshop)
+            gid = g["tree"]["id"]
+            pos = poster(chain[0]["dir"] / "leaves" / str(lead["content"]),
+                         f"{gid}/posters/{lead['leaf']}.jpg", first_still(chain[0]["dir"]))
+            bits = ["Episode 1", dur_label(lead.get("seconds")), cost_label(lead)]
+            hero_cap = " · ".join(b for b in bits if b)
+            hero_video = (
+                f'<figure class="phone"><video controls playsinline preload="metadata"'
+                f'{poster_attr(pos)} src="{gid}/leaves/{html.escape(str(lead["content"]))}">'
+                f'</video><figcaption>{html.escape(hero_cap)}</figcaption></figure>')
+
+    sections = []
     for g in genomes:
         t = g["tree"]
-        tree_html = "<ul class='tree'>" + "".join(node_card(t["id"], r, 0) for r in g["roots"]) + "</ul>"
+        gid = t["id"]
         n_nodes = len(g["nodes"])
         n_leaves = sum(len(n["leaf_meta"]) for n in g["nodes"].values())
+        chain = trunk_chain(g)
         fork = live_fork(g)
         fork_html = ""
         if fork:
             tip, kids = fork
             vs = " <em>vs</em> ".join(
-                f'<a href="{html.escape(t["id"])}/{html.escape(k["slug"])}.html">'
+                f'<a href="{html.escape(gid)}/{html.escape(k["slug"])}.html">'
                 f'{html.escape(k["id"])} — {html.escape(k["title"])}</a>' for k in kids)
-            fork_html = (f'<p class="notice">⚡ <strong>Live fork at the tip:</strong> '
-                         f'<a href="{html.escape(t["id"])}/{html.escape(tip["slug"])}.html">'
-                         f'{html.escape(tip["id"])} — {html.escape(tip["title"])}</a> ends on one cliffhanger, '
+            fork_html = (f'<div class="fork rise"><div class="k">⚡ live fork at the tip</div>'
+                         f'<p><a href="{html.escape(gid)}/{html.escape(tip["slug"])}.html">'
+                         f'{html.escape(tip["title"])}</a> ends on one cliffhanger, '
                          f'paid off {len(kids)} different ways: {vs}. '
-                         f'Same debt, competing payments — read both, react; the tree decides on material, not votes.</p>')
-        sections.append(f"""<h2>🌱 {html.escape(t['title'])} — Season 1, all episodes <span class="chip">{n_nodes} nodes</span> <span class="chip">{n_leaves} leaves</span></h2>
+                         f'Same debt, competing payments — watch both, react; the story is decided '
+                         f'on material, not votes.</p></div>')
+        sections.append(f"""<h2 id="episodes">🌱 {html.escape(t['title'])} — season 1</h2>
+<p class="smallprint">{len(chain)} episodes on the canon path · {n_nodes} episodes in all ·
+{n_leaves} published versions · every one re-renderable by anyone</p>
 {season_strip(g)}
-<p class="notice">🌿 <strong>These are first renders — rough on purpose.</strong> An episode here is a
-<em>leaf</em>: one $0 rendering of a script, never the last word. Rendered a better one on your own
-GPU or key? Submit it — screening and the taste file decide which leaf leads, and the tree keeps
-every version. <a href="{REPO_URL}/blob/main/WATERING.md">How to water with compute →</a></p>
 {fork_html}
-<p class="notice">An engineer dies debugging production at 3 a.m. and reincarnates as a banyan sapling.
-He can't move, fight, or flee — only sense, grow, and make the space around him worth staying in.
-The story <em>branches</em>: rival continuations coexist as siblings, all alive, none rejected.
-Watch, react — the sap decides what runs hot.</p>
-{tree_html}""")
+<h2>How it works</h2>
+<div class="how">
+<div class="card"><div class="k">1 · watch</div><div class="title">Ninety seconds each</div>
+<p>Vertical, voiced, animated. Start at episode 1 and keep scrolling.</p></div>
+<div class="card"><div class="k">2 · react</div><div class="title">Your reactions steer it</div>
+<p>💧 on any episode. Reactions are public data and they order rival continuations.</p></div>
+<div class="card"><div class="k">3 · branch</div><div class="title">Write the next one</div>
+<p>Continue any episode differently. Yours lives beside the canon cut, never deleted.</p></div>
+</div>
+<h2>Every branch of the tree</h2>
+<p class="smallprint">Rival continuations coexist as siblings — all alive, none rejected. The cut that
+leads the story is marked <span class="chip trunk">canon</span>.</p>
+<ul class='tree'>{"".join(node_card(gid, r, 0) for r in g["roots"])}</ul>""")
 
-    body = f"""<div class="hero">
+    # Banyan City is the place; Sapling is the (first) series growing in it.
+    # The hero introduces the city in one line, then hands over to the series.
+    body = f"""<div class="hero rise">
 <div class="seal">🌳</div>
+<p class="eyebrow">A CITY OF BRANCHING STORY TREES</p>
 <h1>Banyan City</h1>
-<p>An AI-animated series that <strong>branches</strong> — viewers pick which sequel survives —
-and <strong>regrows</strong>: every episode below is a first rough $0 render, and anyone
-can re-render any of them better. The whole pipeline, every decision, and every
-dollar are public in git.</p>
+<p class="sub">Series grow here like trees: any episode can be continued differently,
+rival branches live side by side, and the audience's reactions decide which one leads.</p>
+<p class="eyebrow" style="margin-top:1.6rem">NOW GROWING · SAPLING · SEASON 1</p>
+<p class="logline">An engineer dies debugging production at 3 a.m. and reincarnates as a banyan
+sapling. He can't move, fight, or flee — only sense, grow, and make the space around him worth
+staying in.</p>
 {hero_video}
-<a class="btn" href="sapling/001-capability-inventory.html">▶ Start at episode 1</a>
-<a class="btn ghost" href="watch.html">▶ Binge season 1</a>
-<a class="btn ghost" href="create.html">✍️ Write your own episode</a>
-<a class="btn ghost" href="city.html">Read the Promise</a>
+<p class="cta"><a class="btn" href="watch.html">▶ Watch Sapling</a>
+<a class="btn ghost" href="create.html">✍️ Write an episode</a></p>
+<p class="smallprint">These are first renders, rough on purpose — free or near-free, and every cost is
+published beside the film. Rendered a better one on your own GPU or key? Submit it; the tree keeps
+every version. <a href="{REPO_URL}/blob/main/WATERING.md">How to water with compute →</a></p>
 </div>
 {''.join(sections)}
+<h2>⚙️ The machine</h2>
+<div class="card strip rise"><div class="ic">⚙️</div><div>
+<div class="title">This show makes itself in public</div>
+<p>Every episode publishes its complete recipe — approved frames, exact prompts, every take with
+provenance. Read <a href="machine.html">how the whole loop runs</a>, open
+<a href="sapling/001-capability-inventory-shots.html">episode 1's shot board</a> to see it live, or
+grab an <a href="https://github.com/olegmlkvorg/banyan-city/issues?q=is%3Aissue+is%3Aopen+label%3Arender-request">open
+render request</a> and hand back a shot made with your own tools — your name goes in the public
+ledger.</p></div></div>
 <hr>
 <h2>The rules of this place, in one breath</h2>
 <p>Anyone may <strong>branch</strong> any episode (declare your parent — the only obligation).
 Citizens <strong>water</strong> the branches they love; unwatered branches sleep, never die.
-One author's <strong>taste file</strong> decides the trunk; disagreement is watering a rival branch, not a vote.
+One author's <strong>taste file</strong> decides the canon; disagreement is watering a rival branch, not a vote.
 All reactions and money are <strong>open data</strong>. And anyone may <strong>fork the whole city</strong> —
 take everything, rename it, go. <a href="city.html">Full text →</a></p>
-<p class="notice">🎬 <strong>Now growing:</strong> the tree is choosing its video model —
-same three shots rendered on every candidate platform, scored in the open.
-<a href="trials/index.html">The T3 platform trials →</a></p>"""
+<p class="smallprint">🎬 Now growing: the show is choosing its video model — the same three shots
+rendered on every candidate platform, scored in the open.
+<a href="trials/index.html">The platform trials →</a></p>
+{LEGEND}"""
     return page("Banyan City — a story tree", body)
 
 
 def render_city() -> str:
+    ids = {"PROMISE.md": "promise", "GUIDELINES.md": "guidelines", "VOCABULARY.md": "glossary"}
     parts = []
-    for fname, title in [("PROMISE.md", None), ("GUIDELINES.md", None), ("VOCABULARY.md", None)]:
-        parts.append(md_to_html((REPO / fname).read_text()))
-        parts.append("<hr>")
-    body = "".join(parts[:-1]) + f"""
+    for fname in ("PROMISE.md", "GUIDELINES.md", "VOCABULARY.md"):
+        parts.append(f'<section id="{ids[fname]}">'
+                     f'{demote(md_to_html((REPO / fname).read_text()))}</section>')
+    body = f"""<p class="eyebrow">THE RULES · PERMANENT, EXCEPT WHERE THEY SAY OTHERWISE</p>
+<h1>The rules of this city</h1>
+<p class="lede">Three texts: what this place promises (the Promise), how citizens act (the
+Guidelines), and what the tree words mean (the <a href="#glossary">Glossary</a> — start there if
+leaf, sap and trunk are new to you).</p>
+<hr>
+{"<hr>".join(parts)}
 <p class="notice">These texts are canonical and live in
 <a href="{REPO_URL}">the repository</a> — amendable by citizens
 per Guideline 6, except the right to branch and fork, which is permanent.
 Open questions live in <a href="{REPO_URL}/blob/HEAD/DECISIONS.md">DECISIONS.md</a>.</p>"""
-    return page("The City — Promise, Guidelines, Vocabulary", body, path="city.html")
+    return page("The City — Promise, Guidelines, Glossary", body, path="city.html")
+
+
+def render_machine() -> str:
+    body = ('<p class="eyebrow">HOW THIS SHOW IS MADE · EVERY STEP AUDITABLE</p>'
+            + md_to_html((REPO / "MACHINE.md").read_text())
+            + '<p class="smallprint">House shorthand used above: <em>node</em> = episode, '
+              '<em>leaf</em> = one render of an episode, <em>sap</em> = reactions, '
+              '<em>trunk</em> = the canon path, T0–T3 = script → storyboard → animatic → film. '
+              f'<a href="city.html#glossary">Full glossary →</a></p>')
+    return page("The Machine — how this operates", body, path="machine.html",
+                desc="The whole loop on one page: script, approval, stills, takes, "
+                     "assembly, reactions, branching.")
 
 
 AXES = ["adherence", "motion", "look", "nativeness", "consistency", "friction"]
 WEIGHTED = {"adherence": 2, "consistency": 2}
+AXIS_GLOSS = ("<b>adherence</b> did it film the prompt · <b>motion</b> does the movement read · "
+              "<b>look</b> is it on style · <b>nativeness</b> born vertical or cropped · "
+              "<b>consistency</b> same world shot to shot · <b>friction</b> how hard to get. "
+              "1–5; adherence and consistency count double.")
 
 
 def render_trials() -> str:
@@ -559,40 +1331,77 @@ def render_trials() -> str:
     sections = []
     for plat in sorted(set(outputs) | set(scores)):
         rows, players = "", ""
+        # A platform scored against a different prompt pack is not a rival on the
+        # same bake-off — say so on every one of its rows, not in a footnote.
+        pdata = scores.get(plat) or {}
+        blurb = " ".join([str(pdata.get("model", ""))]
+                         + [str((ax or {}).get("notes", "")) for ax in (pdata.get("shots") or {}).values()])
+        flagged = ("not directly comparable" in blurb.lower()
+                   or "not comparable" in blurb.lower())
         for mp4, meta in outputs.get(plat, []):
-            players += (f'<figure style="display:inline-block;margin:0.5rem 0.6rem 0.5rem 0">'
-                        f'<video controls playsinline preload="metadata" '
-                        f'style="width:100%;max-width:300px;border-radius:12px;border:1px solid var(--line)" '
+            pos = poster(mp4, f"trials/posters/{plat}-{mp4.stem}.jpg")
+            dur = dur_label(mp4_seconds(mp4))
+            players += (f'<figure class="phone"><video controls playsinline preload="none"'
+                        f'{poster_attr(pos, "../")} '
                         f'src="{html.escape(plat)}/{html.escape(mp4.name)}"></video>'
-                        f'<figcaption class="chip">shot {html.escape(str(meta.get("shot", mp4.stem)))} · '
+                        f'<figcaption>shot {html.escape(str(meta.get("shot", mp4.stem)))}'
+                        f'{" · " + dur if dur else ""}<br>'
                         f'{html.escape(str(meta.get("model", "model?")))}</figcaption></figure>')
         shot_scores = (scores.get(plat) or {}).get("shots") or {}
         for shot, ax in sorted(shot_scores.items()):
             ax = ax or {}
             filled = [(a, ax[a]) for a in AXES if isinstance(ax.get(a), (int, float))]
-            if filled:
+            missing_weighted = [a for a in WEIGHTED if not isinstance(ax.get(a), (int, float))]
+            if filled and not missing_weighted:
                 num = sum(v * WEIGHTED.get(a, 1) for a, v in filled)
                 den = sum(WEIGHTED.get(a, 1) for a, _ in filled)
-                total = f"{num / den:.1f}"
+                total = f"<strong>{num / den:.1f}</strong>"
+            elif filled:
+                # a double-weighted axis is unscored: publishing a total here
+                # would read as a verdict the founder has not given (R4)
+                total = f'<span class="chip">partial · {len(filled)} of {len(AXES)} axes</span>'
             else:
                 total = "—"
-            cells = "".join(f"<td>{ax.get(a) if ax.get(a) is not None else '·'}</td>" for a in AXES)
             note = html.escape(str(ax.get("notes", "") or ""))
-            rows += f"<tr><td><strong>{html.escape(shot)}</strong></td>{cells}<td><strong>{total}</strong></td><td>{note}</td></tr>"
-        table = (f"<table><tr><th>shot</th>{''.join(f'<th>{a}</th>' for a in AXES)}<th>weighted</th><th>notes</th></tr>"
-                 f"{rows}</table>") if rows else '<p class="notice">Not scored yet.</p>'
-        model = html.escape(str((scores.get(plat) or {}).get("model", "")))
-        sections.append(f"<h2>{html.escape(plat)} <span class='chip'>{model}</span></h2>{players}{table}")
+            warn = ' <span class="chip hot">different prompts</span>' if flagged else ""
+            cells = "".join(f'<td data-label="{a}">{ax.get(a) if ax.get(a) is not None else "·"}</td>'
+                            for a in AXES)
+            rows += (f'<tr><td data-label="shot"><strong>{html.escape(shot)}</strong>{warn}</td>'
+                     f'{cells}<td data-label="weighted">{total}</td>'
+                     f'<td data-label="notes">{note}</td></tr>')
+        table = (f'<table class="scores"><thead><tr><th>shot</th>'
+                 f'{"".join(f"<th>{a}</th>" for a in AXES)}<th>weighted</th><th>notes</th></tr>'
+                 f'</thead><tbody>{rows}</tbody></table>') if rows else \
+                '<p class="notice">Not scored yet.</p>'
+        model = html.escape(str(pdata.get("model", "")))
+        caveat = ('<p class="notice">⚠️ <strong>Not a like-for-like entry.</strong> These shots were '
+                  'rendered from a different prompt pack than the other platforms, so the marks below '
+                  'describe the output, not a ranking against its rivals — it has to be re-run on the '
+                  'shared pack before it can win anything.</p>') if flagged else ""
+        sections.append(f"<h2>{html.escape(plat)} <span class='chip'>{model}</span></h2>"
+                        f'<div class="clips">{players}</div>{caveat}{table}')
 
     if not sections:
         sections.append('<p class="notice">No trial outputs yet — the founder is out gathering free-tier '
                         'renders. The protocol, prompts, and rubric below are already fixed, so results '
                         'can\'t be quietly re-rolled until they flatter.</p>')
 
-    intro = md_to_html((tdir / "README.md").read_text())
-    prompts = md_to_html((tdir / "prompts.md").read_text())
-    body = (f"{''.join(sections)}<hr><details><summary><strong>Protocol, candidates & rubric</strong></summary>"
-            f"{intro}</details><details><summary><strong>The three prompts</strong></summary>{prompts}</details>")
+    intro = demote(md_to_html((tdir / "README.md").read_text(), base="pipeline/t3-trials"))
+    prompts = demote(md_to_html((tdir / "prompts.md").read_text(), base="pipeline/t3-trials"))
+    body = (f'<p class="eyebrow">CHOOSING THE CAMERA · IN PUBLIC</p>'
+            f'<h1>T3 platform trials</h1>'
+            f'<p class="lede">Same three shots, every video model we can get our hands on, scored in '
+            f'the open — we are picking the tool that films the show. Raw output and marks below, '
+            f'nothing re-rolled until it flatters. (<em>T3</em> is the filmed tier: real footage, as '
+            f'opposed to a storyboard or an animatic.)</p>'
+            f'<p class="smallprint">{AXIS_GLOSS} Taste axes — motion, look, consistency — are the '
+            f'author’s alone to fill (R4), so most rows are still partial on purpose.</p>'
+            f"{''.join(sections)}<hr>"
+            f'<details class="drawer"><summary>Protocol, candidates &amp; rubric</summary>'
+            f'<div class="drawer-body">{intro}</div></details>'
+            f'<details class="drawer"><summary>The three prompts</summary>'
+            f'<div class="drawer-body">{prompts}</div></details>'
+            f'<p><a class="btn ghost" href="../index.html">← Back to the tree</a></p>')
     return page("T3 platform trials — same three shots, every model", body, depth=1,
                 path="trials/index.html",
                 desc="Choosing Banyan City's video model in the open: the same three shots "
@@ -629,14 +1438,67 @@ def render_feed(genomes: list) -> str:
 """
 
 
+LINK_RE = re.compile(r'(?:href|src|poster)="([^"]+)"')
+
+
+def check_links(pages: list) -> list:
+    """Every local reference in EVERY published page must resolve inside _site.
+
+    The first version of this gate only checked the pages this module writes
+    in-process, and it green-lit a build where 138 lab images and 15 shot-board
+    receipts 404'd — a green self-check on a broken site is worse than none.
+    Now it sweeps the whole output tree: href, src, and poster alike.
+    """
+    for rel in pages:
+        if not (OUT / rel).exists():
+            return [f"{rel} (page missing)"]
+    broken = []
+    for f in sorted(OUT.rglob("*.html")):
+        rel = f.relative_to(OUT).as_posix()
+        for href in LINK_RE.findall(f.read_text(errors="replace")):
+            if href.startswith(("http://", "https://", "#", "mailto:", "data:", "//")):
+                continue
+            target = href.split("#")[0].split("?")[0]
+            if not target:
+                continue
+            if not (f.parent / target).exists():
+                broken.append(f"{rel} → {href}")
+    return broken
+
+
 def main() -> None:
     if OUT.exists():
         shutil.rmtree(OUT)
     OUT.mkdir()
     genomes = [load_genome(p) for p in sorted((REPO / "genomes").iterdir()) if p.is_dir()]
 
+    # media first: posters are written next to the clips they belong to, and
+    # every page that shows a player wants one.
+    for g in genomes:
+        gdir = OUT / g["tree"]["id"]
+        gdir.mkdir(exist_ok=True)
+        for n in g["nodes"].values():
+            for l in n["leaf_meta"]:
+                content = str(l.get("content", ""))
+                if content.endswith((".html", ".mp4")):
+                    src = n["dir"] / "leaves" / content
+                    if src.exists():
+                        (gdir / "leaves").mkdir(exist_ok=True)
+                        shutil.copy(src, gdir / "leaves" / content)
+
+    mine = ["index.html", "watch.html", "watch/season.html", "create.html", "city.html",
+            "machine.html", "trials/index.html"]
     (OUT / "index.html").write_text(render_index(genomes))
     (OUT / "watch.html").write_text(render_watch(genomes))
+    # the walk: one step page per non-root episode (the root step IS watch.html)
+    (OUT / "watch").mkdir(exist_ok=True)
+    for g in genomes:
+        for n in g["nodes"].values():
+            if n.get("parent"):
+                rel = f"watch/{n['slug']}.html"
+                (OUT / rel).write_text(render_walk(g, n, rel))
+                mine.append(rel)
+    (OUT / "watch" / "season.html").write_text(render_season(genomes))
     (OUT / "create.html").write_text(render_create())
     (OUT / "city.html").write_text(render_city())
     from build_status import build as _build_status
@@ -647,38 +1509,28 @@ def main() -> None:
     if (REPO / 'lab').is_dir():
         _sh.copytree(REPO / 'lab', OUT / 'lab', dirs_exist_ok=True)
         print('✓ lab/ published')
-    (OUT / "machine.html").write_text(page(
-        "The Machine — how this operates",
-        md_to_html((REPO / "MACHINE.md").read_text()),
-        path="machine.html",
-        desc="The whole loop on one page: script, approval, stills, takes, assembly, reactions, branching."))
+    (OUT / "machine.html").write_text(render_machine())
     (OUT / "feed.xml").write_text(render_feed(genomes))
     (OUT / ".nojekyll").write_text("")
     og = REPO / "assets" / "og.png"          # social-share image referenced by page() meta
     if og.exists():
         shutil.copy(og, OUT / "og.png")
-    (OUT / "trials").mkdir()
-    (OUT / "trials" / "index.html").write_text(render_trials())
+    (OUT / "trials").mkdir(exist_ok=True)
     trials_out = REPO / "pipeline" / "t3-trials" / "outputs"
     if trials_out.exists():
         for mp4 in trials_out.glob("*/*.mp4"):
             (OUT / "trials" / mp4.parent.name).mkdir(exist_ok=True)
             shutil.copy(mp4, OUT / "trials" / mp4.parent.name / mp4.name)
+    (OUT / "trials" / "index.html").write_text(render_trials())
     for g in genomes:
         gdir = OUT / g["tree"]["id"]
-        gdir.mkdir()
         for n in g["nodes"].values():
-            _page = render_node_page(g, n)
-            if (g["dir"] / "nodes" / n["slug"] / "shots.md").exists():
-                _page = _page.replace(
-                    "</nav>",
-                    f'</nav><p><a href="{n["slug"]}-shots.html">🎬 Shot board — '
-                    "every beat's recipe &amp; takes, forkable</a></p>", 1)
-            (gdir / f"{n['slug']}.html").write_text(_page)
+            (gdir / f"{n['slug']}.html").write_text(render_node_page(g, n))
+            mine.append(f"{g['tree']['id']}/{n['slug']}.html")
             # D11: the shot board — every beat's full recipe + takes, forkable
             # by anyone. The repo is the process; the site renders the process.
-            node_dir = g["dir"] / "nodes" / n["slug"]
-            if (node_dir / "shots.md").exists():
+            node_dir = n["dir"]
+            if n["has_board"]:
                 from build_shotboard import board_html
                 media = f"{n['slug']}-media"
                 (gdir / f"{n['slug']}-shots.html").write_text(
@@ -695,17 +1547,20 @@ def main() -> None:
                     (gdir / f"{media}-clips").mkdir(exist_ok=True)
                     for f in (node_dir / "takes" / "clips").iterdir():
                         shutil.copy(f, gdir / f"{media}-clips" / f.name)
-            # publish renderable leaf artifacts (html storyboards, animatics…)
-            for l in n["leaf_meta"]:
-                content = str(l.get("content", ""))
-                if content.endswith((".html", ".mp4")):
-                    src = g["dir"] / "nodes" / n["slug"] / "leaves" / content
-                    if src.exists():
-                        (gdir / "leaves").mkdir(exist_ok=True)
-                        shutil.copy(src, gdir / "leaves" / content)
 
     total = sum(len(g["nodes"]) for g in genomes)
-    print(f"✓ built _site/ — {len(genomes)} genome(s), {total} node pages")
+    posters = sum(1 for v in _POSTERS.values() if v)
+    print(f"✓ built _site/ — {len(genomes)} genome(s), {total} node pages, {posters} posters"
+          + ("" if FFMPEG else " (no ffmpeg: posters come from approved stills only)"))
+
+    broken = check_links(mine)
+    if broken:
+        print("✗ broken local links:")
+        for b in broken:
+            print(f"    {b}")
+        raise SystemExit(1)
+    swept = sum(1 for _ in OUT.rglob("*.html"))
+    print(f"✓ link check: {swept} pages swept, no broken local references")
 
 
 if __name__ == "__main__":

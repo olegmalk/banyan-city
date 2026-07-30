@@ -1,0 +1,120 @@
+# Loop cycle 012 — v6 screening notes: the death gets its sound
+
+**Opened:** 2026-07-30 · **Verdict source:** founder's v6 notes (in chat)
+
+## The founder's three notes
+
+1. "Some subtitles are offset."
+2. "'huh. green.' should be 'huh. blue.'" (author's line change — R4).
+3. "His death is very anticlimactic… something missing that would make it
+   much better, because it's a bit boring right now. Probably sound effects
+   or music, or go in a whole other direction."
+
+## Diagnoses
+
+1. **Subtitle drift was structural.** The master audio was built as per-beat
+   AAC segments concatenated with `-c copy`; AAC quantizes each segment to
+   ~23 ms frames and the per-beat video encodes quantize to the frame grid,
+   so the two tracks drifted apart cumulatively — later beats' captions lag
+   the voice. Captions are burned per-beat (relative times), so the video
+   was right; the AUDIO was in the wrong place.
+2. The line was recorded, captioned, and manifested as "Huh. Green."
+3. **The script's own sound design was never built.** Beat 1 scripts "one
+   mechanical keyboard, very fast — then it stops"; beat 5 scripts "Black,
+   and the sound of a cooling fan spinning down." Neither existed. The
+   gunshot-like thump (cycle 011 v1) was removed and never replaced, so the
+   fall played over nothing but the constant wind bed — no contrast, no event.
+
+## Fixes (pipeline, $0)
+
+- **render_t3: one placed mix, not concatenated segments.** Every beat's VO
+  is `adelay`ed to its beat's MEASURED video offset (from the actual encoded
+  beat files) in a single filtergraph → audio position derives from the
+  video, drift is structurally impossible. Assembly now prints the timeline
+  table (beat starts + durations) so sound cues are placed against real
+  numbers, not paper timing.
+- **Line change**: node.md + shots.md → "Huh. Blue."; clip renamed
+  `05-huh-blue.mp4`; Chatterbox retake of beat 5 (1.2 s, old take archived
+  to vo-archive/, R6). Founder-directed 2026-07-30. Reads consistent with
+  the blue-hospital joke chain (his correction of 2026-07-29).
+- **The death is contrast, not volume** (`pipeline/sfx.py` + per-node
+  `clips/sound.yaml`): synthesized room hum + fast keyboard through the
+  opening (J-cut, stops just before the first line) → at the tip-over ALL
+  sound dies (hum out + wind bed ducked) → the mug lands ALONE in true
+  silence at 14.9 s → the scripted fan spin-down under "Huh. Blue." → the
+  world's wind returns with the too-blue sky. No thump, no music: an
+  engineer's death told in machine sounds going quiet. All cues synthesized
+  with fixed seeds — re-render is bit-identical, nothing downloaded.
+- **Bug found by QA on the way**: the bed duck as an afade out+in pair
+  silenced the ENTIRE bed (`afade=t=in` mutes everything before its start).
+  qa_episode's "no digital silence" check caught it; replaced with a
+  windowed `volume` expression. QA now fully green (12 checks; the one
+  warn is the scripted BLACK cold open).
+
+## Evidence
+
+- Timeline table: mug transient measured at 14.9 s at −16 dB inside a
+  −35 dB silence window; fan 16.3→19.7 s; "Blue." caption frame verified
+  inside its chunk window over the fallen-mug shot.
+- `banyan-drops/ep1-remake-screening-v7.mp4` (94 s, −14.4 LUFS, peak-bound).
+
+## Verdict
+
+Pending — v7 delivered for the founder's screen. Asks: subtitles now
+synced? does the death land? sound.yaml times marked (ear) are the knobs.
+Offered: founder-recorded real phone foley (mug, keyboard) to replace the
+synthesized stand-ins — better sound AND family provenance.
+
+## Lesson
+
+When a moment is boring, read the script again before adding anything —
+episode 1's sound design was already written, in stage directions nobody
+had built. And: silence needs something to be the absence OF; the room hum
+exists so its death is audible.
+
+## Addendum — v7b: ALL the scripted sounds (founder: "did you add all the sounds?")
+
+v7 built only the death sequence. The script writes three more cues, now in:
+- **beat 09** `terminal_keys` — "$ whoami" types itself: softer and steadier
+  than the human typing of beat 1 (the machine's voice, not his hands).
+- **beat 10** `footsteps_soil` — "something with feet is walking, ~400m":
+  paired low thumps (52-62 Hz, no click transient — pressure through soil,
+  felt not heard), distant, under the SENSE bloom.
+- **beat 15** the same walker, closer: faster period, swelling level, -14 dB —
+  the episode now ENDS on the hook's sound, thump-THUMP into the smash to
+  black. sfx events pass arbitrary synth params (period, grow) through
+  sound.yaml. QA 12/12. Delivered as v7b.
+
+## Addendum 2 — v7c: right footage (founder: "why are you using the old and
+## very bad ai videos?")
+
+v7/v7b were assembled from `clips/` — the stale early-era renders. The
+published cut's footage lives in `takes/clips/` (engine-tagged,
+ballot-approved takes), and the pick list is recorded in
+`leaves/001-t3-d.yaml` sources. v7c stages exactly those picks (HAILUO
+opener, PIXVERSE fall two-shot, PIXVERSE2 sev-1, the POST beats), rebuilds
+beat 5's dying-vision regrade from the terminal — now drifting BLUE before
+black so the picture agrees with the changed line — and re-tunes every
+sound cue to the real two-shot geography (fan spin-down plays over his
+dying terminal, 5.1–11.1s of beat 4). Duck floor at ≈−57 dB: scored silence
+is air, not digital zero; qa_episode's dead-air check moved to −60 dB so it
+still catches true dropouts while admitting designed silence. 110 s,
+−14.7 LUFS, QA 12/12. Delivered as v7c — THE screening cut.
+
+## Addendum 3 — v7d: black means black, and the thump (founder v7c notes)
+
+Two notes: "when he says 'huh blue' it's showing the terminal image" and
+"the death sound comes late, and it doesn't fit. it should be more of a
+thump."
+
+- Beat 5 is now BLACK, exactly as the script always said ("Black, and the
+  sound of a cooling fan spinning down"). The dying-terminal regrade was a
+  cycle-011 invention; gone. The caption + fan + line carry the beat.
+- New `body_thump` cue replaces the ceramic mug clink: dull, heavy, all low
+  end (52/78/34 Hz partials, soft 8ms attack, no ring) — him and the mug
+  arriving together. Placed mid-tilt at beat4+2.7s (the fall take has no
+  visible impact frame; ear-placed against the tilt), inside real silence:
+  hum out at 2.0, thump at 2.7, nothing until the fan starts at 7.0 over
+  his dying terminal and finishes over the black.
+- Thump gain −13 dB after a true-peak fail at −10 (QA caught −0.3 dBTP).
+QA 12/12. Delivered as v7d.

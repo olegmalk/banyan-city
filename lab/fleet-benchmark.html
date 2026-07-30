@@ -1,79 +1,355 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8">
+<html lang="en">
+<head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Render Farm Benchmark — 2026-07-29</title>
+<meta name="description" content="Four machines, identical work: two frames at 40 steps, 832×1216, same model and seeds. A gaming laptop matches a rented datacenter GPU and beats Apple silicon 13×.">
+<link rel="canonical" href="https://banyan.city/lab/fleet-benchmark.html">
+<link rel="alternate" type="application/rss+xml" title="new nodes" href="https://banyan.city/feed.xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Banyan City">
+<meta property="og:title" content="The render farm, benchmarked — banyan.city lab">
+<meta property="og:description" content="Four machines, identical work: two frames at 40 steps, 832×1216, same model and seeds. A gaming laptop matches a rented datacenter GPU and beats Apple silicon 13×.">
+<meta property="og:url" content="https://banyan.city/lab/fleet-benchmark.html">
+<meta property="og:image" content="https://banyan.city/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The render farm, benchmarked — banyan.city lab">
+<meta name="twitter:description" content="Four machines, identical work: two frames at 40 steps, 832×1216, same model and seeds. A gaming laptop matches a rented datacenter GPU and beats Apple silicon 13×.">
+<meta name="twitter:image" content="https://banyan.city/og.png">
+<title>The render farm, benchmarked — banyan.city lab</title>
+<!-- theme: grove-at-night v1 -->
 <style>
-  :root { color-scheme: light dark; }
-  body { font-family: -apple-system, "Segoe UI", sans-serif; max-width: 760px;
-         margin: 2rem auto; padding: 0 1.2rem; line-height: 1.5;
-         background: #101418; color: #e8edf2; }
-  h1 { font-size: 1.5rem; margin-bottom: .2rem; }
-  .sub { color: #93a4b3; margin-top: 0; font-size: .95rem; }
-  .card { background: #182028; border: 1px solid #26313c; border-radius: 12px;
-          padding: 1.1rem 1.3rem; margin: 1rem 0; }
-  .name { font-weight: 650; font-size: 1.05rem; }
-  .role { color: #93a4b3; font-size: .85rem; }
-  .barwrap { background: #0c1014; border-radius: 6px; height: 26px; margin: .55rem 0 .2rem;
-             position: relative; overflow: hidden; }
-  .bar { height: 100%; border-radius: 6px;
-         background: linear-gradient(90deg, #2dd4a0, #1fa87e); }
-  .bar.slow { background: linear-gradient(90deg, #e8a15c, #c9803f); }
-  .bar.paid { background: linear-gradient(90deg, #6aa9e8, #4a86c9); }
-  .val { position: absolute; right: 10px; top: 3px; font-weight: 700; font-size: .95rem; }
-  .meta { font-size: .85rem; color: #b7c4cf; }
-  .foot { color: #93a4b3; font-size: .82rem; margin-top: 1.4rem; border-top: 1px solid #26313c; padding-top: .8rem; }
-  .big { font-size: 1.35rem; font-weight: 700; color: #2dd4a0; }
-  table { width: 100%; border-collapse: collapse; margin-top: .4rem; font-size: .9rem; }
-  td, th { text-align: left; padding: .3rem .5rem .3rem 0; border-bottom: 1px solid #202a34; }
-  th { color: #93a4b3; font-weight: 600; }
-</style></head><body>
+:root {
+  --bg: #070d09; --bg-glow: #10241a; --panel: #0d1610; --panel-2: #111c14;
+  --ink: #e9f2ea; --muted: #9cb2a1; --faint: #6d8273;
+  --leaf: #8ade9f; --leaf-deep: #2e6b44; --leaf-dim: #234631;
+  --sap: #ffc76a; --sap-deep: #6b4c1a; --sap-ink: #1a1206;
+  --line: rgba(138,222,159,.16); --line-soft: rgba(138,222,159,.09);
+  --code-bg: #060a07; --shadow: 0 18px 50px -18px rgba(0,0,0,.65);
+  --display: 'Iowan Old Style','Palatino Nova',Palatino,'Book Antiqua',Georgia,serif;
+  --body: 'Iowan Old Style',Palatino,Georgia,'Times New Roman',serif;
+  --mono: ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f4f1e6; --bg-glow: #e3ecdb; --panel: #fbf9f1; --panel-2: #f2efe2;
+    --ink: #1c291f; --muted: #55694f; --faint: #7d8f76;
+    --leaf: #1e7a3f; --leaf-deep: #9cc4a8; --leaf-dim: #c4d9c9;
+    --sap: #b06f10; --sap-deep: #e8c98d; --sap-ink: #fffdf5;
+    --line: rgba(30,90,50,.22); --line-soft: rgba(30,90,50,.11);
+    --code-bg: #ebe7d8; --shadow: 0 14px 40px -18px rgba(60,80,55,.35);
+  }
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 17px/1.7 var(--body);
+  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+  background-image:
+    radial-gradient(1100px 520px at 50% -180px, var(--bg-glow), transparent 70%),
+    radial-gradient(700px 420px at 85% 8%, rgba(255,199,106,.05), transparent 70%);
+  background-attachment: fixed;
+}
+body::after { /* film grain over everything, never intercepting a tap */
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 2;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E"); opacity: .05; mix-blend-mode: overlay;
+}
+main { max-width: 720px; margin: 0 auto; padding: 1.6rem 1.25rem 5rem; position: relative; }
+a { color: var(--leaf); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 3px; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.15; font-weight: 600;
+  letter-spacing: -0.015em; text-wrap: balance; }
+h1 { font-size: clamp(2rem, 6.5vw, 3rem); margin: .4rem 0 .6rem; }
+h2 { font-size: 1.45rem; margin: 2.6rem 0 .8rem; }
+h3 { font-size: 1.1rem; }
+p { margin: .8rem 0; }
+hr { border: 0; border-top: 1px solid var(--line); margin: 2.4rem 0; }
+img, video { max-width: 100%; }
 
-<h1>🌱 banyan.city render farm — benchmark</h1>
-<p class="sub">July 29, 2026 · identical task on every machine: 2 images, 40 steps,
-832×1216, same model, same seeds (episode beat 09)</p>
+/* ---- voice: the machine annotates the story ---- */
+.eyebrow { font: 700 .72rem/1 var(--mono); letter-spacing: .22em; text-transform: uppercase;
+  color: var(--sap); margin: 0 0 .4rem; }
+.eyebrow a { color: inherit; }
+.lede { font-size: 1.12rem; color: var(--muted); max-width: 36em; }
+code, pre { font-family: var(--mono); font-size: .84em; }
+code { background: var(--code-bg); border: 1px solid var(--line-soft);
+  border-radius: 5px; padding: .08em .35em; }
+pre { background: var(--code-bg); border: 1px solid var(--line); border-radius: 10px;
+  padding: .9rem 1.1rem; overflow-x: auto; color: var(--leaf); }
+pre code { background: none; border: 0; padding: 0; }
+blockquote { margin: 1.1rem 0; padding: .5rem 1.15rem; border-left: 3px solid var(--sap);
+  color: var(--ink); background: linear-gradient(90deg, var(--panel-2), transparent 85%);
+  border-radius: 0 10px 10px 0; font-style: italic; }
+blockquote strong { font-style: normal; font-family: var(--mono); font-size: .78em;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--sap); }
 
-<div class="card">
-  <div class="name">🏆 MSI Vector 16 HX — RTX 5070 Ti (Windows)</div>
-  <div class="role">primary renderer · joined the farm today</div>
-  <div class="barwrap"><div class="bar" style="width:8%"></div><span class="val">13.5 s / image</span></div>
-  <div class="meta">Free · runs unattended from another room · was 220 s before the
-  power-mode fix (16× unlock) · a full 4-option ballot round ≈ <b>1 minute</b></div>
+/* ---- navigation ---- */
+.crumbs { font: 600 .78rem/1.9 var(--mono); color: var(--faint);
+  margin-bottom: 1.4rem; letter-spacing: .02em; }
+.crumbs a { color: var(--muted); }
+.crumbs a:first-child { color: var(--leaf); }
+
+/* ---- chips → badges ---- */
+.chip { display: inline-block; font: 700 .68rem/1 var(--mono); letter-spacing: .07em;
+  text-transform: uppercase; padding: .34rem .6rem; border-radius: 999px;
+  border: 1px solid var(--line); color: var(--muted); vertical-align: middle;
+  margin: 0 .35rem .3rem 0; background: var(--panel); }
+.chip.hot { color: var(--sap); border-color: var(--sap-deep);
+  background: linear-gradient(180deg, rgba(255,199,106,.12), transparent); }
+.chip.trunk, .chip.live { color: var(--leaf); border-color: var(--leaf-deep); }
+
+/* ---- surfaces ---- */
+.panel, .card, .notice { background: linear-gradient(180deg, var(--panel-2), var(--panel));
+  border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); }
+.card { padding: 1rem 1.2rem; }
+.card .title { font-family: var(--display); font-size: 1.15rem; font-weight: 600; }
+.card .teaser { color: var(--muted); font-size: .95rem; margin: .4rem 0 .55rem; }
+.card .meta { font: 600 .78rem/1.7 var(--mono); color: var(--faint); }
+.notice { padding: .85rem 1.1rem; font-size: .93rem; color: var(--muted);
+  border-style: solid; box-shadow: none; }
+
+/* ---- drawers: the receipts live one fold down ---- */
+details.drawer { background: var(--panel); border: 1px solid var(--line);
+  border-radius: 14px; margin: 1rem 0; overflow: hidden; }
+details.drawer > summary { cursor: pointer; list-style: none; padding: .85rem 1.1rem;
+  font: 700 .8rem/1.4 var(--mono); letter-spacing: .06em; text-transform: uppercase;
+  color: var(--muted); user-select: none; }
+details.drawer > summary::-webkit-details-marker { display: none; }
+details.drawer > summary::before { content: "▸"; display: inline-block; margin-right: .6rem;
+  color: var(--sap); transition: transform .2s ease; }
+details.drawer[open] > summary::before { transform: rotate(90deg); }
+details.drawer > summary:hover { color: var(--ink); }
+details.drawer > .drawer-body { padding: 0 1.1rem 1rem; }
+
+/* ---- buttons ---- */
+.btn { display: inline-block; background: linear-gradient(180deg, var(--sap), #e8a94a);
+  color: var(--sap-ink); font: 700 .95rem/1 var(--body); padding: .78rem 1.4rem;
+  border-radius: 999px; margin: .3rem .35rem .3rem 0;
+  box-shadow: 0 6px 24px -8px rgba(255,199,106,.45); }
+.btn:hover { text-decoration: none; transform: translateY(-1px);
+  box-shadow: 0 10px 28px -8px rgba(255,199,106,.6); }
+.btn.ghost { background: transparent; color: var(--leaf);
+  border: 1px solid var(--leaf-deep); box-shadow: none; }
+.btn.ghost:hover { border-color: var(--leaf); box-shadow: none; }
+.btn { transition: transform .15s ease, box-shadow .15s ease; }
+
+/* ---- the phone: episodes are 9:16 and shown that way ---- */
+.phone { margin: 1.4rem auto; max-width: 320px; }
+.phone video { width: 100%; aspect-ratio: 9 / 16; object-fit: contain; display: block;
+  background: var(--code-bg); border: 1px solid var(--line); border-radius: 22px;
+  box-shadow: var(--shadow), 0 0 80px -30px rgba(138,222,159,.35); }
+.phone figcaption { font: 600 .78rem/1.5 var(--mono); color: var(--faint);
+  text-align: center; margin-top: .6rem; }
+
+/* ---- tables: hairlines, not cages ---- */
+table { border-collapse: collapse; width: 100%; font-size: .88em;
+  display: block; overflow-x: auto; }
+th, td { border: 0; border-bottom: 1px solid var(--line-soft);
+  padding: .55rem .7rem; text-align: left; }
+th { font: 700 .72rem/1.4 var(--mono); letter-spacing: .08em; text-transform: uppercase;
+  color: var(--faint); border-bottom: 1px solid var(--line); background: none; }
+td code { font-size: .95em; }
+
+/* ---- entrance: one staggered rise on load, then stillness ---- */
+@keyframes rise { from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; } }
+.rise { animation: rise .6s cubic-bezier(.2,.7,.3,1) both; }
+.rise:nth-child(2) { animation-delay: .06s; } .rise:nth-child(3) { animation-delay: .12s; }
+.rise:nth-child(4) { animation-delay: .18s; } .rise:nth-child(5) { animation-delay: .24s; }
+@media (prefers-reduced-motion: reduce) {
+  .rise { animation: none; } html { scroll-behavior: auto; }
+  .btn { transition: none; }
+}
+
+/* ---- footer ---- */
+footer { margin-top: 4.5rem; padding-top: 1.4rem; border-top: 1px solid var(--line);
+  color: var(--faint); font: 500 .84rem/1.8 var(--mono); text-align: center; }
+
+/* ---- the one-breath glossary strangers actually need ---- */
+.legend { font: 600 .76rem/1.8 var(--mono); color: var(--faint); text-align: center;
+  margin: 2.2rem 0 0; }
+.legend b { color: var(--leaf); font-weight: 700; }
+
+/* ---- lab: one shell for all four pages ---- */
+main { max-width: 1040px; }
+.measure { max-width: 38em; }
+.labnav { display: flex; flex-wrap: wrap; align-items: baseline; gap: .35rem 1.1rem;
+  padding: .2rem 0 1rem; border-bottom: 1px solid var(--line-soft); margin-bottom: 1.5rem; }
+.labnav .wordmark { font-family: var(--display); font-size: 1.1rem; font-weight: 600;
+  color: var(--ink); letter-spacing: -.01em; }
+.labnav .wordmark b { color: var(--leaf); font-weight: 600; }
+.labnav nav { font: 600 .78rem/1.9 var(--mono); color: var(--faint); }
+.labnav nav a { color: var(--muted); }
+.labnav nav a.cta { color: var(--sap); }
+.labnav nav a[aria-current] { color: var(--ink); text-decoration: none; cursor: default; }
+.dateline { font: 600 .76rem/1.6 var(--mono); color: var(--faint); letter-spacing: .04em;
+  text-transform: uppercase; margin: .1rem 0 1rem; }
+.money { font-size: .93rem; color: var(--muted); max-width: 42em; }
+.money b { color: var(--ink); font-family: var(--mono); font-size: .95em; }
+
+/* ---- galleries ---- */
+.beat { margin: 2.4rem 0 0; }
+.beat h2 { font-size: 1.12rem; margin: 0 0 .1rem; }
+.beat .note { font-size: .92rem; color: var(--muted); margin: .2rem 0 .55rem; max-width: 40em; }
+.beat .note b { color: var(--sap); font-family: var(--mono); font-size: .82em;
+  letter-spacing: .06em; text-transform: uppercase; }
+.grid { display: grid; gap: .7rem; margin-top: .5rem; }
+.grid.four { grid-template-columns: repeat(4, 1fr); }
+.grid.three { grid-template-columns: repeat(3, 1fr); }
+figure.shot { margin: 0; }
+figure.shot a { display: block; }
+figure.shot img { width: 100%; height: auto; display: block; border-radius: 10px;
+  border: 1px solid var(--line); background: var(--code-bg); }
+figure.shot a:hover img { border-color: var(--sap); }
+figure.shot figcaption { font: 600 .72rem/1.4 var(--mono); color: var(--muted);
+  margin-top: .35rem; letter-spacing: .02em; }
+figure.shot figcaption i { font-style: normal; color: var(--faint); }
+.tierbar { position: sticky; top: 0; z-index: 3; display: grid; gap: .7rem;
+  grid-template-columns: repeat(3, 1fr); margin: 1.6rem 0 0;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+  padding: .55rem .7rem; box-shadow: var(--shadow); }
+.tierbar div { font: 700 .7rem/1.35 var(--mono); letter-spacing: .05em;
+  text-transform: uppercase; color: var(--muted); }
+.tierbar div b { color: var(--sap); display: block; font-size: .95em; }
+.tierbar .stack { display: none; }
+@media (max-width: 900px) { .grid.four { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 760px) {
+  .grid.three { grid-template-columns: 1fr; max-width: 420px; }
+  .tierbar { grid-template-columns: 1fr; position: static; }
+  .tierbar .stack { display: block; color: var(--faint); text-transform: none;
+    letter-spacing: 0; font-weight: 500; }
+}
+@media (max-width: 430px) { .grid.four { grid-template-columns: 1fr; max-width: 420px; } }
+
+/* ---- fleet chart ---- */
+.machine { padding: .95rem 1.1rem; margin: .8rem 0; }
+.machine .name { font-family: var(--display); font-size: 1.12rem; font-weight: 600; }
+.machine .role { font: 600 .74rem/1.6 var(--mono); color: var(--faint);
+  text-transform: uppercase; letter-spacing: .06em; }
+.barwrap { background: var(--code-bg); border: 1px solid var(--line-soft); border-radius: 7px;
+  height: 28px; margin: .6rem 0 .35rem; position: relative; overflow: hidden; }
+.bar { height: 100%; border-radius: 6px; min-width: 3px;
+  background: linear-gradient(90deg, var(--leaf-deep), var(--leaf)); }
+.bar.slow { background: linear-gradient(90deg, var(--sap-deep), var(--sap)); }
+.bar.paid { background: linear-gradient(90deg, #2b4f6b, #6aa9e8); }
+.val { position: absolute; right: 10px; top: 0; line-height: 28px;
+  font: 700 .8rem/28px var(--mono); color: var(--ink); }
+.machine .meta { font-size: .9rem; color: var(--muted); }
+.axis { font: 600 .74rem/1.6 var(--mono); color: var(--faint); letter-spacing: .05em;
+  text-transform: uppercase; margin: 1.4rem 0 .2rem; }
+.swatches { font: 600 .76rem/2 var(--mono); color: var(--muted); margin: .2rem 0 .6rem; }
+.swatches i { display: inline-block; width: .8rem; height: .8rem; border-radius: 3px;
+  margin-right: .3rem; vertical-align: -1px; }
+.stat { display: block; margin: 1.6rem 0; padding: 1rem 1.2rem; }
+.stat .fig { font-family: var(--display); font-size: 1.6rem; font-weight: 600; color: var(--sap); }
+@media (max-width: 560px) {
+  table.stack, table.stack tbody, table.stack tr, table.stack td, table.stack th { display: block; }
+  table.stack thead { display: none; }
+  table.stack tr { border-bottom: 1px solid var(--line); padding: .4rem 0; }
+  table.stack td { border: 0; padding: .15rem 0; }
+  table.stack td[data-l]::before { content: attr(data-l) " — "; color: var(--faint);
+    font: 700 .7rem/1.6 var(--mono); text-transform: uppercase; letter-spacing: .06em; }
+}
+</style>
+</head>
+<body>
+<main>
+<header class="labnav">
+<a class="wordmark" href="../index.html">banyan<b>.city</b></a>
+<nav><a href="../sapling/001-capability-inventory.html" class="cta">▶ Watch episode 1</a> · <a href="index.html">The lab</a> ·
+<a href="../machine.html">How it works</a> · <a href="../status.html">Status board</a></nav>
+</header>
+<p class="eyebrow">The lab · fleet benchmark</p>
+<h1>The render farm, benchmarked</h1>
+<p class="dateline">Measured 2026-07-29 · identical task on every machine</p>
+<p class="lede">Every machine was given exactly the same job: two frames, 40 <b>steps</b> each,
+832×1216, same model, same seeds, one fixed <b>beat</b> of episode 1 (beat 09 — a beat is one shot
+of the episode). Nothing here is a spec sheet; it is a stopwatch.</p>
+
+<div class="panel stat">
+<p class="eyebrow" style="margin:0">Why speed is the whole game</p>
+<p style="margin:.3rem 0"><span class="fig">≈ 1 minute</span> — how long the gaming laptop takes
+to render a full <b>ballot round</b>: four candidate versions of one shot, put to the audience so
+they can pick which one becomes canon. The same round takes about 12 minutes on the studio Mac.
+Faster machine, more votes, more of the show decided by the people watching it.</p>
+<p style="margin:.3rem 0 0"><a class="btn ghost" href="../sapling/001-capability-inventory-shots.html">🎬 See a ballot on the shot
+board</a> <a class="btn ghost" href="../machine.html">How voting works</a></p>
 </div>
 
-<div class="card">
-  <div class="name">☁️ RunPod — rented RTX 3090 / 4090</div>
-  <div class="role">surge lane · proven end-to-end today after 3 fixed bugs</div>
-  <div class="barwrap"><div class="bar paid" style="width:7%"></div><span class="val">11 s / image</span></div>
-  <div class="meta">~$0.01–0.03 per round + ~3 min boot each time · $9.55 of the $10
-  budget intact · hard $5/evening cap in code · every pod ledgered</div>
+<p class="axis">Frames per hour — longer bar is better</p>
+<p class="swatches"><i style="background:linear-gradient(90deg,var(--leaf-deep),var(--leaf))"></i>free,
+in-house, fast &nbsp; <i style="background:linear-gradient(90deg,var(--sap-deep),var(--sap))"></i>free,
+in-house, slow &nbsp; <i style="background:linear-gradient(90deg,#2b4f6b,#6aa9e8)"></i>rented cloud
+(paid)</p>
+<div class="panel machine">
+<div class="name">MSI Vector 16 HX — RTX 5070 Ti, 12 GB (Windows)</div>
+<div class="role">the renderer · joined the farm 2026-07-29</div>
+<div class="barwrap"><div class="bar" style="width:81%"></div>
+<span class="val">267 frames/hr · 13.5 s each</span></div>
+<p class="meta">Free to run. Works unattended from another room. It measured 220 s a frame until a Windows power-mode fix unlocked it — a 16× difference from one setting.</p>
+</div>
+<div class="panel machine">
+<div class="name">RunPod — rented RTX 4090 (cloud)</div>
+<div class="role">the surge lane · proven end-to-end 2026-07-29</div>
+<div class="barwrap"><div class="bar paid" style="width:100%"></div>
+<span class="val">327 frames/hr · 11 s each</span></div>
+<p class="meta">The only paid machine here: about 1–3¢ per ballot round, plus roughly 3 minutes of boot each time. Used when four beats need to iterate at once. Every pod is ledgered; the code refuses to spend past $5 in an evening.</p>
+</div>
+<div class="panel machine">
+<div class="name">The second Mac — M3 Pro, 36 GB (family machine)</div>
+<div class="role">overnight batches · joined 2026-07-29</div>
+<div class="barwrap"><div class="bar slow" style="width:9%"></div>
+<span class="val">29 frames/hr · 125 s each</span></div>
+<p class="meta">Free to run, and the machine that rendered the whole <a href="quality-tiers.html">quality-tiers gallery</a>. Good for a queue left running overnight, too slow to iterate with.</p>
+</div>
+<div class="panel machine">
+<div class="name">The studio Mac — M1 Pro, 32 GB</div>
+<div class="role">writing, voice, editing, orchestration · renders on the side</div>
+<div class="barwrap"><div class="bar slow" style="width:6%"></div>
+<span class="val">20 frames/hr · 178 s each</span></div>
+<p class="meta">Free to run. It was also running the day's production while being benchmarked, which is exactly the condition it works in.</p>
 </div>
 
-<div class="card">
-  <div class="name">💻 Second Mac (family machine)</div>
-  <div class="role">second Mac worker — joined the farm 2026-07-29</div>
-  <div class="barwrap"><div class="bar slow" style="width:70%"></div><span class="val">125 s / image</span></div>
-  <div class="meta">Free · good overnight batch machine · ballot round ≈ 8 min</div>
-</div>
+<h2>Two measured reasons the Macs are slower</h2>
+<p class="measure">These two differences are the ones this benchmark can actually attribute, and
+together they account for roughly 2× of the ~13× gap. The rest is raw throughput and memory
+bandwidth between a 2026 desktop-class GPU and a laptop system-on-chip — real, but not something
+this test isolated, so it is not claimed here as if it were measured.</p>
+<table class="stack">
+<thead><tr><th>&nbsp;</th><th>NVIDIA laptop GPU</th><th>Apple M-series</th></tr></thead>
+<tbody>
+<tr><td data-l="Factor">Dedicated AI silicon (tensor cores)</td>
+    <td data-l="NVIDIA laptop GPU">yes — this maths is its home game</td>
+    <td data-l="Apple M-series">no; a general-purpose GPU does the work</td></tr>
+<tr><td data-l="Factor">Numeric precision we can use</td>
+    <td data-l="NVIDIA laptop GPU">half precision (fast)</td>
+    <td data-l="Apple M-series">double the width — half precision renders black frames on these
+    chips, so we pay for the safe path</td></tr>
+<tr><td data-l="Factor">So, per frame</td>
+    <td data-l="NVIDIA laptop GPU">1× work on specialised silicon</td>
+    <td data-l="Apple M-series">2× work on general silicon</td></tr>
+<tr><td data-l="Factor">Accounted for here</td>
+    <td data-l="NVIDIA laptop GPU">—</td>
+    <td data-l="Apple M-series">≈ 2× of the ~13×; the remainder is unattributed silicon
+    throughput</td></tr>
+</tbody></table>
 
-<div class="card">
-  <div class="name">💻 M1 Pro Mac (the studio)</div>
-  <div class="role">orchestration, voice, editing — renders on the side</div>
-  <div class="barwrap"><div class="bar slow" style="width:100%"></div><span class="val">178 s / image</span></div>
-  <div class="meta">Free · also ran the whole day's production while benchmarking ·
-  ballot round ≈ 12 min</div>
-</div>
+<h2>The fleet in one line</h2>
+<p class="measure">The Windows laptop renders, the Macs write and direct, the cloud waits for
+surges — so four beats can iterate in parallel. The same four names are used on every lab page:
+<b>the renderer</b> (MSI Vector 16 HX, RTX 5070 Ti 12 GB), <b>the second Mac</b> (M3 Pro, 36 GB),
+<b>the studio Mac</b> (M1 Pro, 32 GB), and <b>the surge lane</b> (rented RunPod RTX 4090).</p>
 
-<p><span class="big">Why the 13× gap?</span></p>
-<table>
-  <tr><th></th><th>NVIDIA laptop GPU</th><th>Apple M-series</th></tr>
-  <tr><td>Dedicated AI silicon (tensor cores)</td><td>yes — this math's home game</td><td>no (general-purpose GPU)</td></tr>
-  <tr><td>Numeric precision needed</td><td>half (fast)</td><td>double — half-precision renders black on these chips</td></tr>
-  <tr><td>So per image…</td><td>1× work on fast silicon</td><td>2× work on general silicon</td></tr>
-</table>
+<h2>What the money looks like</h2>
+<p class="money"><b>$1.24</b> is the total cash this project has spent, ever — <b>$0.50</b> of rented cloud GPU (all of it on 2026-07-29, the day the cloud numbers above were measured) and <b>$0.74</b> of paid video-API tests. Everything rendered on the household machines cost $0. That is one number with one source: it is the sum of all 73 rows of <a href="https://github.com/olegmlkvorg/banyan-city/blob/main/ledger/render-spend.csv">ledger/render-spend.csv</a>, read 2026-07-30. Caps live in code — $8 per command, $20 lifetime (<a href="https://github.com/olegmlkvorg/banyan-city/blob/main/pipeline/budget.yaml">budget.yaml</a>), $5 per evening on the cloud lane. Every render, vote and cent is public.</p>
 
-<p class="foot">The fleet in one line: the Windows laptop renders, the Macs create and
-direct, the cloud waits for surges — 4 beats can iterate in parallel.
-Total cash spent on the entire episode-1 remake era: <b>≈ $1.20</b>.
-Every render, vote, and cent is public at banyan.city.</p>
-
-</body></html>
+<footer>
+<a href="../index.html">Home</a> · <a href="../sapling/001-capability-inventory.html">Watch episode 1</a> · <a href="index.html">The lab</a> ·
+<a href="../machine.html">How it works</a> · <a href="../status.html">The living status board</a> ·
+<a href="https://github.com/olegmlkvorg/banyan-city">Source</a>
+</footer>
+<p class="legend"><b>beat</b> = one shot of the episode · <b>seed</b> = the same prompt run again, to show a result is not a fluke · <b>steps</b> = how long the AI is allowed to keep refining one frame · <b>ballot round</b> = four candidate versions of one shot, put to the audience</p>
+</main>
+</body>
+</html>

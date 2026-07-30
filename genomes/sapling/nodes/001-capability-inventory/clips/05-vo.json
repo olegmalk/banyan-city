@@ -5,23 +5,23 @@
  "lines": [
   {
    "who": "VO",
-   "text": "Huh. Green.",
+   "text": "Huh. Blue.",
    "start": 0.0,
-   "end": 1.4,
+   "end": 0.882,
    "chunks": [
     {
      "text": "Huh.",
      "start": 0.0,
-     "end": 0.726
+     "end": 0.363
     },
     {
-     "text": "Green.",
-     "start": 0.726,
-     "end": 1.4
+     "text": "Blue.",
+     "start": 0.363,
+     "end": 0.882
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 1.7
+ "total_s": 1.182
 }

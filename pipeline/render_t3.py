@@ -325,23 +325,17 @@ def vo_manifest(clips_dir: Path, num: int) -> dict | None:
     return data
 
 
-def audio_segment(dur: float, audio: Path, workdir: Path, tag: str) -> Path:
-    """One audio segment exactly `dur` long: the beat's audio padded with
-    silence / trimmed to fit, or pure silence when no audio. Uniform AAC so
-    segments concat cleanly into the episode's single track."""
-    out = workdir / f"aud-{tag}.m4a"
-    if audio:
-        cmd = [FFMPEG, "-y", "-i", str(audio), "-af",
-               f"aresample={AUDIO_SR},apad", "-t", f"{dur}",
-               "-ac", "2", "-c:a", "aac", "-b:a", "128k", str(out)]
-    else:
-        cmd = [FFMPEG, "-y", "-f", "lavfi", "-i",
-               f"anullsrc=r={AUDIO_SR}:cl=stereo", "-t", f"{dur}",
-               "-c:a", "aac", "-b:a", "128k", str(out)]
-    r = subprocess.run(cmd, capture_output=True, text=True)
-    if r.returncode:
-        raise SystemExit(f"audio segment {tag} failed:\n{r.stderr[-800:]}")
-    return out
+def load_sound_design(clips_dir: Path | None) -> dict:
+    """Optional per-node `clips/sound.yaml`: synthesized cues (pipeline/sfx.py)
+    placed on the timeline, plus a wind-bed duck window. The scripts write
+    their own sound design; this file is where it finally gets built."""
+    f = (clips_dir / "sound.yaml") if clips_dir else None
+    if not f or not f.exists():
+        return {}
+    try:
+        return yaml.safe_load(f.read_text()) or {}
+    except yaml.YAMLError as e:
+        raise SystemExit(f"sound.yaml is unreadable: {e}")
 
 
 def loudnorm_measure(track: Path) -> dict | None:
@@ -784,35 +778,113 @@ def main() -> int:
 
     # mux a single audio track only if any beat actually carries audio —
     # otherwise the episode stays a silent, captioned animatic (still valid).
-    if any(a for _, _, a in timeline):
-        segs = [audio_segment(d, a, workdir, f"{k:02d}") for k, (_, d, a) in enumerate(timeline)]
-        alist = workdir / "audio.txt"
-        alist.write_text("\n".join(f"file '{s.resolve()}'" for s in segs))
-        atrack = workdir / "audio.m4a"
-        subprocess.run([FFMPEG, "-y", "-f", "concat", "-safe", "0", "-i", str(alist),
-                        "-c", "copy", str(atrack)], check=True, capture_output=True)
-        # sound floor (loop cycle 001, defects 6/7): raw TTS concat mastered
-        # ~8 LU quiet with digital-zero holes between lines. A whisper wind
-        # bed (T2's chain) runs under the whole episode — no frame is ever
-        # digitally silent, fading out over the end card — then two-pass
-        # loudnorm brings the master to short-form platform level.
-        total_s = sum(d for _, d, _ in timeline)
+    n_story_beats = len(beats)
+    sound_design = load_sound_design(args.clips)
+    if any(a for _, _, a in timeline) or sound_design.get("events"):
+        # ---- one placed mix, not concatenated segments (cycle 012) ----
+        # Per-beat AAC segments quantize to ~23 ms frames and per-beat video
+        # encodes to the frame grid; concatenated separately, the two drifted
+        # apart cumulatively and later captions lagged the voice (founder
+        # note 2026-07-30: "some subtitles are offset"). Now every beat's
+        # audio is placed at its beat's MEASURED video offset in a single
+        # filtergraph, so audio position derives from the actual video files.
+        rdurs = [video_duration(p) or d for p, d, _ in timeline]
+        offs = [sum(rdurs[:k]) for k in range(len(rdurs))]
+        total_s = sum(rdurs)
+        # the timeline table: where every beat actually starts in the master —
+        # sound.yaml events are placed against THESE numbers, not paper timing
+        for k, (_, _, a) in enumerate(timeline):
+            tag = f"beat {k + 1:02d}" if k < n_story_beats else "end card"
+            print(f"    {tag}  {offs[k]:6.2f}s  +{rdurs[k]:.2f}s"
+                  f"{'  ♪ ' + Path(a).name if a else ''}")
+
+        inputs: list = []
+        chains: list = []
+        mix_ins: list = []
+        n_in = 0
+
+        def add_input(*spec: str) -> int:
+            nonlocal n_in
+            inputs.extend(spec)
+            n_in += 1
+            return n_in - 1
+
+        for k, (_, d, a) in enumerate(timeline):
+            if not a:
+                continue
+            i = add_input("-i", str(a))
+            chains.append(f"[{i}:a]aresample={AUDIO_SR},aformat=channel_layouts=stereo,"
+                          f"adelay={int(offs[k] * 1000)}:all=1[vo{k}]")
+            mix_ins.append(f"[vo{k}]")
+
+        # synthesized cues from clips/sound.yaml — the script's own sound
+        # design (keyboard that stops, mug in the silence, fan spin-down)
+        if sound_design.get("events"):
+            import sfx as _sfx
+            for j, ev in enumerate(sound_design["events"]):
+                b = int(ev["beat"])
+                if not 1 <= b <= len(rdurs):
+                    raise SystemExit(f"sound.yaml event {j}: beat {b} out of range")
+                name = str(ev["sfx"])
+                if name not in _sfx.SYNTHS:
+                    raise SystemExit(f"sound.yaml event {j}: unknown sfx {name!r} "
+                                     f"(have: {', '.join(sorted(_sfx.SYNTHS))})")
+                dur = ev.get("dur")
+                dur = rdurs[b - 1] if dur in (None, "full") else float(dur)
+                wav = workdir / f"sfx-{j:02d}-{name}.wav"
+                # everything that isn't placement is a synth parameter
+                # (stop_at, period, grow, …) — passed straight through
+                params = {k: v for k, v in ev.items()
+                          if k not in ("beat", "sfx", "start", "dur", "gain_db")}
+                _sfx.SYNTHS[name](wav, dur=dur, **params)
+                at = offs[b - 1] + float(ev.get("start", 0))
+                gain = float(ev.get("gain_db", -18))
+                i = add_input("-i", str(wav))
+                chains.append(f"[{i}:a]volume={gain}dB,aresample={AUDIO_SR},"
+                              f"aformat=channel_layouts=stereo,"
+                              f"adelay={int(at * 1000)}:all=1[fx{j}]")
+                mix_ins.append(f"[fx{j}]")
+
+        # sound floor (loop cycle 001, defects 6/7): a whisper wind bed under
+        # the whole episode so no frame is digitally silent — except where the
+        # design says silence IS the point (bed_duck: the death sequence).
+        duck = ""
+        bd = sound_design.get("bed_duck")
+        if bd:
+            t1 = offs[int(bd["from"]["beat"]) - 1] + float(bd["from"].get("at", 0))
+            t2 = offs[int(bd["to"]["beat"]) - 1] + float(bd["to"].get("at", 0))
+            # NOT a pair of afades: afade=t=in mutes everything BEFORE its
+            # start, so out@t1 + in@t2 silences the whole track (found the
+            # hard way — QA caught the bed at the digital floor). A windowed
+            # volume expression ducks only [t1, t2]: 0.2s out-ramp, 1.2s back.
+            # Floor at 0.15 (≈ −57 dB with the bed's own level): scored
+            # silence is AIR, not digital zero — true zero reads as a
+            # playback glitch on a phone, and qa_episode still polices real
+            # dropouts at the digital floor.
+            duck = (f",volume=volume='max(0.15, clip(({t1:.2f}-t)/0.2,0,1)"
+                    f"+clip((t-{t2:.2f})/1.2,0,1))':eval=frame")
+        i = add_input("-f", "lavfi", "-i",
+                      f"anoisesrc=color=brown:seed=42:r=24000:d={total_s:.2f}")
+        chains.append(f"[{i}:a]lowpass=f=300,volume=0.05"
+                      f",afade=t=out:st={max(total_s - 3.0, 0):.2f}:d=3{duck}"
+                      f",aresample={AUDIO_SR},aformat=channel_layouts=stereo[wind]")
+        mix_ins.append("[wind]")
+
+        chains.append(f"{''.join(mix_ins)}amix=inputs={len(mix_ins)}:duration=longest:"
+                      f"normalize=0,apad=whole_dur={total_s:.2f}s[mix]")
+
         # the pre-master stays PCM: mastering is measure-then-correct, and
         # measuring an AAC generation you are about to re-encode both lies a
         # little and costs a generation of quality for nothing
         mixed = workdir / "mixed.wav"
         r = subprocess.run(
-            [FFMPEG, "-y", "-i", str(atrack), "-f", "lavfi", "-i",
-             f"anoisesrc=color=brown:seed=42:r=24000:d={total_s:.2f}",
-             "-filter_complex",
-             f"[1:a]lowpass=f=300,volume=0.05,"
-             f"afade=t=out:st={max(total_s - 3.0, 0):.2f}:d=3[wind];"
-             "[0:a][wind]amix=inputs=2:duration=first:normalize=0[mix]",
-             "-map", "[mix]", "-ar", str(AUDIO_SR), "-ac", "2",
+            [FFMPEG, "-y"] + inputs +
+            ["-filter_complex", ";".join(chains), "-map", "[mix]",
+             "-t", f"{total_s:.2f}", "-ar", str(AUDIO_SR), "-ac", "2",
              "-c:a", "pcm_s16le", str(mixed)],
             capture_output=True, text=True)
         if r.returncode:
-            raise SystemExit(f"bed mix failed:\n{r.stderr[-1500:]}")
+            raise SystemExit(f"placed mix failed:\n{r.stderr[-1500:]}")
         measured = loudnorm_measure(mixed)
         master = workdir / "master.wav"
 

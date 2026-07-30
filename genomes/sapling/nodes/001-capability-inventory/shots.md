@@ -49,9 +49,9 @@ no dialogue - the death, in one shot. The mug reaches the floor before he does.
 ```
 close-up on the side of an office chair, a man's limp hand hanging straight down past the armrest, relaxed open fingers, motionless, sleeve of a rumpled shirt, papers settled on the dark floor below, cold monitor glow from above, dark room at night, dramatic shadows, shallow depth of field, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No face, no head, no full body, no horror, no blood, no standing. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
-## Beat 05 — HUH. GREEN. (0:20–0:24) ⬜ needs footage
+## Beat 05 — HUH. BLUE. (0:20–0:24) ⬜ needs footage
 
-Line: 'Huh. Green.' Camera low on the floor; the cooling fan winds down over black.
+Line: 'Huh. Blue.' Camera low on the floor; the cooling fan winds down over black.
 
 ```
 thick curved glazed ceramic shards of a broken coffee mug scattered flat on dark wooden floorboards, a puddle of spilled coffee, near darkness, dying screen glow, low camera angle, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No paper, no cards, no intact mug, no kintsugi. No photorealism, no 3D render look. 9:16 vertical, no text.
