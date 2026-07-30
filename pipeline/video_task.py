@@ -30,7 +30,12 @@ TORCH_INDEX = "https://download.pytorch.org/whl/cu128"
 
 
 def _run(cmd, courier, stage, timeout=None):
-    r = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
+    # utf-8 on the child's stdout: Windows consoles default to cp1252, and a
+    # single non-ASCII character in a SUCCESS message killed a 25-minute
+    # encode with UnicodeEncodeError (2026-07-30, canary 3)
+    env = {**os.environ, "PYTHONIOENCODING": "utf-8", "PYTHONUTF8": "1"}
+    r = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout,
+                       env=env, errors="replace")
     if courier:
         courier.say(f"$ {' '.join(str(c) for c in cmd[:6])}…\n{(r.stdout or '')[-1500:]}"
                     f"{(r.stderr or '')[-2500:]}")
