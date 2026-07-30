@@ -1,4 +1,4 @@
-# The founder's inbox — decisions only Roman can make. The bird's-eye board
+# The founder's inbox — decisions only the founder can make. The bird's-eye board
 # reads this; the steward edits it as gates open and close.
 pending:
   - id: v6-verdict
@@ -10,6 +10,14 @@ pending:
     detail: "model-bakeoff.html — pick the show's artist (3.1 / 4.0 / Illustrious; NoobAI handicapped)"
     since: 2026-07-30
   - id: ep2-scripts
-    title: "Episode 2: read the three scripts"
-    detail: "002a broken-channel / 002b first-citizen / 002c admin-wireframe — approval unlocks the farm's next era"
+    title: "Episode 2: read the three scripts (002b first — provisional trunk)"
+    detail: "002b first-citizen is steward-era trunk, yours to confirm/overturn; 002a + 002c alternates. Approval unlocks production."
     since: 2026-07-29
+  - id: ep3-scripts
+    title: "Episode 3: read the three scripts (after your 002 call)"
+    detail: "003a oncall-rotation / 003b one-leaf-for-yes / 003c y-slash-n — children of the 002 trunk choice"
+    since: 2026-07-30
+  - id: hires-review
+    title: "Hi-res canon upgrades: skim & nod"
+    detail: "30 candidates at 1080x1576 from the msi — approve swaps beat-by-beat or ignore"
+    since: 2026-07-30
