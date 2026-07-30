@@ -8,3 +8,13 @@
   00-bank-apartment-dawn-s7.png in 13s
   00-bank-apartment-dawn-s8.png in 13s
   00-bank-apartment-dawn-s9.png in 14s
+  00-bank-desk-detail-s0.png in 14s
+  00-bank-desk-detail-s1.png in 13s
+  00-bank-desk-detail-s2.png in 13s
+  00-bank-desk-detail-s3.png in 13s
+  00-bank-desk-detail-s4.png in 13s
+  00-bank-desk-detail-s5.png in 13s
+  00-bank-desk-detail-s6.png in 13s
+  00-bank-desk-detail-s7.png in 13s
+  00-bank-desk-detail-s8.png in 14s
+  00-bank-desk-detail-s9.png in 14s
