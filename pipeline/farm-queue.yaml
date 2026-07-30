@@ -1,7 +1,7 @@
-# canary 3: same two-process render, now with a worker that restarts on
-# ANY pipeline change (canary 2 ran new wan_i2v.py against old caller).
+# canary 4: the encode SUCCEEDED in canary 3 and then died printing an
+# arrow to a cp1252 console. ASCII prints + utf-8 child env.
 tasks:
-- id: vid-canary3-1785443368
+- id: vid-canary4-1785443526
   worker: msi
   video: true
   node: 001-capability-inventory

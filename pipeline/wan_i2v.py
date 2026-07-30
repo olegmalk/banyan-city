@@ -52,7 +52,7 @@ def stage_encode(a) -> int:
                                       device="cpu")
     torch.save({"prompt_embeds": pos.to(torch.bfloat16),
                 "negative_prompt_embeds": neg.to(torch.bfloat16)}, a.embeds)
-    print(f"encoded → {a.embeds} {tuple(pos.shape)}")
+    print(f"encoded to {a.embeds} {tuple(pos.shape)}")
     return 0
 
 
