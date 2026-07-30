@@ -1,0 +1,139 @@
+leaf: 001-t3-d
+node: '001'
+tier: T3
+form: full-video-mp4 (2026-07 remake)
+content: 001-t3-d.mp4
+author: pipeline/render_t3.py — stills by the family render farm, motion per beat below
+model: per-beat — see sources
+prompt: per-beat — see shots.md
+seed: per-beat — 20260719 + beat; ballot winner per beat
+cost_usd: 0.28
+status: live
+note: 'The remake: all 15 shots re-generated and chosen by public vote on the reactions thread, narration
+  re-recorded with per-line emotional direction. Published as a WORKING CUT with founder authorization
+  2026-07-30 — the screening verdict is still pending and the shot board stays open for anyone to beat
+  any take.'
+platform_urls: []
+sources:
+- beat: 1
+  slug: 01 the-keyboard
+  clip: 01-the-keyboard.HAILUO.mp4
+  audio: 01-vo.mp3
+  voice_engine: chatterbox-0.5B (per-line emotional direction)
+  platform: fal / MiniMax Hailuo 2.3 image-to-video
+  still_model: cagliostrolab/animagine-xl-3.1 — founder-approved still
+  cost_usd: 0.28
+- beat: 2
+  slug: 02 three-oh-seven
+  clip: 02-three-oh-seven.PIXVERSE.mp4
+  audio: 02-vo.mp3
+  voice_engine: chatterbox-0.5B (per-line emotional direction)
+  platform: pixverse-web / PixVerse V6 — contributed take
+  still_model: cagliostrolab/animagine-xl-3.1 — founder-approved still
+  cost_usd: 0.0
+- beat: 3
+  slug: 03 deploy-succeeded
+  clip: 03-deploy-succeeded.POST.mp4
+  audio: 03-vo.mp3
+  voice_engine: chatterbox-0.5B (per-line emotional direction)
+  platform: local deterministic (post_motion.py)
+  still_model: cagliostrolab/animagine-xl-3.1 — founder-approved still
+  cost_usd: 0.0
+- beat: 4
+  slug: 04 the-fall
+  clip: 04-the-fall.PIXVERSE.mp4 + 05-huh-green.POST.mp4
+  audio: 04-vo.mp3
+  voice_engine: chatterbox-0.5B (per-line emotional direction)
+  platform: pixverse-web / PixVerse V6 — contributed; assembled as a two-shot cut with a synthesized 38Hz
+    body-thud
+  still_model: cagliostrolab/animagine-xl-3.1 — founder-approved still
+  cost_usd: 0.0
+- beat: 5
+  slug: 05 huh-green
+  clip: 03-deploy-succeeded.POST.mp4
+  audio: 05-vo.mp3
+  voice_engine: chatterbox-0.5B (per-line emotional direction)
+  platform: local deterministic — beat 03's terminal re-graded (dim, vignette, fade to black) as the dying-vision
+    shot
+  still_model: cagliostrolab/animagine-xl-3.1 — founder-approved still
+  cost_usd: 0.0
+- beat: 6
+  slug: 06 too-blue
+  clip: 06-too-blue.POST.mp4
+  audio: 06-vo.mp3
+  voice_engine: chatterbox-0.5B (per-line emotional direction)
+  platform: local deterministic (post_motion.py)
+  still_model: cagliostrolab/animagine-xl-3.1 — founder-approved still
+  cost_usd: 0.0
+- beat: 7
+  slug: 07 flailing-one
+  clip: 07-flailing-one.POST.mp4
+  audio: 07-vo.mp3
+  voice_engine: chatterbox-0.5B (per-line emotional direction)
+  platform: local deterministic (post_motion.py)
+  still_model: cagliostrolab/animagine-xl-3.1 — founder-approved still
+  cost_usd: 0.0
+- beat: 8
+  slug: 08 sev-1
+  clip: 08-sev-1.PIXVERSE2.mp4
+  audio: 08-vo.mp3
+  voice_engine: chatterbox-0.5B (per-line emotional direction)
+  platform: pixverse-web / PixVerse V6 — contributed, re-shot for the true-scale sapling
+  still_model: cagliostrolab/animagine-xl-3.1 — founder-approved still
+  cost_usd: 0.0
+- beat: 9
+  slug: 09 whoami
+  clip: 09-whoami.POST.mp4
+  audio: 09-vo.mp3
+  voice_engine: chatterbox-0.5B (per-line emotional direction)
+  platform: local deterministic (post_motion.py)
+  still_model: cagliostrolab/animagine-xl-3.1 — founder-approved still
+  cost_usd: 0.0
+- beat: 10
+  slug: 10 sense
+  clip: 10-sense.POST.mp4
+  audio: 10-vo.mp3
+  voice_engine: chatterbox-0.5B (per-line emotional direction)
+  platform: local deterministic + sonar-ring overlay
+  still_model: cagliostrolab/animagine-xl-3.1 — founder-approved still
+  cost_usd: 0.0
+- beat: 11
+  slug: 11 grow
+  clip: 11-grow.PIXVERSE.mp4
+  audio: 11-vo.mp3
+  voice_engine: chatterbox-0.5B (per-line emotional direction)
+  platform: pixverse-web / PixVerse V6 — contributed take
+  still_model: cagliostrolab/animagine-xl-3.1 — founder-approved still
+  cost_usd: 0.0
+- beat: 12
+  slug: 12 undefined
+  clip: 12-undefined.POST.mp4
+  audio: 12-vo.mp3
+  voice_engine: chatterbox-0.5B (per-line emotional direction)
+  platform: local deterministic (post_motion.py)
+  still_model: cagliostrolab/animagine-xl-3.1 — founder-approved still
+  cost_usd: 0.0
+- beat: 13
+  slug: 13 i-always-left
+  clip: 13-i-always-left.PIXVERSE.mp4
+  audio: 13-vo.mp3
+  voice_engine: chatterbox-0.5B (per-line emotional direction)
+  platform: pixverse-web / PixVerse V6 — contributed take
+  still_model: cagliostrolab/animagine-xl-3.1 — founder-approved still
+  cost_usd: 0.0
+- beat: 14
+  slug: 14 worth-staying-in
+  clip: 14-worth-staying-in.POST.mp4
+  audio: 14-vo.mp3
+  voice_engine: chatterbox-0.5B (per-line emotional direction)
+  platform: local deterministic (post_motion.py)
+  still_model: cagliostrolab/animagine-xl-3.1 — founder-approved still
+  cost_usd: 0.0
+- beat: 15
+  slug: 15 something-s-coming
+  clip: 15-something-s-coming.POST.mp4
+  audio: 15-vo.mp3
+  voice_engine: chatterbox-0.5B (per-line emotional direction)
+  platform: local deterministic — beat 10's frame darkened with fresh ring animation (the founder's callback)
+  still_model: cagliostrolab/animagine-xl-3.1 — founder-approved still
+  cost_usd: 0.0

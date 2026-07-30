@@ -4,8 +4,8 @@
 pending:
   - id: v6-verdict
     title: "Watch the finished episode 1 remake and say yes or no"
-    detail: "All 15 shots are approved and assembled with new narration. Nothing posts to the show's channel until the author has watched this cut and passed it."
-    public: "https://github.com/olegmlkvorg/banyan-city/issues/1"
+    detail: "All 15 shots are approved and assembled with new narration. It is published here as a working cut — nothing posts to the show's channel until the author has watched it and passed it."
+    public: "sapling/001-capability-inventory.html"
     since: 2026-07-29
   - id: bakeoff-pick
     title: "Choose which AI model draws the show from now on"
