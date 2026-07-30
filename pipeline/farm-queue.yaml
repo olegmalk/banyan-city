@@ -1,22 +1,16 @@
-# auto-refill by queue_keeper — PRODUCTION rotation (per-worker)
+# MOTION TAKES — the open requests want takes, not frames (founder).
+# The video stack installs itself on first run (video_task.ensure_stack)
+# with a courier mark at every stage. Canary first: one clip proves the
+# path before any batch.
 tasks:
-- id: prod-open-m1pro-1785431597
-  worker: m1pro
-  node: 001-capability-inventory
-  beats: 3,6,7,9,10,12,14
-  seeds: 2
-  seed_base: 23420482
-- id: prod-open-msi-1785434851
+- id: vid-canary-1785437811
   worker: msi
+  video: true
   node: 001-capability-inventory
-  beats: 3,6,7,9,10,12,14
-  seeds: 6
-  seed_base: 23745819
-- id: prod-hires-msi-1785434851
-  worker: msi
-  node: 001-capability-inventory
-  beats: 11,12,13,14,15
-  width: 1080
-  height: 1576
-  seeds: 4
-  seed_base: 23745850
+  beats: '10'
+  motion: the underground root map pulses slowly, veins of water drifting, rings of
+    light spreading outward through the soil, slow push-in
+  size: 704x1280
+  seconds: 4
+  steps: 30
+  seed_base: 20260731

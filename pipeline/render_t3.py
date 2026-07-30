@@ -865,7 +865,9 @@ def main() -> int:
                     f"+clip((t-{t2:.2f})/1.2,0,1))':eval=frame")
         i = add_input("-f", "lavfi", "-i",
                       f"anoisesrc=color=brown:seed=42:r=24000:d={total_s:.2f}")
-        chains.append(f"[{i}:a]lowpass=f=300,volume=0.05"
+        # darker + quieter than v1: at 0.05/300Hz the bed read as "a random
+        # weird wind sound" indoors (founder, v7d notes)
+        chains.append(f"[{i}:a]lowpass=f=240,volume=0.032"
                       f",afade=t=out:st={max(total_s - 3.0, 0):.2f}:d=3{duck}"
                       f",aresample={AUDIO_SR},aformat=channel_layouts=stereo[wind]")
         mix_ins.append("[wind]")

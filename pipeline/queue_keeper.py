@@ -39,33 +39,23 @@ def cycle():
     kept = [tk for v in undone_by_worker.values() for tk in v]
     stamp = int(time.time())
     seed_base = 20260719 + (stamp % 100000) * 100   # fresh seeds every round
-    # PRODUCTION rotation (founder 2026-07-30: "keep the msi working — let's
-    # produce"), all §6-legal on the approved episode 1:
-    #   - fresh candidate frames for the OPEN render requests (ballot fodder)
-    #   - hi-res (1080x1576) upgrade candidates for every canon beat, five
-    #     beats per round, for the pending founder hi-res review
-    # The world bank keeps only a small m1pro share (refs stay useful).
-    OPEN_BEATS = "3,6,7,9,10,12,14"                 # requests.yaml, node 001
-    HIRES = ["1,2,3,4,5", "6,7,8,9,10", "11,12,13,14,15"][stamp // 180 % 3]
     NODE = "001-capability-inventory"
+    # Refills are WORLD REFERENCES only (founder pushback 2026-07-30: fresh
+    # seeds on already-decided beats are make-work; upgrades of approved
+    # frames are finite one-shot img2img queues, not a loop). Refs never
+    # need the founder's review — they are the bank future shots borrow from.
     fresh = []
+    bank = list(PROMPTS.items())
     if "msi" in idle_workers:
-        fresh += [
-            {"id": f"prod-open-msi-{stamp}", "worker": "msi", "node": NODE,
-             "beats": OPEN_BEATS, "seeds": 6, "seed_base": seed_base},
-            {"id": f"prod-hires-msi-{stamp}", "worker": "msi", "node": NODE,
-             "beats": HIRES, "width": 1080, "height": 1576, "seeds": 4,
-             "seed_base": seed_base + 31},
-        ]
+        slug, prompt = bank[stamp // 180 % len(bank)]
+        fresh.append({"id": f"{slug}-msi-{stamp}", "worker": "msi", "node": NODE,
+                      "beats": "", "slug": slug, "prompt": prompt,
+                      "seeds": 15, "seed_base": seed_base})
     if "m1pro" in idle_workers:
-        fresh += [
-            {"id": f"prod-open-m1pro-{stamp}", "worker": "m1pro", "node": NODE,
-             "beats": OPEN_BEATS, "seeds": 2, "seed_base": seed_base + 63},
-            {"id": f"keep-m1pro-{stamp}", "worker": "m1pro", "node": NODE,
-             "beats": "", "slug": "keep-macro-dew",
-             "prompt": PROMPTS["keep-macro-dew"], "seeds": 2,
-             "seed_base": seed_base + 7},
-        ]
+        slug, prompt = bank[(stamp // 180 + 1) % len(bank)]
+        fresh.append({"id": f"{slug}-m1pro-{stamp}", "worker": "m1pro", "node": NODE,
+                      "beats": "", "slug": slug, "prompt": prompt,
+                      "seeds": 2, "seed_base": seed_base + 7})
     Q.write_text("# auto-refill by queue_keeper — PRODUCTION rotation (per-worker)\n"
                  + yaml.safe_dump({"tasks": kept + fresh}, sort_keys=False,
                                   default_flow_style=False, allow_unicode=True))

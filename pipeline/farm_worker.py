@@ -100,6 +100,19 @@ class Courier:
 
 
 def render_task(task: dict, courier: Courier, device: str, dtype) -> None:
+    # video tasks live in their own venv (Wan needs a modern diffusers; the
+    # stills path is pinned to 0.29.2 for SDXL) — dispatch before importing
+    # anything from this process's pinned stack
+    if task.get("video"):
+        d = REPO / "genomes/sapling/nodes" / task["node"]
+        leaves = sorted((d / "leaves").glob("*-t0-*.yaml"))
+        who = str((yaml.safe_load(leaves[-1].read_text(encoding="utf-8")) or {}).get(
+            "approved_by", "none")) if leaves else "none"
+        if not who.startswith("founder"):
+            raise SystemExit(f"{task['node']} NOT founder-approved — STEWARDSHIP §6")
+        import video_task
+        return video_task.run(task, courier, d)
+
     from generate_shots import parse_shots
     from sd_prompt import compress, extra_negatives, suppressed_negatives
     import torch
