@@ -66,3 +66,22 @@ Traceback (most recent call last):
   File "C:\banyan-farm\banyan-city\pipeline\video_task.py", line 38, in _run
     raise RuntimeError(f"{stage} failed (exit {r.returncode})")
 RuntimeError: beat 10 failed (exit 3221225477)
+
+$ C:\banyan-video\venv\Scripts\python.exe C:\banyan-farm\banyan-city\pipeline\wan_i2v.py --init C:\banyan-farm\banyan-city\genomes\sapling\nodes\001-capability-inventory\stills\10-sense.png --prompt the underground root map pulses slowly, veins of water drifting, rings of light spreading outward through the soil, slow push-in. dark underground soil texture filling the whole frame, side view, thin pale roots reaching down through the earth, small glowing blue water droplets between soil grains, quiet darkness, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No people, no cave, no portal, no eye, no sky, no lightning. No photorealism, no 3D render look. 9:16 vertical, no text.…
+usage: wan_i2v.py [-h] --stage {encode,render} --embeds EMBEDS
+                  [--prompt PROMPT] [--init INIT] [--out OUT]
+                  [--seconds SECONDS] [--steps STEPS] [--size SIZE]
+                  [--seed SEED] [--fps FPS]
+wan_i2v.py: error: the following arguments are required: --stage, --embeds
+
+Traceback (most recent call last):
+  File "C:\banyan-farm\banyan-city\pipeline\farm_worker.py", line 220, in main
+    render_task(task, courier, device, dtype)
+  File "C:\banyan-farm\banyan-city\pipeline\farm_worker.py", line 114, in render_task
+    return video_task.run(task, courier, d)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\banyan-farm\banyan-city\pipeline\video_task.py", line 113, in run
+    wan = str(REPO / "pipeline" / "wan_i2v.py")
+  File "C:\banyan-farm\banyan-city\pipeline\video_task.py", line 38, in _run
+    raise RuntimeError(f"{stage} failed (exit {r.returncode})")
+RuntimeError: beat 10 failed (exit 2)
