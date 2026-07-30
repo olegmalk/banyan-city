@@ -1,16 +1,15 @@
-# MOTION TAKES — the open requests want takes, not frames (founder).
-# The video stack installs itself on first run (video_task.ensure_stack)
-# with a courier mark at every stage. Canary first: one clip proves the
-# path before any batch.
+# canary 2: two-process encode/render (the 16GB machine died with an
+# access violation holding the text encoder and transformer at once),
+# and a 480x832 draft bucket to prove the path before any 720p batch.
 tasks:
-- id: vid-canary-1785437811
+- id: vid-canary2-1785443128
   worker: msi
   video: true
   node: 001-capability-inventory
   beats: '10'
   motion: the underground root map pulses slowly, veins of water drifting, rings of
     light spreading outward through the soil, slow push-in
-  size: 704x1280
-  seconds: 4
-  steps: 30
+  size: 480x832
+  seconds: 3.4
+  steps: 25
   seed_base: 20260731
