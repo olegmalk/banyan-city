@@ -1,6 +1,16 @@
-# EMPTY by founder direction (2026-07-30 night): no work is queued unless
-# its output has a real consumer. Utilization is not the goal.
-# Real work returns when: the founder passes/notes v7d (re-render),
-# episode 2's script is read (§6 opens full production), or a machine
-# gains motion rendering (open requests want TAKES, not frames).
-tasks: []
+# MOTION TAKES — the open requests want takes, not frames (founder).
+# The video stack installs itself on first run (video_task.ensure_stack)
+# with a courier mark at every stage. Canary first: one clip proves the
+# path before any batch.
+tasks:
+- id: vid-canary-1785437811
+  worker: msi
+  video: true
+  node: 001-capability-inventory
+  beats: '10'
+  motion: the underground root map pulses slowly, veins of water drifting, rings of
+    light spreading outward through the soil, slow push-in
+  size: 704x1280
+  seconds: 4
+  steps: 30
+  seed_base: 20260731
