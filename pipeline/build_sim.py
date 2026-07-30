@@ -13,6 +13,44 @@ import yaml
 
 REPO = Path(__file__).resolve().parent.parent
 
+import json
+import urllib.request
+
+GH = "olegmlkvorg/banyan-city"
+
+
+def _get(url):
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "banyan-sim-build"})
+        with urllib.request.urlopen(req, timeout=15) as r:
+            return r.read().decode()
+    except Exception:
+        return ""
+
+
+def farm_branches():
+    """farm-results-* branches via the public API — the deploy server has no
+    local refs (the invisible-buildings bug, 2026-07-30)."""
+    raw = _get(f"https://api.github.com/repos/{GH}/branches?per_page=100")
+    try:
+        return [b["name"] for b in json.loads(raw) if b["name"].startswith("farm-results-")]
+    except Exception:
+        return []
+
+
+def branch_heartbeat(branch):
+    txt = _get(f"https://raw.githubusercontent.com/{GH}/{branch}/farm-out/heartbeat.txt")
+    return txt.strip().splitlines()[-1] if txt.strip() else ""
+
+
+def latest_thread_comments(n=3):
+    raw = _get(f"https://api.github.com/repos/{GH}/issues/1/comments?per_page=100")
+    try:
+        cs = json.loads(raw)[-n:]
+        return [(c["user"]["login"], c["body"][:80].replace("\n", " ")) for c in cs]
+    except Exception:
+        return []
+
 
 def sh(cmd):
     try:
@@ -67,21 +105,13 @@ def build(out_dir: Path):
         inbox = (yaml.safe_load((REPO / "pipeline/pending-founder.yaml").read_text()) or {}).get("pending") or []
     except Exception:
         inbox = []
-    sh("git fetch -q origin 'refs/heads/farm-results-*:refs/remotes/origin/farm-results-*'")
     machines = []
     EMOJI = {"msi": "🏭", "m2": "🏢", "m1pro": "🏛"}
-    for b in sh("git branch -r | grep farm-results || true").splitlines():
-        name = b.strip().split("farm-results-")[-1]
-        hb = sh(f"git show {b.strip()}:farm-out/heartbeat.txt 2>/dev/null | tail -1")
-        state, cap = machine_state(hb)
+    for b in farm_branches():
+        name = b.split("farm-results-")[-1]
+        state, cap = machine_state(branch_heartbeat(b))
         machines.append((name, EMOJI.get(name, "🏠"), state, cap))
-    comments = []
-    raw = sh("gh issue view 1 --json comments -q "
-             "'.comments[-3:][] | .author.login + \"|\" + (.body|.[0:80])' 2>/dev/null")
-    for l in raw.splitlines():
-        if "|" in l:
-            a, b2 = l.split("|", 1)
-            comments.append((a, b2))
+    comments = latest_thread_comments()
 
     leaves = "".join(
         f'<div class="leaf {"grown" if i < canon else "bud"}" style="--i:{i}">🍃</div>'
