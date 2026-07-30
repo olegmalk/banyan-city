@@ -65,6 +65,7 @@ def spend():
 def build(out_dir: Path):
     d = REPO / "genomes/sapling/nodes/001-capability-inventory"
     rows, canon, total = beat_state(d)
+    birdseye = birdseye_sections(REPO)
     est = "".join(f"<tr><td>{html.escape(a)}</td><td>{html.escape(b)}</td></tr>" for a, b in ESTIMATES)
     body = f"""<!doctype html><meta charset="utf-8"><title>Status — the machine at work</title>
 <style>body{{font:15px/1.5 -apple-system,system-ui,sans-serif;margin:2rem auto;max-width:900px;background:#0e0e12;color:#e8e8ee;padding:0 1rem}}
@@ -83,13 +84,10 @@ column says most often.</p>
 <h2>Stage estimates (measured)</h2>
 <table><tr><th>Stage</th><th>Cost</th></tr>{est}</table>
 <p><a href="index.html">← the city</a> · <a href="machine.html">how the machine works</a></p>"""
-    body = body.replace("{birdseye}", birdseye_sections(REPO))
     (out_dir / "status.html").write_text(body)
     print(f"✓ status.html — {canon}/{total} canon, ${spend():.2f} lifetime")
 
 
-if __name__ == "__main__":
-    build(REPO / "_site")
 
 
 def birdseye_sections(repo):
@@ -135,3 +133,7 @@ def birdseye_sections(repo):
     out += f"<h2>🗳 Latest on the reactions thread</h2><table>{rows}</table>"
     out += "<p><a href='https://github.com/olegmlkvorg/banyan-city/issues/1'>join the thread</a> · <a href='sapling/001-capability-inventory-shots.html'>the shot board</a></p>"
     return out
+
+
+if __name__ == "__main__":
+    build(REPO / "_site")
