@@ -127,3 +127,4 @@
 18:18:25Z MODEL_LOADED cuda/bfloat16
 18:28:36Z DONE task=prod-hires-msi-1785434851
 18:57:14Z STARTED task=vid-canary-1785437811 beats=10 on cuda
+18:57:18Z VIDEO_VENV_CREATING
