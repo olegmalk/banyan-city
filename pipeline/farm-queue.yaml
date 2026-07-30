@@ -1,6 +1,4 @@
-# faithful hi-res pass: YOUR approved frames, upscaled via img2img —
-# same picture, more detail (founder pushback 2026-07-30: no new seeds
-# on decided beats)
+# auto-refill by queue_keeper — PRODUCTION rotation (per-worker)
 tasks:
 - id: upres-01-1785435789
   worker: msi
@@ -152,3 +150,14 @@ tasks:
   height: 1576
   seeds: 1
   seed_base: 20260730
+- id: keep-field-gold-m1pro-1785435842
+  worker: m1pro
+  node: 001-capability-inventory
+  beats: ''
+  slug: keep-field-gold
+  prompt: no humans, the wide grass field in late golden hour, long shadows, the tiny
+    sprout glowing rim-lit in the foreground, warm cinematic lighting, detailed, newest,
+    masterpiece, best quality, very aesthetic No people, no trees. No photorealism,
+    no 3D render look. 9:16 vertical, no text.
+  seeds: 2
+  seed_base: 23844926
