@@ -1,13 +1,5 @@
-# canary 6: embeddings handed to the pipeline on the execution device.
-tasks:
-- id: vid-canary6-1785444105
-  worker: msi
-  video: true
-  node: 001-capability-inventory
-  beats: '10'
-  motion: the underground root map pulses slowly, veins of water drifting, rings of
-    light spreading outward through the soil, slow push-in
-  size: 480x832
-  seconds: 3.4
-  steps: 25
-  seed_base: 20260731
+# EMPTY. Canary 6 proved Wan runs on the 5070 Ti but needs 2h for one 3.4s
+# draft clip: 16GB system RAM makes cpu-offload page to disk every step. The
+# machine stays idle until it has work it can finish (a 4-step distilled
+# canary, or the 5090). No make-work.
+tasks: []
