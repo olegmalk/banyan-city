@@ -77,3 +77,4 @@
 08:28:14Z MODEL_LOADED cuda/bfloat16
 08:28:32Z DONE task=hires-11
 08:28:38Z STARTED task=hires-12 beats=12 on cuda
+08:28:53Z MODEL_LOADED cuda/bfloat16
