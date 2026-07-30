@@ -80,11 +80,16 @@ def stage_render(a) -> int:
             break
     gc.collect()
 
+    # embeddings arrive from the encode process on CPU, but cpu-offload runs
+    # the transformer on the GPU and does not move caller-supplied tensors
+    # ("mat1 is on cpu, different from other tensors on cuda:0") — they are
+    # small, so hand them over on the execution device
+    dev = "cuda" if torch.cuda.is_available() else "cpu"
     img = Image.open(a.init).convert("RGB").resize((w, h), Image.LANCZOS)
     out = pipe(
         image=img,
-        prompt_embeds=e["prompt_embeds"],
-        negative_prompt_embeds=e["negative_prompt_embeds"],
+        prompt_embeds=e["prompt_embeds"].to(dev),
+        negative_prompt_embeds=e["negative_prompt_embeds"].to(dev),
         height=h, width=w, num_frames=frames,
         num_inference_steps=a.steps, guidance_scale=5.0,
         generator=torch.Generator(device="cpu").manual_seed(a.seed),

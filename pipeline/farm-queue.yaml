@@ -1,6 +1,6 @@
-# canary 5: encode stage now passes; VAE tiling call made version-proof.
+# canary 6: embeddings handed to the pipeline on the execution device.
 tasks:
-- id: vid-canary5-1785443739
+- id: vid-canary6-1785444105
   worker: msi
   video: true
   node: 001-capability-inventory
