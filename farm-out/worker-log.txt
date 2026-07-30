@@ -24,3 +24,5 @@
   12-undefined-s1.png in 7s
   13-i-always-left-s0.png in 8s
   13-i-always-left-s1.png in 7s
+  14-worth-staying-in-s0.png in 8s
+  14-worth-staying-in-s1.png in 7s
