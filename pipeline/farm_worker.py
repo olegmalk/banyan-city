@@ -161,9 +161,11 @@ def render_task(task: dict, courier: Courier, device: str, dtype) -> None:
                 kw["width"] = int(task.get("width", 832))
                 kw["height"] = int(task.get("height", 1216))
             img = pipe(**kw).images[0]
-            # model-override tasks prefix outputs with their task id --
-            # two models on the same beats otherwise overwrite each other
-            prefix = f"{task.get('id')}-" if task.get("model") else ""
+            # EVERY task prefixes outputs with its id: two tasks touching the
+            # same beat otherwise overwrite each other on the courier branch
+            # (prod-hires clobbered prod-open's beat 3, 2026-07-30 — the
+            # frames survived only in git history)
+            prefix = f"{task.get('id')}-"
             f = courier.out / f"{prefix}{num:02d}-{s['slug']}-s{k}.png"
             img.save(f)
             courier.say(f"  {f.name} in {time.time()-t0:.0f}s")
