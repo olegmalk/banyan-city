@@ -40,3 +40,23 @@
   14-worth-staying-in-s3.png in 13s
   14-worth-staying-in-s4.png in 13s
   14-worth-staying-in-s5.png in 13s
+  01-the-keyboard-s0.png in 32s
+  01-the-keyboard-s1.png in 31s
+  01-the-keyboard-s2.png in 31s
+  01-the-keyboard-s3.png in 31s
+  02-three-oh-seven-s0.png in 31s
+  02-three-oh-seven-s1.png in 31s
+  02-three-oh-seven-s2.png in 31s
+  02-three-oh-seven-s3.png in 31s
+  03-deploy-succeeded-s0.png in 31s
+  03-deploy-succeeded-s1.png in 31s
+  03-deploy-succeeded-s2.png in 31s
+  03-deploy-succeeded-s3.png in 31s
+  04-the-fall-s0.png in 31s
+  04-the-fall-s1.png in 31s
+  04-the-fall-s2.png in 31s
+  04-the-fall-s3.png in 31s
+  05-huh-blue-s0.png in 31s
+  05-huh-blue-s1.png in 31s
+  05-huh-blue-s2.png in 31s
+  05-huh-blue-s3.png in 31s
