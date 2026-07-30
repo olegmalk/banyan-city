@@ -1,7 +1,6 @@
-# canary 4: the encode SUCCEEDED in canary 3 and then died printing an
-# arrow to a cp1252 console. ASCII prints + utf-8 child env.
+# canary 5: encode stage now passes; VAE tiling call made version-proof.
 tasks:
-- id: vid-canary4-1785443526
+- id: vid-canary5-1785443739
   worker: msi
   video: true
   node: 001-capability-inventory

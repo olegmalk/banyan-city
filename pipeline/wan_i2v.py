@@ -71,7 +71,13 @@ def stage_render(a) -> int:
     pipe = WanImageToVideoPipeline.from_pretrained(
         MODEL, text_encoder=None, torch_dtype=torch.bfloat16)
     pipe.enable_model_cpu_offload()
-    pipe.enable_vae_tiling()                    # the VAE is the other RAM spike
+    # the VAE is the other RAM spike; the helper's name and presence vary by
+    # diffusers version and pipeline, so reach for whichever exists
+    for enable in (getattr(pipe, "enable_vae_tiling", None),
+                   getattr(getattr(pipe, "vae", None), "enable_tiling", None)):
+        if callable(enable):
+            enable()
+            break
     gc.collect()
 
     img = Image.open(a.init).convert("RGB").resize((w, h), Image.LANCZOS)
