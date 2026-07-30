@@ -112,6 +112,35 @@ def body_thump(path: Path) -> Path:
     return _write(path, 0.9 * x / (np.abs(x).max() or 1))
 
 
+def fall_impact(path: Path, pre: float = 1.1) -> Path:
+    """The fall as sound: air, then floor. A rising whoosh (`pre` seconds of
+    band-swept noise) into one heavy, LONG impact — placed so the hit lands
+    exactly on a cut. v7d's lone thump read anticlimactic (founder); a fall
+    needs the air before the landing."""
+    tail = 1.1
+    n_pre, n_tail = int(pre * SR), int(tail * SR)
+    rng = np.random.default_rng(6)
+    # whoosh: noise through a falling one-pole, swelling in
+    noise = rng.standard_normal(n_pre)
+    wh = np.empty(n_pre)
+    acc = 0.0
+    for i in range(n_pre):
+        k = 0.12 - 0.11 * (i / n_pre)          # brightens down: 800ish → 80ish Hz
+        acc += k * (noise[i] - acc)
+        wh[i] = acc
+    wh *= (np.linspace(0, 1, n_pre) ** 1.8)     # swell
+    # impact: deep, with a long settling tail — weight, not a gunshot
+    t = np.arange(n_tail) / SR
+    hit = (np.sin(2 * np.pi * 42 * t) * np.exp(-t / 0.30)
+           + 0.6 * np.sin(2 * np.pi * 65 * t + 0.4) * np.exp(-t / 0.16)
+           + 0.35 * np.sin(2 * np.pi * 178 * t) * np.exp(-t / 0.05)
+           + 0.25 * np.sin(2 * np.pi * 30 * t) * np.exp(-t / 0.55))
+    hit += 0.15 * rng.standard_normal(n_tail) * _env(n_tail, 0.003, 0.05)
+    hit *= _env(n_tail, 0.006, 0.4)
+    x = np.concatenate([0.35 * wh, hit])
+    return _write(path, 0.92 * x / (np.abs(x).max() or 1))
+
+
 def fan_spindown(path: Path, dur: float) -> Path:
     """A cooling fan spinning down to nothing — the scripted sound of the
     machine (and its operator) switching off. Pitch and level glide to zero."""
@@ -184,6 +213,7 @@ SYNTHS = {
     "keyboard": lambda p, dur=4.0, stop_at=None, **kw: keyboard(p, dur, stop_at),
     "mug_hit": lambda p, **kw: mug_hit(p),
     "body_thump": lambda p, **kw: body_thump(p),
+    "fall_impact": lambda p, pre=1.1, **kw: fall_impact(p, pre),
     "fan_spindown": lambda p, dur=3.0, **kw: fan_spindown(p, dur),
     "footsteps_soil": lambda p, dur=6.0, period=1.5, grow=0.0, **kw:
         footsteps_soil(p, dur, period, grow),
