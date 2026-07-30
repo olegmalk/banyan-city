@@ -198,7 +198,7 @@ table{{border-collapse:collapse;width:100%}}td{{border-bottom:1px solid #222b31;
 a{{color:#e8a15c}} .big{{font-size:1.5rem}} li{{margin:.2rem 0}}</style>
 <h1>⚙️ OPS · {time.strftime('%H:%M:%S')} <small>(auto-refreshes every 20s)</small></h1>
 <p class="big">{canon} / {total} stills canon · lifetime cash: ${spend():.2f}</p>
-<h2>Rendering right now (this Mac)</h2>
+<h2>Rendering on THIS Mac (the farm renders remotely — see fleet below)</h2>
 <table><tr><td width=90><b>elapsed</b></td><td><b>job</b></td></tr>{jobs_html}</table>
 <h2>Your moves, in parallel</h2>
 <ul>{''.join(f'<li>{m}</li>' for m in moves)}</ul>

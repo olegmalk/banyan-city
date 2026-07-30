@@ -30,7 +30,7 @@ def cycle():
     beats: ""
     slug: {slug}
     prompt: "{prompt}"
-    seeds: 8
+    seeds: 15
     seed_base: {seed_base}
 """
     Q.write_text(tasks)
@@ -45,4 +45,4 @@ if __name__ == "__main__":
             print(f"[{time.strftime('%H:%M')}] {cycle()}", flush=True)
         except Exception as e:
             print(f"keeper error: {e!r}", flush=True)
-        time.sleep(600)
+        time.sleep(180)
