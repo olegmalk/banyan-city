@@ -73,3 +73,13 @@
   00-bank-field-storm-s7.png in 14s
   00-bank-field-storm-s8.png in 14s
   00-bank-field-storm-s9.png in 14s
+  00-bank-field-winter-s0.png in 15s
+  00-bank-field-winter-s1.png in 13s
+  00-bank-field-winter-s2.png in 13s
+  00-bank-field-winter-s3.png in 14s
+  00-bank-field-winter-s4.png in 14s
+  00-bank-field-winter-s5.png in 14s
+  00-bank-field-winter-s6.png in 14s
+  00-bank-field-winter-s7.png in 14s
+  00-bank-field-winter-s8.png in 14s
+  00-bank-field-winter-s9.png in 14s
