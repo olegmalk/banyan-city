@@ -22,3 +22,5 @@
   11-grow-s1.png in 7s
   12-undefined-s0.png in 8s
   12-undefined-s1.png in 7s
+  13-i-always-left-s0.png in 8s
+  13-i-always-left-s1.png in 7s
