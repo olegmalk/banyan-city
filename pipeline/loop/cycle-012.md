@@ -100,3 +100,21 @@ dying terminal, 5.1–11.1s of beat 4). Duck floor at ≈−57 dB: scored silenc
 is air, not digital zero; qa_episode's dead-air check moved to −60 dB so it
 still catches true dropouts while admitting designed silence. 110 s,
 −14.7 LUFS, QA 12/12. Delivered as v7c — THE screening cut.
+
+## Addendum 3 — v7d: black means black, and the thump (founder v7c notes)
+
+Two notes: "when he says 'huh blue' it's showing the terminal image" and
+"the death sound comes late, and it doesn't fit. it should be more of a
+thump."
+
+- Beat 5 is now BLACK, exactly as the script always said ("Black, and the
+  sound of a cooling fan spinning down"). The dying-terminal regrade was a
+  cycle-011 invention; gone. The caption + fan + line carry the beat.
+- New `body_thump` cue replaces the ceramic mug clink: dull, heavy, all low
+  end (52/78/34 Hz partials, soft 8ms attack, no ring) — him and the mug
+  arriving together. Placed mid-tilt at beat4+2.7s (the fall take has no
+  visible impact frame; ear-placed against the tilt), inside real silence:
+  hum out at 2.0, thump at 2.7, nothing until the fan starts at 7.0 over
+  his dying terminal and finishes over the black.
+- Thump gain −13 dB after a true-peak fail at −10 (QA caught −0.3 dBTP).
+QA 12/12. Delivered as v7d.

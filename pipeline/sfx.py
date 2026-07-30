@@ -96,6 +96,22 @@ def mug_hit(path: Path) -> Path:
     return _write(path, 0.8 * x / (np.abs(x).max() or 1))
 
 
+def body_thump(path: Path) -> Path:
+    """The death sound (founder, v7c notes: "more of a thump"): a dull, heavy
+    floor impact — soft attack, all low end, no ceramic ring, no click. Him
+    and the mug arriving together."""
+    dur = 0.7
+    n = int(dur * SR)
+    t = np.arange(n) / SR
+    x = (np.sin(2 * np.pi * 52 * t) * np.exp(-t / 0.13)
+         + 0.55 * np.sin(2 * np.pi * 78 * t + 0.5) * np.exp(-t / 0.08)
+         + 0.25 * np.sin(2 * np.pi * 34 * t) * np.exp(-t / 0.2))
+    rng = np.random.default_rng(4)
+    x += 0.18 * rng.standard_normal(n) * _env(n, 0.004, 0.03)   # cloth/floor grit
+    x *= _env(n, 0.008, 0.16)                                    # soft attack: weight, not slap
+    return _write(path, 0.9 * x / (np.abs(x).max() or 1))
+
+
 def fan_spindown(path: Path, dur: float) -> Path:
     """A cooling fan spinning down to nothing — the scripted sound of the
     machine (and its operator) switching off. Pitch and level glide to zero."""
@@ -167,6 +183,7 @@ SYNTHS = {
     "room_hum": lambda p, dur=2.0, **kw: room_hum(p, dur),
     "keyboard": lambda p, dur=4.0, stop_at=None, **kw: keyboard(p, dur, stop_at),
     "mug_hit": lambda p, **kw: mug_hit(p),
+    "body_thump": lambda p, **kw: body_thump(p),
     "fan_spindown": lambda p, dur=3.0, **kw: fan_spindown(p, dur),
     "footsteps_soil": lambda p, dur=6.0, period=1.5, grow=0.0, **kw:
         footsteps_soil(p, dur, period, grow),

@@ -19,9 +19,9 @@ events:
   - {beat: 1, sfx: room_hum, start: 0.0, dur: full, gain_db: -26}
   - {beat: 2, sfx: room_hum, start: 0.0, dur: full, gain_db: -26}
   - {beat: 3, sfx: room_hum, start: 0.0, dur: full, gain_db: -26}
-  - {beat: 4, sfx: room_hum, start: 0.0, dur: 3.0, gain_db: -26}   # ALL sound dies at the tip-over (ear)
-  - {beat: 4, sfx: mug_hit, start: 4.6, gain_db: -12}              # "the mug hits the floor before he does" (ear)
-  - {beat: 4, sfx: fan_spindown, start: 5.1, dur: 6.0, gain_db: -19}  # the cut to his dying terminal: the machine winds down with him
+  - {beat: 4, sfx: room_hum, start: 0.0, dur: 2.0, gain_db: -26}   # ALL sound dies on the breath in (ear)
+  - {beat: 4, sfx: body_thump, start: 2.7, gain_db: -13}           # THE death sound: him and the mug arriving together, mid-tilt (ear; founder: "more of a thump")
+  - {beat: 4, sfx: fan_spindown, start: 7.0, dur: 6.0, gain_db: -19}  # starts over his dying terminal, finishes over the BLACK of beat 5 (as scripted)
   - {beat: 9, sfx: terminal_keys, start: 0.4, dur: 3.2, gain_db: -24}  # "$ whoami" types itself
   - {beat: 10, sfx: footsteps_soil, start: 3.0, dur: 7.0, period: 1.9, gain_db: -23}  # 400m away, felt not heard
   - {beat: 15, sfx: footsteps_soil, start: 0.2, dur: 3.4, period: 1.1, grow: 1.2, gain_db: -14}  # closer, faster — the hook IS this sound
@@ -29,5 +29,5 @@ events:
 # the whisper wind bed is silent from the tip-over until the too-blue sky —
 # the world (and its wind) only comes back when HE does
 bed_duck:
-  from: {beat: 4, at: 3.0}
+  from: {beat: 4, at: 2.0}
   to: {beat: 6, at: 0.0}
