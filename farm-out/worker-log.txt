@@ -10,3 +10,53 @@ Loading weights: 100%|██████████| 242/242 [00:00<00:00, 8344
 
 Loading pipeline components...: 100%|██████████| 3/3 [00:01<00:00,  2.33it/s]
 Loading pipeline components...: 100%|██████████| 3/3 [00:01<00:00,  2.18it/s]
+
+$ C:\banyan-video\venv\Scripts\python.exe C:\banyan-farm\banyan-city\pipeline\wan_i2v.py --stage render --embeds C:\banyan-video\embeds-10.pt�
+[transformers] `CLIPImageProcessor` requires torchvision (not installed); falling back to `CLIPImageProcessorPil` for backward compatibility. Install torchvision to use the default backend, or import `CLIPImageProcessorPil` directly to silence this warning.
+
+Loading pipeline components...:   0%|          | 0/4 [00:00<?, ?it/s]
+Loading pipeline components...:  25%|██▌       | 1/4 [00:01<00:03,  1.16s/it]
+
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s][A
+
+Loading checkpoint shards:  20%|██        | 1/5 [00:01<00:07,  1.89s/it][A
+
+Loading checkpoint shards:  40%|████      | 2/5 [00:07<00:12,  4.11s/it][A
+
+Loading checkpoint shards:  60%|██████    | 3/5 [00:11<00:07,  3.87s/it][A
+
+Loading checkpoint shards:  80%|████████  | 4/5 [00:14<00:03,  3.51s/it][A
+
+Loading checkpoint shards: 100%|██████████| 5/5 [00:14<00:00,  2.34s/it][A
+Loading checkpoint shards: 100%|██████████| 5/5 [00:14<00:00,  2.87s/it]
+
+Loading pipeline components...:  50%|█████     | 2/4 [00:15<00:18,  9.01s/it]
+Loading pipeline components...:  75%|███████▌  | 3/4 [00:16<00:05,  5.06s/it]The config attributes {'clip_output': False} were passed to AutoencoderKLWan, but are not expected and will be ignored. Please verify your config.json configuration file.
+
+Loading pipeline components...: 100%|██████████| 4/4 [00:18<00:00,  4.05s/it]
+Loading pipeline components...: 100%|██████████| 4/4 [00:18<00:00,  4.63s/it]
+Traceback (most recent call last):
+  File "C:\banyan-farm\banyan-city\pipeline\wan_i2v.py", line 110, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\banyan-farm\banyan-city\pipeline\wan_i2v.py", line 106, in main
+    return stage_encode(a) if a.stage == "encode" else stage_render(a)
+                                                       ^^^^^^^^^^^^^^^
+  File "C:\banyan-farm\banyan-city\pipeline\wan_i2v.py", line 74, in stage_render
+    pipe.enable_vae_tiling()                    # the VAE is the other RAM spike
+    ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\banyan-video\venv\Lib\site-packages\diffusers\configuration_utils.py", line 176, in __getattr__
+    raise AttributeError(f"'{type(self).__name__}' object has no attribute '{name}'")
+AttributeError: 'WanImageToVideoPipeline' object has no attribute 'enable_vae_tiling'
+
+Traceback (most recent call last):
+  File "C:\banyan-farm\banyan-city\pipeline\farm_worker.py", line 227, in main
+    render_task(task, courier, device, dtype)
+  File "C:\banyan-farm\banyan-city\pipeline\farm_worker.py", line 114, in render_task
+    return video_task.run(task, courier, d)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\banyan-farm\banyan-city\pipeline\video_task.py", line 127, in run
+    _run([str(PY), wan, "--stage", "render", "--embeds", str(emb),
+  File "C:\banyan-farm\banyan-city\pipeline\video_task.py", line 43, in _run
+    raise RuntimeError(f"{stage} failed (exit {r.returncode})")
+RuntimeError: beat 10 failed (exit 1)
