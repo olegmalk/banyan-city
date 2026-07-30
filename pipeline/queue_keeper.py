@@ -17,12 +17,36 @@ PROMPTS = {
 
 def cycle():
     subprocess.run(["git", "pull", "-q", "--rebase", "origin", "main"], cwd=REPO, capture_output=True)
+    subprocess.run(["git", "fetch", "-q", "origin",
+                    "refs/heads/farm-results-*:refs/remotes/origin/farm-results-*"],
+                   cwd=REPO, capture_output=True)
     q = yaml.safe_load(Q.read_text()) or {}
-    if q.get("tasks"):
-        return "queue busy"
+    tasks = q.get("tasks") or []
+    if tasks:
+        # busy only if some listed task is NOT yet DONE per its worker's
+        # heartbeat — a finished task left in the file is not work
+        # (the 4-hour "queue busy" nap of 2026-07-30)
+        undone = []
+        for tk in tasks:
+            w = tk.get("worker", "any")
+            hb = subprocess.run(["git", "show", f"origin/farm-results-{w}:farm-out/heartbeat.txt"],
+                                cwd=REPO, capture_output=True, text=True).stdout
+            if f"DONE task={tk.get('id')}" not in hb and f"FAIL task={tk.get('id')}" not in hb:
+                undone.append(tk.get("id"))
+        if undone:
+            return f"queue busy ({len(undone)} live)"
     stamp = int(time.time())
     seed_base = 20260719 + (stamp % 100000) * 100   # fresh seeds every round
     tasks = "# auto-refill by queue_keeper — rotating world bank\ntasks:\n"
+    tasks += f"""  - id: keep-m1pro-{stamp}
+    worker: m1pro
+    node: 001-capability-inventory
+    beats: ""
+    slug: keep-macro-dew
+    prompt: "{PROMPTS['keep-macro-dew']}"
+    seeds: 2
+    seed_base: {seed_base + 7}
+"""
     for slug, prompt in PROMPTS.items():
         tasks += f"""  - id: {slug}-{stamp}
     worker: msi
