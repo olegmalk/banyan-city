@@ -109,12 +109,22 @@ def run(task: dict, courier, node_dir: Path) -> None:
         motion = task.get("motion") or "subtle continuous motion, gentle camera drift, living scene"
         prompt = f"{motion}. {s['prompt']}"[:900]
         out = courier.out / f"{task.get('id')}-{num:02d}-{s['slug']}.mp4"
+        emb = ROOT / f"embeds-{num:02d}.pt"
+        wan = str(REPO / "pipeline" / "wan_i2v.py")
+        # two processes: holding the 11GB text encoder AND the transformer in
+        # one process killed the 16GB machine with an access violation
+        # (0xC0000005). Encoding in a process that then EXITS is the only
+        # reliable way to give that memory back on Windows.
+        courier.mark(f"VIDEO_ENCODING beat={num:02d}")
+        _run([str(PY), wan, "--stage", "encode", "--embeds", str(emb),
+              "--prompt", prompt], courier, f"encode {num}", timeout=3600)
         courier.mark(f"VIDEO_RENDERING beat={num:02d}")
-        _run([str(PY), str(REPO / "pipeline" / "wan_i2v.py"),
-              "--init", str(init), "--prompt", prompt, "--out", str(out),
+        _run([str(PY), wan, "--stage", "render", "--embeds", str(emb),
+              "--init", str(init), "--out", str(out),
               "--seconds", str(seconds), "--steps", str(steps), "--size", size,
               "--seed", str(int(task.get("seed_base", 20260731)) + num)],
              courier, f"beat {num}", timeout=7200)
+        emb.unlink(missing_ok=True)
         if out.exists() and out.stat().st_size > 10_000:
             made += 1
             courier.mark(f"VIDEO_CLIP_OK beat={num:02d} "

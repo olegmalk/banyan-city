@@ -11,11 +11,20 @@ under the tree's CC BY licence is clean. TI2V-5B is one ~10GB model at native
 704x1280 — our exact 9:16 — where the 14B variant swaps two 8.5GB experts
 mid-sample and would thrash a 16GB-RAM machine.
 
-    <video-venv>/python wan_i2v.py --init still.png --prompt "..." \
-        --out clip.mp4 [--seconds 4] [--steps 30] [--size 704x1280] [--seed N]
+TWO PROCESSES, ON PURPOSE. Loading the text encoder (UMT5-XXL, ~11GB) and the
+transformer in one process crashed the 16GB Windows machine with an access
+violation (0xC0000005 — RAM exhaustion, not a python error). `--stage encode`
+writes the prompt embeddings to a .pt and exits, which is the only way to
+truly hand that memory back on Windows; `--stage render` then loads the
+pipeline with text_encoder=None and consumes the file.
+
+    <venv>/python wan_i2v.py --stage encode --prompt "..." --embeds e.pt
+    <venv>/python wan_i2v.py --stage render --embeds e.pt --init still.png \
+        --out clip.mp4 [--seconds 4] [--steps 25] [--size 480x832]
 """
 
 import argparse
+import gc
 import sys
 from pathlib import Path
 
@@ -28,39 +37,48 @@ NEG = ("色调艳丽, 过曝, 静态, 细节模糊不清, 字幕, 风格, 作品
        "杂乱的背景, 三条腿, 背景人很多, 倒着走")
 
 
-def main() -> int:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--init", required=True, help="approved still to animate")
-    ap.add_argument("--prompt", required=True)
-    ap.add_argument("--out", required=True)
-    ap.add_argument("--seconds", type=float, default=4.0)
-    ap.add_argument("--steps", type=int, default=30)
-    ap.add_argument("--size", default="704x1280", help="WxH (Wan bucket)")
-    ap.add_argument("--seed", type=int, default=20260731)
-    ap.add_argument("--fps", type=int, default=24)
-    a = ap.parse_args()
+def stage_encode(a) -> int:
+    """Text encoder ONLY: prompt in, embeddings on disk, process exits."""
+    import torch
+    from diffusers import WanImageToVideoPipeline
 
+    # transformer/vae stay unloaded — this process must never hold them
+    pipe = WanImageToVideoPipeline.from_pretrained(
+        MODEL, transformer=None, vae=None, image_encoder=None,
+        torch_dtype=torch.bfloat16)
+    with torch.no_grad():
+        pos, neg = pipe.encode_prompt(prompt=a.prompt, negative_prompt=NEG,
+                                      do_classifier_free_guidance=True,
+                                      device="cpu")
+    torch.save({"prompt_embeds": pos.to(torch.bfloat16),
+                "negative_prompt_embeds": neg.to(torch.bfloat16)}, a.embeds)
+    print(f"encoded → {a.embeds} {tuple(pos.shape)}")
+    return 0
+
+
+def stage_render(a) -> int:
+    """Transformer + VAE only, fed pre-computed embeddings."""
     import torch
     from diffusers import WanImageToVideoPipeline
     from diffusers.utils import export_to_video
     from PIL import Image
 
+    e = torch.load(a.embeds, map_location="cpu")
     w, h = (int(v) for v in a.size.lower().split("x"))
-    # 4n+1 frames is Wan's temporal grid; 81 frames @24fps = the 3.4s default
     frames = int(a.seconds * a.fps)
-    frames = frames - (frames % 4) + 1
+    frames = frames - (frames % 4) + 1          # Wan's 4n+1 temporal grid
 
-    dtype = torch.bfloat16 if torch.cuda.is_available() else torch.float32
-    pipe = WanImageToVideoPipeline.from_pretrained(MODEL, torch_dtype=dtype)
-    if torch.cuda.is_available():
-        # layer-by-layer offload: 12GB cards hold the working set only
-        pipe.enable_model_cpu_offload()
-    else:
-        pipe.to("cpu")
+    pipe = WanImageToVideoPipeline.from_pretrained(
+        MODEL, text_encoder=None, torch_dtype=torch.bfloat16)
+    pipe.enable_model_cpu_offload()
+    pipe.enable_vae_tiling()                    # the VAE is the other RAM spike
+    gc.collect()
 
     img = Image.open(a.init).convert("RGB").resize((w, h), Image.LANCZOS)
     out = pipe(
-        image=img, prompt=a.prompt, negative_prompt=NEG,
+        image=img,
+        prompt_embeds=e["prompt_embeds"],
+        negative_prompt_embeds=e["negative_prompt_embeds"],
         height=h, width=w, num_frames=frames,
         num_inference_steps=a.steps, guidance_scale=5.0,
         generator=torch.Generator(device="cpu").manual_seed(a.seed),
@@ -70,6 +88,22 @@ def main() -> int:
     export_to_video(out, a.out, fps=a.fps)
     print(f"wrote {a.out} ({frames} frames, {w}x{h})")
     return 0
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--stage", choices=["encode", "render"], required=True)
+    ap.add_argument("--embeds", required=True)
+    ap.add_argument("--prompt", default="")
+    ap.add_argument("--init", default="")
+    ap.add_argument("--out", default="")
+    ap.add_argument("--seconds", type=float, default=4.0)
+    ap.add_argument("--steps", type=int, default=25)
+    ap.add_argument("--size", default="480x832", help="WxH (Wan bucket)")
+    ap.add_argument("--seed", type=int, default=20260731)
+    ap.add_argument("--fps", type=int, default=24)
+    a = ap.parse_args()
+    return stage_encode(a) if a.stage == "encode" else stage_render(a)
 
 
 if __name__ == "__main__":
