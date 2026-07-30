@@ -110,7 +110,11 @@ def qa_episode(video: Path, clips_dir: Path | None, ffmpeg: str) -> None:
            f"{tp[-1]} dBTP" if tp else "unmeasured")
 
     # --- dead air ---
-    r = ff(["-i", str(video), "-af", "silencedetect=n=-45dB:d=1", "-f", "null", "-"], ffmpeg)
+    # -60dB, not -45: the defect class is ACCIDENTAL digital-zero holes
+    # (raw TTS concat, cycle 001 — those sit at the -91dB floor). Scored
+    # silence exists now (cycle 012's death sequence) and is mixed as quiet
+    # air around -55dB, which is design, not dropout.
+    r = ff(["-i", str(video), "-af", "silencedetect=n=-60dB:d=1", "-f", "null", "-"], ffmpeg)
     record(ep, "no digital silence", "silence_start" not in r.stderr,
            "; ".join(re.findall(r"silence_start: [\d.]+", r.stderr)[:3]))
     r = ff(["-i", str(video), "-af", f"silencedetect=n=-30dB:d={QUIET_MAX_S}",

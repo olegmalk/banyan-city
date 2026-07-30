@@ -84,3 +84,19 @@ v7 built only the death sequence. The script writes three more cues, now in:
   the episode now ENDS on the hook's sound, thump-THUMP into the smash to
   black. sfx events pass arbitrary synth params (period, grow) through
   sound.yaml. QA 12/12. Delivered as v7b.
+
+## Addendum 2 — v7c: right footage (founder: "why are you using the old and
+## very bad ai videos?")
+
+v7/v7b were assembled from `clips/` — the stale early-era renders. The
+published cut's footage lives in `takes/clips/` (engine-tagged,
+ballot-approved takes), and the pick list is recorded in
+`leaves/001-t3-d.yaml` sources. v7c stages exactly those picks (HAILUO
+opener, PIXVERSE fall two-shot, PIXVERSE2 sev-1, the POST beats), rebuilds
+beat 5's dying-vision regrade from the terminal — now drifting BLUE before
+black so the picture agrees with the changed line — and re-tunes every
+sound cue to the real two-shot geography (fan spin-down plays over his
+dying terminal, 5.1–11.1s of beat 4). Duck floor at ≈−57 dB: scored silence
+is air, not digital zero; qa_episode's dead-air check moved to −60 dB so it
+still catches true dropouts while admitting designed silence. 110 s,
+−14.7 LUFS, QA 12/12. Delivered as v7c — THE screening cut.

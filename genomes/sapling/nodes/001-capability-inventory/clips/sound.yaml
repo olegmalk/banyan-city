@@ -4,29 +4,30 @@
 # very anticlimactic... something missing"). The room's machine-noise exists
 # so that its ABSENCE at the fall is audible; the mug lands alone inside the
 # silence; the fan spins down like a machine being unplugged — the scripted
-# cue ("Black, and the sound of a cooling fan spinning down") that was never
-# implemented. No thump: v1 read as a gunshot (cycle 011).
+# cue that was never implemented. No thump: v1 read as a gunshot (cycle 011).
 #
 # All cues are synthesized (pipeline/sfx.py, fixed seeds): a re-render is
 # bit-identical and there are no downloaded samples to license.
 # `start`/`dur` are seconds from the beat's start; `dur: full` = the beat's
 # length; gain_db is relative to dialogue. Times marked (ear) are placed
-# against the footage by eye and are the first thing to tune on a re-screen.
+# against the FOOTAGE — currently the 001-t3-d take picks staged from
+# takes/clips (beat 4 is the 5.0s PIXVERSE fall + 6.0s terminal two-shot).
+# Re-tune them if the picks change; the assembler prints the timeline table.
 
 events:
-  - {beat: 1, sfx: keyboard, start: 0.2, dur: 4.2, stop_at: 3.5, gain_db: -16}  # "very fast — then it stops" (J-cut: stops at 3.7s abs, just before the first line)
+  - {beat: 1, sfx: keyboard, start: 0.2, dur: 5.8, stop_at: 5.4, gain_db: -16}  # "very fast — then it stops" just before the first line
   - {beat: 1, sfx: room_hum, start: 0.0, dur: full, gain_db: -26}
   - {beat: 2, sfx: room_hum, start: 0.0, dur: full, gain_db: -26}
   - {beat: 3, sfx: room_hum, start: 0.0, dur: full, gain_db: -26}
-  - {beat: 4, sfx: room_hum, start: 0.0, dur: 1.7, gain_db: -26}   # ALL sound dies at the tip-over (ear)
-  - {beat: 4, sfx: mug_hit, start: 2.4, gain_db: -12}              # the mug, alone in the quiet (ear)
-  - {beat: 5, sfx: fan_spindown, start: 0.3, dur: 3.4, gain_db: -20}  # the machine switching off
-  - {beat: 9, sfx: terminal_keys, start: 0.3, dur: 2.4, gain_db: -24}  # "$ whoami" types itself
+  - {beat: 4, sfx: room_hum, start: 0.0, dur: 3.0, gain_db: -26}   # ALL sound dies at the tip-over (ear)
+  - {beat: 4, sfx: mug_hit, start: 4.6, gain_db: -12}              # "the mug hits the floor before he does" (ear)
+  - {beat: 4, sfx: fan_spindown, start: 5.1, dur: 6.0, gain_db: -19}  # the cut to his dying terminal: the machine winds down with him
+  - {beat: 9, sfx: terminal_keys, start: 0.4, dur: 3.2, gain_db: -24}  # "$ whoami" types itself
   - {beat: 10, sfx: footsteps_soil, start: 3.0, dur: 7.0, period: 1.9, gain_db: -23}  # 400m away, felt not heard
   - {beat: 15, sfx: footsteps_soil, start: 0.2, dur: 3.4, period: 1.1, grow: 1.2, gain_db: -14}  # closer, faster — the hook IS this sound
 
-# the whisper wind bed is silent through the death — the world (and its
-# wind) only returns with the too-blue sky of beat 6
+# the whisper wind bed is silent from the tip-over until the too-blue sky —
+# the world (and its wind) only comes back when HE does
 bed_duck:
-  from: {beat: 4, at: 1.7}
+  from: {beat: 4, at: 3.0}
   to: {beat: 6, at: 0.0}

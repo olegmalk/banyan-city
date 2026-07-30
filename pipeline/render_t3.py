@@ -857,8 +857,12 @@ def main() -> int:
             # start, so out@t1 + in@t2 silences the whole track (found the
             # hard way — QA caught the bed at the digital floor). A windowed
             # volume expression ducks only [t1, t2]: 0.2s out-ramp, 1.2s back.
-            duck = (f",volume=volume='clip(({t1:.2f}-t)/0.2,0,1)"
-                    f"+clip((t-{t2:.2f})/1.2,0,1)':eval=frame")
+            # Floor at 0.15 (≈ −57 dB with the bed's own level): scored
+            # silence is AIR, not digital zero — true zero reads as a
+            # playback glitch on a phone, and qa_episode still polices real
+            # dropouts at the digital floor.
+            duck = (f",volume=volume='max(0.15, clip(({t1:.2f}-t)/0.2,0,1)"
+                    f"+clip((t-{t2:.2f})/1.2,0,1))':eval=frame")
         i = add_input("-f", "lavfi", "-i",
                       f"anoisesrc=color=brown:seed=42:r=24000:d={total_s:.2f}")
         chains.append(f"[{i}:a]lowpass=f=300,volume=0.05"
