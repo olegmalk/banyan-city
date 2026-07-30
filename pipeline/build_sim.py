@@ -182,7 +182,7 @@ def scene_list_html(rows: list) -> str:
         if r["waiting_for"]:
             bits.append("waiting for " + r["waiting_for"])
         meta = " · ".join(bits)
-        chip = ('<span class="chip trunk">final</span>' if r["final"]
+        chip = ('<span class="chip trunk">approved</span>' if r["final"]
                 else '<span class="chip hot">in progress</span>')
         ask = ""
         if r["request"]:  # one honest link instead of a bare issue number
@@ -291,12 +291,12 @@ def build(out_dir: Path):
         f'<a class="leaf {"grown" if r["final"] else "bud"}" '
         f'href="{_e(hero["board"])}#beat-{r["num"]:02d}" '
         f'title="Scene {r["num"]:02d} — {_e(r["name"])} · '
-        f'{"final" if r["final"] else "waiting for " + r["waiting_for"]}">🍃</a>'
+        f'{"frame approved" if r["final"] else "waiting for " + r["waiting_for"]}">🍃</a>'
         for r in rows)
     done = tot["final"] == tot["total"]
     grove_caption = (f'Episode {hero["number"]} — '
-                     + (f'all {tot["total"]} scenes finished. '
-                        if done else f'{tot["final"]} of {tot["total"]} scenes finished. ')
+                     + (f'all {tot["total"]} scene frames approved. '
+                        if done else f'{tot["final"]} of {tot["total"]} scene frames approved. ')
                      + f'<a href="{_e(hero["page"])}">Watch it &rarr;</a>')
 
     # --- the town: our machines, in sentences a stranger can read ---
@@ -323,7 +323,8 @@ def build(out_dir: Path):
     player = (f'<figure class="phone"><video controls playsinline preload="metadata" '
               f'poster="{_e(hero["poster"])}" src="{_e(hero["video"])}"></video>'
               f'<figcaption>Episode {hero["number"]} · “{_e(hero["title"])}” — '
-              f'the working cut, {tot["final"]}/{tot["total"]} scenes final</figcaption></figure>'
+              f'the working cut — {tot["final"]}/{tot["total"]} scene frames approved, '
+              f'awaiting the author’s pass</figcaption></figure>'
               ) if hero["video"] else (
         f'<p><a class="btn" href="{_e(hero["watch"])}">▶ Watch episode {hero["number"]} &rarr;</a></p>')
 
@@ -395,7 +396,8 @@ everything else runs on the family's own machines for free</p>
 </div>
 
 <h2>Every scene, and what it is waiting for</h2>
-<p class="summary"><b>All {tot["final"]} of {tot["total"]} scenes are final</b> · {waiting}</p>
+<p class="summary"><b>{tot["final"]} of {tot["total"]} scene frames approved</b> —
+the assembled episode is a working cut until the author passes it · {waiting}</p>
 <details class="drawer"><summary>Open the scene-by-scene list</summary>
 <div class="drawer-body">{scene_list_html(rows)}</div></details>
 

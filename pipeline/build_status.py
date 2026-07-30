@@ -37,7 +37,9 @@ PITCH = ("Sapling — the first series growing in Banyan City — is an AI-anima
 # quoted thread comments — so the legend names them once instead of leaving a
 # stranger to guess (stranger-eyes audit, 2026-07-30).
 LEGEND = ("<b>scene</b> = one shot of an episode (the crew says <b>beat</b>) · "
-          "<b>final</b> = the author approved it (the crew says <b>canon</b>) · "
+          "<b>approved</b> = the author picked this scene's frame · "
+          "<b>canon</b> = the cut currently leading the story — a working cut "
+          "until the author passes it · "
           "<b>take</b> = one attempt at a scene, anyone may hand one in")
 
 # Measured medians from the ledgered runs of 2026-07-27/28, written as
