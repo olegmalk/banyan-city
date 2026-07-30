@@ -35,3 +35,4 @@
 08:05:13Z MODEL_LOADED cuda/bfloat16
 08:07:32Z DONE task=bank-sapling-40cm
 08:07:38Z STARTED task=bank-field-storm beats= on cuda
+08:07:53Z MODEL_LOADED cuda/bfloat16
