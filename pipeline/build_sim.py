@@ -42,6 +42,17 @@ def machine_state(branch_tail: str) -> tuple:
     return "asleep", "asleep for a while"
 
 
+def plain_tables_html():
+    from build_status import beat_state, ESTIMATES
+    d = REPO / "genomes/sapling/nodes/001-capability-inventory"
+    rows, canon, total = beat_state(d)
+    est = "".join(f"<tr><td>{html.escape(a)}</td><td>{html.escape(b)}</td></tr>" for a, b in ESTIMATES)
+    return (f"<h2>📋 Per-beat state</h2><table style='width:100%;font-size:.8rem' border=0>"
+            f"<tr><th>Beat</th><th>Still</th><th>Motion</th><th>Request</th><th>Blocked on</th></tr>"
+            + "".join(rows) +
+            f"</table><h2>💰 Stage costs (measured)</h2><table style='font-size:.8rem'>{est}</table>")
+
+
 def build(out_dir: Path):
     d = REPO / "genomes/sapling/nodes/001-capability-inventory"
     canon = len(list((d / "stills").glob("[0-9]*.png")))
@@ -148,11 +159,15 @@ def build(out_dir: Path):
   <div class="panel"><h2>🗣 Citizens on the thread</h2>{citizens}
     <p><a style="color:#ffd76a" href="https://github.com/olegmlkvorg/banyan-city/issues/1">join them →</a></p></div>
 </div>
+<div class="row"><div class="panel" style="max-width:820px">{{plain_tables}}</div></div>
 <footer>snapshot {time.strftime('%Y-%m-%d %H:%M')} · rebuilt on every push · the whole repo IS the show —
-<a style="color:#ffd76a" href="status.html">plain status</a> · <a style="color:#ffd76a" href="index.html">the city</a></footer>
+<a style="color:#ffd76a" href="index.html">the city</a> · <a style="color:#ffd76a" href="machine.html">how it works</a></footer>
 </body></html>"""
-    (out_dir / "sim.html").write_text(out)
-    print(f"✓ sim.html — {canon}/15 leaves, {len(machines)} buildings")
+    out = out.replace("{plain_tables}", plain_tables_html())
+    (out_dir / "status.html").write_text(out)
+    (out_dir / "sim.html").write_text(
+        '<!doctype html><meta http-equiv="refresh" content="0;url=status.html">')
+    print(f"✓ status.html (sim) — {canon}/15 leaves, {len(machines)} buildings")
 
 
 if __name__ == "__main__":
