@@ -28,3 +28,18 @@
   00-keep-sky-moods-s12.png in 13s
   00-keep-sky-moods-s13.png in 13s
   00-keep-sky-moods-s14.png in 13s
+  00-keep-macro-dew-s0.png in 14s
+  00-keep-macro-dew-s1.png in 13s
+  00-keep-macro-dew-s2.png in 13s
+  00-keep-macro-dew-s3.png in 13s
+  00-keep-macro-dew-s4.png in 13s
+  00-keep-macro-dew-s5.png in 13s
+  00-keep-macro-dew-s6.png in 13s
+  00-keep-macro-dew-s7.png in 13s
+  00-keep-macro-dew-s8.png in 13s
+  00-keep-macro-dew-s9.png in 13s
+  00-keep-macro-dew-s10.png in 13s
+  00-keep-macro-dew-s11.png in 13s
+  00-keep-macro-dew-s12.png in 13s
+  00-keep-macro-dew-s13.png in 13s
+  00-keep-macro-dew-s14.png in 13s
