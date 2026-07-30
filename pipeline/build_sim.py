@@ -13,6 +13,44 @@ import yaml
 
 REPO = Path(__file__).resolve().parent.parent
 
+import json
+import urllib.request
+
+GH = "olegmlkvorg/banyan-city"
+
+
+def _get(url):
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "banyan-sim-build"})
+        with urllib.request.urlopen(req, timeout=15) as r:
+            return r.read().decode()
+    except Exception:
+        return ""
+
+
+def farm_branches():
+    """farm-results-* branches via the public API — the deploy server has no
+    local refs (the invisible-buildings bug, 2026-07-30)."""
+    raw = _get(f"https://api.github.com/repos/{GH}/branches?per_page=100")
+    try:
+        return [b["name"] for b in json.loads(raw) if b["name"].startswith("farm-results-")]
+    except Exception:
+        return []
+
+
+def branch_heartbeat(branch):
+    txt = _get(f"https://raw.githubusercontent.com/{GH}/{branch}/farm-out/heartbeat.txt")
+    return txt.strip().splitlines()[-1] if txt.strip() else ""
+
+
+def latest_thread_comments(n=3):
+    raw = _get(f"https://api.github.com/repos/{GH}/issues/1/comments?per_page=100")
+    try:
+        cs = json.loads(raw)[-n:]
+        return [(c["user"]["login"], c["body"][:80].replace("\n", " ")) for c in cs]
+    except Exception:
+        return []
+
 
 def sh(cmd):
     try:
@@ -67,29 +105,23 @@ def build(out_dir: Path):
         inbox = (yaml.safe_load((REPO / "pipeline/pending-founder.yaml").read_text()) or {}).get("pending") or []
     except Exception:
         inbox = []
-    sh("git fetch -q origin 'refs/heads/farm-results-*:refs/remotes/origin/farm-results-*'")
     machines = []
     EMOJI = {"msi": "🏭", "m2": "🏢", "m1pro": "🏛"}
-    for b in sh("git branch -r | grep farm-results || true").splitlines():
-        name = b.strip().split("farm-results-")[-1]
-        hb = sh(f"git show {b.strip()}:farm-out/heartbeat.txt 2>/dev/null | tail -1")
-        state, cap = machine_state(hb)
+    for b in farm_branches():
+        name = b.split("farm-results-")[-1]
+        state, cap = machine_state(branch_heartbeat(b))
         machines.append((name, EMOJI.get(name, "🏠"), state, cap))
-    comments = []
-    raw = sh("gh issue view 1 --json comments -q "
-             "'.comments[-3:][] | .author.login + \"|\" + (.body|.[0:80])' 2>/dev/null")
-    for l in raw.splitlines():
-        if "|" in l:
-            a, b2 = l.split("|", 1)
-            comments.append((a, b2))
+    comments = latest_thread_comments()
 
     leaves = "".join(
         f'<div class="leaf {"grown" if i < canon else "bud"}" style="--i:{i}">🍃</div>'
         for i in range(15))
-    quests = "".join(
-        f'<div class="quest">📜 <b>{html.escape(q.get("title",""))}</b><br>'
-        f'<small>{html.escape(q.get("detail",""))[:90]}</small></div>'
-        for q in inbox) or '<div class="quest">✨ no quests — the city runs itself</div>'
+    def _q(q):
+        link = q.get("public")
+        a = f' <a style="color:#ffd76a" href="{html.escape(link)}">look &rarr;</a>' if link else ""
+        return (f'<div class="quest">\U0001F4DC <b>{html.escape(q.get("title",""))}</b>{a}<br>'
+                f'<small>{html.escape(q.get("detail",""))}</small></div>')
+    quests = "".join(_q(q) for q in inbox) or '<div class="quest">no quests - the city runs itself</div>'
     town = "".join(
         f'<div class="bld {st}"><div class="smoke">{"💨" if st == "working" else ""}</div>'
         f'<div class="ico">{em}</div><div class="nm">{html.escape(n)}</div>'
@@ -161,7 +193,7 @@ def build(out_dir: Path):
 </div>
 <div class="row"><div class="panel" style="max-width:820px">{{plain_tables}}</div></div>
 <footer>snapshot {time.strftime('%Y-%m-%d %H:%M')} · rebuilt on every push · the whole repo IS the show —
-<a style="color:#ffd76a" href="index.html">the city</a> · <a style="color:#ffd76a" href="machine.html">how it works</a></footer>
+<a style="color:#ffd76a" href="index.html">the city</a> · <a style="color:#ffd76a" href="lab/index.html">the lab</a> · <a style="color:#ffd76a" href="machine.html">how it works</a></footer>
 </body></html>"""
     out = out.replace("{plain_tables}", plain_tables_html())
     (out_dir / "status.html").write_text(out)

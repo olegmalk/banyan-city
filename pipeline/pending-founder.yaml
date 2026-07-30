@@ -1,23 +1,28 @@
-# The founder's inbox — decisions only the founder can make. The bird's-eye board
-# reads this; the steward edits it as gates open and close.
+# The founder's inbox — decisions only the founder can make. The status board
+# renders these publicly, so write them for a STRANGER: no filenames, no
+# internal jargon, and a public link whenever the thing can be looked at.
 pending:
   - id: v6-verdict
-    title: "Episode 1 screening verdict (v6)"
-    detail: "ep1-remake-screening-v6.mp4 — the finished episode; posting gate"
+    title: "Watch the finished episode 1 remake and say yes or no"
+    detail: "All 15 shots are approved and assembled with new narration. It is published here as a working cut — nothing posts to the show's channel until the author has watched it and passed it."
+    public: "sapling/001-capability-inventory.html"
     since: 2026-07-29
   - id: bakeoff-pick
-    title: "Model bake-off verdict"
-    detail: "model-bakeoff.html — pick the show's artist (3.1 / 4.0 / Illustrious; NoobAI handicapped)"
+    title: "Choose which AI model draws the show from now on"
+    detail: "Four free models rendered the same three shots — the current one and 2026's best contenders. Whichever the author picks becomes the artist for every future frame."
+    public: "lab/model-bakeoff.html"
     since: 2026-07-30
   - id: ep2-scripts
-    title: "Episode 2: read the three scripts (002b first — provisional trunk)"
-    detail: "002b first-citizen is steward-era trunk, yours to confirm/overturn; 002a + 002c alternates. Approval unlocks production."
+    title: "Read the three candidate scripts for episode 2"
+    detail: "Three different directions the story can take after episode 1 (a broken channel, a first citizen, an admin who may not exist). No footage may be made from an unread script — so this read is what unblocks the next episode."
+    public: "https://github.com/olegmlkvorg/banyan-city/tree/main/genomes/sapling/nodes"
     since: 2026-07-29
   - id: ep3-scripts
-    title: "Episode 3: read the three scripts (after your 002 call)"
-    detail: "003a oncall-rotation / 003b one-leaf-for-yes / 003c y-slash-n — children of the 002 trunk choice"
+    title: "Read episode 3's three candidates (after the episode 2 choice)"
+    detail: "Each is a child of whichever episode 2 branch wins, so this waits on that call."
+    public: "https://github.com/olegmlkvorg/banyan-city/tree/main/genomes/sapling/nodes"
     since: 2026-07-30
   - id: hires-review
-    title: "Hi-res canon upgrades: skim & nod"
-    detail: "30 candidates at 1080x1576 from the msi — approve swaps beat-by-beat or ignore"
+    title: "Approve or ignore 30 sharper versions of the existing shots"
+    detail: "The farm re-rendered all 15 approved shots at higher resolution overnight. Each one is a candidate to replace its original — a skim-and-nod, not a study."
     since: 2026-07-30

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Render Farm Benchmark — 2026-07-29</title>
+<style>
+  :root { color-scheme: light dark; }
+  body { font-family: -apple-system, "Segoe UI", sans-serif; max-width: 760px;
+         margin: 2rem auto; padding: 0 1.2rem; line-height: 1.5;
+         background: #101418; color: #e8edf2; }
+  h1 { font-size: 1.5rem; margin-bottom: .2rem; }
+  .sub { color: #93a4b3; margin-top: 0; font-size: .95rem; }
+  .card { background: #182028; border: 1px solid #26313c; border-radius: 12px;
+          padding: 1.1rem 1.3rem; margin: 1rem 0; }
+  .name { font-weight: 650; font-size: 1.05rem; }
+  .role { color: #93a4b3; font-size: .85rem; }
+  .barwrap { background: #0c1014; border-radius: 6px; height: 26px; margin: .55rem 0 .2rem;
+             position: relative; overflow: hidden; }
+  .bar { height: 100%; border-radius: 6px;
+         background: linear-gradient(90deg, #2dd4a0, #1fa87e); }
+  .bar.slow { background: linear-gradient(90deg, #e8a15c, #c9803f); }
+  .bar.paid { background: linear-gradient(90deg, #6aa9e8, #4a86c9); }
+  .val { position: absolute; right: 10px; top: 3px; font-weight: 700; font-size: .95rem; }
+  .meta { font-size: .85rem; color: #b7c4cf; }
+  .foot { color: #93a4b3; font-size: .82rem; margin-top: 1.4rem; border-top: 1px solid #26313c; padding-top: .8rem; }
+  .big { font-size: 1.35rem; font-weight: 700; color: #2dd4a0; }
+  table { width: 100%; border-collapse: collapse; margin-top: .4rem; font-size: .9rem; }
+  td, th { text-align: left; padding: .3rem .5rem .3rem 0; border-bottom: 1px solid #202a34; }
+  th { color: #93a4b3; font-weight: 600; }
+</style></head><body>
+
+<h1>🌱 banyan.city render farm — benchmark</h1>
+<p class="sub">July 29, 2026 · identical task on every machine: 2 images, 40 steps,
+832×1216, same model, same seeds (episode beat 09)</p>
+
+<div class="card">
+  <div class="name">🏆 MSI Vector 16 HX — RTX 5070 Ti (Windows)</div>
+  <div class="role">primary renderer · joined the farm today</div>
+  <div class="barwrap"><div class="bar" style="width:8%"></div><span class="val">13.5 s / image</span></div>
+  <div class="meta">Free · runs unattended from another room · was 220 s before the
+  power-mode fix (16× unlock) · a full 4-option ballot round ≈ <b>1 minute</b></div>
+</div>
+
+<div class="card">
+  <div class="name">☁️ RunPod — rented RTX 3090 / 4090</div>
+  <div class="role">surge lane · proven end-to-end today after 3 fixed bugs</div>
+  <div class="barwrap"><div class="bar paid" style="width:7%"></div><span class="val">11 s / image</span></div>
+  <div class="meta">~$0.01–0.03 per round + ~3 min boot each time · $9.55 of the $10
+  budget intact · hard $5/evening cap in code · every pod ledgered</div>
+</div>
+
+<div class="card">
+  <div class="name">💻 Second Mac (family machine)</div>
+  <div class="role">second Mac worker — joined the farm 2026-07-29</div>
+  <div class="barwrap"><div class="bar slow" style="width:70%"></div><span class="val">125 s / image</span></div>
+  <div class="meta">Free · good overnight batch machine · ballot round ≈ 8 min</div>
+</div>
+
+<div class="card">
+  <div class="name">💻 M1 Pro Mac (the studio)</div>
+  <div class="role">orchestration, voice, editing — renders on the side</div>
+  <div class="barwrap"><div class="bar slow" style="width:100%"></div><span class="val">178 s / image</span></div>
+  <div class="meta">Free · also ran the whole day's production while benchmarking ·
+  ballot round ≈ 12 min</div>
+</div>
+
+<p><span class="big">Why the 13× gap?</span></p>
+<table>
+  <tr><th></th><th>NVIDIA laptop GPU</th><th>Apple M-series</th></tr>
+  <tr><td>Dedicated AI silicon (tensor cores)</td><td>yes — this math's home game</td><td>no (general-purpose GPU)</td></tr>
+  <tr><td>Numeric precision needed</td><td>half (fast)</td><td>double — half-precision renders black on these chips</td></tr>
+  <tr><td>So per image…</td><td>1× work on fast silicon</td><td>2× work on general silicon</td></tr>
+</table>
+
+<p class="foot">The fleet in one line: the Windows laptop renders, the Macs create and
+direct, the cloud waits for surges — 4 beats can iterate in parallel.
+Total cash spent on the entire episode-1 remake era: <b>≈ $1.20</b>.
+Every render, vote, and cent is public at banyan.city.</p>
+
+</body></html>
