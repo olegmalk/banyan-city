@@ -2,7 +2,9 @@
 #
 # ASCII ONLY in this file, deliberately: Windows PowerShell 5.1 reads a .ps1
 # as ANSI unless it has a BOM, so a single em-dash arrives as mojibake and
-# takes the parser down with it (2026-07-31, on the 5090's first run). - one command, start to finish.
+# takes the parser down with it (2026-07-31, on the 5090's first run).
+#
+# One command, start to finish.
 #
 # Written for the RTX 5090 laptop (2026-07-31) and any NVIDIA Windows box after
 # it. Everything lands in C:\banyan-farm (plus C:\banyan-video for the video
