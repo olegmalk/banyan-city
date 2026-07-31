@@ -1,13 +1,14 @@
-# All four remaining stills in ONE task, so the 10GB model loads once instead of
-# four times. Sampling is only ~71s per clip; the rest was reload overhead.
+# Beat 1 on request: the founder wants to SEE what our local image-to-video does
+# with the opening frame, so this renders it and I build a side-by-side against
+# the approved still.
 tasks:
-- id: vid-5090-batch-1785523252
+- id: vid-5090-b01-1785524801
   worker: rtx5090
   video: true
   node: 001-capability-inventory
-  beats: 15,6,9,10
-  motion: subtle continuous motion true to the frame, gentle camera drift, living
-    scene
+  beats: 1,6,9,10
+  motion: 'true to the frame: only what would actually move - a hand on keys, screen
+    flicker, drifting air - gentle camera drift, no new subjects'
   size: 480x832
   seconds: 3.0
   steps: 20
