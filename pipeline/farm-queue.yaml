@@ -1,52 +1,38 @@
-# SETTINGS SWEEP on one beat with one seed: 20 steps/cfg5 is the baseline we
-# already have, so these four isolate step count and guidance. Cheap answers
-# before we spend an install on a bigger model.
+# OVERNIGHT. Two jobs, in order.
+#
+# 1. Re-render every motion beat at 704x1280 / 50 steps. Wan's own config lists
+#    704x1280 as the ONLY supported size for TI2V-5B; 480x832 is a trained size
+#    for the BIGGER model and off-distribution for ours. Every clip the founder
+#    has judged was made outside the model's training envelope, at 20 steps
+#    against an official 50. This is a bug fix, not an experiment.
+#
+# 2. Prefetch the 14B stack (Apache-2.0, ~25GB). Download only - the install
+#    decision waits for a human.
 tasks:
-- id: sweep-steps40-1785526459
+- id: vid-720p-all-1785529520
   worker: rtx5090
   video: true
   node: 001-capability-inventory
-  beats: '7'
-  motion: the one leaf twitches and shivers violently, handheld camera shake following
-    it
-  size: 480x832
+  beats: 3,6,7,9,10,12,14,15
+  motion: 'true to the frame: only what would actually move in this shot - drifting
+    air, screen flicker, a trembling leaf, light through soil - gentle camera drift,
+    no new subjects, no scene change'
+  size: 704x1280
   seconds: 3.0
-  seed_base: 20260731
-  steps: 40
-  guidance: 5.0
-- id: sweep-cfg75-1785526459
-  worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  beats: '7'
-  motion: the one leaf twitches and shivers violently, handheld camera shake following
-    it
-  size: 480x832
-  seconds: 3.0
-  seed_base: 20260731
-  steps: 20
-  guidance: 7.5
-- id: sweep-cfg30-1785526459
-  worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  beats: '7'
-  motion: the one leaf twitches and shivers violently, handheld camera shake following
-    it
-  size: 480x832
-  seconds: 3.0
-  seed_base: 20260731
-  steps: 20
-  guidance: 3.0
-- id: sweep-steps50cfg65-1785526459
-  worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  beats: '7'
-  motion: the one leaf twitches and shivers violently, handheld camera shake following
-    it
-  size: 480x832
-  seconds: 3.0
-  seed_base: 20260731
   steps: 50
-  guidance: 6.5
+  guidance: 5.0
+  seed_base: 20260731
+- id: prefetch-a14b-1785529520
+  worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  beats: ''
+  prefetch:
+  - repo: QuantStack/Wan2.2-I2V-A14B-GGUF
+    patterns:
+    - HighNoise/*Q6_K*
+    - LowNoise/*Q6_K*
+    - VAE/*
+  - repo: lightx2v/Wan2.2-Distill-Loras
+    patterns:
+    - '*i2v*rank64*4step*'

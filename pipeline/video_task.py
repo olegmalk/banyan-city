@@ -108,6 +108,30 @@ def _have(py: Path, mod: str) -> bool:
                           capture_output=True).returncode == 0
 
 
+def prefetch(task: dict, courier) -> None:
+    """Download named weights into the video venv's cache, nothing more.
+
+    Downloading is the safe half of trying a new model: it takes bandwidth, not
+    judgement, so it can happen overnight while the install decision waits for
+    a human. Heartbeats mark each repo so a stalled transfer is visible.
+    """
+    ensure_stack(courier)
+    for spec in task.get("prefetch") or []:
+        repo = str(spec["repo"])
+        pats = spec.get("patterns") or None
+        courier.mark(f"PREFETCH_START {repo}")
+        code = (
+            "import os\n"
+            "os.environ['HF_HUB_DISABLE_XET']='1'\n"
+            "os.environ['HF_HUB_DOWNLOAD_TIMEOUT']='60'\n"
+            "from huggingface_hub import snapshot_download\n"
+            f"p=snapshot_download({repo!r}, allow_patterns={pats!r})\n"
+            "print('DOWNLOADED', p)\n")
+        _run([str(PY), "-c", code], courier, f"prefetch {repo}",
+             timeout=21600, retry=True)
+        courier.mark(f"PREFETCH_OK {repo}")
+
+
 def run(task: dict, courier, node_dir: Path) -> None:
     """One video task: N beats animated from their APPROVED stills.
 
@@ -116,6 +140,8 @@ def run(task: dict, courier, node_dir: Path) -> None:
     """
     from generate_shots import parse_shots
 
+    if task.get("prefetch"):
+        return prefetch(task, courier)
     ensure_stack(courier)
     # utf-8 pinned: Windows' cp1252 mangles the em-dash in "## Beat NN —"
     # and parse_shots then finds nothing (the msi's first-light failure)
