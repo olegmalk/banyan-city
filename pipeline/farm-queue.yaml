@@ -1,10 +1,10 @@
-# Both Windows machines working: the 5090 on quality clips at native 9:16, the
-# MSI on a low-step experiment to find out whether it can be a useful overnight
-# DRAFT machine despite its 16GB RAM (25 steps took over two hours; if time
-# scales with steps, 8 steps lands near 40 minutes).
+# The MSI's 480x832 / 8-step clip came out COHERENT in 8 minutes; the 5090's
+# 704x1280 / 30-step clip came out as smears. Same code, so resolution is the
+# prime suspect: the 5090 now renders the MSI's exact settings to isolate it,
+# while the MSI keeps drafting beats at the settings that work.
 tasks:
-- id: vid-msi-lowstep-1785506926
-  worker: msi
+- id: vid-5090-480test-1785508628
+  worker: rtx5090
   video: true
   node: 001-capability-inventory
   beats: '7'
@@ -14,14 +14,25 @@ tasks:
   seconds: 3.0
   steps: 8
   seed_base: 20260731
-- id: vid-5090-b06-1785506926
-  worker: rtx5090
+- id: vid-msi-b06-1785508628
+  worker: msi
   video: true
   node: 001-capability-inventory
   beats: '6'
   motion: clouds drift slowly across the blue, the single leaf trembles in a light
     breeze, gentle parallax
-  size: 704x1280
-  seconds: 3.4
-  steps: 30
+  size: 480x832
+  seconds: 3.0
+  steps: 8
+  seed_base: 20260731
+- id: vid-msi-b15-1785508628
+  worker: msi
+  video: true
+  node: 001-capability-inventory
+  beats: '15'
+  motion: rings of light pulse outward through the soil, faster and brighter with
+    each beat, slow push-in
+  size: 480x832
+  seconds: 3.0
+  steps: 8
   seed_base: 20260731
