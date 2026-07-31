@@ -1,0 +1,37 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "VO",
+   "text": "Okay. Hospital ceiling. That's fine. Hospitals are blue now.",
+   "start": 0.0,
+   "end": 3.763,
+   "chunks": [
+    {
+     "text": "Okay.",
+     "start": 0.0,
+     "end": 0.652
+    },
+    {
+     "text": "Hospital ceiling.",
+     "start": 0.652,
+     "end": 1.558
+    },
+    {
+     "text": "That's fine.",
+     "start": 1.558,
+     "end": 2.406
+    },
+    {
+     "text": "Hospitals are blue now.",
+     "start": 2.406,
+     "end": 3.763
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 4.063
+}
