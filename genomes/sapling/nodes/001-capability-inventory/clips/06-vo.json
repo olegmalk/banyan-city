@@ -5,33 +5,33 @@
  "lines": [
   {
    "who": "VO",
-   "text": "Okay. Hospital ceiling. That's fine. Hospitals are blue now.",
+   "text": "Okay. Ceiling's gone. That's fine. Open-plan hospital.",
    "start": 0.0,
-   "end": 3.763,
+   "end": 3.677,
    "chunks": [
     {
      "text": "Okay.",
      "start": 0.0,
-     "end": 0.652
+     "end": 0.498
     },
     {
-     "text": "Hospital ceiling.",
-     "start": 0.652,
-     "end": 1.558
+     "text": "Ceiling's gone.",
+     "start": 0.498,
+     "end": 1.115
     },
     {
      "text": "That's fine.",
-     "start": 1.558,
-     "end": 2.406
+     "start": 1.115,
+     "end": 2.81
     },
     {
-     "text": "Hospitals are blue now.",
-     "start": 2.406,
-     "end": 3.763
+     "text": "Open-plan hospital.",
+     "start": 2.81,
+     "end": 3.677
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 4.063
+ "total_s": 3.977
 }

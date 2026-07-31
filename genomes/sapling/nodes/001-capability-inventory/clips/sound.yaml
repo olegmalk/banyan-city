@@ -17,11 +17,12 @@ events:
   - {beat: 2, sfx: room_hum, start: 0.0, dur: full, gain_db: -26}
   - {beat: 3, sfx: room_hum, start: 0.0, dur: full, gain_db: -26}
   - {beat: 4, sfx: room_hum, start: 0.0, dur: 4.0, gain_db: -26}   # the room dies with his breath
-  - {beat: 4, sfx: fall_impact, start: 3.94, pre: 1.1, gain_db: -11}  # whoosh 3.94→5.04, HIT on the cut
+  - {beat: 4, sfx: fall_impact, start: 3.30, pre: 1.1, gain_db: -14}  # whoosh, then HE lands at 4.4s — still on the slumping shot, 0.6s BEFORE the cut
+  - {beat: 4, sfx: mug_hit, start: 5.15, gain_db: -15}              # the ceramic, as the floor shot REVEALS the spilled mug (sound follows the picture)
   - {beat: 4, sfx: fan_spindown, start: 7.0, dur: 4.0, gain_db: -19}  # his machine winds down over his last sight
   - {beat: 9, sfx: terminal_keys, start: 0.4, dur: 3.2, gain_db: -24}  # "$ whoami" types itself
   - {beat: 10, sfx: footsteps_soil, start: 3.0, dur: 7.0, period: 1.9, gain_db: -23}  # 400m away, felt not heard
-  - {beat: 15, sfx: footsteps_soil, start: 0.2, dur: 3.4, period: 1.1, grow: 1.2, gain_db: -14}  # closer, faster — the hook
+  - {beat: 15, sfx: footsteps_soil, start: 0.2, dur: 3.4, period: 1.1, grow: 1.2, gain_db: -16}  # closer, faster — the hook
 
 # the wind belongs OUTSIDE: silent from the cold open until the sky appears
 # under "Huh. Blue.", then it breathes in with the new world

@@ -941,6 +941,13 @@ FEED_JS = """<script>
       if (eps[i + 1]) eps[i + 1].scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
   });
+  /* a background tab must not keep decoding video: IntersectionObserver
+     still reports "visible" for a scrolled-into-view player in a hidden
+     tab, so seven autoplaying episodes kept the GPU busy in tabs nobody
+     was looking at (founder's Mac, 2026-07-31). */
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) vids.forEach(function (v) { if (v) v.pause(); });
+  });
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
       var v = e.target.querySelector('video');

@@ -43,6 +43,7 @@ MACHINES = {
     "m1pro": ("the studio laptop", "🏛"),
     "m2": ("the spare laptop", "🏢"),
     "msi": ("the fast-GPU laptop", "🏭"),
+    "rtx5090": ("the big render house", "🏟"),
 }
 STATE_WORDS = {  # css state → the legend under the town
     "working": "glowing = rendering right now",
@@ -287,6 +288,11 @@ SIM_CSS = """
 .bld.idle { opacity: .9; }
 .bld.asleep { opacity: .5; filter: grayscale(.7); }
 .smoke { height: 1.1rem; animation: puff 2.4s linear infinite; }
+/* an infinite animation keeps the compositor running FOREVER, in every
+   open tab — this page is meant to be left open, so it must go quiet
+   when nobody is looking (founder's Mac, 2026-07-31: a Chrome GPU
+   process at 100% of a core for 13 hours). */
+body.away .smoke, body.away .cloudgpu { animation: none !important; }
 @keyframes puff { 0% { opacity: .9; transform: translateY(0) } 100% { opacity: 0; transform: translateY(-11px) } }
 .spend { font: 600 .8rem/1.6 var(--mono); color: var(--faint); text-align: center; }
 .spend b { color: var(--sap); }
@@ -480,6 +486,12 @@ they wait.</p>
 <a href="index.html">the city</a> · <a href="lab/index.html">the lab</a> ·
 <a href="machine.html">how it works</a></footer>
 </main>
+<script>
+/* pause every animation while the tab is hidden. */
+document.addEventListener("visibilitychange", function () {{
+  document.body.classList.toggle("away", document.hidden);
+}});
+</script>
 </body>
 </html>"""
     (out_dir / "status.html").write_text(out)

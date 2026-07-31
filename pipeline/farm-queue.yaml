@@ -1,13 +1,27 @@
-# canary 6: embeddings handed to the pipeline on the execution device.
+# Both Windows machines working: the 5090 on quality clips at native 9:16, the
+# MSI on a low-step experiment to find out whether it can be a useful overnight
+# DRAFT machine despite its 16GB RAM (25 steps took over two hours; if time
+# scales with steps, 8 steps lands near 40 minutes).
 tasks:
-- id: vid-canary6-1785444105
+- id: vid-msi-lowstep-1785506926
   worker: msi
   video: true
   node: 001-capability-inventory
-  beats: '10'
-  motion: the underground root map pulses slowly, veins of water drifting, rings of
-    light spreading outward through the soil, slow push-in
+  beats: '7'
+  motion: the one leaf twitches and shivers violently, handheld camera shake following
+    it
   size: 480x832
+  seconds: 3.0
+  steps: 8
+  seed_base: 20260731
+- id: vid-5090-b06-1785506926
+  worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  beats: '6'
+  motion: clouds drift slowly across the blue, the single leaf trembles in a light
+    breeze, gentle parallax
+  size: 704x1280
   seconds: 3.4
-  steps: 25
+  steps: 30
   seed_base: 20260731

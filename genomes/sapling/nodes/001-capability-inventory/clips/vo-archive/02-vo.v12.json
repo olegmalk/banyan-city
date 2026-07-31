@@ -1,0 +1,29 @@
+{
+ "engine": "f5-tts-v1-base",
+ "total_s": 4.192,
+ "lines": [
+  {
+   "who": "VO",
+   "text": "Production went down at two forty-one. It's the retry loop. It's always the retry loop.",
+   "start": 0.0,
+   "end": 4.192,
+   "chunks": [
+    {
+     "text": "Production went down at two forty-one.",
+     "start": 0.0,
+     "end": 2.13
+    },
+    {
+     "text": "It's the retry loop.",
+     "start": 2.13,
+     "end": 3.09
+    },
+    {
+     "text": "It's always the retry loop.",
+     "start": 3.09,
+     "end": 4.192
+    }
+   ]
+  }
+ ]
+}

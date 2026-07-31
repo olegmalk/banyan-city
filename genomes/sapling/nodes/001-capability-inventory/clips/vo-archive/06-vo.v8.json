@@ -1,0 +1,34 @@
+{
+ "engine": "f5-tts-v1-base",
+ "total_s": 2.325,
+ "lines": [
+  {
+   "who": "VO",
+   "text": "Okay. Ceiling's gone. That's fine. Open-plan hospital.",
+   "start": 0.0,
+   "end": 2.325,
+   "chunks": [
+    {
+     "text": "Okay.",
+     "start": 0.0,
+     "end": 0.228
+    },
+    {
+     "text": "Ceiling's gone.",
+     "start": 0.228,
+     "end": 0.912
+    },
+    {
+     "text": "That's fine.",
+     "start": 0.912,
+     "end": 1.459
+    },
+    {
+     "text": "Open-plan hospital.",
+     "start": 1.459,
+     "end": 2.325
+    }
+   ]
+  }
+ ]
+}

@@ -41,6 +41,7 @@ Usage:
 """
 
 import argparse
+import os
 import json
 import math
 import re
@@ -261,7 +262,10 @@ def video_duration(f: Path) -> float | None:
     return media_duration(f)
 
 
-VOICELESS_TAIL_MAX = 2.0  # footage may beat out this long after the last word
+VOICELESS_TAIL_MAX = float(os.environ.get("T3_TAIL_MAX", 2.0))
+# footage may beat out this long after the last word. Env-tunable because a
+# "tight cut" is a pacing experiment, not a new pipeline: cold readers found
+# 001 holds static plates for seconds after the line ends (2026-07-30).
 
 
 def fit_duration(script_s: float, cdur: float, vdur: float) -> float:

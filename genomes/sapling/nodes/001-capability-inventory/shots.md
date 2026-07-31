@@ -58,7 +58,7 @@ thick curved glazed ceramic shards of a broken coffee mug scattered flat on dark
 ```
 ## Beat 06 — TOO BLUE (0:24–0:29) ⬜ needs footage
 
-Line: 'Hospital ceiling. Hospitals are blue now.' The wrong-ceiling joke IS the shot.
+Line: "Ceiling's gone. Open-plan hospital." The wrong-ceiling joke IS the shot — he is looking at open sky WITH clouds, so the gag is that he files it as architecture.
 
 ```
 no humans, plant focus, pov from inside tall grass, camera on the ground pointing straight up, a vast flat clear blue morning sky filling most of the frame, soft out-of-focus grass blade tips fringing the very edges of the frame, one small green sprout leaf leaning into view at the bottom, one tiny wisp of cloud, gentle morning light, dreamy, detailed, newest, masterpiece, best quality, very aesthetic No 1girl, no girl, no boy, no person, no face, no eyes, no hair, no portrait, no big clouds, no forest, no tree, no abstract shapes. No photorealism, no 3D render look. 9:16 vertical, no text.

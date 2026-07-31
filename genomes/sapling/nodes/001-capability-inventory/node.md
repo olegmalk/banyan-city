@@ -37,6 +37,8 @@ The spinner resolves.
 ✓ deploy succeeded
 ```
 
+> **VO (relieved, almost cheerful):** There. Fixed. Now I'm going to sleep for a—
+
 **THE FALL — 0:15–0:20**
 A sharp breath in — the frame tips sideways — the mug hits the floor before he does.
 
@@ -48,7 +50,7 @@ Black, and the sound of a cooling fan spinning down.
 **TOO BLUE — 0:24–0:29**
 Blinding green blur. Focus pulls: two centimetres off the ground, looking up through one trembling leaf at a sky that is *too* blue.
 
-> **VO:** Okay. Hospital ceiling. That's fine. Hospitals are blue now.
+> **VO:** Okay. Ceiling's gone. That's fine. Open-plan hospital.
 
 **FLAILING ONE (1) LEAF — 0:29–0:35**
 The leaf — *his* leaf — twitches when he panics, and the camera shakes with it.

@@ -1,0 +1,44 @@
+{
+ "engine": "f5-tts-v1-base",
+ "total_s": 5.739,
+ "lines": [
+  {
+   "who": "VO",
+   "text": "Scream. , No mouth. Run. , No legs. Flail?? , ...I appear to be flailing one leaf.",
+   "start": 0.0,
+   "end": 5.739,
+   "chunks": [
+    {
+     "text": "Scream.",
+     "start": 0.0,
+     "end": 0.522
+    },
+    {
+     "text": ", No mouth.",
+     "start": 0.522,
+     "end": 1.342
+    },
+    {
+     "text": "Run.",
+     "start": 1.342,
+     "end": 1.64
+    },
+    {
+     "text": ", No legs.",
+     "start": 1.64,
+     "end": 2.385
+    },
+    {
+     "text": "Flail??",
+     "start": 2.385,
+     "end": 2.907
+    },
+    {
+     "text": ", ...I appear to be flailing one leaf.",
+     "start": 2.907,
+     "end": 5.739
+    }
+   ]
+  }
+ ]
+}

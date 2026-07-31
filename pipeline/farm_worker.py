@@ -86,9 +86,16 @@ class Courier:
     def mark(self, stage: str):
         self.out.mkdir(exist_ok=True)
         stamp = time.strftime("%H:%M:%SZ", time.gmtime())
-        with (self.out / "heartbeat.txt").open("a") as f:
+        # utf-8 on every WRITE too, not just prints: Windows defaults these to
+        # cp1252, and the log carries Wan's Chinese negative prompt plus the
+        # em-dashes from shots.md, so writing it raised UnicodeEncodeError and
+        # killed the worker mid-task (the 5090, 2026-07-31). Fifth cp1252
+        # casualty; the lesson each time is that logging must not be able to
+        # kill the thing it logs.
+        with (self.out / "heartbeat.txt").open("a", encoding="utf-8") as f:
             f.write(f"{stamp} {stage}\n")
-        (self.out / "worker-log.txt").write_text("\n".join(self.log[-400:]))
+        (self.out / "worker-log.txt").write_text("\n".join(self.log[-400:]),
+                                                 encoding="utf-8", errors="replace")
         sh("git", "checkout", "-qB", self.branch, check=False)
         sh("git", "add", "-A", str(self.out), check=False)
         sh("git", "commit", "-qm", f"hb: {stage}", check=False)
@@ -185,6 +192,18 @@ def render_task(task: dict, courier: Courier, device: str, dtype) -> None:
 
 
 def main() -> int:
+    # A Windows console is cp1252, and this worker echoes its children's output
+    # — which carries em-dashes from shots.md and a Chinese negative prompt. A
+    # print() of any of it raised UnicodeEncodeError IN THE WORKER, which is
+    # why the msi went silent mid-task instead of reporting its own timeout
+    # (2026-07-31: "charmap codec can't encode character"). Never let logging
+    # kill the process it is logging.
+    for stream in (sys.stdout, sys.stderr):
+        try:
+            stream.reconfigure(encoding="utf-8", errors="replace")
+        except (AttributeError, ValueError):
+            pass
+
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--name", required=True,
