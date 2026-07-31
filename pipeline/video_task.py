@@ -91,6 +91,17 @@ def ensure_stack(courier) -> None:
     courier.mark(f"VIDEO_DEPS_OK {probe.stdout.strip()}")
 
 
+def gpu_vram_gb() -> float:
+    """Total VRAM on device 0, asked of the video venv (this process has no torch)."""
+    r = subprocess.run([str(PY), "-c", "import torch;print(torch.cuda.get_device_properties(0)"
+                        ".total_memory/1e9 if torch.cuda.is_available() else 0)"],
+                       capture_output=True, text=True)
+    try:
+        return float((r.stdout or "0").strip())
+    except ValueError:
+        return 0.0
+
+
 def _have(py: Path, mod: str) -> bool:
     return subprocess.run([str(py), "-c", f"import {mod}"],
                           capture_output=True).returncode == 0
@@ -138,15 +149,27 @@ def run(task: dict, courier, node_dir: Path) -> None:
         # one process killed the 16GB machine with an access violation
         # (0xC0000005). Encoding in a process that then EXITS is the only
         # reliable way to give that memory back on Windows.
-        courier.mark(f"VIDEO_ENCODING beat={num:02d}")
-        _run([str(PY), wan, "--stage", "encode", "--embeds", str(emb),
-              "--prompt", prompt], courier, f"encode {num}", timeout=3600, retry=True)
-        courier.mark(f"VIDEO_RENDERING beat={num:02d}")
-        _run([str(PY), wan, "--stage", "render", "--embeds", str(emb),
-              "--init", str(init), "--out", str(out),
-              "--seconds", str(seconds), "--steps", str(steps), "--size", size,
-              "--seed", str(int(task.get("seed_base", 20260731)) + num)],
-             courier, f"beat {num}", timeout=7200, retry=True)
+        big = gpu_vram_gb() >= 20
+        if big:
+            # one process, the library's own pipeline class and encoding: the
+            # split-process shortcuts are a 16GB workaround and one of them
+            # was bypassing the image conditioning (first 5090 clip, garbage)
+            courier.mark(f"VIDEO_RENDERING beat={num:02d} (single-process)")
+            _run([str(PY), wan, "--stage", "simple", "--embeds", str(emb),
+                  "--prompt", prompt, "--init", str(init), "--out", str(out),
+                  "--seconds", str(seconds), "--steps", str(steps), "--size", size,
+                  "--seed", str(int(task.get("seed_base", 20260731)) + num)],
+                 courier, f"beat {num}", timeout=7200, retry=True)
+        else:
+            courier.mark(f"VIDEO_ENCODING beat={num:02d}")
+            _run([str(PY), wan, "--stage", "encode", "--embeds", str(emb),
+                  "--prompt", prompt], courier, f"encode {num}", timeout=3600, retry=True)
+            courier.mark(f"VIDEO_RENDERING beat={num:02d}")
+            _run([str(PY), wan, "--stage", "render", "--embeds", str(emb),
+                  "--init", str(init), "--out", str(out),
+                  "--seconds", str(seconds), "--steps", str(steps), "--size", size,
+                  "--seed", str(int(task.get("seed_base", 20260731)) + num)],
+                 courier, f"beat {num}", timeout=7200, retry=True)
         emb.unlink(missing_ok=True)
         if out.exists() and out.stat().st_size > 10_000:
             made += 1

@@ -1,54 +1,57 @@
 {
- "engine": "f5-tts-v1-base",
- "total_s": 11.477,
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
  "lines": [
   {
    "who": "VO",
-   "text": "New constraint. Whatever comes over that hill , a storm, an axe, a war, a conversation , I will be here for all of it. I can't leave. I can only make this spot... worth staying in.",
+   "text": "New constraint. Whatever comes over that hill \u2014 a storm, an axe, a war, a conversation \u2014 I will be here for all of it. I can't leave. I can only make this spot\u2026 worth staying in.",
    "start": 0.0,
-   "end": 11.477,
+   "end": 12.292,
    "chunks": [
     {
      "text": "New constraint.",
      "start": 0.0,
-     "end": 0.928
+     "end": 1.045
     },
     {
-     "text": "Whatever comes over that hill ,",
-     "start": 1.048,
-     "end": 4.188
+     "text": "Whatever comes over that hill \u2014",
+     "start": 1.045,
+     "end": 2.87
     },
     {
      "text": "a storm, an axe,",
-     "start": 4.188,
-     "end": 4.888
+     "start": 2.87,
+     "end": 4.422
     },
     {
-     "text": "a war, a conversation ,",
-     "start": 4.888,
-     "end": 5.518
+     "text": "a war, a conversation \u2014",
+     "start": 4.422,
+     "end": 6.542
     },
     {
      "text": "I will be here for all of it.",
-     "start": 5.518,
-     "end": 7.448
+     "start": 6.542,
+     "end": 8.29
     },
     {
      "text": "I can't leave.",
-     "start": 7.568,
-     "end": 8.432
+     "start": 8.29,
+     "end": 9.492
     },
     {
-     "text": "I can only make this spot...",
-     "start": 8.552,
-     "end": 10.301
+     "text": "I can only make this spot\u2026",
+     "start": 9.492,
+     "end": 11.172
     },
     {
      "text": "worth staying in.",
-     "start": 10.421,
-     "end": 11.477
+     "start": 11.172,
+     "end": 12.292
     }
    ]
   }
- ]
+ ],
+ "actions": [],
+ "total_s": 12.592
 }

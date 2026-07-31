@@ -1,39 +1,42 @@
 {
- "engine": "f5-tts-v1-base",
- "total_s": 5.461,
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
  "lines": [
   {
    "who": "VO",
    "text": "Grow. Works. Latency: three days. Throughput: one leaf. I've shipped on worse.",
    "start": 0.0,
-   "end": 5.461,
+   "end": 4.67,
    "chunks": [
     {
      "text": "Grow.",
      "start": 0.0,
-     "end": 0.832
+     "end": 0.413
     },
     {
      "text": "Works.",
-     "start": 0.952,
-     "end": 1.955
+     "start": 0.413,
+     "end": 1.07
     },
     {
      "text": "Latency: three days.",
-     "start": 2.075,
-     "end": 3.077
+     "start": 1.07,
+     "end": 2.257
     },
     {
      "text": "Throughput: one leaf.",
-     "start": 3.197,
-     "end": 4.243
+     "start": 2.257,
+     "end": 3.708
     },
     {
      "text": "I've shipped on worse.",
-     "start": 4.363,
-     "end": 5.461
+     "start": 3.708,
+     "end": 4.669
     }
    ]
   }
- ]
+ ],
+ "actions": [],
+ "total_s": 4.97
 }

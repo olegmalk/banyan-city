@@ -1,19 +1,22 @@
 {
- "engine": "f5-tts-v1-base",
- "total_s": 1.152,
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
  "lines": [
   {
    "who": "VO",
    "text": "Something's coming.",
    "start": 0.0,
-   "end": 1.152,
+   "end": 1.07,
    "chunks": [
     {
      "text": "Something's coming.",
      "start": 0.0,
-     "end": 1.152
+     "end": 1.07
     }
    ]
   }
- ]
+ ],
+ "actions": [],
+ "total_s": 1.37
 }

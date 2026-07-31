@@ -1,9 +1,12 @@
-# Retry of the 5090's canary. The last attempt was not a render failure: HF's
-# chunked CDN transfer dropped the 10GB model download 23 minutes in. The child
-# now uses the classic resumable path and a dropped transfer retries instead of
-# failing the task.
+# Canary 3 on the 5090. The first clip rendered fine and was garbage: abstract
+# smears unrelated to the conditioning image, which means one of the 16GB
+# workarounds (pre-computed embeddings / force-named pipeline class) was
+# bypassing the image path. A 24GB card needs none of them, so this runs in one
+# process with the pipeline class the model's own config names, and the pipeline
+# does its own encoding. It also prints that class name, so we learn what the
+# repo actually is.
 tasks:
-- id: vid-5090-canary2-1785501499
+- id: vid-5090-canary3-1785505432
   worker: rtx5090
   video: true
   node: 001-capability-inventory

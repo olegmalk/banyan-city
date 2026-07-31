@@ -56,8 +56,48 @@ def stage_encode(a) -> int:
     return 0
 
 
+def stage_simple(a) -> int:
+    """Everything in one process, the library's own way — for cards with room.
+
+    The first 5090 clip came out as abstract smears with no relation to the
+    conditioning image: the two-process trick (pre-computed embeddings, a
+    force-named pipeline class) exists only to fit a 16GB machine, and one of
+    its shortcuts was clearly bypassing the image path. A 24GB card does not
+    need any of it, so here the model's own model_index.json chooses the
+    pipeline and the pipeline does its own encoding.
+    """
+    import torch
+    from diffusers import DiffusionPipeline
+    from diffusers.utils import export_to_video
+    from PIL import Image
+
+    w, h = (int(v) for v in a.size.lower().split("x"))
+    frames = int(a.seconds * a.fps)
+    frames = frames - (frames % 4) + 1
+
+    pipe = DiffusionPipeline.from_pretrained(MODEL, torch_dtype=torch.bfloat16)
+    print(f"pipeline class from the model itself: {type(pipe).__name__}")
+    pipe.to("cuda")
+    img = Image.open(a.init).convert("RGB").resize((w, h), Image.LANCZOS)
+    kw = dict(prompt=a.prompt, negative_prompt=NEG, height=h, width=w,
+              num_frames=frames, num_inference_steps=a.steps,
+              guidance_scale=5.0,
+              generator=torch.Generator(device="cpu").manual_seed(a.seed))
+    # TI2V takes an image; a pure t2v class would not accept one
+    import inspect
+    if "image" in inspect.signature(pipe.__call__).parameters:
+        kw["image"] = img
+    else:
+        print("WARNING: this pipeline takes no image - text-to-video only")
+    out = pipe(**kw).frames[0]
+    Path(a.out).parent.mkdir(parents=True, exist_ok=True)
+    export_to_video(out, a.out, fps=a.fps)
+    print(f"wrote {a.out} ({frames} frames, {w}x{h})")
+    return 0
+
+
 def stage_render(a) -> int:
-    """Transformer + VAE only, fed pre-computed embeddings."""
+    """Transformer + VAE only, fed pre-computed embeddings (small-RAM path)."""
     import torch
     from diffusers import WanImageToVideoPipeline
     from diffusers.utils import export_to_video
@@ -113,7 +153,7 @@ def stage_render(a) -> int:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--stage", choices=["encode", "render"], required=True)
+    ap.add_argument("--stage", choices=["encode", "render", "simple"], required=True)
     ap.add_argument("--embeds", required=True)
     ap.add_argument("--prompt", default="")
     ap.add_argument("--init", default="")
@@ -124,7 +164,9 @@ def main() -> int:
     ap.add_argument("--seed", type=int, default=20260731)
     ap.add_argument("--fps", type=int, default=24)
     a = ap.parse_args()
-    return stage_encode(a) if a.stage == "encode" else stage_render(a)
+    if a.stage == "encode":
+        return stage_encode(a)
+    return stage_simple(a) if a.stage == "simple" else stage_render(a)
 
 
 if __name__ == "__main__":
