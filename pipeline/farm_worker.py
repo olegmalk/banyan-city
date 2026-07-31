@@ -240,7 +240,12 @@ def main() -> int:
                 # (the 2026-07-29 lesson: workers synced the new file but kept
                 # executing the old one from memory). Relaunch.
                 print("pipeline code updated — restarting myself", flush=True)
-                os.execv(sys.executable, [sys.executable] + sys.argv)
+                # NOT os.execv: on Windows it replaces the process in a way that
+                # detaches it from the console, so the worker vanished after
+                # exactly one task every time pipeline code changed (the msi, twice
+                # on 2026-07-31). Re-run as a CHILD sharing this console, then exit
+                # with its status — works the same on POSIX.
+                sys.exit(subprocess.run([sys.executable] + sys.argv).returncode)
             courier.mark(f"STARTED task={tid} beats={task.get('beats')} on {device}")
             try:
                 render_task(task, courier, device, dtype)

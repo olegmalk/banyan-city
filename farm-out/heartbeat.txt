@@ -49,3 +49,4 @@
 16:24:40Z VIDEO_RENDERING beat=14 (single-process)
 16:36:06Z VIDEO_CLIP_OK beat=14 296KB
 16:36:11Z DONE task=vid-rtx5090-b14-1785513201
+16:37:29Z STARTED task=vid-rtx5090-b07-1785514701 beats=7 on cuda
