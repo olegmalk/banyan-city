@@ -115,6 +115,7 @@ def lint_genome(genome_dir: Path) -> None:
                 err(f"{where}: node.md has no '## State change' section (R1 — every node must change something)")
             if "## Hook" not in text:
                 err(f"{where}: node.md has no '## Hook' section (R5)")
+            lint_format_line(where, text)
 
         for leaf_id in n.get("leaves") or []:
             leaf_file = node_dir / "leaves" / f"{leaf_id}.yaml"
@@ -214,6 +215,40 @@ def lint_ledger() -> None:
         header = next(csv.reader(f), None)
     if header != LEDGER_HEADER:
         err(f"ledger/watering.csv header is {header}, expected {LEDGER_HEADER}")
+
+
+BEAT_WINDOW = re.compile(r"^\*\*.+?—\s+(\d+):(\d\d)–(\d+):(\d\d)\*\*", re.M)
+FORMAT_LINE = re.compile(r"^\*\*Format:\*\*(.*)$", re.M)
+
+
+def lint_format_line(where: str, text: str) -> None:
+    """node.md's own `**Format:**` line must describe the script beneath it.
+
+    001's header claimed "~82s · 18 beats = 18 shots" while the script had 15
+    beats spanning 1:37 and the assembled episode ran 100s — stale from an
+    earlier cut, and nothing checked it. That line is the first thing a reader
+    (or a contributor deciding whether to fork a beat) takes as fact, and this
+    file is the canonical script. A tree whose own header miscounts its beats
+    cannot claim the repo IS the product.
+
+    Advisory, not fatal: a wrong count misleads, but it does not make an episode
+    unpublishable, and older nodes may predate the convention.
+    """
+    m = FORMAT_LINE.search(text)
+    if not m:
+        return
+    windows = BEAT_WINDOW.findall(text)
+    if not windows:
+        return
+    declared = re.search(r"(\d+)\s*beats", m.group(1))
+    if declared and int(declared.group(1)) != len(windows):
+        warn(f"{where}: node.md Format says {declared.group(1)} beats, the "
+             f"script has {len(windows)} beat headings")
+    secs = int(windows[-1][2]) * 60 + int(windows[-1][3])
+    said = re.search(r"~?(\d+)\s*s\b", m.group(1))
+    if said and abs(int(said.group(1)) - secs) > 5:
+        warn(f"{where}: node.md Format says ~{said.group(1)}s, the script's "
+             f"last beat ends at {secs}s")
 
 
 def lint_licences() -> None:
