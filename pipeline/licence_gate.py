@@ -211,12 +211,36 @@ MODEL_LICENCES = {
     # cannot back an uncapped offer. Someone must still read it and record which
     # one applies — as a fact, not as grounds for a lower threshold.
     "stable-video-diffusion": "Stability AI non-commercial research community licence",
-    # LTXV's Open Weights License does permit commercial use, but under custom,
-    # revenue-capped terms nobody here has read end to end. Unknown, therefore
-    # a violation — the remedy is to read it and record what it says, or to
-    # replace the two takes.
-    "ltx-video": "LTXV open weights licence (custom, revenue-capped, unread)",
-    "lightricks": "LTXV open weights licence (custom, revenue-capped, unread)",
+    # NOW READ, end to end (2026-08-01), from the raw file rather than a
+    # summariser: LTXV Open Weights License 0.X, dated 2025-04-15, which its own
+    # header applies to "all LTXV model versions released since April 15, 2025".
+    # Our takes are 2026-07 and load Lightricks/LTX-Video unpinned, so this is
+    # the operative text.
+    #   §5: "Licensor claims no rights in the Output you generate using the Model."
+    #   §1.8: Output is "the results of operating a Model".
+    #   §2: the $10,000,000 annual-revenue threshold decides who must buy a
+    #       COMMERCIAL USE AGREEMENT for the Model. Every granted verb in §2
+    #       takes "the Model" as its object; §3's redistribution conditions are
+    #       likewise scoped to "the Model or Derivatives of the Model"; and §1.4
+    #       defines Derivatives model-to-model only (weights/activations
+    #       transferred into another model, distillation, synthetic training
+    #       data). A rendered video is Output, not a Derivative.
+    # So the cap gates the WEIGHTS, not the footage — which means the note above
+    # about stable-video-diffusion ("a revenue-capped grant cannot back an
+    # uncapped offer") does NOT transfer to this one: that argument holds where a
+    # cap constrains output distribution, and here it constrains who may run the
+    # model. We are at zero revenue either way.
+    # STILL NOT FLIPPED TO ALLOW, deliberately. Nobody here is a lawyer, moving
+    # an entry to allow is the direction that publishes things, and the two
+    # affected files are unused trial takes of beat 1 — so waiting costs nothing
+    # and the founder gets to make the call with the text in front of him (D13).
+    # Attachment A(e) additionally forbids disseminating output "without
+    # expressly and intelligibly disclaiming that the ... content is machine
+    # generated" — an obligation on US, which the §7.2 sidecars already meet.
+    # Terse, for the same reason as google-flow below: this value is classified,
+    # not just printed. The reading lives in the comment above and in MODEL_NOTES.
+    "ltx-video": "LTXV Open Weights Licence 0.X (read; founder sign-off pending)",
+    "lightricks": "LTXV Open Weights Licence 0.X (read; founder sign-off pending)",
     "dreamshaper": "CreativeML-OpenRAIL-M",      # SD1.5 derivative; outputs unrestricted
     "animagine": "faipl-1.0-sd",                 # Fair AI Public License; outputs unrestricted
     "ip-adapter": "Apache-2.0",
@@ -241,11 +265,39 @@ MODEL_LICENCES = {
     "pixverse": "free-tier ToS: personal-use only, non-commercial",
     "kling": "free-tier ToS: personal-use only, non-commercial",
     "vidu": "free-tier ToS: personal-use only, non-commercial",
-    # Veo via Google Flow. D8 recorded the WATERMARK ("trials only") and never
-    # the licence, so the output terms remain unread here. Unknown, not denied:
-    # someone must read Flow's terms and record them, or pull the files.
-    "google-flow": "Google Flow free-tier output terms unread",
-    "veo": "Google Flow free-tier output terms unread",
+    # Veo via Google Flow. The terms ARE now read (2026-08-01) and "unread" was
+    # the wrong reason — but the verdict does not move, for better reasons.
+    # There is no Flow- or Labs-specific terms document: policies.google.com's
+    # service-specific index lists Labs.google against only the main ToS and the
+    # generative-AI use policy; labs.google/terms is a 404; the old
+    # terms/generative-ai page has deferred to the main ToS since 2024-05-22. So
+    # the governing text is the Google ToS, and in it:
+    #   - Ownership is answered: "Some of our services allow you to generate
+    #     original content. Google won't claim ownership over that content."
+    #   - Commercial use is NEITHER granted NOR forbidden. The word "commercial"
+    #     appears once in the whole document, defining "consumer". Silence.
+    #   - But under "Don't abuse our services" two conditions attach to the
+    #     OUTPUT: no "using AI-generated content from our services to develop
+    #     machine learning models", and no "misleading others into thinking that
+    #     generative AI content was created by a human". Flow also embeds a
+    #     SynthID watermark that "should not be tampered with or removed".
+    # CC BY 4.0 offers reusers "any purpose, even commercially" with no such
+    # carve-outs — training explicitly included. We cannot pass through
+    # conditions we were given, so we cannot honestly make the CC BY offer over
+    # this footage. That is the real blocker, and it is a judgement about what we
+    # warrant to reusers rather than missing text. Independently, all three trial
+    # files record `watermark: true` (visible Flow sparkle, bottom-right), which
+    # disqualifies them from published material on its own — which is what D8
+    # actually meant by "trials only".
+    # KEEP THESE VALUES TERSE AND NAME NO OTHER LICENCE. This value is fed to
+    # classify(), which greps it for licence identifiers — so a first draft of
+    # this entry that explained itself with the words "cannot pass through a
+    # CC BY 4.0 offer" matched the CC-BY allow pattern and silently made six
+    # Flow files publishable. An explanation became a verdict. The prose belongs
+    # in MODEL_NOTES below, which is only ever printed; test_pipeline now asserts
+    # every restricted entry still classifies non-allow.
+    "google-flow": "Google ToS: output conditions we cannot pass on, plus watermark",
+    "veo": "Google ToS: output conditions we cannot pass on, plus watermark",
     # ---- our own compute: the output is ours to publish ------------------
     # Rented or local GPUs make no claim on the output; the weights named in
     # the same record carry the licence, and they are checked separately.
@@ -265,8 +317,22 @@ MODEL_NOTES = {
                 "re-shoot the beat on a publish-safe route",
     "stable-video-diffusion": " — re-render the beat (render_local.py / Kaggle Wan) "
                              "or move the take to clips/footage-archive/",
-    "google-flow": " — read Flow's output terms and record them in "
-                   "licence_gate.MODEL_LICENCES, or remove the file",
+    # the terms have been read; what is left is not research but a decision
+    "google-flow": " — terms read 2026-08-01: Google claims no ownership of the "
+                   "output and never forbids commercial use, but two conditions "
+                   "attach to it (no using the output to train ML models, no "
+                   "passing it off as human-made) plus 'keep SynthID intact' — "
+                   "and our own release grants reusers those very freedoms, so we "
+                   "cannot honestly pass the restrictions on. The three files "
+                   "also carry a visible Flow watermark, which disqualifies them "
+                   "on its own. Move them off the published surface, or record a "
+                   "founder decision narrowing what we offer reusers (D13)",
+    "ltx-video": " — the licence is read and says the cap gates the weights, not "
+                 "the footage; awaiting founder sign-off before this becomes an "
+                 "allow (D13)",
+    "lightricks": " — the licence is read and says the cap gates the weights, not "
+                  "the footage; awaiting founder sign-off before this becomes an "
+                  "allow (D13)",
 }
 
 # Values that DECLARE no third-party model, matched on the WHOLE value (never

@@ -865,6 +865,26 @@ def test_licence_gate(tmp: Path):
     check("an unlisted engine has no licence on record",
           lg.engine_licence("bark-small") is None)
 
+    # Every model we have decided must NOT ship stays non-allow, whatever its
+    # value string says. This exists because on 2026-08-01 the google-flow entry
+    # was reworded to EXPLAIN itself — "...cannot pass through a CC BY 4.0
+    # offer" — and classify() greps that value for licence identifiers, so the
+    # CC-BY allow pattern matched and six Flow files silently became
+    # publishable. An explanation became a verdict, and the count fell 21 -> 15
+    # with no other change. The prose belongs in MODEL_NOTES (printed, never
+    # classified); MODEL_LICENCES values must stay terse and name no other
+    # licence. This assertion is the tripwire.
+    RESTRICTED = ("pixverse", "kling", "vidu", "stable-video-diffusion",
+                  "f5-tts", "openaudio", "fish", "google-flow", "veo",
+                  "ltx-video", "lightricks")
+    for name in RESTRICTED:
+        verdict = lg.classify(lg.MODEL_LICENCES[name])[0]
+        check(f"{name} is not publishable ({verdict})", verdict != "allow")
+    # and the converse: a restricted value must not merely be unrecognised by
+    # accident — it has to actually be in the table
+    check("every restricted name is in MODEL_LICENCES",
+          all(n in lg.MODEL_LICENCES for n in RESTRICTED))
+
     def genome(name, leaf=None, sources=None, vo=None, archive_vo=None):
         """A minimal one-node genome under tmp/name, then scan it."""
         node = tmp / name / "genomes" / "g" / "nodes" / "n"
