@@ -1,27 +1,24 @@
 {
- "cast": "voices.yaml",
- "engine": "chatterbox-0.5B",
- "directed": "synth_vo v3",
+ "engine": "f5-tts-v1-base",
+ "total_s": 1.752,
  "lines": [
   {
    "who": "VO",
    "text": "Huh. Blue.",
    "start": 0.0,
-   "end": 0.882,
+   "end": 1.752,
    "chunks": [
     {
      "text": "Huh.",
      "start": 0.0,
-     "end": 0.363
+     "end": 0.725
     },
     {
      "text": "Blue.",
-     "start": 0.363,
-     "end": 0.882
+     "start": 0.845,
+     "end": 1.752
     }
    ]
   }
- ],
- "actions": [],
- "total_s": 1.182
+ ]
 }

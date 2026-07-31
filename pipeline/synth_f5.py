@@ -34,6 +34,13 @@ GAP = 0.12          # breath between lines
 MODEL = "F5TTS_v1_Base"
 
 
+def media_seconds(p: Path) -> float:
+    """Duration of an audio file, via ffmpeg's banner (no ffprobe dependency)."""
+    r = subprocess.run(["ffmpeg", "-i", str(p)], capture_output=True, text=True)
+    m = re.search(r"Duration: (\d+):(\d+):(\d+\.?\d*)", r.stderr)
+    return int(m[1]) * 3600 + int(m[2]) * 60 + float(m[3]) if m else 0.0
+
+
 def ref_line(by_num: dict, num: int) -> str:
     """What beat `num`'s take says, straight from the script."""
     b = by_num.get(num)
@@ -153,6 +160,19 @@ def main() -> int:
         if not ref.exists():
             ref, rb = next(clips.glob("*-vo.mp3")), 0
             ref_text = ref_line(by_num, int(ref.name[:2])) or ref_text
+        # F5 wants 5-15s of reference; under ~4s the clone degrades and short
+        # lines come out impossibly fast ("Something's coming." in 0.2s,
+        # 2026-07-31). Substitute the longest take we own, which is always one
+        # of the steady, level reads.
+        if media_seconds(ref) < 4.0:
+            longer = max((q for q in clips.glob("*-vo.mp3")),
+                         key=media_seconds, default=None)
+            if longer and media_seconds(longer) >= 4.0:
+                print(f"  beat {num:02d}: reference {ref.name} is "
+                      f"{media_seconds(ref):.1f}s — too short for F5, "
+                      f"cloning {longer.name} instead", flush=True)
+                ref = longer
+                ref_text = ref_line(by_num, int(longer.name[:2])) or ref_text
         with tempfile.TemporaryDirectory() as td:
             ref_wav = Path(td) / "ref.wav"
             subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(ref),

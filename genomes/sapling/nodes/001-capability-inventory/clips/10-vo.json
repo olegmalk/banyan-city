@@ -1,47 +1,44 @@
 {
- "cast": "voices.yaml",
- "engine": "chatterbox-0.5B",
- "directed": "synth_vo v3",
+ "engine": "f5-tts-v1-base",
+ "total_s": 11.565,
  "lines": [
   {
    "who": "VO",
-   "text": "Sense. I can taste the water table. I can feel the ground. Something with feet is walking, about\u2026 four hundred meters northeast. Noted.",
+   "text": "Sense. I can taste the water table. I can feel the ground. Something with feet is walking, about... four hundred meters northeast. Noted.",
    "start": 0.0,
-   "end": 9.824,
+   "end": 11.565,
    "chunks": [
     {
      "text": "Sense.",
      "start": 0.0,
-     "end": 0.983
+     "end": 1.365
     },
     {
      "text": "I can taste the water table.",
-     "start": 0.983,
-     "end": 2.863
+     "start": 1.485,
+     "end": 3.405
     },
     {
      "text": "I can feel the ground.",
-     "start": 2.863,
-     "end": 4.315
+     "start": 3.525,
+     "end": 5.029
     },
     {
-     "text": "Something with feet is walking, about\u2026",
-     "start": 4.315,
-     "end": 7.256
+     "text": "Something with feet is walking, about...",
+     "start": 5.149,
+     "end": 7.901
     },
     {
      "text": "four hundred meters northeast.",
-     "start": 7.256,
-     "end": 9.169
+     "start": 8.021,
+     "end": 10.08
     },
     {
      "text": "Noted.",
-     "start": 9.169,
-     "end": 9.824
+     "start": 10.2,
+     "end": 11.565
     }
    ]
   }
- ],
- "actions": [],
- "total_s": 10.124
+ ]
 }

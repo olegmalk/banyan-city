@@ -1,47 +1,44 @@
 {
- "cast": "voices.yaml",
- "engine": "chatterbox-0.5B",
- "directed": "synth_vo v3",
+ "engine": "f5-tts-v1-base",
+ "total_s": 8.195,
  "lines": [
   {
    "who": "VO",
-   "text": "Scream. \u2014 No mouth. Run. \u2014 No legs. Flail?? \u2014 \u2026I appear to be flailing one (1) leaf.",
+   "text": "Scream. , No mouth. Run. , No legs. Flail?? , ...I appear to be flailing one leaf.",
    "start": 0.0,
-   "end": 5.434,
+   "end": 8.195,
    "chunks": [
     {
      "text": "Scream.",
      "start": 0.0,
-     "end": 0.729
+     "end": 1.493
     },
     {
-     "text": "\u2014 No mouth.",
-     "start": 0.729,
-     "end": 1.487
+     "text": ", No mouth.",
+     "start": 1.613,
+     "end": 2.307
     },
     {
      "text": "Run.",
-     "start": 1.487,
-     "end": 2.103
+     "start": 2.427,
+     "end": 3.269
     },
     {
-     "text": "\u2014 No legs.",
-     "start": 2.103,
-     "end": 2.924
+     "text": ", No legs.",
+     "start": 3.389,
+     "end": 4.019
     },
     {
      "text": "Flail??",
-     "start": 2.924,
-     "end": 3.648
+     "start": 4.139,
+     "end": 5.632
     },
     {
-     "text": "\u2014 \u2026I appear to be flailing one (1) leaf.",
-     "start": 3.648,
-     "end": 5.434
+     "text": ", ...I appear to be flailing one leaf.",
+     "start": 5.752,
+     "end": 8.195
     }
    ]
   }
- ],
- "actions": [],
- "total_s": 5.734
+ ]
 }

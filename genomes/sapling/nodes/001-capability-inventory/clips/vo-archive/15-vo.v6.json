@@ -1,0 +1,19 @@
+{
+ "engine": "f5-tts-v1-base",
+ "total_s": 0.245,
+ "lines": [
+  {
+   "who": "VO",
+   "text": "Something's coming.",
+   "start": 0.0,
+   "end": 0.245,
+   "chunks": [
+    {
+     "text": "Something's coming.",
+     "start": 0.0,
+     "end": 0.245
+    }
+   ]
+  }
+ ]
+}

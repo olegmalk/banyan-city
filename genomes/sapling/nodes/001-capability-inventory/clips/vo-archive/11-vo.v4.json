@@ -1,0 +1,42 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "VO",
+   "text": "Grow. Works. Latency: three days. Throughput: one leaf. I've shipped on worse.",
+   "start": 0.0,
+   "end": 4.67,
+   "chunks": [
+    {
+     "text": "Grow.",
+     "start": 0.0,
+     "end": 0.413
+    },
+    {
+     "text": "Works.",
+     "start": 0.413,
+     "end": 1.07
+    },
+    {
+     "text": "Latency: three days.",
+     "start": 1.07,
+     "end": 2.257
+    },
+    {
+     "text": "Throughput: one leaf.",
+     "start": 2.257,
+     "end": 3.708
+    },
+    {
+     "text": "I've shipped on worse.",
+     "start": 3.708,
+     "end": 4.669
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 4.97
+}

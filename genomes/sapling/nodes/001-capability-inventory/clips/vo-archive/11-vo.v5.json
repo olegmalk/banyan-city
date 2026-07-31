@@ -1,0 +1,39 @@
+{
+ "engine": "f5-tts-v1-base",
+ "total_s": 4.416,
+ "lines": [
+  {
+   "who": "VO",
+   "text": "Grow. Works. Latency: three days. Throughput: one leaf. I've shipped on worse.",
+   "start": 0.0,
+   "end": 4.416,
+   "chunks": [
+    {
+     "text": "Grow.",
+     "start": 0.0,
+     "end": 0.298
+    },
+    {
+     "text": "Works.",
+     "start": 0.298,
+     "end": 0.656
+    },
+    {
+     "text": "Latency: three days.",
+     "start": 0.656,
+     "end": 1.85
+    },
+    {
+     "text": "Throughput: one leaf.",
+     "start": 1.85,
+     "end": 3.103
+    },
+    {
+     "text": "I've shipped on worse.",
+     "start": 3.103,
+     "end": 4.416
+    }
+   ]
+  }
+ ]
+}
