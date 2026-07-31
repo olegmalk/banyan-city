@@ -393,3 +393,49 @@ Founder-facing: the stranger-review found product-level gaps that are NOT
 steward calls: audience thread separate from ballot threads, one public word
 for scene/shot/beat, episode-status wording ("final" vs "working cut").
 Logged for the next founder session.
+
+## 2026-08-01 — licence gate: 46 violations found, 25 fixed, 21 open (D13)
+
+`pipeline/licence_gate.py` ran fully for the first time. Every violation was
+pre-existing; almost all were in node 001. The tree publishes **CC BY 4.0**,
+which grants commercial reuse, so a non-commercial input inside an episode
+makes our own licence a false statement — the argument does not depend on
+anyone enforcing it.
+
+**Fixed (records, not standards):**
+
+- 15 Kaggle/SVD takes → `clips/footage-archive/` (R6). Non-commercial research
+  licence; all were orphans (no leaf referenced them), left in the live
+  assembly dir when cycle 012 moved assembly to `takes/clips/`.
+- `post_motion.py` was writing sidecars to `NN-slug.meta.yaml` instead of
+  `NN-slug.POST.meta.yaml` — `.with_suffix("").with_suffix(...)` strips both
+  suffixes. 15 clips read as unprovenanced while 15 orphan sidecars sat beside
+  them, each claiming to describe a different take. Cause fixed, 15 renamed.
+- 006b's 4 VO manifests: engine backfilled from `voices.yaml` (kokoro-82M,
+  Apache-2.0), corroborated by mp3 mtimes predating Chatterbox. Audio untouched.
+
+**The live hole, closed.** `build_site.py` published `takes/clips/` with a bare
+`iterdir()` and no licence check — that is how `13-i-always-left.PIXVERSE.mp4`
+became a downloadable file on banyan.city while D8 had already recorded
+PixVerse's free tier as personal-use-only. `publishable()` now asks the gate
+and withholds **deny and unknown** (unread terms are not a licence to publish);
+the board renders an honest withheld card + `WITHHELD.md` instead of a dead
+player. 10 clips withheld, sidecars still shipped, link check green over 69
+pages.
+
+**Open, founder call (D13):** beats 2, 4, 8, 11, 13 of the LIVE episode are
+PixVerse free-tier — re-render queued on Wan 2.2 (Apache-2.0, $0), or swap to
+the `.POST.mp4` alternates that already exist for all five, or record a paid
+plan if one was used. Flow (6) and LTXV (2) need their terms actually read.
+
+**Ratchet, deliberately.** `pages.yml` runs lint before `build_site`, so hard-
+failing 21 pre-existing violations would have stopped banyan.city deploying
+overnight rather than reddening a badge. Debt is advisory; the COUNT is
+asserted at `LICENCE_DEBT = 21`. A new violation fails lint and tests
+immediately (verified by probe). Number may only fall.
+`LICENCE_GATE_STRICT=1` = everything fatal, the founder's switch.
+
+Renders: 5090 re-rendering 8 motion beats at **704x1280 / 50 steps** — the only
+size Wan 2.2 TI2V-5B supports, against the 480x832 / 20 steps every previously
+judged clip used. Five PixVerse beats queued behind it, then the A14B prefetch
+(download only).

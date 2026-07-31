@@ -278,3 +278,54 @@ and branch-ordering without any money touching the project. Rationale: same
 power for everyone, very simple, and no payment custody in a family project.
 The founders' own spend (the $15 motion authorization) remains separate,
 founder-authorized, capped, and ledgered as before.
+
+## D13 — The tree publishes CC BY 4.0, and five beats of the live episode do not (OPEN — founder call, 2026-08-01)
+
+`pipeline/licence_gate.py`'s first full run found 46 licence violations. All
+pre-existing; almost all in node 001. Records hygiene closed 25 of them (see the
+commit): fifteen orphaned Stable Video Diffusion takes archived under R6,
+fifteen POST sidecars renamed after fixing the `post_motion.py` bug that had been
+writing them to the wrong filename, four VO manifests given the engine of record
+already sitting in `voices.yaml`.
+
+**Twenty-one remain, and the shape of them is the decision.**
+
+The tree releases every episode under **CC BY 4.0** — a licence that grants
+strangers commercial reuse. An input that forbids commercial use cannot be inside
+a work that grants it; publishing one makes our own licence a false statement to
+everyone who relies on it. That is the whole argument, and it does not depend on
+anyone suing us.
+
+**1. Five beats of the live episode (2, 4, 8, 11, 13) are PixVerse free-tier.**
+`DECISIONS.md` D8 already recorded that tier as "license-blocked (personal-use
+only ToS)" on 2026-07-27 — written down, then used anyway, then published to
+banyan.city and TikTok. This is the real one. Remedies, cheapest first:
+
+- **Re-render on Wan 2.2 (Apache-2.0), $0, queued on the 5090 as
+  `vid-720p-licence-…`.** The remake is licence-clean by construction and the
+  work was happening anyway. Recommended.
+- **Swap to the `.POST.mp4` take.** Every one of the five beats already has a
+  local-deterministic alternate, publishable today, no render needed. The fast
+  path if a cut has to ship before the Wan clips land.
+- **If any of those takes was made on a PAID PixVerse plan, record the plan in
+  the sidecar and nothing else is needed.** Only the founder or the contributor
+  knows. Worth asking before re-rendering anything.
+
+**2. Flow (6 files) and LTXV (2 files) have licences nobody has read.** Not
+known-bad — *unread*. Someone must read the actual terms and record them in
+`licence_gate.MODEL_LICENCES`, or the files leave the published surface. The
+gate deliberately calls unread "unknown" rather than "probably fine", and
+`build_site.publishable()` now withholds unknown from the public site for the
+same reason: "we do not know whether we may publish this" is not a reason to
+publish it.
+
+**The gate is a ratchet, and that was a judgement call worth stating.**
+`pages.yml` runs `lint_genome.py` immediately before `build_site.py`, so making
+these 21 fatal would not have reddened a badge — it would have stopped
+banyan.city from deploying at all, overnight, blocking the founder's own goal of
+shipping episode 1. So pre-existing debt is an advisory and the *count* is
+asserted (`LICENCE_DEBT = 21`): one new violation fails lint and the test suite
+immediately, and the number may only go down. `LICENCE_GATE_STRICT=1` makes
+every violation fatal — the founder's switch, to flip the day the tree is clean.
+Raising `LICENCE_DEBT` to make a build pass would turn the one gate that can
+catch an unpublishable episode into a rubber stamp.
