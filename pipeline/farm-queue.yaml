@@ -1,15 +1,52 @@
-# Beat 1 on request: the founder wants to SEE what our local image-to-video does
-# with the opening frame, so this renders it and I build a side-by-side against
-# the approved still.
+# SETTINGS SWEEP on one beat with one seed: 20 steps/cfg5 is the baseline we
+# already have, so these four isolate step count and guidance. Cheap answers
+# before we spend an install on a bigger model.
 tasks:
-- id: vid-5090-b01-1785524801
+- id: sweep-steps40-1785526459
   worker: rtx5090
   video: true
   node: 001-capability-inventory
-  beats: 1,6,9,10
-  motion: 'true to the frame: only what would actually move - a hand on keys, screen
-    flicker, drifting air - gentle camera drift, no new subjects'
+  beats: '7'
+  motion: the one leaf twitches and shivers violently, handheld camera shake following
+    it
   size: 480x832
   seconds: 3.0
-  steps: 20
   seed_base: 20260731
+  steps: 40
+  guidance: 5.0
+- id: sweep-cfg75-1785526459
+  worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  beats: '7'
+  motion: the one leaf twitches and shivers violently, handheld camera shake following
+    it
+  size: 480x832
+  seconds: 3.0
+  seed_base: 20260731
+  steps: 20
+  guidance: 7.5
+- id: sweep-cfg30-1785526459
+  worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  beats: '7'
+  motion: the one leaf twitches and shivers violently, handheld camera shake following
+    it
+  size: 480x832
+  seconds: 3.0
+  seed_base: 20260731
+  steps: 20
+  guidance: 3.0
+- id: sweep-steps50cfg65-1785526459
+  worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  beats: '7'
+  motion: the one leaf twitches and shivers violently, handheld camera shake following
+    it
+  size: 480x832
+  seconds: 3.0
+  seed_base: 20260731
+  steps: 50
+  guidance: 6.5

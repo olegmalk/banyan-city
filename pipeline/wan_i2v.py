@@ -101,7 +101,7 @@ def stage_simple(a) -> int:
         img = Image.open(job["init"]).convert("RGB").resize((w, h), Image.LANCZOS)
         kw = dict(prompt=job["prompt"], negative_prompt=NEG, height=h, width=w,
                   num_frames=frames, num_inference_steps=a.steps,
-                  guidance_scale=5.0,
+                  guidance_scale=a.guidance,
                   generator=torch.Generator(device="cpu").manual_seed(int(job["seed"])))
         if takes_image:
             kw["image"] = img
@@ -178,6 +178,8 @@ def main() -> int:
     ap.add_argument("--jobs", default="", help="json list of {init,out,prompt,seed} - one model load for all of them")
     ap.add_argument("--seconds", type=float, default=4.0)
     ap.add_argument("--steps", type=int, default=25)
+    ap.add_argument("--guidance", type=float, default=5.0,
+                    help="cfg; higher follows the prompt harder, lower drifts")
     ap.add_argument("--size", default="480x832", help="WxH (Wan bucket)")
     ap.add_argument("--seed", type=int, default=20260731)
     ap.add_argument("--fps", type=int, default=24)

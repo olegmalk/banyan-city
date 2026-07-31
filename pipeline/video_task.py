@@ -151,7 +151,8 @@ def run(task: dict, courier, node_dir: Path) -> None:
             courier.mark(f"VIDEO_RENDERING batch of {len(jobs)} (one model load)")
             _run([str(PY), str(REPO / "pipeline" / "wan_i2v.py"), "--stage", "simple",
                   "--embeds", str(ROOT / "unused.pt"), "--jobs", str(jf),
-                  "--seconds", str(seconds), "--steps", str(steps), "--size", size],
+                  "--seconds", str(seconds), "--steps", str(steps), "--size", size,
+                  "--guidance", str(task.get("guidance", 5.0))],
                  courier, f"batch {task.get('id')}", timeout=14400, retry=True)
             jf.unlink(missing_ok=True)
             made = 0
