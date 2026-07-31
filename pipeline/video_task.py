@@ -29,17 +29,35 @@ PY = VENV / ("Scripts/python.exe" if IS_WIN else "bin/python3")
 TORCH_INDEX = "https://download.pytorch.org/whl/cu128"
 
 
-def _run(cmd, courier, stage, timeout=None):
+def _run(cmd, courier, stage, timeout=None, retry=False):
     # utf-8 on the child's stdout: Windows consoles default to cp1252, and a
     # single non-ASCII character in a SUCCESS message killed a 25-minute
     # encode with UnicodeEncodeError (2026-07-30, canary 3)
-    env = {**os.environ, "PYTHONIOENCODING": "utf-8", "PYTHONUTF8": "1"}
-    r = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout,
-                       env=env, errors="replace")
-    if courier:
-        courier.say(f"$ {' '.join(str(c) for c in cmd[:6])}…\n{(r.stdout or '')[-1500:]}"
-                    f"{(r.stderr or '')[-2500:]}")
-    if r.returncode:
+    env = {**os.environ, "PYTHONIOENCODING": "utf-8", "PYTHONUTF8": "1",
+           # HF's newer chunked (xet/CAS) transfer dropped the 10GB model
+           # download 23 minutes in on the 5090 (2026-07-31). The classic path
+           # resumes; the chunked one restarts.
+           "HF_HUB_DISABLE_XET": "1",
+           "HF_HUB_DOWNLOAD_TIMEOUT": "60"}
+    attempts = 3 if retry else 1
+    for attempt in range(1, attempts + 1):
+        r = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout,
+                           env=env, errors="replace")
+        if courier:
+            courier.say(f"$ {' '.join(str(c) for c in cmd[:6])}…\n{(r.stdout or '')[-1500:]}"
+                        f"{(r.stderr or '')[-2500:]}")
+        if not r.returncode:
+            return r
+        # a dropped download is not a broken pipeline: say so and try again,
+        # because the next attempt resumes from the bytes already on disk
+        transient = any(s in (r.stderr or "") for s in
+                        ("CAS Client", "error sending request", "Connection",
+                         "Read timed out", "IncompleteRead", "ConnectionError"))
+        if attempt < attempts and transient:
+            if courier:
+                courier.mark(f"VIDEO_RETRY {stage} (attempt {attempt} hit a "
+                             f"network drop, resuming)")
+            continue
         raise RuntimeError(f"{stage} failed (exit {r.returncode})")
     return r
 
@@ -122,13 +140,13 @@ def run(task: dict, courier, node_dir: Path) -> None:
         # reliable way to give that memory back on Windows.
         courier.mark(f"VIDEO_ENCODING beat={num:02d}")
         _run([str(PY), wan, "--stage", "encode", "--embeds", str(emb),
-              "--prompt", prompt], courier, f"encode {num}", timeout=3600)
+              "--prompt", prompt], courier, f"encode {num}", timeout=3600, retry=True)
         courier.mark(f"VIDEO_RENDERING beat={num:02d}")
         _run([str(PY), wan, "--stage", "render", "--embeds", str(emb),
               "--init", str(init), "--out", str(out),
               "--seconds", str(seconds), "--steps", str(steps), "--size", size,
               "--seed", str(int(task.get("seed_base", 20260731)) + num)],
-             courier, f"beat {num}", timeout=7200)
+             courier, f"beat {num}", timeout=7200, retry=True)
         emb.unlink(missing_ok=True)
         if out.exists() and out.stat().st_size > 10_000:
             made += 1

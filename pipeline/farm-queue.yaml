@@ -1,9 +1,9 @@
-# The 5090's first job. Canary discipline: ONE clip, native 704x1280 (its VRAM
-# can hold the model without the RAM thrashing that made the 5070 Ti take two
-# hours for a 480p draft). If this lands clean and looks decent, the batch for
-# every static-zoom beat follows immediately.
+# Retry of the 5090's canary. The last attempt was not a render failure: HF's
+# chunked CDN transfer dropped the 10GB model download 23 minutes in. The child
+# now uses the classic resumable path and a dropped transfer retries instead of
+# failing the task.
 tasks:
-- id: vid-5090-canary-1785495017
+- id: vid-5090-canary2-1785501499
   worker: rtx5090
   video: true
   node: 001-capability-inventory
