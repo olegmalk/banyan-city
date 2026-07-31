@@ -33,7 +33,16 @@ Check it arrived — should be about 411 bytes, no file extension:
 dir C:\banyan-farm
 ```
 
-## 2. Git and Python
+## 2. Git, Python, and the C++ runtime
+
+PyTorch's DLLs need the Microsoft Visual C++ runtime. Without it, importing
+torch dies with `WinError 1114 ... c10.dll` AFTER a successful 3 GB download —
+it has caught both Windows machines, so install it first:
+
+```
+winget install --id Microsoft.VCRedist.2015+.x64 -e --source winget --accept-source-agreements --accept-package-agreements
+```
+
 
 ```
 winget install --id Git.Git -e --source winget --accept-source-agreements --accept-package-agreements
@@ -107,9 +116,22 @@ git fetch origin main
 
 ## 5. Python environment
 
+Windows ships a fake `python.exe` stub that opens the Microsoft Store, and it
+sits AHEAD of the real python on the PATH — so call the real one by full path.
+Find it first:
+
 ```
-python -m venv C:\banyan-farm\venv
+where.exe python
 ```
+
+Use the line that contains `Programs\Python` (NOT the one with `WindowsApps`),
+and substitute it here:
+
+```
+C:\Users\YOU\AppData\Local\Programs\Python\Python312\python.exe -m venv C:\banyan-farm\venv
+```
+
+Everything after this uses the venv's own python, so the stub stops mattering.
 
 PyTorch for the GPU. **RTX 50-series needs this exact cu128 index** — an older
 wheel installs fine and then silently has no CUDA:
@@ -178,8 +200,11 @@ tolerates.
 
 | Symptom | Cause and fix |
 |---|---|
+| `WinError 1114 ... c10.dll` | Missing Visual C++ runtime — the VCRedist line in step 2. Reboot once if it persists. |
 | `CUDA: False` | Wrong wheel. Report it — RTX 50-series needs the cu128 index in step 5. |
-| `git` or `python` not recognised | Open a fresh PowerShell window after step 2. |
+| `git` not recognised | Open a fresh PowerShell window after step 2. |
+| `Python was not found; run without arguments to install from the Microsoft Store` | Windows' stub is shadowing the real python. Run `where.exe python` and use the `Programs\Python` path, as in step 5. |
+| `py` not recognised | The launcher is not always installed. Use the full path from `where.exe python`. |
 | `Permissions ... too open` | Re-run the `icacls` line in step 4. |
 | `Host key verification failed` | The `core.sshCommand` line in step 4 is missing or mistyped. |
 | Download dies partway | Some routers kill long connections. Re-run the same line; pip resumes. |
