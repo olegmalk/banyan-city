@@ -37,6 +37,8 @@ The spinner resolves.
 ✓ deploy succeeded
 ```
 
+> **VO (relieved, almost cheerful):** There. Fixed. Now I'm going to sleep for a—
+
 **THE FALL — 0:15–0:20**
 A sharp breath in — the frame tips sideways — the mug hits the floor before he does.
 

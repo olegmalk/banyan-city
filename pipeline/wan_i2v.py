@@ -70,7 +70,17 @@ def stage_render(a) -> int:
 
     pipe = WanImageToVideoPipeline.from_pretrained(
         MODEL, text_encoder=None, torch_dtype=torch.bfloat16)
-    pipe.enable_model_cpu_offload()
+    # cpu-offload streams every module through system RAM on every step, which
+    # is what made a 12GB/16GB machine take two hours for one draft clip. A
+    # card with room for the model should just hold it.
+    vram = (torch.cuda.get_device_properties(0).total_memory / 1e9
+            if torch.cuda.is_available() else 0)
+    if vram >= 20:
+        pipe.to("cuda")
+        print(f"{vram:.0f}GB VRAM: model resident, no offload")
+    else:
+        pipe.enable_model_cpu_offload()
+        print(f"{vram:.0f}GB VRAM: offloading through system RAM")
     # the VAE is the other RAM spike; the helper's name and presence vary by
     # diffusers version and pipeline, so reach for whichever exists
     for enable in (getattr(pipe, "enable_vae_tiling", None),
