@@ -555,9 +555,23 @@ def render_beat(beat: dict, num: int, dur: float, clips: list, workdir: Path,
 
     layers = []  # (png, x, y, enable-expr)
     y = 100
+    # a terminal chyron must not share the frame with the closing line: on 001
+    # a leftover "GROW ✓" sat in the corner through "Something's coming" and
+    # read as a stuck overlay, stealing the episode's hook (cold read,
+    # 2026-07-30). On a beat whose voice ends before the beat does, hold the
+    # chyron until the last word has landed.
+    lines_here = [i for i in beat["items"] if i[0] == "line"]
+    voice_end = 0.0
+    if manifest and manifest.get("lines"):
+        voice_end = max((float(l.get("end") or 0) for l in manifest["lines"]), default=0.0)
+    ovl_at = max(dur * 0.3, voice_end + 0.15) if (lines_here and voice_end) else dur * 0.3
+    if ovl_at > dur - 0.3:          # no room after the line: keep it off entirely
+        ovl_at = None
     for j, block in enumerate([i[1] for i in beat["items"] if i[0] == "overlay"]):
+        if ovl_at is None:
+            continue
         png = text_png(block, workdir / f"ovl-{num:02d}-{j}.png", 24, GREEN, PANEL_BG)
-        layers.append((png, "36", str(y), f"gte(t,{dur * 0.3:.2f})"))
+        layers.append((png, "36", str(y), f"gte(t,{ovl_at:.2f})"))
         y += Image.open(png).height + 24
 
     lines = [(i[1], i[2]) for i in beat["items"] if i[0] == "line"]
