@@ -8,17 +8,20 @@
 # weird wind sound" — gone indoors). Fan spin-down stays in his dying world
 # (end of beat 4) and is finished before the sky.
 #
-# All cues synthesized (pipeline/sfx.py, fixed seeds). Beat-relative seconds;
+# Cues are synthesized (pipeline/sfx.py, fixed seeds) EXCEPT where a `file:`
+# names a recorded one - public domain / CC0 only, listed with its source in
+# ../audio-sources/SOURCES.md. Real ceramic and real keyswitches beat sine waves. Beat-relative seconds;
 # beat 4 is the 5.04s PIXVERSE fall + 6.0s terminal two-shot (cut at 5.04).
 
 events:
-  - {beat: 1, sfx: keyboard, start: 0.2, dur: 5.8, stop_at: 5.4, gain_db: -16}  # "very fast — then it stops"
+  - {beat: 1, sfx: keyboard, file: genomes/sapling/nodes/001-capability-inventory/audio-sources/keyboard-modelM-cc0.ogg, trim_start: 1.5, start: 0.2, dur: 5.2, gain_db: -17}  # a REAL IBM Model M (CC0): "one mechanical keyboard, very fast - then it stops"
   - {beat: 1, sfx: room_hum, start: 0.0, dur: full, gain_db: -26}
   - {beat: 2, sfx: room_hum, start: 0.0, dur: full, gain_db: -26}
   - {beat: 3, sfx: room_hum, start: 0.0, dur: full, gain_db: -26}
   - {beat: 4, sfx: room_hum, start: 0.0, dur: 0.30, gain_db: -26}   # the room's sound dies ON the impact
   - {beat: 4, sfx: mug_hit, start: 0.0, gain_db: -19}              # the mug lands first, on the cut
-  - {beat: 4, sfx: fall_impact, start: 0.05, pre: 0.15, gain_db: -12}  # HE lands at 0.20s - the very start of the hand shot, so the cut IS the impact (founder)
+  - {beat: 4, sfx: body, file: genomes/sapling/nodes/001-capability-inventory/audio-sources/thud-pd.ogg, start: 0.12, dur: 0.39, gain_db: -11}   # a REAL dull thud (public domain) - the death itself
+  - {beat: 4, sfx: fall_impact, start: 0.05, pre: 0.15, gain_db: -17}  # HE lands at 0.20s - the very start of the hand shot, so the cut IS the impact (founder)
   - {beat: 4, sfx: fan_spindown, start: 0.9, dur: 9.6, gain_db: -20}  # the only thing left running is his computer, winding down through the whole aftermath
   - {beat: 9, sfx: terminal_keys, start: 0.4, dur: 3.2, gain_db: -24}  # "$ whoami" types itself
   - {beat: 10, sfx: footsteps_soil, start: 3.0, dur: 7.0, period: 1.9, gain_db: -23}  # 400m away, felt not heard
