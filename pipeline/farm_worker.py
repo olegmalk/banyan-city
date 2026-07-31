@@ -36,6 +36,7 @@ Queue entry shape (pipeline/farm-queue.yaml):
 
 import argparse
 import os
+import re
 import subprocess
 import sys
 import time
@@ -104,6 +105,31 @@ class Courier:
     def say(self, line: str):
         print(line, flush=True)
         self.log.append(line)
+
+
+def finished_tasks(courier: Courier) -> set:
+    """Task ids this machine has already completed, read back from its own
+    heartbeat.
+
+    `done_ids` used to live only in memory, and this worker RESTARTS ITSELF
+    whenever pipeline code changes on main — so any push during a long task
+    meant the finished task ran again from zero on the next poll. A 4-hour
+    720p batch would have been rendered twice for nothing (caught before it
+    happened, 2026-08-01, with an 8-clip batch mid-flight).
+
+    The heartbeat already records every completion as `DONE task=<id>`, so the
+    answer was on disk the whole time. Reading it back makes a restart cheap,
+    which is what lets the self-update behaviour stay aggressive.
+    """
+    hb = courier.out / "heartbeat.txt"
+    if not hb.exists():
+        return set()
+    done = set()
+    for line in hb.read_text(encoding="utf-8", errors="replace").splitlines():
+        m = re.search(r"DONE task=(\S+)", line)
+        if m:
+            done.add(m.group(1))
+    return done
 
 
 def render_task(task: dict, courier: Courier, device: str, dtype) -> None:
@@ -215,7 +241,9 @@ def main() -> int:
     device, dtype = pick_device()
     courier = Courier(a.name)
     print(f"farm worker '{a.name}' on {device} — polling {QUEUE} every {POLL_SECONDS}s")
-    done_ids = set()
+    done_ids = finished_tasks(courier)
+    if done_ids:
+        print(f"already finished (from heartbeat): {', '.join(sorted(done_ids))}")
     while True:
         for task in queue_head():
             tid = str(task.get("id"))
