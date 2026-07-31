@@ -36,12 +36,16 @@ dir C:\banyan-farm
 ## 2. Git and Python
 
 ```
-winget install --id Git.Git -e --accept-source-agreements --accept-package-agreements
+winget install --id Git.Git -e --source winget --accept-source-agreements --accept-package-agreements
 ```
 
 ```
-winget install --id Python.Python.3.12 -e --accept-source-agreements --accept-package-agreements
+winget install --id Python.Python.3.12 -e --source winget --accept-source-agreements --accept-package-agreements
 ```
+
+`--source winget` is not optional: without it winget also searches the
+Microsoft Store, which can fail with a certificate error, and "Git" matches two
+different packages so it refuses to guess.
 
 **Now close PowerShell and open a new one** so both land on your PATH. Check:
 
