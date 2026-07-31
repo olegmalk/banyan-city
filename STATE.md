@@ -475,3 +475,23 @@ Voice: `pipeline/synth_voxcpm.py` maps the script's own parentheticals ("VO
 that takes direction rather than dials. Apache-2.0, commercial use explicit,
 licence read BEFORE the work this time. Wants CUDA, so it belongs on the 5090.
 `--dry-run` reviews every line's direction with no model or GPU.
+
+**VoxCPM2 verified working on THIS Mac (MPS), 2026-08-01 ~23:00Z** — the model
+card asks for CUDA >= 12 but it auto-adjusts bfloat16 -> float32 for mps and
+runs at 48 kHz, ~1.4x realtime (4.96s of audio in 7s, 26s model load). No 5090
+needed for voice. Venv: `~/banyan-tts-venvs/vox` (python 3.11, torch 2.13.0).
+
+The control that matters: same sentence, no direction 6.40s / "(exhausted, flat,
+low energy, speaking slowly at 3am)" 6.72s / "(bright, quick, genuinely
+delighted)" **4.80s**. The direction changes delivery, and it is NOT spoken aloud
+— the direction text would add 3-4s if recited, and directed is +0.32s over
+plain. VoxCPM-0.5B DID recite it; VoxCPM2 does not. Different behaviour, same
+family — do not carry the 0.5B lesson across.
+
+Samples on the founder's desk: `voice-voxcpm2/` (3 of episode 1's own lines, A/B
+vs Chatterbox, + the 3-way control) with `LISTEN.md`. Caveats recorded there:
+voxcpm2 runs LONGER than the current voice on all three lines (6.72 vs 4.38,
+4.32 vs 3.13, 2.08 vs 1.36), so adopting it means re-timing the cut; and these
+are voice-DESIGN samples with no reference clip, so the character is invented
+rather than matched. Cloning + direction together is the next step and the code
+supports it.
