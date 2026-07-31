@@ -859,17 +859,34 @@ def main() -> int:
                 if not 1 <= b <= len(rdurs):
                     raise SystemExit(f"sound.yaml event {j}: beat {b} out of range")
                 name = str(ev["sfx"])
-                if name not in _sfx.SYNTHS:
-                    raise SystemExit(f"sound.yaml event {j}: unknown sfx {name!r} "
-                                     f"(have: {', '.join(sorted(_sfx.SYNTHS))})")
                 dur = ev.get("dur")
                 dur = rdurs[b - 1] if dur in (None, "full") else float(dur)
                 wav = workdir / f"sfx-{j:02d}-{name}.wav"
-                # everything that isn't placement is a synth parameter
-                # (stop_at, period, grow, …) — passed straight through
-                params = {k: v for k, v in ev.items()
-                          if k not in ("beat", "sfx", "start", "dur", "gain_db")}
-                _sfx.SYNTHS[name](wav, dur=dur, **params)
+                if ev.get("file"):
+                    # a RECORDED cue: public-domain / CC0 only, provenance in
+                    # the node's audio-sources/SOURCES.md. Real ceramic and real
+                    # keyswitches beat anything synthesized from sine waves.
+                    src = REPO / str(ev["file"])
+                    if not src.exists():
+                        raise SystemExit(f"sound.yaml event {j}: missing {src}")
+                    af = [f"atrim=duration={dur:.2f}", f"aresample={AUDIO_SR}"]
+                    if ev.get("trim_start"):
+                        af.insert(0, f"atrim=start={float(ev['trim_start']):.2f}")
+                    r = subprocess.run([FFMPEG, "-y", "-loglevel", "error", "-i", str(src),
+                                        "-af", ",".join(af), "-ac", "1", str(wav)],
+                                       capture_output=True, text=True)
+                    if r.returncode:
+                        raise SystemExit(f"recorded cue {src.name} failed:\n{r.stderr[-500:]}")
+                elif name in _sfx.SYNTHS:
+                    # everything that isn't placement is a synth parameter
+                    # (stop_at, period, grow, …) — passed straight through
+                    params = {k: v for k, v in ev.items()
+                              if k not in ("beat", "sfx", "start", "dur", "gain_db", "file",
+                                           "trim_start")}
+                    _sfx.SYNTHS[name](wav, dur=dur, **params)
+                else:
+                    raise SystemExit(f"sound.yaml event {j}: unknown sfx {name!r} "
+                                     f"(have: {', '.join(sorted(_sfx.SYNTHS))} or a file:)")
                 at = offs[b - 1] + float(ev.get("start", 0))
                 gain = float(ev.get("gain_db", -18))
                 i = add_input("-i", str(wav))
