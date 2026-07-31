@@ -1,37 +1,34 @@
 {
- "cast": "voices.yaml",
- "engine": "chatterbox-0.5B",
- "directed": "synth_vo v3",
+ "engine": "f5-tts-v1-base",
+ "total_s": 2.845,
  "lines": [
   {
    "who": "VO",
    "text": "Okay. Ceiling's gone. That's fine. Open-plan hospital.",
    "start": 0.0,
-   "end": 3.677,
+   "end": 2.845,
    "chunks": [
     {
      "text": "Okay.",
      "start": 0.0,
-     "end": 0.498
+     "end": 0.661
     },
     {
      "text": "Ceiling's gone.",
-     "start": 0.498,
-     "end": 1.115
+     "start": 0.781,
+     "end": 1.379
     },
     {
      "text": "That's fine.",
-     "start": 1.115,
-     "end": 2.81
+     "start": 1.499,
+     "end": 1.968
     },
     {
      "text": "Open-plan hospital.",
-     "start": 2.81,
-     "end": 3.677
+     "start": 2.088,
+     "end": 2.845
     }
    ]
   }
- ],
- "actions": [],
- "total_s": 3.977
+ ]
 }

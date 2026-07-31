@@ -1,19 +1,38 @@
-# Canary 3 on the 5090. The first clip rendered fine and was garbage: abstract
-# smears unrelated to the conditioning image, which means one of the 16GB
-# workarounds (pre-computed embeddings / force-named pipeline class) was
-# bypassing the image path. A 24GB card needs none of them, so this runs in one
-# process with the pipeline class the model's own config names, and the pipeline
-# does its own encoding. It also prints that class name, so we learn what the
-# repo actually is.
+# The MSI's 480x832 / 8-step clip came out COHERENT in 8 minutes; the 5090's
+# 704x1280 / 30-step clip came out as smears. Same code, so resolution is the
+# prime suspect: the 5090 now renders the MSI's exact settings to isolate it,
+# while the MSI keeps drafting beats at the settings that work.
 tasks:
-- id: vid-5090-canary3-1785505432
+- id: vid-5090-480test-1785508628
   worker: rtx5090
   video: true
   node: 001-capability-inventory
-  beats: '10'
-  motion: the underground root map pulses slowly, veins of water drifting through
-    the soil, rings of light spreading outward, slow push-in
-  size: 704x1280
-  seconds: 3.4
-  steps: 30
+  beats: '7'
+  motion: the one leaf twitches and shivers violently, handheld camera shake following
+    it
+  size: 480x832
+  seconds: 3.0
+  steps: 8
+  seed_base: 20260731
+- id: vid-msi-b06-1785508628
+  worker: msi
+  video: true
+  node: 001-capability-inventory
+  beats: '6'
+  motion: clouds drift slowly across the blue, the single leaf trembles in a light
+    breeze, gentle parallax
+  size: 480x832
+  seconds: 3.0
+  steps: 8
+  seed_base: 20260731
+- id: vid-msi-b15-1785508628
+  worker: msi
+  video: true
+  node: 001-capability-inventory
+  beats: '15'
+  motion: rings of light pulse outward through the soil, faster and brighter with
+    each beat, slow push-in
+  size: 480x832
+  seconds: 3.0
+  steps: 8
   seed_base: 20260731

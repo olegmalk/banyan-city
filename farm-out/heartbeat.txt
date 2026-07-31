@@ -25,3 +25,4 @@
 13:44:54Z VIDEO_RENDERING beat=10 (single-process)
 15:28:15Z VIDEO_CLIP_OK beat=10 730KB
 15:28:19Z DONE task=vid-5090-canary3-1785505432
+15:30:33Z STARTED task=vid-5090-480test-1785508628 beats=7 on cuda
