@@ -182,6 +182,17 @@ MODEL_LICENCES = {
     "openaudio": "research-only, non-commercial",
     "fish": "research-only, non-commercial",   # fish-speech == OpenAudio weights
     "voxcpm": "Apache-2.0",
+    # Verified SEPARATELY from voxcpm (2026-08-01), against the cached model
+    # card: "Apache-2.0 license, free for commercial use". Listed on its own
+    # even though the substring 'voxcpm' already matched it — because that match
+    # would have been an ACCIDENT. A new release inherits the licence of any
+    # allowed model whose name is a prefix of its own, so a VoxCPM3 shipped
+    # under non-commercial terms would be waved straight through. The matcher
+    # is substring-based on purpose (it has to survive 'still: X | motion: Y'
+    # provenance strings), so the safeguard is this table: add every new
+    # version explicitly, after reading ITS licence, and never rely on the
+    # prefix. The direction that bites is always allow-by-inheritance.
+    "voxcpm2": "Apache-2.0",
     # ---- open image / video weights ------------------------------------
     # v1 called this one an ADVISORY, on the premise that it was "already on
     # disk in superseded takes". That premise was false, and the audit proved
