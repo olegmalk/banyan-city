@@ -8,7 +8,8 @@ Checks per episode (FAIL = ship-blocking, WARN = advisory):
   container   moov atom before mdat (faststart — browsers stall otherwise;
               bit the project twice), 720x1280 @ 24fps, sane duration,
               audio/video stream lengths agree
-  loudness    integrated ≈ -14 LUFS (short-form platform level), true
+  loudness    integrated ≈ -17 LUFS (deliberately below the -14 platform
+              reference so transients survive — see LUFS_TARGET), true
               peak <= -0.5 dBTP (cycle 001)
   dead air    zero digital silence at -45dB; no quiet-vs-bed stretch
               longer than 3.5s (cycle 004 allows <=2s voiceless beat-outs)
@@ -38,8 +39,18 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent
 WIDTH, HEIGHT = 720, 1280
 CHROME_BAND = 0.22          # platform UI safe area (bottom fraction)
-LUFS_TARGET, LUFS_TOL = -14.0, 1.3
+# -17, not the -14 platform reference: chasing -14 integrated on material with
+# scored silences forces every loud moment into the limiter, so a body hitting
+# the floor came out no louder than a spoken line (cold-read listener, 2026-08-01:
+# "pinned at about -1.8 dBFS almost continuously"). Platforms normalise upward
+# without re-limiting, so mastering quieter keeps the transients.
+LUFS_TARGET, LUFS_TOL = -17.0, 1.5
 QUIET_MAX_S = 3.5           # longest allowed quiet-vs-bed stretch
+# The quiet-stretch floor must track the MASTER's level, not sit at an absolute
+# dB: it was -30 when we mastered to -14, and after dropping the target to -17
+# the whole mix moved down with it, so a fixed floor started calling the
+# designed aftermath a dropout. 16 dB below target is the same musical distance.
+QUIET_FLOOR_DB = LUFS_TARGET - 16
 # Luma spread (90th percentile minus 10th) below this is a blank field, not a
 # shot. A numerically failed generation still writes a valid, mid-grey,
 # perfectly "fine" mp4 — the grey Wan render measured a spread of ~20 where
@@ -102,7 +113,7 @@ def qa_episode(video: Path, clips_dir: Path | None, ffmpeg: str) -> None:
     # ebur128 logs a running I: per frame — the LAST one is the summary
     li = re.findall(r"I:\s+(-?\d+\.\d) LUFS", r.stderr)
     lufs = float(li[-1]) if li else None
-    record(ep, "loudness ~-14 LUFS",
+    record(ep, f"loudness ~{LUFS_TARGET:g} LUFS",
            lufs is not None and abs(lufs - LUFS_TARGET) <= LUFS_TOL,
            f"{lufs} LUFS" if lufs is not None else "unmeasured")
     tp = re.findall(r"Peak:\s+(-?\d+\.\d) dBFS", r.stderr)
@@ -117,7 +128,7 @@ def qa_episode(video: Path, clips_dir: Path | None, ffmpeg: str) -> None:
     r = ff(["-i", str(video), "-af", "silencedetect=n=-60dB:d=1", "-f", "null", "-"], ffmpeg)
     record(ep, "no digital silence", "silence_start" not in r.stderr,
            "; ".join(re.findall(r"silence_start: [\d.]+", r.stderr)[:3]))
-    r = ff(["-i", str(video), "-af", f"silencedetect=n=-30dB:d={QUIET_MAX_S}",
+    r = ff(["-i", str(video), "-af", f"silencedetect=n={QUIET_FLOOR_DB:g}dB:d={QUIET_MAX_S}",
             "-f", "null", "-"], ffmpeg)
     record(ep, f"no quiet stretch > {QUIET_MAX_S}s", "silence_start" not in r.stderr,
            "; ".join(re.findall(r"silence_start: [\d.]+", r.stderr)[:3]))

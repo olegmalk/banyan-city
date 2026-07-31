@@ -213,7 +213,15 @@ AUDIO_EXT = ("mp3", "wav", "m4a", "aac", "ogg")
 AUDIO_SR = 44100
 # short-form platforms normalize to about -14 LUFS; sitting under it just makes
 # the episode quieter than everything around it in the feed.
-LOUDNESS_TARGET = -14.0
+# -14 LUFS is the platform reference, and chasing it was a mistake for THIS
+# material: an episode with scored silences only reaches -14 integrated if the
+# loud moments are shoved into the limiter, so a body hitting the floor ended up
+# no louder than a spoken line. A cold-read listener heard the master "pinned at
+# about -1.8 dBFS almost continuously" — that is a squashed mix, and it is why
+# the thump never landed no matter where it was placed. Master quieter and let
+# the platforms turn it up: they normalise upward without re-limiting, so the
+# transients survive.
+LOUDNESS_TARGET = -17.0
 LIMIT_MASTER = 0.80   # -1.94 dBFS, ceiling during loudnorm's own 192k pass.
                       # 0.86 was not enough headroom once the loudness loop
                       # started winning: episode 1 reached -14.2 LUFS after three
