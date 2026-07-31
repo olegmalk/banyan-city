@@ -1,6 +1,6 @@
-# The last shot of the episode first: beat 15 was assigned to the MSI, which is
-# down, so the closing hook is still a still. Moved to the 5090 along with the
-# other two the MSI never got to.
+# Every remaining still-with-a-zoom: 15 (the closing hook) first, then 6, 9, 10.
+# Beat 10 was missed because the first canary APPEARED to animate it - that clip
+# was generated from the prompt text alone and never touched our frame.
 tasks:
 - id: vid-rtx5090-b15-1785522123
   worker: rtx5090
@@ -31,6 +31,17 @@ tasks:
   beats: '9'
   motion: terminal text types itself line by line, cursor blinking, faint scanline
     drift
+  size: 480x832
+  seconds: 3.0
+  steps: 20
+  seed_base: 20260731
+- id: vid-rtx5090-b10-1785522455
+  worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  beats: '10'
+  motion: the underground root map pulses, veins of dark water drifting through soil,
+    mineral glitter, rings of light spreading outward, slow push-in
   size: 480x832
   seconds: 3.0
   steps: 20
