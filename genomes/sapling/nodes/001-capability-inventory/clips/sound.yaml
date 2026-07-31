@@ -16,13 +16,10 @@ events:
   - {beat: 1, sfx: room_hum, start: 0.0, dur: full, gain_db: -26}
   - {beat: 2, sfx: room_hum, start: 0.0, dur: full, gain_db: -26}
   - {beat: 3, sfx: room_hum, start: 0.0, dur: full, gain_db: -26}
-  - {beat: 4, sfx: room_hum, start: 0.0, dur: 4.0, gain_db: -26}   # the room dies with his breath
-  - {beat: 4, sfx: mug_hit, start: 2.05, gain_db: -19}            # the mug goes first, as scripted - small, on the HAND shot
-  - {beat: 4, sfx: fall_impact, start: 2.50, pre: 1.1, gain_db: -11}  # THE impact: he lands at 3.6s and its 1.1s tail decays BEFORE the 5.04s cut, so nothing rings into the next shot
-  # nothing after the cut: the floor shot is aftermath and plays in silence.
-  # Every impact sound belongs to the shot where you can see him fall
-  # (founder, three times: "it plays in the wrong scene").
-  - {beat: 4, sfx: fan_spindown, start: 7.0, dur: 4.0, gain_db: -19}  # his machine winds down over his last sight
+  - {beat: 4, sfx: room_hum, start: 0.0, dur: 0.30, gain_db: -26}   # the room's sound dies ON the impact
+  - {beat: 4, sfx: mug_hit, start: 0.0, gain_db: -19}              # the mug lands first, on the cut
+  - {beat: 4, sfx: fall_impact, start: 0.05, pre: 0.15, gain_db: -12}  # HE lands at 0.20s - the very start of the hand shot, so the cut IS the impact (founder)
+  - {beat: 4, sfx: fan_spindown, start: 0.9, dur: 9.6, gain_db: -20}  # the only thing left running is his computer, winding down through the whole aftermath
   - {beat: 9, sfx: terminal_keys, start: 0.4, dur: 3.2, gain_db: -24}  # "$ whoami" types itself
   - {beat: 10, sfx: footsteps_soil, start: 3.0, dur: 7.0, period: 1.9, gain_db: -23}  # 400m away, felt not heard
   - {beat: 15, sfx: footsteps_soil, start: 0.2, dur: 3.4, period: 1.1, grow: 1.2, gain_db: -16}  # closer, faster — the hook
