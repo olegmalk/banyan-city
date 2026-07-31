@@ -1,8 +1,20 @@
-# Motion for every remaining static-zoom beat, split across both Windows
-# machines. Both have now produced coherent clips at 480x832/8 steps (MSI 8min,
-# 5090 12min), and beats 7 and 10 are already done. This finishes the set.
+# Re-queue after finding the real bug: the 5090's path was running WanPipeline
+# (TEXT-to-video), so every clip it made ignored the approved frame entirely.
+# Beat 7 is first so we get an apples-to-apples check against the MSI's coherent
+# clip of the same beat.
 tasks:
-- id: vid-rtx5090-b03-1785513201
+- id: vid-rtx5090-b07-1785514701
+  worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  beats: '7'
+  motion: the one leaf twitches and shivers violently, handheld camera shake following
+    it
+  size: 480x832
+  seconds: 3.0
+  steps: 20
+  seed_base: 20260731
+- id: vid-rtx5090-b03-1785514701
   worker: rtx5090
   video: true
   node: 001-capability-inventory
@@ -11,9 +23,9 @@ tasks:
     flicker, slow push-in
   size: 480x832
   seconds: 3.0
-  steps: 8
+  steps: 20
   seed_base: 20260731
-- id: vid-rtx5090-b12-1785513201
+- id: vid-rtx5090-b12-1785514701
   worker: rtx5090
   video: true
   node: 001-capability-inventory
@@ -22,9 +34,9 @@ tasks:
     in the light
   size: 480x832
   seconds: 3.0
-  steps: 8
+  steps: 20
   seed_base: 20260731
-- id: vid-rtx5090-b14-1785513201
+- id: vid-rtx5090-b14-1785514701
   worker: rtx5090
   video: true
   node: 001-capability-inventory
@@ -33,9 +45,9 @@ tasks:
     slow breath of wind
   size: 480x832
   seconds: 3.0
-  steps: 8
+  steps: 20
   seed_base: 20260731
-- id: vid-msi-b09-1785513201
+- id: vid-msi-b09-1785514701
   worker: msi
   video: true
   node: 001-capability-inventory
@@ -46,7 +58,7 @@ tasks:
   seconds: 3.0
   steps: 8
   seed_base: 20260731
-- id: vid-msi-b15-1785513201
+- id: vid-msi-b15-1785514701
   worker: msi
   video: true
   node: 001-capability-inventory
@@ -57,7 +69,7 @@ tasks:
   seconds: 3.0
   steps: 8
   seed_base: 20260731
-- id: vid-msi-b06-1785513201
+- id: vid-msi-b06-1785514701
   worker: msi
   video: true
   node: 001-capability-inventory

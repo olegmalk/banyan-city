@@ -75,8 +75,14 @@ def stage_simple(a) -> int:
     frames = int(a.seconds * a.fps)
     frames = frames - (frames % 4) + 1
 
-    pipe = DiffusionPipeline.from_pretrained(MODEL, torch_dtype=torch.bfloat16)
-    print(f"pipeline class from the model itself: {type(pipe).__name__}")
+    # NOT DiffusionPipeline: this repo's model_index names WanPipeline, which is
+    # TEXT-to-video and silently ignores an image. That is how the 5090 spent an
+    # afternoon generating pretty clips of whatever the prompt described while
+    # the approved frame went unused (2026-07-31 — the warning I had built in is
+    # what caught it). Name the image-to-video class explicitly, always.
+    from diffusers import WanImageToVideoPipeline
+    pipe = WanImageToVideoPipeline.from_pretrained(MODEL, torch_dtype=torch.bfloat16)
+    print(f"pipeline class: {type(pipe).__name__} (forced image-to-video)")
     pipe.to("cuda")
     img = Image.open(a.init).convert("RGB").resize((w, h), Image.LANCZOS)
     kw = dict(prompt=a.prompt, negative_prompt=NEG, height=h, width=w,
