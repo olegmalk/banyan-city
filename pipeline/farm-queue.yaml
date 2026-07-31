@@ -1,47 +1,13 @@
-# Every remaining still-with-a-zoom: 15 (the closing hook) first, then 6, 9, 10.
-# Beat 10 was missed because the first canary APPEARED to animate it - that clip
-# was generated from the prompt text alone and never touched our frame.
+# All four remaining stills in ONE task, so the 10GB model loads once instead of
+# four times. Sampling is only ~71s per clip; the rest was reload overhead.
 tasks:
-- id: vid-rtx5090-b15-1785522123
+- id: vid-5090-batch-1785523252
   worker: rtx5090
   video: true
   node: 001-capability-inventory
-  beats: '15'
-  motion: rings of light pulse outward through the soil, faster and brighter with
-    each beat, slow push-in
-  size: 480x832
-  seconds: 3.0
-  steps: 20
-  seed_base: 20260731
-- id: vid-rtx5090-b06-1785522123
-  worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  beats: '6'
-  motion: clouds drift slowly across the blue, the single leaf trembles in a light
-    breeze, gentle parallax
-  size: 480x832
-  seconds: 3.0
-  steps: 20
-  seed_base: 20260731
-- id: vid-rtx5090-b09-1785522123
-  worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  beats: '9'
-  motion: terminal text types itself line by line, cursor blinking, faint scanline
-    drift
-  size: 480x832
-  seconds: 3.0
-  steps: 20
-  seed_base: 20260731
-- id: vid-rtx5090-b10-1785522455
-  worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  beats: '10'
-  motion: the underground root map pulses, veins of dark water drifting through soil,
-    mineral glitter, rings of light spreading outward, slow push-in
+  beats: 15,6,9,10
+  motion: subtle continuous motion true to the frame, gentle camera drift, living
+    scene
   size: 480x832
   seconds: 3.0
   steps: 20

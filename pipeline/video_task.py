@@ -14,6 +14,7 @@ to diffusers 0.29.2 for SDXL, and Wan needs a modern one.
 Driven by farm_worker when a queue task carries `video: true`.
 """
 
+import json
 import os
 import platform
 import subprocess
@@ -125,6 +126,45 @@ def run(task: dict, courier, node_dir: Path) -> None:
     size = task.get("size", "704x1280")
     seconds = float(task.get("seconds", 4))
     steps = int(task.get("steps", 30))
+
+    # BATCH on a big card: build the whole job list, then load the model once.
+    # Per-clip processes spent ~10 of every 11 minutes reloading 10GB from disk.
+    if gpu_vram_gb() >= 20 and len(beats) > 1:
+        jobs, outs = [], []
+        for num in beats:
+            s = shots.get(num)
+            init = next((q for q in stills.glob(f"{num:02d}-*.png")
+                         if "REVOKED" not in q.name), None)
+            if not s or not init:
+                courier.say(f"beat {num}: no shot or no approved still - skipped")
+                continue
+            motion = task.get("motion") or ("subtle continuous motion, gentle camera "
+                                            "drift, living scene")
+            o = courier.out / f"{task.get('id')}-{num:02d}-{s['slug']}.mp4"
+            jobs.append({"init": str(init), "out": str(o),
+                         "prompt": f"{motion}. {s['prompt']}"[:900],
+                         "seed": int(task.get("seed_base", 20260731)) + num})
+            outs.append((num, o))
+        if jobs:
+            jf = ROOT / f"jobs-{task.get('id')}.json"
+            jf.write_text(json.dumps(jobs), encoding="utf-8")
+            courier.mark(f"VIDEO_RENDERING batch of {len(jobs)} (one model load)")
+            _run([str(PY), str(REPO / "pipeline" / "wan_i2v.py"), "--stage", "simple",
+                  "--embeds", str(ROOT / "unused.pt"), "--jobs", str(jf),
+                  "--seconds", str(seconds), "--steps", str(steps), "--size", size],
+                 courier, f"batch {task.get('id')}", timeout=14400, retry=True)
+            jf.unlink(missing_ok=True)
+            made = 0
+            for num, o in outs:
+                if o.exists() and o.stat().st_size > 10_000:
+                    made += 1
+                    courier.mark(f"VIDEO_CLIP_OK beat={num:02d} {o.stat().st_size//1024}KB")
+                else:
+                    courier.mark(f"VIDEO_CLIP_EMPTY beat={num:02d}")
+            courier.say(f"video task {task.get('id')}: {made}/{len(outs)} clips")
+            if not made:
+                raise RuntimeError("no clips produced")
+            return
 
     made = 0
     for num in beats:

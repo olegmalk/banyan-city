@@ -25,7 +25,9 @@ pipeline with text_encoder=None and consumes the file.
 
 import argparse
 import gc
+import json
 import sys
+import time
 from pathlib import Path
 
 MODEL = "Wan-AI/Wan2.2-TI2V-5B-Diffusers"
@@ -84,21 +86,30 @@ def stage_simple(a) -> int:
     pipe = WanImageToVideoPipeline.from_pretrained(MODEL, torch_dtype=torch.bfloat16)
     print(f"pipeline class: {type(pipe).__name__} (forced image-to-video)")
     pipe.to("cuda")
-    img = Image.open(a.init).convert("RGB").resize((w, h), Image.LANCZOS)
-    kw = dict(prompt=a.prompt, negative_prompt=NEG, height=h, width=w,
-              num_frames=frames, num_inference_steps=a.steps,
-              guidance_scale=5.0,
-              generator=torch.Generator(device="cpu").manual_seed(a.seed))
-    # TI2V takes an image; a pure t2v class would not accept one
     import inspect
-    if "image" in inspect.signature(pipe.__call__).parameters:
-        kw["image"] = img
-    else:
+    takes_image = "image" in inspect.signature(pipe.__call__).parameters
+    if not takes_image:
         print("WARNING: this pipeline takes no image - text-to-video only")
-    out = pipe(**kw).frames[0]
-    Path(a.out).parent.mkdir(parents=True, exist_ok=True)
-    export_to_video(out, a.out, fps=a.fps)
-    print(f"wrote {a.out} ({frames} frames, {w}x{h})")
+
+    # ONE process, MANY clips. Sampling is only ~71s of an ~11min clip; the rest
+    # was reloading this 10GB model from disk for every single beat. Loading once
+    # and looping turns four clips from ~44 minutes into a bit over ten.
+    jobs = json.loads(Path(a.jobs).read_text()) if a.jobs else \
+        [{"init": a.init, "out": a.out, "prompt": a.prompt, "seed": a.seed}]
+    for i, job in enumerate(jobs, 1):
+        t0 = time.time()
+        img = Image.open(job["init"]).convert("RGB").resize((w, h), Image.LANCZOS)
+        kw = dict(prompt=job["prompt"], negative_prompt=NEG, height=h, width=w,
+                  num_frames=frames, num_inference_steps=a.steps,
+                  guidance_scale=5.0,
+                  generator=torch.Generator(device="cpu").manual_seed(int(job["seed"])))
+        if takes_image:
+            kw["image"] = img
+        out = pipe(**kw).frames[0]
+        Path(job["out"]).parent.mkdir(parents=True, exist_ok=True)
+        export_to_video(out, job["out"], fps=a.fps)
+        print(f"[{i}/{len(jobs)}] wrote {job['out']} in {time.time()-t0:.0f}s "
+              f"({frames} frames, {w}x{h})", flush=True)
     return 0
 
 
@@ -164,6 +175,7 @@ def main() -> int:
     ap.add_argument("--prompt", default="")
     ap.add_argument("--init", default="")
     ap.add_argument("--out", default="")
+    ap.add_argument("--jobs", default="", help="json list of {init,out,prompt,seed} - one model load for all of them")
     ap.add_argument("--seconds", type=float, default=4.0)
     ap.add_argument("--steps", type=int, default=25)
     ap.add_argument("--size", default="480x832", help="WxH (Wan bucket)")
