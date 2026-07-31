@@ -339,6 +339,15 @@ def split_sections(md_text: str) -> list:
 
 # ------------------------------------------------------------ publish safety
 
+# What a VISITOR is told when a take is withheld. Plain, complete sentences that
+# assume no knowledge of our pipeline, our gate, or who the founder is.
+PUBLIC_REASON = {
+    "deny": "the licence on the model that made it forbids commercial reuse, "
+            "and every episode here is published under CC BY 4.0 — which grants it",
+    "unknown": "its licence has not been cleared for redistribution yet",
+}
+
+
 def publishable(f: Path) -> tuple:
     """(ok, why) — may this take be copied onto the public site?
 
@@ -376,14 +385,36 @@ def publishable(f: Path) -> tuple:
         licence = lg.engine_licence(value)
         if licence is None:
             continue
-        verdict, why = lg.classify(licence)
+        verdict, _why = lg.classify(licence)
         if verdict != "allow":
             # 'unknown' is withheld too, not waved through. Unknown means
             # nobody has read the terms — and "we do not know whether we may
             # publish this" is not a reason to publish it to the open web. It
             # is a reason to read the licence, which is a human's job.
-            return False, f"{licence} — {why}"
+            #
+            # classify()'s own `why` is deliberately NOT used here. It is written
+            # for whoever maintains the gate — "classify it in
+            # pipeline/licence_gate.py or replace the asset" — and this string
+            # lands on a public page. The first version of this shipped that
+            # sentence, plus "founder sign-off pending", onto the shot board for
+            # a stranger arriving from TikTok to read. Same de-jargoning rule as
+            # the rest of the site: story words out front, machine words in the
+            # drawers. The licence NAME stays, because that part is genuinely
+            # informative and a reader can look it up.
+            return False, f"{PUBLIC_REASON[verdict]} ({public_licence(licence)})"
     return True, ""
+
+
+def public_licence(licence: str) -> str:
+    """The licence identifier with our own bookkeeping stripped off.
+
+    MODEL_LICENCES values carry internal notes for whoever maintains the gate —
+    "LTXV Open Weights Licence 0.X (read; founder sign-off pending)". The name is
+    worth showing a visitor; "founder sign-off pending" is not, and neither is a
+    trailing remedy clause after an em dash.
+    """
+    licence = licence.split(" — ")[0]
+    return re.sub(r"\s*\([^)]*\)\s*$", "", licence).strip()
 
 
 def withheld_note(rows: list) -> str:
