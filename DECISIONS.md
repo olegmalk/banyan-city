@@ -311,13 +311,53 @@ banyan.city and TikTok. This is the real one. Remedies, cheapest first:
   the sidecar and nothing else is needed.** Only the founder or the contributor
   knows. Worth asking before re-rendering anything.
 
-**2. Flow (6 files) and LTXV (2 files) have licences nobody has read.** Not
-known-bad — *unread*. Someone must read the actual terms and record them in
-`licence_gate.MODEL_LICENCES`, or the files leave the published surface. The
-gate deliberately calls unread "unknown" rather than "probably fine", and
-`build_site.publishable()` now withholds unknown from the public site for the
-same reason: "we do not know whether we may publish this" is not a reason to
-publish it.
+**2. Flow (6 files) and LTXV (2 files) — READ as of 2026-08-01. Both now need a
+decision, not more research.**
+
+**LTXV: the recorded reason for blocking it was wrong.** The Open Weights License
+0.X (dated 2025-04-15, and by its own header applying to every LTXV release since
+v0.9.6, so it governs our unpinned 2026-07 takes) says at §5: *"Licensor claims no
+rights in the Output you generate using the Model."* The $10,000,000 revenue
+threshold in §2 decides **who must buy a licence for the model** — every granted
+verb in §2 takes "the Model" as its object, §3's redistribution conditions are
+scoped to "the Model or Derivatives of the Model", and §1.4 defines Derivatives
+model-to-model only (weights transferred into another model, distillation,
+synthetic training data). A rendered video is Output under §1.8, not a Derivative.
+The cap gates the weights, not the footage. **Recommendation: allow it.** Left
+unflipped pending founder sign-off — nobody here is a lawyer, `allow` is the
+direction that publishes things, and the two affected files are unused trial takes
+of beat 1, so waiting costs nothing.
+
+**Flow: no ownership problem, but we cannot pass on what we were given.** There is
+no Flow- or Labs-specific terms document at all (labs.google/terms is a 404; the
+service-specific index lists Labs.google against only the main ToS). The ToS says
+*"Google won't claim ownership over that content"*, and never mentions commercial
+use in any direction — the word appears once, defining "consumer". But two
+conditions attach to the output under "Don't abuse our services": no *"using
+AI-generated content from our services to develop machine learning models"*, and
+no *"misleading others into thinking that generative AI content was created by a
+human"*; plus a SynthID watermark that *"should not be tampered with or removed"*.
+Our own release grants reusers "any purpose, even commercially" — training
+included — so we cannot honestly hand on restrictions we accepted. That is a
+judgement about what we warrant to reusers, not missing text. Independently, all
+three files record `watermark: true` (visible Flow sparkle), which disqualifies
+them regardless. **Recommendation: move them off the published surface.**
+
+**3. A licence seam nobody chose.** The three Flow trial clips live under
+`pipeline/`, which `LICENSE-CODE.md` claims as MIT ("the pipeline, tooling, site
+generators, and any scripts"), while `LICENSE-CONTENT.md` applies CC BY 4.0 to
+"genomes, nodes, scripts, leaves, taste files". So three watermarked Veo videos
+currently sit inside an MIT-declared tree. That looks unintended and needs a
+human decision independent of either licence question.
+
+**4. And a correction to the scoping in this entry's first draft.** It said the
+blocked footage was gitignored, so the exposure was the deployed site only. That
+was checked against `clips/` and generalised wrongly: **`takes/clips/` is fully
+tracked** — every PixVerse, SVD and LTX mp4 is committed and public on GitHub, as
+are the three Flow trials. So `build_site.publishable()` closes one of two
+exposure paths. Since the repo IS the product, "not in any episode" is not the
+same as "not published", and removing a tracked file is a history question as well
+as a working-tree one.
 
 **The gate is a ratchet, and that was a judgement call worth stating.**
 `pages.yml` runs `lint_genome.py` immediately before `build_site.py`, so making
