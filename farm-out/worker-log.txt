@@ -1,0 +1,42 @@
+$ C:\banyan-video\venv\Scripts\python.exe C:\banyan-farm\banyan-city\pipeline\wan_i2v.py --stage simple --embeds C:\banyan-video\embeds-07.pt…
+pipeline class from the model itself: WanPipeline
+WARNING: this pipeline takes no image - text-to-video only
+wrote C:\banyan-farm\banyan-city\farm-out\vid-5090-480test-1785508628-07-flailing-one.mp4 (73 frames, 480x832)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+Loading pipeline components...:   0%|          | 0/5 [00:00<?, ?it/s]
+
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s][A
+
+Loading checkpoint shards:  20%|â–ˆâ–ˆ        | 1/5 [00:01<00:06,  1.69s/it][A
+
+Loading checkpoint shards:  40%|â–ˆâ–ˆâ–ˆâ–ˆ      | 2/5 [00:03<00:04,  1.67s/it][A
+
+Loading checkpoint shards:  60%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ    | 3/5 [00:05<00:03,  1.71s/it][A
+
+Loading checkpoint shards:  80%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ  | 4/5 [00:09<00:02,  2.95s/it][A
+
+Loading checkpoint shards: 100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 5/5 [00:10<00:00,  1.95s/it][A
+Loading checkpoint shards: 100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 5/5 [00:10<00:00,  2.02s/it]
+
+Loading pipeline components...:  20%|â–ˆâ–ˆ        | 1/5 [00:10<00:41, 10.27s/it]
+Loading pipeline components...:  40%|â–ˆâ–ˆâ–ˆâ–ˆ      | 2/5 [00:11<00:15,  5.24s/it]
+
+Loading weights:   0%|          | 0/242 [00:00<?, ?it/s][A
+Loading weights: 100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 242/242 [00:00<00:00, 3673.54it/s]
+
+Loading pipeline components...:  80%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ  | 4/5 [00:12<00:02,  2.15s/it]The config attributes {'clip_output': False} were passed to AutoencoderKLWan, but are not expected and will be ignored. Please verify your config.json configuration file.
+
+Loading pipeline components...: 100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 5/5 [00:14<00:00,  1.98s/it]
+Loading pipeline components...: 100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 5/5 [00:14<00:00,  2.84s/it]
+
+  0%|          | 0/8 [00:00<?, ?it/s]
+ 12%|â–ˆâ–Ž        | 1/8 [00:04<00:31,  4.49s/it]
+ 25%|â–ˆâ–ˆâ–Œ       | 2/8 [00:08<00:25,  4.20s/it]
+ 38%|â–ˆâ–ˆâ–ˆâ–Š      | 3/8 [00:12<00:20,  4.13s/it]
+ 50%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆ     | 4/8 [00:16<00:16,  4.08s/it]
+ 62%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–Ž   | 5/8 [00:20<00:12,  4.06s/it]
+ 75%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–Œ  | 6/8 [00:24<00:08,  4.04s/it]
+ 88%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–Š | 7/8 [00:28<00:04,  4.03s/it]
+100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 8/8 [00:32<00:00,  4.03s/it]
+100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 8/8 [00:32<00:00,  4.08s/it]
