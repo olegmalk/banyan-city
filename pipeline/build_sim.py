@@ -43,6 +43,7 @@ MACHINES = {
     "m1pro": ("the studio laptop", "🏛"),
     "m2": ("the spare laptop", "🏢"),
     "msi": ("the fast-GPU laptop", "🏭"),
+    "rtx5090": ("the big render house", "🏟"),
 }
 STATE_WORDS = {  # css state → the legend under the town
     "working": "glowing = rendering right now",

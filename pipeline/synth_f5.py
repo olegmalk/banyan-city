@@ -18,6 +18,7 @@ contract: NN-vo.mp3 + NN-vo.json with lines[].chunks.
 
 import argparse
 import json
+import re
 import subprocess
 import sys
 import tempfile
@@ -29,8 +30,19 @@ from captions import caption_chunks                      # noqa: E402
 from render_t1 import extract_script, parse_frames, strip_inline_md  # noqa: E402
 from render_t2 import clean_speech                        # noqa: E402
 
-GAP = 0.12          # breath between chunks; keeps a line from sounding spliced
+GAP = 0.12          # breath between lines
 MODEL = "F5TTS_v1_Base"
+
+
+def ref_line(by_num: dict, num: int) -> str:
+    """What beat `num`'s take says, straight from the script."""
+    b = by_num.get(num)
+    if not b:
+        return ""
+    for it in b["items"]:
+        if it[0] == "line":
+            return clean_speech(strip_inline_md(it[2]))
+    return ""
 
 
 def align_chunks(wav: Path, chunks: list, t0: float) -> list:
@@ -104,6 +116,8 @@ def main() -> int:
     ap.add_argument("--beats", required=True, help="comma-separated beat numbers")
     ap.add_argument("--text", default="", help="override the script's line (one beat only)")
     ap.add_argument("--out", default="", help="clips dir (default the node's)")
+    ap.add_argument("--ref-beat", dest="ref_beat", default="",
+                    help="clone the READ of this beat's take (emotion transfer)")
     a = ap.parse_args()
 
     node_dir = REPO / "genomes" / a.genome / "nodes" / a.node
@@ -122,11 +136,23 @@ def main() -> int:
             continue
         # clone from THIS beat's existing take when there is one, so the read
         # stays in the same voice and room as the rest of the episode
-        ref = clips / f"{num:02d}-vo.mp3"
-        ref_text = strip_inline_md(lines[0][1])
+        # EMOTION TRANSFER: F5 takes no tone instructions — it inherits the
+        # read of its reference. So a line's emotion is chosen by picking WHICH
+        # of our own takes to clone from: the most panicked take voices the
+        # panicked lines, the most exhausted one the tired lines. That is how
+        # "say it a certain way, like a human" gets done with a free model
+        # (founder's ask, 2026-07-30).
+        rb = int(a.ref_beat or num)
+        ref = clips / f"{rb:02d}-vo.mp3"
+        # The reference TRANSCRIPT must be exactly what the reference audio
+        # says: F5 derives the speaker's rate from duration/text-length, so an
+        # abbreviated transcript makes it think he speaks slowly and it
+        # stretches the output (a hand-written half-transcript turned a 12.5s
+        # line into 27s, 2026-07-31). Take it from the script, always.
+        ref_text = ref_line(by_num, rb) or clean_speech(strip_inline_md(lines[0][1]))
         if not ref.exists():
-            ref = next(clips.glob("*-vo.mp3"))
-            ref_text = "Right. Sev-1. You know the drill."
+            ref, rb = next(clips.glob("*-vo.mp3")), 0
+            ref_text = ref_line(by_num, int(ref.name[:2])) or ref_text
         with tempfile.TemporaryDirectory() as td:
             ref_wav = Path(td) / "ref.wav"
             subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(ref),
@@ -134,17 +160,26 @@ def main() -> int:
             manifest_lines, parts, t = [], [], 0.0
             for li, (who, raw) in enumerate(lines):
                 spoken = clean_speech(strip_inline_md(raw))
-                p = Path(td) / f"l{li:02d}.wav"
-                dur = f5(ref_wav, ref_text, spoken, p)      # ONE pass per line
-                chunks = align_chunks(p, caption_chunks(spoken), t)
-                parts.append(p)
-                print(f"  beat {num:02d} line {li}: {dur:.2f}s, "
-                      f"{len(chunks)} caption(s)", flush=True)
+                # SENTENCE at a time: F5 batches long text internally and
+                # crashed on every line over ~100 chars (beats 8/10/14, the
+                # three longest). A sentence is also the natural prosodic
+                # unit — reading a whole paragraph in one pass flattens it,
+                # reading caption fragments shatters it.
+                sents = [s.strip() for s in re.split(r"(?<=[.?!])\s+", spoken) if s.strip()]
+                chunks, line_start = [], t
+                for si, sent in enumerate(sents):
+                    sp = Path(td) / f"l{li:02d}s{si:02d}.wav"
+                    d = f5(ref_wav, ref_text, sent, sp)
+                    chunks += align_chunks(sp, caption_chunks(sent), t)
+                    parts.append(sp)
+                    t += d + (GAP if si < len(sents) - 1 else 0.0)
+                print(f"  beat {num:02d} line {li}: {t - line_start:.2f}s, "
+                      f"{len(sents)} sentence(s), {len(chunks)} caption(s)", flush=True)
                 manifest_lines.append({
                     "who": who.split("(")[0].strip().upper() or "VO",
-                    "text": spoken, "start": round(t, 3),
-                    "end": round(t + dur, 3), "chunks": chunks})
-                t += dur + GAP
+                    "text": spoken, "start": round(line_start, 3),
+                    "end": round(t, 3), "chunks": chunks})
+                t += GAP
             # concat with the breath gaps baked in
             lst = Path(td) / "list.txt"
             sil = Path(td) / "sil.wav"
