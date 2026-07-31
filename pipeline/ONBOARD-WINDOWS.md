@@ -33,7 +33,16 @@ Check it arrived — should be about 411 bytes, no file extension:
 dir C:\banyan-farm
 ```
 
-## 2. Git and Python
+## 2. Git, Python, and the C++ runtime
+
+PyTorch's DLLs need the Microsoft Visual C++ runtime. Without it, importing
+torch dies with `WinError 1114 ... c10.dll` AFTER a successful 3 GB download —
+it has caught both Windows machines, so install it first:
+
+```
+winget install --id Microsoft.VCRedist.2015+.x64 -e --source winget --accept-source-agreements --accept-package-agreements
+```
+
 
 ```
 winget install --id Git.Git -e --source winget --accept-source-agreements --accept-package-agreements
@@ -191,6 +200,7 @@ tolerates.
 
 | Symptom | Cause and fix |
 |---|---|
+| `WinError 1114 ... c10.dll` | Missing Visual C++ runtime — the VCRedist line in step 2. Reboot once if it persists. |
 | `CUDA: False` | Wrong wheel. Report it — RTX 50-series needs the cu128 index in step 5. |
 | `git` not recognised | Open a fresh PowerShell window after step 2. |
 | `Python was not found; run without arguments to install from the Microsoft Store` | Windows' stub is shadowing the real python. Run `where.exe python` and use the `Programs\Python` path, as in step 5. |
