@@ -185,6 +185,18 @@ def render_task(task: dict, courier: Courier, device: str, dtype) -> None:
 
 
 def main() -> int:
+    # A Windows console is cp1252, and this worker echoes its children's output
+    # — which carries em-dashes from shots.md and a Chinese negative prompt. A
+    # print() of any of it raised UnicodeEncodeError IN THE WORKER, which is
+    # why the msi went silent mid-task instead of reporting its own timeout
+    # (2026-07-31: "charmap codec can't encode character"). Never let logging
+    # kill the process it is logging.
+    for stream in (sys.stdout, sys.stderr):
+        try:
+            stream.reconfigure(encoding="utf-8", errors="replace")
+        except (AttributeError, ValueError):
+            pass
+
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--name", required=True,
