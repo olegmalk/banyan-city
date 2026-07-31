@@ -439,3 +439,39 @@ Renders: 5090 re-rendering 8 motion beats at **704x1280 / 50 steps** — the onl
 size Wan 2.2 TI2V-5B supports, against the 480x832 / 20 steps every previously
 judged clip used. Five PixVerse beats queued behind it, then the A14B prefetch
 (download only).
+
+## 2026-08-01 — the death was a nine-second hole (cycle 014)
+
+The founder's note "his death is very anticlimatic" survived four rounds of work
+on the thump because **the thump was never the problem** — at 14s it is the
+loudest moment in the episode, louder than any dialogue.
+
+**Beat 4 runs 10.08s where the script gives it 5** (`THE FALL — 0:15–0:20`): two
+full-length 5.04s shots concatenated, carrying no VO at all. RMS decays -28 →
+-46 dB across it while dialogue sits at -13. That silent double-length beat IS
+the anticlimax, it is in every cut ever screened (v11 6.5s, v13 6.2s, v17 7.5s,
+v18 9.5s), and the -17 LUFS re-master shipped as the fix for this very note made
+it 2s longer and 5 dB deeper.
+
+`qa_episode.quiet_hole()` now measures the longest stretch far below the
+episode's OWN 90th-percentile speech level — relative, because an absolute floor
+cannot express "far below the speech around it". `silencedetect` thresholds on
+peaks and returned green for three cycles.
+
+Three options built and measured SEPARATELY (14-25s mean / hole):
+baseline -35.0 / 9.5s · beat-4 trim -27.2 / gone · + fan up + black beat 5
+-24.9 / gone. **The trim alone is the fix** and is not a taste call. On the
+founder's desk: `ep1-v19-BASELINE / -B4TRIM / -FULL.mp4`,
+`DEATH-before-after.png`, `death-fix-sound.patch`. Nothing committed to the cut.
+
+Also: **beat 5, scripted "Black, and the sound of a cooling fan spinning down",
+is a 4-second copy of the bright sky** (luma 135.8 vs 136.2). Cycle 013
+attributes that choice to the founder; his traceable words object to the beat
+showing the TERMINAL. A paraphrase became an attributed decision and node.md was
+never updated. Flagged, not reverted — R4.
+
+Voice: `pipeline/synth_voxcpm.py` maps the script's own parentheticals ("VO
+(tired, flat)") to VoxCPM2's per-line style prompt — the first engine we have
+that takes direction rather than dials. Apache-2.0, commercial use explicit,
+licence read BEFORE the work this time. Wants CUDA, so it belongs on the 5090.
+`--dry-run` reviews every line's direction with no model or GPU.
