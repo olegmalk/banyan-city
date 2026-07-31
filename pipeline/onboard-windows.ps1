@@ -1,16 +1,20 @@
-# Enlist a Windows machine into the render farm — one command, start to finish.
+# Enlist a Windows machine into the render farm
+#
+# ASCII ONLY in this file, deliberately: Windows PowerShell 5.1 reads a .ps1
+# as ANSI unless it has a BOM, so a single em-dash arrives as mojibake and
+# takes the parser down with it (2026-07-31, on the 5090's first run). - one command, start to finish.
 #
 # Written for the RTX 5090 laptop (2026-07-31) and any NVIDIA Windows box after
 # it. Everything lands in C:\banyan-farm (plus C:\banyan-video for the video
 # stack); delete those two folders and the machine is out of the farm. Nothing
 # system-level is touched except git and python, installed via winget.
 #
-#   1. Copy `farm_deploy_key` (from Desktop\banyan-drops on the Mac — USB,
+#   1. Copy `farm_deploy_key` (from Desktop\banyan-drops on the Mac - USB,
 #      AirDrop or local share; NEVER email or chat) to C:\banyan-farm\
 #   2. powershell -ExecutionPolicy Bypass -File onboard-windows.ps1 -Name rtx5090
 #
 # The worker then polls the queue forever, renders, and pushes results with a
-# heartbeat at every stage. Blackwell needs cu128 wheels — pinned below,
+# heartbeat at every stage. Blackwell needs cu128 wheels - pinned below,
 # because the wrong wheel is a silent "no CUDA" fallback to the CPU.
 
 param(
@@ -51,7 +55,7 @@ Step 3 "courier credentials"
 if (!(Test-Path $KEY)) {
     Write-Host "  MISSING: $KEY" -ForegroundColor Red
     Write-Host "  Copy farm_deploy_key from the Mac's Desktop\banyan-drops (USB or" -ForegroundColor Red
-    Write-Host "  AirDrop — never chat or email), then run this again." -ForegroundColor Red
+    Write-Host "  AirDrop - never chat or email), then run this again." -ForegroundColor Red
     exit 1
 }
 # ssh refuses a world-readable key: lock it to this user
@@ -61,7 +65,7 @@ git remote set-url origin git@github.com:olegmlkvorg/banyan-city.git
 git config user.email "farm@banyan.city"
 git config user.name  "farm-courier"
 
-# ---- 4. the stills venv (video builds its own — Wan needs a newer diffusers)
+# ---- 4. the stills venv (video builds its own - Wan needs a newer diffusers)
 Step 4 "python environment (~3GB download, resumable)"
 if (!(Test-Path "$VENV\Scripts\python.exe")) { python -m venv $VENV }
 $PY = "$VENV\Scripts\python.exe"
