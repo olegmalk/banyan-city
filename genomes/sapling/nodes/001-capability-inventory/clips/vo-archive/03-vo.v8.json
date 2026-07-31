@@ -1,0 +1,25 @@
+{
+ "engine": "f5-tts-v1-base",
+ "total_s": 3.058,
+ "lines": [
+  {
+   "who": "VO",
+   "text": "There. Fixed. Now I'm going to sleep for a",
+   "start": 0.0,
+   "end": 3.058,
+   "chunks": [
+    {
+     "text": "There.",
+     "start": 0.0,
+     "end": 1.525
+    },
+    {
+     "text": "Fixed.",
+     "start": 1.645,
+     "end": 3.058
+    }
+   ]
+  }
+ ],
+ "note": "cut mid-word: the line is interrupted by his death, not finished"
+}
