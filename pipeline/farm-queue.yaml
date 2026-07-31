@@ -1,4 +1,4 @@
-# OVERNIGHT. Two jobs, in order.
+# OVERNIGHT. Three jobs, in order.
 #
 # 1. Re-render every motion beat at 704x1280 / 50 steps. Wan's own config lists
 #    704x1280 as the ONLY supported size for TI2V-5B; 480x832 is a trained size
@@ -6,7 +6,15 @@
 #    has judged was made outside the model's training envelope, at 20 steps
 #    against an official 50. This is a bug fix, not an experiment.
 #
-# 2. Prefetch the 14B stack (Apache-2.0, ~25GB). Download only - the install
+# 2. The five beats job 1 does NOT cover - because they were never ours to
+#    publish. Beats 2, 4, 8, 11 and 13 of the LIVE episode were assembled from
+#    PixVerse free-tier takes, and DECISIONS.md D8 already records that tier as
+#    "license-blocked (personal-use-only ToS)" - written down, then used anyway.
+#    Wan 2.2 is Apache 2.0, so re-rendering these five is what makes the remake
+#    publishable by construction instead of by hope. Not a style experiment: the
+#    current takes cannot ship, so the choice is re-render or cut the beats.
+#
+# 3. Prefetch the 14B stack (Apache-2.0, ~25GB). Download only - the install
 #    decision waits for a human.
 tasks:
 - id: vid-720p-all-1785529520
@@ -14,6 +22,19 @@ tasks:
   video: true
   node: 001-capability-inventory
   beats: 3,6,7,9,10,12,14,15
+  motion: 'true to the frame: only what would actually move in this shot - drifting
+    air, screen flicker, a trembling leaf, light through soil - gentle camera drift,
+    no new subjects, no scene change'
+  size: 704x1280
+  seconds: 3.0
+  steps: 50
+  guidance: 5.0
+  seed_base: 20260731
+- id: vid-720p-licence-1785531600
+  worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  beats: 2,4,8,11,13
   motion: 'true to the frame: only what would actually move in this shot - drifting
     air, screen flicker, a trembling leaf, light through soil - gentle camera drift,
     no new subjects, no scene change'

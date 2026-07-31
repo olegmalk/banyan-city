@@ -818,6 +818,316 @@ def test_sync_shots_is_idempotent():
             check(f"{slug} beat {i + 1:02d} heading has one range", h.count(rng) == 1)
 
 
+def test_licence_gate(tmp: Path):
+    """The gate that should have existed on 2026-07-31, when an entire episode
+    came within one command of being voiced with F5-TTS — CC BY-NC weights —
+    and fish/OpenAudio (research-only) was already on disk. The tree publishes
+    CC BY 4.0, so an NC input makes our own licence a lie and an *-SA input
+    silently relicenses every node downstream. Neither is visible in the
+    finished mp4; only code can catch it.
+
+    Built on a throwaway genome so the assertions are about the RULES, not
+    about whatever the real tree happens to contain today.
+    """
+    import re
+
+    import licence_gate as lg
+
+    # the deny families, however the identifier is dressed up
+    check("CC0 ships", lg.classify("CC0")[0] == "allow")
+    check("public domain ships", lg.classify("**Public domain**")[0] == "allow")
+    check("CC BY 4.0 with credit prose ships",
+          lg.classify("**CC BY 4.0** — credit Gravity Sound")[0] == "allow")
+    check("Apache/MIT/BSD ship",
+          all(lg.classify(x)[0] == "allow" for x in ("Apache-2.0", "MIT", "BSD-3-Clause")))
+    check("NC is denied", lg.classify("CC BY-NC 4.0")[0] == "deny")
+    check("SA is denied", lg.classify("CC BY-SA 3.0")[0] == "deny")
+    # a compound must be judged by its WORST clause: 'cc-by-nc-sa' contains the
+    # substring 'cc-by', so an allow-first order would have passed it
+    check("NC-SA is denied, not read as CC BY",
+          lg.classify("cc-by-nc-sa-4.0")[0] == "deny")
+    check("research-only is denied", lg.classify("research use only")[0] == "deny")
+    check("ND is denied (a fork tree is all derivatives)",
+          lg.classify("CC BY-ND 4.0")[0] == "deny")
+    # unclassified is a violation, not a pass — the whole point of an allowlist
+    check("a custom EULA is unknown, not allowed",
+          lg.classify("Sound Dogs EULA")[0] == "unknown")
+    check("a blank licence is unknown", lg.classify("")[0] == "unknown")
+    check("a missing licence is unknown", lg.classify(None)[0] == "unknown")
+
+    # engines resolve through the model table; an engine nobody classified fails
+    check("chatterbox is MIT", lg.engine_licence("chatterbox-0.5B") == "MIT")
+    check("kokoro is Apache", lg.engine_licence("kokoro-82M") == "Apache-2.0")
+    check("f5-tts is NC", lg.classify(lg.engine_licence("f5-tts-v1-base"))[0] == "deny")
+    check("openaudio/fish are non-commercial",
+          all(lg.classify(lg.engine_licence(e))[0] == "deny"
+              for e in ("openaudio-s1-mini", "fish-speech-1.5")))
+    check("an unlisted engine has no licence on record",
+          lg.engine_licence("bark-small") is None)
+
+    def genome(name, leaf=None, sources=None, vo=None, archive_vo=None):
+        """A minimal one-node genome under tmp/name, then scan it."""
+        node = tmp / name / "genomes" / "g" / "nodes" / "n"
+        (node / "leaves").mkdir(parents=True)
+        (node / "leaves" / "n-t0-a.yaml").write_text(leaf or "leaf: n-t0-a\n")
+        if sources:
+            (node / "audio-sources").mkdir()
+            (node / "audio-sources" / "SOURCES.md").write_text(sources)
+        for sub, body in (("clips", vo), ("clips/vo-archive", archive_vo)):
+            if body:
+                (node / sub).mkdir(parents=True, exist_ok=True)
+                (node / sub / "01-vo.json").write_text(body)
+        return lg.scan(tmp / name)
+
+    TABLE = ("| file | what it is | source | licence |\n|---|---|---|---|\n"
+             "| `x.ogg` | a thud | somewhere | %s |\n")
+
+    # 1. a clean node: CC0 audio, an MIT-weights engine, licence keys allowlisted
+    errors, _ = genome(
+        "clean",
+        leaf="leaf: n-t0-a\nvoice_engine: chatterbox-0.5B\nsources:\n- licence: CC0\n",
+        sources=TABLE % "**CC0**",
+        vo='{"engine": "chatterbox-0.5B", "lines": []}')
+    check("a publish-safe node passes the gate", errors == [])
+
+    # 2. non-commercial in the sound table — the F5 near-miss in asset form
+    errors, _ = genome("nc", sources=TABLE % "CC BY-NC 4.0")
+    check("an NC source is a violation", len(errors) == 1)
+    check("the NC violation names the file, the licence and the reason",
+          "SOURCES.md:3" in errors[0] and "CC BY-NC 4.0" in errors[0]
+          and "non-commercial" in errors[0])
+
+    # 3. share-alike: legal to use, fatal to a CC BY tree, so it must NOT pass
+    errors, _ = genome("sa", leaf="leaf: n-t0-a\nlicence: CC BY-SA 4.0\n")
+    check("a share-alike leaf is a violation", len(errors) == 1)
+    check("the SA violation explains the relicensing",
+          "share-alike" in errors[0] and "relicense" in errors[0])
+
+    # 4. an engine nobody has classified must be classified, not waved through
+    errors, _ = genome("unknown-engine", vo='{"engine": "bark-small", "lines": []}')
+    check("an unknown VO engine is a violation", len(errors) == 1)
+    check("the unknown-engine violation names engine and remedy",
+          "bark-small" in errors[0] and "MODEL_LICENCES" in errors[0])
+
+    # an f5 take kept in vo-archive is provenance (R6), not a shipped asset:
+    # advisory only, and it must still be SAID out loud
+    errors, advisories = genome("archived", archive_vo='{"engine": "f5-tts-v1-base", "lines": []}')
+    check("an archived NC take does not fail CI", errors == [])
+    check("but the archived NC take is reported", any("f5-tts" in a for a in advisories))
+
+    def tree(name, files):
+        """Scan a throwaway repo whose files are written at EXACTLY the paths
+        given. genome() above builds one fixed shape; the coverage rules can
+        only be tested by putting an asset where the real tree puts it —
+        takes/clips/, a dir nobody hard-coded, an archive."""
+        root = tmp / name
+        for rel, body in files.items():
+            p = root / rel
+            p.parent.mkdir(parents=True, exist_ok=True)
+            p.write_text(body)
+        return lg.scan(root)
+
+    N = "genomes/g/nodes/n"
+    SVD = "stabilityai/stable-video-diffusion-img2vid-xt"
+
+    # ---- hole 1: THE PICTURE WAS UNCHECKED ------------------------------
+    # v1 resolved only VO engines through the model table. A clip sidecar's
+    # model was compared against a short advisory list and otherwise ignored,
+    # so footage from any model shipped unchecked.
+    errors, _ = tree("pic-nc", {f"{N}/clips/01-a.meta.yaml":
+                                f"platform: kaggle-free-gpu\nmodel: 'still: Lykon/dreamshaper-8 "
+                                f"(+IP-Adapter 0.35) | motion: {SVD}'\n"})
+    check("an NC video model in a shipping sidecar is a violation", len(errors) == 1)
+    check("the picture violation names the model and the NC reason",
+          "stable-video-diffusion" in errors[0] and "non-commercial" in errors[0])
+    # the compound field is the trap: 'cc-by-nc' was fixed by checking deny
+    # first, but 'still: ALLOWED | motion: DENIED' needed the resolver to stop
+    # returning one longest match. dreamshaper is allowlisted; SVD is not.
+    check("a compound 'still: X | motion: Y' is judged by BOTH models",
+          lg.classify(lg.engine_licence(f"still: Lykon/dreamshaper-8 | motion: {SVD}"))[0] == "deny")
+    check("model_licences returns every model a field names",
+          len(lg.model_licences(f"still: Lykon/dreamshaper-8 | motion: {SVD}")) >= 2)
+    errors, _ = tree("pic-unknown", {f"{N}/clips/01-a.meta.yaml":
+                                     "platform: kaggle-free-gpu\nmodel: 'motion: SomeCorp/nightreel-2'\n"})
+    check("an unclassified video model is a violation, not a silent pass",
+          len(errors) == 1 and "MODEL_LICENCES" in errors[0])
+    # the picture's version of a deleted key: a sidecar that answers nothing
+    errors, _ = tree("pic-empty", {f"{N}/clips/01-a.meta.yaml": "prompt: a mug falls\nseed: 7\n"})
+    check("a clip sidecar with no model/platform at all is a violation", len(errors) == 1)
+    errors, _ = tree("pic-orphan", {f"{N}/clips/01-a.mp4": "not really an mp4"})
+    check("footage with no sidecar and no leaf record is a violation",
+          len(errors) == 1 and "no provenance" in errors[0])
+    # and no false positive on a slated beat: there is no asset to license
+    errors, _ = tree("pic-slate", {f"{N}/leaves/n-t3-a.yaml":
+                                   "leaf: n-t3-a\nsources:\n- beat: 1\n  clip: slate (no footage yet)\n"
+                                   "  platform: none\n  model: none\n"})
+    check("a slated beat needs no licence — there is no asset", errors == [])
+
+    # ---- hole 2: ONE DELETED KEY DEFEATED BOTH LAYERS -------------------
+    errors, advisories = tree("vo-gone", {f"{N}/clips/01-vo.json": '{"lines": []}'})
+    check("a shipping VO manifest with 'engine' DELETED is a violation", len(errors) == 1)
+    check("the deleted-key violation says absence is not a note",
+          "no provenance" in errors[0] and "not a note" in errors[0])
+    errors, advisories = tree("vo-gone-archived", {f"{N}/clips/vo-archive/01-vo.json": '{"lines": []}'})
+    check("the same manifest in vo-archive/ is advisory (not served, not globbed)",
+          errors == [] and len(advisories) == 1)
+    # the third way to delete a field: keep it, point it at nothing
+    errors, _ = tree("vo-pointer", {f"{N}/leaves/n-t3-a.yaml":
+                                    "leaf: n-t3-a\nmodel: per-beat — see sources\n"})
+    check("'see sources' with no sources is a violation, not a delegation",
+          len(errors) == 1 and "points at nothing" in errors[0])
+    errors, _ = tree("vo-pointer-ok", {f"{N}/leaves/n-t3-a.yaml":
+                                       "leaf: n-t3-a\nmodel: per-beat — see sources\nsources:\n"
+                                       "- beat: 1\n  clip: 01-a.mp4\n  platform: alibaba-model-studio\n"})
+    check("...and the same pointer over real records still passes", errors == [])
+
+    # ---- hole 3: SCAN COVERAGE WAS ONE HARD-CODED GLOB ------------------
+    # <node>/clips/*-vo.json was the only VO path v1 walked, yet render_t3
+    # accepts --clips <ANY dir> and build_site publishes takes/clips/ verbatim.
+    NC_VO = '{"engine": "f5-tts-v1-base", "lines": []}'
+    for i, (label, rel) in enumerate((("takes/clips", f"{N}/takes/clips/01-vo.json"),
+                                      ("a dir nobody hard-coded", f"{N}/renders/01-vo.json"),
+                                      ("a renamed manifest", f"{N}/clips/take-final.json"))):
+        errors, _ = tree(f"cov-vo-{i}", {rel: NC_VO})
+        check(f"an NC VO manifest in {label} is a violation", len(errors) == 1)
+    errors, _ = tree("cov-takes-sidecar", {f"{N}/takes/clips/01-a.meta.yaml": "platform: pixverse-web\n"})
+    check("a sidecar in takes/clips (build_site publishes it verbatim) is scanned",
+          len(errors) == 1 and "pixverse" in errors[0])
+    errors, advisories = tree("cov-archive", {f"{N}/clips/footage-archive/01-a.meta.yaml":
+                                              "platform: pixverse-web\n"})
+    check("only an explicit archive lowers scrutiny — and never to silence",
+          errors == [] and any("pixverse" in a for a in advisories))
+    # audio coverage from both sides: an unlisted file, and a cue with no row
+    errors, _ = tree("cov-audio", {f"{N}/audio-sources/SOURCES.md": TABLE % "**CC0**",
+                                   f"{N}/audio-sources/y.wav": "RIFF"})
+    check("a recorded sound with no row in SOURCES.md is a violation",
+          len(errors) == 1 and "no row" in errors[0])
+    errors, _ = tree("cov-cue", {f"{N}/audio-sources/SOURCES.md": TABLE % "**CC0**",
+                                 f"{N}/audio-sources/x.ogg": "OggS",
+                                 f"{N}/clips/sound.yaml":
+                                 f"events:\n  - {{beat: 1, sfx: thud, file: {N}/audio-sources/z.ogg}}\n"})
+    check("a sound cue naming a file with no licence row is a violation",
+          len(errors) == 1 and "z.ogg" in errors[0])
+
+    # ---- hole 4: THE ADVISORY WAS JUSTIFIED ON A FALSE PREMISE ----------
+    # v1 called SVD/LTX advisory because they were "already on disk in
+    # superseded takes". They are not: 15 of 16 SVD sidecars are in
+    # nodes/001-capability-inventory/clips/, the dir render_t3 assembles from.
+    # Re-derived from the licences themselves, SVD is non-commercial and LTXV's
+    # custom terms are unread — a violation and an unknown, not two advisories.
+    check("SVD's weights licence is non-commercial",
+          lg.classify(lg.MODEL_LICENCES["stable-video-diffusion"])[0] == "deny")
+    check("LTXV's custom terms are unknown, which is a violation not a shrug",
+          lg.classify(lg.MODEL_LICENCES["ltx-video"])[0] == "unknown")
+    errors, advisories = tree("svd-ships", {f"{N}/clips/01-a.meta.yaml": f"model: {SVD}\n"})
+    check("shipping SVD footage FAILS the gate, it is not warned about",
+          len(errors) == 1 and advisories == [])
+    check("no ADVISORY_MODELS escape hatch survives", not hasattr(lg, "ADVISORY_MODELS"))
+    # the same downgrade in ToS form: a free tier that forbids commercial use
+    check("a personal-use-only free tier is denied like any NC licence",
+          lg.classify(lg.MODEL_LICENCES["pixverse"])[0] == "deny")
+
+    # ---- hole 5: json GOT v1's NARROW TREATMENT WHILE yaml GOT THE SWEEP ----
+    # scan_vo_manifest read exactly one key, data['engine']. So hole 1 survived
+    # inside the other file format: a manifest could name a non-commercial
+    # PICTURE model, or carry an NC licence key outright, and be waved through
+    # because its VOICE engine was fine.
+    errors, _ = tree("json-model", {f"{N}/clips/01-vo.json":
+                                    '{"engine": "chatterbox-0.5B", "model": "PixVerse V6", "lines": []}'})
+    check("an NC model beside a publish-safe engine in a manifest is a violation",
+          len(errors) == 1 and "pixverse" in errors[0])
+    errors, _ = tree("json-licence", {f"{N}/clips/01-vo.json":
+                                      '{"engine": "chatterbox-0.5B", "licence": "CC BY-NC 4.0"}'})
+    check("a licence key inside a json manifest is read like any other",
+          len(errors) == 1 and "non-commercial" in errors[0])
+    errors, _ = tree("json-nested", {f"{N}/clips/01-vo.json":
+                                     '{"engine": "chatterbox-0.5B", "lines": '
+                                     '[{"n": 1, "model": "fish-speech-1.5"}]}'})
+    check("provenance nested inside a manifest's lines[] is swept too",
+          len(errors) == 1 and "research-only" in errors[0])
+
+    # ---- hole 6: A POINTER SILENCED THE MODEL STANDING NEXT TO IT ---------
+    # POINTER matched as a fragment and returned before the model table was
+    # consulted, so three appended words bought silence.
+    errors, _ = tree("ptr-decorated", {f"{N}/clips/01-a.meta.yaml":
+                                       f"platform: kaggle-free-gpu\nmodel: '{SVD} — see sources'\n"})
+    check("'see sources' appended to an NC model does not silence it",
+          len(errors) == 1 and "stable-video-diffusion" in errors[0])
+    check("a pointer is honoured only when the value names no model",
+          lg.model_licences("per-beat — see sources") == []
+          and lg.model_licences(f"{SVD} — see sources") != [])
+
+    # ---- hole 7: ONLY .mp4 WAS A PICTURE, AND NOTHING WAS A SOUND ---------
+    # render_t3's find_audio muxes NN-*.{mp3,wav,m4a,aac,ogg} whether or not a
+    # manifest sits beside them, and build_site copies takes/clips/ with
+    # iterdir() — so the extension was never a filter on what ships. Not writing
+    # the manifest was the cheapest deletion of all: there was no key to delete.
+    errors, _ = tree("audio-orphan", {f"{N}/takes/clips/02-vo.mp3": "ID3"})
+    check("a shipping VO mp3 with no manifest at all is a violation",
+          len(errors) == 1 and "no provenance" in errors[0])
+    check("the audio violation names the manifest it wants",
+          "NN-vo.json" in errors[0])
+    errors, _ = tree("audio-ok", {f"{N}/clips/02-vo.mp3": "ID3",
+                                  f"{N}/clips/02-vo.json": '{"engine": "chatterbox-0.5B", "lines": []}'})
+    check("...and the same mp3 beside its manifest passes", errors == [])
+    errors, _ = tree("container-webm", {f"{N}/clips/01-a.webm": "webm",
+                                        f"{N}/takes/clips/02-b.mov": "mov"})
+    check("footage renamed .webm/.mov is still footage",
+          len(errors) == 2 and all("no provenance" in e for e in errors))
+    errors, advisories = tree("audio-archived", {f"{N}/clips/vo-archive/02-vo.mp3": "ID3"})
+    check("an archived take is not a shipping asset", errors == [])
+
+    # ---- hole 8: TWO EXTENSIONS WERE THE COVERAGE RULE --------------------
+    # '*.yaml' and the literal name '*.meta.yaml' were hard-coded, so saving the
+    # same sidecar as .yml escaped both the sweep and the must-declare rule.
+    errors, _ = tree("yml-sidecar", {f"{N}/clips/01-a.meta.yml": "platform: pixverse-web\n"})
+    check("a sidecar saved .yml is scanned like .yaml",
+          len(errors) == 1 and "pixverse" in errors[0])
+    errors, _ = tree("json-renamed-empty", {f"{N}/clips/take-final.json": '{"prompt": "a mug falls"}'})
+    check("a manifest renamed take-final.json must still declare provenance",
+          len(errors) == 1 and "not a note" in errors[0])
+    errors, _ = tree("stem-mismatch", {f"{N}/clips/take-final.yml": "prompt: a mug falls\nseed: 7\n",
+                                       f"{N}/clips/take-final.mp4": "mp4"})
+    check("a record that is not a sidecar does not provenance the clip beside it",
+          len(errors) == 1 and "no provenance" in errors[0])
+    # hole 2 spelled as an ADDITION rather than a deletion: a bare leaf row
+    check_named = {f"{N}/leaves/n-t3-a.yaml":
+                   "leaf: n-t3-a\nsources:\n- beat: 1\n  clip: 07-take.mp4\n",
+                   f"{N}/clips/07-take.mp4": "mp4"}
+    errors, _ = tree("leaf-launder", check_named)
+    check("a leaf row with no provenance of its own cannot launder a clip",
+          len(errors) == 1 and "no provenance" in errors[0])
+    check_named[f"{N}/leaves/n-t3-a.yaml"] += "  platform: alibaba-model-studio\n"
+    errors, _ = tree("leaf-launder-ok", check_named)
+    check("...and the same row with a real platform does provenance it", errors == [])
+
+    # and the real tree, which is a RATCHET, not a pass/fail. The gate's first
+    # full run (2026-08-01) found 46 violations, every one of them pre-existing
+    # and every one in node 001 — debt this gate discovered, not debt this test
+    # run created. Asserting `errors == []` would have left main red and, via
+    # pages.yml, undeployable, which punishes the next honest commit rather than
+    # the footage. So the COUNT is asserted instead: the classes stay printed in
+    # full, one NEW violation fails the suite, and the number may only go down.
+    # Never raise LICENCE_DEBT to make this green.
+    from lint_genome import LICENCE_DEBT
+    errors, _ = lg.scan(REPO)
+    if errors:
+        classes = {}
+        for e in errors:
+            where, _, msg = e.partition(": ")
+            key = re.sub(r"'[^']*'", "'…'", msg)[:96]
+            classes.setdefault(key, []).append(where)
+        print(f"      live tree: {len(errors)} violation(s) in {len(classes)} class(es)"
+              f" — pre-existing debt, ratchet {LICENCE_DEBT}")
+        for key, wheres in sorted(classes.items(), key=lambda kv: -len(kv[1])):
+            print(f"      × {len(wheres):2d}  {key}")
+            print(f"            e.g. {wheres[0]}")
+    check(f"the live tree adds nothing unpublishable (debt <= {LICENCE_DEBT})",
+          len(errors) <= LICENCE_DEBT)
+    if len(errors) < LICENCE_DEBT:
+        print(f"      ✓ debt fell to {len(errors)} — lower LICENCE_DEBT to match")
+
+
 def main():
     import tempfile
     test_beat_duration_from_timecode()
@@ -867,6 +1177,8 @@ def main():
         test_t3_sidecar_errors_named(Path(td))
     with tempfile.TemporaryDirectory() as td:
         test_t3_check_clips_dir(Path(td))
+    with tempfile.TemporaryDirectory() as td:
+        test_licence_gate(Path(td))
     print()
     if FAILURES:
         print(f"✗ {len(FAILURES)} failure(s): {', '.join(FAILURES)}")

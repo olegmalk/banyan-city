@@ -32,6 +32,7 @@ from pathlib import Path
 import markdown
 import yaml
 
+import licence_gate as lg
 from site_theme import THEME_CSS
 
 REPO = Path(__file__).resolve().parent.parent
@@ -334,6 +335,75 @@ def split_sections(md_text: str) -> list:
             buf.append(line)
     parts.append((head, "\n".join(buf).strip()))
     return parts
+
+
+# ------------------------------------------------------------ publish safety
+
+def publishable(f: Path) -> tuple:
+    """(ok, why) — may this take be copied onto the public site?
+
+    The shot board publishes `takes/clips/` wholesale (D11: the crowd can only
+    beat a take it can see), and for months that was a bare iterdir() with no
+    licence question asked. It is how `13-i-always-left.PIXVERSE.mp4` became a
+    downloadable file on banyan.city while DECISIONS.md D8 already recorded
+    PixVerse's free tier as personal-use-only — the decision was written down,
+    then the build published past it.
+
+    Asks licence_gate rather than carrying a blocklist, so a route classified
+    once is enforced everywhere. Records (sidecars, manifests) always travel:
+    withholding the provenance of a withheld clip would be the exact opposite
+    of the point.
+    """
+    if f.suffix.lower() in {".yaml", ".yml", ".json", ".md"}:
+        return True, ""
+    side = None
+    for ext in (".meta.yaml", ".meta.yml", ".json"):
+        cand = f.with_suffix(ext)
+        if cand.exists():
+            side = cand
+            break
+    if side is None:
+        return True, ""      # unprovenanced is the gate's finding, not the build's
+    try:
+        data = yaml.safe_load(side.read_text(encoding="utf-8")) or {}
+    except Exception:                                    # noqa: BLE001
+        return True, ""
+    if not isinstance(data, dict):
+        return True, ""
+    for key, value in data.items():
+        if key.lower() not in lg.PROVENANCE_KEYS:
+            continue
+        licence = lg.engine_licence(value)
+        if licence is None:
+            continue
+        verdict, why = lg.classify(licence)
+        if verdict != "allow":
+            # 'unknown' is withheld too, not waved through. Unknown means
+            # nobody has read the terms — and "we do not know whether we may
+            # publish this" is not a reason to publish it to the open web. It
+            # is a reason to read the licence, which is a human's job.
+            return False, f"{licence} — {why}"
+    return True, ""
+
+
+def withheld_note(rows: list) -> str:
+    """Why a take the board lists is not downloadable here.
+
+    Silence would read as a broken link. The take EXISTS, its recipe and
+    provenance are published beside it, and anyone may re-shoot the beat on a
+    publish-safe route — that is the fork invitation, stated instead of hidden.
+    """
+    lines = ["# Takes withheld from the public site", "",
+             "These takes exist in the repo and their provenance is published",
+             "beside them. They are not copied here because their licence",
+             "forbids it: the tree releases every episode under **CC BY 4.0**,",
+             "which grants commercial reuse a non-commercial input cannot.", "",
+             "Withholding is not a quality judgement. Any of these beats can be",
+             "re-shot on a publish-safe route ($0: `render_local.py`, Kaggle Wan,",
+             "`post_motion.py`) and a better take is welcome from anyone.", ""]
+    for name, why in sorted(rows):
+        lines.append(f"- **{name}** — {why}")
+    return "\n".join(lines) + "\n"
 
 
 # ---------------------------------------------------------------- media facts
@@ -1552,8 +1622,16 @@ def main() -> None:
                         shutil.copy(f, gdir / f"{media}-takes" / f.name)
                 if (node_dir / "takes" / "clips").is_dir():
                     (gdir / f"{media}-clips").mkdir(exist_ok=True)
+                    withheld = []
                     for f in (node_dir / "takes" / "clips").iterdir():
+                        ok, why = publishable(f)
+                        if not ok:
+                            withheld.append((f.name, why))
+                            continue
                         shutil.copy(f, gdir / f"{media}-clips" / f.name)
+                    if withheld:
+                        (gdir / f"{media}-clips" / "WITHHELD.md").write_text(
+                            withheld_note(withheld))
 
     total = sum(len(g["nodes"]) for g in genomes)
     posters = sum(1 for v in _POSTERS.values() if v)

@@ -1,48 +1,49 @@
 {
- "cast": "voices.yaml",
- "lines": [
-  {
-   "who": "MAGISTRATE",
-   "text": "Shade. Founded yesterday. Structures: one-ish \u2014 I'll speak",
-   "start": 0.0,
-   "end": 3.392
-  },
-  {
-   "who": "VO",
-   "text": "to him about that. Water: \"mended itself\" \u2014 him too. Population: three.",
-   "start": 3.672,
-   "end": 8.173
-  },
-  {
-   "who": "VO",
-   "text": "Occupation of resident number three: (beat) \u2014 \"answers questions.\"",
-   "start": 8.453,
-   "end": 12.315
-  },
-  {
-   "who": "MAGISTRATE",
-   "text": "The assessor is thorough. So: either he is wrong, or the sky",
-   "start": 12.595,
-   "end": 15.773
-  },
-  {
-   "who": "VO",
-   "text": "is. We'll know in four minutes.",
-   "start": 16.053,
-   "end": 18.272
-  },
-  {
-   "who": "VO",
-   "text": "\u2026She's not here to judge us. She's here to reconcile us. Ledger",
-   "start": 18.552,
-   "end": 22.648
-  },
-  {
-   "who": "VO",
-   "text": "versus production. I used to be this woman. At 3 a.m. In a worse robe.",
-   "start": 22.928,
-   "end": 27.877
-  }
- ],
- "total_s": 28.157
+  "engine": "kokoro-onnx (kokoro-82M)",
+  "cast": "voices.yaml",
+  "lines": [
+    {
+      "who": "MAGISTRATE",
+      "text": "Shade. Founded yesterday. Structures: one-ish \u2014 I'll speak",
+      "start": 0.0,
+      "end": 3.392
+    },
+    {
+      "who": "VO",
+      "text": "to him about that. Water: \"mended itself\" \u2014 him too. Population: three.",
+      "start": 3.672,
+      "end": 8.173
+    },
+    {
+      "who": "VO",
+      "text": "Occupation of resident number three: (beat) \u2014 \"answers questions.\"",
+      "start": 8.453,
+      "end": 12.315
+    },
+    {
+      "who": "MAGISTRATE",
+      "text": "The assessor is thorough. So: either he is wrong, or the sky",
+      "start": 12.595,
+      "end": 15.773
+    },
+    {
+      "who": "VO",
+      "text": "is. We'll know in four minutes.",
+      "start": 16.053,
+      "end": 18.272
+    },
+    {
+      "who": "VO",
+      "text": "\u2026She's not here to judge us. She's here to reconcile us. Ledger",
+      "start": 18.552,
+      "end": 22.648
+    },
+    {
+      "who": "VO",
+      "text": "versus production. I used to be this woman. At 3 a.m. In a worse robe.",
+      "start": 22.928,
+      "end": 27.877
+    }
+  ],
+  "total_s": 28.157
 }
