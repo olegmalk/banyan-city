@@ -312,6 +312,36 @@ def stage_render(a) -> int:
     return 0
 
 
+def gpu_busy() -> str:
+    """Another render already on this GPU? Returns a human sentence, or "".
+
+    The single-instance lock guards WORKER against WORKER. It does nothing about a
+    human running this script directly while a worker is running — which is
+    exactly what happened on 2026-08-01: a hand-run AnimeGen diagnostic and a
+    worker retrying the same task, two 27B loads aimed at one 24GB card. The
+    contention that cost four hours in the morning, reappearing through the door
+    the lock does not cover.
+
+    Checked here, in the renderer, because this is the one place BOTH routes pass
+    through. Advisory rather than fatal: a deliberate second render is the user's
+    call, and refusing outright would break the very diagnostic that found this.
+    """
+    try:
+        import torch
+        if not torch.cuda.is_available():
+            return ""
+        free, total = torch.cuda.mem_get_info()
+        used_gb = (total - free) / 1e9
+        if used_gb > 2.0:
+            return (f"{used_gb:.1f}GB of {total/1e9:.0f}GB VRAM is ALREADY IN USE "
+                    f"before we load anything — another render is probably running. "
+                    f"Two big models on one card will OOM or halve each other's "
+                    f"speed. Close the other one unless this is deliberate.")
+    except Exception:                                    # noqa: BLE001
+        pass
+    return ""
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--stage", choices=["encode", "render", "simple"], required=True)
@@ -344,6 +374,9 @@ def main() -> int:
     # are the ones whose licence we have actually read.
     a.model = MODELS.get(a.model, a.model)
     print(f"model: {a.model}", flush=True)
+    busy = gpu_busy()
+    if busy:
+        print(f"!! {busy}", flush=True)
     if a.stage == "encode":
         return stage_encode(a)
     return stage_simple(a) if a.stage == "simple" else stage_render(a)
