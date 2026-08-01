@@ -163,15 +163,18 @@ tasks:
   worker: rtx5090
   video: true
   video_model: animegen
-  quantise: 8bit
   node: 001-capability-inventory
   beats: 12
-  motion: 'true to the frame: only what would actually move in this shot - gentle
-    camera drift, no new subjects, no scene change'
-  size: 704x1280
+  # AnimeGen's own card: motion-only prompt ("blink her eyes."), 4 steps at
+  # guidance 1.0 via the Lightning LoRAs, 16fps, 832x480 or 1280x720. The steps
+  # and guidance below are overridden in wan_i2v for this model — left here so the
+  # queue is honest about what it asked for. 480x832 IS a trained size for A14B
+  # (unlike the 5B, where it was off-distribution), so this is the cheap tier.
+  motion: 'gentle drift; only what would really move here'
+  size: 480x832
   seconds: 3.0
-  steps: 50
-  guidance: 5.0
+  steps: 4
+  guidance: 1.0
   seed_base: 20260731
 # ---- 3. the A14B prefetch, last: download only, no install decision ----------
 # Already in flight when this file was rewritten; kept here so a restart can
