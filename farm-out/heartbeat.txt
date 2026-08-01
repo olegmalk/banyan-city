@@ -137,3 +137,4 @@
 02:19:39Z VIDEO_DEPS_OK 2.11.0+cu128 0.39.0 True
 02:19:40Z VIDEO_RENDERING batch of 3 (one model load)
 02:19:44Z FAIL task=vid-lic-b-1785545700
+02:19:45Z STARTED task=vid-720p-c-1785545700 beats=3,6,7 on cuda
