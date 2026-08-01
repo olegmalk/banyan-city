@@ -30,7 +30,27 @@ import sys
 import time
 from pathlib import Path
 
-MODEL = "Wan-AI/Wan2.2-TI2V-5B-Diffusers"
+DEFAULT_MODEL = "Wan-AI/Wan2.2-TI2V-5B-Diffusers"
+# Publish-safe alternatives, verified 2026-08-01 against fetched primary sources
+# (see drops/MODEL-RESEARCH-2026-08-01.md). Keyed by short name so a queue entry
+# can say `video_model: animegen` instead of carrying a repo id around.
+#
+# NOT a list of "models that look good" — a list of models whose LICENCE was read
+# and quoted. LTX and HunyuanVideo are deliberately absent: LTX's weights ship
+# under three different licences by version (the 2B is research-only) while its
+# GitHub LICENSE is a plain Apache-2.0 that covers CODE ONLY, and Hunyuan's
+# community licence excludes the EU, UK and South Korea from its permitted
+# territory — we would breach it by publishing at all.
+MODELS = {
+    "ti2v-5b":  "Wan-AI/Wan2.2-TI2V-5B-Diffusers",   # incumbent, Apache-2.0
+    "animegen": "aidealab/AnimeGen-I2V",             # Apache-2.0, anime finetune
+                                                     # of Wan 2.2: force-prepends
+                                                     # "Japanese anime style" and
+                                                     # negatives out 3d/cg/photo,
+                                                     # so it fails TOWARD anime —
+                                                     # our named drift problem
+}
+MODEL = DEFAULT_MODEL
 # Wan's own default negative prompt (Chinese, from the official repo): it
 # measurably suppresses colour clipping, static frames and mangled limbs.
 NEG = ("色调艳丽, 过曝, 静态, 细节模糊不清, 字幕, 风格, 作品, 画作, 画面, 静止, 整体发灰, "
@@ -46,7 +66,7 @@ def stage_encode(a) -> int:
 
     # transformer/vae stay unloaded — this process must never hold them
     pipe = WanImageToVideoPipeline.from_pretrained(
-        MODEL, transformer=None, vae=None, image_encoder=None,
+        a.model, transformer=None, vae=None, image_encoder=None,
         torch_dtype=torch.bfloat16)
     with torch.no_grad():
         pos, neg = pipe.encode_prompt(prompt=a.prompt, negative_prompt=NEG,
@@ -83,7 +103,7 @@ def stage_simple(a) -> int:
     # the approved frame went unused (2026-07-31 — the warning I had built in is
     # what caught it). Name the image-to-video class explicitly, always.
     from diffusers import WanImageToVideoPipeline
-    pipe = WanImageToVideoPipeline.from_pretrained(MODEL, torch_dtype=torch.bfloat16)
+    pipe = WanImageToVideoPipeline.from_pretrained(a.model, torch_dtype=torch.bfloat16)
     print(f"pipeline class: {type(pipe).__name__} (forced image-to-video)")
     pipe.to("cuda")
     import inspect
@@ -126,7 +146,7 @@ def stage_render(a) -> int:
     frames = frames - (frames % 4) + 1          # Wan's 4n+1 temporal grid
 
     pipe = WanImageToVideoPipeline.from_pretrained(
-        MODEL, text_encoder=None, torch_dtype=torch.bfloat16)
+        a.model, text_encoder=None, torch_dtype=torch.bfloat16)
     # cpu-offload streams every module through system RAM on every step, which
     # is what made a 12GB/16GB machine take two hours for one draft clip. A
     # card with room for the model should just hold it.
@@ -181,9 +201,16 @@ def main() -> int:
     ap.add_argument("--guidance", type=float, default=5.0,
                     help="cfg; higher follows the prompt harder, lower drifts")
     ap.add_argument("--size", default="480x832", help="WxH (Wan bucket)")
+    ap.add_argument("--model", default="ti2v-5b",
+                    help=f"short name {sorted(MODELS)} or a full HF repo id")
     ap.add_argument("--seed", type=int, default=20260731)
     ap.add_argument("--fps", type=int, default=24)
     a = ap.parse_args()
+    # short name -> repo id; anything unrecognised is passed through as a repo id
+    # so a one-off experiment does not need a code change, but the CURATED names
+    # are the ones whose licence we have actually read.
+    a.model = MODELS.get(a.model, a.model)
+    print(f"model: {a.model}", flush=True)
     if a.stage == "encode":
         return stage_encode(a)
     return stage_simple(a) if a.stage == "simple" else stage_render(a)

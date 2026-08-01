@@ -109,6 +109,34 @@ tasks:
   steps: 50
   guidance: 5.0
   seed_base: 20260731
+# ---- 4. SHOOT-OUT CANARY: AnimeGen-I2V on the hardest beat ------------------
+# One clip, not three. This project's own rule after several expensive batches:
+# one clip per change before any batch. First run also downloads ~15GB of weights.
+#
+# Beat 4 on purpose — the fall. From a single still the model must invent implied
+# body motion, a falling object and liquid, with no face to carry the shot. It is
+# where a model either works or turns to mush, so one clip tells us more than
+# three pretty ones would. Same still, same prompt, same seed as the Wan take, so
+# the ONLY variable is the model.
+#
+# AnimeGen is Apache-2.0 (LICENSE verified byte-identical to canonical), an anime
+# finetune of Wan 2.2 that force-prepends "Japanese anime style" and negatives out
+# 3d/cg/photo — it fails TOWARD anime, which is the drift direction we want after
+# v2 was killed for being unreadable.
+- id: shoot-animegen-b4-1785570000
+  worker: rtx5090
+  video: true
+  video_model: animegen
+  node: 001-capability-inventory
+  beats: 4
+  motion: 'true to the frame: only what would actually move in this shot - drifting
+    air, screen flicker, a trembling leaf, light through soil - gentle camera drift,
+    no new subjects, no scene change'
+  size: 704x1280
+  seconds: 3.0
+  steps: 50
+  guidance: 5.0
+  seed_base: 20260731
 # ---- 3. the A14B prefetch, last: download only, no install decision ----------
 # Already in flight when this file was rewritten; kept here so a restart can
 # recover it as done rather than starting the 25GB pull again.

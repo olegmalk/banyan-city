@@ -89,6 +89,40 @@ def _stream(cmd, courier, timeout, env):
                                        "".join(err))
 
 
+MODEL_LICENCE = {
+    "ti2v-5b":  ("Wan-AI/Wan2.2-TI2V-5B-Diffusers", "Apache-2.0"),
+    "animegen": ("aidealab/AnimeGen-I2V", "Apache-2.0"),
+}
+
+
+def write_sidecar(clip, vmodel, task, beat, seconds, steps, size):
+    """A §7.2 provenance sidecar beside every generated clip.
+
+    Video clips have been landing on the courier branch as bare mp4s, with the
+    model recorded nowhere — licence_gate then flags them as "footage ships with
+    no provenance", and it is right to. The renderer is the only thing that knows
+    what it just ran, so it is the only thing that can say so honestly.
+
+    Licence is written from a table keyed on the SHORT name, not guessed from the
+    repo id: an unrecognised model gets "UNVERIFIED" rather than a hopeful
+    Apache-2.0, because a wrong allow is the direction that publishes things.
+    """
+    repo, lic = MODEL_LICENCE.get(vmodel, (vmodel, "UNVERIFIED — licence not read"))
+    Path(str(clip) + ".meta.yaml").write_text(
+        "# Shot provenance (7.2) — written by video_task at render time\n"
+        f"platform: local-gpu ({task.get('worker', 'unknown')})\n"
+        f"model: {repo}\n"
+        f"model_licence: {lic}\n"
+        f"shot_beat: {beat}\n"
+        f"size: {size}\n"
+        f"seconds: {seconds}\n"
+        f"steps: {steps}\n"
+        f"guidance: {task.get('guidance', 5.0)}\n"
+        f"seed: {int(task.get('seed_base', 20260731)) + beat}\n"
+        f"task: {task.get('id')}\n"
+        "cost_usd: 0\n", encoding="utf-8")
+
+
 def _run(cmd, courier, stage, timeout=None, retry=False):
     # utf-8 on the child's stdout: Windows consoles default to cp1252, and a
     # single non-ASCII character in a SUCCESS message killed a 25-minute
@@ -232,10 +266,13 @@ def run(task: dict, courier, node_dir: Path) -> None:
         if jobs:
             jf = ROOT / f"jobs-{task.get('id')}.json"
             jf.write_text(json.dumps(jobs), encoding="utf-8")
-            courier.mark(f"VIDEO_RENDERING batch of {len(jobs)} (one model load)")
+            vmodel = str(task.get("video_model", "ti2v-5b"))
+            courier.mark(f"VIDEO_RENDERING batch of {len(jobs)} on {vmodel} "
+                         f"(one model load)")
             _run([str(PY), str(REPO / "pipeline" / "wan_i2v.py"), "--stage", "simple",
                   "--embeds", str(ROOT / "unused.pt"), "--jobs", str(jf),
                   "--seconds", str(seconds), "--steps", str(steps), "--size", size,
+                  "--model", vmodel,
                   "--guidance", str(task.get("guidance", 5.0))],
                  courier, f"batch {task.get('id')}", timeout=14400, retry=True)
             jf.unlink(missing_ok=True)
@@ -243,6 +280,7 @@ def run(task: dict, courier, node_dir: Path) -> None:
             for num, o in outs:
                 if o.exists() and o.stat().st_size > 10_000:
                     made += 1
+                    write_sidecar(o, vmodel, task, num, seconds, steps, size)
                     courier.mark(f"VIDEO_CLIP_OK beat={num:02d} {o.stat().st_size//1024}KB")
                 else:
                     courier.mark(f"VIDEO_CLIP_EMPTY beat={num:02d}")
