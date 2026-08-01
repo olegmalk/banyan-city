@@ -247,12 +247,16 @@ def finished_tasks(courier: Courier) -> set:
     # while the licence-clean re-render queued behind it starved (the exact
     # shape of the 8-clip 704x1280 batch in flight on 2026-08-01).
     # One retry, then leave it alone and let the queue move.
+    # SILENT. This used to print "giving up so the queue can move" for every task
+    # that had ever failed twice — including tasks deleted from the queue hours
+    # earlier, on every single startup, forever. Alarming messages about work
+    # nobody is waiting on train you to ignore the log, which is the opposite of
+    # what a heartbeat is for. The skip is still recorded; the WARNING now happens
+    # in the task loop, where we know the task is actually queued (and once).
     for tid, n in failures.items():
-        if n >= MAX_ATTEMPTS and tid not in done:
+        if n >= MAX_ATTEMPTS:
             done.add(tid)
-            print(f"skipping {tid}: failed {n}x — giving up so the queue can "
-                  f"move. Clear it from {QUEUE} or fix the cause.", flush=True)
-    return done
+    return done, {tid: n for tid, n in failures.items() if n >= MAX_ATTEMPTS}
 
 
 def render_task(task: dict, courier: Courier, device: str, dtype) -> None:
@@ -368,12 +372,19 @@ def main() -> int:
     device, dtype = pick_device()
     courier = Courier(a.name)
     print(f"farm worker '{a.name}' on {device} — polling {QUEUE} every {POLL_SECONDS}s")
-    done_ids = finished_tasks(courier)
+    done_ids, gave_up = finished_tasks(courier)
     if done_ids:
-        print(f"already finished (from heartbeat): {', '.join(sorted(done_ids))}")
+        print(f"{len(done_ids)} task(s) already done or abandoned — recovered from "
+              f"heartbeat, will not re-run")
+    warned = set()
     while True:
         for task in queue_head():
             tid = str(task.get("id"))
+            if tid in gave_up and tid not in warned:
+                warned.add(tid)
+                print(f"!! {tid} is QUEUED but failed {gave_up[tid]}x already — "
+                      f"skipping it so the rest of the queue can run. Fix the "
+                      f"cause or remove it from {QUEUE}.", flush=True)
             if tid in done_ids or task.get("worker", "any") not in ("any", a.name):
                 continue
             # render from CURRENT main, not whatever checkout the machine was
