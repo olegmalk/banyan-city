@@ -257,3 +257,60 @@ Traceback (most recent call last):
   File "C:\banyan-farm\banyan-city\pipeline\video_task.py", line 62, in _run
     text=True, errors="replace", bufsize=1, env=env)
 RuntimeError: batch vid-720p-c-1785545700 failed (exit 1)
+
+$ C:\banyan-video\venv\Scripts\python.exe C:\banyan-farm\banyan-city\pipeline\wan_i2v.py --stage simple --embeds C:\banyan-video\unused.pt…
+directs(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\banyan-video\venv\Lib\site-packages\httpx\_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\banyan-video\venv\Lib\site-packages\httpx\_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\banyan-video\venv\Lib\site-packages\httpx\_transports\default.py", line 249, in handle_request
+    with map_httpcore_exceptions():
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\artvn\AppData\Local\Programs\Python\Python312\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "C:\banyan-video\venv\Lib\site-packages\httpx\_transports\default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\banyan-farm\banyan-city\pipeline\wan_i2v.py", line 193, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\banyan-farm\banyan-city\pipeline\wan_i2v.py", line 189, in main
+    return stage_simple(a) if a.stage == "simple" else stage_render(a)
+           ^^^^^^^^^^^^^^^
+  File "C:\banyan-farm\banyan-city\pipeline\wan_i2v.py", line 86, in stage_simple
+    pipe = WanImageToVideoPipeline.from_pretrained(MODEL, torch_dtype=torch.bfloat16)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\banyan-video\venv\Lib\site-packages\huggingface_hub\utils\_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\banyan-video\venv\Lib\site-packages\diffusers\pipelines\pipeline_utils.py", line 860, in from_pretrained
+    cached_folder = cls.download(
+                    ^^^^^^^^^^^^^
+  File "C:\banyan-video\venv\Lib\site-packages\huggingface_hub\utils\_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\banyan-video\venv\Lib\site-packages\diffusers\pipelines\pipeline_utils.py", line 1830, in download
+    raise EnvironmentError(
+OSError: Cannot load model Wan-AI/Wan2.2-TI2V-5B-Diffusers: model is not cached locally and an error occurred while trying to fetch metadata from the Hub. Please check out the root cause in the stacktrace above.
+
+Traceback (most recent call last):
+  File "C:\banyan-farm\banyan-city\pipeline\farm_worker.py", line 251, in main
+    # a task may carry its own prompt (world-reference renders anchored to an
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\banyan-farm\banyan-city\pipeline\farm_worker.py", line 121, in render_task
+    def acquire(name: str, force: bool = False) -> Path:
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\banyan-farm\banyan-city\pipeline\video_task.py", line 178, in run
+    repo = str(spec["repo"])
+        ^^^^^^^^^^^^^^^^^^^^
+  File "C:\banyan-farm\banyan-city\pipeline\video_task.py", line 62, in _run
+    text=True, errors="replace", bufsize=1, env=env)
+RuntimeError: batch vid-720p-d-1785545700 failed (exit 1)
