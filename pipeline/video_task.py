@@ -244,6 +244,18 @@ def ensure_stack(courier) -> None:
                      courier, "probe")
     courier.mark(f"VIDEO_DEPS_OK {probe.stdout.strip()}")
 
+    # TOP-UP, outside the first-run block. The install above runs only when torch
+    # is absent, so a machine set up before a package was needed never gets it —
+    # and finds out at the END of a 30GB model download. peft is exactly that: it
+    # arrived with AnimeGen's LoRAs, long after the 5090's venv was built. Cheap
+    # to check (pip is a no-op when satisfied), and it fails here rather than an
+    # hour in.
+    for mod, spec in (("peft", "peft"),):
+        if not _have(PY, mod):
+            courier.mark(f"VIDEO_DEPS_TOPUP {spec}")
+            _run([str(PY), "-m", "pip", "install", "-q", "--retries", "30",
+                  "--timeout", "120", spec], courier, f"install {spec}", timeout=1800)
+
 
 def gpu_vram_gb() -> float:
     """Total VRAM on device 0, asked of the video venv (this process has no torch)."""
