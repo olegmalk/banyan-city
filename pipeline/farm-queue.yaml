@@ -1,3 +1,18 @@
+# RE-QUEUED 2026-08-01 07:45Z. Fresh ids on purpose.
+#
+# The previous run of these exact tasks failed in ten seconds each, all five,
+# because the 5090 LOST ITS NETWORK around 01:54-02:20:
+#   OSError: Cannot load model Wan-AI/Wan2.2-TI2V-5B-Diffusers: model is not
+#   cached locally and an error occurred while trying to fetch metadata
+# Same outage silently ate every `git push` for six hours, so from outside the
+# machine looked hung while it was actually failing fast and reporting into a
+# void. Network is back (a manual push went through at 07:40Z).
+#
+# Nothing is wrong with the tasks, so they are re-queued unchanged apart from
+# their ids. New ids are REQUIRED: a task that failed is added to the worker's
+# in-session done set and never retried, and with an empty queue the worker
+# never reaches the code-sync step either — so it would poll forever without
+# picking up either these tasks or any fix.
 # REBUILT 2026-08-01 00:55Z, after the monolithic batch failed.
 #
 # WHAT HAPPENED. `vid-720p-all` asked for 8 clips at 704x1280 / 50 steps in one
@@ -24,7 +39,7 @@
 # unblock shipping; the other eight only improve what already ships.
 tasks:
 # ---- 1. the five that make episode 1 publishable (Wan 2.2, Apache-2.0) -------
-- id: vid-lic-a-1785545700
+- id: vid-lic-a-1785567300
   worker: rtx5090
   video: true
   node: 001-capability-inventory
@@ -37,7 +52,7 @@ tasks:
   steps: 50
   guidance: 5.0
   seed_base: 20260731
-- id: vid-lic-b-1785545700
+- id: vid-lic-b-1785567300
   worker: rtx5090
   video: true
   node: 001-capability-inventory
@@ -55,7 +70,7 @@ tasks:
 # config lists 704x1280 as the ONLY supported size for TI2V-5B, and 50 steps is
 # its official default — so these were rendered outside the model's envelope at
 # 40% of its step count. A bug fix, not an experiment; just not urgent.
-- id: vid-720p-c-1785545700
+- id: vid-720p-c-1785567300
   worker: rtx5090
   video: true
   node: 001-capability-inventory
@@ -68,7 +83,7 @@ tasks:
   steps: 50
   guidance: 5.0
   seed_base: 20260731
-- id: vid-720p-d-1785545700
+- id: vid-720p-d-1785567300
   worker: rtx5090
   video: true
   node: 001-capability-inventory
@@ -81,7 +96,7 @@ tasks:
   steps: 50
   guidance: 5.0
   seed_base: 20260731
-- id: vid-720p-e-1785545700
+- id: vid-720p-e-1785567300
   worker: rtx5090
   video: true
   node: 001-capability-inventory

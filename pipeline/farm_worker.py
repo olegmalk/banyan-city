@@ -61,9 +61,30 @@ def sh(*args, check=True, capture=False):
                           capture_output=capture, text=True)
 
 
+_stale_fetches = 0
+
+
 def queue_head():
-    """The queue as of origin/main, without touching the working tree."""
-    sh("git", "fetch", "-q", "origin", "main", check=False)
+    """The queue as of origin/main, without touching the working tree.
+
+    The fetch used to run `-q ... check=False`. When it failed, this read a
+    STALE origin/main and returned whatever the queue said the last time the
+    network worked — and since every task in that old queue was already in the
+    worker's done set, the console printed "queue empty for me" and the machine
+    idled for hours next to five queued jobs (2026-08-01, after the 5090's
+    network dropped). "I can't see the queue" and "the queue is empty" are
+    opposite facts and they looked identical.
+    """
+    global _stale_fetches
+    r = sh("git", "fetch", "origin", "main", check=False, capture=True)
+    if r.returncode:
+        _stale_fetches += 1
+        print(f"!! FETCH FAILED ({_stale_fetches} in a row) — the queue below is "
+              f"STALE, not empty; this machine cannot see new work.\n"
+              f"   {(r.stderr or r.stdout or '').strip()[-300:]}", flush=True)
+    elif _stale_fetches:
+        print(f"fetch recovered after {_stale_fetches} failure(s)", flush=True)
+        _stale_fetches = 0
     r = sh("git", "show", f"origin/main:{QUEUE}", check=False, capture=True)
     if r.returncode != 0:
         return []
@@ -87,6 +108,7 @@ class Courier:
         self.branch = f"farm-results-{name}"
         self.out = REPO / "farm-out"
         self.log = []
+        self.unpushed = 0
 
     def mark(self, stage: str):
         self.out.mkdir(exist_ok=True)
@@ -104,7 +126,22 @@ class Courier:
         sh("git", "checkout", "-qB", self.branch, check=False)
         sh("git", "add", "-A", str(self.out), check=False)
         sh("git", "commit", "-qm", f"hb: {stage}", check=False)
-        sh("git", "push", "-qf", "origin", self.branch, check=False)
+        # The push is the ONLY thing that makes any of this visible, and it ran
+        # with its error suppressed AND -q. On 2026-08-01 the 5090 rendered its
+        # way through the whole queue — "7 task(s) done this session" — while
+        # GitHub received nothing for nearly six hours. From outside it looked
+        # like a hung machine; the work was on disk the whole time. A courier
+        # that cannot deliver has to SAY SO, or the heartbeat is theatre.
+        r = sh("git", "push", "-f", "origin", self.branch,
+               check=False, capture=True)
+        if r.returncode:
+            self.unpushed += 1
+            print(f"!! PUSH FAILED ({self.unpushed} in a row) — results are on "
+                  f"local disk only, in {self.out}\n"
+                  f"   {(r.stderr or r.stdout or '').strip()[-400:]}", flush=True)
+        elif self.unpushed:
+            print(f"push recovered after {self.unpushed} failure(s)", flush=True)
+            self.unpushed = 0
 
     def say(self, line: str):
         print(line, flush=True)
@@ -159,6 +196,20 @@ def acquire(name: str, force: bool = False) -> Path:
     with os.fdopen(fd, "w") as f:
         f.write(f"pid {os.getpid()} started {time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())}")
     return lock
+
+
+def release(lock: Path) -> bool:
+    """Drop the lock only if this process is the one holding it."""
+    try:
+        held = lock.read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return False
+    if f"pid {os.getpid()} " not in held + " ":
+        print(f"not releasing {lock.name}: held by another worker ({held.strip()})",
+              flush=True)
+        return False
+    lock.unlink(missing_ok=True)
+    return True
 
 
 def finished_tasks(courier: Courier) -> set:
@@ -347,7 +398,14 @@ def main() -> int:
                 # release FIRST: the child re-runs main() and calls acquire(),
                 # which would fail against our own still-held lock and kill the
                 # worker on every code update.
-                lock.unlink(missing_ok=True)
+                #
+                # But release ONLY OUR OWN. A bare unlink() deletes whichever
+                # lock is there, so a second worker restarting would quietly free
+                # the FIRST worker's lock and then take it — which is exactly
+                # what happened on 2026-08-01: worker 2 came out of its prefetch
+                # at 02:19, restarted, wiped worker 1's lock, and both ran on.
+                # A mutex you can release on someone else's behalf is not a mutex.
+                release(lock)
                 # NOT os.execv: on Windows it replaces the process in a way that
                 # detaches it from the console, so the worker vanished after
                 # exactly one task every time pipeline code changed (the msi, twice
