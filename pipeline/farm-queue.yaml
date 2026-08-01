@@ -1,184 +1,60 @@
-# RE-QUEUED 2026-08-01 07:45Z. Fresh ids on purpose.
+# REBUILT 2026-08-01 13:35Z. The 16-hour queue is gone.
 #
-# The previous run of these exact tasks failed in ten seconds each, all five,
-# because the 5090 LOST ITS NETWORK around 01:54-02:20:
-#   OSError: Cannot load model Wan-AI/Wan2.2-TI2V-5B-Diffusers: model is not
-#   cached locally and an error occurred while trying to fetch metadata
-# Same outage silently ate every `git push` for six hours, so from outside the
-# machine looked hung while it was actually failing fast and reporting into a
-# void. Network is back (a manual push went through at 07:40Z).
+# I had 13 beats queued at 704x1280 / 50 steps. Measured cost on this card is
+# ~73 min/clip at that setting — 16 GPU-hours. Founder: "16 hour is insane".
+# Correct. It was my choice, made without doing the arithmetic, and 704x1280 was
+# my preference (the model's only officially supported size) not a requirement —
+# the founder had already said "i dont really care about resolution".
 #
-# Nothing is wrong with the tasks, so they are re-queued unchanged apart from
-# their ids. New ids are REQUIRED: a task that failed is added to the worker's
-# in-session done set and never retried, and with an empty queue the worker
-# never reaches the code-sync step either — so it would poll forever without
-# picking up either these tasks or any fix.
-# REBUILT 2026-08-01 00:55Z, after the monolithic batch failed.
+# Everything is now 480x832, which is the size the takes he called "pretty good"
+# were rendered at:
 #
-# WHAT HAPPENED. `vid-720p-all` asked for 8 clips at 704x1280 / 50 steps in one
-# task and hit the 4-hour subprocess timeout with ZERO clips saved
-# (TimeoutExpired after 14400s, worker-log on farm-results-rtx5090). It was
-# mis-sized, and the old buffered runner threw away every clip it HAD rendered
-# because nothing was pushed until the task returned.
+#   anime BEAT 1   1 clip   ~3 min    founder asked for beat 1 specifically — it is
+#                                    the one beat he judged good on Wan, so it is the
+#                                    fair head-to-head on style
+#   anime all     15 clips ~45 min    a COMPLETE anime-model episode to compare
+#   wan licence    5 clips ~65 min    the PixVerse beats on Wan, publishable
+#   prefetch                          last, speculative
 #
-# THE ARITHMETIC WE NOW HAVE. A batch of 4 clips took 1h42m (19:04:47 ->
-# 20:47:34) at the earlier size; single beats ran ~13 min each. At 704x1280 with
-# 50 steps the per-clip cost is >30 min, so 8 clips was never going to fit in
-# four hours and 5 would have been marginal. THREE clips per task is ~1.5h — a
-# comfortable margin, and it means a slow chunk costs one chunk.
-#
-# Two fixes already landed alongside this and change the risk profile: clips are
-# now pushed as each one finishes (video_task._stream), so an overrun keeps
-# whatever completed; and a task that fails twice is skipped so it cannot starve
-# the queue (farm_worker.MAX_ATTEMPTS).
-#
-# ORDER IS DELIBERATE. The licence beats come first. Beats 2, 4, 8, 11 and 13 of
-# the LIVE episode are PixVerse free-tier takes, which is personal-use only
-# against our CC BY 4.0 release (D13) — so until these five exist on a
-# publish-safe route, the only postable cut is the static POST fallback. These
-# unblock shipping; the other eight only improve what already ships.
+# Two hours for all of it, and a whole alternate episode inside the first hour.
+# AnimeGen is 4 steps at guidance 1.0 (its own recipe), which is why 15 beats cost
+# less than one beat did at the old setting.
 tasks:
-# ---- 1. the five that make episode 1 publishable (Wan 2.2, Apache-2.0) -------
-- id: vid-lic-a-1785567300
-  worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  beats: 2,4
-  motion: 'true to the frame: only what would actually move in this shot - drifting
-    air, screen flicker, a trembling leaf, light through soil - gentle camera drift,
-    no new subjects, no scene change'
-  size: 704x1280
-  seconds: 3.0
-  steps: 50
-  guidance: 5.0
-  seed_base: 20260731
-- id: vid-lic-b-1785567300
-  worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  beats: 8,11,13
-  motion: 'true to the frame: only what would actually move in this shot - drifting
-    air, screen flicker, a trembling leaf, light through soil - gentle camera drift,
-    no new subjects, no scene change'
-  size: 704x1280
-  seconds: 3.0
-  steps: 50
-  guidance: 5.0
-  seed_base: 20260731
-# ---- 2. the eight quality re-renders, three at a time ------------------------
-# Every clip the founder has judged was made at 480x832 / 20 steps. Wan's own
-# config lists 704x1280 as the ONLY supported size for TI2V-5B, and 50 steps is
-# its official default — so these were rendered outside the model's envelope at
-# 40% of its step count. A bug fix, not an experiment; just not urgent.
-- id: vid-720p-c-1785567300
-  worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  beats: 3,6,7
-  motion: 'true to the frame: only what would actually move in this shot - drifting
-    air, screen flicker, a trembling leaf, light through soil - gentle camera drift,
-    no new subjects, no scene change'
-  size: 704x1280
-  seconds: 3.0
-  steps: 50
-  guidance: 5.0
-  seed_base: 20260731
-- id: vid-720p-d-1785567300
-  worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  beats: 9,10,12
-  motion: 'true to the frame: only what would actually move in this shot - drifting
-    air, screen flicker, a trembling leaf, light through soil - gentle camera drift,
-    no new subjects, no scene change'
-  size: 704x1280
-  seconds: 3.0
-  steps: 50
-  guidance: 5.0
-  seed_base: 20260731
-- id: vid-720p-e-1785567300
-  worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  beats: 14,15
-  motion: 'true to the frame: only what would actually move in this shot - drifting
-    air, screen flicker, a trembling leaf, light through soil - gentle camera drift,
-    no new subjects, no scene change'
-  size: 704x1280
-  seconds: 3.0
-  steps: 50
-  guidance: 5.0
-  seed_base: 20260731
-# ---- 5. PROMPT-FIX CANARY: the three beats the founder rejected --------------
-# Founder verdict on the six existing Wan takes (2026-08-01): only beat 1 usable.
-# "3rd and 4th seem like random motion", "5th has a stick poking the sapling",
-# "6th doesnt move at all". He was right on every one, and the frames show why —
-# but the cause was not the model.
-#
-# We were feeding the video model the STILL-GENERATION prompt: a full instruction
-# for drawing the scene from scratch, with SDXL quality tags and negatives written
-# as prose INSIDE the positive prompt. An i2v model reads "a single thin green
-# plant stem bent into a tense arc" as "draw this" — so it drew one in addition to
-# the stem already in frame. That is the stick. "No ghost, no sphere" sat in the
-# positive prompt too, where it reads as a request.
-#
-# Fixed in video_task.video_prompt(): motion first, scene reduced to a 22-word
-# anchor labelled "Subject already in frame", negatives moved to the real negative
-# field. These three beats are the direct test — same stills, same seeds, only the
-# prompt changed. If the stick is gone and beat 14 moves, the fix is real.
-- id: fix-prompt-canary-1785573000
-  worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  beats: 12,14,15
-  motion: 'true to the frame: only what would actually move in this shot - gentle
-    camera drift, no new subjects, no scene change'
-  size: 704x1280
-  seconds: 3.0
-  steps: 50
-  guidance: 5.0
-  seed_base: 20260731
-# ---- 4. THE ANIME MODEL, unparked: AnimeGen-I2V quantised on load -----------
-# Founder, after screening six Wan takes: "wan 2.2 is still pretty good, the
-# problem is its not made for anime style" (2026-08-01). That is the whole
-# diagnosis — Wan's training is dominated by live action, so it pulls every frame
-# toward photography however anime the still it was handed.
-#
-# aidealab/AnimeGen-I2V is the purpose-built answer: Apache-2.0 (LICENSE verified
-# byte-identical to canonical), an anime finetune of Wan 2.2 that force-prepends
-# "Japanese anime style" and negatives out 3d/cg/photo. Its own card admits it is
-# WORSE outside anime — tuned in exactly our direction.
-#
-# It was parked because it is an A14B: two 14B experts, ~54GB in bf16 against
-# 24GB of card, and no fp8/GGUF build of this finetune exists. That turns out not
-# to matter — diffusers can quantise at load, so we make our own 8-bit weights
-# instead of waiting for someone to publish some. Slower per clip (offload streams
-# through system RAM) but it fits.
-#
-# ONE clip, on beat 12 — the beat whose stick exposed the prompt bug — so this
-# tests the anime model and the prompt fix on the same frame the founder rejected.
-# If bitsandbytes is missing in the video venv the task fails loudly with the
-# install line rather than OOMing three hours in.
-- id: anime-canary-b12-1785574000
+- id: anime-b1-1785575600
   worker: rtx5090
   video: true
   video_model: animegen
   node: 001-capability-inventory
-  beats: 12
-  # AnimeGen's own card: motion-only prompt ("blink her eyes."), 4 steps at
-  # guidance 1.0 via the Lightning LoRAs, 16fps, 832x480 or 1280x720. The steps
-  # and guidance below are overridden in wan_i2v for this model — left here so the
-  # queue is honest about what it asked for. 480x832 IS a trained size for A14B
-  # (unlike the 5B, where it was off-distribution), so this is the cheap tier.
-  motion: 'gentle drift; only what would really move here'
+  beats: 1
+  motion: gentle drift; only what would really move here
   size: 480x832
   seconds: 3.0
   steps: 4
   guidance: 1.0
   seed_base: 20260731
-# ---- 3. the A14B prefetch, last: download only, no install decision ----------
-# Already in flight when this file was rewritten; kept here so a restart can
-# recover it as done rather than starting the 25GB pull again.
+- id: anime-all-1785575000
+  worker: rtx5090
+  video: true
+  video_model: animegen
+  node: 001-capability-inventory
+  beats: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15
+  motion: gentle drift; only what would really move here
+  size: 480x832
+  seconds: 3.0
+  steps: 4
+  guidance: 1.0
+  seed_base: 20260731
+- id: wan-lic-480-1785575000
+  worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  beats: 2,4,8,11,13
+  motion: gentle drift; only what would really move here
+  size: 480x832
+  seconds: 3.0
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260731
 - id: prefetch-a14b-1785529520
   worker: rtx5090
   video: true
