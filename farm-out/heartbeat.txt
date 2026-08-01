@@ -128,3 +128,4 @@
 01:54:41Z VIDEO_RENDERING batch of 2 (one model load)
 02:18:15Z FAIL task=prefetch-a14b-1785529520
 02:19:16Z STARTED task=vid-lic-a-1785545700 beats=2,4 on cuda
+02:19:20Z VIDEO_VENV_OK
