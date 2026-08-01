@@ -224,7 +224,8 @@ def _sample(pipe, a, w, h, frames, takes_image) -> int:
     from PIL import Image
 
     jobs = json.loads(Path(a.jobs).read_text()) if a.jobs else \
-        [{"init": a.init, "out": a.out, "prompt": a.prompt, "seed": a.seed}]
+        [{"init": a.init, "out": a.out, "prompt": a.prompt, "seed": a.seed,
+          "negative": a.negative}]
     for i, job in enumerate(jobs, 1):
         t0 = time.time()
         img = Image.open(job["init"]).convert("RGB").resize((w, h), Image.LANCZOS)
@@ -324,6 +325,8 @@ def main() -> int:
     ap.add_argument("--guidance", type=float, default=5.0,
                     help="cfg; higher follows the prompt harder, lower drifts")
     ap.add_argument("--size", default="480x832", help="WxH (Wan bucket)")
+    ap.add_argument("--negative", default="",
+                    help="extra negative terms (the beat's own 'no X' clauses)")
     ap.add_argument("--no-lora", action="store_true",
                     help="AnimeGen without the Lightning LoRAs — slower, but every "
                          "weight has a licence we can quote (lightx2v ships none)")

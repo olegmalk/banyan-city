@@ -368,7 +368,16 @@ def run(task: dict, courier, node_dir: Path) -> None:
         # prompt's job is what MOVES (cycle-001 lesson: front-loaded stillness
         # makes models hold the frame)
         motion = task.get("motion") or "subtle continuous motion, gentle camera drift, living scene"
-        prompt = f"{motion}. {s['prompt']}"[:900]
+        # SAME treatment as the batch path. This branch was still concatenating the
+        # whole still-generation prompt — the bug that made Wan draw a second plant
+        # stem into beat 12 ("a stick poking the sapling"). One code path fixed and
+        # the other not is worse than neither, because the difference is invisible
+        # in the queue: a task with ONE beat took this branch and a task with two
+        # took the other, silently rendering on the default model with the old
+        # prompt. Caught when a one-clip AnimeGen canary logged "beat=01
+        # (single-process)" and rendered plain Wan (2026-08-01).
+        prompt, neg = video_prompt(motion, s["prompt"])
+        vmodel = str(task.get("video_model", "ti2v-5b"))
         out = courier.out / f"{task.get('id')}-{num:02d}-{s['slug']}.mp4"
         emb = ROOT / f"embeds-{num:02d}.pt"
         wan = str(REPO / "pipeline" / "wan_i2v.py")
@@ -381,11 +390,16 @@ def run(task: dict, courier, node_dir: Path) -> None:
             # one process, the library's own pipeline class and encoding: the
             # split-process shortcuts are a 16GB workaround and one of them
             # was bypassing the image conditioning (first 5090 clip, garbage)
-            courier.mark(f"VIDEO_RENDERING beat={num:02d} (single-process)")
+            courier.mark(f"VIDEO_RENDERING beat={num:02d} on {vmodel} "
+                         f"(single-process)")
             _run([str(PY), wan, "--stage", "simple", "--embeds", str(emb),
                   "--prompt", prompt, "--init", str(init), "--out", str(out),
+                  "--negative", neg,
+                  "--model", vmodel,
+                  "--quantise", str(task.get("quantise", "none")),
                   "--seconds", str(seconds), "--steps", str(steps), "--size", size,
-                  "--seed", str(int(task.get("seed_base", 20260731)) + num)],
+                  "--seed", str(int(task.get("seed_base", 20260731)) + num)]
+                 + (["--offload"] if task.get("offload") else []),
                  courier, f"beat {num}", timeout=7200, retry=True)
         else:
             courier.mark(f"VIDEO_ENCODING beat={num:02d}")
@@ -400,6 +414,7 @@ def run(task: dict, courier, node_dir: Path) -> None:
         emb.unlink(missing_ok=True)
         if out.exists() and out.stat().st_size > 10_000:
             made += 1
+            write_sidecar(out, vmodel, task, num, seconds, steps, size)
             courier.mark(f"VIDEO_CLIP_OK beat={num:02d} "
                          f"{out.stat().st_size // 1024}KB")
         else:
