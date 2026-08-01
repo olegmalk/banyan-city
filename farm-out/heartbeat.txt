@@ -148,3 +148,4 @@
 02:20:01Z VIDEO_RENDERING batch of 3 (one model load)
 02:20:05Z FAIL task=vid-720p-d-1785545700
 02:20:06Z STARTED task=vid-720p-e-1785545700 beats=14,15 on cuda
+02:20:06Z VIDEO_VENV_OK
