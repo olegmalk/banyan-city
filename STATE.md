@@ -495,3 +495,38 @@ voxcpm2 runs LONGER than the current voice on all three lines (6.72 vs 4.38,
 are voice-DESIGN samples with no reference clip, so the character is invented
 rather than matched. Cloning + direction together is the next step and the code
 supports it.
+
+## 2026-08-01 01:15Z — TWO workers were sharing the 5090 all night
+
+The failed 704x1280 batch was not mis-sized. Two `farm_worker.py` processes were
+running on the 5090, started 21 minutes apart, both polling the same queue and
+both claiming the same tasks. Heartbeat evidence: `2x STARTED
+task=vid-720p-all-1785529520`, two `PREFETCH_START`s, and two separate timeouts
+firing at 14430s and 14404s against the 14400s limit — each process ran the same
+8-clip batch to its own timeout.
+
+Throughput proves the contention: single beats rendered in ~13 min each
+(18:23-19:03), the same work under contention took ~26. Eight clips at 13 min is
+under two hours — comfortably inside the 4h cap. It only overran because it ran
+at half speed. Both processes also `git push -qf` the same branch from the same
+working tree, so results can erase each other, which is likely why zero clips ever
+landed even before the timeouts.
+
+Fixed with an O_CREAT|O_EXCL lock outside the repo (farm-out is committed and
+force-pushed, so a lock inside would be shipped and clobbered by the race it
+guards). No automatic staleness takeover — two workers racing to judge staleness
+is the same bug again; the refusal message tells a human what to do and `--force`
+clears a stale lock. The self-restart path releases before spawning the child, or
+every code update would deadlock the worker against its own lock. Deploys itself:
+both workers restart on the push, first child takes the lock, second stands down.
+
+**Expect one console window on the 5090 reading "another worker already holds this
+machine" — that is the fix working.**
+
+Also this session: CC BY sound credits were never published anywhere ("Gravity
+Sound" appeared nowhere in _site; SOURCES.md is not copied to the site). Node
+pages now render a Sound credits section from the node's own SOURCES.md, and
+POSTING-KIT.md step 0 carries the caption line — the site fix does nothing for a
+TikTok post. licence_gate is narrow here by design: it answers "does this licence
+permit use" and has no notion of permission granted IN EXCHANGE for something, so
+CC BY passes as `allow` and nothing checks the exchange happened.
