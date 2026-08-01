@@ -103,9 +103,44 @@ def stage_simple(a) -> int:
     # the approved frame went unused (2026-07-31 — the warning I had built in is
     # what caught it). Name the image-to-video class explicitly, always.
     from diffusers import WanImageToVideoPipeline
-    pipe = WanImageToVideoPipeline.from_pretrained(a.model, torch_dtype=torch.bfloat16)
+    # QUANTISE ON LOAD, when asked. The founder's verdict after screening six Wan
+    # takes was "wan 2.2 is still pretty good, the problem is its not made for
+    # anime style" — so the model we actually want is an anime finetune, and the
+    # best candidate (aidealab/AnimeGen-I2V, Apache-2.0) is an A14B: two 14B
+    # experts, ~54GB in bf16, against 24GB of card. No fp8 or GGUF build of that
+    # finetune exists, which is why it was parked.
+    #
+    # It does not have to exist. diffusers can quantise at load time, so we can
+    # make our own 8-bit weights instead of waiting for someone to publish some.
+    # Guarded, because the API is version-dependent and a silent fallback to
+    # bf16 would just OOM three hours later with no explanation.
+    kw = {"torch_dtype": torch.bfloat16}
+    if a.quantise != "none":
+        try:
+            from diffusers import PipelineQuantizationConfig
+            kw["quantization_config"] = PipelineQuantizationConfig(
+                quant_backend="bitsandbytes_8bit" if a.quantise == "8bit"
+                else "bitsandbytes_4bit",
+                quant_kwargs={"load_in_8bit": a.quantise == "8bit",
+                              "load_in_4bit": a.quantise == "4bit"},
+                components_to_quantize=["transformer", "transformer_2",
+                                        "text_encoder"])
+            print(f"quantising on load: {a.quantise}", flush=True)
+        except ImportError as e:
+            raise SystemExit(
+                f"--quantise {a.quantise} needs a diffusers with "
+                f"PipelineQuantizationConfig and bitsandbytes installed ({e}).\n"
+                f"Install bitsandbytes in the video venv, or run without "
+                f"--quantise on a model that fits unquantised.")
+    pipe = WanImageToVideoPipeline.from_pretrained(a.model, **kw)
     print(f"pipeline class: {type(pipe).__name__} (forced image-to-video)")
-    pipe.to("cuda")
+    # a quantised big model still will not sit entirely on 24GB; offload streams
+    # modules through system RAM, which is slow but finishes
+    if a.quantise != "none" or a.offload:
+        pipe.enable_model_cpu_offload()
+        print("model cpu offload ON (big model: slower per clip, but it fits)")
+    else:
+        pipe.to("cuda")
     import inspect
     takes_image = "image" in inspect.signature(pipe.__call__).parameters
     if not takes_image:
@@ -204,6 +239,10 @@ def main() -> int:
     ap.add_argument("--guidance", type=float, default=5.0,
                     help="cfg; higher follows the prompt harder, lower drifts")
     ap.add_argument("--size", default="480x832", help="WxH (Wan bucket)")
+    ap.add_argument("--quantise", default="none", choices=["none", "8bit", "4bit"],
+                    help="quantise at load so a model bigger than VRAM fits")
+    ap.add_argument("--offload", action="store_true",
+                    help="stream modules through system RAM (slow, but fits)")
     ap.add_argument("--model", default="ti2v-5b",
                     help=f"short name {sorted(MODELS)} or a full HF repo id")
     ap.add_argument("--seed", type=int, default=20260731)

@@ -89,6 +89,23 @@ def _stream(cmd, courier, timeout, env):
                                        "".join(err))
 
 
+# Wan 2.2 is a general video model — the founder's read after screening six takes:
+# "wan 2.2 is still pretty good, the problem is its not made for anime style"
+# (2026-08-01). Its training is dominated by live action, so left alone it pulls
+# every frame toward photography no matter how anime the still it was handed.
+#
+# The proper fix is an anime-trained model (AnimeGen-I2V, parked on VRAM). This is
+# the cheap one available today: say the style out loud in the POSITIVE and put
+# photography in the NEGATIVE. Costs nothing, and until now we had nowhere to put
+# a negative at all — every "no photorealism" clause was sitting in the positive
+# prompt asking for the opposite.
+STYLE = ("2D anime, hand-drawn cel animation, flat cel shading, clean ink "
+         "linework, anime key art")
+ANTI_STYLE = ("photorealistic, photograph, live action, film still, 3D render, "
+              "CGI, octane, realistic skin texture, depth of field bokeh, "
+              "motion blur")
+
+
 # SDXL prompt furniture that means nothing to a video model and eats its attention
 QUALITY_SPAM = re.compile(
     r"\b(masterpiece|best quality|very aesthetic|newest|highly detailed|detailed|"
@@ -127,9 +144,10 @@ def video_prompt(motion: str, still_prompt: str) -> tuple:
     # a short anchor only — the frame already carries the composition
     words = scene.split()
     anchor = " ".join(words[:22]) + ("…" if len(words) > 22 else "")
-    positive = f"{motion}. Subject already in frame: {anchor}." if anchor else motion
+    positive = f"{STYLE}. {motion}. Subject already in frame: {anchor}." if anchor \
+        else f"{STYLE}. {motion}"
     extra_neg = ", ".join(n[3:].strip() for n in negatives if len(n) > 3)
-    return positive[:700], extra_neg[:300]
+    return positive[:700], f"{extra_neg}, {ANTI_STYLE}"[:400].lstrip(", ")
 
 
 MODEL_LICENCE = {
@@ -317,7 +335,9 @@ def run(task: dict, courier, node_dir: Path) -> None:
                   "--embeds", str(ROOT / "unused.pt"), "--jobs", str(jf),
                   "--seconds", str(seconds), "--steps", str(steps), "--size", size,
                   "--model", vmodel,
-                  "--guidance", str(task.get("guidance", 5.0))],
+                  "--quantise", str(task.get("quantise", "none")),
+                  "--guidance", str(task.get("guidance", 5.0))]
+                 + (["--offload"] if task.get("offload") else []),
                  courier, f"batch {task.get('id')}", timeout=14400, retry=True)
             jf.unlink(missing_ok=True)
             made = 0

@@ -138,19 +138,41 @@ tasks:
   steps: 50
   guidance: 5.0
   seed_base: 20260731
-# ---- 4. AnimeGen canary — PULLED before it ran, 2026-08-01 -------------------
-# I queued this as a one-clip canary and then checked the repo. It is NOT a 5B
-# dense model like our incumbent: aidealab/AnimeGen-I2V ships `transformer/` AND
-# `transformer_2/` (two 14B experts, three shards each) plus high_noise/low_noise
-# — the Wan 2.2 I2V-A14B architecture, whose own README says "at least 80GB VRAM".
-# No fp8/GGUF build of this fine-tune exists in the repo or anywhere found.
+# ---- 4. THE ANIME MODEL, unparked: AnimeGen-I2V quantised on load -----------
+# Founder, after screening six Wan takes: "wan 2.2 is still pretty good, the
+# problem is its not made for anime style" (2026-08-01). That is the whole
+# diagnosis — Wan's training is dominated by live action, so it pulls every frame
+# toward photography however anime the still it was handed.
 #
-# wan_i2v.stage_simple does pipe.to("cuda") whenever VRAM >= 20GB, so on the 24GB
-# 5090 this would have downloaded ~60GB and then OOMed. Requeue it only after an
-# offload or quantisation path exists and has been canaried on ONE clip.
+# aidealab/AnimeGen-I2V is the purpose-built answer: Apache-2.0 (LICENSE verified
+# byte-identical to canonical), an anime finetune of Wan 2.2 that force-prepends
+# "Japanese anime style" and negatives out 3d/cg/photo. Its own card admits it is
+# WORSE outside anime — tuned in exactly our direction.
 #
-# Still the most interesting candidate on licence-and-intent grounds (Apache-2.0,
-# anime finetune that fails TOWARD anime) — parked on hardware, not on merit.
+# It was parked because it is an A14B: two 14B experts, ~54GB in bf16 against
+# 24GB of card, and no fp8/GGUF build of this finetune exists. That turns out not
+# to matter — diffusers can quantise at load, so we make our own 8-bit weights
+# instead of waiting for someone to publish some. Slower per clip (offload streams
+# through system RAM) but it fits.
+#
+# ONE clip, on beat 12 — the beat whose stick exposed the prompt bug — so this
+# tests the anime model and the prompt fix on the same frame the founder rejected.
+# If bitsandbytes is missing in the video venv the task fails loudly with the
+# install line rather than OOMing three hours in.
+- id: anime-canary-b12-1785574000
+  worker: rtx5090
+  video: true
+  video_model: animegen
+  quantise: 8bit
+  node: 001-capability-inventory
+  beats: 12
+  motion: 'true to the frame: only what would actually move in this shot - gentle
+    camera drift, no new subjects, no scene change'
+  size: 704x1280
+  seconds: 3.0
+  steps: 50
+  guidance: 5.0
+  seed_base: 20260731
 # ---- 3. the A14B prefetch, last: download only, no install decision ----------
 # Already in flight when this file was rewritten; kept here so a restart can
 # recover it as done rather than starting the 25GB pull again.
