@@ -1,27 +1,34 @@
-# OVERNIGHT. Three jobs, in order.
+# REBUILT 2026-08-01 00:55Z, after the monolithic batch failed.
 #
-# 1. Re-render every motion beat at 704x1280 / 50 steps. Wan's own config lists
-#    704x1280 as the ONLY supported size for TI2V-5B; 480x832 is a trained size
-#    for the BIGGER model and off-distribution for ours. Every clip the founder
-#    has judged was made outside the model's training envelope, at 20 steps
-#    against an official 50. This is a bug fix, not an experiment.
+# WHAT HAPPENED. `vid-720p-all` asked for 8 clips at 704x1280 / 50 steps in one
+# task and hit the 4-hour subprocess timeout with ZERO clips saved
+# (TimeoutExpired after 14400s, worker-log on farm-results-rtx5090). It was
+# mis-sized, and the old buffered runner threw away every clip it HAD rendered
+# because nothing was pushed until the task returned.
 #
-# 2. The five beats job 1 does NOT cover - because they were never ours to
-#    publish. Beats 2, 4, 8, 11 and 13 of the LIVE episode were assembled from
-#    PixVerse free-tier takes, and DECISIONS.md D8 already records that tier as
-#    "license-blocked (personal-use-only ToS)" - written down, then used anyway.
-#    Wan 2.2 is Apache 2.0, so re-rendering these five is what makes the remake
-#    publishable by construction instead of by hope. Not a style experiment: the
-#    current takes cannot ship, so the choice is re-render or cut the beats.
+# THE ARITHMETIC WE NOW HAVE. A batch of 4 clips took 1h42m (19:04:47 ->
+# 20:47:34) at the earlier size; single beats ran ~13 min each. At 704x1280 with
+# 50 steps the per-clip cost is >30 min, so 8 clips was never going to fit in
+# four hours and 5 would have been marginal. THREE clips per task is ~1.5h — a
+# comfortable margin, and it means a slow chunk costs one chunk.
 #
-# 3. Prefetch the 14B stack (Apache-2.0, ~25GB). Download only - the install
-#    decision waits for a human.
+# Two fixes already landed alongside this and change the risk profile: clips are
+# now pushed as each one finishes (video_task._stream), so an overrun keeps
+# whatever completed; and a task that fails twice is skipped so it cannot starve
+# the queue (farm_worker.MAX_ATTEMPTS).
+#
+# ORDER IS DELIBERATE. The licence beats come first. Beats 2, 4, 8, 11 and 13 of
+# the LIVE episode are PixVerse free-tier takes, which is personal-use only
+# against our CC BY 4.0 release (D13) — so until these five exist on a
+# publish-safe route, the only postable cut is the static POST fallback. These
+# unblock shipping; the other eight only improve what already ships.
 tasks:
-- id: vid-720p-all-1785529520
+# ---- 1. the five that make episode 1 publishable (Wan 2.2, Apache-2.0) -------
+- id: vid-lic-a-1785545700
   worker: rtx5090
   video: true
   node: 001-capability-inventory
-  beats: 3,6,7,9,10,12,14,15
+  beats: 2,4
   motion: 'true to the frame: only what would actually move in this shot - drifting
     air, screen flicker, a trembling leaf, light through soil - gentle camera drift,
     no new subjects, no scene change'
@@ -30,11 +37,11 @@ tasks:
   steps: 50
   guidance: 5.0
   seed_base: 20260731
-- id: vid-720p-licence-1785531600
+- id: vid-lic-b-1785545700
   worker: rtx5090
   video: true
   node: 001-capability-inventory
-  beats: 2,4,8,11,13
+  beats: 8,11,13
   motion: 'true to the frame: only what would actually move in this shot - drifting
     air, screen flicker, a trembling leaf, light through soil - gentle camera drift,
     no new subjects, no scene change'
@@ -43,6 +50,53 @@ tasks:
   steps: 50
   guidance: 5.0
   seed_base: 20260731
+# ---- 2. the eight quality re-renders, three at a time ------------------------
+# Every clip the founder has judged was made at 480x832 / 20 steps. Wan's own
+# config lists 704x1280 as the ONLY supported size for TI2V-5B, and 50 steps is
+# its official default — so these were rendered outside the model's envelope at
+# 40% of its step count. A bug fix, not an experiment; just not urgent.
+- id: vid-720p-c-1785545700
+  worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  beats: 3,6,7
+  motion: 'true to the frame: only what would actually move in this shot - drifting
+    air, screen flicker, a trembling leaf, light through soil - gentle camera drift,
+    no new subjects, no scene change'
+  size: 704x1280
+  seconds: 3.0
+  steps: 50
+  guidance: 5.0
+  seed_base: 20260731
+- id: vid-720p-d-1785545700
+  worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  beats: 9,10,12
+  motion: 'true to the frame: only what would actually move in this shot - drifting
+    air, screen flicker, a trembling leaf, light through soil - gentle camera drift,
+    no new subjects, no scene change'
+  size: 704x1280
+  seconds: 3.0
+  steps: 50
+  guidance: 5.0
+  seed_base: 20260731
+- id: vid-720p-e-1785545700
+  worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  beats: 14,15
+  motion: 'true to the frame: only what would actually move in this shot - drifting
+    air, screen flicker, a trembling leaf, light through soil - gentle camera drift,
+    no new subjects, no scene change'
+  size: 704x1280
+  seconds: 3.0
+  steps: 50
+  guidance: 5.0
+  seed_base: 20260731
+# ---- 3. the A14B prefetch, last: download only, no install decision ----------
+# Already in flight when this file was rewritten; kept here so a restart can
+# recover it as done rather than starting the 25GB pull again.
 - id: prefetch-a14b-1785529520
   worker: rtx5090
   video: true
