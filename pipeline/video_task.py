@@ -20,6 +20,7 @@ import platform
 import re
 import subprocess
 import sys
+import threading
 import time
 from pathlib import Path
 
@@ -60,6 +61,27 @@ def _stream(cmd, courier, timeout, env):
     deadline = time.time() + timeout if timeout else None
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                          text=True, errors="replace", bufsize=1, env=env)
+
+    # A HEARTBEAT THAT DOES NOT DEPEND ON THE CHILD SAYING ANYTHING.
+    #
+    # Per-clip marks made batch progress visible, but the phases that produce NO
+    # stdout stayed invisible — and those are the long ones. A 30GB model download
+    # writes its progress bars to stderr, so from outside, "downloading AnimeGen"
+    # and "hung" looked identical for 65 minutes (2026-08-01), which is the third
+    # time today we could not tell working from stuck. Elapsed time is knowable
+    # without the child's cooperation, so publish that.
+    alive = threading.Event()
+
+    def tick():
+        n = 0
+        while not alive.wait(300):          # every 5 minutes
+            n += 5
+            if courier:
+                try:
+                    courier.mark(f"VIDEO_ALIVE {n}m elapsed, child still running")
+                except Exception:            # noqa: BLE001
+                    pass                     # a heartbeat may never kill its subject
+    threading.Thread(target=tick, daemon=True).start()
     try:
         for line in p.stdout:
             out.append(line)
@@ -78,6 +100,7 @@ def _stream(cmd, courier, timeout, env):
         err.append(p.stderr.read() or "")
         p.wait(timeout=60)
     finally:
+        alive.set()
         for pipe in (p.stdout, p.stderr):
             try:
                 pipe.close()
