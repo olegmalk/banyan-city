@@ -203,3 +203,4 @@
 17:35:13Z VIDEO_RENDERING batch of 5 on ti2v-5b (one model load)
 17:40:16Z VIDEO_ALIVE 5m elapsed, child still running
 17:45:19Z VIDEO_ALIVE 10m elapsed, child still running
+17:46:01Z VIDEO_CLIP 1/5 wan-lic-480-1785575000-02-three-oh-seven.mp4 in 599s
