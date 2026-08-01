@@ -201,3 +201,4 @@
 17:34:57Z VIDEO_VENV_OK
 17:35:05Z VIDEO_DEPS_OK 2.11.0+cu128 0.39.0 True
 17:35:13Z VIDEO_RENDERING batch of 5 on ti2v-5b (one model load)
+17:40:16Z VIDEO_ALIVE 5m elapsed, child still running
