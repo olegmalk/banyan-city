@@ -85,6 +85,13 @@ def _stream(cmd, courier, timeout, env):
     try:
         for line in p.stdout:
             out.append(line)
+            # ECHO IT. Reading the child's stdout into a pipe means it stops
+            # reaching the console, so a human watching the worker window saw
+            # nothing at all for 76 minutes while a 30GB download ran — "is it
+            # even running?" (founder, 2026-08-01). Capturing output for the
+            # courier must not cost the person sitting in front of the machine
+            # their only view of it.
+            print(line, end="", flush=True)
             m = PROGRESS.match(line.strip())
             if m and courier:
                 try:
@@ -97,7 +104,10 @@ def _stream(cmd, courier, timeout, env):
             if deadline and time.time() > deadline:
                 p.kill()
                 raise subprocess.TimeoutExpired(cmd, timeout)
-        err.append(p.stderr.read() or "")
+        tail = p.stderr.read() or ""
+        err.append(tail)
+        if tail.strip():
+            print(tail, end="", flush=True)   # HF's download bars live here
         p.wait(timeout=60)
     finally:
         alive.set()

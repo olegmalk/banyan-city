@@ -296,6 +296,19 @@ a work that grants it; publishing one makes our own licence a false statement to
 everyone who relies on it. That is the whole argument, and it does not depend on
 anyone suing us.
 
+**RESOLVED 2026-08-01 (founder, in session): the PixVerse account is the FREE
+TIER.** So the third remedy below is off the table — there is no paid plan to
+record — and the footage genuinely cannot be published. The five beats must be
+re-rendered on a publish-safe route, which is queued on Wan 2.2 (Apache-2.0, $0).
+Until those land, the only postable cut is `ep1-v19-CLEAN.mp4`, which substitutes
+the local-deterministic POST takes and costs 4-40x less motion on six of fifteen
+beats.
+
+One thing this does NOT forbid: making a PixVerse version to WATCH. Showing a cut
+to the founder or to dad is not distribution. A PixVerse-only comparison cut is
+fine as an internal artifact provided it is labelled unpublishable and never
+reaches banyan.city, TikTok, or the takes/clips/ directory the site copies from.
+
 **1. Five beats of the live episode (2, 4, 8, 11, 13) are PixVerse free-tier.**
 `DECISIONS.md` D8 already recorded that tier as "license-blocked (personal-use
 only ToS)" on 2026-07-27 — written down, then used anyway, then published to
