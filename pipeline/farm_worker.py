@@ -87,6 +87,7 @@ class Courier:
         self.branch = f"farm-results-{name}"
         self.out = REPO / "farm-out"
         self.log = []
+        self.unpushed = 0
 
     def mark(self, stage: str):
         self.out.mkdir(exist_ok=True)
@@ -104,7 +105,22 @@ class Courier:
         sh("git", "checkout", "-qB", self.branch, check=False)
         sh("git", "add", "-A", str(self.out), check=False)
         sh("git", "commit", "-qm", f"hb: {stage}", check=False)
-        sh("git", "push", "-qf", "origin", self.branch, check=False)
+        # The push is the ONLY thing that makes any of this visible, and it ran
+        # with its error suppressed AND -q. On 2026-08-01 the 5090 rendered its
+        # way through the whole queue — "7 task(s) done this session" — while
+        # GitHub received nothing for nearly six hours. From outside it looked
+        # like a hung machine; the work was on disk the whole time. A courier
+        # that cannot deliver has to SAY SO, or the heartbeat is theatre.
+        r = sh("git", "push", "-f", "origin", self.branch,
+               check=False, capture=True)
+        if r.returncode:
+            self.unpushed += 1
+            print(f"!! PUSH FAILED ({self.unpushed} in a row) — results are on "
+                  f"local disk only, in {self.out}\n"
+                  f"   {(r.stderr or r.stdout or '').strip()[-400:]}", flush=True)
+        elif self.unpushed:
+            print(f"push recovered after {self.unpushed} failure(s)", flush=True)
+            self.unpushed = 0
 
     def say(self, line: str):
         print(line, flush=True)
