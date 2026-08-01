@@ -61,9 +61,30 @@ def sh(*args, check=True, capture=False):
                           capture_output=capture, text=True)
 
 
+_stale_fetches = 0
+
+
 def queue_head():
-    """The queue as of origin/main, without touching the working tree."""
-    sh("git", "fetch", "-q", "origin", "main", check=False)
+    """The queue as of origin/main, without touching the working tree.
+
+    The fetch used to run `-q ... check=False`. When it failed, this read a
+    STALE origin/main and returned whatever the queue said the last time the
+    network worked — and since every task in that old queue was already in the
+    worker's done set, the console printed "queue empty for me" and the machine
+    idled for hours next to five queued jobs (2026-08-01, after the 5090's
+    network dropped). "I can't see the queue" and "the queue is empty" are
+    opposite facts and they looked identical.
+    """
+    global _stale_fetches
+    r = sh("git", "fetch", "origin", "main", check=False, capture=True)
+    if r.returncode:
+        _stale_fetches += 1
+        print(f"!! FETCH FAILED ({_stale_fetches} in a row) — the queue below is "
+              f"STALE, not empty; this machine cannot see new work.\n"
+              f"   {(r.stderr or r.stdout or '').strip()[-300:]}", flush=True)
+    elif _stale_fetches:
+        print(f"fetch recovered after {_stale_fetches} failure(s)", flush=True)
+        _stale_fetches = 0
     r = sh("git", "show", f"origin/main:{QUEUE}", check=False, capture=True)
     if r.returncode != 0:
         return []
