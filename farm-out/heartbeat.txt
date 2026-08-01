@@ -163,3 +163,4 @@
 13:20:43Z STARTED task=vid-lic-a-1785567300 beats=2,4 on cuda
 13:20:47Z VIDEO_VENV_OK
 13:20:58Z VIDEO_DEPS_OK 2.11.0+cu128 0.39.0 True
+13:21:02Z VIDEO_RENDERING batch of 2 on ti2v-5b (one model load)
