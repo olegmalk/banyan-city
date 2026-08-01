@@ -1,36 +1,47 @@
-# REBUILT 2026-08-01 13:35Z. The 16-hour queue is gone.
+# OVERNIGHT 2026-08-01. Certain value first, experiment second.
 #
-# I had 13 beats queued at 704x1280 / 50 steps. Measured cost on this card is
-# ~73 min/clip at that setting — 16 GPU-hours. Founder: "16 hour is insane".
-# Correct. It was my choice, made without doing the arithmetic, and 704x1280 was
-# my preference (the model's only officially supported size) not a requirement —
-# the founder had already said "i dont really care about resolution".
+# The founder is running the AnimeGen beat-1 canary BY HAND in a console right
+# now, so `anime-b1` is removed — otherwise the worker would duplicate a render he
+# is already watching, on the same card. (Two renders on one GPU is the mistake
+# that cost four hours this morning; the lock only guards worker-vs-worker, and a
+# hand-run is the door it does not cover. wan_i2v now warns on a busy card.)
 #
-# Everything is now 480x832, which is the size the takes he called "pretty good"
-# were rendered at:
+# ORDER, deliberately:
 #
-#   anime BEAT 1   1 clip   ~3 min    founder asked for beat 1 specifically — it is
-#                                    the one beat he judged good on Wan, so it is the
-#                                    fair head-to-head on style
-#   anime all     15 clips ~45 min    a COMPLETE anime-model episode to compare
-#   wan licence    5 clips ~65 min    the PixVerse beats on Wan, publishable
-#   prefetch                          last, speculative
+#   1. wan-lic-480   5 clips ~65 min  CERTAIN. Beats 2,4,8,11,13 on Wan 2.2.
+#                                     These are the PixVerse beats — free tier,
+#                                     personal-use only (founder confirmed
+#                                     2026-08-01), so the live episode cannot be
+#                                     published until they exist on a clean route.
+#                                     Wan is proven on this machine. This is the
+#                                     task that turns "not postable" into
+#                                     "postable", and it must not sit behind an
+#                                     experiment that might fail all night.
 #
-# Two hours for all of it, and a whole alternate episode inside the first hour.
-# AnimeGen is 4 steps at guidance 1.0 (its own recipe), which is why 15 beats cost
-# less than one beat did at the old setting.
+#   2. anime-all    15 clips ~45 min  EXPERIMENT. All 15 beats on AnimeGen-I2V, to
+#                                     answer the founder's own diagnosis ("wan 2.2
+#                                     is still pretty good, the problem is its not
+#                                     made for anime style") with a COMPLETE
+#                                     alternate episode rather than one clip. Fails
+#                                     fast if the model does not load, because the
+#                                     weights will be cached by then, and the retry
+#                                     cap stops it looping.
+#
+#   3. prefetch                        speculative, last, as always.
+#
+# Two hours of work for a night. If AnimeGen turns out broken we still wake up
+# with a publishable episode 1.
 tasks:
-- id: anime-b1-1785575600
+- id: wan-lic-480-1785575000
   worker: rtx5090
   video: true
-  video_model: animegen
   node: 001-capability-inventory
-  beats: 1
+  beats: 2,4,8,11,13
   motion: gentle drift; only what would really move here
   size: 480x832
   seconds: 3.0
-  steps: 4
-  guidance: 1.0
+  steps: 20
+  guidance: 5.0
   seed_base: 20260731
 - id: anime-all-1785575000
   worker: rtx5090
@@ -43,17 +54,6 @@ tasks:
   seconds: 3.0
   steps: 4
   guidance: 1.0
-  seed_base: 20260731
-- id: wan-lic-480-1785575000
-  worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  beats: 2,4,8,11,13
-  motion: gentle drift; only what would really move here
-  size: 480x832
-  seconds: 3.0
-  steps: 20
-  guidance: 5.0
   seed_base: 20260731
 - id: prefetch-a14b-1785529520
   worker: rtx5090
