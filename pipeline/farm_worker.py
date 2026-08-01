@@ -147,6 +147,23 @@ class Courier:
         print(line, flush=True)
         self.log.append(line)
 
+    def blame(self, text: str):
+        """Append a failure to a log NOTHING later overwrites.
+
+        worker-log.txt is rewritten from self.log on every mark(), and self.log
+        starts empty in a new process — so when a task failed and the next task
+        marked STARTED, the traceback was erased. AnimeGen failed after 76 minutes
+        on 2026-08-01 and its error survived nineteen seconds; by the time anyone
+        looked, worker-log.txt was zero bytes.
+
+        A diagnosis that can be overwritten by routine progress is not a
+        diagnosis. This file only ever grows.
+        """
+        stamp = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+        with (self.out / "errors.txt").open("a", encoding="utf-8",
+                                            errors="replace") as f:
+            f.write(f"\n===== {stamp} =====\n{text}\n")
+
 
 def lock_path(name: str) -> Path:
     """Outside the repo on purpose: farm-out is committed and force-pushed by
@@ -429,7 +446,9 @@ def main() -> int:
                 courier.mark(f"DONE task={tid}")
             except Exception:                     # noqa: BLE001 — ship it, don't die
                 import traceback
-                courier.say(traceback.format_exc())
+                tb = traceback.format_exc()
+                courier.say(tb)
+                courier.blame(f"task={tid}\n{tb}")
                 courier.mark(f"FAIL task={tid}")
             done_ids.add(tid)
         if a.once:
