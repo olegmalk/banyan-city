@@ -1,0 +1,8 @@
+# Shot provenance (7.2)
+platform: local-deterministic
+model: 'none — code (post_motion.py: smoothstep push-in)'
+input_still: 11-grow.png
+frames: 144
+fps: 24
+cost_usd: 0
+date: 2026-07-28

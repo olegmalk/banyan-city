@@ -51,6 +51,11 @@ QUIET_MAX_S = 3.5           # longest allowed quiet-vs-bed stretch
 # the whole mix moved down with it, so a fixed floor started calling the
 # designed aftermath a dropout. 16 dB below target is the same musical distance.
 QUIET_FLOOR_DB = LUFS_TARGET - 16
+# A stretch this far below the episode's own dialogue is a hole, not a held beat
+# — see quiet_hole(). 14 dB is roughly "you would reach for the volume"; 4s is
+# about the longest silence short-form holds before a viewer leaves.
+DYN_DROP_DB = 14.0
+DYN_MAX_S = 4.0
 # Luma spread (90th percentile minus 10th) below this is a blank field, not a
 # shot. A numerically failed generation still writes a valid, mid-grey,
 # perfectly "fine" mp4 — the grey Wan render measured a spread of ~20 where
@@ -70,6 +75,66 @@ def record(episode: str, check: str, ok: bool, detail: str = "", warn: bool = Fa
 
 def ff(args_, ffmpeg="ffmpeg"):
     return subprocess.run([ffmpeg, *args_], capture_output=True, text=True)
+
+
+def quiet_hole(video, ffmpeg="ffmpeg") -> tuple:
+    """(seconds, start, floor_db, speech_db) of the longest stretch sitting far
+    below the episode's OWN speech level.
+
+    Why this is not the quiet-stretch check above. In ep1-v18 the death's
+    aftermath ran nine seconds decaying from -33 to -46 dB RMS while dialogue sat
+    at -18 — and `silencedetect` found nothing, because its threshold is on PEAKS
+    and the peaks stayed above the -33 dB floor for most of it. So the check
+    passed and the founder's actual note ("his death is very anticlimatic") went
+    unexplained through four rounds of moving the thump around.
+
+    The thump was never the problem: at 14s it is the loudest moment in the
+    episode. What follows it is — eight seconds with no words, no sound above a
+    dying fan, over a picture that gets BRIGHTER. The death has no aftermath, it
+    has an absence, and absence is measurable: a long run far below the level of
+    the speech around it.
+
+    ABSOLUTE thresholds cannot express that, which is why this one is relative to
+    the episode's own dialogue (90th-percentile RMS). Scored silence is real and
+    allowed — this is a WARNING carrying its length and location, so an author
+    can tell a held beat from a hole. Two seconds of nothing lands a death; eight
+    loses the audience.
+    """
+    r = ff(["-hide_banner", "-nostats", "-i", str(video), "-af",
+            "astats=metadata=1:reset=1,ametadata=print:"
+            "key=lavfi.astats.Overall.RMS_level:file=-",
+            "-f", "null", "-"], ffmpeg)
+    # one print per audio frame (~23ms), and channel prints share a pts_time —
+    # keep the loudest per timestamp, then bucket to 0.25s so a single quiet
+    # frame between two loud ones cannot look like a hole
+    at, best = {}, None
+    for line in r.stdout.splitlines():
+        m = re.match(r"frame:\d+\s+pts:\d+\s+pts_time:([\d.]+)", line)
+        if m:
+            best = float(m.group(1))
+            continue
+        m = re.match(r"lavfi\.astats\.Overall\.RMS_level=(-?[\d.]+)", line)
+        if m and best is not None:
+            b = round(best * 4) / 4
+            at[b] = max(at.get(b, -120.0), float(m.group(1)))
+    if len(at) < 8:
+        return 0.0, 0.0, 0.0, 0.0
+    keys = sorted(at)
+    levels = sorted(at.values())
+    speech = levels[int(len(levels) * 0.90)]
+    floor = speech - DYN_DROP_DB
+    longest, run = [], []
+    for k in keys:
+        if at[k] < floor:
+            run.append(k)
+        else:
+            longest = max(longest, run, key=len)
+            run = []
+    longest = max(longest, run, key=len)
+    if not longest:
+        return 0.0, 0.0, 0.0, speech
+    return (longest[-1] - longest[0] + 0.25, longest[0],
+            min(at[k] for k in longest), speech)
 
 
 def atom_order(path: Path) -> list:
@@ -132,6 +197,11 @@ def qa_episode(video: Path, clips_dir: Path | None, ffmpeg: str) -> None:
             "-f", "null", "-"], ffmpeg)
     record(ep, f"no quiet stretch > {QUIET_MAX_S}s", "silence_start" not in r.stderr,
            "; ".join(re.findall(r"silence_start: [\d.]+", r.stderr)[:3]))
+    hole_s, hole_at, hole_floor, speech = quiet_hole(video, ffmpeg)
+    record(ep, f"no hole > {DYN_MAX_S:g}s under the dialogue",
+           hole_s <= DYN_MAX_S,
+           (f"{hole_s:.1f}s from {hole_at:.0f}s, floor {hole_floor:.0f} dB vs "
+            f"speech {speech:.0f} dB" if hole_s else "none"), warn=True)
 
     # --- hook ---
     r = ff(["-t", "3", "-i", str(video), "-vf", "freezedetect=n=0.003:d=1.5",

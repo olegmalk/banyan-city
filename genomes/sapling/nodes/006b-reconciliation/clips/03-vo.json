@@ -1,54 +1,55 @@
 {
- "cast": "voices.yaml",
- "lines": [
-  {
-   "who": "SCAVENGER",
-   "text": "\u2014and the water's very reliable now, ma'am, whatever the form",
-   "start": 0.0,
-   "end": 3.221
-  },
-  {
-   "who": "VO",
-   "text": "says, so if you're thirsty\u2014 is she having a moment? Ma'am?",
-   "start": 3.501,
-   "end": 6.915
-  },
-  {
-   "who": "VO",
-   "text": "She can see the debug layer. The\u2014 the regulations.",
-   "start": 7.195,
-   "end": 10.523
-  },
-  {
-   "who": "VO",
-   "text": "Sunset reviews. Assessors who count everything. It was never bureaucracy.",
-   "start": 10.803,
-   "end": 15.56
-  },
-  {
-   "who": "VO",
-   "text": "It's monitoring. They've been reading the console for centuries and built",
-   "start": 15.84,
-   "end": 19.808
-  },
-  {
-   "who": "VO",
-   "text": "a civilization around never admitting it.",
-   "start": 20.088,
-   "end": 22.968
-  },
-  {
-   "who": "MAGISTRATE",
-   "text": "The ledger says three. The sky says two. When they disagree,",
-   "start": 23.248,
-   "end": 26.661
-  },
-  {
-   "who": "VO",
-   "text": "sapling, one of them gets corrected.",
-   "start": 26.941,
-   "end": 29.48
-  }
- ],
- "total_s": 29.76
+  "engine": "kokoro-onnx (kokoro-82M)",
+  "cast": "voices.yaml",
+  "lines": [
+    {
+      "who": "SCAVENGER",
+      "text": "\u2014and the water's very reliable now, ma'am, whatever the form",
+      "start": 0.0,
+      "end": 3.221
+    },
+    {
+      "who": "VO",
+      "text": "says, so if you're thirsty\u2014 is she having a moment? Ma'am?",
+      "start": 3.501,
+      "end": 6.915
+    },
+    {
+      "who": "VO",
+      "text": "She can see the debug layer. The\u2014 the regulations.",
+      "start": 7.195,
+      "end": 10.523
+    },
+    {
+      "who": "VO",
+      "text": "Sunset reviews. Assessors who count everything. It was never bureaucracy.",
+      "start": 10.803,
+      "end": 15.56
+    },
+    {
+      "who": "VO",
+      "text": "It's monitoring. They've been reading the console for centuries and built",
+      "start": 15.84,
+      "end": 19.808
+    },
+    {
+      "who": "VO",
+      "text": "a civilization around never admitting it.",
+      "start": 20.088,
+      "end": 22.968
+    },
+    {
+      "who": "MAGISTRATE",
+      "text": "The ledger says three. The sky says two. When they disagree,",
+      "start": 23.248,
+      "end": 26.661
+    },
+    {
+      "who": "VO",
+      "text": "sapling, one of them gets corrected.",
+      "start": 26.941,
+      "end": 29.48
+    }
+  ],
+  "total_s": 29.76
 }

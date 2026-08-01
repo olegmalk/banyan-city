@@ -393,3 +393,140 @@ Founder-facing: the stranger-review found product-level gaps that are NOT
 steward calls: audience thread separate from ballot threads, one public word
 for scene/shot/beat, episode-status wording ("final" vs "working cut").
 Logged for the next founder session.
+
+## 2026-08-01 — licence gate: 46 violations found, 25 fixed, 21 open (D13)
+
+`pipeline/licence_gate.py` ran fully for the first time. Every violation was
+pre-existing; almost all were in node 001. The tree publishes **CC BY 4.0**,
+which grants commercial reuse, so a non-commercial input inside an episode
+makes our own licence a false statement — the argument does not depend on
+anyone enforcing it.
+
+**Fixed (records, not standards):**
+
+- 15 Kaggle/SVD takes → `clips/footage-archive/` (R6). Non-commercial research
+  licence; all were orphans (no leaf referenced them), left in the live
+  assembly dir when cycle 012 moved assembly to `takes/clips/`.
+- `post_motion.py` was writing sidecars to `NN-slug.meta.yaml` instead of
+  `NN-slug.POST.meta.yaml` — `.with_suffix("").with_suffix(...)` strips both
+  suffixes. 15 clips read as unprovenanced while 15 orphan sidecars sat beside
+  them, each claiming to describe a different take. Cause fixed, 15 renamed.
+- 006b's 4 VO manifests: engine backfilled from `voices.yaml` (kokoro-82M,
+  Apache-2.0), corroborated by mp3 mtimes predating Chatterbox. Audio untouched.
+
+**The live hole, closed.** `build_site.py` published `takes/clips/` with a bare
+`iterdir()` and no licence check — that is how `13-i-always-left.PIXVERSE.mp4`
+became a downloadable file on banyan.city while D8 had already recorded
+PixVerse's free tier as personal-use-only. `publishable()` now asks the gate
+and withholds **deny and unknown** (unread terms are not a licence to publish);
+the board renders an honest withheld card + `WITHHELD.md` instead of a dead
+player. 10 clips withheld, sidecars still shipped, link check green over 69
+pages.
+
+**Open, founder call (D13):** beats 2, 4, 8, 11, 13 of the LIVE episode are
+PixVerse free-tier — re-render queued on Wan 2.2 (Apache-2.0, $0), or swap to
+the `.POST.mp4` alternates that already exist for all five, or record a paid
+plan if one was used. Flow (6) and LTXV (2) need their terms actually read.
+
+**Ratchet, deliberately.** `pages.yml` runs lint before `build_site`, so hard-
+failing 21 pre-existing violations would have stopped banyan.city deploying
+overnight rather than reddening a badge. Debt is advisory; the COUNT is
+asserted at `LICENCE_DEBT = 21`. A new violation fails lint and tests
+immediately (verified by probe). Number may only fall.
+`LICENCE_GATE_STRICT=1` = everything fatal, the founder's switch.
+
+Renders: 5090 re-rendering 8 motion beats at **704x1280 / 50 steps** — the only
+size Wan 2.2 TI2V-5B supports, against the 480x832 / 20 steps every previously
+judged clip used. Five PixVerse beats queued behind it, then the A14B prefetch
+(download only).
+
+## 2026-08-01 — the death was a nine-second hole (cycle 014)
+
+The founder's note "his death is very anticlimatic" survived four rounds of work
+on the thump because **the thump was never the problem** — at 14s it is the
+loudest moment in the episode, louder than any dialogue.
+
+**Beat 4 runs 10.08s where the script gives it 5** (`THE FALL — 0:15–0:20`): two
+full-length 5.04s shots concatenated, carrying no VO at all. RMS decays -28 →
+-46 dB across it while dialogue sits at -13. That silent double-length beat IS
+the anticlimax, it is in every cut ever screened (v11 6.5s, v13 6.2s, v17 7.5s,
+v18 9.5s), and the -17 LUFS re-master shipped as the fix for this very note made
+it 2s longer and 5 dB deeper.
+
+`qa_episode.quiet_hole()` now measures the longest stretch far below the
+episode's OWN 90th-percentile speech level — relative, because an absolute floor
+cannot express "far below the speech around it". `silencedetect` thresholds on
+peaks and returned green for three cycles.
+
+Three options built and measured SEPARATELY (14-25s mean / hole):
+baseline -35.0 / 9.5s · beat-4 trim -27.2 / gone · + fan up + black beat 5
+-24.9 / gone. **The trim alone is the fix** and is not a taste call. On the
+founder's desk: `ep1-v19-BASELINE / -B4TRIM / -FULL.mp4`,
+`DEATH-before-after.png`, `death-fix-sound.patch`. Nothing committed to the cut.
+
+Also: **beat 5, scripted "Black, and the sound of a cooling fan spinning down",
+is a 4-second copy of the bright sky** (luma 135.8 vs 136.2). Cycle 013
+attributes that choice to the founder; his traceable words object to the beat
+showing the TERMINAL. A paraphrase became an attributed decision and node.md was
+never updated. Flagged, not reverted — R4.
+
+Voice: `pipeline/synth_voxcpm.py` maps the script's own parentheticals ("VO
+(tired, flat)") to VoxCPM2's per-line style prompt — the first engine we have
+that takes direction rather than dials. Apache-2.0, commercial use explicit,
+licence read BEFORE the work this time. Wants CUDA, so it belongs on the 5090.
+`--dry-run` reviews every line's direction with no model or GPU.
+
+**VoxCPM2 verified working on THIS Mac (MPS), 2026-08-01 ~23:00Z** — the model
+card asks for CUDA >= 12 but it auto-adjusts bfloat16 -> float32 for mps and
+runs at 48 kHz, ~1.4x realtime (4.96s of audio in 7s, 26s model load). No 5090
+needed for voice. Venv: `~/banyan-tts-venvs/vox` (python 3.11, torch 2.13.0).
+
+The control that matters: same sentence, no direction 6.40s / "(exhausted, flat,
+low energy, speaking slowly at 3am)" 6.72s / "(bright, quick, genuinely
+delighted)" **4.80s**. The direction changes delivery, and it is NOT spoken aloud
+— the direction text would add 3-4s if recited, and directed is +0.32s over
+plain. VoxCPM-0.5B DID recite it; VoxCPM2 does not. Different behaviour, same
+family — do not carry the 0.5B lesson across.
+
+Samples on the founder's desk: `voice-voxcpm2/` (3 of episode 1's own lines, A/B
+vs Chatterbox, + the 3-way control) with `LISTEN.md`. Caveats recorded there:
+voxcpm2 runs LONGER than the current voice on all three lines (6.72 vs 4.38,
+4.32 vs 3.13, 2.08 vs 1.36), so adopting it means re-timing the cut; and these
+are voice-DESIGN samples with no reference clip, so the character is invented
+rather than matched. Cloning + direction together is the next step and the code
+supports it.
+
+## 2026-08-01 01:15Z — TWO workers were sharing the 5090 all night
+
+The failed 704x1280 batch was not mis-sized. Two `farm_worker.py` processes were
+running on the 5090, started 21 minutes apart, both polling the same queue and
+both claiming the same tasks. Heartbeat evidence: `2x STARTED
+task=vid-720p-all-1785529520`, two `PREFETCH_START`s, and two separate timeouts
+firing at 14430s and 14404s against the 14400s limit — each process ran the same
+8-clip batch to its own timeout.
+
+Throughput proves the contention: single beats rendered in ~13 min each
+(18:23-19:03), the same work under contention took ~26. Eight clips at 13 min is
+under two hours — comfortably inside the 4h cap. It only overran because it ran
+at half speed. Both processes also `git push -qf` the same branch from the same
+working tree, so results can erase each other, which is likely why zero clips ever
+landed even before the timeouts.
+
+Fixed with an O_CREAT|O_EXCL lock outside the repo (farm-out is committed and
+force-pushed, so a lock inside would be shipped and clobbered by the race it
+guards). No automatic staleness takeover — two workers racing to judge staleness
+is the same bug again; the refusal message tells a human what to do and `--force`
+clears a stale lock. The self-restart path releases before spawning the child, or
+every code update would deadlock the worker against its own lock. Deploys itself:
+both workers restart on the push, first child takes the lock, second stands down.
+
+**Expect one console window on the 5090 reading "another worker already holds this
+machine" — that is the fix working.**
+
+Also this session: CC BY sound credits were never published anywhere ("Gravity
+Sound" appeared nowhere in _site; SOURCES.md is not copied to the site). Node
+pages now render a Sound credits section from the node's own SOURCES.md, and
+POSTING-KIT.md step 0 carries the caption line — the site fix does nothing for a
+TikTok post. licence_gate is narrow here by design: it answers "does this licence
+permit use" and has no notion of permission granted IN EXCHANGE for something, so
+CC BY passes as `allow` and nothing checks the exchange happened.

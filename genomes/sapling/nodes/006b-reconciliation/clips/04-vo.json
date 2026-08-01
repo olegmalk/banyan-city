@@ -1,48 +1,49 @@
 {
- "cast": "voices.yaml",
- "lines": [
-  {
-   "who": "MAGISTRATE",
-   "text": "The last time a ledger held a name the sky would not count\u2026",
-   "start": 0.0,
-   "end": 3.371
-  },
-  {
-   "who": "VO",
-   "text": "the sky stopped counting the whole valley. There are maps in the archive",
-   "start": 3.651,
-   "end": 7.576
-  },
-  {
-   "who": "VO",
-   "text": "with a town on them that I am not permitted to remember.",
-   "start": 7.856,
-   "end": 11.291
-  },
-  {
-   "who": "MAGISTRATE",
-   "text": "Be countable by harvest's end. I would rather amend the sky",
-   "start": 11.571,
-   "end": 14.813
-  },
-  {
-   "who": "VO",
-   "text": "than the ledger. (quieter) No one has ever been permitted to try.",
-   "start": 15.093,
-   "end": 18.549
-  },
-  {
-   "who": "VO",
-   "text": "Two weeks to convince the sky I exist. \u2026I've filed tickets against",
-   "start": 18.829,
-   "end": 23.16
-  },
-  {
-   "who": "VO",
-   "text": "systems that didn't believe in me before. I usually lost.",
-   "start": 23.44,
-   "end": 27.237
-  }
- ],
- "total_s": 27.517
+  "engine": "kokoro-onnx (kokoro-82M)",
+  "cast": "voices.yaml",
+  "lines": [
+    {
+      "who": "MAGISTRATE",
+      "text": "The last time a ledger held a name the sky would not count\u2026",
+      "start": 0.0,
+      "end": 3.371
+    },
+    {
+      "who": "VO",
+      "text": "the sky stopped counting the whole valley. There are maps in the archive",
+      "start": 3.651,
+      "end": 7.576
+    },
+    {
+      "who": "VO",
+      "text": "with a town on them that I am not permitted to remember.",
+      "start": 7.856,
+      "end": 11.291
+    },
+    {
+      "who": "MAGISTRATE",
+      "text": "Be countable by harvest's end. I would rather amend the sky",
+      "start": 11.571,
+      "end": 14.813
+    },
+    {
+      "who": "VO",
+      "text": "than the ledger. (quieter) No one has ever been permitted to try.",
+      "start": 15.093,
+      "end": 18.549
+    },
+    {
+      "who": "VO",
+      "text": "Two weeks to convince the sky I exist. \u2026I've filed tickets against",
+      "start": 18.829,
+      "end": 23.16
+    },
+    {
+      "who": "VO",
+      "text": "systems that didn't believe in me before. I usually lost.",
+      "start": 23.44,
+      "end": 27.237
+    }
+  ],
+  "total_s": 27.517
 }

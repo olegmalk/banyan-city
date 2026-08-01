@@ -122,3 +122,4 @@
 01:49:53Z PREFETCH_START lightx2v/Wan2.2-Distill-Loras
 01:52:55Z PREFETCH_OK lightx2v/Wan2.2-Distill-Loras
 01:52:58Z DONE task=prefetch-a14b-1785529520
+01:54:17Z STARTED task=vid-lic-a-1785545700 beats=2,4 on cuda

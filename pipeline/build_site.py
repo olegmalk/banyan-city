@@ -32,6 +32,7 @@ from pathlib import Path
 import markdown
 import yaml
 
+import licence_gate as lg
 from site_theme import THEME_CSS
 
 REPO = Path(__file__).resolve().parent.parent
@@ -336,6 +337,106 @@ def split_sections(md_text: str) -> list:
     return parts
 
 
+# ------------------------------------------------------------ publish safety
+
+# What a VISITOR is told when a take is withheld. Plain, complete sentences that
+# assume no knowledge of our pipeline, our gate, or who the founder is.
+PUBLIC_REASON = {
+    "deny": "the licence on the model that made it forbids commercial reuse, "
+            "and every episode here is published under CC BY 4.0 — which grants it",
+    "unknown": "its licence has not been cleared for redistribution yet",
+}
+
+
+def publishable(f: Path) -> tuple:
+    """(ok, why) — may this take be copied onto the public site?
+
+    The shot board publishes `takes/clips/` wholesale (D11: the crowd can only
+    beat a take it can see), and for months that was a bare iterdir() with no
+    licence question asked. It is how `13-i-always-left.PIXVERSE.mp4` became a
+    downloadable file on banyan.city while DECISIONS.md D8 already recorded
+    PixVerse's free tier as personal-use-only — the decision was written down,
+    then the build published past it.
+
+    Asks licence_gate rather than carrying a blocklist, so a route classified
+    once is enforced everywhere. Records (sidecars, manifests) always travel:
+    withholding the provenance of a withheld clip would be the exact opposite
+    of the point.
+    """
+    if f.suffix.lower() in {".yaml", ".yml", ".json", ".md"}:
+        return True, ""
+    side = None
+    for ext in (".meta.yaml", ".meta.yml", ".json"):
+        cand = f.with_suffix(ext)
+        if cand.exists():
+            side = cand
+            break
+    if side is None:
+        return True, ""      # unprovenanced is the gate's finding, not the build's
+    try:
+        data = yaml.safe_load(side.read_text(encoding="utf-8")) or {}
+    except Exception:                                    # noqa: BLE001
+        return True, ""
+    if not isinstance(data, dict):
+        return True, ""
+    for key, value in data.items():
+        if key.lower() not in lg.PROVENANCE_KEYS:
+            continue
+        licence = lg.engine_licence(value)
+        if licence is None:
+            continue
+        verdict, _why = lg.classify(licence)
+        if verdict != "allow":
+            # 'unknown' is withheld too, not waved through. Unknown means
+            # nobody has read the terms — and "we do not know whether we may
+            # publish this" is not a reason to publish it to the open web. It
+            # is a reason to read the licence, which is a human's job.
+            #
+            # classify()'s own `why` is deliberately NOT used here. It is written
+            # for whoever maintains the gate — "classify it in
+            # pipeline/licence_gate.py or replace the asset" — and this string
+            # lands on a public page. The first version of this shipped that
+            # sentence, plus "founder sign-off pending", onto the shot board for
+            # a stranger arriving from TikTok to read. Same de-jargoning rule as
+            # the rest of the site: story words out front, machine words in the
+            # drawers. The licence NAME stays, because that part is genuinely
+            # informative and a reader can look it up.
+            return False, f"{PUBLIC_REASON[verdict]} ({public_licence(licence)})"
+    return True, ""
+
+
+def public_licence(licence: str) -> str:
+    """The licence identifier with our own bookkeeping stripped off.
+
+    MODEL_LICENCES values carry internal notes for whoever maintains the gate —
+    "LTXV Open Weights Licence 0.X (read; founder sign-off pending)". The name is
+    worth showing a visitor; "founder sign-off pending" is not, and neither is a
+    trailing remedy clause after an em dash.
+    """
+    licence = licence.split(" — ")[0]
+    return re.sub(r"\s*\([^)]*\)\s*$", "", licence).strip()
+
+
+def withheld_note(rows: list) -> str:
+    """Why a take the board lists is not downloadable here.
+
+    Silence would read as a broken link. The take EXISTS, its recipe and
+    provenance are published beside it, and anyone may re-shoot the beat on a
+    publish-safe route — that is the fork invitation, stated instead of hidden.
+    """
+    lines = ["# Takes withheld from the public site", "",
+             "These takes exist in the repo and their provenance is published",
+             "beside them. They are not copied here because their licence",
+             "forbids it: the tree releases every episode under **CC BY 4.0**,",
+             "which grants commercial reuse a non-commercial input cannot.", "",
+             "Withholding is not a quality judgement. Any of these beats can be",
+             "re-shot on a publish-safe route ($0: `render_local.py`, Kaggle Wan,",
+             "`post_motion.py`) and a better take is welcome from anyone.", ""]
+    for name, why in sorted(rows):
+        lines.append(f"- **{name}** — {why}")
+    return "\n".join(lines) + "\n"
+
+
 # ---------------------------------------------------------------- media facts
 
 def mp4_seconds(p: Path):
@@ -598,6 +699,40 @@ def node_card(genome_id: str, n: dict, depth: int) -> str:
 
 # ------------------------------------------------------------------ node pages
 
+def audio_credits(node_dir: Path) -> str:
+    """Markdown crediting every attribution-required sound this node uses.
+
+    Reads the node's own audio-sources/SOURCES.md table and keeps the rows whose
+    licence actually asks for a credit — CC0 and public domain do not, so listing
+    them would bury the two that matter. Returns "" when there is nothing owed,
+    so nodes with no recorded audio grow no empty section.
+    """
+    src = node_dir / "audio-sources" / "SOURCES.md"
+    if not src.exists():
+        return ""
+    owed = []
+    for line in src.read_text(encoding="utf-8").splitlines():
+        if not line.startswith("|") or "---" in line:
+            continue
+        cells = [c.strip() for c in line.strip("|").split("|")]
+        if len(cells) < 4:
+            continue
+        licence = cells[3]
+        # CC BY asks for credit; CC0 and public domain do not. Match the licence
+        # TOKEN with its suffixes, and read the verdict off the suffix group —
+        # a first cut searched the leftover text for "nc|sa|nd" and matched the
+        # "nd" in "credit Gravity Sound", silently crediting nobody.
+        m = re.search(r"cc[-\s]?by((?:[-\s](?:nc|sa|nd))*)", licence, re.I)
+        if not m or m.group(1).strip():
+            continue                     # not CC BY, or a -NC/-SA/-ND variant
+        owed.append(f"- {cells[2]} — {licence}")
+    if not owed:
+        return ""
+    return ("Used under Creative Commons Attribution. The licence permits this "
+            "freely; crediting the author is the condition it asks in return.\n\n"
+            + "\n".join(owed) + "\n")
+
+
 def render_node_page(g: dict, n: dict) -> str:
     genome_id = g["tree"]["id"]
     ep = episode_no(g, n)
@@ -615,6 +750,18 @@ def render_node_page(g: dict, n: dict) -> str:
         if not text:
             continue
         (story_md if head.startswith(("State change", "Hook", "Script")) else prod_md).append((head, text))
+
+    # CC BY sound is PERMISSION WITH A CONDITION, and the condition is a credit.
+    # licence_gate says "allow" for CC BY and stops there — it checks whether a
+    # licence lets us use an asset, never whether we did the thing it asks in
+    # return. So two Gravity Sound recordings have been in the published episode
+    # with the credit living only in a repo file that was never copied to the
+    # site: "Gravity Sound" appeared nowhere in _site at all. We cannot ask
+    # reusers to credit us under our own CC BY while quietly not crediting the
+    # person we borrowed from.
+    credits = audio_credits(n["dir"])
+    if credits:
+        prod_md.append(("Sound credits", credits))
 
     # 1 — one player, the current lead cut, with a plain caption
     lead = lead_take(n)
@@ -1552,8 +1699,16 @@ def main() -> None:
                         shutil.copy(f, gdir / f"{media}-takes" / f.name)
                 if (node_dir / "takes" / "clips").is_dir():
                     (gdir / f"{media}-clips").mkdir(exist_ok=True)
+                    withheld = []
                     for f in (node_dir / "takes" / "clips").iterdir():
+                        ok, why = publishable(f)
+                        if not ok:
+                            withheld.append((f.name, why))
+                            continue
                         shutil.copy(f, gdir / f"{media}-clips" / f.name)
+                    if withheld:
+                        (gdir / f"{media}-clips" / "WITHHELD.md").write_text(
+                            withheld_note(withheld))
 
     total = sum(len(g["nodes"]) for g in genomes)
     posters = sum(1 for v in _POSTERS.values() if v)

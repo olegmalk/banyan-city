@@ -210,6 +210,7 @@ tolerates.
 | Download dies partway | Some routers kill long connections. Re-run the same line; pip resumes. |
 | `charmap codec can't encode` | Old code. Run `git pull` in `C:\banyan-farm\banyan-city`, restart the worker. |
 | Worker window closed | Nothing breaks; queued work waits. Re-run step 7. |
+| `another worker already holds this machine` | Exactly what it says, and it is protecting you: two workers on one GPU each run at about half speed and overwrite each other's results. That cost a four-hour render on 2026-07-31. **If another worker window is still open, just close this one.** If nothing else is running, the lock is stale — the message prints the file to delete, or add `--force` to step 7's command. |
 
 To remove the machine from the farm entirely: close the window, delete
 `C:\banyan-farm` and `C:\banyan-video`. Nothing else was ever installed.

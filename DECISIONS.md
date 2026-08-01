@@ -278,3 +278,94 @@ and branch-ordering without any money touching the project. Rationale: same
 power for everyone, very simple, and no payment custody in a family project.
 The founders' own spend (the $15 motion authorization) remains separate,
 founder-authorized, capped, and ledgered as before.
+
+## D13 — The tree publishes CC BY 4.0, and five beats of the live episode do not (OPEN — founder call, 2026-08-01)
+
+`pipeline/licence_gate.py`'s first full run found 46 licence violations. All
+pre-existing; almost all in node 001. Records hygiene closed 25 of them (see the
+commit): fifteen orphaned Stable Video Diffusion takes archived under R6,
+fifteen POST sidecars renamed after fixing the `post_motion.py` bug that had been
+writing them to the wrong filename, four VO manifests given the engine of record
+already sitting in `voices.yaml`.
+
+**Twenty-one remain, and the shape of them is the decision.**
+
+The tree releases every episode under **CC BY 4.0** — a licence that grants
+strangers commercial reuse. An input that forbids commercial use cannot be inside
+a work that grants it; publishing one makes our own licence a false statement to
+everyone who relies on it. That is the whole argument, and it does not depend on
+anyone suing us.
+
+**1. Five beats of the live episode (2, 4, 8, 11, 13) are PixVerse free-tier.**
+`DECISIONS.md` D8 already recorded that tier as "license-blocked (personal-use
+only ToS)" on 2026-07-27 — written down, then used anyway, then published to
+banyan.city and TikTok. This is the real one. Remedies, cheapest first:
+
+- **Re-render on Wan 2.2 (Apache-2.0), $0, queued on the 5090 as
+  `vid-720p-licence-…`.** The remake is licence-clean by construction and the
+  work was happening anyway. Recommended.
+- **Swap to the `.POST.mp4` take.** Every one of the five beats already has a
+  local-deterministic alternate, publishable today, no render needed. The fast
+  path if a cut has to ship before the Wan clips land.
+- **If any of those takes was made on a PAID PixVerse plan, record the plan in
+  the sidecar and nothing else is needed.** Only the founder or the contributor
+  knows. Worth asking before re-rendering anything.
+
+**2. Flow (6 files) and LTXV (2 files) — READ as of 2026-08-01. Both now need a
+decision, not more research.**
+
+**LTXV: the recorded reason for blocking it was wrong.** The Open Weights License
+0.X (dated 2025-04-15, and by its own header applying to every LTXV release since
+v0.9.6, so it governs our unpinned 2026-07 takes) says at §5: *"Licensor claims no
+rights in the Output you generate using the Model."* The $10,000,000 revenue
+threshold in §2 decides **who must buy a licence for the model** — every granted
+verb in §2 takes "the Model" as its object, §3's redistribution conditions are
+scoped to "the Model or Derivatives of the Model", and §1.4 defines Derivatives
+model-to-model only (weights transferred into another model, distillation,
+synthetic training data). A rendered video is Output under §1.8, not a Derivative.
+The cap gates the weights, not the footage. **Recommendation: allow it.** Left
+unflipped pending founder sign-off — nobody here is a lawyer, `allow` is the
+direction that publishes things, and the two affected files are unused trial takes
+of beat 1, so waiting costs nothing.
+
+**Flow: no ownership problem, but we cannot pass on what we were given.** There is
+no Flow- or Labs-specific terms document at all (labs.google/terms is a 404; the
+service-specific index lists Labs.google against only the main ToS). The ToS says
+*"Google won't claim ownership over that content"*, and never mentions commercial
+use in any direction — the word appears once, defining "consumer". But two
+conditions attach to the output under "Don't abuse our services": no *"using
+AI-generated content from our services to develop machine learning models"*, and
+no *"misleading others into thinking that generative AI content was created by a
+human"*; plus a SynthID watermark that *"should not be tampered with or removed"*.
+Our own release grants reusers "any purpose, even commercially" — training
+included — so we cannot honestly hand on restrictions we accepted. That is a
+judgement about what we warrant to reusers, not missing text. Independently, all
+three files record `watermark: true` (visible Flow sparkle), which disqualifies
+them regardless. **Recommendation: move them off the published surface.**
+
+**3. A licence seam nobody chose.** The three Flow trial clips live under
+`pipeline/`, which `LICENSE-CODE.md` claims as MIT ("the pipeline, tooling, site
+generators, and any scripts"), while `LICENSE-CONTENT.md` applies CC BY 4.0 to
+"genomes, nodes, scripts, leaves, taste files". So three watermarked Veo videos
+currently sit inside an MIT-declared tree. That looks unintended and needs a
+human decision independent of either licence question.
+
+**4. And a correction to the scoping in this entry's first draft.** It said the
+blocked footage was gitignored, so the exposure was the deployed site only. That
+was checked against `clips/` and generalised wrongly: **`takes/clips/` is fully
+tracked** — every PixVerse, SVD and LTX mp4 is committed and public on GitHub, as
+are the three Flow trials. So `build_site.publishable()` closes one of two
+exposure paths. Since the repo IS the product, "not in any episode" is not the
+same as "not published", and removing a tracked file is a history question as well
+as a working-tree one.
+
+**The gate is a ratchet, and that was a judgement call worth stating.**
+`pages.yml` runs `lint_genome.py` immediately before `build_site.py`, so making
+these 21 fatal would not have reddened a badge — it would have stopped
+banyan.city from deploying at all, overnight, blocking the founder's own goal of
+shipping episode 1. So pre-existing debt is an advisory and the *count* is
+asserted (`LICENCE_DEBT = 21`): one new violation fails lint and the test suite
+immediately, and the number may only go down. `LICENCE_GATE_STRICT=1` makes
+every violation fatal — the founder's switch, to flip the day the tree is clean.
+Raising `LICENCE_DEBT` to make a build pass would turn the one gate that can
+catch an unpublishable episode into a rubber stamp.

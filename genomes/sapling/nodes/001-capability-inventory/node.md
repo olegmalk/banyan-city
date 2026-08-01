@@ -2,7 +2,7 @@
 
 **Tree:** Sapling · **Parent:** none (root) · **Trunk:** yes · **Status:** hot
 **This file is a T0 leaf** (`001-t0-c`, shot-granular per SCRIPT-SPEC.md).
-**Format:** 9:16 vertical · ~82s · VO-driven · 18 beats = 18 shots
+**Format:** 9:16 vertical · ~97s · VO-driven · 15 beats = 15 shots
 
 ---
 

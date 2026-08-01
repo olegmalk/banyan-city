@@ -17,8 +17,10 @@ Driven by farm_worker when a queue task carries `video: true`.
 import json
 import os
 import platform
+import re
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
@@ -28,6 +30,63 @@ VENV = ROOT / "venv"
 PY = VENV / ("Scripts/python.exe" if IS_WIN else "bin/python3")
 # Blackwell (RTX 50-series) needs cu128 wheels; older builds do not know sm_120
 TORCH_INDEX = "https://download.pytorch.org/whl/cu128"
+
+
+PROGRESS = re.compile(r"^\[(\d+)/(\d+)\]\s+wrote\s+(.+?)\s+in\s+(\S+)")
+
+
+def _stream(cmd, courier, timeout, env):
+    """Run cmd, heartbeating each finished clip instead of after all of them.
+
+    `subprocess.run(capture_output=True)` buffers until exit, so a batch of 8
+    clips sharing one model load — the whole point of batching, 44min down to
+    11 — reported NOTHING for over an hour. The courier's promise is that "a
+    silent machine is impossible", and for long batches it quietly was not:
+    from outside, an hour of healthy sampling and a hung process look
+    identical. wan_i2v already prints `[i/N] wrote <path> in <n>s` per clip;
+    this just stops throwing those lines away until the end.
+
+    Returns a CompletedProcess so callers (retry/transient logic) are unchanged.
+
+    SECOND EFFECT, load-bearing, do not remove the mark() call thinking it is
+    only logging: batch clips are written straight into `courier.out`, and
+    Courier.mark() does `git add -A farm-out` + commit + push. So marking per
+    clip also PUSHES each finished clip the moment it exists. Before this, a
+    batch that hit its timeout lost every clip it had already rendered, because
+    nothing was pushed until the task returned — three hours of finished work
+    discarded by the last minute of it. Now a timeout keeps whatever finished.
+    """
+    out, err = [], []
+    deadline = time.time() + timeout if timeout else None
+    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                         text=True, errors="replace", bufsize=1, env=env)
+    try:
+        for line in p.stdout:
+            out.append(line)
+            m = PROGRESS.match(line.strip())
+            if m and courier:
+                try:
+                    courier.mark(f"VIDEO_CLIP {m.group(1)}/{m.group(2)} "
+                                 f"{Path(m.group(3)).name} in {m.group(4)}")
+                except Exception:            # noqa: BLE001
+                    # a heartbeat must never be able to kill the render it is
+                    # reporting on — the cp1252 lesson, five casualties deep
+                    pass
+            if deadline and time.time() > deadline:
+                p.kill()
+                raise subprocess.TimeoutExpired(cmd, timeout)
+        err.append(p.stderr.read() or "")
+        p.wait(timeout=60)
+    finally:
+        for pipe in (p.stdout, p.stderr):
+            try:
+                pipe.close()
+            except Exception:                # noqa: BLE001
+                pass
+        if p.poll() is None:
+            p.kill()
+    return subprocess.CompletedProcess(cmd, p.returncode, "".join(out),
+                                       "".join(err))
 
 
 def _run(cmd, courier, stage, timeout=None, retry=False):
@@ -42,8 +101,7 @@ def _run(cmd, courier, stage, timeout=None, retry=False):
            "HF_HUB_DOWNLOAD_TIMEOUT": "60"}
     attempts = 3 if retry else 1
     for attempt in range(1, attempts + 1):
-        r = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout,
-                           env=env, errors="replace")
+        r = _stream(cmd, courier, timeout, env)
         if courier:
             courier.say(f"$ {' '.join(str(c) for c in cmd[:6])}…\n{(r.stdout or '')[-1500:]}"
                         f"{(r.stderr or '')[-2500:]}")
