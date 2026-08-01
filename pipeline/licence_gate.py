@@ -193,6 +193,25 @@ MODEL_LICENCES = {
     # version explicitly, after reading ITS licence, and never rely on the
     # prefix. The direction that bites is always allow-by-inheritance.
     "voxcpm2": "Apache-2.0",
+    # ---- video models whose licence was READ, 2026-08-01 -------------------
+    # AnimeGen-I2V (aidealab): LICENSE file verified byte-identical to canonical
+    # Apache-2.0 through all nine operative sections, front matter tags
+    # `commercial-use`. An anime finetune of Wan 2.2 that force-prepends
+    # "Japanese anime style" and negatives out 3d/cg/photo — it fails TOWARD
+    # anime, which is the drift direction we want.
+    # Undisclosed training data: not a licence problem (the LICENSE is clean) but
+    # worth logging under §7.2 that we cannot say what it learned from.
+    "animegen": "Apache-2.0",
+    "aidealab": "Apache-2.0",
+    # Deliberately ABSENT and not to be re-proposed without reading D13:
+    #   ltx / lightricks  — weights ship under THREE licences by version; the 2B
+    #                       is "academic or research purposes only, and explicitly
+    #                       excludes commercialization", and the GitHub LICENSE
+    #                       that looks like plain Apache-2.0 covers CODE ONLY.
+    #   hunyuanvideo      — Tencent community licence §5(c) excludes the EU, UK
+    #                       and South Korea from the permitted Territory. We would
+    #                       breach it by publishing at all, before any downstream
+    #                       question, since banyan.city is visible in the EU.
     # ---- open image / video weights ------------------------------------
     # v1 called this one an ADVISORY, on the premise that it was "already on
     # disk in superseded takes". That premise was false, and the audit proved

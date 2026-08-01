@@ -89,6 +89,101 @@ def _stream(cmd, courier, timeout, env):
                                        "".join(err))
 
 
+# Wan 2.2 is a general video model — the founder's read after screening six takes:
+# "wan 2.2 is still pretty good, the problem is its not made for anime style"
+# (2026-08-01). Its training is dominated by live action, so left alone it pulls
+# every frame toward photography no matter how anime the still it was handed.
+#
+# The proper fix is an anime-trained model (AnimeGen-I2V, parked on VRAM). This is
+# the cheap one available today: say the style out loud in the POSITIVE and put
+# photography in the NEGATIVE. Costs nothing, and until now we had nowhere to put
+# a negative at all — every "no photorealism" clause was sitting in the positive
+# prompt asking for the opposite.
+STYLE = ("2D anime, hand-drawn cel animation, flat cel shading, clean ink "
+         "linework, anime key art")
+ANTI_STYLE = ("photorealistic, photograph, live action, film still, 3D render, "
+              "CGI, octane, realistic skin texture, depth of field bokeh, "
+              "motion blur")
+
+
+# SDXL prompt furniture that means nothing to a video model and eats its attention
+QUALITY_SPAM = re.compile(
+    r"\b(masterpiece|best quality|very aesthetic|newest|highly detailed|detailed|"
+    r"cinematic lighting|9:16 vertical|no text)\b[,.\s]*", re.I)
+# "No person, no figure, no cloak" — negatives written as PROSE inside what we
+# hand over as the POSITIVE prompt
+NEGATIVE_PROSE = re.compile(r"\bno\s+[a-z0-9][^,.]*(?:[,.]|$)", re.I)
+
+
+def video_prompt(motion: str, still_prompt: str) -> tuple:
+    """(positive, extra_negative) for animating an ALREADY APPROVED frame.
+
+    We were handing the video model the STILL-GENERATION prompt — a full
+    instruction for drawing the scene from scratch, complete with SDXL quality
+    tags and negatives written as prose. An image-to-video model reads that as
+    "draw this", not "move this", and obliges: beat 12's prompt says "a single
+    thin green plant stem bent into a tense arc", so Wan drew one IN ADDITION to
+    the stem already in the frame, entering from the right. The founder spotted it
+    as "a stick poking the sapling" (2026-08-01). Beat 15 similarly re-lit the
+    scene from "rings of warm orange light" instead of moving anything.
+
+    So: strip the quality furniture, move the "No X" prose into the real negative
+    prompt where it belongs, and put MOTION first with the scene reduced to a
+    short anchor — enough for the model to know what it is looking at, not enough
+    to invite a redraw.
+
+    Nothing is invented here; the beat's own words are reused, just sorted into
+    the field that acts on them.
+    """
+    still_prompt = still_prompt or ""
+    negatives = [m.group(0).strip(" ,.") for m in NEGATIVE_PROSE.finditer(still_prompt)]
+    scene = NEGATIVE_PROSE.sub("", still_prompt)
+    scene = QUALITY_SPAM.sub("", scene)
+    scene = re.sub(r"\s*,\s*,+", ",", scene)
+    scene = re.sub(r"\s+", " ", scene).strip(" ,.")
+    # a short anchor only — the frame already carries the composition
+    words = scene.split()
+    anchor = " ".join(words[:22]) + ("…" if len(words) > 22 else "")
+    positive = f"{STYLE}. {motion}. Subject already in frame: {anchor}." if anchor \
+        else f"{STYLE}. {motion}"
+    extra_neg = ", ".join(n[3:].strip() for n in negatives if len(n) > 3)
+    return positive[:700], f"{extra_neg}, {ANTI_STYLE}"[:400].lstrip(", ")
+
+
+MODEL_LICENCE = {
+    "ti2v-5b":  ("Wan-AI/Wan2.2-TI2V-5B-Diffusers", "Apache-2.0"),
+    "animegen": ("aidealab/AnimeGen-I2V", "Apache-2.0"),
+}
+
+
+def write_sidecar(clip, vmodel, task, beat, seconds, steps, size):
+    """A §7.2 provenance sidecar beside every generated clip.
+
+    Video clips have been landing on the courier branch as bare mp4s, with the
+    model recorded nowhere — licence_gate then flags them as "footage ships with
+    no provenance", and it is right to. The renderer is the only thing that knows
+    what it just ran, so it is the only thing that can say so honestly.
+
+    Licence is written from a table keyed on the SHORT name, not guessed from the
+    repo id: an unrecognised model gets "UNVERIFIED" rather than a hopeful
+    Apache-2.0, because a wrong allow is the direction that publishes things.
+    """
+    repo, lic = MODEL_LICENCE.get(vmodel, (vmodel, "UNVERIFIED — licence not read"))
+    Path(str(clip) + ".meta.yaml").write_text(
+        "# Shot provenance (7.2) — written by video_task at render time\n"
+        f"platform: local-gpu ({task.get('worker', 'unknown')})\n"
+        f"model: {repo}\n"
+        f"model_licence: {lic}\n"
+        f"shot_beat: {beat}\n"
+        f"size: {size}\n"
+        f"seconds: {seconds}\n"
+        f"steps: {steps}\n"
+        f"guidance: {task.get('guidance', 5.0)}\n"
+        f"seed: {int(task.get('seed_base', 20260731)) + beat}\n"
+        f"task: {task.get('id')}\n"
+        "cost_usd: 0\n", encoding="utf-8")
+
+
 def _run(cmd, courier, stage, timeout=None, retry=False):
     # utf-8 on the child's stdout: Windows consoles default to cp1252, and a
     # single non-ASCII character in a SUCCESS message killed a 25-minute
@@ -225,24 +320,31 @@ def run(task: dict, courier, node_dir: Path) -> None:
             motion = task.get("motion") or ("subtle continuous motion, gentle camera "
                                             "drift, living scene")
             o = courier.out / f"{task.get('id')}-{num:02d}-{s['slug']}.mp4"
-            jobs.append({"init": str(init), "out": str(o),
-                         "prompt": f"{motion}. {s['prompt']}"[:900],
+            pos, neg = video_prompt(motion, s["prompt"])
+            jobs.append({"init": str(init), "out": str(o), "prompt": pos,
+                         "negative": neg,
                          "seed": int(task.get("seed_base", 20260731)) + num})
             outs.append((num, o))
         if jobs:
             jf = ROOT / f"jobs-{task.get('id')}.json"
             jf.write_text(json.dumps(jobs), encoding="utf-8")
-            courier.mark(f"VIDEO_RENDERING batch of {len(jobs)} (one model load)")
+            vmodel = str(task.get("video_model", "ti2v-5b"))
+            courier.mark(f"VIDEO_RENDERING batch of {len(jobs)} on {vmodel} "
+                         f"(one model load)")
             _run([str(PY), str(REPO / "pipeline" / "wan_i2v.py"), "--stage", "simple",
                   "--embeds", str(ROOT / "unused.pt"), "--jobs", str(jf),
                   "--seconds", str(seconds), "--steps", str(steps), "--size", size,
-                  "--guidance", str(task.get("guidance", 5.0))],
+                  "--model", vmodel,
+                  "--quantise", str(task.get("quantise", "none")),
+                  "--guidance", str(task.get("guidance", 5.0))]
+                 + (["--offload"] if task.get("offload") else []),
                  courier, f"batch {task.get('id')}", timeout=14400, retry=True)
             jf.unlink(missing_ok=True)
             made = 0
             for num, o in outs:
                 if o.exists() and o.stat().st_size > 10_000:
                     made += 1
+                    write_sidecar(o, vmodel, task, num, seconds, steps, size)
                     courier.mark(f"VIDEO_CLIP_OK beat={num:02d} {o.stat().st_size//1024}KB")
                 else:
                     courier.mark(f"VIDEO_CLIP_EMPTY beat={num:02d}")

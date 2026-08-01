@@ -56,27 +56,45 @@ ENGINE = "voxcpm2 (openbmb/VoxCPM2)"
 # Phrasing is deliberately behavioural ("flat", "clipped", "no lift at the end")
 # rather than emotional ("sad"), because a description of DELIVERY is a thing a
 # TTS model can act on, while a description of FEELING invites it to perform.
+# EVERY entry states PACE explicitly, and that is the whole lesson here.
+#
+# The first version of this table described how a line FEELS and left pace to the
+# model. Measured against the shipping voice on beat 12 ("…That's the whole API."):
+#
+#     no direction at all ............ 1.44s   (shipping take: 1.60s)
+#     "dry, factual, deadpan,
+#      no emotional colour" ......... 5.12s   — 3.5x LONGER
+#
+# VoxCPM2 reads "deadpan, no emotional colour" as solemn and weighty, so it slows
+# right down. Left alone it matches our pace to within 0.16s. So the engine was
+# never slow — the prose was. An earlier take on beat 2 was worse still, because
+# I had literally written "speaking slowly at 3am" into the direction and then
+# been surprised that it spoke slowly.
+#
+# House register: DEADPAN AND BRISK. The comedy is a dry incident report delivered
+# at working speed (R3), not a man narrating his own tragedy. When in doubt say
+# "brisk" — an unmarked line should sound like someone talking, not intoning.
 DIRECTION = {
     ("tired", "weary", "sigh"):
-        "exhausted, flat, low energy, speaking slowly at 3am",
+        "exhausted and flat, low energy but still brisk, not drawn out",
     # relief is warm but SMALL — he thinks he is going to bed, not celebrating
     ("relieved", "cheerful", "almost cheerful"):
-        "a small tired relief, warmer but still quiet, almost going to bed",
+        "a small tired relief, warmer but quiet, normal speaking pace",
     # dazed: the words arrive before the understanding does
     ("dazed", "stunned", "confused", "distant"):
-        "dazed and far away, unhurried, as if not yet understanding",
+        "dazed and far away, even pace, not slowed",
     ("quiet",):
-        "very quiet, almost under the breath, no projection",
+        "very quiet, almost under the breath, no projection, unhurried but not slow",
     ("deadpan", "flat", "dry"):
-        "completely deadpan, dry, no emotional colour",
+        "dry and matter-of-fact, brisk, no emotional colour",
     ("excited", "delighted", "joy", "triumphant"):
         "bright and quick, genuinely delighted",
     ("angry", "furious", "snaps"):
-        "clipped and hard, controlled anger",
+        "clipped and hard, fast, controlled anger",
     ("scared", "panicked", "afraid"):
         "tight and fast, breath high in the chest",
 }
-DEFAULT_DIRECTION = "dry, factual, deadpan, no emotional colour"
+DEFAULT_DIRECTION = "dry, matter-of-fact, brisk, natural speaking pace"
 
 
 def style_for(cue: str) -> str:
@@ -237,9 +255,21 @@ def main() -> int:
                   "inference_timesteps": a.steps}
             if ref_wav:
                 kw["reference_wav_path"] = str(ref_wav)
-                kw["prompt_wav_path"] = str(ref_wav)      # 'ultimate cloning'
-                if ref_text:
-                    kw["prompt_text"] = ref_text
+                # DO NOT also pass prompt_wav_path/prompt_text here. The model
+                # card documents "ultimate cloning" (the same clip in both) for
+                # maximum voice similarity, and separately documents style
+                # control via a leading "(...)" — but the two DO NOT COMPOSE.
+                # With both set, the parenthetical stops being parsed as style
+                # and is SPOKEN ALOUD. Measured on "…That's the whole API.":
+                #
+                #   plain    + ultimate ..... 1.44s
+                #   directed + ultimate ..... 5.12s   <- reciting 51 chars
+                #   directed + ref-only ..... 1.44s   <- absorbed correctly
+                #
+                # That one line cost an evening: it looked like the engine was
+                # 2.5-4.7x too slow for our beats, then like our direction prose
+                # was at fault. Neither. Combining two documented features that
+                # were never documented together.
             wav = model.generate(**kw)
             part = out_dir / f"{beat['num']:02d}-vo-{i}.wav"
             sf.write(str(part), wav, sr)
