@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "C:\banyan-farm\banyan-city\pipeline\farm_worker.py", line 251, in main
+    render_task(task, courier, device, dtype)
+  File "C:\banyan-farm\banyan-city\pipeline\farm_worker.py", line 121, in render_task
+    return video_task.run(task, courier, d)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\banyan-farm\banyan-city\pipeline\video_task.py", line 178, in run
+    _run([str(PY), str(REPO / "pipeline" / "wan_i2v.py"), "--stage", "simple",
+  File "C:\banyan-farm\banyan-city\pipeline\video_task.py", line 45, in _run
+    r = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\artvn\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 550, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\artvn\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 1209, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\artvn\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 1630, in _communicate
+    raise TimeoutExpired(self.args, orig_timeout)
+subprocess.TimeoutExpired: Command '['C:\\banyan-video\\venv\\Scripts\\python.exe', 'C:\\banyan-farm\\banyan-city\\pipeline\\wan_i2v.py', '--stage', 'simple', '--embeds', 'C:\\banyan-video\\unused.pt', '--jobs', 'C:\\banyan-video\\jobs-vid-720p-all-1785529520.json', '--seconds', '3.0', '--steps', '50', '--size', '704x1280', '--guidance', '5.0']' timed out after 14400 seconds
