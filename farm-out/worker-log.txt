@@ -18,3 +18,24 @@ Traceback (most recent call last):
   File "C:\Users\artvn\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 1630, in _communicate
     raise TimeoutExpired(self.args, orig_timeout)
 subprocess.TimeoutExpired: Command '['C:\\banyan-video\\venv\\Scripts\\python.exe', 'C:\\banyan-farm\\banyan-city\\pipeline\\wan_i2v.py', '--stage', 'simple', '--embeds', 'C:\\banyan-video\\unused.pt', '--jobs', 'C:\\banyan-video\\jobs-vid-720p-all-1785529520.json', '--seconds', '3.0', '--steps', '50', '--size', '704x1280', '--guidance', '5.0']' timed out after 14400 seconds
+
+$ C:\banyan-video\venv\Scripts\python.exe -c import os
+os.environ['HF_HUB_DISABLE_XET']='1'
+os.environ['HF_HUB_DOWNLOAD_TIMEOUT']='60'
+from huggingface_hub import snapshot_download
+p=snapshot_download('QuantStack/Wan2.2-I2V-A14B-GGUF', allow_patterns=['HighNoise/*Q6_K*', 'LowNoise/*Q6_K*', 'VAE/*'])
+print('DOWNLOADED', p)
+…
+DOWNLOADED C:\Users\artvn\.cache\huggingface\hub\models--QuantStack--Wan2.2-I2V-A14B-GGUF\snapshots\6c6717459277b9cd1f72579d78a0fd62a79e57dc
+
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+C:\banyan-video\venv\Lib\site-packages\huggingface_hub\file_download.py:141: UserWarning: `huggingface_hub` cache-system uses symlinks by default to efficiently store duplicated files but your machine does not support them in C:\Users\artvn\.cache\huggingface\hub\models--QuantStack--Wan2.2-I2V-A14B-GGUF. Caching files will still work but in a degraded version that might require more space on your disk. This warning can be disabled by setting the `HF_HUB_DISABLE_SYMLINKS_WARNING` environment variable. For more details, see https://huggingface.co/docs/huggingface_hub/how-to-cache#limitations.
+To support symlinks on Windows, you either need to activate Developer Mode or to run Python as an administrator. In order to activate developer mode, see this article: https://docs.microsoft.com/en-us/windows/apps/get-started/enable-your-device-for-development
+  warnings.warn(message)
+
+Fetching 3 files:  33%|â–ˆâ–ˆâ–ˆâ–Ž      | 1/3 [00:57<01:55, 57.89s/it]Error while downloading from https://huggingface.co/QuantStack/Wan2.2-I2V-A14B-GGUF/resolve/6c6717459277b9cd1f72579d78a0fd62a79e57dc/HighNoise/Wan2.2-I2V-A14B-HighNoise-Q6_K.gguf: peer closed connection without sending complete message body (received 6713361720 bytes, expected 12003652096)
+Trying to resume download...
+
+Fetching 3 files:  67%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–‹   | 2/3 [30:44<17:54, 1074.86s/it]
+Fetching 3 files: 100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 3/3 [59:34<00:00, 1374.07s/it]
+Fetching 3 files: 100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 3/3 [59:34<00:00, 1191.59s/it]
