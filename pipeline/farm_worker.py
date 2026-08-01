@@ -39,6 +39,7 @@ import os
 import re
 import subprocess
 import sys
+import tempfile
 import time
 from datetime import date
 from pathlib import Path
@@ -108,6 +109,56 @@ class Courier:
     def say(self, line: str):
         print(line, flush=True)
         self.log.append(line)
+
+
+def lock_path(name: str) -> Path:
+    """Outside the repo on purpose: farm-out is committed and force-pushed by
+    Courier.mark(), and a lock file living there would be shipped to the branch
+    and then clobbered by the other worker — the very thing it exists to stop."""
+    return Path(tempfile.gettempdir()) / f"banyan-farm-{name}.lock"
+
+
+def acquire(name: str, force: bool = False) -> Path:
+    """One worker per machine handle. Exits rather than sharing a GPU.
+
+    TWO of these ran on the 5090 on 2026-07-31 — started 21 minutes apart, both
+    polling the same queue, both claiming the same tasks. The heartbeat shows it
+    plainly: `2x STARTED task=vid-720p-all-1785529520`, two prefetch starts, and
+    two timeouts firing at 14430s and 14404s against a 14400s limit.
+
+    The damage was not just duplicated effort. Single beats had been rendering in
+    ~13 minutes; under contention the same work took ~26. That is what made an
+    8-clip batch overrun four hours and lose everything — the batch was sized
+    against uncontended throughput and then run at half of it. Both processes
+    also `git push -qf` the same branch from the same working tree, so results
+    can erase each other.
+
+    O_CREAT|O_EXCL, and NO automatic staleness takeover: two workers racing to
+    decide whose lock is stale is the same bug wearing a hat. A human starts this
+    process, so a human can clear a stale lock — the message says how.
+    """
+    lock = lock_path(name)
+    if force and lock.exists():
+        lock.unlink()
+    try:
+        fd = os.open(lock, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+    except FileExistsError:
+        try:
+            held = lock.read_text(encoding="utf-8", errors="replace").strip()
+        except OSError:
+            held = "(unreadable)"
+        raise SystemExit(
+            f"another worker already holds this machine: {held}\n"
+            f"Two workers on one GPU halve each other's speed and overwrite each\n"
+            f"other's results — that is what cost the 8-clip 704x1280 batch four\n"
+            f"hours on 2026-07-31.\n\n"
+            f"If the other window is still open, close THIS one — nothing is lost.\n"
+            f"If nothing else is running, the lock is stale:\n"
+            f"  del {lock}\n"
+            f"or start with --force to clear it.")
+    with os.fdopen(fd, "w") as f:
+        f.write(f"pid {os.getpid()} started {time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())}")
+    return lock
 
 
 def finished_tasks(courier: Courier) -> set:
@@ -257,8 +308,12 @@ def main() -> int:
                     help="this machine's handle (branch: farm-results-<name>)")
     ap.add_argument("--once", action="store_true",
                     help="do one queue pass and exit (no polling loop)")
+    ap.add_argument("--force", action="store_true",
+                    help="clear a stale single-instance lock and run anyway")
     a = ap.parse_args()
 
+    # one worker per machine handle, before the GPU is touched
+    lock = acquire(a.name, force=a.force)
     device, dtype = pick_device()
     courier = Courier(a.name)
     print(f"farm worker '{a.name}' on {device} — polling {QUEUE} every {POLL_SECONDS}s")
@@ -289,6 +344,10 @@ def main() -> int:
                 # (the 2026-07-29 lesson: workers synced the new file but kept
                 # executing the old one from memory). Relaunch.
                 print("pipeline code updated — restarting myself", flush=True)
+                # release FIRST: the child re-runs main() and calls acquire(),
+                # which would fail against our own still-held lock and kill the
+                # worker on every code update.
+                lock.unlink(missing_ok=True)
                 # NOT os.execv: on Windows it replaces the process in a way that
                 # detaches it from the console, so the worker vanished after
                 # exactly one task every time pipeline code changed (the msi, twice
