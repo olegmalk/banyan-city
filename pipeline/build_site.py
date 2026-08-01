@@ -699,6 +699,40 @@ def node_card(genome_id: str, n: dict, depth: int) -> str:
 
 # ------------------------------------------------------------------ node pages
 
+def audio_credits(node_dir: Path) -> str:
+    """Markdown crediting every attribution-required sound this node uses.
+
+    Reads the node's own audio-sources/SOURCES.md table and keeps the rows whose
+    licence actually asks for a credit — CC0 and public domain do not, so listing
+    them would bury the two that matter. Returns "" when there is nothing owed,
+    so nodes with no recorded audio grow no empty section.
+    """
+    src = node_dir / "audio-sources" / "SOURCES.md"
+    if not src.exists():
+        return ""
+    owed = []
+    for line in src.read_text(encoding="utf-8").splitlines():
+        if not line.startswith("|") or "---" in line:
+            continue
+        cells = [c.strip() for c in line.strip("|").split("|")]
+        if len(cells) < 4:
+            continue
+        licence = cells[3]
+        # CC BY asks for credit; CC0 and public domain do not. Match the licence
+        # TOKEN with its suffixes, and read the verdict off the suffix group —
+        # a first cut searched the leftover text for "nc|sa|nd" and matched the
+        # "nd" in "credit Gravity Sound", silently crediting nobody.
+        m = re.search(r"cc[-\s]?by((?:[-\s](?:nc|sa|nd))*)", licence, re.I)
+        if not m or m.group(1).strip():
+            continue                     # not CC BY, or a -NC/-SA/-ND variant
+        owed.append(f"- {cells[2]} — {licence}")
+    if not owed:
+        return ""
+    return ("Used under Creative Commons Attribution. The licence permits this "
+            "freely; crediting the author is the condition it asks in return.\n\n"
+            + "\n".join(owed) + "\n")
+
+
 def render_node_page(g: dict, n: dict) -> str:
     genome_id = g["tree"]["id"]
     ep = episode_no(g, n)
@@ -716,6 +750,18 @@ def render_node_page(g: dict, n: dict) -> str:
         if not text:
             continue
         (story_md if head.startswith(("State change", "Hook", "Script")) else prod_md).append((head, text))
+
+    # CC BY sound is PERMISSION WITH A CONDITION, and the condition is a credit.
+    # licence_gate says "allow" for CC BY and stops there — it checks whether a
+    # licence lets us use an asset, never whether we did the thing it asks in
+    # return. So two Gravity Sound recordings have been in the published episode
+    # with the credit living only in a repo file that was never copied to the
+    # site: "Gravity Sound" appeared nowhere in _site at all. We cannot ask
+    # reusers to credit us under our own CC BY while quietly not crediting the
+    # person we borrowed from.
+    credits = audio_credits(n["dir"])
+    if credits:
+        prod_md.append(("Sound credits", credits))
 
     # 1 — one player, the current lead cut, with a plain caption
     lead = lead_take(n)
