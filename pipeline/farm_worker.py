@@ -50,6 +50,9 @@ sys.path.insert(0, str(REPO / "pipeline"))
 
 QUEUE = "pipeline/farm-queue.yaml"
 POLL_SECONDS = 60
+# How many times a task may FAIL before this worker stops picking it up. 2 = one
+# retry for a transient drop, then move on — see finished_tasks().
+MAX_ATTEMPTS = 2
 
 
 def sh(*args, check=True, capture=False):
@@ -124,11 +127,29 @@ def finished_tasks(courier: Courier) -> set:
     hb = courier.out / "heartbeat.txt"
     if not hb.exists():
         return set()
-    done = set()
+    done, failures = set(), {}
     for line in hb.read_text(encoding="utf-8", errors="replace").splitlines():
         m = re.search(r"DONE task=(\S+)", line)
         if m:
             done.add(m.group(1))
+            continue
+        m = re.search(r"FAIL task=(\S+)", line)
+        if m:
+            failures[m.group(1)] = failures.get(m.group(1), 0) + 1
+    # A FAILED task retries — a dropped download or a transient CUDA error
+    # deserves another go, which is why only DONE counted here at first. But
+    # "retry forever" is its own bug: a task that fails by hitting its own
+    # timeout burns the full timeout EVERY attempt, and because this worker
+    # processes the queue in order, the tasks behind it never run at all. A
+    # 4-hour video batch that times out would have looped 4 hours at a time
+    # while the licence-clean re-render queued behind it starved (the exact
+    # shape of the 8-clip 704x1280 batch in flight on 2026-08-01).
+    # One retry, then leave it alone and let the queue move.
+    for tid, n in failures.items():
+        if n >= MAX_ATTEMPTS and tid not in done:
+            done.add(tid)
+            print(f"skipping {tid}: failed {n}x — giving up so the queue can "
+                  f"move. Clear it from {QUEUE} or fix the cause.", flush=True)
     return done
 
 
