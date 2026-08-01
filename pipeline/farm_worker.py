@@ -177,6 +177,20 @@ def acquire(name: str, force: bool = False) -> Path:
     return lock
 
 
+def release(lock: Path) -> bool:
+    """Drop the lock only if this process is the one holding it."""
+    try:
+        held = lock.read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return False
+    if f"pid {os.getpid()} " not in held + " ":
+        print(f"not releasing {lock.name}: held by another worker ({held.strip()})",
+              flush=True)
+        return False
+    lock.unlink(missing_ok=True)
+    return True
+
+
 def finished_tasks(courier: Courier) -> set:
     """Task ids this machine has already completed, read back from its own
     heartbeat.
@@ -363,7 +377,14 @@ def main() -> int:
                 # release FIRST: the child re-runs main() and calls acquire(),
                 # which would fail against our own still-held lock and kill the
                 # worker on every code update.
-                lock.unlink(missing_ok=True)
+                #
+                # But release ONLY OUR OWN. A bare unlink() deletes whichever
+                # lock is there, so a second worker restarting would quietly free
+                # the FIRST worker's lock and then take it — which is exactly
+                # what happened on 2026-08-01: worker 2 came out of its prefetch
+                # at 02:19, restarted, wiped worker 1's lock, and both ran on.
+                # A mutex you can release on someone else's behalf is not a mutex.
+                release(lock)
                 # NOT os.execv: on Windows it replaces the process in a way that
                 # detaches it from the console, so the worker vanished after
                 # exactly one task every time pipeline code changed (the msi, twice
