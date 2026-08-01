@@ -9,7 +9,9 @@
 # Everything is now 480x832, which is the size the takes he called "pretty good"
 # were rendered at:
 #
-#   anime canary   1 clip   ~3 min    does the anime model load and look right?
+#   anime BEAT 1   1 clip   ~3 min    founder asked for beat 1 specifically — it is
+#                                    the one beat he judged good on Wan, so it is the
+#                                    fair head-to-head on style
 #   anime all     15 clips ~45 min    a COMPLETE anime-model episode to compare
 #   wan licence    5 clips ~65 min    the PixVerse beats on Wan, publishable
 #   prefetch                          last, speculative
@@ -18,12 +20,12 @@
 # AnimeGen is 4 steps at guidance 1.0 (its own recipe), which is why 15 beats cost
 # less than one beat did at the old setting.
 tasks:
-- id: anime-canary-b12-1785574000
+- id: anime-b1-1785575600
   worker: rtx5090
   video: true
   video_model: animegen
   node: 001-capability-inventory
-  beats: 12
+  beats: 1
   motion: gentle drift; only what would really move here
   size: 480x832
   seconds: 3.0
