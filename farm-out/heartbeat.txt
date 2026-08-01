@@ -195,3 +195,4 @@
 16:43:11Z VIDEO_VENV_OK
 16:43:30Z VIDEO_DEPS_OK 2.11.0+cu128 0.39.0 True
 16:43:47Z VIDEO_RENDERING beat=01 on animegen (single-process)
+16:48:53Z VIDEO_ALIVE 5m elapsed, child still running
