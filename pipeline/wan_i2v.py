@@ -119,7 +119,10 @@ def stage_simple(a) -> int:
     for i, job in enumerate(jobs, 1):
         t0 = time.time()
         img = Image.open(job["init"]).convert("RGB").resize((w, h), Image.LANCZOS)
-        kw = dict(prompt=job["prompt"], negative_prompt=NEG, height=h, width=w,
+        # per-job negative: the beat's own "No person, no ghost…" clauses, moved
+        # out of the positive prompt where they were being read as REQUESTS
+        neg = f"{NEG}, {job['negative']}" if job.get("negative") else NEG
+        kw = dict(prompt=job["prompt"], negative_prompt=neg, height=h, width=w,
                   num_frames=frames, num_inference_steps=a.steps,
                   guidance_scale=a.guidance,
                   generator=torch.Generator(device="cpu").manual_seed(int(job["seed"])))

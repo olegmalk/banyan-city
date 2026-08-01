@@ -89,6 +89,49 @@ def _stream(cmd, courier, timeout, env):
                                        "".join(err))
 
 
+# SDXL prompt furniture that means nothing to a video model and eats its attention
+QUALITY_SPAM = re.compile(
+    r"\b(masterpiece|best quality|very aesthetic|newest|highly detailed|detailed|"
+    r"cinematic lighting|9:16 vertical|no text)\b[,.\s]*", re.I)
+# "No person, no figure, no cloak" — negatives written as PROSE inside what we
+# hand over as the POSITIVE prompt
+NEGATIVE_PROSE = re.compile(r"\bno\s+[a-z0-9][^,.]*(?:[,.]|$)", re.I)
+
+
+def video_prompt(motion: str, still_prompt: str) -> tuple:
+    """(positive, extra_negative) for animating an ALREADY APPROVED frame.
+
+    We were handing the video model the STILL-GENERATION prompt — a full
+    instruction for drawing the scene from scratch, complete with SDXL quality
+    tags and negatives written as prose. An image-to-video model reads that as
+    "draw this", not "move this", and obliges: beat 12's prompt says "a single
+    thin green plant stem bent into a tense arc", so Wan drew one IN ADDITION to
+    the stem already in the frame, entering from the right. The founder spotted it
+    as "a stick poking the sapling" (2026-08-01). Beat 15 similarly re-lit the
+    scene from "rings of warm orange light" instead of moving anything.
+
+    So: strip the quality furniture, move the "No X" prose into the real negative
+    prompt where it belongs, and put MOTION first with the scene reduced to a
+    short anchor — enough for the model to know what it is looking at, not enough
+    to invite a redraw.
+
+    Nothing is invented here; the beat's own words are reused, just sorted into
+    the field that acts on them.
+    """
+    still_prompt = still_prompt or ""
+    negatives = [m.group(0).strip(" ,.") for m in NEGATIVE_PROSE.finditer(still_prompt)]
+    scene = NEGATIVE_PROSE.sub("", still_prompt)
+    scene = QUALITY_SPAM.sub("", scene)
+    scene = re.sub(r"\s*,\s*,+", ",", scene)
+    scene = re.sub(r"\s+", " ", scene).strip(" ,.")
+    # a short anchor only — the frame already carries the composition
+    words = scene.split()
+    anchor = " ".join(words[:22]) + ("…" if len(words) > 22 else "")
+    positive = f"{motion}. Subject already in frame: {anchor}." if anchor else motion
+    extra_neg = ", ".join(n[3:].strip() for n in negatives if len(n) > 3)
+    return positive[:700], extra_neg[:300]
+
+
 MODEL_LICENCE = {
     "ti2v-5b":  ("Wan-AI/Wan2.2-TI2V-5B-Diffusers", "Apache-2.0"),
     "animegen": ("aidealab/AnimeGen-I2V", "Apache-2.0"),
@@ -259,8 +302,9 @@ def run(task: dict, courier, node_dir: Path) -> None:
             motion = task.get("motion") or ("subtle continuous motion, gentle camera "
                                             "drift, living scene")
             o = courier.out / f"{task.get('id')}-{num:02d}-{s['slug']}.mp4"
-            jobs.append({"init": str(init), "out": str(o),
-                         "prompt": f"{motion}. {s['prompt']}"[:900],
+            pos, neg = video_prompt(motion, s["prompt"])
+            jobs.append({"init": str(init), "out": str(o), "prompt": pos,
+                         "negative": neg,
                          "seed": int(task.get("seed_base", 20260731)) + num})
             outs.append((num, o))
         if jobs:

@@ -109,6 +109,35 @@ tasks:
   steps: 50
   guidance: 5.0
   seed_base: 20260731
+# ---- 5. PROMPT-FIX CANARY: the three beats the founder rejected --------------
+# Founder verdict on the six existing Wan takes (2026-08-01): only beat 1 usable.
+# "3rd and 4th seem like random motion", "5th has a stick poking the sapling",
+# "6th doesnt move at all". He was right on every one, and the frames show why —
+# but the cause was not the model.
+#
+# We were feeding the video model the STILL-GENERATION prompt: a full instruction
+# for drawing the scene from scratch, with SDXL quality tags and negatives written
+# as prose INSIDE the positive prompt. An i2v model reads "a single thin green
+# plant stem bent into a tense arc" as "draw this" — so it drew one in addition to
+# the stem already in frame. That is the stick. "No ghost, no sphere" sat in the
+# positive prompt too, where it reads as a request.
+#
+# Fixed in video_task.video_prompt(): motion first, scene reduced to a 22-word
+# anchor labelled "Subject already in frame", negatives moved to the real negative
+# field. These three beats are the direct test — same stills, same seeds, only the
+# prompt changed. If the stick is gone and beat 14 moves, the fix is real.
+- id: fix-prompt-canary-1785573000
+  worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  beats: 12,14,15
+  motion: 'true to the frame: only what would actually move in this shot - gentle
+    camera drift, no new subjects, no scene change'
+  size: 704x1280
+  seconds: 3.0
+  steps: 50
+  guidance: 5.0
+  seed_base: 20260731
 # ---- 4. AnimeGen canary — PULLED before it ran, 2026-08-01 -------------------
 # I queued this as a one-clip canary and then checked the repo. It is NOT a 5B
 # dense model like our incumbent: aidealab/AnimeGen-I2V ships `transformer/` AND
