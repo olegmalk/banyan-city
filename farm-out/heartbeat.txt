@@ -178,3 +178,4 @@
 13:38:39Z VIDEO_DEPS_OK 2.11.0+cu128 0.39.0 True
 13:38:47Z VIDEO_RENDERING beat=01 on animegen (single-process)
 14:54:44Z FAIL task=anime-b1-1785575600
+14:55:03Z STARTED task=anime-b1-1785575600 beats=1 on cuda
