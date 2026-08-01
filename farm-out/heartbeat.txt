@@ -166,3 +166,4 @@
 13:21:02Z VIDEO_RENDERING batch of 2 on ti2v-5b (one model load)
 13:30:25Z STARTED task=anime-b1-1785575600 beats=1 on cuda
 13:30:28Z VIDEO_VENV_OK
+13:30:28Z FAIL task=vid-lic-a-1785567300
