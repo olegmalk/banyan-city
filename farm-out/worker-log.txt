@@ -1,0 +1,32 @@
+$ C:\banyan-video\venv\Scripts\python.exe C:\banyan-farm\banyan-city\pipeline\wan_i2v.py --stage simple --embeds C:\banyan-video\embeds-01.pt…
+model: aidealab/AnimeGen-I2V
+loading to a local directory does not use symlinks anymore.
+  warnings.warn(
+C:\banyan-video\venv\Lib\site-packages\huggingface_hub\file_download.py:141: UserWarning: `huggingface_hub` cache-system uses symlinks by default to efficiently store duplicated files but your machine does not support them in C:\Users\artvn\.cache\huggingface\hub\models--aidealab--AnimeGen-I2V. Caching files will still work but in a degraded version that might require more space on your disk. This warning can be disabled by setting the `HF_HUB_DISABLE_SYMLINKS_WARNING` environment variable. For more details, see https://huggingface.co/docs/huggingface_hub/how-to-cache#limitations.
+To support symlinks on Windows, you either need to activate Developer Mode or to run Python as an administrator. In order to activate developer mode, see this article: https://docs.microsoft.com/en-us/windows/apps/get-started/enable-your-device-for-development
+  warnings.warn(message)
+
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Error while downloading from https://huggingface.co/aidealab/AnimeGen-I2V/resolve/6278659f803518d72dd312a1f522e3b34b1afd72/transformer/diffusion_pytorch_model-00003-of-00003.safetensors: peer closed connection without sending complete message body (received 426966034 bytes, expected 8717306128)
+Trying to resume download...
+Error while downloading from https://huggingface.co/aidealab/AnimeGen-I2V/resolve/6278659f803518d72dd312a1f522e3b34b1afd72/transformer/diffusion_pytorch_model-00001-of-00003.safetensors: peer closed connection without sending complete message body (received 286118999 bytes, expected 9969048744)
+Trying to resume download...
+Error while downloading from https://huggingface.co/aidealab/AnimeGen-I2V/resolve/6278659f803518d72dd312a1f522e3b34b1afd72/transformer/diffusion_pytorch_model-00002-of-00003.safetensors: peer closed connection without sending complete message body (received 544803000 bytes, expected 9891560008)
+Trying to resume download...
+forrtl: error (200): program aborting due to window-CLOSE event
+Image              PC                Routine            Line        Source             
+KERNELBASE.dll     00007FFA92273E3D  Unknown               Unknown  Unknown
+KERNEL32.DLL       00007FFA9400E957  Unknown               Unknown  Unknown
+ntdll.dll          00007FFA94ECAD6C  Unknown               Unknown  Unknown
+
+Traceback (most recent call last):
+  File "C:\banyan-farm\banyan-city\pipeline\farm_worker.py", line 428, in main
+    render_task(task, courier, device, dtype)
+  File "C:\banyan-farm\banyan-city\pipeline\farm_worker.py", line 274, in render_task
+    return video_task.run(task, courier, d)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\banyan-farm\banyan-city\pipeline\video_task.py", line 395, in run
+    _run([str(PY), wan, "--stage", "simple", "--embeds", str(emb),
+  File "C:\banyan-farm\banyan-city\pipeline\video_task.py", line 215, in _run
+    raise RuntimeError(f"{stage} failed (exit {r.returncode})")
+RuntimeError: beat 1 failed (exit 2)
