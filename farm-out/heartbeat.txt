@@ -199,3 +199,4 @@
 16:53:59Z VIDEO_ALIVE 10m elapsed, child still running
 17:34:54Z STARTED task=wan-lic-480-1785575000 beats=2,4,8,11,13 on cuda
 17:34:57Z VIDEO_VENV_OK
+17:35:05Z VIDEO_DEPS_OK 2.11.0+cu128 0.39.0 True
