@@ -47,6 +47,14 @@ def _stream(cmd, courier, timeout, env):
     this just stops throwing those lines away until the end.
 
     Returns a CompletedProcess so callers (retry/transient logic) are unchanged.
+
+    SECOND EFFECT, load-bearing, do not remove the mark() call thinking it is
+    only logging: batch clips are written straight into `courier.out`, and
+    Courier.mark() does `git add -A farm-out` + commit + push. So marking per
+    clip also PUSHES each finished clip the moment it exists. Before this, a
+    batch that hit its timeout lost every clip it had already rendered, because
+    nothing was pushed until the task returned — three hours of finished work
+    discarded by the last minute of it. Now a timeout keeps whatever finished.
     """
     out, err = [], []
     deadline = time.time() + timeout if timeout else None
