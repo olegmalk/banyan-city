@@ -1,25 +1,20 @@
-# 2026-08-02. Per-beat ACTION prompts — the fix for the hoodie.
+# 2026-08-02. AnimeGen REMOVED — it cannot load on this machine.
 #
-# The overnight beat-2 clip held the approved frame correctly (the prompt fix
-# works) but the man pulled his hoodie up and down instead of typing. Founder:
-# "he didnt type at all." Of course not — every one of the fifteen beats was sent
-# the same motion instruction, "gentle drift; only what would really move here",
-# so the model had to guess what moves and guessed wrong.
+# Failed with 0xC0000005 (Windows access violation) 29 seconds into the load, and
+# the arithmetic says why: two 14B experts at 28GB each in bf16, plus an 11GB text
+# encoder, is ~69GB of SYSTEM RAM at peak. The fp8 layerwise casting that makes it
+# fit the GPU runs AFTER from_pretrained has read the bf16 weights, so the peak is
+# paid before the trick can help.
 #
-# node.md has said what moves all along, per beat, in the author's own words:
-#   beat 1  "One mechanical keyboard, very fast — then it stops"
-#   beat 3  "The spinner resolves"
-#   beat 4  "A sharp breath in — the frame tips sideways — the mug hits the floor
-#            before he does"
-# shots.md describes how a beat LOOKS; node.md describes what HAPPENS. We were
-# reading only the first and inventing the second. video_task.beat_actions() now
-# reads the second and puts it at the front of the prompt.
+# The licence research said this on 2026-08-01: "No fp8/GGUF build of this
+# fine-tune exists yet — that is work, not a download." The steward overrode it on
+# the strength of the model card's "RTX 4090 or higher is recommended", which is
+# about the GPU and says nothing about load-time RAM. That was wrong and cost the
+# founder most of a day of waiting on a 28GB download.
 #
-# `motion` below is now only the discipline suffix (no new subjects, no scene
-# change) — the actual instruction comes from the script.
-#
-# Beat 2 is back in the queue because its take was rejected on motion, not on
-# framing. One beat per task, after the eight-hour batch stall.
+# Requeue ONLY if someone publishes pre-quantised AnimeGen weights (fp8 or GGUF),
+# so the load reads ~14GB instead of ~56GB. Quantising it ourselves means loading
+# it first, which is the thing that does not fit.
 tasks:
 - id: wan-act-b2-1785650000
   worker: rtx5090
@@ -75,18 +70,6 @@ tasks:
   seconds: 3.0
   steps: 20
   guidance: 5.0
-  seed_base: 20260731
-- id: anime-all-1785575000
-  worker: rtx5090
-  video: true
-  video_model: animegen
-  node: 001-capability-inventory
-  beats: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15
-  motion: gentle drift; only what would really move here
-  size: 480x832
-  seconds: 3.0
-  steps: 4
-  guidance: 1.0
   seed_base: 20260731
 - id: prefetch-a14b-1785529520
   worker: rtx5090
