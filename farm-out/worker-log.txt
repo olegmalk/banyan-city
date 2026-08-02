@@ -414,3 +414,61 @@ Loading pipeline components...: 100%|██████████| 5/5 [00:15<
 100%|██████████| 20/20 [03:19<00:00,  9.97s/it]
 
 video task d2-b07-1785762000: 1/1 clips
+$ C:\banyan-video\venv\Scripts\python.exe C:\banyan-farm\banyan-city\pipeline\wan_i2v.py --stage simple --embeds C:\banyan-video\embeds-08.pt…
+model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+pipeline class: WanImageToVideoPipeline (forced image-to-video)
+VRAM[after load, before .to(cuda)] used 1.38/25.7GB (torch holds 0.00GB)
+model cpu offload ON (big model: slower per clip, but it fits)
+[1/1] wrote C:\banyan-farm\banyan-city\farm-out\d2-b08-1785762000-08-sev-1.mp4 in 236s (61 frames, 704x1280, 20 steps, peak torch 14.4GB, device 1.8/26GB)
+    freed between clips: 1.7/26GB still held
+rectly to silence this warning.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+Loading pipeline components...:   0%|          | 0/5 [00:00<?, ?it/s]
+Loading pipeline components...:  20%|██        | 1/5 [00:00<00:03,  1.04it/s]
+
+Loading weights:   0%|          | 0/242 [00:00<?, ?it/s][A
+Loading weights: 100%|██████████| 242/242 [00:00<00:00, 3846.54it/s]
+
+Loading pipeline components...:  60%|██████    | 3/5 [00:01<00:00,  3.26it/s]
+
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s][A
+
+Loading checkpoint shards:  20%|██        | 1/5 [00:02<00:08,  2.04s/it][A
+
+Loading checkpoint shards:  40%|████      | 2/5 [00:04<00:06,  2.07s/it][A
+
+Loading checkpoint shards:  60%|██████    | 3/5 [00:06<00:04,  2.09s/it][A
+
+Loading checkpoint shards:  80%|████████  | 4/5 [00:12<00:03,  3.77s/it][A
+
+Loading checkpoint shards: 100%|██████████| 5/5 [00:12<00:00,  2.48s/it][A
+Loading checkpoint shards: 100%|██████████| 5/5 [00:12<00:00,  2.55s/it]
+
+Loading pipeline components...:  80%|████████  | 4/5 [00:13<00:04,  4.65s/it]The config attributes {'clip_output': False} were passed to AutoencoderKLWan, but are not expected and will be ignored. Please verify your config.json configuration file.
+
+Loading pipeline components...: 100%|██████████| 5/5 [00:15<00:00,  3.68s/it]
+Loading pipeline components...: 100%|██████████| 5/5 [00:15<00:00,  3.14s/it]
+
+  0%|          | 0/20 [00:00<?, ?it/s]
+  5%|▌         | 1/20 [00:34<10:55, 34.49s/it]
+ 10%|█         | 2/20 [00:42<05:45, 19.19s/it]
+ 15%|█▌        | 3/20 [00:51<04:03, 14.34s/it]
+ 20%|██        | 4/20 [01:00<03:12, 12.04s/it]
+ 25%|██▌       | 5/20 [01:08<02:41, 10.77s/it]
+ 30%|███       | 6/20 [01:17<02:20, 10.02s/it]
+ 35%|███▌      | 7/20 [01:25<02:04,  9.55s/it]
+ 40%|████      | 8/20 [01:34<01:50,  9.23s/it]
+ 45%|████▌     | 9/20 [01:42<01:39,  9.03s/it]
+ 50%|█████     | 10/20 [01:51<01:28,  8.89s/it]
+ 55%|█████▌    | 11/20 [02:00<01:19,  8.80s/it]
+ 60%|██████    | 12/20 [02:08<01:09,  8.73s/it]
+ 65%|██████▌   | 13/20 [02:17<01:00,  8.68s/it]
+ 70%|███████   | 14/20 [02:25<00:51,  8.65s/it]
+ 75%|███████▌  | 15/20 [02:34<00:43,  8.64s/it]
+ 80%|████████  | 16/20 [02:42<00:34,  8.62s/it]
+ 85%|████████▌ | 17/20 [02:51<00:25,  8.61s/it]
+ 90%|█████████ | 18/20 [03:00<00:17,  8.60s/it]
+ 95%|█████████▌| 19/20 [03:08<00:08,  8.60s/it]
+100%|██████████| 20/20 [03:17<00:00,  8.59s/it]
+100%|██████████| 20/20 [03:17<00:00,  9.86s/it]
