@@ -552,3 +552,4 @@
 12:37:01Z VIDEO_DEPS_OK 2.11.0+cu128 0.39.0 True
 12:37:18Z VIDEO_RENDERING batch of 4 on ti2v-5b (one model load)
 12:40:20Z VIDEO_CLIP 1/4 v3-rest-b-1785677000-09-whoami.mp4 in 72s
+12:41:03Z VIDEO_CLIP 2/4 v3-rest-b-1785677000-10-sense.mp4 in 43s
