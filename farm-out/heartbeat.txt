@@ -616,3 +616,4 @@
 14:59:42Z VIDEO_DEPS_OK 2.11.0+cu128 0.39.0 True
 14:59:51Z VIDEO_RENDERING batch of 5 on ti2v-5b (one model load)
 15:00:43Z FAIL task=night-g1-1785700000
+15:00:46Z STARTED task=night-g2-1785700000 beats=6,7,8,9,10 on cuda
