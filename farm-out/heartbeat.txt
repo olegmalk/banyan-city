@@ -563,3 +563,4 @@
 13:17:42Z VIDEO_ALIVE 40m elapsed, 2 clip(s) done
 13:22:44Z VIDEO_ALIVE 45m elapsed, 2 clip(s) done
 13:27:47Z VIDEO_STALLED no clip finished in 46m (2 done) — killing it so the queue moves
+13:27:51Z FAIL task=v3-rest-b-1785677000

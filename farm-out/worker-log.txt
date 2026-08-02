@@ -380,3 +380,71 @@ Traceback (most recent call last):
   File "C:\banyan-farm\banyan-city\pipeline\video_task.py", line 388, in _run
     raise RuntimeError(f"{stage} failed (exit {r.returncode})")
 RuntimeError: batch v3-rest-a-1785677000 failed (exit 1)
+
+$ C:\banyan-video\venv\Scripts\python.exe C:\banyan-farm\banyan-city\pipeline\wan_i2v.py --stage simple --embeds C:\banyan-video\unused.pt…
+model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+pipeline class: WanImageToVideoPipeline (forced image-to-video)
+VRAM[after load, before .to(cuda)] used 1.38/25.7GB (torch holds 0.00GB)
+VRAM[after .to(cuda)] used 24.20/25.7GB (torch holds 22.81GB)
+text encoder evicted after 10s (4 prompt(s) encoded)
+VRAM[text encoder evicted] used 12.93/25.7GB (torch holds 11.46GB)
+[1/4] wrote C:\banyan-farm\banyan-city\farm-out\v3-rest-b-1785677000-09-whoami.mp4 in 72s (61 frames, 480x832, 12 steps, peak torch 22.9GB, device 20.1/26GB)
+[2/4] wrote C:\banyan-farm\banyan-city\farm-out\v3-rest-b-1785677000-10-sense.mp4 in 43s (61 frames, 480x832, 12 steps, peak torch 16.4GB, device 20.1/26GB)
+A
+
+Loading checkpoint shards: 100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 5/5 [00:17<00:00,  3.23s/it][A
+Loading checkpoint shards: 100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 5/5 [00:17<00:00,  3.58s/it]
+
+Loading pipeline components...: 100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 5/5 [00:23<00:00,  6.37s/it]
+Loading pipeline components...: 100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 5/5 [00:23<00:00,  4.74s/it]
+
+  0%|          | 0/12 [00:00<?, ?it/s]
+  8%|â–Š         | 1/12 [00:30<05:31, 30.13s/it]
+ 17%|â–ˆâ–‹        | 2/12 [00:32<02:20, 14.07s/it]
+ 25%|â–ˆâ–ˆâ–Œ       | 3/12 [00:35<01:20,  8.99s/it]
+ 33%|â–ˆâ–ˆâ–ˆâ–Ž      | 4/12 [00:38<00:52,  6.55s/it]
+ 42%|â–ˆâ–ˆâ–ˆâ–ˆâ–�     | 5/12 [00:41<00:36,  5.21s/it]
+ 50%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆ     | 6/12 [00:44<00:26,  4.41s/it]
+ 58%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–Š    | 7/12 [00:47<00:19,  3.90s/it]
+ 67%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–‹   | 8/12 [00:50<00:14,  3.56s/it]
+ 75%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–Œ  | 9/12 [00:52<00:10,  3.34s/it]
+ 83%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–Ž | 10/12 [00:55<00:06,  3.19s/it]
+ 92%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–�| 11/12 [00:58<00:03,  3.08s/it]
+100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 12/12 [01:01<00:00,  3.01s/it]
+100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 12/12 [01:01<00:00,  5.12s/it]
+
+  0%|          | 0/12 [00:00<?, ?it/s]
+  8%|â–Š         | 1/12 [00:02<00:31,  2.90s/it]
+ 17%|â–ˆâ–‹        | 2/12 [00:05<00:28,  2.88s/it]
+ 25%|â–ˆâ–ˆâ–Œ       | 3/12 [00:08<00:25,  2.88s/it]
+ 33%|â–ˆâ–ˆâ–ˆâ–Ž      | 4/12 [00:11<00:22,  2.87s/it]
+ 42%|â–ˆâ–ˆâ–ˆâ–ˆâ–�     | 5/12 [00:14<00:20,  2.87s/it]
+ 50%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆ     | 6/12 [00:17<00:17,  2.87s/it]
+ 58%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–Š    | 7/12 [00:20<00:14,  2.86s/it]
+ 67%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–‹   | 8/12 [00:22<00:11,  2.87s/it]
+ 75%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–Œ  | 9/12 [00:25<00:08,  2.86s/it]
+ 83%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–Ž | 10/12 [00:28<00:05,  2.86s/it]
+ 92%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–�| 11/12 [00:31<00:02,  2.87s/it]
+100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 12/12 [00:34<00:00,  2.87s/it]
+100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 12/12 [00:34<00:00,  2.87s/it]
+
+  0%|          | 0/12 [00:00<?, ?it/s]
+  8%|â–Š         | 1/12 [00:02<00:32,  2.92s/it]
+ 17%|â–ˆâ–‹        | 2/12 [00:05<00:29,  2.90s/it]
+ 25%|â–ˆâ–ˆâ–Œ       | 3/12 [00:08<00:26,  2.89s/it]
+ 33%|â–ˆâ–ˆâ–ˆâ–Ž      | 4/12 [00:11<00:23,  2.88s/it]
+ 42%|â–ˆâ–ˆâ–ˆâ–ˆâ–�     | 5/12 [00:14<00:20,  2.88s/it]
+ 50%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆ     | 6/12 [00:17<00:17,  2.88s/it]
+ 58%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–Š    | 7/12 [00:20<00:14,  2.88s/it]
+ 67%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–‹   | 8/12 [00:23<00:11,  2.88s/it]
+Traceback (most recent call last):
+  File "C:\banyan-farm\banyan-city\pipeline\farm_worker.py", line 445, in main
+    render_task(task, courier, device, dtype)
+  File "C:\banyan-farm\banyan-city\pipeline\farm_worker.py", line 291, in render_task
+    return video_task.run(task, courier, d)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\banyan-farm\banyan-city\pipeline\video_task.py", line 523, in run
+    _run([str(PY), str(REPO / "pipeline" / "wan_i2v.py"), "--stage", "simple",
+  File "C:\banyan-farm\banyan-city\pipeline\video_task.py", line 388, in _run
+    raise RuntimeError(f"{stage} failed (exit {r.returncode})")
+RuntimeError: batch v3-rest-b-1785677000 failed (exit 1)
