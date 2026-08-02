@@ -4,6 +4,13 @@ name: pages
 on:
   push:
     branches: [main, master]   # prod only — WIP branches must not publish to the live mirror
+  # status.html is a STATIC snapshot of what the render farm is doing, so with only
+  # a push trigger it froze for five hours while the farm rendered all afternoon —
+  # under a heading that claimed "right now" (founder, 2026-08-02: "not synced").
+  # Every half hour keeps it roughly true without anyone pushing. Cheap: the build
+  # is ~20s and the deploy is idempotent.
+  schedule:
+    - cron: "*/30 * * * *"
   workflow_dispatch:
 permissions:
   contents: read

@@ -104,6 +104,24 @@ def task_story(t: dict) -> tuple:
     if tid.startswith(("keep", "ref")):
         return (f"{seeds} background-art studies ({str(t.get('slug', '')).replace('keep-', '').replace('-', ' ')})",
                 "world-reference art — the bank every future shot borrows its look from")
+    # VIDEO tasks fell through to the stills wording, so the page told everyone the
+    # farm was making "4 frames for shots" while it spent an entire day animating
+    # video (founder, 2026-08-02: "not synced"). A status page describing the wrong
+    # KIND of work is worse than one that is merely late.
+    if t.get("video"):
+        model = {"animegen": "an anime-trained model",
+                 "ti2v-5b": "Wan 2.2"}.get(str(t.get("video_model", "ti2v-5b")),
+                                           str(t.get("video_model")))
+        secs = t.get("seconds", 3.0)
+        steps = t.get("steps", 20)
+        n = len([b for b in beats.split(",") if b]) or 1
+        if t.get("prefetch"):
+            return ("downloading model weights",
+                    "fetching a bigger video model to try later — no rendering, just the download")
+        return (f"{n} moving clip{'s' if n != 1 else ''} ({secs:g}s each) for {shots}, "
+                f"on {model} at {steps} steps",
+                "animating stills the author already approved — the still is the "
+                "composition, the render only decides what MOVES")
     return (f"{seeds} frames for {shots}", "queued by the studio")
 
 
@@ -370,7 +388,10 @@ def build(out_dir: Path):
         wnice = MACHINES.get(wkey, (wkey, "🏠"))[0]
         prod_rows += (f'<div class="prod-row"><b>{_e(wnice)}</b> · {_e(what)}'
                       f'<br><span class="why">{_e(why)}</span></div>')
-    production = (f'<h2>🏭 In production right now</h2>{prod_rows}'
+    # NOT "right now". This page is a static file built at deploy time, and on
+    # 2026-08-02 it sat five hours out of date under a heading that asserted it was
+    # current. A snapshot may be late; it must not lie about being live.
+    production = (f'<h2>🏭 In production, as of this snapshot</h2>{prod_rows}'
                   '<p class="whyfoot">Finished frames land on each machine\'s courier branch, '
                   'get checked, and show up as choices on the '
                   '<a href="sapling/001-capability-inventory-shots.html">shot board</a> — '
@@ -482,7 +503,9 @@ they wait.</p>
 <p style="text-align:center"><a href="https://github.com/{GH}/issues/1">join them &rarr;</a></p>
 
 <p class="legend">{data.LEGEND}</p>
-<footer>snapshot {time.strftime('%Y-%m-%d %H:%M')} · rebuilt on every push · the whole repo IS the show —
+<footer>snapshot {time.strftime('%Y-%m-%d %H:%M', time.gmtime())}Z · this page is a static
+file: it shows the queue at BUILD time and cannot update itself — rebuilt on every push
+and every half hour · the whole repo IS the show —
 <a href="index.html">the city</a> · <a href="lab/index.html">the lab</a> ·
 <a href="machine.html">how it works</a></footer>
 </main>

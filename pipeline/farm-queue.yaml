@@ -1,32 +1,25 @@
-# 2026-08-02 — A/B THE SPEED FIX FIRST. It may have corrupted the picture.
+# OVERNIGHT 2026-08-02. Fifteen beats, motion.yaml, correct-but-slow.
 #
-# Founder on the step sweep: "all of these step sweep results are bad and corrupt
-# the image. there is barely a difference between them as well."
+# NO SPEED TRICKS. The text-encoder eviction that took a clip from 536s to 66s
+# corrupted every frame — it bypassed the image conditioning, exactly as
+# stage_simple's own docstring warns. Reverted. ~9 min/clip, ~2h15 for the set,
+# and the output is right.
 #
-# The second half of that sentence is the diagnostic. 20 steps and 4 steps should
-# look DRAMATICALLY different; they look nearly identical. When step count stops
-# mattering, the conditioning is not driving the denoiser — and the steward changed
-# exactly that by hand-passing prompt_embeds in order to evict the 11.4GB text
-# encoder (the change that took 536s to 66s).
+# Every beat gets its direction from motion.yaml, which has existed since
+# 2026-07-29 and which the renderer only started reading today. Beat 1 is "the
+# young man types rapidly, fingers moving over the keys... camera locked" — the
+# typing the founder asked for two days ago, already written down.
 #
-# Two variables moved at once, so this isolates them. Same beat, same still, same
-# seed, same motion.yaml direction, same 20 steps:
-#   ab-evict-on   hand-passed prompt_embeds, encoder evicted   (~66s)
-#   ab-evict-off  the pipeline's own prompt path, encoder resident (~536s)
+# Batches of five: one model load each, and every clip pushes the moment it lands,
+# so a crash at 3am keeps whatever finished. The stall detector kills a batch that
+# produces nothing for 45 minutes.
 #
-# If ON is corrupt and OFF is clean, the speed fix is the cause and gets reverted
-# or repaired — an 8x speedup that damages every frame is worth nothing.
-# If BOTH are corrupt, it is the motion.yaml prompt and the speedup stands.
-#
-# The 15 beats sit behind the A/B deliberately. Rendering them through a pipeline
-# that might corrupt every frame would waste the time the speedup just bought.
-#
-# Also confirmed from the founder's review of the 12 v2 clips, for whoever picks
-# this up: beat 9 does not move at all, beat 2 is random camera motion, beat 7 has
-# the sapling moving aggressively and strangely. motion.yaml addresses 2 and 7
-# directly ("camera locked" on every entry, and beat 7 asks for a leaf whip rather
-# than a camera shake). Beat 9 asks for "leaves stir very slightly", so it may stay
-# static — that one is a direction problem, not a model problem.
+# Founder's outstanding verdicts on the previous set, for the morning review:
+#   beat 9  did not move at all      -> motion.yaml asks for "leaves stir very
+#           slightly", so it may stay static. That is a DIRECTION to rewrite, not a
+#           model failure.
+#   beat 2  random camera motion     -> every motion.yaml entry ends "camera locked"
+#   beat 7  sapling aggressively weird -> asks for a leaf whip, not a camera shake
 tasks:
 - worker: rtx5090
   video: true
@@ -37,30 +30,7 @@ tasks:
   steps: 20
   guidance: 5.0
   seed_base: 20260803
-  id: ab-evict-on-1785690000
-  beats: 1
-- worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  motion: gentle drift; no new subjects, no scene change
-  size: 480x832
-  seconds: 2.5
-  steps: 20
-  guidance: 5.0
-  seed_base: 20260803
-  id: ab-evict-off-1785690000
-  beats: 1
-  keep_text_encoder: true
-- worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  motion: gentle drift; no new subjects, no scene change
-  size: 480x832
-  seconds: 2.5
-  steps: 20
-  guidance: 5.0
-  seed_base: 20260803
-  id: m-g1-1785690000
+  id: night-g1-1785700000
   beats: 1,2,3,4,5
 - worker: rtx5090
   video: true
@@ -71,7 +41,7 @@ tasks:
   steps: 20
   guidance: 5.0
   seed_base: 20260803
-  id: m-g2-1785690000
+  id: night-g2-1785700000
   beats: 6,7,8,9,10
 - worker: rtx5090
   video: true
@@ -82,7 +52,7 @@ tasks:
   steps: 20
   guidance: 5.0
   seed_base: 20260803
-  id: m-g3-1785690000
+  id: night-g3-1785700000
   beats: 11,12,13,14,15
 - id: prefetch-a14b-1785529520
   worker: rtx5090
