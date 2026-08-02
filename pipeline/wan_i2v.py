@@ -197,6 +197,23 @@ def stage_simple(a) -> int:
                 f"--quantise on a model that fits unquantised.")
     pipe = WanImageToVideoPipeline.from_pretrained(a.model, **kw)
     print(f"pipeline class: {type(pipe).__name__} (forced image-to-video)")
+    # VRAM ACCOUNTING, printed before and after placement. 536s per clip works out
+    # to 13.4s per forward pass for a 6240-token sequence — roughly 10x off what
+    # this card should manage. The suspicion: the weights do not fit. Wan 2.2
+    # TI2V-5B ships 34GB on disk (transformer 20GB fp32, text encoder 11.4GB, VAE
+    # 2.8GB); at bf16 that is ~17GB resident on a 24GB card that is also driving a
+    # Windows desktop. On Windows/WDDM the driver's default Sysmem Fallback Policy
+    # PAGES TO HOST RAM over PCIe rather than raising OOM — a silent 10x slowdown
+    # that looks identical to "this model is slow".
+    # Measured, not assumed: if used stays near total, that is the answer.
+    def vram(tag):
+        if not torch.cuda.is_available():
+            return
+        free, total = torch.cuda.mem_get_info()
+        alloc = torch.cuda.memory_allocated() / 1e9
+        print(f"VRAM[{tag}] used {(total-free)/1e9:.2f}/{total/1e9:.1f}GB "
+              f"(torch holds {alloc:.2f}GB)", flush=True)
+    vram("after load, before .to(cuda)")
     # a quantised big model still will not sit entirely on 24GB; offload streams
     # modules through system RAM, which is slow but finishes
     if a.quantise != "none" or a.offload:
@@ -204,15 +221,64 @@ def stage_simple(a) -> int:
         print("model cpu offload ON (big model: slower per clip, but it fits)")
     else:
         pipe.to("cuda")
+        vram("after .to(cuda)")
     import inspect
     takes_image = "image" in inspect.signature(pipe.__call__).parameters
     if not takes_image:
         print("WARNING: this pipeline takes no image - text-to-video only")
 
-    return _sample(pipe, a, w, h, frames, takes_image)
+    # ---- THE TEXT ENCODER MUST NOT BE ON THE CARD DURING DENOISING ----------
+    #
+    # This is Wan's own --t5_cpu, and the reason their authors fit 720p on a 4090.
+    # UMT5-XXL is 11.36GB in bf16. It runs ONCE per clip to turn the prompt into
+    # embeddings, then sits idle through every denoising step — while holding half
+    # the card. With the transformer (10.20GB) and VAE (1.41GB) that is 22.97GB
+    # resident on a 24GiB card that also drives a Windows desktop.
+    #
+    # Windows/WDDM does not OOM there. Its default Sysmem Fallback Policy pages to
+    # host RAM over PCIe, silently, which is why we sustain 5.2 TFLOPS on a card
+    # that should do 60-120 — 4-8% of the machine. Two independent checks say the
+    # same: Wan's authors do 11x our token-forwards in the same wall clock on a
+    # weaker 4090, and our own 704x1280/50-step run took 7x the FLOPs for 1.45x the
+    # time, which a compute-bound machine cannot do.
+    #
+    # OUTPUT IS BIT-IDENTICAL. Same embeddings, same seed, same clip. The only
+    # change is where the weights sit while the transformer works.
+    #
+    # stage_encode/stage_render already split exactly this way, written when the
+    # 16GB machine died with an access violation. stage_simple was added for "cards
+    # with room" and discarded the lesson.
+    jobs = json.loads(Path(a.jobs).read_text()) if a.jobs else \
+        [{"init": a.init, "out": a.out, "prompt": a.prompt, "seed": a.seed,
+          "negative": a.negative}]
+    if getattr(pipe, "text_encoder", None) is not None:
+        t_enc = time.time()
+        for job in jobs:
+            neg = f"{NEG}, {job['negative']}" if job.get("negative") else NEG
+            prompt = job["prompt"]
+            if "animegen" in a.model.lower():
+                prompt = f"Japanese anime style, {prompt}"
+                neg = f"3d, cg, photo, stop, wait, {neg}"
+            with torch.no_grad():
+                pos_e, neg_e = pipe.encode_prompt(
+                    prompt=prompt, negative_prompt=neg,
+                    do_classifier_free_guidance=True, device="cuda")
+            job["_pos"] = pos_e.to("cpu")
+            job["_neg"] = neg_e.to("cpu")
+        # `= None`, NOT `del`: deleting a registered diffusers component breaks
+        # pipe.to() and maybe_free_model_hooks(). And do NOT move the VAE to CPU —
+        # prepare_latents calls vae.encode() on the conditioning image INSIDE
+        # __call__, so it would crash on a device mismatch.
+        pipe.text_encoder = None
+        gc.collect()
+        torch.cuda.empty_cache()
+        print(f"text encoder evicted after {time.time()-t_enc:.0f}s "
+              f"({len(jobs)} prompt(s) encoded)", flush=True)
+        vram("text encoder evicted")
+    return _sample(pipe, a, w, h, frames, takes_image, jobs)
 
 
-def _sample(pipe, a, w, h, frames, takes_image) -> int:
+def _sample(pipe, a, w, h, frames, takes_image, jobs=None) -> int:
     """ONE process, MANY clips — shared by both model paths.
 
     Sampling is only a fraction of a clip's wall time; the rest was reloading the
@@ -223,9 +289,10 @@ def _sample(pipe, a, w, h, frames, takes_image) -> int:
     from diffusers.utils import export_to_video
     from PIL import Image
 
-    jobs = json.loads(Path(a.jobs).read_text()) if a.jobs else \
-        [{"init": a.init, "out": a.out, "prompt": a.prompt, "seed": a.seed,
-          "negative": a.negative}]
+    if jobs is None:
+        jobs = json.loads(Path(a.jobs).read_text()) if a.jobs else \
+            [{"init": a.init, "out": a.out, "prompt": a.prompt, "seed": a.seed,
+              "negative": a.negative}]
     for i, job in enumerate(jobs, 1):
         t0 = time.time()
         img = Image.open(job["init"]).convert("RGB").resize((w, h), Image.LANCZOS)
@@ -243,7 +310,16 @@ def _sample(pipe, a, w, h, frames, takes_image) -> int:
             neg = f"3d, cg, photo, stop, wait, {neg}"
             if not a.no_lora:
                 steps, guidance = 4, 1.0
-        kw = dict(prompt=prompt, negative_prompt=neg, height=h, width=w,
+        if job.get("_pos") is not None:
+            dev = "cuda" if torch.cuda.is_available() else "cpu"
+            kw = dict(prompt_embeds=job["_pos"].to(dev),
+                      negative_prompt_embeds=job["_neg"].to(dev),
+                      height=h, width=w,
+                      num_frames=frames, num_inference_steps=steps,
+                      guidance_scale=guidance,
+                      generator=torch.Generator(device="cpu").manual_seed(int(job["seed"])))
+        else:
+            kw = dict(prompt=prompt, negative_prompt=neg, height=h, width=w,
                   num_frames=frames, num_inference_steps=steps,
                   guidance_scale=guidance,
                   generator=torch.Generator(device="cpu").manual_seed(int(job["seed"])))
@@ -252,8 +328,15 @@ def _sample(pipe, a, w, h, frames, takes_image) -> int:
         out = pipe(**kw).frames[0]
         Path(job["out"]).parent.mkdir(parents=True, exist_ok=True)
         export_to_video(out, job["out"], fps=a.fps)
+        peak = (torch.cuda.max_memory_allocated() / 1e9
+                if torch.cuda.is_available() else 0)
+        free, total = (torch.cuda.mem_get_info() if torch.cuda.is_available() else (0, 1))
         print(f"[{i}/{len(jobs)}] wrote {job['out']} in {time.time()-t0:.0f}s "
-              f"({frames} frames, {w}x{h}, {steps} steps)", flush=True)
+              f"({frames} frames, {w}x{h}, {steps} steps, "
+              f"peak torch {peak:.1f}GB, device {(total-free)/1e9:.1f}/{total/1e9:.0f}GB)",
+              flush=True)
+        if torch.cuda.is_available():
+            torch.cuda.reset_peak_memory_stats()
     return 0
 
 

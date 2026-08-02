@@ -193,6 +193,20 @@ MODEL_LICENCES = {
     # version explicitly, after reading ITS licence, and never rely on the
     # prefix. The direction that bites is always allow-by-inheritance.
     "voxcpm2": "Apache-2.0",
+    # CORRECTED 2026-08-02, twice. First recorded as "unverifiable, nothing to
+    # read" — wrong: quanhaol/Wan2.2-TI2V-5B-Turbo ships LICENSE.md, 19151 bytes,
+    # standard CC BY-NC-SA 4.0. Verified in the raw text: "for NonCommercial
+    # purposes only", "non-sublicensable", and ShareAlike via "same License
+    # Elements". GitHub's spdx_id says NOASSERTION, which means its detector could
+    # not CLASSIFY the file — it says nothing about whether one exists, and reading
+    # it as "no file" is how this hid for two days.
+    # It is a permanent hard fail, not a maybe: the NC limit bites on our USE OF THE
+    # WEIGHTS, so we never reach the unsettled question of whether generated video
+    # is Adapted Material. Technically it was the ideal model — 4-step, CFG-free,
+    # real i2v. Rejected on licence, not merit, and never worth revisiting.
+    # Its GGUF mirrors (hum-ma, Kiijoku) declare apache-2.0 over this base: a leaf
+    # cannot grant what its base withholds.
+    "quanhaol": "CC-BY-NC-SA-4.0",
     # ---- video models whose licence was READ, 2026-08-01 -------------------
     # AnimeGen-I2V (aidealab): LICENSE file verified byte-identical to canonical
     # Apache-2.0 through all nine operative sections, front matter tags
@@ -322,6 +336,12 @@ MODEL_LICENCES = {
     # the same record carry the licence, and they are checked separately.
     "kaggle": "CC-BY-4.0 (our own output)",
     "local-rtx5090": "CC-BY-4.0 (our own output)",
+    # the generic form video_task.write_sidecar emits, e.g. "local-gpu (rtx5090)".
+    # Added after a sidecar written by our OWN renderer was flagged unpublishable:
+    # only the exact handle "local-rtx5090" was listed, so every clip from a new
+    # machine — or from a writer that spells it differently — became a violation.
+    # A rule that depends on one machine's nickname is not a rule.
+    "local-gpu": "CC-BY-4.0 (our own output)",
     "local-deterministic": "CC-BY-4.0 (our own output)",
     "post-motion": "CC-BY-4.0 (our own output)",     # post_motion.py: code, not a model
     "render-t2": "CC-BY-4.0 (our own output)",
@@ -329,8 +349,35 @@ MODEL_LICENCES = {
     "sfx-py": "CC-BY-4.0 (our own output)",
 }
 
+# Models with NO LICENCE TEXT ANYWHERE — a different state from "nobody has read
+# it yet", and the difference is worth encoding because it changes what to DO.
+#
+# LTX-Video sat in this gate as "unread". Someone read it, in about twenty minutes,
+# and it cleared. quanhaol/Wan2.2-TI2V-5B-Turbo has no text at any URL: both
+# LICENSE paths 404 and GitHub reports NOASSERTION. Reading is not a task that can
+# be completed. Filing both as "unread" sends the next person to look for a
+# document that does not exist.
+#
+# So: "unread" means GO READ IT (cheap, and it may clear). "UNCLEARABLE" means the
+# only routes are the author publishing terms, or replacing the asset.
+UNCLEARABLE = {}   # nothing currently sits here; see quanhaol below for why
+
+# Apache-2.0 AND OUR OUTPUT, stated once so it stops being re-derived:
+# Apache 2.0 has no output clause at all. It grants rights in "the Work" — the
+# weights and code — and is SILENT on what you generate by running it. That
+# silence, not any affirmative grant, is why apache-2.0 weights place no condition
+# on our CC BY 4.0 offer. (LTXV reaches the same place the other way, by explicit
+# disclaimer in §5: "Licensor claims no rights in the Output".)
+# Verified 2026-08-02: neither Wan-Video/Wan2.2 nor hao-ai-lab/FastVideo ships a
+# NOTICE file, so Apache §4(d)'s attribution requirement — which is conditional on
+# the distributed Work containing one — never triggers. Nothing travels into an
+# episode.
+
 # Remedy appended to a violation when the fix is specific enough to name.
 MODEL_NOTES = {
+    "quanhaol": " — UNCLEARABLE, not merely unread: there is no licence text at any "
+                "URL to read. Do not spend time looking. Either the author "
+                "publishes terms or the asset is replaced.",
     "pixverse": " — if the take was made on a PAID PixVerse plan, record the plan "
                 "in the sidecar (the free tier is personal-use only); otherwise "
                 "re-shoot the beat on a publish-safe route",

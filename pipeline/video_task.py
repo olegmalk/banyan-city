@@ -24,6 +24,8 @@ import threading
 import time
 from pathlib import Path
 
+import yaml
+
 REPO = Path(__file__).resolve().parent.parent
 IS_WIN = platform.system() == "Windows"
 ROOT = Path("C:/banyan-video") if IS_WIN else Path.home() / "banyan-video"
@@ -146,6 +148,41 @@ def _stream(cmd, courier, timeout, env):
             p.kill()
     return subprocess.CompletedProcess(cmd, p.returncode, "".join(out),
                                        "".join(err))
+
+
+def motion_directions(node_dir: Path) -> dict:
+    """{beat: the node's OWN per-beat motion direction}, from motion.yaml.
+
+    This file has existed since 2026-07-29 — "Per-beat MOTION direction (what
+    moves; the still owns composition). Edit here — a PR to this file is a
+    motion-direction pitch." The shot board reads it. make_requests reads it. The
+    RENDERER never did, so every clip we have made was animated from a motion
+    prompt I generated instead, and mine were worse in every way that mattered:
+
+      motion.yaml beat 1:  "the young man types rapidly, fingers moving over the
+                            keys, slight shoulder movement, monitor glow flickers
+                            gently, camera locked"
+      what I sent:         "One mechanical keyboard, very fast — then it stops.
+                            gentle drift; no new subjects, no scene change"
+
+    Theirs describes the STILL WE HAVE, in motion terms, and ends "camera locked"
+    — the exact anti-scene-change instruction I spent today trying to invent. Beat
+    4's entry is "the limp hand stays motionless... one loose paper settles to the
+    floor", which is the aftermath the still actually shows, rather than the mug
+    drop I asked for and got.
+
+    Preferred over the node.md action line, which describes what HAPPENS in the
+    story and can therefore describe a moment the still has already passed.
+    """
+    f = node_dir / "motion.yaml"
+    if not f.exists():
+        return {}
+    try:
+        data = yaml.safe_load(f.read_text(encoding="utf-8")) or {}
+    except Exception:                                    # noqa: BLE001
+        return {}
+    return {int(k): str(v).strip()
+            for k, v in (data.get("motion_prompts") or {}).items() if v}
 
 
 BEAT_HEAD = re.compile(r"^\*\*(.+?)\s+—\s+\d+:\d\d–\d+:\d\d\*\*$", re.M)
@@ -302,6 +339,11 @@ def write_sidecar(clip, vmodel, task, beat, seconds, steps, size):
     repo, lic = MODEL_LICENCE.get(vmodel, (vmodel, "UNVERIFIED — licence not read"))
     Path(str(clip) + ".meta.yaml").write_text(
         "# Shot provenance (7.2) — written by video_task at render time\n"
+        # "local-gpu (<worker>)" not "local-<worker>": the gate classifies on the
+        # generic "local-gpu" prefix, so this form is recognised on ANY machine
+        # while still naming which one rendered it. Spelling it "local-dads-msi"
+        # made every clip from a new handle an unclassified violation — the fix for
+        # one machine's nickname must not depend on another's.
         f"platform: local-gpu ({task.get('worker', 'unknown')})\n"
         f"model: {repo}\n"
         f"model_licence: {lic}\n"
@@ -441,7 +483,8 @@ def run(task: dict, courier, node_dir: Path) -> None:
     ensure_stack(courier)
     # utf-8 pinned: Windows' cp1252 mangles the em-dash in "## Beat NN —"
     # and parse_shots then finds nothing (the msi's first-light failure)
-    actions = beat_actions(node_dir / "node.md")
+    directed = motion_directions(node_dir)          # the node's own motion briefs
+    actions = beat_actions(node_dir / "node.md")     # fallback: the story action
     shots = {s["num"]: s
              for s in parse_shots((node_dir / "shots.md").read_text(encoding="utf-8"))}
     stills = node_dir / "stills"
@@ -464,7 +507,7 @@ def run(task: dict, courier, node_dir: Path) -> None:
             motion = task.get("motion") or ("subtle continuous motion, gentle camera "
                                             "drift, living scene")
             o = courier.out / f"{task.get('id')}-{num:02d}-{s['slug']}.mp4"
-            act = actions.get(num)
+            act = directed.get(num) or actions.get(num)
             pos, neg = video_prompt(f"{act}. {motion}" if act else motion,
                                     s["prompt"])
             jobs.append({"init": str(init), "out": str(o), "prompt": pos,
@@ -522,7 +565,7 @@ def run(task: dict, courier, node_dir: Path) -> None:
         # took the other, silently rendering on the default model with the old
         # prompt. Caught when a one-clip AnimeGen canary logged "beat=01
         # (single-process)" and rendered plain Wan (2026-08-01).
-        act = actions.get(num)
+        act = directed.get(num) or actions.get(num)
         prompt, neg = video_prompt(f"{act}. {motion}" if act else motion,
                                    s["prompt"])
         vmodel = str(task.get("video_model", "ti2v-5b"))

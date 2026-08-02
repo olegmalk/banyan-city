@@ -1,189 +1,130 @@
-# 2026-08-02. ALL 15 BEATS, with the negatives finally in the negative field.
+# 2026-08-02 — STEP SWEEP, ahead of everything else.
 #
-# Founder on the beat-1 Wan take: "it makes an additional realistic looking scene,
-# lets try again without it changing scenes itself." It was TOLD to. The motion
-# string "gentle drift; no new subjects, no scene change" went into the POSITIVE
-# prompt verbatim, so every render was asked for new subjects and a scene change
-# in the same breath as being told not to.
+# Founder: "see how low can we get, and at which point does the quality become too
+# bad." Same shape as the earlier image-model speed test.
 #
-# Second time this exact mistake shipped: fixed for the still-description prompt
-# on 2026-08-01, left in the motion string because that looked like prose rather
-# than a prompt. video_prompt() now strips "no X" clauses from BOTH inputs, and
-# ANTI_STYLE names the failure directly — scene change, shot change, cut to
-# another angle, second scene, new camera angle, different location.
+# CONTROLLED: beat 1, the same approved still, the same motion.yaml direction, the
+# same seed, 480x832, 2.5s, guidance 5.0. ONLY the step count varies, so the
+# comparison is honest — one variable.
 #
-# seed_base changed (20260731 -> 20260802) so these are genuinely new samples and
-# not cache-identical re-runs of yesterday.
+# Beat 1 on purpose: the founder knows it well, it opens the episode, and it has
+# fingers on keys. Fine detail is where low step counts break first, so degradation
+# will be visible rather than a matter of taste.
 #
-# One beat per task: a bad clip costs one clip, each pushes the moment it lands,
-# and the stall detector kills anything wedged for 45 minutes. ~10 min each, so
-# roughly 2.5 hours for a complete episode of fresh takes.
+# Measured baseline is 26.8s per step, so:
+#   20 steps ~ 9m    (today's setting)
+#   12 steps ~ 5.5m
+#    8 steps ~ 3.5m
+#    6 steps ~ 2.7m  <- the 3-minute target lands about here
+#    4 steps ~ 1.8m
+# ~25 min for all five in one model load, each pushing as it finishes.
+#
+# CAVEAT recorded before the result, so it cannot be read as an excuse afterwards:
+# guidance 5.0 is arguably unfair to 4-6 steps. Distilled few-step setups run
+# guidance ~1.0, and high CFG at low steps is a known failure mode. So D and E may
+# look worse than the model's real floor. This sweep answers "what do we get with
+# what we have"; if the low end collapses, the follow-up is the same steps at
+# guidance 1.0-1.5 before concluding anything about the model.
 tasks:
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
-  motion: gentle drift; no new subjects, no scene change
-  size: 480x832
-  seconds: 3.0
-  steps: 20
-  guidance: 5.0
-  seed_base: 20260802
-  id: v2-b01-1785660000
   beats: 1
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 2.5
+  guidance: 5.0
+  seed_base: 20260803
+  id: sweep-s20-1785680000
+  steps: 20
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  beats: 1
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 2.5
+  guidance: 5.0
+  seed_base: 20260803
+  id: sweep-s12-1785680000
+  steps: 12
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  beats: 1
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 2.5
+  guidance: 5.0
+  seed_base: 20260803
+  id: sweep-s08-1785680000
+  steps: 8
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  beats: 1
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 2.5
+  guidance: 5.0
+  seed_base: 20260803
+  id: sweep-s06-1785680000
+  steps: 6
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  beats: 1
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 2.5
+  guidance: 5.0
+  seed_base: 20260803
+  id: sweep-s04-1785680000
+  steps: 4
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
   motion: gentle drift; no new subjects, no scene change
   size: 480x832
-  seconds: 3.0
-  steps: 20
+  seconds: 2.5
+  steps: 12
   guidance: 5.0
-  seed_base: 20260802
-  id: v2-b02-1785660000
-  beats: 2
+  seed_base: 20260803
+  id: v3-probe-1785677000
+  beats: 1,2,4
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
   motion: gentle drift; no new subjects, no scene change
   size: 480x832
-  seconds: 3.0
-  steps: 20
+  seconds: 2.5
+  steps: 12
   guidance: 5.0
-  seed_base: 20260802
-  id: v2-b03-1785660000
-  beats: 3
+  seed_base: 20260803
+  id: v3-rest-a-1785677000
+  beats: 3,5,6,7,8
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
   motion: gentle drift; no new subjects, no scene change
   size: 480x832
-  seconds: 3.0
-  steps: 20
+  seconds: 2.5
+  steps: 12
   guidance: 5.0
-  seed_base: 20260802
-  id: v2-b04-1785660000
-  beats: 4
+  seed_base: 20260803
+  id: v3-rest-b-1785677000
+  beats: 9,10,11,12
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
   motion: gentle drift; no new subjects, no scene change
   size: 480x832
-  seconds: 3.0
-  steps: 20
+  seconds: 2.5
+  steps: 12
   guidance: 5.0
-  seed_base: 20260802
-  id: v2-b05-1785660000
-  beats: 5
-- worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  motion: gentle drift; no new subjects, no scene change
-  size: 480x832
-  seconds: 3.0
-  steps: 20
-  guidance: 5.0
-  seed_base: 20260802
-  id: v2-b06-1785660000
-  beats: 6
-- worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  motion: gentle drift; no new subjects, no scene change
-  size: 480x832
-  seconds: 3.0
-  steps: 20
-  guidance: 5.0
-  seed_base: 20260802
-  id: v2-b07-1785660000
-  beats: 7
-- worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  motion: gentle drift; no new subjects, no scene change
-  size: 480x832
-  seconds: 3.0
-  steps: 20
-  guidance: 5.0
-  seed_base: 20260802
-  id: v2-b08-1785660000
-  beats: 8
-- worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  motion: gentle drift; no new subjects, no scene change
-  size: 480x832
-  seconds: 3.0
-  steps: 20
-  guidance: 5.0
-  seed_base: 20260802
-  id: v2-b09-1785660000
-  beats: 9
-- worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  motion: gentle drift; no new subjects, no scene change
-  size: 480x832
-  seconds: 3.0
-  steps: 20
-  guidance: 5.0
-  seed_base: 20260802
-  id: v2-b10-1785660000
-  beats: 10
-- worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  motion: gentle drift; no new subjects, no scene change
-  size: 480x832
-  seconds: 3.0
-  steps: 20
-  guidance: 5.0
-  seed_base: 20260802
-  id: v2-b11-1785660000
-  beats: 11
-- worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  motion: gentle drift; no new subjects, no scene change
-  size: 480x832
-  seconds: 3.0
-  steps: 20
-  guidance: 5.0
-  seed_base: 20260802
-  id: v2-b12-1785660000
-  beats: 12
-- worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  motion: gentle drift; no new subjects, no scene change
-  size: 480x832
-  seconds: 3.0
-  steps: 20
-  guidance: 5.0
-  seed_base: 20260802
-  id: v2-b13-1785660000
-  beats: 13
-- worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  motion: gentle drift; no new subjects, no scene change
-  size: 480x832
-  seconds: 3.0
-  steps: 20
-  guidance: 5.0
-  seed_base: 20260802
-  id: v2-b14-1785660000
-  beats: 14
-- worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  motion: gentle drift; no new subjects, no scene change
-  size: 480x832
-  seconds: 3.0
-  steps: 20
-  guidance: 5.0
-  seed_base: 20260802
-  id: v2-b15-1785660000
-  beats: 15
+  seed_base: 20260803
+  id: v3-rest-c-1785677000
+  beats: 13,14,15
 - id: prefetch-a14b-1785529520
   worker: rtx5090
   video: true
