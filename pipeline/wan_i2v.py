@@ -197,6 +197,23 @@ def stage_simple(a) -> int:
                 f"--quantise on a model that fits unquantised.")
     pipe = WanImageToVideoPipeline.from_pretrained(a.model, **kw)
     print(f"pipeline class: {type(pipe).__name__} (forced image-to-video)")
+    # VRAM ACCOUNTING, printed before and after placement. 536s per clip works out
+    # to 13.4s per forward pass for a 6240-token sequence — roughly 10x off what
+    # this card should manage. The suspicion: the weights do not fit. Wan 2.2
+    # TI2V-5B ships 34GB on disk (transformer 20GB fp32, text encoder 11.4GB, VAE
+    # 2.8GB); at bf16 that is ~17GB resident on a 24GB card that is also driving a
+    # Windows desktop. On Windows/WDDM the driver's default Sysmem Fallback Policy
+    # PAGES TO HOST RAM over PCIe rather than raising OOM — a silent 10x slowdown
+    # that looks identical to "this model is slow".
+    # Measured, not assumed: if used stays near total, that is the answer.
+    def vram(tag):
+        if not torch.cuda.is_available():
+            return
+        free, total = torch.cuda.mem_get_info()
+        alloc = torch.cuda.memory_allocated() / 1e9
+        print(f"VRAM[{tag}] used {(total-free)/1e9:.2f}/{total/1e9:.1f}GB "
+              f"(torch holds {alloc:.2f}GB)", flush=True)
+    vram("after load, before .to(cuda)")
     # a quantised big model still will not sit entirely on 24GB; offload streams
     # modules through system RAM, which is slow but finishes
     if a.quantise != "none" or a.offload:
@@ -204,6 +221,7 @@ def stage_simple(a) -> int:
         print("model cpu offload ON (big model: slower per clip, but it fits)")
     else:
         pipe.to("cuda")
+        vram("after .to(cuda)")
     import inspect
     takes_image = "image" in inspect.signature(pipe.__call__).parameters
     if not takes_image:
@@ -252,8 +270,15 @@ def _sample(pipe, a, w, h, frames, takes_image) -> int:
         out = pipe(**kw).frames[0]
         Path(job["out"]).parent.mkdir(parents=True, exist_ok=True)
         export_to_video(out, job["out"], fps=a.fps)
+        peak = (torch.cuda.max_memory_allocated() / 1e9
+                if torch.cuda.is_available() else 0)
+        free, total = (torch.cuda.mem_get_info() if torch.cuda.is_available() else (0, 1))
         print(f"[{i}/{len(jobs)}] wrote {job['out']} in {time.time()-t0:.0f}s "
-              f"({frames} frames, {w}x{h}, {steps} steps)", flush=True)
+              f"({frames} frames, {w}x{h}, {steps} steps, "
+              f"peak torch {peak:.1f}GB, device {(total-free)/1e9:.1f}/{total/1e9:.0f}GB)",
+              flush=True)
+        if torch.cuda.is_available():
+            torch.cuda.reset_peak_memory_stats()
     return 0
 
 
