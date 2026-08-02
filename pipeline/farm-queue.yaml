@@ -1,149 +1,222 @@
-# 2026-08-02 18:05Z. ONE BEAT PER TASK. The batch loop leaks VRAM.
+# 2026-08-02 18:15Z — THE SHAKE FIX. Two causes, both the steward's.
 #
-# Measured, three times identically: clip 1 of a 5-clip batch finished in ~440s and
-# clip 2 NEVER finished — each batch stalled ~46 min until the watchdog killed it.
-# peak torch 22.9GB of 25.7GB, so after one clip the allocator holds nearly the
-# whole card and the next one pages to host RAM. wan_i2v now frees between clips
-# (del out + gc + empty_cache), but the founder wants to post TODAY and this is not
-# the day to bet on a fix nobody has watched work.
+# Founder on the three motion.yaml clips: "definitely improvement, but i noticed
+# these all have a pattern of like, shaking alot, strangly." ALL of them, so
+# systematic rather than per-beat.
 #
-# One beat per task is PROVEN — every single-beat render today came in at 9-13 min.
-# It costs a model reload per clip and buys certainty.
+# CAUSE 1: we told the model not to be still, on every clip. Wan's official negative
+# prompt contains 静态 (static), 静止 (motionless) and 静止不动的画面 (a motionless
+# picture). A sound default for text-to-video, where freezing is the usual failure —
+# backwards for a show where the approved still IS the composition and every
+# motion.yaml entry ends "camera locked". Removed those three, kept every quality
+# suppressor, and added explicit shake terms (camera shake, handheld, jitter,
+# wobble, unstable, trembling camera, rolling shutter).
 #
-# Beats 1, 6 and 11 already landed overnight and are excluded. 12 beats x ~11 min =
-# ~2h10. If the memory fix holds, a later batch pass can be reinstated.
+# CAUSE 2: contradictory camera instructions. motion.yaml says "camera locked" and
+# the steward appended "gentle drift" after it, so the prompt read "camera locked.
+# gentle drift." Jitter is what a model does with that. The suffix is now only the
+# discipline part: "no new subjects, no scene change".
+#
+# BEAT 1 FIRST, alone. It is the clip he has judged more than any other, so it is
+# the honest comparison. ~11 min. If the shake is gone, the remaining 14 follow;
+# if not, we have spent 11 minutes instead of two hours.
+#
+# ---------------------------------------------------------------------------
+# 2026-08-02 20:4xZ — RESOLUTION, ahead of the shake question.
+#
+# The founder rejected ep1-v21-CANON as "too low quality". That canon was built
+# from 480x832 clips, and every task below was queued at 480x832 — so as
+# written, a full night of rendering reproduces the exact thing he turned down.
+# 480x832 upscaled to a 1080x1920 phone screen is a 2.25x blow-up; soft is the
+# expected outcome, not a surprise.
+#
+# But 704x1280 has NEVER completed on this card: vid-720p-all failed twice,
+# and -c, -d, -e once each. Five attempts, zero clips. So the resolution
+# question gets ONE beat, not fifteen — with --offload, which is the supported
+# way to fit a model that already sits at 24.4/26GB (hand-rolled eviction is
+# what corrupted every frame on 2026-08-02; do not repeat it).
+#
+# Order is deliberate: the hi-res canary runs FIRST so the answer arrives in
+# ~15 min while there is still a night left to use it. The 480x832 set stays
+# queued behind it, so if 720p OOMs we still wake up to a complete shake-fixed
+# episode instead of nothing.
 tasks:
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
-  motion: gentle drift; no new subjects, no scene change
+  motion: no new subjects, no scene change
+  size: 704x1280        # native 720p for Wan 2.2 TI2V-5B
+  offload: true         # enable_model_cpu_offload — supported, unlike eviction
+  seconds: 2.5
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260805
+  id: hires-canary-b01-1785764400
+  beats: 1
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  motion: no new subjects, no scene change
   size: 480x832
   seconds: 2.5
   steps: 20
   guidance: 5.0
-  seed_base: 20260803
-  id: day-b02-1785760000
+  seed_base: 20260805
+  id: shake-canary-b01-1785762000
+  beats: 1
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  motion: no new subjects, no scene change
+  size: 480x832
+  seconds: 2.5
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260805
+  id: d2-b06-1785762000
+  beats: 6
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  motion: no new subjects, no scene change
+  size: 480x832
+  seconds: 2.5
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260805
+  id: d2-b11-1785762000
+  beats: 11
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  motion: no new subjects, no scene change
+  size: 480x832
+  seconds: 2.5
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260805
+  id: d2-b02-1785762000
   beats: 2
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
-  motion: gentle drift; no new subjects, no scene change
+  motion: no new subjects, no scene change
   size: 480x832
   seconds: 2.5
   steps: 20
   guidance: 5.0
-  seed_base: 20260803
-  id: day-b03-1785760000
+  seed_base: 20260805
+  id: d2-b03-1785762000
   beats: 3
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
-  motion: gentle drift; no new subjects, no scene change
+  motion: no new subjects, no scene change
   size: 480x832
   seconds: 2.5
   steps: 20
   guidance: 5.0
-  seed_base: 20260803
-  id: day-b04-1785760000
+  seed_base: 20260805
+  id: d2-b04-1785762000
   beats: 4
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
-  motion: gentle drift; no new subjects, no scene change
+  motion: no new subjects, no scene change
   size: 480x832
   seconds: 2.5
   steps: 20
   guidance: 5.0
-  seed_base: 20260803
-  id: day-b05-1785760000
+  seed_base: 20260805
+  id: d2-b05-1785762000
   beats: 5
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
-  motion: gentle drift; no new subjects, no scene change
+  motion: no new subjects, no scene change
   size: 480x832
   seconds: 2.5
   steps: 20
   guidance: 5.0
-  seed_base: 20260803
-  id: day-b07-1785760000
+  seed_base: 20260805
+  id: d2-b07-1785762000
   beats: 7
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
-  motion: gentle drift; no new subjects, no scene change
+  motion: no new subjects, no scene change
   size: 480x832
   seconds: 2.5
   steps: 20
   guidance: 5.0
-  seed_base: 20260803
-  id: day-b08-1785760000
+  seed_base: 20260805
+  id: d2-b08-1785762000
   beats: 8
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
-  motion: gentle drift; no new subjects, no scene change
+  motion: no new subjects, no scene change
   size: 480x832
   seconds: 2.5
   steps: 20
   guidance: 5.0
-  seed_base: 20260803
-  id: day-b09-1785760000
+  seed_base: 20260805
+  id: d2-b09-1785762000
   beats: 9
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
-  motion: gentle drift; no new subjects, no scene change
+  motion: no new subjects, no scene change
   size: 480x832
   seconds: 2.5
   steps: 20
   guidance: 5.0
-  seed_base: 20260803
-  id: day-b10-1785760000
+  seed_base: 20260805
+  id: d2-b10-1785762000
   beats: 10
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
-  motion: gentle drift; no new subjects, no scene change
+  motion: no new subjects, no scene change
   size: 480x832
   seconds: 2.5
   steps: 20
   guidance: 5.0
-  seed_base: 20260803
-  id: day-b12-1785760000
+  seed_base: 20260805
+  id: d2-b12-1785762000
   beats: 12
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
-  motion: gentle drift; no new subjects, no scene change
+  motion: no new subjects, no scene change
   size: 480x832
   seconds: 2.5
   steps: 20
   guidance: 5.0
-  seed_base: 20260803
-  id: day-b13-1785760000
+  seed_base: 20260805
+  id: d2-b13-1785762000
   beats: 13
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
-  motion: gentle drift; no new subjects, no scene change
+  motion: no new subjects, no scene change
   size: 480x832
   seconds: 2.5
   steps: 20
   guidance: 5.0
-  seed_base: 20260803
-  id: day-b14-1785760000
+  seed_base: 20260805
+  id: d2-b14-1785762000
   beats: 14
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
-  motion: gentle drift; no new subjects, no scene change
+  motion: no new subjects, no scene change
   size: 480x832
   seconds: 2.5
   steps: 20
   guidance: 5.0
-  seed_base: 20260803
-  id: day-b15-1785760000
+  seed_base: 20260805
+  id: d2-b15-1785762000
   beats: 15
 - id: prefetch-a14b-1785529520
   worker: rtx5090

@@ -51,7 +51,7 @@ ledger. The founder's screening decides what the episode keeps (R4).
 
 
 def gh(*args):
-    r = subprocess.run(["gh", *args], capture_output=True, text=True)
+    r = subprocess.run(["gh", *args], capture_output=True, text=True, encoding="utf-8", errors="replace")
     if r.returncode:
         raise SystemExit(f"gh {' '.join(args[:3])}… failed:\n{r.stderr}")
     return r.stdout.strip()

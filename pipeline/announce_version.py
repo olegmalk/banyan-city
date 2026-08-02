@@ -42,7 +42,7 @@ def main() -> int:
 
     body = f"## {a.title}\n\n{a.body}"
     r = subprocess.run(["gh", "issue", "comment", issue, "--body", body],
-                       capture_output=True, text=True)
+                       capture_output=True, text=True, encoding="utf-8", errors="replace")
     if r.returncode:
         raise SystemExit(f"gh failed:\n{r.stderr}")
     print(f"✓ posted to issue #{issue}: {a.title}\n  {r.stdout.strip()}")

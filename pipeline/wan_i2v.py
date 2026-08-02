@@ -51,12 +51,30 @@ MODELS = {
                                                      # our named drift problem
 }
 MODEL = DEFAULT_MODEL
-# Wan's own default negative prompt (Chinese, from the official repo): it
-# measurably suppresses colour clipping, static frames and mangled limbs.
-NEG = ("色调艳丽, 过曝, 静态, 细节模糊不清, 字幕, 风格, 作品, 画作, 画面, 静止, 整体发灰, "
+# Wan's own default negative prompt (Chinese, from the official repo) MINUS its
+# anti-stillness terms.
+#
+# The official list contains 静态 (static), 静止 (motionless) and 静止不动的画面 (a
+# motionless picture) — i.e. it tells the model NOT TO BE STILL. That is a sensible
+# default for general text-to-video, where a frozen output is the common failure.
+# It is backwards for this show: the still IS the approved composition, every
+# motion.yaml direction ends "camera locked", and what we want is the small true
+# movement and nothing else.
+#
+# Sending it anyway pushed the model into motion everywhere, on every clip, and the
+# founder saw the result before any measurement did (2026-08-02): "these all have a
+# pattern of like, shaking alot, strangly". Those three terms are removed; every
+# quality suppressor (bad hands, fused fingers, jpeg artifacts, overexposure) is
+# kept, and explicit shake terms are added.
+NEG = ("色调艳丽, 过曝, 细节模糊不清, 字幕, 风格, 作品, 画作, 整体发灰, "
        "最差质量, 低质量, JPEG压缩残留, 丑陋的, 残缺的, 多余的手指, 画得不好的手部, "
-       "画得不好的脸部, 畸形的, 毁容的, 形态畸形的肢体, 手指融合, 静止不动的画面, "
-       "杂乱的背景, 三条腿, 背景人很多, 倒着走")
+       "画得不好的脸部, 畸形的, 毁容的, 形态畸形的肢体, 手指融合, "
+       "杂乱的背景, 三条腿, 背景人很多, 倒着走, "
+       # OURS, added 2026-08-02: the founder on every motion.yaml clip — "these all
+       # have a pattern of like, shaking alot, strangly". Suppress the shake
+       # directly, in the field that acts on it.
+       "camera shake, handheld camera, jitter, wobble, unstable camera, "
+       "vibrating, trembling camera, rolling shutter")
 
 
 def load_animegen(torch, a):

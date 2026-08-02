@@ -57,7 +57,7 @@ SPEC_MAX_S = 6.0   # SCRIPT-SPEC's upper bound for one beat = one shot
 
 def clip_seconds(path: Path) -> float | None:
     r = subprocess.run([FFMPEG, "-hide_banner", "-i", str(path)],
-                       capture_output=True, text=True)
+                       capture_output=True, text=True, encoding="utf-8", errors="replace")
     m = re.search(r"Duration: (\d+):(\d+):([\d.]+)", r.stderr)
     if not m:
         return None

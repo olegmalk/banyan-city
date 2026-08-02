@@ -66,8 +66,13 @@ def _stream(cmd, courier, timeout, env):
     """
     out, err = [], []
     deadline = time.time() + timeout if timeout else None
+    # encoding= explicitly: errors="replace" keeps this from crashing on the
+    # farm's cp1252 locale, but without it every non-ASCII byte the renderer
+    # prints (the Chinese negative prompt, a progress bar's box characters)
+    # lands in the log as mojibake — and the log is how we diagnose failures.
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                         text=True, errors="replace", bufsize=1, env=env)
+                         text=True, encoding="utf-8", errors="replace",
+                         bufsize=1, env=env)
 
     # A HEARTBEAT THAT DOES NOT DEPEND ON THE CHILD SAYING ANYTHING.
     #
@@ -241,6 +246,50 @@ def beat_actions(node_md: Path) -> dict:
     return out
 
 
+# Wan's official anti-stillness terms. Applied PER BEAT, never globally — see
+# antistatic_for().
+ANTI_STATIC = "静态, 静止, 静止不动的画面, frozen frame, still image, no motion"
+
+# A direction that describes stillness. Beats like "the leaf holds almost perfectly
+# still" or "a beat of stillness" must NOT be told to avoid being static.
+# "settles" and "quivers" were in this list and are MOVEMENT words — a leaf that
+# "lifts and settles" is moving. That misfiled beat 9 as wanting stillness, which is
+# the exact beat the founder reported as "literally not moving, not one pixel", so
+# the classifier would have made it worse. Stillness words only.
+WANTS_STILL = re.compile(r"\b(still|stillness|motionless|barely|nearly still|"
+                         r"very slightly|perfectly still|holds almost)\b", re.I)
+# A direction that asks for real movement, where Wan's usual failure — freezing —
+# is the thing to suppress.
+WANTS_MOVE = re.compile(r"\b(whips|shakes|sweeps|tips|rapidly|fast|increasingly|"
+                        r"pulses|arcs|unfurls|scrolls|drifts?|lift|settles?|"
+                        r"quivers|strains|flex|tremble[sd]?|stirs?|turning)\b", re.I)
+
+
+def antistatic_for(direction: str) -> str:
+    """Wan's anti-stillness terms, but only for beats that should actually move.
+
+    Founder, 2026-08-02: "no static at all forces it to move even when not needed,
+    creating shaking." Exactly so, and it explains both failures at once — a blanket
+    setting cannot be right for fifteen beats that disagree about motion:
+
+      WITH the terms on every beat: beats meant to be nearly still (4 "the limp hand
+      stays motionless", 8 "holds almost perfectly still") were forbidden from
+      stillness, so they shook.
+      WITHOUT them on any beat: beats that need real movement risk Wan's usual
+      failure, a frozen output — which is what beat 9 did.
+
+    So it is decided per beat, from the direction the author already wrote. Stillness
+    language in the direction means no anti-static suppression; movement language
+    means keep it. When a direction says both, the still reading wins — an
+    over-still clip is a usable plate, a shaking one is not.
+    """
+    if WANTS_STILL.search(direction or ""):
+        return ""
+    if WANTS_MOVE.search(direction or ""):
+        return ANTI_STATIC
+    return ""
+
+
 # Wan 2.2 is a general video model — the founder's read after screening six takes:
 # "wan 2.2 is still pretty good, the problem is its not made for anime style"
 # (2026-08-01). Its training is dominated by live action, so left alone it pulls
@@ -315,7 +364,9 @@ def video_prompt(motion: str, still_prompt: str) -> tuple:
     positive = f"{STYLE}. {motion}. Subject already in frame: {anchor}." if anchor \
         else f"{STYLE}. {motion}"
     extra_neg = ", ".join(n[3:].strip() for n in negatives if len(n) > 3)
-    return positive[:700], f"{extra_neg}, {ANTI_STYLE}"[:400].lstrip(", ")
+    anti = antistatic_for(motion)
+    parts = [x for x in (extra_neg, ANTI_STYLE, anti) if x]
+    return positive[:700], ", ".join(parts)[:460]
 
 
 MODEL_LICENCE = {
@@ -434,7 +485,8 @@ def gpu_vram_gb() -> float:
     """Total VRAM on device 0, asked of the video venv (this process has no torch)."""
     r = subprocess.run([str(PY), "-c", "import torch;print(torch.cuda.get_device_properties(0)"
                         ".total_memory/1e9 if torch.cuda.is_available() else 0)"],
-                       capture_output=True, text=True)
+                       capture_output=True, text=True,
+                       encoding="utf-8", errors="replace")
     try:
         return float((r.stdout or "0").strip())
     except ValueError:

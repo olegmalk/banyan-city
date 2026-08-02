@@ -125,7 +125,7 @@ def gen_kling(prompt: str, model: str, dur: int) -> tuple:
         ["kling", "text_to_video", "--model", model, "--duration", str(dur),
          "--aspect_ratio", "9:16", "--resolution", "720p", "--enable_audio", "false",
          "--poll", "600", prompt],
-        capture_output=True, text=True, timeout=700)
+        capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=700)
     out = r.stdout + r.stderr
     if "Insufficient credits" in out:
         raise SystemExit("kling: agent credit balance is empty — top up at "
