@@ -333,3 +333,4 @@
 07:28:54Z VIDEO_RENDERING beat=08 on ti2v-5b (single-process)
 07:33:47Z VIDEO_ALIVE 545m elapsed, child still running
 07:33:57Z VIDEO_ALIVE 5m elapsed, 0 clip(s) done
+07:38:50Z VIDEO_ALIVE 550m elapsed, child still running
