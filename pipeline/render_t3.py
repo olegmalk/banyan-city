@@ -287,7 +287,20 @@ def fit_duration(script_s: float, cdur: float, vdur: float) -> float:
     hard-trimmed mid-sentence."""
     if cdur:
         if not vdur:
-            return round(cdur, 2)
+            # A SILENT BEAT STILL HAS A SCRIPTED LENGTH. This used to return the
+            # full footage duration, so a beat with no dialogue played however
+            # much material happened to exist. Beat 4 of 001 — the fall, no VO,
+            # two 5s shots — therefore ran 10.08s against a script that gives it
+            # 0:15–0:20. Those five extra silent seconds WERE the "very
+            # anticlimatic" death: nothing said, nothing happening, at the moment
+            # the story turns. Four rounds of sound work chased it before anyone
+            # measured the beat length.
+            #
+            # The script is the edit. Footage shorter than its slot still keeps
+            # its own length (nothing is stretched); footage longer is cut to the
+            # slot the author wrote. Approved by the founder on the A/B
+            # (2026-08-02: "yeah B4TRIM is better").
+            return round(min(cdur, script_s), 2) if script_s else round(cdur, 2)
         return round(max(min(cdur, vdur + VOICELESS_TAIL_MAX), vdur + 0.4), 2)
     if vdur:
         return round(max(script_s, vdur + 0.4), 2)
