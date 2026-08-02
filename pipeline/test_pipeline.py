@@ -911,6 +911,52 @@ def test_no_undefined_locals(tmp: Path):
         print(f"      x  {b}")
     check("no pipeline function reads an undefined name", not bad)
 
+
+def test_subprocess_reads_are_utf8(tmp: Path):
+    """Any subprocess we read TEXT from must name its encoding.
+
+    `text=True` alone decodes with the *locale* codec. On this Mac that is UTF-8
+    and everything works; on the farm's Windows box it is cp1252, which cannot
+    represent the em dash or the Chinese terms in Wan's negative prompt that
+    live in our own queue file. Worse, the decode happens on subprocess's reader
+    THREAD: the UnicodeDecodeError never propagates to the caller, `.stdout` is
+    just quietly set to None, and the crash lands later somewhere unrelated
+    ('NoneType' object has no attribute 'read', inside pyyaml).
+
+    On 2026-08-02 that cost the 5090 a night: the worker could fetch the queue
+    fine and still could not read it, and the traceback pointed at yaml. The
+    platform that runs the renders is not the platform that runs these tests, so
+    only a static check catches it.
+    """
+    import ast
+
+    bad = []
+    for src_file in sorted((REPO / "pipeline").glob("*.py")):
+        tree = ast.parse(src_file.read_text(encoding="utf-8"))
+        for n in ast.walk(tree):
+            if not (isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute)
+                    and n.func.attr in ("run", "Popen", "check_output")):
+                continue
+            kw = {k.arg for k in n.keywords if k.arg}
+            # text mode is what makes decoding happen at all
+            if not (kw & {"text", "universal_newlines", "encoding"}):
+                continue
+            if "encoding" not in kw:
+                bad.append(f"{src_file.name}:{n.lineno} "
+                           f"subprocess.{n.func.attr}(text=...) with no encoding=")
+    for b in bad:
+        print(f"      x  {b}")
+    check("every text-mode subprocess read names its encoding", not bad)
+    # and the file that actually broke must be readable as UTF-8, not as cp1252
+    raw = (REPO / "pipeline" / "farm-queue.yaml").read_bytes()
+    try:
+        raw.decode("utf-8")
+        ok = True
+    except UnicodeDecodeError:
+        ok = False
+    check("the farm queue is valid UTF-8", ok)
+
+
 def test_licence_gate(tmp: Path):
     """The gate that should have existed on 2026-07-31, when an entire episode
     came within one command of being voiced with F5-TTS — CC BY-NC weights —
@@ -1294,6 +1340,7 @@ def main():
         test_licence_gate(Path(td))
     with tempfile.TemporaryDirectory() as td:
         test_no_undefined_locals(Path(td))
+        test_subprocess_reads_are_utf8(Path(td))
     print()
     if FAILURES:
         print(f"✗ {len(FAILURES)} failure(s): {', '.join(FAILURES)}")

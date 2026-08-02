@@ -36,8 +36,9 @@ MODEL = "F5TTS_v1_Base"
 
 def media_seconds(p: Path) -> float:
     """Duration of an audio file, via ffmpeg's banner (no ffprobe dependency)."""
-    r = subprocess.run(["ffmpeg", "-i", str(p)], capture_output=True, text=True)
-    m = re.search(r"Duration: (\d+):(\d+):(\d+\.?\d*)", r.stderr)
+    r = subprocess.run(["ffmpeg", "-i", str(p)], capture_output=True, text=True,
+                       encoding="utf-8", errors="replace")
+    m = re.search(r"Duration: (\d+):(\d+):(\d+\.?\d*)", r.stderr or "")
     return int(m[1]) * 3600 + int(m[2]) * 60 + float(m[3]) if m else 0.0
 
 
@@ -104,10 +105,11 @@ def f5(ref_wav: Path, ref_text: str, text: str, out: Path) -> float:
              "--ref_audio", str(ref_wav), "--ref_text", ref_text,
              "--gen_text", text, "--output_dir", td,
              "--output_file", "chunk.wav", "--device", "mps"],
-            capture_output=True, text=True, timeout=900)
+            capture_output=True, text=True, timeout=900,
+            encoding="utf-8", errors="replace")
         got = Path(td) / "chunk.wav"
         if not got.exists():
-            raise SystemExit(f"F5 failed on {text!r}:\n{(r.stderr or r.stdout)[-800:]}")
+            raise SystemExit(f"F5 failed on {text!r}:\n{(r.stderr or r.stdout or '')[-800:]}")
         out.parent.mkdir(parents=True, exist_ok=True)
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(got),
                         "-ar", "24000", "-ac", "1", str(out)], check=True)

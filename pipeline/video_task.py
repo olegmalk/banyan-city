@@ -66,8 +66,13 @@ def _stream(cmd, courier, timeout, env):
     """
     out, err = [], []
     deadline = time.time() + timeout if timeout else None
+    # encoding= explicitly: errors="replace" keeps this from crashing on the
+    # farm's cp1252 locale, but without it every non-ASCII byte the renderer
+    # prints (the Chinese negative prompt, a progress bar's box characters)
+    # lands in the log as mojibake — and the log is how we diagnose failures.
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                         text=True, errors="replace", bufsize=1, env=env)
+                         text=True, encoding="utf-8", errors="replace",
+                         bufsize=1, env=env)
 
     # A HEARTBEAT THAT DOES NOT DEPEND ON THE CHILD SAYING ANYTHING.
     #
@@ -480,7 +485,8 @@ def gpu_vram_gb() -> float:
     """Total VRAM on device 0, asked of the video venv (this process has no torch)."""
     r = subprocess.run([str(PY), "-c", "import torch;print(torch.cuda.get_device_properties(0)"
                         ".total_memory/1e9 if torch.cuda.is_available() else 0)"],
-                       capture_output=True, text=True)
+                       capture_output=True, text=True,
+                       encoding="utf-8", errors="replace")
     try:
         return float((r.stdout or "0").strip())
     except ValueError:

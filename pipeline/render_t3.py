@@ -248,7 +248,7 @@ def find_audio(clips_dir: Path, num: int) -> Path | None:
 
 def media_duration(f: Path) -> float | None:
     """Container duration via ffmpeg banner (no ffprobe dependency)."""
-    r = subprocess.run([FFMPEG, "-i", str(f)], capture_output=True, text=True)
+    r = subprocess.run([FFMPEG, "-i", str(f)], capture_output=True, text=True, encoding="utf-8", errors="replace")
     m = re.search(r"Duration: (\d+):(\d+):(\d+\.?\d*)", r.stderr)
     return int(m[1]) * 3600 + int(m[2]) * 60 + float(m[3]) if m else None
 
@@ -262,7 +262,7 @@ def video_duration(f: Path) -> float | None:
     progress `time=` is DTS-based and lags B-frames — count frames instead.)
     Falls back to container duration."""
     r = subprocess.run([FFMPEG, "-i", str(f), "-map", "0:v:0", "-c", "copy",
-                        "-f", "null", "-"], capture_output=True, text=True)
+                        "-f", "null", "-"], capture_output=True, text=True, encoding="utf-8", errors="replace")
     fps = re.search(r"(\d+(?:\.\d+)?) fps[,\s]", r.stderr)  # first hit = input banner
     frames = re.findall(r"frame=\s*(\d+)", r.stderr)        # last hit = final count
     if r.returncode == 0 and fps and frames and float(fps[1]) > 0:
@@ -368,7 +368,7 @@ def loudnorm_measure(track: Path) -> dict | None:
     second pass (dynamic single-pass loudnorm pumps on dialogue)."""
     r = subprocess.run([FFMPEG, "-i", str(track), "-af",
                         "loudnorm=I=-14:TP=-1.5:LRA=11:print_format=json",
-                        "-f", "null", "-"], capture_output=True, text=True)
+                        "-f", "null", "-"], capture_output=True, text=True, encoding="utf-8", errors="replace")
     m = re.search(r"\{[^{}]*\"input_i\"[^{}]*\}", r.stderr, re.S)
     if not m:
         return None
@@ -392,7 +392,7 @@ def integrated_lufs(track: Path) -> float | None:
     measured after the fact and the shortfall corrected as a plain gain."""
     r = subprocess.run([FFMPEG, "-hide_banner", "-nostats", "-i", str(track),
                         "-af", "ebur128=framelog=quiet", "-f", "null", "-"],
-                       capture_output=True, text=True)
+                       capture_output=True, text=True, encoding="utf-8", errors="replace")
     hits = re.findall(r"I:\s*(-?[\d.]+)\s*LUFS", r.stderr)
     if not hits:
         return None
@@ -542,7 +542,7 @@ def render_beat(beat: dict, num: int, dur: float, clips: list, workdir: Path,
              "-vf", f"scale={WIDTH}:{HEIGHT}:force_original_aspect_ratio=increase,"
                     f"crop={WIDTH}:{HEIGHT},fps={FPS}",
              "-an", "-c:v", "libx264", "-preset", "veryfast", "-crf", "23", str(seq)],
-            capture_output=True, text=True)
+            capture_output=True, text=True, encoding="utf-8", errors="replace")
         if r.returncode:
             raise SystemExit(f"beat {num} sequence concat failed:\n{r.stderr[-800:]}")
         clip = seq
@@ -560,7 +560,7 @@ def render_beat(beat: dict, num: int, dur: float, clips: list, workdir: Path,
                  "[0:v]split[a][b];[b]reverse[r];[a][r]concat=n=2:v=1:a=0[out]",
                  "-map", "[out]", "-an", "-c:v", "libx264",
                  "-preset", "veryfast", "-crf", "23", str(pp)],
-                capture_output=True, text=True)
+                capture_output=True, text=True, encoding="utf-8", errors="replace")
             if r.returncode:
                 raise SystemExit(f"beat {num} ping-pong failed:\n{r.stderr[-800:]}")
             clip = pp
@@ -666,7 +666,7 @@ def render_beat(beat: dict, num: int, dur: float, clips: list, workdir: Path,
            ["-filter_complex", ";".join(chains), "-map", "[out]",
             "-t", str(dur), "-r", str(FPS), "-an",
             "-c:v", "libx264", "-preset", "veryfast", "-crf", "23", "-movflags", "+faststart", str(out)])
-    r = subprocess.run(cmd, capture_output=True, text=True)
+    r = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace")
     if r.returncode:
         raise SystemExit(f"beat {num} ffmpeg failed:\n{r.stderr[-1500:]}")
     return out
@@ -826,7 +826,7 @@ def main() -> int:
     concat = workdir / "concat.txt"
     concat.write_text("\n".join(f"file '{p.resolve()}'" for p, _, _ in timeline))
     r = subprocess.run([FFMPEG, "-y", "-f", "concat", "-safe", "0", "-i", str(concat),
-                        "-c", "copy", str(video)], capture_output=True, text=True)
+                        "-c", "copy", str(video)], capture_output=True, text=True, encoding="utf-8", errors="replace")
     if r.returncode:
         raise SystemExit(f"concat failed:\n{r.stderr[-1500:]}")
 
@@ -895,7 +895,7 @@ def main() -> int:
                         af.insert(0, f"atrim=start={float(ev['trim_start']):.2f}")
                     r = subprocess.run([FFMPEG, "-y", "-loglevel", "error", "-i", str(src),
                                         "-af", ",".join(af), "-ac", "1", str(wav)],
-                                       capture_output=True, text=True)
+                                       capture_output=True, text=True, encoding="utf-8", errors="replace")
                     if r.returncode:
                         raise SystemExit(f"recorded cue {src.name} failed:\n{r.stderr[-500:]}")
                 elif name in _sfx.SYNTHS:
@@ -955,7 +955,7 @@ def main() -> int:
             ["-filter_complex", ";".join(chains), "-map", "[mix]",
              "-t", f"{total_s:.2f}", "-ar", str(AUDIO_SR), "-ac", "2",
              "-c:a", "pcm_s16le", str(mixed)],
-            capture_output=True, text=True)
+            capture_output=True, text=True, encoding="utf-8", errors="replace")
         if r.returncode:
             raise SystemExit(f"placed mix failed:\n{r.stderr[-1500:]}")
         measured = loudnorm_measure(mixed)
@@ -977,7 +977,7 @@ def main() -> int:
             af += f",alimiter=limit={LIMIT_MASTER}:level=0"
             r = subprocess.run([FFMPEG, "-y", "-i", str(mixed), "-af", af,
                                 "-ar", str(AUDIO_SR), "-c:a", "pcm_s16le", str(master)],
-                               capture_output=True, text=True)
+                               capture_output=True, text=True, encoding="utf-8", errors="replace")
             if r.returncode:
                 raise SystemExit(f"master failed:\n{r.stderr[-1500:]}")
             return af
@@ -1015,7 +1015,7 @@ def main() -> int:
                             "-map", "0:v", "-map", "1:a", "-c:v", "copy",
                             "-ar", str(AUDIO_SR),
                             "-c:a", "aac", "-b:a", "160k", "-shortest",
-                            "-movflags", "+faststart", str(out)], capture_output=True, text=True)
+                            "-movflags", "+faststart", str(out)], capture_output=True, text=True, encoding="utf-8", errors="replace")
         if r.returncode:
             raise SystemExit(f"mux failed:\n{r.stderr[-1500:]}")
     else:
@@ -1023,7 +1023,7 @@ def main() -> int:
         # encodes are, but concat -c copy rewrites the container with moov
         # at the end, which stalls browser playback (regression class 068988d)
         r = subprocess.run([FFMPEG, "-y", "-i", str(video), "-c", "copy",
-                            "-movflags", "+faststart", str(out)], capture_output=True, text=True)
+                            "-movflags", "+faststart", str(out)], capture_output=True, text=True, encoding="utf-8", errors="replace")
         if r.returncode:
             raise SystemExit(f"faststart remux failed:\n{r.stderr[-1500:]}")
 

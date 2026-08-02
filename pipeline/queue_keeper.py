@@ -30,7 +30,7 @@ def cycle():
     for tk in tasks:
         w = tk.get("worker", "any")
         hb = subprocess.run(["git", "show", f"origin/farm-results-{w}:farm-out/heartbeat.txt"],
-                            cwd=REPO, capture_output=True, text=True).stdout
+                            cwd=REPO, capture_output=True, text=True, encoding="utf-8", errors="replace").stdout
         if f"DONE task={tk.get('id')}" not in hb and f"FAIL task={tk.get('id')}" not in hb:
             undone_by_worker.setdefault(w, []).append(tk)
     idle_workers = [w for w in ("msi", "m1pro") if not undone_by_worker.get(w)]

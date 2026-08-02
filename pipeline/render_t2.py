@@ -94,7 +94,7 @@ def ffmpeg_exe() -> str:
 
 def media_duration(ff: str, f: Path) -> float | None:
     """Container duration via ffmpeg banner (no ffprobe dependency)."""
-    r = subprocess.run([ff, "-i", str(f)], capture_output=True, text=True)
+    r = subprocess.run([ff, "-i", str(f)], capture_output=True, text=True, encoding="utf-8", errors="replace")
     m = re.search(r"Duration: (\d+):(\d+):(\d+\.?\d*)", r.stderr)
     return int(m[1]) * 3600 + int(m[2]) * 60 + float(m[3]) if m else None
 

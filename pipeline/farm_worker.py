@@ -57,8 +57,16 @@ MAX_ATTEMPTS = 2
 
 
 def sh(*args, check=True, capture=False):
-    return subprocess.run(args, cwd=REPO, check=check,
-                          capture_output=capture, text=True)
+    # encoding= is not optional. `text=True` alone decodes with the LOCALE
+    # codec, which on Windows is cp1252 — and the queue yaml legitimately holds
+    # an em dash and the Chinese terms from Wan's negative prompt. cp1252 hits
+    # 静 (E9 9D 99), raises UnicodeDecodeError inside subprocess's reader
+    # THREAD, and the exception never reaches this frame: .stdout is simply set
+    # to None, so the caller dies later with "'NoneType' has no attribute
+    # 'read'" and nothing points at the encoding (2026-08-02, the 5090 could
+    # not read a queue it had fetched fine).
+    return subprocess.run(args, cwd=REPO, check=check, capture_output=capture,
+                          text=True, encoding="utf-8", errors="replace")
 
 
 _stale_fetches = 0
@@ -87,6 +95,13 @@ def queue_head():
         _stale_fetches = 0
     r = sh("git", "show", f"origin/main:{QUEUE}", check=False, capture=True)
     if r.returncode != 0:
+        return []
+    if not r.stdout:
+        # Exit 0 with no text = the read itself broke (decode failure in the
+        # reader thread sets .stdout to None). Say so; do NOT return [], which
+        # this worker would print as "queue empty for me" and idle on.
+        print("!! queue read returned NOTHING at exit 0 — cannot see the queue; "
+              "this is not an empty queue.", flush=True)
         return []
     return (yaml.safe_load(r.stdout) or {}).get("tasks", []) or []
 

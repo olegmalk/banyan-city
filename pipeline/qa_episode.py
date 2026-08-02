@@ -74,7 +74,7 @@ def record(episode: str, check: str, ok: bool, detail: str = "", warn: bool = Fa
 
 
 def ff(args_, ffmpeg="ffmpeg"):
-    return subprocess.run([ffmpeg, *args_], capture_output=True, text=True)
+    return subprocess.run([ffmpeg, *args_], capture_output=True, text=True, encoding="utf-8", errors="replace")
 
 
 def quiet_hole(video, ffmpeg="ffmpeg") -> tuple:
