@@ -725,3 +725,4 @@
 20:35:33Z VIDEO_RENDERING beat=01 on ti2v-5b (single-process)
 20:39:55Z VIDEO_CLIP 1/1 hires-canary-b01-1785764400-01-the-keyboard.mp4 in 240s
 20:39:59Z VIDEO_CLIP_OK beat=01 199KB
+20:40:03Z DONE task=hires-canary-b01-1785764400
