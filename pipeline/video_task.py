@@ -33,6 +33,11 @@ PY = VENV / ("Scripts/python.exe" if IS_WIN else "bin/python3")
 TORCH_INDEX = "https://download.pytorch.org/whl/cu128"
 
 
+# No clip finished in this long => stalled, kill it. Generous: a 480x832 clip
+# takes ~10 min and a first-run model download can precede the first clip, so
+# this only fires on something genuinely wedged.
+STALL_MINUTES = 45
+
 PROGRESS = re.compile(r"^\[(\d+)/(\d+)\]\s+wrote\s+(.+?)\s+in\s+(\S+)")
 
 
@@ -71,16 +76,34 @@ def _stream(cmd, courier, timeout, env):
     # time today we could not tell working from stuck. Elapsed time is knowable
     # without the child's cooperation, so publish that.
     alive = threading.Event()
+    # STALL DETECTION, not just liveness. Overnight 2026-08-01: clip 1 of 5 landed
+    # in 599s, then the batch produced nothing for EIGHT HOURS while faithfully
+    # reporting "child still running" every five minutes. The watchdog proved the
+    # process was breathing and said nothing about whether it was working — so a
+    # hung render looked exactly like a slow one, all night, and four clips never
+    # came. Liveness without progress is a comfort blanket.
+    progress = {"at": time.time(), "n": 0}
 
     def tick():
         n = 0
         while not alive.wait(300):          # every 5 minutes
             n += 5
+            stalled = int(time.time() - progress["at"]) // 60
+            msg = (f"VIDEO_ALIVE {n}m elapsed, {progress['n']} clip(s) done")
+            if stalled >= STALL_MINUTES:
+                msg = (f"VIDEO_STALLED no clip finished in {stalled}m "
+                       f"({progress['n']} done) — killing it so the queue moves")
             if courier:
                 try:
-                    courier.mark(f"VIDEO_ALIVE {n}m elapsed, child still running")
+                    courier.mark(msg)
                 except Exception:            # noqa: BLE001
                     pass                     # a heartbeat may never kill its subject
+            if stalled >= STALL_MINUTES:
+                try:
+                    p.kill()
+                except Exception:            # noqa: BLE001
+                    pass
+                return
     threading.Thread(target=tick, daemon=True).start()
     try:
         for line in p.stdout:
@@ -93,6 +116,9 @@ def _stream(cmd, courier, timeout, env):
             # their only view of it.
             print(line, end="", flush=True)
             m = PROGRESS.match(line.strip())
+            if m:
+                progress["at"] = time.time()
+                progress["n"] = int(m.group(1))
             if m and courier:
                 try:
                     courier.mark(f"VIDEO_CLIP {m.group(1)}/{m.group(2)} "
