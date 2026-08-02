@@ -1,0 +1,54 @@
+$ C:\banyan-video\venv\Scripts\python.exe C:\banyan-farm\banyan-city\pipeline\wan_i2v.py --stage simple --embeds C:\banyan-video\embeds-01.pt…
+model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+pipeline class: WanImageToVideoPipeline (forced image-to-video)
+VRAM[after load, before .to(cuda)] used 1.38/25.7GB (torch holds 0.00GB)
+VRAM[after .to(cuda)] used 24.20/25.7GB (torch holds 22.81GB)
+text encoder evicted after 2s (1 prompt(s) encoded)
+VRAM[text encoder evicted] used 12.93/25.7GB (torch holds 11.46GB)
+[1/1] wrote C:\banyan-farm\banyan-city\farm-out\sweep-s20-1785680000-01-the-keyboard.mp4 in 66s (61 frames, 480x832, 20 steps, peak torch 22.9GB, device 20.1/26GB)
+Loading pipeline components...:  20%|â–ˆâ–ˆ        | 1/5 [00:01<00:06,  1.56s/it]
+Loading pipeline components...:  60%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ    | 3/5 [00:02<00:01,  1.17it/s]
+
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s][A
+
+Loading checkpoint shards:  20%|â–ˆâ–ˆ        | 1/5 [00:01<00:07,  1.86s/it][A
+
+Loading checkpoint shards:  40%|â–ˆâ–ˆâ–ˆâ–ˆ      | 2/5 [00:04<00:06,  2.03s/it][A
+
+Loading checkpoint shards:  60%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ    | 3/5 [00:06<00:04,  2.10s/it][A
+
+Loading checkpoint shards:  80%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ  | 4/5 [00:11<00:03,  3.34s/it][A
+
+Loading checkpoint shards: 100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 5/5 [00:11<00:00,  2.20s/it][A
+Loading checkpoint shards: 100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 5/5 [00:11<00:00,  2.32s/it]
+
+Loading pipeline components...:  80%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ  | 4/5 [00:14<00:04,  4.61s/it]
+
+Loading weights:   0%|          | 0/242 [00:00<?, ?it/s][A
+Loading weights: 100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 242/242 [00:00<00:00, 2742.89it/s]
+
+Loading pipeline components...: 100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 5/5 [00:14<00:00,  3.18s/it]
+Loading pipeline components...: 100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 5/5 [00:14<00:00,  2.96s/it]
+
+  0%|          | 0/20 [00:00<?, ?it/s]
+  5%|â–Œ         | 1/20 [00:03<00:58,  3.06s/it]
+ 10%|â–ˆ         | 2/20 [00:05<00:52,  2.92s/it]
+ 15%|â–ˆâ–Œ        | 3/20 [00:08<00:49,  2.92s/it]
+ 20%|â–ˆâ–ˆ        | 4/20 [00:11<00:46,  2.88s/it]
+ 25%|â–ˆâ–ˆâ–Œ       | 5/20 [00:14<00:43,  2.87s/it]
+ 30%|â–ˆâ–ˆâ–ˆ       | 6/20 [00:17<00:39,  2.85s/it]
+ 35%|â–ˆâ–ˆâ–ˆâ–Œ      | 7/20 [00:20<00:37,  2.85s/it]
+ 40%|â–ˆâ–ˆâ–ˆâ–ˆ      | 8/20 [00:22<00:34,  2.85s/it]
+ 45%|â–ˆâ–ˆâ–ˆâ–ˆâ–Œ     | 9/20 [00:25<00:31,  2.85s/it]
+ 50%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆ     | 10/20 [00:28<00:28,  2.85s/it]
+ 55%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–Œ    | 11/20 [00:31<00:25,  2.84s/it]
+ 60%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ    | 12/20 [00:34<00:22,  2.85s/it]
+ 65%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–Œ   | 13/20 [00:37<00:19,  2.85s/it]
+ 70%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ   | 14/20 [00:40<00:17,  2.85s/it]
+ 75%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–Œ  | 15/20 [00:42<00:14,  2.85s/it]
+ 80%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ  | 16/20 [00:45<00:11,  2.85s/it]
+ 85%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–Œ | 17/20 [00:48<00:08,  2.85s/it]
+ 90%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ | 18/20 [00:51<00:05,  2.85s/it]
+ 95%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–Œ| 19/20 [00:54<00:02,  2.85s/it]
+100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 20/20 [00:57<00:00,  2.85s/it]
+100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 20/20 [00:57<00:00,  2.86s/it]
