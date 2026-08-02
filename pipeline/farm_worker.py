@@ -451,6 +451,19 @@ def main() -> int:
                 courier.blame(f"task={tid}\n{tb}")
                 courier.mark(f"FAIL task={tid}")
             done_ids.add(tid)
+            # RE-READ THE QUEUE AFTER EVERY TASK, not after the whole list.
+            #
+            # queue_head() returns a list and this loop walked all of it before
+            # polling again. With twelve tasks at ~9 minutes each, a queue change
+            # took TWO HOURS to take effect — so a prompt fix pushed at 18:15 was
+            # still being ignored at 18:30, and beats 3 and 4 rendered with the very
+            # instruction the fix removed (2026-08-02). The steward spent the
+            # afternoon rewriting a queue the worker could not see.
+            #
+            # Breaking here costs one git fetch (~1s) against a 9-minute task and
+            # makes the queue what it looks like: the current instruction, not a
+            # snapshot from whenever the list was last exhausted.
+            break
         if a.once:
             return 0
         print(f"[{time.strftime('%H:%M:%S')}] polling — queue empty for me, {len(done_ids)} task(s) done this session", flush=True)
