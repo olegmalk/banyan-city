@@ -1,43 +1,76 @@
-# OVERNIGHT 2026-08-01. Certain value first, experiment second.
+# 2026-08-02. Per-beat ACTION prompts — the fix for the hoodie.
 #
-# The founder is running the AnimeGen beat-1 canary BY HAND in a console right
-# now, so `anime-b1` is removed — otherwise the worker would duplicate a render he
-# is already watching, on the same card. (Two renders on one GPU is the mistake
-# that cost four hours this morning; the lock only guards worker-vs-worker, and a
-# hand-run is the door it does not cover. wan_i2v now warns on a busy card.)
+# The overnight beat-2 clip held the approved frame correctly (the prompt fix
+# works) but the man pulled his hoodie up and down instead of typing. Founder:
+# "he didnt type at all." Of course not — every one of the fifteen beats was sent
+# the same motion instruction, "gentle drift; only what would really move here",
+# so the model had to guess what moves and guessed wrong.
 #
-# ORDER, deliberately:
+# node.md has said what moves all along, per beat, in the author's own words:
+#   beat 1  "One mechanical keyboard, very fast — then it stops"
+#   beat 3  "The spinner resolves"
+#   beat 4  "A sharp breath in — the frame tips sideways — the mug hits the floor
+#            before he does"
+# shots.md describes how a beat LOOKS; node.md describes what HAPPENS. We were
+# reading only the first and inventing the second. video_task.beat_actions() now
+# reads the second and puts it at the front of the prompt.
 #
-#   1. wan-lic-480   5 clips ~65 min  CERTAIN. Beats 2,4,8,11,13 on Wan 2.2.
-#                                     These are the PixVerse beats — free tier,
-#                                     personal-use only (founder confirmed
-#                                     2026-08-01), so the live episode cannot be
-#                                     published until they exist on a clean route.
-#                                     Wan is proven on this machine. This is the
-#                                     task that turns "not postable" into
-#                                     "postable", and it must not sit behind an
-#                                     experiment that might fail all night.
+# `motion` below is now only the discipline suffix (no new subjects, no scene
+# change) — the actual instruction comes from the script.
 #
-#   2. anime-all    15 clips ~45 min  EXPERIMENT. All 15 beats on AnimeGen-I2V, to
-#                                     answer the founder's own diagnosis ("wan 2.2
-#                                     is still pretty good, the problem is its not
-#                                     made for anime style") with a COMPLETE
-#                                     alternate episode rather than one clip. Fails
-#                                     fast if the model does not load, because the
-#                                     weights will be cached by then, and the retry
-#                                     cap stops it looping.
-#
-#   3. prefetch                        speculative, last, as always.
-#
-# Two hours of work for a night. If AnimeGen turns out broken we still wake up
-# with a publishable episode 1.
+# Beat 2 is back in the queue because its take was rejected on motion, not on
+# framing. One beat per task, after the eight-hour batch stall.
 tasks:
-- id: wan-lic-480-1785575000
+- id: wan-act-b2-1785650000
   worker: rtx5090
   video: true
   node: 001-capability-inventory
-  beats: 2,4,8,11,13
-  motion: gentle drift; only what would really move here
+  beats: 2
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 3.0
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260731
+- id: wan-act-b4-1785650000
+  worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  beats: 4
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 3.0
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260731
+- id: wan-act-b8-1785650000
+  worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  beats: 8
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 3.0
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260731
+- id: wan-act-b11-1785650000
+  worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  beats: 11
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 3.0
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260731
+- id: wan-act-b13-1785650000
+  worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  beats: 13
+  motion: gentle drift; no new subjects, no scene change
   size: 480x832
   seconds: 3.0
   steps: 20

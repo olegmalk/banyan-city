@@ -33,6 +33,11 @@ PY = VENV / ("Scripts/python.exe" if IS_WIN else "bin/python3")
 TORCH_INDEX = "https://download.pytorch.org/whl/cu128"
 
 
+# No clip finished in this long => stalled, kill it. Generous: a 480x832 clip
+# takes ~10 min and a first-run model download can precede the first clip, so
+# this only fires on something genuinely wedged.
+STALL_MINUTES = 45
+
 PROGRESS = re.compile(r"^\[(\d+)/(\d+)\]\s+wrote\s+(.+?)\s+in\s+(\S+)")
 
 
@@ -71,16 +76,34 @@ def _stream(cmd, courier, timeout, env):
     # time today we could not tell working from stuck. Elapsed time is knowable
     # without the child's cooperation, so publish that.
     alive = threading.Event()
+    # STALL DETECTION, not just liveness. Overnight 2026-08-01: clip 1 of 5 landed
+    # in 599s, then the batch produced nothing for EIGHT HOURS while faithfully
+    # reporting "child still running" every five minutes. The watchdog proved the
+    # process was breathing and said nothing about whether it was working — so a
+    # hung render looked exactly like a slow one, all night, and four clips never
+    # came. Liveness without progress is a comfort blanket.
+    progress = {"at": time.time(), "n": 0}
 
     def tick():
         n = 0
         while not alive.wait(300):          # every 5 minutes
             n += 5
+            stalled = int(time.time() - progress["at"]) // 60
+            msg = (f"VIDEO_ALIVE {n}m elapsed, {progress['n']} clip(s) done")
+            if stalled >= STALL_MINUTES:
+                msg = (f"VIDEO_STALLED no clip finished in {stalled}m "
+                       f"({progress['n']} done) — killing it so the queue moves")
             if courier:
                 try:
-                    courier.mark(f"VIDEO_ALIVE {n}m elapsed, child still running")
+                    courier.mark(msg)
                 except Exception:            # noqa: BLE001
                     pass                     # a heartbeat may never kill its subject
+            if stalled >= STALL_MINUTES:
+                try:
+                    p.kill()
+                except Exception:            # noqa: BLE001
+                    pass
+                return
     threading.Thread(target=tick, daemon=True).start()
     try:
         for line in p.stdout:
@@ -93,6 +116,9 @@ def _stream(cmd, courier, timeout, env):
             # their only view of it.
             print(line, end="", flush=True)
             m = PROGRESS.match(line.strip())
+            if m:
+                progress["at"] = time.time()
+                progress["n"] = int(m.group(1))
             if m and courier:
                 try:
                     courier.mark(f"VIDEO_CLIP {m.group(1)}/{m.group(2)} "
@@ -120,6 +146,62 @@ def _stream(cmd, courier, timeout, env):
             p.kill()
     return subprocess.CompletedProcess(cmd, p.returncode, "".join(out),
                                        "".join(err))
+
+
+BEAT_HEAD = re.compile(r"^\*\*(.+?)\s+—\s+\d+:\d\d–\d+:\d\d\*\*$", re.M)
+
+
+def beat_actions(node_md: Path) -> dict:
+    """{beat number: the script's own line about what HAPPENS in it}.
+
+    The two files say different things and we were only reading one. shots.md
+    describes how a beat LOOKS (composition, for drawing the still). node.md
+    describes what HAPPENS in it — "One mechanical keyboard, very fast", "The
+    spinner resolves", "the frame tips sideways". That second one is a motion
+    brief, written by the author, sitting unused.
+
+    Instead we sent every beat the same sentence: "gentle drift; only what would
+    really move here". So the model had to invent what moves, and on beat 2 —
+    a man at a keyboard at 3am — it decided he pulls his hoodie up and down.
+    Founder: "wan just made him pull his hoodie up and down. he didnt type at
+    all." Of course: nothing ever told it he was typing.
+
+    Nothing invented here either. The beat's own prose, minus the parts that are
+    not about motion: the VO lines (they are audio), the terminal code fences
+    (they are burned in as overlays by render_t3, not animated), and stage
+    directions in caps like BLACK or SMASH TO BLACK.
+    """
+    text = node_md.read_text(encoding="utf-8")
+    parts = BEAT_HEAD.split(text)[1:]
+    out = {}
+    for i in range(0, len(parts) - 1, 2):
+        num = i // 2 + 1
+        body = parts[i + 1]
+        keep = []
+        for line in body.split("\n"):
+            s = line.strip()
+            if not s or s.startswith((">", "```", "**")):
+                continue           # VO line, code fence, or the next heading
+            if s in ("SMASH TO BLACK.", "BLACK."):
+                continue
+            if re.match(r"^[A-Z][A-Z\s.✓✗$]+$", s):
+                continue           # a terminal-panel line, not an action
+            keep.append(s)
+            if len(" ".join(keep)) > 220:
+                break
+        action = " ".join(keep).strip()
+        action = re.sub(r"`[^`]*`", "", action)          # inline code
+        # terminal-panel text leaks in when it shares a line with prose
+        action = re.sub(r"[✓✗]\s*\S.*?(?=$|\.)", "", action)
+        # a lighting cue, not a motion: "BLACK." tells the model to render darkness
+        action = re.sub(r"\b(BLACK|SMASH TO BLACK)\b\.?", "", action)
+        action = re.sub(r"\*([^*]*)\*", r"\1", action)   # emphasis markers
+        action = re.sub(r"\s*,\s*(?=,)", "", action)
+        action = re.sub(r"[,:]\s*(?=[,.])", "", action)
+        action = re.sub(r"\s+", " ", action).strip(" ,.:")
+        if action:
+            out[num] = action
+    return out
 
 
 # Wan 2.2 is a general video model — the founder's read after screening six takes:
@@ -343,6 +425,7 @@ def run(task: dict, courier, node_dir: Path) -> None:
     ensure_stack(courier)
     # utf-8 pinned: Windows' cp1252 mangles the em-dash in "## Beat NN —"
     # and parse_shots then finds nothing (the msi's first-light failure)
+    actions = beat_actions(node_dir / "node.md")
     shots = {s["num"]: s
              for s in parse_shots((node_dir / "shots.md").read_text(encoding="utf-8"))}
     stills = node_dir / "stills"
@@ -365,7 +448,9 @@ def run(task: dict, courier, node_dir: Path) -> None:
             motion = task.get("motion") or ("subtle continuous motion, gentle camera "
                                             "drift, living scene")
             o = courier.out / f"{task.get('id')}-{num:02d}-{s['slug']}.mp4"
-            pos, neg = video_prompt(motion, s["prompt"])
+            act = actions.get(num)
+            pos, neg = video_prompt(f"{act}. {motion}" if act else motion,
+                                    s["prompt"])
             jobs.append({"init": str(init), "out": str(o), "prompt": pos,
                          "negative": neg,
                          "seed": int(task.get("seed_base", 20260731)) + num})
@@ -421,7 +506,9 @@ def run(task: dict, courier, node_dir: Path) -> None:
         # took the other, silently rendering on the default model with the old
         # prompt. Caught when a one-clip AnimeGen canary logged "beat=01
         # (single-process)" and rendered plain Wan (2026-08-01).
-        prompt, neg = video_prompt(motion, s["prompt"])
+        act = actions.get(num)
+        prompt, neg = video_prompt(f"{act}. {motion}" if act else motion,
+                                   s["prompt"])
         vmodel = str(task.get("video_model", "ti2v-5b"))
         out = courier.out / f"{task.get('id')}-{num:02d}-{s['slug']}.mp4"
         emb = ROOT / f"embeds-{num:02d}.pt"
