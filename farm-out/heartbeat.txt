@@ -509,3 +509,4 @@
 10:52:43Z STARTED task=sweep-s04-1785680000 beats=1 on cuda
 10:52:46Z VIDEO_VENV_OK
 10:52:57Z VIDEO_DEPS_OK 2.11.0+cu128 0.39.0 True
+10:53:09Z VIDEO_RENDERING beat=01 on ti2v-5b (single-process)
