@@ -2,13 +2,23 @@
 # Consumed by: render requests, the Kaggle notebook's i2v engines, the shot
 # board. Edit here — a PR to this file is a motion-direction pitch.
 motion_prompts:
-  1: "the young man types rapidly, fingers moving over the keys, slight shoulder movement, monitor glow flickers gently, camera locked"
-  2: "green terminal text scrolls slowly on the monitor, the hooded man's silhouette shifts subtly, faint steam rises from the mug, camera locked"
+  # 2026-08-02, audit of all 15 directions against the script's own action line.
+  # Beat 2 rendered exactly what it was told — a glow wash, no typing — and the
+  # founder's note "no typing" was correct about the DIRECTION, not the model.
+  # The still has the keyboard and the monitor in frame, so both halves of the
+  # scripted action ("types... and stops dead. The spinner turns.") are
+  # animatable without touching composition.
+  1: "his hands type fast over the mechanical keyboard and then stop abruptly, hands going still, monitor glow flickers gently, camera locked"
+  2: "his hands move fast over the keyboard then stop dead, a small spinner turns on the monitor, faint steam rises from the mug, camera locked"
   3: "the terminal text settles, the cursor blinks steadily, the screen glow breathes very gently, camera locked"
   4: "the limp hand stays motionless, the monitor glow flickers slowly across it, one loose paper settles to the floor, camera locked"
   5: "the dying screen glow flickers and fades across the shards, dust motes drift in the last light, camera locked"
   6: "everything nearly still, the clouds drift very slowly, the pale leaf stays attached at the bottom edge of the frame and only trembles gently, nothing flies, nothing detaches, camera locked"
-  7: "the leaf whips hard to one side and springs back, the grass blades lean in the gust, camera locked"
+  # 7: founder — "the sapling is aggressively moving, in a very weird way". The
+  # still is already a whip caught mid-motion, so asking for another whip made
+  # the clip restart the gesture instead of finishing it. A whip that DECAYS is
+  # what the script's "twitches" means and what real springy stems do.
+  7: "the leaf springs back from the whip and settles, each rebound smaller than the last, the grass leans once and stills, camera locked"
   8: "the leaf holds almost perfectly still, dust motes settle slowly in the sunlight, grass sways very gently behind, camera locked"
   # 2026-08-02: "the beat 9 generations i've literally make it not move at all.
   # not one pixel" (founder). "stir very slightly" is below the model's floor —
@@ -16,7 +26,12 @@ motion_prompts:
   # render_t3 burns the $ whoami terminal panel over the top, so the plate only
   # has to live underneath it.
   9: "the sprout's two leaves lift and settle in a slow breeze, one leaf turning as it falls back, grass sways behind, dust motes drift across the light, camera locked"
-  10: "the thin roots tremble subtly, water glints slide between soil grains, dust drifts slowly, no light rays, camera locked"
+  # 10: the beat's whole point is the approaching thump "felt as rings of light
+  # through soil", and the direction said "no light rays" — so the one thing the
+  # audience must see was suppressed. The still already has glowing droplets
+  # between the grains; pulsing THOSE renders the thump without inventing the
+  # god-rays that "no light rays" was written to keep out.
+  10: "the glow between the soil grains pulses in a slow steady rhythm, brighter then dimmer, the thin roots tremble subtly with each pulse, no god rays, no light shafts, camera locked"
   11: "the new leaf unfurls slowly and settles upright, dew drops glisten, soft light shifts, camera locked"
   12: "the bent stem strains and quivers against nothing, a few soil grains shift at its base, everything else still, camera locked"
   13: "wind sweeps the grass in slow waves, clouds drift, dust stirs faintly on the empty road, no people appear, camera locked"
