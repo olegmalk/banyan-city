@@ -97,8 +97,26 @@ def test_caption_chunks():
           "(he writes)" not in sp3 and dr3 == ["he writes"])
     sp4, dr4 = t3.split_caption_display("Fine. (aggressively nothing)")
     check("noun-phrase gag survives", "(aggressively nothing)" in sp4 and dr4 == [])
-    check("captions clear the platform chrome (>=20% bottom margin)",
-          t3.CAPTION_MARGIN >= int(t3.HEIGHT * 0.20))
+    # THIS is the caption-safety gate, not qa_episode's pixel heuristic (which
+    # cannot separate a black caption box from this show's dark night interiors
+    # and is a warning for that reason — see the comment there).
+    #
+    # Tied to qa_episode's OWN CHROME_BAND rather than a hardcoded 0.20: the two
+    # numbers had drifted apart (test allowed 20%, QA measured 22%), so a margin
+    # of 20-21% would have passed this test while genuinely intruding on the band
+    # the delivery platform covers. A guarantee split across two constants is
+    # only a guarantee while they agree.
+    # Assert the REAL invariant, not a proxy for it: a block anchored at H-h-M
+    # draws its last row at H-M-1, and that row must sit strictly ABOVE the first
+    # row of the band. Asserting `M >= band_px` instead let M == band_px pass,
+    # which puts two caption rows inside the band.
+    import qa_episode as qa
+    band_top = int(t3.HEIGHT * (1 - qa.CHROME_BAND))
+    caption_bottom = t3.HEIGHT - t3.CAPTION_MARGIN - 1
+    check(f"captions clear the platform chrome (last row {caption_bottom} "
+          f"< band top {band_top})", caption_bottom < band_top)
+    check("caption margin is measured against qa_episode's own band",
+          qa.WIDTH == t3.WIDTH and qa.HEIGHT == t3.HEIGHT)
     check("caption box narrower than the action-rail line",
           t3.CAPTION_MAX_W <= t3.WIDTH - 140)
     spans = t3.chunk_spans("One two three. Four five six seven eight nine.", 2.0, 8.0)

@@ -72,7 +72,13 @@ CAPTION_SIZE = 44
 # the bottom ~17-20% and a right-side action rail — captions anchored at
 # H-h-160 lost their last line under it. Keep blocks above the chrome and
 # narrower than the rail line.
-CAPTION_MARGIN = int(HEIGHT * 0.22)
+# +2, and the reason is an off-by-one worth writing down. A block anchored at
+# H-h-M has its LOWEST DRAWN PIXEL at H-M-1, while the band qa_episode measures
+# starts at int(H*(1-0.22)) = 998. At M = int(1280*0.22) = 281 the caption's last
+# row lands on y999 — two rows inside the very band this constant exists to
+# clear. The margin was equal to the band when it needed to exceed it, which is
+# the same class of mistake as the cycle-001 defect it was written for.
+CAPTION_MARGIN = int(HEIGHT * 0.22) + 2
 CAPTION_MAX_W = WIDTH - 160
 PINGPONG_MAX_S = 16.0  # reverse buffers raw frames; skip palindrome past this
 
