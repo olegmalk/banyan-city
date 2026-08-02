@@ -310,8 +310,25 @@ def _sample(pipe, a, w, h, frames, takes_image, jobs=None) -> int:
               f"({frames} frames, {w}x{h}, {steps} steps, "
               f"peak torch {peak:.1f}GB, device {(total-free)/1e9:.1f}/{total/1e9:.0f}GB)",
               flush=True)
+        # FREE THE CARD BETWEEN CLIPS. Measured across three batches on
+        # 2026-08-02: clip 1 of 5 finished in ~440s every time, and clip 2 NEVER
+        # finished — each batch stalled ~46 minutes until the watchdog killed it.
+        # peak torch was 22.9GB of a 25.7GB card, so after one clip the caching
+        # allocator holds nearly the whole GPU, clip 2 has no headroom, and Windows
+        # pages it to host RAM instead of failing. Same signature as the eight-hour
+        # stall on 2026-08-01, and the reason single-beat tasks always worked: a
+        # fresh process frees everything on exit.
+        #
+        # `out` holds the decoded frames — hundreds of megabytes of tensors — and
+        # stayed referenced through the next iteration.
+        del out
+        gc.collect()
         if torch.cuda.is_available():
+            torch.cuda.empty_cache()
             torch.cuda.reset_peak_memory_stats()
+            free, total = torch.cuda.mem_get_info()
+            print(f"    freed between clips: {(total-free)/1e9:.1f}/{total/1e9:.0f}GB "
+                  f"still held", flush=True)
     return 0
 
 

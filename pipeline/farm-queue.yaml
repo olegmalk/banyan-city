@@ -1,20 +1,17 @@
-# OVERNIGHT 2026-08-02, final. Founder: "2 too low quality. tommorow we WILL post."
+# 2026-08-02 18:05Z. ONE BEAT PER TASK. The batch loop leaks VRAM.
 #
-# ep1-v21-CANON is rejected — its beats 2/4/8/11/13 use the deterministic POST
-# takes, which move 4-40x less than a generated clip. So this render is not an
-# improvement pass any more, it is the path to a postable episode.
+# Measured, three times identically: clip 1 of a 5-clip batch finished in ~440s and
+# clip 2 NEVER finished — each batch stalled ~46 min until the watchdog killed it.
+# peak torch 22.9GB of 25.7GB, so after one clip the allocator holds nearly the
+# whole card and the next one pages to host RAM. wan_i2v now frees between clips
+# (del out + gc + empty_cache), but the founder wants to post TODAY and this is not
+# the day to bet on a fix nobody has watched work.
 #
-# TWO TAKES OF EVERY BEAT, different seeds. The first pass (night-g*) is the set;
-# the second (take2-g*) exists because the GPU is otherwise idle until morning and
-# because it changes tomorrow's shape from "render and wait 10 minutes" to "pick the
-# better of two". A bad sample is a sample, not a verdict on the beat — every
-# complaint today came from judging one take.
+# One beat per task is PROVEN — every single-beat render today came in at 9-13 min.
+# It costs a model reload per clip and buys certainty.
 #
-# ~2h15 for the first pass, ~4h30 for both. Each clip pushes as it lands, so a crash
-# keeps whatever finished, and the stall detector kills anything wedged for 45 min.
-#
-# Not speculative work with no consumer: the consumer is tomorrow's posting decision,
-# and it needs a choice per beat.
+# Beats 1, 6 and 11 already landed overnight and are excluded. 12 beats x ~11 min =
+# ~2h10. If the memory fix holds, a later batch pass can be reinstated.
 tasks:
 - worker: rtx5090
   video: true
@@ -25,8 +22,8 @@ tasks:
   steps: 20
   guidance: 5.0
   seed_base: 20260803
-  id: night-g1-1785705000
-  beats: 1,2,3,4,5
+  id: day-b02-1785760000
+  beats: 2
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
@@ -36,8 +33,8 @@ tasks:
   steps: 20
   guidance: 5.0
   seed_base: 20260803
-  id: night-g2-1785705000
-  beats: 6,7,8,9,10
+  id: day-b03-1785760000
+  beats: 3
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
@@ -47,8 +44,8 @@ tasks:
   steps: 20
   guidance: 5.0
   seed_base: 20260803
-  id: night-g3-1785705000
-  beats: 11,12,13,14,15
+  id: day-b04-1785760000
+  beats: 4
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
@@ -57,9 +54,9 @@ tasks:
   seconds: 2.5
   steps: 20
   guidance: 5.0
-  seed_base: 20260804
-  id: take2-g1-1785705000
-  beats: 1,2,3,4,5
+  seed_base: 20260803
+  id: day-b05-1785760000
+  beats: 5
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
@@ -68,9 +65,9 @@ tasks:
   seconds: 2.5
   steps: 20
   guidance: 5.0
-  seed_base: 20260804
-  id: take2-g2-1785705000
-  beats: 6,7,8,9,10
+  seed_base: 20260803
+  id: day-b07-1785760000
+  beats: 7
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
@@ -79,9 +76,75 @@ tasks:
   seconds: 2.5
   steps: 20
   guidance: 5.0
-  seed_base: 20260804
-  id: take2-g3-1785705000
-  beats: 11,12,13,14,15
+  seed_base: 20260803
+  id: day-b08-1785760000
+  beats: 8
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 2.5
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260803
+  id: day-b09-1785760000
+  beats: 9
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 2.5
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260803
+  id: day-b10-1785760000
+  beats: 10
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 2.5
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260803
+  id: day-b12-1785760000
+  beats: 12
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 2.5
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260803
+  id: day-b13-1785760000
+  beats: 13
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 2.5
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260803
+  id: day-b14-1785760000
+  beats: 14
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 2.5
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260803
+  id: day-b15-1785760000
+  beats: 15
 - id: prefetch-a14b-1785529520
   worker: rtx5090
   video: true
