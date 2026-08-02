@@ -594,3 +594,4 @@
 13:42:01Z VIDEO_DEPS_OK 2.11.0+cu128 0.39.0 True
 13:42:12Z VIDEO_RENDERING beat=01 on ti2v-5b (single-process)
 13:43:05Z FAIL task=ab-evict-off-1785690000
+13:43:08Z STARTED task=m-g1-1785690000 beats=1,2,3,4,5 on cuda
