@@ -375,7 +375,20 @@ MODEL_LICENCE = {
 }
 
 
-def write_sidecar(clip, vmodel, task, beat, seconds, steps, size):
+def _yaml_block(key: str, value: str) -> str:
+    """A literal block scalar — safe for prompts containing quotes, colons, commas.
+
+    Prompts hold ": " and "…" and Chinese negatives; any inline form would need
+    escaping rules we would get wrong once and then not notice.
+    """
+    if not value:
+        return f"{key}: ''\n"
+    body = "\n".join("  " + ln for ln in str(value).splitlines())
+    return f"{key}: |-\n{body}\n"
+
+
+def write_sidecar(clip, vmodel, task, beat, seconds, steps, size,
+                  prompt=None, negative=None):
     """A §7.2 provenance sidecar beside every generated clip.
 
     Video clips have been landing on the courier branch as bare mp4s, with the
@@ -405,7 +418,16 @@ def write_sidecar(clip, vmodel, task, beat, seconds, steps, size):
         f"guidance: {task.get('guidance', 5.0)}\n"
         f"seed: {int(task.get('seed_base', 20260731)) + beat}\n"
         f"task: {task.get('id')}\n"
-        "cost_usd: 0\n", encoding="utf-8")
+        "cost_usd: 0\n"
+        # THE PROMPT IS PROVENANCE. CLAUDE.md §7.2 says every render publishes
+        # "model, prompt, cost" and this file published two of the three. On
+        # 2026-08-02 the founder said beat 2 had "no typing"; the clip was
+        # correct for the prompt it was given, but the prompt was nowhere on
+        # disk, so telling a bad direction from a bad model meant reconstructing
+        # the string by re-running the pipeline. Anyone auditing the tree had no
+        # way at all. Record what was actually asked for.
+        + _yaml_block("prompt", prompt or "")
+        + _yaml_block("negative", negative or ""), encoding="utf-8")
 
 
 def _run(cmd, courier, stage, timeout=None, retry=False):
@@ -565,7 +587,8 @@ def run(task: dict, courier, node_dir: Path) -> None:
             jobs.append({"init": str(init), "out": str(o), "prompt": pos,
                          "negative": neg,
                          "seed": int(task.get("seed_base", 20260731)) + num})
-            outs.append((num, o))
+            # carry the prompt to the sidecar — see write_sidecar on why
+            outs.append((num, o, pos, neg))
         if jobs:
             jf = ROOT / f"jobs-{task.get('id')}.json"
             jf.write_text(json.dumps(jobs), encoding="utf-8")
@@ -583,10 +606,11 @@ def run(task: dict, courier, node_dir: Path) -> None:
                  courier, f"batch {task.get('id')}", timeout=14400, retry=True)
             jf.unlink(missing_ok=True)
             made = 0
-            for num, o in outs:
+            for num, o, pos, neg in outs:
                 if o.exists() and o.stat().st_size > 10_000:
                     made += 1
-                    write_sidecar(o, vmodel, task, num, seconds, steps, size)
+                    write_sidecar(o, vmodel, task, num, seconds, steps, size,
+                                  prompt=pos, negative=neg)
                     courier.mark(f"VIDEO_CLIP_OK beat={num:02d} {o.stat().st_size//1024}KB")
                 else:
                     courier.mark(f"VIDEO_CLIP_EMPTY beat={num:02d}")
@@ -659,7 +683,8 @@ def run(task: dict, courier, node_dir: Path) -> None:
         emb.unlink(missing_ok=True)
         if out.exists() and out.stat().st_size > 10_000:
             made += 1
-            write_sidecar(out, vmodel, task, num, seconds, steps, size)
+            write_sidecar(out, vmodel, task, num, seconds, steps, size,
+                          prompt=prompt, negative=neg)
             courier.mark(f"VIDEO_CLIP_OK beat={num:02d} "
                          f"{out.stat().st_size // 1024}KB")
         else:

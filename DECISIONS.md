@@ -382,3 +382,60 @@ immediately, and the number may only go down. `LICENCE_GATE_STRICT=1` makes
 every violation fatal — the founder's switch, to flip the day the tree is clean.
 Raising `LICENCE_DEBT` to make a build pass would turn the one gate that can
 catch an unpublishable episode into a rubber stamp.
+
+---
+
+## D14 — Beat 4's fall is written but never shown (OPEN — founder's, R4)
+
+*Raised 2026-08-02 by the steward, from an audit of all 15 motion directions
+against the script's own action lines. This is a composition question, so it
+waits for the author.*
+
+The founder's note on the newest cut was **"his death is very anticlimatic"**.
+That is not a rendering failure. It is the script and the still describing two
+different moments, and the still winning — as it must, because the still owns
+composition and image-to-video can only animate what is already in the frame.
+
+**The script (node.md, beat 4, approved):**
+
+> A sharp breath in — the frame tips sideways — the mug hits the floor before he does.
+
+Three events, all motion: a breath, a camera tilt, an object falling.
+
+**The still (shots.md, beat 4, approved):**
+
+> close-up on the side of an office chair, a man's limp hand hanging straight
+> down past the armrest, relaxed open fingers, **motionless** … papers **settled**
+> on the dark floor below … *No face, no head, no full body, no horror, no blood,
+> no standing.*
+
+That is the aftermath, deliberately and tastefully so — it is the seconds *after*
+the fall, with every restriction pointing away from showing a body drop. The
+motion direction ("the limp hand stays motionless, one loose paper settles")
+matches the still faithfully. So the pipeline is behaving correctly at every
+step, and **the fall is never depicted anywhere in the episode.** The anticlimax
+is structural, not accidental.
+
+**Two coherent resolutions, and they are opposite in taste:**
+
+1. **Keep the aftermath; make the anticlimax deliberate.** Let the fall happen
+   entirely in sound — the sharp breath, the mug, the fan spinning down — over a
+   held shot of the limp hand. This is the restrained reading, it needs no new
+   render, and it is arguably a better death than showing it. If chosen, the
+   *script* line should change so it stops promising a tilt the picture will
+   never deliver.
+2. **Show the fall.** Requires a new beat-4 still depicting it mid-motion (the
+   chair tipping, the mug leaving the desk edge) and a direction with a tilting
+   camera. Note this is the one beat where the script *authors* camera movement,
+   so the global "camera locked" discipline would be overridden here on purpose —
+   which is a real exception, not a slip, and the shake work must not undo it.
+
+**The steward's recommendation is (1)**, on the grounds that the still's
+restrictions read as a considered choice rather than an oversight, and that
+sound is already carrying the moment. But this is R4 — taste belongs to the
+author — so nothing changes until the founder says which.
+
+**What the steward did NOT do:** touch beat 4's still, its direction, or its
+script line. The four directions fixed in the same pass (1, 2, 7, 10) were all
+cases where the direction contradicted *its own already-approved still*; beat 4's
+direction agrees with its still, and the disagreement is one level up.
