@@ -361,3 +361,4 @@
 07:59:54Z VIDEO_VENV_OK
 08:00:01Z VIDEO_DEPS_OK 2.11.0+cu128 0.39.0 True
 08:00:09Z VIDEO_RENDERING batch of 15 on animegen (one model load)
+08:00:38Z FAIL task=anime-all-1785575000
