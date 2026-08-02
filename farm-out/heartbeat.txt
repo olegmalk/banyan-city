@@ -356,3 +356,4 @@
 07:59:02Z VIDEO_ALIVE 570m elapsed, child still running
 07:59:41Z VIDEO_CLIP 1/1 wan-act-b13-1785650000-13-i-always-left.mp4 in 542s
 07:59:45Z VIDEO_CLIP_OK beat=13 319KB
+07:59:48Z DONE task=wan-act-b13-1785650000
