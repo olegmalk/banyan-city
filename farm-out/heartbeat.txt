@@ -479,3 +479,4 @@
 10:42:42Z VIDEO_RENDERING beat=13 on ti2v-5b (single-process)
 10:43:20Z FAIL task=v2-b13-1785660000
 10:43:41Z STARTED task=sweep-s20-1785680000 beats=1 on cuda
+10:43:44Z VIDEO_VENV_OK
