@@ -302,6 +302,11 @@ def write_sidecar(clip, vmodel, task, beat, seconds, steps, size):
     repo, lic = MODEL_LICENCE.get(vmodel, (vmodel, "UNVERIFIED — licence not read"))
     Path(str(clip) + ".meta.yaml").write_text(
         "# Shot provenance (7.2) — written by video_task at render time\n"
+        # "local-gpu (<worker>)" not "local-<worker>": the gate classifies on the
+        # generic "local-gpu" prefix, so this form is recognised on ANY machine
+        # while still naming which one rendered it. Spelling it "local-dads-msi"
+        # made every clip from a new handle an unclassified violation — the fix for
+        # one machine's nickname must not depend on another's.
         f"platform: local-gpu ({task.get('worker', 'unknown')})\n"
         f"model: {repo}\n"
         f"model_licence: {lic}\n"

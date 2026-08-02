@@ -322,6 +322,12 @@ MODEL_LICENCES = {
     # the same record carry the licence, and they are checked separately.
     "kaggle": "CC-BY-4.0 (our own output)",
     "local-rtx5090": "CC-BY-4.0 (our own output)",
+    # the generic form video_task.write_sidecar emits, e.g. "local-gpu (rtx5090)".
+    # Added after a sidecar written by our OWN renderer was flagged unpublishable:
+    # only the exact handle "local-rtx5090" was listed, so every clip from a new
+    # machine — or from a writer that spells it differently — became a violation.
+    # A rule that depends on one machine's nickname is not a rule.
+    "local-gpu": "CC-BY-4.0 (our own output)",
     "local-deterministic": "CC-BY-4.0 (our own output)",
     "post-motion": "CC-BY-4.0 (our own output)",     # post_motion.py: code, not a model
     "render-t2": "CC-BY-4.0 (our own output)",
