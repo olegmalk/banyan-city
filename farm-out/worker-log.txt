@@ -355,3 +355,60 @@ Loading pipeline components...: 100%|██████████| 5/5 [00:17<
 100%|██████████| 20/20 [03:21<00:00, 10.06s/it]
 
 video task d2-b05-1785762000: 1/1 clips
+$ C:\banyan-video\venv\Scripts\python.exe C:\banyan-farm\banyan-city\pipeline\wan_i2v.py --stage simple --embeds C:\banyan-video\embeds-07.pt…
+model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+pipeline class: WanImageToVideoPipeline (forced image-to-video)
+VRAM[after load, before .to(cuda)] used 1.38/25.7GB (torch holds 0.00GB)
+model cpu offload ON (big model: slower per clip, but it fits)
+[1/1] wrote C:\banyan-farm\banyan-city\farm-out\d2-b07-1785762000-07-flailing-one.mp4 in 239s (61 frames, 704x1280, 20 steps, peak torch 14.4GB, device 1.8/26GB)
+    freed between clips: 1.7/26GB still held
+o `CLIPImageProcessorPil` for backward compatibility. Install torchvision to use the default backend, or import `CLIPImageProcessorPil` directly to silence this warning.
+
+Loading pipeline components...:   0%|          | 0/5 [00:00<?, ?it/s]
+Loading pipeline components...:  20%|██        | 1/5 [00:00<00:03,  1.06it/s]
+
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s][A
+
+Loading checkpoint shards:  20%|██        | 1/5 [00:02<00:08,  2.10s/it][A
+
+Loading checkpoint shards:  40%|████      | 2/5 [00:04<00:06,  2.11s/it][A
+
+Loading checkpoint shards:  60%|██████    | 3/5 [00:06<00:04,  2.11s/it][A
+
+Loading checkpoint shards:  80%|████████  | 4/5 [00:11<00:03,  3.43s/it][A
+
+Loading checkpoint shards: 100%|██████████| 5/5 [00:12<00:00,  2.28s/it][A
+Loading checkpoint shards: 100%|██████████| 5/5 [00:12<00:00,  2.40s/it]
+
+Loading pipeline components...:  40%|████      | 2/5 [00:13<00:22,  7.51s/it]
+
+Loading weights:   0%|          | 0/242 [00:00<?, ?it/s][A
+Loading weights: 100%|██████████| 242/242 [00:00<00:00, 3037.67it/s]
+
+Loading pipeline components...:  60%|██████    | 3/5 [00:13<00:08,  4.23s/it]The config attributes {'clip_output': False} were passed to AutoencoderKLWan, but are not expected and will be ignored. Please verify your config.json configuration file.
+
+Loading pipeline components...: 100%|██████████| 5/5 [00:15<00:00,  2.54s/it]
+Loading pipeline components...: 100%|██████████| 5/5 [00:15<00:00,  3.17s/it]
+
+  0%|          | 0/20 [00:00<?, ?it/s]
+  5%|▌         | 1/20 [00:36<11:35, 36.63s/it]
+ 10%|█         | 2/20 [00:45<06:01, 20.08s/it]
+ 15%|█▌        | 3/20 [00:53<04:12, 14.83s/it]
+ 20%|██        | 4/20 [01:02<03:17, 12.34s/it]
+ 25%|██▌       | 5/20 [01:10<02:44, 10.97s/it]
+ 30%|███       | 6/20 [01:19<02:22, 10.15s/it]
+ 35%|███▌      | 7/20 [01:27<02:05,  9.64s/it]
+ 40%|████      | 8/20 [01:36<01:51,  9.30s/it]
+ 45%|████▌     | 9/20 [01:45<01:39,  9.07s/it]
+ 50%|█████     | 10/20 [01:53<01:29,  8.92s/it]
+ 55%|█████▌    | 11/20 [02:02<01:19,  8.82s/it]
+ 60%|██████    | 12/20 [02:10<01:09,  8.75s/it]
+ 65%|██████▌   | 13/20 [02:19<01:00,  8.70s/it]
+ 70%|███████   | 14/20 [02:27<00:51,  8.66s/it]
+ 75%|███████▌  | 15/20 [02:36<00:43,  8.64s/it]
+ 80%|████████  | 16/20 [02:45<00:34,  8.62s/it]
+ 85%|████████▌ | 17/20 [02:53<00:25,  8.61s/it]
+ 90%|█████████ | 18/20 [03:02<00:17,  8.60s/it]
+ 95%|█████████▌| 19/20 [03:10<00:08,  8.60s/it]
+100%|██████████| 20/20 [03:19<00:00,  8.59s/it]
+100%|██████████| 20/20 [03:19<00:00,  9.97s/it]
