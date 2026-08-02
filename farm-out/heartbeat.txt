@@ -648,3 +648,4 @@
 16:11:10Z VIDEO_ALIVE 50m elapsed, 1 clip(s) done
 16:16:13Z VIDEO_STALLED no clip finished in 47m (1 done) — killing it so the queue moves
 16:16:17Z FAIL task=night-g1-1785705000
+16:16:19Z STARTED task=night-g2-1785705000 beats=6,7,8,9,10 on cuda
