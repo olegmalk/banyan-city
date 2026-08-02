@@ -326,3 +326,4 @@
 07:28:25Z VIDEO_CLIP 1/1 wan-act-b4-1785650000-04-the-fall.mp4 in 543s
 07:28:28Z VIDEO_CLIP_OK beat=04 165KB
 07:28:31Z DONE task=wan-act-b4-1785650000
+07:28:33Z STARTED task=wan-act-b8-1785650000 beats=8 on cuda
