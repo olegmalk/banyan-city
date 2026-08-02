@@ -251,7 +251,10 @@ def stage_simple(a) -> int:
     jobs = json.loads(Path(a.jobs).read_text()) if a.jobs else \
         [{"init": a.init, "out": a.out, "prompt": a.prompt, "seed": a.seed,
           "negative": a.negative}]
-    if getattr(pipe, "text_encoder", None) is not None:
+    if a.keep_text_encoder:
+        print("text encoder KEPT resident (--keep-text-encoder): slower, but the "
+              "pipeline encodes prompts its own way", flush=True)
+    if not a.keep_text_encoder and getattr(pipe, "text_encoder", None) is not None:
         t_enc = time.time()
         for job in jobs:
             neg = f"{NEG}, {job['negative']}" if job.get("negative") else NEG
@@ -438,6 +441,11 @@ def main() -> int:
     ap.add_argument("--guidance", type=float, default=5.0,
                     help="cfg; higher follows the prompt harder, lower drifts")
     ap.add_argument("--size", default="480x832", help="WxH (Wan bucket)")
+    ap.add_argument("--keep-text-encoder", action="store_true",
+                    help="do NOT evict the text encoder. Costs ~11.4GB VRAM and "
+                         "roughly 8x wall clock, but uses the pipeline's own "
+                         "prompt path — the A/B control for suspected corruption "
+                         "from hand-passed prompt_embeds (2026-08-02)")
     ap.add_argument("--negative", default="",
                     help="extra negative terms (the beat's own 'no X' clauses)")
     ap.add_argument("--no-lora", action="store_true",
