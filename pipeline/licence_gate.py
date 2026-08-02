@@ -335,8 +335,39 @@ MODEL_LICENCES = {
     "sfx-py": "CC-BY-4.0 (our own output)",
 }
 
+# Models with NO LICENCE TEXT ANYWHERE — a different state from "nobody has read
+# it yet", and the difference is worth encoding because it changes what to DO.
+#
+# LTX-Video sat in this gate as "unread". Someone read it, in about twenty minutes,
+# and it cleared. quanhaol/Wan2.2-TI2V-5B-Turbo has no text at any URL: both
+# LICENSE paths 404 and GitHub reports NOASSERTION. Reading is not a task that can
+# be completed. Filing both as "unread" sends the next person to look for a
+# document that does not exist.
+#
+# So: "unread" means GO READ IT (cheap, and it may clear). "UNCLEARABLE" means the
+# only routes are the author publishing terms, or replacing the asset.
+UNCLEARABLE = {
+    "quanhaol": "no licence text at any URL — both LICENSE paths 404, GitHub "
+                "reports NOASSERTION. Technically ideal (4-step, CFG-free, real "
+                "i2v) and still unusable: there is nothing to read.",
+}
+
+# Apache-2.0 AND OUR OUTPUT, stated once so it stops being re-derived:
+# Apache 2.0 has no output clause at all. It grants rights in "the Work" — the
+# weights and code — and is SILENT on what you generate by running it. That
+# silence, not any affirmative grant, is why apache-2.0 weights place no condition
+# on our CC BY 4.0 offer. (LTXV reaches the same place the other way, by explicit
+# disclaimer in §5: "Licensor claims no rights in the Output".)
+# Verified 2026-08-02: neither Wan-Video/Wan2.2 nor hao-ai-lab/FastVideo ships a
+# NOTICE file, so Apache §4(d)'s attribution requirement — which is conditional on
+# the distributed Work containing one — never triggers. Nothing travels into an
+# episode.
+
 # Remedy appended to a violation when the fix is specific enough to name.
 MODEL_NOTES = {
+    "quanhaol": " — UNCLEARABLE, not merely unread: there is no licence text at any "
+                "URL to read. Do not spend time looking. Either the author "
+                "publishes terms or the asset is replaced.",
     "pixverse": " — if the take was made on a PAID PixVerse plan, record the plan "
                 "in the sidecar (the free tier is personal-use only); otherwise "
                 "re-shoot the beat on a publish-safe route",
