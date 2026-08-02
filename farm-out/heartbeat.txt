@@ -607,3 +607,4 @@
 13:45:50Z STARTED task=m-g3-1785690000 beats=11,12,13,14,15 on cuda
 13:45:53Z VIDEO_VENV_OK
 13:46:05Z VIDEO_DEPS_OK 2.11.0+cu128 0.39.0 True
+13:46:14Z VIDEO_RENDERING batch of 5 on ti2v-5b (one model load)
