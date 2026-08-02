@@ -1,23 +1,28 @@
-# 2026-08-02. ALL 15 BEATS, with the negatives finally in the negative field.
+# 2026-08-02, v3. ALL 15 BEATS using the node's OWN motion.yaml directions.
 #
-# Founder on the beat-1 Wan take: "it makes an additional realistic looking scene,
-# lets try again without it changing scenes itself." It was TOLD to. The motion
-# string "gentle drift; no new subjects, no scene change" went into the POSITIVE
-# prompt verbatim, so every render was asked for new subjects and a scene change
-# in the same breath as being told not to.
+# motion.yaml has existed since 2026-07-29 — "Per-beat MOTION direction (what
+# moves; the still owns composition). Edit here — a PR to this file is a
+# motion-direction pitch." The shot board reads it. make_requests reads it. The
+# RENDERER NEVER DID. So every clip made so far was animated from a motion prompt
+# the steward generated instead, and they were worse in every way that mattered:
 #
-# Second time this exact mistake shipped: fixed for the still-description prompt
-# on 2026-08-01, left in the motion string because that looked like prose rather
-# than a prompt. video_prompt() now strips "no X" clauses from BOTH inputs, and
-# ANTI_STYLE names the failure directly — scene change, shot change, cut to
-# another angle, second scene, new camera angle, different location.
+#   motion.yaml beat 1: "the young man types rapidly, fingers moving over the keys,
+#                        slight shoulder movement, monitor glow flickers gently,
+#                        camera locked"
+#   what was sent:      "One mechanical keyboard, very fast — then it stops.
+#                        gentle drift; no new subjects, no scene change"
 #
-# seed_base changed (20260731 -> 20260802) so these are genuinely new samples and
-# not cache-identical re-runs of yesterday.
+# The founder asked for typing on beat 1 and for beat 2 not to redraw the monitor.
+# Both were already written down. Every entry describes the STILL WE HAVE in motion
+# terms, several carry explicit guards ("nothing flies, nothing detaches", "no
+# people appear"), and all fifteen end "camera locked" — the anti-scene-change
+# instruction the steward spent a day trying to invent.
 #
-# One beat per task: a bad clip costs one clip, each pushes the moment it lands,
-# and the stall detector kills anything wedged for 45 minutes. ~10 min each, so
-# roughly 2.5 hours for a complete episode of fresh takes.
+# Beat 4's entry is "the limp hand stays motionless... one loose paper settles to
+# the floor" — the aftermath the still actually shows, not the mug drop that was
+# asked for and duly rendered.
+#
+# v2 (in flight) is superseded. Fresh seed_base so these are new samples.
 tasks:
 - worker: rtx5090
   video: true
@@ -27,8 +32,8 @@ tasks:
   seconds: 3.0
   steps: 20
   guidance: 5.0
-  seed_base: 20260802
-  id: v2-b01-1785660000
+  seed_base: 20260803
+  id: v3-b01-1785670000
   beats: 1
 - worker: rtx5090
   video: true
@@ -38,8 +43,8 @@ tasks:
   seconds: 3.0
   steps: 20
   guidance: 5.0
-  seed_base: 20260802
-  id: v2-b02-1785660000
+  seed_base: 20260803
+  id: v3-b02-1785670000
   beats: 2
 - worker: rtx5090
   video: true
@@ -49,8 +54,8 @@ tasks:
   seconds: 3.0
   steps: 20
   guidance: 5.0
-  seed_base: 20260802
-  id: v2-b03-1785660000
+  seed_base: 20260803
+  id: v3-b03-1785670000
   beats: 3
 - worker: rtx5090
   video: true
@@ -60,8 +65,8 @@ tasks:
   seconds: 3.0
   steps: 20
   guidance: 5.0
-  seed_base: 20260802
-  id: v2-b04-1785660000
+  seed_base: 20260803
+  id: v3-b04-1785670000
   beats: 4
 - worker: rtx5090
   video: true
@@ -71,8 +76,8 @@ tasks:
   seconds: 3.0
   steps: 20
   guidance: 5.0
-  seed_base: 20260802
-  id: v2-b05-1785660000
+  seed_base: 20260803
+  id: v3-b05-1785670000
   beats: 5
 - worker: rtx5090
   video: true
@@ -82,8 +87,8 @@ tasks:
   seconds: 3.0
   steps: 20
   guidance: 5.0
-  seed_base: 20260802
-  id: v2-b06-1785660000
+  seed_base: 20260803
+  id: v3-b06-1785670000
   beats: 6
 - worker: rtx5090
   video: true
@@ -93,8 +98,8 @@ tasks:
   seconds: 3.0
   steps: 20
   guidance: 5.0
-  seed_base: 20260802
-  id: v2-b07-1785660000
+  seed_base: 20260803
+  id: v3-b07-1785670000
   beats: 7
 - worker: rtx5090
   video: true
@@ -104,8 +109,8 @@ tasks:
   seconds: 3.0
   steps: 20
   guidance: 5.0
-  seed_base: 20260802
-  id: v2-b08-1785660000
+  seed_base: 20260803
+  id: v3-b08-1785670000
   beats: 8
 - worker: rtx5090
   video: true
@@ -115,8 +120,8 @@ tasks:
   seconds: 3.0
   steps: 20
   guidance: 5.0
-  seed_base: 20260802
-  id: v2-b09-1785660000
+  seed_base: 20260803
+  id: v3-b09-1785670000
   beats: 9
 - worker: rtx5090
   video: true
@@ -126,8 +131,8 @@ tasks:
   seconds: 3.0
   steps: 20
   guidance: 5.0
-  seed_base: 20260802
-  id: v2-b10-1785660000
+  seed_base: 20260803
+  id: v3-b10-1785670000
   beats: 10
 - worker: rtx5090
   video: true
@@ -137,8 +142,8 @@ tasks:
   seconds: 3.0
   steps: 20
   guidance: 5.0
-  seed_base: 20260802
-  id: v2-b11-1785660000
+  seed_base: 20260803
+  id: v3-b11-1785670000
   beats: 11
 - worker: rtx5090
   video: true
@@ -148,8 +153,8 @@ tasks:
   seconds: 3.0
   steps: 20
   guidance: 5.0
-  seed_base: 20260802
-  id: v2-b12-1785660000
+  seed_base: 20260803
+  id: v3-b12-1785670000
   beats: 12
 - worker: rtx5090
   video: true
@@ -159,8 +164,8 @@ tasks:
   seconds: 3.0
   steps: 20
   guidance: 5.0
-  seed_base: 20260802
-  id: v2-b13-1785660000
+  seed_base: 20260803
+  id: v3-b13-1785670000
   beats: 13
 - worker: rtx5090
   video: true
@@ -170,8 +175,8 @@ tasks:
   seconds: 3.0
   steps: 20
   guidance: 5.0
-  seed_base: 20260802
-  id: v2-b14-1785660000
+  seed_base: 20260803
+  id: v3-b14-1785670000
   beats: 14
 - worker: rtx5090
   video: true
@@ -181,8 +186,8 @@ tasks:
   seconds: 3.0
   steps: 20
   guidance: 5.0
-  seed_base: 20260802
-  id: v2-b15-1785660000
+  seed_base: 20260803
+  id: v3-b15-1785670000
   beats: 15
 - id: prefetch-a14b-1785529520
   worker: rtx5090
