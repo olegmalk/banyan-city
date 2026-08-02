@@ -550,3 +550,50 @@ Loading pipeline components...: 100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ�
 100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 20/20 [01:11<00:00,  3.56s/it]
 
 video task v2-b12-1785660000: 1/1 clips
+$ C:\banyan-video\venv\Scripts\python.exe C:\banyan-farm\banyan-city\pipeline\wan_i2v.py --stage simple --embeds C:\banyan-video\embeds-13.pt…
+model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+[transformers] `CLIPImageProcessor` requires torchvision (not installed); falling back to `CLIPImageProcessorPil` for backward compatibility. Install torchvision to use the default backend, or import `CLIPImageProcessorPil` directly to silence this warning.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+Loading pipeline components...:   0%|          | 0/5 [00:00<?, ?it/s]
+Loading pipeline components...:  20%|â–ˆâ–ˆ        | 1/5 [00:00<00:03,  1.06it/s]
+
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s][A
+
+Loading checkpoint shards:  20%|â–ˆâ–ˆ        | 1/5 [00:01<00:07,  1.78s/it][A
+
+Loading checkpoint shards:  40%|â–ˆâ–ˆâ–ˆâ–ˆ      | 2/5 [00:03<00:05,  1.96s/it][A
+
+Loading checkpoint shards:  60%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ    | 3/5 [00:05<00:03,  1.95s/it][A
+
+Loading checkpoint shards:  80%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ  | 4/5 [00:12<00:03,  3.82s/it][A
+
+Loading checkpoint shards: 100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 5/5 [00:12<00:00,  2.52s/it][A
+Loading checkpoint shards: 100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 5/5 [00:12<00:00,  2.54s/it]
+
+Loading pipeline components...:  60%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ    | 3/5 [00:13<00:09,  4.98s/it]
+
+Loading weights:   0%|          | 0/242 [00:00<?, ?it/s][A
+Loading weights: 100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 242/242 [00:00<00:00, 3626.26it/s]
+
+Loading pipeline components...:  80%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ  | 4/5 [00:13<00:03,  3.32s/it]The config attributes {'clip_output': False} were passed to AutoencoderKLWan, but are not expected and will be ignored. Please verify your config.json configuration file.
+
+Loading pipeline components...: 100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 5/5 [00:16<00:00,  2.93s/it]
+Loading pipeline components...: 100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 5/5 [00:16<00:00,  3.21s/it]
+forrtl: error (200): program aborting due to window-CLOSE event
+Image              PC                Routine            Line        Source             
+KERNELBASE.dll     00007FFA92273E3D  Unknown               Unknown  Unknown
+KERNEL32.DLL       00007FFA9400E957  Unknown               Unknown  Unknown
+ntdll.dll          00007FFA94ECAD6C  Unknown               Unknown  Unknown
+
+Traceback (most recent call last):
+  File "C:\banyan-farm\banyan-city\pipeline\farm_worker.py", line 445, in main
+    render_task(task, courier, device, dtype)
+  File "C:\banyan-farm\banyan-city\pipeline\farm_worker.py", line 291, in render_task
+    return video_task.run(task, courier, d)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\banyan-farm\banyan-city\pipeline\video_task.py", line 543, in run
+    _run([str(PY), wan, "--stage", "simple", "--embeds", str(emb),
+  File "C:\banyan-farm\banyan-city\pipeline\video_task.py", line 346, in _run
+    raise RuntimeError(f"{stage} failed (exit {r.returncode})")
+RuntimeError: beat 13 failed (exit 2)
