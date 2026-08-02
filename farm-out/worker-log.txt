@@ -54,3 +54,54 @@ Loading pipeline components...: 100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ�
 100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 20/20 [00:57<00:00,  2.86s/it]
 
 video task sweep-s20-1785680000: 1/1 clips
+$ C:\banyan-video\venv\Scripts\python.exe C:\banyan-farm\banyan-city\pipeline\wan_i2v.py --stage simple --embeds C:\banyan-video\embeds-01.pt…
+model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+pipeline class: WanImageToVideoPipeline (forced image-to-video)
+VRAM[after load, before .to(cuda)] used 1.38/25.7GB (torch holds 0.00GB)
+VRAM[after .to(cuda)] used 24.20/25.7GB (torch holds 22.81GB)
+text encoder evicted after 2s (1 prompt(s) encoded)
+VRAM[text encoder evicted] used 12.93/25.7GB (torch holds 11.46GB)
+[1/1] wrote C:\banyan-farm\banyan-city\farm-out\sweep-s12-1785680000-01-the-keyboard.mp4 in 43s (61 frames, 480x832, 12 steps, peak torch 22.9GB, device 20.1/26GB)
+to use the default backend, or import `CLIPImageProcessorPil` directly to silence this warning.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+Loading pipeline components...:   0%|          | 0/5 [00:00<?, ?it/s]The config attributes {'clip_output': False} were passed to AutoencoderKLWan, but are not expected and will be ignored. Please verify your config.json configuration file.
+
+Loading pipeline components...:  20%|â–ˆâ–ˆ        | 1/5 [00:01<00:06,  1.57s/it]
+Loading pipeline components...:  40%|â–ˆâ–ˆâ–ˆâ–ˆ      | 2/5 [00:02<00:04,  1.36s/it]
+
+Loading weights:   0%|          | 0/242 [00:00<?, ?it/s][A
+Loading weights: 100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 242/242 [00:00<00:00, 3817.18it/s]
+
+Loading pipeline components...:  60%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ    | 3/5 [00:02<00:01,  1.26it/s]
+
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s][A
+
+Loading checkpoint shards:  20%|â–ˆâ–ˆ        | 1/5 [00:02<00:08,  2.16s/it][A
+
+Loading checkpoint shards:  40%|â–ˆâ–ˆâ–ˆâ–ˆ      | 2/5 [00:04<00:06,  2.12s/it][A
+
+Loading checkpoint shards:  60%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ    | 3/5 [00:06<00:04,  2.12s/it][A
+
+Loading checkpoint shards:  80%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ  | 4/5 [00:10<00:03,  3.10s/it][A
+
+Loading checkpoint shards: 100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 5/5 [00:11<00:00,  2.07s/it][A
+Loading checkpoint shards: 100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 5/5 [00:11<00:00,  2.25s/it]
+
+Loading pipeline components...:  80%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ  | 4/5 [00:14<00:04,  4.95s/it]
+Loading pipeline components...: 100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 5/5 [00:14<00:00,  2.86s/it]
+
+  0%|          | 0/12 [00:00<?, ?it/s]
+  8%|â–Š         | 1/12 [00:03<00:33,  3.08s/it]
+ 17%|â–ˆâ–‹        | 2/12 [00:05<00:29,  2.94s/it]
+ 25%|â–ˆâ–ˆâ–Œ       | 3/12 [00:08<00:26,  2.93s/it]
+ 33%|â–ˆâ–ˆâ–ˆâ–Ž      | 4/12 [00:11<00:23,  2.89s/it]
+ 42%|â–ˆâ–ˆâ–ˆâ–ˆâ–�     | 5/12 [00:14<00:20,  2.87s/it]
+ 50%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆ     | 6/12 [00:17<00:17,  2.86s/it]
+ 58%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–Š    | 7/12 [00:20<00:14,  2.85s/it]
+ 67%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–‹   | 8/12 [00:23<00:11,  2.85s/it]
+ 75%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–Œ  | 9/12 [00:25<00:08,  2.85s/it]
+ 83%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–Ž | 10/12 [00:28<00:05,  2.85s/it]
+ 92%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–�| 11/12 [00:31<00:02,  2.85s/it]
+100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 12/12 [00:34<00:00,  2.85s/it]
+100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 12/12 [00:34<00:00,  2.87s/it]
