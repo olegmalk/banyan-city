@@ -306,3 +306,4 @@
 06:58:27Z VIDEO_ALIVE 510m elapsed, child still running
 07:03:30Z VIDEO_ALIVE 515m elapsed, child still running
 07:06:31Z STARTED task=wan-act-b2-1785650000 beats=2 on cuda
+07:06:34Z VIDEO_VENV_OK
