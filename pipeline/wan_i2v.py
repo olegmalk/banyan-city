@@ -251,7 +251,12 @@ def stage_simple(a) -> int:
     # has to be one that leaves the pipeline's own conditioning path intact:
     # enable_model_cpu_offload() (diffusers' own, module-by-module) or a smaller
     # text encoder variant. Not this.
-    return _sample(pipe, a, w, h, frames, takes_image, jobs)
+    # _sample loads the job list itself. It used to be passed in from here, because
+    # the (now reverted) eviction needed every prompt up front — deleting that block
+    # removed the line defining `jobs` and left this call still using it, so every
+    # render died with NameError. Reverts have to be verified like anything else:
+    # `git revert`-by-hand is a code change, and mine went out unexecuted.
+    return _sample(pipe, a, w, h, frames, takes_image)
 
 
 def _sample(pipe, a, w, h, frames, takes_image, jobs=None) -> int:
