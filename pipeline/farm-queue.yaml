@@ -265,3 +265,21 @@ tasks:
   - repo: lightx2v/Wan2.2-Distill-Loras
     patterns:
     - '*i2v*rank64*4step*'
+# 21:00Z — beat 1 again, LAST, because the hi-res canary at 20:35 rendered before
+# the motion.yaml fix was pushed: it used the old direction ("types rapidly,
+# fingers moving over the keys") and the new one asks for the script's second
+# half too ("...and then stop abruptly, hands going still"). The canary answered
+# the resolution question, which is what it was for; this take answers the
+# direction question. Queued last so it cannot delay the other 14.
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  motion: no new subjects, no scene change
+  size: 704x1280
+  offload: true
+  seconds: 2.5
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260805
+  id: d2-b01-redo-1785766800
+  beats: 1
