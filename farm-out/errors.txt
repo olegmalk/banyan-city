@@ -43,3 +43,18 @@ Traceback (most recent call last):
     raise RuntimeError(f"{stage} failed (exit {r.returncode})")
 RuntimeError: beat 13 failed (exit 2)
 
+
+===== 2026-08-02T11:45:31Z =====
+task=v3-probe-1785677000
+Traceback (most recent call last):
+  File "C:\banyan-farm\banyan-city\pipeline\farm_worker.py", line 445, in main
+    render_task(task, courier, device, dtype)
+  File "C:\banyan-farm\banyan-city\pipeline\farm_worker.py", line 291, in render_task
+    return video_task.run(task, courier, d)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\banyan-farm\banyan-city\pipeline\video_task.py", line 523, in run
+    _run([str(PY), str(REPO / "pipeline" / "wan_i2v.py"), "--stage", "simple",
+  File "C:\banyan-farm\banyan-city\pipeline\video_task.py", line 388, in _run
+    raise RuntimeError(f"{stage} failed (exit {r.returncode})")
+RuntimeError: batch v3-probe-1785677000 failed (exit 1)
+
