@@ -1,76 +1,189 @@
-# 2026-08-02. AnimeGen REMOVED — it cannot load on this machine.
+# 2026-08-02. ALL 15 BEATS, with the negatives finally in the negative field.
 #
-# Failed with 0xC0000005 (Windows access violation) 29 seconds into the load, and
-# the arithmetic says why: two 14B experts at 28GB each in bf16, plus an 11GB text
-# encoder, is ~69GB of SYSTEM RAM at peak. The fp8 layerwise casting that makes it
-# fit the GPU runs AFTER from_pretrained has read the bf16 weights, so the peak is
-# paid before the trick can help.
+# Founder on the beat-1 Wan take: "it makes an additional realistic looking scene,
+# lets try again without it changing scenes itself." It was TOLD to. The motion
+# string "gentle drift; no new subjects, no scene change" went into the POSITIVE
+# prompt verbatim, so every render was asked for new subjects and a scene change
+# in the same breath as being told not to.
 #
-# The licence research said this on 2026-08-01: "No fp8/GGUF build of this
-# fine-tune exists yet — that is work, not a download." The steward overrode it on
-# the strength of the model card's "RTX 4090 or higher is recommended", which is
-# about the GPU and says nothing about load-time RAM. That was wrong and cost the
-# founder most of a day of waiting on a 28GB download.
+# Second time this exact mistake shipped: fixed for the still-description prompt
+# on 2026-08-01, left in the motion string because that looked like prose rather
+# than a prompt. video_prompt() now strips "no X" clauses from BOTH inputs, and
+# ANTI_STYLE names the failure directly — scene change, shot change, cut to
+# another angle, second scene, new camera angle, different location.
 #
-# Requeue ONLY if someone publishes pre-quantised AnimeGen weights (fp8 or GGUF),
-# so the load reads ~14GB instead of ~56GB. Quantising it ourselves means loading
-# it first, which is the thing that does not fit.
+# seed_base changed (20260731 -> 20260802) so these are genuinely new samples and
+# not cache-identical re-runs of yesterday.
+#
+# One beat per task: a bad clip costs one clip, each pushes the moment it lands,
+# and the stall detector kills anything wedged for 45 minutes. ~10 min each, so
+# roughly 2.5 hours for a complete episode of fresh takes.
 tasks:
-- id: wan-act-b2-1785650000
-  worker: rtx5090
+- worker: rtx5090
   video: true
   node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 3.0
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260802
+  id: v2-b01-1785660000
+  beats: 1
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 3.0
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260802
+  id: v2-b02-1785660000
   beats: 2
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
   motion: gentle drift; no new subjects, no scene change
   size: 480x832
   seconds: 3.0
   steps: 20
   guidance: 5.0
-  seed_base: 20260731
-- id: wan-act-b4-1785650000
-  worker: rtx5090
+  seed_base: 20260802
+  id: v2-b03-1785660000
+  beats: 3
+- worker: rtx5090
   video: true
   node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 3.0
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260802
+  id: v2-b04-1785660000
   beats: 4
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
   motion: gentle drift; no new subjects, no scene change
   size: 480x832
   seconds: 3.0
   steps: 20
   guidance: 5.0
-  seed_base: 20260731
-- id: wan-act-b8-1785650000
-  worker: rtx5090
+  seed_base: 20260802
+  id: v2-b05-1785660000
+  beats: 5
+- worker: rtx5090
   video: true
   node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 3.0
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260802
+  id: v2-b06-1785660000
+  beats: 6
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 3.0
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260802
+  id: v2-b07-1785660000
+  beats: 7
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 3.0
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260802
+  id: v2-b08-1785660000
   beats: 8
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
   motion: gentle drift; no new subjects, no scene change
   size: 480x832
   seconds: 3.0
   steps: 20
   guidance: 5.0
-  seed_base: 20260731
-- id: wan-act-b11-1785650000
-  worker: rtx5090
+  seed_base: 20260802
+  id: v2-b09-1785660000
+  beats: 9
+- worker: rtx5090
   video: true
   node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 3.0
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260802
+  id: v2-b10-1785660000
+  beats: 10
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 3.0
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260802
+  id: v2-b11-1785660000
   beats: 11
-  motion: gentle drift; no new subjects, no scene change
-  size: 480x832
-  seconds: 3.0
-  steps: 20
-  guidance: 5.0
-  seed_base: 20260731
-- id: wan-act-b13-1785650000
-  worker: rtx5090
+- worker: rtx5090
   video: true
   node: 001-capability-inventory
-  beats: 13
   motion: gentle drift; no new subjects, no scene change
   size: 480x832
   seconds: 3.0
   steps: 20
   guidance: 5.0
-  seed_base: 20260731
+  seed_base: 20260802
+  id: v2-b12-1785660000
+  beats: 12
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 3.0
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260802
+  id: v2-b13-1785660000
+  beats: 13
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 3.0
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260802
+  id: v2-b14-1785660000
+  beats: 14
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 3.0
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260802
+  id: v2-b15-1785660000
+  beats: 15
 - id: prefetch-a14b-1785529520
   worker: rtx5090
   video: true
