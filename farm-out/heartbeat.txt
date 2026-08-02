@@ -586,3 +586,4 @@
 13:34:38Z VIDEO_RENDERING beat=01 on ti2v-5b (single-process)
 13:40:30Z STARTED task=ab-evict-on-1785690000 beats=1 on cuda
 13:40:33Z VIDEO_VENV_OK
+13:40:43Z VIDEO_DEPS_OK 2.11.0+cu128 0.39.0 True
