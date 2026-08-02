@@ -1,3 +1,17 @@
+# RE-QUEUED 2026-08-02 15:20Z with fresh ids. The first attempt failed in 60
+# seconds x3, and the cause was the steward's revert, not the render:
+#
+#   NameError: name 'jobs' is not defined
+#
+# Reverting the text-encoder eviction deleted the line that DEFINED `jobs` and left
+# the line that USED it. py_compile passed — it is valid syntax — and no test
+# exercised that path, so it surfaced on the founder's machine as "exit 1" with the
+# real message three files deep in a courier log.
+#
+# A revert is a code change and gets the same scrutiny as the change it undoes.
+# test_pipeline now AST-checks every top-level pipeline function for names it reads
+# but never binds; verified by reintroducing this exact bug (test exits 1 and names
+# wan_i2v.py:stage_simple) and by confirming it passes on the fixed code.
 # OVERNIGHT 2026-08-02. Fifteen beats, motion.yaml, correct-but-slow.
 #
 # NO SPEED TRICKS. The text-encoder eviction that took a clip from 536s to 66s
@@ -30,7 +44,7 @@ tasks:
   steps: 20
   guidance: 5.0
   seed_base: 20260803
-  id: night-g1-1785700000
+  id: night-g1-1785705000
   beats: 1,2,3,4,5
 - worker: rtx5090
   video: true
@@ -41,7 +55,7 @@ tasks:
   steps: 20
   guidance: 5.0
   seed_base: 20260803
-  id: night-g2-1785700000
+  id: night-g2-1785705000
   beats: 6,7,8,9,10
 - worker: rtx5090
   video: true
@@ -52,7 +66,7 @@ tasks:
   steps: 20
   guidance: 5.0
   seed_base: 20260803
-  id: night-g3-1785700000
+  id: night-g3-1785705000
   beats: 11,12,13,14,15
 - id: prefetch-a14b-1785529520
   worker: rtx5090

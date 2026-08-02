@@ -818,6 +818,99 @@ def test_sync_shots_is_idempotent():
             check(f"{slug} beat {i + 1:02d} heading has one range", h.count(rng) == 1)
 
 
+
+def test_no_undefined_locals(tmp: Path):
+    """Every name a pipeline function READS must be defined somewhere it can see.
+
+    Catches the bug class that cost the founder an evening's render on 2026-08-02:
+    reverting the text-encoder eviction deleted the line defining `jobs` and left
+    the line using it, so `stage_simple` raised NameError. Nothing caught it —
+    py_compile passes (it is valid syntax), the tests did not exercise a GPU path,
+    and the failure surfaced on a Windows box ten minutes into a batch, as
+    "exit 1", with the real message three files deep in a courier log.
+
+    A revert is a code change and deserves the same scrutiny as the change it
+    undoes. This is the cheap static half of that: no GPU, no model, no network.
+    """
+    import ast
+    import builtins
+
+    # module dunders are always present but are not in dir(builtins)
+    BUILTIN = set(dir(builtins)) | {"__file__", "__name__", "__doc__", "__spec__",
+                                    "__package__", "__loader__", "__builtins__"}
+    bad = []
+    for src_file in sorted((REPO / "pipeline").glob("*.py")):
+        tree = ast.parse(src_file.read_text(encoding="utf-8"))
+        # MODULE SCOPE ONLY — tree.body, not ast.walk(tree). The first version of
+        # this test walked the whole tree, so a local variable inside ANY function
+        # counted as globally defined and the check found nothing. Verified by
+        # reintroducing the real bug: it passed. A test you have not seen fail is
+        # not a test.
+        module_level = set()
+        for x in tree.body:
+            if isinstance(x, (ast.Import, ast.ImportFrom)):
+                module_level |= {(al.asname or al.name).split(".")[0] for al in x.names}
+            elif isinstance(x, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+                module_level.add(x.name)
+            elif isinstance(x, (ast.Assign, ast.AnnAssign, ast.AugAssign)):
+                for n in ast.walk(x):
+                    if isinstance(n, ast.Name) and isinstance(n.ctx, ast.Store):
+                        module_level.add(n.id)
+            elif isinstance(x, (ast.If, ast.Try, ast.For, ast.While, ast.With)):
+                # conditional imports/assignments at module level still count
+                for n in ast.walk(x):
+                    if isinstance(n, ast.Name) and isinstance(n.ctx, ast.Store):
+                        module_level.add(n.id)
+                    elif isinstance(n, (ast.Import, ast.ImportFrom)):
+                        module_level |= {(al.asname or al.name).split(".")[0]
+                                         for al in n.names}
+
+        # TOP-LEVEL functions only. A nested function legally reads its parent's
+        # variables (md_chunk inside render_node_page reads genome_id), and walking
+        # into it reports every closure as undefined. Checking the parent covers the
+        # child, because the parent's subtree — nested defs included — is where the
+        # assignments live.
+        for fn in tree.body:
+            if not isinstance(fn, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                continue
+            # everything this function makes available to itself
+            local = set(module_level)
+            a = fn.args
+            local |= {x.arg for x in a.args + a.posonlyargs + a.kwonlyargs}
+            local |= {x.arg for x in (a.vararg, a.kwarg) if x}
+            for n in ast.walk(fn):
+                if isinstance(n, ast.Name) and isinstance(n.ctx, ast.Store):
+                    local.add(n.id)
+                elif isinstance(n, (ast.Import, ast.ImportFrom)):
+                    local |= {(al.asname or al.name).split(".")[0] for al in n.names}
+                elif isinstance(n, ast.ExceptHandler) and n.name:
+                    local.add(n.name)
+                elif isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+                    local.add(n.name)
+                    if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                        na = n.args
+                        local |= {x.arg for x in na.args + na.posonlyargs + na.kwonlyargs}
+                        local |= {x.arg for x in (na.vararg, na.kwarg) if x}
+                elif isinstance(n, ast.Lambda):
+                    # lambda params are real bindings — `re.sub(..., lambda m: m[1])`
+                    na = n.args
+                    local |= {x.arg for x in na.args + na.posonlyargs + na.kwonlyargs}
+                    local |= {x.arg for x in (na.vararg, na.kwarg) if x}
+                elif isinstance(n, ast.Global):
+                    local |= set(n.names)
+                elif isinstance(n, (ast.comprehension,)):
+                    for t2 in ast.walk(n.target):
+                        if isinstance(t2, ast.Name):
+                            local.add(t2.id)
+            used = {n.id for n in ast.walk(fn)
+                    if isinstance(n, ast.Name) and isinstance(n.ctx, ast.Load)}
+            missing = used - local - BUILTIN
+            if missing:
+                bad.append(f"{src_file.name}:{fn.name} reads undefined {sorted(missing)}")
+    for b in bad:
+        print(f"      x  {b}")
+    check("no pipeline function reads an undefined name", not bad)
+
 def test_licence_gate(tmp: Path):
     """The gate that should have existed on 2026-07-31, when an entire episode
     came within one command of being voiced with F5-TTS — CC BY-NC weights —
@@ -1199,6 +1292,8 @@ def main():
         test_t3_check_clips_dir(Path(td))
     with tempfile.TemporaryDirectory() as td:
         test_licence_gate(Path(td))
+    with tempfile.TemporaryDirectory() as td:
+        test_no_undefined_locals(Path(td))
     print()
     if FAILURES:
         print(f"✗ {len(FAILURES)} failure(s): {', '.join(FAILURES)}")
