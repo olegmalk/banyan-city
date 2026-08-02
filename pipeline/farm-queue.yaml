@@ -1,39 +1,17 @@
-# RE-QUEUED 2026-08-02 15:20Z with fresh ids. The first attempt failed in 60
-# seconds x3, and the cause was the steward's revert, not the render:
+# 2026-08-02 18:05Z. ONE BEAT PER TASK. The batch loop leaks VRAM.
 #
-#   NameError: name 'jobs' is not defined
+# Measured, three times identically: clip 1 of a 5-clip batch finished in ~440s and
+# clip 2 NEVER finished — each batch stalled ~46 min until the watchdog killed it.
+# peak torch 22.9GB of 25.7GB, so after one clip the allocator holds nearly the
+# whole card and the next one pages to host RAM. wan_i2v now frees between clips
+# (del out + gc + empty_cache), but the founder wants to post TODAY and this is not
+# the day to bet on a fix nobody has watched work.
 #
-# Reverting the text-encoder eviction deleted the line that DEFINED `jobs` and left
-# the line that USED it. py_compile passed — it is valid syntax — and no test
-# exercised that path, so it surfaced on the founder's machine as "exit 1" with the
-# real message three files deep in a courier log.
+# One beat per task is PROVEN — every single-beat render today came in at 9-13 min.
+# It costs a model reload per clip and buys certainty.
 #
-# A revert is a code change and gets the same scrutiny as the change it undoes.
-# test_pipeline now AST-checks every top-level pipeline function for names it reads
-# but never binds; verified by reintroducing this exact bug (test exits 1 and names
-# wan_i2v.py:stage_simple) and by confirming it passes on the fixed code.
-# OVERNIGHT 2026-08-02. Fifteen beats, motion.yaml, correct-but-slow.
-#
-# NO SPEED TRICKS. The text-encoder eviction that took a clip from 536s to 66s
-# corrupted every frame — it bypassed the image conditioning, exactly as
-# stage_simple's own docstring warns. Reverted. ~9 min/clip, ~2h15 for the set,
-# and the output is right.
-#
-# Every beat gets its direction from motion.yaml, which has existed since
-# 2026-07-29 and which the renderer only started reading today. Beat 1 is "the
-# young man types rapidly, fingers moving over the keys... camera locked" — the
-# typing the founder asked for two days ago, already written down.
-#
-# Batches of five: one model load each, and every clip pushes the moment it lands,
-# so a crash at 3am keeps whatever finished. The stall detector kills a batch that
-# produces nothing for 45 minutes.
-#
-# Founder's outstanding verdicts on the previous set, for the morning review:
-#   beat 9  did not move at all      -> motion.yaml asks for "leaves stir very
-#           slightly", so it may stay static. That is a DIRECTION to rewrite, not a
-#           model failure.
-#   beat 2  random camera motion     -> every motion.yaml entry ends "camera locked"
-#   beat 7  sapling aggressively weird -> asks for a leaf whip, not a camera shake
+# Beats 1, 6 and 11 already landed overnight and are excluded. 12 beats x ~11 min =
+# ~2h10. If the memory fix holds, a later batch pass can be reinstated.
 tasks:
 - worker: rtx5090
   video: true
@@ -44,8 +22,8 @@ tasks:
   steps: 20
   guidance: 5.0
   seed_base: 20260803
-  id: night-g1-1785705000
-  beats: 1,2,3,4,5
+  id: day-b02-1785760000
+  beats: 2
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
@@ -55,8 +33,8 @@ tasks:
   steps: 20
   guidance: 5.0
   seed_base: 20260803
-  id: night-g2-1785705000
-  beats: 6,7,8,9,10
+  id: day-b03-1785760000
+  beats: 3
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
@@ -66,8 +44,107 @@ tasks:
   steps: 20
   guidance: 5.0
   seed_base: 20260803
-  id: night-g3-1785705000
-  beats: 11,12,13,14,15
+  id: day-b04-1785760000
+  beats: 4
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 2.5
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260803
+  id: day-b05-1785760000
+  beats: 5
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 2.5
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260803
+  id: day-b07-1785760000
+  beats: 7
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 2.5
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260803
+  id: day-b08-1785760000
+  beats: 8
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 2.5
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260803
+  id: day-b09-1785760000
+  beats: 9
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 2.5
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260803
+  id: day-b10-1785760000
+  beats: 10
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 2.5
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260803
+  id: day-b12-1785760000
+  beats: 12
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 2.5
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260803
+  id: day-b13-1785760000
+  beats: 13
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 2.5
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260803
+  id: day-b14-1785760000
+  beats: 14
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 2.5
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260803
+  id: day-b15-1785760000
+  beats: 15
 - id: prefetch-a14b-1785529520
   worker: rtx5090
   video: true
