@@ -731,3 +731,4 @@
 20:41:25Z VIDEO_DEPS_OK 2.11.0+cu128 0.39.0 True
 20:41:36Z VIDEO_RENDERING beat=01 on ti2v-5b (single-process)
 20:46:39Z VIDEO_ALIVE 5m elapsed, 0 clip(s) done
+20:50:12Z VIDEO_CLIP 1/1 shake-canary-b01-1785762000-01-the-keyboard.mp4 in 462s
