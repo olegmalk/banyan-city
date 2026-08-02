@@ -545,3 +545,4 @@
 12:21:22Z VIDEO_ALIVE 35m elapsed, 2 clip(s) done
 12:26:25Z VIDEO_ALIVE 40m elapsed, 2 clip(s) done
 12:31:29Z VIDEO_ALIVE 45m elapsed, 2 clip(s) done
+12:36:33Z VIDEO_STALLED no clip finished in 48m (2 done) — killing it so the queue moves
