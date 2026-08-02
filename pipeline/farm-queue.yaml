@@ -1,130 +1,89 @@
-# 2026-08-02 — STEP SWEEP, ahead of everything else.
+# 2026-08-02 — A/B THE SPEED FIX FIRST. It may have corrupted the picture.
 #
-# Founder: "see how low can we get, and at which point does the quality become too
-# bad." Same shape as the earlier image-model speed test.
+# Founder on the step sweep: "all of these step sweep results are bad and corrupt
+# the image. there is barely a difference between them as well."
 #
-# CONTROLLED: beat 1, the same approved still, the same motion.yaml direction, the
-# same seed, 480x832, 2.5s, guidance 5.0. ONLY the step count varies, so the
-# comparison is honest — one variable.
+# The second half of that sentence is the diagnostic. 20 steps and 4 steps should
+# look DRAMATICALLY different; they look nearly identical. When step count stops
+# mattering, the conditioning is not driving the denoiser — and the steward changed
+# exactly that by hand-passing prompt_embeds in order to evict the 11.4GB text
+# encoder (the change that took 536s to 66s).
 #
-# Beat 1 on purpose: the founder knows it well, it opens the episode, and it has
-# fingers on keys. Fine detail is where low step counts break first, so degradation
-# will be visible rather than a matter of taste.
+# Two variables moved at once, so this isolates them. Same beat, same still, same
+# seed, same motion.yaml direction, same 20 steps:
+#   ab-evict-on   hand-passed prompt_embeds, encoder evicted   (~66s)
+#   ab-evict-off  the pipeline's own prompt path, encoder resident (~536s)
 #
-# Measured baseline is 26.8s per step, so:
-#   20 steps ~ 9m    (today's setting)
-#   12 steps ~ 5.5m
-#    8 steps ~ 3.5m
-#    6 steps ~ 2.7m  <- the 3-minute target lands about here
-#    4 steps ~ 1.8m
-# ~25 min for all five in one model load, each pushing as it finishes.
+# If ON is corrupt and OFF is clean, the speed fix is the cause and gets reverted
+# or repaired — an 8x speedup that damages every frame is worth nothing.
+# If BOTH are corrupt, it is the motion.yaml prompt and the speedup stands.
 #
-# CAVEAT recorded before the result, so it cannot be read as an excuse afterwards:
-# guidance 5.0 is arguably unfair to 4-6 steps. Distilled few-step setups run
-# guidance ~1.0, and high CFG at low steps is a known failure mode. So D and E may
-# look worse than the model's real floor. This sweep answers "what do we get with
-# what we have"; if the low end collapses, the follow-up is the same steps at
-# guidance 1.0-1.5 before concluding anything about the model.
+# The 15 beats sit behind the A/B deliberately. Rendering them through a pipeline
+# that might corrupt every frame would waste the time the speedup just bought.
+#
+# Also confirmed from the founder's review of the 12 v2 clips, for whoever picks
+# this up: beat 9 does not move at all, beat 2 is random camera motion, beat 7 has
+# the sapling moving aggressively and strangely. motion.yaml addresses 2 and 7
+# directly ("camera locked" on every entry, and beat 7 asks for a leaf whip rather
+# than a camera shake). Beat 9 asks for "leaves stir very slightly", so it may stay
+# static — that one is a direction problem, not a model problem.
 tasks:
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
-  beats: 1
   motion: gentle drift; no new subjects, no scene change
   size: 480x832
   seconds: 2.5
-  guidance: 5.0
-  seed_base: 20260803
-  id: sweep-s20-1785680000
   steps: 20
-- worker: rtx5090
-  video: true
-  node: 001-capability-inventory
+  guidance: 5.0
+  seed_base: 20260803
+  id: ab-evict-on-1785690000
   beats: 1
-  motion: gentle drift; no new subjects, no scene change
-  size: 480x832
-  seconds: 2.5
-  guidance: 5.0
-  seed_base: 20260803
-  id: sweep-s12-1785680000
-  steps: 12
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 2.5
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260803
+  id: ab-evict-off-1785690000
   beats: 1
-  motion: gentle drift; no new subjects, no scene change
-  size: 480x832
-  seconds: 2.5
-  guidance: 5.0
-  seed_base: 20260803
-  id: sweep-s08-1785680000
-  steps: 8
-- worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  beats: 1
-  motion: gentle drift; no new subjects, no scene change
-  size: 480x832
-  seconds: 2.5
-  guidance: 5.0
-  seed_base: 20260803
-  id: sweep-s06-1785680000
-  steps: 6
-- worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  beats: 1
-  motion: gentle drift; no new subjects, no scene change
-  size: 480x832
-  seconds: 2.5
-  guidance: 5.0
-  seed_base: 20260803
-  id: sweep-s04-1785680000
-  steps: 4
+  keep_text_encoder: true
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
   motion: gentle drift; no new subjects, no scene change
   size: 480x832
   seconds: 2.5
-  steps: 12
+  steps: 20
   guidance: 5.0
   seed_base: 20260803
-  id: v3-probe-1785677000
-  beats: 1,2,4
+  id: m-g1-1785690000
+  beats: 1,2,3,4,5
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
   motion: gentle drift; no new subjects, no scene change
   size: 480x832
   seconds: 2.5
-  steps: 12
+  steps: 20
   guidance: 5.0
   seed_base: 20260803
-  id: v3-rest-a-1785677000
-  beats: 3,5,6,7,8
+  id: m-g2-1785690000
+  beats: 6,7,8,9,10
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
   motion: gentle drift; no new subjects, no scene change
   size: 480x832
   seconds: 2.5
-  steps: 12
+  steps: 20
   guidance: 5.0
   seed_base: 20260803
-  id: v3-rest-b-1785677000
-  beats: 9,10,11,12
-- worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  motion: gentle drift; no new subjects, no scene change
-  size: 480x832
-  seconds: 2.5
-  steps: 12
-  guidance: 5.0
-  seed_base: 20260803
-  id: v3-rest-c-1785677000
-  beats: 13,14,15
+  id: m-g3-1785690000
+  beats: 11,12,13,14,15
 - id: prefetch-a14b-1785529520
   worker: rtx5090
   video: true

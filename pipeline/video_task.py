@@ -526,7 +526,8 @@ def run(task: dict, courier, node_dir: Path) -> None:
                   "--model", vmodel,
                   "--quantise", str(task.get("quantise", "none")),
                   "--guidance", str(task.get("guidance", 5.0))]
-                 + (["--offload"] if task.get("offload") else []),
+                 + (["--offload"] if task.get("offload") else [])
+                 + (["--keep-text-encoder"] if task.get("keep_text_encoder") else []),
                  courier, f"batch {task.get('id')}", timeout=14400, retry=True)
             jf.unlink(missing_ok=True)
             made = 0
@@ -590,7 +591,8 @@ def run(task: dict, courier, node_dir: Path) -> None:
                   "--quantise", str(task.get("quantise", "none")),
                   "--seconds", str(seconds), "--steps", str(steps), "--size", size,
                   "--seed", str(int(task.get("seed_base", 20260731)) + num)]
-                 + (["--offload"] if task.get("offload") else []),
+                 + (["--offload"] if task.get("offload") else [])
+                 + (["--keep-text-encoder"] if task.get("keep_text_encoder") else []),
                  courier, f"beat {num}", timeout=7200, retry=True)
         else:
             courier.mark(f"VIDEO_ENCODING beat={num:02d}")

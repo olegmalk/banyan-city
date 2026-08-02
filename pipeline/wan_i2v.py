@@ -227,54 +227,30 @@ def stage_simple(a) -> int:
     if not takes_image:
         print("WARNING: this pipeline takes no image - text-to-video only")
 
-    # ---- THE TEXT ENCODER MUST NOT BE ON THE CARD DURING DENOISING ----------
+    # THE TEXT ENCODER STAYS. Hand-passing pre-computed prompt_embeds to free its
+    # 11.4GB took a clip from 536s to 66s — and produced glitching, character-
+    # destroying output on every beat. Founder: "these 6 new beats are literally
+    # just glitching the image".
     #
-    # This is Wan's own --t5_cpu, and the reason their authors fit 720p on a 4090.
-    # UMT5-XXL is 11.36GB in bf16. It runs ONCE per clip to turn the prompt into
-    # embeddings, then sits idle through every denoising step — while holding half
-    # the card. With the transformer (10.20GB) and VAE (1.41GB) that is 22.97GB
-    # resident on a 24GiB card that also drives a Windows desktop.
+    # The tell was his other observation: 20 steps and 4 steps looked nearly
+    # identical. When the step count stops mattering, conditioning is not driving
+    # the denoise.
     #
-    # Windows/WDDM does not OOM there. Its default Sysmem Fallback Policy pages to
-    # host RAM over PCIe, silently, which is why we sustain 5.2 TFLOPS on a card
-    # that should do 60-120 — 4-8% of the machine. Two independent checks say the
-    # same: Wan's authors do 11x our token-forwards in the same wall clock on a
-    # weaker 4090, and our own 704x1280/50-step run took 7x the FLOPs for 1.45x the
-    # time, which a compute-bound machine cannot do.
+    # AND THIS WAS ALREADY WRITTEN DOWN, fifty lines above, in stage_simple's own
+    # docstring: "The first 5090 clip came out as abstract smears with no relation
+    # to the conditioning image: the two-process trick (pre-computed embeddings...)
+    # exists only to fit a 16GB machine, and one of its shortcuts was clearly
+    # bypassing the image path... here the pipeline does its own encoding."
     #
-    # OUTPUT IS BIT-IDENTICAL. Same embeddings, same seed, same clip. The only
-    # change is where the weights sit while the transformer works.
+    # stage_simple EXISTS because pre-computed embeddings break the image path. I
+    # reintroduced the bug the function was created to avoid, in the function whose
+    # docstring warns about it, and shipped an 8x speedup that ruined every frame.
     #
-    # stage_encode/stage_render already split exactly this way, written when the
-    # 16GB machine died with an access violation. stage_simple was added for "cards
-    # with room" and discarded the lesson.
-    jobs = json.loads(Path(a.jobs).read_text()) if a.jobs else \
-        [{"init": a.init, "out": a.out, "prompt": a.prompt, "seed": a.seed,
-          "negative": a.negative}]
-    if getattr(pipe, "text_encoder", None) is not None:
-        t_enc = time.time()
-        for job in jobs:
-            neg = f"{NEG}, {job['negative']}" if job.get("negative") else NEG
-            prompt = job["prompt"]
-            if "animegen" in a.model.lower():
-                prompt = f"Japanese anime style, {prompt}"
-                neg = f"3d, cg, photo, stop, wait, {neg}"
-            with torch.no_grad():
-                pos_e, neg_e = pipe.encode_prompt(
-                    prompt=prompt, negative_prompt=neg,
-                    do_classifier_free_guidance=True, device="cuda")
-            job["_pos"] = pos_e.to("cpu")
-            job["_neg"] = neg_e.to("cpu")
-        # `= None`, NOT `del`: deleting a registered diffusers component breaks
-        # pipe.to() and maybe_free_model_hooks(). And do NOT move the VAE to CPU —
-        # prepare_latents calls vae.encode() on the conditioning image INSIDE
-        # __call__, so it would crash on a device mismatch.
-        pipe.text_encoder = None
-        gc.collect()
-        torch.cuda.empty_cache()
-        print(f"text encoder evicted after {time.time()-t_enc:.0f}s "
-              f"({len(jobs)} prompt(s) encoded)", flush=True)
-        vram("text encoder evicted")
+    # The VRAM finding is still real and worth acting on — 24.20/25.7GB resident,
+    # measured, means we page to host RAM and run at ~5% of the card. But the fix
+    # has to be one that leaves the pipeline's own conditioning path intact:
+    # enable_model_cpu_offload() (diffusers' own, module-by-module) or a smaller
+    # text encoder variant. Not this.
     return _sample(pipe, a, w, h, frames, takes_image, jobs)
 
 
@@ -310,16 +286,10 @@ def _sample(pipe, a, w, h, frames, takes_image, jobs=None) -> int:
             neg = f"3d, cg, photo, stop, wait, {neg}"
             if not a.no_lora:
                 steps, guidance = 4, 1.0
-        if job.get("_pos") is not None:
-            dev = "cuda" if torch.cuda.is_available() else "cpu"
-            kw = dict(prompt_embeds=job["_pos"].to(dev),
-                      negative_prompt_embeds=job["_neg"].to(dev),
-                      height=h, width=w,
-                      num_frames=frames, num_inference_steps=steps,
-                      guidance_scale=guidance,
-                      generator=torch.Generator(device="cpu").manual_seed(int(job["seed"])))
-        else:
-            kw = dict(prompt=prompt, negative_prompt=neg, height=h, width=w,
+        # ALWAYS the pipeline's own prompt path. Never hand-pass prompt_embeds —
+        # it silently bypasses the image conditioning and glitches every frame
+        # (2026-08-02, and 2026-07-31 before that; see stage_simple's docstring).
+        kw = dict(prompt=prompt, negative_prompt=neg, height=h, width=w,
                   num_frames=frames, num_inference_steps=steps,
                   guidance_scale=guidance,
                   generator=torch.Generator(device="cpu").manual_seed(int(job["seed"])))
@@ -438,6 +408,11 @@ def main() -> int:
     ap.add_argument("--guidance", type=float, default=5.0,
                     help="cfg; higher follows the prompt harder, lower drifts")
     ap.add_argument("--size", default="480x832", help="WxH (Wan bucket)")
+    ap.add_argument("--keep-text-encoder", action="store_true",
+                    help="do NOT evict the text encoder. Costs ~11.4GB VRAM and "
+                         "roughly 8x wall clock, but uses the pipeline's own "
+                         "prompt path — the A/B control for suspected corruption "
+                         "from hand-passed prompt_embeds (2026-08-02)")
     ap.add_argument("--negative", default="",
                     help="extra negative terms (the beat's own 'no X' clauses)")
     ap.add_argument("--no-lora", action="store_true",
