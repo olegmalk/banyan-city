@@ -20,7 +20,39 @@
 # BEAT 1 FIRST, alone. It is the clip he has judged more than any other, so it is
 # the honest comparison. ~11 min. If the shake is gone, the remaining 14 follow;
 # if not, we have spent 11 minutes instead of two hours.
+#
+# ---------------------------------------------------------------------------
+# 2026-08-02 20:4xZ — RESOLUTION, ahead of the shake question.
+#
+# The founder rejected ep1-v21-CANON as "too low quality". That canon was built
+# from 480x832 clips, and every task below was queued at 480x832 — so as
+# written, a full night of rendering reproduces the exact thing he turned down.
+# 480x832 upscaled to a 1080x1920 phone screen is a 2.25x blow-up; soft is the
+# expected outcome, not a surprise.
+#
+# But 704x1280 has NEVER completed on this card: vid-720p-all failed twice,
+# and -c, -d, -e once each. Five attempts, zero clips. So the resolution
+# question gets ONE beat, not fifteen — with --offload, which is the supported
+# way to fit a model that already sits at 24.4/26GB (hand-rolled eviction is
+# what corrupted every frame on 2026-08-02; do not repeat it).
+#
+# Order is deliberate: the hi-res canary runs FIRST so the answer arrives in
+# ~15 min while there is still a night left to use it. The 480x832 set stays
+# queued behind it, so if 720p OOMs we still wake up to a complete shake-fixed
+# episode instead of nothing.
 tasks:
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  motion: no new subjects, no scene change
+  size: 704x1280        # native 720p for Wan 2.2 TI2V-5B
+  offload: true         # enable_model_cpu_offload — supported, unlike eviction
+  seconds: 2.5
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260805
+  id: hires-canary-b01-1785764400
+  beats: 1
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
