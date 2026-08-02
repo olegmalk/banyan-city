@@ -223,3 +223,59 @@ Traceback (most recent call last):
   File "C:\banyan-farm\banyan-city\pipeline\video_task.py", line 388, in _run
     raise RuntimeError(f"{stage} failed (exit {r.returncode})")
 RuntimeError: batch m-g2-1785690000 failed (exit 1)
+
+$ C:\banyan-video\venv\Scripts\python.exe C:\banyan-farm\banyan-city\pipeline\wan_i2v.py --stage simple --embeds C:\banyan-video\unused.pt…
+model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+pipeline class: WanImageToVideoPipeline (forced image-to-video)
+VRAM[after load, before .to(cuda)] used 1.38/25.7GB (torch holds 0.00GB)
+VRAM[after .to(cuda)] used 24.20/25.7GB (torch holds 22.81GB)
+[transformers] `CLIPImageProcessor` requires torchvision (not installed); falling back to `CLIPImageProcessorPil` for backward compatibility. Install torchvision to use the default backend, or import `CLIPImageProcessorPil` directly to silence this warning.
+
+Loading pipeline components...:   0%|          | 0/5 [00:00<?, ?it/s]
+Loading pipeline components...:  20%|â–ˆâ–ˆ        | 1/5 [00:01<00:04,  1.01s/it]
+
+Loading weights:   0%|          | 0/242 [00:00<?, ?it/s][A
+Loading weights: 100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 242/242 [00:00<00:00, 3072.27it/s]
+
+Loading pipeline components...:  40%|â–ˆâ–ˆâ–ˆâ–ˆ      | 2/5 [00:01<00:01,  2.01it/s]The config attributes {'clip_output': False} were passed to AutoencoderKLWan, but are not expected and will be ignored. Please verify your config.json configuration file.
+
+Loading pipeline components...:  60%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ    | 3/5 [00:02<00:01,  1.03it/s]
+
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s][A
+
+Loading checkpoint shards:  20%|â–ˆâ–ˆ        | 1/5 [00:01<00:07,  1.81s/it][A
+
+Loading checkpoint shards:  40%|â–ˆâ–ˆâ–ˆâ–ˆ      | 2/5 [00:03<00:05,  1.82s/it][A
+
+Loading checkpoint shards:  60%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ    | 3/5 [00:05<00:03,  1.96s/it][A
+
+Loading checkpoint shards:  80%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ  | 4/5 [00:12<00:03,  3.91s/it][A
+
+Loading checkpoint shards: 100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 5/5 [00:12<00:00,  2.59s/it][A
+Loading checkpoint shards: 100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 5/5 [00:12<00:00,  2.58s/it]
+
+Loading pipeline components...: 100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 5/5 [00:15<00:00,  4.11s/it]
+Loading pipeline components...: 100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 5/5 [00:15<00:00,  3.14s/it]
+Traceback (most recent call last):
+  File "C:\banyan-farm\banyan-city\pipeline\wan_i2v.py", line 444, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\banyan-farm\banyan-city\pipeline\wan_i2v.py", line 440, in main
+    return stage_simple(a) if a.stage == "simple" else stage_render(a)
+           ^^^^^^^^^^^^^^^
+  File "C:\banyan-farm\banyan-city\pipeline\wan_i2v.py", line 254, in stage_simple
+    return _sample(pipe, a, w, h, frames, takes_image, jobs)
+                                                       ^^^^
+NameError: name 'jobs' is not defined
+
+Traceback (most recent call last):
+  File "C:\banyan-farm\banyan-city\pipeline\farm_worker.py", line 445, in main
+    render_task(task, courier, device, dtype)
+  File "C:\banyan-farm\banyan-city\pipeline\farm_worker.py", line 291, in render_task
+    return video_task.run(task, courier, d)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\banyan-farm\banyan-city\pipeline\video_task.py", line 523, in run
+    _run([str(PY), str(REPO / "pipeline" / "wan_i2v.py"), "--stage", "simple",
+  File "C:\banyan-farm\banyan-city\pipeline\video_task.py", line 388, in _run
+    raise RuntimeError(f"{stage} failed (exit {r.returncode})")
+RuntimeError: batch m-g3-1785690000 failed (exit 1)
