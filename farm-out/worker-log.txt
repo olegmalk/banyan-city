@@ -58,3 +58,61 @@ Loading pipeline components...: 100%|██████████| 5/5 [00:14<
 100%|██████████| 20/20 [03:17<00:00,  9.88s/it]
 
 video task hires-canary-b01-1785764400: 1/1 clips
+$ C:\banyan-video\venv\Scripts\python.exe C:\banyan-farm\banyan-city\pipeline\wan_i2v.py --stage simple --embeds C:\banyan-video\embeds-01.pt…
+model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+pipeline class: WanImageToVideoPipeline (forced image-to-video)
+VRAM[after load, before .to(cuda)] used 1.38/25.7GB (torch holds 0.00GB)
+VRAM[after .to(cuda)] used 24.20/25.7GB (torch holds 22.81GB)
+[1/1] wrote C:\banyan-farm\banyan-city\farm-out\shake-canary-b01-1785762000-01-the-keyboard.mp4 in 462s (61 frames, 480x832, 20 steps, peak torch 27.7GB, device 25.7/26GB)
+    freed between clips: 24.4/26GB still held
+rectly to silence this warning.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+Loading pipeline components...:   0%|          | 0/5 [00:00<?, ?it/s]The config attributes {'clip_output': False} were passed to AutoencoderKLWan, but are not expected and will be ignored. Please verify your config.json configuration file.
+
+Loading pipeline components...:  20%|██        | 1/5 [00:01<00:06,  1.52s/it]
+
+Loading weights:   0%|          | 0/242 [00:00<?, ?it/s][A
+Loading weights: 100%|██████████| 242/242 [00:00<00:00, 3061.22it/s]
+
+Loading pipeline components...:  40%|████      | 2/5 [00:01<00:02,  1.41it/s]
+Loading pipeline components...:  80%|████████  | 4/5 [00:02<00:00,  1.70it/s]
+
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s][A
+
+Loading checkpoint shards:  20%|██        | 1/5 [00:02<00:08,  2.14s/it][A
+
+Loading checkpoint shards:  40%|████      | 2/5 [00:04<00:06,  2.11s/it][A
+
+Loading checkpoint shards:  60%|██████    | 3/5 [00:06<00:04,  2.13s/it][A
+
+Loading checkpoint shards:  80%|████████  | 4/5 [00:11<00:03,  3.37s/it][A
+
+Loading checkpoint shards: 100%|██████████| 5/5 [00:11<00:00,  2.22s/it][A
+Loading checkpoint shards: 100%|██████████| 5/5 [00:11<00:00,  2.37s/it]
+
+Loading pipeline components...: 100%|██████████| 5/5 [00:14<00:00,  4.10s/it]
+Loading pipeline components...: 100%|██████████| 5/5 [00:14<00:00,  2.93s/it]
+
+  0%|          | 0/20 [00:00<?, ?it/s]
+  5%|▌         | 1/20 [00:03<01:00,  3.18s/it]
+ 10%|█         | 2/20 [00:06<00:54,  3.00s/it]
+ 15%|█▌        | 3/20 [00:09<00:50,  2.98s/it]
+ 20%|██        | 4/20 [00:11<00:47,  2.94s/it]
+ 25%|██▌       | 5/20 [00:14<00:43,  2.92s/it]
+ 30%|███       | 6/20 [00:17<00:40,  2.90s/it]
+ 35%|███▌      | 7/20 [00:20<00:37,  2.90s/it]
+ 40%|████      | 8/20 [00:23<00:34,  2.89s/it]
+ 45%|████▌     | 9/20 [00:26<00:31,  2.89s/it]
+ 50%|█████     | 10/20 [00:29<00:28,  2.89s/it]
+ 55%|█████▌    | 11/20 [00:32<00:26,  2.89s/it]
+ 60%|██████    | 12/20 [00:34<00:23,  2.89s/it]
+ 65%|██████▌   | 13/20 [00:37<00:20,  2.89s/it]
+ 70%|███████   | 14/20 [00:40<00:17,  2.89s/it]
+ 75%|███████▌  | 15/20 [00:43<00:14,  2.89s/it]
+ 80%|████████  | 16/20 [00:46<00:11,  2.89s/it]
+ 85%|████████▌ | 17/20 [00:49<00:08,  2.89s/it]
+ 90%|█████████ | 18/20 [00:52<00:05,  2.89s/it]
+ 95%|█████████▌| 19/20 [00:55<00:02,  2.89s/it]
+100%|██████████| 20/20 [00:58<00:00,  2.90s/it]
+100%|██████████| 20/20 [00:58<00:00,  2.91s/it]
