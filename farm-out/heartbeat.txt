@@ -516,3 +516,4 @@
 10:54:35Z STARTED task=v3-probe-1785677000 beats=1,2,4 on cuda
 10:54:38Z VIDEO_VENV_OK
 10:54:50Z VIDEO_DEPS_OK 2.11.0+cu128 0.39.0 True
+10:54:59Z VIDEO_RENDERING batch of 3 on ti2v-5b (one model load)
