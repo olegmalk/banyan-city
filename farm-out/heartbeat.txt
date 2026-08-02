@@ -308,3 +308,4 @@
 07:06:31Z STARTED task=wan-act-b2-1785650000 beats=2 on cuda
 07:06:34Z VIDEO_VENV_OK
 07:06:46Z VIDEO_DEPS_OK 2.11.0+cu128 0.39.0 True
+07:06:59Z VIDEO_RENDERING beat=02 on ti2v-5b (single-process)
