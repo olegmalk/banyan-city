@@ -1,25 +1,86 @@
-# 2026-08-02, v3 — PROBE FIRST, then the rest. MSI unavailable, all on the 5090.
+# 2026-08-02 — STEP SWEEP, ahead of everything else.
 #
-# Founder: "we need to iterate fast." So the first task is three beats, not fifteen
-# — the three he has actually complained about, each of which motion.yaml addresses
-# directly:
+# Founder: "see how low can we get, and at which point does the quality become too
+# bad." Same shape as the earlier image-model speed test.
 #
-#   beat 1  he asked why the man was not typing.
-#           motion.yaml: "the young man types rapidly, fingers moving over the keys"
-#   beat 2  the model redrew the monitor instead of animating the person.
-#           motion.yaml: "green terminal text scrolls slowly on the monitor, the
-#           hooded man's silhouette shifts subtly, faint steam rises from the mug"
-#   beat 4  it invented a mug and a hand grabbing it.
-#           motion.yaml: "the limp hand stays motionless... one loose paper settles
-#           to the floor" — the aftermath the still actually shows
+# CONTROLLED: beat 1, the same approved still, the same motion.yaml direction, the
+# same seed, 480x832, 2.5s, guidance 5.0. ONLY the step count varies, so the
+# comparison is honest — one variable.
 #
-# ~20 minutes for those three, and each pushes as it lands so the first is visible
-# in ~10. If motion.yaml fixes them, the remaining twelve are worth their hour. If
-# it does not, we have spent 20 minutes learning that instead of 84.
+# Beat 1 on purpose: the founder knows it well, it opens the episode, and it has
+# fingers on keys. Fine detail is where low step counts break first, so degradation
+# will be visible rather than a matter of taste.
 #
-# The remaining beats stay queued behind, so no restart is needed either way — but
-# they can be dropped without losing the probe.
+# Measured baseline is 26.8s per step, so:
+#   20 steps ~ 9m    (today's setting)
+#   12 steps ~ 5.5m
+#    8 steps ~ 3.5m
+#    6 steps ~ 2.7m  <- the 3-minute target lands about here
+#    4 steps ~ 1.8m
+# ~25 min for all five in one model load, each pushing as it finishes.
+#
+# CAVEAT recorded before the result, so it cannot be read as an excuse afterwards:
+# guidance 5.0 is arguably unfair to 4-6 steps. Distilled few-step setups run
+# guidance ~1.0, and high CFG at low steps is a known failure mode. So D and E may
+# look worse than the model's real floor. This sweep answers "what do we get with
+# what we have"; if the low end collapses, the follow-up is the same steps at
+# guidance 1.0-1.5 before concluding anything about the model.
 tasks:
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  beats: 1
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 2.5
+  guidance: 5.0
+  seed_base: 20260803
+  id: sweep-s20-1785680000
+  steps: 20
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  beats: 1
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 2.5
+  guidance: 5.0
+  seed_base: 20260803
+  id: sweep-s12-1785680000
+  steps: 12
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  beats: 1
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 2.5
+  guidance: 5.0
+  seed_base: 20260803
+  id: sweep-s08-1785680000
+  steps: 8
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  beats: 1
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 2.5
+  guidance: 5.0
+  seed_base: 20260803
+  id: sweep-s06-1785680000
+  steps: 6
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  beats: 1
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 2.5
+  guidance: 5.0
+  seed_base: 20260803
+  id: sweep-s04-1785680000
+  steps: 4
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
