@@ -1,0 +1,12 @@
+# Shot provenance (7.2) — written by video_task at render time
+platform: local-gpu (rtx5090)
+model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+model_licence: Apache-2.0
+shot_beat: 1
+size: 480x832
+seconds: 2.5
+steps: 8
+guidance: 5.0
+seed: 20260804
+task: sweep-s08-1785680000
+cost_usd: 0
