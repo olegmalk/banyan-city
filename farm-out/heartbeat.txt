@@ -316,3 +316,4 @@
 07:17:53Z VIDEO_CLIP 1/1 wan-act-b2-1785650000-02-three-oh-seven.mp4 in 596s
 07:17:56Z VIDEO_CLIP_OK beat=02 358KB
 07:17:59Z DONE task=wan-act-b2-1785650000
+07:18:02Z STARTED task=wan-act-b4-1785650000 beats=4 on cuda
