@@ -535,3 +535,4 @@
 11:45:50Z VIDEO_DEPS_OK 2.11.0+cu128 0.39.0 True
 11:45:58Z VIDEO_RENDERING batch of 5 on ti2v-5b (one model load)
 11:47:40Z VIDEO_CLIP 1/5 v3-rest-a-1785677000-03-deploy-succeeded.mp4 in 43s
+11:48:22Z VIDEO_CLIP 2/5 v3-rest-a-1785677000-05-huh-blue.mp4 in 43s
