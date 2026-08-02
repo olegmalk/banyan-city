@@ -627,3 +627,4 @@
 15:02:32Z VIDEO_RENDERING batch of 5 on ti2v-5b (one model load)
 15:03:27Z FAIL task=night-g3-1785700000
 15:19:17Z STARTED task=night-g1-1785705000 beats=1,2,3,4,5 on cuda
+15:19:19Z VIDEO_VENV_OK
