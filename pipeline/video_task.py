@@ -218,7 +218,11 @@ STYLE = ("2D anime, hand-drawn cel animation, flat cel shading, clean ink "
          "linework, anime key art")
 ANTI_STYLE = ("photorealistic, photograph, live action, film still, 3D render, "
               "CGI, octane, realistic skin texture, depth of field bokeh, "
-              "motion blur")
+              "motion blur, "
+              # the founder's actual complaint, stated where it acts: Wan likes to
+              # cut to a second, more photographic shot partway through a clip
+              "scene change, shot change, cut to another angle, second scene, "
+              "new camera angle, different location, split screen, montage")
 
 
 # SDXL prompt furniture that means nothing to a video model and eats its attention
@@ -251,7 +255,19 @@ def video_prompt(motion: str, still_prompt: str) -> tuple:
     the field that acts on them.
     """
     still_prompt = still_prompt or ""
-    negatives = [m.group(0).strip(" ,.") for m in NEGATIVE_PROSE.finditer(still_prompt)]
+    # BOTH inputs get the treatment, not just the scene description. The motion
+    # string carried "no new subjects, no scene change" straight into the POSITIVE
+    # prompt — so every render was being asked for new subjects and a scene change,
+    # in the same breath as being told not to. Founder on beat 1: "it makes an
+    # additional realistic looking scene". It was told to.
+    # This is the second time the same mistake shipped: fixed for still_prompt on
+    # 2026-08-01, left in place here because the motion string looked like prose
+    # rather than a prompt. Any text that reaches the model goes through this.
+    motion = motion or ""
+    negatives = [m.group(0).strip(" ,.")
+                 for src in (motion, still_prompt)
+                 for m in NEGATIVE_PROSE.finditer(src)]
+    motion = re.sub(r"\s*;?\s*$", "", NEGATIVE_PROSE.sub("", motion)).strip(" ,.;")
     scene = NEGATIVE_PROSE.sub("", still_prompt)
     scene = QUALITY_SPAM.sub("", scene)
     scene = re.sub(r"\s*,\s*,+", ",", scene)

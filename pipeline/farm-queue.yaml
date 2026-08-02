@@ -1,93 +1,189 @@
-# 2026-08-02. Per-beat ACTION prompts — the fix for the hoodie.
+# 2026-08-02. ALL 15 BEATS, with the negatives finally in the negative field.
 #
-# The overnight beat-2 clip held the approved frame correctly (the prompt fix
-# works) but the man pulled his hoodie up and down instead of typing. Founder:
-# "he didnt type at all." Of course not — every one of the fifteen beats was sent
-# the same motion instruction, "gentle drift; only what would really move here",
-# so the model had to guess what moves and guessed wrong.
+# Founder on the beat-1 Wan take: "it makes an additional realistic looking scene,
+# lets try again without it changing scenes itself." It was TOLD to. The motion
+# string "gentle drift; no new subjects, no scene change" went into the POSITIVE
+# prompt verbatim, so every render was asked for new subjects and a scene change
+# in the same breath as being told not to.
 #
-# node.md has said what moves all along, per beat, in the author's own words:
-#   beat 1  "One mechanical keyboard, very fast — then it stops"
-#   beat 3  "The spinner resolves"
-#   beat 4  "A sharp breath in — the frame tips sideways — the mug hits the floor
-#            before he does"
-# shots.md describes how a beat LOOKS; node.md describes what HAPPENS. We were
-# reading only the first and inventing the second. video_task.beat_actions() now
-# reads the second and puts it at the front of the prompt.
+# Second time this exact mistake shipped: fixed for the still-description prompt
+# on 2026-08-01, left in the motion string because that looked like prose rather
+# than a prompt. video_prompt() now strips "no X" clauses from BOTH inputs, and
+# ANTI_STYLE names the failure directly — scene change, shot change, cut to
+# another angle, second scene, new camera angle, different location.
 #
-# `motion` below is now only the discipline suffix (no new subjects, no scene
-# change) — the actual instruction comes from the script.
+# seed_base changed (20260731 -> 20260802) so these are genuinely new samples and
+# not cache-identical re-runs of yesterday.
 #
-# Beat 2 is back in the queue because its take was rejected on motion, not on
-# framing. One beat per task, after the eight-hour batch stall.
+# One beat per task: a bad clip costs one clip, each pushes the moment it lands,
+# and the stall detector kills anything wedged for 45 minutes. ~10 min each, so
+# roughly 2.5 hours for a complete episode of fresh takes.
 tasks:
-- id: wan-act-b2-1785650000
-  worker: rtx5090
+- worker: rtx5090
   video: true
   node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 3.0
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260802
+  id: v2-b01-1785660000
+  beats: 1
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 3.0
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260802
+  id: v2-b02-1785660000
   beats: 2
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
   motion: gentle drift; no new subjects, no scene change
   size: 480x832
   seconds: 3.0
   steps: 20
   guidance: 5.0
-  seed_base: 20260731
-- id: wan-act-b4-1785650000
-  worker: rtx5090
+  seed_base: 20260802
+  id: v2-b03-1785660000
+  beats: 3
+- worker: rtx5090
   video: true
   node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 3.0
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260802
+  id: v2-b04-1785660000
   beats: 4
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
   motion: gentle drift; no new subjects, no scene change
   size: 480x832
   seconds: 3.0
   steps: 20
   guidance: 5.0
-  seed_base: 20260731
-- id: wan-act-b8-1785650000
-  worker: rtx5090
+  seed_base: 20260802
+  id: v2-b05-1785660000
+  beats: 5
+- worker: rtx5090
   video: true
   node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 3.0
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260802
+  id: v2-b06-1785660000
+  beats: 6
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 3.0
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260802
+  id: v2-b07-1785660000
+  beats: 7
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 3.0
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260802
+  id: v2-b08-1785660000
   beats: 8
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
   motion: gentle drift; no new subjects, no scene change
   size: 480x832
   seconds: 3.0
   steps: 20
   guidance: 5.0
-  seed_base: 20260731
-- id: wan-act-b11-1785650000
-  worker: rtx5090
+  seed_base: 20260802
+  id: v2-b09-1785660000
+  beats: 9
+- worker: rtx5090
   video: true
   node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 3.0
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260802
+  id: v2-b10-1785660000
+  beats: 10
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 3.0
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260802
+  id: v2-b11-1785660000
   beats: 11
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
   motion: gentle drift; no new subjects, no scene change
   size: 480x832
   seconds: 3.0
   steps: 20
   guidance: 5.0
-  seed_base: 20260731
-- id: wan-act-b13-1785650000
-  worker: rtx5090
+  seed_base: 20260802
+  id: v2-b12-1785660000
+  beats: 12
+- worker: rtx5090
   video: true
   node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 3.0
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260802
+  id: v2-b13-1785660000
   beats: 13
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
   motion: gentle drift; no new subjects, no scene change
   size: 480x832
   seconds: 3.0
   steps: 20
   guidance: 5.0
-  seed_base: 20260731
-- id: anime-all-1785575000
-  worker: rtx5090
+  seed_base: 20260802
+  id: v2-b14-1785660000
+  beats: 14
+- worker: rtx5090
   video: true
-  video_model: animegen
   node: 001-capability-inventory
-  beats: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15
-  motion: gentle drift; only what would really move here
+  motion: gentle drift; no new subjects, no scene change
   size: 480x832
   seconds: 3.0
-  steps: 4
-  guidance: 1.0
-  seed_base: 20260731
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260802
+  id: v2-b15-1785660000
+  beats: 15
 - id: prefetch-a14b-1785529520
   worker: rtx5090
   video: true
