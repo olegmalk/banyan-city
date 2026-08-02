@@ -670,3 +670,4 @@
 17:12:43Z VIDEO_DEPS_OK 2.11.0+cu128 0.39.0 True
 17:12:51Z VIDEO_RENDERING batch of 5 on ti2v-5b (one model load)
 17:17:54Z VIDEO_ALIVE 5m elapsed, 0 clip(s) done
+17:21:27Z VIDEO_CLIP 1/5 night-g3-1785705000-11-grow.mp4 in 460s
