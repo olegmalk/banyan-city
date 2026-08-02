@@ -530,3 +530,4 @@
 11:40:25Z VIDEO_ALIVE 45m elapsed, 2 clip(s) done
 11:45:28Z VIDEO_STALLED no clip finished in 48m (2 done) — killing it so the queue moves
 11:45:31Z FAIL task=v3-probe-1785677000
+11:45:34Z STARTED task=v3-rest-a-1785677000 beats=3,5,6,7,8 on cuda
