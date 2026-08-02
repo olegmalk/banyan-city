@@ -728,3 +728,4 @@
 20:40:03Z DONE task=hires-canary-b01-1785764400
 20:41:08Z STARTED task=shake-canary-b01-1785762000 beats=1 on cuda
 20:41:11Z VIDEO_VENV_OK
+20:41:25Z VIDEO_DEPS_OK 2.11.0+cu128 0.39.0 True
