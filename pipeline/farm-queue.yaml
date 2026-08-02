@@ -1,28 +1,24 @@
-# 2026-08-02, v3 — REVIEW PASS. Sized for a fast look, not final quality.
+# 2026-08-02, v3 — TWO MACHINES IN PARALLEL.
 #
-# Founder: "2.5 hours? thats a lot." Correct. Measured cost is 599s of sampling per
-# 480x832 / 20-step clip plus ~3 min of model load per task, so 15 separate tasks
-# was ~3.2 hours. Three changes bring it under 1.5:
+# Founder: "can you do multiple beats at a time? that will be the best." On ONE
+# GPU, no — two renders on one card each run at half speed (the contention that
+# cost four hours on 2026-08-01), and batching already avoids the only real
+# overhead there is, the model reload. Within a batch each clip PUSHES AS IT
+# FINISHES, so the first arrives in ~10 min and the rest every ~6.
 #
-#   batches of 5   one model load per five clips instead of per clip  (-36 min)
-#   12 steps       instead of 20                                     (-60 min)
-#   2.5s clips     instead of 3.0                                    (-15 min)
+# Across TWO machines, yes. farm-results-msi shows 6 completed video renders, so
+# the older Windows laptop can do this. Split:
 #
-# WHAT THIS COSTS: 12 steps is genuinely less refined than 20. It is the right
-# trade for THIS pass because the question being reviewed is MOTION — does beat 1
-# type, does beat 2 stop redrawing the monitor, does anything cut to a new scene —
-# and motion is decided by the prompt, not the step count. Any beat the founder
-# approves gets re-rendered at full steps before it ships.
+#   rtx5090  beats 1-10   faster card, model already cached
+#   msi      beats 11-15  16GB, takes the two-process path, so fewer
 #
-# 2.5s also matches his verdict on beat 1: "beat 1 was a bit long anyway, 2.45 sec
-# is good, no need to loop."
+# Wall clock roughly halves: ~55 min for the 5090's ten, ~45 for the MSI's five,
+# running at the same time. Needs a human to start the MSI worker.
 #
-# Batching is safe again now that _stream kills a batch producing nothing for 45
-# minutes — the eight-hour stall that made batching look reckless is detectable.
-# Five per batch, so a wedge costs five clips rather than fifteen.
+# Beats are assigned EXPLICITLY rather than worker: any — done_ids is per-worker,
+# so two workers on "any" would each render the whole queue.
 tasks:
-- worker: rtx5090
-  video: true
+- video: true
   node: 001-capability-inventory
   motion: gentle drift; no new subjects, no scene change
   size: 480x832
@@ -30,10 +26,10 @@ tasks:
   steps: 12
   guidance: 5.0
   seed_base: 20260803
-  id: v3-g1-1785675000
+  worker: rtx5090
+  id: v3-rtx5090-1-1785676000
   beats: 1,2,3,4,5
-- worker: rtx5090
-  video: true
+- video: true
   node: 001-capability-inventory
   motion: gentle drift; no new subjects, no scene change
   size: 480x832
@@ -41,10 +37,10 @@ tasks:
   steps: 12
   guidance: 5.0
   seed_base: 20260803
-  id: v3-g2-1785675000
+  worker: rtx5090
+  id: v3-rtx5090-2-1785676000
   beats: 6,7,8,9,10
-- worker: rtx5090
-  video: true
+- video: true
   node: 001-capability-inventory
   motion: gentle drift; no new subjects, no scene change
   size: 480x832
@@ -52,8 +48,20 @@ tasks:
   steps: 12
   guidance: 5.0
   seed_base: 20260803
-  id: v3-g3-1785675000
-  beats: 11,12,13,14,15
+  worker: msi
+  id: v3-msi-3-1785676000
+  beats: 11,12,13
+- video: true
+  node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 2.5
+  steps: 12
+  guidance: 5.0
+  seed_base: 20260803
+  worker: msi
+  id: v3-msi-4-1785676000
+  beats: 14,15
 - id: prefetch-a14b-1785529520
   worker: rtx5090
   video: true
