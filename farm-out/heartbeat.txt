@@ -510,3 +510,4 @@
 10:52:46Z VIDEO_VENV_OK
 10:52:57Z VIDEO_DEPS_OK 2.11.0+cu128 0.39.0 True
 10:53:09Z VIDEO_RENDERING beat=01 on ti2v-5b (single-process)
+10:54:26Z VIDEO_CLIP 1/1 sweep-s04-1785680000-01-the-keyboard.mp4 in 21s
