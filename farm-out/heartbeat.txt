@@ -329,3 +329,4 @@
 07:28:33Z STARTED task=wan-act-b8-1785650000 beats=8 on cuda
 07:28:36Z VIDEO_VENV_OK
 07:28:44Z VIDEO_ALIVE 540m elapsed, child still running
+07:28:45Z VIDEO_DEPS_OK 2.11.0+cu128 0.39.0 True
