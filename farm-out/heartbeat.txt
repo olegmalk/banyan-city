@@ -512,3 +512,4 @@
 10:53:09Z VIDEO_RENDERING beat=01 on ti2v-5b (single-process)
 10:54:26Z VIDEO_CLIP 1/1 sweep-s04-1785680000-01-the-keyboard.mp4 in 21s
 10:54:30Z VIDEO_CLIP_OK beat=01 240KB
+10:54:33Z DONE task=sweep-s04-1785680000
