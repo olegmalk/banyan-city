@@ -1,39 +1,20 @@
-# RE-QUEUED 2026-08-02 15:20Z with fresh ids. The first attempt failed in 60
-# seconds x3, and the cause was the steward's revert, not the render:
+# OVERNIGHT 2026-08-02, final. Founder: "2 too low quality. tommorow we WILL post."
 #
-#   NameError: name 'jobs' is not defined
+# ep1-v21-CANON is rejected — its beats 2/4/8/11/13 use the deterministic POST
+# takes, which move 4-40x less than a generated clip. So this render is not an
+# improvement pass any more, it is the path to a postable episode.
 #
-# Reverting the text-encoder eviction deleted the line that DEFINED `jobs` and left
-# the line that USED it. py_compile passed — it is valid syntax — and no test
-# exercised that path, so it surfaced on the founder's machine as "exit 1" with the
-# real message three files deep in a courier log.
+# TWO TAKES OF EVERY BEAT, different seeds. The first pass (night-g*) is the set;
+# the second (take2-g*) exists because the GPU is otherwise idle until morning and
+# because it changes tomorrow's shape from "render and wait 10 minutes" to "pick the
+# better of two". A bad sample is a sample, not a verdict on the beat — every
+# complaint today came from judging one take.
 #
-# A revert is a code change and gets the same scrutiny as the change it undoes.
-# test_pipeline now AST-checks every top-level pipeline function for names it reads
-# but never binds; verified by reintroducing this exact bug (test exits 1 and names
-# wan_i2v.py:stage_simple) and by confirming it passes on the fixed code.
-# OVERNIGHT 2026-08-02. Fifteen beats, motion.yaml, correct-but-slow.
+# ~2h15 for the first pass, ~4h30 for both. Each clip pushes as it lands, so a crash
+# keeps whatever finished, and the stall detector kills anything wedged for 45 min.
 #
-# NO SPEED TRICKS. The text-encoder eviction that took a clip from 536s to 66s
-# corrupted every frame — it bypassed the image conditioning, exactly as
-# stage_simple's own docstring warns. Reverted. ~9 min/clip, ~2h15 for the set,
-# and the output is right.
-#
-# Every beat gets its direction from motion.yaml, which has existed since
-# 2026-07-29 and which the renderer only started reading today. Beat 1 is "the
-# young man types rapidly, fingers moving over the keys... camera locked" — the
-# typing the founder asked for two days ago, already written down.
-#
-# Batches of five: one model load each, and every clip pushes the moment it lands,
-# so a crash at 3am keeps whatever finished. The stall detector kills a batch that
-# produces nothing for 45 minutes.
-#
-# Founder's outstanding verdicts on the previous set, for the morning review:
-#   beat 9  did not move at all      -> motion.yaml asks for "leaves stir very
-#           slightly", so it may stay static. That is a DIRECTION to rewrite, not a
-#           model failure.
-#   beat 2  random camera motion     -> every motion.yaml entry ends "camera locked"
-#   beat 7  sapling aggressively weird -> asks for a leaf whip, not a camera shake
+# Not speculative work with no consumer: the consumer is tomorrow's posting decision,
+# and it needs a choice per beat.
 tasks:
 - worker: rtx5090
   video: true
@@ -67,6 +48,39 @@ tasks:
   guidance: 5.0
   seed_base: 20260803
   id: night-g3-1785705000
+  beats: 11,12,13,14,15
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 2.5
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260804
+  id: take2-g1-1785705000
+  beats: 1,2,3,4,5
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 2.5
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260804
+  id: take2-g2-1785705000
+  beats: 6,7,8,9,10
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 2.5
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260804
+  id: take2-g3-1785705000
   beats: 11,12,13,14,15
 - id: prefetch-a14b-1785529520
   worker: rtx5090
