@@ -1,60 +1,76 @@
-# 2026-08-02 morning. Beat 2 landed overnight; beats 4, 8, 11, 13 did not.
+# 2026-08-02. Per-beat ACTION prompts — the fix for the hoodie.
 #
-# WHAT HAPPENED. Clip 1 of a 5-clip batch finished in 599s. Clips 2-5 then
-# produced NOTHING for eight hours while the watchdog cheerfully reported "child
-# still running" every five minutes, and the heartbeat stopped at 02:05. Liveness
-# without progress is a comfort blanket: a wedged render and a slow one looked
-# identical all night.
+# The overnight beat-2 clip held the approved frame correctly (the prompt fix
+# works) but the man pulled his hoodie up and down instead of typing. Founder:
+# "he didnt type at all." Of course not — every one of the fifteen beats was sent
+# the same motion instruction, "gentle drift; only what would really move here",
+# so the model had to guess what moves and guessed wrong.
 #
-# Two changes as a result:
-#   - video_task now tracks CLIP progress, not just process liveness, and kills a
-#     batch that has produced nothing for 45 minutes (STALL_MINUTES).
-#   - the remaining four beats are ONE TASK EACH. A five-clip batch shares a model
-#     load, which is why it was worth batching — but it also means one wedged clip
-#     costs the other four. At ~10 min a clip the model reload is the cheaper loss.
+# node.md has said what moves all along, per beat, in the author's own words:
+#   beat 1  "One mechanical keyboard, very fast — then it stops"
+#   beat 3  "The spinner resolves"
+#   beat 4  "A sharp breath in — the frame tips sideways — the mug hits the floor
+#            before he does"
+# shots.md describes how a beat LOOKS; node.md describes what HAPPENS. We were
+# reading only the first and inventing the second. video_task.beat_actions() now
+# reads the second and puts it at the front of the prompt.
 #
-# Beat 2 is deliberately absent: it rendered, it is on the branch, and it holds the
-# approved frame properly (the prompt fix works). Re-rendering it would be waste.
+# `motion` below is now only the discipline suffix (no new subjects, no scene
+# change) — the actual instruction comes from the script.
+#
+# Beat 2 is back in the queue because its take was rejected on motion, not on
+# framing. One beat per task, after the eight-hour batch stall.
 tasks:
-- id: wan-lic-b4-1785640000
+- id: wan-act-b2-1785650000
+  worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  beats: 2
+  motion: gentle drift; no new subjects, no scene change
+  size: 480x832
+  seconds: 3.0
+  steps: 20
+  guidance: 5.0
+  seed_base: 20260731
+- id: wan-act-b4-1785650000
   worker: rtx5090
   video: true
   node: 001-capability-inventory
   beats: 4
-  motion: gentle drift; only what would really move here
+  motion: gentle drift; no new subjects, no scene change
   size: 480x832
   seconds: 3.0
   steps: 20
   guidance: 5.0
   seed_base: 20260731
-- id: wan-lic-b8-1785640000
+- id: wan-act-b8-1785650000
   worker: rtx5090
   video: true
   node: 001-capability-inventory
   beats: 8
-  motion: gentle drift; only what would really move here
+  motion: gentle drift; no new subjects, no scene change
   size: 480x832
   seconds: 3.0
   steps: 20
   guidance: 5.0
   seed_base: 20260731
-- id: wan-lic-b11-1785640000
+- id: wan-act-b11-1785650000
   worker: rtx5090
   video: true
   node: 001-capability-inventory
   beats: 11
-  motion: gentle drift; only what would really move here
+  motion: gentle drift; no new subjects, no scene change
   size: 480x832
   seconds: 3.0
   steps: 20
   guidance: 5.0
   seed_base: 20260731
-- id: wan-lic-b13-1785640000
+- id: wan-act-b13-1785650000
   worker: rtx5090
   video: true
   node: 001-capability-inventory
   beats: 13
-  motion: gentle drift; only what would really move here
+  motion: gentle drift; no new subjects, no scene change
   size: 480x832
   seconds: 3.0
   steps: 20
