@@ -1,0 +1,20 @@
+# Shot provenance (7.2)
+platform: local-gpu (rtx5090)
+model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+model_licence: Apache-2.0
+derived_from: 01-the-keyboard.WAN.mp4
+edit: trimmed to 2.45s
+# WHY: the take was good until 2.50s, where the model cut to a second, more
+# photoreal composition — "the only problem was the random additional scene"
+# (founder, 2026-08-02). The jump is a single clean step (frame-to-frame change
+# 40.5 against a baseline under 3), so cutting just before it keeps everything he
+# approved and discards only the invention. Cheaper and more reliable than
+# re-rendering: a fresh sample is a different sample, and measured motion in the
+# trimmed take (1.67) matches the re-render (1.78) anyway.
+# Founder also judged the original length long: "beat 1 was a bit long anyway,
+# 2.45 sec is good, no need to loop."
+shot_beat: 1
+size: 794x1160
+seconds: 2.45
+cost_usd: 0
+date: '2026-08-02'
