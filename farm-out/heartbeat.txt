@@ -569,3 +569,4 @@
 13:28:10Z VIDEO_DEPS_OK 2.11.0+cu128 0.39.0 True
 13:28:19Z VIDEO_RENDERING batch of 3 on ti2v-5b (one model load)
 13:29:56Z VIDEO_CLIP 1/3 v3-rest-c-1785677000-13-i-always-left.mp4 in 43s
+13:30:38Z VIDEO_CLIP 2/3 v3-rest-c-1785677000-14-worth-staying-in.mp4 in 43s
