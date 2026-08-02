@@ -383,3 +383,4 @@
 08:45:37Z VIDEO_VENV_OK
 08:45:44Z VIDEO_DEPS_OK 2.11.0+cu128 0.39.0 True
 08:45:53Z VIDEO_RENDERING beat=02 on ti2v-5b (single-process)
+08:49:32Z VIDEO_ALIVE 620m elapsed, child still running
