@@ -193,6 +193,20 @@ MODEL_LICENCES = {
     # version explicitly, after reading ITS licence, and never rely on the
     # prefix. The direction that bites is always allow-by-inheritance.
     "voxcpm2": "Apache-2.0",
+    # CORRECTED 2026-08-02, twice. First recorded as "unverifiable, nothing to
+    # read" — wrong: quanhaol/Wan2.2-TI2V-5B-Turbo ships LICENSE.md, 19151 bytes,
+    # standard CC BY-NC-SA 4.0. Verified in the raw text: "for NonCommercial
+    # purposes only", "non-sublicensable", and ShareAlike via "same License
+    # Elements". GitHub's spdx_id says NOASSERTION, which means its detector could
+    # not CLASSIFY the file — it says nothing about whether one exists, and reading
+    # it as "no file" is how this hid for two days.
+    # It is a permanent hard fail, not a maybe: the NC limit bites on our USE OF THE
+    # WEIGHTS, so we never reach the unsettled question of whether generated video
+    # is Adapted Material. Technically it was the ideal model — 4-step, CFG-free,
+    # real i2v. Rejected on licence, not merit, and never worth revisiting.
+    # Its GGUF mirrors (hum-ma, Kiijoku) declare apache-2.0 over this base: a leaf
+    # cannot grant what its base withholds.
+    "quanhaol": "CC-BY-NC-SA-4.0",
     # ---- video models whose licence was READ, 2026-08-01 -------------------
     # AnimeGen-I2V (aidealab): LICENSE file verified byte-identical to canonical
     # Apache-2.0 through all nine operative sections, front matter tags
@@ -346,11 +360,7 @@ MODEL_LICENCES = {
 #
 # So: "unread" means GO READ IT (cheap, and it may clear). "UNCLEARABLE" means the
 # only routes are the author publishing terms, or replacing the asset.
-UNCLEARABLE = {
-    "quanhaol": "no licence text at any URL — both LICENSE paths 404, GitHub "
-                "reports NOASSERTION. Technically ideal (4-step, CFG-free, real "
-                "i2v) and still unusable: there is nothing to read.",
-}
+UNCLEARABLE = {}   # nothing currently sits here; see quanhaol below for why
 
 # Apache-2.0 AND OUR OUTPUT, stated once so it stops being re-derived:
 # Apache 2.0 has no output clause at all. It grants rights in "the Work" — the

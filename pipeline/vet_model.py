@@ -44,10 +44,29 @@ TRANSITIVE RESOLUTION, the rule that catches deliberate laundering:
 
 Verified live on 2026-08-02: hum-ma/Wan2.2-TI2V-5B-Turbo-GGUF and
 Kiijoku/Wan2.2-TI2V-5B-Turbo-GGUF both declare `license: apache-2.0` while
-declaring `base_model: quanhaol/Wan2.2-TI2V-5B-Turbo` — which has no licence at
-any path. A GGUF is a pure transform of the weights: no new training, no
-independently licensable contribution, so there is no theory under which the
-quantizer acquired rights the source never granted.
+declaring `base_model: quanhaol/Wan2.2-TI2V-5B-Turbo` — which is CC BY-NC-SA 4.0.
+A GGUF is a pure transform of the weights: no new training, no independently
+licensable contribution, so there is no theory under which the quantizer acquired
+rights the source never granted.
+
+THE COMPLEMENT OF THAT RULE, and the one that caught me out:
+
+    A permissive base plus a permissive method does NOT imply a permissive
+    finetune. Read every node on its own terms.
+
+quanhaol sits on an Apache base (Wan2.2-TI2V-5B) and credits an Apache method
+(Self-Forcing), and is itself CC BY-NC-SA — which Apache expressly permits, since a
+finetuner owns copyright in their own contribution and may license it more
+restrictively. The transitive rule above catches a leaf claiming MORE than its
+upstream; this catches a middle claiming LESS. Both directions are needed.
+
+AND THE MISTAKE THAT MADE THIS TOOL NECESSARY TWICE: it first read only metadata
+TAGS, called quanhaol "unverifiable — might clear if the author publishes terms",
+and its self-test PASSED 5/5 on that wrong expectation. A green test asserting a
+false ground truth is worse than no test: it manufactured confidence in a verdict
+that could have put NC+ShareAlike material into a CC BY 4.0 episode. The repo ships
+LICENSE.md, 19151 bytes, standard CC BY-NC-SA — NC, ShareAlike and
+non-sublicensable all present, verified in the raw text. Text beats tag, always.
 
 CAVEAT THIS TOOL MUST CARRY, or the transitive rule misleads: `base_model` is
 self-declared and often absent. FastWan declares NONE while naming its base in
@@ -71,6 +90,7 @@ often than the steward.
 
 import argparse
 import json
+import re
 import sys
 import urllib.error
 import urllib.request
@@ -103,6 +123,59 @@ def get(url):
         return e.code, {}
     except Exception:                                    # noqa: BLE001
         return 0, {}
+
+
+# Phrases that mean "this grant reaches beyond the weights". Matched against the
+# LICENCE TEXT, not a metadata tag — see fetch_licence_text().
+TRAVELLING_TEXT = [
+    (r"NonCommercial purposes only", "NC — bars commercial use of the material"),
+    (r"\bNonCommercial\b", "NC clause present"),
+    (r"same License Elements", "ShareAlike — forces adaptations onto the same terms"),
+    (r"non-?sublicensable", "non-sublicensable — we cannot pass rights downstream"),
+    (r"outside the Territory", "territory limit"),
+    (r"to improve any other AI model", "no-training-on-output"),
+    (r"research purposes only|academic or research", "research-only"),
+    (r"expressly and intelligibly disclaiming", "mandatory machine-generated notice"),
+]
+
+
+def fetch_licence_text(slug: str) -> tuple:
+    """(filename, text) of the first licence file in a GitHub repo root, or (None, "").
+
+    LIST THE CONTENTS, then fetch. Do not probe raw paths: LICENSE, LICENSE.txt,
+    LICENSE.md, COPYING all occur, and a 404 on a guessed name proves nothing. This
+    is exactly how quanhaol/Wan2.2-TI2V-5B-Turbo was reported for two days as having
+    "no licence at any filename" when it ships a 19KB LICENSE.md containing CC
+    BY-NC-SA 4.0.
+
+    And note what GitHub's own field does NOT tell you: spdx_id "NOASSERTION" means
+    the detector COULD NOT CLASSIFY the file — commonly for CC texts and .md names.
+    It carries no information about whether a file exists.
+    """
+    st, listing = get(GH + slug + "/contents/")
+    if st != 200 or not isinstance(listing, list):
+        return None, ""
+    for x in listing:
+        n = x.get("name", "")
+        if "LICEN" in n.upper() or "COPYING" in n.upper():
+            u = (f"https://raw.githubusercontent.com/{slug}/"
+                 f"{x.get('path', n)}")
+            for branch in ("main", "master"):
+                st2, txt = get_raw(f"https://raw.githubusercontent.com/{slug}/"
+                                   f"{branch}/{x.get('path', n)}")
+                if st2 == 200 and txt:
+                    return n, txt
+    return None, ""
+
+
+def get_raw(url):
+    try:
+        with urllib.request.urlopen(url, timeout=30) as r:
+            return r.status, r.read().decode("utf-8", "replace")
+    except urllib.error.HTTPError as e:
+        return e.code, ""
+    except Exception:                                    # noqa: BLE001
+        return 0, ""
 
 
 def classify_tag(tag: str) -> tuple:
@@ -139,7 +212,33 @@ def vet(repo: str, depth: int = 0, seen=None) -> dict:
     card = d.get("cardData") or {}
     tag = card.get("license")
     state, why = classify_tag(tag)
-    out = {"repo": repo, "tag": tag, "state": state, "why": why,
+
+    # TEXT BEATS TAG. The tag is a self-declared string; the text is the grant.
+    # quanhaol declares NO tag on HF while its GitHub repo ships CC BY-NC-SA — so
+    # tag-only reading called it "unverifiable, might clear later" when it is in
+    # fact a permanent hard fail. Also: a permissive base does NOT imply a
+    # permissive finetune. Apache lets a finetuner license their own contribution
+    # more restrictively, and this one did exactly that on top of an Apache base
+    # and an Apache method. Every node gets read on its own terms.
+    gh_slug = (card.get("repository") or "")
+    if gh_slug.startswith("https://github.com/"):
+        gh_slug = gh_slug[len("https://github.com/"):].strip("/")
+    else:
+        gh_slug = repo          # many model repos mirror the org/name on GitHub
+    fname, text = fetch_licence_text(gh_slug)
+    if text:
+        hits = [why2 for pat, why2 in TRAVELLING_TEXT if re.search(pat, text, re.I)]
+        out_text = {"licence_text_file": f"{gh_slug}/{fname} ({len(text)}B)"}
+        if hits:
+            state = "hard-fail"
+            why = (f"licence TEXT at {gh_slug}/{fname} contains travelling "
+                   f"conditions: {'; '.join(hits[:3])}")
+        elif state == "unverifiable":
+            state, why = "clear", (f"no tag, but the text at {gh_slug}/{fname} has "
+                                   f"no output/travelling clause")
+    else:
+        out_text = {}
+    out = {"repo": repo, "tag": tag, "state": state, "why": why, **out_text,
            "gated": d.get("gated"), "downloads": d.get("downloads"),
            "licence_files": [s["rfilename"] for s in d.get("siblings", [])
                              if "licen" in s["rfilename"].lower()]}
@@ -199,8 +298,15 @@ def show(r, depth=0):
 CASES = [
     ("FastVideo/FastWan2.2-TI2V-5B-FullAttn-Diffusers", "clear"),
     ("Wan-AI/Wan2.2-TI2V-5B-Diffusers", "clear"),
-    ("quanhaol/Wan2.2-TI2V-5B-Turbo", "unverifiable"),
-    ("hum-ma/Wan2.2-TI2V-5B-Turbo-GGUF", "unverifiable"),   # laundering
+    # CORRECTED 2026-08-02: this was asserted as "unverifiable" and the self-test
+    # passed 5/5 on that wrong expectation — a green test encoding a false ground
+    # truth, which is worse than no test. It ships LICENSE.md, 19151B, CC BY-NC-SA
+    # 4.0: NC, ShareAlike and non-sublicensable, all verified in the raw text. Not
+    # "no grant found, might clear" but a permanent hard fail. The NC limit bites on
+    # our USE OF THE WEIGHTS, so we never have to reach the unsettled question of
+    # whether generated video is Adapted Material.
+    ("quanhaol/Wan2.2-TI2V-5B-Turbo", "hard-fail"),
+    ("hum-ma/Wan2.2-TI2V-5B-Turbo-GGUF", "hard-fail"),      # laundering an NC base
     ("stabilityai/stable-video-diffusion-img2vid-xt-1-1", "hard-fail"),
 ]
 
