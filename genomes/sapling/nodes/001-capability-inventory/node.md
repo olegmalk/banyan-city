@@ -26,7 +26,7 @@ is coming toward the tree that can't run?*
 BLACK. One mechanical keyboard, very fast — then it stops.
 
 **THREE OH SEVEN — 0:05–0:10**
-Close on a monitor in a dark apartment: a terminal, `deploy --prod --force`, a spinner. 3:07 a.m.
+He types the last of it, fast, and stops dead. The spinner turns. `deploy --prod --force`. 3:07 a.m.
 
 > **VO (tired, flat):** Production went down at 2:41. It's the retry loop. It's always the retry loop.
 

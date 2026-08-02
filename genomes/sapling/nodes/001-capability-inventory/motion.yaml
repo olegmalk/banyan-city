@@ -10,7 +10,12 @@ motion_prompts:
   6: "everything nearly still, the clouds drift very slowly, the pale leaf stays attached at the bottom edge of the frame and only trembles gently, nothing flies, nothing detaches, camera locked"
   7: "the leaf whips hard to one side and springs back, the grass blades lean in the gust, camera locked"
   8: "the leaf holds almost perfectly still, dust motes settle slowly in the sunlight, grass sways very gently behind, camera locked"
-  9: "the sprout's two leaves stir very slightly, morning light shimmers, grass moves gently, camera locked"
+  # 2026-08-02: "the beat 9 generations i've literally make it not move at all.
+  # not one pixel" (founder). "stir very slightly" is below the model's floor —
+  # ask for nothing and it delivers nothing. This beat can afford real motion:
+  # render_t3 burns the $ whoami terminal panel over the top, so the plate only
+  # has to live underneath it.
+  9: "the sprout's two leaves lift and settle in a slow breeze, one leaf turning as it falls back, grass sways behind, dust motes drift across the light, camera locked"
   10: "the thin roots tremble subtly, water glints slide between soil grains, dust drifts slowly, no light rays, camera locked"
   11: "the new leaf unfurls slowly and settles upright, dew drops glisten, soft light shifts, camera locked"
   12: "the bent stem strains and quivers against nothing, a few soil grains shift at its base, everything else still, camera locked"
