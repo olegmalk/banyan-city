@@ -371,3 +371,4 @@
 08:34:22Z VIDEO_ALIVE 605m elapsed, child still running
 08:35:19Z STARTED task=v2-b01-1785660000 beats=1 on cuda
 08:35:23Z VIDEO_VENV_OK
+08:35:29Z VIDEO_DEPS_OK 2.11.0+cu128 0.39.0 True
