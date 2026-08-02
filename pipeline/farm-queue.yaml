@@ -1,24 +1,27 @@
-# 2026-08-02, v3 — TWO MACHINES IN PARALLEL.
+# 2026-08-02, v3 — PROBE FIRST, then the rest. MSI unavailable, all on the 5090.
 #
-# Founder: "can you do multiple beats at a time? that will be the best." On ONE
-# GPU, no — two renders on one card each run at half speed (the contention that
-# cost four hours on 2026-08-01), and batching already avoids the only real
-# overhead there is, the model reload. Within a batch each clip PUSHES AS IT
-# FINISHES, so the first arrives in ~10 min and the rest every ~6.
+# Founder: "we need to iterate fast." So the first task is three beats, not fifteen
+# — the three he has actually complained about, each of which motion.yaml addresses
+# directly:
 #
-# Across TWO machines, yes. farm-results-msi shows 6 completed video renders, so
-# the older Windows laptop can do this. Split:
+#   beat 1  he asked why the man was not typing.
+#           motion.yaml: "the young man types rapidly, fingers moving over the keys"
+#   beat 2  the model redrew the monitor instead of animating the person.
+#           motion.yaml: "green terminal text scrolls slowly on the monitor, the
+#           hooded man's silhouette shifts subtly, faint steam rises from the mug"
+#   beat 4  it invented a mug and a hand grabbing it.
+#           motion.yaml: "the limp hand stays motionless... one loose paper settles
+#           to the floor" — the aftermath the still actually shows
 #
-#   rtx5090  beats 1-10   faster card, model already cached
-#   msi      beats 11-15  16GB, takes the two-process path, so fewer
+# ~20 minutes for those three, and each pushes as it lands so the first is visible
+# in ~10. If motion.yaml fixes them, the remaining twelve are worth their hour. If
+# it does not, we have spent 20 minutes learning that instead of 84.
 #
-# Wall clock roughly halves: ~55 min for the 5090's ten, ~45 for the MSI's five,
-# running at the same time. Needs a human to start the MSI worker.
-#
-# Beats are assigned EXPLICITLY rather than worker: any — done_ids is per-worker,
-# so two workers on "any" would each render the whole queue.
+# The remaining beats stay queued behind, so no restart is needed either way — but
+# they can be dropped without losing the probe.
 tasks:
-- video: true
+- worker: rtx5090
+  video: true
   node: 001-capability-inventory
   motion: gentle drift; no new subjects, no scene change
   size: 480x832
@@ -26,10 +29,10 @@ tasks:
   steps: 12
   guidance: 5.0
   seed_base: 20260803
-  worker: rtx5090
-  id: v3-rtx5090-1-1785676000
-  beats: 1,2,3,4,5
-- video: true
+  id: v3-probe-1785677000
+  beats: 1,2,4
+- worker: rtx5090
+  video: true
   node: 001-capability-inventory
   motion: gentle drift; no new subjects, no scene change
   size: 480x832
@@ -37,10 +40,10 @@ tasks:
   steps: 12
   guidance: 5.0
   seed_base: 20260803
-  worker: rtx5090
-  id: v3-rtx5090-2-1785676000
-  beats: 6,7,8,9,10
-- video: true
+  id: v3-rest-a-1785677000
+  beats: 3,5,6,7,8
+- worker: rtx5090
+  video: true
   node: 001-capability-inventory
   motion: gentle drift; no new subjects, no scene change
   size: 480x832
@@ -48,10 +51,10 @@ tasks:
   steps: 12
   guidance: 5.0
   seed_base: 20260803
-  worker: msi
-  id: v3-msi-3-1785676000
-  beats: 11,12,13
-- video: true
+  id: v3-rest-b-1785677000
+  beats: 9,10,11,12
+- worker: rtx5090
+  video: true
   node: 001-capability-inventory
   motion: gentle drift; no new subjects, no scene change
   size: 480x832
@@ -59,9 +62,8 @@ tasks:
   steps: 12
   guidance: 5.0
   seed_base: 20260803
-  worker: msi
-  id: v3-msi-4-1785676000
-  beats: 14,15
+  id: v3-rest-c-1785677000
+  beats: 13,14,15
 - id: prefetch-a14b-1785529520
   worker: rtx5090
   video: true
