@@ -13,3 +13,18 @@ Traceback (most recent call last):
     raise RuntimeError(f"{stage} failed (exit {r.returncode})")
 RuntimeError: batch anime-all-1785575000 failed (exit 3221225477)
 
+
+===== 2026-08-02T08:50:45Z =====
+task=v2-b02-1785660000
+Traceback (most recent call last):
+  File "C:\banyan-farm\banyan-city\pipeline\farm_worker.py", line 445, in main
+    render_task(task, courier, device, dtype)
+  File "C:\banyan-farm\banyan-city\pipeline\farm_worker.py", line 291, in render_task
+    return video_task.run(task, courier, d)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\banyan-farm\banyan-city\pipeline\video_task.py", line 543, in run
+    _run([str(PY), wan, "--stage", "simple", "--embeds", str(emb),
+  File "C:\banyan-farm\banyan-city\pipeline\video_task.py", line 346, in _run
+    raise RuntimeError(f"{stage} failed (exit {r.returncode})")
+RuntimeError: beat 2 failed (exit 2)
+
