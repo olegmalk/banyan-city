@@ -869,3 +869,4 @@
 07:15:02Z FAIL task=anime-canary-b07-r2-1785787800
 07:16:21Z STARTED task=anime-canary-b07-r2-1785787800 beats=7 on cuda
 07:16:24Z VIDEO_VENV_OK
+07:16:36Z VIDEO_DEPS_OK 2.11.0+cu128 0.39.0 True
