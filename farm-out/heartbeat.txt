@@ -962,3 +962,4 @@
 09:30:17Z DONE task=life-D-noanchor-b01-1785798000
 09:30:22Z STARTED task=life-E-nolock-b01-1785798000 beats=1 on cuda
 09:30:25Z VIDEO_VENV_OK
+09:30:38Z VIDEO_DEPS_OK 2.11.0+cu128 0.39.0 True
