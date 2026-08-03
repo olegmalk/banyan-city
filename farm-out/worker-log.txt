@@ -106,3 +106,5 @@ C:\banyan-video\venv\Lib\site-packages\diffusers\pipelines\wan\pipeline_wan_i2v.
  93%|█████████▎| 13/14 [02:15<00:08,  8.64s/it]
 100%|██████████| 14/14 [02:23<00:00,  8.61s/it]
 100%|██████████| 14/14 [02:23<00:00, 10.26s/it]
+
+video task face-B-b02-1785816000: 1/1 clips
