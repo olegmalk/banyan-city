@@ -1,0 +1,16 @@
+# Shot provenance (7.2) — written by video_task at render time
+platform: local-gpu (rtx5090)
+model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+model_licence: Apache-2.0
+shot_beat: 10
+size: 704x1280
+seconds: 2.5
+steps: 14
+guidance: 5.0
+seed: 20260815
+task: k15-b10-1785802800
+cost_usd: 0
+prompt: |-
+  2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. the glow between the soil grains pulses in a slow steady rhythm, brighter then dimmer, the thin roots tremble subtly with each pulse,   camera locked. Subject already in frame: dark underground soil texture filling the whole frame, side view, thin pale roots reaching down through the earth, small glowing blue water….
+negative: |-
+  god rays, light shafts, new subjects, scene change, swaying, leaning, head turning, torso twisting, whole body movement, shoulders moving, people, cave, portal, eye, sky, lightning, photorealism, 3D render look, text, 静态, 静止, 静止不动的画面, frozen frame, still image, no motion, photorealistic, photograph, live action, film still, 3D render, CGI, octane, realistic skin texture, depth of field bokeh, motion blur, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
