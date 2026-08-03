@@ -51,3 +51,5 @@ C:\banyan-video\venv\Lib\site-packages\diffusers\pipelines\wan\pipeline_wan_i2v.
  93%|█████████▎| 13/14 [02:20<00:08,  8.64s/it]
 100%|██████████| 14/14 [02:29<00:00,  8.60s/it]
 100%|██████████| 14/14 [02:29<00:00, 10.66s/it]
+
+video task hands-H-scoped-b01-1785800400: 1/1 clips
