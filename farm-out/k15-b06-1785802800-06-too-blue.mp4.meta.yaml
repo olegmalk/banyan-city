@@ -1,0 +1,16 @@
+# Shot provenance (7.2) — written by video_task at render time
+platform: local-gpu (rtx5090)
+model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+model_licence: Apache-2.0
+shot_beat: 6
+size: 704x1280
+seconds: 2.5
+steps: 14
+guidance: 5.0
+seed: 20260811
+task: k15-b06-1785802800
+cost_usd: 0
+prompt: |-
+  2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. everything nearly still, the clouds drift very slowly, the pale leaf stays attached at the bottom edge of the frame and only trembles gently, nothing flies, nothing detaches, camera locked. Subject already in frame: plant focus, pov from inside tall grass, camera on the ground pointing straight up, a vast flat clear blue morning sky filling….
+negative: |-
+  new subjects, scene change, swaying, leaning, head turning, torso twisting, whole body movement, shoulders moving, humans, 1girl, girl, boy, person, face, eyes, hair, portrait, big clouds, forest, tree, abstract shapes, photorealism, 3D render look, text, camera shake, handheld camera, jitter, wobble, unstable camera, vibrating, trembling camera, rolling shutter, photorealistic, photograph, live action, film still, 3D render, CGI, octane, realistic skin texture, depth of field bokeh, motion blur, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
