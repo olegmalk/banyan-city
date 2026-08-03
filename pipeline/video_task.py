@@ -35,10 +35,13 @@ PY = VENV / ("Scripts/python.exe" if IS_WIN else "bin/python3")
 TORCH_INDEX = "https://download.pytorch.org/whl/cu128"
 
 
-# No clip finished in this long => stalled, kill it. Generous: a 480x832 clip
-# takes ~10 min and a first-run model download can precede the first clip, so
-# this only fires on something genuinely wedged.
-STALL_MINUTES = 45
+# Two thresholds, because "slow" and "wedged" are different failures. A 480x832
+# clip takes ~4 min and a first-run model download can precede the first clip.
+STALL_MINUTES = 45          # SILENT this long = hung. Kill it.
+# Printing but no finished clip this long = a real loop, or a model too slow to be
+# usable. 180 lets AnimeGen's ~27B pair finish a clip (30m+ observed and still
+# sampling on 2026-08-03) without letting a stuck progress bar burn a whole night.
+NO_PROGRESS_MINUTES = 180
 
 PROGRESS = re.compile(r"^\[(\d+)/(\d+)\]\s+wrote\s+(.+?)\s+in\s+(\S+)")
 
@@ -89,29 +92,78 @@ def _stream(cmd, courier, timeout, env):
     # process was breathing and said nothing about whether it was working — so a
     # hung render looked exactly like a slow one, all night, and four clips never
     # came. Liveness without progress is a comfort blanket.
-    progress = {"at": time.time(), "n": 0}
+    # TWO CLOCKS, because "no clip yet" and "not breathing" are different facts.
+    #
+    #   at    last FINISHED CLIP        -> progress
+    #   said  last line of child output -> liveness
+    #
+    # The kill used to fire on `at` alone, i.e. "no clip in 45 minutes". That is
+    # right for a hung process and WRONG for a legitimately slow one: AnimeGen
+    # (27B, two A14B transformers, 25 steps without the distillation LoRAs) passed
+    # 30 minutes on its first clip with the sampler running normally, and would
+    # have been killed at 45 for being slow. ti2v-5b's 240s never came near it, so
+    # nothing had tested the threshold before.
+    #
+    # Now: silence for STALL_MINUTES kills (a real hang says nothing at all),
+    # while a child that is still printing is left alone until NO_PROGRESS_MINUTES
+    # — long enough that a slow model finishes, short enough that an infinite
+    # progress-bar loop does not run all night.
+    progress = {"at": time.time(), "n": 0, "said": time.time()}
 
     def tick():
         n = 0
         while not alive.wait(300):          # every 5 minutes
             n += 5
             stalled = int(time.time() - progress["at"]) // 60
-            msg = (f"VIDEO_ALIVE {n}m elapsed, {progress['n']} clip(s) done")
-            if stalled >= STALL_MINUTES:
-                msg = (f"VIDEO_STALLED no clip finished in {stalled}m "
-                       f"({progress['n']} done) — killing it so the queue moves")
+            silent = int(time.time() - progress["said"]) // 60
+            msg = (f"VIDEO_ALIVE {n}m elapsed, {progress['n']} clip(s) done"
+                   + (f", last output {silent}m ago" if silent >= 5 else ""))
+            kill = silent >= STALL_MINUTES or stalled >= NO_PROGRESS_MINUTES
+            if kill:
+                why = (f"silent for {silent}m" if silent >= STALL_MINUTES
+                       else f"no clip finished in {stalled}m despite output")
+                msg = (f"VIDEO_STALLED {why} ({progress['n']} done) — "
+                       f"killing it so the queue moves")
             if courier:
                 try:
                     courier.mark(msg)
                 except Exception:            # noqa: BLE001
                     pass                     # a heartbeat may never kill its subject
-            if stalled >= STALL_MINUTES:
+            if kill:
                 try:
                     p.kill()
                 except Exception:            # noqa: BLE001
                     pass
                 return
     threading.Thread(target=tick, daemon=True).start()
+
+    # DRAIN STDERR ON ITS OWN THREAD. Two reasons, and the second is worse than
+    # the first.
+    #
+    # 1. tqdm — the sampler's progress bar, and HF's download bars — writes to
+    #    STDERR. This function used to read stderr only after the stdout loop
+    #    ENDED, i.e. after the child exited, so during a render the only stdout
+    #    line was "[i/N] wrote ..." at the very end of each clip. A model slow
+    #    enough to take longer than STALL_MINUTES for one clip therefore looked
+    #    completely silent, and the liveness clock above would have killed it
+    #    while its progress bar was ticking normally into an unread pipe.
+    # 2. A PIPE THAT NOBODY READS FILLS AND BLOCKS THE WRITER. The OS buffer is
+    #    ~64KB; a chatty sampler passes that, and then the child blocks forever on
+    #    its next stderr write while we sit blocked on p.stdout waiting for output
+    #    that can no longer come. That is a genuine deadlock, and from outside it
+    #    is indistinguishable from a hang — which is exactly the shape of the
+    #    "eight hours, no clips, still breathing" night on 2026-08-01.
+    def drain_err():
+        try:
+            for eline in p.stderr:
+                err.append(eline)
+                progress["said"] = time.time()
+                print(eline, end="", flush=True)
+        except Exception:                    # noqa: BLE001
+            pass                             # the pipe closing is not an error
+    err_t = threading.Thread(target=drain_err, daemon=True)
+    err_t.start()
+
     try:
         for line in p.stdout:
             out.append(line)
@@ -122,6 +174,8 @@ def _stream(cmd, courier, timeout, env):
             # courier must not cost the person sitting in front of the machine
             # their only view of it.
             print(line, end="", flush=True)
+            # ANY output is proof of life, even a progress bar we cannot parse.
+            progress["said"] = time.time()
             m = PROGRESS.match(line.strip())
             if m:
                 progress["at"] = time.time()
@@ -137,10 +191,9 @@ def _stream(cmd, courier, timeout, env):
             if deadline and time.time() > deadline:
                 p.kill()
                 raise subprocess.TimeoutExpired(cmd, timeout)
-        tail = p.stderr.read() or ""
-        err.append(tail)
-        if tail.strip():
-            print(tail, end="", flush=True)   # HF's download bars live here
+        # stderr is drained by drain_err() above, in real time — do NOT read it
+        # here as well. Two readers on one pipe race and split lines between them.
+        err_t.join(timeout=30)
         p.wait(timeout=60)
     finally:
         alive.set()

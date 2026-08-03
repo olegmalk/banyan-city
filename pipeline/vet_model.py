@@ -94,6 +94,7 @@ import re
 import sys
 import urllib.error
 import urllib.request
+from pathlib import Path
 
 HF = "https://huggingface.co/api/models/"
 GH = "https://api.github.com/repos/"
@@ -137,6 +138,74 @@ TRAVELLING_TEXT = [
     (r"research purposes only|academic or research", "research-only"),
     (r"expressly and intelligibly disclaiming", "mandatory machine-generated notice"),
 ]
+
+
+def fetch_hf_licence_text(repo: str, siblings) -> tuple:
+    """(filename, text) of a licence file in the HF WEIGHTS REPO itself.
+
+    This was the hole. fetch_licence_text() reads GitHub only, and the sibling
+    list was collected for DISPLAY but never read — so aidealab/AnimeGen-I2V,
+    which ships a plain `LICENSE` on Hugging Face and has no GitHub mirror, had
+    no text found at all. The weights repo is the most authoritative place a
+    licence can live: it travels with the very files we load.
+    """
+    for s in siblings or []:
+        n = s.get("rfilename", "")
+        if "LICEN" in n.upper() or "COPYING" in n.upper():
+            st, txt = get_raw(f"https://huggingface.co/{repo}/raw/main/{n}")
+            if st == 200 and txt:
+                return n, txt
+    return None, ""
+
+
+# Which vendored text covers which repos — EXACT SLUGS, mirroring the table in
+# licences/README.md ("Wan 2.2 (TI2V-5B, I2V-A14B, Diffusers variants)").
+#
+# Written as an explicit list because the first version matched on filename
+# resemblance: it split "Wan2.2-Lightning" on "-", took the stem "Wan2.2", found
+# that inside "Wan2.2-LICENSE.txt", and applied Wan-AI's sha256-verified Apache
+# text to lightx2v's LoRA weights — a different org entirely. That is licence
+# LAUNDERING, and it manufactures permission rather than merely missing it, which
+# is the more dangerous direction. Introduced and caught the same hour,
+# 2026-08-03. Permission does not travel by names looking alike.
+#
+# Anything not listed here gets no vendored text and is judged on what can
+# actually be read. Fails closed.
+VENDORED_COVERS = {
+    "Wan2.2-LICENSE.txt": (
+        "wan-ai/wan2.2-ti2v-5b",
+        "wan-ai/wan2.2-ti2v-5b-diffusers",
+        "wan-ai/wan2.2-i2v-a14b",
+        "wan-ai/wan2.2-i2v-a14b-diffusers",
+        "wan-ai/wan2.2-t2v-a14b",
+        "wan-ai/wan2.2-t2v-a14b-diffusers",
+    ),
+}
+
+
+def _vendored_licence(repo: str):
+    """(filename, text) from our own `licences/` archive, or None.
+
+    Text we already fetched, read and sha256-verified against the canonical
+    licence, committed so the reading survives the upstream repo being edited or
+    deleted (every Wan 2.2 weights repo ships no LICENSE and the card's link
+    404s — see licences/README.md).
+    """
+    d = Path(__file__).resolve().parent.parent / "licences"
+    if not d.is_dir():
+        return None
+    slug = repo.strip().lower()
+    for fname, covered in VENDORED_COVERS.items():
+        if slug not in covered:
+            continue
+        f = d / fname
+        if not f.is_file():
+            return None
+        try:
+            return f.name, f.read_text(encoding="utf-8", errors="replace")
+        except OSError:
+            return None
+    return None
 
 
 def fetch_licence_text(slug: str) -> tuple:
@@ -225,7 +294,14 @@ def vet(repo: str, depth: int = 0, seen=None) -> dict:
         gh_slug = gh_slug[len("https://github.com/"):].strip("/")
     else:
         gh_slug = repo          # many model repos mirror the org/name on GitHub
-    fname, text = fetch_licence_text(gh_slug)
+    # WEIGHTS REPO FIRST — it is where the licence travels with the files we
+    # actually load; then the authors' project repo, which is where Wan and many
+    # others keep theirs.
+    fname, text = fetch_hf_licence_text(repo, d.get("siblings"))
+    if text:
+        gh_slug = repo          # name the source honestly in the output below
+    else:
+        fname, text = fetch_licence_text(gh_slug)
     if text:
         hits = [why2 for pat, why2 in TRAVELLING_TEXT if re.search(pat, text, re.I)]
         out_text = {"licence_text_file": f"{gh_slug}/{fname} ({len(text)}B)"}
@@ -238,6 +314,39 @@ def vet(repo: str, depth: int = 0, seen=None) -> dict:
                                    f"no output/travelling clause")
     else:
         out_text = {}
+        # A TAG WITH NOTHING BEHIND IT IS NOT A GRANT.
+        #
+        # classify_tag() calls "apache-2.0" clear, and the text logic above only
+        # ever UPGRADES unverifiable->clear or downgrades to hard-fail. So a repo
+        # declaring apache-2.0 in HF metadata while shipping no licence file
+        # anywhere — weights repo, project repo, or our own archive — came back
+        # CLEAR. That is the exact state this module's own docstring calls
+        # unquotable, and that wan_i2v refuses to render with: found on
+        # 2026-08-03 for lightx2v/Wan2.2-Lightning and Wan2.2-Distill-Loras,
+        # both 'apache-2.0', both zero licence files. The tool contradicted the
+        # rule it exists to enforce.
+        #
+        # `licences/` is a legitimate third source: text we fetched, read and
+        # sha256-verified against the canonical licence, committed so the reading
+        # survives the upstream repo changing. Wan2.2 itself is in there, and its
+        # HF repo ships no licence file — so without this the fix would condemn
+        # the model the tree already publishes from.
+        vend = _vendored_licence(repo)
+        if vend:
+            fname2, text2 = vend
+            hits2 = [w for pat, w in TRAVELLING_TEXT if re.search(pat, text2, re.I)]
+            if hits2:
+                state = "hard-fail"
+                why = (f"vendored licence {fname2} contains travelling "
+                       f"conditions: {'; '.join(hits2[:3])}")
+            else:
+                out_text = {"licence_text_file": f"licences/{fname2} "
+                                                 f"({len(text2)}B, vendored+verified)"}
+        elif state == "clear":
+            state = "unverifiable"
+            why = (f"tag says {tag!r} but NO licence text exists to quote — not in "
+                   f"the weights repo, not at {gh_slug}, not in licences/. A "
+                   f"self-declared tag is a claim, not a grant we can pass on")
     out = {"repo": repo, "tag": tag, "state": state, "why": why, **out_text,
            "gated": d.get("gated"), "downloads": d.get("downloads"),
            "licence_files": [s["rfilename"] for s in d.get("siblings", [])

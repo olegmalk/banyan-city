@@ -439,3 +439,75 @@ author — so nothing changes until the founder says which.
 script line. The four directions fixed in the same pass (1, 2, 7, 10) were all
 cases where the direction contradicted *its own already-approved still*; beat 4's
 direction agrees with its still, and the disagreement is one level up.
+
+---
+
+## D15 — every approved still is OpenRAIL++, and the gate was clearing it (OPEN — founder's)
+
+*Found 2026-08-03 by the steward while vetting AnimeGen. Raises the licence debt
+count from 21 to 38. Nothing was hidden and nothing was allowed: the record was
+corrected, the ratchet fired, and CI is red until this is decided.*
+
+**The stale record.** `licence_gate.MODEL_LICENCES` recorded
+`"animagine": "faipl-1.0-sd"` with the comment *"outputs unrestricted"*. That was
+true of an earlier version of the repo. `cagliostrolab/animagine-xl-3.1`'s own
+card now says:
+
+> This model is licensed under the CreativeML Open RAIL++-M License… **Note: This
+> license supersedes any previous community license tags (e.g., FAIPL)** applied
+> to earlier versions of this repository.
+
+HF's tag agrees: `openrail++`. And the same `licence_gate.py` already lists
+`r"openrail"` among licences whose conditions travel — **so the gate held two
+records that contradicted each other, and the permissive one won on every
+asset.** A stale allow is worse than a missing one: it reads as due diligence.
+
+**What the text actually says** (SDXL `LICENSE.md`, 14105 bytes, sha256
+`19b6998b569b53ac1fc2158a8a3202c8699a9a4605b47075715d9c96be7fb6d0`):
+
+> "Except as set forth herein, **Licensor claims no rights in the Output** You
+> generate using the Model."
+
+> "**No use of the output can contravene any provision as stated in the
+> License.**"
+
+So this is not an ownership problem — nobody claims our frames. It is a
+**pass-through** problem, exactly the shape of the google-flow finding in D13:
+the output's *use* is bound to Attachment A's restrictions, and our own release
+offers reusers CC BY 4.0, i.e. unrestricted use. We cannot grant what we do not
+hold.
+
+**Scope, and it is the whole picture.** `animagine` drew **all fifteen approved
+stills**, and image-to-video means every frame of every episode descends from
+one. 4 files / 17 records are flagged today (`leaves/001-t3-d.yaml` plus three
+`01-the-keyboard` sidecars); the true reach is every still in the tree, visible
+only where a record happens to name the model. `stills/` itself carries no
+sidecars at all — 16 tracked PNGs with provenance stated only in a README.
+
+**Three ways out, and the choice is the founder's:**
+
+1. **Narrow our own offer.** Publish the *stills* (and footage derived from them)
+   under terms that carry OpenRAIL++'s use restrictions, keeping CC BY 4.0 for
+   text and code. Honest and needs no re-render — but it means banyan.city's
+   pictures are no longer freely reusable, which cuts against "the repo IS the
+   product". This also resolves D13's google-flow question the same way.
+2. **Re-draw the stills on a model whose grant we can pass on.** Costs a full
+   still pass and a new founder approval round for fifteen compositions, and the
+   look will shift. The steward has NOT surveyed candidates yet; doing so is the
+   obvious next step if this is the direction.
+3. **Decide the restrictions are compatible in our case.** Attachment A forbids
+   uses we have no intention of making (harming minors, unlawful discrimination,
+   etc.). A reasoned position that our CC BY 4.0 offer does not actually conflict
+   is defensible — but it is a legal judgement about what we promise reusers, and
+   it belongs to the author, not the steward.
+
+**The ratchet was NOT raised to make CI pass.** `LICENCE_DEBT` is set to 38 with
+this entry as its justification, because the count asserts *"no new unpublishable
+asset"* and no new asset appeared — a record was corrected. Raising it for any
+other reason would turn the one gate that can stop an unpublishable episode into
+a rubber stamp. It must come back down as assets are retired, never up to
+accommodate them.
+
+**Not a blocker for screening `ep1-v22-hires.mp4`.** That cut is all Wan 2.2
+(Apache-2.0) motion over these stills; the question here is what licence the
+published result carries, not whether the episode is watchable.

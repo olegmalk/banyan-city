@@ -275,7 +275,33 @@ MODEL_LICENCES = {
     "ltx-video": "LTXV Open Weights Licence 0.X (read; founder sign-off pending)",
     "lightricks": "LTXV Open Weights Licence 0.X (read; founder sign-off pending)",
     "dreamshaper": "CreativeML-OpenRAIL-M",      # SD1.5 derivative; outputs unrestricted
-    "animagine": "faipl-1.0-sd",                 # Fair AI Public License; outputs unrestricted
+    # animagine: THE RECORD WAS STALE, AND IT WAS CLEARING EVERY STILL WE SHIP.
+    #
+    # This said "faipl-1.0-sd; outputs unrestricted", which was true of an earlier
+    # version of the repo. cagliostrolab/animagine-xl-3.1's own card now reads:
+    # "This model is licensed under the CreativeML Open RAIL++-M License… Note:
+    # This license supersedes any previous community license tags (e.g., FAIPL)."
+    # HF's tag agrees: openrail++. And this very file already lists r"openrail" as
+    # a licence whose conditions travel — so the gate held two records that
+    # contradicted each other, and the permissive one won on every asset.
+    #
+    # Read the actual text (SDXL LICENSE.md, 14105 bytes, sha256 19b6998b…):
+    #   "Except as set forth herein, Licensor claims no rights in the Output You
+    #    generate using the Model."          <- no ownership claim. Good.
+    #   "No use of the output can contravene any provision as stated in the
+    #    License."                          <- but its USE is bound to
+    #                                          Attachment A's restrictions.
+    # We publish CC BY 4.0, which offers reusers unrestricted use. We cannot
+    # grant what we do not hold, and we cannot silently pass the restriction on.
+    # Same shape as the google-flow finding in D13, and it lands on EVERY
+    # approved still, because animagine drew all fifteen.
+    #
+    # Recorded as what it is rather than quietly allowed or quietly failed: the
+    # founder decides whether to narrow our own offer (D13) or re-draw the stills
+    # on a model whose grant we can pass on. Naming it here makes it visible in
+    # the debt count instead of invisible behind a stale tag.
+    "animagine": "CreativeML Open RAIL++-M (use restrictions travel; D15)",
+    "cagliostrolab": "CreativeML Open RAIL++-M (use restrictions travel; D15)",
     "ip-adapter": "Apache-2.0",
     # Open Wan weights (Wan-AI/Wan2.x) are Apache-2.0. The hosted preview
     # models (wan2.5/2.6/2.7 via Model Studio) publish no weights, so what

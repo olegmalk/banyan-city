@@ -54,6 +54,15 @@ POLL_SECONDS = 60
 # How many times a task may FAIL before this worker stops picking it up. 2 = one
 # retry for a transient drop, then move on — see finished_tasks().
 MAX_ATTEMPTS = 2
+# Child exit codes that mean "a human or the OS stopped this", not "this task is
+# broken". Windows reports both as NTSTATUS values in the exit code, and the
+# render is usually minutes or tens of minutes in when it happens.
+INTERRUPT_EXITS = (
+    3221225786,   # 0xC000013A STATUS_CONTROL_C_EXIT — Ctrl+C, or a second
+                  # worker started on top of a running one
+    3221225794,   # 0xC000013B STATUS_PIPE_BROKEN — console went away mid-write
+    -1073741510,  # the same 0xC000013A seen as a signed 32-bit value
+)
 
 
 def sh(*args, check=True, capture=False):
@@ -410,6 +419,7 @@ def main() -> int:
               f"heartbeat, will not re-run")
     warned = set()
     while True:
+        ran_one = False
         for task in queue_head():
             tid = str(task.get("id"))
             if tid in gave_up and tid not in warned:
@@ -464,7 +474,23 @@ def main() -> int:
                 tb = traceback.format_exc()
                 courier.say(tb)
                 courier.blame(f"task={tid}\n{tb}")
-                courier.mark(f"FAIL task={tid}")
+                # A CONSOLE INTERRUPT IS NOT A FAILED RENDER, and recording it as
+                # one spends an attempt the task never got. This has now cost two
+                # renders: beat 7 died to `forrtl: error (200): program aborting
+                # due to window-CLOSE event` when the machine was shut down
+                # mid-render (2026-08-02), and the first AnimeGen canary died at
+                # 22 minutes to exit 3221225786 = 0xC000013A =
+                # STATUS_CONTROL_C_EXIT when a second worker was started on top
+                # of a running one (2026-08-03).
+                #
+                # Nothing about the task caused either. Mark it INTERRUPTED so
+                # finished_tasks() does not count it toward MAX_ATTEMPTS — the
+                # work is still queued and will simply be picked up again.
+                if any(str(c) in tb for c in INTERRUPT_EXITS):
+                    courier.mark(f"INTERRUPTED task={tid} (console interrupt, "
+                                 f"not counted as an attempt)")
+                else:
+                    courier.mark(f"FAIL task={tid}")
             done_ids.add(tid)
             # RE-READ THE QUEUE AFTER EVERY TASK, not after the whole list.
             #
@@ -478,9 +504,23 @@ def main() -> int:
             # Breaking here costs one git fetch (~1s) against a 9-minute task and
             # makes the queue what it looks like: the current instruction, not a
             # snapshot from whenever the list was last exhausted.
+            ran_one = True
             break
         if a.once:
             return 0
+        # DO NOT SLEEP AFTER DOING WORK. Breaking out of the queue loop after
+        # every task (so the queue stays current) meant falling straight into an
+        # unconditional 60s sleep — with the next beat already sitting in the
+        # queue. Measured on the 2026-08-02 hi-res set: 242s of rendering per
+        # clip and a 72s gap after it, ~60s of which was this sleep. Fifteen
+        # beats paid it fifteen times: 15 minutes of a 91-minute run spent
+        # waiting for a queue that had not changed.
+        #
+        # The sleep exists for an EMPTY queue, so only sleep when the queue was
+        # actually empty for us. It also printed "queue empty for me" right after
+        # finishing a task, which was simply untrue.
+        if ran_one:
+            continue
         print(f"[{time.strftime('%H:%M:%S')}] polling — queue empty for me, {len(done_ids)} task(s) done this session", flush=True)
         time.sleep(POLL_SECONDS)
 
