@@ -108,3 +108,56 @@ C:\banyan-video\venv\Lib\site-packages\diffusers\pipelines\wan\pipeline_wan_i2v.
 100%|██████████| 14/14 [02:24<00:00, 10.35s/it]
 
 video task f15-b02-1785804000: 1/1 clips
+$ C:\banyan-video\venv\Scripts\python.exe C:\banyan-farm\banyan-city\pipeline\wan_i2v.py --stage simple --embeds C:\banyan-video\embeds-03.pt…
+model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+pipeline class: WanImageToVideoPipeline (forced image-to-video)
+VRAM[after load, before .to(cuda)] used 1.38/25.7GB (torch holds 0.00GB)
+model cpu offload ON (big model: slower per clip, but it fits)
+[1/1] wrote C:\banyan-farm\banyan-city\farm-out\f15-b03-1785804000-03-deploy-succeeded.mp4 in 189s (61 frames, 704x1280, 14 steps, peak torch 14.4GB, device 1.8/26GB)
+    freed between clips: 1.7/26GB still held
+d requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+Loading pipeline components...:   0%|          | 0/5 [00:00<?, ?it/s]
+
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s][A
+
+Loading checkpoint shards:  20%|██        | 1/5 [00:02<00:08,  2.08s/it][A
+
+Loading checkpoint shards:  40%|████      | 2/5 [00:04<00:06,  2.08s/it][A
+
+Loading checkpoint shards:  60%|██████    | 3/5 [00:06<00:04,  2.12s/it][A
+
+Loading checkpoint shards:  80%|████████  | 4/5 [00:11<00:03,  3.23s/it][A
+
+Loading checkpoint shards: 100%|██████████| 5/5 [00:11<00:00,  2.13s/it][A
+Loading checkpoint shards: 100%|██████████| 5/5 [00:11<00:00,  2.29s/it]
+
+Loading pipeline components...:  20%|██        | 1/5 [00:11<00:46, 11.52s/it]
+Loading pipeline components...:  40%|████      | 2/5 [00:12<00:16,  5.60s/it]
+
+Loading weights:   0%|          | 0/242 [00:00<?, ?it/s][A
+Loading weights: 100%|██████████| 242/242 [00:00<00:00, 3048.44it/s]
+
+Loading pipeline components...:  60%|██████    | 3/5 [00:13<00:06,  3.12s/it]The config attributes {'clip_output': False} were passed to AutoencoderKLWan, but are not expected and will be ignored. Please verify your config.json configuration file.
+
+Loading pipeline components...: 100%|██████████| 5/5 [00:15<00:00,  1.97s/it]
+Loading pipeline components...: 100%|██████████| 5/5 [00:15<00:00,  3.07s/it]
+C:\banyan-video\venv\Lib\site-packages\diffusers\pipelines\wan\pipeline_wan_i2v.py:226: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  prompt_embeds = self.text_encoder(text_input_ids.to(device), mask.to(device)).last_hidden_state
+
+  0%|          | 0/14 [00:00<?, ?it/s]
+  7%|▋         | 1/14 [00:40<08:45, 40.40s/it]
+ 14%|█▍        | 2/14 [00:48<04:19, 21.61s/it]
+ 21%|██▏       | 3/14 [00:57<02:52, 15.65s/it]
+ 29%|██▊       | 4/14 [01:05<02:08, 12.82s/it]
+ 36%|███▌      | 5/14 [01:14<01:41, 11.27s/it]
+ 43%|████▎     | 6/14 [01:22<01:22, 10.33s/it]
+ 50%|█████     | 7/14 [01:31<01:08,  9.74s/it]
+ 57%|█████▋    | 8/14 [01:39<00:56,  9.35s/it]
+ 64%|██████▍   | 9/14 [01:48<00:45,  9.10s/it]
+ 71%|███████▏  | 10/14 [01:57<00:35,  8.92s/it]
+ 79%|███████▊  | 11/14 [02:05<00:26,  8.81s/it]
+ 86%|████████▌ | 12/14 [02:14<00:17,  8.73s/it]
+ 93%|█████████▎| 13/14 [02:22<00:08,  8.68s/it]
+100%|██████████| 14/14 [02:31<00:00,  8.64s/it]
+100%|██████████| 14/14 [02:31<00:00, 10.80s/it]
