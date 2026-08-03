@@ -602,7 +602,14 @@ def run(task: dict, courier, node_dir: Path) -> None:
                   "--quantise", str(task.get("quantise", "none")),
                   "--guidance", str(task.get("guidance", 5.0))]
                  + (["--offload"] if task.get("offload") else [])
-                 + (["--keep-text-encoder"] if task.get("keep_text_encoder") else []),
+                 + (["--keep-text-encoder"] if task.get("keep_text_encoder") else [])
+                 # no_lora is what makes an AnimeGen run PUBLISHABLE. The
+                 # Lightning 4-step LoRAs (lightx2v/Wan2.2-Lightning) declare
+                 # apache-2.0 in HF metadata and ship NO LICENSE FILE, so our own
+                 # gate calls them unknown — a violation, not a note. Without
+                 # this flag a queue task could only run AnimeGen *with* them,
+                 # i.e. could only produce footage we are not allowed to ship.
+                 + (["--no-lora"] if task.get("no_lora") else []),
                  courier, f"batch {task.get('id')}", timeout=14400, retry=True)
             jf.unlink(missing_ok=True)
             made = 0
@@ -668,7 +675,14 @@ def run(task: dict, courier, node_dir: Path) -> None:
                   "--seconds", str(seconds), "--steps", str(steps), "--size", size,
                   "--seed", str(int(task.get("seed_base", 20260731)) + num)]
                  + (["--offload"] if task.get("offload") else [])
-                 + (["--keep-text-encoder"] if task.get("keep_text_encoder") else []),
+                 + (["--keep-text-encoder"] if task.get("keep_text_encoder") else [])
+                 # no_lora is what makes an AnimeGen run PUBLISHABLE. The
+                 # Lightning 4-step LoRAs (lightx2v/Wan2.2-Lightning) declare
+                 # apache-2.0 in HF metadata and ship NO LICENSE FILE, so our own
+                 # gate calls them unknown — a violation, not a note. Without
+                 # this flag a queue task could only run AnimeGen *with* them,
+                 # i.e. could only produce footage we are not allowed to ship.
+                 + (["--no-lora"] if task.get("no_lora") else []),
                  courier, f"beat {num}", timeout=7200, retry=True)
         else:
             courier.mark(f"VIDEO_ENCODING beat={num:02d}")

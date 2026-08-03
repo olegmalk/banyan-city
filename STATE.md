@@ -530,3 +530,44 @@ POSTING-KIT.md step 0 carries the caption line — the site fix does nothing for
 TikTok post. licence_gate is narrow here by design: it answers "does this licence
 permit use" and has no notion of permission granted IN EXCHANGE for something, so
 CC BY passes as `allow` and nothing checks the exchange happened.
+
+## 2026-08-02 → 03 (overnight) — 720p works, and the slowness was VRAM paging
+
+**Episode 1 is rendered at 704x1280, all 15 beats, zero slate.** Screening cut
+`ep1-v22-hires.mp4` (untracked, repo root), 87.8s, every frame Wan 2.2
+(Apache-2.0). No leaf written — canon is the founder's call. See
+`MORNING-2026-08-03.md` and `pipeline/loop/cycle-015.md`.
+
+**Standing facts this adds:**
+
+- **`--offload` is mandatory, not optional.** Controlled pair, same beat/seed/
+  steps: 462s at 480x832 without it, **240s at 704x1280 with it**. The 24.4/26GB
+  residency was making the renderer page against itself. This is
+  `enable_model_cpu_offload()` — NOT the hand-rolled text-encoder eviction, which
+  corrupted every frame on 2026-08-02.
+- **704x1280 is the render size from now on.** `render_t3` delivers 720x1280, so
+  704 is near-native; 480x832 was a 1.5x upscale and that upscale is what the
+  founder rejected as "too low quality". 720p had failed 5/5 times before
+  offload.
+- **Measured rate: 95.6s of compute per 1s of video** (median of 16 clips, 239s,
+  range 232-242). One 88s episode ≈ 2.3h. A 24/7 month ≈ 7.5h of video. This
+  SUPERSEDES the 208s/s figure quoted on 2026-08-02, which came from four
+  no-offload clips.
+- **Verified per-episode cost** against the founder's PixVerse pricing (30
+  credits/5s, 15,000 credits/$60): ours ~$0.03 electricity, rented RTX 4090
+  community ~$0.51, PixVerse $2.11. Rental $/hr figures are from our own
+  2026-07-29 ledger rows ($0.19-0.22 community, $0.69 secure), not advertised
+  rates.
+- **`text=True` without `encoding=` is a Windows landmine.** The farm box decodes
+  with cp1252 and our own queue file holds an em dash plus Wan's Chinese negative
+  terms. Fixed at 23 call sites; `test_subprocess_reads_are_utf8` guards it. The
+  platform that renders is not the platform that runs the tests.
+- **Motion directions must be audited against the script's action line.** Four of
+  fifteen contradicted their own approved still, including beat 2, whose "no
+  typing" note was a direction asking for a glow. `motion.yaml` is now the first
+  place to look when a beat does the wrong thing.
+- **Sidecars carry `prompt` and `negative`** as of tonight (§7.2 named them all
+  along).
+
+**Open, founder-reserved:** D14 (does beat 4 show the fall — no engine ever has),
+whether this cut becomes canon, and posting.

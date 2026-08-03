@@ -244,6 +244,30 @@ def qa_episode(video: Path, clips_dir: Path | None, ffmpeg: str) -> None:
            warn=is_episode)
 
     # --- captions in the chrome band ---
+    #
+    # THIS CHECK IS A WARNING, NOT A GATE, AND THAT IS DELIBERATE.
+    #
+    # The pixel signature of a caption block — a wide, near-uniform dark region
+    # carrying bright glyphs, low in the frame — is also the pixel signature of
+    # this show's own footage: a night interior in dark cel shading with a lit
+    # monitor and keycaps. On 2026-08-02 it failed `ep1-v22-hires` whose captions
+    # sat at y999 by construction, and three successive attempts to make it
+    # specific (contiguity, then flatness, then a centred-rectangle test) each
+    # broke in a different direction — the last one flagged a control frame with
+    # no caption in it at all. Verified by cropping the band and looking: no
+    # caption, just a hooded sleeve and a bright keyboard.
+    #
+    # THE REAL GUARANTEE IS ARITHMETIC, NOT VISION. render_t3 places every
+    # caption block at `H-h-CAPTION_MARGIN`, so its lowest pixel is at
+    # HEIGHT-CAPTION_MARGIN. As long as CAPTION_MARGIN >= CHROME_BAND*HEIGHT, a
+    # caption CANNOT enter the band, and test_pipeline asserts exactly that
+    # against this module's own CHROME_BAND. That test is the gate.
+    #
+    # What survives here is a cheap smoke signal for text this pipeline did not
+    # draw (burned-in subtitles in supplied footage, a platform re-encode). It
+    # reports, and it does not block, because a check that fails on healthy
+    # episodes gets ignored — which is how the cycle-001 defect it was written
+    # for would sail through a second time.
     if not m or (int(m[1]), int(m[2])) != (WIDTH, HEIGHT):
         # a raw generator clip is not an assembled episode; the chrome band
         # only means something at the delivery resolution
@@ -266,12 +290,13 @@ def qa_episode(video: Path, clips_dir: Path | None, ffmpeg: str) -> None:
                         v = px[xx, yy]
                         dark += v < 30
                         light += v > 225
-                    # a caption row = a long near-black box run PLUS bright text
                     if dark > 90 and light > 6:
                         band_hits.append(f"{fpath.stem}@y{yy}")
                         break
         record(ep, "captions clear chrome band", not band_hits,
-               ", ".join(band_hits[:4]))
+               (", ".join(band_hits[:4]) + "  (heuristic: dark footage trips this; "
+                "the margin is guaranteed by CAPTION_MARGIN >= CHROME_BAND)")
+               if band_hits else "", warn=True)
     except ImportError:
         record(ep, "captions clear chrome band", True, "PIL unavailable — skipped", warn=True)
 
