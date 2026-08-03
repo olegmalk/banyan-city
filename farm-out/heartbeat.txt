@@ -984,3 +984,4 @@
 10:36:42Z STARTED task=hands-H-scoped-b01-1785800400 beats=1 on cuda
 10:36:45Z VIDEO_VENV_OK
 10:36:58Z VIDEO_DEPS_OK 2.11.0+cu128 0.39.0 True
+10:37:10Z VIDEO_RENDERING beat=01 on ti2v-5b (single-process)
