@@ -930,6 +930,54 @@ def test_no_undefined_locals(tmp: Path):
     check("no pipeline function reads an undefined name", not bad)
 
 
+def test_antistatic_first_signal_wins(tmp: Path):
+    """A direction that opens with motion must get the anti-static terms.
+
+    Fixture is the founder's own verdicts, because they are the only calibration
+    that has held. On 2026-08-03 he watched beat 1 and said "wan 2.2 basically
+    doesnt move at all, literally" — of a clip whose direction the steward had
+    written as "his hands type fast ... and then stop abruptly, hands going
+    still". WANTS_STILL matched the bare word "still" (the END STATE of the
+    motion), suppressed the anti-static terms, and a beat whose entire job is
+    typing was told nothing about needing to move. Beat 12 was the same shape and
+    came out lowest of all fifteen.
+
+    The rule is now first-signal-wins, which works because these directions are
+    written subject-first. Both halves matter: motion-first beats must move, and
+    stillness-first beats must NOT be forced (that was the shaking the founder
+    reported the day before — "no static at all forces it to move even when not
+    needed").
+    """
+    import video_task as vt
+
+    must_move = {
+        "typing that ends still": "his hands type fast over the keyboard and then "
+                                  "stop abruptly, hands going still, camera locked",
+        "motion scoped by 'else still'": "the bent stem strains and quivers against "
+                                         "nothing, everything else still",
+        "plain motion": "the new leaf unfurls slowly and settles upright",
+    }
+    for label, d in must_move.items():
+        check(f"antistatic APPLIED: {label}", vt.antistatic_for(d) != "")
+
+    must_not = {
+        "stillness first": "the leaf holds almost perfectly still, dust motes settle "
+                           "slowly in the sunlight",
+        "opens nearly still": "everything nearly still, the clouds drift very slowly",
+        "deliberately motionless": "the limp hand stays motionless, one loose paper "
+                                   "settles to the floor",
+    }
+    for label, d in must_not.items():
+        check(f"antistatic suppressed: {label}", vt.antistatic_for(d) == "")
+
+    # and the live genome must agree, so a direction edit cannot silently freeze a
+    # beat again
+    live = vt.motion_directions(REPO / "genomes/sapling/nodes/001-capability-inventory") or {}
+    frozen_by_wording = [n for n in (1, 12) if not vt.antistatic_for(live.get(n, ""))]
+    check("live beats 1 and 12 are not suppressed by their own wording",
+          not frozen_by_wording)
+
+
 def test_vendored_licence_does_not_launder(tmp: Path):
     """A vendored licence covers the repos it was VERIFIED for and no others.
 
@@ -1393,6 +1441,7 @@ def main():
     with tempfile.TemporaryDirectory() as td:
         test_no_undefined_locals(Path(td))
         test_subprocess_reads_are_utf8(Path(td))
+        test_antistatic_first_signal_wins(Path(td))
         test_vendored_licence_does_not_launder(Path(td))
     print()
     if FAILURES:
