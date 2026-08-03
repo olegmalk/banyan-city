@@ -152,4 +152,31 @@ tasks:
   seed_base: 20260805
   id: steps06-b01-1785788400
   beats: 1
+# 07:3xZ — third and last AnimeGen attempt. r2 died in 93s with a REAL error this
+# time (not a timeout, not an interrupt): CUDA OOM inside the float32 VAE encode,
+# which the AnimeGen load path never tiled because it returns before the 5B path's
+# tiling call. tile_vae() now runs on both paths, plus
+# PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True.
+#
+# Note what r2 bought us even though it failed: 93 seconds instead of 45 minutes,
+# and a diagnosable error instead of a silent kill. That is the stderr drain
+# working — the previous two attempts hid this exact traceback.
+#
+# If this OOMs again, the honest read is that AnimeGen does not fit this card at
+# 704x1280 and the next step is 480x832 (a fair look-comparison is still possible
+# against the 480x832 ti2v-5b clips from 2026-08-02, which exist).
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  video_model: animegen
+  no_lora: true
+  motion: no new subjects, no scene change
+  size: 704x1280
+  offload: true
+  seconds: 2.5
+  steps: 25
+  guidance: 5.0
+  seed_base: 20260805
+  id: anime-canary-b07-r3-1785789600
+  beats: 7
 

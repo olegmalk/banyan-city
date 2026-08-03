@@ -496,6 +496,14 @@ def _run(cmd, courier, stage, timeout=None, retry=False):
     # single non-ASCII character in a SUCCESS message killed a 25-minute
     # encode with UnicodeEncodeError (2026-07-30, canary 3)
     env = {**os.environ, "PYTHONIOENCODING": "utf-8", "PYTHONUTF8": "1",
+           # PyTorch's own advice, printed in the OOM that killed AnimeGen on
+           # 2026-08-03: "If reserved but unallocated memory is large try setting
+           # PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid
+           # fragmentation." That OOM had 917 MiB reserved-but-unallocated while
+           # asking for 1.29 GiB — the exact shape this setting addresses. It
+           # grows one allocation instead of hunting for a contiguous block, so it
+           # costs nothing when memory is plentiful.
+           "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True",
            # HF's newer chunked (xet/CAS) transfer dropped the 10GB model
            # download 23 minutes in on the 5090 (2026-07-31). The classic path
            # resumes; the chunked one restarts.
