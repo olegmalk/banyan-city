@@ -571,3 +571,41 @@ CC BY passes as `allow` and nothing checks the exchange happened.
 
 **Open, founder-reserved:** D14 (does beat 4 show the fall — no engine ever has),
 whether this cut becomes canon, and posting.
+
+## 2026-08-03 — the picture was frozen because we told it to be
+
+Full write-up: `pipeline/loop/cycle-016.md`. Standing facts this adds:
+
+- **MEASURE MOTION AS MEDIAN + FROZEN-FRAME SHARE, never a mean.** A mean is
+  dragged up by one jump and cannot tell animation from a still that cuts. The
+  steward recommended a variant with 38% barely-moving frames on the strength of
+  its mean, and re-rendered fifteen beats before the founder said "literally just
+  frozen frames". Reference points: the rejected cut 0.13 median / 70% frozen;
+  the approved F recipe 1.30 / 3%; hosted models 1.03-1.13 / 0%.
+- **`"camera locked"` protects nothing in image-to-video.** The init frame locks
+  the framing. Measured drift 0.00-0.02px without the phrase, against 4.83px on
+  the clip the founder called "aggressively moving" — and the phrase costs real
+  subject motion. Kept only on beats whose direction IS stillness (4, 6, 8).
+- **You cannot pin the body and keep the animation.** none 3% frozen, positive
+  wording 25%, negative 43%. Writing stillness into the POSITIVE does almost
+  nothing; the negative is the lever, and here it is the wrong lever.
+- **Direction register: name the amplitude.** "hammer", "drive hard", "whips
+  back", "jolt", "slamming" — not "moves" or "fast". The founder's own call: "do
+  this kinda thing. its very good."
+- **A term added for picture quality can act on motion.** Three of the four
+  suppressors found today were: our shake terms, Wan's inherited 静态/静止
+  defaults, and "motion blur" (measured neutral, reverted). Read the whole
+  negative before blaming the model.
+- **The batch path exists and auto-enables at >=20GB VRAM with >1 beat** — and we
+  have never used it, because every queued task names ONE beat. `beats: "1,2,3"`
+  is supported. One batched task loads the model once instead of fifteen times:
+  ~12 min per episode. Untested WITH offload; batching was unsafe before offload
+  fixed the residency.
+- **14 steps: 188s render, ~248s per beat end to end, 62 min for 15 beats.**
+  20 steps is 240s/300s/75min. Measured, not estimated.
+- **`--keep-text-encoder` is gone** — it was declared, plumbed and read nowhere.
+- A test may enforce an invariant; it may not outvote a measurement. One asserting
+  every direction contains "camera locked" had to be replaced, not satisfied.
+
+**Open, founder-reserved:** D14 (beat 4's fall), D15 (every still is OpenRAIL++,
+debt 38), whether 14 steps is the quality bar, and posting.
