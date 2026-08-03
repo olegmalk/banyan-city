@@ -45,7 +45,20 @@ LEDGER_HEADER = ["date", "node", "leaf", "citizen", "type", "amount_usd", "compu
 # Pre-existing licence violations, all in node 001 (see lint_licences). This
 # number may only ever go DOWN. Raising it to make a build pass would convert
 # the one gate that can catch an unpublishable episode into a rubber stamp.
-LICENCE_DEBT = 21
+#
+# 2026-08-03: 21 -> 38, and this is the ONE reason the number may rise. No new
+# asset appeared; a WRONG RECORD WAS CORRECTED. MODEL_LICENCES claimed
+# cagliostrolab/animagine-xl-3.1 was faipl-1.0-sd with "outputs unrestricted",
+# which the model's own card now supersedes with CreativeML Open RAIL++-M — whose
+# use restrictions travel to the output, and which drew all fifteen approved
+# stills. Those 17 records were being cleared by the stale entry, so the debt was
+# always 38; only the bookkeeping said 21. See DECISIONS.md D15 for the text, the
+# three ways out, and why the steward did not pick one.
+#
+# THE INVARIANT IS UNCHANGED: the count asserts "no new unpublishable asset". It
+# rises only when the tree is found to be worse than recorded, never to make a
+# failing build pass. Every future change must be DOWN, as assets are retired.
+LICENCE_DEBT = 38
 
 errors = []
 
