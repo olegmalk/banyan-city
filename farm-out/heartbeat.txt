@@ -991,3 +991,4 @@
 10:41:00Z STARTED task=hands-I-small-b01-1785800400 beats=1 on cuda
 10:41:03Z VIDEO_VENV_OK
 10:41:17Z VIDEO_DEPS_OK 2.11.0+cu128 0.39.0 True
+10:41:28Z VIDEO_RENDERING beat=01 on ti2v-5b (single-process)
