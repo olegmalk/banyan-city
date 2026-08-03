@@ -411,9 +411,40 @@ ANTI_SCENE = ("scene change, shot change, cut to another angle, second scene, "
 # for stillness gets shake suppression, a beat asking for motion does not.
 SHAKE_NEG = ("camera shake, handheld camera, jitter, wobble, unstable camera, "
              "vibrating, trembling camera, rolling shutter")
-ANTI_STYLE = ("photorealistic, photograph, live action, film still, 3D render, "
+# THE STYLE NEGATIVE HAD TWO MOTION SUPPRESSORS HIDING IN IT.
+#
+# This list exists to keep the picture from drifting photoreal. But a negative
+# prompt does not know why a term is there, only that the term is unwanted:
+#
+#   "motion blur"  — fast hands PRODUCE motion blur. Asking for fast typing while
+#                    forbidding its visual signature leaves the model one cheap way
+#                    to satisfy both: do not move. Added 2026-08-01 as an
+#                    anti-photoreal term, when the complaint was style, not motion.
+#   "film still"   — meant as "not a live-action film frame". But the token *still*
+#                    is in it, and nothing guarantees the encoder reads the two
+#                    words as one concept. This is the same trap as WANTS_STILL
+#                    matching "hands going still" earlier today.
+#
+# Both moved to ANTI_PHOTO_STRICT, applied only where they cannot cost us motion:
+# beats whose direction asks for stillness. This is the third time a term added for
+# picture quality turned out to act on motion (the first was Wan's own anti-static
+# defaults, the second our shake suppression, whose removal was the ONE change that
+# has moved the needle: 0.19 -> 0.62).
+ANTI_STYLE = ("photorealistic, photograph, live action, 3D render, "
               "CGI, octane, realistic skin texture, depth of field bokeh, "
-              "motion blur, " + ANTI_SCENE)
+              + ANTI_SCENE)
+# kept for still beats, where "no blur, no film frame" costs nothing
+ANTI_PHOTO_STRICT = "film still, motion blur"
+# Wan's negative field cap as we use it. Kept as a name so the truncation warning
+# and the value cannot drift apart.
+#
+# NOTE, unverified: 460 CHARACTERS is a proxy for a TOKEN limit, and a bad one when
+# the string mixes Chinese and English — a Chinese character is one token but three
+# UTF-8 bytes, so the char count over- or under-states the real budget depending on
+# the mix. Left as-is rather than raised on a guess; what matters is that
+# truncation is now LOUD, so any term that fails to arrive says so instead of
+# producing a silent non-result.
+NEG_MAX = 460
 
 
 # SDXL prompt furniture that means nothing to a video model and eats its attention
@@ -486,9 +517,23 @@ def video_prompt(motion: str, still_prompt: str, no_anchor=False) -> tuple:
     anti = antistatic_for(motion)
     # anti applied  => this beat wants motion  => do NOT suppress shake
     # anti suppressed => this beat wants stillness => DO suppress shake
-    shake = "" if anti else SHAKE_NEG
-    parts = [x for x in (extra_neg, ANTI_STYLE, anti, shake) if x]
-    return positive[:700], ", ".join(parts)[:460]
+    # a beat that wants motion gets neither shake suppression nor the two
+    # motion-suppressing photo terms; a beat that wants stillness gets both
+    strict = "" if anti else f"{SHAKE_NEG}, {ANTI_PHOTO_STRICT}"
+    # ORDER IS SURVIVAL. The negative is capped, and a plain [:460] cuts mid-word:
+    # adding ANTI_PHOTO_STRICT pushed a still beat to exactly 460 and the tail
+    # arrived as "fil". So the PER-BEAT decisions — the ones being tuned, the ones
+    # whose presence or absence we are measuring — go FIRST, and the general style
+    # list, which is the same on every clip, goes last where losing its tail costs
+    # least. Then cut on a comma so no term is ever half-sent.
+    parts = [x for x in (extra_neg, anti, strict, ANTI_STYLE) if x]
+    neg = ", ".join(parts)
+    if len(neg) > NEG_MAX:
+        cut = neg[:NEG_MAX].rsplit(",", 1)[0]
+        print(f"!! negative prompt truncated {len(neg)} -> {len(cut)} chars; "
+              f"dropped: {neg[len(cut):].strip(', ')[:120]}", flush=True)
+        neg = cut
+    return positive[:700], neg
 
 
 MODEL_LICENCE = {
