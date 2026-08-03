@@ -698,7 +698,8 @@ def run(task: dict, courier, node_dir: Path) -> None:
                  # gate calls them unknown — a violation, not a note. Without
                  # this flag a queue task could only run AnimeGen *with* them,
                  # i.e. could only produce footage we are not allowed to ship.
-                 + (["--no-lora"] if task.get("no_lora") else []),
+                 + (["--no-lora"] if task.get("no_lora") else [])
+                 + (["--no-shake-neg"] if task.get("no_shake_neg") else []),
                  courier, f"batch {task.get('id')}", timeout=14400, retry=True)
             jf.unlink(missing_ok=True)
             made = 0
@@ -771,7 +772,8 @@ def run(task: dict, courier, node_dir: Path) -> None:
                  # gate calls them unknown — a violation, not a note. Without
                  # this flag a queue task could only run AnimeGen *with* them,
                  # i.e. could only produce footage we are not allowed to ship.
-                 + (["--no-lora"] if task.get("no_lora") else []),
+                 + (["--no-lora"] if task.get("no_lora") else [])
+                 + (["--no-shake-neg"] if task.get("no_shake_neg") else []),
                  courier, f"beat {num}", timeout=7200, retry=True)
         else:
             courier.mark(f"VIDEO_ENCODING beat={num:02d}")
