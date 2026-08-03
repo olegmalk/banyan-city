@@ -37,7 +37,7 @@ every push to main). Read `PROMISE.md` first — it is canonical. Then
 |---|---|
 | `python3 pipeline/lint_genome.py` | structural honesty gate (CI runs it too) |
 | `python3 pipeline/test_pipeline.py` | 28 pure-logic tests (CI) |
-| `python3 pipeline/build_site.py` | genomes → `_site/` (deployed on push) |  — **site work: read `SITE.md` first**
+| `python3 pipeline/build_site.py` | genomes → `_site/` (deployed on push). **Site work: read `SITE.md` first** |
 | `python3 pipeline/render_t1.py sapling <id>` | script → storyboard leaf |
 | `python3 pipeline/render_t2.py sapling <id>` | storyboard → silent animatic (needs playwright chromium; portable path fallback) |
 | `python3 pipeline/render_t3.py sapling <id> --clips <dir> [--out x.mp4]` | per-beat clips → captioned 9:16 episode w/ title+end cards; slate for missing beats; muxes `NN-vo.mp3` audio in sync; `--out` = bench, no leaf |
