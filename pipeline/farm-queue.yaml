@@ -90,3 +90,66 @@ tasks:
   seed_base: 20260805
   id: anime-canary-b07-r2-1785787800
   beats: 7
+# 07:2xZ — STEP SWEEP, ON THE CORRECT PATH THIS TIME. The real speed lever, and
+# we abandoned it for the wrong reason.
+#
+# The founder's verdict on the 2026-08-02 sweep was "all of these step sweep
+# results are bad and corrupt the image. there is barely a difference between
+# them as well." The second clause was the diagnosis and nobody read it as one:
+# if 8 steps and 20 steps look the same, the steps are not doing anything.
+#
+# Timeline, reconciled from the heartbeat and git log:
+#   10:31Z  the "speed fix" landed (hand-passed prompt_embeds)
+#   10:43Z  the sweep ran            <- entirely inside the broken window
+#   12:50Z  the fix was REVERTED for bypassing image conditioning
+# Every sweep clip was made by the corrupted path. Their timings give it away
+# too: 66s at 20 steps against the correct path's 240s — 3.6x faster because it
+# was skipping the conditioning that makes the picture.
+#
+# So the quality-vs-steps curve is UNKNOWN. Current setting is 20 with no
+# evidence behind it. If 12 holds up that is a 40% cut on every clip for free,
+# no licence question, no new model. If it does not, we learn the floor.
+#
+# Beat 1 on purpose: the clip the founder has judged more than any other, and
+# d2-b01-redo-1785766800 at 20 steps / 239s is already in hand as the CONTROL.
+# Same seed, same 704x1280, same offload, so steps are the only variable.
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  video_model: ti2v-5b
+  motion: no new subjects, no scene change
+  size: 704x1280
+  offload: true
+  seconds: 2.5
+  steps: 14
+  guidance: 5.0
+  seed_base: 20260805
+  id: steps14-b01-1785788400
+  beats: 1
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  video_model: ti2v-5b
+  motion: no new subjects, no scene change
+  size: 704x1280
+  offload: true
+  seconds: 2.5
+  steps: 10
+  guidance: 5.0
+  seed_base: 20260805
+  id: steps10-b01-1785788400
+  beats: 1
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  video_model: ti2v-5b
+  motion: no new subjects, no scene change
+  size: 704x1280
+  offload: true
+  seconds: 2.5
+  steps: 6
+  guidance: 5.0
+  seed_base: 20260805
+  id: steps06-b01-1785788400
+  beats: 1
+

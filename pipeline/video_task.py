@@ -14,6 +14,7 @@ to diffusers 0.29.2 for SDXL, and Wan needs a modern one.
 Driven by farm_worker when a queue task carries `video: true`.
 """
 
+import collections
 import json
 import os
 import platform
@@ -67,7 +68,14 @@ def _stream(cmd, courier, timeout, env):
     nothing was pushed until the task returned — three hours of finished work
     discarded by the last minute of it. Now a timeout keeps whatever finished.
     """
-    out, err = [], []
+    out = []
+    # BOUNDED. Now that stderr is drained live (see drain_err below), a tqdm bar
+    # is a real line every redraw — Python's universal-newline mode turns each \r
+    # into \n, verified — so a 3-hour render appends tens of thousands of near
+    # identical lines. Callers only ever read the TAIL (`r.stderr[-2500:]`) and
+    # scan for transient-error strings, and a failure lands at the END, so keeping
+    # the last few thousand lines loses nothing and cannot grow without limit.
+    err = collections.deque(maxlen=4000)
     deadline = time.time() + timeout if timeout else None
     # encoding= explicitly: errors="replace" keeps this from crashing on the
     # farm's cp1252 locale, but without it every non-ASCII byte the renderer
