@@ -1,0 +1,16 @@
+# Shot provenance (7.2) — written by video_task at render time
+platform: local-gpu (rtx5090)
+model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+model_licence: Apache-2.0
+shot_beat: 2
+size: 704x1280
+seconds: 2.5
+steps: 14
+guidance: 5.0
+seed: 20260807
+task: k15-b02-1785802800
+cost_usd: 0
+prompt: |-
+  2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. his hands move fast over the keyboard then stop dead, a small spinner turns on the monitor, faint steam rises from the mug, camera locked. Subject already in frame: 1boy, solo, over the shoulder, dark silhouette, glasses, messy hair, hood down, large glowing monitor, terminal log text, mechanical keyboard, mug, dark….
+negative: |-
+  new subjects, scene change, swaying, leaning, head turning, torso twisting, whole body movement, shoulders moving, photorealism, 3D render look, text, 静态, 静止, 静止不动的画面, frozen frame, still image, no motion, photorealistic, photograph, live action, film still, 3D render, CGI, octane, realistic skin texture, depth of field bokeh, motion blur, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
