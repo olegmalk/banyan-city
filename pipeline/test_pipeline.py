@@ -930,6 +930,78 @@ def test_no_undefined_locals(tmp: Path):
     check("no pipeline function reads an undefined name", not bad)
 
 
+def test_queue_render_params_reach_the_child(tmp: Path):
+    """Every render parameter a queue task can set must actually be passed on.
+
+    On 2026-08-03 a guidance 3.0 canary produced a file BYTE-IDENTICAL to the
+    guidance 5.0 baseline — same sha256. Not a finding, a flag that never arrived:
+    the batch path passed --guidance and the single-beat path did not, so every
+    clip in the episode and every canary silently used wan_i2v's default 5.0. The
+    steward had already written "guidance did nothing" into a commit message on the
+    strength of that non-result. A parameter the queue is allowed to set and the
+    renderer silently ignores produces confident wrong conclusions, which is worse
+    than a crash.
+
+    Two invariants:
+      1. the two render paths honour the SAME parameter set, so neither can drift
+      2. every flag either path sends is one wan_i2v actually accepts
+    """
+    import ast as A
+    import re
+
+    # AST, NOT REGEX. Two regex attempts got this wrong in opposite directions —
+    # first matching the `--stage encode` call that legitimately samples nothing,
+    # then matching only one of the two render calls. The call arguments are a
+    # syntax tree; read them as one.
+    def sampling_calls(path):
+        tree = A.parse(path.read_text(encoding="utf-8"))
+        found = []
+        for n in A.walk(tree):
+            if not (isinstance(n, A.Call) and isinstance(n.func, A.Name)
+                    and n.func.id == "_run" and n.args):
+                continue
+            flags = set()
+            for lit in A.walk(n.args[0]):
+                if isinstance(lit, A.Constant) and isinstance(lit.value, str) \
+                        and lit.value.startswith("--"):
+                    flags.add(lit.value[2:])
+            # a call that SAMPLES writes a clip: --out (single) or --jobs (batch).
+            # `--stage encode` has neither; it takes a prompt and emits embeddings.
+            if "stage" in flags and ({"out"} <= flags or {"jobs"} <= flags):
+                found.append(flags)
+        return found
+
+    flagsets = sampling_calls(REPO / "pipeline" / "video_task.py")
+    # THREE, not two: the batch path (--jobs), the single-process path
+    # (--stage simple) and the legacy two-process path (--stage render). All three
+    # sample, so all three must honour the same parameters.
+    check(f"found every wan_i2v sampling call site (got {len(flagsets)})",
+          len(flagsets) == 3)
+
+    SAMPLING = {"seconds", "steps", "size", "guidance", "model", "quantise"}
+    missing = [f"call {i+1} omits --{w}"
+               for i, f in enumerate(flagsets) for w in sorted(SAMPLING) if w not in f]
+    for m in missing:
+        print(f"      x  {m}")
+    check("both render paths pass every sampling parameter", not missing)
+
+    wan_src = (REPO / "pipeline" / "wan_i2v.py").read_text(encoding="utf-8")
+    known = set(re.findall(r'add_argument\("--([a-z-]+)"', wan_src))
+    unknown = sorted({fl for f in flagsets for fl in f} - known)
+    for u in unknown:
+        print(f"      x  --{u} is sent but wan_i2v does not define it")
+    check("no flag is sent that the renderer does not accept", not unknown)
+
+    # a flag DEFINED but never READ is a trap: it looks like a control and does
+    # nothing. --keep-text-encoder was exactly that, and I nearly reached for it to
+    # fix a memory ceiling before noticing it was inert.
+    read = {x.attr for x in A.walk(A.parse(wan_src)) if isinstance(x, A.Attribute)}
+    dead = sorted(f for f in known if f.replace("-", "_") not in read)
+    for d in dead:
+        print(f"      x  --{d} is defined but never read")
+    check("no renderer flag is defined but never read", not dead)
+
+
 def test_hosted_path_sends_our_negative(tmp: Path):
     """The paid API path must send the same anti-scene-change terms as the local one.
 
@@ -1471,6 +1543,7 @@ def main():
     with tempfile.TemporaryDirectory() as td:
         test_no_undefined_locals(Path(td))
         test_subprocess_reads_are_utf8(Path(td))
+        test_queue_render_params_reach_the_child(Path(td))
         test_hosted_path_sends_our_negative(Path(td))
         test_antistatic_first_signal_wins(Path(td))
         test_vendored_licence_does_not_launder(Path(td))

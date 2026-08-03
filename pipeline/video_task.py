@@ -733,7 +733,6 @@ def run(task: dict, courier, node_dir: Path) -> None:
                   "--quantise", str(task.get("quantise", "none")),
                   "--guidance", str(task.get("guidance", 5.0))]
                  + (["--offload"] if task.get("offload") else [])
-                 + (["--keep-text-encoder"] if task.get("keep_text_encoder") else [])
                  # no_lora is what makes an AnimeGen run PUBLISHABLE. The
                  # Lightning 4-step LoRAs (lightx2v/Wan2.2-Lightning) declare
                  # apache-2.0 in HF metadata and ship NO LICENSE FILE, so our own
@@ -811,9 +810,17 @@ def run(task: dict, courier, node_dir: Path) -> None:
                   "--model", vmodel,
                   "--quantise", str(task.get("quantise", "none")),
                   "--seconds", str(seconds), "--steps", str(steps), "--size", size,
+                  # --guidance WAS MISSING HERE. The batch path passed it and this
+                  # one did not, so every single-beat render — which is every clip
+                  # in the episode and every canary — silently used wan_i2v's
+                  # default 5.0 no matter what the queue said. Caught 2026-08-03
+                  # when a cfg 3.0 test produced a file BYTE-IDENTICAL to the cfg
+                  # 5.0 baseline (same sha256). That is not a result, it is a flag
+                  # that never arrived, and I had already written "guidance did
+                  # nothing" into a commit message on the strength of it.
+                  "--guidance", str(task.get("guidance", 5.0)),
                   "--seed", str(int(task.get("seed_base", 20260731)) + num)]
                  + (["--offload"] if task.get("offload") else [])
-                 + (["--keep-text-encoder"] if task.get("keep_text_encoder") else [])
                  # no_lora is what makes an AnimeGen run PUBLISHABLE. The
                  # Lightning 4-step LoRAs (lightx2v/Wan2.2-Lightning) declare
                  # apache-2.0 in HF metadata and ship NO LICENSE FILE, so our own
@@ -831,8 +838,16 @@ def run(task: dict, courier, node_dir: Path) -> None:
             _run([str(PY), wan, "--stage", "encode", "--embeds", str(emb),
                   "--prompt", prompt], courier, f"encode {num}", timeout=3600, retry=True)
             courier.mark(f"VIDEO_RENDERING beat={num:02d}")
+            # THE THIRD sampling path, and it was missing --guidance, --model and
+            # --quantise while the other two had them. Three paths that sample must
+            # honour the same parameters or a queue value means different things
+            # depending on which one runs — that divergence is exactly how
+            # "guidance did nothing" got written down as a finding.
             _run([str(PY), wan, "--stage", "render", "--embeds", str(emb),
                   "--init", str(init), "--out", str(out),
+                  "--model", vmodel,
+                  "--quantise", str(task.get("quantise", "none")),
+                  "--guidance", str(task.get("guidance", 5.0)),
                   "--seconds", str(seconds), "--steps", str(steps), "--size", size,
                   "--seed", str(int(task.get("seed_base", 20260731)) + num)],
                  courier, f"beat {num}", timeout=7200, retry=True)
