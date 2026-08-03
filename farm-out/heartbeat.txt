@@ -1222,3 +1222,4 @@
 14:00:39Z STARTED task=flat-b03-1785808800 beats=3 on cuda
 14:00:42Z VIDEO_VENV_OK
 14:00:54Z VIDEO_DEPS_OK 2.11.0+cu128 0.39.0 True
+14:01:06Z VIDEO_RENDERING beat=03 on ti2v-5b (single-process)
