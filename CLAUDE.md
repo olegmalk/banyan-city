@@ -19,6 +19,17 @@ every push to main). Read `PROMISE.md` first — it is canonical. Then
   (`approved_by: founder` + date). Writing is cheap and reversible; media is
   neither. On 2026-07-25 seven scripts were voiced and 8.7 GPU-hours rendered
   before the author had read any of them — that is what this rule prevents.
+- **ONE SAMPLE BEFORE ANY BATCH** (founder, 2026-08-03): before rendering,
+  voicing or generating a SET of anything, produce ONE and have the founder look at
+  it. Not one per session — one per *recipe change*. The canaries that worked on
+  2026-08-03 were samples (the 704x1280 canary answered a question five whole-batch
+  attempts had only failed at; the step sweep and the shake A/B likewise). The two
+  things that wasted an hour each were both the steward skipping to fifteen: the K
+  recipe, chosen on the steward's own metric, rendered across all fifteen beats and
+  then rejected with "literally just frozen frames" — a defect one sample would have
+  shown in three minutes. This is the same rule as §6 one level down: §6 says do not
+  render an unapproved script, this says do not scale an unapproved *result*.
+  A metric agreeing with me is not a sample.
 - **Spend guards are code:** `pipeline/budget.yaml` caps ($/run and lifetime);
   `generate_shots.py` refuses without explicit `--yes` and logs to
   `ledger/render-spend.csv`. A FAL key may exist in gitignored `.env` — its

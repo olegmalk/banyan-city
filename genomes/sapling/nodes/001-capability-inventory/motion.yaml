@@ -41,7 +41,11 @@ motion_prompts:
   # 2.5s left almost no typing. So beat 1 is now nothing but typing, which also
   # removes the "still" that my previous wording smuggled in.
   1: "his hands hammer the mechanical keyboard, fingers flying across the keys in large rapid strokes, wrists moving visibly, the monitor glow pulsing over them"
-  2: "his hands drive hard across the keyboard then stop dead mid-air, the spinner sweeps around the monitor, steam curls up off the mug"
+  # 2026-08-03, founder approved variant B: "face B is the best out of the 2".
+  # The face terms live in the negative (FACE_NEG, applied to PERSON_BEATS) — this
+  # line is just the motion, with the stop-dead dropped because it belongs to the
+  # keyboard sfx and cost the beat its typing.
+  2: "his hands drive hard across the keyboard, fingers striking the keys, the spinner sweeping on the monitor"
   3: "the terminal text scrolls up in bursts and settles, the cursor blinks hard, the screen glow surges bright then falls back"
   4: "the limp hand stays motionless, the monitor glow flickers slowly across it, one loose paper settles to the floor, camera locked"
   5: "the dying screen glow strobes across the ceramic shards and drains away, dust motes tumble through the last light"
