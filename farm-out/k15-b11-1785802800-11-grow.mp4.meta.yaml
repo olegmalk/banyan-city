@@ -1,0 +1,16 @@
+# Shot provenance (7.2) — written by video_task at render time
+platform: local-gpu (rtx5090)
+model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+model_licence: Apache-2.0
+shot_beat: 11
+size: 704x1280
+seconds: 2.5
+steps: 14
+guidance: 5.0
+seed: 20260816
+task: k15-b11-1785802800
+cost_usd: 0
+prompt: |-
+  2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. the new leaf unfurls slowly and settles upright, dew drops glisten, soft light shifts, camera locked. Subject already in frame: macro close-up of a tiny green sprout, one brand new bright leaf unfurling at its tip, morning dew drops, soft golden morning….
+negative: |-
+  new subjects, scene change, swaying, leaning, head turning, torso twisting, whole body movement, shoulders moving, people, hands, girl, light trails, tree, photorealism, 3D render look, text, 静态, 静止, 静止不动的画面, frozen frame, still image, no motion, photorealistic, photograph, live action, film still, 3D render, CGI, octane, realistic skin texture, depth of field bokeh, motion blur, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
