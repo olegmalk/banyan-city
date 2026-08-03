@@ -863,3 +863,4 @@
 07:11:44Z VIDEO_STALLED no clip finished in 45m (0 done) — killing it so the queue moves
 07:11:47Z FAIL task=anime-canary-b07-1785783000
 07:13:03Z STARTED task=anime-canary-b07-r2-1785787800 beats=7 on cuda
+07:13:06Z VIDEO_VENV_OK
