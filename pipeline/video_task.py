@@ -430,11 +430,18 @@ SHAKE_NEG = ("camera shake, handheld camera, jitter, wobble, unstable camera, "
 # picture quality turned out to act on motion (the first was Wan's own anti-static
 # defaults, the second our shake suppression, whose removal was the ONE change that
 # has moved the needle: 0.19 -> 0.62).
-ANTI_STYLE = ("photorealistic, photograph, live action, 3D render, "
+# MEASURED AND REVERTED, 2026-08-03. I moved "motion blur" and "film still" off
+# motion beats on the reasoning that fast hands PRODUCE motion blur, so forbidding
+# it while asking for speed leaves the model one cheap way out: do not move. Good
+# reasoning, wrong answer — beat 1 measured 0.63 with them gone against 0.62 with
+# them, i.e. nothing. So they are motion-NEUTRAL, and keeping them on every beat is
+# free while removing them would weaken the anti-photoreal guard for no gain.
+#
+# What DID work is in the row below it: the shake terms (0.19 -> 0.62) and dropping
+# "camera locked" plus amplitude language (0.62 -> 1.18).
+ANTI_STYLE = ("photorealistic, photograph, live action, film still, 3D render, "
               "CGI, octane, realistic skin texture, depth of field bokeh, "
-              + ANTI_SCENE)
-# kept for still beats, where "no blur, no film frame" costs nothing
-ANTI_PHOTO_STRICT = "film still, motion blur"
+              "motion blur, " + ANTI_SCENE)
 # Wan's negative field cap as we use it. Kept as a name so the truncation warning
 # and the value cannot drift apart.
 #
@@ -519,7 +526,7 @@ def video_prompt(motion: str, still_prompt: str, no_anchor=False) -> tuple:
     # anti suppressed => this beat wants stillness => DO suppress shake
     # a beat that wants motion gets neither shake suppression nor the two
     # motion-suppressing photo terms; a beat that wants stillness gets both
-    strict = "" if anti else f"{SHAKE_NEG}, {ANTI_PHOTO_STRICT}"
+    strict = "" if anti else SHAKE_NEG
     # ORDER IS SURVIVAL. The negative is capped, and a plain [:460] cuts mid-word:
     # adding ANTI_PHOTO_STRICT pushed a still beat to exactly 460 and the tail
     # arrived as "fil". So the PER-BEAT decisions — the ones being tuned, the ones
