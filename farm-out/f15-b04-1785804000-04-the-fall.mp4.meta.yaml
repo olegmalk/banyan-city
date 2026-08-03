@@ -1,0 +1,16 @@
+# Shot provenance (7.2) — written by video_task at render time
+platform: local-gpu (rtx5090)
+model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+model_licence: Apache-2.0
+shot_beat: 4
+size: 704x1280
+seconds: 2.5
+steps: 14
+guidance: 5.0
+seed: 20260809
+task: f15-b04-1785804000
+cost_usd: 0
+prompt: |-
+  2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. the limp hand stays motionless, the monitor glow flickers slowly across it, one loose paper settles to the floor, camera locked
+negative: |-
+  new subjects, scene change, face, head, full body, horror, blood, standing, photorealism, 3D render look, text, camera shake, handheld camera, jitter, wobble, unstable camera, vibrating, trembling camera, rolling shutter, photorealistic, photograph, live action, film still, 3D render, CGI, octane, realistic skin texture, depth of field bokeh, motion blur, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
