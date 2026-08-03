@@ -395,6 +395,22 @@ STYLE = ("2D anime, hand-drawn cel animation, flat cel shading, clean ink "
 # cannot.
 ANTI_SCENE = ("scene change, shot change, cut to another angle, second scene, "
               "new camera angle, different location, split screen, montage")
+# Shake suppression, applied PER BEAT rather than to everything.
+#
+# Added blanket on 2026-08-02 to fix "these all have a pattern of like, shaking
+# alot, strangly". It worked — camera translation went to 0.00px on all fifteen
+# beats. But it also damped the motion we want: on 2026-08-03 an A/B on beat 1
+# (same seed, same steps, typing-only direction) measured frame-to-frame movement
+# of 0.19 with these terms and 0.62 without — 3.3x — and the founder's verdict on
+# the pair was "B is better overall", B being without.
+#
+# Both of his notes are true at once, which is why this cannot be a global switch:
+#   "no static at all forces it to move even when not needed, creating shaking"
+#   "needs more movement, hands barely move"
+# So it follows the same per-beat signal as antistatic_for, inverted: a beat asking
+# for stillness gets shake suppression, a beat asking for motion does not.
+SHAKE_NEG = ("camera shake, handheld camera, jitter, wobble, unstable camera, "
+             "vibrating, trembling camera, rolling shutter")
 ANTI_STYLE = ("photorealistic, photograph, live action, film still, 3D render, "
               "CGI, octane, realistic skin texture, depth of field bokeh, "
               "motion blur, " + ANTI_SCENE)
@@ -454,7 +470,10 @@ def video_prompt(motion: str, still_prompt: str) -> tuple:
         else f"{STYLE}. {motion}"
     extra_neg = ", ".join(n[3:].strip() for n in negatives if len(n) > 3)
     anti = antistatic_for(motion)
-    parts = [x for x in (extra_neg, ANTI_STYLE, anti) if x]
+    # anti applied  => this beat wants motion  => do NOT suppress shake
+    # anti suppressed => this beat wants stillness => DO suppress shake
+    shake = "" if anti else SHAKE_NEG
+    parts = [x for x in (extra_neg, ANTI_STYLE, anti, shake) if x]
     return positive[:700], ", ".join(parts)[:460]
 
 
@@ -707,7 +726,10 @@ def run(task: dict, courier, node_dir: Path) -> None:
                  # this flag a queue task could only run AnimeGen *with* them,
                  # i.e. could only produce footage we are not allowed to ship.
                  + (["--no-lora"] if task.get("no_lora") else [])
-                 + (["--no-shake-neg"] if task.get("no_shake_neg") else []),
+                 # ALWAYS. The per-beat decision is made in video_prompt() above
+                 # and travels in the negative string; wan_i2v's own global copy
+                 # would re-add the terms to every beat and undo it.
+                 + ["--no-shake-neg"],
                  courier, f"batch {task.get('id')}", timeout=14400, retry=True)
             jf.unlink(missing_ok=True)
             made = 0
@@ -781,7 +803,10 @@ def run(task: dict, courier, node_dir: Path) -> None:
                  # this flag a queue task could only run AnimeGen *with* them,
                  # i.e. could only produce footage we are not allowed to ship.
                  + (["--no-lora"] if task.get("no_lora") else [])
-                 + (["--no-shake-neg"] if task.get("no_shake_neg") else []),
+                 # ALWAYS. The per-beat decision is made in video_prompt() above
+                 # and travels in the negative string; wan_i2v's own global copy
+                 # would re-add the terms to every beat and undo it.
+                 + ["--no-shake-neg"],
                  courier, f"beat {num}", timeout=7200, retry=True)
         else:
             courier.mark(f"VIDEO_ENCODING beat={num:02d}")
