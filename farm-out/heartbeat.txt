@@ -861,3 +861,4 @@
 07:01:38Z VIDEO_ALIVE 35m elapsed, 0 clip(s) done
 07:06:41Z VIDEO_ALIVE 40m elapsed, 0 clip(s) done
 07:11:44Z VIDEO_STALLED no clip finished in 45m (0 done) — killing it so the queue moves
+07:11:47Z FAIL task=anime-canary-b07-1785783000

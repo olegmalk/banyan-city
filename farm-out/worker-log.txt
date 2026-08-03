@@ -1,0 +1,59 @@
+$ C:\banyan-video\venv\Scripts\python.exe C:\banyan-farm\banyan-city\pipeline\wan_i2v.py --stage simple --embeds C:\banyan-video\embeds-07.pt…
+model: aidealab/AnimeGen-I2V
+AnimeGen: fp8 layerwise casting + cpu offload
+model: aidealab/AnimeGen-I2V (anime finetune, authors' recipe)
+████| 3/3 [00:00<00:00,  5.40it/s]
+Loading checkpoint shards: 100%|██████████| 3/3 [00:00<00:00,  5.56it/s]
+
+Loading pipeline components...:   0%|          | 0/6 [00:00<?, ?it/s]
+
+Loading weights:   0%|          | 0/242 [00:00<?, ?it/s][A
+Loading weights: 100%|██████████| 242/242 [00:00<00:00, 5082.68it/s]
+
+Loading pipeline components...:  67%|██████▋   | 4/6 [00:00<00:00,  6.96it/s]
+Loading pipeline components...:  83%|████████▎ | 5/6 [00:01<00:00,  2.73it/s]
+Loading pipeline components...: 100%|██████████| 6/6 [00:01<00:00,  3.84it/s]
+Traceback (most recent call last):
+  File "C:\banyan-farm\banyan-city\pipeline\wan_i2v.py", line 484, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\banyan-farm\banyan-city\pipeline\wan_i2v.py", line 480, in main
+    return stage_simple(a) if a.stage == "simple" else stage_render(a)
+           ^^^^^^^^^^^^^^^
+  File "C:\banyan-farm\banyan-city\pipeline\wan_i2v.py", line 196, in stage_simple
+    return _sample(pipe, a, w, h, frames, takes_image)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\banyan-farm\banyan-city\pipeline\wan_i2v.py", line 321, in _sample
+    out = pipe(**kw).frames[0]
+          ^^^^^^^^^^
+  File "C:\banyan-video\venv\Lib\site-packages\torch\utils\_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\banyan-video\venv\Lib\site-packages\diffusers\pipelines\wan\pipeline_wan_i2v.py", line 716, in __call__
+    latents_outputs = self.prepare_latents(
+                      ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\banyan-video\venv\Lib\site-packages\diffusers\pipelines\wan\pipeline_wan_i2v.py", line 455, in prepare_latents
+    latent_condition = retrieve_latents(self.vae.encode(video_condition), sample_mode="argmax")
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\banyan-video\venv\Lib\site-packages\diffusers\utils\accelerate_utils.py", line 46, in wrapper
+    return method(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\banyan-video\venv\Lib\site-packages\diffusers\models\autoencoders\autoencoder_kl_wan.py", line 1180, in encode
+    h = self._encode(x)
+        ^^^^^^^^^^^^^^^
+  File "C:\banyan-video\venv\Lib\site-packages\diffusers\models\autoencoders\autoencoder_kl_wan.py", line 1149, in _encode
+    out_ = self.encoder(
+           ^^^^^^^^^^^^^
+  File "C:\banyan-video\venv\Lib\site-packages\torch\nn\modules\module.py", line 1779, in _wrapped_call_impl
+
+Traceback (most recent call last):
+  File "C:\banyan-farm\banyan-city\pipeline\farm_worker.py", line 460, in main
+    render_task(task, courier, device, dtype)
+  File "C:\banyan-farm\banyan-city\pipeline\farm_worker.py", line 306, in render_task
+    return video_task.run(task, courier, d)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\banyan-farm\banyan-city\pipeline\video_task.py", line 670, in run
+    _run([str(PY), wan, "--stage", "simple", "--embeds", str(emb),
+  File "C:\banyan-farm\banyan-city\pipeline\video_task.py", line 461, in _run
+    raise RuntimeError(f"{stage} failed (exit {r.returncode})")
+RuntimeError: beat 7 failed (exit 1)
