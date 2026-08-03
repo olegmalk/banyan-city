@@ -930,6 +930,36 @@ def test_no_undefined_locals(tmp: Path):
     check("no pipeline function reads an undefined name", not bad)
 
 
+def test_hosted_path_sends_our_negative(tmp: Path):
+    """The paid API path must send the same anti-scene-change terms as the local one.
+
+    The founder, on the 2026-08-03 model comparison: "wan 2.7 has the second scene
+    for like half a second at the end, which isnt very good." The steward's answer
+    was that an API model's prompt cannot be edited. That was WRONG, and the code
+    said so: generate_shots sent no negative_prompt at all, while also setting
+    `prompt_extend: True` so Model Studio would rewrite our prompt with an LLM
+    first. The one engine with nothing suppressing a cut, plus a server-side
+    rewriter free to invent narrative, was the one that cut to a second scene.
+
+    Locally these terms cut measured scene-change drift from 40.2 to 8.8. Two
+    copies of a list is how they drift apart; this asserts there is one.
+    """
+    import video_task as vt
+    import generate_shots as gs
+
+    check("hosted API_NEG is the local ANTI_SCENE, not a copy",
+          gs.API_NEG == vt.ANTI_SCENE)
+    check("the local style negative still carries the scene terms",
+          vt.ANTI_SCENE in vt.ANTI_STYLE)
+    src = (REPO / "pipeline" / "generate_shots.py").read_text(encoding="utf-8")
+    check("the API request actually sends negative_prompt",
+          '"negative_prompt": API_NEG' in src)
+    # prompt_extend rewrites our prompt server-side; SCRIPT-SPEC prompts are not
+    # for improving
+    check("prompt_extend is off in the API request",
+          '"prompt_extend": False' in src and '"prompt_extend": True' not in src)
+
+
 def test_antistatic_first_signal_wins(tmp: Path):
     """A direction that opens with motion must get the anti-static terms.
 
@@ -1441,6 +1471,7 @@ def main():
     with tempfile.TemporaryDirectory() as td:
         test_no_undefined_locals(Path(td))
         test_subprocess_reads_are_utf8(Path(td))
+        test_hosted_path_sends_our_negative(Path(td))
         test_antistatic_first_signal_wins(Path(td))
         test_vendored_licence_does_not_launder(Path(td))
     print()

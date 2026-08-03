@@ -383,13 +383,21 @@ def antistatic_for(direction: str) -> str:
 # prompt asking for the opposite.
 STYLE = ("2D anime, hand-drawn cel animation, flat cel shading, clean ink "
          "linework, anime key art")
+# The founder's actual complaint, stated where it acts: Wan likes to cut to a
+# second, more photographic shot partway through a clip. These terms took our
+# measured scene-change drift from 40.2 to 8.8.
+#
+# ITS OWN CONSTANT so the hosted API path can import the identical string.
+# generate_shots was sending NO negative prompt at all to Model Studio, which is
+# why the one engine with nothing suppressing a cut was the one that produced a
+# cut ("wan 2.7 has the second scene for like half a second at the end", founder,
+# 2026-08-03). Two copies of a list is how they drift; one constant is how they
+# cannot.
+ANTI_SCENE = ("scene change, shot change, cut to another angle, second scene, "
+              "new camera angle, different location, split screen, montage")
 ANTI_STYLE = ("photorealistic, photograph, live action, film still, 3D render, "
               "CGI, octane, realistic skin texture, depth of field bokeh, "
-              "motion blur, "
-              # the founder's actual complaint, stated where it acts: Wan likes to
-              # cut to a second, more photographic shot partway through a clip
-              "scene change, shot change, cut to another angle, second scene, "
-              "new camera angle, different location, split screen, montage")
+              "motion blur, " + ANTI_SCENE)
 
 
 # SDXL prompt furniture that means nothing to a video model and eats its attention
