@@ -1008,3 +1008,4 @@
 10:52:07Z VIDEO_RENDERING beat=01 on ti2v-5b (single-process)
 10:55:44Z VIDEO_CLIP 1/1 hands-K-both-b01-1785801600-01-the-keyboard.mp4 in 188s
 10:55:47Z VIDEO_CLIP_OK beat=01 212KB
+10:55:51Z DONE task=hands-K-both-b01-1785801600
