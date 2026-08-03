@@ -871,3 +871,4 @@
 07:16:24Z VIDEO_VENV_OK
 07:16:36Z VIDEO_DEPS_OK 2.11.0+cu128 0.39.0 True
 07:16:48Z VIDEO_RENDERING beat=07 on animegen (single-process)
+07:18:32Z FAIL task=anime-canary-b07-r2-1785787800
