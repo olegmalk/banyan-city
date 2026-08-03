@@ -930,6 +930,40 @@ def test_no_undefined_locals(tmp: Path):
     check("no pipeline function reads an undefined name", not bad)
 
 
+def test_vendored_licence_does_not_launder(tmp: Path):
+    """A vendored licence covers the repos it was VERIFIED for and no others.
+
+    Pure logic, no network, because the failure mode is offline: the first
+    version of `_vendored_licence` matched on filename resemblance — it split
+    "Wan2.2-Lightning" on "-", took the stem "Wan2.2", found it inside
+    "Wan2.2-LICENSE.txt" and handed lightx2v's LoRA weights Wan-AI's
+    sha256-verified Apache text. Different org, different weights, borrowed
+    permission.
+
+    That direction of error is the dangerous one. Missing a licence makes the
+    tool say "I cannot tell", which stops a render. MANUFACTURING one makes it
+    say "ship it".
+    """
+    import vet_model as vm
+
+    covered = ("Wan-AI/Wan2.2-TI2V-5B", "Wan-AI/Wan2.2-TI2V-5B-Diffusers",
+               "wan-ai/wan2.2-i2v-a14b")
+    for repo in covered:
+        got = vm._vendored_licence(repo)
+        check(f"vendored text covers {repo.split('/')[-1]}", bool(got))
+
+    # every one of these merely LOOKS like the covered names
+    for repo in ("lightx2v/Wan2.2-Lightning", "lightx2v/Wan2.2-Distill-Loras",
+                 "quanhaol/Wan2.2-TI2V-5B-Turbo", "someone/Wan2.2-Evil",
+                 "attacker/Wan-AI-Wan2.2-TI2V-5B"):
+        check(f"NOT laundered onto {repo}", vm._vendored_licence(repo) is None)
+
+    # and the map may only name files that exist, or coverage is a fiction
+    d = REPO / "licences"
+    missing = [f for f in vm.VENDORED_COVERS if not (d / f).is_file()]
+    check("every vendored file named in the map exists", not missing)
+
+
 def test_subprocess_reads_are_utf8(tmp: Path):
     """Any subprocess we read TEXT from must name its encoding.
 
@@ -1359,6 +1393,7 @@ def main():
     with tempfile.TemporaryDirectory() as td:
         test_no_undefined_locals(Path(td))
         test_subprocess_reads_are_utf8(Path(td))
+        test_vendored_licence_does_not_launder(Path(td))
     print()
     if FAILURES:
         print(f"✗ {len(FAILURES)} failure(s): {', '.join(FAILURES)}")
