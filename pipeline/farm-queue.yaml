@@ -1,63 +1,70 @@
-# 2026-08-03 09:0xZ — "needs more movement, hands barely move". Two parameters.
+# 2026-08-03 09:2xZ — the motion is NOT a parameter. Three prompt tests.
 #
-# Founder on the A/B: "B is better overall, but its still pretty lifeless, needs
-# more movement, hands barely move." B (shake terms off) is now the default for
-# motion beats — decided per beat in video_prompt, so beats 4/6/8 that are meant
-# to be still keep the suppression. That is landed, not queued.
+# Founder: "we dont need so many frames.. thats.. not the point. 24 frames is
+# already great." Correct, and the measurement agrees — motion per frame is pinned
+# at ~0.62 no matter what we change:
 #
-# What is NOT solved is the lifelessness, and I do not know the cause yet. Two
-# candidates, both single parameters, tested one variable at a time:
+#   2.5s /  61 frames, cfg 5.0   0.62 per frame   (baseline)
+#   5.0s / 121 frames, cfg 5.0   0.59             more frames, slightly WORSE
+#   2.5s /  61 frames, cfg 3.0   0.62             guidance did nothing
 #
-# FRAMES. Wan 2.2 TI2V-5B is native 121 frames at 24fps (5s) at 704x1280. We have
-# been asking for 61 (2.5s) — half its trained length. A model asked for half its
-# native sequence may simply distribute less motion. render_t3 already caps long
-# footage to the beat's scripted length, so a 5s render is usable for a 2.5s beat:
-# we get the model's native motion and trim the tail. Costs ~2x per clip.
+# Two parameters dead. So the limit is upstream of both, and the prompt is the
+# remaining suspect. Counting beat 1's actual prompt: 15 words of style, 19 of
+# motion, then 25 DESCRIBING A STATIC COMPOSITION — the biggest block and the last
+# thing the text encoder reads. It is also redundant: the init image already IS
+# that composition. Describing a still frame in detail to a video model is a
+# plausible way to get a still frame.
 #
-# GUIDANCE. 5.0 anchors hard to the prompt AND to the init frame. Lower guidance
-# usually loosens i2v toward more movement; too low drifts off the composition,
-# which is the failure the founder already rejected once (the extra scene). 3.0 is
-# a step, not a leap.
+#  D  drop the static anchor      (33-word prompt, motion-forward)
+#  E  drop "camera locked" too    — it is in every direction, added to stop drift,
+#                                   and a model may not distinguish "the camera
+#                                   does not move" from "nothing moves"
+#  F  explicit amplitude language — big visible strokes, not just "fast"
 #
-# A tests frames alone, B guidance alone, C both — so if C is best we still know
-# which half did the work.
+# One variable each. E and F use motion_override so the genome is untouched —
+# motion.yaml is the author's file and a canary should not rewrite it.
 tasks:
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
   video_model: ti2v-5b
-  motion: no new subjects, no scene change
-  size: 704x1280
-  offload: true
-  seconds: 5.0
-  steps: 14
-  guidance: 5.0
-  seed_base: 20260805
-  id: life-A-native5s-b01-1785796800
-  beats: 1
-- worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  video_model: ti2v-5b
+  no_anchor: true
   motion: no new subjects, no scene change
   size: 704x1280
   offload: true
   seconds: 2.5
   steps: 14
-  guidance: 3.0
+  guidance: 5.0
   seed_base: 20260805
-  id: life-B-cfg3-b01-1785796800
+  id: life-D-noanchor-b01-1785798000
   beats: 1
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
   video_model: ti2v-5b
+  no_anchor: true
+  motion_override: "his hands type fast and continuously over the mechanical keyboard, fingers striking keys, monitor glow flickers gently"
   motion: no new subjects, no scene change
   size: 704x1280
   offload: true
-  seconds: 5.0
+  seconds: 2.5
   steps: 14
-  guidance: 3.0
+  guidance: 5.0
   seed_base: 20260805
-  id: life-C-both-b01-1785796800
+  id: life-E-nolock-b01-1785798000
+  beats: 1
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  video_model: ti2v-5b
+  no_anchor: true
+  motion_override: "his hands hammer the mechanical keyboard, fingers flying across the keys in large rapid strokes, wrists and forearms moving visibly, keys depressing one after another"
+  motion: no new subjects, no scene change
+  size: 704x1280
+  offload: true
+  seconds: 2.5
+  steps: 14
+  guidance: 5.0
+  seed_base: 20260805
+  id: life-F-amplitude-b01-1785798000
   beats: 1
