@@ -341,6 +341,30 @@ WANTS_MOVE = re.compile(r"\b(whip\w*|shak\w*|sweep\w*|tip\w*|rapid\w*|fast|"
                         r"tumbl\w*|surge\w*|blink\w*|curl\w*)\b", re.I)
 
 
+# Faces drift. The founder on beat 2, an otherwise approved beat: "except in 2 it
+# makes him make a weird face.." — its still is the over-the-shoulder framing, so the
+# face is partial and angled, and i2v invents what it cannot see. Putting the terms
+# in the NEGATIVE fixed it: face motion 2.42 -> 1.35 while hand motion went
+# 3.53 -> 6.08, i.e. the model moved its energy to where the beat wants it. Founder
+# picked that variant: "face B is the best out of the 2".
+FACE_NEG = ("face morphing, changing facial features, distorted face, warped face, "
+            "facial expression change, head turning")
+
+# WHICH BEATS HAVE A PERSON — read by eye, hardcoded, and that is deliberate.
+#
+# I tried three times to detect this from the still prompt and got it wrong three
+# times: a bare word search matched "no humans"; splitting on "No " missed the
+# prompts that LEAD with their exclusions ("no humans, plant focus, ..."); and beat
+# 12 matched "person" inside its own exclusion list. This is the same failure as
+# WANTS_STILL matching "hands going still" — a heuristic over prose that reads the
+# negation as the subject.
+#
+# There are fifteen beats. Reading them takes a minute and cannot misfire. Beats 1
+# and 2 are "1boy, solo"; beat 4 is "a man's limp hand". Nothing else has a person:
+# 6 and 7 open with "no humans", and the rest are plants, soil and screens.
+PERSON_BEATS = (1, 2, 4)
+
+
 def antistatic_for(direction: str) -> str:
     """Wan's anti-stillness terms, but only for beats that should actually move.
 
@@ -489,7 +513,8 @@ QUALITY_SPAM = re.compile(
 NEGATIVE_PROSE = re.compile(r"\bno\s+[a-z0-9][^,.]*(?:[,.]|$)", re.I)
 
 
-def video_prompt(motion: str, still_prompt: str, no_anchor=False) -> tuple:
+def video_prompt(motion: str, still_prompt: str, no_anchor=False,
+                 beat: int | None = None) -> tuple:
     """(positive, extra_negative) for animating an ALREADY APPROVED frame.
 
     We were handing the video model the STILL-GENERATION prompt — a full
@@ -553,13 +578,15 @@ def video_prompt(motion: str, still_prompt: str, no_anchor=False) -> tuple:
     # a beat that wants motion gets neither shake suppression nor the two
     # motion-suppressing photo terms; a beat that wants stillness gets both
     strict = "" if anti else SHAKE_NEG
+    # only where there is actually a face to protect — see PERSON_BEATS
+    face = FACE_NEG if (beat in PERSON_BEATS) else ""
     # ORDER IS SURVIVAL. The negative is capped, and a plain [:460] cuts mid-word:
     # adding ANTI_PHOTO_STRICT pushed a still beat to exactly 460 and the tail
     # arrived as "fil". So the PER-BEAT decisions — the ones being tuned, the ones
     # whose presence or absence we are measuring — go FIRST, and the general style
     # list, which is the same on every clip, goes last where losing its tail costs
     # least. Then cut on a comma so no term is ever half-sent.
-    parts = [x for x in (extra_neg, anti, strict, ANTI_STYLE) if x]
+    parts = [x for x in (extra_neg, anti, strict, face, ANTI_STYLE) if x]
     # DEDUPE, first-occurrence order. The pieces overlap by construction: the task
     # suffix carries "no new subjects, no scene change", which video_prompt strips
     # into extra_neg, and ANTI_SCENE says "scene change" again. A still beat came to
@@ -803,7 +830,8 @@ def run(task: dict, courier, node_dir: Path) -> None:
             act = directed.get(num) or actions.get(num)
             pos, neg = video_prompt(f"{act}. {motion}" if act else motion,
                                     s["prompt"],
-                                    no_anchor=bool(task.get("no_anchor")))
+                                    no_anchor=bool(task.get("no_anchor")),
+                                    beat=num)
             jobs.append({"init": str(init), "out": str(o), "prompt": pos,
                          "negative": neg,
                          "seed": int(task.get("seed_base", 20260731)) + num})
@@ -877,7 +905,8 @@ def run(task: dict, courier, node_dir: Path) -> None:
         act = task.get("motion_override") or directed.get(num) or actions.get(num)
         prompt, neg = video_prompt(f"{act}. {motion}" if act else motion,
                                    s["prompt"],
-                                   no_anchor=bool(task.get("no_anchor")))
+                                   no_anchor=bool(task.get("no_anchor")),
+                                   beat=num)
         vmodel = str(task.get("video_model", "ti2v-5b"))
         out = courier.out / f"{task.get('id')}-{num:02d}-{s['slug']}.mp4"
         emb = ROOT / f"embeds-{num:02d}.pt"
