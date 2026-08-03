@@ -865,3 +865,4 @@
 07:13:03Z STARTED task=anime-canary-b07-r2-1785787800 beats=7 on cuda
 07:13:06Z VIDEO_VENV_OK
 07:13:17Z VIDEO_DEPS_OK 2.11.0+cu128 0.39.0 True
+07:13:29Z VIDEO_RENDERING beat=07 on animegen (single-process)
