@@ -77,6 +77,46 @@ NEG = ("色调艳丽, 过曝, 细节模糊不清, 字幕, 风格, 作品, 画作
        "vibrating, trembling camera, rolling shutter")
 
 
+def tile_vae(pipe) -> None:
+    """Make the VAE process the frame in tiles instead of all at once.
+
+    THE VAE IS THE OTHER MEMORY SPIKE, and it is not the transformer's problem.
+    Wan's VAE runs in float32 while the transformer runs bf16 (or fp8 for
+    AnimeGen), so a 704x1280 encode allocates in GiB regardless of how cleverly
+    the transformer was packed. On 2026-08-03 AnimeGen died exactly there:
+
+        torch.OutOfMemoryError: Tried to allocate 1.29 GiB. GPU 0 has a total
+        capacity of 23.89 GiB of which 3.67 GiB is free.
+        ... autoencoder_kl_wan._encode -> encoder -> norm1
+
+    The transformer had loaded fine. The VAE encode of the init image had not.
+
+    Extracted into a function because the bug was DIVERGENCE, not absence: the
+    5B path called this and the AnimeGen path returned to _sample() before
+    reaching it, so the two load paths had different memory discipline and only
+    the untested one was wrong. One helper, called by both, is the fix that
+    stays fixed.
+
+    The helper's name and location move between diffusers versions and between
+    pipelines, so reach for whichever exists rather than assuming.
+    """
+    for enable in (getattr(pipe, "enable_vae_tiling", None),
+                   getattr(getattr(pipe, "vae", None), "enable_tiling", None)):
+        if callable(enable):
+            enable()
+            print("VAE tiling enabled", flush=True)
+            return
+    for enable in (getattr(pipe, "enable_vae_slicing", None),
+                   getattr(getattr(pipe, "vae", None), "enable_slicing", None)):
+        if callable(enable):
+            enable()
+            print("VAE slicing enabled (no tiling available)", flush=True)
+            return
+    print("!! no VAE tiling or slicing available on this pipeline — a large "
+          "frame may OOM in the VAE even with the transformer offloaded",
+          flush=True)
+
+
 def load_animegen(torch, a):
     """AnimeGen-I2V, following AIdeaLab's OWN recipe from their model card.
 
@@ -87,6 +127,15 @@ def load_animegen(torch, a):
     card. I had also recorded "80GB VRAM" as the blocker, which came from the BASE
     Wan A14B readme; AnimeGen's own card says "RTX 4090 or higher", i.e. 24GB.
     The model was never out of reach.
+
+    BUT "24GB" IS NOT MUCH ROOM, AND I OVERSTATED THE MARGIN. The 5090 laptop
+    reports 25.7 GB decimal = 23.89 GiB, and I told the founder that fit
+    comfortably inside a 24 GB requirement. Those are different units: the card is
+    at or just BELOW the stated figure, not above it. This is the same
+    decimal-vs-binary carelessness as the "80GB" note above, one line up in the
+    same docstring. On 2026-08-03 the first real attempt OOM'd — not in the
+    transformer, which fp8 casting packed fine, but in the float32 VAE encoding a
+    704x1280 init. Hence tile_vae() on this path too.
 
     Their recipe, three parts:
       - the two anime-trained transformers come from AnimeGen
@@ -128,7 +177,10 @@ def load_animegen(torch, a):
         tr.enable_layerwise_casting(storage_dtype=torch.float8_e4m3fn,
                                     compute_dtype=torch.bfloat16)
     pipe.enable_model_cpu_offload()
-    print("AnimeGen: fp8 layerwise casting + cpu offload", flush=True)
+    # the 5B path tiles the VAE after loading; this path used to return straight
+    # into _sample() and never got it — see tile_vae()
+    tile_vae(pipe)
+    print("AnimeGen: fp8 layerwise casting + cpu offload + VAE tiling", flush=True)
     return pipe
 
 
@@ -375,13 +427,7 @@ def stage_render(a) -> int:
     else:
         pipe.enable_model_cpu_offload()
         print(f"{vram:.0f}GB VRAM: offloading through system RAM")
-    # the VAE is the other RAM spike; the helper's name and presence vary by
-    # diffusers version and pipeline, so reach for whichever exists
-    for enable in (getattr(pipe, "enable_vae_tiling", None),
-                   getattr(getattr(pipe, "vae", None), "enable_tiling", None)):
-        if callable(enable):
-            enable()
-            break
+    tile_vae(pipe)
     gc.collect()
 
     # embeddings arrive from the encode process on CPU, but cpu-offload runs
