@@ -995,3 +995,4 @@
 10:45:00Z VIDEO_CLIP 1/1 hands-I-small-b01-1785800400-01-the-keyboard.mp4 in 188s
 10:45:04Z VIDEO_CLIP_OK beat=01 219KB
 10:45:07Z DONE task=hands-I-small-b01-1785800400
+10:45:13Z STARTED task=hands-J-bodyneg-b01-1785800400 beats=1 on cuda
