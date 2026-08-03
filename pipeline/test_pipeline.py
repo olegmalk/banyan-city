@@ -474,8 +474,26 @@ def test_marketplace_tools():
     mo = _y.safe_load((REPO / "genomes/sapling/nodes/001-capability-inventory/motion.yaml").read_text())
     mp = mo["motion_prompts"]
     check("motion.yaml covers all 15 beats", sorted(mp) == list(range(1, 16)))
-    check("every motion prompt locks the camera",
-          all("camera locked" in v for v in mp.values()))
+    # WAS: every motion prompt must contain "camera locked". That encoded a belief
+    # which turned out to be false, and the test was enforcing it against evidence.
+    #
+    # Measured 2026-08-03: in image-to-video the INIT FRAME locks the framing, not
+    # the phrase. Camera translation stayed at 0.00-0.02px on every variant with
+    # "camera locked" removed, against 4.83px on the clip the founder called
+    # "aggressively moving". Meanwhile the phrase cost real subject motion — median
+    # frame-to-frame went 0.62 -> 0.79 when it came out, and the share of
+    # barely-moving frames fell.
+    #
+    # So the phrase is now kept only where stillness IS the direction (beats 4, 6, 8
+    # — the limp hand, the too-blue sky, "the trembling stops"), where it costs
+    # nothing and reinforces the intent. Asserting it everywhere would have blocked
+    # the founder's own call ("this is actually the best overall, do this kinda
+    # thing"). A test may enforce an invariant; it may not outvote a measurement.
+    STILL_BEATS = (4, 6, 8)
+    check("the deliberately-still beats still lock the camera",
+          all("camera locked" in mp[n] for n in STILL_BEATS))
+    check("every beat has a direction with some substance",
+          all(len(v.split()) >= 8 for v in mp.values()))
     # post_motion animates ONLY approved pixels — §6 for the deterministic path
     src = (REPO / "pipeline/post_motion.py").read_text()
     check("post_motion imports the approval gate", "from render_local import approved" in src)

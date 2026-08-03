@@ -1,3 +1,30 @@
+# 2026-08-03, FOUNDER'S CALL on the motion investigation. He picked variant F off
+# the comparison — "this is actually the best overall, do this kinda thing. its very
+# good." — and the corrected measurement agrees with him:
+#
+#                                    median   frozen frames
+#   the cut he rejected                0.13        70%
+#   shake terms off                    0.62        25%
+#   + no "camera locked"               0.79        22%
+#   F  + amplitude wording             1.30         3%   <- this
+#   K  + body negative                 0.27        38%   <- steward's wrong pick
+#   hosted models, for scale       1.03-1.13         0%
+#
+# EVERY NUMBER I QUOTED BEFORE THIS WAS A MEAN, and a mean is dragged up by one big
+# jump. The median plus the share of frames that barely move is what matches what a
+# person sees, and on that measure the variant I recommended (K) has 38% dead frames
+# while F has 3%. His "literally just frozen frames" was exact.
+#
+# So these directions are rewritten in F's register: name the amplitude, not just
+# the fact of motion — "hammer", "drive hard", "whips back", "jolt", "slamming" —
+# and drop "camera locked", which protects nothing (the init frame locks the framing
+# in i2v; camera drift measured 0.00-0.02 with it gone) while costing subject motion.
+#
+# BEATS 4, 6 AND 8 ARE UNTOUCHED, including their "camera locked". They are
+# deliberately still: the limp hand after the fall, "everything nearly still" under
+# the too-blue sky, and "the trembling stops. a beat of stillness." Amplitude there
+# would break the script, and the founder's earlier note stands — "no static at all
+# forces it to move even when not needed, creating shaking".
 # Per-beat MOTION direction (what moves; the still owns composition).
 # Consumed by: render requests, the Kaggle notebook's i2v engines, the shot
 # board. Edit here — a PR to this file is a motion-direction pitch.
@@ -13,32 +40,32 @@ motion_prompts:
   # the beat-1 keyboard sfx already ends on its own. Cramming type-then-stop into
   # 2.5s left almost no typing. So beat 1 is now nothing but typing, which also
   # removes the "still" that my previous wording smuggled in.
-  1: "his hands type fast and continuously over the mechanical keyboard, fingers striking keys, monitor glow flickers gently, camera locked"
-  2: "his hands move fast over the keyboard then stop dead, a small spinner turns on the monitor, faint steam rises from the mug, camera locked"
-  3: "the terminal text settles, the cursor blinks steadily, the screen glow breathes very gently, camera locked"
+  1: "his hands hammer the mechanical keyboard, fingers flying across the keys in large rapid strokes, wrists moving visibly, the monitor glow pulsing over them"
+  2: "his hands drive hard across the keyboard then stop dead mid-air, the spinner sweeps around the monitor, steam curls up off the mug"
+  3: "the terminal text scrolls up in bursts and settles, the cursor blinks hard, the screen glow surges bright then falls back"
   4: "the limp hand stays motionless, the monitor glow flickers slowly across it, one loose paper settles to the floor, camera locked"
-  5: "the dying screen glow flickers and fades across the shards, dust motes drift in the last light, camera locked"
+  5: "the dying screen glow strobes across the ceramic shards and drains away, dust motes tumble through the last light"
   6: "everything nearly still, the clouds drift very slowly, the pale leaf stays attached at the bottom edge of the frame and only trembles gently, nothing flies, nothing detaches, camera locked"
   # 7: founder — "the sapling is aggressively moving, in a very weird way". The
   # still is already a whip caught mid-motion, so asking for another whip made
   # the clip restart the gesture instead of finishing it. A whip that DECAYS is
   # what the script's "twitches" means and what real springy stems do.
-  7: "the leaf springs back from the whip and settles, each rebound smaller than the last, the grass leans once and stills, camera locked"
+  7: "the leaf whips back hard from full stretch and springs the other way, each rebound smaller, the grass blades lash once and settle"
   8: "the leaf holds almost perfectly still, dust motes settle slowly in the sunlight, grass sways very gently behind, camera locked"
   # 2026-08-02: "the beat 9 generations i've literally make it not move at all.
   # not one pixel" (founder). "stir very slightly" is below the model's floor —
   # ask for nothing and it delivers nothing. This beat can afford real motion:
   # render_t3 burns the $ whoami terminal panel over the top, so the plate only
   # has to live underneath it.
-  9: "the sprout's two leaves lift and settle in a slow breeze, one leaf turning as it falls back, grass sways behind, dust motes drift across the light, camera locked"
+  9: "the sprout's two leaves swing up on a gust and drop back, one leaf spinning as it falls, the grass thrashes behind, dust motes streaming across the light"
   # 10: the beat's whole point is the approaching thump "felt as rings of light
   # through soil", and the direction said "no light rays" — so the one thing the
   # audience must see was suppressed. The still already has glowing droplets
   # between the grains; pulsing THOSE renders the thump without inventing the
   # god-rays that "no light rays" was written to keep out.
-  10: "the glow between the soil grains pulses in a slow steady rhythm, brighter then dimmer, the thin roots tremble subtly with each pulse, no god rays, no light shafts, camera locked"
-  11: "the new leaf unfurls slowly and settles upright, dew drops glisten, soft light shifts, camera locked"
-  12: "the bent stem strains and quivers against nothing, a few soil grains shift at its base, everything else still, camera locked"
-  13: "wind sweeps the grass in slow waves, clouds drift, dust stirs faintly on the empty road, no people appear, camera locked"
-  14: "the roots flex and tighten their grip, soil grains shift and settle, the warm light holds steady, camera locked"
-  15: "the soil grains tremble increasingly, the warm glow pulses brighter from the right, dust shivers loose, camera locked"
+  10: "the glow between the soil grains pulses hard, bright then dark, the thin roots jolt with every pulse, water beads sliding down between grains, no god rays, no light shafts"
+  11: "the new leaf unfurls in a fast sweep and springs upright, dew drops shaking loose and running off, the light swinging across it"
+  12: "the bent stem strains and shudders hard against nothing, snapping back and straining again, soil grains skittering at its base"
+  13: "wind drives through the grass in hard waves, the clouds racing over, dust whipping along the empty road, no people appear"
+  14: "the roots flex and clench, gripping and re-gripping, soil grains breaking loose and rolling away, the warm light holding steady"
+  15: "the soil grains jump and scatter with each thump, the warm glow slamming brighter from the right, dust bursting loose in sheets"

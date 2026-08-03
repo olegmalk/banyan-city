@@ -321,9 +321,24 @@ WANTS_STILL = re.compile(r"\b(still|stillness|motionless|barely|nearly still|"
                          r"very slightly|perfectly still|holds almost)\b", re.I)
 # A direction that asks for real movement, where Wan's usual failure — freezing —
 # is the thing to suppress.
-WANTS_MOVE = re.compile(r"\b(whips|shakes|sweeps|tips|rapidly|fast|increasingly|"
-                        r"pulses|arcs|unfurls|scrolls|drifts?|lift|settles?|"
-                        r"quivers|strains|flex|tremble[sd]?|stirs?|turning)\b", re.I)
+# EXTENDED 2026-08-03 with the amplitude register the founder approved ("do this
+# kinda thing"). The original list was written when directions said "drifts" and
+# "stirs"; his chosen variant says "hammer", "flying", "drive hard", "jump",
+# "slamming", "thrashes". None of those matched, so five rewritten beats silently
+# lost their anti-static terms — the classifier did not recognise the strongest
+# motion language in the file as motion at all. Caught by the tests, not by eye.
+#
+# Also -ING forms throughout: the old list had "pulses" but not "pulsing", "rapidly"
+# but not "rapid". A vocabulary that only matches one inflection will keep doing
+# this every time a direction is reworded.
+WANTS_MOVE = re.compile(r"\b(whip\w*|shak\w*|sweep\w*|tip\w*|rapid\w*|fast|"
+                        r"increasingly|puls\w*|arc\w*|unfurl\w*|scroll\w*|drift\w*|"
+                        r"lift\w*|settl\w*|quiver\w*|strain\w*|flex\w*|trembl\w*|"
+                        r"stir\w*|turning|hammer\w*|fly\w*|flies|driv\w*|jump\w*|"
+                        r"scatter\w*|slam\w*|thrash\w*|strob\w*|jolt\w*|lash\w*|"
+                        r"clench\w*|grip\w*|shudder\w*|snap\w*|skitter\w*|burst\w*|"
+                        r"rac\w*|swing\w*|spin\w*|stream\w*|slid\w*|roll\w*|"
+                        r"tumbl\w*|surge\w*|blink\w*|curl\w*)\b", re.I)
 
 
 def antistatic_for(direction: str) -> str:
