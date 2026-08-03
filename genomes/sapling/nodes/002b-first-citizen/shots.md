@@ -21,10 +21,15 @@ Status legend: ✅ generated · ⬜ needs footage
 
 ## Beat 01 — COLD OPEN (0:00–0:06) ⬜ needs footage
 
-Line: the tree's first VO. Camera on the TREE and the fig — premise and the ending's payoff in one frame.
+Line: the tree's first VO. Camera on the TREE and the fig — premise and the
+ending's payoff in one frame. The fig must GROW here, not already be hanging
+(founder, 2026-08-03: "we need to make SURE the fig growing on the sapling is
+mentioned, last time we generated 002b it just.. appeared"). It is also the only
+thing episode 1 said he can do — `GROW ✓ slow. directional.` — so the growth is
+continuity, not decoration.
 
 ```
-Vertical 9:16 macro shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, minimal shading (single shadow tone), simplified shapes, soft watercolor-wash backgrounds with large empty areas, gentle pastel-leaning palette. A tiny mascot-simple banyan sapling — thin curved trunk, two oversized expressive leaves, no face — sways in the wind, and on its thinnest branch one small ripe fig bobs with each sway, slightly heavier than the branch wants to hold. Vast empty green field, peach and gold morning washes. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+no humans, tiny banyan sapling, thin curved trunk, two oversized leaves, one small fig on the thinnest branch, fig swelling and ripening, vast empty green field, early morning, peach and gold sky, macro shot, shallow depth of field, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 ## Beat 02 — THE SPRINT (0:06–0:11) ⬜ needs footage

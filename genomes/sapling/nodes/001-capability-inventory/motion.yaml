@@ -54,7 +54,7 @@ motion_prompts:
   # still is already a whip caught mid-motion, so asking for another whip made
   # the clip restart the gesture instead of finishing it. A whip that DECAYS is
   # what the script's "twitches" means and what real springy stems do.
-  7: "the leaf whips back hard from full stretch and springs the other way, each rebound smaller, the grass blades lash once and settle"
+  7: "nothing moves at all, the leaf hangs completely motionless in dead calm air, the grass behind stays perfectly still, dust motes hanging suspended in the light, camera locked"
   8: "the leaf holds almost perfectly still, dust motes settle slowly in the sunlight, grass sways very gently behind, camera locked"
   # 2026-08-02: "the beat 9 generations i've literally make it not move at all.
   # not one pixel" (founder). "stir very slightly" is below the model's floor —

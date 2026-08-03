@@ -5,43 +5,43 @@
  "lines": [
   {
    "who": "VO",
-   "text": "Scream. \u2014 No mouth. Run. \u2014 No legs. Flail?? \u2014 \u2026I appear to be flailing one (1) leaf.",
+   "text": "Scream. \u2014 No mouth. Run. \u2014 No legs. Flail?? \u2014 \u2026I appear to have zero (0) moving parts.",
    "start": 0.0,
-   "end": 5.434,
+   "end": 5.937,
    "chunks": [
     {
      "text": "Scream.",
      "start": 0.0,
-     "end": 0.729
+     "end": 0.602
     },
     {
      "text": "\u2014 No mouth.",
-     "start": 0.729,
-     "end": 1.487
+     "start": 0.602,
+     "end": 1.507
     },
     {
      "text": "Run.",
-     "start": 1.487,
-     "end": 2.103
+     "start": 1.507,
+     "end": 2.172
     },
     {
      "text": "\u2014 No legs.",
-     "start": 2.103,
-     "end": 2.924
+     "start": 2.172,
+     "end": 3.095
     },
     {
      "text": "Flail??",
-     "start": 2.924,
-     "end": 3.648
+     "start": 3.095,
+     "end": 3.807
     },
     {
-     "text": "\u2014 \u2026I appear to be flailing one (1) leaf.",
-     "start": 3.648,
-     "end": 5.434
+     "text": "\u2014 \u2026I appear to have zero (0) moving parts.",
+     "start": 3.807,
+     "end": 5.937
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 5.734
+ "total_s": 6.237
 }

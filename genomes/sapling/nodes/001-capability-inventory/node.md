@@ -42,20 +42,18 @@ The spinner resolves.
 **THE FALL — 0:15–0:20**
 A sharp breath in — the frame tips sideways — the mug hits the floor before he does.
 
-**HUH. BLUE. — 0:20–0:24**
-Black, and the sound of a cooling fan spinning down.
-
-> **VO:** Huh. Blue.
+**FAN SPINNING DOWN — 0:20–0:24**
+The dark apartment floor, the broken mug, the last of the screen glow draining away. No dialogue — the cooling fan winding down over near-black is the whole beat.
 
 **TOO BLUE — 0:24–0:29**
 Blinding green blur. Focus pulls: two centimetres off the ground, looking up through one trembling leaf at a sky that is *too* blue.
 
-> **VO:** Okay. Ceiling's gone. That's fine. Open-plan hospital.
+> **VO:** Huh. Blue. — Okay. Ceiling's gone. That's fine. Open-plan hospital.
 
-**FLAILING ONE (1) LEAF — 0:29–0:35**
-The leaf — *his* leaf — twitches when he panics, and the camera shakes with it.
+**ZERO (0) MOVING PARTS — 0:29–0:35**
+Extreme close-up on one young leaf, absolutely motionless. Nothing in the frame moves. The stillness is the punchline.
 
-> **VO:** Scream. — No mouth. Run. — No legs. Flail?? — …I appear to be flailing one (1) leaf.
+> **VO:** Scream. — No mouth. Run. — No legs. Flail?? — …I appear to have zero (0) moving parts.
 
 **SEV-1 — 0:35–0:48**
 The trembling stops. A beat of stillness.

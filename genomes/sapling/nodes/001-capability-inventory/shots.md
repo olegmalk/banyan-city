@@ -49,9 +49,11 @@ no dialogue - the death, in one shot. The mug reaches the floor before he does.
 ```
 close-up on the side of an office chair, a man's limp hand hanging straight down past the armrest, relaxed open fingers, motionless, sleeve of a rumpled shirt, papers settled on the dark floor below, cold monitor glow from above, dark room at night, dramatic shadows, shallow depth of field, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No face, no head, no full body, no horror, no blood, no standing. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
-## Beat 05 — HUH. BLUE. (0:20–0:24) ⬜ needs footage
+## Beat 05 — FAN SPINNING DOWN (0:20–0:24) ⬜ needs footage
 
-Line: 'Huh. Blue.' Camera low on the floor; the cooling fan winds down over black.
+NO DIALOGUE - the fan spin-down over near-black is the beat. 'Huh. Blue.' moved
+to beat 06 where the blue actually appears (founder, 2026-08-03: 'yeah just move
+it'). The picture here was always right; the LINE was in the wrong beat.
 
 ```
 thick curved glazed ceramic shards of a broken coffee mug scattered flat on dark wooden floorboards, a puddle of spilled coffee, near darkness, dying screen glow, low camera angle, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No paper, no cards, no intact mug, no kintsugi. No photorealism, no 3D render look. 9:16 vertical, no text.
@@ -63,12 +65,28 @@ Line: "Ceiling's gone. Open-plan hospital." The wrong-ceiling joke IS the shot �
 ```
 no humans, plant focus, pov from inside tall grass, camera on the ground pointing straight up, a vast flat clear blue morning sky filling most of the frame, soft out-of-focus grass blade tips fringing the very edges of the frame, one small green sprout leaf leaning into view at the bottom, one tiny wisp of cloud, gentle morning light, dreamy, detailed, newest, masterpiece, best quality, very aesthetic No 1girl, no girl, no boy, no person, no face, no eyes, no hair, no portrait, no big clouds, no forest, no tree, no abstract shapes. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
-## Beat 07 — FLAILING ONE (1) LEAF (0:29–0:35) ⬜ needs footage
+## Beat 07 — ZERO (0) MOVING PARTS (0:29–0:35) ⬜ needs footage
 
-Line: 'I appear to be flailing one (1) leaf.' The flail is the joke - camera on the leaf.
+Line: 'I appear to have zero (0) moving parts.' The STILLNESS is the joke - camera
+on the leaf, and the leaf does not move. Founder, 2026-08-03: the old flail
+contradicted this episode's own `MOVE x undefined` card two beats later, and it
+pre-spent 002b's ending. **Render this beat with `hold_still.py`, not the video
+model** - a shot whose joke is that nothing can move must not be handed to a model
+that has to put something in every frame.
+
+REFRAMED 2026-08-04 (steward, flagged for the founder). The original prompt asked for
+an "extreme close-up macro shot, one single young leaf... nearly filling the frame".
+Four generations under it returned a mature branch carrying eight or more leaves,
+even with `many leaves, leaf cluster, foliage, branch, woody trunk` all in the
+negative: at macro framing this model reads "leaf" as "foliage" and no negative term
+overrides it. Beat 08's still - "a single small leaf on a thin stem" at LOW CLOSE
+framing - renders the sprout correctly and always has. So the framing moved to the
+one that works, kept deliberately cool/overcast/flat so it does not duplicate beat
+08's warm backlit grass two seconds later. The beat's job (one still sprout, nothing
+moving) is unchanged; only the lens is.
 
 ```
-no humans, plant focus, extreme close-up macro shot, one single young leaf on a thin stem whipping sideways mid-motion, motion blur on the leaf tip, the leaf nearly filling the frame, soft out-of-focus pale blue sky behind, morning light rim on the leaf edge, dynamic angle, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No wide shot, no field, no many leaves, no person, no girl, no hands. No photorealism, no 3D render look. 9:16 vertical, no text.
+no humans, plant focus, a tiny two-leaf sprout on one thin stem standing dead still, low close shot from just above the soil, sparse short grass, pale cool overcast sky, flat even light, dead calm air, nothing moving, detailed, newest, masterpiece, best quality, very aesthetic No macro close-up, no leaf filling the frame, no many leaves, no leaf cluster, no foliage, no branch, no woody trunk, no mature plant, no bush, no motion blur, no whipping, no bending, no wind, no sunset, no golden hour, no backlight, no person, no hands. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 ## Beat 08 — SEV-1 (0:35–0:48) ⬜ needs footage
 

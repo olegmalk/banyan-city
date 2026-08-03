@@ -242,6 +242,40 @@ def main() -> int:
     d = next(x for x in sorted(nodes.iterdir()) if x.is_dir() and x.name.startswith(args.node))
     shots = parse_shots((d / "shots.md").read_text())
     want = {int(x) for x in args.beats.split(",")} if args.beats else None
+
+    # PICTURE-VS-WORDS GATE, and it refuses only the beats it has findings ON.
+    #
+    # Founder, 2026-08-03: "there is again some dialogue out of sync, when he says
+    # 'huh, blue' it is showing the coffee scene. reflect why this is happening and
+    # why you still have not implemented guard to make sure it will not happen
+    # again." Beat 05 of episode 1 spoke "Huh. Blue." over a broken coffee mug, and
+    # nothing in the pipeline compared a beat's line to its picture, so the error
+    # was only ever findable by watching the finished cut — after the render, the
+    # voice and the assembly had all been paid for.
+    #
+    # Per-beat rather than whole-node on purpose: blocking all fifteen because one
+    # is stale is how a gate earns an --override flag, and an override flag is how a
+    # gate stops existing. A clean beat still renders.
+    try:
+        from check_sync import check as sync_check
+        bad = {}
+        for f in sync_check(args.genome, args.node):
+            if f["sev"] == "FAIL":
+                bad.setdefault(f["beat"], []).append(f"{f['what']}: {f['detail']}")
+        blocked = sorted(b for b in bad if want is None or b in want)
+        if blocked:
+            print(f"  SYNC GATE: refusing {len(blocked)} beat(s) — picture, script "
+                  f"and voice disagree")
+            for b in blocked:
+                for msg in bad[b]:
+                    print(f"    beat {b:02d}  {msg}")
+            print("  Fix the text first (it is free), or pass --beats without these.")
+            want = ({x for x in want if x not in bad} if want is not None
+                    else {n for n in shots if n not in bad})
+            if not want:
+                raise SystemExit("  every requested beat is out of sync — nothing to do")
+    except ImportError:
+        print("  WARNING: check_sync unavailable — rendering WITHOUT the sync gate")
     out = Path(args.out) if args.out else d / "clips"
     out.mkdir(parents=True, exist_ok=True)
 

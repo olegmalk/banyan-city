@@ -25,9 +25,9 @@ fugitive talk to each other?*
 ## Script
 
 **COLD OPEN — 0:00–0:06**
-A tiny two-leaf banyan sapling sways in a green field; one small fig hangs on its thinnest branch.
+A tiny two-leaf banyan sapling in a green field. On the thinnest branch a green nub swells, darkens and rounds into a single fig — the only thing in frame that moves.
 
-> **VO (dry, tired, engineer):** I used to be an engineer. Now I'm a tree. Total assets: two leaves and one fig.
+> **VO (dry, tired, engineer):** I used to be an engineer. Now I'm a tree. Took three days to grow that. Total assets: two leaves and one fig.
 
 **THE SPRINT — 0:06–0:11**
 A SCAVENGER — goblin-ish, enormous ears, one broken tusk, patchwork cloak — sprints into frame, skids, and dives behind the sapling's thin trunk.
@@ -121,9 +121,10 @@ The scavenger picks the fig up with both hands and looks up at the bare branch.
 > **SCAVENGER (whisper):** …Did you just *answer* me?
 
 **THE ANSWER — 1:42–1:47**
-The sapling's leaf, in absolutely still air, tilts — and holds.
+The sapling's leaf, in absolutely still air, tilts — slowly, deliberately, the first thing he has ever moved on purpose — and holds.
 
 ```
+SPEAK   ✓  1 bit. slow.
 POPULATION: 1
 ```
 
