@@ -88,11 +88,50 @@ def queue_tasks() -> list:
         return []
 
 
+def _shot_runs(beats: str) -> str:
+    """'1,2,3,7,9,10' → '1–3, 7, 9–10' — a merged job names its shots as
+    ranges, not as a fifteen-number recital."""
+    nums = sorted({int(b) for b in beats.split(",") if b.strip().isdigit()})
+    if not nums:
+        return beats.replace(",", ", ")
+    runs, start, prev = [], nums[0], nums[0]
+    for n in nums[1:] + [None]:
+        if n is not None and n == prev + 1:
+            prev = n
+            continue
+        runs.append(str(start) if start == prev else f"{start}–{prev}")
+        if n is not None:
+            start = prev = n
+    return ", ".join(runs)
+
+
+def merge_queue(tasks: list) -> list:
+    """Identical jobs that differ only in their shot number are ONE job to a
+    reader. On 2026-08-03 the queue held fifteen single-beat rows and the page
+    printed the same sentence fifteen times — display-only merge; the heartbeat
+    matcher keeps the raw list, since a worker claims tasks by their full id."""
+    merged, index = [], {}
+    for t in tasks:
+        fam = re.match(r"[a-z]+", str(t.get("id", "")))
+        key = (fam.group(0) if fam else "",
+               tuple(sorted((k, str(v)) for k, v in t.items()
+                            if k not in ("beats", "id", "seed_base"))))
+        if key in index:
+            index[key]["beats"] = f'{index[key]["beats"]},{t.get("beats", "")}'
+        else:
+            t = dict(t)
+            t["beats"] = str(t.get("beats") or "")
+            index[key] = t
+            merged.append(t)
+    return merged
+
+
 def task_story(t: dict) -> tuple:
     """(what, why) in a stranger's words, from a queue task's own fields."""
     tid = str(t.get("id", ""))
     beats = str(t.get("beats") or "").strip()
-    shots = f"shots {beats.replace(',', ', ')}" if beats else "world scenery"
+    shots = f"shot{'s' if ',' in beats else ''} {_shot_runs(beats)}" if beats \
+        else "world scenery"
     seeds = int(t.get("seeds", 4))
     if tid.startswith("prod-open"):
         return (f"{seeds} candidate frames each for {shots}",
@@ -276,6 +315,61 @@ def quests_html(inbox: list) -> str:
     return f'<ol class="quests">{"".join(out)}</ol>'
 
 
+def quest_board_html(rows: list) -> str:
+    """Open quests anyone can take. An 'art quest' is a real open render
+    request from requests.yaml; the two standing quests are the routes that
+    always exist. The reward line states what actually happens — a take lands
+    on the public board and the author may make it the scene — because a
+    promised prize the repo cannot pay would fail the honesty gate."""
+    from build_status import request_url
+    open_reqs = [r for r in rows if r["request"]]
+    # the brief and the reward are the same for every art quest — say them ONCE,
+    # or the board repeats one sentence seven times (the fifteen-identical-rows
+    # lesson, again)
+    note = ""
+    if open_reqs:
+        note = (f'<p class="qnote">🎨 <b>Art quests</b> — the author wants a better frame '
+                f'than the current one for {len(open_reqs)} scenes. Make one — any tool, '
+                'any style that fits — and hand it in. '
+                '<span class="reward"><b>reward</b> · your take goes on the public board; '
+                'if the author picks it, your frame IS the scene, credited</span></p>')
+    cards = [
+        f'<div class="quest slim"><span class="chip hot">🎨 art quest</span>'
+        f'<b>Scene {r["num"]:02d} · {_e(r["name"])}</b>'
+        f'<a href="{_e(request_url(r["request"]))}">take this quest &rarr;</a></div>'
+        for r in open_reqs]
+    cards.append(
+        '<div class="quest"><span class="chip">✍️ writing quest</span><br>'
+        '<b>Write episode 2 yourself</b>'
+        '<p>The story branches. Take the tree, grow your own limb — the right '
+        'to branch is the one rule that can never be cut.</p>'
+        '<div class="reward"><b>reward</b> · your branch lives in the city, '
+        'under your name, forever</div>'
+        '<a href="create.html">take this quest &rarr;</a></div>')
+    cards.append(
+        '<div class="quest"><span class="chip">🗳 citizen quest</span><br>'
+        '<b>Say what you think</b>'
+        '<p>Reactions on the public thread are what the story grows toward — '
+        'they decide which branch becomes the trunk.</p>'
+        '<div class="reward"><b>reward</b> · the next episode bends toward '
+        'what the crowd asked for</div>'
+        f'<a href="https://github.com/{GH}/issues/1">take this quest &rarr;</a></div>')
+    return f'{note}<div class="qboard">{"".join(cards)}</div>'
+
+
+def badges_html(milestones: list) -> str:
+    """(emoji, name, unlocked, detail) → the milestone strip. Every unlocked
+    badge is a checkable repo fact; a locked one names exactly what is
+    missing, so the strip doubles as the episode's to-do list."""
+    out = []
+    for emoji, name, unlocked, detail in milestones:
+        cls = "" if unlocked else " locked"
+        out.append(f'<div class="badge{cls}"><div class="ico">{emoji}</div>'
+                   f'<div class="nm">{_e(name)}</div>'
+                   f'<div class="cap">{_e(detail)}</div></div>')
+    return f'<div class="badges">{"".join(out)}</div>'
+
+
 SIM_CSS = """
 /* ---- the studio, drawn as a town (page-specific; tokens from the theme) ---- */
 .sky { position: relative; height: 92px; overflow: hidden; border-radius: 18px;
@@ -334,6 +428,57 @@ body.away .smoke, body.away .cloudgpu { animation: none !important; }
   margin: .6rem 0; font-size: .92rem; }
 .prod-row .why { color: var(--muted); font-size: .84rem; }
 .whyfoot { font: 500 .8rem/1.7 var(--mono); color: var(--faint); }
+
+/* ---- vitals: the four numbers a visitor can check against the repo ---- */
+.vitals { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: .6rem; margin: .9rem 0 .4rem; }
+.vital { text-align: center; padding: .75rem .5rem .6rem; border: 1px solid var(--line);
+  border-radius: 14px; background: linear-gradient(180deg, var(--panel-2), var(--panel)); }
+.vital b { display: block; font: 600 1.6rem/1.15 var(--display); color: var(--ink);
+  font-variant-numeric: tabular-nums; }
+.vital small { font: 600 .68rem/1.5 var(--mono); color: var(--faint);
+  letter-spacing: .05em; text-transform: uppercase; }
+
+/* ---- the growth meter: two file-existence facts per scene, nothing else ---- */
+.growbar { height: 12px; max-width: 420px; margin: .7rem auto .35rem; overflow: hidden;
+  border: 1px solid var(--line); border-radius: 999px; background: var(--code-bg); }
+.growbar i { display: block; height: 100%; background: var(--sap); border-radius: 999px; }
+
+/* leaf tiers — the tooltip carries the words, the tint is only a hint */
+.leaf.pick { filter: none; text-decoration: none;
+  text-shadow: 0 0 10px rgba(255,199,106,.9); }
+.leaf.still { filter: saturate(.6); }
+
+/* ---- the quest board: real open requests, real reward, no points ---- */
+.qboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: .7rem; margin: .8rem 0 .4rem; }
+.quest { padding: .8rem .95rem .7rem; border: 1px solid var(--line); border-radius: 14px;
+  background: linear-gradient(180deg, var(--panel-2), var(--panel)); font-size: .92rem; }
+.quest b { font-family: var(--display); font-size: 1.02rem; }
+.quest p { margin: .35rem 0 .45rem; color: var(--muted); font-size: .86rem; }
+.quest .reward { font: 500 .72rem/1.5 var(--mono); color: var(--faint);
+  border-top: 1px dashed var(--line-soft); padding-top: .45rem; margin-top: .2rem; }
+.reward b { font: 700 .72rem/1.5 var(--mono); color: var(--sap); }
+.quest.slim { display: flex; flex-direction: column; gap: .3rem; align-items: flex-start; }
+.quest.slim .chip { margin: 0; }
+.qnote { background: linear-gradient(180deg, var(--panel-2), var(--panel));
+  border: 1px solid var(--line); border-radius: 14px; padding: .7rem .95rem;
+  font-size: .9rem; color: var(--muted); }
+.qnote .reward { display: block; border-top: 1px dashed var(--line-soft);
+  padding-top: .4rem; margin-top: .5rem; font: 500 .72rem/1.5 var(--mono);
+  color: var(--faint); }
+
+/* ---- milestones: unlocked = a repo fact; locked = the honest gap ---- */
+.badges { display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center;
+  margin: .8rem 0 .3rem; }
+.badge { flex: 1 1 45%; max-width: 168px; text-align: center; padding: .7rem .55rem .6rem;
+  border: 1px solid var(--line); border-radius: 14px;
+  background: linear-gradient(180deg, var(--panel-2), var(--panel)); }
+.badge .ico { font-size: 1.9rem; line-height: 1.2; }
+.badge .nm { font: 700 .74rem/1.35 var(--mono); margin: .15rem 0 .1rem; }
+.badge .cap { font: 500 .68rem/1.5 var(--mono); color: var(--faint); }
+.badge.locked { opacity: .5; filter: grayscale(1); border-style: dashed; }
+.badge.locked .nm::after { content: " · locked"; color: var(--faint); font-weight: 500; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; } }
 """
 
@@ -353,19 +498,36 @@ def build(out_dir: Path):
     tot = data.summary(rows)
     hero = data.hero()
     spend, inbox = data.spend(), data.inbox()
+    grow = data.growth(rows)
+    takes = data.takes_tally()
+    open_quests = sum(1 for r in rows if r["request"]) + 2  # + the standing two
 
-    # --- the grove: 15 leaves, each one an actual scene you can go look at ---
-    leaves = "".join(
-        f'<a class="leaf {"grown" if r["final"] else "bud"}" '
-        f'href="{_e(hero["board"])}#beat-{r["num"]:02d}" '
-        f'title="Scene {r["num"]:02d} — {_e(r["name"])} · '
-        f'{"frame approved" if r["final"] else "waiting for " + r["waiting_for"]}">🍃</a>'
-        for r in rows)
+    # --- the grove: 15 leaves, each one an actual scene you can go look at.
+    # Four tiers a glance can tell apart; the tooltip carries the exact words.
+    leaves = ""
+    for r in rows:
+        if r["final"] and r["animations"]:
+            cls, glyph, stage = "grown", "🍃", "fully grown — frame approved and animated"
+        elif r["final"]:
+            cls, glyph, stage = "grown still", "🌿", "frame approved — not yet animated"
+        elif r["candidates"]:
+            cls, glyph, stage = ("pick", "🌱", f'sprouting — {r["candidates"]} frames '
+                                 "wait for the author's pick")
+        else:
+            cls, glyph, stage = "bud", "🍃", "a bud — waiting for a render"
+        leaves += (f'<a class="leaf {cls}" href="{_e(hero["board"])}#beat-{r["num"]:02d}" '
+                   f'title="Scene {r["num"]:02d} — {_e(r["name"])} · {_e(stage)}">{glyph}</a>')
     done = tot["final"] == tot["total"]
+    pct = round(100 * grow["done"] / grow["total"]) if grow["total"] else 0
     grove_caption = (f'Episode {hero["number"]} — '
                      + (f'all {tot["total"]} scene frames approved. '
                         if done else f'{tot["final"]} of {tot["total"]} scene frames approved. ')
                      + f'<a href="{_e(hero["page"])}">Watch it &rarr;</a>')
+    # role="img" + aria-label: the bar itself is decoration, the numbers are the fact
+    growbar = (f'<div class="growbar" role="img" aria-label="{grow["done"]} of '
+               f'{grow["total"]} growth steps done"><i style="width:{pct}%"></i></div>'
+               f'<div class="label"><b>{pct}% grown</b> — {grow["done"]} of {grow["total"]} '
+               'growth steps. A scene grows twice: its frame is approved, then it is animated.</div>')
 
     # --- the town: our machines, in sentences a stranger can read ---
     queue = queue_tasks()
@@ -382,7 +544,7 @@ def build(out_dir: Path):
 
     # --- what is being rendered, and why (founder, 2026-07-30) ---
     prod_rows = ""
-    for t in queue:
+    for t in merge_queue(queue):
         what, why = task_story(t)
         wkey = str(t.get("worker", "any"))
         wnice = MACHINES.get(wkey, (wkey, "🏠"))[0]
@@ -417,6 +579,40 @@ def build(out_dir: Path):
 
     waiting = (f'{tot["awaiting_render"]} waiting on a render · '
                f'{tot["awaiting_pick"]} waiting on the author to pick')
+
+    # --- vitals: four numbers, each one checkable against the repo ---
+    vitals = (
+        f'<div class="vitals">'
+        f'<div class="vital"><b>{pct}%</b><small>episode grown</small></div>'
+        f'<div class="vital"><b>{takes["stills"] + takes["clips"]}</b>'
+        f'<small>takes handed in</small></div>'
+        f'<div class="vital"><b>{open_quests}</b><small>open quests</small></div>'
+        f'<div class="vital"><b>${spend:.2f}</b><small>spent, lifetime</small></div>'
+        f'</div>')
+
+    # --- milestones: unlocked = a repo fact, locked = the honest gap ---
+    all_moving = all(r["animations"] for r in rows)
+    vo = data.vo_scenes()
+    passed = data.cut_passed()
+    picking = next((r for r in rows if not r["final"]), None)
+    milestones = [
+        ("🌱", "Scripted", bool(rows),
+         f'{tot["total"]} scenes written; the script approved by the author'),
+        ("🖼", "Every frame approved", done,
+         f'all {tot["total"]} scene frames carry the author\'s pick' if done else
+         (f'{tot["final"]} of {tot["total"]} — scene {picking["num"]:02d} still choosing'
+          if picking else f'{tot["final"]} of {tot["total"]}')),
+        ("🔊", "Narration recorded", vo > 0,
+         f"{vo} scenes carry recorded voice-over" if vo else "no voice lines recorded yet"),
+        ("🎞", "Every scene moves", all_moving,
+         "a moving take exists for all scenes" if all_moving else
+         f'{sum(1 for r in rows if r["animations"])} of {tot["total"]} scenes have one'),
+        ("🎬", "A full cut assembled", bool(hero["video"]),
+         "playing at the top of this page" if hero["video"] else "no full cut yet"),
+        ("🏆", "The author passes the cut", passed,
+         "the cut is canon" if passed else
+         "the last gate — only the author can open it"),
+    ]
 
     out = f"""<!doctype html>
 <html lang="en">
@@ -459,14 +655,21 @@ def build(out_dir: Path):
 </p>
 <p class="spend">total spent on renders so far: <b>${spend:.2f}</b> —
 everything else runs on the family's own machines for free</p>
+{vitals}
 </div>
 
 <h2 class="rise">The episode, growing</h2>
 <div class="grove rise">
   <div class="canopy">{leaves}</div>
   <div class="trunky"><a href="{_e(hero["page"])}" title="Episode {hero["number"]}">🌳</a></div>
+  {growbar}
   <div class="label">{grove_caption}</div>
 </div>
+
+<h2>Milestones</h2>
+{badges_html(milestones)}
+<p class="legend">an unlocked milestone is a fact you can check in the repo ·
+a locked one is exactly what remains</p>
 
 <h2>The machines</h2>
 <div class="sky"><div class="cloudgpu">☁️<small>cloud GPU — standing by (unused)</small></div></div>
@@ -474,14 +677,13 @@ everything else runs on the family's own machines for free</p>
 <p class="legend">{town_legend}</p>
 {production}
 
-<div class="panel" style="padding:1rem 1.2rem;margin:1.6rem 0">
-  <h2 style="margin:.1rem 0 .4rem">Take part</h2>
-  <p style="margin:.2rem 0 .8rem;color:var(--muted)">Nothing here is locked. Pick a scene,
-  make a better version of it, and hand it in — or write the next episode yourself.</p>
-  <p><a class="btn ghost" href="{_e(hero["board"])}">🎬 Scene-by-scene shot board</a>
-     <a class="btn ghost" href="create.html">✍️ Write your own episode</a>
-     <a class="btn ghost" href="https://github.com/{GH}/issues/1">💬 Say what you think</a></p>
-</div>
+<h2>🗺 Open quests — anyone can take one</h2>
+<p style="margin:.2rem 0 .4rem;color:var(--muted)">Nothing here is play-pretend: every art
+quest is a real open request from the author, and every take handed in becomes part of the
+show's public record.</p>
+{quest_board_html(rows)}
+<p class="whyfoot">every quest lands on the
+<a href="{_e(hero["board"])}">scene-by-scene shot board</a> — the whole workshop is public</p>
 
 <h2>Every scene, and what it is waiting for</h2>
 <p class="summary"><b>{tot["final"]} of {tot["total"]} scene frames approved</b> —
@@ -492,7 +694,7 @@ the assembled episode is a working cut until the author passes it · {waiting}</
 <h2>How long each step takes (and what it costs)</h2>
 {steps_table_html(data.STEPS)}
 
-<details class="drawer"><summary>What the author still has to decide — read-only</summary>
+<details class="drawer"><summary>The author's own quest log — read-only</summary>
 <div class="drawer-body">
 <p class="mono">These are calls only the author can make; the rest of the city keeps moving while
 they wait.</p>
