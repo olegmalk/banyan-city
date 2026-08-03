@@ -4,8 +4,11 @@
 Dad asked for the sim (2026-07-30) and it stays: the episode is a tree growing
 leaves, our machines are buildings that glow while they render, the cloud GPU is
 a cloud, the author's open decisions are quests, the people voting on the
-reactions thread are citizens. Pure CSS + emoji — the public-site CSP allows no
-external asset, and nothing here needs JavaScript.
+reactions thread are citizens. Since 2026-08-03 the machines share one animated
+"lot" that the real crew walks (the author, the author's dad, the AI steward,
+plus actual thread commenters) — decoration may be charming, but every sprite
+is somebody real. Pure CSS + emoji — the public-site CSP allows no external
+asset, and nothing here needs JavaScript.
 
 The stranger-eyes audit (2026-07-30) rebuilt the page's priorities:
   1. the episode plays FIRST — a visitor from TikTok came for a cartoon;
@@ -315,6 +318,37 @@ def quests_html(inbox: list) -> str:
     return f'<ol class="quests">{"".join(out)}</ol>'
 
 
+def walkers_html(comments: list, any_working: bool) -> str:
+    """The crew, walking the lot. Every sprite is somebody real: the three
+    people/agents who actually run the studio, up to two citizens straight off
+    the reactions thread (their own usernames), and a courier only while a
+    machine is truly rendering. Decoration is allowed to be charming; it is
+    not allowed to invent staff."""
+    folk = [("🧑‍💻", "the author"),
+            ("🧑‍🔧", "the author's dad"),
+            ("🤖", "the steward — an AI")]
+    seen = set()
+    for who, _said, _url in comments:
+        if who in seen:
+            continue                     # one commenter = one villager
+        seen.add(who)
+        folk.append((("🧑‍🌾", "🧙")[len(seen) % 2], who))
+        if len(seen) == 2:
+            break
+    if any_working:
+        folk.append(("🛻", "hauling fresh frames"))
+    out = ""
+    for i, (spr, tag) in enumerate(folk):
+        dur = 22 + i * 7                 # seconds one way — everyone ambles
+        lo = 5 + i * 8                   # starting spot, % — also the resting
+        out += (                         # spot when animations are off
+            f'<div class="walker" aria-hidden="true" '
+            f'style="--d:{dur}s; --lo:{lo}%; --delay:-{i * 9}s">'
+            f'<span class="spr"><i>{spr}</i></span>'
+            f'<span class="wtag">{_e(tag)}</span></div>')
+    return out
+
+
 def quest_board_html(rows: list) -> str:
     """Open quests anyone can take. An 'art quest' is a real open render
     request from requests.yaml; the two standing quests are the routes that
@@ -371,16 +405,55 @@ def badges_html(milestones: list) -> str:
 
 
 SIM_CSS = """
-/* ---- the studio, drawn as a town (page-specific; tokens from the theme) ---- */
-.sky { position: relative; height: 92px; overflow: hidden; border-radius: 18px;
-  border: 1px solid var(--line-soft); margin: .4rem 0 -.6rem;
-  background: radial-gradient(420px 120px at 70% 120%, var(--bg-glow), transparent 70%); }
-.sky::after { content: "✦ ✧ ✦ ✧ ✦"; position: absolute; top: 10px; left: 8%;
-  letter-spacing: 4.5vw; color: var(--leaf-dim); font-size: .8rem; }
-.cloudgpu { position: absolute; right: 6%; top: 12px; text-align: center; font-size: 1.9rem;
-  line-height: 1; }
-.cloudgpu small { display: block; font: 600 .62rem/1.5 var(--mono); color: var(--faint);
-  letter-spacing: .04em; }
+/* ---- the lot: one living scene — sky, street, crew (tokens from the theme).
+   All motion is transform-only on a handful of small elements, paused when the
+   tab is hidden (body.away) and killed entirely under prefers-reduced-motion —
+   the 2026-07-31 GPU lesson applies to every new animation on this page. ---- */
+.lot { position: relative; height: 230px; overflow: hidden; border-radius: 18px;
+  border: 1px solid var(--line-soft); margin: .5rem 0 .4rem;
+  background:
+    radial-gradient(460px 150px at 72% 0%, var(--bg-glow), transparent 70%),
+    linear-gradient(180deg, transparent 73%, var(--panel-2) 73%); }
+.lot .stars { position: absolute; top: 12px; left: 28%; letter-spacing: 4vw;
+  color: var(--leaf-dim); font-size: .8rem; }
+.lot .sun { position: absolute; top: 12px; left: 5%; text-align: center;
+  font-size: 1.5rem; line-height: 1; }
+.lot .cloud { position: absolute; top: 12px; right: 5%; text-align: center;
+  font-size: 1.7rem; line-height: 1;
+  animation: drift 48s ease-in-out infinite alternate; }
+.lot .sun small, .lot .cloud small { display: block; font: 600 .58rem/1.5 var(--mono);
+  color: var(--faint); }
+@keyframes drift { from { transform: translateX(0) } to { transform: translateX(-64px) } }
+.street { position: absolute; left: 0; right: 0; bottom: 27%; display: flex;
+  justify-content: space-evenly; align-items: flex-end; }
+.lot-bld { position: relative; text-align: center; }
+.lot-bld .ico { display: block; font-size: clamp(1.7rem, 6vw, 2.4rem);
+  line-height: 1.15; text-decoration: none; }
+.lot-bld .btag { display: block; font: 600 .58rem/1.4 var(--mono); color: var(--faint); }
+.lot-bld.working .ico { filter: drop-shadow(0 0 10px rgba(255,199,106,.8)); }
+.lot-bld.working .btag { color: var(--sap); }
+.lot-bld.idle { opacity: .85; }
+.lot-bld.asleep { opacity: .45; filter: grayscale(.8); }
+.lot-bld .smoke { position: absolute; top: -1.1rem; left: 0; right: 0; }
+.lot-tree .ico { font-size: clamp(2.4rem, 8vw, 3.1rem); }
+.walker { position: absolute; bottom: 8px; left: var(--lo); z-index: 3; text-align: center;
+  animation: cross var(--d) linear var(--delay) infinite alternate; }
+@keyframes cross { from { transform: translateX(0) } to { transform: translateX(min(58vw, 400px)) } }
+.walker .spr { display: block; font-size: 1.35rem; line-height: 1.2;
+  /* most emoji people face left, so the rightward leg wears the flip */
+  animation: face calc(var(--d) * 2) steps(1) var(--delay) infinite; }
+@keyframes face { 0%, 100% { transform: scaleX(-1) } 50% { transform: scaleX(1) } }
+.walker .spr i { display: inline-block; font-style: normal;
+  animation: bob .55s ease-in-out infinite alternate; }
+@keyframes bob { from { transform: translateY(0) } to { transform: translateY(-3px) } }
+.walker .wtag { display: block; font: 600 .58rem/1.4 var(--mono); color: var(--faint);
+  background: var(--panel); border: 1px solid var(--line-soft); border-radius: 999px;
+  padding: .06rem .4rem; white-space: nowrap; }
+.machlist { list-style: none; padding: 0; margin: .5rem 0 0; }
+.machlist li { padding: .45rem 0; border-bottom: 1px solid var(--line-soft);
+  font-size: .92rem; }
+.machlist li:last-child { border-bottom: 0; }
+.machlist .mico { margin-right: .3rem; }
 .grove { text-align: center; margin: 0 0 1.2rem; }
 .canopy { display: grid; grid-template-columns: repeat(5, 2.1rem); gap: .1rem;
   justify-content: center; }
@@ -388,23 +461,13 @@ SIM_CSS = """
 .leaf.bud { filter: grayscale(1) brightness(.5); }
 .trunky { font-size: 4.4rem; line-height: 1; }
 .grove .label { font: 600 .8rem/1.6 var(--mono); color: var(--muted); }
-.town { display: flex; flex-wrap: wrap; gap: .7rem; justify-content: center; margin: 1rem 0 .5rem; }
-.bld { flex: 1 1 45%; max-width: 200px; text-align: center; padding: .7rem .6rem;
-  border: 1px solid var(--line); border-radius: 14px;
-  background: linear-gradient(180deg, var(--panel-2), var(--panel)); }
-.bld .ico { font-size: 2.3rem; line-height: 1.1; }
-.bld .nm { font: 700 .78rem/1.4 var(--mono); }
-.bld .cap { font: 500 .72rem/1.45 var(--mono); color: var(--faint); min-height: 2.2em; }
-.bld.working { border-color: var(--sap); box-shadow: 0 0 22px -6px rgba(255,199,106,.45); }
-.bld.working .nm { color: var(--sap); }
-.bld.idle { opacity: .9; }
-.bld.asleep { opacity: .5; filter: grayscale(.7); }
 .smoke { height: 1.1rem; animation: puff 2.4s linear infinite; }
 /* an infinite animation keeps the compositor running FOREVER, in every
    open tab — this page is meant to be left open, so it must go quiet
    when nobody is looking (founder's Mac, 2026-07-31: a Chrome GPU
    process at 100% of a core for 13 hours). */
-body.away .smoke, body.away .cloudgpu { animation: none !important; }
+body.away .smoke, body.away .lot .cloud,
+body.away .walker, body.away .walker * { animation: none !important; }
 @keyframes puff { 0% { opacity: .9; transform: translateY(0) } 100% { opacity: 0; transform: translateY(-11px) } }
 .spend { font: 600 .8rem/1.6 var(--mono); color: var(--faint); text-align: center; }
 .spend b { color: var(--sap); }
@@ -422,7 +485,6 @@ body.away .smoke, body.away .cloudgpu { animation: none !important; }
 .citizen small { font: 600 .7rem/1.4 var(--mono); color: var(--faint); display: block; }
 .summary { font: 600 .84rem/1.7 var(--mono); color: var(--muted); }
 .summary b { color: var(--leaf); }
-@media (min-width: 620px) { .bld { flex: 0 1 180px; } }
 .prod-row { background: linear-gradient(180deg, var(--panel-2), var(--panel));
   border: 1px solid var(--line); border-radius: 14px; padding: .7rem .95rem;
   margin: .6rem 0; font-size: .92rem; }
@@ -529,18 +591,31 @@ def build(out_dir: Path):
                f'<div class="label"><b>{pct}% grown</b> — {grow["done"]} of {grow["total"]} '
                'growth steps. A scene grows twice: its frame is approved, then it is animated.</div>')
 
-    # --- the town: our machines, in sentences a stranger can read ---
+    # --- the lot: our machines as buildings on one street, crew walking it ---
     queue = queue_tasks()
-    town, seen_states = "", []
+    bldgs, machlist, seen_states = "", "", []
     for b in farm_branches():
         key = b.split("farm-results-")[-1]
         nice, emoji = MACHINES.get(key, (key, "🏠"))
         state, cap, raw = machine_state(branch_heartbeat(b), queue)
         seen_states.append(state)
         smoke = '<div class="smoke">💨</div>' if state == "working" else ""
-        town += (f'<div class="bld {state}" title="{_e(raw)}">{smoke}'
-                 f'<div class="ico">{emoji}</div><div class="nm">{_e(nice)}</div>'
-                 f'<div class="cap">{_e(cap)}</div></div>')
+        bldgs += (f'<div class="lot-bld {state}" title="{_e(nice)} — {_e(cap)}">{smoke}'
+                  f'<span class="ico">{emoji}</span><span class="btag">{_e(nice)}</span></div>')
+        machlist += (f'<li><span class="mico">{emoji}</span> <b>{_e(nice)}</b> — '
+                     f'<span class="mono">{_e(cap)}</span></li>')
+    bldgs += (f'<div class="lot-bld lot-tree"><a class="ico" href="{_e(hero["page"])}" '
+              f'title="Episode {hero["number"]} — {pct}% grown">🌳</a>'
+              f'<span class="btag">episode {hero["number"]} · {pct}%</span></div>')
+    day = data.day_count()
+    sun = (f'<div class="sun">☀️<small>day {day} of production</small></div>'
+           if day else "")
+    comments = latest_thread_comments()
+    lot = (f'<div class="lot">{sun}'
+           '<div class="stars" aria-hidden="true">✦ ✧ ✦ ✧ ✦</div>'
+           '<div class="cloud">☁️<small>cloud GPU — standing by (unused)</small></div>'
+           f'<div class="street">{bldgs}</div>'
+           f'{walkers_html(comments, "working" in seen_states)}</div>')
 
     # --- what is being rendered, and why (founder, 2026-07-30) ---
     prod_rows = ""
@@ -565,7 +640,7 @@ def build(out_dir: Path):
     citizens = "".join(
         f'<div class="citizen"><a class="bubble" href="{_e(url)}">{_e(said)}</a>'
         f'<div class="spr">{"🧑‍🌾" if i % 2 else "🧙"}</div><small>{_e(who)}</small></div>'
-        for i, (who, said, url) in enumerate(latest_thread_comments()))
+        for i, (who, said, url) in enumerate(comments))
     if not citizens:
         citizens = '<p class="notice">The reactions thread is quiet right now.</p>'
 
@@ -671,9 +746,9 @@ everything else runs on the family's own machines for free</p>
 <p class="legend">an unlocked milestone is a fact you can check in the repo ·
 a locked one is exactly what remains</p>
 
-<h2>The machines</h2>
-<div class="sky"><div class="cloudgpu">☁️<small>cloud GPU — standing by (unused)</small></div></div>
-<div class="town">{town}</div>
+<h2>The lot — the studio at work</h2>
+{lot}
+<ul class="machlist">{machlist}</ul>
 <p class="legend">{town_legend}</p>
 {production}
 

@@ -134,6 +134,21 @@ def cut_passed(d: Path = None) -> bool:
     return False
 
 
+def day_count() -> int:
+    """Day N of production — days since the root node was released, from
+    lineage.yaml (a repo fact, so the deploy server can compute it). 0 means
+    the lineage could not be read and the page should not show a day at all."""
+    import datetime
+    try:
+        nodes = (yaml.safe_load((REPO / f"genomes/{GENOME}/lineage.yaml").read_text())
+                 or {}).get("nodes", [])
+        root = next(n for n in nodes if not n.get("parent"))
+        return (datetime.datetime.now(datetime.timezone.utc).date()
+                - root["released"]).days + 1
+    except Exception:
+        return 0
+
+
 def request_url(num) -> str:
     """Where a stranger hands in a take for a scene ("open request" on the page)."""
     return f"{GH_URL}/issues/{num}"
