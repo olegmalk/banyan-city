@@ -1,45 +1,24 @@
-# 2026-08-03 19:4xZ — beat 2's face. The founder's note on an otherwise good beat:
-# "except in 2 it makes him make a weird face.."
+# 2026-08-03 20:0xZ — SAMPLE, not a batch. Beat 1 with the face terms.
 #
-# Beat 2's still is the over-the-shoulder framing, so the face is partly visible and
-# at an angle — the worst case for i2v, which has to invent the parts it cannot see
-# and drifts the features while doing it. Same failure family as the sprout doing
-# mitosis and the rock morphing: the model inventing where it has no information.
+# FACE_NEG now applies to the three beats that have a face (1, 2, 4). Beat 2 was
+# approved WITH those terms; beat 1 was approved WITHOUT them, so adding them could
+# improve it or could damage a beat the founder has already signed off.
 #
-# A: face terms in the NEGATIVE. Today's repeated lesson is that the negative is the
-#    lever and positive prose is not, so this is the shape with a track record.
-# B: A plus the amplitude scoped to the HANDS only, so the model has a clear place
-#    to put its motion and less reason to animate the head.
-#
-# Both keep beat 2's approved direction otherwise. If neither works the fallback is
-# the static rule, which is now a tool.
+# One beat. The founder's rule from tonight, now in CLAUDE.md: "i need a sample of
+# your work before you mass produce the same kind of thing." Beat 4 needs no render
+# at all — it is a held still.
 tasks:
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
   video_model: ti2v-5b
   no_anchor: true
-  motion: no new subjects, no scene change, no face morphing, no changing facial features, no distorted face, no warped face, no head turning, no facial expression change
+  motion: no new subjects, no scene change
   size: 704x1280
   offload: true
   seconds: 2.5
   steps: 14
   guidance: 5.0
   seed_base: 20260805
-  id: face-A-b02-1785816000
-  beats: 2
-- worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  video_model: ti2v-5b
-  no_anchor: true
-  motion_override: "his hands drive hard across the keyboard, fingers striking the keys, the spinner sweeping on the monitor"
-  motion: no new subjects, no scene change, no face morphing, no changing facial features, no distorted face, no warped face, no head turning, no facial expression change
-  size: 704x1280
-  offload: true
-  seconds: 2.5
-  steps: 14
-  guidance: 5.0
-  seed_base: 20260805
-  id: face-B-b02-1785816000
-  beats: 2
+  id: faceneg-b01-1785819600
+  beats: 1
