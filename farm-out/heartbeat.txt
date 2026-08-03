@@ -1246,3 +1246,4 @@
 15:45:10Z VIDEO_RENDERING beat=02 on ti2v-5b (single-process)
 15:48:42Z VIDEO_CLIP 1/1 face-A-b02-1785816000-02-three-oh-seven.mp4 in 186s
 15:48:46Z VIDEO_CLIP_OK beat=02 439KB
+15:48:49Z DONE task=face-A-b02-1785816000
