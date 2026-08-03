@@ -948,3 +948,4 @@
 09:18:00Z STARTED task=life-C-both-b01-1785796800 beats=1 on cuda
 09:18:03Z VIDEO_VENV_OK
 09:18:16Z VIDEO_DEPS_OK 2.11.0+cu128 0.39.0 True
+09:18:27Z VIDEO_RENDERING beat=01 on ti2v-5b (single-process)
