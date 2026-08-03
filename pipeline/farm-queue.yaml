@@ -1,37 +1,37 @@
-# 2026-08-03 12:3xZ — RENDER THE FOUNDER'S PICK. All fifteen, F recipe.
+# 2026-08-03 14:0xZ — the three beats that stayed flat. Their STILLS, not the prompt.
 #
-# He chose variant F off the comparison: "this is actually the best overall, do this
-# kinda thing. its very good." The corrected measurement agrees — and my earlier
-# recommendation (K) was wrong:
+# Founder: "ep1-v23-motion.mp4 is not bad! there are still some beats which are
+# static". Measured, he means 3 (0.13, 72% frozen), 12 (0.19, 58%) and 13 (0.19,
+# 53%).
 #
-#                              median   frozen frames
-#   the cut he rejected          0.13        70%
-#   K  (steward's pick)          0.27        38%
-#   F  (his pick)                1.30         3%
-#   hosted models            1.03-1.13         0%
+# Their sidecars show IDENTICAL treatment to beat 11, which hit 2.36 with 0% frozen:
+# anti-static applied, no shake suppression, amplitude wording. So the prompt recipe
+# is not the variable. What differs is what their compositions physically contain:
 #
-# Every figure I quoted before this was a MEAN, which one big jump inflates. Median
-# plus the share of barely-moving frames is what matches what a person sees, and on
-# that measure K has 38% dead frames. His "literally just frozen frames" was exact
-# about a clip I had called the winner.
+#   11  macro sprout, one leaf unfurling      2.36   soft, large, bounded subject
+#   1,2 a person, hands on a keyboard    1.75-1.84   same
+#   3   a MONITOR filling the frame           0.13   screen text; nothing physical
+#   12  a thin stem bent into a tense arc     0.19   rigid
+#   13  wide road across windswept grass      0.19   fine texture spread thin
 #
-# What is in this render:
-#   - all 15 directions rewritten in F's register (amplitude named, not just motion)
-#   - "camera locked" gone from the 12 motion beats; kept on 4, 6, 8 which are
-#     deliberately still. Measured free: camera drift 0.00-0.02 without it.
-#   - no_anchor: the redundant static-composition tail, which F also dropped
-#   - NO body negative. It is what made K frozen: every attempt to pin the body cost
-#     animation (positive 25% frozen, negative 43%, none 3%).
-#
-# The founder rejected F once for body motion and has now chosen it anyway seeing it
-# beside the alternatives. If the body still reads wrong in the assembled cut, the
-# fix is not the negative — that trade is measured and bad.
+# So these directions stop asking for the thing that cannot move and ask for the
+# thing that can:
+#   3   LIGHT. A screen close-up has no moving objects, but the whole frame is
+#       luminance — surge, dim, scanlines, a flaring cursor. (Also the least
+#       critical plate in the episode: render_t3 burns the terminal panel over it,
+#       same as beat 9.)
+#   12  VIBRATION, not travel. The script is explicit that nothing happens — "the
+#       trunk strains against nothing and nothing happens" — so a stem that shudders
+#       in place is the beat, and asking it to whip would contradict the script.
+#   13  WHOLE-FIELD waves rather than per-blade detail, which is what a wide shot of
+#       grass can actually render.
 tasks:
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
   video_model: ti2v-5b
   no_anchor: true
+  motion_override: "the terminal glow surges bright and dims across the whole screen, scanlines rolling down it, the cursor pulsing hard, the green line flaring"
   motion: no new subjects, no scene change
   size: 704x1280
   offload: true
@@ -39,41 +39,14 @@ tasks:
   steps: 14
   guidance: 5.0
   seed_base: 20260805
-  id: f15-b01-1785804000
-  beats: 1
-- worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  video_model: ti2v-5b
-  no_anchor: true
-  motion: no new subjects, no scene change
-  size: 704x1280
-  offload: true
-  seconds: 2.5
-  steps: 14
-  guidance: 5.0
-  seed_base: 20260805
-  id: f15-b02-1785804000
-  beats: 2
-- worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  video_model: ti2v-5b
-  no_anchor: true
-  motion: no new subjects, no scene change
-  size: 704x1280
-  offload: true
-  seconds: 2.5
-  steps: 14
-  guidance: 5.0
-  seed_base: 20260805
-  id: f15-b03-1785804000
+  id: flat-b03-1785808800
   beats: 3
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
   video_model: ti2v-5b
   no_anchor: true
+  motion_override: "the bent stem shudders and vibrates hard under strain without moving anywhere, dust shaking off it, soil grains jumping loose at its base"
   motion: no new subjects, no scene change
   size: 704x1280
   offload: true
@@ -81,125 +54,14 @@ tasks:
   steps: 14
   guidance: 5.0
   seed_base: 20260805
-  id: f15-b04-1785804000
-  beats: 4
-- worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  video_model: ti2v-5b
-  no_anchor: true
-  motion: no new subjects, no scene change
-  size: 704x1280
-  offload: true
-  seconds: 2.5
-  steps: 14
-  guidance: 5.0
-  seed_base: 20260805
-  id: f15-b05-1785804000
-  beats: 5
-- worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  video_model: ti2v-5b
-  no_anchor: true
-  motion: no new subjects, no scene change
-  size: 704x1280
-  offload: true
-  seconds: 2.5
-  steps: 14
-  guidance: 5.0
-  seed_base: 20260805
-  id: f15-b06-1785804000
-  beats: 6
-- worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  video_model: ti2v-5b
-  no_anchor: true
-  motion: no new subjects, no scene change
-  size: 704x1280
-  offload: true
-  seconds: 2.5
-  steps: 14
-  guidance: 5.0
-  seed_base: 20260805
-  id: f15-b07-1785804000
-  beats: 7
-- worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  video_model: ti2v-5b
-  no_anchor: true
-  motion: no new subjects, no scene change
-  size: 704x1280
-  offload: true
-  seconds: 2.5
-  steps: 14
-  guidance: 5.0
-  seed_base: 20260805
-  id: f15-b08-1785804000
-  beats: 8
-- worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  video_model: ti2v-5b
-  no_anchor: true
-  motion: no new subjects, no scene change
-  size: 704x1280
-  offload: true
-  seconds: 2.5
-  steps: 14
-  guidance: 5.0
-  seed_base: 20260805
-  id: f15-b09-1785804000
-  beats: 9
-- worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  video_model: ti2v-5b
-  no_anchor: true
-  motion: no new subjects, no scene change
-  size: 704x1280
-  offload: true
-  seconds: 2.5
-  steps: 14
-  guidance: 5.0
-  seed_base: 20260805
-  id: f15-b10-1785804000
-  beats: 10
-- worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  video_model: ti2v-5b
-  no_anchor: true
-  motion: no new subjects, no scene change
-  size: 704x1280
-  offload: true
-  seconds: 2.5
-  steps: 14
-  guidance: 5.0
-  seed_base: 20260805
-  id: f15-b11-1785804000
-  beats: 11
-- worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  video_model: ti2v-5b
-  no_anchor: true
-  motion: no new subjects, no scene change
-  size: 704x1280
-  offload: true
-  seconds: 2.5
-  steps: 14
-  guidance: 5.0
-  seed_base: 20260805
-  id: f15-b12-1785804000
+  id: flat-b12-1785808800
   beats: 12
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
   video_model: ti2v-5b
   no_anchor: true
+  motion_override: "the grass thrashes in heavy gusts, whole waves rolling across the frame, the clouds racing over, dust sheeting down the empty road, no people appear"
   motion: no new subjects, no scene change
   size: 704x1280
   offload: true
@@ -207,33 +69,5 @@ tasks:
   steps: 14
   guidance: 5.0
   seed_base: 20260805
-  id: f15-b13-1785804000
+  id: flat-b13-1785808800
   beats: 13
-- worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  video_model: ti2v-5b
-  no_anchor: true
-  motion: no new subjects, no scene change
-  size: 704x1280
-  offload: true
-  seconds: 2.5
-  steps: 14
-  guidance: 5.0
-  seed_base: 20260805
-  id: f15-b14-1785804000
-  beats: 14
-- worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  video_model: ti2v-5b
-  no_anchor: true
-  motion: no new subjects, no scene change
-  size: 704x1280
-  offload: true
-  seconds: 2.5
-  steps: 14
-  guidance: 5.0
-  seed_base: 20260805
-  id: f15-b15-1785804000
-  beats: 15
