@@ -341,14 +341,34 @@ def antistatic_for(direction: str) -> str:
 
     So it is decided per beat, from the direction the author already wrote. Stillness
     language in the direction means no anti-static suppression; movement language
-    means keep it. When a direction says both, the still reading wins — an
-    over-still clip is a usable plate, a shaking one is not.
+    means keep it.
+
+    WHEN A DIRECTION SAYS BOTH, THE ONE THAT COMES FIRST WINS. This used to say
+    "the still reading wins — an over-still clip is a usable plate, a shaking one
+    is not", and that was wrong in a way the founder caught by eye on 2026-08-03:
+    "wan 2.2 basically doesnt move at all, literally."
+
+    Why it failed: the steward rewrote beat 1's direction as "his hands type fast
+    over the mechanical keyboard and then stop abruptly, HANDS GOING STILL, monitor
+    glow flickers gently". WANTS_STILL matched the bare word "still" — describing
+    the END STATE of a motion — and suppressed the anti-static terms, so a beat
+    whose whole job is typing was told nothing about needing to move. Beat 12 had
+    the same shape ("strains and quivers... everything else still") and measured the
+    lowest motion of all fifteen. Both were the steward's own wording defeating the
+    steward's own logic.
+
+    Position is the honest discriminator because these directions are written
+    subject-first: "his hands type FAST ... going still" opens with motion and ends
+    still, while "the leaf holds almost perfectly STILL, dust motes settle" opens
+    with stillness and merely mentions a drift. First signal = the subject.
     """
-    if WANTS_STILL.search(direction or ""):
+    d = direction or ""
+    ms, mv = WANTS_STILL.search(d), WANTS_MOVE.search(d)
+    if ms and mv:
+        return "" if ms.start() < mv.start() else ANTI_STATIC
+    if ms:
         return ""
-    if WANTS_MOVE.search(direction or ""):
-        return ANTI_STATIC
-    return ""
+    return ANTI_STATIC if mv else ""
 
 
 # Wan 2.2 is a general video model — the founder's read after screening six takes:
