@@ -150,3 +150,47 @@ Loading pipeline components...: 100%|██████████| 5/5 [00:16<
 100%|██████████| 10/10 [01:56<00:00, 11.64s/it]
 
 video task steps10-b01-1785788400: 1/1 clips
+$ C:\banyan-video\venv\Scripts\python.exe C:\banyan-farm\banyan-city\pipeline\wan_i2v.py --stage simple --embeds C:\banyan-video\embeds-01.pt…
+model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+pipeline class: WanImageToVideoPipeline (forced image-to-video)
+VRAM[after load, before .to(cuda)] used 1.38/25.7GB (torch holds 0.00GB)
+model cpu offload ON (big model: slower per clip, but it fits)
+[1/1] wrote C:\banyan-farm\banyan-city\farm-out\steps06-b01-1785788400-01-the-keyboard.mp4 in 121s (61 frames, 704x1280, 6 steps, peak torch 14.4GB, device 1.8/26GB)
+    freed between clips: 1.8/26GB still held
+[transformers] `CLIPImageProcessor` requires torchvision (not installed); falling back to `CLIPImageProcessorPil` for backward compatibility. Install torchvision to use the default backend, or import `CLIPImageProcessorPil` directly to silence this warning.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+Loading pipeline components...:   0%|          | 0/5 [00:00<?, ?it/s]The config attributes {'clip_output': False} were passed to AutoencoderKLWan, but are not expected and will be ignored. Please verify your config.json configuration file.
+
+Loading pipeline components...:  20%|██        | 1/5 [00:01<00:06,  1.51s/it]
+
+Loading weights:   0%|          | 0/242 [00:00<?, ?it/s][A
+Loading weights: 100%|██████████| 242/242 [00:00<00:00, 3046.33it/s]
+
+Loading pipeline components...:  40%|████      | 2/5 [00:01<00:02,  1.42it/s]
+Loading pipeline components...:  60%|██████    | 3/5 [00:02<00:01,  1.19it/s]
+
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s][A
+
+Loading checkpoint shards:  20%|██        | 1/5 [00:02<00:08,  2.09s/it][A
+
+Loading checkpoint shards:  40%|████      | 2/5 [00:04<00:06,  2.13s/it][A
+
+Loading checkpoint shards:  60%|██████    | 3/5 [00:06<00:04,  2.13s/it][A
+
+Loading checkpoint shards:  80%|████████  | 4/5 [00:13<00:04,  4.04s/it][A
+
+Loading checkpoint shards: 100%|██████████| 5/5 [00:13<00:00,  2.77s/it][A
+Loading checkpoint shards: 100%|██████████| 5/5 [00:13<00:00,  2.77s/it]
+
+Loading pipeline components...:  80%|████████  | 4/5 [00:16<00:06,  6.01s/it]
+Loading pipeline components...: 100%|██████████| 5/5 [00:16<00:00,  3.33s/it]
+
+  0%|          | 0/6 [00:00<?, ?it/s]
+ 17%|█▋        | 1/6 [00:37<03:08, 37.64s/it]
+ 33%|███▎      | 2/6 [00:46<01:21, 20.47s/it]
+ 50%|█████     | 3/6 [00:54<00:45, 15.04s/it]
+ 67%|██████▋   | 4/6 [01:03<00:24, 12.46s/it]
+ 83%|████████▎ | 5/6 [01:11<00:11, 11.03s/it]
+100%|██████████| 6/6 [01:20<00:00, 10.17s/it]
+100%|██████████| 6/6 [01:20<00:00, 13.36s/it]
