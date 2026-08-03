@@ -58,20 +58,92 @@ def slug_for(node_dir: Path, beat: int) -> str | None:
     return s.get("slug") if s else None
 
 
-def hold(still: Path, out: Path, seconds: float) -> None:
-    subprocess.run(
-        ["ffmpeg", "-v", "error", "-loop", "1", "-i", str(still),
-         "-t", f"{seconds}", "-r", str(FPS),
-         # scale then pad: the still may not be exactly the bucket, and a squeezed
-         # frame would be a different picture than the one that was approved
-         "-vf", f"scale={W}:{H}:force_original_aspect_ratio=decrease,"
-                f"pad={W}:{H}:(ow-iw)/2:(oh-ih)/2:black",
-         "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "18",
-         "-movflags", "+faststart", "-y", str(out)],
-        check=True, capture_output=True, encoding="utf-8", errors="replace")
+# 18%, NOT the 6% post_motion uses. Founder on the 6% version: "this one has no
+# motion, u sure you opened it". The move was genuinely present — frames diverged
+# steadily from 0 to 13.2 mean abs difference — and still invisible, because 6% over
+# 2.5s on a dark low-contrast image is about 15px of travel per second at the frame
+# edge and nothing at the centre. A move nobody can see is not a move.
+#
+# 18% over a 5s beat reads as a deliberate slow push without becoming an effect.
+# Measured, not guessed: see the check at the bottom of this file's docstring.
+ZOOM = 0.18
+DRIFT_PX = 70        # lateral travel, so it is a camera move and not just a scale
 
 
-def sidecar(clip: Path, still: Path, beat: int, seconds: float) -> None:
+def hold(still: Path, out: Path, seconds: float, beat: int,
+         zoom: bool = True) -> None:
+    """Hold the still, with a slow push-in unless asked for a frozen frame.
+
+    THE PUSH-IN IS THE DEFAULT, and that is the founder's rule, 2026-08-03: "if
+    theres nothing to animate, just do the static rule. slow zooming."
+    A truly frozen frame inside a moving episode reads as a stalled player rather
+    than a held shot — he saw exactly that when a file got overwritten under an
+    open player and said "its just stuck at this frame for the entire duration".
+    A slow move says "this is a held shot" instead.
+
+    Deterministic, computed rather than generated: nothing can morph, split or
+    invent, which is the whole reason a held beat exists. Smoothstep ease so it
+    eased OUT so it moves at once and settles, and the drift direction alternates
+    with beat parity so two static beats in a row do not look copy-pasted — the
+    same trick post_motion.py uses.
+    """
+    if not zoom:
+        subprocess.run(
+            ["ffmpeg", "-v", "error", "-loop", "1", "-i", str(still),
+             "-t", f"{seconds}", "-r", str(FPS),
+             "-vf", f"scale={W}:{H}:force_original_aspect_ratio=decrease,"
+                    f"pad={W}:{H}:(ow-iw)/2:(oh-ih)/2:black",
+             "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "18",
+             "-movflags", "+faststart", "-y", str(out)],
+            check=True, capture_output=True, encoding="utf-8", errors="replace")
+        return
+
+    from PIL import Image
+    import tempfile
+    src = Image.open(still).convert("RGB")
+    # oversample once, then crop a shrinking window out of it: cropping a big
+    # image keeps full detail at every step, where scaling up each frame would
+    # soften the picture the founder approved
+    over = 1.0 + ZOOM + 0.02
+    big = src.resize((int(W * over), int(H * over)), Image.LANCZOS)
+    n = max(2, int(FPS * seconds))
+    sign = 1 if beat % 2 else -1
+    with tempfile.TemporaryDirectory() as td:
+        for i in range(n):
+            t = i / (n - 1)
+            # A GENTLE ease-out, and the exponent is the whole point.
+            #
+            # smoothstep first: the founder said "feels like a weird slow key
+            # frame, it should be ease in and out, just ease out" — right, because
+            # smoothstep eases IN too, so the move creeps up, peaks, and creeps
+            # out, which is an animation curve rather than a camera.
+            #
+            # Then cubic ease-out, and he said "doesnt mean it should just stop at
+            # one point" — also right. Cubic is 98% travelled by three-quarters
+            # through and retains 1% of its starting speed at the end, so the last
+            # quarter of the shot looks parked.
+            #
+            # 1.4 keeps ~40% of the opening speed at the final frame, so the push
+            # is still going when the cut comes. A camera move that has visibly
+            # finished before the edit is what makes a held shot feel dead.
+            e = 1 - (1 - t) ** 1.4
+            z = 1.0 + ZOOM * (1 - e)                    # window shrinks -> push IN
+            cw, ch = int(W * z), int(H * z)
+            cx = (big.width - cw) // 2 + int(sign * DRIFT_PX * e)
+            cy = (big.height - ch) // 2
+            cx = max(0, min(cx, big.width - cw))
+            (big.crop((cx, cy, cx + cw, cy + ch))
+                .resize((W, H), Image.LANCZOS)
+                .save(f"{td}/f{i:04d}.png"))
+        subprocess.run(
+            ["ffmpeg", "-v", "error", "-r", str(FPS), "-i", f"{td}/f%04d.png",
+             "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "18",
+             "-movflags", "+faststart", "-y", str(out)],
+            check=True, capture_output=True, encoding="utf-8", errors="replace")
+
+
+def sidecar(clip: Path, still: Path, beat: int, seconds: float,
+            frozen: bool = False) -> None:
     """§7.2 provenance. No video model ran, so none is claimed.
 
     The licence question that attaches to this clip is the STILL's, which is
@@ -81,7 +153,8 @@ def sidecar(clip: Path, still: Path, beat: int, seconds: float) -> None:
     Path(str(clip) + ".meta.yaml").write_text(
         "# Shot provenance (7.2) — written by hold_still at build time\n"
         "platform: local-cpu (ffmpeg)\n"
-        "model: none — held still, no video model ran\n"
+        f"model: none — held still{'' if frozen else ' + code push-in'}, "
+        f"no video model ran\n"
         "model_licence: n/a — inherits the still's licence, see stills/README.md\n"
         f"shot_beat: {beat}\n"
         f"size: {W}x{H}\n"
@@ -99,6 +172,10 @@ def main():
     ap.add_argument("--node", default="001-capability-inventory")
     ap.add_argument("--genome", default="sapling")
     ap.add_argument("--seconds", type=float, default=2.5)
+    ap.add_argument("--frozen", action="store_true",
+                    help="no push-in at all. Default is the slow zoom, per the "
+                         "founder's static rule — a truly frozen frame reads as a "
+                         "stalled player rather than a held shot")
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
 
@@ -114,8 +191,8 @@ def main():
             print(f"  beat {beat:02d}: no approved still or no slug — skipped")
             continue
         clip = out_dir / f"{beat:02d}-{slug}.mp4"
-        hold(still, clip, a.seconds)
-        sidecar(clip, still, beat, a.seconds)
+        hold(still, clip, a.seconds, beat, zoom=not a.frozen)
+        sidecar(clip, still, beat, a.seconds, frozen=a.frozen)
         print(f"  beat {beat:02d}  held {still.name}  ->  {clip.name} "
               f"({a.seconds}s, {clip.stat().st_size // 1024}KB)")
         made += 1
