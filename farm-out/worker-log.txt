@@ -601,3 +601,5 @@ C:\banyan-video\venv\Lib\site-packages\diffusers\pipelines\wan\pipeline_wan_i2v.
  93%|█████████▎| 13/14 [02:23<00:08,  8.69s/it]
 100%|██████████| 14/14 [02:31<00:00,  8.65s/it]
 100%|██████████| 14/14 [02:31<00:00, 10.84s/it]
+
+video task k15-b07-1785802800: 1/1 clips
