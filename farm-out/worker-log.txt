@@ -47,3 +47,55 @@ Traceback (most recent call last):
   File "C:\banyan-farm\banyan-city\pipeline\video_task.py", line 522, in _run
     raise RuntimeError(f"{stage} failed (exit {r.returncode})")
 RuntimeError: beat 7 failed (exit 1)
+
+$ C:\banyan-video\venv\Scripts\python.exe C:\banyan-farm\banyan-city\pipeline\wan_i2v.py --stage simple --embeds C:\banyan-video\embeds-01.pt…
+model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+pipeline class: WanImageToVideoPipeline (forced image-to-video)
+VRAM[after load, before .to(cuda)] used 1.38/25.7GB (torch holds 0.00GB)
+model cpu offload ON (big model: slower per clip, but it fits)
+[1/1] wrote C:\banyan-farm\banyan-city\farm-out\steps14-b01-1785788400-01-the-keyboard.mp4 in 186s (61 frames, 704x1280, 14 steps, peak torch 14.4GB, device 1.8/26GB)
+    freed between clips: 1.7/26GB still held
+[transformers] `CLIPImageProcessor` requires torchvision (not installed); falling back to `CLIPImageProcessorPil` for backward compatibility. Install torchvision to use the default backend, or import `CLIPImageProcessorPil` directly to silence this warning.
+
+Loading pipeline components...:   0%|          | 0/5 [00:00<?, ?it/s]
+Loading pipeline components...:  20%|██        | 1/5 [00:01<00:04,  1.01s/it]
+
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s][A
+
+Loading checkpoint shards:  20%|██        | 1/5 [00:02<00:08,  2.13s/it][A
+
+Loading checkpoint shards:  40%|████      | 2/5 [00:04<00:06,  2.12s/it][A
+
+Loading checkpoint shards:  60%|██████    | 3/5 [00:06<00:04,  2.12s/it][A
+
+Loading checkpoint shards:  80%|████████  | 4/5 [00:13<00:04,  4.04s/it][A
+
+Loading checkpoint shards: 100%|██████████| 5/5 [00:13<00:00,  2.66s/it][A
+Loading checkpoint shards: 100%|██████████| 5/5 [00:13<00:00,  2.71s/it]
+
+Loading pipeline components...:  40%|████      | 2/5 [00:14<00:25,  8.44s/it]The config attributes {'clip_output': False} were passed to AutoencoderKLWan, but are not expected and will be ignored. Please verify your config.json configuration file.
+
+Loading pipeline components...:  60%|██████    | 3/5 [00:16<00:11,  5.57s/it]
+
+Loading weights:   0%|          | 0/242 [00:00<?, ?it/s][A
+Loading weights: 100%|██████████| 242/242 [00:00<00:00, 3061.77it/s]
+
+Loading pipeline components...:  80%|████████  | 4/5 [00:17<00:03,  3.46s/it]
+Loading pipeline components...: 100%|██████████| 5/5 [00:17<00:00,  3.42s/it]
+
+  0%|          | 0/14 [00:00<?, ?it/s]
+  7%|▋         | 1/14 [00:36<07:56, 36.69s/it]
+ 14%|█▍        | 2/14 [00:45<04:00, 20.07s/it]
+ 21%|██▏       | 3/14 [00:53<02:42, 14.80s/it]
+ 29%|██▊       | 4/14 [01:02<02:02, 12.30s/it]
+ 36%|███▌      | 5/14 [01:10<01:38, 10.93s/it]
+ 43%|████▎     | 6/14 [01:19<01:20, 10.10s/it]
+ 50%|█████     | 7/14 [01:27<01:07,  9.58s/it]
+ 57%|█████▋    | 8/14 [01:36<00:55,  9.24s/it]
+ 64%|██████▍   | 9/14 [01:44<00:45,  9.01s/it]
+ 71%|███████▏  | 10/14 [01:53<00:35,  8.86s/it]
+ 79%|███████▊  | 11/14 [02:01<00:26,  8.76s/it]
+ 86%|████████▌ | 12/14 [02:10<00:17,  8.69s/it]
+ 93%|█████████▎| 13/14 [02:18<00:08,  8.64s/it]
+100%|██████████| 14/14 [02:27<00:00,  8.61s/it]
+100%|██████████| 14/14 [02:27<00:00, 10.52s/it]
