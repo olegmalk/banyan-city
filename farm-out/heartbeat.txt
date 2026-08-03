@@ -882,3 +882,4 @@
 07:22:51Z STARTED task=steps10-b01-1785788400 beats=1 on cuda
 07:22:55Z VIDEO_VENV_OK
 07:23:08Z VIDEO_DEPS_OK 2.11.0+cu128 0.39.0 True
+07:23:19Z VIDEO_RENDERING beat=01 on ti2v-5b (single-process)
