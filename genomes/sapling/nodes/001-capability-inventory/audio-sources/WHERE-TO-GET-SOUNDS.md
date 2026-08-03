@@ -71,3 +71,37 @@ in `SOURCES.md`.
 3. Reference it from `clips/sound.yaml` with a `file:` key.
 4. Run `python3 pipeline/lint_genome.py`. The gate fails on any shipping sound with no
    row in `SOURCES.md` — absence is a violation, not a note.
+
+## What I actually tested, and what each one fails on
+
+Three sources, real queries, licences checked per file. Recorded so nobody repeats it.
+
+| source | open to us? | catalogue | verdict |
+|---|---|---|---|
+| **Freesound** | **NO** — see below | the right one: a real SFX library with a CC0 filter | **blocked. Needs a founder API token.** |
+| **Wikimedia Commons** | yes, open API | 231 + 64 files in its two SFX categories, ~80 CC0/PD | thin. Zero hits for a computer fan spinning down; nothing for room tone. Full-text search is actively misleading — "footsteps" returns 2252 hits that are overwhelmingly **Wiktionary pronunciation files**, a person *saying* the word. |
+| **archive.org** | yes, open API (`advancedsearch.php`) | huge — 4930 items for "fan" alone | **almost nothing declares a licence.** 0 of 30 "fan" results carried a `licenseurl`; no declared licence is UNVERIFIABLE, which our own gate calls a violation. The few free ones match on text, not sound — "footsteps" returns sermons titled *Following The Footsteps Of Christ*. |
+| **Wiktionary / Lingua Libre** | yes | pronunciations only | wrong medium. Files are `LL-Q...-speaker-word.wav`: a human saying "gravel", not gravel. |
+
+### Freesound: their terms, not our limitation
+
+```
+User-agent: *          Disallow: /search/   Disallow: /apiv2/
+User-agent: ClaudeBot  Disallow: /
+```
+
+Search and the API are disallowed for every agent, and ClaudeBot is named with a
+blanket disallow. The API requires a token; a token requires an account; account
+creation is founder-reserved. Scraping a site that forbids it, in order to source
+"properly licensed" audio, would defeat the point of this whole document.
+
+**To unblock:** create a Freesound account, generate an API v2 token, and hand it
+over. Their CC0 filter plus that token is the actual answer for fan spin-down, room
+tone and soil footsteps — the three gaps `sfx.py` currently covers synthetically.
+
+### Until then
+
+`pipeline/sfx.py` is not a stopgap for these. Fixed seeds, no licence question, and a
+re-render is bit-identical — which no downloaded file can claim. The two recordings
+that ARE worth having (a real Model M keyboard, a real body thud) came from Commons
+because those exist there. Fan hum and room tone do not.
