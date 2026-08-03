@@ -59,3 +59,34 @@ tasks:
   seed_base: 20260805
   id: anime-canary-b07-1785783000
   beats: 7
+# 07:10Z — SAME CANARY, NEW ID. Not a retry of a broken task; the old id is burnt.
+#
+# anime-canary-b07-1785783000 recorded two failures, neither AnimeGen's fault:
+#   1. exit 3221225786 (0xC000013A STATUS_CONTROL_C_EXIT) at 22 minutes — a
+#      second worker was started on top of a running one.
+#   2. killed at 45 minutes by a watchdog that could only ask "has a clip
+#      finished?", so a model that is merely slow looked wedged. And it WAS
+#      silent to that watchdog, because tqdm writes to stderr and stderr was not
+#      read until the child exited — which also risks filling the pipe and
+#      genuinely blocking the child.
+#
+# Both are fixed in video_task now (two clocks: 45m of SILENCE kills, 180m
+# without a finished clip kills; stderr drains on its own thread and counts as
+# liveness). The interrupt case no longer spends an attempt either. But
+# finished_tasks() reads the heartbeat, and that heartbeat already says this id
+# failed twice, so the worker will skip it forever. A new id is the honest way
+# through: nothing about the task changed except its name.
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  video_model: animegen
+  no_lora: true
+  motion: no new subjects, no scene change
+  size: 704x1280
+  offload: true
+  seconds: 2.5
+  steps: 25
+  guidance: 5.0
+  seed_base: 20260805
+  id: anime-canary-b07-r2-1785787800
+  beats: 7
