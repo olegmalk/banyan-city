@@ -445,13 +445,24 @@ ANTI_STYLE = ("photorealistic, photograph, live action, film still, 3D render, "
 # Wan's negative field cap as we use it. Kept as a name so the truncation warning
 # and the value cannot drift apart.
 #
-# NOTE, unverified: 460 CHARACTERS is a proxy for a TOKEN limit, and a bad one when
-# the string mixes Chinese and English — a Chinese character is one token but three
-# UTF-8 bytes, so the char count over- or under-states the real budget depending on
-# the mix. Left as-is rather than raised on a guess; what matters is that
-# truncation is now LOUD, so any term that fails to arrive says so instead of
-# producing a silent non-result.
-NEG_MAX = 460
+# RAISED 460 -> 900, with the arithmetic rather than a shrug.
+#
+# 460 CHARACTERS was a proxy for a TOKEN limit and never a measured one. Wan 2.2's
+# text encoder is UMT5-XXL, whose usual maximum sequence is 512 TOKENS. Our longest
+# negative is ~523 chars — mostly English at roughly 4 chars per token, plus a
+# Chinese quality list at 1 token per character — which estimates to ~146 tokens.
+# The old cap was throwing away terms at under a third of the real budget: a still
+# beat lost "second scene, new camera angle, different location, split screen,
+# montage", i.e. five of the eight anti-scene-change terms, on every render.
+#
+# Two things make raising it safe rather than hopeful:
+#   - the tokenizer prints its OWN truncation warning if a prompt really is too
+#     long, and stderr is drained live as of this morning, so overflow is now
+#     observable instead of silent
+#   - this function's own warning prints anything IT drops
+# 900 leaves headroom under the estimate without pretending to know the exact
+# figure. If the tokenizer ever complains, that number is the thing to lower.
+NEG_MAX = 900
 
 
 # SDXL prompt furniture that means nothing to a video model and eats its attention
@@ -534,7 +545,18 @@ def video_prompt(motion: str, still_prompt: str, no_anchor=False) -> tuple:
     # list, which is the same on every clip, goes last where losing its tail costs
     # least. Then cut on a comma so no term is ever half-sent.
     parts = [x for x in (extra_neg, anti, strict, ANTI_STYLE) if x]
-    neg = ", ".join(parts)
+    # DEDUPE, first-occurrence order. The pieces overlap by construction: the task
+    # suffix carries "no new subjects, no scene change", which video_prompt strips
+    # into extra_neg, and ANTI_SCENE says "scene change" again. A still beat came to
+    # 480 chars against a 460 cap and lost "split screen, montage" — to duplicates.
+    # Repeating a term does not strengthen it; it just spends the budget.
+    seen, uniq = set(), []
+    for term in (t.strip() for t in ", ".join(parts).split(",")):
+        k = term.lower()
+        if term and k not in seen:
+            seen.add(k)
+            uniq.append(term)
+    neg = ", ".join(uniq)
     if len(neg) > NEG_MAX:
         cut = neg[:NEG_MAX].rsplit(",", 1)[0]
         print(f"!! negative prompt truncated {len(neg)} -> {len(cut)} chars; "
