@@ -1,32 +1,34 @@
-# 2026-08-03 09:4xZ — "motion blur" was in our NEGATIVE prompt the whole time.
+# 2026-08-03 10:1xZ — the amplitude wording OVERSHOT. Scope it to the hands.
 #
-# Three hypotheses tested and dead: frames (0.62 -> 0.59, worse), the static scene
-# anchor (0.62 -> 0.54, worse), and guidance — which turned out to be an INVALID
-# test, because --guidance never reached the single-beat renderer at all (the cfg
-# 3.0 clip was byte-identical to cfg 5.0, same sha256). Fixed; guidance is now
-# untested rather than ruled out.
+# Founder on variant 4: "beat1-4-plus-amplitude.mp4 is like.. too smooth. typing is
+# very nice but he's like moving all of his body parst the whole time."
 #
-# The one change that has ever moved the needle was removing OUR OWN shake terms
-# from the negative: 0.19 -> 0.62, 3.3x. That pointed at the negative prompt, and
-# reading it properly found two more motion suppressors sitting in the STYLE list:
+# So the typing is solved and the wording is too broad. Variant 4 said "hands
+# hammer the mechanical keyboard, fingers flying across the keys in large rapid
+# strokes, WRISTS AND FOREARMS MOVING VISIBLY" — asking for forearm movement is
+# asking for the whole arm, and the model obliged with the rest of him.
 #
-#   "motion blur"  fast hands PRODUCE motion blur. We asked for fast typing while
-#                  forbidding its visual signature. The cheapest way to satisfy
-#                  both is not to move. Added 2026-08-01 to fight photorealism,
-#                  when the complaint was style and nobody was thinking about
-#                  motion.
-#   "film still"   meant as "not a live-action film frame", but the token *still*
-#                  is in it. Same trap as WANTS_STILL matching "hands going still"
-#                  earlier today.
+# Note what makes these directions writable at all: they say "stay still" about the
+# body while still getting the anti-static terms, because antistatic_for now takes
+# the FIRST signal and "rapidly" precedes "still". This morning that same wording
+# would have silently frozen the clip.
 #
-# Both now apply only to beats whose direction asks for stillness, where they cost
-# nothing. G measures beat 1 with them gone. Nothing else changed from the current
-# default, so the delta is theirs alone.
+#  H  motion scoped to fingers and hands, body explicitly pinned
+#  I  H with a SMALLER stroke — "tap quickly", "small fast finger movements" —
+#     because "too smooth" may also mean the strokes are too large and fluid for
+#     what typing actually looks like
+#  J  H plus a negative that names the body motion directly. The "no X" prose in a
+#     task's motion field is already stripped into the real negative field by
+#     video_prompt, so this needs no new plumbing.
+#
+# None of these touch motion.yaml. The genome is the author's; canaries use
+# motion_override.
 tasks:
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
   video_model: ti2v-5b
+  motion_override: "his fingers strike the keys rapidly, hands moving over the keyboard; his head, shoulders and torso stay still, only the hands move"
   motion: no new subjects, no scene change
   size: 704x1280
   offload: true
@@ -34,5 +36,33 @@ tasks:
   steps: 14
   guidance: 5.0
   seed_base: 20260805
-  id: life-G-noblur-b01-1785799200
+  id: hands-H-scoped-b01-1785800400
+  beats: 1
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  video_model: ti2v-5b
+  motion_override: "his fingers tap quickly across the keys, small fast finger movements only; his head, shoulders, back and hood stay perfectly still"
+  motion: no new subjects, no scene change
+  size: 704x1280
+  offload: true
+  seconds: 2.5
+  steps: 14
+  guidance: 5.0
+  seed_base: 20260805
+  id: hands-I-small-b01-1785800400
+  beats: 1
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  video_model: ti2v-5b
+  motion_override: "his fingers strike the keys rapidly, hands moving over the keyboard; his head, shoulders and torso stay still, only the hands move"
+  motion: no new subjects, no scene change, no swaying, no leaning, no head turning, no torso twisting, no whole body movement
+  size: 704x1280
+  offload: true
+  seconds: 2.5
+  steps: 14
+  guidance: 5.0
+  seed_base: 20260805
+  id: hands-J-bodyneg-b01-1785800400
   beats: 1

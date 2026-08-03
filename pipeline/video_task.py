@@ -430,21 +430,39 @@ SHAKE_NEG = ("camera shake, handheld camera, jitter, wobble, unstable camera, "
 # picture quality turned out to act on motion (the first was Wan's own anti-static
 # defaults, the second our shake suppression, whose removal was the ONE change that
 # has moved the needle: 0.19 -> 0.62).
-ANTI_STYLE = ("photorealistic, photograph, live action, 3D render, "
+# MEASURED AND REVERTED, 2026-08-03. I moved "motion blur" and "film still" off
+# motion beats on the reasoning that fast hands PRODUCE motion blur, so forbidding
+# it while asking for speed leaves the model one cheap way out: do not move. Good
+# reasoning, wrong answer — beat 1 measured 0.63 with them gone against 0.62 with
+# them, i.e. nothing. So they are motion-NEUTRAL, and keeping them on every beat is
+# free while removing them would weaken the anti-photoreal guard for no gain.
+#
+# What DID work is in the row below it: the shake terms (0.19 -> 0.62) and dropping
+# "camera locked" plus amplitude language (0.62 -> 1.18).
+ANTI_STYLE = ("photorealistic, photograph, live action, film still, 3D render, "
               "CGI, octane, realistic skin texture, depth of field bokeh, "
-              + ANTI_SCENE)
-# kept for still beats, where "no blur, no film frame" costs nothing
-ANTI_PHOTO_STRICT = "film still, motion blur"
+              "motion blur, " + ANTI_SCENE)
 # Wan's negative field cap as we use it. Kept as a name so the truncation warning
 # and the value cannot drift apart.
 #
-# NOTE, unverified: 460 CHARACTERS is a proxy for a TOKEN limit, and a bad one when
-# the string mixes Chinese and English — a Chinese character is one token but three
-# UTF-8 bytes, so the char count over- or under-states the real budget depending on
-# the mix. Left as-is rather than raised on a guess; what matters is that
-# truncation is now LOUD, so any term that fails to arrive says so instead of
-# producing a silent non-result.
-NEG_MAX = 460
+# RAISED 460 -> 900, with the arithmetic rather than a shrug.
+#
+# 460 CHARACTERS was a proxy for a TOKEN limit and never a measured one. Wan 2.2's
+# text encoder is UMT5-XXL, whose usual maximum sequence is 512 TOKENS. Our longest
+# negative is ~523 chars — mostly English at roughly 4 chars per token, plus a
+# Chinese quality list at 1 token per character — which estimates to ~146 tokens.
+# The old cap was throwing away terms at under a third of the real budget: a still
+# beat lost "second scene, new camera angle, different location, split screen,
+# montage", i.e. five of the eight anti-scene-change terms, on every render.
+#
+# Two things make raising it safe rather than hopeful:
+#   - the tokenizer prints its OWN truncation warning if a prompt really is too
+#     long, and stderr is drained live as of this morning, so overflow is now
+#     observable instead of silent
+#   - this function's own warning prints anything IT drops
+# 900 leaves headroom under the estimate without pretending to know the exact
+# figure. If the tokenizer ever complains, that number is the thing to lower.
+NEG_MAX = 900
 
 
 # SDXL prompt furniture that means nothing to a video model and eats its attention
@@ -519,7 +537,7 @@ def video_prompt(motion: str, still_prompt: str, no_anchor=False) -> tuple:
     # anti suppressed => this beat wants stillness => DO suppress shake
     # a beat that wants motion gets neither shake suppression nor the two
     # motion-suppressing photo terms; a beat that wants stillness gets both
-    strict = "" if anti else f"{SHAKE_NEG}, {ANTI_PHOTO_STRICT}"
+    strict = "" if anti else SHAKE_NEG
     # ORDER IS SURVIVAL. The negative is capped, and a plain [:460] cuts mid-word:
     # adding ANTI_PHOTO_STRICT pushed a still beat to exactly 460 and the tail
     # arrived as "fil". So the PER-BEAT decisions — the ones being tuned, the ones
@@ -527,7 +545,18 @@ def video_prompt(motion: str, still_prompt: str, no_anchor=False) -> tuple:
     # list, which is the same on every clip, goes last where losing its tail costs
     # least. Then cut on a comma so no term is ever half-sent.
     parts = [x for x in (extra_neg, anti, strict, ANTI_STYLE) if x]
-    neg = ", ".join(parts)
+    # DEDUPE, first-occurrence order. The pieces overlap by construction: the task
+    # suffix carries "no new subjects, no scene change", which video_prompt strips
+    # into extra_neg, and ANTI_SCENE says "scene change" again. A still beat came to
+    # 480 chars against a 460 cap and lost "split screen, montage" — to duplicates.
+    # Repeating a term does not strengthen it; it just spends the budget.
+    seen, uniq = set(), []
+    for term in (t.strip() for t in ", ".join(parts).split(",")):
+        k = term.lower()
+        if term and k not in seen:
+            seen.add(k)
+            uniq.append(term)
+    neg = ", ".join(uniq)
     if len(neg) > NEG_MAX:
         cut = neg[:NEG_MAX].rsplit(",", 1)[0]
         print(f"!! negative prompt truncated {len(neg)} -> {len(cut)} chars; "
