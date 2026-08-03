@@ -67,7 +67,14 @@ def slug_for(node_dir: Path, beat: int) -> str | None:
 # 18% over a 5s beat reads as a deliberate slow push without becoming an effect.
 # Measured, not guessed: see the check at the bottom of this file's docstring.
 ZOOM = 0.18
-DRIFT_PX = 70        # lateral travel, so it is a camera move and not just a scale
+# NO LATERAL DRIFT. There was 70px of it, alternating direction by beat parity, on
+# the theory that a pure scale is not a camera move and that consecutive held beats
+# should not look copy-pasted. Founder: "its not zooming into the center, zooming
+# into a random point for some reason." Correct — shifting the crop centre while the
+# window shrinks moves the effective zoom origin, and flipping the direction per
+# beat makes it look arbitrary rather than composed. A centred push-in IS a camera
+# move. The variety I was buying was not worth breaking the geometry.
+DRIFT_PX = 0
 
 
 def hold(still: Path, out: Path, seconds: float, beat: int,
@@ -83,9 +90,8 @@ def hold(still: Path, out: Path, seconds: float, beat: int,
 
     Deterministic, computed rather than generated: nothing can morph, split or
     invent, which is the whole reason a held beat exists. Smoothstep ease so it
-    eased OUT so it moves at once and settles, and the drift direction alternates
-    with beat parity so two static beats in a row do not look copy-pasted — the
-    same trick post_motion.py uses.
+    eased OUT so it moves at once and settles, and centred on the frame — see
+    DRIFT_PX for why there is no lateral travel.
     """
     if not zoom:
         subprocess.run(
@@ -107,7 +113,6 @@ def hold(still: Path, out: Path, seconds: float, beat: int,
     over = 1.0 + ZOOM + 0.02
     big = src.resize((int(W * over), int(H * over)), Image.LANCZOS)
     n = max(2, int(FPS * seconds))
-    sign = 1 if beat % 2 else -1
     with tempfile.TemporaryDirectory() as td:
         for i in range(n):
             t = i / (n - 1)
@@ -129,9 +134,9 @@ def hold(still: Path, out: Path, seconds: float, beat: int,
             e = 1 - (1 - t) ** 1.4
             z = 1.0 + ZOOM * (1 - e)                    # window shrinks -> push IN
             cw, ch = int(W * z), int(H * z)
-            cx = (big.width - cw) // 2 + int(sign * DRIFT_PX * e)
+            # dead centre, every frame: the zoom origin must not move
+            cx = (big.width - cw) // 2
             cy = (big.height - ch) // 2
-            cx = max(0, min(cx, big.width - cw))
             (big.crop((cx, cy, cx + cw, cy + ch))
                 .resize((W, H), Image.LANCZOS)
                 .save(f"{td}/f{i:04d}.png"))
