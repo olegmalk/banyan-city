@@ -18,6 +18,9 @@ principle but we prefer CC0 so a fork inherits no obligations it has to track.
 | `roomtone-apartment-cc0.mp3` | Very Quiet Indoor Roomtone (27.5s) | [Very Quiet Indoor Roomtone](https://freesound.org/people/IENBA/sounds/761024/) by IENBA | **CC0** |
 | `footsteps-soil-cc0.mp3` | Soil Steps (11.4s) | [Soil Steps](https://freesound.org/people/Phil25/sounds/208102/) by Phil25 | **CC0** |
 | `computer-running-cc0.mp3` | computer running.wav (61.4s) | [computer running.wav](https://freesound.org/people/OppothusiastGuy2/sounds/649067/) by OppothusiastGuy2 | **CC0** |
+| `body-fall-cc0.mp3` | Body fall_04.wav (1.4s) | [Body fall_04.wav](https://freesound.org/people/deleted_user_2104797/sounds/346692/) | **CC0** |
+| `fan-spindown-cc0.mp3` | Ventilation Fan Howl Spin Down (30.2s) | [BG SaSc Ventilation Fan Howl Spin Down.wav](https://freesound.org/people/Profispiesser/sounds/583248/) by Profispiesser | **CC0** |
+| `wind-steady-cc0.mp3` | S05-01 Steady wind (16.5s) | [S05-01 Steady wind.wav](https://freesound.org/people/craigsmith/sounds/675713/) by craigsmith | **CC0** |
 
 Everything else in the episode's sound design is synthesized locally by
 `pipeline/sfx.py` with fixed seeds — no licence questions, and a re-render is

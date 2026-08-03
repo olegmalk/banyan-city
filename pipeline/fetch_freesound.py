@@ -77,12 +77,19 @@ def get(path: str, **params):
         sys.exit(f"HTTP {e.code} from {path}: {body}")
 
 
-def search(query: str, want: int, allow_by: bool, sort: str = "score"):
+def search(query: str, want: int, allow_by: bool, sort: str = "score",
+           dur: tuple[float, float] | None = None):
     """Licence-filtered search. Filtering SERVER-SIDE matters: it is the difference
     between reading a catalogue and downloading something unusable and deleting it."""
     lics = [CC0] + ([CC_BY] if allow_by else [])
-    f = " OR ".join(f'license:"{l}"' for l in lics)
-    d = get("/search/text/", query=query, filter=f"({f})",
+    f = "(" + " OR ".join(f'license:"{l}"' for l in lics) + ")"
+    # DURATION RANGE, because neither sort helps. sort=duration_asc returns 0.0s
+    # fragments ("Fly_Swatter.wav", 0.1s) and sort=score returned a 531-SECOND wind
+    # bed whose preview download timed out at 90s — for a 4-second cue. The useful
+    # thing is a range, which the API filter supports directly.
+    if dur:
+        f += f" duration:[{dur[0]} TO {dur[1]}]"
+    d = get("/search/text/", query=query, filter=f,
             fields="id,name,license,duration,filesize,username,previews,url",
             page_size=min(want, 50), sort=sort)
     return d.get("results", []), d.get("count", 0)
@@ -150,6 +157,9 @@ def main():
                     help="score = relevance (default). downloads_desc surfaces popular "
                          "sounds that merely mention the words — 'computer fan' returned "
                          "Crashing Starship and Journey To The Interweb.")
+    ap.add_argument("--dur", default="", metavar="MIN:MAX",
+                    help="duration range in seconds, e.g. 5:30. Neither sort order "
+                         "substitutes for this — see search().")
     ap.add_argument("--allow-by", action="store_true",
                     help="include CC BY as well as CC0 (needs credit in SOURCES.md)")
     ap.add_argument("--download", type=int, default=0, metavar="ID",
@@ -176,7 +186,11 @@ def main():
             print(f"  {sources_row(d, got.name)}")
         return 0
 
-    results, count = search(a.query, a.want, a.allow_by, a.sort)
+    rng = None
+    if a.dur:
+        lo, _, hi = a.dur.partition(":")
+        rng = (float(lo or 0), float(hi or 600))
+    results, count = search(a.query, a.want, a.allow_by, a.sort, rng)
     lics = "CC0" + (" + CC BY" if a.allow_by else "")
     print(f"  {a.query!r} — {count} results under {lics}\n")
     if not results:
