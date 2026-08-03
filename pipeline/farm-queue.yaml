@@ -1,68 +1,38 @@
-# 2026-08-03 10:1xZ — the amplitude wording OVERSHOT. Scope it to the hands.
+# 2026-08-03 10:5xZ — K: variant 4's HANDS with J's BODY. And the founder's verdict
+# on the assembled cut: "this ep1-v22-hires.mp4 is too static for almost all of the
+# beats" — so this is not a beat-1 problem, it is the whole episode, and whatever
+# wins here gets applied to all fifteen.
 #
-# Founder on variant 4: "beat1-4-plus-amplitude.mp4 is like.. too smooth. typing is
-# very nice but he's like moving all of his body parst the whole time."
+# Measuring hands and head/body as separate bands finally separated the two things
+# he has been describing:
 #
-# So the typing is solved and the wording is too broad. Variant 4 said "hands
-# hammer the mechanical keyboard, fingers flying across the keys in large rapid
-# strokes, WRISTS AND FOREARMS MOVING VISIBLY" — asking for forearm movement is
-# asking for the whole arm, and the model obliged with the rest of him.
+#                                    HANDS   HEAD/BODY   ratio
+#   current default                   0.68        0.88     0.8x
+#   4  amplitude wording              1.27        1.68     0.8x   <- best hands
+#   H  body pinned in the POSITIVE    0.84        1.06     0.8x   <- did nothing
+#   I  smaller stroke                 0.54        0.54     1.0x
+#   J  body pinned in the NEGATIVE    0.59        0.19     3.2x   <- best body
 #
-# Note what makes these directions writable at all: they say "stay still" about the
-# body while still getting the anti-static terms, because antistatic_for now takes
-# the FIRST signal and "rapidly" precedes "still". This morning that same wording
-# would have silently frozen the clip.
+# H is the informative failure: writing "his head, shoulders and torso stay still"
+# into the direction pinned NOTHING. J's negative did. That is the fourth time today
+# the negative prompt has been the lever and the positive has not — the same lesson
+# as the shake terms, "camera locked", and the anti-static defaults.
 #
-#  H  motion scoped to fingers and hands, body explicitly pinned
-#  I  H with a SMALLER stroke — "tap quickly", "small fast finger movements" —
-#     because "too smooth" may also mean the strokes are too large and fluid for
-#     what typing actually looks like
-#  J  H plus a negative that names the body motion directly. The "no X" prose in a
-#     task's motion field is already stripped into the real negative field by
-#     video_prompt, so this needs no new plumbing.
-#
-# None of these touch motion.yaml. The genome is the author's; canaries use
-# motion_override.
+# So K = 4's amplitude positive + J's body negative. If the bands separate the way
+# the two halves suggest, that is hands ~1.2 with body ~0.2, and it is the recipe
+# for all fifteen beats.
 tasks:
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
   video_model: ti2v-5b
-  motion_override: "his fingers strike the keys rapidly, hands moving over the keyboard; his head, shoulders and torso stay still, only the hands move"
-  motion: no new subjects, no scene change
+  motion_override: "his hands hammer the mechanical keyboard, fingers flying across the keys in large rapid strokes, keys depressing one after another"
+  motion: no new subjects, no scene change, no swaying, no leaning, no head turning, no torso twisting, no whole body movement, no shoulders moving
   size: 704x1280
   offload: true
   seconds: 2.5
   steps: 14
   guidance: 5.0
   seed_base: 20260805
-  id: hands-H-scoped-b01-1785800400
-  beats: 1
-- worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  video_model: ti2v-5b
-  motion_override: "his fingers tap quickly across the keys, small fast finger movements only; his head, shoulders, back and hood stay perfectly still"
-  motion: no new subjects, no scene change
-  size: 704x1280
-  offload: true
-  seconds: 2.5
-  steps: 14
-  guidance: 5.0
-  seed_base: 20260805
-  id: hands-I-small-b01-1785800400
-  beats: 1
-- worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  video_model: ti2v-5b
-  motion_override: "his fingers strike the keys rapidly, hands moving over the keyboard; his head, shoulders and torso stay still, only the hands move"
-  motion: no new subjects, no scene change, no swaying, no leaning, no head turning, no torso twisting, no whole body movement
-  size: 704x1280
-  offload: true
-  seconds: 2.5
-  steps: 14
-  guidance: 5.0
-  seed_base: 20260805
-  id: hands-J-bodyneg-b01-1785800400
+  id: hands-K-both-b01-1785801600
   beats: 1
