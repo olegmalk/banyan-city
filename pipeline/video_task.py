@@ -425,7 +425,7 @@ QUALITY_SPAM = re.compile(
 NEGATIVE_PROSE = re.compile(r"\bno\s+[a-z0-9][^,.]*(?:[,.]|$)", re.I)
 
 
-def video_prompt(motion: str, still_prompt: str) -> tuple:
+def video_prompt(motion: str, still_prompt: str, no_anchor=False) -> tuple:
     """(positive, extra_negative) for animating an ALREADY APPROVED frame.
 
     We were handing the video model the STILL-GENERATION prompt — a full
@@ -466,6 +466,20 @@ def video_prompt(motion: str, still_prompt: str) -> tuple:
     # a short anchor only — the frame already carries the composition
     words = scene.split()
     anchor = " ".join(words[:22]) + ("…" if len(words) > 22 else "")
+    # ANCHOR SUPPRESSION, for the motion investigation.
+    #
+    # Measured on beat 1: frame-to-frame motion is pinned at 0.62 whether we send
+    # 61 frames or 121, and whether guidance is 5.0 or 3.0. Neither parameter moves
+    # it, so the constraint is upstream of both. Counting the prompt: 15 words of
+    # style, 19 of motion, then 25 describing a STATIC composition — the largest
+    # block, and the LAST thing the text encoder reads. It is also redundant, since
+    # the init image already IS that composition. Telling a video model in detail
+    # what a still frame looks like is a plausible way to get a still frame.
+    #
+    # Untested, hence a flag rather than a deletion: the anchor was added because
+    # early clips drifted off-subject, and dropping it may bring that back.
+    if no_anchor:
+        anchor = ""
     positive = f"{STYLE}. {motion}. Subject already in frame: {anchor}." if anchor \
         else f"{STYLE}. {motion}"
     extra_neg = ", ".join(n[3:].strip() for n in negatives if len(n) > 3)
@@ -699,7 +713,8 @@ def run(task: dict, courier, node_dir: Path) -> None:
             o = courier.out / f"{task.get('id')}-{num:02d}-{s['slug']}.mp4"
             act = directed.get(num) or actions.get(num)
             pos, neg = video_prompt(f"{act}. {motion}" if act else motion,
-                                    s["prompt"])
+                                    s["prompt"],
+                                    no_anchor=bool(task.get("no_anchor")))
             jobs.append({"init": str(init), "out": str(o), "prompt": pos,
                          "negative": neg,
                          "seed": int(task.get("seed_base", 20260731)) + num})
@@ -769,9 +784,12 @@ def run(task: dict, courier, node_dir: Path) -> None:
         # took the other, silently rendering on the default model with the old
         # prompt. Caught when a one-clip AnimeGen canary logged "beat=01
         # (single-process)" and rendered plain Wan (2026-08-01).
-        act = directed.get(num) or actions.get(num)
+        # motion_override lets a canary try a different DIRECTION without editing
+        # motion.yaml — the genome is the author's, and a test should not rewrite it
+        act = task.get("motion_override") or directed.get(num) or actions.get(num)
         prompt, neg = video_prompt(f"{act}. {motion}" if act else motion,
-                                   s["prompt"])
+                                   s["prompt"],
+                                   no_anchor=bool(task.get("no_anchor")))
         vmodel = str(task.get("video_model", "ti2v-5b"))
         out = courier.out / f"{task.get('id')}-{num:02d}-{s['slug']}.mp4"
         emb = ROOT / f"embeds-{num:02d}.pt"
