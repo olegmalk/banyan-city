@@ -358,3 +358,18 @@ Traceback (most recent call last):
     raise RuntimeError(f"{stage} failed (exit {r.returncode})")
 RuntimeError: beat 7 failed (exit 1)
 
+
+===== 2026-08-03T08:14:22Z =====
+task=anime-canary-b07-r3-1785789600
+Traceback (most recent call last):
+  File "C:\banyan-farm\banyan-city\pipeline\farm_worker.py", line 470, in main
+    render_task(task, courier, device, dtype)
+  File "C:\banyan-farm\banyan-city\pipeline\farm_worker.py", line 315, in render_task
+    return video_task.run(task, courier, d)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\banyan-farm\banyan-city\pipeline\video_task.py", line 739, in run
+    _run([str(PY), wan, "--stage", "simple", "--embeds", str(emb),
+  File "C:\banyan-farm\banyan-city\pipeline\video_task.py", line 530, in _run
+    raise RuntimeError(f"{stage} failed (exit {r.returncode})")
+RuntimeError: beat 7 failed (exit 3221225477)
+
