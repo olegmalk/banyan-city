@@ -69,12 +69,20 @@ MODEL = DEFAULT_MODEL
 NEG = ("色调艳丽, 过曝, 细节模糊不清, 字幕, 风格, 作品, 画作, 整体发灰, "
        "最差质量, 低质量, JPEG压缩残留, 丑陋的, 残缺的, 多余的手指, 画得不好的手部, "
        "画得不好的脸部, 畸形的, 毁容的, 形态畸形的肢体, 手指融合, "
-       "杂乱的背景, 三条腿, 背景人很多, 倒着走, "
-       # OURS, added 2026-08-02: the founder on every motion.yaml clip — "these all
-       # have a pattern of like, shaking alot, strangly". Suppress the shake
-       # directly, in the field that acts on it.
-       "camera shake, handheld camera, jitter, wobble, unstable camera, "
-       "vibrating, trembling camera, rolling shutter")
+       "杂乱的背景, 三条腿, 背景人很多, 倒着走")
+# OURS, added 2026-08-02: the founder on every motion.yaml clip — "these all have a
+# pattern of like, shaking alot, strangly". Suppress the shake directly, in the
+# field that acts on it.
+#
+# SEPARATE CONSTANT, and --no-shake-neg drops it, because these terms are now a
+# SUSPECT. On 2026-08-03 the founder said beat 1 "basically doesnt move at all,
+# literally", and applying the anti-static terms changed its measured motion by
+# 1% (2.68 -> 2.64) — so anti-static is not the lever. These eight terms are the
+# other thing we changed that day, and "vibrating, trembling camera, unstable"
+# may be damping the hand motion we want along with the camera motion we do not.
+# Untested either way, which is why it is a flag and not a deletion.
+SHAKE_NEG = ("camera shake, handheld camera, jitter, wobble, unstable camera, "
+             "vibrating, trembling camera, rolling shutter")
 
 
 def tile_vae(pipe) -> None:
@@ -349,7 +357,8 @@ def _sample(pipe, a, w, h, frames, takes_image, jobs=None) -> int:
         img = Image.open(job["init"]).convert("RGB").resize((w, h), Image.LANCZOS)
         # per-job negative: the beat's own "No person, no ghost…" clauses, moved
         # out of the positive prompt where they were being read as REQUESTS
-        neg = f"{NEG}, {job['negative']}" if job.get("negative") else NEG
+        base = NEG if a.no_shake_neg else f"{NEG}, {SHAKE_NEG}"
+        neg = f"{base}, {job['negative']}" if job.get("negative") else base
         prompt = job["prompt"]
         steps, guidance = a.steps, a.guidance
         if "animegen" in a.model.lower():
@@ -499,6 +508,10 @@ def main() -> int:
                          "roughly 8x wall clock, but uses the pipeline's own "
                          "prompt path — the A/B control for suspected corruption "
                          "from hand-passed prompt_embeds (2026-08-02)")
+    ap.add_argument("--no-shake-neg", action="store_true",
+                    help="drop OUR shake-suppression terms (SHAKE_NEG). The A/B for "
+                         "whether they are damping wanted motion — beat 1 measured "
+                         "'basically doesnt move at all' with them on")
     ap.add_argument("--negative", default="",
                     help="extra negative terms (the beat's own 'no X' clauses)")
     ap.add_argument("--no-lora", action="store_true",

@@ -8,7 +8,12 @@ motion_prompts:
   # The still has the keyboard and the monitor in frame, so both halves of the
   # scripted action ("types... and stops dead. The spinner turns.") are
   # animatable without touching composition.
-  1: "his hands type fast over the mechanical keyboard and then stop abruptly, hands going still, monitor glow flickers gently, camera locked"
+  # 2026-08-03, founder: "we dont need him to go still in beat 1 anyway." Right —
+  # the stop belongs to beat 2 ("types the last of it, fast, and stops dead"), and
+  # the beat-1 keyboard sfx already ends on its own. Cramming type-then-stop into
+  # 2.5s left almost no typing. So beat 1 is now nothing but typing, which also
+  # removes the "still" that my previous wording smuggled in.
+  1: "his hands type fast and continuously over the mechanical keyboard, fingers striking keys, monitor glow flickers gently, camera locked"
   2: "his hands move fast over the keyboard then stop dead, a small spinner turns on the monitor, faint steam rises from the mug, camera locked"
   3: "the terminal text settles, the cursor blinks steadily, the screen glow breathes very gently, camera locked"
   4: "the limp hand stays motionless, the monitor glow flickers slowly across it, one loose paper settles to the floor, camera locked"

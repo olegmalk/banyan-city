@@ -1,23 +1,29 @@
-# 2026-08-03 08:2xZ — RE-RENDER THE TWO BEATS MY OWN WORDING FROZE.
+# 2026-08-03 08:4xZ — WHY DOESN'T BEAT 1 MOVE? Two variables, isolated.
 #
-# Founder on the model comparison: "wan 2.2 basically doesnt move at all,
-# literally." Correct, and not the model's fault — beat 1's direction ends "hands
-# going still", WANTS_STILL matched the bare word, and the anti-static terms were
-# suppressed on a beat whose whole job is typing. Beat 12 the same. Fixed in
-# antistatic_for (first signal wins); these two need re-rendering to benefit.
+# Founder: "wan 2.2 basically doesnt move at all, literally", then "we dont need
+# him to go still in beat 1 anyway."
 #
-# 14 steps, not 20: the step sweep on the CORRECT path gives 186s vs 239s for what
-# looks identical to me at the face crop. Pending the founder's call on the sweep,
-# so these two are also a second opinion on 14 steps at the same time.
+# The second is done: beat 1's direction is now nothing but typing (the stop
+# belongs to beat 2, and the keyboard sfx already ends on its own).
 #
-# AnimeGen is NOT requeued. Three attempts, three walls: Ctrl+C, then the stall
-# watchdog, then a CUDA OOM in the VAE (fixed), and now exit 3221225477
-# (0xC0000005 ACCESS_VIOLATION) = host RAM. load_animegen loads BOTH A14B
-# transformers in bf16 before casting to fp8, so the peak is ~64 GiB of host RAM
-# and the steady state ~38 GiB even after casting, because cpu-offload keeps
-# weights in host RAM. That is not fixable with flags on this machine. The "69GB
-# load peak" figure recorded in vet_model.py and dismissed as read off the wrong
-# document was right about the number. See MORNING notes.
+# The first is NOT yet explained, and I have to be straight about that. I found a
+# real bug — my "hands going still" wording made WANTS_STILL suppress the
+# anti-static terms — fixed it, re-rendered, and the measured motion moved 1%:
+# 2.68 -> 2.64. So anti-static was NOT the lever. A real bug, fixed, that was not
+# the cause.
+#
+# The remaining suspect is the other thing we changed that day: OUR OWN
+# shake-suppression negative, added 2026-08-02 to stop the shaking the founder
+# reported. Eight terms including "vibrating", "trembling camera", "unstable
+# camera". Those may be damping the hand motion we WANT along with the camera
+# motion we do not.
+#
+# So: same beat, same seed, same steps, same new typing-only direction. The ONLY
+# difference is whether SHAKE_NEG is sent. If B moves and A does not, our shake
+# fix is the cause and the trade is explicit (a little shake for real motion) —
+# the founder's call, and he has a picture to make it on. If both are still, the
+# direction and the negative are both innocent and the next suspect is 61 frames
+# at 2.5s being too few for a visible hand action.
 tasks:
 - worker: rtx5090
   video: true
@@ -30,12 +36,13 @@ tasks:
   steps: 14
   guidance: 5.0
   seed_base: 20260805
-  id: unfreeze-b01-1785792000
+  id: shakeneg-A-on-b01-1785793200
   beats: 1
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
   video_model: ti2v-5b
+  no_shake_neg: true
   motion: no new subjects, no scene change
   size: 704x1280
   offload: true
@@ -43,5 +50,5 @@ tasks:
   steps: 14
   guidance: 5.0
   seed_base: 20260805
-  id: unfreeze-b12-1785792000
-  beats: 12
+  id: shakeneg-B-off-b01-1785793200
+  beats: 1
