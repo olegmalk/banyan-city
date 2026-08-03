@@ -909,3 +909,4 @@
 08:28:38Z VIDEO_CLIP 1/1 unfreeze-b01-1785792000-01-the-keyboard.mp4 in 179s
 08:28:42Z VIDEO_CLIP_OK beat=01 150KB
 08:28:45Z DONE task=unfreeze-b01-1785792000
+08:28:51Z STARTED task=unfreeze-b12-1785792000 beats=12 on cuda
