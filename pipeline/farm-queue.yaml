@@ -1,73 +1,45 @@
-# 2026-08-03 14:0xZ — the three beats that stayed flat. Their STILLS, not the prompt.
+# 2026-08-03 19:4xZ — beat 2's face. The founder's note on an otherwise good beat:
+# "except in 2 it makes him make a weird face.."
 #
-# Founder: "ep1-v23-motion.mp4 is not bad! there are still some beats which are
-# static". Measured, he means 3 (0.13, 72% frozen), 12 (0.19, 58%) and 13 (0.19,
-# 53%).
+# Beat 2's still is the over-the-shoulder framing, so the face is partly visible and
+# at an angle — the worst case for i2v, which has to invent the parts it cannot see
+# and drifts the features while doing it. Same failure family as the sprout doing
+# mitosis and the rock morphing: the model inventing where it has no information.
 #
-# Their sidecars show IDENTICAL treatment to beat 11, which hit 2.36 with 0% frozen:
-# anti-static applied, no shake suppression, amplitude wording. So the prompt recipe
-# is not the variable. What differs is what their compositions physically contain:
+# A: face terms in the NEGATIVE. Today's repeated lesson is that the negative is the
+#    lever and positive prose is not, so this is the shape with a track record.
+# B: A plus the amplitude scoped to the HANDS only, so the model has a clear place
+#    to put its motion and less reason to animate the head.
 #
-#   11  macro sprout, one leaf unfurling      2.36   soft, large, bounded subject
-#   1,2 a person, hands on a keyboard    1.75-1.84   same
-#   3   a MONITOR filling the frame           0.13   screen text; nothing physical
-#   12  a thin stem bent into a tense arc     0.19   rigid
-#   13  wide road across windswept grass      0.19   fine texture spread thin
-#
-# So these directions stop asking for the thing that cannot move and ask for the
-# thing that can:
-#   3   LIGHT. A screen close-up has no moving objects, but the whole frame is
-#       luminance — surge, dim, scanlines, a flaring cursor. (Also the least
-#       critical plate in the episode: render_t3 burns the terminal panel over it,
-#       same as beat 9.)
-#   12  VIBRATION, not travel. The script is explicit that nothing happens — "the
-#       trunk strains against nothing and nothing happens" — so a stem that shudders
-#       in place is the beat, and asking it to whip would contradict the script.
-#   13  WHOLE-FIELD waves rather than per-blade detail, which is what a wide shot of
-#       grass can actually render.
+# Both keep beat 2's approved direction otherwise. If neither works the fallback is
+# the static rule, which is now a tool.
 tasks:
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
   video_model: ti2v-5b
   no_anchor: true
-  motion_override: "the terminal glow surges bright and dims across the whole screen, scanlines rolling down it, the cursor pulsing hard, the green line flaring"
-  motion: no new subjects, no scene change
+  motion: no new subjects, no scene change, no face morphing, no changing facial features, no distorted face, no warped face, no head turning, no facial expression change
   size: 704x1280
   offload: true
   seconds: 2.5
   steps: 14
   guidance: 5.0
   seed_base: 20260805
-  id: flat-b03-1785808800
-  beats: 3
+  id: face-A-b02-1785816000
+  beats: 2
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
   video_model: ti2v-5b
   no_anchor: true
-  motion_override: "the bent stem shudders and vibrates hard under strain without moving anywhere, dust shaking off it, soil grains jumping loose at its base"
-  motion: no new subjects, no scene change
+  motion_override: "his hands drive hard across the keyboard, fingers striking the keys, the spinner sweeping on the monitor"
+  motion: no new subjects, no scene change, no face morphing, no changing facial features, no distorted face, no warped face, no head turning, no facial expression change
   size: 704x1280
   offload: true
   seconds: 2.5
   steps: 14
   guidance: 5.0
   seed_base: 20260805
-  id: flat-b12-1785808800
-  beats: 12
-- worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  video_model: ti2v-5b
-  no_anchor: true
-  motion_override: "the grass thrashes in heavy gusts, whole waves rolling across the frame, the clouds racing over, dust sheeting down the empty road, no people appear"
-  motion: no new subjects, no scene change
-  size: 704x1280
-  offload: true
-  seconds: 2.5
-  steps: 14
-  guidance: 5.0
-  seed_base: 20260805
-  id: flat-b13-1785808800
-  beats: 13
+  id: face-B-b02-1785816000
+  beats: 2
