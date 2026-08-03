@@ -1,32 +1,37 @@
-# 2026-08-03 10:5xZ — K: variant 4's HANDS with J's BODY. And the founder's verdict
-# on the assembled cut: "this ep1-v22-hires.mp4 is too static for almost all of the
-# beats" — so this is not a beat-1 problem, it is the whole episode, and whatever
-# wins here gets applied to all fifteen.
+# 2026-08-03 11:0xZ — RE-RENDER ALL FIFTEEN with the K recipe.
 #
-# Measuring hands and head/body as separate bands finally separated the two things
-# he has been describing:
+# Founder: "this ep1-v22-hires.mp4 is too static for almost all of the beats."
+# Measured on the cut he watched: median frame-to-frame motion 0.17, and 12 of 15
+# beats under the reads-as-static line. Every clip in it was rendered before this
+# morning, with the shake-suppression terms damping all fifteen.
 #
-#                                    HANDS   HEAD/BODY   ratio
-#   current default                   0.68        0.88     0.8x
-#   4  amplitude wording              1.27        1.68     0.8x   <- best hands
-#   H  body pinned in the POSITIVE    0.84        1.06     0.8x   <- did nothing
-#   I  smaller stroke                 0.54        0.54     1.0x
-#   J  body pinned in the NEGATIVE    0.59        0.19     3.2x   <- best body
+# The recipe, arrived at by measuring the HAND band and the HEAD/BODY band apart:
 #
-# H is the informative failure: writing "his head, shoulders and torso stay still"
-# into the direction pinned NOTHING. J's negative did. That is the fourth time today
-# the negative prompt has been the lever and the positive has not — the same lesson
-# as the shake terms, "camera locked", and the anti-static defaults.
+#                                   HANDS   BODY   ratio   cam
+#   the cut he watched               0.21   0.21    1.0x  0.00
+#   current default                  0.68   0.88    0.8x  0.02
+#   4  amplitude wording             1.27   1.68    0.8x  0.10  <- he rejected: body
+#   J  body NEGATIVE only            0.59   0.19    3.2x  0.00
+#   K  amplitude + body negative     0.68   0.17    4.1x  0.00  <- this
 #
-# So K = 4's amplitude positive + J's body negative. If the bands separate the way
-# the two halves suggest, that is hands ~1.2 with body ~0.2, and it is the recipe
-# for all fifteen beats.
+# WHAT GOES IN HERE IS ONLY THE GENERIC HALF, and that is deliberate. The body
+# negative is one string appended to every task, so it needs no authoring and no
+# edit to motion.yaml. J shows it alone lifts the hands to 0.59 — 2.8x the cut he
+# watched — with the body pinned harder than the frozen version.
+#
+# The other half of K, per-beat amplitude wording ("hands hammer the keys, fingers
+# flying across them"), only makes sense beat by beat: it means nothing for a leaf
+# or a root-map. Fifteen of those are fifteen authoring decisions in the founder's
+# own file, so they wait for him rather than being invented here.
+#
+# Also landed since the cut was assembled, applying automatically: shake terms off
+# for motion beats, the negative deduped, and the 460-char cap raised off a guess so
+# five anti-scene-change terms stop being silently dropped.
 tasks:
 - worker: rtx5090
   video: true
   node: 001-capability-inventory
   video_model: ti2v-5b
-  motion_override: "his hands hammer the mechanical keyboard, fingers flying across the keys in large rapid strokes, keys depressing one after another"
   motion: no new subjects, no scene change, no swaying, no leaning, no head turning, no torso twisting, no whole body movement, no shoulders moving
   size: 704x1280
   offload: true
@@ -34,5 +39,187 @@ tasks:
   steps: 14
   guidance: 5.0
   seed_base: 20260805
-  id: hands-K-both-b01-1785801600
+  id: k15-b01-1785802800
   beats: 1
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  video_model: ti2v-5b
+  motion: no new subjects, no scene change, no swaying, no leaning, no head turning, no torso twisting, no whole body movement, no shoulders moving
+  size: 704x1280
+  offload: true
+  seconds: 2.5
+  steps: 14
+  guidance: 5.0
+  seed_base: 20260805
+  id: k15-b02-1785802800
+  beats: 2
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  video_model: ti2v-5b
+  motion: no new subjects, no scene change, no swaying, no leaning, no head turning, no torso twisting, no whole body movement, no shoulders moving
+  size: 704x1280
+  offload: true
+  seconds: 2.5
+  steps: 14
+  guidance: 5.0
+  seed_base: 20260805
+  id: k15-b03-1785802800
+  beats: 3
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  video_model: ti2v-5b
+  motion: no new subjects, no scene change, no swaying, no leaning, no head turning, no torso twisting, no whole body movement, no shoulders moving
+  size: 704x1280
+  offload: true
+  seconds: 2.5
+  steps: 14
+  guidance: 5.0
+  seed_base: 20260805
+  id: k15-b04-1785802800
+  beats: 4
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  video_model: ti2v-5b
+  motion: no new subjects, no scene change, no swaying, no leaning, no head turning, no torso twisting, no whole body movement, no shoulders moving
+  size: 704x1280
+  offload: true
+  seconds: 2.5
+  steps: 14
+  guidance: 5.0
+  seed_base: 20260805
+  id: k15-b05-1785802800
+  beats: 5
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  video_model: ti2v-5b
+  motion: no new subjects, no scene change, no swaying, no leaning, no head turning, no torso twisting, no whole body movement, no shoulders moving
+  size: 704x1280
+  offload: true
+  seconds: 2.5
+  steps: 14
+  guidance: 5.0
+  seed_base: 20260805
+  id: k15-b06-1785802800
+  beats: 6
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  video_model: ti2v-5b
+  motion: no new subjects, no scene change, no swaying, no leaning, no head turning, no torso twisting, no whole body movement, no shoulders moving
+  size: 704x1280
+  offload: true
+  seconds: 2.5
+  steps: 14
+  guidance: 5.0
+  seed_base: 20260805
+  id: k15-b07-1785802800
+  beats: 7
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  video_model: ti2v-5b
+  motion: no new subjects, no scene change, no swaying, no leaning, no head turning, no torso twisting, no whole body movement, no shoulders moving
+  size: 704x1280
+  offload: true
+  seconds: 2.5
+  steps: 14
+  guidance: 5.0
+  seed_base: 20260805
+  id: k15-b08-1785802800
+  beats: 8
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  video_model: ti2v-5b
+  motion: no new subjects, no scene change, no swaying, no leaning, no head turning, no torso twisting, no whole body movement, no shoulders moving
+  size: 704x1280
+  offload: true
+  seconds: 2.5
+  steps: 14
+  guidance: 5.0
+  seed_base: 20260805
+  id: k15-b09-1785802800
+  beats: 9
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  video_model: ti2v-5b
+  motion: no new subjects, no scene change, no swaying, no leaning, no head turning, no torso twisting, no whole body movement, no shoulders moving
+  size: 704x1280
+  offload: true
+  seconds: 2.5
+  steps: 14
+  guidance: 5.0
+  seed_base: 20260805
+  id: k15-b10-1785802800
+  beats: 10
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  video_model: ti2v-5b
+  motion: no new subjects, no scene change, no swaying, no leaning, no head turning, no torso twisting, no whole body movement, no shoulders moving
+  size: 704x1280
+  offload: true
+  seconds: 2.5
+  steps: 14
+  guidance: 5.0
+  seed_base: 20260805
+  id: k15-b11-1785802800
+  beats: 11
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  video_model: ti2v-5b
+  motion: no new subjects, no scene change, no swaying, no leaning, no head turning, no torso twisting, no whole body movement, no shoulders moving
+  size: 704x1280
+  offload: true
+  seconds: 2.5
+  steps: 14
+  guidance: 5.0
+  seed_base: 20260805
+  id: k15-b12-1785802800
+  beats: 12
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  video_model: ti2v-5b
+  motion: no new subjects, no scene change, no swaying, no leaning, no head turning, no torso twisting, no whole body movement, no shoulders moving
+  size: 704x1280
+  offload: true
+  seconds: 2.5
+  steps: 14
+  guidance: 5.0
+  seed_base: 20260805
+  id: k15-b13-1785802800
+  beats: 13
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  video_model: ti2v-5b
+  motion: no new subjects, no scene change, no swaying, no leaning, no head turning, no torso twisting, no whole body movement, no shoulders moving
+  size: 704x1280
+  offload: true
+  seconds: 2.5
+  steps: 14
+  guidance: 5.0
+  seed_base: 20260805
+  id: k15-b14-1785802800
+  beats: 14
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  video_model: ti2v-5b
+  motion: no new subjects, no scene change, no swaying, no leaning, no head turning, no torso twisting, no whole body movement, no shoulders moving
+  size: 704x1280
+  offload: true
+  seconds: 2.5
+  steps: 14
+  guidance: 5.0
+  seed_base: 20260805
+  id: k15-b15-1785802800
+  beats: 15
