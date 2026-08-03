@@ -450,7 +450,10 @@ def stage_render(a) -> int:
         prompt_embeds=e["prompt_embeds"].to(dev),
         negative_prompt_embeds=e["negative_prompt_embeds"].to(dev),
         height=h, width=w, num_frames=frames,
-        num_inference_steps=a.steps, guidance_scale=5.0,
+        num_inference_steps=a.steps,
+        # was hardcoded 5.0, ignoring --guidance entirely. A flag the caller
+        # is allowed to set must not be quietly overridden by a literal.
+        guidance_scale=a.guidance,
         generator=torch.Generator(device="cpu").manual_seed(a.seed),
     ).frames[0]
 
@@ -503,11 +506,12 @@ def main() -> int:
     ap.add_argument("--guidance", type=float, default=5.0,
                     help="cfg; higher follows the prompt harder, lower drifts")
     ap.add_argument("--size", default="480x832", help="WxH (Wan bucket)")
-    ap.add_argument("--keep-text-encoder", action="store_true",
-                    help="do NOT evict the text encoder. Costs ~11.4GB VRAM and "
-                         "roughly 8x wall clock, but uses the pipeline's own "
-                         "prompt path — the A/B control for suspected corruption "
-                         "from hand-passed prompt_embeds (2026-08-02)")
+    # --keep-text-encoder REMOVED 2026-08-03. It was declared here, plumbed
+    # through video_task, and READ NOWHERE — a leftover of the reverted eviction
+    # experiment. A flag that looks like a control and silently does nothing is
+    # worse than no flag: I nearly reached for it to fix AnimeGen's host-RAM
+    # ceiling. There is no eviction to keep or skip any more; the pipeline always
+    # uses its own prompt path.
     ap.add_argument("--no-shake-neg", action="store_true",
                     help="drop OUR shake-suppression terms (SHAKE_NEG). The A/B for "
                          "whether they are damping wanted motion — beat 1 measured "
