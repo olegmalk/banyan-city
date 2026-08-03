@@ -1257,3 +1257,4 @@
 16:08:52Z STARTED task=faceneg-b01-1785819600 beats=1 on cuda
 16:08:56Z VIDEO_VENV_OK
 16:09:08Z VIDEO_DEPS_OK 2.11.0+cu128 0.39.0 True
+16:09:20Z VIDEO_RENDERING beat=01 on ti2v-5b (single-process)
