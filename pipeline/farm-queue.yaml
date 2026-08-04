@@ -22,3 +22,79 @@ tasks:
   seed_base: 20260805
   id: faceneg-b01-1785819600
   beats: 1
+# 2026-08-04 07:1xZ — ANIMEGEN, ONE SAMPLE. Alex's directive: test the heaviest
+# model on the 5090 now. The screening verdict is the FOUNDER'S (R4) — a metric
+# agreeing with me is not a sample.
+#
+# ONE BEAT, and beat 1 on purpose: the human-character beat, so it is the hardest
+# possible anime-style test, and three ti2v-5b controls for it already sit on
+# farm-results-rtx5090 to compare against —
+#   f15-b01-1785804000     the F recipe the founder picked ("very good")
+#   faceneg-b01-1785819600 the same, plus the face negative (current code)
+#   d2-b01-redo-1785766800 20 steps, the older baseline
+# Everything below matches the F recipe except the model: same still, same
+# 704x1280, same seed_base 20260805 (seed 20260806, read off
+# f15-b01's own sidecar), same no_anchor, same motion string. Steps differ because
+# they have to — see below.
+#
+# READ THIS BEFORE EXPECTING A CLIP. ANIMEGEN WAS PARKED YESTERDAY, AND NOTHING
+# IN THE LOAD PATH HAS CHANGED SINCE.
+#
+# Four attempts on 2026-08-03, four walls: Ctrl+C (a second worker), the stall
+# watchdog, a CUDA OOM in the untiled float32 VAE (fixed, fb1e43e), and then
+# exit 3221225477 = 0xC0000005 ACCESS_VIOLATION, diagnosed as HOST RAM. The
+# reason is structural, not a flag: load_animegen (wan_i2v.py:164-167) loads BOTH
+# A14B transformers in bf16 and only then casts them to fp8, so the peak is
+# ~64 GiB of host RAM, and cpu-offload keeps ~38 GiB resident afterwards. Note
+# that this is a LOAD-time ceiling, so dropping the resolution does not touch it.
+#
+# `git log` confirms wan_i2v.py has had no change to that function since the
+# parking. This task therefore re-runs the exact configuration that produced
+# 0xC0000005. It is queued anyway because Alex asked for the test and because it
+# fails FAST and CHEAP — r3's second attempt died 2 minutes in — so the cost of
+# finding out is two minutes of a machine that is otherwise idle.
+#
+# If it dies at 0xC0000005 again, the fix is one code change and not a flag: load
+# `hi`, cast it to fp8, THEN load `lo` and cast it, so the bf16 peak is one
+# transformer (~32 GiB) instead of two (~64 GiB). That change is a recipe change,
+# so it wants its own sample and its own screening — it is not smuggled in here.
+#
+# `no_lora: true` IS A LICENCE DECISION. AnimeGen's own card gets 4 steps at
+# guidance 1.0 out of the Lightning LoRAs (lightx2v/Wan2.2-Lightning), which
+# declare apache-2.0 in HF metadata and ship NO LICENSE FILE — unquotable, so our
+# gate calls them unknown and the footage would be unpublishable. Without them the
+# distilled schedule is gone, so 25 steps at guidance 5.0, matching the three
+# parked canaries. THE SPEED COST IS REAL AND UNMEASURED BY ANYONE: 25 steps
+# through a 27B pair of experts against ti2v-5b's 14 through a 5B, with an
+# expert swap per step. Budget tens of minutes, not the 188s beat 1 takes now.
+# pipeline/research/DECISION.md is explicit that no one has published a time for
+# this model on any card.
+#
+# NO PREFETCH TASK. The weights are already on the machine: r2's traceback OOM'd
+# inside autoencoder_kl_wan._encode, which means both AnimeGen transformers AND
+# the base repo's VAE had loaded, and r3's second attempt reached the same load in
+# ~2 minutes. from_pretrained fetches exactly the subfolders it needs under the
+# resume-safe classic transfer that _run already sets (HF_HUB_DISABLE_XET=1,
+# HF_HUB_DOWNLOAD_TIMEOUT=60 — the fix for the 23-minute drop). Guessing
+# allow_patterns against a 114GB repo risks pulling far more than it saves.
+#
+# seconds: 2.5, NOT the 5 the request named. Two reasons, both about getting an
+# answer: the named comparison clip is 2.5s, and a 5s sample cannot be compared
+# to it; and seconds sets the frame count (61 -> 121), which doubles the
+# activation VRAM on a card already peaking at 22.9 of 25.7GB with the SMALLER
+# model. One field to flip if that trade is wanted anyway.
+- worker: rtx5090
+  video: true
+  node: 001-capability-inventory
+  video_model: animegen
+  no_lora: true
+  no_anchor: true
+  motion: no new subjects, no scene change
+  size: 704x1280
+  offload: true
+  seconds: 2.5
+  steps: 25
+  guidance: 5.0
+  seed_base: 20260805
+  id: bench-animegen-b01-1785827400
+  beats: 1

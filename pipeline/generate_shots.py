@@ -109,7 +109,16 @@ def parse_shots(shots_md: str) -> list:
             print(f"WARNING: shots.md beat {num:02d} ({title}) has no ``` prompt fence "
                   f"— beat SKIPPED, write the prompt before generating", file=sys.stderr)
             continue
-        slug = re.sub(r"[^a-z0-9]+", "-", title.split("(")[0].lower()).strip("-")
+        # Strip the TIMESTAMP, not everything after the first "(". Splitting on
+        # "(" assumed no title ever contains parentheses; beat 07 is titled
+        # "ZERO (0) MOVING PARTS" and slugged to "zero", so its clip was written
+        # as 07-zero.mp4 while check_sync and the still both used
+        # 07-zero-0-moving-parts. Two parsers disagreeing about one beat's
+        # identity is exactly what put "Huh. Blue." over the coffee scene.
+        # Verified against every shots.md in the tree: beat 07 is the only title
+        # containing parentheses, so this changes exactly one slug.
+        bare = re.sub(r"\s*\(\d+:\d+.*$", "", title)
+        slug = re.sub(r"[^a-z0-9]+", "-", bare.lower()).strip("-")
         shots.append({"num": num, "slug": slug or f"beat{num}",
                       "prompt": " ".join(fence.group(1).split()),
                       "done": "✅" in status})

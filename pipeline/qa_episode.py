@@ -236,9 +236,21 @@ def qa_episode(video: Path, clips_dir: Path | None, ffmpeg: str) -> None:
     # is a hard failure. The clip level is where this defect is born, so that is
     # where the gate belongs.
     is_episode = bool(m) and (int(m[1]), int(m[2])) == (WIDTH, HEIGHT)
+    # DO NOT HAND THE READER AN EXCUSE. This warning said "(slates?)" — a guess,
+    # offered whether or not the cut had any slates — and it fired on
+    # ep1-v26-approved and ep1-v28-swap at contrast 12 for days while the steward
+    # read the parenthetical and moved on. The blank frames were beat 15: the
+    # episode's final shot, its hook, essentially black after its first frame.
+    # The check was right every time and its own hedge is what buried it.
+    #
+    # A cut with slates says so in render_t3's summary ("N footage, M slate"), so
+    # the reader can resolve it in one glance — but the message must state the
+    # defect, not pre-excuse it.
+    hint = ("  ← if this cut has 0 slates, these are DEAD SHOTS, not placeholders"
+            if is_episode else " — GENERATION FAILED")
     record(ep, "frames carry a picture", not flat and worst is not None,
            (f"{len(flat)}/{len(devs)} frames blank, lowest contrast {worst:.0f}"
-            + (" (slates?)" if is_episode else " — GENERATION FAILED")
+            + hint
             if flat else f"lowest contrast {worst:.0f}" if worst is not None
             else "unmeasured"),
            warn=is_episode)

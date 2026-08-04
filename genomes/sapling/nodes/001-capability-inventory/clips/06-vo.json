@@ -5,33 +5,43 @@
  "lines": [
   {
    "who": "VO",
-   "text": "Okay. Ceiling's gone. That's fine. Open-plan hospital.",
+   "text": "Huh. Blue. \u2014 Okay. Ceiling's gone. That's fine. Open-plan hospital.",
    "start": 0.0,
-   "end": 3.677,
+   "end": 4.173,
    "chunks": [
     {
-     "text": "Okay.",
+     "text": "Huh.",
      "start": 0.0,
-     "end": 0.498
+     "end": 0.375
+    },
+    {
+     "text": "Blue.",
+     "start": 0.375,
+     "end": 0.953
+    },
+    {
+     "text": "\u2014 Okay.",
+     "start": 0.953,
+     "end": 1.329
     },
     {
      "text": "Ceiling's gone.",
-     "start": 0.498,
-     "end": 1.115
+     "start": 1.329,
+     "end": 2.236
     },
     {
      "text": "That's fine.",
-     "start": 1.115,
-     "end": 2.81
+     "start": 2.236,
+     "end": 2.991
     },
     {
      "text": "Open-plan hospital.",
-     "start": 2.81,
-     "end": 3.677
+     "start": 2.991,
+     "end": 4.173
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 3.977
+ "total_s": 4.473
 }

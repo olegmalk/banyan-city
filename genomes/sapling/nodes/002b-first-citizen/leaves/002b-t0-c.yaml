@@ -12,3 +12,32 @@ cost_usd: 0.00
 status: live
 platform_urls: []
 comprehension_gate: passed 2026-07-25 (sap/gate-t0-c-transcript.md; 2 camera flags fixed pre-render)
+
+# STEWARDSHIP.md §6 — read and approved by the founder, with two required changes.
+approved_by: founder
+approved_on: 2026-08-03
+approved_quote: |-
+  approve 002b except.. we need to make SURE the fig growing on the sapling is
+  mentioned, last time we generated 002b it just.. appeared. also, the sapling was
+  able to flail a leaf in episode 1? why couldnt it do that in 002b?
+approval_conditions:
+  # Both were continuity errors against 001, and both were correct.
+  - "The fig must GROW on screen, not already hang. Beat 01 rewritten: a nub swells
+     and rounds into a fig, and it is the only thing moving in frame. 001 established
+     GROW as his single working verb ('Latency: three days'), so beat 01's VO now says
+     'took three days to grow that' — the fig is the payoff of 001's closing line,
+     'I can only make this spot... worth staying in'. There is no fig anywhere in 001."
+  - "'I can't even wave' (beat 16) contradicted 001 beat 06 outright — 'I appear to be
+     flailing one (1) leaf', where the leaf twitches when he panics. Rewritten to the
+     distinction that actually carries the episode: the panic-twitch is involuntary and
+     unwitnessed; beat 21's tilt is deliberate, aimed and RECEIVED. Beat 21 now prints
+     'SPEAK  checkmark  1 bit. slow.' against 001's inventory card 'SPEAK  x  undefined'
+     — the ending defines a capability instead of merely moving a leaf."
+approval_scope: |-
+  Approval covers the STORY as read (21 beats, the guard exchange, the fig ending).
+  It is NOT approval of the shot prompts: all 21 were found written in the v2
+  low-detail style the founder killed 2026-07-27 as unreadable on screening. Beat 01
+  has been converted to the current native-tag dialect as the one sample; beats 02-21
+  await his verdict on that sample before conversion (CLAUDE.md ONE SAMPLE rule).
+  No VO, no stills and no footage may be produced until the dialect is settled — the
+  18 existing 002b VO files are from the t0-b cut and do not match this one.

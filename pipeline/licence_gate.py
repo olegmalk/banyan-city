@@ -455,7 +455,10 @@ ASSET_KEYS = ("clip", "file", "audio", "still", "content", "leaf")
 # .webm and a VO saved .wav are as published as an .mp4, so they are walked the
 # same way.
 VIDEO_EXT = {".mp4", ".webm", ".mov", ".mkv", ".m4v", ".gif"}
-AUDIO_EXT = {".mp3", ".wav", ".m4a", ".aac", ".ogg", ".flac", ".opus"}
+AUDIO_EXT = {".mp3", ".wav", ".m4a", ".aac", ".ogg", ".flac", ".opus",
+             # added 2026-08-03 while making scan_audio_sources extension-based;
+             # these are containers a contributor could plausibly drop in
+             ".aiff", ".aif", ".wma"}
 # Files that carry provenance, by suffix family rather than by exact name: a
 # sidecar saved .yml and a manifest renamed take-final.json are still records,
 # and renaming one must not exempt it (hole 8).
@@ -770,7 +773,16 @@ class Gate:
         listed = self.scan_sources_md(path)
         where = _rel(path)
         for f in sorted(path.parent.iterdir()):
-            if f.is_dir() or f.name == "SOURCES.md" or f.name.startswith("."):
+            if f.is_dir() or f.name.startswith("."):
+                continue
+            # AUDIO ONLY. This used to skip SOURCES.md by name and treat every other
+            # file in the directory as a recorded sound, so adding
+            # WHERE-TO-GET-SOUNDS.md — documentation about which licences are usable —
+            # was reported as an unlicensed shipping asset (2026-08-03). Documentation
+            # next to the assets it documents is the right place for it; the gate has
+            # to know the difference. Extension-based, so a .wav renamed .mov is still
+            # caught, and a note is not.
+            if f.suffix.lower() not in AUDIO_EXT:
                 continue
             if f.name not in listed:
                 self.err(_rel(f), f"recorded sound ships with no row in {where} — "
