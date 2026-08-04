@@ -83,18 +83,46 @@ tasks:
 # to it; and seconds sets the frame count (61 -> 121), which doubles the
 # activation VRAM on a card already peaking at 22.9 of 25.7GB with the SMALLER
 # model. One field to flip if that trade is wanted anyway.
-- worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  video_model: animegen
-  no_lora: true
-  no_anchor: true
-  motion: no new subjects, no scene change
-  size: 704x1280
-  offload: true
-  seconds: 2.5
-  steps: 25
-  guidance: 5.0
-  seed_base: 20260805
-  id: bench-animegen-b01-1785827400
-  beats: 1
+#
+# ---- PARKED 2026-08-04 — the sample ran, and it answered the question ---------
+# It got its answer, which is why it is parked and not retried. The child died at
+# 0xC0000005 in torch's c10.dll ~56s into model load (11:13:43 local, ~1m30 after
+# STARTED), and ~15 min later the HOST BLUESCREENED — bugcheck 0x3B, and the box
+# rebooted at 11:30:33. The stop condition written twenty lines above ("if it dies
+# at 0xC0000005 again, the fix is one code change and not a flag") is now met.
+#
+# AND THE ONE-LINE FIX IS PROBABLY NOT ENOUGH ON THIS BOX. Load-order only moves
+# the PEAK, ~64 -> ~32 GiB. It does not touch the ~38 GiB of steady-state
+# cpu-offload residency, and this machine has 31.4 GB physical. AnimeGen at
+# A14B x 2 does not fit a 32 GB host regardless of load order — it would page
+# through every offload step of all 25, with an expert swap per step. Requeue this
+# only against a 64 GB host, or after someone has instrumented peak working set
+# during load. That is a recipe change and wants its own sample either way.
+#
+# DO NOT UNCOMMENT THIS TO "SEE IF IT STILL FAILS". The retry guard cannot stop
+# it: finished_tasks() counts `FAIL task=<id>` lines out of heartbeat.txt, and
+# writing one requires the worker to SURVIVE the failure. This failure kills the
+# host, so the heartbeat holds a STARTED line and no FAIL — recorded attempt count
+# is 0, a restarted worker treats it as brand new, and every crash erases the
+# evidence that would eventually stop the retries. That is a crash loop the
+# existing guard is structurally unable to break, and it is general: any failure
+# mode that takes down the OS is invisible to the attempt counter.
+#
+# Full post-mortem — timeline, the empty worker-log, the missing errors.txt entry,
+# the stale lock, the minidump path: DIAG-20260804.md on farm-results-rtx5090.
+# Restarting is safe now that this is parked; the worker just idles.
+# - worker: rtx5090
+#   video: true
+#   node: 001-capability-inventory
+#   video_model: animegen
+#   no_lora: true
+#   no_anchor: true
+#   motion: no new subjects, no scene change
+#   size: 704x1280
+#   offload: true
+#   seconds: 2.5
+#   steps: 25
+#   guidance: 5.0
+#   seed_base: 20260805
+#   id: bench-animegen-b01-1785827400
+#   beats: 1
