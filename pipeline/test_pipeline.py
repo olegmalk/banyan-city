@@ -1565,9 +1565,16 @@ def test_licence_gate(tmp: Path):
     # with no other change. The prose belongs in MODEL_NOTES (printed, never
     # classified); MODEL_LICENCES values must stay terse and name no other
     # licence. This assertion is the tripwire.
+    # "ltx-2-3" joined this list on 2026-08-05, when MODEL_LICENCE gained an
+    # fp8 key whose model string resolves to it and to nothing else. It is the
+    # licence the LTX candidate actually ships under, it was already in the
+    # table, and it was the one LTX key with no tripwire on it — so a future
+    # reword of its value into an explanation could have flipped a watch-only
+    # candidate to publishable in silence, which is the precise failure the
+    # comment above describes.
     RESTRICTED = ("pixverse", "kling", "vidu", "stable-video-diffusion",
                   "f5-tts", "openaudio", "fish", "google-flow", "veo",
-                  "ltx-video", "lightricks")
+                  "ltx-video", "lightricks", "ltx-2-3")
     for name in RESTRICTED:
         verdict = lg.classify(lg.MODEL_LICENCES[name])[0]
         check(f"{name} is not publishable ({verdict})", verdict != "allow")

@@ -686,6 +686,25 @@ MODEL_LICENCE = {
     "ltx23-distilled": ("diffusers/LTX-2.3-Distilled-Diffusers "
                         "(Lightricks LTX-2.3 distilled, bf16)",
                         "LTX-2 Community License Agreement"),
+    # The SAME weights, cast to fp8 for storage at load time and upcast per layer
+    # for compute (--fp8-layerwise). Its own key because the numerics differ: a
+    # clip's look must be attributable to what actually multiplied, and "8-bit in
+    # storage" is a fact about this render that the bf16 entry would hide.
+    #
+    # THE WORD "Lightricks" IS DELIBERATELY ABSENT from this string, and it is not
+    # a style choice. licence_gate.model_licences matches SUBSTRINGS of the
+    # normalised text, and it has both an "ltx-2-3" key (the correct LTX-2
+    # Community Licence) and a "lightricks" catch-all (LTXV Open Weights 0.X, a
+    # different document). The bf16 entry above names the vendor and therefore
+    # matches BOTH — verified 2026-08-05: two distinct licences, so check_model
+    # reports that clip twice, one of them under the wrong document. Adding a
+    # second such string would push the same reporting artifact into the 38-row
+    # ratchet. Without the vendor name exactly one key matches. The vendor is not
+    # lost: the repo id says diffusers/LTX-2.3-Distilled-Diffusers, whose upstream
+    # is named all over ltx_i2v.py and in MODEL_NOTES.
+    "ltx23-distilled-fp8": ("diffusers/LTX-2.3-Distilled-Diffusers "
+                            "(LTX-2.3 distilled, fp8 layerwise cast)",
+                            "LTX-2 Community License Agreement"),
 }
 
 

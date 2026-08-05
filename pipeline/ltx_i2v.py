@@ -53,6 +53,25 @@ Making this checkpoint work means dequantising on load (fp8 * weight_scale -> bf
 is installed in the box venv (no torchao/bitsandbytes/gguf/quanto). Both are recipe
 changes, not fixes, so neither is done here.
 
+THERE ARE TWO fp8 ROUTES AND THEY ARE NOT THE SAME THING. The paragraph above is
+about --fp8-single-file: someone ELSE's statically-quantised checkpoint, which this
+diffusers cannot read. --fp8-layerwise is ours, and it needs no download at all —
+diffusers casts the bf16 weights WE ALREADY LOAD to fp8 for STORAGE and upcasts each
+layer back to bf16 for the duration of its own forward
+(hooks/layerwise_casting.py: initialize_hook -> storage, pre_forward -> compute,
+post_forward -> storage). No weight_scale is involved, so nothing can be silently
+dropped. Upstream vetted this class for it: LTX2VideoTransformer3DModel sets
+_skip_layerwise_casting_patterns = ["norm"] (transformer_ltx2.py:1092), i.e. the
+precision-critical norms stay bf16 by the model's own declaration, not by ours.
+THE POINT IS NOT THE FILE SIZE, IT IS THE OFFLOAD SWITCH THE CAST ALLOWS. See the
+--offload note in _render_with: 38GB of bf16 transformer cannot sit on a 23.89GiB
+card, so this file has always run enable_sequential_cpu_offload, which streams every
+module on every forward and leaves the GPU 45-55% idle. At ~19.8GiB of fp8 storage
+the transformer fits, so `--offload model` can keep it resident for the whole
+denoise loop. That is the mechanism being tested. It is a KNIFE EDGE — ~19.8GiB of
+weights plus ~4GB of activations against 23.89GiB — which is why it is a flag with a
+sample behind it and not a new default.
+
 Licence: LTX-2 Community License Agreement, D16 — CANDIDATE under watch-only, and
 the sidecar says so via video_task.MODEL_LICENCE["ltx23-distilled"] (the fp8 key is
 kept for the archived partial). Same document either way: Lightricks/LTX-2.3's
@@ -161,6 +180,18 @@ def _scheduler_shift(pipe):
         if v is not None:
             return v
     return None
+
+
+def _weight_gib(module) -> float:
+    """GiB of parameters + buffers, from element_size — a MEASUREMENT of the cast.
+
+    Layerwise casting's initialize_hook calls module.to(storage_dtype) the moment it
+    is attached, so this reads 1 byte per fp8 element immediately after the call and
+    2 for whatever was skipped. A cast that did not take shows up as an unchanged
+    number, which is the only cheap way to tell before the denoise loop starts.
+    """
+    return sum(t.numel() * t.element_size()
+               for t in list(module.parameters()) + list(module.buffers())) / 2**30
 
 
 FP8_REPO = "Lightricks/LTX-2.3-fp8"
@@ -365,6 +396,43 @@ def stage_render(a) -> int:
     transformer = LTX2VideoTransformer3DModel.from_pretrained(
         dist, subfolder="transformer", torch_dtype=torch.bfloat16,
         local_files_only=True)
+
+    # THE CAST HAPPENS HERE — before the pipeline is assembled and before any
+    # offload call — for two reasons. The weights are at their most movable while
+    # nothing holds a reference to them but this name, and the offload hooks must be
+    # attached to the model in the shape it will actually run in.
+    #
+    # THE CAST SURVIVES THE OFFLOAD CALL, checked in the source rather than hoped
+    # for: enable_sequential_cpu_offload's remove_all_hooks() strips ACCELERATE
+    # hooks, and layerwise casting lives in the diffusers HookRegistry
+    # (module._diffusers_hook), which that call does not touch. Two hook systems on
+    # one module is nevertheless exactly the thing this sample exists to prove, so
+    # the storage size is MEASURED below and printed — if the cast silently did not
+    # take, the number says so before an hour of GPU time is spent.
+    #
+    # HOST RAM IS THE KNOWN HAZARD OF AN IN-PROCESS CAST, measured on THIS box on
+    # 2026-08-04: the AnimeGen fp8 cast retained the bf16 storages it replaced —
+    # ~40GB of live weights against 128.7GB of commit charge — because a freed
+    # torch storage returns to the caching allocator, not to the OS. Worst case here
+    # is ~38GB of retained bf16 + ~19GB of fp8 + 12.7GB connectors + ~2GB misc
+    # ~= 72GB of commit against this box's ~124GB limit, so it fits where AnimeGen
+    # did not, and it fits for a structural reason: the render stage NEVER holds the
+    # 24.4GB Gemma encoder (that is what the two-stage split is for). Expected LIVE
+    # PHYSICAL is ~34GB — a large improvement on the 60.8GB the bf16 production run
+    # measured, since the resident copy is the fp8 one. The sampler thread above
+    # records both numbers either way; do not restate them from this comment.
+    if a.fp8_layerwise:
+        mark("cast-fp8-layerwise")
+        before = _weight_gib(transformer)
+        t_cast = time.time()
+        transformer.enable_layerwise_casting(
+            storage_dtype=torch.float8_e4m3fn, compute_dtype=torch.bfloat16)
+        gc.collect()
+        print(f"fp8 layerwise cast in {time.time() - t_cast:.0f}s: transformer "
+              f"storage {before:.2f} -> {_weight_gib(transformer):.2f} GiB "
+              f"(norms stay bf16 by the model's own "
+              f"_skip_layerwise_casting_patterns)", flush=True)
+
     return _render_with(a, transformer, parts, dist, w, h)
 
 
@@ -409,23 +477,59 @@ def _render_with(a, transformer, parts, dist, w, h) -> int:
         vocoder=LTX2VocoderWithBWE.from_pretrained(
             parts, subfolder="vocoder", torch_dtype=torch.bfloat16))
 
-    # SEQUENTIAL, not enable_model_cpu_offload, and the reason is VRAM rather than
-    # host RAM. model_cpu_offload moves one WHOLE component to the GPU at a time;
-    # the bf16 transformer is 37.99GB in 8 shards against 24GB of VRAM, so it can
-    # never be resident and the call would OOM on the first denoise step no matter
-    # how much host RAM is free. (The distilled model card's example uses
+    # SEQUENTIAL IS STILL THE DEFAULT, and the reason it ever was is VRAM rather
+    # than host RAM. model_cpu_offload moves one WHOLE component to the GPU at a
+    # time; the bf16 transformer is 37.99GB in 8 shards against 24GB of VRAM, so it
+    # can never be resident and the call would OOM on the first denoise step no
+    # matter how much host RAM is free. (The distilled model card's example uses
     # enable_model_cpu_offload because it assumes a card that fits the model.)
     # Sequential streams module-by-module instead, which fits at the cost of speed —
-    # so the sample time below is an offloading number, not this card's ceiling, and
-    # is not comparable to a Wan row that ran resident. Group offload (block_level,
-    # the model reports _supports_group_offloading True) is the faster middle
-    # ground and the obvious follow-up if this look is worth keeping.
-    # Host RAM for reference: ~52.5GB of weights (transformer 37.99 + connectors
-    # 12.69 + vae 1.45 + vocoder 0.26 + audio_vae 0.11) against 68.1GB, with the
-    # encoder already exited — which is exactly why the two-stage split exists.
-    # VAE tiling keeps the 704x1280 decode off the peak.
-    mark("offload-setup")
-    pipe.enable_sequential_cpu_offload(device="cuda")
+    # so a sample time measured under it is an offloading number, not this card's
+    # ceiling, and is not comparable to a Wan row that ran resident.
+    #
+    # WHAT --offload IS FOR. That whole argument is an argument about 38GB, and
+    # --fp8-layerwise makes the transformer ~19.8GiB of storage instead, which a
+    # 23.89GiB card can hold. So the three modes are:
+    #   sequential  enable_sequential_cpu_offload — leaf-level streaming, every
+    #               module moved on every forward. What has always run; the only
+    #               mode that fits the un-cast bf16 transformer. DEFAULT, so an
+    #               invocation that does not ask for anything renders exactly the
+    #               clip it rendered yesterday.
+    #   model       enable_model_cpu_offload — the transformer goes to the card once
+    #               and STAYS there for the whole denoise loop (the model_cpu_offload_seq
+    #               chain "text_encoder->connectors->transformer->vae->audio_vae->vocoder"
+    #               only evicts it when the vae runs). This is the point of the fp8
+    #               cast, and it is a knife edge: ~19.8GiB of weights plus ~4GB of
+    #               activations on a 23.89GiB card. It OOMs without --fp8-layerwise.
+    #   group       enable_group_offload(block_level, num_blocks_per_group=1,
+    #               use_stream=True, record_stream=True) — the documented middle
+    #               ground: whole transformer blocks move instead of leaves, and the
+    #               next block onloads on a side stream while the current one
+    #               computes. Fits without the cast; the fallback if `model` OOMs.
+    # NOT COMBINABLE, and diffusers enforces it rather than us: enable_model_cpu_offload
+    # calls _maybe_raise_error_if_group_offload_active(raise_error=True), so the
+    # branch below is an if/elif by the library's own rule.
+    #
+    # Host RAM for reference: ~52.5GB of bf16 weights (transformer 37.99 +
+    # connectors 12.69 + vae 1.45 + vocoder 0.26 + audio_vae 0.11) against 68.1GB,
+    # with the encoder already exited — which is exactly why the two-stage split
+    # exists. VAE tiling stays on in every mode: it keeps the 704x1280 decode off
+    # the peak, and it matters MORE with a resident transformer, because then the
+    # decode is competing for the card instead of arriving after the weights have
+    # drained off it. LTX2ImageToVideoPipeline does not inherit StableDiffusionMixin,
+    # so pipe.enable_vae_tiling does not exist here and the vae's own enable_tiling
+    # is what runs — the loop tries both because that is not worth depending on.
+    mark(f"offload-setup-{a.offload}")
+    if a.offload == "model":
+        pipe.enable_model_cpu_offload(device="cuda")
+    elif a.offload == "group":
+        pipe.enable_group_offload(onload_device=torch.device("cuda"),
+                                  offload_device=torch.device("cpu"),
+                                  offload_type="block_level",
+                                  num_blocks_per_group=1,
+                                  use_stream=True, record_stream=True)
+    else:
+        pipe.enable_sequential_cpu_offload(device="cuda")
     for enable in (getattr(pipe, "enable_vae_tiling", None),
                    getattr(getattr(pipe, "vae", None), "enable_tiling", None)):
         if callable(enable):
@@ -601,6 +705,13 @@ def _render_with(a, transformer, parts, dist, w, h) -> int:
     import video_task
     label = a.bench_label or "ltx23"
     clip_s = a.frames / a.fps
+    # THE SIDECAR NAMES THE ARTIFACT, and an fp8-cast transformer is a different
+    # artifact from the bf16 one even though it came from the same files on disk:
+    # the weights that produced these pixels were 8-bit in storage and upcast per
+    # layer. Same repo, same licence document, different numerics — so it gets its
+    # own MODEL_LICENCE key rather than sharing the bf16 one and letting a reader
+    # assume the look is attributable to the stock checkpoint.
+    vmodel = "ltx23-distilled-fp8" if a.fp8_layerwise else "ltx23-distilled"
     negative = (a.negative + "\n[unused: guidance 1.0 on the distilled path runs "
                              "no uncond pass, so this changed no pixel]"
                 ) if a.negative else a.negative
@@ -633,7 +744,7 @@ def _render_with(a, transformer, parts, dist, w, h) -> int:
         # --seed is already the per-beat seed and the sidecar reconstructs it.
         # The slot's OWN seed goes in, so slot 1 of a b2 does not claim slot 0's.
         video_task.write_sidecar(
-            path, "ltx23-distilled",
+            path, vmodel,
             {"worker": a.worker, "guidance": a.guidance,
              "seed_base": a.seed + s - a.beat, "id": a.task},
             beat=a.beat, seconds=round(clip_s, 3), steps=steps_note,
@@ -641,7 +752,17 @@ def _render_with(a, transformer, parts, dist, w, h) -> int:
             # Recorded verbatim, with the caveat attached, because a reader of
             # this sidecar cannot otherwise tell that the negative was inert.
             negative=negative,
+            # offload and quantisation go in the SIDECAR and nowhere else. They are
+            # not bench_row fields and must not become them: BENCH_FIELDS is one
+            # schema shared with wan_i2v, bench_row() RAISES on an unknown key, and
+            # a column that only one renderer ever fills is how a comparison table
+            # starts reading as a gap. quantisation is omitted entirely on the bf16
+            # path — write_sidecar drops None values, and an absent field reads as
+            # "not quantised", which is exactly true.
             extra={"mode": a.mode, "batch": batch, "batch_slot": s,
+                   "offload": a.offload,
+                   "quantisation": ("fp8-layerwise storage / bf16 compute"
+                                    if a.fp8_layerwise else None),
                    "throughput_s_video_per_s_wall":
                        round(batch * clip_s / sample_s, 4),
                    "compute_s_per_video_s": round(sample_s / batch / clip_s, 1)})
@@ -690,13 +811,20 @@ def _render_with(a, transformer, parts, dist, w, h) -> int:
             host_peak_commit_gb=(round(PEAK["commit_gb"], 1) or None),
             steps=steps_note, guidance=a.guidance, shift=_scheduler_shift(pipe),
             size=f"{w}x{h}", ok=True))
+    # "offload" WAS THE STRING "sequential" until 2026-08-05, written when there was
+    # only one path through the code above. The moment a second one existed that
+    # literal became a line that says what the file used to do — so it reads the
+    # flag the branch actually took. Same for quantisation, which is null on the
+    # bf16 path rather than absent, because this line is a fixed-shape record.
     print(json.dumps({"sample_s": round(sample_s, 1), "peak_gb": round(peak, 1),
                       "peak_commit_gb": round(PEAK["commit_gb"], 1),
                       "frames": a.frames, "size": a.size, "steps": steps_note,
                       "batch": batch, "mode": a.mode,
                       "throughput_s_per_s": round(batch * clip_s / sample_s, 4),
                       "two_stage": bool(a.two_stage), "image_crf": a.image_crf,
-                      "offload": "sequential"}),
+                      "offload": a.offload,
+                      "quantisation": ("fp8-layerwise storage / bf16 compute"
+                                       if a.fp8_layerwise else None)}),
           flush=True)
     return 0
 
@@ -724,8 +852,26 @@ def main() -> int:
     ap.add_argument("--distilled-sigmas", action="store_true")
     # Retained, not removed: the 9GB fp8 partial is still on disk against a future
     # torchao / torch._scaled_mm path. It refuses immediately on this diffusers.
+    # NOT overloaded to mean the layerwise cast, and that is deliberate — its
+    # refusal message is the record of a measured dead end, and a flag that used to
+    # print "this does not work" and now quietly does something else is how a
+    # retracted finding gets un-retracted by accident.
     ap.add_argument("--fp8-single-file", action="store_true",
                     help="BROKEN on diffusers 0.39.0 — see module docstring")
+    # The OTHER fp8: no download, no foreign checkpoint. Cast the bf16 weights we
+    # already load to fp8 for storage, upcast per layer for compute. Off by default
+    # because it changes the numerics of a screened look, and because the offload
+    # mode it unlocks is a knife-edge fit.
+    ap.add_argument("--fp8-layerwise", action="store_true",
+                    help="cast the loaded transformer to fp8 storage / bf16 compute "
+                         "(~38GB -> ~19.8GiB), which is what lets --offload model fit")
+    ap.add_argument("--offload", choices=["sequential", "model", "group"],
+                    default="sequential",
+                    help="sequential (default, unchanged behaviour): leaf-level "
+                         "streaming, fits the un-cast bf16 transformer. model: "
+                         "transformer resident for the whole denoise loop, needs "
+                         "--fp8-layerwise. group: block_level with a prefetch "
+                         "stream, the middle ground.")
     # Upstream's actual distilled recipe. Off by default so the flag has to be asked
     # for, but it is the ON-RECIPE path: without it an 8-step render runs at double
     # the resolution stage 1 was meant for.
@@ -759,6 +905,19 @@ def main() -> int:
     if a.batch < 1:
         print(f"!! --batch {a.batch}: must be at least 1", flush=True)
         return 2
+    # LOUD, NOT FATAL. 38GB of bf16 weights cannot be resident on a 23.89GiB card,
+    # so this combination is an OOM with a long walk up to it — ~90 seconds of
+    # loading before the first denoise step raises. It is not refused, because the
+    # OOM itself is a legitimate thing to go and measure on a bigger card; it is
+    # announced, because reading it in a traceback teaches nothing.
+    if a.stage == "render" and a.offload == "model" and not a.fp8_layerwise:
+        print("!! --offload model without --fp8-layerwise: the bf16 transformer is "
+              "~38GB and the card is 23.89GiB, so this is expected to OOM at the "
+              "first denoise step. Continuing because you asked.", flush=True)
+    if a.stage == "render":
+        print(f"recipe: offload={a.offload} "
+              f"quantisation={'fp8-layerwise' if a.fp8_layerwise else 'none (bf16)'}",
+              flush=True)
     if a.prompt_file:
         a.prompt = Path(a.prompt_file).read_text(encoding="utf-8").strip()
     if a.negative_file:

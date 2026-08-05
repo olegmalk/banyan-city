@@ -65,6 +65,15 @@ LABEL_ALIAS = {
     "ltx2.3": "ltx23",
     "ltx23": "ltx23",
     "ltx23-distilled": "ltx23",
+    # The fp8-cast build is a SEPARATE row, not a spelling of the bf16 one. Same
+    # repo and same licence, different numerics and (the point of it) a different
+    # offload strategy — folding the two together would put a resident-transformer
+    # timing in the same column as a sequential-offload timing and read as a batch
+    # or recipe effect. Three spellings because three things name it: the gallery
+    # filename stem, --bench-label, and the sidecar's short model key.
+    "ltx23fp8": "ltx23fp8",
+    "ltx23-fp8": "ltx23fp8",
+    "ltx23-distilled-fp8": "ltx23fp8",
     "animegen": "animegen",
     "animegen-i2v": "animegen",
 }
@@ -150,6 +159,21 @@ MODELS = {
         "licence": "LTX-2 Community License Agreement — CANDIDATE, watch-only under D16",
         "role": "fastest measured path; host-exclusive (it evicted the farm worker)",
     },
+    "ltx23fp8": {
+        "title": "LTX-2.3 distilled — fp8 cast",
+        "build": "diffusers/LTX-2.3-Distilled-Diffusers, the SAME bf16 weights cast "
+                 "to fp8 storage / bf16 compute at load (enable_layerwise_casting, "
+                 "norms excluded by the model's own skip pattern), two-stage on-recipe",
+        # The whole reason the entry exists: the cast takes the transformer from
+        # ~38GB to ~19.8GiB, which is what lets it stay on a 23.89GiB card for the
+        # denoise loop instead of being streamed module-by-module.
+        "offload": "model_cpu_offload + fp8 layerwise",
+        "licence": "LTX-2 Community License Agreement — CANDIDATE, watch-only under "
+                   "D16 (same document as the bf16 build; casting our own copy "
+                   "changes no term)",
+        "role": "the same candidate with the offload brake off — tests whether LTX's "
+                "measured speed was a model result or an offloading floor",
+    },
     "animegen": {
         "title": "AnimeGen-I2V (A14B)",
         "build": "aidealab/AnimeGen-I2V, Wan2.2-I2V-A14B finetune, per-expert fp8 "
@@ -160,7 +184,7 @@ MODELS = {
         "role": "the anime-native candidate — first clips this box has ever produced",
     },
 }
-MODEL_ORDER = ["ti2v5b", "ltx23", "animegen"]
+MODEL_ORDER = ["ti2v5b", "ltx23", "ltx23fp8", "animegen"]
 
 # Figures that exist only in pipeline/research/MODEL-COMPARISON.md, because the
 # run that produced the clip wrote them to the prose table and not to the sidecar.
@@ -300,6 +324,29 @@ COVERAGE_GAPS = {
         "row anywhere. BANNED — reopening it is founder-reserved, because the last "
         "attempt cost a bugcheck.",
         "probe-5b-b4.log, 2026-08-05"),
+    ("ltx23fp8", "production", 1): (
+        "sample pending",
+        "The renderer gained --fp8-layerwise and --offload today and has not been "
+        "run with them. ONE SAMPLE BEFORE ANY BATCH: this cell is the sample, and "
+        "nothing above b1 may be scheduled until the founder has looked at it. What "
+        "it has to answer is not speed but whether the two hook systems coexist — "
+        "the diffusers layerwise-casting registry and the accelerate offload hooks "
+        "— and whether ~19.8GiB of fp8 weights plus activations actually fit 23.89GiB.",
+        "sample pending, as-of 2026-08-05"),
+    ("ltx23fp8", "production", 2): (
+        "not scheduled — b1 first",
+        "No batch point on this build may be scheduled before its b1 sample has "
+        "been screened. If b1 fits at all, the bf16 build's own b1 -> b2 host-RAM "
+        "slope (60.8 -> 64.2GB) is the number to reason from, and it was measured "
+        "with the transformer streamed rather than resident — so it does not "
+        "transfer, it only says where to look.",
+        "sample pending, as-of 2026-08-05"),
+    ("ltx23fp8", "production", 4): (
+        "closed by inheritance — host RAM",
+        "The bf16 build's b4 is closed on a host-RAM slope that the fp8 cast does "
+        "not change: the cast shrinks what sits on the CARD, not the per-latent "
+        "host cost. Nothing here will be run unless b1 and b2 say otherwise.",
+        "derived 2026-08-05 from SAMPLES/batch-bench.jsonl + the b1 sidecar"),
     ("ltx23", "production", 4): (
         "closed — host RAM, not VRAM",
         "LTX peaks at 7.2GB of 25.7GB at b2, so the card is not the constraint. "
@@ -319,6 +366,12 @@ COVERAGE_MODE_ABSENT = {
         "measure, so this row is empty by definition rather than by failure. It is "
         "also the least urgent gap on the page — LTX production already runs at "
         "35.1s per video-second, inside the iterate-in-minutes loop.",
+        "2026-08-05"),
+    ("ltx23fp8", "preview"): (
+        "no preview recipe defined",
+        "Inherited from the bf16 build, and for the same reason: the fp8 cast is a "
+        "change of storage dtype and offload strategy, not of recipe. There is no "
+        "cheap LTX variant to measure, so this row is empty by definition.",
         "2026-08-05"),
 }
 
@@ -658,7 +711,13 @@ def model_of(clip):
     if "ti2v-5b" in model or "ti2v5b" in model:
         return "ti2v5b"
     if "ltx" in model:
-        return "ltx23"
+        # The MODELS loop above cannot separate these two: the sidecar spells the
+        # repo "LTX-2.3-Distilled-Diffusers", and stripping dashes leaves "ltx2.3"
+        # — the dot survives, so neither "ltx23" nor "ltx23fp8" is a substring and
+        # both builds fall through to here. Without this line an fp8 clip whose
+        # filename is not gallery-shaped would be grouped under the bf16 build and
+        # its timing read as the bf16 model's.
+        return "ltx23fp8" if "fp8" in model else "ltx23"
     return "unregistered"
 
 
