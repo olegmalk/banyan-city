@@ -69,6 +69,7 @@ host can still do during that render.
 | same — **T2, `画面` restored to `NEG`** | T1-A/B exactly, plus one appended negative term. Verified a pure append: 618 → 622 chars, same prefix, nothing reordered. **Not** combined with `--no-shake-neg` | production | 147.9s sample / 149.0s wall (10.56s/step) | 0.0172 s(video)/s(wall) @b1 = 58.2s per video-s | 14.4GB of 25.7GB — `model_cpu_offload` | 38.5GB phys / 69.2GB commit — download co-resident | as above | Apache-2.0 | **MEASURED-BY-US 2026-08-04**, $0. Motion: median **0.83** against the baseline's 1.16, 0/60 barely-moving. One clip, one seed — a direction, not a finding | `bench-T1T2T3/T2-neg-huamian.mp4.meta.yaml` |
 | same — **T3, motion-only prompt** | T1-A/B, positive replaced by present-progressive motion only, statics stripped, no camera invention, 36 words: *"…his hands are hammering the keys, fingers striking rapidly in large strokes, wrists lifting and dropping, the monitor glow pulsing over them"*. **STYLE prefix kept** so the clip is a one-variable delta | production | 148.9s sample / 149.9s wall (10.64s/step) | 0.0171 s(video)/s(wall) @b1 = 58.6s per video-s | 14.4GB of 25.7GB — `model_cpu_offload` | 41.9GB phys / 69.3GB commit — download co-resident | as above | Apache-2.0 | **MEASURED-BY-US 2026-08-04**, $0. Motion: median **1.05**, 0/60 barely-moving | `bench-T1T2T3/T3-motion-only.mp4.meta.yaml` |
 | same — **T3b, empty prompt** | T1-A/B with `prompt=""` | production | 146.5s sample / 147.6s wall (10.47s/step) | 0.0173 s(video)/s(wall) @b1 = 57.6s per video-s | 14.4GB of 25.7GB — `model_cpu_offload` | 36.9GB phys / 69.2GB commit — download co-resident | as above | Apache-2.0 | **MEASURED-BY-US 2026-08-04**, $0. **NOT Alibaba's empty-prompt mode** — diffusers has no system-prompt routing, so this is a literally empty string, and the row must never be read as testing their "bring the image to life" brief. Motion: median **0.72**, 0/60 barely-moving | `bench-T1T2T3/T3-empty-prompt.mp4.meta.yaml` |
+| same — **batch 2, the throughput probe** | T1-A/B's recipe exactly at 2 latents through one set of weights: 704x1280, 61f @24fps = 2.542s per clip, 14 steps, guidance 5.0, UniPC `flow_shift` 5.0. Slot 0 repeats **seed 20260732** as the batch-fidelity check, slot 1 takes 20260733 | production | **764.7s sample** for 2 clips (**54.62s/step**) against b1's 12.05 — **4.53x b1's per-step cost for 2x the output** | **0.0066 s(video)/s(wall) @b2** = **150.4s wall per 1s of video** (382.3s per *clip*) — against b1's 0.0151, i.e. **0.44x b1** | **23.5GB torch of 25.7GB (91.4%)** — `model_cpu_offload`; **+9.1GB** over b1's 14.4GB | 54.4GB phys / 54.4GB commit of 68.1/130.4GB — psutil sampler; the two coincide because swap use read 0 at every sample | 1/card | Apache-2.0, output rights disclaimed — CLEAR | **MEASURED-BY-US 2026-08-05**, $0. **Batching the 5B is strictly worse than running it serially on this card.** The fidelity gate passed decisively — slot 0 against the b1 reference differs by less than re-encoding alone, and the two slots diverge from each other properly, so this is a real throughput result and not a batch that silently rendered one clip twice. Corroborated independently in the *preview* recipe by the box's own rows: **16.43 → 110.36 s/step b1 → b2**, same direction, steeper | `SAMPLES/batch-bench.jsonl`, `SAMPLES/ti2v5b-production-b2-s20260732.mp4.meta.yaml`, `SAMPLES/ti2v5b-modes.jsonl` |
 | TI2V-5B + **`shift` sweep** (baseline / 5.0 / 8.0) | 704x1280, 14 steps, 3 clips, one seed | — | — (expect ~248s/beat) | — | — (expect 22.9/25.7GB) | — | — | Apache-2.0 | **SUPERSEDED — measured 2026-08-04**, see the three T1 rows above. Its own expectations were both wrong: the peak is 14.4GB not 22.9GB, and the "baseline" was already 5.0 | `ACTION-PLAN.md §1 T1` |
 | TI2V-5B + `画面` restored to `NEG` | 704x1280, 14 steps, alone (not with `--no-shake-neg`) | — | — | — | — | — | — | Apache-2.0 | **SUPERSEDED — measured 2026-08-04**, see the T2 row above | `ACTION-PLAN.md §1 T2` |
 | TI2V-5B + motion-only prompt contract | statics stripped, ≤100 words | — | — | — | — | — | — | Apache-2.0 | **SUPERSEDED — measured 2026-08-04**, see the T3 and T3b rows above | `ACTION-PLAN.md §1 T3` |
@@ -121,6 +122,58 @@ against a wall-clock guess instead of against the producing process exiting will
 silently return a partial night**, and a run whose artifacts were fetched too
 early is indistinguishable from a run that never happened — which is exactly how
 this row went missing while every other row from the same session landed.
+
+### 2026-08-05 — batching the 5B, and the batch-4 that took the host down
+
+Three probes were authorised to widen the batch-scaling section past AnimeGen.
+Two of them produced something. This is what each one is worth.
+
+**b2 answered the question, and the answer is no.** The row above is the whole
+finding: **0.44x b1's throughput.** Not a plateau, not a wash — a loss. Every
+figure moved the wrong way at once (54.62s/step against 12.05, 150.4s per
+video-second against 66.3, 23.5GB against 14.4), and the *preview* recipe says
+the same thing harder: **16.43 → 110.36 s/step**, a 6.7x per-step cost for twice
+the output. AnimeGen's b2 was the optimum on this same card; the 5B's is a
+regression. The difference is headroom — AnimeGen b1 already streams its weights
+through `model_cpu_offload` at 17.9GB, so a second latent cost it +1.8GB, while
+the 5B's second latent cost +9.1GB and put the card at 91.4%.
+
+**b4 did not produce a row, and must not be given one.** The run **bugchecked
+the host** at **06:07:05 local on 2026-08-05** — Kernel-Power 41, EventLog 6008 —
+the box's *second* unclean reboot that day. It had completed **2 of 14 steps at
+~118-122s/step** when it died. At the moment of death: GPU **24102 MiB of 24463
+(98.5%)** at 100% utilisation, host commit pinned at its **~69GB** ceiling while
+physical was being *reclaimed* 33 → 19GB — the WDDM sysmem-fallback thrash
+AnimeGen's b4 showed as a slowdown, here escalated to taking the machine with it.
+Telemetry: `probe-5b-b4.log`.
+
+There is no sidecar, no clip, and no finished sample, so **rule 1 leaves it out
+of the table** and rule 2 forbids promoting the two step times into one. It is
+recorded here, in prose, with the log named — the same treatment the b4 mid-run
+projection should have had on 2026-08-04.
+
+**The series is superlinear the whole way: 12.05 → 54.62 → ~118 s/step at b1 →
+b2 → b4.** So: **b4 is DEAD on this card. Do not re-run it.** Reopening that is
+founder-reserved — it costs a bugcheck, and the second one in a day is what it
+cost this time.
+
+**The third probe, LTX at b2, never started.** `pipeline/ltx_i2v.py` could not
+render at all: commit fab4632 added the `--batch` body without declaring the
+flag, so every `--stage render` raised `AttributeError` at the defaults. Fixed
+2026-08-05 along with a static test that fails against that commit's file
+(`test_argparse_declares_every_flag_it_reads`). The probe runs after the fix
+lands; there is no LTX batch row until it does.
+
+**One unit correction that touches every "per 1s video" figure in this file.**
+`wan_i2v.py`'s bench row wrote `compute_per_video_s` as seconds per *clip*
+(`sample_s / batch`) while its own sidecar, the AnimeGen file and the 5B-modes
+file all wrote seconds per *second of video*. Both quantities are true; only one
+matches the column's name. `batch-bench.jsonl`'s b2 row therefore says 382.3
+where the same run's sidecar says 150.4. **The written rows stand — they are
+measurements and are not edited** — the renderer now writes the per-video-second
+form, and `COMPARISON.html` derives that cell from `sample_s / video_s` so old
+and new rows read alike. The table above states both numbers for the b2 row and
+labels which is which.
 
 ### Open observations on the measured 5B T1/T2/T3 rows
 

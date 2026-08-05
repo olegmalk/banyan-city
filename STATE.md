@@ -741,3 +741,82 @@ because AnimeGen's cliff is the only one anyone has investigated.
 **Open, founder-reserved:** everything still open from 2026-08-04, plus the
 screening verdict on the recovered AnimeGen production clip (R4), and whether the
 text-encoder-eviction branch is worth writing before the three batch probes run.
+
+## 2026-08-05, the small hours — the batch probes: one answer, one bugcheck, one that could not start
+
+The three probes authorised above ran, or tried to. The box is down at the end of
+it and needs a human at the keyboard.
+
+- **5B at batch 2: measured, and the answer is that batching this model loses.**
+  704x1280, 61f, 14 steps, seeds 20260732-33: **764.7s sample, 54.62s/step,
+  0.0066 s(video)/s(wall)** — 150.4s of wall per second of video, 382.3s per
+  clip — **23.5GB peak of 25.7GB (91.4%)**, 54.4GB host. Against the b1 point of
+  the identical recipe (T1-shift5.0: 12.05s/step, **0.0151**) that is **0.44x the
+  throughput**. Not a plateau, a loss. **The fidelity gate passed decisively** —
+  slot 0 differs from the b1 reference by less than re-encoding alone, and the
+  two slots diverge from each other properly, so this measures batching and not a
+  batch that quietly rendered one clip twice. The box's own preview rows say the
+  same thing harder: **16.43 → 110.36 s/step** b1 → b2
+  (`SAMPLES/ti2v5b-modes.jsonl`). AnimeGen's b2 was the optimum on this same
+  card; the 5B's is a regression, and the difference is headroom — AnimeGen's
+  second latent cost +1.8GB, the 5B's cost +9.1GB.
+- **5B at batch 4: DNF — the run bugchecked the host.** **06:07:05 local**,
+  Kernel-Power 41 / EventLog 6008, the box's **second unclean reboot that day**.
+  It had done **2 of 14 steps at ~118-122s/step**; at death the GPU held
+  **24102 MiB of 24463 (98.5%)** at 100% util while host commit sat pinned at its
+  ~69GB ceiling and physical was being reclaimed 33 → 19GB — WDDM sysmem-fallback
+  thrash, the same mechanism AnimeGen's b4 showed as a slowdown, escalated here
+  into taking the machine. Telemetry: `probe-5b-b4.log`. **No sidecar, no clip,
+  no row** — MODEL-COMPARISON rule 1 keeps unfinished runs out of the table, so
+  it is recorded there as prose with the log named. **Standing decision: b4 is
+  DEAD on this card. Do not re-run it. Reopening is founder-reserved** — the
+  series is superlinear the whole way (12.05 → 54.62 → ~118 s/step) and the
+  price of asking again is a bugcheck.
+- **LTX at batch 2: never started — we had shipped a renderer that could not
+  render.** Commit **fab4632** added the `--batch` body to `pipeline/ltx_i2v.py`
+  and never declared the flag, so `batch = max(1, int(a.batch))` raised
+  `AttributeError` on **every** `--stage render`, at the defaults, before a
+  weight was loaded. A day of the LTX path being dead, and nothing here could
+  have caught it: `py_compile` passes, `test_no_undefined_locals` passes (`a` is
+  defined; the *attribute* is not), and no test had ever touched either
+  renderer's CLI — which matters because the box those scripts run on is not this
+  machine, so the first thing that executes them is an hour-long render nobody is
+  sitting at. Fixed today, to parity with `wan_i2v.py`: the four flags declared,
+  per-slot output naming, per-slot sidecars carrying mode/batch/slot/throughput,
+  and an optional bench row. The gate is
+  **`test_argparse_declares_every_flag_it_reads`** — AST-only, both renderers,
+  and it was verified by running it against `git show fab4632:pipeline/ltx_i2v.py`
+  first, where it names `a.batch` at line 401 and fails.
+- **The farm worker is DOWN and cannot be restarted from here.** It has been down
+  since the 06:07 crash. `schtasks /run /tn banyan-worker-start` returns
+  **0x800710E0**: the task's LogonType is Interactive, and after an unattended
+  reboot there is no interactive session for it to run in. This is pre-existing
+  configuration, not damage from the crash — the same failure was already logged
+  at 23:59 the night before. **A human has to log in at the box.**
+  `banyan-telemetry` recovers by itself at logon; the worker does not.
+- **Two smaller records corrected while in there.** `wan_i2v._scheduler_shift`
+  read only `cfg.get("shift")`, but TI2V-5B ships `UniPCMultistepScheduler` whose
+  key is **`flow_shift`** — measured at 5.0 in `bench-T1T2T3/bench-t0.json` —
+  so every 5B bench row has been recording `"shift": null` while running at 5.0.
+  It now reads `shift`, then `flow_shift`, else null. And `compute_per_video_s`
+  was written by that same bench row as seconds per *clip* while the sidecar of
+  the same run wrote seconds per *second of video*: 382.3 against 150.4 for the
+  b2 run. The rows already on disk stand — they are measurements — the renderer
+  now writes the form its column is named after, and `COMPARISON.html` derives
+  that cell from `sample_s / video_s` so old and new rows read alike.
+- **`COMPARISON.html` is hardened rather than re-styled.** Null bench fields used
+  to render literal `None` and `NoneGB` cells, and the `ok` field was never read
+  at all; both are fixed (gap = em-dash, a dead run renders struck-through and
+  marked *did not finish*, and is excluded from the winner and the baseline). The
+  batch tables grouped on the raw bench `label`, so last night's `ti2v-5b` rows
+  never met the `ti2v5b` gallery group and the table titled itself with the raw
+  string; a small alias map resolves both. The 5B production batch table now has
+  its **b1 comparator**, joined from `bench-T1T2T3/bench-t1t2t3.jsonl`'s
+  T1-shift5.0 — same recipe, same seed, run hours earlier — with the source named
+  in the cell. **Joined, not synthesised: nothing was written back to any jsonl,
+  and no DNF row was hand-written into one.** Cross-check that it is the same run:
+  `ti2v5b-production-b1-s20260732.mp4` is byte-identical to `T1-shift5.0.mp4`,
+  and its sidecar independently carries the two derived figures (0.0151, 66.3).
+
+**Open, founder-reserved:** everything above, plus — *someone must log in at the
+rtx5090 box* before any render is queued, and **b4 stays closed on this card.**
