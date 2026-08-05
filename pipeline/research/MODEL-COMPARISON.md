@@ -59,6 +59,7 @@ host can still do during that render.
 |---|---|---|---|---|---|---|---|---|---|---|
 | **diffusers/LTX-2.3-Distilled-Diffusers, bf16** | two-stage **on-recipe**: 8 steps @352x640 → 2x latent upsample → 3 steps @704x1280, explicit sigmas, guidance 1.0, 65f @24fps = 2.708s | production (two-stage, on-recipe) | **108.1s sample / 120s wall** (stage 1 62s @7.8s/it, stage 2 31s @10.5s/it; remainder = upsample + setup) | **0.0251 s(video)/s(wall) @b1** = 39.9s wall per 1s video (2.708s of video / 108.1s sample) — DERIVED-FROM-OURS, the row states its own 65f @24fps so the denominator is not invented | **4.1GB torch / 2.5GB device of 26GB** — LABEL: **sequential-offload**, measures the offload strategy, not card capacity | **60.8GB phys / 67.1GB commit of 68.1GB** | 1/card, and **host-exclusive** — this render evicted the farm worker on the 64GB box | LTX-2 Community License Agreement — **CANDIDATE** under watch-only per D16 (per-post AI label, never a contributor-facing service, one founder-screened sample) | **MEASURED-BY-US 2026-08-04**, $0. Clip clean: no issue-#37 corruption (saturation 0.264, no channel cast, **0/64 frozen frames**) | `SAMPLE-ltx23-b01.mp4.meta.yaml`, `pipeline/ltx_i2v.py` |
 | same — **batch 2, the throughput probe** | the b1 recipe exactly at 2 latents through one set of weights: two-stage 8 steps @352x640 → 2x latent upsample → 3 steps @704x1280, explicit sigmas, guidance 1.0, 65f @24fps = 2.708s per clip. Slot 0 repeats **seed 20260732** as the batch-fidelity check, slot 1 takes 20260733 | production (two-stage, on-recipe) | **190.1s sample** for 2 clips. **No s/step figure**: the two stages run at different per-step costs, so the renderer writes `null` rather than an average that describes neither | **0.0285 s(video)/s(wall) @b2** = 35.1s wall per 1s video (5.417s of video / 190.1s sample) — **1.14x b1's 0.0251**, the only batch series on this box that gains | **7.2GB torch / 2.6GB device of 25.7GB** — LABEL: **sequential-offload**, measures the offload strategy, not card capacity; +3.1GB torch over b1's 4.1GB | **64.2GB phys / 75.3GB commit of 68.1/130.4GB** — **+3.4GB physical over b1's 60.8GB**, and that slope is what closes b4: two more latents put it past the box's 68.1GB | 1/card, still **host-exclusive** — the b1 row evicted the farm worker at 60.8GB and this one runs 3.4GB higher | LTX-2 Community License Agreement — **CANDIDATE** under watch-only per D16 | **MEASURED-BY-US 2026-08-05**, $0. Throughput is a real gain, **but the batched slot is not pixel-equivalent to the un-batched reference** — see the fidelity note below, and do not treat a batched render as a re-issue of an approved clip | `SAMPLES/batch-bench.jsonl`, `SAMPLES/ltx23-production-b2-s20260732.mp4.meta.yaml`, `SAMPLES/ltx23-production-b1-s20260732.mp4.meta.yaml` |
+| **same — fp8 layerwise cast, `--offload model` (the RESIDENT build)** | the b1 row's recipe **byte-for-byte** — same embeds file, same conditioning still, same prompt/negative files, `--image-crf 33`, two-stage 8 steps @352x640 → 2x latent upsample → 3 steps @704x1280, explicit sigmas, guidance 1.0, 65f @24fps = 2.708s, seed 20260732, beat 1. **The only two changes are the recipe change under test**: `enable_layerwise_casting(storage float8_e4m3fn / compute bf16)` on the transformer, and `enable_model_cpu_offload` in place of sequential | production (two-stage, on-recipe) | **73.3s sample / 224.3s wall** (stage 1 8 steps in 21s — the first step is 12.4s of onload, the last 1.58s/it; stage 2 3 steps in 18s @6.17s/it). **The wall is the honest number for a one-off**: it carries a **one-time 139s fp8 cast** the bf16 build never pays | **0.0369 s(video)/s(wall) @b1** = 27.1s wall per 1s video (2.708s of video / 73.3s sample) — **1.47x the bf16 b1's 0.0251**, the fastest sample row on this box. **DERIVED-FROM-OURS: the cast breaks even at exactly 4 clips in one process** (saves 34.8s/clip against a 139s cast); below that, fp8 is a net LOSS on wall time | **23.1GB torch of 25.7GB** — LABEL: **`model_cpu_offload` + fp8 layerwise, transformer RESIDENT**. Verified externally, not inferred: the telemetry daemon's trace (`telemetry.csv`, 10s cadence) shows **21346 MiB @97% util** through stage 1 and **22920 of 24463 MiB @99% util** through stage 2, against ~2.5GB when the same model is streamed. **1543 MiB spare.** Residency is per-stage: VRAM drops to **362 MiB between** the stages, `model_cpu_offload` returning the transformer to host while the upsampler runs NOT comparable to the sequential-offload 4.1/7.2GB rows above — different question, different answer | **64.6GB phys / 97.0GB commit of 68.1/123.9GB** — **the host got WORSE, not better: +3.8GB phys and +29.9GB commit over the bf16 b1's 60.8/67.1.** The cast retains the bf16 storages it replaces (the same mechanism as the AnimeGen finding above), so the predicted "~34GB resident host" did not happen and must not be quoted | 1/card, **host-exclusive** — measured with both farm-worker processes stopped, and the commit peak leaves 26.9GB of headroom, so co-residency is unproven and untested | LTX-2 Community License Agreement — **CANDIDATE** under watch-only per D16. The `ltx23-distilled-fp8` key resolves to exactly one licence document through the gate | **MEASURED-BY-US 2026-08-05**, $0, **rc=0 first attempt — the `--offload group` fallback was never needed**. **NOT SCREENED — the founder has not seen this clip (R4).** Defect counts only: **0/64 frozen frames** (consecutive-frame MSE min 5.06 vs the reference's 3.60, i.e. marginally *more* inter-frame motion); same-seed drift vs the bf16 b1 **rms 11.93/255, PSNR 26.60 dB**, against a **0.93** crf23 encode-noise control and a **1.74** bitrate-matched control — real drift, slightly more than batch 2 cost (10.35); colour drift **R −2.54, G −2.81, B +0.12** | `SAMPLES/batch-bench.jsonl`, `SAMPLES/ltx23fp8-production-b1-s20260732.mp4.meta.yaml`, `probe-ltx-fp8.log`, `fp8-fidelity-20260805.log` |
 | Wan 2.2 TI2V-5B, diffusers bf16, `model_cpu_offload` | 704x1280, 14 steps, guidance 5.0 | production | **188s render / 248s per beat** (62 min / 15 beats) | no data — the row does not record its frame count, so s(video) has no denominator | 22.9GB of 25.7GB — `model_cpu_offload` | no data | 1/card; host RAM unmeasured, so co-residency unproven | Apache-2.0, output rights disclaimed — CLEAR | MEASURED-BY-US | `STATE.md:604`, `DECISION.md §2` |
 | same | 704x1280, 20 steps | production | **240s / 300s per beat** | no data — as above | no data | no data | as above | as above | MEASURED-BY-US | `STATE.md:605` |
 | same — **cost decomposed** | 704x1280 | — | **8.67s/step marginal + 66.7s fixed per clip** — supersedes the "13.4s/step" figure, which was `188/14` and contaminated by the fixed addend (the 20-step run gives 12.0 for the same quantity) | — | — | — | — | — | DERIVED-FROM-OURS (two-point fit on the two rows above; corroborated by `video_task.py:817` and STATE.md's "~12 min/episode" batch saving) | `DECISION.md §3` |
@@ -227,6 +228,81 @@ the b1 row cites `SAMPLE-ltx23-b01.mp4.meta.yaml`, which carries the recipe but
 **not** the derived 0.0251/39.9 — those live in the sidecar of the gallery copy
 `SAMPLES/ltx23-production-b1-s20260732.mp4` (same bytes, sha256 `6226aef5…`), and
 that is the file `COMPARISON.html` names when it joins b1 into the batch table.
+
+### 2026-08-05 — the fp8 cast: the card wins, the host pays, and the founder has not looked
+
+One sample, one recipe change (founder, 2026-08-03), run with the farm worker
+stopped. It answered the two questions it was set and contradicted the prediction
+attached to it. Sources: `SAMPLES/batch-bench.jsonl` (row `ltx23fp8`),
+`SAMPLES/ltx23fp8-production-b1-s20260732.mp4.meta.yaml`, `probe-ltx-fp8.log`,
+`fp8-fidelity-20260805.log`.
+
+**The two hook systems coexist.** The diffusers layerwise-casting registry and
+the accelerate `model_cpu_offload` hooks ran together at rc=0 on the first
+attempt. The researched `--offload group` fallback was never invoked. This was
+the real risk in the change and it is now measured rather than argued.
+
+**Residency is confirmed, and it is confirmed the only way it could be.** The
+in-process peak line reports `device 2.6GB`, which is a post-run reading taken
+after the card drained — quoted alone it would say "streamed" and be exactly
+wrong. The telemetry daemon's trace (`C:\banyan-farm\telemetry.csv`, 10s cadence,
+a process external to the render) shows the card ramp 2430 → 8114 → 17990 →
+**21346 MiB at 97% util** through stage 1, and **22920 of 24463 MiB at 99% util**
+through stage 2. The transformer is on the card. This is the one number in the
+row that no artifact of the run itself could have supplied, which is why it had
+to come from outside the process.
+
+**Correction, verification pass 2026-08-05:** an earlier draft of this row said
+the card sat "flat at 22920 for the rest of the loop", sourced to an ad-hoc
+nvidia-smi loop at 0.9s sampling that **left no artifact and cannot be
+re-verified**. The durable telemetry record does not support "flat": between the
+two denoise stages VRAM drops to **362 MiB**, because `enable_model_cpu_offload`
+returns the transformer to host RAM while the latent upsampler runs. Residency
+holds **within** each denoise stage, which is what the sample was run to
+establish; it is not continuous across the run. The peak, the 1543 MiB margin and
+the residency verdict are unchanged. Rows quoting a sampling rate finer than 10s
+for this run should be read as unsourced.
+
+**The fit is real and it is thin.** The cast measured **35.37 → 17.69 GiB** of
+transformer storage in 139s — the predicted ~19.8GiB was pessimistic, and norms
+stayed bf16 via the model's own `_skip_layerwise_casting_patterns`. Peak torch
+23.1GB against a 24463 MiB card leaves **1543 MiB**. That margin, not the host,
+is why b2 is not automatic: a second latent spends it on activations.
+
+**THE HOST PREDICTION WAS WRONG, and the row says so rather than quietly
+dropping it.** The change was expected to need ~34GB of host physical against the
+bf16 run's 60.8GB. Measured: **64.6GB phys, 97.0GB commit** — worse on both, and
+the commit spike is the in-process cast doing precisely what the AnimeGen finding
+above describes, retaining the bf16 storages it replaces. The phys trace shows
+the shape plainly: 9.5GB at cast start, 60.0GB by the time the connectors load,
+then a *fall* to ~40GB once the transformer moves onto the card. Anyone planning
+a bigger fp8 run should size the host against 97GB of commit, not against the
+17.69GiB the weights end up occupying.
+
+**Speed is a real gain with a real caveat.** 73.3s against 108.1s is 1.47x on the
+sample, and 0.0369 s(video)/s(wall) is the fastest row in the table. But the run
+pays a **one-time 139s cast**, so end-to-end wall for a single clip is 224.3s
+against the bf16 build's ~120s. **The cast breaks even at exactly 4 clips in one
+process.** For a one-off render fp8 is a loss; for a 15-beat episode it is not.
+Nobody should quote the 1.47x without the break-even next to it.
+
+**Fidelity: a different clip, by about one batch-change.** Same seed, same still,
+same prompt, same `--image-crf 33` — and rms **11.93/255** (PSNR 26.60 dB)
+against the bf16 b1. The controls make that legible: re-encoding the reference at
+crf23 costs **0.93**, at the fp8 clip's own bitrate **1.74**. So the drift is
+~13x the encode-noise floor and slightly *above* what batch 2 cost (10.35).
+Per-frame, frame 1 matches at the noise floor (1.46) and divergence builds over
+~4 frames then plateaus — quantisation noise accumulating through the denoise,
+not a different scene. No frozen frames. Colour cools slightly in R and G
+(−2.54, −2.81) with B flat (+0.12).
+
+**What is NOT decided.** None of the above is a quality verdict and none of it
+promotes this build. Rule 5 of §3 and R4 both apply: these are defect counts.
+`COMPARISON.html` now ranks the fp8 row first on throughput and carries an
+explicit correction under the table saying the top row is not a verdict, because
+the fastest row in the table being an unscreened clip is exactly the confusion
+that correction exists to prevent. **A screening is owed to Roman before any
+batch point above b1 on this build is scheduled.**
 
 ### Open observations on the measured 5B T1/T2/T3 rows
 

@@ -892,3 +892,72 @@ moved.
   06:44.** The worker took the one task on `pipeline/farm-queue.yaml` —
   `faceneg-b01-1785819600`, the deliberate one-beat face-negative sample — at
   06:55:29 and is rendering it. One sample, already sanctioned, left alone.
+
+## 2026-08-05 ~04:00Z — the fp8 sample: the transformer sits on the card, and the host pays for it
+
+ONE sample for ONE recipe change (fp8 layerwise cast + `--offload model`), run
+host-exclusive with both farm-worker processes stopped. Ran clean at **rc=0 on
+the first attempt** — the researched `--offload group` fallback was never needed.
+Sources: `SAMPLES/batch-bench.jsonl` row `ltx23fp8`, the clip's sidecar,
+`probe-ltx-fp8.log`, `fp8-fidelity-20260805.log`. Full write-up and the table row
+in `pipeline/research/MODEL-COMPARISON.md`.
+
+- **Recipe held to the reference byte-for-byte** — same embeds, same still, same
+  prompt/negative files, `--image-crf 33`, seed 20260732, two-stage, guidance
+  1.0, 65f @24fps. The only variables were the two new flags. Worth stating
+  because the implementation report's suggested CLI had `--image-crf 0` (the flag
+  default, not the reference's value); passing it would have fed a different
+  conditioning still and made every frame differ for a reason unrelated to fp8.
+- **Residency: CONFIRMED, and only an external measurement could confirm it.**
+  The telemetry daemon's own trace (`C:\banyan-farm\telemetry.csv`, 10s cadence,
+  external to the render process) shows **21346 MiB at 97% util** through stage 1
+  and **22920 of 24463 MiB at 99% util** through stage 2, against ~2.5GB when the
+  model is streamed. The run's own peak line says `device 2.6GB` — a post-run
+  reading taken after the card drained, which quoted alone reads as "streamed"
+  and is exactly wrong. **1543 MiB spare**, and that thin margin, not the host, is
+  what makes b2 a real question.
+- **Residency is per-stage, not across the run** — corrected on the verification
+  pass. Between stage 1 and stage 2 the same trace drops to **362 MiB**:
+  `enable_model_cpu_offload` returns the transformer to host RAM while the latent
+  upsampler runs, exactly as the hook is documented to. An earlier draft of this
+  entry said the card held "flat" through the whole denoise loop; it does not.
+  The eviction is also part of why the host got worse, not better.
+- **The cast is real and measured**: transformer storage **35.37 → 17.69 GiB** in
+  139s; norms stayed bf16 via the model's own skip patterns.
+- **Speed: 73.3s sample vs the bf16 b1's 108.1s = 1.47x**, throughput 0.0369 vs
+  0.0251 s(video)/s(wall) — the fastest row on this box. **But the 139s cast is a
+  new one-time cost**, so a single clip end-to-end is 224.3s against ~120s.
+  **Break-even is exactly 4 clips in one process.** The 1.47x should never be
+  quoted without that number beside it.
+- **The host prediction was WRONG and is retracted here rather than dropped.**
+  The change was expected to need ~34GB of host physical against bf16's 60.8GB.
+  Measured **64.6GB phys / 97.0GB commit** — worse on both. The in-process cast
+  retains the bf16 storages it replaces, the same mechanism the AnimeGen work
+  already recorded. Size future fp8 runs against 97GB of commit, not against the
+  17.69GiB the weights settle at.
+- **Fidelity: a different clip, by about one batch-change.** Same-seed drift vs
+  the bf16 b1 is **rms 11.93/255, PSNR 26.60 dB**, against controls of **0.93**
+  (crf23 re-encode) and **1.74** (re-encode at the fp8 clip's own bitrate) — so
+  ~13x the encode-noise floor, and slightly *above* what batch 2 cost (10.35).
+  Frame 1 matches at the noise floor and divergence builds over ~4 frames then
+  plateaus: quantisation accumulating through the denoise, not a different scene.
+  **0/64 frozen frames** (consecutive-frame MSE min 5.06 vs the reference's 3.60
+  — marginally more motion, not less). Colour cools slightly: R −2.54, G −2.81,
+  B +0.12. Unlike the last fidelity check, this one left an artifact on disk.
+- **`COMPARISON.html` regenerated**, exit 0, all srcs resolve, no literal-None
+  cells. The fp8 clip is in the hero row as its own column and in the gallery
+  under its own model card; the coverage matrix cell that read "sample pending"
+  now carries the measured state. **The fp8 row now ranks first on throughput,
+  which means the page's top row is a clip nobody has screened** — so a third
+  correction was added under that table saying the top row is not a verdict.
+- **The worker is back up.** Both processes had to be stopped with `taskkill /F`
+  (a console worker with no window refuses a graceful kill; it was idle, last
+  `DONE` at 06:59:53 local, GPU at 0 MiB, so nothing was lost).
+  `schtasks /run /tn banyan-worker-start` returned SUCCESS; it is back in its
+  normal parent-blocked-on-child pair and fetched the queue 33s after restart.
+  The one-shot probe task was deleted after the run.
+- **SCREENING IS OWED TO ROMAN.** Nothing above is a verdict — they are defect
+  counts (R4, and §3 rule 5 of the comparison table). **No batch point above b1
+  on this build may be scheduled until he has looked at the clip:**
+  `SAMPLES/ltx23fp8-production-b1-s20260732.mp4`, best watched against
+  `SAMPLES/ltx23-production-b1-s20260732.mp4` at the same seed.

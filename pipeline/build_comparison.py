@@ -202,6 +202,22 @@ DOC_ONLY = {
         "host": "60.8GB phys / 67.1GB commit of 68.1GB",
         "defects": "saturation 0.264, no channel cast, 0/64 frozen frames",
     },
+    # The bench row carries this clip's vram/host, so those keys would be ignored
+    # here — what it CANNOT carry is the residency number, and residency is the
+    # whole question the sample was run to answer. device_gb in the bench row reads
+    # 2.6GB for this clip, which is the post-run reading after the card drained and
+    # would be read as "streamed"; the truth is an external nvidia-smi trace.
+    "ltx23fp8-production-b1-s20260732": {
+        "defects": "transformer RESIDENT — 21346 MiB at 97% util through stage 1 "
+                   "and 22920 of 24463 MiB at 99% through stage 2 (telemetry.csv, "
+                   "external, 10s cadence), against ~2.5GB streamed; resident "
+                   "per-stage, not across the run — 362 MiB between the stages as "
+                   "model_cpu_offload returns the transformer to host; "
+                   "fp8 cast 35.37 -> 17.69 GiB "
+                   "in 139s; same-seed drift vs the bf16 b1 rms 11.93/255 against a "
+                   "0.93 encode-noise control; 0/64 frozen frames; channel means "
+                   "R-2.54 G-2.81 B+0.12",
+    },
     "animegen-preview-b1-s20260732": {
         "defects": "saturation 0.636, channel means R44/G26/B68, std 53.8; "
                    "motion median 0.52, 0/32 barely-moving",
@@ -325,22 +341,38 @@ COVERAGE_GAPS = {
         "attempt cost a bugcheck.",
         "probe-5b-b4.log, 2026-08-05"),
     ("ltx23fp8", "production", 1): (
-        "sample pending",
-        "The renderer gained --fp8-layerwise and --offload today and has not been "
-        "run with them. ONE SAMPLE BEFORE ANY BATCH: this cell is the sample, and "
-        "nothing above b1 may be scheduled until the founder has looked at it. What "
-        "it has to answer is not speed but whether the two hook systems coexist — "
-        "the diffusers layerwise-casting registry and the accelerate offload hooks "
-        "— and whether ~19.8GiB of fp8 weights plus activations actually fit 23.89GiB.",
-        "sample pending, as-of 2026-08-05"),
+        "measured — 73.3s, 0.0369 s/s, NOT YET SCREENED",
+        "The sample ran on 2026-08-05 and answered both questions it was set. The "
+        "two hook systems DO coexist: rc=0 on the first attempt, no fallback to "
+        "--offload group needed. The weights DO fit: the cast took the transformer "
+        "from 35.37 to 17.69 GiB in 139s, and an external telemetry trace (10s "
+        "cadence) shows 21346 MiB at 97% util through stage 1 and 22920 of 24463 "
+        "MiB at 99% through stage 2 — the transformer is resident, against ~2.5GB "
+        "when it is streamed. Residency is per-stage: between the two stages VRAM "
+        "drops to 362 MiB, model_cpu_offload returning the transformer to host "
+        "while the latent upsampler runs. "
+        "That is a 1.5GB margin on the card, which is the reason b2 is not "
+        "automatic. Speed came with it: 73.3s against the bf16 b1's 108.1s, 1.47x. "
+        "The host did NOT get cheaper — peak phys 64.6GB against bf16's 60.8, peak "
+        "commit 97.0GB against 67.1, because the cast retains the bf16 storages it "
+        "replaces. The predicted ~34GB resident host figure did not happen. "
+        "SCREENING IS STILL OWED: the clip differs from the bf16 reference by rms "
+        "11.93/255 against a 0.93 encode-noise control, which is real drift and "
+        "slightly more than batch=2 cost. Nothing above b1 may be scheduled until "
+        "the founder has looked at it.",
+        "SAMPLES/batch-bench.jsonl + the b1 fp8 sidecar + probe-ltx-fp8.log "
+        "+ fp8-fidelity-20260805.log, 2026-08-05"),
     ("ltx23fp8", "production", 2): (
-        "not scheduled — b1 first",
+        "not scheduled — b1 screening first",
         "No batch point on this build may be scheduled before its b1 sample has "
-        "been screened. If b1 fits at all, the bf16 build's own b1 -> b2 host-RAM "
-        "slope (60.8 -> 64.2GB) is the number to reason from, and it was measured "
-        "with the transformer streamed rather than resident — so it does not "
-        "transfer, it only says where to look.",
-        "sample pending, as-of 2026-08-05"),
+        "been SCREENED, and b1 having now RUN is not that. b1 fits, but with 1543 "
+        "of 24463 MiB spare on the card, and a second latent in the same resident "
+        "loop spends that margin on activations rather than on weights — this is "
+        "the one batch step where the card, not the host, is the wall. The bf16 "
+        "build's own b1 -> b2 host slope (60.8 -> 64.2GB phys) still does not "
+        "transfer: it was measured with the transformer streamed, and b1 here "
+        "already sits at 64.6GB phys / 97.0GB commit before any second latent.",
+        "derived 2026-08-05 from the b1 fp8 bench row + probe-ltx-fp8.log"),
     ("ltx23fp8", "production", 4): (
         "closed by inheritance — host RAM",
         "The bf16 build's b4 is closed on a host-RAM slope that the fp8 cast does "
@@ -1199,7 +1231,7 @@ def build():
           f"<td>{host}</td>"
           f'<td><span class="src">{escape(cpv_src or "sidecar")}</span></td></tr>')
     A("</tbody></table></div>")
-    A('<p class="note" style="margin-top:10px">Two corrections that stop these cells '
+    A('<p class="note" style="margin-top:10px">Three corrections that stop these cells '
       'being over-read. <b>(a)</b> The 5B row is the FIRST clip after a model load and '
       'carries ~20s of warm-up; its five following clips settled at 10.5s/step, i.e. '
       '<b>0.0173 s(video)/s(wall) — 57.6s per video-second</b>, and that is the figure '
@@ -1208,7 +1240,13 @@ def build():
       'sequential offload, not a 26GB card, and reads as "LTX fits in 4GB" the moment '
       'the label is dropped. Host RAM decides co-residency, not VRAM — the LTX render '
       'evicted the farm worker at 60.8GB of 68.1GB; a 5B render survived a 114GB '
-      'download running alongside it.</p>')
+      'download running alongside it. <b>(c)</b> THE TOP ROW IS NOT A VERDICT. The '
+      'fastest row here is the fp8 cast, and as of 2026-08-05 nobody has screened '
+      'it — it is a one-sample measurement, and it hands back a visibly different '
+      'clip from the bf16 build at the same seed (rms 11.93/255 against a 0.93 '
+      'encode-noise floor, slightly more drift than going to batch 2 cost). '
+      'Throughput is the only thing this table ranks. Whether the picture is '
+      'acceptable is the founder\'s call and has not been made.</p>')
 
     # 3b batch scaling — one table per model that has batch bench rows
     A('<h3 style="margin-top:26px">3b. Batch scaling — where it stops, and why</h3>')
