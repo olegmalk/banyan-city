@@ -609,3 +609,135 @@ Full write-up: `pipeline/loop/cycle-016.md`. Standing facts this adds:
 
 **Open, founder-reserved:** D14 (beat 4's fall), D15 (every still is OpenRAIL++,
 debt 38), whether 14 steps is the quality bar, and posting.
+
+## 2026-08-04 — clips are watch-only, and the model/speed audit landed
+
+**Posture change, Oleg, and it reframes every licence finding below** (verbatim):
+*"when we publish clips they are for people to watch, not use for anything, so dont
+create problems for scale."* Published media carries **no reuse grant — watch-only,
+not CC BY 4.0**; pass-through objections are moot for media, while everything that
+binds **us** (NC, territory, personal-use-only, revocable grants) is untouched. Not
+yet in the licence files or `licence_gate.py` — recorded as DECISIONS.md 2026-08-04
+item 0, and the D1 amendment it needs is the founder's.
+
+Five briefs under `pipeline/research/`: `models-licence.md` (47KB, every clause
+quoted from the primary document), `DECISION.md` (per-card recommendation),
+`speed-quant.md`, `benchmarks.md`, `tooling.md`. Licence outcomes are recorded in
+`DECISIONS.md` — **D16** (LTX-2.3 moves BLOCKED → **CANDIDATE** under watch-only,
+gated on a per-post AI-generated label, a standing rule that LTX never powers a
+contributor-facing render service, and one founder-screened sample) and the dated
+2026-08-04 entry (Hunyuan territory extended to 1.5 and FramePack; the Turbo chain
+closed and **watch-only does not unblock NC**; the output-use rule rescoped; the
+OpenRAIL++ stills debt re-opened for review at ratchet 38). `vet_model.py` now
+carries every link of that chain plus FramePack and the AniSora 5B line, and no
+longer reads a vendored third-party LICENSE three directories down (BERT's, a Ditto
+LoRA's) as a repo's own grant. Standing facts that change how we plan:
+
+- **There are no Wan 2.5, 2.6 or 2.7 open weights.** The whole `Wan-AI` org was
+  enumerated via the HF API: newest are the Wan 2.2 line plus `Wan-Dancer-14B`,
+  `Wan2.2-Animate-14B`, `Wan2.2-S2V-14B`. Wan 2.5 shipped September 2025 as
+  **API-only** and remains so; the 2.6/2.7 marketing sites correspond to no
+  weights in the official org. Do not plan around a local Wan 2.5+.
+- **Frozen frames is partly the model, and ours is mid-pack in the field.**
+  TI2V-5B scores Dynamic Degree **52.85%** on VBench-I2V — about half its clips
+  classify as not moving at all. Cycle 016's prompt fixes were real; this is the
+  floor underneath them, and it is the field's dominant failure mode, not ours.
+- **"13.4s per forward pass" was contaminated arithmetic.** It is 188/14, and the
+  20-step run gives 240/20 = 12.0 — a per-pass cost cannot depend on how many
+  passes you make. Solving the two: **8.67s marginal per step + ~67s fixed per
+  clip**, i.e. 36% of wall clock is not denoising, most of it model load.
+- **Per-beat: 248s → ~200s batched → ~160s with SageAttention.** The batch path
+  is the fix for the fixed 67s and we already have it (`beats: "1,2,3"`,
+  auto-enabled ≥20GB and >1 beat) — free, our own code, worth more than the
+  wheel, and untested with `--offload`, so start at 2 beats. SageAttention 2.2.0
+  sm_120 is ~35% CLAIMED by its author on an RTX 5090 Laptop 24GB, our exact
+  card, and it pins torch to a nightly — separate venv only. 15 beats: 62 → ~40 min.
+- **Card B (5070 Ti, 12GB) is a proof-pass machine, not a 704x1280 renderer.**
+  Seconds-per-clip on it: no data, from anyone. Card A peaks at 22.9GB on this
+  shape and activations dominate, so quantised weights do not rescue it. Give it
+  T1/T2 stills, VO and 480x832 drafts. (LTX-2.3 fp8 at 12-16GB is the only
+  candidate that would change this, and it is gated in D16.)
+
+**Gemma second-licence audit: ship-safe** (LTX-2.3's required text encoder is
+Gemma-3-12B, so the Gemma ToU + Google's PUP are in the chain of every LTX clip —
+see the D16 addendum); the full model test set (**~115GB**: LTX-2.3 fp8 stack,
+anisora V3.2, Wan A14B + Lightning LoRA) is downloading to the rtx5090 box at its
+measured **9.8MB/s** ceiling; a **64GB RAM kit** (2x32 DDR5-5600 SODIMM) is ordered
+by Oleg to unlock the A14B class.
+
+**Open, founder-reserved:** the watch-only split (what the media licence says, and
+the D1 amendment it needs), D15 + D13's re-opened licence debt at ratchet 38,
+whether LTX-2.3 gets a sample beat, D14 (beat 4's fall), and posting.
+
+## 2026-08-05 — the box has 68GB, and four records were wrong
+
+Records day, not a render day. Nothing new was generated; five things that were
+stale, mislabelled or simply lost got corrected against the sidecars, the jsonl
+and the run logs.
+
+- **The rtx5090 laptop's RAM landed.** Oleg's 2x32 DDR5-5600 SODIMM kit went in
+  on 2026-08-04, box down ~15:52-16:39 local for the swap: **31.4 GB → 68.1 GB
+  measured physical, 130.4 GB commit limit.** Same physical machine that
+  bluescreened that morning on the AnimeGen load (bugcheck 0x3B, reboot
+  11:30:33) — the crash and the upgrade are the same box, hours apart.
+- **The A14B park's requeue condition is met on both limbs, and the task stays
+  parked anyway.** Commit c004060 wrote it as "requeue only against a 64 GB
+  host, or after someone has instrumented peak working set during load"; the
+  upgrade satisfies the first and the 2026-08-04 bench satisfied the second.
+  **The 64GB host turned out to be necessary, not sufficient.** On the upgraded
+  box attempt 1 still died at step 0 (commit 140.6/140.6GB) and attempt 2
+  succeeded *only* by evicting the text encoder into its own process, which
+  freed 13.1GB. The queue path does not do that: `video_task.py:994` reads
+  `big = gpu_vram_gb() >= 20` and routes a 26GB card straight into the
+  single-process, text-encoder-resident branch. **So the parked AnimeGen task
+  waits on code that does not exist yet, not on hardware.** Writing that branch
+  is a recipe change and wants its own one sample.
+- **An AnimeGen PRODUCTION clip existed on the box and we nearly lost it —
+  recovered today.** `animegen-production-b1-s20260732.mp4` — 704x1280, 61f, the
+  4-step LoRA recipe — finished at **23:30:14** on 2026-08-04: **545.5s sample,
+  136.38s/step, 0.0047 s(video)/s(wall) = 214.6s per 1s of video**, 23.2GB peak
+  of 25.7GB, 66.7GB host. The `scp` that pulled the night's artifacts ran about
+  **four minutes before the run exited**, so neither the clip nor its sidecar
+  came back with the rest of the session. Both are now in `SAMPLES/`, the
+  MODEL-COMPARISON row is appended from the sidecar, and the clip has taken the
+  AnimeGen slot in COMPARISON.html's hero row — **it is unscreened, and the
+  verdict is Roman's (R4)**. First production-geometry cost for this model:
+  ~3.7x the 5B's settled 57.6s per video-second, which is a taste question
+  rather than a throughput one. **The lesson is the copy race, not the clip:** a
+  pull scheduled against a wall-clock guess instead of against the producing
+  process exiting silently returns a partial night, and looks exactly like a run
+  that never happened.
+- **The b4 data conflict is resolved: the jsonl was right.**
+  `MODEL-COMPARISON.md`'s batch-4 row (99.3s/step, "projected ~0.014", 24.1GB /
+  94%) was written at **23:20:37, five minutes before the run finished**, and
+  tagged `MEASURED-BY-US` — a mid-run extrapolation promoted in violation of
+  that file's own §3 rule 2. The sidecars and `animegen-bench.jsonl` had the
+  measurement: **601.3s, 150.32s/step, 0.0091 s(video)/s(wall) = 109.3s per
+  video-second, 23.2GB of 25.7GB = 90.3%.** Row corrected, with a dated
+  correction note in the doc. The finding did not move — b4 is still a WDDM
+  spill and still worse than b1 — the cliff is just steeper than the projection
+  said. Also fixed there: b2 is **1.39x** b1's time, not 1.28x (124.6/89.6), and
+  §2's claim that no Wan 5B row ever had host RAM measured, which its own T1 row
+  and open observation 5 contradict.
+- **`COMPARISON.html` provenance, since it is a local file nobody can date from
+  the outside:** built 2026-08-05 00:16 local by `pipeline/build_comparison.py`,
+  session 29be8750-ae1d-4233-9959-9a2186aa75f6, at Roman's request. Unapproved
+  media under §6 — never in `_site/`, never committed, never deployed. It is
+  regenerated, not edited: `python3 pipeline/build_comparison.py`.
+
+**Why there was no batch coverage to compare against, and it was nobody's
+dropped ball.** Oleg's directive to measure every model batched (17:59Z, restated
+18:02Z on 2026-08-04) arrived *after* `ACTION-PLAN.md` was frozen and **13
+minutes before** the detached 5B bench exited. It was never folded into the plan
+and never re-queued — a directive that lands between a frozen plan and a running
+job has no owner unless someone re-queues it by hand. Decision today:
+`--batch` support is in the generator, and **three probes are authorised** — 5B
+at b2, 5B at b4, LTX at b2 — so the batch-scaling section stops being one model
+wide. `build_comparison.py` now reads `SAMPLES/batch-bench.jsonl` alongside the
+AnimeGen file and renders one table per model label, so those rows need no code
+change to appear; the hand-written reading prose stays attached to AnimeGen only,
+because AnimeGen's cliff is the only one anyone has investigated.
+
+**Open, founder-reserved:** everything still open from 2026-08-04, plus the
+screening verdict on the recovered AnimeGen production clip (R4), and whether the
+text-encoder-eviction branch is worth writing before the three batch probes run.

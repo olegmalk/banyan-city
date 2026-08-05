@@ -22,7 +22,7 @@ tasks:
   seed_base: 20260805
   id: faceneg-b01-1785819600
   beats: 1
-# 2026-08-04 07:1xZ — ANIMEGEN, ONE SAMPLE. Alex's directive: test the heaviest
+# 2026-08-04 07:1xZ — ANIMEGEN, ONE SAMPLE. Oleg (dad)'s directive: test the heaviest
 # model on the 5090 now. The screening verdict is the FOUNDER'S (R4) — a metric
 # agreeing with me is not a sample.
 #
@@ -50,7 +50,7 @@ tasks:
 #
 # `git log` confirms wan_i2v.py has had no change to that function since the
 # parking. This task therefore re-runs the exact configuration that produced
-# 0xC0000005. It is queued anyway because Alex asked for the test and because it
+# 0xC0000005. It is queued anyway because Oleg (dad) asked for the test and because it
 # fails FAST and CHEAP — r3's second attempt died 2 minutes in — so the cost of
 # finding out is two minutes of a machine that is otherwise idle.
 #
@@ -98,6 +98,23 @@ tasks:
 # through every offload step of all 25, with an expert swap per step. Requeue this
 # only against a 64 GB host, or after someone has instrumented peak working set
 # during load. That is a recipe change and wants its own sample either way.
+#
+# ---- 2026-08-05: BOTH REQUEUE LIMBS ARE MET, AND THE PARK STILL STANDS ---------
+# The 64 GB limb: this box was upgraded 2026-08-04 (~16:39 local) from 31.4 GB to
+# 68.1 GB measured physical, 130.4 GB commit. The instrumentation limb: peak
+# working set during load WAS measured that night — ~128.7 GB commit for ~40 GB of
+# live weights, because the runtime fp8 cast retains the bf16 storages it replaces.
+# So the stop condition written above no longer blocks a requeue.
+#
+# IT IS STILL PARKED, because the 64 GB host proved NECESSARY AND NOT SUFFICIENT.
+# On the upgraded box attempt 1 died at step 0 anyway (commit 140.6/140.6 GB), and
+# attempt 2 only completed by evicting the text encoder into its own process, which
+# freed 13.1 GB. This queue path cannot do that: video_task.py:994 reads
+# `big = gpu_vram_gb() >= 20`, so a 26 GB card routes into the single-process branch
+# that keeps the text encoder resident — the exact configuration that failed. The
+# blocker is now CODE, not RAM. Uncommenting this before that branch exists just
+# reproduces attempt 1. When it does exist it is a recipe change and gets its own
+# ONE SAMPLE before anything is scaled.
 #
 # DO NOT UNCOMMENT THIS TO "SEE IF IT STILL FAILS". The retry guard cannot stop
 # it: finished_tasks() counts `FAIL task=<id>` lines out of heartbeat.txt, and
