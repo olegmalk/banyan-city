@@ -595,6 +595,7 @@ is *unmeasured*, which is different from *no*.
 | reachability | LAN ssh since 2026-08-01 | **LAN ssh since 2026-08-05.** Before that it was a USB-bundle enrollment (`STATE.md` 2026-07-30) with no remote route |
 | repo checkout | `C:\banyan-farm\banyan-city` | same path, fast-forwarded 231 commits off the stale `farm-results-msi` to `main` @ `ae13cc6` on 2026-08-05 |
 | video throughput | **MEASURED** — every row in §1 | **NO DATA, from anyone.** The staged TI2V-5B preview probe (`C:\banyan-farm\probe-5070-ti2v5b\`) has never been run |
+| GPU power state | board power unremarked; every §1 row was taken at full clock | **CLAMPED, measured 2026-08-05 16:15Z:** `enforced.power.limit` 25.00 W (default 65 W, max 140 W), **180 MHz of 3090 MHz** at 100% util, `sw_power_cap` Active, 36 C. Persists on AC. Blocks any throughput measurement |
 | stability | two unclean reboots on 2026-08-04/05, both under batch pressure; Kernel-Power 41 at 06:07:05 | no render has ever run on it |
 
 **Why Box B still has no number, and why that is not the same as "too small".**
@@ -608,6 +609,49 @@ hard power-off — the same class of event as the two bugchecks above — and th
 number it produced would have been taken at a **442 MHz** SM clock with
 `power.limit` reading `[N/A]` against a 140W part, which is not the box's
 throughput. It needs a human to plug it in.
+
+**Update 2026-08-05 ~16:15Z — it was plugged in, and that was not enough.**
+`PowerOnline` is True and the pack is charging (4% → 13% over sixteen minutes,
+84 Wh full capacity), but the GPU is still clamped and the sample still has not
+been spent. Measured with a 35s bf16 matmul burn: `enforced.power.limit`
+**25.00 W** both idle and under load, against a **65 W default / 140 W maximum**;
+SM clock **180 MHz of 3090 MHz** at 100% utilisation; `power.draw` 13.4 W; 36 C,
+so not thermal; `clocks_event_reasons.sw_power_cap` **Active** throughout. That
+is ~6% of clock, and it is *lower* than the 442 MHz measured on battery — so
+battery state was never the whole story. Charge rate falls rather than rises
+(39.8 W → 32.5 W → 20.2 W while the GPU drew → 17.4 W idle), which is the
+signature of one small shared power budget: most likely a ~65 W USB-C supply in
+place of the ~240 W barrel adapter this chassis expects, or MSI Center's
+Silent/Eco shift mode, which clamps GPU TGP regardless of AC and is not the
+Windows power scheme (that reads Balanced). Both need a human at the machine.
+**A throughput figure taken at 180 MHz would measure the clamp, not the card**,
+so no row is added.
+
+**Correction, 2026-08-05 — `stage_simple` does not tile the VAE, and the fit
+margin above is negative, not sub-gigabyte.** The bullet below said the 14.4GB
+peak is an untiled VAE decode in `bench_5b_modes.py` "while
+`pipeline/wan_i2v.py`'s `stage_simple` **does** tile the VAE". It does not.
+`tile_vae()` appears exactly three times in that file — the definition at :176,
+the AnimeGen loader at :328, and `stage_render` at :687. The 5B branch of
+`stage_simple` runs `from_pretrained` → VRAM accounting → offload-or-`.to(cuda)`
+→ `_sample`, and neither `stage_simple` (:357-482) nor `_sample` (:483-657)
+calls it. The staged probe runs `--stage simple`, so it will do an **untiled
+float32 VAE decode** of 61 frames at 704x1280 and should peak near the same
+**14.4GB — against 12.82GB decimal of card**. The prediction below is kept
+unedited, as written, because §4 exists to be falsified by the sample; this note
+records that one of its two premises was already falsified by reading the source
+before the sample ran. A VAE OOM on that path is a one-line fix (call
+`tile_vae()` in `stage_simple`), and the tiled configuration is the one an
+episode would actually use — so "does the untiled path fit" and "can this box
+render 5B" are now two different questions.
+
+Also unequal between Box A's row and the staged probe: Box A ran **without**
+`--offload`, the probe runs **with** it (`bench-5b-modes.log` is 31 lines and
+contains no "offload", "tiling" or "slicing"). Any eventual ratio therefore mixes
+silicon with PCIe streaming cost and must not be quoted as a clean throughput
+factor. `PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True` is set in the probe
+env and buys nothing on Windows — Box A's own log carries "expandable_segments
+not supported on this platform".
 
 **What the fit question actually is, stated before the sample so the sample can
 falsify it** (DERIVED-FROM-OURS, `bench-platform/fleet-inventory-20260805.txt`):

@@ -1114,3 +1114,93 @@ banyan-worker-start`; pids 7320 + 13076 are the documented parent+child pair, ON
 worker, and it fetched at 16:01:51. Nothing was lost — the queue had been empty
 since the 06:59:53 `DONE`. **A stopped worker leaves no alarm anywhere**, which is
 worth a watchdog the next time someone stops one to take the host exclusive.
+
+## 2026-08-05 ~16:15Z — the 5070 Ti is on AC, and it is still clamped to 180 MHz
+
+The founder plugged the box in, which was the one thing "did not happen 2" above
+said it needed. **It was not enough, and the sample still has not been spent.**
+`PowerOnline` is now True and the pack is charging, but the GPU is held near
+idle, so a render would have measured the clamp instead of the card.
+
+Measured over ssh with a 35-second bf16 matmul burn — $0, killed as soon as it
+had answered:
+
+| | idle | under 100% util |
+|---|---|---|
+| `enforced.power.limit` | **25.00 W** | **25.00 W** |
+| SM clock | 0 MHz | **180 MHz** of a **3090 MHz** max |
+| `power.draw` | 19.2 W | 13.4 W |
+| temperature | 35 C | 36 C |
+
+`clocks_event_reasons.sw_power_cap` is **Active** in both states, against a
+**65 W default and 140 W maximum** board power. 180 MHz is about **6% of clock**.
+Not thermal — the card never passed 36 C. The 5090 denoised this exact recipe in
+58s at 9.68 s/step; the same six steps here, once weight load and the VAE decode
+are counted, land somewhere around 25-45 minutes, past every abort gate the probe
+was given and past the 10-minute ssh cap. **A number taken at 180 MHz is not this
+box's throughput**, which is the same reason the 442 MHz reading on battery was
+refused this morning. Plugging it in moved 442 MHz to 180 MHz — the wrong
+direction, and the clearest evidence that battery *state* was never the whole
+story.
+
+The pack is **84 Wh** (`FullChargedCapacity` 84176 mWh), **4% at 16:00Z rising to
+13% by 16:16Z**, `Discharging` False. The charge rate is low and falling rather
+than rising: **39.8 W → 32.5 W → 20.2 W** (while the GPU burn ran) **→ 17.4 W**
+(idle again). A nearly-flat 84 Wh pack on a healthy supply charges harder than
+that.
+
+**Two candidate causes, both needing a human at the machine, and they are
+distinguishable by waiting.** One: the wrong charger. An MSI Vector 16 HX AI
+driving a 140 W-capable 5070 Ti ships with a ~240 W barrel adapter, and every
+symptom here — GPU pinned at 25 W, ~20-40 W into a flat pack, charge rate
+*dropping* when the GPU draws — fits a ~65 W USB-C PD supply sharing one small
+budget. Two: MSI Center's Silent/Eco shift mode, which clamps GPU TGP regardless
+of AC and is not the Windows power scheme (that reads Balanced) and cannot be
+read over ssh. If it is the charger, waiting will not help: the pack fills and
+the GPU stays adapter-limited under load. If it is shift mode or a battery-percent
+threshold, it clears on its own.
+
+**Correction — `stage_simple` does NOT tile the VAE, and this inverts the fit
+prediction.** Both the "did not happen 2" entry above and
+`MODEL-COMPARISON.md` §4 argued the fit was plausible with a sub-gigabyte margin
+because the 5090's 14.4GB torch peak is an untiled VAE decode in
+`bench_5b_modes.py` "while `pipeline/wan_i2v.py` does" tile, putting the ceiling
+at the largest resident module (~11.4GB UMT5-XXL) against 11.94GiB of card. The
+file does tile — in the *other* two paths. `tile_vae()` appears exactly three
+times in `pipeline/wan_i2v.py`: the definition at :176, the AnimeGen loader at
+:328, and `stage_render` at :687. The 5B branch of `stage_simple` runs
+`from_pretrained` → VRAM accounting → offload-or-`.to(cuda)` → `_sample`, and
+neither `stage_simple` (:357-482) nor `_sample` (:483-657) calls it. **The staged
+probe invokes `--stage simple`, so it will do an untiled float32 VAE decode of 61
+frames at 704x1280 and should peak near the same 14.4GB — against 12.82GB decimal
+of card. The margin is negative, not sub-gigabyte.** That is not "the box is too
+small": it is that the staged probe tests the untiled path, and a VAE OOM there
+has a one-line fix — call `tile_vae()` in `stage_simple`, which is the
+configuration §4's own reasoning already assumed and the one an episode would
+use. §4 says its prediction is "stated before the sample so the sample can
+falsify it", so the probe stays exactly as staged rather than being quietly
+re-cut.
+
+A second recipe difference worth naming before any number is compared: the 5090
+baseline ran **without** `--offload` and the probe runs **with** it
+(`bench-5b-modes.log` is 31 lines and contains no "offload", "tiling" or
+"slicing"; `stage_simple` prints "model cpu offload ON" when the flag is set).
+Right call for a 12GB card, but it means the eventual ratio mixes silicon with
+PCIe streaming and must not be quoted as a clean throughput factor.
+`PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True` is also in the probe env and
+buys nothing — the 5090 log carries "expandable_segments not supported on this
+platform".
+
+**Verified ready, so the run is one command once power is real:** staged
+`wan_i2v.py` and `video_task.py` are byte-identical to repo HEAD
+(`9DFD2B4F…`, `64B2A58E…`); the conditioning still is `004ECF2D…`, matching the
+5090's; the model snapshot `b8fff731…` is complete at **31.85GB across 22 files
+with zero `.incomplete`**, so nothing downloads mid-probe. Box left exactly as
+found: repo clean at `ae13cc6`, no python processes, GPU 0 MiB, **no scheduled
+tasks registered** (`register.cmd` was never run), probe directory back to its
+nine staged files.
+
+**Fleet verdict is unchanged and stays unchanged:** one proven video box, one
+unproven. The 5070 Ti is still a stills / VO / 480x832-draft box in every plan.
+It is not "too small" — the card side has still never been measured, and now the
+reason is documented as *power delivery*, not memory.
