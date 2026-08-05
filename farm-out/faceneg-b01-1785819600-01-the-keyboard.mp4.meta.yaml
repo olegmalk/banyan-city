@@ -1,0 +1,16 @@
+# Shot provenance (7.2) — written by video_task at render time
+platform: local-gpu (rtx5090)
+model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+model_licence: Apache-2.0
+shot_beat: 1
+size: 704x1280
+seconds: 2.5
+steps: 14
+guidance: 5.0
+seed: 20260806
+task: faceneg-b01-1785819600
+cost_usd: 0
+prompt: |-
+  2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. his hands hammer the mechanical keyboard, fingers flying across the keys in large rapid strokes, wrists moving visibly, the monitor glow pulsing over them
+negative: |-
+  new subjects, scene change, photorealism, 3D render look, text, 静态, 静止, 静止不动的画面, frozen frame, still image, no motion, face morphing, changing facial features, distorted face, warped face, facial expression change, head turning, photorealistic, photograph, live action, film still, 3D render, CGI, octane, realistic skin texture, depth of field bokeh, motion blur, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
