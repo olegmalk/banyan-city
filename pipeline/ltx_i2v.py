@@ -63,6 +63,7 @@ sample, it does not clear anything.
 """
 import argparse
 import ctypes
+import gc
 import json
 import sys
 import threading
@@ -122,6 +123,45 @@ def mark(stage: str):
               f"(load {m['load_pct']}%)", flush=True)
     else:
         print(f"-- {stage}", flush=True)
+
+
+# ---------------------------------------------------------------------------
+# BATCH THROUGHPUT PROBING — wan_i2v.py's flag, with wan_i2v.py's meaning.
+# --batch N asks the pipeline for N clips from ONE sample call so we can measure
+# whether the card is step-bound or launch-bound. It is a MEASUREMENT, not a way
+# to fill the queue: the N clips share one prompt and one conditioning still and
+# differ only by seed.
+#
+# THE BODY OF IT LANDED WITHOUT THE FLAGS (fab4632, 2026-08-04). `batch =
+# max(1, int(a.batch))` shipped against an argparse that never declared --batch,
+# so every `--stage render` raised AttributeError before a single weight was
+# loaded — the LTX renderer could not render AT ALL, including at its defaults.
+# Nothing caught it: py_compile passes, no test touched this CLI, and the box it
+# runs on is not this machine. test_pipeline's
+# test_argparse_declares_every_flag_it_reads is the cheap static gate for that
+# whole class, and it fails against fab4632's copy of this file.
+# ---------------------------------------------------------------------------
+
+
+def _scheduler_shift(pipe):
+    """The flow-match shift the sample actually ran under, or None.
+
+    READ OFF THE OBJECT, never restated from a flag — same rule and same two keys
+    as wan_i2v._scheduler_shift. `shift` is FlowMatchEulerDiscreteScheduler's
+    name for it; `flow_shift` is UniPC's. Unreadable -> null, because a bench row
+    that carries a plausible unmeasured number is how the 2026-08-04 retraction
+    happened.
+    """
+    cfg = getattr(getattr(pipe, "scheduler", None), "config", None)
+    for key in ("shift", "flow_shift"):
+        try:
+            v = cfg.get(key)
+        except Exception:                                    # noqa: BLE001
+            return None
+        if v is not None:
+            return v
+    return None
+
 
 FP8_REPO = "Lightricks/LTX-2.3-fp8"
 FP8_FILE = "ltx-2.3-22b-distilled-fp8.safetensors"
@@ -553,41 +593,108 @@ def _render_with(a, transformer, parts, dist, w, h) -> int:
 
     mark("decode-and-export")
     from diffusers.utils import export_to_video
-    Path(a.out).parent.mkdir(parents=True, exist_ok=True)
-    export_to_video(video[0], a.out, fps=a.fps)
 
     peak = torch.cuda.max_memory_allocated() / 1e9 if torch.cuda.is_available() else 0
     free, total = torch.cuda.mem_get_info() if torch.cuda.is_available() else (0, 1)
-    # The [1/1] line keeps wan_i2v's exact shape so bench_models' WROTE regex and
-    # the comparison row keep parsing; steps carries the two-stage note instead of a
-    # bare integer, since "8 steps" alone would misdescribe what ran.
-    print(f"[1/1] wrote {a.out} in {sample_s:.0f}s "
-          f"({a.frames} frames, {w}x{h}, {steps_note} steps, "
-          f"peak torch {peak:.1f}GB, device {(total-free)/1e9:.1f}/{total/1e9:.0f}GB)",
-          flush=True)
 
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     import video_task
-    # seed_base = a.seed - a.beat, NOT a.seed. write_sidecar publishes
-    # seed_base + beat, so passing the seed itself would have printed 20260732 for
-    # a clip generated with 20260731 — a sidecar naming a seed nobody rendered
-    # with, which is worse than no seed at all for anyone trying to reproduce a
-    # screened look. This matches wan_i2v's convention, where --seed is already
-    # the per-beat seed and the sidecar reconstructs it.
-    video_task.write_sidecar(
-        a.out, "ltx23-distilled",
-        {"worker": a.worker, "guidance": a.guidance,
-         "seed_base": a.seed - a.beat, "id": a.task},
-        beat=a.beat, seconds=round(a.frames / a.fps, 3), steps=steps_note,
-        size=a.size, prompt=a.prompt,
-        # Recorded verbatim, with the caveat attached, because a reader of this
-        # sidecar cannot otherwise tell that the negative was inert.
-        negative=(a.negative + "\n[unused: guidance 1.0 on the distilled path runs "
-                               "no uncond pass, so this changed no pixel]")
-        if a.negative else a.negative)
+    label = a.bench_label or "ltx23"
+    clip_s = a.frames / a.fps
+    negative = (a.negative + "\n[unused: guidance 1.0 on the distilled path runs "
+                             "no uncond pass, so this changed no pixel]"
+                ) if a.negative else a.negative
+
+    for s in range(batch):
+        # slot_out_path returns --out UNCHANGED at batch 1, so the default path
+        # still writes exactly the file it was asked for; only a batched run gets
+        # the `-b<N>-s<seed>` naming the AnimeGen probe already put on disk.
+        path = video_task.slot_out_path(a.out, a.seed, s, batch)
+        Path(path).parent.mkdir(parents=True, exist_ok=True)
+        export_to_video(video[s], path, fps=a.fps)
+        # The [i/N] line keeps wan_i2v's exact shape so bench_models' WROTE regex
+        # and video_task's PROGRESS regex keep parsing; steps carries the
+        # two-stage note instead of a bare integer, since "8 steps" alone would
+        # misdescribe what ran. At batch 1 this is byte-identical to the [1/1]
+        # line this file has always printed. The elapsed figure repeats on every
+        # slot because no per-slot time exists — the N clips were denoised
+        # together, and that IS the measurement.
+        print(f"[{s + 1}/{batch}] wrote {path} in {sample_s:.0f}s "
+              f"({a.frames} frames, {w}x{h}, {steps_note} steps, "
+              f"peak torch {peak:.1f}GB, "
+              f"device {(total-free)/1e9:.1f}/{total/1e9:.0f}GB"
+              + (f", slot {s+1}/{batch} seed {a.seed + s})" if batch > 1 else ")"),
+              flush=True)
+        # seed_base = a.seed - a.beat, NOT a.seed. write_sidecar publishes
+        # seed_base + beat, so passing the seed itself would have printed 20260732
+        # for a clip generated with 20260731 — a sidecar naming a seed nobody
+        # rendered with, which is worse than no seed at all for anyone trying to
+        # reproduce a screened look. This matches wan_i2v's convention, where
+        # --seed is already the per-beat seed and the sidecar reconstructs it.
+        # The slot's OWN seed goes in, so slot 1 of a b2 does not claim slot 0's.
+        video_task.write_sidecar(
+            path, "ltx23-distilled",
+            {"worker": a.worker, "guidance": a.guidance,
+             "seed_base": a.seed + s - a.beat, "id": a.task},
+            beat=a.beat, seconds=round(clip_s, 3), steps=steps_note,
+            size=a.size, prompt=a.prompt,
+            # Recorded verbatim, with the caveat attached, because a reader of
+            # this sidecar cannot otherwise tell that the negative was inert.
+            negative=negative,
+            extra={"mode": a.mode, "batch": batch, "batch_slot": s,
+                   "throughput_s_video_per_s_wall":
+                       round(batch * clip_s / sample_s, 4),
+                   "compute_s_per_video_s": round(sample_s / batch / clip_s, 1)})
+    # THE DECODE IS ONE CALL, so this release is per-batch and not per-slot, and
+    # saying otherwise would be a comment describing code that does not exist:
+    # output_type="np" makes postprocess_video stack all N clips into a single
+    # [N, F, H, W, C] array, and a row of a stacked array cannot be freed on its
+    # own. What CAN be done is drop the whole thing before the bench write instead
+    # of at function exit — at 704x1280/61f that is ~165MB per slot of host RAM,
+    # and host RAM is what killed the b4 probe on 2026-08-05.
+    del video, audio
+    gc.collect()
+
+    # (N clips of video) / (one wall-clock sample). The number the probe exists to
+    # produce: if it does not rise with N, the card is step-bound and batching
+    # buys nothing.
+    print(f"THROUGHPUT {batch * clip_s / sample_s:.4f} s(video)/s(wall) "
+          f"({batch} x {clip_s:.3f}s of video in {sample_s:.0f}s)", flush=True)
+    if a.bench_jsonl:
+        # ONE ROW PER SAMPLE CALL, not per slot: the measurement is the call.
+        #
+        # s_per_step IS NULL ON THE TWO-STAGE PATH and that is the honest cell.
+        # The run is 8 model calls at half resolution plus 3 at full; dividing the
+        # wall clock by 11 would invent a uniform "step" that nothing executed.
+        # throughput_s_per_s carries the comparison instead, and `steps` carries
+        # the note that says what actually ran.
+        video_task.append_bench_row(a.bench_jsonl, video_task.bench_row(
+            label=label, repo=DIST_REPO, mode=a.mode, batch=batch,
+            frames=a.frames, seeds=[a.seed + s for s in range(batch)],
+            sample_s=round(sample_s, 1),
+            s_per_step=(None if a.two_stage else round(sample_s / a.steps, 2)),
+            video_s=round(batch * clip_s, 3),
+            throughput_s_per_s=round(batch * clip_s / sample_s, 4),
+            # per SECOND OF VIDEO, matching the sidecar field of the same meaning
+            # and the column's name. wan_i2v wrote seconds-per-CLIP here until
+            # 2026-08-05; this file never shipped a row either way, so it starts
+            # correct.
+            compute_per_video_s=round(sample_s / batch / clip_s, 1),
+            peak_torch_gb=round(peak, 1),
+            device_gb=round((total - free) / 1e9, 1),
+            device_total_gb=round(total / 1e9, 1),
+            # Host RAM comes from THIS file's GlobalMemoryStatusEx sampler, which
+            # is the same quantity wan_i2v's psutil thread records — physical, and
+            # physical plus pagefile.
+            host_peak_phys_gb=(round(PEAK["phys_gb"], 1) or None),
+            host_peak_commit_gb=(round(PEAK["commit_gb"], 1) or None),
+            steps=steps_note, guidance=a.guidance, shift=_scheduler_shift(pipe),
+            size=f"{w}x{h}", ok=True))
     print(json.dumps({"sample_s": round(sample_s, 1), "peak_gb": round(peak, 1),
                       "peak_commit_gb": round(PEAK["commit_gb"], 1),
                       "frames": a.frames, "size": a.size, "steps": steps_note,
+                      "batch": batch, "mode": a.mode,
+                      "throughput_s_per_s": round(batch * clip_s / sample_s, 4),
                       "two_stage": bool(a.two_stage), "image_crf": a.image_crf,
                       "offload": "sequential"}),
           flush=True)
@@ -633,7 +740,25 @@ def main() -> int:
     ap.add_argument("--beat", type=int, default=1)
     ap.add_argument("--task", default="d16c-one-sample")
     ap.add_argument("--worker", default="rtx5090")
+    # --- throughput probing. Default 1 = the path that has always run. -------
+    # These four are wan_i2v.py's, spelled the same way on purpose: two renderers
+    # append to one bench file, and a flag that means something slightly different
+    # here would turn the comparison table into a guess.
+    ap.add_argument("--batch", type=int, default=1,
+                    help="clips per sample call. A MEASUREMENT, not a queue "
+                         "filler: the N clips share one prompt and one still and "
+                         "differ only by seed (base seed for slot 0, +1 after)")
+    ap.add_argument("--mode", default="production",
+                    help="recipe label recorded in the sidecar and the bench row; "
+                         "the 2026-08-04 rows use preview|production")
+    ap.add_argument("--bench-jsonl", default="",
+                    help="append ONE measurement row per sample call to this file")
+    ap.add_argument("--bench-label", default="",
+                    help="'label' column for --bench-jsonl (default: ltx23)")
     a = ap.parse_args()
+    if a.batch < 1:
+        print(f"!! --batch {a.batch}: must be at least 1", flush=True)
+        return 2
     if a.prompt_file:
         a.prompt = Path(a.prompt_file).read_text(encoding="utf-8").strip()
     if a.negative_file:

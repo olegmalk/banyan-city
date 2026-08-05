@@ -948,6 +948,108 @@ def test_no_undefined_locals(tmp: Path):
     check("no pipeline function reads an undefined name", not bad)
 
 
+def _argparse_gaps(src: str, filename: str = "<src>"):
+    """Attributes read off a parsed-args namespace that no add_argument declares.
+
+    PURE, and AST-only on purpose: wan_i2v and ltx_i2v both reach for torch and
+    diffusers, neither of which exists on this machine or in CI, so the module is
+    parsed and never imported.
+
+    Returns (namespace variable names, [(attr, first line that reads it), ...]).
+
+    Three things count as declaring an attribute, because all three really do put
+    one on the namespace: an `add_argument` (resolved by argparse's own dest rule
+    — explicit `dest=`, else the first long option, else the first short one, with
+    dashes to underscores), a `set_defaults(x=...)`, and a plain `a.x = ...`
+    assignment. `getattr(a, "x", default)` is deliberately NOT counted as a read:
+    it carries its own default and cannot raise, which is exactly why wan_i2v uses
+    that form in the helpers a non-batch caller can reach.
+    """
+    import ast
+
+    tree = ast.parse(src, filename=filename)
+
+    # 1. The namespace: whatever `<x> = <parser>.parse_args()` binds. Matched by
+    #    NAME across the whole module, because the parse happens in main() and
+    #    every read happens in a stage function that took it as a parameter — both
+    #    renderers call it `a`, and that convention is the thing being checked.
+    ns = set()
+    for n in ast.walk(tree):
+        if (isinstance(n, ast.Assign) and isinstance(n.value, ast.Call)
+                and isinstance(n.value.func, ast.Attribute)
+                and n.value.func.attr in ("parse_args", "parse_known_args")):
+            for t in n.targets:
+                for el in (t.elts if isinstance(t, ast.Tuple) else [t]):
+                    if isinstance(el, ast.Name):
+                        ns.add(el.id)
+
+    declared = set()
+    for n in ast.walk(tree):
+        if not (isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute)):
+            continue
+        if n.func.attr == "set_defaults":
+            declared |= {kw.arg for kw in n.keywords if kw.arg}
+            continue
+        if n.func.attr != "add_argument":
+            continue
+        dest = next((kw.value.value for kw in n.keywords if kw.arg == "dest"
+                     and isinstance(kw.value, ast.Constant)), None)
+        flags = [x.value for x in n.args
+                 if isinstance(x, ast.Constant) and isinstance(x.value, str)]
+        if dest is None and flags:
+            longs = [f for f in flags if f.startswith("--")]
+            dest = (longs[0][2:] if longs else flags[0].lstrip("-")).replace("-", "_")
+        if dest:
+            declared.add(dest)
+
+    # 2. An assignment onto the namespace defines it as surely as a flag does —
+    #    `a.model = MODELS.get(a.model, a.model)` is real, and calling it missing
+    #    would be a false alarm.
+    for n in ast.walk(tree):
+        if (isinstance(n, ast.Attribute) and isinstance(n.value, ast.Name)
+                and n.value.id in ns and isinstance(n.ctx, ast.Store)):
+            declared.add(n.attr)
+
+    missing = {}
+    for n in ast.walk(tree):
+        if (isinstance(n, ast.Attribute) and isinstance(n.value, ast.Name)
+                and n.value.id in ns and isinstance(n.ctx, ast.Load)
+                and n.attr not in declared):
+            missing.setdefault(n.attr, n.lineno)
+    return ns, sorted(missing.items(), key=lambda kv: kv[1])
+
+
+def test_argparse_declares_every_flag_it_reads():
+    """Every flag a renderer READS must be one its own parser DECLARES.
+
+    The regression this exists for shipped on 2026-08-04 in fab4632: the --batch
+    BODY landed in ltx_i2v.py — embeds expansion, per-slot generators, the
+    stage-1 batch-shape assertion — and the four argparse lines that declare
+    --batch/--mode/--bench-jsonl/--bench-label did not. `batch = max(1,
+    int(a.batch))` then raised AttributeError on EVERY `--stage render`, at the
+    defaults, before a weight was read. The LTX renderer could not render at all
+    for a day.
+
+    Nothing here could have caught it. py_compile passes — it is valid syntax.
+    test_no_undefined_locals passes — `a` is defined, it is the ATTRIBUTE that is
+    not. And no test touched either renderer's CLI, which is the actual gap: the
+    box they run on is not this machine, so the first thing that executes them is
+    a paid, hour-long render on a GPU nobody is sitting at.
+
+    Verified by running it against `git show fab4632:pipeline/ltx_i2v.py`, where
+    it reports `a.batch` at line 401 and fails. A test you have not seen fail is
+    not a test.
+    """
+    for name in ("wan_i2v.py", "ltx_i2v.py"):
+        src = (REPO / "pipeline" / name).read_text(encoding="utf-8")
+        ns, missing = _argparse_gaps(src, name)
+        check(f"{name} binds a parsed-args namespace this test can follow", bool(ns))
+        for attr, line in missing:
+            print(f"      x  {name}:{line} reads a.{attr} — no add_argument "
+                  f"declares --{attr.replace('_', '-')}")
+        check(f"{name} declares every flag it reads", not missing)
+
+
 def test_queue_render_params_reach_the_child(tmp: Path):
     """Every render parameter a queue task can set must actually be passed on.
 
@@ -1787,6 +1889,7 @@ def main():
     with tempfile.TemporaryDirectory() as td:
         test_t3_check_clips_dir(Path(td))
     test_attempts_survive_a_dead_host()
+    test_argparse_declares_every_flag_it_reads()
     test_child_verdict_names_a_corpse()
     with tempfile.TemporaryDirectory() as td:
         test_giveup_needs_no_fail_line(Path(td))

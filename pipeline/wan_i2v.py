@@ -123,18 +123,32 @@ def _host_peak_sampler(stop) -> None:
 
 
 def _scheduler_shift(pipe):
-    """The flow-match `shift` the sample actually ran under, or None.
+    """The flow-match shift the sample actually ran under, or None.
 
     READ OFF THE OBJECT, never restated from a flag: one branch here constructs
     FlowMatchEulerDiscreteScheduler(shift=3.0) by hand and another inherits
     whatever the repo shipped, so a bench row that quoted a constant would be
     describing code rather than the run. Unreadable -> null.
+
+    TWO KEYS, because the schedulers spell it differently and the one-key version
+    of this function reported null for every 5B row it ever wrote. TI2V-5B ships
+    UniPCMultistepScheduler, whose parameter is `flow_shift`; FlowMatchEuler's is
+    `shift`. Measured, not assumed: bench-T1T2T3/bench-t0.json records the live
+    5B scheduler_config as flow_shift 5.0 with no `shift` key at all, while every
+    5B bench row from the same runs says "shift": null. `shift` is tried first so
+    a scheduler that happens to carry both keeps the name it was constructed
+    with. Still null when neither is readable — a guess in this column is worse
+    than a gap.
     """
     cfg = getattr(getattr(pipe, "scheduler", None), "config", None)
-    try:
-        return cfg.get("shift")
-    except Exception:                                        # noqa: BLE001
-        return None
+    for key in ("shift", "flow_shift"):
+        try:
+            v = cfg.get(key)
+        except Exception:                                    # noqa: BLE001
+            return None
+        if v is not None:
+            return v
+    return None
 
 
 def _bench_mode(a) -> bool:
@@ -599,7 +613,17 @@ def _sample(pipe, a, w, h, frames, takes_image, jobs=None) -> int:
                 sample_s=round(sample_s, 1), s_per_step=round(sample_s / steps, 2),
                 video_s=round(batch * clip_s, 3),
                 throughput_s_per_s=round(batch * clip_s / sample_s, 4),
-                compute_per_video_s=round(sample_s / batch, 1),
+                # PER SECOND OF VIDEO, which is what the column is called and what
+                # the sidecar three lines above already wrote. This said
+                # `sample_s / batch` until 2026-08-05 — seconds per CLIP — so the
+                # 5B b2 row went to disk saying 382.3 while its own sidecar said
+                # 150.4 for the same run, under a page header reading "s per 1s
+                # video". Two true numbers, one of them answering a question
+                # nobody asked in that column. The rows already written keep their
+                # figures (they are measurements, not to be edited); the page
+                # derives this cell from sample_s and video_s so old and new rows
+                # read alike.
+                compute_per_video_s=round(sample_s / batch / clip_s, 1),
                 peak_torch_gb=round(peak, 1),
                 device_gb=round((total - free) / 1e9, 1),
                 device_total_gb=round(total / 1e9, 1),
@@ -733,7 +757,8 @@ def stage_render(a) -> int:
             sample_s=round(sample_s, 1), s_per_step=round(sample_s / a.steps, 2),
             video_s=round(batch * clip_s, 3),
             throughput_s_per_s=round(batch * clip_s / sample_s, 4),
-            compute_per_video_s=round(sample_s / batch, 1),
+            # per SECOND OF VIDEO — see the note at the stage_simple call site.
+            compute_per_video_s=round(sample_s / batch / clip_s, 1),
             peak_torch_gb=round(peak, 1),
             device_gb=round((total - free) / 1e9, 1),
             device_total_gb=round(total / 1e9, 1),
