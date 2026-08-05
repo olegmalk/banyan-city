@@ -352,7 +352,10 @@ COVERAGE_GAPS = {
         "drops to 362 MiB, model_cpu_offload returning the transformer to host "
         "while the latent upsampler runs. "
         "That is a 1.5GB margin on the card, which is the reason b2 is not "
-        "automatic. Speed came with it: 73.3s against the bf16 b1's 108.1s, 1.47x. "
+        "automatic. Speed came with it: 73.3s against the bf16 b1's 108.1s, 1.47x — "
+        "but read that with the reproducibility note above, which measured the same "
+        "bf16 recipe at 159.1s on a second run: the durable form of this gain is "
+        "per-step (stage 2 6.17 s/it against 10.54 and 10.32), not the totals. "
         "The host did NOT get cheaper — peak phys 64.6GB against bf16's 60.8, peak "
         "commit 97.0GB against 67.1, because the cast retains the bf16 storages it "
         "replaces. The predicted ~34GB resident host figure did not happen. "
@@ -371,8 +374,15 @@ COVERAGE_GAPS = {
         "the one batch step where the card, not the host, is the wall. The bf16 "
         "build's own b1 -> b2 host slope (60.8 -> 64.2GB phys) still does not "
         "transfer: it was measured with the transformer streamed, and b1 here "
-        "already sits at 64.6GB phys / 97.0GB commit before any second latent.",
-        "derived 2026-08-05 from the b1 fp8 bench row + probe-ltx-fp8.log"),
+        "already sits at 64.6GB phys / 97.0GB commit before any second latent. "
+        "STILL NOT RUN as of the 2026-08-05 evening pass, and verified against the "
+        "box rather than a report: no clip, no sidecar, no jsonl row, no log, no "
+        "staged command — the only files written to C:\\banyan-farm after 08:10 "
+        "that day are the reproducibility run's directory and the telemetry "
+        "daemon's own three, with the GPU at 0 MiB. The cell is a decision that "
+        "held, not an attempt that failed.",
+        "derived 2026-08-05 from the b1 fp8 bench row + probe-ltx-fp8.log; "
+        "non-run re-verified on the box 2026-08-05 15:35"),
     ("ltx23fp8", "production", 4): (
         "closed by inheritance — host RAM",
         "The bf16 build's b4 is closed on a host-RAM slope that the fp8 cast does "
@@ -424,9 +434,35 @@ BATCH_FIDELITY_NOTE = (
     'clip and needs screening again. Two things it does not say. It does not '
     'contradict AnimeGen\'s "batch fidelity holds" above: that was mean and max '
     'frame-difference, a motion statistic which this drift would also pass, and that '
-    'pair has never been compared per-pixel. And it does not prove batching is the '
-    'cause — <b>whether two UN-batched runs reproduce each other has not been '
-    'tested</b>, so there is no baseline for this metric yet.</p>'
+    'pair has never been compared per-pixel. And it does not, on its own, prove '
+    'batching is the cause — that took a second measurement, below.</p>'
+)
+
+# The control the note above was missing until 2026-08-05 15:22. Until then the
+# drift figures could not be attributed to their recipe change, because nobody had
+# checked whether the pipeline reproduces itself at all. It does, exactly.
+REPRO_NOTE = (
+    '<p class="note" style="margin-top:12px"><b>The baseline is zero: two un-batched '
+    'runs of the same recipe are bit-identical.</b> Measured 2026-08-05 15:22 — the '
+    'LTX bf16 b1 reference re-run verbatim (same script, venv, embeds, still, '
+    'prompt/negative files, <code>--image-crf 33</code>, seed 20260732; only '
+    '<code>--out</code> and the provenance label differ) came back with the <b>same '
+    'sha256, <code>6226aef5…a880</code>, and the same 352084 bytes</b>, through the '
+    'h264 encode. Not "at the noise floor" — identical. So the <b>10.35</b> above and '
+    'the fp8 build\'s <b>11.93</b> carry no run-to-run component: both are their '
+    'recipe change, in full. <b>The clock is the part that does not reproduce.</b> The '
+    'byte-identical re-run took <b>159.1s against 108.1s, +47%</b>, and the whole '
+    'delta is one step — stage 1\'s first, 24.55s → 62.88s, the cold weight stream '
+    'under sequential offload. Everything after it repeated: stage 1 steps 2-8 5.35 → '
+    '5.59 s/it, stage 2 10.54 → 10.32 s/it, peak torch 4.1GB both. <b>Read every '
+    '<code>sample_s</code> total on this page as ±50s of box state, and compare '
+    'recipes on per-step figures.</b> Applied to the fp8 row that ranks first here: '
+    'its 1.47x is two totals, and against this re-run the same arithmetic would read '
+    '2.17x — the gain is real but it lives in the per-step numbers (stage 2 6.17 s/it '
+    'against 10.54 and 10.32), and the "break-even at exactly 4 clips" figure is '
+    'withdrawn as over-precise in favour of <b>~3 clips, range 2-4</b>. '
+    '<span class="src">bench-platform/sha256-repro.txt, '
+    'bench-platform/repro-ltx-b1.log</span></p>'
 )
 
 # ------------------------------------------------------------------ status ----
@@ -1373,6 +1409,7 @@ def build():
         if key == ("animegen", "preview"):
             A(ANIMEGEN_BATCH_NOTE)
     A(BATCH_FIDELITY_NOTE)
+    A(REPRO_NOTE)
 
     # 3b-2 coverage — the same points as the tables above, plus the ones that do
     # not exist. The tables show what ran; only this says what did not and why.

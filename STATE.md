@@ -961,3 +961,124 @@ in `pipeline/research/MODEL-COMPARISON.md`.
   on this build may be scheduled until he has looked at the clip:**
   `SAMPLES/ltx23fp8-production-b1-s20260732.mp4`, best watched against
   `SAMPLES/ltx23-production-b1-s20260732.mp4` at the same seed.
+
+## 2026-08-05 ~15:30Z — two boxes, one bit-identical re-run, and two probes that did not happen
+
+A two-box afternoon. **One measurement landed, two did not**, and the two that
+did not are recorded here at the same length as the one that did, because a
+probe that never ran and a probe nobody mentions look identical six weeks later.
+Evidence: `bench-platform/` (repro log, run-2 sidecar, sha256 proof, fleet
+inventory). Table rows and the platform section: `pipeline/research/MODEL-COMPARISON.md`.
+
+**The fleet is two boxes, and one of them was misnamed. There is no 4070**
+(founder's correction — nothing in the repo ever claimed one, so this is a
+record of the fact, not a fix to a file). The second box is the **MSI Vector 16
+HX AI A2XWHG, RTX 5070 Ti Laptop, 12227 MiB**, and it is now **directly
+reachable over the LAN** — it was a USB-bundle enrollment back on 2026-07-30 and
+had no ssh route until today:
+
+```
+Host rtx5070            # added to ~/.ssh/config 2026-08-05, backup at ~/.ssh/config.bak.<epoch>
+  HostName 192.168.3.153
+  User olegm
+  IdentityFile ~/.ssh/banyan-5070
+  IdentitiesOnly yes
+```
+
+**Both boxes report `hostname` = `MSI`.** Identify them by GPU or by user
+(`artvn` = 5090, `olegm` = 5070 Ti), never by hostname. Its checkout was
+fast-forwarded 231 commits off the stale `farm-results-msi` branch to `main` @
+`ae13cc6`; nothing was started on it.
+
+### The measurement: an un-batched re-run is BIT-IDENTICAL, and its clock is not
+
+Re-ran the LTX-2.3 bf16 b1 reference — same script, same venv, same embeds, same
+still, same prompt/negative files, `--image-crf 33`, seed 20260732, the only
+diff being `--out` and the provenance label. **sha256
+`6226aef5…a880` both times, 352084 bytes both times.** The pipeline is
+bit-deterministic through the h264 encode.
+
+- **This closes the open question the batch-2 note left standing.** That note
+  said the b2 slot-0 drift (rms 10.35/255) could not be attributed to batching
+  because "whether two UN-batched runs reproduce each other has not been
+  tested". It has now been tested and **the run-to-run noise floor is exactly
+  zero**. So both drift figures on the books — **batch 2 at rms 10.35** and
+  **fp8 at rms 11.93** — are attributable to their recipe change in full. No
+  part of either is run-to-run wobble. Doctrine unchanged, and now founded:
+  a batched or fp8 re-render of an approved beat is a NEW clip and needs
+  screening again.
+- **The clock did not reproduce, and that is the finding with teeth.**
+  `sample_s` went **108.1s → 159.1s (+47%) for byte-identical output.** Where it
+  went, per-step: stage 1's **first** step 24.55s → **62.88s** (cold weight
+  stream under sequential offload — that step alone is the whole delta), stage 1
+  steps 2-8 **5.35 → 5.59 s/it (+4.5%)**, stage 2 **10.54 → 10.32 s/it (−2.1%)**.
+  Memory reproduced: 4.1GB torch both, 60.8 → 61.0GB phys, 67.1 → 68.8GB commit.
+- **Consequence for how we quote speed: a cross-run `sample_s` delta under
+  ~50s on this box is box state, not a recipe.** Steady-state s/step reproduces
+  to within 5%; totals carry a fixed cold-start term that varies by 38s in the
+  first denoise step alone. Recipe comparisons should be made on **per-step**
+  figures, and any total quoted should say which run it came from.
+- **The fp8 headline needs that correction applied, and survives it.** "1.47x"
+  was 108.1/73.3 — two totals, both carrying the variable term; against
+  today's re-run of the *same* bf16 recipe it would have read 2.17x. The gain
+  is real on the per-step evidence, which is the part that reproduces:
+  stage 2 **6.17 s/it fp8 vs 10.54/10.32 bf16 = 1.67-1.71x**, stage 1 steady
+  **1.23 vs 5.35/5.59 s/it**. **The "break-even at exactly 4 clips" figure is
+  withdrawn as over-precise**: 139s of cast against a per-clip saving of 34.8s
+  (ref totals) → 4.0 clips, against 85.8s (re-run totals) → 1.6, against the
+  denoise-only per-step arithmetic (93.0s → 39.5s) → **2.6**. Quote it as
+  **~3 clips, range 2-4**.
+
+### Did not happen 1: fp8 at batch 2 — nothing was run, nothing was staged
+
+No clip, no sidecar, no jsonl row, no log, no cmd file. Checked the box directly
+rather than taking a report for it: the only files written to `C:\banyan-farm`
+after 08:10 today are the repro directory and the telemetry daemon's own three.
+GPU 0 MiB / 0% util, no render process, box up since 06:07:05 with no new
+bugcheck. **The coverage gap therefore stands unchanged and for its original
+reason** — `ltx23fp8` b1 has **not been screened**, and the standing rule is
+that no batch point above b1 on a build may be scheduled before its b1 sample is
+screened. b1 fits with **1543 of 24463 MiB spare**, and a second latent in the
+same resident loop spends that margin on activations. It is a founder-gated
+question, not a scheduling oversight.
+
+### Did not happen 2: the 5070 Ti 5B-preview viability sample — battery
+
+Staged and byte-verified in `C:\banyan-farm\probe-5070-ti2v5b\` (the conditioning
+still, prompt and negative all sha256-match the 5090's; same model snapshot
+`b8fff731`; torch 2.11.0+cu128, diffusers 0.39.0), one command from running. It
+did not run and **should not have**: `PowerOnline=False`, charge **9.5% falling
+to 8%**, and Windows' own task policy (`Stop On Battery Mode, No Start On
+Batteries`) refused it. Three reasons to leave that policy alone — a 5-10 minute
+100%-util render at 8% ends in a power-off mid-write, which is the same class of
+event as yesterday's two unclean reboots; on battery the SM clock sits at
+**442 MHz** with `power.limit` reporting `[N/A]` against a 140W part, so the
+number would not be the box's throughput; and an OOM under a throttled clock is
+not an OOM answer either. **The box needs a human to plug it in.**
+
+What the afternoon did measure about it, over ssh:
+
+- **31.4GB visible host RAM / 32GB installed** — this **corrects the 16GB**
+  assumed in `pipeline/research/misc-candidates-source.md:58`. Commit limit
+  **67.4GB** (36GB pagefile), **714.7GB** free on C:.
+- **The card was never the only question, and the host is now the sharper
+  one.** Derived, not measured: the 5B preview b1 row on the 5090 peaks at
+  **80.6GB of commit** — above this box's **67.4GB** ceiling. Windows may grow
+  the pagefile into 714GB of free disk or may not. On the card side the fit is
+  plausible for a different reason than the raw row suggests: that row's 14.4GB
+  torch peak is an **untiled VAE decode** (`bench_5b_modes.py` never calls
+  `tile_vae`), while `pipeline/wan_i2v.py` does, which puts the ceiling at the
+  largest single resident module (~11.4GB UMT5-XXL) against 11.94GiB of card.
+  Sub-gigabyte margin, genuinely uncertain, still worth one sample.
+- **Fleet verdict as of tonight: one proven video box, one unproven.** The 5070
+  Ti stays a **stills / VO / 480x832-draft box** in every plan until that sample
+  runs. It is not "confirmed too small" — nobody has measured it — and that
+  distinction is the whole reason this entry exists.
+
+### Housekeeping
+
+Deleted `banyan-repro-ltx-b1` on the 5090: a One Time Only task, already fired
+manually at 15:19, but still carrying **Next Run Time 2026-08-05 23:59**. Left
+alone it would have re-rendered a clip nobody asked for, overnight, unattended —
+a render with no consumer. Thirteen `banyan-*` tasks remain, all Ready, plus
+`banyan-telemetry` Running.

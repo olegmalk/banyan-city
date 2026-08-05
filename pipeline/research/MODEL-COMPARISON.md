@@ -58,6 +58,7 @@ host can still do during that render.
 | Model + build | Recipe | Mode | Time | Throughput s(video)/s(wall) @ batch | Peak VRAM | Peak host RAM | Parallel | Licence | Measurement status | Source |
 |---|---|---|---|---|---|---|---|---|---|---|
 | **diffusers/LTX-2.3-Distilled-Diffusers, bf16** | two-stage **on-recipe**: 8 steps @352x640 → 2x latent upsample → 3 steps @704x1280, explicit sigmas, guidance 1.0, 65f @24fps = 2.708s | production (two-stage, on-recipe) | **108.1s sample / 120s wall** (stage 1 62s @7.8s/it, stage 2 31s @10.5s/it; remainder = upsample + setup) | **0.0251 s(video)/s(wall) @b1** = 39.9s wall per 1s video (2.708s of video / 108.1s sample) — DERIVED-FROM-OURS, the row states its own 65f @24fps so the denominator is not invented | **4.1GB torch / 2.5GB device of 26GB** — LABEL: **sequential-offload**, measures the offload strategy, not card capacity | **60.8GB phys / 67.1GB commit of 68.1GB** | 1/card, and **host-exclusive** — this render evicted the farm worker on the 64GB box | LTX-2 Community License Agreement — **CANDIDATE** under watch-only per D16 (per-post AI label, never a contributor-facing service, one founder-screened sample) | **MEASURED-BY-US 2026-08-04**, $0. Clip clean: no issue-#37 corruption (saturation 0.264, no channel cast, **0/64 frozen frames**) | `SAMPLE-ltx23-b01.mp4.meta.yaml`, `pipeline/ltx_i2v.py` |
+| same — **the reproducibility control, run 2 of the same b1** | the b1 row's command **verbatim**: same script `ltx_i2v.py`, same venv, same env, same embeds file, same conditioning still, same prompt/negative files, `--image-crf 33`, two-stage, distilled sigmas, guidance 1.0, 704x1280, 65f @24fps, seed 20260732, sequential offload. **The only differences are `--out` and the `--task` provenance label** | production (two-stage, on-recipe) | **159.1s sample** against run 1's 108.1s — **+47% for byte-identical output**. Where it went: stage 1's **first** step **24.55 → 62.88s** (cold weight stream, the whole delta), stage 1 steps 2-8 **5.35 → 5.59 s/it**, stage 2 **10.54 → 10.32 s/it** | 0.0170 s(video)/s(wall) @b1 = 58.7s wall per 1s video — **and this cell is the point: the same recipe scored 0.0251 nineteen hours earlier.** A cross-run `sample_s` on this box carries a cold-start term worth ~50s; **compare recipes on per-step figures, not on totals** | **4.1GB torch of 26GB** — LABEL: **sequential-offload**. Identical to run 1 to the tenth of a GB | **61.0GB phys / 68.8GB commit of 68.1/123.9GB** — run 1 was 60.8/67.1 | 1/card, host-exclusive, as run 1 | LTX-2 Community License Agreement — **CANDIDATE** under watch-only per D16 | **MEASURED-BY-US 2026-08-05 15:22**, $0, rc=0. **BIT-IDENTICAL to the stored reference: sha256 `6226aef5…a880`, 352084 bytes, both runs.** Not "at the noise floor" — the same bytes through the h264 encode. **The run-to-run drift baseline for this pipeline is exactly zero**, which is what makes the b2 (rms 10.35) and fp8 (rms 11.93) figures attributable in full to their recipe change | `bench-platform/sha256-repro.txt`, `bench-platform/repro-ltx-b1.log`, `bench-platform/ltx23-b1-s20260732-run2.mp4.meta.yaml` |
 | same — **batch 2, the throughput probe** | the b1 recipe exactly at 2 latents through one set of weights: two-stage 8 steps @352x640 → 2x latent upsample → 3 steps @704x1280, explicit sigmas, guidance 1.0, 65f @24fps = 2.708s per clip. Slot 0 repeats **seed 20260732** as the batch-fidelity check, slot 1 takes 20260733 | production (two-stage, on-recipe) | **190.1s sample** for 2 clips. **No s/step figure**: the two stages run at different per-step costs, so the renderer writes `null` rather than an average that describes neither | **0.0285 s(video)/s(wall) @b2** = 35.1s wall per 1s video (5.417s of video / 190.1s sample) — **1.14x b1's 0.0251**, the only batch series on this box that gains | **7.2GB torch / 2.6GB device of 25.7GB** — LABEL: **sequential-offload**, measures the offload strategy, not card capacity; +3.1GB torch over b1's 4.1GB | **64.2GB phys / 75.3GB commit of 68.1/130.4GB** — **+3.4GB physical over b1's 60.8GB**, and that slope is what closes b4: two more latents put it past the box's 68.1GB | 1/card, still **host-exclusive** — the b1 row evicted the farm worker at 60.8GB and this one runs 3.4GB higher | LTX-2 Community License Agreement — **CANDIDATE** under watch-only per D16 | **MEASURED-BY-US 2026-08-05**, $0. Throughput is a real gain, **but the batched slot is not pixel-equivalent to the un-batched reference** — see the fidelity note below, and do not treat a batched render as a re-issue of an approved clip | `SAMPLES/batch-bench.jsonl`, `SAMPLES/ltx23-production-b2-s20260732.mp4.meta.yaml`, `SAMPLES/ltx23-production-b1-s20260732.mp4.meta.yaml` |
 | **same — fp8 layerwise cast, `--offload model` (the RESIDENT build)** | the b1 row's recipe **byte-for-byte** — same embeds file, same conditioning still, same prompt/negative files, `--image-crf 33`, two-stage 8 steps @352x640 → 2x latent upsample → 3 steps @704x1280, explicit sigmas, guidance 1.0, 65f @24fps = 2.708s, seed 20260732, beat 1. **The only two changes are the recipe change under test**: `enable_layerwise_casting(storage float8_e4m3fn / compute bf16)` on the transformer, and `enable_model_cpu_offload` in place of sequential | production (two-stage, on-recipe) | **73.3s sample / 224.3s wall** (stage 1 8 steps in 21s — the first step is 12.4s of onload, the last 1.58s/it; stage 2 3 steps in 18s @6.17s/it). **The wall is the honest number for a one-off**: it carries a **one-time 139s fp8 cast** the bf16 build never pays | **0.0369 s(video)/s(wall) @b1** = 27.1s wall per 1s video (2.708s of video / 73.3s sample) — **1.47x the bf16 b1's 0.0251**, the fastest sample row on this box. **DERIVED-FROM-OURS: the cast breaks even at exactly 4 clips in one process** (saves 34.8s/clip against a 139s cast); below that, fp8 is a net LOSS on wall time | **23.1GB torch of 25.7GB** — LABEL: **`model_cpu_offload` + fp8 layerwise, transformer RESIDENT**. Verified externally, not inferred: the telemetry daemon's trace (`telemetry.csv`, 10s cadence) shows **21346 MiB @97% util** through stage 1 and **22920 of 24463 MiB @99% util** through stage 2, against ~2.5GB when the same model is streamed. **1543 MiB spare.** Residency is per-stage: VRAM drops to **362 MiB between** the stages, `model_cpu_offload` returning the transformer to host while the upsampler runs NOT comparable to the sequential-offload 4.1/7.2GB rows above — different question, different answer | **64.6GB phys / 97.0GB commit of 68.1/123.9GB** — **the host got WORSE, not better: +3.8GB phys and +29.9GB commit over the bf16 b1's 60.8/67.1.** The cast retains the bf16 storages it replaces (the same mechanism as the AnimeGen finding above), so the predicted "~34GB resident host" did not happen and must not be quoted | 1/card, **host-exclusive** — measured with both farm-worker processes stopped, and the commit peak leaves 26.9GB of headroom, so co-residency is unproven and untested | LTX-2 Community License Agreement — **CANDIDATE** under watch-only per D16. The `ltx23-distilled-fp8` key resolves to exactly one licence document through the gate | **MEASURED-BY-US 2026-08-05**, $0, **rc=0 first attempt — the `--offload group` fallback was never needed**. **NOT SCREENED — the founder has not seen this clip (R4).** Defect counts only: **0/64 frozen frames** (consecutive-frame MSE min 5.06 vs the reference's 3.60, i.e. marginally *more* inter-frame motion); same-seed drift vs the bf16 b1 **rms 11.93/255, PSNR 26.60 dB**, against a **0.93** crf23 encode-noise control and a **1.74** bitrate-matched control — real drift, slightly more than batch 2 cost (10.35); colour drift **R −2.54, G −2.81, B +0.12** | `SAMPLES/batch-bench.jsonl`, `SAMPLES/ltx23fp8-production-b1-s20260732.mp4.meta.yaml`, `probe-ltx-fp8.log`, `fp8-fidelity-20260805.log` |
 | Wan 2.2 TI2V-5B, diffusers bf16, `model_cpu_offload` | 704x1280, 14 steps, guidance 5.0 | production | **188s render / 248s per beat** (62 min / 15 beats) | no data — the row does not record its frame count, so s(video) has no denominator | 22.9GB of 25.7GB — `model_cpu_offload` | no data | 1/card; host RAM unmeasured, so co-residency unproven | Apache-2.0, output rights disclaimed — CLEAR | MEASURED-BY-US | `STATE.md:604`, `DECISION.md §2` |
@@ -304,6 +305,76 @@ the fastest row in the table being an unscreened clip is exactly the confusion
 that correction exists to prevent. **A screening is owed to Roman before any
 batch point above b1 on this build is scheduled.**
 
+### 2026-08-05 — the reproducibility control: identical bytes, a total that does not reproduce
+
+**The question:** every drift figure in this document — batch 2's rms 10.35,
+fp8's rms 11.93 — was measured against a *stored* reference, and the batch-2
+note said so plainly: *"whether two UN-batched runs reproduce each other has not
+been tested, so there is no baseline for this metric yet."* Without that
+baseline neither figure could be attributed to its recipe change.
+
+**The answer: the baseline is zero.** Re-running the bf16 b1 reference verbatim
+produced **the same bytes** — sha256 `6226aef5…a880`, 352084 bytes, both runs,
+through the h264 encode. Not "below the encode-noise floor"; identical. Sources:
+`bench-platform/sha256-repro.txt`, `bench-platform/repro-ltx-b1.log`, and the
+run-2 sidecar. Two consequences, one for fidelity and one for speed.
+
+**Fidelity — both drift figures are now fully attributable.** Batch 2's 10.35
+and fp8's 11.93 contain no run-to-run component. The doctrine they support
+(*a batched or fp8 re-render of an approved beat is a new clip and needs
+screening again*) stops resting on an untested assumption. The batch-fidelity
+note in `build_comparison.py` was updated in the same pass; its closing sentence
+had said the baseline was untested and that sentence was, from 15:22 on
+2026-08-05, false.
+
+**Speed — a cross-run `sample_s` on this box is worth ±50s, so stop comparing
+totals.** The identical-output re-run took **159.1s against 108.1s, +47%**. It
+is not mysterious and it is not thermal: stage 1's **first** step went
+**24.55 → 62.88s** — the cold weight stream under sequential offload — and that
+one step is the entire delta. Everything that runs after it reproduced:
+
+| | run 1 (2026-08-04 23:14) | run 2 (2026-08-05 15:22) | delta |
+|---|---|---|---|
+| stage 1, step 1 | 24.55 s | 62.88 s | **+156%** |
+| stage 1, steps 2-8 | 5.35 s/it | 5.59 s/it | +4.5% |
+| stage 2, 3 steps @704x1280 | 10.54 s/it | 10.32 s/it | −2.1% |
+| `sample_s` total | 108.1 s | 159.1 s | **+47%** |
+| peak torch / phys / commit | 4.1 / 60.8 / 67.1 GB | 4.1 / 61.0 / 68.8 GB | — |
+
+So **§3 gets a sixth reading rule in practice: quote per-step, not totals.**
+Steady-state s/step reproduces within 5%; a `sample_s` difference smaller than
+~50s between two runs on this box is box state, not a recipe.
+
+**Applied to the fp8 row, whose headline was two totals.** "1.47x" is
+108.1/73.3. Measured against today's re-run of the *same bf16 recipe* the same
+arithmetic gives 2.17x. The gain is real — it is visible in the part that
+reproduces — but it must be quoted per-step: stage 2 **6.17 s/it fp8 against
+10.54 and 10.32 bf16 = 1.67-1.71x**, stage 1 steady **1.23 against 5.35 and
+5.59 s/it**. And **the "break-even at exactly 4 clips" figure is withdrawn as
+over-precise**: 139s of cast against a per-clip saving of 34.8s (run-1 totals)
+gives 4.0 clips, against 85.8s (run-2 totals) gives 1.6, and against
+denoise-only per-step arithmetic (93.0s bf16 → 39.5s fp8) gives **2.6**. The
+honest figure is **~3 clips, range 2-4**. Nothing else in the fp8 row changes:
+residency, the host cost and the fidelity numbers were all measured within a
+single run and carry no cross-run term.
+
+### 2026-08-05 — fp8 at batch 2: not run, and the gap stands for its own reason
+
+No clip, no sidecar, no jsonl row, no log, no staged command. Verified against
+the box rather than a report: the only files written to `C:\banyan-farm` after
+08:10 on 2026-08-05 are the reproducibility directory and the telemetry daemon's
+three; GPU at 0 MiB / 0% util; box up since 06:07:05 with no new bugcheck.
+
+Recorded because the coverage matrix on `COMPARISON.html` already carries this
+cell as an explained gap — *"not scheduled: b1 screening first"* — and that
+reason is unchanged and is the right one. **`ltx23fp8` b1 has not been
+screened**, and no batch point above b1 on a build may be scheduled before its
+b1 sample has been. The technical question underneath is also unchanged: b1 fits
+with **1543 of 24463 MiB spare**, and a second latent in the same resident loop
+spends that margin on activations rather than weights — the one batch step on
+this box where the card, not the host, is the wall. That is a founder-gated
+question, not an omission.
+
 ### Open observations on the measured 5B T1/T2/T3 rows
 
 Measured anomalies only — six clips, one seed each, and nothing here is a verdict.
@@ -416,9 +487,13 @@ Two constraints on top of that, both from tonight:
   had ever had host RAM measured, which the T1 row and open observation 5 both
   contradict.)
 - **Card B (5070 Ti, 12GB) is a proof-pass machine, not a 704x1280 renderer.**
-  Seconds-per-clip on it: no data from anyone. Card A peaks at 22.9GB on this
+  Seconds-per-clip on it: no data from anyone — **still true on 2026-08-05**, and
+  see §4, which now records the box itself. Card A peaks at 22.9GB on this
   shape and activations dominate, so quantised weights do not rescue it. Give it
-  T1/T2 stills, VO and 480x832 drafts.
+  T1/T2 stills, VO and 480x832 drafts. Two things §4 adds that change the shape
+  of this paragraph without changing its verdict: the box has **32GB of host
+  RAM, not the 16GB** this file's sources assumed, and the binding constraint
+  for a 5B preview on it is probably **host commit, not the card**.
 
 ## 3. How to update this table
 
@@ -443,3 +518,62 @@ Two constraints on top of that, both from tonight:
 7. New weights get `licence_gate.py` / `vet_model.py` before download, and the
    licence cell quotes the governing document, not the HF tag — three rows above
    exist because a tag disagreed with the LICENSE file.
+8. **Quote per-step, not totals** (added 2026-08-05 from the reproducibility
+   control). Two byte-identical runs of the same recipe scored 108.1s and
+   159.1s. Steady-state s/step reproduces within 5%; a `sample_s` total carries
+   a cold-start term worth ~50s on this box. A cross-run difference in totals
+   smaller than that is not a result, and any total quoted should name its run.
+
+## 4. Platforms — the two boxes, and what each is measured to do
+
+Every row above was measured on **one** of these. The distinction had been
+implicit and one afternoon of confusion made it worth writing down: **there is
+no 4070 in this fleet** (founder's correction, 2026-08-05), there are two
+Windows GPU laptops, and **both of them report `hostname` = `MSI`**. Identify a
+box by its GPU or its ssh user, never by hostname. Measured facts only; the
+"video throughput" cell is the fleet-level question and one of the two answers
+is *unmeasured*, which is different from *no*.
+
+| | **Box A** | **Box B** |
+|---|---|---|
+| ssh alias | `rtx5090` | `rtx5070` — **added 2026-08-05**, `192.168.3.153`, user `olegm`, key `~/.ssh/banyan-5070` |
+| user | `artvn` | `olegm` |
+| chassis | MSI, RTX 5090 Laptop | MSI Vector 16 HX AI A2XWHG |
+| GPU | RTX 5090 Laptop, **24463 MiB** | RTX 5070 Ti Laptop, **12227 MiB** |
+| host RAM | **68.1GB** visible | **31.4GB** visible / 32GB installed — **corrects the 16GB** assumed in `misc-candidates-source.md:58` |
+| commit limit | **123.9GB** (grown to 140.6GB under the A14B load) | **67.4GB** (31.4 phys + 36GB pagefile), 714.7GB free on C: so it can grow |
+| reachability | LAN ssh since 2026-08-01 | **LAN ssh since 2026-08-05.** Before that it was a USB-bundle enrollment (`STATE.md` 2026-07-30) with no remote route |
+| repo checkout | `C:\banyan-farm\banyan-city` | same path, fast-forwarded 231 commits off the stale `farm-results-msi` to `main` @ `ae13cc6` on 2026-08-05 |
+| video throughput | **MEASURED** — every row in §1 | **NO DATA, from anyone.** The staged TI2V-5B preview probe (`C:\banyan-farm\probe-5070-ti2v5b\`) has never been run |
+| stability | two unclean reboots on 2026-08-04/05, both under batch pressure; Kernel-Power 41 at 06:07:05 | no render has ever run on it |
+
+**Why Box B still has no number, and why that is not the same as "too small".**
+The sample was staged with byte-verified inputs (conditioning still, prompt and
+negative all sha256-matching Box A's; same model snapshot `b8fff731`; torch
+2.11.0+cu128, diffusers 0.39.0) and then **not run**: the laptop was on battery
+at 9.5% falling to 8%, `PowerOnline=False`, and Windows' own task policy
+(`Stop On Battery Mode, No Start On Batteries`) refused it. Overriding that
+policy would have put a 5-10 minute 100%-util render on a machine minutes from a
+hard power-off — the same class of event as the two bugchecks above — and the
+number it produced would have been taken at a **442 MHz** SM clock with
+`power.limit` reading `[N/A]` against a 140W part, which is not the box's
+throughput. It needs a human to plug it in.
+
+**What the fit question actually is, stated before the sample so the sample can
+falsify it** (DERIVED-FROM-OURS, `bench-platform/fleet-inventory-20260805.txt`):
+
+- **Card side — plausible, sub-gigabyte margin, and the naive reading is
+  wrong.** The 5B preview b1 row's **14.4GB torch peak is an untiled VAE
+  decode**: `bench_5b_modes.py` does `from_pretrained` → `enable_model_cpu_offload`
+  and never calls `tile_vae()`, so with no two components resident together that
+  peak cannot be a weight ceiling. `pipeline/wan_i2v.py`'s `stage_simple` **does**
+  tile the VAE, which puts the ceiling at the largest single resident module —
+  UMT5-XXL at ~11.4GB bf16 — against 11.94GiB of card. So "14.4 > 12.2, proven
+  impossible" does not follow.
+- **Host side — the sharper risk, and newly visible.** That same row peaks at
+  **80.6GB of commit** against Box B's **67.4GB** limit. Windows may grow the
+  pagefile into 714GB of free disk, or may not.
+- **Therefore: one proven video box, one unproven.** Box B stays a stills / VO /
+  480x832-draft machine in every plan until the sample runs. Nothing here says
+  it cannot render; it says nobody has measured it, and the two statements must
+  not be allowed to merge.
