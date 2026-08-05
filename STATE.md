@@ -1293,9 +1293,14 @@ then flattened with ~17.5 GB free, which fits "the safetensors file cache was
 released after load" as well as anything paging, and no page-fault rate was sampled.
 A measured curve with no mechanism attached is the honest artifact.
 
-**It did not crash.** The log ends after step 3 with no rc line, no traceback and no
-CUDA error, while the trace's next samples show GPU util and memory at **0** and
-commit collapsing 59.4 → 15.6 GB — killed from outside, not an exception. The box was
+**It did not crash, and the missing rc line is what proves it.** `probe-5070.cmd`
+runs python and *then* echoes `==== probe-5070 exited rc=%ERRORLEVEL% ====` into the
+log. A python-side failure — a CUDA OOM, a host OOM, any exception — leaves the
+parent `cmd` alive to write that line. **There is no rc line at all**, so the whole
+process tree went down together, which rules out a crash in the renderer and points
+squarely at the scheduler stopping the task. The log also ends with no traceback and
+no CUDA error, while the trace's next samples show GPU util and memory at **0** and
+commit collapsing 59.4 → 15.6 GB. The box was
 being unplugged to be carried to another room, and `schtasks` defaults include
 stopping a task on the switch to battery: the same `Stop On Battery Mode` policy this
 file already recorded as having once refused to start this very sample. Unconfirmed
@@ -1330,5 +1335,15 @@ trace loop self-terminates after 90 samples so it is not running, but the
 registrations are still there. The re-fire is one command once the box is back
 (`cmd /c C:\banyan-farm\probe-5070-ti2v5b\register.cmd`), and the tiled renderer is
 already staged beside it as `wan_i2v_tiled.py`, hash-verified — rename it over
-`wan_i2v.py` first and the next run tests the tiled path. Its Wi-Fi MAC is
-**9C:67:D6:85:0A:B6** if the move changed its IP off 192.168.3.153.
+`wan_i2v.py` first and the next run tests the tiled path.
+
+**`~/.ssh/config`'s `rtx5070` block is now stale, and not because of the box.** This
+Mac re-addressed from **192.168.3.x to 192.168.70.x** during the same window — Oleg's
+iPhone shows up on the new subnet under the MAC it had on the old one, so the LAN
+itself changed, not just the laptop. `HostName 192.168.3.153` cannot resolve to the
+box from here regardless of whether it is awake. To re-find it: sweep the current
+subnet and match its Wi-Fi MAC **9C:67:D6:85:0A:B6**
+(`arp -a | grep -i 9c:67:d6:85`), then update the `HostName` line. As of this entry
+it is not on 192.168.70.x at all — nine real ARP entries, none of them the box —
+which is what a laptop closed for a room move looks like. Nothing here is evidence
+about the box's health.

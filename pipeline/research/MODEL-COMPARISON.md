@@ -701,10 +701,14 @@ consistent with the safetensors file cache being released after load as with
 anything paging out; page-fault rates were never sampled. It stays a measured curve
 with no mechanism attached.
 
-**Why it stopped is not instability.** The log ends after step 3 with **no rc line,
-no traceback and no CUDA error**, while the trace's next samples show GPU memory and
-util drop to **0** and commit collapse 59.4 → 15.6 GB. A Python exception writes a
-traceback; this process was killed from outside. The box was being unplugged to be
+**Why it stopped is not instability, and the missing rc line is the evidence.**
+`probe-5070.cmd` echoes `==== probe-5070 exited rc=%ERRORLEVEL% ====` *after* the
+python call, so any renderer-side failure — CUDA OOM included — leaves the parent
+`cmd` alive to write it. **No rc line was written at all**, so the whole process tree
+died together: that rules out a crash inside the renderer and points at the task
+being stopped. The log also carries no traceback and no CUDA error, while the trace's
+next samples show GPU memory and util drop to **0** and commit collapse
+59.4 → 15.6 GB. The box was being unplugged to be
 carried to another room, and these tasks are registered through `schtasks`, whose
 default settings include stopping on a switch to battery — the same
 `Stop On Battery Mode` policy already recorded above as having refused to start this
