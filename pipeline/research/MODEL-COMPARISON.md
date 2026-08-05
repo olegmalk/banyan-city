@@ -358,22 +358,72 @@ honest figure is **~3 clips, range 2-4**. Nothing else in the fp8 row changes:
 residency, the host cost and the fidelity numbers were all measured within a
 single run and carry no cross-run term.
 
-### 2026-08-05 — fp8 at batch 2: not run, and the gap stands for its own reason
+### 2026-08-05 16:00 — fp8 at batch 2: RUN, and it does not fit. Neither does its fallback
 
-No clip, no sidecar, no jsonl row, no log, no staged command. Verified against
-the box rather than a report: the only files written to `C:\banyan-farm` after
-08:10 on 2026-08-05 are the reproducibility directory and the telemetry daemon's
-three; GPU at 0 MiB / 0% util; box up since 06:07:05 with no new bugcheck.
+Founder-sanctioned, and it supersedes the "not scheduled — b1 screening first"
+note this section used to carry. **No clip, no sidecar, no jsonl row** — nothing
+finished, so by rule 2 nothing goes in the table above. What follows is the
+evidence, and per rule 8 the comparisons are per-step.
 
-Recorded because the coverage matrix on `COMPARISON.html` already carries this
-cell as an explained gap — *"not scheduled: b1 screening first"* — and that
-reason is unchanged and is the right one. **`ltx23fp8` b1 has not been
-screened**, and no batch point above b1 on a build may be scheduled before its
-b1 sample has been. The technical question underneath is also unchanged: b1 fits
-with **1543 of 24463 MiB spare**, and a second latent in the same resident loop
-spends that margin on activations rather than weights — the one batch step on
-this box where the card, not the host, is the wall. That is a founder-gated
-question, not an omission.
+**Attempt 1, `--offload model` (the resident build), 15:52:43 → killed 15:56:36.**
+It is not an OOM. **The card never raised** — it spilled, which is the same
+`ACTION-PLAN §1 T0` failure mode the AnimeGen b4 row already carries, on a
+different model:
+
+- **Stage 1 at 352x640 CLEARED at batch 2**, 8 steps in 34s. Per step, steady
+  state (excluding a first step that is weight onload — 18.68s here, 12.43s in
+  the b1 reference): **~2.2 s/step against b1's ~1.3**, i.e. **1.7x the per-step
+  cost for 2x the output**. On stage 1 alone, batching fp8 gains, and gains by
+  about as much as the bf16 build's b2 did. `stage1 latents (2, 128, 9, 20, 11)`
+  and `embeds expanded to batch 2` confirm two real latents, not one twice.
+- **Stage 2 at 704x1280 is the wall.** Step 1 of 3 was still running after ~71s
+  against the b1 reference's **8.37s for the same step** — past 8x, where the
+  abort gate was 2x — and **no stage-2 step ever completed**. An external
+  `nvidia-smi` sample at 15:55:57 read **24112 of 24463 MiB at 100% util**, and
+  a second at 15:56:19 read the same: **98.6% of the card**, held. That is the
+  WDDM sysmem-fallback signature, and it is the signature that bugchecked this
+  host on 2026-08-04, so the process was killed rather than allowed to converge.
+- **The host was not the constraint and never came close.** Peak physical was
+  **65.4 of 68.1GB during weight load** — under the 66.5GB abort gate — and by
+  the time the card was pinned, physical had fallen to **43.99GB** with commit at
+  **85.27 of 123.9GB**. The b1 prediction was right about which resource runs
+  out: b1 fits with 1543 MiB spare, and a second latent's stage-2 activations
+  spend exactly that.
+
+**Attempt 2, `--offload group` — the one sanctioned fallback, 15:58:14 → rc=1 at
+16:00:23.** It failed in 129s, and **not on memory**: physical at stage 1 was
+**46.3GB against attempt 1's 64.3**, so group offload was doing its job.
+
+```
+!! DIED in stage 'stage1-denoise-352x640-8steps':
+   RuntimeError: Input type (CUDABFloat16Type) and weight type (CPUBFloat16Type)
+   should be the same
+     latents, conditioning_mask = self.prepare_latents(
+     File ".../diffusers/pipelines/ltx2/pipeline_ltx2_image2video.py", line 722,
+       in prepare_latents
+       retrieve_latents(self.vae.encode(image[i].unsqueeze(0).unsqueeze(2)), ...)
+```
+
+**`--offload group` is broken for this pipeline, and the break has nothing to do
+with batch size.** `GroupOffloadingHook` installs a **`pre_forward`** hook and
+only that (`diffusers/hooks/group_offloading.py:368,388`, diffusers 0.39.0), so
+the weights of a module are onloaded when its `forward` runs. `vae.encode` is not
+`forward`. The image-conditioning encode therefore meets a VAE that is still on
+CPU, before any denoise step and before latent count means anything. **This makes
+`ltx_i2v.py:504-508`'s "the fallback if `model` OOMs" false as written**, and
+that comment is corrected in the same commit as this note.
+
+**What this closes and what it does not.** It closes fp8 b2 on this box: the only
+offload strategy that makes fp8 fast enough to matter is the one whose margin b2
+consumes, and the documented alternative does not run at all. It does **not**
+close batching for LTX generally — the bf16 b2 row above still stands at 1.14x,
+and stage 1 here says the fp8 build would batch happily if stage 2 were not
+sharing the card with a resident transformer. The untried lever is a **stage-split
+offload** (resident through stage 1, streamed through stage 2), which is a new
+recipe and therefore a new one-sample question, not a retry of this one.
+
+**Still owed, and unchanged by any of the above: `ltx23fp8` b1 has not been
+screened** (R4). Nothing here is a verdict on the look of anything.
 
 ### Open observations on the measured 5B T1/T2/T3 rows
 

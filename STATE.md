@@ -1031,6 +1031,9 @@ bit-deterministic through the h264 encode.
 
 ### Did not happen 1: fp8 at batch 2 — nothing was run, nothing was staged
 
+**SUPERSEDED the same afternoon — it ran at 15:52 and the card spilled. See the
+2026-08-05 ~12:00Z entry at the end of this file.** True as written at 15:30.
+
 No clip, no sidecar, no jsonl row, no log, no cmd file. Checked the box directly
 rather than taking a report for it: the only files written to `C:\banyan-farm`
 after 08:10 today are the repro directory and the telemetry daemon's own three.
@@ -1082,3 +1085,32 @@ manually at 15:19, but still carrying **Next Run Time 2026-08-05 23:59**. Left
 alone it would have re-rendered a clip nobody asked for, overnight, unattended —
 a render with no consumer. Thirteen `banyan-*` tasks remain, all Ready, plus
 `banyan-telemetry` Running.
+
+## 2026-08-05 ~12:00Z — fp8 at batch 2 ran, and the card spilled instead of raising
+
+The "did not happen 1" above is now closed: founder-sanctioned, the fp8 b2 probe
+ran. **It does not fit, and it is not an OOM — the card pinned at 24112 of 24463
+MiB (100% util) and spilled to host through the WDDM fallback rather than
+raising.** Stage 1 at 352x640 cleared cleanly at two latents (~2.2 s/step against
+b1's ~1.3 — 1.7x per step for 2x the output, a real gain); stage 2 at 704x1280
+never completed a single one of its three steps, running past ~71s against the b1
+reference's 8.37s for the same step. Killed at 15:56:36 rather than allowed to
+converge, because that is the signature that bugchecked this host yesterday. The
+host was never the wall: 65.4GB of 68.1 at weight load, 44.0GB while the card was
+pinned. The one sanctioned fallback, `--offload group`, then died in 129s (rc=1)
+for a reason that has nothing to do with memory or batch size — diffusers 0.39.0
+onloads group-offloaded weights on `forward`, and the image conditioning goes
+through `vae.encode`, so `prepare_latents` hands a CUDA tensor to a CPU VAE.
+**`--offload group` is unavailable on this pipeline, not a fallback**;
+`ltx_i2v.py`'s comment saying otherwise is corrected. No clip, no sidecar, no
+jsonl row — nothing finished, so nothing entered the tables. `ltx23fp8` b1 is
+**still unscreened** (R4). Evidence: `probe-ltx-fp8-b2.log`,
+`probe-ltx-fp8-b2-group.log`, `probe-ltx-fp8-b2-trace.csv`.
+
+**The farm worker had been down ~42 minutes and nobody had noticed.** It was
+stopped for the 15:19 reproducibility render and never restarted — the agent that
+ran that render died mid-task. Restarted 16:01:44 via `schtasks /run /tn
+banyan-worker-start`; pids 7320 + 13076 are the documented parent+child pair, ONE
+worker, and it fetched at 16:01:51. Nothing was lost — the queue had been empty
+since the 06:59:53 `DONE`. **A stopped worker leaves no alarm anywhere**, which is
+worth a watchdog the next time someone stops one to take the host exclusive.

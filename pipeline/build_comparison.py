@@ -366,29 +366,38 @@ COVERAGE_GAPS = {
         "SAMPLES/batch-bench.jsonl + the b1 fp8 sidecar + probe-ltx-fp8.log "
         "+ fp8-fidelity-20260805.log, 2026-08-05"),
     ("ltx23fp8", "production", 2): (
-        "not scheduled — b1 screening first",
-        "No batch point on this build may be scheduled before its b1 sample has "
-        "been SCREENED, and b1 having now RUN is not that. b1 fits, but with 1543 "
-        "of 24463 MiB spare on the card, and a second latent in the same resident "
-        "loop spends that margin on activations rather than on weights — this is "
-        "the one batch step where the card, not the host, is the wall. The bf16 "
-        "build's own b1 -> b2 host slope (60.8 -> 64.2GB phys) still does not "
-        "transfer: it was measured with the transformer streamed, and b1 here "
-        "already sits at 64.6GB phys / 97.0GB commit before any second latent. "
-        "STILL NOT RUN as of the 2026-08-05 evening pass, and verified against the "
-        "box rather than a report: no clip, no sidecar, no jsonl row, no log, no "
-        "staged command — the only files written to C:\\banyan-farm after 08:10 "
-        "that day are the reproducibility run's directory and the telemetry "
-        "daemon's own three, with the GPU at 0 MiB. The cell is a decision that "
-        "held, not an attempt that failed.",
-        "derived 2026-08-05 from the b1 fp8 bench row + probe-ltx-fp8.log; "
-        "non-run re-verified on the box 2026-08-05 15:35"),
+        "DNF — spilled, then the fallback would not run",
+        "RUN 2026-08-05, founder-sanctioned, and it does not fit. NOT an OOM: the "
+        "card never raised, it SPILLED. Stage 1 at 352x640 cleared at batch 2 (8 "
+        "steps in 34s, ~2.2 s/step steady against b1's ~1.3 — 1.7x the per-step "
+        "cost for 2x the output, a real gain), and then stage 2 at 704x1280 pinned "
+        "the card: 24112 of 24463 MiB at 100% util (external nvidia-smi, two "
+        "samples 22s apart), step 1 of 3 still running past ~71s against the b1 "
+        "reference's 8.37s for that same step, and no stage-2 step ever completed. "
+        "Killed at 15:56:36 rather than allowed to converge, because that is the "
+        "WDDM sysmem-fallback signature that bugchecked this host on 2026-08-04. "
+        "The host was never the wall here — peak 65.4 of 68.1GB phys during weight "
+        "load, and down at 44.0GB with commit 85.3 of 123.9GB while the card was "
+        "pinned. The b1 margin predicted it exactly: 1543 MiB spare, and a second "
+        "latent's stage-2 activations spend it. The one sanctioned fallback, "
+        "--offload group, then failed for an unrelated reason in 129s (rc=1): "
+        "diffusers 0.39.0 onloads group-offloaded weights on `forward`, and the "
+        "image conditioning goes through vae.encode, so prepare_latents hands a "
+        "CUDA tensor to a CPU VAE. That break is independent of batch size. No "
+        "clip, no sidecar, no jsonl row — nothing finished, so nothing is claimed "
+        "in the tables above.",
+        "probe-ltx-fp8-b2.log + probe-ltx-fp8-b2-group.log + "
+        "probe-ltx-fp8-b2-trace.csv, 2026-08-05 16:00"),
     ("ltx23fp8", "production", 4): (
-        "closed by inheritance — host RAM",
-        "The bf16 build's b4 is closed on a host-RAM slope that the fp8 cast does "
-        "not change: the cast shrinks what sits on the CARD, not the per-latent "
-        "host cost. Nothing here will be run unless b1 and b2 say otherwise.",
-        "derived 2026-08-05 from SAMPLES/batch-bench.jsonl + the b1 sidecar"),
+        "closed — b2 answered it",
+        "This cell used to read 'closed by inheritance — host RAM', on the bf16 "
+        "build's slope. b2 has now been run and that reason was the wrong one: the "
+        "wall on the fp8 build is the CARD, not the host. b2 pinned 24112 of 24463 "
+        "MiB and spilled at 704x1280 with the host at 44GB of 68.1. Four latents "
+        "cannot fit where two did not, so nothing here will be run — and the "
+        "conclusion is now measured one step below rather than inherited two "
+        "builds across.",
+        "probe-ltx-fp8-b2.log, 2026-08-05 16:00"),
     ("ltx23", "production", 4): (
         "closed — host RAM, not VRAM",
         "LTX peaks at 7.2GB of 25.7GB at b2, so the card is not the constraint. "

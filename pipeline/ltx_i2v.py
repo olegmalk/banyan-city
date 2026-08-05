@@ -505,7 +505,20 @@ def _render_with(a, transformer, parts, dist, w, h) -> int:
     #               use_stream=True, record_stream=True) — the documented middle
     #               ground: whole transformer blocks move instead of leaves, and the
     #               next block onloads on a side stream while the current one
-    #               computes. Fits without the cast; the fallback if `model` OOMs.
+    #               computes.
+    #               BROKEN ON THIS PIPELINE as of diffusers 0.39.0 — measured
+    #               2026-08-05, probe-ltx-fp8-b2-group.log, rc=1 in 129s. It had
+    #               been described here as "the fallback if `model` OOMs"; it is
+    #               not, and it never ran. GroupOffloadingHook installs a
+    #               `pre_forward` hook and only that (diffusers/hooks/
+    #               group_offloading.py:368,388), so a module's weights onload when
+    #               its `forward` runs — but the image conditioning goes through
+    #               `vae.encode`, which is not `forward`. prepare_latents then hands
+    #               a CUDA tensor to a CPU VAE and raises "Input type
+    #               (CUDABFloat16Type) and weight type (CPUBFloat16Type) should be
+    #               the same", before step 0 and independent of batch size.
+    #               Fixing it means onloading the vae by hand around the encode;
+    #               nobody has, so treat this mode as unavailable, not as a fallback.
     # NOT COMBINABLE, and diffusers enforces it rather than us: enable_model_cpu_offload
     # calls _maybe_raise_error_if_group_offload_active(raise_error=True), so the
     # branch below is an if/elif by the library's own rule.
