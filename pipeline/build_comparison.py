@@ -44,9 +44,52 @@ CLIP_GLOBS = ["SAMPLES/*.mp4", "bench-T1T2T3/*.mp4", "SAMPLE-*.mp4"]
 
 # Batch-scaling bench files, read in this order. One shared row schema; the row's
 # `label` decides which model's table it lands in, so a new model needs a file and
-# no code. A file that does not exist yet is skipped silently — `batch-bench.jsonl`
-# is written by a render that has not run.
-BATCH_BENCH_FILES = ["SAMPLES/animegen-bench.jsonl", "SAMPLES/batch-bench.jsonl"]
+# no code. A file that does not exist yet is skipped silently — a render that has
+# not happened yet writes one later.
+BATCH_BENCH_FILES = ["SAMPLES/animegen-bench.jsonl", "SAMPLES/batch-bench.jsonl",
+                     "SAMPLES/ti2v5b-modes.jsonl"]
+
+# A bench row's `label` is whatever the renderer's --bench-label said, and the
+# renderers spell the model differently from the gallery filenames: wan_i2v
+# defaults to its MODELS key "ti2v-5b" while every clip on disk is named
+# "ti2v5b-...". Those are the same model, and until this map existed they were two
+# different tables — the batch section titled itself with the raw label "ti2v-5b",
+# found no registry entry, and never associated with the gallery group holding the
+# clips those very rows measured. Keys are lowercased labels; anything unlisted
+# passes through unchanged, so an unregistered model still gets its own table.
+LABEL_ALIAS = {
+    "ti2v-5b": "ti2v5b",
+    "ti2v5b": "ti2v5b",
+    "wan2.2-ti2v-5b": "ti2v5b",
+    "ltx-2.3": "ltx23",
+    "ltx2.3": "ltx23",
+    "ltx23": "ltx23",
+    "ltx23-distilled": "ltx23",
+    "animegen": "animegen",
+    "animegen-i2v": "animegen",
+}
+
+# The b1 comparator for a batch series that measured b2 and never re-measured b1,
+# JOINED from a real run in another file rather than typed in or left blank.
+#
+# The 5B production series is the case. Last night's probe measured b2 only —
+# there was no reason to re-measure b1, because the SAME recipe at b1 had already
+# run that afternoon as the T1/T2/T3 parameter sweep: same 704x1280, same 61
+# frames, same 14 steps, same guidance 5.0, same seed 20260732. T1-shift5.0 IS
+# that b1 point. A batch table with one row reads as if nothing is known about b1,
+# which is false and is the kind of gap that gets filled with an estimate later.
+#
+# JOINED, not synthesised, and the difference is the whole point: sample_s, s/step,
+# peak VRAM and host peak cross over verbatim from bench-t1t2t3.jsonl, throughput
+# is the one division the sweep row does not carry, and the cell names the file it
+# came from. NOTHING is written back to any jsonl — the corpus stays measured-runs-
+# only, and a joined view is not a new measurement. Cross-check that it is the same
+# run: SAMPLES/ti2v5b-production-b1-s20260732.mp4 is byte-identical to
+# bench-T1T2T3/T1-shift5.0.mp4, and its sidecar independently records the two
+# derived figures (0.0151 and 66.3) this join computes.
+BATCH_B1_JOIN = {
+    ("ti2v5b", "production"): ("bench-T1T2T3/bench-t1t2t3.jsonl", "T1-shift5.0"),
+}
 
 GALLERY_NAME = re.compile(
     r"^(?P<model>[A-Za-z0-9]+)-(?P<mode>preview|production)"
@@ -267,13 +310,78 @@ def sha(path: Path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def num(v, digits=1):
-    if v is None:
-        return None
+# What a cell says when the row measured nothing for it. An em-dash, not "None"
+# and not a zero: a gap has to LOOK like a gap (§3.4, "record `no data` when it
+# is"), and the one thing it must never look like is a number.
+DASH = "—"
+
+
+def num(v, digits=1, unit=""):
+    """Format a measured figure, or the gap mark. NEVER the string "None".
+
+    The unit belongs to this function and not to the f-string that calls it,
+    which is the whole fix: `f"{num(x)}GB"` renders "NoneGB" the moment x is null,
+    and null is a normal value in a bench row — bench_row() writes null for every
+    field the run did not measure, on purpose. A two-stage LTX row carries a null
+    s_per_step by design, and the 5B rows carried a null shift for a week. Cells
+    like that printed literal "None" and "NoneGB" on this page.
+    """
+    if v is None or v == "":
+        return DASH
     try:
-        return f"{float(v):.{digits}f}".rstrip("0").rstrip(".")
+        return f"{float(v):.{digits}f}".rstrip("0").rstrip(".") + unit
     except (TypeError, ValueError):
-        return str(v)
+        return escape(str(v)) + unit
+
+
+def model_key(label):
+    """Bench label -> the page's model key. Unknown labels pass through."""
+    return LABEL_ALIAS.get(str(label or "").lower(), str(label or "unlabelled"))
+
+
+def per_video_second(row):
+    """s(wall) per 1s of video, DERIVED from the row's own sample_s and video_s.
+
+    Not read from `compute_per_video_s`, because that column is not one quantity.
+    The AnimeGen and 5B-modes files write sample_s/video_s there (seconds per
+    second of video, which is what the name says); wan_i2v's bench_row call writes
+    sample_s/batch (seconds per CLIP) — so batch-bench.jsonl's 5B b2 row says
+    382.3 where the same run's sidecar says 150.4. Both numbers are true and they
+    are answers to different questions, which is exactly why the page must not
+    print whichever one happens to be in the file under a header that names only
+    one of them. Two measured fields and one division say it unambiguously.
+    """
+    s, v = row.get("sample_s"), row.get("video_s")
+    try:
+        return round(float(s) / float(v), 1) if s and v else None
+    except (TypeError, ValueError, ZeroDivisionError):
+        return None
+
+
+def joined_b1_row(src_file, name):
+    """The b1 row of a batch table, lifted from a single-clip bench file."""
+    src = {r.get("name"): r for r in load_jsonl(REPO / src_file)}.get(name)
+    if not src or not src.get("sample_s"):
+        return None
+    frames, sample_s = src.get("frames"), float(src["sample_s"])
+    # 24fps is this page's standing derivation for a row that records frames and
+    # not seconds (see frames_of), and it is the fps every clip in the comparison
+    # was rendered at. Tagged as derived wherever it shows.
+    video_s = round(float(frames) / 24.0, 3) if frames else None
+    row = dict(src)
+    row.update({
+        "batch": 1, "seeds": [src.get("seed")] if src.get("seed") else [],
+        "video_s": video_s,
+        "throughput_s_per_s": (round(video_s / sample_s, 4) if video_s else None),
+        "compute_per_video_s": (round(sample_s / video_s, 1) if video_s else None),
+        "ok": True,
+        # a literal · and not the entity: this string is printed raw in the source
+        # cell and escaped in the note under the table, and only one of those two
+        # is right for an entity.
+        "_src": f"{Path(src_file).name} · {name}",
+        "_joined": True,
+    })
+    return row
 
 
 def collect():
@@ -283,17 +391,29 @@ def collect():
     # Files that do not exist yet are simply absent — a render writes them later.
     batch_rows = []
     for name in BATCH_BENCH_FILES:
-        batch_rows += load_jsonl(REPO / name)
-    # Grouped by (label, MODE), not label alone. Batch scaling only means anything
-    # within one recipe: AnimeGen's preview series is 480x832/33f and its
+        for r in load_jsonl(REPO / name):
+            r.setdefault("_src", Path(name).name)
+            batch_rows.append(r)
+    # Grouped by (model key, MODE), not label alone. Batch scaling only means
+    # anything within one recipe: AnimeGen's preview series is 480x832/33f and its
     # production row is 704x1280/61f, and putting a 214.6s/video-second production
     # point in the same column as a 65.2s preview point invites reading the recipe
     # change as a batch effect. Same discipline as MODEL-COMPARISON's "record the
     # batch and the mode with the number, always".
     batch_groups = {}
     for r in batch_rows:
-        key = (str(r.get("label") or "unlabelled"), str(r.get("mode") or "?"))
+        key = (model_key(r.get("label")), str(r.get("mode") or "?"))
         batch_groups.setdefault(key, []).append(r)
+    # A joined b1 only lands where the series actually lacks one — it must never
+    # displace a row somebody measured.
+    for key, (src_file, name) in BATCH_B1_JOIN.items():
+        rows = batch_groups.get(key)
+        if not rows or any(r.get("batch") == 1 for r in rows):
+            continue
+        joined = joined_b1_row(src_file, name)
+        if joined:
+            joined.setdefault("mode", key[1])
+            rows.append(joined)
     for rows in batch_groups.values():
         rows.sort(key=lambda r: r.get("batch") or 0)
     t1t2t3 = {r["name"]: r for r in load_jsonl(REPO / "bench-T1T2T3/bench-t1t2t3.jsonl")}
@@ -315,7 +435,7 @@ def collect():
 
             m = GALLERY_NAME.match(stem)
             if m:
-                label, mode = m["model"], m["mode"]
+                label, mode = model_key(m["model"]), m["mode"]
                 batch, seed = int(m["batch"]), m["seed"]
             else:
                 # bench clips and the root sample: the sidecar is the source
@@ -324,7 +444,7 @@ def collect():
                 batch = (meta or {}).get("batch")
                 seed = str((meta or {}).get("seed", "")) or None
                 if stem.startswith("SAMPLE-"):
-                    label = stem.split("-")[1]
+                    label = model_key(stem.split("-")[1])
                 # The T1/T2/T3 sidecars predate the `mode:` field. Their recipe is
                 # the production one (704x1280, 61f, 14 steps, guidance 5.0) and one
                 # of the six IS the production clip under another name, so calling
@@ -340,7 +460,9 @@ def collect():
                 bench = t1t2t3.get(task.split("/", 1)[1])
             elif label and batch:
                 for row in batch_groups.get((label, str(mode)), []):
-                    if row.get("batch") == batch:
+                    # ok is False on a run that DIED. Its numbers describe a
+                    # failure, not this clip, so they never get attached to one.
+                    if row.get("batch") == batch and row.get("ok", True):
                         bench = row
                         break
 
@@ -476,6 +598,11 @@ table.num td.wrapcell{white-space:normal;min-width:260px;font-family:inherit;
   font-size:12.5px;color:#cbd3db}
 table.num tr:last-child td{border-bottom:none}
 table.num tr.best td{background:#12211b}
+/* a run that DIED. Dimmed and struck, never deleted: the b4 attempt that
+   bugchecked the host is evidence, and a table that quietly drops it invites
+   somebody to schedule that run again. */
+table.num tr.dnf td{background:#25171a;color:var(--dim);text-decoration:line-through}
+table.num tr.dnf td:first-child,table.num tr.dnf .src{text-decoration:none}
 .win{color:var(--prod)}
 .lose{color:var(--warn)}
 .slist{display:flex;flex-direction:column;gap:10px}
@@ -555,7 +682,7 @@ def clip_card(clip, wide=False, show_prompt=True, title_override=None, sub=None)
     rows.append(("size", escape(str(meta.get("size", bench.get("size") if bench else None)
                                    or "—"))))
     if secs:
-        rows.append(("length", f"{num(secs, 3)}s"
+        rows.append(("length", num(secs, 3, "s")
                                + (f" &middot; {frames}f{fnote}" if frames else "")))
     rows.append(("steps", escape(str(meta.get("steps", bench.get("steps") if bench else "")
                                      or "—"))))
@@ -572,9 +699,8 @@ def clip_card(clip, wide=False, show_prompt=True, title_override=None, sub=None)
     if bench and bench.get("sample_s"):
         b = int(bench.get("batch") or 1)
         span = f" <span class=\"src\">(all {b} clips)</span>" if b > 1 else ""
-        rows.append(("sample_s", f"{num(bench['sample_s'])}s{span}"))
-        if bench.get("s_per_step"):
-            rows.append(("per step", f"{num(bench['s_per_step'], 2)}s"))
+        rows.append(("sample_s", num(bench["sample_s"], 1, "s") + span))
+        rows.append(("per step", num(bench.get("s_per_step"), 2, "s")))
     if cpv:
         rows.append(("s/video-s", f"<b>{cpv}s</b> <span class=\"src\">{cpv_src}</span>"))
     tp = meta.get("throughput_s_video_per_s_wall") or (
@@ -586,12 +712,13 @@ def clip_card(clip, wide=False, show_prompt=True, title_override=None, sub=None)
     # memory — the offload label is mandatory
     off = reg.get("offload")
     if bench and bench.get("peak_torch_gb"):
-        rows.append(("peak VRAM", f"{num(bench['peak_torch_gb'])}GB torch"
-                                  f" of {num(bench.get('device_total_gb'))}GB"
+        rows.append(("peak VRAM", num(bench["peak_torch_gb"], 1, "GB torch")
+                                  + " of " + num(bench.get("device_total_gb"), 1, "GB")
                                   + (f" <span class=\"src\">{escape(off)}</span>" if off else "")))
         if bench.get("host_peak_phys_gb"):
-            rows.append(("host peak", f"{num(bench['host_peak_phys_gb'])}GB phys /"
-                                      f" {num(bench['host_peak_commit_gb'])}GB commit"))
+            rows.append(("host peak",
+                         num(bench.get("host_peak_phys_gb"), 1, "GB phys") + " / "
+                         + num(bench.get("host_peak_commit_gb"), 1, "GB commit")))
     elif doc.get("vram"):
         rows.append(("peak VRAM", f"{escape(doc['vram'])}"
                      + (f" <span class=\"src\">{escape(off)}, {DOC}</span>" if off else "")))
@@ -818,22 +945,27 @@ def build():
     for i, (key, c, tp) in enumerate(tp_rows):
         cpv, cpv_src = compute_per_video_s(c)
         bench, doc = c["bench"], DOC_ONLY.get(c["stem"], {})
-        vram = (f"{num(bench['peak_torch_gb'])}GB / {num(bench.get('device_total_gb'))}GB"
-                if bench and bench.get("peak_torch_gb") else doc.get("vram", "no data"))
-        host = (f"{num(bench['host_peak_phys_gb'])}G phys / "
-                f"{num(bench['host_peak_commit_gb'])}G commit"
+        # num() escapes its own fallback, so these two are ALREADY html-safe and
+        # must not be escaped a second time at the interpolation site — the doc
+        # branch is the only raw text here.
+        vram = (num(bench["peak_torch_gb"], 1, "GB") + " / "
+                + num(bench.get("device_total_gb"), 1, "GB")
+                if bench and bench.get("peak_torch_gb")
+                else escape(doc.get("vram", "no data")))
+        host = (num(bench.get("host_peak_phys_gb"), 1, "G phys") + " / "
+                + num(bench.get("host_peak_commit_gb"), 1, "G commit")
                 if bench and bench.get("host_peak_phys_gb")
-                else doc.get("host", "no data"))
+                else escape(doc.get("host", "no data")))
         off = MODELS.get(model_of(c), {}).get("offload", "unlabelled")
         best = ' class="best"' if i == 0 else ""
         A(f"<tr{best}><td>{escape(MODELS.get(model_of(c), {}).get('title', model_of(c)))}</td>"
           f"<td>{escape(str(c['mode']))}</td><td>b{c['batch']}</td>"
           f"<td>{escape(str(c['meta'].get('size', '?')))} &middot; "
-          f"{num(video_seconds(c), 3)}s</td>"
+          f"{num(video_seconds(c), 3, 's')}</td>"
           f'<td><b{" class=\"win\"" if i == 0 else ""}>{num(tp, 4)}</b></td>'
-          f"<td>{cpv}s</td>"
-          f'<td>{escape(vram)}<br><span class="src">{escape(off)}</span></td>'
-          f"<td>{escape(host)}</td>"
+          f"<td>{f'{cpv}s' if cpv else DASH}</td>"
+          f'<td>{vram}<br><span class="src">{escape(off)}</span></td>'
+          f"<td>{host}</td>"
           f'<td><span class="src">{escape(cpv_src or "sidecar")}</span></td></tr>')
     A("</tbody></table></div>")
     A('<p class="note" style="margin-top:10px">Two corrections that stop these cells '
@@ -871,39 +1003,69 @@ def build():
               'cost at b1 and no more than that.</p>')
         # the win/lose marks are derived, not typed: fastest row wins, and any row
         # slower than its own b1 baseline loses. No editorial input.
+        #
+        # A ROW WITH ok:false IS A DEATH, NOT A DATA POINT. It stays visible —
+        # deleting the evidence of a run that died is how a cliff gets forgotten —
+        # but it is excluded from the winner and from the baseline, because a run
+        # that did not finish has no throughput to be fastest at.
         tps = {r.get("batch"): (float(r["throughput_s_per_s"])
-                                if r.get("throughput_s_per_s") else None)
+                                if r.get("throughput_s_per_s") and r.get("ok", True)
+                                else None)
                for r in rows}
         best_b = max((b for b, t in tps.items() if t is not None),
                      key=lambda b: tps[b], default=None)
         base = tps.get(1)
+        joined = [r for r in rows if r.get("_joined")]
         A('<div class="tw"><table class="num"><thead><tr>'
           "<th>Batch</th><th>Clips</th><th>Mode &middot; size</th>"
           "<th>sample_s (whole batch)</th><th>s/step</th>"
           "<th>s(video)/s(wall)</th><th>s per 1s video</th><th>Peak VRAM</th>"
+          "<th>Source</th>"
           + ("<th>Reading</th>" if reading else "")
           + "</tr></thead><tbody>")
         for r in rows:
             b = r.get("batch")
             tp = tps.get(b)
-            cls = ' class="best"' if b == best_b and len(rows) > 1 else ""
+            dead = not r.get("ok", True)
+            cls = ' class="dnf"' if dead else (
+                ' class="best"' if b == best_b and len(rows) > 1 else "")
             arrow = ""
             if tp is not None and len(rows) > 1:
                 if b == best_b:
                     arrow = "win"
                 elif base is not None and tp < base:
                     arrow = "lose"
-            A(f"<tr{cls}><td><b>b{b}</b></td><td>{len(r.get('seeds', []))}</td>"
+            A(f"<tr{cls}><td><b>b{b}</b>"
+              + ('<br><span class="src">did not finish</span>' if dead else "")
+              + f"</td><td>{len(r.get('seeds', []))}</td>"
               f"<td>{escape(str(r.get('mode') or '?'))} &middot; "
               f"{escape(str(r.get('size') or '?'))}</td>"
-              f"<td>{num(r.get('sample_s'))}s</td><td>{num(r.get('s_per_step'), 2)}s</td>"
+              f"<td>{num(r.get('sample_s'), 1, 's')}</td>"
+              f"<td>{num(r.get('s_per_step'), 2, 's')}</td>"
               f'<td class="{arrow}"><b>{num(r.get("throughput_s_per_s"), 4)}</b></td>'
-              f'<td class="{arrow}">{num(r.get("compute_per_video_s"))}s</td>'
-              f"<td>{num(r.get('peak_torch_gb'))}GB of "
-              f"{num(r.get('device_total_gb'))}GB</td>"
+              # derived here, not read from the column — see per_video_second
+              f'<td class="{arrow}">{num(per_video_second(r), 1, "s")}</td>'
+              f"<td>{num(r.get('peak_torch_gb'), 1, 'GB')} of "
+              f"{num(r.get('device_total_gb'), 1, 'GB')}</td>"
+              f'<td><span class="src">{escape(str(r.get("_src") or DASH))}'
+              + ('<br>joined, derived @24fps' if r.get("_joined") else "")
+              + "</span></td>"
               + (f'<td class="wrapcell">{reading.get(b, "")}</td>' if reading else "")
               + "</tr>")
         A("</tbody></table></div>")
+        if joined:
+            A('<p class="note" style="margin-top:10px"><b>The b1 row is joined from '
+              'another file, not measured again.</b> ' + " ".join(
+                  f'b1 is <code>{escape(str(r["_src"]))}</code> —' for r in joined)
+              + ' the same recipe at the same seed, run earlier the same day as part '
+                'of the parameter sweep in section 3c. Its sample_s, s/step and memory '
+                'figures cross over verbatim; s(video)/s(wall) and s per 1s video are '
+                'one division on that row\'s own sample_s and frame count at 24fps. '
+                'Nothing was written back to any bench file — this is a view, not a '
+                'measurement. Cross-check: the b1 clip on disk '
+                '(<code>ti2v5b-production-b1-s20260732.mp4</code>) is byte-identical '
+                'to <code>T1-shift5.0.mp4</code>, and its own sidecar records 0.0151 '
+                'and 66.3 — the two figures derived here.</p>')
         if key == ("animegen", "preview"):
             A(ANIMEGEN_BATCH_NOTE)
 
@@ -926,8 +1088,9 @@ def build():
         med, frozen = BENCH_MOTION.get(name, ("no data", "no data"))
         A(f"<tr><td><b>{escape(name)}</b><br>"
           f'<span class="src">{escape(r.get("row", ""))}</span></td>'
-          f"<td>{num(r.get('shift'))}</td><td>{num(r.get('sample_s'))}s</td>"
-          f"<td>{num(r.get('s_per_step'), 2)}s</td><td>{med}</td><td>{frozen}</td>"
+          f"<td>{num(r.get('shift'))}</td>"
+          f"<td>{num(r.get('sample_s'), 1, 's')}</td>"
+          f"<td>{num(r.get('s_per_step'), 2, 's')}</td><td>{med}</td><td>{frozen}</td>"
           f'<td class="wrapcell">{BENCH_READING.get(name, "")}</td></tr>')
     A("</tbody></table></div>")
     A('<div id="sweep" style="margin-top:16px">')
