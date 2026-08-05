@@ -404,6 +404,255 @@ def badges_html(milestones: list) -> str:
     return f'<div class="badges">{"".join(out)}</div>'
 
 
+# ---- the render box's own telemetry -------------------------------------------
+# Oleg asked for GPU utilisation and RAM over time (2026-08-04), the day the 5090
+# bluescreened mid-render and we had no idea what the machine was doing when it
+# went. The box samples itself every 10s and publishes a 24-hour, 1-minute summary
+# to its courier branch; the browser fetches THAT, so the numbers are as fresh as
+# the box's last push instead of as fresh as the last deploy.
+#
+# This is the only live thing on this page, and the honesty rule (SITE.md) applies
+# hardest here: a chart is drawn ONLY when the newest sample is younger than
+# TELEMETRY_STALE_MINUTES. Otherwise the page says "no recent telemetry" and means
+# it. Same repo constant as every other raw fetch on this page — the deploy server
+# has no git refs to read a remote from.
+TELEMETRY_BRANCH = "farm-results-rtx5090"
+TELEMETRY_URL = f"https://raw.githubusercontent.com/{GH}/{TELEMETRY_BRANCH}/telemetry.json"
+TELEMETRY_STALE_MINUTES = 15
+
+TEL_CSS = """
+/* ---- the render box: three single-axis charts, one series each.
+   ONE SERIES PER CHART is not a layout accident. GPU% and GB cannot share a y
+   axis without lying about scale, and the two colours this site owns — leaf green
+   and sap amber — are 4.5 ΔE apart under protanopia (measured), so a two-series
+   chart would encode identity in a difference some readers cannot see. A title
+   per chart carries the identity instead, and no legend is needed. ---- */
+.telnote { font: 500 .82rem/1.7 var(--mono); color: var(--faint); }
+.tchart { margin: 1.1rem 0 0; }
+.tchart figcaption { font: 700 .72rem/1.5 var(--mono); letter-spacing: .06em;
+  text-transform: uppercase; color: var(--muted); display: flex; flex-wrap: wrap;
+  justify-content: space-between; gap: .2rem .8rem; }
+.tchart figcaption .cap { font-weight: 500; text-transform: none; letter-spacing: 0;
+  color: var(--faint); }
+.tchart svg { width: 100%; height: auto; display: block; margin: .35rem 0 .15rem;
+  background: linear-gradient(180deg, var(--panel-2), var(--panel));
+  border: 1px solid var(--line); border-radius: 12px; touch-action: pan-y; }
+.tchart .rdout { font: 500 .74rem/1.6 var(--mono); color: var(--faint);
+  min-height: 1.6em; font-variant-numeric: tabular-nums; }
+.tchart .rdout b { color: var(--ink); }
+.tchart .grid { stroke: var(--line-soft); stroke-width: 1; }
+.tchart .axis { fill: var(--faint); font: 500 10px var(--mono); }
+.tchart .ln { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.tchart .fill { stroke: none; opacity: .13; }
+.tchart .pk { fill: var(--ink); font: 600 10px var(--mono); }
+.tchart .dot { stroke: var(--panel); stroke-width: 2; }
+.tchart .cross { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 2 3; }
+.tel-gpu { color: var(--sap); }        /* the series wears currentColor */
+.tel-mem { color: var(--leaf); }
+"""
+
+# Plain string, not an f-string: this is JavaScript and it is full of braces.
+# TEL_URL / TEL_STALE are emitted next to it by build().
+TEL_JS = """
+/* The render box's charts. No library, no external code — one fetch of our own
+   JSON off the courier branch, three inline SVGs, ~150 lines. If any of it fails
+   the page says so in words instead of drawing a dead chart. */
+(function () {
+  var note = document.getElementById("tel-note"), body = document.getElementById("tel-body");
+  if (!note || !body || !window.fetch) return;          /* no JS, no claim */
+  var W = 720, H = 150, PL = 40, PR = 12, PT = 12, PB = 20, BASE = H - PB;
+  var charts = [];
+
+  function hhmm(sec) {   /* the VIEWER's clock, never ours */
+    return new Date(sec * 1000).toLocaleTimeString([], {hour: "2-digit", minute: "2-digit"});
+  }
+  /* a 24-hour window crosses midnight, and four bare clock labels cannot say
+     which side of it a point is on — so the left-hand tick and every summary
+     carry the date too. */
+  function stamp(sec) {
+    return new Date(sec * 1000).toLocaleString([], {month: "short", day: "numeric",
+                                                    hour: "2-digit", minute: "2-digit"});
+  }
+  function ago(sec) {
+    var m = Math.round(Date.now() / 1000 / 60 - sec / 60);
+    if (m < 1) return "less than a minute";
+    if (m < 60) return m + " min";
+    return Math.floor(m / 60) + "h " + (m % 60) + "m";
+  }
+  function fmt(v, dec, unit) { return v == null ? "\\u2014" : v.toFixed(dec) + unit; }
+  function last(a) { for (var i = a.length - 1; i >= 0; i--) if (a[i] != null) return a[i]; return null; }
+  function peak(a) {
+    var bi = -1, bv = null;
+    for (var i = 0; i < a.length; i++) if (a[i] != null && (bv === null || a[i] > bv)) { bv = a[i]; bi = i; }
+    return bi;
+  }
+
+  function chart(d, key, o) {
+    var t = d.t, v = d[key], n = t.length, id = "tc-" + key;
+    var t0 = t[0], span = Math.max(60, t[n - 1] - t0);
+    var gap = (d.bucket_seconds || 60) * 3;
+    function x(i) { return PL + (t[i] - t0) / span * (W - PL - PR); }
+    function y(val) { return BASE - Math.max(0, Math.min(1, val / o.max)) * (BASE - PT); }
+    /* segments: a hole in the data is a HOLE. Joining across one would draw
+       utilisation for minutes the box was off. */
+    var segs = [], cur = [], i;
+    for (i = 0; i < n; i++) {
+      if (v[i] == null || (i && t[i] - t[i - 1] > gap)) { if (cur.length) segs.push(cur); cur = []; }
+      if (v[i] != null) cur.push(i);
+    }
+    if (cur.length) segs.push(cur);
+    if (!segs.length) return "";
+    var line = "", fill = "";
+    segs.forEach(function (s) {
+      var p = s.map(function (j, k) { return (k ? "L" : "M") + x(j).toFixed(1) + " " + y(v[j]).toFixed(1); }).join(" ");
+      line += p + " ";
+      if (s.length > 1) {
+        fill += "M" + x(s[0]).toFixed(1) + " " + BASE + " " + p.slice(1) +
+                " L" + x(s[s.length - 1]).toFixed(1) + " " + BASE + " Z ";
+      }
+    });
+    var g = "";
+    [0, 0.5, 1].forEach(function (f) {
+      var yy = BASE - f * (BASE - PT);
+      g += '<line class="grid" x1="' + PL + '" y1="' + yy.toFixed(1) + '" x2="' + (W - PR) +
+           '" y2="' + yy.toFixed(1) + '"/><text class="axis" x="' + (PL - 6) + '" y="' +
+           (yy + 3.5).toFixed(1) + '" text-anchor="end">' + (o.max * f).toFixed(o.tick) + '</text>';
+    });
+    [0, 1 / 3, 2 / 3, 1].forEach(function (f, k) {
+      var xx = PL + f * (W - PL - PR);
+      g += '<text class="axis" x="' + xx.toFixed(1) + '" y="' + (H - 6) + '" text-anchor="' +
+           (k === 0 ? "start" : k === 3 ? "end" : "middle") + '">' +
+           (k === 0 ? stamp(t0) : hhmm(t0 + f * span)) + '</text>';
+    });
+    var pi = peak(v), pm = "";
+    if (pi >= 0) {
+      var px = x(pi), py = y(v[pi]), rightish = px > (W + PL) / 2;
+      pm = '<circle class="dot" cx="' + px.toFixed(1) + '" cy="' + py.toFixed(1) +
+           '" r="3" fill="currentColor"/><text class="pk" x="' + (px + (rightish ? -7 : 7)).toFixed(1) +
+           '" y="' + Math.max(PT + 8, py - 6).toFixed(1) + '" text-anchor="' +
+           (rightish ? "end" : "start") + '">peak ' + fmt(v[pi], o.dec, o.unit) + '</text>';
+    }
+    charts.push({id: id, t: t, v: v, t0: t0, span: span, dec: o.dec, unit: o.unit,
+                 dflt: (pi >= 0 ? "peak " + fmt(v[pi], o.dec, o.unit) + " at " + hhmm(t[pi]) +
+                        " \\u00b7 point at the chart for any minute" : "")});
+    return '<figure class="tchart ' + o.cls + '" id="' + id + '">' +
+      '<figcaption><span>' + o.title + '</span><span class="cap">' + o.cap + '</span></figcaption>' +
+      '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + o.title +
+        ', ' + stamp(t0) + ' to ' + stamp(t[n - 1]) + ': latest ' + fmt(last(v), o.dec, o.unit) +
+        ', peak ' + fmt(pi >= 0 ? v[pi] : null, o.dec, o.unit) + '">' + g +
+      '<path class="fill" fill="currentColor" d="' + fill + '"/>' +
+      '<path class="ln" stroke="currentColor" d="' + line + '"/>' + pm +
+      '<line class="cross" x1="0" y1="' + PT + '" x2="0" y2="' + BASE + '" style="display:none"/>' +
+      '<rect x="' + PL + '" y="' + PT + '" width="' + (W - PL - PR) + '" height="' + (BASE - PT) +
+        '" fill="transparent"/></svg>' +
+      '<div class="rdout">' + (charts[charts.length - 1].dflt) + '</div></figure>';
+  }
+
+  function tile(big, cap) {
+    return '<div class="vital"><b>' + big + '</b><small>' + cap + '</small></div>';
+  }
+
+  function render(d) {
+    var n = (d.t || []).length;
+    var win = d.window_hours || 24;
+    if (!n || !d.last_sample) {
+      note.textContent = "no recent telemetry \\u2014 the render box has published a file " +
+        "but it holds no samples from the last " + win + " hours.";
+      return;
+    }
+    var stale = (Date.now() / 1000 - d.last_sample) > TEL_STALE * 60;
+    var vmax = d.vram_total_gb || Math.max.apply(null, d.v.filter(function (x) { return x != null; })) * 1.1;
+    var rmax = d.ram_total_gb || Math.max.apply(null, d.r.filter(function (x) { return x != null; })) * 1.1;
+    var html = "";
+    var pu = peak(d.up), pv = peak(d.v), pr = peak(d.r), pc = peak(d.c);
+    html += '<div class="vitals">' +
+      /* "peak sample", not "peak": this is the busiest single 10s reading, while
+         the chart's peak marker is the busiest minute-AVERAGE. Two different true
+         numbers; if both are called "peak" the page looks like it contradicts
+         itself (it printed 100% here and 97% on the chart). */
+      /* captions kept to four words: uppercase mono at this size wraps, and a
+         caption that breaks mid-phrase ("VRAM IN USE · PEAK / 21.9 OF 23.9") reads
+         as two half-labels. Each chart below states its own capacity anyway. */
+      tile(fmt(last(d.u), 0, "%"), "gpu latest \\u00b7 peak sample " +
+           fmt(pu >= 0 ? d.up[pu] : null, 0, "%")) +
+      tile(fmt(last(d.v), 1, " GB"), "vram latest \\u00b7 peak " + fmt(pv >= 0 ? d.v[pv] : null, 1, " GB")) +
+      tile(fmt(last(d.r), 1, " GB"), "ram latest \\u00b7 peak " + fmt(pr >= 0 ? d.r[pr] : null, 1, " GB")) +
+      tile(fmt(pc >= 0 ? d.c[pc] : null, 1, " GB"), "commit peak \\u00b7 limit " +
+           fmt(d.commit_limit_gb, 0, " GB")) +
+      '</div>';
+    html += chart(d, "u", {title: "GPU utilisation", cap: "% of the card, per minute",
+                           max: 100, tick: 0, dec: 0, unit: "%", cls: "tel-gpu"});
+    html += chart(d, "v", {title: "VRAM in use", cap: "GB of " + fmt(d.vram_total_gb, 1, " GB") + " on the card",
+                           max: vmax, tick: 0, dec: 1, unit: " GB", cls: "tel-mem"});
+    html += chart(d, "r", {title: "Host RAM in use", cap: "GB of " + fmt(d.ram_total_gb, 1, " GB") + " installed",
+                           max: rmax, tick: 0, dec: 1, unit: " GB", cls: "tel-mem"});
+    /* href set in JS, not concatenated into the markup: build_site.py's link
+       checker reads every href in the output, and a spliced-together one reads to
+       it as a broken local path (it caught exactly that, 2026-08-04). */
+    var src = '<p class="whyfoot">straight from the machine: <a class="telsrc" href="#">telemetry.json</a>' +
+      ' \\u2014 GPU by <code>nvidia-smi</code>, memory by <code>GlobalMemoryStatusEx</code>, sampled every ' +
+      (d.sample_seconds || 10) + 's and averaged to one point a minute. Gaps are gaps: the line breaks ' +
+      'wherever the box was not sampling.</p>';
+
+    if (stale) {
+      /* SITE.md: the site must not claim things it cannot know. A chart of
+         yesterday under a heading about the render box reads as "now", so the
+         plain sentence is the answer and the history is one click away, labelled
+         with the hour it actually ends. */
+      note.textContent = "no recent telemetry \\u2014 the newest sample from the render box is " +
+        ago(d.last_sample) + " old (" + hhmm(d.last_sample) + " your time). The box may be off, " +
+        "asleep, or unable to push; nothing here is claimed about it right now.";
+      body.innerHTML = '<details class="drawer"><summary>show the ' + win +
+        ' hours ending ' + stamp(d.last_sample) + '</summary><div class="drawer-body">' +
+        html + src + '</div></details>';
+    } else {
+      note.textContent = (d.gpu_name || "the render box") + " \\u2014 newest sample " +
+        hhmm(d.last_sample) + " your time (" + ago(d.last_sample) + " ago), " + win +
+        "-hour window at one point a minute.";
+      body.innerHTML = html + src;
+    }
+    body.hidden = false;
+    var sa = body.querySelector(".telsrc");
+    if (sa) sa.href = TEL_URL;
+    charts.forEach(function (c) {
+      var fig = document.getElementById(c.id);
+      if (!fig) return;
+      var svg = fig.querySelector("svg"), cross = fig.querySelector(".cross"),
+          out = fig.querySelector(".rdout");
+      function clear() { cross.style.display = "none"; out.textContent = c.dflt; }
+      svg.addEventListener("pointermove", function (e) {
+        var r = svg.getBoundingClientRect();
+        var f = ((e.clientX - r.left) / r.width * W - PL) / (W - PL - PR);
+        var want = c.t0 + Math.max(0, Math.min(1, f)) * c.span, bi = -1, bd = Infinity;
+        for (var i = 0; i < c.t.length; i++) {
+          var dist = Math.abs(c.t[i] - want);
+          if (dist < bd) { bd = dist; bi = i; }
+        }
+        if (bi < 0 || c.v[bi] == null) return clear();
+        var px = PL + (c.t[bi] - c.t0) / c.span * (W - PL - PR);
+        cross.setAttribute("x1", px.toFixed(1));
+        cross.setAttribute("x2", px.toFixed(1));
+        cross.style.display = "";
+        out.innerHTML = hhmm(c.t[bi]) + " \\u00b7 <b>" + fmt(c.v[bi], c.dec, c.unit) + "</b>";
+      });
+      svg.addEventListener("pointerleave", clear);
+    });
+  }
+
+  /* per-minute cache key: raw.githubusercontent sits behind a CDN, and a status
+     page that shows a five-minute-old copy of a five-minute-old file is stale
+     twice over. */
+  fetch(TEL_URL + "?_=" + Math.floor(Date.now() / 60000), {cache: "no-store"})
+    .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+    .then(render)
+    .catch(function (e) {
+      note.textContent = "no recent telemetry \\u2014 the render box's published file could not " +
+        "be read (" + e.message + "), so nothing is being claimed about the machine.";
+    });
+})();
+"""
+
+
 SIM_CSS = """
 /* ---- the lot: one living scene — sky, street, crew (tokens from the theme).
    All motion is transform-only on a handful of small elements, paused when the
@@ -708,7 +957,7 @@ def build(out_dir: Path):
 <meta name="twitter:description" content="{_e(DESC)}">
 <meta name="twitter:image" content="{CANONICAL}/og.png">
 <title>Banyan City — {PAGE_NAME}</title>
-<style>{THEME_CSS}{SIM_CSS}</style>
+<style>{THEME_CSS}{SIM_CSS}{TEL_CSS}</style>
 </head>
 <body>
 <main>
@@ -752,6 +1001,15 @@ a locked one is exactly what remains</p>
 <p class="legend">{town_legend}</p>
 {production}
 
+<h2>🏟 The render box, minute by minute</h2>
+<section id="tel">
+<p class="telnote" id="tel-note">no recent telemetry — these charts are drawn in your browser
+from a file the render box publishes about itself every five minutes. If this line is still
+here, that file has not been read yet (or JavaScript is off, in which case this page will not
+guess what the machine is doing).</p>
+<div id="tel-body" hidden></div>
+</section>
+
 <h2>🗺 Open quests — anyone can take one</h2>
 <p style="margin:.2rem 0 .4rem;color:var(--muted)">Nothing here is play-pretend: every art
 quest is a real open request from the author, and every take handed in becomes part of the
@@ -782,7 +1040,8 @@ they wait.</p>
 <p class="legend">{data.LEGEND}</p>
 <footer>snapshot {time.strftime('%Y-%m-%d %H:%M', time.gmtime())}Z · this page is a static
 file: it shows the queue at BUILD time and cannot update itself — rebuilt on every push
-and every half hour · the whole repo IS the show —
+and every half hour · the render-box charts are the one exception, fetched live by your
+browser · the whole repo IS the show —
 <a href="index.html">the city</a> · <a href="lab/index.html">the lab</a> ·
 <a href="machine.html">how it works</a></footer>
 </main>
@@ -791,6 +1050,8 @@ and every half hour · the whole repo IS the show —
 document.addEventListener("visibilitychange", function () {{
   document.body.classList.toggle("away", document.hidden);
 }});
+var TEL_URL = {json.dumps(TELEMETRY_URL)}, TEL_STALE = {TELEMETRY_STALE_MINUTES};
+{TEL_JS}
 </script>
 </body>
 </html>"""
