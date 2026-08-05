@@ -43,8 +43,52 @@ STALL_MINUTES = 45          # SILENT this long = hung. Kill it.
 # usable. 180 lets AnimeGen's ~27B pair finish a clip (30m+ observed and still
 # sampling on 2026-08-03) without letting a stuck progress bar burn a whole night.
 NO_PROGRESS_MINUTES = 180
+# A child that has EXITED and printed nothing for this long is a corpse, not a
+# render, and the 45-minute silence clock above is the wrong instrument for it.
+# The grace minute exists only so a normal exit whose last lines are still
+# draining is never slandered: a healthy child prints `[i/N] wrote ...`
+# immediately before exiting, so its silence is measured in milliseconds.
+DEAD_QUIET_MINUTES = 1
 
 PROGRESS = re.compile(r"^\[(\d+)/(\d+)\]\s+wrote\s+(.+?)\s+in\s+(\S+)")
+
+
+def child_verdict(rc, silent: int, stalled: int) -> tuple:
+    """`('dead'|'stalled'|'alive', why)` from three numbers. Pure, so it is
+    testable without a process — which is the point, because the case it exists
+    for cannot be reproduced on demand.
+
+    `rc` is `Popen.poll()`: None while the child is running, its exit code once it
+    is gone. `silent`/`stalled` are minutes since the last line of child output and
+    since the last finished clip.
+
+    WHY 'dead' IS A SEPARATE VERDICT (DIAG-20260804.md). On 2026-08-04 the render
+    child died at 0xC0000005 fifty-six seconds in, and this heartbeat reported
+    VIDEO_ALIVE for the next fourteen minutes — the parent was blocked reading the
+    pipes of a process Windows Error Reporting was holding open while it collected
+    a minidump. From outside, "alive, last output 14m ago" and a slow render are
+    the same sentence. The machine then bluescreened, so the 45-minute stall
+    watchdog never got to fire at all.
+
+    'dead' asks the direct question instead of inferring from silence: is the child
+    still there? An exit code is not ambiguous the way a quiet pipe is.
+
+    HONEST LIMIT, so nobody reads more into this than it does: while WER has the
+    child suspended for dumping, the process has not terminated yet and `poll()`
+    still returns None — so on that exact incident this would have fired only once
+    WER let go, not at minute five. It removes up to ~44 minutes of false
+    VIDEO_ALIVE and gives the failure a name; it does not detect a frozen child.
+    The silence clocks stay as the backstop for that, unchanged.
+    """
+    if rc is not None and silent >= DEAD_QUIET_MINUTES:
+        return "dead", f"child exited code={rc}"
+    # order preserved from the original single `kill` expression: silence first,
+    # so a wedged child is reported as wedged rather than as merely unproductive
+    if silent >= STALL_MINUTES:
+        return "stalled", f"silent for {silent}m"
+    if stalled >= NO_PROGRESS_MINUTES:
+        return "stalled", f"no clip finished in {stalled}m despite output"
+    return "alive", ""
 
 
 def _stream(cmd, courier, timeout, env):
@@ -124,20 +168,31 @@ def _stream(cmd, courier, timeout, env):
             n += 5
             stalled = int(time.time() - progress["at"]) // 60
             silent = int(time.time() - progress["said"]) // 60
-            msg = (f"VIDEO_ALIVE {n}m elapsed, {progress['n']} clip(s) done"
-                   + (f", last output {silent}m ago" if silent >= 5 else ""))
-            kill = silent >= STALL_MINUTES or stalled >= NO_PROGRESS_MINUTES
-            if kill:
-                why = (f"silent for {silent}m" if silent >= STALL_MINUTES
-                       else f"no clip finished in {stalled}m despite output")
+            verdict, why = child_verdict(p.poll(), silent, stalled)
+            if verdict == "dead":
+                # NAME THE TASK. This line is the whole record of a failure whose
+                # traceback does not exist — 0xC0000005 kills the interpreter
+                # without unwinding, so errors.txt gets nothing (DIAG-20260804.md).
+                tid = getattr(courier, "task", None) or "?"
+                msg = (f"VIDEO_DEAD {why}, task={tid} — {progress['n']} clip(s) "
+                       f"done, no output for {silent}m; failing now instead of "
+                       f"waiting {STALL_MINUTES}m for the stall watchdog")
+            elif verdict == "stalled":
                 msg = (f"VIDEO_STALLED {why} ({progress['n']} done) — "
                        f"killing it so the queue moves")
+            else:
+                msg = (f"VIDEO_ALIVE {n}m elapsed, {progress['n']} clip(s) done"
+                       + (f", last output {silent}m ago" if silent >= 5 else ""))
             if courier:
                 try:
                     courier.mark(msg)
                 except Exception:            # noqa: BLE001
                     pass                     # a heartbeat may never kill its subject
-            if kill:
+            if verdict != "alive":
+                # kill() on an already-exited child is a no-op, and that is fine:
+                # what unwedges the parent is the pipe write end closing, which a
+                # real exit has already done. It is also the one thing that frees a
+                # child frozen under a crash dumper, so it runs for both verdicts.
                 try:
                     p.kill()
                 except Exception:            # noqa: BLE001
@@ -610,6 +665,27 @@ def video_prompt(motion: str, still_prompt: str, no_anchor=False,
 MODEL_LICENCE = {
     "ti2v-5b":  ("Wan-AI/Wan2.2-TI2V-5B-Diffusers", "Apache-2.0"),
     "animegen": ("aidealab/AnimeGen-I2V", "Apache-2.0"),
+    # NOT Apache-2.0, and nothing here may quietly imply it: the LTX-2 Community
+    # License is its own document (D16) — commercial use free below $10M revenue,
+    # no rights claimed in output, but a 20-item use schedule attached. Spelled
+    # out rather than left to the "UNVERIFIED" default so the sidecar of a
+    # screened sample says what it was actually rendered under; licence_gate
+    # still refuses to publish it until the founder signs off on the look.
+    "ltx23-fp8": ("Lightricks/LTX-2.3-fp8", "LTX-2 Community License Agreement"),
+    # The artifact actually rendered from, once the fp8 route was abandoned: the
+    # official bf16 distilled weights through the stock diffusers path. SAME licence
+    # document — Lightricks/LTX-2.3's LICENSE is byte-for-byte the LTX-2 Community
+    # License Agreement embedded in the fp8 file's own header (21393 chars both) —
+    # but a different artifact, and the sidecar must name the one that made the
+    # pixels. The fp8 entry stays: its 9GB partial is still on disk for a future
+    # quantised path, and a record of what a clip was made with must not be edited
+    # away when the recipe moves on.
+    # licence_gate needs no new key: normalise() turns this into
+    # "diffusers-ltx-2-3-distilled-diffusers", which its existing "ltx-2-3" entry
+    # already matches, so the clip stays correctly classified watch-only.
+    "ltx23-distilled": ("diffusers/LTX-2.3-Distilled-Diffusers "
+                        "(Lightricks LTX-2.3 distilled, bf16)",
+                        "LTX-2 Community License Agreement"),
 }
 
 
@@ -625,8 +701,74 @@ def _yaml_block(key: str, value: str) -> str:
     return f"{key}: |-\n{body}\n"
 
 
+def slot_out_path(out, base_seed: int, slot: int, batch: int) -> str:
+    """Where clip `slot` of a batched sample is written. PURE — unit-tested.
+
+    A batched sample produces N clips from ONE pipe() call and they cannot all
+    land on --out. The naming convention is the one the 2026-08-04 AnimeGen probe
+    already put on disk (SAMPLES/animegen-preview-b2-s20260733.mp4):
+    `<label>-<mode>-b<batch>-s<seed+slot>.mp4`, i.e. only the seed token moves
+    between slots.
+
+    So: if --out already carries the base seed as an `s<seed>` token, replace that
+    token (the LAST occurrence — a task id can contain digits too) with the slot's
+    own seed and change nothing else. If it does not, append `-b<batch>-s<seed>`
+    before the suffix so the set is still self-describing.
+
+    batch == 1 returns --out UNCHANGED. That is deliberate and load-bearing:
+    every existing caller (video_task's own queue, bench_models, farm tasks) asked
+    for one file at one path, and a throughput flag must not silently rename the
+    production output.
+    """
+    if batch <= 1:
+        return str(out)
+    p = Path(out)
+    token, seeded = f"s{int(base_seed)}", f"s{int(base_seed) + int(slot)}"
+    head, sep, tail = p.stem.rpartition(token)
+    stem = head + seeded + tail if sep else f"{p.stem}-b{int(batch)}-{seeded}"
+    return str(p.with_name(stem + p.suffix))
+
+
+# The exact column set of a --bench-jsonl row, in the exact order the 2026-08-04
+# AnimeGen probe wrote them (SAMPLES/animegen-bench.jsonl). Frozen as data, not
+# re-typed at each call site, because two renderers append to the same file and a
+# row that drops or reorders a field turns a comparison table into a guess.
+BENCH_FIELDS = ("label repo mode batch frames seeds sample_s s_per_step video_s "
+                "throughput_s_per_s compute_per_video_s peak_torch_gb device_gb "
+                "device_total_gb host_peak_phys_gb host_peak_commit_gb steps "
+                "guidance shift size ok").split()
+
+
+def bench_row(**kw) -> dict:
+    """One measurement row for a --bench-jsonl file. PURE — unit-tested.
+
+    Every field in BENCH_FIELDS is present in every row, in order (json.dumps
+    keeps insertion order), and a field the caller did not MEASURE comes out
+    null. Nulls are the point: the 2026-08-04 retraction was two confident
+    performance mechanisms reasoned out of our own code comments, and a bench file
+    that carries a plausible unmeasured number is exactly how that happens again.
+
+    An unknown key raises rather than being dropped, so a typo in a call site is a
+    crash and not a silently missing column.
+    """
+    unknown = sorted(set(kw) - set(BENCH_FIELDS))
+    if unknown:
+        raise ValueError(f"bench_row got field(s) outside the schema: {unknown}")
+    return {k: kw.get(k) for k in BENCH_FIELDS}
+
+
+def append_bench_row(path, row: dict) -> None:
+    """Append one JSON row per RUN. No-op when no path was asked for."""
+    if not path:
+        return
+    Path(path).parent.mkdir(parents=True, exist_ok=True)
+    with open(path, "a", encoding="utf-8") as fh:
+        fh.write(json.dumps(row) + "\n")
+    print(f"bench row -> {path}", flush=True)
+
+
 def write_sidecar(clip, vmodel, task, beat, seconds, steps, size,
-                  prompt=None, negative=None):
+                  prompt=None, negative=None, extra=None):
     """A §7.2 provenance sidecar beside every generated clip.
 
     Video clips have been landing on the courier branch as bare mp4s, with the
@@ -665,7 +807,15 @@ def write_sidecar(clip, vmodel, task, beat, seconds, steps, size,
         # the string by re-running the pipeline. Anyone auditing the tree had no
         # way at all. Record what was actually asked for.
         + _yaml_block("prompt", prompt or "")
-        + _yaml_block("negative", negative or ""), encoding="utf-8")
+        + _yaml_block("negative", negative or "")
+        # `extra` carries what only the RENDERER knew — mode, batch, batch_slot,
+        # measured throughput. Appended after the prompt blocks, which is where the
+        # AnimeGen probe's sidecars already put them, so the two generations of
+        # file parse the same. A None value is OMITTED rather than written as a
+        # hopeful number: an absent field reads as "not measured", which is true.
+        + "".join(_yaml_block(k, v) if "\n" in str(v) else f"{k}: {v}\n"
+                  for k, v in (extra or {}).items() if v is not None),
+        encoding="utf-8")
 
 
 def _run(cmd, courier, stage, timeout=None, retry=False):

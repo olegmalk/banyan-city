@@ -47,7 +47,9 @@ Kiijoku/Wan2.2-TI2V-5B-Turbo-GGUF both declare `license: apache-2.0` while
 declaring `base_model: quanhaol/Wan2.2-TI2V-5B-Turbo` — which is CC BY-NC-SA 4.0.
 A GGUF is a pure transform of the weights: no new training, no independently
 licensable contribution, so there is no theory under which the quantizer acquired
-rights the source never granted.
+rights the source never granted. (Since 2026-08-03 those two are refused one step
+earlier, by the rule that a tag with no readable text behind it is not a grant at
+all — so they report UNVERIFIABLE, which is stricter. See CASES.)
 
 THE COMPLEMENT OF THAT RULE, and the one that caught me out:
 
@@ -92,6 +94,7 @@ import argparse
 import json
 import re
 import sys
+import time
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -148,9 +151,29 @@ def fetch_hf_licence_text(repo: str, siblings) -> tuple:
     which ships a plain `LICENSE` on Hugging Face and has no GitHub mirror, had
     no text found at all. The weights repo is the most authoritative place a
     licence can live: it travels with the very files we load.
+
+    ROOT ONLY, and that is the other half of the same lesson. Taking the first
+    file whose name contains "LICEN" anywhere in the tree reads a VENDORED
+    third-party licence as the repo's own grant. Both directions of that error
+    are live on Hugging Face today, found 2026-08-04 while the audit in
+    `pipeline/research/models-licence.md` was being recorded:
+
+      - `IndexTeam/Index-anisora` — its only licence file is
+        `reward/weights/bert-base-uncased/LICENSE`. BERT's Apache text was
+        holding a CLEAR verdict on a repo that also ships the CogVideoX-based
+        5B line, which is the exact laundering the audit flags.
+      - `Kijai/WanVideo_comfy` — its only licence file is
+        `LoRAs/Ditto/ditto_LICENSE.txt`, CC BY-NC-SA, so a 1.8M-download repo
+        hard-failed for a reason with nothing to do with the weights in it.
+        Right answer, wrong evidence, and it would have moved the day Ditto did.
+
+    A licence three directories down governs what sits beside it, not what we
+    load. No root file means no text found here, which fails closed.
     """
     for s in siblings or []:
         n = s.get("rfilename", "")
+        if "/" in n:                            # vendored, not this repo's grant
+            continue
         if "LICEN" in n.upper() or "COPYING" in n.upper():
             st, txt = get_raw(f"https://huggingface.co/{repo}/raw/main/{n}")
             if st == 200 and txt:
@@ -405,7 +428,18 @@ def show(r, depth=0):
 
 
 CASES = [
-    ("FastVideo/FastWan2.2-TI2V-5B-FullAttn-Diffusers", "clear"),
+    # CORRECTED 2026-08-04, and it is the same staleness as hum-ma below, found the
+    # same way: this said "clear", and the 2026-08-03 no-text-behind-a-tag rule had
+    # been returning "unverifiable" ever since without anyone re-running the live
+    # self-test. Verified against the file at HEAD before touching it, so the
+    # regression belongs to that rule, not to the root-only fix above.
+    # FastWan's apache-2.0 is a tag with nothing quotable behind it: no LICENSE in
+    # the weights repo, and its card declares no `repository`, so the GitHub
+    # fallback tries `FastVideo/FastWan…` and never reaches hao-ai-lab/FastVideo,
+    # which does ship a real Apache-2.0. The fix, if we ever want to render on it,
+    # is to vendor that verified text into `licences/` the way Wan 2.2 already is —
+    # never to loosen the rule.
+    ("FastVideo/FastWan2.2-TI2V-5B-FullAttn-Diffusers", "unverifiable"),
     ("Wan-AI/Wan2.2-TI2V-5B-Diffusers", "clear"),
     # CORRECTED 2026-08-02: this was asserted as "unverifiable" and the self-test
     # passed 5/5 on that wrong expectation — a green test encoding a false ground
@@ -415,12 +449,91 @@ CASES = [
     # our USE OF THE WEIGHTS, so we never have to reach the unsettled question of
     # whether generated video is Adapted Material.
     ("quanhaol/Wan2.2-TI2V-5B-Turbo", "hard-fail"),
-    ("hum-ma/Wan2.2-TI2V-5B-Turbo-GGUF", "hard-fail"),      # laundering an NC base
     ("stabilityai/stable-video-diffusion-img2vid-xt-1-1", "hard-fail"),
+
+    # ---- the Turbo chain, every link (models-licence.md, 2026-08-04) ---------
+    #
+    # The audit walked all four mirrors of the 4-step distill and UPHELD this
+    # tool's refusal at each. All four are in here rather than one, because the
+    # chain is the lesson: Apache-2.0 base -> CC BY-NC-SA 4.0 distill ->
+    # unlicensed fp16 repack -> GGUFs declaring apache-2.0 again, with no act of
+    # relicensing anywhere in between and by parties who never held the right.
+    # And name the pull, because it is the strongest in the audit: these GGUFs
+    # run in 4GB at 4 steps and the card recommends exactly our 704x1280.
+    #
+    # THE EXPECTED STATE MOVED, AND THE OLD ONE HAD GONE STALE. hum-ma was
+    # recorded here as "hard-fail — laundering an NC base", verified live
+    # 2026-08-02. The rule added 2026-08-03 — a tag with no readable text behind
+    # it is a claim, not a grant — now fires first, so both GGUFs come back
+    # UNVERIFIABLE and this self-test had been failing unnoticed since. Nothing
+    # loosened: unverifiable is RANK 0, stricter than hard-fail, and main() exits
+    # 1 on both. But note what the state cannot say. A leaf with no readable
+    # licence is already at the bottom of RANK, so the transitive rule can never
+    # worsen it to hard-fail — read the printed base chain, not the leaf's word.
+    # It is quanhaol's NC + ShareAlike that makes these permanent, not the
+    # missing file, and no upload by anyone downstream can cure it.
+    ("hum-ma/Wan2.2-TI2V-5B-Turbo-GGUF", "unverifiable"),
+    # a verbatim clone of hum-ma's card, Civitai links and all — the same error
+    # copied, not independent corroboration of its apache-2.0 claim
+    ("Kiijoku/Wan2.2-TI2V-5B-Turbo-GGUF", "unverifiable"),
+    # declares nothing at all, and is STRICTLY WORSE than the distill it
+    # redistributes: the weights stay under BY-NC-SA, and because §3(a) obliges a
+    # redistributor to pass the licence on, we get no grant from this one either
+    ("yetter-ai/Wan2.2-TI2V-5B-Turbo-Diffusers", "unverifiable"),
+    # the fp16 repack both GGUFs were actually converted from
+    # (`Wan22-Turbo/Wan2_2-TI2V-5B-Turbo_fp16.safetensors`), itself unlicensed.
+    # Until the root-only fix above it hard-failed on a Ditto LoRA's licence.
+    ("Kijai/WanVideo_comfy", "unverifiable"),
+
+    # ---- laundering the same audit flagged elsewhere ------------------------
+    #
+    # One repo id, four model generations, and a repo id cannot express the
+    # split. V2/V3/V3.1/V3.2 are Wan-based and Bilibili's Apache-2.0 grant over
+    # them is sound — V3.2 is the audit's top 12GB pick. The `V1` / `5B` /
+    # `5B_RL` folders declare that same apache-2.0 over a **CogVideoX-5B** base,
+    # whose own licence is revocable, registration-gated for commercial use and
+    # carries a field-of-use clause. So UNVERIFIABLE here is not doubt about
+    # V3.2; it is this tool saying it cannot answer at repo granularity, which is
+    # the honest answer. Bilibili's grant is prose in a GitHub README the HF card
+    # does not link, so there is no text to quote either.
+    ("IndexTeam/Index-anisora", "unverifiable"),
+    # the CogVideoX-based 5B line relabelled into diffusers: apache-2.0 tag, no
+    # text anywhere, base_model pointing back at the mixed repo above
+    ("Disty0/Index-anisora-5B-diffusers", "unverifiable"),
+    # THE MOST LIKELY ACCIDENTAL ADOPTION IN THE AUDIT, and it is here for that
+    # reason. "FramePack is Apache-2.0 and runs in 6GB" is true of
+    # `lllyasviel/FramePack`, the CODE. These are the WEIGHTS: no licence tag, no
+    # LICENSE file, no base_model declared, and the `_HY` suffix over a
+    # HunyuanVideo base whose Territory clause excludes the EU, UK and South
+    # Korea — where we publish. A permissive repo licence read as though it
+    # covered the weights is the textbook pattern, and the 6GB figure is exactly
+    # what makes someone reach for it.
+    ("lllyasviel/FramePackI2V_HY", "unverifiable"),
 ]
 
 
 def self_test() -> int:
+    # A RATE-LIMITED RUN LIES, AND IN THE MOST DANGEROUS WORDING THERE IS.
+    # Unauthenticated api.github.com allows 60 requests/hour per IP and each case
+    # spends roughly two walking its base chain, so the list below no longer fits
+    # in one budget alongside ordinary use. When the limit is hit, get() returns
+    # status 0, fetch_licence_text() finds nothing, and quanhaol — whose CC
+    # BY-NC-SA text exists ONLY on GitHub — comes back "unverifiable: no licence
+    # field declared". That is the precise sentence this tool exists to stop
+    # anyone believing, and it cost two days once already. Hit live on 2026-08-04
+    # by the run that added the Turbo-chain cases. So check the budget before
+    # spending it: /rate_limit does not itself count against the budget.
+    st, rl = get("https://api.github.com/rate_limit")
+    left = ((rl.get("resources") or {}).get("core") or {}).get("remaining")
+    need = 2 * len(CASES)
+    if st == 200 and isinstance(left, int) and left < need:
+        mins = max(0, int((((rl["resources"]["core"].get("reset") or 0)
+                            - time.time()) // 60)))
+        print(f"  NOT RUN — {left} unauthenticated GitHub requests left of 60/hour "
+              f"and this needs ~{need}. Rate-limited, a hard fail degrades to "
+              f"'no licence field declared', which is worse than no answer. "
+              f"Reset in ~{mins} min.")
+        return 2
     bad = 0
     for repo, want in CASES:
         r = vet(repo)
@@ -439,7 +552,7 @@ def main() -> int:
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("repo", nargs="?", help="HF repo id, e.g. org/model")
     ap.add_argument("--self-test", action="store_true",
-                    help="check the five known cases, one per verdict state")
+                    help="check every recorded case live (needs network)")
     a = ap.parse_args()
     if a.self_test:
         return self_test()

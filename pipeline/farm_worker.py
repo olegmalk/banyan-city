@@ -51,8 +51,8 @@ sys.path.insert(0, str(REPO / "pipeline"))
 
 QUEUE = "pipeline/farm-queue.yaml"
 POLL_SECONDS = 60
-# How many times a task may FAIL before this worker stops picking it up. 2 = one
-# retry for a transient drop, then move on — see finished_tasks().
+# How many times a task may be ATTEMPTED before this worker stops picking it up.
+# 2 = one retry for a transient drop, then move on — see heartbeat_attempts().
 MAX_ATTEMPTS = 2
 # Child exit codes that mean "a human or the OS stopped this", not "this task is
 # broken". Windows reports both as NTSTATUS values in the exit code, and the
@@ -133,6 +133,10 @@ class Courier:
         self.out = REPO / "farm-out"
         self.log = []
         self.unpushed = 0
+        # the task currently in flight, set by the loop below. video_task names it
+        # in VIDEO_DEAD so a failure line stands on its own instead of relying on
+        # whoever reads it to scroll up to the last STARTED.
+        self.task = None
 
     def mark(self, stage: str):
         self.out.mkdir(exist_ok=True)
@@ -253,9 +257,64 @@ def release(lock: Path) -> bool:
     return True
 
 
-def finished_tasks(courier: Courier) -> set:
-    """Task ids this machine has already completed, read back from its own
-    heartbeat.
+def heartbeat_attempts(text: str) -> tuple:
+    """`(done_ids, attempts_by_id)` from heartbeat text. Pure: no disk, no git.
+
+    COUNT STARTS, NOT FAILURES. This used to count `FAIL task=<id>` lines, and a
+    FAIL line only exists if the worker SURVIVES the failure — so every failure
+    mode that takes down the OS was invisible to the attempt counter. On
+    2026-08-04 (DIAG-20260804.md) an AnimeGen task crashed its child at
+    0xC0000005 and then bluescreened the host; the heartbeat holds exactly one
+    line about it:
+
+        07:12:18Z STARTED task=bench-animegen-b01-1785827400 beats=1 on cuda
+
+    No FAIL, therefore 0 recorded attempts, therefore a restarted worker treats
+    a task that just killed the machine as brand new — forever. A guard that
+    only learns from failures it survived cannot stop a crash loop.
+
+    `STARTED` is written BEFORE the render begins and was pushed and survived the
+    bluescreen, so it is the one record every attempt leaves behind.
+
+    Three corrections on top of a naive start count:
+
+    - DONE excludes. A completed task is finished, not abandoned, and must never
+      be reported as "failed Nx already".
+    - INTERRUPTED subtracts. A console interrupt is not a failed render (the
+      window-CLOSE on 2026-08-02, the second worker on 2026-08-03), and the task
+      loop deliberately marks it so it costs no attempt. Counting its START back
+      in would undo that.
+    - max() with the FAIL count, so a history whose STARTED lines predate this
+      change still counts its failures.
+
+    RE-QUEUES ARE UNAFFECTED because ids carry an epoch stamp — queue_keeper
+    writes `f"{slug}-msi-{stamp}"` with `stamp = int(time.time())`, and the
+    hand-written entries follow it (`bench-animegen-b01-1785827400`). A re-queue
+    is a NEW id with a zero count. Re-queueing the same id verbatim keeps the old
+    count, which is the conservative half of the trade and is what the skip
+    message tells the reader to fix.
+    """
+    done, starts, interrupts, fails = set(), {}, {}, {}
+    # \b so a future `RESTARTED task=` mark cannot be read as a start
+    for line in text.splitlines():
+        for pat, bucket in ((r"\bSTARTED task=(\S+)", starts),
+                            (r"\bINTERRUPTED task=(\S+)", interrupts),
+                            (r"\bFAIL task=(\S+)", fails)):
+            m = re.search(pat, line)
+            if m:
+                bucket[m.group(1)] = bucket.get(m.group(1), 0) + 1
+        m = re.search(r"\bDONE task=(\S+)", line)
+        if m:
+            done.add(m.group(1))
+    attempts = {}
+    for tid in set(starts) | set(fails):
+        attempts[tid] = max(starts.get(tid, 0) - interrupts.get(tid, 0),
+                            fails.get(tid, 0), 0)
+    return done, attempts
+
+
+def finished_tasks(courier: Courier) -> tuple:
+    """`(ids not to pick up, {id: attempts} for the ones we gave up on)`.
 
     `done_ids` used to live only in memory, and this worker RESTARTS ITSELF
     whenever pipeline code changes on main — so any push during a long task
@@ -266,38 +325,30 @@ def finished_tasks(courier: Courier) -> set:
     The heartbeat already records every completion as `DONE task=<id>`, so the
     answer was on disk the whole time. Reading it back makes a restart cheap,
     which is what lets the self-update behaviour stay aggressive.
+
+    A FAILED task retries — a dropped download or a transient CUDA error
+    deserves another go, which is why only DONE counted here at first. But
+    "retry forever" is its own bug: a task that fails by hitting its own
+    timeout burns the full timeout EVERY attempt, and because this worker
+    processes the queue in order, the tasks behind it never run at all. A
+    4-hour video batch that times out would have looped 4 hours at a time
+    while the licence-clean re-render queued behind it starved (the exact
+    shape of the 8-clip 704x1280 batch in flight on 2026-08-01).
+    One retry, then leave it alone and let the queue move.
+
+    SILENT. This used to print "giving up so the queue can move" for every task
+    that had ever failed twice — including tasks deleted from the queue hours
+    earlier, on every single startup, forever. Alarming messages about work
+    nobody is waiting on train you to ignore the log, which is the opposite of
+    what a heartbeat is for. The skip is still recorded; the WARNING now happens
+    in the task loop, where we know the task is actually queued (and once).
     """
     hb = courier.out / "heartbeat.txt"
-    if not hb.exists():
-        return set()
-    done, failures = set(), {}
-    for line in hb.read_text(encoding="utf-8", errors="replace").splitlines():
-        m = re.search(r"DONE task=(\S+)", line)
-        if m:
-            done.add(m.group(1))
-            continue
-        m = re.search(r"FAIL task=(\S+)", line)
-        if m:
-            failures[m.group(1)] = failures.get(m.group(1), 0) + 1
-    # A FAILED task retries — a dropped download or a transient CUDA error
-    # deserves another go, which is why only DONE counted here at first. But
-    # "retry forever" is its own bug: a task that fails by hitting its own
-    # timeout burns the full timeout EVERY attempt, and because this worker
-    # processes the queue in order, the tasks behind it never run at all. A
-    # 4-hour video batch that times out would have looped 4 hours at a time
-    # while the licence-clean re-render queued behind it starved (the exact
-    # shape of the 8-clip 704x1280 batch in flight on 2026-08-01).
-    # One retry, then leave it alone and let the queue move.
-    # SILENT. This used to print "giving up so the queue can move" for every task
-    # that had ever failed twice — including tasks deleted from the queue hours
-    # earlier, on every single startup, forever. Alarming messages about work
-    # nobody is waiting on train you to ignore the log, which is the opposite of
-    # what a heartbeat is for. The skip is still recorded; the WARNING now happens
-    # in the task loop, where we know the task is actually queued (and once).
-    for tid, n in failures.items():
-        if n >= MAX_ATTEMPTS:
-            done.add(tid)
-    return done, {tid: n for tid, n in failures.items() if n >= MAX_ATTEMPTS}
+    text = hb.read_text(encoding="utf-8", errors="replace") if hb.exists() else ""
+    done, attempts = heartbeat_attempts(text)
+    gave_up = {tid: n for tid, n in attempts.items()
+               if n >= MAX_ATTEMPTS and tid not in done}
+    return done | set(gave_up), gave_up
 
 
 def render_task(task: dict, courier: Courier, device: str, dtype) -> None:
@@ -424,9 +475,21 @@ def main() -> int:
             tid = str(task.get("id"))
             if tid in gave_up and tid not in warned:
                 warned.add(tid)
-                print(f"!! {tid} is QUEUED but failed {gave_up[tid]}x already — "
-                      f"skipping it so the rest of the queue can run. Fix the "
-                      f"cause or remove it from {QUEUE}.", flush=True)
+                # MARK IT, do not just print it. A print dies with the console,
+                # and the failure this guard now catches is the one that takes the
+                # console down with the machine — so the refusal has to reach the
+                # branch or nobody outside the room learns the worker is skipping
+                # work (DIAG-20260804.md). Once per task per process: mark()
+                # commits and force-pushes.
+                why = (f"!! {tid} is QUEUED but has {gave_up[tid]} start(s) with no "
+                       f"DONE — skipping it so the rest of the queue can run "
+                       f"(MAX_ATTEMPTS={MAX_ATTEMPTS}, counted from STARTED lines so "
+                       f"a crash that kills the host still spends an attempt). Fix "
+                       f"the cause, or remove it from {QUEUE}, or re-queue it under "
+                       f"a fresh id.")
+                print(why, flush=True)
+                courier.mark(f"SKIPPED task={tid} after {gave_up[tid]} attempt(s) "
+                             f"— MAX_ATTEMPTS={MAX_ATTEMPTS}")
             if tid in done_ids or task.get("worker", "any") not in ("any", a.name):
                 continue
             # render from CURRENT main, not whatever checkout the machine was
@@ -465,6 +528,7 @@ def main() -> int:
                 # on 2026-07-31). Re-run as a CHILD sharing this console, then exit
                 # with its status — works the same on POSIX.
                 sys.exit(subprocess.run([sys.executable] + sys.argv).returncode)
+            courier.task = tid
             courier.mark(f"STARTED task={tid} beats={task.get('beats')} on {device}")
             try:
                 render_task(task, courier, device, dtype)

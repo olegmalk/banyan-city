@@ -273,6 +273,28 @@ MODEL_LICENCES = {
     # Terse, for the same reason as google-flow below: this value is classified,
     # not just printed. The reading lives in the comment above and in MODEL_NOTES.
     "ltx-video": "LTXV Open Weights Licence 0.X (read; founder sign-off pending)",
+    # LTX-2/2.3 ARE NOT 0.X, and the bare 'lightricks' key was labelling them as
+    # such. normalise("Lightricks/LTX-2.3-fp8") is "lightricks-ltx-2-3-fp8" — the
+    # dot becomes a dash — so a 2.3 sidecar matched this catch-all and nothing
+    # else, and got reported under the wrong document: 0.X is a different licence
+    # from the LTX-2 Community License Agreement, which carries a 20-item use
+    # schedule that 0.X does not have (D16). It failed SAFE — both are non-allow,
+    # so the clip was refused either way — but a gate that refuses for the wrong
+    # reason teaches the wrong fix to whoever reads the message.
+    # So: 2.3 is explicit, and the catch-all no longer names a version it cannot
+    # know. Same rule the voxcpm2 entry above exists to enforce — add every
+    # version after reading ITS licence, never inherit by prefix.
+    # The catch-all below deliberately keeps the IDENTICAL string to ltx-video
+    # rather than a version-agnostic wording, and that is load-bearing, not lazy:
+    # our archived LTX-Video takes match BOTH keys, and check_model reports one
+    # violation per distinct LICENCE (dict.fromkeys over the values), not per key.
+    # Giving the two keys different strings split every such asset into two
+    # violations and pushed the debt ratchet 38 -> 40 — a reporting artifact, with
+    # no new unpublishable thing in the tree. Raising the ceiling to absorb that
+    # would be exactly the "loosen the ratchet" move the ratchet exists to stop.
+    # So the nuance lives in MODEL_NOTES, which is printed and never classified —
+    # the same split the google-flow comment above prescribes.
+    "ltx-2-3": "LTX-2 Community Licence Agreement (D16; watch-only, sign-off pending)",
     "lightricks": "LTXV Open Weights Licence 0.X (read; founder sign-off pending)",
     "dreamshaper": "CreativeML-OpenRAIL-M",      # SD1.5 derivative; outputs unrestricted
     # animagine: THE RECORD WAS STALE, AND IT WAS CLEARING EVERY STILL WE SHIP.
@@ -422,9 +444,20 @@ MODEL_NOTES = {
     "ltx-video": " — the licence is read and says the cap gates the weights, not "
                  "the footage; awaiting founder sign-off before this becomes an "
                  "allow (D13)",
+    # Left as the 0.X reading on purpose: 'lightricks' is the LONGER key, so it
+    # wins the note lookup for our archived LTX-Video takes, which are 0.X. A
+    # version-agnostic note here would replace an accurate message with a vaguer
+    # one for the only assets that actually hit it.
     "lightricks": " — the licence is read and says the cap gates the weights, not "
                   "the footage; awaiting founder sign-off before this becomes an "
                   "allow (D13)",
+    "ltx-2-3": " — LTX-2 Community License read end to end (D16): commercial use "
+               "free below $10M revenue and no rights claimed in output, so the "
+               "reuse side is clear under watch-only. What binds US: AI-disclosure "
+               "per surface, never train on the output, and item 20 — LTX must "
+               "never power a contributor-facing generation service. Awaiting "
+               "founder sign-off on the screened sample before this becomes an "
+               "allow",
 }
 
 # Values that DECLARE no third-party model, matched on the WHOLE value (never
