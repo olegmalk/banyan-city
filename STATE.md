@@ -820,3 +820,75 @@ it and needs a human at the keyboard.
 
 **Open, founder-reserved:** everything above, plus — *someone must log in at the
 rtx5090 box* before any render is queued, and **b4 stays closed on this card.**
+
+## 2026-08-05 ~03:00Z — the third probe ran: LTX at batch 2 pays, but the slot is not the same clip
+
+The probe that could not start yesterday started. `probe-ltx-b2.log`, rc=0 at
+06:51:40 box-local, no crash, no abort. Recipe read off
+`SAMPLE-ltx23-b01.mp4.meta.yaml` and changed in exactly one place — `--batch 2`:
+two-stage distilled (8 steps at 352x640, 2x latent upsample, 3 steps at
+704x1280), distilled sigmas, 704x1280, 65 frames @24fps, guidance 1.0,
+`--image-crf 33`, base seed 20260732 with slot *i* at seed+*i*. Same embeds file,
+same prompt files, same conditioning still as the b1 sample — and the still is
+provably the same input: `cond-crf.png` from last night's run and from this one
+are **byte-identical** (sha256 `da388e7b…`), so nothing upstream of the denoiser
+moved.
+
+- **The measurement: 190.1s for two clips against 108.1s for one.** 1.76x the
+  wall for 2.00x the video, so throughput goes **0.0251 → 0.0285 s(video)/s(wall)**
+  and the cost of a second of finished video goes **39.9s → 35.1s, a 12% saving**.
+  It is a win — the second batch configuration on this card that pays, after
+  AnimeGen's b2 — but it is **1.14x, not the 1.33-1.54x that was predicted**, so
+  the prediction was optimistic by better than half the margin. `s/step` is null
+  and stays null: 8 half-res calls plus 3 full-res is not a uniform step, and
+  throughput is the column that carries the comparison.
+- **The GPU is not the constraint here; the host is.** Peak torch **7.2GB of
+  25.7 (28%)**, device 2.6GB — where the 5B at b2 sat at 23.5 of 25.7 (91%) and
+  the 5B at b4 took the machine. But host physical peaked at **64.2 of 68.1GB
+  (94%)**, up from b1's 60.8, and commit at 75.3 of 123.9. b1 → b2 cost +3.4GB of
+  physical; the same slope puts b4 past 68.1, which is the wall this box
+  bugchecked at twice today. **LTX b3+ is not queued and b4 stays closed here
+  too** — for the opposite reason to the 5B's, and the reason is worth keeping
+  straight: the 5B dies on the card, LTX would die on the host.
+- **THE FIDELITY GATE DID NOT PASS, and the row still stands.** Slot 0 shares the
+  b1 sample's seed and recipe, so it should have been the same picture. It is
+  not, quite. Against a control of the reference re-encoded one more generation
+  (MSE 0.87, **48.7 dB**, rms 0.93/255), slot 0 vs the b1 reference measures MSE
+  107.1, **27.8 dB**, rms **10.3/255** — 11x the control, where the gate allowed
+  1.5x. What it is *not* is the silent-expansion failure this gate was written to
+  catch: slot 1 vs slot 0 is MSE 705.2 (19.7 dB), the two clips are emphatically
+  different, and the log shows the expansion happening
+  (`embeds expanded to batch 2: (2, 1024, 188160)`). An independent seed against
+  the reference sits at 720.4; slot 0 sits at 107.1, **6.7x closer**. So slot 0
+  is the same sample drifted, not a different draw. The per-frame profile says
+  the same thing twice: slot 0 vs reference starts at MSE 2.12 on frame 0 — the
+  conditioning-pinned frame, control 0.54 — and climbs in steps to a 90-130
+  plateau by frame 6, the identical shape slot 1 vs slot 0 traces up to 1100+.
+  Divergence that starts at zero and grows with denoise depth is rounding
+  amplified through eleven steps of bf16, not a changed input.
+- **What that costs us, plainly: a batched slot is not a drop-in for the
+  un-batched clip.** Batching buys 12% on throughput and gives up bit-identity,
+  so it cannot be used to re-render an approved beat "identically, plus a spare".
+  The clips are real — consecutive-frame MSE 80.7 for slot 0 and 44.8 for slot 1
+  against the reference's 85.7, nothing frozen, and slot 1 is a visibly calmer
+  take. **What is NOT established** is whether an *un-batched* re-run would drift
+  from the stored reference by the same amount, i.e. whether this pipeline is
+  reproducible run-to-run at b1 at all. That needs one more render at b1 and the
+  probe was scoped to one run, so it was not taken. **It is the next question,
+  and it is cheap** — 108s.
+- **`COMPARISON.html` regenerated, and the LTX batch table has a wrong word in
+  it.** Exit 0, 91KB, all video srcs resolve, no literal-None cells, five batch
+  tables. The LTX table carries the single b2 row correctly, but its
+  one-point boilerplate reads *"the cells are this recipe's cost at b1"* when the
+  only row is b2. And it has **no b1 comparator**, though a real b1 exists:
+  `BATCH_B1_JOIN` joins from a jsonl row, and LTX's b1 predates `--bench-jsonl`
+  on that renderer — it survives only as a sidecar and a log. Both are small and
+  neither was touched here; this probe's authority was one commit for this file.
+- **The worker is UP.** `schtasks /run /tn banyan-worker-start` returned SUCCESS,
+  not 0x800710E0 — status Running, last result 0x41301. The blocker was never the
+  task, it was the missing interactive session, and there is one now: the
+  telemetry daemon respawned at 06:39:09, which is the logon signature this file
+  already records. **Someone logged in at the box between the 06:07 crash and
+  06:44.** The worker took the one task on `pipeline/farm-queue.yaml` —
+  `faceneg-b01-1785819600`, the deliberate one-beat face-negative sample — at
+  06:55:29 and is rendering it. One sample, already sanctioned, left alone.
