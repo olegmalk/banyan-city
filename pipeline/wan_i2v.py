@@ -443,6 +443,23 @@ def stage_simple(a) -> int:
     else:
         pipe.to("cuda")
         vram("after .to(cuda)")
+    # THE VAE DECODE IS A SEPARATE CEILING FROM THE WEIGHTS, and this path did not
+    # tile it. `tile_vae()` was called by the AnimeGen loader (:328) and by
+    # stage_render (:687) and by neither branch of stage_simple, so the divergence
+    # the helper was extracted to end had quietly reopened on the 5B path — the
+    # exact shape of the bug its own docstring describes.
+    #
+    # NOT measured — and saying so is the point. The 5070 Ti probe that was meant
+    # to observe the untiled decode OOM was killed at denoise step 3 of 6 when the
+    # box was unplugged to be carried to another room, so on 2026-08-05 the decode
+    # peak on a 12GB card remains a PREDICTION (~14.4GB untiled against 12.82GB of
+    # card, from Box A's own peak-torch figure for this recipe).
+    #
+    # This call is justified without it: the divergence is the bug. A 24GB card had
+    # room to be wasteful and hid it, and tiling is the configuration a real episode
+    # render uses either way, so the three load paths now agree instead of two of
+    # them agreeing and the untested one being wrong.
+    tile_vae(pipe)
     import inspect
     takes_image = "image" in inspect.signature(pipe.__call__).parameters
     if not takes_image:

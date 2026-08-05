@@ -594,10 +594,10 @@ is *unmeasured*, which is different from *no*.
 | commit limit | **123.9GB** (grown to 140.6GB under the A14B load) | **67.4GB** (31.4 phys + 36GB pagefile), 714.7GB free on C: so it can grow |
 | reachability | LAN ssh since 2026-08-01 | **LAN ssh since 2026-08-05.** Before that it was a USB-bundle enrollment (`STATE.md` 2026-07-30) with no remote route |
 | repo checkout | `C:\banyan-farm\banyan-city` | same path, fast-forwarded 231 commits off the stale `farm-results-msi` to `main` @ `ae13cc6` on 2026-08-05 |
-| video throughput | **MEASURED** — every row in §1 | **NO DATA, from anyone.** The staged TI2V-5B preview probe (`C:\banyan-farm\probe-5070-ti2v5b\`) has never been run |
-| GPU power state | board power unremarked; every §1 row was taken at full clock | **CLAMPED IN BOTH POWER STATES, measured 2026-08-05.** On AC charging a flat pack: `enforced.power.limit` **25.00 W**, **180 MHz of 3090 MHz** at 100% util, `sw_power_cap` Active. On battery at ~28%: **45.00 W**, **802 MHz**, 35.4 TFLOPS bf16. Default 65 W, max 140 W — so 6% and 26% of clock. Blocks any throughput measurement |
-| mains stability | not a question on this box | **four Kernel-Power event-105 power-source changes in under two hours** (15:09:57, 15:19:21, 15:58:53, 16:42:27 on 2026-08-05); disconnected as of 16:58Z and discharging. Loose plug, failing adapter or a moved machine — unresolved, and the actual blocker |
-| stability | two unclean reboots on 2026-08-04/05, both under batch pressure; Kernel-Power 41 at 06:07:05 | no render has ever run on it |
+| video throughput | **MEASURED** — every row in §1 | **PARTIAL, 2026-08-05** — the probe finally ran and got 3 of 6 denoise steps before a room move killed it: **362 / 601 / 719 s per step** at full clock, against Box A's **16.4 s/step**. Settled steps only; no clip and no completed sample, so **no `s(video)/s(wall)` figure exists for this box** and none should be quoted |
+| GPU power state | board power unremarked; every §1 row was taken at full clock | **RESOLVED 2026-08-05 evening — it was the adapter, and the card is not clamped.** On the correct barrel adapter: `enforced.power.limit` **140.00 W**; a bf16 burn holds **2385 MHz at 139.93 W** (the whole board budget); through the 5B render **2775 MHz at 100% util with `clocks_event_reasons.sw_power_cap` Not Active**, while the pack charged **6% → 32%**. The afternoon's 25 W / 180 MHz was the wrong adapter. Earlier rows measured a cable, not a card |
+| mains stability | not a question on this box | Four Kernel-Power event-105 source changes between 15:09:57 and 16:42:27 on 2026-08-05, **all on the wrong adapter**. **Stable since the swap**: AC held through a 40+ minute 100%-util render while charging the pack from 6% |
+| stability | two unclean reboots on 2026-08-04/05, both under batch pressure; Kernel-Power 41 at 06:07:05 | **first render attempt 2026-08-05 — and it did not misbehave**: 28 minutes at 100% util with GPU memory, host physical and commit all flat, no crash and no bugcheck. It was killed from outside (unplugged for a room move), which is not a stability finding |
 
 **Why Box B still has no number, and why that is not the same as "too small".**
 The sample was staged with byte-verified inputs (conditioning still, prompt and
@@ -641,6 +641,82 @@ neither retracted hypothesis was ever measured; a modest adapter sharing a budge
 with a ~40 W charging load stays a plausible but unmeasured mechanism. The
 measured blocker is the mains connection itself. Box is on battery at 25% and
 falling as of this note, so still no sample.
+
+**Resolved ~18:55Z — the adapter hypothesis was right, and retracting it was the
+wrong call.** The founder plugged in the correct barrel adapter. Nothing else
+changed, and `enforced.power.limit` went **25.00 W → 140.00 W**: a bf16 matmul burn
+held **2355 MHz at 121.02 W** and then **2385 MHz at 139.93 W**, against 180 MHz at
+13-25 W all afternoon. The render that followed sat at **2775 MHz, 100% util,
+`sw_power_cap` Not Active** for forty minutes *while* charging the pack from 6% to
+32% — one adapter carrying a flat battery and a full-power GPU at once, which is
+exactly the load the previous adapter could not.
+
+So "a modest adapter sharing one budget with a ~40 W charging load", retracted two
+paragraphs above as plausible-but-unmeasured, is **confirmed by intervention**: the
+one thing that changed moved the cap by 115 W. Two honest limits on that claim —
+it is a single intervention, and reseating the plug is confounded with swapping it,
+so a loose barrel connector on the *right* adapter would produce the same result;
+and adapter wattage is still not exposed to software, so the mechanism is inferred
+from the cap moving, not read off the supply. What is no longer in doubt is the
+practical conclusion: **this box was adapter-limited, never clock-limited.** Every
+Box B figure from here is a real number; every one before it measured a cable.
+
+The retraction itself is the lesson worth keeping. "Unmeasured" was the correct
+label for the hypothesis and "retracted" was not — the evidence for it (charge rate
+falling as the GPU drew, a cap below the 65 W default) was real and pointed the
+right way. Downgrading a well-supported inference to a discarded one, because it
+could not be proven over ssh, cost an afternoon of waiting for the wrong thing.
+
+**The sample ran, and the move killed it at step 3 of 6 — so the fit question below
+is still open.** Fired 19:00:43 local on 2026-08-05, the staged probe unchanged
+(`--stage simple --model ti2v-5b --size 704x1280 --seconds 2.5 --fps 24 --steps 6
+--guidance 5.0 --batch 1 --mode preview --offload --no-shake-neg`, seed 20260732,
+inputs sha256-verified against Box A's). It loaded in **74s**, reported
+`WanImageToVideoPipeline (forced image-to-video)`, `model cpu offload ON`, and
+`VRAM[after load, before .to(cuda)] used 1.26/12.8GB`. Then it denoised three steps
+and stopped:
+
+| step | cumulative | **this step** | Box A, same recipe |
+|---|---|---|---|
+| 1 | 06:02 | **362 s** | 16.4 s |
+| 2 | 16:03 | **601 s** | 16.4 s |
+| 3 | 28:02 | **719 s** | 16.4 s |
+
+Read the per-step column, not tqdm's rate: those are differences of its cumulative
+elapsed, and its smoothed `s/it` (362 → 503 → 602) understates every step after the
+first. **Settled steps only — there is no clip, no completed sample and therefore no
+`s(video)/s(wall)` figure for this box.** Do not publish one; three rising steps do
+not extrapolate honestly to six.
+
+**The card was at full clock the whole time, so this is not the clamp again**:
+**2775 MHz** at 100% util with `sw_power_cap` **Not Active**, 43-55 W of a 140 W
+budget, 48-52 C. Device memory pinned **flat at 11908/12227 MiB (97.4%)**, host
+physical steady, and `commit_used` ~59.5 GB against **31.4 GB installed**. What is
+solid and structural: **UMT5-XXL alone is ~11.4 GB bf16 against 11.94 GiB of usable
+card**, so Box B can never use Box A's resident path for Wan 5B at any resolution —
+offload, and its PCIe cost, is mandatory here rather than a tuning choice. What is
+NOT established is *why each step costs more than the last*. Host physical use fell
+27.9 → 13.7 GB and then flattened with ~17.5 GB still free, which is at least as
+consistent with the safetensors file cache being released after load as with
+anything paging out; page-fault rates were never sampled. It stays a measured curve
+with no mechanism attached.
+
+**Why it stopped is not instability.** The log ends after step 3 with **no rc line,
+no traceback and no CUDA error**, while the trace's next samples show GPU memory and
+util drop to **0** and commit collapse 59.4 → 15.6 GB. A Python exception writes a
+traceback; this process was killed from outside. The box was being unplugged to be
+carried to another room, and these tasks are registered through `schtasks`, whose
+default settings include stopping on a switch to battery — the same
+`Stop On Battery Mode` policy already recorded above as having refused to start this
+sample once. Unconfirmed (it needs the TaskScheduler log once the box is back), but
+it is the reading the evidence supports, and it is the opposite of a bugcheck: for
+28 minutes GPU, host RAM and commit were all steady.
+
+**So §4's fit prediction below is neither confirmed nor falsified.** The run never
+reached the VAE decode, which is the only thing that prediction is about. `tile_vae()`
+has since been added to `stage_simple` (the divergence the correction below
+identified is a real bug on its own terms), so the *next* run tests the tiled path
+and the untiled peak on a 12GB card may now never be measured at all.
 
 **Correction, 2026-08-05 — `stage_simple` does not tile the VAE, and the fit
 margin above is negative, not sub-gigabyte.** The bullet below said the 14.4GB
@@ -686,3 +762,13 @@ falsify it** (DERIVED-FROM-OURS, `bench-platform/fleet-inventory-20260805.txt`):
   480x832-draft machine in every plan until the sample runs. Nothing here says
   it cannot render; it says nobody has measured it, and the two statements must
   not be allowed to merge.
+
+**Update 2026-08-05 — the verdict survives, on different evidence.** Box B is still
+the stills / VO / draft machine, but no longer because the fit is unknown: three
+measured steps at 362-719 s against Box A's 16.4 s say that even if 704x1280 5B
+*fits*, asking this box for it costs something like an order of magnitude more wall
+time per beat. The recommendation that follows is **not** "try harder on 5B" — it is
+that the model shaped for this box is the one that already runs small:
+**LTX-2.3 preview took 1.9 GB torch / 1.5 GB device** on Box A (§1), which is the
+only measured row in this table that would sit comfortably inside 12 GB without
+offload at all. That is the next thing to put on Box B, and it needs its own sample.

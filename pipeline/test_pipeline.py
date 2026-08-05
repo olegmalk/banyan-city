@@ -1039,8 +1039,15 @@ def test_argparse_declares_every_flag_it_reads():
     Verified by running it against `git show fab4632:pipeline/ltx_i2v.py`, where
     it reports `a.batch` at line 401 and fails. A test you have not seen fail is
     not a test.
+
+    `xplat_fidelity.py` is not a renderer and joined this list on 2026-08-05 for
+    the same structural reason: it was promoted out of `bench-platform/` into a
+    tool other people will call, and it runs on measurement artifacts that take
+    ffmpeg minutes to reach — so a namespace typo there also surfaces late rather
+    than at parse time. Any pipeline script that binds `parse_args()` belongs
+    here; the check costs one AST walk.
     """
-    for name in ("wan_i2v.py", "ltx_i2v.py"):
+    for name in ("wan_i2v.py", "ltx_i2v.py", "xplat_fidelity.py"):
         src = (REPO / "pipeline" / name).read_text(encoding="utf-8")
         ns, missing = _argparse_gaps(src, name)
         check(f"{name} binds a parsed-args namespace this test can follow", bool(ns))

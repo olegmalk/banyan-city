@@ -1256,3 +1256,79 @@ gets answered first.
 Box left as found again: probe directory back to its nine staged files (both burn
 scripts removed), no python processes, GPU 0 MiB at 0% util, no scheduled tasks
 registered, repo clean at `ae13cc6`. Nothing is running and nothing is queued.
+
+## 2026-08-05 evening — the 5070 Ti rendered for 28 minutes, and it was the adapter all along
+
+**The power saga is over and the answer was the cable.** The founder plugged in the
+correct barrel adapter; nothing else changed. `enforced.power.limit` went
+**25.00 W → 140.00 W**, a bf16 burn held **2385 MHz at 139.93 W**, and through the
+render the card sat at **2775 MHz, 100% util, `sw_power_cap` Not Active** while
+charging the pack **6% → 32%** — one supply carrying a flat battery and a full-power
+GPU at once, which is exactly what the old one could not do. So the "modest adapter
+sharing one budget" mechanism that this file retracted a few hours earlier as
+unmeasured is **confirmed by intervention**. Two caveats kept on the record: it is a
+single intervention, and reseating the plug is confounded with swapping it. The
+lesson is about the retraction, not the hypothesis — "unmeasured" was the right
+label, "retracted" was not, and downgrading a well-supported inference because ssh
+could not prove it cost an afternoon of waiting for the wrong thing.
+
+**The sample finally ran, and a room move killed it at step 3 of 6.** Fired 19:00:43,
+the staged recipe unchanged (TI2V-5B preview, 704x1280, 61f, 6 steps, g5.0, seed
+20260732, `--offload`, inputs sha256-identical to Box A's). Loaded in 74s, then:
+
+    step 1  362 s      step 2  601 s      step 3  719 s      (Box A: 16.4 s/step)
+
+Those are differences of tqdm's *cumulative* elapsed; its smoothed rate understates
+every step after the first. **Settled steps only — no clip, no completed sample, so
+no `s(video)/s(wall)` number exists for this box, and none should be quoted.** Three
+rising steps do not extrapolate honestly to six.
+
+Not the clamp this time: full clock throughout, 43-55 W of 140 W, 48-52 C, device
+memory pinned flat at **11908/12227 MiB (97.4%)**, commit ~59.5 GB against **31.4 GB
+installed**. The structural finding is solid — UMT5-XXL alone is ~11.4 GB bf16
+against 11.94 GiB usable, so **this box can never hold Wan 5B resident the way Box A
+does**; offload and its PCIe cost are mandatory here. Why each step costs more than
+the last is deliberately left unexplained: host physical use fell 27.9 → 13.7 GB and
+then flattened with ~17.5 GB free, which fits "the safetensors file cache was
+released after load" as well as anything paging, and no page-fault rate was sampled.
+A measured curve with no mechanism attached is the honest artifact.
+
+**It did not crash.** The log ends after step 3 with no rc line, no traceback and no
+CUDA error, while the trace's next samples show GPU util and memory at **0** and
+commit collapsing 59.4 → 15.6 GB — killed from outside, not an exception. The box was
+being unplugged to be carried to another room, and `schtasks` defaults include
+stopping a task on the switch to battery: the same `Stop On Battery Mode` policy this
+file already recorded as having once refused to start this very sample. Unconfirmed
+until the TaskScheduler log can be read. For 28 minutes GPU, host RAM and commit were
+all steady, so this is the opposite of the two bugchecks above.
+
+**Both headline questions are still open, and I am not going to pretend otherwise.**
+The run never reached the VAE decode, so §4's "does the untiled decode OOM on 12 GB"
+prediction is neither confirmed nor falsified, and with no clip there is no
+cross-platform determinism figure. `bench-platform/xplat_fidelity.py` was promoted to
+`pipeline/xplat_fidelity.py` ready for it and re-validated (it still reproduces the
+recorded CTRL-crf23 0.8714/0.933 and XPLAT 142.3771/11.932 exactly).
+
+Two real fixes came out of the attempt anyway. `tile_vae()` now runs on
+`stage_simple`'s 5B path — the divergence §4 found by reading the source, where the
+AnimeGen loader and `stage_render` tiled and the untested path did not. **Unverified
+on hardware**, and its comment says so. And promoting the fidelity harness into
+`pipeline/` put it under `test_subprocess_reads_are_utf8`, which immediately caught a
+latent bug the untracked copy had hidden: `sh()` ran `text=True` with no `encoding=`,
+which on these Windows boxes decodes as cp1252 and silently sets `.stdout` to `None`.
+
+**Provenance defect found, not fixed (outside that task's scope):**
+`video_task.write_sidecar` writes `platform: local-gpu ({worker})` from
+`platform.node()`, which is **"MSI" on both boxes** — so a clip from the 5070 cannot
+be told from a 5090 clip by its own sidecar, in direct conflict with §4's rule to
+identify a box by GPU and never by hostname. Worth fixing before Box B produces any
+artifact anyone keeps.
+
+**Box NOT left clean — it went offline mid-cleanup and this is outstanding.** Two
+scheduled tasks remain registered (`banyan-probe5070`, `banyan-probe5070-trace`); the
+trace loop self-terminates after 90 samples so it is not running, but the
+registrations are still there. The re-fire is one command once the box is back
+(`cmd /c C:\banyan-farm\probe-5070-ti2v5b\register.cmd`), and the tiled renderer is
+already staged beside it as `wan_i2v_tiled.py`, hash-verified — rename it over
+`wan_i2v.py` first and the next run tests the tiled path. Its Wi-Fi MAC is
+**9C:67:D6:85:0A:B6** if the move changed its IP off 192.168.3.153.
