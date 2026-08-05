@@ -1204,3 +1204,55 @@ nine staged files.
 unproven. The 5070 Ti is still a stills / VO / 480x832-draft box in every plan.
 It is not "too small" — the card side has still never been measured, and now the
 reason is documented as *power delivery*, not memory.
+
+### Correction, ~16:58Z — the clamp is the ON-AC state, and the AC is gone again
+
+Two things in the entry above are wrong, and the Windows event log settles both.
+`Get-WinEvent` for Kernel-Power **event 105 (power source change)** returns four
+transitions in under two hours: **15:09:57, 15:19:21, 15:58:53 and 16:42:27**.
+The 15:58:53 one is the founder plugging it in — it matches `PowerOnline=True` at
+16:00Z. **The 16:42:27 one is the AC going away again**, and the box has been on
+battery ever since: `PowerOnline=False`, `Charging=False`, `Discharging=True` at
+10-23 W, **25% and falling**, 21545 mWh left of 84176.
+
+So the "cap lifted at exactly 30% battery" reading was a coincidence of timing,
+not a state-of-charge gate. `enforced.power.limit` went 25.00 W → 45.00 W at
+16:42:54, which is **27 seconds after AC was lost**, and the battery's 30% peak
+was simply where charging stopped. Corrected causal account, measured both ways:
+
+| power source | `enforced.power.limit` | SM clock at ~99% util | measured throughput |
+|---|---|---|---|
+| **AC, charging a 4-30% pack** | 25.00 W | **180 MHz** of 3090 | not measured (clock ~6%) |
+| **battery, ~28%** | 45.00 W | **802 MHz** of 3090 | **35.4 TFLOPS** bf16, 28.6 W drawn, 33 C |
+
+**On AC the GPU was clamped HARDER than on battery** — the opposite of what the
+morning's entry assumed when it treated 442 MHz on battery as the throttled case.
+Both are far under the **65 W default / 140 W maximum**. 802 MHz is 26% of clock;
+extrapolating the achieved TFLOPS to a normal ~2400 MHz sustained clock puts this
+part near ~106 TFLOPS, so even the better of the two states is about a third of
+the card. Neither number is this box's throughput and no row goes in §1.
+
+**Retracted: the "wrong charger" and "MSI Eco shift mode" hypotheses above.**
+Neither is needed to explain the readings and neither was measured — adapter
+wattage is not exposed to software and MSI's shift mode is not readable over ssh.
+What IS measured is that AC-while-charging clamps the GPU to 25 W. A modest
+adapter sharing one budget with a ~40 W charging load remains the plausible
+mechanism, but it stays labelled a guess. **What is not a guess: the mains
+connection to this box has changed state four times in two hours and is currently
+disconnected**, which is a loose plug, a failing adapter, or someone moving the
+machine — and it is the actual blocker.
+
+**Still nothing rendered, and the founder's one sample is still unspent.** The
+right call twice over: the second burn measurement showed the battery drop 30% →
+29% the moment the GPU was allowed to draw, so a multi-minute render would have
+crossed the power-state boundary mid-sample and averaged two different machines
+into one s/step — worse than no number, because it would look like a number. And
+running a 100%-util render on a box that is now at 25% and discharging is exactly
+what this morning's entry refused. The correct next step is unchanged and remains
+a human one: **plug it back in and confirm it stays plugged in.** After that the
+probe is one command, and the fit question — which does not care about clocks —
+gets answered first.
+
+Box left as found again: probe directory back to its nine staged files (both burn
+scripts removed), no python processes, GPU 0 MiB at 0% util, no scheduled tasks
+registered, repo clean at `ae13cc6`. Nothing is running and nothing is queued.

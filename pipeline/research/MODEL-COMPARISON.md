@@ -595,7 +595,8 @@ is *unmeasured*, which is different from *no*.
 | reachability | LAN ssh since 2026-08-01 | **LAN ssh since 2026-08-05.** Before that it was a USB-bundle enrollment (`STATE.md` 2026-07-30) with no remote route |
 | repo checkout | `C:\banyan-farm\banyan-city` | same path, fast-forwarded 231 commits off the stale `farm-results-msi` to `main` @ `ae13cc6` on 2026-08-05 |
 | video throughput | **MEASURED** — every row in §1 | **NO DATA, from anyone.** The staged TI2V-5B preview probe (`C:\banyan-farm\probe-5070-ti2v5b\`) has never been run |
-| GPU power state | board power unremarked; every §1 row was taken at full clock | **CLAMPED, measured 2026-08-05 16:15Z:** `enforced.power.limit` 25.00 W (default 65 W, max 140 W), **180 MHz of 3090 MHz** at 100% util, `sw_power_cap` Active, 36 C. Persists on AC. Blocks any throughput measurement |
+| GPU power state | board power unremarked; every §1 row was taken at full clock | **CLAMPED IN BOTH POWER STATES, measured 2026-08-05.** On AC charging a flat pack: `enforced.power.limit` **25.00 W**, **180 MHz of 3090 MHz** at 100% util, `sw_power_cap` Active. On battery at ~28%: **45.00 W**, **802 MHz**, 35.4 TFLOPS bf16. Default 65 W, max 140 W — so 6% and 26% of clock. Blocks any throughput measurement |
+| mains stability | not a question on this box | **four Kernel-Power event-105 power-source changes in under two hours** (15:09:57, 15:19:21, 15:58:53, 16:42:27 on 2026-08-05); disconnected as of 16:58Z and discharging. Loose plug, failing adapter or a moved machine — unresolved, and the actual blocker |
 | stability | two unclean reboots on 2026-08-04/05, both under batch pressure; Kernel-Power 41 at 06:07:05 | no render has ever run on it |
 
 **Why Box B still has no number, and why that is not the same as "too small".**
@@ -626,6 +627,20 @@ Silent/Eco shift mode, which clamps GPU TGP regardless of AC and is not the
 Windows power scheme (that reads Balanced). Both need a human at the machine.
 **A throughput figure taken at 180 MHz would measure the clamp, not the card**,
 so no row is added.
+
+**Correction, ~16:58Z — the 25 W clamp is the ON-AC state, and both hypotheses in
+the paragraph above are retracted.** Kernel-Power **event 105** shows four
+power-source changes in under two hours (15:09:57, 15:19:21, 15:58:53, 16:42:27).
+AC arrived at 15:58:53 and **left again at 16:42:27**; the limit stepped 25 → 45 W
+at 16:42:54, twenty-seven seconds later. So the apparent "lifted at 30% battery"
+was the switch to battery power, not a state-of-charge gate, and **on AC the card
+was clamped harder (25 W / 180 MHz) than on battery (45 W / 802 MHz, 35.4 TFLOPS
+bf16)** — the reverse of what the 442 MHz battery reading had implied. Adapter
+wattage is not exposed to software and shift mode is not readable over ssh, so
+neither retracted hypothesis was ever measured; a modest adapter sharing a budget
+with a ~40 W charging load stays a plausible but unmeasured mechanism. The
+measured blocker is the mains connection itself. Box is on battery at 25% and
+falling as of this note, so still no sample.
 
 **Correction, 2026-08-05 — `stage_simple` does not tile the VAE, and the fit
 margin above is negative, not sub-gigabyte.** The bullet below said the 14.4GB
