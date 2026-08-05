@@ -58,6 +58,7 @@ host can still do during that render.
 | Model + build | Recipe | Mode | Time | Throughput s(video)/s(wall) @ batch | Peak VRAM | Peak host RAM | Parallel | Licence | Measurement status | Source |
 |---|---|---|---|---|---|---|---|---|---|---|
 | **diffusers/LTX-2.3-Distilled-Diffusers, bf16** | two-stage **on-recipe**: 8 steps @352x640 → 2x latent upsample → 3 steps @704x1280, explicit sigmas, guidance 1.0, 65f @24fps = 2.708s | production (two-stage, on-recipe) | **108.1s sample / 120s wall** (stage 1 62s @7.8s/it, stage 2 31s @10.5s/it; remainder = upsample + setup) | **0.0251 s(video)/s(wall) @b1** = 39.9s wall per 1s video (2.708s of video / 108.1s sample) — DERIVED-FROM-OURS, the row states its own 65f @24fps so the denominator is not invented | **4.1GB torch / 2.5GB device of 26GB** — LABEL: **sequential-offload**, measures the offload strategy, not card capacity | **60.8GB phys / 67.1GB commit of 68.1GB** | 1/card, and **host-exclusive** — this render evicted the farm worker on the 64GB box | LTX-2 Community License Agreement — **CANDIDATE** under watch-only per D16 (per-post AI label, never a contributor-facing service, one founder-screened sample) | **MEASURED-BY-US 2026-08-04**, $0. Clip clean: no issue-#37 corruption (saturation 0.264, no channel cast, **0/64 frozen frames**) | `SAMPLE-ltx23-b01.mp4.meta.yaml`, `pipeline/ltx_i2v.py` |
+| same — **batch 2, the throughput probe** | the b1 recipe exactly at 2 latents through one set of weights: two-stage 8 steps @352x640 → 2x latent upsample → 3 steps @704x1280, explicit sigmas, guidance 1.0, 65f @24fps = 2.708s per clip. Slot 0 repeats **seed 20260732** as the batch-fidelity check, slot 1 takes 20260733 | production (two-stage, on-recipe) | **190.1s sample** for 2 clips. **No s/step figure**: the two stages run at different per-step costs, so the renderer writes `null` rather than an average that describes neither | **0.0285 s(video)/s(wall) @b2** = 35.1s wall per 1s video (5.417s of video / 190.1s sample) — **1.14x b1's 0.0251**, the only batch series on this box that gains | **7.2GB torch / 2.6GB device of 25.7GB** — LABEL: **sequential-offload**, measures the offload strategy, not card capacity; +3.1GB torch over b1's 4.1GB | **64.2GB phys / 75.3GB commit of 68.1/130.4GB** — **+3.4GB physical over b1's 60.8GB**, and that slope is what closes b4: two more latents put it past the box's 68.1GB | 1/card, still **host-exclusive** — the b1 row evicted the farm worker at 60.8GB and this one runs 3.4GB higher | LTX-2 Community License Agreement — **CANDIDATE** under watch-only per D16 | **MEASURED-BY-US 2026-08-05**, $0. Throughput is a real gain, **but the batched slot is not pixel-equivalent to the un-batched reference** — see the fidelity note below, and do not treat a batched render as a re-issue of an approved clip | `SAMPLES/batch-bench.jsonl`, `SAMPLES/ltx23-production-b2-s20260732.mp4.meta.yaml`, `SAMPLES/ltx23-production-b1-s20260732.mp4.meta.yaml` |
 | Wan 2.2 TI2V-5B, diffusers bf16, `model_cpu_offload` | 704x1280, 14 steps, guidance 5.0 | production | **188s render / 248s per beat** (62 min / 15 beats) | no data — the row does not record its frame count, so s(video) has no denominator | 22.9GB of 25.7GB — `model_cpu_offload` | no data | 1/card; host RAM unmeasured, so co-residency unproven | Apache-2.0, output rights disclaimed — CLEAR | MEASURED-BY-US | `STATE.md:604`, `DECISION.md §2` |
 | same | 704x1280, 20 steps | production | **240s / 300s per beat** | no data — as above | no data | no data | as above | as above | MEASURED-BY-US | `STATE.md:605` |
 | same — **cost decomposed** | 704x1280 | — | **8.67s/step marginal + 66.7s fixed per clip** — supersedes the "13.4s/step" figure, which was `188/14` and contaminated by the fixed addend (the 20-step run gives 12.0 for the same quantity) | — | — | — | — | — | DERIVED-FROM-OURS (two-point fit on the two rows above; corroborated by `video_task.py:817` and STATE.md's "~12 min/episode" batch saving) | `DECISION.md §3` |
@@ -174,6 +175,58 @@ measurements and are not edited** — the renderer now writes the per-video-seco
 form, and `COMPARISON.html` derives that cell from `sample_s / video_s` so old
 and new rows read alike. The table above states both numbers for the b2 row and
 labels which is which.
+
+### 2026-08-05 — LTX at b2: the one batch that gains, and what it costs in fidelity
+
+**The third probe ran.** The section above closes with "there is no LTX batch row
+until [the `--batch` fix] lands". It landed, the probe ran, and the row is in the
+table: **190.1s of sampling for two 2.708s clips — 0.0285 s(video)/s(wall), 35.1s
+of wall per second of video, against b1's 0.0251 and 39.9s.** That is **1.14x b1**,
+and it is the only batch gain measured on this box. AnimeGen's b2 gained at
+*preview* geometry only; the 5B lost at both geometries. Memory moved the way
+sequential offload predicts: **7.2GB torch of 25.7GB** — the card is nowhere near
+the constraint — against **64.2GB host physical of 68.1GB**, which is.
+
+**b4 is closed without running it, on the host slope.** b1 → b2 cost **+3.4GB of
+host physical** (60.8 → 64.2GB) while VRAM barely moved, so two more latents put
+the run past the 68.1GB this box has — on a render that is already host-exclusive
+and evicted the farm worker at b1. That is arithmetic on two measured points, not
+a measurement, and it is recorded here as a closure rather than promoted to a row.
+
+**The fidelity check did not pass the way the 5B's did, and that is the finding.**
+Slot 0 of the b2 batch ran at seed 20260732 — the b1 sample's seed, byte-identical
+inputs, the same conditioning frame — and it is **not the same clip**. Against
+`SAMPLE-ltx23-b01.mp4` it measures **RMS 10.35 of 255**, where re-encoding the
+reference against itself measures **0.93**: about **11x the control**. The drift
+grows with denoise depth, the conditioning frame itself is identical, and the two
+slots differ from each other properly (the prompt-embed expansion is confirmed
+working) — so this is a real batch doing real independent work, neither one clip
+rendered twice nor a batch that silently broke.
+
+**What that licenses and what it does not.** A batched render is a *new clip*: it
+can be screened, kept and shipped on its own merits, but it is **not a drop-in
+re-render of an approved un-batched clip**. Re-issuing an already-approved beat
+from inside a batch puts it back in front of Roman — §6 territory, not a
+throughput question.
+
+**The open question, stated so nobody closes it by assumption: whether two
+UN-BATCHED runs reproduce each other is not established.** Nobody has run this
+recipe twice at b1 and compared. Until that exists 10.35 has no baseline, and the
+only honest reading is "the batched slot differs from the reference by ~11x a
+re-encode" — **not** "batching causes drift". The test is one repeat of the b1
+recipe at the same seed with the same metric, and it is the next thing this row
+needs.
+
+**Provenance gap, recorded rather than papered over.** The RMS comparison was run
+against the two clips on disk during the 2026-08-05 session and **wrote no log
+file**, so unlike every other figure in this table it cannot be re-read out of an
+artifact — only re-derived by running the check again. Both clips are kept
+(`SAMPLES/ltx23-production-b2-s20260732.mp4` and `SAMPLE-ltx23-b01.mp4`), so that
+is cheap; the next such check writes its output somewhere. Smaller and related:
+the b1 row cites `SAMPLE-ltx23-b01.mp4.meta.yaml`, which carries the recipe but
+**not** the derived 0.0251/39.9 — those live in the sidecar of the gallery copy
+`SAMPLES/ltx23-production-b1-s20260732.mp4` (same bytes, sha256 `6226aef5…`), and
+that is the file `COMPARISON.html` names when it joins b1 into the batch table.
 
 ### Open observations on the measured 5B T1/T2/T3 rows
 

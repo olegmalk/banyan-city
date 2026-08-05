@@ -91,6 +91,37 @@ BATCH_B1_JOIN = {
     ("ti2v5b", "production"): ("bench-T1T2T3/bench-t1t2t3.jsonl", "T1-shift5.0"),
 }
 
+# The same join, from a CLIP SIDECAR instead of a bench file, for a series whose
+# b1 ran before `--bench-jsonl` existed and therefore has no row in any file.
+#
+# LTX production is the case. The b1 render of 2026-08-04 wrote its throughput
+# into its own sidecar and nothing else; the b2 probe of 2026-08-05 then produced
+# a table with one row, reading as if b1 were unknown — which it is not, and which
+# is how a 1.14x gain ends up quoted with nothing under it.
+#
+# The path names the GALLERY copy, and that is deliberate. The b1 run is usually
+# cited as `SAMPLE-ltx23-b01.mp4.meta.yaml`, and that repo-root sidecar carries
+# the recipe but NOT the two derived figures — 0.0251 and 39.9 live only in the
+# gallery copy's sidecar. The two mp4s are the same bytes (asserted at build time,
+# below), so it is one run under two filenames; the Source column names the file
+# that actually holds the number, because that is the only thing that column is
+# for. NOTHING is written back to any bench file.
+#
+# A sidecar has no sample_s, no s/step and no VRAM field. Those cells stay
+# em-dashes: borrowing them from the prose table would promote a document figure
+# into a measured row, which is what MODEL-COMPARISON rule 2 forbids.
+BATCH_B1_SIDECAR = {
+    ("ltx23", "production"): "SAMPLES/ltx23-production-b1-s20260732.mp4",
+}
+
+# The un-batched LTX clip the sidecar join reads is meant to be the same artifact
+# as the repo-root sample. If that ever stops being true the join is quoting one
+# run's numbers under another run's provenance, so the page checks rather than
+# trusts, and says so in the note under the table.
+SIDECAR_JOIN_TWIN = {
+    "SAMPLES/ltx23-production-b1-s20260732.mp4": "SAMPLE-ltx23-b01.mp4",
+}
+
 GALLERY_NAME = re.compile(
     r"^(?P<model>[A-Za-z0-9]+)-(?P<mode>preview|production)"
     r"-b(?P<batch>\d+)-s(?P<seed>\d+)$"
@@ -223,6 +254,96 @@ ANIMEGEN_BATCH_NOTE = (
     'never changed, only the size of the cliff.</p>'
 )
 
+# ---------------------------------------------------------------- coverage ----
+# The batch coverage matrix: every model x mode x batch, with a REASON in every
+# cell that holds no measurement (founder's standing requirement — batch results
+# for each model, gaps EXPLICIT rather than silent). A table that shows only the
+# points somebody got round to running reads as if the rest were never considered,
+# and that is how the run that bugchecked the host gets scheduled a second time.
+#
+# The MEASURED cells are derived from the loaded bench rows — throughput, and the
+# multiple of that same series' own b1 — so they cannot drift from the tables
+# above them. Only the reasons are written here, because a reason is a decision
+# and a decision has no sidecar; each carries its own as-of, the same discipline
+# as NO_SAMPLE_YET. Every figure quoted inside one appears in a table on this page.
+COVERAGE_BATCHES = [1, 2, 4]
+COVERAGE_MODES = ["preview", "production"]
+
+#
+# Each value is (short marker, the reason, as-of). The marker is what a reader
+# scanning the row sees; the reason is why nobody should schedule the cell.
+COVERAGE_GAPS = {
+    ("animegen", "production", 2): (
+        "does not fit",
+        "Derived from the measured VRAM slope rather than attempted: "
+        "the preview series pays +1.8GB for its second latent at 480x832/33f, and "
+        "the production latent is ~4.2x that volume, which puts a second one near "
+        "~30GB against a 25.7GB card. b1 alone already sits at 23.2GB (90%).",
+        "derived 2026-08-05 from SAMPLES/animegen-bench.jsonl"),
+    ("animegen", "production", 4): (
+        "does not fit",
+        "Same wall, twice as far past it. b2 does not fit, so b4 cannot; nothing "
+        "here was run.",
+        "derived 2026-08-05 from SAMPLES/animegen-bench.jsonl"),
+    ("ti2v5b", "preview", 4): (
+        "banned with production b4",
+        "The run that took the host down was this model at b4, and the preview "
+        "recipe differs from the production one only in step count (6 against 14), "
+        "not in the latent count that decides memory. Nothing was run here.",
+        "banned 2026-08-05, probe-5b-b4.log"),
+    ("ti2v5b", "production", 4): (
+        "DNF — took the host down",
+        "2 of 14 steps at ~118-122s/step, then "
+        "Kernel-Power 41 at 06:07:05 on 2026-08-05, the box's second unclean reboot "
+        "that day; GPU 24102 of 24463 MiB at 98.5% when it died, host commit pinned "
+        "at its ceiling while physical was being reclaimed. No clip, no sidecar, no "
+        "row anywhere. BANNED — reopening it is founder-reserved, because the last "
+        "attempt cost a bugcheck.",
+        "probe-5b-b4.log, 2026-08-05"),
+    ("ltx23", "production", 4): (
+        "closed — host RAM, not VRAM",
+        "LTX peaks at 7.2GB of 25.7GB at b2, so the card is not the constraint. "
+        "Host physical went 60.8 → 64.2GB from "
+        "b1 to b2, and +3.4GB per extra latent puts b4 past the 68.1GB this box "
+        "has. The render is already host-exclusive: at b1 it evicted the farm worker.",
+        "derived 2026-08-05 from SAMPLES/batch-bench.jsonl + the b1 sidecar"),
+}
+
+# A whole (model, mode) pair that does not exist, as opposed to a batch point
+# inside one that does. Rendered as one spanning cell.
+COVERAGE_MODE_ABSENT = {
+    ("ltx23", "preview"): (
+        "no preview recipe defined",
+        "Every LTX figure on this "
+        "page is the two-stage production recipe; there is no cheap variant to "
+        "measure, so this row is empty by definition rather than by failure. It is "
+        "also the least urgent gap on the page — LTX production already runs at "
+        "35.1s per video-second, inside the iterate-in-minutes loop.",
+        "2026-08-05"),
+}
+
+# Under the batch tables. The 2026-08-05 LTX b2 probe checked whether a batched
+# slot reproduces the un-batched clip, and the answer changes how a batch result
+# may be used — so it sits with the tables it qualifies, not in a footnote.
+BATCH_FIDELITY_NOTE = (
+    '<p class="note" style="margin-top:14px"><b>A batched slot is not a re-render '
+    'of the un-batched clip.</b> Measured 2026-08-05 on the LTX b2 probe: slot 0 '
+    'against <code>SAMPLE-ltx23-b01</code> — same seed, byte-identical inputs, '
+    'identical conditioning frame — comes out at <b>RMS 10.35 of 255</b>, where '
+    're-encoding the reference against itself scores <b>0.93</b>. Eleven times the '
+    'control, and the drift grows with denoise depth. The batch is doing real work: '
+    'the slots differ from each other properly and the embeds expansion is confirmed '
+    'working, so this is neither one clip rendered twice nor a broken batch. Read it '
+    'as: <b>batched output is real and distinct, but it is not a drop-in re-render '
+    'of an approved un-batched clip</b> — a beat re-rendered inside a batch is a new '
+    'clip and needs screening again. Two things it does not say. It does not '
+    'contradict AnimeGen\'s "batch fidelity holds" above: that was mean and max '
+    'frame-difference, a motion statistic which this drift would also pass, and that '
+    'pair has never been compared per-pixel. And it does not prove batching is the '
+    'cause — <b>whether two UN-batched runs reproduce each other has not been '
+    'tested</b>, so there is no baseline for this metric yet.</p>'
+)
+
 # ------------------------------------------------------------------ status ----
 # Hardcoded for now: no sidecar exists for a render that has not happened. Each
 # row carries the as-of stamp of the source that says so.
@@ -353,9 +474,15 @@ def per_video_second(row):
     """
     s, v = row.get("sample_s"), row.get("video_s")
     try:
-        return round(float(s) / float(v), 1) if s and v else None
+        if s and v:
+            return round(float(s) / float(v), 1)
     except (TypeError, ValueError, ZeroDivisionError):
         return None
+    # A row joined from a clip sidecar has no sample_s to divide — the renderer
+    # wrote the quotient itself, under `compute_s_per_video_s`, a name that means
+    # one thing in one writer's output and is not the ambiguous jsonl column this
+    # function exists to avoid. Only a sidecar join sets this key.
+    return row.get("_pvs_sidecar")
 
 
 def joined_b1_row(src_file, name):
@@ -380,8 +507,43 @@ def joined_b1_row(src_file, name):
         # is right for an entity.
         "_src": f"{Path(src_file).name} · {name}",
         "_joined": True,
+        "_joined_from": "bench row",
     })
     return row
+
+
+def joined_b1_row_from_sidecar(mp4_rel):
+    """The b1 row of a batch table, lifted from the b1 clip's own sidecar.
+
+    ONLY what the sidecar wrote. A render sidecar records the recipe and the two
+    throughput figures the render derived; it has no sample_s, no s/step and no
+    VRAM line, and this returns no key for any of them, so num() prints the gap
+    mark. That is the point — a joined row that filled those in from the prose
+    table would look measured and would not be.
+    """
+    mp4 = REPO / mp4_rel
+    meta = load_sidecar(mp4) or {}
+    if "_parse_error" in meta or not meta.get("throughput_s_video_per_s_wall"):
+        return None
+    twin = SIDECAR_JOIN_TWIN.get(mp4_rel)
+    same_bytes = bool(twin and (REPO / twin).exists()
+                      and sha(mp4) == sha(REPO / twin))
+    return {
+        "batch": int(meta.get("batch") or 1),
+        "seeds": [meta["seed"]] if meta.get("seed") is not None else [],
+        "mode": meta.get("mode"),
+        "size": meta.get("size"),
+        "steps": meta.get("steps"),
+        "video_s": meta.get("seconds"),
+        "throughput_s_per_s": meta["throughput_s_video_per_s_wall"],
+        "ok": True,
+        "_src": f"{mp4.name}.meta.yaml",
+        "_joined": True,
+        "_joined_from": "sidecar",
+        "_pvs_sidecar": meta.get("compute_s_per_video_s"),
+        "_twin": twin,
+        "_twin_same_bytes": same_bytes,
+    }
 
 
 def collect():
@@ -405,12 +567,21 @@ def collect():
         key = (model_key(r.get("label")), str(r.get("mode") or "?"))
         batch_groups.setdefault(key, []).append(r)
     # A joined b1 only lands where the series actually lacks one — it must never
-    # displace a row somebody measured.
+    # displace a row somebody measured. Two sources, one rule: another file's
+    # bench row, or the b1 clip's own sidecar.
     for key, (src_file, name) in BATCH_B1_JOIN.items():
         rows = batch_groups.get(key)
         if not rows or any(r.get("batch") == 1 for r in rows):
             continue
         joined = joined_b1_row(src_file, name)
+        if joined:
+            joined.setdefault("mode", key[1])
+            rows.append(joined)
+    for key, mp4_rel in BATCH_B1_SIDECAR.items():
+        rows = batch_groups.get(key)
+        if not rows or any(r.get("batch") == 1 for r in rows):
+            continue
+        joined = joined_b1_row_from_sidecar(mp4_rel)
         if joined:
             joined.setdefault("mode", key[1])
             rows.append(joined)
@@ -840,6 +1011,7 @@ def build():
     for key in ordered:
         A(f'<a href="#g-{key}">{escape(MODELS.get(key, {}).get("title", key))}</a>')
     A('<a href="#numbers">3 · the numbers</a>')
+    A('<a href="#coverage">3b-2 · batch coverage</a>')
     A('<a href="#sweep">3c · shift sweep</a>')
     A('<a href="#status">4 · no sample yet</a>')
     A("</nav>")
@@ -998,9 +1170,15 @@ def build():
               f'<span class="count">— {len(rows)} batch point'
               f'{"s" if len(rows) != 1 else ""}</span></h4>')
         if len(rows) < 2:
+            # name the batch value the table ACTUALLY holds. This line used to say
+            # "cost at b1" unconditionally, which was a lie on any series whose one
+            # measured point is not b1 — the LTX table said it over a b2 row, i.e.
+            # the page invented a b1 in the only sentence a reader would trust it on.
+            only = ", ".join(f"b{r.get('batch')}" if r.get("batch") else "an "
+                             "unrecorded batch size" for r in rows)
             A('<p class="sub gap" style="margin:0 0 6px">One batch point only — '
               'nothing is <i>scaling</i> here yet. The cells are this recipe\'s '
-              'cost at b1 and no more than that.</p>')
+              f'cost at {escape(only)} and no more than that.</p>')
         # the win/lose marks are derived, not typed: fastest row wins, and any row
         # slower than its own b1 baseline loses. No editorial input.
         #
@@ -1015,7 +1193,8 @@ def build():
         best_b = max((b for b, t in tps.items() if t is not None),
                      key=lambda b: tps[b], default=None)
         base = tps.get(1)
-        joined = [r for r in rows if r.get("_joined")]
+        joined = [r for r in rows if r.get("_joined_from") == "bench row"]
+        joined_side = [r for r in rows if r.get("_joined_from") == "sidecar"]
         A('<div class="tw"><table class="num"><thead><tr>'
           "<th>Batch</th><th>Clips</th><th>Mode &middot; size</th>"
           "<th>sample_s (whole batch)</th><th>s/step</th>"
@@ -1035,6 +1214,11 @@ def build():
                     arrow = "win"
                 elif base is not None and tp < base:
                     arrow = "lose"
+            # one gap mark, not "— of —": a row that measured no VRAM at all (the
+            # sidecar join) has one gap, not two halves of one
+            vram_cell = (num(r.get("peak_torch_gb"), 1, "GB") + " of "
+                         + num(r.get("device_total_gb"), 1, "GB")
+                         if r.get("peak_torch_gb") else DASH)
             A(f"<tr{cls}><td><b>b{b}</b>"
               + ('<br><span class="src">did not finish</span>' if dead else "")
               + f"</td><td>{len(r.get('seeds', []))}</td>"
@@ -1045,10 +1229,12 @@ def build():
               f'<td class="{arrow}"><b>{num(r.get("throughput_s_per_s"), 4)}</b></td>'
               # derived here, not read from the column — see per_video_second
               f'<td class="{arrow}">{num(per_video_second(r), 1, "s")}</td>'
-              f"<td>{num(r.get('peak_torch_gb'), 1, 'GB')} of "
-              f"{num(r.get('device_total_gb'), 1, 'GB')}</td>"
+              f"<td>{vram_cell}</td>"
               f'<td><span class="src">{escape(str(r.get("_src") or DASH))}'
-              + ('<br>joined, derived @24fps' if r.get("_joined") else "")
+              + ('<br>joined, derived @24fps'
+                 if r.get("_joined_from") == "bench row" else
+                 '<br>joined from the clip sidecar'
+                 if r.get("_joined_from") == "sidecar" else "")
               + "</span></td>"
               + (f'<td class="wrapcell">{reading.get(b, "")}</td>' if reading else "")
               + "</tr>")
@@ -1066,8 +1252,99 @@ def build():
                 '(<code>ti2v5b-production-b1-s20260732.mp4</code>) is byte-identical '
                 'to <code>T1-shift5.0.mp4</code>, and its own sidecar records 0.0151 '
                 'and 66.3 — the two figures derived here.</p>')
+        for r in joined_side:
+            twin, same = r.get("_twin"), r.get("_twin_same_bytes")
+            A('<p class="note" style="margin-top:10px"><b>The b1 row is joined from '
+              'the clip\'s own sidecar, not measured again.</b> It comes from '
+              f'<code>{escape(str(r["_src"]))}</code>, written by the render that '
+              'produced the b1 clip on 2026-08-04 — before <code>--bench-jsonl</code> '
+              'existed, which is why there is no bench row to read instead. '
+              + (f'That clip is the same artifact as the repo-root '
+                 f'<code>{escape(str(twin))}</code>, the name this run is usually '
+                 'cited by; the page hashes both at build time and they '
+                 + ('<b>match</b>' if same else
+                    '<b class="gap">NO LONGER MATCH — treat the provenance of this '
+                    'row as broken</b>')
+                 + '. The root sidecar carries the recipe but not the derived '
+                   'figures, so the file named above is the one that actually holds '
+                   'them. ' if twin else "")
+              + '<b>The em-dashes are real:</b> a sidecar records no sample_s, no '
+                's/step and no VRAM peak, and those cells are left empty rather than '
+                'filled from the prose table — a borrowed figure in a measured row is '
+                'exactly the promotion MODEL-COMPARISON rule 2 forbids. Nothing was '
+                'written back to any bench file; this is a view, not a measurement.</p>')
         if key == ("animegen", "preview"):
             A(ANIMEGEN_BATCH_NOTE)
+    A(BATCH_FIDELITY_NOTE)
+
+    # 3b-2 coverage — the same points as the tables above, plus the ones that do
+    # not exist. The tables show what ran; only this says what did not and why.
+    A('<h3 id="coverage" style="margin-top:30px">3b-2. Coverage — every model '
+      '&times; mode &times; batch, and why each empty cell is empty</h3>')
+    A('<p class="sub">No cell is allowed to be blank. A measured point states its '
+      'throughput and what it did to that series\' own b1; every other cell states '
+      'a reason and a date. <b>Nothing here is new data</b> — the numbers are the '
+      'rows above, re-laid-out, and the reasons are the only thing written by hand.</p>')
+    cov_measured, cov_gaps = 0, 0
+    cov_html = []
+    for mkey in MODEL_ORDER:
+        for cmode in COVERAGE_MODES:
+            head = (f'<td><b>{escape(MODELS.get(mkey, {}).get("title", mkey))}</b>'
+                    f'<br>{mode_badge(cmode)}</td>')
+            absent = COVERAGE_MODE_ABSENT.get((mkey, cmode))
+            if absent:
+                marker, why, as_of = absent
+                cov_gaps += 1
+                cov_html.append(
+                    f'<tr>{head}<td class="wrapcell" '
+                    f'colspan="{len(COVERAGE_BATCHES)}">'
+                    f'<span class="gap">{escape(marker)}</span> — {escape(why)}'
+                    f'<br><span class="src">as of {escape(as_of)}</span></td></tr>')
+                continue
+            crows = {r.get("batch"): r for r in batch_groups.get((mkey, cmode), [])}
+            cbase = crows.get(1, {}).get("throughput_s_per_s")
+            cells = []
+            for b in COVERAGE_BATCHES:
+                r = crows.get(b)
+                if r and r.get("ok", True) and r.get("throughput_s_per_s"):
+                    cov_measured += 1
+                    tp = float(r["throughput_s_per_s"])
+                    if b == 1:
+                        rel = '<span class="src">baseline</span>'
+                    elif cbase:
+                        mult = tp / float(cbase)
+                        rel = (f'<span class="{"win" if mult > 1 else "lose"}">'
+                               f"{mult:.2f}&times; b1</span>")
+                    else:
+                        # no b1 to divide by, so no multiple — and no invented one
+                        rel = '<span class="src">no b1 to compare</span>'
+                    prov = ("joined, see the table above" if r.get("_joined")
+                            else "measured")
+                    cells.append(f'<td><b>{num(tp, 4)}</b><br>{rel}'
+                                 f'<br><span class="src">{prov}</span></td>')
+                    continue
+                cov_gaps += 1
+                marker, why, as_of = COVERAGE_GAPS.get(
+                    (mkey, cmode, b),
+                    ("no reason recorded",
+                     "Not measured, and this page cannot say why — which is itself "
+                     "the gap. It needs either a run or a line in COVERAGE_GAPS.",
+                     f"{now:%Y-%m-%d}, generated"))
+                cells.append(f'<td class="wrapcell"><span class="gap">'
+                             f'{escape(marker)}</span> — {escape(why)}'
+                             f'<br><span class="src">{escape(as_of)}</span></td>')
+            cov_html.append(f"<tr>{head}{''.join(cells)}</tr>")
+    A('<div class="tw"><table class="num"><thead><tr><th>Model &middot; mode</th>'
+      + "".join(f"<th>Batch {b}</th>" for b in COVERAGE_BATCHES)
+      + "</tr></thead><tbody>" + "".join(cov_html) + "</tbody></table></div>")
+    A(f'<p class="note" style="margin-top:10px"><b>{cov_measured} measured points, '
+      f'{cov_gaps} explained gaps.</b> Two of the gaps are decisions rather than '
+      'todo items and should not be read as work outstanding: <b>b4 on the 5B is '
+      'banned</b> — it bugchecked the host on 2026-08-05 and reopening it is '
+      'founder-reserved — and <b>b4 on LTX is closed by host RAM</b>, on a slope '
+      'measured between its own b1 and b2 rather than by trying it. The AnimeGen '
+      'production cells are arithmetic on a measured VRAM slope, so they are the '
+      'two worth re-testing if the card or the offload strategy ever changes.</p>')
 
     # 3c parameter findings + sweep clips
     A('<h3 style="margin-top:26px">3c. Same model, parameter sweep — 5B T1/T2/T3</h3>')
