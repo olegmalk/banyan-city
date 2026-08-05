@@ -143,3 +143,21 @@ tasks:
 #   seed_base: 20260805
 #   id: bench-animegen-b01-1785827400
 #   beats: 1
+
+# 5070 video benchmark row for MODEL-COMPARISON.md (Oleg's fleet question,
+# 2026-08-05). Recipe = the PROVEN vid-msi-lowstep settings from 2026-07-31
+# (25 steps took 2h+ on this box; 8 steps ~40min) with beat 1 + the comparison
+# seed so the clip joins the same-seed cross-model row. The machine has a
+# power-delivery fault (5070 Ti clamps to 180MHz, mains flapping — see
+# STATE.md 2026-08-05); this task waits in queue until its worker runs on
+# stable AC. No new recipe elements — this is a hardware benchmark, not a
+# recipe change.
+- id: msi-preview-b01-1785937992
+  worker: msi
+  video: true
+  node: 001-capability-inventory
+  beats: '1'
+  size: 480x832
+  seconds: 2.5
+  steps: 8
+  seed_base: 20260731
