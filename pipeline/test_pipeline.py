@@ -1132,6 +1132,74 @@ def test_vendored_licence_does_not_launder(tmp: Path):
     check("every vendored file named in the map exists", not missing)
 
 
+def test_nested_licence_does_not_launder(tmp: Path):
+    """A licence file three directories down is not the repo's grant either.
+
+    Same failure as `_vendored_licence` matching on filename resemblance, one
+    layer out: `fetch_hf_licence_text` took the first sibling whose name
+    contained "LICEN" anywhere in the tree. Both directions of that error were
+    live on Hugging Face on 2026-08-04, found while recording
+    `pipeline/research/models-licence.md`:
+
+      - `IndexTeam/Index-anisora` ships exactly one licence file,
+        `reward/weights/bert-base-uncased/LICENSE`, and BERT's Apache text was
+        holding a CLEAR verdict over a repo that also carries the
+        CogVideoX-based 5B line.
+      - `Kijai/WanVideo_comfy` ships exactly one, `LoRAs/Ditto/ditto_LICENSE.txt`,
+        CC BY-NC-SA, so it hard-failed for a reason unrelated to its weights.
+
+    Offline: with only nested siblings the fetch must not happen at all, which
+    is also what makes it testable in CI.
+    """
+    import vet_model as vm
+
+    fetched = []
+
+    def stub(url):
+        fetched.append(url)
+        return 200, "Apache License\nVersion 2.0, January 2004\n"
+
+    real, vm.get_raw = vm.get_raw, stub
+    try:
+        for repo, nested in (("IndexTeam/Index-anisora",
+                              "reward/weights/bert-base-uncased/LICENSE"),
+                             ("Kijai/WanVideo_comfy",
+                              "LoRAs/Ditto/ditto_LICENSE.txt")):
+            got = vm.fetch_hf_licence_text(repo, [{"rfilename": "config.json"},
+                                                  {"rfilename": nested}])
+            check(f"nested licence is not {repo.split('/')[1]}'s grant",
+                  got == (None, ""))
+        check("a nested licence is never even fetched", not fetched)
+        # and a root file must still be read, or aidealab/AnimeGen-I2V — the one
+        # anime model that does ship a real LICENSE — loses it
+        name, text = vm.fetch_hf_licence_text(
+            "aidealab/AnimeGen-I2V",
+            [{"rfilename": "config.json"}, {"rfilename": "LICENSE"}])
+        check("a root LICENSE is still read", name == "LICENSE" and "Apache" in text)
+    finally:
+        vm.get_raw = real
+
+    # The audited chain must stay recorded, and no link of it may read as clear.
+    # CASES is checked live by `--self-test` (network, so not here); this asserts
+    # only that the record has not lost an entry or gained a permissive one.
+    blocked = ("quanhaol/Wan2.2-TI2V-5B-Turbo",
+               "hum-ma/Wan2.2-TI2V-5B-Turbo-GGUF",
+               "Kiijoku/Wan2.2-TI2V-5B-Turbo-GGUF",
+               "yetter-ai/Wan2.2-TI2V-5B-Turbo-Diffusers",
+               "Kijai/WanVideo_comfy",
+               "IndexTeam/Index-anisora",
+               "Disty0/Index-anisora-5B-diffusers",
+               "lllyasviel/FramePackI2V_HY")
+    recorded = dict(vm.CASES)
+    check("no repo is recorded twice in CASES", len(recorded) == len(vm.CASES))
+    check("every expected state is one the tool can return",
+          all(want in vm.RANK for _, want in vm.CASES))
+    check("every repo the audit blocked is still recorded",
+          not [r for r in blocked if r not in recorded])
+    check("and no blocked repo is recorded as clear",
+          all(recorded.get(r) != "clear" for r in blocked))
+
+
 def test_subprocess_reads_are_utf8(tmp: Path):
     """Any subprocess we read TEXT from must name its encoding.
 
@@ -1175,6 +1243,168 @@ def test_subprocess_reads_are_utf8(tmp: Path):
     except UnicodeDecodeError:
         ok = False
     check("the farm queue is valid UTF-8", ok)
+
+
+def test_attempts_survive_a_dead_host():
+    """A crash that kills the OS must still spend an attempt.
+
+    The guard used to count `FAIL task=<id>` lines, which only exist if the worker
+    SURVIVES the failure. On 2026-08-04 an AnimeGen task crashed its render child
+    at 0xC0000005 and then bluescreened the host, so the heartbeat holds one
+    STARTED line and nothing else — recorded attempts: zero, forever. A restarted
+    worker would re-run the task that took the machine down, every time, and each
+    crash would erase the evidence that should have stopped it (DIAG-20260804.md).
+    """
+    from farm_worker import MAX_ATTEMPTS, heartbeat_attempts
+
+    # the real thing, copied from farm-results-rtx5090's heartbeat.txt
+    diag = ("07:12:18Z STARTED task=bench-animegen-b01-1785827400 beats=1 on cuda\n"
+            "07:12:22Z VIDEO_VENV_OK\n"
+            "07:12:47Z VIDEO_RENDERING beat=01 on animegen (single-process)\n"
+            "07:27:56Z VIDEO_ALIVE 15m elapsed, 0 clip(s) done, last output 14m ago\n")
+    done, attempts = heartbeat_attempts(diag)
+    check("a host-killing crash counts as one attempt (0 before this fix)",
+          attempts.get("bench-animegen-b01-1785827400") == 1)
+    check("...and one attempt is not yet a giveup",
+          attempts["bench-animegen-b01-1785827400"] < MAX_ATTEMPTS)
+
+    # restarted into the same task: two starts, still no FAIL line anywhere
+    done, attempts = heartbeat_attempts(diag + diag)
+    check("twice through the bluescreen reaches MAX_ATTEMPTS",
+          attempts["bench-animegen-b01-1785827400"] >= MAX_ATTEMPTS)
+    check("a task that only ever crashed the box is not 'done'", not done)
+
+    # DONE EXCLUDES. Two completed runs of the same id must never read as attempts
+    # to give up on — the worker skips them either way, but the courier message
+    # would accuse a task that worked.
+    ok = ("16:08:52Z STARTED task=faceneg-b01-1785819600 beats=1 on cuda\n"
+          "16:13:01Z DONE task=faceneg-b01-1785819600\n") * 2
+    done, attempts = heartbeat_attempts(ok)
+    check("DONE marks the task done however many starts it took",
+          done == {"faceneg-b01-1785819600"})
+
+    # A CONSOLE INTERRUPT IS STILL NOT AN ATTEMPT. The task loop marks INTERRUPTED
+    # precisely so a Ctrl+C or a closed window costs nothing; counting its START
+    # back in would undo the 2026-08-02 and 2026-08-03 lessons.
+    interrupted = ("STARTED task=t1 beats=1 on cuda\n"
+                   "INTERRUPTED task=t1 (console interrupt, not counted as an attempt)\n"
+                   "STARTED task=t1 beats=1 on cuda\n"
+                   "FAIL task=t1\n")
+    done, attempts = heartbeat_attempts(interrupted)
+    check("an interrupted start costs no attempt", attempts["t1"] == 1)
+
+    # older histories carry FAIL lines without this fix's reading of STARTED
+    done, attempts = heartbeat_attempts("FAIL task=old\nFAIL task=old\n")
+    check("a legacy FAIL-only history still counts its failures",
+          attempts["old"] == 2)
+
+    # RE-QUEUES ARE UNAFFECTED because ids carry an epoch stamp (queue_keeper
+    # writes f"{slug}-msi-{stamp}"), so the same work queued again is a new id.
+    done, attempts = heartbeat_attempts(diag + diag)
+    check("a re-queue under a fresh id starts from zero",
+          "bench-animegen-b01-1785900000" not in attempts)
+
+
+def test_giveup_needs_no_fail_line(tmp: Path):
+    """finished_tasks() reads the above off disk and refuses the task."""
+    from farm_worker import MAX_ATTEMPTS, finished_tasks
+
+    class Stub:
+        out = tmp
+    (tmp / "heartbeat.txt").write_text(
+        "STARTED task=killer beats=1 on cuda\n"
+        "STARTED task=killer beats=1 on cuda\n"
+        "STARTED task=fine beats=1 on cuda\n"
+        "DONE task=fine\n"
+        "STARTED task=once beats=1 on cuda\n", encoding="utf-8")
+    skip, gave_up = finished_tasks(Stub())
+    check("a task started MAX_ATTEMPTS times with no DONE is skipped",
+          "killer" in skip and gave_up.get("killer") == MAX_ATTEMPTS)
+    check("a completed task is skipped but not accused",
+          "fine" in skip and "fine" not in gave_up)
+    check("a task with one start left is still runnable",
+          "once" not in skip and "once" not in gave_up)
+
+
+def test_child_verdict_names_a_corpse():
+    """VIDEO_ALIVE reported a dead render child for fourteen minutes.
+
+    2026-08-04: the child died at 0xC0000005 fifty-six seconds in, and the parent
+    kept heartbeating "alive, last output 14m ago" because it was blocked reading
+    the pipes of a process Windows Error Reporting was holding open. Then the box
+    bluescreened, so the 45-minute stall watchdog never fired at all. Asking
+    `poll()` directly is the cheap check that turns that into a named failure
+    (DIAG-20260804.md).
+    """
+    import video_task as vt
+
+    check("a running child that has just spoken is alive",
+          vt.child_verdict(None, 0, 0) == ("alive", ""))
+    check("an exited child is dead, by exit code, not by inference",
+          vt.child_verdict(3221225477, 5, 5)
+          == ("dead", "child exited code=3221225477"))
+    check("dead outranks stalled — the exit code is the better answer",
+          vt.child_verdict(1, 50, 50)[0] == "dead")
+    # THE GRACE MINUTE. A healthy child prints "[i/N] wrote ..." immediately before
+    # exiting, so its silence is milliseconds; failing a successful render because
+    # the tick landed mid-drain would be a worse bug than the one being fixed.
+    check("a fresh clean exit mid-drain is not slandered",
+          vt.child_verdict(0, 0, 0) == ("alive", ""))
+    # the existing watchdog is the backstop, wording unchanged
+    check("silence still stalls at STALL_MINUTES",
+          vt.child_verdict(None, vt.STALL_MINUTES, 0)
+          == ("stalled", f"silent for {vt.STALL_MINUTES}m"))
+    check("output without clips still stalls at NO_PROGRESS_MINUTES",
+          vt.child_verdict(None, 0, vt.NO_PROGRESS_MINUTES)
+          == ("stalled", f"no clip finished in {vt.NO_PROGRESS_MINUTES}m "
+                         f"despite output"))
+    # HONEST LIMIT, recorded so nobody credits this with more than it does: while
+    # the crash dumper has the child suspended, the process has NOT exited and
+    # poll() still returns None. On the 2026-08-04 timeline this verdict arrives
+    # when WER lets go, not at minute five. It removes up to ~44 minutes of false
+    # VIDEO_ALIVE; it does not detect a frozen child.
+    check("a child frozen under a crash dumper still reads as alive (known gap)",
+          vt.child_verdict(None, 14, 15) == ("alive", ""))
+
+
+def test_animegen_casts_before_the_second_expert(tmp: Path):
+    """Load `hi`, cast `hi`, then load `lo` — one bf16 expert at a time.
+
+    Both A14B transformers used to be loaded in bf16 and cast to fp8 only
+    afterwards, so the peak held two ~32 GiB experts: ~64 GiB of host RAM against
+    31.4 GB physical on the rtx5090 laptop, i.e. ~33 GB of hard paging, which is
+    the diagnosis for the 0xC0000005 this path has died at three times
+    (DIAG-20260804.md). Static check because the fix cannot be exercised here — it
+    needs the weights and a CUDA card.
+    """
+    import ast
+
+    src = (REPO / "pipeline" / "wan_i2v.py").read_text(encoding="utf-8")
+    fn = next(n for n in ast.walk(ast.parse(src))
+              if isinstance(n, ast.FunctionDef) and n.name == "load_animegen")
+    lines = src.splitlines()
+    # where each expert is loaded, and where the fp8 cast of the first one happens
+    load_hi = load_lo = cast = None
+    for n in ast.walk(fn):
+        if isinstance(n, ast.Call):
+            text = "".join(lines[n.lineno - 1:n.end_lineno])
+            if 'subfolder="transformer"' in text:
+                load_hi = n.lineno
+            elif 'subfolder="transformer_2"' in text:
+                load_lo = n.lineno
+        if (isinstance(n, ast.Call) and isinstance(n.func, ast.Name)
+                and n.func.id == "cast_fp8" and cast is None):
+            cast = n.lineno
+    check("load_animegen still loads both experts",
+          load_hi is not None and load_lo is not None)
+    check("the first expert is cast to fp8 BEFORE the second is loaded",
+          cast is not None and load_hi < cast < load_lo)
+    # and the reason the LoRA path keeps the old order is written down, not lost:
+    # peft would build the adapters in the base layer's dtype, i.e. fp8.
+    check("the with-LoRA exception names peft and its dtype",
+          "peft" in src and "float8_e4m3fn dtype error" in src)
+    check("the fix cites the diagnosis it comes from",
+          src.count("DIAG-20260804.md") >= 1)
 
 
 def test_licence_gate(tmp: Path):
@@ -1556,6 +1786,12 @@ def main():
         test_t3_sidecar_errors_named(Path(td))
     with tempfile.TemporaryDirectory() as td:
         test_t3_check_clips_dir(Path(td))
+    test_attempts_survive_a_dead_host()
+    test_child_verdict_names_a_corpse()
+    with tempfile.TemporaryDirectory() as td:
+        test_giveup_needs_no_fail_line(Path(td))
+    with tempfile.TemporaryDirectory() as td:
+        test_animegen_casts_before_the_second_expert(Path(td))
     with tempfile.TemporaryDirectory() as td:
         test_licence_gate(Path(td))
     with tempfile.TemporaryDirectory() as td:
@@ -1565,6 +1801,7 @@ def main():
         test_hosted_path_sends_our_negative(Path(td))
         test_antistatic_first_signal_wins(Path(td))
         test_vendored_licence_does_not_launder(Path(td))
+        test_nested_licence_does_not_launder(Path(td))
     print()
     if FAILURES:
         print(f"✗ {len(FAILURES)} failure(s): {', '.join(FAILURES)}")

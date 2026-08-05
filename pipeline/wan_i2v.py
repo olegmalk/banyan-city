@@ -26,7 +26,9 @@ pipeline with text_encoder=None and consumes the file.
 import argparse
 import gc
 import json
+import platform
 import sys
+import threading
 import time
 from pathlib import Path
 
@@ -83,6 +85,78 @@ NEG = ("色调艳丽, 过曝, 细节模糊不清, 字幕, 风格, 作品, 画作
 # Untested either way, which is why it is a flag and not a deletion.
 SHAKE_NEG = ("camera shake, handheld camera, jitter, wobble, unstable camera, "
              "vibrating, trembling camera, rolling shutter")
+
+
+# ---------------------------------------------------------------------------
+# BATCH THROUGHPUT PROBING. --batch N asks the pipeline for N clips from ONE
+# sample call (diffusers' num_videos_per_prompt) so we can measure whether the
+# card is step-bound or launch-bound. It is a MEASUREMENT flag, not a way to fill
+# the queue faster: N clips share one prompt and one conditioning still and differ
+# only by seed.
+# ---------------------------------------------------------------------------
+HOST_PEAK = {"phys_gb": None, "commit_gb": None}
+
+
+def _host_peak_sampler(stop) -> None:
+    """1s host-RAM peak sampling — psutil if present, silent nulls if not.
+
+    NULLS RATHER THAN GUESSES. A bench row is read later as evidence, and the one
+    thing that must never happen to it is a plausible number nobody measured
+    (2026-08-04: two host-memory mechanisms reasoned out of our own code comments,
+    both retracted). If psutil is not installed in this venv the two host fields
+    stay None and the row says null.
+
+    "commit" is physical + swap/pagefile in use, which is what psutil can see
+    portably; it is the same quantity ltx_i2v reads exactly from
+    GlobalMemoryStatusEx on Windows, not a different definition.
+    """
+    try:
+        import psutil
+    except Exception:                                        # noqa: BLE001
+        print("psutil not installed — host RAM fields will be null", flush=True)
+        return
+    while not stop.wait(1.0):
+        vm, sw = psutil.virtual_memory(), psutil.swap_memory()
+        HOST_PEAK["phys_gb"] = max(HOST_PEAK["phys_gb"] or 0.0, vm.used / 1e9)
+        HOST_PEAK["commit_gb"] = max(HOST_PEAK["commit_gb"] or 0.0,
+                                     (vm.used + sw.used) / 1e9)
+
+
+def _scheduler_shift(pipe):
+    """The flow-match `shift` the sample actually ran under, or None.
+
+    READ OFF THE OBJECT, never restated from a flag: one branch here constructs
+    FlowMatchEulerDiscreteScheduler(shift=3.0) by hand and another inherits
+    whatever the repo shipped, so a bench row that quoted a constant would be
+    describing code rather than the run. Unreadable -> null.
+    """
+    cfg = getattr(getattr(pipe, "scheduler", None), "config", None)
+    try:
+        return cfg.get("shift")
+    except Exception:                                        # noqa: BLE001
+        return None
+
+
+def _bench_mode(a) -> bool:
+    """Is this run being MEASURED? Only then do the extra writes happen.
+
+    The default path (--batch 1, no --bench-jsonl) must stay byte-for-byte what it
+    was: it is the production path for every episode clip, it runs on a box this
+    machine cannot test, and a throughput probe is not worth regressing it for.
+    """
+    return int(getattr(a, "batch", 1) or 1) > 1 or bool(getattr(a, "bench_jsonl", ""))
+
+
+def _import_video_task():
+    """Sidecar + bench-row helpers, imported ONLY on a measured run.
+
+    Same lazy import ltx_i2v.py already uses. Kept out of the module top level
+    because this script runs in the torch venv and the production path must not
+    acquire a new import to fail on.
+    """
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import video_task
+    return video_task
 
 
 def tile_vae(pipe) -> None:
@@ -161,10 +235,62 @@ def load_animegen(torch, a):
     from diffusers import (AutoencoderKLWan, FlowMatchEulerDiscreteScheduler,
                            WanImageToVideoPipeline, WanTransformer3DModel)
     BASE = "Wan-AI/Wan2.2-I2V-A14B-Diffusers"
+
+    def cast_fp8(tr) -> None:
+        """fp8 storage / bf16 compute — the authors' own way of fitting 24GB."""
+        tr.enable_layerwise_casting(storage_dtype=torch.float8_e4m3fn,
+                                    compute_dtype=torch.bfloat16)
+        # the bf16 storages this replaces are freed only once nothing holds them,
+        # and a lower PEAK is the whole point of casting here — so collect now
+        # rather than leaving ~16 GiB alive across the next from_pretrained()
+        gc.collect()
+
+    # LOAD ORDER IS A MEMORY DECISION. Both transformers used to be loaded in bf16
+    # and only then cast, so the peak held two ~32 GiB experts at once — ~64 GiB of
+    # host RAM, which on the then-31.4 GB rtx5090 laptop meant ~33 GB of hard
+    # paging. That is the diagnosis for the 0xC0000005 access violation this path
+    # died at three times (DIAG-20260804.md, and pipeline/farm-queue.yaml:43-60
+    # which predicted the repeat and set this as the fix). Casting `hi` before `lo`
+    # is loaded means only ONE expert is ever in bf16.
+    #
+    # THE 31.4 GB CEILING IS GONE — the box was upgraded on 2026-08-04 and now
+    # measures 68.1 GB physical. The paragraph that used to sit here reasoned from
+    # 31.4 GB to "AnimeGen stays parked on this machine class"; that arithmetic is
+    # stale and has been removed rather than left to be quoted back at someone.
+    # What the new RAM does NOT do is unpark AnimeGen, and the reason is
+    # configuration, not capacity:
+    #   - the reordered peak is ~48 GiB, not ~32 (fp8 `hi` ~16 + bf16 `lo` ~32).
+    #     farm-queue.yaml's "~32 GiB" is the bf16 half of it, not the total.
+    #   - cpu-offload then keeps ~38 GiB RESIDENT for the whole sample, and load
+    #     order cannot touch a steady state. Both figures now FIT in 68.1 GB.
+    #   - and it still died at step 0 on the 64 GB attempt, because the queue routes
+    #     any card with >=20 GB VRAM (video_task.py:994, `big = gpu_vram_gb() >= 20`)
+    #     into the single-process branch that keeps the ~11 GB text encoder resident
+    #     alongside both experts. The configuration that WORKED evicted the encoder
+    #     into its own process and freed 13.1 GB.
+    # So the A14B park stands, on the single-process queue path rather than on host
+    # RAM. Unparking is a change to that routing (or an fp8/GGUF build), measured —
+    # not an inference from the new total.
     hi = WanTransformer3DModel.from_pretrained(a.model, subfolder="transformer",
                                               torch_dtype=torch.bfloat16)
+    # ONLY THE no-LoRA PATH CAN CAST THIS EARLY, and the divergence is deliberate
+    # rather than an oversight. peft creates lora_A/lora_B in the base layer's
+    # dtype, so injecting an adapter into an already-cast transformer yields fp8
+    # adapter weights with no upcasting hook on them, and the first matmul is a
+    # bf16 x float8_e4m3fn dtype error. The pipeline-level loader below needs BOTH
+    # transformers constructed, so with the LoRAs the old order and the old ~64 GiB
+    # peak are the only correct ones. Untested against the real weights either way
+    # — nothing here has run to completion yet.
+    #
+    # It lands on the right side: --no-lora is the PUBLISHABLE path (the Lightning
+    # repo ships no LICENSE file, see above), so the memory win goes to the run we
+    # are actually allowed to release footage from.
+    if a.no_lora:
+        cast_fp8(hi)
     lo = WanTransformer3DModel.from_pretrained(a.model, subfolder="transformer_2",
                                                torch_dtype=torch.bfloat16)
+    if a.no_lora:
+        cast_fp8(lo)
     vae = AutoencoderKLWan.from_pretrained(BASE, subfolder="vae",
                                            torch_dtype=torch.float32)
     pipe = WanImageToVideoPipeline.from_pretrained(
@@ -180,15 +306,18 @@ def load_animegen(torch, a):
                                adapter_name="low", load_into_transformer_2=True)
         pipe.set_adapters(["high", "low"], adapter_weights=[1.0, 1.0])
         print("Lightning 4-step LoRAs loaded", flush=True)
-    # fp8 storage / bf16 compute — the authors' own way of fitting 24GB
-    for tr in (hi, lo):
-        tr.enable_layerwise_casting(storage_dtype=torch.float8_e4m3fn,
-                                    compute_dtype=torch.bfloat16)
+        for tr in (hi, lo):
+            cast_fp8(tr)                 # AFTER the adapters — see the note above
     pipe.enable_model_cpu_offload()
     # the 5B path tiles the VAE after loading; this path used to return straight
     # into _sample() and never got it — see tile_vae()
     tile_vae(pipe)
-    print("AnimeGen: fp8 layerwise casting + cpu offload + VAE tiling", flush=True)
+    # say WHICH order ran: the two differ by ~16 GiB of peak host RAM, and a log
+    # that does not name it cannot be used to explain an access violation
+    order = ("cast per expert on load, one bf16 expert at a time" if a.no_lora
+             else "cast after the LoRAs, both experts bf16 at peak")
+    print(f"AnimeGen: fp8 layerwise casting ({order}) + cpu offload + VAE tiling",
+          flush=True)
     return pipe
 
 
@@ -348,6 +477,29 @@ def _sample(pipe, a, w, h, frames, takes_image, jobs=None) -> int:
     from diffusers.utils import export_to_video
     from PIL import Image
 
+    batch = max(1, int(getattr(a, "batch", 1) or 1))
+    bench = _bench_mode(a)
+    video_task = _import_video_task() if bench else None
+    short = next((k for k, v in MODELS.items() if v == a.model), a.model)
+    label = a.bench_label or short
+    # WAN 2.1-STYLE IMAGE CONDITIONING IS NOT BATCH-SAFE ON THIS DIFFUSERS, and the
+    # failure would be a wrong clip rather than a crash. pipeline_wan_i2v.py:701
+    # does `image_embeds = image_embeds.repeat(batch_size, 1, 1)` using batch_size,
+    # NOT batch_size * num_videos_per_prompt — so a CLIP-conditioned transformer
+    # (config.image_dim set, i.e. Wan 2.1 I2V) gets one image embedding against N
+    # latents. Wan 2.2 leaves image_dim None and skips that branch entirely, which
+    # is why both curated models are fine; --model also takes arbitrary repo ids,
+    # so refuse instead of finding out in the footage.
+    if batch > 1:
+        for name in ("transformer", "transformer_2"):
+            cfg = getattr(getattr(pipe, name, None), "config", None)
+            if getattr(cfg, "image_dim", None) is not None:
+                print(f"!! {a.model} conditions on CLIP image embeddings "
+                      f"({name}.config.image_dim is set). diffusers 0.39.0 repeats "
+                      f"those by batch_size and not by the effective batch "
+                      f"(pipeline_wan_i2v.py:701), so --batch {batch} would render "
+                      f"N clips off ONE image embedding. Refusing.", flush=True)
+                return 2
     if jobs is None:
         jobs = json.loads(Path(a.jobs).read_text()) if a.jobs else \
             [{"init": a.init, "out": a.out, "prompt": a.prompt, "seed": a.seed,
@@ -370,25 +522,93 @@ def _sample(pipe, a, w, h, frames, takes_image, jobs=None) -> int:
             neg = f"3d, cg, photo, stop, wait, {neg}"
             if not a.no_lora:
                 steps, guidance = 4, 1.0
+        seed = int(job["seed"])
+        # ONE GENERATOR PER SLOT, and slot 0 keeps the base seed so a batched run
+        # can be diffed against the un-batched clip of the same recipe — that is
+        # the fidelity check the whole probe rests on. diffusers validates the list
+        # length against the effective batch and draws each slot separately
+        # (pipeline_wan_i2v.py:412-419, torch_utils.randn_tensor's list branch).
+        #
+        # A BARE GENERATOR AT batch == 1, not a one-element list: randn_tensor
+        # unwraps a length-1 list to exactly this ("make sure generator list of
+        # length 1 is treated like a non-list"), but prepare_latents ALSO branches
+        # on isinstance(generator, list) one level up (:449-456), and the default
+        # path is production. Identical by construction beats identical by argument.
+        gens = ([torch.Generator(device="cpu").manual_seed(seed + s)
+                 for s in range(batch)] if batch > 1
+                else torch.Generator(device="cpu").manual_seed(seed))
         # ALWAYS the pipeline's own prompt path. Never hand-pass prompt_embeds —
         # it silently bypasses the image conditioning and glitches every frame
         # (2026-08-02, and 2026-07-31 before that; see stage_simple's docstring).
+        #
+        # Because the prompt IS a string here, num_videos_per_prompt does its whole
+        # job: encode_prompt runs the text path and _get_t5_prompt_embeds repeats
+        # the embeddings to the effective batch (pipeline_wan_i2v.py:235-236), and
+        # prepare_latents is asked for batch_size * num_videos_per_prompt (:718).
+        # stage_render, which supplies embeddings, does NOT get this for free — see
+        # the note there.
         kw = dict(prompt=prompt, negative_prompt=neg, height=h, width=w,
                   num_frames=frames, num_inference_steps=steps,
-                  guidance_scale=guidance,
-                  generator=torch.Generator(device="cpu").manual_seed(int(job["seed"])))
+                  guidance_scale=guidance, num_videos_per_prompt=batch,
+                  generator=gens)
         if takes_image:
             kw["image"] = img
-        out = pipe(**kw).frames[0]
-        Path(job["out"]).parent.mkdir(parents=True, exist_ok=True)
-        export_to_video(out, job["out"], fps=a.fps)
+        out = pipe(**kw).frames
+        sample_s = time.time() - t0
         peak = (torch.cuda.max_memory_allocated() / 1e9
                 if torch.cuda.is_available() else 0)
         free, total = (torch.cuda.mem_get_info() if torch.cuda.is_available() else (0, 1))
-        print(f"[{i}/{len(jobs)}] wrote {job['out']} in {time.time()-t0:.0f}s "
-              f"({frames} frames, {w}x{h}, {steps} steps, "
-              f"peak torch {peak:.1f}GB, device {(total-free)/1e9:.1f}/{total/1e9:.0f}GB)",
-              flush=True)
+        clip_s = frames / a.fps
+        for s in range(batch):
+            path = video_task.slot_out_path(job["out"], seed, s, batch) if bench \
+                else job["out"]
+            Path(path).parent.mkdir(parents=True, exist_ok=True)
+            export_to_video(out[s], path, fps=a.fps)
+            # the [i/N] shape is video_task's PROGRESS regex and bench_models' WROTE
+            # regex; the per-slot suffix goes AFTER the part they parse. The elapsed
+            # figure is the whole sample call, repeated on each slot line, because
+            # no per-slot time exists — the N clips were denoised together.
+            print(f"[{i}/{len(jobs)}] wrote {path} in {sample_s:.0f}s "
+                  f"({frames} frames, {w}x{h}, {steps} steps, "
+                  f"peak torch {peak:.1f}GB, "
+                  f"device {(total-free)/1e9:.1f}/{total/1e9:.0f}GB"
+                  + (f", slot {s+1}/{batch} seed {seed + s})" if batch > 1 else ")"),
+                  flush=True)
+            if bench:
+                video_task.write_sidecar(
+                    path, short, {"worker": platform.node() or "unknown",
+                                  "guidance": guidance, "seed_base": seed + s,
+                                  "id": f"{label}/{a.mode}/b{batch}/s{seed + s}"},
+                    beat=0, seconds=round(clip_s, 3), steps=steps,
+                    size=f"{w}x{h}", prompt=prompt, negative=neg,
+                    extra={"mode": a.mode, "batch": batch, "batch_slot": s,
+                           "throughput_s_video_per_s_wall":
+                               round(batch * clip_s / sample_s, 4),
+                           "compute_s_per_video_s":
+                               round(sample_s / batch / clip_s, 1)})
+        # (N clips of video) / (one wall-clock sample). The number the probe exists
+        # to produce: if it does not rise with N, the card is step-bound and
+        # batching buys nothing.
+        print(f"THROUGHPUT {batch * clip_s / sample_s:.4f} s(video)/s(wall) "
+              f"({batch} x {clip_s:.3f}s of video in {sample_s:.0f}s)", flush=True)
+        if bench and a.bench_jsonl:
+            # ONE ROW PER SAMPLE CALL, not per slot: the measurement is the call.
+            video_task.append_bench_row(a.bench_jsonl, video_task.bench_row(
+                label=label, repo=a.model, mode=a.mode, batch=batch, frames=frames,
+                seeds=[seed + s for s in range(batch)],
+                sample_s=round(sample_s, 1), s_per_step=round(sample_s / steps, 2),
+                video_s=round(batch * clip_s, 3),
+                throughput_s_per_s=round(batch * clip_s / sample_s, 4),
+                compute_per_video_s=round(sample_s / batch, 1),
+                peak_torch_gb=round(peak, 1),
+                device_gb=round((total - free) / 1e9, 1),
+                device_total_gb=round(total / 1e9, 1),
+                host_peak_phys_gb=(round(HOST_PEAK["phys_gb"], 1)
+                                   if HOST_PEAK["phys_gb"] else None),
+                host_peak_commit_gb=(round(HOST_PEAK["commit_gb"], 1)
+                                     if HOST_PEAK["commit_gb"] else None),
+                steps=steps, guidance=guidance, shift=_scheduler_shift(pipe),
+                size=f"{w}x{h}", ok=True))
         # FREE THE CARD BETWEEN CLIPS. Measured across three batches on
         # 2026-08-02: clip 1 of 5 finished in ~440s every time, and clip 2 NEVER
         # finished — each batch stalled ~46 minutes until the watchdog killed it.
@@ -422,6 +642,10 @@ def stage_render(a) -> int:
     w, h = (int(v) for v in a.size.lower().split("x"))
     frames = int(a.seconds * a.fps)
     frames = frames - (frames % 4) + 1          # Wan's 4n+1 temporal grid
+    bench = _bench_mode(a)
+    video_task = _import_video_task() if bench else None
+    short = next((k for k, v in MODELS.items() if v == a.model), a.model)
+    label = a.bench_label or short
 
     pipe = WanImageToVideoPipeline.from_pretrained(
         a.model, text_encoder=None, torch_dtype=torch.bfloat16)
@@ -445,21 +669,80 @@ def stage_render(a) -> int:
     # small, so hand them over on the execution device
     dev = "cuda" if torch.cuda.is_available() else "cpu"
     img = Image.open(a.init).convert("RGB").resize((w, h), Image.LANCZOS)
+    batch = max(1, int(getattr(a, "batch", 1) or 1))
+    pe, ne = e["prompt_embeds"].to(dev), e["negative_prompt_embeds"].to(dev)
+    # DIFFUSERS DOES NOT EXPAND EMBEDDINGS YOU HAND IT — this is the silent-wrong
+    # failure the whole batch change had to be researched around, and it bites
+    # exactly here because this stage supplies prompt_embeds instead of a string.
+    # encode_prompt guards the entire text path behind `if prompt_embeds is None:`
+    # (diffusers 0.39.0 pipeline_wan_i2v.py:297), so num_videos_per_prompt never
+    # reaches the repeat at :235-236 and the embeddings stay batch 1 while
+    # prepare_latents is sized batch_size * num_videos_per_prompt (:718).
+    #
+    # Expand them HERE and leave num_videos_per_prompt at its default 1. Not both:
+    # batch_size is read off prompt_embeds.shape[0] (:674), so expanding to N and
+    # also asking for N videos per prompt would request N*N clips. Expanding is
+    # also what makes :701 correct — image_embeds.repeat(batch_size, ...) matches
+    # the latents only when batch_size is already the effective batch.
+    if batch > 1:
+        pe, ne = pe.repeat_interleave(batch, dim=0), ne.repeat_interleave(batch, dim=0)
+    gens = ([torch.Generator(device="cpu").manual_seed(a.seed + s)
+             for s in range(batch)] if batch > 1
+            else torch.Generator(device="cpu").manual_seed(a.seed))
+    t0 = time.time()
     out = pipe(
         image=img,
-        prompt_embeds=e["prompt_embeds"].to(dev),
-        negative_prompt_embeds=e["negative_prompt_embeds"].to(dev),
+        prompt_embeds=pe,
+        negative_prompt_embeds=ne,
         height=h, width=w, num_frames=frames,
         num_inference_steps=a.steps,
         # was hardcoded 5.0, ignoring --guidance entirely. A flag the caller
         # is allowed to set must not be quietly overridden by a literal.
         guidance_scale=a.guidance,
-        generator=torch.Generator(device="cpu").manual_seed(a.seed),
-    ).frames[0]
+        generator=gens,
+    ).frames
+    sample_s = time.time() - t0
 
-    Path(a.out).parent.mkdir(parents=True, exist_ok=True)
-    export_to_video(out, a.out, fps=a.fps)
-    print(f"wrote {a.out} ({frames} frames, {w}x{h})")
+    clip_s = frames / a.fps
+    for s in range(batch):
+        path = video_task.slot_out_path(a.out, a.seed, s, batch) if bench else a.out
+        Path(path).parent.mkdir(parents=True, exist_ok=True)
+        export_to_video(out[s], path, fps=a.fps)
+        print(f"wrote {path} ({frames} frames, {w}x{h}"
+              + (f", slot {s+1}/{batch} seed {a.seed + s})" if batch > 1 else ")"))
+        if bench:
+            video_task.write_sidecar(
+                path, short, {"worker": platform.node() or "unknown",
+                              "guidance": a.guidance, "seed_base": a.seed + s,
+                              "id": f"{label}/{a.mode}/b{batch}/s{a.seed + s}"},
+                beat=0, seconds=round(clip_s, 3), steps=a.steps,
+                size=f"{w}x{h}", prompt=a.prompt, negative=a.negative,
+                extra={"mode": a.mode, "batch": batch, "batch_slot": s,
+                       "throughput_s_video_per_s_wall":
+                           round(batch * clip_s / sample_s, 4),
+                       "compute_s_per_video_s": round(sample_s / batch / clip_s, 1)})
+    print(f"THROUGHPUT {batch * clip_s / sample_s:.4f} s(video)/s(wall) "
+          f"({batch} x {clip_s:.3f}s of video in {sample_s:.0f}s)", flush=True)
+    if bench and a.bench_jsonl:
+        peak = (torch.cuda.max_memory_allocated() / 1e9
+                if torch.cuda.is_available() else 0)
+        free, total = (torch.cuda.mem_get_info() if torch.cuda.is_available() else (0, 1))
+        video_task.append_bench_row(a.bench_jsonl, video_task.bench_row(
+            label=label, repo=a.model, mode=a.mode, batch=batch, frames=frames,
+            seeds=[a.seed + s for s in range(batch)],
+            sample_s=round(sample_s, 1), s_per_step=round(sample_s / a.steps, 2),
+            video_s=round(batch * clip_s, 3),
+            throughput_s_per_s=round(batch * clip_s / sample_s, 4),
+            compute_per_video_s=round(sample_s / batch, 1),
+            peak_torch_gb=round(peak, 1),
+            device_gb=round((total - free) / 1e9, 1),
+            device_total_gb=round(total / 1e9, 1),
+            host_peak_phys_gb=(round(HOST_PEAK["phys_gb"], 1)
+                               if HOST_PEAK["phys_gb"] else None),
+            host_peak_commit_gb=(round(HOST_PEAK["commit_gb"], 1)
+                                 if HOST_PEAK["commit_gb"] else None),
+            steps=a.steps, guidance=a.guidance, shift=_scheduler_shift(pipe),
+            size=f"{w}x{h}", ok=True))
     return 0
 
 
@@ -529,7 +812,24 @@ def main() -> int:
                     help=f"short name {sorted(MODELS)} or a full HF repo id")
     ap.add_argument("--seed", type=int, default=20260731)
     ap.add_argument("--fps", type=int, default=24)
+    # --- throughput probing. Default 1 = the path that has always run. -------
+    ap.add_argument("--batch", type=int, default=1,
+                    help="clips per sample call (diffusers num_videos_per_prompt). "
+                         "A MEASUREMENT, not a queue filler: the N clips share one "
+                         "prompt and one still and differ only by seed (base seed "
+                         "for slot 0, +1 per slot after)")
+    ap.add_argument("--mode", default="production",
+                    help="recipe label recorded in the sidecar and the bench row; "
+                         "the 2026-08-04 rows use preview|production")
+    ap.add_argument("--bench-jsonl", default="",
+                    help="append ONE measurement row per sample call to this file")
+    ap.add_argument("--bench-label", default="",
+                    help="'label' column for --bench-jsonl (default: the short "
+                         "model name)")
     a = ap.parse_args()
+    if a.batch < 1:
+        print(f"!! --batch {a.batch}: must be at least 1", flush=True)
+        return 2
     # short name -> repo id; anything unrecognised is passed through as a repo id
     # so a one-off experiment does not need a code change, but the CURATED names
     # are the ones whose licence we have actually read.
@@ -540,7 +840,18 @@ def main() -> int:
         print(f"!! {busy}", flush=True)
     if a.stage == "encode":
         return stage_encode(a)
-    return stage_simple(a) if a.stage == "simple" else stage_render(a)
+    # The host-RAM sampler runs ONLY on a measured run. It is a daemon thread doing
+    # a psutil read a second, which is cheap — but the production render path does
+    # not need it, and not starting it is one fewer thing that can be blamed for a
+    # 0xC0000005 on a box this machine cannot test.
+    stop = threading.Event()
+    if _bench_mode(a):
+        threading.Thread(target=_host_peak_sampler, args=(stop,),
+                         daemon=True).start()
+    try:
+        return stage_simple(a) if a.stage == "simple" else stage_render(a)
+    finally:
+        stop.set()
 
 
 if __name__ == "__main__":
