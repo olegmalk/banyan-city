@@ -35,6 +35,16 @@ Reading rules, all load-bearing:
   measured with a 114GB download in flight, whose page cache Windows counts as
   in-use-but-reclaimable, so those figures are *upper bounds on a busy box*, not
   the model's own footprint.
+- **EVERY LTX-2.3 ROW IS OFF ITS TRAINING BUCKET AND IS MARKED "OFF-BUCKET —
+  PROVISIONALLY NON-COMPARABLE (2026-08-06)".** Lightricks ship 2.3 at
+  **960x544x121**; every row below was measured at 704x1280x65 or 352x640x65. The
+  marker covers **time, s/step, throughput AND VRAM/host** in that row, and it
+  means: these figures describe a geometry we will not ship if the on-bucket
+  recipe passes screening. The one on-bucket datapoint we have says the gap is not
+  a rounding error — **137.3 s/step at 544x960x121 against 7.75 s/step at
+  352x640x65, a 17.7x per-step cost for 4.12x the latent tokens**
+  (`bench-platform/colour-bucket-20260806.log`). Un-marking a row needs an
+  on-bucket measurement, not an argument.
 - **NEVER PLAN A LOAD BY WEIGHT SIZE. Measured 2026-08-04: loading AnimeGen's two
   28.58GB experts took ~128.7GB of commit charge for ~40GB of live weights — a
   ~3x retained overhead.** The cause is the runtime fp8 cast: it allocates the fp8
@@ -57,10 +67,10 @@ host can still do during that render.
 
 | Model + build | Recipe | Mode | Time | Throughput s(video)/s(wall) @ batch | Peak VRAM | Peak host RAM | Parallel | Licence | Measurement status | Source |
 |---|---|---|---|---|---|---|---|---|---|---|
-| **diffusers/LTX-2.3-Distilled-Diffusers, bf16** | two-stage **on-recipe**: 8 steps @352x640 → 2x latent upsample → 3 steps @704x1280, explicit sigmas, guidance 1.0, 65f @24fps = 2.708s | production (two-stage, on-recipe) | **108.1s sample / 120s wall** (stage 1 62s @7.8s/it, stage 2 31s @10.5s/it; remainder = upsample + setup) | **0.0251 s(video)/s(wall) @b1** = 39.9s wall per 1s video (2.708s of video / 108.1s sample) — DERIVED-FROM-OURS, the row states its own 65f @24fps so the denominator is not invented | **4.1GB torch / 2.5GB device of 26GB** — LABEL: **sequential-offload**, measures the offload strategy, not card capacity | **60.8GB phys / 67.1GB commit of 68.1GB** | 1/card, and **host-exclusive** — this render evicted the farm worker on the 64GB box | LTX-2 Community License Agreement — **CANDIDATE** under watch-only per D16 (per-post AI label, never a contributor-facing service, one founder-screened sample) | **MEASURED-BY-US 2026-08-04**, $0. Clip clean: no issue-#37 corruption (saturation 0.264, no channel cast, **0/64 frozen frames**) | `SAMPLE-ltx23-b01.mp4.meta.yaml`, `pipeline/ltx_i2v.py` |
-| same — **the reproducibility control, run 2 of the same b1** | the b1 row's command **verbatim**: same script `ltx_i2v.py`, same venv, same env, same embeds file, same conditioning still, same prompt/negative files, `--image-crf 33`, two-stage, distilled sigmas, guidance 1.0, 704x1280, 65f @24fps, seed 20260732, sequential offload. **The only differences are `--out` and the `--task` provenance label** | production (two-stage, on-recipe) | **159.1s sample** against run 1's 108.1s — **+47% for byte-identical output**. Where it went: stage 1's **first** step **24.55 → 62.88s** (cold weight stream, the whole delta), stage 1 steps 2-8 **5.35 → 5.59 s/it**, stage 2 **10.54 → 10.32 s/it** | 0.0170 s(video)/s(wall) @b1 = 58.7s wall per 1s video — **and this cell is the point: the same recipe scored 0.0251 nineteen hours earlier.** A cross-run `sample_s` on this box carries a cold-start term worth ~50s; **compare recipes on per-step figures, not on totals** | **4.1GB torch of 26GB** — LABEL: **sequential-offload**. Identical to run 1 to the tenth of a GB | **61.0GB phys / 68.8GB commit of 68.1/123.9GB** — run 1 was 60.8/67.1 | 1/card, host-exclusive, as run 1 | LTX-2 Community License Agreement — **CANDIDATE** under watch-only per D16 | **MEASURED-BY-US 2026-08-05 15:22**, $0, rc=0. **BIT-IDENTICAL to the stored reference: sha256 `6226aef5…a880`, 352084 bytes, both runs.** Not "at the noise floor" — the same bytes through the h264 encode. **The run-to-run drift baseline for this pipeline is exactly zero**, which is what makes the b2 (rms 10.35) and fp8 (rms 11.93) figures attributable in full to their recipe change | `bench-platform/sha256-repro.txt`, `bench-platform/repro-ltx-b1.log`, `bench-platform/ltx23-b1-s20260732-run2.mp4.meta.yaml` |
-| same — **batch 2, the throughput probe** | the b1 recipe exactly at 2 latents through one set of weights: two-stage 8 steps @352x640 → 2x latent upsample → 3 steps @704x1280, explicit sigmas, guidance 1.0, 65f @24fps = 2.708s per clip. Slot 0 repeats **seed 20260732** as the batch-fidelity check, slot 1 takes 20260733 | production (two-stage, on-recipe) | **190.1s sample** for 2 clips. **No s/step figure**: the two stages run at different per-step costs, so the renderer writes `null` rather than an average that describes neither | **0.0285 s(video)/s(wall) @b2** = 35.1s wall per 1s video (5.417s of video / 190.1s sample) — **1.14x b1's 0.0251**, the only batch series on this box that gains | **7.2GB torch / 2.6GB device of 25.7GB** — LABEL: **sequential-offload**, measures the offload strategy, not card capacity; +3.1GB torch over b1's 4.1GB | **64.2GB phys / 75.3GB commit of 68.1/130.4GB** — **+3.4GB physical over b1's 60.8GB**, and that slope is what closes b4: two more latents put it past the box's 68.1GB | 1/card, still **host-exclusive** — the b1 row evicted the farm worker at 60.8GB and this one runs 3.4GB higher | LTX-2 Community License Agreement — **CANDIDATE** under watch-only per D16 | **MEASURED-BY-US 2026-08-05**, $0. Throughput is a real gain, **but the batched slot is not pixel-equivalent to the un-batched reference** — see the fidelity note below, and do not treat a batched render as a re-issue of an approved clip | `SAMPLES/batch-bench.jsonl`, `SAMPLES/ltx23-production-b2-s20260732.mp4.meta.yaml`, `SAMPLES/ltx23-production-b1-s20260732.mp4.meta.yaml` |
-| **same — fp8 layerwise cast, `--offload model` (the RESIDENT build)** | the b1 row's recipe **byte-for-byte** — same embeds file, same conditioning still, same prompt/negative files, `--image-crf 33`, two-stage 8 steps @352x640 → 2x latent upsample → 3 steps @704x1280, explicit sigmas, guidance 1.0, 65f @24fps = 2.708s, seed 20260732, beat 1. **The only two changes are the recipe change under test**: `enable_layerwise_casting(storage float8_e4m3fn / compute bf16)` on the transformer, and `enable_model_cpu_offload` in place of sequential | production (two-stage, on-recipe) | **73.3s sample / 224.3s wall** (stage 1 8 steps in 21s — the first step is 12.4s of onload, the last 1.58s/it; stage 2 3 steps in 18s @6.17s/it). **The wall is the honest number for a one-off**: it carries a **one-time 139s fp8 cast** the bf16 build never pays | **0.0369 s(video)/s(wall) @b1** = 27.1s wall per 1s video (2.708s of video / 73.3s sample) — **1.47x the bf16 b1's 0.0251**, the fastest sample row on this box. **DERIVED-FROM-OURS: the cast breaks even at exactly 4 clips in one process** (saves 34.8s/clip against a 139s cast); below that, fp8 is a net LOSS on wall time | **23.1GB torch of 25.7GB** — LABEL: **`model_cpu_offload` + fp8 layerwise, transformer RESIDENT**. Verified externally, not inferred: the telemetry daemon's trace (`telemetry.csv`, 10s cadence) shows **21346 MiB @97% util** through stage 1 and **22920 of 24463 MiB @99% util** through stage 2, against ~2.5GB when the same model is streamed. **1543 MiB spare.** Residency is per-stage: VRAM drops to **362 MiB between** the stages, `model_cpu_offload` returning the transformer to host while the upsampler runs NOT comparable to the sequential-offload 4.1/7.2GB rows above — different question, different answer | **64.6GB phys / 97.0GB commit of 68.1/123.9GB** — **the host got WORSE, not better: +3.8GB phys and +29.9GB commit over the bf16 b1's 60.8/67.1.** The cast retains the bf16 storages it replaces (the same mechanism as the AnimeGen finding above), so the predicted "~34GB resident host" did not happen and must not be quoted | 1/card, **host-exclusive** — measured with both farm-worker processes stopped, and the commit peak leaves 26.9GB of headroom, so co-residency is unproven and untested | LTX-2 Community License Agreement — **CANDIDATE** under watch-only per D16. The `ltx23-distilled-fp8` key resolves to exactly one licence document through the gate | **MEASURED-BY-US 2026-08-05**, $0, **rc=0 first attempt — the `--offload group` fallback was never needed**. **NOT SCREENED — the founder has not seen this clip (R4).** Defect counts only: **0/64 frozen frames** (consecutive-frame MSE min 5.06 vs the reference's 3.60, i.e. marginally *more* inter-frame motion); same-seed drift vs the bf16 b1 **rms 11.93/255, PSNR 26.60 dB**, against a **0.93** crf23 encode-noise control and a **1.74** bitrate-matched control — real drift, slightly more than batch 2 cost (10.35); colour drift **R −2.54, G −2.81, B +0.12** | `SAMPLES/batch-bench.jsonl`, `SAMPLES/ltx23fp8-production-b1-s20260732.mp4.meta.yaml`, `probe-ltx-fp8.log`, `fp8-fidelity-20260805.log` |
+| **diffusers/LTX-2.3-Distilled-Diffusers, bf16** | two-stage **on-recipe**: 8 steps @352x640 → 2x latent upsample → 3 steps @704x1280, explicit sigmas, guidance 1.0, 65f @24fps = 2.708s | production (two-stage, on-recipe) | **OFF-BUCKET — PROVISIONALLY NON-COMPARABLE (2026-08-06).** **108.1s sample / 120s wall** (stage 1 62s @7.8s/it, stage 2 31s @10.5s/it; remainder = upsample + setup) | **0.0251 s(video)/s(wall) @b1** = 39.9s wall per 1s video (2.708s of video / 108.1s sample) — DERIVED-FROM-OURS, the row states its own 65f @24fps so the denominator is not invented | **4.1GB torch / 2.5GB device of 26GB** — LABEL: **sequential-offload**, measures the offload strategy, not card capacity | **60.8GB phys / 67.1GB commit of 68.1GB** | 1/card, and **host-exclusive** — this render evicted the farm worker on the 64GB box | LTX-2 Community License Agreement — **CANDIDACY SUSPENDED 2026-08-06** (was **CANDIDATE** under watch-only per D16 — per-post AI label, never a contributor-facing service, one founder-screened sample). Suspended on the founder's 2026-08-06 screening plus the measurement below; pending his screening of the on-bucket sample. The licence terms are unchanged and are not why | **MEASURED-BY-US 2026-08-04**, $0. **CORRECTED 2026-08-06 — this cell read "Clip clean: no issue-#37 corruption (saturation 0.264, no channel cast, 0/64 frozen frames)", and it was wrong against a number printed inside itself.** 0.264 is the clip's MEAN saturation, on the same beat and the same conditioning still where AnimeGen measures **0.636** and the 5B **0.630** — a **2.4x deficit tabulated and labelled clean**. Re-measured 2026-08-06 (`bench-platform/colour-drift-20260806.log`): saturation **0.6721 at f0 → 0.1914 at f64**, chroma **Cab 28.066 → 3.779, −86.5%**, retention **R = 0.1265**; and the channel cast the cell denied is present — **G +108.0%, B −32.5%**, with **a\* +17.46 → −2.17** and **b\* −20.18 → +1.95** crossing zero into faint green. That is the issue-#37 grayscale-plus-green signature, not its absence. **0/64 frozen frames stands** and is the only part of the original cell that survives | `SAMPLE-ltx23-b01.mp4.meta.yaml`, `pipeline/ltx_i2v.py`, `bench-platform/colour-drift-20260806.log` |
+| same — **the reproducibility control, run 2 of the same b1** | the b1 row's command **verbatim**: same script `ltx_i2v.py`, same venv, same env, same embeds file, same conditioning still, same prompt/negative files, `--image-crf 33`, two-stage, distilled sigmas, guidance 1.0, 704x1280, 65f @24fps, seed 20260732, sequential offload. **The only differences are `--out` and the `--task` provenance label** | production (two-stage, on-recipe) | **OFF-BUCKET — PROVISIONALLY NON-COMPARABLE (2026-08-06).** **159.1s sample** against run 1's 108.1s — **+47% for byte-identical output**. Where it went: stage 1's **first** step **24.55 → 62.88s** (cold weight stream, the whole delta), stage 1 steps 2-8 **5.35 → 5.59 s/it**, stage 2 **10.54 → 10.32 s/it** | 0.0170 s(video)/s(wall) @b1 = 58.7s wall per 1s video — **and this cell is the point: the same recipe scored 0.0251 nineteen hours earlier.** A cross-run `sample_s` on this box carries a cold-start term worth ~50s; **compare recipes on per-step figures, not on totals** | **4.1GB torch of 26GB** — LABEL: **sequential-offload**. Identical to run 1 to the tenth of a GB | **61.0GB phys / 68.8GB commit of 68.1/123.9GB** — run 1 was 60.8/67.1 | 1/card, host-exclusive, as run 1 | LTX-2 Community License Agreement — **CANDIDACY SUSPENDED 2026-08-06** (was CANDIDATE, watch-only per D16) | **MEASURED-BY-US 2026-08-05 15:22**, $0, rc=0. **BIT-IDENTICAL to the stored reference: sha256 `6226aef5…a880`, 352084 bytes, both runs.** Not "at the noise floor" — the same bytes through the h264 encode. **The run-to-run drift baseline for this pipeline is exactly zero**, which is what makes the b2 (rms 10.35) and fp8 (rms 11.93) figures attributable in full to their recipe change | `bench-platform/sha256-repro.txt`, `bench-platform/repro-ltx-b1.log`, `bench-platform/ltx23-b1-s20260732-run2.mp4.meta.yaml` |
+| same — **batch 2, the throughput probe** | the b1 recipe exactly at 2 latents through one set of weights: two-stage 8 steps @352x640 → 2x latent upsample → 3 steps @704x1280, explicit sigmas, guidance 1.0, 65f @24fps = 2.708s per clip. Slot 0 repeats **seed 20260732** as the batch-fidelity check, slot 1 takes 20260733 | production (two-stage, on-recipe) | **OFF-BUCKET — PROVISIONALLY NON-COMPARABLE (2026-08-06).** **190.1s sample** for 2 clips. **No s/step figure**: the two stages run at different per-step costs, so the renderer writes `null` rather than an average that describes neither | **0.0285 s(video)/s(wall) @b2** = 35.1s wall per 1s video (5.417s of video / 190.1s sample) — **1.14x b1's 0.0251**, the only batch series on this box that gains | **7.2GB torch / 2.6GB device of 25.7GB** — LABEL: **sequential-offload**, measures the offload strategy, not card capacity; +3.1GB torch over b1's 4.1GB | **64.2GB phys / 75.3GB commit of 68.1/130.4GB** — **+3.4GB physical over b1's 60.8GB**, and that slope is what closes b4: two more latents put it past the box's 68.1GB | 1/card, still **host-exclusive** — the b1 row evicted the farm worker at 60.8GB and this one runs 3.4GB higher | LTX-2 Community License Agreement — **CANDIDACY SUSPENDED 2026-08-06** (was CANDIDATE, watch-only per D16) | **MEASURED-BY-US 2026-08-05**, $0. Throughput is a real gain, **but the batched slot is not pixel-equivalent to the un-batched reference** — see the fidelity note below, and do not treat a batched render as a re-issue of an approved clip | `SAMPLES/batch-bench.jsonl`, `SAMPLES/ltx23-production-b2-s20260732.mp4.meta.yaml`, `SAMPLES/ltx23-production-b1-s20260732.mp4.meta.yaml` |
+| **same — fp8 layerwise cast, `--offload model` (the RESIDENT build)** | the b1 row's recipe **byte-for-byte** — same embeds file, same conditioning still, same prompt/negative files, `--image-crf 33`, two-stage 8 steps @352x640 → 2x latent upsample → 3 steps @704x1280, explicit sigmas, guidance 1.0, 65f @24fps = 2.708s, seed 20260732, beat 1. **The only two changes are the recipe change under test**: `enable_layerwise_casting(storage float8_e4m3fn / compute bf16)` on the transformer, and `enable_model_cpu_offload` in place of sequential | production (two-stage, on-recipe) | **OFF-BUCKET — PROVISIONALLY NON-COMPARABLE (2026-08-06).** **73.3s sample / 224.3s wall** (stage 1 8 steps in 21s — the first step is 12.4s of onload, the last 1.58s/it; stage 2 3 steps in 18s @6.17s/it). **The wall is the honest number for a one-off**: it carries a **one-time 139s fp8 cast** the bf16 build never pays | **0.0369 s(video)/s(wall) @b1** = 27.1s wall per 1s video (2.708s of video / 73.3s sample) — **1.47x the bf16 b1's 0.0251**, the fastest sample row on this box. **DERIVED-FROM-OURS: the cast breaks even at exactly 4 clips in one process** (saves 34.8s/clip against a 139s cast); below that, fp8 is a net LOSS on wall time | **23.1GB torch of 25.7GB** — LABEL: **`model_cpu_offload` + fp8 layerwise, transformer RESIDENT**. Verified externally, not inferred: the telemetry daemon's trace (`telemetry.csv`, 10s cadence) shows **21346 MiB @97% util** through stage 1 and **22920 of 24463 MiB @99% util** through stage 2, against ~2.5GB when the same model is streamed. **1543 MiB spare.** Residency is per-stage: VRAM drops to **362 MiB between** the stages, `model_cpu_offload` returning the transformer to host while the upsampler runs NOT comparable to the sequential-offload 4.1/7.2GB rows above — different question, different answer | **64.6GB phys / 97.0GB commit of 68.1/123.9GB** — **the host got WORSE, not better: +3.8GB phys and +29.9GB commit over the bf16 b1's 60.8/67.1.** The cast retains the bf16 storages it replaces (the same mechanism as the AnimeGen finding above), so the predicted "~34GB resident host" did not happen and must not be quoted | 1/card, **host-exclusive** — measured with both farm-worker processes stopped, and the commit peak leaves 26.9GB of headroom, so co-residency is unproven and untested | LTX-2 Community License Agreement — **CANDIDACY SUSPENDED 2026-08-06** (was CANDIDATE, watch-only per D16). The `ltx23-distilled-fp8` key resolves to exactly one licence document through the gate | **MEASURED-BY-US 2026-08-05**, $0, **rc=0 first attempt — the `--offload group` fallback was never needed**. **NOT SCREENED — the founder has not seen this clip (R4).** Defect counts only: **0/64 frozen frames** (consecutive-frame MSE min 5.06 vs the reference's 3.60, i.e. marginally *more* inter-frame motion); same-seed drift vs the bf16 b1 **rms 11.93/255, PSNR 26.60 dB**, against a **0.93** crf23 encode-noise control and a **1.74** bitrate-matched control — real drift, slightly more than batch 2 cost (10.35). **DISAMBIGUATED 2026-08-06 — this cell said "colour drift R −2.54, G −2.81, B +0.12" and that phrase, sitting in the one place a reader looks for colour information, read as reassurance about the wrong quantity.** Those three numbers are **BETWEEN-CLIP**: the per-channel mean difference of *this* clip against the *bf16 b1* clip, i.e. what the fp8 cast changed. They say nothing about what either clip does over its own length. The **WITHIN-CLIP** figure, measured 2026-08-06, is the one that matters: this clip loses **89.4% of its chroma** (**Cab 28.152 → 2.992**, retention **R = 0.1020**, saturation **0.6694 → 0.2063**, greyfrac **0.166 → 0.829**) — and the bf16 b1 it is being differenced against loses **86.5%**, so the two agree to **<1 Cab unit (<0.5 JND)** because **they are both dead, not because either is clean**. A between-clip delta of −2.54 against a within-clip collapse of 86% is the arithmetic of comparing two greyscale clips. Both figures stay; the labels are now on them | `SAMPLES/batch-bench.jsonl`, `SAMPLES/ltx23fp8-production-b1-s20260732.mp4.meta.yaml`, `probe-ltx-fp8.log`, `fp8-fidelity-20260805.log`, `bench-platform/colour-drift-20260806.log` |
 | Wan 2.2 TI2V-5B, diffusers bf16, `model_cpu_offload` | 704x1280, 14 steps, guidance 5.0 | production | **188s render / 248s per beat** (62 min / 15 beats) | no data — the row does not record its frame count, so s(video) has no denominator | 22.9GB of 25.7GB — `model_cpu_offload` | no data | 1/card; host RAM unmeasured, so co-residency unproven | Apache-2.0, output rights disclaimed — CLEAR | MEASURED-BY-US | `STATE.md:604`, `DECISION.md §2` |
 | same | 704x1280, 20 steps | production | **240s / 300s per beat** | no data — as above | no data | no data | as above | as above | MEASURED-BY-US | `STATE.md:605` |
 | same — **cost decomposed** | 704x1280 | — | **8.67s/step marginal + 66.7s fixed per clip** — supersedes the "13.4s/step" figure, which was `188/14` and contaminated by the fixed addend (the 20-step run gives 12.0 for the same quantity) | — | — | — | — | — | DERIVED-FROM-OURS (two-point fit on the two rows above; corroborated by `video_task.py:817` and STATE.md's "~12 min/episode" batch saving) | `DECISION.md §3` |
@@ -79,7 +89,7 @@ host can still do during that render.
 | same — baked fp8, **batch 2** | as above | preview (480x832) | 119.7s for 2 clips | **0.0230 s/s (43.5s per video-s) — best A14B figure measured** | 18.7GB | 45.1GB phys / 80.3GB commit | 1/card | as above | **MEASURED-BY-US 2026-08-05**, $0. Same b2 optimum as the runtime-cast path (0.0221), so the bake did not change the throughput shape | `SAMPLES/animegen-fp8-preview-b2-s20260732.mp4.meta.yaml` |
 | same — baked fp8, **batch 4** | as above | preview (480x832) | 733.2s | 0.0075 s/s | 22.0GB (86%) | 62.1GB phys / 85.8GB commit | 1/card | as above | **MEASURED-BY-US 2026-08-05**, $0. Spills exactly as the runtime-cast b4 did — **the bake fixes host RAM and does nothing for the VRAM spill** | `SAMPLES/animegen-fp8-preview-b4-s20260732.mp4.meta.yaml` |
 | same — baked fp8, **PRODUCTION** | 4 steps, 704x1280, 61f | production | 824.8s | **0.0031 s/s (324.5s per 1s video)** | 22.0GB | 62.1GB phys / 85.8GB commit | 1/card | as above | **MEASURED-BY-US 2026-08-05**, $0. **Slower than the runtime-cast production row (546s / 0.0047)** — both spill at 704x1280 and the fp8 path pays per-layer dequant on top. So A14B production resolution is VRAM-bound, and the bake does not rescue it | `SAMPLES/animegen-fp8-production-b1-s20260732.mp4.meta.yaml` |
-| **LTX-2.3 distilled, PREVIEW mode** (stage 1 alone) | 8 steps @352x640, explicit distilled sigmas, guidance 1.0, 65f @24fps, `--image-crf 33` | preview | 94.3s — **UNARCHIVED, see the note** | 0.0287 s(video)/s(wall) = 34.8s per 1s video — **and this is not "the fastest model we measured"**: the fp8 resident build above is **0.0369** (27.1s per video-s), and the bf16 b2 is 0.0285. What this row beats is the bf16 two-stage b1's 0.0251 — **at a fifth of the pixels** | 1.9GB torch / 1.5GB device — LABEL: **sequential-offload** — **UNARCHIVED** | 60.5GB phys / 68.9GB commit — **UNARCHIVED** | 1/card, host-exclusive | LTX-2 Community License Agreement — CANDIDATE, watch-only per D16 | **MEASURED-BY-US 2026-08-05**, $0. This is upstream's own first stage, not an invented shortcut — but it is **stage 1 only**, so it must be screened as a preview; judged as production it would show the "soft and under-detailed" failure `ltx2-source.md §1` predicts. **Two provenance limits, stated rather than smoothed over.** (1) **Do not rank this row against the 704x1280 rows.** Its output is **352x640** — 20% of the pixels — so `s(video)/s(wall)` is measuring a different job, not a faster one. (2) **The timing and memory cells have no archived source.** The clip and its sidecar exist and the denominator is verified — `ffprobe` reads 352x640, 65 frames @24/1, 2.708333s, matching the sidecar — but the sidecar records no `sample_s`, there is no `ltx23-preview` row in any `SAMPLES/*.jsonl`, and no log in this repo contains 94.3, 0.0287, 1.9/1.5GB or 60.5/68.9GB. They are console-only figures carried over by hand. **Kept because the run happened and deleting a real measurement is worse than flagging it; re-run it to archive a sourced row before anything downstream quotes these four cells** | `SAMPLES/ltx23-preview-b1-s20260732.mp4.meta.yaml` (recipe + provenance only — carries no timing) |
+| **LTX-2.3 distilled, PREVIEW mode** (stage 1 alone) | 8 steps @352x640, explicit distilled sigmas, guidance 1.0, 65f @24fps, `--image-crf 33` | preview | **OFF-BUCKET — PROVISIONALLY NON-COMPARABLE (2026-08-06).** 94.3s — **UNARCHIVED, see the note** | 0.0287 s(video)/s(wall) = 34.8s per 1s video — **and this is not "the fastest model we measured"**: the fp8 resident build above is **0.0369** (27.1s per video-s), and the bf16 b2 is 0.0285. What this row beats is the bf16 two-stage b1's 0.0251 — **at a fifth of the pixels** | 1.9GB torch / 1.5GB device — LABEL: **sequential-offload** — **UNARCHIVED** | 60.5GB phys / 68.9GB commit — **UNARCHIVED** | 1/card, host-exclusive | LTX-2 Community License Agreement — **CANDIDACY SUSPENDED 2026-08-06** (was CANDIDATE, watch-only per D16) | **MEASURED-BY-US 2026-08-05**, $0. This is upstream's own first stage, not an invented shortcut — but it is **stage 1 only**, so it must be screened as a preview; judged as production it would show the "soft and under-detailed" failure `ltx2-source.md §1` predicts. **Two provenance limits, stated rather than smoothed over.** (1) **Do not rank this row against the 704x1280 rows.** Its output is **352x640** — 20% of the pixels — so `s(video)/s(wall)` is measuring a different job, not a faster one. (2) **The timing and memory cells have no archived source.** The clip and its sidecar exist and the denominator is verified — `ffprobe` reads 352x640, 65 frames @24/1, 2.708333s, matching the sidecar — but the sidecar records no `sample_s`, there is no `ltx23-preview` row in any `SAMPLES/*.jsonl`, and no log in this repo contains 94.3, 0.0287, 1.9/1.5GB or 60.5/68.9GB. They are console-only figures carried over by hand. **Kept because the run happened and deleting a real measurement is worse than flagging it; re-run it to archive a sourced row before anything downstream quotes these four cells** | `SAMPLES/ltx23-preview-b1-s20260732.mp4.meta.yaml` (recipe + provenance only — carries no timing) |
 | TI2V-5B + **`shift` sweep** (baseline / 5.0 / 8.0) | 704x1280, 14 steps, 3 clips, one seed | — | — (expect ~248s/beat) | — | — (expect 22.9/25.7GB) | — | — | Apache-2.0 | **SUPERSEDED — measured 2026-08-04**, see the three T1 rows above. Its own expectations were both wrong: the peak is 14.4GB not 22.9GB, and the "baseline" was already 5.0 | `ACTION-PLAN.md §1 T1` |
 | TI2V-5B + `画面` restored to `NEG` | 704x1280, 14 steps, alone (not with `--no-shake-neg`) | — | — | — | — | — | — | Apache-2.0 | **SUPERSEDED — measured 2026-08-04**, see the T2 row above | `ACTION-PLAN.md §1 T2` |
 | TI2V-5B + motion-only prompt contract | statics stripped, ≤100 words | — | — | — | — | — | — | Apache-2.0 | **SUPERSEDED — measured 2026-08-04**, see the T3 and T3b rows above | `ACTION-PLAN.md §1 T3` |
@@ -432,6 +442,174 @@ recipe and therefore a new one-sample question, not a retry of this one.
 **Still owed, and unchanged by any of the above: `ltx23fp8` b1 has not been
 screened** (R4). Nothing here is a verdict on the look of anything.
 
+### 2026-08-06 — the colour collapse: LTX-2.3 loses 86-89% of its chroma per clip, and this table said "clean"
+
+**The trigger was the founder's eye, not the metric.** Roman screened the LTX
+clips on 2026-08-06 and said both *"turn black and white ... an unnecessary colour
+transition"*. He also cleared the fp8 build on look — *"barely a difference"* —
+which is the same screening and is recorded in `STATE.md`. Every number below is
+measured; sources are `bench-platform/colour-drift-20260806.log` (38 clips, one
+code path, $0, read-only on the local Mac) and
+`bench-platform/colour-postfix-mkl-20260806.log`. **None of it is a verdict —
+rule 5 still holds, these are defect counts.**
+
+**The metric.** `Cab` = mean CIELAB chroma sqrt(a\*²+b\*²) over every pixel of every
+frame, decoded `rgb24` at native resolution. 0 is perfectly grey; ~2.3 units is
+one JND. **`R` = mean Cab over frames 18-64 divided by Cab at frame 0** — the
+plateau band, chosen so a 121-frame on-bucket clip can sit in the same column.
+The conditioning still measures **Cab 27.339, satHSV 0.6060, L\* 14.76, R/G/B
+45.04/26.30/67.60, a\* +16.76, b\* −19.66**, and resizing it is immaterial:
+704x1280 gives 27.345, 544x960 gives 27.356 (**0.007 JND** from native), 352x640
+gives 27.382. **That still is the target. A clip that holds its input palette sits
+near Cab 27-28 for its whole length.**
+
+**What the LTX-2.3 clips do instead:**
+
+| clip | Cab f0 | Cab f64 | Cab% | **R** | 50% at | 90% at | greyfrac f0 → fN |
+|---|---|---|---|---|---|---|---|
+| `ltx23-production-b1` (bf16, two-stage) | 28.066 | 3.779 | **−86.5%** | **0.1265** | f6 | f18 | 0.165 → 0.794 |
+| `ltx23-production-b2` slot 0 (batched) | 28.000 | 3.960 | −85.9% | — | f6 | f17 | 0.165 → 0.789 |
+| `ltx23fp8-production-b1` (fp8 cast) | 28.152 | 2.992 | **−89.4%** | **0.1020** | f9 | f18 | 0.166 → 0.829 |
+| `ltx23-preview-b1` (stage 1 ONLY, 352x640) | 28.205 | 4.066 | −85.6% | **0.1369** | f6 | f17 | 0.157 → 0.755 |
+
+**The shape is a fast collapse and then a floor, not a ramp.** Half the chroma is
+gone by **frame 6 (0.250 s)**, 90% by **frame 18 (0.750 s)**, and frames 18-64 are
+statistically flat at Cab 2.7-3.8. The largest single per-frame drop in every LTX
+clip is at **frame 3**.
+
+**It is not only desaturation — the hue inverts and the image gets brighter.**
+f0 → f64 on the bf16 b1: **R +4.2%, G +108.0%, B −32.5%**, channel spread
+**42.41 → 4.20**, **a\* +17.46 → −2.17**, **b\* −20.18 → +1.95**, **L\* 13.67 →
+18.59 (+36%)**, **greyfrac 0.165 → 0.794**. The three channels converge on R. The
+cast does not fade to zero, it **crosses zero**: blue-violet becomes faint green.
+This is also what the old "magenta → teal drift" note was describing, badly.
+
+**LTX-2.3 ONLY, and our pipeline is exonerated.** Same beat, same still, same
+export path, same writer: all **12** Wan-5B clips **gain 1.8-4.3%**; all **16**
+AnimeGen clips sit within **−0.4% to +3.4%**; the AnimateDiff-Mac clips are flat;
+and the **July LTX-Video 0.9 Kaggle renders of this exact still are flat too
+(−0.7% and +1.3%)**. Frame 0 of every clip is within **±3.2%** of the still, so
+nothing is lost at VAE round-trip, encode or mux — **the colour is destroyed
+during the clip, not at its boundaries**. A 65-PNG decode of the b1 clip
+reproduces the piped measurement **to every printed digit**, so it is in the
+pixels, not the player. **The defect is not "LTX" generically. It arrived with the
+LTX-2.3-Distilled checkpoint.**
+
+**Four candidate causes eliminated, three of them without spending a sample:**
+
+- **fp8 is not the cause.** bf16 −86.5% against fp8 −89.4%; end states 3.779 and
+  2.992 Cab, a gap of **0.79 units, under 0.5 JND on a 28-unit scale**. The bf16
+  clip has no quantisation anywhere in its graph and does the same thing. **This
+  is also the numerical form of the founder's "barely a difference" — he is exactly
+  right, and the reason the two builds agree is that both are dead.**
+- **Batching is not the cause.** Same seed b1 vs b2 slot 0: mean per-frame Cab gap
+  **+0.302**, max **0.719**, identical crossing frames.
+- **Container tagging is not the cause.** All 38 clips — LTX, 5B, AnimeGen,
+  AnimateDiff — are h264 High / yuv420p / range, space, transfer and primaries all
+  `unknown` / chroma_location left / 24 fps. **Identical.** (Separate real hygiene
+  gap: nothing in this repo writes colr/bt709 tags on *any* clip. Fixing it
+  restores zero chroma and is not this defect.)
+- **Stage 2, the latent upsampler and `adain_factor` are exonerated.** The
+  stage-1-only preview clip collapses **identically** (−85.6% vs −86.5%, same
+  crossing frames); stage 2 moves the plateau by **−0.29 Cab**. The collapse is
+  complete before stage 2 exists, so the one untested lever this file had been
+  holding — `adain_factor`, which acts at that boundary — **is refuted without a
+  render**. `conditioning_mask` is separately already hardcoded at 1.0.
+
+**Upstream says the same thing, and had said it before we measured.**
+Lightricks/LTX-2 issue **#37** — *"Severe video corruption in LTX-2 on RTX 5090
+(green artifacts + near-total grayscale output)"*, RTX 5090 Blackwell, cu128 —
+**open, no root cause, no fix**. Our plateau is precisely that: near-total
+grayscale with a residual **green** cast (a\* −2.17, G +108%), and **we render
+LTX-2.3 on an RTX 5090**. Also relevant: issue **#148** (artifacting at end of
+video with 2.3), and Lightricks' own guidance that **2.3 washes out colour when
+run far from its 960x544x121 training bucket** — we run 704x1280x65, and the
+stage-1 pass runs 352x640, well under it.
+
+**The geometry prior, strengthened but NOT proven.** Inside the LTX family the
+split is clean: **on-bucket → R = 0.9999 and 1.0080, flat across all 97 frames;
+off-bucket → R = 0.10 to 0.14.** The on-bucket rows are the July renders, which
+are **512x768x97 — LTX-Video 0.9's canonical 768x512x97 bucket transposed to 9:16,
+exactly the manoeuvre the pending 2.3 sample performs.** This is not proof and
+must not be written up as any: **four variables differ** (0.9 vs 2.3, 30 vs 8
+steps, base vs distilled CFG, Kaggle vs this box). It is why the one-variable
+on-bucket 2.3 sample is the right next measurement rather than a formality.
+
+**THE ONE-SAMPLE RESULT: there isn't one. The sample did not complete.** Launched
+18:42:47 local on 2026-08-06 as scheduled task `banyan-colour-bucket`, single
+stage, one variable moved from the control — geometry **352x640x65 → 544x960x121**
+— with `ltx_i2v.py` sha256 `565b40e6…888795` matched on both sides, the embeds
+`.pt` reused rather than re-encoded, and the crf-33 conditioning round-trip
+**bit-identical** (`da388e7b…d9ea4`) to what the 2026-08-04 controls encoded. The
+rtx5090 **left the LAN at ~18:56, mid-denoise at step 4 of 8**. ICMP 100% loss
+over three ping runs, an ARP sweep of the /24 that found its MAC **nowhere** (so
+not a new DHCP lease), WoL to three addresses with no response, our own gateway
+answering at ~3 ms throughout. **No clip, therefore no R and no colour verdict for
+the on-bucket recipe.** Recording one would be an invention.
+
+**It was not a gate trip, and that matters for the re-run.** At last contact: host
+phys **44.90 GiB of 63.42** against a 66.5 GB abort line, with the run's peak
+**48.93 GiB already 40 minutes behind it and falling**; VRAM **3044 MiB of 24463 =
+12.4%**, nowhere near the >97% WDDM signature (sequential offload never lets the
+card hold more than ~3 GB); s/step **improving** — 196 → 138 → 136 → 138; GPU
+100% at 41 °C. Consistent with a power, lid or sleep event, or a bugcheck and
+reboot. The task carries **no time trigger, so a reboot does not re-fire it**. The
+whole re-run is `Start-ScheduledTask -TaskName 'banyan-colour-bucket'`.
+
+**What the dead run did produce is a real result — the first on-bucket throughput
+datapoint, and it is expensive.** Four steps timed before contact was lost:
+
+| step | cumulative | this step |
+|---|---|---|
+| 1 | 196 s | 196 s (first-touch weight streaming) |
+| 2 | 334 s | 138 s |
+| 3 | 470 s | 136 s |
+| 4 | 608 s | 138 s |
+
+Steady state **137.3 s/step at 544x960x121** against the control's **7.75 s/step
+at 352x640x65**. Latent tokens **8160 against 1980 = 4.12x**; measured time ratio
+**17.7x**, against tokens² = **17.0x** and tokens¹ = 4.12x. **LTX-2.3 stage 1 is
+attention-bound at this size, not weight-streaming-bound: going on-bucket costs
+~18x per step, not 4x.** Projected **~22 min per clip**, so a 15-beat episode is
+**≈5.5 GPU-hours** under sequential offload. Quote it per rule 8 as a per-step
+figure; the projection is DERIVED-FROM-OURS on four steps and is not a row.
+
+**A free post-process exists, it works, and it is NOT the fix.** MKL
+(Monge-Kantorovich linear) colour transport of every frame onto frame 0, measured
+2026-08-06 on the bf16 b1 clip: **Cab holds 27.94-28.20 across all 65 frames**
+(f0 28.066, f6 27.939, f18 28.092, f32 28.173, f64 28.204) against the untreated
+**28.066 → 3.779**, and the hue inversion is undone (**a\*,b\* at f64 +17.44,
+−20.15** against the untreated **−2.17, +1.95**). It costs $0 and no GPU. It is
+recorded as an **available fallback only**, for three measured reasons: it forces
+one palette on the whole clip and erases any intended colour change; it **cannot
+invent chroma detail the model did not generate**, so it restores the cast rather
+than the information; and rescaling a collapsed distribution **amplifies chroma
+noise**. Shipping it is a look change and therefore **R4 — the founder's call, not
+scheduled**.
+
+**Candidacy: SUSPENDED, and every LTX row is now marked off-bucket.** The five LTX
+rows in §1 previously read **CANDIDATE, watch-only per D16**; they now read
+**CANDIDACY SUSPENDED 2026-08-06**, pending the founder's screening of the
+on-bucket sample. The licence is unchanged and is not the reason. Separately,
+their time, s/step, throughput and VRAM cells carry **OFF-BUCKET — PROVISIONALLY
+NON-COMPARABLE**, because every one of them was measured at a geometry we will not
+ship if the on-bucket recipe passes — and the single on-bucket step time we have
+is 17.7x the control's.
+
+**The process failure, stated plainly because it is the transferable part.**
+**Saturation 0.264 was sitting in this table's LTX row, in a cell that also said
+"clean", next to an AnimeGen row reading 0.636 on the same beat and the same
+still.** A 2.4x deficit was measured, written down, published to the comparison
+page, and read past — for two days, by everyone who touched the file, including
+across two corrections to neighbouring cells. What broke the tie was **the founder
+watching the clip**. The rule this is an instance of is already written down:
+**"a metric agreeing with me is not a sample"** — and its converse, which this
+table just paid for, is that **a metric disagreeing with the label is not
+noise**. The fix in this file is mechanical and already applied: the row now
+states the measured collapse instead of "clean", and the fp8 row's between-clip
+channel deltas are labelled as between-clip so they stop reading as within-clip
+reassurance.
+
 ### Open observations on the measured 5B T1/T2/T3 rows
 
 Measured anomalies only — six clips, one seed each, and nothing here is a verdict.
@@ -480,14 +658,37 @@ Measured anomalies only — six clips, one seed each, and nothing here is a verd
 
 ### Open observations on the measured LTX row
 
-Three, all unresolved, none a verdict:
+Three were opened here on 2026-08-04. **Two were closed or corrected on
+2026-08-06** — see the colour section below for the measurements; this list now
+says what each one turned into.
 
-1. **Progressive colour drift, magenta → teal over ~16 frames.** Untested lever:
-   `adain_factor`, held at 0.0 in `pipeline/ltx_i2v.py:435` because upstream's
-   distilled path leaves it off too. One sample decides it.
-2. **Possible period-3 motion cadence — UNRESOLVED and confounded** by the 1Mbps
-   h264 encode. Settling test: lossless re-encode on the next run. Do not record
-   a cadence verdict until that is done.
+1. **~~Progressive colour drift, magenta → teal over ~16 frames~~ — MEASURED AND
+   RESCALED 2026-08-06, and it was never a hue rotation.** It is a **chroma
+   collapse through neutral that overshoots slightly into the opposite quadrant**:
+   **Cab 28.066 → 3.779, −86.5%**, half gone by **frame 6**, 90% by **frame 18**,
+   flat after. `adain_factor` is **REFUTED as the lever without spending a
+   sample**: it acts at the latent-upsample / stage-2 boundary, and the
+   **stage-1-only preview clip collapses identically** (−85.6% against −86.5%,
+   same crossing frames), so there is nothing for it to fix. It stays at 0.0. The
+   other lever named in this list, `conditioning_mask`, is already hardcoded at
+   1.0 and is item 3, not a colour lever.
+2. **~~Possible period-3 motion cadence — UNRESOLVED and confounded by the 1Mbps
+   h264 encode~~ — REFUTED 2026-08-06. The cadence is real and it is not the
+   encode.** Measured through the **identical writer** on every family:
+   inter-frame autocorrelation at lag 3 is **+0.79 / +0.77 / +0.82** for LTX-2.3
+   bf16 / fp8 / stage-1-only, against **+0.12** for the 5B, **+0.24** for AnimeGen
+   and **−0.09 to +0.29** for AnimateDiff. Every third frame-pair moves 4-6x as
+   far (mean |dRGB| **5.978** at pair%3==0 against **2.352** elsewhere, ratio
+   **2.54**; the 5B's ratio is **1.02**). A 1Mbps encode cannot produce a
+   period-3 structure in one model's clips and not another's through the same
+   encoder. **Consequence: the 65-frame 24fps clip carries ~22 distinct motion
+   states — an effective 8 fps.** The **mechanism is open and must not be
+   guessed**: LTX-2's documented 8x temporal VAE (65 frames → 9 latent frames)
+   predicts period-**8**, not period-3, so this is not a latent-frame boundary.
+   The lossless settling test the old text asked for is still worth running and is
+   now a *confirmation* rather than the deciding evidence — `--lossless-out` is
+   implemented and its metric baselined (period-3 power **0.4353** and **0.4891**
+   for the two LTX clips against **0.0033** for the 5B).
 3. **diffusers hardcodes `conditioning_mask = 1.0`** (maximum first-frame
    pinning) where upstream's own quickstart and docs use **0.8-0.9**
    (`ltx2-source.md:317-330`: `denoise_mask = 1.0 - strength`, so 1.0 pins those
@@ -851,11 +1052,23 @@ falsify it** (DERIVED-FROM-OURS, `bench-platform/fleet-inventory-20260805.txt`):
 the stills / VO / draft machine, but no longer because the fit is unknown: three
 measured steps at 362-719 s against Box A's 16.4 s say that even if 704x1280 5B
 *fits*, asking this box for it costs something like an order of magnitude more wall
-time per beat. The recommendation that follows is **not** "try harder on 5B" — it is
+time per beat. The recommendation that followed was **not** "try harder on 5B" — it was
 that the model shaped for this box is the one that already runs small:
 **LTX-2.3 preview took 1.9 GB torch / 1.5 GB device** on Box A (§1), which is the
 only measured row in this table that would sit comfortably inside 12 GB without
 offload at all. That is the next thing to put on Box B, and it needs its own sample.
+
+> **WITHDRAWN 2026-08-06.** Do not act on the paragraph above. The recipe it
+> recommends — LTX-2.3 single-stage at 352x640 — is the **hardest-collapsing
+> recipe we have measured**: it loses **85.6%** of its chroma (Cab 28.205 → 4.066,
+> retention **R = 0.1369**, 50% gone by frame 6), and 352x640 is the geometry
+> *furthest* from LTX-2.3's 960x544x121 bucket, which is the leading suspect for
+> the collapse. Putting it on Box B would have spent the only unproven box in the
+> fleet proving that a broken recipe is also small. The paragraph is kept rather
+> than deleted because its *fit* reasoning was sound and is unaffected — 1.9 GB
+> torch really would sit inside 12 GB. What was wrong is the choice of recipe, and
+> nothing about Box B's size caused that error: the disqualifying number was in
+> this file's own LTX row the whole time, mislabelled "clean".
 
 **Update 2026-08-06 — the verdict hardens into a rule, and the option under it is an
 option, not a job.** Two corrections to the paragraph directly above. First, "an
@@ -879,11 +1092,13 @@ recipe that must not be run here at all.
   before it is anything else, and no batch, sweep or queue entry may precede that
   sample. Nobody has named a consumer for the output, which is the other reason it
   is not scheduled.
-- **The LTX-2.3 preview suggestion above stands, with its own caveat now attached.**
-  §1's LTX preview row carries **UNARCHIVED** timing and memory cells (see the note
-  on that row) and renders at 352x640, so "sits comfortably inside 12 GB" is the
-  right instinct on the wrong evidence until that row is re-run and archived. Also a
-  one-sample question, also unscheduled.
+- **~~The LTX-2.3 preview suggestion above stands, with its own caveat now
+  attached.~~ WITHDRAWN 2026-08-06 — see the block quote above.** Two caveats were
+  already on it: §1's LTX preview row carries **UNARCHIVED** timing and memory
+  cells, and it renders at 352x640, so "sits comfortably inside 12 GB" was the
+  right instinct on the wrong evidence. The third caveat is the one that ends it —
+  **that recipe collapses hardest of anything measured (R = 0.1369)**. There is no
+  Box B LTX job. What Box B gets is unchanged and unaffected: stills, VO, drafts.
 
 **Box status as of 2026-08-06: offline and unavailable again.** Not reachable at the
 stale `192.168.3.153`, and — per the note below on the LAN re-addressing — not found

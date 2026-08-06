@@ -1423,3 +1423,115 @@ no sidecar timing, no jsonl row, no log. The clip and its recipe are real and
 `ffprobe`-verified (352x640, 65f @24fps, 2.708s), so the row is kept with those four
 cells labelled **UNARCHIVED** rather than deleted or quietly trusted. Re-run it to
 archive a sourced row before anything downstream cites them.
+
+## 2026-08-06 evening — the founder's eye beat the metric: LTX-2.3 loses 86-89% of its colour, and our own table had the number
+
+**Roman screened the LTX samples today and the verdict is two verdicts.** On the
+fp8 cast, **cleared on look**: *"barely a difference"*. On the colour, a defect
+report: both LTX clips *"turn black and white ... an unnecessary colour
+transition"*. The second one is why everything below happened.
+
+**The diagnosis, measured, $0, read-only on this Mac** — 38 clips through one code
+path; full artefacts in `bench-platform/colour-drift-20260806.log` and
+`bench-platform/colour-postfix-mkl-20260806.log`, written up per that file's own
+rules in `pipeline/research/MODEL-COMPARISON.md` (new dated 2026-08-06 section):
+
+- **LTX-2.3-Distilled loses 86-89% of its chroma over each clip.** bf16 b1: mean
+  CIELAB chroma **Cab 28.07 at frame 0 → 3.78 at frame 64, −86.5%**. **58% gone by
+  frame 6** (0.25 s), **90% by frame 18** (0.75 s), then a flat plateau for the
+  remaining ~2 s. It is not only desaturation: **a\* +17.46 → −2.17** and **b\*
+  −20.18 → +1.95** cross zero, so blue-violet inverts to faint green, **L\* rises
+  +36%**, and the channels converge on R (**G +108%, B −32.5%**). By the last frame
+  **79% of pixels are visually neutral** — that is exactly the black-and-white
+  Roman saw.
+- **LTX-2.3 ONLY. Our pipeline is exonerated.** Same beat, same still, same writer,
+  same export path: Wan-5B **+1.8 to +4.3%**, AnimeGen flat, AnimateDiff flat, and
+  the **July LTX-Video 0.9 renders of this same still flat too**. Frame 0 of every
+  clip is within **±3.2%** of the conditioning still, so nothing is lost at
+  VAE round-trip, encode or mux. **The defect arrived with the 2.3 distilled
+  checkpoint**, not with "LTX" and not with us.
+- **Four causes eliminated, three without spending a sample.** fp8 is not it —
+  bf16 −86.5% vs fp8 −89.4%, **under 0.5 JND apart**, so *the founder's "barely a
+  difference" is numerically exact* (and the reason they agree is that both are
+  dead). Batching is not it. Container tagging is not it — all 38 clips are
+  identically h264/yuv420p with every colour tag `unknown`. And **stage 2 plus the
+  latent upsampler are exonerated** by the stage-1-only clip collapsing
+  identically, which **refutes `adain_factor`** — the one lever we had been holding
+  a sample for — **without rendering anything**. `conditioning_mask` is already
+  hardcoded at 1.0.
+- **Upstream had it first:** Lightricks/LTX-2 issue **#37**, *"green artifacts +
+  near-total grayscale output"* on RTX 5090 — **open, no fix** — plus issue #148,
+  and Lightricks' guidance that 2.3 washes out far from its **960x544x121**
+  training bucket. We render 704x1280x65 and 352x640.
+- **SECOND DEFECT, de-confounded.** LTX-2.3 motion is **quantised to 3-frame
+  steps**: lag-3 autocorrelation **0.79 / 0.77 / 0.82** for the three LTX clips
+  against **1.02 / 1.05 / 0.95-1.29** for 5B, AnimeGen and AnimateDiff **through
+  the identical writer**. So the 65-frame 24 fps clip carries **~22 distinct motion
+  states — an effective 8 fps**. `MODEL-COMPARISON.md` had blamed the encode; that
+  is now **refuted** (an encoder cannot do this to one model's clips and not
+  another's). **The mechanism is OPEN and is not being guessed at** — LTX-2's
+  documented 8x temporal VAE predicts period-8, not period-3.
+
+**The one sample: it did not complete, so there is no colour verdict.** Launched
+18:42:47 as scheduled task `banyan-colour-bucket`, one variable moved — geometry
+**352x640x65 → 544x960x121**, LTX-2.3's own bucket transposed to 9:16 — with the
+script hash matched both sides and the conditioning round-trip bit-identical to
+the 2026-08-04 controls. The **rtx5090 left the LAN at ~18:56, mid-denoise at step
+4 of 8**: ICMP silent, an ARP sweep of the /24 found its MAC nowhere, WoL to three
+addresses did nothing, our gateway answered throughout. **Not a gate trip** — at
+last contact host phys was 44.90 of 63.42 GiB and *falling*, VRAM 12.4%, s/step
+*improving*. **No clip, so no R and no colour verdict.** The task has no time
+trigger, so a reboot does not re-fire it; the re-run is one command,
+`Start-ScheduledTask -TaskName 'banyan-colour-bucket'`.
+
+**What the dead run did give us is a real and expensive number: the first
+on-bucket throughput datapoint.** Four steps timed — 196 / 138 / 136 / 138 s —
+so **137.3 s/step at 544x960x121** against the control's **7.75 s/step at
+352x640x65**. Latent tokens ratio 4.12x, measured time ratio **17.7x** (tokens² =
+17.0x). **LTX-2.3 stage 1 is attention-bound at this size: going on-bucket is an
+~18x per-step cost, not 4x.** Projected ~22 min/clip, so a 15-beat episode is
+**≈5.5 GPU-hours** under sequential offload. That is a planning fact whichever way
+the colour verdict lands.
+
+**Candidacy: SUSPENDED.** `DECISIONS.md` D16 gate (c) was *"one sample beat,
+founder-screened"* — it fired, and it fired negative. LTX-2.3 moves **CANDIDATE →
+CANDIDACY SUSPENDED**, pending Roman's screening of the on-bucket sample, recorded
+in a D16 addendum and on all five LTX rows in `MODEL-COMPARISON.md` §1. **The
+licence analysis is untouched and is not the reason.** Those five rows' time,
+s/step, throughput and VRAM cells are now also marked **OFF-BUCKET —
+PROVISIONALLY NON-COMPARABLE**, because every one was measured at a geometry we
+will not ship if the on-bucket recipe passes.
+
+**A free fallback exists and is NOT the fix.** MKL colour transport of every frame
+onto frame 0 holds **Cab 27.94-28.20 across all 65 frames** (against 28.07 → 3.78
+untreated) and undoes the hue inversion, at $0 and no GPU. It is cosmetic: it
+forces one palette on the whole clip, **cannot invent chroma detail the model did
+not generate**, and amplifies chroma noise. Recorded as an available fallback
+only — **shipping it is a look change, therefore R4**, and it is not scheduled.
+
+**The process lesson, and it is not a near-miss.** **Saturation 0.264 was already
+in our own table**, in an LTX row whose same cell said **"Clip clean: no issue-#37
+corruption"**, sitting one row away from AnimeGen's **0.636** on the same beat and
+the same still. A **2.4x deficit** was measured, written down, published to
+`COMPARISON.html`, and read past for two days — through two separate correction
+passes on neighbouring cells. **Nobody escalated it. The founder watching the clip
+did.** The standing rule is *"a metric agreeing with me is not a sample"*; today
+supplies its converse, which is the more expensive half: **a metric disagreeing
+with its own label is not noise.** The row now states the measured collapse
+instead of "clean", the fp8 row's `R −2.54, G −2.81, B +0.12` is labelled
+**BETWEEN-clip** so it stops reading as within-clip reassurance next to an 86%
+collapse, and the screening page shows the retention figure on the LTX cards
+rather than leaving it in a research file.
+
+**Also withdrawn today:** the standing recommendation to put the **LTX single-stage
+352x640 preview recipe on the 5070 Ti**. It is the **hardest-collapsing recipe we
+have measured** (**R = 0.1369**) at the geometry furthest from LTX-2.3's bucket —
+it would have spent the fleet's only unproven box proving a broken recipe is also
+small. The 5070 Ti's role is unchanged: stills, VO, drafts.
+
+**Still open.** (1) The on-bucket sample — one command, blocked only on the box
+being reachable. (2) The period-3 mechanism. (3) `pipeline/ltx_i2v.py`'s module
+docstring still calls LTX a D16 CANDIDATE; that file is carrying unrelated
+uncommitted work, so the line is left for whoever lands that change. (4) Nothing in
+this repo writes colr/bt709 tags on any clip — real hygiene, not this defect,
+worth zero chroma.

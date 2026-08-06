@@ -526,7 +526,7 @@ A actually forbids. See item 4 of the 2026-08-04 entry below.
 
 ---
 
-## D16 — LTX-2/2.3 is a CANDIDATE under watch-only, gated on three things we control (OPEN — founder call, 2026-08-04)
+## D16 — LTX-2/2.3 is a CANDIDATE under watch-only, gated on three things we control (OPEN — founder call, 2026-08-04; **candidacy SUSPENDED 2026-08-06 on the screening, see the addendum at the end — the licence analysis is unchanged**)
 
 *Raised by the steward from `pipeline/research/models-licence.md` (finding 3) and
 `pipeline/research/DECISION.md`, both 2026-08-04, both quoting the primary licence
@@ -705,6 +705,37 @@ shot board.
 **Net D16 status, updated: the Gemma gate is CLEAR.** Remaining gates are both ours
 and both unchanged — the per-post AI-disclosure rule, and the one founder-screened
 sample beat (weights downloading 2026-08-04).
+
+**ADDENDUM 2026-08-06 — gate (c) fired, and it fired NEGATIVE. Candidacy
+SUSPENDED, on a picture defect, not on the licence.** The gate this entry says
+"actually holds this open" is **(c) one sample beat, founder-screened**. The
+founder screened it on 2026-08-06 and his verdict on the LTX clips was that they
+*"turn black and white ... an unnecessary colour transition"*. He separately
+cleared the fp8 build **on look** — *"barely a difference"* — which is a real
+clearance and is recorded, but it is a clearance of the fp8 *cast*, not of the
+model.
+
+**Measured, so the suspension is not an impression** (`bench-platform/colour-drift-20260806.log`,
+38 clips, one code path, $0): every LTX-2.3 clip loses **86-89% of its chroma over
+its own length** (Cab 28.07 → 3.78 on the bf16 b1; half gone by frame 6, 90% by
+frame 18), while every Wan-5B, AnimeGen, AnimateDiff and **July LTX-Video 0.9**
+clip of the same beat through the same export path is flat. Upstream has it open
+as Lightricks/LTX-2 issue **#37** on this exact card, with no fix.
+
+**Status: LTX-2.3 = CANDIDACY SUSPENDED**, down from CANDIDATE, **pending the
+founder's screening of one on-bucket sample** at LTX-2.3's own **960x544x121**
+geometry — the leading suspect, per Lightricks' own guidance, is that we run far
+off that bucket. That sample was launched 2026-08-06 18:42 and **did not complete**
+(the render box left the LAN mid-denoise at step 4 of 8); it is staged for a
+one-command re-run.
+
+**What this addendum does NOT do.** It does not touch (a) or (b), which cost
+nothing and stand. It does not change one word of the licence analysis above —
+Attachment A, item 20, the Gemma chain and the $10M entity trigger all read exactly
+as they did, and **none of them is why**. It does not close D16: this entry stays
+**OPEN**, because whether a model is good enough to ship is **R4**, and so is
+whether to spend another sample on it. Reopening the candidacy needs the on-bucket
+clip in front of the founder, not an argument in this file.
 
 ---
 

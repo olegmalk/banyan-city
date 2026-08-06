@@ -156,8 +156,14 @@ MODELS = {
         "title": "LTX-2.3 distilled",
         "build": "diffusers/LTX-2.3-Distilled-Diffusers, bf16, two-stage on-recipe",
         "offload": "sequential-offload",
-        "licence": "LTX-2 Community License Agreement — CANDIDATE, watch-only under D16",
-        "role": "fastest measured path; host-exclusive (it evicted the farm worker)",
+        "licence": "LTX-2 Community License Agreement — CANDIDACY SUSPENDED "
+                   "2026-08-06 (was CANDIDATE, watch-only under D16). Suspended on "
+                   "the founder's screening and the colour measurement, pending his "
+                   "screening of an on-bucket sample. The licence is unchanged and "
+                   "is not the reason.",
+        "role": "fastest measured path, and it loses 86% of its colour doing it — "
+                "candidacy suspended 2026-08-06; host-exclusive (it evicted the "
+                "farm worker)",
     },
     "ltx23fp8": {
         "title": "LTX-2.3 distilled — fp8 cast",
@@ -168,11 +174,15 @@ MODELS = {
         # ~38GB to ~19.8GiB, which is what lets it stay on a 23.89GiB card for the
         # denoise loop instead of being streamed module-by-module.
         "offload": "model_cpu_offload + fp8 layerwise",
-        "licence": "LTX-2 Community License Agreement — CANDIDATE, watch-only under "
-                   "D16 (same document as the bf16 build; casting our own copy "
-                   "changes no term)",
+        "licence": "LTX-2 Community License Agreement — CANDIDACY SUSPENDED "
+                   "2026-08-06 (was CANDIDATE, watch-only under D16; same document "
+                   "as the bf16 build — casting our own copy changes no term, and "
+                   "the licence is not why it is suspended)",
         "role": "the same candidate with the offload brake off — tests whether LTX's "
-                "measured speed was a model result or an offloading floor",
+                "measured speed was a model result or an offloading floor. Cleared "
+                "on LOOK by the founder 2026-08-06 (\"barely a difference\" from "
+                "bf16, and the measurement agrees to under 0.5 JND) — but it "
+                "inherits the bf16 build's colour collapse, at 89%",
     },
     "animegen": {
         "title": "AnimeGen-I2V (A14B)",
@@ -192,15 +202,25 @@ MODEL_ORDER = ["ti2v5b", "ltx23", "ltx23fp8", "animegen"]
 DOC = "MODEL-COMPARISON.md"
 DOC_ONLY = {
     # keyed by clip stem
+    # CORRECTED 2026-08-06. Both cells used to read "saturation 0.264, no channel
+    # cast, 0/64 frozen frames" — the same words MODEL-COMPARISON's row carried
+    # under the heading "Clip clean". 0.264 is the clip MEAN, against AnimeGen's
+    # 0.636 on the same beat and the same still: a 2.4x deficit that was measured,
+    # tabulated, rendered onto this page, and read past for two days. The channel
+    # cast the cell denied is there too. The corrected text says what was measured.
     "ltx23-production-b1-s20260732": {
         "vram": "4.1GB torch / 2.5GB device of 26GB",
         "host": "60.8GB phys / 67.1GB commit of 68.1GB",
-        "defects": "saturation 0.264, no channel cast, 0/64 frozen frames",
+        "defects": "0/64 frozen frames. Saturation 0.6721 (f0) -> 0.1914 (f64), "
+                   "clip mean 0.264 against AnimeGen's 0.636 on this same beat; "
+                   "channel cast present, G +108% / B -32.5%",
     },
     "SAMPLE-ltx23-b01": {
         "vram": "4.1GB torch / 2.5GB device of 26GB",
         "host": "60.8GB phys / 67.1GB commit of 68.1GB",
-        "defects": "saturation 0.264, no channel cast, 0/64 frozen frames",
+        "defects": "0/64 frozen frames. Saturation 0.6721 (f0) -> 0.1914 (f64), "
+                   "clip mean 0.264 against AnimeGen's 0.636 on this same beat; "
+                   "channel cast present, G +108% / B -32.5%",
     },
     # The bench row carries this clip's vram/host, so those keys would be ignored
     # here — what it CANNOT carry is the residency number, and residency is the
@@ -215,8 +235,10 @@ DOC_ONLY = {
                    "model_cpu_offload returns the transformer to host; "
                    "fp8 cast 35.37 -> 17.69 GiB "
                    "in 139s; same-seed drift vs the bf16 b1 rms 11.93/255 against a "
-                   "0.93 encode-noise control; 0/64 frozen frames; channel means "
-                   "R-2.54 G-2.81 B+0.12",
+                   "0.93 encode-noise control; 0/64 frozen frames; BETWEEN-CLIP "
+                   "channel means vs the bf16 b1 R-2.54 G-2.81 B+0.12 (that is what "
+                   "the fp8 cast changed, NOT what this clip does over its own "
+                   "length — within-clip it loses 89.4% of its chroma)",
     },
     "animegen-preview-b1-s20260732": {
         "defects": "saturation 0.636, channel means R44/G26/B68, std 53.8; "
@@ -227,6 +249,107 @@ DOC_ONLY = {
                    "0.62 and max 1.63 match to 2dp, median 0.55 vs 0.52",
     },
 }
+
+# ------------------------------------------------------------ colour ----
+# The 2026-08-06 colour measurement, per clip. Roman screened the LTX samples that
+# day and reported that both "turn black and white ... an unnecessary colour
+# transition"; this is what the pixels say, measured through one code path over 38
+# clips ($0, read-only). Source: bench-platform/colour-drift-20260806.log.
+#
+# It lives on this page rather than only in the research file for a specific
+# reason. The disqualifying figure — saturation 0.264 against AnimeGen's 0.636 —
+# was ALREADY on this page for two days, inside a cell that also said "clean", and
+# every reader including this script's author read past it. A screener should not
+# have to cross-reference a research document to learn that the clip he is
+# watching lost 86% of its colour.
+#
+# Cab = mean CIELAB chroma sqrt(a*^2+b*^2), all pixels, all frames; 0 is grey and
+# ~2.3 units is one JND. R = mean Cab over frames 18-64 divided by Cab at frame 0
+# — the plateau band, chosen so a 121-frame on-bucket clip can sit in this column.
+# The conditioning still measures Cab 27.34, so a clip that holds its input palette
+# sits near 27-28 for its whole length.
+# Cab f0/fN/% come from colour-drift-20260806.log SECTION 1; R comes from
+# colour-retention-20260806.log, which is the raw one-invocation tool output for
+# exactly these nine clips. Every value below was read out of one of those two
+# files. Four of them were briefly typed in from a plausible-looking estimate
+# while this block was being written, and measuring them moved all four — which is
+# the same failure mode, one file over, as the row this whole block exists to fix.
+COLOUR_LOG = "bench-platform/colour-drift-20260806.log"
+COLOUR_R_LOG = "bench-platform/colour-retention-20260806.log"
+COLOUR_STILL_CAB = 27.34
+COLOUR = {
+    # stem: (Cab at f0, Cab at last frame, % change, R, verdict-free one-liner)
+    "ltx23-production-b1-s20260732": (28.066, 3.779, -86.5, 0.1265, ""),
+    "SAMPLE-ltx23-b01": (28.066, 3.779, -86.5, 0.1265, ""),
+    "ltx23-production-b2-s20260732": (28.000, 3.960, -85.9, 0.1387, ""),
+    "ltx23-production-b2-s20260733": (28.621, 5.321, -81.4, 0.3259,
+                                      "The highest R of any LTX clip, and it is "
+                                      "not a better clip: this slot is largely "
+                                      "FROZEN — 14 of 64 consecutive pairs move "
+                                      "less than 0.5 — so it retains chroma by "
+                                      "being stuck, not by holding colour."),
+    "ltx23fp8-production-b1-s20260732": (28.152, 2.992, -89.4, 0.1020, ""),
+    "ltx23-preview-b1-s20260732": (28.205, 4.066, -85.6, 0.1369,
+                                   "The hardest-collapsing recipe measured, at the "
+                                   "geometry furthest from LTX-2.3's 960x544x121 "
+                                   "bucket. The standing recommendation to put this "
+                                   "recipe on the 5070 Ti was WITHDRAWN 2026-08-06 "
+                                   "on this number."),
+    # The healthy comparators, so the LTX figure has something to be read against
+    # on the same page instead of in another file.
+    "ti2v5b-production-b1-s20260732": (27.552, 28.438, +3.2, 1.0356, ""),
+    "ti2v5b-preview-b1-s20260732": (27.552, 28.716, +4.2, 1.0438, ""),
+    "animegen-production-b1-s20260732": (27.512, 28.445, +3.4, 1.0515, ""),
+    "animegen-fp8-production-b1-s20260732": (27.593, 28.464, +3.2, 1.0416, ""),
+}
+
+# What the collapse IS, once, in one place — attached to every LTX card so the
+# figure never appears without the reading. Measurements only (rule 5): the
+# founder's screening verdict is quoted as his, and nothing here grades a picture.
+COLOUR_LTX_MECHANISM = (
+    "Not a hue rotation and not a uniform shift: a collapse through neutral that "
+    "overshoots. Half the chroma is gone by frame 6 (0.25s), 90% by frame 18, then "
+    "it is flat. a* +17.46 &rarr; &minus;2.17 and b* &minus;20.18 &rarr; +1.95 "
+    "cross zero, so blue-violet inverts to faint green; L* rises 36%; the channels "
+    "converge on R (G +108%, B &minus;32.5%); by the last frame 79% of pixels are "
+    "visually neutral. Frame 0 matches the conditioning still to within 3%, so "
+    "nothing is lost at encode, VAE round-trip or mux &mdash; it is destroyed "
+    "during the clip."
+)
+COLOUR_LTX_SCOPE = (
+    "<b>LTX-2.3 only &mdash; the pipeline is exonerated.</b> Same beat, same still, "
+    "same writer, same export path: all 12 Wan-5B clips GAIN 1.8&ndash;4.3%, all 16 "
+    "AnimeGen clips sit within &minus;0.4% to +3.4%, AnimateDiff is flat, and the "
+    "July LTX-Video <b>0.9</b> renders of this same still are flat too "
+    "(&minus;0.7% and +1.3%). Eliminated by measurement: fp8 (bf16 does it too, and "
+    "the two end under 0.5 JND apart), batching, container tagging (all 38 clips "
+    "are identically tagged), and stage 2 + the latent upsampler &mdash; the "
+    "stage-1-only clip collapses identically, which refutes <code>adain_factor</code> "
+    "without spending a render. Upstream: Lightricks/LTX-2 issue #37, "
+    "“green artifacts + near-total grayscale output” on RTX 5090, open, no "
+    "fix; and Lightricks' own guidance that 2.3 washes out far from its "
+    "960x544x121 bucket, which we do not run."
+)
+
+
+def colour_note(stem):
+    """The measured colour row for a clip, or "" if it was not measured."""
+    row = COLOUR.get(stem)
+    if not row:
+        return ""
+    cab0, cabn, pct, r, extra = row
+    bad = r < 0.9
+    cls = "note gap" if bad else "note"
+    head = ("<b>COLOUR DEFECT &mdash; measured, not screened.</b> " if bad
+            else "<b>Colour held.</b> ")
+    body = (f"Chroma <b>Cab {cab0:.2f} &rarr; {cabn:.2f}</b> over the clip "
+            f"(<b>{pct:+.1f}%</b>), retention <b>R = {r:.4f}</b> against the "
+            f"conditioning still's Cab {COLOUR_STILL_CAB:.2f}. ")
+    tail = (f'<span class="src">{COLOUR_LOG} &middot; R from {COLOUR_R_LOG}</span>')
+    mech = (" " + COLOUR_LTX_MECHANISM) if bad else ""
+    ex = (" " + extra) if extra else ""
+    return f'<p class="{cls}">{head}{body}{mech}{ex} {tail}</p>'
+
 
 # Motion metric per 5B bench clip — repo metric, collect_farm.py --measure.
 # Measurements, not verdicts (MODEL-COMPARISON §3.5). Source: MODEL-COMPARISON.md.
@@ -478,6 +601,32 @@ REPRO_NOTE = (
 # Hardcoded for now: no sidecar exists for a render that has not happened. Each
 # row carries the as-of stamp of the source that says so.
 NO_SAMPLE_YET = [
+    # Listed first because it is the one gating a live decision, and because a
+    # sample that RAN and did not finish is the case most likely to be remembered
+    # as a result. It produced no clip, so it gets no card, no row and no R — but
+    # it does not get silence either.
+    {
+        "model": "LTX-2.3 distilled, ON ITS OWN BUCKET — 544x960x121, single stage",
+        "plan": "the sample LTX-2.3's suspended candidacy is waiting on",
+        "why": "LAUNCHED 2026-08-06 18:42:47 and DID NOT FINISH. The rtx5090 left "
+               "the LAN at ~18:56, mid-denoise at step 4 of 8 — ICMP silent, an ARP "
+               "sweep of the /24 found its MAC nowhere, WoL to three addresses did "
+               "nothing. NOT a resource abort: host physical was 44.90 of 63.42 GiB "
+               "and falling, VRAM 12.4%, s/step improving. There is NO CLIP, so "
+               "there is no colour verdict for this recipe and nothing on this page "
+               "should be read as one. One variable moved from the 352x640x65 "
+               "control — geometry, onto Lightricks' own 960x544x121 bucket "
+               "transposed to 9:16. Re-run is one command on a reachable box: "
+               "Start-ScheduledTask -TaskName 'banyan-colour-bucket'.",
+        "extra": "It did produce the first on-bucket throughput datapoint, and it "
+                 "is expensive: 137.3 s/step steady state (196/138/136/138) against "
+                 "the control's 7.75 s/step. Latent tokens 4.12x, measured time "
+                 "17.7x — attention-bound, so going on-bucket costs ~18x per step, "
+                 "not 4x. Projected ~22 min/clip, ~5.5 GPU-hours for a 15-beat "
+                 "episode under sequential offload. That is four timed steps, not a "
+                 "finished sample, so it is written here and not in a table.",
+        "as_of": "bench-platform/colour-bucket-20260806.log, 2026-08-06",
+    },
     {
         "model": "IndexTeam/Index-anisora V3.2",
         "plan": "T8",
@@ -1050,7 +1199,18 @@ def clip_card(clip, wide=False, show_prompt=True, title_override=None, sub=None)
     if meta.get("model_licence"):
         rows.append(("licence", escape(str(meta["model_licence"]))))
 
+    if COLOUR.get(stem):
+        cab0, cabn, pct, r, _ = COLOUR[stem]
+        rows.append(("colour", f"Cab <b>{cab0:.2f} &rarr; {cabn:.2f}</b> "
+                               f"({pct:+.1f}%) &middot; R <b>{r:.4f}</b>"
+                               f' <span class="src">{COLOUR_R_LOG}</span>'))
+
     extras = []
+    # First, above every other note: a screener should learn that the clip he is
+    # watching lost 86% of its colour from the card, not from a research file.
+    cnote = colour_note(stem)
+    if cnote:
+        extras.append(cnote)
     if clip["dup_of"]:
         extras.append('<p class="note"><b>Same bytes as '
                       f'<code>{escape(clip["dup_of"])}</code></b> — one render, two '
@@ -1182,6 +1342,24 @@ def build():
       'approved still, one seed, identical conditioning — the only thing that '
       'changes is the model. Play them together and pick the motion you believe.'
       + prev_note + '</p>')
+    # The one thing a screener must know BEFORE playing these side by side, sitting
+    # above the strip rather than inside a card, because the comparison it changes
+    # is the comparison this section exists to make.
+    A('<p class="note gap" style="margin-bottom:14px">'
+      '<b>Watch the colour, not only the motion — and know this before you do.</b> '
+      'The two LTX-2.3 clips in this row <b>lose 86&ndash;89% of their chroma over '
+      'their own length</b> (Cab 28.07 &rarr; 3.78, retention R = 0.1265 and '
+      '0.1020), while the Wan-5B and AnimeGen clips beside them hold theirs '
+      '(R = 1.04&ndash;1.05) from the same still through the same export path. '
+      'Roman screened these on 2026-08-06 and reported it before any of it was '
+      'measured: both LTX clips <i>“turn black and white … an unnecessary colour '
+      'transition”</i>. ' + COLOUR_LTX_SCOPE + ' <b>LTX-2.3 candidacy is SUSPENDED '
+      'as of 2026-08-06</b> (D16, on the screening — not on the licence) pending '
+      'one on-bucket sample at its own 960x544x121 geometry; that sample was '
+      'launched on 2026-08-06 and did not finish, so <b>there is no on-bucket clip '
+      'on this page and no colour verdict for that recipe</b>. '
+      f'<span class="src">{COLOUR_LOG} &middot; {COLOUR_R_LOG} &middot; '
+      f'{DOC} 2026-08-06 &middot; STATE.md 2026-08-06</span></p>')
     A('<div class="hero" id="hero">')
     A('<div class="ctl"><button onclick="grp(\'hero\',\'play\')">▶ play all</button>'
       '<button onclick="grp(\'hero\',\'pause\')">❙❙ pause all</button>'
@@ -1276,6 +1454,21 @@ def build():
           f"<td>{host}</td>"
           f'<td><span class="src">{escape(cpv_src or "sidecar")}</span></td></tr>')
     A("</tbody></table></div>")
+    A('<p class="note gap" style="margin-top:10px"><b>(0) EVERY LTX ROW IN THIS '
+      'TABLE IS OFF-BUCKET AND PROVISIONALLY NON-COMPARABLE (2026-08-06).</b> '
+      'Lightricks ship LTX-2.3 at 960x544x121; every LTX row here was measured at '
+      '704x1280x65 or 352x640x65. That marker covers the time, s/step, throughput '
+      'AND memory cells of those rows together, and it means these figures describe '
+      'a geometry we will not ship if the on-bucket recipe passes screening. The one '
+      'on-bucket datapoint we have says the gap is not a rounding error: '
+      '<b>137.3 s/step at 544x960x121 against 7.75 s/step at 352x640x65</b> — 17.7x '
+      'the per-step cost for 4.12x the latent tokens, i.e. attention-bound. Un-marking '
+      'a row takes an on-bucket measurement, not an argument. LTX-2.3 candidacy is '
+      'also <b>SUSPENDED</b> as of 2026-08-06 (D16, on the founder\'s screening and '
+      'the colour collapse — not on the licence), so no LTX row here is ranking a '
+      'model anyone is currently proposing to use. '
+      f'<span class="src">{DOC} 2026-08-06 &middot; '
+      'bench-platform/colour-bucket-20260806.log</span></p>')
     A('<p class="note" style="margin-top:10px">Three corrections that stop these cells '
       'being over-read. <b>(a)</b> The 5B row is the FIRST clip after a model load and '
       'carries ~20s of warm-up; its five following clips settled at 10.5s/step, i.e. '
@@ -1572,14 +1765,24 @@ def build():
     A('<p><b>Quality verdicts are Roman\'s alone (R4).</b> Nothing on this page is one. '
       'Frozen-frame counts, saturation, channel means and motion medians are '
       '<i>measurements</i> and belong in a table; "good", "soft" and "usable" belong to '
-      'the person screening. The two open observations on tonight\'s LTX production '
-      'clip are in that spirit and both unresolved: <b>progressive colour drift, '
-      'magenta → teal over ~16 frames</b> (untested lever: <code>adain_factor</code>, '
-      'held at 0.0 in <code>pipeline/ltx_i2v.py:435</code> because upstream\'s '
-      'distilled path leaves it off too — one sample decides it), and a <b>possible '
-      'period-3 motion cadence, UNRESOLVED and confounded</b> by the 1Mbps h264 encode '
-      '— the settling test is a lossless re-encode on the next run, and no cadence '
-      'verdict should be recorded before that.</p>')
+      'the person screening. Two open observations used to sit here on the LTX '
+      'production clip; <b>both were measured on 2026-08-06 and both changed</b>. '
+      '<b>(1) The "progressive colour drift, magenta → teal over ~16 frames" was '
+      'neither progressive-and-mild nor a hue rotation</b> — it is an 86.5% chroma '
+      'collapse through neutral, half of it gone by frame 6, and the untested lever '
+      'named here (<code>adain_factor</code>, still 0.0) is <b>refuted without a '
+      'render</b>: it acts at the stage-2 boundary and the stage-1-only clip '
+      'collapses identically. <b>(2) The "possible period-3 motion cadence, '
+      'UNRESOLVED and confounded by the 1Mbps h264 encode" is REFUTED — the cadence '
+      'is real and the encode did not cause it.</b> Through the identical writer, '
+      'lag-3 autocorrelation is 0.79 / 0.77 / 0.82 on the three LTX-2.3 clips '
+      'against 1.02 (Wan-5B), 1.05 (AnimeGen) and 0.95–1.29 (AnimateDiff); every '
+      'third frame-pair moves 4–6x as far. So the 65-frame 24fps LTX clip carries '
+      '~22 distinct motion states — <b>an effective 8 fps</b>. The <b>mechanism is '
+      'open and is not being guessed at</b>: LTX-2\'s documented 8x temporal VAE '
+      'predicts period-8, not period-3. The lossless re-encode is still worth '
+      'running, now as confirmation rather than as the deciding evidence. '
+      f'<span class="src">{COLOUR_LOG} &middot; {DOC} 2026-08-06</span></p>')
     A('<p><b>Nothing here is published.</b> These are unapproved media samples under '
       'STEWARDSHIP §6, so this file is local only: not built into <code>_site/</code>, '
       'not deployed, not committed. Every clip cost $0. Rebuild after new clips land '
