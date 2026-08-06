@@ -526,7 +526,7 @@ A actually forbids. See item 4 of the 2026-08-04 entry below.
 
 ---
 
-## D16 — LTX-2/2.3 is a CANDIDATE under watch-only, gated on three things we control (OPEN — founder call, 2026-08-04; **candidacy SUSPENDED 2026-08-06 on the screening, see the addendum at the end — the licence analysis is unchanged**)
+## D16 — LTX-2/2.3 is a CANDIDATE under watch-only, gated on three things we control (OPEN — founder call, 2026-08-04; **gate (c) FIRED TWICE on 2026-08-06 — suspended, then SCREENED AND CLEARED ON LOOK; still OPEN because adoption now waits on integration work that is not done. Two addenda at the end, in order. The licence analysis is unchanged throughout**)
 
 *Raised by the steward from `pipeline/research/models-licence.md` (finding 3) and
 `pipeline/research/DECISION.md`, both 2026-08-04, both quoting the primary licence
@@ -736,6 +736,67 @@ as they did, and **none of them is why**. It does not close D16: this entry stay
 **OPEN**, because whether a model is good enough to ship is **R4**, and so is
 whether to spend another sample on it. Reopening the candidacy needs the on-bucket
 clip in front of the founder, not an argument in this file.
+
+**ADDENDUM 2 — 2026-08-06, later the same day: gate (c) fired a SECOND time and
+CLEARED. The suspension above is LIFTED. D16 stays OPEN, and the reason has moved
+from the picture to the plumbing.**
+
+*Addendum 1 is left standing word for word. It was an accurate record of the first
+screening, and superseding it is not the same as it having been wrong.*
+
+**What reopened it was not an argument in this file — it was the founder looking
+again.** Addendum 1 closed by saying exactly that. Shown the same clips with the
+colour measurement in hand, he cleared all three of the things that had been logged
+as defects:
+
+- **fp8 cast vs bf16** — *"barely a difference"*. (Already recorded in addendum 1
+  as a real clearance of the *cast*; it is repeated here because it is now one of
+  three, not a lone exception.)
+- **The within-clip chroma collapse** — *"fine"*. The figure he was shown is the
+  measured one: **86%, Cab 28.07 → 3.78** on the bf16 b1 (89.4% on the fp8).
+- **The 3-frame motion cadence** — *"fine"*. Also measured: **~22 distinct motion
+  states in a 65-frame 24 fps clip, an effective 8 fps**.
+
+**Gate (c) is therefore SATISFIED.** It read *"one sample beat, founder-screened"*.
+It has now been screened twice on the same day, and the second screening is the
+operative one. **LTX-2.3 moves CANDIDACY SUSPENDED → CANDIDATE, SCREENED AND
+CLEARED ON LOOK.** The five LTX rows in `MODEL-COMPARISON.md` §1 and the banners on
+`COMPARISON.html` are updated in place, each quoting the suspension it supersedes.
+
+**What this clearance is, exactly — and it is narrower than "we are using LTX".**
+It is a clearance **on look**, of clips at **704x1280x65 and 352x640x65**. It is
+not an adoption decision, not a decision to spend the on-bucket sample, and not a
+statement that the collapse is desirable — only that the founder saw it and does
+not consider it disqualifying. R4 is his to revisit at any time, and the
+measurements stay on the page so that revisiting it is cheap.
+
+**Why D16 is still OPEN, and this is the part a future session should read first:
+LTX is not wired into anything, and wiring it in naively makes it slower than the
+incumbent.** Measured 2026-08-06, $0:
+
+- `pipeline/video_task.py` hardcodes the Wan renderer in **both** places it
+  launches one — **`:1015`** and **`:1082`**, both `pipeline/wan_i2v.py`. There is
+  no LTX queue path; LTX is hand-run via `pipeline/ltx_i2v.py` plus a separate
+  `--stage encode` pass.
+- Given the queue's shape — one process per beat — LTX costs **≈78 min for a
+  15-beat episode against the incumbent 5B's ≈42**, because each beat re-pays an
+  **88s Gemma load**, the transformer load and the **139s fp8 cast**.
+- A **jobs-loop** (load once, render all) brings it to **≈25 min**. **That work is
+  not done.**
+
+So the honest status is: **the look is cleared, the adoption is not, and what
+stands between them is engineering rather than taste.** Anyone re-litigating LTX
+should start by pricing the jobs-loop, not by re-arguing the colour — that question
+was answered by the person whose question it is.
+
+**Unchanged by this addendum:** (a) and (b) stand. The licence analysis is
+untouched for the third time — Attachment A, item 20, the Gemma chain and the $10M
+trigger all read as they did, and **none of them was ever why**. The **OFF-BUCKET —
+PROVISIONALLY NON-COMPARABLE** markers on every LTX row also stand: they are a
+statement about geometry, and no taste verdict retires one. The on-bucket sample
+(launched 2026-08-06, killed when the render box left the LAN mid-denoise) is
+**no longer a gate** — it is now an open throughput question, worth running when
+the box is reachable.
 
 ---
 

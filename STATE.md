@@ -1535,3 +1535,95 @@ docstring still calls LTX a D16 CANDIDATE; that file is carrying unrelated
 uncommitted work, so the line is left for whoever lands that change. (4) Nothing in
 this repo writes colr/bt709 tags on any clip — real hygiene, not this defect,
 worth zero chroma.
+
+## 2026-08-06, later — the founder cleared what he flagged: LTX's suspension is LIFTED, the blocker is INTEGRATION, and node 002b's one sample did not render
+
+**This block supersedes the "Candidacy: SUSPENDED" paragraph of the block above.**
+That paragraph was true when written and is not true now — same day, same founder,
+a second screening with the measurements in hand. Nothing in it is deleted; it is
+the first half of the story and this is the second.
+
+**The three verdicts, R4, 2026-08-06.** Shown the LTX clips again alongside the
+colour numbers, Roman cleared all three of the things the block above had recorded
+as defects:
+
+- **fp8 vs bf16 — "barely a difference".** (This one was already recorded above;
+  it is repeated here because it is now one of three, not a lone exception.)
+- **The within-clip chroma collapse — "fine".** The measurement is unchanged and
+  stays on every page it is on: **86%, Cab 28.07 → 3.78** on the bf16 b1, 89.4% on
+  the fp8. He was shown that figure and accepted it.
+- **The 3-frame motion cadence / effective 8 fps — "fine".** Also unchanged as a
+  measurement: lag-3 autocorrelation 0.79/0.77/0.82, ~22 distinct motion states in
+  a 65-frame 24 fps clip.
+
+**A verdict does not move a measurement.** Every number above stays exactly where
+it is written, in `MODEL-COMPARISON.md` §1, in the colour section, and on the
+comparison page's clip cards. What changed is their *status*: they are now
+described properties of a renderer the founder has cleared **on look**, not open
+objections. And "cleared on look" is the whole of it — he has approved how it
+looks, not decided we ship it.
+
+**Consequence: LTX-2.3 is a CANDIDATE again.** `DECISIONS.md` D16 gate (c) —
+*"one sample beat, founder-screened"* — has now been through both halves of a
+screening and comes out **cleared**. The suspension recorded earlier today in D16's
+addendum, on all five LTX rows in `MODEL-COMPARISON.md` §1, and on `COMPARISON.html`
+is **LIFTED**, superseded in place in each of those files rather than edited away.
+The licence analysis was never the reason and is still untouched. The **OFF-BUCKET
+— PROVISIONALLY NON-COMPARABLE** markers are a separate matter and **stay**: they
+are about geometry, not taste, and only an on-bucket measurement removes them.
+
+**What actually blocks LTX now is integration, and it is measured, not estimated
+(2026-08-06).** This is the finding most likely to be re-litigated, so it is stated
+with its numbers:
+
+- **Nothing wires LTX into the render queue.** `pipeline/video_task.py` hardcodes
+  the Wan path in both places it launches a renderer — **`:1015`** (the batch
+  branch) and **`:1082`** (the per-beat branch), both `REPO / "pipeline" /
+  "wan_i2v.py"`. LTX has no queue path at all; it is hand-run via
+  `pipeline/ltx_i2v.py` with a separate `--stage encode` pass.
+- **Wired in naively, LTX is SLOWER per episode than the incumbent it beats per
+  clip.** One process per beat — the shape the queue would actually give it —
+  costs **≈78 min for a 15-beat episode against the 5B's ≈42**. The per-clip win
+  is real and it does not survive contact with the queue, because every beat
+  re-pays a **88s Gemma load**, the transformer load, and a **139s fp8 cast**.
+- **A jobs-loop fixes it: ≈25 min.** Load once, render all fifteen — the same
+  structure `wan_i2v.py` already has and `ltx_i2v.py` does not. **That work is not
+  done and nobody is doing it.**
+
+So the honest state is: **screened and cleared on look; adoption still needs the
+jobs-loop.** Anyone proposing to switch renderers should cost the integration
+first, and anyone proposing to re-open the colour question should read the
+clearance above before spending a sample on it.
+
+**Node 002b, "The First Citizen" — the one sample DID NOT RUN today.** Recording
+this plainly because a comparison page full of LTX and 5B clips reads as though it
+had:
+
+- **No beat-01 clip for node 002b exists anywhere in this repo.** The render agent
+  failed before producing either the Wan2.2-TI2V-5B or the LTX-2.3+fp8 version.
+  Disk check 2026-08-06: the newest file in `SAMPLES/` is from 2026-08-05 18:15,
+  and **every LTX and 5B clip on `COMPARISON.html` is the 2026-08-04/05 bench beat,
+  not node 002b.** The staging got as far as the conditioning still, the prompt and
+  negative files and a jobs JSON; the rtx5090 was unreachable for the whole window
+  (44 poll iterations, all `down`).
+- **The permission side is clear — what is missing is the render, not the
+  approval.** 002b's **t0-c** cut is founder-approved:
+  `genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml:17-18`,
+  `approved_by: founder`, `approved_on: 2026-08-03`. STEWARDSHIP §6 permits the
+  footage. 002b is the only node in the tree with an approved script and zero
+  media.
+- **When it runs it is ONE beat and only one.** Beat 01 is the beat both of the
+  founder's approval conditions were spent on — *the fig must GROW on screen, not
+  already hang* — so it is the beat that proves the fix. **The other 20 beats of
+  `shots.md` (21 total, Beat 01 → Beat 21) wait on the founder's look at beat 01**,
+  per the one-sample rule. Not fifteen, not twenty-one.
+- **002b's existing media is DEAD and must not be reused or cited.** The two T3
+  leaves (`002b-t3-a.mp4` 2026-07-22, `002b-t3-b.mp4` 2026-07-24) and the **18 VO
+  takes** in `clips/*-vo.mp3` all predate t0-c and come from the **superseded t0-b
+  cut**. They are not footage for this node's approved script. Re-voice from t0-c
+  when the time comes.
+- **Where the clips will land.** Drop the two mp4s and their `*.mp4.meta.yaml`
+  sidecars into `SAMPLES/` and `COMPARISON.html` picks them up with **no code
+  change** — `build_comparison.py`'s `CLIP_GLOBS` already globs `SAMPLES/*.mp4`.
+  Until then the page carries the absence explicitly, as the first entry of
+  §4 "Still no sample, and why", rather than letting the bench clips imply it.

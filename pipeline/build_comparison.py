@@ -156,14 +156,18 @@ MODELS = {
         "title": "LTX-2.3 distilled",
         "build": "diffusers/LTX-2.3-Distilled-Diffusers, bf16, two-stage on-recipe",
         "offload": "sequential-offload",
-        "licence": "LTX-2 Community License Agreement — CANDIDACY SUSPENDED "
-                   "2026-08-06 (was CANDIDATE, watch-only under D16). Suspended on "
-                   "the founder's screening and the colour measurement, pending his "
-                   "screening of an on-bucket sample. The licence is unchanged and "
-                   "is not the reason.",
+        "licence": "LTX-2 Community License Agreement — CANDIDATE, watch-only under "
+                   "D16, SCREENED AND CLEARED ON LOOK 2026-08-06. The suspension "
+                   "recorded earlier the same day is LIFTED: shown the clips again "
+                   "with the colour measurement in hand, the founder called the "
+                   "86% chroma collapse \"fine\" and the 3-frame motion cadence "
+                   "\"fine\" (R4 — his call, and it is a clearance on look only). "
+                   "The licence was never the reason and is unchanged.",
         "role": "fastest measured path, and it loses 86% of its colour doing it — "
-                "candidacy suspended 2026-08-06; host-exclusive (it evicted the "
-                "farm worker)",
+                "the founder screened that and cleared it 2026-08-06; what still "
+                "blocks adoption is INTEGRATION, not the picture (nothing wires LTX "
+                "into the queue; video_task.py hardcodes wan_i2v.py); "
+                "host-exclusive (it evicted the farm worker)",
     },
     "ltx23fp8": {
         "title": "LTX-2.3 distilled — fp8 cast",
@@ -174,15 +178,16 @@ MODELS = {
         # ~38GB to ~19.8GiB, which is what lets it stay on a 23.89GiB card for the
         # denoise loop instead of being streamed module-by-module.
         "offload": "model_cpu_offload + fp8 layerwise",
-        "licence": "LTX-2 Community License Agreement — CANDIDACY SUSPENDED "
-                   "2026-08-06 (was CANDIDATE, watch-only under D16; same document "
-                   "as the bf16 build — casting our own copy changes no term, and "
-                   "the licence is not why it is suspended)",
+        "licence": "LTX-2 Community License Agreement — CANDIDATE, watch-only under "
+                   "D16, SCREENED AND CLEARED ON LOOK 2026-08-06 (same document as "
+                   "the bf16 build — casting our own copy changes no term; the "
+                   "earlier same-day suspension is lifted)",
         "role": "the same candidate with the offload brake off — tests whether LTX's "
                 "measured speed was a model result or an offloading floor. Cleared "
                 "on LOOK by the founder 2026-08-06 (\"barely a difference\" from "
-                "bf16, and the measurement agrees to under 0.5 JND) — but it "
-                "inherits the bf16 build's colour collapse, at 89%",
+                "bf16, and the measurement agrees to under 0.5 JND). It inherits the "
+                "bf16 build's colour collapse, at 89% — which he also saw and called "
+                "\"fine\" the same day",
     },
     "animegen": {
         "title": "AnimeGen-I2V (A14B)",
@@ -255,6 +260,13 @@ DOC_ONLY = {
 # day and reported that both "turn black and white ... an unnecessary colour
 # transition"; this is what the pixels say, measured through one code path over 38
 # clips ($0, read-only). Source: bench-platform/colour-drift-20260806.log.
+#
+# LATER THE SAME DAY he was shown the clips again with these numbers in hand and
+# CLEARED them: the collapse is "fine", the 3-frame cadence is "fine", fp8 vs bf16
+# is "barely a difference". The numbers below do not change — a verdict does not
+# move a measurement — but they are now a described property of a cleared
+# renderer, not an open objection. Keep them on the page: a future screener still
+# needs to know what he is looking at, and R4 can be revisited.
 #
 # It lives on this page rather than only in the research file for a specific
 # reason. The disqualifying figure — saturation 0.264 against AnimeGen's 0.636 —
@@ -340,7 +352,8 @@ def colour_note(stem):
     cab0, cabn, pct, r, extra = row
     bad = r < 0.9
     cls = "note gap" if bad else "note"
-    head = ("<b>COLOUR DEFECT &mdash; measured, not screened.</b> " if bad
+    head = ("<b>COLOUR COLLAPSE &mdash; measured, screened, and cleared on look "
+            "2026-08-06 (&ldquo;fine&rdquo;, R4).</b> " if bad
             else "<b>Colour held.</b> ")
     body = (f"Chroma <b>Cab {cab0:.2f} &rarr; {cabn:.2f}</b> over the clip "
             f"(<b>{pct:+.1f}%</b>), retention <b>R = {r:.4f}</b> against the "
@@ -601,13 +614,38 @@ REPRO_NOTE = (
 # Hardcoded for now: no sidecar exists for a render that has not happened. Each
 # row carries the as-of stamp of the source that says so.
 NO_SAMPLE_YET = [
-    # Listed first because it is the one gating a live decision, and because a
-    # sample that RAN and did not finish is the case most likely to be remembered
+    # First, because it is the only entry here that is about SHIPPING an episode
+    # rather than about ranking a model, and because the page it sits on would
+    # otherwise read as if beat 01 had been rendered today. It was not.
+    {
+        "model": "node 002b beat 01 — the ONE SAMPLE, on both cleared renderers "
+                 "(Wan2.2-TI2V-5B and LTX-2.3-Distilled + fp8)",
+        "plan": "the sample node 002b's remaining 20 beats wait on",
+        "why": "DID NOT RUN on 2026-08-06 — the render agent failed before it "
+               "produced either clip, and no beat-01 mp4 or sidecar for node 002b "
+               "exists anywhere in this repo. Nothing on this page is that sample: "
+               "every LTX and 5B clip here is the 2026-08-04/05 bench beat, not "
+               "node 002b. The script side is clear — 002b's t0-c cut is "
+               "founder-approved (leaves/002b-t0-c.yaml, approved_by: founder, "
+               "approved_on: 2026-08-03), so STEWARDSHIP §6 permits the footage; "
+               "what is missing is the render, not the permission.",
+        "extra": "When it runs it is ONE beat and only one (founder, 2026-08-03) — "
+                 "the other 20 beats of shots.md wait on the founder's look at beat "
+                 "01. Beat 01 is the beat both approval conditions were spent on "
+                 "(the fig must GROW on screen), which is why it is the beat that "
+                 "proves the fix. Drop the two clips and their *.mp4.meta.yaml "
+                 "sidecars into SAMPLES/ and this page picks them up with no code "
+                 "change (CLIP_GLOBS globs SAMPLES/*.mp4). Do NOT reuse 002b's old "
+                 "T3 leaves or its 18 VO takes under clips/ — those are the "
+                 "superseded t0-b cut.",
+        "as_of": "disk check 2026-08-06; approval leaves/002b-t0-c.yaml 2026-08-03",
+    },
+    # A sample that RAN and did not finish is the case most likely to be remembered
     # as a result. It produced no clip, so it gets no card, no row and no R — but
     # it does not get silence either.
     {
         "model": "LTX-2.3 distilled, ON ITS OWN BUCKET — 544x960x121, single stage",
-        "plan": "the sample LTX-2.3's suspended candidacy is waiting on",
+        "plan": "an open throughput/colour question, no longer a gate",
         "why": "LAUNCHED 2026-08-06 18:42:47 and DID NOT FINISH. The rtx5090 left "
                "the LAN at ~18:56, mid-denoise at step 4 of 8 — ICMP silent, an ARP "
                "sweep of the /24 found its MAC nowhere, WoL to three addresses did "
@@ -1353,11 +1391,16 @@ def build():
       '(R = 1.04&ndash;1.05) from the same still through the same export path. '
       'Roman screened these on 2026-08-06 and reported it before any of it was '
       'measured: both LTX clips <i>“turn black and white … an unnecessary colour '
-      'transition”</i>. ' + COLOUR_LTX_SCOPE + ' <b>LTX-2.3 candidacy is SUSPENDED '
-      'as of 2026-08-06</b> (D16, on the screening — not on the licence) pending '
-      'one on-bucket sample at its own 960x544x121 geometry; that sample was '
-      'launched on 2026-08-06 and did not finish, so <b>there is no on-bucket clip '
-      'on this page and no colour verdict for that recipe</b>. '
+      'transition”</i>. ' + COLOUR_LTX_SCOPE + ' <b>Then, later the same day, he '
+      'was shown the clips again with these numbers in hand and CLEARED them on '
+      'look: the 86% collapse is <i>“fine”</i>, and so is the 3-frame motion '
+      'cadence.</b> That is R4 and it stands — the suspension recorded earlier on '
+      '2026-08-06 is LIFTED, and LTX-2.3 is a CANDIDATE again (D16). Read the '
+      'numbers above as what he accepted, not as an open objection. <b>What still '
+      'blocks LTX is integration, not the picture</b>: nothing wires it into the '
+      'render queue. The on-bucket sample at 960x544x121 was launched on '
+      '2026-08-06 and did not finish, so <b>there is no on-bucket clip on this '
+      'page</b> — that is now an open throughput/colour question, not a gate. '
       f'<span class="src">{COLOUR_LOG} &middot; {COLOUR_R_LOG} &middot; '
       f'{DOC} 2026-08-06 &middot; STATE.md 2026-08-06</span></p>')
     A('<div class="hero" id="hero">')
@@ -1411,6 +1454,26 @@ def build():
 
     # 3a throughput
     A("<h3>3a. Throughput — model &times; mode &times; batch</h3>")
+    # Per-clip throughput is not per-episode throughput, and on this page the gap
+    # is large enough to invert the ranking. Measured 2026-08-06; stated here
+    # because §3a is exactly where someone reads "LTX is 1.47x" and proposes to
+    # switch. See MODEL-COMPARISON.md 2026-08-06 and DECISIONS.md D16.
+    A('<p class="note gap" style="margin-bottom:12px">'
+      '<b>A fast clip is not a fast episode — and for LTX the two disagree by '
+      'enough to flip the answer.</b> Every row below is <b>per clip, with the '
+      'model already loaded</b>. LTX is <b>not wired into the render queue at '
+      'all</b>: <code>video_task.py</code> hardcodes the Wan path at '
+      '<code>:1015</code> and <code>:1082</code>, so the incumbent 5B is the only '
+      'renderer the queue can call. <b>Measured 2026-08-06:</b> wired in naively — '
+      'one process per beat, the shape the queue would give it — LTX costs '
+      '<b>≈78 min for a 15-beat episode against the 5B\'s ≈42</b>, because every '
+      'beat re-pays <b>88s of Gemma load</b> plus the transformer load and a '
+      '<b>139s fp8 cast</b>. Amortised behind a jobs-loop (load once, render all) '
+      'the same weights come in at <b>≈25 min</b>. <b>So the per-clip win here is '
+      'real and it is not transferable</b>: adopting LTX means writing the '
+      'jobs-loop, and that work is <b>not done</b>. '
+      f'<span class="src">{DOC} 2026-08-06 &middot; STATE.md 2026-08-06 &middot; '
+      'pipeline/video_task.py:1015,1082</span></p>')
     A('<div class="tw"><table class="num"><thead><tr>'
       "<th>Model</th><th>Mode</th><th>Batch</th><th>Size / length</th>"
       "<th>s(video)/s(wall)</th><th>s(wall) per 1s video</th><th>Peak VRAM</th>"
@@ -1463,10 +1526,13 @@ def build():
       'on-bucket datapoint we have says the gap is not a rounding error: '
       '<b>137.3 s/step at 544x960x121 against 7.75 s/step at 352x640x65</b> — 17.7x '
       'the per-step cost for 4.12x the latent tokens, i.e. attention-bound. Un-marking '
-      'a row takes an on-bucket measurement, not an argument. LTX-2.3 candidacy is '
-      'also <b>SUSPENDED</b> as of 2026-08-06 (D16, on the founder\'s screening and '
-      'the colour collapse — not on the licence), so no LTX row here is ranking a '
-      'model anyone is currently proposing to use. '
+      'a row takes an on-bucket measurement, not an argument. LTX-2.3 candidacy '
+      'itself is <b>live again</b>: it was suspended earlier on 2026-08-06 and '
+      '<b>the suspension was LIFTED the same day</b>, when the founder screened the '
+      'clips with the colour measurement in hand and called the collapse and the '
+      '3-frame cadence <i>“fine”</i> (D16, R4). So these rows do describe a model '
+      'someone may propose to use — at a geometry that is still not the shipping '
+      'one. '
       f'<span class="src">{DOC} 2026-08-06 &middot; '
       'bench-platform/colour-bucket-20260806.log</span></p>')
     A('<p class="note" style="margin-top:10px">Three corrections that stop these cells '
