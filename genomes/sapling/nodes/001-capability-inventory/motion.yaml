@@ -46,7 +46,19 @@ motion_prompts:
   # line is just the motion, with the stop-dead dropped because it belongs to the
   # keyboard sfx and cost the beat its typing.
   2: "his hands drive hard across the keyboard, fingers striking the keys, the spinner sweeping on the monitor"
-  3: "the terminal text scrolls up in bursts and settles, the cursor blinks hard, the screen glow surges bright then falls back"
+  # 2026-08-06. This direction names a scrolling text block and a cursor. THE
+  # CURRENT STILL HAS NEITHER. Beat 3's still was replaced on 2026-08-04 (the
+  # magenta dashboard was revoked; the pick was "s0 — green scanlines, no letters",
+  # deliberately lettered-free because render_t3 burns the real deploy-succeeded
+  # card over this plate). What is actually in the frame is a green panel at left,
+  # a blue monitor centre, and hard ink panel lines: no text, no cursor, nothing
+  # solid that can travel. i2v moves what is in the frame, so the two renders that
+  # led to this beat being held were asking for absent objects — and both of them
+  # ran on the DEAD still, so the current frame has never been animated at all.
+  # Measured on those two: whole-frame luminance swung 3.3 and 3.8 of 255 across
+  # the entire clip. The frame is luminance and nothing else, so the direction now
+  # asks for luminance, at amplitude.
+  3: "the green panel and the blue monitor surge bright and drop back hard, pale scanlines rolling down both screens, the glow flaring out across the dark panels around them"
   4: "the limp hand stays motionless, the monitor glow flickers slowly across it, one loose paper settles to the floor, camera locked"
   5: "the dying screen glow strobes across the ceramic shards and drains away, dust motes tumble through the last light"
   6: "everything nearly still, the clouds drift very slowly, the pale leaf stays attached at the bottom edge of the frame and only trembles gently, nothing flies, nothing detaches, camera locked"
@@ -69,7 +81,45 @@ motion_prompts:
   # god-rays that "no light rays" was written to keep out.
   10: "the glow between the soil grains pulses hard, bright then dark, the thin roots jolt with every pulse, water beads sliding down between grains, no god rays, no light shafts"
   11: "the new leaf unfurls in a fast sweep and springs upright, dew drops shaking loose and running off, the light swinging across it"
-  12: "the bent stem strains and shudders hard against nothing, snapping back and straining again, soil grains skittering at its base"
-  13: "wind drives through the grass in hard waves, the clouds racing over, dust whipping along the empty road, no people appear"
+  # 2026-08-06. Beat 12 was held for measuring 0.19 median / 58% barely-moving —
+  # a WHOLE-FRAME number on a frame that is 95% cracked ground and flat sky. Inside
+  # the box the sprout occupies, the same clip measures 0.35 median with 10% frozen
+  # frames: the plant moved, the plain did not, and the mean over the plain is what
+  # got read. The second attempt is the warning. A steward override asked for the
+  # stem to shudder "WITHOUT MOVING ANYWHERE" and the subject box fell to 0.11 with
+  # 75% frozen — positive prose about stillness suppressing motion, the same shape
+  # as "hands going still" on beat 1. Never again in this file.
+  # Also: the direction described a stem "bent into a tense arc" and the still
+  # renders an upright three-leaf sprout, so it was directing a picture we do not
+  # have. Named parts only, amplitude on each, and no negation anywhere — the
+  # script's "nothing happens" is achieved by the plant not travelling, not by
+  # telling the model about stillness.
+  12: "the sprout's leaves shake hard and whip back, the thin stem bowing over and springing upright again, grit skittering off the cracked ground at its base"
+  # 2026-08-06. Split the frame and the two halves disagree completely. In the
+  # bottom half — the grass and the road — this beat already animates: 0.30 median
+  # with 8% frozen frames, and 0.36 / 2% on the steward's variant. In the top half,
+  # which is a cloudbank filling nearly half the picture, it is 0.10-0.11 median
+  # with 80-82% frozen. The grass was never the problem; the clouds are dead, and
+  # "the clouds racing over" is asking a 2.5-second clip for something clouds do
+  # not do in 2.5 seconds. So the sky's job becomes the thing a wide vista CAN
+  # render at this length: its shadow falling across the fields, which is
+  # luminance. Grass stays first because it is the half that works.
+  # "no people appear" is kept, and flagged: the still has two figures on the road
+  # at the horizon, so this clause puts "people" in the negative against a frame
+  # that contains them. It has not damaged them yet — but it is the term to pull
+  # first if they ever smear.
+  13: "the grass thrashes in heavy gusts, whole waves rolling across the fields, cloud shadows sliding over the ground and darkening it in bands, dust sheeting along the empty road, no people appear"
   14: "the roots flex and clench, gripping and re-gripping, soil grains breaking loose and rolling away, the warm light holding steady"
-  15: "the soil grains jump and scatter with each thump, the warm glow slamming brighter from the right, dust bursting loose in sheets"
+  # 2026-08-06. Beat 15 is the closing hook, the founder asked for it animated, and
+  # nothing here was ever the reason it is a held still — it is held because the
+  # 5090 was switched off on the steward's advice (049c519, flagged there as the
+  # steward's own failure). The direction works: on the OLD still it measured 0.41
+  # median / 25% frozen, and the 25% is the old frame being three-quarters black,
+  # not the wording. Only one thing needed changing. That old frame was replaced on
+  # 2026-08-04 — the "underground side view" cross-section this model cannot draw
+  # became a ground-level macro, soil and stones under a hard raking light band
+  # with long shadows — and "the warm glow slamming brighter FROM THE RIGHT" now
+  # describes a light that is not where the new frame puts it. Naming the band
+  # itself cannot contradict the init frame, and the long shadows are the most
+  # legible thing in the picture that a pulse can move.
+  15: "the soil grains and small stones jump and scatter with each thump, the raking light band slamming brighter and dimming back, the long shadows jolting with it, dust bursting loose in sheets"
