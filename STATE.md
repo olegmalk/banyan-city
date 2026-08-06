@@ -1627,3 +1627,111 @@ had:
   change** — `build_comparison.py`'s `CLIP_GLOBS` already globs `SAMPLES/*.mp4`.
   Until then the page carries the absence explicitly, as the first entry of
   §4 "Still no sample, and why", rather than letting the bench clips imply it.
+
+## 2026-08-06, night — 002b beat 01 is THE job: eight candidate stills exist, the fig is in none of them, and one founder pick is the gate
+
+The entry above says the one sample "did not run" — that was true of the *clip*.
+Since then the box came back and the sample ran one tier lower, as **stills**, per
+STILLS BEFORE MOTION (dad, 2026-07-27). Eight of them exist. **None is approved and
+none is fit to condition a video on yet**; the founder's look at them is now the
+single thing gating episode 2.
+
+**The active production job is node 002b beat 01 — one frame, not twenty-one.**
+
+- **Permission is settled, only the picture is missing.** The t0-c cut is
+  founder-approved:
+  `genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml:17-18` —
+  `approved_by: founder`, `approved_on: 2026-08-03`. STEWARDSHIP §6 is satisfied for
+  media on this node. The approval's own `approval_scope` says it covers the STORY,
+  not the shot prompts, and that beat 01 is converted to the current native-tag
+  dialect as **the one sample** — beats 02-21 stay unconverted and unrendered until
+  he has looked at this frame. That is where they still are.
+- **002b's existing media is DEAD.** Restating it because it is the most re-usable
+  looking thing in the node: the two T3 leaves (`002b-t3-a.mp4` 2026-07-22,
+  `002b-t3-b.mp4` 2026-07-24) and the **18 `*-vo.mp3` takes in `clips/`** (counted,
+  18) are all from the superseded **t0-b** cut. They are not footage or voice for the
+  approved script. Do not reuse them, do not cite them as progress; re-voice from
+  t0-c when the time comes.
+
+**What was rendered, and on what.** All eight on the **rtx5090** (`artvn@.157`) with
+**animagine-xl-3.1** — not cached there, 9m39s to pull, 18 files — at 832x1216, 40
+steps, cfg 7.5, bf16, matching `farm_worker.render_task`. Seeds
+20260720 / 20261720 / 20262720 / 20263720 (`20260719 + beat + k*1000`), the same
+four in both rounds, so the only variable between rounds is the prompt. ~9-11s per
+image, rc=0 both rounds. The farm worker was **not** touched: it was down before and
+after, no queue, no lock, no courier branch; GPU back to 0 MiB / 0%. The Mac rendered
+nothing. The eight PNGs are **untracked** in
+`genomes/sapling/nodes/002b-first-citizen/takes/stills/01-cold-open-r{1,2}-s{0..3}.png`
+— `takes/stills/` is the candidate bin; `stills/` is founder-approved canon and
+nothing was put there, because putting it there would assert an R4 verdict.
+
+**The failure that started this, and the fix.** The first still came back as a thick
+woody **mature branch** carrying ~8 leaves and a **ripe pink peach** — a grown tree
+with the wrong fruit, when the entire premise is that he is 40cm tall. The scale
+negatives were firing and losing, so the fix went into the positive prompt
+(`shots.md` beat 01 only, two commits, text-only):
+
+- **bc1b1a3** — the sapling leads instead of the scene; "40cm" and "whole plant in
+  frame" state the scale out loud; the fig is small, green and *unripe* (it still
+  swells — the founder's condition — but "ripening" is what coloured it peach);
+  `macro shot` removed, it invited the branch-scale crop. **Result: mature tree gone,
+  0 of 8 recurrences.** But two words of mine broke it: `mascot-simple`, copied from
+  beats 02-03 where it modifies the sapling a goblin hides behind, became the SUBJECT
+  here and **three of four candidates drew a chibi mascot creature with a face, arms
+  and legs**; and `no ripe fruit` / `no large fruit` sat in the negative prompt
+  suppressing the one piece of fruit the beat exists to show.
+- **cce81ae** — no `mascot-simple`, no fruit negatives, `no chibi` / `no mascot` /
+  `no creature` / `no face` written comma-terminated so `sd_prompt` lifts them into
+  the negative. Measured with the repo's own `sd_prompt.compress`: old prompt = 67
+  tokens and literally began with a comma; new = 72 tokens with **nothing dropped**.
+
+**Honest read of the eight, against the beat's own five points** (tiny two-leaf
+sapling / one small fig / empty green field / morning peach-gold sky / no humans-no
+text): **no candidate passes.** Round 1 is rejected outright (3 of 4 are a creature).
+In round 2: r2-s0 best composition, ~6 leaves, dry amber field, no fig; r2-s1 pretty
+and violet (hue 320°, reads dusk not sunrise), no fig; r2-s2 giant foreground leaves
+own the frame, scale reads backwards; r2-s3 best scale and the only truly green field
+(38%), and the only stem carrying anything — a small **magenta flower bud**, not a
+fig. **Two structural blockers, not seed luck: the fig is in 0 of 8, and the leaf
+count is wrong in 8 of 8 (4-6 leaves, never two).** Conditioning i2v on a figless
+plate means the fig can only "just.. appear" again — precisely the defect the
+founder's approval condition exists to prevent. Untried and cheap, for whoever picks
+this up: `still_local.py --init` img2img to paint the fig onto a chosen plate at low
+strength; and replacing "fig" (which likely maps to *fig leaf* in the Danbooru
+vocabulary) with "one small round green fruit hanging from the stem", plus "two
+cotyledons" for the leaf count. Both are new recipes, so both wait for the founder.
+
+**Screening page: `SCREENING.html` (local, untracked, nothing published, nothing in
+`_site/`).** It now carries two sections — episode 1 `ep1-v30-fixed.mp4` yes/no at the
+top, unchanged, and below it episode 2 beat 01: all eight stills at judgeable size,
+each labelled with its seed and its five-point result, the beat's script text beside
+them for comparison, the wrong ones shown *with the reason under them* rather than
+hidden, and the question stated plainly — which one is the sapling as he pictures
+him, or none — with the point that the pick becomes the frame the video is grown from,
+so scale and the fig outrank prettiness. Contact sheet: `CONTACT-002b-b01.png`.
+
+**Side finding worth keeping (it silently degraded every farm still ever rendered on
+that box).** The rtx5090 had no `openai/clip-vit-large-patch14` tokenizer cached, so
+`sd_prompt` fell back to its word-count estimate and trimmed trailing booster tags —
+round 1 lost `very aesthetic`, an untrimmed variant lost the whole
+`detailed, newest, masterpiece, best quality, very aesthetic` tail. Tokenizer is now
+cached there and round 2 dropped nothing. **Assume prior farm-rendered stills were
+missing part of their Animagine booster tail.**
+
+### Still open tonight — recorded so the next session does not re-litigate them
+
+- **`ep1-v30-fixed.mp4` is still unscreened.** 15 beats, 89s, rendered 2026-08-04,
+  never watched. It is what blocks posting — and posting is what the founder himself
+  ordered on 2026-08-02. It is the top section of `SCREENING.html`; it costs 89
+  seconds.
+- **Five trunk scripts are written and unread: 003b, 004, 005, 006a, 007a.** Only two
+  leaves in the entire tree carry `approved_by: founder` (`001-t0-d.yaml` and
+  `002b-t0-c.yaml`); everything downstream of 002b is script-blocked, not
+  machine-blocked. **One reading pass is the cheapest unblock available in the tree.**
+- **The rtx5090 has had three unclean shutdowns in three days, and today's was NOT
+  under memory stress** — VRAM at 12%, host memory *falling*, step times *improving*
+  when it went. That rules out the paging explanation we have leaned on and leaves the
+  cause unknown. **Treat it as a reliability risk for any 15- or 21-beat run:** a crash
+  at beat 12 loses the whole run unless clips are written and fsynced **as each one
+  lands**, with the job resumable from the clips already on disk. Do not queue a long
+  batch on that box until the per-beat save path is the default.
