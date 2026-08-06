@@ -803,7 +803,11 @@ margin above is negative, not sub-gigabyte.** The bullet below said the 14.4GB
 peak is an untiled VAE decode in `bench_5b_modes.py` "while
 `pipeline/wan_i2v.py`'s `stage_simple` **does** tile the VAE". It does not.
 `tile_vae()` appears exactly three times in that file — the definition at :176,
-the AnimeGen loader at :328, and `stage_render` at :687. The 5B branch of
+the AnimeGen loader at :328, and `stage_render` at :687. (Those counts and line
+numbers are **as of 2026-08-05, before the fix**. `84f54b9` added the fourth call
+in `stage_simple`, so today the file has four and `stage_render` has shifted to
+:704. Left as written because the whole point of this note is what the source
+said when the prediction was made; grep, do not trust these offsets.) The 5B branch of
 `stage_simple` runs `from_pretrained` → VRAM accounting → offload-or-`.to(cuda)`
 → `_sample`, and neither `stage_simple` (:357-482) nor `_sample` (:483-657)
 calls it. The staged probe runs `--stage simple`, so it will do an **untiled
