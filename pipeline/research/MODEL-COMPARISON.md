@@ -73,6 +73,13 @@ host can still do during that render.
 | same — **T3, motion-only prompt** | T1-A/B, positive replaced by present-progressive motion only, statics stripped, no camera invention, 36 words: *"…his hands are hammering the keys, fingers striking rapidly in large strokes, wrists lifting and dropping, the monitor glow pulsing over them"*. **STYLE prefix kept** so the clip is a one-variable delta | production | 148.9s sample / 149.9s wall (10.64s/step) | 0.0171 s(video)/s(wall) @b1 = 58.6s per video-s | 14.4GB of 25.7GB — `model_cpu_offload` | 41.9GB phys / 69.3GB commit — download co-resident | as above | Apache-2.0 | **MEASURED-BY-US 2026-08-04**, $0. Motion: median **1.05**, 0/60 barely-moving | `bench-T1T2T3/T3-motion-only.mp4.meta.yaml` |
 | same — **T3b, empty prompt** | T1-A/B with `prompt=""` | production | 146.5s sample / 147.6s wall (10.47s/step) | 0.0173 s(video)/s(wall) @b1 = 57.6s per video-s | 14.4GB of 25.7GB — `model_cpu_offload` | 36.9GB phys / 69.2GB commit — download co-resident | as above | Apache-2.0 | **MEASURED-BY-US 2026-08-04**, $0. **NOT Alibaba's empty-prompt mode** — diffusers has no system-prompt routing, so this is a literally empty string, and the row must never be read as testing their "bring the image to life" brief. Motion: median **0.72**, 0/60 barely-moving | `bench-T1T2T3/T3-empty-prompt.mp4.meta.yaml` |
 | same — **batch 2, the throughput probe** | T1-A/B's recipe exactly at 2 latents through one set of weights: 704x1280, 61f @24fps = 2.542s per clip, 14 steps, guidance 5.0, UniPC `flow_shift` 5.0. Slot 0 repeats **seed 20260732** as the batch-fidelity check, slot 1 takes 20260733 | production | **764.7s sample** for 2 clips (**54.62s/step**) against b1's 12.05 — **4.53x b1's per-step cost for 2x the output** | **0.0066 s(video)/s(wall) @b2** = **150.4s wall per 1s of video** (382.3s per *clip*) — against b1's 0.0151, i.e. **0.44x b1** | **23.5GB torch of 25.7GB (91.4%)** — `model_cpu_offload`; **+9.1GB** over b1's 14.4GB | 54.4GB phys / 54.4GB commit of 68.1/130.4GB — psutil sampler; the two coincide because swap use read 0 at every sample | 1/card | Apache-2.0, output rights disclaimed — CLEAR | **MEASURED-BY-US 2026-08-05**, $0. **Batching the 5B is strictly worse than running it serially on this card.** The fidelity gate passed decisively — slot 0 against the b1 reference differs by less than re-encoding alone, and the two slots diverge from each other properly, so this is a real throughput result and not a batch that silently rendered one clip twice. Corroborated independently in the *preview* recipe by the box's own rows: **16.43 → 110.36 s/step b1 → b2**, same direction, steeper | `SAMPLES/batch-bench.jsonl`, `SAMPLES/ti2v5b-production-b2-s20260732.mp4.meta.yaml`, `SAMPLES/ti2v5b-modes.jsonl` |
+| **TI2V-5B, PREVIEW mode** (6 steps) | 704x1280, 61f, guidance 5.0, `flow_shift` 5.0 — **steps cut, not resolution**: 704x1280 is the native bucket and the low-detail look was killed on screening | preview | **98.6s** (16.4s/step) | **0.0258 s(video)/s(wall) @b1 = 38.8s per 1s video — 1.5x the production recipe** | 14.4GB of 25.7GB — `model_cpu_offload` | 51.5GB phys / 80.6GB commit | 1/card | Apache-2.0 | **MEASURED-BY-US 2026-08-05**, $0. Also settles `ACTION-PLAN §4` correction 6: the 6-step clip from the 2026-08-03 sweep had never been timed. The fit predicted ~118s; measured 98.6s | `SAMPLES/ti2v5b-preview-b1-s20260732.mp4.meta.yaml` |
+| same — preview **batch 2** | as above, 2 latents | preview | 662.2s for 2 clips | **0.0077 s/s — 3.3x WORSE than b1** | **23.5GB of 25.7GB (91%)** | 51.5GB phys / 90.6GB commit | 1/card | Apache-2.0 | **MEASURED-BY-US 2026-08-05**, $0. **What stopped scaling: VRAM.** At 704x1280 the 5B has no headroom for a second latent, so **batch 1 is the optimum for the 5B at production resolution** — the opposite of AnimeGen at 480x832, where b2 won. Batching pays only where VRAM has room | `SAMPLES/ti2v5b-preview-b2-s20260732.mp4.meta.yaml` |
+| **AnimeGen from BAKED fp8 experts** (LoRA fused at bake time, no peft at render, text encoder evicted) | 4 steps, guidance 1.0, shift 5.0, boundary 0.900, seed 20260732 | preview 480x832 33f **b1** | 111.2s | 0.0124 s/s (80.9s per video-s) | **17.1GB** of 25.7GB | **41.9GB phys / 73.3GB commit** — against the runtime-cast path's **119.1GB** render peak, and its **128.7GB** *load* peak | 1/card, and **no longer host-exclusive**: the bake removed the commit wall | AnimeGen Apache-2.0; **Lightning LoRA UNVERIFIED (no LICENSE file) — evaluation only** | **MEASURED-BY-US 2026-08-05**, $0. **The bake's payoff is host RAM, not speed.** Quote the comparison at matched scope: 73.3GB commit against the runtime-cast row's **119.1GB** for the same render (`SAMPLES/animegen-bench.jsonl`), and against the **128.7GB** the runtime cast reached *at load* — the peak that took the watchdog abort. No watchdog abort here | `SAMPLES/animegen-fp8-preview-b1-s20260732.mp4.meta.yaml` |
+| same — baked fp8, **batch 2** | as above | preview (480x832) | 119.7s for 2 clips | **0.0230 s/s (43.5s per video-s) — best A14B figure measured** | 18.7GB | 45.1GB phys / 80.3GB commit | 1/card | as above | **MEASURED-BY-US 2026-08-05**, $0. Same b2 optimum as the runtime-cast path (0.0221), so the bake did not change the throughput shape | `SAMPLES/animegen-fp8-preview-b2-s20260732.mp4.meta.yaml` |
+| same — baked fp8, **batch 4** | as above | preview (480x832) | 733.2s | 0.0075 s/s | 22.0GB (86%) | 62.1GB phys / 85.8GB commit | 1/card | as above | **MEASURED-BY-US 2026-08-05**, $0. Spills exactly as the runtime-cast b4 did — **the bake fixes host RAM and does nothing for the VRAM spill** | `SAMPLES/animegen-fp8-preview-b4-s20260732.mp4.meta.yaml` |
+| same — baked fp8, **PRODUCTION** | 4 steps, 704x1280, 61f | production | 824.8s | **0.0031 s/s (324.5s per 1s video)** | 22.0GB | 62.1GB phys / 85.8GB commit | 1/card | as above | **MEASURED-BY-US 2026-08-05**, $0. **Slower than the runtime-cast production row (546s / 0.0047)** — both spill at 704x1280 and the fp8 path pays per-layer dequant on top. So A14B production resolution is VRAM-bound, and the bake does not rescue it | `SAMPLES/animegen-fp8-production-b1-s20260732.mp4.meta.yaml` |
+| **LTX-2.3 distilled, PREVIEW mode** (stage 1 alone) | 8 steps @352x640, explicit distilled sigmas, guidance 1.0, 65f @24fps, `--image-crf 33` | preview | 94.3s — **UNARCHIVED, see the note** | 0.0287 s(video)/s(wall) = 34.8s per 1s video — **and this is not "the fastest model we measured"**: the fp8 resident build above is **0.0369** (27.1s per video-s), and the bf16 b2 is 0.0285. What this row beats is the bf16 two-stage b1's 0.0251 — **at a fifth of the pixels** | 1.9GB torch / 1.5GB device — LABEL: **sequential-offload** — **UNARCHIVED** | 60.5GB phys / 68.9GB commit — **UNARCHIVED** | 1/card, host-exclusive | LTX-2 Community License Agreement — CANDIDATE, watch-only per D16 | **MEASURED-BY-US 2026-08-05**, $0. This is upstream's own first stage, not an invented shortcut — but it is **stage 1 only**, so it must be screened as a preview; judged as production it would show the "soft and under-detailed" failure `ltx2-source.md §1` predicts. **Two provenance limits, stated rather than smoothed over.** (1) **Do not rank this row against the 704x1280 rows.** Its output is **352x640** — 20% of the pixels — so `s(video)/s(wall)` is measuring a different job, not a faster one. (2) **The timing and memory cells have no archived source.** The clip and its sidecar exist and the denominator is verified — `ffprobe` reads 352x640, 65 frames @24/1, 2.708333s, matching the sidecar — but the sidecar records no `sample_s`, there is no `ltx23-preview` row in any `SAMPLES/*.jsonl`, and no log in this repo contains 94.3, 0.0287, 1.9/1.5GB or 60.5/68.9GB. They are console-only figures carried over by hand. **Kept because the run happened and deleting a real measurement is worse than flagging it; re-run it to archive a sourced row before anything downstream quotes these four cells** | `SAMPLES/ltx23-preview-b1-s20260732.mp4.meta.yaml` (recipe + provenance only — carries no timing) |
 | TI2V-5B + **`shift` sweep** (baseline / 5.0 / 8.0) | 704x1280, 14 steps, 3 clips, one seed | — | — (expect ~248s/beat) | — | — (expect 22.9/25.7GB) | — | — | Apache-2.0 | **SUPERSEDED — measured 2026-08-04**, see the three T1 rows above. Its own expectations were both wrong: the peak is 14.4GB not 22.9GB, and the "baseline" was already 5.0 | `ACTION-PLAN.md §1 T1` |
 | TI2V-5B + `画面` restored to `NEG` | 704x1280, 14 steps, alone (not with `--no-shake-neg`) | — | — | — | — | — | — | Apache-2.0 | **SUPERSEDED — measured 2026-08-04**, see the T2 row above | `ACTION-PLAN.md §1 T2` |
 | TI2V-5B + motion-only prompt contract | statics stripped, ≤100 words | — | — | — | — | — | — | Apache-2.0 | **SUPERSEDED — measured 2026-08-04**, see the T3 and T3b rows above | `ACTION-PLAN.md §1 T3` |
@@ -594,10 +601,10 @@ is *unmeasured*, which is different from *no*.
 | commit limit | **123.9GB** (grown to 140.6GB under the A14B load) | **67.4GB** (31.4 phys + 36GB pagefile), 714.7GB free on C: so it can grow |
 | reachability | LAN ssh since 2026-08-01 | **LAN ssh since 2026-08-05.** Before that it was a USB-bundle enrollment (`STATE.md` 2026-07-30) with no remote route |
 | repo checkout | `C:\banyan-farm\banyan-city` | same path, fast-forwarded 231 commits off the stale `farm-results-msi` to `main` @ `ae13cc6` on 2026-08-05 |
-| video throughput | **MEASURED** — every row in §1 | **PARTIAL, 2026-08-05** — the probe finally ran and got 3 of 6 denoise steps before a room move killed it: **362 / 601 / 719 s per step** at full clock, against Box A's **16.4 s/step**. Settled steps only; no clip and no completed sample, so **no `s(video)/s(wall)` figure exists for this box** and none should be quoted |
+| video throughput | **MEASURED** — every row in §1 | **NOT MEASURED, and the partial numbers are not throughput.** The probe ran 2026-08-05 and settled 3 of 6 denoise steps — **362 / 601 / 719 s** at full clock against Box A's **16.43 s/step** — before the lead terminated it. Rising cost at a pinned 97.4% of VRAM makes those **paging figures, not throughput figures**: they measure a working set that does not fit. No clip, no completed sample, **no `s(video)/s(wall)` figure for this box, and the s/step ratio must never be published as this box's speed** |
 | GPU power state | board power unremarked; every §1 row was taken at full clock | **RESOLVED 2026-08-05 evening — it was the adapter, and the card is not clamped.** On the correct barrel adapter: `enforced.power.limit` **140.00 W**; a bf16 burn holds **2385 MHz at 139.93 W** (the whole board budget); through the 5B render **2775 MHz at 100% util with `clocks_event_reasons.sw_power_cap` Not Active**, while the pack charged **6% → 32%**. The afternoon's 25 W / 180 MHz was the wrong adapter. Earlier rows measured a cable, not a card |
-| mains stability | not a question on this box | Four Kernel-Power event-105 source changes between 15:09:57 and 16:42:27 on 2026-08-05, **all on the wrong adapter**. **Stable since the swap**: AC held through a 40+ minute 100%-util render while charging the pack from 6% |
-| stability | two unclean reboots on 2026-08-04/05, both under batch pressure; Kernel-Power 41 at 06:07:05 | **first render attempt 2026-08-05 — and it did not misbehave**: 28 minutes at 100% util with GPU memory, host physical and commit all flat, no crash and no bugcheck. It was killed from outside (unplugged for a room move), which is not a stability finding |
+| mains stability | not a question on this box | Four Kernel-Power event-105 source changes between 15:09:57 and 16:42:27 on 2026-08-05, **all on the wrong adapter**. **Stable since the swap**: AC held through the whole 34-minute render (19:00:43 → 19:34:44 in the trace) while charging the pack from 6% |
+| stability | two unclean reboots on 2026-08-04/05, both under batch pressure; Kernel-Power 41 at 06:07:05 | **first render attempt 2026-08-05 — and it did not misbehave**: **31 unbroken minutes at 100% util** (19:03:31 → 19:34:44) with GPU memory, host physical and commit all flat, no crash and no bugcheck. **The lead terminated it**; that is an operator decision, not a stability finding |
 
 **Why Box B still has no number, and why that is not the same as "too small".**
 The sample was staged with byte-verified inputs (conditioning still, prompt and
@@ -667,8 +674,8 @@ falling as the GPU drew, a cap below the 65 W default) was real and pointed the
 right way. Downgrading a well-supported inference to a discarded one, because it
 could not be proven over ssh, cost an afternoon of waiting for the wrong thing.
 
-**The sample ran, and the move killed it at step 3 of 6 — so the fit question below
-is still open.** Fired 19:00:43 local on 2026-08-05, the staged probe unchanged
+**The sample ran, and the lead stopped it during step 4 of 6 — so the fit question
+below is still open.** Fired 19:00:43 local on 2026-08-05, the staged probe unchanged
 (`--stage simple --model ti2v-5b --size 704x1280 --seconds 2.5 --fps 24 --steps 6
 --guidance 5.0 --batch 1 --mode preview --offload --no-shake-neg`, seed 20260732,
 inputs sha256-verified against Box A's). It loaded in **74s**, reported
@@ -688,39 +695,108 @@ first. **Settled steps only — there is no clip, no completed sample and theref
 `s(video)/s(wall)` figure for this box.** Do not publish one; three rising steps do
 not extrapolate honestly to six.
 
+The raw line is quoted here so the arithmetic can be checked without the box
+(`bench-platform/probe5070-spill-partial.log`, last line):
+
+```
+  0%|  | 0/6 [00:00<?, ?it/s] 17%|█▋ | 1/6 [06:02<30:12, 362.43s/it] 33%|███▎ | 2/6 [16:03<33:31, 502.98s/it] 50%|█████ | 3/6 [28:02<30:04, 601.55s/it]
+```
+
+**`362.43 / 502.98 / 601.55` are not the per-step costs and must not be quoted as
+them** — they are tqdm's bias-corrected EMA of the step time (`smoothing=0.3`), and
+they reproduce exactly from the real steps: 362, then `(0.3·601 + 0.7·108.6)/0.51` =
+503, then `(0.3·719 + 0.7·256.3)/0.657` = 601. The costs are the differences of the
+cumulative column — **362 / 601 / 719** — which is why the table above uses those.
+
 **The card was at full clock the whole time, so this is not the clamp again**:
 **2775 MHz** at 100% util with `sw_power_cap` **Not Active**, 43-55 W of a 140 W
-budget, 48-52 C. Device memory pinned **flat at 11908/12227 MiB (97.4%)**, host
-physical steady, and `commit_used` ~59.5 GB against **31.4 GB installed**. What is
-solid and structural: **UMT5-XXL alone is ~11.4 GB bf16 against 11.94 GiB of usable
-card**, so Box B can never use Box A's resident path for Wan 5B at any resolution —
-offload, and its PCIe cost, is mandatory here rather than a tuning choice. What is
-NOT established is *why each step costs more than the last*. Host physical use fell
-27.9 → 13.7 GB and then flattened with ~17.5 GB still free, which is at least as
-consistent with the safetensors file cache being released after load as with
-anything paging out; page-fault rates were never sampled. It stays a measured curve
-with no mechanism attached.
+budget, 48-52 C. Device memory pinned **flat at 11908/12227 MiB (97.4%)** for the
+whole run, and `commit_used` climbing 57.7 → 61.0 GB against **31.4 GB installed**.
+What is solid and structural: **UMT5-XXL alone is ~11.4 GB bf16 against 11.94 GiB of
+usable card**, so Box B can never use Box A's resident path for Wan 5B at any
+resolution — offload, and its PCIe cost, is mandatory here rather than a tuning
+choice.
+
+**Corrected 2026-08-06 — this run has a mechanism, and naming it changes what the
+numbers are.** The paragraph here previously called the rising curve "a measured
+curve with no mechanism attached", on the grounds that host physical use fell
+27.9 → 13.7 GB and then flattened with ~17.5 GB free, which fits the safetensors
+file cache being released after load as well as it fits paging. That reasoning is
+sound and stays — **but it is about the host, and the spill is on the device.** The
+device side is not ambiguous: **11908 of 12227 MiB (97.4%) pinned flat for 31
+unbroken minutes at 100% util and 2775 MHz**, with per-step cost rising
+**monotonically** — 362 → 601 → 719 s — on a workload whose every step is identical.
+A compute-bound step costs the same every time. Cost that grows at constant clock,
+constant occupancy and constant work is a working set being moved, not computed:
+under WDDM the driver demotes allocations that exceed the budget to system memory
+and re-fetches them per dispatch, and util reads 100% because the SM stalls on those
+transfers exactly as it would on arithmetic.
+
+Two consequences, and the second is the operational one:
+
+- **The binding constraint is the DENOISE working set, not the VAE decode.** The
+  97.4% occupancy was reached before step 1 finished and never moved, so the card
+  was already full while denoising — it never got near the decode that §4's
+  prediction is about.
+- **These are paging figures, not throughput figures.** `362 / 601 / 719 s` against
+  Box A's 16.43 s/step is **22x, 37x and 44x, and rising** — but a ratio that grows
+  while the work stays constant is not a speed. **Never publish an s/step ratio from
+  this run as this box's speed**, in this file or anywhere downstream. It is the
+  measurement of a recipe that does not fit.
+
+Still not sampled, and still worth sampling if the box comes back: page-fault and
+PCIe-transfer counters, which would turn the inference above into a direct reading.
 
 **Why it stopped is not instability, and the missing rc line is the evidence.**
 `probe-5070.cmd` echoes `==== probe-5070 exited rc=%ERRORLEVEL% ====` *after* the
 python call, so any renderer-side failure — CUDA OOM included — leaves the parent
 `cmd` alive to write it. **No rc line was written at all**, so the whole process tree
-died together: that rules out a crash inside the renderer and points at the task
-being stopped. The log also carries no traceback and no CUDA error, while the trace's
-next samples show GPU memory and util drop to **0** and commit collapse
-59.4 → 15.6 GB. The box was being unplugged to be
-carried to another room, and these tasks are registered through `schtasks`, whose
-default settings include stopping on a switch to battery — the same
-`Stop On Battery Mode` policy already recorded above as having refused to start this
-sample once. Unconfirmed (it needs the TaskScheduler log once the box is back), but
-it is the reading the evidence supports, and it is the opposite of a bugcheck: for
-28 minutes GPU, host RAM and commit were all steady.
+died together: that rules out a crash inside the renderer. The log also carries no
+traceback and no CUDA error, while the trace's next sample shows GPU memory and util
+drop to **0** and commit collapse **61.0 → 16.16 GB** — the run is alive at 19:34:44
+and gone by 19:35:24.
 
-**So §4's fit prediction below is neither confirmed nor falsified.** The run never
-reached the VAE decode, which is the only thing that prediction is about. `tile_vae()`
-has since been added to `stage_simple` (the divergence the correction below
-identified is a real bug on its own terms), so the *next* run tests the tiled path
-and the untiled peak on a 12GB card may now never be measured at all.
+**Corrected 2026-08-06 — the lead killed it, and the schtasks story it replaces was
+an inference nobody needed to make.** This paragraph previously read the missing rc
+line as pointing at the Windows scheduler: the box "was being unplugged to be carried
+to another room", `schtasks` defaults include `Stop On Battery Mode`, and the same
+policy had already refused to start this sample once. That was flagged unconfirmed,
+and it is wrong. **The lead terminated the run itself at ~19:34 local**, having
+watched three steps settle at 22-44x Box A and concluded that step 4 was buying a
+paging curve rather than a sample. First-hand account of the operator's own action
+beats an inference from a log gap, and it retires the scheduler reading entirely —
+`Stop On Battery Mode` never applied, because AC never left (the trace shows a full
+34 minutes of uninterrupted 100%-util render). The missing rc line still means what
+it meant, only less specifically: the process tree went down together, which is what
+an external kill looks like and is **not** what a renderer crash looks like.
+
+**One residual conflict, unresolvable while the box is offline.** The lead's account
+is that no scheduled tasks were registered at the time; `STATE.md`'s cleanup note for
+this same evening records two left registered (`banyan-probe5070`,
+`banyan-probe5070-trace`). Both cannot be right. Nothing above depends on which is —
+the kill is accounted for either way — but **the registration state must be checked
+before anything is re-fired on this box**, because a stale registration would fire a
+recipe this section has since ruled out. Left open on purpose rather than picked.
+
+For 31 minutes GPU, host RAM and commit were all steady, so this remains the opposite
+of the two bugchecks above.
+
+**So §4's fit prediction below is UNTESTED — which is not the same as falsified.**
+The run never reached the VAE decode, and the decode is the only thing that
+prediction is about. It stops at step 4 of 6 of the denoise, so the prediction keeps
+exactly the status it had before the box was plugged in: unexercised. Do not let
+"the sample ran" be read as "the sample answered it".
+
+**And the tiling lever did not have its premise tested either.** `tile_vae()` **is
+landed** on `stage_simple`'s 5B path in this repo (`pipeline/wan_i2v.py:462`, commit
+`84f54b9`) — the divergence the correction below identified is a real bug and the
+fix stands on its own. What this run did *not* do is give it anything to fix: tiling
+lowers the **decode** peak, and the constraint that actually bound here was the
+**denoise** working set, which was already at 97.4% of the card before step 1
+finished. Tiling the VAE does not give the denoise a single megabyte back. So the
+next run on this recipe would test the tiled decode path and still spill in exactly
+the same place — which is why the fleet verdict below does not wait on it, and why
+the untiled peak on a 12GB card may now never be measured at all.
 
 **Correction, 2026-08-05 — `stage_simple` does not tile the VAE, and the fit
 margin above is negative, not sub-gigabyte.** The bullet below said the 14.4GB
@@ -776,3 +852,37 @@ that the model shaped for this box is the one that already runs small:
 **LTX-2.3 preview took 1.9 GB torch / 1.5 GB device** on Box A (§1), which is the
 only measured row in this table that would sit comfortably inside 12 GB without
 offload at all. That is the next thing to put on Box B, and it needs its own sample.
+
+**Update 2026-08-06 — the verdict hardens into a rule, and the option under it is an
+option, not a job.** Two corrections to the paragraph directly above. First, "an
+order of magnitude" understates and blurs: the settled steps are **22x, 37x and 44x**
+Box A's 16.43 s/step **and still climbing at the point the lead stopped it**, and the
+reason they climb is that the recipe does not fit (see the paging correction above).
+Second, and more importantly, that is not a slow number to be improved — it is a
+recipe that must not be run here at all.
+
+- **RULED OUT: TI2V-5B at 704x1280 on Box B.** Not "slow", not "unmeasured" —
+  **not viable**. The denoise working set alone pins 97.4% of the card, so there is
+  no offload setting, no step count and no scheduler that recovers it. Do not queue
+  it, do not benchmark it again, and do not quote its s/step as a speed.
+- **UNCHANGED AND PROVEN: Box B's role is stills, VO and drafts.** This is the third
+  independent route to the same verdict, and it is now the measured one rather than
+  the cautious one.
+- **AN OPTION, EXPLICITLY NOT SCHEDULED: a smaller 5B recipe** — 480x832, fewer
+  frames — is a *different* question this run says nothing about, since it changes
+  the working set that did the spilling. It is **recorded here as an option for the
+  founder and nothing more**. It is a new recipe, so it is a ONE-SAMPLE question
+  before it is anything else, and no batch, sweep or queue entry may precede that
+  sample. Nobody has named a consumer for the output, which is the other reason it
+  is not scheduled.
+- **The LTX-2.3 preview suggestion above stands, with its own caveat now attached.**
+  §1's LTX preview row carries **UNARCHIVED** timing and memory cells (see the note
+  on that row) and renders at 352x640, so "sits comfortably inside 12 GB" is the
+  right instinct on the wrong evidence until that row is re-run and archived. Also a
+  one-sample question, also unscheduled.
+
+**Box status as of 2026-08-06: offline and unavailable again.** Not reachable at the
+stale `192.168.3.153`, and — per the note below on the LAN re-addressing — not found
+on the new subnet either. Everything above is what the record says; none of it can be
+re-checked, extended or acted on until someone has the box. That includes the
+registration conflict flagged earlier in this section.

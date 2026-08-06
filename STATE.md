@@ -1272,7 +1272,7 @@ lesson is about the retraction, not the hypothesis — "unmeasured" was the righ
 label, "retracted" was not, and downgrading a well-supported inference because ssh
 could not prove it cost an afternoon of waiting for the wrong thing.
 
-**The sample finally ran, and a room move killed it at step 3 of 6.** Fired 19:00:43,
+**The sample finally ran, and the lead stopped it during step 4 of 6.** Fired 19:00:43,
 the staged recipe unchanged (TI2V-5B preview, 704x1280, 61f, 6 steps, g5.0, seed
 20260732, `--offload`, inputs sha256-identical to Box A's). Loaded in 74s, then:
 
@@ -1293,19 +1293,40 @@ then flattened with ~17.5 GB free, which fits "the safetensors file cache was
 released after load" as well as anything paging, and no page-fault rate was sampled.
 A measured curve with no mechanism attached is the honest artifact.
 
+> **Superseded 2026-08-06 — the curve does have a mechanism, and it is on the device,
+> not the host.** The caution above is about *host* memory and stays correct; the
+> spill is on the *card*. 11908/12227 MiB pinned flat at 100% util and full clock for
+> 31 minutes while identical steps cost monotonically more is a working set being
+> moved, not computed. So these are **paging figures, not throughput figures**, the
+> binding constraint is the **denoise**, and the s/step ratio must never be published
+> as this box's speed. Full reasoning and its limits:
+> `pipeline/research/MODEL-COMPARISON.md` §4.
+
 **It did not crash, and the missing rc line is what proves it.** `probe-5070.cmd`
 runs python and *then* echoes `==== probe-5070 exited rc=%ERRORLEVEL% ====` into the
 log. A python-side failure — a CUDA OOM, a host OOM, any exception — leaves the
 parent `cmd` alive to write that line. **There is no rc line at all**, so the whole
 process tree went down together, which rules out a crash in the renderer and points
 squarely at the scheduler stopping the task. The log also ends with no traceback and
-no CUDA error, while the trace's next samples show GPU util and memory at **0** and
-commit collapsing 59.4 → 15.6 GB. The box was
-being unplugged to be carried to another room, and `schtasks` defaults include
-stopping a task on the switch to battery: the same `Stop On Battery Mode` policy this
-file already recorded as having once refused to start this very sample. Unconfirmed
-until the TaskScheduler log can be read. For 28 minutes GPU, host RAM and commit were
-all steady, so this is the opposite of the two bugchecks above.
+no CUDA error, while the trace's next sample shows GPU util and memory at **0** and
+commit collapsing **61.0 → 16.16 GB** — alive at 19:34:44, gone by 19:35:24. For 31
+minutes GPU, host RAM and commit were all steady, so this is the opposite of the two
+bugchecks above.
+
+> **Corrected 2026-08-06 — the lead killed it; the scheduler had nothing to do with
+> it.** This entry originally continued "the box was being unplugged to be carried to
+> another room, and `schtasks` defaults include stopping a task on the switch to
+> battery", flagged unconfirmed. Wrong. **The lead terminated the run at ~19:34
+> local**, three settled steps being enough to show the recipe was paging rather than
+> rendering. `Stop On Battery Mode` never applied — AC held for the entire 34-minute
+> run. The missing rc line still rules out a renderer crash; it just no longer points
+> anywhere in particular beyond "killed from outside", which is what it was.
+>
+> One conflict left open rather than papered over: the lead's account is that **no
+> scheduled tasks were registered**, while the housekeeping note further down this
+> entry records **two left registered**. Both cannot be true and the box is offline,
+> so **verify the registration state before re-firing anything on it** — a stale
+> registration would launch the recipe now ruled out.
 
 **Both headline questions are still open, and I am not going to pretend otherwise.**
 The run never reached the VAE decode, so §4's "does the untiled decode OOM on 12 GB"
@@ -1347,3 +1368,58 @@ subnet and match its Wi-Fi MAC **9C:67:D6:85:0A:B6**
 it is not on 192.168.70.x at all — nine real ARP entries, none of them the box —
 which is what a laptop closed for a room move looks like. Nothing here is evidence
 about the box's health.
+
+## 2026-08-06 — reconciling the 5070 Ti record: a paging measurement, a ruled-out recipe, and an option nobody scheduled
+
+No machine work today — the box is **offline and unavailable again** (stale
+`192.168.3.153`, absent from the re-addressed `192.168.70.x` subnet). This entry
+closes out records left partly written when yesterday's run ended, and corrects three
+claims in the entry above rather than restating what it got right. The corrections are
+inline there and the full reasoning is in `pipeline/research/MODEL-COMPARISON.md` §4;
+what follows is only the part that changes decisions.
+
+**What the 28-minute 5070 Ti run actually measured.** Not throughput. The card sat at
+**11908/12227 MiB (97.4%)** pinned flat, 100% util, 2775 MHz, full clock, for 31
+unbroken minutes while identical denoise steps cost **362 → 601 → 719 s** — rising
+monotonically. Constant work whose cost grows at constant clock and constant occupancy
+is a working set being moved, not computed. The binding constraint is the **denoise**,
+which was already full before step 1 finished; the run never reached the VAE decode at
+all. Against Box A's 16.43 s/step that is **22x, 37x, 44x and still climbing** — which
+is a description of a recipe that does not fit, not a speed. **The s/step ratio from
+this run must never be published as this box's speed.**
+
+**Two things this therefore did NOT settle**, both of which the record now says
+plainly: §4's untiled-VAE-decode OOM prediction is **UNTESTED, not falsified** (the run
+stopped four steps short of the decode), and the `tile_vae()` fix — which **is** landed
+at `pipeline/wan_i2v.py:462` in `84f54b9` and is a real bug fix on its own terms — had
+its premise untouched. Tiling lowers the *decode* peak; nothing here was decode-bound.
+A re-run with tiling would spill in exactly the same place.
+
+**Fleet consequences.**
+
+- **RULED OUT — TI2V-5B at 704x1280 on the 5070 Ti.** Not slow, not unmeasured: not
+  viable, with no offload/step/scheduler setting that recovers it. Do not queue or
+  re-benchmark it.
+- **UNCHANGED — the 5070 Ti's proven role is stills, VO and drafts.** Third
+  independent route to the same verdict, now on measured rather than cautious grounds.
+- **RECORDED AS AN OPTION, NOT SCHEDULED — a smaller 5B recipe** (480x832, fewer
+  frames). It changes the working set that spilled, so this run says nothing about it.
+  It is a **new recipe**, therefore a ONE-SAMPLE question for the founder before it is
+  anything else, and it has **no named consumer** — two independent reasons it is not
+  on any queue. It is written down so it is not lost, not so it gets run.
+- **Before anything re-fires on that box**, resolve the scheduled-task registration
+  conflict noted in the entry above — a stale registration would launch the recipe
+  just ruled out.
+
+**Also corrected today, in `MODEL-COMPARISON.md` §1** (unrelated to the 5070, found
+while reconciling): the six Box A rows an interrupted edit had left uncommitted are now
+in, having been checked cell-by-cell against `SAMPLES/*.jsonl`. Two defects were caught
+in them. The baked-fp8 AnimeGen row compared its 73.3GB commit against **128.7GB**, a
+*load*-path peak, where the matched render figure is **119.1GB** — both are now quoted
+with their scope. And the LTX-2.3 preview row claimed "the best throughput of any model
+measured", which the fp8 resident build (0.0369) beats; worse, that row's `94.3s`,
+`1.9/1.5GB` and `60.5/68.9GB` cells have **no archived source anywhere in this repo** —
+no sidecar timing, no jsonl row, no log. The clip and its recipe are real and
+`ffprobe`-verified (352x640, 65f @24fps, 2.708s), so the row is kept with those four
+cells labelled **UNARCHIVED** rather than deleted or quietly trusted. Re-run it to
+archive a sourced row before anything downstream cites them.

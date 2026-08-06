@@ -147,11 +147,28 @@ tasks:
 # 5070 video benchmark row for MODEL-COMPARISON.md (Oleg's fleet question,
 # 2026-08-05). Recipe = the PROVEN vid-msi-lowstep settings from 2026-07-31
 # (25 steps took 2h+ on this box; 8 steps ~40min) with beat 1 + the comparison
-# seed so the clip joins the same-seed cross-model row. The machine has a
-# power-delivery fault (5070 Ti clamps to 180MHz, mains flapping — see
-# STATE.md 2026-08-05); this task waits in queue until its worker runs on
-# stable AC. No new recipe elements — this is a hardware benchmark, not a
-# recipe change.
+# seed so the clip joins the same-seed cross-model row. No new recipe elements
+# — this is a hardware benchmark, not a recipe change.
+#
+# BLOCKER UPDATED 2026-08-06 — the old one is resolved and was never a fault.
+# This comment used to gate the task on "stable AC", citing a power-delivery
+# fault (5070 Ti clamped to 180MHz, mains flapping). That is settled: the clamp
+# was an INADEQUATE ADAPTER, not the card and not a state-of-charge gate. On the
+# correct barrel adapter the card holds enforced.power.limit 140W and ran 2775
+# MHz at 100% util for 34 unbroken minutes while charging the pack. Do not
+# re-gate anything on AC stability or battery level.
+#
+# The real blocker now is reachability: the box is OFFLINE as of 2026-08-06 —
+# ~/.ssh/config's 192.168.3.153 is stale (the LAN re-addressed to 192.168.70.x)
+# and it is not on the new subnet. Re-find it by Wi-Fi MAC 9C:67:D6:85:0A:B6.
+#
+# STILL VALID, and deliberately so: this row is 480x832 at 8 steps on the
+# lowstep recipe. It is NOT the TI2V-5B 704x1280 recipe that MODEL-COMPARISON
+# §4 ruled out on this box on 2026-08-06 — that one pinned 97.4% of VRAM and
+# paged. Different model, a fifth of the pixels, different question. Before
+# re-firing, check the box for stale scheduled-task registrations
+# (banyan-probe5070, banyan-probe5070-trace) so the ruled-out recipe cannot
+# launch alongside this one.
 - id: msi-preview-b01-1785937992
   worker: msi
   video: true
