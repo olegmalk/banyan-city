@@ -28,18 +28,25 @@ mentioned, last time we generated 002b it just.. appeared"). It is also the only
 thing episode 1 said he can do — `GROW ✓ slow. directional.` — so the growth is
 continuity, not decoration.
 
-Prompt rewritten 2026-08-06 after the first still came back as a thick woody
-MATURE branch carrying ~8 leaves and a ripe pink peach. The scale negatives were
-already firing and lost anyway, so the fix is in the positive prompt: the sapling
-leads instead of the scene, "40cm" and "whole plant in frame" state the scale the
-episode's joke depends on, `no extra leaves` / `no branches` / `no ripe fruit` /
-`no large fruit` are comma-terminated so `sd_prompt` moves them into the negative,
-the fig is small, green and unripe ON THE TRUNK (it still swells — the founder's
-condition — but "ripening" is what coloured it peach), and `macro shot` is gone
-because it invited the branch-scale crop that produced the mature tree.
+Prompt rewritten 2026-08-06, twice, against drawn evidence. The first still came
+back as a thick woody MATURE branch carrying ~8 leaves and a ripe pink peach; the
+scale negatives were already firing and lost anyway, so the fix went into the
+positive prompt — the sapling leads instead of the scene, "40cm" and "whole plant
+in frame" state the scale the episode's joke depends on, the fig is small, green
+and unripe (it still swells, which is the founder's condition, but "ripening" is
+what coloured it peach), and `macro shot` is gone because it invited the
+branch-scale crop. That killed the mature tree in all four candidates. Two things
+it got wrong, and both were words I had added: `mascot-simple`, borrowed from
+beats 02-03 where it modifies the sapling a goblin hides behind, became the
+SUBJECT here and three of four candidates drew a chibi mascot CREATURE with
+leaves on its head; and the fig appeared in none of the four, with `no ripe
+fruit` / `no large fruit` sitting in the negative prompt where they suppress the
+one piece of fruit the beat exists to show. So: no `mascot-simple`, no fruit
+negatives, and `no chibi` / `no mascot` / `no creature` / `no face` written
+comma-terminated so `sd_prompt` lifts them into the negative instead.
 
 ```
-A tiny 40cm mascot-simple banyan sapling, thin curved trunk, exactly two oversized leaves, no extra leaves, no branches, alone in a vast empty green field, one small unripe green fig swelling on its trunk, no humans, no ripe fruit, no large fruit, whole plant in frame, wide shot, early morning, peach and gold sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+A tiny 40cm banyan sapling, thin curved stem, a single pair of oversized leaves, one small green unripe fig swelling on the stem, alone in a vast empty grass field, whole plant in frame, wide shot, sunrise, peach and gold morning sky, no humans, no chibi, no mascot, no creature, no face, no extra leaves, no branches, no night sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 ## Beat 02 — THE SPRINT (0:06–0:11) ⬜ needs footage
