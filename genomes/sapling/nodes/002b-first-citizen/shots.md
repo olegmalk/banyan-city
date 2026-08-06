@@ -45,8 +45,23 @@ one piece of fruit the beat exists to show. So: no `mascot-simple`, no fruit
 negatives, and `no chibi` / `no mascot` / `no creature` / `no face` written
 comma-terminated so `sd_prompt` lifts them into the negative instead.
 
+Rewritten a third time 2026-08-06, against the eight candidates those two rewrites
+drew. Two failures survived both and neither is seed luck: the fig is in 0 of 8, and
+all 8 carry four to six leaves. The likeliest reason for the missing fruit is that
+`fig` in this model's caption vocabulary names the *leaf*, not the fruit — so the
+fruit is now described without the word, `one small round green fruit hanging from
+the stem`. And `a single pair of oversized leaves` is prose the model ignored eight
+times; `seedling` plus `exactly two oversized cotyledon leaves` is the botanical
+vocabulary for a plant that has only two. `sapling` gives way to `seedling` because
+keeping both words costs four tokens and puts the compressed prompt exactly on CLIP's
+77-token ceiling (measured with the real tokenizer, this way it is 73); `seedling` is
+in `sd_prompt._SMALL` too, so the scale negatives still fire. Everything rounds 1-2
+proved is untouched — `40cm`, `whole plant in frame`, `wide shot`, the sunrise
+palette, the booster tail, and the entire negative list — so the subject description
+is the only thing that changed.
+
 ```
-A tiny 40cm banyan sapling, thin curved stem, a single pair of oversized leaves, one small green unripe fig swelling on the stem, alone in a vast empty grass field, whole plant in frame, wide shot, sunrise, peach and gold morning sky, no humans, no chibi, no mascot, no creature, no face, no extra leaves, no branches, no night sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+A tiny 40cm banyan seedling, exactly two oversized cotyledon leaves, thin curved stem, one small round green fruit hanging from the stem, alone in a vast empty grass field, whole plant in frame, wide shot, sunrise, peach and gold morning sky, no humans, no chibi, no mascot, no creature, no face, no extra leaves, no branches, no night sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 ## Beat 02 — THE SPRINT (0:06–0:11) ⬜ needs footage
