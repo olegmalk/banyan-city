@@ -60,6 +60,47 @@ proved is untouched — `40cm`, `whole plant in frame`, `wide shot`, the sunrise
 palette, the booster tail, and the entire negative list — so the subject description
 is the only thing that changed.
 
+A fourth attempt, later on 2026-08-06, changed only the leaf clause and is **not** in
+the prompt below, because it lost more than it won. `exactly two oversized cotyledon
+leaves` became `sprout with only two oversized leaves` — the bet was on `sprout`,
+since the two-leaf sprout is a motif this model has actually seen drawn thousands of
+times, whereas counting words are something it has only ever read. It got closer than
+anything before: seed 20260720 came back with **three** leaves where every earlier
+attempt gave four to six. But three is not two, and the other three seeds paid for it
+by losing the composition round 3 had already won — 20261720 and 20263720 both hung
+the plant off the top edge of the frame, and 20262720 cropped in to a single leaf. So
+the wording stays at round 3's and the leaf count is now four wordings deep:
+
+| wording | rounds | leaf count it drew |
+|---|---|---|
+| `a single pair of oversized leaves` | 1–2 | 4–6, in 8 of 8 |
+| `exactly two oversized cotyledon leaves` | 3 | 4–6, in 4 of 4 |
+| `sprout with only two oversized leaves` | 4 | 3 at best, in 1 of 4 — and 3 of 4 lost the composition |
+
+Do not spend a fifth round on synonyms for "two": treat the two-leaf character as
+something this model will not draw on request, and a thing the founder accepts or
+rejects (R4). The levers that are left are all outside the prompt — img2img over a
+chosen plate, a pose controlnet, or a different checkpoint.
+
+Also settled on 2026-08-06, and also not worth re-trying: **size adjectives do not
+shrink the fruit.** Two img2img repaints over `01-cold-open-r3-s3.png` at strength
+0.35, changing only the fruit clause — `one tiny unripe green fruit nub on the stem`
+and `one pea-sized unripe green fruit on the stem` — both came back with a fruit
+*larger* and rounder than the plate they started from, the first of them lime-yellow
+rather than green. The model hears `fruit` and draws a finished one; `tiny`, `nub`,
+`unripe` and `pea-sized` do not move it, and `pea-sized` moved only the colour. The
+practical consequence for this beat is the opposite of a defeat: the script wants the
+fig to *swell* across the six seconds, so the un-repainted plate is the start frame and
+a 0.35 repaint of it is a ready-made end frame. Do not spend more rounds asking for a
+smaller fruit in words; choose the frame instead.
+
+Known and deliberately left alone here: the negative prompt is 82 tokens against
+CLIP's 77-token ceiling, so its tail is silently dropped — diffusers warns when the
+*positive* prompt truncates but not when the negative does. For this beat the lost
+words are duplicates (`photorealism`, `text`), so nothing is actually suppressed that
+is not suppressed twice over; fixing it during round 4 would have added a second
+variable to a one-variable test.
+
 ```
 A tiny 40cm banyan seedling, exactly two oversized cotyledon leaves, thin curved stem, one small round green fruit hanging from the stem, alone in a vast empty grass field, whole plant in frame, wide shot, sunrise, peach and gold morning sky, no humans, no chibi, no mascot, no creature, no face, no extra leaves, no branches, no night sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
