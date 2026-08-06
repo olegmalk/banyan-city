@@ -278,6 +278,89 @@ def _crf_roundtrip(src: str, crf: int, out_dir: str) -> str:
     return png
 
 
+def _write_lossless(frames, path: str, fps: int) -> None:
+    """A SECOND copy of the same decoded frames with the encoder taken out of it.
+
+    export_to_video hands imageio its default quality, which on our clips lands
+    around 1 Mbps, and MODEL-COMPARISON.md:487 had to leave the period-3 motion
+    cadence open because a bitrate-starved inter-frame encode can manufacture
+    exactly that reading — repeated P-frames are what an x264 rate control does
+    when it runs out of bits. -qp 0 is x264's true lossless mode and yuv444p
+    leaves chroma unsubsampled, so whatever cadence survives here is in the
+    model's own frames and not in the container.
+
+    The uint8 conversion is export_to_video's line, character for character
+    ((frame * 255).astype(np.uint8)), because the two files must differ ONLY in
+    the encode. Frames are piped one at a time rather than as one 190MB write:
+    stderr is not drained, so a single write big enough to fill the pipe while
+    ffmpeg blocks is a deadlock with no output to explain it.
+    """
+    import subprocess
+
+    import imageio_ffmpeg
+    import numpy as np
+
+    arr = np.asarray(frames)
+    if arr.dtype != np.uint8:
+        arr = (arr * 255).astype(np.uint8)
+    n, h, w = arr.shape[0], arr.shape[1], arr.shape[2]
+    Path(path).parent.mkdir(parents=True, exist_ok=True)
+    p = subprocess.Popen(
+        [imageio_ffmpeg.get_ffmpeg_exe(), "-y", "-loglevel", "error",
+         "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{w}x{h}", "-r", str(fps),
+         "-i", "-", "-c:v", "libx264", "-preset", "veryfast", "-qp", "0",
+         "-pix_fmt", "yuv444p", path], stdin=subprocess.PIPE)
+    for frame in arr:
+        p.stdin.write(frame.tobytes())
+    p.stdin.close()
+    rc = p.wait()
+    print(f"lossless copy: {n} frames {w}x{h} at x264 -qp 0 yuv444p -> {path} "
+          f"(rc={rc})", flush=True)
+
+
+def _decode_frame0_replica(pipe, decode, cap: dict, path: str, fps: int) -> None:
+    """Decode the run's OWN latents again, frame 0 held for the whole clip.
+
+    THE QUESTION THIS ANSWERS, and it is the only question it answers. The
+    2026-08-06 measurement puts LTX-2.3's chroma collapse between the
+    conditioning still (Cab 27.34, matched at frame 0) and the exported pixels
+    (Cab ~3 by frame 18). Two things sit in that gap: the denoiser, which writes
+    the latents, and the VAE, which reads them. Replaying the SAME decoder on the
+    SAME latents with every latent frame replaced by latent frame 0 separates
+    them, because frame 0 is the position we already know decodes coloured:
+      coloured replica -> the decoder is fine at every temporal position and the
+                          grey is in the latents (a model/prior problem)
+      grey replica     -> a decoder that greys out everything past position 0,
+                          which would be a VAE bug and a different fix entirely
+    It is a decode, not a denoise: seconds, no extra sample, no second recipe.
+
+    `decode` is the UNWRAPPED bound method captured before the run, and `cap`
+    carries the positional timestep and kwargs the pipeline itself passed, so the
+    replay differs from the real decode in the latents and in nothing else.
+    """
+    import torch
+
+    from diffusers.utils import export_to_video
+
+    lat = cap.get("latents")
+    if lat is None or lat.ndim != 5:
+        print(f"!! frame-0 replica skipped: latents {None if lat is None else tuple(lat.shape)}"
+              f" is not the [B,C,F,H,W] shape vae.decode was expected to receive",
+              flush=True)
+        return
+    # repeat, not expand: this tensor goes into a conv stack, and an aliased
+    # stride trick is the kind of thing that works until something writes in place.
+    held = lat[:, :, :1].repeat(1, 1, lat.shape[2], 1, 1)
+    with torch.no_grad():
+        out = decode(held, *cap["args"], **cap["kw"])
+    vid = out[0] if isinstance(out, tuple) else out.sample
+    vid = pipe.video_processor.postprocess_video(vid, output_type="np")
+    Path(path).parent.mkdir(parents=True, exist_ok=True)
+    export_to_video(vid[0], path, fps=fps)
+    print(f"frame-0 replica decode: latents {tuple(lat.shape)} -> "
+          f"{tuple(held.shape)} -> {path}", flush=True)
+
+
 def _local(repo, filename=None):
     """Resolve an already-cached repo/file. local_files_only: this script must
     never start a 24GB download as a side effect of a typo in a repo id."""
@@ -549,6 +632,30 @@ def _render_with(a, transformer, parts, dist, w, h) -> int:
             enable()
             break
 
+    # THE CAPTURE IS A PASS-THROUGH AND IT IS OFF BY DEFAULT, both deliberately.
+    # An invocation that does not ask for --decode-frame0-out never installs this,
+    # so the graph that produced every previous clip is untouched; and when it is
+    # installed it records its argument and calls straight through, so the clip
+    # this run exports is the clip it would have exported anyway. Taking the
+    # latents HERE rather than re-running the pipeline at output_type="latent" is
+    # what keeps the sample comparable: the same denoise, the same decode, one
+    # extra decode afterwards.
+    #
+    # vae.decode is where the pipeline hands over 5-D DEnormalised latents plus
+    # the decode timestep (pipeline_ltx2_image2video.py:1572). audio_vae is a
+    # different object, so nothing here touches the audio path.
+    cap: dict = {}
+    _vae_decode = pipe.vae.decode
+    if a.decode_frame0_out:
+        def _capturing_decode(latents, *args, **kw):
+            # last write wins: on the two-stage path stage 1 and the upsampler
+            # both run at output_type="latent" and never decode, so this is the
+            # decode that made the exported pixels either way.
+            cap["latents"] = latents.detach().clone()
+            cap["args"], cap["kw"] = args, kw
+            return _vae_decode(latents, *args, **kw)
+        pipe.vae.decode = _capturing_decode
+
     e = torch.load(a.embeds, map_location="cpu")
     init = a.init
     if a.image_crf:
@@ -779,6 +886,14 @@ def _render_with(a, transformer, parts, dist, w, h) -> int:
                    "throughput_s_video_per_s_wall":
                        round(batch * clip_s / sample_s, 4),
                    "compute_s_per_video_s": round(sample_s / batch / clip_s, 1)})
+    # THE RIDERS RUN AFTER THE CLIP IS ON DISK, so a failure in either one cannot
+    # cost the sample: the file the run exists to produce is already written and
+    # its sidecar with it. Both are slot 0 only — they answer questions about a
+    # recipe, not about a batch, and this renderer's batch is a throughput probe
+    # whose slots differ by noise alone.
+    if a.lossless_out:
+        _write_lossless(video[0], a.lossless_out, a.fps)
+
     # THE DECODE IS ONE CALL, so this release is per-batch and not per-slot, and
     # saying otherwise would be a comment describing code that does not exist:
     # output_type="np" makes postprocess_video stack all N clips into a single
@@ -788,6 +903,16 @@ def _render_with(a, transformer, parts, dist, w, h) -> int:
     # and host RAM is what killed the b4 probe on 2026-08-05.
     del video, audio
     gc.collect()
+
+    # AFTER the release above, and that ordering is the whole reason this is not
+    # up with the lossless rider: the replica decode allocates a SECOND full
+    # [F,H,W,C] float array, and at 121 frames of 544x960 that is ~0.76GB against
+    # a host peak this recipe already measures in the high fifties of 68.1GB.
+    # Freeing the first one first costs nothing and keeps the two from overlapping.
+    if a.decode_frame0_out:
+        pipe.vae.decode = _vae_decode          # un-wrap before replaying it
+        _decode_frame0_replica(pipe, _vae_decode, cap, a.decode_frame0_out, a.fps)
+        gc.collect()
 
     # (N clips of video) / (one wall-clock sample). The number the probe exists to
     # produce: if it does not rise with N, the card is step-bound and batching
@@ -895,6 +1020,18 @@ def main() -> int:
     # by their reckoning).
     ap.add_argument("--image-crf", type=int, default=0,
                     help="round-trip the still through libx264 at this CRF first")
+    # --- two diagnostic riders. Both default OFF and both are pure additions to
+    # a run that was going to happen anyway: no extra sample, no second recipe,
+    # no change to the exported clip. Empty string = don't.
+    ap.add_argument("--lossless-out", default="",
+                    help="also write slot 0's frames to this path at x264 -qp 0 "
+                         "yuv444p, so a cadence question can be asked of the "
+                         "frames instead of of the ~1 Mbps default encode")
+    ap.add_argument("--decode-frame0-out", default="",
+                    help="also decode this run's own latents a second time with "
+                         "latent frame 0 replicated across every latent position; "
+                         "coloured output puts a colour collapse in the latents, "
+                         "grey output puts it in the VAE decoder")
     ap.add_argument("--seed", type=int, default=20260731)
     ap.add_argument("--beat", type=int, default=1)
     ap.add_argument("--task", default="d16c-one-sample")
