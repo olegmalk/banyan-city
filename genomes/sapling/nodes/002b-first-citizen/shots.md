@@ -28,8 +28,18 @@ mentioned, last time we generated 002b it just.. appeared"). It is also the only
 thing episode 1 said he can do — `GROW ✓ slow. directional.` — so the growth is
 continuity, not decoration.
 
+Prompt rewritten 2026-08-06 after the first still came back as a thick woody
+MATURE branch carrying ~8 leaves and a ripe pink peach. The scale negatives were
+already firing and lost anyway, so the fix is in the positive prompt: the sapling
+leads instead of the scene, "40cm" and "whole plant in frame" state the scale the
+episode's joke depends on, `no extra leaves` / `no branches` / `no ripe fruit` /
+`no large fruit` are comma-terminated so `sd_prompt` moves them into the negative,
+the fig is small, green and unripe ON THE TRUNK (it still swells — the founder's
+condition — but "ripening" is what coloured it peach), and `macro shot` is gone
+because it invited the branch-scale crop that produced the mature tree.
+
 ```
-no humans, tiny banyan sapling, thin curved trunk, two oversized leaves, one small fig on the thinnest branch, fig swelling and ripening, vast empty green field, early morning, peach and gold sky, macro shot, shallow depth of field, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+A tiny 40cm mascot-simple banyan sapling, thin curved trunk, exactly two oversized leaves, no extra leaves, no branches, alone in a vast empty green field, one small unripe green fig swelling on its trunk, no humans, no ripe fruit, no large fruit, whole plant in frame, wide shot, early morning, peach and gold sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 ## Beat 02 — THE SPRINT (0:06–0:11) ⬜ needs footage
