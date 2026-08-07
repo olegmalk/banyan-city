@@ -39,8 +39,17 @@ Line: 'Production went down at 2:41.' Camera on the terminal - the machine is th
 
 no dialogue - post burns the deploy-succeeded card. Camera stays on the screen.
 
+REWRITTEN 2026-08-07 to the founder's verdict: *"Beat 3 looks more like a terminal
+in some.. lab. not realistic. whatever you intended it to be, you should make a new
+image for it and make sure it looks like its inside a house."* The old prompt gave
+the model a monitor, a dark room and a deep blue glow and nothing domestic at all —
+which is the description of a lab bench. The screen is now a PERSONAL computer on a
+home desk: warm lamp, mug, houseplant, a bedroom corner behind it. `no laboratory,
+no server room, no lab equipment` go to the negative; the terminal stays the
+subject (so `sd_prompt` keeps un-negating `text` for this beat).
+
 ```
-computer monitor close-up filling the frame, terminal window, command finishing, green success line, blinking cursor, dark room, deep blue glow, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+close-up of a personal computer monitor on a cluttered home desk, terminal window, a command finishing, green success line, blinking cursor, warm desk lamp glow, coffee mug, houseplant, a lived-in bedroom corner at night, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No laboratory, no server room, no lab equipment, no cubicle, no person. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 ## Beat 04 — THE FALL (0:15–0:20) ⬜ needs footage04
 
@@ -62,8 +71,15 @@ extreme macro close-up of two thick curved glazed ceramic shards lying flat on d
 
 Line: "Ceiling's gone. Open-plan hospital." The wrong-ceiling joke IS the shot — he is looking at open sky WITH clouds, so the gag is that he files it as architecture.
 
+REWRITTEN 2026-08-07 to the founder's verdict: *"for beat 6, there shouldnt be a
+leaf in the image, doesnt make sense that he can see himself when he is looking at
+the sky."* Correct — the leaf leaning into frame was HIM, and a first-person POV
+cannot contain its own body. The whole foreground is gone: open sky, one drifting
+wisp, and only a soft blurred green fringe at the very bottom edge to place the
+camera on the ground. `no leaf, no plant, no stem` are in the negative now.
+
 ```
-no humans, plant focus, pov from inside tall grass, camera on the ground pointing straight up, a vast flat clear blue morning sky filling most of the frame, soft out-of-focus grass blade tips fringing the very edges of the frame, one small green sprout leaf leaning into view at the bottom, one tiny wisp of cloud, gentle morning light, dreamy, detailed, newest, masterpiece, best quality, very aesthetic No 1girl, no girl, no boy, no person, no face, no eyes, no hair, no portrait, no big clouds, no forest, no tree, no abstract shapes. No photorealism, no 3D render look. 9:16 vertical, no text.
+a vast open sky filling the frame seen from ground level looking straight up, no humans, deep clear blue morning sky, one thin wisp of white cloud drifting high above, a soft blurred green fringe of grass along the bottom edge, gentle morning light, dreamy, detailed, newest, masterpiece, best quality, very aesthetic No leaf, no plant, no stem, no foliage, no big clouds, no tree. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 ## Beat 07 — ZERO (0) MOVING PARTS (0:29–0:35) ⬜ needs footage07
 
@@ -85,8 +101,17 @@ one that works, kept deliberately cool/overcast/flat so it does not duplicate be
 08's warm backlit grass two seconds later. The beat's job (one still sprout, nothing
 moving) is unchanged; only the lens is.
 
+RE-PALETTED 2026-08-07 to the founder's verdict: *"beat 7 makes everything look
+grayened. thats not a bad thing but the main problem is that it drastically changes
+the style."* The cool/overcast wording above was the steward's own device for
+separating 7 from 8 — and it bought that separation with a palette break the
+founder can see from across the room. Stillness is kept (dead calm air, nothing
+moving); the grey is not. The episode's morning palette is back, `no grey sky, no
+overcast` are in the negative, and the 7/8/9 separation moves to the place it
+belongs — the LENS, in the progression set below.
+
 ```
-no humans, plant focus, a tiny two-leaf sprout on one thin stem standing dead still, low close shot from just above the soil, sparse short grass, pale cool overcast sky, flat even light, dead calm air, nothing moving, detailed, newest, masterpiece, best quality, very aesthetic No macro close-up, no leaf filling the frame, no many leaves, no leaf cluster, no foliage, no branch, no woody trunk, no mature plant, no bush, no motion blur, no whipping, no bending, no wind, no sunset, no golden hour, no backlight, no person, no hands. No photorealism, no 3D render look. 9:16 vertical, no text.
+plant focus, no humans, a tiny two-leaf sprout on one thin stem standing dead still, low close shot from just above the soil, short green grass, pale blue morning sky, soft morning light, one thin cloud drifting, dead calm air, nothing moving, detailed, newest, masterpiece, best quality, very aesthetic No macro close-up, no many leaves, no grey sky. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 ## Beat 08 — SEV-1 (0:35–0:48) ⬜ needs footage08
 
@@ -108,8 +133,17 @@ Line: 'Sense. I can taste the water table.' Camera underground - the sense IS th
 The pulsing footstep-RINGS are a POST overlay (deterministic, like the terminal cards) —
 three founder-rejected rounds proved the model cannot be trusted to draw them.
 
+REWRITTEN 2026-08-07 to the founder's verdict: *"for beat 10, another major style
+change and it looks a sapling in the middle of a long body of water, with a blank
+dark background."* The macro-underground framing had no horizon, no grass and no
+daylight in it, so "wet soil under faint blue light" resolved as a plant standing in
+water against black. The camera comes up to the plant's own base: the sense is
+shown where the sprout meets the ground, in the episode's field and its morning
+light, with the water read as droplets in the earth rather than a surface. Rings
+remain a POST overlay.
+
 ```
-macro close-up of dark wet soil at ground level, one pale thin root tip curling between the grains, clinging water droplets catching a faint blue light, damp earth texture sharp in the foreground, shallow depth of field, quiet, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No abstract shapes, no vertical streaks, no drips, no paint drips, no cross-section, no diagram, no cave, no tunnel, no doorway, no cave mouth, no black frame, no empty darkness, no people, no portal, no eye, no sky, no lightning, no god rays, no light shafts. No photorealism, no 3D render look. 9:16 vertical, no text.
+plant focus, no humans, low shot at the base of a tiny two-leaf sprout, damp dark soil around its stem, pale roots at the surface, water droplets in the earth, short green grass at the frame edges, soft warm morning light, shallow depth of field, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No lake, no water surface, no dark background, no black void, no cave. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 ## Beat 11 — GROW (1:03–1:09) ⬜ needs footage11
 
@@ -122,8 +156,15 @@ macro close-up of a tiny green sprout, one brand new bright leaf unfurling at it
 
 Line: 'That is the whole API.' Camera on the strain that achieves nothing.
 
+REWRITTEN 2026-08-07 to the founder's verdict: *"beat 12 follows the style well but
+looks like the sapling is in a dark place, with a dry cracked and gray floor,
+completely changes the enviroment, gotta regenerate that."* The prompt asked for
+exactly that: `cracked flat dirt ground, pale grey sky`. Both are gone — the strain
+happens in the same green field, damp soil and morning light as every other outdoor
+beat, and the cracked-desert reading is in the negative.
+
 ```
-a single thin green plant stem bent into a tense arc, growing from cracked flat dirt ground, minimalist empty scene, pale grey sky, quiet, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No person, no figure, no cloak, no ghost, no sphere, no flowerpot. No photorealism, no 3D render look. 9:16 vertical, no text.
+plant focus, no humans, a single thin green stem of a tiny sprout bent into a tense arc, leaning hard and straining, rooted in damp brown soil among short green grass, open sunlit field, pale blue morning sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No cracked ground, no dry dirt, no grey floor, no flowerpot. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 ## Beat 13 — I ALWAYS LEFT (1:12–1:21) ⬜ needs footage13
 
@@ -136,14 +177,32 @@ an empty dirt road running straight to a pale horizon across windswept grass fie
 
 Line: 'I can only make this spot worth staying in.' The want of the series, as a grip.
 
+REWRITTEN 2026-08-07 to the founder's verdict: *"beat 14 is.. i dont know what?? what
+is it supposed to be? i think you need to regenerate it."* That is a legibility
+failure, not a taste one, and the prompt caused it: a macro crop of "roots wrapped
+around a clump of soil" with no plant, no ground plane and no horizon in it has
+nothing in frame to tell a viewer what they are looking at — it reads as texture.
+The script's line is *"Low at the base of the trunk: roots gripping soil"*, so the
+subject is restored: the sprout is IN the shot, stem rising out of the earth, roots
+gripping down into it, field behind. The grip is legible because the thing gripping
+is visible.
+
 ```
-macro close-up of pale thin roots wrapped tight around a clump of dark brown soil, fine root hairs gripping, crumbs of earth, warm low light raking across the surface, shallow depth of field, quiet, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No abstract shapes, no vertical streaks, no drips, no paint drips, no cross-section, no diagram, no cave, no tunnel, no doorway, no cave mouth, no black frame, no empty darkness, no people, no portal, no eye, no sky, no lightning, no god rays, no light shafts. No photorealism, no 3D render look. 9:16 vertical, no text.
+plant focus, no humans, low close shot at the base of a tiny two-leaf sprout, thin stem rising out of the ground, pale roots gripping into damp brown soil, small stones and short grass around it, warm afternoon light raking across the earth, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No cross-section, no diagram, no cave, no black void. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 ## Beat 15 — SOMETHING'S COMING (1:34–1:37) ⬜ needs footage15
 
-Line: 'Something is coming.' Camera underground; the footsteps are felt, not seen.
-The approaching RINGS are a POST overlay, brighter/faster than beat 10's (same mechanism).
+Line: 'Something is coming.' The footsteps are felt, not seen. The approaching RINGS
+are a POST overlay, brighter/faster than beat 10's (same mechanism).
+
+REWRITTEN 2026-08-07. The founder: *"for beat 15, why is it showing the underground?
+i think it should show the sapling, no? well, you can decide."* Decided — surface
+level, sapling as protagonist. The camera comes up out of the soil and sits with him
+in the grass; the arriving presence enters the frame as a hard warm glow spilling in
+from the right edge with the ground trembling under it, so the episode ends on the
+character something is walking toward rather than on dirt. Nothing is shown of what
+is coming, which is the hook (`no person, no figure, no monster` in the negative).
 
 ```
-macro close-up of dark soil and small stones at ground level, pale roots among them, strong warm orange light raking in from the right side and lighting the grains clearly, long shadows stretching left, loose dust, ominous, well lit, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No abstract shapes, no vertical streaks, no drips, no paint drips, no cross-section, no diagram, no cave, no tunnel, no doorway, no cave mouth, no black frame, no empty darkness, no people, no portal, no eye, no sky, no lightning, no god rays, no light shafts. No photorealism, no 3D render look. 9:16 vertical, no text.
+plant focus, no humans, a tiny two-leaf sprout standing at ground level in short grass, loose soil grains scattering around its base, a strong warm orange glow spilling in from the right edge of frame, long shadows stretching left, evening field, ominous, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No underground, no cave, no black void, no figure, no monster. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
