@@ -1921,8 +1921,9 @@ multiplying, no changing leaf count, no morphing silhouette.* They land at the
   watermark*. That is a change to an approved still's recipe and is **not** made
   here.
 
-**IT RAN, and the leaf no longer divides.** Both boxes were off at the start of
-the session; the 5090 came back mid-session and the job fired immediately.
+**IT RAN, and the leaf no longer divides.** The 5090 was unreachable at the start
+of the session and answered mid-session; the job fired the minute it did (see the
+correction below — the box had been up the whole time).
 `review/11-grow-antisplit.mp4`, seed 20260816, 704x1280, 14 steps, guidance 5.0,
 UniPC shift 5.0, `model_cpu_offload`, 279s wall, $0, provenance sidecar beside
 it. Frame counts at the apex, where the script has exactly two blades (the one
@@ -1969,6 +1970,31 @@ compared on each machine; they matched). It also writes the §7.2 sidecar that
 be excavated from a dead commit. `pipeline/probe-b11-mitosis.sh` is the one
 command that stages and fires it.
 
-**Machine state:** rtx5090 (192.168.3.157) **up**, card idle before and after.
-MSI 5070 Ti (192.168.3.153) **still down** — no ping, no ssh, ARP incomplete;
-the household power problem has cleared for one box, not both.
+**Machine state, and a correction worth more than the render: THE 5090 WAS NEVER
+DOWN TODAY.** It was reported off, it failed ping, ssh and ARP at 12:50 local, and
+it answered at 13:20 — and its own clock says otherwise. `LastBootUpTime` is
+**2026-08-06 20:13:54**, i.e. **17.4 hours of unbroken uptime** across the whole
+window in which we called it powered off, and there is **no Kernel-Power 41 dated
+2026-08-07 at all**. The unclean-shutdown record is six events, none today:
+
+    2026-08-06 20:13:57   <- the mains failure, yesterday evening
+    2026-08-05 06:07:09       2026-08-05 00:11:46
+    2026-08-04 16:38:32       2026-08-04 11:30:38
+    2026-08-03 11:33:23
+
+**So today's outage was the LAN, not the power** — the same failure mode as
+2026-08-06 (`2c02c3e`, "the LAN moved too"), and the second time in two days that
+a network fault has been read as a dead box. The cost is not small: "the box is
+off" ends work and waits for a human to walk to it, while "the box is unreachable"
+is a thing to retry. **Ping is not a power state.** Before recording a machine as
+down, check the other one's reachability and re-probe; after it answers, read
+`LastBootUpTime` and settle which it was, because that answer decides whether
+anyone has to get up.
+
+The card was idle before and after (0 MiB / 0%), the one-shot task was deleted,
+and the only python on the box is `telemetry.py --daemon`, which was already
+running — **the farm worker was not started and nothing else was touched.**
+
+MSI 5070 Ti (192.168.3.153) is **unreachable** — no ping, no ssh, ARP incomplete.
+On today's evidence that word is doing real work: unreachable is what we know, and
+whether it is switched off is exactly what we cannot tell from here.
