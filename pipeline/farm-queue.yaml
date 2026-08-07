@@ -451,46 +451,36 @@ backlog:
 
 # MODEL-COMPARISON section 1 carries three rows that read SCHEDULED and have never
 # run. They are stocked here with the gates they actually have.
-- id: t5-fastwan-licence-1786090200
-  runner: manual
-  worker: m1pro
-  needs: []
-  window: any
-  est_minutes: 15
-  cmd: >-
-    python3 pipeline/vet_model.py on the FastWan rank-128 LoRA repo, then
-    python3 pipeline/licence_gate.py
-  why: >-
-    T5's LoRA may not be downloaded until the licence gate clears it (a standing
-    gate in the ACTION-PLAN header). The check is text, needs no GPU and no
-    founder, and it decides whether the T5 row is real work or a row to cut — a
-    change MODEL-COMPARISON should carry either way.
+# RETIRED 2026-08-07 — t5-fastwan-licence-1786090200, done by db26f7b (`FastWan's
+# licence is real, and it is on GitHub rather than where the recipe points`).
+# Verdict SHIP-SAFE: hao-ai-lab/FastVideo's LICENSE read and diffed against
+# canonical Apache-2.0, vendored to licences/, vet_model.py CLEAR, self-test
+# 11/11. Evidence and the mirror caveat are in models-licence.md's FastWan
+# section. The row it was deciding the fate of is real work, not a row to cut.
 
 - id: t5-fastwan-sample-b01-1786090260
   runner: manual
   worker: rtx5090
   needs: [cuda, vram20, video-venv]
-  gate: code
-  gate_ref: >-
-    t5-fastwan-licence-1786090200 has not run. The LoRA may not be DOWNLOADED
-    until pipeline/licence_gate.py clears the repo (the standing gate in the
-    ACTION-PLAN header), so the weights this sample renders on cannot legally be
-    on the box yet. That check is text, unblocked and sitting in this same
-    backlog. The hardware gate this entry used to carry — rtx5090 Smart App
-    Control enforcement, shared with b09-antigrowth-1786089660 — was cleared by
-    the founder on 2026-08-07 and verified (torch and transformers both import);
-    the licence gate is what was standing behind it, named in `why` all along.
   window: any
   est_minutes: 10
   cmd: >-
     one beat-1 clip at 3 steps, guidance 1, flow_shift 3, 121 frames at 704x1280 —
-    the LoRA's own recipe, and do not carry our shift over
+    the LoRA's own recipe, and do not carry our shift over. Take the weights from
+    FastVideo's own repo, or from the DeepBeepMeep mirror WITH sha256
+    79290493711b022e1c6e655d803715cd8a91a75cdb139856cad46f354e2f681c recorded in
+    the sidecar; the sidecar must name the LoRA, not just the 5B base
   why: >-
-    Behind the hardware gate sits t5-fastwan-licence-1786090200, which must clear
-    first. Read the sample knowing two things upstream already documents: at
-    guidance 1 the entire negative prompt is inert, so every anti-static term we
-    tuned stops applying, and distill LoRAs are documented to slow motion — the
-    exact defect the K recipe was rejected for.
+    UNGATED 2026-08-07 by db26f7b. Both gates this entry ever carried are gone:
+    the rtx5090 Smart App Control enforcement the founder cleared, and behind it
+    the licence, which now reads Apache-2.0 with text we can quote. Nothing
+    remains but the machine and the recipe — the 5090, free, and the LoRA loading
+    path, which is the one piece of real work left, since wan_i2v's LoRA plumbing
+    was built for the A14B/AnimeGen path and has never loaded a LoRA onto the 5B.
+    Read the sample knowing two things upstream already documents: at guidance 1
+    the entire negative prompt is inert, so every anti-static term we tuned stops
+    applying, and distill LoRAs are documented to slow motion — the exact defect
+    the K recipe was rejected for.
 
 # UNGATED 2026-08-07 with b09-antigrowth-1786089660, and this entry is the one
 # the unblock mattered most to. Its gate read: the same rtx5090 Smart App Control
