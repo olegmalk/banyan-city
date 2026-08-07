@@ -1,0 +1,29 @@
+# Still provenance (7.2) — NOT written at render time. The job that drew
+# this frame (C:\banyan-farm\wave-20260807\render_wave.py on the rtx5090)
+# is a standalone script and does not go through farm_worker, so it wrote
+# no record; all 40 frames of the wave landed bare. Reconstructed on
+# 2026-08-07 from that run's own wave.log, which prints the compressed
+# prompt, the negative, the seed and the wall time for every file it saved.
+# Every field below is read out of the log or resolved by the gate — none
+# is inferred from shots.md, because compress() rewrites the shot text and
+# the model saw the compressed string, not the authored one.
+#   NEGWARN: !! negative prompt over CLIP's 77-token budget; deduplicated: text
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+shot_beat: 10
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20261729
+seeds_in_batch: 4
+task: ep1-stills-rework-1786124640
+candidate_set: fix
+wall_seconds: 9
+cost_usd: 0
+note: |-
+  a replacement frame for a beat the founder refused on 2026-08-07; the direction it was drawn from is shots.md as of fd056e5
+prompt: |-
+  plant focus, low shot at the base of a tiny two-leaf sprout, damp dark soil around its stem, pale roots at the surface, water droplets in the earth, short green grass at the frame edges, soft warm morning light, shallow depth of field, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, mature tree, large tree, tall tree, thick trunk, full canopy, forest, bush, shrubbery, humans, lake, water surface, dark background, black void, cave, photorealism
