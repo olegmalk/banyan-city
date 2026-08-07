@@ -1840,10 +1840,23 @@ page why the number cannot decide held-vs-moving.
   conditioning frame: `takes/stills/01-cold-open-r3-s3.png`, **untouched** — both
   repaints made the fruit bigger when asked for smaller, so the untouched plate
   is the nub and the repaints are what the end of the shot looks like.
-- **Negative prompts silently truncate at 77 tokens on every render.** Real,
-  unfixed. Beat 15's rejected-take negative alone is far past it, so the tail
-  terms in any long negative are not reaching the model at all.
-- **`genomes/sapling/nodes/002b-first-citizen/takes/` is untracked but NOT
-  gitignored** — 25 MB that an accidental `git add -A` would commit. (001's
-  `takes/` is already tracked, 183 files, so the hazard is 002b's alone.)
-  Nothing has been staged; it is a live hazard.
+- ~~**Negative prompts silently truncate at 77 tokens on every render.**~~
+  **FIXED 2026-08-07** (`sd_prompt.fit_negative`, commit d63271c). Measured with
+  the real CLIP tokenizer, 7 of the genome's 177 beats were over: 001 beats 5, 6,
+  7, 10, 14, 15 and 002b beat 1. 001 beat 7 was the worst at 115 tokens — 16 of
+  the terms its author wrote were never sent. The fitter deduplicates, then drops
+  whole terms from the least important end (house boilerplate before a
+  beat-specific instruction, video_task's rule), and names what it dropped. It is
+  a no-op for the 170 beats that already fitted — byte-identical, and a test
+  holds that line. **Two consequences worth knowing:** re-rendering 001 beats 5,
+  6, 7, 10, 14 or 15 will no longer reproduce the archived frames exactly, and
+  the shot board still prints the *unfitted* negative under "as sent", so for
+  those 7 beats the published board overstates what reaches the model (it was
+  already wrong there — CLIP was cutting it — just differently wrong now).
+- ~~**`002b-first-citizen/takes/` is untracked but NOT gitignored**~~ **FIXED
+  2026-08-07** (same commit). Candidate media under any node's `takes/` is now
+  ignored **by extension** — png/jpg/mp4/mp3/wav — so the yaml provenance
+  sidecars beside the pixels stay in the tree. 001's `takes/` is exempted: it is
+  a deliberately committed v1 archive, all 183 files still tracked, and new files
+  there behave as they always have. Verified: tracked count unchanged at 1668,
+  002b's 21 candidates gone from the untracked list.
