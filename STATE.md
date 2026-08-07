@@ -2102,11 +2102,15 @@ Error loading "...\torch\lib\c10.dll" or one of its dependencies.
 
 **Smart App Control turned itself on.**
 `HKLM\SYSTEM\CurrentControlSet\Control\CI\Policy\VerifiedAndReputablePolicyState`
-now reads **1 (enforcement)**. The CodeIntegrity log shows a policy refresh at
-**13:25:22** — about a minute before beat 11's clip finished rendering on the same
-torch — and the **first block events in the log's history at 13:51**, which is
-this probe. So the beat 11 render was the last one to get through. It is not the
-scheduled task: a plain interactive ssh `import torch` is blocked identically.
+now reads **1 (enforcement)**, and the CodeIntegrity log dates the change. At
+**13:25:22** today: *"Refreshed and activated Code Integrity policy
+{0283ac0f-fff1-49ae-ada1-8a933130cad6} VerifiedAndReputableDesktop"* — the same
+policy GUID the block event names, activated about a minute before beat 11's clip
+finished rendering on that same torch. The log holds **1341 events going back to
+2026-07-31**, and **exactly three of them are blocks (Id 3077), all today at
+13:51** — this probe and the interactive check that confirmed it. So beat 11 was
+the last render to get through, and this is not an artifact of the scheduled
+task: a plain interactive ssh `import torch` is blocked identically.
 
 **This one needs a human at the keyboard, and the switch is one-way.** Smart App
 Control has no allowlist and no per-file exclusion; Microsoft's documented
