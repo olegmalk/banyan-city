@@ -525,3 +525,105 @@ backlog:
     SCHEDULED today and is probably a lie. Their own published VBench Motion is
     45.59, below vanilla Wan on the axis this show cares about, so the likeliest
     honest outcome of this check is that the row gets cut.
+
+# Held stills ARE provenanced and the gate cannot read the provenance. Both
+# strings pipeline/hold_still.py writes fail licence_gate's own classifier, and
+# the repair is a few characters — but the same field is load-bearing in two
+# other tools, so the obvious rewrite breaks them. Read all three parts.
+#
+# PART 1 — the strings. Verified by running licence_gate's classifier on them,
+# not reasoned about:
+#   platform: local-cpu (ffmpeg)                    -> model_licences() []
+#     -> no POINTER, whole value not in SENTINELS   -> VIOLATION
+#   platform: local-deterministic (pipeline/hold_still.py, ffmpeg)
+#     -> local-deterministic -> CC-BY-4.0 (our own output) -> PASS
+#   model: none — held still + code push-in, no video model ran -> VIOLATION
+#   model: none                                     -> SENTINELS -> PASS
+# licence_gate.py:466 matches SENTINELS on the WHOLE value and never as a
+# fragment, which is exactly why the explanatory tail is what breaks it. The
+# tail is worth keeping — move it to its own key. Do not append it to `model:`.
+#
+# PART 2 — "model: none" IS A TOKEN TWO OTHER TOOLS DETECT ON, and this is the
+# way to get this wrong:
+#   render_t3.py:545        held_still() substring-matches "model: none" on each
+#                           clip's sidecar. False means the clip is treated as
+#                           real footage and PING-PONGED to fill its slot rather
+#                           than stretched — the reversing held zoom, back again.
+#   check_invention.py:207  skips held clips by the same substring. Drop the
+#                           token and every held clip gets scored for invented
+#                           content, which is the four confident false positives
+#                           that check's own comment records.
+# A BARE `model: none` satisfies the gate AND both detectors. Adding to it does
+# not, and neither does renaming the key.
+#
+# PART 3 — the naming split, and the fix belongs in the READERS. The tree
+# carries two sidecar conventions: <stem>.meta.yaml (98 files under genomes/)
+# and <full-name-with-extension>.meta.yaml (hold_still.py:243 and
+# video_task.write_sidecar at video_task.py:803, e.g. SAMPLES/*.mp4.meta.yaml).
+# licence_gate's sidecar_of (licence_gate.py:846) and build_site
+# (build_site.py:1513, 1638, 1659, 1666) match the STEM shape only, so a sidecar
+# written in the other shape is invisible to them and its asset reads as having
+# no provenance at all. build_shotboard.py:240-241 already handles this the
+# right way — try the exact name, fall back to the beat's base, link nothing
+# over a 404 — and that is the pattern to copy. DO NOT do a rename sweep: it
+# breaks every reader pinned to the other convention, starting with the two
+# detectors in Part 2, and it throws away the git trail on each file.
+- id: held-sidecar-classify-1786114785
+  runner: manual
+  worker: m1pro
+  needs: []
+  window: any
+  est_minutes: 40
+  cmd: >-
+    in hold_still.sidecar() write platform "local-deterministic
+    (pipeline/hold_still.py, ffmpeg)" and a BARE "model: none", moving the held
+    description to its own key; then teach licence_gate.sidecar_of and
+    build_site to accept both sidecar naming conventions
+  why: >-
+    Every held still in episode 1 ships with provenance the licence gate scores
+    as an unclassified model, so the one tool that decides what may be published
+    cannot read the record saying nothing was generated; its consumer is that
+    gate's verdict on the cut the founder is being asked to pass.
+
+# The farm's STILLS path publishes pixels with no provenance at all.
+# farm_worker.py:430 saves the PNG and writes nothing beside it. Observed on
+# origin/farm-results-m1pro for task b07-negatives-as-written-1786090140: two
+# PNGs, zero sidecars. Section 7.2 says every render publishes model, prompt and
+# cost; this path publishes none of the three, and it is the path that makes
+# most of the tree's images.
+#
+# The video path already solved this — video_task.write_sidecar
+# (video_task.py:789) — and the stills path has what it needs at the write site:
+# BASE is in scope from farm_worker.py:378, where a task MAY OVERRIDE it
+# (`task.get("model") or ...`), so record the BASE actually used and never the
+# default string.
+#
+# TWO REASONS VERBATIM REUSE IS NOT ENOUGH:
+#   1. write_sidecar's MODEL_LICENCE table (video_task.py:665) is video-only —
+#      ti2v-5b, animegen, ltx23-*. A still model is not in it and falls through
+#      to "UNVERIFIED — licence not read", which licence_gate classifies
+#      unknown. Give the still model a real table entry; do not ship the
+#      default.
+#   2. write_sidecar emits <full-name>.meta.yaml, the convention sidecar_of
+#      cannot see. Until held-sidecar-classify-1786114785 lands, sidecars
+#      written this way are correct records the gate still cannot read.
+# AND EXPECT THE GATE TO GET LOUDER, WHICH IS THE POINT: still_model
+# "cagliostrolab/animagine-xl-3.1" is ALREADY an open licence_gate finding on
+# the 001 leaves (CreativeML Open RAIL++-M, use restrictions travel, D15).
+# Naming the model on the stills path surfaces that same known finding on more
+# files. That is disclosure working as designed — do not quiet it by leaving the
+# model out.
+- id: stills-sidecar-provenance-1786114845
+  runner: manual
+  worker: m1pro
+  needs: []
+  window: any
+  est_minutes: 30
+  cmd: >-
+    give farm_worker.py's stills path the sidecar its video path already writes
+    — the model actually loaded, prompt, negative, seed, size, steps, cost 0 —
+    beside every PNG it saves
+  why: >-
+    Candidate frames land on the courier branches as bare PNGs with the model
+    recorded nowhere, so the shot board shows art it cannot cite and "provenance
+    always" is unmet on the path that produces most of the tree's images.
