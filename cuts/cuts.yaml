@@ -53,7 +53,7 @@ cuts:
       - "**the five held beats (4, 5, 7, 10, 14)** were re-rendered under the author's own instruction that day: *“do not do ping pong… it should be very slow and gentle zooming.”* The push is now **2–4% of scale at a constant 0.6% per second**, one-way and linear, against a flat 18% front-loaded at 10.1%/s before. The five pairs below are the whole change, cut out of both episodes"
       - "**no animated beat changed.** v31's footage went in untouched and was verified pixel-identical at probes inside beats 6, 8, 9, 11, 12, 13 and 15"
       - "**gentleness is a rate, not a total** — a fixed 18% made a 2.6-second beat drift five times faster than a 13-second one and called both the same move"
-      - "**checks** — 15 QA checks pass with the same single loudness warning v30 and v31 carry; sync clean across the whole node. Runs 0.08s under v31, which is rounding on three held slots, not footage"
+      - "**checks** — 15 QA checks pass, carrying the same single brightness warning v30 and v31 also carry; narration sync clean across the whole node. Runs 0.08s under v31, which is rounding on three held slots, not footage"
     known_wrong:
       - "**2–4% may now be too little.** The author once called a 6% version invisible — *“this one has no motion, u sure you opened it”* — and this is gentler than that. The zoom is one number and every held beat re-renders in about a minute, so “too little” is a cheap thing to say"
       - "**beats 8 and 9** are still near-identical shots back to back, unchanged since v30"
@@ -70,7 +70,7 @@ cuts:
       - "**beat 3 also gets the right picture.** v30 holds the magenta dashboard that was rejected; v31 animates the green frame that replaced it. That is a different change from the other three, and it is not a taste question"
       - "**beats 4, 5, 7, 10, 14** are still held, deliberately — those are the compositions with nothing in frame to animate, and every model pointed at one has invented something instead (a morphing rock, a leaf splitting in two). Five held beats, down from nine"
       - "**audio** — same voice takes, re-synced. v31 runs 0.88s longer than v30 and none of that is footage: beats 6 and 7 get their corrected voice timing, which v30 was assembled just before"
-      - "**checks** — 13 QA checks pass, captions and loudness included; the invention detector flags nothing on any of the four new clips"
+      - "**checks** — 13 QA checks pass, carrying the same single brightness warning v30 does; narration sync clean, and the invention detector flags nothing on any of the four new clips"
     known_wrong:
       - "**beat 3**'s animation may be a still with a flicker on it — half its frames barely change. The steward would not fight for it"
       - "**beat 13**'s sky still does not move; the cloud-shadow band the direction asked for did not land"
