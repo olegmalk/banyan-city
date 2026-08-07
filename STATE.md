@@ -1998,3 +1998,128 @@ running — **the farm worker was not started and nothing else was touched.**
 MSI 5070 Ti (192.168.3.153) is **unreachable** — no ping, no ssh, ARP incomplete.
 On today's evidence that word is doing real work: unreachable is what we know, and
 whether it is switched off is exactly what we cannot tell from here.
+
+## 2026-08-07 — the founder meant BEAT 9, and beat 9 is the worse one: 3 leaves become 7, and the metric scored it 1.00
+
+**The founder corrected himself mid-sentence:** after *"why did we never fix the
+mitosis?"* he added *"that's not the beat i was talking about. i was talking
+about BEAT 9."* He is right, and the records pointed the other way:
+`hold_still.py` attributes *"the sapling doing mitosis"* to beat 11, quoting him
+directly, and beat 11 had just been re-rendered against it. Both are true. Beat
+11 does divide a leaf. **Beat 9 does it worse, and nobody had ever written it
+down.**
+
+**Beat 9 is "WHOAMI" (0:48–0:53)**, no dialogue — the script is a terminal
+panel, `$ whoami` / `sapling (ficus. probably.)`, typed in post over the plate.
+Still `stills/09-whoami.png`; clip `review/beat-09-whoami.mp4`, the f15 take
+that is in every cut of episode 1. Direction, before today: *"the sprout's two
+leaves swing up on a gust and drop back, one leaf spinning as it falls, the
+grass thrashes behind, dust motes streaming across the light."*
+
+**Counted off the pixels, at 4x zoom on the subject, all 61 frames extracted:**
+
+| frame | distinct leaf blades | what changed |
+|---|---|---|
+| 0 | **3** | one yellow top leaf, two white wing blades, one node |
+| 5 | **4** | the top leaf has DIVIDED — a narrow blade peels left off the broad one |
+| 10 | **5** | a third yellow leaf is out |
+| 20 | **6** | a second node has appeared lower on the stem |
+| 25–60 | **7** | two full tiers on an elongated stem; the plant also drifts right |
+
+So it is the same defect class as beat 11 and a **distinct, worse instance**.
+Beat 11's tip leaf divides and re-fuses inside the clip; beat 9's plant simply
+**keeps growing**, which is beat 11's job in the script, not beat 9's — "$
+whoami" is the identity beat, where the sapling is supposed to be *one thing*
+for two and a half seconds.
+
+**The metric is not just blind to this, it prefers it.**
+`check_invention.py` scores beat 9 **ret 1.00** — the highest of every clip
+measured, i.e. "returns perfectly to its opening composition" — while the
+subject triples its leaf count. The reason is the same one the tool's own
+docstring warns about: the sprout is a small share of a frame that is mostly
+stable grass and sky, and the score is a whole-frame number. For scale, the same
+run gives beat 8 **0.86** and beat 11 **0.85**. Nothing was flagged. This is the
+second time in two days that a number has rated a duplication artifact as the
+cleanest thing in the episode.
+
+**The negative-prompt audit, with the real CLIP tokenizer and the real builder.**
+
+- **Still path** (`sd_prompt.beat_negative`): **64 of 77 tokens**, nothing
+  dropped, no warning. Not truncation.
+- **Video path** (`video_task.video_prompt`): **363 of 900 characters.** It
+  regenerates byte-identical to the f15 sidecar at `7f6c538`, so the genome
+  still reproduces the take exactly. **It was using 40% of its budget and held
+  not one word about leaf count.** The terms were never authored — the same
+  finding as beat 11, arrived at independently.
+- `antistatic_for()` fires correctly on the amplitude words, so the beat is
+  forbidden to hold still.
+
+**And a second cause that is ours alone, which beat 11 did not have.** The
+direction *asked for the leaf count to change*. **"one leaf spinning as it
+falls"** instructs a leaf to detach; **"the sprout's two leaves"** asserts a
+count the approved still contradicts — `09-whoami.png` draws three blades plus a
+bud. Adding "no extra leaves" to the negative while still asking for a leaf to
+come off is precisely the mistake `video_prompt`'s own docstring records: *"It
+was told to."*
+
+**The still is not innocent either, and it was not changed.** At zoom,
+`09-whoami.png` already contains the ambiguity the model resolved: the top
+yellow leaf is drawn as a broad blade with a **second thin sickle blade peeling
+off it from a shared base** — beat 11's Y-fork again — the two white wings have
+hollow interiors, red rim outlines and no visible attachment on the right, a
+pale teardrop hangs unattached under the node, and a straight dark grass blade
+crosses the node diagonally, reading as a second stem. It stays as it is:
+`motion.yaml` is read only by the video path and the still is the founder's
+canon (R4).
+
+**The logged "beats 08+09 near-identical" complaint is real and measured.** SSIM
+between the two clips is **0.893 All / 0.869 Y**. Against every other beat in the
+episode, beat 9 scores 0.755 (b12), 0.748 (b6), 0.726 (b7), 0.511 (b10); the two
+*stills* are 0.807. Same low shot through grass, same sun on the horizon, same
+three-blade sprout design. But it is **not** what the founder is reacting to
+here: beat 8 holds its three blades rock-steady across all 61 frames, so the
+thing that moves in beat 9 and not in beat 8 is the duplication.
+
+**The fix, in `motion.yaml` beat 9.** Two inputs change, unlike the beat 11
+probe, and deliberately: thirteen leaf-count terms lead the negative (`no
+splitting leaf … no leaf detaching, no falling leaf`), **and** the direction
+loses the detachment clause and the wrong count, the way beat 12's rewrite
+dropped its count on 2026-08-06. Amplitude register kept — the stem now carries
+the swing instead of a departing leaf. Measured after: positive **256 chars**,
+negative **593 of 900**, anti-static still firing.
+
+**THE RENDER DID NOT HAPPEN, and the reason is a Windows security policy, not a
+schedule.** `pipeline/probe-b9-mitosis.sh` is written and was fired at the
+5090 — same still, same recipe (704x1280, 14 steps, guidance 5.0, UniPC shift
+5.0, `model_cpu_offload`), **same seed 20260814**, recovered from the f15 sidecar
+at `7f6c538`. Both prompt files hashed identical on both machines. It died in
+three seconds:
+
+```
+OSError: [WinError 4551] An Application Control policy has blocked this file.
+Error loading "...\torch\lib\c10.dll" or one of its dependencies.
+```
+
+**Smart App Control turned itself on.**
+`HKLM\SYSTEM\CurrentControlSet\Control\CI\Policy\VerifiedAndReputablePolicyState`
+now reads **1 (enforcement)**. The CodeIntegrity log shows a policy refresh at
+**13:25:22** — about a minute before beat 11's clip finished rendering on the same
+torch — and the **first block events in the log's history at 13:51**, which is
+this probe. So the beat 11 render was the last one to get through. It is not the
+scheduled task: a plain interactive ssh `import torch` is blocked identically.
+
+**This one needs a human at the keyboard, and the switch is one-way.** Smart App
+Control has no allowlist and no per-file exclusion; Microsoft's documented
+remedies are signed binaries or turning it off, and **once off it cannot be
+turned back on without resetting or reinstalling Windows.** PyTorch's wheels ship
+unsigned DLLs, so there is no user-space route. The unblock is *Windows Security
+→ App & browser control → Smart App Control settings → Off*, on the box, by
+someone who accepts that it is permanent — **that is Oleg's or Roman's call, not
+the steward's.** The probe dir `C:\banyan-farm\probe-b9-20260807` is staged and
+hashed, so after the toggle the render is one command:
+`bash pipeline/probe-b9-mitosis.sh`.
+
+The card was idle before and after (0 MiB / 0%), the one-shot task was deleted,
+and the only python on the box is the telemetry daemon that was already running —
+**the farm worker was not started and nothing else was touched.** MSI 5070 Ti
+(192.168.3.153) is still unreachable: no ping, ssh times out.

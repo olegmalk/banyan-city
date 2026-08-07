@@ -16,6 +16,13 @@ give up — it invents:
     rock randomly morphing because the ai cant figure out what else to do."
   - beat 11 (one sprout, one new leaf unfurling) came back with the leaf SPLITTING
     into two and extra leaves appearing. The founder: "the sapling doing mitosis."
+  - beat 9 (a sprout standing alone, "$ whoami") has the SAME artifact and worse,
+    found 2026-08-07 when the founder corrected the beat number — "that's not the
+    beat i was talking about. i was talking about BEAT 9." Counted off the f15
+    take: three blades at frame 0, the top leaf divided by frame 5, seven blades
+    on a stem carrying a whole extra node from frame 25 on. The quote above is
+    his and stays on beat 11, which does divide a leaf; it was simply never the
+    only one. Nothing about leaf count existed in either beat's negative.
 
 Beat 11 measured 2.36 median with 0% frozen frames — the highest score of all
 fifteen, and the steward called it the best beat in the episode. The score was the

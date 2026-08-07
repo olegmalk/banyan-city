@@ -73,7 +73,31 @@ motion_prompts:
   # ask for nothing and it delivers nothing. This beat can afford real motion:
   # render_t3 burns the $ whoami terminal panel over the top, so the plate only
   # has to live underneath it.
-  9: "the sprout's two leaves swing up on a gust and drop back, one leaf spinning as it falls, the grass thrashes behind, dust motes streaming across the light"
+  # 2026-08-07, THE MITOSIS IS HERE TOO — and the founder pointed at this beat,
+  # not 11: "that's not the beat i was talking about. i was talking about BEAT 9."
+  # He is right, and it is worse here. Counted off the f15 take (seed 20260814,
+  # the clip in every cut of episode 1): the sprout starts on THREE blades — one
+  # yellow top leaf, two white wings — the top leaf has divided in two by frame 5,
+  # a third yellow leaf is out by frame 10, and from frame 25 the plant carries
+  # SEVEN blades on a stem that has grown a whole second node. Beat 11's leaf
+  # divides and re-fuses; this one just keeps growing, which is beat 11's job, not
+  # beat 9's ("$ whoami" is an identity beat — the plant is supposed to be one
+  # thing for 2.5 seconds).
+  #
+  # TWO CAUSES, and the second is ours. (a) The negative held nothing about leaf
+  # count — 363 of 900 chars used, so it was never a budget problem, the terms were
+  # simply never authored — while antistatic_for() correctly read the amplitude
+  # words and forbade stillness. (b) The direction ITSELF asked for the leaf count
+  # to change: "one leaf spinning as it falls" instructs a leaf to detach, and
+  # "the sprout's two leaves" asserts a count the approved still contradicts (it
+  # draws three blades, plus a bud). Adding "no extra leaves" while still asking
+  # for a leaf to come off is the mistake video_prompt's own docstring records —
+  # "It was told to." So the detachment clause goes and the count is dropped, the
+  # way beat 12's rewrite dropped its count on 2026-08-06; the amplitude register
+  # stays (gust, thrashes, streaming), with the stem carrying the swing instead of
+  # a departing leaf. The still is NOT changed: motion.yaml is read only by the
+  # video path, and 09-whoami.png is the founder's canon.
+  9: "the sprout's leaves swing up on a gust and drop back, the thin stem bowing over and springing upright, the grass thrashes behind, dust motes streaming across the light, no splitting leaf, no dividing leaf, no duplicate leaves, no extra leaves appearing, no new leaves growing, no second sprout, no leaf multiplying, no changing leaf count, no morphing silhouette, no growing stem, no timelapse growth, no leaf detaching, no falling leaf"
   # 10: the beat's whole point is the approaching thump "felt as rings of light
   # through soil", and the direction said "no light rays" — so the one thing the
   # audience must see was suppressed. The still already has glowing droplets
