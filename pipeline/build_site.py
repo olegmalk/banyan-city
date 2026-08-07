@@ -1690,10 +1690,20 @@ def render_review() -> str:
         mb = src.stat().st_size / (1 << 20)
         changed = "".join(f"<li>{inline_md(x)}</li>" for x in cut.get("changed") or [])
         wrong = "".join(f"<li>{inline_md(x)}</li>" for x in cut.get("known_wrong") or [])
+        # `status:` — the author's verdict on THIS cut, printed above the player
+        # and before anything else the card says. It exists because on 2026-08-07
+        # he refused v32 and the page went on calling it "the one to answer on"
+        # for the rest of the evening: a card whose every other line is a fact
+        # about the film cannot also carry a verdict, and burying one in "known
+        # and still wrong" would file a decision under a defect list. A refused
+        # cut is never REMOVED — it is the record of what he refused, and the
+        # notes being worked from only make sense next to it.
+        status = (f'<p class="notice">{inline_md(str(cut["status"]))}</p>'
+                  if cut.get("status") else "")
         sections.append(
             f'<div class="cut"><h2>{html.escape(str(cut["title"]))} '
             f'<span class="chip hot">{html.escape(str(cut.get("version", "")))}</span></h2>'
-            f'{CUT_STAMP}'
+            f'{status}{CUT_STAMP}'
             f'<div class="split"><div class="film">'
             f'<video controls playsinline preload="metadata"{poster_attr(pos, "../")} '
             f'src="{html.escape(rel)}"></video>'

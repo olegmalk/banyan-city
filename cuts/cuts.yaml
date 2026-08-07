@@ -16,6 +16,14 @@
 # Adding a cut: drop <name>.mp4 here with a stem-named <name>.meta.yaml beside
 # it (stem-named, because that is what licence_gate.sidecar_of reads), then add
 # a block below. Nothing else to edit.
+#
+# WHEN HE ANSWERS ONE, SAY SO HERE THE SAME DAY. A cut carries `status:` once it
+# has a verdict, and the page prints it above the player before any other claim
+# the card makes. On 2026-08-07 he refused v32 in the evening and this page went
+# on telling him v32 was "the one to answer on" — the page's one job is to say
+# what a thing IS, and for a few hours it said the opposite. A refused cut is
+# never deleted: it is the record of what he refused, and the work list only
+# makes sense beside it.
 
 page:
   title: "Working cuts — episode 1, unscreened"
@@ -30,11 +38,18 @@ page:
     The published episode is the one on the season page; if these ever replace
     it, it will be because he said so, in a record you can read.
 
-    **Newest first, and the top one is the one to answer on.** The two beneath
-    it are the versions it came from, kept so the change is visible rather than
-    asserted. Under them, the two side-by-side sections are the individual
-    questions: what the gentler camera move looks like, and what the four
-    argued-over beats look like held against moving.
+    **Nothing on this page is waiting for an answer right now.** The newest cut
+    here, v32, was watched on the evening of 2026-08-07 and **refused** — seven
+    frames named, the camera move called too slow, and one earlier fix ordered
+    reverted. Every one of those is in hand. **The cut to answer on is v33, and
+    it is not built yet**; it lands on this page, at the top, when it is. The
+    three cuts below are the record of how it got here, newest first, kept so the
+    change is visible rather than asserted. Under them, the two side-by-side
+    sections are the questions the cuts were arguing about. The camera one is
+    settled: he refused the whole scheme of it — *"zoom speed ladder is just
+    overdoing it. simply make the zoom speed moderate"* — so every held beat now
+    moves by one number, 12% of scale, whatever its length, and the pairs below
+    are kept as the working that got there rather than as a live question.
 
     It is unlisted rather than secret. Nothing in the site's navigation points
     here — the only link is the one in the author's own decision queue on the
@@ -46,6 +61,12 @@ cuts:
   - file: ep1-v32-gentleholds.mp4
     title: "Episode 1 with the held beats moving gently — the newest cut"
     version: v32
+    status: >-
+      **REFUSED 2026-08-07** — the founder's notes are being executed; v33
+      replaces this. He named seven frames (beats 3, 6, 7, 10, 12, 14, 15),
+      called the camera move too slow, said beats 7, 8 and 9 are the same
+      picture, and ordered one earlier fix of ours reverted. Nothing here needs
+      a second look: it is kept because it is the record of what he refused.
     date: 2026-08-07
     beats: "15 beats, none missing"
     changed_from: "v31, below"

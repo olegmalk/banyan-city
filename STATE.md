@@ -3095,3 +3095,84 @@ error message** — check the box's torch build before blaming a recipe.
 Written up in `pipeline/research/models-licence.md` (2026-08-07 section, licence)
 and `pipeline/research/MODEL-COMPARISON.md` (2026-08-07 section + the T8 row,
 practical).
+
+## 2026-08-07 — "r3-s3 and retire": episode 2 has a canon frame, and four gates came off
+
+**The pick.** Asked to choose among the eight beat-01 candidates for node 002b,
+the founder answered in five words: **"r3-s3 and retire"**. That is R4 and it
+does two jobs — it names the frame, and it kills a stale question in his inbox.
+
+`takes/stills/01-cold-open-r3-s3.png` is promoted byte-for-byte (sha256
+`7cc22aa1…3557`, 832×1216) to
+**`genomes/sapling/nodes/002b-first-citizen/stills/01-cold-open.png`** — canon,
+tracked in git exactly as 001's fifteen approved frames are, because the
+renderers read `stills/` and not `takes/`, and because a shot board can only
+show a frame that is in the tree. `stills/README.md` carries the provenance the
+pixels cannot: model, prompt round, the seed *derived* from `still_local.py`'s
+formula rather than recorded (the stills path writes no sidecar at all —
+`farm_worker.py:430`, traced in `8d7ceed`), and $0.
+
+**The flaw he accepted, recorded rather than quietly inherited.** The plant in
+the chosen frame has **four leaves**; the character has two. Four wordings were
+spent on that count and the table in `shots.md` says what each one drew — the
+best got three leaves in one seed of four and lost the composition in the other
+three. It is a model limitation, he picked the frame with it in view, and the
+next reader is not to spend a fifth round on synonyms for *two*.
+
+**What it unblocks, which is the whole episode.** `002b-t0-c.yaml`'s
+`approval_scope` gated everything on this one sample — *"beats 02-21 await his
+verdict on that sample before conversion"*, *"No VO, no stills and no footage
+may be produced until the dialect is settled"*. Settled. Four backlog entries in
+`pipeline/farm-queue.yaml` lost their `gate: founder` today:
+`002b-b01-video-5b-1786089900`, `002b-b01-video-ltx-1786089960`,
+`002b-stills-b02-21-1786090020`, `002b-vo-t0c-21beats-1786090080`. The evidence
+comment stays above each; the gate key is gone, so the promoter can move the two
+farm entries and report the two manual ones as runnable.
+
+One stale claim died with the gate. `002b-stills-b02-21`'s `why` said all twenty
+prompts were still in the v2 low-detail style the founder killed — false since
+**2026-08-04**, when `e4826ed` converted all twenty to the native-tag dialect
+("*20 prompt conversions — text, free, one git revert to undo — were blocked on a
+founder verdict*"). There is no conversion pass standing between that gate and
+the batch, and the entry no longer says there is.
+
+**`hires-review` is RETIRED, and it should have been months ago.** The inbox
+item promised the founder *"30 candidates at 1080×1576"* — *"the farm re-rendered
+all 15 approved shots at higher resolution overnight"*. Every clause of that is
+wrong, and it was checkable:
+
+- **The premise died the same day, by his own call.** The item was opened at
+  13:32 on 2026-07-30 (`c999476`) off a *plan*, before a single frame existed. At
+  22:23 that evening `284bbdf` recorded his pushback — *"are we just doing
+  unnecessary work?"* — and the steward's own answer, *"partly yes. Fresh seeds
+  on decided beats are make-work (frames are approved)."* The fresh-seed hi-res
+  pool was cancelled nine hours after the inbox item described it.
+- **The artifacts do not match the description.** What exists is **20** PNGs, not
+  30, from one task (`prod-hires-msi-1785434851`), covering **beats 11-15 only**,
+  four seeds each — *new pictures at a bigger size*, not sharper versions of the
+  approved ones. They are not even in this repo: they sit on
+  `origin/farm-results-msi` under `farm-out/`. The faithful replacement pass that
+  `284bbdf` queued instead — fifteen `upres-NN` img2img repaints at strength 0.35,
+  init = each canon still, *same picture, more detail* — produced **zero**
+  committed outputs on any branch.
+- **They could not be published if he said yes.** Not one of the 20 has a
+  sidecar (checked: zero `.yaml` beside them), which is `8d7ceed`'s finding about
+  the farm's stills path exactly — `farm_worker.py:430` saves the PNG and nothing
+  beside it. An unprovenanced frame is withheld by our own gate.
+- **And there is no consumer for the resolution.** The episode ships at
+  **720×1280**; the canon stills are **832×1216**, already above the delivered
+  frame; the video path conditions at 704×1280. Nothing downstream can spend
+  1080×1576. His live question about episode 1's picture is v33, not a sharpness
+  pass on frames the August remake has moved past.
+
+**`002b-b01-frame` is RESOLVED** — answered tonight, by the pick above. Both
+entries are deleted from `pipeline/pending-founder.yaml` rather than parked: the
+file has never carried a "retired" list, an item leaves it by being removed, and
+the reasons live here and in the commit.
+
+**`/review/` stopped lying.** The page led with *"the top one is the one to
+answer on"* pointing at v32 — false from the moment he refused it. v32's card now
+opens with **REFUSED 2026-08-07 — the founder's notes are being executed; v33
+replaces this**, and the page's lead question points at the v33 that is being
+built. The cut stays up: it is the record of what he refused, and deleting it
+would delete the reason the notes exist.
