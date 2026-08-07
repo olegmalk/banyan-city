@@ -45,11 +45,28 @@ image for it and make sure it looks like its inside a house."* The old prompt ga
 the model a monitor, a dark room and a deep blue glow and nothing domestic at all —
 which is the description of a lab bench. The screen is now a PERSONAL computer on a
 home desk: warm lamp, mug, houseplant, a bedroom corner behind it. `no laboratory,
-no server room, no lab equipment` go to the negative; the terminal stays the
-subject (so `sd_prompt` keeps un-negating `text` for this beat).
+no server room, no lab equipment` go to the negative.
+
+REVISED AGAIN the same day, after that rewrite rendered. The house landed — all four
+candidates were domestic — but not one of them had a terminal with a success line in
+it. What they had was gibberish glyphs sprayed across the screen and anime-girl
+desktop wallpaper behind them, in neon vaporwave: the only style break in a forty-
+frame wave. The cause was in the code, not the words. `sd_prompt.suppressed_negatives`
+lifted `text` out of the negative for any beat whose subject named a screen, so beat 3
+— the one beat in the genome that rule ever fired on — was the one beat with nothing
+fighting the junk. It now un-negates `text` only for a prompt that names the actual
+words it wants drawn, which this one does not and should not: **screens in this show
+are abstract glow.** Beat 1 has drawn "one glowing monitor with code" that way, with
+`text` negated, since 2026-07-27, and this beat is written to match it — a bright
+green line of code and a cursor, no words to read. `no wallpaper, no neon` go to the
+negative for the vaporwave desktop; `no cubicle` comes off, the office reading died
+with the old prompt and the budget is better spent. Measured on the real CLIP
+tokenizer: positive 69 tokens, negative 55; on the deliberately pessimistic tag
+estimate a machine without transformers falls back to, 74 and 58. Nothing dropped
+either way, and `text` is back in the negative where the other 176 beats keep it.
 
 ```
-close-up of a personal computer monitor on a cluttered home desk, terminal window, a command finishing, green success line, blinking cursor, warm desk lamp glow, coffee mug, houseplant, a lived-in bedroom corner at night, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No laboratory, no server room, no lab equipment, no cubicle, no person. No photorealism, no 3D render look. 9:16 vertical, no text.
+close-up of a personal computer monitor on a cluttered home desk, dark terminal window on the glowing screen, one bright green line of code, blinking cursor, warm desk lamp, coffee mug, houseplant, lived-in bedroom corner at night, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No laboratory, no server room, no lab equipment, no person, no wallpaper, no neon. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 ## Beat 04 — THE FALL (0:15–0:20) ⬜ needs footage04
 
@@ -163,8 +180,29 @@ exactly that: `cracked flat dirt ground, pale grey sky`. Both are gone — the s
 happens in the same green field, damp soil and morning light as every other outdoor
 beat, and the cracked-desert reading is in the negative.
 
+REVISED AGAIN the same day. The environment was fixed and the strain was not: all
+four candidates came back calm and upright, a sprout standing straight in a nice
+field. `bent into a tense arc, leaning hard and straining` is what the beat MEANS —
+the trunk straining against nothing — and Animagine has no picture for any of it.
+`tense`, `straining` and `hard` are states of mind; `arc` is geometry with no body
+attached. The rewrite names only what the model can draw, in the physical vocabulary
+that finally worked on 002b's leaf count: **bent low, taut curve, arched over almost
+horizontal, leaf tips pulled down near the grass** — a shape, stated four ways, no
+adverbs. And the prior it has to beat goes in the negative, which is where a "not" is
+worth anything: `no upright stem`. The script's word is still the target ("The trunk
+strains against nothing and nothing happens"); the prompt just stopped asking for it
+in English. `no flowerpot` comes off to pay for `no upright stem` — the pot never
+appeared in any of the four, and one term of budget buys the actual defect. Measured:
+positive 69 tokens real / 75 estimated, nothing dropped. The NEGATIVE is at the
+ceiling and was already — 76 of 77 real tokens, the same as the old prompt, and it
+only lands there because the duplicated `text` deduplicates away first. On the
+pessimistic estimate it goes over and sheds one HOUSE term (`realistic skin
+texture`) while `no upright stem` survives untouched: the drop order doing its job,
+since a term written for this beat outranks a global default. Any machine that can
+render counts exactly, so the 76 is the number that ships.
+
 ```
-plant focus, no humans, a single thin green stem of a tiny sprout bent into a tense arc, leaning hard and straining, rooted in damp brown soil among short green grass, open sunlit field, pale blue morning sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No cracked ground, no dry dirt, no grey floor, no flowerpot. No photorealism, no 3D render look. 9:16 vertical, no text.
+plant focus, no humans, one tiny two-leaf sprout, its thin green stem bent low into a taut curve, arched over almost horizontal, leaf tips pulled down near the grass, damp brown soil, short green grass, sunlit field, pale blue morning sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No cracked ground, no dry dirt, no grey floor, no upright stem. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 ## Beat 13 — I ALWAYS LEFT (1:12–1:21) ⬜ needs footage13
 

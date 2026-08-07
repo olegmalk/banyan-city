@@ -93,17 +93,40 @@ def _negated_nouns(text: str) -> list:
     return [m.group(1).strip() for m in _NEGATION.finditer(text)]
 
 
-# Some beats ARE the thing the standard negative prompt forbids. Beat 3 of 001 is a
-# terminal resolving a line of output — its entire subject is text on a screen — and
-# it came back (2026-07-26) as abstract magenta shapes, because `text` sits in the
-# renderer's standard negative AND shots.md's boilerplate "no text" (which means "no
-# burned-in caption") got extracted into the negative on top of it. Forbidding the
-# subject twice is a reliable way to not draw it. When the shot is a screen, `text`
-# has to come OUT of the negative — the caption ban belongs to render_t3, which
-# draws captions itself, not to the image model.
-_TEXT_SUBJECT = re.compile(
-    r"\b(terminal|console|screen|monitor|cursor|spinner|logs?|stack trace|"
-    r"code|command line|prompt line|dashboard|readout|sign|label)\b", re.I)
+# Some beats ARE the thing the standard negative prompt forbids, so a beat can opt OUT
+# of the standard `text` negative — but only by naming the WORDS it wants drawn.
+#
+# The first version of this rule un-negated `text` whenever the SUBJECT clause named a
+# text-bearing object (terminal, console, screen, monitor, cursor, spinner, log, code,
+# dashboard, readout, sign, label). The reasoning, 2026-07-26: beat 3 of 001 "is a
+# terminal resolving a line of output, its entire subject is text on a screen"; it had
+# come back as abstract magenta shapes; and forbidding the subject twice — once by the
+# standard negative, once by shots.md's boilerplate "no text", which means "no burned-in
+# caption" and is render_t3's business, not the image model's — is a reliable way to not
+# draw it. That read the subject wrong. A terminal is a lit rectangle, and what is on it
+# this show has always drawn as abstract glow: beat 1 of 001 asks for "one glowing
+# monitor with code" and renders correctly WITH `text` negated, and has since
+# 2026-07-27.
+#
+# Beat 3 was the only beat in the genome the old rule ever fired on, and on 2026-08-07
+# it cost exactly what the negative exists to prevent. All four of the wave's candidates
+# came back with gibberish glyphs across the screen and anime-girl desktop wallpaper
+# behind them — the wave's only style break, in its only unprotected beat, because
+# nothing was left fighting the junk.
+#
+# So the ask has to be EXPLICIT and SPECIFIC: the prompt names the characters, quoted or
+# capitalised after a reading verb — `a sign reading "OPEN"`, `a plaque that reads NORTH
+# GATE`. A screen noun is furniture, not an ask. Neither is a person reading or writing:
+# 006a beat 6 is "a robed magistrate reads aloud from an open ledger" and 005 beat 22 a
+# man who "stops writing mid-stroke" — no glyph has to survive a screening for either
+# shot to work, and un-negating those would buy nothing but scribble. Measured against
+# all 182 prompts on 2026-08-07 this pattern matches NOTHING, which is the right answer:
+# it is an escape hatch for a beat that one day needs a legible word, not a rule that
+# fires on furniture.
+_TEXT_ASK = re.compile(
+    r"""["“”](?=[^"“”]{1,40}["“”])   # "OPEN" — the words themselves, quoted
+        |\b(?:reading|reads|labell?ed|spelling|inscribed\s+with)\s+["“']?[A-Z0-9]
+    """, re.X)
 
 
 # Animagine XL 3.1 is trained on Danbooru captions, where the presence and number of
@@ -166,15 +189,20 @@ def count_tag(prompt: str) -> str:
 
 
 def suppressed_negatives(prompt: str) -> list:
-    """Standard negative terms this beat's SUBJECT needs removed to be drawable.
+    """Standard negative terms this beat's prompt asks to have removed (see _TEXT_ASK).
 
-    Scoped to the FIRST CLAUSE, because a passing mention is not a subject: beats 1 and
-    4 of 001 say "faint monitor glow on his knuckles" and "cold monitor light" — the
-    monitor is lighting, not the shot. Un-negating `text` for those would only invite
-    the model to scribble gibberish signage into a shot that never asked for any.
+    Reads compress()'s output rather than the authored prompt, because the model only
+    ever sees the compressed string: a `reading "OPEN"` the token budget threw away must
+    not un-negate anything.
+
+    No longer scoped to the first clause. That scope existed to stop a SUBJECT-noun rule
+    firing on lighting — beats 1 and 4 of 001 say "faint monitor glow on his knuckles"
+    and "cold monitor light", where the monitor is the light and not the shot. An
+    explicit quoted ask means the same thing wherever in the prompt it sits, and the
+    clause scope would only make the escape hatch unreachable for, say, `1boy holding a
+    placard reading "HELP"`.
     """
-    body = re.sub(r"^[a-z ]*shot of ", "", compress(prompt)[0], flags=re.I)
-    return ["text"] if _TEXT_SUBJECT.search(body.split(",")[0]) else []
+    return ["text"] if _TEXT_ASK.search(compress(prompt)[0]) else []
 
 
 def extra_negative_parts(prompt: str) -> tuple:

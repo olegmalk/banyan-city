@@ -173,14 +173,39 @@ def test_sd_prompt_fits_clip_and_keeps_the_action():
     check("a prompt with no palette phrase keeps its ACTION", "hunched at a desk" in out2)
     check("...and still sheds its style preamble", "hand-drawn" not in out2)
 
-    # Beat 3 of 001 is a terminal resolving a line of output — its subject IS text on a
-    # screen — and it rendered as abstract magenta shapes because `text` was negated
-    # twice: once by the standard negative, once by shots.md's boilerplate "no text"
-    # (which means "no burned-in caption", a render_t3 concern, not an image-model one).
-    from sd_prompt import suppressed_negatives
-    check("a screen subject un-negates 'text'",
-          "text" in suppressed_negatives("Vertical 9:16 close shot. A terminal spinner "
-                                         "resolving into a finished line. No text."))
+    # `text` leaves the negative only for a beat that names the WORDS it wants drawn.
+    # A screen NOUN used to be enough, on the reading that beat 3 of 001 "is a terminal
+    # resolving a line of output, its subject IS text on a screen". Beat 3 was the only
+    # beat in the genome that rule fired on, and on 2026-08-07 all four of its wave
+    # candidates came back with gibberish glyphs and anime-girl wallpaper — nothing was
+    # left fighting the junk. Screens in this show are abstract glow (beat 1's "one
+    # glowing monitor with code", drawn with `text` negated, since 2026-07-27).
+    from sd_prompt import beat_negative, suppressed_negatives
+    check("naming the actual words un-negates 'text'",
+          "text" in suppressed_negatives('Vertical 9:16 close shot. A weathered wooden '
+                                         'sign reading "OPEN" beside a dirt road. No text.'))
+    check("...capitalised after a reading verb counts too",
+          "text" in suppressed_negatives("Vertical 9:16 close shot. A brass plaque that "
+                                         "reads NORTH GATE, lantern light. No text."))
+    check("a terminal that shows no named words keeps its 'text' protection",
+          suppressed_negatives("Vertical 9:16 close shot. A terminal spinner "
+                               "resolving into a finished line. No text.") == [])
+    # the two live shapes this must not fire on: a person reading, and a person writing
+    check("a person reading aloud is not an ask for glyphs",
+          suppressed_negatives("Vertical 9:16 medium shot. A robed magistrate reads "
+                               "aloud from an open ledger. No text.") == [])
+    check("nor is a person writing", suppressed_negatives(
+        "Vertical 9:16 close shot. A grey-robed man stops writing mid-stroke, quill "
+        "lifted, and looks up. No text.") == [])
+    # and the beat this was all for: 001 beat 3, as shots.md carries it
+    BEAT3 = next(s["prompt"] for s in parse_shots(
+        (REPO / "genomes/sapling/nodes/001-capability-inventory/shots.md").read_text())
+        if s["num"] == 3)
+    NEG3 = ("photorealistic, 3d render, abstract, text, watermark, signature, "
+            "low quality, blurry, extra limbs, deformed, jpeg artifacts, "
+            "realistic skin texture")
+    check("001 beat 3 keeps 'text' in its negative",
+          "text" in beat_negative(NEG3, BEAT3, warn=lambda m: None).split(", "))
     # Animagine is Danbooru-trained: people are declared by a count tag before anything
     # else. Beat 4 of 001 asks for a man tipping out of his chair and rendered the desk,
     # the chair and the flying papers with NOBODY in them (2026-07-27) — the furniture was
