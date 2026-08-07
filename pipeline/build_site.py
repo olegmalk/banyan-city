@@ -1707,9 +1707,15 @@ def render_review() -> str:
             left, right = serve(str(p["left"])), serve(str(p["right"]))
             if not (left and right):
                 continue
+            # An item may override the group's labels. Beat 3 needs it: the group
+            # says "held — in v30", and beat 3's held side is the approved frame,
+            # which is in no cut at all. A label inherited into being false is
+            # worse than no label on a page whose whole job is to say what a
+            # thing IS.
             cells = ""
-            for label, (rel, pos), note in ((left_label, left, p.get("left_note", "")),
-                                            (right_label, right, p.get("right_note", ""))):
+            for label, (rel, pos), note in (
+                    (str(p.get("left_label", left_label)), left, p.get("left_note", "")),
+                    (str(p.get("right_label", right_label)), right, p.get("right_note", ""))):
                 cells += (f'<figure><video controls playsinline preload="none" muted'
                           f'{poster_attr(pos, "../")} src="{html.escape(rel)}"></video>'
                           f'<figcaption><span class="k">{html.escape(label)}</span>'

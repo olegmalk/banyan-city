@@ -178,9 +178,10 @@ comparisons:
           clip below is that one. Both are the approved green frame, and the choice
           here is only whether it moves.
         left: pairs/beat-03-held-approved.mp4
-        left_note: "held — the approved frame under the new gentle rule, 2.1% over 3.54s"
+        left_label: "held — in no cut yet"
+        left_note: "the approved frame under the new gentle rule, 2.1% over 3.54s"
         right: pairs/beat-03-animated.mp4
-        right_note: "animated — motion 0.20 · 50% frozen; screens surge and fall, scanlines roll"
+        right_note: "motion 0.20 · 50% frozen; screens surge and fall, scanlines roll"
         verdict: >-
           The animation is the weaker of the two and worth saying so: half its frames
           barely change, and 0.20 is below the line where a shot starts reading as a
