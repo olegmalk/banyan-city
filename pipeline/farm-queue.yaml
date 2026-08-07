@@ -1,27 +1,61 @@
-# 2026-08-03 20:0xZ — SAMPLE, not a batch. Beat 1 with the face terms.
+# THE FARM QUEUE — two lists, one meaning each.
 #
-# FACE_NEG now applies to the three beats that have a face (1, 2, 4). Beat 2 was
-# approved WITH those terms; beat 1 was approved WITHOUT them, so adding them could
-# improve it or could damage a beat the founder has already signed off.
+# tasks:    RUNNABLE NOW. Every worker ever shipped reads exactly this key
+#           (farm_worker.py:115, `.get("tasks", [])` off origin/main) and nothing
+#           else. A machine that polls the queue will start anything in here.
+# backlog:  PLANNED, NOT RUNNABLE. Invisible to every worker, including stale
+#           checkouts, because the read path above never looks for it. This is
+#           where work waits with its blocker written down instead of in a
+#           comment nobody can query.
 #
-# One beat. The founder's rule from tonight, now in CLAUDE.md: "i need a sample of
-# your work before you mass produce the same kind of thing." Beat 4 needs no render
-# at all — it is a held still.
+# Promotion is one commit: `python3 pipeline/queue_promoter.py` moves a dict out
+# of backlog: and into tasks: in a single write, so the two lists can never
+# disagree. The promoter also RETIRES tasks whose `DONE task=<id>` line exists on
+# a farm-results-* heartbeat — that is what the stale faceneg entry needed and
+# never got. It never invents work and never clears a gate.
+#
+# ---- ENTRY SHAPE ------------------------------------------------------------
+# A backlog entry is a tasks entry plus planning fields. Nothing here is read by
+# a worker: unknown keys on a task are inert (dead keys already exist in this
+# file's history), so a promoted entry keeps its planning fields and no worker
+# cares.
+#
+#   id           REQUIRED, slug-epoch. heartbeat_attempts() counts STARTED lines
+#                keyed on id, so re-queued work MUST take a new id or it inherits
+#                the old one's spent attempts.
+#   worker       plain string, matched by equality at farm_worker.py:488
+#                ("any" is the wildcard). Never a list.
+#   runner       farm   — a farm_worker task. The ONLY kind the promoter moves.
+#                manual — a command a person or an agent runs. Never promoted,
+#                         because tasks: is a worker inbox and a worker would
+#                         choke on it. The promoter reports it as runnable and
+#                         leaves it here.
+#   cmd          manual entries only: the exact command where one exists,
+#                otherwise the one-line instruction.
+#   after        list of ids that must ALL show `DONE task=<id>` on some
+#                farm-results-* heartbeat. Render dependencies only — a code or
+#                writing job never writes a heartbeat line, so those are gates.
+#   gate         founder | code | hardware. Present = BLOCKED, full stop. The
+#                promoter cannot clear one; clearing is a human deleting the key
+#                in a commit. It names the NEAREST blocker only: when you clear
+#                one, re-read the entry, because `why` may name another behind it
+#                and you are the one who has to write the new gate value.
+#   gate_ref     what specifically. A pending-founder.yaml id, the code gap with
+#                file:line, or the machine and its fault. Not "blocked".
+#   needs        capability tags. cuda | vram20 | mps | video-venv. The promoter
+#                fills `worker` from these when it is unset (see CAPS in
+#                queue_promoter.py) and refuses to promote if nothing matches.
+#   window       overnight | day | any. ADVISORY ONLY, and deliberately so: the
+#                promoter never delays on it. Machine work is scheduled by
+#                dependencies, not human hours (Oleg, 2026-08-05). It records
+#                that a host-exclusive job will evict the farm worker, not that
+#                anyone should wait for dark.
+#   est_minutes  int, an estimate, sourced in `why` where one exists.
+#   why          one line a stranger understands, naming the consumer of the
+#                output. No job without a consumer (standing rule).
+#
+# ---- RUNNABLE NOW -----------------------------------------------------------
 tasks:
-- worker: rtx5090
-  video: true
-  node: 001-capability-inventory
-  video_model: ti2v-5b
-  no_anchor: true
-  motion: no new subjects, no scene change
-  size: 704x1280
-  offload: true
-  seconds: 2.5
-  steps: 14
-  guidance: 5.0
-  seed_base: 20260805
-  id: faceneg-b01-1785819600
-  beats: 1
 # 2026-08-04 07:1xZ — ANIMEGEN, ONE SAMPLE. Oleg (dad)'s directive: test the heaviest
 # model on the 5090 now. The screening verdict is the FOUNDER'S (R4) — a metric
 # agreeing with me is not a sample.
@@ -143,34 +177,99 @@ tasks:
 #   seed_base: 20260805
 #   id: bench-animegen-b01-1785827400
 #   beats: 1
+#
+# RETIRED 2026-08-07 — faceneg-b01-1785819600. It finished on 2026-08-03 at
+# 02:59:53Z (`DONE task=faceneg-b01-1785819600` on farm-results-rtx5090) and sat
+# here for four days afterwards. A worker skips a task it can see DONE in its own
+# heartbeat, so nothing re-rendered it — but a re-imaged box, or one whose
+# heartbeat.txt was reset, sees a fresh queue and a task it has never run. The
+# heartbeat line is the record; the queue entry was a loaded gun. queue_promoter
+# now retires these automatically.
+#
+# An empty tasks: list is a statement, not an oversight — it means no backlog
+# entry is both unblocked and worker-shaped today. `python3
+# pipeline/queue_promoter.py` prints which entry is held by what, and appends
+# anything it can promote at the end of this list.
 
-# 5070 video benchmark row for MODEL-COMPARISON.md (Oleg's fleet question,
-# 2026-08-05). Recipe = the PROVEN vid-msi-lowstep settings from 2026-07-31
-# (25 steps took 2h+ on this box; 8 steps ~40min) with beat 1 + the comparison
-# seed so the clip joins the same-seed cross-model row. No new recipe elements
-# — this is a hardware benchmark, not a recipe change.
+backlog:
+# ---- PLANNED, WITH THE BLOCKER WRITTEN DOWN ---------------------------------
+
+# The oldest bottleneck in the tree. Ordered by the founder on 2026-08-02, open in
+# his inbox since 2026-07-29, and every downstream thing waits behind it.
+- id: ep1-canon-leaf-and-post-1786089600
+  runner: manual
+  worker: m1pro
+  needs: []
+  gate: founder
+  gate_ref: >-
+    pending-founder.yaml id v6-verdict. Neither cut has been watched —
+    ep1-v30-fixed.mp4 (89s, 15 beats, rendered 2026-08-04) or
+    ep1-v31-animated.mp4 (89.96s, four held beats animated, 2026-08-07).
+    One 90-second watch clears it.
+  window: any
+  est_minutes: 45
+  cmd: >-
+    write the T3 leaf for whichever cut he passes, lint, push, then the posting
+    steps recorded under Distribution in STATE.md
+  why: >-
+    Episode 1's remake has been assembled and unwatched for days; publishing it is
+    what the founder himself ordered on 2026-08-02, and D9 plus STEWARDSHIP section 6
+    forbid posting from an unscreened cut.
+
+# Beat 9's plant grows from 4 leaf shapes to 7 and gains a second stem tier in
+# 2.5 seconds — the founder's own complaint, and the beat is in every cut of
+# episode 1 right now.
+- id: b09-antigrowth-1786089660
+  runner: manual
+  worker: rtx5090
+  needs: [cuda, vram20, video-venv]
+  gate: hardware
+  gate_ref: >-
+    rtx5090 Smart App Control switched itself to enforcement on 2026-08-07 at
+    13:25 local (HKLM\SYSTEM\CurrentControlSet\Control\CI\Policy\VerifiedAndReputablePolicyState
+    = 1). It blocks every unsigned compiled extension in C:\banyan-video\venv, so
+    torch will not import; there is no allowlist and no per-file exclusion. The
+    unblock is Windows Security, App and browser control, Smart App Control, Off —
+    by hand, on the box, and the switch is one-way. Oleg's or Roman's call, not
+    the steward's.
+  window: any
+  est_minutes: 8
+  cmd: bash pipeline/probe-b9-mitosis.sh
+  why: >-
+    The fifteen leaf-count terms and the rewritten direction are committed and held
+    by a test; only the render is missing, and the same method already worked on
+    beat 11 at a fixed seed (2 silhouettes for all 61 frames, motion 2.36 to 2.07).
+    Seed 20260814 off the f15 sidecar; the probe dir on the box is staged and hashed.
+
+# The 5070 Ti's video benchmark row for MODEL-COMPARISON section 1 — a hardware
+# measurement on a recipe already proven on that box, not a recipe change.
 #
-# BLOCKER UPDATED 2026-08-06 — the old one is resolved and was never a fault.
-# This comment used to gate the task on "stable AC", citing a power-delivery
-# fault (5070 Ti clamped to 180MHz, mains flapping). That is settled: the clamp
-# was an INADEQUATE ADAPTER, not the card and not a state-of-charge gate. On the
-# correct barrel adapter the card holds enforced.power.limit 140W and ran 2775
-# MHz at 100% util for 34 unbroken minutes while charging the pack. Do not
-# re-gate anything on AC stability or battery level.
+# The 2026-08-05 blocker on this entry is RESOLVED and was never a fault: the
+# 180MHz clamp was an inadequate barrel adapter, not the card and not the state of
+# charge. On the correct adapter it holds enforced.power.limit 140W and ran
+# 2775MHz at 100% util for 34 unbroken minutes while charging. Do not re-gate this
+# on AC stability or battery level.
 #
-# The real blocker now is reachability: the box is OFFLINE as of 2026-08-06 —
-# ~/.ssh/config's 192.168.3.153 is stale (the LAN re-addressed to 192.168.70.x)
-# and it is not on the new subnet. Re-find it by Wi-Fi MAC 9C:67:D6:85:0A:B6.
-#
-# STILL VALID, and deliberately so: this row is 480x832 at 8 steps on the
-# lowstep recipe. It is NOT the TI2V-5B 704x1280 recipe that MODEL-COMPARISON
-# §4 ruled out on this box on 2026-08-06 — that one pinned 97.4% of VRAM and
-# paged. Different model, a fifth of the pixels, different question. Before
-# re-firing, check the box for stale scheduled-task registrations
-# (banyan-probe5070, banyan-probe5070-trace) so the ruled-out recipe cannot
-# launch alongside this one.
+# STILL VALID, and deliberately so: 480x832 at 8 steps on the vid-msi-lowstep
+# recipe (DONE task=vid-msi-lowstep-1785506926 on farm-results-msi, 2026-07-31).
+# It is NOT the TI2V-5B 704x1280 recipe that MODEL-COMPARISON section 4 ruled out
+# on this box on 2026-08-06 — that one pinned 97.4% of VRAM and paged. Different
+# model, a fifth of the pixels, a different question. Before it fires, check the
+# box for stale scheduled-task registrations (banyan-probe5070,
+# banyan-probe5070-trace) so the ruled-out recipe cannot launch alongside it.
 - id: msi-preview-b01-1785937992
+  runner: farm
   worker: msi
+  needs: [cuda, video-venv]
+  gate: hardware
+  gate_ref: >-
+    msi 5070 Ti unreachable since 2026-08-06 — no ping, ssh times out, ARP
+    incomplete. ~/.ssh/config still points at 192.168.3.153 and the LAN
+    re-addressed to 192.168.70.x. Re-find it by Wi-Fi MAC 9C:67:D6:85:0A:B6
+    (find-msi-on-lan-1786089720), then fix the ssh alias. Unreachable is what we
+    know; whether it is switched off is exactly what we cannot tell from here.
+  window: any
+  est_minutes: 40
   video: true
   node: 001-capability-inventory
   beats: '1'
@@ -178,3 +277,250 @@ tasks:
   seconds: 2.5
   steps: 8
   seed_base: 20260731
+  why: >-
+    MODEL-COMPARISON section 1 has no measured video row for the second card, so
+    the fleet question Oleg asked on 2026-08-05 — what is each box worth for
+    video — is answered for one box out of two.
+
+# Finding the box is a separate, cheap, unblocked job from rendering on it.
+- id: find-msi-on-lan-1786089720
+  runner: manual
+  worker: m1pro
+  needs: []
+  window: any
+  est_minutes: 10
+  cmd: >-
+    scan 192.168.70.0/24 for Wi-Fi MAC 9C:67:D6:85:0A:B6, then update the msi alias
+    in ~/.ssh/config and re-probe ssh
+  why: >-
+    It is the whole of msi-preview-b01-1785937992's gate and of every future job on
+    the second card, it needs no GPU and no founder, and twice in two days a LAN
+    fault has been recorded as a dead box.
+
+# LTX-2.3 is cleared on look and cannot be used, and this is the reason.
+- id: ltx-jobs-loop-1786089780
+  runner: manual
+  worker: m1pro
+  needs: []
+  window: any
+  est_minutes: 120
+  cmd: >-
+    give pipeline/ltx_i2v.py a jobs stage (load once, render all) and teach
+    pipeline/video_task.py to launch it when video_model names an LTX build
+  why: >-
+    LTX wins per clip and LOSES per episode — about 78 min for 15 beats against the
+    5B's 42 — because video_task.py lines 1015 and 1082 both hardcode wan_i2v.py, so
+    every beat gets its own process and re-pays an 88s Gemma load and a 139s fp8
+    cast. Load-once brings it to about 25 min. Its consumer is
+    ltx-episode-batch-1786089840, which cannot be queued at all until this exists.
+
+- id: ltx-episode-batch-1786089840
+  runner: farm
+  worker: rtx5090
+  needs: [cuda, vram20, video-venv]
+  gate: code
+  gate_ref: >-
+    ltx-jobs-loop-1786089780 is unwritten — video_task.py lines 1015 and 1082
+    hardcode pipeline/wan_i2v.py, and ltx_i2v.py has no jobs stage.
+  window: overnight
+  est_minutes: 30
+  video: true
+  node: 001-capability-inventory
+  video_model: ltx-2.3
+  beats: '1'
+  size: 704x1280
+  seconds: 2.5
+  why: >-
+    A second gate sits behind the code one and is named here rather than discovered
+    later — LTX is cleared ON LOOK only (R4, 2026-08-06), and switching renderers
+    mid-episode changes the look, so the founder decides whether an episode is
+    rendered on it. ONE beat first either way, which is why this entry is beats 1.
+    Host-exclusive: the 2026-08-04 LTX run evicted the farm worker on the 64GB box.
+
+# Node 002b, "The First Citizen" — the only node in the tree with an approved
+# script and zero media. Everything under it hangs on one frame nobody has picked.
+- id: 002b-b01-video-5b-1786089900
+  runner: farm
+  worker: rtx5090
+  needs: [cuda, vram20, video-venv]
+  gate: founder
+  gate_ref: >-
+    The 002b beat-01 conditioning frame. Candidates sit under
+    genomes/sapling/nodes/002b-first-citizen/takes/stills/ and none is approved;
+    the steward's recommendation is the untouched 01-cold-open-r3-s3.png. Clearing
+    this gate means copying the chosen frame into that node's stills/, which is
+    founder-approved canon (R4), because video_task globs stills/NN-*.png for its
+    conditioning frame. No pending-founder.yaml id exists for this decision yet.
+  window: any
+  est_minutes: 10
+  video: true
+  node: 002b-first-citizen
+  video_model: ti2v-5b
+  no_anchor: true
+  motion: no new subjects, no scene change
+  size: 704x1280
+  offload: true
+  seconds: 2.5
+  steps: 14
+  guidance: 5.0
+  seed_base: 20260805
+  beats: '1'
+  why: >-
+    Beat 01 is the beat both of the founder's approval conditions were spent on —
+    the fig must GROW on screen, not already hang — so it is the one sample that
+    proves the fix and the one the other twenty beats wait behind.
+
+- id: 002b-b01-video-ltx-1786089960
+  runner: manual
+  worker: rtx5090
+  needs: [cuda, vram20, video-venv]
+  gate: founder
+  gate_ref: >-
+    The same beat-01 frame pick as 002b-b01-video-5b-1786089900 — one approved
+    conditioning frame serves both renders.
+  window: any
+  est_minutes: 15
+  cmd: >-
+    hand-run pipeline/ltx_i2v.py two-stage on the approved frame (8 steps at
+    352x640, 2x latent upsample, 3 steps at 704x1280, explicit sigmas, guidance
+    1.0) per the LTX row in pipeline/research/MODEL-COMPARISON.md section 1
+  why: >-
+    The same beat on both renderers is the comparison the founder was promised on
+    2026-08-06 and never got; the clips drop into SAMPLES/ and COMPARISON.html
+    picks them up with no code change.
+
+- id: 002b-stills-b02-21-1786090020
+  runner: farm
+  worker: rtx5090
+  needs: [cuda]
+  gate: founder
+  gate_ref: >-
+    002b-t0-c.yaml approval_scope — "beats 02-21 await his verdict on that sample
+    before conversion", and "No VO, no stills and no footage may be produced until
+    the dialect is settled". That verdict is the beat-01 frame pick above.
+  window: any
+  est_minutes: 25
+  node: 002b-first-citizen
+  beats: '2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21'
+  seeds: 4
+  steps: 40
+  seed_base: 20260719
+  why: >-
+    All twenty prompts are still written in the v2 low-detail style the founder
+    killed on 2026-07-27, so the first step after the gate clears is a text-only
+    conversion pass to the native-tag dialect and only then this batch — 80 images
+    at the 9-11s per image the 5090 measured on 2026-08-06.
+
+- id: 002b-vo-t0c-21beats-1786090080
+  runner: manual
+  worker: m1pro
+  needs: [mps]
+  gate: founder
+  gate_ref: >-
+    The same 002b-t0-c approval_scope clause as 002b-stills-b02-21-1786090020 —
+    "No VO ... until the dialect is settled".
+  window: overnight
+  est_minutes: 60
+  cmd: >-
+    python3 pipeline/synth_vo.py FFMPEG sapling 002b-first-citizen --engine
+    chatterbox — load the render-env-setup skill first for cb-venv and the model
+    paths
+  why: >-
+    The 18 existing 002b VO takes are from the superseded t0-b cut and are not
+    voice for the approved script; a full re-voice runs on the Mac's MPS, needs no
+    GPU and contends with nothing on the farm.
+
+# Beat 7's negative was 115 of 77 CLIP tokens until 2026-08-07 — the worst in the
+# genome. This is the first render on which the terms its author wrote are sent.
+- id: b07-negatives-as-written-1786090140
+  runner: farm
+  worker: m1pro
+  needs: [mps]
+  window: any
+  est_minutes: 12
+  node: 001-capability-inventory
+  beats: '7'
+  seeds: 2
+  steps: 40
+  seed_base: 20260719
+  why: >-
+    Sixteen of beat 7's negative terms were never sent, among them the anti-foliage
+    terms the 2026-08-04 reframe was written to work around after four generations
+    came back as a mature branch. fit_negative (d63271c) now delivers them, so this
+    finds out whether the macro framing failed on the recipe or on the truncation.
+    Two candidate frames for the author's eye, never a canon swap; about 178s per
+    image on this box, off the 2026-07-30 fleet measurement.
+
+# MODEL-COMPARISON section 1 carries three rows that read SCHEDULED and have never
+# run. They are stocked here with the gates they actually have.
+- id: t5-fastwan-licence-1786090200
+  runner: manual
+  worker: m1pro
+  needs: []
+  window: any
+  est_minutes: 15
+  cmd: >-
+    python3 pipeline/vet_model.py on the FastWan rank-128 LoRA repo, then
+    python3 pipeline/licence_gate.py
+  why: >-
+    T5's LoRA may not be downloaded until the licence gate clears it (a standing
+    gate in the ACTION-PLAN header). The check is text, needs no GPU and no
+    founder, and it decides whether the T5 row is real work or a row to cut — a
+    change MODEL-COMPARISON should carry either way.
+
+- id: t5-fastwan-sample-b01-1786090260
+  runner: manual
+  worker: rtx5090
+  needs: [cuda, vram20, video-venv]
+  gate: hardware
+  gate_ref: >-
+    The same rtx5090 Smart App Control enforcement as b09-antigrowth-1786089660 —
+    no unsigned compiled extension in any venv on that box will import.
+  window: any
+  est_minutes: 10
+  cmd: >-
+    one beat-1 clip at 3 steps, guidance 1, flow_shift 3, 121 frames at 704x1280 —
+    the LoRA's own recipe, and do not carry our shift over
+  why: >-
+    Behind the hardware gate sits t5-fastwan-licence-1786090200, which must clear
+    first. Read the sample knowing two things upstream already documents: at
+    guidance 1 the entire negative prompt is inert, so every anti-static term we
+    tuned stops applying, and distill LoRAs are documented to slow motion — the
+    exact defect the K recipe was rejected for.
+
+- id: t4-sageattention-1786090320
+  runner: manual
+  worker: rtx5090
+  needs: [cuda, vram20]
+  gate: hardware
+  gate_ref: >-
+    The same rtx5090 Smart App Control enforcement as b09-antigrowth-1786089660,
+    and doubly so — SageAttention ships as an unsigned prebuilt Windows wheel into
+    a new venv, which is exactly what the policy blocks.
+  window: any
+  est_minutes: 45
+  cmd: >-
+    separate venv (the wheel pins the torch line), then one beat-1 clip at the
+    production 704x1280 14-step recipe, timed against the measured 5B baseline
+  why: >-
+    The section 1 row claims about 35% on our exact card and the claim is
+    mobcat40's, not ours; per-beat cost sets every episode's render budget. On
+    sm_120 force the Triton kernel — lightx2v routes capability (12,0) away from
+    the CUDA dispatch — coerce k and v to q's dtype, and never hand fp32 to sage.
+
+- id: t8-anisora-conversion-check-1786090380
+  runner: manual
+  worker: rtx5090
+  needs: []
+  window: any
+  est_minutes: 10
+  cmd: >-
+    list the model cache on the 5090 and report whether an AniSora V3.2 bf16 or fp8
+    conversion already exists on disk
+  why: >-
+    ACTION-PLAN section 1 T8 says cut the row unless the fp32 to bf16 conversion has
+    already happened, and nobody has looked; the download is about 126GB for the
+    pair against 68GB of host RAM. The consumer is the T8 row itself, which reads
+    SCHEDULED today and is probably a lie. Their own published VBench Motion is
+    45.59, below vanilla Wan on the axis this show cares about, so the likeliest
+    honest outcome of this check is that the row gets cut.
