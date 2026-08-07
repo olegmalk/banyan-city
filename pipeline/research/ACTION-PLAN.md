@@ -403,7 +403,21 @@ expensive — so run the metrics on our own 15 beats via `mode='custom_input'`
 Things the dossiers overturn in our own written records. Each needs the record
 edited, not just noting here.
 
-1. **The SageAttention black-frames note is uncorroborated.** We have
+1. **REFUTED BY MEASUREMENT 2026-08-07, not merely uncorroborated — running T4
+   settled this.** At our own attention shape (8160 tokens, 24 heads, head_dim
+   128) on this card, `sageattn_qk_int8_pv_fp16_cuda` returns output
+   **uncorrelated with torch SDPA: cosine similarity −0.0002, relative error
+   5468%**. It raises nothing, produces no NaN, runs 38-53x "faster", and
+   reproduces its garbage bit for bit across runs — silent corruption, the worst
+   available failure mode, and it is what our records recommended. The **Triton**
+   kernel is correct (cos 0.99991) and is what the measured T4 rows used;
+   lightx2v's routing of capability `(12,0)` away from the CUDA dispatch is
+   thereby confirmed on hardware rather than on their say-so. The bf16 worry below
+   did **not** materialise: bf16 and fp16 score within 0.03% of each other on
+   every kernel, and our bf16 pipeline rendered clean. Evidence:
+   `bench-platform/t4-sage-fidelity-20260807.txt` §0. The original note follows,
+   for the record.
+   **The SageAttention black-frames note is uncorroborated.** We have
    `sageattn_qk_int8_pv_fp16_cuda` written down as "the community's fix" for
    Wan+Sage black frames (`[dec §3 cause 3]`, `[dec §4]`). kijai's repo — the
    source that note points at — **never names that function**; an exhaustive grep

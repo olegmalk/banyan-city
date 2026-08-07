@@ -1,0 +1,158 @@
+T4 — SageAttention 2.2.0 on the rtx5090 (RTX 5090 Laptop, sm_120). 2026-08-07.
+
+Three renders, one recipe, one seed. Runs 1 and 3 are the NATIVE control and its
+repeat; run 2 is the same thing with DIFFUSERS_ATTN_BACKEND set to sage's Triton
+kernel. Everything else — venv, harness, prompt files, conditioning still, seed —
+is held. Isolated venv C:anyan-bench\sage-venv: sageattention + triton only,
+with the production tree's site-packages on sys.path READ-ONLY via a .pth.
+C:anyan-videoenv was never written to (verified: it imports neither package).
+
+WHAT WAS INSTALLED, and from where:
+  sageattention-2.2.0+cu128torch2.10.0andhigher.post6-cp310-abi3-win_amd64.whl
+    github.com/woct0rdho/SageAttention, release v2.2.0-windows.post6 (2026-07-17)
+    sha256 103e06df49486daa87c3338bf2490ada2b074da1422f2b90566a8f2f81a6b76e
+    — matches the digest GitHub's API publishes for the asset. 16,871,451 bytes.
+  triton-windows==3.7.1.post27 (PyPI, 2026-06-21, same maintainer woctordho)
+    bundles TinyCC and a minimal CUDA toolchain, so no MSVC and no CUDA toolkit
+    were needed — there is no nvcc and no Visual Studio on this box.
+  Host: Python 3.12.10, torch 2.11.0+cu128 (RELEASED, not a nightly),
+        diffusers 0.39.0, transformers 5.14.1, compute capability (12,0).
+
+==========================================================================
+RUNS 1 and 2 — native control, then sage triton
+==========================================================================
+==== T4 RUN 1 native control ==== 
+PROBE_INIT C:\banyan-bench\t4-20260807\01-the-keyboard.png sha256=004ecf2df2176977dcfe85cfb0d47ad7a53e3a0d49ac60050654ae7002f31c08
+PROBE_PROMPT 243 chars: 2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. his hands hammer the mechanical keyboard, fingers flying across the keys in large rapid strokes, wrists moving visibly, the monitor glow pulsing over them
+PROBE_NEGATIVE 473 chars: new subjects, scene change, photorealism, 3D render look, text, 静态, 静止, 静止不动的画面, frozen frame, still image, no motion, face morphing, changing facial features, distorted face, warped face, facial expression change, head turning, photorealistic, photograph, live action, film still, 3D render, CGI, octane, realistic skin texture, depth of field bokeh, motion blur, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+PROBE_CMD C:\banyan-bench\sage-venv\Scripts\python.exe C:\banyan-bench\t4-20260807\wan_i2v.py --stage simple --embeds C:\banyan-bench\t4-20260807\t4-native-control.unused.pt --init C:\banyan-bench\t4-20260807\01-the-keyboard.png --out C:\banyan-bench\t4-20260807\t4-native-control.mp4 --prompt <t4-prompt.txt> --negative <t4-negative.txt> --model ti2v-5b --quantise none --size 704x1280 --steps 14 --guidance 5.0 --seconds 2.5 --seed 20260732 --offload --no-shake-neg
+model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+[transformers] `CLIPImageProcessor` requires torchvision (not installed); falling back to `CLIPImageProcessorPil` for backward compatibility. Install torchvision to use the default backend, or import `CLIPImageProcessorPil` directly to silence this warning.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading pipeline components...:   0%|          | 0/5 [00:00<?, ?it/s]Loading pipeline components...:  20%|██        | 1/5 [00:00<00:03,  1.05it/s]
+Loading weights:   0%|          | 0/242 [00:00<?, ?it/s][ALoading weights: 100%|██████████| 242/242 [00:00<00:00, 3075.21it/s]
+Loading pipeline components...:  40%|████      | 2/5 [00:01<00:01,  2.13it/s]
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s][A
+Loading checkpoint shards:  20%|██        | 1/5 [00:18<01:13, 18.26s/it][A
+Loading checkpoint shards:  40%|████      | 2/5 [00:36<00:54, 18.11s/it][A
+Loading checkpoint shards:  60%|██████    | 3/5 [00:54<00:36, 18.13s/it][A
+Loading checkpoint shards:  80%|████████  | 4/5 [01:12<00:18, 18.08s/it][A
+Loading checkpoint shards: 100%|██████████| 5/5 [01:13<00:00, 12.02s/it][ALoading checkpoint shards: 100%|██████████| 5/5 [01:13<00:00, 14.74s/it]
+Loading pipeline components...:  60%|██████    | 3/5 [01:14<01:07, 33.94s/it]The config attributes {'clip_output': False} were passed to AutoencoderKLWan, but are not expected and will be ignored. Please verify your config.json configuration file.
+Loading pipeline components...:  80%|████████  | 4/5 [01:25<00:24, 24.73s/it]Loading pipeline components...: 100%|██████████| 5/5 [01:25<00:00, 17.10s/it]
+pipeline class: WanImageToVideoPipeline (forced image-to-video)
+VRAM[after load, before .to(cuda)] used 1.38/25.7GB (torch holds 0.00GB)
+model cpu offload ON (big model: slower per clip, but it fits)
+VAE tiling enabled
+C:\banyan-video\venv\Lib\site-packages\diffusers\pipelines\wan\pipeline_wan_i2v.py:226: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  prompt_embeds = self.text_encoder(text_input_ids.to(device), mask.to(device)).last_hidden_state
+  0%|          | 0/14 [00:00<?, ?it/s]  7%|▋         | 1/14 [00:16<03:28, 16.07s/it] 14%|█▍        | 2/14 [00:24<02:18, 11.58s/it] 21%|██▏       | 3/14 [00:33<01:51, 10.18s/it] 29%|██▊       | 4/14 [00:41<01:35,  9.50s/it] 36%|███▌      | 5/14 [00:49<01:22,  9.14s/it] 43%|████▎     | 6/14 [00:58<01:11,  8.91s/it] 50%|█████     | 7/14 [01:06<01:01,  8.78s/it] 57%|█████▋    | 8/14 [01:15<00:52,  8.69s/it] 64%|██████▍   | 9/14 [01:23<00:43,  8.63s/it] 71%|███████▏  | 10/14 [01:32<00:34,  8.60s/it] 79%|███████▊  | 11/14 [01:40<00:25,  8.57s/it] 86%|████████▌ | 12/14 [01:49<00:17,  8.56s/it] 93%|█████████▎| 13/14 [01:58<00:08,  8.55s/it]100%|██████████| 14/14 [02:06<00:00,  8.54s/it]100%|██████████| 14/14 [02:06<00:00,  9.04s/it]
+[1/1] wrote C:\banyan-bench\t4-20260807\t4-native-control.mp4 in 179s (61 frames, 704x1280, 14 steps, peak torch 14.4GB, device 1.8/26GB)
+THROUGHPUT 0.0142 s(video)/s(wall) (1 x 2.542s of video in 179s)
+    freed between clips: 1.7/26GB still held
+PROBE_SIDECAR t4-native-control.mp4.meta.yaml
+PROBE_RC rc=0 out=C:\banyan-bench\t4-20260807\t4-native-control.mp4 bytes=336883 wall_s=272
+==== T4 RUN 2 sage triton ==== 
+PROBE_INIT C:\banyan-bench\t4-20260807\01-the-keyboard.png sha256=004ecf2df2176977dcfe85cfb0d47ad7a53e3a0d49ac60050654ae7002f31c08
+PROBE_PROMPT 243 chars: 2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. his hands hammer the mechanical keyboard, fingers flying across the keys in large rapid strokes, wrists moving visibly, the monitor glow pulsing over them
+PROBE_NEGATIVE 473 chars: new subjects, scene change, photorealism, 3D render look, text, 静态, 静止, 静止不动的画面, frozen frame, still image, no motion, face morphing, changing facial features, distorted face, warped face, facial expression change, head turning, photorealistic, photograph, live action, film still, 3D render, CGI, octane, realistic skin texture, depth of field bokeh, motion blur, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+PROBE_CMD C:\banyan-bench\sage-venv\Scripts\python.exe C:\banyan-bench\t4-20260807\wan_i2v.py --stage simple --embeds C:\banyan-bench\t4-20260807\t4-sage-triton.unused.pt --init C:\banyan-bench\t4-20260807\01-the-keyboard.png --out C:\banyan-bench\t4-20260807\t4-sage-triton.mp4 --prompt <t4-prompt.txt> --negative <t4-negative.txt> --model ti2v-5b --quantise none --size 704x1280 --steps 14 --guidance 5.0 --seconds 2.5 --seed 20260732 --offload --no-shake-neg
+model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+[transformers] `CLIPImageProcessor` requires torchvision (not installed); falling back to `CLIPImageProcessorPil` for backward compatibility. Install torchvision to use the default backend, or import `CLIPImageProcessorPil` directly to silence this warning.
+Loading pipeline components...:   0%|          | 0/5 [00:00<?, ?it/s]
+Loading weights:   0%|          | 0/242 [00:00<?, ?it/s][ALoading weights: 100%|██████████| 242/242 [00:00<00:00, 5109.75it/s]
+Loading pipeline components...:  20%|██        | 1/5 [00:00<00:00,  9.01it/s]Loading pipeline components...:  40%|████      | 2/5 [00:01<00:01,  1.62it/s]The config attributes {'clip_output': False} were passed to AutoencoderKLWan, but are not expected and will be ignored. Please verify your config.json configuration file.
+Loading pipeline components...:  80%|████████  | 4/5 [00:11<00:03,  3.57s/it]
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s][A
+Loading checkpoint shards:  20%|██        | 1/5 [00:00<00:01,  2.74it/s][A
+Loading checkpoint shards:  40%|████      | 2/5 [00:00<00:01,  2.70it/s][A
+Loading checkpoint shards:  60%|██████    | 3/5 [00:01<00:00,  2.59it/s][A
+Loading checkpoint shards:  80%|████████  | 4/5 [00:01<00:00,  2.49it/s][A
+Loading checkpoint shards: 100%|██████████| 5/5 [00:02<00:00,  1.36it/s][ALoading checkpoint shards: 100%|██████████| 5/5 [00:02<00:00,  1.73it/s]
+Loading pipeline components...: 100%|██████████| 5/5 [00:14<00:00,  3.37s/it]Loading pipeline components...: 100%|██████████| 5/5 [00:14<00:00,  2.93s/it]
+pipeline class: WanImageToVideoPipeline (forced image-to-video)
+VRAM[after load, before .to(cuda)] used 1.38/25.7GB (torch holds 0.00GB)
+model cpu offload ON (big model: slower per clip, but it fits)
+VAE tiling enabled
+C:\banyan-video\venv\Lib\site-packages\diffusers\pipelines\wan\pipeline_wan_i2v.py:226: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  prompt_embeds = self.text_encoder(text_input_ids.to(device), mask.to(device)).last_hidden_state
+  0%|          | 0/14 [00:00<?, ?it/s]  7%|▋         | 1/14 [00:13<02:50, 13.10s/it] 14%|█▍        | 2/14 [00:18<01:45,  8.82s/it] 21%|██▏       | 3/14 [00:24<01:22,  7.49s/it] 29%|██▊       | 4/14 [00:30<01:08,  6.84s/it] 36%|███▌      | 5/14 [00:36<00:58,  6.48s/it] 43%|████▎     | 6/14 [00:42<00:50,  6.27s/it] 50%|█████     | 7/14 [00:48<00:42,  6.14s/it] 57%|█████▋    | 8/14 [00:54<00:36,  6.05s/it] 64%|██████▍   | 9/14 [00:59<00:29,  6.00s/it] 71%|███████▏  | 10/14 [01:05<00:23,  5.96s/it] 79%|███████▊  | 11/14 [01:11<00:17,  5.93s/it] 86%|████████▌ | 12/14 [01:17<00:11,  5.92s/it] 93%|█████████▎| 13/14 [01:23<00:05,  5.91s/it]100%|██████████| 14/14 [01:29<00:00,  5.90s/it]100%|██████████| 14/14 [01:29<00:00,  6.38s/it]
+[1/1] wrote C:\banyan-bench\t4-20260807\t4-sage-triton.mp4 in 137s (61 frames, 704x1280, 14 steps, peak torch 14.4GB, device 1.8/26GB)
+THROUGHPUT 0.0185 s(video)/s(wall) (1 x 2.542s of video in 137s)
+    freed between clips: 1.7/26GB still held
+PROBE_SIDECAR t4-sage-triton.mp4.meta.yaml
+PROBE_RC rc=0 out=C:\banyan-bench\t4-20260807\t4-sage-triton.mp4 bytes=342246 wall_s=160
+T4_ALL_DONE 
+
+==========================================================================
+RUN 3 — native repeat, the run-to-run determinism control
+==========================================================================
+==== T4 RUN 3 native repeat ==== 
+PROBE_INIT C:\banyan-bench\t4-20260807\01-the-keyboard.png sha256=004ecf2df2176977dcfe85cfb0d47ad7a53e3a0d49ac60050654ae7002f31c08
+PROBE_PROMPT 243 chars: 2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. his hands hammer the mechanical keyboard, fingers flying across the keys in large rapid strokes, wrists moving visibly, the monitor glow pulsing over them
+PROBE_NEGATIVE 473 chars: new subjects, scene change, photorealism, 3D render look, text, 静态, 静止, 静止不动的画面, frozen frame, still image, no motion, face morphing, changing facial features, distorted face, warped face, facial expression change, head turning, photorealistic, photograph, live action, film still, 3D render, CGI, octane, realistic skin texture, depth of field bokeh, motion blur, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+PROBE_CMD C:\banyan-bench\sage-venv\Scripts\python.exe C:\banyan-bench\t4-20260807\wan_i2v.py --stage simple --embeds C:\banyan-bench\t4-20260807\t4-native-repeat.unused.pt --init C:\banyan-bench\t4-20260807\01-the-keyboard.png --out C:\banyan-bench\t4-20260807\t4-native-repeat.mp4 --prompt <t4-prompt.txt> --negative <t4-negative.txt> --model ti2v-5b --quantise none --size 704x1280 --steps 14 --guidance 5.0 --seconds 2.5 --seed 20260732 --offload --no-shake-neg
+model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+[transformers] `CLIPImageProcessor` requires torchvision (not installed); falling back to `CLIPImageProcessorPil` for backward compatibility. Install torchvision to use the default backend, or import `CLIPImageProcessorPil` directly to silence this warning.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading pipeline components...:   0%|          | 0/5 [00:00<?, ?it/s]Loading pipeline components...:  20%|██        | 1/5 [00:00<00:03,  1.03it/s]
+Loading weights:   0%|          | 0/242 [00:00<?, ?it/s][ALoading weights: 100%|██████████| 242/242 [00:00<00:00, 7639.55it/s]
+Loading pipeline components...:  60%|██████    | 3/5 [00:01<00:00,  3.41it/s]The config attributes {'clip_output': False} were passed to AutoencoderKLWan, but are not expected and will be ignored. Please verify your config.json configuration file.
+
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s][A
+Loading checkpoint shards:  20%|██        | 1/5 [00:00<00:01,  2.72it/s][A
+Loading checkpoint shards:  40%|████      | 2/5 [00:00<00:01,  2.68it/s][A
+Loading checkpoint shards:  60%|██████    | 3/5 [00:01<00:00,  2.68it/s][A
+Loading checkpoint shards:  80%|████████  | 4/5 [00:01<00:00,  2.71it/s][A
+Loading checkpoint shards: 100%|██████████| 5/5 [00:02<00:00,  1.41it/s][ALoading checkpoint shards: 100%|██████████| 5/5 [00:02<00:00,  1.79it/s]
+Loading pipeline components...: 100%|██████████| 5/5 [00:14<00:00,  3.59s/it]Loading pipeline components...: 100%|██████████| 5/5 [00:14<00:00,  2.90s/it]
+pipeline class: WanImageToVideoPipeline (forced image-to-video)
+VRAM[after load, before .to(cuda)] used 1.38/25.7GB (torch holds 0.00GB)
+model cpu offload ON (big model: slower per clip, but it fits)
+VAE tiling enabled
+C:\banyan-video\venv\Lib\site-packages\diffusers\pipelines\wan\pipeline_wan_i2v.py:226: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  prompt_embeds = self.text_encoder(text_input_ids.to(device), mask.to(device)).last_hidden_state
+  0%|          | 0/14 [00:00<?, ?it/s]  7%|▋         | 1/14 [00:16<03:34, 16.53s/it] 14%|█▍        | 2/14 [00:24<02:21, 11.78s/it] 21%|██▏       | 3/14 [00:33<01:53, 10.30s/it] 29%|██▊       | 4/14 [00:41<01:35,  9.58s/it] 36%|███▌      | 5/14 [00:50<01:22,  9.19s/it] 43%|████▎     | 6/14 [00:58<01:11,  8.95s/it] 50%|█████     | 7/14 [01:07<01:01,  8.81s/it] 57%|█████▋    | 8/14 [01:15<00:52,  8.71s/it] 64%|██████▍   | 9/14 [01:24<00:43,  8.65s/it] 71%|███████▏  | 10/14 [01:33<00:34,  8.61s/it] 79%|███████▊  | 11/14 [01:41<00:25,  8.58s/it] 86%|████████▌ | 12/14 [01:50<00:17,  8.57s/it] 93%|█████████▎| 13/14 [01:58<00:08,  8.56s/it]100%|██████████| 14/14 [02:07<00:00,  8.55s/it]100%|██████████| 14/14 [02:07<00:00,  9.08s/it]
+[1/1] wrote C:\banyan-bench\t4-20260807\t4-native-repeat.mp4 in 172s (61 frames, 704x1280, 14 steps, peak torch 14.4GB, device 1.8/26GB)
+THROUGHPUT 0.0148 s(video)/s(wall) (1 x 2.542s of video in 172s)
+    freed between clips: 1.7/26GB still held
+PROBE_SIDECAR t4-native-repeat.mp4.meta.yaml
+PROBE_RC rc=0 out=C:\banyan-bench\t4-20260807\t4-native-repeat.mp4 bytes=336883 wall_s=194
+T4_RUN3_DONE 
+
+==========================================================================
+TIMINGS, parsed. Per-step is the figure that counts (MODEL-COMPARISON §3 r8).
+==========================================================================
+======================================================================
+T4 RUN 1 native control
+======================================================================
+  elapsed at each step: 0:0s 1:16s 2:24s 3:33s 4:41s 5:49s 6:58s 7:66s 8:75s 9:83s 10:92s 11:100s 12:109s 13:118s 14:126s
+  per-step deltas     : 1:16s 2:8s 3:9s 4:8s 5:8s 6:9s 7:8s 8:9s 9:8s 10:9s 11:8s 12:9s 13:9s 14:8s
+  SETTLED (steps 8-14): 8.57 s/it (min 8, max 9)
+  first step          : 0s   loop total: 126s
+  tqdm final smoothed : 9.04 s/it
+  WROTE: ('C:\\banyan-bench\\t4-20260807\\t4-native-control.mp4', '179', '61', '14.4', '1.8', '26')
+  RC: ('0', 'C:\\banyan-bench\\t4-20260807\\t4-native-control.mp4', '336883', '272')
+
+======================================================================
+T4 RUN 2 sage triton
+======================================================================
+  elapsed at each step: 0:0s 1:13s 2:18s 3:24s 4:30s 5:36s 6:42s 7:48s 8:54s 9:59s 10:65s 11:71s 12:77s 13:83s 14:89s
+  per-step deltas     : 1:13s 2:5s 3:6s 4:6s 5:6s 6:6s 7:6s 8:6s 9:5s 10:6s 11:6s 12:6s 13:6s 14:6s
+  SETTLED (steps 8-14): 5.86 s/it (min 5, max 6)
+  first step          : 0s   loop total: 89s
+  tqdm final smoothed : 6.38 s/it
+  WROTE: ('C:\\banyan-bench\\t4-20260807\\t4-sage-triton.mp4', '137', '61', '14.4', '1.8', '26')
+  RC: ('0', 'C:\\banyan-bench\\t4-20260807\\t4-sage-triton.mp4', '342246', '160')
+
+======================================================================
+T4 RUN 3 native repeat
+======================================================================
+  elapsed at each step: 0:0s 1:16s 2:24s 3:33s 4:41s 5:50s 6:58s 7:67s 8:75s 9:84s 10:93s 11:101s 12:110s 13:118s 14:127s
+  per-step deltas     : 1:16s 2:8s 3:9s 4:8s 5:9s 6:8s 7:9s 8:8s 9:9s 10:9s 11:8s 12:9s 13:8s 14:9s
+  SETTLED (steps 8-14): 8.57 s/it (min 8, max 9)
+  first step          : 0s   loop total: 127s
+  tqdm final smoothed : 9.08 s/it
+  WROTE: ('C:\\banyan-bench\\t4-20260807\\t4-native-repeat.mp4', '172', '61', '14.4', '1.8', '26')
+  RC: ('0', 'C:\\banyan-bench\\t4-20260807\\t4-native-repeat.mp4', '336883', '194')
+

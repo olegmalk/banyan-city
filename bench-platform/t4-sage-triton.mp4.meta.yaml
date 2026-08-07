@@ -1,0 +1,21 @@
+# Shot provenance (7.2) — written by probe_beat at render time
+platform: local-gpu (rtx5090)
+model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+model_licence: Apache-2.0
+shot_beat: 1
+size: 704x1280
+seconds: 2.5
+steps: 14 (UniPC flow_shift=5.0)
+guidance: 5.0
+offload: model_cpu_offload
+quantise: none
+seed: 20260732
+task: t4-sage-triton
+init_still: 01-the-keyboard.png
+init_still_sha256: 004ecf2df2176977dcfe85cfb0d47ad7a53e3a0d49ac60050654ae7002f31c08
+wall_seconds: 160
+cost_usd: 0
+prompt: |-
+  2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. his hands hammer the mechanical keyboard, fingers flying across the keys in large rapid strokes, wrists moving visibly, the monitor glow pulsing over them
+negative: |-
+  new subjects, scene change, photorealism, 3D render look, text, 静态, 静止, 静止不动的画面, frozen frame, still image, no motion, face morphing, changing facial features, distorted face, warped face, facial expression change, head turning, photorealistic, photograph, live action, film still, 3D render, CGI, octane, realistic skin texture, depth of field bokeh, motion blur, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage

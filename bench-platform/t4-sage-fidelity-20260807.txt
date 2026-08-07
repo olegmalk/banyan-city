@@ -1,0 +1,194 @@
+T4 — SageAttention FIDELITY and kernel selection. 2026-08-07, rtx5090 (sm_120).
+
+READ THE DETERMINISM CONTROL FIRST. It is what makes the drift attributable:
+  t4-native-control.mp4  sha256 6cb0c84d647e7f8f1a7246a86ba6619249076d8abd0279b5713e6082a679c925  336883 bytes
+  t4-native-repeat.mp4   sha256 6cb0c84d647e7f8f1a7246a86ba6619249076d8abd0279b5713e6082a679c925  336883 bytes
+  t4-sage-triton.mp4     sha256 f2716f282b60692150a1dfa72ba21ca5cbfeec6d7b30c2b5d764bc7268d65860  342246 bytes
+
+The control and its repeat are BYTE-IDENTICAL. The run-to-run floor for the
+TI2V-5B path on this box is therefore EXACTLY ZERO, same as the LTX pipeline's
+(MODEL-COMPARISON, the reproducibility control row). So 100% of the drift in
+section A below belongs to the attention kernel and nothing else.
+
+==========================================================================
+0. KERNEL SELECTION — measured before any render, at our real attention shape
+==========================================================================
+Wan2.2 TI2V-5B at 704x1280x61f: 8160 latent tokens, 24 heads, head_dim 128.
+'cos' is cosine similarity against torch SDPA on the same tensors.
+
+card: NVIDIA GeForce RTX 5090 Laptop GPU  cap (12, 0)
+shape: B1 H24 S8160 D128
+
+=== torch.bfloat16 ===
+  sdpa (torch)                         20.76 ms   baseline
+  sageattn (auto dispatch)              3.71 ms   5.60x   maxabs 0.00879  meanabs 0.000565  rel 3.876%  cos 0.999245
+  sageattn_qk_int8_pv_fp16_triton       5.77 ms   3.60x   maxabs 0.00317  meanabs 0.000194  rel 1.331%  cos 0.999908
+  sageattn_qk_int8_pv_fp16_cuda         0.54 ms   38.35x   maxabs 5.47237  meanabs 0.797791  rel 5468.643%  cos -0.000168
+
+=== torch.float16 ===
+  sdpa (torch)                         20.50 ms   baseline
+  sageattn (auto dispatch)              3.35 ms   6.12x   maxabs 0.00787  meanabs 0.000566  rel 3.877%  cos 0.999248
+  sageattn_qk_int8_pv_fp16_triton       5.70 ms   3.60x   maxabs 0.00244  meanabs 0.000190  rel 1.305%  cos 0.999914
+  sageattn_qk_int8_pv_fp16_cuda         0.38 ms   53.28x   maxabs 5.48410  meanabs 0.797795  rel 5468.591%  cos -0.000175
+
+SMOKE_RC 0
+
+THE FINDING: sageattn_qk_int8_pv_fp16_cuda — the kernel DECISION.md §3 cause 3
+and §4 write down as 'the community's fix' for Wan+Sage black frames — returns
+output UNCORRELATED with the reference on this card (cos -0.0002, rel 5468%).
+It does not raise, it does not produce NaN, and it is 38-53x 'faster'. It is
+silent corruption, and it reproduces exactly across runs (maxabs 5.47237 both
+times), so it is deterministic garbage rather than a flake. This is the CUDA
+dispatch lightx2v routes compute capability (12,0) away from; our own records
+had it as the recommended path. The Triton kernel is both correct (cos 0.99991)
+and the one the render below actually used.
+
+bf16 vs fp16 is a non-issue at kernel level: the two dtypes score within 0.03%
+of each other on every kernel. ACTION-PLAN §1 T4's warning that bf16 into sage
+is 'not a path any known-good workflow exercises' is true as provenance and did
+not bite — our pipeline stayed bf16 and the render is clean.
+
+==========================================================================
+A. THE MEASUREMENT — sage vs its own same-session native control
+==========================================================================
+==============================================================================
+CROSS-PLATFORM FIDELITY — same recipe, same seed, two different GPUs
+reference   : /private/tmp/claude-501/-Users-artovonkugler-banyan-city/51fa0eeb-78a4-44dd-a095-f8105ba56a73/scratchpad/t4-native-control.mp4
+candidate   : /private/tmp/claude-501/-Users-artovonkugler-banyan-city/51fa0eeb-78a4-44dd-a095-f8105ba56a73/scratchpad/t4-sage-triton.mp4
+CONFOUND    : same box, same isolated venv, same seed, same harness; the ONLY difference is DIFFUSERS_ATTN_BACKEND native -> _sage_qk_int8_pv_fp16_triton. Run-to-run floor for this pipeline is ZERO (t4-native-repeat.mp4 is byte-identical to the reference), so all drift below is the kernel
+method      : per-frame MSE/PSNR via ffmpeg psnr filter, averaged over
+              frames; rms = sqrt(mse_avg), in 0-255 units. Same method as
+              fp8-fidelity-20260805.log; this harness reproduces that
+              log's CTRL-crf23 row exactly (0.8714 / 0.933).
+==============================================================================
+
+== identity ==
+  t4-native-control.mp4                                  336883 bytes  sha256=6cb0c84d647e7f8f
+  t4-sage-triton.mp4                                     342246 bytes  sha256=f2716f282b606921
+  bit-identical across boxes: NO
+
+== stream properties ==
+  t4-native-control.mp4:
+    codec_name=h264
+    width=704
+    height=1280
+    pix_fmt=yuv420p
+    r_frame_rate=24/1
+    nb_frames=61
+    duration=2.541667
+    bit_rate=1055351
+  t4-sage-triton.mp4:
+    codec_name=h264
+    width=704
+    height=1280
+    pix_fmt=yuv420p
+    r_frame_rate=24/1
+    nb_frames=61
+    duration=2.541667
+    bit_rate=1072231
+
+== controls (encode-generation noise floor) ==
+  candidate measured bitrate: 1072231 bps
+  CTRL-crf23  ref vs its own re-encode    frames=61  mse_avg=1.0125  psnr=48.08 dB  rms=1.006/255
+  CTRL-br     ref vs re-encode @cand br   frames=61  mse_avg=2.9044  psnr=43.50 dB  rms=1.704/255
+
+== the measurement ==
+  XPLAT       candidate vs reference       frames=61  mse_avg=18.4313  psnr=35.48 dB  rms=4.293/255
+  drift / encode-noise-control ratio: 4.27x
+
+  For scale, the same metric on the figures already on record:
+    fp8 vs bf16 (same box) .................. rms 11.93/255
+    batch drift (b2 slot0 vs b1, same box) .. rms 10.35/255
+    crf23 re-encode control ................. rms  0.93/255
+
+== frozen-frame check (consecutive-frame RGB MSE; near-zero = frozen) ==
+  t4-native-control.mp4
+    pairs=60  consecutive-MSE min=12.070  mean=89.254  max=205.313
+    frames with consecutive-MSE < 0.5 (frozen): 0
+  t4-sage-triton.mp4
+    pairs=60  consecutive-MSE min=9.632  mean=91.703  max=211.385
+    frames with consecutive-MSE < 0.5 (frozen): 0
+
+== gross colour drift (per-channel mean over all frames) ==
+    channel      R        G        B
+    reference   42.331   22.454   66.095
+    candidate   42.300   22.382   66.045
+    delta       -0.031   -0.073   -0.050   (0-255 units)
+
+== end ==
+
+==========================================================================
+B. CALIBRATION — the native control vs the ARCHIVED 2026-08-04 baseline
+==========================================================================
+Not the measurement. The archived clip was encoded at crf 16 and this harness
+writes export_to_video's default, so the two are not byte-comparable by
+construction and rms 3.805 here is mostly h264 generation loss (its own
+bitrate-matched control is 2.141). Recorded so nobody later reads the archived
+file as a failed reproduction: the DENOISE reproduced to the step — 8.57 s/it
+settled here against 8.59 on 2026-08-04, loop 126s against 128s.
+
+==============================================================================
+CROSS-PLATFORM FIDELITY — same recipe, same seed, two different GPUs
+reference   : bench-T1T2T3/T1-shift5.0.mp4
+candidate   : /private/tmp/claude-501/-Users-artovonkugler-banyan-city/51fa0eeb-78a4-44dd-a095-f8105ba56a73/scratchpad/t4-native-control.mp4
+CONFOUND    : SAME recipe and seed, DIFFERENT h264 settings: the 2026-08-04 bench wrote crf 16 (1216053 bytes), probe_beat uses export_to_video defaults (336883 bytes). This is a harness/encode calibration, NOT the sage measurement
+method      : per-frame MSE/PSNR via ffmpeg psnr filter, averaged over
+              frames; rms = sqrt(mse_avg), in 0-255 units. Same method as
+              fp8-fidelity-20260805.log; this harness reproduces that
+              log's CTRL-crf23 row exactly (0.8714 / 0.933).
+==============================================================================
+
+== identity ==
+  T1-shift5.0.mp4                                       1216053 bytes  sha256=1f45d67655a7ba8a
+  t4-native-control.mp4                                  336883 bytes  sha256=6cb0c84d647e7f8f
+  bit-identical across boxes: NO
+
+== stream properties ==
+  T1-shift5.0.mp4:
+    codec_name=h264
+    width=704
+    height=1280
+    pix_fmt=yuv420p
+    r_frame_rate=24/1
+    nb_frames=61
+    duration=2.541667
+    bit_rate=3822521
+  t4-native-control.mp4:
+    codec_name=h264
+    width=704
+    height=1280
+    pix_fmt=yuv420p
+    r_frame_rate=24/1
+    nb_frames=61
+    duration=2.541667
+    bit_rate=1055351
+
+== controls (encode-generation noise floor) ==
+  candidate measured bitrate: 1055351 bps
+  CTRL-crf23  ref vs its own re-encode    frames=61  mse_avg=2.2402  psnr=44.63 dB  rms=1.497/255
+  CTRL-br     ref vs re-encode @cand br   frames=61  mse_avg=4.5826  psnr=41.52 dB  rms=2.141/255
+
+== the measurement ==
+  XPLAT       candidate vs reference       frames=61  mse_avg=14.4780  psnr=36.52 dB  rms=3.805/255
+  drift / encode-noise-control ratio: 2.54x
+
+  For scale, the same metric on the figures already on record:
+    fp8 vs bf16 (same box) .................. rms 11.93/255
+    batch drift (b2 slot0 vs b1, same box) .. rms 10.35/255
+    crf23 re-encode control ................. rms  0.93/255
+
+== frozen-frame check (consecutive-frame RGB MSE; near-zero = frozen) ==
+  T1-shift5.0.mp4
+    pairs=60  consecutive-MSE min=14.301  mean=92.603  max=209.065
+    frames with consecutive-MSE < 0.5 (frozen): 0
+  t4-native-control.mp4
+    pairs=60  consecutive-MSE min=12.070  mean=89.254  max=205.313
+    frames with consecutive-MSE < 0.5 (frozen): 0
+
+== gross colour drift (per-channel mean over all frames) ==
+    channel      R        G        B
+    reference   42.425   22.514   65.930
+    candidate   42.331   22.454   66.095
+    delta       -0.093   -0.060   +0.165   (0-255 units)
+
+== end ==

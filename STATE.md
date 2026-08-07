@@ -2765,3 +2765,73 @@ changes from `ltx-2.3` (a family name the dispatch cannot honour) to
 `ltx23-distilled-fp8`, and its `seconds` from 2.5 to 2.7, because 2.7s is the 65
 frames that were screened and 2.5s would round to 57 — a length nobody has looked
 at.
+
+## 2026-08-07 — SageAttention is real: 31.6% off every step, and the kernel our own notes called "the fix" returns garbage
+
+T4 ran on the rtx5090. The claim under test was mobcat40's **~35% faster
+diffusion sampling**, CLAIMED since 2026-08-04 and never measured by us. It is
+very nearly right, and it is now ours: **5.86 s/it against 8.57, −31.6%**, on
+beat 1 at the production recipe. Sources and every number:
+`bench-platform/t4-sage-20260807.log`,
+`bench-platform/t4-sage-fidelity-20260807.txt`, two rows in
+`pipeline/research/MODEL-COMPARISON.md` §1.
+
+**Three renders, not one, and the third is the one that makes the other two
+mean anything.** Run 1 native control, run 2 sage, run 3 native again. Runs 1
+and 3 came back **byte-identical** — sha256 `6cb0c84d…`, 336883 bytes both
+times. So the TI2V-5B path is **bit-deterministic run to run on this box**,
+which everybody had assumed and nobody had shown (the zero-drift control on
+record is LTX's, not the 5B's). Without it the drift below is just a number;
+with it, all of the drift belongs to the attention kernel and to nothing else.
+
+**What it costs.** Same-seed drift against its own control: **rms 4.293/255,
+PSNR 35.48 dB**, against a 1.006 crf23 and 1.704 bitrate-matched encode-noise
+control — 4.27x the floor, so real. For scale it is about a third of what the
+fp8 cast costs (11.93) and of batch-2 drift (10.35). Colour does not move (ΔR
+−0.031, ΔG −0.073, ΔB −0.050), there are **0/60 frozen frames**, and
+consecutive-frame MSE goes 89.25 → 91.70, i.e. very slightly *more* inter-frame
+motion. VRAM is unchanged to the tenth of a GB: 14.4GB torch either way. **The
+picture is not screened and adoption is not this record's call** — it is
+Roman's (R4). Nothing was switched on in production; the production venv was
+never written to.
+
+**The bigger finding is the one that was not the assignment.** Before rendering
+anything I ran the three candidate kernels at our real attention shape. The one
+our own records name as "the community's fix" for Wan+Sage black frames —
+`sageattn_qk_int8_pv_fp16_cuda`, at `DECISION.md` §3 cause 3 and §4 — returns
+output **uncorrelated with torch SDPA on this card: cosine similarity −0.0002,
+relative error 5468%**. No exception, no NaN, 38-53x "faster", and identical
+garbage on a re-run. Had T4 been done the obvious way — install the wheel, use
+the recommended backend, render fifteen beats — it would have produced fifteen
+fast worthless clips and an afternoon spent debugging our pipeline, which is
+exactly what `DECISION.md` §3 tells the reader *not* to do. The Triton kernel is
+correct (cos 0.99991) and is what ran. `ACTION-PLAN.md` §4 correction 1 is
+upgraded from "uncorroborated" to **refuted by measurement**.
+
+**Two things in the plan were wrong in the easy direction.** The row said the
+wheel *pins the torch line* to a 2.11.0.dev20260127 nightly plus Python 3.11 —
+that is mobcat40's build, and it is unusable here (cp311 against our 3.12, and
+its own BUILD_STORY says nightly ABI breaks between dates). woct0rdho ships a
+**`cp310-abi3` + `torch2.10.0andhigher`** wheel on the libtorch stable ABI that
+installs on our *released* torch 2.11.0+cu128 under Python 3.12.10 with nothing
+pinned:
+`sageattention-2.2.0+cu128torch2.10.0andhigher.post6-cp310-abi3-win_amd64.whl`,
+sha256 `103e06df…` verified against the digest GitHub publishes. The plan also
+named the **cu130** variant, which is the wrong CUDA line for this box. And the
+licence needed no confirming — Apache-2.0 with a real LICENSE file in both
+`thu-ml/SageAttention` and the fork; `triton-windows` is MIT. No compiler was
+needed either: triton-windows bundles TinyCC and a minimal CUDA toolchain, and
+this box has neither MSVC nor nvcc.
+
+**No pipeline code changed, and none needs to.** diffusers 0.39 already routes
+Wan's transformer through `dispatch_attention_fn` and already reads
+`DIFFUSERS_ATTN_BACKEND`, so the whole experiment is one environment variable
+and `_sage_qk_int8_pv_fp16_triton` is a first-class value of it. The isolation
+was a fresh venv holding *only* sageattention and triton, with the production
+`site-packages` added read-only through a `.pth` written after the last pip
+call — `C:\banyan-video\venv` imports neither package, checked afterwards.
+
+**What it would buy, if the founder wants it.** ~42s per beat at this recipe
+(179s → 137s), so roughly **10 minutes off a fifteen-beat episode**, for rms
+4.29 of drift on a clip nobody has looked at yet. That is the trade; the
+decision is not a measurement and does not happen here.
