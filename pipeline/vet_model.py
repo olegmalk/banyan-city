@@ -203,6 +203,22 @@ VENDORED_COVERS = {
         "wan-ai/wan2.2-t2v-a14b",
         "wan-ai/wan2.2-t2v-a14b-diffusers",
     ),
+    # Added 2026-08-07 by the T5 licence check, and note WHICH slug it is. The
+    # FastWan weights repo declares apache-2.0 with no LICENSE file and no
+    # `repository` field, so the GitHub fallback below tries
+    # "FastVideo/FastWan2.2-…" and never reaches hao-ai-lab/FastVideo, which
+    # does ship the real text. That is a paper-trail hole, not a licence
+    # problem, and this directory is the remedy the docstring already named.
+    #
+    # ONE slug, deliberately. The recipe in ACTION-PLAN T5 downloads the LoRA
+    # from DeepBeepMeep/Wan2.2, and Kijai/WanVideo_comfy holds a byte-identical
+    # copy — neither is listed and neither may be. They are 130- and 233-file
+    # grab-bags spanning many origins, so covering a REPO with one work's text
+    # is the same laundering the Wan2.2-Lightning near-miss above was: a
+    # vendored licence covers a WORK, and the work here is FastVideo's.
+    "FastVideo-FastWan-LICENSE.txt": (
+        "fastvideo/fastwan2.2-ti2v-5b-fullattn-diffusers",
+    ),
 }
 
 
@@ -433,13 +449,23 @@ CASES = [
     # been returning "unverifiable" ever since without anyone re-running the live
     # self-test. Verified against the file at HEAD before touching it, so the
     # regression belongs to that rule, not to the root-only fix above.
-    # FastWan's apache-2.0 is a tag with nothing quotable behind it: no LICENSE in
+    # FastWan's apache-2.0 was a tag with nothing quotable behind it: no LICENSE in
     # the weights repo, and its card declares no `repository`, so the GitHub
     # fallback tries `FastVideo/FastWan…` and never reaches hao-ai-lab/FastVideo,
     # which does ship a real Apache-2.0. The fix, if we ever want to render on it,
     # is to vendor that verified text into `licences/` the way Wan 2.2 already is —
     # never to loosen the rule.
-    ("FastVideo/FastWan2.2-TI2V-5B-FullAttn-Diffusers", "unverifiable"),
+    #
+    # MOVED unverifiable -> clear 2026-08-07, and it is the fix above being taken,
+    # not the rule being relaxed. The T5 licence check read
+    # hao-ai-lab/FastVideo's LICENSE (10757B, operative sections 1-9
+    # whitespace-identical to canonical Apache-2.0) and vendored it, so the text
+    # now EXISTS to quote and the no-text-behind-a-tag rule is satisfied rather
+    # than bypassed. Delete licences/FastVideo-FastWan-LICENSE.txt and this
+    # returns to "unverifiable" on the next run, which is the property that makes
+    # the change honest. Evidence: pipeline/research/models-licence.md, the
+    # FastWan section.
+    ("FastVideo/FastWan2.2-TI2V-5B-FullAttn-Diffusers", "clear"),
     ("Wan-AI/Wan2.2-TI2V-5B-Diffusers", "clear"),
     # CORRECTED 2026-08-02: this was asserted as "unverifiable" and the self-test
     # passed 5/5 on that wrong expectation — a green test encoding a false ground

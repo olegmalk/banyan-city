@@ -19,6 +19,7 @@ that rule has to apply to us too.
 | file | model | verified |
 |---|---|---|
 | `Wan2.2-LICENSE.txt` | Wan 2.2 (TI2V-5B, I2V-A14B, Diffusers variants) | 2026-08-01 — fetched from `raw.githubusercontent.com/Wan-Video/Wan2.2/main/LICENSE.txt`, 11357 bytes, sha256 `c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4`. Whitespace-normalised comparison against `apache.org/licenses/LICENSE-2.0.txt` is **identical** — canonical Apache-2.0, no appended clauses, no NOTICE file to propagate. |
+| `FastVideo-FastWan-LICENSE.txt` | `FastVideo/FastWan2.2-TI2V-5B-FullAttn-Diffusers` (the FastWan 3-step distill) | 2026-08-07 — fetched from `raw.githubusercontent.com/hao-ai-lab/FastVideo/main/LICENSE`, 10757 bytes, sha256 `5c7f173199fd7fb3cc83d86d24f3541e8ae0cb8c16e912ca519ed6a1435bd8f3`. Operative sections 1–9 are **whitespace-normalised identical** to `apache.org/licenses/LICENSE-2.0.txt`. The file differs from canonical by exactly 561 characters, all of them the APPENDIX *boilerplate template* ("Copyright [yyyy] [name of copyright owner]…"), which upstream truncated. That template is instructions for applying the licence to a new work, not terms — nothing is added and no clause is removed. GitHub's own detector resolves the repo to `spdx_id: Apache-2.0`, not `NOASSERTION`. No NOTICE file in the repo root. |
 
 The Wan model card additionally disclaims the output: *"We claim no rights over
 the your generated contents, granting you the freedom to use them."*

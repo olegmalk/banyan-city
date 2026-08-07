@@ -691,13 +691,20 @@ NO_SAMPLE_YET = [
     {
         "model": "FastWan 3-step LoRA on TI2V-5B",
         "plan": "T5",
-        "why": "Pending. No new base weights (it is a LoRA on the 5B we already run), "
-               "so this is the cheapest row left — but the LoRA needs licence_gate.py "
-               "before download.",
+        "why": "Pending a render, no longer pending a licence. No new base weights "
+               "(it is a LoRA on the 5B we already run), so this is still the "
+               "cheapest row left, and the gate cleared on 2026-08-07: "
+               "hao-ai-lab/FastVideo ships a real Apache-2.0 LICENSE whose operative "
+               "sections are identical to canonical, now vendored, and vet_model.py "
+               "returns CLEAR.",
         "extra": "Two things decide how to read it: at guidance 1 the entire negative "
                  "prompt goes inert, and distill LoRAs are documented to slow motion "
-                 "— the exact defect the K recipe was rejected for on 2026-08-03.",
-        "as_of": "ACTION-PLAN §1 T5, 2026-08-04",
+                 "— the exact defect the K recipe was rejected for on 2026-08-03. One "
+                 "licence caveat survives: the recipe's download URL points at an "
+                 "unlicensed mirror (DeepBeepMeep/Wan2.2, byte-identical to kijai's "
+                 "copy), so pull from FastVideo's own repo or record the LoRA's "
+                 "sha256 in the sidecar.",
+        "as_of": "models-licence.md FastWan section, 2026-08-07",
     },
     {
         "model": "Kandinsky 5.0",

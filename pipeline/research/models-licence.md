@@ -52,6 +52,7 @@ Test applied (all four must pass, else NO):
 | `genmo/mochi-1-preview` | **NO** | 10B | Apache-2.0 | **NO — fails I2V requirement** | 22GB bf16 / <20GB ComfyUI |
 | `quanhaol/Wan2.2-TI2V-5B-Turbo` + all diffusers/GGUF rebuilds | Yes | 5B, 4 steps | **CC BY-NC-SA 4.0** | **BLOCKED** — NonCommercial *and* ShareAlike | 4GB (GGUF) |
 | `lightx2v/Wan2.2-Lightning` → `Wan2.2-I2V-A14B-4steps-lora-rank64-Seko-V1` | Yes (LoRA) | rank-64 LoRA, 4 steps | Apache-2.0 (GitHub `LICENSE.txt` verified) | **SHIP-SAFE** | A14B host model |
+| `FastVideo/FastWan2.2-TI2V-5B-FullAttn-Diffusers` (the T5 3-step LoRA) | Yes (text+image, via the 5B base) | rank-128 LoRA 630MB, or 10.0GB merged | Apache-2.0 (GitHub `LICENSE` read + vendored) | **SHIP-SAFE** — mirror caveat below | TI2V-5B host model, no new base weights |
 
 ---
 
@@ -807,3 +808,183 @@ Supersedes the fallback list written above for this section.
 
 Per ONE SAMPLE BEFORE ANY BATCH: each of options 1–3 is a *recipe change*, so each
 needs one beat rendered and looked at before it goes near fifteen.
+
+---
+
+# The FastWan 3-step LoRA (ACTION-PLAN T5) — verdict: SHIP-SAFE, with the download source named
+
+**Researched 2026-08-07**, live against the HF and GitHub JSON APIs, for
+`t5-fastwan-licence-1786090200`. T5's rule was that the LoRA may not be
+DOWNLOADED until this clears. It clears.
+
+## Overall verdict: SHIP-SAFE at the origin. Take the weights from the authors, or record the mirror's sha256.
+
+The short version, because it is the opposite of the Turbo chain and the
+difference matters: **Turbo was BLOCKED because its origin is NonCommercial.
+FastWan's origin is Apache-2.0 and grants everything we need.** What is imperfect
+here is only the paper trail between the authors and the file our recipe points
+at — a hygiene defect belonging to the redistributors, not a restriction on us.
+
+Exactly the pattern
+[Lightning set](#link-4-answered--lightx2vwan22-lightning-no-license-on-hf-but-apache-20-verified-on-github):
+HF metadata says `apache-2.0` with no LICENSE file in the tree; the authors'
+GitHub repo ships the real text. Both surfaces were checked, as that precedent
+requires.
+
+## Link 1 — `FastVideo/FastWan2.2-TI2V-5B-FullAttn-Diffusers`, the origin — **SHIP-SAFE**
+
+<https://huggingface.co/FastVideo/FastWan2.2-TI2V-5B-FullAttn-Diffusers>
+
+`cardData.license: apache-2.0`, tag `license:apache-2.0`, `gated: False`, 60,733
+downloads, last modified 2025-11-25. The full `siblings` list — 24 files, 24.2GB
+— contains **no LICENSE file of any kind**, and the card declares no
+`repository` field. On HF alone this is a tag with nothing behind it.
+
+The README links `github.com/hao-ai-lab/FastVideo` four times as the authors' own
+project. That repo **does** ship `LICENSE`, 10757 bytes, and GitHub's detector
+resolves it to `spdx_id: Apache-2.0` — *not* `NOASSERTION`, the signal that
+exposed Turbo.
+
+<https://raw.githubusercontent.com/hao-ai-lab/FastVideo/main/LICENSE>:
+
+> "Apache License
+> Version 2.0, January 2004
+> http://www.apache.org/licenses/"
+
+Diffed against `apache.org/licenses/LICENSE-2.0.txt` rather than eyeballed. The
+**operative sections 1–9 are whitespace-normalised identical** (10107 characters
+each). The only difference in the whole file is 561 characters of the APPENDIX
+*boilerplate template* — the "Copyright [yyyy] [name of copyright owner]…" notice
+you are meant to paste into your own source files — which upstream truncated.
+That is instructions for applying the licence, not terms. **Nothing added, no
+clause removed:** no output clause, no NonCommercial, no ShareAlike, no
+territory, no field-of-use, no acceptable-use schedule. Apache-2.0 is silent
+about output, which is the reason it passes, not any affirmative grant.
+
+The README carries no restrictive prose either — grepped for
+commercial/research/restrict/prohibit and the only hit is *"If you use the
+FastWan2.2-TI2V-5B-FullAttn-Diffusers model for your research, please cite our
+paper"*. A citation request is not a licence condition.
+
+**Base chain, and it is the cleanest possible for us.** The `base_model` metadata
+field is empty — the hygiene caveat `vet_model.py`'s docstring already names
+FastWan for — but the card prose states it: *"FastWan2.2-TI2V-5B-Full-Diffusers
+is built upon Wan-AI/Wan2.2-TI2V-5B-Diffusers."* That is **our own production
+base**, Apache-2.0, already SHIP-SAFE in the table above and already inside a
+published episode. An Apache-2.0 distill of an Apache-2.0 base expands nobody's
+rights and is internally consistent.
+
+Now vendored, per the remedy `vet_model.py` had already written down for this
+exact repo: `licences/FastVideo-FastWan-LICENSE.txt`, sha256
+`5c7f173199fd7fb3cc83d86d24f3541e8ae0cb8c16e912ca519ed6a1435bd8f3`. The tool
+moved `UNVERIFIABLE → CLEAR` as a result, and its self-test expectation moved
+with it (11/11). Delete the vendored file and it reverts — the rule was
+satisfied, not loosened.
+
+## Link 2 — `DeepBeepMeep/Wan2.2`, what the recipe actually downloads — **unlicensed mirror**
+
+The ACTION-PLAN T5 recipe comes from Wan2GP's `defaults/ti2v_2_2_fastwan.json`,
+and that file's `loras` entry is a single hard URL, fetched live:
+
+```json
+"loras": ["https://huggingface.co/DeepBeepMeep/Wan2.2/resolve/main/loras_accelerators/Wan2_2_5B_FastWanFullAttn_lora_rank_128_bf16.safetensors"]
+```
+
+So the bytes T5 would put on the 5090 come from **neither FastVideo nor Wan-AI**.
+`DeepBeepMeep/Wan2.2` declares:
+
+- **no `license` in `cardData`, no `license:` tag** — nothing at all;
+- **no LICENSE file** — the only `.md` among its 130 files is `README.md`;
+- `base_model: ["Wan-AI/Wan2.2-T2V-A14B"]`, which is **the wrong base** for a 5B
+  TI2V LoRA — a repo-wide default, not a statement about this file;
+- a README that is a WanGP feature list, and a `loras_accelerators/readme.txt`
+  whose entire contents are the two words `loras accelerators`.
+
+`vet_model.py DeepBeepMeep/Wan2.2` → **UNVERIFIABLE**, correctly.
+
+`Kijai/WanVideo_comfy` holds the same file at `FastWan/`. It is **byte-identical**
+— both copies report LFS sha256
+`79290493711b022e1c6e655d803715cd8a91a75cdb139856cad46f354e2f681c`, 660,874,456
+bytes — established from the `paths-info` API **without downloading anything**.
+Two mirrors of one artifact, not two independent sources, which is the same trap
+the twin Turbo GGUFs set. Kijai declares no licence either (its sole LICENSE file
+covers an unrelated Ditto LoRA) and its README's "Other model sources" list
+credits nine upstreams — **hao-ai-lab/FastVideo is not among them**.
+
+**Why this is a caveat and not a block.** Nobody in this chain claims *more* than
+upstream granted; they claim nothing. Apache-2.0 §2 grants a perpetual,
+irrevocable licence to reproduce and prepare derivative works, directly from the
+Licensor to every recipient. A redistributor omitting the LICENSE is failing
+their own §4 obligations — it does not withdraw the grant that reaches us from
+FastVideo. That is the structural inverse of Turbo, where the restriction was
+upstream of every mirror and no downstream repackaging could clean it.
+
+**What is genuinely unproven:** that this 630MB rank-128 file is a mathematical
+extract of FastVideo's checkpoint. The evidence is naming, Wan2GP's own
+description, and kijai's known practice — and this repo has been bitten before by
+provenance-by-naming ("permission does not travel by names looking alike",
+`vet_model.py`). Circumstantial support: kijai's merged
+`Wan2_2-TI2V-5B-FastWanFullAttn_bf16.safetensors` is 9,999,659,744 bytes against
+FastVideo's own `transformer/diffusion_pytorch_model.safetensors` at
+9,999,660,080 — **336 bytes apart**, i.e. the same tensor budget with a rewritten
+safetensors header. Consistent with a repack. Not proof.
+
+Two clean ways to close it, both $0:
+
+1. **Download the transformer from FastVideo's own repo** (10.00GB) instead of the
+   630MB mirror. No third-party link at all, and it is the *same* 5B architecture
+   we already run. Costs disk and download time, buys a complete chain.
+2. **Use the mirror and record `sha256:79290493…` in the clip sidecar** alongside
+   the model string. The artifact becomes identifiable forever and the gap is
+   published rather than hidden — which is what §7.2 is for.
+
+Either satisfies the gate. Neither needs the founder.
+
+## What `licence_gate.py` says about the string the render would record — and a hole it exposes
+
+Run against the classifier live. Our sidecars take the shape
+`model: Wan-AI/Wan2.2-TI2V-5B-Diffusers` (see `bench-T1T2T3/*.meta.yaml`), so a
+T5 clip would record the base plus the LoRA. Every candidate form resolves the
+same way:
+
+| string fed to `model_licences()` | resolves as | verdict |
+|---|---|---|
+| `Wan-AI/Wan2.2-TI2V-5B-Diffusers` | `[('wan', 'Apache-2.0')]` | allow |
+| `Wan-AI/Wan2.2-TI2V-5B-Diffusers + FastVideo/FastWan2.2-TI2V-5B-FullAttn LoRA rank128 bf16 (via DeepBeepMeep/Wan2.2)` | `[('wan', 'Apache-2.0')]` | allow |
+| `FastVideo/FastWan2.2-TI2V-5B-FullAttn-Diffusers` | `[('wan', 'Apache-2.0')]` | allow |
+| `Wan2_2_5B_FastWanFullAttn_lora_rank_128_bf16.safetensors` | `[('wan', 'Apache-2.0')]` | allow |
+| `fastwan` | `[('wan', 'Apache-2.0')]` | allow |
+
+The verdict is right and **the reasoning is not**. `MODEL_LICENCES` matching is
+substring-based, and `"wan"` is a substring of `"fastwan"` — so the gate allows
+the LoRA on an accident of spelling, having read nothing about it. The bare word
+`fastwan`, naming no Wan-AI repo whatsoever, comes back Apache-2.0.
+
+This is precisely the failure the table's own `voxcpm2` comment warns about — *"a
+new release inherits the licence of any allowed model whose name is a prefix of
+its own… the direction that bites is always allow-by-inheritance"* — and it is
+worse when the accident agrees with the truth, because nothing ever surfaces it.
+Contrast `quanhaol/Wan2.2-TI2V-5B-Turbo`, which also contains `wan` but is caught:
+its explicit `quanhaol` key is non-allow, and `engine_licence()` returns the
+worst clause. **The explicit key is the only thing doing the work**, and FastWan
+has none.
+
+Adding one is R4 — `vet_model.py` is explicit that editing
+`licence_gate.MODEL_LICENCES` is a human decision, and this check does not make
+it. Recorded here as the finding it is. The safe reading in the meantime: a T5
+sidecar passes the gate, but it passes on the base's licence, so the sidecar must
+name the LoRA and its source explicitly for the provenance to mean anything.
+
+## Sources (all fetched 2026-08-07)
+
+- <https://huggingface.co/api/models/FastVideo/FastWan2.2-TI2V-5B-FullAttn-Diffusers>
+- <https://huggingface.co/FastVideo/FastWan2.2-TI2V-5B-FullAttn-Diffusers/raw/main/README.md>
+- <https://api.github.com/repos/hao-ai-lab/FastVideo>
+- <https://raw.githubusercontent.com/hao-ai-lab/FastVideo/main/LICENSE>
+- <https://www.apache.org/licenses/LICENSE-2.0.txt> (canonical, for the diff)
+- <https://raw.githubusercontent.com/deepbeepmeep/Wan2GP/main/defaults/ti2v_2_2_fastwan.json>
+- <https://huggingface.co/api/models/DeepBeepMeep/Wan2.2>
+- <https://huggingface.co/DeepBeepMeep/Wan2.2/raw/main/loras_accelerators/readme.txt>
+- <https://huggingface.co/api/models/Kijai/WanVideo_comfy>
+- <https://huggingface.co/Kijai/WanVideo_comfy/raw/main/README.md>
+- `paths-info` API on all three repos, for LFS sha256 without downloading weights
