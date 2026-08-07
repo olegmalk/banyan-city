@@ -242,19 +242,30 @@ backlog:
 # Beat 9's plant grows from 4 leaf shapes to 7 and gains a second stem tier in
 # 2.5 seconds — the founder's own complaint, and the beat is in every cut of
 # episode 1 right now.
+#
+# UNGATED 2026-08-07, and the gate it carried is kept here rather than deleted.
+# It read: rtx5090 Smart App Control switched itself to enforcement that morning
+# at 13:25 local (HKLM\SYSTEM\CurrentControlSet\Control\CI\Policy\VerifiedAndReputablePolicyState
+# = 1), which blocks every unsigned compiled extension in C:\banyan-video\venv —
+# torch died in c10.dll at WinError 4551, transformers on its regex module — with
+# no allowlist and no per-file exclusion, so the unblock had to be Windows
+# Security, App and browser control, Smart App Control, Off, by hand on the box,
+# and was Oleg's or Roman's call rather than the steward's.
+#
+# The founder switched it off. Verified from here the same day: the key reads
+# 0x0, torch 2.11.0+cu128 imports with cuda.is_available() True on the RTX 5090
+# Laptop GPU, and transformers 5.14.1 imports CLIPTokenizer. No reboot was needed.
+#
+# ONE CORRECTION TO THAT GATE_REF, worth more than the gate: it called the switch
+# one-way, which is Microsoft's documented behaviour and is not what this box
+# did. The machine had been running unsigned extensions for days, went to
+# enforcement on its own, and went back to Off by hand — the policy state is
+# MUTABLE here and can return. Re-read that key first the next time a compiled
+# import dies on this box.
 - id: b09-antigrowth-1786089660
   runner: manual
   worker: rtx5090
   needs: [cuda, vram20, video-venv]
-  gate: hardware
-  gate_ref: >-
-    rtx5090 Smart App Control switched itself to enforcement on 2026-08-07 at
-    13:25 local (HKLM\SYSTEM\CurrentControlSet\Control\CI\Policy\VerifiedAndReputablePolicyState
-    = 1). It blocks every unsigned compiled extension in C:\banyan-video\venv, so
-    torch will not import; there is no allowlist and no per-file exclusion. The
-    unblock is Windows Security, App and browser control, Smart App Control, Off —
-    by hand, on the box, and the switch is one-way. Oleg's or Roman's call, not
-    the steward's.
   window: any
   est_minutes: 8
   cmd: bash pipeline/probe-b9-mitosis.sh
@@ -476,10 +487,16 @@ backlog:
   runner: manual
   worker: rtx5090
   needs: [cuda, vram20, video-venv]
-  gate: hardware
+  gate: code
   gate_ref: >-
-    The same rtx5090 Smart App Control enforcement as b09-antigrowth-1786089660 —
-    no unsigned compiled extension in any venv on that box will import.
+    t5-fastwan-licence-1786090200 has not run. The LoRA may not be DOWNLOADED
+    until pipeline/licence_gate.py clears the repo (the standing gate in the
+    ACTION-PLAN header), so the weights this sample renders on cannot legally be
+    on the box yet. That check is text, unblocked and sitting in this same
+    backlog. The hardware gate this entry used to carry — rtx5090 Smart App
+    Control enforcement, shared with b09-antigrowth-1786089660 — was cleared by
+    the founder on 2026-08-07 and verified (torch and transformers both import);
+    the licence gate is what was standing behind it, named in `why` all along.
   window: any
   est_minutes: 10
   cmd: >-
@@ -492,15 +509,16 @@ backlog:
     tuned stops applying, and distill LoRAs are documented to slow motion — the
     exact defect the K recipe was rejected for.
 
+# UNGATED 2026-08-07 with b09-antigrowth-1786089660, and this entry is the one
+# the unblock mattered most to. Its gate read: the same rtx5090 Smart App Control
+# enforcement, and doubly so — SageAttention ships as an unsigned prebuilt
+# Windows wheel into a new venv, which is exactly what the policy blocks. With
+# the policy Off and verified, a fresh venv can install and import that wheel.
+# Nothing else was holding this row, so it is runnable work now, not a plan.
 - id: t4-sageattention-1786090320
   runner: manual
   worker: rtx5090
   needs: [cuda, vram20]
-  gate: hardware
-  gate_ref: >-
-    The same rtx5090 Smart App Control enforcement as b09-antigrowth-1786089660,
-    and doubly so — SageAttention ships as an unsigned prebuilt Windows wheel into
-    a new venv, which is exactly what the policy blocks.
   window: any
   est_minutes: 45
   cmd: >-
