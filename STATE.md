@@ -2088,6 +2088,15 @@ dropped its count on 2026-08-06. Amplitude register kept — the stem now carrie
 the swing instead of a departing leaf. Measured after: positive **256 chars**,
 negative **593 of 900**, anti-static still firing.
 
+**The method is proven, on beat 11, before beat 9 ever renders.** That job
+finished today as a controlled A/B — same still, same recipe, same seed 20260816,
+only the negative changed — and the apex count settled it: the old clip holds 2
+silhouettes at frame 0, 3 from frame 20, with the extra shape **detached and
+unanchored** by frame 35; the new clip holds **2 for all 61 frames**. Motion fell
+2.36 → 2.07 at 0% frozen in both, and **the drop is the artifact leaving.** So
+the eight-term convention works and beat 9 is the same convention applied to a
+worse case; what is missing here is only the render.
+
 **THE RENDER DID NOT HAPPEN, and the reason is a Windows security policy, not a
 schedule.** `pipeline/probe-b9-mitosis.sh` is written and was fired at the
 5090 — same still, same recipe (704x1280, 14 steps, guidance 5.0, UniPC shift

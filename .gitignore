@@ -40,3 +40,18 @@ genomes/*/nodes/*/takes/**/*.wav
 # tracked. Ignoring never untracks anything, so those are safe either way — this
 # keeps NEW files there behaving as they always have rather than vanishing.
 !genomes/sapling/nodes/001-capability-inventory/takes/**
+
+# Render media pulled off the farm boxes into review/. Same hazard as takes/ and
+# closed the same way (2026-08-07): 41 clips and 3 wavs were sitting untracked,
+# one `git add -A` from the tree, and nothing under review/ has ever been tracked
+# — verified with git ls-files before writing this. Extensions, not the
+# directory, so the .meta.yaml provenance sidecars that arrive beside every clip
+# stay visible: a sidecar is the record of what a render WAS, and it must not be
+# hidden along with the pixels it describes.
+review/**/*.mp4
+review/**/*.mov
+review/**/*.webm
+review/**/*.png
+review/**/*.jpg
+review/**/*.mp3
+review/**/*.wav
