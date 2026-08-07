@@ -14,6 +14,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import render_t2 as t2
 import render_t3 as t3
+import hold_still as hs
 from render_t1 import extract_script, parse_frames
 
 REPO = Path(__file__).resolve().parent.parent
@@ -895,6 +896,75 @@ def test_pingpong_loop_seams(tmp: Path):
         t3.subprocess.run, t3.video_duration = orig_run, orig_vd
     check("looping beat gets a palindrome", looped)
     check("covered beat is never ping-ponged", not covered)
+
+
+def test_held_still_is_never_reversed(tmp: Path):
+    """Founder, 2026-08-07: "for all of the images that have no animation and
+    only zooming, first of all, do not do ping pong." No delivered cut ever hit
+    this path — v30 and v31 sized their held clips to their slots — so the test
+    guards a latent one: a held clip left at the 2.5s default lands in beat 14's
+    13s slot, and the palindrome would answer it by reversing the push. It is
+    stretched instead; real footage still gets the palindrome, which is what
+    keeps ITS loop seams motion-continuous."""
+    calls = []
+
+    def fake_run(cmd, **kw):
+        calls.append([str(c) for c in cmd])
+        out = Path(cmd[-1])
+        if out.suffix == ".mp4":
+            out.write_bytes(b"x")
+        class R:
+            returncode = 0
+            stderr = ""
+        return R()
+
+    clip = tmp / "14-worth-staying-in.mp4"
+    clip.write_bytes(b"v")
+    beat = {"slug": "TEST — 0:00–0:13", "items": []}
+    orig_run, orig_vd = t3.subprocess.run, t3.video_duration
+    t3.subprocess.run, t3.video_duration = fake_run, lambda f: 2.5
+    try:
+        t3.render_beat(beat, 14, 13.0, [clip], tmp)          # no sidecar yet
+        as_footage = " ".join(" ".join(c) for c in calls)
+        calls.clear()
+        Path(str(clip) + ".meta.yaml").write_text(
+            "model: none — held still + code push-in, no video model ran\n")
+        t3.render_beat(beat, 14, 13.0, [clip], tmp)
+        as_held = " ".join(" ".join(c) for c in calls)
+    finally:
+        t3.subprocess.run, t3.video_duration = orig_run, orig_vd
+    check("unmarked footage still gets the palindrome", "reverse" in as_footage)
+    check("a held still is never reversed", "reverse" not in as_held)
+    check("a held still is stretched to its slot", "setpts" in as_held)
+
+
+def test_held_zoom_is_monotonic_and_gentle():
+    """The founder's two conditions on a zoom-only shot, as arithmetic.
+
+    ONE DIRECTION, WHOLE CLIP — asserted over the real beat lengths of episode
+    1's held beats, not a convenient one. And "very slow and gentle": the rate
+    is what the eye reads, so it is the rate that is bounded, with the 2-4%
+    total travel falling out of it. The curve this replaced moved 18% at
+    10.1%/s off the first frame."""
+    ep1_held = [2.583, 3.5, 6.637, 10.524, 12.992]        # beats 5, 4, 7, 10, 14
+    for secs in ep1_held + [0.5, 1.0, 60.0]:
+        n = max(2, int(24 * secs))
+        zs = hs.scale_series(secs, n)
+        check(f"{secs}s: scale series never reverses",
+              all(b <= a for a, b in zip(zs, zs[1:])))
+        check(f"{secs}s: pushes IN and lands on the approved frame",
+              zs[0] > zs[-1] and abs(zs[-1] - 1.0) < 1e-9)
+    for secs in ep1_held:
+        total = hs.zoom_total(secs)
+        check(f"{secs}s: travel {total * 100:.1f}% is within 2-4%",
+              0.02 - 1e-9 <= total <= 0.04 + 1e-9)
+        check(f"{secs}s: rate {total / secs * 100:.2f}%/s is under 1%/s",
+              total / secs < 0.01)
+    rates = [hs.zoom_total(s) / s for s in sorted(ep1_held)]
+    check("a longer beat is never given a faster drift",
+          all(b <= a + 1e-12 for a, b in zip(rates, rates[1:])))
+    check("an explicit per-beat override is honoured",
+          hs.zoom_total(6.0, 0.01) == 0.01)
 
 
 def test_kaggle_notebook_cells_parse():
@@ -2344,6 +2414,9 @@ def main():
         test_find_audio_naming(Path(td))
     with tempfile.TemporaryDirectory() as td:
         test_pingpong_loop_seams(Path(td))
+    with tempfile.TemporaryDirectory() as td:
+        test_held_still_is_never_reversed(Path(td))
+    test_held_zoom_is_monotonic_and_gentle()
     test_wrap_never_drops_words()
     test_caption_chunks()
     test_sync_shots_is_idempotent()

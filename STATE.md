@@ -2477,3 +2477,120 @@ hand-written sidecars that use `local-deterministic` and a bare `none` instead.
 `hold_still.py` was left alone on purpose: another session is editing it.
 
 **Not included:** `ep1-v32-gentleholds.mp4` did not exist at build time.
+
+## 2026-08-07 — the held zoom gets a rule, and the ping-pong was on the review page
+
+**The founder's direction, verbatim, and it is standing for every held shot from
+here on (R4 — this is taste, and taste is his):**
+
+> "for all of the images that have no animation and only zooming, first of all,
+> do not do ping pong. second of all, it should be very slow and gentle zooming."
+
+**The obvious culprit was the wrong one, and it was believed for an hour.**
+`render_t3.render_beat` palindromes any clip whose slot outruns it — clip plus
+itself reversed, so loop seams stay motion-continuous — and held clips were being
+made at `hold_still`'s 2.5s default while beat 14's slot is 13.0s. That reads as
+an airtight explanation and it is false. Measured frame by frame against frame 0,
+in a band with no captions in it: **v31 beat 14 climbs 1.00 → 1.20 across 40
+samples with zero reversals, and v30 beat 14 does the same (20.0%, zero).** Beats
+7 and 10 likewise, in both cuts. No delivered episode has ever ping-ponged,
+because both cuts' held clips were already cut to their slots, so the palindrome
+never fired. Writing that mechanism into the fix's own docstring as fact was the
+mistake; the measurement is what caught it, before the commit.
+
+**What actually bounces is `SCREENING.html`.** Its four per-beat held clips are
+2.5s and carried `<video loop>`, so an 18% push-in ran to the end and snapped
+back to wide every two and a half seconds for as long as he watched it. That is
+a ping-pong and it is the only one on the property. Those four `loop` attributes
+are gone.
+
+**`hold_still.py` before: `ZOOM = 0.18`, one number for every beat, on a cubic-ish
+ease-out** (`e = 1-(1-t)**1.4`). 18% of scale regardless of whether the beat ran
+2.6s or 13.0s, front-loaded — **10.1%/s at the first frame, half the travel spent
+in the first 39% of the shot.** It had been set against the opposite note (a 6%
+version drew "this one has no motion, u sure you opened it") and overshot into an
+effect.
+
+**After: gentleness is a RATE, not a total** — `ZOOM_RATE_PER_S = 0.006`, clamped
+to `ZOOM_MIN/MAX = 0.02/0.04`. A fixed total would have made the 2.6s beat drift
+five times faster than the 13.0s one and called both "3%". The floor keeps a
+short beat from having no move; the cap keeps a long one from reframing an
+approved picture. `EASE_EXP = 1.0` — **linear**, which is the only curve that
+satisfies both of his earlier notes at once: smoothstep was rejected for easing
+IN ("it should be ease in and out, just ease out") and cubic ease-out for parking
+("doesnt mean it should just stop at one point"). Constant rate never creeps up
+and never arrives. Per beat, and every one measured on the rendered file:
+
+| beat | slot | travel | rate |
+|---|---|---|---|
+| 05 | 2.58s | 2.0% (floor) | 0.77%/s |
+| 04 | 3.50s | 2.1% | 0.60%/s |
+| 07 | 6.64s | 4.0% (cap) | 0.60%/s |
+| 10 | 10.52s | 4.0% (cap) | 0.38%/s |
+| 14 | 12.99s | 4.0% (cap) | 0.31%/s |
+
+`--zoom` tunes it per beat; `scale_series` is a pure function and
+`test_held_zoom_is_monotonic_and_gentle` asserts the series never reverses at any
+of those five real lengths plus 0.5s/1s/60s, that travel stays in 2–4%, and that
+a longer beat is never given a faster drift. **A later session cannot reintroduce
+a bounce with a plausible easing tweak without a red test.**
+
+**Two structural fixes so the latent path stays latent.** `hold_still --fit`
+sizes a held clip to its slot (`vdur + 0.4`, the floor of `fit_duration` and a
+fixed point of it, so the beat neither loops nor lengthens), and
+`render_t3.held_still` refuses to palindrome a held clip at all — it stretches it
+instead, since a computed zoom has no true frame rate and slowing it is the same
+move. No epsilon on that branch, unlike the palindrome's `+0.05`: a held clip
+0.005s short still wraps ONE frame of the loop onto the beat's end, and that
+frame is the widest point of the push. Also `n = ceil(FPS * seconds)` — `int(24 *
+2.5833)` is 61, not 62, and a frame lost to float is exactly what makes a clip
+short of its slot.
+
+**`ep1-v32-gentleholds.mp4` exists — an unapproved working cut, no leaf written.**
+15 beats, 15 footage, 0 slate, 89.88s, 720×1280, 8.3 MB, $0. Only the five held
+sources changed; v31's animated beats went in untouched and were **verified
+pixel-identical** (mean abs difference 0.0000 at probes inside beats 6, 8, 9, 11,
+12, 13 and 15 of the rebuilt clip set). `qa_episode` 15 checks pass with the same
+single luma warning v30 and v31 carry; `check_sync --strict` clean on all of 001;
+`lint_genome` and the 28-test suite green. It runs 0.08s under v31 — rounding on
+three held slots, no footage.
+
+**Rebuilding v31's clip set cost more than the fix did, and the reason is worth
+recording:** its staging directory lived in `/tmp` and had been cleaned, so the
+recipe in the 2026-08-07 entry above had to be re-executed (`collect_farm.py f15
+--branch 0e8c298`, face-B beat 02 from `3629e58`, the beat 3/13/15 swaps from
+`review/animated/`; beat 12's f15 take turned out already byte-identical). Two
+things that entry does not say and cost an hour between them: **the held beats
+were not all 2.5s** — beat 4 was 3.50s and beat 5 2.5833s, recovered by locating
+v31's own cuts by frame differencing — and **beats 5 and 7 have held clips under
+different slugs than their f15 animated ones** (`05-fan-spinning-down` vs
+`05-huh-blue`), so both land in the directory and `find_clips` sequences them
+unless the animated one is deleted.
+
+**Evidence for the founder, in `review/`** (gitignored, nothing staged): the five
+held beats cut straight out of both episodes as
+`beat-NN-HELD-v31-18pct.mp4` against `beat-NN-HELD-v32-gentle-cut.mp4`, captions
+and all, same length, same picture, only the zoom differing —
+`SCREENING.html` now leads with v32 and shows those five pairs, with v31 and v30
+kept beneath, labelled and dimmed. Raw `hold_still` output is also there as
+`beat-NN-HELD-gentle.mp4`.
+
+**Beat 3's missing third option now exists:** `review/beat-03-HELD-gentle-approvedframe.mp4`
+— the approved green frame held with the new push, 3.54s, the one-minute job the
+entry above left unmade because this file was being edited. **It is not on the
+screening page on purpose:** the page asks one yes/no on v32 and a fourth option
+on one beat would blur it. Next session can offer it.
+
+**Still open, and no longer blocked** — `hold_still.py` is done being edited, so
+the two sidecar findings in the entry above can be fixed: `licence_gate.sidecar_of`
+matches on the clip stem while `hold_still` writes `clip.mp4.meta.yaml`, and
+neither `platform: local-cpu (ffmpeg)` nor `model: none — held still + code
+push-in…` classifies. Left alone here deliberately — changing the sidecar strings
+touches the licence gate, `check_invention` and the new `render_t3.held_still`,
+all three of which key off `model: none`, and that deserves its own pass rather
+than a drive-by inside a taste fix.
+
+**Awaiting the founder:** v32 is the cut to answer on. The zoom is one number and
+every held beat re-renders in about a minute, so "too little" is a cheap answer —
+which matters, because 2–4% is nearer the version he once called invisible than
+the one he has now.

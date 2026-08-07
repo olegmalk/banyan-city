@@ -527,6 +527,27 @@ def card_clip(pngs_and_durs: list, workdir: Path, tag: str) -> Path:
     return parts
 
 
+def held_still(clips: list) -> bool:
+    """Is this beat's footage a held still rather than rendered video?
+
+    Same marker `check_invention` reads — the `model: none` line hold_still
+    writes into its own sidecar. It matters here because a held still is a
+    COMPUTED camera move, not footage: reversing it runs the push backwards,
+    which is the ping-pong the founder ruled out on 2026-08-07 ("for all of the
+    images that have no animation and only zooming, first of all, do not do ping
+    pong"). It also has no correct frame rate, so unlike real footage it can be
+    stretched to its slot instead."""
+    if not clips:
+        return False
+    for c in clips:
+        meta = Path(str(c) + ".meta.yaml")
+        if not (meta.is_file()
+                and "model: none" in meta.read_text(encoding="utf-8",
+                                                    errors="replace")):
+            return False
+    return True
+
+
 def render_beat(beat: dict, num: int, dur: float, clips: list, workdir: Path,
                 manifest: dict | None = None, extra_layers: list | None = None,
                 tag_speakers: bool = True) -> Path:
@@ -559,7 +580,34 @@ def render_beat(beat: dict, num: int, dur: float, clips: list, workdir: Path,
         # motion-continuous. First pass still plays forward from frame 1.
         # reverse buffers raw frames — cap the source length it applies to.
         cdur = video_duration(clip) or 0
-        if cdur and dur > cdur + 0.05 and cdur <= PINGPONG_MAX_S:
+        # NO EPSILON ON THE HELD BRANCH, unlike the palindrome's +0.05. A held
+        # still that falls even 0.005s short still wraps ONE frame of the loop
+        # onto the end of the beat, and that frame is the widest point of the
+        # push — a visible flick back at the cut. Real footage can absorb the
+        # slack; a monotonic move cannot, so any shortfall at all is stretched.
+        if cdur and dur > cdur and held_still(clips):
+            # A HELD STILL IS NEVER PALINDROMED. This path has never fired on a
+            # held beat — v30 and v31 both sized their held clips to their slots,
+            # and both measure as single monotonic pushes — so this is a latent
+            # path being closed, not a bug being fixed. It is worth closing: one
+            # held clip left at hold_still's 2.5s default drops beat 14 into a
+            # 13s slot, and the palindrome would answer that by running the push
+            # in, out, in, out, in. Stretch instead — a computed zoom has no true
+            # frame rate, so slowing it is the same move, gentler, still one-way.
+            st = workdir / f"st-{num:02d}.mp4"
+            r = subprocess.run(
+                [FFMPEG, "-y", "-i", str(clip), "-filter_complex",
+                 f"[0:v]setpts={(dur + 0.2) / cdur:.6f}*PTS,fps={FPS}[out]",
+                 "-map", "[out]", "-an", "-c:v", "libx264",
+                 "-preset", "veryfast", "-crf", "23", str(st)],
+                capture_output=True, text=True, encoding="utf-8", errors="replace")
+            if r.returncode:
+                raise SystemExit(f"beat {num} held-still stretch failed:\n"
+                                 f"{r.stderr[-800:]}")
+            print(f"    beat {num:02d} held still {cdur:.2f}s stretched to fill "
+                  f"{dur:.2f}s — not reversed (founder, 2026-08-07)")
+            clip = st
+        elif cdur and dur > cdur + 0.05 and cdur <= PINGPONG_MAX_S:
             pp = workdir / f"pp-{num:02d}.mp4"
             r = subprocess.run(
                 [FFMPEG, "-y", "-i", str(clip), "-filter_complex",
