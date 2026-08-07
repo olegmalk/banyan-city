@@ -2594,3 +2594,34 @@ than a drive-by inside a taste fix.
 every held beat re-renders in about a minute, so "too little" is a cheap answer —
 which matters, because 2–4% is nearer the version he once called invisible than
 the one he has now.
+
+### 2026-08-07, later — beat 3's held option was rebuilt because the old one was the rejected picture
+
+**`review/beat-03-HELD-gentle.mp4` — the approved green frame, held with the new
+push (3.54s, 2.1% travel, 0.60%/s).** It replaces nothing; the point is what it
+replaces *the offer of*. Verified by first-frame comparison against both plates in
+`stills/`: the old `review/beat-03-HELD-centred.mp4` matches
+`03-deploy-succeeded-REVOKED-magenta.png` at distance 9.1 and the approved
+`03-deploy-succeeded.png` at 50.8 — **the held clip the screening page was
+offering as one of beat 3's two options embedded the picture the founder
+rejected.** The new clip matches the approved plate at 5.7 and the revoked one at
+51.4. `hold_still.approved_still` skips any `REVOKED` filename, so the new clip
+could not have picked the wrong one; the old clip predates that guard's
+relevance because the still was revoked a minute after v30 was assembled.
+
+So the beat-3 question the founder was being asked was never held-versus-animated
+— it was *the rejected picture held* versus *the approved picture animated*, which
+is not a question. `SCREENING.html` now asks it properly, inside the v32 card:
+approved-animated (what v32 ships) against approved-held (new), as its own yes/no.
+The old comparison block is still there under v31, with its "slow push-in on your
+approved still" caption corrected to name the revoked plate, and **v30's card no
+longer claims "magenta dashboard replaced"** — it says v30 ships the rejected
+still and gives the 09:33 / 09:34:21 timestamps.
+
+**v32 is unchanged and its bytes are frozen** (8,324,166 B, md5
+`60be0132d0de45d595e4ec85ed563fa0`): beat 3 stays animated in it, the same clip
+v31 used, because no founder verdict exists to change it. Swapping in the held
+version is a one-minute re-render if he asks. `site-review` is publishing v30,
+v31 and v32 to the unlisted `/review/` area and has been given those checksums
+plus v30's and v31's, with confirmation that none of the three will be moved or
+rewritten without telling it first.
