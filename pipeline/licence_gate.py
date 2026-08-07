@@ -545,6 +545,70 @@ def engine_licence(engine) -> str:
     return hits[0][1]
 
 
+def is_candidate(path: Path, root: Path = REPO) -> bool:
+    """Evaluation media under a `takes/` subtree — shot but not yet chosen.
+
+    A THIRD tier between shipping and archived, added 2026-08-07. Archive means
+    "was canon, superseded"; candidate means "may never be canon at all". Both
+    are decided by directory name only, for the reason is_archived() gives: a
+    directory is a DECLARATION, whereas a filename or a missing field is a way
+    of hiding something.
+
+    Why it earns its own tier rather than counting as debt. The ratchet in
+    lint_genome asserts one thing — that publishable-asset liability never
+    quietly grows — and it does that by counting violations. Candidates break
+    the count without breaking the invariant: the founder picks one frame out of
+    four, so a single approved still arrives with three siblings that exist only
+    to be rejected, and each writes its own honest sidecar. On 2026-08-07 that
+    put 40 records into one node's takes/stills/ in a single wave and pushed the
+    debt from 38 to 78 — 40 new lines of report about ONE unresolved question
+    (D15: animagine-xl-3.1 is CreativeML Open RAIL++-M, whose use restrictions
+    travel, and it drew every frame in the tree). Not one new KIND of liability;
+    the same open decision, multiplied by the number of frames a wave happens to
+    shoot. A ratchet that ratchets on batch size is a ratchet nobody can hold.
+
+    THIS IS SCOPING, NOT SUPPRESSION, and the difference is load-bearing:
+      - candidates are still classified, by exactly the same rules;
+      - they are still REPORTED, on their own line in lint output, so D15's
+        surface area stays visible and countable instead of vanishing;
+      - they do not enter the debt total;
+      - and the moment one is PROMOTED — copied into the node's own stills/ or
+        clips/, named by a leaf, assembled into an episode — it is canon and the
+        full gate applies with nothing softened. Same rule as an archive: moving
+        the file is what changes the verdict.
+
+    WHAT MAKES THE EXEMPTION HONEST is that the publish path enforces it, and
+    takes/ IS a publish path — this must not be read as "takes/ never ships".
+    Both directories build_site copies out of a takes/ subtree run every file
+    through publishable() first: takes/clips/ since the PixVerse leak, and
+    takes/stills/ as of today (build_site.py, same commit as this comment — it
+    was a bare glob+copy until now, the one published surface on the site with
+    no licence question asked). A non-allow candidate is withheld and named in
+    WITHHELD.md. That gate, not this tier, is what keeps an unpublishable frame
+    off banyan.city. If a surface ever starts publishing out of takes/ without
+    calling publishable(), this exemption becomes a hole the day that code
+    lands, so the two belong in the same review.
+
+    THE TIER THEREFORE COVERS EXACTLY WHAT publishable() CATCHES, and no more:
+    a record that NAMES a model whose licence classifies non-allow. Everything
+    else the gate can find in a takes/ file stays canon debt — an empty
+    provenance value, a model in no table, a pointer to nothing, a sidecar
+    declaring no provenance at all, a clip with no record beside it. In every
+    one of those, engine_licence() returns None, publishable() reads None as
+    `continue`, and the file is copied to the website. Exempting the findings
+    the publish gate waves through would invert the incentive the whole gate
+    rests on: writing an honest sidecar would cost a candidate line, and writing
+    nothing would cost nothing. The unreadable record must never be the cheap
+    one — that is hole 2 ("absence is never safer than presence"), and it would
+    have come straight back in through this door.
+    """
+    try:
+        parts = path.relative_to(root).parts[:-1]
+    except ValueError:
+        parts = path.parts[:-1]
+    return "takes" in parts
+
+
 def is_archived(path: Path, root: Path = REPO) -> bool:
     """Superseded material, kept for provenance (R6).
 
@@ -651,7 +715,21 @@ class Gate:
         self.repo = repo
         self.errors = []
         self._advisories = []      # (message, where) — collapsed by run()
+        self.candidates = []       # takes/ — reported, never counted (is_candidate)
         self._reported = set()     # (where, licence) already named — see check_provenance
+
+    def tier_of(self, path: Path) -> str:
+        """"canon" | "candidate" | "archived" — which of the three the file is.
+
+        Archive is checked FIRST: `takes/archive/` is both, and an archived take
+        is the more specific statement (it was shot, considered and set aside),
+        so it keeps the advisory treatment it has always had rather than being
+        re-labelled a live candidate."""
+        if is_archived(path, self.repo):
+            return "archived"
+        if is_candidate(path, self.repo):
+            return "candidate"
+        return "canon"
 
     def err(self, where: str, msg: str) -> None:
         line = f"{where}: {msg} (licence gate)"
@@ -664,14 +742,35 @@ class Gate:
         scrolling past, which is how a real warning gets missed."""
         self._advisories.append((msg, where))
 
-    def report(self, where: str, msg: str, shipping: bool) -> None:
-        """A shipping asset's problem is a violation; an archived asset's is an
-        advisory. Nothing is ever silent."""
-        if shipping:
-            self.err(where, msg)
-        else:
+    def candidate(self, where: str, msg: str) -> None:
+        """A takes/ record's problem: classified and printed, never counted."""
+        line = f"{where}: {msg} (licence gate)"
+        if line not in self.candidates:
+            self.candidates.append(line)
+
+    def report(self, where: str, msg: str, tier: str = "canon") -> None:
+        """Route one finding by tier. Nothing is ever silent — the three
+        differ in whether they FAIL, not in whether they are said out loud.
+
+        canon      → violation, counted against the debt ratchet
+        candidate  → reported on its own line, not counted (see is_candidate)
+        archived   → advisory, collapsed by message
+
+        `tier` was a `shipping: bool` until 2026-08-07. A boolean could only
+        ever say fails / does-not-fail, so the day a third tier appeared the
+        choice was to call candidates shipping (and let one 40-frame wave move
+        the ratchet by 40) or to call them archived (and bury a live question in
+        a list that exists to be scrolled past). Neither is true of them."""
+        if tier == "candidate":
+            self.candidate(where, f"{msg} — a takes/ candidate, so it is not "
+                                  "counted against the debt ratchet; publishing "
+                                  "it is blocked by publishable(), and promoting "
+                                  "it into stills/ or clips/ makes this fatal")
+        elif tier == "archived":
             self.advise(where, f"{msg} — archived, so it does not fail CI, but "
                                "promoting it back into an episode would")
+        else:
+            self.err(where, msg)
 
     def check_licence(self, where: str, licence, what: str) -> None:
         """An explicit licence key is a fact about the file, wherever the file
@@ -683,15 +782,28 @@ class Gate:
         elif verdict == "unknown":
             self.err(where, f"licence '{licence}' on {what} is unclassified: {why}")
 
-    def check_provenance(self, where: str, value, what: str, shipping: bool = True) -> None:
+    def check_provenance(self, where: str, value, what: str, tier: str = "canon") -> None:
         """A model / engine / platform name → whether what it made can ship.
 
         The one path for voice AND picture (hole 1). Absent or unrecognised
         provenance on a shipping asset is a violation, not a note (hole 2)."""
+        # THE CANDIDATE TIER APPLIES TO EXACTLY ONE OUTCOME: a model that IS
+        # named and DOES classify non-allow. That is the only finding
+        # build_site.publishable() acts on, so it is the only one whose
+        # exemption is backed by anything.
+        #
+        # Everything else below — an empty value, a name in no table, a pointer
+        # to nothing — makes engine_licence() return None, and publishable()
+        # reads None as `continue` and copies the file to the website. Those
+        # findings therefore stay CANON debt wherever the file lives, because
+        # the alternative is a rule that charges you for honest provenance and
+        # refunds you for vague provenance. The gate must never make the
+        # unreadable record the cheap one.
+        blocked = tier if tier != "candidate" else "canon"
         norm = normalise(value)
         if not norm:
             self.report(where, f"{what} is empty — an asset with no provenance has no "
-                               "licence, and no licence cannot ship", shipping)
+                               "licence, and no licence cannot ship", blocked)
             return
         # The model table is consulted FIRST, before either escape (hole 6).
         # v2 matched POINTER as a fragment and returned, so 'stable-video-
@@ -707,7 +819,7 @@ class Gate:
             self.report(where, f"{what} '{value}' matches nothing in "
                                "licence_gate.MODEL_LICENCES — an unclassified model is "
                                "not a safe model; add it there with the licence you "
-                               "actually read, or replace the asset", shipping)
+                               "actually read, or replace the asset", blocked)
             return
         # One violation per asset per licence, not per matched name and not per
         # key: a sidecar that says `platform: pixverse-web` and `model: PixVerse
@@ -723,14 +835,14 @@ class Gate:
                 continue
             self._reported.add((where, licence))
             self.report(where, f"{what} '{value}' is made with {'/'.join(names)} "
-                               f"({licence}), which cannot ship: {why}{note}", shipping)
+                               f"({licence}), which cannot ship: {why}{note}", tier)
 
-    def check_engine(self, where: str, engine, what: str, shipping: bool = True) -> None:
+    def check_engine(self, where: str, engine, what: str, tier: str = "canon") -> None:
         """Voice engines, kept as its own name because that is what the VO path
         calls; the check itself is the shared one."""
-        self.check_provenance(where, engine, what, shipping)
+        self.check_provenance(where, engine, what, tier)
 
-    def scan_record_file(self, path: Path, shipping: bool = True) -> None:
+    def scan_record_file(self, path: Path, tier: str = "canon") -> None:
         """One record file — leaf, clip sidecar, VO manifest, voices.yaml,
         sound.yaml, whatever a future step writes — parsed and swept.
 
@@ -752,7 +864,7 @@ class Gate:
                 self.err(where, "unparseable yaml, licence cannot be verified "
                                 f"({e.__class__.__name__})")
                 return
-        self._scan_records(path, data, shipping)
+        self._scan_records(path, data, tier)
 
     def describes_asset(self, path: Path) -> bool:
         """Files whose ONLY job is to say what made a shipping asset: a clip
@@ -767,7 +879,7 @@ class Gate:
         336 are VO."""
         return ".meta." in path.name or path.suffix.lower() == ".json"
 
-    def _scan_records(self, path: Path, data, shipping: bool) -> None:
+    def _scan_records(self, path: Path, data, tier: str = "canon") -> None:
         """The one sweep over a parsed record file, whatever its format.
 
         v2 ran this over yaml and gave json a single `data['engine']` lookup —
@@ -782,10 +894,11 @@ class Gate:
         # nothing — and it would otherwise satisfy scan_media, which only looks
         # for the record's existence. Absence is a violation, not a note: a
         # deleted 'engine' key must not be cheaper than a wrong one.
-        # No `shipping and …` guard on the condition: report() decides error vs
-        # advisory, and an archived record that says nothing is still worth
-        # naming out loud. v2 guarded the sidecar rule this way and the archive
-        # went silent, which is the one thing an archive must never buy.
+        # No `tier == "canon" and …` guard on the condition: report() decides
+        # error vs candidate vs advisory, and a record that says nothing is
+        # worth naming out loud in all three. v2 guarded the sidecar rule this
+        # way and the archive went silent, which is the one thing a lower tier
+        # must never buy.
         if self.describes_asset(path) \
                 and not any(k in PROVENANCE_KEYS for r in recs for k in r):
             fix = ("backfill the engine of record or re-synth (pipeline/synth_vo.py "
@@ -793,7 +906,7 @@ class Gate:
                    else "record the platform and model that made the footage beside it")
             self.report(where, "declares no engine, model or platform — a shipping asset "
                                f"with no provenance is a violation, not a note; {fix}",
-                        shipping)
+                        tier if tier != "candidate" else "canon")
         # 'model: per-beat — see sources' delegates provenance to the records
         # underneath it, and check_provenance honours that. If the file has no
         # record naming a model, the delegation points at nothing — which is a
@@ -803,7 +916,7 @@ class Gate:
                 and not any(model_licences(v) for _, v in prov):
             self.report(where, "provenance says 'see sources' but no record in this file "
                                "names a model or service — the pointer points at nothing",
-                        shipping)
+                        tier if tier != "candidate" else "canon")
         for rec in recs:
             asset = next((str(rec[k]) for k in ASSET_KEYS if rec.get(k)), "")
             label = f"{where} [{asset[:60]}]" if asset else where
@@ -816,7 +929,7 @@ class Gate:
                         self.check_licence(label, v, f"key '{key}'")
                     elif key in PROVENANCE_KEYS and not slate:
                         kind = "engine" if key in ENGINE_KEYS else "model/service"
-                        self.check_provenance(label, v, f"{kind} (key '{key}')", shipping)
+                        self.check_provenance(label, v, f"{kind} (key '{key}')", tier)
 
     def scan_sources_md(self, path: Path) -> set:
         """A node's audio-sources/SOURCES.md licence table. The licence column
@@ -919,6 +1032,14 @@ class Gate:
             kind = "footage" if ext in VIDEO_EXT else "audio"
             beside = ("no .meta.yaml sidecar" if ext in VIDEO_EXT
                       else "no NN-vo.json manifest, no .meta.yaml sidecar, no SOURCES.md row")
+            # STAYS A HARD ERROR IN takes/ TOO — deliberately not routed through
+            # report(). The candidate tier is only ever as honest as the publish
+            # gate behind it, and publishable() returns True for a file with no
+            # sidecar ("unprovenanced is the gate's finding, not the build's").
+            # So an unprovenanced take in takes/clips/ is not withheld from
+            # banyan.city — it is copied onto it. Exempting the one class of
+            # asset the publish gate waves through is how a scoping rule becomes
+            # a laundering rule: write no record and pay nothing.
             self.err(_rel(asset), f"{kind} ships with no provenance: {beside} "
                                   "and no leaf record names it, so nothing "
                                   "says what made it or under what licence")
@@ -981,7 +1102,7 @@ class Gate:
             #    passes to render_t3 --clips tomorrow, voices.yaml, sound.yaml.
             for f in sorted(root.rglob("*")):
                 if f.is_file() and f.suffix.lower() in RECORD_EXT:
-                    self.scan_record_file(f, shipping=not is_archived(f, self.repo))
+                    self.scan_record_file(f, tier=self.tier_of(f))
             # 2. every shipping picture and sound with no provenance anywhere.
             #    Leaf rows are a legitimate place for it, so they are collected
             #    first — from the tree only; a trial clip's record is its sidecar.
@@ -993,24 +1114,51 @@ class Gate:
         # 4. sound-design cues that name a recorded file
         for f in sorted(genomes.glob("*/nodes/*/clips/sound.yaml")):
             self.scan_sound_cues(f)
-        return self.errors, self.collapse()
+        return self.errors, self.collapse(), self.candidates
 
 
 def scan(repo: Path = REPO) -> tuple:
-    """(errors, advisories) for a repo. Errors are publish-blocking."""
+    """(errors, advisories) for a repo. Errors are publish-blocking.
+
+    KEPT AT TWO VALUES on purpose (2026-08-07). Candidates arrived as a third
+    bucket, and widening this tuple would have rewritten 35 unpack sites in
+    test_pipeline alone — a diff where the real change is invisible among the
+    mechanical ones, and every one of those sites a chance to silently swallow
+    the new element by unpacking it into `_`. Callers that only ask "does this
+    tree ship" still get exactly that answer; scan_all() is for callers that
+    must also account for what is merely being considered."""
+    errors, advisories, _candidates = scan_all(repo)
+    return errors, advisories
+
+
+def scan_all(repo: Path = REPO) -> tuple:
+    """(errors, advisories, candidates) — the whole picture.
+
+    Errors are publish-blocking and counted against the debt ratchet.
+    Candidates are takes/ records naming a model whose licence does not clear:
+    printed every run so the tree's open licence questions stay countable, and
+    never added to the total, because build_site.publishable() is what keeps
+    them off the website. See is_candidate for the full reasoning and for the
+    one thing that must stay true for this split to be honest."""
     return Gate(repo).run()
 
 
 def main() -> int:
-    errors, advisories = scan()
+    errors, advisories, candidates = scan_all()
     for a in advisories:
         print(f"  ⚠ {a}")
+    if candidates:
+        print(f"  ⊙ {len(candidates)} takes/ candidate(s) not publishable as-is "
+              f"(not counted — see licence_gate.is_candidate):")
+        for c in candidates:
+            print(f"    - {c}")
     if errors:
         print(f"✗ licence gate: {len(errors)} violation(s):")
         for e in errors:
             print(f"  - {e}")
         return 1
-    print(f"✓ licence gate clear — 0 violations, {len(advisories)} advisory(ies)")
+    print(f"✓ licence gate clear — 0 violations, {len(advisories)} advisory(ies), "
+          f"{len(candidates)} candidate(s)")
     return 0
 
 

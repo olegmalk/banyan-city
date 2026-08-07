@@ -437,12 +437,17 @@ def publishable(f: Path) -> tuple:
     """
     if f.suffix.lower() in {".yaml", ".yml", ".json", ".md"}:
         return True, ""
-    side = None
-    for ext in (".meta.yaml", ".meta.yml", ".json"):
-        cand = f.with_suffix(ext)
-        if cand.exists():
-            side = cand
-            break
+    # lg.sidecar_for, not a hand-rolled with_suffix loop (2026-08-07). The
+    # pipeline writes sidecars under TWO names — `09-x.meta.yaml` AND
+    # `09-x.png.meta.yaml` — and with_suffix() can only ever build the first,
+    # because it REPLACES the extension instead of appending to it. So every
+    # full-name sidecar was invisible here, and invisible reads as
+    # unprovenanced, which returns True four lines down: the most carefully
+    # written record in the tree bought the least scrutiny. That shape is
+    # licence_gate's own documented reader bug (see the META_EXT comment there),
+    # and sidecar_for is the fix it already carries. It bit for real on the 40
+    # candidate stills of 2026-08-07, all of them `<name>.png.meta.yaml`.
+    side = lg.sidecar_for(f, lg.RECORD_SIDECAR_EXT)
     if side is None:
         return True, ""      # unprovenanced is the gate's finding, not the build's
     try:
@@ -2110,10 +2115,30 @@ def main() -> None:
                     (gdir / media).mkdir(exist_ok=True)
                     for f in (node_dir / "stills").glob("*.png"):
                         shutil.copy(f, gdir / media / f.name)
+                # Candidate stills go through publishable() exactly like the
+                # candidate clips below (2026-08-07). This was a bare glob+copy
+                # until today, which made takes/stills/ the one published
+                # surface on the site with no licence question asked — the same
+                # hole publishable() was written to close for takes/clips/ after
+                # `13-i-always-left.PIXVERSE.mp4` became a downloadable file on
+                # banyan.city with D8 already forbidding it. Two directories
+                # side by side, one gated and one not, is not a policy.
+                # It is also the condition licence_gate.is_candidate depends on:
+                # takes/ records are kept out of the debt ratchet BECAUSE this
+                # gate stops an unpublishable candidate reaching the web. Remove
+                # the gate and the exemption becomes a hole the same day.
                 if (node_dir / "takes" / "stills").is_dir():
                     (gdir / f"{media}-takes").mkdir(exist_ok=True)
-                    for f in (node_dir / "takes" / "stills").glob("*.png"):
+                    withheld = []
+                    for f in sorted((node_dir / "takes" / "stills").glob("*.png")):
+                        ok, why = publishable(f)
+                        if not ok:
+                            withheld.append((f.name, why))
+                            continue
                         shutil.copy(f, gdir / f"{media}-takes" / f.name)
+                    if withheld:
+                        (gdir / f"{media}-takes" / "WITHHELD.md").write_text(
+                            withheld_note(withheld))
                 if (node_dir / "takes" / "clips").is_dir():
                     (gdir / f"{media}-clips").mkdir(exist_ok=True)
                     withheld = []

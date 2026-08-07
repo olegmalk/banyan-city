@@ -2807,6 +2807,16 @@ def test_licence_gate(tmp: Path):
             p.write_text(body)
         return lg.scan(root)
 
+    def tree3(name, files):
+        """tree(), but keeping the candidates bucket scan() drops (2026-08-07).
+        A takes/ finding is still a finding; it is just counted elsewhere."""
+        root = tmp / name
+        for rel, body in files.items():
+            p = root / rel
+            p.parent.mkdir(parents=True, exist_ok=True)
+            p.write_text(body)
+        return lg.scan_all(root)
+
     N = "genomes/g/nodes/n"
     SVD = "stabilityai/stable-video-diffusion-img2vid-xt"
 
@@ -2863,14 +2873,22 @@ def test_licence_gate(tmp: Path):
 
     # ---- hole 3: SCAN COVERAGE WAS ONE HARD-CODED GLOB ------------------
     # <node>/clips/*-vo.json was the only VO path v1 walked, yet render_t3
-    # accepts --clips <ANY dir> and build_site publishes takes/clips/ verbatim.
+    # accepts --clips <ANY dir> and build_site publishes takes/clips/ too.
+    # These assert COVERAGE — that the sweep SEES a record wherever it sits.
+    # Which bucket it lands in is the tier's business and is asserted further
+    # down; takes/ became a candidate rather than an error on 2026-08-07, so
+    # 'is seen' is counted as errors + candidates here. Reading it out of
+    # `errors` alone would have made this test quietly stop testing coverage
+    # the day the tier landed, while still passing for the other two paths.
     NC_VO = '{"engine": "f5-tts-v1-base", "lines": []}'
     for i, (label, rel) in enumerate((("takes/clips", f"{N}/takes/clips/01-vo.json"),
                                       ("a dir nobody hard-coded", f"{N}/renders/01-vo.json"),
                                       ("a renamed manifest", f"{N}/clips/take-final.json"))):
-        errors, _ = tree(f"cov-vo-{i}", {rel: NC_VO})
-        check(f"an NC VO manifest in {label} is a violation", len(errors) == 1)
-    errors, _ = tree("cov-takes-sidecar", {f"{N}/takes/clips/01-a.meta.yaml": "platform: pixverse-web\n"})
+        errors, _, cands = tree3(f"cov-vo-{i}", {rel: NC_VO})
+        check(f"an NC VO manifest in {label} is seen", len(errors) + len(cands) == 1)
+    errors, _, cands = tree3("cov-takes-sidecar",
+                             {f"{N}/takes/clips/01-a.meta.yaml": "platform: pixverse-web\n"})
+    errors = errors + cands
     check("a sidecar in takes/clips (build_site publishes it verbatim) is scanned",
           len(errors) == 1 and "pixverse" in errors[0])
     errors, advisories = tree("cov-archive", {f"{N}/clips/footage-archive/01-a.meta.yaml":
@@ -2980,6 +2998,63 @@ def test_licence_gate(tmp: Path):
     check_named[f"{N}/leaves/n-t3-a.yaml"] += "  platform: alibaba-model-studio\n"
     errors, _ = tree("leaf-launder-ok", check_named)
     check("...and the same row with a real platform does provenance it", errors == [])
+
+    # ---- the CANDIDATE tier: takes/ is scoped out of the ratchet, not hidden --
+    # 2026-08-07. A candidate-stills wave wrote 40 honest sidecars into one
+    # node's takes/stills/ in a single night and took the debt 38 -> 78, forty
+    # lines all restating one open decision (D15: animagine-xl-3.1 is CreativeML
+    # Open RAIL++-M). The ratchet counts violations, so it was tracking how many
+    # frames a batch happened to shoot rather than how much liability the tree
+    # carries. Frames shot to be chosen between are not canon and must not move
+    # a canon count — but they must never go quiet either, which is what these
+    # assertions pin.
+    RAIL = "model: cagliostrolab/animagine-xl-3.1\n"
+    # the SAME sidecar, moved between two directories — the only difference
+    canon_errs, _, canon_cands = tree3(
+        "cand-canon", {f"{N}/stills/06-blue.png.meta.yaml": RAIL})
+    take_errs, _, take_cands = tree3(
+        "cand-takes", {f"{N}/takes/stills/06-blue.png.meta.yaml": RAIL})
+    check("a RAIL-licenced sidecar in canon stills/ is counted debt",
+          len(canon_errs) == 1 and "animagine" in canon_errs[0] and canon_cands == [])
+    check("...and the identical sidecar under takes/ raises debt by nothing",
+          take_errs == [])
+    check("...but it IS still classified and reported as a candidate",
+          len(take_cands) == 1 and "animagine" in take_cands[0])
+    check("the candidate line says why it is not counted, not merely that it is not",
+          "not counted against the debt ratchet" in take_cands[0]
+          and "promoting it" in take_cands[0])
+    # promotion is what changes the verdict — the same rule an archive follows
+    promoted, _, _ = tree3("cand-promoted",
+                           {f"{N}/clips/06-blue.mp4.meta.yaml": RAIL})
+    check("promoting a candidate into clips/ makes it fatal again",
+          len(promoted) == 1)
+    # takes/archive/ is both; archived is the more specific statement and wins
+    arch_e, arch_a, arch_c = tree3("cand-archived",
+                                   {f"{N}/takes/archive/06-blue.png.meta.yaml": RAIL})
+    check("an archived take under takes/ stays an advisory, not a candidate",
+          arch_e == [] and arch_c == [] and len(arch_a) == 1)
+
+    # THE EXEMPTION STOPS EXACTLY WHERE publishable() STOPS. Everything below
+    # leaves engine_licence() returning None, which publishable() treats as
+    # `continue` — so build_site copies the file to the website. If takes/ let
+    # these off too, writing a vague record would be cheaper than writing an
+    # honest one, and hole 2 would be back in through a new door.
+    vague, _, vague_c = tree3("cand-unclassified",
+                              {f"{N}/takes/stills/07-x.png.meta.yaml":
+                               "model: some-model-nobody-classified\n"})
+    check("an UNCLASSIFIED model under takes/ is still hard debt",
+          len(vague) == 1 and vague_c == [])
+    silent, _, silent_c = tree3("cand-silent",
+                                {f"{N}/takes/stills/07-x.png.meta.yaml":
+                                 "prompt: a mug falls\nseed: 7\n"})
+    check("a takes/ sidecar declaring no provenance at all is still hard debt",
+          len(silent) == 1 and "not a note" in silent[0] and silent_c == [])
+    bare, _, bare_c = tree3("cand-bare", {f"{N}/takes/clips/02-b.mp4": "mp4"})
+    check("a takes/ clip with no record beside it is still hard debt",
+          len(bare) == 1 and "no provenance" in bare[0] and bare_c == [])
+    # and the founder's switch must not be narrowed by any of the above
+    check("scan() keeps its two-value contract for callers that only ask 'ships?'",
+          len(lg.scan(tmp / "cand-takes")) == 2)
 
     # and the real tree, which is a RATCHET, not a pass/fail. The gate's first
     # full run (2026-08-01) found 46 violations, every one of them pre-existing

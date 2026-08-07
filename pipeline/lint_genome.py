@@ -58,7 +58,20 @@ LEDGER_HEADER = ["date", "node", "leaf", "citizen", "type", "amount_usd", "compu
 # THE INVARIANT IS UNCHANGED: the count asserts "no new unpublishable asset". It
 # rises only when the tree is found to be worse than recorded, never to make a
 # failing build pass. Every future change must be DOWN, as assets are retired.
-LICENCE_DEBT = 38
+#
+# 2026-08-07: 38 -> 25, and this is NOT thirteen assets retired. The count was
+# re-scoped to canon: records under a `takes/` subtree are now reported as
+# candidates instead (lint_licences below, licence_gate.is_candidate), and 13 of
+# the 38 were takes/clips sidecars. Nothing in the tree got better and nothing
+# got worse — the same 13 files are still printed every run, on the candidates
+# line instead of this one.
+# LOWERED RATHER THAN LEFT AT 38 ON PURPOSE. Keeping the old ceiling over a
+# smaller definition would bank thirteen units of slack, and slack in a ratchet
+# is indistinguishable from having raised it: thirteen genuinely new canon
+# violations could land before anything went red. A ratchet that has been
+# re-scoped has to be re-tightened in the same commit, or the re-scoping IS the
+# loosening it was supposed not to be.
+LICENCE_DEBT = 25
 
 errors = []
 
@@ -286,11 +299,39 @@ def lint_licences() -> None:
     the build immediately. The number may only go down, and lowering it is how
     the debt is retired. Set LICENCE_GATE_STRICT=1 to make every violation
     fatal — the founder's switch, to flip the day the tree is clean.
+
+    THE DEBT IS CANON ONLY (2026-08-07). Records under a `takes/` subtree are
+    candidates — frames and clips shot to be chosen between, most of which exist
+    to be rejected — and they are reported on their own line rather than counted.
+    The reason is that the count would otherwise track batch size instead of
+    liability: one candidate-stills wave that night wrote 40 honest sidecars into
+    node 001's takes/stills/ and took the total 38 -> 78, all forty saying the
+    same already-open thing (D15 — animagine-xl-3.1 is CreativeML Open RAIL++-M,
+    and it drew every frame in the tree). Nothing new became unpublishable; one
+    unresolved decision was restated forty times, and the ratchet cannot tell
+    those apart by counting. licence_gate.is_candidate carries the full reasoning
+    and the condition that keeps it honest — every path that publishes out of
+    takes/ runs publishable() first, so this scopes the COUNT and not the gate.
+    Promote a candidate into stills/, clips/ or a leaf and it is canon debt with
+    nothing softened.
     """
-    errors, advisories = licence_gate.scan(REPO)
+    errors, advisories, candidates = licence_gate.scan_all(REPO)
     for a in advisories:
         warn(a)
+    for c in candidates:
+        warn(f"[takes/ candidate] {c}")
+    if candidates:
+        print(f"  ⊙ {len(candidates)} takes/ candidate(s) are not publishable "
+              "as-is — not counted against the ratchet (licence_gate."
+              "is_candidate); publishable() withholds them from the site")
     strict = os.environ.get("LICENCE_GATE_STRICT") == "1"
+    # STRICT STILL MEANS EVERY ONE. The candidate tier scopes the ratchet, which
+    # is a tolerance for pre-existing debt — it must not quietly narrow the
+    # founder's switch as well, or "flip it the day the tree is clean" would
+    # start passing on a tree with unpublishable takes still in it.
+    if strict:
+        for c in candidates:
+            err(c)
     if strict or len(errors) > LICENCE_DEBT:
         for e in errors:
             err(e)
