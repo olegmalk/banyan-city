@@ -30,6 +30,12 @@ page:
     The published episode is the one on the season page; if these ever replace
     it, it will be because he said so, in a record you can read.
 
+    **Newest first, and the top one is the one to answer on.** The two beneath
+    it are the versions it came from, kept so the change is visible rather than
+    asserted. Under them, the two side-by-side sections are the individual
+    questions: what the gentler camera move looks like, and what the four
+    argued-over beats look like held against moving.
+
     It is unlisted rather than secret. Nothing in the site's navigation points
     here — the only link is the one in the author's own decision queue on the
     studio page — and the page tells search engines not to index it. That is a
@@ -37,6 +43,40 @@ page:
     the repo that makes it is public, and so is the decision that put it here.
 
 cuts:
+  - file: ep1-v32-gentleholds.mp4
+    title: "Episode 1 with the held beats moving gently — the newest cut"
+    version: v32
+    date: 2026-08-07
+    beats: "15 beats, none missing"
+    changed_from: "v31, below"
+    changed:
+      - "**the five held beats (4, 5, 7, 10, 14)** were re-rendered under the author's own instruction that day: *“do not do ping pong… it should be very slow and gentle zooming.”* The push is now **2–4% of scale at a constant 0.6% per second**, one-way and linear, against a flat 18% front-loaded at 10.1%/s before. The five pairs below are the whole change, cut out of both episodes"
+      - "**no animated beat changed.** v31's footage went in untouched and was verified pixel-identical at probes inside beats 6, 8, 9, 11, 12, 13 and 15"
+      - "**gentleness is a rate, not a total** — a fixed 18% made a 2.6-second beat drift five times faster than a 13-second one and called both the same move"
+      - "**checks** — 15 QA checks pass with the same single loudness warning v30 and v31 carry; sync clean across the whole node. Runs 0.08s under v31, which is rounding on three held slots, not footage"
+    known_wrong:
+      - "**2–4% may now be too little.** The author once called a 6% version invisible — *“this one has no motion, u sure you opened it”* — and this is gentler than that. The zoom is one number and every held beat re-renders in about a minute, so “too little” is a cheap thing to say"
+      - "**beats 8 and 9** are still near-identical shots back to back, unchanged since v30"
+      - "**beat 13**'s sky still does not move, unchanged from v31"
+
+  - file: ep1-v31-animated.mp4
+    title: "Episode 1 again, with the four held beats moving"
+    version: v31
+    date: 2026-08-07
+    beats: "15 beats, none missing"
+    changed_from: "v30, below"
+    changed:
+      - "**beats 3, 12, 13, 15** are animated footage instead of a held still. Nothing else in the picture changed"
+      - "**beat 3 also gets the right picture.** v30 holds the magenta dashboard that was rejected; v31 animates the green frame that replaced it. That is a different change from the other three, and it is not a taste question"
+      - "**beats 4, 5, 7, 10, 14** are still held, deliberately — those are the compositions with nothing in frame to animate, and every model pointed at one has invented something instead (a morphing rock, a leaf splitting in two). Five held beats, down from nine"
+      - "**audio** — same voice takes, re-synced. v31 runs 0.88s longer than v30 and none of that is footage: beats 6 and 7 get their corrected voice timing, which v30 was assembled just before"
+      - "**checks** — 13 QA checks pass, captions and loudness included; the invention detector flags nothing on any of the four new clips"
+    known_wrong:
+      - "**beat 3**'s animation may be a still with a flicker on it — half its frames barely change. The steward would not fight for it"
+      - "**beat 13**'s sky still does not move; the cloud-shadow band the direction asked for did not land"
+      - "**beats 8 and 9** are still near-identical shots back to back, unchanged from v30"
+      - "**the held beats still push in at 18%** on a front-loaded curve — 10.1% of scale in the first second. That is the move the author called too much on 2026-08-07, and v32 above is the version that fixes it"
+
   - file: ep1-v30-fixed.mp4
     title: "Episode 1 — the August remake"
     version: v30
@@ -49,108 +89,176 @@ cuts:
       - "**beat 15** — the closing hook went nearly black after the first frame; reshot"
       - "**beats 3, 12, 13** — held stills chosen over their animated versions, on a motion measurement"
     known_wrong:
-      - "**beat 3 still shows the magenta dashboard the author rejected.** Found 2026-08-07, not previously recorded: this cut was written at 09:33 on 2026-08-04 and the still was revoked at 09:34 the same morning, one minute later — so the replacement never reached it. Earlier notes claiming v30 had replaced that frame were wrong. v31 has the approved frame"
+      - "**beat 3 still shows the magenta dashboard the author rejected.** Found 2026-08-07, not previously recorded: this cut was written at 09:33 on 2026-08-04 and the still was revoked at 09:34 the same morning, one minute later — so the replacement never reached it. Earlier notes claiming v30 had replaced that frame were wrong. v31 and v32 have the approved frame"
       - "**beat 15** is a held still, not animation — and animation is what was asked for"
       - "**beats 8 and 9** are near-identical shots back to back"
       - "**beat 7**'s punchline wording and still contrast are the steward's taste, not the author's"
 
-  - file: ep1-v31-animated.mp4
-    title: "Episode 1 again, with the four held beats moving"
-    version: v31
-    date: 2026-08-07
-    beats: "15 beats, none missing"
-    changed_from: "v30, above"
-    changed:
-      - "**beats 3, 12, 13, 15** are animated footage instead of a held still. Nothing else in the picture changed"
-      - "**beat 3 also gets the right picture.** v30 holds the magenta dashboard that was rejected; v31 animates the green frame that replaced it. That is a different change from the other three, and it is not a taste question"
-      - "**beats 4, 5, 7, 10, 14** are still held, deliberately — those are the compositions with nothing in frame to animate, and every model pointed at one has invented something instead (a morphing rock, a leaf splitting in two). Five held beats, down from nine"
-      - "**audio** — same voice takes, re-synced. v31 runs 0.88s longer than v30 and none of that is footage: beats 6 and 7 get their corrected voice timing, which v30 was assembled just before"
-      - "**checks** — 13 QA checks pass, captions and loudness included; the invention detector flags nothing on any of the four new clips"
-    known_wrong:
-      - "**beat 3**'s animation may be a still with a flicker on it — half its frames barely change. The steward would not fight for it"
-      - "**beat 13**'s sky still does not move; the cloud-shadow band the direction asked for did not land"
-      - "**beats 8 and 9** are still near-identical shots back to back, unchanged from v30"
+# Side-by-side groups, newest question first. `left`/`right` are paths under
+# cuts/; every one goes through the same publishable() gate as the whole cuts.
+comparisons:
+  - title: "The five held beats — the old push against the gentle one"
+    left_label: "v31 — 18% push"
+    right_label: "v32 — gentle"
+    intro: |-
+      This is the whole difference between v31 and v32, cut straight out of both
+      episodes with the captions still on — same picture, same length on each side.
+      **The only thing that changed is how far and how fast the camera creeps in.**
+      The old move was one number for every beat, 18% of scale on a front-loaded
+      curve with 10.1% of it in the first second, which made a 2.6-second beat drift
+      five times faster than a 13-second one. The new one is a rate: 0.6% per second,
+      floored at 2% so a short beat still moves and capped at 4% so a long one does
+      not reframe an approved picture, at a constant speed rather than lunging and
+      then parking.
+    items:
+      - beat: 4
+        title: "“the fall” — 3.5s on screen"
+        why_label: "Why it is held at all:"
+        why: >-
+          Nothing in the frame can animate without inventing a body in mid-air, so it has been a held still since the beginning. Only the camera move is in question.
+        left: pairs/beat-04-zoom-18pct.mp4
+        left_note: "18% of scale, front-loaded — 10.1%/s at the first frame"
+        right: pairs/beat-04-zoom-gentle.mp4
+        right_note: "2.1% of scale, constant 0.60%/s"
+        verdict: >-
+          Same picture, same length, same captions. The question is only whether the
+          right-hand move is now too small to read as a camera at all.
+      - beat: 5
+        title: "“fan spinning down” — 2.58s on screen"
+        why_label: "Why it is held at all:"
+        why: >-
+          The shortest held beat in the episode, and the one the old flat 18% treated worst — the same travel packed into 2.6 seconds is the fastest drift in the cut.
+        left: pairs/beat-05-zoom-18pct.mp4
+        left_note: "18% of scale, front-loaded — 10.1%/s at the first frame"
+        right: pairs/beat-05-zoom-gentle.mp4
+        right_note: "2.0% — the floor of scale, constant 0.77%/s"
+        verdict: >-
+          Same picture, same length, same captions. The question is only whether the
+          right-hand move is now too small to read as a camera at all.
+      - beat: 7
+        title: "“zero (0) moving parts” — 6.64s on screen"
+        why_label: "Why it is held at all:"
+        why: >-
+          Held on purpose: a still life with nothing in it that moves. Every model pointed at this kind of composition has added something rather than admit there was nothing to do.
+        left: pairs/beat-07-zoom-18pct.mp4
+        left_note: "18% of scale, front-loaded — 10.1%/s at the first frame"
+        right: pairs/beat-07-zoom-gentle.mp4
+        right_note: "4.0% — the cap of scale, constant 0.60%/s"
+        verdict: >-
+          Same picture, same length, same captions. The question is only whether the
+          right-hand move is now too small to read as a camera at all.
+      - beat: 10
+        title: "“sense” — 10.52s on screen"
+        why_label: "Why it is held at all:"
+        why: >-
+          Underground, roots and droplets. The animated version came back as abstract streaks with a large dark shape morphing between frames — the author's "big rock randomly morphing" — so the still is held instead.
+        left: pairs/beat-10-zoom-18pct.mp4
+        left_note: "18% of scale, front-loaded — 10.1%/s at the first frame"
+        right: pairs/beat-10-zoom-gentle.mp4
+        right_note: "4.0% — the cap of scale, constant 0.38%/s"
+        verdict: >-
+          Same picture, same length, same captions. The question is only whether the
+          right-hand move is now too small to read as a camera at all.
+      - beat: 14
+        title: "“worth staying in” — 12.99s on screen"
+        why_label: "Why it is held at all:"
+        why: >-
+          The longest slot in the episode at 13 seconds, and the beat where a fixed 18% of scale does the most damage: a whole eighth of the frame gone by the end of a line he approved as a composition.
+        left: pairs/beat-14-zoom-18pct.mp4
+        left_note: "18% of scale, front-loaded — 10.1%/s at the first frame"
+        right: pairs/beat-14-zoom-gentle.mp4
+        right_note: "4.0% — the cap of scale, constant 0.31%/s"
+        verdict: >-
+          Same picture, same length, same captions. The question is only whether the
+          right-hand move is now too small to read as a camera at all.
 
-# The four beats where v30 and v31 differ, side by side. Left is what v30 ships,
-# right is what v31 puts in its place.
-pairs_intro: |-
-  These four are the whole difference between the two cuts. **The motion number
-  under each clip cannot compare a held beat against a moving one** — a held
-  still is a computed push-in, so every pixel moves and it scores *higher* than
-  real animation. The figure is only useful for judging one animated take
-  against another. Held-versus-moving is an eye call, which is the reason this
-  page exists at all.
+  - title: "The four beats v30 and v31 disagree about"
+    left_label: "held — in v30"
+    right_label: "animated — in v31 and v32"
+    intro: |-
+      These four are the whole difference between the two cuts. **The motion number
+      under each clip cannot compare a held beat against a moving one** — a held
+      still is a computed push-in, so every pixel moves and it scores *higher* than
+      real animation. The figure is only useful for judging one animated take
+      against another. Held-versus-moving is an eye call, which is the reason this
+      page exists at all.
+    items:
+      - beat: 3
+        title: "“deploy succeeded” — and these two are not the same picture"
+        why_label: "Why it was held:"
+        why: >-
+          The measurement that held it was taken on the magenta dashboard the author
+          rejected, revoked on 2026-08-04 — and so was v30 itself, by one minute. The
+          green frame that replaced it had never been animated until 2026-08-07.
+        left: pairs/beat-03-held.mp4
+        left_note: "motion 2.13 · 2% frozen — push-in on the REJECTED magenta plate, which is what v30 ships"
+        right: pairs/beat-03-animated.mp4
+        right_note: "motion 0.20 · 50% frozen — the approved green frame; screens surge and fall, scanlines roll"
+        verdict: >-
+          Read this pair differently from the other three. On the left is the picture
+          that was rejected, held; on the right is the approved picture, animated. So
+          the animation is the weaker half of the argument — half its frames barely
+          change and 0.20 is below the line where a shot reads as a still anyway —
+          but going back to the held version means going back to the magenta plate.
+          If the flicker is not wanted, the fix is a held push-in on the approved
+          frame under the new gentle rule. That third version has been rendered
+          and is deliberately not on this page — one beat with three options
+          would blur the single yes/no v32 is asking for. Say the word and it
+          goes up.
 
-pairs:
-  - beat: 3
-    title: "“deploy succeeded” — and these two are not the same picture"
-    held_why: >-
-      The measurement that held it was taken on the magenta dashboard the author
-      rejected, revoked on 2026-08-04 — and so was v30 itself, by one minute. The
-      green frame that replaced it had never been animated until 2026-08-07.
-    held: pairs/beat-03-held.mp4
-    held_note: "motion 2.13 · 2% frozen — push-in on the REJECTED magenta plate, which is what v30 ships"
-    animated: pairs/beat-03-animated.mp4
-    animated_note: "motion 0.20 · 50% frozen — the approved green frame; screens surge and fall, scanlines roll"
-    verdict: >-
-      Read this pair differently from the other three. On the left is the picture
-      that was rejected, held; on the right is the approved picture, animated. So
-      the animation is the weaker half of the argument — half its frames barely
-      change and 0.20 is below the line where a shot reads as a still anyway —
-      but going back to the held version means going back to the magenta plate.
-      If the flicker is not wanted, the honest fix is a held push-in on the
-      approved frame, which does not exist yet and takes a minute to make.
+      - beat: 12
+        title: "“undefined”"
+        why_label: "Why it was held:"
+        why: >-
+          It was never static. It was measured across a frame that is 95% rigid: the
+          whole-frame score was 0.19 because a cracked plain fills most of the
+          picture and cannot move, while the sprout, measured inside its own box,
+          moves at 0.46 with 8% of frames frozen.
+        left: pairs/beat-12-held.mp4
+        left_note: "motion 0.79 · 2% frozen — slow push-in"
+        right: pairs/beat-12-animated.mp4
+        right_note: "whole frame 0.19 · 58% frozen · sprout itself 0.46 · 8% frozen"
+        verdict: >-
+          The clip in v31 is the one that already existed — the take the bad
+          measurement threw away on 2026-08-03. A rewritten shot direction was
+          rendered on 2026-08-07 and lost to it (0.27 against 0.46 in the same box),
+          because it asked the stem to shudder “without moving anywhere”, and prose
+          about stillness produces stillness.
 
-  - beat: 12
-    title: "“undefined”"
-    held_why: >-
-      It was never static. It was measured across a frame that is 95% rigid: the
-      whole-frame score was 0.19 because a cracked plain fills most of the
-      picture and cannot move, while the sprout, measured inside its own box,
-      moves at 0.46 with 8% of frames frozen.
-    held: pairs/beat-12-held.mp4
-    held_note: "motion 0.79 · 2% frozen — slow push-in"
-    animated: pairs/beat-12-animated.mp4
-    animated_note: "whole frame 0.19 · 58% frozen · sprout itself 0.46 · 8% frozen"
-    verdict: >-
-      The clip in v31 is the one that already existed — the take the bad
-      measurement threw away on 2026-08-03. A rewritten shot direction was
-      rendered on 2026-08-07 and lost to it (0.27 against 0.46 in the same box),
-      because it asked the stem to shudder “without moving anywhere”, and prose
-      about stillness produces stillness.
+      - beat: 13
+        title: "“I always left”"
+        why_label: "Why it was held:"
+        why: >-
+          Half the frame works and half of it cannot. The grass and the road move;
+          the cloudbank does not, because clouds do not visibly travel in two and a
+          half seconds. The dead half halved the average and the beat was held for it.
+        left: pairs/beat-13-held.mp4
+        left_note: "motion 2.90 · 2% frozen — slow push-in"
+        right: pairs/beat-13-animated.mp4
+        right_note: "whole frame 0.30 · 3% frozen · grass and road 0.50 · 0% · cloudbank 0.10 · 82%"
+        verdict: >-
+          The clearest improvement of the four, and it is only in the bottom half.
+          Frozen frames across the whole picture fell from 53% to 3%. The sky did not
+          budge. Whether that reads as a flaw or as a calm horizon over moving grass
+          is a taste call, not a measurement.
 
-  - beat: 13
-    title: "“I always left”"
-    held_why: >-
-      Half the frame works and half of it cannot. The grass and the road move;
-      the cloudbank does not, because clouds do not visibly travel in two and a
-      half seconds. The dead half halved the average and the beat was held for it.
-    held: pairs/beat-13-held.mp4
-    held_note: "motion 2.90 · 2% frozen — slow push-in"
-    animated: pairs/beat-13-animated.mp4
-    animated_note: "whole frame 0.30 · 3% frozen · grass and road 0.50 · 0% · cloudbank 0.10 · 82%"
-    verdict: >-
-      The clearest improvement of the four, and it is only in the bottom half.
-      Frozen frames across the whole picture fell from 53% to 3%. The sky did not
-      budge. Whether that reads as a flaw or as a calm horizon over moving grass
-      is a taste call, not a measurement.
-
-  - beat: 15
-    title: "“something's coming” — the closing hook"
-    held_why: >-
-      No reason to do with the shot. Nothing was wrong with its direction: the
-      machine that renders was switched off, so no animation of it ever existed
-      and a held still went in instead.
-    held: pairs/beat-15-held.mp4
-    held_note: "motion 1.67 · 2% frozen — slow push-in"
-    animated: pairs/beat-15-animated.mp4
-    animated_note: "motion 2.72 · 0% frozen — take 2: ground jumps, light slams"
-    verdict: >-
-      Two takes were rendered and the first is rejected. It scores 4.63, the
-      highest number in the episode, because a bright red-orange cone stabs into
-      frame twice — an object in no still and no script. The invented object is
-      what produced the score. Take 2, same seed and recipe with a negative
-      naming the cone, keeps the motion and loses the object.
+      - beat: 15
+        title: "“something's coming” — the closing hook"
+        why_label: "Why it was held:"
+        why: >-
+          No reason to do with the shot. Nothing was wrong with its direction: the
+          machine that renders was switched off, so no animation of it ever existed
+          and a held still went in instead.
+        left: pairs/beat-15-held.mp4
+        left_note: "motion 1.67 · 2% frozen — slow push-in"
+        right: pairs/beat-15-animated.mp4
+        right_note: "motion 2.72 · 0% frozen — take 2: ground jumps, light slams"
+        verdict: >-
+          Two takes were rendered and the first is rejected. It scores 4.63, the
+          highest number in the episode, because a bright red-orange cone stabs into
+          frame twice — an object in no still and no script. The invented object is
+          what produced the score. Take 2, same seed and recipe with a negative
+          naming the cone, keeps the motion and loses the object.
 
 # Printed under the players. The licence position is not a footnote here: these
 # files publish, so the reader is owed the same accounting the rest of the site

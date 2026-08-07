@@ -1694,25 +1694,37 @@ def render_review() -> str:
             + (f"<h3>Known and still wrong</h3><ul>{wrong}</ul>" if wrong else "")
             + '</div></div></div>')
 
-    pairs = []
-    for p in cfg.get("pairs") or []:
-        held, anim = serve(str(p["held"])), serve(str(p["animated"]))
-        if not (held and anim):
-            continue
-        cells = ""
-        for label, (rel, pos), note in (("held — in v30", held, p.get("held_note", "")),
-                                        ("animated — in v31", anim, p.get("animated_note", ""))):
-            cells += (f'<figure><video controls playsinline preload="none" loop muted'
-                      f'{poster_attr(pos, "../")} src="{html.escape(rel)}"></video>'
-                      f'<figcaption><span class="k">{html.escape(label)}</span>'
-                      f'{html.escape(str(note))}{rec_link(rel)}</figcaption></figure>')
-        pairs.append(
-            f'<div class="pair"><h3>Beat {html.escape(str(p["beat"]))} — '
-            f'{html.escape(str(p.get("title", "")))}</h3>'
-            f'<p class="why"><strong>Why it was held:</strong> '
-            f'{html.escape(str(p.get("held_why", "")))}</p>'
-            f'<div class="two">{cells}</div>'
-            f'<p class="why">{html.escape(str(p.get("verdict", "")))}</p></div>')
+    # Side-by-side groups. No `loop` on these players, and that is not a style
+    # choice: a held beat is a one-way push-in, so looping a 2.5s clip snaps the
+    # frame back to wide every 2.5 seconds and reads as the ping-pong the founder
+    # ruled out on 2026-08-07. SCREENING.html had exactly this bug.
+    groups = []
+    for grp in cfg.get("comparisons") or []:
+        left_label = str(grp.get("left_label", "before"))
+        right_label = str(grp.get("right_label", "after"))
+        items = []
+        for p in grp.get("items") or []:
+            left, right = serve(str(p["left"])), serve(str(p["right"]))
+            if not (left and right):
+                continue
+            cells = ""
+            for label, (rel, pos), note in ((left_label, left, p.get("left_note", "")),
+                                            (right_label, right, p.get("right_note", ""))):
+                cells += (f'<figure><video controls playsinline preload="none" muted'
+                          f'{poster_attr(pos, "../")} src="{html.escape(rel)}"></video>'
+                          f'<figcaption><span class="k">{html.escape(label)}</span>'
+                          f'{html.escape(str(note))}{rec_link(rel)}</figcaption></figure>')
+            why = (f'<p class="why"><strong>{html.escape(str(p.get("why_label", "Why:")))}'
+                   f'</strong> {html.escape(str(p["why"]))}</p>') if p.get("why") else ""
+            items.append(
+                f'<div class="pair"><h3>Beat {html.escape(str(p["beat"]))} — '
+                f'{html.escape(str(p.get("title", "")))}</h3>{why}'
+                f'<div class="two">{cells}</div>'
+                + (f'<p class="why">{html.escape(str(p["verdict"]))}</p>'
+                   if p.get("verdict") else "") + '</div>')
+        if items:
+            groups.append(f'<div class="cut"><h2>{html.escape(str(grp.get("title", "")))}</h2>'
+                          f'{md_to_html(str(grp.get("intro", "")))}{"".join(items)}</div>')
 
     notices = ""
     if withheld:
@@ -1733,9 +1745,7 @@ def render_review() -> str:
             f'{md_to_html(str(meta.get("why", "")))}'
             f'{notices}'
             f"{''.join(sections)}"
-            + (f'<div class="cut"><h2>The four beats the two cuts disagree about</h2>'
-               f'{md_to_html(str(cfg.get("pairs_intro", "")))}{"".join(pairs)}</div>'
-               if pairs else "")
+            f"{''.join(groups)}"
             + '<div class="cut"><h2>Receipts</h2>'
             + md_to_html(str(cfg.get("provenance", "")))
             + '</div>'

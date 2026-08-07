@@ -2476,7 +2476,21 @@ would be reported as unprovenanced. The four held clips published today carry
 hand-written sidecars that use `local-deterministic` and a bare `none` instead.
 `hold_still.py` was left alone on purpose: another session is editing it.
 
-**Not included:** `ep1-v32-gentleholds.mp4` did not exist at build time.
+**Second pass, same evening: v32 landed and the page now leads with it.**
+`ep1-v32-gentleholds.mp4` did not exist when /review/ first went up; it arrived
+with `98d8d71` half an hour later, so the page was rebuilt around it — three
+cuts newest-first with v32 at the top as the one to answer on, plus that
+session's five held-zoom pairs (`beat-NN-zoom-18pct` against
+`beat-NN-zoom-gentle`, 5.3 MB) so the per-beat question travels to the phone
+too. 21 players, 34 MB in `cuts/`, all of it through the gate. **The same
+session's ping-pong finding applied to this page and had to be fixed here as
+well:** the comparison players carried `<video loop>`, which on a 2.5s one-way
+push-in snaps the frame back to wide every 2.5 seconds — the exact defect they
+found on `SCREENING.html`. The attribute is gone and the reason is written into
+`render_review` so it does not come back. **Deliberately not published:**
+`review/beat-03-HELD-gentle-approvedframe.mp4`, the third option for beat 3 —
+their call, for the reason they gave (a beat with three options blurs the single
+yes/no v32 asks), and the page says the file exists and can go up on request.
 
 ## 2026-08-07 — the held zoom gets a rule, and the ping-pong was on the review page
 
