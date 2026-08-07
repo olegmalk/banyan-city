@@ -120,9 +120,6 @@ comparisons:
         left_note: "18% of scale, front-loaded — 10.1%/s at the first frame"
         right: pairs/beat-04-zoom-gentle.mp4
         right_note: "2.1% of scale, constant 0.60%/s"
-        verdict: >-
-          Same picture, same length, same captions. The question is only whether the
-          right-hand move is now too small to read as a camera at all.
       - beat: 5
         title: "“fan spinning down” — 2.58s on screen"
         why_label: "Why it is held at all:"
@@ -132,9 +129,6 @@ comparisons:
         left_note: "18% of scale, front-loaded — 10.1%/s at the first frame"
         right: pairs/beat-05-zoom-gentle.mp4
         right_note: "2.0% — the floor of scale, constant 0.77%/s"
-        verdict: >-
-          Same picture, same length, same captions. The question is only whether the
-          right-hand move is now too small to read as a camera at all.
       - beat: 7
         title: "“zero (0) moving parts” — 6.64s on screen"
         why_label: "Why it is held at all:"
@@ -144,9 +138,6 @@ comparisons:
         left_note: "18% of scale, front-loaded — 10.1%/s at the first frame"
         right: pairs/beat-07-zoom-gentle.mp4
         right_note: "4.0% — the cap of scale, constant 0.60%/s"
-        verdict: >-
-          Same picture, same length, same captions. The question is only whether the
-          right-hand move is now too small to read as a camera at all.
       - beat: 10
         title: "“sense” — 10.52s on screen"
         why_label: "Why it is held at all:"
@@ -156,9 +147,6 @@ comparisons:
         left_note: "18% of scale, front-loaded — 10.1%/s at the first frame"
         right: pairs/beat-10-zoom-gentle.mp4
         right_note: "4.0% — the cap of scale, constant 0.38%/s"
-        verdict: >-
-          Same picture, same length, same captions. The question is only whether the
-          right-hand move is now too small to read as a camera at all.
       - beat: 14
         title: "“worth staying in” — 12.99s on screen"
         why_label: "Why it is held at all:"
@@ -168,9 +156,6 @@ comparisons:
         left_note: "18% of scale, front-loaded — 10.1%/s at the first frame"
         right: pairs/beat-14-zoom-gentle.mp4
         right_note: "4.0% — the cap of scale, constant 0.31%/s"
-        verdict: >-
-          Same picture, same length, same captions. The question is only whether the
-          right-hand move is now too small to read as a camera at all.
 
   - title: "The four beats v30 and v31 disagree about"
     left_label: "held — in v30"
