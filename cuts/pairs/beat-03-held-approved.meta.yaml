@@ -1,0 +1,30 @@
+# Shot provenance (7.2) — the hold_still sidecar beside review/beat-03-HELD-gentle.mp4,
+# restated under the stem name the gate reads and with the two fields that do not
+# classify replaced by ones that do. `model: none` is kept as a BARE token on
+# purpose: render_t3.held_still and check_invention both detect a held clip by
+# substring on it, and dropping it would palindrome this clip and make the
+# invention detector report a computed push-in as invented content.
+platform: local-deterministic (pipeline/hold_still.py, ffmpeg)
+model: none
+model_licence: n/a — no video model ran. The licence that attaches is the
+  still's, recorded in
+  genomes/sapling/nodes/001-capability-inventory/stills/README.md
+  (cagliostrolab/animagine-xl-3.1, OpenRAIL++ — the open D15 debt).
+shot_beat: 3
+size: 704x1280
+seconds: 3.542
+zoom: push-in 2.1% over 3.54s, 0.60%/s, linear, centred, monotonic (never reverses)
+source_still: 03-deploy-succeeded.png
+original_filename: beat-03-HELD-gentle.mp4
+sha256: ceff08beff5dc59e03965636f8fac01d97a59e68091ad6f01b3d9cc72eb61d34
+cost_usd: 0
+note: |-
+  The APPROVED green frame held under the founder's 2026-08-07 zoom rule. This is
+  the version v30's held beat 3 should have been and was not — v30 holds the
+  revoked magenta plate, verified at 9.1 mean|diff| against it and 50.8 against
+  this frame. This clip's own frame 0 measures 5.1 against the approved plate and
+  51.0 against the revoked one. It is in no cut: beat 3 is animated in v31 and
+  v32, and nothing swaps without the founder's verdict.
+prompt: |-
+  (none — the approved still is held; nothing was generated)
+negative: ''
