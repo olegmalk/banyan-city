@@ -356,20 +356,31 @@ backlog:
     rendered on it. ONE beat first either way, which is why this entry is beats 1.
     Host-exclusive: the 2026-08-04 LTX run evicted the farm worker on the 64GB box.
 
-# Node 002b, "The First Citizen" — the only node in the tree with an approved
-# script and zero media. Everything under it hangs on one frame nobody has picked.
+# Node 002b, "The First Citizen" — the node with an approved script and zero
+# media. Everything under it hung on one frame, and on 2026-08-07 the founder
+# picked it: "r3-s3 and retire" (R4).
+#
+# UNGATED 2026-08-07, all four entries below, and this comment is the evidence
+# that stays. takes/stills/01-cold-open-r3-s3.png is promoted byte-for-byte to
+# genomes/sapling/nodes/002b-first-citizen/stills/01-cold-open.png — canon,
+# tracked, the exact path video_task globs (stills/NN-*.png) and the exact name
+# build_status calls final (NN-<shots.md slug>.png). That pick also satisfies
+# 002b-t0-c.yaml's approval_scope, which gated beats 02-21 on his verdict about
+# this one sample. pending-founder.yaml id 002b-b01-frame is retired with it, so
+# a gate_ref pointing at that id would now name nothing.
+#
+# Re-read for a blocker BEHIND the founder one, as this file requires: there is
+# none on any of the four. The node's t0 leaf is founder-approved (the §6 check
+# farm_worker.py:415-421 runs before any video task), the conditioning frame now
+# exists on disk, and the prompt-dialect worry that used to sit behind the stills
+# batch was already dead — see that entry's own why.
+#
+# Production is running tonight (2026-08-07) in the workflow that made this pick
+# into paperwork. These are the beats of it that need a machine.
 - id: 002b-b01-video-5b-1786089900
   runner: farm
   worker: rtx5090
   needs: [cuda, vram20, video-venv]
-  gate: founder
-  gate_ref: >-
-    The 002b beat-01 conditioning frame. Candidates sit under
-    genomes/sapling/nodes/002b-first-citizen/takes/stills/ and none is approved;
-    the steward's recommendation is the untouched 01-cold-open-r3-s3.png. Clearing
-    this gate means copying the chosen frame into that node's stills/, which is
-    founder-approved canon (R4), because video_task globs stills/NN-*.png for its
-    conditioning frame. pending-founder.yaml id 002b-b01-frame, opened 2026-08-06.
   window: any
   est_minutes: 10
   video: true
@@ -387,16 +398,14 @@ backlog:
   why: >-
     Beat 01 is the beat both of the founder's approval conditions were spent on —
     the fig must GROW on screen, not already hang — so it is the one sample that
-    proves the fix and the one the other twenty beats wait behind.
+    proves the fix and the one the other twenty beats wait behind. Runnable since
+    2026-08-07: its conditioning frame is stills/01-cold-open.png, the frame he
+    picked, and the fig in it is the one that has to swell.
 
 - id: 002b-b01-video-ltx-1786089960
   runner: manual
   worker: rtx5090
   needs: [cuda, vram20, video-venv]
-  gate: founder
-  gate_ref: >-
-    The same beat-01 frame pick as 002b-b01-video-5b-1786089900 — one approved
-    conditioning frame serves both renders.
   window: any
   est_minutes: 15
   cmd: >-
@@ -405,22 +414,19 @@ backlog:
     1.0) per the LTX row in pipeline/research/MODEL-COMPARISON.md section 1 — or,
     since 2026-08-07, queue it: `video_model: ltx23-distilled-fp8` now reaches
     ltx_i2v through video_task, which writes the sidecar and the bench row itself.
-    Left as `manual` because the frame pick is still the gate either way.
+    Left as `manual` because it is a hand-driven comparison, not because anything
+    blocks it — the frame that used to gate it is stills/01-cold-open.png now.
   why: >-
     The same beat on both renderers is the comparison the founder was promised on
     2026-08-06 and never got; the clips drop into SAMPLES/ and COMPARISON.html
-    picks them up with no code change.
+    picks them up with no code change. Runnable since 2026-08-07 with the frame
+    pick; production runs tonight. This is a SAMPLE on one beat — LTX is cleared
+    on look only (R4, 2026-08-06), so an LTX-rendered EPISODE still needs him.
 
 - id: 002b-stills-b02-21-1786090020
   runner: farm
   worker: rtx5090
   needs: [cuda]
-  gate: founder
-  gate_ref: >-
-    002b-t0-c.yaml approval_scope — "beats 02-21 await his verdict on that sample
-    before conversion", and "No VO, no stills and no footage may be produced until
-    the dialect is settled". That verdict is the beat-01 frame pick above,
-    pending-founder.yaml id 002b-b01-frame.
   window: any
   est_minutes: 25
   node: 002b-first-citizen
@@ -429,20 +435,23 @@ backlog:
   steps: 40
   seed_base: 20260719
   why: >-
-    All twenty prompts are still written in the v2 low-detail style the founder
-    killed on 2026-07-27, so the first step after the gate clears is a text-only
-    conversion pass to the native-tag dialect and only then this batch — 80 images
-    at the 9-11s per image the 5090 measured on 2026-08-06.
+    80 images at the 9-11s per image the 5090 measured on 2026-08-06 — the drawn
+    half of episode 2, which had no approved look to draw against until the
+    founder picked beat 01's frame on 2026-08-07. Runnable now; production runs
+    tonight. CORRECTION 2026-08-07, and it is why nothing stands behind the
+    cleared gate: this entry used to say all twenty prompts were still in the v2
+    low-detail style and that a text-only conversion pass had to come first. That
+    stopped being true on 2026-08-04, when e4826ed converted all twenty to the
+    native-tag dialect ("20 prompt conversions — text, free, one git revert to
+    undo — were blocked on a founder verdict"). The prompts are current; the batch
+    is the next step, not the second one. `mascot-simple` survives in beats 02, 03
+    and 12 on purpose — it modifies the sapling there, which is what it is for.
+    Beat 01's rounds only proved it must not be the SUBJECT.
 
 - id: 002b-vo-t0c-21beats-1786090080
   runner: manual
   worker: m1pro
   needs: [mps]
-  gate: founder
-  gate_ref: >-
-    The same 002b-t0-c approval_scope clause as 002b-stills-b02-21-1786090020 —
-    "No VO ... until the dialect is settled", which waits on the same beat-01
-    frame pick, pending-founder.yaml id 002b-b01-frame.
   window: overnight
   est_minutes: 60
   cmd: >-
@@ -452,7 +461,11 @@ backlog:
   why: >-
     The 18 existing 002b VO takes are from the superseded t0-b cut and are not
     voice for the approved script; a full re-voice runs on the Mac's MPS, needs no
-    GPU and contends with nothing on the farm.
+    GPU and contends with nothing on the farm. Runnable since 2026-08-07 — the
+    "no VO until the dialect is settled" clause was settled by the frame pick, and
+    production runs tonight. `window: overnight` stays advisory and delays nothing
+    (Oleg, 2026-08-05); it records only that a 60-minute MPS job will make the Mac
+    slow to work on, not that anyone should wait for dark.
 
 # MODEL-COMPARISON section 1 carries three rows that read SCHEDULED and have never
 # run. They are stocked here with the gates they actually have.

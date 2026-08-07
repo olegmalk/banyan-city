@@ -13,6 +13,27 @@
 # review area, so "the only copy is on the author's laptop" is no longer the
 # default answer for footage he has not passed — /review/ is. Media he has not
 # passed still never becomes THE episode without his verdict.
+#
+# HOW AN ITEM LEAVES: it is deleted. There is no `retired:` list and there never
+# has been — the board renders `pending:` and nothing else, so a "retired" entry
+# would either be invisible or be a second inbox. The reason goes in the commit
+# message and in STATE.md, where a reader can find it; the deletion goes here.
+#
+# Removed 2026-08-07, both in the same commit as the founder's "r3-s3 and retire":
+#   002b-b01-frame  ANSWERED. He picked r3-s3 for episode 2's opening frame; it is
+#                   promoted to 002b-first-citizen/stills/01-cold-open.png and four
+#                   queue entries lost their founder gate with it.
+#   hires-review    RETIRED UNANSWERED, and it should never have been asked. Opened
+#                   13:32 on 2026-07-30 (c999476) off a plan, not artifacts; the plan
+#                   was cancelled by his own pushback nine hours later ("are we just
+#                   doing unnecessary work?", 284bbdf). What exists is 20 PNGs on
+#                   origin/farm-results-msi covering beats 11-15 only — new pictures
+#                   at a bigger size, not sharper versions of the 15 approved shots
+#                   the item described — none with a provenance sidecar (8d7ceed:
+#                   farm_worker.py:430 writes none), so none publishable. The episode
+#                   ships at 720x1280 and the canon stills are already 832x1216, so
+#                   there is no consumer for the resolution either. Full trace in
+#                   STATE.md 2026-08-07.
 pending:
   - id: v6-verdict
     title: "Say yes or no on episode 1 — the next cut, built from the notes you gave"
@@ -35,19 +56,9 @@ pending:
     detail: "Each is a child of whichever episode 2 branch wins, so this waits on that call."
     public: "https://github.com/olegmlkvorg/banyan-city/tree/main/genomes/sapling/nodes"
     since: 2026-07-30
-  - id: 002b-b01-frame
-    title: "Pick the opening frame for the next episode's first scene"
-    detail: "The story's next branch has an approved script and not one frame of film. Its opening scene has candidate drawings waiting and none has been chosen — and every other scene in that episode is drawn and voiced from the look this one settles, so nothing in it can start until this is picked."
-    public: "sapling/002b-first-citizen-shots.html"
-    link_text: "see the 21 candidate frames"
-    since: 2026-08-06
   - id: animegen-speedup-licence
     title: "Decide whether a licence published in one place but not the other is good enough to publish from"
     detail: "The model that draws the show in anime style has a companion file that makes it about thirteen times faster — roughly nine minutes per shot instead of nearly two hours, measured on our own card. The people who made it did publish their licence, and it is the permissive kind, but they published it alongside their code and not on the download page the show actually pulls the file from. The show's standing rule is that nothing gets published unless every part of it has a licence we can quote, so today the fast version is used for tests only and every releasable anime shot takes the slow path. The evidence has been read and written up on both pages. What is missing is the author saying that a licence verified in the makers' own repository counts as proof for footage that goes out."
     public: "https://github.com/olegmlkvorg/banyan-city/blob/main/pipeline/research/models-licence.md#link-4-answered--lightx2vwan22-lightning-no-license-on-hf-but-apache-20-verified-on-github"
     link_text: "read what was found on each of the two pages"
     since: 2026-08-07
-  - id: hires-review
-    title: "Approve or ignore 30 sharper versions of the existing shots"
-    detail: "The farm re-rendered all 15 approved shots at higher resolution overnight. Each one is a candidate to replace its original — a skim-and-nod, not a study."
-    since: 2026-07-30
