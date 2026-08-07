@@ -7,21 +7,21 @@
    "who": "VO",
    "text": "A creature is using me as cover. I am forty centimeters tall.",
    "start": 0.0,
-   "end": 4.5,
+   "end": 3.682,
    "chunks": [
     {
      "text": "A creature is using me as cover.",
      "start": 0.0,
-     "end": 2.571
+     "end": 1.997
     },
     {
      "text": "I am forty centimeters tall.",
-     "start": 2.571,
-     "end": 4.5
+     "start": 1.997,
+     "end": 3.682
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 4.8
+ "total_s": 3.982
 }

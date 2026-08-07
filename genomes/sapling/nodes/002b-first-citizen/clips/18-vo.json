@@ -5,33 +5,43 @@
  "lines": [
   {
    "who": "VO",
-   "text": "Wait. Growth includes release. One fruit \u2014 everything I own. He said ground fruit is foraging.",
+   "text": "Wait. Growth includes release. One fruit \u2014 everything I own. He said ground fruit is foraging. If they take him, I am alone in a field again.",
    "start": 0.0,
-   "end": 6.035,
+   "end": 10.246,
    "chunks": [
     {
      "text": "Wait.",
      "start": 0.0,
-     "end": 0.577
+     "end": 0.704
     },
     {
      "text": "Growth includes release.",
-     "start": 0.577,
-     "end": 2.436
+     "start": 0.704,
+     "end": 3.117
     },
     {
      "text": "One fruit \u2014 everything I own.",
-     "start": 2.436,
-     "end": 4.17
+     "start": 3.117,
+     "end": 5.338
     },
     {
      "text": "He said ground fruit is foraging.",
-     "start": 4.17,
-     "end": 6.035
+     "start": 5.338,
+     "end": 7.525
+    },
+    {
+     "text": "If they take him,",
+     "start": 7.525,
+     "end": 8.486
+    },
+    {
+     "text": "I am alone in a field again.",
+     "start": 8.486,
+     "end": 10.246
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 6.335
+ "total_s": 10.546
 }

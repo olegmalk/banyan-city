@@ -1,0 +1,32 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "VO",
+   "text": "Worst stealth plan I have ever seen \u2014 and I once watched an architect hide an outage in a footnote.",
+   "start": 0.0,
+   "end": 5.067,
+   "chunks": [
+    {
+     "text": "Worst stealth plan I have ever seen",
+     "start": 0.0,
+     "end": 1.966
+    },
+    {
+     "text": "\u2014 and I once watched an architect",
+     "start": 1.966,
+     "end": 3.574
+    },
+    {
+     "text": "hide an outage in a footnote.",
+     "start": 3.574,
+     "end": 5.067
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 5.367
+}

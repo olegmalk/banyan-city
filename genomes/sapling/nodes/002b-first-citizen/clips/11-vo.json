@@ -7,21 +7,21 @@
    "who": "VO",
    "text": "Nobody in this scene is evil. Everybody in this scene is trapped in a workflow.",
    "start": 0.0,
-   "end": 4.083,
+   "end": 3.861,
    "chunks": [
     {
      "text": "Nobody in this scene is evil.",
      "start": 0.0,
-     "end": 1.522
+     "end": 1.52
     },
     {
      "text": "Everybody in this scene is trapped in a workflow.",
-     "start": 1.522,
-     "end": 4.083
+     "start": 1.52,
+     "end": 3.861
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 4.383
+ "total_s": 4.161
 }

@@ -1,0 +1,37 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "VO",
+   "text": "Wait. Growth includes release. One fruit \u2014 everything I own. He said ground fruit is foraging.",
+   "start": 0.0,
+   "end": 6.035,
+   "chunks": [
+    {
+     "text": "Wait.",
+     "start": 0.0,
+     "end": 0.577
+    },
+    {
+     "text": "Growth includes release.",
+     "start": 0.577,
+     "end": 2.436
+    },
+    {
+     "text": "One fruit \u2014 everything I own.",
+     "start": 2.436,
+     "end": 4.17
+    },
+    {
+     "text": "He said ground fruit is foraging.",
+     "start": 4.17,
+     "end": 6.035
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 6.335
+}

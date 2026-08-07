@@ -1,0 +1,32 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "GUARD 1",
+   "text": "He went this way. I saw him. Apple thief.",
+   "start": 0.0,
+   "end": 2.39,
+   "chunks": [
+    {
+     "text": "He went this way.",
+     "start": 0.0,
+     "end": 0.826
+    },
+    {
+     "text": "I saw him.",
+     "start": 0.826,
+     "end": 1.579
+    },
+    {
+     "text": "Apple thief.",
+     "start": 1.579,
+     "end": 2.39
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 2.69
+}
