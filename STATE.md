@@ -2086,7 +2086,17 @@ splitting leaf … no leaf detaching, no falling leaf`), **and** the direction
 loses the detachment clause and the wrong count, the way beat 12's rewrite
 dropped its count on 2026-08-06. Amplitude register kept — the stem now carries
 the swing instead of a departing leaf. Measured after: positive **256 chars**,
-negative **593 of 900**, anti-static still firing.
+negative **627 of 900**, fifteen terms leading it.
+
+**Anti-static stays on, and that is a decision rather than an oversight.** Beat 9
+does carry Wan's 静态 / 静止 / frozen frame / no motion block, and the question of
+whether it is *pushing* the model to invent was asked and answered no: the
+founder's standing complaint on this exact beat is the opposite one — *"the beat
+9 generations i've literally make it not move at all. not one pixel"*
+(2026-08-02) — and the frame has legitimate work to give it: thrashing grass,
+streaming dust motes, a stem that can sway without gaining parts. Anti-static did
+not invent the leaves. The absent leaf-count terms and the direction's own
+detachment clause did, and both are now closed.
 
 **The method is proven, on beat 11, before beat 9 ever renders.** That job
 finished today as a controlled A/B — same still, same recipe, same seed 20260816,
@@ -2136,3 +2146,67 @@ The card was idle before and after (0 MiB / 0%), the one-shot task was deleted,
 and the only python on the box is the telemetry daemon that was already running —
 **the farm worker was not started and nothing else was touched.** MSI 5070 Ti
 (192.168.3.153) is still unreachable: no ping, ssh times out.
+
+**The defect measured, before anything is rendered against it.** The lead's read
+and the probe script's header were both counted again off `review/beat-09-whoami.mp4`
+— 61 frames, 704x1280, 24fps — at frames 0/12/24/36/48/60, on 2x crops of the
+sprout column rather than the whole frame, because at full width the plant is
+forty pixels of a vertical still. Leaf shapes counted by eye; apex read off the
+crop and converted back to source pixels, so the heights are approximate and the
+*direction* is the finding:
+
+| frame | leaf shapes | node tiers | apex y (of 1280, lower = taller) |
+|---|---|---|---|
+| 0  | 4 | 1 | ≈558 |
+| 12 | 5 | 1 | ≈540 |
+| 24 | 6 | 1→2 | ≈518 |
+| 36 | 7 | 2 | ≈472 |
+| 48 | 7 | 2 | ≈450 |
+| 60 | 7 | 2 | ≈448 |
+
+Four shapes become seven, one node tier becomes two, and the apex climbs about
+110px — a tenth of the frame — over two and a half seconds. The cleanest
+in-frame landmark: **at frame 0 the sprout's tip sits below the horizon grass
+line; from frame 24 it stands above it.** This is not beat 11's defect at a
+different size. Beat 11's leaf divides and re-fuses in place; beat 9's plant
+*grows*, and growth is beat 11's only event, two beats early.
+
+**So the terms are right and they stay.** Fifteen, not beat 11's eight, and the
+two that beat 11 never needed — `no extra stem nodes`, `no branching stem` — are
+the second tier the table names. Re-measured on the real genome today: video
+positive **256 chars**, video negative **627 of 900**, 43 terms after dedupe,
+**nothing truncated**, the growth terms leading and `frozen frame` still present,
+and **nothing leaked into the positive**. The still path is untouched and
+provably so — `shots.md` is not edited, and `beat_negative()` reads only
+`shots.md` and `still_local.NEG`. For the record its negative fits at **67 of 77
+CLIP tokens**, though that is the deliberately pessimistic tag estimate: no CLIP
+tokenizer is installed on this Mac, and the box cannot supply one either (below).
+`fit_negative` drops one house term there, `realistic skin texture` — pre-existing,
+not ours, and the reason motion.yaml's terms were kept off the still path.
+
+**`test_beat09_negatives_forbid_the_growth` now holds all of it** next to beat
+11's, so deleting the terms is a red build rather than a quiet regression: the
+fifteen terms present, none in the positive, leading the negative, under NEG_MAX,
+anti-static alive, and — the half no negative can do — the direction no longer
+saying `one leaf spinning as it falls`. Tests exit 0, lint exit 0, ratchet 38.
+
+**The block is wider than torch, which rules out the workarounds.** It is not the
+`c10.dll` load specifically: `from transformers import CLIPTokenizer` on the box
+dies the same way on `regex/_regex`, *"An Application Control policy has blocked
+this file"*. Every unsigned compiled extension in `C:\banyan-video\venv` is
+blocked, so there is no import-order trick and no lighter path through that venv.
+Checked and closed today: **WSL is not installed** on the 5090 (`wsl --status`:
+"not installed"), so there is no Linux side to run under a policy that does not
+apply; the **MSI 5070 Ti is still unreachable** (ssh timeout), so there is no
+second card; and a fresh mainstream torch wheel would be a *second changed input*
+against a seed-matched A/B even if its DLLs happened to pass reputation. The
+render waits on the toggle, not on an idea.
+
+**Nothing was touched on the box and nothing was rendered.** Card idle at 0 MiB /
+0% / 42C, farm worker left down, probe dir `C:\banyan-farm\probe-b9-20260807`
+still staged with the founder's still (`b0dabdfd…`, hash-matched to
+`_site/.../09-whoami.png`). Its `b9-negative.txt` is one revision stale at 593
+chars — harmless, because `probe-b9-mitosis.sh` regenerates both prompt files
+from the genome and asserts the terms before it fires, so after the toggle the
+render really is one command: `bash pipeline/probe-b9-mitosis.sh`. Seed
+**20260814**, off the f15 sidecar.

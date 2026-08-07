@@ -84,6 +84,17 @@ motion_prompts:
   # beat 9's ("$ whoami" is an identity beat — the plant is supposed to be one
   # thing for 2.5 seconds).
   #
+  # BOTH FAILURE SHAPES ARE HERE, which is why the term list is longer than beat
+  # 11's: a leaf DIVIDES (frames 0-10, beat 11's artifact exactly) and then the
+  # PLANT ELABORATES (frames 20-60, a second node tier on a lengthened stem).
+  # Nothing in the script or the shot asks for either. node.md gives this beat no
+  # action at all — "Terminal text types itself over the shot", then the $ whoami
+  # block — and shots.md draws "a tiny two-leaf green sprout standing alone in
+  # short grass, centered, quiet empty composition". Growth belongs to beat 11,
+  # whose line IS the growth ("Latency: three days. Throughput: one leaf"), so
+  # beat 9 growing is not an overshoot to be bounded, it is invention to be
+  # forbidden — and it steals the next beat's only event.
+  #
   # TWO CAUSES, and the second is ours. (a) The negative held nothing about leaf
   # count — 363 of 900 chars used, so it was never a budget problem, the terms were
   # simply never authored — while antistatic_for() correctly read the amplitude
@@ -97,7 +108,7 @@ motion_prompts:
   # stays (gust, thrashes, streaming), with the stem carrying the swing instead of
   # a departing leaf. The still is NOT changed: motion.yaml is read only by the
   # video path, and 09-whoami.png is the founder's canon.
-  9: "the sprout's leaves swing up on a gust and drop back, the thin stem bowing over and springing upright, the grass thrashes behind, dust motes streaming across the light, no splitting leaf, no dividing leaf, no duplicate leaves, no extra leaves appearing, no new leaves growing, no second sprout, no leaf multiplying, no changing leaf count, no morphing silhouette, no growing stem, no timelapse growth, no leaf detaching, no falling leaf"
+  9: "the sprout's leaves swing up on a gust and drop back, the thin stem bowing over and springing upright, the grass thrashes behind, dust motes streaming across the light, no splitting leaf, no dividing leaf, no duplicate leaves, no extra leaves appearing, no new leaves growing, no second sprout, no leaf multiplying, no changing leaf count, no morphing silhouette, no growing stem, no extra stem nodes, no branching stem, no timelapse growth, no leaf detaching, no falling leaf"
   # 10: the beat's whole point is the approaching thump "felt as rings of light
   # through soil", and the direction said "no light rays" — so the one thing the
   # audience must see was suppressed. The still already has glowing droplets

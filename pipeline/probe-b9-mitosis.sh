@@ -11,10 +11,16 @@
 # held not one word about leaf count.
 #
 # TWO INPUTS CHANGE HERE, unlike the beat 11 probe, and deliberately. The
-# negative gains the thirteen leaf-count terms, AND the direction loses "one leaf
+# negative gains fifteen leaf-count terms, AND the direction loses "one leaf
 # spinning as it falls" — an instruction for a leaf to detach, which no negative
 # can outvote (video_prompt's docstring: "It was told to.") — plus the "two
 # leaves" count the approved still contradicts. Both live in motion.yaml.
+#
+# Fifteen rather than beat 11's eight because the frame counts name a second
+# defect: re-measured 2026-08-07 at frames 0/12/24/36/48/60, the stem does not
+# just gain leaves, it LENGTHENS and grows a whole second node tier. "no extra
+# stem nodes" and "no branching stem" are that tier; the other thirteen are beat
+# 11's convention plus the detachment pair. 627 of 900 characters, nothing cut.
 #
 # WHAT IS HELD CONSTANT: the same conditioning still, the same recipe, and THE
 # SAME SEED as the take in the episode — 20260814, off the f15 sidecar at

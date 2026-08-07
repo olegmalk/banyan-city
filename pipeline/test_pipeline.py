@@ -1337,6 +1337,61 @@ def test_beat11_negatives_name_the_mitosis(tmp: Path):
     check("beat 11 is still forbidden to freeze", "frozen frame" in neg)
 
 
+def test_beat09_negatives_forbid_the_growth(tmp: Path):
+    """Beat 9's plant does not divide a leaf — it grows a whole new tier of them.
+
+    Counted off the f15 take at frames 0/12/24/36/48/60: the sprout starts as one
+    node of leaves low in the grass and ends on a lengthened stem carrying a
+    SECOND node, roughly four leaf shapes becoming seven. Beat 11's leaf splits
+    and re-fuses; beat 9's plant simply grows — which is beat 11's own line
+    ("Latency: three days. Throughput: one leaf") happening two beats early.
+
+    Nothing in the beat asks for it. node.md gives WHOAMI no action at all, only
+    "Terminal text types itself over the shot", and shots.md draws "a tiny
+    two-leaf green sprout ... quiet empty composition". So growth here is not an
+    overshoot to bound, it is invention to forbid outright, and this test holds
+    the two halves of that fix:
+
+      1. the COUNT terms, as on beat 11, plus the ones beat 11 never needed —
+         a stem that lengthens and grows extra nodes
+      2. the direction no longer asks a leaf to leave. The f15 positive said
+         "one leaf spinning as it falls"; no negative outvotes an instruction
+         (video_prompt: "It was told to"), so the clause had to go from the
+         prompt, not be argued with from the negative.
+
+    The still path is deliberately untouched — shots.md is not edited here, and
+    09-whoami.png is the founder's canon.
+    """
+    sys.path.insert(0, str(REPO / "pipeline"))
+    import video_task as vt
+    from generate_shots import parse_shots
+
+    node = REPO / "genomes/sapling/nodes/001-capability-inventory"
+    direction = vt.motion_directions(node).get(9, "")
+    shot = {s["num"]: s for s in parse_shots((node / "shots.md").read_text(encoding="utf-8"))}[9]
+    pos, neg = vt.video_prompt(f"{direction}. no new subjects, no scene change",
+                               shot["prompt"], no_anchor=True, beat=9)
+
+    WANTED = ("splitting leaf", "dividing leaf", "duplicate leaves",
+              "extra leaves appearing", "new leaves growing", "second sprout",
+              "leaf multiplying", "changing leaf count", "morphing silhouette",
+              "growing stem", "extra stem nodes", "branching stem",
+              "timelapse growth", "leaf detaching", "falling leaf")
+    absent = [w for w in WANTED if w not in neg]
+    for w in absent:
+        print(f"      x  beat 9's negative no longer says '{w}'")
+    check("beat 9 forbids the plant growing", not absent)
+    check("none of it leaked into the positive prompt",
+          not any(w in pos for w in WANTED))
+    check("the growth terms lead the negative", neg.startswith("splitting leaf"))
+    check(f"beat 9's negative still fits ({len(neg)}/{vt.NEG_MAX} chars)",
+          len(neg) <= vt.NEG_MAX)
+    check("beat 9 is still forbidden to freeze", "frozen frame" in neg)
+    # The half a negative cannot do. Both spellings, so restoring either fails.
+    check("the direction no longer asks a leaf to fall",
+          "spinning as it falls" not in pos and "falls" not in pos)
+
+
 def test_hosted_path_sends_our_negative(tmp: Path):
     """The paid API path must send the same anti-scene-change terms as the local one.
 
@@ -2126,6 +2181,7 @@ def main():
         test_queue_render_params_reach_the_child(Path(td))
         test_probe_beat_sends_the_files_and_the_whole_recipe(Path(td))
         test_beat11_negatives_name_the_mitosis(Path(td))
+        test_beat09_negatives_forbid_the_growth(Path(td))
         test_hosted_path_sends_our_negative(Path(td))
         test_antistatic_first_signal_wins(Path(td))
         test_vendored_licence_does_not_launder(Path(td))
