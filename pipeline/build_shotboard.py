@@ -35,6 +35,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "pipeline"))
+import licence_gate as lg  # noqa: E402 — the tolerant sidecar reader
 from generate_shots import parse_shots  # noqa: E402
 from sd_prompt import compress, extra_negatives, suppressed_negatives  # noqa: E402
 from site_theme import THEME_CSS  # noqa: E402  — one palette for every page
@@ -183,10 +184,16 @@ def img_tag(p: Path, rel: str = "", alt: str = "", thumb: str = "") -> str:
 
 def take_meta(v: Path) -> dict:
     """The sidecar next to a take — provenance, and who handed it in.
-    01-the-keyboard.HAILUO.mp4 → 01-the-keyboard.HAILUO.meta.yaml (with_suffix
-    would eat the engine tag, which is part of the name here)."""
-    m = v.with_name(v.with_suffix("").name + ".meta.yaml")
-    if not m.exists():
+
+    BOTH NAMING SHAPES (lg.sidecar_for, 2026-08-07). The old lookup built one
+    name by hand — 01-the-keyboard.HAILUO.mp4 → 01-the-keyboard.HAILUO.meta.yaml
+    — which is right for the records intake_take writes and blind to the
+    `<full name>.mp4.meta.yaml` shape hold_still, video_task and the farm worker
+    write. This is the crowd-facing board, so a miss is the §7.2 promise
+    silently unmet: the take still plays, with no engine credit and no
+    contributor beside it, exactly as if nobody had recorded anything."""
+    m = lg.sidecar_for(v, lg.META_EXT)
+    if not m:
         return {}
     try:
         return yaml.safe_load(m.read_text()) or {}
@@ -235,13 +242,18 @@ def take_cell(v: Path, rel: str, poster_url: str, canon: bool) -> str:
     poster = f' poster="{poster_url}"' if poster_url else ""
     crown = '<span class="chip-canon">IN THE EPISODE</span><br>' if canon else ""
     # only link a receipt that exists — POST clips have no engine-tagged
-    # sidecar, so fall back to the beat's base meta, and to nothing over a 404
+    # sidecar, so fall back to the beat's base meta, and to nothing over a 404.
+    # Both lookups go through lg.sidecar_for for the reason take_meta does: the
+    # hand-built name only ever found `<stem>.meta.yaml`, so a take filed with a
+    # full-name record showed no "exact settings used" link at all. Safe to link
+    # either shape — build_site copies takes/clips/ with iterdir(), so whichever
+    # file is found travels to _site under its own name.
     stem = v.with_suffix("").name
-    sidecar = v.with_name(f"{stem}.meta.yaml")
-    base = v.with_name(f"{stem.rsplit('.', 1)[0]}.meta.yaml")
-    if sidecar.exists():
+    sidecar = lg.sidecar_for(v, lg.META_EXT)
+    base = lg.sidecar_for(v.with_name(f"{stem.rsplit('.', 1)[0]}.mp4"), lg.META_EXT)
+    if sidecar:
         receipt = f'<br><a href="{rel}-clips/{sidecar.name}">exact settings used</a>'
-    elif base.exists():
+    elif base:
         receipt = f'<br><a href="{rel}-clips/{base.name}">exact settings used</a>'
     else:
         receipt = ""

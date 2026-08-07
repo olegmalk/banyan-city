@@ -1086,6 +1086,91 @@ def test_held_sidecar_is_readable_by_every_tool_that_reads_it(tmp: Path):
     check("a held still passes the licence gate end to end", errors == [])
 
 
+def test_every_sidecar_reader_finds_both_shapes(tmp: Path):
+    """The last three readers pinned to one of the two naming conventions.
+
+    The tree has always written records under two names — `06-x.meta.yaml`
+    (render_t3, intake_take, 126 tracked records) and `06-x.mp4.meta.yaml`
+    (hold_still, video_task, the farm worker, and every writer added since).
+    Neither is wrong, so the fix is always in the READER: renaming files would
+    break the held-still detectors and throw away each record's git trail.
+    lg.sidecar_for tries both; build_site took it at four call sites and
+    publishable() at a fifth. These are the rest, and each one costs something
+    different when it misses:
+
+      shot board      the crowd-facing surface — a take plays with no engine
+                      credit and no "exact settings used" link, which is §7.2
+                      unmet in public rather than in a log.
+      render_t3       clip_provenance's {} is not a GAP in the episode leaf, it
+                      is a wrong answer in it: beat_provenance turns the miss
+                      into a published claim that no model rendered the beat.
+      build_comparison  the inverse pinning, full-name only — a stem-shape
+                      record reads as "no sidecar, numbers blank", a row of gap
+                      marks over a render that measured itself.
+
+    WIDENING, NOT SWAPPING, is the whole assertion here: every case below checks
+    the shape the reader already handled as well as the one it could not see.
+    """
+    import build_comparison as bc
+    import build_shotboard as bsb
+
+    REC = ("platform: local-gpu\nmodel: Wan2.2-TI2V-5B\n"
+           "contributed_by: someone\ncost_usd: 0\n")
+    full = tmp / "01-the-keyboard.HAILUO.mp4"
+    full.write_bytes(b"v")
+    (tmp / "01-the-keyboard.HAILUO.mp4.meta.yaml").write_text(REC, encoding="utf-8")
+    stem = tmp / "02-the-keyboard.HAILUO.mp4"
+    stem.write_bytes(b"v")
+    (tmp / "02-the-keyboard.HAILUO.meta.yaml").write_text(REC, encoding="utf-8")
+    bare = tmp / "03-nobody-filed-one.HAILUO.mp4"
+    bare.write_bytes(b"v")
+
+    # THE SHOT BOARD, both the credit line and the receipt link beside it.
+    check("the board reads a full-name record",
+          bsb.take_meta(full).get("contributed_by") == "someone")
+    check("...and still reads the stem shape",
+          bsb.take_meta(stem).get("contributed_by") == "someone")
+    check("a take with no record says nothing rather than guessing",
+          bsb.take_meta(bare) == {})
+    check("the board links the full-name receipt",
+          "01-the-keyboard.HAILUO.mp4.meta.yaml"
+          in bsb.take_cell(full, "media", "", False))
+    check("...and the stem-shape one",
+          "02-the-keyboard.HAILUO.meta.yaml"
+          in bsb.take_cell(stem, "media", "", False))
+    check("and offers no receipt at all over a 404",
+          "exact settings used" not in bsb.take_cell(bare, "media", "", False))
+
+    # RENDER_T3, at the level the leaf is actually written from.
+    check("the leaf credits a full-name record",
+          t3.beat_provenance([full])["model"] == "Wan2.2-TI2V-5B")
+    check("...and a stem-shape one",
+          t3.beat_provenance([stem])["model"] == "Wan2.2-TI2V-5B")
+    check("a clip with no record is the only one that reads as 'none'",
+          t3.beat_provenance([bare])["model"] == "none")
+    # held_still is the same lookup one function over; the full-name direction is
+    # pinned end to end in test_held_sidecar_is_readable_by_every_tool_that_reads_it
+    held = tmp / "04-held.mp4"
+    held.write_bytes(b"v")
+    (tmp / "04-held.meta.yaml").write_text("model: none\n", encoding="utf-8")
+    check("a held clip filed under the stem shape is still never reversed",
+          t3.held_still([held]))
+
+    # THE COMPARISON PAGE — the inverse, so the stem shape is the new one here.
+    check("the comparison page reads a stem-shape record",
+          (bc.load_sidecar(stem) or {}).get("model") == "Wan2.2-TI2V-5B")
+    check("...and still reads the shape it was written for",
+          (bc.load_sidecar(full) or {}).get("model") == "Wan2.2-TI2V-5B")
+    check("no record stays None — a blank recipe would print as measured",
+          bc.load_sidecar(bare) is None)
+
+    # check_invention exposes no helper — its skip is inline in the sweep — so it
+    # is pinned on the source, the way its "model: none" literal already is.
+    check("check_invention locates held records with the tolerant reader",
+          "lg.sidecar_for(p, lg.META_EXT)"
+          in (REPO / "pipeline" / "check_invention.py").read_text(encoding="utf-8"))
+
+
 def test_farm_still_sidecar_records_what_actually_ran(tmp: Path):
     """The farm worker's VIDEO path writes provenance; its STILLS path wrote none.
 
@@ -3166,6 +3251,8 @@ def main():
     test_held_zoom_is_monotonic_and_moderate()
     with tempfile.TemporaryDirectory() as td:
         test_held_sidecar_is_readable_by_every_tool_that_reads_it(Path(td))
+    with tempfile.TemporaryDirectory() as td:
+        test_every_sidecar_reader_finds_both_shapes(Path(td))
     with tempfile.TemporaryDirectory() as td:
         test_farm_still_sidecar_records_what_actually_ran(Path(td))
     test_wrap_never_drops_words()

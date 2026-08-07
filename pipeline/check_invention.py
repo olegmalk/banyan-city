@@ -59,6 +59,9 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import licence_gate as lg  # noqa: E402 — the tolerant sidecar reader
+
 # Coarse on purpose. We are asking about composition, not texture: at 96x171 a
 # second sprout is unmissable and a leaf's serration is invisible, which is the
 # right trade for this question and makes fifteen clips take seconds.
@@ -203,8 +206,11 @@ def main():
     # A held still cannot invent anything: no model ran. The sidecar says so.
     held = []
     for p in list(clips):
-        meta = Path(str(p) + ".meta.yaml")
-        if meta.is_file() and "model: none" in meta.read_text(encoding="utf-8"):
+        # either naming shape (lg.sidecar_for): this located
+        # `<full name>.mp4.meta.yaml` only, so a held clip filed under the stem
+        # shape comes back as four confident false positives instead of a skip.
+        meta = lg.sidecar_for(p, lg.META_EXT)
+        if meta and "model: none" in meta.read_text(encoding="utf-8"):
             clips.remove(p)
             held.append(p.name)
     if held:

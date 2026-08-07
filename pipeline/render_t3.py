@@ -54,6 +54,7 @@ import yaml
 from PIL import Image, ImageDraw, ImageFont
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import licence_gate as lg  # noqa: E402 — the tolerant sidecar reader
 from captions import (CAPTION_MAX_WORDS, caption_chunks, chunk_spans,  # noqa: E402,F401 — shared with synth_vo
                       split_caption_display)
 from render_t1 import extract_script, parse_frames, strip_inline_md  # noqa: E402
@@ -540,8 +541,12 @@ def held_still(clips: list) -> bool:
     if not clips:
         return False
     for c in clips:
-        meta = Path(str(c) + ".meta.yaml")
-        if not (meta.is_file()
+        # the INVERSE of the clip_provenance bug, and worth widening for the
+        # same reason: this located `<full name>.mp4.meta.yaml` only, which is
+        # what hold_still writes today, so a held clip filed under the stem
+        # shape reads as footage and gets ping-ponged.
+        meta = lg.sidecar_for(c, lg.META_EXT)
+        if not (meta
                 and "model: none" in meta.read_text(encoding="utf-8",
                                                     errors="replace")):
             return False
@@ -727,8 +732,17 @@ def render_beat(beat: dict, num: int, dur: float, clips: list, workdir: Path,
 
 
 def clip_provenance(clip: Path) -> dict:
-    meta = clip.with_suffix(".meta.yaml") if clip else None
-    if not (meta and meta.exists()):
+    """The clip's own record (§7.2), under either naming shape.
+
+    with_suffix() REPLACES the extension, so this only ever built
+    `<stem>.meta.yaml` and returned {} for every `<full name>.mp4.meta.yaml` —
+    the shape hold_still, video_task and the farm worker all write. An empty
+    dict here is not a gap in the leaf, it is a LIE in the leaf: beat_provenance
+    reads the miss as `platform: none, model: none, cost 0`, so a clip that
+    recorded its model honestly gets published as one that named nothing.
+    """
+    meta = lg.sidecar_for(clip, lg.META_EXT) if clip else None
+    if not meta:
         return {}
     try:
         data = yaml.safe_load(meta.read_text()) or {}

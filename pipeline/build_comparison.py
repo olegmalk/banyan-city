@@ -33,6 +33,9 @@ from urllib.parse import quote
 
 import yaml
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import licence_gate as lg  # noqa: E402 — the tolerant sidecar reader
+
 REPO = Path(__file__).resolve().parent.parent
 OUT = REPO / "COMPARISON.html"
 
@@ -726,9 +729,16 @@ STATUS_FOOTNOTE = (
 
 # ------------------------------------------------------------------ helpers ---
 def load_sidecar(mp4: Path):
-    """Return the parsed *.mp4.meta.yaml, or None. Never guesses on failure."""
-    side = mp4.with_suffix(".mp4.meta.yaml")
-    if not side.exists():
+    """Return the clip's parsed record, or None. Never guesses on failure.
+
+    Either naming shape (lg.sidecar_for, 2026-08-07). This was pinned to
+    `<full name>.mp4.meta.yaml` — the INVERSE of the bug the other readers had,
+    and the same cost: a clip whose record is `<stem>.meta.yaml` reported "no
+    sidecar — rendered with its numbers blank", which on this page is a row of
+    gap marks over a render that measured itself.
+    """
+    side = lg.sidecar_for(mp4, lg.META_EXT)
+    if side is None:
         return None
     try:
         return yaml.safe_load(side.read_text(encoding="utf-8")) or {}
@@ -849,6 +859,9 @@ def joined_b1_row_from_sidecar(mp4_rel):
     meta = load_sidecar(mp4) or {}
     if "_parse_error" in meta or not meta.get("throughput_s_video_per_s_wall"):
         return None
+    # cite the file actually read, not a name rebuilt from the mp4's — the two
+    # differ the moment the record is filed under the stem shape
+    side = lg.sidecar_for(mp4, lg.META_EXT)
     twin = SIDECAR_JOIN_TWIN.get(mp4_rel)
     same_bytes = bool(twin and (REPO / twin).exists()
                       and sha(mp4) == sha(REPO / twin))
@@ -861,7 +874,7 @@ def joined_b1_row_from_sidecar(mp4_rel):
         "video_s": meta.get("seconds"),
         "throughput_s_per_s": meta["throughput_s_video_per_s_wall"],
         "ok": True,
-        "_src": f"{mp4.name}.meta.yaml",
+        "_src": side.name if side else f"{mp4.name}.meta.yaml",
         "_joined": True,
         "_joined_from": "sidecar",
         "_pvs_sidecar": meta.get("compute_s_per_video_s"),
