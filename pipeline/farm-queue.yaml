@@ -457,11 +457,30 @@ backlog:
 # canonical Apache-2.0, vendored to licences/, vet_model.py CLEAR, self-test
 # 11/11. Evidence and the mirror caveat are in models-licence.md's FastWan
 # section. The row it was deciding the fate of is real work, not a row to cut.
-
+#
+# RE-GATED 2026-08-07, one day after it was ungated, and the re-gate is not a
+# reversal of db26f7b — it is the blocker BEHIND the one db26f7b cleared, which
+# this entry's own `why` already named and no key expressed. The promoter read
+# this row as "BY HAND — unblocked, run:" while the thing it asks for could not be
+# run at all: the 5B has no LoRA loading path (lora-5b-load-path-1786123500). A row
+# that reports runnable and is not is worse than a row that reports blocked.
+#
+# WHY gate: code AND NOT after:. The header's rule, applied: `after:` is satisfied
+# only by a `DONE task=<id>` line on a farm-results-* heartbeat, and a code job
+# never writes one — so an `after: [lora-5b-load-path-1786123500]` would read as
+# waiting and never clear, for as long as the file exists. Code dependencies are
+# gates here. That is what gate_ref's "the code gap with file:line" is for.
 - id: t5-fastwan-sample-b01-1786090260
   runner: manual
   worker: rtx5090
   needs: [cuda, vram20, video-venv]
+  gate: code
+  gate_ref: >-
+    backlog id lora-5b-load-path-1786123500. wan_i2v.py's only two
+    load_lora_weights calls are at :317 and :319, both inside load_animegen()
+    (:216) and hardcoded to Lightning's two-expert A14B stems; the TI2V-5B path
+    (:394 onward) has no adapter mechanism at all. Clearing this gate is that entry
+    landing, not a person deciding it has.
   window: any
   est_minutes: 10
   cmd: >-
@@ -621,3 +640,81 @@ backlog:
     Candidate frames land on the courier branches as bare PNGs with the model
     recorded nowhere, so the shot board shows art it cannot cite and "provenance
     always" is unmet on the path that produces most of the tree's images.
+
+# THE FASTWAN SAMPLE IS LICENCE-CLEARED AND UNIMPLEMENTABLE, and this entry is the
+# distance between those two facts. db26f7b cleared the licence. Nothing cleared
+# the code, and nothing had looked.
+#
+# wan_i2v.py holds exactly two load_lora_weights calls, at :317 and :319, and both
+# sit inside load_animegen() (:216). They are hardcoded to Lightning's two-expert
+# A14B shape — high_noise_model / low_noise_model, adapter_name high / low,
+# load_into_transformer_2 on the second. The TI2V-5B path (:394 onward) has no
+# adapter mechanism at all: no loader, no flag, no fuse. A 5B LoRA is not a flag
+# away; it is a path that does not exist.
+#
+# THREE THINGS NOT TO REDERIVE:
+#   * repo id and weight name are PARAMETERS. The A14B path hardcodes both, which
+#     is exactly why it serves one LoRA and only one.
+#   * LOAD, DO NOT FUSE — the diffusers Wan GGUF precedent. Fusing writes the
+#     adapter into the base weights and the sidecar can no longer say honestly
+#     which weights ran.
+#   * THE SIDECAR MUST NAME THE LoRA, not just the 5B base — and the licence gate
+#     will not catch you if it does not. See licence-gate-substring-1786123560:
+#     the bare string `fastwan` resolves to Apache-2.0 today by matching `wan`
+#     inside itself, having read nothing.
+- id: lora-5b-load-path-1786123500
+  runner: manual
+  worker: m1pro
+  needs: []
+  window: any
+  est_minutes: 90
+  cmd: >-
+    give wan_i2v.py's TI2V-5B path a --lora option — repo id and weight name as
+    parameters, load and never fuse, and the adapter recorded in the sidecar by
+    name
+  why: >-
+    t5-fastwan-sample-b01-1786090260 reads runnable and cannot be run: its licence
+    is cleared, its recipe is written, and the 5B has never loaded a LoRA in its
+    life. This is the one piece of real work between that row and a clip.
+
+# THE GATE SAID Apache-2.0 ABOUT FASTWAN BEFORE ANYONE HAD READ FASTWAN'S LICENCE.
+# It was right, and it was right by accident. Verified by running the classifier,
+# not reasoned about:
+#   model_licences("fastwan")  -> [("wan", "Apache-2.0")]
+#   engine_licence("fastwan")  -> "Apache-2.0"
+#   "fastwan" in MODEL_LICENCES -> False
+# Matching is substring-based — model_licences (licence_gate.py:520, `if name in
+# norm` at :531) — and the key `wan` (:332) sits inside `fastwan`. The verdict was
+# allow-by-inheritance from a table entry about a different model, and it was
+# invisible precisely BECAUSE the accident agreed with the truth this time: db26f7b
+# went and read FastVideo's own LICENSE and it is Apache-2.0. The next one will not
+# agree, and nothing will say so.
+#
+# THE TABLE ALREADY KNOWS THIS FAILURE and its safeguard did not hold.
+# licence_gate.py:187-194 documents the identical hazard in the PREFIX direction —
+# a hypothetical non-commercial VoxCPM3 waved through by `voxcpm` — and prescribes
+# discipline: "add every new version explicitly, after reading ITS licence, and
+# never rely on the prefix". `fastwan` is the SUFFIX direction. It does not read
+# like a version bump, so nobody thought to add it. That is the whole lesson:
+# discipline is not the fix, because the failure mode is not remembering.
+#
+# HARD CONSTRAINT FOR THE IMPLEMENTER. The table's semantics are load-bearing for
+# lint's debt ratchet (LICENCE_DEBT = 38, lint_genome.py:61; :49 names the ONE
+# reason the number may rise). Token-aware matching WILL change what some strings
+# resolve to. The fix must not reclassify shipped assets — the ratchet stays 38, or
+# the commit explains in the file why it moved and D15 moves with it.
+- id: licence-gate-substring-1786123560
+  runner: manual
+  worker: m1pro
+  needs: []
+  window: any
+  est_minutes: 45
+  cmd: >-
+    make licence_gate's model matching token-aware, or add an explicit key for
+    every LoRA and finetune family we touch, plus a test asserting that an unknown
+    string CONTAINING a known key does not inherit its licence
+  why: >-
+    The one tool that decides what may be published can return a licence it has
+    never read, for a model that is not in its table, and report nothing unusual —
+    so provenance integrity currently rests on the substring accident landing our
+    way.

@@ -41,6 +41,12 @@ pending:
     public: "sapling/002b-first-citizen-shots.html"
     link_text: "see the 21 candidate frames"
     since: 2026-08-06
+  - id: animegen-speedup-licence
+    title: "Decide whether a licence published in one place but not the other is good enough to publish from"
+    detail: "The model that draws the show in anime style has a companion file that makes it about thirteen times faster — roughly nine minutes per shot instead of nearly two hours, measured on our own card. The people who made it did publish their licence, and it is the permissive kind, but they published it alongside their code and not on the download page the show actually pulls the file from. The show's standing rule is that nothing gets published unless every part of it has a licence we can quote, so today the fast version is used for tests only and every releasable anime shot takes the slow path. The evidence has been read and written up on both pages. What is missing is the author saying that a licence verified in the makers' own repository counts as proof for footage that goes out."
+    public: "https://github.com/olegmlkvorg/banyan-city/blob/main/pipeline/research/models-licence.md#link-4-answered--lightx2vwan22-lightning-no-license-on-hf-but-apache-20-verified-on-github"
+    link_text: "read what was found on each of the two pages"
+    since: 2026-08-07
   - id: hires-review
     title: "Approve or ignore 30 sharper versions of the existing shots"
     detail: "The farm re-rendered all 15 approved shots at higher resolution overnight. Each one is a candidate to replace its original — a skim-and-nod, not a study."
