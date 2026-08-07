@@ -2639,3 +2639,36 @@ version is a one-minute re-render if he asks. `site-review` is publishing v30,
 v31 and v32 to the unlisted `/review/` area and has been given those checksums
 plus v30's and v31's, with confirmation that none of the three will be moved or
 rewritten without telling it first.
+
+**Correction to the D17 record, same evening, and it is a correction about
+history rather than about the decision.** The first draft of D17 said the
+publication gate the founder overruled was the steward's own over-reading of
+STEWARDSHIP §6. **It was not.** A provenance dig put it in **D9** (`6064860`,
+2026-07-13), steward-written criteria whose own status line has read *"open —
+draft criteria below, for the founder to ratify or amend"* for twenty-five days
+with **no ratification anywhere** — git, DECISIONS.md, STATE.md, transcripts.
+And D9 asks a narrower question than it was used for: *when does an assembled T3
+episode become a node's official `live` leaf*, i.e. canon. It was being read as
+gating any appearance of a cut on the site at all. D17 now resolves that much of
+D9's dangling status and no more — criterion 4, the taste gate, stands; D9 stays
+open as to canon. §6 is cited instead as the gate that genuinely WAS ratified
+(dad 2026-07-25, the founder's assent at 20:38:22Z, commit `b6c510a`), and
+CLAUDE.md's "founder screening gates PUBLICATION" line is cited nowhere: it is
+uncommitted steward gloss, and the 2026-08-05 exchange under it was about not
+idling the GPU, not about publishing.
+
+**Beat 3's third option went up after all, as a replacement rather than an
+addition.** gentle-holds' reason for keeping it off (a beat with three options
+blurs v32's single yes/no) stopped holding once the clip existed and
+`SCREENING.html` — which is local-only — was the only place carrying it: the
+founder reaches /review/ on his phone and would have seen a beat-3 pair where
+both sides were bad. So the pair is now **approved-held against
+approved-animated**, two live choices on the same picture, and the
+revoked-magenta hold is demoted to a labelled drawer captioned *what v30 ships,
+not a choice*. `review/beat-03-HELD-gentle.mp4` (renamed from
+`-gentle-approvedframe` mid-flight) is `cuts/pairs/beat-03-held-approved.mp4`,
+602,987 bytes, frame 0 measuring 5.1 against the approved plate and 51.0 against
+the revoked one. Its sidecar keeps `model: none` as a **bare** token
+deliberately: `render_t3.held_still` and `check_invention` both detect a held
+clip by substring on it, and dropping it would palindrome the clip and make the
+detector report a computed push-in as invented content.

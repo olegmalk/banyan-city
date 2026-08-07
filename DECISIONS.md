@@ -162,6 +162,17 @@ slates. Steward read: **not yet** — publish criteria, proposed:
 Publishing is a `render`, within steward authority once criteria are met — but
 criterion 4 keeps the trunk's first video a founder call. Amendable per Guideline 6.
 
+**Addendum 2026-08-07 — this was never ratified, and it was applied wider than it
+is written.** The status line above says "for the founder to ratify or amend" and
+no ratification of it exists anywhere: not in git, not in this file, not in
+`STATE.md`, not in the transcripts. For twenty-five days these draft criteria were
+enforced as law — and beyond their own subject, which is a node's official `live`
+leaf. They were read as gating any appearance of a cut on the site at all. The
+founder struck that reading down on 2026-08-07: see
+**[D17](#d17--working-cuts-may-publish-to-an-unlisted-review-area-resolved--founder-2026-08-07)**,
+which supersedes it for working cuts and leaves criterion 4 — the canon gate —
+standing. **D9 itself is still open.**
+
 ---
 
 ## 2026-07-25 — The first molt (Repair Brief 001)
@@ -970,11 +981,19 @@ words, verbatim:
 > "Don't produce media from scripts I haven't read" does not mean you cant put
 > media we have already produced on the website.
 
-He is right that no ratified rule said otherwise. The restriction was the
-steward's own reading of STEWARDSHIP §6, extended one step past what §6 says:
-§6 governs **making** media, and the steward had been applying it to
-**serving** media that was already made. Publication is the founder's call, and
-he made it.
+**He is right, and the provenance is exact.** The rule he could not remember
+making is **[D9](#d9--when-is-a-nodes-t3-video-leaf-publishable)**, written by
+the steward on 2026-07-13 (`6064860`), whose own status line reads *"open —
+draft criteria below, for the founder to ratify or amend."* **No ratification of
+it exists** — not in git, not in this file, not in `STATE.md`, not in the
+session transcripts. He never made it because nobody ever made it; it has been
+draft decision-support for twenty-five days, applied as if it were law.
+
+And it was applied wider than it was written. D9 asks one question — *when does
+an assembled T3 episode become a node's official `live` leaf* — which is the
+**canon** question. Its criteria were being read as gating any appearance of a
+cut on the site at all, including a copy that claims to be no such thing. That
+step is not in D9 and was never anywhere else either.
 
 **What changed.** Cuts he has not passed may be published to an **unlisted
 review area** — `/review/`, built by `build_site.render_review()` from
@@ -986,15 +1005,29 @@ the studio page, which is where he goes to make the call. The mp4s are
 committed — the single sanctioned exception to *media does not go into git*,
 because a static site cannot serve a file that is not in the repo.
 
+**What this does to D9.** D9's dangling status resolves as follows, and only
+this far: **its screening-gates-publication reading is superseded for WORKING
+CUTS** served from the unlisted review area. **Its criterion 4 stands** — *"the
+author has seen the assembled episode and approved it as the node's
+representative video (R4)"* — because that is the canon gate, and unlike the
+rest of D9 it matches what was actually ratified elsewhere. Criteria 1, 2, 3 and
+5 (footage complete, watermark policy, provenance, lint green) are untouched and
+still apply to a `live` leaf. **D9 remains OPEN as to canon**; nothing here
+ratifies the parts of it nobody has ratified.
+
 **What did NOT change, and none of it was up for discussion:**
 
-- **STEWARDSHIP §6 stands untouched.** No voice synthesis, no footage render, no
-  episode assembly from a script the founder has not read. Every beat on the
-  review page comes from the approved 001 script; this decision moved nothing
-  into production.
+- **STEWARDSHIP §6 stands untouched, and it is the one gate here that was
+  genuinely ratified.** Dad asked for it on 2026-07-25 — *"I have to see the
+  narrative before you produce the footage and attach the audio. Right?"* — the
+  founder assented the same evening at 20:38:22Z — *"yeah that split sounds
+  right, do it"* — and it was committed as `b6c510a`. No voice synthesis, no
+  footage render, no episode assembly from a script the founder has not read.
+  Every beat on the review page comes from the approved 001 script; this
+  decision moved nothing into production.
 - **The canon gate stands.** No cut becomes THE episode without his verdict
   (R4). None of these has a leaf, none is on the season page, and the stamp says
-  so on every player. Dad restated this on 2026-08-05 and it is unaffected.
+  so on every player.
 - **The licence gate applies to everything served.** `cuts/` is now one of
   `licence_gate.Gate.run()`'s scanned roots, and every file passes
   `build_site.publishable()` before it is copied. A blocked file is named on the

@@ -1716,12 +1716,28 @@ def render_review() -> str:
                           f'{html.escape(str(note))}{rec_link(rel)}</figcaption></figure>')
             why = (f'<p class="why"><strong>{html.escape(str(p.get("why_label", "Why:")))}'
                    f'</strong> {html.escape(str(p["why"]))}</p>') if p.get("why") else ""
+            # A third clip that is context, not a choice — beat 3's revoked-magenta
+            # hold, which is what v30 ships and is nobody's option. Shown small and
+            # after the verdict so it cannot be mistaken for one of the two.
+            fn = p.get("footnote") or {}
+            foot = ""
+            got = serve(str(fn["file"])) if fn.get("file") else None
+            if got:
+                rel, pos = got
+                foot = ('<details class="drawer"><summary>'
+                        f'{html.escape(str(fn.get("label", "for reference")))}</summary>'
+                        '<div class="drawer-body"><div class="two">'
+                        f'<figure><video controls playsinline preload="none" muted'
+                        f'{poster_attr(pos, "../")} src="{html.escape(rel)}"></video>'
+                        f'<figcaption><span class="k">not an option</span>'
+                        f'{html.escape(str(fn.get("note", "")))}{rec_link(rel)}'
+                        '</figcaption></figure></div></div></details>')
             items.append(
                 f'<div class="pair"><h3>Beat {html.escape(str(p["beat"]))} — '
                 f'{html.escape(str(p.get("title", "")))}</h3>{why}'
                 f'<div class="two">{cells}</div>'
                 + (f'<p class="why">{html.escape(str(p["verdict"]))}</p>'
-                   if p.get("verdict") else "") + '</div>')
+                   if p.get("verdict") else "") + foot + '</div>')
         if items:
             groups.append(f'<div class="cut"><h2>{html.escape(str(grp.get("title", "")))}</h2>'
                           f'{md_to_html(str(grp.get("intro", "")))}{"".join(items)}</div>')

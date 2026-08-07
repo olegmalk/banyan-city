@@ -184,27 +184,28 @@ comparisons:
       page exists at all.
     items:
       - beat: 3
-        title: "“deploy succeeded” — and these two are not the same picture"
+        title: "“deploy succeeded” — held or moving, both on the right picture"
         why_label: "Why it was held:"
         why: >-
           The measurement that held it was taken on the magenta dashboard the author
-          rejected, revoked on 2026-08-04 — and so was v30 itself, by one minute. The
-          green frame that replaced it had never been animated until 2026-08-07.
-        left: pairs/beat-03-held.mp4
-        left_note: "motion 2.13 · 2% frozen — push-in on the REJECTED magenta plate, which is what v30 ships"
+          rejected, revoked on 2026-08-04 — and v30 was assembled one minute before
+          that revocation, so v30 is still holding the rejected plate today. Neither
+          clip below is that one. Both are the approved green frame, and the choice
+          here is only whether it moves.
+        left: pairs/beat-03-held-approved.mp4
+        left_note: "held — the approved frame under the new gentle rule, 2.1% over 3.54s"
         right: pairs/beat-03-animated.mp4
-        right_note: "motion 0.20 · 50% frozen — the approved green frame; screens surge and fall, scanlines roll"
+        right_note: "animated — motion 0.20 · 50% frozen; screens surge and fall, scanlines roll"
         verdict: >-
-          Read this pair differently from the other three. On the left is the picture
-          that was rejected, held; on the right is the approved picture, animated. So
-          the animation is the weaker half of the argument — half its frames barely
-          change and 0.20 is below the line where a shot reads as a still anyway —
-          but going back to the held version means going back to the magenta plate.
-          If the flicker is not wanted, the fix is a held push-in on the approved
-          frame under the new gentle rule. That third version has been rendered
-          and is deliberately not on this page — one beat with three options
-          would blur the single yes/no v32 is asking for. Say the word and it
-          goes up.
+          The animation is the weaker of the two and worth saying so: half its frames
+          barely change, and 0.20 is below the line where a shot starts reading as a
+          still anyway. A flat cel-shaded panel has almost nothing in it that can move.
+          Nothing was invented, so it is not wrong — it may simply be a still with a
+          flicker on it, in which case the held version on the left is the better shot.
+        footnote:
+          file: pairs/beat-03-held.mp4
+          label: "What v30 actually ships for this beat (not a choice)"
+          note: "the REJECTED magenta plate, held — kept visible because it is in the cut, not because it is an option"
 
       - beat: 12
         title: "“undefined”"
