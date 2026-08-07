@@ -1510,8 +1510,11 @@ def render_trials() -> str:
         for pdir in sorted(p for p in outdir.iterdir() if p.is_dir()):
             clips = []
             for mp4 in sorted(pdir.glob("*.mp4")):
-                meta_f = mp4.with_suffix(".meta.yaml")
-                meta = yaml.safe_load(meta_f.read_text()) if meta_f.exists() else {}
+                # either naming convention (lg.sidecar_for) — a trial clip
+                # brought in beside a `<name>.mp4.meta.yaml` used to render
+                # with its recipe blank
+                meta_f = lg.sidecar_for(mp4, lg.META_EXT)
+                meta = yaml.safe_load(meta_f.read_text()) if meta_f else {}
                 clips.append((mp4, meta or {}))
             if clips:
                 outputs[pdir.name] = clips
@@ -1635,8 +1638,11 @@ def render_review() -> str:
 
     def still_for(src: Path):
         """The beat's own approved still, so a poster is never another beat."""
-        side = src.with_name(src.stem + ".meta.yaml")
-        if not side.exists():
+        # hold_still records the frame as `source_still` in a `<name>.mp4.meta.yaml`;
+        # the stem-only lookup missed it and every held clip fell back to the node's
+        # first still, i.e. another beat's picture as the poster
+        side = lg.sidecar_for(src, lg.META_EXT)
+        if not side:
             return first_still(REVIEW_NODE)
         data = yaml.safe_load(side.read_text(encoding="utf-8")) or {}
         name = data.get("init_still") or data.get("source_still")
@@ -1656,16 +1662,22 @@ def render_review() -> str:
         dst = outdir / rel
         dst.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy(src, dst)
-        side = src.with_name(src.stem + ".meta.yaml")
-        if side.exists():                      # records always travel (§7.2)
+        side = lg.sidecar_for(src, lg.META_EXT)
+        if side:                               # records always travel (§7.2)
             shutil.copy(side, dst.with_name(side.name))
         pos = poster(src, f"review/posters/{Path(rel).stem}.jpg", fallback=still_for(src))
         return rel, pos
 
     def rec_link(rel: str) -> str:
-        side = Path(rel).with_suffix("").as_posix() + ".meta.yaml"
-        return (f' · <a href="{html.escape(side)}">provenance</a>'
-                if (CUTS / side).exists() else "")
+        # THE SAME LOOKUP serve() COPIES WITH, deliberately: serve writes the
+        # record out under `side.name`, so a link built by any other rule can
+        # name a file that is not in _site — a dead "provenance" link, which the
+        # link gate fails the build over and which reads as a missing record.
+        side = lg.sidecar_for(CUTS / rel, lg.META_EXT)
+        if not side:
+            return ""
+        href = (Path(rel).parent / side.name).as_posix()
+        return f' · <a href="{html.escape(href)}">provenance</a>'
 
     sections = []
     for cut in cfg.get("cuts") or []:

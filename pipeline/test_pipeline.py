@@ -967,6 +967,181 @@ def test_held_zoom_is_monotonic_and_gentle():
           hs.zoom_total(6.0, 0.01) == 0.01)
 
 
+def test_held_sidecar_is_readable_by_every_tool_that_reads_it(tmp: Path):
+    """hold_still wrote an honest record that the publish gate could not read.
+
+    THREE tools read this one file and they want different things from the same
+    two lines, which is why the strings are pinned by a test and not by a
+    comment alone:
+
+      licence_gate    classifies `platform` and `model`. SENTINELS is matched on
+                      the WHOLE value (licence_gate.py:466), so the old
+                      "none — held still + code push-in, no video model ran" read
+                      as an unclassified MODEL NAME — and the one clip in the
+                      tree we can prove no model touched was the one the gate
+                      refused. "local-cpu (ffmpeg)" resolved to no route at all.
+      render_t3       substring-matches "model: none" (render_t3.py:545). A miss
+                      means the clip is treated as footage and PING-PONGED —
+                      the computed push-in run backwards, which the founder
+                      ruled out on 2026-08-07.
+      check_invention skips held clips on the same substring
+                      (check_invention.py:207). A miss means every held clip is
+                      scored for invented content: four confident false
+                      positives on the first run.
+
+    A BARE "none" is the only value satisfying all three — appending to it
+    breaks the gate, renaming the key breaks the other two — so the explanation
+    lives on `note`, which nothing classifies.
+    """
+    import yaml
+
+    import licence_gate as lg
+
+    clip = tmp / "03-deploy-succeeded.mp4"
+    clip.write_bytes(b"v")
+    hs.sidecar(clip, tmp / "03-deploy-succeeded.png", 3, 2.5, zoom_total_used=0.03)
+    text = Path(str(clip) + ".meta.yaml").read_text(encoding="utf-8")
+    data = yaml.safe_load(text)
+
+    check("held platform resolves to our own licence, not to nothing",
+          lg.model_licences(data["platform"])
+          == [("local-deterministic", "CC-BY-4.0 (our own output)")])
+    check("held model is a BARE sentinel",
+          lg.normalise(data["model"]) in lg.SENTINELS)
+    check("the explanation survives, off the classified key",
+          "no video model ran" in str(data.get("note", "")))
+    check("render_t3 still reads the clip as held", t3.held_still([clip]))
+    check("check_invention's literal is the one hold_still writes",
+          '"model: none" in meta.read_text'
+          in (REPO / "pipeline" / "check_invention.py").read_text(encoding="utf-8")
+          and "model: none" in text)
+
+    # BOTH NAMING CONVENTIONS, from the reader's side. hold_still and
+    # video_task write `<name>.mp4.meta.yaml`; render_t3 and 126 tracked records
+    # use `<stem>.meta.yaml`. A reader pinned to one shape reports the other as
+    # an asset with NO provenance — the loudest verdict on the most careful file.
+    check("the full-name shape is found", lg.sidecar_for(clip) is not None)
+    stem_only = tmp / "04-stem.mp4"
+    stem_only.write_bytes(b"v")
+    (tmp / "04-stem.meta.yaml").write_text("model: none\n", encoding="utf-8")
+    check("the stem shape is still found", lg.sidecar_for(stem_only) is not None)
+    check("an asset with neither has no record, and says so",
+          lg.sidecar_for(tmp / "05-nothing.mp4") is None)
+    # a VO manifest is a record; a picture reader must not adopt one as a recipe
+    (tmp / "06-vo.mp3").write_bytes(b"a")
+    (tmp / "06-vo.json").write_text("{}", encoding="utf-8")
+    check("the gate sees a VO manifest", lg.sidecar_for(tmp / "06-vo.mp3") is not None)
+    check("a picture reader scoped to META_EXT does not",
+          lg.sidecar_for(tmp / "06-vo.mp3", lg.META_EXT) is None)
+
+    # END TO END, through the real gate, in a root it actually walks: the clip
+    # is only clean if the record classifies AND the reader can find it.
+    root = tmp / "repo"
+    (root / "genomes").mkdir(parents=True)
+    (root / "cuts").mkdir(parents=True)
+    (root / "cuts" / clip.name).write_bytes(b"v")
+    (root / "cuts" / (clip.name + ".meta.yaml")).write_text(text, encoding="utf-8")
+    errors, _ = lg.scan(root)
+    check("a held still passes the licence gate end to end", errors == [])
+
+
+def test_farm_still_sidecar_records_what_actually_ran(tmp: Path):
+    """The farm worker's VIDEO path writes provenance; its STILLS path wrote none.
+
+    video_task.write_sidecar exists because clips were landing on the courier
+    branch as bare mp4s with the model recorded nowhere. The frames beside them
+    were landing exactly the same way and nobody noticed for a week, because a
+    still looks self-explanatory in a way a clip does not. It is not: a bake-off
+    task can name ANY open model in `model:`, so the one fact you cannot recover
+    from a png on farm-results-<name> is which model drew it.
+
+    Four things this pins, each of which was unrecoverable:
+      1. the model ACTUALLY LOADED — task['model'] when the task overrides the
+         house model, the house model when it does not. Recording the default
+         while a bake-off ran would be worse than recording nothing.
+      2. the POST-FIT prompt. sd_prompt.compress() rewrites the shot text to fit
+         CLIP's 77 tokens and the model sees the compressed string; shots.md is
+         not a record of what was asked for. §7.2 names prompt explicitly.
+      3. the licence, resolved THROUGH licence_gate — so the record can never
+         disagree with the tool that will later judge it, and an unclassified
+         model reads UNVERIFIED instead of a hopeful allow.
+      4. seed, size, steps, task id, $0.
+    """
+    import yaml
+
+    import farm_worker as fw
+    import licence_gate as lg
+    from sd_prompt import compress
+
+    long_shot = ("a wide low-angle shot of a young sapling in a server room, "
+                 "cold blue rack light behind it: cables on the floor, dust in "
+                 "the air, one warm desk lamp off to the left, detailed "
+                 "cinematic anime, 9:16, the whole frame held very still")
+    ptext, _ = compress(long_shot)
+    task = {"id": "r42", "worker": "dads-msi", "seeds": 4, "steps": 40}
+
+    text = fw.still_sidecar("cagliostrolab/animagine-xl-3.1", task, 7, 21007,
+                            "832x1216", 40, ptext, "photorealistic, 3d render")
+    d = yaml.safe_load(text)
+    check("the still sidecar is valid yaml", isinstance(d, dict))
+    check("platform is the generic local-gpu form the gate classifies",
+          lg.model_licences(d["platform"]) and d["platform"].startswith("local-gpu"))
+    check("the model that drew it is named", d["model"] == "cagliostrolab/animagine-xl-3.1")
+    check("its licence is the gate's own verdict, not a guess",
+          d["model_licence"] == lg.engine_licence("cagliostrolab/animagine-xl-3.1"))
+    check("the seed is recorded", d["seed"] == 21007)
+    check("and which of the batch's seeds it was", d["seeds_in_batch"] == 4)
+    for k, v in (("shot_beat", 7), ("size", "832x1216"), ("steps", 40),
+                 ("task", "r42"), ("cost_usd", 0)):
+        check(f"{k} is recorded", d[k] == v)
+    check("the POST-FIT prompt is recorded, not the shots.md text",
+          d["prompt"] == ptext and d["prompt"] != long_shot)
+    check("the negative is recorded too", d["negative"] == "photorealistic, 3d render")
+    check("a txt2img frame claims no img2img settings",
+          "strength" not in d and "init" not in d)
+
+    # A BAKE-OFF NAMES ITS OWN MODEL. Recording the house default while another
+    # model rendered is the one failure worse than recording nothing at all.
+    other = fw.still_sidecar("stabilityai/sdxl-turbo", dict(task, model="x"), 7,
+                             1, "832x1216", 4, "p", "n")
+    od = yaml.safe_load(other)
+    check("a bake-off's model is what gets written",
+          od["model"] == "stabilityai/sdxl-turbo")
+    check("an unclassified model is UNVERIFIED, never a hopeful allow",
+          od["model_licence"].startswith("UNVERIFIED"))
+
+    # A prompt full of colons, quotes and em-dashes is the normal case here, and
+    # an inline scalar would need escaping rules we would get wrong once.
+    nasty = 'a shot: "quoted", with — dashes, and a trailing colon:'
+    nd = yaml.safe_load(fw.still_sidecar("m", task, 1, 1, "8x8", 1, nasty, ""))
+    check("a prompt with colons and quotes survives the round trip",
+          nd["prompt"] == nasty)
+
+    img2img = yaml.safe_load(fw.still_sidecar(
+        "m", task, 1, 1, "8x8", 1, "p", "n",
+        init="genomes/sapling/nodes/001-capability-inventory/stills/07-x.png",
+        strength=0.45))
+    check("an img2img frame records what it was drawn from", img2img["strength"] == 0.45
+          and img2img["init"].endswith("07-x.png"))
+
+    # THE RECORD MUST BE FINDABLE, and under the convention the readers use.
+    png = tmp / "r42-07-zero-0-moving-parts-s0.png"
+    png.write_bytes(b"p")
+    Path(str(png) + ".meta.yaml").write_text(text, encoding="utf-8")
+    check("licence_gate finds the still's record beside it",
+          lg.sidecar_for(png) == Path(str(png) + ".meta.yaml"))
+
+    # WRITTEN PER IMAGE, INSIDE THE LOOP — not after the batch. The courier
+    # branch's whole point is that a machine which dies mid-run is still
+    # readable, and a sidecar pass at the end of the batch loses every frame the
+    # run did finish. This is the regression the test exists for: the stills path
+    # shipped for a week with no sidecar call in it at all.
+    src = (REPO / "pipeline" / "farm_worker.py").read_text(encoding="utf-8")
+    loop = src.split("for k in range(int(task.get(\"seeds\", 4))):")[1].split("\ndef ")[0]
+    check("the stills loop writes a sidecar for every frame it saves",
+          "still_sidecar(" in loop and loop.index("img.save(") < loop.index("still_sidecar("))
+
+
 def test_kaggle_notebook_cells_parse():
     """The free-render notebook must be syntactically valid — it shipped
     2026-07-19 with a truncated string on its config line and nobody ran it
@@ -2684,6 +2859,10 @@ def main():
     with tempfile.TemporaryDirectory() as td:
         test_held_still_is_never_reversed(Path(td))
     test_held_zoom_is_monotonic_and_gentle()
+    with tempfile.TemporaryDirectory() as td:
+        test_held_sidecar_is_readable_by_every_tool_that_reads_it(Path(td))
+    with tempfile.TemporaryDirectory() as td:
+        test_farm_still_sidecar_records_what_actually_ran(Path(td))
     test_wrap_never_drops_words()
     test_caption_chunks()
     test_sync_shots_is_idempotent()

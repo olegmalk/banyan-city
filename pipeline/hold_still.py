@@ -239,13 +239,39 @@ def sidecar(clip: Path, still: Path, beat: int, seconds: float,
     The licence question that attaches to this clip is the STILL's, which is
     recorded where the still is recorded — writing a video model here would be a
     lie, and writing nothing at all is what licence_gate calls a violation.
+
+    BOTH TOP LINES ARE CLASSIFIER INPUT, and until 2026-08-07 both failed. The
+    honest record was here all along; the one tool that decides what may be
+    published could not read it, which is the same as not having written it.
     """
     Path(str(clip) + ".meta.yaml").write_text(
         "# Shot provenance (7.2) — written by hold_still at build time\n"
-        "platform: local-cpu (ffmpeg)\n"
-        f"model: none — held still{'' if frozen else ' + code push-in'}, "
-        f"no video model ran\n"
+        # "local-cpu (ffmpeg)" resolved to NO licence route at all — not a
+        # sentinel, not a pointer, no MODEL_LICENCES key — so licence_gate read
+        # a held still as an unclassified model and refused it. Every word here
+        # is load-bearing: "local-deterministic" is the key that resolves to
+        # CC-BY-4.0 (our own output), which is exactly what a clip made by
+        # ffmpeg out of a still we already hold IS.
+        "platform: local-deterministic (pipeline/hold_still.py, ffmpeg)\n"
+        # KEEP THIS VALUE BARE — it is read three ways and only the bare form
+        # satisfies all three:
+        #   licence_gate.py:466  SENTINELS is matched on the WHOLE value, never
+        #                        as a fragment, so the old inline explanation
+        #                        ("none — held still + code push-in, …") was an
+        #                        unrecognised model name rather than a "none".
+        #   render_t3.py:545     held_still() substring-matches "model: none".
+        #                        Miss it and the clip is treated as footage and
+        #                        PING-PONGED — the push-in run backwards, which
+        #                        the founder ruled out on 2026-08-07.
+        #   check_invention:207  skips held clips on the same substring. Miss it
+        #                        and every held clip is scored for invented
+        #                        content: four confident false positives.
+        # Appending to this line breaks the gate; renaming the key breaks the
+        # other two. The explanation moves to `note`, which nothing classifies.
+        "model: none\n"
         "model_licence: n/a — inherits the still's licence, see stills/README.md\n"
+        f"note: held still{'' if frozen else ' + code push-in'}, "
+        f"no video model ran\n"
         f"shot_beat: {beat}\n"
         f"size: {W}x{H}\n"
         f"seconds: {seconds}\n"

@@ -30,8 +30,10 @@ Test applied (all four must pass, else NO):
 | `Wan-AI/Wan2.1-I2V-14B-480P` / `-720P` | Yes | 14B | Apache-2.0 | **SHIP-SAFE** | not stated |
 | `Wan-AI/Wan2.1-VACE-1.3B` / `-14B` | Yes | 1.3B / 14B | Apache-2.0 | **SHIP-SAFE** | not stated |
 | `aidealab/AnimeGen-I2V` | Yes | 14B active, BF16; repo ~114GB (all variants), ~14.3GB BF16/expert | Apache-2.0 (stock text, verified) | **SHIP-SAFE** | "RTX 4090 or higher" |
-| `IndexTeam/Index-anisora` V2 / V3 / V3.1 / V3.2 | Yes | 14B (V2/V3, Wan base) | Apache-2.0 | **SHIP-SAFE** | V3.1 has a 12GB-compatible build (ModelScope) |
+| `IndexTeam/Index-anisora` V2 / V3 / V3.1 / V3.2 | Yes | 14B (V2/V3, Wan base); **V3.2 = 2 x 57.16GB fp32 experts, 126.2GB** | Apache-2.0 **+ a 1848-char bilibili rider** (text found 2026-08-07, vendored) | **SHIP-SAFE for inference** — the rider's six clauses are all under a fine-tuning/retraining chapeau; see the 2026-08-07 section | V3.1 has a 12GB-compatible build (ModelScope) |
 | `IndexTeam/Index-anisora` **V1 / 5B** | Yes | 5B | Apache-2.0 tag over **CogVideoX-5B** base | **UNCLEAR** (laundering) | "cost-effective on RTX 4090" |
+| `QuantStack/Index-Anisora-V3.2-GGUF` | Yes | Q3_K_S 6.99GB → Q8_0 15.88GB per expert; **matched High+Low pairs exist only at Q4_0 and Q8_0** | Apache-2.0 tag, no text of its own — the grant is bilibili's | **SHIP-SAFE via the vendored upstream text**, on the same reasoning as `QuantStack/Wan2.2-I2V-A14B-GGUF`; `vet_model.py` alone still says UNVERIFIABLE | n/a (Q4_0 9.03GB/expert) |
+| `terracottahaniwa/Index-anisora_V3.2_float8_e4m3fn` | Yes | 14.31GB per expert, 28.62GB the pair | **none declared** — no tag, no README, no LICENSE | **UNCLEAR — evaluation only** until the founder rules; prefer the QuantStack build, which at least declares | n/a |
 | `kandinskylab/Kandinsky-5.0-I2V-Lite-5s` | Yes | 2B | **MIT** (tag and LICENSE agree) | **SHIP-SAFE** | "24 GB with offloading" |
 | `IamCreateAI/Ruyi-Mini-7B` | Yes | 7.1B | Apache-2.0 | **SHIP-SAFE** | 21.5GB @360x480; 54.8GB @720x1280 |
 | `hpcai-tech/Open-Sora-v2` | Yes | 11B | Apache-2.0 | **SHIP-SAFE** | 44.3GB peak @256x256 |
@@ -118,6 +120,15 @@ inherit the laundering problem below.
 
 Paper-trail caveat: the HF repo `IndexTeam/Index-anisora` carries an `apache-2.0`
 tag but **no LICENSE file**. Same situation as Wan.
+
+> **SUPERSEDED IN PART, 2026-08-07.** The HF half of that caveat stands — there is
+> still no LICENSE file in the weights repo, and the tag is still the only thing on
+> that surface. The GitHub half was wrong: `bilibili/Index-anisora` **does** ship a
+> `LICENSE`, it is **not** plain Apache-2.0, and this file's own reading of "prose in
+> a README" was reading the wrong document. The text is now vendored at
+> `licences/bilibili-Index-anisora-LICENSE.txt` and quoted in full in the
+> **2026-08-07 section at the bottom of this file**. Verdict is unchanged for
+> inference — SHIP-SAFE — and the reasons are now quotable rather than inferred.
 
 ### Kandinsky 5.0 — MIT — SHIP-SAFE (best licence in the field)
 
@@ -988,3 +999,163 @@ name the LoRA and its source explicitly for the provenance to mean anything.
 - <https://huggingface.co/api/models/Kijai/WanVideo_comfy>
 - <https://huggingface.co/Kijai/WanVideo_comfy/raw/main/README.md>
 - `paths-info` API on all three repos, for LFS sha256 without downloading weights
+
+---
+
+# AniSora V3.2 — the licence has a file, and it is on the third surface (2026-08-07)
+
+Researched for `ACTION-PLAN.md §1 T8`, which had parked AniSora behind "the download
+is fp32, convert it first" and behind a licence this file called unquotable. Both
+parts moved. This section records the licence half; the practical half — what now
+exists to download and whether our code can load it — is in
+`MODEL-COMPARISON.md`, 2026-08-07.
+
+## Overall verdict: SHIP-SAFE for inference on V3.2, with one clause to read before we ever bake our own weights
+
+## The two surfaces disagree, and the one with the text is neither of the two we check
+
+`vet_model.py` looks in three places: the HF weights repo, the GitHub project repo
+it infers from the card, and our own `licences/`. AniSora defeats all three, and
+each for a different reason:
+
+| Surface | What is there | What our tooling does with it |
+|---|---|---|
+| `huggingface.co/IndexTeam/Index-anisora` (the weights) | YAML front-matter `license: apache-2.0`, no `license_name`, no `license_link`, **no LICENSE file at the root**. The only licence file in 209 siblings is `reward/weights/bert-base-uncased/LICENSE` | root-only rule correctly refuses to read BERT's text as bilibili's grant → **no text found** |
+| the model card body | a markdown link to `github.com/bilibili/Index-anisora`, in an HTML `<p align="center">` header. **No `repository:` field in the front-matter** | `vet_model.py:331` falls back to `gh_slug = repo`, i.e. it tries `github.com/IndexTeam/Index-anisora`, which does not exist. It never reaches the `bilibili` org → **no text found** |
+| `github.com/bilibili/Index-anisora` (the project) | **`LICENSE`, 13206 bytes.** GitHub's own detector calls it `spdx_id: Apache-2.0`. It is not | never fetched, because of the row above |
+
+Run live 2026-08-07: `python3 pipeline/vet_model.py IndexTeam/Index-anisora` →
+**UNVERIFIABLE**, *"tag says 'apache-2.0' but NO licence text exists to quote — not
+in the weights repo, not at IndexTeam/Index-anisora, not in licences/"*. The tool
+named its own miss precisely: it says "not at IndexTeam/Index-anisora", and nobody
+claimed the licence was there.
+
+**This is the FastWan hole a second time, and it is now a pattern rather than an
+incident.** FastWan: weights at `FastVideo/…`, text at `hao-ai-lab/FastVideo`.
+AniSora: weights at `IndexTeam/…`, text at `bilibili/Index-anisora`. In both cases
+the HF org name and the GitHub org name differ, no `repository:` field bridges them,
+and the fallback that assumes they match reports "no licence exists" about a
+repository that ships one. `licences/` is the remedy the directory was created for,
+and both are now in it.
+
+## What the file actually says
+
+`raw.githubusercontent.com/bilibili/Index-anisora/main/LICENSE`, 13206 bytes,
+sha256 `b38f8efde614507194157fc7a1e993f66b9fd3d9b687f3f11309975cb0794480`, vendored
+verbatim at `licences/bilibili-Index-anisora-LICENSE.txt`.
+
+Composition, measured rather than eyeballed: everything up to and including the
+APPENDIX is **whitespace-normalised identical to `apache.org/licenses/LICENSE-2.0.txt`**
+— 10221 normalised characters on both sides, no clause added, none removed. Then
+1848 characters are appended, verbatim:
+
+> "[Model License Agreement], Based on [Apache 2.0] License with Additional Restrictions:
+>
+> User Notice: Should you undertake fine-tuning/retraining or derivative development of this model, you must additionally comply with:
+>
+> 1. Usage Restrictions: The retrained model shall not be used for purposes violating laws or regulatory requirements of the output/usage jurisdiction (including but not limited to generating false information, discriminatory content, privacy infringement, etc.).
+> 2. Output Compliance: For retrained models with generative capabilities, you must ensure all outputs comply with legal and regulatory requirements of the output/usage jurisdiction (including but not limited to false information, discriminatory content, or privacy violations).
+> 3. Retraining Obligations: When retraining this model, you must independently ensure: (a) Training data contains no illegal or infringing content; (b) Retrained models won't be deployed in high-risk automated decision-making scenarios (e.g., credit assessment, employment evaluation) without passing compliance audits; (c) No circumvention of regulatory or review mechanisms in output/usage jurisdictions.
+> 4. Liability: You assume full responsibility for all activities involving this model, including retraining and derivative works. Should your actions result in third-party claims, administrative penalties, or other losses to our company, you shall indemnify all damages (including legal fees, litigation costs, compensation, fines) and take necessary measures to eliminate negative impacts.
+> 5. Downstream Compliance: You must ensure downstream users of derivative works comply with these terms through binding agreements. You bear liability for downstream violations.
+> 6. Attribution: All copies of retrained models must retain this original copyright notice and restrictive clauses."
+
+**The chapeau governs all six.** Every clause is conditioned on *"Should you
+undertake fine-tuning/retraining or derivative development"*, and five of the six
+then say "retrained model", "retraining", "derivative works" in their own text. We
+would be running inference on unmodified published weights and publishing the
+frames. Nothing in Apache-2.0 restricts output, and nothing in the rider reaches
+output from an unmodified model. **The four-part test at the top of this file passes
+on all four for V3.2.**
+
+Checked against the machine rule as well as by reading: none of `vet_model.py`'s
+eight `TRAVELLING_TEXT` patterns match this file — no NonCommercial, no ShareAlike,
+no non-sublicensable, no territory, no no-training-on-output, no research-only, no
+mandatory-notice. Run against the vendored text: **zero hits**.
+
+## The one clause that is not fine-tuning-scoped, and the act that would trigger it
+
+Clause 4 is drafted broadly — *"full responsibility for all activities involving
+this model"* — even though it sits under the same chapeau. Standing alone it is an
+indemnity, not a use restriction: it does not limit what we may generate or
+publish, it says who pays if a claim arrives. It does not travel to output and it
+does not collide with CC BY 4.0.
+
+**What would change the analysis is baking our own weights.** If we quantise the
+fp32 experts ourselves — an fp8 or GGUF bake of the kind
+`MODEL-COMPARISON.md` recommends for A14B-class models — that is at least arguably
+the "derivative development" the chapeau names, and clauses 5 and 6 then attach:
+downstream users bound by agreement, and the notice carried on every copy. Our own
+`vet_model.py` holds the opposite reading for quantisation (*"a GGUF is a pure
+transform of the weights: no new training"*), and that reading is defensible, but it
+was written about who may *grant* a licence, not about what triggers a rider.
+
+The cheap way out is not to perform the act: **use a published conversion, cite
+bilibili's licence in the sidecar, and the question never arises.** If we ever do
+bake AniSora weights ourselves, that is a founder call (R4) with clauses 4-6 in
+front of him, not a steward decision.
+
+## The conversion repos, judged on their own surfaces
+
+- **`QuantStack/Index-Anisora-V3.2-GGUF`** — `license: apache-2.0` tag, one-line
+  README (*"High will come later on (;"* — it has since arrived), no LICENSE file,
+  no `base_model` metadata. `vet_model.py` returns **UNVERIFIABLE**, correctly: the
+  tag is a claim. But the claim is *true at the source*, and the source's text is
+  now in `licences/`. This is the same shape as `QuantStack/Wan2.2-I2V-A14B-GGUF`,
+  already **SHIP-SAFE** in the table above. A quantisation is a pure transform;
+  Apache-2.0 §4 permits redistribution of modified copies; the grant we rely on is
+  bilibili's, not QuantStack's. **SHIP-SAFE via the upstream text, provided the
+  sidecar names bilibili's licence and the rider — not "apache-2.0" alone.**
+- **`terracottahaniwa/Index-anisora_V3.2_float8_e4m3fn`** — fp8 e4m3fn safetensors,
+  14.31GB per expert. **No licence field at all**, no README, no `base_model`.
+  `vet_model.py`: **UNVERIFIABLE — "no licence field declared"**. Apache-2.0 §4(a)
+  and §4(b) oblige a redistributor to carry the licence and state the changes; this
+  repo does neither. That does not extinguish bilibili's grant on the weights, but
+  it means the artifact arrives with no paper trail of its own and we cannot show
+  from the repo that the bytes are what they claim to be. **UNCLEAR — evaluation
+  only.** Prefer QuantStack.
+- **`youcef079/Index-Anisora-V3.2-GGUF`** — a file-for-file mirror of QuantStack's
+  listing (same 14 GGUFs, same sizes), 15 downloads. No independent value and no
+  independent grant. Ignore it; the corroboration precedent from the Turbo chain
+  applies — a copied card is not a second source.
+- **`shinnpuru/Anisora_comfy_fp8_scaled`** — `apache-2.0`, `base_model` declaring
+  both `IndexTeam/Index-anisora` and `Wan-AI/Wan2.2-I2V-A14B`, but the single file
+  it ships is named `Anisora_V3_1-I2V-14B_fp8_e5m2_scaled.safetensors`, 17.14GB —
+  **V3.1, the Wan2.1-based single-transformer line, not V3.2**. The metadata and the
+  filename describe different models. Not our target; noted so nobody adopts it by
+  its `base_model` field.
+- **`woctordho/AniSora-v3-BF16` / `-GGUF`** — V3 (Wan2.1 line), 32.79GB bf16 single
+  file. **No licence declared on either.** Same UNCLEAR shape as terracottahaniwa,
+  on an older version we do not want.
+
+## Recommended change to `vet_model.py` — NOT applied here
+
+Two lines, and both are precedented:
+
+1. Add to `VENDORED_COVERS`: `"bilibili-Index-anisora-LICENSE.txt": ("indexteam/index-anisora",)`.
+   **One slug, deliberately**, exactly as the FastWan entry argues: the vendored
+   text covers a work, and grab-bag repos do not inherit it. Note the honest
+   awkwardness — `IndexTeam/Index-anisora` is itself a mixed repo (the `5B` folders
+   are CogVideoX-based), so covering it wholesale would hand bilibili's Apache text
+   to the laundering case this file flags. **The safer form is to leave the tool
+   UNVERIFIABLE at repo granularity** — which is what its comment at
+   `vet_model.py:518-527` already says it is doing, and which is right — and to
+   cite the vendored file per render instead.
+2. The `gh_slug` fallback (`vet_model.py:331-335`) could read the GitHub URL out of
+   the card *body* when the front-matter has no `repository:` field. That would have
+   found both FastWan and AniSora. It is a real improvement and it is a code change
+   outside this task's lane.
+
+## Sources (all fetched 2026-08-07)
+
+- <https://huggingface.co/api/models/IndexTeam/Index-anisora> (209 siblings, sizes, `cardData`)
+- <https://huggingface.co/IndexTeam/Index-anisora/raw/main/README.md>
+- <https://api.github.com/repos/bilibili/Index-anisora> (`spdx_id: Apache-2.0`, 2500 stars, pushed 2026-07-16)
+- <https://raw.githubusercontent.com/bilibili/Index-anisora/main/LICENSE> (13206B, vendored)
+- <https://www.apache.org/licenses/LICENSE-2.0.txt> (canonical, for the diff)
+- <https://huggingface.co/api/models/QuantStack/Index-Anisora-V3.2-GGUF>
+- <https://huggingface.co/api/models/terracottahaniwa/Index-anisora_V3.2_float8_e4m3fn>
+- <https://huggingface.co/api/models/youcef079/Index-Anisora-V3.2-GGUF>
+- <https://huggingface.co/api/models/shinnpuru/Anisora_comfy_fp8_scaled>
+- <https://huggingface.co/api/models/woctordho/AniSora-v3-GGUF>
+- `python3 pipeline/vet_model.py` on all three of the above, live

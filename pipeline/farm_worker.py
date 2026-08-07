@@ -351,6 +351,63 @@ def finished_tasks(courier: Courier) -> tuple:
     return done | set(gave_up), gave_up
 
 
+def still_sidecar(model, task, beat, seed, size, steps, prompt, negative,
+                  init=None, strength=None) -> str:
+    """§7.2 provenance beside a generated STILL. Pure — returns the text.
+
+    THE VIDEO PATH HAS HAD THIS SINCE 2026-08-02 AND THE STILLS PATH NEVER DID.
+    `video_task.write_sidecar` was written because clips were landing on the
+    courier branch as bare mp4s with the model recorded nowhere; the frames
+    beside them were landing the same way and nobody noticed, because a still
+    looks self-explanatory in a way a clip does not. It is not. A png on the
+    courier branch answers none of: which model drew it (a bake-off task can
+    name any open model in `model:`), which seed, which of the four seeds in
+    the batch, how many steps, and — the one that has actually cost us time —
+    what prompt it was given AFTER compress() got through with it.
+
+    That last one is the reason this is not cosmetic. §7.2 says every render
+    publishes model, prompt and cost. sd_prompt.compress() rewrites the shot's
+    text to fit CLIP's 77 tokens, and what the model saw is the compressed
+    string, not the one in shots.md. On 2026-08-02 a beat came back wrong and
+    telling a bad direction from a bad model meant re-running the pipeline to
+    reconstruct the string, because it existed nowhere on disk. Record what was
+    actually asked for, not what we meant to ask for.
+
+    LICENCE COMES FROM THE GATE, not from a table kept here. licence_gate is
+    the thing that will later refuse or pass this frame, so asking it now means
+    the sidecar can never disagree with the tool that judges it — and a model
+    it does not know gets "UNVERIFIED" rather than a hopeful Apache-2.0. A
+    wrong allow is the direction that publishes things.
+    """
+    import licence_gate as lg
+    from video_task import _yaml_block
+
+    lic = lg.engine_licence(model) or "UNVERIFIED — licence not read"
+    text = (
+        "# Still provenance (7.2) — written by farm_worker at render time\n"
+        # Same generic "local-gpu (<worker>)" spelling the video path uses, and
+        # for the same reason: the gate classifies on the prefix, so the form is
+        # recognised on ANY machine while still naming which one drew the frame.
+        # Spelling it "local-dads-msi" made every clip from a new handle an
+        # unclassified violation once already.
+        f"platform: local-gpu ({task.get('worker', 'unknown')})\n"
+        f"model: {model}\n"
+        f"model_licence: {lic}\n"
+        f"shot_beat: {beat}\n"
+        f"size: {size}\n"
+        f"steps: {steps}\n"
+        f"guidance: {task.get('guidance', 7.5)}\n"
+        f"seed: {seed}\n"
+        f"seeds_in_batch: {int(task.get('seeds', 4))}\n"
+        f"task: {task.get('id')}\n"
+        "cost_usd: 0\n")
+    # img2img only. An absent field reads as "not measured"; a `strength: none`
+    # on a txt2img frame reads as a measurement of nothing.
+    if init:
+        text += f"init: {init}\nstrength: {strength}\n"
+    return text + _yaml_block("prompt", prompt) + _yaml_block("negative", negative)
+
+
 def render_task(task: dict, courier: Courier, device: str, dtype) -> None:
     # video tasks live in their own venv (Wan needs a modern diffusers; the
     # stills path is pinned to 0.29.2 for SDXL) — dispatch before importing
@@ -408,18 +465,19 @@ def render_task(task: dict, courier: Courier, device: str, dtype) -> None:
         neg = beat_negative(NEG, s["prompt"])
         for k in range(int(task.get("seeds", 4))):
             t0 = time.time()
-            g = torch.Generator(device="cpu").manual_seed(SEED + num + k * 1000)
+            seed = SEED + num + k * 1000
+            g = torch.Generator(device="cpu").manual_seed(seed)
+            w, h = int(task.get("width", 832)), int(task.get("height", 1216))
+            steps = int(task.get("steps", 40))
             kw = dict(prompt=ptext, negative_prompt=neg,
-                      num_inference_steps=int(task.get("steps", 40)),
+                      num_inference_steps=steps,
                       guidance_scale=7.5, generator=g)
             if init_rel:
                 from PIL import Image
-                kw["image"] = Image.open(REPO / init_rel).convert("RGB").resize(
-                    (int(task.get("width", 832)), int(task.get("height", 1216))))
+                kw["image"] = Image.open(REPO / init_rel).convert("RGB").resize((w, h))
                 kw["strength"] = float(task.get("strength", 0.5))
             else:
-                kw["width"] = int(task.get("width", 832))
-                kw["height"] = int(task.get("height", 1216))
+                kw["width"], kw["height"] = w, h
             img = pipe(**kw).images[0]
             # EVERY task prefixes outputs with its id: two tasks touching the
             # same beat otherwise overwrite each other on the courier branch
@@ -428,6 +486,18 @@ def render_task(task: dict, courier: Courier, device: str, dtype) -> None:
             prefix = f"{task.get('id')}-"
             f = courier.out / f"{prefix}{num:02d}-{s['slug']}-s{k}.png"
             img.save(f)
+            # BESIDE THE FRAME, NOT AFTER THE BATCH. Written per image so a run
+            # killed mid-batch leaves every frame it did finish with its record
+            # attached — the courier branch's whole point is that a machine that
+            # dies is still readable. `<name>.png.meta.yaml`, the full-name
+            # convention hold_still and video_task already use (licence_gate
+            # .sidecar_for reads both).
+            Path(str(f) + ".meta.yaml").write_text(
+                still_sidecar(BASE, task, num, seed, f"{w}x{h}", steps,
+                              ptext, neg,
+                              init=init_rel or None,
+                              strength=task.get("strength", 0.5) if init_rel else None),
+                encoding="utf-8")
             courier.say(f"  {f.name} in {time.time()-t0:.0f}s")
 
 

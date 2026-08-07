@@ -2937,3 +2937,70 @@ yes/no on a cut is his and always was. Its detail now says the cut was watched
 and refused, names what he refused it for, and says a rebuilt cut replaces it.
 No T3 leaf, no publication and no distribution step happens off v32, and none
 happens off v33 either until it has a yes.
+
+## 2026-08-07 — AniSora V3.2's two blockers both moved: the conversions exist, and the licence has a file after all
+
+Research only. **No download, no render, no sample** — every number below is repo
+metadata or upstream source, and the T8 row in `MODEL-COMPARISON.md` stays
+SCHEDULED.
+
+**T8 was parked behind two things and instructed to be cut if the first had not
+happened.** It has happened, and the second turned out to be a paper-trail error of
+ours rather than a missing document.
+
+**1. The fp32 gate is discharged.** The official download is still fp32 — 57.16GB
+per expert, 126.2GB the pair, the same on HF and ModelScope, and the repo's own
+`configuration.json` advertises six `-bf16` shards per expert **that exist in
+neither place**. But we no longer have to be the ones to convert it:
+`QuantStack/Index-Anisora-V3.2-GGUF` ships matched High+Low pairs at **Q4_0
+(9.03GB/expert)** and **Q8_0 (15.88GB/expert)** — 4127 downloads — and
+`terracottahaniwa/Index-anisora_V3.2_float8_e4m3fn` ships the pre-baked fp8 pair at
+14.31GB/expert. Q8_0 is the same size class this table already scoped for the 24GB
+card. **The AnimeGen precedent — ready-made quants appear within weeks — held.**
+
+**2. The licence exists, and it is on the surface neither of our two checks looks
+at.** `bilibili/Index-anisora` ships a `LICENSE`, 13206 bytes, sha256 `b38f8ef…`,
+now vendored at `licences/bilibili-Index-anisora-LICENSE.txt`. It is canonical
+Apache-2.0 — whitespace-normalised identical through the APPENDIX — plus **1848
+appended characters** of a bilibili "Model License Agreement" with six numbered
+clauses, all under one chapeau: *"Should you undertake fine-tuning/retraining or
+derivative development of this model"*. We run inference on unmodified weights and
+publish frames; nothing in either half reaches that. **Verdict: SHIP-SAFE for
+inference on V3.2.** The clause that would bite is the one that fires if we bake our
+own quant — which is an argument for downloading a published conversion rather than
+converting the fp32 ourselves, and a founder call (R4) if we ever do.
+
+**This is the FastWan hole a second time, which makes it a pattern.** Weights at
+`IndexTeam/…`, licence at `bilibili/…`; weights at `FastVideo/…`, licence at
+`hao-ai-lab/FastVideo`. `vet_model.py` has no `repository:` field to follow in
+either card, so it falls back to assuming the GitHub org matches the HF org, fails,
+and reports "no licence text exists" about a repo that ships one. It said exactly
+that live today about AniSora. **Recommended (not applied — outside this task's
+lane): read the GitHub URL out of the card body when the front-matter has none.**
+
+**What now blocks T8 is our loader, and it is smaller than the gate it replaces.**
+AniSora ships the original Wan layout (`high_noise_model/`, `low_noise_model/`,
+`blocks.N.…` keys); `wan_i2v.py` loads A14B through
+`from_pretrained(subfolder="transformer"/"transformer_2")`, which is the diffusers
+layout, and **no diffusers-format V3.2 conversion exists on HF**. diffusers *can*
+load these — `WanTransformer3DModel` is single-file-loadable and GGUF Q4_0/Q8_0 are
+supported quant types — but its model-type inference has no Wan-2.2 branch and
+mis-detects the checkpoint as Wan 2.1 I2V, which wants a CLIP image embedder the 2.2
+architecture does not have. The documented escape is one argument,
+`from_single_file(config="Wan-AI/Wan2.2-I2V-A14B-Diffusers", subfolder="transformer")`.
+So T8 becomes: **a new single-file loader branch in `wan_i2v.py`, then a download,
+then ONE sample** — in that order, because the download is only worth its disk once
+the code that reads it exists.
+
+Architecture verified rather than assumed: V3.2's config is field-for-field the
+`Wan2.2-I2V-A14B-Diffusers` transformer (`dim 5120, ffn 13824, 40 heads, 40 layers,
+in 36, out 16`, no CLIP tower), and the upstream recipe is confirmed at source —
+`--sample_steps 8 --sample_shift 5 --sample_guide_scale 1`, `boundary = 0.900`,
+F=8x+1, and the mandatory `aesthetic score: X.X. motion score: X.X. There is no text
+in the video.` prompt tail. One community caution worth the two minutes it costs:
+on Blackwell (our 5090), a cu124/cu128 torch reportedly returns **pure noise with no
+error message** — check the box's torch build before blaming a recipe.
+
+Written up in `pipeline/research/models-licence.md` (2026-08-07 section, licence)
+and `pipeline/research/MODEL-COMPARISON.md` (2026-08-07 section + the T8 row,
+practical).

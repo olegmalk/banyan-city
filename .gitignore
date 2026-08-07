@@ -25,6 +25,12 @@ sapling-narrative.html
 # Local shot-board pages (build_shotboard.py) — same reason as the review page
 shotboard-*.html
 
+# Local beat index (BEATMAP.html) and the frames it shows. Same reason again: the
+# thumbnails are one frame each out of unapproved working clips, and the page
+# exists so a beat can be named in chat, not to be published.
+BEATMAP.html
+.beatmap-thumbs/
+
 # Candidate render media under a node's takes/ — the pick-of-N frames drawn while
 # a beat is being dialled in, ~1 MB each and dozens per beat. Media does not go
 # into git; only the frame the founder picks does, promoted deliberately. 002b's

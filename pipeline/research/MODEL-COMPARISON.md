@@ -103,7 +103,7 @@ host can still do during that render.
 | same — **PRODUCTION geometry, b1** | the b1 recipe exactly (4 steps, guidance 1.0, shift 5.0, boundary 0.900, Lightning LoRAs both experts @1.0, motion-only prompt, seed 20260732) at **704x1280** | **production** — 61f @24fps = 2.542s | **545.5s sample** (**136.38s/step**) | **0.0047 s(video)/s(wall) @b1** = **214.6s per 1s video** — 3.3x the preview row's 65.2s for 1.85x the pixels-times-frames | **23.2GB of 25.7GB** — `model_cpu_offload` + fp8 layerwise | 66.7GB phys / 119.1GB commit of 68.1/130.4GB | as above | as above | **MEASURED-BY-US 2026-08-04 23:30:14**, $0. **Recovered 2026-08-05**: the night's `scp` ran ~4 minutes before this run exited, so the clip and sidecar were left on the box and this row was missing from the first pass of the table. No screening verdict — R4, and it has not been screened | `SAMPLES/animegen-production-b1-s20260732.mp4.meta.yaml`, `SAMPLES/animegen-bench.jsonl` |
 | same — **the load path is the real T6 gate** | two 28.58GB bf16 experts, loaded and cast **one at a time** (load hi -> attach its Lightning adapter in bf16 -> cast fp8 -> gc -> then lo), which is ~14GB below the pipeline-level LoRA load `wan_i2v.load_animegen` performs | n/a — load only | **240s** | — | — | **128.7GB commit with the text encoder resident; 115.6GB without it.** ~40GB of live weights against ~128GB of commit charge: the runtime fp8 cast **retains** the bf16 storages it replaces, and `gc.collect()` does not return them to the OS | host-exclusive during load | as above | **MEASURED-BY-US 2026-08-04.** Attempt 1 loaded fine and then died at step 0 (commit 140.6/140.6GB, 1.7GB free physical, watchdog abort rc=9). Attempt 2 differed only by evicting the text encoder into its own process, which freed **13.1GB** and let the render proceed. **Consequence for T7/T8: the same wall, and the fix is to bake fp8 experts to disk in isolated processes so nothing bf16 is ever resident** | `bench-a14b.log`, `SAMPLES/animegen-summary.json` |
 | stock `Wan2.2-I2V-A14B` + lightx2v Lightning LoRAs (rank 64, **both at 1.0**) | 4 steps, explicit sigmas `[1.0, 0.9375, 0.8333, 0.625]`, shift 5.0, guidance 1 | — | no data | — | no data — A14B-class, as above | no data | 1/card | Apache-2.0 | **SCHEDULED — T7**, only if T6's look fails | `ACTION-PLAN.md §1 T7` |
-| `IndexTeam/Index-anisora` V3.2 (stock Wan2.2-I2V-A14B arch) | 8 steps native, no LoRA, shift 5, guidance 1, boundary 0.900, 81f @16fps, 8n+1 frames, `motion score` token | — | no data | — | no data | **hard gate: download is fp32, ~57GB/expert (~126GB the pair); needs bf16/fp8 conversion on disk before the first run** — one fp32 expert nearly fills 64GB | 1/card, host-exclusive by construction | **"Apache-2.0 plus bilibili Model License Agreement additional restrictions"** — not plain Apache-2.0; five of six restrictions are fine-tuning-scoped, clause 4 (indemnity) is not. V3.x only, never the 5B folders | **SCHEDULED — T8**, cut if the conversion has not already happened. Their own benchmarks put it *below* vanilla Wan on motion (VBench Motion 45.59) | `ACTION-PLAN.md §1 T8`, `§4.2` |
+| `IndexTeam/Index-anisora` V3.2 (stock Wan2.2-I2V-A14B arch) | 8 steps native, no LoRA, shift 5, guidance 1, boundary 0.900, 81f @16fps, 8n+1 frames, `motion score` token — **all five verified at source 2026-08-07** in the upstream `anisoraV3.2/README.md` CLI (`--sample_steps 8 --sample_shift 5 --sample_guide_scale 1`) and `wan/configs/wan_i2v_A14B.py:34-37` | — | no data | — | no data | **THE fp32 GATE IS GONE (2026-08-07) — the official download is still fp32 (57.16GB/expert, 126.2GB the pair, on HF *and* ModelScope), but we no longer have to be the ones to convert it.** Ready-made: `QuantStack/Index-Anisora-V3.2-GGUF` Q4_0 **9.03GB/expert** or Q8_0 **15.88GB/expert** (matched High+Low pairs exist at those two quants only), and `terracottahaniwa/…_float8_e4m3fn` **14.31GB/expert**. Q8_0 is the same size class as the Wan2.2 A14B Q8_0 we already scoped for 24GB. **CLAIMED-BY-repo-metadata (file sizes), no data on resident VRAM or host commit** | 1/card, host-exclusive by construction | **"Apache-2.0 plus bilibili Model License Agreement additional restrictions"** — not plain Apache-2.0; five of six restrictions are fine-tuning-scoped, clause 4 (indemnity) is not. V3.x only, never the 5B folders. **The text was found 2026-08-07** at `bilibili/Index-anisora` (13206B, sha256 `b38f8ef…`) and is vendored at `licences/bilibili-Index-anisora-LICENSE.txt`; the Apache part is byte-normalised identical to canonical, the rider is 1848 appended characters. Verdict for inference: **SHIP-SAFE**. Baking our OWN quant is the act that would trigger the rider — use a published conversion | **SCHEDULED — T8**, and the "cut it if nobody has converted it" condition is **DISCHARGED — somebody has.** What replaces it is a code gate: `wan_i2v.py` loads A14B via `from_pretrained(subfolder="transformer"/"transformer_2")` and **AniSora ships the original Wan layout, not the diffusers one** — no diffusers-format V3.2 conversion exists anywhere on HF. See the 2026-08-07 section below. Their own benchmarks still put it *below* vanilla Wan on motion (VBench Motion 45.59) | `ACTION-PLAN.md §1 T8`, `§4.2`, `licences/bilibili-Index-anisora-LICENSE.txt`, `pipeline/research/models-licence.md` 2026-08-07 |
 |---|---|---|---|---|---|---|---|---|---|---|
 
 ### Correction, 2026-08-05 — the b4 row was a mid-run projection
@@ -667,6 +667,96 @@ optimisation target is seconds of video per second of real time, and **§3a's
 agree; for a model it does not, they can invert — here by nearly 2x, in the
 direction opposite the one the table implies. **Cost the integration before quoting
 the throughput.** Source: `pipeline/video_task.py:1015,1082`, `STATE.md` 2026-08-06.
+
+### 2026-08-07 — T8's fp32 gate is discharged: the conversions exist, and the blocker moved into our loader
+
+**Nothing here is measured.** No AniSora weight has been downloaded, no clip
+rendered, no sidecar written. Every figure below is a file size read off repo
+metadata or a recipe read off upstream source — `CLAIMED-BY-repo-metadata` and
+`MEASURED-BY-authors` respectively, and the T8 row stays SCHEDULED.
+
+**The AnimeGen precedent held.** T8 was parked on "the download is fp32,
+57.16GB/expert, plan on converting to bf16/fp8 on disk before the first run", with
+the instruction to cut the row if that conversion had not already happened. It has:
+
+| Artifact | Files | Per expert | The pair | Notes |
+|---|---|---|---|---|
+| `QuantStack/Index-Anisora-V3.2-GGUF` | 14 GGUFs, High + Low | Q4_0 **9.03GB**, Q8_0 **15.88GB** | 18.06GB / 31.76GB | 4127 downloads. **The Low expert has ten quants; the High expert has two.** A matched pair — and the community rule is same quant, same publisher — therefore exists at **Q4_0 and Q8_0 only**. Q3_K_S/Q4_K_S/Q5/Q6 exist for Low with no High to pair them with |
+| `terracottahaniwa/Index-anisora_V3.2_float8_e4m3fn` | 2 safetensors | **14.31GB** | 28.62GB | float8_e4m3fn, ComfyUI single-file layout. Zero downloads, no README, **no licence declared** — evaluation only, see the licence audit |
+| `youcef079/Index-Anisora-V3.2-GGUF` | file-for-file mirror of QuantStack | same | same | no independent value |
+| official `IndexTeam/Index-anisora` V3.2 | fp32 | **57.16GB** | **126.2GB** | unchanged. ModelScope carries the same fp32 split as `model_part1/2.safetensors` (33.03 + 24.12GB) — **there is no official bf16 anywhere.** The repo's own `V3.2/configuration.json` lists six `…-bf16.safetensors` shards per expert **that exist in neither repo** |
+
+**What that buys: Q8_0 at 15.88GB/expert is the size class we have already scoped
+for the 24GB card** — the table above records `Wan2.2-I2V-A14B` Q8_0 at 15.4GB/expert
+as the control baseline, and AniSora is that architecture. Q4_0 at 9.03GB is the
+12GB-card class. Neither number is a VRAM measurement; add the 11.36GB umt5-xxl text
+encoder and the 0.51GB Wan2.1 VAE to any budget, and remember the routing fact that
+killed AnimeGen at step 0: `video_task.py:994` sends any card with ≥20GB VRAM down
+the single-process branch that keeps the text encoder resident. The configuration
+that worked evicted it into its own process. That constraint is unchanged by
+anything in this section.
+
+**Architecture confirmed, not assumed.** `V3.2/high_noise_model/config.json`:
+`dim 5120, ffn_dim 13824, num_heads 40, num_layers 40, in_dim 36, out_dim 16,
+model_type "i2v"`, two experts, Wan2.1 VAE, umt5-xxl, **no CLIP image encoder** —
+field-for-field the `Wan-AI/Wan2.2-I2V-A14B-Diffusers` transformer config
+(`in_channels 36, image_dim null, added_kv_proj_dim null`). It is stock Wan2.2 I2V
+A14B. The 57.16GB is `total_size 57155604736` in the shard index ÷ 4 bytes =
+14.29B parameters: fp32, arithmetically.
+
+**And that is where the new blocker is — in our loader, not on the disk.**
+
+1. **`wan_i2v.py` cannot load any of these as they ship.** `load_animegen()` calls
+   `WanTransformer3DModel.from_pretrained(model, subfolder="transformer")` and
+   `subfolder="transformer_2"` — the **diffusers** layout. AniSora ships the
+   **original Wan** layout: `high_noise_model/` + `low_noise_model/`, keys like
+   `blocks.0.cross_attn.k.weight`, `blocks.0.modulation`. **No diffusers-format
+   conversion of V3.2 exists on HF** — searched by name, by `base_model` filter and
+   by tag; the only `diffusers`-tagged AniSora repos are Disty0's, which are the
+   CogVideoX-based 5B line the licence audit tells us to avoid.
+2. **The single-file path exists but mis-detects the model.** `WanTransformer3DModel`
+   *is* in diffusers' `SINGLE_FILE_LOADABLE_CLASSES` with
+   `convert_wan_transformer_to_diffusers`, and GGUF loads via
+   `from_single_file(..., quantization_config=GGUFQuantizationConfig(...))` — Q4_0
+   and Q8_0 are both in the supported type list. But `infer_diffusers_model_type`
+   (`single_file_utils.py:755-776`) has **no Wan-2.2 branch at all**. Its Wan ladder
+   ends `elif shape[0]==5120 and shape[1]==16: "wan-t2v-14B"` / `else:
+   "wan-i2v-14B"`. AniSora's patch embedding is `[5120, 36, …]`, so it falls to
+   `wan-i2v-14B` and fetches the **Wan 2.1** I2V config, which carries
+   `image_dim: 1280` and `added_kv_proj_dim: 5120` — an image embedder and cross-attn
+   projections the 2.2 checkpoint has no weights for.
+3. **The fix is one argument, and it is documented rather than guessed.**
+   `from_single_file(config=...)` (`single_file_model.py:337, 428-436`) takes a repo
+   id and skips inference entirely, with `subfolder` alongside it. So:
+   `WanTransformer3DModel.from_single_file(<gguf|fp8 path>, config="Wan-AI/Wan2.2-I2V-A14B-Diffusers", subfolder="transformer", …)`.
+   **This is new code in `wan_i2v.py` either way** — a single-file loader branch that
+   does not exist today — but it is a branch, not a port, and it is the same branch
+   the `--lora` work on the 5B path already wants.
+4. **The fp8 pair is the artifact this table asked for, for a different model.** The
+   load-path row above concludes: "the fix is to bake fp8 experts to disk in isolated
+   processes so nothing bf16 is ever resident". `terracottahaniwa`'s two 14.31GB
+   float8_e4m3fn files are exactly that artifact, pre-baked, for AniSora — 28.62GB on
+   disk against 126.2GB, and no bf16 ever materialised in our process. Its licence
+   surface is empty, which is why the GGUF is the recommended download and this is
+   the note, not the plan.
+
+**Two external cautions, both `CLAIMED-BY-community` and both cheap to respect:**
+
+- **RTX 5090 / Blackwell (sm_120) needs a cu13x PyTorch.** From the only published
+  end-to-end AniSora V3.2 GGUF guide (2026-06-29, `abegundetobo-cloud/AniSora-V3.2-GGUF-ComfyUI-Guide`):
+  *"Standard PyTorch builds (cu124, cu128) DO NOT support this GPU and will produce
+  pure static/noise output with no error message. You must install PyTorch cu130."*
+  That failure mode — silent noise, rc=0 — is one we would otherwise diagnose as a
+  bad recipe. Check the box's torch build before blaming the model.
+- **Two users in QuantStack's own discussion thread got bad output and one abandoned
+  the model** (*"the result were terrible… I gave up on anisora. I used wan2.2, then
+  Ltx2 since January"*, rtx3090, Q8). Not evidence about the weights — no settings
+  were posted — but it is evidence that the recipe is not self-evident, which is an
+  argument for the sample being run against the **upstream** recipe rather than a
+  community workflow. The one working community guide uses 30 steps at CFG 5.5 with
+  a CLIP-vision node wired in; upstream says 8 steps, guidance 1, and the
+  architecture has no CLIP vision tower. **Prefer upstream. Where they conflict, the
+  authors' CLI is the source with standing.**
 
 ### Open observations on the measured 5B T1/T2/T3 rows
 

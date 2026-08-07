@@ -598,6 +598,52 @@ def _rel(path: Path) -> str:
         return str(path)
 
 
+# The pipeline writes sidecars under TWO names and always has:
+#
+#   <stem>.meta.yaml        09-whoami.meta.yaml   — render_t3, intake_take, and
+#                           the 126 records tracked under genomes/ and cuts/
+#   <full name>.meta.yaml   09-whoami.mp4.meta.yaml — hold_still.py:243 and
+#                           video_task.write_sidecar (video_task.py:923)
+#
+# Readers pinned to the stem shape simply do not see the other one, and an
+# asset whose record they cannot see reads as an asset with no provenance at
+# all — the loudest possible verdict on the most carefully written file. That
+# is a bug in the READER. Fixing it by renaming the files instead would break
+# every reader pinned to the full-name shape, starting with the two held-still
+# detectors (render_t3.py:545, check_invention.py:207) that match on the file
+# they were handed, and it would throw away the git trail on each record.
+#
+# The pattern is build_shotboard.py:240-241's, which got this right first: try
+# the exact name, fall back, and treat "neither exists" as no record rather
+# than as an error. Most specific first — a sidecar naming the container it
+# sits beside outranks one naming only the stem, so a `.POST.mp4` can never
+# inherit the base take's receipt while claiming to be its own.
+META_EXT = (".meta.yaml", ".meta.yml")
+# `.json` is the VO manifest shape (NN-vo.json beside NN-vo.mp3) and belongs
+# ONLY to callers that walk sound as well as picture — i.e. the gate. A picture
+# reader that accepted it would one day adopt an unrelated export sitting in the
+# same directory as a clip's recipe, so those callers pass META_EXT explicitly.
+RECORD_SIDECAR_EXT = META_EXT + (".json",)
+
+
+def sidecar_for(asset: Path, exts=RECORD_SIDECAR_EXT) -> Path | None:
+    """The record beside an asset that says what made it, or None.
+
+    Both naming conventions, and by default the three extensions the pipeline
+    writes: `.meta.yaml`, the same saved `.meta.yml`, and `NN-vo.json` beside
+    `NN-vo.mp3` (synth_vo). Never inherits a NEIGHBOUR's record — both
+    candidates are built from this asset's own name, so renaming a take away
+    from its sidecar still loses its provenance rather than borrowing the
+    next take's.
+    """
+    for ext in exts:
+        for cand in (asset.with_name(asset.name + ext),    # 09-x.mp4.meta.yaml
+                     asset.with_name(asset.stem + ext)):   # 09-x.meta.yaml
+            if cand.exists():
+                return cand
+    return None
+
+
 class Gate:
     """Collects violations (errors) and advisories over one repo."""
 
@@ -844,18 +890,8 @@ class Gate:
                                 f"{_rel(table)} — a shipping sound with no licence")
 
     def sidecar_of(self, asset: Path) -> Path | None:
-        """The record beside an asset that says what made it, or None.
-
-        Three shapes, because the pipeline writes three: `<clip>.meta.yaml`
-        (render_t3 / intake_take), the same saved `.meta.yml`, and `NN-vo.json`
-        beside `NN-vo.mp3` (synth_vo). Matched on the STEM, so renaming a take
-        away from its sidecar loses its provenance rather than inheriting the
-        neighbour's."""
-        for ext in (".meta.yaml", ".meta.yml", ".json"):
-            cand = asset.with_name(asset.stem + ext)
-            if cand.exists():
-                return cand
-        return None
+        """The record beside an asset that says what made it, or None."""
+        return sidecar_for(asset)
 
     def scan_media(self, root: Path, named: set) -> None:
         """Every shipping picture and sound whose licence is written down
