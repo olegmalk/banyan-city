@@ -1,0 +1,47 @@
+# Episode provenance (7.2) for a WORKING CUT — not a leaf, not canon.
+# The author has not passed this cut; it is published to the unlisted
+# review area so he can screen it from any device (D17, 2026-08-07).
+platform: local-deterministic (pipeline/render_t3.py, ffmpeg)
+model: per-beat — see sources
+assembled: 2026-08-07
+size: 720x1280
+seconds: 89.875
+sha256: 1ff00379d9cf7c0608fa488b76a81134857a6348d8b20ced378b6526f13bd560
+cost_usd: 0
+approved_by: none — unscreened working cut
+note: |-
+  v31 with its five held beats (4, 5, 7, 10, 14) re-rendered under the
+  founder's 2026-08-07 zoom rule — gentleness as a rate, 0.6%/s clamped to
+  2-4% of scale, linear, one-way. The old move was a flat 18% on a
+  front-loaded ease-out for every beat regardless of length. No animated
+  beat changed: v31's went in untouched and were verified pixel-identical
+  (mean abs difference 0.0000 at probes inside beats 6, 8, 9, 11, 12, 13
+  and 15). It runs 0.08s under v31 — rounding on three held slots, no
+  footage. qa_episode 15 checks pass with the same single luma warning v30
+  and v31 carry; check_sync --strict clean across node 001.
+sources:
+- part: animated beats
+  platform: local-gpu (rtx5090)
+  model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+  model_licence: Apache-2.0
+  note: identical footage to ep1-v31-animated.mp4; per-beat recipe, seed and
+    prompt are in each beat's own sidecar under review/ and cuts/pairs/
+- part: held beats
+  platform: local-deterministic (pipeline/hold_still.py, ffmpeg)
+  model: none
+  model_licence: n/a — the approved still is held; no video model ran
+- part: the drawn frames every beat starts from
+  still_model: per-beat — see each beat's own sidecar (init_still) and
+    genomes/sapling/nodes/001-capability-inventory/stills/README.md
+  model_licence: the stills were drawn by cagliostrolab/animagine-xl-3.1
+    under CreativeML Open RAIL++-M, whose use restrictions travel to the
+    output. That is the OPEN D15 debt on the founder's approved stills —
+    the same debt the live July episode already carries, unresolved and
+    stated here rather than left to be inferred.
+- part: narration
+  voice_engine: chatterbox-0.5B
+  model_licence: MIT
+- part: recorded sound
+  platform: none
+  model_licence: CC0 and CC BY beds, one row each in
+    genomes/sapling/nodes/001-capability-inventory/audio-sources/SOURCES.md

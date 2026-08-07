@@ -1,0 +1,30 @@
+# Shot provenance (7.2) — written by hand 2026-08-07. This clip was not
+# rendered; it is the beat cut straight out of an assembled episode with
+# ffmpeg, captions and all, so the two sides of the comparison are the
+# same picture at the same length differing only in the zoom.
+platform: local-deterministic (pipeline/hold_still.py, render_t3.py, ffmpeg)
+model: none
+model_licence: n/a — no video model ran. The licence that attaches is the
+  still's, recorded in
+  genomes/sapling/nodes/001-capability-inventory/stills/README.md
+  (cagliostrolab/animagine-xl-3.1, OpenRAIL++ — the open D15 debt).
+shot_beat: 7
+size: 720x1280
+seconds: 6.708
+slot_seconds: 6.64
+source_still: 07-zero-0-moving-parts.png
+cut_from: ep1-v32-gentleholds.mp4
+original_filename: beat-07-HELD-v32-gentle-cut.mp4
+sha256: 13ee4fd813332a297ff880ad3ea34d9e11bd81a83d2ff4bfe77effc58df9444b
+cost_usd: 0
+camera_move: |-
+  4.0% (the cap) of scale at 0.60%/s — gentleness as a RATE
+  (ZOOM_RATE_PER_S 0.006, clamped 2-4%), linear, so it never creeps
+  up and never parks
+note: |-
+  One half of the held-zoom comparison the founder's 2026-08-07 direction
+  asked for — "do not do ping pong… it should be very slow and gentle
+  zooming". Nothing in the picture changed between the two halves.
+prompt: |-
+  (none — a still is held; nothing was generated)
+negative: ''
