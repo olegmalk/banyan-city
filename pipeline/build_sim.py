@@ -19,9 +19,51 @@ The stranger-eyes audit (2026-07-30) rebuilt the page's priorities:
 
 Data comes from `build_status.py` (repo files) and the PUBLIC GitHub API only —
 the deploy server has no local git refs and no `gh` CLI.
+
+2026-08-07 — THE PAGE STOPPED LYING ABOUT THE MACHINES. Three lies were live,
+and each one is fixed below rather than reworded:
+
+  1. AGE. `machine_state()` read only the `HH:MM:SS` off a heartbeat line and
+     compared it to today's clock, wrapping at 24 h — so a box last heard from
+     on 29 July read "12 h ago". heartbeat.txt genuinely carries no date, but
+     the worker pushes every line as its own commit, so the commit history of
+     that one path IS the same log with the day attached. Ages now come from
+     there and nowhere else; when that request fails the page says the date is
+     unknown instead of inventing one. No machine is ever shown fresher than
+     provable.
+  2. LIVENESS. The heartbeat is written only while a task runs, so a powered,
+     idle box read as offline. telemetry.json is published every five minutes
+     regardless — it is now the primary "is it on" signal for any box that
+     publishes one, with the heartbeat answering the different question of
+     what it is DOING.
+  3. "IN PRODUCTION". The heading printed the whole `tasks:` list, so a job
+     nobody had started — and a finished job the queue file had not retired —
+     both read as work happening now. Rendering is now what a MACHINE'S OWN LOG
+     says: a fresh STARTED for that id with no DONE after it. Queued, finished
+     today and blocked are three other lists, and each says so.
+  4. THE FOOTER. It claimed the page is "rebuilt on every push and every half
+     hour". Only the GitHub Pages mirror has that cron (pages.yml); banyan.city
+     rebuilds on push and on nothing else (vercel.yml, vercel.json). Two prior
+     attempts argued over which half of that sentence to keep; the fix is to
+     stop needing the sentence — every datum carries its own age, so no reader
+     has to reason from the page's freshness to a fact's freshness, and the
+     footer is true of either copy.
+
+The queue's `backlog:` list is published for the first time here, grouped by
+what each entry is waiting for, with its own `why` and estimate. Work that is
+blocked is the honest shape of this project — a page that shows only what is
+running shows an empty street and explains nothing.
+
+And the page is now LIVE, on the pattern the telemetry charts proved: the
+browser re-reads the queue, each machine's check-in log and each machine's
+vitals for itself, so an open tab keeps up with the farm between deploys. The
+build-time values stay in the HTML as the no-JavaScript answer, each labelled
+with the age of the thing it describes.
 """
+import datetime
 import html
 import json
+import os
 import re
 import sys
 import time
@@ -33,6 +75,8 @@ sys.path.insert(0, str(REPO / "pipeline"))
 from site_theme import THEME_CSS  # noqa: E402  the one visual language
 
 GH = "olegmlkvorg/banyan-city"
+API = f"https://api.github.com/repos/{GH}"
+RAW = f"https://raw.githubusercontent.com/{GH}"
 CANONICAL = "https://banyan.city"
 PAGE = "status.html"
 # One name for this page, used in the <title>, the <h1> and our own nav.
@@ -50,45 +94,324 @@ MACHINES = {
 }
 STATE_WORDS = {  # css state → the legend under the town
     "working": "glowing = rendering right now",
-    "idle": "dim = switched on, nothing to do",
-    "asleep": "faded = offline",
+    "idle": "dim = switched on, not rendering",
+    "asleep": "faded = not heard from",
 }
 
+# How fresh a signal has to be before it is allowed to mean anything.
+TELEMETRY_STALE_MINUTES = 15    # vitals are published every 5 min; 3 misses = stale
+JOB_FRESH_MINUTES = 45          # a "STARTED" line older than this is not "now"
+JUST_FINISHED_MINUTES = 30      # a machine that just handed work in is still warm
 
-def _get(url):
+# ------------------------------------------------------------------ fetching ---
+# NOTHING ON THIS PAGE MAY FAIL SILENTLY. The old `_get` swallowed every
+# exception and returned "", so one rate-limited build rendered an empty street
+# under a heading about our machines and nobody could tell (the
+# invisible-buildings bug, 2026-07-30). Failures are collected here and printed
+# on the page in words.
+FETCH_ERRORS: list = []
+
+
+def _reason(exc) -> str:
+    code = getattr(exc, "code", None)
+    if code in (403, 429):
+        return ("GitHub is rate-limiting this build — the public API allows 60 "
+                "requests an hour without a login")
+    if code:
+        return f"GitHub answered HTTP {code}"
+    return str(exc) or exc.__class__.__name__
+
+
+def _get(url, label=None):
+    """Fetch text. On failure return "" AND record a printable reason.
+
+    `label` names the datum in a stranger's words; pass None only when the file
+    being asked for is legitimately optional (not every machine publishes
+    vitals), so a normal absence does not read as a fault.
+    """
+    headers = {"User-Agent": "banyan-sim-build"}
+    token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
+    if token and url.startswith("https://api.github.com"):
+        headers["Authorization"] = f"Bearer {token}"   # optional; raises the 60/hr cap
     try:
-        req = urllib.request.Request(url, headers={"User-Agent": "banyan-sim-build"})
+        req = urllib.request.Request(url, headers=headers)
         with urllib.request.urlopen(req, timeout=15) as r:
             return r.read().decode()
-    except Exception:
+    except Exception as e:
+        if label:
+            FETCH_ERRORS.append((label, _reason(e)))
         return ""
+
+
+def _api(path, label):
+    raw = _get(f"{API}{path}", label)
+    if not raw:
+        return None
+    try:
+        return json.loads(raw)
+    except Exception:
+        FETCH_ERRORS.append((label, "GitHub's answer could not be read"))
+        return None
+
+
+def utcnow():
+    return datetime.datetime.now(datetime.timezone.utc)
+
+
+def _iso(s):
+    """GitHub's `2026-08-05T02:59:53Z` → an aware datetime, or None."""
+    try:
+        return datetime.datetime.strptime(str(s), "%Y-%m-%dT%H:%M:%SZ").replace(
+            tzinfo=datetime.timezone.utc)
+    except Exception:
+        return None
+
+
+def age_words(then, now=None) -> str:
+    """'4 min ago' · '2 days ago (5 Aug 02:59 UTC)' · 'date unknown'.
+
+    Anything older than a day carries its absolute stamp as well, because
+    "N days ago" is exactly where a reader stops being able to check us — and
+    an uncheckable age is what this page had wrong.
+    """
+    if then is None:
+        return "date unknown"
+    now = now or utcnow()
+    secs = max(0, int((now - then).total_seconds()))
+    if secs < 90:
+        s = "just now"
+    elif secs < 5400:
+        s = f"{secs // 60} min ago"
+    elif secs < 129600:                       # up to 36 h, still countable in hours
+        s = f"{secs // 3600} h ago"
+    else:
+        d = secs // 86400
+        s = f"{d} day{'s' if d != 1 else ''} ago"
+    if secs >= 86400:
+        s += then.strftime(f" ({then.day} %b %H:%M UTC)")
+    return s
+
+
+def age_el(then, now=None) -> str:
+    """An age that keeps counting after the build.
+
+    Every age on this page is one of these, and each carries the instant it
+    counts from. The build-time words are the answer with JavaScript off; with
+    it on, the browser rewrites them from `data-at` — which is the honest way
+    to have a live-looking number on a page that is a file. No datum's age is
+    ever the page's age.
+    """
+    if then is None:
+        return '<span class="age">date unknown</span>'
+    return (f'<time class="age" datetime="{then.strftime("%Y-%m-%dT%H:%M:%SZ")}" '
+            f'data-at="{int(then.timestamp())}">{html.escape(age_words(then, now))}</time>')
 
 
 def farm_branches():
     """farm-results-* branches via the public API — the deploy server has no
-    local refs (the invisible-buildings bug, 2026-07-30)."""
-    raw = _get(f"https://api.github.com/repos/{GH}/branches?per_page=100")
-    try:
-        return [b["name"] for b in json.loads(raw) if b["name"].startswith("farm-results-")]
-    except Exception:
-        return []
+    local refs (the invisible-buildings bug, 2026-07-30). If the API cannot be
+    reached we fall back to the machines this file already knows by name, so the
+    street is never silently empty; the missing datum is reported instead."""
+    data = _api("/branches?per_page=100", "the list of machine branches")
+    if isinstance(data, list):
+        names = sorted(b["name"] for b in data
+                       if str(b.get("name", "")).startswith("farm-results-"))
+        if names:
+            return names
+    return [f"farm-results-{k}" for k in MACHINES]
 
 
 def branch_heartbeat(branch):
-    txt = _get(f"https://raw.githubusercontent.com/{GH}/{branch}/farm-out/heartbeat.txt")
+    """The newest line of a machine's own log — the STAGE it is at. This file
+    carries a clock time and no date; `heartbeat_history` supplies the date."""
+    txt = _get(f"{RAW}/{branch}/farm-out/heartbeat.txt", f"the check-in log for {branch}")
     return txt.strip().splitlines()[-1] if txt.strip() else ""
 
 
-def queue_tasks() -> list:
-    """The live work list (pipeline/farm-queue.yaml on main), public raw —
-    the bird's-eye should say WHAT is being rendered and WHY (founder,
-    2026-07-30), and the queue file is where the why lives."""
-    import yaml as _yaml
-    txt = _get(f"https://raw.githubusercontent.com/{GH}/main/pipeline/farm-queue.yaml")
+def heartbeat_history(branch, n=30):
+    """[(when, line)] newest first — the check-in log WITH real dates.
+
+    THIS IS THE FIX FOR THE OLDEST LIE ON THE PAGE. heartbeat.txt records
+    `02:59:53Z DONE task=…` and no day, and the old reader compared that clock
+    to today's, wrapping at 24 h: a box last heard from eight days ago read
+    "12 h ago". The worker commits each line separately with the line as the
+    commit message, so the history of that one path is the same log with the
+    date attached — one request per machine, exact, no reconstruction.
+    """
+    data = _api(f"/commits?sha={branch}&path=farm-out/heartbeat.txt&per_page={n}",
+                f"the check-in dates for {branch}")
+    out = []
+    for c in data or []:
+        when = _iso((c.get("commit") or {}).get("committer", {}).get("date"))
+        if when is None:
+            continue
+        msg = str((c.get("commit") or {}).get("message", "")).splitlines()[0]
+        out.append((when, msg[4:].strip() if msg.startswith("hb: ") else msg.strip()))
+    return out
+
+
+def telemetry_head(branch):
+    """{'at': when, 'gpu': name} — a machine's own five-minute pulse, or None.
+
+    This file is written whether or not there is work to do, which is the whole
+    point: it answers "is the box on", a question the heartbeat cannot answer
+    because the heartbeat is only written while a task runs. Absence is normal
+    (only the render box publishes one), so it is not reported as a failure.
+    """
+    txt = _get(f"{RAW}/{branch}/telemetry.json", None)
     try:
-        return (_yaml.safe_load(txt) or {}).get("tasks") or []
+        d = json.loads(txt)
+        return {"at": datetime.datetime.fromtimestamp(float(d["last_sample"]),
+                                                      datetime.timezone.utc),
+                "gpu": str(d.get("gpu_name") or "")}
     except Exception:
-        return []
+        return None
+
+
+def queue_doc() -> dict:
+    """The work list — `tasks:` (runnable now) and `backlog:` (waiting on
+    something), read from the repo checkout this build was made from.
+
+    Read LOCALLY on purpose. The queue file lives on `main` and the deploy
+    server checks `main` out, so the local copy is exactly the commit being
+    published: no request to spend, no rate limit to hit, and no way for a
+    failed fetch to render an empty queue. The browser re-reads the same file
+    over the network afterwards, which is where live-ness comes from.
+    """
+    import yaml as _yaml
+    try:
+        doc = _yaml.safe_load((REPO / "pipeline/farm-queue.yaml").read_text()) or {}
+    except Exception as e:
+        FETCH_ERRORS.append(("the work queue", f"the queue file could not be read ({e})"))
+        return {"tasks": [], "backlog": [], "readable": False}
+    tasks = doc.get("tasks")
+    backlog = doc.get("backlog")
+    return {"tasks": [t for t in (tasks or []) if isinstance(t, dict)],
+            "backlog": [b for b in (backlog or []) if isinstance(b, dict)],
+            # `backlog:` is landing in a parallel change; its absence is not a
+            # fault, and unknown keys inside an entry are ignored, not fatal.
+            "has_backlog": isinstance(backlog, list),
+            "readable": True}
+
+
+# ---- the queue's own words, in a stranger's ----------------------------------
+# `why` and `gate_ref` are written by whoever queued the work, for whoever picks
+# it up, and they use the studio's two internal words. The page has said "scene"
+# and "final" everywhere else since the stranger-eyes audit, so the same two
+# substitutions run over every queue string that reaches a visitor. Filenames
+# stay: the repo IS the product, and a reader who wants to check us needs the
+# path. Task ids never reach the page — those are log tokens.
+_HOUSE = [
+    # a task id is `slug-<epoch>`; the epoch is a log token and never published,
+    # but the slug is how one queue entry refers to another and stays readable.
+    (re.compile(r"\b([a-z][\w-]*?)-\d{9,}\b"), r"\1"),
+    (re.compile(r"\bcanon swap\b", re.I), "swap of the final frame"),
+    (re.compile(r"\bcanon\b", re.I), "final"),
+    # a range stays plural, a single number goes singular: `beats 02-21` is
+    # twenty scenes, `beats 1` is the field naming one.
+    (re.compile(r"\bbeats?[- ](\d{1,2}\s*[-–]\s*\d{1,2})\b", re.I), r"scenes \1"),
+    (re.compile(r"\bbeats?[- ](\d{1,2})\b", re.I), r"scene \1"),
+    (re.compile(r"\bbeats\b", re.I), "scenes"),
+    (re.compile(r"\bbeat\b", re.I), "scene"),
+]
+
+
+def plain(text) -> str:
+    """House dialect, whitespace folded. Safe to run over any queue string."""
+    s = " ".join(str(text or "").split())
+    for pat, rep in _HOUSE:
+        s = pat.sub(rep, s)
+    return s
+
+
+def first_sentence(s: str, limit: int = 190) -> str:
+    """The first sentence, without cutting a word or mistaking an elision for a
+    full stop. `002b-t0-c.yaml` and `wan_i2v.py` keep their dots — those are not
+    followed by a space."""
+    s = re.sub(r"\.{2,}", "…", " ".join(str(s or "").split()))
+    first = re.split(r"\.\s+", s)[0].rstrip(". ")
+    if len(first) > limit:
+        first = first[:limit].rsplit(" ", 1)[0] + "…"
+    return first
+
+
+def gate_note(entry: dict, limit: int = 190) -> str:
+    """The blocker in one sentence — `gate_ref`'s first, minus its parentheses.
+
+    gate_ref is written for the person who will clear the gate, so it carries
+    registry paths and file:line. The first sentence is the fact; the rest is
+    the instructions. A visitor gets the fact.
+    """
+    ref = plain(entry.get("gate_ref"))
+    if not ref:
+        return ""
+    ref = re.sub(r"\s*\([^()]*\)", "", ref)            # parenthetical detail
+    ref = re.sub(r"\s*—\s*$", "", ref).strip()
+    return first_sentence(ref, limit)
+
+
+GATE_WORDS = {
+    "founder": ("🕰", "waiting on the author",
+                "only the author can make these calls — taste, and what gets published"),
+    "hardware": ("🔌", "waiting on a machine",
+                 "a box is unreachable or cannot run the code; no render can start on it"),
+    "code": ("🛠", "waiting on code",
+             "the pipeline cannot do this yet — the missing piece is named"),
+    "": ("▶️", "nothing is blocking it",
+         "unblocked and unstarted: these need a person to run them, not a gate to open"),
+}
+
+
+def backlog_entry_view(b: dict) -> dict:
+    """One backlog entry as the page shows it: what, why, how long, who runs it."""
+    render_shaped = any(k in b for k in ("beats", "seeds", "video"))
+    what = task_story(b)[0] if render_shaped else ""
+    est = b.get("est_minutes")
+    try:
+        est = int(est)
+    except (TypeError, ValueError):
+        est = None
+    runner = str(b.get("runner") or "").strip()
+    window = str(b.get("window") or "").strip()
+    wkey = str(b.get("worker") or "any")
+    return {
+        "gate": str(b.get("gate") or ""),
+        "what": what,
+        "why": plain(b.get("why")),
+        "note": gate_note(b),
+        "est": est,
+        "window": window,
+        "runner": runner,
+        "machine": MACHINES.get(wkey, (wkey if wkey != "any" else "", ""))[0],
+    }
+
+
+def backlog_groups(backlog: list) -> list:
+    """[(gate, emoji, heading, blurb, [views], total minutes)] — blocked first,
+    founder before machines before code, unblocked last, because the page is
+    read top-down and the author's five are the ones that move the show."""
+    order = ["founder", "hardware", "code", ""]
+    views = [(str(b.get("gate") or ""), backlog_entry_view(b)) for b in backlog or []]
+    out = []
+    for gate in order:
+        rows = [v for g, v in views if g == gate]
+        if not rows:
+            continue
+        emoji, head, blurb = GATE_WORDS[gate]
+        mins = sum(r["est"] or 0 for r in rows)
+        out.append((gate, emoji, head, blurb, rows, mins))
+    for gate in sorted({g for g, _ in views} - set(order)):   # a gate word we do not know
+        rows = [v for g, v in views if g == gate]
+        out.append((gate, "⏳", f"waiting on {gate}", "", rows,
+                    sum(r["est"] or 0 for r in rows)))
+    return out
+
+
+def hours_words(minutes: int) -> str:
+    """'45 min' · 'about 1.8 h' — estimates, and never dressed as measurements."""
+    if not minutes:
+        return ""
+    return f"{minutes} min" if minutes < 90 else f"about {minutes / 60:.1f} h"
 
 
 def _shot_runs(beats: str) -> str:
@@ -152,16 +475,20 @@ def task_story(t: dict) -> tuple:
     # KIND of work is worse than one that is merely late.
     if t.get("video"):
         model = {"animegen": "an anime-trained model",
+                 "ltx-2.3": "an LTX video model",
                  "ti2v-5b": "Wan 2.2"}.get(str(t.get("video_model", "ti2v-5b")),
                                            str(t.get("video_model")))
         secs = t.get("seconds", 3.0)
-        steps = t.get("steps", 20)
+        # NOT `t.get("steps", 20)`. A planned job that has not chosen its step
+        # count would have been published as "at 20 steps" — a number nobody
+        # wrote, on a page whose whole claim is that its numbers are checkable.
+        steps = t.get("steps")
         n = len([b for b in beats.split(",") if b]) or 1
         if t.get("prefetch"):
             return ("downloading model weights",
                     "fetching a bigger video model to try later — no rendering, just the download")
         return (f"{n} moving clip{'s' if n != 1 else ''} ({secs:g}s each) for {shots}, "
-                f"on {model} at {steps} steps",
+                f"on {model}" + (f" at {steps} steps" if steps else ""),
                 "animating stills the author already approved — the still is the "
                 "composition, the render only decides what MOVES")
     return (f"{seeds} frames for {shots}", "queued by the studio")
@@ -223,43 +550,178 @@ def latest_thread_comments(n=3):
 
 
 # ---------------------------------------------------------------- machines ---
-def machine_state(branch_tail: str, queue: list | None = None) -> tuple:
-    """(css_state, human sentence, raw heartbeat for a title attribute).
+# Stage words a worker writes while it is mid-task. DONE and FAIL are the two
+# lines that end a task, so they are the absence of work, not work.
+WORK_WORDS = ("STARTED", "MODEL_LOADED", "VIDEO_VENV_OK", "VIDEO_DEPS_OK",
+              "VIDEO_RENDERING", "VIDEO_ENCODING", "VIDEO_CLIP", "RENDERING",
+              "ENCODING")
 
-    Heartbeat lines look like `11:32:16Z STARTED task=keep-m1pro-1785431597 …`.
-    The epoch ID never reaches the page — but it DOES get matched against the
-    live queue so a working machine says what it is making and why.
+
+def job_words(tail: str, queue: list | None = None) -> tuple:
+    """(what a working machine is making, why) — from the queue where possible.
+
+    The epoch task ID never reaches the page, but it IS matched against the
+    queue, so a rendering machine says what it is making and why it matters.
     """
-    if not branch_tail:
-        return "asleep", "offline — has not checked in yet", ""
-    try:
-        hh, mm, ss = branch_tail.split("Z")[0].split(":")
-        now = time.gmtime()
-        age = (now.tm_hour * 3600 + now.tm_min * 60 + now.tm_sec) - \
-              (int(hh) * 3600 + int(mm) * 60 + int(ss))
-        if age < 0:
-            age += 86400
-    except Exception:
-        age = 9999
-    mins = max(age, 0) // 60
-    ago = "just now" if mins < 1 else (f"{mins} min ago" if mins < 90
-                                       else f"{mins // 60} h ago")
-    working = ("STARTED" in branch_tail or "MODEL_LOADED" in branch_tail)
-    scene = re.search(r"beats?=\s*(\d+)", branch_tail)
-    if age < 360 and working:
-        # name the actual job from the queue: what it makes, and why
-        tid = re.search(r"task=([\w.-]+)", branch_tail)
-        entry = next((t for t in (queue or [])
-                      if str(t.get("id")) == (tid.group(1) if tid else "")), None)
-        if entry:
-            what, _why = task_story(entry)
-            return "working", f"making {what}", branch_tail
-        job = f"rendering scene {int(scene.group(1)):02d}" if scene else \
-            "rendering a round of candidate frames"
-        return "working", job, branch_tail
-    if age < 1800:
-        return "idle", f"idle — last job finished {ago}", branch_tail
-    return "asleep", f"offline — last seen {ago}", branch_tail
+    tid = re.search(r"task=([\w.-]+)", tail or "")
+    entry = next((t for t in (queue or [])
+                  if str(t.get("id")) == (tid.group(1) if tid else "")), None)
+    if entry:
+        return task_story(entry)
+    scene = re.search(r"beats?=\s*(\d+)", tail or "")
+    if scene:
+        return (f"rendering scene {int(scene.group(1)):02d}",
+                "the job is not in the published queue any more — this is what "
+                "the machine's own log says it is on")
+    return ("rendering", "the machine's log says it is working; the job is not "
+                         "in the published queue, so the page will not guess at what")
+
+
+def machine_state(tail: str, last_seen=None, telem=None, queue=None, now=None,
+                  blocked: str = "") -> dict:
+    """What one machine is doing, and how sure the page is allowed to be.
+
+    TWO CLOCKS, AND THEY ANSWER DIFFERENT QUESTIONS.
+      * telemetry.json is written every five minutes whether or not there is
+        work → IS THE BOX ON.
+      * heartbeat.txt is written only while a task runs → WHAT IS IT DOING, and
+        its silence means "no job", not "no machine".
+    Reading liveness off the heartbeat alone is why a powered, idle render box
+    was published as offline (2026-08-07). `last_seen` is a real datetime from
+    the commit that pushed the line — never parsed out of the line itself,
+    which carries no date.
+
+    `blocked` is the third state the old two-word vocabulary could not say: ON
+    AND UNABLE. It comes from the queue's own hardware gates, so the page never
+    invents a fault — it repeats the one the queue file already records against
+    that machine. The render box is exactly this today: powered, publishing its
+    vitals every five minutes, and unable to import torch at all.
+    """
+    now = now or utcnow()
+    tel_age = None if not telem else (now - telem["at"]).total_seconds()
+    hb_age = None if last_seen is None else (now - last_seen).total_seconds()
+    on = tel_age is not None and tel_age < TELEMETRY_STALE_MINUTES * 60
+    stage = (tail or "").split("Z", 1)[-1].strip()
+    working = bool(tail) and any(w in tail for w in WORK_WORDS) \
+        and "DONE" not in tail and "FAIL" not in tail
+    fresh_job = hb_age is not None and hb_age < JOB_FRESH_MINUTES * 60
+
+    seen = ("last check-in " + age_words(last_seen, now)) if last_seen or tail else \
+        "no check-in has ever been read for this machine"
+    if tail and last_seen is None:
+        seen = ("last check-in date could not be read — GitHub did not answer, so "
+                "this page will not put a number on it")
+    pulse = ("publishing its own vitals, newest reading " + age_words(telem["at"], now)) \
+        if telem else ""
+
+    base = {"seen": seen, "pulse": pulse, "stage": stage, "raw": tail or "",
+            "blocked": blocked}
+    if working and fresh_job:
+        what, why = job_words(tail, queue)
+        return {**base, "css": "working", "chip": "rendering",
+                "head": what, "why": why}
+    if on and blocked:
+        # The state the page could not previously say. "Offline" would be a
+        # lie about a box that is answering every five minutes; "idle" would be
+        # a lie about a box that cannot start a job at all.
+        return {**base, "css": "idle", "chip": "on, cannot render",
+                "head": "switched on, and unable to render",
+                "why": blocked}
+    if on:
+        return {**base, "css": "idle", "chip": "on, nothing to render",
+                "head": "switched on and asking for work",
+                "why": "it reports its own temperature and memory every five "
+                       "minutes; the queue has nothing it can run"}
+    if hb_age is not None and hb_age < JUST_FINISHED_MINUTES * 60:
+        return {**base, "css": "idle", "chip": "just finished",
+                "head": "handed its last job in",
+                "why": blocked or ""}
+    return {**base, "css": "asleep", "chip": "not heard from",
+            "head": "no sign of this machine",
+            "why": blocked or ("off, asleep, or unable to reach GitHub — nothing "
+                               "is claimed about it beyond when it was last heard")}
+
+
+def machine_blocker(key: str, backlog: list) -> str:
+    """The fault the QUEUE already records against this machine, in one line.
+
+    Not a guess and not a hardcoded string: a `gate: hardware` entry names the
+    machine it is waiting on in `worker`, and its `gate_ref` says what is wrong.
+    If nobody has written a gate, the page claims no fault.
+    """
+    for b in backlog or []:
+        if str(b.get("gate")) == "hardware" and str(b.get("worker")) == key:
+            note = gate_note(b)
+            if note:
+                return note
+    return ""
+
+
+def read_machines(queue: list, backlog: list = None, now=None) -> list:
+    """One record per machine: its branch, its state, and its dated log."""
+    now = now or utcnow()
+    out = []
+    for branch in farm_branches():
+        key = branch.split("farm-results-")[-1]
+        nice, emoji = MACHINES.get(key, (key, "🏠"))
+        tail = branch_heartbeat(branch)
+        hist = heartbeat_history(branch)
+        telem = telemetry_head(branch)
+        last_seen = hist[0][0] if hist else None
+        out.append({"key": key, "branch": branch, "name": nice, "emoji": emoji,
+                    "history": hist, "telemetry": telem, "last_seen": last_seen,
+                    "tail": tail,
+                    "state": machine_state(tail, last_seen, telem, queue, now,
+                                           machine_blocker(key, backlog))})
+    return out
+
+
+def finished_today(machines: list, now=None) -> list:
+    """[(when, machine name, task id)] for every job that finished since
+    midnight UTC — read off the dated commit log, so 'today' is a fact and not
+    an inference from a clock time with no day attached."""
+    now = now or utcnow()
+    start = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    out = []
+    for m in machines:
+        for when, line in m["history"]:
+            if when < start or not line.startswith("DONE"):
+                continue
+            tid = re.search(r"task=([\w.-]+)", line)
+            out.append((when, m["name"], tid.group(1) if tid else ""))
+    return sorted(out, reverse=True)
+
+
+def task_ids_done(machines: list) -> set:
+    """Every task id with a `DONE` line on any machine's log, at any date.
+
+    The queue file is not self-clearing — an entry sits in `tasks:` until the
+    promoter retires it — so a finished job would otherwise be published as
+    still-queued. The heartbeat is the record of what actually happened; the
+    queue is only the intent.
+    """
+    out = set()
+    for m in machines:
+        for _when, line in m["history"]:
+            if line.startswith("DONE"):
+                tid = re.search(r"task=([\w.-]+)", line)
+                if tid:
+                    out.add(tid.group(1))
+    return out
+
+
+def task_running(tid: str, machines: list) -> dict:
+    """The machine that has a fresh STARTED for this id and no DONE after it,
+    or None. This is the difference between QUEUED and RENDERING — a heading
+    that called the whole queue "in production" was the third lie."""
+    for m in machines:
+        for when, line in m["history"]:            # newest first
+            if f"task={tid}" not in line:
+                continue
+            if line.startswith(("DONE", "FAIL")):
+                return None
+            return {"machine": m, "since": when} if line.startswith("STARTED") else None
+    return None
 
 
 # ------------------------------------------------------------------- pieces ---
@@ -301,21 +763,134 @@ def steps_table_html(steps: list) -> str:
             f"{body}</table></div>")
 
 
-def quests_html(inbox: list) -> str:
-    """The author's own decision list. Read-only for everyone else — the old
-    board offered five identical gold 'look →' links for tasks a visitor cannot
-    do, two of them into a raw GitHub file listing."""
+def _since_dt(v):
+    """`since: 2026-07-29` → a datetime at UTC midnight. yaml hands back a date."""
+    if isinstance(v, datetime.datetime):
+        return v if v.tzinfo else v.replace(tzinfo=datetime.timezone.utc)
+    if isinstance(v, datetime.date):
+        return datetime.datetime(v.year, v.month, v.day, tzinfo=datetime.timezone.utc)
+    try:
+        return datetime.datetime.strptime(str(v)[:10], "%Y-%m-%d").replace(
+            tzinfo=datetime.timezone.utc)
+    except Exception:
+        return None
+
+
+def waiting_words(since, now=None) -> str:
+    """'waiting 9 days' — the number that makes the queue's oldest item visible.
+
+    An inbox with no ages reads as a to-do list. With them it reads as what it
+    is: five calls, the oldest of them made nine days ago, with real work
+    parked behind each one.
+    """
+    d = _since_dt(since)
+    if d is None:
+        return "waiting — no date recorded"
+    now = now or utcnow()
+    days = max(0, (now.date() - d.date()).days)
+    if days == 0:
+        return "asked today"
+    return f"waiting {days} day{'s' if days != 1 else ''}"
+
+
+def founder_gate_map(backlog: list, pending_ids: list) -> dict:
+    """{pending id: [backlog entries gated on it]} — read out of `gate_ref`.
+
+    A gate_ref names its blocker by id, and some entries name a SIBLING entry
+    instead of naming the inbox item twice ("the same frame pick as …"), so the
+    reference is followed one link at a time until it lands on an inbox id or
+    runs out. Nothing is inferred from wording — an entry whose gate_ref names
+    no id at all stays unattached, and the page says so rather than guessing.
+    """
+    entries = [b for b in (backlog or []) if isinstance(b, dict)]
+    ids = [str(p) for p in pending_ids if p]
+    owner: dict = {}
+    for b in entries:
+        ref = str(b.get("gate_ref") or "")
+        hit = next((p for p in ids if p in ref), None)
+        if hit:
+            owner[str(b.get("id"))] = hit
+    for _hop in range(len(entries)):                 # follow sibling references
+        grew = False
+        for b in entries:
+            bid = str(b.get("id"))
+            if bid in owner:
+                continue
+            ref = str(b.get("gate_ref") or "")
+            for other in entries:
+                oid = str(other.get("id"))
+                if oid != bid and oid in ref and oid in owner:
+                    owner[bid], grew = owner[oid], True
+                    break
+        if not grew:
+            break
+    out: dict = {p: [] for p in ids}
+    for b in entries:
+        p = owner.get(str(b.get("id")))
+        if p:
+            out[p].append(b)
+    return out
+
+
+def waiting_html(inbox: list, backlog: list, now=None) -> str:
+    """The author's decision queue, with the age of each wait and the work
+    parked behind it. Read-only for everyone else — the old board offered five
+    identical gold 'look →' links for calls a visitor cannot make."""
     if not inbox:
         return '<p class="notice">Nothing waiting — the city runs itself today.</p>'
+    now = now or utcnow()
+    blocked = founder_gate_map(backlog, [q.get("id") for q in inbox])
     out = []
     for q in inbox:
         link, label = q.get("public"), "look at it &rarr;"
         if link and "/tree/" in link:      # a directory of .md files is not a page
             label = "read it on GitHub &rarr;"
         a = f' <a href="{_e(link)}">{label}</a>' if link else ""
-        out.append(f'<li><b>{_e(q.get("title", ""))}</b>{a}'
-                   f'<div class="mono">{_e(q.get("detail", ""))}</div></li>')
+        held = [backlog_entry_view(b) for b in blocked.get(str(q.get("id")), [])]
+        mins = sum(h["est"] or 0 for h in held)
+        tail = ""
+        if held:
+            jobs = "; ".join(first_sentence(h["why"], 150) for h in held if h["why"])
+            tail = (f'<div class="held"><b>{len(held)} job'
+                    f'{"s" if len(held) != 1 else ""} parked behind this call</b>'
+                    + (f' · {_e(hours_words(mins))} of machine time' if mins else "")
+                    + (f'<br>{_e(jobs)}' if jobs else "") + "</div>")
+        out.append(f'<li><span class="waited">{_e(waiting_words(q.get("since"), now))}'
+                   f'</span> <b>{_e(q.get("title", ""))}</b>{a}'
+                   f'<div class="mono">{_e(q.get("detail", ""))}</div>{tail}</li>')
     return f'<ol class="quests">{"".join(out)}</ol>'
+
+
+def backlog_html(backlog: list) -> str:
+    """The planned-but-blocked list, grouped by what each group is waiting for."""
+    groups = backlog_groups(backlog)
+    if not groups:
+        return ('<p class="notice">The backlog is empty — every planned job has '
+                'either run or been dropped.</p>')
+    out = []
+    for _gate, emoji, head, blurb, rows, mins in groups:
+        items = ""
+        for r in rows:
+            meta = [b for b in (
+                hours_words(r["est"]),
+                r["machine"],
+                "a person runs this by hand" if r["runner"] == "manual" else "",
+                "runs while nobody needs the machine" if r["window"] == "overnight" else "",
+            ) if b]
+            items += ('<li>'
+                      + (f'<b>{_e(r["what"])}</b><br>' if r["what"] else "")
+                      + (f'<span class="why">{_e(r["why"])}</span>' if r["why"] else "")
+                      + (f'<div class="mono">blocked by: {_e(r["note"])}</div>'
+                         if r["note"] else "")
+                      + (f'<div class="mono">{_e(" · ".join(meta))}</div>' if meta else "")
+                      + "</li>")
+        out.append(f'<div class="bgroup"><h3>{emoji} {_e(head)} '
+                   f'<span class="count">{len(rows)}</span></h3>'
+                   + (f'<p class="mono">{_e(blurb)}'
+                      + (f' · {_e(hours_words(mins))} of work' if mins else "")
+                      + "</p>")
+                   + f'<ol class="blist">{items}</ol></div>')
+    return "".join(out)
 
 
 def walkers_html(comments: list, any_working: bool) -> str:
@@ -417,8 +992,11 @@ def badges_html(milestones: list) -> str:
 # it. Same repo constant as every other raw fetch on this page — the deploy server
 # has no git refs to read a remote from.
 TELEMETRY_BRANCH = "farm-results-rtx5090"
-TELEMETRY_URL = f"https://raw.githubusercontent.com/{GH}/{TELEMETRY_BRANCH}/telemetry.json"
-TELEMETRY_STALE_MINUTES = 15
+TELEMETRY_URL = f"{RAW}/{TELEMETRY_BRANCH}/telemetry.json"
+QUEUE_URL = f"{RAW}/main/pipeline/farm-queue.yaml"
+# TELEMETRY_STALE_MINUTES lives with the other freshness rules at the top of the
+# file — it was declared twice, and two constants of the same name is one edit
+# away from a page whose chart and whose machine list disagree about "stale".
 
 TEL_CSS = """
 /* ---- the render box: three single-axis charts, one series each.
@@ -653,6 +1231,226 @@ TEL_JS = """
 """
 
 
+# Plain string, not an f-string: JavaScript, full of braces. RAW_BASE, QUEUE_URL,
+# BUILT_AT and BUILT_QUEUE are emitted next to it by build().
+LIVE_JS = """
+/* ---- the page keeps up with the farm after the deploy ------------------------
+   Three files, all of them ours, all fetched by the reader's own browser off
+   raw.githubusercontent (Access-Control-Allow-Origin: *, verified): each
+   machine's check-in log, each machine's vitals, and the work queue. No
+   library, no external code, no request to any host but GitHub's raw CDN.
+
+   The honesty rules the rest of the page runs on apply here too:
+     * a fetch that fails says so in words and changes nothing else;
+     * ages count from the datum, never from the page — every age on this page
+       is a <time data-at> and this is what keeps it counting;
+     * heartbeat.txt carries a clock and no date, so a line that appeared AFTER
+       this copy was built is dated as the first instant matching that clock at
+       or after the build. That is exact — until the tab has been open longer
+       than a day, at which point the clock is genuinely ambiguous and the page
+       says so instead of picking. */
+(function () {
+  if (!window.fetch) return;                       /* no JS, no claim */
+  function bust() { return Math.floor(Date.now() / 60000); }
+  function words(sec) {
+    if (sec < 90) return "just now";
+    if (sec < 5400) return Math.floor(sec / 60) + " min ago";
+    if (sec < 129600) return Math.floor(sec / 3600) + " h ago";
+    var d = Math.floor(sec / 86400);
+    return d + (d === 1 ? " day ago" : " days ago");
+  }
+  function stamp(ms) {
+    return new Date(ms).toLocaleString([], {month: "short", day: "numeric",
+                                            hour: "2-digit", minute: "2-digit"});
+  }
+  function paint(el) {
+    var at = +el.getAttribute("data-at");
+    if (!at) return;
+    var sec = Math.max(0, Math.round(Date.now() / 1000 - at));
+    el.textContent = words(sec) + (sec >= 86400 ? " (" + stamp(at * 1000) + " your time)" : "");
+  }
+  function tick() {
+    var els = document.querySelectorAll("time.age[data-at]");
+    for (var i = 0; i < els.length; i++) paint(els[i]);
+  }
+  function ageEl(at) {
+    var t = document.createElement("time");
+    t.className = "age";
+    t.setAttribute("data-at", at);
+    t.setAttribute("datetime", new Date(at * 1000).toISOString());
+    paint(t);
+    return t;
+  }
+
+  /* ---- one machine's own log ------------------------------------------- */
+  var STAGE = {STARTED: "started a job", MODEL_LOADED: "loaded the model",
+               VIDEO_VENV_OK: "set its video tools up", VIDEO_DEPS_OK: "set its video tools up",
+               VIDEO_RENDERING: "rendering a moving clip", RENDERING: "rendering",
+               VIDEO_CLIP: "wrote a clip", VIDEO_CLIP_OK: "wrote a clip",
+               VIDEO_ENCODING: "encoding a clip", ENCODING: "encoding",
+               DONE: "handed its job in", FAIL: "its last job failed"};
+  function stageWords(line) {
+    /* task ids are log tokens and never reach the page (stranger-eyes, 2026-07-30) */
+    var s = line.replace(/^\\d{2}:\\d{2}:\\d{2}Z\\s*/, "").replace(/task=[\\w.\\-]+/g, "").trim();
+    var head = (s.split(/\\s+/)[0] || "").toUpperCase();
+    return STAGE[head] || s.toLowerCase() || "checked in";
+  }
+  function lineTime(line) {
+    var m = /^(\\d{2}):(\\d{2}):(\\d{2})Z/.exec(line);
+    if (!m) return null;
+    if (Date.now() / 1000 - BUILT_AT > 86400) return null;   /* genuinely ambiguous */
+    var d = new Date(BUILT_AT * 1000);
+    var t = Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), +m[1], +m[2], +m[3]);
+    if (t < BUILT_AT * 1000) t += 86400000;                  /* the clock crossed midnight */
+    if (t > Date.now() + 60000) t -= 86400000;
+    return Math.floor(t / 1000);
+  }
+  function lot(key, css) {
+    var b = document.querySelector('.lot-bld[data-mach="' + key + '"]');
+    if (b) b.className = "lot-bld " + css;
+  }
+  function say(li, text) {
+    var n = li.querySelector('[data-role="live"]');
+    if (!n) {
+      n = document.createElement("div");
+      n.className = "mono livemark";
+      n.setAttribute("data-role", "live");
+      li.appendChild(n);
+    }
+    n.textContent = text;
+    return n;
+  }
+
+  function readLog(li) {
+    var branch = li.getAttribute("data-branch"), key = li.getAttribute("data-mach");
+    var was = li.getAttribute("data-tail") || "";
+    fetch(RAW_BASE + "/" + branch + "/farm-out/heartbeat.txt?_=" + bust(), {cache: "no-store"})
+      .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
+      .then(function (txt) {
+        var lines = txt.replace(/\\s+$/, "").split("\\n");
+        var tail = (lines[lines.length - 1] || "").trim();
+        if (!tail || tail === was) return;         /* the build-time reading still stands */
+        li.setAttribute("data-tail", tail);
+        var ended = /(DONE|FAIL)\\b/.test(tail);
+        var head = li.querySelector('[data-role="head"]');
+        var chip = li.querySelector('[data-role="chip"]');
+        if (head) head.textContent = stageWords(tail);
+        if (chip) {
+          chip.textContent = ended ? "just finished" : "rendering";
+          chip.className = "chip" + (ended ? "" : " hot");
+        }
+        lot(key, ended ? "idle" : "working");
+        var at = lineTime(tail), seen = li.querySelector('[data-role="seen"]');
+        if (seen) {
+          seen.textContent = "last check-in ";
+          if (at) seen.appendChild(ageEl(at));
+          else seen.appendChild(document.createTextNode(
+            "since this page was built — the log carries a clock and no date, and this tab " +
+            "has been open long enough that the day is genuinely ambiguous"));
+        }
+        say(li, "re-read by your browser — this is newer than the copy the page was built from");
+      })
+      .catch(function (e) {
+        say(li, "its log could not be re-read just now (" + e.message +
+                "), so the reading above is the one this page was built with");
+      });
+  }
+
+  function readVitals(li) {
+    var branch = li.getAttribute("data-branch"), key = li.getAttribute("data-mach");
+    fetch(RAW_BASE + "/" + branch + "/telemetry.json?_=" + bust(), {cache: "no-store"})
+      .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then(function (d) {
+        var at = +d.last_sample;
+        if (!at) throw new Error("no sample in the file");
+        var stale = Date.now() / 1000 - at > TEL_STALE * 60;
+        var chip = li.querySelector('[data-role="chip"]');
+        var slot = li.querySelector('[data-role="vitals"]');
+        if (slot) {                                /* one age for one datum */
+          slot.textContent = "";
+          slot.appendChild(ageEl(at));
+        }
+        if (stale) {
+          /* the box has stopped publishing: withdraw the "switched on" claim */
+          if (chip && chip.textContent.indexOf("on,") === 0) {
+            chip.textContent = "not heard from";
+            chip.className = "chip";
+            lot(key, "asleep");
+          }
+          say(li, "its vitals stopped arriving " + words(Math.round(Date.now() / 1000 - at)) +
+                  " — nothing is claimed about whether it is switched on");
+        } else {
+          say(li, "your browser re-read its vitals just now — it is switched on");
+        }
+      })
+      .catch(function (e) {
+        say(li, "its vitals could not be read just now (" + e.message + ")");
+      });
+  }
+
+  /* ---- the work queue --------------------------------------------------- */
+  /* A four-line reader, not a YAML parser: this file's entries are `- id: x` at
+     column 0 under one of two top-level keys, and a comment cannot start with a
+     dash. It answers one question — has the list changed since this copy was
+     built — and the page keeps its build-time detail either way, because
+     rebuilding the whole work list in the browser would mean shipping a parser
+     we would then have to trust. */
+  function queueIds(text) {
+    var lines = text.split("\\n"), sec = null, out = {tasks: [], backlog: []};
+    for (var i = 0; i < lines.length; i++) {
+      var L = lines[i];
+      if (/^tasks:\\s*$/.test(L)) { sec = "tasks"; continue; }
+      if (/^backlog:\\s*$/.test(L)) { sec = "backlog"; continue; }
+      if (/^[A-Za-z_][\\w-]*:/.test(L)) { sec = null; continue; }
+      var m = /^- id:\\s*(\\S+)/.exec(L);
+      if (m && sec) out[sec].push(m[1]);
+    }
+    return out;
+  }
+  function readQueue() {
+    var note = document.getElementById("q-live");
+    if (!note) return;
+    fetch(QUEUE_URL + "?_=" + bust(), {cache: "no-store"})
+      .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
+      .then(function (t) {
+        var live = queueIds(t);
+        var same = live.tasks.join() === BUILT_QUEUE.tasks.join() &&
+                   live.backlog.join() === BUILT_QUEUE.backlog.join();
+        if (same) {
+          note.textContent = "your browser re-read the queue just now: unchanged since this " +
+            "copy was built — " + live.tasks.length + " runnable, " + live.backlog.length +
+            " planned.";
+        } else {
+          note.textContent = "your browser re-read the queue just now and it has CHANGED since " +
+            "this copy was built: " + live.tasks.length + " runnable and " + live.backlog.length +
+            " planned now, against " + BUILT_QUEUE.tasks.length + " and " +
+            BUILT_QUEUE.backlog.length + " below. The detail below is the older reading.";
+        }
+      })
+      .catch(function (e) {
+        note.textContent = "the queue could not be re-read just now (" + e.message +
+          "), so the list below is the queue as this copy was built.";
+      });
+  }
+
+  function refresh() {
+    var lis = document.querySelectorAll("#machlist li[data-branch]");
+    for (var i = 0; i < lis.length; i++) {
+      readLog(lis[i]);
+      if (lis[i].getAttribute("data-tel")) readVitals(lis[i]);
+    }
+    readQueue();
+  }
+  tick();
+  setInterval(tick, 20000);
+  refresh();
+  /* five minutes: the fastest anything upstream is written, and slow enough
+     that a tab left open all day is a handful of CDN reads. */
+  setInterval(function () { if (!document.hidden) refresh(); }, 300000);
+})();
+"""
+
+
 SIM_CSS = """
 /* ---- the lot: one living scene — sky, street, crew (tokens from the theme).
    All motion is transform-only on a handful of small elements, paused when the
@@ -739,6 +1537,34 @@ body.away .walker, body.away .walker * { animation: none !important; }
   margin: .6rem 0; font-size: .92rem; }
 .prod-row .why { color: var(--muted); font-size: .84rem; }
 .whyfoot { font: 500 .8rem/1.7 var(--mono); color: var(--faint); }
+
+/* ---- ages, states and the blocked list ----------------------------------
+   Every number on this page that is a DURATION wears .age, so a reader can see
+   at a glance which words are counting and which are fixed. The tabular figures
+   stop the list twitching as the browser rewrites them each 20 s. ---- */
+.age { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.machlist li { padding: .6rem 0; }
+.machlist .chip { margin-left: .35rem; vertical-align: .05em; }
+.machlist .mstate { margin: .25rem 0 .1rem; }
+.machlist .why { color: var(--muted); font-size: .84rem; }
+.livemark { font: 500 .76rem/1.6 var(--mono); color: var(--faint); }
+h3 .count, .bgroup .count { display: inline-block; font: 700 .68rem/1 var(--mono);
+  color: var(--faint); border: 1px solid var(--line); border-radius: 999px;
+  padding: .22rem .45rem; vertical-align: .12em; }
+.bgroup { margin: 1rem 0 .2rem; }
+.bgroup h3 { margin-bottom: .1rem; }
+.blist { list-style: none; padding: 0; margin: .3rem 0 0; }
+.blist li { padding: .55rem 0 .6rem; border-bottom: 1px solid var(--line-soft); }
+.blist li:last-child { border-bottom: 0; }
+.blist .why { color: var(--muted); font-size: .88rem; }
+.quests .waited { display: inline-block; font: 700 .68rem/1 var(--mono);
+  letter-spacing: .06em; text-transform: uppercase; color: var(--sap);
+  border: 1px solid var(--sap-deep); border-radius: 999px; padding: .25rem .5rem;
+  margin-right: .4rem; }
+.quests .held { margin-top: .35rem; padding: .45rem .6rem; border-radius: 10px;
+  background: var(--panel-2); border: 1px solid var(--line-soft);
+  font: 500 .76rem/1.6 var(--mono); color: var(--faint); }
+.quests .held b { color: var(--ink); }
 
 /* ---- vitals: the four numbers a visitor can check against the repo ---- */
 .vitals { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -841,18 +1667,41 @@ def build(out_dir: Path):
                'growth steps. A scene grows twice: its frame is approved, then it is animated.</div>')
 
     # --- the lot: our machines as buildings on one street, crew walking it ---
-    queue = queue_tasks()
+    # ONE READ OF THE FARM, used by every section below. read_machines() dates
+    # each check-in off the commit that pushed it, so the ages here are real:
+    # the old arithmetic wrapped at 24 h and published a box last heard from on
+    # 29 July as "12 h ago".
+    now = utcnow()
+    qdoc = queue_doc()
+    queue, backlog = qdoc["tasks"], qdoc["backlog"]
+    machines = read_machines(queue, backlog, now)
     bldgs, machlist, seen_states = "", "", []
-    for b in farm_branches():
-        key = b.split("farm-results-")[-1]
-        nice, emoji = MACHINES.get(key, (key, "🏠"))
-        state, cap, raw = machine_state(branch_heartbeat(b), queue)
-        seen_states.append(state)
-        smoke = '<div class="smoke">💨</div>' if state == "working" else ""
-        bldgs += (f'<div class="lot-bld {state}" title="{_e(nice)} — {_e(cap)}">{smoke}'
-                  f'<span class="ico">{emoji}</span><span class="btag">{_e(nice)}</span></div>')
-        machlist += (f'<li><span class="mico">{emoji}</span> <b>{_e(nice)}</b> — '
-                     f'<span class="mono">{_e(cap)}</span></li>')
+    for m in machines:
+        st = m["state"]
+        seen_states.append(st["css"])
+        title = f'{m["name"]} — {st["head"]} · {st["seen"]}'
+        smoke = '<div class="smoke">💨</div>' if st["css"] == "working" else ""
+        bldgs += (f'<div class="lot-bld {st["css"]}" data-mach="{_e(m["key"])}" '
+                  f'title="{_e(title)}">{smoke}'
+                  f'<span class="ico">{m["emoji"]}</span>'
+                  f'<span class="btag">{_e(m["name"])}</span></div>')
+        # Every claim on this line carries the age of the thing it describes,
+        # and the ages tick in the reader's own browser (see LIVE_JS).
+        bits = [f'last check-in {age_el(m["last_seen"], now)}'] if m["last_seen"] else \
+            [f'<span class="age">{_e(st["seen"])}</span>']
+        if m["telemetry"]:
+            bits.append('vitals published <span data-role="vitals">'
+                        f'{age_el(m["telemetry"]["at"], now)}</span>')
+        machlist += (
+            f'<li data-mach="{_e(m["key"])}" data-branch="{_e(m["branch"])}" '
+            f'data-tail="{_e(st["raw"])}" data-built="{int(now.timestamp())}" '
+            f'data-tel="{"1" if m["telemetry"] else ""}">'
+            f'<span class="mico">{m["emoji"]}</span> <b>{_e(m["name"])}</b> '
+            f'<span class="chip{" hot" if st["css"] == "working" else ""}" '
+            f'data-role="chip">{_e(st["chip"])}</span>'
+            f'<div class="mstate" data-role="head">{_e(st["head"])}</div>'
+            + (f'<div class="why">{_e(st["why"])}</div>' if st["why"] else "")
+            + f'<div class="mono" data-role="seen">{" · ".join(bits)}</div></li>')
     bldgs += (f'<div class="lot-bld lot-tree"><a class="ico" href="{_e(hero["page"])}" '
               f'title="Episode {hero["number"]} — {pct}% grown">🌳</a>'
               f'<span class="btag">episode {hero["number"]} · {pct}%</span></div>')
@@ -866,23 +1715,93 @@ def build(out_dir: Path):
            f'<div class="street">{bldgs}</div>'
            f'{walkers_html(comments, "working" in seen_states)}</div>')
 
-    # --- what is being rendered, and why (founder, 2026-07-30) ---
-    prod_rows = ""
-    for t in merge_queue(queue):
-        what, why = task_story(t)
-        wkey = str(t.get("worker", "any"))
-        wnice = MACHINES.get(wkey, (wkey, "🏠"))[0]
-        prod_rows += (f'<div class="prod-row"><b>{_e(wnice)}</b> · {_e(what)}'
-                      f'<br><span class="why">{_e(why)}</span></div>')
-    # NOT "right now". This page is a static file built at deploy time, and on
-    # 2026-08-02 it sat five hours out of date under a heading that asserted it was
-    # current. A snapshot may be late; it must not lie about being live.
-    production = (f'<h2>🏭 In production, as of this snapshot</h2>{prod_rows}'
-                  '<p class="whyfoot">Finished frames land on each machine\'s courier branch, '
-                  'get checked, and show up as choices on the '
-                  '<a href="sapling/001-capability-inventory-shots.html">shot board</a> — '
-                  'the author (and anyone watching) picks what survives.</p>'
-                  ) if prod_rows else ""
+    # --- what is being rendered, what is merely queued, and what is blocked ---
+    # QUEUED IS NOT IN PRODUCTION. The old heading printed the whole `tasks:`
+    # list under "In production" — so a job nobody had started, and a job that
+    # finished four days ago and had not been retired out of the file, both read
+    # as work happening now. A task is RENDERING only when a machine's own log
+    # holds a fresh STARTED for its id and no DONE after it.
+    done_ids = task_ids_done(machines)
+    running = {}
+    for t in queue:
+        r = task_running(str(t.get("id")), machines)
+        if r:
+            running[str(t.get("id"))] = r
+    running_t = [t for t in queue if str(t.get("id")) in running]
+    queued_t = [t for t in queue
+                if str(t.get("id")) not in running and str(t.get("id")) not in done_ids]
+
+    def _rows(tasks, stamp=None):
+        html_rows = ""
+        for t in merge_queue(tasks):
+            what, why = task_story(t)
+            wkey = str(t.get("worker", "any"))
+            wnice = MACHINES.get(wkey, (wkey, "🏠"))[0] if wkey != "any" else "any machine"
+            extra = ""
+            r = running.get(str(t.get("id")))
+            if stamp and r:
+                extra = f'<br><span class="mono">started {age_el(r["since"], now)}</span>'
+            html_rows += (f'<div class="prod-row"><b>{_e(wnice)}</b> · {_e(what)}{extra}'
+                          f'<br><span class="why">{_e(why)}</span></div>')
+        return html_rows
+
+    if running_t:
+        rendering = ('<h3>🔴 Rendering right now</h3>' + _rows(running_t, stamp=True))
+    else:
+        rendering = ('<h3>🔴 Rendering right now</h3><p class="notice">Nothing is '
+                     'rendering this minute — no machine has an unfinished job in its '
+                     'own log.</p>')
+    if queued_t:
+        queued_html = (f'<h3>⏭ Queued and runnable <span class="count">{len(queued_t)}'
+                       '</span></h3><p class="mono">Claimed by whichever named machine '
+                       'polls the queue next; nothing here is waiting on a person.</p>'
+                       + _rows(queued_t))
+    else:
+        queued_html = ('<h3>⏭ Queued and runnable <span class="count">0</span></h3>'
+                       '<p class="notice">The runnable queue is empty. That is a '
+                       'statement, not an oversight: it means no planned job is both '
+                       'unblocked and shaped for a machine to pick up by itself.</p>')
+
+    # --- finished today: DONE lines with real dates on them ---
+    by_id = {str(t.get("id")): t for t in list(queue) + list(backlog)}
+    fin = finished_today(machines, now)
+    if fin:
+        fin_rows = ""
+        for when, who, tid in fin:
+            t = by_id.get(tid)
+            what = task_story(t)[0] if t else "a job the queue no longer lists"
+            fin_rows += (f'<div class="prod-row"><b>{_e(who)}</b> · {_e(what)}'
+                         f'<br><span class="mono">finished {age_el(when, now)}</span></div>')
+        done_html = (f'<h3>✅ Finished today <span class="count">{len(fin)}</span></h3>'
+                     + fin_rows)
+    else:
+        done_html = ('<h3>✅ Finished today <span class="count">0</span></h3>'
+                     '<p class="notice">No job has finished since midnight UTC. '
+                     'Today is read off the dated check-in log, not guessed from a '
+                     'clock time with no day attached.</p>')
+
+    blocked_total = sum(v["est"] or 0 for v in map(backlog_entry_view, backlog))
+    production = (
+        '<h2>🏭 The work list</h2>'
+        '<p style="margin:.2rem 0 .6rem;color:var(--muted)">Everything the studio '
+        'has agreed to make, in the order reality allows: what a machine is '
+        'actually running, what it can pick up next, what finished today, and '
+        'what is planned but held — each held job with the blocker written down.</p>'
+        '<p class="livemark" id="q-live">This is the work queue as this copy of the '
+        'page was built. With JavaScript on, your browser re-reads the queue file '
+        'itself and says here whether it has changed since.</p>'
+        f'{rendering}{queued_html}{done_html}'
+        f'<h3>🧱 Planned, and what each one is waiting for '
+        f'<span class="count">{len(backlog)}</span></h3>'
+        + ('<p class="mono">' + _e(hours_words(blocked_total))
+           + ' of work sits here. A blocker is a fact about the world, not a '
+             'priority call — nothing below can start until the named thing '
+             'changes.</p>' if blocked_total else "")
+        + backlog_html(backlog)
+        + '<p class="whyfoot">Finished frames land on each machine\'s courier branch, '
+          'get checked, and show up as choices on the '
+          '<a href="sapling/001-capability-inventory-shots.html">shot board</a> — '
+          'the author (and anyone watching) picks what survives.</p>')
     town_legend = " · ".join(STATE_WORDS[s] for s in STATE_WORDS if s in seen_states) \
         or "no machine has checked in yet"
 
@@ -997,8 +1916,13 @@ a locked one is exactly what remains</p>
 
 <h2>The lot — the studio at work</h2>
 {lot}
-<ul class="machlist">{machlist}</ul>
+<ul class="machlist" id="machlist">{machlist}</ul>
 <p class="legend">{town_legend}</p>
+<p class="whyfoot">Two different files answer two different questions. A machine writes to
+its check-in log only while a job is running, so silence there means “no job”, never “no
+machine”; the render box also publishes its own temperature and memory every five minutes,
+which is the only thing that can say a box is switched on. Where a machine can be seen but
+cannot work, the reason below is the one its own queue entry records.</p>
 {production}
 
 <h2>🏟 The render box, minute by minute</h2>
@@ -1027,21 +1951,25 @@ the assembled episode is a working cut until the author passes it · {waiting}</
 <h2>How long each step takes (and what it costs)</h2>
 {steps_table_html(data.STEPS)}
 
-<details class="drawer"><summary>The author's own quest log — read-only</summary>
-<div class="drawer-body">
-<p class="mono">These are calls only the author can make; the rest of the city keeps moving while
-they wait.</p>
-{quests_html(inbox)}</div></details>
+<h2>🕰 Waiting on the author</h2>
+<p style="margin:.2rem 0 .4rem;color:var(--muted)">These are calls only the author can make —
+taste, and what gets published. The rest of the city keeps moving while they wait, but the
+jobs listed under each one cannot start until it is made, and the number in front of each is
+how long it has been sitting there.</p>
+{waiting_html(inbox, backlog, now)}
 
 <h2>People on the reactions thread</h2>
 <div class="citizens">{citizens}</div>
 <p style="text-align:center"><a href="https://github.com/{GH}/issues/1">join them &rarr;</a></p>
 
 <p class="legend">{data.LEGEND}</p>
-<footer>snapshot {time.strftime('%Y-%m-%d %H:%M', time.gmtime())}Z · this page is a static
-file: it shows the queue at BUILD time and cannot update itself — rebuilt on every push
-and every half hour · the render-box charts are the one exception, fetched live by your
-browser · the whole repo IS the show —
+<footer>This copy was built {now.strftime('%Y-%m-%d %H:%M')}Z ({age_el(now, now)}).
+Nothing on this page is dated by that build: every age above counts from the moment its own
+datum was recorded. This copy is rebuilt whenever the repo changes, and the mirror copy also
+rebuilds every half hour, so two copies of this page can differ — which is why the ages are
+per-datum and not one snapshot stamp. Your browser re-reads the machines' check-in logs, the
+render box's vitals and the work queue for itself, and keeps the ages counting while the tab
+is open. The whole repo IS the show —
 <a href="index.html">the city</a> · <a href="lab/index.html">the lab</a> ·
 <a href="machine.html">how it works</a></footer>
 </main>
@@ -1051,6 +1979,11 @@ document.addEventListener("visibilitychange", function () {{
   document.body.classList.toggle("away", document.hidden);
 }});
 var TEL_URL = {json.dumps(TELEMETRY_URL)}, TEL_STALE = {TELEMETRY_STALE_MINUTES};
+var RAW_BASE = {json.dumps(RAW)}, QUEUE_URL = {json.dumps(QUEUE_URL)};
+var BUILT_AT = {int(now.timestamp())};
+var BUILT_QUEUE = {json.dumps({"tasks": [str(t.get("id")) for t in queue],
+                               "backlog": [str(b.get("id")) for b in backlog]})};
+{LIVE_JS}
 {TEL_JS}
 </script>
 </body>
