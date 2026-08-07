@@ -310,39 +310,42 @@ backlog:
     the second card, it needs no GPU and no founder, and twice in two days a LAN
     fault has been recorded as a dead box.
 
-# LTX-2.3 is cleared on look and cannot be used, and this is the reason.
-- id: ltx-jobs-loop-1786089780
-  runner: manual
-  worker: m1pro
-  needs: []
-  window: any
-  est_minutes: 120
-  cmd: >-
-    give pipeline/ltx_i2v.py a jobs stage (load once, render all) and teach
-    pipeline/video_task.py to launch it when video_model names an LTX build
-  why: >-
-    LTX wins per clip and LOSES per episode — about 78 min for 15 beats against the
-    5B's 42 — because video_task.py lines 1015 and 1082 both hardcode wan_i2v.py, so
-    every beat gets its own process and re-pays an 88s Gemma load and a 139s fp8
-    cast. Load-once brings it to about 25 min. Its consumer is
-    ltx-episode-batch-1786089840, which cannot be queued at all until this exists.
+# ltx-jobs-loop-1786089780 was HERE and is done (2026-08-07): ltx_i2v.py has a
+# --jobs mode on both stages and video_task.py dispatches `video_model: ltx*` to
+# it. The entry is deleted rather than annotated because a manual entry is never
+# retired by the promoter — it would have sat in this file reading as runnable.
+# What it produced is below; the measurement is in STATE.md 2026-08-07.
 
 - id: ltx-episode-batch-1786089840
   runner: farm
   worker: rtx5090
   needs: [cuda, vram20, video-venv]
-  gate: code
+  gate: founder
   gate_ref: >-
-    ltx-jobs-loop-1786089780 is unwritten — video_task.py lines 1015 and 1082
-    hardcode pipeline/wan_i2v.py, and ltx_i2v.py has no jobs stage.
-  window: overnight
+    The code gate is CLEARED (2026-08-07: --jobs on both ltx_i2v stages, dispatch
+    in video_task.run, one beat verified end-to-end through the new path against
+    SAMPLES/ltx23fp8-production-b1-s20260732.mp4). What is left is a taste call and
+    it is R4's. Episode 1 already exists as v32, rendered on the 5B, and it is the
+    cut sitting in pending-founder.yaml `v6-verdict` waiting to be watched — so
+    re-rendering its beats on a different model would replace the thing being judged
+    while the judgement is open. LTX is cleared on ONE beat's look, not on an
+    episode's. Order: v6-verdict first, then this ONE beat, then his verdict on it,
+    and only then a fifteen-beat batch (ONE SAMPLE BEFORE ANY BATCH, CLAUDE.md).
+  window: any
   est_minutes: 30
   video: true
   node: 001-capability-inventory
-  video_model: ltx-2.3
+  # THE KEY THE DISPATCH ACTUALLY ACCEPTS. `ltx-2.3` was a name for the family, not
+  # a model: video_task.LTX_MODELS keys on the artifact, because the fp8 layerwise
+  # cast is a different set of numerics from the bf16 weights and the sidecar has to
+  # say which one made the pixels. This is the one the founder screened.
+  video_model: ltx23-distilled-fp8
   beats: '1'
   size: 704x1280
-  seconds: 2.5
+  # 2.7, not 2.5, and the number is load-bearing: ltx_frames_for rounds seconds to
+  # the nearest legal 8n+1, so 2.7s is 65 frames — the exact length of the screened
+  # sample. 2.5s would be 57, a recipe nobody has looked at.
+  seconds: 2.7
   why: >-
     A second gate sits behind the code one and is named here rather than discovered
     later — LTX is cleared ON LOOK only (R4, 2026-08-06), and switching renderers
@@ -396,7 +399,10 @@ backlog:
   cmd: >-
     hand-run pipeline/ltx_i2v.py two-stage on the approved frame (8 steps at
     352x640, 2x latent upsample, 3 steps at 704x1280, explicit sigmas, guidance
-    1.0) per the LTX row in pipeline/research/MODEL-COMPARISON.md section 1
+    1.0) per the LTX row in pipeline/research/MODEL-COMPARISON.md section 1 — or,
+    since 2026-08-07, queue it: `video_model: ltx23-distilled-fp8` now reaches
+    ltx_i2v through video_task, which writes the sidecar and the bench row itself.
+    Left as `manual` because the frame pick is still the gate either way.
   why: >-
     The same beat on both renderers is the comparison the founder was promised on
     2026-08-06 and never got; the clips drop into SAMPLES/ and COMPARISON.html

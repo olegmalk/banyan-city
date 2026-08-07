@@ -2672,3 +2672,96 @@ the revoked one. Its sidecar keeps `model: none` as a **bare** token
 deliberately: `render_t3.held_still` and `check_invention` both detect a held
 clip by substring on it, and dropping it would palindrome the clip and make the
 detector report a computed push-in as invented content.
+
+## 2026-08-07 — LTX-2.3 is queueable: an episode is two processes instead of thirty, and the verification clip came back byte-identical three times
+
+**What was blocked.** LTX-2.3 fp8 won on look on 2026-08-06 and could not be run
+from the queue at all: `video_task.py` hardcoded `wan_i2v.py` in all three of its
+sampling paths, and `video_model` only ever selected a key inside
+`wan_i2v.MODELS` — a dict of Wan-family repos that LTX is deliberately not in
+(different pipeline, different CLI, different licence document). The only way to
+render on it was by hand. And per beat it was slower than the model it beat:
+73.3s of clip behind 88s of Gemma, a transformer load and a 139s fp8 cast, **every
+beat** — about 78 minutes for fifteen against the 5B's 42.
+
+**What exists now.** `ltx_i2v.py` takes `--jobs <list.json>` on BOTH stages.
+`--stage encode` loads Gemma once and writes one embeds file per beat, then
+exits — still a separate process, because exiting is what returns the ~37GB
+encoder before the transformer is read. `--stage render` assembles the pipeline
+once (`_build_pipe`) and loops the beats through it (`_render_one`). `run()`
+gained a three-line dispatch: a `video_model` starting `ltx` goes to `run_ltx`,
+anything else reaches the same literal it always did. The queue speaks Wan's
+dialect, so the translation is three pure, unit-tested functions —
+`ltx_frames_for` (seconds → nearest legal 8n+1), `ltx_offload_for` (the queue's
+boolean → `model` when the fp8 cast is on, `sequential` when it is not) and
+`ltx_argv`.
+
+**The verification was a plumbing check, and it is as strict as this pipeline
+allows.** The recipe was the screened one — 704x1280, 65 frames, two-stage,
+distilled sigmas, guidance 1.0, image-crf 33, fp8-layerwise, offload model, seed
+20260732 — and the only question was whether routing it through the new dispatch
+changes a pixel. It does not. **The clip came back sha256 `98d2487…fed91`,
+byte-identical to `SAMPLES/ltx23fp8-production-b1-s20260732.mp4`, in three
+independent runs**: once before a fix, once after it, and once from inside a
+two-beat loop. No fidelity metric was needed — the files are the same file. The
+prompt and negative the queue builds were checked against the screened sidecar
+first, on both machines, and match byte for byte.
+
+**Measured on the 5090, 2026-08-07, box otherwise idle.**
+
+| | wall | note |
+|---|---|---|
+| encode, 1 prompt | 138.6s | 6.3s Gemma load (warm cache) + 132.3s first `encode_prompt` |
+| encode, each further prompt | 35.7s | steady across all fourteen |
+| **encode, 15 prompts** | **646.5s measured** | one process, one Gemma load, rc=0, 15/15 embeds |
+| render, load + first beat | 220.2s | includes the 139s fp8 cast |
+| render, each further beat | 47.6s | measured beat 1 → beat 2 |
+| 15-beat render (projected) | 886.6s | 220.2 + 14 × 47.6, measured terms only |
+| **15-beat episode** | **~25.6 min** | against ~78 min per-beat, and the 5B's ~42 |
+
+The per-beat marginal is **83.3s** — 35.7s of encode plus 47.6s of render. Fixed
+cost for the whole episode is about 4.6 minutes. Reproducing the OLD path's cost
+from the same measurements gives ~77 min, which is the ~78 already on record, so
+these numbers and that one are the same measurement seen twice.
+
+**Beat 2 is 28s cheaper than beat 1 and it is worth knowing where that went**,
+because it is not all the model load. `sample_s` falls 73.9 → 46.0 while the
+recipe is identical. Of that: **8s in the stage-1 bar** (21s → 13s — CUDA
+first-step warm-up; the 2026-08-05 log shows step 1 at 12.43s against 1.5s for
+step 8), **0s in stage 2** (18s both), and **~20s outside the bars**, which is
+`_load_upsampler()` re-reading the 497.9M-parameter spatial upscaler **from disk
+on every beat** — cold on beat 1, page cache on beat 2. Hoisting it into
+`_build_pipe` is the next available win and is deliberately NOT taken here: it
+sits exactly where the parked `--offload split` work switches offload modes at
+the stage seam, and one change at a time in that spot is the cheaper order.
+
+**One defect was found by running it and not by reading it.** `_crf_roundtrip`
+wrote `cond-crf.mp4` and `cond-crf.png` into the CLIP's directory. On a hand-fired
+probe that directory was `SAMPLES/`; through the queue it is `courier.out`, and
+`Courier.mark()` runs `git add -A farm-out` + commit + push on every finished
+beat — so a fifteen-beat episode would have pushed ~9MB of throwaway onto the
+courier branch, with the last beat's pair sitting in the delivery folder looking
+like output. They now go beside the embeds, which is a scratch location on every
+caller, tagged per beat. The verification was re-run after the fix rather than
+argued about, because it is a change to the render path; the output directory now
+holds exactly the clips and their sidecars.
+
+**Provenance is per beat, and the renderer writes it rather than the queue.**
+`run_ltx` deliberately does not overwrite the sidecar `ltx_i2v` already wrote —
+that one carries what only the renderer knew (the offload mode that ran, the
+quantisation, the measured throughput), and the queue's thinner version would
+delete it. It writes one only if the renderer wrote none, because a clip without
+provenance is a §7.2 violation. Beat 2's sidecar reads `shot_beat: 2`, `seed:
+20260733`, `throughput_s_video_per_s_wall: 0.0588` — its own numbers, not beat 1's.
+
+**What is still gated, and by whom.** `ltx-episode-batch-1786089840` moves from
+`gate: code` to `gate: founder`. The loop exists; the taste call does not. Episode
+1 already exists as v32 on the 5B and is the cut waiting in
+`pending-founder.yaml v6-verdict` — re-rendering its beats on a different model
+would replace the thing being judged while the judgement is open. LTX is cleared
+on ONE beat's look, not on an episode's. Order: v6-verdict, then this one beat,
+then his verdict on it, and only then a batch. The entry's `video_model` also
+changes from `ltx-2.3` (a family name the dispatch cannot honour) to
+`ltx23-distilled-fp8`, and its `seconds` from 2.5 to 2.7, because 2.7s is the 65
+frames that were screened and 2.5s would round to 57 — a length nobody has looked
+at.

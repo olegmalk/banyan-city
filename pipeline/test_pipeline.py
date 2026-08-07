@@ -1364,6 +1364,258 @@ def test_probe_beat_sends_the_files_and_the_whole_recipe(tmp: Path):
           "init_still: 11-grow.png" in side)
 
 
+def test_ltx_frames_are_the_nearest_8n_plus_1():
+    """The queue speaks seconds; LTX's CLI takes frames, and only 8n+1 ones.
+
+    A translation with rounding in it is exactly the kind of thing that looks
+    obviously right and is off by a third of a second on every clip in an episode.
+    Two failure directions matter:
+
+      FLOOR instead of nearest. 4s at 24fps is 96 frames and the candidates are 89
+      and 97. Flooring gives 89 — 3.71s of clip for a beat the shot board timed at
+      4.0 — and render_t3 would then either stretch it or slate the gap, neither of
+      which anyone would trace back to a rounding rule.
+
+      A COUNT THAT IS NOT 8n+1. LTX refuses it (ltx_i2v prints "requires frames
+      divisible by 8 plus 1" and exits 2), which is the harmless direction, but it
+      would refuse AFTER the queue had marked the task running.
+
+    The 2.7s -> 65 row is the load-bearing one: 65 frames is the recipe the founder
+    screened on 2026-08-06, so a task written in seconds must land on it exactly or
+    the queue cannot reproduce the approved look at all.
+    """
+    sys.path.insert(0, str(REPO / "pipeline"))
+    import video_task as V
+
+    check("2.7s at 24fps is the screened 65 frames", V.ltx_frames_for(2.7) == 65)
+    check("4s at 24fps rounds UP to 97, not down to 89", V.ltx_frames_for(4) == 97)
+    check("3s at 24fps -> 73", V.ltx_frames_for(3.0) == 73)
+    check("5s at 24fps -> 121", V.ltx_frames_for(5.0) == 121)
+    check("a non-24 fps is honoured", V.ltx_frames_for(4, fps=12) == 49)
+    bad = [s for s in (0.1, 0.5, 1, 1.7, 2, 2.5, 2.667, 2.7, 3, 3.3, 4, 4.5, 5, 6, 8)
+           if (V.ltx_frames_for(s) - 1) % 8 or V.ltx_frames_for(s) < 9]
+    for s in bad:
+        print(f"      x  {s}s -> {V.ltx_frames_for(s)} frames, not a valid 8n+1")
+    check("every duration maps to a legal 8n+1 count of at least 9", not bad)
+    # nearest, checked as a property rather than as a table: no legal count is
+    # closer to the request than the one returned
+    off = []
+    for s in (0.4, 1.3, 2.2, 3.9, 4.4, 7.1):
+        want = s * 24
+        got = V.ltx_frames_for(s)
+        better = [f for f in range(9, 400, 8) if abs(f - want) < abs(got - want)]
+        if better:
+            off.append(f"{s}s -> {got}, but {better[0]} is nearer {want}")
+    for o in off:
+        print(f"      x  {o}")
+    check("no legal frame count is nearer the request than the one chosen", not off)
+
+
+def test_ltx_dispatch_routes_by_video_model(tmp: Path):
+    """`video_model: ltx*` must reach ltx_i2v.py, and everything else wan_i2v.py.
+
+    Until 2026-08-07 video_task hardcoded the renderer in all three of its sampling
+    paths — `wan = str(REPO/"pipeline"/"wan_i2v.py")` and the same literal in the
+    batch call — so an LTX task was not a slow path, it was no path: `video_model`
+    only ever selected a key inside wan_i2v.MODELS, and LTX is deliberately not in
+    that dict (different pipeline, different licence document).
+
+    Both halves are asserted, and the second is the one that protects existing work:
+    an LTX task must NOT reach wan_i2v, and a Wan task must NOT reach ltx_i2v. The
+    dispatch is three lines above code that fifteen episodes have already been
+    rendered through, and a routing change that leaks is a change to all of them.
+
+    Run against real machinery — node 001's shot board and a real still — with only
+    the two child-process boundaries stubbed, because the thing under test is which
+    argv gets built, not whether a GPU is present.
+    """
+    import json
+
+    sys.path.insert(0, str(REPO / "pipeline"))
+    import video_task as V
+
+    node = REPO / "genomes/sapling/nodes/001-capability-inventory"
+    stills = tmp / "stills"
+    stills.mkdir()
+    (stills / "01-keyboard.png").write_bytes(b"\x89PNG\r\n\x1a\n" + b"0" * 64)
+    work = tmp / "node"
+    work.mkdir()
+    for f in ("shots.md", "node.md"):
+        (work / f).write_text((node / f).read_text(encoding="utf-8"), encoding="utf-8")
+    (work / "stills").symlink_to(stills)
+
+    class Courier:
+        def __init__(self):
+            self.out = tmp / "farm-out"
+            self.out.mkdir(exist_ok=True)
+            self.marks, self.said = [], []
+
+        def mark(self, m):
+            self.marks.append(m)
+
+        def say(self, m):
+            self.said.append(m)
+
+    seen = []
+    real = (V._run, V.gpu_vram_gb, V.ensure_stack)
+    V.gpu_vram_gb = lambda: 24.0            # a big card, so the Wan batch path runs
+    V.ensure_stack = lambda courier: None   # no venv on this machine, and none needed
+
+    def fake_run(cmd, courier, stage, timeout=None, retry=False):
+        seen.append([str(c) for c in cmd])
+        # the child would have written the clip; write something clip-sized so the
+        # caller's own "did a clip appear" check reaches its success branch and the
+        # routing question is answered by a run that SUCCEEDED, not by an exception
+        for i, c in enumerate(cmd):
+            if c == "--out":
+                Path(cmd[i + 1]).write_bytes(b"0" * 20_000)
+            if c == "--jobs":
+                for j in json.loads(Path(cmd[i + 1]).read_text(encoding="utf-8")):
+                    if isinstance(j, dict) and j.get("out"):
+                        Path(j["out"]).write_bytes(b"0" * 20_000)
+        return None
+    V._run = fake_run
+    try:
+        for vmodel, script, other in (
+                ("ltx23-distilled-fp8", "ltx_i2v.py", "wan_i2v.py"),
+                ("ti2v-5b", "wan_i2v.py", "ltx_i2v.py")):
+            seen.clear()
+            V.run({"id": f"t-{vmodel}", "beats": "1", "video_model": vmodel,
+                   "seconds": 2.7, "worker": "rtx5090"}, Courier(), work)
+            joined = " ".join(" ".join(c) for c in seen)
+            check(f"{vmodel} reaches {script}", script in joined)
+            check(f"{vmodel} never reaches {other}", other not in joined)
+    finally:
+        V._run, V.gpu_vram_gb, V.ensure_stack = real
+
+    # THE WHOLE RECIPE, not just the script name. Same invariant the Wan test above
+    # enforces on its three call sites: a parameter the queue may set and the child
+    # silently defaults is how "guidance did nothing" got written down as a finding.
+    task = {"id": "ep1", "video_model": "ltx23-distilled-fp8", "worker": "rtx5090",
+            "seed_base": 20260731}
+    argv = V.ltx_argv("py", "ltx_i2v.py", task, "j.json", stage="render",
+                      size="704x1280", seconds=2.7)
+    got = " ".join(argv)
+    for want in ("--size 704x1280", "--frames 65", "--guidance 1.0",
+                 "--image-crf 33", "--offload model", "--two-stage",
+                 "--distilled-sigmas", "--fp8-layerwise", "--task ep1",
+                 "--worker rtx5090"):
+        check(f"the screened recipe carries {want}", want in got)
+    # the CFG-1 default is the LTX one, not this file's Wan-shaped 5.0
+    check("guidance defaults to the distilled 1.0, not wan's 5.0",
+          "--guidance 5.0" not in got)
+    # bf16 has no cast, so the resident mode would OOM: it must get sequential
+    bf16 = " ".join(V.ltx_argv("py", "l.py", {**task, "video_model": "ltx23-distilled"},
+                               "j.json", stage="render", size="704x1280", seconds=2.7))
+    check("the un-cast bf16 model gets --offload sequential",
+          "--offload sequential" in bf16 and "--fp8-layerwise" not in bf16)
+    # --steps means nothing under --two-stage (the sigma lists set the counts), and
+    # a queue default of 30 in the log is a number nothing executed
+    check("--steps is not sent on the two-stage path", "--steps" not in got)
+    single = V.ltx_argv("py", "l.py", {**task, "two_stage": False}, "j.json",
+                        stage="render", size="704x1280", seconds=2.7)
+    check("--steps IS sent on the single-stage path", "--steps 8" in " ".join(single))
+    check("the encode stage takes only the jobs file",
+          V.ltx_argv("py", "l.py", task, "j.json", stage="encode", size="704x1280",
+                     seconds=2.7) == ["py", "l.py", "--stage", "encode",
+                                      "--jobs", "j.json"])
+    # an ltx name the dispatch cannot honour must fail HERE, with a sentence, not an
+    # hour later inside diffusers: ltx23-fp8 is the archived single-file checkpoint
+    try:
+        V.ltx_argv("py", "l.py", {"video_model": "ltx23-fp8"}, "j.json",
+                   stage="render", size="704x1280", seconds=2.7)
+        check("an unsupported ltx model is refused at dispatch", False)
+    except ValueError:
+        check("an unsupported ltx model is refused at dispatch", True)
+
+    # every flag the dispatch sends must be one ltx_i2v's parser declares — the LTX
+    # half of the same check test_queue_render_params_reach_the_child makes for wan
+    import re as _re
+    known = set(_re.findall(r'add_argument\("--([a-z0-9-]+)"',
+                            (REPO / "pipeline" / "ltx_i2v.py").read_text(encoding="utf-8")))
+    sent = {c[2:] for c in argv + single if c.startswith("--")}
+    unknown = sorted(sent - known)
+    for u in unknown:
+        print(f"      x  --{u} is sent but ltx_i2v does not define it")
+    check("no flag is sent that ltx_i2v does not accept", not unknown)
+
+
+def test_ltx_jobs_list_is_one_beat_per_entry(tmp: Path):
+    """The jobs file is the whole contract between two processes and fifteen beats.
+
+    Everything that makes an episode an episode rather than fifteen unrelated
+    renders passes through this list: which still conditions which beat, which
+    seed, which prompt, and which embeds file the render stage should expect the
+    encode stage to have written. It is read twice, in two processes, and the
+    second read happens after ~4 minutes of model loading — so a malformed entry
+    must raise at the top of the run, not a third of the way into it.
+
+    The recipe is deliberately NOT per-beat: one model load is one recipe, and a
+    jobs file that could vary --size or --offload per entry would be asking for a
+    reload it cannot have.
+    """
+    import argparse
+    import json
+
+    sys.path.insert(0, str(REPO / "pipeline"))
+    import ltx_i2v as L
+
+    (tmp / "p1.txt").write_text("2D anime. the sapling leans", encoding="utf-8")
+    # the negative carries Wan-era Chinese anti-static terms; the point of putting
+    # prompts in FILES is that these bytes survive a cp1252 console
+    (tmp / "n1.txt").write_text("静态, 静止不动的画面, frozen frame", encoding="utf-8")
+    spec = [{"beat": 1, "embeds": str(tmp / "e1.pt"), "prompt_file": str(tmp / "p1.txt"),
+             "negative_file": str(tmp / "n1.txt"), "init": str(tmp / "01.png"),
+             "out": str(tmp / "o1.mp4"), "seed": 20260732},
+            {"beat": 2, "embeds": str(tmp / "e2.pt"), "prompt_file": str(tmp / "p1.txt"),
+             "negative_file": str(tmp / "n1.txt"), "init": str(tmp / "02.png"),
+             "out": str(tmp / "o2.mp4"), "seed": 20260733}]
+    jf = tmp / "jobs.json"
+    jf.write_text(json.dumps(spec), encoding="utf-8")
+
+    base = dict(jobs=str(jf), beat=99, seed=1, init="", out="", prompt="",
+                negative="", embeds="", size="704x1280", offload="model",
+                two_stage=True)
+    jobs = L._jobs_for(argparse.Namespace(**base), "render")
+    check("one namespace per entry", len(jobs) == 2)
+    check("each beat carries its own seed", [j.seed for j in jobs] == [20260732, 20260733])
+    check("each beat carries its own beat number", [j.beat for j in jobs] == [1, 2])
+    check("each beat carries its own embeds path",
+          [Path(j.embeds).name for j in jobs] == ["e1.pt", "e2.pt"])
+    check("the prompt is read from the file, not the json",
+          jobs[0].prompt == "2D anime. the sapling leans")
+    check("the negative survives as bytes, not as mojibake",
+          "静止不动的画面" in jobs[0].negative)
+    check("the recipe is shared, not per-beat",
+          all(j.size == "704x1280" and j.offload == "model" for j in jobs))
+
+    check("no --jobs means exactly the namespace it was handed",
+          L._jobs_for(argparse.Namespace(jobs=""), "render") == [
+              argparse.Namespace(jobs="")])
+
+    def raises(spec_, stage, why):
+        p = tmp / "bad.json"
+        p.write_text(json.dumps(spec_), encoding="utf-8")
+        try:
+            L._jobs_for(argparse.Namespace(**{**base, "jobs": str(p)}), stage)
+            check(why, False)
+        except ValueError:
+            check(why, True)
+
+    raises([{"beat": 1, "prompt_file": str(tmp / "p1.txt")}], "encode",
+           "an entry with no embeds path is refused")
+    raises([{"beat": 1, "embeds": str(tmp / "e1.pt")}], "encode",
+           "an entry with no prompt file is refused")
+    raises([{"beat": 1, "embeds": str(tmp / "e1.pt"), "init": str(tmp / "01.png")}],
+           "render", "an entry with no output path is refused")
+    raises([], "render", "an empty jobs list is refused")
+    raises([{"beat": 1, "embeds": str(tmp / "e1.pt"), "init": str(tmp / "01.png"),
+             "out": str(tmp / "same.mp4")},
+            {"beat": 2, "embeds": str(tmp / "e2.pt"), "init": str(tmp / "02.png"),
+             "out": str(tmp / "same.mp4")}], "render",
+           "two beats writing the same file is refused")
+
+
 def test_beat11_negatives_name_the_mitosis(tmp: Path):
     """Beat 11's leaf divides in two, and until 2026-08-07 nothing forbade it.
 
@@ -2474,6 +2726,12 @@ def main():
         test_subprocess_reads_are_utf8(Path(td))
         test_queue_render_params_reach_the_child(Path(td))
         test_probe_beat_sends_the_files_and_the_whole_recipe(Path(td))
+    test_ltx_frames_are_the_nearest_8n_plus_1()
+    with tempfile.TemporaryDirectory() as td:
+        test_ltx_dispatch_routes_by_video_model(Path(td))
+    with tempfile.TemporaryDirectory() as td:
+        test_ltx_jobs_list_is_one_beat_per_entry(Path(td))
+    with tempfile.TemporaryDirectory() as td:
         test_beat11_negatives_name_the_mitosis(Path(td))
         test_beat09_negatives_forbid_the_growth(Path(td))
         test_hosted_path_sends_our_negative(Path(td))

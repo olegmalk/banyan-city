@@ -707,6 +707,126 @@ MODEL_LICENCE = {
                             "LTX-2 Community License Agreement"),
 }
 
+# THE LTX MODELS A QUEUE TASK MAY ASK FOR, and deliberately NOT an entry in
+# wan_i2v.MODELS. That dict maps a short name to a Wan-family HF repo and is read
+# by a renderer that assumes the Wan pipeline classes; LTX is a different pipeline,
+# a different CLI and a different licence document (D16, watch-only). Putting it
+# there would have made `video_model: ltx23-distilled-fp8` route to wan_i2v.py and
+# fail on a repo id, which is the polite failure — the impolite one is a future
+# reader taking the shared dict as a statement that the licences are alike.
+#
+# The value is the ONE thing the dispatch cannot read off the name safely: whether
+# this key means the layerwise fp8 cast. "ltx23-fp8" is absent on purpose — that key
+# names the archived statically-quantised single-file checkpoint, which diffusers
+# 0.39.0 cannot honour (ltx_i2v.py refuses it), so a task naming it must fail here
+# with a sentence rather than an hour later with a dtype error.
+LTX_MODELS = {
+    "ltx23-distilled":     {"fp8_layerwise": False},
+    "ltx23-distilled-fp8": {"fp8_layerwise": True},
+}
+
+
+def ltx_frames_for(seconds, fps=24) -> int:
+    """Seconds of video -> an LTX frame count. PURE — unit-tested.
+
+    The queue speaks in `seconds` because Wan's CLI does; LTX's takes `--frames`
+    and requires 8n+1 (its temporal VAE compresses by 8 and keeps one key frame).
+    Neither side should be asked to know about the other, so the translation lives
+    here, on its own, where a test can hold it still.
+
+    NEAREST, not floor: 4s at 24fps is 96 frames, and the two candidates are 89 and
+    97 — flooring would quietly shave a third of a second off every clip in an
+    episode. Ties go up (the +0.5 truncation, so half-way rounds away from zero
+    rather than to even, which is what `round()` would do and is not what anyone
+    reading "nearest" expects). Floor of 9, because n must be at least 1.
+
+    The screened 2026-08-06 sample is 65 frames = 2.667s; a task asking for 2.7s
+    lands on exactly that, which is why the verification render can be compared to
+    it at all.
+    """
+    n = int((float(seconds) * int(fps) - 1) / 8 + 0.5)
+    return 8 * max(1, n) + 1
+
+
+def ltx_offload_for(task: dict, fp8: bool) -> str:
+    """`--offload` for this task. PURE — unit-tested.
+
+    The queue's `offload` is a BOOLEAN in the Wan schema (`--offload` is a switch
+    there). LTX's is a four-way choice and there is no sensible "off": 38GB of bf16
+    transformer, or ~19.8GiB cast, against a 23.89GiB card. So a boolean carries no
+    usable information and the fp8 decision does: the cast is what lets the
+    transformer stay resident, so a cast run gets `model` and an un-cast one gets
+    `sequential`, which is the only mode the full bf16 weights fit under.
+
+    A STRING PASSES STRAIGHT THROUGH, unvalidated on purpose. ltx_i2v's argparse
+    already owns the list of legal modes and rejects an unknown one at parse time,
+    in a second, with the choices printed — duplicating that list here would mean
+    two places to update and a chance for them to disagree about which modes exist.
+    """
+    val = task.get("offload")
+    if isinstance(val, str) and val.strip():
+        return val.strip()
+    return "model" if fp8 else "sequential"
+
+
+def ltx_argv(py, script, task: dict, jobs_file, *, stage: str, size: str,
+             seconds, fps=24) -> list:
+    """The child command line for one LTX stage. PURE — unit-tested.
+
+    A FUNCTION AND NOT AN INLINE LIST, unlike the three Wan call sites, because
+    those three are exactly what test_queue_render_params_reach_the_child had to be
+    written to police: three literal argv lists that drifted until a guidance
+    canary produced a byte-identical file. A translation with rounding in it cannot
+    be checked by reading argv out of the AST anyway — the values are the part that
+    can be wrong — so it is built somewhere a test can call it and compare numbers.
+
+    ENCODE TAKES ALMOST NOTHING. It runs Gemma over the jobs file's prompts and
+    writes one .pt per beat; resolution, frame count, guidance and offload are the
+    render stage's business and passing them here would only invite the reader to
+    think one of them mattered to the text encoder.
+    """
+    vmodel = str(task.get("video_model", ""))
+    if vmodel not in LTX_MODELS:
+        raise ValueError(f"video_model {vmodel!r} is not an LTX model this "
+                         f"dispatch can run: {sorted(LTX_MODELS)}")
+    fp8 = LTX_MODELS[vmodel]["fp8_layerwise"]
+    cmd = [str(py), str(script), "--stage", stage, "--jobs", str(jobs_file)]
+    if stage == "encode":
+        return cmd
+    two_stage = bool(task.get("two_stage", True))
+    cmd += ["--size", str(size),
+            "--frames", str(ltx_frames_for(seconds, fps)),
+            "--fps", str(int(fps)),
+            # 1.0, NOT the Wan default of 5.0 this file uses everywhere else. The
+            # distilled build is a CFG-1 model; at 5.0 it would run an uncond pass
+            # it was never distilled for. A queue task that says nothing about
+            # guidance must get the recipe, not the other renderer's habit.
+            "--guidance", str(task.get("guidance", 1.0)),
+            "--image-crf", str(int(task.get("image_crf", 33))),
+            "--offload", ltx_offload_for(task, fp8),
+            "--mode", str(task.get("mode", "production")),
+            "--task", str(task.get("id", "")),
+            "--worker", str(task.get("worker", "rtx5090"))]
+    if two_stage:
+        cmd += ["--two-stage"]
+    # INERT UNDER --two-stage and passed anyway: the two-stage path uses
+    # DISTILLED_SIGMA_VALUES unconditionally, so this flag only does anything on the
+    # single-stage path — which is precisely where it is needed, because an 8-step
+    # run without it gets a naive linear ramp instead of the distilled schedule.
+    # Defaulting it on means `two_stage: false` is still on-recipe.
+    if task.get("distilled_sigmas", True):
+        cmd += ["--distilled-sigmas"]
+    if fp8:
+        cmd += ["--fp8-layerwise"]
+    # --steps ONLY where it is read. Under --two-stage the step counts come from the
+    # two sigma lists, and the queue's Wan-shaped default of 30 would be a number in
+    # the log that nothing executed.
+    if not two_stage:
+        cmd += ["--steps", str(int(task.get("steps", 8)))]
+    if task.get("bench_jsonl"):
+        cmd += ["--bench-jsonl", str(task["bench_jsonl"])]
+    return cmd
+
 
 def _yaml_block(key: str, value: str) -> str:
     """A literal block scalar — safe for prompts containing quotes, colons, commas.
@@ -959,6 +1079,113 @@ def prefetch(task: dict, courier) -> None:
         courier.mark(f"PREFETCH_OK {repo}")
 
 
+def run_ltx(task, courier, beats, shots, stills, directed, actions,
+            size, seconds) -> None:
+    """The LTX-2.3 route: TWO child processes for a whole episode, not thirty.
+
+    WHAT THIS REPLACES. LTX beat the 5B on look (founder cleared the fp8 recipe
+    2026-08-06) and on per-clip time — 73.3s against ~168s — and was still SLOWER
+    per episode, ~78 minutes against ~42, because every beat paid 88s of Gemma, a
+    transformer load and a 139s fp8 cast to render 73 seconds of clip. That is not
+    a model problem, it is a process-boundary problem, and it is the same one
+    wan_i2v's --jobs was written for. One encode process for all fifteen prompts,
+    one render process for all fifteen clips: ~25 minutes.
+
+    THE TWO PROCESSES ARE NOT AN OPTIMISATION TO COLLAPSE LATER. Gemma asked for
+    all 49 hidden-state layers peaks ~37GB of host RAM, and the transformer,
+    connectors and vae are ~44GB more against 68GB of physical — exiting the encode
+    process is what returns the first number before the second is read. See
+    ltx_i2v.py's docstring, where it is measured rather than assumed.
+
+    Everything else is the batch path's machinery unchanged: the same stills lookup
+    (REVOKED stills skipped), the same video_prompt treatment of the direction and
+    the shot board, the same clip naming into `courier.out` so each finished beat is
+    pushed the moment it exists.
+    """
+    vmodel = str(task.get("video_model", ""))
+    fps = int(task.get("fps", 24))
+    ROOT.mkdir(parents=True, exist_ok=True)
+    work = ROOT / f"ltx-{task.get('id')}"
+    work.mkdir(parents=True, exist_ok=True)
+
+    jobs, outs = [], []
+    for num in beats:
+        s = shots.get(num)
+        init = next((q for q in stills.glob(f"{num:02d}-*.png")
+                     if "REVOKED" not in q.name), None)
+        if not s or not init:
+            courier.say(f"beat {num}: no shot or no approved still - skipped")
+            continue
+        motion = task.get("motion") or ("subtle continuous motion, gentle camera "
+                                        "drift, living scene")
+        act = task.get("motion_override") or directed.get(num) or actions.get(num)
+        pos, neg = video_prompt(f"{act}. {motion}" if act else motion,
+                                s["prompt"],
+                                no_anchor=bool(task.get("no_anchor")),
+                                beat=num)
+        # PROMPTS TO FILES, not into the jobs json and never into argv. The
+        # negatives carry "静态, 静止" and this fires over a cp1252 console; a
+        # mangled negative renders a clip that looks fine and was asked something
+        # else. ltx_i2v reads these paths itself, in utf-8, in the child.
+        pf, nf = work / f"{num:02d}-prompt.txt", work / f"{num:02d}-negative.txt"
+        pf.write_text(pos, encoding="utf-8")
+        nf.write_text(neg, encoding="utf-8")
+        o = courier.out / f"{task.get('id')}-{num:02d}-{s['slug']}.mp4"
+        jobs.append({"beat": num, "embeds": str(work / f"{num:02d}-embeds.pt"),
+                     "prompt_file": str(pf), "negative_file": str(nf),
+                     "init": str(init), "out": str(o),
+                     "seed": int(task.get("seed_base", 20260731)) + num})
+        outs.append((num, o, pos, neg))
+    if not jobs:
+        raise RuntimeError("no beat had both a shot and an approved still")
+
+    jf = work / "jobs.json"
+    jf.write_text(json.dumps(jobs, indent=1), encoding="utf-8")
+    script = str(REPO / "pipeline" / "ltx_i2v.py")
+    courier.mark(f"VIDEO_ENCODING {len(jobs)} prompts on {vmodel} (one Gemma load)")
+    _run(ltx_argv(PY, script, task, jf, stage="encode", size=size,
+                  seconds=seconds, fps=fps),
+         courier, f"ltx encode {task.get('id')}", timeout=3600, retry=True)
+    courier.mark(f"VIDEO_RENDERING batch of {len(jobs)} on {vmodel} "
+                 f"(one model load)")
+    _run(ltx_argv(PY, script, task, jf, stage="render", size=size,
+                  seconds=seconds, fps=fps),
+         courier, f"ltx batch {task.get('id')}", timeout=14400, retry=True)
+
+    made = 0
+    for num, o, pos, neg in outs:
+        if o.exists() and o.stat().st_size > 10_000:
+            made += 1
+            # NO SIDECAR IS WRITTEN HERE WHEN THE RENDERER WROTE ONE, and that is
+            # the opposite of the Wan path on purpose: wan_i2v writes none, so this
+            # file must; ltx_i2v calls write_sidecar itself and records what only it
+            # knew — the offload mode that ran, the quantisation, the measured
+            # throughput. Overwriting that with the queue's thinner version would
+            # delete the measurements. The fallback exists because a clip with no
+            # provenance is a licence_gate violation (§7.2), not a cosmetic gap.
+            if not Path(str(o) + ".meta.yaml").exists():
+                courier.say(f"beat {num}: renderer wrote no sidecar — writing the "
+                            f"queue's own, without the render-time measurements")
+                write_sidecar(o, vmodel, task, num,
+                              round(ltx_frames_for(seconds, fps) / fps, 3),
+                              "two-stage distilled" if task.get("two_stage", True)
+                              else str(task.get("steps", 8)),
+                              size, prompt=pos, negative=neg)
+            courier.mark(f"VIDEO_CLIP_OK beat={num:02d} "
+                         f"{o.stat().st_size // 1024}KB")
+        else:
+            courier.mark(f"VIDEO_CLIP_EMPTY beat={num:02d}")
+    # The embeds are the big transient — one per beat, deleted once the clips are
+    # judged. The prompt files and jobs.json stay: they are what the run was
+    # actually asked, they are bytes not gigabytes, and the first question about a
+    # surprising clip is always "what did it get".
+    for j in jobs:
+        Path(j["embeds"]).unlink(missing_ok=True)
+    courier.say(f"video task {task.get('id')}: {made}/{len(outs)} clips")
+    if not made:
+        raise RuntimeError("no clips produced")
+
+
 def run(task: dict, courier, node_dir: Path) -> None:
     """One video task: N beats animated from their APPROVED stills.
 
@@ -981,6 +1208,15 @@ def run(task: dict, courier, node_dir: Path) -> None:
     size = task.get("size", "704x1280")
     seconds = float(task.get("seconds", 4))
     steps = int(task.get("steps", 30))
+
+    # RENDERER DISPATCH, and it is three lines because everything above it is
+    # renderer-independent — which beats, which stills, which shot board, how big.
+    # Everything BELOW it assumed one renderer and said so in a literal path, twice.
+    # The default is that literal: a task that does not name an LTX model reaches
+    # exactly the code it reached yesterday, byte for byte.
+    if str(task.get("video_model", "ti2v-5b")).startswith("ltx"):
+        return run_ltx(task, courier, beats, shots, stills, directed, actions,
+                       size, seconds)
 
     # BATCH on a big card: build the whole job list, then load the model once.
     # Per-clip processes spent ~10 of every 11 minutes reloading 10GB from disk.

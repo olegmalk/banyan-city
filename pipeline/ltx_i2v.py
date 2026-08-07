@@ -81,6 +81,7 @@ clip until the founder signs off on the screened look; this script renders a ben
 sample, it does not clear anything.
 """
 import argparse
+import copy
 import ctypes
 import gc
 import json
@@ -247,7 +248,7 @@ def _load_upsampler():
     return model.to(torch.bfloat16).eval()
 
 
-def _crf_roundtrip(src: str, crf: int, out_dir: str) -> str:
+def _crf_roundtrip(src: str, crf: int, out_dir: str, tag: str = "") -> str:
     """Round-trip the conditioning still through libx264 at `crf`, as upstream does.
 
     media_io.load_image_and_preprocess encodes and decodes the still through x264 at
@@ -264,8 +265,13 @@ def _crf_roundtrip(src: str, crf: int, out_dir: str) -> str:
     import imageio_ffmpeg
 
     ff = imageio_ffmpeg.get_ffmpeg_exe()
-    mid = str(Path(out_dir) / "cond-crf.mp4")
-    png = str(Path(out_dir) / "cond-crf.png")
+    Path(out_dir).mkdir(parents=True, exist_ok=True)
+    # `tag` NAMES THE BEAT, and it exists because these two files are throwaway and
+    # a fifteen-beat run makes fifteen of each. Un-tagged they would be one pair
+    # overwritten fourteen times — which works, since each is consumed immediately,
+    # but leaves a diagnostic that can only ever describe the last beat.
+    mid = str(Path(out_dir) / f"cond-crf{tag}.mp4")
+    png = str(Path(out_dir) / f"cond-crf{tag}.png")
     # -frames:v 1 both ways: one frame in, one frame out. yuv420p because that is
     # what their encoder writes, and the chroma subsampling is part of the domain
     # match, not an accident of the container.
@@ -390,12 +396,87 @@ def _local_dir(repo, probe="model_index.json"):
     return str(Path(hf_hub_download(repo, probe, local_files_only=True)).parent)
 
 
+def _jobs_for(a, stage: str) -> list:
+    """The run's beats, one argparse namespace each. `[a]` when --jobs was absent.
+
+    WHAT THIS IS FOR, in one number: an episode is fifteen beats, and until this
+    existed each of them was its own pair of processes — 88s of Gemma, then a
+    transformer load and (with --fp8-layerwise) a 139s cast, per beat. The clip
+    itself is 73.3s. Fifteen beats that way is ~78 minutes of which ~62 is loading
+    the same weights again. wan_i2v.py already carries the same flag for the same
+    reason ("per-clip processes spent ~10 of every 11 minutes reloading",
+    video_task.py); this is that flag on the LTX CLI, and the two stages keep their
+    split — one encode process for all fifteen prompts, one render process for all
+    fifteen clips, because Gemma at all 49 hidden layers peaks ~37GB host and still
+    cannot be co-resident with the transformer.
+
+    ONE JOBS FILE SERVES BOTH STAGES. Each entry names the beat's embeds path, so
+    the encode process writes exactly what the render process then reads, and
+    neither side reconstructs a filename the other invented. Per-entry keys:
+      embeds        (both)    where the beat's .pt lives
+      prompt_file   (encode)  the positive, READ FROM A FILE
+      negative_file (encode)  the negative, likewise; optional
+      init, out     (render)  conditioning still, clip path
+      seed, beat    (render)  per-beat, and the sidecar publishes both
+    PROMPTS COME FROM FILES AND NOT FROM THE JSON — the same rule main() already
+    applies to --prompt-file. A jobs file COULD carry the strings inline (wan's
+    does), but the LTX negatives contain "静态, 静止" and this runs over a cp1252
+    console; keeping them in files means the bytes that reach Gemma are the bytes
+    on disk no matter what the console thinks it is.
+
+    A missing key RAISES rather than defaulting. Fifteen beats is a batch, and a
+    beat that quietly rendered from the wrong still or wrote over another beat's
+    path is the kind of defect that is only visible after the whole hour is spent.
+    """
+    if not a.jobs:
+        return [a]
+    spec = json.loads(Path(a.jobs).read_text(encoding="utf-8"))
+    if not isinstance(spec, list) or not spec:
+        raise ValueError(f"--jobs {a.jobs}: expected a non-empty json list of beats")
+    need = (("embeds", "prompt_file") if stage == "encode"
+            else ("embeds", "init", "out"))
+    jobs = []
+    for i, j in enumerate(spec):
+        if not isinstance(j, dict):
+            raise ValueError(f"--jobs {a.jobs}[{i}]: expected an object, got "
+                             f"{type(j).__name__}")
+        missing = [k for k in need if not j.get(k)]
+        if missing:
+            raise ValueError(f"--jobs {a.jobs}[{i}] (stage {stage}): missing "
+                             f"{', '.join(missing)}")
+        # copy.copy, so every recipe flag the CLI carries — size, frames, offload,
+        # two_stage, image_crf, guidance, mode — is the SAME object's value on every
+        # beat. A jobs file cannot vary the recipe, and that is deliberate: one model
+        # load means one recipe, and a per-beat recipe would need a per-beat load.
+        ja = copy.copy(a)
+        ja.embeds = str(j["embeds"])
+        ja.beat = int(j.get("beat", a.beat))
+        ja.seed = int(j.get("seed", a.seed))
+        ja.init = str(j.get("init") or a.init)
+        ja.out = str(j.get("out") or a.out)
+        ja.prompt = (Path(j["prompt_file"]).read_text(encoding="utf-8").strip()
+                     if j.get("prompt_file") else a.prompt)
+        ja.negative = (Path(j["negative_file"]).read_text(encoding="utf-8").strip()
+                       if j.get("negative_file") else a.negative)
+        jobs.append(ja)
+    outs = [ja.out for ja in jobs if ja.out]
+    if stage == "render" and len(set(outs)) != len(outs):
+        raise ValueError(f"--jobs {a.jobs}: two beats write the same --out")
+    return jobs
+
+
 def stage_encode(a) -> int:
     """Gemma ONLY: prompt in, embeddings on disk, process exits.
 
     The pipeline is built with every other component None. That is the same trick
     wan_i2v.py uses, and it is what keeps 24.4GB and 29.5GB from ever being
     resident together.
+
+    WITH --jobs THE ENCODER LOADS ONCE AND WRITES N FILES. 24.4GB read from disk
+    per beat was the whole of the 88s; encode_prompt itself is seconds. The loop
+    is inside the process for that reason and the process still EXITS at the end
+    of it, because exiting is what gives the 37GB back before the transformer is
+    read (see the module docstring — that split is not optional).
     """
     import torch
     from diffusers import LTX2ImageToVideoPipeline
@@ -417,15 +498,24 @@ def stage_encode(a) -> int:
         tokenizer=tokenizer, connectors=None, transformer=None, vocoder=None,
         processor=processor)
 
-    with torch.no_grad():
-        pos, pos_mask, neg, neg_mask = pipe.encode_prompt(
-            prompt=a.prompt, negative_prompt=a.negative,
-            do_classifier_free_guidance=True, device="cpu")
-    torch.save({"prompt_embeds": pos.to(torch.bfloat16),
-                "prompt_attention_mask": pos_mask,
-                "negative_prompt_embeds": neg.to(torch.bfloat16),
-                "negative_prompt_attention_mask": neg_mask}, a.embeds)
-    print(f"encoded to {a.embeds} {tuple(pos.shape)}", flush=True)
+    jobs = _jobs_for(a, "encode")
+    for i, ja in enumerate(jobs, 1):
+        mark(f"encode-beat-{ja.beat:02d}")
+        with torch.no_grad():
+            pos, pos_mask, neg, neg_mask = pipe.encode_prompt(
+                prompt=ja.prompt, negative_prompt=ja.negative,
+                do_classifier_free_guidance=True, device="cpu")
+        Path(ja.embeds).parent.mkdir(parents=True, exist_ok=True)
+        torch.save({"prompt_embeds": pos.to(torch.bfloat16),
+                    "prompt_attention_mask": pos_mask,
+                    "negative_prompt_embeds": neg.to(torch.bfloat16),
+                    "negative_prompt_attention_mask": neg_mask}, ja.embeds)
+        # "encoded", never "wrote": video_task's PROGRESS regex marks a finished
+        # CLIP off `[i/N] wrote`, and an embeds file is not a clip. The bracket
+        # prefix is still here so the encode process is visibly counting down
+        # rather than merely alive.
+        print(f"[{i}/{len(jobs)}] encoded beat {ja.beat} to {ja.embeds} "
+              f"{tuple(pos.shape)}", flush=True)
     return 0
 
 
@@ -536,12 +626,61 @@ def _fp8_transformer_is_unsupported() -> int:
 def _render_with(a, transformer, parts, dist, w, h) -> int:
     """The half that is identical whichever transformer was loaded."""
     import torch
+
+    # ASSEMBLE ONCE, RENDER N TIMES. Everything below the pipeline construction was
+    # already per-clip; the only thing that made it per-PROCESS was that nothing
+    # asked it twice. So the split is by cost, not by tidiness: _build_pipe holds
+    # what an episode pays for once (12.7GB of connectors, the vae, the offload
+    # hooks, and — with --fp8-layerwise — the 139s cast that already happened up in
+    # stage_render), and _render_one holds what each beat genuinely repeats.
+    # THE BREAK-EVEN IS FOUR CLIPS on the screened fp8 recipe (73.3s of sample
+    # against ~230s of load+cast); at fifteen it is the difference between ~78
+    # minutes and ~25.
+    pipe = _build_pipe(a, transformer, parts, dist)
+    jobs = _jobs_for(a, "render")
+    for i, ja in enumerate(jobs, 1):
+        if i > 1:
+            # PER-BEAT PEAKS, from beat 2 on. Beat 1's peak legitimately contains
+            # the load this loop exists to amortise, and leaving the counters alone
+            # for it keeps a single-beat run's numbers exactly what they have always
+            # been. From beat 2 the interesting quantity is what THAT beat cost, so
+            # the torch high-water mark is reset and the host baseline re-read —
+            # otherwise every later sidecar would inherit beat 1's load peak and the
+            # bench file would read as fifteen identical measurements.
+            if torch.cuda.is_available():
+                torch.cuda.reset_peak_memory_stats()
+            m = _mem()
+            PEAK["commit_gb"] = m.get("commit_gb", 0.0)
+            PEAK["phys_gb"] = m.get("phys_gb", 0.0)
+        if len(jobs) > 1:
+            print(f"[job {i}/{len(jobs)}] beat {ja.beat:02d} seed {ja.seed} "
+                  f"-> {ja.out}", flush=True)
+        rc = _render_one(ja, pipe, w, h)
+        if rc:
+            # STOP, do not carry on to beat i+1. A non-zero here is a shape or a
+            # batch assertion, i.e. something true of the RECIPE — the remaining
+            # beats would fail the same way, slowly, and bury the first failure
+            # under fourteen repetitions of itself.
+            print(f"!! job {i}/{len(jobs)} (beat {ja.beat}) returned {rc} — "
+                  f"stopping, {len(jobs) - i} beat(s) not attempted", flush=True)
+            return rc
+    return 0
+
+
+def _build_pipe(a, transformer, parts, dist):
+    """The components and the offload strategy: paid once per PROCESS, not per clip.
+
+    Lifted out of _render_with unchanged when --jobs arrived. Nothing here depends
+    on which beat is about to render — the conditioning still, the embeddings and
+    the seed all arrive later, in _render_one — which is exactly why an episode
+    can pay for it once.
+    """
+    import torch
     from diffusers import (AutoencoderKLLTX2Audio, AutoencoderKLLTX2Video,
                            FlowMatchEulerDiscreteScheduler,
                            LTX2ImageToVideoPipeline)
     from diffusers.pipelines.ltx2.connectors import LTX2TextConnectors
     from diffusers.pipelines.ltx2.vocoder import LTX2VocoderWithBWE
-    from diffusers.utils import load_image
 
     mark("load-connectors-12.7GB-and-vae")
     pipe = LTX2ImageToVideoPipeline(
@@ -631,6 +770,24 @@ def _render_with(a, transformer, parts, dist, w, h) -> int:
         if callable(enable):
             enable()
             break
+    return pipe
+
+
+def _render_one(a, pipe, w, h) -> int:
+    """ONE beat on an already-loaded pipeline: still in, clip and sidecar out.
+
+    `a` is the beat's own namespace — under --jobs a copy of the parsed args with
+    init/out/embeds/prompt/negative/seed/beat replaced, so every line below reads
+    exactly the attribute it always read and a single-beat run takes the identical
+    path with the identical values.
+
+    THE WRAPPING AND UNWRAPPING OF pipe.vae.decode IS BALANCED, which is what makes
+    this safe to call in a loop: both halves are behind `if a.decode_frame0_out`,
+    so the second beat captures the real bound method and never a wrapper left on
+    by the first.
+    """
+    import torch
+    from diffusers.utils import load_image
 
     # THE CAPTURE IS A PASS-THROUGH AND IT IS OFF BY DEFAULT, both deliberately.
     # An invocation that does not ask for --decode-frame0-out never installs this,
@@ -659,7 +816,18 @@ def _render_with(a, transformer, parts, dist, w, h) -> int:
     e = torch.load(a.embeds, map_location="cpu")
     init = a.init
     if a.image_crf:
-        init = _crf_roundtrip(init, a.image_crf, str(Path(a.out).parent))
+        # BESIDE THE EMBEDS, NOT BESIDE THE CLIP, and the difference is a bug that
+        # only appears once this renderer is reachable from the queue. The clip's
+        # directory used to be SAMPLES/ on a hand-fired probe; through video_task it
+        # is `courier.out`, and Courier.mark() runs `git add -A farm-out` + commit +
+        # push on every finished beat. Leaving the round-trip intermediates there
+        # would push ~600KB of throwaway per beat onto the courier branch, with the
+        # last beat's pair sitting in the delivery folder looking like output. The
+        # embeds path is a scratch location by construction on every caller — the
+        # per-episode work dir under video_task.ROOT for a --jobs run, the
+        # operator's own file otherwise — so it is the honest place for them.
+        init = _crf_roundtrip(init, a.image_crf, str(Path(a.embeds).parent),
+                              tag=f"-{a.beat:02d}")
     img = load_image(init)
 
     batch = max(1, int(a.batch))
@@ -970,7 +1138,17 @@ def _render_with(a, transformer, parts, dist, w, h) -> int:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--stage", choices=["encode", "render"], required=True)
-    ap.add_argument("--embeds", required=True)
+    # NO LONGER required=True, and only because --jobs names one per beat. Without
+    # --jobs it is still mandatory — enforced below rather than by argparse, so the
+    # message can say which of the two forms is missing.
+    ap.add_argument("--embeds", default="")
+    # ONE MODEL LOAD, N BEATS — the flag wan_i2v.py already has, spelled the same
+    # way for the same reason. A json list of per-beat objects; see _jobs_for for
+    # the keys and for why the prompts are file paths and not strings.
+    ap.add_argument("--jobs", default="",
+                    help="json list of per-beat objects (embeds, prompt_file, "
+                         "negative_file, init, out, seed, beat) rendered in one "
+                         "process on one model load")
     ap.add_argument("--prompt", default="")
     ap.add_argument("--negative", default="")
     # Prompts come from FILES, not argv, whenever they are offered. The beat-1
@@ -1054,6 +1232,22 @@ def main() -> int:
     a = ap.parse_args()
     if a.batch < 1:
         print(f"!! --batch {a.batch}: must be at least 1", flush=True)
+        return 2
+    if not a.jobs and not a.embeds:
+        print("!! --embeds is required unless --jobs names one per beat",
+              flush=True)
+        return 2
+    # REFUSED, because the two flags mean opposite things about the seed. --batch N
+    # is a THROUGHPUT PROBE: N clips from one sample call, same prompt, same still,
+    # differing only by seed+slot. --jobs is an EPISODE: N different beats, each
+    # with its own still and its own prompt. Together they would ask for N slots of
+    # every beat, writing slot paths derived from a per-beat seed — measurable
+    # neither as a probe nor usable as an episode. Nothing needs the combination, so
+    # it stops here instead of producing a folder nobody can interpret.
+    if a.jobs and a.batch > 1:
+        print(f"!! --jobs with --batch {a.batch}: --batch is the throughput probe "
+              "(N seeds of ONE beat) and --jobs is the episode (N beats). Pick one.",
+              flush=True)
         return 2
     # LOUD, NOT FATAL. 38GB of bf16 weights cannot be resident on a 23.89GiB card,
     # so this combination is an OOM with a long walk up to it — ~90 seconds of
