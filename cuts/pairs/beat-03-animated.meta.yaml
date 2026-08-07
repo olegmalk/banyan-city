@@ -1,0 +1,39 @@
+# Copied verbatim from review/animated/03-deploy-succeeded.mp4.meta.yaml when this clip was published to
+# the review area (2026-08-07). Renamed for the page; every recipe
+# field below is the original render's own record.
+published_as: cuts/pairs/beat-03-animated.mp4
+original_filename: 03-deploy-succeeded.mp4
+sha256: bcafa2e81fd14e499009b2f36d71c48fcae31f3172b55668c330ff14b195bae8
+container: 704x1280, 2.542s, h264
+# Shot provenance (7.2) - written by hand; the farm worker is down and
+# wan_i2v.py --stage simple writes no sidecar. Recipe fields copied from the
+# render log on rtx5090, not assumed.
+platform: local-gpu (rtx5090)
+model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+model_licence: Apache-2.0
+shot_beat: 3
+size: 704x1280
+seconds: 2.542
+frames: 61
+steps: 14 (UniPC flow_shift=5.0, from the 5B scheduler config)
+guidance: 5.0
+offload: model_cpu_offload
+quantise: none
+seed: 20260808
+task: anim-b03-20260806
+init_still: 03-deploy-succeeded.png
+init_still_sha256: 8f5420d8a14897e6cefb9eacd54b04f8547d43434c58234b6035a0e444cf7f2d
+wall_seconds: 205
+cost_usd: 0
+measured_median_motion: 0.20
+measured_frozen_share_pct: 50
+measurement: pipeline/collect_farm.py measure() - median frame-to-frame
+  mean-abs-diff on 200px grayscale, and the share of frames under 0.2
+note: |-
+  First animation of the CURRENT beat-3 frame. The held-era f15 take was
+  rendered against 03-deploy-succeeded-REVOKED-magenta.png, so its
+  0.13/72% is not a baseline for the frame that ships.
+prompt: |-
+  2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. the green panel and the blue monitor surge bright and drop back hard, pale scanlines rolling down both screens, the glow flaring out across the dark panels around them
+negative: |-
+  new subjects, scene change, photorealism, 3D render look, text, 静态, 静止, 静止不动的画面, frozen frame, still image, no motion, photorealistic, photograph, live action, film still, 3D render, CGI, octane, realistic skin texture, depth of field bokeh, motion blur, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage

@@ -1,0 +1,33 @@
+# Copied verbatim from review/animated/12-undefined-f15-original.mp4.meta.yaml when this clip was published to
+# the review area (2026-08-07). Renamed for the page; every recipe
+# field below is the original render's own record.
+published_as: cuts/pairs/beat-12-animated.mp4
+original_filename: 12-undefined-f15-original.mp4
+sha256: ae0f608734d45cf23da6d037c11f92a815f00be9051e43edf8109cff0c3639be
+container: 704x1280, 2.542s, h264
+# Shot provenance (7.2) - NOT rendered tonight. This is the pre-existing f15
+# take of beat 12 (rendered 2026-08-03), copied in because it is the BEST
+# animated version of this beat that exists and tonight's rewrite lost to it.
+platform: local-gpu (rtx5090)
+model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+model_licence: Apache-2.0
+shot_beat: 12
+size: 704x1280
+steps: 14 (UniPC flow_shift=5.0)
+guidance: 5.0
+init_still: 12-undefined.png
+cost_usd: 0
+measured_median_motion: 0.19
+measured_frozen_share_pct: 58
+sprout_box_median: 0.46
+sprout_box_frozen_pct: 8
+note: |-
+  This is the take whose 0.19 whole-frame score got beat 12 held. Measured
+  inside the sprout's own box (0.38,0.42,0.64,0.60) it is 0.46 median with 8%
+  frozen, against 0.16 for a crack-only box and 0.09 for the sky in the same
+  clip - so the plant genuinely moves and the 95%-rigid cracked plain is what
+  dragged the whole-frame average under the line.
+  Tonight's rewrite (12-undefined.mp4) scores 0.27/25% in the same box.
+prompt: |-
+  the bent stem strains and shudders hard against nothing, snapping back and
+  straining again, soil grains skittering at its base

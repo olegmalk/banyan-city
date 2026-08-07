@@ -1,0 +1,38 @@
+# Copied verbatim from review/animated/15-something-s-coming-v2.mp4.meta.yaml when this clip was published to
+# the review area (2026-08-07). Renamed for the page; every recipe
+# field below is the original render's own record.
+published_as: cuts/pairs/beat-15-animated.mp4
+original_filename: 15-something-s-coming-v2.mp4
+sha256: db08b4a42f8148899bdce6c7e9dc0ffb10957c8222e9e36caf17ece7f8cd0db8
+container: 704x1280, 2.542s, h264
+# Shot provenance (7.2) - written by hand; the farm worker is down and
+# wan_i2v.py --stage simple writes no sidecar. Recipe fields copied from the
+# render log on rtx5090, not assumed.
+platform: local-gpu (rtx5090)
+model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+model_licence: Apache-2.0
+shot_beat: 15
+size: 704x1280
+seconds: 2.542
+frames: 61
+steps: 14 (UniPC flow_shift=5.0, from the 5B scheduler config)
+guidance: 5.0
+offload: model_cpu_offload
+quantise: none
+seed: 20260820
+task: anim-b15-20260806
+init_still: 15-something-s-coming.png
+init_still_sha256: aa14d078774b703cecc156f119fc0142e4a73ec350675790b6a094fe0d74d34a
+wall_seconds: 201
+cost_usd: 0
+measured_median_motion: 2.72
+measured_frozen_share_pct: 0
+measurement: pipeline/collect_farm.py measure() - median frame-to-frame
+  mean-abs-diff on 200px grayscale, and the share of frames under 0.2
+note: |-
+  Take 2, same seed and recipe, wording moved to 'in place' plus a
+  negative naming the cone. Object gone, motion kept.
+prompt: |-
+  2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. the soil grains and small stones jump and scatter in place, the raking light band slamming brighter and dimming back, the long shadows jolting with it, dust puffing up off the ground in sheets
+negative: |-
+  rocket, missile, cone, spike, blade, knife, crayon, pencil, stick, drill, tool, hand, finger, arm, falling object, object entering frame, red object, orange object, bright red shape, new subjects, scene change, abstract shapes, vertical streaks, drips, paint drips, cross-section, diagram, cave, tunnel, doorway, cave mouth, black frame, empty darkness, people, portal, eye, sky, lightning, god rays, light shafts, photorealism, 3D render look, text, 静态, 静止, 静止不动的画面, frozen frame, still image, no motion, photorealistic, photograph, live action, film still, 3D render, CGI, octane, realistic skin texture, depth of field bokeh, motion blur, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage

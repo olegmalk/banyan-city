@@ -1,0 +1,29 @@
+# Shot provenance (7.2) — written by hand 2026-08-07 when this clip was
+# published to the review area. hold_still.py writes its sidecar beside
+# the clip as <name>.mp4.meta.yaml, which is not the stem name the gate
+# reads, and none was carried across with these four anyway.
+platform: local-deterministic (pipeline/hold_still.py, ffmpeg)
+model: none
+model_licence: n/a — no video model ran, so no video model's licence
+  attaches. The licence that DOES attach is the still's, recorded in
+  genomes/sapling/nodes/001-capability-inventory/stills/README.md
+  (cagliostrolab/animagine-xl-3.1, OpenRAIL++ — the open D15 debt).
+shot_beat: 15
+size: 704x1280
+seconds: 2.583
+source_still: 15-something-s-coming.png
+sha256: a920879e10cd269caee2393e4944f432055dfcac1bda62a0e9dbff766d6316b0
+cost_usd: 0
+measured_median_motion: 1.67
+measured_frozen_share_pct: 2
+measurement: pipeline/collect_farm.py measure() — median frame-to-frame
+  mean-abs-diff on 200px grayscale, and the share of frames under 0.2.
+  These numbers CANNOT be compared against an animated take — a push-in
+  moves every pixel, so a held still scores higher than real animation.
+note: |-
+  The approved still held and pushed in by code — the treatment this beat
+  gets in ep1-v30-fixed.mp4. Nothing was generated; every pixel is the
+  frame the founder approved.
+prompt: |-
+  (none — the approved still is held; nothing was generated)
+negative: ''

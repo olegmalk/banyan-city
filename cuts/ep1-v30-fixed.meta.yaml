@@ -1,0 +1,43 @@
+# Episode provenance (7.2) for a WORKING CUT — not a leaf, not canon.
+# The author has not passed this cut; it is published to the unlisted
+# review area so he can screen it from any device (D17, 2026-08-07).
+platform: local-deterministic (pipeline/render_t3.py, ffmpeg)
+model: per-beat — see sources
+assembled: 2026-08-04
+size: 720x1280
+seconds: 89.08
+sha256: 7aec1a834f4f5f8b29c0e4da06e268ebfb1fc96c520621f09b4baac9c208db5c
+cost_usd: 0
+approved_by: none — unscreened working cut
+note: |-
+  Fifteen beats, no slate. Ten beats animated on Wan2.2-TI2V-5B, five
+  held (beats 3, 12, 13, 15 held plus 4, 5, 7, 10, 14) — nine held in
+  total. Assembled by render_t3.py from the farm's f15 clip set with the
+  approved per-line narration muxed in sync.
+sources:
+- part: animated beats
+  platform: local-gpu (rtx5090)
+  model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+  model_licence: Apache-2.0
+  note: per-beat recipe, seed and prompt are in each beat's own sidecar
+    under review/ and, for the four in this page's comparison, in
+    cuts/pairs/*.meta.yaml
+- part: held beats
+  platform: local-deterministic (pipeline/hold_still.py, ffmpeg)
+  model: none
+  model_licence: n/a — the approved still is held; no video model ran
+- part: the drawn frames every beat starts from
+  still_model: per-beat — see each beat's own sidecar (init_still) and
+    genomes/sapling/nodes/001-capability-inventory/stills/README.md
+  model_licence: the stills were drawn by cagliostrolab/animagine-xl-3.1
+    under CreativeML Open RAIL++-M, whose use restrictions travel to the
+    output. That is the OPEN D15 debt on the founder's approved stills —
+    the same debt the live July episode already carries, unresolved and
+    stated here rather than left to be inferred.
+- part: narration
+  voice_engine: chatterbox-0.5B
+  model_licence: MIT
+- part: recorded sound
+  platform: none
+  model_licence: CC0 and CC BY beds, one row each in
+    genomes/sapling/nodes/001-capability-inventory/audio-sources/SOURCES.md
