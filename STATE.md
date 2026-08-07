@@ -2322,3 +2322,91 @@ and `backlog:` never reaches the worker's list; a gate blocks regardless of
 node or a resolvable worker is refused; and the move itself is one write, both
 lists, comments intact, idempotent on a second run); `yaml.safe_load` on the queue
 exit 0, before and after the promoter's own commit.
+
+## 2026-08-07 — Smart App Control came off and beat 9 stopped growing: 7 leaves back to 4, the apex stays under the horizon
+
+**The founder switched Smart App Control off on the rtx5090, and it took.** That
+policy had gone to enforcement on its own that morning
+(`HKLM\SYSTEM\CurrentControlSet\Control\CI\Policy\VerifiedAndReputablePolicyState`
+= 1), which blocks every unsigned compiled extension in `C:\banyan-video\venv` —
+torch dying in `c10.dll` at WinError 4551, transformers dying on its regex
+module. Verified from here before anything was queued or rendered: the key reads
+**0x0**, `torch 2.11.0+cu128` imports with `cuda.is_available()` **True** on the
+RTX 5090 Laptop GPU, and `transformers 5.14.1` imports `CLIPTokenizer`. **No
+reboot was needed** — the running processes picked up the new policy state.
+
+**One correction to the record, and it matters more than the unblock.** The gate
+this project wrote called the Off switch **one-way**, which is Microsoft's
+documented behaviour and is **not what this machine did**. The box had been
+running unsigned extensions for days, went to enforcement by itself, and went
+back to Off by hand the same day. On this build the policy state is **mutable and
+can return**, so that registry key is the first thing to read the next time a
+compiled import dies on this box — not a reinstall, and not a hardware theory.
+
+**Three backlog entries named that policy; two of them named nothing else.**
+`b09-antigrowth-1786089660` and `t4-sageattention-1786090320` are **ungated** —
+the second is the entry the block hit hardest, since an unsigned prebuilt
+SageAttention wheel dropped into a fresh venv is precisely what the policy
+refuses. **`t5-fastwan-sample-b01-1786090260` keeps a gate**, because Smart App
+Control was never its only one: its own `why` has said all along that the licence
+check must clear before the LoRA may be downloaded at all, so the gate moves
+`hardware → code` and points at `t5-fastwan-licence-1786090200`, which is
+unblocked and sitting in the same file. No `gate_ref` text was deleted; each is
+kept where the entry can still be read against it. `queue_promoter.py` promoted
+nothing (all three are `runner: manual`, which a worker inbox cannot hold) and
+retired `b07-negatives-as-written-1786090140`, which had finished on a heartbeat.
+
+**Beat 9 re-rendered, and the plant no longer grows.** `probe-b9-mitosis.sh`, the
+same conditioning still `09-whoami.png` (sha256 `b0dabdf…`, hashed on both sides
+before the run), the same 704x1280 / 14-step / guidance-5.0 recipe and **the same
+seed, 20260814**. Only two inputs changed, both in `motion.yaml` at `64141ad`:
+fifteen leaf-count and anti-detachment terms added to the negative (627 of 900
+characters), and the "one leaf spinning as it falls" clause removed from the
+direction. 190 s wall, rc=0, $0, peak torch 14.4 GB of 26.
+
+Frames at matching indices, leaf silhouettes counted by eye off 2x crops, apex
+row measured by colour mask against the horizon at y=508 (**+ is below the
+horizon line, − is above it**):
+
+| frame | in the episode | | anti-growth | |
+|---|---|---|---|---|
+| | leaves | apex | leaves | apex |
+| 0 | 4 | +50 | 4 | +50 |
+| 12 | 5 | +36 | 4 | +51 |
+| 24 | **7** | +9 | 4 | +51 |
+| 36 | **7** | **−30** | 4 | +49 |
+| 48 | **7** | **−56** | 4 | +48 |
+| 60 | **7** | **−59** | 4 | +44 |
+
+The take in the episode gains three leaf shapes and **a whole second node tier**,
+and its apex climbs **109 px** — from 50 px below the horizon grass line to 59 px
+above it — in a beat whose script gives the plant no action at all. The
+re-render **holds 4 leaves and one tier for all 61 frames** and its apex moves
+6 px, never crossing the line. Vivid-leaf pixel area goes 1.11x in the old take
+and 0.87x in the new one. `check_invention.py` is blind to this class by
+construction (its limits are written at `check_invention.py:45`); the frame
+counts are the evidence.
+
+**The motion number fell, as predicted, and the frozen share is the figure to
+read carefully.** Whole-frame median **0.36 → 0.21**, frozen share **2% → 43%**.
+That reads alarming next to the K recipe the founder rejected as "literally just
+frozen frames", and it is not the same thing: **no frame in the new clip is dead**
+(minimum delta 0.10, 0% below 0.05), the longest run under the 0.2 threshold is
+**3 frames — an eighth of a second**, and measured on the plant region alone the
+new clip holds median **0.37 with 0% dead frames** against the old take's **2.16**.
+That 2.16 *was the growth*: the defect is most of what the old number was
+scoring, so removing it had to cost motion. What the 43% really shows is a
+threshold cutting through the middle of a gentler distribution clustered at
+0.13–0.23. Both clips also carry the same 4-frame periodicity already recorded
+for this pipeline (the effective-8-fps pattern).
+
+**This is one sample, and the verdict is not the steward's.** Beat 9 was already
+the lowest-motion beat in the episode at 0.36; whether the gentler version reads
+as alive or as held on screen is R4, the founder's eye, and nothing is scaled or
+swapped into a cut until he has looked. Clip and the six-frame side-by-side are
+under `review/b09-retest/` (untracked): `09-whoami-antisplit.mp4`, its §7.2
+sidecar, and `b09-old-vs-new.png` (old on top, new below, horizon drawn on every
+cell).
+
+**Box state on exit:** scheduled task `banyan-b9-mitosis` deleted, GPU 0 MiB /
+0% utilisation, the farm worker left exactly as found (not started, not stopped).
