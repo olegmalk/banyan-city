@@ -1735,3 +1735,115 @@ missing part of their Animagine booster tail.**
   at beat 12 loses the whole run unless clips are written and fsynced **as each one
   lands**, with the job resumable from the clips already on disk. Do not queue a long
   batch on that box until the per-beat save path is the default.
+
+## 2026-08-07 — the four held beats were re-examined: three had been held on a broken measurement, one because a machine was off
+
+**The founder's question, verbatim in effect:** should the whole episode be
+animated? Episode 1's current cut `ep1-v30-fixed.mp4` has four beats that are
+held stills with a slow push-in rather than animation — **3, 12, 13 and 15**.
+Answering it needed the reasons those four were held, and the reasons did not
+survive being checked.
+
+**Beat 3 — measured on a picture that no longer exists.** The hold was decided
+on a render of `03-deploy-succeeded-REVOKED-magenta.png`, the still the founder
+rejected and which was revoked on 2026-08-04 (`049c519`, which renamed it and
+replaced the shipping frame in the same commit). The frame the episode
+ships had **never been animated at all**, and the old shot direction named
+objects (text, a cursor) that are not in it. Animated tonight for the first
+time: **0.20 median, 50% frozen**, against the revoked-still take's 0.13/72%.
+Genuinely flat — a cel-shaded panel has almost nothing to modulate but the two
+screens. Do not spend more renders here without the founder asking.
+
+**Beat 12 — not static, measured wrong.** Whole-frame 0.19 median with 58%
+frozen; measured **inside the sprout's own box** (0.38,0.42,0.64,0.60) the same
+clip is **0.46 with 8% frozen**, against 0.14/67% for the cracked ground below
+it and 0.08/77% for the sky. The frame is mostly rigid plain, and that averaged
+plant away. **Same class of instrument error as cycle-016's mean-vs-median, one
+level down: the right statistic over the wrong support.** A rewritten direction
+was rendered tonight and **lost to the take it replaced** — 0.27/25% in the
+sprout box against 0.46/8% — because it asked the stem to shudder "without
+moving anywhere", and positive prose about stillness suppresses motion. v31
+therefore carries the *older* clip; the rewrite is kept as evidence.
+
+**Beat 13 — half the frame works, half cannot.** Grass and road 0.30/8%,
+cloudbank 0.11/80%, because a 2.5s clip cannot show clouds travelling; the dead
+half halved the whole-frame average. Re-rendered: **grass and road 0.28/15% →
+0.50/0%, whole frame 0.19/53% → 0.30/3%**, cloud half unchanged (0.11/80% →
+0.10/82%) — the cloud-shadow band the new direction asked for did not land.
+
+**Beat 15 — never a judgement.** Nothing was wrong with its direction; **the
+render box was switched off**, so no animation existed and a held still went in.
+Two takes tonight. Take 1 scores **4.63/0%, the highest number in the episode,
+and is rejected**: a bright red-orange cone stabs into frame twice, an object in
+no still and no script — *the invented object is what produced the score.* Take
+2, same seed and recipe with the wording moved to "in place" and a negative
+naming the cone, measures **2.72/0%** with the object gone. Take 2 is in v31.
+
+**Controls for reading any of these, same night, same model and recipe:** beat
+11 = 2.36/0%, beat 1 = 1.75/3%, beat 7 = 0.78/0%, beat 9 = 0.36/2%.
+
+**The held clips score HIGHER than the animated ones, and that is the trap.** A
+held still with `hold_still.py`'s centred push-in moves every pixel: beat 3 held
+= 2.13, beat 13 held = 2.90, beat 15 held = 1.67. **The frame-difference
+statistic cannot compare a held beat against a moving one at all** — only one
+animated take against another. Any future held-vs-moving call is the author's
+eye or nothing.
+
+**`ep1-v31-animated.mp4` exists — an unapproved working cut, no leaf written.**
+15 beats, 15 footage, 0 slate, 89.96s, 720×1280, 8.9 MB, $0. `qa_episode` 13
+checks pass with the same single luma warning v30 has; `check_sync` clean on all
+of node 001; **`check_invention` flags nothing** on any of the ten animated
+clips. Assembled with the recovered v30 recipe (`collect_farm.py f15` off
+`0e8c298` — the f15 blobs are gone from the branch tip — plus the face-B beat 02
+from `3629e58`, `hold_still` for 4/5/7/10/14, then the four swaps), verified by
+rebuilding v30 itself first and diffing: **ten of the eleven unswapped beats are
+pixel-identical**, and the eleventh (beat 14) is the same footage sampled 0.04s
+later, because each animated clip is one frame longer than the held clip it
+replaces. Five beats stay held on purpose (4, 5, 7, 10, 14), down from nine.
+
+**A defect in v30 found by that rebuild, worth keeping:** v30's clip directory
+was populated at 2026-08-03 16:26Z and its VO manifests were **never refreshed**
+after `4611efc` (20:58Z the same evening) re-measured beats 6 and 7 —
+`06-vo.json` 3.977 → 4.473s, `07-vo.json` 5.734 → 6.237s. v30 therefore sizes
+those two slots to pre-sync-fix voice lengths and clips ~0.1s off the end of
+beat 6's line. **The whole 0.88s by which v31 is longer than v30 is this
+correction, not footage.** The lesson is narrow and concrete: a clip staging
+directory outside the repo goes stale silently, and nothing compares it against
+the tree it was copied from.
+
+**Model choice was deliberate: Wan2.2-TI2V-5B, not LTX.** LTX is faster and its
+suspension was lifted on 2026-08-06, but every beat already in the episode was
+rendered on the 5B, and LTX's measured colour loss would change the look partway
+through a 90-second cut. Consistency inside one episode outranks throughput.
+
+**Screening page:** `SCREENING.html` (local, untracked, nothing published,
+nothing in `_site/`) now carries three sections — episode 1 `ep1-v30-fixed.mp4`
+yes/no at the top unchanged, then the new v31 section with the whole cut plus
+per-beat held-vs-animated pairs for 3, 12, 13 and 15, each labelled with its
+measured motion, a one-line plain reason it had been held, and its own explicit
+question; then episode 2 beat 01. It states plainly that three of the four were
+held on a measurement rather than on the founder's verdict, and it says in the
+page why the number cannot decide held-vs-moving.
+
+### Carried forward for a fresh session
+
+- **Episode 1 is still unscreened, and that is what blocks posting** — which the
+  founder himself ordered on 2026-08-02. Two cuts are now waiting, v30 and v31;
+  the decision is one 90-second watch.
+- **Five trunk scripts written and unread: 003b, 004, 005, 006a, 007a.** One
+  reading pass remains the cheapest unblock in the tree.
+- **Node 002b beat 01 has a fig at last, and four leaves after four wordings.**
+  The fig is in 2 of 4 round-3 candidates after 0 of the previous 8; the leaf
+  count is wrong in every picture ever rendered and **four wordings in, this
+  model will not draw a two-leaf plant on request** — a model limitation, and
+  the founder's call whether to accept it or change tools. Recommended
+  conditioning frame: `takes/stills/01-cold-open-r3-s3.png`, **untouched** — both
+  repaints made the fruit bigger when asked for smaller, so the untouched plate
+  is the nub and the repaints are what the end of the shot looks like.
+- **Negative prompts silently truncate at 77 tokens on every render.** Real,
+  unfixed. Beat 15's rejected-take negative alone is far past it, so the tail
+  terms in any long negative are not reaching the model at all.
+- **`genomes/sapling/nodes/002b-first-citizen/takes/` is untracked but NOT
+  gitignored** — 25 MB that an accidental `git add -A` would commit. (001's
+  `takes/` is already tracked, 183 files, so the hazard is 002b's alone.)
+  Nothing has been staged; it is a live hazard.
