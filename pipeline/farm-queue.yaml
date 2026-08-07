@@ -420,7 +420,8 @@ backlog:
   gate_ref: >-
     002b-t0-c.yaml approval_scope — "beats 02-21 await his verdict on that sample
     before conversion", and "No VO, no stills and no footage may be produced until
-    the dialect is settled". That verdict is the beat-01 frame pick above.
+    the dialect is settled". That verdict is the beat-01 frame pick above,
+    pending-founder.yaml id 002b-b01-frame.
   window: any
   est_minutes: 25
   node: 002b-first-citizen
@@ -441,7 +442,8 @@ backlog:
   gate: founder
   gate_ref: >-
     The same 002b-t0-c approval_scope clause as 002b-stills-b02-21-1786090020 —
-    "No VO ... until the dialect is settled".
+    "No VO ... until the dialect is settled", which waits on the same beat-01
+    frame pick, pending-founder.yaml id 002b-b01-frame.
   window: overnight
   est_minutes: 60
   cmd: >-
