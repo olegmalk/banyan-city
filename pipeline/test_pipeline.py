@@ -1230,6 +1230,113 @@ def test_queue_render_params_reach_the_child(tmp: Path):
     check("no renderer flag is defined but never read", not dead)
 
 
+def test_probe_beat_sends_the_files_and_the_whole_recipe(tmp: Path):
+    """A one-beat probe must pass every sampling parameter, and pass the two
+    strings it READ rather than any it re-derived.
+
+    Same invariant as the test above, on the third renderer entry point. It is
+    here because the probe path is the one used for single-beat re-renders — the
+    runs whose whole purpose is that ONE input changed — and a recipe field that
+    silently reverts to a default turns "only the negative changed" into a claim
+    nobody can check afterwards.
+
+    The utf-8 half is the other reason: the negative carries Wan's Chinese
+    anti-static terms, and the run is fired over a cp1252 console. If the string
+    that reaches argv is not byte-for-byte the file's, the clip still renders and
+    the corruption is invisible in the output.
+    """
+    import re
+
+    sys.path.insert(0, str(REPO / "pipeline"))
+    import probe_beat as pb
+
+    neg = "splitting leaf, 静态, 静止不动的画面, frozen frame"
+    cmd = pb.build_cmd("py", "wan.py", "in.png", "out.mp4", "2D anime. x", neg,
+                       20260816, "e.pt", steps=14, guidance=5.0, seconds=2.5)
+    check("probe passes the negative byte-for-byte", neg in cmd)
+    check("probe passes the seed it was given", "20260816" in cmd)
+
+    flags = {c[2:] for c in cmd if c.startswith("--")}
+    SAMPLING = {"seconds", "steps", "size", "guidance", "model", "quantise", "seed"}
+    missing = sorted(SAMPLING - flags)
+    for m in missing:
+        print(f"      x  probe omits --{m}")
+    check("the probe path passes every sampling parameter", not missing)
+    check("the probe path suppresses wan_i2v's global shake terms",
+          "no-shake-neg" in flags)
+
+    wan_src = (REPO / "pipeline" / "wan_i2v.py").read_text(encoding="utf-8")
+    known = set(re.findall(r'add_argument\("--([a-z-]+)"', wan_src))
+    unknown = sorted(flags - known)
+    for u in unknown:
+        print(f"      x  --{u} is sent but wan_i2v does not define it")
+    check("the probe sends no flag the renderer does not accept", not unknown)
+
+    # the recipe is not only flags: video_task hands every render an environment,
+    # and each variable in it is there because its absence once cost a run
+    vt_src = (REPO / "pipeline" / "video_task.py").read_text(encoding="utf-8")
+    vt_env = set(re.findall(r'"(PYTHON[A-Z0-9_]*|PYTORCH_[A-Z0-9_]*|HF_HUB_[A-Z0-9_]*)":',
+                            vt_src))
+    missing_env = sorted(vt_env - set(pb.RENDER_ENV))
+    for m in missing_env:
+        print(f"      x  the probe does not set {m}")
+    check(f"the probe hands the render video_task's environment ({len(vt_env)} vars)",
+          vt_env and not missing_env)
+
+    # the sidecar is the other half: --stage simple writes none, which is why
+    # beat 11's seed had to be dug out of a commit whose blobs are gone
+    side = pb.sidecar_text("Wan-AI/Wan2.2-TI2V-5B-Diffusers", "Apache-2.0",
+                           "rtx5090", 11, "704x1280", 2.5, "14", 5.0, 20260816,
+                           "t", "11-grow.png", "abc", 200, "pos", neg)
+    check("the probe sidecar records the seed", "seed: 20260816" in side)
+    check("the probe sidecar records the negative verbatim", "静止不动的画面" in side)
+    check("the probe sidecar records which still conditioned it",
+          "init_still: 11-grow.png" in side)
+
+
+def test_beat11_negatives_name_the_mitosis(tmp: Path):
+    """Beat 11's leaf divides in two, and until 2026-08-07 nothing forbade it.
+
+    The founder: "why did we never fix the mitosis?" The answer was in the inputs
+    — the direction asks for a SHAPE CHANGE ("unfurls", "springs upright"),
+    antistatic_for() correctly forbids stillness, and the negative held nothing
+    at all about leaf COUNT. Told to change shape and denied the option of holding
+    still, the cheapest thing a leaf can do is become two leaves. The metric
+    scored that 2.36, the highest in the episode.
+
+    What this holds, on the real genome rather than a fixture:
+      1. the leaf-count terms are still authored (deleting them is the regression)
+      2. they reach the NEGATIVE, and the positive stays free of them — the
+         "no new subjects" bug, which asked for the thing it forbade
+      3. they lead, where the cap cannot reach them
+      4. anti-static survives, so the fix cannot quietly freeze the beat
+    """
+    sys.path.insert(0, str(REPO / "pipeline"))
+    import video_task as vt
+    from generate_shots import parse_shots
+
+    node = REPO / "genomes/sapling/nodes/001-capability-inventory"
+    direction = vt.motion_directions(node).get(11, "")
+    shot = {s["num"]: s for s in parse_shots((node / "shots.md").read_text(encoding="utf-8"))}[11]
+    pos, neg = vt.video_prompt(f"{direction}. no new subjects, no scene change",
+                               shot["prompt"], no_anchor=True, beat=11)
+
+    WANTED = ("splitting leaf", "dividing leaf", "duplicate leaves",
+              "extra leaves appearing", "second sprout", "leaf multiplying",
+              "changing leaf count", "morphing silhouette")
+    absent = [w for w in WANTED if w not in neg]
+    for w in absent:
+        print(f"      x  beat 11's negative no longer says '{w}'")
+    check("beat 11 forbids the leaf dividing", not absent)
+    check("none of it leaked into the positive prompt",
+          not any(w in pos for w in WANTED))
+    check("the leaf-count terms lead the negative",
+          neg.startswith("splitting leaf"))
+    check(f"beat 11's negative still fits ({len(neg)}/{vt.NEG_MAX} chars)",
+          len(neg) <= vt.NEG_MAX)
+    check("beat 11 is still forbidden to freeze", "frozen frame" in neg)
+
+
 def test_hosted_path_sends_our_negative(tmp: Path):
     """The paid API path must send the same anti-scene-change terms as the local one.
 
@@ -2017,6 +2124,8 @@ def main():
         test_no_undefined_locals(Path(td))
         test_subprocess_reads_are_utf8(Path(td))
         test_queue_render_params_reach_the_child(Path(td))
+        test_probe_beat_sends_the_files_and_the_whole_recipe(Path(td))
+        test_beat11_negatives_name_the_mitosis(Path(td))
         test_hosted_path_sends_our_negative(Path(td))
         test_antistatic_first_signal_wins(Path(td))
         test_vendored_licence_does_not_launder(Path(td))

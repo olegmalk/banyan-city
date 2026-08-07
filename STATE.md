@@ -1860,3 +1860,115 @@ page why the number cannot decide held-vs-moving.
   a deliberately committed v1 archive, all 183 files still tracked, and new files
   there behave as they always have. Verified: tracked count unchanged at 1668,
   002b's 21 candidates gone from the untracked list.
+
+## 2026-08-07 — the mitosis was never fixed because it was never attempted, and the metric scored it as the episode's best beat
+
+**The founder:** *"why did we never fix the mitosis? you can remake that beat
+with the new render method."* The beat is node 001 **beat 11, "grow"** —
+*"Latency: three days. Throughput: one leaf."* Its clip is in
+`ep1-v30-fixed.mp4` and in `ep1-v31-animated.mp4` right now.
+
+**The answer is that nothing was ever tried.** No prompt, no negative, no seed
+and no direction was ever changed to fight it. Beat 11 was never held, never
+re-rendered and never flagged, because it measured **2.36 median with 0% frozen
+frames — the highest motion of the fifteen**, and the steward called it the best
+beat in the episode. The duplication *was* the score: a leaf dividing moves a
+great many pixels. `check_invention.py` was written on exactly that observation
+and nobody then went back and re-rendered the beat that prompted it.
+
+**Three explanations checked and killed before touching anything.**
+
+- **The 77-token truncation is not this one.** Measured with the real CLIP
+  tokenizer: beat 11's still negative is **75 of 77 tokens**, `fit_negative`
+  returns it byte-identical and drops nothing. The video path builds its
+  negative against `NEG_MAX` 900 **characters** on UMT5 and was using **390**.
+  Nothing was ever silently discarded here — unlike 001 beats 5, 6, 7, 10, 14
+  and 15, which is a different defect that happens to share a date.
+- **The suppressors are not this.** `antistatic_for()` correctly reads the
+  movement words and applies Wan's anti-static terms; no shake terms, no
+  "camera locked".
+- **The negative had nothing whatever to say about leaves.** No
+  anti-duplication, anti-splitting, anti-extra-leaf or anti-second-sprout term
+  had ever existed for this beat. **They were never authored.** Meanwhile the
+  direction asks the leaf to *unfurl* and *spring upright* — a shape
+  transformation — while anti-static forbids the beat from holding still. Told
+  to change shape and denied the option of not moving, the cheapest thing a leaf
+  can do is become two leaves.
+
+**The seed turned out to be recoverable, so this is an A/B and not another
+take.** The f15 sidecars are gone from the branch tip but survive at `0e8c298`:
+`f15-b11-1785804000-11-grow.mp4.meta.yaml` records **seed 20260816**, 704x1280,
+14 steps, guidance 5.0, and both prompt strings. Re-deriving the pair from the
+genome reproduces that sidecar's positive and negative **byte-identically**, so
+the re-render holds still, recipe and seed constant and changes **one input**.
+Same shape as the beat 15 fix on 2026-08-06, where naming the invented cone took
+4.63 to 2.72 at a fixed seed.
+
+**What was authored** (`motion.yaml`, beat 11, in beat 10's existing "no god
+rays" convention — `video_prompt()` splits these into the real negative field, so
+they never reach the positive): *no splitting leaf, no dividing leaf, no
+duplicate leaves, no extra leaves appearing, no second sprout, no leaf
+multiplying, no changing leaf count, no morphing silhouette.* They land at the
+**front** of the negative, which is the position the cap cannot reach.
+
+- **Video path: 390 → 552 characters of 900.** Nothing truncated, anti-static
+  still applied.
+- **Still path: untouched, still 75/77 tokens, byte-identical.** `motion.yaml`
+  is read only by the video renderer. Adding the same terms to `shots.md` would
+  put the still at **103 tokens unfitted**, and `fit_negative` would buy the room
+  by dropping eight house terms in the documented order — *realistic skin
+  texture, jpeg artifacts, deformed, extra limbs, blurry, low quality, signature,
+  watermark*. That is a change to an approved still's recipe and is **not** made
+  here.
+
+**IT RAN, and the leaf no longer divides.** Both boxes were off at the start of
+the session; the 5090 came back mid-session and the job fired immediately.
+`review/11-grow-antisplit.mp4`, seed 20260816, 704x1280, 14 steps, guidance 5.0,
+UniPC shift 5.0, `model_cpu_offload`, 279s wall, $0, provenance sidecar beside
+it. Frame counts at the apex, where the script has exactly two blades (the one
+already there and the one unfurling):
+
+| frame | old (`review/beat-11-grow.mp4`) | new |
+|---|---|---|
+| 0 | 2 — identical, it is the still | 2 |
+| 20 | **3** — the hooked tip has its own closed outline, separated from the pale blade | 2 — hook and blade share one unbroken contour |
+| 35-40 | **3, and the hook is DETACHED** — clear background between it and the leaf, no stem anchor | 2 — the curl stays attached to its blade |
+| 58-60 | 3 overlapping shapes resolving to 2 | 2 |
+
+The old clip's extra shape appears around frame 20, floats free by frame 35 and
+is the thing the founder's eye caught. In the new clip the same apex leaf curls
+its tip over and unfurls as **one** leaf for all 61 frames.
+
+**The numbers, and why the good one went down.** Motion **2.36 → 2.07 median,
+0% frozen in both**. A *lower* number is the better clip here, exactly as
+predicted: part of the 2.36 was the duplication itself. `check_invention` flags
+neither (old ret 0.85 / mono 0.58, new **0.90** / 0.58, against a 0.88 gate) —
+and note the new clip scores marginally *worse* on the tool's own axis while
+being visibly correct. That is the documented structural blind spot
+(`check_invention.py:45`), not a drifted threshold: a beat that is *supposed* to
+transform reads like an invention. **The frame count is the evidence; the tool is
+not.**
+
+**Not swapped into any cut, and nothing published.** The clip is a candidate for
+the founder's eye against the one in v30/v31 — a taste verdict, R4.
+
+**If he wants it cleaner, the next lever is the STILL, and that is his call.**
+`stills/11-grow.png` contains **five leaf shapes** where the prompt asked for one
+new leaf, a **Y-fork at the stem apex that already reads as one leaf mid-division**,
+three free-floating detached leaf shapes with no stem anchor, and heavy shallow-DOF
+blur leaving no crisp silhouette for the model to preserve. The negative can only
+stop the model *adding*; it cannot remove what the approved frame already shows.
+Replacing that still is a change to approved canon and is not steward work.
+
+**New in the pipeline:** `pipeline/probe_beat.py` renders one beat with its
+prompt and negative read from **files** — the negative carries Wan's Chinese
+anti-static terms and a cp1252 console mangles them silently, which would have
+produced a clip that renders and quietly proves nothing (both sha256 were
+compared on each machine; they matched). It also writes the §7.2 sidecar that
+`--stage simple` never wrote, which is the whole reason this beat's seed had to
+be excavated from a dead commit. `pipeline/probe-b11-mitosis.sh` is the one
+command that stages and fires it.
+
+**Machine state:** rtx5090 (192.168.3.157) **up**, card idle before and after.
+MSI 5070 Ti (192.168.3.153) **still down** — no ping, no ssh, ARP incomplete;
+the household power problem has cleared for one box, not both.

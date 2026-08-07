@@ -80,7 +80,23 @@ motion_prompts:
   # between the grains; pulsing THOSE renders the thump without inventing the
   # god-rays that "no light rays" was written to keep out.
   10: "the glow between the soil grains pulses hard, bright then dark, the thin roots jolt with every pulse, water beads sliding down between grains, no god rays, no light shafts"
-  11: "the new leaf unfurls in a fast sweep and springs upright, dew drops shaking loose and running off, the light swinging across it"
+  # 2026-08-07, THE MITOSIS. The founder: "why did we never fix the mitosis?" —
+  # in the f15 take that is in every cut of episode 1, the leaf divides like a
+  # cell partway through the clip. Nothing was ever tried against it, and the
+  # reason is in this line: the direction asks for a SHAPE CHANGE ("unfurls",
+  # "springs upright") and the negative held nothing about leaf COUNT, while
+  # antistatic_for() correctly reads the movement words and forbids stillness.
+  # Told to change shape and forbidden to hold still, the cheapest thing a leaf
+  # can do is become two leaves — and the frame-difference metric scored that
+  # 2.36, the highest in the episode, i.e. the defect read as the best motion.
+  # Naming an invention in the negative is the mechanism that already worked
+  # here: beat 15's red-orange cone, same seed and recipe, 4.63 -> 2.72 with the
+  # object named (STATE.md 2026-08-07). Same negation convention as beat 10's
+  # "no god rays" — video_prompt() splits these into the real negative field, so
+  # they never reach the positive prompt, and the leading position in the
+  # negative is the protected one. The still is NOT changed by this: motion.yaml
+  # is read only by the video path, and 11-grow.png is the founder's canon.
+  11: "the new leaf unfurls in a fast sweep and springs upright, dew drops shaking loose and running off, the light swinging across it, no splitting leaf, no dividing leaf, no duplicate leaves, no extra leaves appearing, no second sprout, no leaf multiplying, no changing leaf count, no morphing silhouette"
   # 2026-08-06. Beat 12 was held for measuring 0.19 median / 58% barely-moving —
   # a WHOLE-FRAME number on a frame that is 95% cracked ground and flat sky. Inside
   # the box the sprout occupies, the same clip measures 0.35 median with 10% frozen
