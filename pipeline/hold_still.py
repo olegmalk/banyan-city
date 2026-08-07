@@ -39,6 +39,17 @@ THE MOVE ITSELF IS NOW RULED, and the rule is the founder's, 2026-08-07, verbati
     "for all of the images that have no animation and only zooming, first of all,
     do not do ping pong. second of all, it should be very slow and gentle zooming."
 
+and, later the same day, having watched what "gentle" was read to mean:
+
+    "zoom speed ladder is just overdoing it. simply make the zoom speed moderate."
+
+TWO RULINGS, AND ONLY THE SECOND ONE MOVED. "No ping pong" is unchanged and is
+not up for re-tuning; what changed is the amount. The ladder he is refusing is
+the rate model — a per-second drift clamped into a 2-4% band, so that each beat
+got a different total worked out from its length. He asked for one moderate
+move, not a scheme. `ZOOM_TOTAL` is now that one number and it is the same on
+every held beat; the arc that got us there is recorded on the constant.
+
 WHERE THE PING-PONG ACTUALLY IS, because the obvious answer is wrong and was
 believed for an hour. `render_t3` palindromes any clip its slot outruns, and that
 looked like the culprit. It is not: measured frame by frame, **no held beat in
@@ -51,13 +62,19 @@ with `<video loop>`, so an 18% push-in ran to its end and snapped back to wide
 every two and a half seconds, over and over, for as long as the founder watched.
 That is a ping-pong, and it is the one he was looking at.
 
-So the fix is in three places and only one of them was a bug:
-  - the travel, here — 18% is why the snap-back was violent (`zoom_total`);
-  - the loop, in SCREENING.html, which no longer loops a held clip;
+So the fix was in three places and only one of them was a bug:
+  - the loop, in SCREENING.html, which no longer loops a held clip — THIS was the
+    bug, and on its own it is what stopped the snap-back the founder saw;
   - the palindrome, in `render_t3.held_still` — a latent path, one short clip away
-    from firing, now closed rather than left as the next session's surprise.
-Neither the direction nor the gentleness is a preference to be re-tuned by a later
-session on its own metric — see `scale_series` and the test that guards it.
+    from firing, now closed rather than left as the next session's surprise;
+  - the travel, here, which was cut to 2-4% in the same pass on the theory that a
+    smaller move made the snap gentler. That reasoning is retired: once the page
+    stopped looping there was nothing to snap, and the cut cost the move its
+    visibility for nothing. 12% is a screened amount rather than a mitigation.
+The DIRECTION is not a preference to be re-tuned by a later session on its own
+metric — see `scale_series` and the test that guards it. The AMOUNT is the
+founder's and moves only when he says so; it has now moved three times, always
+on a screening and never on a measurement.
 """
 
 import argparse
@@ -91,34 +108,41 @@ def slug_for(node_dir: Path, beat: int) -> str | None:
     return s.get("slug") if s else None
 
 
-# GENTLENESS IS A RATE, NOT A TOTAL — that is the whole design of these three
-# numbers, and it is what "very slow and gentle" (founder, 2026-08-07) means when
-# the held beats run 2.6s to 13.0s. A fixed total would make the 2.6s beat drift
-# five times faster than the 13.0s one and call both "3%".
+# THE TOTAL IS WHAT IS FIXED, and there is exactly one of it. Four settings have
+# now been screened, so this is not a guess to be re-derived from first principles
+# by the next session:
 #
-# It replaces ZOOM = 0.18, which was 18% of scale on every held beat regardless of
-# length, front-loaded by an ease-out: 10.1%/s at the first frame, half the travel
-# spent in the first 39% of the shot. That was chosen against a different note —
-# the founder had called a 6% version invisible ("this one has no motion, u sure
-# you opened it") — and 18% overshot into an effect.
+#     6%    "this one has no motion, u sure you opened it"   — invisible
+#    18%    seen, and too much: front-loaded by an ease-out to 10.1%/s off the
+#           first frame, half the travel spent in the first 39% of the shot
+#    2-4%   a per-second rate (0.6%/s) clamped into a band, so every beat got a
+#           different total worked out from its length — "way too slow", and the
+#           scheme itself refused: "zoom speed ladder is just overdoing it"
+#    12%    "simply make the zoom speed moderate" — this one
 #
-# 0.6%/s, clamped to 2–4% of total travel:
-#     beat 05  2.58s -> 2.0% (floor)      beat 10  10.52s -> 4.0% (cap)
-#     beat 04  3.50s -> 2.1%              beat 14  12.99s -> 4.0% (cap)
-#     beat 07  6.64s -> 4.0% (cap)
-# The floor keeps a short beat from having no move at all; the cap keeps a long one
-# from reframing the picture the founder approved. Between them every held beat in
-# episode 1 travels 2–4%, at 0.31–0.77%/s — an order of magnitude under the old
-# curve's opening speed.
-ZOOM_RATE_PER_S = 0.006
-ZOOM_MIN, ZOOM_MAX = 0.02, 0.04
+# WHY A TOTAL AND NOT A RATE, which is the reverse of what stood here this
+# morning. The rate model's case was that the held beats run 2.6s to 13.0s, so a
+# fixed total makes the short beat drift five times faster than the long one. True,
+# and it is not what the eye is judging. What reads as the size of a camera move is
+# how far the frame travelled by the end of the shot, not the pixels per second on
+# the way; pinning the rate meant the 2.6s beat moved 2% and disappeared while the
+# 13.0s beat moved its full 4%, which is the ladder. One number, every beat:
+#
+#     beat 05  2.58s -> 12% at 4.65%/s     beat 10  10.52s -> 12% at 1.14%/s
+#     beat 04  3.50s -> 12% at 3.43%/s     beat 14  12.99s -> 12% at 0.92%/s
+#     beat 07  6.64s -> 12% at 1.81%/s
+#
+# Parameterized on purpose — the founder tunes ONE constant here, or one beat at a
+# time with --zoom, and nothing else in the file has to be reasoned about.
+ZOOM_TOTAL = 0.12
 # LINEAR, AND THAT IS THE MONOTONICITY GUARANTEE. Two easing curves have been
 # rejected by the founder, for opposite reasons: smoothstep because it eases IN as
 # well as out ("feels like a weird slow key frame, it should be ease in and out,
 # just ease out"), then cubic ease-out because it parks ("doesnt mean it should
 # just stop at one point"). Constant rate does neither — it never creeps up and
-# never arrives. At 0.31–0.77%/s there is no acceleration worth shaping, and a
-# curve is one more thing that can be given a reversing exponent by accident.
+# never arrives. A curve is also one more thing that can be given a reversing
+# exponent by accident, and "no ping pong" is the ruling that did NOT move when
+# the amount did: a bigger total makes the direction rule matter more, not less.
 EASE_EXP = 1.0
 # NO LATERAL DRIFT. There was 70px of it, alternating direction by beat parity, on
 # the theory that a pure scale is not a camera move and that consecutive held beats
@@ -131,10 +155,18 @@ DRIFT_PX = 0
 
 
 def zoom_total(seconds: float, override: float | None = None) -> float:
-    """How far this clip travels, as a fraction of scale. See ZOOM_RATE_PER_S."""
+    """How far this clip travels, as a fraction of scale. See ZOOM_TOTAL.
+
+    `seconds` is accepted and deliberately unused: the total does NOT depend on
+    the length of the beat, and that independence is the founder's ruling rather
+    than an accident of the arithmetic. Dropping the parameter would let the next
+    version of this function quietly grow a length term again with no caller to
+    change; keeping it means the signature says "we were asked, and the answer is
+    the same". The rate that falls out is 12%/duration.
+    """
     if override is not None:
         return max(0.0, float(override))
-    return min(ZOOM_MAX, max(ZOOM_MIN, ZOOM_RATE_PER_S * seconds))
+    return ZOOM_TOTAL
 
 
 def scale_series(seconds: float, n: int, override: float | None = None) -> list:
@@ -301,10 +333,11 @@ def main():
                          "render_t3 never has to loop or reverse it; --seconds is "
                          "the floor, and stands alone on a beat with no voice")
     ap.add_argument("--zoom", type=float, default=None,
-                    help="push-in as a fraction of scale, overriding the "
-                         "rate-derived default (see zoom_total). Per-beat tuning "
-                         "knob — the founder's rule is slow and gentle, so this "
-                         "goes DOWN from 0.02-0.04, not up")
+                    help="push-in as a fraction of scale for this run, overriding "
+                         "ZOOM_TOTAL (see zoom_total). The per-BEAT knob: 0.12 is "
+                         "the screened setting for all of them, so reach for this "
+                         "when one picture wants a different move, not to re-tune "
+                         "the default — that number is the founder's")
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
 

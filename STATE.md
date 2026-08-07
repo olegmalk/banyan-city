@@ -2938,6 +2938,97 @@ and refused, names what he refused it for, and says a rebuilt cut replaces it.
 No T3 leaf, no publication and no distribution step happens off v32, and none
 happens off v33 either until it has a yes.
 
+## 2026-08-07 late — the zoom is one number again (12%, moderate), and the two sidecar bugs are closed
+
+**THE ZOOM: A TOTAL, NOT A RATE — and the founder refused the scheme, not just
+the setting.** Verbatim: *"zoom speed ladder is just overdoing it. simply make
+the zoom speed moderate."* The ladder he is refusing is what stood in
+`hold_still.py` this morning: a per-second drift (0.6%/s) clamped into a 2-4%
+band, which handed every held beat a different total worked out from its own
+length. He had already called that *"way too slow"*. It is replaced by
+`ZOOM_TOTAL = 0.12` — **12% of scale on every held beat regardless of duration**,
+rate = 12%/duration, linear, centred, one direction.
+
+Four settings have now been screened, and the arc is on the constant so the next
+session does not re-derive it: **6%** invisible (*"u sure you opened it"*), **18%**
+too much, **2-4%** too slow and refused as a scheme, **12%** moderate. The variant
+ladder queued as `held-zoom-rate-repick-1786124700` was overtaken — he skipped
+the pick and named the answer — so that entry is done without its clips ever
+being screened.
+
+**"No ping pong" did NOT move.** That ruling stands and matters more at 12% than
+it did at 2%, which is why the direction is still pinned by a test and the amount
+is pinned separately. The morning's docstring claimed the travel cut was part of
+the ping-pong fix; that reasoning is retired in the file. Once `SCREENING.html`
+stopped looping held clips there was nothing to snap back, so the travel cut
+bought nothing and cost the move its visibility.
+
+**Five clips regenerated and MEASURED OUT OF THE PIXELS**, not read back off the
+code that wrote them — each frame matched against the best centre-crop of frame 0,
+13 samples per clip (`review/beat-NN-HELD-moderate.mp4`, alongside the gentle set
+for comparison):
+
+| beat | length | measured travel | rate | reversals |
+|---|---|---|---|---|
+| 04 | 3.50s | 11.8% | 3.37%/s | 0 |
+| 05 | 2.58s | 11.8% | 4.57%/s | 0 |
+| 07 | 6.67s | 12.0% | 1.80%/s | 0 |
+| 10 | 10.54s | 12.0% | 1.14%/s | 0 |
+| 14 | 13.00s | 11.8% | 0.91%/s | 0 |
+
+All five strictly increasing, evenly spaced (linear), landing on the approved
+frame. The 11.8/12.0 split is the 0.2% search grid, not a difference in the
+clips. Beats 4 and 5 were cut at the gentle set's durations rather than their
+current slots — beat 4's VO manifest is absent right now and beat 5's was
+re-synthesised shorter (2.18s → 1.88s) since the gentle clips were made — so the
+A/B changes only the zoom. Their real slots move when the VO settles.
+
+**SIDECAR BUG 1: the held-still record was honest and the publish gate could not
+read it.** `hold_still.sidecar()` wrote `platform: local-cpu (ffmpeg)`, which
+resolved to no licence route at all, and a `model:` line with the explanation
+appended inline — and `SENTINELS` is matched on the WHOLE value, so
+*"none — held still + code push-in, no video model ran"* read as an unclassified
+model NAME. The one clip in the tree we can prove no model touched was the one
+`licence_gate` refused. Now `platform: local-deterministic (pipeline/hold_still.py,
+ffmpeg)` (→ CC-BY-4.0, our own output) and a **bare `model: none`**, with the
+explanation moved to `note:`, which nothing classifies. The bare token is
+load-bearing in two more places — `render_t3.py:545` and `check_invention.py:207`
+both substring-match `"model: none"`, and a miss means a held clip gets
+ping-ponged or scored for invented content. All three readers are pinned by
+`test_held_sidecar_is_readable_by_every_tool_that_reads_it`, end to end through
+the real gate.
+
+**SIDECAR BUG 2: five readers were pinned to one of the two naming conventions.**
+The pipeline has always written both `<stem>.meta.yaml` (render_t3, intake_take,
+the 126 tracked records) and `<full name>.meta.yaml` (hold_still, video_task). A
+reader that knows one shape reports the other as an asset with NO provenance —
+the loudest possible verdict on the most carefully written file. The fix is in
+the READERS, never in the filenames: renaming would break the held-still
+detectors and throw away each record's git trail. `licence_gate.sidecar_for()`
+tries the exact name first, then the stem, and returns None for neither;
+`build_site.py` uses it at all four of its call sites. One of those was visibly
+wrong on the site — every held clip in `/review/` was getting the node's FIRST
+still as its poster, i.e. another beat's picture.
+
+**SIDECAR BUG 3: the farm worker's stills path wrote no sidecar at all.** The
+video path has had one since 2026-08-02, for the exact reason that clips were
+landing on the courier branch as bare mp4s; the frames beside them were landing
+the same way and nobody noticed, because a still looks self-explanatory and is
+not. `farm_worker.still_sidecar()` now records the model **actually loaded**
+(including a bake-off task's `model:` override — recording the house default
+while another model rendered would be worse than recording nothing), the seed and
+how many were in the batch, size, steps, guidance, task id, `cost_usd: 0`, and the
+**post-`compress()` prompt and negative** — what the model was actually given, not
+the shots.md text §7.2 would otherwise be read as covering. Licence is resolved
+through `licence_gate.engine_licence()` so the record can never disagree with the
+tool that judges it, and an unclassified model reads UNVERIFIED. Written per
+image inside the loop, so a machine that dies mid-batch still ships a record for
+every frame it finished.
+
+Licence debt unchanged at **38** (ratchet 38). `test_pipeline.py`, `lint_genome.py`
+and `build_site.py` all exit 0; the link check sweeps 70 pages clean, which is
+what proves the `rec_link` rewrite is naming files that are actually in `_site`.
+
 ## 2026-08-07 — AniSora V3.2's two blockers both moved: the conversions exist, and the licence has a file after all
 
 Research only. **No download, no render, no sample** — every number below is repo

@@ -938,14 +938,26 @@ def test_held_still_is_never_reversed(tmp: Path):
     check("a held still is stretched to its slot", "setpts" in as_held)
 
 
-def test_held_zoom_is_monotonic_and_gentle():
+def test_held_zoom_is_monotonic_and_moderate():
     """The founder's two conditions on a zoom-only shot, as arithmetic.
 
     ONE DIRECTION, WHOLE CLIP — asserted over the real beat lengths of episode
-    1's held beats, not a convenient one. And "very slow and gentle": the rate
-    is what the eye reads, so it is the rate that is bounded, with the 2-4%
-    total travel falling out of it. The curve this replaced moved 18% at
-    10.1%/s off the first frame."""
+    1's held beats, not a convenient one. That half is fixed and has never
+    moved: "do not do ping pong" (2026-08-07).
+
+    THE AMOUNT IS THE HALF THAT MOVED, and this test was rewritten when it did.
+    It used to bound the RATE and let the total fall out at 2-4%, on the
+    reasoning that the held beats run 2.6s to 13.0s so a fixed total drifts the
+    short one five times faster. The founder screened that and refused the
+    scheme, not just the setting: "zoom speed ladder is just overdoing it.
+    simply make the zoom speed moderate." So what is pinned here is now the
+    TOTAL, identical on every beat, and the rate is whatever falls out —
+    the exact inverse of what this function asserted eight hours earlier.
+
+    Four settings have been screened (6% invisible, 18% too much, 2-4% too
+    slow, 12% moderate). A later session with a metric does not get to move it:
+    a number agreeing with itself is not a screening.
+    """
     ep1_held = [2.583, 3.5, 6.637, 10.524, 12.992]        # beats 5, 4, 7, 10, 14
     for secs in ep1_held + [0.5, 1.0, 60.0]:
         n = max(2, int(24 * secs))
@@ -954,16 +966,20 @@ def test_held_zoom_is_monotonic_and_gentle():
               all(b <= a for a, b in zip(zs, zs[1:])))
         check(f"{secs}s: pushes IN and lands on the approved frame",
               zs[0] > zs[-1] and abs(zs[-1] - 1.0) < 1e-9)
-    for secs in ep1_held:
+        # LINEAR, so the move never creeps up and never parks — both curves that
+        # did one of those were rejected by name (see hold_still.EASE_EXP)
+        steps = [a - b for a, b in zip(zs, zs[1:])]
+        check(f"{secs}s: every frame advances by the same amount",
+              max(steps) - min(steps) < 1e-9)
+    for secs in ep1_held + [0.5, 60.0]:
         total = hs.zoom_total(secs)
-        check(f"{secs}s: travel {total * 100:.1f}% is within 2-4%",
-              0.02 - 1e-9 <= total <= 0.04 + 1e-9)
-        check(f"{secs}s: rate {total / secs * 100:.2f}%/s is under 1%/s",
-              total / secs < 0.01)
-    rates = [hs.zoom_total(s) / s for s in sorted(ep1_held)]
-    check("a longer beat is never given a faster drift",
-          all(b <= a + 1e-12 for a, b in zip(rates, rates[1:])))
-    check("an explicit per-beat override is honoured",
+        check(f"{secs}s: travel is the one moderate total, {total * 100:.0f}%",
+              abs(total - hs.ZOOM_TOTAL) < 1e-12)
+    check("a 2.6s beat and a 13.0s beat are given the SAME move — no ladder",
+          hs.zoom_total(2.583) == hs.zoom_total(12.992))
+    check(f"and that total is 12%, the screened setting ({hs.ZOOM_TOTAL})",
+          abs(hs.ZOOM_TOTAL - 0.12) < 1e-12)
+    check("an explicit per-beat override is still honoured",
           hs.zoom_total(6.0, 0.01) == 0.01)
 
 
@@ -2858,7 +2874,7 @@ def main():
         test_pingpong_loop_seams(Path(td))
     with tempfile.TemporaryDirectory() as td:
         test_held_still_is_never_reversed(Path(td))
-    test_held_zoom_is_monotonic_and_gentle()
+    test_held_zoom_is_monotonic_and_moderate()
     with tempfile.TemporaryDirectory() as td:
         test_held_sidecar_is_readable_by_every_tool_that_reads_it(Path(td))
     with tempfile.TemporaryDirectory() as td:
