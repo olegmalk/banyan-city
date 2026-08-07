@@ -1,11 +1,20 @@
 # The founder's inbox — decisions only the founder can make. The status board
 # renders these publicly, so write them for a STRANGER: no filenames, no
 # internal jargon, and a public link whenever the thing can be looked at.
+#
+# The one exception, and it is not optional (2026-08-07): when the thing being
+# judged is UNPUBLISHED — unapproved footage never reaches the site — the detail
+# must say so and say where the author's own copy is, even if that means naming a
+# local file. `public:` may still carry a link for strangers, but then `link_text:`
+# must name what is actually behind it. On 2026-08-06 this item sent the author to
+# the published July cut of episode 1 while asking him to pass the August remake,
+# and he watched the wrong film. A link that is not the thing is worse than none.
 pending:
   - id: v6-verdict
     title: "Watch the finished episode 1 remake and say yes or no"
-    detail: "All 15 shots are approved and assembled with new narration. It is published here as a working cut — nothing posts to the show's channel until the author has watched it and passed it."
+    detail: "Fifteen shots, approved and assembled with new narration — and not watched yet. It is deliberately not on this site: footage the author has not passed never publishes here, so the only copy is a screening page on the author's own machine (SCREENING.html, sitting beside the file itself). The link goes to episode 1 as published today — the older cut this remake would replace, not the remake."
     public: "sapling/001-capability-inventory.html"
+    link_text: "watch the cut it would replace"
     since: 2026-07-29
   - id: bakeoff-pick
     title: "Choose which AI model draws the show from now on"
@@ -26,6 +35,7 @@ pending:
     title: "Pick the opening frame for the next episode's first scene"
     detail: "The story's next branch has an approved script and not one frame of film. Its opening scene has candidate drawings waiting and none has been chosen — and every other scene in that episode is drawn and voiced from the look this one settles, so nothing in it can start until this is picked."
     public: "sapling/002b-first-citizen-shots.html"
+    link_text: "see the 21 candidate frames"
     since: 2026-08-06
   - id: hires-review
     title: "Approve or ignore 30 sharper versions of the existing shots"

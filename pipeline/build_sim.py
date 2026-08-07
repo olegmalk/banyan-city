@@ -844,6 +844,12 @@ def waiting_html(inbox: list, backlog: list, now=None) -> str:
         link, label = q.get("public"), "look at it &rarr;"
         if link and "/tree/" in link:      # a directory of .md files is not a page
             label = "read it on GitHub &rarr;"
+        # An item can name what is behind its link. It must, when the decision is
+        # about something unpublished: a generic "look at it" under a title like
+        # "watch the finished remake" promises the link IS the remake, and on
+        # 2026-08-06 it sent the author to the published older cut instead.
+        if q.get("link_text"):
+            label = f'{_e(q["link_text"])} &rarr;'
         a = f' <a href="{_e(link)}">{label}</a>' if link else ""
         held = [backlog_entry_view(b) for b in blocked.get(str(q.get("id")), [])]
         mins = sum(h["est"] or 0 for h in held)
