@@ -24,3 +24,19 @@ sapling-narrative.html
 
 # Local shot-board pages (build_shotboard.py) — same reason as the review page
 shotboard-*.html
+
+# Candidate render media under a node's takes/ — the pick-of-N frames drawn while
+# a beat is being dialled in, ~1 MB each and dozens per beat. Media does not go
+# into git; only the frame the founder picks does, promoted deliberately. 002b's
+# takes/ held 25 MB of untracked candidates and was one `git add -A` from being
+# committed (2026-08-06). Extensions, not the directory, so the yaml provenance
+# sidecars that sit beside the pixels stay in the tree where they belong.
+genomes/*/nodes/*/takes/**/*.png
+genomes/*/nodes/*/takes/**/*.jpg
+genomes/*/nodes/*/takes/**/*.mp4
+genomes/*/nodes/*/takes/**/*.mp3
+genomes/*/nodes/*/takes/**/*.wav
+# 001's takes/ is the deliberate exception: a committed v1 archive, all 183 files
+# tracked. Ignoring never untracks anything, so those are safe either way — this
+# keeps NEW files there behaving as they always have rather than vanishing.
+!genomes/sapling/nodes/001-capability-inventory/takes/**

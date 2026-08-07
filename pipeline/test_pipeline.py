@@ -229,6 +229,107 @@ def test_sd_prompt_fits_clip_and_keeps_the_action():
     check(f"no prompt is reduced to style alone ({len(stripped)} were)", not stripped)
 
 
+def test_negative_prompt_cannot_overflow_in_silence():
+    """The negative prompt gets the same 77 tokens, and nothing was watching it.
+
+    diffusers warns when a POSITIVE prompt is truncated and says nothing when a
+    negative one is, so every still this project has drawn with a long negative
+    lost its tail without a word. Measured 2026-08-06 with the real tokenizer: 7
+    of the genome's 177 beats are over — 001 beat 7 at 115 tokens, half of it
+    thrown away, and 002b beat 1 at 82. On 002b beat 1 the lost words were
+    duplicates, which is the only reason nobody noticed for a month.
+
+    Everything here runs on an injected counter, so it needs no tokenizer and
+    means the same thing in CI as it does on a render box.
+    """
+    import re as _re
+
+    sys.path.insert(0, str(REPO / "pipeline"))
+    import sd_prompt
+    from generate_shots import parse_shots
+
+    fit = getattr(sd_prompt, "fit_negative", None)
+    fit_beat = getattr(sd_prompt, "beat_negative", None)
+    check("sd_prompt exposes fit_negative()", fit is not None)
+    check("sd_prompt exposes beat_negative()", fit_beat is not None)
+    if fit is None or fit_beat is None:
+        return
+
+    # one token per word, one per comma — exact for this test's made-up terms
+    def n(t):
+        return len(_re.findall(r"[A-Za-z0-9']+", t)) + t.count(",")
+
+    # 1. under budget: byte-identical and silent. This is the guard on the fix
+    # itself — a negative that already fits must reach the model unchanged, or
+    # the repair becomes a look change to every frame in the genome.
+    said = []
+    short = "photorealistic, 3d render, text"
+    check("a negative that fits comes back byte-identical",
+          fit(short, limit=77, warn=said.append, count=n) == short)
+    check("a negative that fits says nothing", said == [])
+
+    # 2. over budget: brought under the limit, and LOUD about it
+    house = ", ".join(f"h{i}" for i in range(30))
+    said = []
+    out = fit(house, beat=", ".join(f"b{i}" for i in range(10)),
+              limit=20, warn=said.append, count=n)
+    check("an over-budget negative is brought under the limit", n(out) <= 20)
+    check("dropping a term is announced", len(said) == 1 and "DROPPED" in said[0])
+    check("the announcement names what it dropped", "h29" in said[0])
+    # the beat's own terms are why the beat looks like itself; the house list is
+    # the same on every frame, so it is the one that gets sacrificed
+    check("beat-specific terms outlive the house list", "b9" in out)
+    check("the house list is what gets spent", "h29" not in out)
+
+    # 3. duplicates go before anything real does — 002b beat 1's overflow was
+    # entirely "text" and "photorealism" arriving twice
+    said = []
+    out = fit("text, watermark", beat="text", limit=4, warn=said.append, count=n)
+    check("a repeated term is removed before a unique one", out.count("text") == 1)
+    check("deduplication is announced", "deduplicated" in said[0])
+    check("deduplication keeps the unique terms", "watermark" in out)
+
+    # asking for a term twice must not be how you lose it: the surviving copy
+    # sits at the house copy's POSITION but carries the beat's PROTECTION, so
+    # spending the house list cannot take it (001 beat 7's "no text" did exactly
+    # this before the two were separated)
+    out = fit("keepme, h1, h2, h3, h4", beat="keepme, b1",
+              limit=5, warn=lambda m: None, count=n)
+    check("a term the beat also asked for survives the house list being spent",
+          "keepme" in out)
+    check("the house terms it outranks are gone", "h4" not in out)
+
+    # 4. the real genome, every beat: fits, and whatever already fitted is
+    # untouched down to the byte
+    NEG = ("photorealistic, 3d render, abstract, text, watermark, signature, "
+           "low quality, blurry, extra limbs, deformed, jpeg artifacts, "
+           "realistic skin texture")
+
+    def as_it_was(prompt):
+        """The assembly all three renderers used before fit_negative existed."""
+        neg = NEG
+        for term in sd_prompt.suppressed_negatives(prompt):
+            neg = neg.replace(term + ", ", "")
+        extra = sd_prompt.extra_negatives(prompt)
+        return f"{neg}, {extra}" if extra else neg
+
+    over, changed, worst = [], [], 0
+    for node in sorted((REPO / "genomes/sapling/nodes").iterdir()):
+        f = node / "shots.md"
+        if not f.exists():
+            continue
+        for s in parse_shots(f.read_text()):
+            was = as_it_was(s["prompt"])
+            now = fit_beat(NEG, s["prompt"], warn=lambda m: None, count=n)
+            worst = max(worst, n(now))
+            if n(now) > 77:
+                over.append(f"{node.name} beat {s['num']}")
+            if n(was) <= 77 and now != was:
+                changed.append(f"{node.name} beat {s['num']}")
+    check(f"every beat's negative fits (worst {worst})", not over)
+    check(f"no beat that already fitted is altered ({len(changed)} were)", not changed)
+
+
 def test_footage_must_match_its_beat():
     """Footage is found by beat NUMBER, and rewrites renumber beats.
 
@@ -1868,6 +1969,7 @@ def main():
     test_sync_shots_is_idempotent()
     test_kaggle_notebook_cells_parse()
     test_sd_prompt_fits_clip_and_keeps_the_action()
+    test_negative_prompt_cannot_overflow_in_silence()
     test_footage_must_match_its_beat()
     test_displayable_action_is_the_trees_voice_only()
     test_parse_frames_bold_emphasis_in_quote()

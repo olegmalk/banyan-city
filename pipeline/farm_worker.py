@@ -366,7 +366,7 @@ def render_task(task: dict, courier: Courier, device: str, dtype) -> None:
         return video_task.run(task, courier, d)
 
     from generate_shots import parse_shots
-    from sd_prompt import compress, extra_negatives, suppressed_negatives
+    from sd_prompt import beat_negative, compress
     import torch
     from diffusers import (StableDiffusionXLImg2ImgPipeline,
                            StableDiffusionXLPipeline)
@@ -405,12 +405,7 @@ def render_task(task: dict, courier: Courier, device: str, dtype) -> None:
     for s in jobs:
         num = s["num"]
         ptext, _ = compress(s["prompt"])
-        neg = NEG
-        for term in suppressed_negatives(s["prompt"]):
-            neg = neg.replace(term + ", ", "")
-        extra = extra_negatives(s["prompt"])
-        if extra:
-            neg = f"{neg}, {extra}"
+        neg = beat_negative(NEG, s["prompt"])
         for k in range(int(task.get("seeds", 4))):
             t0 = time.time()
             g = torch.Generator(device="cpu").manual_seed(SEED + num + k * 1000)

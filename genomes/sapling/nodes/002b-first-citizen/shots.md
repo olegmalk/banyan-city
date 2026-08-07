@@ -94,12 +94,21 @@ fig to *swell* across the six seconds, so the un-repainted plate is the start fr
 a 0.35 repaint of it is a ready-made end frame. Do not spend more rounds asking for a
 smaller fruit in words; choose the frame instead.
 
-Known and deliberately left alone here: the negative prompt is 82 tokens against
-CLIP's 77-token ceiling, so its tail is silently dropped — diffusers warns when the
-*positive* prompt truncates but not when the negative does. For this beat the lost
-words are duplicates (`photorealism`, `text`), so nothing is actually suppressed that
-is not suppressed twice over; fixing it during round 4 would have added a second
-variable to a one-variable test.
+Fixed 2026-08-07, having been known and left alone through rounds 1-4: the negative
+prompt was 82 tokens against CLIP's 77-token ceiling, so its tail was silently
+dropped — diffusers warns when the *positive* prompt truncates but not when the
+negative does. For this beat the lost words were duplicates (`photorealism`, `text`),
+which is the only reason it cost nothing here; on 001 beat 7 the same defect was
+throwing away 16 of the author's terms. `sd_prompt.fit_negative` now deduplicates and
+then drops from the least important end, saying out loud what it dropped. This beat's
+negative comes to 76 tokens: the duplicate `text` goes, and `realistic skin texture`
+is spent — house boilerplate, in a shot whose own negative already says `no humans`.
+Everything the beat asks for survives, including `night sky` and the scale negatives.
+
+**The eight candidates in `takes/stills/` predate that fix** and were drawn with
+`realistic skin texture` in force and `photorealism` silently absent. They are still
+valid plates to choose from — but a re-render at the same seed will no longer match
+them exactly, so pick from the files, do not expect to reproduce them.
 
 ```
 A tiny 40cm banyan seedling, exactly two oversized cotyledon leaves, thin curved stem, one small round green fruit hanging from the stem, alone in a vast empty grass field, whole plant in frame, wide shot, sunrise, peach and gold morning sky, no humans, no chibi, no mascot, no creature, no face, no extra leaves, no branches, no night sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.

@@ -177,14 +177,25 @@ def suppressed_negatives(prompt: str) -> list:
     return ["text"] if _TEXT_SUBJECT.search(body.split(",")[0]) else []
 
 
+def extra_negative_parts(prompt: str) -> tuple:
+    """(scale_terms, beat_terms) — the two halves of extra_negatives(), kept apart.
+
+    Split out so fit_negative() can tell a GLOBAL default from a BEAT-SPECIFIC
+    instruction when the budget runs out. Joined back together they are exactly
+    what extra_negatives() has always returned, so nothing that reads the merged
+    string changes.
+    """
+    blocked = set(suppressed_negatives(prompt))
+    scale = SCALE_NEGATIVES if _SMALL.search(prompt) else ""
+    if scale.lower() in blocked:
+        scale = ""
+    beat = ", ".join(p for p in _negated_nouns(prompt) if p.lower() not in blocked)
+    return scale, beat
+
+
 def extra_negatives(prompt: str) -> str:
     """Negative terms this beat needs on top of the renderer's standard ones."""
-    parts = []
-    if _SMALL.search(prompt):
-        parts.append(SCALE_NEGATIVES)
-    parts += _negated_nouns(prompt)
-    blocked = set(suppressed_negatives(prompt))
-    return ", ".join(p for p in parts if p.lower() not in blocked)
+    return ", ".join(p for p in extra_negative_parts(prompt) if p)
 
 
 _TOKENIZER = None
@@ -225,6 +236,140 @@ def _token_estimate(text: str) -> int:
     words = len(re.findall(r"[A-Za-z']+", text))
     marks = len(re.findall(r"[^\sA-Za-z]", text))
     return int(words * 1.35 + marks * 0.5) + 2
+
+
+# ---------------------------------------------------------------- the negative
+#
+# CLIP's 77 tokens are the budget for the NEGATIVE prompt too, and diffusers only
+# warns about the positive one. So every still this project has ever drawn whose
+# negative ran long lost its tail in silence: measured 2026-08-06 with the real
+# tokenizer, 7 of the genome's 177 beats are over — 001 beats 5, 6, 7, 10, 14 and
+# 15 (7 is 115 tokens, half its negative gone) and 002b beat 1 at 82. On 002b
+# beat 1 the lost words happened to be duplicates, which is the only reason the
+# defect stayed invisible; on 001 beat 7 it is not remotely harmless.
+#
+# _token_estimate is calibrated on PROSE and weighs a comma at half a token. A
+# negative prompt is not prose — it is a comma-separated tag list, where every
+# comma really is one token. Measured across all 177 negatives the prose estimate
+# under-counts EVERY ONE of them, by up to 10 tokens, so a machine without
+# transformers would have called 002b beat 1 (82 real) a comfortable 75 and sent
+# it anyway. Hence a second estimator rather than a fix to the first: retuning
+# _token_estimate would change compress()'s output, and that is a look change to
+# every frame in the genome.
+def _tag_token_estimate(text: str) -> int:
+    """Conservative token count for a comma-separated tag list.
+
+    Deliberately pessimistic — checked against the real tokenizer on all 177 of
+    the genome's negatives, it never reads low (and never more than 11 high).
+    Over-counting only costs a dropped term on a machine that cannot render
+    anyway: diffusers depends on transformers, so anything that can draw can
+    count exactly.
+    """
+    words = len(re.findall(r"[A-Za-z0-9']+", text))
+    return int(words * 1.35 + text.count(",")) + 2
+
+
+def negative_tokens(text: str) -> int:
+    """Exact CLIP token count where it is measurable, a safe over-estimate where
+    it is not."""
+    tok = _clip_tokenizer()
+    return len(tok(text)["input_ids"]) if tok is not None else _tag_token_estimate(text)
+
+
+# Least important FIRST — the order terms are sacrificed in when the budget runs
+# out. This is video_task.py's rule, which was written for the same bug on the
+# video side: "the PER-BEAT decisions go FIRST, and the general style list, which
+# is the same on every clip, goes last where losing its tail costs least."
+#
+# The still path assembles the negative the other way round — house list first,
+# the beat's own "no X" terms last — so CLIP's blind tail cut takes exactly the
+# terms the author wrote for THIS beat and keeps the boilerplate. Reversing the
+# assembly to match would change the string sent for every prompt in the genome,
+# including the 170 that fit, so the ORDER stays and only the sacrifice order is
+# reversed. That a beat-specific instruction outranks a global default is already
+# this module's rule: suppressed_negatives() deletes a house term outright when
+# the beat needs it.
+NEG_DROP_ORDER = ("house", "scale", "beat", "explicit")
+
+
+def fit_negative(house: str, scale: str = "", beat: str = "", explicit: str = "",
+                 limit: int = MAX_TOKENS, warn=None, count=None) -> str:
+    """The four negative tiers joined and fitted into `limit` CLIP tokens.
+
+    Returns the joined string BYTE-IDENTICAL when it already fits — the common
+    case, 170 of 177 beats — so this cannot change a frame that was not already
+    being truncated. Only when it does not fit does anything happen, and then it
+    is loud: duplicates go first (a repeated term does not suppress anything
+    twice, it just spends budget), then whole terms come off the least important
+    end, and every one of them is named. Silence was the actual defect here.
+    """
+    count = count or negative_tokens
+    warn = warn or (lambda m: print(m, flush=True))
+    tiers = [("house", house), ("scale", scale), ("beat", beat), ("explicit", explicit)]
+    joined = ", ".join(t for _, t in tiers if t and t.strip())
+    if count(joined) <= limit:
+        return joined
+
+    # A term keeps the POSITION of its first appearance and the PROTECTION of the
+    # most important tier that asked for it. Those have to be separated: 001 beat
+    # 7 writes its own "no text", which deduplicated away in favour of the house
+    # copy — and then the house copy was sacrificed, so a term the author asked
+    # for twice survived not at all. Ranking by first appearance alone loses
+    # exactly the terms that were requested most.
+    rank = {t: i for i, t in enumerate(NEG_DROP_ORDER)}
+    split = [(name, [t.strip() for t in (text or "").split(",") if t.strip()])
+             for name, text in tiers]
+    best = {}
+    for name, group in split:
+        for term in group:
+            best[term.lower()] = max(best.get(term.lower(), -1), rank[name])
+
+    terms, seen, dupes = [], set(), []
+    for _, group in split:
+        for term in group:
+            if term.lower() in seen:
+                dupes.append(term)
+                continue
+            seen.add(term.lower())
+            terms.append((NEG_DROP_ORDER[best[term.lower()]], term))
+
+    dropped = []
+    while len(terms) > 1 and count(", ".join(t for _, t in terms)) > limit:
+        for tier in NEG_DROP_ORDER:
+            hit = [i for i, (n, _) in enumerate(terms) if n == tier]
+            if hit:
+                # from the END of that tier: these lists are written most-important
+                # first, and the tail is where terms get appended over time
+                dropped.append(terms.pop(hit[-1])[1])
+                break
+
+    out = ", ".join(t for _, t in terms)
+    note = "" if _clip_tokenizer() is not None else " (estimated — no CLIP tokenizer here)"
+    msg = f"!! negative prompt over CLIP's {limit}-token budget{note}"
+    if dupes:
+        msg += f"; deduplicated: {', '.join(dupes)}"
+    if dropped:
+        msg += f"; DROPPED: {', '.join(dropped)}"
+    if count(out) > limit:
+        msg += f"; STILL {count(out)} tokens — CLIP will cut the rest"
+    warn(msg)
+    return out
+
+
+def beat_negative(base: str, prompt: str, explicit: str = "", warn=None, count=None) -> str:
+    """The complete negative for one beat, fitted to CLIP's budget.
+
+    One implementation for every renderer. still_local, farm_worker and
+    runpod_render each carried their own copy of these five lines, which is the
+    drift generate_shots.py's _api_neg() comment warns about — "the whole reason
+    the API clip cut to a second scene is that these two lists were allowed to
+    differ".
+    """
+    house = base
+    for term in suppressed_negatives(prompt):
+        house = house.replace(term + ", ", "")
+    scale, beat = extra_negative_parts(prompt)
+    return fit_negative(house, scale, beat, explicit, warn=warn, count=count)
 
 
 def compress(prompt: str) -> tuple:
