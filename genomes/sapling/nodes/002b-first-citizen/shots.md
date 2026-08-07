@@ -17,6 +17,37 @@ VO. 9:16 vertical. Each prompt's FIRST sentence states the primary action
 
 Status legend: ✅ generated · ⬜ needs footage
 
+**Five prompts edited 2026-08-07, measured on the real `sd_prompt` path before the
+beats 02-21 batch, not guessed.** Three of them were losing their whole style tail
+in silence. `compress()` drops trailing SENTENCES to reach CLIP's 77 tokens, and on
+beats 02, 03 and 15 the sentence it dropped was the one carrying `masterpiece, best
+quality, very aesthetic` — the booster tags Animagine XL 3.1's card requires, whose
+omission this repo has already paid for once: "flat abstract shapes in a garish
+palette", 2026-07-26, recorded in `sd_prompt.py`'s own header. Beat 02 also lost
+`empty morning field` and `wide shot` with it. So 12 of the 80 images in the batch
+would have come back in a different, knowably worse look than the other 68.
+
+The fix spends the cheapest words, never the beat's subject. Beats 02 and 03 give up
+`cinematic lighting, detailed, newest` — house boilerplate repeated identically on all
+21 beats — to keep the boosters and the environment; beat 02 also drops `huge
+expressive eyes` (beat 04 is the close-up that carries them) and beat 03 drops
+`sucking in his belly`, keeping the size mismatch the beat exists to show. Beat 15
+loses only two adjectives. Measured after: 02 = 72 tokens, 03 = 72, 15 = 76, all
+tails intact.
+
+Two more are continuity with the canon frame, which is what `stills/01-cold-open.png`
+now is: beat 12's sky is its SUBJECT and had no palette at all, so it takes beat 01's
+`peach and gold morning sky` rather than letting the model pick; and beat 04's
+`dappled morning light` asked for overhead foliage in a location beat 01 establishes
+as a vast empty field with one 40cm seedling in it — nothing there can dapple, so it
+is `soft morning light`.
+
+Checked and deliberately NOT changed: no beat's NEGATIVE drops a term (measured with
+the real CLIP tokenizer against `farm_worker`'s exact house list — worst is beat 12 at
+73 of 77), and `mascot-simple` stays in beats 02, 03 and 12, where it modifies the
+sapling rather than naming the subject. Beat 01's rounds only proved it must not be
+the SUBJECT, and the queue entry says so.
+
 ---
 
 ## Beat 01 — COLD OPEN (0:00–0:06) ⬜ needs footage
@@ -139,7 +170,7 @@ A tiny 40cm banyan seedling, exactly two oversized cotyledon leaves, thin curved
 No dialogue — pure action. Camera wide so the dive reads.
 
 ```
-A small round goblin — enormous ears, huge expressive eyes, one broken tusk, patchwork cloak in faded greens and browns — sprints into frame at full panicked speed, skids in the grass kicking up simple cartoon dust puffs, and dives behind a tiny 40cm mascot-simple sapling. Static camera, empty morning field, wide shot, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+A small round goblin — enormous ears, one broken tusk, patchwork cloak in faded greens and browns — sprints in panicked, skids in the grass kicking up cartoon dust, and dives behind a tiny 40cm mascot-simple sapling. Static camera, empty morning field, wide shot, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 ## Beat 03 — BAD COVER (0:11–0:16) ⬜ needs footage
@@ -147,7 +178,7 @@ A small round goblin — enormous ears, huge expressive eyes, one broken tusk, p
 Line: "A creature is using me as cover. I am forty centimeters tall." Camera on the size mismatch the line describes.
 
 ```
-A small round goblin — enormous ears, one broken tusk, patchwork cloak — crouches lower and lower behind the pencil-thin trunk of a tiny 40cm mascot-simple sapling, sucking in his belly, absurdly failing to hide as the tiny tree covers almost none of him. Deadpan comedic staging, static camera, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+A small round goblin — enormous ears, one broken tusk, patchwork cloak — crouches low behind the pencil-thin trunk of a tiny 40cm mascot-simple sapling, absurdly failing to hide as the tiny tree covers almost none of him. Deadpan comedic staging, static camera, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 ## Beat 04 — THE FOOTNOTE (0:16–0:22) ⬜ needs footage
@@ -155,7 +186,7 @@ A small round goblin — enormous ears, one broken tusk, patchwork cloak — cro
 Line: the architect/footnote joke. Camera close on the held breath.
 
 ```
-A small round goblin's face fills the frame as he holds his breath, cheeks puffed, huge expressive eyes darting left and right, enormous ears twitching at every sound. Slow push-in, dappled morning light, close-up, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+A small round goblin's face fills the frame as he holds his breath, cheeks puffed, huge expressive eyes darting left and right, enormous ears twitching at every sound. Slow push-in, soft morning light, close-up, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 ## Beat 05 — THE PATROL (0:22–0:27) ⬜ needs footage
@@ -219,7 +250,7 @@ Two round guards in mismatched armor walk away from camera across an empty field
 Line: the tree's. Camera ON THE TREE for the tree's own line — framed TIGHT on the leaves, because the scavenger is still hidden behind the trunk and a wide shot would read as him having left (caught by the comprehension gate).
 
 ```
-Clouds drift and blur behind the two oversized leaves of a tiny mascot-simple sapling that fill the frame and stay utterly still — no trunk base, no ground, no other character visible. The stillness of the tree against a moving sky. Very slow push-in, tight close-up, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+Clouds drift and blur behind the two oversized leaves of a tiny mascot-simple sapling that fill the frame and stay utterly still — no trunk base, no ground, no other character visible. The stillness of the tree against a moving peach and gold morning sky. Very slow push-in, tight close-up, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 ## Beat 13 — THE SHADE (1:00–1:04) ⬜ needs footage
@@ -243,7 +274,7 @@ A small goblin's clawed fingers pick and scratch at loose dirt, flicking pebbles
 Line: "You're a good listener." Camera holds BOTH of them — the conversation is the subject.
 
 ```
-A small goblin tips his head back and looks up at the tiny sapling beside him, talking, gesturing loosely with one hand; the sapling's two oversized leaves hang above him in frame. Warm midday light, gentle and lonely tone, slow imperceptible push-in, two-shot, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+A small goblin tips his head back and looks up at the tiny sapling beside him, talking, gesturing loosely with one hand; the sapling's two oversized leaves hang above him in frame. Warm midday light, lonely tone, slow push-in, two-shot, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 ## Beat 16 — WHY (1:15–1:22) ⬜ needs footage
