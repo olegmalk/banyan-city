@@ -2410,3 +2410,70 @@ cell).
 
 **Box state on exit:** scheduled task `banyan-b9-mitosis` deleted, GPU 0 MiB /
 0% utilisation, the farm worker left exactly as found (not started, not stopped).
+
+## 2026-08-07 — the founder overruled the rule keeping his own cuts off the site, and /review/ went up
+
+**His call, quoted in [DECISIONS.md D17](DECISIONS.md):** *"i don't remember
+making this rule... its just unnessecary restrictions"* and *"'Don't produce
+media from scripts I haven't read' does not mean you cant put media we have
+already produced on the website."* He was right — no ratified rule said
+otherwise. STEWARDSHIP §6 governs **making** media; the steward had been
+applying it to **serving** media already made, which is a step §6 does not take.
+
+**What is live.** `https://banyan.city/review/` — unlisted, `noindex, nofollow`,
+absent from the navigation, linked only from his own decision queue on the
+studio page. It serves `ep1-v30-fixed.mp4` and `ep1-v31-animated.mp4` whole,
+plus the four held-versus-animated pairs for beats 3, 12, 13 and 15, each
+stamped **WORKING CUT — NOT THE EPISODE** with its date and what changed since
+the previous cut. **89 seconds of watching is what has blocked posting since
+2026-08-02, and it now works on a phone.**
+
+**How it is built.** Source media and its §7.2 sidecars live in `cuts/` — the
+one sanctioned exception to media-does-not-go-into-git, because a static site
+cannot serve a file that is not in the repo. `cuts/cuts.yaml` carries the copy;
+`build_site.render_review()` renders it. Adding a cut is a file plus a stem-named
+sidecar plus a block in that yaml.
+
+**The licence gate was wired, not worked around.** `cuts/` is now a scanned root
+in `licence_gate.Gate.run()` alongside `genomes/` and the trial outputs — a
+published surface the gate does not walk was the exact hole that list exists to
+close. Every file also passes `build_site.publishable()` before it is copied,
+and a blocked one is named on the page as withheld. **All ten files pass; debt
+is unchanged at 38.** The stills' OpenRAIL++ problem (D15) is stated in the
+page's own receipts rather than left to be discovered.
+
+**Building the page turned up a defect in v30 that nothing had recorded: it
+ships the beat-3 still the founder REJECTED.** The page's poster extraction put
+the two beat-3 clips side by side and they were different colours. Checked three
+ways: the held clip's first frame is 8.7 mean|diff| from
+`03-deploy-succeeded-REVOKED-magenta.png` and 51.1 from the approved
+`03-deploy-succeeded.png`; sampling `ep1-v30-fixed.mp4` at 2 fps, the magenta
+plate matches at 7.5–10.5s (18.6) and the approved plate matches **nothing** in
+the whole cut (best 42.3); the same sweep over `ep1-v31-animated.mp4` finds the
+approved plate at 7.5s (7.0). **Cause, and it is a one-minute miss:** commit
+`049c519` revoked the still at **09:34:21 on 2026-08-04**, and v30 was written at
+**09:33** the same morning, off the clip set from before the fix. Every other
+beat in both cuts uses its current still — 7, 10, 14 and 15 were checked against
+their REVOKED variants and all four are clean in both. **`SCREENING.html` says
+the opposite** ("beat 03 magenta dashboard replaced"), and so did the first draft
+of this review page; both were wrong and the page now says so on v30's own card.
+It reframes the beat-3 question the founder was being asked: it is not
+held-versus-animated, it is *the rejected picture held* versus *the approved
+picture animated*. **The missing third option — a held push-in on the approved
+green frame — does not exist and is a one-minute `hold_still.py` job**, left
+unmade only because another session is editing that file's zoom right now.
+
+**Two findings worth keeping, neither fixed here.** (1) `licence_gate.sidecar_of`
+matches a sidecar on the clip's **stem** (`clip.meta.yaml`), but `hold_still.py`
+and `probe_beat` write `clip.mp4.meta.yaml` — the reader and two of the writers
+disagree, so those sidecars are invisible to the gate. It has never bitten
+because `review/` is not a scanned root; it would the moment one of those clips
+landed somewhere that is. (2) `hold_still.py`'s sidecar writes
+`platform: local-cpu (ffmpeg)` and `model: none — held still + code push-in…`,
+and **neither string classifies** — `local-cpu` is in no table and the `model`
+value is not the bare sentinel `none`, so a held clip inside a scanned root
+would be reported as unprovenanced. The four held clips published today carry
+hand-written sidecars that use `local-deterministic` and a bare `none` instead.
+`hold_still.py` was left alone on purpose: another session is editing it.
+
+**Not included:** `ep1-v32-gentleholds.mp4` did not exist at build time.

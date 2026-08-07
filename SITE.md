@@ -34,6 +34,7 @@ type, spacing) instead.
 | `machine.html` | how the machine works, publicly |
 | `<genome>/<node>-shots.html` | per-node shot board, one page per node |
 | `trials/index.html` | the T3 provider trials |
+| `review/index.html` | **unlisted** — working cuts the author has not passed, for his screening (D17). `noindex`, absent from the nav, linked only from his inbox on the status page. Content comes from `cuts/cuts.yaml`; the mp4s in `cuts/` are the one place media is committed |
 
 Page builders worth knowing in `build_site.py`: `page()` (the shell every page
 uses), `render_node_page()`, `node_card()`, `chips()`, `trunk_chain()`,

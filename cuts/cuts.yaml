@@ -1,0 +1,175 @@
+# The working cuts, and the copy the /review/ page renders around them.
+#
+# WHAT THIS DIRECTORY IS. Every other .mp4 in this repo is either a leaf (an
+# episode the author passed) or untracked working media. These are neither:
+# they are cuts he has NOT passed, committed on purpose so he can screen them
+# from a phone. His decision, 2026-08-07, DECISIONS.md D17 — "'Don't produce
+# media from scripts I haven't read' does not mean you cant put media we have
+# already produced on the website."
+#
+# THE RULES THAT DID NOT MOVE. §6 still forbids making media from a script he
+# has not read; nothing here was. Canon still needs his verdict; none of these
+# is canon and none has a leaf. And every file listed below goes through
+# build_site.publishable() before it is copied, exactly like the shot board's
+# takes — a file that fails the licence gate is withheld and the page says so.
+#
+# Adding a cut: drop <name>.mp4 here with a stem-named <name>.meta.yaml beside
+# it (stem-named, because that is what licence_gate.sidecar_of reads), then add
+# a block below. Nothing else to edit.
+
+page:
+  title: "Working cuts — episode 1, unscreened"
+  eyebrow: "UNLISTED · WORKING CUTS · NOT THE EPISODE"
+  # Rendered as the page's own explanation of itself. Written for Roman, but a
+  # stranger who guesses the URL should also be told exactly what he is looking
+  # at and what he is not.
+  why: |-
+    This page exists because the author screens on a phone and the cuts were
+    only ever on a laptop. **Nothing here is the episode.** These are working
+    cuts of episode 1 — assembled, watchable, and *not passed by the author*.
+    The published episode is the one on the season page; if these ever replace
+    it, it will be because he said so, in a record you can read.
+
+    It is unlisted rather than secret. Nothing in the site's navigation points
+    here — the only link is the one in the author's own decision queue on the
+    studio page — and the page tells search engines not to index it. That is a
+    courtesy to readers arriving at a half-finished thing, not a hiding place:
+    the repo that makes it is public, and so is the decision that put it here.
+
+cuts:
+  - file: ep1-v30-fixed.mp4
+    title: "Episode 1 — the August remake"
+    version: v30
+    date: 2026-08-04
+    beats: "15 beats, none missing"
+    changed_from: "the last cut the author approved (v26, 2026-08-03)"
+    changed:
+      - "**beat 5** — the mug and pink puddle that read as blood: cropped and desaturated, no re-render"
+      - "**beat 10** — was abstract streaks with no subject; reshot at ground level"
+      - "**beat 15** — the closing hook went nearly black after the first frame; reshot"
+      - "**beats 3, 12, 13** — held stills chosen over their animated versions, on a motion measurement"
+    known_wrong:
+      - "**beat 3 still shows the magenta dashboard the author rejected.** Found 2026-08-07, not previously recorded: this cut was written at 09:33 on 2026-08-04 and the still was revoked at 09:34 the same morning, one minute later — so the replacement never reached it. Earlier notes claiming v30 had replaced that frame were wrong. v31 has the approved frame"
+      - "**beat 15** is a held still, not animation — and animation is what was asked for"
+      - "**beats 8 and 9** are near-identical shots back to back"
+      - "**beat 7**'s punchline wording and still contrast are the steward's taste, not the author's"
+
+  - file: ep1-v31-animated.mp4
+    title: "Episode 1 again, with the four held beats moving"
+    version: v31
+    date: 2026-08-07
+    beats: "15 beats, none missing"
+    changed_from: "v30, above"
+    changed:
+      - "**beats 3, 12, 13, 15** are animated footage instead of a held still. Nothing else in the picture changed"
+      - "**beat 3 also gets the right picture.** v30 holds the magenta dashboard that was rejected; v31 animates the green frame that replaced it. That is a different change from the other three, and it is not a taste question"
+      - "**beats 4, 5, 7, 10, 14** are still held, deliberately — those are the compositions with nothing in frame to animate, and every model pointed at one has invented something instead (a morphing rock, a leaf splitting in two). Five held beats, down from nine"
+      - "**audio** — same voice takes, re-synced. v31 runs 0.88s longer than v30 and none of that is footage: beats 6 and 7 get their corrected voice timing, which v30 was assembled just before"
+      - "**checks** — 13 QA checks pass, captions and loudness included; the invention detector flags nothing on any of the four new clips"
+    known_wrong:
+      - "**beat 3**'s animation may be a still with a flicker on it — half its frames barely change. The steward would not fight for it"
+      - "**beat 13**'s sky still does not move; the cloud-shadow band the direction asked for did not land"
+      - "**beats 8 and 9** are still near-identical shots back to back, unchanged from v30"
+
+# The four beats where v30 and v31 differ, side by side. Left is what v30 ships,
+# right is what v31 puts in its place.
+pairs_intro: |-
+  These four are the whole difference between the two cuts. **The motion number
+  under each clip cannot compare a held beat against a moving one** — a held
+  still is a computed push-in, so every pixel moves and it scores *higher* than
+  real animation. The figure is only useful for judging one animated take
+  against another. Held-versus-moving is an eye call, which is the reason this
+  page exists at all.
+
+pairs:
+  - beat: 3
+    title: "“deploy succeeded” — and these two are not the same picture"
+    held_why: >-
+      The measurement that held it was taken on the magenta dashboard the author
+      rejected, revoked on 2026-08-04 — and so was v30 itself, by one minute. The
+      green frame that replaced it had never been animated until 2026-08-07.
+    held: pairs/beat-03-held.mp4
+    held_note: "motion 2.13 · 2% frozen — push-in on the REJECTED magenta plate, which is what v30 ships"
+    animated: pairs/beat-03-animated.mp4
+    animated_note: "motion 0.20 · 50% frozen — the approved green frame; screens surge and fall, scanlines roll"
+    verdict: >-
+      Read this pair differently from the other three. On the left is the picture
+      that was rejected, held; on the right is the approved picture, animated. So
+      the animation is the weaker half of the argument — half its frames barely
+      change and 0.20 is below the line where a shot reads as a still anyway —
+      but going back to the held version means going back to the magenta plate.
+      If the flicker is not wanted, the honest fix is a held push-in on the
+      approved frame, which does not exist yet and takes a minute to make.
+
+  - beat: 12
+    title: "“undefined”"
+    held_why: >-
+      It was never static. It was measured across a frame that is 95% rigid: the
+      whole-frame score was 0.19 because a cracked plain fills most of the
+      picture and cannot move, while the sprout, measured inside its own box,
+      moves at 0.46 with 8% of frames frozen.
+    held: pairs/beat-12-held.mp4
+    held_note: "motion 0.79 · 2% frozen — slow push-in"
+    animated: pairs/beat-12-animated.mp4
+    animated_note: "whole frame 0.19 · 58% frozen · sprout itself 0.46 · 8% frozen"
+    verdict: >-
+      The clip in v31 is the one that already existed — the take the bad
+      measurement threw away on 2026-08-03. A rewritten shot direction was
+      rendered on 2026-08-07 and lost to it (0.27 against 0.46 in the same box),
+      because it asked the stem to shudder “without moving anywhere”, and prose
+      about stillness produces stillness.
+
+  - beat: 13
+    title: "“I always left”"
+    held_why: >-
+      Half the frame works and half of it cannot. The grass and the road move;
+      the cloudbank does not, because clouds do not visibly travel in two and a
+      half seconds. The dead half halved the average and the beat was held for it.
+    held: pairs/beat-13-held.mp4
+    held_note: "motion 2.90 · 2% frozen — slow push-in"
+    animated: pairs/beat-13-animated.mp4
+    animated_note: "whole frame 0.30 · 3% frozen · grass and road 0.50 · 0% · cloudbank 0.10 · 82%"
+    verdict: >-
+      The clearest improvement of the four, and it is only in the bottom half.
+      Frozen frames across the whole picture fell from 53% to 3%. The sky did not
+      budge. Whether that reads as a flaw or as a calm horizon over moving grass
+      is a taste call, not a measurement.
+
+  - beat: 15
+    title: "“something's coming” — the closing hook"
+    held_why: >-
+      No reason to do with the shot. Nothing was wrong with its direction: the
+      machine that renders was switched off, so no animation of it ever existed
+      and a held still went in instead.
+    held: pairs/beat-15-held.mp4
+    held_note: "motion 1.67 · 2% frozen — slow push-in"
+    animated: pairs/beat-15-animated.mp4
+    animated_note: "motion 2.72 · 0% frozen — take 2: ground jumps, light slams"
+    verdict: >-
+      Two takes were rendered and the first is rejected. It scores 4.63, the
+      highest number in the episode, because a bright red-orange cone stabs into
+      frame twice — an object in no still and no script. The invented object is
+      what produced the score. Take 2, same seed and recipe with a negative
+      naming the cone, keeps the motion and loses the object.
+
+# Printed under the players. The licence position is not a footnote here: these
+# files publish, so the reader is owed the same accounting the rest of the site
+# gives.
+provenance: |-
+  **What made these.** Ten beats are animated on
+  `Wan-AI/Wan2.2-TI2V-5B-Diffusers` (Apache-2.0) on a local GPU; five are the
+  author's approved stills held and pushed in by code, with no video model
+  involved. Narration is Chatterbox 0.5B (MIT), run locally. Recorded sound is
+  CC0 and CC BY, one row each in the node's `audio-sources/SOURCES.md`. Cash
+  cost of both cuts: **$0**. Every file above has a `.meta.yaml` beside it in
+  `cuts/` carrying the recipe, the seed and the SHA-256 of the exact bytes
+  served here, and every one passed the same licence gate the rest of the site
+  goes through before it was copied.
+
+  **The one open licence question, stated rather than buried.** The drawn frames
+  underneath every beat came from `cagliostrolab/animagine-xl-3.1`, whose
+  CreativeML Open RAIL++-M licence attaches use restrictions that travel to the
+  output — while this tree publishes under CC BY 4.0, which offers reusers
+  unrestricted use. That conflict is open, recorded as **D15**, and it is the
+  author's to settle. It is not new here: the episode already published on this
+  site carries it too.

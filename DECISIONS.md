@@ -956,3 +956,56 @@ only the mp4s out of the reuse offer. It needs a [D1](#d1--content-license) amen
 and a licence file that says so — and it interacts with D16's item-20 standing rule,
 since a contributor-facing render service is the one thing LTX must never power.
 **Open — founder item, not a resolution.**
+
+## D17 — Working cuts may publish to an unlisted review area (RESOLVED — founder, 2026-08-07)
+
+**Question:** may a cut the author has not passed be served from banyan.city so
+he can watch it, or must it stay a file on a laptop?
+
+**Status:** **resolved** (2026-08-07, founder, in session) — **it may.** His
+words, verbatim:
+
+> i don't remember making this rule... its just unnessecary restrictions
+
+> "Don't produce media from scripts I haven't read" does not mean you cant put
+> media we have already produced on the website.
+
+He is right that no ratified rule said otherwise. The restriction was the
+steward's own reading of STEWARDSHIP §6, extended one step past what §6 says:
+§6 governs **making** media, and the steward had been applying it to
+**serving** media that was already made. Publication is the founder's call, and
+he made it.
+
+**What changed.** Cuts he has not passed may be published to an **unlisted
+review area** — `/review/`, built by `build_site.render_review()` from
+`cuts/cuts.yaml`. Every item is stamped *WORKING CUT — NOT THE EPISODE*, dated,
+and carries what changed since the previous cut. The page sends
+`<meta name="robots" content="noindex, nofollow">` and nothing in the site
+navigation links to it; the one link is from the author's own decision queue on
+the studio page, which is where he goes to make the call. The mp4s are
+committed — the single sanctioned exception to *media does not go into git*,
+because a static site cannot serve a file that is not in the repo.
+
+**What did NOT change, and none of it was up for discussion:**
+
+- **STEWARDSHIP §6 stands untouched.** No voice synthesis, no footage render, no
+  episode assembly from a script the founder has not read. Every beat on the
+  review page comes from the approved 001 script; this decision moved nothing
+  into production.
+- **The canon gate stands.** No cut becomes THE episode without his verdict
+  (R4). None of these has a leaf, none is on the season page, and the stamp says
+  so on every player. Dad restated this on 2026-08-05 and it is unaffected.
+- **The licence gate applies to everything served.** `cuts/` is now one of
+  `licence_gate.Gate.run()`'s scanned roots, and every file passes
+  `build_site.publishable()` before it is copied. A blocked file is named on the
+  page as withheld, never quietly dropped. Debt is unchanged at 38.
+
+**The open licence question this does not settle.** The drawn frames under every
+beat are `cagliostrolab/animagine-xl-3.1` (OpenRAIL++), which is the open
+**[D15](#d15--every-approved-still-is-openrail-and-the-gate-was-clearing-it-open--founders)**
+debt. Publishing these cuts adds no new model and no new exposure — the episode
+already on the site carries the same debt — but it does not resolve it, and the
+review page says so in its own receipts rather than leaving a reader to find out.
+
+**How to revisit:** delete the block from `cuts/cuts.yaml` and the files stop
+being served on the next build. Nothing else depends on them.

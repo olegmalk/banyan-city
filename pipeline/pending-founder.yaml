@@ -2,19 +2,23 @@
 # renders these publicly, so write them for a STRANGER: no filenames, no
 # internal jargon, and a public link whenever the thing can be looked at.
 #
-# The one exception, and it is not optional (2026-08-07): when the thing being
-# judged is UNPUBLISHED — unapproved footage never reaches the site — the detail
-# must say so and say where the author's own copy is, even if that means naming a
-# local file. `public:` may still carry a link for strangers, but then `link_text:`
-# must name what is actually behind it. On 2026-08-06 this item sent the author to
-# the published July cut of episode 1 while asking him to pass the August remake,
-# and he watched the wrong film. A link that is not the thing is worse than none.
+# The rule that outranks all of that, and it is not optional (2026-08-07):
+# `link_text:` must name what is actually behind `public:`. On 2026-08-06 this
+# item sent the author to the published July cut of episode 1 while asking him to
+# pass the August remake, and he watched the wrong film. A link that is not the
+# thing is worse than none. Where a decision is about something UNPUBLISHED, say
+# so and say where his own copy is, even if that means naming a local file.
+#
+# What changed on 2026-08-07 (D17): working cuts may now publish to the unlisted
+# review area, so "the only copy is on the author's laptop" is no longer the
+# default answer for footage he has not passed — /review/ is. Media he has not
+# passed still never becomes THE episode without his verdict.
 pending:
   - id: v6-verdict
     title: "Watch the finished episode 1 remake and say yes or no"
-    detail: "Fifteen shots, approved and assembled with new narration — and not watched yet. It is deliberately not on this site: footage the author has not passed never publishes here, so the only copy is a screening page on the author's own machine (SCREENING.html, sitting beside the file itself). The link goes to episode 1 as published today — the older cut this remake would replace, not the remake."
-    public: "sapling/001-capability-inventory.html"
-    link_text: "watch the cut it would replace"
+    detail: "Fifteen shots, approved and assembled with new narration — and not watched yet. Two versions are waiting: the August remake, and the same cut with its four held stills animated instead. Both now sit on a review page on this site, playable on a phone, each stamped as a working cut the author has not passed. A yes on one of them is what unblocks posting."
+    public: "review/index.html"
+    link_text: "watch the working cuts"
     since: 2026-07-29
   - id: bakeoff-pick
     title: "Choose which AI model draws the show from now on"

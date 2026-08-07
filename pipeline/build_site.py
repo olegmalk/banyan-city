@@ -219,6 +219,35 @@ form.compose input, form.compose textarea { width: 100%; margin-top: .3rem;
 form.compose textarea { font: 15px/1.6 var(--mono); resize: vertical; }
 form.compose button { margin-top: 1rem; border: 0; cursor: pointer; }
 form.compose .hint { font: 500 .78rem/1.6 var(--mono); color: var(--faint); margin: .5rem 0 0; }
+
+/* ---- the review area: unlisted working cuts (D17) ---- */
+/* The stamp is loud on purpose. A cut the author has not passed must never be
+   mistakable for the episode, and the one place that could happen is a page
+   showing it full-width with no caption in view. */
+.stamp { display: block; background: rgba(224,115,107,.12); border: 1px solid #7a3b36;
+  border-radius: 12px; padding: .7rem .95rem; margin: 0 0 1rem;
+  font: 700 .78rem/1.6 var(--mono); letter-spacing: .06em; color: #e0736b; }
+.stamp b { color: #f0a49e; }
+.cut { margin: 2.2rem 0; padding-top: 1.6rem; border-top: 1px solid var(--line); }
+.cut .film { max-width: 340px; }
+.cut .film video { width: 100%; aspect-ratio: 9 / 16; display: block; border-radius: 14px;
+  background: var(--code-bg); border: 1px solid var(--line); }
+.cut .facts { font: 600 .78rem/1.7 var(--mono); color: var(--faint); margin: .5rem 0 0; }
+@media (min-width: 760px) {
+  .cut .split { display: grid; grid-template-columns: 340px 1fr; gap: 1.6rem; align-items: start; }
+}
+.cut ul { padding-left: 1.1rem; }
+.cut ul li { margin: .35rem 0; color: var(--muted); font-size: .95rem; }
+.pair { margin: 1.6rem 0; padding: 1rem 1.15rem; background: var(--panel);
+  border: 1px solid var(--line); border-radius: 16px; }
+.pair h3 { margin: 0 0 .4rem; }
+.pair .two { display: flex; flex-wrap: wrap; gap: 1rem; margin: .9rem 0; }
+.pair .two figure { margin: 0; flex: 1 1 200px; max-width: 240px; }
+.pair .two video { width: 100%; aspect-ratio: 9 / 16; display: block; border-radius: 12px;
+  background: var(--code-bg); border: 1px solid var(--line); }
+.pair .two figcaption { font: 600 .74rem/1.55 var(--mono); color: var(--faint); margin-top: .4rem; }
+.pair .two .k { display: block; color: var(--ink); letter-spacing: .1em; text-transform: uppercase; }
+.pair .why { color: var(--muted); font-size: .94rem; }
 """
 
 
@@ -227,7 +256,11 @@ DEFAULT_DESC = ("Story trees that branch instead of running linear — AI-render
 
 
 def page(title: str, body: str, depth: int = 0, path: str = "", desc: str = "",
-         body_class: str = "", tail: str = "") -> str:
+         body_class: str = "", tail: str = "", robots: str = "") -> str:
+    """`robots` is for pages that are reachable but not advertised — the review
+    area (D17). Meta noindex rather than a robots.txt Disallow on purpose: a
+    disallowed page is never fetched, so the noindex is never read, and the URL
+    can still surface from a link somewhere else."""
     root = "../" * depth
     desc = (desc or DEFAULT_DESC).strip()
     if len(desc) > 200:
@@ -236,6 +269,7 @@ def page(title: str, body: str, depth: int = 0, path: str = "", desc: str = "",
     og_image = f"{CANONICAL}/og.png"
     esc_t, esc_d = html.escape(title), html.escape(desc)
     cls = f' class="{body_class}"' if body_class else ""
+    robots_meta = f'\n<meta name="robots" content="{html.escape(robots)}">' if robots else ""
     # Viewer-facing chrome: the two pages a stranger wants (watch, write) are in
     # the nav on every page; the build dashboard moved to the footer.
     nav = (f'<nav class="crumbs"><a href="{root}index.html">🌳 {REPO_NAME}</a> · '
@@ -249,7 +283,7 @@ def page(title: str, body: str, depth: int = 0, path: str = "", desc: str = "",
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">{robots_meta}
 <meta name="description" content="{esc_d}">
 <link rel="canonical" href="{url}">
 <link rel="alternate" type="application/rss+xml" title="new nodes" href="{CANONICAL}/feed.xml">
@@ -1562,6 +1596,157 @@ def render_trials() -> str:
                      "rendered on each candidate platform, scored on a fixed rubric.")
 
 
+CUTS = REPO / "cuts"
+REVIEW_NODE = REPO / "genomes" / "sapling" / "nodes" / "001-capability-inventory"
+# Every player on the review page carries this, and it is not softened anywhere.
+# The failure this prevents is one sentence long: somebody opens the URL, sees a
+# finished-looking 90-second film, and takes it for the episode.
+CUT_STAMP = ('<p class="stamp"><b>WORKING CUT — NOT THE EPISODE.</b> '
+             'The author has not passed this. It is here so he can screen it; '
+             'nothing about it is settled and it is not what the show is.</p>')
+
+
+def inline_md(text: str) -> str:
+    """One line of markdown with the paragraph wrapper taken off again."""
+    out = md_to_html(str(text).strip())
+    return re.sub(r"^<p>|</p>$", "", out.strip())
+
+
+def render_review() -> str:
+    """The unlisted review area: cuts the author has NOT passed, published so he
+    can screen them from a phone (his decision, 2026-08-07 — DECISIONS.md D17).
+
+    Two rules meet here and neither bends. STEWARDSHIP §6 still forbids MAKING
+    media from a script he has not read — nothing on this page was; every beat
+    comes from the approved 001 script. And the canon gate still holds: no cut
+    becomes the episode without his verdict, which is why none of these has a
+    leaf and why the stamp is on every player.
+
+    Every file goes through publishable() before it is copied, exactly like the
+    shot board's takes, and a blocked file is named as withheld rather than
+    quietly dropped — a page that looks complete because the failures were
+    hidden is the one outcome the gate exists to prevent.
+    """
+    cfg = yaml.safe_load((CUTS / "cuts.yaml").read_text(encoding="utf-8")) or {}
+    meta = cfg.get("page") or {}
+    outdir = OUT / "review"
+    outdir.mkdir(parents=True, exist_ok=True)
+    withheld, missing = [], []
+
+    def still_for(src: Path):
+        """The beat's own approved still, so a poster is never another beat."""
+        side = src.with_name(src.stem + ".meta.yaml")
+        if not side.exists():
+            return first_still(REVIEW_NODE)
+        data = yaml.safe_load(side.read_text(encoding="utf-8")) or {}
+        name = data.get("init_still") or data.get("source_still")
+        cand = REVIEW_NODE / "stills" / str(name) if name else None
+        return cand if cand and cand.exists() else first_still(REVIEW_NODE)
+
+    def serve(rel: str):
+        """Copy one media file plus its provenance record. (href, poster) or None."""
+        src = CUTS / rel
+        if not src.exists():
+            missing.append(rel)
+            return None
+        ok, why = publishable(src)
+        if not ok:
+            withheld.append((rel, why))
+            return None
+        dst = outdir / rel
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy(src, dst)
+        side = src.with_name(src.stem + ".meta.yaml")
+        if side.exists():                      # records always travel (§7.2)
+            shutil.copy(side, dst.with_name(side.name))
+        pos = poster(src, f"review/posters/{Path(rel).stem}.jpg", fallback=still_for(src))
+        return rel, pos
+
+    def rec_link(rel: str) -> str:
+        side = Path(rel).with_suffix("").as_posix() + ".meta.yaml"
+        return (f' · <a href="{html.escape(side)}">provenance</a>'
+                if (CUTS / side).exists() else "")
+
+    sections = []
+    for cut in cfg.get("cuts") or []:
+        got = serve(str(cut["file"]))
+        if not got:
+            continue
+        rel, pos = got
+        src = CUTS / rel
+        dur = dur_label(mp4_seconds(src))
+        mb = src.stat().st_size / (1 << 20)
+        changed = "".join(f"<li>{inline_md(x)}</li>" for x in cut.get("changed") or [])
+        wrong = "".join(f"<li>{inline_md(x)}</li>" for x in cut.get("known_wrong") or [])
+        sections.append(
+            f'<div class="cut"><h2>{html.escape(str(cut["title"]))} '
+            f'<span class="chip hot">{html.escape(str(cut.get("version", "")))}</span></h2>'
+            f'{CUT_STAMP}'
+            f'<div class="split"><div class="film">'
+            f'<video controls playsinline preload="metadata"{poster_attr(pos, "../")} '
+            f'src="{html.escape(rel)}"></video>'
+            f'<p class="facts">assembled {html.escape(str(cut.get("date", "")))} · '
+            f'{html.escape(str(cut.get("beats", "")))}'
+            f'{" · " + dur if dur else ""} · {mb:.1f} MB{rec_link(rel)}</p>'
+            f'</div><div>'
+            f'<h3>What changed from {inline_md(cut.get("changed_from", "the previous cut"))}</h3>'
+            f"<ul>{changed}</ul>"
+            + (f"<h3>Known and still wrong</h3><ul>{wrong}</ul>" if wrong else "")
+            + '</div></div></div>')
+
+    pairs = []
+    for p in cfg.get("pairs") or []:
+        held, anim = serve(str(p["held"])), serve(str(p["animated"]))
+        if not (held and anim):
+            continue
+        cells = ""
+        for label, (rel, pos), note in (("held — in v30", held, p.get("held_note", "")),
+                                        ("animated — in v31", anim, p.get("animated_note", ""))):
+            cells += (f'<figure><video controls playsinline preload="none" loop muted'
+                      f'{poster_attr(pos, "../")} src="{html.escape(rel)}"></video>'
+                      f'<figcaption><span class="k">{html.escape(label)}</span>'
+                      f'{html.escape(str(note))}{rec_link(rel)}</figcaption></figure>')
+        pairs.append(
+            f'<div class="pair"><h3>Beat {html.escape(str(p["beat"]))} — '
+            f'{html.escape(str(p.get("title", "")))}</h3>'
+            f'<p class="why"><strong>Why it was held:</strong> '
+            f'{html.escape(str(p.get("held_why", "")))}</p>'
+            f'<div class="two">{cells}</div>'
+            f'<p class="why">{html.escape(str(p.get("verdict", "")))}</p></div>')
+
+    notices = ""
+    if withheld:
+        rows = "".join(f"<li><code>{html.escape(n)}</code> — {html.escape(w)}</li>"
+                       for n, w in withheld)
+        notices += ('<p class="notice">⚠️ <strong>Withheld by the licence gate.</strong> '
+                    'These files exist in the repo and are not copied here, because the '
+                    'tree publishes under CC BY 4.0 and their licence does not grant what '
+                    f'that offers:<ul>{rows}</ul></p>')
+    if missing:
+        rows = "".join(f"<li><code>{html.escape(n)}</code></li>" for n in missing)
+        notices += ('<p class="notice"><strong>Listed but not here yet.</strong> These are '
+                    'named in <code>cuts/cuts.yaml</code> and the file has not landed in the '
+                    f'repo, so there is nothing to play:<ul>{rows}</ul></p>')
+
+    body = (f'<p class="eyebrow">{html.escape(str(meta.get("eyebrow", "WORKING CUTS")))}</p>'
+            f'<h1>{html.escape(str(meta.get("title", "Working cuts")))}</h1>'
+            f'{md_to_html(str(meta.get("why", "")))}'
+            f'{notices}'
+            f"{''.join(sections)}"
+            + (f'<div class="cut"><h2>The four beats the two cuts disagree about</h2>'
+               f'{md_to_html(str(cfg.get("pairs_intro", "")))}{"".join(pairs)}</div>'
+               if pairs else "")
+            + '<div class="cut"><h2>Receipts</h2>'
+            + md_to_html(str(cfg.get("provenance", "")))
+            + '</div>'
+            f'<p><a class="btn ghost" href="../index.html">← the tree</a> '
+            f'<a class="btn ghost" href="../watch.html">the published episode</a></p>')
+    return page(str(meta.get("title", "Working cuts")), body, depth=1,
+                path="review/index.html", robots="noindex, nofollow",
+                desc="Unlisted screening page for working cuts of Banyan City episodes — "
+                     "drafts the author has not passed, not the published show.")
+
+
 def render_feed(genomes: list) -> str:
     """RSS 2.0 of nodes, newest release first (dates from lineage `released`)."""
     items = []
@@ -1669,6 +1854,13 @@ def main() -> None:
     og = REPO / "assets" / "og.png"          # social-share image referenced by page() meta
     if og.exists():
         shutil.copy(og, OUT / "og.png")
+    # The review area (D17). Deliberately NOT in `mine`'s nav and not linked
+    # from any page — unlisted, reachable by URL. It is still swept by
+    # check_links, which walks every html file in the output.
+    if (CUTS / "cuts.yaml").exists():
+        (OUT / "review" / "index.html").write_text(render_review())
+        mine.append("review/index.html")
+        print("✓ review/ published — unlisted working cuts")
     (OUT / "trials").mkdir(exist_ok=True)
     trials_out = REPO / "pipeline" / "t3-trials" / "outputs"
     if trials_out.exists():

@@ -928,12 +928,16 @@ class Gate:
 
     def run(self) -> tuple:
         genomes = self.repo / "genomes"
-        # The two roots build_site publishes out of: the tree itself, and the
-        # trial gallery (outputs/*/*.mp4 → /trials/<platform>/). Everything
+        # The three roots build_site publishes out of: the tree itself, the
+        # trial gallery (outputs/*/*.mp4 → /trials/<platform>/), and the working
+        # cuts (cuts/**.mp4 → /review/, added 2026-08-07 with D17). Everything
         # below is derived from these, so a new node, a new clips dir or a new
         # record format is covered the day it appears — no per-shape glob left
-        # to fall out of date (hole 3).
-        roots = [genomes] + [d for d in [self.repo / "pipeline" / "t3-trials" / "outputs"]
+        # to fall out of date (hole 3). A published surface that the gate does
+        # not walk is the whole hole this list exists to close, so a directory
+        # gets added here in the same commit that starts publishing out of it.
+        roots = [genomes] + [d for d in (self.repo / "pipeline" / "t3-trials" / "outputs",
+                                         self.repo / "cuts")
                              if d.is_dir()]
         for root in roots:
             # 1. every record file, any format, anywhere: leaves, clip sidecars,
