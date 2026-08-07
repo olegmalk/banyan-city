@@ -2210,3 +2210,115 @@ chars — harmless, because `probe-b9-mitosis.sh` regenerates both prompt files
 from the genome and asserts the terms before it fires, so after the toggle the
 render really is one command: `bash pipeline/probe-b9-mitosis.sh`. Seed
 **20260814**, off the f15 sidecar.
+
+## 2026-08-07 — the queue had nowhere to put a plan, so the plan lived in comments: `backlog:` and a promoter
+
+**The approved plan (founder Roman, today).** The `/status` page must stop lying,
+become genuinely live client-side, and answer at a glance NOW / QUEUE+BACKLOG /
+DONE TODAY / WAITING ON ROMAN; the queue file gains a `backlog:` section with
+dependencies, gates, day/night windows and estimates; a promoter moves work to
+runnable when it unblocks; and the backlog gets stocked days deep. Every number
+on the public page must be TRUE and sourced, staleness visible. This entry covers
+the queue half of that; the page half is a parallel lane.
+
+**What the file was.** 180 lines, **130 of them commentary**, holding one live
+task that had finished four days earlier and one blocked entirely in prose. The
+schema had no field for a dependency, a gate, a window or an estimate, so every
+one of those went into a comment — unreadable by the status page, unqueryable by
+anything, and impossible to keep honest.
+
+**The schema, as landed.** `tasks:` keeps its exact meaning: runnable now, and
+the only key any worker has ever read — `farm_worker.py:115` is
+`.get("tasks", [])` against `origin/main`, which is also why a new top-level key
+is invisible to every worker ever shipped, including stale checkouts. `backlog:`
+is that new key. An entry is a tasks entry plus planning fields: `after` (ids that
+must all show DONE on some heartbeat), `gate` (founder | code | hardware),
+`gate_ref` (the specific thing — a `pending-founder.yaml` id, a code gap with
+file:line, a machine and its fault), `needs` (cuda | vram20 | mps | video-venv),
+`window`, `est_minutes`, `why`, and `runner` (farm | manual) for the difference
+between a worker's inbox and a command a person runs. Unknown fields on a task
+are inert — dead keys already exist in this file's history — so a promoted entry
+keeps its planning fields and no worker cares.
+
+**Two schema decisions worth defending.** `runner: manual` exists because most of
+the real work right now is not farm-shaped — a probe script, a licence check, a
+code change — and putting any of it in `tasks:` would hand a worker something it
+would choke on. The promoter reports manual entries as runnable and never moves
+them. And **`window:` is advisory and delays nothing**: it records that a
+host-exclusive job will evict the farm worker, not that anyone should wait for
+dark. Machine work is scheduled by dependencies, not human hours (Oleg,
+2026-08-05), and a promoter that slept until night would be re-introducing the
+thing that directive killed.
+
+**`pipeline/queue_promoter.py`.** Idempotent, safe by hand and on a timer. It
+fetches every `farm-results-*` heartbeat, then in ONE write: **retires** any task
+with a `DONE task=<id>` line; **promotes** any backlog entry that is `runner:
+farm`, carries no `gate`, and whose every `after` id is DONE somewhere, filling
+`worker` from `needs` when unset; and **prints** what is unblocked but manual plus
+every blocked entry with its blocker by name. It cannot clear a gate — that would
+be deciding the founder has looked, or that Smart App Control is off, on its own
+evidence — so clearing one is a human deleting the key in a commit. It invents no
+work.
+
+It edits the file as **text**, not by re-dumping it, because `safe_dump` cannot
+carry a comment and this file's comments are what keeps a host-bluescreening job
+parked. An entry's own comment run travels with it; a comment run that touches the
+top of a region is preamble and stays put, so a move can never delete reasoning
+that was not the entry's. Every write is verified by parsing both versions and
+comparing id sets before it lands, which is what makes the move atomic in
+substance rather than only in commit count.
+
+**`queue_keeper.py` now refuses to run while a backlog exists.** It rewrites the
+whole queue with `safe_dump`; that was tolerable for a bare task list and would
+now erase about two hundred lines of blockers. Reviving refills needs a
+comment-safe writer first — and an answer to who consumes a rotating
+world-reference bank, which is the standing no-work-without-a-consumer question.
+
+**Hygiene.** `faceneg-b01-1785819600` is **retired**: it finished 2026-08-03 at
+02:59:53Z (`DONE task=faceneg-b01-1785819600` on `farm-results-rtx5090`) and sat
+live for four days. A worker skips what it can see DONE in its own heartbeat, so
+nothing re-rendered it — but a re-imaged box, or one whose `heartbeat.txt` was
+reset, sees a fresh queue and a task it has never run. The heartbeat line is the
+record; the queue entry was a loaded gun, and the promoter now removes these
+automatically. The 5070 Ti row became a backlog entry with `gate: hardware` and
+its real blocker (unreachable since 2026-08-06; find it by Wi-Fi MAC
+9C:67:D6:85:0A:B6, the LAN having re-addressed to 192.168.70.x). **The AnimeGen
+park is untouched**, reasoning and all.
+
+**Stocked: fifteen entries, 7.6 hours, every one with a named consumer.** Mined
+from STATE.md's recent sections, `002b-t0-c.yaml`'s `approval_scope`,
+`ACTION-PLAN.md` §1 and `MODEL-COMPARISON.md` §1's SCHEDULED rows.
+
+| gate | entries | est | what |
+|---|---|---|---|
+| **none** | 5 | **2.8 h** | beat 7's still with the sixteen negatives that never used to arrive (promoted to `tasks:` on the first run); find the msi by MAC; **the LTX jobs-loop, 2 h, the biggest unblocked job in the tree**; the FastWan licence check; the AniSora conversion check |
+| **hardware** | 4 | 1.7 h | beat 9's anti-growth render; the 5070 Ti 480x832 row; T5's sample; T4 SageAttention |
+| **code** | 1 | 0.5 h | the LTX episode batch, behind the jobs-loop |
+| **founder** | 5 | 2.6 h | ep1 v30/v31 verdict → canon leaf + posting; 002b beat-01 video on the 5B and on LTX; 002b beats 02-21 stills; 002b's 21-beat re-voice |
+
+**4.5 hours of that needs no human decision at all** — the gate-free work plus
+everything held only by hardware, which is one one-way Smart App Control toggle
+and one LAN scan away. By window: 6.1 h `any`, 1.5 h `overnight`, **0 h `day`** —
+nothing in the backlog waits on office hours by construction.
+
+**Three gates hold almost everything, and two of them are one action each.**
+Smart App Control on the 5090 blocks four entries; the founder's unwatched
+90-second cut and his unmade 002b frame pick block five; the unwritten LTX
+jobs-loop blocks one. The most valuable single thing on this list is still the
+90-second watch.
+
+**Two honest gaps, recorded rather than papered over.** `pipeline/pending-founder.yaml`
+has an id for the episode-1 verdict (`v6-verdict`) and **none for the 002b
+beat-01 frame pick**, so two founder gates point at a decision the public inbox
+does not list; adding it belongs to whoever owns that file. And `build_sim.py`
+reads the queue's `tasks:` from raw GitHub — it will now see an accurate,
+usually-short list, and it should learn to read `backlog:` for the page to answer
+QUEUE+BACKLOG at all.
+
+**Verification, each as its own step:** `lint_genome.py` exit 0, ratchet 38;
+`test_pipeline.py` exit 0 (three new test groups — an old-style task still parses
+and `backlog:` never reaches the worker's list; a gate blocks regardless of
+`after`, `window` blocks nothing, manual is never queued, a farm entry missing a
+node or a resolvable worker is refused; and the move itself is one write, both
+lists, comments intact, idempotent on a second run); `yaml.safe_load` on the queue
+exit 0, before and after the promoter's own commit.
