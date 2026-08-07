@@ -373,7 +373,7 @@ backlog:
     the steward's recommendation is the untouched 01-cold-open-r3-s3.png. Clearing
     this gate means copying the chosen frame into that node's stills/, which is
     founder-approved canon (R4), because video_task globs stills/NN-*.png for its
-    conditioning frame. No pending-founder.yaml id exists for this decision yet.
+    conditioning frame. pending-founder.yaml id 002b-b01-frame, opened 2026-08-06.
   window: any
   est_minutes: 10
   video: true

@@ -22,6 +22,11 @@ pending:
     detail: "Each is a child of whichever episode 2 branch wins, so this waits on that call."
     public: "https://github.com/olegmlkvorg/banyan-city/tree/main/genomes/sapling/nodes"
     since: 2026-07-30
+  - id: 002b-b01-frame
+    title: "Pick the opening frame for the next episode's first scene"
+    detail: "The story's next branch has an approved script and not one frame of film. Its opening scene has candidate drawings waiting and none has been chosen — and every other scene in that episode is drawn and voiced from the look this one settles, so nothing in it can start until this is picked."
+    public: "sapling/002b-first-citizen-shots.html"
+    since: 2026-08-06
   - id: hires-review
     title: "Approve or ignore 30 sharper versions of the existing shots"
     detail: "The farm re-rendered all 15 approved shots at higher resolution overnight. Each one is a candidate to replace its original — a skim-and-nod, not a study."
