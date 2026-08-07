@@ -1779,6 +1779,224 @@ def test_animegen_casts_before_the_second_expert(tmp: Path):
           src.count("DIAG-20260804.md") >= 1)
 
 
+def test_queue_backlog_is_invisible_to_workers():
+    """The `backlog:` key must be a planning list only. Every worker ever shipped
+    reads `.get("tasks", [])` off origin/main (farm_worker.py:115) and nothing
+    else, including checkouts too old to know the key exists — that invisibility
+    is the whole reason planned work can live in the queue file at all. If a
+    worker ever learns to read backlog:, gated work starts rendering itself."""
+    import yaml as _y
+
+    src = (REPO / "pipeline" / "farm_worker.py").read_text(encoding="utf-8")
+    check("the worker still reads only tasks: out of the queue",
+          '.get("tasks", [])' in src)
+    check("the worker never mentions backlog at all", "backlog" not in src)
+
+    # the read path itself, on a file that carries both lists
+    text = ("tasks:\n"
+            "- id: old-style-1785000000\n"
+            "  worker: msi\n"
+            "  node: 001-capability-inventory\n"
+            "  beats: '1'\n"
+            "backlog:\n"
+            "- id: planned-1786000000\n"
+            "  runner: farm\n"
+            "  gate: founder\n")
+    seen = (_y.safe_load(text) or {}).get("tasks", []) or []
+    check("an old-style task with no new fields still parses",
+          [t["id"] for t in seen] == ["old-style-1785000000"])
+    check("nothing from backlog: reaches the worker's task list",
+          all("planned" not in t["id"] for t in seen))
+
+    # and an empty tasks: list must not read as a broken queue
+    empty = (_y.safe_load("tasks:\nbacklog:\n- id: x\n") or {}).get("tasks", []) or []
+    check("an empty tasks: is an empty list, not a crash", empty == [])
+
+    # the real file, parsed, is the thing the workers will actually see
+    live = _y.safe_load((REPO / "pipeline" / "farm-queue.yaml").read_text(
+        encoding="utf-8")) or {}
+    check("the live queue still parses and carries both keys",
+          "tasks" in live and "backlog" in live)
+    ids = [e.get("id") for e in (live.get("backlog") or [])]
+    check("every backlog entry has an id", all(ids) and len(ids) == len(set(ids)))
+    check("every backlog entry says why it exists",
+          all(e.get("why") for e in (live.get("backlog") or [])))
+    check("every gated backlog entry names what specifically",
+          all(e.get("gate_ref") for e in (live.get("backlog") or []) if e.get("gate")))
+
+
+def test_queue_promoter_gate_beats_everything():
+    """A gate blocks regardless of `after`, and the promoter cannot clear one.
+
+    This is the rule that keeps founder, code and hardware gates human-owned: a
+    promoter that could decide a gate was satisfied would be deciding that the
+    founder had looked, or that Smart App Control was off, on its own evidence.
+    Clearing a gate is a person deleting the key in a commit."""
+    from queue_promoter import parse_done, plan, resolve_worker
+
+    # CR-only heartbeats are what the 5090 actually writes; a splitlines() reader
+    # sees one line and finds nothing.
+    check("DONE ids parse out of a CR-terminated heartbeat",
+          parse_done("02:59:53Z DONE task=faceneg-b01-1785819600\r"
+                     "03:10:00Z FAIL task=other\r")
+          == {"faceneg-b01-1785819600"})
+
+    farm = {"runner": "farm", "node": "001-capability-inventory", "beats": "1"}
+    q = {"tasks": [], "backlog": [
+        dict(farm, id="ready", worker="msi", after=["done-a", "done-b"]),
+        dict(farm, id="half", worker="msi", after=["done-a", "never"]),
+        dict(farm, id="gated", worker="msi", after=["done-a", "done-b"],
+             gate="founder", gate_ref="pending-founder:v6-verdict"),
+        dict(farm, id="gated-no-deps", worker="msi", gate="hardware",
+             gate_ref="the box is unreachable"),
+    ]}
+    p = plan(q, {"done-a", "done-b"})
+    check("an entry whose after-ids are all DONE is promoted",
+          p["promote"] == ["ready"])
+    check("one unmet after-id is enough to hold an entry",
+          any(i == "half" and "never" in w for i, w in p["waiting"]))
+    check("a gate blocks an entry whose after-ids are ALL satisfied",
+          any(i == "gated" and w.startswith("gate:founder") for i, w in p["waiting"]))
+    check("a gate blocks an entry with no dependencies at all",
+          any(i == "gated-no-deps" and w.startswith("gate:hardware")
+              for i, w in p["waiting"]))
+    check("the promoter never reports a gated entry as runnable by hand",
+          not any(i in ("gated", "gated-no-deps") for i, _ in p["by_hand"]))
+
+    # window is advisory: machine work is scheduled by dependencies, not hours
+    p2 = plan({"tasks": [], "backlog": [
+        dict(farm, id="night", worker="msi", window="overnight"),
+        dict(farm, id="day", worker="msi", window="day")]}, set())
+    check("window never delays a promotion", sorted(p2["promote"]) == ["day", "night"])
+
+    # manual work is never put in a worker's inbox
+    p3 = plan({"tasks": [], "backlog": [
+        {"id": "byhand", "runner": "manual", "worker": "m1pro", "cmd": "bash x.sh"}]},
+        set())
+    check("a manual entry is reported, never promoted",
+          not p3["promote"] and p3["by_hand"] == [("byhand", "bash x.sh")])
+
+    # nothing goes into tasks: that a worker could not run
+    p4 = plan({"tasks": [], "backlog": [
+        {"id": "nonode", "runner": "farm", "worker": "msi", "beats": "1"},
+        {"id": "nobeats", "runner": "farm", "worker": "msi", "node": "001-x"},
+        {"id": "nowho", "runner": "farm", "node": "001-x", "beats": "1"},
+        {"id": "impossible", "runner": "farm", "node": "001-x", "beats": "1",
+         "needs": ["mps", "vram20"]}]}, set())
+    check("a farm entry with no node is refused, not queued", not p4["promote"])
+    check("all four malformed entries are reported with a reason",
+          len(p4["waiting"]) == 4 and all("not queue-shaped" in w
+                                          for _, w in p4["waiting"]))
+
+    # worker is filled from needs, and stays a plain string (farm_worker:488
+    # compares it by equality, so a list would never match any machine)
+    w, why = resolve_worker({"needs": ["mps"]})
+    check("needs [mps] resolves to the Mac", w == "m1pro" and "needs" in why)
+    w, _ = resolve_worker({"needs": ["cuda", "vram20"]})
+    check("needs [cuda, vram20] resolves to the 26GB box", w == "rtx5090")
+    w, _ = resolve_worker({"worker": "msi", "needs": ["cuda", "vram20"]})
+    check("an explicit worker always wins over needs", w == "msi")
+    w, _ = resolve_worker({"worker": ["msi", "rtx5090"]})
+    check("a list worker is refused rather than written", w is None)
+
+
+def test_queue_promotion_is_one_atomic_move():
+    """A promotion moves the dict from one list to the other in a single write,
+    so the two lists can never disagree — and everything it does not touch comes
+    out byte-identical, because the comments in this file are the record of why
+    each parked job stays parked."""
+    import yaml as _y
+    from queue_promoter import blocks, plan, rewrite, verify
+
+    text = (
+        "tasks:\n"
+        "# a parked job, and ninety lines of why it must stay parked\n"
+        "# - id: parked\n"
+        "#   worker: rtx5090\n"
+        "- id: finished-1785819600\n"
+        "  worker: rtx5090\n"
+        "  node: 001-capability-inventory\n"
+        "  beats: '1'\n"
+        "\n"
+        "backlog:\n"
+        "\n"
+        "# the reason this entry exists, which must travel with it\n"
+        "- id: moves-1786000000\n"
+        "  runner: farm\n"
+        "  needs: [mps]\n"
+        "  node: 001-capability-inventory\n"
+        "  beats: '7'\n"
+        "  why: >-\n"
+        "    a consumer, named\n"
+        "\n"
+        "- id: stays-1786000001\n"
+        "  runner: farm\n"
+        "  worker: msi\n"
+        "  node: 001-capability-inventory\n"
+        "  beats: '2'\n"
+        "  gate: hardware\n"
+        "  gate_ref: the box is unreachable\n")
+
+    q = _y.safe_load(text)
+    p = plan(q, {"finished-1785819600"})
+    check("a task with a DONE heartbeat line is retired",
+          p["retire"] == ["finished-1785819600"])
+    check("a FAIL-only task would not be retired (only DONE was matched)",
+          plan(q, set())["retire"] == [])
+
+    new = rewrite(text, p["retire"], p["promote"], p["assign"], "2026-08-07")
+    verify(text, new, p["retire"], p["promote"])       # raises SystemExit if not
+    after = _y.safe_load(new)
+    t_ids = [e["id"] for e in (after.get("tasks") or [])]
+    b_ids = [e["id"] for e in (after.get("backlog") or [])]
+    check("the promoted entry is in tasks: exactly once", t_ids == ["moves-1786000000"])
+    check("...and is gone from backlog: in the same write",
+          b_ids == ["stays-1786000001"])
+    check("no entry is ever in both lists", not (set(t_ids) & set(b_ids)))
+    check("the retired task is in neither list",
+          "finished-1785819600" not in t_ids + b_ids)
+    check("worker was filled in from needs on the way across",
+          after["tasks"][0]["worker"] == "m1pro")
+    check("the promoted entry is otherwise unchanged",
+          after["tasks"][0]["beats"] == "7" and after["tasks"][0]["why"].strip()
+          == "a consumer, named")
+    check("the gated entry survives untouched",
+          after["backlog"][0]["gate"] == "hardware")
+
+    # the comments, which is the half yaml.safe_dump cannot do
+    check("the parked job's reasoning is still in the file",
+          "ninety lines of why it must stay parked" in new
+          and "#   worker: rtx5090" in new)
+    check("the moved entry's own comment moved with it",
+          new.index("the reason this entry exists")
+          < new.index("- id: moves-1786000000") < new.index("backlog:"))
+    check("the promotion says where it came from",
+          "promoted from backlog 2026-08-07" in new)
+
+    # a second run has nothing left to do — safe on a timer
+    p2 = plan(_y.safe_load(new), {"finished-1785819600"})
+    check("re-running promotes nothing and retires nothing",
+          not p2["promote"] and not p2["retire"])
+
+    # the block walk must not swallow a comment block it merely sits under
+    pre, bl, tail = blocks(["# park line one",
+                            "# park line two",
+                            "",
+                            "# mine",
+                            "- id: a",
+                            "  worker: msi"])
+    check("a blank line stops a block reaching back into the park above it",
+          len(bl) == 1 and bl[0] == ["# mine", "- id: a", "  worker: msi"]
+          and pre == ["# park line one", "# park line two", ""])
+    # and with no blank line at all, the run is region preamble and stays put
+    pre2, bl2, _ = blocks(["# park with no blank under it",
+                           "# - id: parked",
+                           "- id: a",
+                           "  worker: msi"])
+    check("a comment run touching the top of the region is never carried off",
+          bl2 == [["- id: a", "  worker: msi"]] and len(pre2) == 2)
+
+
 def test_licence_gate(tmp: Path):
     """The gate that should have existed on 2026-07-31, when an entire episode
     came within one command of being voiced with F5-TTS — CC BY-NC weights —
@@ -2167,6 +2385,9 @@ def main():
     with tempfile.TemporaryDirectory() as td:
         test_t3_check_clips_dir(Path(td))
     test_attempts_survive_a_dead_host()
+    test_queue_backlog_is_invisible_to_workers()
+    test_queue_promoter_gate_beats_everything()
+    test_queue_promotion_is_one_atomic_move()
     test_argparse_declares_every_flag_it_reads()
     test_child_verdict_names_a_corpse()
     with tempfile.TemporaryDirectory() as td:

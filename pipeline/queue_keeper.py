@@ -2,7 +2,18 @@
 """Keeps the msi fed (dad's utilization directive, 2026-07-30): when the farm
 queue is empty, append a world-bank batch with a fresh seed base so every
 round explores NEW options for the approved node-001 world. $0, runs on the
-steward's Mac in a loop."""
+steward's Mac in a loop.
+
+DORMANT SINCE 2026-08-07, and the refusal below is why. This loop rewrites the
+whole queue with `yaml.safe_dump`, which cannot carry a comment. That was
+tolerable when the file was a task list; it is not now that the file also holds
+a `backlog:` section whose ~200 lines of comments record why each parked job is
+parked — including the AnimeGen post-mortem whose entire job is to stop the
+crash-loop being retried. So `cycle()` refuses to write while a backlog exists.
+Moving planned work into `tasks:` is `queue_promoter.py`'s job and it edits the
+file as text. Reviving refills means giving this loop a comment-safe writer
+first, and asking again whether a rotating world-reference bank has a named
+consumer (standing rule: no work without one)."""
 import subprocess, time
 from pathlib import Path
 import yaml
@@ -21,6 +32,11 @@ def cycle():
                     "refs/heads/farm-results-*:refs/remotes/origin/farm-results-*"],
                    cwd=REPO, capture_output=True)
     q = yaml.safe_load(Q.read_text()) or {}
+    if q.get("backlog"):
+        return ("refusing to refill: the queue carries a backlog: section and the "
+                "comments that say why each entry is blocked. safe_dump would erase "
+                "every one of them. Use queue_promoter.py, or give this loop a "
+                "comment-safe writer first.")
     tasks = q.get("tasks") or []
     # busy is judged PER WORKER: the msi finishes its round 13x faster than
     # the m1pro, and a global gate left it idling until the slow machine
