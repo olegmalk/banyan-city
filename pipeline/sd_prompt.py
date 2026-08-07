@@ -244,7 +244,8 @@ def _token_estimate(text: str) -> int:
 # warns about the positive one. So every still this project has ever drawn whose
 # negative ran long lost its tail in silence: measured 2026-08-06 with the real
 # tokenizer, 7 of the genome's 177 beats are over — 001 beats 5, 6, 7, 10, 14 and
-# 15 (7 is 115 tokens, half its negative gone) and 002b beat 1 at 82. On 002b
+# 15 (7 is 115 tokens, and 16 of the terms its author wrote were never sent at
+# all) and 002b beat 1 at 82. On 002b
 # beat 1 the lost words happened to be duplicates, which is the only reason the
 # defect stayed invisible; on 001 beat 7 it is not remotely harmless.
 #
@@ -260,7 +261,7 @@ def _tag_token_estimate(text: str) -> int:
     """Conservative token count for a comma-separated tag list.
 
     Deliberately pessimistic — checked against the real tokenizer on all 177 of
-    the genome's negatives, it never reads low (and never more than 11 high).
+    the genome's negatives, it never reads low (and never more than 12 high).
     Over-counting only costs a dropped term on a machine that cannot render
     anyway: diffusers depends on transformers, so anything that can draw can
     count exactly.
