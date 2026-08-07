@@ -675,6 +675,14 @@ rendered, no sidecar written. Every figure below is a file size read off repo
 metadata or a recipe read off upstream source — `CLAIMED-BY-repo-metadata` and
 `MEASURED-BY-authors` respectively, and the T8 row stays SCHEDULED.
 
+**Re-verified independently 2026-08-07, second pass, $0 and no downloads.** Every
+file size below was re-read from the HF API rather than carried over: QuantStack's
+Q4_0 at `9032587904` bytes and Q8_0 at `15881099904` bytes per expert, both matching
+across High and Low; terracottahaniwa's two files at `14305996624` bytes each; the
+vendored licence re-hashed on disk to `b38f8ef…0794480`. All four hold. The pass
+also found one error in the first draft and one gap, both fixed in place below —
+the `diffusers` tag on the official repo, and the host-RAM ceiling.
+
 **The AnimeGen precedent held.** T8 was parked on "the download is fp32,
 57.16GB/expert, plan on converting to bf16/fp8 on disk before the first run", with
 the instruction to cut the row if that conversion had not already happened. It has:
@@ -696,6 +704,17 @@ the single-process branch that keeps the text encoder resident. The configuratio
 that worked evicted it into its own process. That constraint is unchanged by
 anything in this section.
 
+**And the host-RAM arithmetic, which decides the question before VRAM gets a vote:
+the box has 68.1GB visible host RAM** (measured, row at line 949 of this file). The
+official fp32 pair is **126.2GB**. It does not fit — not with offload, not with
+sequential expert loading, not at any setting, because `from_pretrained`
+materialises an expert whole and one fp32 expert is 57.16GB against a 68.1GB
+ceiling that also has to hold the 11.36GB text encoder. **So the published
+conversion is not an optimisation for us, it is the only path that exists.** The
+Q8_0 pair (31.76GB) and the fp8 pair (28.62GB) both clear the host ceiling with
+room for the encoder; the fp32 download is unusable on this hardware and should
+never be queued.
+
 **Architecture confirmed, not assumed.** `V3.2/high_noise_model/config.json`:
 `dim 5120, ffn_dim 13824, num_heads 40, num_layers 40, in_dim 36, out_dim 16,
 model_type "i2v"`, two experts, Wan2.1 VAE, umt5-xxl, **no CLIP image encoder** —
@@ -712,8 +731,31 @@ A14B. The 57.16GB is `total_size 57155604736` in the shard index ÷ 4 bytes =
    **original Wan** layout: `high_noise_model/` + `low_noise_model/`, keys like
    `blocks.0.cross_attn.k.weight`, `blocks.0.modulation`. **No diffusers-format
    conversion of V3.2 exists on HF** — searched by name, by `base_model` filter and
-   by tag; the only `diffusers`-tagged AniSora repos are Disty0's, which are the
-   CogVideoX-based 5B line the licence audit tells us to avoid.
+   by tag.
+
+   **Correction and sharpening, on a re-verification pass 2026-08-07.** An earlier
+   draft of this row said "the only `diffusers`-tagged AniSora repos are Disty0's".
+   That is wrong, and the counterexample is the one that matters: a live
+   `?search=anisora` over the HF model API returns **six** `library_name: diffusers`
+   repos — Disty0's two 5B builds, `ikusa/anisorav2`, `aardsoul-music/Wan2.1-Anisora-14B`,
+   `KuOnoda/merged-ati-anisora`, and **`IndexTeam/Index-anisora` itself**. The
+   official weights repo carries `library_name: diffusers` in its own metadata. The
+   conclusion is unchanged — none of the six is a V3.2 diffusers conversion — but
+   **the tag is a trap, and it is on the repo we would actually point at.** Anyone
+   reading that model page concludes `from_pretrained` will work. It cannot: the
+   V3.2 tree is `high_noise_model/`, `low_noise_model/`, `Wan2.1_VAE.pth`,
+   `models_t5_umt5-xxl-enc-bf16.pth`, `google/`, `configuration.json` — verified by
+   API today — with **no `model_index.json` at any level and no `transformer/` or
+   `transformer_2/` subfolder.** There is nothing for either `from_pretrained` call
+   to read.
+
+   **So: which pipeline class do the checkpoints target? None in diffusers.** The
+   official weights target bilibili's vendored fork of the Wan codebase —
+   `anisoraV3.2/generate.py` driving `wan.WanI2V`, configured by
+   `wan/configs/wan_i2v_A14B.py`. The GGUF and fp8 conversions target **ComfyUI's
+   single-file loader**. No surface anywhere targets a diffusers pipeline class,
+   which is why every route into `wan_i2v.py` is new code rather than a config
+   change.
 2. **The single-file path exists but mis-detects the model.** `WanTransformer3DModel`
    *is* in diffusers' `SINGLE_FILE_LOADABLE_CLASSES` with
    `convert_wan_transformer_to_diffusers`, and GGUF loads via
