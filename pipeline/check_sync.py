@@ -200,6 +200,28 @@ def check(genome: str, node: str) -> list:
                 f"{(b_w[j] if j < len(b_w) else '(ends)')!r} — recording predates "
                 f"the current script")
 
+    # ---- C2. a beat the script silenced must not keep its recording ----------
+    # Check C is driven off the SCRIPT's lines, so `not sb["lines"]` skips the
+    # beat entirely and a take that outlived its line is invisible to it. That
+    # is not hypothetical: on 2026-08-03 the founder moved "Huh. Blue." off
+    # beat 05 to beat 06 where the blue is actually on screen, the retake ran
+    # `synth_vo --beats 06`, and synth_vo's own silent-beat archiver never
+    # visited beat 05 because --beats skips it before that check. So 05-vo.mp3
+    # survived, and the assembly spoke "Huh. Blue." twice — the second time
+    # over near-black mug shards, which is verbatim the defect this file was
+    # written to end. The gate watched script→picture and never asked whether a
+    # recording existed that the script no longer accounted for.
+    for i, sb in enumerate(script, start=1):
+        if sb["lines"]:
+            continue
+        rec = spoken_text(d, i)
+        if rec is None:
+            continue
+        add("FAIL", i, "orphan take",
+            f"beat {i} ({sb['title']}) has no line in the script, but "
+            f"{i:02d}-vo.json says {rec[:44]!r} — a take that outlived its "
+            f"line. Archive it (R6) or restore the line")
+
     # ---- D. a colour named in the line must be visible in the picture --------
     # The beat-05 bug, as a rule: "Huh. Blue." over a prompt whose subject is a
     # broken coffee mug on dark floorboards.
