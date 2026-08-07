@@ -218,11 +218,21 @@ backlog:
     what the founder himself ordered on 2026-08-02, and D9 plus STEWARDSHIP section 6
     forbid posting from an unscreened cut.
 
-# Beat 9's plant grows from 4 leaf shapes to 7 and gains a second stem tier in
-# 2.5 seconds — the founder's own complaint, and the beat is in every cut of
-# episode 1 right now.
+# RETIRED 2026-08-07 — b09-antigrowth-1786089660, done by 528ff7c (`beat 9's
+# plant stops growing: 7 leaves back to 4, apex under the horizon`).
 #
-# UNGATED 2026-08-07, and the gate it carried is kept here rather than deleted.
+# The render exists: probe-b9-mitosis.sh on the rtx5090, the same conditioning
+# still and the same 704x1280 / 14-step / guidance-5.0 recipe at the same seed
+# 20260814, holding 4 leaf shapes and one tier for all 61 frames against the
+# episode take's 7 and two. Measurement in STATE.md 2026-08-07. What is left is
+# the founder's look at review/b09-retest/09-whoami-antisplit.mp4, and a taste
+# call is tracked on the review surface, not in a worker queue. Deleted rather
+# than annotated: this was runner: manual, which the promoter can report but
+# never retire, so left here it would have read as work nobody had started.
+#
+# ITS GATE HISTORY STAYS, because two live entries point at it —
+# t4-sageattention-1786090320 was ungated with it and
+# t5-fastwan-sample-b01-1786090260 names it in its own gate_ref.
 # It read: rtx5090 Smart App Control switched itself to enforcement that morning
 # at 13:25 local (HKLM\SYSTEM\CurrentControlSet\Control\CI\Policy\VerifiedAndReputablePolicyState
 # = 1), which blocks every unsigned compiled extension in C:\banyan-video\venv —
@@ -241,18 +251,6 @@ backlog:
 # enforcement on its own, and went back to Off by hand — the policy state is
 # MUTABLE here and can return. Re-read that key first the next time a compiled
 # import dies on this box.
-- id: b09-antigrowth-1786089660
-  runner: manual
-  worker: rtx5090
-  needs: [cuda, vram20, video-venv]
-  window: any
-  est_minutes: 8
-  cmd: bash pipeline/probe-b9-mitosis.sh
-  why: >-
-    The fifteen leaf-count terms and the rewritten direction are committed and held
-    by a test; only the render is missing, and the same method already worked on
-    beat 11 at a fixed seed (2 silhouettes for all 61 frames, motion 2.36 to 2.07).
-    Seed 20260814 off the f15 sidecar; the probe dir on the box is staged and hashed.
 
 # The 5070 Ti's video benchmark row for MODEL-COMPARISON section 1 — a hardware
 # measurement on a recipe already proven on that box, not a recipe change.
