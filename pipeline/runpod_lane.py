@@ -144,8 +144,9 @@ mutation($input: PodFindAndDeployOnDemandInput) {
                 break
             subprocess.run(["git", "fetch", "-q", "origin", "runpod-results"],
                            cwd=REPO, capture_output=True)
-            hb = subprocess.run(["git", "show", "origin/runpod-results:runpod-out/heartbeat.txt"],
-                                cwd=REPO, capture_output=True, text=True).stdout.strip()
+            hb = (subprocess.run(["git", "show", "origin/runpod-results:runpod-out/heartbeat.txt"],
+                                 cwd=REPO, capture_output=True, text=True,
+                                 encoding="utf-8", errors="replace").stdout or "").strip()
             if not hb.startswith(last_beat):
                 last_beat = ""    # branch was rewritten (fresh worker) — start over
             if hb != last_beat:

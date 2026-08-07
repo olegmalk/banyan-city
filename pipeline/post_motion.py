@@ -126,7 +126,14 @@ def main() -> int:
             continue
         dest = out_dir / f"{s['num']:02d}-{s['slug']}.POST.mp4"
         animate(still, s["num"], dest)
-        dest.with_suffix("").with_suffix(".meta.yaml").write_text(
+        # ONE with_suffix, not two: `.with_suffix("")` first strips `.mp4` and
+        # the second call then eats `.POST` as well, so every sidecar landed at
+        # `NN-slug.meta.yaml` — a name that claims to describe a DIFFERENT take
+        # of the same beat. Fifteen POST clips read as unprovenanced footage
+        # while fifteen orphan sidecars sat beside them (found by licence_gate,
+        # 2026-08-01). In a project whose whole claim is provenance, a sidecar
+        # under the wrong name is worse than a missing one.
+        dest.with_suffix(".meta.yaml").write_text(
             "# Shot provenance (7.2)\n"
             "platform: local-deterministic\n"
             # quoted — the value contains a colon, which unquoted breaks YAML

@@ -32,7 +32,7 @@ REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "pipeline"))
 from generate_shots import parse_shots  # noqa: E402
 from render_local import approved  # noqa: E402 — the §6 gate, one implementation
-from sd_prompt import compress, extra_negatives, suppressed_negatives  # noqa: E402
+from sd_prompt import beat_negative, compress  # noqa: E402
 
 BASE = "cagliostrolab/animagine-xl-3.1"
 STILL_W, STILL_H = 832, 1216          # what the Kaggle notebook draws
@@ -99,14 +99,7 @@ def main() -> int:
                 "extra digit, fewer digits, cropped, worst quality, low quality, "
                 "normal quality, jpeg artifacts, signature, watermark, username, "
                 "blurry, artist name")
-    neg = CARD_NEG if a.card_neg else NEG
-    for term in suppressed_negatives(shot["prompt"]):
-        neg = neg.replace(term + ", ", "")
-    extra = extra_negatives(shot["prompt"])
-    if extra:
-        neg = f"{neg}, {extra}"
-    if a.extra_neg:
-        neg = f"{neg}, {a.extra_neg}"
+    neg = beat_negative(CARD_NEG if a.card_neg else NEG, shot["prompt"], a.extra_neg)
     print(f"beat {a.beat:02d} {shot['slug']}\n  POS: {ptext}\n  NEG: {neg}")
     if dropped:
         print(f"  dropped for budget: {' '.join(dropped)[:120]}")

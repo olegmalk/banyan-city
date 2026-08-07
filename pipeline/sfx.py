@@ -112,6 +112,35 @@ def body_thump(path: Path) -> Path:
     return _write(path, 0.9 * x / (np.abs(x).max() or 1))
 
 
+def fall_impact(path: Path, pre: float = 1.1) -> Path:
+    """The fall as sound: air, then floor. A rising whoosh (`pre` seconds of
+    band-swept noise) into one heavy, LONG impact — placed so the hit lands
+    exactly on a cut. v7d's lone thump read anticlimactic (founder); a fall
+    needs the air before the landing."""
+    tail = 1.1
+    n_pre, n_tail = int(pre * SR), int(tail * SR)
+    rng = np.random.default_rng(6)
+    # whoosh: noise through a falling one-pole, swelling in
+    noise = rng.standard_normal(n_pre)
+    wh = np.empty(n_pre)
+    acc = 0.0
+    for i in range(n_pre):
+        k = 0.12 - 0.11 * (i / n_pre)          # brightens down: 800ish → 80ish Hz
+        acc += k * (noise[i] - acc)
+        wh[i] = acc
+    wh *= (np.linspace(0, 1, n_pre) ** 1.8)     # swell
+    # impact: deep, with a long settling tail — weight, not a gunshot
+    t = np.arange(n_tail) / SR
+    hit = (np.sin(2 * np.pi * 42 * t) * np.exp(-t / 0.30)
+           + 0.6 * np.sin(2 * np.pi * 65 * t + 0.4) * np.exp(-t / 0.16)
+           + 0.35 * np.sin(2 * np.pi * 178 * t) * np.exp(-t / 0.05)
+           + 0.25 * np.sin(2 * np.pi * 30 * t) * np.exp(-t / 0.55))
+    hit += 0.15 * rng.standard_normal(n_tail) * _env(n_tail, 0.003, 0.05)
+    hit *= _env(n_tail, 0.006, 0.4)
+    x = np.concatenate([0.35 * wh, hit])
+    return _write(path, 0.92 * x / (np.abs(x).max() or 1))
+
+
 def fan_spindown(path: Path, dur: float) -> Path:
     """A cooling fan spinning down to nothing — the scripted sound of the
     machine (and its operator) switching off. Pitch and level glide to zero."""
@@ -133,11 +162,40 @@ def fan_spindown(path: Path, dur: float) -> Path:
 
 
 def footsteps_soil(path: Path, dur: float, period: float = 1.5,
-                   grow: float = 0.0) -> Path:
+                   grow: float = 0.0, sample: str = "") -> Path:
     """Footsteps felt THROUGH SOIL, not heard through air: paired low thumps
     (a walker's two feet) with no transient click — pressure, not impact.
-    `grow` > 0 swells the level across the cue (beat 15: it's getting closer)."""
+    `grow` > 0 swells the level across the cue (beat 15: it's getting closer).
+
+    `sample` places a REAL recorded step on that rhythm instead of a synthesized
+    thump, and it exists because the two things are not interchangeable. The
+    founder asked for real recordings everywhere (2026-08-03); but render_t3 only
+    reads `period` and `grow` on the SYNTH branch, so pointing this cue at a
+    recording with `file:` would have played the recording's own rhythm and thrown
+    ours away. Beat 15 is "closer, faster" — period 1.1, grow 1.2, the accelerating
+    thump the episode ends on. That acceleration is the hook, and a raw file cannot
+    produce it.
+
+    So: real timbre, our timing. One step is extracted from the recording (the
+    loudest onset) and placed at the computed intervals with the growth envelope.
+    """
     rng = np.random.default_rng(9)
+    one = None
+    if sample:
+        import subprocess
+        raw = subprocess.run(["ffmpeg", "-v", "error", "-i", str(sample),
+                              "-ac", "1", "-ar", str(SR), "-f", "f32le", "-"],
+                             capture_output=True, check=True).stdout
+        a = np.frombuffer(raw, dtype=np.float32).astype(float)
+        if a.size:
+            # the loudest 0.28s window is the cleanest single step in the file
+            w = int(0.28 * SR)
+            if a.size > w:
+                energies = [(np.abs(a[i:i + w]).sum(), i)
+                            for i in range(0, a.size - w, max(1, SR // 100))]
+                _, best = max(energies)
+                one = a[best:best + w] * _env(w, 0.004, 0.05)
+                one = one / (np.abs(one).max() or 1)
     n = int(dur * SR)
     x = np.zeros(n)
     t = 0.35
@@ -147,10 +205,13 @@ def footsteps_soil(path: Path, dur: float, period: float = 1.5,
         kn = int(0.28 * SR)
         if i + kn >= n:
             break
-        tt = np.arange(kn) / SR
-        f = rng.uniform(52, 62)
-        thump = np.sin(2 * np.pi * f * tt) * _env(kn, 0.012, 0.07)
-        thump += 0.3 * rng.standard_normal(kn) * _env(kn, 0.008, 0.03)  # soil grit
+        if one is not None:
+            thump = one[:kn] if one.size >= kn else np.pad(one, (0, kn - one.size))
+        else:
+            tt = np.arange(kn) / SR
+            f = rng.uniform(52, 62)
+            thump = np.sin(2 * np.pi * f * tt) * _env(kn, 0.012, 0.07)
+            thump += 0.3 * rng.standard_normal(kn) * _env(kn, 0.008, 0.03)  # soil grit
         amp = rng.uniform(0.8, 1.0) * (1.0 + grow * (t / dur))
         x[i:i + kn] += amp * thump
         # thump-THUMP: the second foot lands close behind the first
@@ -184,9 +245,10 @@ SYNTHS = {
     "keyboard": lambda p, dur=4.0, stop_at=None, **kw: keyboard(p, dur, stop_at),
     "mug_hit": lambda p, **kw: mug_hit(p),
     "body_thump": lambda p, **kw: body_thump(p),
+    "fall_impact": lambda p, pre=1.1, **kw: fall_impact(p, pre),
     "fan_spindown": lambda p, dur=3.0, **kw: fan_spindown(p, dur),
-    "footsteps_soil": lambda p, dur=6.0, period=1.5, grow=0.0, **kw:
-        footsteps_soil(p, dur, period, grow),
+    "footsteps_soil": lambda p, dur=6.0, period=1.5, grow=0.0, sample="", **kw:
+        footsteps_soil(p, dur, period, grow, sample),
     "terminal_keys": lambda p, dur=3.0, **kw: terminal_keys(p, dur),
 }
 

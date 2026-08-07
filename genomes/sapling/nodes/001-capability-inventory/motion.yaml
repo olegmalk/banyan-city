@@ -1,19 +1,176 @@
+# 2026-08-03, FOUNDER'S CALL on the motion investigation. He picked variant F off
+# the comparison — "this is actually the best overall, do this kinda thing. its very
+# good." — and the corrected measurement agrees with him:
+#
+#                                    median   frozen frames
+#   the cut he rejected                0.13        70%
+#   shake terms off                    0.62        25%
+#   + no "camera locked"               0.79        22%
+#   F  + amplitude wording             1.30         3%   <- this
+#   K  + body negative                 0.27        38%   <- steward's wrong pick
+#   hosted models, for scale       1.03-1.13         0%
+#
+# EVERY NUMBER I QUOTED BEFORE THIS WAS A MEAN, and a mean is dragged up by one big
+# jump. The median plus the share of frames that barely move is what matches what a
+# person sees, and on that measure the variant I recommended (K) has 38% dead frames
+# while F has 3%. His "literally just frozen frames" was exact.
+#
+# So these directions are rewritten in F's register: name the amplitude, not just
+# the fact of motion — "hammer", "drive hard", "whips back", "jolt", "slamming" —
+# and drop "camera locked", which protects nothing (the init frame locks the framing
+# in i2v; camera drift measured 0.00-0.02 with it gone) while costing subject motion.
+#
+# BEATS 4, 6 AND 8 ARE UNTOUCHED, including their "camera locked". They are
+# deliberately still: the limp hand after the fall, "everything nearly still" under
+# the too-blue sky, and "the trembling stops. a beat of stillness." Amplitude there
+# would break the script, and the founder's earlier note stands — "no static at all
+# forces it to move even when not needed, creating shaking".
 # Per-beat MOTION direction (what moves; the still owns composition).
 # Consumed by: render requests, the Kaggle notebook's i2v engines, the shot
 # board. Edit here — a PR to this file is a motion-direction pitch.
 motion_prompts:
-  1: "the young man types rapidly, fingers moving over the keys, slight shoulder movement, monitor glow flickers gently, camera locked"
-  2: "green terminal text scrolls slowly on the monitor, the hooded man's silhouette shifts subtly, faint steam rises from the mug, camera locked"
-  3: "the terminal text settles, the cursor blinks steadily, the screen glow breathes very gently, camera locked"
+  # 2026-08-02, audit of all 15 directions against the script's own action line.
+  # Beat 2 rendered exactly what it was told — a glow wash, no typing — and the
+  # founder's note "no typing" was correct about the DIRECTION, not the model.
+  # The still has the keyboard and the monitor in frame, so both halves of the
+  # scripted action ("types... and stops dead. The spinner turns.") are
+  # animatable without touching composition.
+  # 2026-08-03, founder: "we dont need him to go still in beat 1 anyway." Right —
+  # the stop belongs to beat 2 ("types the last of it, fast, and stops dead"), and
+  # the beat-1 keyboard sfx already ends on its own. Cramming type-then-stop into
+  # 2.5s left almost no typing. So beat 1 is now nothing but typing, which also
+  # removes the "still" that my previous wording smuggled in.
+  1: "his hands hammer the mechanical keyboard, fingers flying across the keys in large rapid strokes, wrists moving visibly, the monitor glow pulsing over them"
+  # 2026-08-03, founder approved variant B: "face B is the best out of the 2".
+  # The face terms live in the negative (FACE_NEG, applied to PERSON_BEATS) — this
+  # line is just the motion, with the stop-dead dropped because it belongs to the
+  # keyboard sfx and cost the beat its typing.
+  2: "his hands drive hard across the keyboard, fingers striking the keys, the spinner sweeping on the monitor"
+  # 2026-08-06. This direction names a scrolling text block and a cursor. THE
+  # CURRENT STILL HAS NEITHER. Beat 3's still was replaced on 2026-08-04 (the
+  # magenta dashboard was revoked; the pick was "s0 — green scanlines, no letters",
+  # deliberately lettered-free because render_t3 burns the real deploy-succeeded
+  # card over this plate). What is actually in the frame is a green panel at left,
+  # a blue monitor centre, and hard ink panel lines: no text, no cursor, nothing
+  # solid that can travel. i2v moves what is in the frame, so the two renders that
+  # led to this beat being held were asking for absent objects — and both of them
+  # ran on the DEAD still, so the current frame has never been animated at all.
+  # Measured on those two: whole-frame luminance swung 3.3 and 3.8 of 255 across
+  # the entire clip. The frame is luminance and nothing else, so the direction now
+  # asks for luminance, at amplitude.
+  3: "the green panel and the blue monitor surge bright and drop back hard, pale scanlines rolling down both screens, the glow flaring out across the dark panels around them"
   4: "the limp hand stays motionless, the monitor glow flickers slowly across it, one loose paper settles to the floor, camera locked"
-  5: "the dying screen glow flickers and fades across the shards, dust motes drift in the last light, camera locked"
+  5: "the dying screen glow strobes across the ceramic shards and drains away, dust motes tumble through the last light"
   6: "everything nearly still, the clouds drift very slowly, the pale leaf stays attached at the bottom edge of the frame and only trembles gently, nothing flies, nothing detaches, camera locked"
-  7: "the leaf whips hard to one side and springs back, the grass blades lean in the gust, camera locked"
+  # 7: founder — "the sapling is aggressively moving, in a very weird way". The
+  # still is already a whip caught mid-motion, so asking for another whip made
+  # the clip restart the gesture instead of finishing it. A whip that DECAYS is
+  # what the script's "twitches" means and what real springy stems do.
+  7: "nothing moves at all, the leaf hangs completely motionless in dead calm air, the grass behind stays perfectly still, dust motes hanging suspended in the light, camera locked"
   8: "the leaf holds almost perfectly still, dust motes settle slowly in the sunlight, grass sways very gently behind, camera locked"
-  9: "the sprout's two leaves stir very slightly, morning light shimmers, grass moves gently, camera locked"
-  10: "the thin roots tremble subtly, water glints slide between soil grains, dust drifts slowly, no light rays, camera locked"
-  11: "the new leaf unfurls slowly and settles upright, dew drops glisten, soft light shifts, camera locked"
-  12: "the bent stem strains and quivers against nothing, a few soil grains shift at its base, everything else still, camera locked"
-  13: "wind sweeps the grass in slow waves, clouds drift, dust stirs faintly on the empty road, no people appear, camera locked"
-  14: "the roots flex and tighten their grip, soil grains shift and settle, the warm light holds steady, camera locked"
-  15: "the soil grains tremble increasingly, the warm glow pulses brighter from the right, dust shivers loose, camera locked"
+  # 2026-08-02: "the beat 9 generations i've literally make it not move at all.
+  # not one pixel" (founder). "stir very slightly" is below the model's floor —
+  # ask for nothing and it delivers nothing. This beat can afford real motion:
+  # render_t3 burns the $ whoami terminal panel over the top, so the plate only
+  # has to live underneath it.
+  # 2026-08-07, THE MITOSIS IS HERE TOO — and the founder pointed at this beat,
+  # not 11: "that's not the beat i was talking about. i was talking about BEAT 9."
+  # He is right, and it is worse here. Counted off the f15 take (seed 20260814,
+  # the clip in every cut of episode 1): the sprout starts on THREE blades — one
+  # yellow top leaf, two white wings — the top leaf has divided in two by frame 5,
+  # a third yellow leaf is out by frame 10, and from frame 25 the plant carries
+  # SEVEN blades on a stem that has grown a whole second node. Beat 11's leaf
+  # divides and re-fuses; this one just keeps growing, which is beat 11's job, not
+  # beat 9's ("$ whoami" is an identity beat — the plant is supposed to be one
+  # thing for 2.5 seconds).
+  #
+  # BOTH FAILURE SHAPES ARE HERE, which is why the term list is longer than beat
+  # 11's: a leaf DIVIDES (frames 0-10, beat 11's artifact exactly) and then the
+  # PLANT ELABORATES (frames 20-60, a second node tier on a lengthened stem).
+  # Nothing in the script or the shot asks for either. node.md gives this beat no
+  # action at all — "Terminal text types itself over the shot", then the $ whoami
+  # block — and shots.md draws "a tiny two-leaf green sprout standing alone in
+  # short grass, centered, quiet empty composition". Growth belongs to beat 11,
+  # whose line IS the growth ("Latency: three days. Throughput: one leaf"), so
+  # beat 9 growing is not an overshoot to be bounded, it is invention to be
+  # forbidden — and it steals the next beat's only event.
+  #
+  # TWO CAUSES, and the second is ours. (a) The negative held nothing about leaf
+  # count — 363 of 900 chars used, so it was never a budget problem, the terms were
+  # simply never authored — while antistatic_for() correctly read the amplitude
+  # words and forbade stillness. (b) The direction ITSELF asked for the leaf count
+  # to change: "one leaf spinning as it falls" instructs a leaf to detach, and
+  # "the sprout's two leaves" asserts a count the approved still contradicts (it
+  # draws three blades, plus a bud). Adding "no extra leaves" while still asking
+  # for a leaf to come off is the mistake video_prompt's own docstring records —
+  # "It was told to." So the detachment clause goes and the count is dropped, the
+  # way beat 12's rewrite dropped its count on 2026-08-06; the amplitude register
+  # stays (gust, thrashes, streaming), with the stem carrying the swing instead of
+  # a departing leaf. The still is NOT changed: motion.yaml is read only by the
+  # video path, and 09-whoami.png is the founder's canon.
+  9: "the sprout's leaves swing up on a gust and drop back, the thin stem bowing over and springing upright, the grass thrashes behind, dust motes streaming across the light, no splitting leaf, no dividing leaf, no duplicate leaves, no extra leaves appearing, no new leaves growing, no second sprout, no leaf multiplying, no changing leaf count, no morphing silhouette, no growing stem, no extra stem nodes, no branching stem, no timelapse growth, no leaf detaching, no falling leaf"
+  # 10: the beat's whole point is the approaching thump "felt as rings of light
+  # through soil", and the direction said "no light rays" — so the one thing the
+  # audience must see was suppressed. The still already has glowing droplets
+  # between the grains; pulsing THOSE renders the thump without inventing the
+  # god-rays that "no light rays" was written to keep out.
+  10: "the glow between the soil grains pulses hard, bright then dark, the thin roots jolt with every pulse, water beads sliding down between grains, no god rays, no light shafts"
+  # 2026-08-07, THE MITOSIS. The founder: "why did we never fix the mitosis?" —
+  # in the f15 take that is in every cut of episode 1, the leaf divides like a
+  # cell partway through the clip. Nothing was ever tried against it, and the
+  # reason is in this line: the direction asks for a SHAPE CHANGE ("unfurls",
+  # "springs upright") and the negative held nothing about leaf COUNT, while
+  # antistatic_for() correctly reads the movement words and forbids stillness.
+  # Told to change shape and forbidden to hold still, the cheapest thing a leaf
+  # can do is become two leaves — and the frame-difference metric scored that
+  # 2.36, the highest in the episode, i.e. the defect read as the best motion.
+  # Naming an invention in the negative is the mechanism that already worked
+  # here: beat 15's red-orange cone, same seed and recipe, 4.63 -> 2.72 with the
+  # object named (STATE.md 2026-08-07). Same negation convention as beat 10's
+  # "no god rays" — video_prompt() splits these into the real negative field, so
+  # they never reach the positive prompt, and the leading position in the
+  # negative is the protected one. The still is NOT changed by this: motion.yaml
+  # is read only by the video path, and 11-grow.png is the founder's canon.
+  11: "the new leaf unfurls in a fast sweep and springs upright, dew drops shaking loose and running off, the light swinging across it, no splitting leaf, no dividing leaf, no duplicate leaves, no extra leaves appearing, no second sprout, no leaf multiplying, no changing leaf count, no morphing silhouette"
+  # 2026-08-06. Beat 12 was held for measuring 0.19 median / 58% barely-moving —
+  # a WHOLE-FRAME number on a frame that is 95% cracked ground and flat sky. Inside
+  # the box the sprout occupies, the same clip measures 0.35 median with 10% frozen
+  # frames: the plant moved, the plain did not, and the mean over the plain is what
+  # got read. The second attempt is the warning. A steward override asked for the
+  # stem to shudder "WITHOUT MOVING ANYWHERE" and the subject box fell to 0.11 with
+  # 75% frozen — positive prose about stillness suppressing motion, the same shape
+  # as "hands going still" on beat 1. Never again in this file.
+  # Also: the direction described a stem "bent into a tense arc" and the still
+  # renders an upright three-leaf sprout, so it was directing a picture we do not
+  # have. Named parts only, amplitude on each, and no negation anywhere — the
+  # script's "nothing happens" is achieved by the plant not travelling, not by
+  # telling the model about stillness.
+  12: "the sprout's leaves shake hard and whip back, the thin stem bowing over and springing upright again, grit skittering off the cracked ground at its base"
+  # 2026-08-06. Split the frame and the two halves disagree completely. In the
+  # bottom half — the grass and the road — this beat already animates: 0.30 median
+  # with 8% frozen frames, and 0.36 / 2% on the steward's variant. In the top half,
+  # which is a cloudbank filling nearly half the picture, it is 0.10-0.11 median
+  # with 80-82% frozen. The grass was never the problem; the clouds are dead, and
+  # "the clouds racing over" is asking a 2.5-second clip for something clouds do
+  # not do in 2.5 seconds. So the sky's job becomes the thing a wide vista CAN
+  # render at this length: its shadow falling across the fields, which is
+  # luminance. Grass stays first because it is the half that works.
+  # "no people appear" is kept, and flagged: the still has two figures on the road
+  # at the horizon, so this clause puts "people" in the negative against a frame
+  # that contains them. It has not damaged them yet — but it is the term to pull
+  # first if they ever smear.
+  13: "the grass thrashes in heavy gusts, whole waves rolling across the fields, cloud shadows sliding over the ground and darkening it in bands, dust sheeting along the empty road, no people appear"
+  14: "the roots flex and clench, gripping and re-gripping, soil grains breaking loose and rolling away, the warm light holding steady"
+  # 2026-08-06. Beat 15 is the closing hook, the founder asked for it animated, and
+  # nothing here was ever the reason it is a held still — it is held because the
+  # 5090 was switched off on the steward's advice (049c519, flagged there as the
+  # steward's own failure). The direction works: on the OLD still it measured 0.41
+  # median / 25% frozen, and the 25% is the old frame being three-quarters black,
+  # not the wording. Only one thing needed changing. That old frame was replaced on
+  # 2026-08-04 — the "underground side view" cross-section this model cannot draw
+  # became a ground-level macro, soil and stones under a hard raking light band
+  # with long shadows — and "the warm glow slamming brighter FROM THE RIGHT" now
+  # describes a light that is not where the new frame puts it. Naming the band
+  # itself cannot contradict the init frame, and the long shadows are the most
+  # legible thing in the picture that a pulse can move.
+  15: "the soil grains and small stones jump and scatter with each thump, the raking light band slamming brighter and dimming back, the long shadows jolting with it, dust bursting loose in sheets"

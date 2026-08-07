@@ -15,16 +15,24 @@ Checks every genome under genomes/ for:
     genomes/sapling/style.md); beat headings' time ranges appear verbatim
     in the node.md script (canon-drift guard); beat numbers run 01, 02, …
   - ledger header shape
+  - licence gate (pipeline/licence_gate.py): nothing that ships carries a
+    non-commercial, share-alike, research-only or unclassified licence — the
+    tree publishes CC BY 4.0 and cannot honour that promise otherwise
 
 Exit 0 = healthy tree. Exit 1 = list of violations.
 """
 
 import csv
+import os
 import re
 import sys
 from pathlib import Path
 
 import yaml
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))   # importable from any cwd
+
+import licence_gate  # noqa: E402 — needs the path above
 
 REPO = Path(__file__).resolve().parent.parent
 VALID_STATUS = {"hot", "hardened", "dormant"}
@@ -33,6 +41,24 @@ BEAT_HEADING = re.compile(r"^## Beat (\d{2}) — .+?\((\d+:\d{2}[–-]\d+:\d{2})
 LEAF_REQUIRED_KEYS = {"leaf", "node", "tier", "form", "cost_usd", "status", "model", "prompt", "seed"}
 VALID_TIERS = {"T0", "T1", "T2", "T3"}
 LEDGER_HEADER = ["date", "node", "leaf", "citizen", "type", "amount_usd", "compute_desc", "split_applied", "notes"]
+
+# Pre-existing licence violations, all in node 001 (see lint_licences). This
+# number may only ever go DOWN. Raising it to make a build pass would convert
+# the one gate that can catch an unpublishable episode into a rubber stamp.
+#
+# 2026-08-03: 21 -> 38, and this is the ONE reason the number may rise. No new
+# asset appeared; a WRONG RECORD WAS CORRECTED. MODEL_LICENCES claimed
+# cagliostrolab/animagine-xl-3.1 was faipl-1.0-sd with "outputs unrestricted",
+# which the model's own card now supersedes with CreativeML Open RAIL++-M — whose
+# use restrictions travel to the output, and which drew all fifteen approved
+# stills. Those 17 records were being cleared by the stale entry, so the debt was
+# always 38; only the bookkeeping said 21. See DECISIONS.md D15 for the text, the
+# three ways out, and why the steward did not pick one.
+#
+# THE INVARIANT IS UNCHANGED: the count asserts "no new unpublishable asset". It
+# rises only when the tree is found to be worse than recorded, never to make a
+# failing build pass. Every future change must be DOWN, as assets are retired.
+LICENCE_DEBT = 38
 
 errors = []
 
@@ -102,6 +128,7 @@ def lint_genome(genome_dir: Path) -> None:
                 err(f"{where}: node.md has no '## State change' section (R1 — every node must change something)")
             if "## Hook" not in text:
                 err(f"{where}: node.md has no '## Hook' section (R5)")
+            lint_format_line(where, text)
 
         for leaf_id in n.get("leaves") or []:
             leaf_file = node_dir / "leaves" / f"{leaf_id}.yaml"
@@ -203,6 +230,85 @@ def lint_ledger() -> None:
         err(f"ledger/watering.csv header is {header}, expected {LEDGER_HEADER}")
 
 
+BEAT_WINDOW = re.compile(r"^\*\*.+?—\s+(\d+):(\d\d)–(\d+):(\d\d)\*\*", re.M)
+FORMAT_LINE = re.compile(r"^\*\*Format:\*\*(.*)$", re.M)
+
+
+def lint_format_line(where: str, text: str) -> None:
+    """node.md's own `**Format:**` line must describe the script beneath it.
+
+    001's header claimed "~82s · 18 beats = 18 shots" while the script had 15
+    beats spanning 1:37 and the assembled episode ran 100s — stale from an
+    earlier cut, and nothing checked it. That line is the first thing a reader
+    (or a contributor deciding whether to fork a beat) takes as fact, and this
+    file is the canonical script. A tree whose own header miscounts its beats
+    cannot claim the repo IS the product.
+
+    Advisory, not fatal: a wrong count misleads, but it does not make an episode
+    unpublishable, and older nodes may predate the convention.
+    """
+    m = FORMAT_LINE.search(text)
+    if not m:
+        return
+    windows = BEAT_WINDOW.findall(text)
+    if not windows:
+        return
+    declared = re.search(r"(\d+)\s*beats", m.group(1))
+    if declared and int(declared.group(1)) != len(windows):
+        warn(f"{where}: node.md Format says {declared.group(1)} beats, the "
+             f"script has {len(windows)} beat headings")
+    secs = int(windows[-1][2]) * 60 + int(windows[-1][3])
+    said = re.search(r"~?(\d+)\s*s\b", m.group(1))
+    if said and abs(int(said.group(1)) - secs) > 5:
+        warn(f"{where}: node.md Format says ~{said.group(1)}s, the script's "
+             f"last beat ends at {secs}s")
+
+
+def lint_licences() -> None:
+    """Publish-safety of every licence the shipping artifacts declare. A
+    non-commercial or share-alike asset in an episode is not a style problem,
+    it is a licence violation of our own CC BY release — and it is invisible in
+    the finished mp4, so only code can catch it (near-miss 2026-08-01: an
+    entire episode nearly voiced with CC BY-NC F5-TTS weights).
+
+    A RATCHET, not a switch. `.github/workflows/pages.yml` runs this file
+    immediately before `build_site.py`, so a hard failure here does not turn a
+    badge red — it stops banyan.city from deploying at all. On 2026-08-01 the
+    gate's first full run found 46 pre-existing violations, all in node 001;
+    fixing records and archiving orphans took it to LICENCE_DEBT below, and the
+    rest need either a re-render (queued) or a licence somebody has actually
+    read. Failing the deploy over debt this gate itself just discovered would
+    have blocked the founder's own goal for the day.
+
+    So: pre-existing debt is an advisory, exactly as warn() already documents
+    for "rules adopted after content already shipped" — but the COUNT is
+    asserted. One new violation pushes the total above LICENCE_DEBT and fails
+    the build immediately. The number may only go down, and lowering it is how
+    the debt is retired. Set LICENCE_GATE_STRICT=1 to make every violation
+    fatal — the founder's switch, to flip the day the tree is clean.
+    """
+    errors, advisories = licence_gate.scan(REPO)
+    for a in advisories:
+        warn(a)
+    strict = os.environ.get("LICENCE_GATE_STRICT") == "1"
+    if strict or len(errors) > LICENCE_DEBT:
+        for e in errors:
+            err(e)
+        if not strict:
+            err(f"licence debt ROSE to {len(errors)} (ratchet: {LICENCE_DEBT}) — "
+                "the new asset above is not publishable; replace it or record "
+                "its licence. Never raise LICENCE_DEBT to make this pass.")
+        return
+    for e in errors:
+        warn(f"[licence debt] {e}")
+    if errors:
+        print(f"  ⚠ {len(errors)} pre-existing licence violation(s), ratchet "
+              f"{LICENCE_DEBT} — see MORNING-2026-08-01.md; a NEW one fails CI")
+    if len(errors) < LICENCE_DEBT:
+        print(f"  ✓ licence debt is down to {len(errors)} — lower LICENCE_DEBT "
+              f"in lint_genome.py from {LICENCE_DEBT} to {len(errors)}")
+
+
 def main() -> int:
     genome_dirs = sorted(p for p in (REPO / "genomes").iterdir() if p.is_dir())
     if not genome_dirs:
@@ -210,6 +316,7 @@ def main() -> int:
     for g in genome_dirs:
         lint_genome(g)
     lint_ledger()
+    lint_licences()
 
     if errors:
         print(f"✗ {len(errors)} violation(s):")

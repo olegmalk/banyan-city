@@ -5,7 +5,13 @@
 # Without the secret this workflow is a no-op.
 name: mirror
 on:
+  # Not on the courier branches: `git push --mirror` below ships EVERY ref, so a
+  # mirror run triggered by any ordinary push already carries farm-results-*.
+  # Firing it again on each of farm_worker.py's 5-minute heartbeats re-mirrored
+  # the same refs ~288 times a day, and failed loudly all through the 2026-08-06
+  # Actions outage for a workflow that is a no-op until MIRROR_GIT_URL is set.
   push:
+    branches-ignore: ["farm-results-**"]
   workflow_dispatch:
 jobs:
   mirror:

@@ -1,0 +1,44 @@
+{
+ "engine": "f5-tts-v1-base",
+ "total_s": 27.021,
+ "lines": [
+  {
+   "who": "VO",
+   "text": "Right. Sev-1. You know the drill. Nobody panics on my incidents, including me. Step one: stop screaming , done, involuntarily. Step two: what do we actually know?",
+   "start": 0.0,
+   "end": 27.021,
+   "chunks": [
+    {
+     "text": "Right.",
+     "start": 0.0,
+     "end": 2.848
+    },
+    {
+     "text": "Sev-1.",
+     "start": 2.968,
+     "end": 5.816
+    },
+    {
+     "text": "You know the drill.",
+     "start": 5.936,
+     "end": 8.645
+    },
+    {
+     "text": "Nobody panics on my incidents, including me.",
+     "start": 8.765,
+     "end": 15.059
+    },
+    {
+     "text": "Step one: stop screaming , done, involuntarily.",
+     "start": 15.179,
+     "end": 21.899
+    },
+    {
+     "text": "Step two: what do we actually know?",
+     "start": 22.019,
+     "end": 27.021
+    }
+   ]
+  }
+ ]
+}

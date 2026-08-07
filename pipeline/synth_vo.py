@@ -65,6 +65,10 @@ EMOTION_HINTS = {
     ("panic", "scream", "frantic", "alarmed"):    (1.10, 0.25),
     ("excited", "delighted", "joy", "triumphant"): (0.95, 0.28),
     ("tired", "weary", "sigh"):                   (0.45, 0.45),
+    # relief is warm but small — he thinks he is going to bed, not celebrating
+    ("relieved", "cheerful", "almost cheerful"):   (0.60, 0.40),
+    # dazed: the words arrive before the understanding does
+    ("dazed", "stunned", "confused", "distant"):   (0.38, 0.42),
     ("angry", "furious", "snaps"):                (1.00, 0.28),
 }
 # The house register is DEADPAN (R3: comedy from the gap between a dry

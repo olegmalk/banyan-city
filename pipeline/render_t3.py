@@ -41,6 +41,7 @@ Usage:
 """
 
 import argparse
+import os
 import json
 import math
 import re
@@ -71,7 +72,13 @@ CAPTION_SIZE = 44
 # the bottom ~17-20% and a right-side action rail — captions anchored at
 # H-h-160 lost their last line under it. Keep blocks above the chrome and
 # narrower than the rail line.
-CAPTION_MARGIN = int(HEIGHT * 0.22)
+# +2, and the reason is an off-by-one worth writing down. A block anchored at
+# H-h-M has its LOWEST DRAWN PIXEL at H-M-1, while the band qa_episode measures
+# starts at int(H*(1-0.22)) = 998. At M = int(1280*0.22) = 281 the caption's last
+# row lands on y999 — two rows inside the very band this constant exists to
+# clear. The margin was equal to the band when it needed to exceed it, which is
+# the same class of mistake as the cycle-001 defect it was written for.
+CAPTION_MARGIN = int(HEIGHT * 0.22) + 2
 CAPTION_MAX_W = WIDTH - 160
 PINGPONG_MAX_S = 16.0  # reverse buffers raw frames; skip palindrome past this
 
@@ -212,7 +219,15 @@ AUDIO_EXT = ("mp3", "wav", "m4a", "aac", "ogg")
 AUDIO_SR = 44100
 # short-form platforms normalize to about -14 LUFS; sitting under it just makes
 # the episode quieter than everything around it in the feed.
-LOUDNESS_TARGET = -14.0
+# -14 LUFS is the platform reference, and chasing it was a mistake for THIS
+# material: an episode with scored silences only reaches -14 integrated if the
+# loud moments are shoved into the limiter, so a body hitting the floor ended up
+# no louder than a spoken line. A cold-read listener heard the master "pinned at
+# about -1.8 dBFS almost continuously" — that is a squashed mix, and it is why
+# the thump never landed no matter where it was placed. Master quieter and let
+# the platforms turn it up: they normalise upward without re-limiting, so the
+# transients survive.
+LOUDNESS_TARGET = -17.0
 LIMIT_MASTER = 0.80   # -1.94 dBFS, ceiling during loudnorm's own 192k pass.
                       # 0.86 was not enough headroom once the loudness loop
                       # started winning: episode 1 reached -14.2 LUFS after three
@@ -239,7 +254,7 @@ def find_audio(clips_dir: Path, num: int) -> Path | None:
 
 def media_duration(f: Path) -> float | None:
     """Container duration via ffmpeg banner (no ffprobe dependency)."""
-    r = subprocess.run([FFMPEG, "-i", str(f)], capture_output=True, text=True)
+    r = subprocess.run([FFMPEG, "-i", str(f)], capture_output=True, text=True, encoding="utf-8", errors="replace")
     m = re.search(r"Duration: (\d+):(\d+):(\d+\.?\d*)", r.stderr)
     return int(m[1]) * 3600 + int(m[2]) * 60 + float(m[3]) if m else None
 
@@ -253,7 +268,7 @@ def video_duration(f: Path) -> float | None:
     progress `time=` is DTS-based and lags B-frames — count frames instead.)
     Falls back to container duration."""
     r = subprocess.run([FFMPEG, "-i", str(f), "-map", "0:v:0", "-c", "copy",
-                        "-f", "null", "-"], capture_output=True, text=True)
+                        "-f", "null", "-"], capture_output=True, text=True, encoding="utf-8", errors="replace")
     fps = re.search(r"(\d+(?:\.\d+)?) fps[,\s]", r.stderr)  # first hit = input banner
     frames = re.findall(r"frame=\s*(\d+)", r.stderr)        # last hit = final count
     if r.returncode == 0 and fps and frames and float(fps[1]) > 0:
@@ -261,7 +276,10 @@ def video_duration(f: Path) -> float | None:
     return media_duration(f)
 
 
-VOICELESS_TAIL_MAX = 2.0  # footage may beat out this long after the last word
+VOICELESS_TAIL_MAX = float(os.environ.get("T3_TAIL_MAX", 2.0))
+# footage may beat out this long after the last word. Env-tunable because a
+# "tight cut" is a pacing experiment, not a new pipeline: cold readers found
+# 001 holds static plates for seconds after the line ends (2026-07-30).
 
 
 def fit_duration(script_s: float, cdur: float, vdur: float) -> float:
@@ -275,7 +293,20 @@ def fit_duration(script_s: float, cdur: float, vdur: float) -> float:
     hard-trimmed mid-sentence."""
     if cdur:
         if not vdur:
-            return round(cdur, 2)
+            # A SILENT BEAT STILL HAS A SCRIPTED LENGTH. This used to return the
+            # full footage duration, so a beat with no dialogue played however
+            # much material happened to exist. Beat 4 of 001 — the fall, no VO,
+            # two 5s shots — therefore ran 10.08s against a script that gives it
+            # 0:15–0:20. Those five extra silent seconds WERE the "very
+            # anticlimatic" death: nothing said, nothing happening, at the moment
+            # the story turns. Four rounds of sound work chased it before anyone
+            # measured the beat length.
+            #
+            # The script is the edit. Footage shorter than its slot still keeps
+            # its own length (nothing is stretched); footage longer is cut to the
+            # slot the author wrote. Approved by the founder on the A/B
+            # (2026-08-02: "yeah B4TRIM is better").
+            return round(min(cdur, script_s), 2) if script_s else round(cdur, 2)
         return round(max(min(cdur, vdur + VOICELESS_TAIL_MAX), vdur + 0.4), 2)
     if vdur:
         return round(max(script_s, vdur + 0.4), 2)
@@ -343,7 +374,7 @@ def loudnorm_measure(track: Path) -> dict | None:
     second pass (dynamic single-pass loudnorm pumps on dialogue)."""
     r = subprocess.run([FFMPEG, "-i", str(track), "-af",
                         "loudnorm=I=-14:TP=-1.5:LRA=11:print_format=json",
-                        "-f", "null", "-"], capture_output=True, text=True)
+                        "-f", "null", "-"], capture_output=True, text=True, encoding="utf-8", errors="replace")
     m = re.search(r"\{[^{}]*\"input_i\"[^{}]*\}", r.stderr, re.S)
     if not m:
         return None
@@ -367,7 +398,7 @@ def integrated_lufs(track: Path) -> float | None:
     measured after the fact and the shortfall corrected as a plain gain."""
     r = subprocess.run([FFMPEG, "-hide_banner", "-nostats", "-i", str(track),
                         "-af", "ebur128=framelog=quiet", "-f", "null", "-"],
-                       capture_output=True, text=True)
+                       capture_output=True, text=True, encoding="utf-8", errors="replace")
     hits = re.findall(r"I:\s*(-?[\d.]+)\s*LUFS", r.stderr)
     if not hits:
         return None
@@ -497,7 +528,8 @@ def card_clip(pngs_and_durs: list, workdir: Path, tag: str) -> Path:
 
 
 def render_beat(beat: dict, num: int, dur: float, clips: list, workdir: Path,
-                manifest: dict | None = None, extra_layers: list | None = None) -> Path:
+                manifest: dict | None = None, extra_layers: list | None = None,
+                tag_speakers: bool = True) -> Path:
     """Encode one beat: fitted footage (or slate) + overlays + captions.
     Multiple clips per beat are sequenced (concat) to fill the slot; only the
     full sequence loops (anime-idiomatic hold) — never a freeze. Captions
@@ -516,7 +548,7 @@ def render_beat(beat: dict, num: int, dur: float, clips: list, workdir: Path,
              "-vf", f"scale={WIDTH}:{HEIGHT}:force_original_aspect_ratio=increase,"
                     f"crop={WIDTH}:{HEIGHT},fps={FPS}",
              "-an", "-c:v", "libx264", "-preset", "veryfast", "-crf", "23", str(seq)],
-            capture_output=True, text=True)
+            capture_output=True, text=True, encoding="utf-8", errors="replace")
         if r.returncode:
             raise SystemExit(f"beat {num} sequence concat failed:\n{r.stderr[-800:]}")
         clip = seq
@@ -534,7 +566,7 @@ def render_beat(beat: dict, num: int, dur: float, clips: list, workdir: Path,
                  "[0:v]split[a][b];[b]reverse[r];[a][r]concat=n=2:v=1:a=0[out]",
                  "-map", "[out]", "-an", "-c:v", "libx264",
                  "-preset", "veryfast", "-crf", "23", str(pp)],
-                capture_output=True, text=True)
+                capture_output=True, text=True, encoding="utf-8", errors="replace")
             if r.returncode:
                 raise SystemExit(f"beat {num} ping-pong failed:\n{r.stderr[-800:]}")
             clip = pp
@@ -550,9 +582,23 @@ def render_beat(beat: dict, num: int, dur: float, clips: list, workdir: Path,
 
     layers = []  # (png, x, y, enable-expr)
     y = 100
+    # a terminal chyron must not share the frame with the closing line: on 001
+    # a leftover "GROW ✓" sat in the corner through "Something's coming" and
+    # read as a stuck overlay, stealing the episode's hook (cold read,
+    # 2026-07-30). On a beat whose voice ends before the beat does, hold the
+    # chyron until the last word has landed.
+    lines_here = [i for i in beat["items"] if i[0] == "line"]
+    voice_end = 0.0
+    if manifest and manifest.get("lines"):
+        voice_end = max((float(l.get("end") or 0) for l in manifest["lines"]), default=0.0)
+    ovl_at = max(dur * 0.3, voice_end + 0.15) if (lines_here and voice_end) else dur * 0.3
+    if ovl_at > dur - 0.3:          # no room after the line: keep it off entirely
+        ovl_at = None
     for j, block in enumerate([i[1] for i in beat["items"] if i[0] == "overlay"]):
+        if ovl_at is None:
+            continue
         png = text_png(block, workdir / f"ovl-{num:02d}-{j}.png", 24, GREEN, PANEL_BG)
-        layers.append((png, "36", str(y), f"gte(t,{dur * 0.3:.2f})"))
+        layers.append((png, "36", str(y), f"gte(t,{ovl_at:.2f})"))
         y += Image.open(png).height + 24
 
     lines = [(i[1], i[2]) for i in beat["items"] if i[0] == "line"]
@@ -583,8 +629,13 @@ def render_beat(beat: dict, num: int, dur: float, clips: list, workdir: Path,
                 speech, directions = split_caption_display(chunk)
                 if speech:
                     # name tag on the line's first chunk, and only when the
-                    # speaker changes — steady exchanges stay uncluttered
-                    tag = label if (k == 0 and who != prev_who) else ""
+                    # speaker changes — steady exchanges stay uncluttered.
+                    # A ONE-VOICE episode gets no tags at all: on 001 every
+                    # caption read "THE TREE:" from the first frame, which
+                    # cold-read viewers took for a captioning bug AND which
+                    # spoiled the reincarnation 40s before the episode earns
+                    # it (three independent naive readers, 2026-07-30).
+                    tag = label if (tag_speakers and k == 0 and who != prev_who) else ""
                     png = text_png(speech, workdir / f"cap-{num:02d}-{j}-{k}.png",
                                    CAPTION_SIZE, ink, CAPTION_BG,
                                    max_w=CAPTION_MAX_W, bold=True,
@@ -621,7 +672,7 @@ def render_beat(beat: dict, num: int, dur: float, clips: list, workdir: Path,
            ["-filter_complex", ";".join(chains), "-map", "[out]",
             "-t", str(dur), "-r", str(FPS), "-an",
             "-c:v", "libx264", "-preset", "veryfast", "-crf", "23", "-movflags", "+faststart", str(out)])
-    r = subprocess.run(cmd, capture_output=True, text=True)
+    r = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace")
     if r.returncode:
         raise SystemExit(f"beat {num} ffmpeg failed:\n{r.stderr[-1500:]}")
     return out
@@ -702,6 +753,14 @@ def main() -> int:
         prev = previously_line(genome_dir, node, lineage["nodes"])
         title_ovl = title_overlay_png(node, prev, workdir / "title-ovl.png")
 
+    # one voice for the whole episode → no speaker tags anywhere (see the
+    # caption code): tags only earn their space when there is an exchange
+    voices = {re.sub(r"\s*\(.*$", "", it[1]).strip().upper()
+              for b in beats for it in b["items"] if it[0] == "line"}
+    tag_speakers = len(voices) > 1
+    if not tag_speakers:
+        print(f"  one voice ({', '.join(voices) or 'none'}) — speaker tags off")
+
     mismatched = []
     for i, beat in enumerate(beats, 1):
         dur = beat_duration(beat["slug"], beat["items"])
@@ -741,7 +800,8 @@ def main() -> int:
         extra = ([(title_ovl, "(W-w)/2", "110", "lt(t,2.8)")]
                  if i == 1 and title_ovl else None)
         timeline.append((render_beat(beat, i, dur, beat_clips, workdir, manifest,
-                                     extra_layers=extra), dur, audio))
+                                     extra_layers=extra, tag_speakers=tag_speakers),
+                         dur, audio))
         sources.append({"beat": i, "slug": strip_inline_md(beat["slug"]),
                         "clip": "+".join(c.name for c in beat_clips) if beat_clips else "slate (no footage yet)",
                         "audio": audio.name if audio else "none",
@@ -772,7 +832,7 @@ def main() -> int:
     concat = workdir / "concat.txt"
     concat.write_text("\n".join(f"file '{p.resolve()}'" for p, _, _ in timeline))
     r = subprocess.run([FFMPEG, "-y", "-f", "concat", "-safe", "0", "-i", str(concat),
-                        "-c", "copy", str(video)], capture_output=True, text=True)
+                        "-c", "copy", str(video)], capture_output=True, text=True, encoding="utf-8", errors="replace")
     if r.returncode:
         raise SystemExit(f"concat failed:\n{r.stderr[-1500:]}")
 
@@ -826,17 +886,34 @@ def main() -> int:
                 if not 1 <= b <= len(rdurs):
                     raise SystemExit(f"sound.yaml event {j}: beat {b} out of range")
                 name = str(ev["sfx"])
-                if name not in _sfx.SYNTHS:
-                    raise SystemExit(f"sound.yaml event {j}: unknown sfx {name!r} "
-                                     f"(have: {', '.join(sorted(_sfx.SYNTHS))})")
                 dur = ev.get("dur")
                 dur = rdurs[b - 1] if dur in (None, "full") else float(dur)
                 wav = workdir / f"sfx-{j:02d}-{name}.wav"
-                # everything that isn't placement is a synth parameter
-                # (stop_at, period, grow, …) — passed straight through
-                params = {k: v for k, v in ev.items()
-                          if k not in ("beat", "sfx", "start", "dur", "gain_db")}
-                _sfx.SYNTHS[name](wav, dur=dur, **params)
+                if ev.get("file"):
+                    # a RECORDED cue: public-domain / CC0 only, provenance in
+                    # the node's audio-sources/SOURCES.md. Real ceramic and real
+                    # keyswitches beat anything synthesized from sine waves.
+                    src = REPO / str(ev["file"])
+                    if not src.exists():
+                        raise SystemExit(f"sound.yaml event {j}: missing {src}")
+                    af = [f"atrim=duration={dur:.2f}", f"aresample={AUDIO_SR}"]
+                    if ev.get("trim_start"):
+                        af.insert(0, f"atrim=start={float(ev['trim_start']):.2f}")
+                    r = subprocess.run([FFMPEG, "-y", "-loglevel", "error", "-i", str(src),
+                                        "-af", ",".join(af), "-ac", "1", str(wav)],
+                                       capture_output=True, text=True, encoding="utf-8", errors="replace")
+                    if r.returncode:
+                        raise SystemExit(f"recorded cue {src.name} failed:\n{r.stderr[-500:]}")
+                elif name in _sfx.SYNTHS:
+                    # everything that isn't placement is a synth parameter
+                    # (stop_at, period, grow, …) — passed straight through
+                    params = {k: v for k, v in ev.items()
+                              if k not in ("beat", "sfx", "start", "dur", "gain_db", "file",
+                                           "trim_start")}
+                    _sfx.SYNTHS[name](wav, dur=dur, **params)
+                else:
+                    raise SystemExit(f"sound.yaml event {j}: unknown sfx {name!r} "
+                                     f"(have: {', '.join(sorted(_sfx.SYNTHS))} or a file:)")
                 at = offs[b - 1] + float(ev.get("start", 0))
                 gain = float(ev.get("gain_db", -18))
                 i = add_input("-i", str(wav))
@@ -865,7 +942,9 @@ def main() -> int:
                     f"+clip((t-{t2:.2f})/1.2,0,1))':eval=frame")
         i = add_input("-f", "lavfi", "-i",
                       f"anoisesrc=color=brown:seed=42:r=24000:d={total_s:.2f}")
-        chains.append(f"[{i}:a]lowpass=f=300,volume=0.05"
+        # darker + quieter than v1: at 0.05/300Hz the bed read as "a random
+        # weird wind sound" indoors (founder, v7d notes)
+        chains.append(f"[{i}:a]lowpass=f=240,volume=0.032"
                       f",afade=t=out:st={max(total_s - 3.0, 0):.2f}:d=3{duck}"
                       f",aresample={AUDIO_SR},aformat=channel_layouts=stereo[wind]")
         mix_ins.append("[wind]")
@@ -882,7 +961,7 @@ def main() -> int:
             ["-filter_complex", ";".join(chains), "-map", "[mix]",
              "-t", f"{total_s:.2f}", "-ar", str(AUDIO_SR), "-ac", "2",
              "-c:a", "pcm_s16le", str(mixed)],
-            capture_output=True, text=True)
+            capture_output=True, text=True, encoding="utf-8", errors="replace")
         if r.returncode:
             raise SystemExit(f"placed mix failed:\n{r.stderr[-1500:]}")
         measured = loudnorm_measure(mixed)
@@ -904,7 +983,7 @@ def main() -> int:
             af += f",alimiter=limit={LIMIT_MASTER}:level=0"
             r = subprocess.run([FFMPEG, "-y", "-i", str(mixed), "-af", af,
                                 "-ar", str(AUDIO_SR), "-c:a", "pcm_s16le", str(master)],
-                               capture_output=True, text=True)
+                               capture_output=True, text=True, encoding="utf-8", errors="replace")
             if r.returncode:
                 raise SystemExit(f"master failed:\n{r.stderr[-1500:]}")
             return af
@@ -942,7 +1021,7 @@ def main() -> int:
                             "-map", "0:v", "-map", "1:a", "-c:v", "copy",
                             "-ar", str(AUDIO_SR),
                             "-c:a", "aac", "-b:a", "160k", "-shortest",
-                            "-movflags", "+faststart", str(out)], capture_output=True, text=True)
+                            "-movflags", "+faststart", str(out)], capture_output=True, text=True, encoding="utf-8", errors="replace")
         if r.returncode:
             raise SystemExit(f"mux failed:\n{r.stderr[-1500:]}")
     else:
@@ -950,7 +1029,7 @@ def main() -> int:
         # encodes are, but concat -c copy rewrites the container with moov
         # at the end, which stalls browser playback (regression class 068988d)
         r = subprocess.run([FFMPEG, "-y", "-i", str(video), "-c", "copy",
-                            "-movflags", "+faststart", str(out)], capture_output=True, text=True)
+                            "-movflags", "+faststart", str(out)], capture_output=True, text=True, encoding="utf-8", errors="replace")
         if r.returncode:
             raise SystemExit(f"faststart remux failed:\n{r.stderr[-1500:]}")
 

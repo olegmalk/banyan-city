@@ -8,7 +8,8 @@ Checks per episode (FAIL = ship-blocking, WARN = advisory):
   container   moov atom before mdat (faststart — browsers stall otherwise;
               bit the project twice), 720x1280 @ 24fps, sane duration,
               audio/video stream lengths agree
-  loudness    integrated ≈ -14 LUFS (short-form platform level), true
+  loudness    integrated ≈ -17 LUFS (deliberately below the -14 platform
+              reference so transients survive — see LUFS_TARGET), true
               peak <= -0.5 dBTP (cycle 001)
   dead air    zero digital silence at -45dB; no quiet-vs-bed stretch
               longer than 3.5s (cycle 004 allows <=2s voiceless beat-outs)
@@ -38,8 +39,23 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent
 WIDTH, HEIGHT = 720, 1280
 CHROME_BAND = 0.22          # platform UI safe area (bottom fraction)
-LUFS_TARGET, LUFS_TOL = -14.0, 1.3
+# -17, not the -14 platform reference: chasing -14 integrated on material with
+# scored silences forces every loud moment into the limiter, so a body hitting
+# the floor came out no louder than a spoken line (cold-read listener, 2026-08-01:
+# "pinned at about -1.8 dBFS almost continuously"). Platforms normalise upward
+# without re-limiting, so mastering quieter keeps the transients.
+LUFS_TARGET, LUFS_TOL = -17.0, 1.5
 QUIET_MAX_S = 3.5           # longest allowed quiet-vs-bed stretch
+# The quiet-stretch floor must track the MASTER's level, not sit at an absolute
+# dB: it was -30 when we mastered to -14, and after dropping the target to -17
+# the whole mix moved down with it, so a fixed floor started calling the
+# designed aftermath a dropout. 16 dB below target is the same musical distance.
+QUIET_FLOOR_DB = LUFS_TARGET - 16
+# A stretch this far below the episode's own dialogue is a hole, not a held beat
+# — see quiet_hole(). 14 dB is roughly "you would reach for the volume"; 4s is
+# about the longest silence short-form holds before a viewer leaves.
+DYN_DROP_DB = 14.0
+DYN_MAX_S = 4.0
 # Luma spread (90th percentile minus 10th) below this is a blank field, not a
 # shot. A numerically failed generation still writes a valid, mid-grey,
 # perfectly "fine" mp4 — the grey Wan render measured a spread of ~20 where
@@ -58,7 +74,67 @@ def record(episode: str, check: str, ok: bool, detail: str = "", warn: bool = Fa
 
 
 def ff(args_, ffmpeg="ffmpeg"):
-    return subprocess.run([ffmpeg, *args_], capture_output=True, text=True)
+    return subprocess.run([ffmpeg, *args_], capture_output=True, text=True, encoding="utf-8", errors="replace")
+
+
+def quiet_hole(video, ffmpeg="ffmpeg") -> tuple:
+    """(seconds, start, floor_db, speech_db) of the longest stretch sitting far
+    below the episode's OWN speech level.
+
+    Why this is not the quiet-stretch check above. In ep1-v18 the death's
+    aftermath ran nine seconds decaying from -33 to -46 dB RMS while dialogue sat
+    at -18 — and `silencedetect` found nothing, because its threshold is on PEAKS
+    and the peaks stayed above the -33 dB floor for most of it. So the check
+    passed and the founder's actual note ("his death is very anticlimatic") went
+    unexplained through four rounds of moving the thump around.
+
+    The thump was never the problem: at 14s it is the loudest moment in the
+    episode. What follows it is — eight seconds with no words, no sound above a
+    dying fan, over a picture that gets BRIGHTER. The death has no aftermath, it
+    has an absence, and absence is measurable: a long run far below the level of
+    the speech around it.
+
+    ABSOLUTE thresholds cannot express that, which is why this one is relative to
+    the episode's own dialogue (90th-percentile RMS). Scored silence is real and
+    allowed — this is a WARNING carrying its length and location, so an author
+    can tell a held beat from a hole. Two seconds of nothing lands a death; eight
+    loses the audience.
+    """
+    r = ff(["-hide_banner", "-nostats", "-i", str(video), "-af",
+            "astats=metadata=1:reset=1,ametadata=print:"
+            "key=lavfi.astats.Overall.RMS_level:file=-",
+            "-f", "null", "-"], ffmpeg)
+    # one print per audio frame (~23ms), and channel prints share a pts_time —
+    # keep the loudest per timestamp, then bucket to 0.25s so a single quiet
+    # frame between two loud ones cannot look like a hole
+    at, best = {}, None
+    for line in r.stdout.splitlines():
+        m = re.match(r"frame:\d+\s+pts:\d+\s+pts_time:([\d.]+)", line)
+        if m:
+            best = float(m.group(1))
+            continue
+        m = re.match(r"lavfi\.astats\.Overall\.RMS_level=(-?[\d.]+)", line)
+        if m and best is not None:
+            b = round(best * 4) / 4
+            at[b] = max(at.get(b, -120.0), float(m.group(1)))
+    if len(at) < 8:
+        return 0.0, 0.0, 0.0, 0.0
+    keys = sorted(at)
+    levels = sorted(at.values())
+    speech = levels[int(len(levels) * 0.90)]
+    floor = speech - DYN_DROP_DB
+    longest, run = [], []
+    for k in keys:
+        if at[k] < floor:
+            run.append(k)
+        else:
+            longest = max(longest, run, key=len)
+            run = []
+    longest = max(longest, run, key=len)
+    if not longest:
+        return 0.0, 0.0, 0.0, speech
+    return (longest[-1] - longest[0] + 0.25, longest[0],
+            min(at[k] for k in longest), speech)
 
 
 def atom_order(path: Path) -> list:
@@ -102,7 +178,7 @@ def qa_episode(video: Path, clips_dir: Path | None, ffmpeg: str) -> None:
     # ebur128 logs a running I: per frame — the LAST one is the summary
     li = re.findall(r"I:\s+(-?\d+\.\d) LUFS", r.stderr)
     lufs = float(li[-1]) if li else None
-    record(ep, "loudness ~-14 LUFS",
+    record(ep, f"loudness ~{LUFS_TARGET:g} LUFS",
            lufs is not None and abs(lufs - LUFS_TARGET) <= LUFS_TOL,
            f"{lufs} LUFS" if lufs is not None else "unmeasured")
     tp = re.findall(r"Peak:\s+(-?\d+\.\d) dBFS", r.stderr)
@@ -117,10 +193,15 @@ def qa_episode(video: Path, clips_dir: Path | None, ffmpeg: str) -> None:
     r = ff(["-i", str(video), "-af", "silencedetect=n=-60dB:d=1", "-f", "null", "-"], ffmpeg)
     record(ep, "no digital silence", "silence_start" not in r.stderr,
            "; ".join(re.findall(r"silence_start: [\d.]+", r.stderr)[:3]))
-    r = ff(["-i", str(video), "-af", f"silencedetect=n=-30dB:d={QUIET_MAX_S}",
+    r = ff(["-i", str(video), "-af", f"silencedetect=n={QUIET_FLOOR_DB:g}dB:d={QUIET_MAX_S}",
             "-f", "null", "-"], ffmpeg)
     record(ep, f"no quiet stretch > {QUIET_MAX_S}s", "silence_start" not in r.stderr,
            "; ".join(re.findall(r"silence_start: [\d.]+", r.stderr)[:3]))
+    hole_s, hole_at, hole_floor, speech = quiet_hole(video, ffmpeg)
+    record(ep, f"no hole > {DYN_MAX_S:g}s under the dialogue",
+           hole_s <= DYN_MAX_S,
+           (f"{hole_s:.1f}s from {hole_at:.0f}s, floor {hole_floor:.0f} dB vs "
+            f"speech {speech:.0f} dB" if hole_s else "none"), warn=True)
 
     # --- hook ---
     r = ff(["-t", "3", "-i", str(video), "-vf", "freezedetect=n=0.003:d=1.5",
@@ -155,14 +236,50 @@ def qa_episode(video: Path, clips_dir: Path | None, ffmpeg: str) -> None:
     # is a hard failure. The clip level is where this defect is born, so that is
     # where the gate belongs.
     is_episode = bool(m) and (int(m[1]), int(m[2])) == (WIDTH, HEIGHT)
+    # DO NOT HAND THE READER AN EXCUSE. This warning said "(slates?)" — a guess,
+    # offered whether or not the cut had any slates — and it fired on
+    # ep1-v26-approved and ep1-v28-swap at contrast 12 for days while the steward
+    # read the parenthetical and moved on. The blank frames were beat 15: the
+    # episode's final shot, its hook, essentially black after its first frame.
+    # The check was right every time and its own hedge is what buried it.
+    #
+    # A cut with slates says so in render_t3's summary ("N footage, M slate"), so
+    # the reader can resolve it in one glance — but the message must state the
+    # defect, not pre-excuse it.
+    hint = ("  ← if this cut has 0 slates, these are DEAD SHOTS, not placeholders"
+            if is_episode else " — GENERATION FAILED")
     record(ep, "frames carry a picture", not flat and worst is not None,
            (f"{len(flat)}/{len(devs)} frames blank, lowest contrast {worst:.0f}"
-            + (" (slates?)" if is_episode else " — GENERATION FAILED")
+            + hint
             if flat else f"lowest contrast {worst:.0f}" if worst is not None
             else "unmeasured"),
            warn=is_episode)
 
     # --- captions in the chrome band ---
+    #
+    # THIS CHECK IS A WARNING, NOT A GATE, AND THAT IS DELIBERATE.
+    #
+    # The pixel signature of a caption block — a wide, near-uniform dark region
+    # carrying bright glyphs, low in the frame — is also the pixel signature of
+    # this show's own footage: a night interior in dark cel shading with a lit
+    # monitor and keycaps. On 2026-08-02 it failed `ep1-v22-hires` whose captions
+    # sat at y999 by construction, and three successive attempts to make it
+    # specific (contiguity, then flatness, then a centred-rectangle test) each
+    # broke in a different direction — the last one flagged a control frame with
+    # no caption in it at all. Verified by cropping the band and looking: no
+    # caption, just a hooded sleeve and a bright keyboard.
+    #
+    # THE REAL GUARANTEE IS ARITHMETIC, NOT VISION. render_t3 places every
+    # caption block at `H-h-CAPTION_MARGIN`, so its lowest pixel is at
+    # HEIGHT-CAPTION_MARGIN. As long as CAPTION_MARGIN >= CHROME_BAND*HEIGHT, a
+    # caption CANNOT enter the band, and test_pipeline asserts exactly that
+    # against this module's own CHROME_BAND. That test is the gate.
+    #
+    # What survives here is a cheap smoke signal for text this pipeline did not
+    # draw (burned-in subtitles in supplied footage, a platform re-encode). It
+    # reports, and it does not block, because a check that fails on healthy
+    # episodes gets ignored — which is how the cycle-001 defect it was written
+    # for would sail through a second time.
     if not m or (int(m[1]), int(m[2])) != (WIDTH, HEIGHT):
         # a raw generator clip is not an assembled episode; the chrome band
         # only means something at the delivery resolution
@@ -185,12 +302,13 @@ def qa_episode(video: Path, clips_dir: Path | None, ffmpeg: str) -> None:
                         v = px[xx, yy]
                         dark += v < 30
                         light += v > 225
-                    # a caption row = a long near-black box run PLUS bright text
                     if dark > 90 and light > 6:
                         band_hits.append(f"{fpath.stem}@y{yy}")
                         break
         record(ep, "captions clear chrome band", not band_hits,
-               ", ".join(band_hits[:4]))
+               (", ".join(band_hits[:4]) + "  (heuristic: dark footage trips this; "
+                "the margin is guaranteed by CAPTION_MARGIN >= CHROME_BAND)")
+               if band_hits else "", warn=True)
     except ImportError:
         record(ep, "captions clear chrome band", True, "PIL unavailable — skipped", warn=True)
 

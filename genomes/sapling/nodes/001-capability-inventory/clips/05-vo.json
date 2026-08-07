@@ -7,21 +7,21 @@
    "who": "VO",
    "text": "Huh. Blue.",
    "start": 0.0,
-   "end": 0.882,
+   "end": 1.58,
    "chunks": [
     {
      "text": "Huh.",
      "start": 0.0,
-     "end": 0.363
+     "end": 0.757
     },
     {
      "text": "Blue.",
-     "start": 0.363,
-     "end": 0.882
+     "start": 0.757,
+     "end": 1.58
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 1.182
+ "total_s": 1.88
 }

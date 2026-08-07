@@ -278,3 +278,681 @@ and branch-ordering without any money touching the project. Rationale: same
 power for everyone, very simple, and no payment custody in a family project.
 The founders' own spend (the $15 motion authorization) remains separate,
 founder-authorized, capped, and ledgered as before.
+
+## D13 — The tree publishes CC BY 4.0, and five beats of the live episode do not (OPEN — founder call, 2026-08-01)
+
+`pipeline/licence_gate.py`'s first full run found 46 licence violations. All
+pre-existing; almost all in node 001. Records hygiene closed 25 of them (see the
+commit): fifteen orphaned Stable Video Diffusion takes archived under R6,
+fifteen POST sidecars renamed after fixing the `post_motion.py` bug that had been
+writing them to the wrong filename, four VO manifests given the engine of record
+already sitting in `voices.yaml`.
+
+**Twenty-one remain, and the shape of them is the decision.**
+
+The tree releases every episode under **CC BY 4.0** — a licence that grants
+strangers commercial reuse. An input that forbids commercial use cannot be inside
+a work that grants it; publishing one makes our own licence a false statement to
+everyone who relies on it. That is the whole argument, and it does not depend on
+anyone suing us.
+
+**RESOLVED 2026-08-01 (founder, in session): the PixVerse account is the FREE
+TIER.** So the third remedy below is off the table — there is no paid plan to
+record — and the footage genuinely cannot be published. The five beats must be
+re-rendered on a publish-safe route, which is queued on Wan 2.2 (Apache-2.0, $0).
+Until those land, the only postable cut is `ep1-v19-CLEAN.mp4`, which substitutes
+the local-deterministic POST takes and costs 4-40x less motion on six of fifteen
+beats.
+
+One thing this does NOT forbid: making a PixVerse version to WATCH. Showing a cut
+to the founder or to dad is not distribution. A PixVerse-only comparison cut is
+fine as an internal artifact provided it is labelled unpublishable and never
+reaches banyan.city, TikTok, or the takes/clips/ directory the site copies from.
+
+**1. Five beats of the live episode (2, 4, 8, 11, 13) are PixVerse free-tier.**
+`DECISIONS.md` D8 already recorded that tier as "license-blocked (personal-use
+only ToS)" on 2026-07-27 — written down, then used anyway, then published to
+banyan.city and TikTok. This is the real one. Remedies, cheapest first:
+
+- **Re-render on Wan 2.2 (Apache-2.0), $0, queued on the 5090 as
+  `vid-720p-licence-…`.** The remake is licence-clean by construction and the
+  work was happening anyway. Recommended.
+- **Swap to the `.POST.mp4` take.** Every one of the five beats already has a
+  local-deterministic alternate, publishable today, no render needed. The fast
+  path if a cut has to ship before the Wan clips land.
+- **If any of those takes was made on a PAID PixVerse plan, record the plan in
+  the sidecar and nothing else is needed.** Only the founder or the contributor
+  knows. Worth asking before re-rendering anything.
+
+**2. Flow (6 files) and LTXV (2 files) — READ as of 2026-08-01. Both now need a
+decision, not more research.**
+
+**LTXV: the recorded reason for blocking it was wrong.** The Open Weights License
+0.X (dated 2025-04-15, and by its own header applying to every LTXV release since
+v0.9.6, so it governs our unpinned 2026-07 takes) says at §5: *"Licensor claims no
+rights in the Output you generate using the Model."* The $10,000,000 revenue
+threshold in §2 decides **who must buy a licence for the model** — every granted
+verb in §2 takes "the Model" as its object, §3's redistribution conditions are
+scoped to "the Model or Derivatives of the Model", and §1.4 defines Derivatives
+model-to-model only (weights transferred into another model, distillation,
+synthetic training data). A rendered video is Output under §1.8, not a Derivative.
+The cap gates the weights, not the footage. **Recommendation: allow it.** Left
+unflipped pending founder sign-off — nobody here is a lawyer, `allow` is the
+direction that publishes things, and the two affected files are unused trial takes
+of beat 1, so waiting costs nothing.
+
+**Flow: no ownership problem, but we cannot pass on what we were given.** There is
+no Flow- or Labs-specific terms document at all (labs.google/terms is a 404; the
+service-specific index lists Labs.google against only the main ToS). The ToS says
+*"Google won't claim ownership over that content"*, and never mentions commercial
+use in any direction — the word appears once, defining "consumer". But two
+conditions attach to the output under "Don't abuse our services": no *"using
+AI-generated content from our services to develop machine learning models"*, and
+no *"misleading others into thinking that generative AI content was created by a
+human"*; plus a SynthID watermark that *"should not be tampered with or removed"*.
+Our own release grants reusers "any purpose, even commercially" — training
+included — so we cannot honestly hand on restrictions we accepted. That is a
+judgement about what we warrant to reusers, not missing text. Independently, all
+three files record `watermark: true` (visible Flow sparkle), which disqualifies
+them regardless. **Recommendation: move them off the published surface.**
+
+**3. A licence seam nobody chose.** The three Flow trial clips live under
+`pipeline/`, which `LICENSE-CODE.md` claims as MIT ("the pipeline, tooling, site
+generators, and any scripts"), while `LICENSE-CONTENT.md` applies CC BY 4.0 to
+"genomes, nodes, scripts, leaves, taste files". So three watermarked Veo videos
+currently sit inside an MIT-declared tree. That looks unintended and needs a
+human decision independent of either licence question.
+
+**4. And a correction to the scoping in this entry's first draft.** It said the
+blocked footage was gitignored, so the exposure was the deployed site only. That
+was checked against `clips/` and generalised wrongly: **`takes/clips/` is fully
+tracked** — every PixVerse, SVD and LTX mp4 is committed and public on GitHub, as
+are the three Flow trials. So `build_site.publishable()` closes one of two
+exposure paths. Since the repo IS the product, "not in any episode" is not the
+same as "not published", and removing a tracked file is a history question as well
+as a working-tree one.
+
+**The gate is a ratchet, and that was a judgement call worth stating.**
+`pages.yml` runs `lint_genome.py` immediately before `build_site.py`, so making
+these 21 fatal would not have reddened a badge — it would have stopped
+banyan.city from deploying at all, overnight, blocking the founder's own goal of
+shipping episode 1. So pre-existing debt is an advisory and the *count* is
+asserted (`LICENCE_DEBT = 21`): one new violation fails lint and the test suite
+immediately, and the number may only go down. `LICENCE_GATE_STRICT=1` makes
+every violation fatal — the founder's switch, to flip the day the tree is clean.
+Raising `LICENCE_DEBT` to make a build pass would turn the one gate that can
+catch an unpublishable episode into a rubber stamp.
+
+**PARTLY RE-OPENED 2026-08-04.** Oleg's watch-only directive removes the
+pass-through reasoning behind §2's **Flow** finding; the visible SynthID watermark
+and the two conditions on us survive it, so Flow is not cleared, only re-openable.
+**The PixVerse five (§1) are NOT affected** — a personal-use-only free tier binds us
+as the publisher regardless of what we offer viewers. See items 0, 2 and 4 of the
+2026-08-04 entry below.
+
+---
+
+## D14 — Beat 4's fall is written but never shown (OPEN — founder's, R4)
+
+*Raised 2026-08-02 by the steward, from an audit of all 15 motion directions
+against the script's own action lines. This is a composition question, so it
+waits for the author.*
+
+The founder's note on the newest cut was **"his death is very anticlimatic"**.
+That is not a rendering failure. It is the script and the still describing two
+different moments, and the still winning — as it must, because the still owns
+composition and image-to-video can only animate what is already in the frame.
+
+**The script (node.md, beat 4, approved):**
+
+> A sharp breath in — the frame tips sideways — the mug hits the floor before he does.
+
+Three events, all motion: a breath, a camera tilt, an object falling.
+
+**The still (shots.md, beat 4, approved):**
+
+> close-up on the side of an office chair, a man's limp hand hanging straight
+> down past the armrest, relaxed open fingers, **motionless** … papers **settled**
+> on the dark floor below … *No face, no head, no full body, no horror, no blood,
+> no standing.*
+
+That is the aftermath, deliberately and tastefully so — it is the seconds *after*
+the fall, with every restriction pointing away from showing a body drop. The
+motion direction ("the limp hand stays motionless, one loose paper settles")
+matches the still faithfully. So the pipeline is behaving correctly at every
+step, and **the fall is never depicted anywhere in the episode.** The anticlimax
+is structural, not accidental.
+
+**Two coherent resolutions, and they are opposite in taste:**
+
+1. **Keep the aftermath; make the anticlimax deliberate.** Let the fall happen
+   entirely in sound — the sharp breath, the mug, the fan spinning down — over a
+   held shot of the limp hand. This is the restrained reading, it needs no new
+   render, and it is arguably a better death than showing it. If chosen, the
+   *script* line should change so it stops promising a tilt the picture will
+   never deliver.
+2. **Show the fall.** Requires a new beat-4 still depicting it mid-motion (the
+   chair tipping, the mug leaving the desk edge) and a direction with a tilting
+   camera. Note this is the one beat where the script *authors* camera movement,
+   so the global "camera locked" discipline would be overridden here on purpose —
+   which is a real exception, not a slip, and the shake work must not undo it.
+
+**The steward's recommendation is (1)**, on the grounds that the still's
+restrictions read as a considered choice rather than an oversight, and that
+sound is already carrying the moment. But this is R4 — taste belongs to the
+author — so nothing changes until the founder says which.
+
+**What the steward did NOT do:** touch beat 4's still, its direction, or its
+script line. The four directions fixed in the same pass (1, 2, 7, 10) were all
+cases where the direction contradicted *its own already-approved still*; beat 4's
+direction agrees with its still, and the disagreement is one level up.
+
+---
+
+## D15 — every approved still is OpenRAIL++, and the gate was clearing it (OPEN — founder's)
+
+*Found 2026-08-03 by the steward while vetting AnimeGen. Raises the licence debt
+count from 21 to 38. Nothing was hidden and nothing was allowed: the record was
+corrected, the ratchet fired, and CI is red until this is decided.*
+
+**The stale record.** `licence_gate.MODEL_LICENCES` recorded
+`"animagine": "faipl-1.0-sd"` with the comment *"outputs unrestricted"*. That was
+true of an earlier version of the repo. `cagliostrolab/animagine-xl-3.1`'s own
+card now says:
+
+> This model is licensed under the CreativeML Open RAIL++-M License… **Note: This
+> license supersedes any previous community license tags (e.g., FAIPL)** applied
+> to earlier versions of this repository.
+
+HF's tag agrees: `openrail++`. And the same `licence_gate.py` already lists
+`r"openrail"` among licences whose conditions travel — **so the gate held two
+records that contradicted each other, and the permissive one won on every
+asset.** A stale allow is worse than a missing one: it reads as due diligence.
+
+**What the text actually says** (SDXL `LICENSE.md`, 14105 bytes, sha256
+`19b6998b569b53ac1fc2158a8a3202c8699a9a4605b47075715d9c96be7fb6d0`):
+
+> "Except as set forth herein, **Licensor claims no rights in the Output** You
+> generate using the Model."
+
+> "**No use of the output can contravene any provision as stated in the
+> License.**"
+
+So this is not an ownership problem — nobody claims our frames. It is a
+**pass-through** problem, exactly the shape of the google-flow finding in D13:
+the output's *use* is bound to Attachment A's restrictions, and our own release
+offers reusers CC BY 4.0, i.e. unrestricted use. We cannot grant what we do not
+hold.
+
+**Scope, and it is the whole picture.** `animagine` drew **all fifteen approved
+stills**, and image-to-video means every frame of every episode descends from
+one. 4 files / 17 records are flagged today (`leaves/001-t3-d.yaml` plus three
+`01-the-keyboard` sidecars); the true reach is every still in the tree, visible
+only where a record happens to name the model. `stills/` itself carries no
+sidecars at all — 16 tracked PNGs with provenance stated only in a README.
+
+**Three ways out, and the choice is the founder's:**
+
+1. **Narrow our own offer.** Publish the *stills* (and footage derived from them)
+   under terms that carry OpenRAIL++'s use restrictions, keeping CC BY 4.0 for
+   text and code. Honest and needs no re-render — but it means banyan.city's
+   pictures are no longer freely reusable, which cuts against "the repo IS the
+   product". This also resolves D13's google-flow question the same way.
+2. **Re-draw the stills on a model whose grant we can pass on.** Costs a full
+   still pass and a new founder approval round for fifteen compositions, and the
+   look will shift. The steward has NOT surveyed candidates yet; doing so is the
+   obvious next step if this is the direction.
+3. **Decide the restrictions are compatible in our case.** Attachment A forbids
+   uses we have no intention of making (harming minors, unlawful discrimination,
+   etc.). A reasoned position that our CC BY 4.0 offer does not actually conflict
+   is defensible — but it is a legal judgement about what we promise reusers, and
+   it belongs to the author, not the steward.
+
+**The ratchet was NOT raised to make CI pass.** `LICENCE_DEBT` is set to 38 with
+this entry as its justification, because the count asserts *"no new unpublishable
+asset"* and no new asset appeared — a record was corrected. Raising it for any
+other reason would turn the one gate that can stop an unpublishable episode into
+a rubber stamp. It must come back down as assets are retired, never up to
+accommodate them.
+
+**Not a blocker for screening `ep1-v22-hires.mp4`.** That cut is all Wan 2.2
+(Apache-2.0) motion over these stills; the question here is what licence the
+published result carries, not whether the episode is watchable.
+
+**RE-OPENED FOR REVIEW 2026-08-04.** Oleg's watch-only directive removes the
+pass-through half of the argument above. Nothing here is resolved and the ratchet
+still stands at 38 — but the three ways out must be re-read against what Attachment
+A actually forbids. See item 4 of the 2026-08-04 entry below.
+
+---
+
+## D16 — LTX-2/2.3 is a CANDIDATE under watch-only, gated on three things we control (OPEN — founder call, 2026-08-04; **gate (c) FIRED TWICE on 2026-08-06 — suspended, then SCREENED AND CLEARED ON LOOK; still OPEN because adoption now waits on integration work that is not done. Two addenda at the end, in order. The licence analysis is unchanged throughout**)
+
+*Raised by the steward from `pipeline/research/models-licence.md` (finding 3) and
+`pipeline/research/DECISION.md`, both 2026-08-04, both quoting the primary licence
+texts verbatim — then **rewritten the same day**, because Oleg's watch-only
+directive changed the question this entry was asking. Attachment A was afterwards
+extracted from the primary text in full (<https://raw.githubusercontent.com/Lightricks/LTX-2/main/LICENSE>,
+20 items) and re-read under the new posture. Two movements, therefore: the recorded
+**reason** for rejecting LTX had expired, and the objection that replaced it has
+now been answered by the posture.*
+
+**The posture this entry now rests on** (Oleg, process authority, 2026-08-04,
+verbatim):
+
+> "when we publish clips they are for people to watch, not use for anything, so
+> dont create problems for scale."
+
+Published rendered media carries **no reuse grant** — watch-only. That is recorded
+once, with what it does and does not change, in the 2026-08-04 entry below; this
+entry only uses it. **Verdict here moves from BLOCKED to CANDIDATE.**
+
+**What we recorded.** `licence_gate.py` keeps `ltx` / `lightricks` off the
+publish-safe side, *"not to be re-proposed without reading D13"*, on the reason
+*"weights ship under THREE licences by version; the 2B is 'academic or research
+purposes only, and explicitly excludes commercialization', and the GitHub LICENSE
+that looks like plain Apache-2.0 covers CODE ONLY."*
+
+**That is verbatim-confirmed — for the 2B v0.9.x checkpoints only.** Those are
+literally RAIL-M:
+
+> "No use of the Output can contravene any provision as stated in the License."
+
+The provision it points at is *"academic or research purposes only"*, so that
+clause reaches **our own** publication — which is the form of the objection that
+survives the watch-only posture (item 3 of the entry below). **BLOCKED, unchanged**,
+and the "code only" warning is still true of the GitHub file.
+
+**But it is wrong as a verdict on the family, and the record predates two
+releases.** **LTX-2 (19B, January 2026)** and **LTX-2.3 (22B, March 2026)** ship
+under the *LTX-2 Community License Agreement* (5 January 2026):
+
+> "you are granted a non-exclusive, worldwide, non-transferable and royalty-free
+> limited license … to use, reproduce, prepare, distribute, publicly display,
+> publicly perform, sublicense, copy, create derivative works of, and make
+> modifications to LTX-2, **for any purpose**"
+
+> "Except as set forth herein, Licensor claims no rights in the Output you
+> generate using LTX-2."
+
+Worldwide, no territory exclusion, commercial use free below $10,000,000 annual
+revenue, no rights claimed in output. On Artificial Analysis LTX-2 ranks top-3 for
+image-to-video overall and **#1 among open-source models**, and the fp8 distilled
+build runs in **12-16GB** — so it fits *both* laptops, including the 12GB card
+that cannot render 704x1280 on Wan at all. It is the strongest-quality
+licence-plausible model we had excluded, and the sentence we excluded it on
+describes the 2B v0.9.x checkpoints.
+
+(The 13B 0.9.7 / 0.9.8 checkpoints are a third licence again, the *LTXV Open
+Weights License 0.X*, already read end-to-end and recommended `allow` in
+[D13](#d13--the-tree-publishes-cc-by-40-and-five-beats-of-the-live-episode-do-not-open--founder-call-2026-08-01) §2.
+Nothing there is disturbed: 0.X applies by its own header to releases since
+2025-04-15, and the RAIL-M checkpoints all predate that date, so the two readings
+are consistent and the discriminator is which checkpoint a take was rendered with.)
+
+**The objection that watch-only removes.** The blocker in this entry's first draft
+was structural: LTX-2/2.3 carries a 20-item use-restriction schedule constraining
+what may be done with the **output**, we publish under CC BY 4.0 which grants
+recipients unrestricted use, and both cannot be true for a downstream reuser — the
+same shape as the OpenRAIL++ finding in [D15](#d15--every-approved-still-is-openrail-and-the-gate-was-clearing-it-open--founders)
+and the Flow finding in D13. **Under watch-only there is no downstream reuser to
+contradict**, and the primary text confirms it from the other side: **flow-down in
+Section 3 is scoped to "LTX-2 or Derivatives of LTX-2" — never to Output.** We
+would distribute neither weights nor derivatives, so no notice attaches to a
+published clip and **a viewer is never a party to the licence.** The reuse-side
+concern is fully cleared.
+
+**What survives binds US. Three duties:**
+
+1. **Disclose per surface (Attachment A item 5).** Machine-generated content must be
+   *"expressly and intelligibly"* disclaimed — and the duty attaches to **each
+   surface the footage appears on**, not to the repo. §7.2 does not discharge it: a
+   leaf yaml is not a TikTok post. **Distribution rule: every post or embed carrying
+   LTX footage sets an AI-generated label** — TikTok has a native toggle, so the
+   cost is one switch per post. `POSTING-KIT.md` step 0 is where it belongs.
+2. **Never train on the output (item 18).** No LoRA, no finetune, no distillation
+   from LTX frames. Named because training on our own footage is a plausible thing
+   to want later, and this forecloses it for LTX material specifically.
+3. **Do not strip technical limitations or safety filters (item 19).** Scope is
+   undefined in the text, and there is an **unresolved edge: quantisation.** The fp8
+   build is the whole reason LTX fits 12-16GB, and whether reducing precision counts
+   as removing a "technical limitation" is not answered by the licence. Flagged, not
+   resolved.
+
+**THE ONE OPEN RISK — item 20, and it lands on the crowd plan, not on us rendering
+episodes.** It bars use in any product that
+
+> "directly competes with Licensor's commercial products or services"
+
+Lightricks sells **LTX Studio**, an AI video-production tool. Us rendering our own
+episodes: low risk — we are a story tree, not a video tool. **Powering a public,
+contributor-facing generation service with LTX is on its face inside that
+category** — and that is D11's shot board, which dad's crowd-first directive makes
+the main artifact. **Standing rule to record: LTX may render our episodes; it must
+never become a generation engine we offer contributors or the public.**
+
+Two stability caveats on the same licence, both worth knowing before anything is
+built on it: **Attachment A incorporates an external AUP that Lightricks may revise
+unilaterally**, so this verdict is only as stable as a document we do not control;
+and **Section 2's $10,000,000 trigger is ENTITY revenue** — above it a paid licence
+is required and its terms are not stated.
+
+**The licence-simpler fallback.** The 13B LTX-Video checkpoints (0.9.7 / 0.9.8,
+*LTXV Open Weights License 0.X*) carry a strictly narrower **16-item** schedule:
+**items 17-20 are absent** and only the disclosure duty survives. So if item 20
+worries the founder, the fallback is a weaker model whose licence cannot reach the
+shot board at all. (D13 §2 already read 0.X end to end and recommended `allow`.)
+
+**Net status: LTX-2.3 = CANDIDATE** under watch-only, up from BLOCKED, gated on
+three things that are all ours: **(a)** the per-post AI-disclosure rule above,
+recorded as a distribution rule binding on whoever posts; **(b)** the item-20
+standing rule, recorded; **(c)** **one sample beat, founder-screened** — a model
+swap is a recipe change, so ONE SAMPLE BEFORE ANY BATCH applies, one beat and not
+fifteen, and the look is R4. (a) and (b) cost nothing and are written down here;
+(c) is the gate that actually holds this open.
+
+**What waiting costs, stated honestly:** nothing yet. No clip in the tree is LTX-2
+and nothing is queued on it. What it costs later is the field's best open-source I2V
+model and the only route to real motion on the 12GB machine. **The steward is not
+proposing adoption** — this entry exists so a rejection whose reason has expired
+stops reading as a settled fact.
+
+**ADDENDUM 2026-08-04 — the second licence in the chain is Gemma's, and it is
+SHIP-SAFE.** LTX-2.3 does not carry its own text encoder: the **required** one is
+Google **Gemma-3-12B**, so the *Gemma Terms of Use*
+(<https://ai.google.dev/gemma/terms>) and Google's Prohibited Use Policy sit in the
+chain of **every LTX clip** we would render — a second licence everything above
+never examined. Read end to end 2026-08-04. **Verdict: ship-safe for watch-only**,
+and on three points it is cleaner than the LTX text:
+
+- **No rights claimed in output. §3.3 verbatim:** *"Google claims no rights in
+  Outputs you generate using Gemma. You and your users are solely responsible for
+  Outputs and their subsequent uses."*
+- **Commercial use is permitted unconditionally** — no revenue threshold (unlike
+  LTX-2's $10,000,000 entity trigger), no MAU cap, no royalty, no territory
+  exclusion, no NC clause.
+- **No flow-down to viewers.** §3.1's notice-and-agreement duties fire only on
+  distributing *"Gemma or Model Derivatives"*, and a Model Derivative is **defined
+  as a MODEL** — an mp4 is not one. **No Gemma notice is needed on any post.**
+- **Its provenance duties are already over-satisfied.** Gemma's provenance items are
+  qualified on deception, and the per-surface AI-generated label recorded above
+  (duty 1) goes further than they ask.
+
+**THE COST, stated plainly:** the PUP is **incorporated by reference** and Google
+*"reserves the right to update"* it — so adopting LTX-2.3 puts a **second
+unilaterally-revisable AUP** in the chain, alongside Lightricks' own, doubling the
+stability caveat above rather than adding a new kind of risk. The Gemma text also
+carries a **termination-and-delete clause** and a **reserved right to restrict usage
+remotely**.
+
+**How we would obtain the weights does not change any of it.** The build we would
+fetch is the ungated Lightricks mirror
+(`Lightricks/gemma-3-12b-it-qat-q4_0-unquantized`, tagged `license:gemma`). The
+preamble makes **acceptance by conduct** — using the weights is agreeing — so we are
+bound by the Gemma ToU regardless of Google's HF gate. **Lawful to fetch, bound
+anyway**; there is no version of this where the mirror routes around the licence.
+
+**The item-20 standing rule now reads across both licences.** Gemma's *Distribution*
+definition explicitly includes *"making Gemma or its functionality available as a
+hosted service via API, web access, or any other electronic or remote means"* — so a
+public render-your-own-beat tool would trigger §3.1's duties on the Gemma side
+exactly as it trips item 20 on the Lightricks side. **Standing rule, restated: these
+models render our episodes; they never become a generation service we offer
+contributors or the public.** Two independent licences now say the same thing about
+[D11](#d11--the-shot-board-crowd-powered-generation-is-the-main-artifact-directed-by-dad-2026-07-27-awaiting-founder-ratification)'s
+shot board.
+
+**Net D16 status, updated: the Gemma gate is CLEAR.** Remaining gates are both ours
+and both unchanged — the per-post AI-disclosure rule, and the one founder-screened
+sample beat (weights downloading 2026-08-04).
+
+**ADDENDUM 2026-08-06 — gate (c) fired, and it fired NEGATIVE. Candidacy
+SUSPENDED, on a picture defect, not on the licence.** The gate this entry says
+"actually holds this open" is **(c) one sample beat, founder-screened**. The
+founder screened it on 2026-08-06 and his verdict on the LTX clips was that they
+*"turn black and white ... an unnecessary colour transition"*. He separately
+cleared the fp8 build **on look** — *"barely a difference"* — which is a real
+clearance and is recorded, but it is a clearance of the fp8 *cast*, not of the
+model.
+
+**Measured, so the suspension is not an impression** (`bench-platform/colour-drift-20260806.log`,
+38 clips, one code path, $0): every LTX-2.3 clip loses **86-89% of its chroma over
+its own length** (Cab 28.07 → 3.78 on the bf16 b1; half gone by frame 6, 90% by
+frame 18), while every Wan-5B, AnimeGen, AnimateDiff and **July LTX-Video 0.9**
+clip of the same beat through the same export path is flat. Upstream has it open
+as Lightricks/LTX-2 issue **#37** on this exact card, with no fix.
+
+**Status: LTX-2.3 = CANDIDACY SUSPENDED**, down from CANDIDATE, **pending the
+founder's screening of one on-bucket sample** at LTX-2.3's own **960x544x121**
+geometry — the leading suspect, per Lightricks' own guidance, is that we run far
+off that bucket. That sample was launched 2026-08-06 18:42 and **did not complete**
+(the render box left the LAN mid-denoise at step 4 of 8); it is staged for a
+one-command re-run.
+
+**What this addendum does NOT do.** It does not touch (a) or (b), which cost
+nothing and stand. It does not change one word of the licence analysis above —
+Attachment A, item 20, the Gemma chain and the $10M entity trigger all read exactly
+as they did, and **none of them is why**. It does not close D16: this entry stays
+**OPEN**, because whether a model is good enough to ship is **R4**, and so is
+whether to spend another sample on it. Reopening the candidacy needs the on-bucket
+clip in front of the founder, not an argument in this file.
+
+**ADDENDUM 2 — 2026-08-06, later the same day: gate (c) fired a SECOND time and
+CLEARED. The suspension above is LIFTED. D16 stays OPEN, and the reason has moved
+from the picture to the plumbing.**
+
+*Addendum 1 is left standing word for word. It was an accurate record of the first
+screening, and superseding it is not the same as it having been wrong.*
+
+**What reopened it was not an argument in this file — it was the founder looking
+again.** Addendum 1 closed by saying exactly that. Shown the same clips with the
+colour measurement in hand, he cleared all three of the things that had been logged
+as defects:
+
+- **fp8 cast vs bf16** — *"barely a difference"*. (Already recorded in addendum 1
+  as a real clearance of the *cast*; it is repeated here because it is now one of
+  three, not a lone exception.)
+- **The within-clip chroma collapse** — *"fine"*. The figure he was shown is the
+  measured one: **86%, Cab 28.07 → 3.78** on the bf16 b1 (89.4% on the fp8).
+- **The 3-frame motion cadence** — *"fine"*. Also measured: **~22 distinct motion
+  states in a 65-frame 24 fps clip, an effective 8 fps**.
+
+**Gate (c) is therefore SATISFIED.** It read *"one sample beat, founder-screened"*.
+It has now been screened twice on the same day, and the second screening is the
+operative one. **LTX-2.3 moves CANDIDACY SUSPENDED → CANDIDATE, SCREENED AND
+CLEARED ON LOOK.** The five LTX rows in `MODEL-COMPARISON.md` §1 and the banners on
+`COMPARISON.html` are updated in place, each quoting the suspension it supersedes.
+
+**What this clearance is, exactly — and it is narrower than "we are using LTX".**
+It is a clearance **on look**, of clips at **704x1280x65 and 352x640x65**. It is
+not an adoption decision, not a decision to spend the on-bucket sample, and not a
+statement that the collapse is desirable — only that the founder saw it and does
+not consider it disqualifying. R4 is his to revisit at any time, and the
+measurements stay on the page so that revisiting it is cheap.
+
+**Why D16 is still OPEN, and this is the part a future session should read first:
+LTX is not wired into anything, and wiring it in naively makes it slower than the
+incumbent.** Measured 2026-08-06, $0:
+
+- `pipeline/video_task.py` hardcodes the Wan renderer in **both** places it
+  launches one — **`:1015`** and **`:1082`**, both `pipeline/wan_i2v.py`. There is
+  no LTX queue path; LTX is hand-run via `pipeline/ltx_i2v.py` plus a separate
+  `--stage encode` pass.
+- Given the queue's shape — one process per beat — LTX costs **≈78 min for a
+  15-beat episode against the incumbent 5B's ≈42**, because each beat re-pays an
+  **88s Gemma load**, the transformer load and the **139s fp8 cast**.
+- A **jobs-loop** (load once, render all) brings it to **≈25 min**. **That work is
+  not done.**
+
+So the honest status is: **the look is cleared, the adoption is not, and what
+stands between them is engineering rather than taste.** Anyone re-litigating LTX
+should start by pricing the jobs-loop, not by re-arguing the colour — that question
+was answered by the person whose question it is.
+
+**Unchanged by this addendum:** (a) and (b) stand. The licence analysis is
+untouched for the third time — Attachment A, item 20, the Gemma chain and the $10M
+trigger all read as they did, and **none of them was ever why**. The **OFF-BUCKET —
+PROVISIONALLY NON-COMPARABLE** markers on every LTX row also stand: they are a
+statement about geometry, and no taste verdict retires one. The on-bucket sample
+(launched 2026-08-06, killed when the render box left the LAN mid-denoise) is
+**no longer a gate** — it is now an open throughput question, worth running when
+the box is reachable.
+
+---
+
+## 2026-08-04 — clips are watch-only (Oleg), and the licence audit re-read under that posture
+
+*Two things landed the same day and the second changes what the first means.
+Evidence trail for the audit: `pipeline/research/models-licence.md` (every clause
+quoted verbatim from the primary document) and `pipeline/research/DECISION.md`,
+whose §7 licence-checked its two recommended models independently and reached the
+same verdicts. Items 1-3 are record entries; items 4 and 5 are open and founder's.*
+
+**0. THE POSTURE.** Oleg, process authority, 2026-08-04, verbatim:
+
+> "when we publish clips they are for people to watch, not use for anything, so
+> dont create problems for scale."
+
+**Published rendered media carries no reuse grant — watch-only. We are not
+offering clips under CC BY 4.0.**
+
+*What this changes:* every objection of the form "our CC BY 4.0 offer would grant
+reusers rights this licence does not give us" is moot **for media**, because there
+is no offer. That argument was doing the work in the Flow finding (D13), the
+OpenRAIL++ stills finding (D15) and the first draft of D16.
+
+*What it does NOT change:* **every restriction that binds US as the party
+rendering and publishing.** Non-commercial clauses, territory limits, revocable
+grants, registration gates and personal-use-only ToS all reach our own act of
+using the weights, and are untouched by what we offer viewers. Items 2 and 3 below
+are entirely about keeping that distinction straight.
+
+*And it is posture, not yet law here.* `pipeline/licence_gate.py` still tests every
+asset against the CC BY 4.0 offer; `LICENSE-CONTENT.md` still applies CC BY 4.0 to
+leaves; the 38-violation debt count and the lint ratchet are both computed on the
+old premise. [D1](#d1--content-license) recorded CC BY 4.0 for content and is a
+*resolved* decision — amendable the way it was made, which is not by a steward.
+Making watch-only real in the licence files and the gate is item 5.
+
+**1. HunyuanVideo's territory rejection is CONFIRMED verbatim, and it extends to
+HunyuanVideo-1.5.** Both `tencent/HunyuanVideo-I2V/LICENSE` and
+`tencent/HunyuanVideo-1.5/LICENSE` carry the identical Tencent Hunyuan Community
+License clause:
+
+> "'Territory' shall mean the worldwide territory, excluding the territory of the
+> European Union, United Kingdom and South Korea."
+
+Its output clause is generous (*"Tencent claims no rights in Outputs You
+generate"*) but operates only inside Territory, and we publish on TikTok and a
+public website that we cannot geo-fence. **HunyuanVideo-1.5 (8.3B, November 2025)
+is the one being pushed hardest in 2026 roundups and is repeatedly mis-described
+as Apache-2.0. It is not** — that is the specific error to expect from secondary
+sources. The rejection also reaches **FramePack**, whose *code* is Apache-2.0 but
+whose weights (`lllyasviel/FramePackI2V_HY`) declare no licence at all over a
+HunyuanVideo derivative: no tag, no LICENSE file, no base_model. Named explicitly
+because a permissive code licence plus a 6GB VRAM figure makes it the single most
+likely thing here to be adopted by accident. Recorded in `pipeline/vet_model.py`
+CASES as well, so the tool refuses it rather than only this file.
+
+**Watch-only does not touch this one.** Territory is a limit on *our* licence to use
+the weights at all: publishing where EU, UK and South Korean viewers can see it is
+outside the granted Territory whatever grant we do or do not offer them.
+
+**2. The Wan2.2-TI2V-5B-Turbo chain: BLOCKED at the distill, and no mirror can cure
+it.** The 4-step distill `quanhaol/Wan2.2-TI2V-5B-Turbo` is **CC BY-NC-SA 4.0**
+(`LICENSE.md` in the GitHub repo; the HF weights repo declares nothing at all, and
+GitHub's own detector reports `spdx_id: NOASSERTION`, which is how a tag-based
+check misses it). Two clauses each disqualify it independently — §1(k) *"NonCommercial
+means not primarily intended for or directed towards commercial advantage or
+monetary compensation"*, and the ShareAlike requirement that adaptations carry
+*"the same License Elements"*. **ShareAlike is decisive on its own:** CC BY 4.0 is
+not a BY-NC-SA-compatible licence and cannot be, since compatibility requires
+carrying NC and SA forward — so even if the NC argument went our way we still
+could not publish the result under CC BY 4.0, which is what our provenance model
+does. The base is fine and nothing is wrong upstream: Apache-2.0 permits a
+finetuner to license their own contribution more restrictively, and these authors
+did. Every downstream link inherits it — the unlicensed diffusers conversion, the
+unlicensed fp16 repack, both `apache-2.0`-declaring GGUFs — and the temptation is
+real enough to name: those GGUFs run in **4GB at 4 steps** and their card
+recommends exactly our 704x1280. **The only clean route to that recipe is asking
+the Fudan authors to dual-licence, which is founder-reserved outbound contact**
+(and even then CausVid's upstream terms would need checking). Do not adopt any
+Turbo build, under any repo name, at any quantisation.
+
+**READ THIS BEFORE ANYONE READS WATCH-ONLY AS UNBLOCKING AN NC MODEL. It does
+not, and this verdict is unchanged by item 0.** CC BY-NC-SA's NonCommercial clause
+binds **us** — the party loading the weights, rendering, and publishing for a
+project that is explicitly commercially-adjacent. Loading weights to render *is*
+reproduction, so the grant does not cover the act even before anything is
+published; and ShareAlike constrains what we may license anything made from it
+under, which is a limit on us too. Neither clause has anything to do with what
+grant we offer viewers, so removing the reuse offer removes nothing here. **The
+same reasoning keeps D13's five PixVerse beats blocked** — a free tier that is
+personal-use-only binds us as the publisher, and a public episode for this project
+is not personal use. Watch-only clears *pass-through* arguments and only those.
+
+**3. The output-use rule, generalised and then rescoped the same day.** Our record
+says OpenRAIL/OpenRAIL++ is structurally incompatible with our CC BY 4.0 offer.
+The audit recommended widening that to a single test:
+
+> ~~**Any licence that conditions the use of OUTPUT is a problem for us, whatever
+> the licence is called.**~~
+
+**SUPERSEDED 2026-08-04 by Oleg's watch-only decision (item 0), the same day it was
+recorded.** Its reasoning was pass-through — we cannot grant reusers rights we do
+not hold — and with no reuse grant on media there is nothing to pass through. As
+written it would now reject models over restrictions that could never bite us.
+**The rule that replaces it:** a condition on output use is a problem only if
+
+- **(a)** it could bite **our own** publication or promotion of the episodes, or
+- **(b)** its notice or disclosure obligations are impractical at our scale.
+
+Everything else in a restriction schedule is a list of things we were not going to
+do anyway. Worked through the three cases the old rule caught:
+
+- **RAIL-M — still BLOCKED, on (a).** *"No use of the Output can contravene any
+  provision as stated in the License"*, and the provision it points at is
+  *"academic or research purposes only"*. Publishing an episode is neither, so this
+  one reaches our own publication directly.
+- **LTX-2/2.3 — passes (a), and (b) is a founder decision.** One AI-generated label
+  per post is practical; item 20 is the real question. See D16.
+- **CogVideoX — still BLOCKED, and not on an output clause at all.** A registration
+  gate we must pass, a hard one-million-visits-per-month traffic cap, a political
+  field-of-use clause, and a **revocable** grant. Every one of those binds us.
+
+So the surviving test is: **"does this licence restrict what WE may do with what we
+make, or oblige us to something we cannot sustain per post?"** `licence_gate.py` and
+`vet_model.py` still implement the *old* shape — `vet_model`'s three states turn on
+*"does the grant reach the output"* — which is stricter than we now need but never
+wrong in the dangerous direction. Rewording the code is not urgent; reading item 0
+before trusting either tool's verdict is.
+
+**4. The OpenRAIL++ stills debt (D15, and D13's Flow finding) — RE-OPENED FOR
+REVIEW. Not resolved, and not by the steward.** D15's argument was pass-through:
+*"the output's use is bound to Attachment A's restrictions, and our own release
+offers reusers CC BY 4.0, i.e. unrestricted use. We cannot grant what we do not
+hold."* Item 0 removes exactly that half of it. What is left is the question D15
+never had to answer — **what does SDXL's Attachment A actually forbid, and does any
+of it bite our own publication or promotion?** Its own option 3 already gestured at
+the answer (*"Attachment A forbids uses we have no intention of making"*), and under
+watch-only that is the option that got stronger, not weaker.
+
+**Do not read this as 38 violations clearing.** Nobody has enumerated Attachment A
+against our actual conduct yet, the ratchet still stands at 38, and the same
+re-reading is owed to **D13's Flow finding** — pass-through was half of it, but the
+visible SynthID watermark and the two conditions on *us* (no training on the output,
+no passing it off as human-made) are the other half and are untouched. **Explicitly
+out of scope: PixVerse and any NC input.** Those bind us (item 2), so no posture
+change reaches them. This is R4/governance — the founder's, flagged here so nobody
+acts on the old reasoning in either direction.
+
+**5. FOR ROMAN — watch-only meets crowd-first, and the split needs his word.** Two
+things he owns intersect here: dad's **crowd-first directive** (full transparency,
+fork-per-beat, the shot board as the main artifact — D11) and the still-pending
+licence pick for episode 1. The coherent split to put to him: **story, scripts, node
+text, taste files, pipeline and the repo itself stay open exactly as they are;
+rendered MEDIA is watch-only.** That keeps "the repo IS the product" intact and takes
+only the mp4s out of the reuse offer. It needs a [D1](#d1--content-license) amendment
+and a licence file that says so — and it interacts with D16's item-20 standing rule,
+since a contributor-facing render service is the one thing LTX must never power.
+**Open — founder item, not a resolution.**

@@ -1,0 +1,39 @@
+{
+ "engine": "f5-tts-v1-base",
+ "total_s": 7.701,
+ "lines": [
+  {
+   "who": "VO",
+   "text": "Every problem I ever had , the job, the pager, the retry loop , I solved it the same way, eventually. I walked away.",
+   "start": 0.0,
+   "end": 7.701,
+   "chunks": [
+    {
+     "text": "Every problem I ever had ,",
+     "start": 0.0,
+     "end": 1.788
+    },
+    {
+     "text": "the job, the pager,",
+     "start": 1.788,
+     "end": 3.094
+    },
+    {
+     "text": "the retry loop ,",
+     "start": 3.094,
+     "end": 4.194
+    },
+    {
+     "text": "I solved it the same way, eventually.",
+     "start": 4.194,
+     "end": 6.739
+    },
+    {
+     "text": "I walked away.",
+     "start": 6.739,
+     "end": 7.701
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,19 @@
+{
+ "engine": "f5-tts-v1-base",
+ "total_s": 0.875,
+ "lines": [
+  {
+   "who": "VO",
+   "text": "...That's the whole API.",
+   "start": 0.0,
+   "end": 0.875,
+   "chunks": [
+    {
+     "text": "...That's the whole API.",
+     "start": 0.0,
+     "end": 0.875
+    }
+   ]
+  }
+ ]
+}

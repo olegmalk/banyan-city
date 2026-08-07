@@ -1,0 +1,32 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "VO",
+   "text": "Production went down at 2:41. It's the retry loop. It's always the retry loop.",
+   "start": 0.0,
+   "end": 5.12,
+   "chunks": [
+    {
+     "text": "Production went down at 2:41.",
+     "start": 0.0,
+     "end": 2.189
+    },
+    {
+     "text": "It's the retry loop.",
+     "start": 2.189,
+     "end": 3.468
+    },
+    {
+     "text": "It's always the retry loop.",
+     "start": 3.468,
+     "end": 5.12
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 5.42
+}

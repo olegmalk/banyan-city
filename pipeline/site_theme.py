@@ -56,11 +56,21 @@ body {{
   background-image:
     radial-gradient(1100px 520px at 50% -180px, var(--bg-glow), transparent 70%),
     radial-gradient(700px 420px at 85% 8%, rgba(255,199,106,.05), transparent 70%);
-  background-attachment: fixed;
+  background-repeat: no-repeat;
+  /* NOT background-attachment: fixed — with the grain layer below it, a fixed
+     gradient made the compositor repaint the whole viewport continuously and
+     pinned a Chrome GPU process at 100% of a core for hours (found on the
+     founder's Mac, 2026-07-31, with several of these pages open). */
 }}
-body::after {{ /* film grain over everything, never intercepting a tap */
-  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 2;
-  background: {GRAIN}; opacity: .05; mix-blend-mode: overlay;
+body::after {{ /* film grain over the page, never intercepting a tap */
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 2;
+  background: {GRAIN}; opacity: .045;
+  /* absolute + no blend mode, deliberately: a POSITION:FIXED layer with
+     mix-blend-mode forces the compositor to re-blend the whole viewport every
+     frame, forever, on every open tab. That is what pinned a Chrome GPU
+     process at 100% of a core for 13 hours on the founder's Mac
+     (2026-07-31) — and it would have been quietly eating viewers' phone
+     batteries too. Texture is not worth a spinning fan. */
 }}
 main {{ max-width: 720px; margin: 0 auto; padding: 1.6rem 1.25rem 5rem; position: relative; }}
 a {{ color: var(--leaf); text-decoration: none; }}

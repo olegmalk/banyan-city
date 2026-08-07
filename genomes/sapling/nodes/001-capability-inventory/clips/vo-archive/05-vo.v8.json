@@ -1,0 +1,24 @@
+{
+ "engine": "f5-tts-v1-base",
+ "total_s": 0.363,
+ "lines": [
+  {
+   "who": "VO",
+   "text": "Huh. Blue.",
+   "start": 0.0,
+   "end": 0.363,
+   "chunks": [
+    {
+     "text": "Huh.",
+     "start": 0.0,
+     "end": 0.161
+    },
+    {
+     "text": "Blue.",
+     "start": 0.161,
+     "end": 0.363
+    }
+   ]
+  }
+ ]
+}

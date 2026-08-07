@@ -2,7 +2,7 @@
 
 **Tree:** Sapling · **Parent:** none (root) · **Trunk:** yes · **Status:** hot
 **This file is a T0 leaf** (`001-t0-c`, shot-granular per SCRIPT-SPEC.md).
-**Format:** 9:16 vertical · ~82s · VO-driven · 18 beats = 18 shots
+**Format:** 9:16 vertical · ~97s · VO-driven · 15 beats = 15 shots
 
 ---
 
@@ -26,7 +26,7 @@ is coming toward the tree that can't run?*
 BLACK. One mechanical keyboard, very fast — then it stops.
 
 **THREE OH SEVEN — 0:05–0:10**
-Close on a monitor in a dark apartment: a terminal, `deploy --prod --force`, a spinner. 3:07 a.m.
+He types the last of it, fast, and stops dead. The spinner turns. `deploy --prod --force`. 3:07 a.m.
 
 > **VO (tired, flat):** Production went down at 2:41. It's the retry loop. It's always the retry loop.
 
@@ -37,23 +37,23 @@ The spinner resolves.
 ✓ deploy succeeded
 ```
 
+> **VO (relieved, almost cheerful):** There. Fixed. Now I'm going to sleep for a—
+
 **THE FALL — 0:15–0:20**
 A sharp breath in — the frame tips sideways — the mug hits the floor before he does.
 
-**HUH. BLUE. — 0:20–0:24**
-Black, and the sound of a cooling fan spinning down.
-
-> **VO:** Huh. Blue.
+**FAN SPINNING DOWN — 0:20–0:24**
+The dark apartment floor, the broken mug, the last of the screen glow draining away. No dialogue — the cooling fan winding down over near-black is the whole beat.
 
 **TOO BLUE — 0:24–0:29**
 Blinding green blur. Focus pulls: two centimetres off the ground, looking up through one trembling leaf at a sky that is *too* blue.
 
-> **VO:** Okay. Hospital ceiling. That's fine. Hospitals are blue now.
+> **VO:** Huh. Blue. — Okay. Ceiling's gone. That's fine. Open-plan hospital.
 
-**FLAILING ONE (1) LEAF — 0:29–0:35**
-The leaf — *his* leaf — twitches when he panics, and the camera shakes with it.
+**ZERO (0) MOVING PARTS — 0:29–0:35**
+Extreme close-up on one young leaf, absolutely motionless. Nothing in the frame moves. The stillness is the punchline.
 
-> **VO:** Scream. — No mouth. Run. — No legs. Flail?? — …I appear to be flailing one (1) leaf.
+> **VO:** Scream. — No mouth. Run. — No legs. Flail?? — …I appear to have zero (0) moving parts.
 
 **SEV-1 — 0:35–0:48**
 The trembling stops. A beat of stillness.

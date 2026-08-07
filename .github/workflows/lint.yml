@@ -2,7 +2,17 @@
 # structurally honest — parents declared, R1/R5 sections present,
 # leaf provenance complete, ledger well-formed.
 name: lint-genome
-on: [push, pull_request, workflow_dispatch]
+on:
+  # `farm-results-*` are courier branches, not code. farm_worker.py force-pushes
+  # a heartbeat commit to its own branch every ~5 minutes for the whole length of
+  # a task, and each one was firing a full lint+test run — ~288 runs a day that
+  # say nothing about the tree, since the worker syncs its files FROM main and
+  # main's own push already lints them. On 2026-08-06, with GitHub Actions in a
+  # major outage, those heartbeats were most of the wall of failure mail.
+  push:
+    branches-ignore: ["farm-results-**"]
+  pull_request:
+  workflow_dispatch:
 jobs:
   lint:
     runs-on: ubuntu-latest

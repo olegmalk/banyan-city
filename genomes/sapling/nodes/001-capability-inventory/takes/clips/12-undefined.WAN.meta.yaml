@@ -1,0 +1,9 @@
+platform: local-rtx5090
+model: "Wan-AI/Wan2.2-TI2V-5B-Diffusers"
+license: Apache-2.0
+size: 480x832
+steps: 20
+seconds: 3.0
+cost_usd: 0.00
+rendered: 2026-07-31
+note: image-to-video from the founder-approved still; first local motion takes

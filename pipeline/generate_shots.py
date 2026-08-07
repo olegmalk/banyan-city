@@ -109,7 +109,16 @@ def parse_shots(shots_md: str) -> list:
             print(f"WARNING: shots.md beat {num:02d} ({title}) has no ``` prompt fence "
                   f"— beat SKIPPED, write the prompt before generating", file=sys.stderr)
             continue
-        slug = re.sub(r"[^a-z0-9]+", "-", title.split("(")[0].lower()).strip("-")
+        # Strip the TIMESTAMP, not everything after the first "(". Splitting on
+        # "(" assumed no title ever contains parentheses; beat 07 is titled
+        # "ZERO (0) MOVING PARTS" and slugged to "zero", so its clip was written
+        # as 07-zero.mp4 while check_sync and the still both used
+        # 07-zero-0-moving-parts. Two parsers disagreeing about one beat's
+        # identity is exactly what put "Huh. Blue." over the coffee scene.
+        # Verified against every shots.md in the tree: beat 07 is the only title
+        # containing parentheses, so this changes exactly one slug.
+        bare = re.sub(r"\s*\(\d+:\d+.*$", "", title)
+        slug = re.sub(r"[^a-z0-9]+", "-", bare.lower()).strip("-")
         shots.append({"num": num, "slug": slug or f"beat{num}",
                       "prompt": " ".join(fence.group(1).split()),
                       "done": "✅" in status})
@@ -125,7 +134,7 @@ def gen_kling(prompt: str, model: str, dur: int) -> tuple:
         ["kling", "text_to_video", "--model", model, "--duration", str(dur),
          "--aspect_ratio", "9:16", "--resolution", "720p", "--enable_audio", "false",
          "--poll", "600", prompt],
-        capture_output=True, text=True, timeout=700)
+        capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=700)
     out = r.stdout + r.stderr
     if "Insufficient credits" in out:
         raise SystemExit("kling: agent credit balance is empty — top up at "
@@ -236,6 +245,23 @@ def gen_fal(prompt: str, model: str, dur: int, image: Path | None = None) -> tup
     raise RuntimeError("fal: generation timed out")
 
 
+# The negative we already trust locally. Imported rather than retyped so the
+# hosted path and the local path cannot drift apart — the whole reason the API
+# clip cut to a second scene is that these two lists were allowed to differ.
+def _api_neg() -> str:
+    try:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        from video_task import ANTI_SCENE
+        return ANTI_SCENE
+    except Exception:                                   # noqa: BLE001
+        # never let a missing import silently send NO negative again
+        return ("scene change, shot change, cut to another angle, second scene, "
+                "new camera angle, different location, split screen, montage")
+
+
+API_NEG = _api_neg()
+
+
 def gen_wan(prompt: str, model: str, dur: int, image: Path | None = None) -> tuple:
     """Alibaba Cloud Model Studio (DashScope intl) — wan2.x text-to-video.
     Needs DASHSCOPE_API_KEY (Singapore-region workspace; the new-account free
@@ -275,12 +301,31 @@ def gen_wan(prompt: str, model: str, dur: int, image: Path | None = None) -> tup
             # (verified the hard way, 2026-07-28, $0 billed on the failed task)
             # wan2.7 i2v schema (Model Studio image-to-video API reference, verified
             # 2026-07-28): media = list of {type, url}; the still is the first frame.
-            "input": ({"prompt": prompt,
+            # NEGATIVE PROMPT, which this path was sending NONE of. Locally
+            # video_prompt() appends "scene change, shot change, cut to another
+            # angle, second scene, new camera angle, different location, split
+            # screen, montage" — the terms that cut our own scene-change drift
+            # from 40.2 to 8.8 — and the API request simply left it out. So the
+            # hosted model was the only engine we ran with nothing suppressing a
+            # cut, and it is the one that produced a cut. I told the founder we
+            # "can't edit its prompt because it's an API model"; that was wrong,
+            # and this is the correction.
+            "input": ({"prompt": prompt, "negative_prompt": API_NEG,
                        "media": [{"type": "first_frame", "url": img_url}]}
-                      if img_url else {"prompt": prompt}),
+                      if img_url else {"prompt": prompt,
+                                       "negative_prompt": API_NEG}),
             "parameters": {"resolution": "720P", "ratio": "9:16",
                            "duration": max(2, min(15, dur)),
-                           "prompt_extend": True, "watermark": False},
+                           # PROMPT_EXTEND OFF. This was True, which asks Model
+                           # Studio to REWRITE our prompt with an LLM before
+                           # generating. The founder on the 2026-08-03 model
+                           # comparison: "wan 2.7 has the second scene for like
+                           # half a second at the end, which isnt very good" — and
+                           # a server-side rewriter adding narrative is exactly
+                           # how a second scene appears in a prompt that never
+                           # asked for one. Our prompts are already written to
+                           # SCRIPT-SPEC; we do not want them improved.
+                           "prompt_extend": False, "watermark": False},
         }).encode(),
         headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json",
                  "X-DashScope-Async": "enable"})

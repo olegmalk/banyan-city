@@ -90,6 +90,65 @@ def scenes(d: Path = None) -> list:
     return out
 
 
+def growth(rows: list) -> dict:
+    """The episode's growth score — two verifiable steps per scene.
+
+    A scene grows twice: its frame is approved by the author, and a moving
+    version of it exists. Both are file-existence facts from `scenes()`, so
+    the meter on the page can never claim progress the repo cannot show.
+    """
+    done = sum(1 for r in rows if r["final"]) + sum(1 for r in rows if r["animations"])
+    return {"done": done, "total": 2 * len(rows)}
+
+
+def takes_tally(d: Path = None) -> dict:
+    """Every take anyone has ever handed in for this episode, from takes/."""
+    d = d or EPISODE
+    stills, clips = d / "takes" / "stills", d / "takes" / "clips"
+    return {
+        "stills": len(list(stills.glob("*.png"))) if stills.is_dir() else 0,
+        "clips": len(list(clips.glob("*.mp4"))) if clips.is_dir() else 0,
+    }
+
+
+def vo_scenes(d: Path = None) -> int:
+    """How many scenes carry recorded narration (NN-vo.mp3 in clips/)."""
+    d = d or EPISODE
+    clips = d / "clips"
+    return len(list(clips.glob("[0-9][0-9]-vo.mp3"))) if clips.is_dir() else 0
+
+
+def cut_passed(d: Path = None) -> bool:
+    """Has the author passed a full cut? True only when a T3 leaf carries
+    `approved_by: founder` — the same convention T0 scripts already use
+    (STEWARDSHIP.md §6). Until then the page must call the cut 'working'."""
+    d = d or EPISODE
+    for f in (d / "leaves").glob("*.yaml"):
+        try:
+            meta = yaml.safe_load(f.read_text()) or {}
+        except Exception:
+            continue
+        if str(meta.get("tier")) == "T3" and \
+                str(meta.get("approved_by", "")).startswith("founder"):
+            return True
+    return False
+
+
+def day_count() -> int:
+    """Day N of production — days since the root node was released, from
+    lineage.yaml (a repo fact, so the deploy server can compute it). 0 means
+    the lineage could not be read and the page should not show a day at all."""
+    import datetime
+    try:
+        nodes = (yaml.safe_load((REPO / f"genomes/{GENOME}/lineage.yaml").read_text())
+                 or {}).get("nodes", [])
+        root = next(n for n in nodes if not n.get("parent"))
+        return (datetime.datetime.now(datetime.timezone.utc).date()
+                - root["released"]).days + 1
+    except Exception:
+        return 0
+
+
 def request_url(num) -> str:
     """Where a stranger hands in a take for a scene ("open request" on the page)."""
     return f"{GH_URL}/issues/{num}"

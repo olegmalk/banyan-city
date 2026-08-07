@@ -22,7 +22,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "pipeline"))
 from generate_shots import parse_shots  # noqa: E402
-from sd_prompt import compress, extra_negatives, suppressed_negatives  # noqa: E402
+from sd_prompt import beat_negative, compress  # noqa: E402
 
 NEG = ("photorealistic, 3d render, abstract, text, watermark, signature, low quality, "
        "blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture")
@@ -60,12 +60,7 @@ def main() -> int:
     for num in beats:
         s = shots[num]
         ptext, _ = compress(s["prompt"])
-        neg = NEG
-        for term in suppressed_negatives(s["prompt"]):
-            neg = neg.replace(term + ", ", "")
-        extra = extra_negatives(s["prompt"])
-        if extra:
-            neg = f"{neg}, {extra}"
+        neg = beat_negative(NEG, s["prompt"])
         for k in range(seeds):
             t0 = time.time()
             g = torch.Generator(device="cpu").manual_seed(SEED + num + k * 1000)

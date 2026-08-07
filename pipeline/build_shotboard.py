@@ -245,9 +245,21 @@ def take_cell(v: Path, rel: str, poster_url: str, canon: bool) -> str:
         receipt = f'<br><a href="{rel}-clips/{base.name}">exact settings used</a>'
     else:
         receipt = ""
+    # A take whose licence forbids publication is LISTED but not playable: the
+    # file is never copied to _site, so a <video> pointing at it would be a
+    # broken player (and the link gate rightly fails the build over it). Saying
+    # so beats both hiding the take and shipping a dead frame — the recipe and
+    # the receipt are still right here for anyone who wants to beat it.
+    from build_site import publishable
+    ok, blocked = publishable(v)
+    player = (f'<video preload="none"{poster} controls muted loop playsinline '
+              f'src="{rel}-clips/{v.name}"></video>' if ok else
+              f'<div class="withheld"><b>not published here</b><br>'
+              f'{html.escape(blocked)}<br>'
+              f'<span>the take exists in the repo; this beat is open to a '
+              f're-shoot on a publish-safe route</span></div>')
     return (f'<figure class="take{" canon" if canon else ""}">'
-            f'<video preload="none"{poster} controls muted loop playsinline '
-            f'src="{rel}-clips/{v.name}"></video>'
+            f'{player}'
             f'<figcaption>{crown}'
             f'<b>{html.escape(name)}</b>{credit}'
             f'<br><span class="why">{html.escape(why)}</span>'
@@ -446,6 +458,15 @@ abbr[title] { text-decoration: underline dotted; cursor: help; }
   background: var(--code-bg); border: 1px solid var(--line); border-radius: 12px; }
 .take.canon video { border-color: var(--sap);
   box-shadow: 0 0 44px -18px rgba(255,199,106,.75); }
+/* a take we may not publish: same footprint as the player it replaces, so the
+   grid does not reflow, and legible enough to be read as an invitation */
+.take .withheld { width: 100%; aspect-ratio: 9 / 16; display: flex; gap: .5rem;
+  flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 1rem; box-sizing: border-box; font-size: .82rem;
+  line-height: 1.45; color: var(--muted); background: var(--code-bg);
+  border: 1px dashed var(--line); border-radius: 12px; }
+.take .withheld b { color: var(--ink); font-size: .9rem; }
+.take .withheld span { opacity: .8; }
 .chip-canon { display: inline-block; font: 700 .62rem/1 var(--mono); letter-spacing: .1em;
   color: var(--sap-ink); background: var(--sap); padding: .3rem .5rem; border-radius: 999px;
   margin-bottom: .3rem; }

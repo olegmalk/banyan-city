@@ -1,33 +1,37 @@
-# sound design — cycle 012: the script's own cues, finally built.
+# sound design — cycle 012 v7e (founder's v7d notes worked in).
 #
-# The death is contrast, not volume (founder note 2026-07-30: "his death is
-# very anticlimactic... something missing"). The room's machine-noise exists
-# so that its ABSENCE at the fall is audible; the mug lands alone inside the
-# silence; the fan spins down like a machine being unplugged — the scripted
-# cue that was never implemented. No thump: v1 read as a gunshot (cycle 011).
+# The fall is air-then-floor: a whoosh rises through the last second of the
+# drift and the impact lands EXACTLY on the cut to his last sight (the take
+# has no visible impact frame — the cut is the event). The wind bed is no
+# longer everywhere: it belongs to the OUTDOOR world and enters with the sky
+# under "Huh. Blue." (beat 5), darker and quieter than before ("a random
+# weird wind sound" — gone indoors). Fan spin-down stays in his dying world
+# (end of beat 4) and is finished before the sky.
 #
-# All cues are synthesized (pipeline/sfx.py, fixed seeds): a re-render is
-# bit-identical and there are no downloaded samples to license.
-# `start`/`dur` are seconds from the beat's start; `dur: full` = the beat's
-# length; gain_db is relative to dialogue. Times marked (ear) are placed
-# against the FOOTAGE — currently the 001-t3-d take picks staged from
-# takes/clips (beat 4 is the 5.0s PIXVERSE fall + 6.0s terminal two-shot).
-# Re-tune them if the picks change; the assembler prints the timeline table.
+# Cues are synthesized (pipeline/sfx.py, fixed seeds) EXCEPT where a `file:`
+# names a recorded one - public domain / CC0 only, listed with its source in
+# ../audio-sources/SOURCES.md. Real ceramic and real keyswitches beat sine waves. Beat-relative seconds;
+# beat 4 is the 5.04s PIXVERSE fall + 6.0s terminal two-shot (cut at 5.04).
 
 events:
-  - {beat: 1, sfx: keyboard, start: 0.2, dur: 5.8, stop_at: 5.4, gain_db: -16}  # "very fast — then it stops" just before the first line
-  - {beat: 1, sfx: room_hum, start: 0.0, dur: full, gain_db: -26}
-  - {beat: 2, sfx: room_hum, start: 0.0, dur: full, gain_db: -26}
-  - {beat: 3, sfx: room_hum, start: 0.0, dur: full, gain_db: -26}
-  - {beat: 4, sfx: room_hum, start: 0.0, dur: 2.0, gain_db: -26}   # ALL sound dies on the breath in (ear)
-  - {beat: 4, sfx: body_thump, start: 2.7, gain_db: -13}           # THE death sound: him and the mug arriving together, mid-tilt (ear; founder: "more of a thump")
-  - {beat: 4, sfx: fan_spindown, start: 7.0, dur: 6.0, gain_db: -19}  # starts over his dying terminal, finishes over the BLACK of beat 5 (as scripted)
+  - {beat: 1, sfx: keyboard, file: genomes/sapling/nodes/001-capability-inventory/audio-sources/keyboard-modelM-cc0.ogg, trim_start: 1.5, start: 0.2, dur: 5.2, gain_db: -17}  # a REAL IBM Model M (CC0): "one mechanical keyboard, very fast - then it stops"
+  - {beat: 1, sfx: room_hum, file: genomes/sapling/nodes/001-capability-inventory/audio-sources/roomtone-apartment-cc0.mp3, start: 0.0, dur: full, gain_db: -26}
+  - {beat: 2, sfx: room_hum, file: genomes/sapling/nodes/001-capability-inventory/audio-sources/roomtone-apartment-cc0.mp3, start: 0.0, dur: full, gain_db: -26}
+  - {beat: 3, sfx: room_hum, file: genomes/sapling/nodes/001-capability-inventory/audio-sources/roomtone-apartment-cc0.mp3, start: 0.0, dur: full, gain_db: -26}
+  - {beat: 4, sfx: room_hum, file: genomes/sapling/nodes/001-capability-inventory/audio-sources/roomtone-apartment-cc0.mp3, start: 0.0, dur: 0.30, gain_db: -26}   # the room's sound dies ON the impact
+  - {beat: 4, sfx: mug, file: genomes/sapling/nodes/001-capability-inventory/audio-sources/mug-glass-ccby.wav, start: 0.0, dur: 1.4, gain_db: -11}   # a REAL ceramic/glass smash (CC BY) - the shot shows the mug in pieces
+  - {beat: 4, sfx: body, file: genomes/sapling/nodes/001-capability-inventory/audio-sources/thud-pd.ogg, start: 0.16, dur: 0.39, gain_db: -4}    # a REAL dull thud (public domain) - THE death, and it must dominate
+  - {beat: 4, sfx: fall_impact, file: genomes/sapling/nodes/001-capability-inventory/audio-sources/body-fall-cc0.mp3, start: 0.0, pre: 0.16, gain_db: -19}  # just a breath of air under the real thud
+  - {beat: 4, sfx: fan_spindown, file: genomes/sapling/nodes/001-capability-inventory/audio-sources/fan-spindown-cc0.mp3, start: 0.9, dur: 12.0, gain_db: -18}  # the only thing left running is his computer, winding down through the whole aftermath
   - {beat: 9, sfx: terminal_keys, start: 0.4, dur: 3.2, gain_db: -24}  # "$ whoami" types itself
-  - {beat: 10, sfx: footsteps_soil, start: 3.0, dur: 7.0, period: 1.9, gain_db: -23}  # 400m away, felt not heard
-  - {beat: 15, sfx: footsteps_soil, start: 0.2, dur: 3.4, period: 1.1, grow: 1.2, gain_db: -14}  # closer, faster — the hook IS this sound
+  - {beat: 10, sfx: footsteps_soil, sample: genomes/sapling/nodes/001-capability-inventory/audio-sources/footsteps-soil-cc0.mp3, start: 3.0, dur: 7.0, period: 1.9, gain_db: -23}  # 400m away, felt not heard
+  - {beat: 10, sfx: gravel, file: genomes/sapling/nodes/001-capability-inventory/audio-sources/footstep-gravel-ccby.mp3, start: 4.9, dur: 0.5, gain_db: -26}  # one REAL footstep (CC BY), far off, under the synthesized soil-pressure thumps
+  - {beat: 15, sfx: footsteps_soil, sample: genomes/sapling/nodes/001-capability-inventory/audio-sources/footsteps-soil-cc0.mp3, start: 0.2, dur: 3.4, period: 1.1, grow: 1.2, gain_db: -16}  # closer, faster — the hook
+  - {beat: 15, sfx: gravel, file: genomes/sapling/nodes/001-capability-inventory/audio-sources/footstep-gravel-ccby.mp3, start: 0.5, dur: 0.5, gain_db: -18}  # the same footstep, closer now
+  - {beat: 15, sfx: gravel, file: genomes/sapling/nodes/001-capability-inventory/audio-sources/footstep-gravel-ccby.mp3, start: 1.5, dur: 0.5, gain_db: -15}  # and closer
 
-# the whisper wind bed is silent from the tip-over until the too-blue sky —
-# the world (and its wind) only comes back when HE does
+# the wind belongs OUTSIDE: silent from the cold open until the sky appears
+# under "Huh. Blue.", then it breathes in with the new world
 bed_duck:
-  from: {beat: 4, at: 2.0}
-  to: {beat: 6, at: 0.0}
+  from: {beat: 1, at: 0.0}
+  to: {beat: 5, at: 0.4}

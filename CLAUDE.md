@@ -19,6 +19,40 @@ every push to main). Read `PROMISE.md` first — it is canonical. Then
   (`approved_by: founder` + date). Writing is cheap and reversible; media is
   neither. On 2026-07-25 seven scripts were voiced and 8.7 GPU-hours rendered
   before the author had read any of them — that is what this rule prevents.
+- **ONE SAMPLE BEFORE ANY BATCH** (founder, 2026-08-03): before rendering,
+  voicing or generating a SET of anything, produce ONE and have the founder look at
+  it. Not one per session — one per *recipe change*. The canaries that worked on
+  2026-08-03 were samples (the 704x1280 canary answered a question five whole-batch
+  attempts had only failed at; the step sweep and the shake A/B likewise). The two
+  things that wasted an hour each were both the steward skipping to fifteen: the K
+  recipe, chosen on the steward's own metric, rendered across all fifteen beats and
+  then rejected with "literally just frozen frames" — a defect one sample would have
+  shown in three minutes. This is the same rule as §6 one level down: §6 says do not
+  render an unapproved script, this says do not scale an unapproved *result*.
+  A metric agreeing with me is not a sample.
+- **THE LEAD IS AN ORCHESTRATOR — it does nothing on its own** (Oleg — dad,
+  2026-08-04):
+  "you don't do anything on your own. and it includes you don't read any code or
+  any transcripts which will blow your context. You are purely talking to me and
+  orchestrating agents." The lead's context holds the conversation and the
+  delegation plan; file reads, greps, transcript digs, benchmark harnesses and
+  every build step are subagent work reported back as summaries. This overrides
+  the reading half of "read history, don't interrogate" only as to WHO reads:
+  transcripts and `git log` still get read, by a delegate, never in the lead's
+  own context — and still never by interrogating the founder. Same directive:
+  every subagent runs pinned to Opus 5 by explicit `model` parameter (Agent tool
+  `model: "opus"`), never left to inherit.
+- **RESEARCH BEFORE SOLVING, and research means OUTSIDE this repo** (Oleg — dad,
+  2026-08-04): "Everything you do, you have to research first. You don't pretend
+  that you'd know everything and start solving for the sake of solving. We need
+  results. Not your pretend researches." On 2026-08-04 the steward built a
+  benchmark harness and two confident performance mechanisms out of its own code
+  comments — "the slowness is VRAM paging", then a correction to that — and
+  retracted both, having consulted no VBench, no Wan2GP, no ComfyUI community
+  VRAM/speed findings, no quantised GGUF/fp8 builds, no step-reduction LoRAs
+  while hand-rolling diffusers memory management the community had already
+  fixed. Dispatch research subagents at papers, repos and issue threads and wait
+  for them; reasoning about our own codebase is not research.
 - **Spend guards are code:** `pipeline/budget.yaml` caps ($/run and lifetime);
   `generate_shots.py` refuses without explicit `--yes` and logs to
   `ledger/render-spend.csv`. A FAL key may exist in gitignored `.env` — its
@@ -37,7 +71,7 @@ every push to main). Read `PROMISE.md` first — it is canonical. Then
 |---|---|
 | `python3 pipeline/lint_genome.py` | structural honesty gate (CI runs it too) |
 | `python3 pipeline/test_pipeline.py` | 28 pure-logic tests (CI) |
-| `python3 pipeline/build_site.py` | genomes → `_site/` (deployed on push) |
+| `python3 pipeline/build_site.py` | genomes → `_site/` (deployed on push). **Site work: read `SITE.md` first** |
 | `python3 pipeline/render_t1.py sapling <id>` | script → storyboard leaf |
 | `python3 pipeline/render_t2.py sapling <id>` | storyboard → silent animatic (needs playwright chromium; portable path fallback) |
 | `python3 pipeline/render_t3.py sapling <id> --clips <dir> [--out x.mp4]` | per-beat clips → captioned 9:16 episode w/ title+end cards; slate for missing beats; muxes `NN-vo.mp3` audio in sync; `--out` = bench, no leaf |
