@@ -251,15 +251,16 @@ comparisons:
 # files publish, so the reader is owed the same accounting the rest of the site
 # gives.
 provenance: |-
-  **What made these.** Ten beats are animated on
-  `Wan-AI/Wan2.2-TI2V-5B-Diffusers` (Apache-2.0) on a local GPU; five are the
-  author's approved stills held and pushed in by code, with no video model
-  involved. Narration is Chatterbox 0.5B (MIT), run locally. Recorded sound is
-  CC0 and CC BY, one row each in the node's `audio-sources/SOURCES.md`. Cash
-  cost of both cuts: **$0**. Every file above has a `.meta.yaml` beside it in
-  `cuts/` carrying the recipe, the seed and the SHA-256 of the exact bytes
-  served here, and every one passed the same licence gate the rest of the site
-  goes through before it was copied.
+  **What made these.** Every moving shot is
+  `Wan-AI/Wan2.2-TI2V-5B-Diffusers` (Apache-2.0) on a local GPU — ten of the
+  fifteen beats in v31 and v32, six of them in v30. The rest are the author's
+  approved stills held and pushed in by code, with no video model involved at
+  all. Narration is Chatterbox 0.5B (MIT), run locally. Recorded sound is CC0
+  and CC BY, one row each in the node's `audio-sources/SOURCES.md`. Cash cost
+  of all three cuts and every clip on this page: **$0**. Every file above has a
+  `.meta.yaml` beside it in `cuts/` carrying the recipe, the seed and the
+  SHA-256 of the exact bytes served here, and every one passed the same licence
+  gate the rest of the site goes through before it was copied.
 
   **The one open licence question, stated rather than buried.** The drawn frames
   underneath every beat came from `cagliostrolab/animagine-xl-3.1`, whose
