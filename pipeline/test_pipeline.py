@@ -1807,6 +1807,152 @@ def test_ltx_jobs_list_is_one_beat_per_entry(tmp: Path):
            "two beats writing the same file is refused")
 
 
+def test_review_page_publishes_nothing_unprovenanced():
+    """Every file the review area serves must exist, carry a record, and clear
+    the licence gate — checked against `cuts/cuts.yaml`, not against the build.
+
+    WHY A TEST AND NOT JUST THE GATE. `build_site.publishable()` returns True
+    for a file with NO sidecar at all, on purpose and correctly: an
+    unprovenanced asset is the licence gate's finding to report, not the site
+    build's to silently suppress. That is the right call for the shot board,
+    where withholding a take would hide the crowd's own evidence. It is the
+    wrong call HERE. The review area exists because the author screens working
+    cuts on a phone (D17), and a cut published with no record of what made it is
+    exactly the debt §7.2 exists to prevent — the loophole is real and was found
+    open: `review/beat-11-grow.mp4` is in three cuts and has no sidecar anywhere,
+    which is why the morning checklist points at v32 for that take instead of
+    republishing it bare.
+
+    So this closes the gap for one directory rather than changing the gate for
+    every directory. Three things, on the real yaml:
+      1. every named asset exists — a checklist item promising a clip that is
+         not in the repo reads to the author as a thing he failed to find
+      2. every named asset has a `.meta.yaml` beside it, under either of the two
+         naming conventions the pipeline writes
+      3. every named asset passes publishable(), so a licence that does not
+         grant what CC BY 4.0 offers cannot reach the open web through here
+    """
+    sys.path.insert(0, str(REPO / "pipeline"))
+    import yaml
+    import build_site as bs
+    import licence_gate as lg
+
+    cuts_dir = REPO / "cuts"
+    cfg = yaml.safe_load((cuts_dir / "cuts.yaml").read_text(encoding="utf-8")) or {}
+
+    named: list[str] = []
+    for cut in cfg.get("cuts") or []:
+        named.append(str(cut["file"]))
+    for grp in cfg.get("comparisons") or []:
+        for p in grp.get("items") or []:
+            named += [str(p["left"]), str(p["right"])]
+            if (p.get("footnote") or {}).get("file"):
+                named.append(str(p["footnote"]["file"]))
+    # The checklist's three media slots. `audio:` is narration, judged by ear;
+    # `sheets:` is a contact sheet of candidate frames. Both publish exactly
+    # like a clip and are gated exactly like one.
+    for it in (cfg.get("checklist") or {}).get("items") or []:
+        for slot in ("clips", "sheets", "audio"):
+            named += [str(x["file"]) for x in (it.get(slot) or [])]
+
+    check("cuts.yaml names at least one asset", bool(named))
+    missing = [n for n in named if not (cuts_dir / n).exists()]
+    check(f"every asset named in cuts.yaml exists ({len(named)} named)", not missing)
+    if missing:
+        print("      missing:", ", ".join(missing[:6]))
+
+    present = [n for n in named if (cuts_dir / n).exists()]
+    bare = [n for n in present if not lg.sidecar_for(cuts_dir / n, lg.META_EXT)]
+    check("every published asset carries a provenance record", not bare)
+    if bare:
+        print("      no sidecar:", ", ".join(bare[:6]))
+
+    # The licence is classified off the record this test FOUND, not by calling
+    # publishable(). Deliberate, and it is the whole reason this assertion is
+    # worth anything: publishable() looks its sidecar up by stem only
+    # (`f.with_suffix('.meta.yaml')`), so a full-name record —
+    # `beat-05-HELD-moderate.mp4.meta.yaml`, which is what hold_still and
+    # video_task write — is invisible to it, and it returns "publishable, no
+    # sidecar" for a file that is in fact fully documented. Every clip on the
+    # checklist is that shape. Calling publishable() here would therefore assert
+    # nothing at all while looking like it asserted everything: green because
+    # the gate never read the file, not because the licence cleared.
+    blocked = []
+    for n in present:
+        side = lg.sidecar_for(cuts_dir / n, lg.META_EXT)
+        data = yaml.safe_load(side.read_text(encoding="utf-8")) or {}
+        if not isinstance(data, dict):
+            continue
+        for key, value in data.items():
+            if key.lower() not in lg.PROVENANCE_KEYS:
+                continue
+            licence = lg.engine_licence(value)
+            if licence and lg.classify(licence)[0] != "allow":
+                blocked.append(f"{n} ({key})")
+    check("every published asset's own record clears the licence gate", not blocked)
+    if blocked:
+        print("      withheld:", ", ".join(blocked[:6]))
+
+
+def test_checklist_does_not_reask_a_closed_question():
+    """An item on the morning checklist must be open THIS MORNING.
+
+    On 2026-08-07 the author refused v32 with an itemised list. Overnight, two
+    of the items on that list were answered by him directly, in the hours
+    between the screening and the build: the push-in rate — *"zoom speed ladder
+    is just overdoing it. simply make the zoom speed moderate"* — and the
+    approach for beats 7 to 9 — *"alright, shot progression"*. Both had finished
+    media waiting to be shown to him, a four-rung speed ladder in particular,
+    and both were dropped from the checklist rather than published.
+
+    The failure mode this guards is subtle and expensive: the evidence for a
+    closed question is usually the most polished thing in the tree, because
+    someone just spent an evening making it. Putting it in front of him reads as
+    diligence and is actually a request to decide something he has decided —
+    with, in the zoom's case, the exact artifact he called "overdoing it".
+
+    Held here rather than in prose because the checklist is edited by whoever is
+    on shift, and the two closed questions are precisely the ones whose media is
+    sitting on disk looking useful.
+    """
+    import yaml
+    cfg = yaml.safe_load((REPO / "cuts" / "cuts.yaml").read_text(encoding="utf-8")) or {}
+    items = (cfg.get("checklist") or {}).get("items") or []
+    check("the checklist has items", bool(items))
+
+    # The four rungs are real files and stay unpublished; naming one under a
+    # media slot is the mistake, not mentioning the ladder in prose (item 01
+    # explains why it is absent, which is the honest thing to do).
+    slots = [str(x["file"]) for it in items for slot in ("clips", "sheets", "audio")
+             for x in (it.get(slot) or [])]
+    ladder = [s for s in slots if "zoom-ladder" in s or "zoom-0p6" in s
+              or "zoom-1p5" in s or "zoom-2p5" in s or "zoom-4p0" in s]
+    check("no checklist item publishes a rung of the refused speed ladder", not ladder)
+
+    asks = " ".join(str(it.get("ask", "")).lower() for it in items)
+    check("no item asks him to pick a zoom speed",
+          not ("pick" in asks and "speed" in asks and "zoom" in asks))
+    check("no item asks him to pick an approach for 7/8/9",
+          "pick an approach" not in asks)
+
+    # The beat-7 trap: he named beat 7 twice — once for draining the colour and
+    # once as the first of three identical shots — so ONE replacement frame has
+    # to satisfy both notes. Beat 7 therefore belongs to the progression item
+    # alone; a separate "beat 7 colour" item would collect two answers for one
+    # frame and the second would arrive too late to shoot.
+    six = next((it for it in items if "six frames" in str(it.get("ask", "")).lower()), None)
+    check("the six-frame item exists", six is not None)
+    if six:
+        body = str(six.get("body", ""))
+        check("beat 7 is not listed among the individually-picked frames",
+              "**Beat 7" not in body and "Beat 7 —" not in body)
+    prog = next((it for it in items if "7, 8 and 9" in str(it.get("ask", ""))), None)
+    check("the progression item exists", prog is not None)
+    if prog:
+        check("the progression item says its pick also settles the grey note",
+              "grey" in str(prog.get("body", "")).lower())
+
+
 def test_beat11_direction_is_the_founders_revert(tmp: Path):
     """Beat 11's "mitosis" was never there, and the fix for it made the beat worse.
 
@@ -2941,6 +3087,8 @@ def main():
         test_ltx_dispatch_routes_by_video_model(Path(td))
     with tempfile.TemporaryDirectory() as td:
         test_ltx_jobs_list_is_one_beat_per_entry(Path(td))
+    test_review_page_publishes_nothing_unprovenanced()
+    test_checklist_does_not_reask_a_closed_question()
     with tempfile.TemporaryDirectory() as td:
         test_beat11_direction_is_the_founders_revert(Path(td))
         test_beat09_negatives_forbid_the_growth(Path(td))

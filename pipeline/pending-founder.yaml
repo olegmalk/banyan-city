@@ -38,9 +38,21 @@ pending:
   - id: v6-verdict
     title: "Say yes or no on episode 1 — the next cut, built from the notes you gave"
     detail: "Answered once and the answer was no. On the evening of 2026-08-07 the author watched the assembled remake and turned it down with a specific list rather than a shrug: the camera moves are far too slow; one scene reads as a laboratory when it is supposed to be inside a house; another shows a leaf in a shot where the character is looking at the sky, which cannot be what he is seeing; one shot drains the colour out of the show; three consecutive shots are the same picture; two more change the setting and the look entirely; one he could not identify at all; one earlier change he asked to be undone, because it was fixing a fault that was never there. Every one of those is now work in hand — new drawings for the shots he named, a faster camera move, three shots reworked as a wide-medium-close progression, and the wrong fix reverted. A rebuilt cut goes back on the review page for the same yes or no. That yes is still the only thing that unblocks posting, and nothing goes out until a cut has one."
-    public: "review/index.html"
-    link_text: "the review page — still showing the turned-down cut until the new one lands"
+    public: "review/index.html#checklist"
+    link_text: "your morning checklist — the questions the next cut needs answered, above the cut you turned down"
     since: 2026-07-29
+  - id: ep1-frame-picks
+    title: "Choose the replacement drawings for the shots you turned down"
+    detail: "Seven of the fifteen shots in episode 1 were refused on the drawing itself rather than on the movement — one that reads as a laboratory instead of a house, one showing a leaf in a shot of the sky, three consecutive shots that are the same picture, two that change the setting and the look, one that could not be identified at all. New drawings for all of them were rendered overnight, several candidates each, and they need one pass of the author's eye: pick one per shot or reject the set. This is separate from the yes-or-no on the finished cut above, and it comes first — the cut cannot be rebuilt out of frames nobody has chosen. Two related calls were already made and are not being re-asked: the camera speed, and the decision to shoot three of the shots as one scene at three distances."
+    public: "review/index.html#checklist"
+    link_text: "the same morning checklist — items 02 and 03, which say plainly if the drawings have not finished rendering yet"
+    since: 2026-08-07
+  - id: ep2-beat16-line
+    title: "Approve, edit or rewrite one line of episode 2 — the contradiction you spotted"
+    detail: "When the author approved episode 2 he attached a condition: the sapling manages to move a leaf in episode 1, so why does it say it cannot move at all in episode 2? He was right, and it was a straight contradiction between the two scripts. A replacement line is proposed that keeps the joke and turns the contradiction into the distinction the episode runs on — the first movement was panic and unwitnessed, the last one is deliberate and seen. It needs a yes, an edit, or his own version. Nothing is voiced or filmed for that moment until it has one: writing is cheap and reversible, and recorded speech is neither."
+    public: "review/index.html#checklist"
+    link_text: "the morning checklist — item 09 quotes the line as it stands and the proposed replacement"
+    since: 2026-08-07
   - id: bakeoff-pick
     title: "Choose which AI model draws the show from now on"
     detail: "Four free models rendered the same three shots — the current one and 2026's best contenders. Whichever the author picks becomes the artist for every future frame."

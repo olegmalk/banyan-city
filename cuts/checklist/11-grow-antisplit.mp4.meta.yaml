@@ -1,0 +1,21 @@
+# Shot provenance (7.2) — written by probe_beat at render time
+platform: local-gpu (rtx5090)
+model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+model_licence: Apache-2.0
+shot_beat: 11
+size: 704x1280
+seconds: 2.5
+steps: 14 (UniPC flow_shift=5.0)
+guidance: 5.0
+offload: model_cpu_offload
+quantise: none
+seed: 20260816
+task: b11-mitosis-20260807
+init_still: 11-grow.png
+init_still_sha256: 7886e0370e42aa1660552cd4e0752b8409d954fce06ab56f4c2d92ddc7eda5a7
+wall_seconds: 279
+cost_usd: 0
+prompt: |-
+  2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. the new leaf unfurls in a fast sweep and springs upright, dew drops shaking loose and running off, the light swinging across it
+negative: |-
+  splitting leaf, dividing leaf, duplicate leaves, extra leaves appearing, second sprout, leaf multiplying, changing leaf count, morphing silhouette, new subjects, scene change, people, hands, girl, light trails, tree, photorealism, 3D render look, text, 静态, 静止, 静止不动的画面, frozen frame, still image, no motion, photorealistic, photograph, live action, film still, 3D render, CGI, octane, realistic skin texture, depth of field bokeh, motion blur, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage

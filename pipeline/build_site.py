@@ -248,6 +248,44 @@ form.compose .hint { font: 500 .78rem/1.6 var(--mono); color: var(--faint); marg
 .pair .two figcaption { font: 600 .74rem/1.55 var(--mono); color: var(--faint); margin-top: .4rem; }
 .pair .two .k { display: block; color: var(--ink); letter-spacing: .1em; text-transform: uppercase; }
 .pair .why { color: var(--muted); font-size: .94rem; }
+
+/* ---- the morning checklist: the questions, above the films that raised them ---- */
+/* Ordered by what it costs him to answer, not by what it cost us to make. The
+   page below is the evidence; this is the ask. */
+.check { margin: 1.4rem 0; padding: 1.1rem 1.2rem; background: var(--panel);
+  border: 1px solid var(--line); border-left: 3px solid var(--sap); border-radius: 16px; }
+.check > h3 { margin: .1rem 0 .5rem; font-size: 1.06rem; }
+.check .n { display: inline-block; min-width: 1.6rem; margin-right: .4rem; color: var(--sap);
+  font: 800 .82rem/1.6 var(--mono); letter-spacing: .04em; vertical-align: .12em; }
+.check .why, .check p { color: var(--muted); font-size: .94rem; }
+.check .two { display: flex; flex-wrap: wrap; gap: 1rem; margin: .9rem 0 .2rem; }
+.check .two figure { margin: 0; flex: 1 1 190px; max-width: 230px; }
+.check .two video { width: 100%; aspect-ratio: 9 / 16; display: block; border-radius: 12px;
+  background: var(--code-bg); border: 1px solid var(--line); }
+.check .two figcaption { font: 600 .74rem/1.55 var(--mono); color: var(--faint); margin-top: .4rem; }
+.check .two .k { display: block; color: var(--ink); letter-spacing: .1em; text-transform: uppercase; }
+/* A contact sheet is wide and detailed — it gets the full column and its own
+   scroll rather than being squeezed into a phone-shaped box like a clip. */
+.check .sheets figure { margin: 0 0 1.1rem; max-width: none; overflow-x: auto; }
+.check .sheets img { display: block; width: 100%; min-width: 520px; height: auto;
+  border-radius: 12px; border: 1px solid var(--line); background: var(--code-bg); }
+.check .voices figure { margin: 0 0 .8rem; max-width: none; }
+.check .voices audio { width: 100%; max-width: 420px; display: block; }
+/* Opens a labelled run of items — episode 2's questions are real but they do
+   not block the cut, so they are visibly a second block and not more of the first. */
+h3.run { margin: 2.4rem 0 .2rem; padding-top: 1.2rem; border-top: 1px solid var(--line);
+  font: 700 .78rem/1.6 var(--mono); letter-spacing: .14em; text-transform: uppercase;
+  color: var(--faint); }
+/* Absent evidence is stated in the item that needed it, never left to be
+   inferred from a section that is quietly shorter than it should be. */
+.check .gap { border: 1px dashed var(--sap-deep); background: var(--panel-2);
+  border-radius: 12px; padding: .7rem .9rem; margin: .8rem 0 .2rem;
+  font-size: .92rem; color: var(--muted); }
+/* The left bar carries the item's state so the shape of the morning is legible
+   before a word is read: amber = he has to answer, green = already answered and
+   only being confirmed, dim = nothing to do here yet. */
+.check.settled { border-left-color: var(--leaf); }
+.check.gapbar { border-left-color: var(--sap-deep); }
 """
 
 
@@ -1668,6 +1706,34 @@ def render_review() -> str:
         pos = poster(src, f"review/posters/{Path(rel).stem}.jpg", fallback=still_for(src))
         return rel, pos
 
+    def serve_image(rel: str):
+        """The same copy-and-record contract as serve(), for a contact sheet.
+
+        A separate function and not a branch inside serve(), because the two
+        differ in the only part that matters: a clip needs a frame extracted to
+        stand in for it, and a sheet already IS the picture. Everything that
+        makes serve() trustworthy is kept — the licence gate decides, the
+        provenance record travels beside the file, and a withheld or absent
+        sheet lands in the same two lists as a withheld or absent clip, so the
+        page reports a missing candidate frame exactly as loudly as it reports
+        a missing cut.
+        """
+        src = CUTS / rel
+        if not src.exists():
+            missing.append(rel)
+            return None
+        ok, why = publishable(src)
+        if not ok:
+            withheld.append((rel, why))
+            return None
+        dst = outdir / rel
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy(src, dst)
+        side = lg.sidecar_for(src, lg.META_EXT)
+        if side:                               # records always travel (§7.2)
+            shutil.copy(side, dst.with_name(side.name))
+        return rel
+
     def rec_link(rel: str) -> str:
         # THE SAME LOOKUP serve() COPIES WITH, deliberately: serve writes the
         # record out under `side.name`, so a link built by any other rule can
@@ -1678,6 +1744,110 @@ def render_review() -> str:
             return ""
         href = (Path(rel).parent / side.name).as_posix()
         return f' · <a href="{html.escape(href)}">provenance</a>'
+
+    # ---- HIS MORNING CHECKLIST ----------------------------------------------
+    # Why this sits ABOVE the cuts rather than under them. On the evening of
+    # 2026-08-07 the author refused v32 with an itemised list, work started on
+    # every item that night, and by morning the page below held three cuts, ten
+    # comparison pairs and no statement of what was actually being ASKED of him.
+    # A screening surface that shows everything asks for nothing: he has to
+    # reconstruct the question from the evidence, which is our job and not his.
+    #
+    # THE ITEM COUNT IS NOT FIXED, AND SHRINKING IT IS THE NORMAL OUTCOME. Two
+    # of the questions drafted for this list were deleted before it was built,
+    # because he had already answered both in the hours between the screening
+    # and the build — the push-in rate ("simply make the zoom speed moderate")
+    # and the 7/8/9 approach ("alright, shot progression"). Putting either in
+    # front of him would have re-asked a closed question using the artifact he
+    # closed it with. An item earns its place by being genuinely open THIS
+    # MORNING; `state: settled` is for the ones we are only confirming we heard
+    # right, and those are cheap to leave in because they cost him a glance.
+    #
+    # `pending:` IS THE HONEST HALF. An item whose evidence has not landed
+    # renders its `pending:` text and nothing else — it does not quietly vanish,
+    # because a checklist that hides its own gaps is how "seven new frames" turns
+    # into a morning of finding out there are none. Filling the gap later is a
+    # yaml edit: drop the file into `cuts/` with a sidecar and name it under
+    # `sheets:` or `clips:`.
+    checks = []
+    ck = cfg.get("checklist") or {}
+    for i, it in enumerate(ck.get("items") or [], 1):
+        state = str(it.get("state", "")).strip().lower()
+        klass = "check" + (f" {state}bar" if state == "gap" else
+                           " settled" if state == "settled" else "")
+        chip = str(it.get("chip", "")).strip()
+        chip_html = (f' <span class="chip{" hot" if state not in ("settled", "gap") else ""}">'
+                     f'{html.escape(chip)}</span>') if chip else ""
+        body_md = md_to_html(str(it.get("body", "")))
+
+        # Clips and sheets are both optional and both degrade the same way: a
+        # named file that is not there is reported, and an item with nothing
+        # named simply has no media row.
+        cells = ""
+        for c in it.get("clips") or []:
+            got = serve(str(c["file"]))
+            if not got:
+                continue
+            rel, pos = got
+            cells += (f'<figure><video controls playsinline preload="none" muted'
+                      f'{poster_attr(pos, "../")} src="{html.escape(rel)}"></video>'
+                      f'<figcaption><span class="k">{html.escape(str(c.get("label", "")))}</span>'
+                      f'{html.escape(str(c.get("note", "")))}{rec_link(rel)}</figcaption></figure>')
+        clips_html = f'<div class="two">{cells}</div>' if cells else ""
+
+        sheets = ""
+        for s in it.get("sheets") or []:
+            rel = serve_image(str(s["file"]))
+            if not rel:
+                continue
+            sheets += (f'<figure><img src="{html.escape(rel)}" loading="lazy" '
+                       f'alt="{html.escape(str(s.get("alt", s.get("label", "candidate frames"))))}">'
+                       f'<figcaption><span class="k">{html.escape(str(s.get("label", "")))}</span>'
+                       f'{html.escape(str(s.get("note", "")))}{rec_link(rel)}</figcaption></figure>')
+        sheets_html = f'<div class="sheets">{sheets}</div>' if sheets else ""
+
+        # Narration is judged by ear, so it gets a real player rather than a
+        # link. Same gate, same travelling record: a voice take whose engine
+        # licence does not clear is withheld exactly like a clip.
+        auds = ""
+        for a in it.get("audio") or []:
+            rel = serve_image(str(a["file"]))       # copy-and-record, no poster
+            if not rel:
+                continue
+            auds += (f'<figure><audio controls preload="none" '
+                     f'src="{html.escape(rel)}"></audio>'
+                     f'<figcaption><span class="k">{html.escape(str(a.get("label", "")))}</span>'
+                     f'{html.escape(str(a.get("note", "")))}{rec_link(rel)}</figcaption></figure>')
+        audio_html = f'<div class="voices">{auds}</div>' if auds else ""
+
+        # The gap note prints when the item said it was waiting on something AND
+        # nothing arrived. If evidence did land, the note is dropped rather than
+        # left standing next to the thing it claims is absent.
+        gap = (f'<p class="gap">{inline_md(str(it["pending"]))}</p>'
+               if it.get("pending") and not (cells or sheets or auds) else "")
+
+        # `heading:` opens a labelled run of items. Episode 2's questions are
+        # real but they do not block v33, so they sit under their own heading
+        # below the ones that do — if he only has ten minutes, they should go on
+        # the cut he already refused, not on the next episode.
+        if it.get("heading"):
+            h = it["heading"]
+            checks.append(f'<h3 class="run">{html.escape(str(h.get("title", "")))}</h3>'
+                          + md_to_html(str(h.get("intro", ""))))
+
+        checks.append(
+            f'<div class="{klass}"><h3><span class="n">{i:02d}</span>'
+            f'{html.escape(str(it.get("ask", "")))}{chip_html}</h3>'
+            f'{body_md}{clips_html}{sheets_html}{audio_html}{gap}</div>')
+
+    checklist_html = ""
+    if checks:
+        checklist_html = (
+            '<div class="cut" id="checklist">'
+            f'<h2>{html.escape(str(ck.get("title", "Your pass")))}</h2>'
+            f'{md_to_html(str(ck.get("intro", "")))}{"".join(checks)}'
+            + (f'{md_to_html(str(ck.get("outro", "")))}' if ck.get("outro") else "")
+            + '</div>')
 
     sections = []
     for cut in cfg.get("cuts") or []:
@@ -1788,6 +1958,7 @@ def render_review() -> str:
             f'<h1>{html.escape(str(meta.get("title", "Working cuts")))}</h1>'
             f'{md_to_html(str(meta.get("why", "")))}'
             f'{notices}'
+            f'{checklist_html}'
             f"{''.join(sections)}"
             f"{''.join(groups)}"
             + '<div class="cut"><h2>Receipts</h2>'

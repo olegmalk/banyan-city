@@ -1,0 +1,14 @@
+# Shot provenance (7.2) — written by hold_still at build time
+platform: local-deterministic (pipeline/hold_still.py, ffmpeg)
+model: none
+model_licence: n/a — inherits the still's licence, see stills/README.md
+note: held still + code push-in, no video model ran
+shot_beat: 5
+size: 704x1280
+seconds: 2.5833
+zoom: push-in 12.0% over 2.5833s, 4.65%/s, linear, centred, monotonic (never reverses)
+source_still: 05-fan-spinning-down.png
+cost_usd: 0
+prompt: |-
+  (none — the approved still is held; nothing was generated)
+negative: ''
