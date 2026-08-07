@@ -15,10 +15,10 @@
 # passed still never becomes THE episode without his verdict.
 pending:
   - id: v6-verdict
-    title: "Watch the finished episode 1 remake and say yes or no"
-    detail: "Fifteen shots, approved and assembled with new narration — and not watched yet. Two versions are waiting: the August remake, and the same cut with its four held stills animated instead. Both now sit on a review page on this site, playable on a phone, each stamped as a working cut the author has not passed. A yes on one of them is what unblocks posting."
+    title: "Say yes or no on episode 1 — the next cut, built from the notes you gave"
+    detail: "Answered once and the answer was no. On the evening of 2026-08-07 the author watched the assembled remake and turned it down with a specific list rather than a shrug: the camera moves are far too slow; one scene reads as a laboratory when it is supposed to be inside a house; another shows a leaf in a shot where the character is looking at the sky, which cannot be what he is seeing; one shot drains the colour out of the show; three consecutive shots are the same picture; two more change the setting and the look entirely; one he could not identify at all; one earlier change he asked to be undone, because it was fixing a fault that was never there. Every one of those is now work in hand — new drawings for the shots he named, a faster camera move, three shots reworked as a wide-medium-close progression, and the wrong fix reverted. A rebuilt cut goes back on the review page for the same yes or no. That yes is still the only thing that unblocks posting, and nothing goes out until a cut has one."
     public: "review/index.html"
-    link_text: "watch the working cuts"
+    link_text: "the review page — still showing the turned-down cut until the new one lands"
     since: 2026-07-29
   - id: bakeoff-pick
     title: "Choose which AI model draws the show from now on"

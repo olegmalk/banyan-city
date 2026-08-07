@@ -1616,22 +1616,32 @@ def test_ltx_jobs_list_is_one_beat_per_entry(tmp: Path):
            "two beats writing the same file is refused")
 
 
-def test_beat11_negatives_name_the_mitosis(tmp: Path):
-    """Beat 11's leaf divides in two, and until 2026-08-07 nothing forbade it.
+def test_beat11_direction_is_the_founders_revert(tmp: Path):
+    """Beat 11's "mitosis" was never there, and the fix for it made the beat worse.
 
-    The founder: "why did we never fix the mitosis?" The answer was in the inputs
-    — the direction asks for a SHAPE CHANGE ("unfurls", "springs upright"),
-    antistatic_for() correctly forbids stillness, and the negative held nothing
-    at all about leaf COUNT. Told to change shape and denied the option of holding
-    still, the cheapest thing a leaf can do is become two leaves. The metric
-    scored that 2.36, the highest in the episode.
+    This test replaces test_beat11_negatives_name_the_mitosis, which held the
+    opposite and was right for about eight hours. The founder, screening v32 on
+    2026-08-07: "beat 11 actually became worse when we wrongly fixed 'mitosis'
+    which was never there, so you should revert it." Two rulings in one sentence
+    — the defect was not a defect, and the eight anti-leaf-count terms authored
+    against it cost the beat something visible — and both are R4's.
+
+    WHY A TEST AND NOT JUST A REVERT. Everything that argued for those terms is
+    still true and still on the record: the f15 take really does show a third
+    shape at the apex around frame 20, the frame table in STATE.md 2026-08-07
+    really was counted, and the 2.36 median really was the episode's highest. A
+    reader who finds that evidence and re-adds the terms will believe they are
+    fixing a regression. They are not. Measurement does not outvote the author on
+    a taste call; that is the same order as "a metric agreeing with me is not a
+    sample" (CLAUDE.md).
 
     What this holds, on the real genome rather than a fixture:
-      1. the leaf-count terms are still authored (deleting them is the regression)
-      2. they reach the NEGATIVE, and the positive stays free of them — the
-         "no new subjects" bug, which asked for the thing it forbade
-      3. they lead, where the cap cannot reach them
-      4. anti-static survives, so the fix cannot quietly freeze the beat
+      1. the direction is the pre-fix sentence, exactly
+      2. not one of the eight terms is anywhere in either prompt
+      3. anti-static still applies, so the revert did not freeze the beat
+      4. BEAT 9 IS NOT REVERTED WITH IT. He corrected the beat number himself
+         ("i was talking about BEAT 9"), that re-render was screened and kept,
+         and a tidying sweep across "both leaf beats" would undo it.
     """
     sys.path.insert(0, str(REPO / "pipeline"))
     import video_task as vt
@@ -1643,20 +1653,25 @@ def test_beat11_negatives_name_the_mitosis(tmp: Path):
     pos, neg = vt.video_prompt(f"{direction}. no new subjects, no scene change",
                                shot["prompt"], no_anchor=True, beat=11)
 
-    WANTED = ("splitting leaf", "dividing leaf", "duplicate leaves",
-              "extra leaves appearing", "second sprout", "leaf multiplying",
-              "changing leaf count", "morphing silhouette")
-    absent = [w for w in WANTED if w not in neg]
-    for w in absent:
-        print(f"      x  beat 11's negative no longer says '{w}'")
-    check("beat 11 forbids the leaf dividing", not absent)
-    check("none of it leaked into the positive prompt",
-          not any(w in pos for w in WANTED))
-    check("the leaf-count terms lead the negative",
-          neg.startswith("splitting leaf"))
+    PRE_FIX = ("the new leaf unfurls in a fast sweep and springs upright, dew drops "
+               "shaking loose and running off, the light swinging across it")
+    check("beat 11's direction is the founder's pre-fix text", direction == PRE_FIX)
+
+    REVERTED = ("splitting leaf", "dividing leaf", "duplicate leaves",
+                "extra leaves appearing", "second sprout", "leaf multiplying",
+                "changing leaf count", "morphing silhouette")
+    present = [w for w in REVERTED if w in neg or w in pos]
+    for w in present:
+        print(f"      x  beat 11 says '{w}' again — the founder reverted that")
+    check("the leaf-count terms are gone from beat 11", not present)
     check(f"beat 11's negative still fits ({len(neg)}/{vt.NEG_MAX} chars)",
           len(neg) <= vt.NEG_MAX)
     check("beat 11 is still forbidden to freeze", "frozen frame" in neg)
+
+    # The revert is beat 11's alone. Beat 9's terms were screened and kept.
+    b9 = vt.motion_directions(node).get(9, "")
+    check("beat 9 keeps the growth terms the founder did ask for",
+          "no growing stem" in b9 and "no extra stem nodes" in b9)
 
 
 def test_beat09_negatives_forbid_the_growth(tmp: Path):
@@ -2732,7 +2747,7 @@ def main():
     with tempfile.TemporaryDirectory() as td:
         test_ltx_jobs_list_is_one_beat_per_entry(Path(td))
     with tempfile.TemporaryDirectory() as td:
-        test_beat11_negatives_name_the_mitosis(Path(td))
+        test_beat11_direction_is_the_founders_revert(Path(td))
         test_beat09_negatives_forbid_the_growth(Path(td))
         test_hosted_path_sends_our_negative(Path(td))
         test_antistatic_first_signal_wins(Path(td))

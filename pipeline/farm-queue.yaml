@@ -204,10 +204,12 @@ backlog:
   needs: []
   gate: founder
   gate_ref: >-
-    pending-founder.yaml id v6-verdict. Neither cut has been watched —
-    ep1-v30-fixed.mp4 (89s, 15 beats, rendered 2026-08-04) or
-    ep1-v31-animated.mp4 (89.96s, four held beats animated, 2026-08-07).
-    One 90-second watch clears it.
+    pending-founder.yaml id v6-verdict. UPDATED 2026-08-07 evening: this used to
+    read "neither cut has been watched", and that is no longer true. v32 WAS
+    watched and was REJECTED, itemised — seven frames, the zoom rate, and a
+    revert (STATE.md 2026-08-07 evening). So the gate is no longer one 90-second
+    watch of something that already exists; it is a yes on the replacement cut,
+    ep1-v33-assemble-1786124760. Nothing here may run off v30, v31 or v32.
   window: any
   est_minutes: 45
   cmd: >-
@@ -323,12 +325,15 @@ backlog:
     The code gate is CLEARED (2026-08-07: --jobs on both ltx_i2v stages, dispatch
     in video_task.run, one beat verified end-to-end through the new path against
     SAMPLES/ltx23fp8-production-b1-s20260732.mp4). What is left is a taste call and
-    it is R4's. Episode 1 already exists as v32, rendered on the 5B, and it is the
-    cut sitting in pending-founder.yaml `v6-verdict` waiting to be watched — so
-    re-rendering its beats on a different model would replace the thing being judged
-    while the judgement is open. LTX is cleared on ONE beat's look, not on an
-    episode's. Order: v6-verdict first, then this ONE beat, then his verdict on it,
-    and only then a fifteen-beat batch (ONE SAMPLE BEFORE ANY BATCH, CLAUDE.md).
+    it is R4's. UPDATED 2026-08-07 evening: this used to say v32 was "waiting to be
+    watched". It was watched, and REJECTED itemised — seven frames, the zoom rate,
+    a revert (STATE.md 2026-08-07 evening). The ordering argument is UNCHANGED and
+    if anything stronger: the cut being judged is now v33, whose whole purpose is to
+    answer his list on the frames, so re-rendering those same beats on a different
+    model mid-list would change two things at once and answer neither. LTX is
+    cleared on ONE beat's look, not on an episode's. Order: v33 passes, then this
+    ONE beat, then his verdict on it, and only then a fifteen-beat batch (ONE
+    SAMPLE BEFORE ANY BATCH, CLAUDE.md).
   window: any
   est_minutes: 30
   video: true
@@ -721,3 +726,99 @@ backlog:
     never read, for a model that is not in its table, and report nothing unusual —
     so provenance integrity currently rests on the substring accident landing our
     way.
+
+# ---- THE v32 REJECTION, 2026-08-07 evening ----------------------------------
+# The founder watched the assembled cut and turned it down with an itemised list,
+# not a shrug. Verbatim, because every entry below is one line of it: "zooms are
+# way too slow ... Beat 3 looks more like a terminal in some.. lab. not realistic
+# ... make a new image for it and make sure it looks like its inside a house. for
+# beat 6, there shouldnt be a leaf in the image, doesnt make sense that he can see
+# himself when he is looking at the sky. beat 7 makes everything look grayened ...
+# it drastically changes the style. also i noticed that beat 7, 8, 9 are basically
+# the same picture ... for beat 10, another major style change and it looks a
+# sapling in the middle of a long body of water, with a blank dark background ...
+# beat 12 ... looks like the sapling is in a dark place, with a dry cracked and
+# gray floor, completely changes the enviroment, gotta regenerate that. beat 14
+# is.. i dont know what?? ... i think you need to regenerate it. and for beat 15,
+# why is it showing the underground? i think it should show the sapling".
+# Beat 11 is in that list too and is NOT queued work: he asked for a revert and it
+# is done in this same commit. Full text and the beat-by-beat reading: STATE.md
+# 2026-08-07 evening. The verdict on the cut itself stays open as
+# pending-founder.yaml v6-verdict — answered "no, with a work list", not retired.
+
+# STILLS. Six beats get a new frame and three of them get one composition between
+# them, which is why this is ONE entry and not seven: beat 7 appears on both
+# halves of his list — it is the grey one AND the first of the three identical
+# ones — so its replacement has to satisfy both at once or the next screening gets
+# the same note back. The 7/8/9 answer is the lead's recommendation and the
+# founder picks in the morning: one scene, one light, three distances — wide (7),
+# medium (8), close (9) — so the three shots read as a camera moving in rather
+# than three attempts at one picture.
+- id: ep1-stills-rework-1786124640
+  runner: manual
+  worker: rtx5090
+  needs: [cuda]
+  window: any
+  est_minutes: 90
+  cmd: >-
+    regenerate the conditioning frames for beats 3, 6, 10, 12, 14 and 15 of node
+    001 against his notes — 3 unmistakably indoors, 6 with no leaf in a sky shot,
+    10 and 12 back inside the show's palette and environment, 14 legible as
+    something, 15 at surface level with the arriving presence entering frame
+    (warm glow at the frame edge, soil trembling) rather than underground — and
+    render the 7/8/9 progression as one scene at three distances; several
+    candidates per beat, contact sheet for one screening pass
+  why: >-
+    Seven of the fifteen shots in the cut the founder just refused are refused on
+    the frame, not on the motion, so no re-render, no re-assembly and no posting
+    can start from the frames now in the tree. The consumer is the replacement cut
+    (ep1-v33-assemble-1786124760) and, behind it, pending-founder.yaml v6-verdict.
+
+# THE ZOOM. His first sentence and the only note that touches every shot at once:
+# "zooms are way too slow." The held beats' push-in is a single number in
+# hold_still.py, so this is a rate re-pick and not a re-render of anything — and
+# it is a PICK, R4's, which is why the work here stops at producing the variants.
+# Do not settle it on a measurement; the last time the steward chose a motion
+# recipe on its own metric it lost an hour and fifteen beats (CLAUDE.md).
+- id: held-zoom-rate-repick-1786124700
+  runner: manual
+  worker: m1pro
+  needs: []
+  window: any
+  est_minutes: 25
+  cmd: >-
+    render one held beat at a spread of push-in rates well above the current one,
+    put the variants side by side on the review surface, and let him pick the rate
+    — then apply the picked number in hold_still.py, once
+  why: >-
+    Every held shot in the episode moves at a rate the author has now called far
+    too slow, so the number is wrong in the cut he refused and in every cut built
+    from it; variants are in production tonight and the pick is his in the
+    morning. The consumer is ep1-v33-assemble-1786124760.
+
+# THE REPLACEMENT CUT. Gated and deliberately so: this is the one job tonight that
+# cannot start, because two of its three inputs are founder picks that do not
+# exist until morning. `gate:` and not `after:` for the reason the header gives —
+# a manual job never writes a DONE heartbeat line, so an `after:` on the two
+# entries above would read as waiting forever.
+- id: ep1-v33-assemble-1786124760
+  runner: manual
+  worker: m1pro
+  needs: []
+  gate: founder
+  gate_ref: >-
+    Two morning picks off tonight's candidates: the replacement frames from
+    ep1-stills-rework-1786124640 (including which of the 7/8/9 progressions he
+    wants) and the push-in rate from held-zoom-rate-repick-1786124700. Behind
+    both, pending-founder.yaml v6-verdict — which this cut is what will finally
+    answer, since v32 answered it "no".
+  window: any
+  est_minutes: 60
+  cmd: >-
+    re-render the reworked beats from the approved frames, then assemble
+    ep1-v33 with render_t3, publish it to the review area as a working cut, and
+    write no T3 leaf until he passes it
+  why: >-
+    The founder's list is itemised, so the answer to it is a whole cut and not
+    seven loose clips; v33 is the thing he says yes or no to next, and posting has
+    been blocked on that yes since 2026-07-29.

@@ -2835,3 +2835,105 @@ call — `C:\banyan-video\venv` imports neither package, checked afterwards.
 (179s → 137s), so roughly **10 minutes off a fifteen-beat episode**, for rms
 4.29 of drift on a clip nobody has looked at yet. That is the trade; the
 decision is not a measurement and does not happen here.
+
+## 2026-08-07 evening — the founder screened v32 and said no, itemised: seven frames, the zoom rate, and one fix of ours he ordered reverted
+
+**v6-verdict is answered, and the answer is "no — with a work list".** The cut
+that has been waiting in his inbox since 2026-07-29 was watched. It is REJECTED
+as a cut. This is the good version of a no: nothing here is vague, and every
+line of it is a job.
+
+**Verbatim (Roman, R4, 2026-08-07 evening), because the paraphrase is where a
+taste note goes to die:**
+
+> zooms are way too slow. Beat 3 looks more like a terminal in some.. lab. not
+> realistic. whatever you intended it to be, you should make a new image for it
+> and make sure it looks like its inside a house. for beat 6, there shouldnt be a
+> leaf in the image, doesnt make sense that he can see himself when he is looking
+> at the sky. beat 7 makes everything look grayened. thats not a bad thing but the
+> main problem is that it drastically changes the style. also i noticed that beat
+> 7, 8, 9 are basically the same picture. […] for beat 10, another major style
+> change and it looks a sapling in the middle of a long body of water, with a
+> blank dark background. beat 11 actually became worse when we wrongly fixed
+> "mitosis" which was never there, so you should revert it. beat 12 follows the
+> style well but looks like the sapling is in a dark place, with a dry cracked and
+> gray floor, completely changes the enviroment, gotta regenerate that. beat 14
+> is.. i dont know what?? what is it supposed to be? i think you need to
+> regenerate it. and for beat 15, why is it showing the underground? i think it
+> should show the sapling, no? well, you can decide.
+
+**The list, sorted into what it actually asks for:**
+
+| his note | what it is | who answers it |
+|---|---|---|
+| "zooms are way too slow" | one number, every held shot | variants tonight, his pick in the morning |
+| beat 3 reads as a lab, not a house | new frame | new frame tonight |
+| beat 6 has a leaf in a sky shot | new frame — he is looking UP, so the leaf cannot be what he sees | new frame tonight |
+| beat 7 greys the whole show | new frame; "thats not a bad thing" but it breaks style continuity | new frame tonight |
+| beats 7, 8, 9 are the same picture | one composition problem across three shots | the 7/8/9 progression, below |
+| beat 10 — style change, sapling in a long body of water, blank dark background | new frame | new frame tonight |
+| beat 11 got WORSE from our "mitosis" fix, and the mitosis was never there | a revert, not a render | **done, this commit** |
+| beat 12 — dark place, dry cracked grey floor, wrong environment | new frame | new frame tonight |
+| beat 14 — "i dont know what??" | new frame | new frame tonight |
+| beat 15 shows the underground; "should show the sapling, no? well, you can decide" | delegated | the lead decided — below |
+
+**Two calls he handed over, and both are recorded as OURS so he can overrule
+them cheaply.** On 7/8/9 he asked for ideas and the lead recommended a shot
+progression: one scene, one light, three distances — wide (7), medium (8), close
+(9) — so the run reads as a camera moving in rather than three attempts at the
+same picture. He picks in the morning from tonight's candidates. On 15 he said
+"you can decide": the lead decided **sapling at surface level, with the arriving
+presence entering the frame** — warm glow at the frame edge, soil trembling —
+rather than the underground view that is there now. Beat 15 is the closing hook;
+the hook is the arrival, and it should be seen from where the sapling is.
+
+**Beat 7 is on the list twice and that is the trap in this wave.** It is the grey
+one and it is the first of the three identical ones. One replacement frame has to
+satisfy both notes at once, or the next screening gets the same note back.
+
+**BEAT 11 IS REVERTED, and the interesting half is why the revert is right when
+the measurement was not wrong.** `motion.yaml` beat 11 is back to its pre-fix
+text — *"the new leaf unfurls in a fast sweep and springs upright, dew drops
+shaking loose and running off, the light swinging across it"* — and the eight
+anti-leaf-count terms added this morning (`5c0a8d3`) are gone: *no splitting
+leaf, no dividing leaf, no duplicate leaves, no extra leaves appearing, no second
+sprout, no leaf multiplying, no changing leaf count, no morphing silhouette*.
+
+Everything that argued for those terms is still on the record and still true.
+The f15 take really does show a third shape at the apex from about frame 20, the
+frame-by-frame table earlier in this file really was counted at 4x, and 2.36 really
+was the episode's highest motion median. **None of that is the verdict.** The
+author who owns this beat looked at both clips and says the original is the one
+that works and the fault was never there — that is R4, and a frame count does not
+outvote it. Same order as the standing rule one level up: a metric agreeing with
+the steward is not a sample.
+
+- **`review/beat-11-grow.mp4` is the founder-preferred take.** It is the clip
+  already in v30/v31/v32 and it stays in the next cut.
+- **`review/11-grow-antisplit.mp4` is REJECTED.** Kept on disk with its sidecar,
+  not deleted: it is the evidence for what the terms did, and deleting a rejected
+  experiment is how the next reader re-runs it.
+- **Beat 9 is NOT reverted with it.** He corrected the beat number himself this
+  morning — *"that's not the beat i was talking about. i was talking about BEAT
+  9"* — and that re-render was screened and kept. Beat 9's growth terms stand. A
+  tidying sweep across "both leaf beats" would undo a change he asked for.
+- `test_beat11_negatives_name_the_mitosis` held the opposite and was right for
+  about eight hours. It is replaced by
+  **`test_beat11_direction_is_the_founders_revert`**, which pins the pre-fix
+  sentence, asserts none of the eight terms is in either prompt, checks the beat
+  is still forbidden to freeze, and checks beat 9 still carries its own terms —
+  so the next reader who finds the frame table cannot "fix the regression" back.
+
+**What is queued, and none of it waits for morning except the assembly.** Three
+entries in `pipeline/farm-queue.yaml`:
+`ep1-stills-rework-1786124640` (the six new frames plus the 7/8/9 progression,
+running tonight), `held-zoom-rate-repick-1786124700` (push-in variants tonight,
+his pick in the morning), and `ep1-v33-assemble-1786124760`, which is `gate:
+founder` because two of its three inputs are picks that do not exist until he
+makes them.
+
+**Posting stays gated.** `pending-founder.yaml v6-verdict` is NOT retired — the
+yes/no on a cut is his and always was. Its detail now says the cut was watched
+and refused, names what he refused it for, and says a rebuilt cut replaces it.
+No T3 leaf, no publication and no distribution step happens off v32, and none
+happens off v33 either until it has a yes.
