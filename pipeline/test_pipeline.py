@@ -1868,15 +1868,22 @@ def test_review_page_publishes_nothing_unprovenanced():
         print("      no sidecar:", ", ".join(bare[:6]))
 
     # The licence is classified off the record this test FOUND, not by calling
-    # publishable(). Deliberate, and it is the whole reason this assertion is
-    # worth anything: publishable() looks its sidecar up by stem only
-    # (`f.with_suffix('.meta.yaml')`), so a full-name record —
-    # `beat-05-HELD-moderate.mp4.meta.yaml`, which is what hold_still and
-    # video_task write — is invisible to it, and it returns "publishable, no
-    # sidecar" for a file that is in fact fully documented. Every clip on the
-    # checklist is that shape. Calling publishable() here would therefore assert
-    # nothing at all while looking like it asserted everything: green because
-    # the gate never read the file, not because the licence cleared.
+    # publishable().
+    #
+    # This was once a workaround and is now belt-and-braces, and the note is
+    # kept because the reason it was written matters. publishable() used to look
+    # its sidecar up by stem only (`f.with_suffix('.meta.yaml')`), so a
+    # full-name record — `beat-05-HELD-moderate.mp4.meta.yaml`, which is what
+    # hold_still and video_task write, and which every clip on the checklist
+    # is — was invisible to it and it returned "publishable, no sidecar" for a
+    # fully documented file. Calling it here would have asserted nothing while
+    # looking like it asserted everything: green because the gate never read the
+    # file, not because the licence cleared.
+    # FIXED 2026-08-07 — publishable() now routes through lg.sidecar_for() and
+    # sees both shapes (test_licence_gate pins it). Reading the record directly
+    # is kept anyway: this test's job is that the PUBLISHED SET is clean, and it
+    # should keep answering that question on its own evidence rather than
+    # inheriting whatever the gate currently believes.
     blocked = []
     for n in present:
         side = lg.sidecar_for(cuts_dir / n, lg.META_EXT)
@@ -3055,6 +3062,42 @@ def test_licence_gate(tmp: Path):
     # and the founder's switch must not be narrowed by any of the above
     check("scan() keeps its two-value contract for callers that only ask 'ships?'",
           len(lg.scan(tmp / "cand-takes")) == 2)
+
+    # ---- the publish gate this scoping RESTS ON must be able to read ---------
+    # takes/ is exempt from the debt count only because publishable() withholds
+    # an unpublishable candidate from the site. That premise was false until
+    # 2026-08-07: publishable() looked its sidecar up with f.with_suffix(), which
+    # REPLACES the final extension instead of appending, so it could only ever
+    # build `06-blue.meta.yaml` and never `06-blue.png.meta.yaml` — the shape
+    # hold_still, video_task and the farm's stills all write. A missing sidecar
+    # takes publishable()'s "unprovenanced is the gate's finding" branch and
+    # returns True, so the newer naming convention did not merely go unchecked:
+    # writing a correct record was the thing that made the frame publishable.
+    # The fifth stem-only reader of the five, and the only one on the gate.
+    import build_site as _bs
+    stills_dir = tmp / "pub-gate"
+    stills_dir.mkdir(parents=True, exist_ok=True)
+    frame = stills_dir / "06-blue.png"
+    frame.write_bytes(b"png")
+    check("a frame with no record at all is the gate's finding, not the build's",
+          _bs.publishable(frame) == (True, ""))
+    (stills_dir / "06-blue.png.meta.yaml").write_text(RAIL)
+    ok, why = _bs.publishable(frame)
+    check("a FULL-NAME sidecar carrying a withheld licence blocks publication",
+          ok is False and "RAIL" in why)
+    # the older stem shape must keep working — this is a widening, not a swap
+    frame2 = stills_dir / "07-green.png"
+    frame2.write_bytes(b"png")
+    (stills_dir / "07-green.meta.yaml").write_text(RAIL)
+    check("...and the stem-shape sidecar still blocks it too",
+          _bs.publishable(frame2)[0] is False)
+    # a full-name sidecar naming a CLEARED model must still publish, or the fix
+    # would just be a blanket refusal wearing a reader's clothes
+    frame3 = stills_dir / "08-ok.png"
+    frame3.write_bytes(b"png")
+    (stills_dir / "08-ok.png.meta.yaml").write_text("model: aidealab/AnimeGen-I2V\n")
+    check("a full-name sidecar naming an Apache-2.0 model still publishes",
+          _bs.publishable(frame3) == (True, ""))
 
     # and the real tree, which is a RATCHET, not a pass/fail. The gate's first
     # full run (2026-08-01) found 46 violations, every one of them pre-existing
