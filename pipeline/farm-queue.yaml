@@ -501,26 +501,29 @@ backlog:
     applying, and distill LoRAs are documented to slow motion — the exact defect
     the K recipe was rejected for.
 
-# UNGATED 2026-08-07 with b09-antigrowth-1786089660, and this entry is the one
-# the unblock mattered most to. Its gate read: the same rtx5090 Smart App Control
-# enforcement, and doubly so — SageAttention ships as an unsigned prebuilt
-# Windows wheel into a new venv, which is exactly what the policy blocks. With
-# the policy Off and verified, a fresh venv can install and import that wheel.
-# Nothing else was holding this row, so it is runnable work now, not a plan.
-- id: t4-sageattention-1786090320
-  runner: manual
-  worker: rtx5090
-  needs: [cuda, vram20]
-  window: any
-  est_minutes: 45
-  cmd: >-
-    separate venv (the wheel pins the torch line), then one beat-1 clip at the
-    production 704x1280 14-step recipe, timed against the measured 5B baseline
-  why: >-
-    The section 1 row claims about 35% on our exact card and the claim is
-    mobcat40's, not ours; per-beat cost sets every episode's render budget. On
-    sm_120 force the Triton kernel — lightx2v routes capability (12,0) away from
-    the CUDA dispatch — coerce k and v to q's dtype, and never hand fp32 to sage.
+# RETIRED 2026-08-07 — t4-sageattention-1786090320, done by b0129b9 (`sage is
+# worth 31.6% a step, and the kernel we called "the fix" returns garbage`).
+# Measured: 5.86 s/it against the control's 8.57 (−31.6%), drift rms 4.293/255,
+# no VRAM cost, and the run-to-run floor proved to be zero so the drift is the
+# kernel's. Two rows in MODEL-COMPARISON §1, sources in bench-platform/t4-*.
+# The unblock this row waited on (Smart App Control) was real and was the whole
+# gate: an unsigned prebuilt wheel into a fresh venv is exactly what that policy
+# blocks. It installed and imported first try with the policy Off.
+# Deleted rather than annotated, as b09-antigrowth was: runner: manual, which the
+# promoter can report but never retire, so left here it would read as unstarted.
+#
+# WHAT THE NEXT READER NEEDS, because this entry's own `cmd` and `why` were wrong
+# in two places and would send them down the same wrong paths:
+#   - "the wheel pins the torch line" is FALSE for the wheel to use. That is
+#     mobcat40's build (cp311, torch 2.11.0.dev20260127 nightly) and it will not
+#     install here. woct0rdho's cp310-abi3 + torch2.10.0andhigher wheel is on the
+#     libtorch stable ABI and needs no pinning at all — and take the cu128
+#     variant, not the cu130 one ACTION-PLAN names; this box is cu128.
+#   - "coerce k and v to q's dtype, never hand fp32 to sage" was never exercised,
+#     because nothing hand-calls sage: diffusers 0.39 owns the dispatch and the
+#     whole integration is DIFFUSERS_ATTN_BACKEND=_sage_qk_int8_pv_fp16_triton.
+#     Forcing Triton on sm_120 WAS right, and for a sharper reason than lightx2v's
+#     say-so: the CUDA kernel returns uncorrelated garbage on this card, silently.
 
 - id: t8-anisora-conversion-check-1786090380
   runner: manual
