@@ -191,6 +191,29 @@ tasks:
 # pipeline/queue_promoter.py` prints which entry is held by what, and appends
 # anything it can promote at the end of this list.
 
+
+# promoted from backlog 2026-08-07 by queue_promoter
+# Beat 7's negative was 115 of 77 CLIP tokens until 2026-08-07 — the worst in the
+# genome. This is the first render on which the terms its author wrote are sent.
+- id: b07-negatives-as-written-1786090140
+  runner: farm
+  worker: m1pro
+  needs: [mps]
+  window: any
+  est_minutes: 12
+  node: 001-capability-inventory
+  beats: '7'
+  seeds: 2
+  steps: 40
+  seed_base: 20260719
+  why: >-
+    Sixteen of beat 7's negative terms were never sent, among them the anti-foliage
+    terms the 2026-08-04 reframe was written to work around after four generations
+    came back as a mature branch. fit_negative (d63271c) now delivers them, so this
+    finds out whether the macro framing failed on the recipe or on the truncation.
+    Two candidate frames for the author's eye, never a canon swap; about 178s per
+    image on this box, off the 2026-07-30 fleet measurement.
+
 backlog:
 # ---- PLANNED, WITH THE BLOCKER WRITTEN DOWN ---------------------------------
 
@@ -429,27 +452,6 @@ backlog:
     The 18 existing 002b VO takes are from the superseded t0-b cut and are not
     voice for the approved script; a full re-voice runs on the Mac's MPS, needs no
     GPU and contends with nothing on the farm.
-
-# Beat 7's negative was 115 of 77 CLIP tokens until 2026-08-07 — the worst in the
-# genome. This is the first render on which the terms its author wrote are sent.
-- id: b07-negatives-as-written-1786090140
-  runner: farm
-  worker: m1pro
-  needs: [mps]
-  window: any
-  est_minutes: 12
-  node: 001-capability-inventory
-  beats: '7'
-  seeds: 2
-  steps: 40
-  seed_base: 20260719
-  why: >-
-    Sixteen of beat 7's negative terms were never sent, among them the anti-foliage
-    terms the 2026-08-04 reframe was written to work around after four generations
-    came back as a mature branch. fit_negative (d63271c) now delivers them, so this
-    finds out whether the macro framing failed on the recipe or on the truncation.
-    Two candidate frames for the author's eye, never a canon swap; about 178s per
-    image on this box, off the 2026-07-30 fleet measurement.
 
 # MODEL-COMPARISON section 1 carries three rows that read SCHEDULED and have never
 # run. They are stocked here with the gates they actually have.
