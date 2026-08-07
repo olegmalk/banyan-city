@@ -110,6 +110,26 @@ Everything the beat asks for survives, including `night sky` and the scale negat
 valid plates to choose from — but a re-render at the same seed will no longer match
 them exactly, so pick from the files, do not expect to reproduce them.
 
+**PICKED 2026-08-07 (founder, R4): `r3-s3`.** His words were *"r3-s3 and retire"* —
+the frame, and the retirement of a stale question in his inbox, in one line.
+`takes/stills/01-cold-open-r3-s3.png` is promoted byte-for-byte to
+`stills/01-cold-open.png`, which is founder-approved canon and the file every
+renderer actually reads (`video_task` globs `stills/NN-*.png` for its conditioning
+frame). Provenance, checksum and the derived seed are in `stills/README.md`.
+
+**The flaw he accepted with it: four leaves, where the character has two.** That is
+not an unfinished prompt — it is the model, argued down through the four wordings in
+the table above and refused by all of them. The pick is a verdict on a known
+limitation, so do not "fix" it with a fifth synonym for *two*: the levers left are
+img2img over this plate, a pose controlnet, or another checkpoint.
+
+**What the pick unblocks.** The script's approval was scoped to this sample —
+`leaves/002b-t0-c.yaml`: *"beats 02-21 await his verdict on that sample before
+conversion"*, and *"No VO, no stills and no footage may be produced until the dialect
+is settled"*. Settled. Beats 02-21 stills, the 21-beat re-voice, and beat 01's video
+on both renderers are sanctioned from this date, and their four queue entries lost
+their founder gate the same day.
+
 ```
 A tiny 40cm banyan seedling, exactly two oversized cotyledon leaves, thin curved stem, one small round green fruit hanging from the stem, alone in a vast empty grass field, whole plant in frame, wide shot, sunrise, peach and gold morning sky, no humans, no chibi, no mascot, no creature, no face, no extra leaves, no branches, no night sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
