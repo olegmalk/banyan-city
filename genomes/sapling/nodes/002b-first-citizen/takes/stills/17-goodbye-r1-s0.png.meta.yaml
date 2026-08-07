@@ -1,0 +1,29 @@
+# Still provenance (7.2) — NOT written at render time. The job that drew this
+# frame (C:\banyan-farm\wave-002b-20260807\render_002b.py on the rtx5090) is a standalone script and does not
+# go through farm_worker, so it wrote no record; all 80 frames of the wave
+# landed bare. Reconstructed on 2026-08-07 from that run's own wave.log,
+# which prints the compressed prompt, the negative, the seed and the wall time
+# for every file it saved. Every field below is read out of the log or resolved
+# by the gate — none is inferred from shots.md, because compress() rewrites the
+# shot text and the model saw the compressed string, not the authored one.
+
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+shot_beat: 17
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20260736
+seeds_in_batch: 4
+task: 002b-stills-b02-21-1786090020
+render_round: r1
+repo_head: 44148ac
+wall_seconds: 9
+cost_usd: 0
+note: |-
+  one of four candidate frames for this beat, drawn the night the founder picked beat 01's conditioning frame and unblocked episode 2's drawn half; the direction it came from is shots.md as of 44148ac
+prompt: |-
+  1other, a small round goblin pushes himself up to standing, brushes dust off his patchwork cloak with two quick swipes, and turns away from the tiny sapling toward the open field. Static camera, afternoon light warming toward amber, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, mature tree, large tree, tall tree, thick trunk, full canopy, forest, bush, shrubbery, photorealism, text
