@@ -44,6 +44,16 @@
 #                   (002b-t0-c.yaml revisions) and on review item 09, which stays
 #                   published as the record. Beat 16's voice take stopped being a
 #                   question for him with it.
+#   ep2-beat01-line ANSWERED, and it is the last of episode 2's narration. He asked
+#                   for one listen and gave one verdict: "yeah its good" — beat 1's
+#                   second take, the deadpan read on the wording he picked, is
+#                   approved. The take he refused stays beside it in
+#                   clips/vo-archive/ (R6). With this, episode 2's narration is
+#                   COMPLETE and founder-approved: 17 takes plus beat 16, all in the
+#                   voice he passed on beat 03, beats 02/19/21 silent by design.
+#                   His words live on review item 08, which stays published as the
+#                   record; the VO manifests have no per-take approval field and one
+#                   was not invented for this. Full trace in STATE.md 2026-08-08.
 pending:
   - id: v6-verdict
     title: "Say yes or no on episode 1 — the next cut, built from the notes you gave"
@@ -57,12 +67,6 @@ pending:
     public: "review/index.html#checklist"
     link_text: "the same morning checklist — items 02 and 03, which say plainly if the drawings have not finished rendering yet"
     since: 2026-08-07
-  - id: ep2-beat01-line
-    title: "Listen to the first line of episode 2, recorded again on the words you chose"
-    detail: "The author refused the recording of the narrator's opening line on 2026-08-08, on two grounds at once: the delivery made it sound like an ironic comparison with some other tree instead of a plain report, and the word itself looked wrong, since a later line in the same episode has him saying he is forty centimetres tall. He settled the words the same day by picking a version where the narrator corrects himself out loud, so he is a tree and then, on second thought, a sapling. One new recording has been made on those words and on his note about the delivery, and it is the only thing this decision is still waiting for: a listen, and either yes or another note about the read. Nothing else in the narration was re-recorded — the sixteen takes he did not query are untouched. The refused recording is kept beside the new one as the record of what he turned down."
-    public: "review/index.html#checklist"
-    link_text: "the morning checklist — item 08 plays the new take first, then the one he refused, then the one he passed"
-    since: 2026-08-08
   - id: bakeoff-pick
     title: "Choose which AI model draws the show from now on"
     detail: "Four free models rendered the same three shots — the current one and 2026's best contenders. Whichever the author picks becomes the artist for every future frame."

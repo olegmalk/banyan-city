@@ -4553,3 +4553,57 @@ board globs them off disk while the licence gate withholds them from `_site/`
 (D15, CreativeML Open RAIL++-M). On CI those files do not exist, so no link is
 emitted and `pages` stays green — which is why f24e9d0 passed. Nothing to fix in
 this change; noted so the next session does not re-diagnose it.
+
+## 2026-08-08 — beat 1's retake passed, episode 2's narration is complete, and the morning page has nothing left to ask
+
+**The founder approved beat 1's second take, verbatim: "yeah its good."** That is
+his ear on `cuts/checklist/002b-01-vo-take2.mp3` — the deadpan read on the wording
+he picked earlier the same day, with the 0.55s pause at the ellipsis — and it
+closes checklist item 08 in `cuts/cuts.yaml`, the last item on that page that was
+genuinely his. **Episode 2's narration is now COMPLETE and founder-approved:** 17
+takes plus beat 16, every one in the voice he passed on beat 03 ("002b-30-v0 is
+good"), with beats 02, 19 and 21 silent because the script writes them silent. The
+take he refused this morning stays in `clips/vo-archive/` (R6, byte-identical,
+nothing deleted) and stays published on item 08 as the record of what he turned
+down.
+
+**IT TOOK TWO ROUNDS AND BOTH ROUNDS WERE HIS, which is the part worth keeping.**
+The first take was refused on the read *and* the word in one sentence — "as if he
+is describing some irony and comparing himself to another tree… also, he isn't a
+tree? he's a sapling." The word he settled himself by picking option 3 out of
+three wordings ("for beat 1's line, 3."), so the narrator corrects himself out
+loud. The read was fixed in the one place the engine actually looks: the delivery
+cue moved `tired` → `flat`, which selects (exaggeration 0.30, cfg 0.55), the
+preset 001 already uses for this narrator. **One take was made on that recipe and
+one take was screened** — the ONE SAMPLE rule at its smallest scale — and it
+passed on the first listen. No metric was consulted on either round; both verdicts
+are ears.
+
+**THE PIPELINE NEEDED NO APPROVAL MARK, and that was checked rather than
+assumed.** Beat 03's approved take carries no status field, and neither does any
+other: `clips/NN-vo.json` holds cast, engine, direction, measured `lines[].chunks`
+and `total_s`, and nothing about verdicts. Approval is expressed structurally —
+the current take lives in `clips/`, a refused one moves to `clips/vo-archive/` —
+and `01-vo.mp3` in `clips/` is byte-identical to the checklist file he passed
+(md5 `20bdb741…`), so the approved take is already the one `render_t3` will mux.
+The T0 leaf's `approved_by: founder` is script approval under §6, not per-take VO
+approval, and its `revisions:` list is for changes he made to the script, which
+this is not. So no manifest, leaf or code changed on this verdict; the record is
+review item 08, the retirement note in `pipeline/pending-founder.yaml`, and this
+entry.
+
+**What moved on the page.** Item 08 flips to `state: settled` / chip `CONFIRM`
+with his words in the `ask` line, the retake's player relabelled from "the ear you
+owe us" to the take he passed, and the whole two-round history kept underneath
+rather than deleted. The checklist intro and the page's own `why:` block stop
+telling him the page is waiting on him: **as of this verdict zero items on the
+morning page are open on the founder.** Item 06 stays `state: open` because it is
+open **on us** — it needs a cold-open frame that has not been drawn since he took
+the old one back, not a word from him. `ep2-beat01-line` is deleted from
+`pipeline/pending-founder.yaml` per that file's only convention (an item leaves by
+being deleted, reason in the commit and here).
+
+Gates: `lint_genome.py` rc=0, `test_pipeline.py` rc=0. `build_site.py` still exits
+1 locally only, on the same 164 broken links into `002b-first-citizen-media-takes/`
+diagnosed under the 12% entry above — gitignored candidate PNGs that exist on this
+machine and not on CI. Unchanged by this commit and not re-diagnosed.
