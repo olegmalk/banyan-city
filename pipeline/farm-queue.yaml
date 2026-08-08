@@ -934,3 +934,58 @@ backlog:
     force-push behind it. The consumer is anyone who has ever wondered why a
     farm-results branch contains a file they did not put there; the fix is one
     argument.
+
+# ---- THE DOMAIN OUTLIVES THE MIGRATION --------------------------------------
+#
+# The epoch in this id is the ELIGIBILITY date (2026-09-07T00:00Z), not the
+# filing date (2026-08-08). It is the earliest day the work can legally start,
+# and it is in the id so nobody has to open another file to work out why an
+# entry filed in August is sitting here doing nothing.
+#
+# Two dates and one card, written up in full as MIGRATION.md section F.
+# banyan.city was registered THROUGH Vercel on 2026-07-09 (registrar of record
+# Name.com) and auto-renews 2027-07-09, billed ~30 days ahead with a warning
+# email at 60, against the payment method of WHICHEVER Vercel team holds it on
+# that day. The team the project moved to keeps NO payment method by design —
+# that absence is the spend guard, and it is also a renewal charge that cannot
+# succeed. What follows a failed charge is expiry, a ~30-day redemption window
+# with a fee on top, and then a name anyone can register.
+#
+# NOT FILED IN pending-founder.yaml, and deliberately. That inbox renders
+# publicly as the author's morning checklist and every item on it is answerable
+# the day he reads it; this one cannot be acted on before 2026-09-07 and is
+# infrastructure rather than taste. Putting it on his board in August would post
+# a question he is unable to close for a month. It belongs there, if anywhere,
+# when it becomes answerable.
+- id: domain-transfer-out-1788739200
+  runner: manual
+  worker: any
+  needs: []
+  gate: founder
+  gate_ref: >-
+    A spend decision, so nobody's but the founder's: ~$10-20/yr at an external
+    registrar, on dad's card. It is also boxed at both ends by dates nothing in
+    this repo can move — ELIGIBLE AFTER 2026-09-07 (ICANN's 60-day lock, counted
+    from the 2026-07-09 registration; no Vercel setting shortens it) and MUST
+    RESOLVE BEFORE 2027-06-01, which sits ahead of the ~2027-06-09 renewal
+    billing attempt. Between those two dates the only question left is whether
+    the domain leaves Vercel or a card goes onto the team that holds it.
+  window: any
+  est_minutes: 60
+  cmd: >-
+    after 2026-09-07, work MIGRATION.md section F2 — auth code out of the account
+    that holds banyan.city (Domains, the ... menu, Transfer out; Team Owner role
+    only, and if clientTransferProhibited blocks it that is a Vercel support
+    ticket, not a toggle we know of), start the transfer at the new registrar,
+    recreate the A/CNAME records in the NEW registrar's DNS and let them resolve
+    BEFORE cutting nameservers because the Vercel DNS zone does not travel, and
+    prove `curl -sI https://banyan.city` serving before anyone retires the old
+    Vercel account
+  why: >-
+    banyan.city is the address the show lives at, and it currently renews against
+    a Vercel team that has no card on purpose — so the same guard that keeps this
+    project from billing anyone is what fails the renewal if the domain is still
+    there in June 2027. Owning it at a registrar we pay directly ends that, and
+    frees the last asset trapped inside a Vercel account. Human time is about an
+    hour; the transfer itself takes up to a week of wall clock, which is why the
+    deadline is June and not July.

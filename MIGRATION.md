@@ -67,7 +67,8 @@ are called out where they occur.
 The nameservers are Vercel's, so the DNS zone is an asset inside that account.
 Deleting the account first is the one move here that can orphan the domain
 mid-registration. Move first, delete second, and there is no hurry about the
-second.
+second — **§F3 says what "second" actually requires**, and it is later than it
+sounds.
 
 ### B1. Find out where the domain actually lives (~2 minutes)
 
@@ -445,6 +446,10 @@ invoice exists.
    instead of guessing.
 8. **Record what the domain cost** in `ledger/expenses.csv` (`OPERATOR.md` V5).
    This city publishes its costs; the one line we are missing is the domain.
+9. **The domain renewal is a dated decision, not a background process** — §F.
+   A team with no payment method cannot pay a renewal either, so the guard that
+   makes this project safe is the same thing that loses the name on 2027-07-09
+   if nobody acts. Queued as `domain-transfer-out-1788739200`.
 
 ---
 
@@ -481,6 +486,114 @@ entirely. Path A is instant; this trades a clean 404 for hours of TLS warning.
 
 ---
 
+## F. Domain endgame — renewal and transfer-out
+
+**This section is deliberately independent of whether §B4's Move succeeded.**
+Both facts below hold whichever Vercel team ends up holding `banyan.city`;
+where the branch matters it is called out. Everything here is dated, and the
+dates are the point — this is the part of the migration that comes due long
+after everyone has stopped thinking about it.
+
+### F1. The renewal timebomb — a dated decision, not a background process
+
+`banyan.city` was registered **2026-07-09** through Vercel (registrar of record
+**Name.com, Inc.**) and **auto-renews 2027-07-09**. Vercel's renewal mechanics,
+per its own docs:
+
+| fact | value |
+|---|---|
+| warning email | **~60 days before expiry** — around **2027-05-10** |
+| billing attempt | **~30 days before expiry** — around **2027-06-09** |
+| charged to | the **payment method of the Vercel team that owns the domain on that date** |
+| the new team's payment method | **none**, and that absence is the spend guard (§B2) |
+
+Those two things cannot both stay true. The state that makes this project unable
+to generate an invoice is the same state in which the renewal charge fails. **If
+`banyan.city` is still sitting on Vercel in June 2027, a founder-level decision
+has to be made before then — and it is a spend decision either way**: add a card
+to the team that holds it (which gives up the guard) or be gone from Vercel
+first (F2).
+
+**The failure mode, stated so nobody has to discover it.** Charge fails →
+domain expires → roughly a **30-day redemption period** during which it can be
+recovered but only with a redemption fee on top of the renewal → after that it
+is released and **may not be recoverable at all**, because anyone can take it.
+There is no version of this where letting the date pass is cheap.
+
+Source: <https://vercel.com/docs/domains/working-with-domains/renew-a-domain>
+
+### F2. The clean exit — transfer out to an external registrar
+
+The domain is **locked against registrar transfer until ~2026-09-07** — ICANN's
+60-day lock, counted from the 2026-07-09 registration. This is unrelated to
+§B4's Move, which is a team-to-team change inside one registrar and is not a
+transfer.
+
+**From ~2026-09-07 onward the domain can leave Vercel entirely**, to any
+external registrar at roughly **$10–20/yr on dad's card**. That is
+founder-reserved spend and nobody's call but theirs. What it buys is the end of
+this whole class of problem: renewal billing stops depending on a Vercel team's
+card, and the last asset trapped inside a Vercel account is out.
+
+The steps, in the order they have to happen:
+
+1. **In the account that currently holds the domain** → **Domains** → the `⋯`
+   menu next to `banyan.city` → **Transfer out** → copy the **auth code**
+   (also called the EPP code). Only a **Team Owner** can do this.
+2. **Buy the year at the new registrar and start the transfer there**, pasting
+   the auth code. This is the step that costs money and is the founder's.
+3. **Wait.** A registrar transfer is **up to about a week** and is not
+   cancellable halfway in any pleasant way.
+4. **The DNS zone does NOT travel.** This is the one that takes sites down. The
+   `ns1/ns2.vercel-dns.com` zone is an asset of the Vercel account and stays
+   there; the new registrar starts with an empty zone. **Recreate the A/CNAME
+   records at the new registrar's DNS and let them resolve BEFORE cutting the
+   nameservers over.** Read the record values off the Vercel project's
+   **Settings → Domains** panel at cutover time — do not copy them from this
+   file or a screenshot, because the apex A values rotate (§B9 measured two
+   different pairs hours apart on one day).
+5. **The whois lock may block step 1.** `clientTransferProhibited` is set today
+   (measured 2026-08-08, §A status table). **Whether Vercel exposes a
+   self-serve unlock is undocumented** — its transfer-out doc does not mention
+   one, and we are not going to claim a toggle exists that we have not seen. If
+   the flow refuses, that is a **Vercel support ticket**, not a bug in this
+   runbook. Budget for it rather than being surprised by it in the last week.
+
+Sources: <https://vercel.com/docs/domains/working-with-domains/transfer-your-domain>
+and <https://vercel.com/kb/guide/how-do-i-delete-a-vercel-team>
+
+### F3. When the old Vercel account may finally be retired
+
+**Not until the domain is verifiably out of it and DNS is proven serving.**
+§B0 says "move first, delete second, and there is no hurry about the second" —
+F3 is what "second" means. Vercel's own KB is explicit that domains attached to
+a deleted team are trapped, so a deletion is the one step here that can lose the
+name outright.
+
+Two branches, and you check which one you are in by **opening the Domains list
+of the account you are about to delete**, not by remembering what a Move dialog
+said:
+
+- **If the domain still shows there** — the account holds it, and possibly the
+  DNS zone with it. **Do not delete.** Nothing about that changes until F2
+  completes.
+- **If it does not** — the Move carried the domain and its zone to the new team
+  (§B4), and the old account is no longer load-bearing for the name. It is then
+  safe to retire, though there is still no reason to hurry.
+
+In both branches the final all-clear is the same: transfer-out complete at an
+external registrar, plus `curl -sI https://banyan.city` returning a real page
+from the new DNS. Prove it serving, then delete.
+
+**Queued as** `domain-transfer-out-1788739200` in `pipeline/farm-queue.yaml`
+(gate: founder — it is a spend decision). It is deliberately **not** in
+`pending-founder.yaml`: that inbox renders publicly as the author's morning
+checklist and everything on it is actionable today, whereas this cannot be acted
+on before 2026-09-07 and is infrastructure rather than taste. It gets filed
+there, if anywhere, when it becomes answerable.
+
+---
+
 ## Provenance
 
 Assembled 2026-08-08 by the steward from three prep passes: the build-guard
@@ -495,6 +608,15 @@ state**, not docs: every value in B2 and B2b was read back from
 `GET /v9/projects/banyan-city` after being written, and the two refusals in B7
 are the API's own 400. The click-path correction in B7 step 1 (Environments →
 Branch Tracking, not Git) comes from Vercel's current `/docs/git`.
+
+**§F added 2026-08-08**, while the founder was retrying the §B4 Move, and
+written to hold whichever way that attempt went. Its renewal and transfer-out
+mechanics come from Vercel's current docs (`/docs/domains/working-with-domains/
+renew-a-domain`, `.../transfer-your-domain`) and its delete-a-team warning from
+Vercel's KB; the registration and expiry dates and the `clientTransferProhibited`
+flag are the whois values measured for §A on 2026-08-08. Where the docs are
+silent — self-serve unlock of the transfer lock — §F says so instead of
+guessing.
 
 **What an agent did and did not do.** Did: create one empty Vercel project and
 PATCH its settings, through the founder's already-logged-in CLI. Did not: run any
