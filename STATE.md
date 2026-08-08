@@ -5067,3 +5067,69 @@ question about the past.** Existence checks before a write must go through git,
 and a `Write` to a path another agent owns needs `git status` on that path
 first — a tracked-file ` M` where `??` was expected is the only warning there
 is.
+
+## 2026-08-09 — three provisional clips exist, and the brief's other twenty renders were refused
+
+**Wall clock: 00:50:38 → 01:03 on the 5090, one claim, one model load.** Encode of
+three prompts 218s (rc=0), then beat 16 in 204s, beat 18 in 139s, beat 21 in 137s
+(rc=0). The first beat carries the transformer load; the 139/137 pair is the
+marginal cost of a beat once LTX is resident, which is the whole point of the
+jobs loop. Throughput 0.0296 s(video)/s(wall) on beat 16 against the b01-v2
+baseline's 0.0295 — the recipe reproduced itself to the third decimal, which is
+how we know nothing drifted.
+
+**WHAT WAS RENDERED: beats 16, 18 and 21 of episode 2. Nothing else.** They are
+in `review/ep2-prov-0809/` as `ltx-002b-b{16,18,21}-prov.mp4`, 704x1280, 145
+frames at 24fps, 6.042s each, with sidecars, the plates, the jobs file, the
+driver script and the full run log beside them. `review/` is untracked and no
+clip, plate or candidate pixel is committed.
+
+**THE BRIEF ASKED FOR TWENTY-ONE RENDERS AND TWENTY OF THEM HAD NO INPUT.** The
+task named a b01 cold-open A/B "on the PROVISIONAL b01-r5 pick" and an ep2 pass
+over "each beat with a provisional pick (02-21)". `PROVISIONAL-PICKS-0809.md`
+(b78ce13) had landed after that brief was written and says the opposite: all
+four b01 r5 candidates are vetoed, and seventeen of the twenty ep2 beats are
+`reject_all`. There is no cold-open pick, so the A/B has nothing to be an A/B
+of; STATE's own item 06 entry says that comparison is "one pick away from being
+a real question", and it still is. Rendering the vetoed frames would have cost
+~2 hours and put frames the picker had already rejected on the founder's morning
+review surface — the exact failure the provisional mechanism exists to prevent.
+
+**Two agents reached that conclusion independently, which is the useful part.**
+`wan-ep2-spec` left `WARNING-READ-FIRST.txt` in the box work directory
+enumerating the same veto list, having no message channel to reach the render
+side before a jobs file got built. It also carried a cross-check: an independent
+cover-centre crop of the same three stills. Both crops agree byte for byte —
+16 `cdbb511a`, 18 `60f6885a`, 21 `65bd0aa5` — so the plates are a controlled
+input and the Wan side can render on the identical pixels rather than on its own
+crop. The plates are deliberately left on the box for that reason.
+
+**A defect was found by preparing the work rather than by reading it, and it was
+live on every node.** `video_task.beat_actions` bounds each beat by the next
+beat's heading, so the LAST beat of a node runs to end of file and swallows the
+sections after the beat list. Beat 21's motion brief came out as "...the leaf
+tilts and holds. SPEAK . slow. POPULATION: 1 --- ## Provenance Shot-granular
+successor (), steward-written (model: claude-fable-5)", and that string was one
+step from a text encoder as a description of what should move. It is the closing
+beat of all sixteen nodes, not just this one. Fixed and pushed as `a5c3777` with
+a test that fails four checks when the two-line fix is reverted; measured first,
+so the record says the change touches 16 last beats and zero earlier ones.
+Beat 21 was rendered only after the fix, on corrected text.
+
+**Provenance chain is closed end to end.** Each sidecar names its candidate
+still by repo-relative posix path and sha256, the plate by sha256, and carries a
+`PROVISIONAL` banner stating that the conditioning frame is not approved, that
+the pick is a `steward-model.v1` prediction, and that `founder_verdict` is null.
+`shot_beat` reads 16/18/21 rather than 0 — the box was pulled past `49f54ac`
+before any sidecar was written, on wan-ep2-spec's warning. The three source
+hashes match the picker's record exactly (`7d103bc5`, `a9649bed`, `7cc9f219`).
+
+**Nothing is approved by any of this.** Three clips of three predicted-good
+frames now exist so the founder can accept or flip on a moving picture instead
+of a guess. Taste is his (R4); the model has still earned nothing and its 25
+predictions remain unjudged.
+
+**Box state:** `banyan-prov0809` schtask deleted and verified absent (only the
+pre-existing `banyan-telemetry` and `banyan-worker-start` remain), embeds
+deleted, GPU-CLAIM.txt released, card idle at 0%. Nothing was published, posted,
+spent, or opened on the founder's screen.
