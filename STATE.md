@@ -5303,3 +5303,98 @@ frame, not that one.** `b15-r3-s1` is canon, is his, and is the sapling in grass
 
 **Nothing here is ratified.** Gates as their own steps: `lint_genome.py` rc=0,
 `test_pipeline.py` rc=0, `build_site.py` rc=0.
+
+## 2026-08-09 (small hours) — the model A/B got built on three plates instead of twenty-one, and the wave behind it was stopped by its own sample
+
+**THE CONTROLLED A/B EXISTS, AND IT IS THREE BEATS.** `PROVISIONAL-PICKS-0809.md`
+kept five frames out of a hundred; for episode 2 that is beats **16, 18 and 21**
+and nothing else — the cold open's four r5 candidates are all vetoed, so the b01
+A/B that was briefed has no plate to be an A/B of, and seventeen more ep2 beats
+are `reject_all`. An episode-level LTX-vs-Wan comparison was therefore not
+buildable tonight and was not faked: no vetoed plate was substituted to reach
+twenty-one, and no three-beat set was assembled into anything calling itself an
+episode.
+
+What was built is tighter than what was briefed. Both models saw **byte-identical
+inputs**: the same three plate FILES (not two crops of one source), the same
+prompt and negative text, the same seed 20260806.
+
+| beat | LTX-2.3 | Wan2.2-TI2V-5B |
+|---|---|---|
+| 16 | 204s | 537s |
+| 18 | 139s | 526s |
+| 21 | 137s | 526s |
+
+Both rc=0, every clip 145 frames at 704x1280 / 24fps / 6.042s, verified by
+ffprobe on the pulled copies and sha256-matched against the box. LTX peak torch
+7.5GB, Wan 18.1GB — the same 18.1GB the b01 v2 pair measured. Clips in
+`review/ep2-prov-0809/` (LTX) and `review/ep2-prov-0809/wan/` (Wan); `review/**`
+is gitignored, so nothing here is committed.
+
+**The plate discipline is the part worth keeping.** The crop was computed twice by
+two independent implementations — `plate_prep.prepare_plate` on the box and a
+hand crop on the Mac — and agreed byte for byte on all three
+(`cdbb511a…`, `60f6885a…`, `65bd0aa5…`, re-verified before the claim and again in
+the repo). Two crops that merely *look* the same are not a controlled input; two
+crops with one sha256 are.
+
+**`shot_beat` is right this time.** Both passes pulled the box clone past
+`49f54ac` before writing a sidecar, and every one of the six clips records its
+real beat — 16, 18, 21 — instead of the `0` that needed hand-written corrections
+on `wan5b-b01.mp4` and its checklist copy. The Wan side got it from each `--jobs`
+entry's own `beat` key, which is the only form that can be right for a multi-beat
+run.
+
+Wan sidecars additionally carry `init_frame` and the PROVISIONAL banner, appended
+after the fact: `wan_i2v` writes its own sidecar and cannot know which still it
+was conditioned on, and the `--jobs` bench path has no queue to append the block
+the way `video_task` does on the queue path.
+
+### The r4 wave was NOT fired, and its own ONE SAMPLE is why
+
+Beat 13 was rebuilt (`308c74e`) on a measured fault: `compress()` was shedding the
+whole trailing sentence to reach CLIP's 77 tokens, so the beat had been rendering
+with **no style anchor and no Animagine boosters at all**. Eleven of this node's
+twenty-one beats were in that state. Four frames, four seeds, ~40 GPU-seconds.
+
+**The fix worked and it was not the fix that was needed.** All four came back as
+soft cinematic anime with real light and a coherent palette instead of the flat
+cartoon r3 returned — wave defect 4 has a demonstrated mechanical cause and a
+demonstrated remedy. **A1 did not move.** Zero of four contain the sapling as a
+plant: s0 wears a leaf as a hat over bare human legs, s1 is an anime child holding
+a sprout, s2 is an unreadable pale mass, and s3 grows the sprout **out of the
+figure's head** — beat 19's exact recorded fault. The beat needs a goblin AND a
+40cm seedling in one frame and the checkpoint keeps collapsing them into one
+creature. Beat 01's botanical binding did not transfer because there the plant was
+the only subject; here it trails behind "A small round goblin".
+
+**And the person negatives did not bind, which is a finding in itself.** `no girl,
+no boy, no child, no person` were verified lifted into the negative on the real
+path, and the model drew people anyway. So the picks page's recommendation is
+necessary but not sufficient: on a beat whose subject clause names a humanoid,
+negatives do not stop a person being drawn. That is a positive-prompt problem.
+
+So the twenty-beat r4 wave stands down. It was about to be fired on the theory
+that the wave's negatives were the defect; forty GPU-seconds say the negatives
+were half of it and the half that matters most — A1, weight 5, his dominant
+objection — is untouched. Recorded as ledger record 26 (`ep2-b13-r4-sample`,
+`reject_all`, confidence 0.85), written before he has seen anything.
+
+### Two things filed rather than fixed
+
+**`node.md` beat 15 of node 001 still describes the frame he revoked.** Its motion
+brief reads *"Underground: the far-off thump-thump is closer now, the rings of
+light through the soil brighter and faster"* — written for
+`15-something-s-coming-REVOKED-underground.png`, which he threw out with *"for
+beat 15, why is it showing the underground? i think it should show the sapling,
+no?"*. The still was replaced and promoted to canon; **the motion brief never
+was**, and the beat's own negative already forbids `underground`. Any video render
+of beat 15 is therefore told to animate a scene its plate does not contain and its
+negative rejects. Found while staging the b15 model A/B, which uses a bench
+override motion consistent with the approved plate and says so in its sidecar.
+`node.md` is approved script text and was NOT edited; this is the founder's line
+to correct.
+
+**Composite provenance** — `build_site.publishable()` reads only a file's own
+sidecar, so a concatenated cut launders every refusal inside it. Filed as
+`composite-provenance-manifest-1786218000` (`ceefaf1`), off `2a6f80e`.

@@ -780,3 +780,71 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+# Record 26 — the r4 ONE SAMPLE. Not a pick: it is the gate the r4 wave was to
+# fire behind, and it did not clear. Logged with the same fields as a pick
+# because a refused sample is exactly the kind of prediction this file exists to
+# be wrong in public about.
+- id: ep2-b13-r4-sample
+  date: 2026-08-09
+  subject: "node 002b beat 13 — THE SHADE, round 4, the ONE SAMPLE for the r4 wave"
+  kind: still
+  candidates: [b13-r4-s0, b13-r4-s1, b13-r4-s2, b13-r4-s3]
+  address_key: "this ledger entry; frames at C:\\banyan-farm\\sample-b13-r4\\out\\13-the-shade-r4-sN.png, sidecars beside them"
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  scores:
+    b13-r4-s0: {A1: -2, A2: 1, A3: -2, A4: -1, A5: 1, A6: 1}
+    b13-r4-s1: {A1: -2, A2: 1, A3: -2, A4: 0, A5: 1, A6: 1}
+    b13-r4-s2: {A1: -2, A2: 1, A3: -1, A4: -2, A5: 0, A6: 1}
+    b13-r4-s3: {A1: -2, A2: 1, A3: -2, A4: 0, A5: 1, A6: 1}
+  vetoed: [b13-r4-s0, b13-r4-s1, b13-r4-s2, b13-r4-s3]
+  totals: {}
+  predicted_verdict: reject_all
+  predicted_flip_to: null
+  predicted_objection: >
+    Same sentence as round 3, and that is the point: there is still no sapling in
+    any of them. In his vocabulary — where is the tree, and that one is a boy.
+  confidence: 0.85
+  reasoning: >
+    THE FIX THAT WAS TESTED WORKED, AND IT WAS NOT THE FIX THAT WAS NEEDED. Round
+    4 changed one measured thing: the prompt was shortened until compress() stopped
+    shedding the trailing sentence, so for the first time this beat was drawn WITH
+    `cinematic lighting, detailed, newest` and Animagine's `masterpiece, best
+    quality, very aesthetic` (65 positive tokens on the box's real CLIP tokenizer,
+    against 53 with the tail gone). It shows: all four are soft cinematic anime with
+    a coherent warm-green palette and real light, not the flat cartoon the r3 wave
+    returned. A5 and A6 move up across the set. So wave defect 4, the register
+    swing, has a demonstrated mechanical cause and a demonstrated fix.
+
+    A1 DID NOT MOVE. Zero of four contain the sapling as a plant. s0 is a robed
+    figure with a leaf worn as a hat and bare human legs; s1 is an anime child with
+    pointed ears holding a tiny sprout, no standing plant anywhere; s2 is an
+    unreadable pale-green mass in grass; s3 puts the sprout GROWING OUT OF THE
+    FIGURE'S HEAD, which is the identical fault the picks page recorded on beat 19.
+    The beat needs two things in frame — a goblin AND a 40cm seedling it shelters
+    under — and this checkpoint keeps collapsing them into one creature. The
+    botanical binding that rescued beat 01 (`seedling`, `two oversized cotyledon
+    leaves`) did not rescue this beat, because on beat 01 the plant was the only
+    subject in the sentence and here it is a prepositional phrase behind "A small
+    round goblin".
+
+    AND THE PERSON NEGATIVES DID NOT BIND, WHICH IS A RESULT IN ITSELF. `no girl,
+    no boy, no child, no person` were verified lifted into the negative on the real
+    path, and s1 is still unmistakably a human/elf child and s0 still has human
+    legs. So the picks page's recommendation 2 is necessary but NOT sufficient: on
+    a beat whose subject clause names a humanoid, negatives do not stop the model
+    drawing a person. This is a positive-prompt problem, not a negative-prompt one.
+
+    CONSEQUENCE, AND IT IS THE WHOLE VALUE OF THE SAMPLE: the r4 wave is NOT fired.
+    Twenty beats were about to be redrawn on the theory that the wave's negatives
+    were the defect. Four frames and about forty GPU-seconds say the negatives were
+    only half of it, and the half that matters most — A1, weight 5, his dominant
+    objection — is untouched. A wave fired tonight would have returned eighty
+    frames failing the same way and cost the card three hours.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
