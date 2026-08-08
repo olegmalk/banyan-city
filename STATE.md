@@ -3446,3 +3446,91 @@ Domains attached and `verified: true`: `banyan.city`, `www.banyan.city`
   what makes retiring it safe. The F3 rule still applies as written: before any
   deletion, open that account's **Domains** list and look, rather than trusting
   this entry or a Move dialog. There is no hurry.
+
+## 2026-08-08 — beat 1 of episode 2 is filmed on both renderers, and the one launch that failed was two renders racing one GPU
+
+**Four clips of the same beat now exist and none of them had a record anywhere
+until this entry.** All four condition on
+`genomes/sapling/nodes/002b-first-citizen/stills/01-cold-open.png` — the frame
+the founder picked with "r3-s3 and retire" — all four are 704x1280 at 24fps, all
+four cost **$0**, and all four exited **rc=0**. They sit in `review/ep2-b01/`
+with their sidecars and logs beside them.
+
+| clip | model | frames / length | wall | s(video)/s(wall) | peak torch |
+|---|---|---|---|---|---|
+| `002b-b01-video-5b-…-01-cold-open.mp4` | Wan2.2-TI2V-5B | 113 / **4.708s** | — | — | — |
+| `002b-b01-video-5b-6s-…-01-cold-open.mp4` | Wan2.2-TI2V-5B | 145 / **6.042s** | 884s | 0.0068 | 18.1GB |
+| `ltx-b01.mp4` | LTX-2.3-Distilled bf16 | 145 / **6.042s** | **207s** | **0.0292** | **7.5GB** |
+| `wan5b-b01.mp4` | Wan2.2-TI2V-5B | 145 / **6.042s** | 539s | 0.0112 | 18.1GB |
+
+**Only the last two are a comparison.** `ltx-b01.mp4` and `wan5b-b01.mp4` carry a
+byte-identical prompt and the same seed (20260806) at the same length — that is
+the same-frame/same-prompt/same-seed A/B the founder was promised on 2026-08-06
+and never got. The first two are the farm-queue task
+`002b-b01-video-5b-1786089900` and use a **different, fuller prompt** (whole-scene
+description plus "camera locked"), so they are evidence about the beat, not about
+the two models. Worth recording separately: **that queue entry asks for
+`seconds: 2.5` and the pipeline delivered 4.708s** — 113 frames. Nobody has
+explained the gap and no one should quote 2.5 as the length of that clip.
+
+**LTX drew the same six seconds 2.6x faster on a third of the memory** (207s vs
+539s; 34.3 vs 89.1 compute-seconds per second of video; 7.5GB vs 18.1GB peak
+torch). Two-stage: 8 steps at 352x640, 2x latent upsample, 3 steps at 704x1280,
+guidance 1.0. **This settles nothing about which model films episode 2** — LTX is
+a CANDIDATE on look, not a default, because on 2026-08-06 the founder's eye
+caught it losing 86-89% of its chroma across a clip. Speed is not a taste verdict
+and this entry does not offer one.
+
+**THE ONE FAILURE, AND IT WAS OURS: two renders were launched onto one card.**
+`b01-wan5b` first started **2026-08-07 23:09:43** and died 48 seconds later at
+23:10:31 with **rc=-1073741819 — 0xC0000005, ACCESS_VIOLATION**. It is not a WDDM
+bugcheck, not a driver fault and not a bad recipe: the identical command returned
+rc=0 unchanged this morning at 09:17:30–09:27:49 once the card was free. The 6s
+farm render held the GPU from 23:08 to 23:24, and the wrapper **saw it and said
+so** before loading a byte:
+
+> `!! 9.7GB of 26GB VRAM is ALREADY IN USE before we load anything — another
+> render is probably running. Two big models on one card will OOM or halve each
+> other's speed. Close the other one unless this is deliberate.`
+
+**The guard detects the condition and then proceeds anyway.** That warning is the
+whole diagnosis, printed 48 seconds before the crash it predicted, and because it
+warns instead of refusing it cost a wasted launch and put the model comparison
+ten hours late. A pre-flight check that cannot stop the run is a comment. Filed
+as the fix worth making before any multi-beat night: the same scheduler that
+queues these should refuse to start a second big model on an occupied card, or
+wait for it.
+
+**Two scheduled tasks were disarmed that would have destroyed this evidence.**
+Lane A found `schtasks` entries armed to re-fire tonight at **23:58 and 23:59**
+and killed them. They would have re-rendered into the same filenames and
+**overwritten `ltx-b01.mp4` and `wan5b-b01.mp4`** — the founder's unscreened
+comparison — before he ever saw it. Nothing was lost; it is recorded because a
+job that silently overwrites the artifact someone is waiting to screen is a
+standing hazard, not a one-off.
+
+**What the morning page can and cannot show him.** The three Wan clips are
+Apache-2.0 and pass `publishable()`; **`ltx-b01.mp4` is refused by the licence
+gate** and stays on the machine — LTX-2 Community Licence Agreement, D16
+watch-only, the sign-off still the founder's. So `/review/#checklist` item 06 —
+which said "Nothing to look at yet" through both renders landing — gets the Wan
+side as `checklist/002b-b01-5b.mp4` and asks him to screen the two side by side
+at the machine, rather than pretending the page holds a comparison. That page
+edit lands in a companion commit; this entry is the render record and does not
+depend on it.
+
+**A gate defect found while checking that, fails-safe, not fixed here.**
+`publishable()` refuses `ltx-b01.mp4` for the **wrong document**: it reports
+*"LTXV Open Weights Licence 0.X"*, which is the `lightricks` catch-all, not the
+`ltx-2-3` entry that exists precisely to stop this. The sidecar's model string is
+`diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)`, and
+its normalised form contains **both** keys — `ltx-2-3` and `lightricks` — with the
+catch-all winning. The clip is refused either way, so nothing shipped that should
+not have; but the `ltx-2-3` key's own comment says a gate that refuses for the
+wrong reason teaches the wrong fix, and right now it is doing that on any sidecar
+that names Lightricks and the version together. Not touched here — it is a gate
+change with ratchet consequences, and it belongs with the hygiene batch that also
+owns the `platform: local-gpu (MSI)` mislabel on `wan5b-b01.mp4`'s sidecar (that
+clip reports a 25.7GB card, which is the 5090, not the 12GB MSI; render-time
+sidecars are not retro-edited, so that one is a correction annotation plus a
+`--worker` flag, not an edit).
