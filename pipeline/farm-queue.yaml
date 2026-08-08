@@ -1472,25 +1472,33 @@ backlog:
     is anyone reading this queue to find out what has actually been rendered —
     right now an id in a sidecar does not mean the queue entry ran.
 
-- id: wan-bench-sidecar-beat-1786190640
-  runner: manual
-  worker: any
-  needs: []
-  window: any
-  est_minutes: 20
-  cmd: >-
-    give wan_i2v's bench path a beat to record. Its two write_sidecar calls
-    (stage_render and stage_simple, the `if bench:` branches) pass beat=0
-    hard-coded; add a --beat that defaults to 0 and thread it through, so a clip
-    rendered as a bench sample of a real beat says which beat it is.
-  why: >-
-    beat=0 is honest for a throughput measurement and wrong the moment the clip
-    is screened as a beat, which is what happened to wan5b-b01.mp4 and to the
-    copy of it on the founder's checklist — both say `shot_beat: 0` for the cold
-    open, and both now carry a correction block saying so. The consumer is
-    build_shotboard and the review page, which key off shot_beat to put a clip
-    under the beat it belongs to. Small, but it is the field that decides where a
-    clip appears.
+# RETIRED 2026-08-08 — wan-bench-sidecar-beat-1786190640, done by 49f54ac (`the
+# bench path can be told which beat it is rendering, and says nothing when nobody
+# tells it`). `--beat` exists on wan_i2v and is threaded to both `if bench:`
+# write_sidecar calls; a --jobs entry's own `beat` overrides it per clip, and
+# video_task's wan jobs entries now carry one.
+#
+# DEFAULTED TO NOTHING, not to 0, which is where this entry's own `cmd` was wrong.
+# It asked for "a --beat that defaults to 0" — that keeps writing `shot_beat: 0`
+# over beat 1 on every run nobody remembers the flag on, and a placeholder 0 is
+# indistinguishable from a real beat to every reader. Unset now OMITS the field,
+# the drop-a-None convention video_task._yaml_map and `extra` already state, so an
+# untold bench clip reads as "not recorded" instead of claiming a beat.
+#
+# One thing --beat could have broken and does not: write_sidecar publishes
+# seed_base + beat, so naming a beat while handing over the seed itself would move
+# a recorded seed and publish a draw that never happened. wan_i2v.sidecar_seed_base
+# subtracts it, as ltx_i2v.py:1164 already did. beat=0 had made that subtraction
+# invisible.
+#
+# The three files this was filed for keep their correction blocks and their
+# `shot_beat: 0` — render-time provenance is not rewritten here
+# (review/ep2-b01/wan5b-b01.mp4, its -v2, cuts/checklist/002b-b01-5b.mp4). What
+# changes is that the next bench clip screened as a beat needs no block at all.
+# Pinned by test_bench_sidecar_names_the_beat_or_omits_it, including two AST checks
+# that neither call site hard-codes a beat again — the stage functions need torch,
+# so nothing else in CI can reach them. Deleted rather than annotated, as
+# t4-sageattention was: `runner: manual`, which the promoter never retires.
 
 # ---- THE DOMAIN OUTLIVES THE MIGRATION --------------------------------------
 #
