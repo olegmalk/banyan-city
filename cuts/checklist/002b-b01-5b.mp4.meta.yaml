@@ -1,0 +1,21 @@
+# Shot provenance (7.2) — written by video_task at render time
+platform: local-gpu (MSI)
+model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+model_licence: Apache-2.0
+shot_beat: 0
+size: 704x1280
+seconds: 6.042
+steps: 14
+guidance: 5.0
+seed: 20260806
+task: b01-wan5b-6s/production/b1/s20260806
+cost_usd: 0
+prompt: |-
+  2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. a small green fig on the stem swells, darkens and rounds into a single fig, surging visibly larger across the shot, increasingly full and heavy, the two leaves lifting and quivering in the morning air
+negative: |-
+  色调艳丽, 过曝, 细节模糊不清, 字幕, 风格, 作品, 画作, 整体发灰, 最差质量, 低质量, JPEG压缩残留, 丑陋的, 残缺的, 多余的手指, 画得不好的手部, 画得不好的脸部, 畸形的, 毁容的, 形态畸形的肢体, 手指融合, 杂乱的背景, 三条腿, 背景人很多, 倒着走, humans, chibi, mascot, creature, face, extra leaves, branches, night sky, photorealism, 3D render look, text, 静态, 静止, 静止不动的画面, frozen frame, still image, no motion, face morphing, changing facial features, distorted face, warped face, facial expression change, head turning, photorealistic, photograph, live action, film still, 3D render, CGI, octane, realistic skin texture, depth of field bokeh, motion blur, scene change, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+mode: production
+batch: 1
+batch_slot: 0
+throughput_s_video_per_s_wall: 0.0112
+compute_s_per_video_s: 89.1

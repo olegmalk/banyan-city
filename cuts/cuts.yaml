@@ -324,22 +324,43 @@ checklist:
           episode 2's look and started four jobs that had been waiting on it.
           Their results land here. **None of this holds up episode 1**, so if
           the morning is short, stop after item 05.
-      ask: "Episode 2's opening shot — which of the two looks carries the episode?"
-      state: gap
+      ask: "Episode 2's opening shot — both films exist, and only one of them can be shown here"
+      state: open
       chip: "YOUR PICK"
       body: |-
-        Your approved opening frame is being filmed twice by two different video
-        models — the one that made episode 1, and a newer one — from the **same
-        frame, same prompt, same seed**. Nothing else differs, so the only thing
-        you are judging is which one moves better.
+        **Both renders came back.** Your approved opening frame has now been
+        filmed twice, by the model that made episode 1 (Wan 2.2) and by the newer
+        one (LTX-2.3), from the **same frame, same prompt, same seed** — 6.0
+        seconds each, nothing else differing. This is the *motion* test only; the
+        frame itself is settled and is not being re-asked.
 
-        This is a bigger question than one shot: whichever you pick films the
-        rest of episode 2.
+        **Below is the Wan side, and it is the only side this page is allowed to
+        show you.** LTX's weights ship under a licence that keeps its output off
+        anything we publish — the same reason items 02, 03 and 07 hold their
+        candidates back, and the same open question (D15/D16) that is still
+        yours to settle. It is not a missing render. It is a finished clip we may
+        watch but not republish, sitting at `review/ep2-b01/ltx-b01.mp4`, and
+        **the two are meant to be watched back to back** — so this item is worth
+        ten seconds at the machine rather than ten on the page.
+
+        **What the numbers already say, since they cost nothing to report:** LTX
+        drew the same six seconds in **207 seconds against Wan's 539** — about
+        2.6x faster, at a third of the peak memory. That is a real difference
+        over twenty-one beats, and it is *not* the question. Speed does not pick
+        a look, and LTX has lost on look here before: on 2026-08-06 you caught it
+        losing most of its colour across a clip, which is why it is a candidate
+        again rather than the default.
+
+        Whichever you name films the rest of episode 2, so it is worth the walk
+        to the other screen.
+      clips:
+        - file: checklist/002b-b01-5b.mp4
+          label: "Wan 2.2 — 6.0s"
+          note: "the episode-1 model; 539s to render"
       pending: >-
-        **Nothing to look at yet.** Both renders were queued the moment your pick
-        took the gate off them and neither had returned when this page was
-        written. Note that these are the *motion* test — the frame itself is
-        already settled and is not being re-asked.
+        **The Wan clip is being withheld from this page too** — which, if you are
+        reading this line, is a licence-gate refusal rather than a missing render.
+        Both films exist; the reason travels with them.
 
     - n: 7
       ask: "Episode 2's remaining twenty drawings — they came back wrong, and in one particular way"
