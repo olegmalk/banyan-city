@@ -4267,3 +4267,124 @@ directory it describes (001 carries seven `-REVOKED-` frames) and the code that
 depends on the substring; that instruction is corrected in the same commit, because
 a reader following it would have destroyed the evidence of what the founder
 refused.
+
+## 2026-08-08 — both of episode 2's open lines are answered, one of them by changing nothing, and beat 1 is recorded again on the wording he picked
+
+**HIS WORDS, VERBATIM AND IN FULL:** *"for beat 1's line, 3. for beat 16's line,
+lets keep 'I can't even wave.'"* Two script decisions in one sentence, and they are
+the last two episode 2 was waiting on. Nothing on the review page asks him for words
+any more.
+
+**BEAT 16 IS ANSWERED BY CHANGING NOTHING, and that is the half worth reading
+carefully.** The phrase he kept is the line as it already stood, so **the replacement
+we proposed is DECLINED** and `node.md` is untouched at beat 16. What makes it more
+than a no-op is whose condition it releases: on 2026-08-03 he approved this script
+*with* the requirement that this exact line be rewritten (*"the sapling was able to
+flail a leaf in episode 1? why couldnt it do that in 002b?"*), and he has now decided
+it stays. So the contradiction he spotted against 001 beat 06 — *"I appear to be
+flailing one (1) leaf"* — **stands in beat 16's words, by his call, and is not to be
+re-opened as a question by anyone.** Two things are recorded beside it rather than
+left for someone to rediscover: the approval condition's own text claims the line was
+*"Rewritten"*, which was never true of `node.md` (the rewrite reached the record and
+not the script), while the other half of that same remedy always was in place — beat
+21 prints `SPEAK ✓ 1 bit. slow.` against 001's `SPEAK ✗ undefined`. The distinction
+the episode runs on is carried by the ending, which is the shape he has chosen.
+
+**BEAT 1 TOOK OPTION 3, and the line now corrects itself out loud.** As committed:
+
+> I used to be an engineer. Now I'm a tree. **…Well. A sapling.** Took three days to
+> grow that. Total assets: two leaves and one fig.
+
+"Took three days to grow that" is untouched — it is his own 2026-08-03 approval
+condition, the fig's continuity with episode 1, and was never his to lose in a
+wording pick. The word stops doing two jobs without either half of the joke being
+surrendered: "tree" keeps the scale, "sapling" keeps the fact.
+
+**THE RETAKE EXISTS AND IT IS A SAMPLE, NOT AN APPROVED TAKE** — one take, 9.07s,
+`cuts/checklist/002b-01-vo-take2.mp3` on the review page and `clips/01-vo.mp3` in the
+node. Item 08 stays **open** with its chip moved `YOUR WORDS` → `YOUR EAR`, because
+what is left of it is a listen and nothing else.
+
+**HIS READ DIRECTION IS WIRED IN RATHER THAN HOPED FOR, and that is two mechanisms,
+both measured.** His objection was the stress landing on *"now **I'M** a tree"*,
+which read as an ironic comparison with another tree instead of a plain report.
+
+- **The delivery cue moved `tired` → `flat`** on that line, which is not cosmetic:
+  `synth_vo.direction_for` reads direction out of that parenthetical, `tired` selects
+  (exaggeration 0.45, cfg 0.50) and `flat` selects (0.30, 0.55) — the flattest preset
+  the vocabulary has, and the one 001 already uses for this same narrator. `flat`
+  also matches EARLIER in `EMOTION_HINTS` than `tired`, so leaving both words in
+  place would have silently kept the refused read and changed only the words.
+- **The line is written as two blockquotes**, one speaker and one continuous
+  narration, and the reason is a threshold rather than a preference. His wording takes
+  the beat to 26 spoken words, past `LONG_LINE_WORDS = 22`, above which `synth_vo`
+  stops speaking a line as one utterance and stitches it from one solo generation per
+  caption chunk with a fixed 0.12s join. Measured on the real path before recording
+  anything: the chunks would have been `Now I'm a tree.` / `…Well.` / `A sapling.` /
+  …, so the self-correction his pick exists FOR would have been three separate one-
+  and two-word generations in a row — and `Now I'm a tree.` would again have been
+  generated with no sentence around it, which is the condition that produced the
+  stress he refused. Split after "tree", each half is 10 and 16 words, each speaks as
+  one utterance, and his ellipsis gets the direction layer's 0.50s between-lines
+  pause. Rejoining them is one edit if his ear wants it tighter, and the taste note
+  and Provenance both say so.
+
+**WHAT THE FILE ACTUALLY MEASURES, so the claim travels with the bytes:** 9.072s,
+peak 0.854, zero clipped samples, and **0.547s of true silence at the ellipsis** —
+the only pause in the take longer than 150ms, which is the whole point of it.
+
+**ONLY BEAT 1 WAS TOUCHED, ASSERTED RATHER THAN ASSUMED.** All 34 takes and manifests
+in `clips/` were sha256'd before and after: exactly two hashes moved, `01-vo.mp3` and
+`01-vo.json`. The sixteen approved takes he did not query are byte-identical, and the
+`--beats` scoping did not leak — beats 02, 19 and 21, which have no narration, were
+skipped without their stale-take branch firing.
+
+**THE REFUSED TAKE IS ARCHIVED, WHICH IS A CHANGE FROM WHAT 4a8f962 PROMISED, AND ON
+PURPOSE.** `synth_vo` moved it to `clips/vo-archive/01-vo.v3.mp3` as it wrote the
+retake (R6, nothing deleted, verified byte-identical at `812c9c14…`). The earlier
+record said it would stay in `clips/` until a replacement was *approved*; that was
+right while the line was in question and is wrong now that the line has changed,
+because a take saying the old words sitting in `clips/` tells the assembler that beat
+01 says something the script no longer says — the exact failure `synth_vo`'s own
+stale-take branch exists to prevent. **The page copy did not move**:
+`cuts/checklist/002b-01-vo.mp3` is still there as the record of what he refused, and
+its sidecar now says where the original lives and that the "no retake may be
+synthesised yet" sentence has been answered rather than leaving it to read as true.
+
+**WHERE THE TWO VERDICTS ARE WRITTEN DOWN, so no lane acts on a stale reading:**
+
+- **`leaves/002b-t0-c.yaml` gains `revisions:`** — a new block, because the script is
+  not frozen by approval, it is revised by him. Two entries, each his quote plus what
+  it cost; `approved_by` stays `founder` because he wrote both. (The key is `date:`
+  and not `on:` — YAML 1.1 parses a bare `on` as boolean `true`, which it did, once.)
+- **Review item 09 is `settled`** with chip `CONFIRM`, kept published rather than
+  deleted: it is the record of a declined proposal and of a condition released.
+- **Review item 08 stays open on his ear**, with the new take as the FIRST player,
+  the refused one second, the passed beat-03 take third.
+- **`pending-founder.yaml`:** `ep2-beat16-line` is **deleted** per that file's
+  retirement convention, with the reason in the removal block above `pending:`;
+  `ep2-beat01-line` is rewritten from "which word?" to "listen to this take", since
+  it is the same decision at a different stage.
+- **`farm-queue.yaml`: `002b-vo-retake-b01-b16-1786193585` is RETIRED and replaced by
+  `002b-vo-b16-1786279200`, beat 16 only, ungated.** Retired rather than left with a
+  cleared gate for exactly the reason its own predecessor was: it is `runner: manual`,
+  so nothing retires it automatically, and its `cmd` re-voices beats 1 AND 16 — the
+  promoter would have started printing "BY HAND — unblocked, run:" on a command that
+  archives the take he has not heard yet and re-records beat 01 from words that are
+  already recorded. `queue_promoter.py --dry-run` is clean and lists the replacement.
+
+**WHAT IS RUNNABLE NOW AND WAS NOT RUN HERE.** Beat 16 has still never been voiced,
+and after this it is ordinary ungated work — its words are the approved script's, so
+§6 is satisfied by the script itself and no taste call is left in it. It was held out
+of this pass deliberately, to keep the `--beats` scope at one beat while a take the
+founder has not heard yet sits in `clips/`. One caveat is recorded on the queue entry
+for whoever runs it: **two archived takes of that exact line already exist**
+(`clips/vo-archive/16-vo.json` and `.v2.json`, text byte-identical to the script's),
+from the superseded t0-b cut that the 2026-08-07 re-voice skipped on purpose.
+Re-synthesising against the approved script is the clean answer; promoting a t0-b-era
+take out of the archive is a decision to make deliberately rather than by accident.
+
+**WHAT IS LEFT FOR HIM: one listen.** Thirty seconds on
+`cuts/checklist/002b-01-vo-take2.mp3` — whether the read is the deadpan he asked for
+and whether the beat at the ellipsis is the right length. Yes closes item 08 and
+retires `ep2-beat01-line`; another note on the read is one more two-minute take.

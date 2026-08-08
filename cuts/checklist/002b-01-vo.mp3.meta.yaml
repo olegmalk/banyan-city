@@ -16,11 +16,21 @@ note: |-
   REJECTED BY THE FOUNDER 2026-08-08, on the read: "002b-01-vo doesn't have the
   right tone, it says 'i used to be an engineer, now IM a tree.' as if he is
   describing some irony and comparing himself to another tree. also, he isn't a
-  tree? he's a sapling." The take is kept in place, unarchived, because it is the
-  record of what he refused and no approved replacement exists. NO RETAKE MAY BE
-  SYNTHESISED YET: the same verdict put the LINE in question (tree vs sapling),
-  the wording is his to settle and is unanswered, and STEWARDSHIP §6 allows media
-  only from text he has approved. Retake entry: farm-queue.yaml
-  002b-vo-retake-b01-b16-1786193585, gate: founder.
+  tree? he's a sapling." That is the whole reason this file exists and it is not
+  to be deleted: it is the record of what he refused.
+  SUPERSEDED LATER THE SAME DAY, and the retake is 002b-01-vo-take2.mp3 beside
+  this one. He settled both halves of the refusal — the words ("for beat 1's
+  line, 3.") and the read — so the sentence that used to stand here, that no
+  retake could be synthesised until he answered, has been ANSWERED and is gone
+  rather than left to be read as still true. §6 was satisfied by his own pick.
+  WHERE THIS TAKE NOW LIVES. This page copy stays exactly where it is. In the
+  episode's folder it is no longer clips/01-vo.mp3 — synth_vo archived it to
+  clips/vo-archive/01-vo.v3.mp3 as it wrote the retake (R6, nothing deleted), and
+  that is correct rather than a loss: the line's text changed with his revision,
+  so a clips/ dir still serving this take would be telling the assembler that
+  beat 01 says something the script no longer says. The archived copy is
+  byte-identical to this one, sha256 812c9c14…, verified after the move.
+  Retake entry: farm-queue.yaml 002b-vo-retake-b01-b16-1786193585.
 line: |-
   I used to be an engineer. Now I'm a tree. Took three days to grow that. Total assets: two leaves and one fig.
+line_note: "The line as REFUSED. The script's line is now the revised one — see 002b-01-vo-take2.mp3.meta.yaml."

@@ -5,33 +5,51 @@
  "lines": [
   {
    "who": "VO",
-   "text": "I used to be an engineer. Now I'm a tree. Took three days to grow that. Total assets: two leaves and one fig.",
+   "text": "I used to be an engineer. Now I'm a tree.",
    "start": 0.0,
-   "end": 7.463,
+   "end": 2.827,
    "chunks": [
     {
      "text": "I used to be an engineer.",
      "start": 0.0,
-     "end": 1.36
+     "end": 1.685
     },
     {
      "text": "Now I'm a tree.",
-     "start": 1.36,
-     "end": 2.985
+     "start": 1.685,
+     "end": 2.827
+    }
+   ]
+  },
+  {
+   "who": "VO",
+   "text": "\u2026Well. A sapling. Took three days to grow that. Total assets: two leaves and one fig.",
+   "start": 3.327,
+   "end": 8.772,
+   "chunks": [
+    {
+     "text": "\u2026Well.",
+     "start": 3.327,
+     "end": 4.287
+    },
+    {
+     "text": "A sapling.",
+     "start": 4.287,
+     "end": 4.874
     },
     {
      "text": "Took three days to grow that.",
-     "start": 2.985,
-     "end": 4.705
+     "start": 4.874,
+     "end": 6.481
     },
     {
      "text": "Total assets: two leaves and one fig.",
-     "start": 4.705,
-     "end": 7.463
+     "start": 6.481,
+     "end": 8.772
     }
    ]
   }
  ],
  "actions": [],
- "total_s": 7.763
+ "total_s": 9.072
 }

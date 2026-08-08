@@ -1,0 +1,37 @@
+# Voice provenance (7.2) — the take as recorded by synth_vo, copied here
+# unchanged so the checklist can play it; the node's clips/01-vo.mp3 is the
+# same bytes (sha256 a03a549e…) and clips/01-vo.json carries the measured
+# chunk timings. The take this one answers is 002b-01-vo.mp3, beside it.
+platform: local-mps (pipeline/synth_vo.py, synth_vo v3)
+model: chatterbox-0.5B
+model_licence: MIT
+cast: voices.yaml
+shot_beat: 1
+seconds: 9.072
+source_script: leaves/002b-t0-c.yaml (approved_by founder 2026-08-03; beat 01 revised by him 2026-08-08, revisions[0])
+recorded: 2026-08-08
+cost_usd: 0
+note: |-
+  TAKE 2, AND IT IS A SAMPLE WAITING ON HIS EAR — not an approved take. It is
+  the retake of the one he refused on 2026-08-08, recorded only after he settled
+  both halves of that refusal: the words ("for beat 1's line, 3.") and the read
+  (deadpan, matter-of-fact, no stress on "I'm" — his objection was that the take
+  sounded like an ironic comparison with another tree).
+  WHAT CHANGED, so his ear knows what it is listening for. The line now corrects
+  itself out loud, which is his pick. The delivery cue in node.md moved
+  `tired` → `flat`, taking synth_vo's direction from (exaggeration 0.45, cfg
+  0.50) to (0.30, 0.55) — the preset 001 already uses for this narrator, and the
+  reason the read should sit flatter than take 1's. And his narration is written
+  as two blockquotes rather than one, which is why the pause before "Well" is
+  real: at 26 spoken words the line passes synth_vo's LONG_LINE_WORDS = 22, above
+  which a line is stitched from one solo generation per caption chunk, so "…Well."
+  and "A sapling." would have been one- and two-word generations joined by a fixed
+  0.12s gap, and "Now I'm a tree." would again have been spoken with no sentence
+  around it. Split after "tree", each half is one utterance (10 and 16 words) and
+  the ellipsis gets the direction layer's 0.50s between-lines pause — measured at
+  0.547s of true silence in the file, the only pause in it over 150ms.
+  Measured, not asserted: 9.072s, peak 0.854, no clipped samples. Nothing else in
+  the episode was re-synthesised — the other sixteen takes are byte-identical,
+  verified by sha256 before and after.
+line: |-
+  I used to be an engineer. Now I'm a tree. …Well. A sapling. Took three days to grow that. Total assets: two leaves and one fig.

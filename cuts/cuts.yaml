@@ -137,10 +137,15 @@ checklist:
     answered the same day — the voice is good, one take is not.** **Item 06 is not
     asking you anything today either** — you took that opening frame back on
     2026-08-08, so the model question built on it is ours to re-stage before it can
-    be put to you again. **If the pass is short, items 08 and 09 are what is
-    genuinely yours to answer** — two lines of script, because what is left of item
-    08 is a word you queried in your own script rather than anything about the
-    voice.
+    be put to you again.
+
+    **Both lines of episode 2's script are settled now, and you settled them on
+    2026-08-08, so this page is not waiting on your words anywhere.** Beat 16 keeps
+    "I can't even wave" because you said keep it — **item 09 closes** and stays as
+    the record. Beat 1 took your third wording, and that is why beat 1 has been
+    recorded again. **So item 08 is the only thing on this page that is genuinely
+    yours today, and it is no longer a question about words: it is your ear on one
+    take**, thirty seconds, to say whether the new read is the one you asked for.
   items:
     - n: 1
       ask: "The camera move — is 12% right at both ends of the episode?"
@@ -571,9 +576,9 @@ checklist:
         the seed under every frame.
 
     - n: 8
-      ask: "Episode 2's narration — ANSWERED IN HALF 2026-08-08. The voice is right, beat 1's read is not, and one word of it is now yours."
+      ask: "Beat 1's narration, recorded again on your words — does this one read right?"
       state: open
-      chip: "YOUR WORDS"
+      chip: "YOUR EAR"
       body: |-
         **You listened on 2026-08-08 and the answer split in two.** Your words,
         in full:
@@ -597,45 +602,65 @@ checklist:
         **I'M** a tree"*, which turns the line into a comparison with some other
         tree and an irony he is observing rather than a fact he is reporting. That
         is a delivery note and it is yours; no metric of ours disagreed and none
-        was consulted. **The take stays where it is** — on this page, in the
-        episode's folder, unarchived — because it is the record of what you
-        refused, and it is replaced only when a new one is approved.
+        was consulted. **That take is still on this page**, second player below,
+        because it is the record of what you refused. In the episode's folder it
+        has moved to `clips/vo-archive/` now that the retake exists (R6, nothing
+        deleted, byte-identical) — it had to, because the line's words changed
+        with your revision, and a take saying the old words sitting in `clips/`
+        would tell the assembler that beat 01 says something the script no longer
+        says.
 
-        **AND YOU PUT THE LINE ITSELF IN QUESTION, WHICH IS THE OPEN HALF.**
-        *"also, he isn't a tree? he's a sapling."* You are reading your own
-        script back at us: beat 03, the take you just passed, has him saying he
-        is *"forty centimeters tall"*, and the show calls him a sapling
-        everywhere else. The line as recorded is:
+        **AND YOU SETTLED THE WORD THE SAME DAY, WHICH IS WHY THERE IS A NEW
+        TAKE.** *"also, he isn't a tree? he's a sapling."* was you reading your
+        own script back at us — beat 03, the take you passed, has him saying he is
+        *"forty centimeters tall"*. Three wordings went to you in chat and you
+        picked the third: *"for beat 1's line, 3."* So he corrects himself out
+        loud and the word stops doing two jobs:
 
-        > I used to be an engineer. **Now I'm a tree.** Took three days to grow
-        > that. Total assets: two leaves and one fig.
+        > I used to be an engineer. Now I'm a tree. **…Well. A sapling.** Took
+        > three days to grow that. Total assets: two leaves and one fig.
 
-        **Wordings were put to you in chat on 2026-08-08 and none is picked yet.
-        Pick one, write your own, or say the line was fine as it was** — any of
-        the three closes this. It is one word doing two jobs, which is why nobody
-        is choosing it for you: "tree" is the joke's whole scale (an engineer
-        became *a tree*), and it is also the thing your other line says he is not.
+        "Took three days to grow that" is untouched — that is your own approval
+        condition from 2026-08-03, the fig's continuity with episode 1.
 
-        **NOTHING IS BEING RE-RECORDED UNTIL YOU ANSWER, and that is the rule
-        rather than caution.** §6: media comes from text you have approved, and
-        the text of this beat is now open. The retake needs two things from you
-        anyway and only one of them is the word — **how you want it read has not
-        been directed yet either**, and re-synthesising on a guess would answer
-        neither note. It is one line and about ninety seconds of machine time
-        when it comes.
+        **THE RETAKE IS THE FIRST PLAYER BELOW, AND IT IS THE ONLY THING THIS
+        ITEM STILL WANTS FROM YOU.** One take, on your words, with your read
+        direction actually wired in rather than hoped for: the delivery cue in the
+        script moved from `tired` to `flat`, which is where the voice engine reads
+        direction from, and `flat` is the same preset episode 1 uses for this
+        narrator — it should sit flatter and more matter-of-fact than the take you
+        refused. The pause before "Well" is real, 0.55 seconds of silence, and it
+        is the only pause in the file longer than a breath.
+
+        **One production note, because it is visible in the script and you should
+        not have to wonder why.** Beat 01's narration is now written as two
+        blockquotes instead of one. It is one speaker and one continuous line —
+        the split exists because past 22 spoken words the engine stops speaking a
+        line as one utterance and stitches it out of one recording per caption
+        chunk. Your wording takes the beat to 26, so "…Well." and "A sapling."
+        would each have been recorded alone, two seconds of one- and two-word
+        fragments where the joke lands, and *"Now I'm a tree."* would again have
+        been recorded with no sentence around it — which is the condition that
+        produced the stress you refused. Rejoining them is one edit whenever you
+        want it.
 
         For context, unchanged: the seventeen takes were re-voiced against the
         approved script; the eighteen from the superseded draft are archived
-        rather than deleted (R6). **Beat 16 is still deliberately unvoiced** for
-        the same reason this beat now is — its line is item 09, directly below.
-        Beats 02, 19 and 21 have no narration by design.
+        rather than deleted (R6). **The sixteen takes you did not query were not
+        touched by this retake** — verified byte-identical before and after, not
+        assumed. **Beat 16 has still never been voiced**, but it is no longer
+        blocked: you settled its line too (item 09, directly below), so its take
+        is now just work to run. Beats 02, 19 and 21 have no narration by design.
       audio:
+        - file: checklist/002b-01-vo-take2.mp3
+          label: "beat 01, TAKE 2 — 9.1s — the new one. This is the ear you owe us"
+          note: "I used to be an engineer. Now I'm a tree. …Well. A sapling. — your pick, deadpan, 0.55s at the ellipsis"
+        - file: checklist/002b-01-vo.mp3
+          label: "beat 01, take 1 — 7.5s — the take you REFUSED, kept as the record"
+          note: "I used to be an engineer. Now I'm a tree. — the read you called an ironic comparison"
         - file: checklist/002b-03-vo.mp3
           label: "beat 03 — 3.7s — GOOD, and it approves the voice"
           note: "A creature is using me as cover. I am forty centimeters tall."
-        - file: checklist/002b-01-vo.mp3
-          label: "beat 01 — 7.5s — REJECTED on the read, kept as the record"
-          note: "I used to be an engineer. Now I'm a tree. — the sentence in question"
       pending: >-
         **The takes exist but are being withheld from this page** — which, if you
         are reading this line, is a licence-gate refusal and not an empty
@@ -643,35 +668,45 @@ checklist:
         travels with them.
 
     - n: 9
-      ask: "Beat 16's line — you caught a contradiction. Is this the fix?"
-      state: open
-      chip: "YOUR WORDS"
+      ask: "Beat 16's line — ANSWERED 2026-08-08. You kept it, and our replacement is declined."
+      state: settled
+      chip: "CONFIRM"
       body: |-
-        When you approved episode 2 you attached a condition: *"the sapling was
-        able to flail a leaf in episode 1? why couldnt it do that in 002b?"* You
-        were right, and it was a straight contradiction — episode 1 beat 6 has
-        him **"flailing one (1) leaf"**, and episode 2 beat 16 had him saying he
-        cannot move at all.
+        **You answered this on 2026-08-08 and the line does not change.** Your
+        words: *"for beat 16's line, lets keep 'I can't even wave.'"* The
+        replacement we proposed is **declined**, and this item stays on the page as
+        the record of that rather than being deleted.
 
-        **The line as it stands:**
+        **The line, as it stays:**
 
         > He talks to me because I'm the only thing here that won't file a
         > report. Buddy, I *wish* I could. **I can't even wave.**
 
-        **What we propose instead** — keeping the joke, losing the contradiction,
-        and turning it into the distinction the episode actually runs on: the
-        twitch was involuntary and nobody saw it; the ending is deliberate and
-        received.
+        **What we had proposed, and what you turned down** — it kept the joke and
+        tried to convert the contradiction into the distinction the episode runs
+        on, the twitch involuntary and unseen against an ending that is deliberate
+        and received:
 
-        > He talks to me because I'm the only thing here that won't file a
-        > report. Buddy, I *wish* I could. **I've moved a leaf exactly once —
-        > panic, not aim. Nobody saw it.**
+        > …Buddy, I *wish* I could. **I've moved a leaf exactly once — panic, not
+        > aim. Nobody saw it.**
 
-        **Yes, edit it, or write your own.** This is the one item on this page
-        where the words are yours rather than the pictures — and until you
-        answer, **no voice take and no footage of beat 16 exists or will be
-        made.** Writing is cheap and reversible; a voiced, filmed beat is
-        neither.
+        **One thing said plainly, because this answer releases a condition you set
+        yourself.** When you approved episode 2 you attached *"the sapling was
+        able to flail a leaf in episode 1? why couldnt it do that in 002b?"* and
+        required this line rewritten. You were right about the facts — episode 1
+        beat 6 has him **"flailing one (1) leaf"** — and you have now decided the
+        line stays anyway. So the contradiction is not resolved in beat 16's words,
+        by your call, and nobody is to re-open it as a question: it is a closed
+        decision, recorded in the script's own approval leaf. What does carry the
+        distinction is the ending, and that half was always in place — beat 21
+        prints **`SPEAK ✓ 1 bit. slow.`** against episode 1's **`SPEAK ✗
+        undefined`**, so the episode defines a capability rather than merely
+        moving a leaf.
+
+        **What this unblocked:** beat 16 has never been voiced or filmed, and it
+        was waiting only on this. Its words are now settled, so its voice take is
+        ordinary queued work — one line, about two minutes of machine time — and no
+        longer a question for you.
 
 cuts:
   - file: ep1-v32-gentleholds.mp4

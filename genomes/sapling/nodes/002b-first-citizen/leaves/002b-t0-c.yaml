@@ -33,6 +33,56 @@ approval_conditions:
      unwitnessed; beat 21's tilt is deliberate, aimed and RECEIVED. Beat 21 now prints
      'SPEAK  checkmark  1 bit. slow.' against 001's inventory card 'SPEAK  x  undefined'
      — the ending defines a capability instead of merely moving a leaf."
+# Changes he made to the approved script AFTER approving it. The script above is
+# not frozen by approval — it is revised by him, and each revision is his words
+# plus what they cost. approved_by stays `founder` because he wrote both of these.
+revisions:
+  - date: 2026-08-08
+    beat: 1
+    quote: "for beat 1's line, 3."
+    what: |-
+      His pick out of three wordings put to him in chat, after he refused the
+      recorded take on 2026-08-08 for two reasons at once — the read ("as if he
+      is describing some irony and comparing himself to another tree") and the
+      word ("also, he isn't a tree? he's a sapling"). Option 3 answers the word
+      by letting him correct himself out loud rather than by choosing between
+      'tree' and 'sapling': the line is now "I used to be an engineer. Now I'm a
+      tree. …Well. A sapling. Took three days to grow that. Total assets: two
+      leaves and one fig." The joke keeps 'tree' for its scale and the show
+      keeps 'sapling' for its facts. "Took three days to grow that" is untouched
+      — it is approval_conditions[0]'s continuity with 001 and not his to lose here.
+      The line's delivery cue also moved `tired` → `flat`, which is not cosmetic:
+      synth_vo reads direction out of that parenthetical, `tired` selects
+      (exaggeration 0.45, cfg 0.50) and `flat` selects (0.30, 0.55) — the preset
+      001 already uses for this narrator — and `flat` is matched first, so leaving
+      `tired` beside it would have kept the refused read while changing only words.
+      The line is written as two blockquotes for the same reason and is still one
+      speaker and one continuous narration: at 26 spoken words it is past
+      synth_vo's LONG_LINE_WORDS = 22, above which a line is stitched from one
+      solo generation per caption chunk, and on his wording that made '…Well.' and
+      'A sapling.' one- and two-word generations with 'Now I'm a tree.' again
+      spoken with no sentence around it — the condition that produced the read he
+      refused. Split after 'tree', each half speaks as one utterance and his
+      ellipsis gets the direction layer's 0.50s between-lines pause.
+  - date: 2026-08-08
+    beat: 16
+    quote: "for beat 16's line, lets keep 'I can't even wave.'"
+    what: |-
+      NO CHANGE, on his word, and it RELEASES approval_conditions[1] above. A
+      replacement was proposed to him ("I've moved a leaf exactly once — panic,
+      not aim. Nobody saw it.") and he declined it by keeping the line as
+      written. Recorded plainly because the condition it releases was his own:
+      on 2026-08-03 he required this line rewritten as a continuity fix against
+      001 beat 06 ("I appear to be flailing one (1) leaf"), and he has now
+      decided the line stays. So the contradiction he spotted is not resolved in
+      beat 16's words and is not to be re-raised as an open question — it is a
+      closed decision. Two things about condition[1] should be read alongside it:
+      its text claims the line was "Rewritten", and that was never true of
+      node.md — the rewrite reached the record and not the script — while the
+      other half of the same remedy IS in place and always was, beat 21's card
+      printing "SPEAK ✓ 1 bit. slow." against 001's "SPEAK ✗ undefined". The
+      distinction the episode runs on is therefore carried by the ending rather
+      than by this line, which is the shape he has now chosen.
 approval_scope: |-
   Approval covers the STORY as read (21 beats, the guard exchange, the fig ending).
   It is NOT approval of the shot prompts: all 21 were found written in the v2

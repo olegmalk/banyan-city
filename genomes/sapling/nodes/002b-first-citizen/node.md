@@ -27,7 +27,9 @@ fugitive talk to each other?*
 **COLD OPEN — 0:00–0:06**
 A tiny two-leaf banyan sapling in a green field. On the thinnest branch a green nub swells, darkens and rounds into a single fig — the only thing in frame that moves.
 
-> **VO (dry, tired, engineer):** I used to be an engineer. Now I'm a tree. Took three days to grow that. Total assets: two leaves and one fig.
+> **VO (dry, flat, engineer):** I used to be an engineer. Now I'm a tree.
+
+> **VO (flat):** …Well. A sapling. Took three days to grow that. Total assets: two leaves and one fig.
 
 **THE SPRINT — 0:06–0:11**
 A SCAVENGER — goblin-ish, enormous ears, one broken tusk, patchwork cloak — sprints into frame, skids, and dives behind the sapling's thin trunk.
@@ -141,6 +143,37 @@ verdict that the picture did not correlate with the script. Predecessors
 archived: `leaves/002b-t0-a.md` (Phase 0), `leaves/002b-t0-b.md` (molt).
 Published video leaves 002b-t3-a/b are takes of earlier script eras.
 
+**Two lines settled by the founder on 2026-08-08, and they are the only script
+changes since his 2026-08-03 approval.** Beat 01 gained a self-correction — his
+pick out of wordings put to him in chat, verbatim: *"for beat 1's line, 3."* —
+after he refused the recorded take on both the word and the read (*"he isn't a
+tree? he's a sapling"*). The delivery cue moved `tired` → `flat` on the same
+line, because that is where `synth_vo` reads direction from and `flat` is the
+preset 001 already uses for this narrator (`EMOTION_HINTS`: exaggeration
+0.45 → 0.30, cfg 0.50 → 0.55); leaving `tired` in place would have re-recorded
+the read he refused with only the words changed.
+
+His narration is one continuous line **written as two blockquotes, and that is
+a synthesis decision rather than a second line.** Measured, not guessed: his
+wording takes the beat to 26 spoken words, past `synth_vo`'s
+`LONG_LINE_WORDS = 22`, and above that threshold a line is not spoken as one
+utterance — it is stitched out of one solo generation per caption chunk with a
+fixed 0.12s join. On his wording those chunks are `Now I'm a tree.` / `…Well.` /
+`A sapling.`, so the self-correction his pick exists for would have been three
+separate one- and two-word generations in a row, and `Now I'm a tree.` would
+again have been generated with no sentence around it — which is the condition
+that produced the stress he refused. Broken after "tree", each half is 10 and
+16 words, each is spoken as one utterance, and the pause at his ellipsis is the
+0.50s the direction layer gives between lines. Rejoining them is one edit if his
+ear wants it tighter.
+
+**Beat 16 is unchanged, and that too is his word** — *"for beat 16's line, lets
+keep 'I can't even wave.'"* It declines the replacement that was proposed to him
+and releases the second of his own 2026-08-03 approval conditions, which had
+required this line rewritten. So the contradiction he spotted against 001 beat 06
+stands in beat 16's words by his decision, and beat 21's card carries the
+distinction instead; `leaves/002b-t0-c.yaml` records the release and what it costs.
+
 ## Siblings
 
 [002a — The Broken Channel](../002a-broken-channel/node.md) · [002c — ADMIN(?)](../002c-admin-wireframe/node.md)
@@ -154,9 +187,11 @@ tilts a leaf in still air.
 ## Taste-rule notes
 
 - **Cycle 007 (shot density):** 21 beats / ~95s = a cut every 4.5s,
-  ≤1 spoken line each, and every beat's camera is on the referent of its
+  one speaker each, and every beat's camera is on the referent of its
   line — the tree is on screen for all four of its own lines (the old cut
-  showed it for none of them).
+  showed it for none of them). Beat 01's narration is written as two
+  blockquotes since 2026-08-08; it is one speaker and one continuous line,
+  split so the voice engine speaks each half in context (see Provenance).
 - **R7:** cold open re-grounds the premise and plants the fig (the
   ending's payoff) inside five seconds; every beat causes the next.
 - **R1:** population 0 → 1; his only fruit is spent; a creature now
