@@ -3955,6 +3955,115 @@ def test_licence_gate(tmp: Path):
           all(k in lg.MODEL_LICENCES and v in lg.MODEL_LICENCES
               for k, v in lg.SUPERSEDES_CATCH_ALL.items()))
 
+    # ---- AN ALLOWANCE MUST NEVER TRAVEL TO A NAME NOBODY READ. 2026-08-08, the
+    # other half of the same queue entry as the block above.
+    #
+    # Keys were matched as substrings of the whole normalised value, which leaks
+    # in two directions, and the morning's fix only closed one of them:
+    #   * SUFFIX — `fastwan` contains `wan`, so the gate answered Apache-2.0 for
+    #     a model in no table, having read nothing. It was RIGHT (FastVideo's
+    #     LICENSE is Apache-2.0, read separately in db26f7b), and that is why it
+    #     lived: the accident agreed with the truth once, so nothing looked odd.
+    #   * FINETUNE — `Lykon/dreamshaper-8-anything` contains `dreamshaper`, so
+    #     every LoRA, merge and finetune of a listed base cleared on its base's
+    #     licence.
+    # Both are now graded per IDENTIFIER (licence_gate._match_grade): an allow is
+    # honoured where the key NAMES the identifier, and a variant of it is demoted
+    # to UNINHERITED unless declared in ALLOW_INHERITS.
+    check("a suffix is not a match — fastwan inherits nothing from wan",
+          lg.model_licences("fastwan") == [] and lg.engine_licence("fastwan") is None)
+    check("...so an unlisted model containing a known key fails CLOSED",
+          lg.classify(lg.engine_licence("fastwan") or "")[0] == "unknown")
+    FINETUNE = "Lykon/dreamshaper-8-anything"
+    check("a finetune of an allowed base does not inherit the base's allowance",
+          lg.classify(lg.engine_licence(FINETUNE))[0] != "allow")
+    check("...and the report still names what it resembles, so the reading is findable",
+          [n for n, _ in lg.model_licences(FINETUNE)] == ["dreamshaper"])
+    check("...while the base itself is untouched — the real sidecar string still clears",
+          lg.engine_licence("Lykon/dreamshaper-8") == "CreativeML-OpenRAIL-M")
+    # the version direction the voxcpm2 entry documented in 2026-08-01 and then
+    # left to discipline ("add every new version explicitly, never rely on the
+    # prefix"). A fused numeric suffix is now a version, and a version is
+    # different weights: enforced, not remembered.
+    check("a version fused onto an allowed key is a different model",
+          lg.classify(lg.engine_licence("VoxCPM3"))[0] != "allow")
+    check("...while the two versions somebody DID read still resolve",
+          lg.engine_licence("VoxCPM-0.5B") == "Apache-2.0"
+          and lg.engine_licence("voxcpm2") == "Apache-2.0")
+    # A DEMOTION MUST SURVIVE STANDING NEXT TO AN ALLOW. Dropping the hit instead
+    # of demoting it would go silent the moment the same sidecar also named our own
+    # GPU — "no hits" reads as "nothing to check", which is how the record with the
+    # least provenance becomes the cheapest (hole 2).
+    errors, _ = tree("finetune-inherit", {f"{N}/clips/01-a.meta.yaml":
+                                          f"platform: local-gpu (rtx5090)\nmodel: {FINETUNE}\n"})
+    check("an unread finetune is a violation even beside our own compute",
+          len(errors) == 1 and "dreamshaper" in errors[0])
+    check("every UNINHERITED value classifies non-allow, whatever the model is called",
+          all(lg.classify(lg.UNINHERITED.format(name=n))[0] != "allow"
+              for n in lg.MODEL_LICENCES))
+    check("UNINHERITED_MARK still identifies its own wording",
+          lg.UNINHERITED_MARK in lg.UNINHERITED.format(name="x"))
+    # a withheld asset's reason lands on a public page, and build_site strips
+    # everything after an em dash as internal bookkeeping. So the wording keeps
+    # the part a stranger can act on ("unread variant of dreamshaper") in front
+    # of the dash and the explanation behind it — same convention as the
+    # MODEL_LICENCES values with '(read; founder sign-off pending)' tails.
+    import build_site as _bs_lic
+    check("the public form of a demoted licence is a readable name, not a paragraph",
+          _bs_lic.public_licence(lg.UNINHERITED.format(name="dreamshaper"))
+          == "unread variant of dreamshaper")
+    check("every ALLOW_INHERITS key is in the table and its licence really is an allow",
+          all(k in lg.MODEL_LICENCES
+              and lg.classify(lg.MODEL_LICENCES[k])[0] == "allow"
+              and isinstance(why, str) and why
+              for k, why in lg.ALLOW_INHERITS.items()))
+    # THE STRINGS THE TREE ACTUALLY WRITES, verbatim, because the risk in a
+    # matcher rewrite is not the hazard it closes — it is the 385 chatterbox
+    # sidecars, the 245 local-gpu ones and the 235 animagine ones it must leave
+    # exactly as they were. Each of these is a real value out of a real record;
+    # a licence-gate change that reclassifies a shipped asset moves the ratchet,
+    # and the ratchet is the only thing asserting nothing new became unpublishable.
+    UNCHANGED = {
+        # cuts/**/*-vo.json and genomes/**/clips/*.meta.yaml
+        "chatterbox-0.5B": "MIT",
+        "chatterbox-0.5B (per-line emotional direction)": "MIT",
+        "kokoro-onnx (kokoro-82M)": "Apache-2.0",
+        # a parameter count, a machine nickname, a script name and a path are all
+        # packaging — none of them is another model
+        "local-gpu (rtx5090)": "CC-BY-4.0 (our own output)",
+        "local-gpu (MSI)": "CC-BY-4.0 (our own output)",
+        "local-mps (pipeline/synth_vo.py, synth_vo v3)": "CC-BY-4.0 (our own output)",
+        "local-deterministic (pipeline/hold_still.py, render_t3.py, ffmpeg)":
+            "CC-BY-4.0 (our own output)",
+        "local deterministic (post_motion.py)": "CC-BY-4.0 (our own output)",
+        "kaggle-free-gpu": "CC-BY-4.0 (our own output)",
+        # a key spanning three whitespace-separated words still matches — and the
+        # platform grant is what this value has always resolved to, which is also
+        # the honest answer: the wan entry says the hosted previews publish no
+        # weights, so Model Studio's terms are the document, not Apache-2.0
+        "wan2.7-t2v (Alibaba Model Studio API)": "provider terms: commercial-output-grant",
+        "fal-ai/minimax/hailuo-2.3/standard/image-to-video":
+            "provider terms: commercial-output-grant",
+        "claude-fable-5": "provider terms: commercial-output-grant",
+        # and every restricted one stays restricted, judged by its worst clause
+        "cagliostrolab/animagine-xl-3.1": "CreativeML Open RAIL++-M (use restrictions travel; D15)",
+        "f5-tts-v1-base": "CC-BY-NC-4.0",
+        "PixVerse V6": "free-tier ToS: personal-use only, non-commercial",
+        "Veo 3.1 (Google Flow free tier)":
+            "Google ToS: output conditions we cannot pass on, plus watermark",
+    }
+    wrong = {v: lg.engine_licence(v) for v, want in UNCHANGED.items()
+             if lg.engine_licence(v) != want}
+    check(f"the {len(UNCHANGED)} real provenance strings in the tree resolve "
+          f"exactly as before{'' if not wrong else f' — got {wrong}'}", not wrong)
+    SVD_PAIR = ("still: Lykon/dreamshaper-8 (+IP-Adapter 0.35) | "
+                "motion: stabilityai/stable-video-diffusion-img2vid-xt")
+    check("the 16 compound SVD sidecars still name all three of their models",
+          {n for n, _ in lg.model_licences(SVD_PAIR)}
+          == {"dreamshaper", "ip-adapter", "stable-video-diffusion"})
+    check("...and are still refused on the motion model",
+          "non-commercial" in lg.classify(lg.engine_licence(SVD_PAIR))[1])
+
     # ---- the CANDIDATE tier: takes/ is scoped out of the ratchet, not hidden --
     # 2026-08-07. A candidate-stills wave wrote 40 honest sidecars into one
     # node's takes/stills/ in a single night and took the debt 38 -> 78, forty

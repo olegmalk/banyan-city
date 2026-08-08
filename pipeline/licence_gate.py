@@ -192,6 +192,17 @@ MODEL_LICENCES = {
     # provenance strings), so the safeguard is this table: add every new
     # version explicitly, after reading ITS licence, and never rely on the
     # prefix. The direction that bites is always allow-by-inheritance.
+    #
+    # THE SAFEGUARD IS NO LONGER DISCIPLINE (2026-08-08). Everything above still
+    # describes the right practice, but the last three sentences described the
+    # matcher of the day and it has been replaced: keys match whole TOKENS now,
+    # and a version fused onto a key (`voxcpm3` for `voxcpm`) grades as a
+    # variant, so an allowance does not reach it — `VoxCPM3` fails closed with
+    # nobody having to remember this paragraph. Compound 'still: X | motion: Y'
+    # strings still work, by identifier rather than by substring. Adding the
+    # version explicitly is still the right move, and it is now what MAKES the
+    # string resolve rather than what stops it going wrong: this key is why
+    # `voxcpm2` answers for itself instead of falling to `voxcpm`'s doubt.
     "voxcpm2": "Apache-2.0",
     # CORRECTED 2026-08-02, twice. First recorded as "unverifiable, nothing to
     # read" — wrong: quanhaol/Wan2.2-TI2V-5B-Turbo ships LICENSE.md, 19151 bytes,
@@ -448,6 +459,68 @@ SUPERSEDES_CATCH_ALL = {
 }
 CATCH_ALLS = frozenset(SUPERSEDES_CATCH_ALL.values())
 
+# KEYS WHOSE ALLOWANCE MAY TRAVEL TO A NAME THE TABLE HAS NOT SEEN, each with the
+# reason it is not the hazard the rest of this section exists to stop. Every other
+# allow key covers ONE set of weights and covers nothing else: see _match_grade.
+#
+# The test of membership is not "we trust this vendor", it is: **does the document
+# that grants us the output attach to something broader than one checkpoint?**
+#   - our own compute and our own code: the grant is that WE made it. A new machine
+#     nickname or a renamed script is not a new licensor. This list is why
+#     `local-gpu (a-box-we-buy-in-october)` does not have to be added to the table
+#     the day the box arrives — the mistake the "local-rtx5090" entry above records.
+#   - a hosted service: the licence IS the provider's terms, and those terms cover
+#     whatever the service serves. `claude-fable-5` and a model Anthropic ships next
+#     year land on the same document; the model name is not what was read.
+# A WEIGHTS licence never qualifies on that test, which is why `chatterbox`,
+# `kokoro`, `voxcpm`, `dreamshaper`, `animegen` and `ip-adapter` are absent: a
+# finetune of them is a different set of weights under a licence nobody has read,
+# and that is precisely the string that must fail closed.
+ALLOW_INHERITS = {
+    # ---- our own compute / our own code ----
+    "kaggle": "our own compute; the notebook's weights are a separate key",
+    "local-rtx5090": "our own compute",
+    "local-gpu": "our own compute, any machine nickname",
+    "local-mps": "our own compute",
+    "local-deterministic": "our own code path, no model at all",
+    "post-motion": "our own code (post_motion.py)",
+    "render-t2": "our own code (render_t2.py)",
+    "render-t3": "our own code (render_t3.py)",
+    "sfx-py": "our own code (sfx.py)",
+    # ---- hosted services: the terms cover the service, not one checkpoint ----
+    "alibaba-model-studio": "provider terms cover every model the API serves (D8)",
+    "fal-ai": "provider terms cover every model the API serves",
+    "hailuo": "provider terms (MiniMax via fal) cover the service's models",
+    "minimax": "provider terms cover the service's models",
+    "claude": "Anthropic's terms cover whatever model they serve",
+    # ---- THE UNCOMFORTABLE ONE, listed with its discomfort ----
+    # `wan` is the only WEIGHTS key here and it does not pass the test above on its
+    # own merits. It is here because the tree's wan records are 100-odd sidecars
+    # naming hosted preview versions — wan2.5/2.6/2.7, wan2.x-t2v-plus, wan-api —
+    # whose weights were never published, so the entry above already says out loud
+    # that what licenses their output is the PLATFORM grant in the same record, not
+    # this key. Strict matching would refuse every one of them for the wrong reason
+    # (an unread model) when the right reading is recorded one line away.
+    # The tightening that retires this line is per-version keys — `wan2-2` for the
+    # Apache-2.0 open weights, the platform grant for each hosted preview — which
+    # is a classification job with a founder-visible outcome, not a matcher fix.
+    # Until then: a wan release whose licence differs from Apache-2.0 gets its own
+    # key the day it is used, and this line is the reason nothing will warn you.
+    "wan": "hosted wan previews are licensed by the platform grant beside them "
+           "(see the wan entry); per-version keys are the tightening",
+}
+
+# What a demoted allow becomes: a licence classify() must read as UNKNOWN, so the
+# string fails closed and says why. Deliberately NOT the empty string and NOT a
+# silent drop — a dropped hit is invisible the moment the same record also names
+# our own GPU, and "no hits" would then read as "nothing to check". The finding has
+# to be POSITIVE to survive standing next to an allow.
+UNINHERITED = ("unread variant of {name} — one set of weights was read and this "
+               "is not it")
+# Substring that identifies such a value without re-deriving it (used for ordering
+# and by the tests). Any wording change must keep this token present.
+UNINHERITED_MARK = "unread variant of "
+
 # Models with NO LICENCE TEXT ANYWHERE — a different state from "nobody has read
 # it yet", and the difference is worth encoding because it changes what to DO.
 #
@@ -585,6 +658,110 @@ def classify(licence) -> tuple:
                        "pipeline/licence_gate.py or replace the asset")
 
 
+# ---------------------------------------------------------------------------
+# HOW A KEY IN THE TABLE ABOVE MATCHES A PROVENANCE STRING. Rewritten 2026-08-08;
+# until then a key matched as a bare SUBSTRING of the whole normalised value, which
+# is two holes pointing opposite ways:
+#
+#   * SUFFIX. `fastwan` contains `wan`, so model_licences("fastwan") answered
+#     Apache-2.0 — a document read for a different model, about a model in no
+#     table, with nothing said out loud. It was RIGHT (db26f7b went and read
+#     FastVideo's LICENSE: Apache-2.0), and that is exactly why it survived: the
+#     accident agreed with the truth once, so nothing looked wrong.
+#   * FINETUNE. `Lykon/dreamshaper-8-anything` contains `dreamshaper`, so every
+#     LoRA, merge and finetune of a listed base inherited the base's allowance.
+#
+# The morning's SUPERSEDES_CATCH_ALL fix covered ONE family in ONE direction (a
+# vendor catch-all losing to a version key we had read). This is the general rule,
+# and it rests on the asymmetry the voxcpm2 entry named and then left to
+# discipline: THE DIRECTION THAT BITES IS ALWAYS ALLOW-BY-INHERITANCE. A
+# restriction that reaches one model too many refuses something publishable —
+# noisy, and it fails safe. An allowance that reaches one model too many publishes
+# something we hold no right to publish, and the debt count says 25 all the while.
+#
+# So matching is deliberately NOT symmetrical:
+#
+#   deny / unknown licences → honoured at ANY match. An NC base's finetune is NC.
+#   allow licences          → honoured only where the key NAMES an identifier
+#                             rather than merely occurring inside one; otherwise
+#                             the hit is DEMOTED to UNINHERITED and reported.
+#
+# An identifier no key matches is unknown, which was already a violation. Nothing
+# below can turn a string this table has never seen into a pass — that is the one
+# property to preserve if any of this is ever rewritten again.
+#
+# A provenance string is prose with identifiers in it, so the identifier is the
+# unit: `Wan-AI/Wan2.2-TI2V-5B`, `local-gpu`, `post_motion.py`. Hyphens, dots and
+# underscores bind INSIDE a name; whitespace, slashes, pipes, commas, colons and
+# brackets separate one name from the next and from the prose around it. That one
+# distinction is why `kokoro-82M via kokoro-onnx (local neural TTS)` reads as
+# several identifiers — so `via` is not held against `kokoro` — while
+# `dreamshaper-8-anything` reads as exactly one, and `anything` is.
+IDENT_SEP = re.compile(r"[\s/|,;:()\[\]{}<>+&*=\"'`]|—|–|→")
+# Tokens that describe HOW the same weights were packaged rather than naming other
+# weights: a parameter count (82M, 0.5B), a precision or quantisation (fp8, bf16,
+# q4), a container (onnx, gguf, safetensors, diffusers), a date, a resolution.
+# Everything with a digit in it qualifies, plus this short word list. Words that
+# name DIFFERENT weights — distilled, turbo, plus, base, instruct, preview, xl —
+# are deliberately absent: those are the strings that must fail closed.
+DECORATION_WORDS = frozenset({"onnx", "gguf", "safetensors", "diffusers",
+                              "ckpt", "pt", "pth", "bin", "py"})
+# exact      — the key consumed every identifier it touched, and nothing else.
+# decorated  — leftovers, all of them packaging (above): the same weights.
+# variant    — a leftover word the table never read, or a version fused onto the
+#              key (`wan2` for `wan`, `voxcpm3` for `voxcpm`). Different weights.
+GRADE_RANK = {"exact": 0, "decorated": 1, "variant": 2}
+
+
+def identifiers(text) -> list:
+    """The identifiers a provenance string names, each normalised."""
+    return [n for n in (normalise(c) for c in IDENT_SEP.split(str(text))) if n]
+
+
+def _decoration(token: str) -> bool:
+    """Packaging, not another model — see DECORATION_WORDS."""
+    return any(c.isdigit() for c in token) or token in DECORATION_WORDS
+
+
+def _match_grades(key: str, tokens: list, run_of: list) -> dict:
+    """{identifier(s) touched → grade} for every way `key` matches here.
+
+    A key matches a run of WHOLE tokens (so `wan` no longer matches inside
+    `fastwan`), and its last token may absorb a fused numeric suffix (`wan2`) —
+    which is graded as a version, the weakest grade, because a version bump is
+    exactly how a licence changes. Leftover tokens are counted only in the
+    identifiers the match actually touched: prose two words away is not evidence
+    about the model, and the identifier it sits in is.
+
+    Keyed by the touched identifiers rather than reduced to one grade, because
+    WHICH identifier a hit is about is what lets a specific key answer for it
+    (model_licences below). A multi-token key may legitimately span consecutive
+    identifiers — `alibaba-model-studio` against 'Alibaba Model Studio API' —
+    so the key of this dict is a tuple, not an index."""
+    kt = key.split("-")
+    grades = {}
+    for start in range(len(tokens) - len(kt) + 1):
+        fused = False
+        for offset, want in enumerate(kt):
+            got = tokens[start + offset]
+            if got == want:
+                continue
+            if offset == len(kt) - 1 and got.startswith(want) and got[len(want):].isdigit():
+                fused = True
+                continue
+            break
+        else:
+            span = range(start, start + len(kt))
+            touched = tuple(dict.fromkeys(run_of[i] for i in span))
+            leftover = [t for i, t in enumerate(tokens)
+                        if run_of[i] in touched and i not in span]
+            grade = ("variant" if fused or not all(map(_decoration, leftover))
+                     else "decorated" if leftover else "exact")
+            if GRADE_RANK[grade] < GRADE_RANK.get(grades.get(touched), 9):
+                grades[touched] = grade
+    return grades
+
+
 def model_licences(text) -> list:
     """EVERY classified model named in a provenance string, as (name, licence).
 
@@ -599,13 +776,63 @@ def model_licences(text) -> list:
     dropped here per SUPERSEDES_CATCH_ALL, and any catch-all that survives sorts
     last — so `Lightricks/LTX-2.3` is answered by the LTX-2 Community Licence and
     not by whichever key spells its vendor with more letters. Length still breaks
-    ties between unrelated keys, where it decides nothing that matters."""
-    norm = normalise(text)
-    hits = [name for name in MODEL_LICENCES if name in norm]
-    superseded = {SUPERSEDES_CATCH_ALL[n] for n in hits if n in SUPERSEDES_CATCH_ALL}
-    hits = [n for n in hits if n not in superseded]
-    hits.sort(key=lambda n: (n in CATCH_ALLS, -len(n)))
-    return [(name, MODEL_LICENCES[name]) for name in hits]
+    ties between unrelated keys, where it decides nothing that matters.
+
+    AN ALLOWANCE NEVER TRAVELS TO A NAME NOBODY READ (also 2026-08-08, the other
+    half of the same queue entry). A key whose licence classifies `allow` and
+    which only matched a VARIANT of itself is returned under UNINHERITED instead
+    of under its own licence, unless it is declared in ALLOW_INHERITS. The name
+    is still returned, so the report can say what the string resembles — the
+    demotion changes the verdict, never the evidence. Restrictions keep
+    travelling in the other direction, on purpose (see the section comment)."""
+    tokens, run_of = [], []
+    for i, ident in enumerate(identifiers(text)):
+        for tok in ident.split("-"):
+            tokens.append(tok)
+            run_of.append(i)
+    graded = {}
+    for name in MODEL_LICENCES:
+        grades = _match_grades(name, tokens, run_of)
+        if grades:
+            graded[name] = grades
+    # THE MOST SPECIFIC KEY ANSWERS FOR AN IDENTIFIER. `voxcpm2` is in this table
+    # because someone read ITS card, and it names the string `voxcpm2` outright,
+    # while `voxcpm` reaches the same string only as a fused version — so the
+    # reading wins and the base key has nothing to say about it. Without this,
+    # adding a version key would make the string WORSE than before it was added
+    # (read licence + inherited doubt), which is the opposite of the incentive
+    # every "add every new version explicitly" comment in this file is asking for.
+    #
+    # Deliberately NOT the tempting "a base key defers to whatever else matched" —
+    # the hole SUPERSEDES_CATCH_ALL's comment names. Deferral is to a key that
+    # matched THE SAME IDENTIFIER at exact or decorated grade, i.e. one whose
+    # licence is about these very weights. `Lykon/dreamshaper-8-anything on
+    # local-gpu (rtx5090)` still fails: our own GPU is a different identifier and
+    # answers for nothing but itself.
+    answered = {run for grades in graded.values()
+                for runs, grade in grades.items() if grade != "variant"
+                for run in runs}
+    superseded = {SUPERSEDES_CATCH_ALL[n] for n in graded if n in SUPERSEDES_CATCH_ALL}
+    hits = []
+    for name, grades in graded.items():
+        if name in superseded:
+            continue
+        licence = MODEL_LICENCES[name]
+        if (min(GRADE_RANK[g] for g in grades.values()) == GRADE_RANK["variant"]
+                and name not in ALLOW_INHERITS
+                and classify(licence)[0] == "allow"):
+            # every occurrence is a variant (that is what the min says). If a key
+            # that DID name the identifier covers all of them, this one is silent;
+            # otherwise it fails closed and says which reading it is not.
+            if all(any(run in answered for run in runs) for runs in grades):
+                continue
+            licence = UNINHERITED.format(name=name)
+        hits.append((name, licence))
+    # A demoted hit sorts after the licences somebody actually read, so
+    # engine_licence() cites a real document when the string names one and only
+    # falls back to "we have not read this" when it does not.
+    hits.sort(key=lambda h: (h[0] in CATCH_ALLS, UNINHERITED_MARK in h[1], -len(h[0])))
+    return hits
 
 
 def engine_licence(engine) -> str:

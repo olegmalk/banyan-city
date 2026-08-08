@@ -693,6 +693,11 @@ backlog:
 #     will not catch you if it does not. See licence-gate-substring-1786123560:
 #     the bare string `fastwan` resolves to Apache-2.0 today by matching `wan`
 #     inside itself, having read nothing.
+#     THE GATE CATCHES IT NOW (2026-08-08, that entry's fix): keys match whole
+#     tokens, so `fastwan` matches nothing at all and fails closed — an unread
+#     LoRA named in the sidecar is a violation instead of a silent Apache-2.0.
+#     Naming the LoRA is still the requirement; what changed is that omitting it
+#     is now the only way to stay quiet, and scan_media catches THAT.
 - id: lora-5b-load-path-1786123500
   runner: manual
   worker: m1pro
@@ -734,28 +739,66 @@ backlog:
 # reason the number may rise). Token-aware matching WILL change what some strings
 # resolve to. The fix must not reclassify shipped assets — the ratchet stays 38, or
 # the commit explains in the file why it moved and D15 moves with it.
-- id: licence-gate-substring-1786123560
+# RETIRED 2026-08-08 NIGHT — licence-gate-substring-1786123560, done in the commit
+# that carries this line. Matching is token-aware and per-identifier now
+# (licence_gate.identifiers / _match_grades / model_licences), and the rule is the
+# asymmetry this entry's own text kept pointing at: a restriction may travel to a
+# variant, an ALLOWANCE never may.
+#
+#   model_licences("fastwan")                    -> []            (was Apache-2.0)
+#   engine_licence("fastwan")                    -> None          → fails closed
+#   engine_licence("Lykon/dreamshaper-8-anything") -> "unread variant of
+#                                                   dreamshaper …"  (was OpenRAIL)
+#   engine_licence("VoxCPM3")                    -> same shape    (was Apache-2.0)
+#
+# Both directions the entry named, plus the one it did not:
+#   * SUFFIX — a key must match whole TOKENS, so `wan` is not inside `fastwan`.
+#   * FINETUNE — an allow key is honoured only where it NAMES the identifier;
+#     leftover words (`-anything`, `-nsfw-merge`) or a fused version (`voxcpm3`)
+#     demote the hit to licence_gate.UNINHERITED, which classify() reads as
+#     unknown. The finding is POSITIVE, not a dropped hit — a dropped one goes
+#     quiet the moment the same sidecar also names our own GPU.
+#   * MOST-SPECIFIC-WINS — a key that names the identifier answers for it, so
+#     adding `voxcpm2` now MAKES that string resolve instead of leaving it in the
+#     base key's doubt. Adding a version is rewarded, which is what every "add
+#     every new version explicitly" comment in that file was asking for and could
+#     not enforce.
+#
+# THE HARD CONSTRAINT ABOVE WAS MET AND MEASURED, not asserted: `licence_gate.py`
+# run before and after prints BYTE-IDENTICAL output — 25 violations, ratchet 25,
+# same files, same documents cited — and all 61 distinct provenance strings in
+# genomes/, cuts/ and the trial gallery resolve to exactly the licence they did
+# before. The only three strings in the repo or the tests whose verdict moved are
+# the three hazards above. Nothing was reclassified, so D15 does not move.
+# Regressions live in test_pipeline.test_licence_gate, both directions, and the
+# 16 real strings are asserted by value so the next matcher change has to show its
+# work the same way.
+#
+# ONE DEFERRAL, DECLARED RATHER THAN DISCOVERED: licence_gate.ALLOW_INHERITS lists
+# the keys whose allowance may still reach a name nobody read, and `wan` is the one
+# entry there that is weights rather than a service or our own compute. It is there
+# because ~100 sidecars name hosted wan previews whose real document is the platform
+# grant recorded beside them, and strict matching would refuse every one for the
+# wrong reason. The successor entry below is that tightening, and it is a
+# classification job, not a matcher job.
+- id: licence-gate-wan-versions-1786212300
   runner: manual
   worker: m1pro
   needs: []
   window: any
-  est_minutes: 45
+  est_minutes: 60
   cmd: >-
-    make licence_gate's model matching token-aware, or add an explicit key for
-    every LoRA and finetune family we touch, plus a test asserting that an unknown
-    string CONTAINING a known key does not inherit its licence
+    give licence_gate a key per wan version we have actually used — wan2.1, 2.2,
+    2.5, 2.6, 2.7, wan-api, the -plus variants — each with the document that
+    governs IT (open weights vs Model Studio's terms), then delete `wan` from
+    ALLOW_INHERITS and confirm the gate output is unchanged
   why: >-
-    The one tool that decides what may be published can return a licence it has
-    never read, for a model that is not in its table, and report nothing unusual —
-    so provenance integrity currently rests on the substring accident landing our
-    way. STILL OPEN as of 2026-08-08, and deliberately not retired by that day's
-    gate fix: that fix made a VENDOR CATCH-ALL lose to a version key we have read
-    (licence_gate.SUPERSEDES_CATCH_ALL), which is one family and one direction.
-    The general hazard this entry names is the other direction and is untouched —
-    `Lykon/dreamshaper-8-something-else` still inherits dreamshaper's OpenRAIL
-    because the key is a substring of it, and nothing warns. Token-aware matching
-    is still the fix; what exists now is one worked example of declaring
-    precedence instead of inferring it.
+    `wan` is the last allow key whose licence can reach a release nobody read, and
+    the table's own comment already says the hosted previews publish no weights, so
+    Apache-2.0 is the wrong document for six of the values we write today. The gate
+    would then cite the right one, and the last declared allow-by-inheritance in
+    the file goes away. Consumer: the publish gate and every wan sidecar's
+    `model_licence` line, which farm_worker writes from engine_licence().
 
 # ---- THE v32 REJECTION, 2026-08-07 evening ----------------------------------
 # The founder watched the assembled cut and turned it down with an itemised list,
