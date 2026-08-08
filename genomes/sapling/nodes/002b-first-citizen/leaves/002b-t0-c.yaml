@@ -91,3 +91,42 @@ approval_scope: |-
   await his verdict on that sample before conversion (CLAUDE.md ONE SAMPLE rule).
   No VO, no stills and no footage may be produced until the dialect is settled — the
   18 existing 002b VO files are from the t0-b cut and do not match this one.
+
+# ── ANNOTATION 2026-08-09 — DECISIONS.md D19, open item (b). ──────────────────
+# The approval_scope text above is preserved exactly as he had it on 2026-08-03 and
+# is NOT deleted (R6; a closed decision is never edited away, only superseded). Its
+# last two sentences are nonetheless stale. Recorded because they are the only text
+# in the repo forbidding the episode-level renders now being staged, and a live-
+# looking prohibition that everyone quietly steps over is worse than either a live
+# one or a retired one.
+approval_scope_superseded:
+  clause: "No VO, no stills and no footage may be produced until the dialect is settled."
+  status: |-
+    STALE — the dialect was settled by the founder's own conduct rather than by a
+    written verdict on the beat-01 sample. He approved episode 2's VO after this
+    sentence was written, and he directed the redraw wave that drew beats 02-21 in
+    the settled dialect. The clause was never overruled in words; it was outrun.
+  dialect_as_settled: |-
+    Current native-tag dialect (detailed cinematic anime). shots.md was converted for
+    the b02-21 batch on 2026-08-07 with the CLIP token budget measured on the real
+    sd_prompt path, not guessed — beat 01's sample was screened, and its successor
+    plate was picked from the r3/r5 contact sheets.
+  citations:
+    - "54562ca (2026-08-08) — beat 16 has a voice for the first time"
+    - "0636023 (2026-08-08) — beat 1's retake passed, episode 2's narration complete
+       with nothing left to ask"
+    - "c21c8f4 (2026-08-08) — he settled both of episode 2's lines, and one of them
+       he settled by changing nothing"
+    - "the b02-21 redraw wave (80 frames) ran at his direction on 2026-08-08"
+  also_stale: |-
+    "the 18 existing 002b VO files are from the t0-b cut and do not match this one" —
+    they were re-synthesised against THIS cut on 2026-08-07/08 (clips/01-vo.mp3 dates
+    to the 08-08 beat-1 retake). 18 of the 21 beats carry VO; 02, 19 and 21 have none.
+  formal_retirement: |-
+    Rides with D19's open item (a), the §6 read-before-media → read-before-publish
+    conversion. One commit by the founder of record closes both; until then this is
+    an annotation, not an amendment.
+  flagged_by: |-
+    Steward, 2026-08-09, staging the speculative episode-2 pass — and independently
+    the same night by the item08-close workstream, which reached it from the other
+    direction.

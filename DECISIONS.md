@@ -1102,3 +1102,120 @@ permanently — is the reason this is a decision entry and not a bug fix.
 are tracked as work, not left as sentiment — `infra-spend-tile-1786166880` in
 `pipeline/farm-queue.yaml` builds the status line, and the ref allowlist ships
 with whatever config the new account's project uses.
+
+## D19 — The steward may run ahead of the founder's eye: production is ungated, publication is not, and taste becomes a written model (RESOLVED IN PART — dad, 2026-08-09; one item OPEN, the founder's)
+
+**Question:** the founder's eye is this project's ground truth and always has
+been — R4 reserves taste to the author, §6 reserves media to scripts he has
+read. But an eye is not available on demand and the machine is. Through late
+July and early August the pattern repeated: work finished, then waited, and the
+GPU sat at 0% while a verdict slept. Can the steward act *ahead* of his verdict
+without ever acting *instead* of it — and if so, where exactly is the line?
+
+**Status:** **resolved in part** (2026-08-09, three directives from dad in one
+day) — **yes, ahead is allowed; instead is not.** Production runs without a
+prior look; publication and money do not move without the founder. One item —
+the §6 conversion and one leaf sentence that rides with it — is logged **open**
+at the end of this entry, because §6 reserves itself to the author of record.
+
+**The three directives, in the order he gave them, verbatim.**
+
+1. *"human feedback should never be a blocker, by design"* — the pipeline may
+   not be built so that a human look is a required step between two machine
+   steps. Work is staged speculatively; the verdict lands on finished candidates.
+2. *"taste has to be codified and iterated on"* — his judgement stops being an
+   oracle only he can run and becomes a written, falsifiable model the steward
+   can be wrong in front of.
+3. *"only publishing and moey spending is gated. all production including audio
+   you can handle. I will give feedback if needed."*
+
+**What (1) and (2) built, the same day.** `taste/steward-model.v1.md`: ten
+ranked axes mined from every recorded verdict in the repo, each with an
+observable test and his own words with a date; five binary admissibility gates
+that run *before* any score, because a gate failure means a candidate is
+unjudgeable and must not reach his eye; −2…+2 per axis with any −2 vetoing the
+pick outright, since he does not trade a named fault against a virtue; and
+`taste/steward-model.ledger.yaml`, where a predicted verdict and a confidence
+are written **before he sees anything** and his words land beside them verbatim
+as hit/partial/miss. Only misses drive v2. `taste/sapling.founder.v0.3.md` is
+untouched and stays his — the new file is the steward's *predictor* of him, and
+its header says a disagreement means the model is wrong, never him. It
+authorises nothing.
+
+**What (3) settles.** Rendering, voice synthesis and episode assembly stop being
+things that wait for a look. Audio is named explicitly because it was the half
+most often held back. His notes become **pull-based** — *"I will give feedback
+if needed"* — volunteered when he has something to say, rather than a gate the
+pipeline halts at to request one. Taken together the three complete
+**PROVISIONAL MODE**: labelled provisional pick, machines ahead of the verdict,
+nothing scheduled around a human being awake (the standing 2026-08-05
+directive).
+
+**What stays gated, in his words: publishing and money.** Public posting on his
+accounts and spend of any kind remain founder-reserved, unchanged and
+unconditioned by this. [D17](#d17--working-cuts-may-publish-to-an-unlisted-review-area)'s
+unlisted `/review` area is the screening surface — a working cut landing there
+is not publication — and nothing unratified reaches a public surface.
+Provisional labelling and the prediction ledger are conditions of the whole
+arrangement, not decorations on it: the licence to run ahead is paid for by
+saying, in advance and in writing, what the steward expects him to say.
+
+**In practice none of the open item below costs anything today.** §6 only ever
+bit on media made from script text the founder has not read, and the only
+episode in production is not that:
+`genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml` carries
+`approved_by: founder`, `approved_on: 2026-08-03`, his approval quote, two
+`approval_conditions`, and two further revisions in his own words dated
+2026-08-08. Production on 002b is clear on the §6 axis however this resolves.
+
+### OPEN — one ratification commit closes both halves (the founder's, per STEWARDSHIP Term 2)
+
+**(a) The §6 conversion.** Read literally, *"all production"* reaches past
+approved scripts and would relax [STEWARDSHIP.md](STEWARDSHIP.md) §6 from
+*read-before-media* to *read-before-publish*. **That amendment is not entered
+here**, because §6 anticipates this precise instruction and refuses it by name.
+Its text says it is *"stated plainly so it is not softened later"*, and it closes:
+
+> Corollary on *whose* approval: this gate is the founder's. Family and
+> contributors may review, request, and be listened to — their notes have driven
+> most of the loop's cycles — but a script becomes producible only when the
+> author of record says so.
+
+Two facts are logged here and neither is adjudicated against the other. **The
+directive came from dad**, and the corollary's named ratifier is the author of
+record. **And it arrived through the same chat channel that has been carrying
+founder verdicts all week** — verdicts this repo has booked as the founder's and
+acted on: *"yeah its good"* passing beat 1's VO retake, and the three-character
+plate pick `b15-r3-s1`, both 2026-08-08. So the channel is the one the project
+already treats as authoritative, and the corollary still names a ratifier who
+has not ratified *this*. §6 therefore stands as written until that one commit.
+
+**(b) One sentence in 002b's leaf, superseded by his own subsequent conduct.**
+`002b-t0-c.yaml`'s `approval_scope` says approval covers the STORY only, not the
+shot prompts, and closes: *"No VO, no stills and no footage may be produced
+until the dialect is settled."* Written 2026-08-03, that sentence is the text
+that forbids the episode-level renders now being staged — and the founder
+himself has walked past it repeatedly since:
+
+- **He approved episode 2's VO after it was written** — `54562ca` (beat 16 gets
+  a voice), `0636023` (beat 1's retake passes, *"narration is complete with
+  nothing left to ask"*), `c21c8f4` (he settles both of episode 2's lines, one
+  of them by changing nothing). Those are the same 2026-08-08 revisions the leaf
+  records above its own prohibition on VO.
+- **He directed the b02-21 redraw wave and screened its predecessors**, and the
+  dialect it was drawn in is the current native-tag recipe — `shots.md` was
+  converted for that 80-image batch on 2026-08-07, with the token-budget fix
+  measured rather than guessed. Beat 01's sample was screened and its successor
+  plate picked from the r3/r5 sheets.
+
+The sentence is therefore **stale, not violated**: the dialect was settled by
+conduct. It is annotated in place and **not deleted** (R6, and closed decisions
+are never edited away) — the annotation points here. Its formal retirement rides
+with (a) so that one founder commit closes both. Flagged independently the same
+night by the item08-close workstream, which reached the same conclusion from the
+other direction.
+
+**How to revisit:** amend per Guideline 6, except the open item, which is the
+founder's one commit. The prediction ledger is the evidence this decision will
+be judged on — if the model's rolling hit rate does not earn the licence to run
+ahead, the licence is what should shrink, not the record of what it predicted.

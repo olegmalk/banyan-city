@@ -4992,3 +4992,78 @@ the model predicts he rejects, each with what the next round must change.
 Gates as their own steps: `lint_genome.py` rc=0, `test_pipeline.py` rc=0. Nothing
 rendered, published, posted, spent, or opened on his screen; no candidate pixel is
 committed with this text.
+
+## 2026-08-09 — production is the steward's, publishing and money are not, and the one clause that waits for a signature
+
+**Third directive of the day** (Oleg, verbatim): *"only publishing and moey
+spending is gated. all production including audio you can handle. I will give
+feedback if needed."* Renders, voice synthesis and episode assembly stop waiting
+for a look, and his notes become **pull-based** — volunteered when he has
+something to say, not a gate the pipeline halts at to request one. With the
+day's first two directives (*"human feedback should never be a blocker, by
+design"*, *"taste has to be codified and iterated on"*) this completes
+PROVISIONAL MODE: labelled provisional pick, machines ahead of the verdict,
+nothing scheduled around a human being awake. Recorded as **D19**.
+
+**Publishing and money are untouched.** Public posting and spend stay
+founder-reserved. D17's unlisted `/review` area is the screening surface;
+nothing unratified reaches a public one. Provisional labelling and the
+prediction ledger are conditions of the licence, not decorations on it.
+
+**One item is logged OPEN, and it is deliberate.** Read literally, *"all
+production"* would relax STEWARDSHIP.md §6 from read-before-media to
+read-before-publish — and §6 refuses that by name. It says it is *"stated
+plainly so it is not softened later"* and its corollary reserves the gate to
+*"the author of record"*, with family able to review and request but not to open
+it. Both facts are logged and neither is adjudicated: the directive came from
+dad, **and** it arrived through the same chat channel that has carried founder
+verdicts all week — *"yeah its good"* passing beat 1's VO retake, and the
+three-character plate pick `b15-r3-s1`, both 2026-08-08, both booked as his and
+acted on. So §6 stands as written until one ratification commit
+(STEWARDSHIP Term 2).
+
+**Riding with it: one sentence in 002b's leaf, annotated rather than deleted.**
+`002b-t0-c.yaml`'s `approval_scope` closes *"No VO, no stills and no footage may
+be produced until the dialect is settled"* — the only text in the repo forbidding
+the episode-level renders now being staged. It is **stale, not violated**: the
+founder approved episode 2's VO after writing it (`54562ca` beat 16's first
+voice, `0636023` beat 1's retake passing with *"narration complete with nothing
+left to ask"*, `c21c8f4` settling both lines, one by changing nothing) and
+directed the 80-frame b02-21 redraw in the settled native-tag dialect
+(`shots.md` converted 2026-08-07, token budget measured not guessed). The
+clause was never overruled in words; it was outrun. A new
+`approval_scope_superseded` block records this in the leaf with citations, the
+original text untouched (R6). Flagged independently the same night by the
+item08-close workstream. Its formal retirement rides with the §6 item so one
+founder commit closes both.
+
+**Also corrected there:** the same `approval_scope` says the 18 existing 002b VO
+files *"are from the t0-b cut"*. They were re-synthesised against THIS cut on
+2026-08-07/08. Eighteen of the twenty-one beats carry VO; 02, 19 and 21 have
+none.
+
+Gates: `lint_genome.py` rc=0 (ratchet 25), `test_pipeline.py` rc=0. Nothing
+rendered, nothing published, nothing on his screen.
+
+**The ledger was checked against the page independently, and it reconciles.**
+`b78ce13` landed `PROVISIONAL-PICKS-0809.md` and
+`taste/steward-model.ledger.yaml` together. Read back from the yaml rather than
+from the prose: **25 records, 5 with a pick** (`b06-r3-s2`, `b14-r3-s3`,
+`002b-b16-r3-s2`, `002b-b18-r3-s0`, `002b-b21-r3-s3`), **20 `reject_all`**, a
+stated confidence on every one of the 25, unique ids, and `founder_verdict` null
+throughout — which is the property the whole mechanism exists to have. The
+page's own arithmetic (five picks out of a hundred candidates, twenty beats
+back) matches the file it points at.
+
+**A near-miss worth recording, because the next agent will hit it.** The check
+was run at 00:36 by looking for the file on disk, found nothing, and began
+transcribing the 25 records from the prose page on the assumption the picker had
+written only the .md. The picker had written both — `b78ce13` committed while
+that transcription was in flight, so the write landed on top of a file that had
+existed for a few minutes, and the richer original was recovered with
+`git checkout HEAD --`. Nothing was lost and nothing incorrect was committed.
+The lesson is narrow and general: **in a shared working tree, `ls` answers a
+question about the past.** Existence checks before a write must go through git,
+and a `Write` to a path another agent owns needs `git status` on that path
+first — a tracked-file ` M` where `??` was expected is the only warning there
+is.
