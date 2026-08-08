@@ -1,0 +1,17 @@
+# Voice provenance (7.2) — the take as recorded by synth_vo, copied here
+# unchanged so the checklist can play it; the node's clips/03-vo.mp3 is the
+# same bytes and clips/03-vo.json carries the measured chunk timings.
+platform: local-mps (pipeline/synth_vo.py, synth_vo v3)
+model: chatterbox-0.5B
+model_licence: MIT
+cast: voices.yaml
+shot_beat: 3
+seconds: 3.682
+source_script: leaves/002b-t0-c.yaml (approved_by founder, 2026-08-03)
+recorded: 2026-08-07 (5d2e82b)
+cost_usd: 0
+note: |-
+  one of seventeen takes re-recorded against the approved script; the eighteen
+  takes it replaced were from t0-b and are archived beside them (R6)
+line: |-
+  A creature is using me as cover. I am forty centimeters tall.

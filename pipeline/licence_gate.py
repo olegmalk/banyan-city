@@ -390,6 +390,17 @@ MODEL_LICENCES = {
     # machine — or from a writer that spells it differently — became a violation.
     # A rule that depends on one machine's nickname is not a rule.
     "local-gpu": "CC-BY-4.0 (our own output)",
+    # synth_vo writes "local-mps (pipeline/synth_vo.py, synth_vo v3)" — the Apple
+    # card is our own compute exactly as the 5090 is, and it was missing here for
+    # the same reason "local-gpu" once was: the list had grown one machine
+    # nickname at a time. Caught 2026-08-08, when the first two Chatterbox takes
+    # copied into cuts/checklist/ for the founder's ear check pushed licence debt
+    # 25 -> 27 and failed the build. The voice engine's own licence is NOT being
+    # waved through with this: chatterbox-0.5B is on the voice-engine list above
+    # as MIT, it rides the `model` key of the same sidecar, and the gate reads
+    # every provenance key independently — so an unread engine on our own card
+    # still fails, which is the only property that makes this entry safe.
+    "local-mps": "CC-BY-4.0 (our own output)",
     "local-deterministic": "CC-BY-4.0 (our own output)",
     "post-motion": "CC-BY-4.0 (our own output)",     # post_motion.py: code, not a model
     "render-t2": "CC-BY-4.0 (our own output)",

@@ -342,36 +342,92 @@ checklist:
         already settled and is not being re-asked.
 
     - n: 7
-      ask: "Episode 2's remaining twenty drawings — pick or reject"
-      state: gap
+      ask: "Episode 2's remaining twenty drawings — they came back wrong, and in one particular way"
+      state: open
       chip: "YOUR PICK"
       body: |-
-        Episode 2 is twenty-one shots and you have approved the first one. The
-        other twenty are being drawn now, in the style you just picked, and
-        arrive here as contact sheets for one pass.
-      pending: >-
-        **Nothing to look at yet** — the batch was unblocked last night and is
-        still running. Worth knowing while you wait: these twenty prompts were
-        already rewritten into the current style back on 2026-08-04, so nothing
-        stands between the batch and the frames except the render itself.
+        **They are drawn — all eighty, four seeds for each of the twenty beats,
+        rendered overnight the moment your frame pick took the gate off them.**
+        Every one carries a written record now. And the honest report is that
+        the batch has a problem you should hear before you spend ten minutes
+        looking at it.
+
+        **Nobody is drawing the same character twice.** Across the twenty beats
+        the goblin comes back as a round mascot blob, a human anime child, a
+        tiny green gremlin, a clawed monster and an elf boy; the two guards come
+        back as polished heroic knights, hooded grim-reaper silhouettes,
+        sci-fi helmets and ordinary modern men. Each individual frame is
+        competent. They are not frames from the same show.
+
+        That is not seed luck and it is not something more seeds fix — every
+        beat writes its own description of who is in it, and there is no
+        character sheet holding them to one design. **Beat 01 is the only shot
+        in episode 2 with an approved look, which is exactly why the other
+        twenty drifted.**
+
+        Four other things are wrong for reasons that are cheap to fix, and all
+        four are the same class of defect the beat-01 rounds already fought:
+
+        - **Beat 20 is at night** — all four seeds — in a morning episode.
+        - **Beat 13 is indoors**, in what reads as a garage; **beat 14** is on
+          desert dirt. Both should be the green field.
+        - **Beats 12 and 18 grew a big ripe orange-pink fruit** where the fig is
+          meant to be small and green. Same wrong-fruit the opening shot spent
+          three rounds arguing down.
+        - **Beat 09 came back as split panels** in all four seeds — a technical
+          fault, not a drawing.
+
+        Closest to the look you approved: **beats 19 and 21**, then 02 and 15.
+
+        **The frames are not on this page and that is deliberate** — same reason
+        as items 02 and 03. They are drawn by a model whose licence attaches
+        conditions our own licence gives away (D15, still yours to settle), so
+        candidates stay on the machine. They are on it as four contact sheets,
+        `CONTACT-002b-b02-06.png` and its three neighbours, one band per beat
+        with the seed under every frame.
+
+        **What we would like from you is not twenty picks.** It is a ruling on
+        whether episode 2 gets a character sheet — one approved drawing of the
+        goblin and one of a guard, which every later beat is then drawn
+        against — because picking best-of-four per beat out of this batch buys
+        twenty good frames of twenty different shows.
 
     - n: 8
       ask: "Episode 2's narration — does the voice read right?"
-      state: gap
+      state: open
       chip: "CONFIRM"
       body: |-
-        The whole episode is being re-voiced against the approved script. The
-        eighteen old takes on disk are from an **earlier draft** and do not match
-        the story you approved, so every line is being made again rather than
-        reused.
+        **Seventeen takes are recorded and on disk.** The episode was re-voiced
+        against the approved script — the eighteen old takes were from t0-b, the
+        draft t0-c replaced, and they are archived rather than deleted (R6).
 
         This is an ear check, not a script check — the words are the ones you
         already passed. Item 09 is the one place the words themselves are in
-        question.
+        question. Two takes are below rather than all seventeen: **if the voice
+        is wrong, it is wrong in the first few**, and a wrong voice is one
+        re-synth of the whole set either way.
+
+        Beat 01 is here because it carries your first approval condition — *"Took
+        three days to grow that"*, so the fig is grown and not merely present.
+        Beat 03 is here because it is the shortest line in the episode and the
+        least forgiving of a bad read.
+
+        **Beat 16 was deliberately not recorded.** Its line still reads *"I can't
+        even wave"* — the exact sentence your second condition required
+        rewritten — so it stays unvoiced until item 09 settles the replacement.
+        Beats 02, 19 and 21 have no narration by design.
+      audio:
+        - file: checklist/002b-01-vo.mp3
+          label: "beat 01 — 7.5s"
+          note: "I used to be an engineer. Now I'm a tree."
+        - file: checklist/002b-03-vo.mp3
+          label: "beat 03 — 3.7s"
+          note: "A creature is using me as cover. I am forty centimeters tall."
       pending: >-
-        **Nothing to listen to yet** — the takes were still being made as this
-        page was written. They will appear here as a short sample rather than all
-        twenty-one lines; if the voice is wrong, it is wrong in the first few.
+        **The takes exist but are being withheld from this page** — which, if you
+        are reading this line, is a licence-gate refusal and not an empty
+        promise. The recordings are in the node's `clips/`; the gate's reason
+        travels with them.
 
     - n: 9
       ask: "Beat 16's line — you caught a contradiction. Is this the fix?"
