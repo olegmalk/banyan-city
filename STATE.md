@@ -4563,9 +4563,12 @@ closes checklist item 08 in `cuts/cuts.yaml`, the last item on that page that wa
 genuinely his. **Episode 2's narration is now COMPLETE and founder-approved:** 17
 takes plus beat 16, every one in the voice he passed on beat 03 ("002b-30-v0 is
 good"), with beats 02, 19 and 21 silent because the script writes them silent. The
-take he refused this morning stays in `clips/vo-archive/` (R6, byte-identical,
-nothing deleted) and stays published on item 08 as the record of what he turned
-down.
+take he refused this morning stays in `clips/vo-archive/` as
+**`01-vo.v3.mp3`** — named precisely because plain `01-vo.mp3` in that same
+folder is a July take from the superseded t0-b draft, and the two are easy to
+confuse; the refused one is byte-identical to the copy he heard
+(md5 `9682aee5…`), R6, nothing deleted. It stays published on item 08 as the
+record of what he turned down.
 
 **IT TOOK TWO ROUNDS AND BOTH ROUNDS WERE HIS, which is the part worth keeping.**
 The first take was refused on the read *and* the word in one sentence — "as if he
