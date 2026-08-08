@@ -1917,6 +1917,98 @@ def test_ltx_jobs_list_is_one_beat_per_entry(tmp: Path):
            "two beats writing the same file is refused")
 
 
+def test_vercel_build_guard_covers_every_site_input():
+    """The Vercel build guard must still name every input build_site.py reads.
+
+    `pipeline/vercel-ignore-build.sh` decides whether a push is worth a build by
+    diffing a hand-written list of site inputs. Two ways that list rots, both
+    silent, both expensive in opposite directions: a guarded path gets renamed
+    (the guard stops covering it, and a real site change stops publishing), or a
+    builder grows a new input nobody added (same). This test reads the inputs
+    back out of the builders and fails if one escapes the list — which is the
+    only reason the list is allowed to be strict. The overspend it descends from
+    was >$100 of build hours in under a month, so the guard staying honest is
+    worth a test.
+    """
+    import json
+    import re
+
+    cfg = json.loads((REPO / "vercel.json").read_text())
+
+    # (a) the config points at a script that exists, and the branch rules deny
+    #     the courier branches while still letting main publish.
+    guard = REPO / "pipeline" / "vercel-ignore-build.sh"
+    check("vercel.json ignoreCommand names the guard script",
+          "vercel-ignore-build.sh" in (cfg.get("ignoreCommand") or ""))
+    check("the guard script exists", guard.is_file())
+    enabled = (cfg.get("git") or {}).get("deploymentEnabled") or {}
+    check("git.deploymentEnabled denies farm-results-*",
+          enabled.get("farm-results-*") is False)
+    check("git.deploymentEnabled denies everything by default",
+          enabled.get("**") is False and enabled.get("*") is False)
+    check("git.deploymentEnabled still allows main", enabled.get("main") is True)
+
+    # (b) every path the guard lists is a real path today.
+    body = guard.read_text()
+    block = body.split("SITE_INPUTS=(", 1)[1].split("\n)", 1)[0]
+    listed = [ln.strip() for ln in block.splitlines()
+              if ln.strip() and not ln.strip().startswith("#")]
+    missing = [p for p in listed if not (REPO / p).exists()]
+    if missing:
+        print(f"      guard lists paths that no longer exist: {missing}")
+    check("every path in the build guard exists", not missing)
+
+    # (c) every repo file the builders read is under one of those paths. The
+    #     builders name their inputs as `REPO / "..."` literals and as sibling
+    #     module imports; both are enumerable without importing anything.
+    builders = ["build_site.py", "build_status.py", "build_sim.py",
+                "build_shotboard.py", "site_theme.py", "licence_gate.py"]
+    seen, queue = set(), list(builders)
+    # Seed the expected set with the builders themselves: build_site delegates to
+    # build_status/build_sim/build_shotboard from *inside* main(), so the
+    # top-level-import rule below would never see them, and dropping one from the
+    # guard would have gone unnoticed. (It did, the first time this test ran.)
+    reads = {f"pipeline/{b}" for b in builders}
+    while queue:
+        name = queue.pop()
+        if name in seen or not (REPO / "pipeline" / name).is_file():
+            continue
+        seen.add(name)
+        src = (REPO / "pipeline" / name).read_text()
+        # Sibling pipeline modules are build inputs — but only the ones imported
+        # at module scope (column 0). An indented `from video_task import ...`
+        # is a lazy import inside a paid-render code path that build_site never
+        # executes; following those walked the test into the whole render
+        # pipeline and would have made every ltx_i2v.py tweak rebuild the site.
+        for mod in re.findall(r"^(?:import (\w+)|from (\w+) import)", src, re.M):
+            dep = (mod[0] or mod[1]) + ".py"
+            if (REPO / "pipeline" / dep).is_file():
+                reads.add(f"pipeline/{dep}")
+                queue.append(dep)
+        # REPO / "a" / "b"  and  REPO / "a/b"
+        for chain in re.findall(r'REPO / "([^"]+)"((?: / "[^"]+")*)', src):
+            parts = [chain[0]] + re.findall(r'"([^"]+)"', chain[1])
+            reads.add("/".join(parts))
+
+    # Named exclusions, each with the reason it is not a site input. A path that
+    # reaches this test without being listed in the guard OR named here is a new
+    # input nobody thought about, and that is the failure worth having.
+    not_inputs = {
+        "_site":                 "the output directory, not an input",
+        "pipeline":              "sys.path.insert, not a file read",
+        "pipeline/budget.yaml":  "generate_shots.load_caps() reads it on the PAID "
+                                 "render path only; build_status imports just "
+                                 "parse_shots, so no build ever opens it",
+    }
+    uncovered = sorted(
+        r for r in reads
+        if r not in not_inputs
+        and not any(r == p or r.startswith(p + "/") for p in listed))
+    if uncovered:
+        print(f"      builder inputs the guard does not cover: {uncovered}")
+    check("the build guard covers every builder input", not uncovered)
+
+
 def test_review_page_publishes_nothing_unprovenanced():
     """Every file the review area serves must exist, carry a record, and clear
     the licence gate — checked against `cuts/cuts.yaml`, not against the build.
@@ -3317,6 +3409,7 @@ def main():
         test_ltx_dispatch_routes_by_video_model(Path(td))
     with tempfile.TemporaryDirectory() as td:
         test_ltx_jobs_list_is_one_beat_per_entry(Path(td))
+    test_vercel_build_guard_covers_every_site_input()
     test_review_page_publishes_nothing_unprovenanced()
     test_checklist_does_not_reask_a_closed_question()
     with tempfile.TemporaryDirectory() as td:

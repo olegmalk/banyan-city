@@ -5,6 +5,17 @@
   "outputDirectory": "_site",
   "cleanUrls": true,
   "framework": null,
+  "git": {
+    "deploymentEnabled": {
+      "**": false,
+      "*": false,
+      "farm-results-*": false,
+      "farm-results-**": false,
+      "runpod-results": false,
+      "main": true
+    }
+  },
+  "ignoreCommand": "bash pipeline/vercel-ignore-build.sh",
   "github": {
     "silent": true
   }

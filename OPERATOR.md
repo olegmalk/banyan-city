@@ -160,13 +160,16 @@ verifies outcomes independently (DNS, HTTP, ledger) on its next tending pass.
   `git.deploymentEnabled` (evaluated *before* a deployment is created) and the
   project settings above stop the event happening at all.
 - **Cheapest possible shape, if dad wants belt-and-braces:** set
-  `git.deploymentEnabled: false` and deploy only through the existing `vercel`
-  GitHub Actions workflow, which already does `vercel build` +
-  `deploy --prebuilt` (that is how V1 shipped). The build then runs on a **free
-  public-repo GitHub runner** and Vercel only hosts. Vercel's docs stop short of
-  stating outright that a prebuilt deploy is never billed, so **check the first
-  invoice rather than take that on trust** — but it moves the compute off the
-  meter by construction. Costs nothing to adopt; needs V4's token.
+  `git.deploymentEnabled: false` for **every** branch and deploy through a
+  GitHub Actions workflow doing `vercel build` + `deploy --prebuilt` (that is
+  how V1 shipped). The build then runs on a **free public-repo GitHub runner**
+  and Vercel only hosts. Vercel's docs stop short of stating outright that a
+  prebuilt deploy is never billed, so **check the first invoice rather than take
+  that on trust** — but it moves the compute off the meter by construction.
+  Note the workflow that used to do this was deleted on 2026-08-08 (V4): it had
+  never deployed once and named the dead project's IDs. Re-writing it against
+  the new project is ~15 lines plus a `VERCEL_TOKEN` secret — write it if and
+  when this shape is chosen, not before.
 - **Budget:** $0, and that is the point.
 - RESULT:
 
@@ -201,29 +204,30 @@ verifies outcomes independently (DNS, HTTP, ledger) on its next tending pass.
 - **Budget:** $0.
 - RESULT:
 
-### V4 — Add the VERCEL_TOKEN repository secret (enables auto-deploy from CI)
-- [ ] Status: **open** — founder or operator, ~30 seconds
-- **What:** GitHub repo → Settings → Secrets and variables → Actions → New
-  repository secret. Name: `VERCEL_TOKEN`. Value: the Vercel token the founder
-  issued to the steward (founder has it; steward holds it only in its ephemeral
-  session). Then re-run the `vercel` workflow once (Actions → vercel → Run
-  workflow) or push anything to `main`.
-- **Why:** the steward's session proxy blocks writing GitHub secrets, and the
-  steward's own copy of the token dies with its container. Until this is set,
-  banyan.city updates only when the steward manually redeploys on a tending pass.
-- **STALE AFTER THE MOVE — read before setting the token.**
-  `.github/workflows/vercel.yml` hardcodes the **old** account's
+### V4 — Add the VERCEL_TOKEN repository secret — **CLOSED 2026-08-08, not done**
+- [x] Status: **closed — the thing it configured no longer exists.** Nobody
+  needs to do anything here.
+- **What it asked for:** a `VERCEL_TOKEN` repository secret, so
+  `.github/workflows/vercel.yml` could run `vercel build` +
+  `deploy --prebuilt` instead of the steward redeploying by hand.
+- **Why it is closed rather than done:** that workflow was deleted on
+  2026-08-08. It hardcoded the **old** account's
   `VERCEL_ORG_ID: team_a9sPzfYauUVeVMTAsO8hWXaH` and
-  `VERCEL_PROJECT_ID: prj_LfrxgwzJFYqW2OEa5TL63RePlmbD`. Both die with the old
-  project. Setting a **new** account's `VERCEL_TOKEN` while those stay put makes
-  the workflow fail against IDs the token cannot see. Take the new pair from the
-  new project's `.vercel/project.json` (or Settings → General) and update the
-  workflow **in the same change** as the secret. The workflow is a no-op without
-  the token, so today it is harmless — it stops being harmless the moment V4 is
-  done.
+  `VERCEL_PROJECT_ID: prj_LfrxgwzJFYqW2OEa5TL63RePlmbD` — both died with the
+  project dad removed, so setting a new account's token would have made it fail
+  against IDs the token cannot see. It had also never once deployed: **100 of
+  its last 100 runs printed `VERCEL_TOKEN secret not set — skipping`** and
+  exited, and three of those runs *failed* during the 2026-08-06 Actions outage.
+  A file that has never worked, cannot work as written, and generates failure
+  mail during outages is noise, and we have been burned by that noise already.
+- **The option it stood for is not lost.** V8's "cheapest possible shape" —
+  build on a free GitHub runner, deploy prebuilt so Vercel only hosts — is still
+  available. It is ~15 lines of YAML that must be written against the **new**
+  project's org/project IDs anyway. Write it fresh when someone chooses it; do
+  not restore the old file.
 - **Budget:** $0.
-- **Done when:** the `vercel` workflow runs green and banyan.city reflects a new push.
-- RESULT:
+- RESULT: workflow deleted; no token needed. Vercel git integration deploys on
+  push with no secret in this repo at all.
 
 ### V5 — Record the banyan.city purchase price
 - [ ] Status: **open**

@@ -43,7 +43,9 @@ and each one is fixed below rather than reworded:
      today and blocked are three other lists, and each says so.
   4. THE FOOTER. It claimed the page is "rebuilt on every push and every half
      hour". Only the GitHub Pages mirror has that cron (pages.yml); banyan.city
-     rebuilds on push and on nothing else (vercel.yml, vercel.json). Two prior
+     rebuilt on push and on nothing else — and since 2026-08-08 not even that,
+     since a push only builds if it touched a site input (vercel.json's
+     ignoreCommand). Two prior
      attempts argued over which half of that sentence to keep; the fix is to
      stop needing the sentence — every datum carries its own age, so no reader
      has to reason from the page's freshness to a fact's freshness, and the

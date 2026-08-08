@@ -64,14 +64,40 @@ wrong trade. Relevant: `create.html`, the shot boards, `CONTRIBUTING.md`.
 
 ## Deploy
 
-Push to `main` and two things happen:
+Push to `main` and the **GitHub Pages** mirror (`pages.yml`) rebuilds. It runs
+`lint_genome.py` **before** `build_site.py`, so a lint failure stops the site
+deploying, not just a badge. Also `lint.yml`, `mirror.yml`, `sap.yml`.
+**Check CI after pushing** (`gh run list`); CI has been red while local passed
+before.
 
-- **Vercel** via git integration → banyan.city (`.github/workflows/vercel.yml`)
-- **GitHub Pages** mirror (`pages.yml`), which runs `lint_genome.py` **before**
-  `build_site.py` — so a lint failure stops the site deploying, not just a badge
+**Vercel is disconnected right now.** Dad removed banyan-city from his Vercel
+account on 2026-08-07 after it billed **>$100 in under a month** — 500+ build
+hours, almost none of it the site changing. The cause: each farm box
+force-pushes a heartbeat commit to its own `farm-results-*` branch every ~5
+minutes, and every one of those was a Vercel deployment running the full pip
+install + `build_site.py`. Roughly 1,150 builds a day to publish nothing. The
+domain move to a new account is work orders **V6–V9 in `OPERATOR.md`**.
 
-Also `lint.yml`, `mirror.yml`, `sap.yml`. **Check CI after pushing** (`gh run list`);
-CI has been red while local passed before.
+Before that connection is made again, three layers have to be in place, and
+only the first two are code:
+
+1. **`vercel.json` → `git.deploymentEnabled`** — deny-all, `main` only. Vercel
+   evaluates this *before* creating a deployment, so a non-main push produces no
+   event at all. This is the layer that actually kills the farm-branch flood.
+2. **`pipeline/vercel-ignore-build.sh`** (wired up as `ignoreCommand`) — even on
+   `main`, exits 0/skip unless the push changed a path `build_site.py` actually
+   reads. The header comment lists every path and why. Note honestly what it
+   *cannot* do: a skipped build is still a triggered-then-skipped **deployment
+   event** and still takes a concurrent build slot — near-zero build minutes, not
+   zero events.
+3. **Project settings on Vercel's side** — Production Branch = `main`, preview
+   deployments off, on-demand concurrency off, Standard build machine. Settings
+   are the only layer that governs a branch whose checked-out `vercel.json` is
+   stale, which force-pushed farm branches are. Those clicks are V8.
+
+There is no `vercel` GitHub Actions workflow any more — it was deleted
+2026-08-08, having never deployed once in 100 runs (see V4). Vercel git
+integration needs no workflow and no secret in this repo.
 
 ## Reading order for a site session
 
