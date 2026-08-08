@@ -389,8 +389,48 @@ Clouds drift and blur behind the two oversized leaves of a tiny mascot-simple sa
 
 Line: "…Thanks for the shade." Camera on the goblin folding into the tiny shade.
 
+**Rewritten 2026-08-09 as the ONE SAMPLE for the r4 wave, and the fault it fixes
+was measured, not guessed.** All four r3 candidates were rejected on A1 at −2 —
+*"the sapling is a giant round creature in every one of them"* — and the
+`PROVISIONAL-PICKS-0809.md` wave diagnosis put that down to beat 01's
+`no chibi / no mascot / no creature / no face` negatives never having been ported
+to beats 02-21. Running the real `sd_prompt` path on this beat says the first
+cause is something else and cheaper: **the whole second sentence was being
+dropped before the model ever saw it.** `compress()` sheds trailing SENTENCES to
+reach CLIP's 77 tokens, and on the old wording the sentence it shed was the only
+one carrying the environment, the camera, `cinematic lighting, detailed, newest`
+and Animagine's required `masterpiece, best quality, very aesthetic`. What
+actually rendered was `1other, a small round goblin slides down the trunk of a
+tiny 40cm sapling standing tall … with practised ease` and nothing else — no
+style anchor, no boosters, no field. That is the same defect the 2026-08-07 note
+above fixed for beats 02, 03 and 15, and it is live on eleven of this node's
+twenty-one beats (2, 3, 6, 7, 12, 13, 15, 16, 18, 19, 20). Two of the three
+frames the picker kept, 16 and 18, are on that list, and they are exactly the two
+he marked down for style — A5 −1 on 16, and 18's *"faint white dashed sketch
+marks … a flourish this wave added that nothing else in the show has"* — while
+beat 21, which keeps its tail, drew no style complaint at all.
+
+So the subject clause is shortened until the tail survives: **73 positive tokens
+with the boosters and the style anchor intact**, measured, against 53 before with
+both gone. `sapling standing tall` gives way to `seedling with two oversized
+cotyledon leaves`, which is beat 01's proven botanical binding and is what stops
+the plant being drawn as a second round creature beside the goblin; `seedling`
+also still fires `sd_prompt._SMALL`, so the scale negatives are appended exactly
+as before.
+
+**Beat 01's negative block is deliberately NOT ported here, and must not be.**
+Lifting `creature`, `face` and `chibi` into the negative is safe on the
+plant-only beats (01, 12, 16, 18, 21 — which is why the three the picker kept are
+all plant-only, *"the only ones where no character had to be drawn"*). This beat's
+subject IS a creature with a face and enormous ears. The human terms are the ones
+that belong here, and they are written `no girl, no boy, no child, no person`
+rather than as the danbooru tags: `sd_prompt`'s negation regex only lifts a noun
+that starts with a letter, so `no 1girl, no 1boy` would be left sitting in the
+POSITIVE prompt asking for a girl and a boy — measured, and the reason the wave
+script must not take that recommendation literally.
+
 ```
-A small round goblin slides down the trunk of a tiny 40cm sapling standing tall and folds himself into its single small patch of shade, pulling his knees up around his enormous ears with practised ease. Midday light, open green grass field, high flat greens, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+A small round goblin slides down the stem of a tiny 40cm seedling with two oversized cotyledon leaves and folds into its patch of shade, knees up around his ears, no girl, no boy, no child, no person. Midday light, open green grass field, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 ## Beat 14 — THE DEFENSE (1:04–1:10) ⬜ needs footage
