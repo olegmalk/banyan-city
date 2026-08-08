@@ -28,3 +28,21 @@ note: |-
 prompt: |-
   (none — a still is held; nothing was generated)
 negative: ''
+
+# ---- CORRECTIONS — appended 2026-08-08 overnight. NOTHING ABOVE IS EDITED. ----
+# WHICH PIXELS THIS CLIP HOLDS, as bytes, because the NAME above stopped being an
+# answer. `07-zero-0-moving-parts.png` was re-promoted 2026-08-08 16:37 +0400;
+# this clip was committed 2026-08-07 18:50, so its frame is the one that held the
+# name before that promotion — kept in place by R6 as
+# `07-zero-0-moving-parts-REVOKED-grayened.png`, identical bytes.
+#
+# Not guessed and not measured off the picture: read out of this repository's own
+# history — `git rev-list -1 --before=<this clip's commit> HEAD -- <the still>`,
+# then sha256 of that blob.
+#
+# WHY IT COULD NOT WAIT FOR MORNING: build_site.still_from_record() prefers this
+# hash over the filename, and its only other defence — the named file being newer
+# than the clip — CANNOT fire on the deploy, where a fresh clone stamps every file
+# with the checkout time. Without this line the poster is right on the laptop and
+# wrong on banyan.city, which is the only place the founder screens it from.
+source_still_sha256: a0512e49501e3d905a2039117a0fc3a472410d7ddd178f865dd1b15cc1c369cb

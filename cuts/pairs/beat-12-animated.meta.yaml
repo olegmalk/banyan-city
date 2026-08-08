@@ -31,3 +31,20 @@ note: |-
 prompt: |-
   the bent stem strains and shudders hard against nothing, snapping back and
   straining again, soil grains skittering at its base
+
+# ---- CORRECTIONS — appended 2026-08-08 overnight. NOTHING ABOVE IS EDITED. ----
+# THE FRAME THIS RENDER STARTED FROM, as bytes. `12-undefined.png` was
+# re-promoted 2026-08-08 14:49 +0400; this take is the f15 render from
+# 2026-08-03, committed here 2026-08-07 18:39, so its init image is the
+# pre-promotion frame — R6 keeps it as `12-undefined-REVOKED-cracked-grey.png`.
+#
+# Read out of the repository's history — `git rev-list -1 --before=<this clip's
+# commit> HEAD -- <the still>`, then sha256 of that blob — and corroborated by
+# `review/animated/12-undefined.mp4.meta.yaml`, which was backfilled by
+# measurement earlier the same day and records the same db0be703….
+#
+# It also settles what the note above describes: the "95%-rigid cracked plain"
+# that dragged this take's whole-frame motion score under the line is the CRACKED
+# GREY frame, which is the one this clip was conditioned on — not the picture
+# that holds the name now.
+init_still_sha256: db0be7038d0187327aef2a8e8739aae367acb4cb1e1740da71258e8a458b42a9

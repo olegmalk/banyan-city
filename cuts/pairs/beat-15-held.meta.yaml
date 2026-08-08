@@ -27,3 +27,22 @@ note: |-
 prompt: |-
   (none — the approved still is held; nothing was generated)
 negative: ''
+
+# ---- CORRECTIONS — appended 2026-08-08 overnight. NOTHING ABOVE IS EDITED. ----
+# WHICH PIXELS THIS CLIP HOLDS, as bytes. `15-something-s-coming.png` was
+# re-promoted 2026-08-08 17:58 +0400 — the beat-15 redraw the founder passed that
+# afternoon — and this clip was committed 2026-08-07 18:39. The frame held here
+# is therefore the pre-promotion one, kept by R6 as
+# `15-something-s-coming-REVOKED-underground.png`.
+#
+# Read out of the repository's history — `git rev-list -1 --before=<this clip's
+# commit> HEAD -- <the still>`, then sha256 of that blob. CORROBORATED: its pair
+# `beat-15-animated.meta.yaml` already recorded aa14d078… as its own
+# `init_still_sha256`, measured a different way. Both halves of the comparison
+# were drawn from the same frame, which is the whole point of a pair.
+#
+# THIS IS THE PAIR THE DEFECT WAS FOUND ON: with the name alone, the review page
+# showed the NEW tall-sapling frame over both of these clips — footage of what
+# came before it. The right-hand clip's hash already stopped that; this line
+# stops it for the left-hand one, on the deploy as well as here.
+source_still_sha256: aa14d078774b703cecc156f119fc0142e4a73ec350675790b6a094fe0d74d34a

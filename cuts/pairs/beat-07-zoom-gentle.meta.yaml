@@ -28,3 +28,17 @@ note: |-
 prompt: |-
   (none — a still is held; nothing was generated)
 negative: ''
+
+# ---- CORRECTIONS — appended 2026-08-08 overnight. NOTHING ABOVE IS EDITED. ----
+# The other half of the beat-7 pair, same finding and same evidence as
+# beat-07-zoom-18pct: `07-zero-0-moving-parts.png` was re-promoted 2026-08-08
+# 16:37 +0400, after this clip was committed (2026-08-07 18:50), so the frame it
+# was cut from is the one R6 now keeps as
+# `07-zero-0-moving-parts-REVOKED-grayened.png`.
+#
+# Read out of the repository's own history, not measured off the picture:
+# `git rev-list -1 --before=<this clip's commit> HEAD -- <the still>`, then
+# sha256 of that blob. Recording it is what stops the review page posterering
+# these two clips with the frame that took their still's name — the filename
+# fallback cannot tell on the deploy, where every file is the same age.
+source_still_sha256: a0512e49501e3d905a2039117a0fc3a472410d7ddd178f865dd1b15cc1c369cb

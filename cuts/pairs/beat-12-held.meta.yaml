@@ -27,3 +27,19 @@ note: |-
 prompt: |-
   (none — the approved still is held; nothing was generated)
 negative: ''
+
+# ---- CORRECTIONS — appended 2026-08-08 overnight. NOTHING ABOVE IS EDITED. ----
+# WHICH PIXELS THIS CLIP HOLDS, as bytes. `12-undefined.png` was re-promoted
+# 2026-08-08 14:49 +0400 and this clip was committed 2026-08-07 18:39, so the
+# still held here is the pre-promotion one, kept by R6 as
+# `12-undefined-REVOKED-cracked-grey.png`.
+#
+# Read out of the repository's history — `git rev-list -1 --before=<this clip's
+# commit> HEAD -- <the still>`, then sha256 of that blob. CORROBORATED
+# INDEPENDENTLY: `review/animated/12-undefined.mp4.meta.yaml`, backfilled earlier
+# on 2026-08-08 by measurement rather than by history, records the same
+# db0be703… for the same frame. Two methods, one answer.
+#
+# Above all this the `note:` is still true — every pixel is a frame the founder
+# approved. It is simply not the frame that wears the name today.
+source_still_sha256: db0be7038d0187327aef2a8e8739aae367acb4cb1e1740da71258e8a458b42a9
