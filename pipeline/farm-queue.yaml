@@ -835,3 +835,102 @@ backlog:
     The founder's list is itemised, so the answer to it is a whole cut and not
     seven loose clips; v33 is the thing he says yes or no to next, and posting has
     been blocked on that yes since 2026-07-29.
+
+# ---- THE INFRA METER, FILED THE DAY IT COST MONEY ---------------------------
+#
+# Both entries below come out of the 2026-08-08 Vercel incident: >$100 in under a
+# month because every courier heartbeat and every 5-minute telemetry pulse
+# triggered a full site rebuild on a branch nobody reads (STATE.md 2026-08-08,
+# D18). 2,344 courier pushes in 29 days; 78% of all builds were non-main.
+#
+# D18's second obligation, and the one that is ours rather than dad's. The guard
+# stops the spending; this makes it *legible*, which is the half that was missing
+# — the meter ran for a month with no line anywhere in this repo reporting it.
+- id: infra-spend-tile-1786166880
+  runner: manual
+  worker: any
+  needs: []
+  window: any
+  est_minutes: 90
+  cmd: >-
+    add an "infra spend" tile to the studio page via pipeline/build_status.py
+    (composed by build_sim.py — one generator, one file, per that module's own
+    house rule), fed ONLY by $0 sources, and make it say plainly when a number is
+    unavailable rather than printing a stale or invented one
+  why: >-
+    D18 says a metered service gets a monitoring line on the status page, and a
+    meter nobody can read is not a meter. The consumer is dad, who paid the >$100
+    and asked for money to be kept in mind permanently — he should be able to see
+    the current month's build volume on the page instead of on an invoice a month
+    later. $0 sources only, and only two are known to exist: the new account's
+    Vercel usage endpoint IF that account's tier exposes one (unverified — do not
+    assume it does, and do not add a paid plan to get it), and GitHub's Actions
+    usage API. Note build_status.py's constraint before starting: the deploy
+    server has no local git refs and no `gh` CLI, so anything read at build time
+    must come from the public GitHub API or a repo file. Cheapest honest v1, if
+    Vercel exposes nothing free: count pushes per ref from the same repository
+    activity API this incident was measured with, and show BUILD TRIGGERS rather
+    than dollars — trigger count is the number we can actually verify, and it is
+    the number that went wrong.
+
+# PROPOSAL ONLY — do not implement off this entry. It changes how quickly the
+# status page can notice a dead box, which is a call about what we are willing to
+# be blind to, not a cleanup.
+- id: telemetry-idle-cadence-proposal-1786166940
+  runner: manual
+  worker: any
+  needs: []
+  gate: founder
+  gate_ref: >-
+    Nobody has agreed to trade liveness for quiet. This entry is the written
+    proposal and the tradeoff; the decision is dad's or the founder's.
+  window: any
+  est_minutes: 20
+  cmd: >-
+    put the proposal below in front of dad, and implement nothing until he picks
+  why: >-
+    telemetry.py's PUBLISH_SECONDS = 300 fires whether the box is rendering or
+    sitting idle — 288 pushes a day, forever, and the 2026-08-08 forensics found
+    96.9% of 613 recent rtx5090 push gaps sitting in that 4-6 minute band. PROPOSAL:
+    keep 5 minutes while a task is in flight, back off to ~30 minutes when the
+    queue is empty and no render is running, and push immediately on the
+    idle->busy edge so starting work is never delayed by the slow cadence. That is
+    roughly 288 -> 48 pushes on an idle day. TRADEOFF, stated because it is the
+    whole reason this is gated: liveness detection on the status page gets 6x
+    slower exactly when the box is idle, so a machine that dies quietly reads as
+    "fine, just idle" for up to half an hour instead of five minutes — and an idle
+    box is the one most likely to have died without anyone noticing. WORTH SAYING
+    PLAINLY: after D18's ref allowlist lands, these pushes cost nothing per push,
+    so this is push NOISE, not spend. It should be argued on whether a 30-minute
+    blind spot is acceptable, and not sold as saving money it will no longer save.
+
+# ---- THE COURIER'S BARE COMMIT, STILL OPEN AT HEAD --------------------------
+#
+# Adjacent to the incident and found while measuring it. Not fixed — verified
+# present at HEAD on 2026-08-08.
+#
+#   farm_worker.py:155  sh("git", "add", "-A", str(self.out), check=False)
+#   farm_worker.py:156  sh("git", "commit", "-qm", f"hb: {stage}", check=False)
+#
+# Line 155 is correctly pathspec-scoped to farm-out/. Line 156 is NOT: a bare
+# `git commit` writes the WHOLE INDEX, so anything another process staged in that
+# working tree before the heartbeat fired is swept into a commit labelled
+# `hb: <stage>` and force-pushed to a courier branch. The worker shares its
+# checkout with whatever else is running there, and the commit that carries the
+# accident is the one nobody reads, on the branch nobody reads.
+- id: courier-commit-pathspec-1786167000
+  runner: manual
+  worker: any
+  needs: []
+  window: any
+  est_minutes: 15
+  cmd: >-
+    scope farm_worker.py:156 to the same pathspec line 155 stages — commit only
+    farm-out/ — and check the courier branches for heartbeat commits that already
+    carry unrelated files
+  why: >-
+    Explicit-pathspec commits are a standing house rule and the courier is the one
+    place in the pipeline that breaks it, on an automatic 5-minute timer with a
+    force-push behind it. The consumer is anyone who has ever wondered why a
+    farm-results branch contains a file they did not put there; the fix is one
+    argument.

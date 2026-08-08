@@ -3176,3 +3176,89 @@ opens with **REFUSED 2026-08-07 — the founder's notes are being executed; v33
 replaces this**, and the page's lead question points at the v33 that is being
 built. The cut stays up: it is the record of what he refused, and deleting it
 would delete the reason the notes exist.
+
+## 2026-08-08 — the couriers were paying Vercel to rebuild the whole site every five minutes: 2,366 of 3,047 builds were for branches nobody reads
+
+**Dad pulled banyan.city off his Vercel account.** Relayed into this session
+rather than typed here, so the figures are his and the wording is reported: the
+project burned **more than $100 in under a month** on **500+ build hours**, and
+the instruction is a **new Vercel account (`hellobanyancity@gmail.com`)**, the
+**banyan.city domain moved to it**, and money **kept in mind permanently** —
+not as a cleanup task that closes, as a standing condition. Account creation,
+the domain move and the tier choice are his: this entry is the forensics and the
+guard rails, and nothing here touched an account, a credential or a DNS record.
+
+**The mechanism, and it is entirely ours.** Every farm worker is a courier: it
+force-pushes its heartbeat and results to `farm-results-<name>`
+(`farm_worker.py:155-163`, `git push -f` on every `mark()`), and since
+2026-08-05 `telemetry.py` publishes a GPU/RAM pulse to the same branch on
+`PUBLISH_SECONDS = 300`. Vercel's git integration builds **every push to every
+branch** by default. Nothing in `vercel.json` ever said otherwise — its
+`"github": {"silent": true}` suppresses PR *comments*, not builds, and there is
+no `ignoreCommand` and no `git.deploymentEnabled` branch filter in the file. So
+each heartbeat, each five-minute telemetry pulse, each of them a file nobody
+would ever browse, triggered a full `python3 pipeline/build_site.py` of the
+entire tree and a deploy of the result.
+
+**Measured, not estimated.** GitHub's repository activity API, window
+**2026-07-10T02:47Z → 2026-08-08T05:20Z** (29 days, 3,086 events, pagination
+run to exhaustion):
+
+| ref | push | force_push | total |
+|---|---|---|---|
+| `farm-results-rtx5090` | 1,263 | 710 | **1,973** |
+| `farm-results-msi` | 205 | 16 | 221 |
+| `farm-results-m2` | 87 | 6 | 93 |
+| `runpod-results` | 38 | 0 | 38 |
+| `farm-results-m1pro` | 17 | 2 | 19 |
+| `claude/*`, `rescue-diag-history` | 21 | 1 | 22 |
+| **`main`** | 681 | 0 | **681** |
+| **all refs** | | | **3,047** |
+
+**2,344 courier pushes. 2,366 non-main — 78% of every build the account was
+billed for was a branch with no reader.** Worst days: **559** courier pushes on
+2026-08-02, **423** on 2026-08-03.
+
+**The five-minute cadence is visible in the data, not inferred.** Of the 613
+gaps between consecutive `farm-results-rtx5090` pushes since 2026-08-05,
+**594 (96.9%) fall between four and six minutes**. That is `PUBLISH_SECONDS =
+300` drawn in push events. Eight gaps under a minute, four over half an hour;
+everything else is the daemon.
+
+**Where the numbers do not add up, said plainly.** Observed duration for the
+same `build_site.py` on the `pages` workflow — n=33 successful runs — is
+**min 78s, median 100s, mean 135s** (one 1,135s outlier). Against 3,047 builds:
+
+- at the median → **85 build-hours**
+- at the mean → **114 build-hours**
+- at a generous flat 5 min → 254 build-hours
+- **to reach 500 build-hours needs 9.8 min/build** — roughly **6x** the median
+  we measure on the identical build command.
+
+So preview-builds-on-every-branch is **necessary but not sufficient** to explain
+the bill. It is certainly the bulk of the *trigger* count, and killing non-main
+builds removes 78% of them whatever the per-build minute figure turns out to be
+— but our own data cannot reproduce 500 hours, and this entry is not going to
+pretend it can. Three multipliers are evidenceable from the repo and none is
+confirmed as the cause: **`.git` is 1.9 GB** and HEAD carries **1,036 MB across
+1,953 tracked files**, which Vercel clones over the public internet while
+`actions/checkout@v4` takes a depth-1 copy inside GitHub's own network;
+`vercel.json`'s `installCommand` pip-installs on every build with
+`"framework": null` and no cache; and `_site` is **482 MB including 86 mp4s**,
+uploaded every time. One further caveat that matters for the new account:
+**">$100" need not be all build minutes** — 482 MB of video behind a CDN is a
+bandwidth line item too, and the invoice is the only thing that can split them.
+Read it on the new account before choosing a tier.
+
+**Why nobody saw it.** The repo is **public**, so GitHub Actions minutes are
+$0, and `pages.yml` only fires on `main` plus a `*/30` cron. The mirror was free
+and honest the whole time. The meter was on the other deploy — the one with no
+line anywhere in this repo, on a page or in a log, reporting what it cost.
+
+**Response.** New account and domain move: dad's, pending. Guards: **D18** below
+makes the rule general rather than a Vercel patch — any metered external service
+gets a code-side guard and a status-page line *before* it is connected. Two
+backlog entries filed in `pipeline/farm-queue.yaml`: an **infra-spend tile** on
+the studio page fed only by $0 sources, and a **proposal** (not an
+implementation) to drop telemetry cadence when the box is idle. The tier choice
+stays open until the invoice is read.

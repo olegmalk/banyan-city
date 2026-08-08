@@ -1042,3 +1042,63 @@ review page says so in its own receipts rather than leaving a reader to find out
 
 **How to revisit:** delete the block from `cuts/cuts.yaml` and the files stop
 being served on the next build. Nothing else depends on them.
+
+## D18 — "Spend guards are code" covered renders and nothing else; a metered service now gets its guard and its meter before it is connected (RESOLVED — dad, 2026-08-08)
+
+**Question:** the project has had a hard spend rule since the beginning — caps
+in `pipeline/budget.yaml`, `generate_shots.py` refusing without `--yes`, every
+charge landing in `ledger/render-spend.csv`. It stopped a $0.40 breach from
+becoming a habit. So how did banyan.city run up **more than $100 in under a
+month** without one line of it appearing in any ledger, on any page, or in any
+refusal?
+
+**Status:** **resolved** (2026-08-08, dad, on removing the project from his
+Vercel account) — because **every guard we had was pointed at renders**, and
+this was not a render.
+
+**What the old rule actually covered.** Read it literally, the way the code
+implements it: a *render* has a *provider*, a *per-run price* and a *lifetime
+cap*, and a human types `--yes`. Every clause assumes a discrete, priced,
+human-initiated job. Infrastructure is none of those things. Build minutes and
+bandwidth have no per-run price, no `--yes`, no row, and — the part that made
+this expensive — **no human initiating them**. A courier heartbeat is not a
+purchase decision anyone makes; it is a purchase decision the *machine* makes,
+2,344 times in a month (STATE.md 2026-08-08). The guard could not have caught
+it, because the guard was waiting to be asked.
+
+**The decision, and it is deliberately wider than Vercel.** *Any metered
+external service gets two things before it is connected to this repo, and
+"before" is the whole rule:*
+
+1. **A code-side guard**, in the repo, that bounds what the machine can spend
+   without a human — the same shape as `budget.yaml`, adapted to whatever the
+   meter counts. For a build service that means an explicit **allowlist of refs
+   that may trigger a build** (default: `main` only) committed in config, so a
+   new branch costs nothing until someone says it should. For a bandwidth or API
+   meter it means the cap and the refusal path in code, not in a dashboard
+   setting that no reader of this repo can see.
+2. **A monitoring line on the status page**, fed by a $0 source, that says what
+   the thing has cost so far. **A meter nobody can read is not a meter.** Free
+   tiers do not exempt a service from this — a free tier is a meter with a cliff,
+   and the cliff is where the bill starts.
+
+**A dashboard toggle does not satisfy this.** The setting that would have
+prevented the whole incident exists in Vercel's UI, and its absence is invisible
+from the repo: `vercel.json` carries `"github": {"silent": true}`, which silences
+comments and reads, to a hurried eye, like it silences builds. Guards live in
+files a reader can diff. If the only record of a limit is in someone's account
+settings, the limit is not part of the product and the next person to connect a
+service will not know it was ever there.
+
+**What this does NOT change.** It adds no authority to the steward. Opening an
+account, choosing a paid tier, moving a domain, and every credential remain
+**founder-reserved human steps**, exactly as before — this decision governs what
+must be *built and visible* before such a connection is made, never who may make
+it. And it does not retroactively bless the spend: the >$100 was real money on
+dad's card, and the standing instruction that came with it — keep money in mind,
+permanently — is the reason this is a decision entry and not a bug fix.
+
+**How to revisit:** amend per Guideline 6. The concrete obligations it creates
+are tracked as work, not left as sentiment — `infra-spend-tile-1786166880` in
+`pipeline/farm-queue.yaml` builds the status line, and the ref allowlist ships
+with whatever config the new account's project uses.
