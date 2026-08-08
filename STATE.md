@@ -3635,3 +3635,225 @@ today, and the checklist intro, the block heading and item 07 itself all say so.
 page's own rule is that re-asking a closed question is the one thing it must not do;
 the corollary is that a block claiming to block nothing while blocking five redraws is
 the same failure pointed the other way.
+
+## 2026-08-08 — beats 7, 8 and 9 are picked, the grey question dies with the same frame, and the picks mix rounds
+
+**Checklist item 03 is answered.** After the trio rows were turned down and the three
+plain per-beat sheets went up in their place, the founder replied with three addresses
+and nothing else. Verbatim, in full:
+
+> po7-r1-s2, po8-r2-s0, po9-r1-s2
+
+The leading `po` is how he typed the `p07`/`p08`/`p09` grammar. Normalised to
+**`p07-r1-s2`, `p08-r2-s0`, `p09-r1-s2`** and resolved through `REVIEW-KEY-0808.md`,
+the pixel-matched address map — not by grid position, and not off the sheets' captions.
+`b`/`p` was the one trap in that key (beats 7, 8 and 9 were drawn twice, once as
+ordinary fixes and once as the progression, and for beat 7 the two sets share seeds);
+these are `p`, the progression, which is what item 03 asked about.
+
+**ALL THREE ARE CANON.** Each take is copied byte-for-byte to the filename
+`video_task` globs for a conditioning frame, the same mechanics as beat 12 that
+morning and as 002b's "r3-s3 and retire" the day before:
+
+| beat | label | promoted from | sha256 | seed | round | replaces |
+|---|---|---|---|---|---|---|
+| 07 wide | `p07-r1-s2` | `takes/stills/07-zero-0-moving-parts-prog-s2.png` | `76e4d81f…` | 20262726 | **1** | `07-zero-0-moving-parts-REVOKED-grayened.png` |
+| 08 medium | `p08-r2-s0` | `takes/stills/08-sev-1-prog2-t0.png` | `e886758c…` | 20260726 | **2** | `08-sev-1-REVOKED-same-picture.png` |
+| 09 close | `p09-r1-s2` | `takes/stills/09-whoami-prog-s2.png` | `16ec0b49…` | 20262728 | **1** | `09-whoami-REVOKED-same-picture.png` |
+
+All three 832x1216, `cagliostrolab/animagine-xl-3.1`, 40 steps, cfg 7.5, **$0** on the
+rtx5090. **Every seed is read out of that PNG's own sidecar under `takes/`, never off a
+caption** — round 1's sidecars were reconstructed from `wave.log` and say so in their
+headers; round 2 wrote itself at render time. The frames they replace are retired in
+place rather than deleted (R6) and the renderers skip any name containing `REVOKED`.
+No `.meta.yaml` is written beside the canon stills, so **CI's licence ratchet stays
+25**. Provenance table: `stills/README.md`.
+
+**THE GREY QUESTION IS SETTLED BY THE SAME PICK, and it was designed to be.** Beat 7
+was on his v32 list twice — *"beat 7 makes everything look grayened … the main problem
+is that it drastically changes the style"* AND *"beat 7, 8, 9 are basically the same
+picture"* — and item 03's copy told him one frame had to satisfy both, so the wide he
+picked was also the answer to the grey. He picked a wide drawn on the episode's morning
+palette (`pale blue morning sky, soft warm morning light`, with `grey sky` and
+`overcast` in the negative) and raised no colour objection. **The palette complaint is
+recorded CLOSED**, not unmentioned. If v33 still reads washed out, that is a new note
+on a new frame.
+
+**THE PROMPTS MOVED WITH THE PICK, because they had to.** `shots-alt-789.md` wrote its
+own rule when it was created: *"If he takes the progression, these three blocks replace
+their counterparts in `shots.md`."* His pick is that branch firing. It is also a
+correctness fix, not bookkeeping: `video_task.video_prompt()` cuts the first 22 words
+of a beat's `shots.md` block into the video model's scene anchor, so leaving beat 7
+described as a *"low close shot from just above the soil"* beside a canon frame that is
+a wide establishing shot would have mis-anchored every v33 render of that beat. Beats
+07 and 09 moved across unchanged. **Beat 08 did not**: its canon frame is round 2,
+whose prompts live in `render_wave2.py` and not in the alt file, so `shots.md` now
+carries the round-2 text read out of the sidecar (the palette clause byte-identical
+across the three r2 shots; the dust motes are gone from the prompt because they were
+gone from the render). `shots-alt-789.md` is marked SUPERSEDED in place with that
+divergence named, and says "do not render from this file".
+
+**THE HONEST CAVEAT, AND IT IS THE ONLY ONE: THE PICKS MIX ROUNDS.** Wide and close are
+round 1, the medium is round 2. **Round 1's one documented flaw was colour drift across
+the trio** — it is the entire reason round 2 exists, and item 03 said so in the copy he
+read: *"the colour drifted across the three in round one, so they were drawn again with
+the palette pinned."* Round 2 removed it structurally: one byte-identical palette and
+environment block, one byte-identical negative, **one shared seed (20260726) across all
+three shots**, lens the only variable. His combination keeps none of that guarantee —
+three different seeds, and beat 09's negative is not even the same string as the other
+two (it drops `macro close-up`, adds `leaf cluster`, repeats `text`).
+
+**That combination is his call and is not being second-guessed.** He picked per beat
+with the three sheets side by side — which is what those sheets were rebuilt for, on
+his instruction — and mixing rounds was stated as a legal answer in the copy he
+answered from. A per-beat pick beats a row pick when the best wide and the best close
+live in round 1. **What the record must also say is that the drift risk transfers to
+the assembled cut and gets judged at the v33 screening**, cheap to fix if it clashes:
+the round-2 wide and close already exist (`p07-r2-s0`, `p09-r2-s0`) and re-rendering one
+beat on the palette-locked block is 39 seconds at $0. Nothing re-renders before he has
+seen the three cut together.
+
+**What was measured, and why it settles nothing.** Whole-frame mean RGB across the
+three canon frames spreads 22.0 (max pairwise L2), against 90.7 for the pure round-2
+trio and 62.5 for round 1's slot-2 trio. That looks like the mixed pick winning, and it
+is **not** evidence: the r2 trio was built to have zero palette drift by construction,
+so a metric that ranks it worst is measuring composition — sky fraction against soil
+fraction across a wide, a medium and a close — and the composition differences are the
+point of the progression. The number is written down so nobody later cites a figure
+that was never taken, and so nobody mistakes it for a screening. **A metric agreeing
+with me is not a sample.**
+
+**QUEUE: `ep1-stills-rework-1786124640` IS RETIRED**, by its own terms. That entry
+stayed open on 2026-08-08 morning for two stated reasons — *"its own text still names
+beats it did not settle"* and *"7/8/9 is still an unanswered pick"*. Both are gone:
+7/8/9 is answered here, and the beats it did not settle (3, 6, 10, 14, 15) have carried
+their directions into `ep1-stills-redraw-wave2-1786197600` since that morning. Every
+beat the entry names now has an answer — 12 and 7/8/9 canon, five rejected and
+re-queued — so it is retired as a comment in `pipeline/farm-queue.yaml` the way the
+manual entries before it were. The promoter could never have retired it: `runner:
+manual`, and manual jobs write no `DONE` heartbeat line. `queue_promoter.py --dry-run`
+re-verified after the edit.
+
+**Where episode 1 stands: ten shots have a frame he has not refused, five do not.**
+Beats 3, 6, 10, 14 and 15 still hold their old PNGs on disk — those were never revoked,
+because a revocation needs a replacement to point at and their candidates were all
+rejected — but each is a frame he turned down in v32, so **no usable frame** is the
+honest count, not "no frame". Their redraw wave is
+`ep1-stills-redraw-wave2-1786197600`, which carried a `gate: founder` on **checklist
+item 07** — the character-consistency technique question — when this pass began.
+**That gate came off the same evening, while this pass was being written.** He
+answered item 07: no character sheet, the sapling simply reads tall in every clip it
+is in, and the leaves are not to be fussed over. The wave is runnable, its beat-15
+sample is rendering, and the entry directly below this one is the record of that
+ruling — it owns item 07, the wave's queue entry and the review page's episode-2
+block. Read the five redraws' status off that entry, not off this one.
+
+What item 03 settles is narrower, and worth stating exactly so no one later credits it
+with more: **beats 7, 8 and 9 are no longer waiting on anything**, the grey complaint
+died with the same frame, and with items 01 through 05 now all settled or reports the
+episode-1 half of the review page is closed. The five redraws are the only episode-1
+frames still outstanding, and they were never item 03's to answer.
+
+## 2026-08-08 — the character sheet is refused and the rule is one sentence: the sapling reads tall, and twenty-five drawings came off the gate
+
+**Checklist item 07 is answered, and it was the only thing between episode 1 and its
+frames.** The item asked for a ruling on character consistency — whether the show gets
+a character sheet, one approved drawing every later beat is drawn against — after
+episode 2's eighty candidates came back as twenty different shows and four of episode
+1's five rejections turned on the same axis. His answer, verbatim and in full:
+
+> whats the point of a character sheet for the engineer? not like he's gonna show up
+> again. im talking about the sapling, and its very simple, just make it tall in each
+> clip of it, and thats pretty much it. dont overthink the leafs on it.
+
+**THE CHARACTER SHEET IS DECLINED, on his reason and not on a reading of ours.** A
+sheet is machinery for a character who comes back, and the one this item was built
+around does not. No sheet is being drawn for either episode, no beat's prompt points at
+one, and nobody re-opens it on a metric — this is R4, and the technique decision is
+closed.
+
+**What replaces it is one sentence and that is deliberate: the recurring character is
+THE SAPLING, and it reads TALL wherever it appears.** That is the whole technique. It
+goes into episode 1's five redraws and episode 2's twenty as a single line of
+direction. **Leaf detail is explicitly off the table** — *"dont overthink the leafs on
+it"* — so no prompt term, QA check or screening note counts leaves, matches leaf shape
+or fails a frame on foliage. That is the second time he has killed that habit: the
+leaf-splitting "fix" on beat 11 is the one he ordered reverted on 2026-08-07, and our
+own metric had scored it the episode's best beat.
+
+**The honest wrinkle, recorded rather than smoothed over: the question and the answer
+do not name the same character.** Item 07 asked about episode 2's goblin and its two
+guards; he answered about the engineer and the sapling. It is being taken as the
+general ruling it reads as — consistency machinery is for the character who recurs —
+so **the goblin's drift is accepted rather than fixed**, and episode 2's twenty are
+redrawn for a tall sapling and their plain faults, not for a matching goblin. If that
+reads badly in the assembled episode it is a new note on a new cut and one line of
+prompt per beat. Both the review page and the queue say so in those words rather than
+claiming he settled a question he was not asked.
+
+**WHAT CAME OFF THE GATE, AND IT IS TWENTY-FIVE DRAWINGS ACROSS TWO EPISODES.**
+
+- **`ep1-stills-redraw-wave2-1786197600` is UNGATED** in `pipeline/farm-queue.yaml`.
+  `gate: founder` / `gate_ref:` item 07 are deleted, the entry re-read for a blocker
+  behind the founder one (there is none — approved t0 leaf, directions written, same
+  model and card that drew the last forty, $0), and the tall-sapling rule folded into
+  the `cmd` for all five beats. Beat 6's "no leaf in the image" survives and is
+  flagged in the entry as **his own composition note, not a detail rule** — a sky shot
+  cannot show him his own leaf.
+- **`ep2-stills-redraw-b02-21-1786192800` is filed** for episode 2's twenty: text
+  first (the tall sapling into the twenty `shots.md` blocks where the sapling is in
+  shot, plus the four plain faults — beat 20's night, beat 13's garage and beat 14's
+  desert dirt, the big ripe fruit on 12 and 18, beat 09's split panels), then the same
+  80-frame batch recipe `002b-stills-b02-21-1786090020` ran. Every other word of those
+  prompts stays: their intent is what the approved t0-c script and the native-tag
+  conversion (e4826ed) already settled.
+- **`ep1-v33-assemble-1786124760`'s `gate_ref` moves one gate closer.** It named item
+  07 as the nearest blocker for its frames; the frames are now waiting on a wave that
+  is running, not on a decision.
+
+**ONE SAMPLE BEFORE ANY BATCH IS THE ONLY GATE LEFT, and it is a dependency rather
+than office hours.** The tall-sapling rule is one sentence but this tree has never
+rendered it, and 2026-08-03 is on the record for what happens when a recipe is scaled
+to fifteen beats on the steward's own say-so. **Beat 15 of episode 1 is drawn first,
+tall, and screened as one frame** — it is rendering on the rtx5090 now. The other four
+run on his verdict; episode 2's twenty are gated on that same one frame and nothing
+else, which is what `ep2-stills-redraw-b02-21-1786192800`'s `gate_ref` names. Nothing
+waits for a person to be awake: the sample started the hour the ruling landed.
+
+**The review page carries the ruling as the record it now is.** Item 07 moves to
+`state: settled` with his words quoted in full and the character-sheet proposal
+explicitly declined beside his reason; the checklist intro, which spent the morning
+telling him item 07 was the one thing to do, now says it is answered and points the
+short pass at 06, 08 and 09; the episode-2 block heading stops claiming it holds up
+episode 1. Item 02's "the five redraws are NOT rendering until you answer" paragraph is
+rewritten to say they are rendering, one sample first. **A page that keeps asking a
+closed question is the one failure that page is not allowed** — the same rule that
+deleted two drafted items the morning before.
+
+**THE SAMPLE IS `b15-r3-s0` TO `b15-r3-s3`** — beat 15 of episode 1, round 3, four
+seeds, one contact sheet, one question. Episode 2's twenty name those labels in their
+`gate_ref` and wait on nothing else.
+
+**AND THE SAMPLE HAS A CONFLICT TO SETTLE THAT NOBODY HAD NOTICED.** Read off
+`takes/stills/02-the-sprint-r2-s0.png.meta.yaml` rather than guessed: all eighty of
+episode 2's frames were drawn with **`mature tree, large tree, TALL TREE, thick trunk,
+full canopy` in the negative** — put there to stop Animagine drawing a mature banyan —
+and episode 2's own VO has him saying he is *"forty centimeters tall"*. A line saying
+TALL against a negative saying not-tall cancels, and the twenty would come back exactly
+as they are. Neither side of that gets deleted on a steward's judgement. The rule is
+about how the sapling READS in frame — the fault it answers is beat 14's *"all too
+small"* — so the working reconciliation is a slender vertical that owns the height of
+the shot while still being a sapling, and **the beat-15 sample is the frame that shows
+whether that is what he meant.** Both the queue entry and the review page say so in
+those words.
+
+**ONE RETIREMENT FELL OUT OF THIS, and it was a loaded gun.**
+`002b-stills-b02-21-1786090020` — the entry that drew the eighty — was still sitting in
+`backlog:` as `runner: farm` with no gate, and `queue_promoter.py --dry-run` was
+reporting **PROMOTE** on it. It ran on 2026-08-07 (every sidecar carries
+`task: 002b-stills-b02-21-1786090020`), but it was hand-run from a standalone script on
+the 5090 that writes no `DONE task=` heartbeat line, so the promoter could not see it
+was done — the third instance of the pattern already filed as
+`queue-id-borrowed-by-hand-run-1786190580`. One promoter run and one polling worker
+would have redrawn all eighty on the unfixed prompts. Retired as a comment with the
+evidence, and `--dry-run` now reports "nothing to move".

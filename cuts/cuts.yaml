@@ -109,27 +109,31 @@ page:
 checklist:
   title: "Your morning pass — about ten minutes"
   intro: |-
-    **Items 01 to 05 are episode 1 and they are the ones that matter this
-    morning** — nothing else can be built until they are answered. **Item 03 is
-    now the only open pick in the block**: item 02 was answered in full on
-    2026-08-08 and is kept as the record of what you said. Two others are
-    confirmations you can do at a glance, and one is a report that asks nothing.
+    **Items 01 to 05 are episode 1, and as of 2026-08-08 you have answered every
+    one of them.** Item 02 in the morning, item 03 in the afternoon — both are
+    kept below as the record of what you said rather than deleted, because four
+    frames are now canon on those words and five more are being redrawn from them.
+    **There is nothing left to pick in this block.** If we heard any of it wrong,
+    that is the only thing left to say here.
 
-    **One warning about the running order, because it inverts today.** The five
-    redraws item 02 ordered are held up by **item 07**, which is in the episode-2
-    block below — character consistency is what you rejected them for, and item 07
-    is where the technique for fixing it gets chosen. It is the one episode-2
-    question that blocks episode 1.
+    **And item 07 is answered too, which is the sentence that matters today.**
+    This page spent the morning telling you that item 07 — in the episode-2 block
+    below — was the one thing holding up episode 1's five redraws. You settled it
+    on 2026-08-08: **no character sheet, and the sapling reads tall in every clip
+    it is in.** Nothing on this page is waiting on you for episode 1 any more. The
+    five redraws started on that answer, **one sample first** (beat 15, drawn
+    tall), and episode 2's twenty are queued behind the same sample.
 
-    Everything in that first block came out of the notes you gave on v32 last
-    night. Nothing outside those notes was touched, and item 05 says so in
-    detail rather than leaving you to trust it.
+    Everything in that first block came out of the notes you gave on v32. Nothing
+    outside those notes was touched, and item 05 says so in detail rather than
+    leaving you to trust it.
 
-    **Items 06 to 09 are episode 2.** Three of the four hold nothing up and are
-    here because your "r3-s3 and retire" started four jobs that had been waiting
-    on it. **Item 07 is the exception as of 2026-08-08** — it now blocks episode
-    1's five redraws as well, for the reason above. If the morning is short, stop
-    after 05 **and 07**.
+    **Items 06 to 09 are episode 2, and none of the four holds anything up.** They
+    are here because your "r3-s3 and retire" started four jobs that had been
+    waiting on it, and this is where their output arrives. Item 07 is now the
+    record of a ruling rather than a question. **If the pass is short, items 06,
+    08 and 09 are what is genuinely yours to answer** — an opening-shot pick, a
+    voice check, and one line of script.
   items:
     - n: 1
       ask: "The camera move — is 12% right at both ends of the episode?"
@@ -197,17 +201,14 @@ checklist:
           surface-level composition you asked for is kept; only the character is
           redrawn.
 
-        **THE ONE THING THAT WOULD SPEED THIS UP IS ITEM 07, AND IT IS NOT ON THIS
-        HALF OF THE PAGE.** Character consistency is the objection you gave most
-        often here — the fault on 14 and 15, and the single virtue that nearly
-        saved beat 10 — and it is exactly the question item 07 asks about episode
-        2: does the show get a character sheet, one approved drawing every later
-        beat is drawn against. **The five redraws are deliberately NOT rendering
-        until you answer that**, because the technique you choose there is the
-        technique they need. Rendering them first would buy five more frames of
-        five different shows and land the same note back on your desk. It is the
-        one place where an episode-2 item is holding up episode 1, and it is worth
-        knowing before you decide the morning is over after item 05.
+        **THE FIVE REDRAWS WERE HELD ON ITEM 07 AND ARE HELD NO LONGER.**
+        Character consistency is the objection you gave most often here — the
+        fault on 14 and 15, and the single virtue that nearly saved beat 10 — so
+        the five sat until you settled the technique in item 07, on the other half
+        of this page. You did, the same day: **no character sheet, the sapling
+        reads tall in every clip, and the leaves are not to be fussed over.** That
+        is the line the five are being redrawn under, **one sample first** — beat
+        15 — before the other four run.
 
         Your original words on the six, kept because the redraws are still working
         from them:
@@ -247,57 +248,56 @@ checklist:
         framing is the script's own words — *"Low at the base of the trunk"*.
 
     - n: 3
-      ask: "Beats 7, 8 and 9 — pick the three frames for the progression"
-      state: open
-      chip: "YOUR PICK"
+      ask: "Beats 7, 8 and 9 — ANSWERED 2026-08-08. All three picked, and the grey goes with them."
+      state: settled
+      chip: "CONFIRM"
       body: |-
-        You caught that *"beat 7, 8, 9 are basically the same picture"*, and when
-        we put the options to you, you chose: **"alright, shot progression."**
-        So the approach is settled and is not being re-asked. The three are being
-        drawn as **one scene in one light at three distances** — wide on 7, medium
-        on 8, close on 9 — so they read as a camera moving in rather than three
-        attempts at the same picture.
+        **You answered this one and it is closed as a question.** It stays on the
+        page as the record of what you said. Read it as "here is what we heard"; if
+        we heard any of it wrong, that is the only thing left to say.
 
-        **This item also settles your other beat 7 note**, and that is the trap
-        worth naming: beat 7 is on your list twice. You said it *"makes everything
-        look grayened … the main problem is that it drastically changes the
-        style"* — and it is also the first of the three identical ones. **One
-        frame has to satisfy both**, so the wide shot you pick here is also the
-        answer to the grey. If the set you like fixes the repetition but is still
-        washed out, reject it and say that; it has not done its job.
-        **Both rounds are done.** The staging works — wide, medium, close read as
-        one camera moving in — but the colour drifted across the three in round
-        one, so they were drawn again with the palette pinned. That second round
-        is the `r2` frame at the end of each sheet below.
+        **Your answer, in full:** *"po7-r1-s2, po8-r2-s0, po9-r1-s2"* — the wide
+        from beat 7's sheet, the medium from beat 8's, the close from beat 9's.
+        Resolved through `REVIEW-KEY-0808.md`, the address map, not by where a tile
+        sat on a sheet. **All three are now the frames v33 will be built from**,
+        copied across unchanged; the frames they replace are kept beside them,
+        renamed, so you can still see what you refused.
 
-        **STILL OPEN, AND THE SHEET WE GAVE YOU WAS THE PROBLEM.** On 2026-08-08
-        you said of this item: *"for beat 7/8/9, i am confused? all of these are
-        mixed in?"* You were right — `progression-789` puts all fifteen candidates
-        in one grid, so a wide, a medium and a close from three unrelated seeds sit
-        side by side and nothing on the sheet says which three go together. That is
-        our layout failing, not fifteen frames failing, and **this item is not
-        being counted as answered by it.**
+        **YOUR OTHER BEAT 7 NOTE IS SETTLED BY THE SAME PICK, and that was always
+        the plan for this item.** Beat 7 was on your v32 list twice — you said it
+        *"makes everything look grayened … the main problem is that it drastically
+        changes the style"*, and it is also the first of the three identical ones.
+        This item told you one frame had to satisfy both, so the wide you picked is
+        also the answer to the grey. You picked a wide drawn on the show's morning
+        palette and said nothing about colour, so **we are recording the grey as
+        closed, not as unmentioned.** If the assembled cut still looks washed out
+        to you, say so then — it will be a new note on a new frame, not this one
+        still open.
 
-        **Three plain sheets now, one per beat.** You said *"stop doing all this
-        complicated row stuff, keep it like it was for the previous beats"* — so it
-        is laid out the way beat 3 and beat 12 were: `LABELED-beat07-all.png`,
-        `LABELED-beat08-all.png` and `LABELED-beat09-all.png`, each holding that one
-        beat's five candidates in a single row — the four round-1 frames, then the
-        round-2 frame at the end. Nothing to decode.
+        **ONE THING WE OWE YOU ABOUT THE COMBINATION, because you should hear it
+        from us before you see it moving.** Your three picks come from **two
+        different rounds** — the wide and the close are round 1, the medium is
+        round 2. Round 1 had exactly one known fault, and it was a fault *across*
+        the three rather than in any one of them: **the colour drifted between the
+        shots.** That is why round 2 was drawn at all — it pinned all three to one
+        palette and one seed so the lens was the only thing changing.
 
-        **Local, for the same D15 reason as item 02** — the three sheets sit in the
-        repo folder rather than on this page, and `REVIEW-KEY-0808.md` beside them
-        resolves every address to its file.
+        **Your combination is your call and we are not re-asking it.** You looked
+        at the three sheets side by side and picked per beat, which is what those
+        sheets were rebuilt for, and mixing rounds was allowed in what you read.
+        The best wide and the best close being in round 1 is a perfectly good
+        reason to take them.
 
-        **Answer with three addresses, one per beat** — e.g. *"`p07-r2-s0`,
-        `p08-r1-s1`, `p09-r2-s0`"*. **Mixing rounds is allowed**: the three picks are
-        independent and each sheet stands on its own. The `r2` frame is the
-        palette-pinned round, so it is the one worth your eye first on each sheet.
-        **Skip beat 7's `p07-r1-s1`, it grew a giant hand.**
+        **What it means practically: the colour question moves from the sheets to
+        the cut.** Three separate frames can each look right and still not read as
+        one camera moving through one place. **You will judge that at the v33
+        screening**, not now — and if it clashes, it is cheap: the round-2 wide and
+        close already exist, and re-drawing one beat to match takes under a minute
+        and costs nothing. **We are not re-rendering anything on this before you
+        have seen the three cut together.**
 
-        Worth saying alongside the picks: **tell us whether the staging is right**,
-        because that is the part we would keep. The colour is ours to fix and does
-        not need your verdict.
+        **Where they are, for the same D15 reason as item 02** — the sheets you
+        picked from stay in the repo folder rather than on this page.
 
     - n: 4
       ask: "Beat 11 — we undid our own fix, as you asked. Confirm."
@@ -359,15 +359,16 @@ checklist:
     # their output arrives for his eye rather than accumulating unseen.
     - n: 6
       heading:
-        title: "Episode 2 — and one item here that now blocks episode 1"
+        title: "Episode 2 — and the one item here that unblocked episode 1"
         intro: |-
           Your five words on 2026-08-07 — **"r3-s3 and retire"** — settled
           episode 2's look and started four jobs that had been waiting on it.
-          Their results land here. **This block used to say it held up nothing in
-          episode 1. As of 2026-08-08 that is no longer true of item 07** — the
-          character-sheet question below is what episode 1's five redraws are
-          waiting on, because character consistency is what you rejected them for.
-          Items 06, 08 and 09 still hold up nothing.
+          Their results land here. **For part of 2026-08-08 this block held up
+          episode 1: item 07, the character-sheet question, was what the five
+          redraws were waiting on. You answered it the same day and it stopped
+          being a question** — no sheet, the sapling reads tall, the leaves are
+          not to be fussed over. It is kept below as the record of that ruling.
+          Nothing in this block holds anything up now.
       ask: "Episode 2's opening shot — both films exist, and only one of them can be shown here"
       state: open
       chip: "YOUR PICK"
@@ -407,66 +408,97 @@ checklist:
         Both films exist; the reason travels with them.
 
     - n: 7
-      ask: "Episode 2's remaining twenty drawings — they came back wrong, and in one particular way"
-      state: open
-      chip: "YOUR PICK"
+      ask: "The character-consistency technique — ANSWERED 2026-08-08. No character sheet; the sapling reads tall, and that is the whole rule."
+      state: settled
+      chip: "CONFIRM"
       body: |-
-        **They are drawn — all eighty, four seeds for each of the twenty beats,
-        rendered overnight the moment your frame pick took the gate off them.**
-        Every one carries a written record now. And the honest report is that
-        the batch has a problem you should hear before you spend ten minutes
-        looking at it.
+        **You answered this one and it is closed as a question.** It stays on the
+        page as the record of what you said, because twenty-five drawings across
+        both episodes are being made on these words and nothing else. Read it as
+        "here is what we heard"; if we heard any of it wrong, that is the only
+        thing left to say.
 
-        **Nobody is drawing the same character twice.** Across the twenty beats
-        the goblin comes back as a round mascot blob, a human anime child, a
-        tiny green gremlin, a clawed monster and an elf boy; the two guards come
-        back as polished heroic knights, hooded grim-reaper silhouettes,
-        sci-fi helmets and ordinary modern men. Each individual frame is
-        competent. They are not frames from the same show.
+        **Your answer, in full and unedited:**
 
-        That is not seed luck and it is not something more seeds fix — every
-        beat writes its own description of who is in it, and there is no
-        character sheet holding them to one design. **Beat 01 is the only shot
-        in episode 2 with an approved look, which is exactly why the other
-        twenty drifted.**
+        > whats the point of a character sheet for the engineer? not like he's
+        > gonna show up again. im talking about the sapling, and its very simple,
+        > just make it tall in each clip of it, and thats pretty much it. dont
+        > overthink the leafs on it.
 
-        Four other things are wrong for reasons that are cheap to fix, and all
-        four are the same class of defect the beat-01 rounds already fought:
+        **THE CHARACTER SHEET IS DECLINED, and the reason recorded for it is
+        yours, not a reading of ours.** We had asked for one approved drawing that
+        every later beat would then be drawn against. You refused the premise:
+        that is machinery for a character who comes back, and this one does
+        not — *"not like he's gonna show up again."* So no sheet is being drawn,
+        for either episode, no beat's prompt is being rewritten to point at one,
+        and the two queue entries that were waiting on this now say so in the
+        same words.
 
-        - **Beat 20 is at night** — all four seeds — in a morning episode.
-        - **Beat 13 is indoors**, in what reads as a garage; **beat 14** is on
-          desert dirt. Both should be the green field.
+        **What replaces it is one sentence, and one sentence is the point.** The
+        character who does recur is **the sapling**, and its rule is that **it
+        reads TALL in every clip it appears in.** That is the entire technique. It
+        goes into episode 1's five redraws and episode 2's twenty as one line of
+        direction, and nothing else about it is being invented on your behalf.
+
+        **The leaves are explicitly off the table** — *"dont overthink the leafs
+        on it."* Nothing in a prompt, a check or a screening note will count
+        leaves, match leaf shape, or fail a frame on foliage. That habit was real
+        and this is the second time you have killed it: the leaf-splitting "fix"
+        on beat 11 is the one you already ordered reverted in item 04.
+
+        **One thing we owe you, because the question and the answer do not name
+        the same character.** This item asked about episode 2's goblin and its two
+        guards, who come back as a different creature in nearly every one of the
+        eighty frames. Your answer is about the engineer and the sapling. We are
+        taking it as the general ruling it reads as — consistency machinery is for
+        the character who recurs, and that is the sapling — so **the goblin's
+        drift is being accepted rather than fixed.** The twenty beats are being
+        redrawn for the plain faults below and a tall sapling, not for a matching
+        goblin. If a shape-shifting goblin bothers you once you see episode 2 cut
+        together, that is a new note on a new cut and a cheap one; it is a line of
+        prompt text per beat.
+
+        **The four things that were plainly broken are being fixed while those
+        frames are open**, since none of them is a taste question:
+
+        - **Beat 20 came back at night** — all four seeds — in a morning episode.
+        - **Beat 13 came back indoors**, reading as a garage; **beat 14** on
+          desert dirt. Both are the green field.
         - **Beats 12 and 18 grew a big ripe orange-pink fruit** where the fig is
-          meant to be small and green. Same wrong-fruit the opening shot spent
-          three rounds arguing down.
-        - **Beat 09 came back as split panels** in all four seeds — a technical
-          fault, not a drawing.
+          small and green — the wrong-fruit the opening shot spent three rounds
+          arguing down.
+        - **Beat 09 came back as split panels** in all four seeds, a technical
+          fault rather than a drawing.
 
-        Closest to the look you approved: **beats 19 and 21**, then 02 and 15.
+        Closest to the look you approved, for whatever it is worth to the
+        redraws: **beats 19 and 21**, then 02 and 15.
 
-        **The frames are not on this page and that is deliberate** — same reason
-        as items 02 and 03. They are drawn by a model whose licence attaches
-        conditions our own licence gives away (D15, still yours to settle), so
-        candidates stay on the machine. They are on it as four contact sheets,
-        `CONTACT-002b-b02-06.png` and its three neighbours, one band per beat
-        with the seed under every frame.
+        **WHAT THIS UNBLOCKED, AND IT STARTED THE SAME HOUR.** Episode 1's five
+        redraws — beats 3, 6, 10, 14, 15 — were held on this answer and are held
+        no longer. Episode 2's twenty are queued behind them under the same rule.
+        **One sample comes before either batch:** beat 15 of episode 1, drawn with
+        the sapling tall — labels **`b15-r3-s0`** to **`b15-r3-s3`** — screened by
+        you before the other four run and before episode 2's twenty start at all.
+        That is the standing rule from 2026-08-03, not a new gate we invented:
+        nothing renders as a set until you have looked at one of it.
 
-        **What we would like from you is not twenty picks.** It is a ruling on
-        whether episode 2 gets a character sheet — one approved drawing of the
-        goblin and one of a guard, which every later beat is then drawn
-        against — because picking best-of-four per beat out of this batch buys
-        twenty good frames of twenty different shows.
+        **The one thing that sample has to settle, and it is worth thirty seconds
+        of warning.** Every one of episode 2's twenty prompts currently tells the
+        model *not* to draw a tall tree — `mature tree, large tree, tall tree,
+        thick trunk, full canopy` sits in the negative on all of them, put there to
+        stop a mature banyan, and the episode's own narration has him saying he is
+        *"forty centimeters tall"*. So "make it tall" and that negative cancel, and
+        nobody is going to quietly pick a winner between your rule and a line you
+        approved. **The sample is where you see what tall looks like** — a slender
+        vertical that owns the height of the shot, still a sapling — and the twenty
+        are reconciled to whatever you pass.
 
-        **AND AS OF 2026-08-08 THIS ITEM HOLDS UP EPISODE 1 TOO, WHICH IT DID NOT
-        WHEN IT WAS WRITTEN.** When you went through episode 1's forty candidates
-        you rejected four of the five beats on the same fault this item is about:
-        *"not good character consistency"* on beat 14, *"bad character
-        consistency"* on beat 15, and on beat 10 it was the one virtue that nearly
-        made you keep a frame that was otherwise wrong. **Those five redraws are
-        deliberately not rendering until you answer here**, because whatever you
-        choose — a character sheet, or carrying on without one — is the technique
-        they have to be drawn with. Answer it for episode 2 and episode 1's
-        redraws start the same hour. Ignore it and both stay where they are.
+        **The frames are still not on this page**, for the same reason as items 02
+        and 03: they are drawn by a model whose licence attaches conditions our
+        own licence gives away (D15, still yours to settle), so candidates stay on
+        the machine. They are there as four contact sheets,
+        `CONTACT-002b-b02-06.png` and its three neighbours, one band per beat with
+        the seed under every frame.
 
     - n: 8
       ask: "Episode 2's narration — does the voice read right?"

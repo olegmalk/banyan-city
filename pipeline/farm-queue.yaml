@@ -406,30 +406,25 @@ backlog:
 # the founder's eye caught LTX losing 86-89% of its chroma across a clip on
 # 2026-08-06. That call is R4's and lives on the review surface, not here.
 
-- id: 002b-stills-b02-21-1786090020
-  runner: farm
-  worker: rtx5090
-  needs: [cuda]
-  window: any
-  est_minutes: 25
-  node: 002b-first-citizen
-  beats: '2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21'
-  seeds: 4
-  steps: 40
-  seed_base: 20260719
-  why: >-
-    80 images at the 9-11s per image the 5090 measured on 2026-08-06 — the drawn
-    half of episode 2, which had no approved look to draw against until the
-    founder picked beat 01's frame on 2026-08-07. Runnable now; production runs
-    tonight. CORRECTION 2026-08-07, and it is why nothing stands behind the
-    cleared gate: this entry used to say all twenty prompts were still in the v2
-    low-detail style and that a text-only conversion pass had to come first. That
-    stopped being true on 2026-08-04, when e4826ed converted all twenty to the
-    native-tag dialect ("20 prompt conversions — text, free, one git revert to
-    undo — were blocked on a founder verdict"). The prompts are current; the batch
-    is the next step, not the second one. `mascot-simple` survives in beats 02, 03
-    and 12 on purpose — it modifies the sapling there, which is what it is for.
-    Beat 01's rounds only proved it must not be the SUBJECT.
+# RETIRED 2026-08-08 — 002b-stills-b02-21-1786090020. IT RAN, and it had to be
+# retired by hand for a reason this file already documents twice. All eighty frames
+# exist — genomes/sapling/nodes/002b-first-citizen/takes/stills/, four seeds each
+# for beats 02-21, 832x1216, animagine-xl-3.1, 40 steps, $0 — and every sidecar
+# carries `task: 002b-stills-b02-21-1786090020`, so the render happened under this
+# id. But it was HAND-RUN from a standalone script on the 5090
+# (C:\banyan-farm\wave-002b-20260807\render_b0203.py), which writes no
+# `DONE task=` heartbeat line, so the promoter could not see it was done. Same
+# loaded gun as the 002b-b01-video pair above: see queue-id-borrowed-by-hand-run.
+#
+# IT WAS ALSO ON THE VERGE OF FIRING AGAIN. `runner: farm` with no gate, so the
+# next promoter run would have moved it into tasks: and the next worker to poll
+# would have redrawn all eighty on the same unfixed prompts — the ones that
+# produced twenty different goblins, a night beat, a garage, desert dirt, two
+# ripe fruit and a split panel. Retiring it is the point of the retirement, not
+# bookkeeping.
+#
+# WHAT REPLACES IT: ep2-stills-redraw-b02-21-1786192800, below, which fixes the
+# prompts first and then re-runs this exact recipe.
 
 - id: 002b-vo-t0c-21beats-1786090080
   runner: manual
@@ -757,62 +752,93 @@ backlog:
 # founder picks in the morning: one scene, one light, three distances — wide (7),
 # medium (8), close (9) — so the three shots read as a camera moving in rather
 # than three attempts at one picture.
-# DELIVERED 2026-08-07 NIGHT, SCREENED 2026-08-08, AND NOT YET RETIRABLE. This
-# entry produced the forty candidates plus the 7/8/9 progression, and the founder
-# went through them: one pick (beat 12, b12-r2-s1, now canon at
-# 001-capability-inventory/stills/12-undefined.png) and five rejections (3, 6, 10,
-# 14, 15). It stays open because its own text still names beats it did not settle
-# and because 7/8/9 is still an unanswered pick (checklist item 03). The five
-# rejections are NOT re-queued here — they are a second wave with a founder gate
-# of their own: ep1-stills-redraw-wave2-1786197600, directly below.
-- id: ep1-stills-rework-1786124640
-  runner: manual
-  worker: rtx5090
-  needs: [cuda]
-  window: any
-  est_minutes: 90
-  cmd: >-
-    regenerate the conditioning frames for beats 3, 6, 10, 12, 14 and 15 of node
-    001 against his notes — 3 unmistakably indoors, 6 with no leaf in a sky shot,
-    10 and 12 back inside the show's palette and environment, 14 legible as
-    something, 15 at surface level with the arriving presence entering frame
-    (warm glow at the frame edge, soil trembling) rather than underground — and
-    render the 7/8/9 progression as one scene at three distances; several
-    candidates per beat, contact sheet for one screening pass
-  why: >-
-    Seven of the fifteen shots in the cut the founder just refused are refused on
-    the frame, not on the motion, so no re-render, no re-assembly and no posting
-    can start from the frames now in the tree. The consumer is the replacement cut
-    (ep1-v33-assemble-1786124760) and, behind it, pending-founder.yaml v6-verdict.
+# RETIRED 2026-08-08 EVENING — ep1-stills-rework-1786124640, ON ITS OWN TERMS.
+#
+# That morning this comment said the entry was "NOT YET RETIRABLE" and named the
+# two conditions keeping it open, so those are the conditions it is retired
+# against and not a fresh judgement:
+#
+#   1. "its own text still names beats it did not settle" — beats 3, 6, 10, 14
+#      and 15. The founder rejected every candidate for those five, and their
+#      directions moved into ep1-stills-redraw-wave2-1786197600 (directly below)
+#      that same morning, each baked into its cmd. Nothing this entry named is
+#      unowned.
+#   2. "7/8/9 is still an unanswered pick (checklist item 03)" — answered the
+#      same afternoon: "po7-r1-s2, po8-r2-s0, po9-r1-s2", three picks, one per
+#      beat, all three now canon.
+#
+# WHAT IT DELIVERED, in full, so the retirement is auditable: 40 candidate frames
+# for six beats plus 15 progression frames for 7/8/9 across two rounds, on the
+# rtx5090, at $0. Four of them are canon —
+#   stills/12-undefined.png              b12-r2-s1  seed 20261731  (item 02)
+#   stills/07-zero-0-moving-parts.png    p07-r1-s2  seed 20262726  (item 03)
+#   stills/08-sev-1.png                  p08-r2-s0  seed 20260726  (item 03, r2)
+#   stills/09-whoami.png                 p09-r1-s2  seed 20262728  (item 03)
+# — each copied byte-for-byte from takes/stills/, each replacing a frame retired
+# in place as *-REVOKED-*.png. Provenance and checksums:
+# genomes/sapling/nodes/001-capability-inventory/stills/README.md. The founder's
+# words and the reasoning per beat: that node's shots.md. Full record: STATE.md
+# 2026-08-08.
+#
+# ONE THING THE NEXT PERSON HAS TO KNOW rather than rediscover: the 7/8/9 picks
+# MIX ROUNDS — wide and close from round 1, medium from round 2 — and round 1's
+# one documented flaw was colour drift ACROSS the trio, which is why round 2 was
+# rendered with a byte-identical palette block and one shared seed. His pick is
+# his call and stands; the risk simply moves to the assembled cut and is judged
+# at the v33 screening. Do NOT queue a re-render of 7, 8 or 9 before that
+# screening. If it does clash, the round-2 wide and close already exist on disk
+# (07-…-prog2-t0.png, 09-whoami-prog2-t0.png) and one beat is 39 seconds at $0.
+#
+# THE PROMOTER COULD NEVER HAVE RETIRED THIS ONE. runner: manual, and a manual
+# job writes no `DONE task=<id>` heartbeat line — same reason the 002b video
+# entries above had to be retired by hand. Nothing to fix in queue_promoter.py;
+# this is the documented behaviour of manual entries, not a gap.
 
-# THE SECOND STILLS WAVE, AND THE REASON IT IS GATED RATHER THAN RUNNING.
+# THE SECOND STILLS WAVE — UNGATED 2026-08-08, AND THIS COMMENT IS THE EVIDENCE
+# THAT STAYS.
 #
 # The founder screened the forty candidates on 2026-08-08: ONE pick (beat 12,
 # b12-r2-s1, promoted byte-for-byte to stills/12-undefined.png) and FIVE
-# rejections. Those five are this entry. Beat 7 is not among them — it is
-# answered by the 7/8/9 progression, checklist item 03, still an open pick.
+# rejections. Those five are this entry. Beats 7, 8 and 9 are not among them —
+# he picked all three off the progression the same afternoon ("po7-r1-s2,
+# po8-r2-s0, po9-r1-s2", checklist item 03, now settled) and they are canon, so
+# this wave is five beats and not eight.
 #
-# WHY gate: founder AND NOT a runnable job. This repo's standing rule is that a
-# job with no physical dependency starts now, so the gate has to earn itself:
-# CHARACTER CONSISTENCY IS THE FOUNDER'S DOMINANT OBJECTION ACROSS THIS WAVE — he
-# named it as the fault on 14 ("all too small, not good character consistency")
-# and on 15 ("bad character consistency"), and on 10 it was the single virtue that
-# nearly saved a frame he otherwise had doubts about. There is no technique in the
-# tree for holding a design steady across shots, and choosing one is exactly what
-# checklist item 07 asks — whether the show gets a character sheet, one approved
-# drawing that every later beat is drawn against. Episode 2 asked first because
-# eighty frames came back as twenty different shows; the answer governs these five
-# too, same model, same missing anchor.
+# THIS ENTRY CARRIED `gate: founder` / `gate_ref:` CHECKLIST ITEM 07 UNTIL
+# 2026-08-08, and both keys are deleted here because he answered item 07. Four of
+# these five beats were rejected on character consistency ("all too small, not
+# good character consistency" on 14, "bad character consistency" on 15, the near-
+# saving virtue on 10), there was no technique in the tree for holding a design
+# steady across shots, and item 07 was where one got chosen. His ruling, verbatim
+# and in full:
 #
-# So this is not a wait for office hours. The RECIPE IS UNDECIDED, and rendering
-# five beats on the old one buys five more frames of five different shows and
-# spends his next screening pass on a question he has already been asked. When the
-# gate clears, ONE SAMPLE BEFORE ANY BATCH applies to the new technique before all
-# five beats run.
+#   "whats the point of a character sheet for the engineer? not like he's gonna
+#    show up again. im talking about the sapling, and its very simple, just make
+#    it tall in each clip of it, and thats pretty much it. dont overthink the
+#    leafs on it."
 #
-# gate_ref names checklist item 07 and not a pending-founder.yaml id because none
-# exists for it: the character-sheet question lives on the review checklist only.
-# If it is ever promoted to the founder's inbox, put the id here.
+# THREE THINGS THAT MEANS, AND NOTHING BEYOND THEM. (1) NO CHARACTER SHEET — the
+# proposal was one approved drawing every later beat is drawn against, and it is
+# DECLINED on his stated ground that it is machinery for a character who recurs.
+# Do not build one, do not reference one in a prompt, do not re-open it on a
+# metric. (2) The recurring character is THE SAPLING and its rule is that it
+# READS TALL wherever it appears — one line of direction, which is the whole
+# technique. (3) LEAF DETAIL IS OFF THE TABLE: no prompt term, QA check or
+# screening note counts leaves, matches leaf shape or fails a frame on foliage.
+# Beat 6's "no leaf in the image" survives that and is NOT an exception — it is
+# his own composition instruction from the same pass (a sky shot cannot show him
+# his own leaf), not a detail rule.
+#
+# RE-READ FOR A BLOCKER BEHIND THE FOUNDER ONE, as this file's header requires:
+# there is none. The node's t0 leaf is founder-approved, the five beats'
+# directions are written, the model and the card are the ones that drew the last
+# forty, and $0.
+#
+# ONE SAMPLE BEFORE ANY BATCH STILL APPLIES and is IN the cmd, not in a gate. The
+# technique is new to this tree even though it is one sentence: beat 15 is drawn
+# first, with the sapling tall, and is screened before the other four run.
+# Rendering all five on an unscreened recipe is the exact failure CLAUDE.md
+# records for 2026-08-03.
 #
 # DIRECTIONS ARE BAKED IN BELOW, one line each, so this entry is executable by
 # someone who has read nothing else. The authority for each is that beat's section
@@ -822,37 +848,133 @@ backlog:
   runner: manual
   worker: rtx5090
   needs: [cuda]
-  gate: founder
-  gate_ref: >-
-    Checklist item 07 — the character-consistency technique decision (does the show
-    get a character sheet: one approved drawing every later beat is drawn against).
-    /review/#checklist, episode-2 block; no pending-founder.yaml id exists for it.
-    Four of these five beats were rejected ON that axis, so the technique chosen
-    there is the technique they must be redrawn with. Clearing this gate is him
-    answering item 07, not anyone deciding the answer is obvious.
   window: any
   est_minutes: 75
   cmd: >-
-    redraw the conditioning frames for beats 3, 6, 10, 14 and 15 of node 001 under
-    whatever character-anchoring technique item 07 settles — ONE sample beat first,
-    screened, before the other four run. Beat 3: CLOSE-UP (his new direction,
-    2026-08-08), still unmistakably indoors and domestic, both prior rounds
-    rejected. Beat 6: unchanged direction, sky only, no leaf — rejected with no
-    stated axis, so invent no fault for him; anchor palette and light to the
-    episode. Beat 10: roots must be VISIBLE and readable (the beat's own overlay
-    card reads "SENSE roots / air / vibration" and its script line is an
-    underground root-map), while keeping the consistency b10-r1-s3 had, AND
-    re-lens it lower and closer than beat 14 so the two stop being twins — 10 is
-    the one that moves, 14 keeps the script's framing. Beat 14: subject much
-    bigger in frame, the sprout and its grip filling the shot, plus consistency.
-    Beat 15: composition unchanged (surface level, warm glow entering from the
-    right), character redrawn to match. Several seeds each, one contact sheet,
-    one screening pass.
+    redraw the conditioning frames for beats 3, 6, 10, 14 and 15 of node 001 —
+    ONE SAMPLE FIRST: beat 15, labels b15-r3-s0..s3, screened by the founder
+    before the other four run.
+    THE CHARACTER RULE FOR ALL FIVE, and it is the whole of it (his ruling,
+    2026-08-08): the sapling READS TALL wherever it appears in frame. No character
+    sheet exists and none is to be made; add no leaf-detail terms and fail no
+    frame on foliage. Beat 3: CLOSE-UP (his new direction, 2026-08-08), still
+    unmistakably indoors and domestic, both prior rounds rejected. Beat 6:
+    unchanged direction, sky only, no leaf in the image — his own composition
+    note, not a detail rule; rejected with no stated axis, so invent no fault for
+    him, and anchor palette and light to the episode. Beat 10: roots must be
+    VISIBLE and readable (the beat's own overlay card reads "SENSE roots / air /
+    vibration" and its script line is an underground root-map), AND re-lens it
+    lower and closer than beat 14 so the two stop being twins — 10 is the one that
+    moves, 14 keeps the script's framing. Beat 14: subject much bigger in frame,
+    the sprout and its grip filling the shot. Beat 15: composition unchanged
+    (surface level, warm glow entering from the right), the sapling redrawn tall.
+    Several seeds each, one contact sheet, one screening pass.
   why: >-
     Five of episode 1's fifteen shots have no usable frame after the founder's
     2026-08-08 pass, so ep1-v33-assemble-1786124760 cannot be built and
     pending-founder.yaml v6-verdict cannot be answered. The consumer is v33.
     Beat 12 is already out of this set — he picked b12-r2-s1 and it is canon.
+    RUNNABLE NOW as of 2026-08-08 — the item-07 gate came off with his ruling and
+    nothing physical stands behind it; the beat-15 sample is the first thing that
+    runs, not a reason to wait.
+
+# EPISODE 2'S TWENTY, REDRAWN — the other half of what item 07 unblocked, and the
+# only reason it is still gated is the sample.
+#
+# 002b-stills-b02-21-1786090020 drew all eighty (four seeds x twenty beats) on
+# 2026-08-07 the moment the founder's "r3-s3 and retire" cleared it, and they came
+# back as twenty different shows: the goblin is a mascot blob, a human child, a
+# gremlin, a clawed monster and an elf boy across the set; the two guards are
+# knights, reapers, sci-fi helmets and modern men. That batch is DONE and is not
+# re-run here — this entry is the redraw it earned.
+#
+# THE CHARACTER QUESTION IS ANSWERED AND IS NOT A GATE ANY MORE. Checklist item 07
+# asked for a ruling and got one on 2026-08-08, verbatim and in full:
+#
+#   "whats the point of a character sheet for the engineer? not like he's gonna
+#    show up again. im talking about the sapling, and its very simple, just make
+#    it tall in each clip of it, and thats pretty much it. dont overthink the
+#    leafs on it."
+#
+# So: NO character sheet for the goblin or the guards — declined on his stated
+# ground that a sheet is machinery for a character who recurs — and no attempt to
+# hold their designs steady between beats. The one rule is the sapling, tall
+# wherever it is in frame, and leaf detail is explicitly not to be chased. THE
+# GOBLIN'S DRIFT IS THEREFORE ACCEPTED, not overlooked; if it reads badly in the
+# assembled episode that is a new note on a new cut and one line of prompt per
+# beat to fix. Do not reinstate the sheet on anyone's judgement but his.
+#
+# WHY gate: founder WHEN THE RULING IS ALREADY IN. Not for the technique — for
+# ONE SAMPLE BEFORE ANY BATCH (2026-08-03). The tall-sapling rule has never been
+# rendered by this tree, and the ep1 wave's beat-15 sample is the first frame that
+# tests it. Firing eighty frames of episode 2 on an unscreened rule is precisely
+# the 2026-08-03 failure CLAUDE.md records. The sample is rendering now, so this
+# is a dependency and not office hours: the gate clears the moment he answers on
+# one frame, and nothing about episode 2 is being asked of him before then.
+#
+# PROMPT EDITS COME FIRST AND THEY ARE TEXT — free, and one git revert to undo.
+# Twenty blocks in genomes/sapling/nodes/002b-first-citizen/shots.md gain the tall
+# sapling where the sapling is in shot, and the four plain faults get corrected in
+# the same pass. Nothing else in those prompts moves: their intent is what he
+# approved via the t0-c script and the native-tag conversion (e4826ed).
+#
+# READ THIS BEFORE WRITING THE WORD "TALL" INTO EPISODE 2: THE NEGATIVE FIGHTS THE
+# RULE, AND THE SCRIPT MIGHT TOO. Every one of the eighty frames was drawn with
+# `mature tree, large tree, TALL TREE, thick trunk, full canopy` in its negative —
+# read off takes/stills/02-the-sprint-r2-s0.png.meta.yaml, not guessed — and those
+# terms are there to stop Animagine drawing a mature banyan. Episode 2's own VO
+# says he is *"forty centimeters tall"*. So a line saying TALL and a negative
+# saying not-tall would cancel, and the frames would come back exactly as they are.
+# DO NOT silently delete those terms and DO NOT silently keep them. His rule is
+# about how the sapling READS in frame — the fault it was answering is episode 1
+# beat 14's "all too small" — so the reconciliation is a tall, upright, slender
+# vertical that owns the height of the shot while still being a sapling, and the
+# beat-15 sample is the frame that shows whether that is what he meant. Reconcile
+# the negative against the sample he passes, then run the twenty.
+- id: ep2-stills-redraw-b02-21-1786192800
+  runner: manual
+  worker: rtx5090
+  needs: [cuda]
+  gate: founder
+  gate_ref: >-
+    THE BEAT-15 SAMPLE — labels b15-r3-s0, b15-r3-s1, b15-r3-s2, b15-r3-s3 — the
+    one sapling-tall beat that ep1-stills-redraw-wave2-1786197600's cmd puts before
+    its own batch, rendering on the rtx5090 on 2026-08-08. That screening is the
+    ONLY thing this entry waits on. Item 07's technique ruling is IN (no character
+    sheet; the sapling reads tall wherever it appears), so this is not a decision
+    gate — it is the standing ONE SAMPLE BEFORE ANY BATCH rule of 2026-08-03, on a
+    rule this tree has never rendered. Clearing it is him saying the tall sapling
+    reads right on that one frame.
+  window: any
+  est_minutes: 45
+  cmd: >-
+    redraw the twenty conditioning frames for beats 02-21 of node
+    002b-first-citizen, after the founder passes the beat-15 sample. TWO STEPS.
+    (1) TEXT FIRST, free and revertible: in that node's shots.md give every beat
+    where the sapling is in shot the tall-sapling direction — it reads TALL,
+    his ruling of 2026-08-08 — and add NO leaf-detail terms. Reconcile the
+    negative while you are in there: it currently carries "mature tree, large
+    tree, tall tree, thick trunk, full canopy" on all twenty and would cancel the
+    rule outright; settle it against the beat-15 sample he passed, not by
+    guesswork. Then fix the four plain faults the eighty frames came back with: beat 20 is at NIGHT and must be
+    the morning of the episode, beat 13 is INDOORS (reads as a garage) and beat 14
+    is on DESERT DIRT where both are the green field, beats 12 and 18 grew a big
+    ripe orange-pink FRUIT where the fig is small and green, beat 09 came back as
+    SPLIT PANELS in all four seeds. Every other word of those twenty prompts stays
+    as it is — each beat's existing intent is what the approved t0-c script and the
+    native-tag conversion (e4826ed) already settled. NO character sheet is written
+    and none is referenced; the goblin and the guards keep whatever each beat says
+    about them. (2) then re-run the batch exactly as 002b-stills-b02-21-1786090020
+    ran it — node 002b-first-citizen, beats 2-21, 4 seeds, 40 steps, 832x1216,
+    cagliostrolab/animagine-xl-3.1, $0 on the rtx5090 — into contact sheets, one
+    band per beat with the seed under every frame, for one screening pass.
+  why: >-
+    Episode 2's twenty drawn beats have no usable frame: the eighty rendered on
+    2026-08-07 are competent frames of twenty different shows, and the founder saw
+    the report. They are what episode 2's footage conditions on, so the consumer is
+    episode 2's render — 002b-b01-video is already filmed on both renderers and
+    beats 02-21 cannot follow it without frames. ~9-11s per image measured on the
+    5090 on 2026-08-06, so 80 images is well under an hour at $0.
 
 # THE ZOOM. His first sentence and the only note that touches every shot at once:
 # "zooms are way too slow." The held beats' push-in is a single number in
@@ -887,11 +1009,19 @@ backlog:
   needs: []
   gate: founder
   gate_ref: >-
-    Two morning picks off tonight's candidates: the replacement frames from
-    ep1-stills-rework-1786124640 (including which of the 7/8/9 progressions he
-    wants) and the push-in rate from held-zoom-rate-repick-1786124700. Behind
-    both, pending-founder.yaml v6-verdict — which this cut is what will finally
-    answer, since v32 answered it "no".
+    UPDATED 2026-08-08 — one gate closer than this line said an hour ago. He
+    answered checklist item 02 (beat 12) and item 03 ("po7-r1-s2, po8-r2-s0,
+    po9-r1-s2"), so four frames are canon, and then he answered item 07 — no
+    character sheet, the sapling reads tall — which took the founder gate OFF the
+    five redraws (ep1-stills-redraw-wave2-1786197600, now runnable and rendering
+    its beat-15 sample, labels b15-r3-s0..s3). So the frames are no longer waiting
+    on a decision; they are waiting on the wave to produce them — his screening of
+    that one sample, then the other four beats, then the contact sheet. What blocks
+    THIS cut is therefore two picks and no open questions: those five frames, and
+    the push-in rate on its own entry
+    held-zoom-rate-repick-1786124700. Behind both, pending-founder.yaml
+    v6-verdict — which this cut is what will finally answer, since v32 answered it
+    "no".
   window: any
   est_minutes: 60
   cmd: >-
