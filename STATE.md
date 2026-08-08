@@ -3182,7 +3182,10 @@ would delete the reason the notes exist.
 **Dad pulled banyan.city off his Vercel account.** Relayed into this session
 rather than typed here, so the figures are his and the wording is reported: the
 project burned **more than $100 in under a month** on **500+ build hours**, and
-the instruction is a **new Vercel account (`hellobanyancity@gmail.com`)**, the
+the instruction is a **new Vercel account (`hellobanyancity@gmail.com` — that
+address was the plan as relayed here and it was later dropped; the account
+actually made is `olegmalkov2023@gmail.com`, see the entry at the foot of this
+file)**, the
 **banyan.city domain moved to it**, and money **kept in mind permanently** —
 not as a cleanup task that closes, as a standing condition. Account creation,
 the domain move and the tier choice are his: this entry is the forensics and the
@@ -3262,3 +3265,57 @@ backlog entries filed in `pipeline/farm-queue.yaml`: an **infra-spend tile** on
 the studio page fed only by $0 sources, and a **proposal** (not an
 implementation) to drop telemetry cadence when the box is idle. The tier choice
 stays open until the invoice is read.
+
+## 2026-08-08 later — the new Vercel account exists and its project is pre-configured; previews were switched off before the repo was connected
+
+**The account is `olegmalkov2023@gmail.com`, not `hellobanyancity@gmail.com`.**
+That address was the plan when the entry above was written and it was dropped;
+no such account was created. The real one — user `olegmalkov2023-1685`, **team
+slug `olegmalkov2023-1685s-projects`**, **Hobby**, **`payment: null`** — was made
+by the founder, who logged the local Vercel CLI into it. `MIGRATION.md` B2,
+`OPERATOR.md` V7 and the entry above are corrected rather than rewritten, so the
+dropped plan stays visible instead of disappearing.
+
+**One empty project, no git, no deploy.** Working through that login, the steward
+created `banyan-city` (`prj_EnxZWrmMb83d0Au5irzg5TAXmEoC`) and set what could be
+set before a repo is attached: `framework: null` (Other),
+`commandForIgnoringBuildStep` = the same `bash pipeline/vercel-ignore-build.sh`
+string `vercel.json` already carries, `gitForkProtection: true`, and
+build/install/output/root left `null` so Vercel reads `vercel.json`. Every value
+was read back from `GET /v9/projects/banyan-city` rather than assumed.
+`latestDeployments: []`, `live: false`, no git link. **No deploy was run and the
+repo was not connected** — that authorization is the founder's browser step.
+
+**The one that actually matters: `previewDeploymentsDisabled: true`, set before
+the repo is connected.** `git.deploymentEnabled` in `vercel.json` cannot govern a
+branch whose *checked-out* copy of that file predates the guard, and all five
+courier branches are still pre-guard today. A project-level setting can. Setting
+it before the connect also deletes the five-minute race `MIGRATION.md` B6 used to
+warn about — a courier heartbeat landing mid-migration can no longer produce a
+preview build, because there is no window in which previews are on.
+
+**Two things the plan wanted and Hobby would not give, both harmless.** Build
+machine and on-demand concurrency are not settable: the API answers `Custom build
+machines are not available on your plan (400)`. That is the tier working as
+intended — concurrency is 1, the machine is Standard, `elasticConcurrencyEnabled`
+is already `false`, and Standard without on-demand is the configuration where the
+build meter never starts. They stay written down in B7 because they stop being
+moot the day anyone upgrades to Pro. Production branch also cannot be pre-set —
+it lives in the git link, not the project record, and is absent from the PATCH
+schema — but Vercel picks `main` first for a new project, so it is a verify, not
+a step. Its click path had drifted in our notes: **Settings → Environments →
+Production → Branch Tracking**, not Settings → Git.
+
+**Read-only finding that does not close V6.** The login can see two scopes,
+`olegmalkov2023-1685s-projects` and a team `banyan-3318d224` ("banyan"), and
+**both are empty — 0 projects, 0 domains**. So `banyan.city` is not sitting
+somewhere already reachable; the old account still holds it and B1 remains a real
+look in that account's own session.
+
+**Still down, and the mirror is still carrying it.** `curl -sI
+https://banyan.city` → **404**; `https://olegmlkvorg.github.io/banyan-city/` →
+**200**. The last `vercel[bot]` deployment GitHub recorded is
+`2026-08-08T00:55:48Z`, a Preview, and every §C verification command in
+`MIGRATION.md` was run as written and works. The human work left is four steps:
+find the domain (B1), move it (B4), connect the repo to the existing project
+(B6), attach the domain (B8).

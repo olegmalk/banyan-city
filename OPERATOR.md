@@ -73,14 +73,22 @@ verifies outcomes independently (DNS, HTTP, ledger) on its next tending pass.
 - **Path A — the domain is in the old Vercel account (expected case).**
   A team-to-team move inside Vercel is **not** a registrar transfer, so the
   60-day ICANN lock does **not** apply to it. It is instant.
-  1. Create the new account on **hellobanyancity@gmail.com**. Keep it on
-     **Hobby** — see V8 for why that is the correct tier, not a compromise.
+  1. ~~Create the new account~~ **DONE 2026-08-08.** It is
+     **olegmalkov2023@gmail.com**, *not* `hellobanyancity@gmail.com` — that plan
+     was dropped and no such account exists. User `olegmalkov2023-1685`, **team
+     slug `olegmalkov2023-1685s-projects`** (that is the slug step 2 wants),
+     **Hobby**, **no payment method** — verified by reading the API through the
+     logged-in CLI. Keep it cardless; see V8 for why that is the real spend guard.
   2. Old account → **Domains** (team sidebar) → context menu next to
      `banyan.city` → **Move** → enter the receiving team's **slug**
      (Settings → the slug field, on both profiles) → **Move**.
-  3. Receiving account: **Add New → Project** → import `olegmlkvorg/banyan-city`.
-     Vercel reads `vercel.json`, so the build command and output dir come across
-     on their own. Framework preset: **Other**.
+  3. **DONE 2026-08-08 — the project already exists, so do NOT "Add New →
+     Project".** An empty, git-disconnected `banyan-city` project was created and
+     pre-configured in the new team (framework **Other**, previews **disabled**,
+     ignored-build-step set; build/install/output left `null` so Vercel reads
+     `vercel.json`). What is left is connecting the repo to it: project
+     `banyan-city` → **Settings → Git → Connect Git Repository** → GitHub →
+     `olegmlkvorg/banyan-city` **only**. Full detail in `MIGRATION.md` B2b/B6.
   4. New project → **Settings → Domains → Add Domain** → `banyan.city`. Accept
      the `www` prompt and let it redirect to the apex, as V2 had it.
   5. Because the nameservers are already Vercel's and the zone came with the
@@ -140,18 +148,30 @@ verifies outcomes independently (DNS, HTTP, ledger) on its next tending pass.
   `build_site.py`, all allowed to run at once. 500 build hours on a 4-vCPU
   machine is 500 × 60 × 4 × $0.0035 ≈ **$420** of theoretical burn; >$100 is that
   meter running for part of a month.
-- **Clicks, in order, on the new project:**
-  1. **Settings → Build and Deployment → Ignored Build Step → Only build
-     production.** (`vercel.json` already carries `git.deploymentEnabled` and an
-     `ignoreCommand`; this is the layer that still governs a branch whose
-     checked-out `vercel.json` is stale, which force-pushed farm branches are.)
-  2. **Settings → Git → Production Branch = `main`.**
-  3. **Settings → Build and Deployment → On-Demand Concurrent Builds → off.**
-     On Hobby concurrency is 1 anyway; set it so an accidental upgrade cannot
-     silently re-enable the thing that cost the money.
-  4. Leave the build machine at **Standard**. Vercel's pricing page: builds on
-     Standard are billed **only** when on-demand concurrency is enabled or
-     Elastic is selected. Standard + no on-demand = the build meter never starts.
+- **Clicks, in order, on the new project — mostly DONE 2026-08-08.** Applied
+  through the logged-in CLI before git was connected, and read back to confirm.
+  Only item 2 is still a human step, and it is a look rather than a change:
+  1. ~~Ignored Build Step~~ **DONE** — set to `bash pipeline/vercel-ignore-build.sh`,
+     the identical string `vercel.json`'s `ignoreCommand` carries, so the two
+     layers cannot disagree. **Also DONE and more important: preview deployments
+     are disabled project-wide.** That is the layer that still governs a branch
+     whose checked-out `vercel.json` is stale, which every force-pushed farm
+     branch is today, and it was set *before* the repo is connected so there is
+     no window.
+  2. **Production Branch = `main` — VERIFY.** The click path here was stale:
+     it is **Settings → Environments → Production → Branch Tracking**, not
+     Settings → Git. It cannot be set before git is connected (it lives in the
+     git link), and it should already say `main` because Vercel picks `main`
+     first for a new project. Confirm after connecting.
+  3. ~~On-Demand Concurrent Builds → off~~ **Not available on Hobby, and already
+     off.** The API refuses: `Custom build machines are not available on your
+     plan (400)`.
+  4. Build machine **Standard** — likewise not selectable on Hobby, and Standard
+     is the default. Vercel's pricing page: builds on Standard are billed **only**
+     when on-demand concurrency is enabled or Elastic is selected. Standard + no
+     on-demand = the build meter never starts. Items 3 and 4 stay listed because
+     they stop being moot the day anyone upgrades to Pro — which is the day the
+     meter behind this whole work order turns back on.
 - **One thing that is NOT a fix, so nobody reaches for it:** an
   `ignoreCommand` alone would not have prevented this bill. Vercel's docs say a
   skipped build is still **"counted as a full deployment"** and still consumes

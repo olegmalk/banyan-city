@@ -6,6 +6,19 @@ owns the one decision marked **DECISION** (tier + cap). The steward does §C —
 verification only, from the outside, $0, no account needed. Nothing in this file
 requires a card, and no step here can bill anyone.
 
+**What is already done (2026-08-08).** B2 (the new account) by the founder; B2b
+(the Vercel project, created empty and pre-configured, git deliberately **not**
+connected) by the steward. That turns B7 from five clicks into one look. **The
+human work left is four steps:**
+
+> **B1** find where the domain lives → **B4** move it to
+> `olegmalkov2023-1685s-projects` → **B6** connect the git repo to the existing
+> `banyan-city` project → **B8** attach the domain to it.
+>
+> With **B3** (tier — recommendation: change nothing, stay Hobby) as the one
+> decision, and **B7** as a one-item verify in between. B5, B9 and B10 are
+> confirm-only or no-ops on Hobby.
+
 **Status when this was written (measured 2026-08-08 05:49Z, not assumed):**
 
 | check | result |
@@ -71,12 +84,79 @@ second.
 
 Record which path in the `RESULT:` line of `OPERATOR.md` V6.
 
-### B2. Create the new account (~3 minutes)
+### B2. Create the new account — **DONE 2026-08-08, by the founder**
 
-1. Sign up at vercel.com on **hellobanyancity@gmail.com**.
-2. Personal account, **Hobby** tier. Do not add a payment method.
-3. Settings → note the **team slug** — path A needs it, and it needs the old
-   account's slug too.
+Kept as a step rather than deleted so the runbook stays honest about what was
+done and by whom. **Nothing to do here.**
+
+The account exists and the local Vercel CLI is logged into it. Measured
+2026-08-08 by reading the API through that login, not assumed:
+
+| fact | value |
+|---|---|
+| email | **olegmalkov2023@gmail.com** |
+| user | `olegmalkov2023-1685` |
+| **team slug** (this is what B4 asks for) | **`olegmalkov2023-1685s-projects`** |
+| plan | `hobby` |
+| payment method | **`null` — none attached** |
+
+**Correction:** earlier drafts of this file, `OPERATOR.md` V7 and the `STATE.md`
+entry for 2026-08-08 all named **`hellobanyancity@gmail.com`**. That plan was
+dropped and no such account was made. Any doc still naming it is stale.
+
+**The no-payment-method rule stands, and it is the whole spend guard.** Hobby
+with `payment: null` is the only state in which this project cannot generate an
+invoice (B3). Do not add a card to "unlock" anything. If a Vercel screen asks
+for one, the answer is to not do that thing.
+
+One thing the login also settles, read-only: the account can see two scopes,
+`olegmalkov2023-1685s-projects` and a team `banyan-3318d224` ("banyan"). **Both
+are empty — 0 projects and 0 domains each.** So the old account holding
+`banyan.city` is *not* reachable from this login, and B1 is still a real step
+that has to happen in the old account's own session.
+
+### B2b. The project is created and pre-configured — **DONE 2026-08-08, by the steward**
+
+**Nothing to do here either.** An empty, **git-disconnected** project named
+`banyan-city` now exists in `olegmalkov2023-1685s-projects`, with the B7
+settings already applied through the logged-in CLI. Creating an unlinked project
+costs nothing, builds nothing and deploys nothing: `latestDeployments: []`,
+`live: false`. **No deploy of any kind was run**, and the git repo was **not**
+connected — that authorization is the founder's browser step (B6).
+
+Project id `prj_EnxZWrmMb83d0Au5irzg5TAXmEoC`. Applied and then read back:
+
+| setting | value | why |
+|---|---|---|
+| `framework` | `null` (= **Other**) | B6 step 3 |
+| `previewDeploymentsDisabled` | **`true`** | B7 step 3 — see below |
+| `commandForIgnoringBuildStep` | `bash pipeline/vercel-ignore-build.sh` | B7 step 2 |
+| `gitForkProtection` | `true` | fork PRs need authorization |
+| build/install/output/root | all `null` | Vercel reads them from `vercel.json` |
+
+**`previewDeploymentsDisabled: true` is the one that matters**, and it is worth
+saying why in full: it is a *project-level* setting, so it governs a push on a
+branch whose checked-out `vercel.json` is stale — which, as §C1 measured, is all
+five courier branches today. It is the layer `git.deploymentEnabled` cannot
+reach. **It also closes the five-minute race window B6 used to warn about**: a
+courier heartbeat landing between the git connect and the settings pass can no
+longer create a preview build, because the setting is already on before the repo
+is connected.
+
+**Two settings could NOT be applied, and neither is a gap:**
+
+- **Production branch.** Not settable before git is connected — it lives in the
+  git link, not the project record, and it is absent from the `PATCH
+  /v9/projects/{id}` schema entirely. It does not need setting: Vercel's docs say
+  a new project's production branch is chosen as "the `main` branch" first, and
+  ours is `main`. So it should come out right on its own. **Verify, don't set**
+  (B7 step 1).
+- **Build machine / on-demand concurrency.** The API refused: `Custom build
+  machines are not available on your plan (400)`. That is Hobby working as
+  intended — concurrency is 1, the machine is Standard, and
+  `elasticConcurrencyEnabled` is already `false`. B7 steps 4 and 5 are **moot on
+  Hobby**, not skipped. They become real again the day anyone upgrades to Pro,
+  which is why they stay written down.
 
 ### B3. DECISION — tier and cap (dad + Roman together)
 
@@ -145,46 +225,65 @@ say a skipped build still counts as a full deployment and still takes a
 concurrent build slot. `git.deploymentEnabled` plus the project settings in B6
 are what stop the event existing.
 
-### B6. Import the repo (~2 minutes) — then B7 within five minutes
+### B6. Connect the repo to the project that already exists (~2 minutes)
 
-1. New account → **Add New → Project**.
-2. Install the Vercel GitHub app if prompted, granting access to
-   **`olegmlkvorg/banyan-city` only**, not all repositories.
-3. Import `olegmlkvorg/banyan-city`. Framework preset: **Other**. Leave build
-   command, install command and output directory alone — Vercel reads them from
-   `vercel.json`.
-4. **Deploy.** The import always triggers one deployment; there is no way to
-   connect without deploying, and this one is a build of `main`, which is the
-   build we want.
+**Do not use "Add New → Project".** That would create a *second* project and
+leave the pre-configured one unused. The project exists (B2b); this step gives it
+a git repo.
 
-**Then go straight to B7 without stopping. Here is why, measured today:** all
-five courier branches (`farm-results-rtx5090`, `-msi`, `-m2`, `-m1pro`,
-`runpod-results`) still carry the **pre-guard** `vercel.json` — Vercel reads that
-file from the branch being pushed, so the deny-list does not govern them until
-each branch turns over. rtx5090 pushed 40 seconds before this file was written
-and pushes again every ~5 minutes. **Between the import finishing and previews
-being off, a courier push will create a preview build.** On Hobby that costs $0,
-but it spends from the 100/day deployment allowance, and running that allowance
-out pauses production. Five minutes of attention closes the window.
+1. New account → project **`banyan-city`** → **Settings → Git**.
+2. **Connect Git Repository** → GitHub. Install the Vercel GitHub app if
+   prompted, granting access to **`olegmlkvorg/banyan-city` only**, not all
+   repositories.
+3. Select `olegmlkvorg/banyan-city` and connect.
+4. Leave framework, build command, install command and output directory alone.
+   They are already set (framework **Other**; the rest `null` so Vercel reads
+   them from `vercel.json`).
 
-### B7. The settings that always apply (~3 minutes)
+**The old five-minute panic here no longer applies.** This step used to warn that
+a courier heartbeat landing between the import and the settings pass would create
+a preview build — because all five courier branches (`farm-results-rtx5090`,
+`-msi`, `-m2`, `-m1pro`, `runpod-results`) still carry the **pre-guard**
+`vercel.json`, and Vercel reads that file from the branch being pushed, so the
+deny-list does not govern them until each branch turns over. That is still true
+of the branches (§C1 re-checks it), but `previewDeploymentsDisabled` was set
+**before** the repo was connected, so there is no window. Take B7 at a normal
+pace.
 
-Project → **Settings**:
+**On whether connecting produces a deployment:** the old import flow always did,
+by design — its last button was "Deploy". Connecting a repo to an existing
+project may or may not; Vercel's docs do not say, so this file does not claim
+either. It does not matter much: previews are off, so anything it produces is a
+production build of `main`, which is the build we want. If nothing appears,
+push to `main` or use **Deployments → Create Deployment** with branch `main`.
 
-1. **Git → Production Branch = `main`.**
-2. **Git → Ignored Build Step → "Only build production"** (or "Only build
-   Production Branch", per the current label).
-3. **Git → Preview Deployments → disable** for all branches other than
-   production, if the account exposes this separately.
-4. **Build and Deployment → On-Demand Concurrent Builds → off.** Hobby's
-   concurrency is 1 regardless; setting it means a future accidental upgrade
-   cannot silently re-enable the exact thing that cost the money.
-5. **Build and Deployment → Build machine → Standard.** Vercel bills build
-   compute only when on-demand concurrency is enabled or Elastic is selected.
-   Standard with no on-demand means the build meter never starts.
+### B7. The settings — now a VERIFY pass, ~1 minute
+
+Steps 2–5 were applied in B2b or are unavailable on Hobby. **Only step 1 is
+still an action, and it is a look, not a change.** Check the rest against the
+dashboard; if any disagrees with the table below, that is worth knowing before
+the domain goes on.
+
+1. **Production branch = `main` — verify.** **Settings → Environments →
+   **Production** → Branch Tracking.** (Not "Settings → Git" — Vercel moved it;
+   older notes in this repo, including `OPERATOR.md` V8, still say Git.) It
+   should already read `main` because Vercel picks `main` first for a new
+   project. If it says anything else, change it here and save.
+2. Ignored Build Step — **already set** to `bash pipeline/vercel-ignore-build.sh`
+   (B2b). `vercel.json`'s `ignoreCommand` carries the identical string, so the
+   two layers cannot disagree whichever takes precedence.
+3. Preview deployments — **already disabled** project-wide (B2b).
+4. On-Demand Concurrent Builds — **not available on Hobby**, and already `false`.
+5. Build machine → Standard — **not selectable on Hobby**; the API returns
+   `Custom build machines are not available on your plan`. Standard is the
+   default and the un-metered one.
+
+Steps 4 and 5 stay written down because they stop being moot the moment anyone
+upgrades to Pro. That upgrade is exactly when the meter that caused §A turns back
+on, so whoever does it reads this step first.
 
 These settings are the only layer that governs a branch whose checked-out
-`vercel.json` is stale — which every courier branch is today.
+`vercel.json` is stale — which every courier branch is today (§C1).
 
 ### B8. Attach the domain (~2 minutes)
 
@@ -388,6 +487,17 @@ Assembled 2026-08-08 by the steward from three prep passes: the build-guard
 implementation (`eb16094`, `aeea1ac`), the migration research recorded as
 `OPERATOR.md` V6–V9 (`51dc76e`), and the spend forensics recorded in `STATE.md`
 and `DECISIONS.md` D18 (`8f8a00f`). Every number in §A and every DNS, HTTP and
-branch fact in this file was measured on 2026-08-08, not carried over. No
-account, credential or DNS action was taken by an agent; §B is human work by
-design.
+branch fact in this file was measured on 2026-08-08, not carried over.
+
+Revised later the same day, after the founder created the account and logged the
+Vercel CLI into it. B2, B2b, B6 and B7 were rewritten against **measured API
+state**, not docs: every value in B2 and B2b was read back from
+`GET /v9/projects/banyan-city` after being written, and the two refusals in B7
+are the API's own 400. The click-path correction in B7 step 1 (Environments →
+Branch Tracking, not Git) comes from Vercel's current `/docs/git`.
+
+**What an agent did and did not do.** Did: create one empty Vercel project and
+PATCH its settings, through the founder's already-logged-in CLI. Did not: run any
+deploy, connect the git repo, touch DNS or a domain, add a payment method, delete
+anything, or mint a token. Domain and git-authorization steps are human work by
+design, and the account remains Hobby with no payment method.
