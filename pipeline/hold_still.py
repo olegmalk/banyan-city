@@ -75,6 +75,16 @@ The DIRECTION is not a preference to be re-tuned by a later session on its own
 metric — see `scale_series` and the test that guards it. The AMOUNT is the
 founder's and moves only when he says so; it has now moved three times, always
 on a screening and never on a measurement.
+
+AND FOR FOUR DAYS ALL OF IT WAS MEASURED AGAINST A STRETCHED PICTURE. The stills
+are 832x1216 and the clip is 704x1280; the frame builder closed that gap with a
+two-argument resize, so every held beat the founder screened while settling 6% ->
+18% -> 2-4% -> 12% was 24.4% taller than the still he approved. The move was
+being judged on a distorted frame the whole time. Fixed 2026-08-08 in
+`zoom_windows`, which cuts from the native still on `plate_prep`'s cover-centre
+policy — the same framing render_t3 gives the delivered episode. The rulings
+above survive it untouched: this changed the shape of the frame, never the
+direction, the amount or the curve.
 """
 
 import argparse
@@ -84,6 +94,9 @@ import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import plate_prep  # noqa: E402 — the shared cover-crop policy, no heavy deps
+
 W, H = 704, 1280          # native Wan bucket, and what render_t3's canvas expects
 FPS = 24
 
@@ -185,8 +198,101 @@ def scale_series(seconds: float, n: int, override: float | None = None) -> list:
     return [1.0 + total * (1 - (i / (n - 1)) ** EASE_EXP) for i in range(n)]
 
 
+def zoom_windows(sw: int, sh: int, scales: list, tw: int = W, th: int = H) -> list:
+    """The SOURCE-pixel window each frame is cut from. PURE — unit-tested.
+
+    Returns one `(left, top, right, bottom)` box per entry in `scales`, in the
+    coordinates of the original still, every one of them on the target aspect
+    and every one of them centred on the same point.
+
+    THE DEFECT THIS REPLACES, and it was in the held beats too. Until 2026-08-08
+    this function did not exist and the loop below oversampled first:
+
+        big = src.resize((int(W * over), int(H * over)))
+
+    Two arguments, no aspect term. Every canon still is 832x1216 (0.684) and W:H
+    is 704x1280 (0.550), so that line pulled the picture 24.4% taller before a
+    single frame was cut, and every held beat in v30, v31 and v32 carries it —
+    measured at 42.6dB against the approved still on beat 14. A held still whose
+    whole promise is "exactly the frame the founder approved" was the one clip in
+    the tree guaranteed to be a stretched frame the founder never saw.
+
+    WHICH PIXELS LEAVE is not this module's decision to make. `plate_prep`
+    already holds the policy — render_t3's own scale-to-cover plus centre crop,
+    the framing every delivered episode uses — so the widest window here IS the
+    conditioning plate, and a held beat and a rendered beat cut from the same
+    still now start from the same composition instead of two different ones.
+
+    NO OVERSAMPLED INTERMEDIATE, which is the second half of the fix and the part
+    that is about sharpness rather than shape. Cover-cropping to 669x1216 and then
+    oversampling to 802x1459 to crop out of would have been geometrically correct
+    and visibly soft: it resamples the picture UP 1.2x, throws the extra pixels
+    away again on the per-frame downscale, and every frame inherits the blur of an
+    interpolation that invented nothing. Cutting each window straight out of the
+    native still is one LANCZOS pass per frame from the real pixel grid — the
+    widest frame is a 1.05x scale (669 -> 704) instead of 1.20x, and the tightest
+    is 1.18x instead of 1.20x-then-0.89x. Same geometry, fewer resamples, and the
+    old `+0.02` fudge that kept the crop box inside the oversampled buffer has
+    nothing left to guard, so frame 0 is now the whole plate rather than 98.2% of
+    it.
+
+    The move itself is untouched: `scales` still comes from `scale_series`, so the
+    first window is 1 + ZOOM_TOTAL times the last (1.1206 rather than 1.1200 flat,
+    the difference being whole pixels — see `_same_parity`) and the sequence is
+    still one-way. Boxes shrink toward a FIXED centre — see DRIFT_PX for why the
+    zoom origin does not travel.
+    """
+    box = plate_prep.cover_crop_box(sw, sh, tw, th) or (0, 0, sw, sh)
+    left, top, right, bottom = box
+    kw, kh = right - left, bottom - top
+    # the doubled centre, so an odd-sized window still lands on the same point
+    # the plate is centred on rather than drifting half a pixel per frame
+    cx2, cy2 = left + right, top + bottom
+    widest = scales[0] if scales else 1.0
+    out = []
+    for z in scales:
+        f = min(1.0, z / widest) if widest else 1.0
+        cw = max(2, min(kw, _same_parity(round(kw * f), kw)))
+        # height FROM the width and the target ratio, never from `f` again:
+        # rounding each axis independently is how a window drifts off-aspect
+        ch = max(2, min(kh, _same_parity(round(cw * th / tw), kh)))
+        x = max(0, min(sw - cw, (cx2 - cw) // 2))
+        y = max(0, min(sh - ch, (cy2 - ch) // 2))
+        out.append((x, y, x + cw, y + ch))
+    return out
+
+
+def _same_parity(n: int, like: int) -> int:
+    """`n`, or n-1, so that `like - n` is even. PURE.
+
+    A HALF-PIXEL OF SHIMMER, AND IT IS WORTH A FUNCTION. `zoom_windows` centres
+    every window with `(cx2 - cw) // 2`, which is exact when cw and the plate
+    width have the same parity and half a pixel off when they do not. Let the
+    widths round freely and the parity alternates frame to frame, so the centre
+    hops 415.0, 415.5, 415.0 for the length of the shot — a sub-pixel left-right
+    jitter riding on top of a move whose whole point is that it is smooth and
+    centred, and the sort of thing that gets screened as "the zoom looks weird"
+    with nothing in the recipe to blame. Snapping DOWN keeps widths inside the
+    plate and keeps the series non-increasing, so the push-in stays one-way.
+    """
+    return int(n) - ((int(like) - int(n)) % 2)
+
+
+def zoom_frames(src, scales: list, tw: int = W, th: int = H):
+    """Yield the finished frames of the push-in, in order. PIL in, PIL out.
+
+    Split from `hold` so the pixels can be asserted on without ffmpeg: the
+    test that matters is that frame 0 IS `plate_prep.fit_cover`'s plate, byte
+    for byte, and that is only checkable if something hands back an image.
+    """
+    from PIL import Image
+
+    for box in zoom_windows(src.width, src.height, scales, tw, th):
+        yield src.crop(box).resize((tw, th), Image.LANCZOS)
+
+
 def hold(still: Path, out: Path, seconds: float, beat: int,
-         zoom: bool = True, zoom_override: float | None = None) -> None:
+         zoom: bool = True, zoom_override: float | None = None) -> str:
     """Hold the still, with a slow push-in unless asked for a frozen frame.
 
     THE PUSH-IN IS THE DEFAULT, and that is the founder's rule, 2026-08-03: "if
@@ -200,6 +306,8 @@ def hold(still: Path, out: Path, seconds: float, beat: int,
     invent, which is the whole reason a held beat exists. One-way and centred on
     the frame — see `scale_series` for the direction rule and DRIFT_PX for why
     there is no lateral travel.
+
+    Returns the one-line framing record for the sidecar, empty on --frozen.
     """
     if not zoom:
         subprocess.run(
@@ -210,7 +318,15 @@ def hold(still: Path, out: Path, seconds: float, beat: int,
              "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "18",
              "-movflags", "+faststart", "-y", str(out)],
             check=True, capture_output=True, encoding="utf-8", errors="replace")
-        return
+        # DELIBERATELY UNRECORDED, because this path's geometry is a separate
+        # open question rather than a settled one. --frozen letterboxes
+        # (decrease + pad) where the zoom path now cover-crops, so the two
+        # disagree about framing on the same still; render_t3 would crop-to-cover
+        # a padded frame and zoom the bars in. Nothing in the tree uses --frozen
+        # — every held beat in v30/v31/v32 took the zoom — and changing its
+        # framing is a recipe change the founder has not screened, so it is
+        # written down here and left for him rather than fixed in passing.
+        return ""
 
     from PIL import Image
     import tempfile
@@ -221,25 +337,20 @@ def hold(still: Path, out: Path, seconds: float, beat: int,
     # gets trimmed, falling short costs the wrap this file exists to prevent.
     n = max(2, math.ceil(FPS * seconds - 1e-9))
     zs = scale_series(seconds, n, zoom_override)
-    # oversample once, then crop a shrinking window out of it: cropping a big
-    # image keeps full detail at every step, where scaling up each frame would
-    # soften the picture the founder approved
-    over = zs[0] + 0.02
-    big = src.resize((int(W * over), int(H * over)), Image.LANCZOS)
+    # A SHRINKING WINDOW CUT STRAIGHT OUT OF THE NATIVE STILL — no oversampled
+    # intermediate and, above all, no two-argument resize. `zoom_windows` owns
+    # both the aspect policy and the reasoning; the loop here is just the pixels.
     with tempfile.TemporaryDirectory() as td:
-        for i, z in enumerate(zs):                      # window shrinks -> push IN
-            cw, ch = int(W * z), int(H * z)
-            # dead centre, every frame: the zoom origin must not move
-            cx = (big.width - cw) // 2
-            cy = (big.height - ch) // 2
-            (big.crop((cx, cy, cx + cw, cy + ch))
-                .resize((W, H), Image.LANCZOS)
-                .save(f"{td}/f{i:04d}.png"))
+        for i, frame in enumerate(zoom_frames(src, zs)):    # window shrinks -> IN
+            frame.save(f"{td}/f{i:04d}.png")
         subprocess.run(
             ["ffmpeg", "-v", "error", "-r", str(FPS), "-i", f"{td}/f%04d.png",
              "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "18",
              "-movflags", "+faststart", "-y", str(out)],
             check=True, capture_output=True, encoding="utf-8", errors="replace")
+    return (plate_prep.crop_note(src.width, src.height, W, H)
+            + "; the push-in then cuts each frame from inside that window, in "
+              "the native still, one resample per frame")
 
 
 def slot_seconds(node_dir: Path, beat: int, fallback: float) -> float:
@@ -265,7 +376,8 @@ def slot_seconds(node_dir: Path, beat: int, fallback: float) -> float:
 
 
 def sidecar(clip: Path, still: Path, beat: int, seconds: float,
-            frozen: bool = False, zoom_total_used: float = 0.0) -> None:
+            frozen: bool = False, zoom_total_used: float = 0.0,
+            framing: str = "") -> None:
     """§7.2 provenance. No video model ran, so none is claimed.
 
     The licence question that attaches to this clip is the STILL's, which is
@@ -307,6 +419,14 @@ def sidecar(clip: Path, still: Path, beat: int, seconds: float,
         f"shot_beat: {beat}\n"
         f"size: {W}x{H}\n"
         f"seconds: {seconds}\n"
+        # WHICH PIXELS SURVIVED, because the stretch that made every held beat
+        # in v30-v32 24.4% tall was invisible precisely for want of this line: a
+        # resize that changes the aspect ratio raises nothing and reads, in a
+        # record, exactly like one that does not. DOUBLE-QUOTED — the note says
+        # "cover-centre (render_t3 policy: scale to cover, ...)" and a bare
+        # colon-space in a plain scalar is a yaml parse error, which would take
+        # licence_gate down with it.
+        + (f'framing: "{framing}"\n' if framing else "")
         + ("" if frozen else
            f"zoom: push-in {zoom_total_used * 100:.1f}% over {seconds}s, "
            f"{zoom_total_used / seconds * 100:.2f}%/s, linear, centred, "
@@ -355,8 +475,10 @@ def main():
         secs = slot_seconds(node_dir, beat, a.seconds) if a.fit else a.seconds
         zt = zoom_total(secs, a.zoom)
         clip = out_dir / f"{beat:02d}-{slug}.mp4"
-        hold(still, clip, secs, beat, zoom=not a.frozen, zoom_override=a.zoom)
-        sidecar(clip, still, beat, secs, frozen=a.frozen, zoom_total_used=zt)
+        framing = hold(still, clip, secs, beat,
+                       zoom=not a.frozen, zoom_override=a.zoom)
+        sidecar(clip, still, beat, secs, frozen=a.frozen, zoom_total_used=zt,
+                framing=framing)
         move = "frozen" if a.frozen else f"push-in {zt * 100:.1f}%"
         print(f"  beat {beat:02d}  held {still.name}  ->  {clip.name} "
               f"({secs}s, {move}, {clip.stat().st_size // 1024}KB)")

@@ -363,7 +363,7 @@ def finished_tasks(courier: Courier) -> tuple:
 
 
 def still_sidecar(model, task, beat, seed, size, steps, prompt, negative,
-                  init=None, strength=None) -> str:
+                  init=None, strength=None, init_crop=None) -> str:
     """§7.2 provenance beside a generated STILL. Pure — returns the text.
 
     THE VIDEO PATH HAS HAD THIS SINCE 2026-08-02 AND THE STILLS PATH NEVER DID.
@@ -419,6 +419,14 @@ def still_sidecar(model, task, beat, seed, size, steps, prompt, negative,
     # on a txt2img frame reads as a measurement of nothing.
     if init:
         text += f"init: {init}\nstrength: {strength}\n"
+        # AND WHICH PIXELS OF IT THE MODEL SAW. The init used to be stretched to
+        # the target shape by a bare resize (fixed 2026-08-08), and the reason
+        # that survived is that the record said `init: <path>` and stopped —
+        # naming a file is not naming a framing. Double-quoted: the note carries
+        # "policy: scale to cover", and a colon-space in a plain scalar is a
+        # parse error that takes licence_gate down with the sidecar.
+        if init_crop:
+            text += f'init_crop: "{init_crop}"\n'
     return text + _yaml_block("prompt", prompt) + _yaml_block("negative", negative)
 
 
@@ -473,6 +481,34 @@ def render_task(task: dict, courier: Courier, device: str, dtype) -> None:
                  "prompt": task["prompt"]}]
     else:
         jobs = [shots[int(b)] for b in str(task["beats"]).split(",")]
+
+    # ONCE PER TASK, NOT ONCE PER SEED — these are all read off `task` and never
+    # vary inside the loops below, and the init image in particular was being
+    # decoded and resampled again for every one of the four seeds.
+    w, h = int(task.get("width", 832)), int(task.get("height", 1216))
+    steps = int(task.get("steps", 40))
+    init_img, init_crop = None, None
+    if init_rel:
+        # NOT `.resize((w, h))`, which is what stood here until 2026-08-08 and
+        # is the same defect plate_prep.py was written for: two arguments, no
+        # aspect term, so an 832x1216 canon still handed to a task targeting any
+        # other shape was silently pulled to fit. img2img keeps the init's
+        # composition by construction — a stretched init is a stretched output,
+        # for every seed, with nothing in the record saying so.
+        #
+        # Refuse means CROP, on render_t3's own cover-centre policy, so a farm
+        # frame is anchored to the composition the episode would show. Same call
+        # wan_i2v.load_init makes, deliberately — one policy, one helper.
+        from PIL import Image
+
+        import plate_prep
+
+        with Image.open(REPO / init_rel) as raw:
+            init_img, crop = plate_prep.fit_cover(raw.convert("RGB"), w, h)
+        init_crop = crop["crop_note"]
+        if crop["box"] is not None:
+            courier.say(f"  init {Path(init_rel).name}: {init_crop}")
+
     for s in jobs:
         num = s["num"]
         ptext, _ = compress(s["prompt"])
@@ -481,14 +517,11 @@ def render_task(task: dict, courier: Courier, device: str, dtype) -> None:
             t0 = time.time()
             seed = SEED + num + k * 1000
             g = torch.Generator(device="cpu").manual_seed(seed)
-            w, h = int(task.get("width", 832)), int(task.get("height", 1216))
-            steps = int(task.get("steps", 40))
             kw = dict(prompt=ptext, negative_prompt=neg,
                       num_inference_steps=steps,
                       guidance_scale=7.5, generator=g)
-            if init_rel:
-                from PIL import Image
-                kw["image"] = Image.open(REPO / init_rel).convert("RGB").resize((w, h))
+            if init_img is not None:
+                kw["image"] = init_img
                 kw["strength"] = float(task.get("strength", 0.5))
             else:
                 kw["width"], kw["height"] = w, h
@@ -510,7 +543,8 @@ def render_task(task: dict, courier: Courier, device: str, dtype) -> None:
                 still_sidecar(BASE, task, num, seed, f"{w}x{h}", steps,
                               ptext, neg,
                               init=init_rel or None,
-                              strength=task.get("strength", 0.5) if init_rel else None),
+                              strength=task.get("strength", 0.5) if init_rel else None,
+                              init_crop=init_crop),
                 encoding="utf-8")
             courier.say(f"  {f.name} in {time.time()-t0:.0f}s")
 

@@ -2056,6 +2056,180 @@ def test_the_conditioning_plate_is_the_episode_crop(tmp: Path):
           Image.open(p2).size == (704, 1280) and "no crop" in r2["crop_policy"])
 
 
+def _asymmetric(w: int, h: int):
+    """A picture with no symmetry in either axis. Cheap — blocks, not a gradient.
+
+    Every assertion below compares one crop against another, and a picture that
+    is symmetric passes when the crop is taken from the wrong side or the image
+    comes back mirrored. The stripes are deliberately different widths so a
+    left/right flip changes the bytes, and the top band so a vertical one does.
+    """
+    from PIL import Image
+
+    img = Image.new("RGB", (w, h), (20, 30, 40))
+    img.paste((220, 40, 40), (0, 0, max(1, w // 8), h))            # fat left edge
+    img.paste((40, 200, 90), (w - max(1, w // 20), 0, w, h))       # thin right edge
+    img.paste((250, 240, 60), (0, 0, w, max(1, h // 12)))          # top band only
+    img.paste((90, 60, 220), (w // 3, h // 2, w // 3 + max(1, w // 10),
+                              h // 2 + max(1, h // 6)))            # off-centre mark
+    return img
+
+
+def test_no_render_path_stretches_a_mismatched_still(tmp: Path):
+    """The held beats were stretched too, and for four days nothing measured it.
+
+    THE PLATE FIX MISSED A RENDERER. 9009870 put `plate_prep`'s cover-centre
+    policy in front of wan_i2v and the queue, on the reasoning that those are
+    what turn a still into video. `hold_still.py` also turns a still into video —
+    it just does it with arithmetic instead of a model — and it had the identical
+    line, `src.resize((int(W * over), int(H * over)))`, two arguments and no
+    aspect term. Every held beat in v30, v31 and v32 is 24.4% tall (42.6dB
+    against the approved still on beat 14), which makes the held clips the WORST
+    case rather than an afterthought: a held still's entire claim is that it is
+    exactly the frame the founder approved, and it was the one clip in the tree
+    guaranteed not to be. `farm_worker.py:490` had it a third time on its img2img
+    init.
+
+    So this test is deliberately not about one function. It sweeps every source
+    shape the tree can hand a renderer — the canon 832x1216, an already-correct
+    704x1280, a landscape frame, an over-tall one and a square — across BOTH
+    surviving pixel paths, because the bug was never that one crop was wrong. It
+    was that no test anywhere asserted an output aspect, so three call sites
+    could each be written the obvious wrong way and all three stay silent.
+
+    What is NOT re-asserted here: the direction, the amount and the curve of the
+    push-in. Those are the founder's, they live in
+    test_held_zoom_is_monotonic_and_moderate, and this fix moved none of them —
+    but the monotonicity has to be re-checked in PIXELS, because a crop box that
+    rounds badly can reverse a move whose float scales never did.
+    """
+    from PIL import Image
+
+    sys.path.insert(0, str(REPO / "pipeline"))
+    import plate_prep as pp
+
+    W, H = hs.W, hs.H
+    check("the held beats target the same bucket the plates do", (W, H) == (704, 1280))
+
+    # THE SWEEP. Both directions of mismatch, plus the no-op, on both paths.
+    shapes = [(832, 1216, "the canon still, every frame in the tree"),
+              (704, 1280, "already on-aspect — must not be re-cropped"),
+              (1920, 1080, "a landscape frame, which loses WIDTH not height"),
+              (512, 1600, "over-tall, the direction that loses HEIGHT"),
+              (1000, 1000, "square")]
+    zs = hs.scale_series(12.992, 24 * 13)          # beat 14's real length
+    for sw, sh, why in shapes:
+        # --- the held path ---
+        boxes = hs.zoom_windows(sw, sh, zs)
+        check(f"{sw}x{sh} held: a window per frame ({why})", len(boxes) == len(zs))
+        worst = max(abs((r - l) / (b - t) - W / H) for l, t, r, b in boxes)
+        check(f"{sw}x{sh} held: every window is on the 0.55 target aspect "
+              f"(worst {worst:.5f})", worst <= pp.ASPECT_EPS)
+        check(f"{sw}x{sh} held: no window escapes the source",
+              all(0 <= l < r <= sw and 0 <= t < b <= sh for l, t, r, b in boxes))
+        # THE WIDEST WINDOW IS THE PLATE. Not merely on-aspect — the same box,
+        # so a held beat and a rendered beat cut from one still open on one
+        # composition instead of two that are each defensible on their own.
+        check(f"{sw}x{sh} held: frame 0 IS the conditioning plate's crop",
+              boxes[0] == (pp.cover_crop_box(sw, sh, W, H) or (0, 0, sw, sh)))
+        widths = [r - l for l, _, r, _ in boxes]
+        check(f"{sw}x{sh} held: the push-in never reverses in PIXELS",
+              all(b <= a for a, b in zip(widths, widths[1:])))
+        check(f"{sw}x{sh} held: and it does travel, by 1 + ZOOM_TOTAL",
+              abs(widths[0] / widths[-1] - (1 + hs.ZOOM_TOTAL)) < 0.005)
+        # ONE CENTRE FOR THE WHOLE SHOT. Rounding each window independently made
+        # this alternate by half a pixel — a shimmer under a move whose only
+        # content is that it is smooth. See hold_still._same_parity.
+        check(f"{sw}x{sh} held: the zoom origin never moves, not by half a pixel",
+              len({(l + r, t + b) for l, t, r, b in boxes}) == 1)
+
+        # --- the plate path, same shapes, same rule ---
+        fitted, info = pp.fit_cover(_asymmetric(sw, sh), W, H)
+        check(f"{sw}x{sh} plate: comes out exactly {W}x{H}", fitted.size == (W, H))
+        check(f"{sw}x{sh} plate: the record says which pixels went",
+              str(sw) in info["crop_note"] and info["crop_note"].isascii())
+
+    # THE PIXELS, on the shape that actually exists in the tree. Sizes and
+    # aspects alone would pass a crop taken from the wrong side.
+    src = _asymmetric(832, 1216)
+    want = src.crop((81, 0, 750, 1216)).resize((W, H), Image.LANCZOS)
+    frames = list(hs.zoom_frames(src, zs))
+    check("a held frame is exactly the clip size", frames[0].size == (W, H))
+    check("the first held frame IS the plate, pixel for pixel",
+          frames[0].tobytes() == want.tobytes()
+          and want.tobytes() == pp.fit_cover(src, W, H)[0].tobytes())
+    stretched = src.resize((W, H), Image.LANCZOS)
+    check("and is NOT the stretch every held beat in v30-v32 carries",
+          frames[0].tobytes() != stretched.tobytes())
+    check("the last frame is tighter than the first, and still not the stretch",
+          frames[-1].tobytes() not in (frames[0].tobytes(), stretched.tobytes()))
+
+    # NO OVERSAMPLED INTERMEDIATE. The geometrically-correct-but-soft variant
+    # (fit to 704x1280, blow up 1.14x, crop back down) is a real alternative that
+    # a later session could reach for; it upscales 1.2x and every frame inherits
+    # the blur. Frame 0 must be the single-resample cut, not that one.
+    soft = (pp.fit_cover(src, W, H)[0]
+            .resize((int(W * 1.14), int(H * 1.14)), Image.LANCZOS)
+            .crop((7, 8, 7 + W, 8 + H)))
+    check("frames are cut from the native still, not from an upscaled buffer",
+          frames[0].tobytes() != soft.tobytes())
+
+    # THE RECORD, because an unrecorded framing is how this survived a whole
+    # pipeline audit: `init: <path>` names a file, not a crop.
+    import yaml
+    clip = tmp / "14-worth-staying-in.mp4"
+    clip.write_bytes(b"v")
+    note = pp.crop_note(832, 1216, W, H) + "; and then some (a: colon, in it)"
+    hs.sidecar(clip, tmp / "14-worth-staying-in.png", 14, 12.99,
+               zoom_total_used=0.12, framing=note)
+    text = Path(str(clip) + ".meta.yaml").read_text(encoding="utf-8")
+    d = yaml.safe_load(text)
+    check("the held sidecar records which pixels the frame kept",
+          "163px of width" in d["framing"] and d["framing"] == note)
+    check("a framing note full of colons does not break the yaml",
+          isinstance(d, dict) and d["shot_beat"] == 14)
+    # the three substring readers this file's docstring pins, still readable.
+    # `none` is a yaml STRING, not a null — the sentinel readers match the raw
+    # text and licence_gate normalises the value, so both forms are asserted.
+    check("and the bare sentinel render_t3 and check_invention match survives",
+          "model: none\n" in text and d["model"] == "none")
+    # AND THE PATH THAT APPLIED NO POLICY CLAIMS NONE. --frozen still letterboxes
+    # (a separate, unscreened question — see hold.__doc__), so it returns "" and
+    # the key must be absent rather than present and empty: an empty `framing:`
+    # would read as "measured, nothing cropped", which is a different claim.
+    frz = tmp / "14-frozen.mp4"
+    frz.write_bytes(b"v")
+    hs.sidecar(frz, tmp / "14-worth-staying-in.png", 14, 12.99, frozen=True)
+    frz_text = Path(str(frz) + ".meta.yaml").read_text(encoding="utf-8")
+    check("a frozen hold claims no framing it did not apply",
+          "framing:" not in frz_text
+          and "framing" not in (yaml.safe_load(frz_text) or {}))
+
+    # THE THIRD CALL SITE. farm_worker imports torch and diffusers, so it cannot
+    # be exercised here and the fix is asserted structurally instead — by AST,
+    # not by substring, because the comment recording what the line USED to say
+    # contains the very string a substring check would look for, and a test that
+    # a comment can satisfy is worse than no test.
+    #
+    # The invariant is delegation: render_task may open an image, but every
+    # decision about its shape belongs to plate_prep. A resize of its own is the
+    # bug by definition, whatever arguments it is given.
+    import ast
+
+    fw_src = (REPO / "pipeline" / "farm_worker.py").read_text(encoding="utf-8")
+    render_task = next(n for n in ast.walk(ast.parse(fw_src, "farm_worker.py"))
+                       if isinstance(n, ast.FunctionDef) and n.name == "render_task")
+    resizes = [n.lineno for n in ast.walk(render_task)
+               if isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute)
+               and n.func.attr == "resize"]
+    check("the farm worker's img2img init goes through the shared policy",
+          "plate_prep.fit_cover(" in fw_src)
+    check(f"and render_task reshapes nothing itself (found {resizes})", not resizes)
+    check("the held path reaches the same helper, not its own arithmetic",
+          "plate_prep.cover_crop_box("
+          in (REPO / "pipeline" / "hold_still.py").read_text(encoding="utf-8"))
+
+
 def test_dispatch_never_hands_a_renderer_a_raw_still(tmp: Path):
     """Both renderers must be conditioned on a plate, and the sidecar must say so.
 
@@ -3864,6 +4038,8 @@ def main():
         test_ltx_jobs_list_is_one_beat_per_entry(Path(td))
     with tempfile.TemporaryDirectory() as td:
         test_the_conditioning_plate_is_the_episode_crop(Path(td))
+    with tempfile.TemporaryDirectory() as td:
+        test_no_render_path_stretches_a_mismatched_still(Path(td))
     with tempfile.TemporaryDirectory() as td:
         test_dispatch_never_hands_a_renderer_a_raw_still(Path(td))
     test_vercel_build_guard_covers_every_site_input()
