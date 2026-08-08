@@ -1,0 +1,22 @@
+# Still provenance (7.2), written AT RENDER TIME by render_wave2.py
+# on the rtx5090. Round 1 wrote none and had to be reconstructed from
+# wave.log afterwards; this run records itself.
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+shot_beat: 3
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20262722
+seeds_in_batch: 4
+task: ep1-stills-round2-1786129764
+candidate_set: r2
+wall_seconds: 39
+cost_usd: 0
+note: |-
+  round 2. Round 1's four candidates were domestic (the founder's house note landed) but every one drew gibberish glyphs across the screen and anime-girl desktop wallpaper — the wave's only style break. The cause was code: sd_prompt lifted `text` out of the negative for any beat whose subject named a screen, and beat 3 was the only beat in the genome that rule ever fired on. Fixed; `text` is negated here. The prompt now asks for one bright green line of code and a cursor, no words to read, matching how beat 1 has drawn a monitor since 2026-07-27. Same seeds as round 1.
+prompt: |-
+  close-up of a personal computer monitor on a cluttered home desk, dark terminal window on the glowing screen, one bright green line of code, blinking cursor, warm desk lamp, coffee mug, houseplant, lived-in bedroom corner at night, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, laboratory, server room, lab equipment, person, wallpaper, neon, photorealism, text

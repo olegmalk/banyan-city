@@ -1,0 +1,23 @@
+# Still provenance (7.2), written AT RENDER TIME by render_wave2.py
+# on the rtx5090. Round 1 wrote none and had to be reconstructed from
+# wave.log afterwards; this run records itself.
+#   NEGWARN: !! negative prompt over CLIP's 77-token budget; deduplicated: text
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+shot_beat: 7
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20260726
+seeds_in_batch: 1
+task: ep1-stills-round2-1786129764
+candidate_set: prog2
+wall_seconds: 39
+cost_usd: 0
+note: |-
+  palette-LOCKED candidate in the wide(7)/medium(8)/close(9) progression proposed for the three beats the founder called 'basically the same picture'. Round 2: the palette and environment block is byte-identical across all three prompts, the negative is byte-identical across all three, and all three share ONE seed per trio, so the only variable across the cut is the lens. Prompts live in render_wave2.py, NOT in shots-alt-789.md, which is a proposal awaiting R4 and is not rewritten under him.
+prompt: |-
+  plant focus, wide establishing shot of an open green field, one tiny two-leaf sprout alone in the lower centre of frame standing dead still, low horizon, short green grass, damp brown soil, pale blue morning sky, soft warm morning light, dead calm air, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, mature tree, large tree, tall tree, thick trunk, full canopy, forest, bush, shrubbery, humans, macro close-up, many leaves, grey sky, overcast, photorealism

@@ -1,0 +1,23 @@
+# Still provenance (7.2), written AT RENDER TIME by render_wave2.py
+# on the rtx5090. Round 1 wrote none and had to be reconstructed from
+# wave.log afterwards; this run records itself.
+#   NEGWARN: !! negative prompt over CLIP's 77-token budget; deduplicated: text
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+shot_beat: 12
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20261731
+seeds_in_batch: 4
+task: ep1-stills-round2-1786129764
+candidate_set: r2
+wall_seconds: 39
+cost_usd: 0
+note: |-
+  round 2. Round 1's four candidates came back calm and upright — the environment was fixed and the strain was not. `tense`, `straining`, `arc` are states of mind Animagine cannot draw; the rewrite names the shape only (bent low, taut curve, arched over almost horizontal, leaf tips pulled down) and puts `no upright stem` in the negative. Same seeds as round 1.
+prompt: |-
+  plant focus, one tiny two-leaf sprout, its thin green stem bent low into a taut curve, arched over almost horizontal, leaf tips pulled down near the grass, damp brown soil, short green grass, sunlit field, pale blue morning sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, mature tree, large tree, tall tree, thick trunk, full canopy, forest, bush, shrubbery, humans, cracked ground, dry dirt, grey floor, upright stem, photorealism
