@@ -429,8 +429,43 @@ that starts with a letter, so `no 1girl, no 1boy` would be left sitting in the
 POSITIVE prompt asking for a girl and a boy — measured, and the reason the wave
 script must not take that recommendation literally.
 
+**Round 4 was rendered and REJECTED, and it split the fault cleanly in two.**
+Four seeds, ~40 GPU-seconds, 2026-08-09. The style half of the fix WORKED: with
+the trailing sentence no longer dropped, all four came back as soft cinematic
+anime with real light and a coherent palette instead of the flat cartoon r3
+returned, which retires the "twenty different shows" register complaint for this
+beat as a *mechanical* problem with a *measured* remedy. **A1 did not move.** Zero
+of four contain the sapling as a plant: s0 wears a leaf as a hat above bare human
+legs, s1 is an anime child holding a sprout, s2 is an unreadable pale mass, and s3
+grows the sprout *out of the figure's head* — beat 19's recorded fault appearing
+here. The person negatives were verified lifted into the negative on the real path
+and the checkpoint drew people anyway, so on a beat whose subject clause names a
+humanoid this is **not** a negative-prompt problem.
+
+Ledger record 26 (`ep2-b13-r4-sample`, `reject_all`, confidence 0.85). The
+twenty-beat r4 wave was NOT fired on the strength of it — that is the ONE SAMPLE
+rule doing exactly the job it exists for.
+
+**Round 5 changes ONE thing: which noun is the subject.** The diagnosis is that
+"A small round goblin" led the sentence, so the goblin was the subject and the
+seedling trailed behind it in a prepositional phrase — and this checkpoint
+resolves a subordinate plant by fusing it into the character it is attached to.
+Beat 01's botanical binding worked there because the plant was the *only* subject.
+So r5 inverts the grammar and changes nothing else: the seedling stands as the
+subject of the first clause, the goblin follows it as the subordinate one. Same
+four seeds, so the pair is controlled on the wording. Measured at **70 positive
+tokens with the boosters and style anchor intact**, negatives unchanged and still
+lifting `girl, boy, child, person`, and the Danbooru count tag stays `1other`
+exactly as in r4 — worth stating, because holding the tag constant is what makes
+subject order the only variable.
+
+(Noted for a later round, not acted on here: `1other` asserts one non-human
+character while this beat needs a goblin AND a plant in frame. That may be part of
+the fusion and it is a *different* experiment; changing the tag and the word order
+in the same sample would tell us nothing about either.)
+
 ```
-A small round goblin slides down the stem of a tiny 40cm seedling with two oversized cotyledon leaves and folds into its patch of shade, knees up around his ears, no girl, no boy, no child, no person. Midday light, open green grass field, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+A tiny 40cm seedling with two oversized cotyledon leaves stands in open grass; a small round goblin folds into its patch of shade, knees up around his ears, no girl, no boy, no child, no person. Midday light, open green grass field, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 ## Beat 14 — THE DEFENSE (1:04–1:10) ⬜ needs footage
