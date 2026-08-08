@@ -110,9 +110,12 @@ checklist:
   title: "Your morning pass — about ten minutes"
   intro: |-
     **Items 01 to 05 are episode 1, and as of 2026-08-08 you have answered every
-    one of them.** Item 02 in the morning, item 03 in the afternoon — both are
-    kept below as the record of what you said rather than deleted, because four
-    frames are now canon on those words and five more are being redrawn from them.
+    one of them.** Item 02 in the morning, item 03 in the afternoon, item 01's
+    camera move the same day — all three are kept below as the record of what you
+    said rather than deleted, because four frames are now canon on those words,
+    five more are being redrawn from them, and the camera is closed at 12% on
+    *"the zoom should be a balance between shortest and longest, and yes 12
+    percent is fine."*
     **There is nothing left to pick in this block.** If we heard any of it wrong,
     that is the only thing left to say here.
 
@@ -148,23 +151,39 @@ checklist:
     take**, thirty seconds, to say whether the new read is the one you asked for.
   items:
     - n: 1
-      ask: "The camera move — is 12% right at both ends of the episode?"
+      ask: "The camera move — ANSWERED 2026-08-08. 12% stays, and the camera is closed."
       state: settled
       chip: "CONFIRM"
       body: |-
+        **You answered this on 2026-08-08 and the camera is done.** Your words:
+        *"the zoom should be a balance between shortest and longest, and yes 12
+        percent is fine."* **12% stays**, one number on every held beat, and this
+        item is the record of that rather than a question.
+
+        **What we read that as, because your sentence answers two things at once.**
+        You watched the two extremes below and nothing in between — 2.6 seconds and
+        13 seconds, the same 12% in each — and the balance you describe is that one
+        number sitting between them: picked so the short beat is not a lunge and the
+        long one is still visible, instead of every beat getting its own amount
+        worked out from its length. That is what is in the pipeline today, and your
+        answer changes nothing in it. **Where this reading would be wrong:** if you
+        meant the two clips should travel at the same speed per second, that is the
+        ladder you already refused — it would put the 2.6-second beat back at 2% and
+        make it invisible. It is still one number away if you want it.
+
+        The question as it stood, kept because your answer is an answer to it:
+
         You said *"zooms are way too slow"*, then, when we came back with a
         ladder of speeds to choose from, *"zoom speed ladder is just overdoing
-        it. simply make the zoom speed moderate."* So there is no ladder here
-        and nothing to pick. Every held shot now creeps in by **one number —
-        12% of the frame — whatever its length**, and the ladder we had built
-        is on the shelf, unpublished.
+        it. simply make the zoom speed moderate."* So there was no ladder here
+        and nothing to pick. Every held shot creeps in by **one number — 12% of
+        the frame — whatever its length**, and the ladder we had built is on the
+        shelf, unpublished.
 
-        The one thing worth thirty seconds of your eye: the held shots run from
-        2.6 seconds to 13 seconds, so a single total means the short one travels
-        **five times faster** than the long one. Below are those two extremes,
-        nothing in between. **If it reads moderate on both, we are done with the
-        camera.** If the short one now feels like a lunge, say so and we change
-        the one number.
+        The one thing it asked for was thirty seconds of your eye: the held shots
+        run from 2.6 seconds to 13 seconds, so a single total means the short one
+        travels **five times faster** than the long one. Below are those two
+        extremes — the pair you passed.
       clips:
         - file: checklist/beat-05-HELD-moderate.mp4
           label: "shortest — 2.6s"

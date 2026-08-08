@@ -4504,3 +4504,52 @@ picks now genuinely his: episode 1's four beats (checklist item 02), episode
 box before intake; lint, tests and the promoter dry-run pass with the
 candidate count moved by exactly the hundred rendered; the GPU claim is
 released and both schtasks are deleted, verified by query.
+
+## 2026-08-08 — the camera is confirmed at 12%, and he answered the trade the constant is built on
+
+**The founder confirmed the held-shot zoom, verbatim: "the zoom should be a
+balance between shortest and longest, and yes 12 percent is fine."** That closes
+checklist item 01 in `cuts/cuts.yaml`, which had been sitting at `state: settled`
+waiting on nothing but his word, and it closes `ZOOM_TOTAL = 0.12` in
+`pipeline/hold_still.py`. 12% is the fourth amount he has screened (6% → 18% →
+2-4% → 12%, see 2026-08-07 late) and **the first one he has confirmed instead of
+replaced** — so the amount has stopped moving, and it stopped on a screening
+rather than on a measurement, like the three before it.
+
+**HE ANSWERED THE TRADE, NOT ONLY THE NUMBER, which is the part worth keeping.**
+Item 01 put the tension in front of him rather than hiding it: one fixed total
+means the 2.6-second beat travels five times faster than the 13.0-second one, so
+he was shown exactly those two extremes and nothing in between
+(`checklist/beat-05-HELD-moderate.mp4` at 4.65%/s,
+`checklist/beat-14-HELD-moderate.mp4` at 0.92%/s). "A balance between shortest
+and longest" is read as **the single total being that balance** — picked so the
+short beat is not a lunge and the long one is still visible — which is what the
+pipeline already does, so his answer changes no code. **The reading is written
+down with the place it would be wrong**, in both the checklist item and the
+constant's comment: if he meant the two clips should travel at the same rate per
+second, that is the per-second ladder he refused the day before ("zoom speed
+ladder is just overdoing it"), and it would put beat 05 back near 2% and
+invisible. That would be a question for him, not a change a session makes on its
+own reading of one sentence.
+
+**What moved is provenance and nothing else.** Item 01's `ask` flips to ANSWERED
+with his words verbatim and keeps the original question underneath as the ground
+his answer was given on; the checklist intro stops implying item 01 was still
+owed an eye. `hold_still.py` carries the quote in three places that each had a
+reason to want it — the module docstring's list of verbatim rulings (now two
+rulings and a confirmation), the four-setting table above the constant, and the
+"why a total and not a rate" paragraph the confirmation settles. **No code, no
+constant and no render changed**; `zoom_total()` still returns 0.12 for every
+beat. `pipeline/pending-founder.yaml` needed no edit — the camera has never had
+an item there, and the two items that mention it (`v6-verdict`,
+`ep1-frame-picks`) already describe the camera speed as a call he made rather
+than one being re-asked.
+
+Gates: `lint_genome.py` rc=0 (25 pre-existing licence warnings, ratchet 25),
+`test_pipeline.py` rc=0. `build_site.py` renders item 01 correctly but exits 1
+**locally only**, on 164 broken links into `002b-first-citizen-media-takes/`:
+tonight's candidate PNGs are gitignored, exist on this machine, and the shot
+board globs them off disk while the licence gate withholds them from `_site/`
+(D15, CreativeML Open RAIL++-M). On CI those files do not exist, so no link is
+emitted and `pages` stays green — which is why f24e9d0 passed. Nothing to fix in
+this change; noted so the next session does not re-diagnose it.

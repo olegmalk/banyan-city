@@ -43,12 +43,19 @@ and, later the same day, having watched what "gentle" was read to mean:
 
     "zoom speed ladder is just overdoing it. simply make the zoom speed moderate."
 
-TWO RULINGS, AND ONLY THE SECOND ONE MOVED. "No ping pong" is unchanged and is
-not up for re-tuning; what changed is the amount. The ladder he is refusing is
-the rate model — a per-second drift clamped into a 2-4% band, so that each beat
-got a different total worked out from its length. He asked for one moderate
-move, not a scheme. `ZOOM_TOTAL` is now that one number and it is the same on
-every held beat; the arc that got us there is recorded on the constant.
+and 2026-08-08, confirming the amount after watching the shortest and the longest
+held beat side by side with nothing in between:
+
+    "the zoom should be a balance between shortest and longest, and yes 12 percent
+    is fine."
+
+TWO RULINGS AND A CONFIRMATION, AND ONLY THE SECOND RULING EVER MOVED. "No ping
+pong" is unchanged and is not up for re-tuning; what changed is the amount. The
+ladder he is refusing is the rate model — a per-second drift clamped into a 2-4%
+band, so that each beat got a different total worked out from its length. He
+asked for one moderate move, not a scheme. `ZOOM_TOTAL` is now that one number
+and it is the same on every held beat; the arc that got us there is recorded on
+the constant, and 2026-08-08 is where it stops.
 
 WHERE THE PING-PONG ACTUALLY IS, because the obvious answer is wrong and was
 believed for an hour. `render_t3` palindromes any clip its slot outruns, and that
@@ -73,8 +80,9 @@ So the fix was in three places and only one of them was a bug:
     visibility for nothing. 12% is a screened amount rather than a mitigation.
 The DIRECTION is not a preference to be re-tuned by a later session on its own
 metric — see `scale_series` and the test that guards it. The AMOUNT is the
-founder's and moves only when he says so; it has now moved three times, always
-on a screening and never on a measurement.
+founder's and moves only when he says so; it moved three times, always on a
+screening and never on a measurement, and on 2026-08-08 he confirmed the fourth
+setting rather than asking for a fifth.
 
 AND FOR FOUR DAYS ALL OF IT WAS MEASURED AGAINST A STRETCHED PICTURE. The stills
 are 832x1216 and the clip is 704x1280; the frame builder closed that gap with a
@@ -131,7 +139,10 @@ def slug_for(node_dir: Path, beat: int) -> str | None:
 #    2-4%   a per-second rate (0.6%/s) clamped into a band, so every beat got a
 #           different total worked out from its length — "way too slow", and the
 #           scheme itself refused: "zoom speed ladder is just overdoing it"
-#    12%    "simply make the zoom speed moderate" — this one
+#    12%    "simply make the zoom speed moderate" — this one, and the one he
+#           CONFIRMED on 2026-08-08 after screening both extremes: "the zoom
+#           should be a balance between shortest and longest, and yes 12 percent
+#           is fine."
 #
 # WHY A TOTAL AND NOT A RATE, which is the reverse of what stood here this
 # morning. The rate model's case was that the held beats run 2.6s to 13.0s, so a
@@ -144,6 +155,16 @@ def slug_for(node_dir: Path, beat: int) -> str | None:
 #     beat 05  2.58s -> 12% at 4.65%/s     beat 10  10.52s -> 12% at 1.14%/s
 #     beat 04  3.50s -> 12% at 3.43%/s     beat 14  12.99s -> 12% at 0.92%/s
 #     beat 07  6.64s -> 12% at 1.81%/s
+#
+# AND THE FOUNDER HAS NOW CONFIRMED THE TOTAL ON EXACTLY THAT TRADE, which is why
+# the paragraph above is not the next session's to re-argue. He was shown the two
+# extremes and nothing between them — beat 05 at 2.58s and beat 14 at 12.99s, the
+# same 12% in each — and answered (2026-08-08): "the zoom should be a balance
+# between shortest and longest, and yes 12 percent is fine." Read as: the single
+# total IS that balance, chosen so the short beat is not a lunge and the long one
+# is still visible. It is NOT a request to equalise the two rates — that is the
+# ladder refused above, and it would put beat 05 back near 2% and invisible. If a
+# later session hears it the other way, that is a question for him, not a change.
 #
 # Parameterized on purpose — the founder tunes ONE constant here, or one beat at a
 # time with --zoom, and nothing else in the file has to be reasoned about.
