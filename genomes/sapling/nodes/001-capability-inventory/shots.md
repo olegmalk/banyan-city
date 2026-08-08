@@ -68,6 +68,18 @@ either way, and `text` is back in the negative where the other 176 beats keep it
 ```
 close-up of a personal computer monitor on a cluttered home desk, dark terminal window on the glowing screen, one bright green line of code, blinking cursor, warm desk lamp, coffee mug, houseplant, lived-in bedroom corner at night, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No laboratory, no server room, no lab equipment, no person, no wallpaper, no neon. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
+
+**REJECTED 2026-08-08 (founder, R4): ALL EIGHT — `b03-r1-s0..s3` AND `b03-r2-s0..s3`.**
+Both rounds, the whole set. **NEW DIRECTION, his: make it a CLOSE-UP** — the third
+instruction on this beat, and it is a lens note rather than a content note, so it
+stacks on the two above rather than replacing them. The standing note still holds:
+unmistakably indoors, domestic. Neither of the two rewrites is retracted; what
+changes is the distance. A close-up also gives the domestic reading somewhere to
+live at this size — a screen filling the frame with the warm lamp, the mug rim and
+the room's edge just inside it, rather than a desk photographed from across a room.
+
+**Not queued yet, and deliberately.** This redraw is GATED behind checklist item 07
+with beats 6, 10, 14 and 15 — see the wave note at the foot of this file.
 ## Beat 04 — THE FALL (0:15–0:20) ⬜ needs footage04
 
 no dialogue - the death, in one shot. The mug reaches the floor before he does.
@@ -98,6 +110,22 @@ camera on the ground. `no leaf, no plant, no stem` are in the negative now.
 ```
 a vast open sky filling the frame seen from ground level looking straight up, no humans, deep clear blue morning sky, one thin wisp of white cloud drifting high above, a soft blurred green fringe of grass along the bottom edge, gentle morning light, dreamy, detailed, newest, masterpiece, best quality, very aesthetic No leaf, no plant, no stem, no foliage, no big clouds, no tree. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
+
+**REJECTED 2026-08-08 (founder, R4): ALL FOUR — `b06-r1-s0..s3`.** Recorded as
+**rejected without a stated axis**: his words were that none of them quite work, and
+he named no fault. That is a legitimate verdict and it is written down as what it is
+rather than dressed in a reason we invented — do not attribute one to him later.
+
+The redraw direction is therefore UNCHANGED from the rewrite above (no leaf, sky
+shot; the leaf-is-him reasoning still stands) plus the one cross-cutting note that
+came out of the same pass: **character consistency**, which was his dominant
+objection across this whole wave. Beat 6 has no character in frame by construction,
+so what it inherits from that note is the shared-anchor technique itself — whatever
+item 07 settles for holding a design steady across shots is what this beat's sky,
+light and palette get anchored to, so it stops being a frame from a different show.
+
+**Not queued yet, and deliberately.** GATED behind checklist item 07 — see the wave
+note at the foot of this file.
 ## Beat 07 — ZERO (0) MOVING PARTS (0:29–0:35) ⬜ needs footage07
 
 Line: 'I appear to have zero (0) moving parts.' The STILLNESS is the joke - camera
@@ -162,6 +190,48 @@ remain a POST overlay.
 ```
 plant focus, no humans, low shot at the base of a tiny two-leaf sprout, damp dark soil around its stem, pale roots at the surface, water droplets in the earth, short green grass at the frame edges, soft warm morning light, shallow depth of field, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No lake, no water surface, no dark background, no black void, no cave. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
+
+**REJECTED 2026-08-08 — the founder DELEGATED this one and the steward decided it
+against the script, not against taste.** His note on `b10-r1-s3` was: *"actually has
+character consistency, although it isn't exactly showing roots, so maybe it's not
+aligning with the correct idea, you decide."* So the frame was offered on one virtue
+(consistency) with one doubt (no roots), and the delegation is explicitly about
+whether the doubt is fatal.
+
+**The rule applied: are visible roots load-bearing for this beat's R1 state change or
+its text, or are they incidental staging?** Load-bearing, on three counts, all of them
+in `node.md` and none of them a matter of preference:
+
+- The beat's own on-screen card is `SENSE   ✓  roots / air / vibration` — the word is
+  printed over the picture. A frame with no roots in it makes the overlay contradict
+  the plate.
+- The beat's image line is *"He pushes attention downward and the image blooms: an
+  underground root-map, veins of dark water, mineral glitter"* — the root-map IS the
+  image the script asks for.
+- The node's R1 is *"capabilities exactly two (sense, grow)"*, and this beat is the
+  entire demonstration of the first one. Roots are the organ the sense runs on: the
+  VO's *"I can taste the water table. I can feel the ground"* has no visible mechanism
+  without them.
+
+The 2026-08-07 rewrite that brought the camera up out of the ground kept `pale roots
+at the surface` in the prompt for exactly this reason. So a candidate that drops them
+fails the script, and the founder's stated virtue does not rescue it — **character
+consistency is what the redraw must PRESERVE, not what it may trade the beat's
+subject for.** REJECT; beat 10 joins the gated redraw wave.
+
+**Redraw direction — both things at once, and that is the difficulty.** Keep whatever
+made `b10-r1-s3` consistent, and get the roots back in frame: roots readable at the
+surface where the stem meets the soil, damp earth, the episode's field and morning
+light. And carry the note the checklist already raised — **10 and 14 came back as
+very nearly the same picture** (same low angle, same two-leaf sprout, same warm soil)
+because their rewritten directions are nearly the same words. More seeds will not fix
+that. One of the two has to be re-lensed; this beat is the one that should move, since
+14's *"Low at the base of the trunk"* is the script's own words and beat 10's framing
+has already been moved once. Take 10 lower and closer — into the soil line rather than
+standing off it — so the two read as different distances on different subjects.
+
+**Not queued yet, and deliberately.** GATED behind checklist item 07 — see the wave
+note at the foot of this file.
 ## Beat 11 — GROW (1:03–1:09) ⬜ needs footage11
 
 Line: 'Latency: three days. Throughput: one leaf.' Timelapse on the one new leaf.
@@ -204,6 +274,29 @@ render counts exactly, so the 76 is the number that ships.
 ```
 plant focus, no humans, one tiny two-leaf sprout, its thin green stem bent low into a taut curve, arched over almost horizontal, leaf tips pulled down near the grass, damp brown soil, short green grass, sunlit field, pale blue morning sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No cracked ground, no dry dirt, no grey floor, no upright stem. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
+
+**PICKED 2026-08-08 (founder, R4): `b12-r2-s1`.** The one pick in the whole wave.
+`takes/stills/12-undefined-r2-s1.png` (seed 20261731, round 2) is promoted
+byte-for-byte to `stills/12-undefined.png`, which is founder-approved canon and the
+file every renderer actually reads — `video_task` globs `stills/NN-*.png` for its
+conditioning frame and skips `REVOKED` names. The frame it replaces, the 2026-07-27
+approval he refused on the cracked grey floor, is retired in place as
+`stills/12-undefined-REVOKED-cracked-grey.png` rather than deleted, the way this
+directory already carries 03, 07, 10, 14 and 15's revocations (R6). Checksum and
+provenance: `stills/README.md`.
+
+**THE RESERVATION HE ATTACHED, VERBATIM, AND THE PICK STANDS ANYWAY:** *"not sure
+what it's supposed to be."* That is legibility, and it is the same complaint that
+condemned beat 14 — so it is recorded here rather than filed as a compliment.
+It is NOT a rejection and must not be read back as one: he named the frame, the frame
+is canon, and nothing re-renders on the strength of the doubt. What it is is a flag on
+the beat's whole conceit. The shot is a stem bending against nothing for three
+seconds under the line *"That's the whole API"* — the strain reads as a shape long
+before it reads as a *meaning*, and round 2 exists precisely because round 1 drew no
+strain at all. If the assembled v33 comes back with the same note on this beat, the
+lever is the beat's staging or its caption, **not** a fifth prompt: two rounds have
+already established that Animagine draws the shape when asked for geometry and
+nothing when asked for effort.
 ## Beat 13 — I ALWAYS LEFT (1:12–1:21) ⬜ needs footage13
 
 Line: 'I walked away.' The road he can no longer take - no tree in this frame.
@@ -228,6 +321,30 @@ is visible.
 ```
 plant focus, no humans, low close shot at the base of a tiny two-leaf sprout, thin stem rising out of the ground, pale roots gripping into damp brown soil, small stones and short grass around it, warm afternoon light raking across the earth, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No cross-section, no diagram, no cave, no black void. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
+
+**REJECTED 2026-08-08 (founder, R4): ALL FOUR — `b14-r1-s0..s3`.** His words:
+*"all too small, not good character consistency."* Two faults, and they are separate.
+
+**Subject scale.** The rewrite above fixed legibility by putting the sprout back in
+frame, and then framed it too far off: at 13.0 seconds this is the LONGEST slot in the
+episode and the plant does not command it. The subject has to be bigger in frame —
+the sprout and its grip filling the shot, ground and stones reading as the bed it
+holds rather than as most of the picture. Note that `low close shot` is already in the
+prompt and did not deliver it; the lever is composition wording (the plant occupying
+the frame, close on the base) and not another synonym for "close".
+
+**Character consistency**, the wave-wide objection. The sprout here has to be the same
+plant as beats 6, 10, 11, 12 and 15 — same leaf count, same stem, same palette — and
+across four seeds it is not. That is the fault item 07 is about, and it is why this
+redraw waits rather than firing tonight.
+
+Both hold together with the note the checklist already raised: **10 and 14 are near
+twins.** 14 keeps its framing, because *"Low at the base of the trunk: roots gripping
+soil"* is the script's own line; beat 10 is the one that moves. See beat 10 above.
+
+**Not queued yet, and deliberately.** GATED behind checklist item 07 — see the wave
+note at the foot of this file.
+
 ## Beat 15 — SOMETHING'S COMING (1:34–1:37) ⬜ needs footage15
 
 Line: 'Something is coming.' The footsteps are felt, not seen. The approaching RINGS
@@ -244,3 +361,47 @@ is coming, which is the hook (`no person, no figure, no monster` in the negative
 ```
 plant focus, no humans, a tiny two-leaf sprout standing at ground level in short grass, loose soil grains scattering around its base, a strong warm orange glow spilling in from the right edge of frame, long shadows stretching left, evening field, ominous, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No underground, no cave, no black void, no figure, no monster. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
+
+**REJECTED 2026-08-08 (founder, R4): ALL FOUR — `b15-r1-s0..s3`.** His words:
+*"bad character consistency."* One axis, and it is the wave's axis.
+
+The 2026-08-07 decision above is NOT reopened — surface level, the sapling as
+protagonist, the presence entering as a warm glow from the right, nothing shown of
+what is coming. He asked for the sapling and this is the beat that finally has one in
+it; what he refused is that the sapling in it is not the sapling. This is the closing
+frame of the episode and the last thing a viewer sees before the hook, so a plant that
+does not match beats 6, 10, 11 and 12 breaks the identity at the worst possible
+moment. Redraw direction: the composition unchanged, the character anchored by
+whatever item 07 settles.
+
+**Not queued yet, and deliberately.** GATED behind checklist item 07 — see the wave
+note directly below.
+
+---
+
+## THE 2026-08-08 REDRAW WAVE — beats 3, 6, 10, 14, 15 — GATED, NOT QUEUED
+
+The founder screened all forty candidate frames on 2026-08-08 and the wave produced
+**one pick and five rejections**: `b12-r2-s1` is canon (beat 12 above), and beats 3,
+6, 10, 14 and 15 need drawing again. Beat 7 is not in this list — it is answered by
+the 7/8/9 progression, which is checklist item 03 and still open.
+
+**Why nothing is rendering tonight, stated plainly, because the standing rule is that
+a runnable job runs now.** This wave is not runnable. **Character consistency is the
+founder's dominant objection** — he named it on 14 and 15 as the fault, and on 10 as
+the one virtue that nearly saved a frame — and the technique that fixes it has not
+been chosen. That choice is **checklist item 07**, the open question of whether
+episode 2 gets a character sheet: one approved drawing the later beats are drawn
+against. Episode 2 asked it first because eighty frames came back as twenty different
+shows, but the answer governs episode 1's redraws too — the same model, the same
+absence of an anchor, the same drift. Firing five redraws on the old technique before
+that answer lands buys five more frames of five more shows and spends the founder's
+next screening pass on a question he has already been asked.
+
+So the gate is a real dependency and not a wait for office hours: the recipe is
+undecided, and **ONE SAMPLE BEFORE ANY BATCH** applies to the technique the moment it
+is. When item 07 is answered, the wave fires as one sample first, then the set.
+
+Queue entry: `ep1-stills-redraw-wave2-*` in `pipeline/farm-queue.yaml` `backlog:`,
+`gate: founder`, carrying each beat's direction. The per-beat directions are the
+authority and live in the beat sections above.

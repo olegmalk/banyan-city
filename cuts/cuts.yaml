@@ -110,19 +110,26 @@ checklist:
   title: "Your morning pass — about ten minutes"
   intro: |-
     **Items 01 to 05 are episode 1 and they are the ones that matter this
-    morning** — nothing else can be built until they are answered. Two of them
-    are confirmations you can do at a glance: you already decided, we did it,
-    tell us if we misread you. Two are picks only you can make. One is a report
-    and asks nothing.
+    morning** — nothing else can be built until they are answered. **Item 03 is
+    now the only open pick in the block**: item 02 was answered in full on
+    2026-08-08 and is kept as the record of what you said. Two others are
+    confirmations you can do at a glance, and one is a report that asks nothing.
+
+    **One warning about the running order, because it inverts today.** The five
+    redraws item 02 ordered are held up by **item 07**, which is in the episode-2
+    block below — character consistency is what you rejected them for, and item 07
+    is where the technique for fixing it gets chosen. It is the one episode-2
+    question that blocks episode 1.
 
     Everything in that first block came out of the notes you gave on v32 last
     night. Nothing outside those notes was touched, and item 05 says so in
     detail rather than leaving you to trust it.
 
-    **Items 06 to 09 are episode 2** and hold nothing up. They are here because
-    your "r3-s3 and retire" started four jobs that had been waiting on it, and
-    their results need somewhere to arrive. If the morning is short, stop after
-    05.
+    **Items 06 to 09 are episode 2.** Three of the four hold nothing up and are
+    here because your "r3-s3 and retire" started four jobs that had been waiting
+    on it. **Item 07 is the exception as of 2026-08-08** — it now blocks episode
+    1's five redraws as well, for the reason above. If the morning is short, stop
+    after 05 **and 07**.
   items:
     - n: 1
       ask: "The camera move — is 12% right at both ends of the episode?"
@@ -151,13 +158,59 @@ checklist:
           note: "12% of frame, 0.92%/s"
 
     - n: 2
-      ask: "The six frames you named — pick one each, or reject the lot"
-      state: open
-      chip: "YOUR PICK"
+      ask: "The six frames you named — ANSWERED 2026-08-08. One pick, five redraws."
+      state: settled
+      chip: "CONFIRM"
       body: |-
-        Six of the shots you refused, you refused on the **drawing**, not on the
-        motion — so they need new pictures before anything can be re-filmed.
-        Your words, and what each is being redrawn to:
+        **You went through all forty candidates on 2026-08-08 and this item is
+        closed as a question.** It stays on the page as the record of what you
+        said, because five of the six beats are being drawn again from it and the
+        directions below are the instructions. Read it as "here is what we heard";
+        if we heard any of it wrong, that is the only thing left to say.
+
+        **What you decided:**
+
+        - **Beat 12 — PICKED `b12-r2-s1`.** The one pick in the wave. It is
+          promoted to canon and is the frame v33 will be built from. You added
+          *"not sure what it's supposed to be"*, and that is written down beside
+          the pick rather than swallowed — **the pick stands and nothing is being
+          re-rendered on it.** If the same note comes back when you see the beat
+          moving in v33, the fix is the staging or the caption, not a fifth prompt.
+        - **Beat 3 — rejected, both rounds, all eight frames.** New direction from
+          you: **make it a close-up**, on top of the standing note that it must be
+          unmistakably indoors and domestic.
+        - **Beat 6 — rejected, all four.** You gave no fault, and none has been
+          invented for you: recorded as rejected without a stated axis. The redraw
+          direction is unchanged — no leaf, it is a sky shot.
+        - **Beat 10 — rejected.** You handed this one to us: *"b10-r1-s3 actually
+          has character consistency, although it isn't exactly showing roots, so
+          maybe it's not aligning with the correct idea, you decide."* **We decided
+          against it, on the script rather than on taste.** The card printed over
+          that beat literally reads `SENSE ✓ roots / air / vibration`, and roots
+          are the thing the sense runs on — so a frame without them contradicts its
+          own overlay. Consistency is what the redraw has to keep, not what the
+          beat's subject can be traded for. Cheap to overrule if you disagree.
+        - **Beat 14 — rejected, all four:** *"all too small, not good character
+          consistency."* Both are being fixed — the plant fills the frame, and the
+          plant is the same plant.
+        - **Beat 15 — rejected, all four:** *"bad character consistency."* The
+          surface-level composition you asked for is kept; only the character is
+          redrawn.
+
+        **THE ONE THING THAT WOULD SPEED THIS UP IS ITEM 07, AND IT IS NOT ON THIS
+        HALF OF THE PAGE.** Character consistency is the objection you gave most
+        often here — the fault on 14 and 15, and the single virtue that nearly
+        saved beat 10 — and it is exactly the question item 07 asks about episode
+        2: does the show get a character sheet, one approved drawing every later
+        beat is drawn against. **The five redraws are deliberately NOT rendering
+        until you answer that**, because the technique you choose there is the
+        technique they need. Rendering them first would buy five more frames of
+        five different shows and land the same note back on your desk. It is the
+        one place where an episode-2 item is holding up episode 1, and it is worth
+        knowing before you decide the morning is over after item 05.
+
+        Your original words on the six, kept because the redraws are still working
+        from them:
 
         - **Beat 3** — *"looks more like a terminal in some.. lab. not realistic
           … make sure it looks like its inside a house."* Being redrawn
@@ -178,52 +231,20 @@ checklist:
           cheap to overrule:** the sapling at surface level with the arriving
           presence entering the frame — a warm glow at the edge, the soil
           trembling — rather than a cutaway underground.
-        **Four of the six have candidates now — beats 6, 10, 14 and 15 — four
-        seeds each.** Beats 3 and 12 are being drawn again tonight and may land
-        before you wake: beat 3 hit a real bug of ours (the text on the screens
-        came out as gibberish) and beat 12 did not carry the strain the script
-        asks for. Neither is a taste question yet.
-
-        **The frames are not on this page and that is deliberate.** They are
+        **Still true, and still yours: the frames are not on this page.** They are
         drawn by a model whose licence attaches conditions that our own licence
-        gives away — the open question recorded as D15, and yours to settle —
-        so candidates stay on the machine until it is answered. Finished cuts
-        publish here; candidate frames do not.
+        gives away — the open question recorded as D15 — so candidates stay on the
+        machine. Finished cuts publish here; candidate frames do not. The sheets
+        you screened are in the repo folder, and the address of every frame quoted
+        above resolves through `REVIEW-KEY-0808.md` beside them.
 
-        **And the line that draws is currently in a silly place, which is worth
-        thirty seconds because only you can move it.** As of tonight the public
-        shot board hides these forty frames *because they carry honest records
-        naming that model*, while older frames from the very same model stay
-        visible because nobody ever wrote them a record — so the record, not the
-        licence, is what decides. You can fix that by answering D15, or by ruling
-        that candidate frames are public regardless, which your own
-        crowd-first directive already did once for episode 2's twenty-one
-        candidates; either is a decision, and neither is a workaround.
-
-        **Where they are:** `WAVE-0807-beat06-fix.png`, `-beat10-fix`,
-        `-beat14-fix`, `-beat15-fix` in the repo folder, one sheet per beat,
-        four frames each labelled with their seed. `WAVE-0807-overview.png` is
-        all of them on one screen, and `WAVE-0807-style-anchor.png` is the OLD
-        look for contrast — the dark cave, the lava, the cracked grey floor.
-        That sheet is not candidates; it is what you were objecting to.
-
-        **If forced to pick we would say 6→s3, 10→s0, 14→s0, 15→s2** — your call
-        overrules all four. **Three to skip, they are single-seed misfires:** 6's
-        s0 has a person lying in the grass, 15's s0 came out autumn orange.
-
-        **One thing to decide before you pick, because it is the note you already
-        gave us once.** Put `WAVE-0807-adjacency.png` up first: it is the picks for
-        10, 12, 14 and 15 side by side. **Beats 10 and 14 have come back as very
-        nearly the same picture** — the same low angle on the same two-leaf sprout
-        in the same warm soil. That is the fault you caught on 7, 8 and 9, and it
-        is far cheaper to catch here than in an assembled cut. (Beats 12 and 15 are
-        clear of it — 12 is an up-angle against blue sky, 15 is the red one.)
-
-        **More seeds will not fix 10 and 14.** They look alike because their
-        rewritten directions are nearly the same words, so every seed lands in the
-        same place. It needs the same medicine as 7/8/9: one of the two shot from a
-        different distance or angle. **Which is your call** — accept them as twins,
-        or name which of the two gets re-lensed.
+        **The one note of ours that outlived the pass, carried into the redraws so
+        it is not lost:** beats 10 and 14 came back as very nearly the same
+        picture — the same low angle on the same two-leaf sprout in the same warm
+        soil, the fault you caught on 7, 8 and 9. Both are being redrawn anyway, so
+        it costs nothing to fix while they are open: **beat 10 is the one that gets
+        moved** (lower, into the soil line, where its roots are), because 14's
+        framing is the script's own words — *"Low at the base of the trunk"*.
 
     - n: 3
       ask: "Beats 7, 8 and 9 — pick the three frames for the progression"
@@ -249,10 +270,30 @@ checklist:
         across the three, so they are being drawn again tonight with the palette
         pinned. That second round may land before you wake.
 
-        **Local, for the same D15 reason as item 02** — the sheets are
-        `WAVE-0807-progression-789.png` (all three together, which is the one to
-        look at) and `-beat07-prog`, `-beat08-prog`, `-beat09-prog` per shot.
-        **Skip 7's s1, it grew a giant hand.**
+        **STILL OPEN, AND THE SHEET WE GAVE YOU WAS THE PROBLEM.** On 2026-08-08
+        you said of this item: *"for beat 7/8/9, i am confused? all of these are
+        mixed in?"* You were right — `progression-789` puts all fifteen candidates
+        in one grid, so a wide, a medium and a close from three unrelated seeds sit
+        side by side and nothing on the sheet says which three go together. That is
+        our layout failing, not fifteen frames failing, and **this item is not
+        being counted as answered by it.**
+
+        **A new sheet exists: `TRIOS-789-0808.png`.** The same fifteen frames, laid
+        out as **five rows of three** — wide (7) → medium (8) → close (9) across
+        every row, so a row is one candidate cut and picking is naming a row.
+        **Say `T1`, `T2`, `T3`, `T4` or `T5`** and it resolves to exactly three
+        files through `REVIEW-KEY-0808.md`. **`T1` is the one to look at first**:
+        it is the round-2 trio, and it is the only row that is a real trio — one
+        palette, one seed (20260726) across all three shots, the lens the only
+        thing that differs. Rows `T2`–`T5` are the round-1 seeds grouped by slot,
+        which is a presentation convention and nothing more, so **mixing across
+        those rows is allowed** — naming three individual frames is a legal answer.
+
+        **Local, for the same D15 reason as item 02** — use `TRIOS-789-0808.png`.
+        The older sheets are still there (`WAVE-0807-progression-789.png` and
+        `-beat07-prog`, `-beat08-prog`, `-beat09-prog` per shot) and the mixed one
+        is kept only for comparing seeds inside round 1. **Skip 7's s1, it grew a
+        giant hand.**
 
         Worth your eye even though round two is coming: **tell us whether the
         staging is right**, because that is the part we would keep. The colour is
@@ -318,12 +359,15 @@ checklist:
     # their output arrives for his eye rather than accumulating unseen.
     - n: 6
       heading:
-        title: "Episode 2 — not blocking the cut above"
+        title: "Episode 2 — and one item here that now blocks episode 1"
         intro: |-
           Your five words on 2026-08-07 — **"r3-s3 and retire"** — settled
           episode 2's look and started four jobs that had been waiting on it.
-          Their results land here. **None of this holds up episode 1**, so if
-          the morning is short, stop after item 05.
+          Their results land here. **This block used to say it held up nothing in
+          episode 1. As of 2026-08-08 that is no longer true of item 07** — the
+          character-sheet question below is what episode 1's five redraws are
+          waiting on, because character consistency is what you rejected them for.
+          Items 06, 08 and 09 still hold up nothing.
       ask: "Episode 2's opening shot — both films exist, and only one of them can be shown here"
       state: open
       chip: "YOUR PICK"
@@ -412,6 +456,17 @@ checklist:
         goblin and one of a guard, which every later beat is then drawn
         against — because picking best-of-four per beat out of this batch buys
         twenty good frames of twenty different shows.
+
+        **AND AS OF 2026-08-08 THIS ITEM HOLDS UP EPISODE 1 TOO, WHICH IT DID NOT
+        WHEN IT WAS WRITTEN.** When you went through episode 1's forty candidates
+        you rejected four of the five beats on the same fault this item is about:
+        *"not good character consistency"* on beat 14, *"bad character
+        consistency"* on beat 15, and on beat 10 it was the one virtue that nearly
+        made you keep a frame that was otherwise wrong. **Those five redraws are
+        deliberately not rendering until you answer here**, because whatever you
+        choose — a character sheet, or carrying on without one — is the technique
+        they have to be drawn with. Answer it for episode 2 and episode 1's
+        redraws start the same hour. Ignore it and both stay where they are.
 
     - n: 8
       ask: "Episode 2's narration — does the voice read right?"

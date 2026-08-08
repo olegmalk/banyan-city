@@ -3534,3 +3534,104 @@ owns the `platform: local-gpu (MSI)` mislabel on `wan5b-b01.mp4`'s sidecar (that
 clip reports a 25.7GB card, which is the 5090, not the 12GB MSI; render-time
 sidecars are not retro-edited, so that one is a correction annotation plus a
 `--worker` flag, not an edit).
+
+## 2026-08-08 — the founder went through all forty candidate frames: one pick, five rejections, and the redraw wave is gated on a question in the OTHER episode
+
+He screened checklist item 02 — the forty replacement frames rendered on 2026-08-07
+for the six beats he refused in v32 — and answered every beat. **One frame survived.**
+
+| beat | verdict | his words |
+|---|---|---|
+| 3 | **REJECT ALL** — both rounds, 8 frames | new direction: it should be a **CLOSE-UP**; standing note (unmistakably indoors, domestic) still holds |
+| 6 | **REJECT ALL** — 4 frames | none quite work — **no axis stated**, and none has been invented for him |
+| 10 | **DELEGATED → rejected by the steward** | *"b10-r1-s3 actually has character consistency, although it isn't exactly showing roots, so maybe it's not aligning with the correct idea, you decide."* |
+| 12 | **PICK `b12-r2-s1`** | *"not sure what it's supposed to be"* — recorded, and **the pick stands** |
+| 14 | **REJECT ALL** — 4 frames | *"all too small, not good character consistency"* |
+| 15 | **REJECT ALL** — 4 frames | *"bad character consistency"* |
+
+Every label above resolves through `REVIEW-KEY-0808.md`, the pixel-matched address
+map written for this pass; nothing here was identified by grid position.
+
+**BEAT 12 IS CANON.** `takes/stills/12-undefined-r2-s1.png` (seed 20261731, round 2,
+832x1216, sha256 `5bf2f645215e4fa10b47eb1e9f189edbf8775d056162791db410556b84913d87`)
+is promoted byte-for-byte to
+`genomes/sapling/nodes/001-capability-inventory/stills/12-undefined.png` — the same
+mechanics as 002b's "r3-s3 and retire" a day earlier, because that is the file
+`video_task` actually globs for a conditioning frame. The 2026-07-27 frame it
+replaces — the dark place with the dry cracked grey floor he named on 2026-08-07 — is
+retired in place as `stills/12-undefined-REVOKED-cracked-grey.png` rather than
+deleted (R6); the renderers skip any name containing `REVOKED`
+(`video_task.py:1182`, `:1295`, `:1359`). Checksum, seed and prompt provenance are in
+`stills/README.md`, which also now documents rename-not-delete as the revocation
+method the directory has actually been using for five beats.
+
+**The reservation on the pick is recorded verbatim and is not a rejection.** *"Not
+sure what it's supposed to be"* is the same legibility complaint that condemned beat
+14, and it is written beside the pick rather than filed as a compliment — but he named
+the frame, the frame is canon, and nothing re-renders on the strength of it. If it
+comes back on the assembled v33 the lever is staging or caption, not a fifth prompt:
+two rounds already established that Animagine draws the shape when asked for geometry
+and nothing when asked for effort.
+
+**BEAT 10 WAS DELEGATED AND THE STEWARD DECIDED IT AGAINST THE SCRIPT, NOT AGAINST
+TASTE.** He offered the frame one virtue (character consistency) and one doubt (no
+roots) and asked whether the doubt was fatal. The rule applied was whether visible
+roots are load-bearing for the beat's R1 state change or its text, or incidental
+staging. Load-bearing, three ways, all of them in `node.md`:
+
+- the beat's own on-screen card is `SENSE   ✓  roots / air / vibration` — a frame with
+  no roots makes the overlay contradict the plate;
+- the beat's image line is *"the image blooms: an underground root-map, veins of dark
+  water, mineral glitter"*;
+- the node's R1 is *"capabilities exactly two (sense, grow)"* and this beat is the
+  entire demonstration of the first — roots are the organ the sense runs on, and the
+  VO's *"I can taste the water table"* has no visible mechanism without them.
+
+The 2026-08-07 rewrite that brought the camera up out of the ground kept `pale roots
+at the surface` in the prompt for that reason. **REJECT.** Consistency is what the
+redraw must preserve, not what the beat's subject may be traded for — and the call is
+cheap for him to overrule, which is said on the review page in those words.
+
+**CHARACTER CONSISTENCY IS THE THROUGH-LINE, AND IT IS SOMEONE ELSE'S OPEN QUESTION.**
+He named it on 14, on 15, and on 10 as the near-saving virtue — four of the five
+rejections turn on it. There is no technique in this tree for holding a design steady
+across shots, and choosing one is exactly **checklist item 07**: whether the show gets
+a character sheet, one approved drawing every later beat is drawn against. Episode 2
+asked first because eighty frames came back as twenty different shows. The answer
+governs episode 1's five redraws too — same model, same missing anchor.
+
+**So the redraw wave is GATED and no render was fired.** Filed as
+`ep1-stills-redraw-wave2-1786197600` in `pipeline/farm-queue.yaml` `backlog:`,
+`gate: founder`, `gate_ref:` checklist item 07, with each beat's direction baked into
+the `cmd` so it is executable by someone who has read nothing else (3 close-up; 6
+unchanged sky, no invented fault; 10 roots visible AND re-lensed lower/closer than 14
+so the twins separate — 10 moves, 14 keeps the script's *"Low at the base of the
+trunk"*; 14 subject much bigger in frame; 15 composition unchanged, character
+redrawn). `queue_promoter.py --dry-run` shows it WAITING, not runnable.
+
+**This is a gate that had to earn itself against the standing rule**, since a job with
+no physical dependency starts now. It earns it on the recipe being undecided: firing
+five redraws on the old technique buys five more frames of five different shows and
+spends his next screening pass on a question he has already been asked. ONE SAMPLE
+BEFORE ANY BATCH then applies to the new technique the moment it is chosen — one beat
+screened before the other four run. `ep1-stills-rework-1786124640` stays open beside
+it: it delivered these forty frames but its own text still names beats it did not
+settle, and 7/8/9 is still an unanswered pick.
+
+**Item 03 got a note, not a resolution.** He said of the 7/8/9 progression *"i am
+confused? all of these are mixed in?"* — and he was right: `progression-789` is one
+grid of fifteen frames with nothing saying which three belong together. That is our
+layout failing, not the frames. `TRIOS-789-0808.png` re-lays the same fifteen as five
+rows of three, wide→medium→close per row, so a pick is a row label (`T1`…`T5`)
+resolving through `REVIEW-KEY-0808.md`. `T1` is the only real trio — the round-2
+frames share one palette and one seed (20260726) with the lens as the only variable;
+`T2`–`T5` are round-1 seeds grouped by slot, a presentation convention, so mixing
+across them is legal. **Item 03 stays open.**
+
+**The review page now says all of this**, including the part that inverts the running
+order: item 02 moves to `state: settled` as the record of what he said, and the
+episode-2 block stops claiming it holds up nothing — item 07 blocks episode 1 as of
+today, and the checklist intro, the block heading and item 07 itself all say so. That
+page's own rule is that re-asking a closed question is the one thing it must not do;
+the corollary is that a block claiming to block nothing while blocking five redraws is
+the same failure pointed the other way.
