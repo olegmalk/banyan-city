@@ -78,8 +78,9 @@ changes is the distance. A close-up also gives the domestic reading somewhere to
 live at this size — a screen filling the frame with the warm lamp, the mug rim and
 the room's edge just inside it, rather than a desk photographed from across a room.
 
-**Not queued yet, and deliberately.** This redraw is GATED behind checklist item 07
-with beats 6, 10, 14 and 15 — see the wave note at the foot of this file.
+**QUEUED AND UN-GATED as of 2026-08-08**, with beats 6, 10, 14 and 15 — item 07 was
+answered (no character sheet; the sapling reads tall) and the founder gate came off.
+Beat 15's sample is screened first. See the wave note at the foot of this file.
 ## Beat 04 — THE FALL (0:15–0:20) ⬜ needs footage04
 
 no dialogue - the death, in one shot. The mug reaches the floor before he does.
@@ -124,8 +125,9 @@ so what it inherits from that note is the shared-anchor technique itself — wha
 item 07 settles for holding a design steady across shots is what this beat's sky,
 light and palette get anchored to, so it stops being a frame from a different show.
 
-**Not queued yet, and deliberately.** GATED behind checklist item 07 — see the wave
-note at the foot of this file.
+**QUEUED AND UN-GATED as of 2026-08-08** — item 07 was answered (no character sheet;
+the sapling reads tall) and the founder gate came off. Beat 15's sample is screened
+first. See the wave note at the foot of this file.
 ## Beat 07 — ZERO (0) MOVING PARTS (0:29–0:35) ⬜ needs footage07
 
 Line: 'I appear to have zero (0) moving parts.' The STILLNESS is the joke - camera
@@ -155,22 +157,129 @@ moving); the grey is not. The episode's morning palette is back, `no grey sky, n
 overcast` are in the negative, and the 7/8/9 separation moves to the place it
 belongs — the LENS, in the progression set below.
 
+**PICKED 2026-08-08 (founder, R4): `p07-r1-s2` — the WIDE of the progression.**
+His answer to checklist item 03 was three addresses and nothing else, verbatim and in
+full: *"po7-r1-s2, po8-r2-s0, po9-r1-s2"*. The leading `po` is how he typed the `p07`
+/ `p08` / `p09` grammar; normalised to `p07-r1-s2, p08-r2-s0, p09-r1-s2` and resolved
+through `REVIEW-KEY-0808.md`, the pixel-matched address map, not by grid position.
+
+`takes/stills/07-zero-0-moving-parts-prog-s2.png` (seed **20262726**, round 1,
+`candidate_set: prog`, task `ep1-stills-rework-1786124640`, 832x1216) is promoted
+byte-for-byte to `stills/07-zero-0-moving-parts.png` — the file `video_task` globs for
+its conditioning frame — sha256 `76e4d81f…`. The frame it replaces is retired in place
+as `stills/07-zero-0-moving-parts-REVOKED-grayened.png` rather than deleted (R6); the
+renderers skip any name containing `REVOKED`. Checksums and provenance:
+`stills/README.md`.
+
+**THE GREY IS SETTLED BY THIS SAME PICK, and that was the item's design rather than a
+convenience.** Beat 7 was on his v32 list twice — it is the grey one (the RE-PALETTED
+note above) *and* the first of the three identical ones — and item 03 told him in his
+own copy that one frame has to satisfy both, so the wide he picks is also the answer
+to the grey. He picked a wide out of a set drawn on the
+episode's morning palette — `pale blue morning sky, soft warm morning light`, with
+`grey sky` and `overcast` in the negative — and raised no colour objection.
+That is the item working as written: **the palette complaint is CLOSED by this frame**,
+not left unmentioned. If v33 still reads washed out to him, that is a new note on a new
+frame, not this one still outstanding.
+
+**The prompt below is the progression prompt and it replaces the single.**
+`shots-alt-789.md` set its own rule when it was written: *"If he takes the
+progression, these three blocks replace their counterparts in `shots.md`."* His pick is
+that branch firing, so the replacement is executing his call, not making one. It also
+has to happen: `video_task.video_prompt()` cuts the first 22 words of this block into
+the video model's scene anchor, so a block still describing a "low close shot" beside a
+canon frame that is a wide establishing shot would mis-describe the very picture it is
+conditioning. Beat 7's block is `shots-alt-789.md`'s, unchanged.
+
 ```
-plant focus, no humans, a tiny two-leaf sprout on one thin stem standing dead still, low close shot from just above the soil, short green grass, pale blue morning sky, soft morning light, one thin cloud drifting, dead calm air, nothing moving, detailed, newest, masterpiece, best quality, very aesthetic No macro close-up, no many leaves, no grey sky. No photorealism, no 3D render look. 9:16 vertical, no text.
+plant focus, no humans, wide establishing shot of an open green field at morning, one tiny two-leaf sprout alone in the lower centre of frame standing dead still, short green grass to a low horizon, pale blue morning sky, soft warm morning light, one thin cloud drifting, dead calm air, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No macro close-up, no many leaves, no grey sky, no overcast. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
+
+### THE ONE THING TO CARRY FORWARD: HIS PICKS MIX ROUNDS
+
+**Wide and close are round 1; the medium is round 2.** `p07-r1-s2` and `p09-r1-s2` come
+from `candidate_set: prog`, `p08-r2-s0` from `candidate_set: prog2`. That matters
+because **round 1's one documented flaw was colour drift ACROSS the trio** — it is why
+round 2 exists at all, and item 03 said so on the page he was reading: *"the colour
+drifted across the three in round one, so they were drawn again with the palette
+pinned."* Round 2 pinned it by rendering all three shots from a byte-identical palette
+and environment block, one byte-identical negative, and **one shared seed, 20260726**,
+with the lens as the only variable. Taking one frame out of that trio and two out of
+round 1 keeps none of that guarantee: the three canon frames now carry **three
+different seeds** (20262726 / 20260726 / 20262728), and `09`'s negative is not even the
+same string as the other two (it drops `macro close-up`, adds `leaf cluster`, and
+repeats `text`).
+
+**This is his call and it is not being second-guessed.** He picked per beat with the
+three sheets side by side — which is exactly what `LABELED-beat07-all.png`,
+`-beat08-all` and `-beat09-all` were rebuilt for, on his instruction, and mixing rounds
+was stated as a legal answer in the copy he answered from. A per-beat pick is a better
+answer than a row pick if the best wide and the best close happen to live in round 1.
+
+**What the record has to say anyway: the drift risk transfers to the assembled cut, and
+it gets judged at the v33 screening.** Nothing here is a reason to re-render now, and
+nothing here overrides him. If 7→8→9 reads as three colour temperatures instead of one
+camera moving in, the fix is cheap — the round-2 wides and closes already exist
+(`p07-r2-s0`, `p09-r2-s0`), and re-rendering any single beat on the palette-locked block
+is 39 seconds on the rtx5090 at $0. **Do not pre-empt that with a re-render, and do not
+report the risk as settled until he has seen the three cut together.**
+
 ## Beat 08 — SEV-1 (0:35–0:48) ⬜ needs footage08
 
 Line: 'Right. Sev-1.' Stillness arriving is the shot; post burns the terminal lines.
 
+**PICKED 2026-08-08 (founder, R4): `p08-r2-s0` — the MEDIUM of the progression, and
+the only one of the three he took from round 2.** His words are the address itself:
+*"po7-r1-s2, po8-r2-s0, po9-r1-s2"* — see **Beat 07** for the verbatim answer, the
+normalisation, and the mixed-round note that governs all three.
+
+`takes/stills/08-sev-1-prog2-t0.png` (seed **20260726**, round 2, `candidate_set:
+prog2`, task `ep1-stills-round2-1786129764`, 832x1216, 39s wall) is promoted
+byte-for-byte to `stills/08-sev-1.png`, sha256 `e886758c…`. The 2026-07-27 frame it
+replaces — one of the three he called *"basically the same picture"* — is retired in
+place as `stills/08-sev-1-REVOKED-same-picture.png` (R6).
+
+**The block below is the round-2 prompt, not `shots-alt-789.md`'s beat 08.** This is
+the one place where the alt file is NOT the authority, and the difference is the whole
+point of round 2: the r2 prompts live in `render_wave2.py` and their environment clause
+is byte-identical across all three shots, so the alt file's *"holding perfectly still
+in short green grass … damp brown soil at its base … dust motes drifting"* became
+*"holding perfectly still, the plant filling the middle of the frame, short green
+grass, damp brown soil"*. The text below is what the model actually saw, read out of
+`08-sev-1-prog2-t0.png.meta.yaml`, with the negative written back into this file's
+`No …` dialect from that same sidecar. The dust motes are gone from the prompt because
+they were gone from the render.
+
 ```
-a single small leaf on a thin stem holding perfectly still, dust motes settling in sunlight around it, calm short grass, pale blue sky, quiet, low close shot, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+plant focus, no humans, medium shot of one tiny two-leaf sprout holding perfectly still, the plant filling the middle of the frame, short green grass, damp brown soil, pale blue morning sky, soft warm morning light, dead calm air, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No macro close-up, no many leaves, no grey sky, no overcast. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 ## Beat 09 — WHOAMI (0:48–0:53) ⬜ needs footage09
 
 no dialogue - post types the whoami overlay over this frame.
 
+**PICKED 2026-08-08 (founder, R4): `p09-r1-s2` — the CLOSE of the progression.** His
+words are the address itself: *"po7-r1-s2, po8-r2-s0, po9-r1-s2"* — see **Beat 07** for
+the verbatim answer, the normalisation, and the mixed-round note that governs all three.
+
+`takes/stills/09-whoami-prog-s2.png` (seed **20262728**, round 1, `candidate_set:
+prog`, task `ep1-stills-rework-1786124640`, 832x1216) is promoted byte-for-byte to
+`stills/09-whoami.png`, sha256 `16ec0b49…`. The 2026-07-27 frame it replaces — the
+third of the three he called *"basically the same picture"* — is retired in place as
+`stills/09-whoami-REVOKED-same-picture.png` (R6).
+
+**This is the frame post types `whoami` over**, so it is also the one where the sprout
+has to read as a face; that was the close's whole job in the proposal and it is what
+the pick endorses. The block below is `shots-alt-789.md`'s beat 09, unchanged, for the
+reason given under **Beat 07**.
+
+**Its negative is the odd one of the three** — round 1 drew this beat with `leaf
+cluster` in the negative and without `macro close-up`, and with `text` duplicated (the
+sidecar's own `NEGWARN`). That is recorded rather than tidied, because it is part of
+why this frame looks the way it does, and because a later re-render on the round-2
+block would not reproduce it.
+
 ```
-a tiny two-leaf green sprout standing alone in short grass, centered, quiet empty composition, soft pale morning sky, gentle light, low close shot, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+plant focus, no humans, close shot on one tiny two-leaf sprout, its two leaves and thin stem filling the upper frame, short green grass and damp brown soil soft behind, pale blue morning sky, soft warm morning light, one dew drop on a leaf edge, dead calm air, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No many leaves, no leaf cluster, no grey sky, no overcast. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 ## Beat 10 — SENSE (0:53–1:03) ⬜ needs footage10
 
@@ -230,8 +339,9 @@ that. One of the two has to be re-lensed; this beat is the one that should move,
 has already been moved once. Take 10 lower and closer — into the soil line rather than
 standing off it — so the two read as different distances on different subjects.
 
-**Not queued yet, and deliberately.** GATED behind checklist item 07 — see the wave
-note at the foot of this file.
+**QUEUED AND UN-GATED as of 2026-08-08** — item 07 was answered (no character sheet;
+the sapling reads tall) and the founder gate came off. Beat 15's sample is screened
+first. See the wave note at the foot of this file.
 ## Beat 11 — GROW (1:03–1:09) ⬜ needs footage11
 
 Line: 'Latency: three days. Throughput: one leaf.' Timelapse on the one new leaf.
@@ -342,8 +452,9 @@ Both hold together with the note the checklist already raised: **10 and 14 are n
 twins.** 14 keeps its framing, because *"Low at the base of the trunk: roots gripping
 soil"* is the script's own line; beat 10 is the one that moves. See beat 10 above.
 
-**Not queued yet, and deliberately.** GATED behind checklist item 07 — see the wave
-note at the foot of this file.
+**QUEUED AND UN-GATED as of 2026-08-08** — item 07 was answered (no character sheet;
+the sapling reads tall) and the founder gate came off. Beat 15's sample is screened
+first. See the wave note at the foot of this file.
 
 ## Beat 15 — SOMETHING'S COMING (1:34–1:37) ⬜ needs footage15
 
@@ -374,34 +485,51 @@ does not match beats 6, 10, 11 and 12 breaks the identity at the worst possible
 moment. Redraw direction: the composition unchanged, the character anchored by
 whatever item 07 settles.
 
-**Not queued yet, and deliberately.** GATED behind checklist item 07 — see the wave
-note directly below.
+**QUEUED AND UN-GATED as of 2026-08-08** — item 07 was answered (no character sheet;
+the sapling reads tall) and the founder gate came off. This beat is the ONE SAMPLE the
+wave draws and screens first. See the wave note directly below.
 
 ---
 
-## THE 2026-08-08 REDRAW WAVE — beats 3, 6, 10, 14, 15 — GATED, NOT QUEUED
+## THE 2026-08-08 REDRAW WAVE — beats 3, 6, 10, 14, 15 — UN-GATED, SAMPLE RUNNING
 
 The founder screened all forty candidate frames on 2026-08-08 and the wave produced
 **one pick and five rejections**: `b12-r2-s1` is canon (beat 12 above), and beats 3,
-6, 10, 14 and 15 need drawing again. Beat 7 is not in this list — it is answered by
-the 7/8/9 progression, which is checklist item 03 and still open.
+6, 10, 14 and 15 need drawing again. Beats 7, 8 and 9 are not in this list — they were
+answered separately, later the same day, by his three picks on the progression
+(checklist item 03, now settled; see those beats above). **So as of the end of
+2026-08-08, ten of episode 1's fifteen shots hold a frame he has not refused and five
+do not** — 3, 6, 10, 14 and 15 still have their old PNGs on disk, unrevoked because a
+revocation needs a replacement to point at and their candidates were all rejected, but
+each is a frame he turned down in v32. This wave is those five.
 
-**Why nothing is rendering tonight, stated plainly, because the standing rule is that
-a runnable job runs now.** This wave is not runnable. **Character consistency is the
-founder's dominant objection** — he named it on 14 and 15 as the fault, and on 10 as
-the one virtue that nearly saved a frame — and the technique that fixes it has not
-been chosen. That choice is **checklist item 07**, the open question of whether
-episode 2 gets a character sheet: one approved drawing the later beats are drawn
-against. Episode 2 asked it first because eighty frames came back as twenty different
-shows, but the answer governs episode 1's redraws too — the same model, the same
-absence of an anchor, the same drift. Firing five redraws on the old technique before
-that answer lands buys five more frames of five more shows and spends the founder's
-next screening pass on a question he has already been asked.
+**IT WAS GATED AND THEN IT WAS NOT, AND BOTH HALVES BELONG HERE.** Character
+consistency was the founder's dominant objection across this wave — he named it on 14
+and 15 as the fault and on 10 as the one virtue that nearly saved a frame — and no
+technique existed in this tree for holding a design steady across shots. So the five
+were held with `gate: founder` on **checklist item 07** rather than fired on the old
+recipe, because five redraws on an undecided technique buy five more frames of five
+different shows.
 
-So the gate is a real dependency and not a wait for office hours: the recipe is
-undecided, and **ONE SAMPLE BEFORE ANY BATCH** applies to the technique the moment it
-is. When item 07 is answered, the wave fires as one sample first, then the set.
+**THE GATE CAME OFF THE SAME DAY. He answered item 07, verbatim:** *"whats the point
+of a character sheet for the engineer? not like he's gonna show up again. im talking
+about the sapling, and its very simple, just make it tall in each clip of it, and
+thats pretty much it. dont overthink the leafs on it."*
+
+**That is the whole technique and it is one line: the sapling READS TALL wherever it
+appears.** The character sheet is DECLINED on his stated ground — it is machinery for
+a character who recurs, and the engineer does not. Do not build one, do not reference
+one in a prompt, do not re-open it on a metric. **Leaf detail is off the table**: no
+prompt term, QA check or screening note counts leaves, matches leaf shape or fails a
+frame on foliage. Beat 6's *no leaf in the image* survives that and is NOT an
+exception — it is his own composition instruction for a sky shot, not a detail rule.
+
+**ONE SAMPLE BEFORE ANY BATCH still applies, and it now lives in the `cmd` rather than
+in a gate.** Beat 15 is drawn first with the sapling tall and screened as one frame —
+candidates `b15-r3-s0..s3` — before the other four run. His verdict on that one sample
+is what releases the remaining four; the rule survived the gate coming off, which is
+the point of it being a rule and not a gate.
 
 Queue entry: `ep1-stills-redraw-wave2-*` in `pipeline/farm-queue.yaml` `backlog:`,
-`gate: founder`, carrying each beat's direction. The per-beat directions are the
-authority and live in the beat sections above.
+now runnable with no founder gate, carrying each beat's direction. The per-beat
+directions are the authority and live in the beat sections above.

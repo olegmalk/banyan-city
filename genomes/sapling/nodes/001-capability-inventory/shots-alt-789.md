@@ -1,5 +1,18 @@
 # Node 001 — ALTERNATE shot list for beats 07/08/09 (progression set)
 
+> **SUPERSEDED 2026-08-08 — THE PROPOSAL WON AND HAS MOVED.** The founder picked one
+> frame per beat out of this set (`p07-r1-s2`, `p08-r2-s0`, `p09-r1-s2`), so the branch
+> written into the last paragraph of this header fired: **the three blocks below now
+> live in `shots.md`**, which is the only file the pipeline reads and the only place to
+> edit them. Kept, not deleted, because it is the record of what was proposed and
+> because thirteen of the fifteen candidates it produced are still on the machine.
+>
+> **One block below is NOT what shipped.** Beat 08's canon frame came from round 2,
+> whose prompts live in `render_wave2.py` with a palette clause byte-identical across
+> all three shots — so `shots.md`'s beat 08 reads *"holding perfectly still, the plant
+> filling the middle of the frame, short green grass, damp brown soil"* and drops the
+> dust motes. Beats 07 and 09 moved across unchanged. **Do not render from this file.**
+
 **Not the live prompts.** `shots.md` is still the only file the pipeline reads; this
 one exists so a proposal can be rendered and judged side by side with what is
 already there, without editing the beats it is competing against.
