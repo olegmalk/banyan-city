@@ -1448,24 +1448,53 @@ backlog:
 # assumed to be empty; it is a history read on four branches, filed as
 # courier-branch-sweep below rather than quietly dropped.
 
-- id: courier-branch-sweep-1786190400
-  runner: manual
-  worker: any
-  needs: []
-  window: any
-  est_minutes: 30
-  cmd: >-
-    on each farm-results-* branch (rtx5090, msi, m1pro, m2) and runpod-results,
-    `git log --format='%H %s' --name-only` filtered to commits whose subject
-    starts `hb:`, and list every path outside farm-out/ that any of them touched.
-    Anything found is someone's work committed under a heartbeat message — decide
-    per file whether it is still wanted anywhere before the branch is next
-    force-pushed over.
-  why: >-
-    The bare-commit bug is fixed forward but wrote history for as long as it
-    existed, and these branches are force-pushed on a 5-minute timer, so anything
-    swept into them is one push from being unreachable. The consumer is whoever
-    lost a file in a shared checkout and has never been told where it went.
+# RETIRED 2026-08-08 NIGHT — courier-branch-sweep-1786190400, audited in the commit
+# that carries this line. THE SWEEP IS REAL AND NOTHING WAS LOST. Both halves of
+# that sentence were measured, and the second half is the one the entry did not
+# expect.
+#
+# THE SWEEP HAPPENED. Diffing each branch tip against its own merge-base with main
+# — which is the only comparison that isolates what the courier wrote, since a
+# courier branch is a whole checkout and "differs from today's main" mostly just
+# means main moved on — 478 file states outside the out-dirs were committed under
+# `hb:` messages: msi 212, m1pro 264, m2 2, rtx5090 1, runpod 0. m1pro's is the
+# widest (CLAUDE.md, three workflow files, .gitignore, STATE.md, the audio-sources
+# tree, the footage archive); m2's is the narrowest and the most on-the-nose
+# (pipeline/farm-queue.yaml and pipeline/farm_worker.py — the courier committing
+# its own source).
+#
+# NOTHING IS ONE PUSH FROM UNREACHABLE, which is what the entry was filed to find
+# out. Every blob those commits introduced was checked against the set of objects
+# reachable from origin/main (`git rev-list --objects origin/main`, 7,616 objects).
+# Across ALL 231 branch commits, not just the tips, and counting blobs only —
+# the first pass counted tree objects too and read as hundreds of unique files,
+# which was an artefact of the filter, not a finding:
+#     msi      217 distinct blobs outside farm-out/  → 0 not reachable from main
+#     m1pro    184                                   → 0
+#     m2         6                                   → 0
+#     rtx5090    1                                   → 1  (telemetry.json)
+#     runpod     0                                   → 0
+# Zero. Every state the courier swept in is a state that also reached main through
+# a real commit. The bug wrote noise into history; it did not capture a single edit
+# that then went missing. So the answer to this entry's own consumer line — whoever
+# lost a file in a shared checkout — is that there is no such person, and the four
+# stale branches can be force-pushed over without losing anything. That is a
+# licence this audit grants and the entry could not.
+#
+# THE ONE UNIQUE BLOB IS NOT THE BUG. `telemetry.json` on farm-results-rtx5090 sits
+# outside farm-out/ by design — it is what banyan-telemetry publishes, rewritten
+# every ten minutes, and the newest copy is the only one anyone wants. It is unique
+# because it is live, not because it was swept.
+#
+# WIDER THAN ASKED, DELIBERATELY. The entry said "commits whose subject starts
+# `hb:`"; this covered every commit on each branch not on main. The difference is
+# exactly one commit — rtx5090's telemetry push — and filtering it out would have
+# hidden the single unique blob in the whole audit.
+#
+# HISTORY WAS NOT REWRITTEN, per the brief. Three of the four farm branches are
+# already cold (m2 2026-07-30, msi 2026-07-31, m1pro 2026-08-07; only rtx5090 is
+# live), so the cheapest cleanup is to let the next force-push take them, and no
+# entry is filed to do it because the audit says there is nothing to preserve.
 
 # RETIRED 2026-08-08 NIGHT — 002b-candidates-dangling-links-1786190460, done in the
 # commit that carries this line. (B) WAS CHOSEN AND (A) IS DELETED: no candidate PNG
@@ -1521,26 +1550,72 @@ backlog:
 # repositories, including the no-git case, which must fall back to every file on
 # disk rather than publish nothing; a mocked `ls-files` would only test the mock.
 
-- id: rtx5090-schtasks-sweep-1786190520
-  runner: manual
-  worker: any
-  needs: []
-  window: any
-  est_minutes: 30
-  cmd: >-
-    on the rtx5090 box (ssh alias rtx5090, cmd.exe), `schtasks /query /fo LIST
-    /v | findstr /i banyan` to list every banyan-* registration, and for each one
-    read what it fires before deleting it — a task that re-arms a render is not
-    the same as a task that only logs. Delete with `schtasks /delete /tn <name>
-    /f`, one at a time, and paste the before/after list into the report.
-  why: >-
-    Roughly 19 stale banyan-* scheduled tasks are registered on that box from past
-    lanes; two of them were armed to RE-FIRE a render and were killed on
-    2026-08-08 after they did. The rest are unaudited. The consumer is anyone who
-    starts a render on that machine and needs to know that nothing else will
-    launch onto the same card behind them — which is exactly the collision that
-    cost ten hours on 2026-08-07. Supervised on purpose: a blind `/delete` loop
-    over a findstr match is how a scheduled task somebody still wants disappears.
+# RETIRED 2026-08-08 NIGHT — rtx5090-schtasks-sweep-1786190520, done in the commit
+# that carries this line. 19 banyan-* registrations before, 2 after, each deletion
+# verified by re-query rather than by trusting its own SUCCESS line.
+#
+# NOT ONE OF THE 19 WAS ARMED, and that is the correction this entry needs. The
+# entry's class (a) — "armed to RE-FIRE a render" — was already empty when the
+# sweep opened: every one of the 19 reported `Next Run Time: N/A`, fourteen as
+# "On demand only" and four as an expired "One Time Only". The two that really were
+# armed, banyan-wave4 and banyan-wave5, were deleted earlier the same day by
+# wave-runner-0808 and C:\banyan-farm\GPU-CLAIM.txt records it. So all 17 deletions
+# are class (b), expired or trigger-less, and nothing tonight removed a live trigger.
+#
+# KEPT, EXPLICITLY — the two the entry's class (c) protects:
+#   banyan-telemetry     At logon time, Status: Running. Registered by
+#                        pipeline/mktask-telemetry.ps1, documented in
+#                        pipeline/telemetry.py, and its output is visible from here:
+#                        farm-results-rtx5090 gains a `telemetry: rtx5090 …` commit
+#                        every ten minutes. Still Running and still pushing after
+#                        the sweep.
+#   banyan-worker-start  The documented restart handle for farm_worker.py —
+#                        `schtasks /run /tn banyan-worker-start` appears four times
+#                        in STATE.md as the way the worker is brought back up.
+#
+# DELETED (17). All Status: Ready, all Next Run N/A, all payloads under
+# C:\banyan-farm. Last Result 267011 = never ran under the task at all:
+#   banyan-a14b-fp8        bench-a14b-fp8.cmd            rc 0    05/08
+#   banyan-anisora-convert anisora-convert.cmd           never ran
+#   banyan-bake-animegen   bake-animegen.cmd             never ran
+#   banyan-bench-5b-modes  bench-5b-modes.cmd            never ran
+#   banyan-bench-a14b      bench-a14b.cmd                rc 0    04/08
+#   banyan-bench-t1t2t3    bench-t1t2t3.cmd              rc 0    04/08
+#   banyan-colour-bucket   probe-colour\colour-bucket.cmd rc 0   06/08
+#   banyan-colour-trace    probe-colour\trace.ps1        rc 0    06/08
+#   banyan-fastwan         fastwan.cmd                   rc 0    05/08
+#   banyan-fetch-queue     fetch-queue.cmd               rc 0    05/08
+#   banyan-ltx-components  ltx-components.cmd            rc -2147023829
+#   banyan-ltx-distilled   ltx-distilled.cmd             rc 0    04/08
+#   banyan-ltx-fetch       ltx-fetch.cmd                 rc -2147023829
+#   banyan-ltx-preview     ltx-preview.cmd               rc 0    05/08
+#   banyan-ltx-sample      ltx-render.cmd                rc 0    04/08
+#   banyan-night-chain     night-chain.cmd               rc 0    04/08
+#   banyan-t7-chain        t7-chain.cmd                  rc 0    05/08
+#
+# READ BEFORE DELETING, as the entry demanded, and one check earned its place:
+# `findstr /i /m schtasks C:\banyan-farm\*.cmd *.ps1` — NO box script re-arms or
+# chains a task. Every hit is a REM comment ("Fire it with: schtasks /run …") or a
+# stopper (stopdownloads.ps1 issues /End, stopqueue.ps1 the same). night-chain.cmd
+# and t7-chain.cmd are chains in the sense that they run four python steps in a
+# row, not in the sense that they register anything. Nothing re-armed itself.
+#
+# DELETION IS REVERSIBLE HERE, which is why 17 could go rather than 3. All 19
+# definitions were exported to C:\banyan-farm\schtasks-archive-20260808\*.xml
+# (19 files, 22,679 bytes, verified non-empty) BEFORE any /delete; restore with
+# `schtasks /create /tn <name> /xml <file>`. The .cmd and .ps1 payloads were never
+# touched — a registration is the handle, not the recipe, and every recipe is still
+# on disk. The three that never ran are the ones most likely to be wanted back and
+# are named above for exactly that reason.
+#
+# STATE AT SWEEP TIME: GPU 0 MiB / 0% used, GPU-CLAIM.txt reading RELEASED, and no
+# banyan task Status: Running except telemetry — so nothing was deleted out from
+# under a live render.
+#
+# LOOSE END, NAMED NOT FIXED: stopqueue.ps1 and stopdownloads.ps1 both target
+# banyan-fetch-queue, which no longer exists, so those two helpers are now no-ops
+# against a task that is gone. They stop a download that finished on 05/08; leaving
+# them is harmless and rewriting box scripts was not in this brief.
 
 # NOT the frames bug it looked like. Kept as an entry because what it IS is worse
 # for the queue's honesty than an arithmetic error would have been.

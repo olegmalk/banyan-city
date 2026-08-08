@@ -4610,3 +4610,98 @@ Gates: `lint_genome.py` rc=0, `test_pipeline.py` rc=0. `build_site.py` still exi
 1 locally only, on the same 164 broken links into `002b-first-citizen-media-takes/`
 diagnosed under the 12% entry above — gitignored candidate PNGs that exist on this
 machine and not on CI. Unchanged by this commit and not re-diagnosed.
+
+---
+
+## 2026-08-08 (night) — box hygiene: 19 scheduled tasks down to 2, and the courier sweep lost nothing
+
+Two overnight audits on the rtx5090 box and the courier branches. Neither
+rendered anything, neither touched the founder's screen, and both were filed
+because a past incident made them urgent. **Both premises turned out to be
+partly wrong, in the safe direction.**
+
+**SCHEDULED TASKS: 19 → 2.** Every banyan-* registration on the 5090 was read
+before anything was deleted. The finding that matters: **not one of the 19 was
+armed.** All reported `Next Run Time: N/A` — fourteen "On demand only", four an
+expired "One Time Only", one (telemetry) "At logon time". The class the queue
+entry was written to catch — armed to re-fire a render onto a card someone else
+is using, the collision that cost ten hours on 2026-08-07 — was already empty:
+banyan-wave4 and banyan-wave5 were killed earlier the same day by
+wave-runner-0808, and `C:\banyan-farm\GPU-CLAIM.txt` says so. So all 17
+deletions were the expired/trigger-less class, and nothing tonight removed a
+live trigger.
+
+**KEPT, and named so nobody has to guess:** `banyan-telemetry` (At logon,
+Status: Running, registered by `pipeline/mktask-telemetry.ps1`, documented in
+`pipeline/telemetry.py`) and `banyan-worker-start` (the restart handle
+`schtasks /run /tn banyan-worker-start`, which appears four times in this file
+as the way the worker comes back). Telemetry was verified still Running *after*
+the sweep, and its output is checkable from this laptop — farm-results-rtx5090
+gains a `telemetry: rtx5090 …` commit every ten minutes.
+
+**DELETED (17):** a14b-fp8, anisora-convert, bake-animegen, bench-5b-modes,
+bench-a14b, bench-t1t2t3, colour-bucket, colour-trace, fastwan, fetch-queue,
+ltx-components, ltx-distilled, ltx-fetch, ltx-preview, ltx-sample, night-chain,
+t7-chain. Each deleted individually with `/f` and each verified absent by
+re-query — the after-list is two rows, not seventeen SUCCESS lines taken on
+trust.
+
+**Why 17 could go rather than 3: the deletion is reversible.** All 19
+definitions were exported to
+`C:\banyan-farm\schtasks-archive-20260808\*.xml` (19 files, 22,679 bytes,
+verified non-empty) *before* any `/delete`; `schtasks /create /xml` puts any of
+them back. The `.cmd`/`.ps1` payloads were never touched — the registration is
+the handle, not the recipe. Three of the seventeen (anisora-convert,
+bake-animegen, bench-5b-modes) had **never run under their task** at all
+(`Last Result: 267011`); they are the likeliest to be wanted back and are named
+here for that reason.
+
+One check earned its keep: `findstr /i /m schtasks C:\banyan-farm\*.cmd *.ps1`
+showed **no box script re-arms or registers a task**. Every hit is a REM comment
+or a `/End` stopper. At sweep time the GPU read 0 MiB / 0%, GPU-CLAIM.txt read
+RELEASED, and no banyan task was Running except telemetry — nothing was deleted
+out from under a live render. Loose end named not fixed: `stopqueue.ps1` and
+`stopdownloads.ps1` both target the now-deleted `banyan-fetch-queue` and are
+no-ops against a download that finished on 05/08.
+
+**COURIER BRANCHES: the sweep is real and nothing was lost.** The bare-commit
+bug (fixed at `farm_worker.py:156` in d606f80) genuinely wrote foreign files
+into courier history — **478 file states outside the out-dirs**, measured as
+each branch tip against its own merge-base with main, which is the only
+comparison that isolates what the courier wrote: msi 212, m1pro 264, m2 2,
+rtx5090 1, runpod 0. m1pro's is the widest (CLAUDE.md, three workflow files,
+.gitignore, STATE.md, the audio-sources tree, the footage archive); m2's is the
+most on-the-nose — `farm-queue.yaml` and `farm_worker.py`, the courier
+committing its own source.
+
+**But none of it is one push from unreachable, which is what the entry was
+filed to find out.** Every blob those commits introduced was checked against the
+objects reachable from origin/main (7,616 objects), across all 231 branch
+commits rather than just the tips, blobs only:
+
+| branch | distinct blobs outside out-dir | not reachable from main |
+|---|---|---|
+| farm-results-msi | 217 | **0** |
+| farm-results-m1pro | 184 | **0** |
+| farm-results-m2 | 6 | **0** |
+| farm-results-rtx5090 | 1 | 1 — `telemetry.json` |
+| runpod-results | 0 | **0** |
+
+Zero. Every state the courier swept in also reached main through a real commit;
+the bug wrote noise into history but never captured an edit that then went
+missing. The single unique blob is **not the bug** — `telemetry.json` lives
+outside `farm-out/` by design, is rewritten every ten minutes, and is unique
+because it is live. So the consumer this entry named — "whoever lost a file in a
+shared checkout" — **does not exist**, and the three cold branches (m2
+2026-07-30, msi 2026-07-31, m1pro 2026-08-07) can be force-pushed over without
+losing anything. No history was rewritten tonight, per the brief; the audit
+grants a licence the entry could not.
+
+Two corrections worth recording because they were mine. The first content test
+compared branch tips to *today's* main and read as 153 "differing" files on msi
+alone — an artefact of main having moved on, not of the courier. The second
+counted **tree** objects alongside blobs and reported 184 unique paths on msi;
+filtering to blobs took it to zero. Both were caught before they reached this
+file, and the numbers above are from the corrected passes.
+
+Gates: `lint_genome.py` rc=0, `test_pipeline.py` rc=0.
