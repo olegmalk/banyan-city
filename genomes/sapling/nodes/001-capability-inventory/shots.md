@@ -470,7 +470,7 @@ character something is walking toward rather than on dirt. Nothing is shown of w
 is coming, which is the hook (`no person, no figure, no monster` in the negative).
 
 ```
-plant focus, no humans, a tiny two-leaf sprout standing at ground level in short grass, loose soil grains scattering around its base, a strong warm orange glow spilling in from the right edge of frame, long shadows stretching left, evening field, ominous, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No underground, no cave, no black void, no figure, no monster. No photorealism, no 3D render look. 9:16 vertical, no text.
+plant focus, no humans, one slender sapling standing tall in short grass, its thin stem rising well above the grass, loose soil grains scattering around its base, a strong warm orange glow spilling in from the right edge of frame, long shadows stretching left, evening field, ominous, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No underground, no cave, no black void, no figure, no monster. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 **REJECTED 2026-08-08 (founder, R4): ALL FOUR — `b15-r1-s0..s3`.** His words:
@@ -488,6 +488,28 @@ whatever item 07 settles.
 **QUEUED AND UN-GATED as of 2026-08-08** — item 07 was answered (no character sheet;
 the sapling reads tall) and the founder gate came off. This beat is the ONE SAMPLE the
 wave draws and screens first. See the wave note directly below.
+
+**RENDERED 2026-08-08 as the sample — `b15-r3-s0..s3`, awaiting his verdict.** Two
+things changed and nothing else did. The prompt above lost `a tiny two-leaf sprout
+standing at ground level` and gained `one slender sapling standing tall … its thin
+stem rising well above the grass`: that is his rule stated as the subject, and `tiny`,
+`sprout` and `ground level` were the three words that made it impossible. `two-leaf`
+went with them because it is a prompt term that counts leaves and leaf detail is off
+the table — not because the leaves changed. Composition, light, palette, seeds, model,
+size, steps and cfg are round 1's exactly (20260734/20261734/20262734/20263734), so a
+column of the sheet is a controlled pair and the only variable is this sentence.
+
+**And the negative had to give up ONE term: `tall tree`.** `sapling` trips
+`sd_prompt._SMALL`, which appends `SCALE_NEGATIVES` — `mature tree, large tree, tall
+tree, thick trunk, full canopy, forest, bush, shrubbery` — so the recipe as it stood
+asked for a tall plant and forbade a tall plant in the same breath. That is the same
+shape of fault as beat 3's un-negated `text`: a rule firing against the beat it was
+meant to help. `tall tree` is dropped for this sample ONLY, in the wave script, not in
+`sd_prompt.py`; everything else in that list stays, because a tall SAPLING is still not
+a mature tree with a thick trunk and a full canopy. If he passes the frame, that
+one-term removal is what episode 2's twenty prompts inherit — the reconciliation
+`ep2-stills-redraw-b02-21-1786192800` says to settle against the sample he passed
+rather than by guesswork. If he refuses it, nothing global was touched.
 
 ---
 

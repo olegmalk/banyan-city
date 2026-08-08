@@ -1,0 +1,25 @@
+# Still provenance (7.2), written AT RENDER TIME by render_wave3.py
+# on the rtx5090 (C:\banyan-farm\wave-20260808).
+# The negative below is what the model actually saw. The recipe's own
+# negative, before this script's one deliberate removal, was:
+#   photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, mature tree, large tree, tall tree, thick trunk, full canopy, forest, bush, shrubbery, humans, underground, cave, black void, figure, monster, photorealism, text
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+shot_beat: 15
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20260734
+seeds_in_batch: 4
+task: ep1-beat15-r3-1786193372
+candidate_set: r3
+negative_terms_removed: tall tree
+wall_seconds: 10
+cost_usd: 0
+note: |-
+  round 3, and the ONE SAMPLE that gates the rest of the 2026-08-08 redraw wave (beats 3, 6, 10, 14). Round 1's four candidates were rejected by the founder the same day on one axis, 'bad character consistency'; his ruling on checklist item 07, hours later, was that no character sheet exists or will and that the whole technique is one line — the sapling READS TALL wherever it appears, and do not overthink the leaves. This frame is that rule and only that rule: the subject clause went from 'a tiny two-leaf sprout standing at ground level' to 'one slender sapling standing tall, its thin stem rising well above the grass'. `two-leaf` went because it is a prompt term that counts leaves and leaf detail is off the table. Composition, light, palette, model, size, steps, cfg and the four seeds are round 1's exactly, so each column of LABELED-beat15-r3.png is a controlled pair. ONE recipe deviation, deliberate: `tall tree` is removed from the negative. It arrives via sd_prompt.SCALE_NEGATIVES, which fires because the prompt says `sapling`, and it would have forbidden the exact thing the sample exists to test — the same shape of fault as beat 3's un-negated `text`. The removal is scoped to this script; sd_prompt.py is unchanged, so nothing global moved before he looked.
+prompt: |-
+  plant focus, one slender sapling standing tall in short grass, its thin stem rising well above the grass, loose soil grains scattering around its base, a strong warm orange glow spilling in from the right edge of frame, long shadows stretching left, evening field, ominous, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, mature tree, large tree, thick trunk, full canopy, forest, bush, shrubbery, humans, underground, cave, black void, figure, monster, photorealism, text
