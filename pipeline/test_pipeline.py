@@ -2047,6 +2047,41 @@ def test_the_conditioning_plate_is_the_episode_crop(tmp: Path):
     check("the record hashes the bytes the model actually saw",
           rec["plate_sha256"] == pp.sha256_file(plate))
 
+    # 4b. THE SEPARATOR, which is the whole portability of that repo-relative
+    # pointer. The clips are rendered on the Windows box and the sidecars are read
+    # here, and `genomes\sapling\...` does not raise on posix — a backslash is a
+    # legal filename character, so the pointer just quietly names nothing. Asserted
+    # through a PureWindowsPath because that is the only way this Mac can see the
+    # bug at all: the local Path flavour never produces a backslash to strip.
+    from pathlib import PureWindowsPath
+    win = PureWindowsPath(r"genomes\sapling\nodes\002b-first-citizen\stills"
+                          r"\01-cold-open.png")
+    check("a windows repo-relative path is published with forward slashes",
+          pp.posix(win)
+          == "genomes/sapling/nodes/002b-first-citizen/stills/01-cold-open.png")
+    check("a windows absolute path keeps its drive and loses its backslashes",
+          pp.posix(PureWindowsPath(r"C:\banyan-farm\b01\01-704x1280.png"))
+          == "C:/banyan-farm/b01/01-704x1280.png")
+    check("nothing this platform can produce carries a backslash either",
+          "\\" not in rec["path"] and "\\" not in pp.rel_to_repo(still))
+
+    # AND THE CALL SITE, structurally, because the behaviour above cannot pin it
+    # from here: `Path("a\\b")` on posix is one segment named `a\b`, so the local
+    # flavour has no separator to convert and rel_to_repo would pass every
+    # assertion this machine can make even after a revert to `str()`. Both of its
+    # exits — the repo-relative one and the absolute fallback — must go through
+    # posix(), and CI runs on linux, so only the AST notices if one stops.
+    import ast
+
+    pp_src = (REPO / "pipeline" / "plate_prep.py").read_text(encoding="utf-8")
+    fn = next(n for n in ast.walk(ast.parse(pp_src, "plate_prep.py"))
+              if isinstance(n, ast.FunctionDef) and n.name == "rel_to_repo")
+    exits = [n.value for n in ast.walk(fn) if isinstance(n, ast.Return)]
+    check(f"both of rel_to_repo's {len(exits)} exits are converted, not str()'d",
+          len(exits) == 2
+          and all(isinstance(e, ast.Call) and getattr(e.func, "id", "") == "posix"
+                  for e in exits))
+
     # 5. AN ALREADY-CORRECT PLATE IS STILL RESAMPLED TO SIZE. Right aspect, wrong
     # scale is the same class of silent wrongness one step smaller.
     half = tmp / "half.png"

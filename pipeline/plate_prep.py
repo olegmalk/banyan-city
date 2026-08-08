@@ -46,7 +46,7 @@ arithmetic is unit-testable without an image and importable from the render venv
 """
 
 import hashlib
-from pathlib import Path
+from pathlib import Path, PurePath
 
 REPO = Path(__file__).resolve().parent.parent
 
@@ -149,6 +149,25 @@ def sha256_file(path) -> str:
     return h.hexdigest()
 
 
+def posix(path) -> str:
+    """Spell `path` with forward slashes whatever platform is holding it. PURE.
+
+    A sidecar is written on one machine and read on another. Until 2026-08-08 the
+    two v2 clips rendered on the 5090 box recorded
+    `path: genomes\\sapling\\nodes\\...` — a live pointer on Windows and a dead
+    one on the Mac where sidecars are actually consumed, because a backslash is a
+    legal filename character on posix, so nothing raises: the path simply names a
+    file that does not exist. Repo-relative provenance is only portable if its
+    separator is too.
+
+    The flavour of an already-constructed PurePath is PRESERVED rather than
+    re-parsed, which is what makes this testable off Windows: re-wrapping a
+    WindowsPath in the local Path flavour would fold `a\\b` into one segment and
+    the conversion would silently become a no-op on the machine running the test.
+    """
+    return (path if isinstance(path, PurePath) else PurePath(path)).as_posix()
+
+
 def rel_to_repo(path) -> str:
     """Repo-relative if it lives in the tree, absolute otherwise.
 
@@ -158,9 +177,9 @@ def rel_to_repo(path) -> str:
     """
     p = Path(path)
     try:
-        return str(p.resolve().relative_to(REPO))
+        return posix(p.resolve().relative_to(REPO))
     except (ValueError, OSError):
-        return str(p)
+        return posix(p)
 
 
 def fit_cover(img, tw: int, th: int, eps: float = ASPECT_EPS) -> tuple:
