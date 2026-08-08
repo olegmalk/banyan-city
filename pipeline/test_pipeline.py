@@ -1300,6 +1300,93 @@ def test_farm_still_sidecar_records_what_actually_ran(tmp: Path):
           "still_sidecar(" in loop and loop.index("img.save(") < loop.index("still_sidecar("))
 
 
+def test_bench_sidecar_names_the_beat_or_omits_it(tmp: Path):
+    """A bench clip records the beat it IS — and records nothing when nobody said.
+
+    review/ep2-b01/wan5b-b01.mp4 reached the founder's morning checklist saying
+    `shot_beat: 0` over the COLD OPEN, and so did cuts/checklist/002b-b01-5b.mp4.
+    Nothing guessed: wan_i2v's two bench write_sidecar calls passed beat=0 as a
+    LITERAL, a throughput measurement having no beat to give. Honest for a bench
+    row, wrong the moment the clip is screened as a beat — and it is the field
+    build_shotboard and the review page key off to place a clip under its beat, so
+    both files needed a hand-written correction block for a fact the renderer
+    could have been told (queue id wan-bench-sidecar-beat-1786190640).
+
+    Three things, and the last is the one a --beat flag can newly break:
+      1. a beat that IS known is published
+      2. an unknown beat is ABSENT, not 0. A placeholder 0 is indistinguishable
+         from a real beat to every reader; an absent field reads as "not
+         recorded", which is true. Same drop-a-None convention as _yaml_map.
+      3. the published SEED does not move. write_sidecar publishes seed_base +
+         beat, so a caller that names a beat and hands over the seed itself would
+         record a draw that never happened.
+    """
+    import ast as A
+    import yaml
+
+    import video_task as V
+    import wan_i2v as W
+
+    def side(beat, seed=20260806):
+        clip = tmp / f"bench-b{beat}.mp4"
+        clip.write_bytes(b"v")
+        V.write_sidecar(clip, "ti2v-5b",
+                        {"worker": "rtx5090", "guidance": 5.0,
+                         "seed_base": W.sidecar_seed_base(seed, beat),
+                         "id": "b01-wan5b-6s/production/b1/s20260806"},
+                        beat=beat, seconds=6.042, steps=14, size="704x1280")
+        text = Path(str(clip) + ".meta.yaml").read_text(encoding="utf-8")
+        return text, yaml.safe_load(text)
+
+    text, d = side(1)
+    check("a bench sidecar publishes the beat it was given", d["shot_beat"] == 1)
+    check("and still the seed that was actually drawn, not seed+beat",
+          d["seed"] == 20260806)
+
+    text, d = side(None)
+    check("an unknown beat is an ABSENT field, not a guessed 0",
+          "shot_beat" not in text and "shot_beat" not in d)
+    check("and it is not a null either — nothing was recorded as nothing",
+          "shot_beat" not in yaml.safe_load(text))
+    check("an unknown beat moves no seed", d["seed"] == 20260806)
+    check("the rest of the record is unchanged by the missing field",
+          d["size"] == "704x1280" and d["steps"] == 14 and d["cost_usd"] == 0)
+
+    # WHOSE BEAT WINS. A jobs file is N different beats; one CLI number is not
+    # right for all of them, and the old defect one size up would be a sweep where
+    # every clip claims beat 1.
+    check("a --jobs entry's own beat beats the command line",
+          W.bench_beat(3, {"beat": 7}) == 7)
+    check("the command line covers a job that names none",
+          W.bench_beat(3, {"init": "x.png"}) == 3)
+    check("nobody saying is None, on either path",
+          W.bench_beat(None) is None and W.bench_beat(None, {"init": "x"}) is None)
+    check("a beat someone typed is honoured verbatim, 0 included",
+          W.bench_beat(0) == 0 and W.bench_beat("11", None) == 11)
+    check("the seed base is the seed minus the beat, and unmoved when unknown",
+          W.sidecar_seed_base(20260806, 6) == 20260800
+          and W.sidecar_seed_base(20260806, None) == 20260806)
+
+    # STRUCTURAL, because the two call sites live in a stage function that needs
+    # torch and diffusers and cannot run here — the same reason the flag tests in
+    # this file are AST. What is pinned is that neither one hard-codes the beat
+    # again, and that both compensate the seed they publish.
+    src = (REPO / "pipeline" / "wan_i2v.py").read_text(encoding="utf-8")
+    calls = [n for n in A.walk(A.parse(src))
+             if isinstance(n, A.Call) and isinstance(n.func, A.Attribute)
+             and n.func.attr == "write_sidecar"]
+    check(f"both wan bench sidecar call sites found (got {len(calls)})",
+          len(calls) == 2)
+    hard = [A.unparse(k.value) for c in calls for k in c.keywords
+            if k.arg == "beat" and isinstance(k.value, A.Constant)]
+    for h in hard:
+        print(f"      x  a bench call site passes beat={h} as a literal")
+    check("neither bench call site hard-codes the beat", not hard)
+    bases = [n for n in A.walk(A.parse(src)) if isinstance(n, A.Call)
+             and isinstance(n.func, A.Name) and n.func.id == "sidecar_seed_base"]
+    check("and both hand over a base that compensates for it", len(bases) == 2)
+
+
 def test_kaggle_notebook_cells_parse():
     """The free-render notebook must be syntactically valid — it shipped
     2026-07-19 with a truncated string on its config line and nobody ran it
@@ -4007,6 +4094,8 @@ def main():
         test_every_sidecar_reader_finds_both_shapes(Path(td))
     with tempfile.TemporaryDirectory() as td:
         test_farm_still_sidecar_records_what_actually_ran(Path(td))
+    with tempfile.TemporaryDirectory() as td:
+        test_bench_sidecar_names_the_beat_or_omits_it(Path(td))
     test_wrap_never_drops_words()
     test_caption_chunks()
     test_sync_shots_is_idempotent()

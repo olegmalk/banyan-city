@@ -162,6 +162,42 @@ def _bench_mode(a) -> bool:
     return int(getattr(a, "batch", 1) or 1) > 1 or bool(getattr(a, "bench_jsonl", ""))
 
 
+def bench_beat(cli_beat, job=None):
+    """WHICH BEAT this clip IS, for its sidecar — or None when nobody said.
+
+    A --jobs entry's own `beat` wins over --beat, because a jobs file is N
+    DIFFERENT beats and one command-line number cannot be right for all of them;
+    stamping a fifteen-beat sweep with the first beat's number would be this
+    function's own bug one size up.
+
+    Unknown is None, and write_sidecar then OMITS `shot_beat` rather than writing
+    0. `shot_beat: 0` is what review/ep2-b01/wan5b-b01.mp4 and the copy of it on
+    the founder's checklist both recorded over the COLD OPEN — beat 1 — because
+    the two bench call sites passed beat=0 as a literal, a throughput measurement
+    having no beat to give. Honest for a bench row and wrong the moment the clip
+    is screened as a beat, and no reader can tell a placeholder 0 from a real
+    beat: both files needed a hand-written correction block for a fact the
+    renderer could simply have been told. PURE, and unit-tested.
+    """
+    v = (job or {}).get("beat", cli_beat)
+    return None if v is None else int(v)
+
+
+def sidecar_seed_base(seed, beat):
+    """What write_sidecar must be HANDED so it publishes `seed` unchanged.
+
+    It publishes `seed_base + beat` (video_task.write_sidecar), so naming a beat
+    without subtracting it would shift a recorded seed by the beat number and
+    publish a draw that never happened — a provenance field, quietly wrong, on
+    exactly the runs that now carry a beat. ltx_i2v.py:1164 does this identical
+    subtraction and says so at its call site.
+
+    The old bench path was immune only by accident: beat was 0, so the
+    subtraction was invisible. --beat is what makes it load-bearing.
+    """
+    return int(seed) - (beat or 0)
+
+
 def _import_video_task():
     """Sidecar + bench-row helpers, imported ONLY on a measured run.
 
@@ -593,6 +629,8 @@ def _sample(pipe, a, w, h, frames, takes_image, jobs=None) -> int:
             if not a.no_lora:
                 steps, guidance = 4, 1.0
         seed = int(job["seed"])
+        # THE BEAT THIS CLIP IS, per job, or None when nobody said — see bench_beat
+        beat = bench_beat(a.beat, job)
         # ONE GENERATOR PER SLOT, and slot 0 keeps the base seed so a batched run
         # can be diffed against the un-batched clip of the same recipe — that is
         # the fidelity check the whole probe rests on. diffusers validates the list
@@ -647,9 +685,13 @@ def _sample(pipe, a, w, h, frames, takes_image, jobs=None) -> int:
             if bench:
                 video_task.write_sidecar(
                     path, short, {"worker": platform.node() or "unknown",
-                                  "guidance": guidance, "seed_base": seed + s,
+                                  "guidance": guidance,
+                                  # seed_base + beat is what gets published, so
+                                  # the base is the seed MINUS the beat and the
+                                  # recorded seed stays the one that was drawn
+                                  "seed_base": sidecar_seed_base(seed + s, beat),
                                   "id": f"{label}/{a.mode}/b{batch}/s{seed + s}"},
-                    beat=0, seconds=round(clip_s, 3), steps=steps,
+                    beat=beat, seconds=round(clip_s, 3), steps=steps,
                     size=f"{w}x{h}", prompt=prompt, negative=neg,
                     extra={"mode": a.mode, "batch": batch, "batch_slot": s,
                            "throughput_s_video_per_s_wall":
@@ -783,6 +825,8 @@ def stage_render(a) -> int:
     sample_s = time.time() - t0
 
     clip_s = frames / a.fps
+    # no jobs file on this stage: --beat is the only thing that can know
+    beat = bench_beat(a.beat)
     for s in range(batch):
         path = video_task.slot_out_path(a.out, a.seed, s, batch) if bench else a.out
         Path(path).parent.mkdir(parents=True, exist_ok=True)
@@ -792,9 +836,11 @@ def stage_render(a) -> int:
         if bench:
             video_task.write_sidecar(
                 path, short, {"worker": platform.node() or "unknown",
-                              "guidance": a.guidance, "seed_base": a.seed + s,
+                              "guidance": a.guidance,
+                              # minus the beat — see the note at the other call site
+                              "seed_base": sidecar_seed_base(a.seed + s, beat),
                               "id": f"{label}/{a.mode}/b{batch}/s{a.seed + s}"},
-                beat=0, seconds=round(clip_s, 3), steps=a.steps,
+                beat=beat, seconds=round(clip_s, 3), steps=a.steps,
                 size=f"{w}x{h}", prompt=a.prompt, negative=a.negative,
                 extra={"mode": a.mode, "batch": batch, "batch_slot": s,
                        "throughput_s_video_per_s_wall":
@@ -906,7 +952,7 @@ def main() -> int:
     ap.add_argument("--prompt", default="")
     ap.add_argument("--init", default="")
     ap.add_argument("--out", default="")
-    ap.add_argument("--jobs", default="", help="json list of {init,out,prompt,seed} - one model load for all of them")
+    ap.add_argument("--jobs", default="", help="json list of {init,out,prompt,seed,negative,beat} - one model load for all of them")
     ap.add_argument("--seconds", type=float, default=4.0)
     ap.add_argument("--steps", type=int, default=25)
     ap.add_argument("--guidance", type=float, default=5.0,
@@ -941,6 +987,16 @@ def main() -> int:
     ap.add_argument("--model", default="ti2v-5b",
                     help=f"short name {sorted(MODELS)} or a full HF repo id")
     ap.add_argument("--seed", type=int, default=20260731)
+    # NO DEFAULT BEAT, on purpose. This is read only on a measured run (the
+    # `if bench:` sidecar), and the previous behaviour there was a hard-coded
+    # beat=0 that published `shot_beat: 0` over beat 1's cold open. Unset now means
+    # the field is absent, which reads as "not recorded" instead of claiming a
+    # beat nobody named; a --jobs entry's own `beat` overrides it per clip.
+    ap.add_argument("--beat", type=int, default=None,
+                    help="which beat this clip IS. Recorded as shot_beat in the "
+                         "bench sidecar and subtracted out of seed_base so the "
+                         "published seed does not move. Unset = the field is "
+                         "omitted, never guessed as 0")
     ap.add_argument("--fps", type=int, default=24)
     # --- throughput probing. Default 1 = the path that has always run. -------
     ap.add_argument("--batch", type=int, default=1,

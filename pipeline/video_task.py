@@ -1096,8 +1096,22 @@ def write_sidecar(clip, vmodel, task, beat, seconds, steps, size,
     Licence is written from a table keyed on the SHORT name, not guessed from the
     repo id: an unrecognised model gets "UNVERIFIED" rather than a hopeful
     Apache-2.0, because a wrong allow is the direction that publishes things.
+
+    `beat` MAY BE None, and then `shot_beat:` is absent rather than 0 — the same
+    drop-a-None convention `extra` and _yaml_map already use, for the same reason.
+    Until 2026-08-08 wan_i2v's bench path passed a literal 0 because a throughput
+    measurement has no beat, so review/ep2-b01/wan5b-b01.mp4 and the copy of it on
+    the founder's checklist both recorded `shot_beat: 0` over the cold open, and
+    both needed a hand-written correction block for it. A placeholder 0 is
+    indistinguishable from a beat; an absent field reads as "not recorded", which
+    is true. The published `seed` is unmoved either way: an unknown beat adds
+    nothing to seed_base, exactly as beat 0 did.
     """
     repo, lic = MODEL_LICENCE.get(vmodel, (vmodel, "UNVERIFIED — licence not read"))
+    # seed_base + beat is the per-beat seed the sampler actually drew, so a caller
+    # that names a beat hands over the base and not the seed (wan_i2v's
+    # sidecar_seed_base, ltx_i2v.py:1164). An unknown beat contributes 0.
+    seed = int(task.get("seed_base", 20260731)) + (beat or 0)
     Path(str(clip) + ".meta.yaml").write_text(
         "# Shot provenance (7.2) — written by video_task at render time\n"
         # "local-gpu (<worker>)" not "local-<worker>": the gate classifies on the
@@ -1112,12 +1126,13 @@ def write_sidecar(clip, vmodel, task, beat, seconds, steps, size,
         f"platform: local-gpu ({worker_id(task)})\n"
         f"model: {repo}\n"
         f"model_licence: {lic}\n"
-        f"shot_beat: {beat}\n"
-        f"size: {size}\n"
+        # ONLY WHEN THE BEAT IS KNOWN — omitted, never 0. See the docstring.
+        + (f"shot_beat: {beat}\n" if beat is not None else "")
+        + f"size: {size}\n"
         f"seconds: {seconds}\n"
         f"steps: {steps}\n"
         f"guidance: {task.get('guidance', 5.0)}\n"
-        f"seed: {int(task.get('seed_base', 20260731)) + beat}\n"
+        f"seed: {seed}\n"
         f"task: {task.get('id')}\n"
         "cost_usd: 0\n"
         # THE PROMPT IS PROVENANCE. CLAUDE.md §7.2 says every render publishes
@@ -1446,7 +1461,13 @@ def run(task: dict, courier, node_dir: Path) -> None:
             plate, frame = conditioning_plate(task, init, size, num, courier)
             if plate is None:
                 continue
-            jobs.append({"init": str(plate), "out": str(o), "prompt": pos,
+            # `beat` travels with the job. INERT on this path today — the queue
+            # never sends --bench-jsonl to wan_i2v, so the renderer writes no
+            # sidecar here and the loop below writes them with `num` — but it is
+            # the one thing a bench run cannot work out for itself, and the jobs
+            # file is where the LTX path already carries it.
+            jobs.append({"beat": num,
+                         "init": str(plate), "out": str(o), "prompt": pos,
                          "negative": neg,
                          "seed": int(task.get("seed_base", 20260731)) + num})
             # carry the prompt to the sidecar — see write_sidecar on why
