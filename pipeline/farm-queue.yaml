@@ -1653,3 +1653,109 @@ backlog:
     frees the last asset trapped inside a Vercel account. Human time is about an
     hour; the transfer itself takes up to a week of wall clock, which is why the
     deadline is June and not July.
+
+# ---- THE HASH THAT KEEPS THE POSTER FIX WORKING, WRITTEN AT RENDER TIME ------
+#
+# Filed off the poster fix that landed tonight (50e0358 + b6d435f), by the agent
+# that audited it rather than the one that wrote it. Not a defect in that change:
+# a hole it can see and cannot close from where it sits.
+#
+# `build_site.still_from_record()` resolves a review-page poster against the still
+# the clip was ACTUALLY drawn from by preferring a recorded hash over the
+# filename, because a filename changes hands the moment a redraw is promoted —
+# that is the bug that put a tall sapling over footage of bare soil on beats 7, 12
+# and 15. Its only other defence is "the file now under that name is newer than
+# the clip", and THAT CANNOT FIRE ON THE DEPLOY: a fresh clone stamps every file
+# with the checkout time, so on banyan.city, the one surface the founder screens
+# from, the recorded hash is the only defence there is.
+#
+# hold_still.py:455 writes `source_still: <name>` and no hash. So every held clip
+# it has ever produced is defended on a laptop and undefended on Vercel, and every
+# held clip it produces from here re-arms the same fault. The five published ones
+# stopped being wrong only because their hashes were read out of git history by
+# hand in b6d435f; that is a repair, and this is the thing that stops it being
+# needed again. The still object is already open in that function — the hash is
+# one line beside the name that is missing it.
+#
+# READ GIT LOG BEFORE OPENING THE FILE: hold_still.py took two commits on
+# 2026-08-08 (5568113 17:07, the output aspect; a902dd3 19:46, the 12% zoom
+# confirm), so someone else was in it the same day.
+- id: hold-still-sidecar-sha-1786215600
+  runner: manual
+  worker: m1pro
+  needs: []
+  window: any
+  est_minutes: 20
+  cmd: >-
+    in pipeline/hold_still.py sidecar(), beside the `source_still:` line
+    (hold_still.py:455), also write `source_still_sha256:` — the sha256 of the
+    bytes of the still that function was handed, measured off that file rather
+    than looked up by name afterwards. Backfill nothing: the five published held
+    clips already carry their hashes from b6d435f. Add a test in test_pipeline
+    conventions that a sidecar written for a known still carries the hash of
+    exactly those bytes, and that build_site.still_from_record() then resolves
+    that clip's poster correctly after the canon filename is re-promoted onto
+    different pixels. Do NOT touch the three classifier-input lines above it
+    (platform / `model: none` / model_licence) — hold_still.py's own comments say
+    what each one breaks.
+  why: >-
+    Every future held beat re-arms the stale-poster bug the review page was fixed
+    for tonight, and re-arms it in the one place the fix cannot see — the mtime
+    fallback is worthless on a fresh clone, so an unhashed held clip is right on
+    the laptop and wrong on banyan.city. The consumer is the founder's phone: a
+    poster is the first frame he sees, and one promising a picture the clip does
+    not contain is the review surface lying about footage. $0, no GPU, ~20
+    minutes, and it stops the debt growing instead of paying it again by hand.
+
+# ---- EPISODE 2'S COLD OPEN IS BLANK, AND ITS OWN RECORDS HOLD THE ANSWER -----
+#
+# The other half of the same audit, filed as one entry because both halves share a
+# consumer and one of them is unreachable without the other.
+#
+# THE READ. The v2 renders in review/ep2-b01/ (wan5b-b01-v2.mp4, ltx-b01-v2.mp4)
+# record their init frame as a NESTED mapping — `init_frame: {path:, sha256:,
+# source_wxh:, plate_wxh:, crop_policy:, plate_path:, plate_sha256:}` — and
+# still_from_record() reads only the FLAT dialects, `init_still` / `source_still`
+# and their `_sha256`. So it sees a record naming no still at all, while two lines
+# down that record carries sha256 7cc22aa1…, which is byte-for-byte
+# `002b-first-citizen/stills/01-cold-open-REVOKED-too-tall.png` — the frame those
+# clips really do hold, on disk, findable, ignored. Teaching the resolver the
+# third dialect posters them and every future LTX/Wan render for free. Two traps
+# in it: `init_frame.path` is a WINDOWS path with backslashes, so take the
+# basename and prefer the sha over it; and `plate_sha256` (004dc1e8…) is NOT the
+# answer — that is the 704x1280 cover-crop fed to the model, it exists nowhere the
+# resolver looks, and recording it produces a refusal instead of a poster.
+#
+# THE WRITE. `cuts/checklist/002b-b01-5b.mp4` is the copy the site actually
+# serves. It is a v1-shape record with no `init_frame` and no still named at all,
+# so since 50e0358 it correctly gets NO poster — an honest blank, where before it
+# wore episode ONE's `09-whoami.png`. Its frame is recoverable exactly as beats 7
+# and 12 were, out of this repo's history, and the v2 sidecars beside it record
+# the same hash for the same frame, which is the corroboration.
+- id: checklist-b01-poster-backfill-1786215660
+  runner: manual
+  worker: m1pro
+  needs: []
+  window: any
+  est_minutes: 40
+  cmd: >-
+    (a) teach build_site.still_from_record() the nested `init_frame:` dialect —
+    basename of `init_frame.path` (Windows separators) as the name,
+    `init_frame.sha256` as the hash, ignoring `plate_sha256`; (b) append a dated
+    CORRECTIONS block to cuts/checklist/002b-b01-5b.mp4.meta.yaml recording
+    init_still and init_still_sha256 read out of git history —
+    `git rev-list -1 --before=<that clip's render time> HEAD --
+    genomes/sapling/nodes/002b-first-citizen/stills/01-cold-open.png`, then sha256
+    of that blob, which should come back 7cc22aa1… — naming the two v2 sidecars in
+    review/ep2-b01/ as corroboration and editing nothing above the line; (c) tests
+    per test_pipeline conventions that the nested dialect resolves to the same
+    still the flat one would, and that this clip posters
+    01-cold-open-REVOKED-too-tall.png rather than whatever holds the name
+    01-cold-open.png at the time.
+  why: >-
+    Episode 2's cold open is the next thing the founder screens after episode 1,
+    and today it is a blank player whose own provenance already names the frame it
+    holds. The consumer is the review page: it stops being blank where it can be
+    right, and it stops going stale the moment ep2-b01-cold-open-redraw promotes a
+    new 01-cold-open.png — the third stale-poster pair the original entry
+    predicted, and the last piece of preventing it.
