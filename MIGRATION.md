@@ -1,25 +1,36 @@
 # Migrating banyan.city to its own Vercel account
 
-**Who does what.** Roman does every step in §B — they are account, domain and
-DNS steps, and those are founder-reserved human work. Dad watches the money and
-owns the one decision marked **DECISION** (tier + cap). The steward does §C —
-verification only, from the outside, $0, no account needed. Nothing in this file
-requires a card, and no step here can bill anyone.
-
-**What is already done (2026-08-08).** B2 (the new account) by the founder; B2b
-(the Vercel project, created empty and pre-configured, git deliberately **not**
-connected) by the steward. That turns B7 from five clicks into one look. **The
-human work left is four steps:**
-
-> **B1** find where the domain lives → **B4** move it to
-> `olegmalkov2023-1685s-projects` → **B6** connect the git repo to the existing
-> `banyan-city` project → **B8** attach the domain to it.
+> ## MIGRATION COMPLETE — 2026-08-08, ~09:13Z
 >
-> With **B3** (tier — recommendation: change nothing, stay Hobby) as the one
-> decision, and **B7** as a one-item verify in between. B5, B9 and B10 are
-> confirm-only or no-ops on Hobby.
+> **Every step in §B is done.** The domain is in
+> `olegmalkov2023-1685s-projects` (Hobby, **no payment method**), the repo is
+> connected, and `https://banyan.city` serves **200** again after roughly a day
+> of `DEPLOYMENT_NOT_FOUND`. The first courier heartbeat pushed *after* the git
+> integration was connected produced **zero deployment events** — the mechanism
+> that billed >$100 is confirmed dead against live traffic, not just in theory
+> (§C2).
+>
+> **What is left is not migration work:** the September transfer-out decision
+> (§F2, founder spend, eligible ~2026-09-07), downgrading or deleting the empty
+> `banyan` Pro team created during signup (§B2), and — only when dad wants to —
+> retiring the old account under the §F3 rule, which the Move has now satisfied.
+>
+> The step-by-step below is kept **as written and marked done in place**. It is
+> the record of what was actually done and in what order, and §B6's namespace
+> lesson is the part worth reading before anyone connects a Vercel project to a
+> GitHub repo again.
 
-**Status when this was written (measured 2026-08-08 05:49Z, not assumed):**
+**Who does what, and who did.** The rule this file was written under: every step
+in §B is founder-reserved human work — account, domain and DNS — dad owns the
+one **DECISION** (tier + cap), and the steward does §C, verification only, from
+the outside, $0. Nothing here requires a card and no step here can bill anyone.
+It held. **In the event:** B2 and every browser step (B1, B4, B6, B8) by the
+founder; B2b — the project, created empty and pre-configured — and the §C
+verifications by the steward. The one production deployment was triggered
+through the API after the connect; nothing else about it was automated.
+
+**Status when this file was written (measured 2026-08-08 05:49Z, kept as the
+before-picture — do not read these as current):**
 
 | check | result |
 |---|---|
@@ -30,7 +41,18 @@ human work left is four steps:**
 | registrar | Name.com, Inc. Registered 2026-07-09, expires 2027-07-09, `clientTransferProhibited` |
 | repo-side build guards on `main` | **present** — commits `eb16094`, `aeea1ac` |
 
-The site is down right now. This is a repair, not a scheduled move.
+**The same checks after the migration (measured 2026-08-08 09:15:37Z):**
+
+| check | result |
+|---|---|
+| `curl -sI https://banyan.city` | **200**, no `x-vercel-error` |
+| `curl -sI https://www.banyan.city` | **308** → apex, as before the outage |
+| `curl -sI https://olegmlkvorg.github.io/banyan-city/` | **200** — the mirror stays as the fallback (§C4) |
+| production deployment | `dpl_8xsZbR1WyFXR2ZrcPUU41brKUSMN`, **READY** 09:13:37Z, target `production`, ref `main` |
+| deployments on the new project | **1** — the courier push at 09:10:31Z created none (§C2) |
+| domains attached | `banyan.city` and `www.banyan.city`, both `verified: true` |
+
+The site was down when this file was written. It is not now.
 
 ---
 
@@ -70,7 +92,11 @@ mid-registration. Move first, delete second, and there is no hurry about the
 second — **§F3 says what "second" actually requires**, and it is later than it
 sounds.
 
-### B1. Find out where the domain actually lives (~2 minutes)
+### B1. Find out where the domain actually lives — **DONE 2026-08-08, by the founder: PATH A**
+
+`banyan.city` was listed under the **old** account's Domains with a renewal
+date: Vercel-registered through Name.com, exactly the expected case. Path A it
+was, which is why B4 took two minutes and §E was never needed.
 
 1. Log into the **old** Vercel account.
 2. Team sidebar → **Domains**.
@@ -159,7 +185,14 @@ is connected.
   Hobby**, not skipped. They become real again the day anyone upgrades to Pro,
   which is why they stay written down.
 
-### B3. DECISION — tier and cap (dad + Roman together)
+### B3. DECISION — tier and cap — **DECIDED 2026-08-08: Hobby, no card**
+
+The recommendation below was taken. The team holding the domain and the project
+is **Hobby with `payment: null`**, so B10 does not apply and there is nothing
+that can produce an invoice. **One loose end from signup:** a second team,
+`banyan-3318d224` ("banyan"), was created on a **Pro trial** at 05:47Z and holds
+0 projects and 0 domains. It is harmless empty, but Pro is the tier where the
+meter exists — downgrade it to Hobby or delete it.
 
 **Recommendation: stay on Hobby. Expected monthly cost $0.**
 
@@ -190,7 +223,14 @@ choosing: Spend Management is checked "every few minutes", so it overshoots the
 cap; and a paused project does **not** un-pause when the billing cycle rolls
 over — someone resumes it by hand.
 
-### B4. Move the domain — path A only (~2 minutes, instant)
+### B4. Move the domain — **DONE 2026-08-08, by the founder**
+
+The team-to-team Move ran as described: **instant**, and the **DNS zone
+travelled with it**. `banyan.city` is now held by
+`olegmalkov2023-1685s-projects`; the old account holds no domain and no zone.
+Nothing was touched at Name.com and no nameserver was edited, which is why B9
+stayed a no-op. **This is the fact that satisfies §F3** — see there before
+retiring the old account.
 
 A team-to-team move inside Vercel is **not** a registrar transfer, so the 60-day
 ICANN lock (which runs to 2026-09-07) does not apply and there is no propagation
@@ -206,7 +246,12 @@ after the project exists, at B7.
 **Why this comes before the import:** it takes the only irreversible risk in the
 whole migration off the table while the old account is still open and healthy.
 
-### B5. Confirm the guards are on `main` before connecting anything (~1 minute)
+### B5. Confirm the guards are on `main` before connecting anything — **CONFIRMED 2026-08-08**
+
+Re-verified on the day, before the connect. **And then verified live:** the
+courier heartbeat at 09:10:31Z, pushed with the integration already connected,
+produced **no deployment event at all** — see §C2, which is now a recorded pass
+rather than a pending check.
 
 This is the step that makes the rest safe, and it is already done — confirm, do
 not redo. On `main`:
@@ -226,7 +271,38 @@ say a skipped build still counts as a full deployment and still takes a
 concurrent build slot. `git.deploymentEnabled` plus the project settings in B6
 are what stop the event existing.
 
-### B6. Connect the repo to the project that already exists (~2 minutes)
+### B6. Connect the repo to the project that already exists — **DONE 2026-08-08, by the founder**
+
+Connected: `olegmlkvorg/banyan-city`, production branch `main`, 0 deploy hooks,
+read back from `GET /v9/projects/banyan-city`. It took most of a morning, and
+the reason is worth more than the step.
+
+> **THE NAMESPACE LESSON — read this before connecting any Vercel project to any
+> GitHub repo.**
+>
+> **Vercel's repository picker enumerates only the namespace of the GitHub
+> identity connected to the Vercel account.** It does not list every repo that
+> identity can *reach*. `olegmlkvorg/banyan-city` is a personal repo of the user
+> `olegmlkvorg`, so it lives in that user's namespace and nowhere else.
+>
+> **What did not work:** adding the family's other GitHub user — `olegmalk`, the
+> account on `olegmalkov2023@gmail.com`, matching the new Vercel login — as a
+> **write collaborator** on the repo. The invitation was accepted (~09:00Z) and
+> that user could push. The repo still did not appear in the picker.
+> **Collaborator access is not namespace membership**, and the picker keys off
+> the latter.
+>
+> **What worked:** connect GitHub login **`olegmlkvorg`** — the repo *owner* —
+> to the new Vercel account, and install the Vercel GitHub App there scoped to
+> **`banyan-city` only**. The repo appeared immediately.
+>
+> The generalisation: match the connected GitHub identity to the repo's **owner**
+> (the user or org in the URL). If the repo lived in an org, org membership plus
+> an org-level app install would be the equivalent move. Granting a second
+> account access to the repo is solving a permissions problem when the problem is
+> an enumeration one. The collaborator grant to `olegmalk` was left in place —
+> harmless, and useful if the repo ever needs pushing from that login — but it
+> was not what fixed this.
 
 **Do not use "Add New → Project".** That would create a *second* project and
 leave the pre-configured one unused. The project exists (B2b); this step gives it
@@ -251,14 +327,23 @@ of the branches (§C1 re-checks it), but `previewDeploymentsDisabled` was set
 **before** the repo was connected, so there is no window. Take B7 at a normal
 pace.
 
-**On whether connecting produces a deployment:** the old import flow always did,
-by design — its last button was "Deploy". Connecting a repo to an existing
-project may or may not; Vercel's docs do not say, so this file does not claim
-either. It does not matter much: previews are off, so anything it produces is a
-production build of `main`, which is the build we want. If nothing appears,
-push to `main` or use **Deployments → Create Deployment** with branch `main`.
+**On whether connecting produces a deployment — now measured: it does not.** The
+old import flow always did, by design; its last button was "Deploy". Connecting a
+repo to an *existing* project produced **nothing** here, and Vercel's docs still
+do not say either way. The fallback in the next sentence is what we actually
+used: the production build was created explicitly, and the site came up 90
+seconds later. If nothing appears after your connect, that is normal — push to
+`main` or use **Deployments → Create Deployment** with branch `main`.
 
-### B7. The settings — now a VERIFY pass, ~1 minute
+### B7. The settings — **VERIFIED 2026-08-08, nothing needed changing**
+
+Step 1 came out right on its own: `productionBranch` reads **`main`** in the git
+link, as Vercel's default for a new project predicted. The rest were read back
+from `GET /v9/projects/banyan-city` after the connect and all held —
+`previewDeploymentsDisabled: true`, `commandForIgnoringBuildStep` = `bash
+pipeline/vercel-ignore-build.sh`, `gitForkProtection: true`, framework `null`,
+`deployHooks: 0`. **No setting was lost when the repo was attached**, which was
+the thing worth checking.
 
 Steps 2–5 were applied in B2b or are unavailable on Hobby. **Only step 1 is
 still an action, and it is a look, not a change.** Check the rest against the
@@ -286,7 +371,12 @@ on, so whoever does it reads this step first.
 These settings are the only layer that governs a branch whose checked-out
 `vercel.json` is stale — which every courier branch is today (§C1).
 
-### B8. Attach the domain (~2 minutes)
+### B8. Attach the domain — **DONE 2026-08-08, by the founder**
+
+Both `banyan.city` and `www.banyan.city` are attached to the project and read
+back `verified: true`, with `www` redirecting to the apex as before. Path A
+meant no TXT record was needed. The apex answered **200** within the same
+minute — no propagation wait, because the zone had already travelled in B4.
 
 Moving a domain does **not** carry project assignments with it. This is a real
 step, not a formality.
@@ -297,7 +387,10 @@ step, not a formality.
    and issue a **TXT record**. Add that record at Name.com. Per Vercel's docs
    this verifies *use*, not ownership — which is all the project needs.
 
-### B9. DNS (~0 minutes on path A)
+### B9. DNS — **NO-OP, as predicted (2026-08-08)**
+
+Nothing was done here and nothing needed to be. Path A held: the zone moved with
+the domain in B4 and the apex resolved the moment B8 was saved.
 
 **Path A: there is nothing to do.** The nameservers are already
 `ns1/ns2.vercel-dns.com` and the zone travelled with the domain in B4. The A
@@ -312,7 +405,11 @@ fact, not the IPs.
 point Name.com's nameservers at the **new** account's Vercel DNS and let Vercel
 recreate the records. Do this only after B8 shows the domain verified.
 
-### B10. Spend Management — Pro only (~2 minutes)
+### B10. Spend Management — **SKIPPED 2026-08-08: Hobby, correctly**
+
+B3 chose Hobby with no card, so this section does not apply. It becomes real the
+day anyone upgrades — including if the empty `banyan` Pro team (B3) is kept
+rather than downgraded and something is ever put in it.
 
 **On Hobby, skip this. It does not exist, and it does not need to: there is no
 payment method to charge.**
@@ -355,7 +452,22 @@ All five printed `PRE-GUARD` on 2026-08-08. They self-heal only when each box
 starts its next task (`farm_worker.py:573` runs `git checkout origin/main -- .`),
 so this is re-run rather than assumed.
 
-### C2. After B7 — a courier push does NOT trigger a build
+### C2. After B7 — a courier push does NOT trigger a build — **PASSED LIVE 2026-08-08 09:10:31Z**
+
+The strongest version of this check ran on its own: a real `farm_worker.py`
+heartbeat force-pushed to `farm-results-rtx5090` at **09:10:31Z**, with the git
+integration already connected — the exact condition that produced 2,303 preview
+builds on the old account. **Zero deployment events.** The project's deployment
+list held exactly one entry (the manual production build at 09:12:30Z) and
+GitHub's `vercel[bot]` rows show no Preview after `2026-08-08T00:55:48Z`, which
+is the old project's last gasp.
+
+Note what "pass" looks like here: **not a skipped build, no event at all.** That
+is `git.deploymentEnabled` refusing before a deployment is created, and it is
+why D1 insists on the code layer as well as the dashboard. Keep running this
+check anyway — the branches are still PRE-GUARD (§C1), so today's pass rests on
+the project setting and the deny-list together.
+
 
 GitHub records every Vercel deployment as a `vercel[bot]` entry, so this is
 answerable without logging into Vercel. This is the same signal that measured the
@@ -494,6 +606,14 @@ where the branch matters it is called out. Everything here is dated, and the
 dates are the point — this is the part of the migration that comes due long
 after everyone has stopped thinking about it.
 
+> **Resolved 2026-08-08: the Move succeeded, so the holder is now
+> `olegmalkov2023-1685s-projects` — the Hobby team with no payment method.**
+> Read every "the team that owns the domain" below as that team. This is the
+> uncomfortable branch, not the comfortable one: the migration did not defuse
+> F1, it re-pointed it at a team that is *even less* able to pay a renewal than
+> the old account was. **§F is now the only open item in this file**, and F3's
+> question is answered — see there.
+
 ### F1. The renewal timebomb — a dated decision, not a background process
 
 `banyan.city` was registered **2026-07-09** through Vercel (registrar of record
@@ -505,7 +625,8 @@ per its own docs:
 | warning email | **~60 days before expiry** — around **2027-05-10** |
 | billing attempt | **~30 days before expiry** — around **2027-06-09** |
 | charged to | the **payment method of the Vercel team that owns the domain on that date** |
-| the new team's payment method | **none**, and that absence is the spend guard (§B2) |
+| who that is, as of 2026-08-08 | **`olegmalkov2023-1685s-projects`** — the Move completed (§B4) |
+| that team's payment method | **none**, and that absence is the spend guard (§B2) |
 
 Those two things cannot both stay true. The state that makes this project unable
 to generate an invoice is the same state in which the renewal charge fails. **If
@@ -513,6 +634,11 @@ to generate an invoice is the same state in which the renewal charge fails. **If
 has to be made before then — and it is a spend decision either way**: add a card
 to the team that holds it (which gives up the guard) or be gone from Vercel
 first (F2).
+
+**The Move did not change this — it sharpened it.** Before 2026-08-08 the domain
+sat in an account that *had* a card and would have quietly renewed. It now sits
+in one that cannot. The safety and the timebomb are the same property, and the
+only exit that keeps both is F2.
 
 **The failure mode, stated so nobody has to discover it.** Charge fails →
 domain expires → roughly a **30-day redemption period** during which it can be
@@ -562,7 +688,22 @@ The steps, in the order they have to happen:
 Sources: <https://vercel.com/docs/domains/working-with-domains/transfer-your-domain>
 and <https://vercel.com/kb/guide/how-do-i-delete-a-vercel-team>
 
-### F3. When the old Vercel account may finally be retired
+### F3. When the old Vercel account may finally be retired — **the blocking branch cleared 2026-08-08**
+
+> **Where we are.** The Move (§B4) carried `banyan.city` **and its DNS zone** to
+> `olegmalkov2023-1685s-projects`, and the apex serves 200 from the new
+> project's deployment. That is the second branch below: **the old account is no
+> longer load-bearing for the name.**
+>
+> **The rule does not get skipped because this paragraph exists.** Before dad
+> deletes anything, he opens that account's **Domains** list and looks — the
+> check below is deliberately "open the list", not "remember what someone told
+> you", and a doc entry is exactly the kind of remembering it rules out. If
+> `banyan.city` appears there, stop; something did not move the way this file
+> says it did.
+>
+> And the final all-clear in the last paragraph still stands: it is **F2
+> complete**, not F3, that ends this. There is no hurry.
 
 **Not until the domain is verifiably out of it and DNS is proven serving.**
 §B0 says "move first, delete second, and there is no hurry about the second" —
@@ -618,8 +759,21 @@ flag are the whois values measured for §A on 2026-08-08. Where the docs are
 silent — self-serve unlock of the transfer lock — §F says so instead of
 guessing.
 
+**Completion pass, 2026-08-08 ~09:15Z.** The step statuses, the after-picture
+table, §C2's recorded pass and §F's re-pointing were written after the migration
+finished, from state read back through the API and from `curl` against the live
+domain — deployment id, `READY` timestamp, `productionBranch`, the domain
+`verified` flags and the deployment count were all measured, not relayed. §B6's
+namespace lesson is the morning's actual failure and fix, written down because
+the next person to connect a Vercel project to a personal GitHub repo will hit
+it. Nothing already in this file was deleted to make room: the 05:49Z
+before-picture, the four-steps-left box's contents and the plan's own hedges are
+all still here, marked done rather than removed.
+
 **What an agent did and did not do.** Did: create one empty Vercel project and
-PATCH its settings, through the founder's already-logged-in CLI. Did not: run any
-deploy, connect the git repo, touch DNS or a domain, add a payment method, delete
-anything, or mint a token. Domain and git-authorization steps are human work by
-design, and the account remains Hobby with no payment method.
+PATCH its settings, through the founder's already-logged-in CLI; later, trigger
+one production deployment of `main` through the same login, and read state back
+for these records. Did not: connect the git repo, touch DNS or a domain, add a
+payment method, delete anything, or mint a token. Domain and git-authorization
+steps are human work by design, and the account remains Hobby with no payment
+method.

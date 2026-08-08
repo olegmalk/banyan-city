@@ -3319,3 +3319,78 @@ https://banyan.city` → **404**; `https://olegmlkvorg.github.io/banyan-city/` �
 `MIGRATION.md` was run as written and works. The human work left is four steps:
 find the domain (B1), move it (B4), connect the repo to the existing project
 (B6), attach the domain (B8).
+
+## 2026-08-08 09:15Z — banyan.city is back up, on a team with no card, and the first live courier push built nothing
+
+**The outage is over.** `curl -sI https://banyan.city` → **200** (measured
+09:15:37Z), `https://www.banyan.city` → **308** to the apex, mirror still 200.
+The site had been 404 `DEPLOYMENT_NOT_FOUND` since dad removed the old project
+on 2026-08-07 to stop the bill described in the two entries above.
+
+**The domain moved team-to-team, and the DNS zone travelled with it.** Path A,
+exactly as `MIGRATION.md` B4 predicted: instant, no registrar transfer, no
+propagation wait, no ICANN lock involved. `banyan.city` now sits in team
+**`olegmalkov2023-1685s-projects`** on the new account
+(**olegmalkov2023@gmail.com**), **Hobby, no payment method**. The old account
+(oleg@mlkv.org) holds no domain, no zone and no project.
+
+**The absence of a card is the spend guard, and it is now also the renewal
+timebomb.** The July-2027 renewal will be attempted against this new cardless
+team, so §F1 did not become moot when the domain moved — it moved with it. The
+existing queue entry `domain-transfer-out-1788739200` (transfer out to an
+external registrar, eligible from ~**2026-09-07** when the 60-day ICANN lock
+lifts) is the live plan, unchanged.
+
+**Timeline, all UTC, all 2026-08-08:**
+
+| time | what |
+|---|---|
+| 00:55:48Z | last `vercel[bot]` deployment on the old project — a Preview, the end of the flood |
+| 05:47Z | dad created an empty Pro team `banyan-3318d224` during signup — cardless trial, 0 projects, 0 domains |
+| ~09:00Z | GitHub user `olegmalk` accepted a write-collaborator invitation on the repo |
+| 09:10:31Z | courier heartbeat pushed to `farm-results-rtx5090` **with the git integration already connected** |
+| 09:12:30Z | production deployment `dpl_8xsZbR1WyFXR2ZrcPUU41brKUSMN` created via API |
+| 09:13:35Z | GitHub records it as a `vercel[bot]` **Production** entry — the first non-Preview row in weeks |
+| 09:13:37Z | deployment **READY**; banyan.city answers 200 |
+
+**LIVE-FIRE GUARD PASS #1 — the mechanism that produced >$100 is confirmed
+dead.** The 09:10:31Z courier push happened *after* the repo was connected to the
+project, which is precisely the condition that generated 2,303 preview builds on
+the old account. It produced **zero deployment events**: the project's deployment
+list contains exactly one entry, the manual production build. Not a skipped
+build, not a cancelled build — no event at all. That is
+`git.deploymentEnabled` refusing at the event layer, which is the outcome
+`MIGRATION.md` B5 said to expect and the reason the deny-list matters more than
+the ignore script.
+
+**The GitHub-connect saga, because it cost the morning and will cost it again.**
+Vercel's repository picker enumerates **only the namespace of the GitHub identity
+connected to the Vercel account** — not every repo that identity can reach.
+`olegmlkvorg/banyan-city` is a personal repo of `olegmlkvorg`, so adding the
+family's other GitHub user (`olegmalk`, on the new account's email) as a write
+collaborator did **not** make the repo appear in the picker; collaborator access
+is not namespace membership. What worked was connecting GitHub login
+**`olegmlkvorg`** — the repo owner — to the new Vercel account, and installing
+the Vercel GitHub App on that account scoped to **banyan-city only**. Recorded in
+`MIGRATION.md` B6.
+
+**Project state, read back from `GET /v9/projects/banyan-city` rather than
+assumed:** git link `olegmlkvorg/banyan-city`, production branch **`main`**,
+`previewDeploymentsDisabled: true`, `commandForIgnoringBuildStep` = `bash
+pipeline/vercel-ignore-build.sh`, `gitForkProtection: true`, 0 deploy hooks.
+Domains attached and `verified: true`: `banyan.city`, `www.banyan.city`
+(redirecting to the apex), `banyan-city.vercel.app`.
+
+**What is left, none of it urgent, none of it the steward's:**
+
+- **The September decision.** From ~2026-09-07 the domain can leave Vercel for an
+  external registrar at ~$10–20/yr. Founder-reserved spend; §F2 has the steps and
+  the one trap (the DNS zone does **not** travel with a registrar transfer).
+- **The empty `banyan` Pro team** (`banyan-3318d224`) should be downgraded to
+  Hobby or deleted. It is a signup artifact with 0 projects and 0 domains and it
+  is harmless while it sits there — but it is a Pro trial, and Pro is the tier
+  where the meter exists.
+- **Dad's old account is no longer load-bearing for the name**, which per §F3 is
+  what makes retiring it safe. The F3 rule still applies as written: before any
+  deletion, open that account's **Domains** list and look, rather than trusting
+  this entry or a Move dialog. There is no hurry.
