@@ -462,11 +462,18 @@ list held exactly one entry (the manual production build at 09:12:30Z) and
 GitHub's `vercel[bot]` rows show no Preview after `2026-08-08T00:55:48Z`, which
 is the old project's last gasp.
 
-Note what "pass" looks like here: **not a skipped build, no event at all.** That
-is `git.deploymentEnabled` refusing before a deployment is created, and it is
-why D1 insists on the code layer as well as the dashboard. Keep running this
-check anyway — the branches are still PRE-GUARD (§C1), so today's pass rests on
-the project setting and the deny-list together.
+Note what "pass" looks like here: **not a skipped build, no event at all.**
+
+**And note which layer earned it, because it is not the one in this repo.** §C1
+was re-run at 09:22Z and **all five courier branches are still PRE-GUARD** — no
+`git.deploymentEnabled` block in the `vercel.json` they carry. Vercel reads that
+file from the branch being pushed, so the deny-list on `main` had no say here.
+The pass belongs to **`previewDeploymentsDisabled: true`**, the project setting
+from B2b, which is precisely the layer it was set for. The deny-list will start
+covering each branch as it turns over (`farm_worker.py:573` runs `git checkout
+origin/main -- .` at the start of a task), and until then D1's "both, always" is
+carrying on one leg. **That leg is a dashboard toggle nobody can diff** — which
+is the exact shape of risk D4 was written about, now applying to our own guard.
 
 
 GitHub records every Vercel deployment as a `vercel[bot]` entry, so this is

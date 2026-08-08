@@ -3358,10 +3358,62 @@ dead.** The 09:10:31Z courier push happened *after* the repo was connected to th
 project, which is precisely the condition that generated 2,303 preview builds on
 the old account. It produced **zero deployment events**: the project's deployment
 list contains exactly one entry, the manual production build. Not a skipped
-build, not a cancelled build — no event at all. That is
-`git.deploymentEnabled` refusing at the event layer, which is the outcome
-`MIGRATION.md` B5 said to expect and the reason the deny-list matters more than
-the ignore script.
+build, not a cancelled build — no event at all.
+
+**Which layer stopped it, corrected.** The first version of this entry credited
+`git.deploymentEnabled`. That is wrong, and the §C1 re-run at 09:22Z is why:
+**all five courier branches still carry a PRE-GUARD `vercel.json`** with no
+deny-list in it, and Vercel reads that file from the branch being pushed. The
+deny-list on `main` cannot govern a push to `farm-results-rtx5090` until that
+branch turns over. So the layer actually holding the line today is the project
+setting **`previewDeploymentsDisabled: true`** — exactly the case
+`MIGRATION.md` B2b was written for ("the layer `git.deploymentEnabled` cannot
+reach"). The deny-list becomes the second layer branch by branch, as each box
+next runs `git checkout origin/main -- .`. Both are wanted; only one is load-
+bearing right now, and it is the one that is a dashboard setting rather than a
+line in this repo.
+
+**GUARD PASS #2 — a push to `main` that changes no site input is CANCELED, with
+the guard's own reason in the log.** The commit carrying this entry
+(`bd2ac18`, pushed 09:20:31Z) touches only `STATE.md` and `MIGRATION.md`, which
+`vercel-ignore-build.sh` deliberately excludes. It created deployment
+`dpl_FpjyGsBtZM3iHrycYePsbGSQa5xa` — correct, `main` is allowed to make events —
+and that deployment went **CANCELED at 09:21:25Z without building**. The build
+log, quoted rather than characterised:
+
+```
+Cloning github.com/olegmlkvorg/banyan-city (Branch: main, Commit: bd2ac18)
+Cloning completed: 50.198s
+Running "bash pipeline/vercel-ignore-build.sh"
+[build-guard] baseline: last deployed commit 7f02387942da
+[build-guard] SKIP — no site input changed between 7f02387942da... and HEAD
+The Deployment has been canceled as a result of running the command defined in
+the "Ignored Build Step" setting.
+```
+
+No `pip install`, no `build_site.py`, and `banyan.city` kept serving the
+previous READY deployment throughout. `VERCEL_GIT_PREVIOUS_SHA` resolved to the
+real last-deployed commit, so the baseline logic took its intended path rather
+than either fallback.
+
+**The number in that log worth keeping: the clone is 50.2 seconds.** A skipped
+deployment is not free, and now we know what it actually costs — ~53s wall on a
+2-core machine, essentially all of it cloning the 1.9 GB repo before the guard
+gets a word in. `vercel-ignore-build.sh` says at the top that a skip "is not
+zero and it is not invisible"; this is the measurement behind that sentence. On
+Hobby with no card it bills nothing. It is also the strongest argument for the
+repo-size work, and a reason `git.deploymentEnabled` (no event, no clone) is
+genuinely better than the ignore script rather than merely redundant with it.
+
+**GUARD PASS #3 — the next courier heartbeat, same result.** `farm_worker.py`
+force-pushed `9ae5945` to `farm-results-rtx5090` at 09:20:31Z. Checked at
+09:23:36Z: the project's deployment list holds **exactly two** entries, both
+`target=production`, both `ref=main` — the READY one from 09:12:30Z and the
+CANCELED one from this commit. **Nothing from the courier.** That is three
+post-connect courier pushes now (09:10:31Z, 09:15:30Z, 09:20:31Z) and zero
+deployment events between them.
+
+**CI on `bd2ac18`: lint-genome, pages and mirror all green.**
 
 **The GitHub-connect saga, because it cost the morning and will cost it again.**
 Vercel's repository picker enumerates **only the namespace of the GitHub identity
