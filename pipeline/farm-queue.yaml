@@ -1237,31 +1237,60 @@ backlog:
 # disk and unread.
 # NOT fixed in the promotion commit on purpose: it is a build_site change, it needs a
 # test, and a stills promotion is not where a site generator gets edited.
-- id: review-poster-names-stale-still-1786197251
-  runner: manual
-  worker: m1pro
-  needs: []
-  window: any
-  est_minutes: 30
-  cmd: >-
-    make build_site.still_for() resolve a clip's poster against the still the clip
-    was ACTUALLY drawn from, not against whatever now holds that filename: prefer
-    the sidecar's `init_still_sha256` and accept the `-REVOKED-*` sibling whose bytes
-    match it, fall back to no poster rather than to a frame the clip does not
-    contain, and add a test that a promoted canon still does not silently re-poster
-    an older clip. Then check the two pairs already affected, beats 12 and 15 — and
-    a THIRD that is armed rather than firing: node 002b beat 01, whose plate was
-    revoked on 2026-08-08 (01-cold-open-REVOKED-too-tall.png). Its four clips in
-    review/ep2-b01/ currently resolve to no poster at all, because nothing holds the
-    name they were drawn from; the moment ep2-b01-cold-open-redraw promotes a new
-    01-cold-open.png they will silently poster themselves with a frame none of them
-    contains. Fix it before that promotion and the third pair never happens.
-  why: >-
-    The review page is what the founder screens on, and a poster is the first frame
-    he sees; one that promises a picture the clip does not contain is the review
-    surface lying about footage — the same class of fault as the shot board that
-    could not read its own records. It is cheap and it is $0, and it will recur on
-    every future promotion until the lookup stops going by filename.
+# RETIRED 2026-08-08 NIGHT — review-poster-names-stale-still-1786197251, done by the
+# commit that carries this line, plus b6d435f (the records the resolver reads).
+# Deleted rather than annotated, like the two above it: `runner: manual`, which the
+# promoter never retires, so it would sit here reading as runnable forever.
+#
+# The lookup no longer goes by filename. `still_from_record()` prefers the record's
+# `init_still_sha256` / `source_still_sha256` and resolves by BYTES — the named file
+# if it still holds them, otherwise whichever file does, which is what a `-REVOKED-*`
+# retirement is (R6 keeps the frame in place under a new name). Where the claim
+# cannot be honoured it returns NO poster plus a named build warning. A blank player
+# beats a false one.
+#
+# THE THREE CASES THIS ENTRY NAMED, and what each turned out to be:
+#
+#   BEATS 12 AND 15, "live NOW" — fixed, and fixed ON THE DEPLOY, which took more
+#   than the code and is the part this entry did not know it needed. The no-hash
+#   fallback is "is the named file NEWER than the clip", and mtime belongs to the
+#   CHECKOUT, not to the tree: it fires on a working copy and CANNOT fire on Vercel,
+#   where a fresh clone stamps every file the same second. Five served clips carried
+#   no hash at all, so the wrong poster would have survived this fix on the only
+#   surface he screens from. b6d435f states the bytes for all five, read out of this
+#   repo's own history — `git rev-list -1 --before=<clip's commit> HEAD -- <still>`,
+#   sha256 of that blob — with two corroborated independently by an earlier
+#   measurement backfill. The entry's own premise was half right: it said three of
+#   four beat-15 sidecars carry the hash, and the fourth was the one that mattered.
+#
+#   002b BEAT 01, "armed rather than firing" — worse than armed, and not where the
+#   entry looked. It named `review/ep2-b01/`, which the site does not serve; the
+#   SERVED copy is `cuts/checklist/002b-b01-5b.mp4`, an EPISODE 2 beat-1 render whose
+#   record names no still, and the blanket fallback was handing it `09-whoami.png` —
+#   episode ONE, beat NINE — as its poster wherever ffmpeg is absent. Not armed:
+#   firing, every deploy. `poster_still()` now splits the two populations that reach
+#   that fallback. An assembly says so by carrying `sources:` and keeps the node's
+#   approved still, which a 90-second cut of episode 1 genuinely contains; one shot
+#   with no record gets nothing and a warning. The redraw can promote freely now.
+#
+# MEASURED, not asserted: rendering /review/ with FFMPEG forced to None — the Vercel
+# build image exactly — gives 25 of 26 players a poster and the 26th none, one
+# warning naming it. The bytes served for beats 12 and 15 hash aa14d078 / db0be703,
+# the pre-promotion frames; the files now wearing those names hash f60c1404 /
+# 5bf2f645 and appear on the page nowhere.
+#
+# 19 checks in test_pipeline.py pin every branch — bytes under the same name, bytes
+# moved to another name, a hash nobody holds, a name in no node, a name in two nodes,
+# no record at all, the mtime rule and its slack, and the assembly/one-shot split —
+# plus one over the live cuts.yaml asserting that every served cut recording a
+# still's hash posters exactly those bytes. That last one keeps answering after
+# future promotions, which is the point: the defect recurs on every promotion until
+# the lookup stops going by name.
+#
+# ON THE FFMPEG RED the note below hands to this entry: measured after this change on
+# top of 45049cf, `build_site.py` with ffmpeg on PATH sweeps 70 pages with no broken
+# references and exits 0. Which change earned that was NOT isolated here — 45049cf
+# landed in between — so this claims the state, not the cause.
 
 # THE ZOOM. His first sentence and the only note that touches every shot at once:
 # "zooms are way too slow." The held beats' push-in is a single number in

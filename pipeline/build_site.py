@@ -21,6 +21,7 @@ Design constraints:
     translated in place and only kept inside the technical drawers
 """
 
+import hashlib
 import html
 import os
 import re
@@ -689,6 +690,145 @@ def poster(src: Path, rel: str, fallback: Path | None = None):
 
 def poster_attr(rel, prefix: str = "") -> str:
     return f' poster="{prefix}{rel}"' if rel else ""
+
+
+_SHA: dict = {}
+_STILL_DIRS: list = []
+# Every clip whose record cannot be honoured, reported at the end of the build.
+POSTER_WARNINGS: list = []
+# How much newer than its clip a still may be before the name stops being
+# evidence. A promotion is hours or days later; a fresh `git clone` stamps every
+# file with the checkout time, so the honest window has to be wider than clock
+# skew and narrower than a working day. See still_from_record's docstring for
+# what this rule can and cannot see on the deploy host.
+STILL_MTIME_SLACK = 300
+
+
+def bytes_sha256(p: Path) -> str:
+    """sha256 of a file, cached per (path, size, mtime).
+
+    A build asks the same still's hash once per clip that names it, and the
+    stills are ~1.3MB each; without the cache a 22-clip review page re-reads
+    26 PNGs 22 times.
+    """
+    st = p.stat()
+    key = (str(p), st.st_size, st.st_mtime_ns)
+    if key not in _SHA:
+        _SHA[key] = hashlib.sha256(p.read_bytes()).hexdigest()
+    return _SHA[key]
+
+
+def still_dirs() -> list:
+    """Every node's stills/ — a cut on the review page can come from any node.
+
+    Episode 2's clips name frames that live under `002b-first-citizen/stills`,
+    and a lookup hard-wired to one node cannot find them at all.
+    """
+    global _STILL_DIRS
+    if not _STILL_DIRS:
+        _STILL_DIRS = sorted(
+            d for g in sorted((REPO / "genomes").glob("*"))
+            for d in sorted(g.glob("nodes/*/stills")) if d.is_dir())
+    return _STILL_DIRS
+
+
+def still_from_record(data: dict, clip: Path, dirs: list) -> tuple:
+    """WHICH PIXELS THIS CLIP HOLDS — answered by bytes, never by filename alone.
+
+    Returns `(still | None, warning)`. `(None, "")` means the record names no
+    still at all and the caller is free to fall back to something generic;
+    `(None, "<why>")` means the record DOES name one and we cannot honour the
+    claim, so the honest poster is no poster.
+
+    THE BUG THIS EXISTS TO PREVENT, in one sentence: a still promoted under an
+    existing canon filename re-posters every older clip drawn from the OLD
+    pixels, so the review page shows a tall sapling over footage of bare soil.
+    That happened live to three comparison pairs — beats 7, 12 and 15 of node
+    001 — because `init_still: 15-something-s-coming.png` was read as a name and
+    the name had changed hands. `poster()` only reaches this fallback when ffmpeg
+    is missing, which is exactly the Vercel build image, so the wrong poster was
+    visible only on the deployed page and never on a local build.
+
+    Resolution order, and each step is a different kind of evidence:
+      1. `init_still_sha256` / `source_still_sha256` matching the named file —
+         the record is precise and the name still holds those bytes.
+      2. the same hash found on ANY still in ANY node — the bytes were renamed,
+         which is what a `-REVOKED-*` retirement is (R6 keeps them in place), so
+         the clip's true frame is still on disk under its new name and we show
+         it. This is the case that turns a lie into a correct poster rather than
+         into a blank.
+      3. a recorded hash that no file on disk has — refuse. The record makes a
+         claim about bytes nobody holds; anything we showed would be a guess.
+      4. no hash, one file under that name, and that file is not meaningfully
+         newer than the clip — trust the name. THE LIMIT OF THIS RULE, stated
+         because it matters: mtime is a property of the checkout, not of the
+         repo, so on the build host every file is the same age and this test
+         cannot fire. It catches a stranded clip on a working copy; only a
+         recorded hash catches one on Vercel, which is why every published cut's
+         record was backfilled with its measured hash on 2026-08-08.
+      5. no hash and the name is missing, or ambiguous across nodes — refuse.
+    """
+    name = str(data.get("init_still") or data.get("source_still") or "").strip()
+    want = str(data.get("init_still_sha256")
+               or data.get("source_still_sha256") or "").strip().lower()
+    if not name and not want:
+        return None, ""
+    named = [d / name for d in dirs if name and (d / name).exists()]
+    if want:
+        for cand in named:
+            if bytes_sha256(cand) == want:
+                return cand, ""
+        # The bytes were renamed out from under the name. Identical bytes are
+        # the identical picture, so any file holding them is the right poster.
+        renamed = [p for d in dirs for p in sorted(d.glob("*.png"))
+                   if bytes_sha256(p) == want]
+        if renamed:
+            return renamed[0], ""
+        return None, (f"{clip.name}: records the still it was drawn from as "
+                      f"{want[:12]}… and no still in the repo has those bytes")
+    if not named:
+        return None, (f"{clip.name}: names still {name!r}, which is in no node's stills/")
+    if len(named) > 1:
+        return None, (f"{clip.name}: names still {name!r}, which exists in "
+                      f"{len(named)} nodes, and the record does not say which")
+    cand = named[0]
+    if cand.stat().st_mtime > clip.stat().st_mtime + STILL_MTIME_SLACK:
+        return None, (f"{clip.name}: names still {name!r} with no hash, and the file now "
+                      f"under that name is newer than the clip — the name was re-promoted, "
+                      f"so those are not this clip's pixels")
+    return cand, ""
+
+
+def poster_still(data: dict, clip: Path, dirs: list, assembly_still) -> tuple:
+    """still_from_record plus the one question it cannot answer: what a record
+    that names NO still at all should show. Returns `(still | None, warning)`.
+
+    Two populations end up here and they deserve opposite answers.
+
+    An ASSEMBLY says so in its own record — `sources:` is present and its
+    `model:` reads "per-beat — see sources". A 90-second cut of episode 1 really
+    does contain the node's approved middle still, so that frame is a true
+    picture of the film and not a guess about it.
+
+    ONE SHOT that records no still gets nothing. THE CASE THIS CLOSES, measured
+    on the live cuts.yaml on 2026-08-08: `checklist/002b-b01-5b.mp4` is an
+    EPISODE 2 beat-1 render whose record names no still, and the blanket
+    fallback handed it `09-whoami.png` — episode ONE, beat NINE — as its poster
+    on every host without ffmpeg, i.e. on Vercel, i.e. on the page he screens
+    from his phone. It is the same lie as a stale filename wearing different
+    clothes: "which frame does this shot hold" had no answer, and something was
+    shown anyway. A blank player is how you say there is no answer.
+
+    A separate function from the closure that used to hold this so the rule can
+    be tested without building a page (test_pipeline pins all five branches).
+    """
+    cand, why = still_from_record(data, clip, dirs)
+    if cand is None and not why:
+        if data.get("sources"):
+            return assembly_still, ""
+        why = (f"{clip.name}: its record names no still at all, so nothing in the "
+               f"repo says which frame this shot holds")
+    return (None, why) if why else (cand, "")
 
 
 DATE_RE = re.compile(r"(20\d\d-\d\d(?:-\d\d)?)")
@@ -1766,7 +1906,30 @@ def render_review() -> str:
     withheld, missing = [], []
 
     def still_for(src: Path):
-        """The beat's own approved still, so a poster is never another beat."""
+        """The pixels this clip actually holds, or NO poster at all.
+
+        Four answers, and the two in the middle are the whole point:
+          - the record names a still we can identify → that still, by bytes
+          - the record names one we cannot → nothing, and a build warning. A
+            poster is a promise about the clip; a wrong one is the review
+            surface lying about footage, which is worse than a black rectangle.
+          - the record names none and the cut IS an assembly, which its own
+            record says by carrying `sources:` (its `model:` reads "per-beat —
+            see sources") → the node's approved still. A 90-second cut of
+            episode 1 really does contain that frame, so the poster is a true
+            picture of the film rather than a guess about it.
+          - the record names none and it is ONE SHOT → nothing, and a warning.
+            THE CASE THIS CLOSES, measured on the live cuts.yaml 2026-08-08: the
+            served episode-2 beat-1 clip `checklist/002b-b01-5b.mp4` records no
+            still, and the old blanket fallback handed it `09-whoami.png` —
+            episode ONE, beat NINE — as its poster on every host without ffmpeg,
+            which is Vercel, which is the page he screens from his phone. "Which
+            frame does this shot hold" has no answer when the record names none,
+            and the honest way to say so is a blank player.
+
+        Only ever asked about clips: the audio takes and contact sheets on this
+        page go through serve_image(), which asks for no poster at all.
+        """
         # hold_still records the frame as `source_still` in a `<name>.mp4.meta.yaml`;
         # the stem-only lookup missed it and every held clip fell back to the node's
         # first still, i.e. another beat's picture as the poster
@@ -1774,9 +1937,14 @@ def render_review() -> str:
         if not side:
             return first_still(REVIEW_NODE)
         data = yaml.safe_load(side.read_text(encoding="utf-8")) or {}
-        name = data.get("init_still") or data.get("source_still")
-        cand = REVIEW_NODE / "stills" / str(name) if name else None
-        return cand if cand and cand.exists() else first_still(REVIEW_NODE)
+        if not isinstance(data, dict):
+            return first_still(REVIEW_NODE)
+        cand, why = poster_still(data, src, still_dirs(), first_still(REVIEW_NODE))
+        if why:
+            if why not in POSTER_WARNINGS:
+                POSTER_WARNINGS.append(why)
+            return None
+        return cand
 
     def serve(rel: str):
         """Copy one media file plus its provenance record. (href, poster) or None."""
@@ -2177,6 +2345,14 @@ def main() -> None:
         (OUT / "review" / "index.html").write_text(render_review())
         mine.append("review/index.html")
         print("✓ review/ published — unlisted working cuts")
+        # Not fatal, and named rather than silent. Each line is a clip whose own
+        # record cannot say which pixels it holds, so it ships with no poster
+        # instead of one that promises a frame it does not contain. On a host
+        # with ffmpeg the player still gets a real extracted frame; on Vercel,
+        # which has none, these are the players that come up blank — which is
+        # the point, and is why the line names the record and not the poster.
+        for w in POSTER_WARNINGS:
+            print(f"  ! poster withheld — {w}")
     (OUT / "trials").mkdir(exist_ok=True)
     trials_out = REPO / "pipeline" / "t3-trials" / "outputs"
     if trials_out.exists():

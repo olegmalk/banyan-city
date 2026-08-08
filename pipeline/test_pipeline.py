@@ -4324,6 +4324,241 @@ def test_no_git_never_silently_empties_the_board(tmp: Path):
     check("inside a repo, an untracked file is dropped", bs.in_the_tree(empty) == [])
 
 
+# ====================================================================== #
+# A POSTER IS A PROMISE ABOUT PIXELS — review-poster-names-stale-still-1786197251
+#
+# The defect, in one sentence: a review-page clip's poster was resolved by the
+# FILENAME its record gives, so promoting a new canon still under an existing
+# name re-postered every older clip drawn from the old pixels, and the page
+# showed a tall sapling over footage of bare soil. It was invisible locally
+# because `poster()` only reaches the still fallback when ffmpeg is missing —
+# which is the Vercel build image, i.e. only the deployed page lied, only on the
+# surface the founder actually screens from.
+#
+# These pin `build_site.still_from_record()` (which pixels does this clip hold)
+# and `build_site.poster_still()` (what a record naming no still at all gets).
+# Both are pure: they read files, no ffmpeg, no page build.
+# ====================================================================== #
+
+
+def _stills_dir(root: Path, node: str, files: dict) -> Path:
+    """One node's stills/, the shape still_dirs() hands the resolver."""
+    d = root / node / "stills"
+    d.mkdir(parents=True)
+    for name, data in files.items():
+        (d / name).write_bytes(data)
+    return d
+
+
+def test_a_promoted_still_does_not_reposter_an_older_clip(tmp: Path):
+    """THE REGRESSION TEST THE QUEUE ENTRY ASKED FOR, as the tree really does it.
+
+    R6 keeps a retired frame in place under a `-REVOKED-<why>` name, so after a
+    promotion the canon filename holds NEW pixels and the old ones are still on
+    disk beside it. Identical bytes are the identical picture, so the clip's true
+    frame is findable — and a resolver that goes by name shows the wrong one.
+    """
+    import hashlib
+
+    import build_site as bs
+
+    OLD, NEW = b"bare soil, beat 15 as shot", b"tall sapling, promoted later"
+    old_sha, new_sha = hashlib.sha256(OLD).hexdigest(), hashlib.sha256(NEW).hexdigest()
+    d = _stills_dir(tmp, "001-x", {"15-coming.png": NEW,
+                                   "15-coming-REVOKED-underground.png": OLD})
+    clip = tmp / "beat-15-animated.mp4"
+    clip.write_bytes(b"an mp4")
+
+    got, why = bs.still_from_record(
+        {"init_still": "15-coming.png", "init_still_sha256": old_sha}, clip, [d])
+    check("a clip drawn from the old pixels posters the OLD file, not the promoted name",
+          got is not None and got.name == "15-coming-REVOKED-underground.png")
+    check("...silently, with no warning, because this is a correct answer and not a repair",
+          why == "")
+    check("...and the bytes handed back are the bytes the record names",
+          got is not None and bs.bytes_sha256(got) == old_sha)
+
+    # The same shape of record, on a clip drawn AFTER the promotion.
+    got2, why2 = bs.still_from_record(
+        {"init_still": "15-coming.png", "init_still_sha256": new_sha}, clip, [d])
+    check("a clip drawn from the pixels the name still holds posters the name itself",
+          got2 is not None and got2.name == "15-coming.png" and why2 == "")
+    # `source_still` is what hold_still.py writes; `init_still` is the renderers'.
+    got3, _ = bs.still_from_record(
+        {"source_still": "15-coming.png", "source_still_sha256": old_sha}, clip, [d])
+    check("both record dialects are read — hold_still's source_still resolves too",
+          got3 is not None and got3.name == "15-coming-REVOKED-underground.png")
+
+
+def test_a_record_we_cannot_honour_gets_no_poster_at_all(tmp: Path):
+    """No poster beats a wrong poster, and "no record" is not "cannot honour".
+
+    Four refusals and one sentinel. The sentinel matters as much as the
+    refusals: `(None, "")` means the record claims nothing, so the caller stays
+    free to fall back, while `(None, why)` means the record made a claim we
+    could not verify and the caller must show nothing.
+    """
+    import hashlib
+
+    import build_site as bs
+
+    d = _stills_dir(tmp, "001-x", {"12-undefined.png": b"cracked grey"})
+    clip = tmp / "beat-12-animated.mp4"
+    clip.write_bytes(b"an mp4")
+
+    gone = hashlib.sha256(b"pixels nobody kept").hexdigest()
+    got, why = bs.still_from_record(
+        {"init_still": "12-undefined.png", "init_still_sha256": gone}, clip, [d])
+    check("a recorded hash no file on disk has → no poster", got is None)
+    check("...and the warning names the clip and the hash, so it is findable",
+          clip.name in why and gone[:12] in why)
+
+    got, why = bs.still_from_record({"init_still": "99-not-here.png"}, clip, [d])
+    check("a named still in no node's stills/ → no poster, with a reason",
+          got is None and "no node" in why)
+
+    d2 = _stills_dir(tmp, "002b-y", {"12-undefined.png": b"a different picture"})
+    got, why = bs.still_from_record({"init_still": "12-undefined.png"}, clip, [d, d2])
+    check("one name, two nodes, no hash → refuse rather than pick one",
+          got is None and "2 nodes" in why)
+
+    got, why = bs.still_from_record({}, clip, [d])
+    check("a record that names no still returns the free-to-fall-back sentinel",
+          got is None and why == "")
+
+
+def test_a_hashless_name_that_changed_hands_is_refused(tmp: Path):
+    """The only evidence available when a record carries no hash: file age.
+
+    Stated in still_from_record's docstring and repeated here because the limit
+    is the point — mtime is a property of the checkout, so this rule catches a
+    stranded clip on a working copy and cannot fire on a fresh clone. It is the
+    reason the published cuts' records were backfilled with measured hashes.
+    """
+    import os
+
+    import build_site as bs
+
+    d = _stills_dir(tmp, "001-x", {"07-zero.png": b"grayened, promoted later"})
+    still = d / "07-zero.png"
+    clip = tmp / "beat-07-zoom-gentle.mp4"
+    clip.write_bytes(b"an mp4")
+    born = clip.stat().st_mtime
+
+    os.utime(still, (born + bs.STILL_MTIME_SLACK + 60,) * 2)
+    got, why = bs.still_from_record({"source_still": "07-zero.png"}, clip, [d])
+    check("no hash, and the file under that name is newer than the clip → refuse",
+          got is None and "re-promoted" in why)
+
+    os.utime(still, (born - 60,) * 2)
+    got, why = bs.still_from_record({"source_still": "07-zero.png"}, clip, [d])
+    check("no hash, and the name is no newer than the clip → trust the name",
+          got is not None and got.name == "07-zero.png" and why == "")
+
+    # Clock skew and a fresh checkout must not read as a promotion.
+    os.utime(still, (born + bs.STILL_MTIME_SLACK - 30,) * 2)
+    got, _ = bs.still_from_record({"source_still": "07-zero.png"}, clip, [d])
+    check("...and a few minutes of skew is slack, not evidence", got is not None)
+
+
+def test_a_shot_that_records_no_still_gets_no_poster(tmp: Path):
+    """An assembly may borrow the node's still. A single shot may not.
+
+    The live case, 2026-08-08: `checklist/002b-b01-5b.mp4` is an EPISODE 2
+    beat-1 render whose record names no still, and the old blanket fallback gave
+    it episode 1's `09-whoami.png` — another beat of another episode — as its
+    poster wherever ffmpeg is absent, which is the deploy.
+    """
+    import build_site as bs
+
+    d = _stills_dir(tmp, "001-x", {"09-whoami.png": b"a beat 9 frame"})
+    node_still = d / "09-whoami.png"
+
+    shot = tmp / "002b-b01-5b.mp4"
+    shot.write_bytes(b"an mp4")
+    got, why = bs.poster_still({"shot_beat": 1, "model": "Wan-AI/Wan2.2-TI2V-5B"},
+                               shot, [d], node_still)
+    check("a one-shot record naming no still gets no poster, not another beat's frame",
+          got is None and "names no still at all" in why and shot.name in why)
+
+    film = tmp / "ep1-v32-gentleholds.mp4"
+    film.write_bytes(b"an mp4")
+    got, why = bs.poster_still({"model": "per-beat — see sources",
+                                "sources": [{"part": "animated beats"}]},
+                               film, [d], node_still)
+    check("a whole-episode assembly still shows the node's approved still",
+          got == node_still and why == "")
+
+    # poster_still must not soften a refusal still_from_record already made.
+    got, why = bs.poster_still({"init_still": "nope.png"}, film, [d], node_still)
+    check("an unhonourable record is refused even for an assembly",
+          got is None and why != "")
+
+
+def test_every_served_cut_posters_the_frame_its_record_names():
+    """The live review surface, on the real tree — not a fixture.
+
+    The invariant, for every clip `cuts/cuts.yaml` actually serves: if its
+    record states the hash of the still it was drawn from, the poster the build
+    resolves holds EXACTLY those bytes. That is the whole fix, asserted against
+    the files the founder will screen rather than against a mock, and it stays
+    true across any future promotion — which is what makes it worth running
+    forever rather than once.
+    """
+    import yaml
+
+    import build_site as bs
+    import licence_gate as lg
+
+    cfg = yaml.safe_load((bs.CUTS / "cuts.yaml").read_text(encoding="utf-8")) or {}
+    named: list[str] = [str(c["file"]) for c in (cfg.get("cuts") or [])]
+    for grp in cfg.get("comparisons") or []:
+        for p in grp.get("items") or []:
+            named += [str(p["left"]), str(p["right"])]
+            if (p.get("footnote") or {}).get("file"):
+                named.append(str(p["footnote"]["file"]))
+    for it in (cfg.get("checklist") or {}).get("items") or []:
+        named += [str(x["file"]) for x in (it.get("clips") or [])]
+
+    dirs = bs.still_dirs()
+    check(f"the resolver can see every node's stills/ ({len(dirs)} dirs)", len(dirs) >= 1)
+
+    hashed, wrong, stale_name, blank = 0, [], 0, []
+    for rel in sorted(set(named)):
+        src = bs.CUTS / rel
+        if not src.exists() or src.suffix.lower() not in lg.VIDEO_EXT:
+            continue
+        side = lg.sidecar_for(src, lg.META_EXT)
+        if not side:
+            continue                      # a different test's finding, not this one's
+        data = yaml.safe_load(side.read_text(encoding="utf-8")) or {}
+        if not isinstance(data, dict):
+            continue
+        want = str(data.get("init_still_sha256")
+                   or data.get("source_still_sha256") or "").strip().lower()
+        got, why = bs.still_from_record(data, src, dirs)
+        if want:
+            hashed += 1
+            if got is None or bs.bytes_sha256(got) != want:
+                wrong.append(rel)
+            elif got.name != str(data.get("init_still") or data.get("source_still") or ""):
+                stale_name += 1           # the name changed hands; bytes found it anyway
+        elif why:
+            blank.append(rel)
+
+    check(f"at least one served cut records the hash of its still ({hashed} do)", hashed >= 1)
+    check(f"every one of those {hashed} posters those exact bytes"
+          + ("" if not wrong else f" — WRONG: {', '.join(wrong)}"), not wrong)
+    # Not an assertion about the number, which any promotion or backfill moves —
+    # printed so a reviewer can see the renamed-bytes path is live traffic and
+    # not a hypothetical the tests invented.
+    print(f"      · {stale_name} served cut(s) postered from a file that no longer "
+          f"holds the name their record gives")
+    if blank:
+        print(f"      · {len(blank)} served cut(s) get NO poster (record cannot be "
+              f"honoured): {', '.join(sorted(blank)[:6])}")
+
+
 def main():
     import tempfile
     test_beat_duration_from_timecode()
@@ -4433,6 +4668,17 @@ def main():
         test_a_frame_the_tree_carries_but_the_licence_blocks_is_named_not_linked(Path(td))
     with tempfile.TemporaryDirectory() as td:
         test_no_git_never_silently_empties_the_board(Path(td))
+    # POSTERS BY BYTES — review-poster-names-stale-still-1786197251. Own temp dir
+    # each: these write stills/ trees and then move file mtimes around in them.
+    with tempfile.TemporaryDirectory() as td:
+        test_a_promoted_still_does_not_reposter_an_older_clip(Path(td))
+    with tempfile.TemporaryDirectory() as td:
+        test_a_record_we_cannot_honour_gets_no_poster_at_all(Path(td))
+    with tempfile.TemporaryDirectory() as td:
+        test_a_hashless_name_that_changed_hands_is_refused(Path(td))
+    with tempfile.TemporaryDirectory() as td:
+        test_a_shot_that_records_no_still_gets_no_poster(Path(td))
+    test_every_served_cut_posters_the_frame_its_record_names()
     print()
     if FAILURES:
         print(f"✗ {len(FAILURES)} failure(s): {', '.join(FAILURES)}")
