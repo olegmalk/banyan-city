@@ -26,6 +26,7 @@ pipeline with text_encoder=None and consumes the file.
 import argparse
 import gc
 import json
+import os
 import platform
 import sys
 import threading
@@ -788,8 +789,40 @@ def stage_render(a) -> int:
     return 0
 
 
-def gpu_busy() -> str:
-    """Another render already on this GPU? Returns a human sentence, or "".
+# WHAT COUNTS AS "SOMEONE ELSE IS ALREADY ON THIS CARD", in two steps, because
+# one threshold cannot do both jobs. Both numbers are read off one log rather
+# than picked — review/ep2-b01/wan5b-b01.log, the night of 2026-08-07:
+#
+#   WARN, 2GB. Unchanged. That same run's own last line is "freed between clips:
+#   2.0/26GB still held", so a couple of gigabytes of allocator residue from a
+#   process that just exited is NORMAL. Refusing on it would stop the farm for a
+#   condition every clean run produces, and the standing rule is that the GPU is
+#   never idle while a runnable job exists.
+#
+#   ABORT, a quarter of the card. The collision that actually crashed read 9.7 of
+#   26GB — 37% — and died 48 seconds later with 0xC0000005 while loading weights.
+#   The residue above is 7.7%. Any line between them is arbitrary; a FRACTION is
+#   at least arbitrary in the same way on the 24GiB 5090 and the 12GB 5070 Ti,
+#   which a second absolute number would not be.
+BUSY_WARN_GB = 2.0
+BUSY_ABORT_FRACTION = 0.25
+# Distinct from 2 (bad arguments) so a wrapper, a scheduled task or a log reader
+# can tell "this box was busy, retry later" from "this command was wrong, never
+# retry it". They call for opposite responses and both used to be a printed line.
+RC_GPU_BUSY = 3
+
+
+def busy_is_fatal(used_gb: float, total_gb: float) -> bool:
+    """Is what is already resident on this card another MODEL, or just residue?
+
+    Its own function so the line can be tested with the two real readings that
+    define it (9.7/26 crashed, 2.0/26 is what a clean run leaves behind) on a
+    machine with no CUDA at all — which is every machine that runs the tests."""
+    return total_gb > 0 and used_gb > total_gb * BUSY_ABORT_FRACTION
+
+
+def gpu_busy() -> tuple:
+    """Another render already on this GPU? Returns (sentence, fatal).
 
     The single-instance lock guards WORKER against WORKER. It does nothing about a
     human running this script directly while a worker is running — which is
@@ -799,23 +832,34 @@ def gpu_busy() -> str:
     the lock does not cover.
 
     Checked here, in the renderer, because this is the one place BOTH routes pass
-    through. Advisory rather than fatal: a deliberate second render is the user's
-    call, and refusing outright would break the very diagnostic that found this.
+    through.
+
+    NO LONGER ADVISORY ABOVE THE ABORT LINE (2026-08-08). It was, and the
+    reasoning was that "a deliberate second render is the user's call" — which is
+    true and is what --force-shared-gpu is for. What the reasoning missed is that
+    a warning nobody is standing in front of is not a choice, it is a log line.
+    On 2026-08-07 at 23:09:43 this printed "9.7GB of 26GB VRAM is ALREADY IN USE"
+    into a detached run on the 5090 and carried straight on into the model load;
+    at 23:10:31 the process died rc=-1073741819, i.e. 0xC0000005, with nothing
+    rendered. The check saw the crash coming, said so accurately, and had no way
+    to act on it. The same task ran clean at 09:17 the next morning on a free
+    card — ten hours lost to a diagnosis that was already correct.
     """
     try:
         import torch
         if not torch.cuda.is_available():
-            return ""
+            return "", False
         free, total = torch.cuda.mem_get_info()
         used_gb = (total - free) / 1e9
-        if used_gb > 2.0:
+        if used_gb > BUSY_WARN_GB:
             return (f"{used_gb:.1f}GB of {total/1e9:.0f}GB VRAM is ALREADY IN USE "
                     f"before we load anything — another render is probably running. "
                     f"Two big models on one card will OOM or halve each other's "
-                    f"speed. Close the other one unless this is deliberate.")
+                    f"speed. Close the other one unless this is deliberate.",
+                    busy_is_fatal(used_gb, total / 1e9))
     except Exception:                                    # noqa: BLE001
         pass
-    return ""
+    return "", False
 
 
 def main() -> int:
@@ -837,6 +881,13 @@ def main() -> int:
     # worse than no flag: I nearly reached for it to fix AnimeGen's host-RAM
     # ceiling. There is no eviction to keep or skip any more; the pipeline always
     # uses its own prompt path.
+    ap.add_argument("--force-shared-gpu", action="store_true",
+                    help="start even though another process already holds a "
+                         "quarter of this card. The escape hatch for the "
+                         "deliberate second render — the AnimeGen diagnostic "
+                         "that found the contention in the first place would "
+                         "have needed it. BANYAN_ALLOW_SHARED_GPU=1 does the "
+                         "same for a detached run with no editable command line")
     ap.add_argument("--no-shake-neg", action="store_true",
                     help="drop OUR shake-suppression terms (SHAKE_NEG). The A/B for "
                          "whether they are damping wanted motion — beat 1 measured "
@@ -877,9 +928,24 @@ def main() -> int:
     # are the ones whose licence we have actually read.
     a.model = MODELS.get(a.model, a.model)
     print(f"model: {a.model}", flush=True)
-    busy = gpu_busy()
+    busy, fatal = gpu_busy()
     if busy:
         print(f"!! {busy}", flush=True)
+    if fatal and not (a.force_shared_gpu or os.environ.get("BANYAN_ALLOW_SHARED_GPU")):
+        print(f"!! REFUSING TO START. This is not a warning any more: the last "
+              f"time this line printed and the render went ahead anyway "
+              f"(2026-08-07 23:09), the process died 48 seconds later with "
+              f"0xC0000005 and produced nothing.\n"
+              f"   Find the other process and let it finish — one render at a "
+              f"time on a card finishes both sooner than two at once.\n"
+              f"   Worker-against-worker already has a lock "
+              f"(farm_worker.acquire, banyan-farm-<handle>.lock in the temp "
+              f"dir); this is the case it does not cover — a hand-run render "
+              f"beside a running worker.\n"
+              f"   If sharing the card is genuinely what you want, say so: "
+              f"--force-shared-gpu, or BANYAN_ALLOW_SHARED_GPU=1 for a detached "
+              f"or scheduled run that has no command line to edit.", flush=True)
+        return RC_GPU_BUSY
     if a.stage == "encode":
         return stage_encode(a)
     # The host-RAM sampler runs ONLY on a measured run. It is a daemon thread doing

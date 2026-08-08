@@ -1226,6 +1226,38 @@ def test_farm_still_sidecar_records_what_actually_ran(tmp: Path):
     check("a txt2img frame claims no img2img settings",
           "strength" not in d and "init" not in d)
 
+    # WHICH BOX RENDERED IT, and the two answers that are not it. 2026-08-08.
+    #
+    # `002b-b01-5b.mp4` reached the founder's morning checklist saying
+    # `platform: local-gpu (MSI)` over a log reporting a 25.7GB card. Nothing
+    # guessed: platform.node() returns "MSI" on BOTH Windows boxes, so the
+    # sidecar faithfully recorded a value that cannot separate a 24GiB 5090 from
+    # a 12GB 5070 Ti. The other wrong answer is the task's `worker:` field, which
+    # is a ROUTING constraint whose legal values include the wildcard `any` — a
+    # clip is not rendered by "any". video_task.worker_id() asks the card.
+    import video_task as V
+    check("the card names itself, and the handle rides along",
+          V.worker_id({"worker": "rtx5090"}, gpu="NVIDIA GeForce RTX 5090 Laptop GPU")
+          == "NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090")
+    check("two boxes sharing a hostname are told apart by the card",
+          V.worker_id({"worker": "MSI"}, gpu="NVIDIA GeForce RTX 5090 Laptop GPU")
+          != V.worker_id({"worker": "MSI"}, gpu="NVIDIA GeForce RTX 5070 Ti Laptop GPU"))
+    check("the routing wildcard never becomes a machine",
+          "any" not in V.worker_id({"worker": "any"}, gpu="RTX 5090"))
+    check("...nor does the old 'unknown' placeholder",
+          "unknown" not in V.worker_id({"worker": "unknown"}, gpu="RTX 5090"))
+    check("with no card to ask, an explicitly named box is still honoured",
+          V.worker_id({"worker": "rtx5090"}, gpu="") == "rtx5090")
+    check("and the platform stays the generic form the licence gate classifies",
+          lg.model_licences(f"local-gpu ({V.worker_id({}, gpu='RTX 5090')})"))
+    # the sidecar farm_worker writes goes through the same function, so a still
+    # and a clip from one night cannot disagree about which machine made them
+    still_task = dict(task, worker="rtx5090")
+    check("the still sidecar's platform routes through the same worker_id",
+          yaml.safe_load(fw.still_sidecar("cagliostrolab/animagine-xl-3.1",
+                                          still_task, 7, 1, "8x8", 4, "p", "n"))["platform"]
+          == f"local-gpu ({V.worker_id(still_task)})")
+
     # A BAKE-OFF NAMES ITS OWN MODEL. Recording the house default while another
     # model rendered is the one failure worse than recording nothing at all.
     other = fw.still_sidecar("stabilityai/sdxl-turbo", dict(task, model="x"), 7,
@@ -2500,6 +2532,98 @@ def test_subprocess_reads_are_utf8(tmp: Path):
     check("the farm queue is valid UTF-8", ok)
 
 
+def test_a_heartbeat_commits_only_the_heartbeat(tmp: Path):
+    """The courier's five-minute commit must not sweep up the whole index.
+
+    `Courier.mark()` scoped its `git add` to farm-out/ and then ran a BARE
+    `git commit`, which writes everything staged. The checkout on a farm box is
+    shared — a human at the machine, a hand-run diagnostic, another script — so
+    anything anyone had staged got committed under the message "hb: <stage>" and
+    force-pushed to a courier branch that nobody reads for content. Their work,
+    filed under our label, on a timer.
+
+    Asserted END TO END rather than by reading the source, because the property
+    that matters is git's and not ours: `git commit -- <path>` commits the
+    working tree at that path and leaves the rest of the index alone. If that
+    ever stopped being true the fix would be silently useless, and a source
+    check would still pass.
+    """
+    import subprocess
+
+    import farm_worker as fw
+
+    repo, origin = tmp / "box-checkout", tmp / "origin.git"
+    repo.mkdir()
+
+    def sh(*a):
+        return subprocess.run(a, cwd=repo, check=True, capture_output=True,
+                              text=True, encoding="utf-8")
+
+    subprocess.run(["git", "init", "-q", "--bare", str(origin)], check=True)
+    sh("git", "init", "-q", "-b", "main")
+    sh("git", "config", "user.email", "t@t")
+    sh("git", "config", "user.name", "t")
+    sh("git", "remote", "add", "origin", str(origin))
+    (repo / "README.md").write_text("x\n")
+    sh("git", "add", "README.md")
+    sh("git", "commit", "-qm", "init")
+
+    # somebody else's work, staged in the shared checkout and not theirs to lose
+    (repo / "half-finished.py").write_text("# mid-edit, deliberately staged\n")
+    sh("git", "add", "half-finished.py")
+
+    was = fw.REPO
+    try:
+        fw.REPO = repo
+        fw.Courier("testbox").mark("STARTED task=t1")
+    finally:
+        fw.REPO = was
+
+    committed = sh("git", "show", "--name-only", "--format=", "HEAD").stdout.split()
+    staged = sh("git", "diff", "--cached", "--name-only").stdout.split()
+    check("the heartbeat itself is committed",
+          any(f.startswith("farm-out/") for f in committed))
+    check("the other process's staged file is NOT in the heartbeat commit",
+          "half-finished.py" not in committed)
+    check("...and it is still staged, exactly as they left it",
+          "half-finished.py" in staged)
+
+
+def test_a_busy_card_refuses_the_render():
+    """A pre-flight that prints and proceeds is a log line, not a check.
+
+    On 2026-08-07 at 23:09:43 wan_i2v printed "9.7GB of 26GB VRAM is ALREADY IN
+    USE before we load anything — another render is probably running" into a
+    detached run on the 5090, then loaded the model anyway; at 23:10:31 the
+    process died rc=-1073741819 (0xC0000005) with nothing written. The same task
+    ran clean the next morning on a free card. The diagnosis was right, printed,
+    and unactionable — nobody was standing in front of that terminal.
+
+    The two readings that define the line are both from that one log, which is
+    why they are asserted here rather than left as a tuned constant: a clean run
+    on the same card ends with "freed between clips: 2.0/26GB still held", so
+    residue is normal and must not stop the farm.
+    """
+    import wan_i2v as W
+
+    check("the collision that crashed would now abort", W.busy_is_fatal(9.7, 26))
+    check("the residue a clean run leaves behind would not",
+          not W.busy_is_fatal(2.0, 26))
+    check("...nor would a little more of it", not W.busy_is_fatal(2.1, 26))
+    # the same fraction on the smaller box, where an absolute GB line would either
+    # never fire or fire on everything
+    check("half of the 12GB box is a collision there too", W.busy_is_fatal(6.0, 12))
+    check("and its own residue still is not", not W.busy_is_fatal(2.0, 12))
+    check("no card, no verdict", not W.busy_is_fatal(0, 0))
+    # the escape hatch has to exist, or the check just breaks the diagnostic that
+    # found the contention in the first place
+    src = (REPO / "pipeline" / "wan_i2v.py").read_text(encoding="utf-8")
+    check("there is a documented way to share the card on purpose",
+          "--force-shared-gpu" in src and "BANYAN_ALLOW_SHARED_GPU" in src)
+    check("busy has its own exit code, distinct from bad arguments",
+          W.RC_GPU_BUSY not in (0, 1, 2))
+
+
 def test_attempts_survive_a_dead_host():
     """A crash that kills the OS must still spend an attempt.
 
@@ -3441,6 +3565,7 @@ def main():
     test_queue_promotion_is_one_atomic_move()
     test_argparse_declares_every_flag_it_reads()
     test_child_verdict_names_a_corpse()
+    test_a_busy_card_refuses_the_render()
     with tempfile.TemporaryDirectory() as td:
         test_giveup_needs_no_fail_line(Path(td))
     with tempfile.TemporaryDirectory() as td:
@@ -3450,6 +3575,7 @@ def main():
     with tempfile.TemporaryDirectory() as td:
         test_no_undefined_locals(Path(td))
         test_subprocess_reads_are_utf8(Path(td))
+        test_a_heartbeat_commits_only_the_heartbeat(Path(td))
         test_queue_render_params_reach_the_child(Path(td))
         test_probe_beat_sends_the_files_and_the_whole_recipe(Path(td))
     test_ltx_frames_are_the_nearest_8n_plus_1()

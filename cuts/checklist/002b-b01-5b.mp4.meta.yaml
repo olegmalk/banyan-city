@@ -19,3 +19,45 @@ batch: 1
 batch_slot: 0
 throughput_s_video_per_s_wall: 0.0112
 compute_s_per_video_s: 89.1
+
+# ---- CORRECTIONS — appended 2026-08-08. NOTHING ABOVE THIS LINE IS EDITED. ----
+# Render-time fields record what the renderer believed when it wrote them, and a
+# wrong one is evidence: rewriting it destroys the only trace that the pipeline
+# ever got this wrong, and leaves the next reader with a tidy file and no reason
+# to fix the code. Corrections are appended, dated, and carry the evidence that
+# settles them. licence_gate reads `corrected_platform` / `corrected_model` as
+# provenance keys, so a correction is classified exactly like the field it
+# corrects — annotating is not a way past the gate.
+corrections:
+- date: 2026-08-08
+  field: platform
+  recorded: local-gpu (MSI)
+  corrected_platform: local-gpu (rtx5090)
+  evidence: >-
+    review/ep2-b01/wan5b-b01.log, the log of this same task id, reports
+    "VRAM[after load, before .to(cuda)] used 1.38/25.7GB" and "device 2.1/26GB".
+    25.7GB is 24GiB — the RTX 5090 laptop card in the .157 box. The MSI 5070 Ti
+    (.153) has 12GB and could not have reported it.
+  cause: >-
+    No --worker reached the renderer, so write_sidecar fell back to
+    platform.node(). That is not a guess, which is what makes it worse: BOTH
+    farm boxes report hostname "MSI" (STATE.md 2026-08-05), so the hostname
+    cannot distinguish them and never could. Fixed at the source on 2026-08-08 —
+    video_task.worker_id() now names the CUDA device, which is unambiguous, and
+    falls back to the hostname only where there is no GPU to ask.
+  corrected_by: steward
+- date: 2026-08-08
+  field: shot_beat
+  recorded: 0
+  corrected_shot_beat: 1
+  evidence: >-
+    This is 002b beat 1, the cold open — the same beat the two
+    002b-b01-video-5b-*-01-cold-open sidecars beside it record as shot_beat 1.
+  cause: >-
+    The clip came off wan_i2v's bench path (stage_render / stage_simple), which
+    calls video_task.write_sidecar with beat=0 hard-coded because a throughput
+    measurement has no beat. It is honest for a bench row and wrong the moment
+    the clip is screened as a beat. Not fixed here — it needs a --beat on
+    wan_i2v, which is a render-CLI change and not a hygiene edit; queued as
+    wan-bench-sidecar-beat-1786190640.
+  corrected_by: steward

@@ -153,7 +153,18 @@ class Courier:
                                                  encoding="utf-8", errors="replace")
         sh("git", "checkout", "-qB", self.branch, check=False)
         sh("git", "add", "-A", str(self.out), check=False)
-        sh("git", "commit", "-qm", f"hb: {stage}", check=False)
+        # PATHSPEC, NOT THE WHOLE INDEX. The add above was correctly scoped and
+        # the commit under it was not: a bare `git commit` writes everything
+        # staged, and this runs on a five-minute timer in a checkout a human or
+        # another script may be using. Anything they had staged got swept into a
+        # heartbeat commit titled "hb: <stage>" and force-pushed to a courier
+        # branch — their work under our message, on a branch nobody reads for
+        # content. With `-- <path>` git commits the working-tree state of that
+        # path and leaves the rest of the index untouched, so the two lines now
+        # agree about what this commit is for.
+        # Note for whoever reads a heartbeat that still looks wrong: this only
+        # takes effect on a box once its checkout turns over.
+        sh("git", "commit", "-qm", f"hb: {stage}", "--", str(self.out), check=False)
         # The push is the ONLY thing that makes any of this visible, and it ran
         # with its error suppressed AND -q. On 2026-08-01 the 5090 rendered its
         # way through the whole queue — "7 task(s) done this session" — while
@@ -380,7 +391,7 @@ def still_sidecar(model, task, beat, seed, size, steps, prompt, negative,
     wrong allow is the direction that publishes things.
     """
     import licence_gate as lg
-    from video_task import _yaml_block
+    from video_task import _yaml_block, worker_id
 
     lic = lg.engine_licence(model) or "UNVERIFIED — licence not read"
     text = (
@@ -390,7 +401,10 @@ def still_sidecar(model, task, beat, seed, size, steps, prompt, negative,
         # recognised on ANY machine while still naming which one drew the frame.
         # Spelling it "local-dads-msi" made every clip from a new handle an
         # unclassified violation once already.
-        f"platform: local-gpu ({task.get('worker', 'unknown')})\n"
+        # And the same worker_id() the video path uses as of 2026-08-08, for the
+        # same reason: `task['worker']` is a routing field, and the hostname it
+        # otherwise fell back to is "MSI" on both boxes.
+        f"platform: local-gpu ({worker_id(task)})\n"
         f"model: {model}\n"
         f"model_licence: {lic}\n"
         f"shot_beat: {beat}\n"

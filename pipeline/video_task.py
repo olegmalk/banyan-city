@@ -702,6 +702,15 @@ MODEL_LICENCE = {
     # ratchet. Without the vendor name exactly one key matches. The vendor is not
     # lost: the repo id says diffusers/LTX-2.3-Distilled-Diffusers, whose upstream
     # is named all over ltx_i2v.py and in MODEL_NOTES.
+    #
+    # THE GATE-SIDE BUG THIS WORKED AROUND IS FIXED (2026-08-08): model_licences
+    # now drops a vendor catch-all when the same string names a version key it
+    # supersedes (licence_gate.SUPERSEDES_CATCH_ALL), so the bf16 string above is
+    # reported ONCE and under the LTX-2 Community Licence. Omitting the vendor
+    # here is therefore no longer load-bearing — it is kept because changing a
+    # model string changes what every future sidecar records, and this one has
+    # rendered clips. Do not read the paragraph above as a live constraint on new
+    # entries: name the vendor if it is the honest repo id.
     "ltx23-distilled-fp8": ("diffusers/LTX-2.3-Distilled-Diffusers "
                             "(LTX-2.3 distilled, fp8 layerwise cast)",
                             "LTX-2 Community License Agreement"),
@@ -906,6 +915,61 @@ def append_bench_row(path, row: dict) -> None:
     print(f"bench row -> {path}", flush=True)
 
 
+def cuda_device_name() -> str:
+    """What the card about to do the work calls itself, or "" if there is none.
+
+    Isolated so worker_id() below stays testable without a GPU, and wrapped
+    because torch is absent on the mac that runs the tests and present-but-
+    driverless on a box mid-reboot. Neither is worth an exception during a
+    render: a sidecar with a vaguer platform is recoverable, a crashed render
+    is not."""
+    try:
+        import torch
+        if torch.cuda.is_available():
+            return torch.cuda.get_device_name(0) or ""
+    except Exception:                                    # noqa: BLE001
+        pass
+    return ""
+
+
+def worker_id(task=None, gpu=None) -> str:
+    """WHICH MACHINE ACTUALLY RENDERED THIS, for a §7.2 sidecar.
+
+    Two different wrong answers were in use here until 2026-08-08, and keeping
+    them apart is the whole point of this function:
+
+      - `platform.node()`. Both Windows farm boxes report hostname "MSI"
+        (STATE.md 2026-08-05, checked on each), so the hostname cannot tell a
+        24GiB 5090 from a 12GB 5070 Ti. This is not a guess going wrong — it is
+        a faithful reading of a value that carries no information, which is why
+        it survived review. `cuts/checklist/002b-b01-5b.mp4` went onto the
+        founder's checklist saying `local-gpu (MSI)` above a log reporting a
+        25.7GB card; see the corrections block in its sidecar.
+      - the queue task's `worker:` field. That is a ROUTING CONSTRAINT — who MAY
+        run this — and `any` is a legal value the promoter writes (farm-queue's
+        own docs). Copying it into provenance can claim a clip was rendered by
+        "any".
+
+    So THE CARD NAMES ITSELF and the handle rides along. The device name is a
+    reading off the hardware that did the work, it separates our two boxes on
+    its face, and it needs no nickname table to fall out of date — the failure
+    mode that produced "local-gpu (dads-msi)" and then "local-gpu (MSI)". The
+    handle is kept because `--worker rtx5090` is a real thing a human said and a
+    flag that silently did nothing would be worse than no flag.
+
+    `gpu` is injectable so the tests can exercise both branches on a machine
+    with no CUDA at all.
+    """
+    task = task or {}
+    named = str(task.get("worker") or "").strip()
+    # the wildcard is not a machine; neither is the old "unknown" placeholder
+    if named.lower() in ("", "any", "unknown", "none"):
+        named = ""
+    handle = named or platform.node() or "unknown"
+    gpu = cuda_device_name() if gpu is None else gpu
+    return f"{gpu} @ {handle}" if gpu else handle
+
+
 def write_sidecar(clip, vmodel, task, beat, seconds, steps, size,
                   prompt=None, negative=None, extra=None):
     """A §7.2 provenance sidecar beside every generated clip.
@@ -927,7 +991,11 @@ def write_sidecar(clip, vmodel, task, beat, seconds, steps, size,
         # while still naming which one rendered it. Spelling it "local-dads-msi"
         # made every clip from a new handle an unclassified violation — the fix for
         # one machine's nickname must not depend on another's.
-        f"platform: local-gpu ({task.get('worker', 'unknown')})\n"
+        # The inside of the parens comes from worker_id() as of 2026-08-08, not
+        # from the task: `task['worker']` is where a routing wildcard and a
+        # hostname shared by two boxes both got in. Read its docstring before
+        # putting a caller-supplied label back here.
+        f"platform: local-gpu ({worker_id(task)})\n"
         f"model: {repo}\n"
         f"model_licence: {lic}\n"
         f"shot_beat: {beat}\n"
