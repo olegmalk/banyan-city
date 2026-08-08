@@ -341,6 +341,17 @@ def beat_actions(node_md: Path) -> dict:
         keep = []
         for line in body.split("\n"):
             s = line.strip()
+            # THE LAST BEAT'S BODY RUNS TO END OF FILE. BEAT_HEAD.split leaves
+            # every beat bounded by the next beat's heading except the final one,
+            # whose body swallows whatever sections follow the beat list — and on
+            # every node in this tree that is `## Provenance`. So the last beat of
+            # each of the 16 nodes was being animated with "## Provenance
+            # Shot-granular successor (), steward-written (model: claude-fable-5)"
+            # appended to its motion brief. A section heading or a horizontal rule
+            # ends the beat, and must BREAK rather than `continue`: a skipped line
+            # keeps reading text that belongs to another section.
+            if s.startswith("#") or s in ("---", "***", "___"):
+                break
             if not s or s.startswith((">", "```", "**")):
                 continue           # VO line, code fence, or the next heading
             if s in ("SMASH TO BLACK.", "BLACK."):

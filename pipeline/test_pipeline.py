@@ -2912,6 +2912,60 @@ def test_hosted_path_sends_our_negative(tmp: Path):
           '"prompt_extend": False' in src and '"prompt_extend": True' not in src)
 
 
+def test_last_beat_action_stops_at_the_beat_list(tmp: Path):
+    """The final beat must not be animated with the node's `## Provenance` section.
+
+    BEAT_HEAD.split bounds every beat by the NEXT beat's heading — except the
+    last one, whose body runs to end of file and swallows whatever follows the
+    beat list. On every node in this tree that is `## Provenance`, so the closing
+    beat of all 16 nodes was handing the text encoder "## Provenance
+    Shot-granular successor (), steward-written (model: claude-fable-5)" as part
+    of its motion brief. Found 2026-08-09 preparing episode 2 beat 21, whose
+    direction came back with the provenance line welded onto "the leaf tilts and
+    holds".
+
+    Skipping the heading is not enough and that is the point of the test: a
+    `continue` drops the `##` line and keeps reading the prose underneath it. The
+    beat has to END there.
+    """
+    import video_task as vt
+
+    node = tmp / "node.md"
+    node.write_text(
+        "**Open — 0:00–0:05**\n\nThe cursor blinks in an empty terminal.\n\n"
+        "**Close — 0:05–0:10**\n\nThe leaf tilts once and holds.\n\n"
+        "---\n\n## Provenance\n\nSteward-written (model: claude-fable-5) to the\n"
+        "shared spec, and this sentence must never reach a text encoder.\n",
+        encoding="utf-8")
+    acts = vt.beat_actions(node)
+    check("last beat keeps its own action",
+          acts.get(2) == "The leaf tilts once and holds")
+    check("last beat drops the provenance section",
+          "Provenance" not in acts.get(2, "") and "claude" not in acts.get(2, ""))
+    check("earlier beats are untouched",
+          acts.get(1) == "The cursor blinks in an empty terminal.".rstrip("."))
+
+    # A heading with no rule before it is the 001 shape, and must also terminate.
+    node.write_text(
+        "**Only — 0:00–0:05**\n\nUnderground, the thump is closer now.\n\n"
+        "## Provenance\n\nSteward-written (model: claude-fable-5).\n",
+        encoding="utf-8")
+    check("a bare heading ends the beat too",
+          "Provenance" not in vt.beat_actions(node).get(1, ""))
+
+    # and the live genome must agree, on every node, not just the two we render
+    dirty = []
+    for nd in sorted((REPO / "genomes/sapling/nodes").glob("*/node.md")):
+        acts = vt.beat_actions(nd)
+        if not acts:
+            continue
+        tail = acts[max(acts)]
+        if "Provenance" in tail or "Lineage notes" in tail or "claude-fable" in tail:
+            dirty.append(nd.parent.name)
+    check(f"no live node's last beat carries a section heading ({len(dirty)} dirty)",
+          not dirty)
+
+
 def test_antistatic_first_signal_wins(tmp: Path):
     """A direction that opens with motion must get the anti-static terms.
 
@@ -4658,6 +4712,7 @@ def main():
         test_beat09_negatives_forbid_the_growth(Path(td))
         test_hosted_path_sends_our_negative(Path(td))
         test_antistatic_first_signal_wins(Path(td))
+        test_last_beat_action_stops_at_the_beat_list(Path(td))
         test_vendored_licence_does_not_launder(Path(td))
         test_nested_licence_does_not_launder(Path(td))
     # Own temp dir each: these build real git repositories, and a repo inside a
