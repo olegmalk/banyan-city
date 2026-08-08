@@ -489,8 +489,30 @@ whatever item 07 settles.
 the sapling reads tall) and the founder gate came off. This beat is the ONE SAMPLE the
 wave draws and screens first. See the wave note directly below.
 
-**RENDERED 2026-08-08 as the sample — `b15-r3-s0..s3`, awaiting his verdict.** Two
-things changed and nothing else did. The prompt above lost `a tiny two-leaf sprout
+**PASSED 2026-08-08 (founder, R4): `b15-r3-s1`.** His whole answer, verbatim and in
+full, was the label and nothing else — resolved through `REVIEW-KEY-0808.md`, the
+pixel-matched address map, not by grid position.
+`takes/stills/15-something-s-coming-r3-s1.png` (seed **20261734**, round 3, 832x1216,
+sha256 `f60c1404f88d45720ca295dfc753e9eaabb815446710bcfffb3c7a07b7277f54`) is promoted
+byte-for-byte to `stills/15-something-s-coming.png`, which is founder-approved canon and
+the file every renderer actually reads — `video_task` globs `stills/NN-*.png` for its
+conditioning frame and skips `REVOKED` names (`video_task.py:1308`, `:1433`, `:1501`).
+The frame it replaces is retired in place as
+`stills/15-something-s-coming-REVOKED-underground.png` rather than deleted (R6), named
+with his own word from v32 — *"why is it showing the underground?"* — and it is the
+second revocation this beat carries, alongside `-REVOKED-abstract.png` from 2026-08-04.
+Checksums, seed and the four stale sidecars that still name the old bytes:
+`stills/README.md`.
+
+**THIS IS A RECIPE VERDICT AS WELL AS A FRAME, and that was the point of drawing it
+alone.** It is the first frame this tree has rendered under his item-07 ruling, so
+passing it means *the sapling reads tall* looks the way he meant it — and it means the
+one-term negative removal below is the settled reconciliation and not a steward's
+guess. What the remaining four beats and episode 2's twenty inherit is stated in the
+wave note directly below, including which of them the removal actually touches.
+
+**WHAT WAS RENDERED, so the pass is auditable.** Two things changed and nothing else
+did. The prompt above lost `a tiny two-leaf sprout
 standing at ground level` and gained `one slender sapling standing tall … its thin
 stem rising well above the grass`: that is his rule stated as the subject, and `tiny`,
 `sprout` and `ground level` were the three words that made it impossible. `two-leaf`
@@ -504,26 +526,37 @@ column of the sheet is a controlled pair and the only variable is this sentence.
 tree, thick trunk, full canopy, forest, bush, shrubbery` — so the recipe as it stood
 asked for a tall plant and forbade a tall plant in the same breath. That is the same
 shape of fault as beat 3's un-negated `text`: a rule firing against the beat it was
-meant to help. `tall tree` is dropped for this sample ONLY, in the wave script, not in
+meant to help. `tall tree` was dropped for this sample ONLY, in the wave script, not in
 `sd_prompt.py`; everything else in that list stays, because a tall SAPLING is still not
-a mature tree with a thick trunk and a full canopy. If he passes the frame, that
-one-term removal is what episode 2's twenty prompts inherit — the reconciliation
-`ep2-stills-redraw-b02-21-1786192800` says to settle against the sample he passed
-rather than by guesswork. If he refuses it, nothing global was touched.
+a mature tree with a thick trunk and a full canopy.
+
+**HE PASSED IT, SO THE REMOVAL IS VALIDATED — one term, and still not global.** The
+frame he picked was drawn with `tall tree` out and the other seven `SCALE_NEGATIVES`
+terms in, so that exact list is what the rest of the wave and
+`ep2-stills-redraw-b02-21-1786192800` now inherit, by his verdict rather than by
+guesswork. `sd_prompt.py` is STILL untouched and that is deliberate, not an oversight:
+`SCALE_NEGATIVES` fires on any prompt whose text says the subject is small — every
+episode, including the growth ladder that wants a man-height tree by 007a — and one
+approved frame of one beat is not evidence about all of them. The removal stays scoped
+to the wave scripts that render under the tall rule until there is a reason to move it,
+and if it ever does move it moves with a test.
 
 ---
 
-## THE 2026-08-08 REDRAW WAVE — beats 3, 6, 10, 14, 15 — UN-GATED, SAMPLE RUNNING
+## THE 2026-08-08 REDRAW WAVE — beat 15 IS DONE, beats 3, 6, 10, 14 REMAIN
 
 The founder screened all forty candidate frames on 2026-08-08 and the wave produced
 **one pick and five rejections**: `b12-r2-s1` is canon (beat 12 above), and beats 3,
-6, 10, 14 and 15 need drawing again. Beats 7, 8 and 9 are not in this list — they were
+6, 10, 14 and 15 needed drawing again. Beats 7, 8 and 9 are not in this list — they were
 answered separately, later the same day, by his three picks on the progression
-(checklist item 03, now settled; see those beats above). **So as of the end of
-2026-08-08, ten of episode 1's fifteen shots hold a frame he has not refused and five
-do not** — 3, 6, 10, 14 and 15 still have their old PNGs on disk, unrevoked because a
-revocation needs a replacement to point at and their candidates were all rejected, but
-each is a frame he turned down in v32. This wave is those five.
+(checklist item 03, now settled; see those beats above).
+
+**BEAT 15 CAME BACK AND HE PASSED IT: `b15-r3-s1` is canon** (see **Beat 15** above),
+so of the five this wave was filed for, **one is delivered and four are outstanding —
+3, 6, 10 and 14.** **Eleven of episode 1's fifteen shots now hold a frame he has not
+refused and four do not** — 3, 6, 10 and 14 still have their old PNGs on disk,
+unrevoked because a revocation needs a replacement to point at and their candidates
+were all rejected, but each is a frame he turned down in v32.
 
 **IT WAS GATED AND THEN IT WAS NOT, AND BOTH HALVES BELONG HERE.** Character
 consistency was the founder's dominant objection across this wave — he named it on 14
@@ -546,12 +579,38 @@ prompt term, QA check or screening note counts leaves, matches leaf shape or fai
 frame on foliage. Beat 6's *no leaf in the image* survives that and is NOT an
 exception — it is his own composition instruction for a sky shot, not a detail rule.
 
-**ONE SAMPLE BEFORE ANY BATCH still applies, and it now lives in the `cmd` rather than
-in a gate.** Beat 15 is drawn first with the sapling tall and screened as one frame —
-candidates `b15-r3-s0..s3` — before the other four run. His verdict on that one sample
-is what releases the remaining four; the rule survived the gate coming off, which is
-the point of it being a rule and not a gate.
+**ONE SAMPLE BEFORE ANY BATCH still applies, and it lives in the `cmd` rather than in a
+gate.** Beat 15 was drawn first with the sapling tall and screened as one frame —
+candidates `b15-r3-s0..s3` — before the other four ran. **That sample is now answered:
+`b15-r3-s1`, 2026-08-08.** His verdict on it is what releases the remaining four, and
+they are released. The rule survived the gate coming off, which is the point of it being
+a rule and not a gate.
+
+**THE RECIPE THE REMAINING FOUR NOW FIRE WITH, and it is one term, not a rewrite.**
+Beats 3, 6, 10 and 14 run under exactly the recipe the passed sample was drawn on: the
+tall-sapling direction where the sapling is in shot, no leaf-detail terms, and
+`tall tree` removed from the `SCALE_NEGATIVES` block that `sd_prompt` appends. The other
+seven terms of that block stay — `mature tree, large tree, thick trunk, full canopy,
+forest, bush, shrubbery` — because a tall sapling is still not a mature tree.
+
+**AND IT DOES NOT TOUCH ALL FOUR, which is worth stating rather than assuming.**
+`SCALE_NEGATIVES` is appended only when a prompt's own text says the subject is small
+(`sd_prompt._SMALL`). Run against the four current prompts in this file:
+
+| beat | `_SMALL` fires | so the `tall tree` removal |
+|---|---|---|
+| 3 | no — a home desk, a monitor, a houseplant; no small-subject word | **is a no-op**; this beat never receives the scale block at all |
+| 6 | no — sky, cloud, a green fringe of grass | **is a no-op**, same reason |
+| 10 | yes — `tiny two-leaf sprout` | **applies** |
+| 14 | yes — `tiny two-leaf sprout` | **applies** |
+
+So the removal is load-bearing on 10 and 14, the two beats whose subject IS the plant —
+and those are also the two whose prompts still say `tiny two-leaf sprout`, the words
+beat 15's sample had to lose before the tall rule could render at all. Redrawing 10 and
+14 without moving that clause would ask for a tall reading and describe a tiny sprout in
+the same breath. Beats 3 and 6 are unaffected by either half.
 
 Queue entry: `ep1-stills-redraw-wave2-*` in `pipeline/farm-queue.yaml` `backlog:`,
-now runnable with no founder gate, carrying each beat's direction. The per-beat
-directions are the authority and live in the beat sections above.
+runnable with no founder gate, beat 15 marked delivered inside it and the four
+remaining beats' directions carried in its `cmd`. The per-beat directions are the
+authority and live in the beat sections above.

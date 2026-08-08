@@ -122,7 +122,9 @@ checklist:
     on 2026-08-08: **no character sheet, and the sapling reads tall in every clip
     it is in.** Nothing on this page is waiting on you for episode 1 any more. The
     five redraws started on that answer, **one sample first** (beat 15, drawn
-    tall), and episode 2's twenty are queued behind the same sample.
+    tall) — **and you passed that sample the same day, `b15-r3-s1`.** So beat 15
+    is finished and canon, the other four redraws are running on the recipe you
+    just approved, and episode 2's twenty are no longer waiting on anything.
 
     Everything in that first block came out of the notes you gave on v32. Nothing
     outside those notes was touched, and item 05 says so in detail rather than
@@ -201,7 +203,8 @@ checklist:
           plant is the same plant.
         - **Beat 15 — rejected, all four:** *"bad character consistency."* The
           surface-level composition you asked for is kept; only the character is
-          redrawn.
+          redrawn. **This one is now finished** — it came back as the sample and
+          you passed it, `b15-r3-s1`; see the paragraph below.
 
         **THE FIVE REDRAWS WERE HELD ON ITEM 07 AND ARE HELD NO LONGER.**
         Character consistency is the objection you gave most often here — the
@@ -211,6 +214,16 @@ checklist:
         reads tall in every clip, and the leaves are not to be fussed over.** That
         is the line the five are being redrawn under, **one sample first** — beat
         15 — before the other four run.
+
+        **AND THE SAMPLE IS ANSWERED: `b15-r3-s1`, so four of the five are left.**
+        Beat 15 came back with the sapling drawn tall, you picked one of the four
+        seeds, and that frame is now canon — the closing shot of the episode is a
+        sapling in the grass with the light coming in from the right instead of the
+        patch of soil and stones you turned down in v32. The frame it replaces is
+        kept under a `REVOKED` name rather than deleted, so nothing you refused has
+        been thrown away. **What is left of this item is beats 3, 6, 10 and 14**,
+        and they are drawing now on exactly the recipe that sample proved — you do
+        not have to look at anything again until their contact sheet.
 
         Your original words on the six, kept because the redraws are still working
         from them:
@@ -478,22 +491,29 @@ checklist:
         **WHAT THIS UNBLOCKED, AND IT STARTED THE SAME HOUR.** Episode 1's five
         redraws — beats 3, 6, 10, 14, 15 — were held on this answer and are held
         no longer. Episode 2's twenty are queued behind them under the same rule.
-        **One sample comes before either batch:** beat 15 of episode 1, drawn with
+        **One sample came before either batch:** beat 15 of episode 1, drawn with
         the sapling tall — labels **`b15-r3-s0`** to **`b15-r3-s3`** — screened by
-        you before the other four run and before episode 2's twenty start at all.
+        you before the other four ran and before episode 2's twenty started at all.
         That is the standing rule from 2026-08-03, not a new gate we invented:
         nothing renders as a set until you have looked at one of it.
 
-        **The one thing that sample has to settle, and it is worth thirty seconds
-        of warning.** Every one of episode 2's twenty prompts currently tells the
-        model *not* to draw a tall tree — `mature tree, large tree, tall tree,
-        thick trunk, full canopy` sits in the negative on all of them, put there to
-        stop a mature banyan, and the episode's own narration has him saying he is
-        *"forty centimeters tall"*. So "make it tall" and that negative cancel, and
-        nobody is going to quietly pick a winner between your rule and a line you
-        approved. **The sample is where you see what tall looks like** — a slender
-        vertical that owns the height of the shot, still a sapling — and the twenty
-        are reconciled to whatever you pass.
+        **YOU PASSED IT — `b15-r3-s1` — SO NOTHING HERE IS WAITING ON YOU.** That
+        frame is canon for beat 15, episode 1's remaining four redraws are running,
+        and episode 2's twenty are unblocked and running too. The next thing that
+        comes back to you on either is a contact sheet, not a question.
+
+        **The one thing that sample had to settle, and it is settled by the frame
+        you picked rather than by us choosing.** Every one of episode 2's twenty
+        prompts currently tells the model *not* to draw a tall tree — `mature tree,
+        large tree, tall tree, thick trunk, full canopy` sits in the negative on all
+        of them, put there to stop a mature banyan, and the episode's own narration
+        has him saying he is *"forty centimeters tall"*. So "make it tall" and that
+        negative cancel, and nobody was going to quietly pick a winner between your
+        rule and a line you approved. **The frame you passed was drawn with exactly
+        one of those words removed — `tall tree` — and the rest left in.** That is
+        now the recipe for episode 1's four and episode 2's twenty: a slender
+        vertical that owns the height of the shot, still not a thick-trunked mature
+        tree. One word, chosen by which frame you liked.
 
         **The frames are still not on this page**, for the same reason as items 02
         and 03: they are drawn by a model whose licence attaches conditions our
@@ -815,6 +835,14 @@ comparisons:
           frame twice — an object in no still and no script. The invented object is
           what produced the score. Take 2, same seed and recipe with a negative
           naming the cone, keeps the motion and loses the object.
+          ONE THING TO KNOW BEFORE YOU WATCH THESE, added 2026-08-08: both clips
+          here were drawn from the OLD beat-15 frame — the soil and stones you
+          turned down in v32 — because they were rendered before you passed
+          b15-r3-s1. They stay up as the record of the held-versus-animated
+          question, which is what this pair is for; beat 15 re-renders from the new
+          frame for v33. If the still image before you press play shows the new
+          sapling instead, that is a bug in our page generator picking the poster by
+          filename, it is filed, and it does not mean the clip changed.
 
 # Printed under the players. The licence position is not a footnote here: these
 # files publish, so the reader is owed the same accounting the rest of the site

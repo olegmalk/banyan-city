@@ -12,9 +12,20 @@ seed 20260719+beat.
 
 To REVOKE an approval: rename the PNG to `NN-<slug>-REVOKED-<why>.png` (git records
 it, R6 keeps history). The renderers skip any name containing `REVOKED`
-(`video_task.py:1182`, `:1295`, `:1359`), so a revoked frame stays readable as
-evidence without ever being animated again. Deleting works too and is what this file
-used to say; renaming is better, and it is what beats 3, 7, 8, 9, 10, 12, 14 and 15 do.
+(`video_task.py:1308`, `:1433`, `:1501` — the line numbers this file used to give,
+1182/1295/1359, moved when that module grew on 2026-08-08; the three `"REVOKED" not
+in` guards are the same three), so a revoked frame stays readable as evidence without
+ever being animated again. Deleting works too and is what this file used to say;
+renaming is better, and it is what beats 3, 7, 8, 9, 10, 12, 14 and 15 do.
+
+**Revocations STACK, and beat 15 is the first beat here to carry two.** A `-REVOKED-`
+name is not a slot; it is one refusal with its reason in it. Beat 15 now holds
+`15-something-s-coming-REVOKED-abstract.png` (the vertical-streak frame the
+"underground side view" prompt produced, retired 2026-08-04 by `049c519`'s reframe to
+ground-level macro) and `15-something-s-coming-REVOKED-underground.png` (that reframe
+itself — soil, stones and a raking light band, no plant in it — refused by the founder
+in v32 on 2026-08-07). Both are skipped by the same guard and neither overwrote the
+other.
 
 ## 07 / 08 / 09 — the progression, picked 2026-08-08 (item 03)
 
@@ -107,3 +118,75 @@ it questions and not only beside the pixels.
 scored by `licence_gate` as a new CreativeML Open RAIL++-M finding (D15, open, the
 founder's to settle) and would fail CI's ratchet. The provenance lives in this file,
 in the take's own sidecar under `takes/`, and in git.
+
+## 15-something-s-coming.png — picked 2026-08-08, and it is the ONE SAMPLE, not just a frame
+
+The founder's verdict on the beat-15 round-3 sample was three characters long:
+**`b15-r3-s1`**. Resolved through `REVIEW-KEY-0808.md`, the pixel-matched address map,
+not by grid position — and `b15-r3-*` is the round-3 row of `LABELED-beat15-r3.png`,
+the four seeds redrawn with the sapling tall. That is R4. The reading of the pick and
+the direction it endorses are in `shots.md` under **Beat 15**.
+
+| | |
+|---|---|
+| promoted from | `takes/stills/15-something-s-coming-r3-s1.png`, copied byte-for-byte |
+| sha256 | `f60c1404f88d45720ca295dfc753e9eaabb815446710bcfffb3c7a07b7277f54` |
+| size | 832 × 1216 |
+| model | `cagliostrolab/animagine-xl-3.1` — the house still model |
+| round | **3** (`candidate_set: r3`) — there is no r2 for this beat; the round-2 tag belongs to beats 3 and 12, and skipping it keeps a label meaning the same round everywhere |
+| seed | **20261734** — read out of that PNG's own `.meta.yaml` sidecar under `takes/`, which round 3 wrote at render time, never off a sheet caption |
+| task | `ep1-beat15-r3-1786193372` |
+| steps / guidance | 40 / 7.5, 9s wall on the rtx5090 |
+| prompt | the fenced block under **Beat 15** in `shots.md` — the round-3 text, with `one slender sapling standing tall` as the subject |
+| negative | the recipe's list **minus one term, `tall tree`** — recorded in the take's sidecar as `negative_terms_removed: tall tree`, and the sidecar's header comment carries the un-removed string for comparison |
+| cost | $0 — local CUDA, no provider |
+| replaces | `15-something-s-coming-REVOKED-underground.png` |
+
+**IT REPLACES A FRAME WITH NO PLANT IN IT, and that frame is kept.** What was canon
+here until this pick — `15-something-s-coming-REVOKED-underground.png`, sha256
+`aa14d078774b703cecc156f119fc0142e4a73ec350675790b6a094fe0d74d34a` — is soil, stones
+and a hard light band raking in from the right, and nothing growing. It is the frame
+the founder refused in v32 in his own word: *"for beat 15, why is it showing the
+underground? i think it should show the sapling, no?"* — which is where the `-underground`
+in the name comes from. Retired in place rather than deleted (R6), because it is the
+record of what the closing shot of the episode used to be.
+
+**THIS PICK IS ALSO A RECIPE VERDICT, which no other frame in this directory is.**
+Beat 15 was drawn first and alone on purpose (ONE SAMPLE BEFORE ANY BATCH, 2026-08-03),
+and passing it settles two things beyond one beat's pixels: that *the sapling reads
+tall* looks the way he meant it (his item-07 ruling, and this is the first frame this
+tree has rendered under it), and that dropping **one** term — `tall tree` — from
+`sd_prompt.SCALE_NEGATIVES` is the right reconciliation rather than deleting the scale
+block or keeping it whole. The remaining four beats of the wave (3, 6, 10, 14) and
+episode 2's twenty inherit that removal from this frame. Which of them it actually
+touches is stated in `shots.md`'s wave note and is not "all of them" — `SCALE_NEGATIVES`
+only fires on a prompt whose own text says the subject is small.
+
+**No sidecar beside this one either**, for the reason the section above and the foot of
+this file give: a `.meta.yaml` naming `cagliostrolab/animagine-xl-3.1` next to a canon
+still scores as a new OpenRAIL++ finding and pushes CI's licence ratchet past 25. The
+provenance is this table, `takes/stills/15-something-s-coming-r3-s1.png.meta.yaml`, and
+git.
+
+**FOUR OLDER SIDECARS NAME THIS FILENAME FOR CLIPS DRAWN FROM THE OLD PIXELS, and
+they are not being edited because they are not wrong.**
+`cuts/pairs/beat-15-animated.meta.yaml`,
+`review/animated/15-something-s-coming.mp4.meta.yaml` and
+`review/animated/15-something-s-coming-v2.mp4.meta.yaml` each carry
+`init_still_sha256: aa14d078…` — the bytes now living under the `-REVOKED-underground`
+name — so each states exactly which frame it conditioned on and stays true after the
+promotion. `cuts/pairs/beat-15-held.meta.yaml` names `source_still:` with no still sha
+(its own `sha256:` is the CLIP's, verified against `cuts/pairs/beat-15-held.mp4`), so it
+is the one that is merely ambiguous rather than precise. Beat 12's pick left the same
+pattern alone for the same reason.
+
+**ONE CONSEQUENCE OF THAT, RECORDED HERE BECAUSE IT IS VISIBLE AND WAS NOT INTENDED.**
+`build_site.still_for()` picks a clip's review-page poster by reading `init_still` /
+`source_still` **by name**, and `poster()` only reaches that fallback when ffmpeg is
+absent — which is exactly the Vercel build image (`build_site.py:574-601`, its own
+docstring). So on the deployed `/review/` page the beat-15 comparison pair can show a
+poster of the NEW tall-sapling frame over the OLD soil-and-stones footage. Beat 12's
+promotion did the same thing on 2026-08-08 and it went unnoticed. Not fixed in this
+commit — the fix is in `build_site`, it needs a test, and it is not a stills-promotion
+change — but it is queued and named rather than left to be discovered on the page. If any of those clips is re-rendered it gets the new frame
+and a sidecar that names its bytes.

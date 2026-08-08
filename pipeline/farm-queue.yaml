@@ -879,6 +879,36 @@ backlog:
 # Rendering all five on an unscreened recipe is the exact failure CLAUDE.md
 # records for 2026-08-03.
 #
+# THE SAMPLE RAN AND HE PASSED IT — 2026-08-08, verbatim: "b15-r3-s1". So this
+# entry is ONE FIFTH DELIVERED and four fifths outstanding, and it stays open on
+# the four rather than being retired or re-filed:
+#
+#   BEAT 15 — DONE. takes/stills/15-something-s-coming-r3-s1.png (seed 20261734,
+#   round 3, sha256 f60c1404…) is canon at
+#   genomes/sapling/nodes/001-capability-inventory/stills/15-something-s-coming.png,
+#   copied byte-for-byte; the frame it replaces is retired in place as
+#   15-something-s-coming-REVOKED-underground.png. Provenance: that directory's
+#   README.md. Do NOT redraw beat 15 as part of the remaining run.
+#
+#   BEATS 3, 6, 10, 14 — OUTSTANDING, and now releasable, because his verdict on
+#   the one sample is exactly what the rule said would release them.
+#
+# THE RECIPE IS NO LONGER A QUESTION, WHICH IS THE OTHER HALF OF WHAT HE PASSED.
+# The sample was drawn with ONE term removed from the SCALE_NEGATIVES block that
+# sd_prompt appends to any small-subject prompt: `tall tree`, which would have
+# forbidden the thing the sample existed to test. He passed that frame, so the
+# remaining four render on that same list — `tall tree` out, the other seven
+# (mature tree, large tree, thick trunk, full canopy, forest, bush, shrubbery) IN.
+# It is in the cmd below in those words, because a validated recipe change that
+# lives only in one operator's head is not validated.
+# WHERE IT ACTUALLY BITES, measured against the four prompts as they stand in
+# shots.md rather than assumed: `_SMALL` fires on beats 10 and 14 (`tiny two-leaf
+# sprout`) and NOT on beats 3 or 6, which never receive the scale block at all. So
+# the removal is load-bearing on two of the four. sd_prompt.py itself is still
+# untouched — that block fires for every episode including the growth ladder that
+# wants a man-height tree by 007a, and one approved frame is not evidence about all
+# of them.
+#
 # DIRECTIONS ARE BAKED IN BELOW, one line each, so this entry is executable by
 # someone who has read nothing else. The authority for each is that beat's section
 # in genomes/sapling/nodes/001-capability-inventory/shots.md, which carries his
@@ -890,10 +920,22 @@ backlog:
   window: any
   est_minutes: 75
   cmd: >-
-    redraw the conditioning frames for beats 3, 6, 10, 14 and 15 of node 001 —
-    ONE SAMPLE FIRST: beat 15, labels b15-r3-s0..s3, screened by the founder
-    before the other four run.
-    THE CHARACTER RULE FOR ALL FIVE, and it is the whole of it (his ruling,
+    redraw the conditioning frames for beats 3, 6, 10 and 14 of node 001. BEAT 15
+    IS ALREADY DONE and is NOT in this run — the founder passed its sample on
+    2026-08-08 ("b15-r3-s1") and that frame is canon at
+    stills/15-something-s-coming.png; redrawing it would overwrite an approved
+    frame. The ONE SAMPLE this entry owed has therefore been served and answered,
+    so these four may run as a batch.
+    THE RECIPE IS THE ONE HE PASSED, and it is inherited explicitly rather than
+    reconstructed: the tall-sapling direction where the sapling is in shot, plus
+    ONE term dropped from the SCALE_NEGATIVES block sd_prompt appends to a
+    small-subject prompt — `tall tree` OUT, the other seven (mature tree, large
+    tree, thick trunk, full canopy, forest, bush, shrubbery) IN. That block only
+    fires on beats 10 and 14 of these four (their prompts say `tiny two-leaf
+    sprout`); beats 3 and 6 never receive it, so for them the removal is a no-op
+    and no negative changes. Scope the removal to the wave script; do NOT edit
+    sd_prompt.py.
+    THE CHARACTER RULE FOR ALL FOUR, and it is the whole of it (his ruling,
     2026-08-08): the sapling READS TALL wherever it appears in frame. No character
     sheet exists and none is to be made; add no leaf-detail terms and fail no
     frame on foliage. Beat 3: CLOSE-UP (his new direction, 2026-08-08), still
@@ -905,17 +947,21 @@ backlog:
     vibration" and its script line is an underground root-map), AND re-lens it
     lower and closer than beat 14 so the two stop being twins — 10 is the one that
     moves, 14 keeps the script's framing. Beat 14: subject much bigger in frame,
-    the sprout and its grip filling the shot. Beat 15: composition unchanged
-    (surface level, warm glow entering from the right), the sapling redrawn tall.
+    the sprout and its grip filling the shot. For 10 and 14 the subject clause has
+    to move off `tiny two-leaf sprout` the way beat 15's did, or the prompt asks
+    for a tall reading and describes a tiny sprout in the same breath.
     Several seeds each, one contact sheet, one screening pass.
   why: >-
-    Five of episode 1's fifteen shots have no usable frame after the founder's
+    Four of episode 1's fifteen shots have no usable frame after the founder's
     2026-08-08 pass, so ep1-v33-assemble-1786124760 cannot be built and
     pending-founder.yaml v6-verdict cannot be answered. The consumer is v33.
-    Beat 12 is already out of this set — he picked b12-r2-s1 and it is canon.
-    RUNNABLE NOW as of 2026-08-08 — the item-07 gate came off with his ruling and
-    nothing physical stands behind it; the beat-15 sample is the first thing that
-    runs, not a reason to wait.
+    Beat 12 is already out of this set — he picked b12-r2-s1 and it is canon — and
+    so is beat 15 as of 2026-08-08, on b15-r3-s1, which is why this entry names
+    four beats where it used to name five.
+    RUNNABLE NOW as of 2026-08-08 — the item-07 gate came off with his ruling,
+    nothing physical stands behind it, and the one-sample obligation is discharged
+    rather than pending: he has looked at a frame drawn on this recipe and passed
+    it, so the remaining four are a batch and not a wait.
 
 # EPISODE 2'S TWENTY, REDRAWN — the other half of what item 07 unblocked, and the
 # only reason it is still gated is the sample.
@@ -943,13 +989,30 @@ backlog:
 # assembled episode that is a new note on a new cut and one line of prompt per
 # beat to fix. Do not reinstate the sheet on anyone's judgement but his.
 #
-# WHY gate: founder WHEN THE RULING IS ALREADY IN. Not for the technique — for
-# ONE SAMPLE BEFORE ANY BATCH (2026-08-03). The tall-sapling rule has never been
-# rendered by this tree, and the ep1 wave's beat-15 sample is the first frame that
-# tests it. Firing eighty frames of episode 2 on an unscreened rule is precisely
-# the 2026-08-03 failure CLAUDE.md records. The sample is rendering now, so this
-# is a dependency and not office hours: the gate clears the moment he answers on
-# one frame, and nothing about episode 2 is being asked of him before then.
+# THIS ENTRY CARRIED gate: founder / gate_ref: THE BEAT-15 SAMPLE UNTIL
+# 2026-08-08, AND BOTH KEYS ARE DELETED HERE BECAUSE THE SAMPLE IS ANSWERED.
+# What that gate said, kept because a satisfied gate is evidence and not clutter:
+# it was never a decision gate — item 07's ruling was already in — it was ONE
+# SAMPLE BEFORE ANY BATCH (2026-08-03) on a rule this tree had never rendered, and
+# "clearing it is him saying the tall sapling reads right on that one frame."
+#
+# HE SAID IT. 2026-08-08, verbatim and in full: "b15-r3-s1". One label, resolved
+# through REVIEW-KEY-0808.md, the pixel-matched address map, not by grid position.
+# That frame is now canon at
+# genomes/sapling/nodes/001-capability-inventory/stills/15-something-s-coming.png
+# (copied byte-for-byte from takes/stills/15-something-s-coming-r3-s1.png, seed
+# 20261734, sha256 f60c1404…). The gate's own condition is met exactly as written:
+# he looked at one frame drawn on the tall rule and passed it.
+#
+# RE-READ FOR A BLOCKER BEHIND THE FOUNDER ONE, as this file's header requires:
+# there is none. Every one of the twenty prompts is written and native-tag
+# converted (e4826ed), the model and the card are the ones that drew the eighty on
+# 2026-08-07, the 5090 measured 9-11s per image on 2026-08-06, and it is $0. The
+# text half of the cmd needs no machine at all. RUNNABLE NOW.
+#
+# AND THE NEGATIVE QUESTION THIS ENTRY WAS FILED AROUND IS ANSWERED BY THE SAME
+# FRAME — see the paragraph below, which used to end "reconcile against the sample
+# he passes" and now names what he passed.
 #
 # PROMPT EDITS COME FIRST AND THEY ARE TEXT — free, and one git revert to undo.
 # Twenty blocks in genomes/sapling/nodes/002b-first-citizen/shots.md gain the tall
@@ -967,35 +1030,44 @@ backlog:
 # DO NOT silently delete those terms and DO NOT silently keep them. His rule is
 # about how the sapling READS in frame — the fault it was answering is episode 1
 # beat 14's "all too small" — so the reconciliation is a tall, upright, slender
-# vertical that owns the height of the shot while still being a sapling, and the
-# beat-15 sample is the frame that shows whether that is what he meant. Reconcile
-# the negative against the sample he passes, then run the twenty.
+# vertical that owns the height of the shot while still being a sapling.
+#
+# THE SAMPLE HE PASSED SETTLES IT, AND THE ANSWER IS ONE TERM. b15-r3-s1 was drawn
+# with exactly one term removed from that list — `tall tree` — and the other seven
+# left in: mature tree, large tree, thick trunk, full canopy, forest, bush,
+# shrubbery. Read off the take's own sidecar, which records it as
+# `negative_terms_removed: tall tree` and carries the un-removed string in its
+# header comment for comparison; not inferred from the picture. So neither side was
+# deleted on a steward's judgement and neither was kept whole: the twenty inherit
+# `tall tree` out and the rest in, by his verdict on a frame. That is what the cmd
+# below says in those words, and saying it there rather than leaving it to be
+# re-derived is the whole point — a validated recipe change that lives in one
+# operator's head is not validated. sd_prompt.py is NOT edited: SCALE_NEGATIVES
+# fires for every small-subject prompt in the tree, including the growth ladder
+# that wants a man-height tree by 007a, and one frame of one beat is not evidence
+# about all of them.
 - id: ep2-stills-redraw-b02-21-1786192800
   runner: manual
   worker: rtx5090
   needs: [cuda]
-  gate: founder
-  gate_ref: >-
-    THE BEAT-15 SAMPLE — labels b15-r3-s0, b15-r3-s1, b15-r3-s2, b15-r3-s3 — the
-    one sapling-tall beat that ep1-stills-redraw-wave2-1786197600's cmd puts before
-    its own batch, rendering on the rtx5090 on 2026-08-08. That screening is the
-    ONLY thing this entry waits on. Item 07's technique ruling is IN (no character
-    sheet; the sapling reads tall wherever it appears), so this is not a decision
-    gate — it is the standing ONE SAMPLE BEFORE ANY BATCH rule of 2026-08-03, on a
-    rule this tree has never rendered. Clearing it is him saying the tall sapling
-    reads right on that one frame.
   window: any
   est_minutes: 45
   cmd: >-
     redraw the twenty conditioning frames for beats 02-21 of node
-    002b-first-citizen, after the founder passes the beat-15 sample. TWO STEPS.
+    002b-first-citizen. The beat-15 sample this used to wait on is PASSED
+    (2026-08-08, "b15-r3-s1"), so this runs now. TWO STEPS.
     (1) TEXT FIRST, free and revertible: in that node's shots.md give every beat
     where the sapling is in shot the tall-sapling direction — it reads TALL,
-    his ruling of 2026-08-08 — and add NO leaf-detail terms. Reconcile the
-    negative while you are in there: it currently carries "mature tree, large
-    tree, tall tree, thick trunk, full canopy" on all twenty and would cancel the
-    rule outright; settle it against the beat-15 sample he passed, not by
-    guesswork. Then fix the four plain faults the eighty frames came back with: beat 20 is at NIGHT and must be
+    his ruling of 2026-08-08 — and add NO leaf-detail terms. THE NEGATIVE IS
+    SETTLED AND THE CHANGE IS EXACTLY ONE TERM, INHERITED FROM THE FRAME HE
+    PASSED, NOT CHOSEN HERE: all twenty currently carry "mature tree, large tree,
+    tall tree, thick trunk, full canopy" (plus forest, bush, shrubbery) and would
+    cancel the rule outright, so DROP `tall tree` and KEEP the other seven —
+    that is the list b15-r3-s1 was drawn on, recorded in
+    takes/stills/15-something-s-coming-r3-s1.png.meta.yaml as
+    `negative_terms_removed: tall tree`. Do it in the wave script, the same scope
+    the sample used; do NOT edit pipeline/sd_prompt.py and do not remove any other
+    scale term. Then fix the four plain faults the eighty frames came back with: beat 20 is at NIGHT and must be
     the morning of the episode, beat 13 is INDOORS (reads as a garage) and beat 14
     is on DESERT DIRT where both are the green field, beats 12 and 18 grew a big
     ripe orange-pink FRUIT where the fig is small and green, beat 09 came back as
@@ -1014,6 +1086,43 @@ backlog:
     episode 2's render — 002b-b01-video is already filmed on both renderers and
     beats 02-21 cannot follow it without frames. ~9-11s per image measured on the
     5090 on 2026-08-06, so 80 images is well under an hour at $0.
+    RUNNABLE NOW as of 2026-08-08 — the one thing it waited on was the beat-15
+    sample screening and he passed it ("b15-r3-s1"); gate and gate_ref are deleted
+    above and nothing physical stands behind them.
+
+# FOUND WHILE PROMOTING BEAT 15, AND IT IS ON THE LIVE PAGE, NOT IN A LOG.
+# build_site.still_for() picks a review-page clip's poster by reading `init_still` /
+# `source_still` out of the clip's sidecar BY NAME, and poster() only reaches that
+# fallback when ffmpeg is missing — which is exactly the Vercel build image
+# (build_site.py:574-601, its own docstring says so). So the moment a still is
+# promoted under an existing canon filename, every published clip drawn from the OLD
+# pixels gets a poster of the NEW frame: the beat-15 comparison pair now shows a tall
+# sapling over footage of bare soil, and the beat-12 pair has done the same since
+# 01d28a4 that morning without anyone noticing. The clips' own sidecars are innocent —
+# three of the four beat-15 ones record `init_still_sha256: aa14d078…`, the bytes now
+# under the -REVOKED-underground name, so the data to do this right is already on
+# disk and unread.
+# NOT fixed in the promotion commit on purpose: it is a build_site change, it needs a
+# test, and a stills promotion is not where a site generator gets edited.
+- id: review-poster-names-stale-still-1786197251
+  runner: manual
+  worker: m1pro
+  needs: []
+  window: any
+  est_minutes: 30
+  cmd: >-
+    make build_site.still_for() resolve a clip's poster against the still the clip
+    was ACTUALLY drawn from, not against whatever now holds that filename: prefer
+    the sidecar's `init_still_sha256` and accept the `-REVOKED-*` sibling whose bytes
+    match it, fall back to no poster rather than to a frame the clip does not
+    contain, and add a test that a promoted canon still does not silently re-poster
+    an older clip. Then check the two pairs already affected, beats 12 and 15.
+  why: >-
+    The review page is what the founder screens on, and a poster is the first frame
+    he sees; one that promises a picture the clip does not contain is the review
+    surface lying about footage — the same class of fault as the shot board that
+    could not read its own records. It is cheap and it is $0, and it will recur on
+    every future promotion until the lookup stops going by filename.
 
 # THE ZOOM. His first sentence and the only note that touches every shot at once:
 # "zooms are way too slow." The held beats' push-in is a single number in
@@ -1048,17 +1157,17 @@ backlog:
   needs: []
   gate: founder
   gate_ref: >-
-    UPDATED 2026-08-08 — one gate closer than this line said an hour ago. He
-    answered checklist item 02 (beat 12) and item 03 ("po7-r1-s2, po8-r2-s0,
-    po9-r1-s2"), so four frames are canon, and then he answered item 07 — no
-    character sheet, the sapling reads tall — which took the founder gate OFF the
-    five redraws (ep1-stills-redraw-wave2-1786197600, now runnable and rendering
-    its beat-15 sample, labels b15-r3-s0..s3). So the frames are no longer waiting
-    on a decision; they are waiting on the wave to produce them — his screening of
-    that one sample, then the other four beats, then the contact sheet. What blocks
-    THIS cut is therefore two picks and no open questions: those five frames, and
-    the push-in rate on its own entry
-    held-zoom-rate-repick-1786124700. Behind both, pending-founder.yaml
+    UPDATED AGAIN 2026-08-08 EVENING — one more frame in, four to go. He answered
+    checklist item 02 (beat 12) and item 03 ("po7-r1-s2, po8-r2-s0, po9-r1-s2"), so
+    four frames are canon; then item 07 — no character sheet, the sapling reads
+    tall — which took the founder gate off the redraw wave
+    (ep1-stills-redraw-wave2-1786197600); then he passed that wave's ONE SAMPLE,
+    "b15-r3-s1", so BEAT 15 IS CANON TOO and five canon frames have come off this
+    day. So the frames are not waiting on a decision and never were after item 07;
+    they are waiting on the wave to draw the four that remain — beats 3, 6, 10 and
+    14 — then the contact sheet, then his pick. What blocks THIS cut is therefore
+    two picks and no open questions: those FOUR frames, and the push-in rate on its
+    own entry held-zoom-rate-repick-1786124700. Behind both, pending-founder.yaml
     v6-verdict — which this cut is what will finally answer, since v32 answered it
     "no".
   window: any

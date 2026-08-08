@@ -4006,3 +4006,119 @@ Neither belongs in a re-render commit.
 
 **These are unscreened.** The stretch is gone by measurement; whether beat 1 is now a
 good shot is R4 and nobody has looked yet.
+
+## 2026-08-08 — the one sample passed, so beat 15 is canon and a recipe is settled by one word
+
+**The founder's whole verdict was three characters: `b15-r3-s1`.** That is the beat-15
+round-3 sample — the ONE SAMPLE that `ep1-stills-redraw-wave2-1786197600`'s own `cmd`
+put in front of its batch, and the only thing
+`ep2-stills-redraw-b02-21-1786192800`'s founder gate was waiting on. Resolved through
+`REVIEW-KEY-0808.md`, the pixel-matched address map written for this pass, not by grid
+position. **Two things came off one label: a frame, and a recipe.**
+
+**BEAT 15 IS CANON.** `takes/stills/15-something-s-coming-r3-s1.png` (seed **20261734**,
+round 3, 832x1216, sha256
+`f60c1404f88d45720ca295dfc753e9eaabb815446710bcfffb3c7a07b7277f54`) is promoted
+byte-for-byte to
+`genomes/sapling/nodes/001-capability-inventory/stills/15-something-s-coming.png` —
+`cmp` clean, verified, not "copied and assumed" — because that is the file `video_task`
+globs for a conditioning frame. The seed is read out of that PNG's own `.meta.yaml`
+sidecar under `takes/`, which round 3 wrote at render time, never off a sheet caption.
+No `.meta.yaml` is written beside the canon still, so CI's licence ratchet stays at 25.
+
+**THE FRAME IT REPLACES HAD NO PLANT IN IT, and it is retired in place, not deleted.**
+`stills/15-something-s-coming-REVOKED-underground.png` (sha256 `aa14d078…`) is soil,
+stones and a hard light band raking in from the right — the reframe `049c519` produced
+on 2026-08-04 — and the name carries his own word from v32: *"for beat 15, why is it
+showing the underground? i think it should show the sapling, no?"* The renderers skip
+any name containing `REVOKED` (`video_task.py:1308`, `:1433`, `:1501` — those line
+numbers moved from the 1182/1295/1359 the stills README had recorded, and the README now
+says so). **Beat 15 is the first beat in that directory to carry two revocations**:
+`-REVOKED-abstract` from the underground cross-section, and now `-REVOKED-underground`
+for the reframe that replaced it. A `-REVOKED-` name is one refusal with its reason in
+it, not a slot, so they stack rather than overwrite.
+
+**THE OTHER HALF OF THE PASS IS A RECIPE VERDICT, and it is exactly one term.** The
+sample existed to test his item-07 ruling — *the sapling reads tall wherever it
+appears* — and the recipe as it stood forbade the thing being tested: `sapling` trips
+`sd_prompt._SMALL`, which appends `SCALE_NEGATIVES`, which contains `tall tree`. That
+one term was dropped for the sample only, in the wave script, with the other seven left
+in; the take's sidecar records it as `negative_terms_removed: tall tree` and carries the
+un-removed string in its header comment for comparison. **He passed the frame drawn that
+way, so that list — `tall tree` out, `mature tree, large tree, thick trunk, full canopy,
+forest, bush, shrubbery` in — is the settled reconciliation for episode 1's remaining
+four beats and episode 2's twenty.** Neither side of the conflict was deleted on a
+steward's judgement and neither was kept whole: the choice was made by which frame he
+liked. Both queue entries now say that in words rather than leaving it to be re-derived,
+because a validated recipe change living in one operator's head is not validated.
+
+**`sd_prompt.py` IS STILL UNTOUCHED, and that is a decision.** `SCALE_NEGATIVES` fires
+on any prompt whose own text says the subject is small — every episode, including the
+growth ladder that wants a man-height tree by 007a — so one approved frame of one beat
+is not evidence about all of them. The removal stays scoped to the wave scripts that
+render under the tall rule, and if it ever moves it moves with a test.
+
+**WHERE THE REMOVAL ACTUALLY BITES, measured rather than assumed.** `extra_negative_parts()`
+was run against the four outstanding prompts as they stand in `shots.md`:
+
+| beat | `_SMALL` fires | the `tall tree` removal |
+|---|---|---|
+| 3 | no — home desk, monitor, houseplant | **no-op** — this beat never receives the scale block at all |
+| 6 | no — sky, cloud, a green fringe of grass | **no-op**, same reason |
+| 10 | yes — `tiny two-leaf sprout` | **applies** |
+| 14 | yes — `tiny two-leaf sprout` | **applies** |
+
+So it is load-bearing on two of the four, and those two are also the ones whose prompts
+still say `tiny two-leaf sprout` — the exact words beat 15's sample had to lose before
+the tall rule could render. Redrawing 10 or 14 without moving that clause would ask for
+a tall reading and describe a tiny sprout in the same breath, and the wave's `cmd` now
+says so.
+
+**WHAT MOVED IN THE QUEUE.**
+
+- **`ep2-stills-redraw-b02-21-1786192800` is UNGATED.** `gate: founder` and `gate_ref:`
+  are deleted, with the satisfied gate's own text kept above as the evidence — it was
+  never a decision gate, it was ONE SAMPLE BEFORE ANY BATCH on a rule this tree had
+  never rendered, and its stated clearing condition was him saying the tall sapling
+  reads right on one frame. He said it. Re-read for a blocker behind the founder one,
+  as the file's header requires: there is none — twenty prompts written and native-tag
+  converted, same model and card that drew the eighty, 9-11s per image measured on the
+  5090, $0, and the text half of the job needs no machine at all. **Runnable now.** Its
+  `cmd` names the one-term removal explicitly and forbids editing `sd_prompt.py`.
+- **`ep1-stills-redraw-wave2-1786197600` is one fifth delivered, not retired.** Beat 15
+  is marked DONE inside it with the promoted path and a "do not redraw this beat"
+  instruction; beats **3, 6, 10 and 14** remain, and its `cmd` and `why` now say four
+  beats where they said five. `est_minutes` is left at 75 rather than guessed downward.
+  It keeps its id because four of the five beats it was filed for are still outstanding.
+- **One new entry, `review-poster-names-stale-still-1786197251`,** for a defect found
+  while promoting — below.
+
+**A DEFECT THIS PROMOTION EXPOSED, AND IT IS ON THE LIVE PAGE.**
+`build_site.still_for()` picks a review-page clip's poster by reading `init_still` /
+`source_still` out of the clip's sidecar **by filename**, and `poster()` only reaches
+that fallback when ffmpeg is missing — which is exactly the Vercel build image
+(`build_site.py:574-601`, its own docstring). So promoting a still under an existing
+canon filename re-posters every published clip drawn from the old pixels: the beat-15
+comparison pair can now show a tall sapling over footage of bare soil, and **the beat-12
+pair has been doing the same since `01d28a4` that morning with nobody noticing.** The
+clips' sidecars are not the problem — three of the four beat-15 ones record
+`init_still_sha256: aa14d078…`, the bytes now under the `-REVOKED-` name, so the data to
+resolve it correctly is already on disk and simply unread. Filed rather than fixed here:
+it is a `build_site` change, it needs a test, and a stills promotion is not where a site
+generator gets edited. The review page's beat-15 pair now warns the founder in plain
+words that both clips predate his pick and that a poster showing the new frame is our
+bug, not a changed clip.
+
+**FOUR SIDECARS NAME THE PROMOTED FILENAME AND NONE WAS EDITED** —
+`cuts/pairs/beat-15-held.meta.yaml`, `cuts/pairs/beat-15-animated.meta.yaml` and the two
+`review/animated/15-something-s-coming*.mp4.meta.yaml`. Three carry
+`init_still_sha256: aa14d078…` and therefore remain exactly true after the promotion; the
+fourth names only `source_still:` and its own `sha256:` is the CLIP's, verified against
+`cuts/pairs/beat-15-held.mp4`. Beat 12's pick left the same pattern alone for the same
+reason: they are records of renders that happened.
+
+**WHERE EPISODE 1 STANDS.** **Eleven of fifteen shots hold a frame the founder has not
+refused; four do not** — 3, 6, 10 and 14, each still on the PNG he turned down in v32,
+unrevoked because a revocation needs a replacement to point at. `ep1-v33-assemble-1786124760`
+still waits on those four and on the held-zoom rate pick, and behind it
+`pending-founder.yaml` `v6-verdict`.
