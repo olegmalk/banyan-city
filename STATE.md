@@ -5133,3 +5133,80 @@ predictions remain unjudged.
 pre-existing `banyan-telemetry` and `banyan-worker-start` remain), embeds
 deleted, GPU-CLAIM.txt released, card idle at 0%. Nothing was published, posted,
 spent, or opened on the founder's screen.
+
+## 2026-08-09 — PROVISIONAL v33 is assembled: fifteen beats, no slate, and the first cut in which no held beat is stretched
+
+**`review/provisional-v33/ep1-v33-PROVISIONAL.mp4` — 90.08s, 720x1280, 24fps,
+7.67 MB, $0, bench render (`--out`, no leaf, nothing published).** Fifteen beats,
+**fifteen with footage, zero slated.** Ten of them are held stills re-filmed on
+the geometry fixed in `5568113`; five are existing renders copied byte-for-byte.
+Nothing under `genomes/` was written, no canon still was promoted or renamed, and
+no model ran — the whole cut is ffmpeg on this laptop.
+
+**THE FOUR-BEAT REDRAW WAVE PRODUCED TWO PICKS, NOT FOUR, AND THE CUT SAYS SO.**
+The dispatch asked for "the four provisional picks (beats 3/6/10/14)". Read back
+out of `PROVISIONAL-PICKS-0809.md` and the ledger, that is the four-beat redraw
+WAVE; the picker made two picks in it and rejected the other two lots outright:
+
+- **beat 06 -> `06-too-blue-r3-s2`** (provisional, confidence 0.55) — held here.
+- **beat 14 -> `14-worth-staying-in-r3-s3`** (provisional, 0.45; runner-up `s2`)
+  — held here.
+- **beat 03 -> reject the lot**, all four r3 candidates vetoed, so the beat keeps
+  **canon** `03-deploy-succeeded.png` — and keeps it MOVING, as the animated clip
+  v31 and v32 shipped, which is on that same approved green frame (frame-0 16.7
+  MAD against the plate). His v32 objection to beat 3 was the drawing, never the
+  motion, so nothing here argues for converting it to a held shot.
+- **beat 10 -> reject the lot**, all four vetoed (no roots in any of them, and the
+  roots are load-bearing on that beat). Held off **canon** `10-sense.png`.
+
+So beats 3 and 10 carry the pictures he turned down in v32, because there is no
+replacement with any standing and a vetoed candidate has less authority than
+canon, not more. **That is the honest state of those two beats and it should not
+be read as an argument for them.** r4 is specified in the picks page.
+
+**WHICH BEATS ARE HELD, AND THE REASON IS MEASURED RATHER THAN ASSUMED.** Held:
+4, 5, 6, 7, 8, 9, 10, 12, 14, 15. Footage kept: 1, 2, 3, 11, 13. Beats 7, 8, 9,
+12 and 15 moved from footage to held because **their canon stills were replaced
+on 2026-08-08 and their old clips animate the superseded picture** — frame 0 of
+each old clip against the current plate measures 48.7 / 81.5 / 67.1 / 55.4 MAD,
+against 9.6-20.9 for every beat whose canon did not move. Re-rendering them is a
+GPU job; holding them is a $0 one that shows the right drawing tonight.
+
+**THE FIVE KEPT CLIPS ARE PROVENANCE-CLEAN AND NONE OF IT WAS RE-WRITTEN BY
+HAND.** Each was verified byte-identical to a render git already records, and
+that commit's own sidecar was copied verbatim: beats 1 and 11 from
+`farm-out/f15-b01…`/`f15-b11…` at `0e8c298`, beat 2 from
+`farm-out/face-B-b02-1785816000-…` at `3629e58` (the take he picked — *"face B is
+the best out of the 2"*), beats 3 and 13 from `review/animated/` with their
+render-time sidecars. Beat 11 is the take he ordered KEPT on 2026-08-07.
+
+**EVERY HELD CLIP CARRIES THE FIX, AND IT IS ASSERTED, NOT CLAIMED.** Frame 0 of
+each held clip against `plate_prep.fit_cover(still, 704, 1280)` measures
+**39.3-47.2 dB**; the same frame against the two-argument resize the fix removed
+measures **15.5 dB** (beat 6, both numbers). That is the signature the geometry
+demo recorded on 2026-08-08 (43.0 vs 15.5) reproduced on ten more pictures. The
+move is unchanged and unre-tuned: `ZOOM_TOTAL` 0.12, linear, centred, and
+`scale_series` strictly decreasing on every length in the cut — no ping-pong.
+Sidecars carry `model: none` (the exact string three tools key off), the framing
+note, `source_still_path` and `source_still_sha256`.
+
+**IT IS 0.21s LONGER THAN v32 AND ITS AV ALIGNMENT IS TIGHTER.** 90.080s against
+89.875s; video and audio stream durations are **equal to the millisecond**
+(90.080/90.080), where v32's differ by 0.014s. `qa_episode` passes 15 checks.
+
+**THE ONE NEW WARNING IS v32's DEFECT BEING ABSENT, NOT A REGRESSION.** v33 warns
+*"no hole > 4s under the dialogue — 5.5s from 12s"*; v32 does not. Measured
+second by second, v32 has speech at 14-15s that v33 does not, and the reason is
+`f25eb94`, committed at 22:25 on 2026-08-07 — **four hours after v32 was cut.**
+That commit deleted the stray `05-vo.mp3`, the duplicate *"Huh. Blue."* the
+founder had moved to beat 6, which v32 was still playing over near-black mug
+shards. v33 is the first cut without it, so beats 4 and 5 are now both silent by
+design (the death, then the shards) and the hole detector sees 5.5s of scored
+silence. `check_sync --strict` is clean on all of 001.
+
+**Nothing here is ratified.** Every clip sidecar carries `provisional: true` and
+the banner; the directory carries a README saying the same; `review/**/*.mp4` is
+gitignored and nothing in `review/provisional-v33/` is tracked. No canon
+filename was written, nothing was published, posted or spent, and nothing was
+opened on his screen. Gates as their own steps: `lint_genome.py` rc=0 (ratchet
+25, unchanged), `test_pipeline.py` rc=0.
