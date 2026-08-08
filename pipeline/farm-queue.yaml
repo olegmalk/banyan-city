@@ -377,51 +377,34 @@ backlog:
 #
 # Production is running tonight (2026-08-07) in the workflow that made this pick
 # into paperwork. These are the beats of it that need a machine.
-- id: 002b-b01-video-5b-1786089900
-  runner: farm
-  worker: rtx5090
-  needs: [cuda, vram20, video-venv]
-  window: any
-  est_minutes: 10
-  video: true
-  node: 002b-first-citizen
-  video_model: ti2v-5b
-  no_anchor: true
-  motion: no new subjects, no scene change
-  size: 704x1280
-  offload: true
-  seconds: 2.5
-  steps: 14
-  guidance: 5.0
-  seed_base: 20260805
-  beats: '1'
-  why: >-
-    Beat 01 is the beat both of the founder's approval conditions were spent on —
-    the fig must GROW on screen, not already hang — so it is the one sample that
-    proves the fix and the one the other twenty beats wait behind. Runnable since
-    2026-08-07: its conditioning frame is stills/01-cold-open.png, the frame he
-    picked, and the fig in it is the one that has to swell.
-
-- id: 002b-b01-video-ltx-1786089960
-  runner: manual
-  worker: rtx5090
-  needs: [cuda, vram20, video-venv]
-  window: any
-  est_minutes: 15
-  cmd: >-
-    hand-run pipeline/ltx_i2v.py two-stage on the approved frame (8 steps at
-    352x640, 2x latent upsample, 3 steps at 704x1280, explicit sigmas, guidance
-    1.0) per the LTX row in pipeline/research/MODEL-COMPARISON.md section 1 — or,
-    since 2026-08-07, queue it: `video_model: ltx23-distilled-fp8` now reaches
-    ltx_i2v through video_task, which writes the sidecar and the bench row itself.
-    Left as `manual` because it is a hand-driven comparison, not because anything
-    blocks it — the frame that used to gate it is stills/01-cold-open.png now.
-  why: >-
-    The same beat on both renderers is the comparison the founder was promised on
-    2026-08-06 and never got; the clips drop into SAMPLES/ and COMPARISON.html
-    picks them up with no code change. Runnable since 2026-08-07 with the frame
-    pick; production runs tonight. This is a SAMPLE on one beat — LTX is cleared
-    on look only (R4, 2026-08-06), so an LTX-rendered EPISODE still needs him.
+# RETIRED 2026-08-08 — 002b-b01-video-5b-1786089900 and
+# 002b-b01-video-ltx-1786089960. Beat 1 of episode 2 is filmed on both renderers.
+# Four clips, all conditioning on stills/01-cold-open.png, all 704x1280 / 24fps,
+# all $0, all rc=0, all in review/ep2-b01/ with their sidecars and logs:
+#   002b-b01-video-5b-…-01-cold-open.mp4      113 frames  the 5B, queue recipe
+#   002b-b01-video-5b-6s-…-01-cold-open.mp4   145 frames  the same, at 6s
+#   ltx-b01.mp4      LTX-2.3-Distilled bf16, 207s, 7.5GB peak  ← the ltx entry
+#   wan5b-b01.mp4    Wan2.2-TI2V-5B,         539s, 18.1GB peak ← its A/B partner
+# ltx-b01 is exactly what the ltx entry's `cmd` describes: two-stage, 8 steps at
+# 352x640, 2x latent upsample, 3 steps at 704x1280, guidance 1.0. Measurements and
+# the comparison caveat are in STATE.md 2026-08-08.
+#
+# NEITHER COULD HAVE BEEN RETIRED BY THE PROMOTER, and the reason is worth keeping
+# because it is not the usual one. The ltx entry was `runner: manual`, which the
+# promoter reports and never retires. The 5B entry was `runner: farm` — but no
+# `DONE task=002b-b01-video-5b-1786089900` line exists on any farm-results
+# heartbeat, and farm-out on farm-results-rtx5090 still holds nothing but the
+# faceneg artifacts from 2026-08-03. The clips carry that task id in their
+# sidecars all the same, because the render was HAND-RUN with the queue's id
+# rather than claimed through the queue. So the work is done, the promoter cannot
+# see that it is done, and the entry would have sat here indefinitely reading as
+# unstarted — the same loaded gun the faceneg retirement above describes, pointed
+# from the other direction. See queue-id-borrowed-by-hand-run below.
+#
+# WHAT IS NOT SETTLED BY THIS: which model films episode 2. LTX drew the same six
+# seconds 2.6x faster on a third of the memory, and speed is not a taste verdict —
+# the founder's eye caught LTX losing 86-89% of its chroma across a clip on
+# 2026-08-06. That call is R4's and lives on the review surface, not here.
 
 - id: 002b-stills-b02-21-1786090020
   runner: farm
@@ -738,7 +721,14 @@ backlog:
     The one tool that decides what may be published can return a licence it has
     never read, for a model that is not in its table, and report nothing unusual —
     so provenance integrity currently rests on the substring accident landing our
-    way.
+    way. STILL OPEN as of 2026-08-08, and deliberately not retired by that day's
+    gate fix: that fix made a VENDOR CATCH-ALL lose to a version key we have read
+    (licence_gate.SUPERSEDES_CATCH_ALL), which is one family and one direction.
+    The general hazard this entry names is the other direction and is untouched —
+    `Lykon/dreamshaper-8-something-else` still inherits dreamshaper's OpenRAIL
+    because the key is a substring of it, and nothing warns. Token-aware matching
+    is still the fix; what exists now is one worked example of declaring
+    precedence instead of inferring it.
 
 # ---- THE v32 REJECTION, 2026-08-07 evening ----------------------------------
 # The founder watched the assembled cut and turned it down with an itemised list,
@@ -918,22 +908,138 @@ backlog:
 # `hb: <stage>` and force-pushed to a courier branch. The worker shares its
 # checkout with whatever else is running there, and the commit that carries the
 # accident is the one nobody reads, on the branch nobody reads.
-- id: courier-commit-pathspec-1786167000
+# RETIRED 2026-08-08 — courier-commit-pathspec-1786167000. Courier.mark() now runs
+# `git commit -qm "hb: <stage>" -- <farm-out>`, so the commit is scoped to the same
+# path line 155 stages and a file another process left in the index stays there.
+# Covered end to end by test_a_heartbeat_commits_only_the_heartbeat: it stages an
+# unrelated file in a throwaway checkout, runs a real mark(), and asserts the file
+# is neither in the commit nor lost from the index. Verified against the old code
+# first — a bare commit sweeps it in and clears the index, which is the behaviour
+# the test would now catch.
+#
+# THE FIX DOES NOT REACH A RUNNING BOX UNTIL ITS CHECKOUT TURNS OVER. Each worker
+# runs the farm_worker.py in its own working copy, so a machine that has not
+# pulled since 2026-08-08 is still committing the whole index every five minutes.
+# The second half of the retired entry — auditing the courier branches for
+# heartbeat commits that already carry unrelated files — is NOT done and is not
+# assumed to be empty; it is a history read on four branches, filed as
+# courier-branch-sweep below rather than quietly dropped.
+
+- id: courier-branch-sweep-1786190400
   runner: manual
   worker: any
   needs: []
   window: any
-  est_minutes: 15
+  est_minutes: 30
   cmd: >-
-    scope farm_worker.py:156 to the same pathspec line 155 stages — commit only
-    farm-out/ — and check the courier branches for heartbeat commits that already
-    carry unrelated files
+    on each farm-results-* branch (rtx5090, msi, m1pro, m2) and runpod-results,
+    `git log --format='%H %s' --name-only` filtered to commits whose subject
+    starts `hb:`, and list every path outside farm-out/ that any of them touched.
+    Anything found is someone's work committed under a heartbeat message — decide
+    per file whether it is still wanted anywhere before the branch is next
+    force-pushed over.
   why: >-
-    Explicit-pathspec commits are a standing house rule and the courier is the one
-    place in the pipeline that breaks it, on an automatic 5-minute timer with a
-    force-push behind it. The consumer is anyone who has ever wondered why a
-    farm-results branch contains a file they did not put there; the fix is one
-    argument.
+    The bare-commit bug is fixed forward but wrote history for as long as it
+    existed, and these branches are force-pushed on a 5-minute timer, so anything
+    swept into them is one push from being unreachable. The consumer is whoever
+    lost a file in a shared checkout and has never been told where it went.
+
+# A STEWARD DECISION WITH TWO REAL COSTS, so it is written as a choice rather
+# than as a task with a hidden answer. Ungated: nothing waits on the founder.
+- id: 002b-candidates-dangling-links-1786190460
+  runner: manual
+  worker: any
+  needs: []
+  window: any
+  est_minutes: 45
+  cmd: >-
+    pick ONE of two, then do it. (A) extend the .gitignore un-ignore that already
+    exempts 001's takes/ — `!genomes/sapling/nodes/001-capability-inventory/takes/**`
+    — to cover 002b, and commit the 101 candidate PNGs. (B) teach build_site to
+    skip LINKING a take whose pixels are gitignored, so a local build and a
+    deployed build agree about what exists. Whichever is chosen, say so in the
+    commit message and delete the other from this entry.
+  why: >-
+    002b's takes/ holds 80 tracked .meta.yaml sidecars beside 101 deliberately
+    gitignored PNGs, so every local build_site run produces links to frames that
+    are not in the tree and will never be on banyan.city. The consumer is whoever
+    next debugs the site locally and cannot tell a real broken link from this.
+    The costs are not close in kind, which is why nobody should decide it in
+    passing: (A) is about +120MB of repo growth, permanent and paid by every
+    clone, in exchange for the tree telling the truth about what was shot; (B)
+    costs nothing on disk and makes the local build quieter, but it also makes
+    build_site's output depend on git state, which is a new coupling in the one
+    program whose job is to be a pure function of the tree.
+
+- id: rtx5090-schtasks-sweep-1786190520
+  runner: manual
+  worker: any
+  needs: []
+  window: any
+  est_minutes: 30
+  cmd: >-
+    on the rtx5090 box (ssh alias rtx5090, cmd.exe), `schtasks /query /fo LIST
+    /v | findstr /i banyan` to list every banyan-* registration, and for each one
+    read what it fires before deleting it — a task that re-arms a render is not
+    the same as a task that only logs. Delete with `schtasks /delete /tn <name>
+    /f`, one at a time, and paste the before/after list into the report.
+  why: >-
+    Roughly 19 stale banyan-* scheduled tasks are registered on that box from past
+    lanes; two of them were armed to RE-FIRE a render and were killed on
+    2026-08-08 after they did. The rest are unaudited. The consumer is anyone who
+    starts a render on that machine and needs to know that nothing else will
+    launch onto the same card behind them — which is exactly the collision that
+    cost ten hours on 2026-08-07. Supervised on purpose: a blind `/delete` loop
+    over a findstr match is how a scheduled task somebody still wants disappears.
+
+# NOT the frames bug it looked like. Kept as an entry because what it IS is worse
+# for the queue's honesty than an arithmetic error would have been.
+- id: queue-id-borrowed-by-hand-run-1786190580
+  runner: manual
+  worker: any
+  needs: []
+  window: any
+  est_minutes: 30
+  cmd: >-
+    decide what a hand-run should do with a queue task's id. Either it claims the
+    task properly (write the STARTED/DONE heartbeat lines, so the promoter can
+    retire it) or it takes its own id and the queue entry stays open. Then make
+    the chosen one the easy path — today both are equally easy and one of them
+    lies. Whatever is decided, record it in this file's ENTRY SHAPE header, since
+    that is where the next person looks for what an id means.
+  why: >-
+    STATE.md 2026-08-08 records "that queue entry asks for seconds 2.5 and the
+    pipeline delivered 4.708s — nobody has explained the gap". The frames
+    derivation is not the gap and is not broken: wan_i2v computes
+    `frames = int(seconds * fps)` and video_task passes the task's `seconds`
+    straight through, which reproduces all three clips exactly — 4.71s to 113
+    frames, 6.05s to 145, 6.042s to 145. The clip's own sidecar says
+    `seconds: 4.71`, and write_sidecar can only have read that from the task dict.
+    So nothing ever asked the pipeline for 2.5: the render was hand-run with the
+    queue entry's ID and a different recipe, which is also why no `DONE
+    task=002b-b01-video-5b-1786089900` line exists on any heartbeat. The consumer
+    is anyone reading this queue to find out what has actually been rendered —
+    right now an id in a sidecar does not mean the queue entry ran.
+
+- id: wan-bench-sidecar-beat-1786190640
+  runner: manual
+  worker: any
+  needs: []
+  window: any
+  est_minutes: 20
+  cmd: >-
+    give wan_i2v's bench path a beat to record. Its two write_sidecar calls
+    (stage_render and stage_simple, the `if bench:` branches) pass beat=0
+    hard-coded; add a --beat that defaults to 0 and thread it through, so a clip
+    rendered as a bench sample of a real beat says which beat it is.
+  why: >-
+    beat=0 is honest for a throughput measurement and wrong the moment the clip
+    is screened as a beat, which is what happened to wan5b-b01.mp4 and to the
+    copy of it on the founder's checklist — both say `shot_beat: 0` for the cold
+    open, and both now carry a correction block saying so. The consumer is
+    build_shotboard and the review page, which key off shot_beat to put a clip
+    under the beat it belongs to. Small, but it is the field that decides where a
+    clip appears.
 
 # ---- THE DOMAIN OUTLIVES THE MIGRATION --------------------------------------
 #
