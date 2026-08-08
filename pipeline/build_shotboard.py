@@ -356,24 +356,56 @@ def canon_clips(leaf: dict) -> dict:
     return out
 
 
+def variant_cell(f: Path, letter: str, num: int, rel: str, genome: str) -> str:
+    """One candidate frame in site mode — linked, or named as not published.
+
+    The publishable() half is take_cell's rule applied to pictures, which it was
+    missing: a still whose licence forbids redistribution is never copied to
+    _site, so linking it is a 404 in a visitor's face and a build the link gate
+    fails. Same answer as for a clip — say so, keep the recipe visible, invite
+    the re-shoot.
+    """
+    from build_site import publishable
+    ok, blocked = publishable(f)
+    if not ok:
+        return (f'<figure class="take"><div class="withheld">'
+                f'<b>not published here</b><br>{html.escape(blocked)}<br>'
+                f'<span>the frame exists in the repo; this beat is open to a '
+                f're-shoot on a publish-safe route</span></div>'
+                f'<figcaption><b>{letter}</b></figcaption></figure>')
+    thumb = still_thumb(f, f"{genome}/posters/cand-{f.stem}.jpg", 360)
+    return (f'<figure class="take"><a href="{rel}-takes/{f.name}">'
+            f'<img width="{STILL["width"]}" height="{STILL["height"]}" '
+            f'loading="lazy" decoding="async" '
+            f'src="{thumb or f"{rel}-takes/{f.name}"}" '
+            f'alt="candidate {letter} for shot {num:02d}"></a>'
+            f'<figcaption><b>{letter}</b></figcaption></figure>')
+
+
 def variant_cells(takes_stills: Path, num: int, rel: str, genome: str = "") -> str:
     """Candidate stills for an unapproved beat, labelled A/B/C…, votable.
 
     Thumbnailed like the approved frames: these are the same 1.2 MB PNGs, and a
-    beat in review can have four of them."""
+    beat in review can have four of them.
+
+    SITE MODE LISTS ONLY WHAT THE DEPLOY HAS (2026-08-08). Candidate frames are
+    gitignored by design, so on the box that drew them this globbed 185 PNGs and
+    emitted 164 <a href>s to files that are not in the tree — links that 404 on
+    banyan.city and that failed the local build while CI, lacking the files
+    entirely, stayed green. Standalone mode (rel="") is deliberately NOT
+    filtered: the local board embeds base64 and its whole reason to exist is
+    looking at exactly those uncommitted candidates in review.
+    """
     if not takes_stills.is_dir():
         return ""
     files = sorted(f for f in takes_stills.glob(f"{num:02d}-*.png"))
+    if rel:
+        from build_site import in_the_tree
+        files = in_the_tree(files)
     if not files:
         return ""
     cells = "".join(
-        f'<figure class="take"><a href="{rel}-takes/{f.name}">'
-        f'<img width="{STILL["width"]}" height="{STILL["height"]}" '
-        f'loading="lazy" decoding="async" '
-        f'src="{still_thumb(f, f"{genome}/posters/cand-{f.stem}.jpg", 360) or f"{rel}-takes/{f.name}"}" '
-        f'alt="candidate {chr(65 + i)} for shot {num:02d}"></a>'
-        f'<figcaption><b>{chr(65 + i)}</b></figcaption></figure>'
-        if rel else
+        variant_cell(f, chr(65 + i), num, rel, genome) if rel else
         f'<figure class="take">{img_tag(f, alt=f"candidate {chr(65 + i)}")}'
         f'<figcaption><b>{chr(65 + i)}</b></figcaption></figure>'
         for i, f in enumerate(files))
@@ -540,6 +572,15 @@ def board_html(genome: str, d: Path, rel: str = "") -> str:
                      if (stills_dir / f"{s['num']:02d}-{s['slug']}.png").exists())
     all_takes = {s["num"]: take_list(d / "takes" / "clips", s["num"], s["slug"])
                  for s in shots}
+    if rel:
+        # Same rule as the candidate frames, for the same reason: takes/clips/
+        # mp4s are gitignored too (001's committed archive excepted), and a
+        # <video src> or a receipt link into a clip the deploy does not have is
+        # the identical dangling reference. It has not bitten yet only because
+        # every clip on the board today happens to be one of 001's tracked ones
+        # — which is luck, not a rule. This is the rule.
+        from build_site import in_the_tree
+        all_takes = {n: in_the_tree(v) for n, v in all_takes.items()}
     # The take a shot leads with, and its extracted 360px frame. The frame does
     # double duty: the player's poster AND the filmstrip thumbnail, so the index
     # costs ~20 KB a shot instead of a 1.2 MB source PNG apiece.

@@ -1438,32 +1438,59 @@ backlog:
     swept into them is one push from being unreachable. The consumer is whoever
     lost a file in a shared checkout and has never been told where it went.
 
-# A STEWARD DECISION WITH TWO REAL COSTS, so it is written as a choice rather
-# than as a task with a hidden answer. Ungated: nothing waits on the founder.
-- id: 002b-candidates-dangling-links-1786190460
-  runner: manual
-  worker: any
-  needs: []
-  window: any
-  est_minutes: 45
-  cmd: >-
-    pick ONE of two, then do it. (A) extend the .gitignore un-ignore that already
-    exempts 001's takes/ — `!genomes/sapling/nodes/001-capability-inventory/takes/**`
-    — to cover 002b, and commit the 101 candidate PNGs. (B) teach build_site to
-    skip LINKING a take whose pixels are gitignored, so a local build and a
-    deployed build agree about what exists. Whichever is chosen, say so in the
-    commit message and delete the other from this entry.
-  why: >-
-    002b's takes/ holds 80 tracked .meta.yaml sidecars beside 101 deliberately
-    gitignored PNGs, so every local build_site run produces links to frames that
-    are not in the tree and will never be on banyan.city. The consumer is whoever
-    next debugs the site locally and cannot tell a real broken link from this.
-    The costs are not close in kind, which is why nobody should decide it in
-    passing: (A) is about +120MB of repo growth, permanent and paid by every
-    clone, in exchange for the tree telling the truth about what was shot; (B)
-    costs nothing on disk and makes the local build quieter, but it also makes
-    build_site's output depend on git state, which is a new coupling in the one
-    program whose job is to be a pure function of the tree.
+# RETIRED 2026-08-08 NIGHT — 002b-candidates-dangling-links-1786190460, done in the
+# commit that carries this line. (B) WAS CHOSEN AND (A) IS DELETED: no candidate PNG
+# is un-ignored, the ~120 MB of repo growth is not paid, and neither the board's
+# links nor the build's copy step can now reach a file the deploy will not have.
+# `build_site.in_the_tree()` is the gate and both go through it, so the two cannot
+# disagree about what exists. What that was worth tonight is stated plainly below.
+#
+# READ THIS BEFORE YOU BELIEVE THE ENTRY ABOVE — ITS PREMISE DID NOT REPRODUCE.
+# The entry says "every local build_site run produces links to frames that are not
+# in the tree". Measured at HEAD tonight, on this laptop, with all 185 candidate
+# PNGs sitting on disk: the site emits ZERO hrefs into any `*-takes/` directory,
+# site-wide. build_shotboard renders candidate cells only for a beat that is NOT
+# approved (`{'' if approved else variant_cells(...)}`), and 002b's beats are
+# approved now, so the 164 links this entry is named after are not in the tree.
+# They were real when it was filed; approving a beat retires them.
+#
+# SO THIS COMMIT DOES NOT CLOSE THE LOCAL RED, AND MUST NOT BE READ THAT WAY.
+# Isolated A/B — same tree, HEAD vs this commit, both with the 185 PNGs present —
+# both exit 1, and the two broken-link sets are IDENTICAL: 38 links, every one a
+# `sapling/posters/take-*.jpg` or `still-*.jpg` on 001's shot board, not one of
+# them a candidate frame.
+#
+# WHAT THE LOCAL-ONLY RED ACTUALLY IS, measured, so the fourth re-diagnosis can
+# stop: it is ffmpeg. Same commit, same tree, only PATH differs —
+#     ffmpeg present → exit 1, 38 broken poster links
+#     ffmpeg absent  → exit 0, 70 pages swept, none broken
+# With ffmpeg the board asks for a 480px thumb per beat, is told it was made, links
+# it, and the file is not there when the build ends. Without ffmpeg — which is the
+# Vercel build image — no thumb URL is emitted at all and the filmstrip falls back
+# to the copied full-size PNG, which does exist. That is why every laptop is red and
+# the deploy is green, and why CI structurally cannot see it. It belongs to
+# review-poster-names-stale-still-1786197251, in flight in this same file; that
+# working copy, run here by accident, takes the same build to exit 0.
+#
+# WHAT THIS COMMIT DOES CHANGE, measured: 002b's published takes/ goes from 22
+# copied files plus a WITHHELD.md to empty. Nothing linked them either way, so no
+# visitor loses a link — what goes is 22 orphan files on the deploy and a notice
+# whose own first sentence ("these takes exist in the repo") was false for every
+# frame it named. 001's takes/ archive is TRACKED (the
+# `!…/001-capability-inventory/takes/**` un-ignore) and is untouched: its 22 files
+# and its WITHHELD.md still ship, so the withheld path still works. The skip is
+# printed, never silent — 185 here — because a forgotten `git add` and a deliberate
+# ignore look identical from outside, and that silence is what let this be argued
+# about three times.
+#
+# ASKS WHAT GIT KEEPS, NOT WHAT .gitignore MATCHES, a deliberate widening of the
+# entry's wording: a file nobody has committed yet is exactly as absent from the
+# deploy as a deliberately ignored one, and if the two got different answers this
+# comes back wearing a different hat. The standalone board (`build_shotboard.py …
+# --out`, base64, gitignored) is deliberately NOT filtered — judging uncommitted
+# candidates is the only reason that page exists. Three tests on real git
+# repositories, including the no-git case, which must fall back to every file on
+# disk rather than publish nothing; a mocked `ls-files` would only test the mock.
 
 - id: rtx5090-schtasks-sweep-1786190520
   runner: manual

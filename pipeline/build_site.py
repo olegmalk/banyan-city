@@ -494,8 +494,94 @@ def public_licence(licence: str) -> str:
     return re.sub(r"\s*\([^)]*\)\s*$", "", licence).strip()
 
 
+# --------------------------------------------------- what the deploy will have
+# One `git ls-files` per directory asked about. Keyed by directory because the
+# question is always asked about a whole glob at once.
+_TRACKED: dict = {}
+# How many files on this disk the site deliberately did not use because the
+# tree does not carry them. Printed at the end of the build: a silent skip and a
+# forgotten `git add` would look identical, and they are not.
+_LOCAL_ONLY = 0
+
+
+def _tracked_in(d: Path):
+    """The names git keeps in directory `d`, or None if git cannot answer.
+
+    None is not the empty set. "git is not here" — a tarball export, no git
+    binary, a directory outside any repo — must fall back to using whatever is
+    on disk, which is what every build did before this function existed. An
+    empty set is a real answer: git looked, and this directory holds nothing it
+    keeps. Obeying that is the entire point.
+
+    Runs `git -C d`, so the paths come back relative to `d` itself: a direct
+    child is `x.png` and something one level down is `sub/x.png`. That is what
+    makes the membership test below exact rather than a basename guess.
+    """
+    key = str(d)
+    if key in _TRACKED:
+        return _TRACKED[key]
+    got = None
+    try:
+        r = subprocess.run(["git", "-C", str(d), "ls-files", "-z"],
+                           capture_output=True, timeout=30)
+        if r.returncode == 0:
+            got = {p.decode("utf-8", "replace") for p in r.stdout.split(b"\0") if p}
+    except (OSError, subprocess.SubprocessError):
+        got = None
+    _TRACKED[key] = got
+    return got
+
+
+def in_the_tree(files) -> list:
+    """The subset of `files` git keeps — which is the subset the deploy has.
+
+    THE BUG THIS CLOSES (2026-08-08). A node's candidate frames are gitignored
+    on purpose (`genomes/*/nodes/*/takes/**/*.png`, ~1 MB each, dozens per
+    beat), so they exist on the box that drew them and nowhere else. The shot
+    board listed every PNG it could see on disk and the build copied the ones
+    publishable() allowed, which meant a local build produced 164 <a href>s into
+    002b candidate frames that are not in the tree and will never be on
+    banyan.city. `check_links` correctly failed the build over them — and CI,
+    having none of the files, never saw a link to fail on. So `build_site.py`
+    exited 1 on this laptop and 0 on the deploy box for the same commit, and
+    the difference got diagnosed as a broken site three separate times in one
+    day. The fix is upstream of the link gate: do not emit the link.
+
+    THE COST, STATED PLAINLY, because it was the argument against doing this:
+    the site build now reads git state, and its output is supposed to be a
+    function of the tree. It is worth it because the reading is what MAKES it
+    one. "The tree" is what is committed — it is what CI clones and what the
+    deploy serves. A build that publishes untracked files is a function of one
+    working directory, which is strictly less than the tree, and the 164 links
+    are what that difference looks like from outside.
+
+    Tracked beats ignored, deliberately: 001's takes/ is a committed v1 archive
+    (`!genomes/…/001-capability-inventory/takes/**`) and every file in it ships,
+    licence gate permitting. That is also why this asks what git KEEPS rather
+    than what .gitignore MATCHES — a file that is untracked because nobody
+    committed it yet is just as absent from the deploy as an ignored one, and
+    both answers must be the same answer or this bug comes back wearing a
+    different hat.
+    """
+    global _LOCAL_ONLY
+    out = []
+    for f in files:
+        tracked = _tracked_in(f.parent)
+        if tracked is None or f.name in tracked:
+            out.append(f)
+        else:
+            _LOCAL_ONLY += 1
+    return out
+
+
 def withheld_note(rows: list) -> str:
     """Why a take the board lists is not downloadable here.
+
+    Only ever asked about files the tree carries — in_the_tree() runs first, so
+    a frame that exists on one laptop is not "withheld" here, it is simply not
+    part of the repo this page describes. Writing it into the note would have
+    been a false statement: the note's own first sentence promises the reader
+    that the take exists in the repo and its provenance is published beside it.
 
     Silence would read as a broken link. The take EXISTS, its recipe and
     provenance are published beside it, and anyone may re-shoot the beat on a
@@ -2127,10 +2213,16 @@ def main() -> None:
                 # takes/ records are kept out of the debt ratchet BECAUSE this
                 # gate stops an unpublishable candidate reaching the web. Remove
                 # the gate and the exemption becomes a hole the same day.
+                # in_the_tree() before publishable(), and the order matters: a
+                # candidate frame the tree does not carry is not a licence
+                # question at all. The board no longer links it, so copying it
+                # would put an orphan file on the site, and naming it in
+                # WITHHELD.md would tell a visitor a file is in the repo when it
+                # is not. See in_the_tree() for the 164 links this closes.
                 if (node_dir / "takes" / "stills").is_dir():
                     (gdir / f"{media}-takes").mkdir(exist_ok=True)
                     withheld = []
-                    for f in sorted((node_dir / "takes" / "stills").glob("*.png")):
+                    for f in in_the_tree(sorted((node_dir / "takes" / "stills").glob("*.png"))):
                         ok, why = publishable(f)
                         if not ok:
                             withheld.append((f.name, why))
@@ -2142,7 +2234,7 @@ def main() -> None:
                 if (node_dir / "takes" / "clips").is_dir():
                     (gdir / f"{media}-clips").mkdir(exist_ok=True)
                     withheld = []
-                    for f in (node_dir / "takes" / "clips").iterdir():
+                    for f in in_the_tree(sorted((node_dir / "takes" / "clips").iterdir())):
                         ok, why = publishable(f)
                         if not ok:
                             withheld.append((f.name, why))
@@ -2156,6 +2248,12 @@ def main() -> None:
     posters = sum(1 for v in _POSTERS.values() if v)
     print(f"✓ built _site/ — {len(genomes)} genome(s), {total} node pages, {posters} posters"
           + ("" if FFMPEG else " (no ffmpeg: posters come from approved stills only)"))
+    # Say the number out loud. The whole failure this closes was a difference
+    # between two boxes that neither box mentioned; a build that quietly drops
+    # 185 files it can see is one `git add` away from being the same story.
+    if _LOCAL_ONLY:
+        print(f"  · {_LOCAL_ONLY} take file(s) on this disk are not in the tree — "
+              f"not linked, not copied (the deploy does not have them)")
 
     broken = check_links(mine)
     if broken:

@@ -4184,6 +4184,146 @@ def test_licence_gate(tmp: Path):
         print(f"      ✓ debt fell to {len(errors)} — lower LICENCE_DEBT to match")
 
 
+def _tiny_git_repo(tmp: Path) -> Path:
+    """A real repository, because the thing under test is git's own answer.
+
+    Faking `git ls-files` would test the mock. The bug being closed here was a
+    disagreement between what one disk holds and what the repository holds, and
+    only a repository can be asked that.
+    """
+    import subprocess
+    for cmd in (["init", "-q"], ["config", "user.email", "t@example.com"],
+                ["config", "user.name", "T"], ["config", "commit.gpgsign", "false"]):
+        subprocess.run(["git", "-C", str(tmp)] + cmd, check=True,
+                       capture_output=True)
+    return tmp
+
+
+def _commit_all(tmp: Path) -> None:
+    import subprocess
+    subprocess.run(["git", "-C", str(tmp), "add", "-A"], check=True, capture_output=True)
+    subprocess.run(["git", "-C", str(tmp), "commit", "-q", "-m", "x"],
+                   check=True, capture_output=True)
+
+
+def test_the_board_links_only_frames_the_deploy_has(tmp: Path):
+    """A candidate frame that is not in the tree gets no link on the site.
+
+    THE FAILURE (2026-08-08, diagnosed three times in one day as a broken site).
+    Candidate frames are gitignored on purpose — `takes/**/*.png`, ~1 MB each,
+    dozens per beat — so they live on the box that drew them and nowhere else.
+    `variant_cells` listed every PNG it could see on disk, which on that box
+    meant 164 <a href>s into 002b frames the repository does not carry.
+    `check_links` failed the build over them, correctly. CI, having none of the
+    files, emitted no such links and stayed green. Same commit, exit 1 here and
+    exit 0 there, and the difference read as "the site is broken locally".
+
+    So the assertion is the invariant, not the symptom: what the board links is
+    a function of the repository, which is the thing every box shares.
+    """
+    import build_shotboard as bsb
+
+    repo = _tiny_git_repo(tmp)
+    (repo / ".gitignore").write_text("takes/**/*.png\n")
+    stills = repo / "takes" / "stills"
+    stills.mkdir(parents=True)
+    kept, ignored = stills / "01-a.png", stills / "01-b.png"
+    for p in (kept, ignored):
+        p.write_bytes(b"pixels")
+    # `kept` is committed over the ignore rule the way 001's takes/ archive is —
+    # ignoring never untracks, and a tracked file ships.
+    import subprocess
+    subprocess.run(["git", "-C", str(repo), "add", "-f", str(kept)],
+                   check=True, capture_output=True)
+    subprocess.run(["git", "-C", str(repo), "add", str(repo / ".gitignore")],
+                   check=True, capture_output=True)
+    _commit_all(repo)
+
+    thumb = bsb.still_thumb
+    bsb.still_thumb = lambda *a, **k: ""      # no ffmpeg, no writes into _site
+    try:
+        site = bsb.variant_cells(stills, 1, rel="m", genome="g")
+        local = bsb.variant_cells(stills, 1, rel="", genome="g")
+    finally:
+        bsb.still_thumb = thumb
+
+    check("site board links the frame the tree carries", "m-takes/01-a.png" in site)
+    check("site board does NOT link the ignored frame", "01-b.png" not in site)
+    # The local review board is the reason those uncommitted frames exist: beats
+    # get judged on it before anything is committed. It must keep showing both.
+    check("standalone board still shows both candidates",
+          local.count("<figure") == 2 and "data:image" in local)
+    check("standalone board emits no site-relative hrefs", "-takes/" not in local)
+
+
+def test_a_frame_the_tree_carries_but_the_licence_blocks_is_named_not_linked(tmp: Path):
+    """publishable() decides pictures the way it already decided clips.
+
+    `take_cell` has always drawn a "not published here" panel for a motion take
+    whose licence forbids redistribution, because the build never copies that
+    file and a <video> pointing at it would be a dead player. `variant_cells`
+    linked candidate stills with no licence question asked at all, so a tracked
+    frame that publishable() refuses would be an <a href> to a file the build
+    deliberately did not copy — a 404 for the visitor and a red build for us,
+    this time on CI too. In the tree AND publishable are two conditions and both
+    have to hold before a link is emitted.
+    """
+    import build_shotboard as bsb
+
+    repo = _tiny_git_repo(tmp)
+    stills = repo / "takes" / "stills"
+    stills.mkdir(parents=True)
+    (stills / "01-a.png").write_bytes(b"pixels")
+    # The real shape of 001's withheld frames: a render record naming a model
+    # whose licence carries use restrictions CC BY 4.0 cannot pass on.
+    (stills / "01-a.png.meta.yaml").write_text(
+        "model: cagliostrolab/animagine-xl-3.1\n")
+    _commit_all(repo)
+
+    thumb = bsb.still_thumb
+    bsb.still_thumb = lambda *a, **k: ""
+    try:
+        site = bsb.variant_cells(stills, 1, rel="m", genome="g")
+    finally:
+        bsb.still_thumb = thumb
+
+    check("a licence-blocked frame is listed", "<figure" in site)
+    check("a licence-blocked frame is not linked", "m-takes/01-a.png" not in site)
+    check("and the page says why", "not published here" in site
+          and "CreativeML" in site)
+
+
+def test_no_git_never_silently_empties_the_board(tmp: Path):
+    """"git cannot answer" must not read as "the tree is empty".
+
+    in_the_tree() is the one gate that can remove content from the site, so its
+    failure mode matters more than its success. A tarball export, a build box
+    with no git binary, a directory outside any repository: all three return
+    nothing from `ls-files`, and treating that as "nothing is tracked" would
+    publish a shot board with every take stripped out of it and no error
+    anywhere. Absence of an answer falls back to what the disk holds, which is
+    exactly what every build did before this gate existed.
+    """
+    import build_site as bs
+
+    plain = tmp / "not-a-repo"
+    plain.mkdir()
+    files = [plain / "01-a.png", plain / "01-b.png"]
+    for p in files:
+        p.write_bytes(b"pixels")
+    check("outside a repo, every file is kept", bs.in_the_tree(files) == files)
+
+    repo = tmp / "repo"
+    repo.mkdir()
+    _tiny_git_repo(repo)
+    stills = repo / "takes"
+    stills.mkdir()
+    empty = [stills / "01-c.png"]
+    empty[0].write_bytes(b"pixels")
+    # A real repo that tracks nothing here IS an answer, and it is obeyed.
+    check("inside a repo, an untracked file is dropped", bs.in_the_tree(empty) == [])
+
+
 def main():
     import tempfile
     test_beat_duration_from_timecode()
@@ -4285,6 +4425,14 @@ def main():
         test_antistatic_first_signal_wins(Path(td))
         test_vendored_licence_does_not_launder(Path(td))
         test_nested_licence_does_not_launder(Path(td))
+    # Own temp dir each: these build real git repositories, and a repo inside a
+    # repo would answer for the wrong tree.
+    with tempfile.TemporaryDirectory() as td:
+        test_the_board_links_only_frames_the_deploy_has(Path(td))
+    with tempfile.TemporaryDirectory() as td:
+        test_a_frame_the_tree_carries_but_the_licence_blocks_is_named_not_linked(Path(td))
+    with tempfile.TemporaryDirectory() as td:
+        test_no_git_never_silently_empties_the_board(Path(td))
     print()
     if FAILURES:
         print(f"✗ {len(FAILURES)} failure(s): {', '.join(FAILURES)}")
