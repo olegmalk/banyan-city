@@ -1,0 +1,27 @@
+# Still provenance (7.2), written AT RENDER TIME by render_wave4.py
+# on the rtx5090 (C:\banyan-farm\wave-20260808b).
+# The negative below is what the model actually saw. The recipe's own
+# negative, before this script's one deliberate removal, was:
+#   photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, mature tree, large tree, tall tree, thick trunk, full canopy, forest, bush, shrubbery, humans, cross-section, diagram, cave, black void, photorealism, text
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+shot_beat: 14
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20263733
+seeds_in_batch: 4
+task: ep1-wave2-r3-1786198316
+candidate_set: r3
+negative_terms_removed: tall tree
+recipe_inherited_from: >-
+  takes/stills/15-something-s-coming-r3-s1.png — the ONE SAMPLE the founder passed on 2026-08-08 ('b15-r3-s1'). Model, size, steps, cfg, seed rule, the tall-sapling direction and the one-term negative removal all come from that frame's recipe rather than from a choice made in this script.
+wall_seconds: 9
+cost_usd: 0
+note: |-
+  round 3. His 2026-08-08 verdict on b14-r1-s0..s3 was two faults in one sentence — 'all too small, not good character consistency' — and only the first is answerable with words. SUBJECT SCALE: this is the episode's longest slot at 13.0s and the plant did not command it, so the composition wording moved (the sapling filling the frame, the stem through the picture's whole height, roots gripping across the foreground) rather than another synonym for close — `low close shot` was already in the prompt and did not deliver it. The framing itself is KEPT, because 'Low at the base of the trunk: roots gripping soil' is the script's own line; beat 10 is the twin that moved. CONSISTENCY is the founder's item-07 ruling and it is one line, the sapling reads tall — no character sheet exists or will, and no leaf-detail term was added.
+prompt: |-
+  plant focus, low close shot of one slender sapling filling the frame, thin stem rising tall through the frame, pale roots gripping into damp brown soil, stones and short grass at its base, warm afternoon light raking the earth, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, mature tree, large tree, thick trunk, full canopy, forest, bush, shrubbery, humans, cross-section, diagram, cave, black void, photorealism, text

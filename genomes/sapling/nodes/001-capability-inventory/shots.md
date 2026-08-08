@@ -66,7 +66,7 @@ estimate a machine without transformers falls back to, 74 and 58. Nothing droppe
 either way, and `text` is back in the negative where the other 176 beats keep it.
 
 ```
-close-up of a personal computer monitor on a cluttered home desk, dark terminal window on the glowing screen, one bright green line of code, blinking cursor, warm desk lamp, coffee mug, houseplant, lived-in bedroom corner at night, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No laboratory, no server room, no lab equipment, no person, no wallpaper, no neon. No photorealism, no 3D render look. 9:16 vertical, no text.
+tight close-up of a personal computer screen filling the frame, dark terminal window, one bright green line of code, blinking cursor, warm desk lamp and coffee mug rim at the frame edge, houseplant, lived-in bedroom corner behind, night, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No laboratory, no server room, no lab equipment, no person, no wallpaper, no neon. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 **REJECTED 2026-08-08 (founder, R4): ALL EIGHT — `b03-r1-s0..s3` AND `b03-r2-s0..s3`.**
@@ -297,7 +297,7 @@ light, with the water read as droplets in the earth rather than a surface. Rings
 remain a POST overlay.
 
 ```
-plant focus, no humans, low shot at the base of a tiny two-leaf sprout, damp dark soil around its stem, pale roots at the surface, water droplets in the earth, short green grass at the frame edges, soft warm morning light, shallow depth of field, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No lake, no water surface, no dark background, no black void, no cave. No photorealism, no 3D render look. 9:16 vertical, no text.
+plant focus, no humans, very low shot at the soil line, one slender sapling's thin stem rising tall out of frame, pale roots visible in damp soil, water droplets in the earth, short grass at the edges, soft warm morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No lake, no water surface, no dark background, no black void, no cave. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 **REJECTED 2026-08-08 — the founder DELEGATED this one and the steward decided it
@@ -429,7 +429,7 @@ gripping down into it, field behind. The grip is legible because the thing gripp
 is visible.
 
 ```
-plant focus, no humans, low close shot at the base of a tiny two-leaf sprout, thin stem rising out of the ground, pale roots gripping into damp brown soil, small stones and short grass around it, warm afternoon light raking across the earth, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No cross-section, no diagram, no cave, no black void. No photorealism, no 3D render look. 9:16 vertical, no text.
+plant focus, no humans, low close shot of one slender sapling filling the frame, thin stem rising tall through the frame, pale roots gripping into damp brown soil, stones and short grass at its base, warm afternoon light raking the earth, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No cross-section, no diagram, no cave, no black void. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 **REJECTED 2026-08-08 (founder, R4): ALL FOUR — `b14-r1-s0..s3`.** His words:

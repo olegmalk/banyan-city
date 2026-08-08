@@ -59,6 +59,74 @@ the real CLIP tokenizer against `farm_worker`'s exact house list — worst is be
 sapling rather than naming the subject. Beat 01's rounds only proved it must not be
 the SUBJECT, and the queue entry says so.
 
+**Twelve prompts edited 2026-08-08 for the r3 redraw wave**
+(`ep2-stills-redraw-b02-21` in the farm queue; the eighty 2026-08-07 frames were
+"competent frames of twenty different shows" and the founder saw the report).
+What changed, and the exact scope of each change:
+
+- **The tall-sapling direction** (his ruling of 2026-08-08, the one b15-r3-s1 of
+  node 001 validated) lands as `standing tall` in the SIX beats where the whole
+  plant is in shot: 02, 03, 13, 15, 17, 19. It is deliberately NOT added to five
+  beats where the sapling appears but its height is not in frame — 12 (tight on
+  the two leaves, no trunk base by its own words), 16 (one leaf fills the frame),
+  18 (held macro on the fruit), 20 (only a bare branch overhead), 21 (one leaf
+  close-up) — because asking a macro to stand tall cancels the macro. Each of
+  those five carries the exemption and its reason in its render sidecar. Beats
+  04-11 and 14 have no sapling in frame at all and take no direction.
+- **HIS CEILING RIDES WITH THE RULE and is recorded here, not baked into twenty
+  prompts.** On the same day he asked for a tall sapling he revoked beat 01's
+  plate as "tooooo tall" — a 1-3px hairline stem standing 32% of the frame. Read
+  together: the tall reading is WIDTH-AND-SUBSTANCE work, not just height — a
+  plant that owns the height of its shot on a stem of real thickness, not a
+  thread against the sky. Rewriting all twenty prompts on that steward reading
+  of one adjective would be "a metric agreeing with me is not a sample", so the
+  words above stay minimal (`standing tall`) and this caveat is written down so
+  the contact sheet is screened knowing both his sentences. Beat 01's own redraw
+  (below) is the one place the ceiling changes a word, because the ceiling was
+  ruled ON that beat's plate.
+- **The four screening faults, fixed at their likeliest cause and nowhere else:**
+  beat 09 drew SPLIT PANELS in all four seeds — `comic timing` (the one panel-
+  inviting phrase in the file) became `deadpan timing` and `no split panels` is
+  written comma-terminated so `sd_prompt` lifts it into the negative; beat 12
+  grew a big ripe orange-pink FRUIT the story has not grown yet — `no fruit`
+  joins its negation run; beat 13 read as a GARAGE — `open green grass field`
+  anchors it outdoors, and `of someone used to tiny shelters` (the one indoor-
+  shelter image in the prompt) is the clause spent to pay for it; beat 14 sat on
+  DESERT DIRT — `shallow flat background` became `shallow green grass
+  background`; beat 18's fruit was big, ripe and orange-pink — `small ripe fig`
+  became `small round green fruit`, dropping `ripe` (the word that coloured beat
+  01's fruit peach, that beat's round-2 evidence) and `fig` (which names the
+  LEAF in this model's vocabulary, same evidence); beat 20 came back at NIGHT —
+  `Amber sliding toward indigo` became `Warm amber afternoon light`. Amber
+  afternoon, not the queue entry's "morning of the episode": the closing run
+  17-21 is written at afternoon-warming-toward-amber in this file's own words,
+  so morning would contradict the four beats around it; the fix goes to the
+  palette beats 18 and 19 already hold. Beats 19 and 20 still say `fig`/`ripe
+  fig` — not named as faults, so not touched (inventing a fault the founder did
+  not name is worse than redrawing) — flagged for the screening pass since beat
+  18 beside them now says `green fruit`.
+- **Words spent to stay under CLIP's 77 tokens** (same discipline as the
+  2026-08-07 edits above, cheapest words and never the subject): beat 02 pays
+  `cartoon` and `empty` (the dust reads cartoon in this style anyway, and the
+  field's emptiness survives in `wide shot` and in beat 05's own words), beat
+  03 pays `absurdly` (redundant beside "covers almost none of him"), beat 15
+  pays `loosely`. Beat 02's spend is measured, not guessed: with `standing
+  tall` added and nothing paid, `compress()` dropped the beat's entire style
+  tail on the estimate counter — the exact 12-of-80 failure the 2026-08-07
+  note above records.
+- **The negative changes by exactly one term, inherited, not chosen** — `tall
+  tree` out of the scale block, the other seven in, the list b15-r3-s1 was drawn
+  on. Scoped to the wave script (`render_wave5.py`); `pipeline/sd_prompt.py` is
+  untouched.
+- **Seeds:** beats whose words or negative changed reuse their own four seeds,
+  so a contact-sheet column against the last round is a controlled pair — 02,
+  03, 09, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21 (16 and 21 change only by the
+  `tall tree` removal, which is load-bearing there). Beats 04, 05, 06, 07, 08,
+  10 and 11 changed in neither words nor negative, and no fault was named on
+  them — they draw the NEXT four seeds of their own series (k=4..7), because new
+  noise is the only honest lever a no-axis redraw leaves (the same reasoning as
+  001's beat 6 on 2026-08-08).
+
 ---
 
 ## Beat 01 — COLD OPEN (0:00–0:06) ⬜ needs footage
@@ -200,6 +268,17 @@ sentence says nothing about leaves, and *"dont overthink the leafs on it"*
 (2026-08-08) puts the count explicitly out of scope for the redraw. Do not spend a
 fifth round on synonyms for *two*.
 
+**Round 5 (2026-08-08, `ep2-b01-cold-open-redraw`) changes ONE clause in the
+fence below: `thin curved stem` → `sturdy curved stem`.** That is his ceiling
+made into a word — the revoked plate failed as a 1-3px hairline thread, and
+"reads tall" has to mean a small plant that owns the height of its shot on a stem
+of real substance. Everything else rounds 1-4 settled stands untouched: `40cm`,
+`whole plant in frame`, `wide shot`, the fruit described without the word `fig`,
+the sunrise palette, the negations. Recipe change rides with the other twenty:
+`tall tree` out of the scale negatives in the wave script only. Four candidates,
+r5, on this beat's own four seeds; the sheet carries labels only — no favourite,
+no ordering, no "closest to" — which is the whole reason this round exists (R4).
+
 **What the pick unblocked on 2026-08-07, and where each of those four stands after
 the revocation.** The script's approval was scoped to this sample —
 `leaves/002b-t0-c.yaml`: *"beats 02-21 await his verdict on that sample before
@@ -215,7 +294,7 @@ he just refused; re-running it on the same frame would ask him the same question
 twice.
 
 ```
-A tiny 40cm banyan seedling, exactly two oversized cotyledon leaves, thin curved stem, one small round green fruit hanging from the stem, alone in a vast empty grass field, whole plant in frame, wide shot, sunrise, peach and gold morning sky, no humans, no chibi, no mascot, no creature, no face, no extra leaves, no branches, no night sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+A tiny 40cm banyan seedling, exactly two oversized cotyledon leaves, sturdy curved stem, one small round green fruit hanging from the stem, alone in a vast empty grass field, whole plant in frame, wide shot, sunrise, peach and gold morning sky, no humans, no chibi, no mascot, no creature, no face, no extra leaves, no branches, no night sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 ## Beat 02 — THE SPRINT (0:06–0:11) ⬜ needs footage
@@ -223,7 +302,7 @@ A tiny 40cm banyan seedling, exactly two oversized cotyledon leaves, thin curved
 No dialogue — pure action. Camera wide so the dive reads.
 
 ```
-A small round goblin — enormous ears, one broken tusk, faded green patchwork cloak — sprints in panicked, skids in the grass kicking up cartoon dust, and dives behind a tiny 40cm mascot-simple sapling. Static camera, empty morning field, wide shot, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+A small round goblin — enormous ears, one broken tusk, faded green patchwork cloak — sprints in panicked, skids in the grass kicking up dust, and dives behind a tiny 40cm mascot-simple sapling standing tall. Static camera, morning field, wide shot, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 ## Beat 03 — BAD COVER (0:11–0:16) ⬜ needs footage
@@ -231,7 +310,7 @@ A small round goblin — enormous ears, one broken tusk, faded green patchwork c
 Line: "A creature is using me as cover. I am forty centimeters tall." Camera on the size mismatch the line describes.
 
 ```
-A small round goblin — enormous ears, one broken tusk, patchwork cloak — crouches low behind the pencil-thin trunk of a tiny 40cm mascot-simple sapling, absurdly failing to hide as it covers almost none of him. Deadpan comedic staging, static camera, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+A small round goblin — enormous ears, one broken tusk, patchwork cloak — crouches low behind the pencil-thin trunk of a tiny 40cm mascot-simple sapling standing tall, failing to hide as it covers almost none of him. Deadpan comedic staging, static camera, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 ## Beat 04 — THE FOOTNOTE (0:16–0:22) ⬜ needs footage
@@ -279,7 +358,7 @@ A round guard lowers his bark clipboard and points flatly at the round belly of 
 Line: "…We confiscate the goblin?" Camera close on the guard's slow realisation.
 
 ```
-A round guard's face works slowly through an idea: eyes drifting, mouth opening slightly, helmet slipping a fraction as he tilts his head. Held close-up, minimal motion, comic timing, close-up, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+A round guard's face works slowly through an idea: eyes drifting, mouth opening slightly, helmet slipping a fraction as he tilts his head. Held close-up, minimal motion, deadpan timing, no split panels, close-up, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 ## Beat 10 — NO FORM (0:45–0:50) ⬜ needs footage
@@ -303,7 +382,7 @@ Two round guards in mismatched armor walk away from camera across an empty field
 Line: the tree's. Camera ON THE TREE for the tree's own line — framed TIGHT on the leaves, because the scavenger is still hidden behind the trunk and a wide shot would read as him having left (caught by the comprehension gate).
 
 ```
-Clouds drift and blur behind the two oversized leaves of a tiny mascot-simple sapling that fill the frame and stay utterly still — no trunk base, no ground, no other character visible. The stillness of the tree against a moving peach and gold morning sky. Very slow push-in, tight close-up, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+Clouds drift and blur behind the two oversized leaves of a tiny mascot-simple sapling that fill the frame and stay utterly still — no trunk base, no ground, no fruit, no other character visible. The stillness of the tree against a moving peach and gold morning sky. Very slow push-in, tight close-up, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 ## Beat 13 — THE SHADE (1:00–1:04) ⬜ needs footage
@@ -311,7 +390,7 @@ Clouds drift and blur behind the two oversized leaves of a tiny mascot-simple sa
 Line: "…Thanks for the shade." Camera on the goblin folding into the tiny shade.
 
 ```
-A small round goblin slides down the trunk of a tiny 40cm sapling and folds himself into its single small patch of shade, pulling his knees up around his enormous ears with the practised ease of someone used to tiny shelters. Midday light, high flat greens, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+A small round goblin slides down the trunk of a tiny 40cm sapling standing tall and folds himself into its single small patch of shade, pulling his knees up around his enormous ears with practised ease. Midday light, open green grass field, high flat greens, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 ## Beat 14 — THE DEFENSE (1:04–1:10) ⬜ needs footage
@@ -319,7 +398,7 @@ A small round goblin slides down the trunk of a tiny 40cm sapling and folds hims
 Line: the apple defence. Camera on his hands in the dirt — embarrassment made physical.
 
 ```
-A small goblin's clawed fingers pick and scratch at loose dirt, flicking pebbles aside, while above them his face glances away, embarrassed, then back down. Intimate low close-up, shallow flat background, close-up, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+A small goblin's clawed fingers pick and scratch at loose dirt, flicking pebbles aside, while above them his face glances away, embarrassed, then back down. Intimate low close-up, shallow green grass background, close-up, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 ## Beat 15 — GOOD LISTENER (1:10–1:15) ⬜ needs footage
@@ -327,7 +406,7 @@ A small goblin's clawed fingers pick and scratch at loose dirt, flicking pebbles
 Line: "You're a good listener." Camera holds BOTH of them — the conversation is the subject.
 
 ```
-A small goblin tips his head back and looks up at the tiny sapling beside him, talking, gesturing loosely with one hand; the sapling's two oversized leaves hang above him in frame. Warm midday light, lonely tone, slow push-in, two-shot, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+A small goblin tips his head back and looks up at the tiny sapling standing tall beside him, talking, gesturing with one hand; the sapling's two oversized leaves hang above him in frame. Warm midday light, lonely tone, slow push-in, two-shot, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 ## Beat 16 — WHY (1:15–1:22) ⬜ needs footage
@@ -343,7 +422,7 @@ One oversized green leaf of a tiny sapling fills the frame and turns very slight
 Line: "you didn't see me." Camera on him standing to leave.
 
 ```
-A small round goblin pushes himself up to standing, brushes dust off his patchwork cloak with two quick swipes, and turns away from the tiny sapling toward the open field. Static camera, afternoon light warming toward amber, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+A small round goblin pushes himself up to standing, brushes dust off his patchwork cloak with two quick swipes, and turns away from the tiny sapling standing tall toward the open field. Static camera, afternoon light warming toward amber, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 ## Beat 18 — THE DECISION (1:27–1:34) ⬜ needs footage
@@ -351,7 +430,7 @@ A small round goblin pushes himself up to standing, brushes dust off his patchwo
 Line: the tree deciding to spend everything. Camera on the FIG — the thing being spent.
 
 ```
-One small ripe fig trembles on the thinnest branch of a tiny sapling, its stem flexing under the weight, rimmed by warm amber afternoon light against a soft wash sky. The trembling grows; the stem bends further. Held macro, no cut, extreme close-up, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+One small round green fruit trembles on the thinnest branch of a tiny sapling, its stem flexing under the weight, rimmed by warm amber afternoon light against a soft wash sky. The trembling grows; the stem bends further. Held macro, no cut, extreme close-up, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 ## Beat 19 — THE DROP (1:34–1:39) ⬜ needs footage
@@ -359,7 +438,7 @@ One small ripe fig trembles on the thinnest branch of a tiny sapling, its stem f
 No dialogue — the physical event. Deliberately WIDE (the gate flagged a scale jump from the previous macro): tree and scavenger must share one frame so cause and effect read in a single take.
 
 ```
-A small ripe fig drops from a tiny sapling's branch, bounces softly off the head of a small round goblin walking away below, and lands in the grass at his feet as he stops mid-step. Single continuous take, static camera, amber afternoon, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+A small ripe fig drops from the branch of a tiny sapling standing tall, bounces softly off the head of a small round goblin walking away below, and lands in the grass at his feet as he stops mid-step. Single continuous take, static camera, amber afternoon, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 ## Beat 20 — EVIDENCE (1:39–1:42) ⬜ needs footage
@@ -367,7 +446,7 @@ A small ripe fig drops from a tiny sapling's branch, bounces softly off the head
 Line: "…Did you just answer me?" Camera on the goblin holding the fig like evidence.
 
 ```
-A small round goblin crouches, picks a fig up out of the grass with both hands, straightens, and raises it in front of him like evidence, huge eyes widening as he looks up at a bare branch above. Amber sliding toward indigo, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+A small round goblin crouches, picks a fig up out of the grass with both hands, straightens, and raises it in front of him like evidence, huge eyes widening as he looks up at a bare branch above. Warm amber afternoon light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 ## Beat 21 — THE ANSWER (1:42–1:47) ⬜ needs footage

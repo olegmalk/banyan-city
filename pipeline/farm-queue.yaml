@@ -906,55 +906,33 @@ backlog:
 # someone who has read nothing else. The authority for each is that beat's section
 # in genomes/sapling/nodes/001-capability-inventory/shots.md, which carries his
 # words verbatim and the reasoning; the foot of that file carries the wave note.
-- id: ep1-stills-redraw-wave2-1786197600
-  runner: manual
-  worker: rtx5090
-  needs: [cuda]
-  window: any
-  est_minutes: 75
-  cmd: >-
-    redraw the conditioning frames for beats 3, 6, 10 and 14 of node 001. BEAT 15
-    IS ALREADY DONE and is NOT in this run — the founder passed its sample on
-    2026-08-08 ("b15-r3-s1") and that frame is canon at
-    stills/15-something-s-coming.png; redrawing it would overwrite an approved
-    frame. The ONE SAMPLE this entry owed has therefore been served and answered,
-    so these four may run as a batch.
-    THE RECIPE IS THE ONE HE PASSED, and it is inherited explicitly rather than
-    reconstructed: the tall-sapling direction where the sapling is in shot, plus
-    ONE term dropped from the SCALE_NEGATIVES block sd_prompt appends to a
-    small-subject prompt — `tall tree` OUT, the other seven (mature tree, large
-    tree, thick trunk, full canopy, forest, bush, shrubbery) IN. That block only
-    fires on beats 10 and 14 of these four (their prompts say `tiny two-leaf
-    sprout`); beats 3 and 6 never receive it, so for them the removal is a no-op
-    and no negative changes. Scope the removal to the wave script; do NOT edit
-    sd_prompt.py.
-    THE CHARACTER RULE FOR ALL FOUR, and it is the whole of it (his ruling,
-    2026-08-08): the sapling READS TALL wherever it appears in frame. No character
-    sheet exists and none is to be made; add no leaf-detail terms and fail no
-    frame on foliage. Beat 3: CLOSE-UP (his new direction, 2026-08-08), still
-    unmistakably indoors and domestic, both prior rounds rejected. Beat 6:
-    unchanged direction, sky only, no leaf in the image — his own composition
-    note, not a detail rule; rejected with no stated axis, so invent no fault for
-    him, and anchor palette and light to the episode. Beat 10: roots must be
-    VISIBLE and readable (the beat's own overlay card reads "SENSE roots / air /
-    vibration" and its script line is an underground root-map), AND re-lens it
-    lower and closer than beat 14 so the two stop being twins — 10 is the one that
-    moves, 14 keeps the script's framing. Beat 14: subject much bigger in frame,
-    the sprout and its grip filling the shot. For 10 and 14 the subject clause has
-    to move off `tiny two-leaf sprout` the way beat 15's did, or the prompt asks
-    for a tall reading and describes a tiny sprout in the same breath.
-    Several seeds each, one contact sheet, one screening pass.
-  why: >-
-    Four of episode 1's fifteen shots have no usable frame after the founder's
-    2026-08-08 pass, so ep1-v33-assemble-1786124760 cannot be built and
-    pending-founder.yaml v6-verdict cannot be answered. The consumer is v33.
-    Beat 12 is already out of this set — he picked b12-r2-s1 and it is canon — and
-    so is beat 15 as of 2026-08-08, on b15-r3-s1, which is why this entry names
-    four beats where it used to name five.
-    RUNNABLE NOW as of 2026-08-08 — the item-07 gate came off with his ruling,
-    nothing physical stands behind it, and the one-sample obligation is discharged
-    rather than pending: he has looked at a frame drawn on this recipe and passed
-    it, so the remaining four are a batch and not a wait.
+# RETIRED 2026-08-08 EVENING — ep1-stills-redraw-wave2-1786197600. DELIVERED IN
+# FULL, and retired against its own two-part shape: beat 15 was already done (the
+# passed sample, canon at stills/15-something-s-coming.png), and the remaining
+# four beats rendered on 2026-08-08 as detached schtask banyan-wave4 on the
+# rtx5090 (C:\banyan-farm\wave-20260808b, render_wave4.py, rc=0, 16 frames in
+# 3m03s of GPU) — 4 seeds each for beats 3, 6, 10, 14, all 32 files (PNGs +
+# render-time sidecars) pulled, sha256-verified against the box, and committed
+# under genomes/sapling/nodes/001-capability-inventory/takes/stills/ as
+# {03-deploy-succeeded,06-too-blue,10-sense,14-worth-staying-in}-r3-s[0-3].png.
+# Every direction in the cmd is in the frames' own sidecars: beat 3 the close-up,
+# beat 6 byte-unchanged words on the NEXT four seeds (no fault invented for a
+# no-axis rejection), beats 10/14 off `tiny two-leaf sprout` onto the tall
+# sapling with `tall tree` removed load-bearing (asserted per beat at run time,
+# sd_prompt.py untouched), beats 3/10/14 on their own r1 seeds so every sheet
+# column is a controlled pair. Screening surfaces: LABELED-beat{03,06,10,14}-r3.png
+# + REVIEW-KEY-0808.md (uncommitted review artifacts, per that file's own footer).
+#
+# WHAT THIS RETIREMENT DOES NOT SAY: nothing here is approved. The sixteen are
+# CANDIDATES awaiting his pass on checklist item 02; the render obligation is
+# what this entry carried and what is discharged. The ceiling caveat two
+# paragraphs down (his "tooooo tall", same day as the rule) rode into every
+# tall-direction sidecar so the sheets are read knowing both his sentences.
+#
+# THE PROMOTER COULD NEVER HAVE RETIRED THIS ONE: runner: manual writes no
+# `DONE task=` heartbeat, and the render was hand-run under its own task id
+# (sidecars say `task: ep1-wave2-r3-1786198316`) — the documented behaviour, same
+# as every manual retirement above. Full record: STATE.md 2026-08-08 evening.
 
 # EPISODE 2'S TWENTY, REDRAWN — the other half of what item 07 unblocked, and the
 # only reason it is still gated is the sample.
@@ -1055,49 +1033,37 @@ backlog:
 # sample" forbids. The caveat is recorded so that whoever reads the contact sheet
 # reads it knowing both sentences, and so that "too tall again" comes back as an
 # expected outcome with a recipe lever behind it rather than a surprise.
-- id: ep2-stills-redraw-b02-21-1786192800
-  runner: manual
-  worker: rtx5090
-  needs: [cuda]
-  window: any
-  est_minutes: 45
-  cmd: >-
-    redraw the twenty conditioning frames for beats 02-21 of node
-    002b-first-citizen. The beat-15 sample this used to wait on is PASSED
-    (2026-08-08, "b15-r3-s1"), so this runs now. TWO STEPS.
-    (1) TEXT FIRST, free and revertible: in that node's shots.md give every beat
-    where the sapling is in shot the tall-sapling direction — it reads TALL,
-    his ruling of 2026-08-08 — and add NO leaf-detail terms. THE NEGATIVE IS
-    SETTLED AND THE CHANGE IS EXACTLY ONE TERM, INHERITED FROM THE FRAME HE
-    PASSED, NOT CHOSEN HERE: all twenty currently carry "mature tree, large tree,
-    tall tree, thick trunk, full canopy" (plus forest, bush, shrubbery) and would
-    cancel the rule outright, so DROP `tall tree` and KEEP the other seven —
-    that is the list b15-r3-s1 was drawn on, recorded in
-    takes/stills/15-something-s-coming-r3-s1.png.meta.yaml as
-    `negative_terms_removed: tall tree`. Do it in the wave script, the same scope
-    the sample used; do NOT edit pipeline/sd_prompt.py and do not remove any other
-    scale term. Then fix the four plain faults the eighty frames came back with: beat 20 is at NIGHT and must be
-    the morning of the episode, beat 13 is INDOORS (reads as a garage) and beat 14
-    is on DESERT DIRT where both are the green field, beats 12 and 18 grew a big
-    ripe orange-pink FRUIT where the fig is small and green, beat 09 came back as
-    SPLIT PANELS in all four seeds. Every other word of those twenty prompts stays
-    as it is — each beat's existing intent is what the approved t0-c script and the
-    native-tag conversion (e4826ed) already settled. NO character sheet is written
-    and none is referenced; the goblin and the guards keep whatever each beat says
-    about them. (2) then re-run the batch exactly as 002b-stills-b02-21-1786090020
-    ran it — node 002b-first-citizen, beats 2-21, 4 seeds, 40 steps, 832x1216,
-    cagliostrolab/animagine-xl-3.1, $0 on the rtx5090 — into contact sheets, one
-    band per beat with the seed under every frame, for one screening pass.
-  why: >-
-    Episode 2's twenty drawn beats have no usable frame: the eighty rendered on
-    2026-08-07 are competent frames of twenty different shows, and the founder saw
-    the report. They are what episode 2's footage conditions on, so the consumer is
-    episode 2's render — 002b-b01-video is already filmed on both renderers and
-    beats 02-21 cannot follow it without frames. ~9-11s per image measured on the
-    5090 on 2026-08-06, so 80 images is well under an hour at $0.
-    RUNNABLE NOW as of 2026-08-08 — the one thing it waited on was the beat-15
-    sample screening and he passed it ("b15-r3-s1"); gate and gate_ref are deleted
-    above and nothing physical stands behind them.
+# RETIRED 2026-08-08 EVENING — ep2-stills-redraw-b02-21-1786192800. BOTH STEPS
+# RAN. Step 1 (text): the 2026-08-08 wave note in that node's shots.md is the
+# record — the tall direction landed as `standing tall` in the SIX beats where
+# the whole plant is in shot (02, 03, 13, 15, 17, 19), five beats where the
+# sapling appears without its height in frame are EXEMPT with the reason in
+# each sidecar (12 tight-on-leaves, 16 one-leaf, 18 macro-on-fruit, 20
+# branch-only, 21 one-leaf), and the four screening faults were fixed at their
+# likeliest cause (09 `comic timing`->`deadpan timing` + `no split panels`; 12
+# `no fruit`; 13 `open green grass field`, the shelter clause spent; 14
+# `shallow green grass background`; 18 `small ripe fig`->`small round green
+# fruit`; 20 `Amber sliding toward indigo`->`Warm amber afternoon light`). ONE
+# DEVIATION FROM THIS CMD, on the file's own evidence: this entry said beat 20
+# "must be the morning of the episode", but the closing run 17-21 is written at
+# afternoon-warming-toward-amber in shots.md's own words, so morning would have
+# contradicted the four beats around it — the fix went to the amber afternoon
+# beats 18/19 already hold, and the wave note records the reasoning.
+# Step 2 (render): detached schtask banyan-wave5 on the rtx5090
+# (C:\banyan-farm\wave-20260808c, render_wave5.py, box dry-run rc=0 first on
+# the real CLIP tokenizer, then rc=0, 80 frames in ~12.5 min of GPU, ~9.4s per
+# image, $0), sidecars written AT RENDER TIME (`task: ep2-wave-r3-1786202159`,
+# each carrying this entry's id as queue_entry). All 160 files sha256-verified
+# against the box; PNGs under that node's takes/stills/ (gitignored there, per
+# convention), sidecars committed. Changed beats reuse their own four seeds
+# (controlled pairs); the seven no-fault, no-change beats (04-08, 10, 11) drew
+# the NEXT four seeds of their series — same words on same noise is the same
+# picture. Screening surfaces: CONTACT-002b-r3-b{02-06,07-11,12-16,17-21}.png,
+# one band per beat, seed under every frame, NO favourite anywhere.
+# NOTHING HERE IS APPROVED: eighty candidates await one screening pass.
+# The promoter could never have retired this (runner: manual, no DONE
+# heartbeat; hand-run under its own task id — queue-id-borrowed-by-hand-run).
+# Full record: STATE.md 2026-08-08 evening.
 
 # EPISODE 2'S TWENTY-FIRST FRAME — THE OPENING SHOT, WHICH HE TOOK BACK.
 #
@@ -1135,44 +1101,27 @@ backlog:
 # draw more candidates. Drawing four $0 frames is how the question gets asked
 # properly, so waiting for permission to draw them would be the "overnight" failure
 # of 2026-08-05 with a politer name. Four images at ~9-11s each on the 5090.
-- id: ep2-b01-cold-open-redraw-1786197900
-  runner: manual
-  worker: rtx5090
-  needs: [cuda]
-  window: any
-  est_minutes: 10
-  cmd: >-
-    redraw the conditioning frame for beat 01 (COLD OPEN) of node
-    002b-first-citizen — four seeds, labels b01-r5-s0 to b01-r5-s3, one contact
-    sheet. THE SHEET CARRIES NO FAVOURITE, no ordering and no "closest to": the
-    2026-08-07 sheet had a "BEST PLATE" mark on it and that is why this frame is
-    being drawn again (R4). Start from the round-3 prompt already fenced under Beat
-    01 in that node's shots.md — it is NOT revoked and its four rounds of evidence
-    stand — and change two things only. (1) THE SAPLING READS TALL, his ruling of
-    2026-08-08, reconciled the same way as the twenty: drop `tall tree` from the
-    scale negatives and keep the other seven (mature tree, large tree, thick trunk,
-    full canopy, forest, bush, shrubbery), the list b15-r3-s1 was drawn on. Scope it
-    to the wave script; do NOT edit pipeline/sd_prompt.py. (2) HIS CEILING, which is
-    the whole reason this beat is being redrawn rather than reused: the revoked plate
-    was a 1-3px hairline stem standing 32% of frame height with its apex 25.9% from
-    the top, and he called it "tooooo tall". The seedling must read as a small plant
-    that OWNS the height of its shot — a substantial stem, the whole plant in frame,
-    40cm — not a thread against the sky. The composition the beat needs is unchanged:
-    the fig GROWS on screen rather than already hanging (his 2026-08-03 condition),
-    whole plant in frame, wide shot, sunrise, peach and gold morning sky. Add NO
-    leaf-detail terms and do not chase the leaf count — "dont overthink the leafs on
-    it" (2026-08-08), and the four-leaf limitation is four wordings deep in that
-    file's table. Same batch settings as the rest of the episode: 40 steps, 832x1216,
-    cagliostrolab/animagine-xl-3.1, $0.
-  why: >-
-    Beat 01 has NO canon frame after the 2026-08-08 revocation — stills/ carries only
-    01-cold-open-REVOKED-too-tall.png and every renderer resolves the beat to None.
-    Two consumers, both stalled on it: checklist item 06, the Wan-vs-LTX decision,
-    which he declined to judge on the withdrawn plate ("neither") and which cannot be
-    re-asked until a frame he passed exists to film; and episode 2's own opening shot,
-    the only beat of 21 whose frame was ever approved and now the only one whose
-    approval was withdrawn. RUNNABLE NOW — ungated, no dependency, $0, ~1 minute of
-    GPU: run it the moment the 5090 is free of the two redraw waves.
+# RETIRED 2026-08-08 EVENING — ep2-b01-cold-open-redraw-1786197900. RAN, chained
+# directly behind the b02-21 wave on the same schtask (banyan-wave5,
+# C:\banyan-farm\wave-20260808c, render_b01r5.py, rc=0, 4 frames in under a
+# minute of GPU, $0; sidecar task id ep2-b01-r5-1786202916, this entry's id as
+# queue_entry). Exactly the two changes the cmd names and no third: `tall tree`
+# out of the scale negatives in the script's scope (asserted at run time,
+# sd_prompt.py untouched), and his ceiling as one word in the fence —
+# `thin curved stem` -> `sturdy curved stem`, the round-5 note in that beat's
+# shots.md section. The script refuses to draw from a snapshot without that
+# clause (rc=4 guard), so the prompt rendered is provably the round-5 text.
+# Seeds are the beat's own four (20260720..20263720) — controlled against
+# rounds 1-4 on the wording; the fit_negative dedupe caveat from shots.md
+# applies and is in each sidecar. All 8 files sha256-verified; PNGs gitignored
+# in takes/stills/ per convention, sidecars committed.
+# THE SHEET IS THE POINT AND IT IS CLEAN: LABELED-b01-r5.png carries four amber
+# address chips (b01-r5-s0..s3) and per-tile `r5 seed N` captions — no
+# favourite, no ordering, no "closest to", no assessment of any tile.
+# NOTHING HERE IS APPROVED; beat 01 still has NO canon frame until he picks or
+# refuses. Both consumers named below stay stalled until then, by design.
+# The promoter could never have retired this (runner: manual, no DONE
+# heartbeat). Full record: STATE.md 2026-08-08 evening.
 
 # THE FRAMING DEMO HE SAID "no" TO — RE-MADE ON A PICTURE HE HAS ACTUALLY PASSED.
 #

@@ -1,0 +1,30 @@
+# Still provenance (7.2), written AT RENDER TIME by render_wave4.py
+# on the rtx5090 (C:\banyan-farm\wave-20260808b).
+# The negative below is what the model actually saw. The recipe's own
+# negative, before this script's one deliberate removal, was:
+#   photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, humans, leaf, plant, stem, foliage, big clouds, tree, photorealism, text
+# NOTE: identical to the line above — sd_prompt._SMALL does not fire on this
+# beat's prompt, so SCALE_NEGATIVES was never appended and there was no
+# `tall tree` to remove. The removal is a no-op here, not a skipped step.
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+shot_beat: 6
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20265725
+seeds_in_batch: 4
+task: ep1-wave2-r3-1786198316
+candidate_set: r3
+negative_terms_removed: none (tall tree not present)
+recipe_inherited_from: >-
+  takes/stills/15-something-s-coming-r3-s1.png — the ONE SAMPLE the founder passed on 2026-08-08 ('b15-r3-s1'). Model, size, steps, cfg, seed rule, the tall-sapling direction and the one-term negative removal all come from that frame's recipe rather than from a choice made in this script.
+wall_seconds: 9
+cost_usd: 0
+note: |-
+  round 3, and THE PROMPT IS UNCHANGED — deliberately. His 2026-08-08 verdict on b06-r1-s0..s3 was a rejection with NO stated axis: none of them quite worked and he named no fault. That is a legitimate verdict and the wave note records it as what it is, so no fault was invented for him and no word of the direction moved: open sky from ground level, one wisp of cloud, a blurred green fringe at the bottom edge, and no leaf in the image (his own composition note — a first-person POV cannot contain its own body). What changes is the NOISE: same prompt on the same seed is the same PNG, so this beat draws the next four seeds of its own series (20264725..20267725) rather than round 1's. No character is in frame by construction, so the tall rule has nothing to act on and _SMALL does not fire; the `tall tree` removal is a no-op here.
+prompt: |-
+  a vast open sky filling the frame seen from ground level looking straight up, deep clear blue morning sky, one thin wisp of white cloud drifting high above, a soft blurred green fringe of grass along the bottom edge, gentle morning light, dreamy, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, humans, leaf, plant, stem, foliage, big clouds, tree, photorealism, text

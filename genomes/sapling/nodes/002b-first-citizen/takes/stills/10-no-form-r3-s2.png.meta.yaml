@@ -1,0 +1,32 @@
+# Still provenance (7.2), written AT RENDER TIME by render_wave5.py
+# on the rtx5090 (C:\banyan-farm\wave-20260808c).
+# The negative below is what the model actually saw. The recipe's own
+# negative, before this script's one deliberate removal, was:
+#   photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, photorealism, text
+# NOTE: identical to the line above — sd_prompt._SMALL does not fire on this
+# beat's prompt, so SCALE_NEGATIVES was never appended and there was no
+# `tall tree` to remove. The removal is a no-op here, not a skipped step.
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+shot_beat: 10
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20266729
+seeds_in_batch: 4
+task: ep2-wave-r3-1786202159
+queue_entry: ep2-stills-redraw-b02-21-1786192800
+render_round: r3
+candidate_set: r3
+negative_terms_removed: none (tall tree not present)
+recipe_inherited_from: >-
+  node 001, takes/stills/15-something-s-coming-r3-s1.png — the ONE SAMPLE the founder passed on 2026-08-08 ('b15-r3-s1'). Model, size, steps, cfg, seed rule and the one-term negative removal all come from that frame's recipe rather than from a choice made in this script. The prompts are shots.md as of the 2026-08-08 r3 wave note (committed with these sidecars).
+wall_seconds: 9
+cost_usd: 0
+note: |-
+  round 3. No sapling in frame (the blank clipboard back is the shot); prompt and negative are unchanged from the last round and no fault was named on this beat, so it draws the NEXT four seeds of its own series (k=4..7) — same words on the same noise is the same picture, and new noise is the only honest lever a no-axis redraw leaves. It redraws at all because the twenty beats screen together as one show.
+prompt: |-
+  1boy, a round guard flips his bark clipboard around and holds up its completely blank back toward his partner, shaking it once for emphasis. The blank board dominates the frame. Static camera, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, photorealism, text

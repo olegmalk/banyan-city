@@ -1,0 +1,30 @@
+# Still provenance (7.2), written AT RENDER TIME by render_b01r5.py
+# on the rtx5090 (C:\banyan-farm\wave-20260808c).
+# The negative below is what the model actually saw. The recipe's own
+# negative, before this script's one deliberate removal, was:
+#   photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, mature tree, large tree, tall tree, thick trunk, full canopy, forest, bush, shrubbery, humans, chibi, mascot, creature, face, extra leaves, branches, night sky, photorealism
+#   NEGWARN: !! negative prompt over CLIP's 77-token budget; deduplicated: text; DROPPED: realistic skin texture
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+shot_beat: 1
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20260720
+seeds_in_batch: 4
+task: ep2-b01-r5-1786202916
+queue_entry: ep2-b01-cold-open-redraw-1786197900
+render_round: r5
+candidate_set: r5
+negative_terms_removed: tall tree
+recipe_inherited_from: >-
+  node 001, takes/stills/15-something-s-coming-r3-s1.png — the ONE SAMPLE the founder passed on 2026-08-08. Model, size, steps, cfg, seed rule and the one-term negative removal come from that frame's recipe. The prompt is shots.md Beat 01 as of the round-5 note (committed with this sidecar).
+wall_seconds: 10
+cost_usd: 0
+note: |-
+  round 5. The 2026-08-07 pick (r3-s3) was REVOKED on 2026-08-08 — 'you used a frame i never approved, and its tooooo tall' — on two grounds: the pick sheet carried a steward-hand favourite mark (void on process, R4), and the drawing was a 1-3px hairline stem standing 32% of frame height where the prompt asks for a tiny 40cm seedling, whole plant in frame. This round changes exactly two things: `tall tree` out of the scale negatives (the b15-r3-s1 recipe, scoped to the wave script), and `thin curved stem` -> `sturdy curved stem` — his ceiling made into a word: a small plant that OWNS the height of its shot on a stem of real substance, not a thread against the sky. Everything rounds 1-4 settled stands: 40cm, whole plant in frame, wide shot, the fruit described without the word `fig`, the sunrise palette, the negations, and the leaf count stays out of scope ('dont overthink the leafs on it'). The sheet these four feed carries labels only — no favourite, no ordering, no 'closest to'. Same four seeds as rounds 1-4 (controlled pair on the wording; the fit_negative dedupe fix means r1-r3 files do not byte-match a same-seed render, shots.md records that).
+prompt: |-
+  A tiny 40cm banyan seedling, exactly two oversized cotyledon leaves, sturdy curved stem, one small round green fruit hanging from the stem, alone in a vast empty grass field, whole plant in frame, wide shot, sunrise, peach and gold morning sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, mature tree, large tree, thick trunk, full canopy, forest, bush, shrubbery, humans, chibi, mascot, creature, face, extra leaves, branches, night sky, photorealism

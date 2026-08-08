@@ -1,0 +1,28 @@
+# Still provenance (7.2), written AT RENDER TIME by render_wave4.py
+# on the rtx5090 (C:\banyan-farm\wave-20260808b).
+# The negative below is what the model actually saw. The recipe's own
+# negative, before this script's one deliberate removal, was:
+#   photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, mature tree, large tree, tall tree, thick trunk, full canopy, forest, bush, shrubbery, humans, lake, water surface, dark background, black void, cave, photorealism
+#   NEGWARN: !! negative prompt over CLIP's 77-token budget; deduplicated: text
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+shot_beat: 10
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20263729
+seeds_in_batch: 4
+task: ep1-wave2-r3-1786198316
+candidate_set: r3
+negative_terms_removed: tall tree
+recipe_inherited_from: >-
+  takes/stills/15-something-s-coming-r3-s1.png — the ONE SAMPLE the founder passed on 2026-08-08 ('b15-r3-s1'). Model, size, steps, cfg, seed rule, the tall-sapling direction and the one-term negative removal all come from that frame's recipe rather than from a choice made in this script.
+wall_seconds: 9
+cost_usd: 0
+note: |-
+  round 3, and it carries BOTH things the delegation asked for at once. The founder handed this one to the steward — 'actually has character consistency, although it isn't exactly showing roots, so maybe it's not aligning with the correct idea, you decide' — and it was decided against the script: visible roots are load-bearing here, because the beat's own overlay card reads 'SENSE roots / air / vibration', its image line is an underground root-map, and R1's first capability is the sense the roots are the organ for. So the roots are foregrounded and readable. And the beat is RE-LENSED: 10 and 14 came back as near twins on the same low angle, and 10 is the one that moves (14's framing is the script's own words), so this sits at the soil line — lower and closer than 14, the stem leaving the top of frame — while 14 holds the whole plant. The subject clause left `tiny two-leaf sprout` for the tall sapling the way beat 15's did, because asking for a tall reading while describing a tiny sprout cancels; `two-leaf` went with it because leaf detail is off the table. The episode's field and morning light are unchanged.
+prompt: |-
+  plant focus, very low shot at the soil line, one slender sapling's thin stem rising tall out of frame, pale roots visible in damp soil, water droplets in the earth, short grass at the edges, soft warm morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, mature tree, large tree, thick trunk, full canopy, forest, bush, shrubbery, humans, lake, water surface, dark background, black void, cave, photorealism

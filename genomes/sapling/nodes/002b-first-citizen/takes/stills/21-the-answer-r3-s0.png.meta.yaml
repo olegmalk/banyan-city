@@ -1,0 +1,29 @@
+# Still provenance (7.2), written AT RENDER TIME by render_wave5.py
+# on the rtx5090 (C:\banyan-farm\wave-20260808c).
+# The negative below is what the model actually saw. The recipe's own
+# negative, before this script's one deliberate removal, was:
+#   photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, mature tree, large tree, tall tree, thick trunk, full canopy, forest, bush, shrubbery, wind anywhere in frame, photorealism, text
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+shot_beat: 21
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20260740
+seeds_in_batch: 4
+task: ep2-wave-r3-1786202159
+queue_entry: ep2-stills-redraw-b02-21-1786192800
+render_round: r3
+candidate_set: r3
+negative_terms_removed: tall tree
+recipe_inherited_from: >-
+  node 001, takes/stills/15-something-s-coming-r3-s1.png — the ONE SAMPLE the founder passed on 2026-08-08 ('b15-r3-s1'). Model, size, steps, cfg, seed rule and the one-term negative removal all come from that frame's recipe rather than from a choice made in this script. The prompts are shots.md as of the 2026-08-08 r3 wave note (committed with these sidecars).
+wall_seconds: 9
+cost_usd: 0
+note: |-
+  round 3. EXEMPT from the tall direction: one leaf close-up, the plant's height is not in the shot. Prompt unchanged; the negative changes by exactly the `tall tree` removal (load-bearing), so same seeds make the pair controlled on that one term.
+prompt: |-
+  In dead-still air with the grass frozen, one oversized leaf of a tiny sapling tilts slowly and deliberately to one side — an unmistakably intentional gesture from a plant — then holds, motionless. Low amber light, quiet awe, close-up, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, mature tree, large tree, thick trunk, full canopy, forest, bush, shrubbery, wind anywhere in frame, photorealism, text

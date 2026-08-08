@@ -4434,3 +4434,73 @@ and 21 silent by design. **That is the whole of the episode's narration.** What 
 still lacks is a picture, and it is in the queue with the other twenty. Review items 08
 and 09 were corrected in the same commit rather than left saying beat 16 has never been
 voiced — the page's one job is to say what a thing IS.
+
+## 2026-08-08 evening — one hundred candidate frames in one sitting, and the machine never waited for anyone
+
+**The session that ran this died mid-stride and the GPU did not notice.** The
+ep1 wave (banyan-wave4, beats 3/6/10/14 of node 001) had been launched as a
+detached schtask before the operator session hit its limit; it finished on its
+own — `DONE 16 stills`, rc=0, 3 minutes of GPU — and the resumed session's
+first acts were to read that rc line, sha256-verify all 32 pulled files against
+the box (32/32 identical), refresh the stale GPU claim with a succession note
+in the file, and confirm the schtask was already gone from the task list (the
+re-arm hazard: a `/sc once` task left registered fires again). The scheduling
+rule held end to end: at no point tonight did a runnable job wait for a human.
+
+**Episode 1's four are drawn — `b03/b06/b10/b14-r3-s0..s3`,** 16 frames + 16
+render-time sidecars in that node's `takes/stills/`, on the recipe b15-r3-s1
+validated (`tall tree` out, seven scale terms in, asserted per beat at run
+time). Beat 3 is his close-up; beat 6 is byte-identical words on the NEXT four
+seeds — he rejected r1 naming no fault, and inventing one for him is worse
+than redrawing — beats 10/14 moved off `tiny two-leaf sprout` onto the tall
+sapling, 10 re-lensed to the soil line so 10 and 14 stop being twins. Sheets:
+`LABELED-beat{03,06,10,14}-r3.png`, address chips and seeds only;
+`REVIEW-KEY-0808.md` resolves every new label. Queue entry
+`ep1-stills-redraw-wave2-1786197600` retired against its own terms.
+
+**Episode 2's twenty are redrawn — 80 frames, r3 across the board** (every set
+jumped to r3 so a round label means the same wave everywhere, the beat-15
+logic). Text first, per the queue entry: the tall direction landed as
+`standing tall` in the six whole-plant beats (02, 03, 13, 15, 17, 19); five
+beats where the sapling's height is not in frame are exempt WITH the reason in
+each sidecar (12, 16, 18, 20, 21 — asking a macro to stand tall cancels the
+macro); the four screening faults were fixed at their likeliest cause (09
+split panels -> `deadpan timing` + `no split panels`; 12 `no fruit`; 13 out of
+the garage into `open green grass field`; 14 off desert dirt onto
+`shallow green grass background`; 18's fruit small round green with `ripe` and
+`fig` spent on beat 01's own evidence; 20 out of the night into
+`Warm amber afternoon light` — NOT the queue's "morning", because the closing
+run 17-21 is written at afternoon-into-amber and morning would contradict the
+beats around it). HIS CEILING RODE ALONG AS A RECORD, NOT A REWRITE: "reads
+tall" and "tooooo tall" are both his, hours apart, so every tall-direction
+sidecar carries the width-and-substance reading — a plant that owns the height
+of its shot on a stem of real thickness, not a hairline thread — while the
+twenty prompts stay at `standing tall`, because rewriting them on a steward's
+reading of one adjective is what "a metric agreeing with me is not a sample"
+exists to stop. Changed beats reuse their own seeds (controlled pairs); the
+seven no-fault unchanged beats (04-08, 10, 11) drew the next four of their
+series. Box dry-run first on the real CLIP tokenizer (beat 02 needed two words
+spent — `cartoon`, `empty` — to buy `standing tall` under the 77-token
+ceiling; the sweep proved no beat drops its style tail), then banyan-wave5:
+rc=0, 80 frames in ~12.5 min, ~9.4s/frame, $0. Sheets:
+`CONTACT-002b-r3-b{02-06,07-11,12-16,17-21}.png`, one band per beat, seed
+under every frame, no favourite anywhere.
+
+**Beat 01 drew its round 5 in the same chain — `b01-r5-s0..s3`,** the revoked
+cold open re-asked properly: the round-3 prompt with exactly two changes (the
+inherited `tall tree` drop; `thin curved stem` -> `sturdy curved stem`, his
+ceiling made into a word), the beat's own four seeds, and a sheet
+(`LABELED-b01-r5.png`) that carries labels and seeds ONLY — the steward
+favourite mark on the last pick sheet is why this round exists, so this one
+marks nothing. The render script refuses a snapshot without the round-5 clause
+(rc=4 guard), so the rendered prompt is provably the recorded one. Queue
+entries `ep2-stills-redraw-b02-21-1786192800` and
+`ep2-b01-cold-open-redraw-1786197900` retired with the evidence in place.
+
+**Nothing tonight is approved and nothing pretends to be.** One hundred
+candidates (16 + 80 + 4), three screening surfaces, zero dollars, and three
+picks now genuinely his: episode 1's four beats (checklist item 02), episode
+2's twenty, and the cold open. All 168 + 32 files sha256-verified against the
+box before intake; lint, tests and the promoter dry-run pass with the
+candidate count moved by exactly the hundred rendered; the GPU claim is
+released and both schtasks are deleted, verified by query.
