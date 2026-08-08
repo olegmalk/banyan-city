@@ -426,24 +426,63 @@ backlog:
 # WHAT REPLACES IT: ep2-stills-redraw-b02-21-1786192800, below, which fixes the
 # prompts first and then re-runs this exact recipe.
 
-- id: 002b-vo-t0c-21beats-1786090080
+# RETIRED 2026-08-08 — 002b-vo-t0c-21beats-1786090080. IT RAN, and it had become a
+# loaded gun for a reason that did not exist when it was written. Seventeen takes
+# were recorded against the approved t0-c script on 2026-08-07 (5d2e82b:
+# chatterbox-0.5B on MPS, 70.3s of voice, $0), and the eighteen t0-b takes they
+# replaced are in clips/vo-archive/ (R6). Nothing retired it, because nothing can:
+# the promoter retires on a `DONE task=<id>` heartbeat line and a `runner: manual`
+# job never writes one, so a finished manual entry reports "BY HAND — unblocked,
+# run:" forever until a person deletes it. It did, for a day.
+#
+# WHY IT COULD NOT WAIT FOR A TIDY-UP. Its cmd re-voices EVERY beat and archives
+# the current take of each as it goes. On 2026-08-08 the founder passed the voice
+# on beat 03 ("002b-03-vo is good") and REJECTED beat 01 — on the read, and on the
+# word "tree" in the line itself. Re-running this entry would have archived the one
+# take that is the record of his refusal and synthesised a replacement from wording
+# he has explicitly put in question, which is §6 with the safety off. The next
+# person to read "unblocked, run:" would have done exactly that.
+#
+# WHAT REPLACES IT: 002b-vo-retake-b01-b16-1786193585, directly below — the two
+# beats that have no approved take, and only those two.
+
+- id: 002b-vo-retake-b01-b16-1786193585
   runner: manual
   worker: m1pro
   needs: [mps]
-  window: overnight
-  est_minutes: 60
+  window: any
+  est_minutes: 5
+  gate: founder
+  gate_ref: >-
+    TWO LINES, AND HE OWNS BOTH OF THEM. Beat 01 — pending-founder.yaml id
+    ep2-beat01-line: he refused the recorded take on 2026-08-08 ("doesn't have the
+    right tone … as if he is describing some irony and comparing himself to another
+    tree. also, he isn't a tree? he's a sapling"), which puts the WORD and the READ
+    in question at once; wordings were put to him in chat the same day, none is
+    picked, and no delivery direction has been written either. Beat 16 —
+    pending-founder.yaml id ep2-beat16-line: its line still says "I can't even
+    wave", the exact sentence his own approval condition required rewritten, and it
+    has never been voiced. Clearing this gate is him naming the words, not a steward
+    picking between them or inventing a reading.
   cmd: >-
-    python3 pipeline/synth_vo.py FFMPEG sapling 002b-first-citizen --engine
-    chatterbox — load the render-env-setup skill first for cb-venv and the model
-    paths
+    FIRST put the words he picks into
+    genomes/sapling/nodes/002b-first-citizen/node.md — that is the file synth_vo
+    voices (render_t1.extract_script), not the leaf — and record the change against
+    leaves/002b-t0-c.yaml, which is where his approval lives. THEN run: python3
+    pipeline/synth_vo.py FFMPEG sapling 002b-first-citizen --engine chatterbox
+    --beats 1,16. ONLY those two beats — `--beats` exists for exactly this surgical
+    retake, and the other fifteen takes are approved and must not be re-synthesised.
+    Load the render-env-setup skill first for cb-venv and the model paths. synth_vo
+    archives the refused beat-01 take itself (R6) when the new one lands, and not
+    before — it stays in clips/ and on the review page until then, because it is the
+    record of what he refused.
   why: >-
-    The 18 existing 002b VO takes are from the superseded t0-b cut and are not
-    voice for the approved script; a full re-voice runs on the Mac's MPS, needs no
-    GPU and contends with nothing on the farm. Runnable since 2026-08-07 — the
-    "no VO until the dialect is settled" clause was settled by the frame pick, and
-    production runs tonight. `window: overnight` stays advisory and delays nothing
-    (Oleg, 2026-08-05); it records only that a 60-minute MPS job will make the Mac
-    slow to work on, not that anyone should wait for dark.
+    Episode 2 has seventeen approved takes and two beats with no usable voice: beat
+    01's was refused on 2026-08-08 and beat 16 was never recorded. Both feed the
+    episode-2 assembly, which slates a missing beat rather than inventing one, so
+    this is the last voice work the episode needs — about five minutes on the Mac's
+    MPS once the words exist. `window: any` because five minutes will not evict
+    anything (Oleg, 2026-08-05: hours are not a gate).
 
 # MODEL-COMPARISON section 1 carries three rows that read SCHEDULED and have never
 # run. They are stocked here with the gates they actually have.

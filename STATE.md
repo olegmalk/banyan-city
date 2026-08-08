@@ -3857,3 +3857,77 @@ was done — the third instance of the pattern already filed as
 `queue-id-borrowed-by-hand-run-1786190580`. One promoter run and one polling worker
 would have redrawn all eighty on the unfixed prompts. Retired as a comment with the
 evidence, and `--dry-run` now reports "nothing to move".
+
+## 2026-08-08 — the voice is approved and beat 1's take is not, and the same sentence turned a voice question into a script one
+
+**Checklist item 08 came back split, which is why it is not settled.** He listened
+to the two takes on the review page and answered both in one breath, verbatim:
+
+> 002b-30-v0 is good. 002b-01-v0 doesn't have the right tone, it says "i used to be
+> an engineer, now IM a tree." as if he is describing some irony and comparing
+> himself to another tree. also, he isn't a tree? he's a sapling.
+
+**His labels are read as the beat-03 take and the beat-01 take** —
+`cuts/checklist/002b-03-vo.mp3` and `002b-01-vo.mp3`, the only two audio files on
+that item, in that order. Everything below rests on that reading and the page says
+so out loud rather than quietly assuming it.
+
+**THE VOICE IS APPROVED, and that is the larger half of the verdict.** *"002b-30-v0
+is good"* clears the engine (chatterbox-0.5B on MPS), the casting and the read on
+the shortest and least forgiving line in the episode. **The other fifteen takes are
+not being re-recorded.** Item 08 is no longer asking whether the voice works, and
+the ear check that opened it is closed.
+
+**BEAT 01'S TAKE IS REJECTED ON THE READ.** The stress lands on *"now I'M a tree"*,
+which turns a plain report into an ironic comparison with some other tree. That is
+a delivery note, it is his, and no metric of ours was asked or would have caught it.
+**The take is not moved, not archived and not deleted** — it stays in
+`genomes/sapling/nodes/002b-first-citizen/clips/01-vo.mp3` and on the review page,
+because until an approved replacement exists it IS the record of what he refused.
+R6's archive-on-resynth is the right convention and it fires when the retake lands,
+not when the verdict does.
+
+**AND THE SECOND HALF IS A SCRIPT QUESTION NOBODY CAN ANSWER FOR HIM.** *"also, he
+isn't a tree? he's a sapling."* He is reading his own script back at us: beat 03 —
+the take he just passed — has him saying he is *"forty centimeters tall"*, and the
+show calls him a sapling everywhere else. The word is doing two jobs at once, which
+is exactly why it is not a steward's call: "tree" is the scale the joke runs on (an
+engineer became *a tree*), and it is also the thing his other approved line says he
+is not. Wordings were put to him in chat on 2026-08-08 and **none is picked**.
+
+**NOTHING IS BEING RE-SYNTHESISED, and that is §6 rather than caution.** The text of
+beat 01 is now open, so media may not be made from it; and the retake needs two
+things from him anyway — the word AND how he wants it read, the second of which has
+not been directed at all. Re-recording on a guess would answer neither note and
+would archive the evidence of the first one.
+
+**WHERE THE VERDICT IS WRITTEN DOWN, so no lane can act on a stale reading of it:**
+
+- **Review page item 08 stays open** (`state:` is not `settled`, chip moves
+  `CONFIRM` → `YOUR WORDS`) with the split spelled out: voice approved, take
+  refused, line pending. The checklist intro stops calling item 08 a voice check
+  and calls the remaining half what it is — a word he queried in his own script.
+- **Both takes' sidecars carry the verdict**, so it travels with the bytes the page
+  serves: `002b-03-vo.mp3.meta.yaml` records the pass and that the whole voice is
+  approved on it, `002b-01-vo.mp3.meta.yaml` records the refusal in his words, that
+  the take is deliberately kept in place, and that no retake may be synthesised yet.
+- **`pending-founder.yaml` gains `ep2-beat01-line`** — the founder's inbox and the
+  public status board now show one line of episode 2 waiting on him alongside beat
+  16's, written for a stranger and pointed at item 08.
+- **`002b-vo-t0c-21beats-1786090080` is RETIRED and it was a loaded gun by the time
+  it went.** It had already run (5d2e82b, seventeen takes, 70.3s, $0) but nothing
+  can retire a finished `runner: manual` entry automatically — the promoter retires
+  on a `DONE task=` heartbeat and a manual job never writes one — so
+  `queue_promoter.py --dry-run` was still printing "BY HAND — unblocked, run:
+  `synth_vo.py … --engine chatterbox`" for it. That command re-voices EVERY beat and
+  archives each current take as it goes: one reader following the queue's own advice
+  would have destroyed the refused take and re-synthesised the line he has put in
+  question. Replaced by **`002b-vo-retake-b01-b16-1786193585`**, `gate: founder`,
+  scoped by `--beats 1,16` to the only two beats without an approved take, with the
+  order of operations written into the `cmd` (his words into `node.md`, which is
+  what synth_vo actually voices, before anything is recorded).
+
+**What is still true and unchanged:** beat 16 remains deliberately unvoiced pending
+item 09, beats 02, 19 and 21 have no narration by design, and episode 2's assembly
+slates a missing beat rather than inventing one. Two lines of script are now the
+whole of episode 2's voice work, and both are his.

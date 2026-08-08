@@ -53,6 +53,12 @@ pending:
     public: "review/index.html#checklist"
     link_text: "the morning checklist — item 09 quotes the line as it stands and the proposed replacement"
     since: 2026-08-07
+  - id: ep2-beat01-line
+    title: "One word in the first line of episode 2 — is he a tree, or a sapling?"
+    detail: "The narrator's opening line says he used to be an engineer and is now a tree. The author listened to the recording of it on 2026-08-08 and objected twice in one breath: the delivery makes it sound like an ironic comparison with some other tree rather than a plain report of what happened to him, and the word may simply be wrong — a later line in the same episode has him saying he is forty centimetres tall, and everywhere else the show calls him a sapling. Both halves are his to settle: which word the line uses, and how it should be read. That recording is refused and stays where it is as the record of the refusal; nothing is re-recorded until he answers, because writing is cheap and recorded speech is not. The rest of the narration passed in the same sitting — this is one line, and about a minute of machine time once the words exist."
+    public: "review/index.html#checklist"
+    link_text: "the morning checklist — item 08, which quotes the line, plays the take he refused and the take he passed"
+    since: 2026-08-08
   - id: bakeoff-pick
     title: "Choose which AI model draws the show from now on"
     detail: "Four free models rendered the same three shots — the current one and 2026's best contenders. Whichever the author picks becomes the artist for every future frame."

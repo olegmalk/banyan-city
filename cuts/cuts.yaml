@@ -131,9 +131,11 @@ checklist:
     **Items 06 to 09 are episode 2, and none of the four holds anything up.** They
     are here because your "r3-s3 and retire" started four jobs that had been
     waiting on it, and this is where their output arrives. Item 07 is now the
-    record of a ruling rather than a question. **If the pass is short, items 06,
-    08 and 09 are what is genuinely yours to answer** — an opening-shot pick, a
-    voice check, and one line of script.
+    record of a ruling rather than a question, and **item 08's voice check you
+    answered the same day — the voice is good, one take is not.** **If the pass is
+    short, items 06, 08 and 09 are what is genuinely yours to answer** — an
+    opening-shot pick and two lines of script, because what is left of item 08 is
+    a word you queried in your own script rather than anything about the voice.
   items:
     - n: 1
       ask: "The camera move — is 12% right at both ends of the episode?"
@@ -501,36 +503,71 @@ checklist:
         the seed under every frame.
 
     - n: 8
-      ask: "Episode 2's narration — does the voice read right?"
+      ask: "Episode 2's narration — ANSWERED IN HALF 2026-08-08. The voice is right, beat 1's read is not, and one word of it is now yours."
       state: open
-      chip: "CONFIRM"
+      chip: "YOUR WORDS"
       body: |-
-        **Seventeen takes are recorded and on disk.** The episode was re-voiced
-        against the approved script — the eighteen old takes were from t0-b, the
-        draft t0-c replaced, and they are archived rather than deleted (R6).
+        **You listened on 2026-08-08 and the answer split in two.** Your words,
+        in full:
 
-        This is an ear check, not a script check — the words are the ones you
-        already passed. Item 09 is the one place the words themselves are in
-        question. Two takes are below rather than all seventeen: **if the voice
-        is wrong, it is wrong in the first few**, and a wrong voice is one
-        re-synth of the whole set either way.
+        > 002b-30-v0 is good. 002b-01-v0 doesn't have the right tone, it says "i
+        > used to be an engineer, now IM a tree." as if he is describing some
+        > irony and comparing himself to another tree. also, he isn't a tree?
+        > he's a sapling.
 
-        Beat 01 is here because it carries your first approval condition — *"Took
-        three days to grow that"*, so the fig is grown and not merely present.
-        Beat 03 is here because it is the shortest line in the episode and the
-        least forgiving of a bad read.
+        **We read "002b-30-v0" as the beat 03 take and "002b-01-v0" as beat 01** —
+        the two players below, in that order. Say so if we have them backwards,
+        because everything under here is built on that reading.
 
-        **Beat 16 was deliberately not recorded.** Its line still reads *"I can't
-        even wave"* — the exact sentence your second condition required
-        rewritten — so it stays unvoiced until item 09 settles the replacement.
+        **THE VOICE IS APPROVED and that is the larger half.** *"002b-30-v0 is
+        good"* settles the engine, the casting and the read on a line with nothing
+        to hide behind. **The other fifteen takes are not being re-recorded** and
+        the episode is not being re-voiced. This item is no longer asking whether
+        the voice works.
+
+        **BEAT 01'S TAKE IS REJECTED, on the read.** The stress lands on *"now
+        **I'M** a tree"*, which turns the line into a comparison with some other
+        tree and an irony he is observing rather than a fact he is reporting. That
+        is a delivery note and it is yours; no metric of ours disagreed and none
+        was consulted. **The take stays where it is** — on this page, in the
+        episode's folder, unarchived — because it is the record of what you
+        refused, and it is replaced only when a new one is approved.
+
+        **AND YOU PUT THE LINE ITSELF IN QUESTION, WHICH IS THE OPEN HALF.**
+        *"also, he isn't a tree? he's a sapling."* You are reading your own
+        script back at us: beat 03, the take you just passed, has him saying he
+        is *"forty centimeters tall"*, and the show calls him a sapling
+        everywhere else. The line as recorded is:
+
+        > I used to be an engineer. **Now I'm a tree.** Took three days to grow
+        > that. Total assets: two leaves and one fig.
+
+        **Wordings were put to you in chat on 2026-08-08 and none is picked yet.
+        Pick one, write your own, or say the line was fine as it was** — any of
+        the three closes this. It is one word doing two jobs, which is why nobody
+        is choosing it for you: "tree" is the joke's whole scale (an engineer
+        became *a tree*), and it is also the thing your other line says he is not.
+
+        **NOTHING IS BEING RE-RECORDED UNTIL YOU ANSWER, and that is the rule
+        rather than caution.** §6: media comes from text you have approved, and
+        the text of this beat is now open. The retake needs two things from you
+        anyway and only one of them is the word — **how you want it read has not
+        been directed yet either**, and re-synthesising on a guess would answer
+        neither note. It is one line and about ninety seconds of machine time
+        when it comes.
+
+        For context, unchanged: the seventeen takes were re-voiced against the
+        approved script; the eighteen from the superseded draft are archived
+        rather than deleted (R6). **Beat 16 is still deliberately unvoiced** for
+        the same reason this beat now is — its line is item 09, directly below.
         Beats 02, 19 and 21 have no narration by design.
       audio:
-        - file: checklist/002b-01-vo.mp3
-          label: "beat 01 — 7.5s"
-          note: "I used to be an engineer. Now I'm a tree."
         - file: checklist/002b-03-vo.mp3
-          label: "beat 03 — 3.7s"
+          label: "beat 03 — 3.7s — GOOD, and it approves the voice"
           note: "A creature is using me as cover. I am forty centimeters tall."
+        - file: checklist/002b-01-vo.mp3
+          label: "beat 01 — 7.5s — REJECTED on the read, kept as the record"
+          note: "I used to be an engineer. Now I'm a tree. — the sentence in question"
       pending: >-
         **The takes exist but are being withheld from this page** — which, if you
         are reading this line, is a licence-gate refusal and not an empty
