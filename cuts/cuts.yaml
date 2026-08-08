@@ -648,9 +648,12 @@ checklist:
         approved script; the eighteen from the superseded draft are archived
         rather than deleted (R6). **The sixteen takes you did not query were not
         touched by this retake** — verified byte-identical before and after, not
-        assumed. **Beat 16 has still never been voiced**, but it is no longer
-        blocked: you settled its line too (item 09, directly below), so its take
-        is now just work to run. Beats 02, 19 and 21 have no narration by design.
+        assumed. **And beat 16 is now voiced**, which it had never been: settling
+        its line (item 09, directly below) was the only thing it was waiting on, so
+        it was recorded the same day, 8.2s, and it needs nothing from you — the
+        voice you approved on beat 03 is the voice it is in. Beats 02, 19 and 21
+        have no narration by design, so episode 2's narration is complete apart
+        from your ear on the take above.
       audio:
         - file: checklist/002b-01-vo-take2.mp3
           label: "beat 01, TAKE 2 — 9.1s — the new one. This is the ear you owe us"
@@ -703,10 +706,11 @@ checklist:
         undefined`**, so the episode defines a capability rather than merely
         moving a leaf.
 
-        **What this unblocked:** beat 16 has never been voiced or filmed, and it
-        was waiting only on this. Its words are now settled, so its voice take is
-        ordinary queued work — one line, about two minutes of machine time — and no
-        longer a question for you.
+        **What this unblocked, and it is already done:** beat 16 had never been
+        voiced, and your answer was the only thing it was waiting on. It was
+        recorded the same day — one line, 8.2 seconds, in the voice you approved on
+        beat 03 — so it is not on this page as a question. Its footage is still to
+        come, with the other twenty frames of episode 2.
 
 cuts:
   - file: ep1-v32-gentleholds.mp4

@@ -4388,3 +4388,49 @@ take out of the archive is a decision to make deliberately rather than by accide
 `cuts/checklist/002b-01-vo-take2.mp3` — whether the read is the deadpan he asked for
 and whether the beat at the ellipsis is the right length. Yes closes item 08 and
 retires `ep2-beat01-line`; another note on the read is one more two-minute take.
+
+## 2026-08-08 — beat 16 is voiced, so episode 2's narration is complete except for one ear
+
+**The beat that had never been recorded is recorded.** `clips/16-vo.mp3` + `16-vo.json`
+— 8.202s, one line, four caption chunks, chatterbox-0.5B on MPS, $0. It closes the
+queue entry that was opened for it earlier the same day (`002b-vo-b16-1786279200`,
+retired in this commit), and the words are the ones the founder kept an hour before:
+
+> He talks to me because I'm the only thing here that won't file a report. Buddy, I
+> *wish* I could. **I can't even wave.**
+
+**Why this needed nobody's permission, stated once.** §6 is satisfied by the approved
+script itself: the line is the one in `node.md`, and it is in `node.md` unchanged
+*because* he ruled on it (*"for beat 16's line, lets keep 'I can't even wave.'"*). The
+voice, the casting and the read were approved on beat 03 the same day, and beat 16 was
+never an ear question. So the only thing that ever blocked it was a word in question,
+and the word stopped being in question.
+
+**IT WAS RE-SYNTHESISED, NOT PROMOTED, and that was a decision rather than a default.**
+Two archived takes of these exact words already existed —
+`clips/vo-archive/16-vo.json` and `.v2.json`, text byte-identical to the script's — and
+promoting one would have been faster than recording. They were not used: they predate
+the current voice references and belong to the superseded t0-b cut that 2026-08-07's
+re-voice skipped on purpose, so promoting one would have put a take built on older refs
+beside sixteen built on the current ones. That is a consistency fault invisible in the
+file and audible in the episode, and it would have been bought for ninety seconds. The
+archived pair stays where it is (R6).
+
+**Measured, not asserted:** 8.202s, peak 0.430, zero clipped samples, RMS 0.0376 —
+levels in line with the take the founder passed rather than louder than it. All four
+chunks carry real speech; the internal gaps are the stitch joins (0.19–0.22s, this line
+is 24 spoken words and so takes the same stitched path as the episode's other long
+lines) plus a 0.315s tail settle. The punchline gets its own caption window,
+6.662–7.902s.
+
+**The leak check ran again and it is stricter than last time:** all 34 existing takes
+and manifests in `clips/` sha256'd before and after, and **not one changed** — beat 16
+is purely an addition. That mattered more than usual, because the file it must not have
+touched is beat 01's retake, which the founder has not heard yet.
+
+**WHERE EPISODE 2'S VOICE NOW STANDS:** seventeen approved takes, beat 16 new and
+needing nothing, beat 01's retake on the review page awaiting his ear, and beats 02, 19
+and 21 silent by design. **That is the whole of the episode's narration.** What beat 16
+still lacks is a picture, and it is in the queue with the other twenty. Review items 08
+and 09 were corrected in the same commit rather than left saying beat 16 has never been
+voiced — the page's one job is to say what a thing IS.

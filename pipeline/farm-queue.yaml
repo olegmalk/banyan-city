@@ -459,37 +459,23 @@ backlog:
 # a command that archives the take he has not heard yet and re-synthesises beat 01
 # from words that are already recorded. The replacement below can only touch 16.
 #
-# WHAT REPLACES IT: 002b-vo-b16-1786279200, directly below — beat 16 only, ungated.
-
-- id: 002b-vo-b16-1786279200
-  runner: manual
-  worker: m1pro
-  needs: [mps]
-  window: any
-  est_minutes: 2
-  cmd: >-
-    python3 pipeline/synth_vo.py FFMPEG sapling 002b-first-citizen --engine
-    chatterbox --beats 16. ONLY beat 16 — `--beats` exists for exactly this, and the
-    other seventeen takes must not be re-synthesised: sixteen are approved and beat
-    01's is the retake sitting on the founder's review page awaiting his ear, so a
-    wider run would destroy the thing he is being asked to listen to. Load the
-    render-env-setup skill first for cb-venv (/Users/artovonkugler/banyan-tts-venvs/cb)
-    and the model paths, and run it with THAT interpreter, not system python3.
-    No script edit comes first this time — beat 16's words are already in node.md and
-    are the ones he kept.
-  why: >-
-    UNGATED SINCE 2026-08-08, and the words are the reason. Beat 16 has never been
-    voiced because its line was in question; the founder closed that by keeping the
-    line as written ("for beat 16's line, lets keep 'I can't even wave.'", review
-    item 09), so §6 is satisfied by the approved script itself and nothing here is a
-    taste call. It is the last voice work episode 2 needs — the assembly slates a
-    missing beat rather than inventing one, so beat 16 is silent until this runs.
-    Worth knowing before running it: two archived takes of this exact line already
-    exist (clips/vo-archive/16-vo.json and .v2.json, text byte-identical to the
-    script's), from the superseded t0-b cut, and the 2026-08-07 re-voice skipped this
-    beat on purpose. Re-synthesising against the approved script is the clean answer;
-    promoting a t0-b-era take out of the archive instead is a decision somebody
-    should make deliberately rather than by accident.
+# WHAT REPLACED IT: 002b-vo-b16-1786279200 — and that one has RUN and is retired too,
+# in the commit that recorded it. Beat 16 is voiced: 8.202s, one line, four caption
+# chunks, chatterbox-0.5B on MPS, $0, clips/16-vo.mp3 + 16-vo.json. Episode 2's
+# narration is complete — seventeen approved takes, beat 16 new, beat 01's retake
+# awaiting the founder's ear, and beats 02, 19 and 21 silent by design.
+#
+# THE ONE DECISION IT CARRIED, made deliberately rather than by default: beat 16 was
+# RE-SYNTHESISED and the two archived takes of the same words were NOT promoted
+# (clips/vo-archive/16-vo.json and .v2.json, text byte-identical to the script's).
+# They predate the current voice references and belong to the superseded t0-b cut that
+# 2026-08-07's re-voice skipped on purpose, so promoting one would have put a take
+# built on older refs beside sixteen built on the current ones — a consistency risk
+# invisible in the file and audible in the episode. A fresh take under the engine and
+# refs every other take uses is the consistent choice, and it cost two minutes.
+# Verified the same way beat 01's retake was: all 34 existing takes and manifests
+# sha256'd before and after, not one changed — beat 16 is purely an addition, and the
+# retake the founder has not heard yet was not touched.
 
 # MODEL-COMPARISON section 1 carries three rows that read SCHEDULED and have never
 # run. They are stocked here with the gates they actually have.
