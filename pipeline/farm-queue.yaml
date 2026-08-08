@@ -1831,3 +1831,37 @@ backlog:
     right, and it stops going stale the moment ep2-b01-cold-open-redraw promotes a
     new 01-cold-open.png — the third stale-poster pair the original entry
     predicted, and the last piece of preventing it.
+
+# Filed 2026-08-09 by the speculative-render agent at the lead's direction, off
+# 2a6f80e ("episode 2 is a cut for the first time, and the gate that clears it
+# cannot see what is inside it"). That commit hand-plugged two live instances;
+# this is the general fix, which is why it is a queue row and not a follow-up
+# comment on the commit.
+- id: composite-provenance-manifest-1786218000
+  runner: manual
+  worker: m1pro
+  needs: []
+  window: any
+  est_minutes: 90
+  cmd: >-
+    (a) render_t3 writes an `ingredients:` block into the assembled cut's own
+    sidecar — one row per source clip with its path, its sha256 as muxed, and the
+    publishable verdict that clip carried AT ASSEMBLY TIME; (b)
+    build_site.publishable() walks that block and refuses the cut when any
+    ingredient is refused, is missing a sidecar, or no longer hashes to the value
+    recorded — an unresolvable ingredient is a refusal, not a pass, for the same
+    reason lint treats a missing record as a failure; (c) tests per
+    test_pipeline conventions: a cut holding one refused ingredient must not
+    publish, a cut whose manifest names a file that has since changed must not
+    publish, and a cut whose ingredients all pass must publish unchanged.
+  why: >-
+    publishable() reads only a file's OWN sidecar, so concatenation launders every
+    refusal inside it: the moment N clips are muxed into one mp4 the gate sees one
+    new file with one clean record and no way to ask what went into it. Refused
+    ingredients therefore publish, which is precisely the failure the gate exists
+    to prevent, and it gets more likely as more cuts are assembled rather than
+    less. Two instances were found and hand-plugged on 2026-08-09 by 2a6f80e (the
+    provisional ep2 cut, and v33) — hand-plugging is per-cut and does not survive
+    the next assembly. Same shape as D18: a guard that cannot read the thing it is
+    being asked to clear. Cheap to hold to, because render_t3 already knows every
+    ingredient at the moment it muxes them; nothing has to be re-derived later.
