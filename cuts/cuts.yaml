@@ -26,8 +26,8 @@
 # makes sense beside it.
 
 page:
-  title: "Working cuts — episode 1, unscreened"
-  eyebrow: "UNLISTED · WORKING CUTS · NOT THE EPISODE"
+  title: "Working cuts — episodes 1 and 2, unscreened"
+  eyebrow: "UNLISTED · WORKING CUTS · PROVISIONAL · NOT THE EPISODE"
   # Rendered as the page's own explanation of itself. Written for Roman, but a
   # stranger who guesses the URL should also be told exactly what he is looking
   # at and what he is not.
@@ -38,26 +38,38 @@ page:
     The published episode is the one on the season page; if these ever replace
     it, it will be because he said so, in a record you can read.
 
-    **No cut on this page is waiting for a verdict.** The newest one, v32, was
-    watched on the evening of 2026-08-07 and **refused** — seven frames named,
-    the camera move called too slow, and one earlier fix ordered reverted. Every
-    one of those is in hand. **The cut to answer on is v33, and it is not built
-    yet**; it lands on this page, at the top, when it is. The three cuts below
-    are the record of how it got here, newest first, kept so the change is
-    visible rather than asserted. Under them, the two side-by-side sections are
-    the questions the cuts were arguing about, kept as working rather than as
-    live questions.
+    **v33 EXISTS AS OF 2026-08-09, AND IT IS NOT ON THIS PAGE.** This spot has
+    said for two days that v33 "lands on this page, at the top, when it is
+    built". It is built — and the promise was one we could not keep, so here is
+    the correction rather than a quiet deletion. Two of its fifteen beats are
+    held on frames drawn by `animagine-xl-3.1`, whose licence restrictions
+    travel to the output while this tree publishes CC BY 4.0. That is **D15**,
+    the same open conflict that keeps the candidate frames off this page in
+    items 02, 03 and 10 — and a cut is not a loophole around it. The build's own
+    licence gate refuses the file, which is the gate working. **v33 is watched
+    on the machine, at a path the checklist names.** The same is true of the
+    first episode-2 cut, for the same reason under **D16**.
 
-    **The checklist directly below this is not waiting on him either, as of
-    2026-08-08** — every question it asked before v33 could be built has been
-    answered, the last of them his ear on one voice take, and the items stay
-    published as the record of what he said rather than being deleted. It was
-    short on purpose: one question each, and one at a time. Two of the questions
-    drafted for it were
-    deleted before it was published, because he answered both himself in the
-    hours after the screening — the camera speed and the approach for beats 7 to
-    9. Re-asking a question he has closed is the one thing a page like this must
-    not do.
+    So: the three cuts below are the record of how v33 got here, newest first,
+    kept so the change is visible rather than asserted. The newest of them, v32,
+    was watched on the evening of 2026-08-07 and **refused** — seven frames
+    named, the camera move called too slow, one earlier fix ordered reverted.
+    Under them, the two side-by-side sections are the questions those cuts were
+    arguing about, kept as working rather than as live questions.
+
+    **THE CHECKLIST BELOW CHANGED SHAPE ON 2026-08-09, AND THIS IS THE ONE
+    PARAGRAPH THAT EXPLAINS IT.** Until yesterday it was a list of questions
+    that had to be answered before machines could move. It is now a list of
+    things **already built, on picks the steward made in his place**, each one
+    labelled `PROVISIONAL` and each one his to keep or throw out. Nothing was
+    published, nothing was posted, nothing was spent, and nothing became canon.
+    The rule that produced this shape is the founder's own, on 2026-08-09:
+    *"hardware not doing anything is bad, why wasting time. human feedback
+    should never be a blocker, by design."* His taste is still the only ground
+    truth there is (R4); what changed is that waiting for it no longer idles the
+    machines. **A flip is one word and it is expected** — the work behind these
+    items cost a night nobody was awake for, and re-rendering on a corrected
+    pick costs the same nothing.
 
     It is unlisted rather than secret. Nothing in the site's navigation points
     here — the only link is the one in the author's own decision queue on the
@@ -109,8 +121,43 @@ page:
 # page under D17; loose candidate frames do not, and the two items say so in
 # words he can read and point him at the sheets on the machine instead. Do not
 # "fix" this by adding them to `sheets:` — the omission is the decision.
+#
+# PROVISIONAL MODE, from 2026-08-09. The founder's words that morning: "hardware
+# not doing anything is bad, why wasting time. human feedback should never be a
+# blocker, by design" and "you have to learn the patterns from human feedback.
+# taste has to be codified and iterated on." Items 12 and up are therefore
+# things that were BUILT while he slept, on picks the steward made in his place
+# and logged as predictions in `taste/steward-model.ledger.yaml` before he saw
+# anything. Three properties are load-bearing and an item that loses one of them
+# is broken:
+#   1. every such item states the provisional pick it stands on, by address;
+#   2. every such item states what the model predicted and its confidence, so
+#      his verdict scores the model rather than just settling the frame;
+#   3. the sheets in item 10 stay NEUTRAL — labels and seeds, no favourite. The
+#      pick is disclosed in prose here, never as a mark on a picture he is being
+#      asked to choose from. That is gate G3, and violating it is what voided
+#      the 2026-08-08 cold-open pick.
+# Taste is still his (R4). The model predicts him; it never replaces him, and a
+# `PROVISIONAL` label is not a soft approval.
+#
+# WHY ITEMS 12 AND 13 NAME PATHS INSTEAD OF EMBEDDING THEIR CUTS, which looks
+# like an oversight and is not. Both cuts were run through
+# `build_site.publishable()` on 2026-08-09 and both are REFUSED — v33 on
+# CreativeML Open RAIL++-M (D15), because two of its beats are held on
+# animagine-drawn candidate frames; the episode-2 pass on the LTX-2 Community
+# Licence (D16), because three of its beats are LTX renders. Publishing a cut
+# whose ingredients this page withholds would be a launder, not a shortcut.
+#
+# AND A GATE HOLE FOUND WHILE CHECKING THAT, worth knowing before someone trusts
+# a green result: publishable() reads ONE sidecar — the file's own — so an
+# assembled cut with no sidecar returns (True, "") no matter what is inside it.
+# Both cuts passed that way at first. They now carry hand-written
+# `.meta.yaml` sidecars recording their composite provenance and the restrictive
+# licences they inherit, which is what makes the gate refuse them correctly. The
+# general fix — teaching the gate to read an assembly's inputs — is not done, so
+# do NOT read "publishable() said yes" as "cleared" for any concatenated file.
 checklist:
-  title: "Your morning pass — about ten minutes"
+  title: "Your morning pass — two cuts to watch, then the sheets. About fifteen minutes."
   intro: |-
     **Items 01 to 05 are episode 1, and as of 2026-08-08 you have answered every
     one of them.** Item 02 in the morning, item 03 in the afternoon, item 01's
@@ -155,23 +202,45 @@ checklist:
     16, all in the voice you approved on beat 03, with beats 02, 19 and 21 silent
     because the script writes them silent.**
 
-    **THAT WAS YESTERDAY MORNING. OVERNIGHT THE WORK CAME BACK, AND THIS MORNING
-    THERE ARE TWO THINGS FOR YOU — ITEMS 10 AND 11.** The page said, in this spot,
-    that what would come back to you next was a rebuilt cut and some contact
-    sheets. The sheets came back; the cut did not, and item 11 is the reason
-    why. Read in this order:
+    **THAT WAS THE MORNING OF 2026-08-08. WHAT FOLLOWS IS NEW, AND IT IS A
+    DIFFERENT KIND OF LIST.** On 2026-08-09 you said *"human feedback should
+    never be a blocker, by design"* and *"taste has to be codified and iterated
+    on."* So overnight, instead of waiting, the steward read all 100 candidate
+    frames, wrote down what it predicted **you** would say about each one before
+    you had seen any of them, and let the machines build on those predictions.
 
-    - **Item 10 — the frames.** Nine sheets, drawn overnight on the recipe your
-      beat-15 yes proved: episode 1's last four beats (3, 6, 10, 14), all twenty
-      of episode 2, and a fresh set of four for episode 2's opening shot. This is
-      the big one and it is picking, not judging — one address per beat.
-    - **Item 11 — one clip, one question.** Is the framing right. Thirty seconds.
+    **Everything below numbered 12 and up already exists. None of it is
+    approved, and none of it is asking your permission after the fact.** Each
+    item names the provisional pick it stands on, what the model predicted, and
+    how sure it was. Where the guess is wrong, say the word and it re-renders;
+    the night it cost was a night nobody was awake for. **Flips are cheap by
+    design — that is the entire point of building ahead, and an item you
+    overturn is the item that taught the model the most.**
 
-    **Everything numbered 01 to 09 is still a record of something you decided, not
-    a question.** Item 06 is the one exception worth knowing about: it stays open
-    **on us**, and it un-blocks the moment you answer the cold-open part of item 10
-    — a pick there is the frame the model A/B has been missing, and item 06 comes
-    back to you as the straight comparison it was always meant to be.
+    Two things did not move an inch, and they are worth stating plainly.
+    **Nothing was published, posted or spent**, and **the nine sheets in item 10
+    still carry labels and seeds only — no favourite is marked on any of them.**
+    Where the steward's pick is disclosed, it is disclosed here in words, on its
+    own line, so overruling it costs you one word instead of an argument with a
+    picture. Read in this order:
+
+    - **Item 12 — episode 1, v33. Ninety seconds.** The cut you refused,
+      rebuilt. Fifteen beats, none slated, nothing stretched. Two of its frames
+      are the steward's guesses at your taste.
+    - **Item 13 — episode 2, first pass. Two minutes.** Your whole script heard
+      end to end for the first time, with three beats filmed and eighteen on
+      slates. This one is mostly a listen.
+    - **Item 10 — the nine sheets.** Unchanged and still neutral. This is where
+      a flip actually gets made, one address per beat.
+    - **Item 11 — the framing.** Now answered ahead of you; v33 is built on that
+      answer, so a no here is a real cost and the item says how much.
+    - **Item 14 — the model A/B.** Still does not exist, and item 14 explains
+      why rather than showing you something else.
+
+    **Everything numbered 01 to 09 is still a record of something you decided,
+    not a question.** Item 06 remains the one exception: it stays open **on us**,
+    and it has not moved, because the four new cold-open frames were all
+    provisionally rejected too. Item 14 is the honest version of that gap.
   items:
     - n: 1
       ask: "The camera move — ANSWERED 2026-08-08. 12% stays, and the camera is closed."
@@ -501,6 +570,28 @@ checklist:
         the same two films, of a picture you chose this time. Until then there is
         still nothing to answer *here*; the answer that moves it lives in item 10.
 
+        **UPDATE, 2026-08-09 — AND IT IS NOT GOOD NEWS.** The steward read those
+        four round-5 frames overnight and **provisionally rejected all four**, so
+        it did not film an A/B on any of them. Three of the four put a human
+        child in a field your script says is empty. The fourth is clean in every
+        other way and is *the picture you withdrew, redrawn* — hairline stem, tip
+        in the top quarter, standing **36% of frame height against the revoked
+        plate's 32%**. Taller than the one you threw out. **Confidence 0.80**,
+        and this is the one prediction on the page it would be genuinely
+        surprising to lose.
+
+        **If you agree, the next move is not another sheet.** Round 5's only
+        lever was the word `thin` → `sturdy` and the drawing did not move, so
+        adjectives are spent on this beat. What changes next are composition and
+        negatives: bring the camera **down and in** so a 40cm plant does not have
+        to be drawn as a tall weed to be visible at all — the two frames of this
+        plant you have actually kept, `b15-r3-s1` and canon `12-undefined`, are
+        both grass-height shots — and add the negative terms that actually bind
+        (`1girl, 1boy, child, person`), because `no humans` is demonstrably not
+        firing on this wave. **One sample before any set of four.** If you look
+        at the sheet and disagree with any of that, your pick overrides all of
+        it and the A/B films tonight.
+
         **The Wan film of the withdrawn frame is kept below rather than deleted**,
         because it is the record of what you were asked and refused. The LTX film
         of it exists too and this page still may not show it: LTX's weights ship
@@ -828,11 +919,48 @@ checklist:
         the question you rightly refused to answer on a withdrawn frame — is put to
         you properly for the first time.
 
+        **WHAT THE STEWARD PROVISIONALLY PICKED OVERNIGHT, IN WORDS, SO YOU CAN
+        OVERRULE IT IN ONE.** All 100 frames were read and scored before you saw
+        any of them. **Five picks; twenty beats rejected outright.** The sheets
+        themselves are untouched — no mark, no ordering — and these are the
+        steward's guesses, not answers:
+
+        | sheet | provisional call | confidence |
+        |---|---|---|
+        | ep1 b06 | **pick `b06-r3-s2`** | 0.55 |
+        | ep1 b14 | **pick `b14-r3-s3`** | 0.45 |
+        | ep1 b03, b10 | **reject all 8** | 0.85 / 0.80 |
+        | ep2 b16 | **pick `002b-b16-r3-s2`** | 0.40 |
+        | ep2 b18 | **pick `002b-b18-r3-s0`** | 0.45 |
+        | ep2 b21 | **pick `002b-b21-r3-s3`** | 0.50 |
+        | ep2 b02–b15, b17, b19, b20 | **reject all 68** | 0.70–0.95 |
+        | ep2 cold open b01-r5 | **reject all 4** | 0.80 |
+
+        Full reasoning per frame is in `PROVISIONAL-PICKS-0809.md` on this
+        machine, and every row above was written to
+        `taste/steward-model.ledger.yaml` with an empty verdict field waiting for
+        yours. **Notice that the picks carry the LOW numbers and the rejections
+        carry the high ones.** That is not modesty — rejecting a frame needs one
+        named fault, choosing one needs to predict a preference, and the model is
+        openly worse at the second. Everything built overnight stands on those
+        five weakest guesses.
+
+        **THE PART THAT CHANGED, AND YOU SHOULD KNOW IT BEFORE YOU LOOK.** This
+        item used to promise that *"nothing is filmed from a frame you did not
+        name."* **That is no longer true and the sentence is retracted rather
+        than quietly edited.** Five of those picks were filmed overnight — two
+        into v33 (item 12), three into the episode-2 pass (item 13) — under the
+        rule you gave that morning. What is still true, and is the harder half:
+        **nothing was promoted to a canon filename, nothing was published,
+        nothing was posted, nothing was spent, and no leaf was written.** Every
+        one of those five clips lives under a `review/` path with `PROVISIONAL`
+        in its name and a record beside it saying you have ratified nothing.
+
         **You can answer these in any order and you do not have to finish.** A beat
-        you skip stays a candidate set; nothing is promoted on our judgement, and
-        nothing is filmed from a frame you did not name. If a whole set is wrong,
-        that is a legitimate answer too — say what is wrong with it and it is drawn
-        again, the same way beat 15 was.
+        you skip stays a candidate set. If a whole set is wrong, that is a
+        legitimate answer too — say what is wrong with it and it is drawn again,
+        the same way beat 15 was. **And if you flip one of the five, the clip
+        built on it is thrown away, not defended.**
 
         **Still true, and still yours: the frames are not on this page.** They are
         drawn by `cagliostrolab/animagine-xl-3.1`, whose licence attaches use
@@ -843,7 +971,7 @@ checklist:
         rather than showing you the pictures.
 
     - n: 11
-      ask: "One clip, one question — is this the right framing? A yes releases the held beats into v33."
+      ask: "One clip, one question — is this the right framing? We stopped waiting and built v33 on a yes you have not given."
       state: open
       chip: "YES / NO"
       body: |-
@@ -880,12 +1008,205 @@ checklist:
           bug is fixed, and this clip is the proof — but a fix nobody has looked at
           is not finished, which is why this is a question and not a note.
 
-        **WHAT A YES RELEASES.** Every held beat in episode 1 re-films on this
-        geometry — the shots with nothing in frame to animate, the ones that would
-        otherwise have gone into v33 carrying the stretch — and then v33 can be
-        assembled. **A no costs almost nothing:** the framing policy is one
-        function, the held beats re-render in about a minute each, and no model
-        runs either way. Tell us what is wrong with the crop and it changes.
+        **WHAT A YES RELEASES — EXCEPT IT WAS ALREADY RELEASED, ON 2026-08-09.**
+        This item used to say a yes here is what lets v33 be assembled. Under the
+        rule you gave that morning, the machines did not wait for it: **all ten
+        held beats were re-filmed on this geometry overnight and v33 is built**
+        (item 12). So you are not authorising this crop, you are auditing it, and
+        the honest way to answer is to watch v33 rather than this thirty-second
+        clip — the geometry is in every beat of it.
+
+        **A NO STILL COSTS ALMOST NOTHING, AND HERE IS THE ACTUAL NUMBER.** The
+        framing policy is one function; the ten held beats re-render in about a
+        minute each and the cut reassembles in three. **No model runs and no
+        money moves either way** — a held beat is a code push-in on a still, not
+        a render. Worst case is roughly fifteen minutes of a machine that was
+        otherwise idle. Tell us what is wrong with the crop and it changes.
+
+    - n: 12
+      heading:
+        title: "Built overnight while you slept — two cuts and one honest gap"
+        intro: |-
+          **These did not exist when you closed the page yesterday, and you did
+          not approve any of them.** They are here because of what you said on
+          2026-08-09 — *"human feedback should never be a blocker, by design"* —
+          so the steward guessed your picks, wrote the guesses down first, and
+          let the machines run on them overnight.
+
+          **Neither cut is on this page and both are on this machine.** The
+          licence gate refuses them: v33 carries two frames drawn by
+          `animagine-xl-3.1` (**D15**) and the episode-2 pass carries three LTX
+          renders (**D16**). Those are the two open licence questions that are
+          yours to settle, and a finished cut is not a way around them. Paths are
+          printed below.
+      ask: "Episode 1, v33 — the cut you refused, rebuilt. Ninety seconds, and two of its frames are our guess at your taste."
+      state: open
+      chip: "SCREEN"
+      body: |-
+        > `review/provisional-v33/ep1-v33-PROVISIONAL.mp4`
+        > 90.1s · 720x1280 · **15 beats, none slated** · $0
+
+        **THE THREE THINGS YOU ASKED FOR ON v32, AND WHETHER THEY LANDED.**
+
+        - **The camera.** 12% on every held beat, your number, linear and
+          one-way, never reversing. Ten beats carry it.
+        - **The stretch is gone.** For four days every held beat you screened was
+          **24.4% taller** than the frame you approved — a resize with no aspect
+          term. Every beat here is 704x1280 with nothing stretched. This is item
+          11's question, and it is now in all fifteen beats rather than one demo
+          clip.
+        - **The seven frames you named** — 3, 6, 7, 10, 12, 14, 15. Four of them
+          moved. **Two did not, and that is the part to read before you watch.**
+
+        **BEAT BY BEAT — WHAT IS ACTUALLY IN FRONT OF YOU.** Five beats are
+        filmed (Wan 2.2); ten are your stills with the 12% push on them.
+
+        | beat | what it is | frame |
+        |---|---|---|
+        | 1, 2 | filmed | canon |
+        | **3** | filmed | **canon — unchanged. The redraw was rejected.** |
+        | 4, 5 | held | canon |
+        | **6** | held | **`b06-r3-s2` — PROVISIONAL, our pick, confidence 0.55** |
+        | 7, 8, 9 | held | canon — the frames you picked on 2026-08-08 |
+        | **10** | held | **canon — unchanged. The redraw was rejected.** |
+        | 11 | filmed | canon — the fix you ordered reverted, stays reverted |
+        | 12 | held | canon |
+        | **14** | held | **`b14-r3-s3` — PROVISIONAL, our pick, confidence 0.45** |
+        | 13 | filmed | canon |
+        | 15 | held | canon — `b15-r3-s1`, the frame you passed |
+
+        **THE TWO PROVISIONAL FRAMES, AND WHAT WE EXPECT YOU TO SAY.**
+
+        - **Beat 6** — `b06-r3-s2`. This is your own canon `06-too-blue` frame
+          with the leaf taken out: same blue, same clouds, same light. Picked
+          because it is measured against a frame you already passed rather than
+          against an opinion. **Predicted: you ratify. Confidence 0.55** — low,
+          because when you rejected this beat in round 1 you named no fault at
+          all (*"none quite work"*), and there is no way to predict an unstated
+          objection.
+        - **Beat 14** — `b14-r3-s3`. Your fault was *"all too small, not good
+          character consistency."* This one puts a four-leaf sprout across the
+          middle of the frame in warm raking light, nothing man-made in it.
+          **Predicted: you ratify. Confidence 0.45 — the lowest on the episode.**
+          The honest reason: `b14-r3-s2` has a *bigger* plant, and "too small" is
+          a comparative. It was passed over only because it has a window and a
+          building wall in the top strip. **If you want the bigger one, say
+          `b14-r3-s2`** and it swaps in about a minute.
+
+        **THE TWO THAT DID NOT MOVE, WHICH IS THE WEAKNESS OF THIS CUT.** Beats
+        **3** and **10** still carry the exact frames you named on v32, because
+        all eight of their redraws were rejected — beat 3's four came back with
+        an anime girl on the monitor twice and gibberish text once, none of them
+        reading as inside a house; beat 10's four missed in their own way. **You
+        are watching a cut that still has two of your seven complaints in it**,
+        and saying so up front is better than hoping you do not notice on a
+        phone.
+
+        **WHAT YOUR ANSWER DOES.** Ratify the two frames and they are promoted to
+        canon and v33 stops being provisional. Flip either and that beat
+        re-renders in a minute. Reject the cut as a whole and we have lost a
+        night that cost nothing and learned which axis the model reads wrong,
+        which is the point of writing the guesses down first.
+
+    - n: 13
+      ask: "Episode 2, first pass — your whole script heard end to end for the first time. Two minutes, and mostly a listen."
+      state: open
+      chip: "SCREEN"
+      body: |-
+        > `review/ep2-prov-0809/ep2-PROVISIONAL.mp4`
+        > 119.2s · 720x1280 · **21 beats — 3 filmed, 18 on slates** · $0
+
+        **WHAT THIS IS, BECAUSE 18 SLATES SOUNDS LIKE A FAILURE AND IS NOT THE
+        POINT OF IT.** The 21-beat script you approved has **never been assembled
+        before** — the two episode-2 cuts in the tree are both of the old
+        five-beat version from before the rewrite. This is the first time your
+        current script exists as something you can play: all eighteen approved
+        voice takes, in order, in the voice you passed, with the captions and the
+        real beat lengths. **Listen to it before you look at it.** The questions
+        it can actually answer are whether the episode runs, whether any beat is
+        too long or too short, and whether the ending lands — not whether it
+        looks right, because mostly there is nothing to look at yet.
+
+        **THE THREE BEATS THAT ARE FILMED HAPPEN TO BE THE ENDING.** That is
+        luck, not design — they are simply the only three of twenty whose frames
+        survived. They run 1:15 to the end:
+
+        | beat | shot | provisional frame | predicted | conf |
+        |---|---|---|---|---|
+        | **16 — WHY** | close on the leaf, goblin blurred behind | `002b-b16-r3-s2` | ratify | **0.40** |
+        | **18 — THE DECISION** | macro, the fig, stem trembling | `002b-b18-r3-s0` | ratify | **0.45** |
+        | **21 — THE ANSWER** | the leaf tilts, on purpose, and holds | `002b-b21-r3-s3` | ratify | **0.50** |
+
+        **THESE ARE THE THREE LEAST CONFIDENT PREDICTIONS ON THE WHOLE PAGE**,
+        and two reservations were written down before you watched, so they count
+        as misses rather than as hindsight if you name them:
+
+        - **Beat 16** — the background is a plain grey-lilac and **the goblin the
+          prompt asked to have blurred behind the leaf is simply absent.** "A
+          blank dark background" is a phrase you have used as a fault before.
+        - **Beat 18** — faint **white dashed sketch marks ring the fruit**, a
+          flourish nothing else in this show has.
+
+        **WHY THE OTHER 18 ARE SLATES, WHICH IS A DECISION AND NOT A SHORTFALL.**
+        The overnight job was briefed to film all twenty of episode 2. It filmed
+        three and **refused the other eighteen**, because their candidate frames
+        had already been rejected — human figures in beats the script writes
+        empty, mostly, the same defect twenty times over. Filming them would have
+        cost about two hours of GPU and put already-rejected frames in front of
+        you this morning dressed up as progress. **Two independent agents reached
+        that conclusion separately and cross-checked each other's frames byte for
+        byte before either stopped.**
+
+        **WHAT YOUR ANSWER DOES.** If the three endings hold, they are promoted
+        and episode 2 has its closing run. If the pacing is wrong anywhere in the
+        other eighteen, that is a script or timing note and it is free to act on
+        — no frame has been drawn for those beats that anyone is defending. The
+        twenty rejected beats go back for a round 4 built on composition and
+        negatives rather than adjectives, and that recipe is the same one item 06
+        describes for the cold open.
+
+    - n: 14
+      ask: "The Wan-against-LTX comparison — it still does not exist, and this is why rather than something else to look at"
+      state: gap
+      chip: "ON US"
+      body: |-
+        **NOTHING WAS BUILT FOR THIS AND NOTHING IS BEING SHOWN TO YOU.** The
+        overnight plan had an A/B in it: the same cold-open frame filmed by both
+        models, so item 06's question — which model draws episode 2 — could
+        finally be put to you on a picture you had chosen. **It was not
+        rendered**, and the reason is the same rejection that runs through this
+        whole morning: **all four round-5 cold-open frames were provisionally
+        rejected**, so there was no plate to film. An A/B needs a frame both
+        sides agree on, and there is not one.
+
+        **THIS IS THE SECOND TIME THIS QUESTION HAS BEEN ASKED ON A FRAME THAT
+        WAS NOT YOURS, AND WE STOPPED RATHER THAN DO IT AGAIN.** On 2026-08-08
+        you were shown exactly that and refused it in the right words — *"you
+        used a frame i never approved, and its tooooo tall."* Filming the A/B on
+        a frame the steward had just rejected would have repeated the mistake
+        with an extra step. Two agents on separate machines reached that
+        independently last night and both stopped.
+
+        **THERE IS A WAY TO ANSWER IT WITHOUT WAITING FOR THE COLD OPEN, AND IT
+        NEEDS ONE WORD FROM YOU.** The model question does not actually need
+        *that* frame — it needs any frame you have passed. **`b15-r3-s1`** is
+        canon, it is yours, and it is the sapling in grass, which is what most of
+        episode 2 is. Say **"film the A/B on beat 15"** and both models render it
+        tonight at $0 on the local card; you get the straight comparison the next
+        time you open this page, and it is decoupled from the cold open
+        completely.
+
+        **WHAT WE WILL NOT DO IS PICK THE MODEL OURSELVES.** There is one number
+        worth keeping and it is explicitly not an argument: LTX drew six seconds
+        in **207 seconds against Wan's 539**, about 2.6x faster at a third of the
+        peak memory. Over twenty-one beats that is real, and it still does not
+        choose a look — LTX has lost here on look before, when you caught it
+        draining the colour out of a clip on 2026-08-06.
+      pending: >-
+        **No A/B clip is named here because none was rendered** — a missing
+        plate, not a missing render. Both films of the *withdrawn* frame still
+        exist and are kept under item 06 as the record of the question you
+        refused.
 
 cuts:
   - file: ep1-v32-gentleholds.mp4

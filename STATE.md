@@ -5210,3 +5210,96 @@ gitignored and nothing in `review/provisional-v33/` is tracked. No canon
 filename was written, nothing was published, posted or spent, and nothing was
 opened on his screen. Gates as their own steps: `lint_genome.py` rc=0 (ratchet
 25, unchanged), `test_pipeline.py` rc=0.
+
+## 2026-08-09 — episode 2 exists as a cut, the morning page becomes a ratify-or-flip list, and the licence gate cannot see inside an assembly
+
+**THE SPECULATIVE NIGHT'S LEDGER, IN ONE PLACE.** Picked: 100 candidate frames
+read, **5 provisional picks, 20 beats rejected** (`PROVISIONAL-PICKS-0809.md`,
+`b78ce13`), every prediction written to `taste/steward-model.ledger.yaml` with an
+empty verdict field before he saw anything. Rendered: **3 LTX clips** of episode
+2's beats 16/18/21, **18 renders refused** because their frames were already
+rejected. Assembled: **two cuts**, `ep1-v33-PROVISIONAL.mp4` (15 beats, no slate)
+and now `ep2-PROVISIONAL.mp4`. Predicted: everything built stands on the model's
+**five weakest guesses** — the picks run 0.40-0.55 confidence while the
+rejections run 0.70-0.95, because rejecting needs one named fault and choosing
+needs predicting a preference. Nothing published, posted, spent, or opened on his
+screen; no canon filename written; no leaf.
+
+**EPISODE 2 IS ASSEMBLED FOR THE FIRST TIME ON ITS CURRENT SCRIPT.**
+`review/ep2-prov-0809/ep2-PROVISIONAL.mp4` — 119.21s, 720x1280, 24fps,
+5,947,152 B, md5 `f94fe23c086a872468284336c950f7fc`, **21 beats: 3 filmed
+(16, 18, 21), 18 slate**, $0, `--out` so no leaf. The two episode-2 cuts already
+in the tree (`002b-t3-a`, `002b-t3-b`) are both of the **old five-beat script**
+from before the molt, so this is the first time the approved 21-beat script
+exists as something playable. That is the real value of the cut, not the three
+clips: eighteen approved Chatterbox takes in order, with captions and true beat
+lengths. Beats 02, 19 and 21 are silent because the script writes them silent.
+
+**THE COMMAND IN THE BRIEF WOULD HAVE FAILED THREE WAYS, AND ALL THREE ARE
+NAMED-ID DEFECTS WORTH REMEMBERING.** (1) `sapling 002b-first-citizen` raises
+StopIteration — lineage keys the node `002b`, the same trap v33 hit. (2)
+`--clips review/ep2-prov-0809` aborts on `check_clips_dir`: the box's outputs are
+named `ltx-002b-b16-prov.mp4` and `find_clips` globs `NN-*.mp4`, which matches
+none of them. (3) That directory holds no VO, so the cut would have been silent
+with evenly-sliced captions. Fixed by staging
+`review/ep2-prov-0809/clips/` — the three clips renamed to their beat slugs
+(`16-why-prov.mp4`, `18-the-decision-prov.mp4`, `21-the-answer-prov.mp4`) with
+their `.meta.yaml` sidecars carried across, plus the node's 18 `NN-vo.mp3` and 18
+`NN-vo.json`. Verified before rendering: `footage_matches_beat` True on all
+three, `held_still` False on all three (they are real footage, so they must not
+be ping-ponged or stretched).
+
+**THE VO TAKES WERE CHECKED AGAINST THE CURRENT SCRIPT RATHER THAN ASSUMED.**
+Episode 2's `clips/footage-archive/` holds `04-the-answer.mp4` from the old
+script while the current beat 21 is also called THE ANSWER — exactly the
+cycle-008 orphaned-take shape. The audio is clean: `01-vo.json` carries the
+engineer's two cold-open lines, `16` carries "won't file a report", `18` carries
+"Growth includes release", `20` carries "Did you just answer me?". Eighteen takes
+for eighteen speaking beats, all matching the approved 21-beat text.
+
+**A REAL HOLE IN THE LICENCE GATE, FOUND BY TESTING RATHER THAN BY READING.**
+`build_site.publishable()` reads exactly one sidecar — the file's own — and
+returns `(True, "")` for anything unprovenanced. **An assembled cut therefore
+launders its inputs.** Both new cuts passed the gate on first test while their
+own ingredients are refused by it one directory down:
+`review/ep2-prov-0809/clips/16-why-prov.mp4` is refused on the **LTX-2 Community
+Licence (D16)**, and `takes/stills/06-too-blue-r3-s2.png` and
+`14-worth-staying-in-r3-s3.png` are refused on **CreativeML Open RAIL++-M
+(D15)** — the same restriction that keeps the candidate frames off the cuts page
+in items 02, 03 and 10. Publishing either cut would have been an end-run around
+a decision that is the founder's.
+
+Plugged for these two instances by hand-writing composite-provenance sidecars
+(`ep2-PROVISIONAL.mp4.meta.yaml`, `ep1-v33-PROVISIONAL.mp4.meta.yaml`) naming the
+real contributing models, after which the gate refuses both correctly — verified.
+**The general fix is NOT done:** the gate still cannot read an assembly's inputs,
+so "publishable() said yes" must not be read as "cleared" for any concatenated
+file. Recorded in the maintainer comment above `checklist:` in `cuts/cuts.yaml`.
+Consequence for today: **neither cut is published**; both are named as paths on
+the checklist, the same treatment items 02, 03 and 10 already give the animagine
+frames. He screens them on the machine, and D15/D16 now visibly block phone
+screening of finished work, which raises the stakes on settling them.
+
+**THE MORNING PAGE IS NOW RATIFY-OR-FLIP.** `cuts/cuts.yaml` rewritten in its own
+conventions: items **01-09 unchanged as records**, **10** gains the full
+provisional disclosure in prose (the sheets stay neutral — labels and seeds only,
+gate G3 intact) plus an explicit **retraction** of its old promise that *"nothing
+is filmed from a frame you did not name"*, which five overnight renders made
+false; **11** reframed because v33 was built on a framing yes he never gave, with
+the real cost of a no stated (~15 min, no model, no money); **12** screen v33
+beat by beat; **13** screen episode 2; **14** the A/B gap. Every new item names
+its provisional basis, the prediction and the confidence, so his verdict scores
+the model. The page states flips are cheap by design and quotes him: *"human
+feedback should never be a blocker, by design."*
+
+**THE A/B STILL DOES NOT EXIST AND ITEM 14 SAYS SO INSTEAD OF SHOWING SOMETHING
+ELSE.** All four round-5 cold-open frames were provisionally rejected (0.80), so
+there was no plate to film and both the box agent and `wan-ep2-spec` stopped
+independently rather than film the model comparison on a rejected frame — which
+would have repeated the 2026-08-08 mistake with an extra step. Item 14 offers the
+decoupling that actually unblocks it: **the model question needs any approved
+frame, not that one.** `b15-r3-s1` is canon, is his, and is the sapling in grass
+— one word films the A/B on it tonight at $0.
+
+**Nothing here is ratified.** Gates as their own steps: `lint_genome.py` rc=0,
+`test_pipeline.py` rc=0, `build_site.py` rc=0.
