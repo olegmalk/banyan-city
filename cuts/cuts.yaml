@@ -151,14 +151,27 @@ checklist:
     the record. Beat 1 took your third wording, beat 1 was recorded again on it,
     and you passed that recording the same day: **"yeah its good."**
 
-    **SO THERE IS NOTHING ON THIS PAGE FOR YOU TO ANSWER THIS MORNING.** Every
-    item below is a record of something you decided, not a question waiting on
-    you. That last yes also finished episode 2's narration: **seventeen takes plus
-    beat 16, all in the voice you approved on beat 03, with beats 02, 19 and 21
-    silent because the script writes them silent.** The one item still marked open
-    — item 06 — is open **on us**: it needs a frame we have not drawn yet, not a
-    word from you. What comes back to you next is a rebuilt cut and two contact
-    sheets, each arriving as its own yes or no.
+    That last yes also finished episode 2's narration: **seventeen takes plus beat
+    16, all in the voice you approved on beat 03, with beats 02, 19 and 21 silent
+    because the script writes them silent.**
+
+    **THAT WAS YESTERDAY MORNING. OVERNIGHT THE WORK CAME BACK, AND THIS MORNING
+    THERE ARE TWO THINGS FOR YOU — ITEMS 10 AND 11.** The page said, in this spot,
+    that what would come back to you next was a rebuilt cut and some contact
+    sheets. The sheets came back; the cut did not, and item 11 is the reason
+    why. Read in this order:
+
+    - **Item 10 — the frames.** Nine sheets, drawn overnight on the recipe your
+      beat-15 yes proved: episode 1's last four beats (3, 6, 10, 14), all twenty
+      of episode 2, and a fresh set of four for episode 2's opening shot. This is
+      the big one and it is picking, not judging — one address per beat.
+    - **Item 11 — one clip, one question.** Is the framing right. Thirty seconds.
+
+    **Everything numbered 01 to 09 is still a record of something you decided, not
+    a question.** Item 06 is the one exception worth knowing about: it stays open
+    **on us**, and it un-blocks the moment you answer the cold-open part of item 10
+    — a pick there is the frame the model A/B has been missing, and item 06 comes
+    back to you as the straight comparison it was always meant to be.
   items:
     - n: 1
       ask: "The camera move — ANSWERED 2026-08-08. 12% stays, and the camera is closed."
@@ -476,11 +489,17 @@ checklist:
         stops. Those frames come back as contact sheets, and none of them is being
         passed off as approved on our own judgement.
 
-        **WHAT HAPPENS NEXT, AND NONE OF IT NEEDS YOU.** The opening shot is
-        redrawn — four candidates, one sheet, **no favourite marked on it this
-        time** — on the same recipe as the twenty. When you pick one, that frame is
-        filmed by both models again and this item comes back to you as the
-        straight A/B it was always meant to be.
+        **WHAT HAPPENS NEXT — AND AS OF THE MORNING OF 2026-08-09, ONE STEP OF IT
+        DOES NEED YOU.** The opening shot has been redrawn: four candidates, one
+        sheet, **no favourite marked on it this time**, on the same recipe as the
+        twenty. That sheet is `LABELED-b01-r5.png` and it is **the last part of
+        item 10** — the round-5 set, addresses `b01-r5-s0` to `b01-r5-s3`.
+
+        **So this item is one pick away from being a real question again.** Name a
+        cold-open frame in item 10 and that frame gets filmed by both models, and
+        item 06 comes back to you as the straight A/B it was always meant to be —
+        the same two films, of a picture you chose this time. Until then there is
+        still nothing to answer *here*; the answer that moves it lives in item 10.
 
         **The Wan film of the withdrawn frame is kept below rather than deleted**,
         because it is the record of what you were asked and refused. The LTX film
@@ -755,6 +774,118 @@ checklist:
         recorded the same day — one line, 8.2 seconds, in the voice you approved on
         beat 03 — so it is not on this page as a question. Its footage is still to
         come, with the other twenty frames of episode 2.
+
+    - n: 10
+      heading:
+        title: "This morning — the two that are actually yours"
+        intro: |-
+          **These two arrived overnight on 2026-08-08 and neither existed when you
+          last read this page.** Everything above is a record; these are questions.
+          They are in the order that costs you least: the frames first, because
+          four jobs are waiting on them, then one clip that takes half a minute.
+
+          **Neither of them needs you at a desk.** Item 10 is nine images on this
+          machine and item 11 is one short clip on it — no cut to sit through, and
+          nothing here is asking you to re-open anything you closed yesterday.
+      ask: "The redrawn frames — nine sheets, and a pick on each. This is the one that unblocks everything else."
+      state: open
+      chip: "PICK"
+      body: |-
+        **Everything you approved yesterday has now been drawn, and it is waiting
+        on your eye.** Your beat-15 yes (`b15-r3-s1`) settled the recipe; overnight
+        it was run across every frame still outstanding in both episodes. Nine
+        sheets, one pass, and every one of them was drawn on the rule you gave in
+        item 07 — no character sheet, the sapling reads tall, the leaves are not
+        fussed over.
+
+        **THE NINE SHEETS, AND WHAT EACH ONE ASKS.** They are at the top level of
+        the repo folder on this machine, alongside `REVIEW-KEY-0808.md`, which
+        resolves every label printed on them:
+
+        - **Episode 1 — the last four frames, one sheet each.**
+          `LABELED-beat03-r3.png`, `LABELED-beat06-r3.png`,
+          `LABELED-beat10-r3.png`, `LABELED-beat14-r3.png`. Eight frames apiece —
+          the round you rejected on the top row, the new one below it, same seed
+          per column so a column is the same picture drawn twice. Addresses read
+          `b03-r3-s0` and so on. **These four are all that stands between v33 and
+          a complete set of stills.**
+        - **Episode 2 — all twenty, four band sheets.**
+          `CONTACT-002b-r3-b02-06.png`, `-b07-11.png`, `-b12-16.png`,
+          `-b17-21.png`. Beats 02 to 21, four candidates each, band header per
+          beat. Quote these in the long form, `002b-b02-r3-s3`. The eighty frames
+          of 2026-08-07 are superseded — those were, in the note written at the
+          time, competent frames of twenty different shows.
+        - **Episode 2's opening shot — `LABELED-b01-r5.png`.** Four candidates,
+          `b01-r5-s0` to `b01-r5-s3`, replacing the frame you withdrew. **Labels
+          and seeds only — no favourite marked**, which is the whole reason the
+          last pick was void. This one is small and it is the highest-leverage
+          answer on the page: see item 06.
+
+        **WHAT EACH ANSWER TURNS ON.** Four picks on the episode-1 sheets and the
+        v33 stills are complete, so the cut you refused can actually be rebuilt.
+        Twenty picks on the episode-2 sheets and that episode starts being filmed.
+        One pick on the cold open and item 06's model comparison — Wan against LTX,
+        the question you rightly refused to answer on a withdrawn frame — is put to
+        you properly for the first time.
+
+        **You can answer these in any order and you do not have to finish.** A beat
+        you skip stays a candidate set; nothing is promoted on our judgement, and
+        nothing is filmed from a frame you did not name. If a whole set is wrong,
+        that is a legitimate answer too — say what is wrong with it and it is drawn
+        again, the same way beat 15 was.
+
+        **Still true, and still yours: the frames are not on this page.** They are
+        drawn by `cagliostrolab/animagine-xl-3.1`, whose licence attaches use
+        restrictions that travel to the output while this tree publishes CC BY 4.0
+        — the open conflict recorded as **D15**, which is yours to settle. Finished
+        cuts publish here under D17; loose candidate frames do not. That is a
+        decision, not an oversight, and it is why this item points you at filenames
+        rather than showing you the pictures.
+
+    - n: 11
+      ask: "One clip, one question — is this the right framing? A yes releases the held beats into v33."
+      state: open
+      chip: "YES / NO"
+      body: |-
+        **This replaces the demo you turned down yesterday, and it is the same
+        question asked properly.** Thirty seconds, one clip:
+
+        > `review/aspect-fix-0808/15-something-s-coming.mp4`
+
+        **WHY YOU ARE BEING ASKED TWICE.** You were shown a framing demo on
+        2026-08-08 and said no. That demo was built on `14-worth-staying-in.png` —
+        a frame you had rejected *the same morning*. So your no landed on the
+        picture, and the framing itself was never actually judged; reading that
+        answer as a verdict on the geometry would be us putting words in your
+        mouth. **This one is built on beat 15's frame — the one you picked
+        yesterday**, `b15-r3-s1`. The old clip is still in that folder on purpose,
+        as the record of what you refused. Do not use it to answer this.
+
+        **WHAT YOU ARE ACTUALLY BEING ASKED.** Not the zoom amount — that is closed
+        at 12% on your own words and item 01 is the record. Not the picture — it is
+        your pick. Only this: **the stills are 832x1216 and the video frame is
+        704x1280, so reaching the video shape costs 19.6% of the still's width, 81
+        pixels off the left and 82 off the right.** Does the shot still frame the
+        way it should with that gone. That is the entire question.
+
+        **WHAT IS GUARANTEED ABOUT IT, so you are judging a picture and not a
+        promise.** Both of these were measured on this exact file before it was put
+        in front of you, and both travel with it in its record:
+
+        - **Its first frame is your still, byte for byte** — the approved frame
+          cover-cropped, compared as raw pixels rather than by eye.
+        - **704x1280, and nothing is stretched.** For four days every held beat
+          you screened was **24.4% taller** than the frame you had approved: a
+          resize with no aspect term, applied before a single frame was cut. That
+          bug is fixed, and this clip is the proof — but a fix nobody has looked at
+          is not finished, which is why this is a question and not a note.
+
+        **WHAT A YES RELEASES.** Every held beat in episode 1 re-films on this
+        geometry — the shots with nothing in frame to animate, the ones that would
+        otherwise have gone into v33 carrying the stretch — and then v33 can be
+        assembled. **A no costs almost nothing:** the framing policy is one
+        function, the held beats re-render in about a minute each, and no model
+        runs either way. Tell us what is wrong with the crop and it changes.
 
 cuts:
   - file: ep1-v32-gentleholds.mp4

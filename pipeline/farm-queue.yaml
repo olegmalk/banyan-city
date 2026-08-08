@@ -1166,62 +1166,41 @@ backlog:
 # The promoter could never have retired this (runner: manual, no DONE
 # heartbeat). Full record: STATE.md 2026-08-08 evening.
 
-# THE FRAMING DEMO HE SAID "no" TO — RE-MADE ON A PICTURE HE HAS ACTUALLY PASSED.
+# RETIRED 2026-08-08 NIGHT — held-geometry-demo-approved-plate-1786197960.
+# PRODUCED; SCREENING PENDING. Deleted rather than annotated, like the manual
+# entries above it: `runner: manual` has no DONE heartbeat, so the promoter would
+# never retire it and it would sit here reading as runnable forever.
 #
-# What he was shown on 2026-08-08 was review/aspect-fix-0808/14-worth-staying-in.mp4,
-# a held-still clip demonstrating that the 24.4% vertical stretch in hold_still.py is
-# gone (5568113: frame 0 is now byte-identical to the plate, 43.0dB against the old
-# path's 15.5dB). His answer: "you are still using the bad beat 14 frame, no."
+# THE ARTIFACT: review/aspect-fix-0808/15-something-s-coming.mp4, made by
+#   python3 pipeline/hold_still.py 15 --fit --out review/aspect-fix-0808
+# on 15-something-s-coming.png (b15-r3-s1, canon since d4488de) — the one frame in
+# this tree he has approved since the stretch was fixed. Settled recipe, untouched:
+# ZOOM_TOTAL 0.12, linear, centred, cut from the native still.
 #
-# THE "no" IS ABOUT THE PICTURE AND THE GEOMETRY IS STILL UNJUDGED. That demo was
-# built on node 001's canon 14-worth-staying-in.png — which he had rejected THAT
-# MORNING as one of the five redraws (it is beat 14 of ep1-stills-redraw-wave2). So
-# he was shown a fix demonstrated on a frame he had already thrown out, and the only
-# thing his "no" can be read as rejecting is the frame. It is NOT a verdict on the
-# framing policy, the crop, or the 12% push-in, and it must not be recorded as one.
-# The policy therefore remains unscreened, which is the part that matters: the
-# held-beat re-films are what it gates.
+# NOT COMMITTED, AND THAT IS THE CONVENTION RATHER THAN AN OMISSION. Nothing in
+# review/aspect-fix-0808/ is tracked — `.gitignore:57 review/**/*.mp4` ignores the
+# clip and the beat-14 sidecar beside it was never committed either. It also keeps
+# the deploy honest: build_site.in_the_tree() will not publish a take the deploy
+# does not have, which is exactly why the local build now agrees with CI.
 #
-# THE PICTURE TO RE-MAKE IT ON IS BEAT 15's, because it is the one frame in this
-# tree he has approved since the stretch was fixed: 15-something-s-coming.png,
-# promoted from b15-r3-s1 on 2026-08-08 (d4488de). One clip, one plate, one look.
+# BOTH ASSERTIONS THE ENTRY ASKED FOR WERE MADE ON THE FILE ITSELF, not inherited
+# from the general test, and both are written into its sidecar so the claim travels:
+#   - 704x1280 by ffprobe, SAR unset — the 9:16 bucket.
+#   - frame 0 byte-identical to plate_prep.fit_cover(still, 704, 1280), compared as
+#     raw RGB bytes, and byte-DIFFERENT from the old two-argument resize.
+# Ten further checks passed alongside them (60 frames at 24fps over 2.5s, window
+# 669->597 source px strictly decreasing, single fixed centre, 12.0% total).
 #
-# NO HELD-BEAT RE-FILMS BEFORE HE PASSES IT. Every held beat in v30, v31 and v32 was
-# 24.4% tall and all of them need re-making, but re-filming a set on an unscreened
-# geometry is ONE SAMPLE BEFORE ANY BATCH (2026-08-03) read backwards, and the demo
-# he has already turned down once is the sample. So: this clip, then his yes, then
-# the re-films.
-- id: held-geometry-demo-approved-plate-1786197960
-  runner: manual
-  worker: any
-  needs: []
-  window: any
-  est_minutes: 10
-  cmd: >-
-    re-make the framing demo on a frame the founder has approved, replacing
-    review/aspect-fix-0808/14-worth-staying-in.mp4 as the thing he is asked to look
-    at. Run hold_still.py on node 001 beat 15 —
-    stills/15-something-s-coming.png, canon since 2026-08-08 (b15-r3-s1) — at the
-    settled recipe, ZOOM_TOTAL 0.12, linear, centred, cut from the native still
-    rather than an oversampled buffer. Keep the old beat-14 clip where it is: it is
-    the record of what he refused and of the stretch it fixed, and its sidecar
-    truthfully names `source_still: 14-worth-staying-in.png` — a frame he turned
-    down that is still canon under that name only because its replacement has not
-    been drawn yet, which is exactly the confusion this re-make removes. Assert the
-    same two things the test suite
-    asserts before showing it to anyone — output aspect is the 9:16 bucket, and
-    frame 0 is byte-identical to the plate — and put the numbers beside the clip so
-    the claim travels with it. Ask him ONE question: whether the framing is right,
-    on a picture he chose.
-  why: >-
-    The held-beat re-films of v30/v31/v32 are blocked on a screened geometry and
-    nothing else. The founder's "no" on 2026-08-08 rejected the beat-14 frame the
-    demo was built from (he had rejected that frame the same morning), not the
-    framing, so the policy has never actually been judged and cannot be inferred
-    from that answer. This is the sample that unblocks the re-films — the consumer is
-    every held beat in ep1-v33-assemble-1786124760. RUNNABLE NOW: the plate it needs
-    landed in d4488de, hold_still is pure python and needs no GPU, so it does not
-    queue behind either redraw wave.
+# THE LENGTH IS THE REAL SLOT, NOT A DEMO LENGTH. VO 15 measures 1.37s, so
+# render_t3's floor is 1.77s and [1.77, 3.37] are all fixed points of fit_duration;
+# --fit floors at the 2.5s default, which sits inside that band, so this clip
+# neither loops nor stretches the beat when v33 is assembled.
+#
+# NO HELD-BEAT RE-FILMS BEFORE HE PASSES IT — the entry's own rule, and it still
+# stands now that the sample exists. It is ONE SAMPLE BEFORE ANY BATCH: this clip,
+# then his yes, then the re-films. It is asked as checklist item 11 in cuts/cuts.yaml
+# (state: open, "YES / NO"), and the beat-14 clip stays in that folder as the record
+# of what he refused. Consumer: every held beat in ep1-v33-assemble-1786124760.
 
 # FOUND WHILE PROMOTING BEAT 15, AND IT IS ON THE LIVE PAGE, NOT IN A LOG.
 # build_site.still_for() picks a review-page clip's poster by reading `init_still` /

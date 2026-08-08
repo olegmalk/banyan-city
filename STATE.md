@@ -4705,3 +4705,118 @@ filtering to blobs took it to zero. Both were caught before they reached this
 file, and the numbers above are from the corrected passes.
 
 Gates: `lint_genome.py` rc=0, `test_pipeline.py` rc=0.
+
+## 2026-08-08 (night) — the night shift closes: nine commits landed, one clip produced, and the morning page stops saying there is nothing to answer
+
+**The shift's own acceptance test passed, and it is the one number worth
+leading with: `python3 pipeline/build_site.py` now exits 0 locally.** For most
+of the day the local build failed where CI went green, which meant no one could
+trust a local build to tell them what the deploy would do. `45049cf` made
+`build_site.in_the_tree()` the single gate both the shot board's link emission
+and the build's copy step go through, so the site stops publishing takes the
+deploy never had. Local and CI now agree. The build's remaining output is two
+honest notes, not errors: one poster withheld (`002b-b01-5b.mp4`, whose record
+names no still — backlog `checklist-b01-poster-backfill-1786215660`), and 185
+take files on this disk deliberately not in the tree.
+
+**Tip is `e4bfec7`, HEAD == origin/main, nothing unpushed.** CI on the full
+40-char sha `e4bfec7fa947c80ec9e3d5a20e66a0669a244767`: lint-genome success,
+pages success, mirror success. `curl -sI https://banyan.city` → HTTP/2 200.
+Box idle, no claims.
+
+**THE NIGHT'S LEDGER.** Nine commits, newest first:
+
+| commit | what it fixed |
+|---|---|
+| `e4bfec7` | box hygiene — 19 scheduled tasks to 2, courier sweep audited, nothing lost |
+| `7c790fe` | the poster fix held by a hash nothing wrote; ep2's cold open records the frame it is missing |
+| `50e0358` | a poster promised pixels its clip never held; the ep2 shot was being given an ep1 frame |
+| `45049cf` | the site stops publishing takes the deploy never had — **the local-build fix** |
+| `b6d435f` | five review clips can prove which frame they hold, two of them twice |
+| `fd7d381` | an unread finetune of an allowed model was reading as allowed (licence gate is now token-aware per identifier) |
+| `c28bbd9` | the studio page promised a rebuild on every push; two pushes did not get one |
+| `51e667f` | the beat flag exists, so its queue entry retires — and its default was the wrong one |
+| `49f54ac` | the bench path can be told which beat it is rendering, and says nothing when nobody tells it |
+
+Three of the night's dispatches did **no** work and said so rather than
+inventing some: the wave gate found wave-runner's 120 files already landed and
+green, the poster task found a live worker already executing it and stood down
+without writing, and the dangling-links task found `45049cf` had already fixed
+it. Retirements landed for `ep1-stills-redraw-wave2-1786197600`, the ep2
+b02-21 wave, the b01-r5 set, `licence-gate-substring-1786123560`,
+`wan-bench-sidecar-beat-1786190640` and `review-poster-names-stale-still-1786197251`.
+
+**THE ONE THING PRODUCED TONIGHT — the held-geometry demo, on a plate he
+actually passed.** Queue entry `held-geometry-demo-approved-plate-1786197960`,
+retired as PRODUCED / SCREENING PENDING.
+
+    python3 pipeline/hold_still.py 15 --fit --out review/aspect-fix-0808
+    -> review/aspect-fix-0808/15-something-s-coming.mp4   (2.5s, 12.0%, 387KB)
+
+Built on `15-something-s-coming.png` — `b15-r3-s1`, canon since `d4488de`, the
+one frame in this tree he has approved since the stretch was fixed. Settled
+recipe untouched: `ZOOM_TOTAL` 0.12, linear, centred, cut from the native still.
+**Twelve assertions were run against this file before it was left for him**, the
+first two being exactly the ones `test_pipeline.py` makes about the held path in
+general — 704x1280 by ffprobe with SAR unset, and frame 0 byte-identical to
+`plate_prep.fit_cover(still, 704, 1280)` compared as raw RGB bytes (and
+byte-different from the old two-argument resize). The other ten: 60 frames at
+24fps, window 669→597 source px strictly decreasing with no reversal anywhere,
+single fixed centre, 12.0% total. All twelve are written into the clip's sidecar
+so the claim travels with it.
+
+**The length is the real slot, not a demo length.** VO 15 measures 1.37s, so
+`render_t3`'s floor is 1.77s and every length in [1.77, 3.37] is a fixed point
+of `fit_duration`; `--fit` floors at the 2.5s default, inside that band, so this
+clip neither loops nor stretches beat 15 when v33 is assembled.
+
+**Not committed, and that is the convention rather than an omission.** Nothing
+in `review/aspect-fix-0808/` is tracked — `.gitignore:57 review/**/*.mp4`
+ignores the clip, and the beat-14 sidecar beside it was never committed either.
+It also keeps the deploy honest under the new `in_the_tree()` gate. The rejected
+beat-14 demo stays exactly where it is: it is the record of what he refused and
+of the stretch the fix removed. Nothing was opened on his screen.
+
+**Its sidecar carries `source_still_sha256` by hand**, which is precisely what
+backlog entry `hold-still-sidecar-sha-1786215600` will make `hold_still.sidecar()`
+write in code. That entry stays queued — the code change is its own task, and
+tonight only the one clip needed the hash.
+
+**THE MORNING PAGE STOPS LYING BY OMISSION.** `cuts/cuts.yaml` opened the day
+saying *"SO THERE IS NOTHING ON THIS PAGE FOR YOU TO ANSWER THIS MORNING."* True
+when written; false the moment nine sheets and a demo landed. The checklist now
+carries **two new open items** and the intro points at them in reading order:
+
+- **Item 10 (`state: open`, chip PICK)** — the nine sheets, all written this
+  evening and all resolvable through `REVIEW-KEY-0808.md`: episode 1's last four
+  beats (`LABELED-beat03-r3.png`, `-beat06-r3`, `-beat10-r3`, `-beat14-r3`),
+  episode 2's twenty (`CONTACT-002b-r3-b02-06.png`, `-b07-11`, `-b12-16`,
+  `-b17-21`), and the cold open (`LABELED-b01-r5.png`, four candidates, labels
+  and seeds only, no favourite marked).
+- **Item 11 (`state: open`, chip YES / NO)** — the geometry demo, one question:
+  is the framing right.
+
+**Item 06 was edited rather than left to go stale.** Its body said *"WHAT
+HAPPENS NEXT, AND NONE OF IT NEEDS YOU"* — untrue once `LABELED-b01-r5.png`
+existed. It now says it is one pick away from being a real question: name a cold
+open frame in item 10 and that frame gets filmed by both models, and 06 returns
+as the straight Wan/LTX A/B it was always meant to be.
+
+**Neither new item publishes its evidence, and that is D15 rather than
+laziness.** The candidate frames are drawn by `cagliostrolab/animagine-xl-3.1`,
+whose licence attaches use restrictions that travel to the output while this
+tree publishes CC BY 4.0. Finished cuts publish under D17; loose candidates do
+not. Both items name filenames on this machine instead — the same convention
+items 02 and 03 already use, and the same one the LTX film at
+`review/ep2-b01/ltx-b01-v2.mp4` is named under.
+
+**WHAT WAITS ON THE FOUNDER, and it is only these:** the frame picks (item 10),
+the geometry yes/no (item 11), and — downstream of the first — item 06's model
+comparison. Picks complete v33's stills and start episode 2 filming; a yes on
+the geometry releases the held-beat re-films into
+`ep1-v33-assemble-1786124760`. Nothing else on the page is a question.
+
+Gates: `lint_genome.py` rc=0, `test_pipeline.py` rc=0, `build_site.py` rc=0.
+`licence_gate.py` rc=1 — **pre-existing and not a CI job** (CI runs lint_genome
+and test_pipeline); it exits 1 identically with tonight's files moved aside, on
+the known animagine/D15 and PixVerse debt.
