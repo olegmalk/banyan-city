@@ -174,6 +174,46 @@ def _import_video_task():
     return video_task
 
 
+def load_init(path, w: int, h: int):
+    """Open a conditioning still and fit it to WxH WITHOUT stretching it.
+
+    WHAT THIS REPLACES, at both call sites, verbatim:
+
+        img = Image.open(...).convert("RGB").resize((w, h), Image.LANCZOS)
+
+    A two-argument resize does not care about aspect ratio and does not say so.
+    Every canon still is 832x1216 (0.684) and every clip is rendered at 704x1280
+    (0.550), so that line silently pulled the picture 24.4% taller on every beat
+    this renderer has ever produced — a founder-rejected defect that no log line,
+    no exception and no metric reported, because a stretched frame is a perfectly
+    valid frame.
+
+    The queue now prepares an aspect-correct plate upstream (video_task's
+    conditioning_plate), so on the normal path the crop here finds nothing to do
+    and this is exactly the old resize. It is not therefore redundant: --init is a
+    public flag, and every hand-fired probe, bench sweep and canary that has ever
+    debugged this pipeline passed a raw 832x1216 still straight to it. Refusing to
+    stretch belongs where the pixels are read, not only in the one caller that
+    currently remembers.
+
+    Refuse means CROP, not raise. The policy is render_t3's own cover-centre —
+    the framing every delivered episode already uses — so a probe that passes a
+    raw still gets the same picture the episode would have shown it, and gets told
+    which pixels went. See pipeline/plate_prep.py.
+    """
+    from PIL import Image
+
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import plate_prep
+
+    with Image.open(path) as raw:
+        img = raw.convert("RGB")
+    fitted, info = plate_prep.fit_cover(img, w, h)
+    if info["box"] is not None:
+        print(f"   init {Path(path).name}: {info['crop_note']}", flush=True)
+    return fitted
+
+
 def tile_vae(pipe) -> None:
     """Make the VAE process the frame in tiles instead of all at once.
 
@@ -368,7 +408,6 @@ def stage_simple(a) -> int:
     import torch
     from diffusers import DiffusionPipeline
     from diffusers.utils import export_to_video
-    from PIL import Image
 
     w, h = (int(v) for v in a.size.lower().split("x"))
     frames = int(a.seconds * a.fps)
@@ -507,7 +546,6 @@ def _sample(pipe, a, w, h, frames, takes_image, jobs=None) -> int:
     """
     import torch
     from diffusers.utils import export_to_video
-    from PIL import Image
 
     batch = max(1, int(getattr(a, "batch", 1) or 1))
     bench = _bench_mode(a)
@@ -538,7 +576,7 @@ def _sample(pipe, a, w, h, frames, takes_image, jobs=None) -> int:
               "negative": a.negative}]
     for i, job in enumerate(jobs, 1):
         t0 = time.time()
-        img = Image.open(job["init"]).convert("RGB").resize((w, h), Image.LANCZOS)
+        img = load_init(job["init"], w, h)      # cover-crop, never a stretch
         # per-job negative: the beat's own "No person, no ghost…" clauses, moved
         # out of the positive prompt where they were being read as REQUESTS
         base = NEG if a.no_shake_neg else f"{NEG}, {SHAKE_NEG}"
@@ -678,7 +716,6 @@ def stage_render(a) -> int:
     import torch
     from diffusers import WanImageToVideoPipeline
     from diffusers.utils import export_to_video
-    from PIL import Image
 
     e = torch.load(a.embeds, map_location="cpu")
     w, h = (int(v) for v in a.size.lower().split("x"))
@@ -710,7 +747,7 @@ def stage_render(a) -> int:
     # ("mat1 is on cpu, different from other tensors on cuda:0") — they are
     # small, so hand them over on the execution device
     dev = "cuda" if torch.cuda.is_available() else "cpu"
-    img = Image.open(a.init).convert("RGB").resize((w, h), Image.LANCZOS)
+    img = load_init(a.init, w, h)               # cover-crop, never a stretch
     batch = max(1, int(getattr(a, "batch", 1) or 1))
     pe, ne = e["prompt_embeds"].to(dev), e["negative_prompt_embeds"].to(dev)
     # DIFFUSERS DOES NOT EXPAND EMBEDDINGS YOU HAND IT — this is the silent-wrong

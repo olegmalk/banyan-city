@@ -27,6 +27,9 @@ from pathlib import Path
 
 import yaml
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import plate_prep  # noqa: E402 — the shared cover-crop policy, no heavy deps
+
 REPO = Path(__file__).resolve().parent.parent
 IS_WIN = platform.system() == "Windows"
 ROOT = Path("C:/banyan-video") if IS_WIN else Path.home() / "banyan-video"
@@ -849,6 +852,117 @@ def _yaml_block(key: str, value: str) -> str:
     return f"{key}: |-\n{body}\n"
 
 
+def _yaml_scalar(value: str) -> str:
+    """One inline scalar, quoted only when a plain one would change meaning.
+
+    Three shapes reach this and each breaks a different way if written bare:
+    a crop note contains ": " (yaml then reads the tail as a nested mapping), a
+    Windows plate path contains "C:/..." (safe — a colon with no space after it
+    stays part of a plain scalar, which is why this does not quote everything and
+    turn every path in every sidecar into a diff), and a sha256 is digits and
+    letters (safe, but a hash that happened to be all digits would be read as an
+    int by a reader that cares). Single quotes, doubled internally, is the one
+    yaml quoting rule with no escape sequences inside it to get wrong.
+    """
+    s = str(value)
+    if s == "":
+        return "''"
+    risky = (": " in s or s.endswith(":") or " #" in s or s.isdigit()
+             or s[0] in "&*!|>%@`\"'[]{},?-" or s.strip() != s)
+    return "'" + s.replace("'", "''") + "'" if risky else s
+
+
+def _yaml_map(key: str, mapping: dict) -> str:
+    """A one-level nested mapping — `init_frame:` and anything like it.
+
+    None values are DROPPED, the same convention write_sidecar's `extra` uses:
+    an absent field reads as "not recorded", which is honest, where a null reads
+    as "recorded as nothing", which is not.
+    """
+    items = [(k, v) for k, v in (mapping or {}).items() if v is not None]
+    if not items:
+        return ""
+    lines = [f"{key}:"]
+    for k, v in items:
+        if "\n" in str(v):
+            body = "\n".join("    " + ln for ln in str(v).splitlines())
+            lines.append(f"  {k}: |-\n{body}")
+        else:
+            lines.append(f"  {k}: {_yaml_scalar(v)}")
+    return "\n".join(lines) + "\n"
+
+
+def plate_dir(task: dict) -> Path:
+    """Where this task's conditioning plates are written.
+
+    Beside the job under ROOT, which is the one deletable folder the whole video
+    stack lives in — NOT beside the clip. `courier.out` is git-added, committed
+    and pushed on every finished beat, so a plate written there would put ~1MB of
+    intermediate per beat onto the courier branch and leave the last one sitting in
+    the delivery folder looking like output. Same reasoning ltx_i2v records for its
+    crf round-trip images, and the same answer.
+    """
+    return ROOT / f"plates-{task.get('id') or 'adhoc'}"
+
+
+def conditioning_plate(task: dict, still: Path, size: str, beat: int, courier=None):
+    """The aspect-correct plate for one beat, and its `init_frame` record.
+
+    THIS IS THE FIX, and it is deliberately upstream of both renderers rather than
+    inside either. Every canon still is 832x1216 and every clip is rendered at
+    704x1280; handed the raw still, wan_i2v resized it to the target with no regard
+    for aspect and LTX's preprocessor did the same, so every clip in the tree came
+    out 24.4% vertically stretched. Cropping HERE means the corrupt input never
+    reaches a renderer at all — including ltx_i2v.py, which carries a parked diff
+    and must not be edited, and including any renderer added later that has not yet
+    learned to be careful.
+
+    Returns `(plate_path, record)`, or `(None, None)` when the still cannot be
+    read or fitted. A beat is then SKIPPED by the caller rather than rendered from
+    the raw file: falling back to the original path is falling back to the defect,
+    quietly, on the one machine nobody is watching.
+    """
+    try:
+        return plate_prep.prepare_plate(still, size, plate_dir(task),
+                                        tag=f"{beat:02d}")
+    except Exception as exc:                        # unreadable, truncated, exotic
+        msg = (f"beat {beat}: {Path(still).name} could not be fitted to {size} "
+               f"({type(exc).__name__}: {exc}) - skipped rather than stretched")
+        if courier:
+            courier.say(msg)
+        else:
+            print(f"!! {msg}", flush=True)
+        return None, None
+
+
+def append_init_frame(clip, record: dict) -> bool:
+    """Add the `init_frame:` block to a sidecar another process wrote.
+
+    ltx_i2v calls write_sidecar itself and records what only it knew — the offload
+    mode that ran, the quantisation, the measured throughput. It does not know
+    which still it was conditioned on, because the queue handed it a plate path in
+    a jobs file and the plate is a derived file; and it cannot be taught to, since
+    that file is parked and must not be edited. The queue DOES know, so the queue
+    appends.
+
+    APPEND, NEVER REWRITE. Render-time provenance is not edited in place in this
+    tree (see licence_gate's note on `corrections:`), and this is an addition of a
+    field nobody wrote rather than a correction of one somebody did. Idempotent: a
+    sidecar that already carries an init_frame block is left exactly alone, so a
+    re-run cannot double it.
+    """
+    p = Path(str(clip) + ".meta.yaml")
+    if not record or not p.is_file():
+        return False
+    text = p.read_text(encoding="utf-8")
+    if re.search(r"^init_frame:", text, re.M):
+        return False
+    if not text.endswith("\n"):
+        text += "\n"
+    p.write_text(text + _yaml_map("init_frame", record), encoding="utf-8")
+    return True
+
+
 def slot_out_path(out, base_seed: int, slot: int, batch: int) -> str:
     """Where clip `slot` of a batched sample is written. PURE — unit-tested.
 
@@ -971,7 +1085,7 @@ def worker_id(task=None, gpu=None) -> str:
 
 
 def write_sidecar(clip, vmodel, task, beat, seconds, steps, size,
-                  prompt=None, negative=None, extra=None):
+                  prompt=None, negative=None, extra=None, init_frame=None):
     """A §7.2 provenance sidecar beside every generated clip.
 
     Video clips have been landing on the courier branch as bare mp4s, with the
@@ -1015,6 +1129,17 @@ def write_sidecar(clip, vmodel, task, beat, seconds, steps, size,
         # way at all. Record what was actually asked for.
         + _yaml_block("prompt", prompt or "")
         + _yaml_block("negative", negative or "")
+        # THE INIT FRAME IS PROVENANCE TOO, and its absence was a real hole: an
+        # i2v clip is at least as much its conditioning image as its prompt, and
+        # until 2026-08-08 no sidecar named the still, let alone its bytes. So a
+        # clip rendered from a still that was later redrawn, or from the REVOKED
+        # sibling of the approved one, was indistinguishable on disk from a clip
+        # rendered from the right file. The sha is the point: two stills that
+        # differ by a colour grade have the same filename and the same size.
+        # `crop_policy` is here because the framing is now a DECISION — the plate
+        # is a crop of the still, not the still — and a record that hid that
+        # would be the stretch bug's exact twin one layer down.
+        + _yaml_map("init_frame", init_frame or {})
         # `extra` carries what only the RENDERER knew — mode, batch, batch_slot,
         # measured throughput. Appended after the prompt blocks, which is where the
         # AnimeGen probe's sidecars already put them, so the two generations of
@@ -1198,14 +1323,22 @@ def run_ltx(task, courier, beats, shots, stills, directed, actions,
         pf, nf = work / f"{num:02d}-prompt.txt", work / f"{num:02d}-negative.txt"
         pf.write_text(pos, encoding="utf-8")
         nf.write_text(neg, encoding="utf-8")
+        # THE PLATE, NOT THE STILL, and this is the only place LTX's stretch can
+        # be fixed from. ltx_i2v hands whatever `init` names straight to the pipe,
+        # whose preprocessor resizes to --size without looking at aspect; that file
+        # is parked and cannot be edited. Handing it a frame that is ALREADY
+        # 704x1280 makes its resize a no-op, so the bug has nothing to act on.
+        plate, frame = conditioning_plate(task, init, size, num, courier)
+        if plate is None:
+            continue
         o = courier.out / f"{task.get('id')}-{num:02d}-{s['slug']}.mp4"
         jobs.append({"beat": num, "embeds": str(work / f"{num:02d}-embeds.pt"),
                      "prompt_file": str(pf), "negative_file": str(nf),
-                     "init": str(init), "out": str(o),
+                     "init": str(plate), "out": str(o),
                      "seed": int(task.get("seed_base", 20260731)) + num})
-        outs.append((num, o, pos, neg))
+        outs.append((num, o, pos, neg, frame))
     if not jobs:
-        raise RuntimeError("no beat had both a shot and an approved still")
+        raise RuntimeError("no beat had both a shot and a usable approved still")
 
     jf = work / "jobs.json"
     jf.write_text(json.dumps(jobs, indent=1), encoding="utf-8")
@@ -1221,7 +1354,7 @@ def run_ltx(task, courier, beats, shots, stills, directed, actions,
          courier, f"ltx batch {task.get('id')}", timeout=14400, retry=True)
 
     made = 0
-    for num, o, pos, neg in outs:
+    for num, o, pos, neg, frame in outs:
         if o.exists() and o.stat().st_size > 10_000:
             made += 1
             # NO SIDECAR IS WRITTEN HERE WHEN THE RENDERER WROTE ONE, and that is
@@ -1238,7 +1371,11 @@ def run_ltx(task, courier, beats, shots, stills, directed, actions,
                               round(ltx_frames_for(seconds, fps) / fps, 3),
                               "two-stage distilled" if task.get("two_stage", True)
                               else str(task.get("steps", 8)),
-                              size, prompt=pos, negative=neg)
+                              size, prompt=pos, negative=neg, init_frame=frame)
+            else:
+                # The renderer's own sidecar is kept intact and gains the one
+                # field it had no way to know — see append_init_frame.
+                append_init_frame(o, frame)
             courier.mark(f"VIDEO_CLIP_OK beat={num:02d} "
                          f"{o.stat().st_size // 1024}KB")
         else:
@@ -1305,11 +1442,15 @@ def run(task: dict, courier, node_dir: Path) -> None:
                                     s["prompt"],
                                     no_anchor=bool(task.get("no_anchor")),
                                     beat=num)
-            jobs.append({"init": str(init), "out": str(o), "prompt": pos,
+            # aspect-correct before it leaves this process — see conditioning_plate
+            plate, frame = conditioning_plate(task, init, size, num, courier)
+            if plate is None:
+                continue
+            jobs.append({"init": str(plate), "out": str(o), "prompt": pos,
                          "negative": neg,
                          "seed": int(task.get("seed_base", 20260731)) + num})
             # carry the prompt to the sidecar — see write_sidecar on why
-            outs.append((num, o, pos, neg))
+            outs.append((num, o, pos, neg, frame))
         if jobs:
             jf = ROOT / f"jobs-{task.get('id')}.json"
             jf.write_text(json.dumps(jobs), encoding="utf-8")
@@ -1337,11 +1478,11 @@ def run(task: dict, courier, node_dir: Path) -> None:
                  courier, f"batch {task.get('id')}", timeout=14400, retry=True)
             jf.unlink(missing_ok=True)
             made = 0
-            for num, o, pos, neg in outs:
+            for num, o, pos, neg, frame in outs:
                 if o.exists() and o.stat().st_size > 10_000:
                     made += 1
                     write_sidecar(o, vmodel, task, num, seconds, steps, size,
-                                  prompt=pos, negative=neg)
+                                  prompt=pos, negative=neg, init_frame=frame)
                     courier.mark(f"VIDEO_CLIP_OK beat={num:02d} {o.stat().st_size//1024}KB")
                 else:
                     courier.mark(f"VIDEO_CLIP_EMPTY beat={num:02d}")
@@ -1380,6 +1521,15 @@ def run(task: dict, courier, node_dir: Path) -> None:
                                    s["prompt"],
                                    no_anchor=bool(task.get("no_anchor")),
                                    beat=num)
+        # THE THIRD CALL SITE, and the reason conditioning_plate is a function.
+        # This branch's history is a list of parameters the other two had and it
+        # did not (--guidance, --model, --quantise, the shot-board prompt fix), so
+        # a framing rule applied to the batch paths and not to this one would just
+        # be the next entry: a task with two beats framed correctly and a task with
+        # one silently stretched.
+        plate, frame = conditioning_plate(task, init, size, num, courier)
+        if plate is None:
+            continue
         vmodel = str(task.get("video_model", "ti2v-5b"))
         out = courier.out / f"{task.get('id')}-{num:02d}-{s['slug']}.mp4"
         emb = ROOT / f"embeds-{num:02d}.pt"
@@ -1396,7 +1546,7 @@ def run(task: dict, courier, node_dir: Path) -> None:
             courier.mark(f"VIDEO_RENDERING beat={num:02d} on {vmodel} "
                          f"(single-process)")
             _run([str(PY), wan, "--stage", "simple", "--embeds", str(emb),
-                  "--prompt", prompt, "--init", str(init), "--out", str(out),
+                  "--prompt", prompt, "--init", str(plate), "--out", str(out),
                   "--negative", neg,
                   "--model", vmodel,
                   "--quantise", str(task.get("quantise", "none")),
@@ -1435,7 +1585,7 @@ def run(task: dict, courier, node_dir: Path) -> None:
             # depending on which one runs — that divergence is exactly how
             # "guidance did nothing" got written down as a finding.
             _run([str(PY), wan, "--stage", "render", "--embeds", str(emb),
-                  "--init", str(init), "--out", str(out),
+                  "--init", str(plate), "--out", str(out),
                   "--model", vmodel,
                   "--quantise", str(task.get("quantise", "none")),
                   "--guidance", str(task.get("guidance", 5.0)),
@@ -1446,7 +1596,7 @@ def run(task: dict, courier, node_dir: Path) -> None:
         if out.exists() and out.stat().st_size > 10_000:
             made += 1
             write_sidecar(out, vmodel, task, num, seconds, steps, size,
-                          prompt=prompt, negative=neg)
+                          prompt=prompt, negative=neg, init_frame=frame)
             courier.mark(f"VIDEO_CLIP_OK beat={num:02d} "
                          f"{out.stat().st_size // 1024}KB")
         else:

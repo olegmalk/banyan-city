@@ -1767,10 +1767,18 @@ def test_ltx_dispatch_routes_by_video_model(tmp: Path):
     sys.path.insert(0, str(REPO / "pipeline"))
     import video_task as V
 
+    from PIL import Image
+
     node = REPO / "genomes/sapling/nodes/001-capability-inventory"
     stills = tmp / "stills"
     stills.mkdir()
-    (stills / "01-keyboard.png").write_bytes(b"\x89PNG\r\n\x1a\n" + b"0" * 64)
+    # A REAL IMAGE AT THE REAL CANON SIZE, not the eight PNG magic bytes this
+    # fixture used until 2026-08-08. Dispatch now prepares an aspect-correct
+    # conditioning plate before either renderer is called (conditioning_plate),
+    # so a still that cannot be opened is a beat that gets SKIPPED — and a
+    # fixture that skips every beat answers the routing question by accident,
+    # from the "no clips produced" path, whichever renderer was picked.
+    Image.new("RGB", (832, 1216), (40, 60, 45)).save(stills / "01-keyboard.png")
     work = tmp / "node"
     work.mkdir()
     for f in ("shots.md", "node.md"):
@@ -1947,6 +1955,277 @@ def test_ltx_jobs_list_is_one_beat_per_entry(tmp: Path):
             {"beat": 2, "embeds": str(tmp / "e2.pt"), "init": str(tmp / "02.png"),
              "out": str(tmp / "same.mp4")}], "render",
            "two beats writing the same file is refused")
+
+
+def test_the_conditioning_plate_is_the_episode_crop(tmp: Path):
+    """The crop that frames a video plate must be the crop that frames the cut.
+
+    THE DEFECT, hash-verified 2026-08-08: every canon still is 832x1216 (aspect
+    0.684) and every clip is rendered at 704x1280 (0.550), and both renderers
+    closed that gap with a two-argument resize — wan_i2v.py:541 and :713 called
+    `Image.resize((w, h))` outright, ltx_i2v handed the raw PIL image to a
+    preprocessor that does the same. 0.684/0.550 = 1.2440, so every clip came out
+    24.4% vertically stretched and nothing said so, because a stretched frame is a
+    valid frame and no metric in this repo measures aspect.
+
+    THE POLICY IS BORROWED, NOT CHOSEN. render_t3 has fitted every delivered
+    episode to 9:16 with `force_original_aspect_ratio=increase` + `crop=W:H`
+    since T3 existed — scale to cover, then take the middle. That framing is
+    founder-approved by having been screened; picking a different one for the
+    plates would mean conditioning the model on a composition the episode then
+    re-crops. The first assertion below reads that filter string back out of
+    render_t3, so if the episode's policy ever moves, THIS test is what says the
+    plate policy has silently stopped matching it.
+
+    The pixel fingerprint is the part that cannot be argued with: the plate must
+    equal crop-then-resample of the source, byte for byte, and must NOT equal the
+    naive stretch. Sizes and aspect ratios alone would pass a plate cropped from
+    the wrong side.
+    """
+    from PIL import Image
+
+    sys.path.insert(0, str(REPO / "pipeline"))
+    import plate_prep as pp
+
+    # 1. THE POLICY THIS MATCHES, read from the file that ships the episodes.
+    graph = (REPO / "pipeline" / "render_t3.py").read_text(encoding="utf-8")
+    check("ep1's fit is still scale-to-cover plus centre crop",
+          "force_original_aspect_ratio=increase" in graph
+          and f"crop={{WIDTH}}:{{HEIGHT}}" in graph)
+    check("ep1 does not letterbox its footage",
+          "force_original_aspect_ratio=decrease" not in graph)
+
+    # 2. THE ARITHMETIC, both directions and the no-op.
+    check("832x1216 into 704x1280 crops WIDTH, centred",
+          pp.cover_crop_box(832, 1216, 704, 1280) == (81, 0, 750, 1216))
+    check("the kept window is 669 wide — 163px out, 81 left and 82 right",
+          (750 - 81, 832 - 669) == (669, 163))
+    check("704x1280 into 832x1216 crops HEIGHT, centred",
+          pp.cover_crop_box(704, 1280, 832, 1216) == (0, 125, 704, 1154))
+    check("an exactly on-aspect source is not cropped",
+          pp.cover_crop_box(704, 1280, 704, 1280) is None)
+    check("one pixel of disagreement is rounding, not framing",
+          pp.cover_crop_box(703, 1280, 704, 1280) is None)
+    check("four pixels is framing, and is cropped",
+          pp.cover_crop_box(700, 1280, 704, 1280) == (0, 3, 700, 1276))
+    check("a half-scale source of the same shape is left alone",
+          pp.cover_crop_box(416, 608, 832, 1216) is None)
+    check("the note says the numbers, in ascii, for a cp1252 console",
+          "163px of width (81 left, 82 right)" in pp.crop_note(832, 1216, 704, 1280)
+          and pp.crop_note(832, 1216, 704, 1280).isascii())
+
+    # 3. THE PIXELS. An asymmetric source, so a crop taken from the wrong side or
+    # a left/right flip fails instead of looking plausible.
+    src = Image.new("RGB", (832, 1216))
+    src.putdata([(x % 256, y % 256, (x * 3 + y * 7) % 256)
+                 for y in range(1216) for x in range(832)])
+    still = tmp / "01-canon.png"
+    src.save(still)
+
+    plate, rec = pp.prepare_plate(still, "704x1280", tmp / "plates", tag="01")
+    got = Image.open(plate).convert("RGB")
+    check("the plate is exactly the target size", got.size == (704, 1280))
+    check("the plate's aspect is 0.55, not the still's 0.684",
+          abs(got.size[0] / got.size[1] - 0.55) < 1e-9)
+    want = src.crop((81, 0, 750, 1216)).resize((704, 1280), Image.LANCZOS)
+    check("the plate IS the centre crop of the source, pixel for pixel",
+          got.tobytes() == want.tobytes())
+    stretched = src.resize((704, 1280), Image.LANCZOS)
+    check("and is not the stretch the renderers used to do",
+          got.tobytes() != stretched.tobytes())
+
+    # 4. THE RECORD. It names the durable half (the still, by repo-relative path
+    # and sha) as well as the derived half, because the plate dir gets deleted.
+    check("the record names the source still, not just the plate",
+          rec["path"].endswith("01-canon.png")
+          and rec["sha256"] == pp.sha256_file(still))
+    check("the record measures both frames",
+          (rec["source_wxh"], rec["plate_wxh"]) == ("832x1216", "704x1280"))
+    check("the record says what was cropped and by which policy",
+          rec["crop_policy"].startswith("cover-centre")
+          and "163px of width" in rec["crop_policy"])
+    check("the record hashes the bytes the model actually saw",
+          rec["plate_sha256"] == pp.sha256_file(plate))
+
+    # 5. AN ALREADY-CORRECT PLATE IS STILL RESAMPLED TO SIZE. Right aspect, wrong
+    # scale is the same class of silent wrongness one step smaller.
+    half = tmp / "half.png"
+    Image.new("RGB", (352, 640), (9, 9, 9)).save(half)
+    p2, r2 = pp.prepare_plate(half, "704x1280", tmp / "plates", tag="02")
+    check("an on-aspect but undersized still is scaled, not passed through",
+          Image.open(p2).size == (704, 1280) and "no crop" in r2["crop_policy"])
+
+
+def test_dispatch_never_hands_a_renderer_a_raw_still(tmp: Path):
+    """Both renderers must be conditioned on a plate, and the sidecar must say so.
+
+    This is the half of the aspect fix that ltx_i2v.py cannot carry. That file
+    hands `--init` straight to a preprocessor that resizes to --size without
+    looking at aspect, and it is parked — so the only place LTX's stretch can be
+    fixed from is upstream, by making sure the corrupt input never arrives. Every
+    dispatch path is asserted because this file's history is a list of parameters
+    that reached two of its three sampling paths and not the third.
+
+    THE PROVENANCE HALF IS NOT A GARNISH. An i2v clip is at least as much its
+    conditioning image as its prompt, and until today no sidecar named the still
+    at all — so a clip rendered from a REVOKED still, or from the pre-regrade
+    revision of a redrawn one, was indistinguishable on disk from a correct one.
+    The sha is what makes that answerable; two revisions of a still share a name
+    and a size.
+    """
+    import json
+
+    import yaml
+    from PIL import Image
+
+    sys.path.insert(0, str(REPO / "pipeline"))
+    import licence_gate as lg
+    import video_task as V
+
+    node = REPO / "genomes/sapling/nodes/001-capability-inventory"
+    work = tmp / "node"
+    (work / "stills").mkdir(parents=True)
+    for f in ("shots.md", "node.md"):
+        (work / f).write_text((node / f).read_text(encoding="utf-8"), encoding="utf-8")
+    canon = {}
+    for beat, shade in ((1, (200, 40, 40)), (2, (40, 40, 200))):
+        p = work / "stills" / f"{beat:02d}-canon.png"
+        im = Image.new("RGB", (832, 1216), shade)
+        # a bright stripe down one side: a crop taken from an edge instead of the
+        # centre keeps it, and the plate's mean colour then gives the game away
+        im.paste((255, 255, 0), (0, 0, 40, 1216))
+        im.save(p)
+        canon[beat] = p
+    # the REVOKED sibling must stay unread — it is the file whose accidental use
+    # the sha in the record exists to make detectable
+    Image.new("RGB", (832, 1216), (0, 0, 0)).save(
+        work / "stills" / "01-canon-REVOKED-old.png")
+
+    class Courier:
+        def __init__(self):
+            self.out = tmp / "farm-out"
+            self.out.mkdir(exist_ok=True)
+            self.marks, self.said = [], []
+
+        def mark(self, m):
+            self.marks.append(m)
+
+        def say(self, m):
+            self.said.append(m)
+
+    # Collected INSIDE the stub, not read back afterwards: the Wan batch path
+    # unlinks its jobs file the moment the child returns, and the LTX path hands
+    # the same file to two stages, so an after-the-fact sweep of argv would find
+    # one path missing and the other doubled.
+    inits = []
+    real = (V._run, V.gpu_vram_gb, V.ensure_stack)
+    V.gpu_vram_gb = lambda: 24.0
+    V.ensure_stack = lambda courier: None
+
+    def fake_run(cmd, courier, stage, timeout=None, retry=False):
+        cmd = [str(c) for c in cmd]
+        for i, c in enumerate(cmd):
+            if c == "--init":
+                inits.append(Path(cmd[i + 1]))
+            if c == "--out":
+                Path(cmd[i + 1]).write_bytes(b"0" * 20_000)
+            if c == "--jobs":
+                for j in json.loads(Path(cmd[i + 1]).read_text(encoding="utf-8")):
+                    if not isinstance(j, dict):
+                        continue
+                    if j.get("init"):
+                        inits.append(Path(j["init"]))
+                    if j.get("out"):
+                        Path(j["out"]).write_bytes(b"0" * 20_000)
+        return None
+    V._run = fake_run
+
+    try:
+        # THREE PATHS, all three exercised: LTX's jobs file, Wan's batch jobs file
+        # (>1 beat on a big card) and Wan's single-beat argv (1 beat).
+        for label, task in (
+                ("ltx", {"id": "p-ltx", "beats": "1,2", "seconds": 2.7,
+                         "video_model": "ltx23-distilled-fp8", "worker": "rtx5090"}),
+                ("wan-batch", {"id": "p-wanb", "beats": "1,2", "seconds": 4,
+                               "video_model": "ti2v-5b", "worker": "rtx5090"}),
+                ("wan-single", {"id": "p-wans", "beats": "1", "seconds": 4,
+                                "video_model": "ti2v-5b", "worker": "rtx5090"})):
+            inits.clear()
+            courier = Courier()
+            V.run(dict(task), courier, work)
+            # LTX hands one jobs file to encode AND to render, so the same plate
+            # legitimately appears twice; what must be true is that each beat has
+            # one and only one distinct conditioning frame.
+            plates = sorted({p.resolve() for p in inits})
+            check(f"{label}: every beat got a conditioning frame",
+                  len(plates) == len(str(task["beats"]).split(",")))
+            check(f"{label}: no renderer was handed the raw canon still",
+                  not any(p in {q.resolve() for q in canon.values()} for p in plates))
+            check(f"{label}: every conditioning frame is already 704x1280",
+                  all(Image.open(p).size == (704, 1280) for p in plates))
+            check(f"{label}: the plates live outside the courier's push folder",
+                  not any(courier.out.resolve() in p.parents for p in plates))
+
+            clips = sorted(courier.out.glob(f"{task['id']}-*.mp4"))
+            metas = [yaml.safe_load((c.parent / (c.name + ".meta.yaml"))
+                                    .read_text(encoding="utf-8")) for c in clips]
+            check(f"{label}: every clip's sidecar records its init frame",
+                  clips and all(isinstance(m.get("init_frame"), dict) for m in metas))
+            frames = [m["init_frame"] for m in metas]
+            check(f"{label}: the record names the still, not the plate, as source",
+                  all(f["path"].endswith("-canon.png")
+                      and "REVOKED" not in f["path"] for f in frames))
+            check(f"{label}: the record carries the still's own sha256",
+                  {f["sha256"] for f in frames}
+                  <= {V.plate_prep.sha256_file(p) for p in canon.values()})
+            check(f"{label}: the record states the crop, source and plate sizes",
+                  all(f["source_wxh"] == "832x1216" and f["plate_wxh"] == "704x1280"
+                      and "163px of width" in f["crop_policy"] for f in frames))
+    finally:
+        V._run, V.gpu_vram_gb, V.ensure_stack = real
+
+    # A RENDERER'S OWN SIDECAR IS ADDED TO, NEVER REWRITTEN. ltx_i2v writes the
+    # offload mode, the quantisation and the measured throughput; those are the
+    # only record of them, and the queue's thinner version would delete them.
+    clip = tmp / "own.mp4"
+    clip.write_bytes(b"0" * 20_000)
+    side = tmp / "own.mp4.meta.yaml"
+    side.write_text("model: Lightricks/LTX-Video\nthroughput_s_video_per_s_wall: 0.42\n",
+                    encoding="utf-8")
+    rec = {"path": "genomes/sapling/nodes/n/stills/01-x.png", "sha256": "ab" * 32,
+           "source_wxh": "832x1216", "plate_wxh": "704x1280",
+           "crop_policy": V.plate_prep.crop_note(832, 1216, 704, 1280)}
+    check("the queue appends its init_frame to the renderer's record",
+          V.append_init_frame(clip, rec) is True)
+    got = yaml.safe_load(side.read_text(encoding="utf-8"))
+    check("and the renderer's own measurements survive it",
+          got["throughput_s_video_per_s_wall"] == 0.42
+          and got["model"] == "Lightricks/LTX-Video")
+    check("the appended block round-trips through yaml",
+          got["init_frame"]["sha256"] == "ab" * 32
+          and got["init_frame"]["crop_policy"].startswith("cover-centre"))
+    check("a second append is a no-op, not a duplicate block",
+          V.append_init_frame(clip, rec) is False
+          and side.read_text(encoding="utf-8").count("init_frame:") == 1)
+
+    # THE READERS TOLERATE THE NEW KEY, verified the way `corrections:` was: the
+    # gate walks every nested dict as its own record, so a block of five scalars
+    # with no model, platform or licence in it must read as "nothing to judge"
+    # and must not turn a clean clip into a violation. `path` is deliberately not
+    # one of the gate's ASSET_KEYS — naming it `still:` would have.
+    root = tmp / "gate"
+    n = root / "genomes/g/nodes/n/clips"
+    n.mkdir(parents=True)
+    body = ("platform: local-gpu (rtx5090)\nmodel: Wan-AI/Wan2.2-TI2V-5B-Diffusers\n"
+            "model_licence: Apache-2.0\ncost_usd: 0\n")
+    (n / "01-a.mp4").write_bytes(b"0" * 100)
+    (n / "01-a.mp4.meta.yaml").write_text(body, encoding="utf-8")
+    before, _ = lg.scan(root)
+    (n / "01-a.mp4.meta.yaml").write_text(
+        body + V._yaml_map("init_frame", rec), encoding="utf-8")
+    after, _ = lg.scan(root)
+    check("licence_gate reads a sidecar the same with init_frame as without",
+          before == after == [])
 
 
 def test_vercel_build_guard_covers_every_site_input():
@@ -3583,6 +3862,10 @@ def main():
         test_ltx_dispatch_routes_by_video_model(Path(td))
     with tempfile.TemporaryDirectory() as td:
         test_ltx_jobs_list_is_one_beat_per_entry(Path(td))
+    with tempfile.TemporaryDirectory() as td:
+        test_the_conditioning_plate_is_the_episode_crop(Path(td))
+    with tempfile.TemporaryDirectory() as td:
+        test_dispatch_never_hands_a_renderer_a_raw_still(Path(td))
     test_vercel_build_guard_covers_every_site_input()
     test_review_page_publishes_nothing_unprovenanced()
     test_checklist_does_not_reask_a_closed_question()
