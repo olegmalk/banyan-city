@@ -294,6 +294,17 @@ MODEL_LICENCES = {
     # would be exactly the "loosen the ratchet" move the ratchet exists to stop.
     # So the nuance lives in MODEL_NOTES, which is printed and never classified —
     # the same split the google-flow comment above prescribes.
+    #
+    # ADDING THE KEY WAS NOT ENOUGH, which is the 2026-08-08 half of this entry.
+    # model_licences() ordered its hits by KEY LENGTH, so on a string naming both
+    # — `diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled,
+    # bf16)`, which is exactly what video_task writes — the 10-character catch-all
+    # still outranked the 7-character version key, and engine_licence() handed
+    # publishable() the 0.X document again. The specific entry existed, was
+    # correct, and lost on spelling: the mislabel this comment was written to
+    # prevent went on happening for three days underneath the fix for it.
+    # Which key wins is DECLARED now, in SUPERSEDES_CATCH_ALL below, and no longer
+    # inferred from how many letters a vendor's name happens to have.
     "ltx-2-3": "LTX-2 Community Licence Agreement (D16; watch-only, sign-off pending)",
     "lightricks": "LTXV Open Weights Licence 0.X (read; founder sign-off pending)",
     "dreamshaper": "CreativeML-OpenRAIL-M",      # SD1.5 derivative; outputs unrestricted
@@ -408,6 +419,35 @@ MODEL_LICENCES = {
     "sfx-py": "CC-BY-4.0 (our own output)",
 }
 
+# A VENDOR CATCH-ALL IS THE LICENCE OF LAST RESORT FOR THAT VENDOR. Version-specific
+# key → the catch-all key it supersedes: when one provenance string matches both, the
+# version is the answer and the catch-all is dropped (model_licences below).
+#
+# Needed because the keys are matched as SUBSTRINGS of one normalised string, so a
+# sidecar naming the vendor AND the version legitimately matches both, and something
+# has to decide which document gets cited. Until 2026-08-08 that something was
+# len(name), which is a fact about spelling and not about licences — see the ltx-2-3
+# entry for the three days it cost.
+#
+# THE ENTRY IS WRITTEN BESIDE THE VERSION, not as a member list on the catch-all, and
+# the direction is the point: adding `ltx-3` tomorrow means writing its licence and
+# its supersession in the same file at the same moment. A catch-all that enumerated
+# its own family would go stale the first time someone added a version and did not
+# think to come back up here — the voxcpm2 comment's rule ("add every new version
+# explicitly, never inherit by prefix") pointed the other way.
+#
+# NOT "a catch-all defers to whatever else matched", which is the tempting one-liner
+# and is an allow-by-inheritance hole: `Lightricks/LTX-9 on local-gpu` matches
+# `lightricks` and `local-gpu`, and dropping the catch-all because SOMETHING else
+# matched would leave only our own compute — an unread Lightricks model waved through
+# as publishable. Deferral is only ever to a version whose licence someone read,
+# which is precisely what an entry in this table certifies.
+SUPERSEDES_CATCH_ALL = {
+    "ltx-video": "lightricks",
+    "ltx-2-3": "lightricks",
+}
+CATCH_ALLS = frozenset(SUPERSEDES_CATCH_ALL.values())
+
 # Models with NO LICENCE TEXT ANYWHERE — a different state from "nobody has read
 # it yet", and the difference is worth encoding because it changes what to DO.
 #
@@ -455,13 +495,19 @@ MODEL_NOTES = {
     "ltx-video": " — the licence is read and says the cap gates the weights, not "
                  "the footage; awaiting founder sign-off before this becomes an "
                  "allow (D13)",
-    # Left as the 0.X reading on purpose: 'lightricks' is the LONGER key, so it
-    # wins the note lookup for our archived LTX-Video takes, which are 0.X. A
-    # version-agnostic note here would replace an accurate message with a vaguer
-    # one for the only assets that actually hit it.
+    # THE LAST-RESORT NOTE NOW, not the winning one (2026-08-08). It used to print
+    # for our archived LTX-Video takes because 'lightricks' was the longer key;
+    # SUPERSEDES_CATCH_ALL drops it on any string that also names a version we have
+    # read, so what reaches this line is a Lightricks model matching NO version key.
+    # The 0.X reading is still the right thing to say — 0.X is what applies to
+    # anything Lightricks released from 2025-04-15 that we have not separately
+    # classified — but the remedy is now the unlisted version, so it says so.
     "lightricks": " — the licence is read and says the cap gates the weights, not "
                   "the footage; awaiting founder sign-off before this becomes an "
-                  "allow (D13)",
+                  "allow (D13). If the value names an LTX version this table does "
+                  "not list, that version is what you are looking at and 0.X may "
+                  "not be its document: read ITS licence, add it beside 'ltx-2-3', "
+                  "and register the supersession in SUPERSEDES_CATCH_ALL",
     "ltx-2-3": " — LTX-2 Community License read end to end (D16): commercial use "
                "free below $10M revenue and no rights claimed in output, so the "
                "reuse side is clear under watch-only. What binds US: AI-disclosure "
@@ -487,8 +533,19 @@ ENGINE_KEYS = {"engine", "voice_engine", "vo_engine", "tts_engine"}
 # Keys naming the model or the service that made an asset — the PICTURE side of
 # the gate, checked exactly like an engine (hole 1).
 MODEL_KEYS = {"model", "still_model", "motion_model", "video_model", "image_model",
-              "base_model", "motion_module"}
-PLATFORM_KEYS = {"platform", "provider", "service", "vendor"}
+              "base_model", "motion_module",
+              # A CORRECTION IS JUDGED LIKE THE FIELD IT CORRECTS (2026-08-08).
+              # Render-time provenance is never rewritten — a wrong value is
+              # annotated with a dated `corrections:` block instead, so the
+              # record keeps the evidence that it was ever wrong. That
+              # convention hands the gate a second place a model name can live,
+              # and a place it did not read would be the cheapest route past it:
+              # write `model: none`, correct it to something unpublishable
+              # underneath, ship. Hole 2's shape exactly ("absence is never
+              # safer than presence"), spelled as an append instead of a delete.
+              "corrected_model", "corrected_still_model"}
+PLATFORM_KEYS = {"platform", "provider", "service", "vendor",
+                 "corrected_platform"}          # same rule as corrected_model above
 PROVENANCE_KEYS = ENGINE_KEYS | MODEL_KEYS | PLATFORM_KEYS
 # Keys that name the asset a record is about, for the error message.
 ASSET_KEYS = ("clip", "file", "audio", "still", "content", "leaf")
@@ -535,11 +592,20 @@ def model_licences(text) -> list:
     stable-video-diffusion-img2vid-xt' — and v1's resolver returned the single
     longest match, so sixteen shipping sidecars were judged by their still
     model and their non-commercial motion model was never looked at. A record
-    ships only if every model it names is publish-safe."""
+    ships only if every model it names is publish-safe.
+
+    LENGTH DECIDES NOTHING ABOUT WHICH DOCUMENT A MODEL IS JUDGED UNDER
+    (2026-08-08). A vendor catch-all whose version-specific key also matched is
+    dropped here per SUPERSEDES_CATCH_ALL, and any catch-all that survives sorts
+    last — so `Lightricks/LTX-2.3` is answered by the LTX-2 Community Licence and
+    not by whichever key spells its vendor with more letters. Length still breaks
+    ties between unrelated keys, where it decides nothing that matters."""
     norm = normalise(text)
-    return [(name, MODEL_LICENCES[name])
-            for name in sorted(MODEL_LICENCES, key=len, reverse=True)
-            if name in norm]
+    hits = [name for name in MODEL_LICENCES if name in norm]
+    superseded = {SUPERSEDES_CATCH_ALL[n] for n in hits if n in SUPERSEDES_CATCH_ALL}
+    hits = [n for n in hits if n not in superseded]
+    hits.sort(key=lambda n: (n in CATCH_ALLS, -len(n)))
+    return [(name, MODEL_LICENCES[name]) for name in hits]
 
 
 def engine_licence(engine) -> str:

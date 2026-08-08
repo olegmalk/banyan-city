@@ -3208,6 +3208,54 @@ def test_licence_gate(tmp: Path):
     errors, _ = tree("leaf-launder-ok", check_named)
     check("...and the same row with a real platform does provenance it", errors == [])
 
+    # ---- THE RIGHT REFUSAL FOR THE WRONG REASON: a vendor catch-all outranked
+    # the version key that exists to beat it. 2026-08-08.
+    #
+    # The keys are matched as substrings of one normalised string, so a sidecar
+    # naming both the vendor and the version matches both keys — and
+    # model_licences ordered its hits by len(name), so the 10-character
+    # `lightricks` catch-all (LTXV Open Weights 0.X) beat the 7-character
+    # `ltx-2-3` (LTX-2 Community Licence, a different document with a 20-item use
+    # schedule 0.X does not have). The clip was refused either way, which is why
+    # it survived three days: the verdict was right and only the citation was
+    # wrong. A gate that refuses for the wrong reason sends the next person to
+    # read the wrong licence.
+    #
+    # The string below is verbatim from review/ep2-b01/ltx-b01.mp4.meta.yaml —
+    # video_task.MODEL_LICENCE["ltx23-distilled"], what our own renderer writes —
+    # rather than a shortened stand-in, because the bug was in how the two keys
+    # collide inside a REAL provenance value.
+    LTX23 = "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)"
+    check("a real LTX-2.3 sidecar string resolves to the version, not the vendor",
+          [n for n, _ in lg.model_licences(LTX23)] == ["ltx-2-3"])
+    check("...so the document cited is the LTX-2 Community Licence (D16)",
+          "LTX-2 Community Licence" in (lg.engine_licence(LTX23) or ""))
+    check("...and not the LTXV Open Weights 0.X the catch-all names",
+          "0.X" not in (lg.engine_licence(LTX23) or ""))
+    check("...while the refusal itself is unchanged — it was never the defect",
+          lg.classify(lg.engine_licence(LTX23))[0] != "allow")
+    errors, _ = tree("ltx23-document", {f"{N}/clips/01-a.meta.yaml":
+                                        f"platform: local-gpu (rtx5090)\nmodel: {LTX23}\n"})
+    check("the gate reports that sidecar once, under D16",
+          len(errors) == 1 and "D16" in errors[0] and "0.X" not in errors[0])
+    # THE OTHER DIRECTION, and the reason the catch-all is dropped only for a
+    # version we have READ rather than for anything else that matched. "Defer to
+    # whatever else is in the string" would clear an unlisted Lightricks model the
+    # moment its sidecar also named our own GPU — allow-by-inheritance, the one
+    # direction that publishes things (the voxcpm2 entry's rule).
+    UNLISTED = "Lightricks/LTX-9-preview on local-gpu (rtx5090)"
+    check("an LTX version in no table still falls to the vendor catch-all",
+          lg.classify(lg.engine_licence(UNLISTED))[0] != "allow")
+    check("...and our own compute standing beside it does not clear it",
+          "lightricks" in [n for n, _ in lg.model_licences(UNLISTED)])
+    # and the archived 0.X takes keep their own document: supersession is
+    # per-version, so ltx-video answers for LTX-Video exactly as it always did
+    check("an LTX-Video string is still judged under LTXV Open Weights 0.X",
+          "0.X" in (lg.engine_licence("Lightricks/LTX-Video") or ""))
+    check("every SUPERSEDES_CATCH_ALL key is a model this table has classified",
+          all(k in lg.MODEL_LICENCES and v in lg.MODEL_LICENCES
+              for k, v in lg.SUPERSEDES_CATCH_ALL.items()))
+
     # ---- the CANDIDATE tier: takes/ is scoped out of the ratchet, not hidden --
     # 2026-08-07. A candidate-stills wave wrote 40 honest sidecars into one
     # node's takes/stills/ in a single night and took the debt 38 -> 78, forty
