@@ -1,0 +1,782 @@
+# Prediction ledger for taste/steward-model.v1.md (§3).
+#
+# One record per PROVISIONAL pick. Every record is written BEFORE the founder
+# sees the artifact — a record added or edited after his verdict is not a
+# prediction and is worthless. Append only; never rewrite a record.
+#
+# The `founder_*` and `outcome` fields stay null until he rules. A miss names
+# the axis it broke and is what drives a v2 of the model; nothing else does.
+#
+# Ground truth is the founder (R4). This file never overrules him.
+#
+# Rolling hit rate: undefined — 0 verdicts recorded against 25 predictions.
+
+- id: ep2-b01-r5-provisional
+  date: 2026-08-09
+  subject: "node 002b beat 01 — cold open, round 5 redraw of the revoked plate"
+  kind: still
+  candidates: [b01-r5-s0, b01-r5-s1, b01-r5-s2, b01-r5-s3]
+  address_key: REVIEW-KEY-0808.md
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  scores:
+    b01-r5-s0: {A1: -2, A2: 1, A3: -2, A4: -2, A7: -2}
+    b01-r5-s1: {A1: -2, A2: 1, A3: -2, A4: -1, A7: -2}
+    b01-r5-s2: {A1: -2, A2: 0, A3: -2, A4: -2, A7: -2}
+    b01-r5-s3: {A1: 0, A2: 1, A3: 1, A4: 1, A5: 1, A6: 1, A7: -2}
+  vetoed: [b01-r5-s0, b01-r5-s1, b01-r5-s2, b01-r5-s3]
+  totals: {}
+  predicted_verdict: reject_all
+  predicted_flip_to: null
+  predicted_objection: "A7 and A3 — 'tooooo tall' again on s3, and a person standing in an empty field in s0/s1/s2"
+  confidence: 0.80
+  reasoning: >
+    s0 and s2 hang the plant DOWN from the top edge as a vine; s1 floats a
+    detached sprout above the horizon; all three put a human child in a field the
+    script calls empty. s3 is clean of those and reproduces the revoked plate's
+    own measurements — hairline stem, apex 25% from the top, ~36% of frame
+    height, taller in frame than the 32% he threw out. Round 5's only lever was
+    the word `sturdy`, and the drawing did not move.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep1-b03-r3-provisional
+  date: 2026-08-09
+  subject: "node 001 beat 03 — deploy succeeded, close-up indoors domestic"
+  kind: still
+  candidates: [b03-r3-s0, b03-r3-s1, b03-r3-s2, b03-r3-s3]
+  address_key: REVIEW-KEY-0808.md
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  scores:
+    b03-r3-s0: {A2: 1, A3: -2, A4: -1, A5: -2}
+    b03-r3-s1: {A2: 0, A3: -2, A4: -2, A5: -1}
+    b03-r3-s2: {A2: -2, A3: -1, A4: -1, A5: -2}
+    b03-r3-s3: {A2: 1, A3: -2, A5: -2}
+  vetoed: [b03-r3-s0, b03-r3-s1, b03-r3-s2, b03-r3-s3]
+  totals: {}
+  predicted_verdict: reject_all
+  predicted_flip_to: null
+  predicted_objection: "A3/A5 — an anime girl on the monitor in two, the glyph junk he already rejected in the others"
+  confidence: 0.85
+  reasoning: >
+    The house landed and the close-up landed; the failure is entirely inside the
+    screen rectangle, and it is the same failure he rejected all eight of r1+r2
+    for. Two frames put character art on the monitor (wallpaper is in this beat's
+    own negative), one puts gibberish glyphs, one is the neon vaporwave room the
+    r2 rewrite existed to kill.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep1-b06-r3-provisional
+  date: 2026-08-09
+  subject: "node 001 beat 06 — too blue, sky only, no leaf"
+  kind: still
+  candidates: [b06-r3-s0, b06-r3-s1, b06-r3-s2, b06-r3-s3]
+  address_key: REVIEW-KEY-0808.md
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: b06-r3-s2
+  scores:
+    b06-r3-s2: {A3: 2, A4: 2, A5: 2, A6: 1}
+    b06-r3-s0: {A3: -1, A4: -1, A5: -1}
+    b06-r3-s1: {A3: -2, A4: 0, A5: -2}
+    b06-r3-s3: {A3: -2, A5: -2}
+  vetoed: [b06-r3-s1, b06-r3-s3]
+  totals: {b06-r3-s2: 25, b06-r3-s0: -11}
+  predicted_verdict: ratify
+  predicted_flip_to: null
+  predicted_objection: null
+  confidence: 0.55
+  reasoning: >
+    s2 is the canon 06-too-blue frame with the leaf taken out — same blue, same
+    cloud dialect, same light — which is A5 measured against his approved frame
+    rather than against an opinion, and nothing in it contradicts a point of view
+    lying in grass looking up. s1 and s3 put a girl in a first-person sky shot.
+    Confidence is held at 0.55 because his r1 verdict on this beat named no axis
+    at all ("none quite work"), and an unstated-axis rejection is unpredictable
+    by construction (§4).
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep1-b10-r3-provisional
+  date: 2026-08-09
+  subject: "node 001 beat 10 — sense, roots load-bearing, re-lensed lower than 14"
+  kind: still
+  candidates: [b10-r3-s0, b10-r3-s1, b10-r3-s2, b10-r3-s3]
+  address_key: REVIEW-KEY-0808.md
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  scores:
+    b10-r3-s0: {A1: 1, A2: -2, A3: -1, A4: 1}
+    b10-r3-s1: {A1: -2, A4: -2}
+    b10-r3-s2: {A1: 1, A2: -2, A3: -1, A4: 1, A5: 1}
+    b10-r3-s3: {A1: 1, A2: -2, A3: -2, A4: 1}
+  vetoed: [b10-r3-s0, b10-r3-s1, b10-r3-s2, b10-r3-s3]
+  totals: {}
+  predicted_verdict: reject_all
+  predicted_flip_to: null
+  predicted_objection: "A3 — still no roots; and A2, a post or a fence standing in a wild field"
+  confidence: 0.80
+  reasoning: >
+    Roots are load-bearing for this beat by the record (the on-screen card reads
+    'SENSE roots / air / vibration', the script's image line is a root-map, and
+    the node's R1 is the demonstration of the sense). None of the four shows
+    them, which is the same rejection the steward already recorded here on
+    2026-08-08 rather than a new one. The lens note WAS answered — s2 is
+    genuinely lower and closer than 14 — so the re-lensing is banked. Three of
+    four also stand architecture in the field.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep1-b14-r3-provisional
+  date: 2026-08-09
+  subject: "node 001 beat 14 — worth staying in, subject larger, character consistent"
+  kind: still
+  candidates: [b14-r3-s0, b14-r3-s1, b14-r3-s2, b14-r3-s3]
+  address_key: REVIEW-KEY-0808.md
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: b14-r3-s3
+  scores:
+    b14-r3-s3: {A1: 1, A2: 1, A3: 1, A4: 2, A5: 1, A6: 1, A7: 1}
+    b14-r3-s2: {A1: 1, A2: -1, A3: 1, A4: 2, A5: 1, A6: 1, A7: 1}
+    b14-r3-s0: {A1: 1, A2: 1, A3: 1, A4: 0, A5: 1, A6: 1, A7: 0}
+    b14-r3-s1: {A1: 0, A2: -2, A4: -1}
+  vetoed: [b14-r3-s1]
+  totals: {b14-r3-s3: 30, b14-r3-s2: 22, b14-r3-s0: 19}
+  predicted_verdict: ratify
+  predicted_flip_to: b14-r3-s2
+  predicted_objection: null
+  confidence: 0.45
+  reasoning: >
+    His fault was "all too small, not good character consistency". s3 puts a
+    four-leaf sprout across the middle of the frame in warm raking light with
+    stones and grass and nothing man-made in it. s2 has a bigger, cleaner plant
+    on damper earth and a window and a building wall in the top strip — A2 is not
+    traded for A4 (he rejected beat 12 with "follows the style well" in the same
+    sentence), which is the only thing separating them. Lowest confidence on the
+    page: "too small" is comparative, s2 is the biggest thing in the set, and a
+    reject_all on consistency across the four sprouts is also live.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep2-b16-r3-provisional
+  date: 2026-08-09
+  subject: "node 002b beat 16 — why, extreme close-up on one leaf"
+  kind: still
+  candidates: [002b-b16-r3-s0, 002b-b16-r3-s1, 002b-b16-r3-s2, 002b-b16-r3-s3]
+  address_key: REVIEW-KEY-0808.md
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: 002b-b16-r3-s2
+  scores:
+    002b-b16-r3-s2: {A1: 1, A3: 1, A4: 2, A5: -1}
+    002b-b16-r3-s1: {A1: -1, A3: 0, A4: -1}
+    002b-b16-r3-s3: {A1: 0, A4: -1, A5: -1}
+    002b-b16-r3-s0: {A1: -2, A3: -2}
+  vetoed: [002b-b16-r3-s0]
+  totals: {002b-b16-r3-s2: 14, 002b-b16-r3-s3: -7, 002b-b16-r3-s1: -9}
+  predicted_verdict: ratify
+  predicted_flip_to: null
+  predicted_objection: null
+  confidence: 0.40
+  reasoning: >
+    One oversized leaf filling the frame with its edge catching light, which is
+    the sentence. A2 is not scored on a macro, so the plain grey-lilac background
+    is recorded as a reservation beside the pick rather than as a rejection — his
+    beat-12 precedent is that a legibility or environment complaint can ride
+    along with a pick. Low confidence: the goblin the prompt wants blurred behind
+    the leaf is absent, "a blank dark background" is a phrase he has used as a
+    fault before, and this frame will have no neighbours until the wave is
+    redrawn.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep2-b18-r3-provisional
+  date: 2026-08-09
+  subject: "node 002b beat 18 — the decision, macro on the fig"
+  kind: still
+  candidates: [002b-b18-r3-s0, 002b-b18-r3-s1, 002b-b18-r3-s2, 002b-b18-r3-s3]
+  address_key: REVIEW-KEY-0808.md
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: 002b-b18-r3-s0
+  scores:
+    002b-b18-r3-s0: {A1: 1, A3: 1, A4: 2, A5: 0, A6: 1}
+    002b-b18-r3-s2: {A1: 0, A3: -1, A4: 1}
+    002b-b18-r3-s3: {A1: -1, A4: 1, A6: 1}
+    002b-b18-r3-s1: {A1: -2, A3: -2}
+  vetoed: [002b-b18-r3-s1]
+  totals: {002b-b18-r3-s0: 20, 002b-b18-r3-s3: 2, 002b-b18-r3-s2: 0}
+  predicted_verdict: ratify
+  predicted_flip_to: null
+  predicted_objection: null
+  confidence: 0.45
+  reasoning: >
+    One small round green fruit on a slender stem with two small leaves, amber
+    rim light — a stem thin enough that the script's flex is believable. s1's
+    fruit has two dark spots that read as eyes; s3 hangs it on a thick bare woody
+    branch, the mature-tree reading beat 01 spent three rewrites killing; s2
+    draws two fruits where the script has one. Reservation recorded: faint white
+    dashed sketch marks ring the fruit, a flourish nothing else in the show has.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep2-b21-r3-provisional
+  date: 2026-08-09
+  subject: "node 002b beat 21 — the answer, the leaf tilts"
+  kind: still
+  candidates: [002b-b21-r3-s0, 002b-b21-r3-s1, 002b-b21-r3-s2, 002b-b21-r3-s3]
+  address_key: REVIEW-KEY-0808.md
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: 002b-b21-r3-s3
+  scores:
+    002b-b21-r3-s3: {A1: 1, A3: 1, A4: 2, A5: 0, A6: 1}
+    002b-b21-r3-s2: {A1: -1, A4: -1}
+    002b-b21-r3-s0: {A3: -2, A4: 0}
+    002b-b21-r3-s1: {A3: -2, A4: -1}
+  vetoed: [002b-b21-r3-s0, 002b-b21-r3-s1]
+  totals: {002b-b21-r3-s3: 20, 002b-b21-r3-s2: -9}
+  predicted_verdict: ratify
+  predicted_flip_to: null
+  predicted_objection: null
+  confidence: 0.50
+  reasoning: >
+    One oversized leaf tilted deliberately to one side, rim-lit amber, grass
+    frozen below, and no hand anywhere — the tilt reads as a decision rather than
+    as wind, which is the whole beat. s0 and s1 put a human hand in a beat that
+    has no people in it.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+# ---- the seventeen episode-2 rejections -------------------------------------
+# Same wave, same four defects (see PROVISIONAL-PICKS-0809.md "wave-level
+# diagnosis"): the sapling is absent or drawn as a mascot with a face; `no
+# humans` is not binding; the guards render as dark-fantasy at night instead of
+# round and harmless in a morning field; and the register swings between flat
+# cartoon and moody dark-fantasy inside one episode. Recorded per beat because a
+# redraw is commissioned per beat.
+
+- id: ep2-b02-r3-provisional
+  date: 2026-08-09
+  subject: "node 002b beat 02 — the sprint"
+  kind: still
+  candidates: [002b-b02-r3-s0, 002b-b02-r3-s1, 002b-b02-r3-s2, 002b-b02-r3-s3]
+  address_key: REVIEW-KEY-0808.md
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  scores:
+    002b-b02-r3-s0: {A1: -2, A4: -1, A5: -2}
+    002b-b02-r3-s1: {A1: -2, A4: -1, A5: -2}
+    002b-b02-r3-s2: {A1: -2, A4: -2, A5: -2}
+    002b-b02-r3-s3: {A1: -2, A4: 0, A5: -2}
+  vetoed: [002b-b02-r3-s0, 002b-b02-r3-s1, 002b-b02-r3-s2, 002b-b02-r3-s3]
+  totals: {}
+  predicted_verdict: reject_all
+  predicted_flip_to: null
+  predicted_objection: "A1/A5 — no sapling in any of them, and it is a flat cartoon, not our show"
+  confidence: 0.90
+  reasoning: "Closest of the four is s3 (the dive reads). No sapling anywhere in the set."
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep2-b03-r3-provisional
+  date: 2026-08-09
+  subject: "node 002b beat 03 — bad cover"
+  kind: still
+  candidates: [002b-b03-r3-s0, 002b-b03-r3-s1, 002b-b03-r3-s2, 002b-b03-r3-s3]
+  address_key: REVIEW-KEY-0808.md
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  scores:
+    002b-b03-r3-s0: {A1: -2, A2: -2, A4: -1}
+    002b-b03-r3-s1: {A1: -2, A2: -2, A4: 0}
+    002b-b03-r3-s2: {A1: -2, A2: -2, A4: -2}
+    002b-b03-r3-s3: {A1: -2, A2: -2, A4: -1}
+  vetoed: [002b-b03-r3-s0, 002b-b03-r3-s1, 002b-b03-r3-s2, 002b-b03-r3-s3]
+  totals: {}
+  predicted_verdict: reject_all
+  predicted_flip_to: null
+  predicted_objection: "A2 — they are indoors with computer monitors behind them, and there is no tree to hide behind"
+  confidence: 0.92
+  reasoning: "Closest of the four is s1. The size-mismatch gag needs the sapling and a morning field; the set has neither."
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep2-b04-r3-provisional
+  date: 2026-08-09
+  subject: "node 002b beat 04 — the footnote"
+  kind: still
+  candidates: [002b-b04-r3-s0, 002b-b04-r3-s1, 002b-b04-r3-s2, 002b-b04-r3-s3]
+  address_key: REVIEW-KEY-0808.md
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  scores:
+    002b-b04-r3-s0: {A2: -2, A4: 0, A5: -2}
+    002b-b04-r3-s1: {A2: -2, A4: -2, A5: -1}
+    002b-b04-r3-s2: {A2: -1, A4: -2, A5: -2}
+    002b-b04-r3-s3: {A2: -1, A4: 2, A5: -1}
+  vetoed: [002b-b04-r3-s0, 002b-b04-r3-s1, 002b-b04-r3-s2]
+  totals: {002b-b04-r3-s3: 5}
+  predicted_verdict: reject_all
+  predicted_flip_to: 002b-b04-r3-s3
+  predicted_objection: "A5/A2 — four different creatures across four seeds, and a window behind a beat that is outdoors"
+  confidence: 0.70
+  reasoning: >
+    s3 is a legible goblin face holding its breath and is the one frame in the
+    set that survives a veto — but s1 is literally two stacked panels, s0 draws a
+    human boy and s2 a blue elephant, so the set is the "twenty different shows"
+    complaint in miniature. The model predicts he rejects rather than picks out
+    of it. If he takes one, it is s3; that is the flip recorded here.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep2-b05-r3-provisional
+  date: 2026-08-09
+  subject: "node 002b beat 05 — the patrol"
+  kind: still
+  candidates: [002b-b05-r3-s0, 002b-b05-r3-s1, 002b-b05-r3-s2, 002b-b05-r3-s3]
+  address_key: REVIEW-KEY-0808.md
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  scores:
+    002b-b05-r3-s0: {A2: -2, A4: -1, A5: -2}
+    002b-b05-r3-s1: {A2: -2, A4: -1, A5: -2}
+    002b-b05-r3-s2: {A2: -2, A4: -1, A5: -2}
+    002b-b05-r3-s3: {A2: -2, A4: 0, A5: -2}
+  vetoed: [002b-b05-r3-s0, 002b-b05-r3-s1, 002b-b05-r3-s2, 002b-b05-r3-s3]
+  totals: {}
+  predicted_verdict: reject_all
+  predicted_flip_to: null
+  predicted_objection: "A2/A5 — it is a dark forest and they look dangerous; they are supposed to be round and harmless in a morning field"
+  confidence: 0.90
+  reasoning: "Closest of the four is s3 (two figures, arriving). Every frame is a dark-fantasy soldier in trees."
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep2-b06-r3-provisional
+  date: 2026-08-09
+  subject: "node 002b beat 06 — the clipboard"
+  kind: still
+  candidates: [002b-b06-r3-s0, 002b-b06-r3-s1, 002b-b06-r3-s2, 002b-b06-r3-s3]
+  address_key: REVIEW-KEY-0808.md
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  scores:
+    002b-b06-r3-s0: {A2: -2, A4: -1, A5: -2}
+    002b-b06-r3-s1: {A2: -2, A4: 0, A5: -2}
+    002b-b06-r3-s2: {A2: -2, A4: -1, A5: -2}
+    002b-b06-r3-s3: {A2: -2, A4: 1, A5: -2}
+  vetoed: [002b-b06-r3-s0, 002b-b06-r3-s1, 002b-b06-r3-s2, 002b-b06-r3-s3]
+  totals: {}
+  predicted_verdict: reject_all
+  predicted_flip_to: null
+  predicted_objection: "A5 — serious armoured men at night; the clipboard is the joke and nothing here is funny"
+  confidence: 0.88
+  reasoning: "Closest of the four is s3 — the bark board and the tracing finger both read. Wrong genre, wrong time of day."
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep2-b07-r3-provisional
+  date: 2026-08-09
+  subject: "node 002b beat 07 — confiscate"
+  kind: still
+  candidates: [002b-b07-r3-s0, 002b-b07-r3-s1, 002b-b07-r3-s2, 002b-b07-r3-s3]
+  address_key: REVIEW-KEY-0808.md
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  scores:
+    002b-b07-r3-s0: {A2: 1, A4: -1, A5: -2}
+    002b-b07-r3-s1: {A2: 1, A4: 1, A5: -2}
+    002b-b07-r3-s2: {A2: 1, A4: 0, A5: -2}
+    002b-b07-r3-s3: {A2: 1, A4: -1, A5: -2}
+  vetoed: [002b-b07-r3-s0, 002b-b07-r3-s1, 002b-b07-r3-s2, 002b-b07-r3-s3]
+  totals: {}
+  predicted_verdict: reject_all
+  predicted_flip_to: null
+  predicted_objection: "A5 — the field is right and the guard is a hero from another show"
+  confidence: 0.75
+  reasoning: >
+    The only beat in 05-11 where the environment survived — open field, warm
+    light, the pointing gesture legible in all four. It still fails because the
+    guard is a heroic bishonen knight in polished plate, which inverts the joke
+    and matches none of its neighbours. Closest is s1.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep2-b08-r3-provisional
+  date: 2026-08-09
+  subject: "node 002b beat 08 — inside him"
+  kind: still
+  candidates: [002b-b08-r3-s0, 002b-b08-r3-s1, 002b-b08-r3-s2, 002b-b08-r3-s3]
+  address_key: REVIEW-KEY-0808.md
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  scores:
+    002b-b08-r3-s0: {A2: -2, A4: 0, A5: -2}
+    002b-b08-r3-s1: {A2: -2, A3: -2, A5: -2}
+    002b-b08-r3-s2: {A2: -2, A3: -2, A5: -2}
+    002b-b08-r3-s3: {A2: -2, A3: -2, A5: -2}
+  vetoed: [002b-b08-r3-s0, 002b-b08-r3-s1, 002b-b08-r3-s2, 002b-b08-r3-s3]
+  totals: {}
+  predicted_verdict: reject_all
+  predicted_flip_to: null
+  predicted_objection: "A3/A5 — a hooded figure with a blade standing over him at night; it plays as a murder"
+  confidence: 0.92
+  reasoning: "Closest is s0 (a pointing figure and a goblin in one frame). Night, menace, glowing red eyes; the beat is a deadpan daylight two-shot."
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep2-b09-r3-provisional
+  date: 2026-08-09
+  subject: "node 002b beat 09 — the pause"
+  kind: still
+  candidates: [002b-b09-r3-s0, 002b-b09-r3-s1, 002b-b09-r3-s2, 002b-b09-r3-s3]
+  address_key: REVIEW-KEY-0808.md
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  scores:
+    002b-b09-r3-s0: {A2: -2, A4: 0, A5: -2}
+    002b-b09-r3-s1: {A2: -2, A4: -1, A5: -2}
+    002b-b09-r3-s2: {A2: -2, A4: 1, A5: -2}
+    002b-b09-r3-s3: {A2: -2, A4: -1, A5: -2}
+  vetoed: [002b-b09-r3-s0, 002b-b09-r3-s1, 002b-b09-r3-s2, 002b-b09-r3-s3]
+  totals: {}
+  predicted_verdict: reject_all
+  predicted_flip_to: null
+  predicted_objection: "A5 — glowing eyes in a black helmet; the beat is a slow dumb thought in daylight"
+  confidence: 0.90
+  reasoning: "Closest is s2 (a face working through an idea). All four are horror close-ups on black."
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep2-b10-r3-provisional
+  date: 2026-08-09
+  subject: "node 002b beat 10 — no form"
+  kind: still
+  candidates: [002b-b10-r3-s0, 002b-b10-r3-s1, 002b-b10-r3-s2, 002b-b10-r3-s3]
+  address_key: REVIEW-KEY-0808.md
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  scores:
+    002b-b10-r3-s0: {A2: -2, A4: -2, A5: -1}
+    002b-b10-r3-s1: {A2: -2, A4: -2, A5: -1}
+    002b-b10-r3-s2: {A2: -2, A4: -2, A5: -1}
+    002b-b10-r3-s3: {A2: -2, A4: -2, A5: -1}
+  vetoed: [002b-b10-r3-s0, 002b-b10-r3-s1, 002b-b10-r3-s2, 002b-b10-r3-s3]
+  totals: {}
+  predicted_verdict: reject_all
+  predicted_flip_to: null
+  predicted_objection: "A4/A2 — he is indoors with his back to us and the blank board reads as a lit screen"
+  confidence: 0.92
+  reasoning: "Closest is s1. Every frame is a dark interior shot of a man's back; the blank bark board is the subject and it is glowing like a monitor."
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep2-b11-r3-provisional
+  date: 2026-08-09
+  subject: "node 002b beat 11 — they leave"
+  kind: still
+  candidates: [002b-b11-r3-s0, 002b-b11-r3-s1, 002b-b11-r3-s2, 002b-b11-r3-s3]
+  address_key: REVIEW-KEY-0808.md
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  scores:
+    002b-b11-r3-s0: {A2: 0, A4: -2, A6: -1}
+    002b-b11-r3-s1: {A2: -2, A4: -1}
+    002b-b11-r3-s2: {A2: -1, A3: -2, A4: -2}
+    002b-b11-r3-s3: {A2: -2, A4: -1}
+  vetoed: [002b-b11-r3-s0, 002b-b11-r3-s1, 002b-b11-r3-s2, 002b-b11-r3-s3]
+  totals: {}
+  predicted_verdict: reject_all
+  predicted_flip_to: null
+  predicted_objection: "A4 — the two of them are specks at dusk, or standing in a different place entirely"
+  confidence: 0.85
+  reasoning: >
+    s0 has the right staging — two figures walking away across a field — and
+    draws them as specks under a dark dusk sky where the beat asks for morning
+    and long shadows. s1 is a paved courtyard, s3 a clearing under enormous
+    trees, s2 two silhouetted humans plus a second duplicate pair.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep2-b12-r3-provisional
+  date: 2026-08-09
+  subject: "node 002b beat 12 — related, tight on the two leaves"
+  kind: still
+  candidates: [002b-b12-r3-s0, 002b-b12-r3-s1, 002b-b12-r3-s2, 002b-b12-r3-s3]
+  address_key: REVIEW-KEY-0808.md
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  scores:
+    002b-b12-r3-s0: {A1: -2, A3: -2, A4: 0}
+    002b-b12-r3-s1: {A1: -1, A3: -2, A4: 1}
+    002b-b12-r3-s2: {A1: -1, A2: -2, A3: -2}
+    002b-b12-r3-s3: {A1: -1, A3: -2, A4: -1}
+  vetoed: [002b-b12-r3-s0, 002b-b12-r3-s1, 002b-b12-r3-s2, 002b-b12-r3-s3]
+  totals: {}
+  predicted_verdict: reject_all
+  predicted_flip_to: null
+  predicted_objection: "A3 — all four drew the ripe fruit; this beat is the two leaves and the sky, no fruit at all"
+  confidence: 0.88
+  reasoning: >
+    The beat's own text says no fruit, no ground, no trunk base — clouds moving
+    behind two still leaves. Every frame makes a large pink ripe fruit the
+    subject, s0 gives it a face, and s2 puts a city skyline behind it. Closest is
+    s3.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep2-b13-r3-provisional
+  date: 2026-08-09
+  subject: "node 002b beat 13 — the shade"
+  kind: still
+  candidates: [002b-b13-r3-s0, 002b-b13-r3-s1, 002b-b13-r3-s2, 002b-b13-r3-s3]
+  address_key: REVIEW-KEY-0808.md
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  scores:
+    002b-b13-r3-s0: {A1: -2, A4: -1, A7: -2}
+    002b-b13-r3-s1: {A1: -2, A4: -1, A7: -2}
+    002b-b13-r3-s2: {A1: -2, A4: -1, A7: -2}
+    002b-b13-r3-s3: {A1: -2, A4: -2, A7: -2}
+  vetoed: [002b-b13-r3-s0, 002b-b13-r3-s1, 002b-b13-r3-s2, 002b-b13-r3-s3]
+  totals: {}
+  predicted_verdict: reject_all
+  predicted_flip_to: null
+  predicted_objection: "A1 — the sapling is a giant round creature in every one of them"
+  confidence: 0.95
+  reasoning: >
+    The worst A1 failure in the wave and the beat to fix the negatives on: in all
+    four the 40cm sapling is drawn as an enormous rotund mascot blob the goblin
+    is sitting beside. Highest-confidence rejection on the page. Closest is s1.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep2-b14-r3-provisional
+  date: 2026-08-09
+  subject: "node 002b beat 14 — the defense"
+  kind: still
+  candidates: [002b-b14-r3-s0, 002b-b14-r3-s1, 002b-b14-r3-s2, 002b-b14-r3-s3]
+  address_key: REVIEW-KEY-0808.md
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  scores:
+    002b-b14-r3-s0: {A3: -2, A4: -2}
+    002b-b14-r3-s1: {A3: 0, A4: -2}
+    002b-b14-r3-s2: {A3: -2, A4: -2}
+    002b-b14-r3-s3: {A3: -2, A4: -1}
+  vetoed: [002b-b14-r3-s0, 002b-b14-r3-s1, 002b-b14-r3-s2, 002b-b14-r3-s3]
+  totals: {}
+  predicted_verdict: reject_all
+  predicted_flip_to: null
+  predicted_objection: "A3 — those are human hands, and the anatomy is broken in three of them"
+  confidence: 0.90
+  reasoning: >
+    The beat is a goblin's clawed fingers in the dirt. s0, s2 and s3 draw large
+    pale human hands with muddled anatomy; s1 has a face in grass and no hands at
+    all. Closest is s1.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep2-b15-r3-provisional
+  date: 2026-08-09
+  subject: "node 002b beat 15 — good listener, two-shot"
+  kind: still
+  candidates: [002b-b15-r3-s0, 002b-b15-r3-s1, 002b-b15-r3-s2, 002b-b15-r3-s3]
+  address_key: REVIEW-KEY-0808.md
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  scores:
+    002b-b15-r3-s0: {A1: -2, A2: -2, A4: 0}
+    002b-b15-r3-s1: {A1: -2, A3: -2, A4: -1}
+    002b-b15-r3-s2: {A1: -2, A2: -2, A4: -1}
+    002b-b15-r3-s3: {A1: -2, A4: -2}
+  vetoed: [002b-b15-r3-s0, 002b-b15-r3-s1, 002b-b15-r3-s2, 002b-b15-r3-s3]
+  totals: {}
+  predicted_verdict: reject_all
+  predicted_flip_to: null
+  predicted_objection: "A1/A2 — that is a boy in a room with a houseplant, not a goblin talking to the sapling"
+  confidence: 0.90
+  reasoning: >
+    All four draw an elf-eared human boy in front of an interior wall, with the
+    sapling replaced by a hanging houseplant or a floating sprig; s1 adds a giant
+    human finger. Closest is s0.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep2-b17-r3-provisional
+  date: 2026-08-09
+  subject: "node 002b beat 17 — goodbye"
+  kind: still
+  candidates: [002b-b17-r3-s0, 002b-b17-r3-s1, 002b-b17-r3-s2, 002b-b17-r3-s3]
+  address_key: REVIEW-KEY-0808.md
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  scores:
+    002b-b17-r3-s0: {A1: -2, A4: 0, A5: -2}
+    002b-b17-r3-s1: {A1: -2, A4: -2}
+    002b-b17-r3-s2: {A1: -2, A4: -1, A5: -2}
+    002b-b17-r3-s3: {A1: -2, A2: -2, A4: -1}
+  vetoed: [002b-b17-r3-s0, 002b-b17-r3-s1, 002b-b17-r3-s2, 002b-b17-r3-s3]
+  totals: {}
+  predicted_verdict: reject_all
+  predicted_flip_to: null
+  predicted_objection: "A1 — a hero walking off into a sunset, one of them in a desert; where is the tree"
+  confidence: 0.88
+  reasoning: >
+    The beat is the goblin standing, brushing off his cloak and turning away FROM
+    the sapling; no frame contains the sapling, two hand him a shovel and s3
+    relocates the whole scene to a desert. Closest is s0.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep2-b19-r3-provisional
+  date: 2026-08-09
+  subject: "node 002b beat 19 — the drop, wide, both characters in one frame"
+  kind: still
+  candidates: [002b-b19-r3-s0, 002b-b19-r3-s1, 002b-b19-r3-s2, 002b-b19-r3-s3]
+  address_key: REVIEW-KEY-0808.md
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  scores:
+    002b-b19-r3-s0: {A1: -2, A4: -1, A7: -2}
+    002b-b19-r3-s1: {A1: -2, A4: -2}
+    002b-b19-r3-s2: {A1: -2, A4: -1, A7: -2}
+    002b-b19-r3-s3: {A1: -2, A4: -1, A7: -2}
+  vetoed: [002b-b19-r3-s0, 002b-b19-r3-s1, 002b-b19-r3-s2, 002b-b19-r3-s3]
+  totals: {}
+  predicted_verdict: reject_all
+  predicted_flip_to: null
+  predicted_objection: "A1 — the sapling is growing out of his head in all four"
+  confidence: 0.92
+  reasoning: >
+    A single systematic failure across the set: asked for the sapling and the
+    goblin in one wide frame, the checkpoint merges them and puts the sprout on
+    the goblin's head. Nothing drops in any frame. Closest is s2.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep2-b20-r3-provisional
+  date: 2026-08-09
+  subject: "node 002b beat 20 — evidence"
+  kind: still
+  candidates: [002b-b20-r3-s0, 002b-b20-r3-s1, 002b-b20-r3-s2, 002b-b20-r3-s3]
+  address_key: REVIEW-KEY-0808.md
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  scores:
+    002b-b20-r3-s0: {A1: -2, A4: -2}
+    002b-b20-r3-s1: {A3: -2, A4: -1}
+    002b-b20-r3-s2: {A4: -2}
+    002b-b20-r3-s3: {A4: -2}
+  vetoed: [002b-b20-r3-s0, 002b-b20-r3-s1, 002b-b20-r3-s2, 002b-b20-r3-s3]
+  totals: {}
+  predicted_verdict: reject_all
+  predicted_flip_to: null
+  predicted_objection: "A4/A3 — he never picks the fig up, and there is a human finger in it"
+  confidence: 0.88
+  reasoning: >
+    The beat exists to show him holding the fig up like evidence and no frame
+    contains a held fig. s0 is a chimera with an extra eye, s1 has a human finger
+    descending into it, s3 draws a duplicate goblin below the first. Closest is
+    s3.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null

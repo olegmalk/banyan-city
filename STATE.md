@@ -4950,3 +4950,45 @@ withdrawn, so it has never been screened at all.
 
 Gates: `lint_genome.py` rc=0, `test_pipeline.py` rc=0. Nothing rendered, nothing
 published, nothing on his screen.
+
+## 2026-08-09 — PROVISIONAL PICKS across all nine candidate sheets (steward, labelled)
+
+First use of `taste/steward-model.v1.md` as a predictor. One hundred candidate
+frames read as pixels and scored on the model's axes — ep2 cold open `b01-r5-s0..s3`,
+ep1 beats 03/06/10/14 `r3-s0..s3`, ep2 beats 02-21 `r3-s0..s3` — with the calls and
+the reasoning in `PROVISIONAL-PICKS-0809.md` and all twenty-five predictions written
+to `taste/steward-model.ledger.yaml` BEFORE the founder sees anything. Everything on
+that page is PROVISIONAL and is the steward's; taste is his (R4), a pick authorises
+no publication, no spend and no promotion to a canon filename, and the sheets he is
+shown still carry labels and seeds only (G3).
+
+**Five provisional picks out of a hundred: `b06-r3-s2`, `b14-r3-s3` (runner-up
+`b14-r3-s2`, flip costs one word), `002b-b16-r3-s2`, `002b-b18-r3-s0`,
+`002b-b21-r3-s3`. Twenty beats REJECT THE LOT** — a legal provisional outcome where
+the model predicts he rejects, each with what the next round must change.
+
+- **ep2 cold open — reject.** Three of four put a human child in a field the script
+  calls empty and two hang the plant downward from the top edge; the one clean frame
+  reproduces the revoked plate's own measurements (apex 25% from the top, ~36% of
+  frame height on a hairline stem — *taller* than the 32% he threw out). Round 5's
+  only lever was `thin` → `sturdy` and the drawing did not move, so the word is spent;
+  the levers left are the framing (grass-height, the b15/12 framing he has passed) and
+  a negative that actually binds people.
+- **ep1 beat 03 — reject.** House ✓, close-up ✓, and the screen carries anime-girl
+  wallpaper in two frames and the glyph junk he already rejected in the others.
+- **ep1 beat 10 — reject.** Roots still absent (load-bearing here by the record), and
+  three of four stand a fence or a post in a wild field. The lens note WAS answered —
+  `s2` is genuinely lower and closer than 14 — so keep that lens and lead the prompt
+  with the roots.
+- **ep2 beats 02-15/17/19/20 — reject, on four wave-level defects, not twenty
+  accidents:** the sapling is absent from every beat that names it or is drawn as a
+  mascot with a face (beat 01's `no chibi/mascot/creature/face` negatives never got
+  ported to 02-21); `no humans` is not binding (hands and figures in 14, 20, 21);
+  the guards render as dark-fantasy at night instead of round and harmless in a
+  morning field; and the register swings between flat cartoon and moody dark-fantasy
+  inside one episode — the "twenty different shows" complaint, unfixed. Fix the
+  negatives, then ONE SAMPLE of beat 13 before any set of twenty.
+
+Gates as their own steps: `lint_genome.py` rc=0, `test_pipeline.py` rc=0. Nothing
+rendered, published, posted, spent, or opened on his screen; no candidate pixel is
+committed with this text.
