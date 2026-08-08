@@ -95,6 +95,24 @@ only the first two are code:
    are the only layer that governs a branch whose checked-out `vercel.json` is
    stale, which force-pushed farm branches are. Those clicks are V8.
 
+**And layer 3 is doing more work than it sounds like — measured 2026-08-08.**
+Vercel reads `git.deploymentEnabled` from the config in *the commit being
+pushed*, so it only governs a branch that carries it. Right now **none of the
+four `farm-results-*` branches do**: they are up to 93 commits behind main with
+the pre-guard `vercel.json`. The same staleness is already observable in
+Actions — three of the four still carry the pre-2026-08-06 `lint.yml` with no
+`branches-ignore`, which is why `lint-genome` and `mirror` still fire on every
+five-minute heartbeat despite that fix having landed on main two days ago.
+
+They do heal, on their own, but only partly. `farm_worker.py:573` runs
+`git checkout -q origin/main -- .` before each task, so a courier branch picks
+up main's *modified* files — including the guarded `vercel.json` — on its next
+task cycle. It never picks up *deletions*: those branches will keep carrying the
+deleted `.github/workflows/vercel.yml` indefinitely. Harmless (it is the same
+no-op that never deployed), but it will not clear itself, and until each branch
+turns over, the dashboard settings are the only thing standing between a courier
+heartbeat and a build.
+
 There is no `vercel` GitHub Actions workflow any more — it was deleted
 2026-08-08, having never deployed once in 100 runs (see V4). Vercel git
 integration needs no workflow and no secret in this repo.
