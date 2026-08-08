@@ -4881,3 +4881,72 @@ is measured, no clip rendered, no sidecar written — and the standing order rem
 loader branch, then download, then ONE sample, in that order. What tonight adds is
 that the download step must name a published quant, because the fp32 one has
 already been tried here and cannot complete.
+
+## 2026-08-09 — the verdict corpus is mined and the taste model is a file you can be wrong in front of
+
+**`taste/steward-model.v1.md` exists** — a falsifiable model OF the founder's
+taste, distilled from every recorded verdict in this repo (STATE.md's dated
+blocks 2026-07-25 → 2026-08-08, both nodes' `shots.md` verdict blocks,
+`cuts/cuts.yaml`'s settled items, eight loop cycles, `pending-founder.yaml`'s
+removal notes, and commit messages quoting him). It exists to serve PROVISIONAL
+MODE: the steward makes a labelled provisional pick, machines render ahead, and
+he ratifies or flips afterwards — *"human feedback should never be a blocker, by
+design"* and *"taste has to be codified and iterated on"* (Oleg, 2026-08-09).
+
+**`taste/sapling.founder.v0.3.md` IS UNTOUCHED and that is the point.** That file
+is his (R4). The new file is the steward's *predictor* of him, cited to his own
+words with dates, and it says in its header that his verdict is always ground
+truth and that a disagreement means the MODEL is wrong. It authorises nothing —
+no publication, no spend, no media off unapproved script text (§6) — and a high
+score is a reason to render a candidate for him, never a reason to ship one.
+
+**Ten axes, ranked, each with an observable test and his verbatim words.**
+A1 character consistency of the RECURRING subject (weight 5 — four of five
+rejections on 2026-08-08 turned on it; leaf detail explicitly excluded, twice),
+A2 environment continuity (*"completely changes the enviroment"*; beat 12 was
+rejected while *"follows the style well"*, so style does not rescue setting),
+A3 in-world plausibility (*"doesnt make sense that he can see himself when he is
+looking at the sky"*), A4 legibility (*"i dont know what??"*, *"all too small"*,
+and R7's stated-question test), A5 style stability against the anchor
+(*"drastically changes the style"* — with *"thats not a bad thing"* as the whole
+calibration), A6 palette **as an asymmetry** (per-frame drift rejected; the
+uniform 86-89% LTX chroma collapse ruled *"fine"* once measured, fp8 *"barely a
+difference"* — so a global colour metric is a weak taste signal), A7 subject
+proportion with BOTH bounds set the same day (*"just make it tall in each clip"*
+against *"its tooooo tall"* on a 1-3px hairline at 32% of frame height; the
+*"forty centimeters"* joke is preserved), A8 camera restraint (one constant, not
+a scheme — he refused the ladder before any of its rungs; 6% → 18% → 2-4% → 12%
+confirmed), A9 deadpan over irony in VO, and A10 provenance of the plate — not an
+aesthetic axis but the corpus's strongest predictor of whether he answers at all
+(*"you are still using the bad beat 14 frame, no … neither … a frame i never
+approved"* refused three questions in one sentence).
+
+**A scoring procedure with gates before scores.** Five binary admissibility gates
+(approved plate, §6 script approval, neutral sheet with no steward favourite,
+resolvable address, PROVISIONAL labelling) — a gate failure means the candidate
+is unjudgeable and must not reach his eye, which is exactly the `<- BEST PLATE`
+mistake that voided episode 2's cold-open pick. Then −2…+2 per applicable axis,
+**any −2 vetoes a pick regardless of total** (he does not trade a named fault
+against a virtue), then a weighted total, then a neutral sheet where the
+provisional pick is disclosed in words rather than marked on the sheet.
+
+**And a prediction ledger, `taste/steward-model.ledger.yaml`, schema'd in §3 and
+empty until the first provisional pick.** Every pick records candidates, gate
+results, per-axis scores, vetoes, `predicted_verdict`, `confidence` and the
+reasoning — written BEFORE he sees anything. His verdict lands verbatim beside it
+as hit/partial/miss/unjudged, misses name the axis they broke, and **only misses
+drive v2**. Calibration is scored alongside the hit rate, and the rolling rate is
+published next to any provisional pick so he can see what the model has earned.
+The model starts at zero recorded predictions and claims no rate; v0.3's own ≥90%
+bar is quoted as the founder file's aim, not as anything this file has met.
+
+**§4 records where the model has NO axis** rather than letting silence read as
+coverage: beat 6's rejection named no fault and none was invented for him;
+set-level adjacency (*"fifteen unrelated AI images"*, *"basically the same
+picture"*) is a run-of-shots complaint the per-frame axes only approximate;
+non-recurring characters are out of A1's scope by his own reason; and the
+held-shot framing policy has only ever been demonstrated on plates he had
+withdrawn, so it has never been screened at all.
+
+Gates: `lint_genome.py` rc=0, `test_pipeline.py` rc=0. Nothing rendered, nothing
+published, nothing on his screen.
