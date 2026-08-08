@@ -1972,8 +1972,12 @@ how long it has been sitting there.</p>
 <p class="legend">{data.LEGEND}</p>
 <footer>This copy was built {now.strftime('%Y-%m-%d %H:%M')}Z ({age_el(now, now)}).
 Nothing on this page is dated by that build: every age above counts from the moment its own
-datum was recorded. This copy is rebuilt whenever the repo changes, and the mirror copy also
-rebuilds every half hour, so two copies of this page can differ — which is why the ages are
+datum was recorded. This copy is rebuilt when something the page is built from changes — a
+scene, a take, the work queue, the author's list, the spend. A push that only touches the
+repo's own notes and logs does not rebuild it, on purpose: rebuilding on every push billed
+over $100 of build time in a month and published nothing. So a build stamp older than the
+newest commit is that rule working, not this page failing. The mirror copy also rebuilds
+every half hour, so two copies of this page can differ — which is why the ages are
 per-datum and not one snapshot stamp. Your browser re-reads the machines' check-in logs, the
 render box's vitals and the work queue for itself, and keeps the ages counting while the tab
 is open. The whole repo IS the show —
