@@ -1166,47 +1166,104 @@ checklist:
         describes for the cold open.
 
     - n: 14
-      ask: "The Wan-against-LTX comparison — it still does not exist, and this is why rather than something else to look at"
-      state: gap
-      chip: "ON US"
+      ask: "The Wan-against-LTX comparison — it EXISTS now, it was filmed on your beat 15, and only half of it is allowed on this page"
+      state: open
+      chip: "PICK"
       body: |-
-        **NOTHING WAS BUILT FOR THIS AND NOTHING IS BEING SHOWN TO YOU.** The
-        overnight plan had an A/B in it: the same cold-open frame filmed by both
-        models, so item 06's question — which model draws episode 2 — could
-        finally be put to you on a picture you had chosen. **It was not
-        rendered**, and the reason is the same rejection that runs through this
-        whole morning: **all four round-5 cold-open frames were provisionally
-        rejected**, so there was no plate to film. An A/B needs a frame both
-        sides agree on, and there is not one.
+        **IT WAS FILMED OVERNIGHT, ON YOUR FRAME.** The previous version of this
+        item asked you to say *"film the A/B on beat 15"*. It was rendered
+        without waiting for you to say it — on 2026-08-09 you told us *"only
+        publishing and moey spending is gated, all production including audio you
+        can handle"*, and this is that rule being used. Saying so plainly because
+        the item used to be a request and is now a thing already done.
 
-        **THIS IS THE SECOND TIME THIS QUESTION HAS BEEN ASKED ON A FRAME THAT
-        WAS NOT YOURS, AND WE STOPPED RATHER THAN DO IT AGAIN.** On 2026-08-08
-        you were shown exactly that and refused it in the right words — *"you
-        used a frame i never approved, and its tooooo tall."* Filming the A/B on
-        a frame the steward had just rejected would have repeated the mistake
-        with an extra step. Two agents on separate machines reached that
-        independently last night and both stopped.
+        The cold open still has no plate — all four round-5 frames were
+        provisionally rejected — so the A/B was moved onto **`b15-r3-s1`**, which
+        is canon, is yours, and is the sapling in grass that most of episode 2 is.
+        Both models drew the same 704x1280 crop of it, same prompt, same seed.
 
-        **THERE IS A WAY TO ANSWER IT WITHOUT WAITING FOR THE COLD OPEN, AND IT
-        NEEDS ONE WORD FROM YOU.** The model question does not actually need
-        *that* frame — it needs any frame you have passed. **`b15-r3-s1`** is
-        canon, it is yours, and it is the sapling in grass, which is what most of
-        episode 2 is. Say **"film the A/B on beat 15"** and both models render it
-        tonight at $0 on the local card; you get the straight comparison the next
-        time you open this page, and it is decoupled from the cold open
-        completely.
+        **WHAT THE MEASUREMENT SAYS, AND IT IS NOT A VERDICT.** On three episode-2
+        beats filmed the same controlled way, how much the picture actually
+        changes frame to frame:
 
-        **WHAT WE WILL NOT DO IS PICK THE MODEL OURSELVES.** There is one number
-        worth keeping and it is explicitly not an argument: LTX drew six seconds
-        in **207 seconds against Wan's 539**, about 2.6x faster at a third of the
-        peak memory. Over twenty-one beats that is real, and it still does not
-        choose a look — LTX has lost here on look before, when you caught it
-        draining the colour out of a clip on 2026-08-06.
+        | beat | LTX | Wan |
+        |---|---|---|
+        | 16 | 31.4 | **0.9** |
+        | 18 | 19.8 | **4.3** |
+        | 21 | 23.9 | **0.8** |
+
+        Your own accepted clips sit at **10.7** (episode 1's opening shot) and
+        **14.2** (the beat-9 retest you looked at). So **LTX moves about twice as
+        much as anything you have passed, and Wan barely moves at all** — its
+        first and last frames on beat 21 are the same picture, in a beat whose
+        whole content is *the leaf tilts, deliberately, the first thing he has
+        ever moved on purpose*. It does not tilt. That is the *"frozen frames"*
+        failure again. Speed is unchanged from before: LTX ~200s a clip against
+        Wan's ~530s.
+
+        Both readings could be wrong for a reason worth naming: the Wan recipe was
+        tuned on beat 1, where a fig visibly swells, and these are near-still
+        macros. And you have refused too much camera movement before, so the
+        stiller one is not automatically the worse one. That is exactly why this
+        is your call and not ours.
+
+        **THE HALF YOU CANNOT WATCH HERE, AND WHY.** The Wan clips pass the
+        licence gate and can be served from this page. **The LTX clips do not** —
+        the gate refuses them with *"its licence has not been cleared for
+        redistribution yet (LTX-2 Community Licence Agreement)"*, which is
+        [D16](/decisions#d16)'s open question, not a bug. So a side-by-side cannot
+        be published here until that licence call is made. Both halves exist on
+        the machine and can be watched off the laptop in a minute; what is blocked
+        is putting the LTX half on a web page.
       pending: >-
-        **No A/B clip is named here because none was rendered** — a missing
-        plate, not a missing render. Both films of the *withdrawn* frame still
-        exist and are kept under item 06 as the record of the question you
-        refused.
+        **No clip is embedded here yet.** The Wan halves would pass the gate on
+        their own, but a one-sided A/B is not a comparison, and the LTX halves
+        cannot be served until D16's licence question is answered. Files are
+        `review/ep2-prov-0809/AB-b{16,18,21}-ltx-vs-wan.mp4` and
+        `AB-ALL-ltx-vs-wan.mp4` (18s, all three), plus `b15ab-ltx.mp4` and
+        `b15ab-wan.mp4` on your own frame. All PROVISIONAL, none canon, none
+        posted.
+
+    - n: 15
+      ask: "Beat 15's motion brief still describes the underground frame you threw out — one line to replace, yes or no"
+      state: open
+      chip: "YES / NO"
+      body: |-
+        **YOU FIXED THIS ONCE AND HALF OF IT DID NOT TAKE.** On episode 1 beat 15
+        you asked *"for beat 15, why is it showing the underground? i think it
+        should show the sapling, no?"* The still was replaced — the underground
+        frame is retired as `15-something-s-coming-REVOKED-underground.png` and
+        your `b15-r3-s1` is canon in its place. **The motion line in `node.md` was
+        never changed with it.** It still reads:
+
+        > Underground: the far-off thump-thump is closer now, the rings of light
+        > through the soil brighter and faster
+
+        So every video render of beat 15 is handed a description of the frame you
+        rejected, over a plate that is the frame you chose. The beat's own
+        negative list already forbids `underground`, so the instruction and the
+        rules contradict each other inside the same render.
+
+        **WE DID NOT EDIT IT.** `node.md` is the approved script; changing what a
+        beat says is yours, not ours. Last night's A/B on this beat used a
+        temporary stand-in line so the two models were not being told to draw a
+        cave, and that override is recorded in the clip's own sidecar and in the
+        script that produced it — it changed nothing in the repo.
+
+        **PROPOSED REPLACEMENT, for a yes or a no:**
+
+        > The thump-thump is closer now, felt through the ground — the grass
+        > shivers and the sapling's two leaves tremble with each pulse.
+
+        Same event, same rising dread, told from above ground where your frame
+        actually is. Say **yes** and it goes in; say **no** and we leave the line
+        alone and keep using an override; say nothing and the override stands,
+        which is the one option that quietly rots.
+      pending: >-
+        **Nothing is blocked on this today** — the override covers the only render
+        that has needed it. It matters the moment beat 15 is filmed for real,
+        because at that point the script and the picture disagree in the
+        published record rather than in a bench file.
 
 cuts:
   - file: ep1-v32-gentleholds.mp4
