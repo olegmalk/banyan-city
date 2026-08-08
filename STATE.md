@@ -3931,3 +3931,78 @@ would archive the evidence of the first one.
 item 09, beats 02, 19 and 21 have no narration by design, and episode 2's assembly
 slates a missing beat rather than inventing one. Two lines of script are now the
 whole of episode 2's voice work, and both are his.
+
+## 2026-08-08 — beat 1 is re-filmed on a plate that is not stretched, and the v1 clips are kept as the evidence that it was
+
+**Both beat-1 films were re-rendered on the aspect-correct plate**, LTX-2.3-Distilled
+and Wan TI2V-5B, and they live beside the originals rather than on top of them:
+`review/ep2-b01/ltx-b01-v2.mp4` and `review/ep2-b01/wan5b-b01-v2.mp4`, with full
+sidecars. The v1 files are not overwritten and are not to be — they are the only
+footage that shows the defect, and a fix whose proof has been deleted is a claim.
+
+**THE ONLY VARIABLE IS THE PLATE, and that took work to be able to say.** The recipes
+came out of `C:\banyan-farm\b01-video-20260807\ltx-b01.cmd` and `wan5b.cmd`, the two
+scripts that produced the v1 clips, copied argv for argv: same seed 20260806, same
+two-stage 8@352x640 + 3@704x1280 at guidance 1.0 with `--distilled-sigmas
+--image-crf 33 --offload sequential` for LTX, same 145 frames / 14 steps / guidance
+5.0 for Wan. The prompt and negative were moved through json rather than retyped and
+the round trip was asserted byte-identical before either render started. The source
+still is byte-identical too — `01-cold-open.png` is blob `53cc403` at both the v1
+commit and the fix commit, and its sha256 (`7cc22aa1…`) is the same on the mac and on
+the box. Even the LTX text embeds were re-encoded instead of reused, so the prompt
+text is proven unchanged rather than asserted. The clocks agree the recipe held: LTX
+205s against v1's 207s, Wan 538s against 539s.
+
+**What the crop costs, stated once so nobody has to re-derive it:** 832x1216 into
+704x1280 keeps the window (81, 0, 750, 1216) — 669x1216, so 163 columns leave the
+frame, 81 off the left and 82 off the right, 19.6% of the width — then LANCZOS to
+704x1280, aspect exactly 0.550. The plate is `review/ep2-b01/01-cold-open-plate-704x1280.png`
+(sha `004dc1e8…`) so the thing the models actually saw can be opened, not recomputed.
+
+**THE VERIFICATION IS A 2x2 AND THE V1 CLIPS ARE THE CONTROL.** Frame 0 of an i2v clip
+is never a byte copy of its conditioning image — VAE round trip, then h264 — so
+"matches the plate" has to mean "is far closer to the plate than to the stretch"
+against a stated metric. Two references were built, both 704x1280, differing only in
+the fit: PLATE (cover-centre crop) and STRETCH (the old `resize((704,1280))`). RMSE of
+frame 0 against each:
+
+| clip | vs PLATE | vs STRETCH | sits on |
+|---|---|---|---|
+| `ltx-b01.mp4` (v1) | 14.12 | **7.12** | STRETCH |
+| `wan5b-b01.mp4` (v1) | 14.93 | **3.26** | STRETCH |
+| `ltx-b01-v2.mp4` | **6.77** | 14.08 | PLATE |
+| `wan5b-b01-v2.mp4` | **3.25** | 14.85 | PLATE |
+
+Every frame is 704x1280 at aspect 0.550. The symmetry is the tell: each model
+reproduces its conditioning frame to its own fidelity — Wan 3.26 then 3.25, LTX 7.12
+then 6.77 — and only the frame it was reproducing changed. A 64-bit dHash agrees (v2
+sits 5 bits from the plate against 9 and 13 from the stretch, on references 8 bits
+apart). aHash is reported at 0 everywhere and separated nothing; an 8x8 average cannot
+see a horizontal squeeze in this picture, and it is written down here so the next
+reader does not mistake it for a third confirmation.
+
+**A second fix was confirmed in the wild without being asked to be.** The v1 Wan
+sidecar had guessed `local-gpu (MSI)` from the hostname and needed a hand correction,
+because both farm boxes report that hostname. `--worker` was deliberately left OFF the
+v2 Wan run to test the 2026-08-08 `worker_id()` change, and the sidecar now reads
+`local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ MSI)` — the hostname is still wrong
+and still useless, and the CUDA device beside it settles the question anyway. No
+correction was needed this time.
+
+**Sidecars now name the still.** Both carry `init_frame` — source path, sha256, source
+and plate sizes, the crop policy in words, and the plate's own sha — appended through
+`video_task.append_init_frame`, the queue's own function, so they are shaped like every
+clip that follows. Idempotence was exercised, not assumed: the second call returned
+false on both.
+
+**Two things are still wrong and neither was fixed in passing.** The Wan sidecar again
+records `shot_beat: 0`, because the bench path hard-codes it; the v2 file carries the
+same appended correction the v1 one does, and the real fix stays queued as
+`wan-bench-sidecar-beat-1786190640` since it needs a `--beat` on `wan_i2v` and this run
+existed to change nothing but the plate. And `init_frame.path` is written with Windows
+separators (`genomes\sapling\…`), which is a live pointer on the box and a dead one on
+the mac the sidecars travel to — `plate_prep.rel_to_repo` should emit posix separators.
+Neither belongs in a re-render commit.
+
+**These are unscreened.** The stretch is gone by measurement; whether beat 1 is now a
+good shot is R4 and nobody has looked yet.
