@@ -265,10 +265,10 @@ checklist:
         frame has to satisfy both**, so the wide shot you pick here is also the
         answer to the grey. If the set you like fixes the repetition but is still
         washed out, reject it and say that; it has not done its job.
-        **A first round exists and a second is rendering.** The staging works —
-        wide, medium, close read as one camera moving in — but the colour drifts
-        across the three, so they are being drawn again tonight with the palette
-        pinned. That second round may land before you wake.
+        **Both rounds are done.** The staging works — wide, medium, close read as
+        one camera moving in — but the colour drifted across the three in round
+        one, so they were drawn again with the palette pinned. That second round
+        is the `r2` frame at the end of each sheet below.
 
         **STILL OPEN, AND THE SHEET WE GAVE YOU WAS THE PROBLEM.** On 2026-08-08
         you said of this item: *"for beat 7/8/9, i am confused? all of these are
@@ -278,26 +278,26 @@ checklist:
         our layout failing, not fifteen frames failing, and **this item is not
         being counted as answered by it.**
 
-        **A new sheet exists: `TRIOS-789-0808.png`.** The same fifteen frames, laid
-        out as **five rows of three** — wide (7) → medium (8) → close (9) across
-        every row, so a row is one candidate cut and picking is naming a row.
-        **Say `T1`, `T2`, `T3`, `T4` or `T5`** and it resolves to exactly three
-        files through `REVIEW-KEY-0808.md`. **`T1` is the one to look at first**:
-        it is the round-2 trio, and it is the only row that is a real trio — one
-        palette, one seed (20260726) across all three shots, the lens the only
-        thing that differs. Rows `T2`–`T5` are the round-1 seeds grouped by slot,
-        which is a presentation convention and nothing more, so **mixing across
-        those rows is allowed** — naming three individual frames is a legal answer.
+        **Three plain sheets now, one per beat.** You said *"stop doing all this
+        complicated row stuff, keep it like it was for the previous beats"* — so it
+        is laid out the way beat 3 and beat 12 were: `LABELED-beat07-all.png`,
+        `LABELED-beat08-all.png` and `LABELED-beat09-all.png`, each holding that one
+        beat's five candidates in a single row — the four round-1 frames, then the
+        round-2 frame at the end. Nothing to decode.
 
-        **Local, for the same D15 reason as item 02** — use `TRIOS-789-0808.png`.
-        The older sheets are still there (`WAVE-0807-progression-789.png` and
-        `-beat07-prog`, `-beat08-prog`, `-beat09-prog` per shot) and the mixed one
-        is kept only for comparing seeds inside round 1. **Skip 7's s1, it grew a
-        giant hand.**
+        **Local, for the same D15 reason as item 02** — the three sheets sit in the
+        repo folder rather than on this page, and `REVIEW-KEY-0808.md` beside them
+        resolves every address to its file.
 
-        Worth your eye even though round two is coming: **tell us whether the
-        staging is right**, because that is the part we would keep. The colour is
-        ours to fix and does not need your verdict.
+        **Answer with three addresses, one per beat** — e.g. *"`p07-r2-s0`,
+        `p08-r1-s1`, `p09-r2-s0`"*. **Mixing rounds is allowed**: the three picks are
+        independent and each sheet stands on its own. The `r2` frame is the
+        palette-pinned round, so it is the one worth your eye first on each sheet.
+        **Skip beat 7's `p07-r1-s1`, it grew a giant hand.**
+
+        Worth saying alongside the picks: **tell us whether the staging is right**,
+        because that is the part we would keep. The colour is ours to fix and does
+        not need your verdict.
 
     - n: 4
       ask: "Beat 11 — we undid our own fix, as you asked. Confirm."
