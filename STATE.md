@@ -4820,3 +4820,64 @@ Gates: `lint_genome.py` rc=0, `test_pipeline.py` rc=0, `build_site.py` rc=0.
 `licence_gate.py` rc=1 — **pre-existing and not a CI job** (CI runs lint_genome
 and test_pipeline); it exits 1 identically with tonight's files moved aside, on
 the known animagine/D15 and PixVerse debt.
+
+## 2026-08-08 (night) — T8's conversion check: nothing on our disk, and the fp32 route is not slow but broken
+
+**Read-only disk listing on the 5090, no GPU claimed** (`nvidia-smi` 0% / 0 MiB
+at check time, `GPU-CLAIM.txt` reading RELEASED from the 19:4x wave runner).
+Retires `t8-anisora-conversion-check-1786090380`, which asked whether an AniSora
+V3.2 bf16 or fp8 conversion already exists on the box.
+
+**It does not. Neither does the fp32 it would be made from.** The intended output
+directory `C:\banyan-video\models\anisora-v3.2-bf16` exists and is **empty — 0
+files**, created 2026-08-04 22:00 and never written to; its siblings
+`a14b-lightning-fp8-fused` and `animegen-fp8-fused` do have content, so the
+directory is a placeholder, not a convention. The HF cache entry
+`models--IndexTeam--Index-anisora` holds **13 files, 11,891,193,499 bytes, and
+not one transformer shard**: the umt5-xxl text encoder (11.36GB), `Wan2.1_VAE.pth`
+(508MB), the four tokenizer files (21MB), and both experts' `config.json` plus
+`diffusion_pytorch_model.safetensors.index.json` — the index that names the
+weights, without the weights. No `.incomplete` blobs under that repo either
+(other repos have plenty), so nothing is mid-flight.
+
+**The conversion tooling is staged and was never fired.** `aniso_bf16.py`,
+`aniso_selftest.py` and `anisora-convert.cmd` are all on the box, the cmd's own
+header saying "REGISTERED, NOT FIRED" and the script refusing with rc=2 rather
+than writing a partial expert. `C:\banyan-farm\anisora-convert.log` **does not
+exist at all**, which is the proof it never ran once — every other scheduled job
+here writes its STARTED line before anything can go wrong. Its task
+`banyan-anisora-convert` is no longer registered; it was archived to
+`schtasks-archive-20260808\banyan-anisora-convert.xml` in tonight's 19→2 sweep.
+
+**WHY there are no weights, and this is the part worth keeping:** the fetch did
+not stall, it **failed**, on 2026-08-05 at 19:13 after 35.2 minutes —
+`q3-anisora-v32.log`, six attempts, every one of them
+`ValueError: The file is too large to be downloaded using the regular download
+method. Install hf_xet`. It had pulled 11.89GB of ~126.2GB at ~6.7 MB/s and then
+sat at exactly 11.89 while all six retries died instantly. The 11.89GB that landed
+is precisely the auxiliary set above; what the size limit rejected is the 57.16GB
+fp32 experts. `anisora-convert.cmd` sets `HF_HUB_DISABLE_XET=1` explicitly, so
+this is the configured path refusing the file, not a network fault.
+
+**The consequence is a real narrowing, not a restatement.** The 11.36GB text
+encoder came down the same path without complaint, so the ceiling sits between
+11.36GB and 57.16GB — and every published conversion is under it: QuantStack's
+Q8_0 at 15.88GB/expert, Q4_0 at 9.03GB, terracottahaniwa's fp8 at 14.31GB. **On
+this box as configured, the official fp32 download is not merely 5+ hours and a
+68GB-host-RAM conversion away, it does not work at all** — which turns "prefer a
+published quant" from a preference into the only route that runs, and it happens
+to agree with the licence finding (baking our own quant is the act that trips the
+bilibili rider; 2026-08-07).
+
+**The row is NOT cut, and the queue entry's premise was stale.** The entry
+expected "the likeliest honest outcome is that the row gets cut" on the grounds
+that nobody had looked. Somebody had — on 2026-08-07, at a **different question**:
+does a conversion exist *anywhere*, not *on our disk*. That pass discharged the
+fp32 gate via the published quants above and moved the blocker into our loader
+(`wan_i2v.py` loads A14B as diffusers layout; AniSora ships the original Wan
+layout; the escape is `from_single_file(config="Wan-AI/Wan2.2-I2V-A14B-Diffusers",
+subfolder="transformer")`). Both records stand. **T8 stays SCHEDULED** — nothing
+is measured, no clip rendered, no sidecar written — and the standing order remains
+loader branch, then download, then ONE sample, in that order. What tonight adds is
+that the download step must name a published quant, because the fp32 one has
+already been tried here and cannot complete.

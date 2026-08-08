@@ -553,22 +553,40 @@ backlog:
 #     Forcing Triton on sm_120 WAS right, and for a sharper reason than lightx2v's
 #     say-so: the CUDA kernel returns uncorrelated garbage on this card, silently.
 
-- id: t8-anisora-conversion-check-1786090380
-  runner: manual
-  worker: rtx5090
-  needs: []
-  window: any
-  est_minutes: 10
-  cmd: >-
-    list the model cache on the 5090 and report whether an AniSora V3.2 bf16 or fp8
-    conversion already exists on disk
-  why: >-
-    ACTION-PLAN section 1 T8 says cut the row unless the fp32 to bf16 conversion has
-    already happened, and nobody has looked; the download is about 126GB for the
-    pair against 68GB of host RAM. The consumer is the T8 row itself, which reads
-    SCHEDULED today and is probably a lie. Their own published VBench Motion is
-    45.59, below vanilla Wan on the axis this show cares about, so the likeliest
-    honest outcome of this check is that the row gets cut.
+# RETIRED 2026-08-08 (night) — t8-anisora-conversion-check-1786090380. IT RAN, as a
+# read-only listing of the 5090 with no GPU claimed (0% / 0 MiB at check, GPU-CLAIM
+# reading RELEASED). Deleted rather than annotated in place, as t4-sageattention and
+# b09-antigrowth were: runner: manual, which the promoter reports but can never
+# retire, so left here it would read as unstarted forever.
+#
+# THE ANSWER IS NO, TWICE OVER. No bf16 conversion, no fp8 conversion, and no fp32
+# to make one from. C:\banyan-video\models\anisora-v3.2-bf16 exists and is EMPTY;
+# the HF cache models--IndexTeam--Index-anisora holds 13 files / 11,891,193,499
+# bytes that are ENTIRELY auxiliary — umt5-xxl 11.36GB, Wan2.1 VAE 508MB, tokenizer,
+# and both experts' config.json + safetensors.index.json, the index that names the
+# weights without the weights. aniso_bf16.py and anisora-convert.cmd are staged and
+# were never fired: no anisora-convert.log exists at all, and the schtask is archived
+# in schtasks-archive-20260808\.
+#
+# BUT THE ROW IS NOT CUT, AND THIS ENTRY'S OWN `why` IS WHY THE NEXT READER GETS
+# CONFUSED. It says "nobody has looked" and predicts the row gets cut. Somebody had
+# looked — on 2026-08-07, at a DIFFERENT QUESTION: does a conversion exist anywhere,
+# not on our disk. That pass discharged the fp32 gate with published quants
+# (QuantStack Q8_0 15.88GB/expert, Q4_0 9.03GB, terracottahaniwa fp8 14.31GB) and
+# moved the blocker into our loader. Both answers are true and they are not the same
+# answer. T8 stays SCHEDULED; nothing is measured.
+#
+# WHAT THIS CHECK ADDS THAT 2026-08-07 COULD NOT: the fp32 route is not slow, it is
+# CLOSED. q3-anisora-v32.log shows the fetch FAILED 2026-08-05 after 35.2 min — six
+# attempts, every one `The file is too large to be downloaded using the regular
+# download method. Install hf_xet` — stuck at 11.89GB of 126.2GB. The 11.36GB text
+# encoder came down that same path fine, so the ceiling is between 11.36 and
+# 57.16GB and every published quant clears it while the official fp32 never will
+# (anisora-convert.cmd sets HF_HUB_DISABLE_XET=1 itself). Do not re-file this as a
+# download job without either installing hf_xet or naming a published quant — and
+# prefer the quant, since baking our own is the act that trips the bilibili rider.
+# Recorded in STATE.md 2026-08-08 (night), ACTION-PLAN.md §1 T8 (hard gate marked
+# SUPERSEDED) and the MODEL-COMPARISON.md §1 T8 row.
 
 # Held stills ARE provenanced and the gate cannot read the provenance. Both
 # strings pipeline/hold_still.py writes fail licence_gate's own classifier, and

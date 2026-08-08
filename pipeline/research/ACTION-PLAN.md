@@ -215,6 +215,20 @@ bf16/fp8 on disk before the first run**; do not expect the stock path to work
 `[aniso §4]`. If that conversion has not already happened, this row does not fit
 in tomorrow.
 
+**SUPERSEDED 2026-08-08 — do not act on the paragraph above, and do not re-run
+its check.** Both halves have been answered. (1) *Has someone converted it?* Yes,
+but not us: published quants exist — QuantStack Q8_0 15.88GB/expert and Q4_0
+9.03GB, terracottahaniwa fp8 14.31GB (MODEL-COMPARISON.md 2026-08-07). The row is
+**not cut**. (2) *Do we hold a conversion on disk?* **No — and no fp32 either.**
+The 5090 was listed on 2026-08-08: the output dir `anisora-v3.2-bf16` is empty,
+the HF cache holds 11.89GB of text encoder, VAE and index files with zero
+transformer shards, `anisora-convert.cmd` never ran (no log exists) and its task
+is archived. The fp32 fetch **failed** on 2026-08-05 — six attempts, all
+`The file is too large to be downloaded using the regular download method.
+Install hf_xet` — so **converting the fp32 ourselves is not a slow option on this
+box, it is a closed one.** Take a published quant. Live blocker is the loader, not
+the weights; see STATE.md 2026-08-08 (night) and MODEL-COMPARISON.md §1 T8.
+
 Recipe, if it runs: **8 steps native — no LoRA anywhere in the V3.2 inference
 path, the few-step capability is baked into the weights** — shift 5, guidance 1,
 boundary 0.900 (3 high-noise steps, 5 low, exactly one expert swap), 81 frames
