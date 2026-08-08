@@ -4122,3 +4122,148 @@ refused; four do not** — 3, 6, 10 and 14, each still on the PNG he turned down
 unrevoked because a revocation needs a replacement to point at. `ep1-v33-assemble-1786124760`
 still waits on those four and on the held-zoom rate pick, and behind it
 `pending-founder.yaml` `v6-verdict`.
+
+## 2026-08-08 — three verdicts in one sentence, and the only one that is a verdict on a MODEL is none of them
+
+**His words, in full and unedited**, answering three different things at once:
+
+> you are still using the bad beat 14 frame, no. for the wan or ltx decision,
+> neither. you used a frame i never approved, and its tooooo tall.
+
+**ALL THREE READ THE SAME WAY ONCE YOU NOTICE WHAT THEY HAVE IN COMMON: he is
+refusing to judge work that was staged on a picture he had already thrown out.**
+Not one of the three is a verdict on a technique, a model or a recipe, and the
+temptation in every case was to file it as one — "framing rejected", "both models
+rejected", "the frame is bad" — which would have retired three live questions on
+answers he did not give. Each is recorded below with his sentence beside it.
+
+**1. THE FRAMING DEMO — "no" IS ABOUT THE PICTURE, AND THE GEOMETRY IS STILL
+UNJUDGED.** He was shown `review/aspect-fix-0808/14-worth-staying-in.mp4`, the
+clip that demonstrates the 24.4% vertical stretch is gone from `hold_still.py`
+(`5568113`: frame 0 byte-identical to the plate, 43.0dB against the old path's
+15.5dB). It was built on node 001's `14-worth-staying-in.png` — **a frame he had
+turned down**, in v32 and again in his pass over the forty candidates the same
+day, and one of the four `ep1-stills-redraw-wave2` is redrawing right now. So the
+fix was demonstrated on a frame that was never going to survive, and *"you are
+still using the bad beat 14 frame"* says precisely that. **The framing policy has
+not been screened and no part of this answer may be read as screening it** — not
+the crop, not the 12% push-in, not the cut-from-native-still decision. What the
+demo proved by measurement stands; whether it looks right is still nobody's call
+but his. Queued as `held-geometry-demo-approved-plate-1786197960`: the same demo
+on `15-something-s-coming.png`, the one frame in this tree he has approved since
+the stretch was fixed (b15-r3-s1, `d4488de`). **NO HELD-BEAT RE-FILMS UNTIL HE
+PASSES IT.** Every held beat in v30, v31 and v32 is 24.4% tall and all of them
+need re-making, but re-filming a set on an unscreened geometry is ONE SAMPLE
+BEFORE ANY BATCH read backwards — and the demo he has now refused once *is* the
+sample.
+
+**2. "NEITHER" IS NOT A MODEL VERDICT, AND FILING IT AS ONE WOULD HAVE BEEN THE
+EXPENSIVE MISTAKE OF THE DAY.** Asked whether Wan 2.2 or LTX-2.3 should film
+episode 2, he answered *"neither"* — in the same breath as withdrawing the frame
+both clips were made from. Read as a taste verdict it retires two candidate
+renderers and sends us looking for a third; read as what it says, it is a refusal
+to judge a motion test whose subject he had just rejected, which is the only sound
+answer to it, because the better-looking clip would only have been the better film
+of the wrong frame. **Checklist item 06 therefore stays `open`, with nothing asked
+of him** — chip `YOUR PICK` → `ON US`, the ask rewritten to say the question waits
+on a frame he has not taken back, and his sentence quoted in full at the top of
+the item. Neither model is recorded as rejected anywhere. The 2.6x speed gap
+(207s against 539s) is kept in the item and explicitly labelled not-the-question,
+since he has caught LTX draining colour before. The Wan clip stays on the page,
+relabelled **"OF THE WITHDRAWN FRAME"** and noted as the record of the question he
+refused rather than a candidate.
+
+**3. EPISODE 2'S OPENING FRAME IS WITHDRAWN, AND ONE OF HIS TWO GROUNDS IS OURS.**
+`stills/01-cold-open.png` is renamed in place to
+**`01-cold-open-REVOKED-too-tall.png`**. *"a frame i never approved"* is not a
+memory lapse — the sheet he picked `r3-s3` from on 2026-08-07 carried a
+steward-hand **`<- BEST PLATE`** label beside that candidate. A sheet that names a
+favourite is not a pick sheet; taste is the author's (R4); the pick is void on
+process and is not being argued with. **Beat 01 of episode 2 has no canon frame,
+and it was the only one of its 21 beats that ever had one.**
+
+**"TOO TALL" IS A MEASUREMENT AND NOT A MOOD, AND IT IS NOT ABOUT THE FILE'S
+SHAPE.** Measured off the plate rather than eyeballed: the stem is a **1-3 pixel
+hairline** standing **385px — 32% of the frame's height** — with its apex at
+**y=315, 25.9% from the top**, the fruit silhouetted against sky, against a prompt
+asking for *"a tiny 40cm banyan seedling … whole plant in frame"*. What got drawn
+is a tall spindly weed. The frame's own aspect is **0.684 (832x1216), WIDER than
+the 9:16 (0.5625) the show ships in**, so nobody should "fix" this by reshaping a
+file — recorded because "too tall" beside a week of aspect-ratio work is exactly
+the sentence a reader will mis-attribute to geometry.
+
+**THE REVOCATION IS VERIFIED IN THE CODE, NOT ASSERTED.** `hold_still.approved_still`
+returns `None` for beat 1 (called, not read), and the expression `video_task.py`
+uses at :1307, :1432 and :1500 — plus `bench_models.py:88` and `check_sync.py:169`
+— resolves `None` for the same glob. The published board moved from **1/21 frames
+approved to 0/21**, which is the truth arriving on the surface a stranger reads.
+`build_site` still copies the `REVOKED` PNG into the node's published media
+directory, as it does for 001's seven, and **no HTML anywhere links it** (checked
+across `_site/`): a dangling asset, not a published frame.
+
+**WHAT SURVIVES THE REVOCATION, because "the pick is void" is not "everything
+downstream is void".** The **prompt** is untouched and is what the redraw starts
+from: four rounds of evidence in that beat's `shots.md` — the mature-tree fix,
+`mascot-simple` dropped for drawing a chibi creature as the subject, the fruit
+described without the word `fig` because `fig` names the leaf in this model's
+vocabulary, the negative refitted to 76 tokens — is evidence about **words**, not
+about that one candidate. The **21 scripts, the native-tag dialect and the voice**
+also survive, and that last one is a **reading rather than a fact, written down as
+one in both `shots.md` and `cuts.yaml`**: the 2026-08-07 pick had a second job,
+settling the dialect that `leaves/002b-t0-c.yaml` scoped the script's approval to,
+and the reason it stays settled is not this frame but his *later* rulings — he has
+since directed episode 2's twenty redraws by name and approved its narration voice
+on the beat-03 take, both of which presume the episode is being made. **If he
+means the dialect went back open with the frame, beats 02-21 stop**, and both files
+name that as where the mistake would be.
+
+**THERE IS NOW A CEILING ON "TALL", SET HOURS AFTER THE RULE, AND NOTHING WAS
+CHANGED ON IT.** His character ruling the same day was *"just make it tall in each
+clip of it"*, and twenty-four frames across both episodes are drawing on it now
+with `tall tree` removed from the scale negatives — the one-term recipe he
+validated by passing b15-r3-s1. A frame he calls **too** tall is a ceiling on that
+rule discovered the same day it was set: "reads tall" is a slender vertical that
+owns the height of the shot, and a hairline weed against the sky is past it. **The
+twenty prompts were NOT rewritten on that reading and neither wave was touched.**
+He has not seen a frame from either; the recipe is the one he actually passed; and
+rewriting twenty prompts on a steward's interpretation of an adjective is the move
+"a metric agreeing with me is not a sample" exists to stop. The caveat is recorded
+in the wave entry instead, so whoever reads the contact sheet reads it knowing both
+of his sentences, and so that "too tall again" arrives as an expected outcome with
+a lever behind it rather than a surprise.
+
+**QUEUED, UNGATED, AND RUNNABLE NOW — both are $0 and neither waits on a person.**
+`ep2-b01-cold-open-redraw-1786197900` draws beat 01 four ways (labels
+**b01-r5-s0..s3** — r1 through r4 already exist in `takes/stills/`) on the recipe
+the twenty are using plus his ceiling, into **one sheet carrying no favourite, no
+ordering and no "closest to"**, which is the whole point of the entry. ~1 minute of
+5090 time; it runs the moment the card is free of the two redraw waves.
+`held-geometry-demo-approved-plate-1786197960` needs no GPU at all — `hold_still`
+is pure python — so it does not queue behind them. Nothing here was deferred to
+"tomorrow": the only reason either is not finished is that one wants a card that is
+busy and the other wants ten minutes.
+
+**FOUR SIDECARS NAME THE REVOKED FILENAME AND NONE WAS REWRITTEN.** The clips in
+`review/ep2-b01/` — both v1 films and both v2 re-renders on the aspect-correct crop
+— carry `init_frame.path` pointing at `01-cold-open.png`. They are records of
+renders that happened and stay exactly as written, the same treatment beat 15's and
+beat 12's promotions gave theirs. **This arms a third case of the poster bug**
+already queued as `review-poster-names-stale-still-1786197251`: those four clips
+resolve to *no* poster today, because nothing holds the name they were drawn from,
+but the moment the redraw promotes a new `01-cold-open.png` they will silently
+poster themselves with a frame none of them contains. That entry now names beat 01
+of 002b beside beats 12 and 15, with the ordering written down — fix it before the
+promotion and the third case never happens.
+
+**WHAT WAS DELIBERATELY NOT DONE.** No new checklist item was invented for the
+framing demo — he has nine and adding a tenth to hold a question he has already
+answered once would be padding his morning; the record carries it and the queue
+entry does the work. No beat-1 footage was re-rendered: a bake-off on a withdrawn
+frame is what he just refused, and re-running it on the same plate would ask him
+the same question twice. Item 07's text was left as it was — his character ruling
+is unaffected by any of this. And `01-cold-open.png` was **renamed, not deleted**:
+`stills/README.md` said to delete a revoked pick, which contradicted both the
+directory it describes (001 carries seven `-REVOKED-` frames) and the code that
+depends on the substring; that instruction is corrected in the same commit, because
+a reader following it would have destroyed the evidence of what the founder
+refused.

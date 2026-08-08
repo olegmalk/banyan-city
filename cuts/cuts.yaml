@@ -134,10 +134,13 @@ checklist:
     are here because your "r3-s3 and retire" started four jobs that had been
     waiting on it, and this is where their output arrives. Item 07 is now the
     record of a ruling rather than a question, and **item 08's voice check you
-    answered the same day — the voice is good, one take is not.** **If the pass is
-    short, items 06, 08 and 09 are what is genuinely yours to answer** — an
-    opening-shot pick and two lines of script, because what is left of item 08 is
-    a word you queried in your own script rather than anything about the voice.
+    answered the same day — the voice is good, one take is not.** **Item 06 is not
+    asking you anything today either** — you took that opening frame back on
+    2026-08-08, so the model question built on it is ours to re-stage before it can
+    be put to you again. **If the pass is short, items 08 and 09 are what is
+    genuinely yours to answer** — two lines of script, because what is left of item
+    08 is a word you queried in your own script rather than anything about the
+    voice.
   items:
     - n: 1
       ask: "The camera move — is 12% right at both ends of the episode?"
@@ -372,51 +375,96 @@ checklist:
     # (002b-b01-video-5b, 002b-b01-video-ltx, 002b-stills-b02-21,
     # 002b-vo-t0c-21beats) — all four are producing tonight, and this is where
     # their output arrives for his eye rather than accumulating unseen.
+    #
+    # HE TOOK THAT PICK BACK ON 2026-08-08 ("a frame i never approved, and its
+    # tooooo tall"), so read the line above as history: the FRAME is revoked and
+    # item 06 is re-staged around that. What survives the revocation is the
+    # DIALECT — and that survives on later rulings of his, not on this one, since
+    # he has since directed episode 2's twenty redraws by name and approved its
+    # narration voice. That reading is written down as a reading, with the place
+    # it would be wrong named, in the node's shots.md under Beat 01. If the
+    # dialect went back open with the frame, beats 02-21 stop and this comment is
+    # the thread to pull.
     - n: 6
       heading:
         title: "Episode 2 — and the one item here that unblocked episode 1"
         intro: |-
-          Your five words on 2026-08-07 — **"r3-s3 and retire"** — settled
-          episode 2's look and started four jobs that had been waiting on it.
-          Their results land here. **For part of 2026-08-08 this block held up
-          episode 1: item 07, the character-sheet question, was what the five
-          redraws were waiting on. You answered it the same day and it stopped
-          being a question** — no sheet, the sapling reads tall, the leaves are
-          not to be fussed over. It is kept below as the record of that ruling.
-          Nothing in this block holds anything up now.
-      ask: "Episode 2's opening shot — both films exist, and only one of them can be shown here"
+          Your five words on 2026-08-07 — **"r3-s3 and retire"** — started four
+          jobs that had been waiting on them, and their results land here.
+          **You then took that frame back on 2026-08-08** — *"you used a frame i
+          never approved, and its tooooo tall"* — so the opening picture of
+          episode 2 is an open question again and the first item below says so.
+          Nothing was built on top of it that cannot be redrawn: the words of all
+          21 shots stand, and so does the voice.
+
+          **For part of 2026-08-08 this block held up episode 1: item 07, the
+          character-sheet question, was what the five redraws were waiting on. You
+          answered it the same day and it stopped being a question** — no sheet,
+          the sapling reads tall, the leaves are not to be fussed over. It is kept
+          below as the record of that ruling. Nothing in this block holds up
+          episode 1 any more.
+      ask: "Episode 2's opening shot — you declined to judge this on a frame you had taken back, and the question waits for a frame you have not"
       state: open
-      chip: "YOUR PICK"
+      chip: "ON US"
       body: |-
-        **Both renders came back.** Your approved opening frame has now been
-        filmed twice, by the model that made episode 1 (Wan 2.2) and by the newer
-        one (LTX-2.3), from the **same frame, same prompt, same seed** — 6.0
-        seconds each, nothing else differing. This is the *motion* test only; the
-        frame itself is settled and is not being re-asked.
+        **THIS ITEM STAYS OPEN AND NOTHING IS BEING ASKED OF YOU TODAY.** You were
+        shown two films of episode 2's opening shot and asked which model should
+        draw the rest of the episode. Your answer, in full:
 
-        **Below is the Wan side, and it is the only side this page is allowed to
-        show you.** LTX's weights ship under a licence that keeps its output off
-        anything we publish — the same reason items 02, 03 and 07 hold their
-        candidates back, and the same open question (D15/D16) that is still
-        yours to settle. It is not a missing render. It is a finished clip we may
-        watch but not republish, sitting at `review/ep2-b01/ltx-b01.mp4`, and
-        **the two are meant to be watched back to back** — so this item is worth
-        ten seconds at the machine rather than ten on the page.
+        > for the wan or ltx decision, **neither**. you used a frame i never
+        > approved, and its tooooo tall.
 
-        **What the numbers already say, since they cost nothing to report:** LTX
-        drew the same six seconds in **207 seconds against Wan's 539** — about
-        2.6x faster, at a third of the peak memory. That is a real difference
-        over twenty-one beats, and it is *not* the question. Speed does not pick
-        a look, and LTX has lost on look here before: on 2026-08-06 you caught it
-        losing most of its colour across a clip, which is why it is a candidate
-        again rather than the default.
+        **WE ARE NOT READING "NEITHER" AS A VERDICT ON THE TWO MODELS.** It would
+        be convenient to file it as "both rejected" and go looking for a third
+        renderer, and that would be us putting words in your mouth. You refused to
+        judge a motion test built on a picture you had just withdrawn — which is
+        the only sound answer to it, because whichever clip looked better would
+        have been the better film *of the wrong frame*. So the model question is
+        not answered, not abandoned, and not re-asked until there is a frame behind
+        it that you have passed.
 
-        Whichever you name films the rest of episode 2, so it is worth the walk
-        to the other screen.
+        **THE FRAME IS WITHDRAWN AND WE ARE NOT ARGUING WITH IT.** *"a frame i
+        never approved"* is about how the choice was put to you: the sheet you
+        picked `r3-s3` from on 2026-08-07 had our own **"BEST PLATE"** label sitting
+        beside that candidate. Marking a favourite on a sheet we hand you is not
+        asking you to choose, and the pick is void on that ground alone — taste is
+        yours (R4), and a nudged pick is not a pick. That frame is now retired in
+        place under a `REVOKED` name rather than deleted, and **episode 2 has no
+        approved opening picture.**
+
+        **AND "TOO TALL" IS BEING TAKEN AS A MEASUREMENT, NOT A MOOD.** In that
+        drawing the stem is a hairline standing about a third of the screen's
+        height with its tip in the top quarter, where the shot is supposed to be a
+        40cm seedling with the whole plant in frame. It matters beyond this one
+        picture: on the same day you told us the sapling should *"just be tall in
+        each clip"*, and twenty-four frames across both episodes are being redrawn
+        on that instruction right now. Your "too tall" is where that instruction
+        stops. Those frames come back as contact sheets, and none of them is being
+        passed off as approved on our own judgement.
+
+        **WHAT HAPPENS NEXT, AND NONE OF IT NEEDS YOU.** The opening shot is
+        redrawn — four candidates, one sheet, **no favourite marked on it this
+        time** — on the same recipe as the twenty. When you pick one, that frame is
+        filmed by both models again and this item comes back to you as the
+        straight A/B it was always meant to be.
+
+        **The Wan film of the withdrawn frame is kept below rather than deleted**,
+        because it is the record of what you were asked and refused. The LTX film
+        of it exists too and this page still may not show it: LTX's weights ship
+        under a licence that keeps its output off anything we publish — the same
+        reason items 02 and 03 hold their candidates back, and the same open
+        question (D15/D16) that is yours to settle. It sits at
+        `review/ep2-b01/ltx-b01-v2.mp4`.
+
+        **One number is worth keeping and is explicitly not an argument:** LTX drew
+        those six seconds in **207 seconds against Wan's 539**, about 2.6x faster
+        at a third of the peak memory. Over twenty-one beats that is real, and it
+        still does not pick a look — LTX has lost here on look before, when you
+        caught it draining the colour out of a clip on 2026-08-06.
       clips:
         - file: checklist/002b-b01-5b.mp4
-          label: "Wan 2.2 — 6.0s"
-          note: "the episode-1 model; 539s to render"
+          label: "Wan 2.2 — 6.0s — OF THE WITHDRAWN FRAME"
+          note: "kept as the record of the question you refused, not as a candidate; the episode-1 model, 539s to render"
       pending: >-
         **The Wan clip is being withheld from this page too** — which, if you are
         reading this line, is a licence-gate refusal rather than a missing render.

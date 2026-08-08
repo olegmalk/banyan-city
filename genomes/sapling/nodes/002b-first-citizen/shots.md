@@ -45,8 +45,9 @@ those words, came back in full glossy detail on the same model, the same seeds a
 the same run. The token arithmetic had agreed with the edit the whole time. A metric
 agreeing with me is not a sample, and the picture is what says so.
 
-Two more are continuity with the canon frame, which is what `stills/01-cold-open.png`
-now is: beat 12's sky is its SUBJECT and had no palette at all, so it takes beat 01's
+Two more are continuity with beat 01 — with its **prompt**, which is what survived
+2026-08-08's revocation of the plate drawn from it (see Beat 01): beat 12's sky is
+its SUBJECT and had no palette at all, so it takes beat 01's
 `peach and gold morning sky` rather than letting the model pick; and beat 04's
 `dappled morning light` asked for overhead foliage in a location beat 01 establishes
 as a vast empty field with one 40cm seedling in it — nothing there can dapple, so it
@@ -151,25 +152,67 @@ Everything the beat asks for survives, including `night sky` and the scale negat
 valid plates to choose from — but a re-render at the same seed will no longer match
 them exactly, so pick from the files, do not expect to reproduce them.
 
-**PICKED 2026-08-07 (founder, R4): `r3-s3`.** His words were *"r3-s3 and retire"* —
-the frame, and the retirement of a stale question in his inbox, in one line.
-`takes/stills/01-cold-open-r3-s3.png` is promoted byte-for-byte to
-`stills/01-cold-open.png`, which is founder-approved canon and the file every
-renderer actually reads (`video_task` globs `stills/NN-*.png` for its conditioning
-frame). Provenance, checksum and the derived seed are in `stills/README.md`.
+**PICKED 2026-08-07 (founder, R4): `r3-s3`** — *"r3-s3 and retire"* — and then
+**REVOKED BY HIM ON 2026-08-08. THIS BEAT HAS NO CANON FRAME.** His words:
 
-**The flaw he accepted with it: four leaves, where the character has two.** That is
-not an unfinished prompt — it is the model, argued down through the four wordings in
-the table above and refused by all of them. The pick is a verdict on a known
-limitation, so do not "fix" it with a fifth synonym for *two*: the levers left are
-img2img over this plate, a pose controlnet, or another checkpoint.
+> you used a frame i never approved, and its tooooo tall.
 
-**What the pick unblocks.** The script's approval was scoped to this sample —
+`stills/01-cold-open.png` is renamed in place to
+`stills/01-cold-open-REVOKED-too-tall.png`, so every renderer skips it and beat 01
+resolves to `None`. The full record — his sentence in context, the provenance of
+the revoked file, and the measurements below — is in `stills/README.md`.
+
+**Two things are being revoked at once and only one of them is about pixels.**
+*"a frame i never approved"* is about how the pick was taken: the sheet he chose
+from carried a steward-hand `<- BEST PLATE` label beside `r3-s3`. A pick sheet
+that names a favourite is not a pick sheet (R4), so the 2026-08-07 verdict is
+withdrawn rather than defended. And *"tooooo tall"* is about the drawing: the stem
+is a 1-3 pixel hairline standing 32% of the frame's height with its apex 25.9%
+from the top, where the prompt asks for *a tiny 40cm seedling, whole plant in
+frame*. The frame's own shape is not the complaint — 832x1216 is aspect 0.684,
+*wider* than the 9:16 the show ships in.
+
+**THE PROMPT BELOW IS NOT REVOKED WITH THE PLATE, and the redraw starts from it.**
+Everything rounds 1-4 settled is evidence about words, not about that one
+candidate: the mature-tree fix, the dropped `mascot-simple`, the fruit described
+without the word `fig`, the 76-token negative. The redraw
+(`ep2-b01-cold-open-redraw` in the farm queue — four candidates, one labelled
+sheet, **no favourite marked on it**) runs this prompt with the tall-sapling
+reconciliation the other twenty beats are getting, and with his ceiling in view:
+he has now called one drawing of this plant *too* tall on the same day he asked
+for a tall sapling, so "reads tall" means a slender vertical that owns the height
+of the shot, not a hairline weed against the sky.
+
+**What the revocation does NOT undo: the dialect, and beats 02-21.** The
+2026-08-07 pick had a second job — it settled the native-tag dialect that
+`leaves/002b-t0-c.yaml` scoped the script's approval to (*"beats 02-21 await his
+verdict on that sample before conversion"*). That stays settled, and the reason is
+not this frame: since 2026-08-08 he has ruled on episode 2's twenty redraws by
+name and approved its narration voice on the beat-03 take, both of which presume
+the episode is being made in this dialect. **That is a reading, and it is written
+down as one** — if he means the dialect went back open with the frame, beats 02-21
+stop and this paragraph is where the mistake will be found.
+
+**The four-leaf flaw is not what he revoked it for.** The plant carries four
+leaves where the character has two; that was argued down through the four wordings
+in the table above as a model limitation and the pick was made in view of it. His
+sentence says nothing about leaves, and *"dont overthink the leafs on it"*
+(2026-08-08) puts the count explicitly out of scope for the redraw. Do not spend a
+fifth round on synonyms for *two*.
+
+**What the pick unblocked on 2026-08-07, and where each of those four stands after
+the revocation.** The script's approval was scoped to this sample —
 `leaves/002b-t0-c.yaml`: *"beats 02-21 await his verdict on that sample before
 conversion"*, and *"No VO, no stills and no footage may be produced until the dialect
-is settled"*. Settled. Beats 02-21 stills, the 21-beat re-voice, and beat 01's video
-on both renderers are sanctioned from this date, and their four queue entries lost
-their founder gate the same day.
+is settled"*. Settled, and still settled (see the reading above). Of the four queue
+entries that lost their founder gate that day: **beats 02-21 stills** and the
+**21-beat re-voice** are unaffected and proceeded; **beat 01's video on both
+renderers ran and is now spent** — the two clips exist, they were re-rendered on the
+aspect-correct crop of this plate, and on 2026-08-08 he declined to judge Wan
+against LTX on them at all (*"neither"*). **No further beat-01 footage is to be
+rendered until a new plate is picked.** A model bake-off on a revoked frame is what
+he just refused; re-running it on the same frame would ask him the same question
+twice.
 
 ```
 A tiny 40cm banyan seedling, exactly two oversized cotyledon leaves, thin curved stem, one small round green fruit hanging from the stem, alone in a vast empty grass field, whole plant in frame, wide shot, sunrise, peach and gold morning sky, no humans, no chibi, no mascot, no creature, no face, no extra leaves, no branches, no night sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.

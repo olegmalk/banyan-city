@@ -1046,6 +1046,22 @@ backlog:
 # fires for every small-subject prompt in the tree, including the growth ladder
 # that wants a man-height tree by 007a, and one frame of one beat is not evidence
 # about all of them.
+#
+# THERE IS NOW A CEILING ON "TALL", SET THE SAME DAY THE RULE WAS, AND THIS ENTRY
+# IS NOT BEING CHANGED FOR IT — it is being warned. Later on 2026-08-08 the founder
+# revoked episode 2's own opening frame with "you used a frame i never approved, and
+# its tooooo tall". Measured off that plate rather than eyeballed: the stem is a 1-3
+# pixel hairline standing 385px, 32% of the frame's height, apex 25.9% from the top,
+# against a prompt asking for a tiny 40cm seedling with the whole plant in frame. So
+# "reads TALL" and "tooooo tall" are both his, hours apart, about the same plant —
+# the target is a slender vertical that OWNS the height of the shot, and a hairline
+# weed silhouetted against sky is past the line. NOTHING IS EDITED HERE ON THAT
+# READING: he has not seen a frame from this wave, the one-term recipe is what he
+# actually passed, and rewriting twenty prompts on a steward's interpretation of an
+# adjective is precisely the move CLAUDE.md's "a metric agreeing with me is not a
+# sample" forbids. The caveat is recorded so that whoever reads the contact sheet
+# reads it knowing both sentences, and so that "too tall again" comes back as an
+# expected outcome with a recipe lever behind it rather than a surprise.
 - id: ep2-stills-redraw-b02-21-1786192800
   runner: manual
   worker: rtx5090
@@ -1090,6 +1106,138 @@ backlog:
     sample screening and he passed it ("b15-r3-s1"); gate and gate_ref are deleted
     above and nothing physical stands behind them.
 
+# EPISODE 2'S TWENTY-FIRST FRAME — THE OPENING SHOT, WHICH HE TOOK BACK.
+#
+# On 2026-08-08 the founder revoked the frame he had picked on 2026-08-07, in a
+# sentence that answered two other questions at the same time. His words, in full:
+#
+#   "you are still using the bad beat 14 frame, no. for the wan or ltx decision,
+#    neither. you used a frame i never approved, and its tooooo tall."
+#
+# TWO GROUNDS, AND THE FIRST ONE IS OURS, NOT THE MODEL'S. "a frame i never
+# approved" is about how the pick was taken: the sheet he chose `r3-s3` from
+# carried a steward-hand "<- BEST PLATE" label beside that candidate. A sheet that
+# names a favourite is not a pick sheet — taste is the author's (R4) — so the pick
+# is void on process and is not being defended. THE SHEET FOR THIS REDRAW CARRIES
+# NO ANNOTATION OF ANY KIND: four candidates, labels only, no ordering, no
+# recommendation, no "closest to". That is the entry's first requirement and the
+# reason it exists at all.
+# The second ground is the drawing, and it is measurable: 1-3 pixel hairline stem
+# standing 385px = 32% of frame height, apex 25.9% from the top, fruit silhouetted
+# against sky, where the prompt asks for a tiny 40cm seedling with the whole plant
+# in frame. The frame's own shape is NOT the complaint and nobody should "fix" it —
+# 832x1216 is aspect 0.684, wider than the 9:16 the show ships in.
+#
+# THE PROMPT IS NOT REVOKED WITH THE PLATE. Four rounds of evidence live in that
+# beat's shots.md section — the mature-tree fix, `mascot-simple` dropped because it
+# drew a chibi CREATURE as the subject, the fruit described without the word `fig`
+# because `fig` names the leaf in this model's vocabulary, the negative refitted to
+# 76 tokens. All of it is about words and none of it is about that candidate. Round
+# 5 runs those words with the tall-sapling reconciliation the other twenty are
+# getting, plus his ceiling: a slender vertical that owns the height of the shot,
+# not a hairline weed. r1-r4 all exist in takes/stills/, so these are r5.
+#
+# WHY THIS IS NOT GATED. The recipe is the one he validated on b15-r3-s1 and the
+# rule is his own; what he refused was a pick sheet and a picture, not a plan to
+# draw more candidates. Drawing four $0 frames is how the question gets asked
+# properly, so waiting for permission to draw them would be the "overnight" failure
+# of 2026-08-05 with a politer name. Four images at ~9-11s each on the 5090.
+- id: ep2-b01-cold-open-redraw-1786197900
+  runner: manual
+  worker: rtx5090
+  needs: [cuda]
+  window: any
+  est_minutes: 10
+  cmd: >-
+    redraw the conditioning frame for beat 01 (COLD OPEN) of node
+    002b-first-citizen — four seeds, labels b01-r5-s0 to b01-r5-s3, one contact
+    sheet. THE SHEET CARRIES NO FAVOURITE, no ordering and no "closest to": the
+    2026-08-07 sheet had a "BEST PLATE" mark on it and that is why this frame is
+    being drawn again (R4). Start from the round-3 prompt already fenced under Beat
+    01 in that node's shots.md — it is NOT revoked and its four rounds of evidence
+    stand — and change two things only. (1) THE SAPLING READS TALL, his ruling of
+    2026-08-08, reconciled the same way as the twenty: drop `tall tree` from the
+    scale negatives and keep the other seven (mature tree, large tree, thick trunk,
+    full canopy, forest, bush, shrubbery), the list b15-r3-s1 was drawn on. Scope it
+    to the wave script; do NOT edit pipeline/sd_prompt.py. (2) HIS CEILING, which is
+    the whole reason this beat is being redrawn rather than reused: the revoked plate
+    was a 1-3px hairline stem standing 32% of frame height with its apex 25.9% from
+    the top, and he called it "tooooo tall". The seedling must read as a small plant
+    that OWNS the height of its shot — a substantial stem, the whole plant in frame,
+    40cm — not a thread against the sky. The composition the beat needs is unchanged:
+    the fig GROWS on screen rather than already hanging (his 2026-08-03 condition),
+    whole plant in frame, wide shot, sunrise, peach and gold morning sky. Add NO
+    leaf-detail terms and do not chase the leaf count — "dont overthink the leafs on
+    it" (2026-08-08), and the four-leaf limitation is four wordings deep in that
+    file's table. Same batch settings as the rest of the episode: 40 steps, 832x1216,
+    cagliostrolab/animagine-xl-3.1, $0.
+  why: >-
+    Beat 01 has NO canon frame after the 2026-08-08 revocation — stills/ carries only
+    01-cold-open-REVOKED-too-tall.png and every renderer resolves the beat to None.
+    Two consumers, both stalled on it: checklist item 06, the Wan-vs-LTX decision,
+    which he declined to judge on the withdrawn plate ("neither") and which cannot be
+    re-asked until a frame he passed exists to film; and episode 2's own opening shot,
+    the only beat of 21 whose frame was ever approved and now the only one whose
+    approval was withdrawn. RUNNABLE NOW — ungated, no dependency, $0, ~1 minute of
+    GPU: run it the moment the 5090 is free of the two redraw waves.
+
+# THE FRAMING DEMO HE SAID "no" TO — RE-MADE ON A PICTURE HE HAS ACTUALLY PASSED.
+#
+# What he was shown on 2026-08-08 was review/aspect-fix-0808/14-worth-staying-in.mp4,
+# a held-still clip demonstrating that the 24.4% vertical stretch in hold_still.py is
+# gone (5568113: frame 0 is now byte-identical to the plate, 43.0dB against the old
+# path's 15.5dB). His answer: "you are still using the bad beat 14 frame, no."
+#
+# THE "no" IS ABOUT THE PICTURE AND THE GEOMETRY IS STILL UNJUDGED. That demo was
+# built on node 001's canon 14-worth-staying-in.png — which he had rejected THAT
+# MORNING as one of the five redraws (it is beat 14 of ep1-stills-redraw-wave2). So
+# he was shown a fix demonstrated on a frame he had already thrown out, and the only
+# thing his "no" can be read as rejecting is the frame. It is NOT a verdict on the
+# framing policy, the crop, or the 12% push-in, and it must not be recorded as one.
+# The policy therefore remains unscreened, which is the part that matters: the
+# held-beat re-films are what it gates.
+#
+# THE PICTURE TO RE-MAKE IT ON IS BEAT 15's, because it is the one frame in this
+# tree he has approved since the stretch was fixed: 15-something-s-coming.png,
+# promoted from b15-r3-s1 on 2026-08-08 (d4488de). One clip, one plate, one look.
+#
+# NO HELD-BEAT RE-FILMS BEFORE HE PASSES IT. Every held beat in v30, v31 and v32 was
+# 24.4% tall and all of them need re-making, but re-filming a set on an unscreened
+# geometry is ONE SAMPLE BEFORE ANY BATCH (2026-08-03) read backwards, and the demo
+# he has already turned down once is the sample. So: this clip, then his yes, then
+# the re-films.
+- id: held-geometry-demo-approved-plate-1786197960
+  runner: manual
+  worker: any
+  needs: []
+  window: any
+  est_minutes: 10
+  cmd: >-
+    re-make the framing demo on a frame the founder has approved, replacing
+    review/aspect-fix-0808/14-worth-staying-in.mp4 as the thing he is asked to look
+    at. Run hold_still.py on node 001 beat 15 —
+    stills/15-something-s-coming.png, canon since 2026-08-08 (b15-r3-s1) — at the
+    settled recipe, ZOOM_TOTAL 0.12, linear, centred, cut from the native still
+    rather than an oversampled buffer. Keep the old beat-14 clip where it is: it is
+    the record of what he refused and of the stretch it fixed, and its sidecar
+    truthfully names `source_still: 14-worth-staying-in.png` — a frame he turned
+    down that is still canon under that name only because its replacement has not
+    been drawn yet, which is exactly the confusion this re-make removes. Assert the
+    same two things the test suite
+    asserts before showing it to anyone — output aspect is the 9:16 bucket, and
+    frame 0 is byte-identical to the plate — and put the numbers beside the clip so
+    the claim travels with it. Ask him ONE question: whether the framing is right,
+    on a picture he chose.
+  why: >-
+    The held-beat re-films of v30/v31/v32 are blocked on a screened geometry and
+    nothing else. The founder's "no" on 2026-08-08 rejected the beat-14 frame the
+    demo was built from (he had rejected that frame the same morning), not the
+    framing, so the policy has never actually been judged and cannot be inferred
+    from that answer. This is the sample that unblocks the re-films — the consumer is
+    every held beat in ep1-v33-assemble-1786124760. RUNNABLE NOW: the plate it needs
+    landed in d4488de, hold_still is pure python and needs no GPU, so it does not
+    queue behind either redraw wave.
+
 # FOUND WHILE PROMOTING BEAT 15, AND IT IS ON THE LIVE PAGE, NOT IN A LOG.
 # build_site.still_for() picks a review-page clip's poster by reading `init_still` /
 # `source_still` out of the clip's sidecar BY NAME, and poster() only reaches that
@@ -1116,7 +1264,13 @@ backlog:
     the sidecar's `init_still_sha256` and accept the `-REVOKED-*` sibling whose bytes
     match it, fall back to no poster rather than to a frame the clip does not
     contain, and add a test that a promoted canon still does not silently re-poster
-    an older clip. Then check the two pairs already affected, beats 12 and 15.
+    an older clip. Then check the two pairs already affected, beats 12 and 15 — and
+    a THIRD that is armed rather than firing: node 002b beat 01, whose plate was
+    revoked on 2026-08-08 (01-cold-open-REVOKED-too-tall.png). Its four clips in
+    review/ep2-b01/ currently resolve to no poster at all, because nothing holds the
+    name they were drawn from; the moment ep2-b01-cold-open-redraw promotes a new
+    01-cold-open.png they will silently poster themselves with a frame none of them
+    contains. Fix it before that promotion and the third pair never happens.
   why: >-
     The review page is what the founder screens on, and a poster is the first frame
     he sees; one that promises a picture the clip does not contain is the review
