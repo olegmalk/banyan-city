@@ -6628,3 +6628,104 @@ tests rc=1 on ONE failure that is not this lane's — `the worker never mentions
 backlog at all` fails because another lane's uncommitted `pipeline/farm_worker.py`
 now contains the word in a docstring, and every one of the seven new checks
 passes.
+
+## 2026-08-09 — the tusk arrived on the first try, and the tag that drew it also took the last female read off the beat
+
+**`ep2-b13-r9-sample`, ledger record 42, `reject_all`, confidence 0.82. Four
+seeds, 37 GPU-seconds, $0, rtx5090.** The ONE SAMPLE for the lever record 39
+filed and deferred — *"if he asks where the tusk is, the answer is that it was
+affordable and deferred, not that it was tried and failed."* It has now been
+tried. Frames and sidecars at
+`genomes/sapling/nodes/002b-first-citizen/takes/stills/13-the-shade-r9-s*.png`;
+neutral sheet `LABELED-b13-r9.png`, built and **not opened**.
+
+**Tusks 4 of 4 — the first tusk this beat has drawn in nine rounds.** Prominent
+paired lower tusks on s0 and s2, smaller on s1, weak but present on s3. Three
+tokens bought it.
+
+**THE SECOND EFFECT IS THE BIGGER ONE, AND IT WAS PREDICTED FROM THE CORPUS
+BEFORE THE RENDER. Not-female is 4 of 4, clean.** r8 read male unambiguously on
+s0 alone and record 39 logged s2 as AT RISK — "red eyes, blush, soft round face,
+the frame closest to the reading he rejected". r9 has no feminine-coded frame at
+all. The tag was chosen for exactly this: **`tusks` co-occurs male to female
+1.92 to 1, and on posts also carrying `goblin` it takes the female skew from
+3.14 down to 1.59 — it halves it.** That number was read out of Danbooru during
+design and written into the render script and the STARTED heartbeat before a
+step was spent, so it is a pre-registered prediction that held, not a story told
+after the pictures.
+
+**WHICH TAG IS A CORPUS QUESTION, AND THE INTUITIVE ANSWER WAS WRONG THREE TIMES
+OUT OF THREE.** `tusk` singular is aliased away and carries no learned signal —
+asking for one tusk with `tusk` asks for nothing. `broken tusk`, which is
+literally the script's phrase and which **fit the budget at exactly 77 of 77**,
+is 15 posts in roughly 12 million and is unlearnable, and `broken` neighbours
+the quality-defect words. `fangs` is real and heavy and would have **deepened**
+the female skew this beat is fighting — it would have made his complaint worse
+while looking like progress. r6 and r8 found that on this checkpoint the tag
+name beats the mechanism; r9 adds the operational half.
+
+**THE REGRESSION IS THE PLANT AND THE CAUSE IS GENUINELY UNDETERMINED.** P1 and
+P4 fail on all four — no rooted 40cm two-cotyledon seedling in any frame, and
+s3's large out-of-focus foreground leaves read as foliage bokeh rather than the
+second subject. r6 took both to 4 of 4 and r8 held them at 3 of 4, so this is
+the worst the plant has been since r6 bought it. **The plant sentence was not
+touched** — r6's byte-for-byte, verified present in the sent positive at 76 of
+77 with the anchor intact, so the words were sent and not drawn. Two causes fit
+and the record refuses to choose: the PAYMENT (buying the axis cost `patch of`
+out of the shade clause, the only other placed scene element in sentence 1) or
+the AXIS (`tusks` + `plump` + `solo` weights a character portrait). That is the
+price of a round that adds and pays in the same prompt, and it was written into
+the script before the render rather than discovered after it.
+
+**THE BRIEFED TOKEN COST WAS WRONG AND THE MEASUREMENT IS THE ONLY REASON THE
+ANCHOR SURVIVED.** This lane was briefed that `tusks` costs one token. **The
+word is two and the insertion is three** — the difference is the comma, because
+a tag added to a comma-separated list brings its own separator, and a budget
+pays for the insertion. Measured on the box's real CLIP tokenizer before a step:
+`, tusks` 3, `, tusk` 3, `, fangs` 3, `, broken tusk` 4, `, single tusk` 4, the
+indefinite article 1. **Selling the article alone — the obvious trade — leaves
+79 and sheds the style anchor**, the r4 defect this beat has already paid for
+once; four early candidates did exactly that at 60-62 tokens. The admissible
+trade sells the article AND `patch of`: `A small goblin boy` → `Small goblin
+boy`, `folds into a thin patch of shade` → `folds into thin shade`. Four freed
+for a three-token axis, **sent positive 76 of 77, anchor INTACT, one token of
+headroom**. The r8 control was re-measured in the same run and reproduced 77 of
+77 with its negative byte-identical to the recorded sidecars, which is what
+validates every number above.
+
+**One variable on the negative, two on the positive, and the record says so.**
+`render_b13r9.py` refuses to spend a step unless the negative it is about to
+send is byte-identical to r8's, all eleven explicit terms included — that check
+passed, so the negative is provably unmoved. The positive moved twice because
+the axis had to be paid for out of the same sentence.
+
+**`shots.md` WAS NOT EDITED.** r8 rewrote the fence, which is how a stale
+checkout can render the wrong round under the right id. r9 injects its axis
+script-side and asserts the fence **byte-for-byte** against the r8 text before
+the injection runs, so a stale checkout cannot start at all, and the approved
+shot list still carries one authored version of this beat rather than nine.
+
+**What did not move.** Lighting is dusk on s0, s1 and s3 with `Midday light`
+verified present — the same three-of-four failure r8 logged on the same wording.
+Twice observed on an identical string, this is a checkpoint/seed property and a
+prompt-side round should not be spent on it again. The faded green patchwork
+cloak is 0 of 4 for the second round running; s0 and s2 add a white cap nobody
+asked for. **The break is not a prompt lever either** — if he wants one broken
+tusk visible, that is an inpaint or a face close-up, filed so the next round does
+not rediscover it as a wording problem.
+
+**No pick, and not a gate attempt.** Record 32 — *"P2 is not a valid gate until
+he defines the goblin"* — has not been lifted and covers this round. The
+predicate block is observation; the sheet carries addresses and seeds only.
+
+**A numbering correction made by note, not by edit.** The r8 record is called
+"record 39" in STATE.md, its own note, its sidecars and the hand heartbeat; it is
+positionally the **40th** and has been since before it was written. This one is
+the 42nd. Nothing is renumbered — the ids are the stable handle.
+
+**Box left clean.** `GPU-CLAIM.txt` claimed as `ep2-b13-r9-tusks` and released,
+verified; card 0% / 0 MiB; **no schtask created** — the render ran ~37s on a
+held-open ssh. All four frames and four sidecars pulled and **sha256-verified
+byte-identical** box-to-repo, 8 of 8. Heartbeats on `farm-results-hand` against
+a fresh id `ep2-b13-r9-tusks-1786320000`. Nothing published, posted, or opened
+on his screen.

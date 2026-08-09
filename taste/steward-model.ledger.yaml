@@ -2614,3 +2614,190 @@
     ordering, no "closest to" — which is the gate the 2026-08-07 pick was revoked
     over (R4). Nothing fires off this beat, nothing is published, and nothing was
     put on the founder's screen.
+- id: ep2-b13-r9-sample
+  date: 2026-08-09
+  subject: "node 002b beat 13 — THE SHADE, round 9, THE TUSK (`tusks` bought into the positive with the indefinite article and `patch of`)"
+  kind: still
+  candidates: [b13-r9-s0, b13-r9-s1, b13-r9-s2, b13-r9-s3]
+  address_key: "sheet LABELED-b13-r9.png; frames at genomes/sapling/nodes/002b-first-citizen/takes/stills/13-the-shade-r9-sN.png, sidecars beside them"
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  scores: {}
+  vetoed: []
+  totals: {}
+  observed_predicates:
+    note: >-
+      RECORDED AS OBSERVATIONS, NOT AS A GATE, on the same terms as the r8
+      record. P2 is suspended by record 32 and that has not been lifted. P5 and
+      P6 are the steward's reading of his words rather than his ruling, so they
+      describe rather than score. The tusk rows are this round's axis and are
+      new.
+    P1_plant_is_a_plant:    {s0: fail, s1: fail, s2: fail, s3: ambiguous}
+    P2_goblin_is_a_goblin:  SUSPENDED — record 32
+    P3_no_fusion:           {s0: pass, s1: pass, s2: pass, s3: pass}
+    P4_two_silhouettes:     {s0: fail, s1: fail, s2: fail, s3: fail}
+    P5_not_female:          {s0: pass, s1: pass, s2: pass, s3: pass}
+    P6_not_an_elf:          {s0: pass, s1: pass, s2: pass, s3: pass}
+    tusks_present:          {s0: pass, s1: pass, s2: pass, s3: weak}
+    tusk_is_one_and_broken: {s0: fail, s1: fail, s2: fail, s3: fail}
+    green_skin:             {s0: pass, s1: pass, s2: pass, s3: pass}
+    plump:                  {s0: pass, s1: overshoot, s2: pass, s3: overshoot}
+    midday_light:           {s0: fail, s1: fail, s2: partial, s3: fail}
+    patchwork_cloak:        {s0: fail, s1: fail, s2: fail, s3: fail}
+  predicted_verdict: reject_all
+  predicted_flip_to: null
+  predicted_objection: >
+    Where is the tree. The seedling is gone from all four — it is the other half
+    of the scene and the thing the episode is actually about — and he has twice
+    rejected sets for missing something he wrote down. Then that two of them
+    (s1, s3) are the bald dome-headed thing again, the read record 32 already
+    records him rejecting once. Then that the tusks are two and whole when his
+    script says ONE BROKEN. And that it is night again on three of four.
+  confidence: 0.82
+  reasoning: >
+    THE AXIS LANDED AND IT IS 4 OF 4. Every frame has tusks — prominent paired
+    lower tusks on s0 and s2, smaller but unmistakable on s1, weak but present
+    on s3. This is the first tusk this beat has drawn in nine rounds. Record 39
+    filed the lever with the line "if he asks where the tusk is, the answer is
+    that it was affordable and deferred, not that it was tried and failed"; it
+    has now been tried and it works, on the first attempt, for three tokens.
+
+    THE SECOND EFFECT LANDED TOO AND IT IS THE MORE IMPORTANT HALF. NOT-FEMALE
+    IS 4 OF 4, CLEAN. r8 read male unambiguously on s0 alone, left s1 and s3
+    gender-neutral, and record 39 logged s2 as AT RISK — red eyes, blush, soft
+    round face, "the frame closest to the reading he rejected". r9 has no
+    feminine-coded frame at all: s0 and s2 read male outright, s1 and s3 read as
+    monstrous rather than neutral. AND THIS WAS PREDICTED FROM THE CORPUS BEFORE
+    A STEP WAS SPENT, which is what makes it evidence rather than an anecdote:
+    `tusks` co-occurs male to female 1.92 to 1, and on posts also carrying
+    `goblin` it takes the female skew from 3.14 down to 1.59 — it halves it.
+    That number was read out of Danbooru while the recipe was being designed and
+    written into the render script and the STARTED heartbeat before the render
+    ran. The founder's complaint was "all the goblin images look like female
+    demihumans"; record 39 established that this was the corpus sampled
+    faithfully rather than a mis-render. A tag chosen to pull the corpus the
+    other way pulled it the other way.
+
+    THE VOCABULARY LESSON HOLDS A THIRD TIME, AND IT NOW HAS A SECOND HALF.
+    r6 and r8 both moved predicates with Danbooru tag names, and r8's swap of
+    the prose `round` for the tag `plump` was the clearest case; the finding was
+    "on this checkpoint the tag name beats the mechanism". r9 adds the part that
+    matters operationally: WHICH tag is a corpus question, and the intuitive
+    answer was wrong three times out of three. `tusk` singular is aliased away
+    and carries no learned signal — asking for one tusk with `tusk` asks for
+    nothing. `broken tusk`, which is literally the script's phrase and which
+    FIT the budget at exactly 77 of 77, is 15 posts in roughly 12 million and is
+    unlearnable, and `broken` neighbours the quality-defect words so it risks
+    reading as a fault in the picture. `fangs` is real and heavy and would have
+    DEEPENED the female skew this beat is fighting — it would have made his
+    complaint worse while looking like progress. Ten minutes of corpus reading
+    outside this repo chose the tag; none of that was answerable from inside it.
+
+    THE REGRESSION IS REAL, IT IS THE PLANT, AND THE CAUSE IS GENUINELY
+    UNDETERMINED. P1 and P4 fail on all four. There is no rooted 40cm
+    two-cotyledon seedling in any frame; s3 has large out-of-focus foreground
+    leaves that are the closest thing to it and they read as foliage bokeh
+    rather than as the second subject, so it is logged ambiguous rather than
+    generously. r6 took P1 and P4 to 4 of 4 and r8 held them at 3 of 4 — this is
+    the worst the plant has been since r6 bought it. THE PLANT SENTENCE WAS NOT
+    TOUCHED: it is r6's byte-for-byte, it was verified present in the sent
+    positive at 76 of 77 with the style anchor intact, so the words were sent
+    and not drawn. Two causes fit and this record refuses to pick one, because
+    the round cannot distinguish them: (a) THE PAYMENT — buying the axis cost
+    `patch of` out of the shade clause, and `a thin patch of shade` was the only
+    other grounded, placed scene element in sentence 1; or (b) THE AXIS — a
+    creature carrying `tusks`, `plump` and `solo` weights a character portrait,
+    and the model gave the whole frame to the creature. Record 41's b01 finding
+    is this one's mirror image: when the plant fails to occupy the frame as its
+    subject the model fills the composition with a figure. Here the figure won
+    the frame outright. THIS IS THE PRICE OF A ROUND THAT ADDS AND PAYS IN THE
+    SAME PROMPT, and it was stated in the script before the render rather than
+    discovered after it.
+
+    WHAT DID NOT MOVE, RECORDED SO IT IS NOT RE-DISCOVERED. Lighting is dark or
+    dusk on s0, s1 and s3 and only partially midday on s2, with `Midday light`
+    verified present in the sent positive — the same three-of-four failure r8
+    logged on the same wording. Twice observed on an identical string, this is a
+    property of the checkpoint and these seeds rather than a gap in the prompt,
+    and a prompt-side round should not be spent on it again. The faded green
+    patchwork cloak is 0 of 4 for the second round running; all four wear dark
+    robes, and s0 and s2 add a white cap nobody asked for. The ears are large
+    and pointed on all four and are the closest this beat has come to his
+    "enormous", though no round has asked for them in words.
+
+    WHY reject_all AT 0.82. He has rejected this beat in every one of eight
+    prior rounds. The seedling is absent from all four, which is a fresh and
+    highly visible defect on a predicate r6 had already bought, and missing a
+    thing he wrote down is a class of failure he has rejected sets over twice.
+    Half the set is the bald dome-headed creature record 32 records him
+    rejecting once. The tusks are paired and intact where his script says one
+    broken. It is 0.82 rather than r8's 0.85 because this round delivers two
+    things he actually named — a noun from his own script sentence, and the
+    female read he ordered removed — and "definitely need to regenerate" is more
+    likely to become a narrower instruction here than it was after r8. A
+    narrower instruction is the output this round was for; a frame was not.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+  notes: >-
+    THE BUDGET, AND THE ESTIMATE THAT OPENED THE LANE WAS WRONG. This lane was
+    briefed that `tusks` would cost one token. THE WORD IS TWO AND THE INSERTION
+    IS THREE — the difference is the comma, because a tag added to a
+    comma-separated list brings its own separator, and what a budget pays for is
+    the insertion. Measured on the box's real CLIP tokenizer before a step:
+    `, tusks` 3, `, tusk` 3, `, fangs` 3, `, broken tusk` 4, `, single tusk` 4,
+    and the indefinite article 1. So selling the article alone — the obvious
+    trade — leaves the prompt at 79 and SHEDS THE STYLE ANCHOR, which is the r4
+    defect this beat has already paid for once; four early candidates did
+    exactly that at 60-62 tokens. The admissible trade sells the article AND
+    `patch of`, freeing four for a three-token axis: `A small goblin boy` became
+    `Small goblin boy`, and `folds into a thin patch of shade` became `folds
+    into thin shade`. Sent positive 76 of 77, anchor INTACT, one token of
+    headroom left. The r8 control was re-measured on the same tokenizer in the
+    same run and reproduced 77 of 77 with its negative byte-identical to the
+    recorded r8 sidecars, which is what validates every number above.
+
+    ONE VARIABLE ON THE NEGATIVE, TWO ON THE POSITIVE, AND THE RECORD SAYS SO
+    RATHER THAN CLAIMING A CLEAN ROUND. `render_b13r9.py` refuses to spend a
+    step unless the string it is about to send is byte-identical to the negative
+    in the r8 sidecars, all eleven explicit terms included, and that check
+    passed — so the negative is provably unmoved. The POSITIVE moved in two
+    places, because the axis had to be paid for out of the same sentence. That
+    is why the plant regression above is logged with two candidate causes and no
+    verdict between them.
+
+    SHOTS.MD WAS NOT EDITED. r8 rewrote the fence, which is how a stale checkout
+    could render the wrong round under the right id. r9 injects its axis
+    script-side and asserts the fence byte-for-byte against the r8 text before
+    the injection runs, so a stale checkout cannot start at all, and the
+    founder's approved shot list still carries one authored version of this beat
+    rather than nine. The fence sha256 is recorded in every sidecar.
+
+    THE `, tusks` HEADROOM IS ONE TOKEN AND IT IS SPOKEN FOR IF HE WANTS IT.
+    `broken` is the obvious next buy and it should NOT be bought: at 15 posts in
+    ~12M the checkpoint has no concept for it, and `broken` sits near the
+    quality-defect vocabulary. THE BREAK IS NOT A PROMPT LEVER. If he wants one
+    broken tusk visible, the lever is an inpaint or a close-up on the face, and
+    that is filed here so the next round does not spend itself rediscovering it
+    as a wording problem. The same goes for the dark lighting: two rounds have
+    now sent `Midday light` and drawn dusk.
+
+    A NUMBERING CORRECTION, MADE BY NOTE RATHER THAN BY EDIT BECAUSE THIS FILE IS
+    APPEND-ONLY. The r8 record is referred to as "record 39" in STATE.md, in its
+    own note, in its sidecars and on the hand heartbeat; it is positionally the
+    40th record in this file and has been since before it was written (`ep1-b06-
+    r5-provisional` landed in 82fd4ff, ahead of 0b6bf59). This record is the
+    42nd. Nothing is being renumbered — the IDS ARE THE STABLE HANDLE and
+    `ep2-b13-r8-sample` resolves without ambiguity where "record 39" does not.
+
+    NOT SCORED AGAINST THE OLD GATE, BY RULE, AND NO PICK. Record 32: "P2 is not
+    a valid gate until he defines the goblin, and no r8 may be scored against
+    the old one." That constraint has not been lifted and it covers this round
+    too. The predicate block is observation. Choosing a favourite is the exact
+    error record 33 was scored a miss for. This record was written BEFORE the
+    sheet was built; the sheet carries addresses and seeds only, with no
+    favourite, no ordering and no "closest to". No wave fires off this beat,
+    nothing is published, and nothing went on his screen.
