@@ -348,7 +348,7 @@ creature / no face`. Four candidates on this beat's own four seeds; the sheet
 carries labels and seeds only — no favourite, no ordering (R4).
 
 ```
-A tiny 40cm seedling standing in short grass, its sturdy curved stem rising well above the grass, two oversized cotyledon leaves, one small round green fruit hanging from the stem, whole plant in frame, wide shot, peach and gold sunrise sky, no girl, no boy, no child, no person, no chibi, no mascot, no creature, no face, no branches, no night sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+A tiny 40cm seedling standing in short grass, its sturdy curved stem no taller than the grass around it, two oversized cotyledon leaves, one small round green fruit hanging from the stem, whole plant in frame, wide shot, peach and gold sunrise sky, no girl, no boy, no child, no person, no chibi, no mascot, no creature, no face, no branches, no night sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 **r6 RENDERED AND REFUSED — two of the three changes worked and the beat still has
@@ -386,6 +386,75 @@ grass` — the clause this round imported from b15 — is itself what makes it t
 and that naming the grass as the measure (*no taller than the grass around it*)
 says the opposite thing. That is a different claim from the one b15 proved, so it
 is r7's single variable if there is an r7.
+
+**Round 7 ran that variable and the answer is NO — the clause makes it TALLER.**
+The fence above now carries r7's wording: `rising well above the grass` gives way
+to `no taller than the grass around it`, the record's own phrasing, and nothing
+else moves. That the negative did not move is a *precondition* rather than a
+claim — `pipeline/render_b01r7.py` refuses to spend a step unless the string it
+is about to send matches the negative in the r6 sidecars character for character
+and all four person terms survive the 77-token fit. Both passed, so the positive
+is the only thing that changed.
+
+**Measured, on the box's real CLIP tokenizer with the r6 fence as the control:**
+r7 positive 72 of 77, style anchor INTACT, no sentence dropped; r6 control 70 of
+77, anchor intact; delta +2, exactly the two added words. The same check on the
+Mac reports the anchor DROPPED and would have stopped the round at its own hard
+gate — that is `_token_estimate` over-counting by ~3 near the boundary with no
+`transformers` present, the trap r8 documented. The script now refuses to run at
+all without a real tokenizer rather than printing an estimate as a measurement.
+
+**The stem height fraction, which is what this beat is now scored on** (apex to
+groundline over frame height, against the 32% hairline he revoked):
+
+| seed | frame | result |
+|---|---|---|
+| 20260720 | s0 | stem exits the top edge *and* runs to the bottom — ~93% visible, `whole plant in frame` fails |
+| 20261720 | s1 | hangs DOWN from the top edge, ungrounded — **and stands a child in the grass** |
+| 20262720 | s2 | hangs DOWN from the top edge, ungrounded — r5's and r6's vine failure, third round running |
+| 20263720 | s3 | the only rooted whole-plant frame: apex 51.8%, base ~90.9%, **stem ~39% of frame height** |
+
+s3 is the number that settles it. On this same seed r6 drew the first frame in
+six rounds *inside* his ceiling, at about a fifth of frame height; one clause took
+it to 39% — taller than the 32% plate he revoked with *"its tooooo tall"*.
+
+**THE MECHANISM, and it is the part worth keeping: CLIP does not encode negation,
+which is the whole reason this codebase lifts `no X` out of the positive in the
+first place.** An unlifted `no X` in the positive is read by the model as `X`.
+This clause is not lifted — `_NEGATION` captures at most 25 characters before a
+comma and the clause is 31 — so what the model actually saw asserted *taller than
+the grass around it*. **The proposal recorded above was self-defeating and that is
+recorded rather than quietly dropped:** a measure expressed as a negation cannot
+work in a positive prompt, and lifting it would not have helped, because it would
+have put "taller than the grass around it" in the NEGATIVE, forbidding the
+composition instead of bounding it. **Do not spend r8 on `not above` or `never
+higher than` — same defect.** If the measure is worth another round it must be
+asserted POSITIVELY, as a relation the model can draw rather than a limit it must
+respect (grass reaching up over the seedling's leaves, the plant half-buried in
+it). That is a suggestion, not a decision.
+
+**Person binding regressed to 1 of 4 and record 28's rule is too strong as
+written.** s1 stands a child in the grass with `girl, boy, child, person` all
+verified in the sent negative — the same string, to the byte, that returned 0 of 4
+in r6 on the same seed. A rule stated as a property of the NEGATIVE was broken by
+one clause of POSITIVE text. What fits all three rounds is about the subject:
+r5 grounded the plant in 1 of 4 and drew people in 3 of 4; r6 grounded it in 4 of
+4 and drew people in 0 of 4; r7 grounds it in 2 of 4 and draws one. When the plant
+fails to occupy the frame as its subject, the model fills the composition with a
+figure. Hypothesis over three rounds, not a measured law.
+
+**The slab is seed-linked.** s3 carries the same unexplained pale rectangular
+column that ruined r6-s3, on the same seed 20263720, surviving a change to the
+positive. A fourth round on that seed should expect it.
+
+**The fig is 0 of 4 again — 0 of 24 across seven rounds**, with one honest
+ambiguity: the upper rounded form on s0 is the closest any round has come, and at
+full resolution it still reads as a curled backlit leaf, as do the s1 and s2 pods,
+which carry midribs and pointed tips. Observed, not gated.
+
+Ledger record 41 (`ep2-b01-r7-sample`, `reject_all`, 0.88) was written BEFORE the
+sheet. Sheet `LABELED-b01-r7.png`, labels and seeds only — no favourite, no
+ordering (R4) — built and not opened.
 
 ## Beat 02 — THE SPRINT (0:06–0:11) ⬜ needs footage
 

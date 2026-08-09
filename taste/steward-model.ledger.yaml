@@ -2471,3 +2471,146 @@
     written. The file's rule exists to stop a prediction being edited toward a
     verdict; there is no verdict here yet, and the edit adds the evidence the
     round was designed from rather than changing what it claims.
+
+- id: ep2-b01-r7-sample
+  date: 2026-08-09
+  subject: "node 002b beat 01 — cold open, round 7, the grass named as the MEASURE instead of the thing the stem rises above"
+  kind: still
+  candidates: [b01-r7-s0, b01-r7-s1, b01-r7-s2, b01-r7-s3]
+  address_key: "sheet LABELED-b01-r7.png; frames at genomes/sapling/nodes/002b-first-citizen/takes/stills/01-cold-open-r7-sN.png, sidecars beside them"
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  scores:
+    b01-r7-s0: {A1: -1, A2: 1, A3: 0, A4: -1, A5: 1, A6: 1, A7: -2}
+    b01-r7-s1: {A1: -1, A2: 1, A3: -2, A4: -2, A5: 1, A6: 1, A7: -2}
+    b01-r7-s2: {A1: -2, A2: 1, A3: -2, A4: -2, A5: 1, A6: 1, A7: -2}
+    b01-r7-s3: {A1: 0, A2: 1, A3: -2, A4: -1, A5: 1, A6: 1, A7: -1}
+  vetoed: [b01-r7-s0, b01-r7-s1, b01-r7-s2, b01-r7-s3]
+  totals: {}
+  predicted_verdict: reject_all
+  predicted_flip_to: b01-r7-s3
+  predicted_objection: >
+    Still too tall, and now there is a person in one of them again. What is the
+    white column.
+  confidence: 0.88
+  reasoning: >
+    THE ROUND ASKED A CLEAN QUESTION AND GOT A CLEAN NO. Record 28 named the
+    single variable — that `rising well above the grass`, the clause r6 imported
+    from b15, is itself what makes the stem tall, and that naming the grass as
+    the MEASURE (`no taller than the grass around it`) says the opposite thing.
+    It does not say the opposite thing. It says the SAME thing, slightly louder,
+    and the frames are taller than r6's on the same four seeds.
+
+    THE MEASUREMENT, which is the rubric this round pre-registered. Stem height
+    as a fraction of frame height, apex to groundline, against the 32% hairline
+    he revoked:
+      s0  stem exits the top edge AND runs to the bottom — visible span ~93% of
+          frame height, apex off-frame, `whole plant in frame` fails outright.
+      s1  hangs DOWN from the top edge, ungrounded, pod at ~63%.
+      s2  hangs DOWN from the top edge, ungrounded, leaf at ~62% over grass at
+          ~68% — r5's and r6's exact vine failure, third round running.
+      s3  the only rooted, whole-plant frame: apex 51.8% from the top, base
+          ~90.9%, STEM HEIGHT ~39% OF FRAME HEIGHT.
+    s3 is the number that settles it. On this same seed (20263720) r6 drew the
+    first frame in six rounds INSIDE his ceiling at about a fifth of frame
+    height; the one-clause change took it to 39%, which is not merely worse than
+    r6-s3 — it is taller than the 32% plate he revoked with "its tooooo tall".
+    The round moved the axis it was aimed at, in the wrong direction, on the seed
+    that had already proved the wording could reach his scale.
+
+    THE MECHANISM, AND IT IS THE DURABLE PART OF THIS ROUND. CLIP does not encode
+    negation; that is the entire reason this codebase lifts `no X` OUT of the
+    positive and into the negative in the first place (`sd_prompt._NEGATION`). A
+    `no X` phrase that is NOT lifted is therefore read by the model as `X`. This
+    clause is not lifted — `_NEGATION` captures at most 25 characters before a
+    comma and the clause is 31 — so the positive the model actually saw asserted
+    "taller than the grass around it". Verified rather than inferred: the sent
+    negative was byte-identical to r6's, checked as a precondition before a step
+    was spent, so the positive is the only thing that moved and the word `no` in
+    it did no work at all. THE RECORD'S OWN PROPOSAL WAS SELF-DEFEATING, and that
+    is worth saying plainly because the proposal was mine: a measure expressed as
+    a negation cannot work in a positive prompt, and lifting it would not have
+    helped either — it would have put "taller than the grass around it" in the
+    NEGATIVE, which forbids the composition rather than bounding it.
+
+    PERSON BINDING REGRESSED, 1 of 4, and this is the finding with the widest
+    blast radius. s1 stands a child in the grass with `girl, boy, child, person`
+    all verified present in the sent negative — the SAME negative string, to the
+    byte, that returned 0 people in 4 of 4 in r6, on the same seed. Record 28's
+    rule was stated as a property of the negative ("`no girl, no boy, no child,
+    no person` binds on a beat whose subject is not a character"). One clause of
+    POSITIVE text just broke it without touching the negative, so the rule as
+    written is too strong. The pattern that fits all three rounds is about the
+    SUBJECT rather than the negative: r5 grounded the plant in 1 of 4 and drew
+    people in 3 of 4; r6 grounded it in 4 of 4 and drew people in 0 of 4; r7
+    grounds it in 2 of 4 and draws a person in 1. When the plant fails to occupy
+    the frame as its subject, the model fills the composition with a figure, and
+    no quantity of person-negatives prevents it. Offered as the best-fitting
+    hypothesis over three rounds, not as a measured law — n is small and the
+    r5/r7 counts are not a clean split.
+
+    THE SLAB IS SEED-LINKED, NOT CLAUSE-LINKED. s3 carries the same unexplained
+    tall pale rectangular column that ruined r6-s3, on the same seed 20263720,
+    surviving a change to the positive. Two rounds, one seed, same architectural
+    intrusion in a field the script calls empty: this is a property of that seed
+    on this checkpoint, and a fourth round on 20263720 should expect it.
+
+    THE FIG IS ABSENT AGAIN — 0 of 4 clear, 0 of 24 across seven rounds. Recorded
+    with one honest ambiguity: the upper rounded form on s0 is the closest thing
+    to the beat's fruit any round has drawn, and at full resolution it still
+    reads as a curled backlit LEAF rather than a fruit, as do the s1 and s2 pods,
+    which carry visible midribs and pointed tips. Observed, not gated — the round
+    changed nothing that would move it and the record already concluded this
+    needs a lever outside the prompt.
+
+    WHY reject_all AT 0.88. He has rejected this beat in every one of seven
+    rounds. This set is measurably worse on the one axis he named than the set he
+    rejected last, it re-introduces the human he objected to in r5, and it keeps
+    the column he has not yet been asked about. The file's own calibration note
+    is that rejections are the class this model is actually calibrated in — five
+    for five, no reject_all has ever missed — and nothing here is close to the
+    line. It is not higher than 0.88 only because s3 is a competent drawing and
+    he has occasionally answered a rejected set with a narrower instruction
+    instead of a refusal, which would be the useful outcome.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+  notes: >-
+    NEGATIVE HELD BYTE-IDENTICAL TO r6 AS A PRECONDITION, which is what makes
+    this a one-variable round rather than a claim to be one. `render_b01r7.py`
+    refuses to spend a step unless the string it is about to send matches the
+    negative recorded in the r6 sidecars character for character, and unless all
+    four person terms survive the 77-token fit. Both passed. The two authored
+    fences differ by exactly one substitution.
+
+    MEASURED ON THE BOX AND ONLY THERE, with the r6 fence as the control on the
+    same tokenizer: r7 positive 72 of 77 with the style anchor INTACT and no
+    sentence dropped, r6 control 70 of 77 anchor intact, delta +2 — exactly the
+    two added words. The negative fits to 72 sent from a 75-token recipe, and the
+    control reproduced the r6 negative recorded in the sidecars exactly, which is
+    what validates the run. THE SAME CHECK ON THE MAC SAID THE ANCHOR WAS
+    DROPPED and would have stopped this round at its own hard gate; that reading
+    is the `_token_estimate` fallback over-counting by ~3 near the 77 boundary,
+    the trap r8 documented. The script now refuses to run at all without a real
+    CLIP tokenizer rather than reporting an estimate as a measurement.
+
+    WHAT THE NEXT ROUND SHOULD NOT DO, filed so it is not rediscovered: do not
+    spend r8 on another negated measure. `no taller than`, `not above`, `never
+    higher than` are the same defect — an unlifted negation in the positive is
+    read as its own opposite, and a lifted one forbids the wrong thing. If the
+    measure is worth another round it has to be asserted POSITIVELY, as a
+    relation the model can draw rather than a limit it must respect — the grass
+    reaching up over the seedling's leaves, the plant half-buried in it, the
+    leaves level with the grass tops. That is a different claim and it is a
+    suggestion, not a decision: this beat has now spent seven rounds on wording
+    and record 28's own conclusion, that the remaining levers are outside the
+    prompt, has more evidence behind it after this round than before it.
+
+    NO GATE, NO WAVE, NOTHING OPENED. This record was written BEFORE the sheet
+    was built. The sheet carries labels and seeds only — no favourite, no
+    ordering, no "closest to" — which is the gate the 2026-08-07 pick was revoked
+    over (R4). Nothing fires off this beat, nothing is published, and nothing was
+    put on the founder's screen.
