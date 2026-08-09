@@ -6042,3 +6042,52 @@ card.
 Lint 0 violations (ratchet unchanged at 25), 28 pipeline tests pass, CI green on
 `39c3b0d` (lint-genome, pages, mirror). Text and queue only — no candidate pixel
 was published and nothing was opened on his screen.
+
+## 2026-08-09 — episode 2's tiles are addressable, and the sidecar had been claiming they already were
+
+**His defect is fixed** (`e84039b`): *"ep2 beats dont have labels."* The four
+`CONTACT-002b-r3-*` sheets carried the beat only in the band header and the tile
+caption read `r3-s0  seed 20260721`, so no tile said what it was and episode 2
+could not be answered the way episode 1 had just been. Every tile now carries
+`002b-bNN-r3-sK` in the amber chip the episode-1 sheets use.
+
+**THE WORSE HALF: the provenance file had already promised the badge.** Every
+CONTACT sidecar's `sheet_note` said "with an amber address badge and the seed
+burned under each tile" — written the same day, describing something that was
+not there. The record asserted the property he had to discover was missing. It
+is true now.
+
+Rebuilt from the 80 source stills through the original builder with one
+addition, not pixel-patched: same 2060x4024, and a tile-body diff against the
+old sheet below the chip line is EMPTY, so the frames are the same pixels in the
+same places. One sheet built and inspected before the other three.
+
+**GALLERY.** `LABELED-beat06-r4.jpg` and `LABELED-beat14-r4.jpg` added — /review
+had no rendition of either r4 sheet while `REVIEW-KEY-0808.md` was already
+calling their r3 predecessors superseded, so the page was offering sheets the
+key had retired. Four CONTACT renditions re-encoded, both SHA-256s refreshed on
+each. **All 22 gallery sidecars verify**: every JPEG hashes to its recorded
+`sha256` and every source PNG to its `derived_from_sha256`.
+
+**THREE CHECKLIST ITEMS WERE TELLING HIM THINGS HE HAD ALREADY DISPROVED.** Item
+16 was still asking him to choose between two lettered rules for beat 3 — he
+answered it by picking `b03-r4-s3`, so it is `settled`, and **which letter that
+amounts to is not claimed** because he wrote neither. Item 12 was still offering
+v33 as a screening with two live provisional picks; four of its fifteen beats
+are now wrong (6 and 14 hold frames from sets he rejected, 3 and 10 predate his
+answers), so it is `gap` with "don't watch it" in the ask and **v33 needs a
+rebuild, not a redraw**. Item 10 still offered `b10-r4-s2` at 0.65 for a beat he
+had answered from round 1 — **struck, not left standing beside his answer** —
+and its prediction table now carries a verdict column.
+
+**A FRAGILITY WORTH NAMING, because it is how this defect got in.** The sheet
+builders are not in the repo. `sheets_002b_r3.py`, the script that drew these
+four, lives only in a session scratchpad, and the relabelling script now does
+too. Anyone regenerating these sheets from the older script silently loses the
+addresses again, and nothing in the tree would catch it. Not fixed here —
+putting a sheet builder into `pipeline/` is a design call this lane should not
+make alone — but it should not stay a scratchpad artifact.
+
+`build_site.py` clean: 70 pages swept, no broken local references, /status still
+13 of 15. Lint 0 violations, ratchet unchanged; 28 tests pass. Nothing opened on
+his screen, nothing promoted to canon.
