@@ -360,13 +360,24 @@ root-map risks walking straight back into that, so the word `underground` is
 light` on it, and `no dark background, no black void, no cave` stay in the
 negative. `no post, no fence, no pole, no building` are added for the architecture.
 
-Measured on the real `sd_prompt` path before rendering: the first draft **dropped
-`very aesthetic` off the positive tail**, so three clauses were tightened until the
-boosters survived — positive 69, negative 69, nothing dropped. Rings remain a POST
-overlay; three founder-rejected rounds proved the model cannot draw them.
+Measured on the real `sd_prompt` path before rendering, and it caught two things
+rather than one. The first draft **dropped `very aesthetic` off the positive tail**,
+so three clauses were tightened until the boosters survived. The second is subtler
+and would not have been visible in the image: rewriting `one slender sapling's thin
+stem` as `one slender stem` **silently removed every scale negative from the beat.**
+`sd_prompt` attaches `mature tree, large tree, tall tree, thick trunk, full canopy,
+forest, bush, shrubbery` only when the prompt contains a `_SMALL` word, and `sapling`
+was the word carrying that here — so the shortening would have left a root-and-soil
+close-up with nothing forbidding a thick trunk or a forest above it. `seedling` goes
+back in as the trigger (the same word beats 01, 12 and 13 use), which restores all
+eight. Final: positive 71, negative 77 with the tail intact; `fit_negative` sheds
+`realistic skin texture, jpeg artifacts, deformed, extra limbs` from the
+least-important end and says so — all four are human-body boilerplate on a frame
+whose own negative says `no humans`. Rings remain a POST overlay; three
+founder-rejected rounds proved the model cannot draw them.
 
 ```
-root-map of pale spreading roots in dark damp soil, mineral glitter, veins of dark water, one slender stem rising into short grass, very low shot at the soil line, warm morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No post, no fence, no pole, no building, no lake, no water surface, no dark background, no black void, no cave, no humans. No photorealism, no 3D render look. 9:16 vertical, no text.
+root-map of pale spreading roots in dark damp soil, mineral glitter, veins of dark water, one slender seedling stem rising into short grass, very low shot at the soil line, warm morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No post, no fence, no pole, no building, no lake, no water surface, no dark background, no black void, no cave, no humans. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 **REJECTED 2026-08-08 — the founder DELEGATED this one and the steward decided it
