@@ -324,8 +324,15 @@ checklist:
         **We are not reading "neither" as a verdict on the two models.** You
         refused to judge a motion test built on a picture you had just withdrawn —
         whichever clip looked better would have been the better film *of the wrong
-        frame*. So the model question is not answered, not abandoned, and not
-        re-asked until there is a frame behind it that you passed.
+        frame*. So the model question was not answered here, not abandoned, and not
+        re-asked until there was a frame behind it that you passed.
+
+        **THAT HAPPENED ON 2026-08-09 and the model question is now closed
+        elsewhere.** The A/B was re-filmed on `b15-r3-s1`, which is canon and
+        yours, and you answered it: *"wan has nearly no motion, and ltx is just
+        amazing.. buuut it's going off track and making random stuff like this
+        human sometimes."* **That verdict and the condition attached to it live in
+        item 14.** Only the cold-open frame is still open here.
 
         **The frame is withdrawn and we are not arguing.** The sheet you picked
         `r3-s3` from had our own **"BEST PLATE"** label beside that candidate.
@@ -518,10 +525,11 @@ checklist:
       chip: "PICK"
       minutes: 5
       summary: >-
-        100 candidates on the recipe your beat-15 yes settled. Four picks finish
-        v33; twenty start episode 2; one gives item 06 its A/B back.
+        100 candidates on the recipe your beat-15 yes settled, plus four round-4
+        and round-6 redraws that came back while you slept. Two of those carry
+        new picks.
       where: "on this card — open the sheets, tap one to see it full size"
-      sheets_title: "The nine sheets — tap one to open it full size"
+      sheets_title: "The sheets — thirteen of them, tap one to open it full size"
       how: "name an address, e.g. `b14-r3-s2` or `002b-b16-r3-s1`"
       body: |-
         **THE NINE SHEETS ARE BELOW** — they went onto this page on your word,
@@ -540,10 +548,35 @@ checklist:
           Labels and seeds only, no favourite marked — which is the whole reason
           the last pick was void. Highest-leverage answer on the page (item 06).
 
+        **AND FOUR MORE THAT LANDED SINCE, each answering a named fault rather
+        than re-rolling seeds.** They are the last four sheets in the gallery.
+
+        - **`b10-r4` — episode 1 beat 10. NEW PICK: `b10-r4-s2`, confidence
+          0.65.** Leading the prompt with the root-map worked: **this is the
+          first time in four rounds the beat has had roots at all**, which is
+          the thing its own on-screen card (`SENSE ✓ roots / air / vibration`)
+          has been contradicting. If you take it, beat 10 stops being one of
+          v33's two unfixed complaints.
+        - **`b12-r4` — episode 2 beat 12. NEW PICK: `b12-r4-s2`, confidence
+          0.70.** r3 drew the big ripe pink fruit in all four, on a beat whose
+          own text has no fruit in it. Removing one word (`mascot-simple`) and
+          adding beat 01's negative block **killed it in 4 of 4**.
+        - **`b01-r6` — the cold open again, provisionally rejected, 0.75.** The
+          person binding worked outright — **zero people in 4 of 4, against
+          three of four in r5** — and the beat still has no plate: three still
+          read too tall, and the fourth has a white block in it. This is item
+          06's question, still open.
+        - **`b13-r6` — episode 2 beat 13, provisionally rejected, 0.72.** The
+          plant-and-goblin fusion that survived three rounds of negatives is
+          **gone in 4 of 4**; what is left is that the goblin only reads as a
+          goblin in one of them. Real progress on the wave's worst beat, not a
+          frame to pick.
+
         **WHAT THE STEWARD PROVISIONALLY PICKED, SO YOU CAN OVERRULE IT IN ONE
-        WORD.** All 100 frames were scored before you saw any. **Five picks;
-        twenty beats rejected outright.** The sheets are untouched — no mark, no
-        ordering.
+        WORD.** All 100 frames of the r3 wave were scored before you saw any —
+        **five picks, twenty beats rejected** — and the four later sheets add
+        **two more picks and two more rejections**. Seven picks in all. The
+        sheets are untouched: no mark, no ordering.
 
         | sheet | provisional call | confidence |
         |---|---|---|
@@ -555,6 +588,10 @@ checklist:
         | ep2 b21 | **pick `002b-b21-r3-s3`** | 0.50 |
         | ep2 b02–b15, b17, b19, b20 | **reject all 68** | 0.70–0.95 |
         | ep2 cold open b01-r5 | **reject all 4** | 0.80 |
+        | ep1 b10 **r4** | **pick `b10-r4-s2`** | 0.65 |
+        | ep2 b12 **r4** | **pick `b12-r4-s2`** | 0.70 |
+        | ep2 cold open **b01-r6** | **reject all 4** | 0.75 |
+        | ep2 b13 **r6** | **reject all 4** | 0.72 |
 
         Full reasoning per frame is in `PROVISIONAL-PICKS-0809.md`; every row is in
         `taste/steward-model.ledger.yaml` with an empty verdict field waiting for
@@ -612,6 +649,18 @@ checklist:
         - file: review-assets/LABELED-b01-r5.jpg
           label: "ep2 cold open — b01-r5-s0..s3"
           note: "the four replacing the frame you withdrew"
+        - file: review-assets/LABELED-b10-r4.jpg
+          label: "ep1 beat 10 ROUND 4 — b10-r4-s0..s3"
+          note: "roots for the first time in four rounds; provisional pick b10-r4-s2, 0.65"
+        - file: review-assets/LABELED-b12-r4.jpg
+          label: "ep2 beat 12 ROUND 4 — b12-r4-s0..s3"
+          note: "the ripe fruit gone in 4 of 4; provisional pick b12-r4-s2, 0.70"
+        - file: review-assets/LABELED-b01-r6.jpg
+          label: "ep2 cold open ROUND 6 — b01-r6-s0..s3"
+          note: "zero people in 4 of 4, and still no plate; all four provisionally rejected"
+        - file: review-assets/LABELED-b13-r6.jpg
+          label: "ep2 beat 13 ROUND 6 — b13-r6-s0..s3"
+          note: "the plant/goblin fusion gone in 4 of 4; all four provisionally rejected"
     # BEAT 3 IS NOT BLOCKED ON A BETTER PROMPT, which is why this is an item and
     # not a queue entry. Round 4 copied beat 1's approved screen wording verbatim
     # and it worked: the glyph junk that sank r1, r2 and r3 is gone in 4 of 4.
@@ -867,28 +916,28 @@ checklist:
           label: "beat 21 — 002b-b21-r3-s3 — PROVISIONAL"
           note: "confidence 0.50; the tilt reads as a decision, not as wind"
     - n: 14
-      ask: "Wan against LTX — filmed, and half of it can't be shown."
+      ask: "Wan against LTX — ANSWERED. LTX, once it stops inventing people."
       state: open
-      chip: "PICK"
-      minutes: 2
+      chip: "ON US"
+      minutes: 1
       summary: >-
-        Filmed on your frame `b15-r3-s1`. The LTX halves fail the licence gate, so
-        it cannot be published here.
-      where: "`review/ep2-prov-0809/AB-ALL-ltx-vs-wan.mp4` — 18s, all three"
-      how: "name a model, or say the numbers are enough"
+        You chose LTX on its motion and named the thing that disqualifies it. The
+        invention has a cause and it is our prompt, not the model.
+      where: "nothing to watch — the fix is being tested on the machine"
+      how: "nothing, unless we misheard you"
       body: |-
-        **IT WAS FILMED OVERNIGHT, ON YOUR FRAME.** This item used to ask you to
-        say *"film the A/B on beat 15"*. It was rendered without waiting — on
-        2026-08-09 you said *"only publishing and moey spending is gated, all
-        production including audio you can handle"*.
+        **Your answer, in full and unedited:**
 
-        The cold open still has no plate, so the A/B moved onto **`b15-r3-s1`**,
-        which is canon and yours. Both models drew the same 704x1280 crop, same
-        prompt, same seed.
+        > wan has nearly no motion, and ltx is just amazing.. buuut it's going off
+        > track and making random stuff like this human sometimes.
 
-        **WHAT THE MEASUREMENT SAYS, AND IT IS NOT A VERDICT.** How much the
-        picture actually changes frame to frame, on three episode-2 beats filmed
-        the same controlled way:
+        **This is read as a direction, not a settled choice.** LTX is the engine we
+        build episode 2 on **if** the invention can be killed. If it cannot, the
+        choice reopens — you named a fault, and a model that draws a stranger into
+        a two-hander is not usable at twenty-one beats whatever its motion is like.
+
+        **YOUR TWO SENTENCES BOTH MATCHED THE MEASUREMENT**, which was published
+        here before you saw the clips. Frame-to-frame change on three beats:
 
         | beat | LTX | Wan |
         |---|---|---|
@@ -896,24 +945,37 @@ checklist:
         | 18 | 19.8 | **4.3** |
         | 21 | 23.9 | **0.8** |
 
-        Your own accepted clips sit at **10.7** and **14.2**. So **LTX moves about
-        twice as much as anything you have passed, and Wan barely moves at all** —
-        its first and last frames on beat 21 are the same picture, in a beat whose
-        whole content is *the leaf tilts, deliberately*. It does not tilt. That is
-        the *"frozen frames"* failure again. Speed: LTX ~200s a clip, Wan ~530s.
+        We wrote *"Wan barely moves at all"* and you wrote *"nearly no motion"*.
+        Recorded as a hit for the measurement, and the caveat we hedged it with —
+        *"the stiller one is not automatically worse"* — is recorded as wrong.
 
-        Both readings could be wrong: the Wan recipe was tuned on beat 1, where a
-        fig visibly swells, and these are near-still macros. And you have refused
-        too much camera movement before, so the stiller one is not automatically
-        worse.
+        **THE HUMAN IS NOT RANDOM AND WE ARE NOT GUESSING.** It is beat 16, and
+        **the prompt asks for him by name.** The sentence sent to LTX contains
+        *"Close on the sapling's leaf; **the scavenger sits blurred behind it**"* —
+        the script's own staging line (`node.md:103`), passed straight into the
+        POSITIVE prompt. **The picture it was animating has no person in it at
+        all**, just the leaf. So the model was handed a plate with no character and
+        a sentence asking for one, and it drew one. He arrives about a second in
+        and is in focus by three.
 
-        **THE HALF YOU CANNOT WATCH HERE.** The Wan clips pass the licence gate;
-        **the LTX clips do not** — *"its licence has not been cleared for
-        redistribution yet (LTX-2 Community Licence Agreement)"*, which is
-        **D16**'s open question, not a bug. Both halves exist on the machine.
+        **We had already written down that the frame was missing him** — the note
+        beside that frame's pick reads *"the goblin the prompt wants blurred behind
+        the leaf is absent"* — and then sent the sentence anyway.
+
+        **Negatives could never have caught it.** At the settings these run on, the
+        negative prompt is not read at all; every clip's own record says so in the
+        negative field itself. The only text that acts is the positive one, and the
+        positive one was asking for a man.
+
+        **WHAT IS RUNNING NOW.** Eight clips on beat 16: the same picture, the same
+        recipe, four seeds — half with that clause, half with it removed and nothing
+        else changed. If the people vanish, this is a one-line fix and LTX is your
+        engine. If they do not, LTX has a real drift problem and you will be told
+        that instead. **Nothing goes to a screen until it is scored.**
       pending: >-
-        **Nothing is embedded here:** a one-sided A/B is not a comparison. Also
-        `AB-b{16,18,21}-ltx-vs-wan.mp4`, `b15ab-ltx.mp4`, `b15ab-wan.mp4`.
+        **Nothing is embedded here** — the LTX clips fail the licence gate
+        (**D16**, open, yours), and the eight-clip test is still rendering. They sit
+        at `review/ep2-prov-0809/` and `review/ltx-drift-0809/`.
 
     - n: 15
       ask: "Beat 15's motion line still describes the frame you threw out."

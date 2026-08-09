@@ -2007,3 +2007,70 @@ backlog:
     in 001 — a genome whose whole subject is a plant with no people in it. The
     finding is already written up in that node's own shots.md; this entry is the
     sweep it asks for.
+
+# ---------------------------------------------------------------------------
+- id: i2v-prompt-plate-truth-1786280100
+  runner: manual
+  worker: m1pro
+  needs: []
+  window: any
+  est_minutes: 60
+  cmd: >-
+    (a) make `video_prompt` refuse to name a SUBJECT the plate does not contain:
+    the fix is not a word blacklist but the rule that the i2v positive may only
+    describe what is in the conditioning frame, and the staging line describes
+    the INTENDED composition, not the frame that exists; (b) the concrete carrier
+    is `act` — `video_task.py:1341` passes the script's staging line
+    (`motion_directions`, read from node.md) verbatim into the positive, and that
+    line routinely names characters, e.g. 002b beat 16's "the scavenger sits
+    blurred behind it"; (c) `NEGATIVE_PROSE` (video_task.py:582) must not be the
+    answer — it moves any `no …` clause into the negative, which is INERT on the
+    LTX distilled path (guidance 1.0, no uncond pass), so "no person" in the
+    positive is worse than useless, it looks like a fix; (d) extend
+    `video_prompt`'s own docstring with this THIRD case, alongside the two it
+    already documents (beat 12's second stem, "a stick poking the sapling"; and
+    the motion string carrying "no new subjects" into the positive) — the
+    docstring is where this bug family is tracked and the new member belongs in
+    it; (e) `test_pipeline.py:403` already pins beat 16's staging line as a
+    fixture, so the regression test has its input ready; (f) ONE SAMPLE before
+    any set, per CLAUDE.md.
+  why: >-
+    The founder on 2026-08-09: "ltx is just amazing.. buuut it's going off track
+    and making random stuff like this human sometimes." It is NOT going off
+    track. The clip he screenshotted is 002b beat 16, whose POSITIVE prompt asks
+    for the man by name — "Close on the sapling's leaf; the scavenger sits
+    blurred behind it", the script's own staging line at node.md:103 — while the
+    conditioning plate contains no figure at all, just the leaf. Frame 0 is
+    clean, a head enters at ~1s, a full figure is in focus by 3s; beats 18 and
+    21, whose prompts name no character, are clean for all six seconds. Our own
+    ledger had already recorded the mismatch when it picked the frame ("the
+    goblin the prompt wants blurred behind the leaf is absent",
+    ep2-b16-r3-provisional) and the sentence went out anyway. This is the third
+    time this family has shipped and the first two are documented in the
+    composer's own docstring, so the pattern is known and the general rule is
+    not yet written down anywhere the code enforces it. Measured result of the
+    one-variable experiment is in STATE.md 2026-08-09 (task 002b-b16-drift-0809).
+
+- id: ledger-engine-kind-1786280160
+  runner: manual
+  worker: m1pro
+  needs: []
+  window: any
+  est_minutes: 30
+  cmd: >-
+    give `taste/steward-model.ledger.yaml` a record kind for ENGINE and RECIPE
+    predictions, not just per-frame `kind: still` ones, with its own scoring
+    fields (what was predicted, on what measurement, at what confidence, and
+    which founder sentence settles it).
+  why: >-
+    On 2026-08-09 the founder answered the Wan-vs-LTX question — "wan has nearly
+    no motion, and ltx is just amazing" — and there was NOTHING IN THE LEDGER TO
+    SCORE IT AGAINST, because the ledger only models predictions about candidate
+    frames. The prediction did exist and it was a hit: cuts.yaml item 14 had
+    published "Wan barely moves at all" off measured frame-to-frame deltas (LTX
+    31.4/19.8/23.9 vs Wan 0.9/4.3/0.8 on beats 16/18/21) before he saw the clips,
+    and the hedge attached to it — "the stiller one is not automatically worse" —
+    was wrong. Scoring it meant writing the result into the cuts.yaml body as a
+    workaround, which is not a ledger and cannot be tallied against the model's
+    hit rate. Engine and recipe calls are exactly the kind of expensive,
+    hard-to-reverse guess the ledger exists to keep honest.
