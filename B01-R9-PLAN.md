@@ -217,13 +217,28 @@ Quoted from the model cards, not paraphrased.
 | `Intel/dpt-hybrid-midas` | depth preprocessor | `apache-2.0` | **SAFE** — permissive, adds nothing |
 | `xinsir/controlnet-depth-sdxl-1.0` | alternative structure control | `apache-2.0` | **SAFE**, and licence-preferable; see §9 |
 
-**No non-commercial artifact appears in this recipe, and none may.** The
-specific trap worth naming, because the instinct is to reach for it: the Depth
-Anything V2 family is *not* uniformly permissive across its size variants, and a
-CC-BY-NC artifact anywhere in a canon still's chain would poison the composite
-the way `models-licence.md` records the Wan2.2-Turbo distill doing. The
-recommended recipe avoids the question entirely by using an apache-2.0
-estimator.
+**No non-commercial artifact appears in this recipe, and none may.** The trap
+worth naming, because the instinct is to reach for the newest estimator: the
+Depth Anything V2 family is *not* uniformly licensed across its sizes, and it is
+worse than the usual assumption —
+
+| Depth Anything V2 | licence (card YAML) |
+|---|---|
+| `Depth-Anything-V2-Small-hf` | `apache-2.0` |
+| `Depth-Anything-V2-Base-hf` | **`cc-by-nc-4.0`** |
+| `Depth-Anything-V2-Large-hf` | **`cc-by-nc-4.0`** |
+
+Base is non-commercial too, not just Large, so "use the middle size" is the
+version of this mistake most likely to get made. A CC-BY-NC artifact anywhere in
+a canon still's chain would poison the composite the way `models-licence.md`
+records the Wan2.2-Turbo distill doing. Worth recording for whenever we do want
+Depth Anything: the **V1** family (`LiheYoung/depth-anything-{small,base,large}-hf`)
+is `apache-2.0` at every size, and V1-Large is byte-for-byte the same size as
+V2-Large with the same API — a clean drop-in if the NC licence is ever the only
+objection.
+
+The recommended recipe avoids the question entirely: `Intel/dpt-hybrid-midas` is
+`apache-2.0`.
 
 The r9 sidecar must declare, in addition to r8's fields:
 `controlnet`, `controlnet_licence`, `controlnet_conditioning_scale`,
@@ -355,15 +370,21 @@ new here and should not pretend to.
 Nothing below has been downloaded. Sizes are as shown on the Hugging Face files
 pages.
 
-| Artifact | Files | Size | Notes |
-|---|---|---|---|
-| `diffusers/controlnet-depth-sdxl-1.0` | `diffusion_pytorch_model.fp16.safetensors` + `config.json` | **2.5 GB** + 1.27 kB | the fp32 file is 5 GB; take the fp16 variant |
-| `Intel/dpt-hybrid-midas` | `pytorch_model.bin` + `config.json` + `preprocessor_config.json` | **490 MB** + 9.88 kB + 382 B | see the `.bin` note below |
-| `diffusers/controlnet-depth-sdxl-1.0-small` | fallback only | 0.2B params, "7x smaller" | not needed unless the 2.5 GB is a problem |
+Byte sizes are from the Hugging Face API `tree/main` endpoint, not the rounded
+figures on the web page.
 
-**About 3.0 GB total**, into the box's default Hugging Face hub cache, loaded by
-repo id — no explicit paths and no `local_dir`, matching how r5–r8 load
-animagine, which is already cached there.
+| Artifact | Files | Exact bytes | Notes |
+|---|---|---|---|
+| `diffusers/controlnet-depth-sdxl-1.0` | `diffusion_pytorch_model.fp16.safetensors` + `config.json` | **2,502,139,134** (2502.14 MB) + 1.27 kB | the fp32 file is 5,004,167,860 B; take the fp16 variant |
+| `Intel/dpt-hybrid-midas` | `pytorch_model.bin` + `config.json` + `preprocessor_config.json` | **489,648,389** (489.65 MB) + 9.88 kB + 382 B | see the `.bin` note below |
+
+**2,991,787,523 bytes — about 2.99 GB total**, into the box's default Hugging
+Face hub cache, loaded by repo id: no explicit paths, no `local_dir`, matching
+how r5–r8 load animagine, which is already cached there.
+
+Smaller fallbacks on the same licence, if 2.99 GB is ever the objection:
+`diffusers/controlnet-depth-sdxl-1.0-mid` at 545,197,729 B fp16 and
+`-small` at 320,237,179 B fp16. Both take `variant="fp16"`.
 
 **No pip install of any kind.** Both additions load through `diffusers 0.29.2`
 and `transformers 4.44.2` exactly as pinned; that is the main reason this
@@ -384,15 +405,44 @@ Two things that will otherwise cost the box a failed run:
   pinned transformers, but it is the one load in this recipe without a
   safetensors path, so it is the one to watch on first run.
 
-**On xinsir/controlnet-depth-sdxl-1.0** (apache-2.0, 1B, F16, loads with the
-standard `ControlNetModel.from_pretrained`): licence-preferable to the diffusers
-weight and widely reported as stronger, but its card drives the preprocessor
-through `controlnet_aux` — a new pip dependency with its own transformers and
-timm constraints, pointed at the venv whose pin r8's token trap depends on. It
-is trained on MiDaS-and-Zoe depth, so it would in fact accept the DPT map this
-plan already produces, and it recommends scale 1.0 rather than 0.5. **Named as
-the r10 substitution if r9's geometry comes back too weak** — swapping the
-weight is one line and needs no new preprocessor.
+**On `xinsir/controlnet-depth-sdxl-1.0` — the named r10 substitution if r9's
+geometry comes back too weak.** apache-2.0 (licence-preferable), 2,502,139,104 B,
+loads with the standard `ControlNetModel.from_pretrained`, trained on
+MiDaS-and-Zoe depth so it accepts the very DPT map this plan already produces —
+no new preprocessor, no new pip package. Two things to get right when we take
+it, both of which would otherwise waste a run:
+
+- **`variant="fp16"` raises on the xinsir repos.** There is no
+  `*.fp16.safetensors` file; the single default file already holds fp16-precision
+  weights. Load it with `torch_dtype=` and **no `variant` argument at all** —
+  the opposite of the diffusers weight's call, which is exactly the kind of
+  detail that gets copy-pasted wrong.
+- Its card recommends `controlnet_conditioning_scale = 1.0` where the diffusers
+  card recommends 0.5, so r9's sweep values do not carry across unchanged.
+
+**Two negative results, recorded so they are not re-proposed:**
+
+- **ControlNet-Union / Promax cannot run on our pin.** `ControlNetUnionModel`
+  does not exist in diffusers 0.29.2 — it first appears in **v0.32.0** (PR
+  #10131, merged 2024-12-11), and 0.32.x is itself known-buggy for Union, with
+  the fixes landing in v0.35.0. Worse than a missing convenience wrapper: the
+  Union configs declare `_class_name: "ControlNetModel"`, so a naive
+  `from_pretrained` on 0.29.2 will *attempt* the load and then fail or misload
+  on the extra Union tensors. Also `xinsir/controlnet-union-sdxl-1.0-promax`
+  does not exist as a repo — promax is a differently-named file inside the base
+  repo, which is why the ecosystem loads the `brad-twinkl` repack instead.
+- **T2I-Adapter is the interesting cheap alternative, and is not being taken
+  this round.** `TencentARC/t2i-adapter-depth-midas-sdxl-1.0` is `apache-2.0`
+  and **158,060,440 B fp16 — sixteen times smaller** than a full ControlNet, and
+  both `T2IAdapter` and `StableDiffusionXLAdapterPipeline` are present in 0.29.2.
+  Adapters apply a looser, cheaper conditioning than ControlNets, which for a
+  round that explicitly wants *loose* geometry is arguably a feature rather than
+  a compromise. It is not r9's arm only because r9 should change one thing, and
+  the diffusers ControlNet is the pairing with a published operating point. If
+  r9's problem turns out to be that the control is too *tight* — a b15 clone in
+  sunrise colours — this is the first thing to try. (Their model cards contain a
+  typo, `varient="fp16"`, which is silently swallowed and downloads the 316 MB
+  fp32 file instead.)
 
 ---
 
@@ -451,13 +501,32 @@ what makes the API claims in §3 checkable:
 in §2 in enough detail to re-run; the numbers are reproducible from the plate
 and its recorded sha256.
 
-**Not yet returned.** Two outside-research lanes were dispatched in parallel
-with this plan — one on the community's comparative findings for depth vs canny
-vs lineart vs T2I-Adapter vs IP-Adapter-composition colour leakage and their
-reported conditioning-scale ranges, one on a fuller artifact and licence
-manifest. Neither had reported when this was written. Nothing above depends on
-them: the recipe is anchored to the diffusers card's own published `0.5` rather
-than to community ranges, and the licences here were read off the cards
-directly. If those lanes come back with a materially better control type — the
-most likely candidate is `xinsir/controlnet-depth-sdxl-1.0`, already costed in
-§9 — the substitution is one line and §9 says so.
+**Artifact and licence manifest** — exact byte sizes in §9 and the licence
+verdicts in §5 come from a parallel research lane that queried the Hugging Face
+API `tree/main` endpoint per repo rather than reading rounded figures off the
+web pages, and probed the diffusers source tree tag by tag to date
+`ControlNetUnionModel`:
+
+- `https://huggingface.co/api/models/<repo>/tree/main?recursive=true`
+- diffusers PR #10131 "Add ControlNetUnion" —
+  <https://github.com/huggingface/diffusers/pull/10131> — and release v0.32.0
+  <https://github.com/huggingface/diffusers/releases/tag/v0.32.0>
+- Depth Anything V2 cards, per size —
+  <https://huggingface.co/depth-anything/Depth-Anything-V2-Small-hf>,
+  <https://huggingface.co/depth-anything/Depth-Anything-V2-Base-hf>,
+  <https://huggingface.co/depth-anything/Depth-Anything-V2-Large-hf>
+- Depth Anything V1, the apache-2.0 alternative —
+  <https://huggingface.co/LiheYoung/depth-anything-large-hf>
+- `TencentARC/t2i-adapter-depth-midas-sdxl-1.0` —
+  <https://huggingface.co/TencentARC/t2i-adapter-depth-midas-sdxl-1.0>
+
+**Still outstanding, and named so it is not mistaken for settled.** A third lane
+was dispatched for the community's *comparative* findings — depth vs canny vs
+lineart vs T2I-Adapter vs the IP-Adapter composition variants on colour leakage,
+and their reported conditioning-scale ranges — and it did not return. Nothing
+above depends on it: the sweep is anchored to the diffusers card's own published
+`0.5` rather than to community ranges, the choice of depth over edges rests on
+the measurement of our own plate in §2, and every licence was read off a card
+directly. What that lane would add is corroboration on the *scale* values and on
+whether the IP-Adapter composition route deserves a place in r10 — neither of
+which changes what r9 should render.
