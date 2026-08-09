@@ -5564,3 +5564,80 @@ byte-identical between the box and the repo** — `b15ab-wan.mp4`
 Deleting another lane's handle on the strength of "its outputs are pulled" alone
 would have been the collision this discipline exists to prevent. Only
 `banyan-telemetry` (Running) and `banyan-worker-start` (Ready) remain.
+
+## 2026-08-09 — the adapter took, the reference did not, and the gate that matters was never about the picture
+
+**`ep2-b13-r7-sample`, ledger record 34, `reject_all`, confidence 0.86. Four
+seeds, 44 GPU-seconds, $0, rtx5090.** The ONE SAMPLE for the regional
+IP-Adapter round that `pipeline/research/two-subject-composition.md` §3.3
+specifies and whose ladder selected it in advance for an r6 P2 failure. Frames
+and sidecars at
+`genomes/sapling/nodes/002b-first-citizen/takes/stills/13-the-shade-r7-s*.png`;
+neutral sheet `LABELED-b13-r7.png`, built and **not opened**.
+
+**One axis changed and it was provably one.** The driver refuses to draw unless
+the positive and negative it is about to send are byte-identical to the strings
+in r6's sidecar. That guard earned itself before it ever ran on the card: on the
+Mac, with no CLIP tokenizer installed, `fit_negative` *estimates* the budget and
+drops ten house terms instead of r6's seven, so a Mac-side run would silently
+have been a different negative and r7 would not have been a controlled pair. On
+the box it passes exactly — count tag `1boy`, 72 positive tokens, 73 negative
+sent, the same seven house terms dropped. Added: `h94/IP-Adapter`
+`ip-adapter_sdxl_vit-h` (Apache-2.0) + ViT-H encoder, scale 0.6, reference r6 s2
+**cropped to the goblin**, masked to a box over the character's head and torso
+(53% of frame, margins L18% R12% B22%) so the plant stayed text-only.
+
+| round | what it changed | P1 plant | P2 goblin | P3 no fusion | P4 two shapes | all four |
+|---|---|---|---|---|---|---|
+| r6 | Danbooru-native vocabulary | 4/4 | 1/4 | 4/4 | 4/4 | 1/4 |
+| **r7** | **+ regional IP-Adapter on r6 s2** | **3/4** | **0/4** | **4/4** | **4/4** | **0/4** |
+
+**THE TECHNIQUE WORKED AND THE REFERENCE DID NOT.** The adapter plainly took:
+all four frames carry the reference's white bob, its long pointed ears and a
+cloak, and they carry them *consistently* — four seeds returned recognisably the
+same character, which has never happened on this beat and is the A1 dividend
+§3.3 was ranked for. What did not transfer is the one attribute P2 turns on, the
+green skin. The reason is legible in the reference: r6 s2's head is bowed under a
+brightly lit white bob filling the top half of the crop, and the green is a
+small, dark, low-contrast region beneath it. CLIP encodes what is salient. We
+conditioned on the goblin's silhouette and costume and got exactly those back —
+four pale elves in the goblin's coat.
+
+**A GATE FAILURE BIGGER THAN THIS ROUND, AND IT IS STRUCTURAL.** G1 fails a
+candidate "staged on, **conditioned on**, or demonstrated with a still that is
+REVOKED or was never approved". `b13-r6-s2` was never approved. So every frame
+regional IP-Adapter produces is **inadmissible until the founder approves a
+goblin reference** — not because the picture is bad but because a gate failure
+means it is unjudgeable and must not reach his screen. That precondition binds
+the whole §3.3 branch and would have bound it just as hard at 4 of 4. The memo
+did not surface it. Recorded so the next attempt starts from it.
+
+**Recorded, not smoothed:** P1 slipped 4/4 → 3/4 because s3 puts the seedling in
+the character's hand, which fails the "not touching" clause and inverts the beat
+— the line is about sitting in the plant's shade, not holding it. P3 and P4 held
+at 4/4, so the fusion r6 closed stayed closed with image conditioning on top,
+which is what masking the character region was for. A2 drifted on s1 and s3,
+which replaced the grass field with bare dirt and a wooden wall.
+
+**Ledger record 33 (`ep2-b13-r7-reference-provisional`) was written before the
+render** and called the mechanism right and the attribute wrong: it predicted
+green-and-eared-with-a-human-face and said "the reference is the reason". The
+reference was the reason; its failure mode is the unlit skin, not the missing
+face.
+
+**No wave fires — fourth sample in a row to stop one.** The ladder now names
+§3.2, the two-pass inpaint, as the remaining branch. Two cheaper things are also
+visible and are **filed, not run**, because one sample tests one axis: a better
+reference (a goblin frame where the green skin is lit and salient), and the
+Danbooru tag `green skin` asserted in the positive, which has never been in any
+prompt on this beat and is the same class of move as the vocabulary correction
+that took P1/P3/P4 to 4/4. Which of the three goes next is not the steward's
+call to make silently after a failure.
+
+New pipeline code: `pipeline/regional_ip.py` (pure region geometry over PIL, no
+torch) and `pipeline/render_b13r7.py` (the box-runnable driver), with 22 checks
+across three tests in `test_pipeline.py`. Box left clean: GPU-CLAIM released,
+card idle at 0%, no schtask created so none to delete — only `banyan-telemetry`
+and `banyan-worker-start` remain, both standing, and the `banyan-b15ab` r6
+flagged is gone. Weights `h94/IP-Adapter` 4.07 GB now cached on the box (the
+ViT-H encoder is 2.5 GB, not the ~700 MB the memo's arithmetic implied).

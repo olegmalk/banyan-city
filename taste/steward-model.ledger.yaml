@@ -1266,3 +1266,146 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+- id: ep2-b13-r7-reference-provisional
+  date: 2026-08-09
+  subject: "node 002b beat 13 — the goblin REFERENCE that regional IP-Adapter (r7) conditions on, picked from the r6 set"
+  kind: reference
+  candidates: [b13-r6-s0, b13-r6-s1, b13-r6-s2, b13-r6-s3]
+  address_key: "genomes/sapling/nodes/002b-first-citizen/takes/stills/13-the-shade-r6-s2.png, sha256 89310f55aa56c23d281852631260ffbfdc1686137287234007bc1309a948f1f1; sidecar beside it; recorded again in every r7 sidecar"
+  gates: {G1_approved_plate: n/a, G2_script_approved: pass, G3_neutral_sheet: n/a,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: b13-r6-s2
+  scores:
+    b13-r6-s2: {A1: 1, A2: 1, A3: 0, A4: 1, A5: 1, A6: 1}
+  vetoed: [b13-r6-s0, b13-r6-s1, b13-r6-s3]
+  totals: {}
+  predicted_verdict: pick_holds
+  predicted_flip_to: null
+  predicted_objection: >
+    That this is a reference and not a frame he approved — s2 was inside a set he
+    has not ruled on, and its head is bowed so there is no face and no tusk in the
+    picture doing the conditioning. If he flips it he will do it by naming a
+    goblin he likes better, and the cost is one re-run.
+  confidence: 0.80
+  reasoning: >
+    THIS RECORD IS A PICK OF A TOOL INPUT, NOT OF A PUBLISHABLE FRAME, and it is
+    filed because the steward chose it and the founder may overrule it. Memo §3.3
+    conditions the goblin region on "an approved goblin still". No goblin still is
+    approved. b13-r6-s2 is the closest thing that exists: it is the ONE frame in
+    r6 that scored P2 (goblin-is-a-goblin) pass — green skin, long pointed ears,
+    grey cloak — against three seeds that came back as pale elf children, and
+    ledger record 32 already called it "the closest thing to this show's goblin
+    that has ever been drawn". Picking anything else would mean conditioning on a
+    frame that failed the very predicate the round exists to fix.
+
+    WHAT THE PICK COSTS IF IT IS WRONG IS ONE RE-RUN, and that is why it is safe
+    to make without him. Nothing else in the r7 recipe depends on which frame it
+    is: the reference is read at render time, checked by sha256, and named in
+    every sidecar. Swapping it is a one-line change and 37 GPU-seconds. The
+    reference is NOT published, NOT part of any episode, and NOT a taste claim —
+    it is evidence handed to a conditioning model.
+
+    WHAT THE PICK CANNOT CARRY, recorded now rather than discovered later: s2's
+    head is bowed, so the reference contains no face and no tusk. It carries skin
+    colour, ear shape, hair and costume and nothing else. If r7's frames come back
+    green-and-eared but with a human face, the reference is the reason and the
+    answer is a different goblin, not a different technique. The frame also holds
+    three seedlings of its own, which is why the script crops to the subject
+    before encoding — an uncropped reference would push plant evidence into the
+    character's region and re-open the fusion r6 just closed.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep2-b13-r7-sample
+  date: 2026-08-09
+  subject: "node 002b beat 13 — THE SHADE, round 7, regional IP-Adapter (memo §3.3) conditioning the character region on r6 s2"
+  kind: still
+  candidates: [b13-r7-s0, b13-r7-s1, b13-r7-s2, b13-r7-s3]
+  address_key: "sheet LABELED-b13-r7.png; frames at genomes/sapling/nodes/002b-first-citizen/takes/stills/13-the-shade-r7-sN.png, sidecars beside them"
+  gates: {G1_approved_plate: FAIL, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  scores:
+    b13-r7-s0: {A1: -2, A2: 1, A3: 0, A4: 0, A5: 1, A6: 1}
+    b13-r7-s1: {A1: -2, A2: 0, A3: 0, A4: 1, A5: 1, A6: 1}
+    b13-r7-s2: {A1: -2, A2: 1, A3: 0, A4: 1, A5: 1, A6: 1}
+    b13-r7-s3: {A1: -2, A2: -1, A3: -1, A4: 0, A5: 1, A6: 1}
+  vetoed: [b13-r7-s0, b13-r7-s1, b13-r7-s2, b13-r7-s3]
+  totals: {}
+  pre_registered_gate:
+    rubric: "memo §5 — per seed, four binary predicates; pass = >=3 of 4 seeds passing ALL four"
+    P1_plant_is_a_plant:      {s0: pass, s1: pass, s2: pass, s3: fail}
+    P2_goblin_is_a_goblin:    {s0: fail, s1: fail, s2: fail, s3: fail}
+    P3_no_fusion:             {s0: pass, s1: pass, s2: pass, s3: pass}
+    P4_two_silhouettes:       {s0: pass, s1: pass, s2: pass, s3: pass}
+    seeds_passing_all_four: 0
+    gate: FAIL
+  predicted_verdict: reject_all
+  predicted_flip_to: null
+  predicted_objection: >
+    "That is an elf, not a goblin" on all four — and it is the same elf four
+    times, which is the one thing that is new. On s3 he would also ask why the
+    character is holding the seedling when the line is about sitting in its
+    shade, and on s3 and s1 where the ground became bare dirt and a wooden wall,
+    what happened to the field.
+  confidence: 0.86
+  reasoning: >
+    THE GATE FAILED AT 0 OF 4 AND IT FAILED ON THE PREDICATE THE ROUND EXISTS TO
+    FIX. P2 was 1/4 in r6 and is 0/4 in r7: not one frame is green. The round is
+    a clean loss on its own hypothesis and no wave fires.
+
+    THE TECHNIQUE WORKED; THE REFERENCE DID NOT. This is the distinction the
+    round is worth recording for. The IP-Adapter plainly took: all four frames
+    now carry the reference's white bob, its long pointed ears and a cloak, and
+    they carry them CONSISTENTLY — four seeds returned recognisably the same
+    character, which has never happened on this beat and is the A1 dividend §3.3
+    predicted it would pay. What did not transfer is the one attribute P2 turns
+    on, the green skin. The reason is legible in the reference: in r6 s2 the
+    goblin's head is bowed under a brightly lit white bob that fills the top half
+    of the crop, and the green is a small, dark, low-contrast region beneath it.
+    CLIP encodes what is salient, and what is salient in that picture is white
+    hair and a grey cloak. We conditioned on the goblin's silhouette and costume
+    and got exactly those back.
+
+    RECORD 33'S PREDICTION WAS HALF RIGHT AND THE HALF IT MISSED IS THE USEFUL
+    HALF. It said: "If r7's frames come back green-and-eared but with a human
+    face, the reference is the reason." The frames came back eared-and-cloaked
+    but NOT green, with human faces. The mechanism named was right — the
+    reference is the reason — and the specific attribute predicted was wrong. The
+    reference's failure mode is not the missing face; it is the unlit skin.
+
+    A GATE FAILURE THAT IS BIGGER THAN THIS ROUND, AND IT IS STRUCTURAL. G1 fails
+    a candidate that is "staged on, CONDITIONED ON, or demonstrated with a still
+    that is REVOKED or was never approved". b13-r6-s2 was never approved. So
+    every frame regional IP-Adapter produces is inadmissible until the founder
+    approves a goblin reference — not because the picture is bad, but because a
+    gate failure means it is unjudgeable and must not be put in front of him.
+    That precondition applies to the whole §3.3 branch and it would have applied
+    just as hard if this round had scored 4 of 4. The memo did not surface it.
+    Nothing here goes on his screen; the sheet exists as evidence, not as a pick.
+
+    WHAT ELSE MOVED, RECORDED RATHER THAN SMOOTHED. P1 slipped from 4/4 to 3/4:
+    s3 puts the seedling in the character's hand, which fails the "not touching
+    the character's body" clause and also inverts the beat — the line is about
+    sitting in the plant's shade, not holding it. P3 and P4 held at 4/4, so the
+    fusion r6 closed stayed closed with image conditioning added on top, which is
+    what masking the character region was for. A2 drifted: s1 and s3 replaced the
+    grass field with bare dirt and, on s3, a wooden wall.
+
+    THE LADDER. The memo fixed it in advance and it now names §3.2, the two-pass
+    inpaint, as the remaining branch. Two cheaper things are ALSO now visible and
+    are filed, not run, because one sample tests one axis: a better reference (a
+    goblin frame where the green skin is lit and salient) and the Danbooru tag
+    `green skin` asserted in the positive, which has never been in any prompt on
+    this beat — the same class of move as the vocabulary correction that took
+    P1/P3/P4 to 4/4 in r6. Which of the three goes next is not the steward's call
+    to make silently after a failure.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null

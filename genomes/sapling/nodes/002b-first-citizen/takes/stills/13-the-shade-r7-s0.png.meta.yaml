@@ -1,0 +1,48 @@
+# Still provenance (7.2), written AT RENDER TIME by render_b13r7.py
+# on the rtx5090 (C:\banyan-farm\sample-b13-r7).
+# The negative below is what the model actually saw. The recipe's own
+# negative, before this script's one deliberate removal, was:
+#   photorealistic, 3d render, abstract, text, watermark, mature tree, large tree, tall tree, thick trunk, full canopy, forest, bush, shrubbery, girl, child, photorealism, leaf on head, plant girl, alraune, monster girl, flower on head, head wreath, hair ornament, leaf hair ornament, plant hair
+#   NEGWARN: !! negative prompt over CLIP's 77-token budget; deduplicated: text; DROPPED: realistic skin texture, jpeg artifacts, deformed, extra limbs, blurry, low quality, signature
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+shot_beat: 13
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20260732
+seeds_in_batch: 4
+task: ep2-b13-r7-1786276813
+queue_entry: ep2-b13-shade-r7-regional-ipadapter-1786320000
+render_round: r7
+candidate_set: r7
+negative_terms_removed: tall tree
+count_tag: 1boy
+extra_negative_tier: explicit
+extra_negative: >-
+  leaf on head, plant girl, alraune, monster girl, flower on head, head wreath, hair ornament, leaf hair ornament, plant hair
+conditioning: regional-ip-adapter
+ip_adapter_repo: h94/IP-Adapter
+ip_adapter_weight: sdxl_models/ip-adapter_sdxl_vit-h.safetensors
+ip_adapter_image_encoder: models/image_encoder
+ip_adapter_licence: Apache-2.0 (h94/IP-Adapter; claims nothing over output)
+ip_adapter_scale: 0.6
+ip_adapter_reference: genomes/sapling/nodes/002b-first-citizen/takes/stills/13-the-shade-r6-s2.png
+ip_adapter_reference_sha256: 89310f55aa56c23d281852631260ffbfdc1686137287234007bc1309a948f1f1
+ip_adapter_reference_crop: x 0.16-0.90, y 0.06-0.88 (61% of frame; free margins L16% R10% T6% B12%)
+ip_adapter_reference_crop_px: 133,73,749,1070
+ip_adapter_mask: x 0.18-0.88, y 0.02-0.78 (53% of frame; free margins L18% R12% T2% B22%)
+ip_adapter_mask_feather_px: 24
+ip_adapter_reference_status: >-
+  PROVISIONAL, picked by the steward, ledger record 33. It is the only frame in r6 that scored P2 (goblin-is-a-goblin) pass. The founder has not ruled on it; flipping it to a different goblin costs one re-run and nothing else in the recipe depends on which frame it is.
+recipe_inherited_from: >-
+  node 002b, takes/stills/13-the-shade-r6-s2.png and its sidecar — round 6, the ONE SAMPLE of 2026-08-09 (ledger record 32). Prompt, negative, count tag, fusion negatives, model, size, steps, cfg and all four seeds are inherited from it unchanged, so r7 is a controlled comparison against a recorded 1-of-4. The only difference is the regional IP-Adapter, which pipeline/research/two-subject-composition.md §3.3 specifies and the memo's ladder selected in advance for a P2 failure.
+wall_seconds: 11
+cost_usd: 0
+note: |-
+  round 7, REGIONAL IP-ADAPTER, specified by pipeline/research/two-subject-composition.md §3.3 and selected by the ladder that memo fixed in advance for this exact branch: "r6 fails on P2 (goblin off-model / a human) -> §3.3, regional IP-Adapter on the 5090 box, conditioning the goblin region on an approved goblin still. That is an A1 problem and IP-Adapter is the A1 tool." r6 (ledger record 32) took the plant predicates from 0/4 to 4/4 — no frame wears a leaf, grows a cotyledon out of its head, or collapses the two nouns — and still failed its gate at 1 of 4, because P2 did not move: `goblin` loses to `1boy` and three seeds came back as a pale elf child. Seed s2 is why this round is conditioning rather than more adjectives — green skin, long pointed ears, grey cloak, the closest thing to this show's goblin yet drawn — so the tag can win and what it needs is evidence. EXACTLY ONE THING CHANGES. The r6 prompt is inherited byte-for-byte, same count tag, same nine fusion negatives, same four seeds, and an IP-Adapter is added masked to the character region only. The reference is r6 s2 CROPPED to the goblin: CLIP encodes the whole reference and that frame carries three seedlings of its own, so uncropped it would push plant evidence into the character region and re-open the fusion r6 just closed. The mask is a box over where the head and torso land in the r6 frames — every cue P2 scores is head-and-shoulders — with both side bands and the bottom strip left unmasked so the plant is still drawn by text alone, because the plant predicates are at 4/4 and this round must not touch them. The reference pick is PROVISIONAL and the steward's, recorded as ledger record 33; the founder may flip it to a different goblin at the cost of one re-run, since nothing else in the recipe depends on which frame it is. Pre-registered gate, unchanged from r6 (memo §5): four binary predicates per seed — plant is a plant, goblin is a goblin, no fusion, two separate silhouettes — and a pass is at least 3 of 4 seeds passing all four. Ledger record written BEFORE any screen. No wave fires off this beat without the founder.
+prompt: |-
+  1boy, a small round goblin boy, solo, folds into a thin patch of shade, knees up around his ears. Plant, grass, outdoors, a tiny 40cm seedling with two oversized cotyledon leaves rooted in the ground beside him. Midday light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  photorealistic, 3d render, abstract, text, watermark, mature tree, large tree, thick trunk, full canopy, forest, bush, shrubbery, girl, child, photorealism, leaf on head, plant girl, alraune, monster girl, flower on head, head wreath, hair ornament, leaf hair ornament, plant hair
