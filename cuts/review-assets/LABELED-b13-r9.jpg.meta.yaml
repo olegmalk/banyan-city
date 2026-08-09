@@ -1,0 +1,89 @@
+# Provenance for one image on the /review gallery (STEWARDSHIP §7.2).
+#
+# WHAT THIS FILE IS SERVED UNDER, because it is not what the rest of the tree is
+# served under. banyan.city publishes CC BY 4.0. This picture was drawn by
+# cagliostrolab/animagine-xl-3.1, whose CreativeML Open RAIL++-M licence attaches
+# use restrictions that travel to the output — the open conflict recorded as D15.
+# The founder authorised these frames onto the review page on 2026-08-09; he did
+# not resolve the licence question, and publishing them under a blanket CC BY
+# offer would grant what we do not hold. So the offer is NARROWED for this file
+# and said out loud on the page: it carries OpenRAIL++'s Attachment A use
+# restrictions and is not CC BY 4.0. Everything else on the site is unaffected.
+#
+# The pixels here are a JPEG re-encode, not the original bytes. The source file
+# and its SHA-256 are recorded below, so the rendition is checkable against the
+# frame it came from.
+
+platform: local-gpu (rtx5090) for the frames; local ImageMagick for the sheet
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+conditioning: none — this round moved words only
+conditioning_note: >-
+  Round 7 conditioned the character region on an earlier goblin draw and that is
+  recorded as a gate failure on its own sidecar. Round 9 uses no reference image
+  at all: the axis (`tusks`) is injected script-side by
+  `pipeline/render_b13r9.py`, which asserts the shots.md fence byte-for-byte
+  against the r8 text before the injection runs and refuses to spend a step if
+  the negative it is about to send differs from the r8 sidecars by one character.
+  So `G1_approved_plate` passes here where it failed on r7.
+published_under: >-
+  CreativeML Open RAIL++-M use restrictions (Attachment A) — NOT the tree's
+  CC BY 4.0. Founder-authorised for the /review gallery only; not canon,
+  not published elsewhere, not promoted to a stills/ filename.
+authorised_by: >-
+  founder (Roman), 2026-08-09 — "put the images from my computer onto there
+  please, not like theres any reason to hide it". Visibility only: D15's
+  licence question stays open and stays his.
+surface: /review gallery (unlisted, noindex — D17)
+canon: false
+derived_from: LABELED-b13-r9.png
+derived_from_sha256: 68ce8070cd0f8cb793cdce3ed2a1f2134447bd7768f5ffab70fff445f9d505d9
+sha256: 24b1b234a5e612a0e9ce8660d0372cd60339766f7bd00642e8aab2acc9212547
+encoding: >-
+  JPEG from the source PNG with ImageMagick 7.1.2-21 — no resize, no crop, no
+  colour conversion, metadata stripped. Quality 90,
+  4:4:4 chroma so the burned-in labels stay crisp.
+cost_usd: 0
+gpu_seconds: 37
+sheet: true
+episode: 2
+shows: b13-r9-s0..s3 — the same four seeds rounds 4 through 8 used
+what: >-
+  episode 2 beat 13 — round 9, THE TUSK. One tag (`tusks`) bought into the
+  positive for three tokens by selling the indefinite article and `patch of`;
+  everything else, negative included, held byte-identical to round 8. Tusks 4 of
+  4, the first this beat has drawn in nine rounds, and not-female 4 of 4 where
+  round 8 read male on s0 alone. The plant regressed on all four and the record
+  names two candidate causes without choosing between them.
+sheet_note: >-
+  A contact sheet: four candidate frames composited into one picture by our own
+  labelling script, each tile carrying its address and its seed. The compositing
+  and the labels are our code and carry no model. Addresses resolve through
+  REVIEW-KEY-0808.md.
+neutral: >-
+  Labels and seeds only, in source order. No favourite is marked, nothing is
+  ordered by preference and no tile is offered as a pick (gate G3). Taste ledger
+  record 32 suspends the goblin predicate until the founder defines the goblin,
+  so this round is explicitly not a gate attempt — the sheet exists to give him
+  something to define it with.
+not_scored_here: >-
+  No pick and no taste verdict. The round's ledger record `ep2-b13-r9-sample`
+  carries `reject_all` at 0.82 with `pick: null`, and it was written before this
+  sheet was built.
+source_frames:
+  - path: genomes/sapling/nodes/002b-first-citizen/takes/stills/13-the-shade-r9-s0.png
+    address: 002b-b13-r9-s0
+    seed: 20260732
+    sha256: 57b6e361b2bf91cd4dec58dfc6198a28e34b76db4ac3d5dad8bd7b4ff3b24618
+  - path: genomes/sapling/nodes/002b-first-citizen/takes/stills/13-the-shade-r9-s1.png
+    address: 002b-b13-r9-s1
+    seed: 20261732
+    sha256: 0617222de09b77d28d5ff45f089aada337c01ff92e86d37ab96c4bd988848ef1
+  - path: genomes/sapling/nodes/002b-first-citizen/takes/stills/13-the-shade-r9-s2.png
+    address: 002b-b13-r9-s2
+    seed: 20262732
+    sha256: 7493a29f0c98d7f3d08a07b0a1166e0f0c38f8edde88e7197e21cf206be8e0fe
+  - path: genomes/sapling/nodes/002b-first-citizen/takes/stills/13-the-shade-r9-s3.png
+    address: 002b-b13-r9-s3
+    seed: 20263732
+    sha256: 29992188681a0c6c538ac10e320f4c0ff6e76ace0f267f5a4ef48779df928e3c

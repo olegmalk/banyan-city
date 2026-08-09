@@ -1,0 +1,80 @@
+# Provenance for one image on the /review gallery (STEWARDSHIP §7.2).
+#
+# WHAT THIS FILE IS SERVED UNDER, because it is not what the rest of the tree is
+# served under. banyan.city publishes CC BY 4.0. This picture was drawn by
+# cagliostrolab/animagine-xl-3.1, whose CreativeML Open RAIL++-M licence attaches
+# use restrictions that travel to the output — the open conflict recorded as D15.
+# The founder authorised these frames onto the review page on 2026-08-09; he did
+# not resolve the licence question, and publishing them under a blanket CC BY
+# offer would grant what we do not hold. So the offer is NARROWED for this file
+# and said out loud on the page: it carries OpenRAIL++'s Attachment A use
+# restrictions and is not CC BY 4.0. Everything else on the site is unaffected.
+#
+# The pixels here are a JPEG re-encode, not the original bytes. The source file
+# and its SHA-256 are recorded below, so the rendition is checkable against the
+# frame it came from.
+
+platform: local-gpu (rtx5090) for the frames; local ImageMagick for the sheet
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+conditioning: none — this round moved one clause of the positive prompt
+published_under: >-
+  CreativeML Open RAIL++-M use restrictions (Attachment A) — NOT the tree's
+  CC BY 4.0. Founder-authorised for the /review gallery only; not canon,
+  not published elsewhere, not promoted to a stills/ filename.
+authorised_by: >-
+  founder (Roman), 2026-08-09 — "put the images from my computer onto there
+  please, not like theres any reason to hide it". Visibility only: D15's
+  licence question stays open and stays his.
+surface: /review gallery (unlisted, noindex — D17)
+canon: false
+derived_from: LABELED-b01-r7.png
+derived_from_sha256: c5e96319d9e464e5c9679be4d02e447c39c175dc3a409b24d70e76fb5921c06b
+sha256: 1ad8fb114b86de51434d8f421ba649b2c5ca79825584e8221eb86415aa065b63
+encoding: >-
+  JPEG from the source PNG with ImageMagick 7.1.2-21 — no resize, no crop, no
+  colour conversion, metadata stripped. Quality 90,
+  4:4:4 chroma so the burned-in labels stay crisp.
+cost_usd: 0
+gpu_seconds: 37
+sheet: true
+episode: 2
+shows: b01-r7-s0..s3 — round 6's four seeds, one clause changed
+what: >-
+  episode 2's cold open, round 7. The single variable was shots.md's own
+  proposal — `rising well above the grass` out, `no taller than the grass around
+  it` in — on round 6's seeds with the negative held character for character.
+  The clause made the plant TALLER: s3, the only rooted whole-plant frame,
+  measures a stem 39% of frame height against the 32% plate he revoked with
+  "its tooooo tall". The mechanism is that CLIP does not encode negation and
+  this clause is too long for `_NEGATION` to lift out of the positive, so the
+  model was sent "taller than the grass around it".
+sheet_note: >-
+  A contact sheet: four candidate frames composited into one picture by our own
+  labelling script, each tile carrying its address and its seed. The compositing
+  and the labels are our code and carry no model. Addresses resolve through
+  REVIEW-KEY-0808.md.
+neutral: >-
+  Labels and seeds only, in source order. No favourite is marked, nothing is
+  ordered by preference and no tile is offered as a pick (gate G3).
+not_scored_here: >-
+  No pick and no taste verdict. The round's ledger record `ep2-b01-r7-sample`
+  carries `reject_all` at 0.88 with `pick: null`, and it was written before this
+  sheet was built.
+source_frames:
+  - path: genomes/sapling/nodes/002b-first-citizen/takes/stills/01-cold-open-r7-s0.png
+    address: 002b-b01-r7-s0
+    seed: 20260720
+    sha256: a68bd43c3e0ce72ee1ff527ac4ce5add41657f53184c10a1436f4fbcebd528f4
+  - path: genomes/sapling/nodes/002b-first-citizen/takes/stills/01-cold-open-r7-s1.png
+    address: 002b-b01-r7-s1
+    seed: 20261720
+    sha256: 6f81ae90cfb2df0e5986f16fa6cc7b91a671ca67a124dd296ad1b5c0d7b06335
+  - path: genomes/sapling/nodes/002b-first-citizen/takes/stills/01-cold-open-r7-s2.png
+    address: 002b-b01-r7-s2
+    seed: 20262720
+    sha256: 0a38d0be50e932636350d80f9bbf6a5720f10cff355804551eed05cca2545cfd
+  - path: genomes/sapling/nodes/002b-first-citizen/takes/stills/01-cold-open-r7-s3.png
+    address: 002b-b01-r7-s3
+    seed: 20263720
+    sha256: d78579e98379526320e976db6a8099a16b6112a7254a134674ffc3a2267361e9

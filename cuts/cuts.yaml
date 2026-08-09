@@ -105,11 +105,11 @@ page:
     here, the page tells search engines not to index it, and the repo that
     makes it is public — as is the decision that put it here (D17).
 
-    **Two files are still not on this page and both are licence refusals, not
-    missing renders.** v33 holds two animagine-drawn frames (**D15**) and
-    episode 2's first pass holds three LTX renders (**D16**); the build's own
-    gate refuses both cuts, which is the gate working. The checklist names
-    where they sit on the machine.
+    **Three files are still not on this page and all three are licence refusals,
+    not missing renders.** v33 holds two animagine-drawn frames and v34 holds
+    nine (**D15**); episode 2's first pass holds three LTX renders (**D16**). The
+    build's own gate refuses all three cuts, which is the gate working. The
+    checklist names where they sit on the machine.
 
     **The candidate frames themselves ARE here**, on the founder's word of
     2026-08-09. They publish under an offer narrowed to the terms their model
@@ -118,7 +118,7 @@ page:
     line under each gallery says so, and every image carries its record.
 
 checklist:
-  title: "Your morning pass — two cuts, then the sheets."
+  title: "Your morning pass — define the goblin, then two cuts."
   intro: |-
     **Items 01 to 09 are a record, not a list of questions.** You answered every
     one of them on 2026-08-08; they are kept so you can catch us hearing
@@ -136,6 +136,14 @@ checklist:
     steward guessed, the guess is written out in words so overruling it costs
     you one. **A flip is expected and cheap**; the night it cost was a night
     nobody was awake for.
+
+    **Overnight 2026-08-10, three things landed and each one is on its own card.**
+    The goblin got two more rounds and is now waiting on a definition from you
+    rather than a pick (**item 18**, and it is the answer that unblocks the most).
+    Episode 1's v34 was measured end to end (**item 19**). The cold open's round 7
+    came back worse than round 6 and the reason is written down (**item 06**).
+    Two rounds ran, 37 GPU-seconds each, $0, and nothing was opened on your
+    screen.
   items:
     - n: 1
       ask: "The camera move — ANSWERED. 12% stays."
@@ -433,29 +441,47 @@ checklist:
     # and record 32 already ruled the goblin predicate unscorable until the
     # founder defines the goblin. This card carries the picture and the ask.
     - n: 18
-      ask: "The goblin — round 8 is green. Is this him?"
+      ask: "Define the goblin — green and tusks now hold."
       state: open
-      chip: "PICK"
+      chip: "DEFINE"
       minutes: 3
       summary: >-
-        Four rounds chased this and round 8 landed tonight: green in 4 of 4, no
-        white hair, no elf. It is deliberately unscored — nothing can score it
-        until you say what the goblin is.
-      where: "the round-8 sheet is first on this card; tap it to open full size"
-      how: "name the closest, e.g. `002b-b13-r8-s2`, or say in one line what the goblin is"
-      sheets_title: "Round 8 first, then the two rounds it corrects"
+        Two more rounds landed overnight: green 4 of 4, tusks 4 of 4, and nothing
+        reads female any more. Nothing can be scored until you say what the
+        goblin IS — and your words release fifteen waiting beats.
+      where: "the round-9 sheet is first on this card, round 8 under it; tap either to open full size"
+      how: "tags, labels or one sentence — e.g. `green skin, plump, tusks`, or just describe him"
+      sheets_title: "Round 9 first, then the three rounds behind it"
       body: |-
         **YOUR LINE, 2026-08-09:** *"all the goblin images look like female
         demihumans, definitely need to regenerate."*
 
-        **ROUND 8 IS THAT REGENERATION AND IT LANDED TONIGHT** — four seeds, five
-        minutes on the 5090, $0, nothing opened on your screen.
+        **THAT COMPLAINT IS NOW FIXED AND THE BEAT IS STILL NOT DRAWN**, which is
+        why this card asks for a definition and not a pick. Two rounds ran
+        overnight — four seeds each, 37 GPU-seconds each, $0, nothing opened on
+        your screen.
 
         | round | what it changed | what came back |
         |---|---|---|
         | r6 | words — `1boy, goblin, solo`, the fusion terms negated | goblin reads as a goblin in **1 of 4** |
         | r7 | machinery — the character region conditioned on r6's best goblin | **0 of 4.** Four identical white-haired elves |
-        | **r8** | words again — `green skin` and `plump` in, **`female goblin` and `elf` negated** | **green in 4 of 4** |
+        | r8 | words again — `green skin` and `plump` in, **`female goblin` and `elf` negated** | **green 4 of 4**; male on `s0` alone |
+        | **r9** | one tag — **`tusks`**, bought for three tokens | **tusks 4 of 4**, the first in nine rounds — and **not-female 4 of 4** |
+
+        **THREE THINGS ARE PROVEN AND YOUR DEFINITION CAN SPEND THEM.** Green, 4
+        of 4 across both rounds. Tusks, 4 of 4 — the first tusk this beat has
+        drawn in nine attempts. Not-female, 4 of 4, where round 8 read male on
+        `s0` alone and logged `s2` as at risk. Not-an-elf holds as well, 4 of 4,
+        and the ears are still pointed.
+
+        **THE SECOND EFFECT WAS PREDICTED BEFORE A STEP WAS SPENT**, which is what
+        makes it evidence rather than luck. `tusks` co-occurs male-to-female
+        1.92:1, and on pictures that also carry `goblin` it takes the female skew
+        from 3.14 down to 1.59 — it halves it. That was read out of Danbooru while
+        the recipe was being written and put into the render script before the
+        render ran. What you were seeing was the corpus sampled faithfully:
+        **`female goblin` is 1,717 of the 4,257 pictures this model knows as
+        `goblin`**, and that tag had never once been in the negative.
 
         **WHY THE WORDS WORKED WHERE THE MACHINERY DID NOT.** Round 7's technique
         did what it promised: four seeds returned **recognisably the same
@@ -464,22 +490,30 @@ checklist:
         under a brightly lit white bob and the green skin is a small dark patch
         underneath, so it took the hair and the coat and left the one thing that
         mattered. Round 8 stopped copying a picture and named the attribute
-        instead. The measurement behind it: **`female goblin` is 1,717 of the
-        4,257 pictures this model knows as `goblin`**, so what you were seeing was
-        not a mis-render — it was the word doing exactly what it means 40% of the
-        time. That tag had never once been in the negative.
+        instead; round 9 named one more.
 
-        **WHAT IS IN THE FOUR, plainly and with no favourite marked.** All four
-        are green, round-headed, small and heavy-set. Two wear a white cloth cap.
-        `s2` has red eyes. **The ears are still pointed** — we expected to lose
-        them when `elf` went into the negative and we did not. **The weak half is
-        the plant:** the line needs a small two-leaf seedling beside him, and only
-        `s1` and `s2` clearly have one; `s0` and `s3` give grass and leaf-shadow.
+        **WHAT ROUND 9 COST, and it is not being smoothed over.** The seedling is
+        **gone from all four** — the plant fails on every frame, the worst this
+        beat has been since round 6 bought it. Two causes fit and the record picks
+        neither: paying for `tusks` took `patch of` out of the shade clause, or
+        the new tag pulled the whole draw towards a character portrait. Two other
+        things stay wrong: the tusks are **two and whole** where your script says
+        one broken, and it is night again in three of four on a prompt that says
+        midday.
+
+        **ONE BROKEN TUSK IS NOT A PROMPT LEVER, and that is measured now rather
+        than assumed.** `tusk` singular is aliased away and carries no signal.
+        `broken tusk` is your own phrase and fits the budget exactly, but it is 15
+        pictures in about 12 million and `broken` sits beside the words that mean
+        *this picture is faulty*. `fangs` would have deepened the female skew this
+        beat was fighting. If you want the break visible, the lever is an inpaint
+        or a closer shot — not a word.
 
         **IT IS NOT SCORED AND THAT IS DELIBERATE.** Our own rule from your last
         answer says the goblin test is not a real test until you define the
         goblin, so scoring these against the old definition would be marking our
-        own homework. **This round exists to give you something to point at.**
+        own homework. Both rounds are logged as reject-all with no pick, and the
+        sheets carry no favourite, no ordering and no mark on any tile.
 
         **ONE ROUND WAS THROWN OUT ON A RULE RATHER THAN A LOOK, and you should
         know we did it.** Round 7 conditioned four renders on `b13-r6-s2` — a
@@ -487,16 +521,36 @@ checklist:
         against us, and it is why round 7 is on this card as evidence and not as
         a set to choose from.
 
-        **TWO THINGS WAIT ON YOUR ANSWER, AND THE SECOND IS THE EXPENSIVE ONE.**
-        The first is this beat. The second is **beat 16's redraw** — you said the
-        scavenger was in that shot on purpose (*"if he was there on purpose then
-        fine, it wont ruin anything right?"*), so that picture gets drawn again
-        with him in it, blurred, and it cannot start until the goblin has a look
-        you have approved.
+        **WHAT YOUR SENTENCE RELEASES, and this is the expensive half.**
+
+        - **Fifteen episode-2 beats are drafted, measured and waiting** on a
+          marked slot where your words go. Your definition runs a 40-second fit
+          check, then **ONE sample**, then your verdict on that one sample
+          releases the other fourteen. No GPU time has been spent on any of it.
+        - **Beat 16's redraw.** You said the scavenger was in that shot on purpose
+          (*"if he was there on purpose then fine, it wont ruin anything right?"*),
+          so that picture gets drawn again with him in it, blurred, and it cannot
+          start until the goblin has a look you have approved.
+
+        **A BUDGET NOTE, so that a long answer is not quietly trimmed.** Prompts
+        are capped at 77 tokens and the style sentence is always the first thing
+        pushed out. Past about six tokens beyond `green skin, plump`, three of the
+        fifteen beats start losing that sentence. **If your definition runs
+        longer, we re-trim the staging on those three beats. We do not cut your
+        words.**
+
+        **ONE SUB-ASK, and it is a one-word answer.** Beat 14 is a close-up of the
+        goblin's hands with his face turned away above them. Tagging it `1boy`
+        risks drawing a whole man into a hands shot; leaving it untagged is how
+        this show got female demihumans in the first place. Both versions are
+        written and both are measured. **Tagged or untagged?**
       sheets:
+        - file: review-assets/LABELED-b13-r9.jpg
+          label: "ep2 beat 13 ROUND 9 — 002b-b13-r9-s0..s3"
+          note: "tusks 4 of 4, nothing female; the seedling is gone from all four. No pick, no score."
         - file: review-assets/SHEET-b13-r8.jpg
-          label: "ep2 beat 13 ROUND 8 — 002b-b13-r8-s0..s3"
-          note: "green in 4 of 4, ears still pointed, the seedling faint in two. No pick, no score."
+          label: "ep2 beat 13 round 8 — 002b-b13-r8-s0..s3"
+          note: "green in 4 of 4, ears still pointed, male on s0 alone. No pick, no score."
         - file: review-assets/LABELED-b13-r7.jpg
           label: "ep2 beat 13 round 7 — b13-r7-s0..s3"
           note: "the machinery round: one consistent character, zero green — all four rejected, 0.86"
@@ -570,6 +624,17 @@ checklist:
         reject the set we expect it to be for the camera angle, and the next
         round is then a scenery camera tag, not a return to person negatives.
 
+        **YOUR VERDICT HERE CHANGES THE CUT AND NOT THE GATE, and you should know
+        that before you spend the answer.** Either way one command runs and v35
+        exists in about a minute — ratify and the fifteen clips carry forward with
+        only beat 6's record changing, or name another seed and beat 6 alone is
+        re-held. **Neither outcome makes v35 publishable.** Nine of the fifteen
+        beats are refused by the licence gate for one and the same reason, the
+        animagine still each of them holds; beat 6 is one of the nine, and the
+        other eight do not move whichever way you rule. That is **D15**, still
+        open and still yours. This answer finishes the picture. It does not put
+        the episode on the site.
+
         **ROUND 4, KEPT AS THE RECORD.** *"its getting worse, many random girls
         and very strange cloud formations."* You were right and the numbers
         agreed. Both of that round's changes were aimed at the faults you named
@@ -582,17 +647,17 @@ checklist:
 
         - **Episode 2 — all twenty beats**, four band sheets, four candidates per
           beat, now addressable per tile. Quote the long form: `002b-b02-r3-s3`.
-        - **Episode 2's opening shot** — `b01-r5-s0..s3`, and `b01-r6-s0..s3`
-          after it. The person binding worked outright in r6 (**zero people in 4
-          of 4**) and the beat still has no plate: three read too tall and the
-          fourth has a white block in it. Highest-leverage answer on the page
-          (item 06).
+        - **Episode 2's opening shot** — rounds 5, 6 and now **7**, all
+          provisionally rejected and none of them a plate. Round 7 tested your
+          shots.md's own wording and it **made the plant taller**, not shorter.
+          Item 06 has the mechanism.
         - **`b12-r4` — episode 2 beat 12. PICK: `b12-r4-s2`, 0.70.** r3 drew a
           big ripe pink fruit in all four on a beat whose text has no fruit;
           removing one word and adding beat 01's negative block killed it 4 of 4.
-        - **`b13-r6` — episode 2 beat 13, all four provisionally rejected, 0.72.**
-          The plant-and-goblin fusion is **gone in 4 of 4**; what is left is that
-          the goblin only reads as a goblin in one of them. Progress, not a frame.
+        - **Episode 2 beat 13 — the goblin, now at round 9** and moved to its own
+          card. Green and tusks both hold 4 of 4 and nothing reads female any
+          more; what is missing is your definition. **Item 18**, and it is the one
+          answer that releases fifteen other beats.
 
         **WHAT THE STEWARD GUESSED, AND HOW BADLY.** Every frame was scored
         before you saw any. **Six of those predictions now have your verdict: 1
@@ -619,6 +684,9 @@ checklist:
         | ep2 b13 **r6** | **reject all 4** | 0.72 | open |
         | ep1 b06 **r5** | **pick `b06-r5-s2`** | 0.55 | open |
         | ep2 b13 **r7** | **reject all 4** | 0.86 | open |
+        | ep2 b13 **r8** | **reject all 4** | 0.85 | open |
+        | ep2 cold open **b01-r7** | **reject all 4** | 0.88 | open |
+        | ep2 b13 **r9** | **reject all 4** | 0.82 | open |
 
         Full reasoning per frame is in `PROVISIONAL-PICKS-0809.md`; every open row
         is in `taste/steward-model.ledger.yaml` with an empty verdict field waiting
@@ -697,33 +765,30 @@ checklist:
           note: "zero people in 4 of 4, and still no plate; all four provisionally rejected"
         - file: review-assets/LABELED-b13-r6.jpg
           label: "ep2 beat 13 ROUND 6 — b13-r6-s0..s3"
-          note: "the plant/goblin fusion gone in 4 of 4; all four provisionally rejected"
-    # V34 IS NOT LISTED UNDER `cuts:` AND THE REASON IS A GATE HOLE, NOT A RULE.
-    # Measured 2026-08-09: build_site.publishable() returns (True, "") for
-    # review/provisional-v34/ep1-v34-PROVISIONAL.mp4, and the clear is FALSE in
-    # two independent ways.
+          note: "the plant/goblin fusion gone in 4 of 4; the goblin's later rounds are on item 18"
+    # V34 IS NOT LISTED UNDER `cuts:` AND THE GATE NOW SAYS SO ITSELF. This
+    # comment used to describe a hole; the hole was closed on 2026-08-09 by
+    # 4eb4c61, and the paragraph on item 19 has been rewritten to match rather
+    # than left telling him we distrust a green light that no longer exists.
     #
-    #   1. THE COMPOSITE NEVER ASKS ABOUT STILLS. `composite_publishable` walks
-    #      `ingredients:`, which render_t3 fills with clips and audio only. All
-    #      26 rows pass. Eleven of the fifteen beats are hold_still outputs whose
-    #      own sidecars read `model: none` / `model_licence: n/a — inherits the
-    #      still's licence, see stills/README.md`, so the PNG under each one is
-    #      never a row and is never asked. Asked directly,
-    #      takes/stills/06-too-blue-r5-s2.png returns
-    #      (False, 'CreativeML Open RAIL++-M').
-    #   2. AND IF IT DID ASK, TEN OF THE ELEVEN WOULD CLEAR FOR A WORSE REASON.
-    #      genomes/sapling/nodes/001-capability-inventory/stills/*.png have NO
-    #      sidecar — lg.sidecar_for() returns None for 03, 14, 15 and the rest —
-    #      and publishable() reads unprovenanced as permitted. Promoting an
-    #      animagine frame out of takes/ into stills/ therefore drops the
-    #      provenance that would have refused it.
+    # Re-measured 2026-08-10 against the live gate, not remembered:
+    # build_site.publishable() returns False for
+    # review/provisional-v34/ep1-v34-PROVISIONAL.mp4, naming
+    # clips/03-deploy-succeeded.mp4 -> 03-deploy-succeeded-r4-s3.png,
+    # 'CreativeML Open RAIL++-M'. Per clip, NINE of fifteen refuse for that one
+    # reason — 03, 06, 07, 08, 09, 10, 12, 14, 15 — and the composite reports
+    # only the first refusing ingredient, which is why it names 03 alone.
     #
-    # v33 was refused only because a HUMAN had typed animagine into its
-    # top-level `model:` field; v34's is tool-written and says
-    # `Wan-AI/Wan2.2-TI2V-5B-Diffusers+none`. This is the laundering shape the
-    # publishable() docstring says `ingredients:` closed, one level further down.
-    # Named here and in STATE.md, not fixed by this lane, and NOT acted on:
-    # nothing publishes on a green light we do not trust.
+    # TWO OF THE SIX PASSES ARE SILENCE, NOT CLEARANCE, and they are the residue
+    # of the same laundering shape. Beats 04 and 05 carry `model: none` and point
+    # at genomes/sapling/nodes/001-capability-inventory/stills/04-the-fall.png
+    # and 05-fan-spinning-down.png, neither of which has a sidecar; publishable()
+    # reads unprovenanced as permitted on purpose ("the gate's finding, not the
+    # build's"). Verified by listing: no .meta.yaml beside either. They are
+    # unexamined, not cleared, and a record naming animagine takes the refusal
+    # count to eleven. Writing one is R4's call (D15), not this lane's.
+    #
+    # Beats 01, 02, 11 and 13 pass on their own records.
     - n: 19
       ask: "Episode 1, v34 — all fifteen beats, no slates."
       state: open
@@ -731,7 +796,8 @@ checklist:
       minutes: 2
       summary: >-
         Ninety seconds, every beat on a real picture. Fourteen of the fifteen are
-        frames you chose; beat 6 is ours and is labelled as ours in three places.
+        frames you chose. We measured it overnight and there is one finding worth
+        your eye: seven of the fifteen barely move.
       where: "`review/provisional-v34/ep1-v34-PROVISIONAL.mp4` on this machine — why it is not on this page is below"
       how: "watch it and say what is wrong, or answer beat 6 on item 10 and we rebuild"
       body: |-
@@ -758,17 +824,72 @@ checklist:
         **BEAT 3 IS THE OTHER THING TO WATCH FOR.** You have only ever seen it
         moving; in this cut it is a held still with the camera pushing in.
 
-        **WHY IT IS NOT ON THIS PAGE, and this is our fault rather than a rule.**
-        The check that decides what may be published said **yes** to this cut
-        tonight, and the yes is wrong twice over. Eleven of the fifteen beats are
-        still pictures with the camera pushing in; the check only reads the moving
-        files, so the picture under each one is never asked about at all. And if
-        it were asked, ten of those eleven would pass only because promoting a
-        picture into the canon folder leaves it with no record — and a picture
-        with no record reads as allowed. The eleventh, beat 6, is refused outright
-        when you ask it directly. **So the licence question that is yours (D15)
-        was never put.** We are not publishing on a green light we do not trust.
-        Fixing the check is ours; the call underneath it is yours.
+        ---
+
+        **WE MEASURED THE CUT OVERNIGHT AND ONE NUMBER IS THE WHOLE FINDING:
+        SEVEN OF FIFTEEN BEATS READ AS STILL FRAMES.** Beats **03, 04, 06, 07,
+        08, 10 and 14**, at a median frame-to-frame change of 0.01–0.05 with
+        57–88% of their frames identical to the one before. All seven are held
+        stills with the 12% push-in, and at 3.4% per second that push is below
+        what the encoder can even see — so the measurement is reading them
+        honestly rather than failing.
+
+        **The cut's median is 0.30. The version you rejected measured 0.13 and
+        the one you picked measured 1.30**, so this sits nearer the rejected end.
+
+        **Beat 13 is NOT one of the seven** even though it sits at 0.30: only 3%
+        of its frames are frozen, so it is moving slowly and continuously rather
+        than stuttering. Our own flag mislabels it and we are correcting that
+        here rather than telling you eight beats are frozen when it is seven.
+
+        **THE OTHER THING THE MEASUREMENT FOUND IS A HOLE IN THE SOUND — 5.5
+        seconds with no voice, starting 12 seconds in.** It lands across beats 3
+        and 4, which are also two of the seven still beats. Five and a half
+        seconds of silence over a picture that is not moving is the same stretch
+        failing twice, and it is the most likely place for you to stop the
+        playback.
+
+        **WHAT IS FINE, so you know where not to look.** Colour holds on every
+        beat — chroma is flat or drifts slightly up across all fifteen, and there
+        is no colour collapse anywhere. Loudness is -16.9 LUFS at -1.4 dBTP true
+        peak, no digital silence, captions clear the chrome band, nothing is
+        stretched. Thirteen automatic checks pass and the two warnings are the
+        sound hole above and the known dark opening.
+
+        **THE ADJACENCY STRIP IS ON THE MACHINE** at `CONTACT-v34-adjacency.png`
+        — the first frame of all fifteen beats in order, in one row. It is an
+        eyeball aid and not a score; nothing in this repo computes an adjacency
+        number, and we are not inventing one. Two things stand out in it: **05 to
+        06 is the hardest jump in the cut** (near-black interior straight into
+        bright daylight, which is also the act break and may be exactly right),
+        and beats 12-13-14 swing warm, cool, warm rather than progressing.
+
+        **THE DECISION THIS PUTS IN FRONT OF YOU IS RE-ANIMATING THE HELD SHOTS.**
+        Seven beats being stills with a slow push is a choice we made, not a
+        fault that appeared; it is cheap to keep and not cheap to change. We are
+        not proposing it until you have watched the cut and said whether it reads
+        as still or as calm.
+
+        **WHY IT IS NOT ON THIS PAGE, and this is now the gate working rather
+        than a hole in it.** The check that decides what may be published
+        **refuses this cut**, and it refuses for one reason nine times over: nine
+        of the fifteen beats hold a picture drawn by animagine, whose licence
+        attaches use restrictions that travel to what it draws. Beats **03, 06,
+        07, 08, 09, 10, 12, 14 and 15**. The cut names beat 03 alone because it
+        reports the first thing that refuses, not all of them. **That is D15 —
+        open, and yours.**
+
+        **Two beats pass by silence rather than by clearance, and we would rather
+        flag that than count them clean.** Beats 04 and 05 hold canon pictures
+        with no record at all beside them, and an unrecorded picture reads to the
+        check as permitted. They are unexamined, not cleared. If a record is ever
+        written for them and it names animagine, the refusal count is eleven.
+
+        **THIS CORRECTS WHAT THIS CARD TOLD YOU YESTERDAY.** It said the check had
+        cleared the cut and that we did not trust the clearance. That was true
+        when it was written; the fault it described was fixed the same night, and
+        we re-measured against the live check this morning instead of repeating
+        the sentence. The cut refuses on its own now.
 
         **What it cost: nothing.** No model ran, no GPU, no money — every beat is
         ffmpeg over frames that already existed.
@@ -1186,11 +1307,11 @@ checklist:
       chip: "ON US"
       minutes: 1
       summary: >-
-        Rounds 5 and 6 were both rejected outright, so there is still no A/B to
-        put to you. Round 6 killed the people and left the plate; round 7 is
-        queued behind the goblin.
-      where: "the `b01-r5` sheet is on this card, and `b01-r6` in item 10"
-      sheets_title: "The cold-open sheet — four candidates"
+        Rounds 5, 6 and now 7 were all rejected outright, so there is still no
+        A/B to put to you. Round 7 tried the wording your own shot list proposed
+        and it made the plant taller, not shorter.
+      where: "the `b01-r7` and `b01-r5` sheets are on this card; `b01-r6` is in item 10"
+      sheets_title: "The cold-open sheets — round 7 first"
       how: "nothing — unless you disagree, in which case name a frame"
       body: |-
         **Your answer on the model question, in full:**
@@ -1228,6 +1349,32 @@ checklist:
         redrawn* — standing **36% of frame height against the revoked plate's
         32%**. Taller than the one you threw out. **Confidence 0.80.**
 
+        **UPDATE 2026-08-10 — ROUND 7 RAN AND YOUR SHOT LIST'S OWN SENTENCE MADE
+        IT WORSE.** One sample, four seeds, 37 GPU-seconds, $0. The single change
+        was the fix already written into the shot list — `rising well above the
+        grass` out, `no taller than the grass around it` in — on round 6's seeds
+        with the negative held character for character. **It made the plant
+        taller.** The only rooted, whole-plant frame measures a stem at **39% of
+        frame height**, against the **32%** plate you revoked with *"its tooooo
+        tall"*. Two of the four hang down from the top edge with no ground under
+        them and the fourth runs off the top. All four rejected, confidence 0.88.
+
+        **WHY IT BACKFIRED, and this is the part worth keeping.** The model cannot
+        read the word *no*. This codebase lifts `no X` out of a prompt into the
+        negative for exactly that reason, but the lifting only catches short
+        phrases and this one was too long — so the sentence reached the model as
+        written and it read **"taller than the grass around it"**. A measurement
+        expressed as a negation cannot work in a positive prompt. **Round 8 is not
+        going to be spent rewording it.**
+
+        **One thing regressed and it is not being buried:** a child came back in
+        one of the four, with `girl, boy, child, person` all verified present in
+        the negative — the same string, to the byte, that returned zero people in
+        round 6 on that same seed. So round 6's clean sweep was not a property of
+        the negative after all. The reading that fits all three rounds is about
+        the subject: when the plant fails to hold the frame, the model fills the
+        composition with a figure. That is filed as a hypothesis, not a law.
+
         **If you agree, the next move is not another sheet.** Round 5's only lever
         was `thin` → `sturdy` and the drawing did not move, so adjectives are spent
         here. What changes is composition and negatives: camera **down and in** so
@@ -1246,6 +1393,9 @@ checklist:
         **207 seconds against Wan's 539** — 2.6x faster at a third of peak memory.
         Over twenty-one beats that is real, and it still does not pick a look.
       sheets:
+        - file: review-assets/LABELED-b01-r7.jpg
+          label: "the cold open, ROUND 7 — b01-r7-s0 to s3"
+          note: "the clause meant to shrink it grew it: 39% of frame height against the 32% you revoked"
         - file: review-assets/LABELED-b01-r5.jpg
           label: "the cold open, round 5 — b01-r5-s0 to s3"
           note: "labels and seeds only, no favourite marked; all four provisionally rejected"
