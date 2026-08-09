@@ -132,8 +132,18 @@ exists.
 ## C. The code-side fixes — run AFTER the transfer, not before
 
 Editing these before the move would break links that currently work. The
-checklist is ordered by how much it matters. **76 tracked files** mention
-`olegmlkvorg`; only the first two groups are urgent.
+checklist is ordered by how much it matters. **77 tracked files** (excluding this
+one) mention `olegmlkvorg`; only the first two groups are urgent.
+
+> **Re-grep before you start — this list drifts.** It is a snapshot, and lanes
+> are committing all night. Between the first sweep and the commit after it,
+> `pipeline/build_pulse.py` arrived carrying a fresh hardcoded
+> `GH = "olegmlkvorg/banyan-city"` — a new builder written against the old
+> constant, because that is what every sibling file still says. Expect more.
+> Start the morning with `git grep -ln olegmlkvorg | wc -l` and treat any count
+> above 77 as new arrivals to triage into the groups below. **Every new
+> reference added between now and the transfer makes the C2 list longer**, so
+> the sooner the account is named, the smaller this job is.
 
 ### C1 — The Pages mirror URL (no redirect — fix same day)
 
@@ -161,6 +171,7 @@ an account that no longer owns it. Same-day.
 | File | Line | Constant |
 |---|---|---|
 | `pipeline/build_sim.py` | 78 | `GH = "olegmlkvorg/banyan-city"` — feeds `API`, and `RAW` at line 80, which becomes `RAW_BASE` in the browser (`LIVE_JS`, lines 1649 & 1683: heartbeat + telemetry fetches) |
+| `pipeline/build_pulse.py` | 58 | `GH` → `RAW` → `TELEMETRY_URL` (reads the **`farm-results-rtx5090` courier branch**) and `QUEUE_URL`. Landed after the first sweep of this inventory — see the drift note below |
 | `pipeline/build_shotboard.py` | 54 | `GH_REPO` → `REPO_URL` |
 | `pipeline/build_status.py` | 25 | `GH_URL` → issue links, render-request label query, and `DEPLOY_API` (line 247) |
 | `pipeline/ops_board.py` | 188, 189 | inline issue links |
