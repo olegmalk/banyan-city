@@ -48,52 +48,74 @@ FLAGGING tool: it says "look at this one", never "this one is bad". The founder'
 eye remains the verdict — this exists so his eye is spent on the shots that need
 it instead of on all fifteen.
 
-MEASURED RECALL: 0 OF 3. THIS TOOL IS UNVALIDATED AND THE NUMBER IS NOT AN
+MEASURED RECALL: 1 OF 5. THIS TOOL IS UNVALIDATED AND THE NUMBER IS NOT AN
 ESTIMATE. On 2026-08-09 the beat-16 drift experiment produced the first clips
 whose labels are known by construction — same plate, same recipe, four seeds, two
 prompts 38 bytes apart — and three of them contain a full anime human who is not
 in the conditioning frame. This gate passed all three and printed "nothing
-flagged". The set, the harness and every number below are
-`pipeline/invention-labelled-set.yaml` and `pipeline/eval_invention.py`; run it
-before believing anything here.
+flagged". Three more control-arm seeds were rendered the same night to take the
+set to twelve (task `ep2-b16-expand-0810`); two of them drew a person, and the
+gate catches exactly one — `control-s20260812`, the clip where a head and a bank
+of rocks rise together, so the composition finally climbs the way the drift rule
+expects. Four of five still walk through. The set, the harness and every number
+below are `pipeline/invention-labelled-set.yaml` and `pipeline/eval_invention.py`;
+run it before believing anything here.
 
-  - `monotonic > 0.70` RUNS BACKWARDS. Measured AUC 0.19 on the labelled set —
-    that is 0.81 in the wrong direction — because the leaf keeps swaying while
-    the man arrives, so the distance curve oscillates instead of climbing. All
-    three misses fail on this conjunct alone.
+  - `monotonic > 0.70` RUNS BACKWARDS. Measured AUC 0.34 on the twelve — still
+    the wrong side of 0.5 — because the leaf keeps swaying while the man
+    arrives, so the distance curve oscillates instead of climbing. All four
+    misses fail on this conjunct alone.
   - DELETING IT DOES NOT PRODUCE A DETECTOR, it produces an alarm bell. With the
-    conjunct struck out the rule scores 3/3 recall and 6/6 FALSE ALARMS: on
+    conjunct struck out the rule scores 5/5 recall and 7/7 FALSE ALARMS: on
     six-second LTX output `return_ratio > 0.88 AND peak > 0.18` is true of every
     clip, invented or not. The conjunct that runs backwards is the only thing
     keeping the gate quiet, which means the gate carries no information on this
     engine in either configuration.
-  - `peak > 0.18` DOES NO WORK ON LTX. Every labelled clip reads 0.61-0.95. The
+  - `peak > 0.18` DOES NO WORK ON LTX. Every labelled clip reads 0.57-0.95. The
     threshold was calibrated against AnimateDiff clips that read 0.12-0.50, and
     nobody rescaled it when the engine changed.
   - `area_ratio` and `spread_ratio` miss because `fg()` masks pixels DARKER than
     typical and an anime human in mid-tone linework is not darker than a peach
-    sky. Masking on linework density instead gets closer (AUC 0.94) and still
-    does not separate the set.
+    sky. Masking on linework density instead gets closer (AUC 0.89 on area, 0.94
+    on spread) and still does not separate the set.
 
 WHAT WAS TRIED AND FAILED, recorded so it is not tried twice. The obvious repair
 — compute the drift shape PER BLOCK so a man arriving in one corner is not
 averaged away by a swaying leaf — is CONTRADICTED, not merely unsupported:
-`local_mono_max` scores AUC 0.31 and `local_oneway_max` 0.44, both pointing the
-wrong way. So does `shift_blob_frac` (0.17), the "an invention is a connected
+`local_mono_max` scores AUC 0.37 and `local_oneway_max` 0.41, both pointing the
+wrong way. So does `shift_blob_frac` (0.36), the "an invention is a connected
 blob" idea. Ledger record 38's pre-registered lead, the fraction of consecutive
-frame pairs moving more than 1.0, does separate the labelled set perfectly and
-then FLAGS BEAT 11 AND BEAT 01 of the shipped episode-1 cut — the mitosis beat
-the founder called the best in the episode reads 1.00 — which is the circularity
-that record warned about, confirmed: it is measuring motion, and a person walking
-into a static shot is motion.
+frame pairs moving more than 1.0, separated the first nine perfectly and then
+FLAGGED BEAT 11 AND BEAT 01 of the shipped episode-1 cut — the mitosis beat the
+founder called the best in the episode reads 1.00 — which is the circularity that
+record warned about, confirmed. The three expansion clips finished it off from
+the other side: it no longer separates even in sample (AUC 0.80), because both
+new invented clips are quiet ones.
 
-WHY NOTHING WAS RETUNED HERE. `peak` separates the set perfectly with the widest
-margin, survives leave-one-out 9/9, and is the one leader that does NOT flag the
-episode-1 clips. It is still not shipped as a threshold, because nine clips
-cannot license one: three positives among nine give an exact two-sided p of
-2/84 = 0.024 at best, fifteen candidate metrics were tried, and 15 x 0.024 = 0.36.
-Twelve labelled clips with five invented would settle it. Until then this file
-prints how little it knows.
+THE ONE METRIC THAT CLEARED THE CORRECTION, AND WHY IT IS STILL NOT A THRESHOLD.
+`peak` separates all twelve perfectly, AUC 1.00, exact two-sided p 0.0025, and
+0.0025 x 15 candidates = 0.038 — the first and only time anything here has come
+in under alpha 0.05. That was a PRE-REGISTERED test and not a lucky slice: the
+n = 12 with 5 invented was computed in advance by `sample_size_needed`, three
+arm-A seeds were rendered to reach exactly it, and the metric held. Leave-one-out
+is 12/12 and it remains the only leader that does not flag the episode-1 cut
+(those clips read 0.12-0.50).
+
+AND IN THE SAME RUN IT FAILED THE ONLY HONEST TEST IT HAS EVER HAD. The three new
+clips postdate both the candidate list and the leaderboard, so they are the first
+points nobody chose. Draw the boundary on the eight original drift clips — 0.7674,
+the number that existed BEFORE these clips were rendered — and it calls both new
+invented clips clean: they read 0.7477 and 0.7458. The separation at twelve is
+perfect only because the threshold is allowed to slide down to 0.7393 after
+seeing them, and the usable margin fell from 0.21 to 0.03 as the two new
+positives landed in the gap the first nine had left empty. THE RANKING SURVIVED;
+THE BOUNDARY DID NOT, and a gate ships a boundary.
+
+So nothing is retuned here, again, and now for a better reason than "the sample
+is too small". The sample is no longer too small, and what it says is that this
+metric's threshold does not transfer between two batches of the SAME beat on the
+SAME plate, one seed apart. `peak` is still the best thing on the board and is
+still not a number anyone can ship. This file prints how little it knows.
 """
 
 import argparse
@@ -124,10 +146,12 @@ import licence_gate as lg  # noqa: E402 — the tolerant sidecar reader
 UNVALIDATED = """
   ── INSUFFICIENT VALIDATION ─────────────────────────────────────────────────
   An `ok` here is WEAK EVIDENCE and a silent run is not an all-clear. Measured
-  recall on the only labelled set this tool has (9 clips, 3 containing a human
-  the plate never had) is 0 OF 3: it passed all three. No threshold in it has
-  been validated against ground truth, and the `monotonic` conjunct is measured
-  running BACKWARDS (AUC 0.19) on those same clips.
+  recall on the only labelled set this tool has (12 clips, 5 containing a human
+  the plate never had) is 1 OF 5: four walk straight through. No threshold in it
+  has been validated against ground truth, and the `monotonic` conjunct is
+  measured running BACKWARDS (AUC 0.34) on those same clips.
+  `peak` is the one candidate that clears the family-wise correction (p 0.038),
+  and its boundary still MISSED both invented clips it had not already seen.
     labels   pipeline/invention-labelled-set.yaml
     harness  python3 pipeline/eval_invention.py
   Clearing a clip still needs eyes on frames. This tool cannot do it.
@@ -235,18 +259,23 @@ def verdict(m: dict) -> tuple:
     """(flag, why). Thresholds are deliberately loose — this points a human at a
     clip, so a false alarm costs one look and a miss costs a shipped defect.
 
-    AND ON THE ONE LABELLED SET THEY ARE ALSO WRONG: 0 of 3 recall, the
-    `monotonic` conjunct measured pointing backwards (AUC 0.19), and `peak > 0.18`
+    AND ON THE ONE LABELLED SET THEY ARE ALSO WRONG: 1 of 5 recall, the
+    `monotonic` conjunct measured pointing backwards (AUC 0.34), and `peak > 0.18`
     true of every LTX clip ever measured. They are left exactly as they were
-    because the alternative offered by nine clips is a threshold fitted to three
-    positives, and the file's own churn note says why that is not an improvement.
-    `pipeline/eval_invention.py` is where a replacement has to earn its way in.
+    because the one candidate that cleared the correction on twelve clips
+    (`peak`, p 0.038) then missed both positives it had not been fitted on, so
+    the replacement on offer is a threshold that is already measured not to
+    transfer. `pipeline/eval_invention.py` is where one has to earn its way in.
     """
     why = []
     # one-way drift: ends at its furthest point AND mostly climbed to get there.
-    # MEASURED 2026-08-09 on invention-labelled-set.yaml — invented clips read
-    # monotonic 0.62 / 0.55 / 0.60 against a clean mean of 0.658, so this conjunct
-    # is what stops all three from flagging, and striking it out flags all nine.
+    # MEASURED 2026-08-09 on invention-labelled-set.yaml — four of the five
+    # invented clips read monotonic 0.55-0.62 against a clean mean above them, so
+    # this conjunct is what stops them flagging, and striking it out flags all
+    # twelve. The fifth (control-s20260812) clears it at 0.72 and is the tool's
+    # only true positive on record; a head and a bank of rocks rise together
+    # there, which is a one-way composition change of the kind this rule was
+    # actually built for.
     if m["return_ratio"] > 0.88 and m["monotonic"] > 0.70 and m["peak"] > 0.18:
         why.append(f"one-way drift (ends at {m['return_ratio']:.2f} of peak, "
                    f"{m['monotonic']:.0%} of steps climbing) — the composition "

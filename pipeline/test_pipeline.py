@@ -6340,10 +6340,21 @@ def test_the_labelled_set_is_internally_consistent():
     check("no clip is listed twice", len({c["path"] for c in clips}) == len(clips))
     check("every clip says why it is labelled the way it is",
           all(len(c.get("evidence", "")) > 40 for c in clips))
+    check("every clip names the render batch it came from",
+          all(c.get("set") for c in clips))
     oos = [c for c in clips if "held_out_from" in c]
-    check("exactly one clip is marked out-of-sample", len(oos) == 1)
-    check("and it is a clean one that arrived after the set was frozen",
-          oos[0]["label"] == "clean" and oos[0]["beat"] != 16)
+    check("the header's out-of-sample count matches the clips",
+          len(oos) == fx["out_of_sample"])
+    # THE INVARIANT, not a count. A clip is out-of-sample when it came from a
+    # DIFFERENT batch than the one it is held out from — which is the only thing
+    # that makes it out-of-sample, and is checkable. The previous form asserted
+    # "exactly one, and it is not beat 16", which was a fact about the b12 clip
+    # rather than a rule, and would have rejected a later beat-16 batch that is
+    # every bit as out-of-sample as b12 was.
+    check("out-of-sample means the clip postdates a DIFFERENT batch",
+          all(c["held_out_from"] != c["set"] for c in oos))
+    check("and every in-sample clip belongs to the batch that was frozen",
+          all(c["set"] == fx["set_id"] for c in clips if "held_out_from" not in c))
 
 
 def test_the_committed_measurements_cover_every_candidate_and_every_clip():
@@ -6407,12 +6418,53 @@ def test_the_detector_states_its_measured_recall_and_states_it_correctly():
           and (REPO / "pipeline" / "eval_invention.py").exists())
 
 
+def test_the_metric_that_cleared_the_correction_still_misses_what_it_never_saw():
+    """`peak` clears the family-wise correction AND its boundary does not
+    transfer. Both halves, because shipping the first without the second is the
+    exact mistake this whole group of tests exists to prevent.
+
+    On 2026-08-09 the set was grown to twelve for a pre-registered reason: n = 12
+    with 5 invented is the smallest set at which a perfect separator earns a
+    corrected p under 0.05, and `peak` duly earned 0.038. It is the first metric
+    ever to clear here. But the three clips that took the set to twelve postdate
+    both the candidate list and the leaderboard, so the boundary drawn on the
+    eight original drift clips is a real prediction about them — and it calls
+    both new invented clips clean (0.7477 and 0.7458 against a 0.7674 boundary).
+    The perfect separation is perfect only after the threshold slides down.
+
+    A future session reaching for `peak > 0.74` finds this measured rather than
+    re-deriving it, which is the same service the churn note performs for churn.
+    """
+    import json
+    sys.path.insert(0, str(REPO / "pipeline"))
+    import eval_invention as ev
+
+    data = json.loads(
+        (REPO / "pipeline" / "invention-labelled-set.measured.json").read_text(
+            encoding="utf-8"))
+    rows = [{"name": c["name"], "label": c["label"],
+             "out_of_sample": c["out_of_sample"], "metrics": c["metrics"]}
+            for c in data["clips"]]
+    res = {r["metric"]: r for r in ev.evaluate(rows)}
+    peak = res["peak"]
+    check("peak separates every labelled clip", peak["perfect"])
+    check("and it clears the family-wise correction", peak["p_bonferroni"] < 0.05)
+    check("it is the only candidate that does",
+          sum(1 for r in res.values() if r["p_bonferroni"] < 0.05) == 1)
+    # The half that stops it shipping.
+    check("and its in-sample boundary still misses the clips it never saw",
+          peak["out_of_sample_ok"] is False)
+    check("the gate does not act on peak alone anyway",
+          "m[\"peak\"] > 0.18" in
+          (REPO / "pipeline" / "check_invention.py").read_text(encoding="utf-8"))
+
+
 def test_striking_the_backwards_conjunct_would_flag_everything():
     """Why the obvious fix was not shipped, kept as an executable fact.
 
     `monotonic` runs backwards on the labelled set, so deleting it looks like
     free recall. It is not: on six-second LTX output the surviving conjuncts are
-    true of every clip, and the gate goes from silent to flagging all nine. A
+    true of every clip, and the gate goes from silent to flagging all twelve. A
     future session reaching for that edit finds the measurement here instead of
     re-deriving it.
     """
@@ -6429,7 +6481,7 @@ def test_striking_the_backwards_conjunct_would_flag_everything():
 
     clean = [c for c in data["clips"] if c["label"] == "clean"]
     inv = [c for c in data["clips"] if c["label"] == "invented"]
-    check("without the conjunct the rule catches all three",
+    check("without the conjunct the rule catches all five",
           all(no_mono(c["metrics"]) for c in inv))
     check("and also flags every clean clip, which is not a detector",
           all(no_mono(c["metrics"]) for c in clean))
@@ -6614,7 +6666,9 @@ def main():
     test_the_labelled_set_is_internally_consistent()
     test_the_committed_measurements_cover_every_candidate_and_every_clip()
     test_the_detector_states_its_measured_recall_and_states_it_correctly()
+    test_the_metric_that_cleared_the_correction_still_misses_what_it_never_saw()
     test_striking_the_backwards_conjunct_would_flag_everything()
+    # THE MAC'S RENDER LOOP MUST NOT PUBLISH TO HIS SCREEN BY ACCIDENT.
     print()
     if FAILURES:
         print(f"✗ {len(FAILURES)} failure(s): {', '.join(FAILURES)}")

@@ -216,6 +216,78 @@
       "out_of_sample": true,
       "path": "review/ep2-prov-0809/ltx-002b-b12-prov-v2.mp4",
       "sha256": "b474f66d74066d6f908dca28cfd24baee890eae0ca1ce09a5951e5d004bebdf3"
+    },
+    {
+      "label": "invented",
+      "metrics": {
+        "area_ratio": 1.1657566848663026,
+        "churn": 0.40713775157928467,
+        "edgefg_area_ratio": 1.0642693190512624,
+        "edgefg_spread_ratio": 1.4462356826676979,
+        "local_mono_max": 0.6382978723404256,
+        "local_oneway_max": 0.6382978723404256,
+        "monotonic": 0.5106382978723404,
+        "pair_motion_mean": 2.9631523375606372,
+        "pair_motion_median": 0.3649769127368927,
+        "pair_moving_frac": 0.2847222222222222,
+        "peak": 0.7476632595062256,
+        "persistent_shift": 0.670555055141449,
+        "return_ratio": 0.8861995935440063,
+        "shift_blob_frac": 0.11505681818181818,
+        "spread_ratio": 1.1461499704908569
+      },
+      "name": "ltx-b16-control-s20260810.mp4",
+      "out_of_sample": true,
+      "path": "review/ltx-drift-0809/expansion/ltx-b16-control-s20260810.mp4",
+      "sha256": "95f59156710c2e19b1c8862b28ac50a096ec53bf87bd0c728093537158a8f60a"
+    },
+    {
+      "label": "clean",
+      "metrics": {
+        "area_ratio": 0.9696969696969697,
+        "churn": 0.5552070736885071,
+        "edgefg_area_ratio": 0.9699413489736071,
+        "edgefg_spread_ratio": 1.0222342169007697,
+        "local_mono_max": 0.6595744680851063,
+        "local_oneway_max": 0.6060186344930223,
+        "monotonic": 0.5957446808510638,
+        "pair_motion_mean": 2.02467237940679,
+        "pair_motion_median": 0.3867875635623932,
+        "pair_moving_frac": 0.2986111111111111,
+        "peak": 0.5685461759567261,
+        "persistent_shift": 0.27035751938819885,
+        "return_ratio": 0.9503380060195923,
+        "shift_blob_frac": 0.09517045454545454,
+        "spread_ratio": 1.0942113640082403
+      },
+      "name": "ltx-b16-control-s20260811.mp4",
+      "out_of_sample": true,
+      "path": "review/ltx-drift-0809/expansion/ltx-b16-control-s20260811.mp4",
+      "sha256": "95a58ef6c49da5aa743465239d67807e91af8a0298d0536eb8a8282866313e3a"
+    },
+    {
+      "label": "invented",
+      "metrics": {
+        "area_ratio": 0.8341840253828114,
+        "churn": 0.48752933740615845,
+        "edgefg_area_ratio": 1.2249443207126949,
+        "edgefg_spread_ratio": 1.173602631550217,
+        "local_mono_max": 0.6808510638297872,
+        "local_oneway_max": 0.5377761753607861,
+        "monotonic": 0.723404255319149,
+        "pair_motion_mean": 4.086223915478008,
+        "pair_motion_median": 3.1343250274658203,
+        "pair_moving_frac": 0.6944444444444444,
+        "peak": 0.7457706332206726,
+        "persistent_shift": 0.6591660380363464,
+        "return_ratio": 0.9730749726295471,
+        "shift_blob_frac": 0.26988636363636365,
+        "spread_ratio": 1.5650800567514458
+      },
+      "name": "ltx-b16-control-s20260812.mp4",
+      "out_of_sample": true,
+      "path": "review/ltx-drift-0809/expansion/ltx-b16-control-s20260812.mp4",
+      "sha256": "47e875983c9b57a826705702f649d8d5b45489f7d7880fec179e59e598a9c9c5"
     }
   ],
   "frozen": "2026-08-09",

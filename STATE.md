@@ -6729,3 +6729,82 @@ held-open ssh. All four frames and four sidecars pulled and **sha256-verified
 byte-identical** box-to-repo, 8 of 8. Heartbeats on `farm-results-hand` against
 a fresh id `ep2-b13-r9-tusks-1786320000`. Nothing published, posted, or opened
 on his screen.
+
+## 2026-08-09 — the detector's lead cleared the correction on twelve clips and missed both positives it had not already seen
+
+**THE SET IS TWELVE AND THE SIZE WAS NOT CHOSEN AFTER THE FACT.**
+`eval_invention.sample_size_needed(K=15)` returns `(12, 5)` — twelve labelled
+clips with five invented is the smallest set at which a PERFECT separator earns
+a family-wise p under 0.05, because `2/C(12,5) x 15 = 0.038`. c93afe6 printed
+that number and named the next move; this lane rendered exactly it. Three
+control-arm beat-16 seeds (`20260810/11/12`, the next three in sequence after
+the original four), arm A of `ea62f69` verbatim: same plate BYTES
+(`16-704x1280.png`, sha `cdbb511a`), the same control prompt and negative files
+sha-verified against `review/ltx-drift-0809/` before upload, same two-stage
+recipe, driver blob `ecaf3104` = Mac HEAD = `ea62f69`. Only the seed moved.
+$0, ~11 minutes on the box. **Every seed rendered is in the file** — none was
+run and discarded, which is the only thing that would make "we needed two
+positives and got two" worth doubting.
+
+**TWO OF THREE DREW A PERSON — 67%, against the 75% the first four predicted.**
+`s20260810` puts a curly-haired figure in a pale shirt into frame from the
+bottom-left, shoulder at frame 44 (~1.8s). `s20260812` is the set's hardest
+positive: at thumbnail size it is a dark mass that could honestly be a boulder,
+and it was only called a person after a full-resolution crop of frames 32/60/100
+showed inked hair, a rounded skull, **both ears** and a neck into shoulders —
+first tuft at frame 16 (~0.67s). `s20260811` is clean, and it matters as much as
+the other two: same prompt, the one that asks for the scavenger, and nobody
+came. **The scoring procedure was calibrated before it was trusted** — run on
+two clips whose labels were already known it found the man in `control-s20260806`
+and nobody in `treat-s20260806`, which is the founder's label and the recorded
+one.
+
+**`peak` HELD. It is the first metric ever to clear this bar.** AUC 1.00 across
+all twelve, exact two-sided p **0.0025**, x15 candidates = **0.038**, LOO 12/12.
+Nothing else comes close (next best `edgefg_spread_ratio`, pK 0.15). It also
+keeps the property that killed the previous lead: it does **not** flag the
+episode-1 cut, which reads 0.12-0.50 against a 0.7393 boundary.
+
+**AND IT FAILED THE ONLY HONEST TEST IT HAS EVER BEEN GIVEN, IN THE SAME RUN.**
+The three new clips postdate the candidate list AND the leaderboard, so the
+boundary drawn on the eight original drift clips — **0.7674, a number that
+existed before these clips were rendered** — is a genuine prediction about them.
+It calls **both** new invented clips clean: they read 0.7477 and 0.7458. The
+separation at twelve is perfect only because the threshold is allowed to slide
+down to 0.7393 after seeing them, and the usable margin collapsed from **0.21 to
+0.03** as the two new positives landed in the gap the first nine had left empty.
+**The RANKING survived and the BOUNDARY did not, and a gate ships a boundary.**
+So `peak` is still not shipped as a threshold — no longer because the sample is
+too small, but because the sample is now big enough to show that its threshold
+does not transfer between two batches of the same beat on the same plate, one
+seed apart.
+
+**THE GATE'S OWN RECALL MOVED, 0 OF 3 → 1 OF 5, and the warning says so.**
+`check_invention.verdict()` now catches `control-s20260812` — the clip where a
+head and a bank of rocks rise together, so `monotonic` finally clears 0.70 at
+0.72. Four of five still walk through. `monotonic` still runs backwards (AUC
+0.19 → **0.34**, still the wrong side of 0.5) and striking it out still flags
+everything (5/5 recall, **7/7 false alarms**). Ledger record 38's
+`pair_moving_frac` is now dead from both ends: it flagged the founder's
+favourite beat, and it no longer separates even in sample (AUC 1.00 → **0.80**),
+because both new positives are quiet ones.
+
+**What is committed.** The fixture grew to twelve with sha256 and per-clip
+evidence for each new row; every clip now names the render batch it came from,
+so `held_out_from` is checked as an INVARIANT (`held_out_from != set`) instead of
+the old hardcoded "exactly one, and it is not beat 16" — which was a fact about
+the b12 clip rather than a rule, and would have rejected a later beat-16 batch
+that is every bit as out-of-sample. One new test asserts both halves of the
+verdict at once: peak clears the correction, is the only thing that does, **and**
+its in-sample boundary misses the held-out positives. Tests rc=0 (no failures),
+lint rc=0 with the licence ratchet unmoved at 25.
+
+**Box left clean.** `GPU-CLAIM.txt` claimed as `ep2-b16-expand-0810` and
+released, verified; card 0% / 0 MiB; schtask `banyan-b16expand` deleted and
+verified absent by re-query. Encode rc=0, render rc=0, three clips and three
+sidecars pulled and **sha256-verified byte-identical** box-to-repo, 3 of 3.
+Heartbeats `STARTED`/`DONE` on `farm-results-hand` against the fresh id
+`ep2-b16-expand-0810`. Sidecars carry `arm: control` and a purpose block saying
+these are DETECTOR DATA — no contact sheet was built and none is wanted, because
+nothing here is founder review material. Nothing published, posted, spent, made
+canon, or opened on his screen.

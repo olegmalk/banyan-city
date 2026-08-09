@@ -14,11 +14,22 @@
 # every other kind of invention (a morphing rock, a second sprout) looks like
 # this. A detector validated on this set is validated on ONE failure mode.
 #
-# THE SET IS SPENT IF IT IS FITTED. It is nine clips. A rule tuned until these
-# nine come out right has learned these nine, which is the mistake
+# THE SET IS SPENT IF IT IS FITTED. It is twelve clips. A rule tuned until these
+# twelve come out right has learned these twelve, which is the mistake
 # check_invention.py's own churn note (check_invention.py:171) was written to
 # prevent. Evaluate against it, report the statistics honestly, and read
 # pipeline/eval_invention.py's family-wise correction before believing anything.
+#
+# GROWN TO TWELVE ON 2026-08-09 (task ep2-b16-expand-0810), and the size is not
+# arbitrary: eval_invention.sample_size_needed(K=15) returns exactly (12, 5) —
+# twelve clips with five invented is the FIRST n at which a perfect separator
+# earns a family-wise p under 0.05, because 2/C(12,5) x 15 = 0.038. The three
+# clips that got it there are arm-A control seeds 20260810/11/12, rendered to
+# that arithmetic and to no other target. Two drew a person and one did not,
+# which is the 5/7 split the number was computed for. THE SEEDS WERE THE NEXT
+# THREE IN SEQUENCE after the original four and every one of them is in this
+# file: none was rendered and discarded, which is the only thing that would
+# make "we needed two positives and got two" suspicious.
 #
 # THE CLIPS ARE NOT IN GIT. review/ is untracked by gate G5 — no candidate pixel
 # is committed — so the sha256 below is the whole of the provenance a future
@@ -27,14 +38,23 @@
 
 set_id: b16-drift-0809
 frozen: 2026-08-09
+# Every clip names the render batch it came from, and `held_out_from` names a
+# DIFFERENT batch — that inequality is what "out-of-sample" means here and the
+# test checks it, so the flag cannot be applied to a clip that was in the room
+# when the metrics were chosen.
+out_of_sample: 4
 labelled_by: >-
   The founder's own eye on the first invented clip (he screenshotted the man in
   ltx-002b-b16-prov.mp4, whose sha256 is byte-identical to control-s20260806
   here); the steward's frame-sampling by eye on the other seven, reported in
-  STATE.md 2026-08-09 "The result, same day" and in commit ea62f69. No detector
-  output contributed to any label — the tool under test cannot grade itself.
-positives: 3
-negatives: 6
+  STATE.md 2026-08-09 "The result, same day" and in commit ea62f69. The three
+  expansion clips were scored the same way, by a procedure first CALIBRATED on
+  two clips whose labels were already known: run blind on control-s20260806 it
+  found the man (entry ~frame 30) and on treat-s20260806 it found nobody, which
+  is the founder's label and the recorded one. No detector output contributed to
+  any label — the tool under test cannot grade itself.
+positives: 5
+negatives: 7
 
 clips:
   # ---- arm A, control: the prompt exactly as it was rendered for review -------
@@ -44,6 +64,7 @@ clips:
     seed: 20260806
     arm: control
     beat: 16
+    set: b16-drift-0809
     evidence: >-
       THE STRONGEST LABEL IN THE SET. This file has the same sha256 as
       review/ep2-prov-0809/ltx-002b-b16-prov.mp4, the clip the founder looked at
@@ -55,6 +76,7 @@ clips:
     seed: 20260807
     arm: control
     beat: 16
+    set: b16-drift-0809
     evidence: >-
       A person moving behind the branches, seen by frame-sampling. Noted in
       STATE.md as the seed whose motion figure drops most in the treatment arm,
@@ -66,6 +88,7 @@ clips:
     seed: 20260808
     arm: control
     beat: 16
+    set: b16-drift-0809
     evidence: A person, seen by frame-sampling (ea62f69, "3 of 4 — 20260806, 20260807, 20260808").
 
   - path: review/ltx-drift-0809/ltx-b16-control-s20260809.mp4
@@ -74,6 +97,7 @@ clips:
     seed: 20260809
     arm: control
     beat: 16
+    set: b16-drift-0809
     evidence: >-
       THE MOST VALUABLE NEGATIVE. Same prompt as the three above — the one asking
       for the man — and no person appeared. It is the base rate, and it is why a
@@ -88,6 +112,7 @@ clips:
     seed: 20260806
     arm: treat
     beat: 16
+    set: b16-drift-0809
     evidence: >-
       No person, by frame-sampling. THE SHARPEST PAIR IN THE SET: this is the
       seed that drew the man under the control prompt, so it and
@@ -100,6 +125,7 @@ clips:
     seed: 20260807
     arm: treat
     beat: 16
+    set: b16-drift-0809
     evidence: >-
       No person, by frame-sampling. Its control twin is the clip whose invented
       figure MOVED behind the branches, which is why this seed's motion figure
@@ -111,6 +137,7 @@ clips:
     seed: 20260808
     arm: treat
     beat: 16
+    set: b16-drift-0809
     evidence: >-
       No person, by frame-sampling. Its control twin drew one, so this is the
       third of the three arm-pairs where the clause is the only difference.
@@ -121,6 +148,7 @@ clips:
     seed: 20260809
     arm: treat
     beat: 16
+    set: b16-drift-0809
     evidence: >-
       No person, by frame-sampling. The one pair where BOTH arms are clean — its
       control twin is the clip that establishes the base rate, so this pair says
@@ -133,6 +161,7 @@ clips:
     seed: 20260806
     arm: treat
     beat: 12
+    set: b12-promptfix-0809
     held_out_from: b16-drift-0809
     evidence: >-
       Rendered 2026-08-09 20:23 box local under task 002b-b12-promptfix-0809,
@@ -141,6 +170,70 @@ clips:
       three samplings (every 12th across the clip, every 4th through the first two
       seconds because beat 16's head entered at ~1s, and 0/48/96/144 at 352x640):
       zero figures. Different beat, different plate, different staging line — so
-      for any statistic that was chosen after seeing the eight, THIS CLIP IS THE
-      ONLY OUT-OF-SAMPLE POINT THE SET HAS, and eval_invention.py scores it
-      separately for that reason.
+      for any statistic that was chosen after seeing the eight, this clip is
+      out-of-sample, and eval_invention.py scores it separately for that reason.
+      It was the set's ONLY such point until 2026-08-09, when the three expansion
+      clips below joined it; it remains the only one from a different beat and a
+      different plate, which is the only out-of-sample evidence the set has that
+      a boundary drawn on beat 16 travels at all.
+
+  # ---- the expansion batch: three fresh arm-A seeds, rendered to reach n=12 ---
+  # ALL THREE ARE OUT-OF-SAMPLE IN THE STRONGEST SENSE THE SET CAN OFFER. They
+  # were rendered after eval_invention.py's fifteen candidates were declared AND
+  # after the full leaderboard had been printed and read (c93afe6), so no metric
+  # here was chosen with these numbers in view. That does not exempt them from
+  # the family-wise correction — they are counted in the headline p, which is the
+  # entire point of rendering them — it means the `oos` column is a real test:
+  # the boundary is drawn on the eight drift clips alone and these are dropped
+  # onto it afterwards.
+  - path: review/ltx-drift-0809/expansion/ltx-b16-control-s20260810.mp4
+    sha256: 95f59156710c2e19b1c8862b28ac50a096ec53bf87bd0c728093537158a8f60a
+    label: invented
+    seed: 20260810
+    arm: control
+    beat: 16
+    set: b16-expand-0810
+    held_out_from: b16-drift-0809
+    evidence: >-
+      A full anime figure — curly brown hair, pale collared shirt — rises from
+      the bottom-left and stays to the end. Frame-sampled every 4th frame through
+      3.2s and every 12th across all 145: a shoulder is first visible at frame 44
+      (~1.8s), the head and one ear are unmistakable by frame 48-52, and the
+      figure is present in every sample thereafter. The conditioning plate
+      contains no figure at all.
+
+  - path: review/ltx-drift-0809/expansion/ltx-b16-control-s20260811.mp4
+    sha256: 95a58ef6c49da5aa743465239d67807e91af8a0298d0536eb8a8282866313e3a
+    label: clean
+    seed: 20260811
+    arm: control
+    beat: 16
+    set: b16-expand-0810
+    held_out_from: b16-drift-0809
+    evidence: >-
+      No person. THE SECOND BASE-RATE CLIP, and it is why the expansion is not
+      three cherry-picked positives: same prompt as the two that drew one — the
+      prompt that asks for the scavenger — and nobody arrived. Frame-sampled the
+      same way as its batch-mates, plus a full-resolution crop of the bottom
+      45% of frames 24/48/72/96/120/144, where a faint or partly-occluded figure
+      would be easiest to miss and hardest to excuse. Empty sky in all of them.
+
+  - path: review/ltx-drift-0809/expansion/ltx-b16-control-s20260812.mp4
+    sha256: 47e875983c9b57a826705702f649d8d5b45489f7d7880fec179e59e598a9c9c5
+    label: invented
+    seed: 20260812
+    arm: control
+    beat: 16
+    set: b16-expand-0810
+    held_out_from: b16-drift-0809
+    evidence: >-
+      A human head and shoulders seen FROM BEHIND, rising from behind rocks that
+      also grow into the bottom of frame. THE LABEL WAS NOT TAKEN FROM THE
+      THUMBNAIL: at 352x640 the shape is a dark mass that could honestly be a
+      boulder, and it was only called a person after a full-resolution crop of
+      frames 32/60/100 showed inked tufted hair, a rounded skull, BOTH EARS and a
+      neck narrowing into shoulders. First hair tuft at frame 16 (~0.67s),
+      unmistakable head by frames 24-28 (~1.0-1.2s), occluded at the very end
+      when the leaf swings down across the lens. This is the set's hardest
+      positive and the reason the sampling procedure was calibrated on two
+      known-label clips before any expansion clip was scored.
