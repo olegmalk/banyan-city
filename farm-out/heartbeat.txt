@@ -10,3 +10,4 @@
 13:09:37Z DONE task=002b-b16-drift-0809 by-hand backfilled from commit evidence ea62f69 — beat 16 LTX drift experiment, 8 clips 704x1280 on rtx5090, taste ledger record 35, run-drift.log FINISHED 17:09:37 box local rc=0
 13:15:34Z DONE task=001-b06-r4-1786281217 by-hand backfilled from commit evidence bb8d983 — b06 r4 redraw, 4 seeds on rtx5090, taste ledger record 36, box job redraw2-0809 FINISHED 17:15:34 box local
 13:15:34Z DONE task=001-b14-r4-1786281289 by-hand backfilled from commit evidence bb8d983 — b14 r4 redraw, 4 seeds on rtx5090, taste ledger record 37, box job redraw2-0809 FINISHED 17:15:34 box local
+15:38:35Z DONE task=rtx5090-release-stale-redraw2-claim-1786290000 by-hand all four verified against the box: claim file RELEASED (written 17:16 box local by the run itself), schtasks /Query banyan-redraw2 reports the task does not exist, card 0 pct 0 MiB; sequencing note appended for the overnight lanes
