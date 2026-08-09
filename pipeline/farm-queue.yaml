@@ -254,7 +254,53 @@ tasks:
 # reason: claim_task.py refuses an id that is not in this file, so these entries
 # are what lets each lane claim WITHOUT --force.
 #     python3 pipeline/claim_task.py <id> started | done
+#
+# ---- VERIFIED 2026-08-09 16:44Z: WHAT A REVIVED WORKER WOULD ACTUALLY DO -------
+# The founder logs into the 5090 tomorrow morning, which brings farm_worker back,
+# so every entry below was read against the reader instead of trusted.
+#
+# SELECTION IS TWO CONDITIONS AND NO MORE (farm_worker.py:606): the id is absent
+# from this worker's own done set, and `worker:` equals "any" or the machine's
+# --name. `runner:`, `gate:`, `needs:` and `after:` appear NOWHERE in
+# farm_worker.py. `after:` is the one that reads like protection and is not: it is
+# a promoter gate, so nothing in this list waits for anything.
+#
+# NOT ONE ENTRY HERE CARRIES `node:`, and render_task subscripts it directly —
+# farm_worker.py:460 on the stills path, :438 on the video path. A matching worker
+# therefore raises KeyError('node') before it loads a model, the handler at :649
+# writes `FAIL task=<id>` to its heartbeat (:670), and the entry has spent one of
+# its MAX_ATTEMPTS. That is the good half of the news: they fail in seconds,
+# loudly, having rendered nothing. Compare `msi-preview-b01-1785937992` down in
+# backlog:, a real `runner: farm` entry — it carries `node:` because a worker
+# entry has to.
+#
+# DO NOT "FIX" THAT BY ADDING `node:`. These are hand-lane rounds whose variable
+# is prompt text, and the stills path builds both halves of the prompt itself: the
+# positive from shots.md through parse_shots and compress (:476, :514), the
+# negative from sd_prompt.beat_negative (:515). A task dict has NO negative field
+# at all. So `no-humans-sweep-sample`, whose entire variable IS the negative,
+# cannot be expressed in this shape at any length; and a node-ful
+# `ep2-b01-r7-coldopen` would render the CURRENT shots.md text and stamp round 7's
+# id on control frames. Adding the field converts a loud KeyError into a silent
+# wrong render carrying a real id, which is the borrowed-id failure the header of
+# this file spends forty lines on. A loud failure is the better shape until the
+# recipe lives somewhere a worker can read.
+#
+# SO THE FIX IS THE ONE THE PARAGRAPH ABOVE ALREADY ASKS FOR, and it is cheap:
+# before a worker is restarted on any box, move whatever is unfinished here into
+# backlog: or give it a gate. An id keeps working after the move —
+# claim_task.queue_entry reads BOTH lists (claim_task.py:99), so a lane still
+# claims it without --force. `ep1-held-refilms-v34-1786292556` was moved tonight
+# on exactly this reasoning and its entry says so.
 
+# MAY BE HAND-COMPLETED — CHECK farm-results-hand BEFORE RUNNING THIS. A lane
+# claimed this exact id by hand tonight and is rendering it now, so its DONE line
+# lands on the hand ledger, which no worker can read (the gap is filed as
+# farm-worker-reads-hand-ledger-1786293857 in backlog:). A revived worker reads
+# this entry as unstarted. Per the block above it would not re-render it — it
+# would write `FAIL task=ep2-b13-r8-goblin-1786292421` for a render that
+# SUCCEEDED, which is worse than the double render it looks like, because then two
+# ledgers disagree about one id and neither is wrong about itself.
 - id: ep2-b13-r8-goblin-1786292421
   runner: manual
   worker: rtx5090
@@ -353,29 +399,16 @@ tasks:
     contain — the defect behind his "it's going off track and making random stuff
     like this human sometimes".
 
-- id: ep1-held-refilms-v34-1786292556
-  runner: manual
-  worker: m1pro
-  needs: [mps]
-  window: any
-  est_minutes: 15
-  cmd: >-
-    Promote `b14-r4-s3` to canon `14-worth-staying-in.png` — his pick, quoted below,
-    and still unpromoted (a0a5170 moved only beats 3 and 10) — then re-film beat 14
-    as a held shot on the fixed geometry (5568113: ZOOM_TOTAL 0.12, linear, centred),
-    re-cut episode 1 to v34 and run qa_episode. ffmpeg on this laptop, $0, no model
-    runs. Beats 3 and 10 were already re-filmed on their new canon
-    (v34-refilm-b03-b10-1786291388). LEAVE BEAT 6 ON ITS v33 HELD FRAME: its r4 was
-    rejected and 001-b06-r5 above is still open, so there is nothing to promote.
-  why: >-
-    Beat 14's canon moved today — the founder picked `b14-r4-s3` ("b14-r4-s3.", taste
-    ledger record 37) — and the v33 cut still animates the superseded drawing. That is
-    the same defect that made beats 7, 8, 9, 12 and 15 held in the first place, and it
-    is measured rather than assumed: frame-0 MAD runs 48.7-81.5 against the current
-    plate where canon moved, against 9.6-20.9 where it did not. The consumer is the
-    founder's next screening of episode 1 — v34 is the first cut in which every beat
-    he ruled on today shows the frame he actually chose.
+# MOVED TO backlog: 2026-08-09 16:44Z — ep1-held-refilms-v34-1786292556, the m1pro
+# re-film and re-cut. It is the entry that prompted the sweep above: `worker: m1pro`
+# is a live handle, so a worker started on the Mac under that --name matches it at
+# farm_worker.py:606 and hands an ffmpeg-and-promote job to an SDXL pipeline. Its
+# text and its claim are unchanged; only the list it sits in is.
 
+# NOT WORKER-RUNNABLE AS WRITTEN, and left that way on purpose — see the
+# verification block above the first entry. This round's variable is prompt text,
+# which a task dict cannot carry, so a hand lane runs it and a worker that reached
+# it would KeyError on the missing `node:` rather than render anything.
 - id: ep2-b01-r7-coldopen-1786292601
   runner: manual
   worker: rtx5090
@@ -401,6 +434,12 @@ tasks:
     controlled half of the `no humans` finding — but drew no verdict from him. The
     consumer is the founder's pick for episode 2's opening shot.
 
+# NOT WORKER-RUNNABLE, and this is the one that cannot be made so by any edit to
+# this entry: the variable IS the negative, and render_task derives the negative
+# from the beat's own prompt through sd_prompt.beat_negative (farm_worker.py:515)
+# with no task field anywhere that overrides it. A worker handed this renders the
+# control and calls it the sample. Hand lane only, until the sweep's fix lands in
+# shots.md or sd_prompt where a worker can see it.
 - id: no-humans-sweep-sample-1786292646
   runner: manual
   worker: rtx5090
@@ -455,6 +494,83 @@ backlog:
     Episode 1's remake has been assembled and unwatched for days; publishing it is
     what the founder himself ordered on 2026-08-02, and D9 plus STEWARDSHIP section 6
     forbid posting from an unscreened cut.
+
+# MOVED OUT OF tasks: 2026-08-09 16:44Z, and it is the entry that sent someone to
+# read the worker in the first place. This is a Mac job — promote a still, re-film
+# one beat with ffmpeg, re-cut the episode — and `worker: m1pro` is a live handle,
+# so a worker started on that laptop under that --name matches it at
+# farm_worker.py:606 and hands the whole thing to render_task, an SDXL/diffusers
+# path that has no idea what any of those words mean. What it would actually do is
+# raise KeyError('node') and write `FAIL task=ep1-held-refilms-v34-1786292556`
+# against a job no machine ever attempted, which is the honest outcome of a
+# dishonest listing rather than a defence.
+#
+# NOTHING ABOUT THE WORK CHANGED AND NOTHING HERE IS BLOCKED — no gate, because
+# there is no blocker: queue_promoter reports an ungated `runner: manual` entry as
+# runnable and will never promote it into a worker inbox, which is precisely the
+# handling this needs, and claim_task.py:99 reads backlog: as well as tasks:, so
+# the lane that runs it still claims this id without --force. The founder revives
+# farm_worker on the 5090 tomorrow morning, not on the Mac; this moved anyway,
+# because the list an entry sits in is a claim about who runs it.
+- id: ep1-held-refilms-v34-1786292556
+  runner: manual
+  worker: m1pro
+  needs: [mps]
+  window: any
+  est_minutes: 15
+  cmd: >-
+    Promote `b14-r4-s3` to canon `14-worth-staying-in.png` — his pick, quoted below,
+    and still unpromoted (a0a5170 moved only beats 3 and 10) — then re-film beat 14
+    as a held shot on the fixed geometry (5568113: ZOOM_TOTAL 0.12, linear, centred),
+    re-cut episode 1 to v34 and run qa_episode. ffmpeg on this laptop, $0, no model
+    runs. Beats 3 and 10 were already re-filmed on their new canon
+    (v34-refilm-b03-b10-1786291388). LEAVE BEAT 6 ON ITS v33 HELD FRAME: its r4 was
+    rejected and 001-b06-r5-sample-1786292829 in tasks: is still open, so there is
+    nothing to promote.
+  why: >-
+    Beat 14's canon moved today — the founder picked `b14-r4-s3` ("b14-r4-s3.", taste
+    ledger record 37) — and the v33 cut still animates the superseded drawing. That is
+    the same defect that made beats 7, 8, 9, 12 and 15 held in the first place, and it
+    is measured rather than assumed: frame-0 MAD runs 48.7-81.5 against the current
+    plate where canon moved, against 9.6-20.9 where it did not. The consumer is the
+    founder's next screening of episode 1 — v34 is the first cut in which every beat
+    he ruled on today shows the frame he actually chose.
+
+# THE CODE GAP UNDER TONIGHT'S GHOST RE-RENDERS. Found by queue-stock's audit
+# (de6a51c) and re-verified against the reader on 2026-08-09 before being filed.
+- id: farm-worker-reads-hand-ledger-1786293857
+  runner: manual
+  worker: m1pro
+  needs: []
+  window: any
+  est_minutes: 40
+  cmd: >-
+    In finished_tasks() (farm_worker.py:357-362), union the worker's own
+    farm-out/heartbeat.txt with the DONE ids published to `farm-results-hand`:
+    fetch that branch — the courier already talks to this remote — and run its text
+    through the same heartbeat_attempts() the local file goes through, so a hand
+    DONE stops a worker exactly the way the worker's own DONE does. Three calls to
+    make deliberately rather than by accident. (1) A hand STARTED or FAIL must NOT
+    count toward MAX_ATTEMPTS — another lane's attempt is not this worker's, and
+    counting it would let a hand lane exhaust a task's retries. (2) Decide between
+    the hand ledger alone and every farm-results-* branch the way queue_promoter
+    already globs them (queue_promoter.py:80); the second is more correct and makes
+    a re-imaged box recover its own history, which today it cannot. (3) A failed
+    fetch must fall back to the local file and never to an empty done set, because
+    an empty done set is what re-renders everything. Test it in
+    pipeline/test_pipeline.py against fixture heartbeat text — finished_tasks is
+    pure enough to test if the fetch is passed in rather than called inside.
+  why: >-
+    A hand-run that claims a queue id publishes STARTED and DONE to
+    `farm-results-hand` (claim_task.py:76), and finished_tasks() opens only the
+    worker's own farm-out/heartbeat.txt on its own disk — so hand-completed ids are
+    invisible to every worker, and the entry keeps reading as unstarted for as long
+    as it sits in tasks:. That is not hypothetical tonight: every entry in tasks: is
+    a hand-run on a queue id, and the founder revives farm_worker on the 5090
+    tomorrow morning, so each finished one is a ghost re-render candidate. The
+    consumer is that worker. The fix is what makes a hand claim mean to a machine
+    what it already means to the status page and to the promoter, both of which read
+    every farm-results-* branch and have never had this blind spot.
 
 # RETIRED 2026-08-07 — b09-antigrowth-1786089660, done by 528ff7c (`beat 9's
 # plant stops growing: 7 leaves back to 4, apex under the horizon`).
