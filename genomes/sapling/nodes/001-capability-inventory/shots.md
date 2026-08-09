@@ -1101,3 +1101,120 @@ Queue entry: `ep1-stills-redraw-wave2-*` in `pipeline/farm-queue.yaml` `backlog:
 runnable with no founder gate, beat 15 marked delivered inside it and the four
 remaining beats' directions carried in its `cmd`. The per-beat directions are the
 authority and live in the beat sections above.
+
+---
+
+## THE `no humans` SWEEP RAN, 2026-08-09 — AND EDITING THESE FENCES CANNOT DO IT
+
+Queue entry `no-humans-negative-sweep-1786293900` asked for the eight fences in
+this file that carry `no humans` to be rewritten, and for one sample to prove the
+rewrite. **The rewrite was measured on the box's real CLIP before it was made, and
+it is a no-op: no wording in a shots.md fence can put `no humans` into the
+positive prompt.** `sd_prompt._NEGATION` (line 89) matches `no <noun>` anywhere in
+the text — leading, medial or in the trailing `No …` sentence — deletes it, and
+appends the bare noun to the negative. So the fence and the model disagree by
+construction, and they disagree in the exact direction r5 proved is wrong.
+
+**Beat 06's fence is the proof, because it is ALREADY written in the leading form**
+(`no humans, scenery, …`, committed with the r5 round above). Run through the real
+path today it still yields a positive that begins with an orphan comma and a
+negative carrying `humans`. The r5 frames were clean because
+`render_b06r5.py` re-injected the tag AFTER `compress()` — a script-level
+transform, named as the experiment in that round's note — **not** because the
+fence says so.
+
+**MEASURED ON THE BOX, `openai/clip-vit-large-patch14`, `sd_prompt.py` sha256
+`72c7c33d…` (byte-identical to the mac checkout), no GPU and no render.** Column A
+is what the machine path sends from the fence as written; B is the same fence with
+`no humans` moved to the front; C is r5's post-`compress` transform applied to this
+beat — the tag re-injected at the head of the positive and bare `humans` deleted
+from the negative.
+
+| beat | A pos/neg | B pos/neg | C pos/neg | `no humans` reaches POS in A or B | negative today |
+|---|---|---|---|---|---|
+| 06 | 30 / 53 | 30 / 53 | 32 / 51 | no | fits |
+| 07 | 74 / 77 | 75 / 77 | **77** / 75 | no | over budget, `text` deduped |
+| 08 | 63 / 77 | 64 / 77 | 66 / 75 | no | over budget, `text` deduped |
+| 09 | 72 / 77 | 73 / 77 | 75 / 75 | no | at ceiling |
+| 10 | 58 / 77 | 59 / 77 | 61 / 75 | no | **DROPPING `realistic skin texture, jpeg artifacts`** |
+| 12 | 69 / 76 | 70 / 76 | 72 / 74 | no | over budget, `text` deduped |
+| 15 | 71 / 77 | 72 / 77 | 74 / 75 | no | at ceiling |
+
+A and B are the same instruction; B is one token WORSE, the orphan comma left where
+the leading tag was lifted out. **C fits on every beat** and buys two negative
+tokens each — which on beat 10 is not cosmetic: that beat is silently shedding two
+house terms today and C recovers both. C on beat 07 lands on 77 exactly, no
+headroom, so it is not free there.
+
+**COLUMN C IS NOT A PREDICTION — IT REPRODUCES A RENDER THAT HAPPENED.** On beat 06
+it comes out at positive 32, negative 51, which is byte-for-byte the pair
+`06-too-blue-r5-s0.png.meta.yaml` recorded at render time ("positive 32/77, negative
+51/77"). The transform in the table and the transform that drew the four clean
+frames are the same transform, measured twice on the same tokenizer.
+
+**AND THE MEASUREMENT CAUGHT ITS OWN ESTIMATOR.** Run first on a mac with no
+transformers, `_tag_token_estimate` reported beats 07, 09 and 15 dropping
+`newest, masterpiece, best quality, very aesthetic` off the positive tail. The
+box's real tokenizer says they do not — 74, 72 and 71 tokens, all under budget —
+and beat 07's canon sidecar confirms it, carrying all four boosters in the string
+the model actually saw. The three drops were an artifact of the prose estimator on
+a tag list, which is exactly the failure `_tag_token_estimate`'s own comment
+predicts. **No number in this note comes from an estimate.**
+
+**THE SET DRIFTED BETWEEN THE ENTRY BEING FILED AND THE SWEEP RUNNING — eight are
+now seven, and the two that moved are the interesting ones.** The entry's beat 06
+(its line 177) was the r4 prompt, and r5 replaced it the same day: that is the beat
+the sweep was really about and it is already answered. The entry's beat 14 (its
+line 576) was replaced by the r4 prompt above, which applies the entry's own
+prescription (b) verbatim — `no woman, no girl, no boy, no child, no person` — and
+the frame drawn under it is the one he picked. Both are superseded, not skipped.
+
+The drift is confirmed rather than asserted: the rtx5090's checkout still sits at
+`dde4ade`, and `measure_no_humans.py` run against it finds **eight** fences at
+lines 177, 260, 319, 347, 413, 529, 576 and 617 — the entry's list exactly — and
+**zero** in 002b, the entry's other claim. The six beats that did not move report
+identical token counts on both revisions.
+
+**GAZE AND PERSPECTIVE VOCABULARY, CHECKED PER BEAT, AND NOTHING IS DELETED.** The
+character-relative camera words r5 identified — `looking up` as a POSE tag, `from
+below` as a character-relative angle — existed on exactly ONE beat in this file,
+06, and r5 removed them there. Of the seven fences left: 07's `wide establishing
+shot`, 08's `medium shot` and 09's `close shot` are shot-SCALE tags and they are
+the three the founder picked as a progression (item 03); 10's `very low shot at the
+soil line` is scene-relative camera height, and it is the framing that settled the
+"10 and 14 came back as very nearly the same picture" note; 12 and 15 carry no
+camera tag at all. **None of them is gaze vocabulary and none of them may be
+blanket-deleted** — every one is either a pick he made or a rejection it answered.
+
+**NO SAMPLE WAS DRAWN, AND THAT IS THE ONE-SAMPLE RULE RATHER THAN A STALL.** The
+worst-affected beat by evidence is 06 — five person-failures across r3 (2 of 4) and
+r4 (3 of 4), the most in the genome — and **its proof sample already exists**
+(`b06-r5-s0..s3`, 0 people in 4 of 4, sheet `LABELED-beat06-r5.png`, ledger
+`ep1-b06-r5-provisional`) and has not been screened. Drawing a second set of the
+same mechanism before he has looked at the first is the thing the rule forbids. The
+next-worst is beat 10 (2 of 4, a hand and a bare foot), and its note above reads
+**"THERE IS NO ROUND 5 AND NOTHING RE-RENDERS ON THIS BEAT."** Beats 07, 08, 09, 12
+and 15 are all founder-canon too. Every beat in the sweep set is therefore either
+canon or the pending sample, and there is nothing in node 001 that this sweep may
+legally draw.
+
+**WHAT WOULD ACTUALLY FIX IT, and it is a proposal and not a round.** Column C is
+`sd_prompt._NEGATION` learning that `no humans` is a Danbooru tag rather than a
+negation — one exception, measured here on all seven beats, fitting on all seven.
+That is a look change to every prompt in the tree that writes the phrase, which is
+why r5 deliberately did not slip it in beside a render, and it stays a proposal
+until the r5 sheet has a verdict on it. **The one thing this sweep settles is that
+it cannot be done in this file**, so no fence was edited: writing the leading form
+into six more canon beats would put a claim in the record that the measurement says
+is false, and on 07, 08 and 09 those fences are transcripts of what the model
+actually saw.
+
+The measurement is re-runnable and ships with this note:
+`pipeline/measure_no_humans.py`, which reads the fences rather than the prose
+(counting prose is how the entry came to say eight and 002b came to look like it
+had two) and **refuses to print anything on a machine without a real CLIP
+tokenizer** rather than emitting the estimates that produced three phantom drops.
+
+Nothing rendered, nothing published, nothing approved. Queue entry
+`no-humans-negative-sweep-1786293900` is answered by this note and its
+prescription (b) is superseded by the r5 finding; its (d) waits on the r5 verdict.
