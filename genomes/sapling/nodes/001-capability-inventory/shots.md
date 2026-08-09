@@ -809,6 +809,44 @@ is visible. That wording — rounds 1 and 3 — was:
 > stones and short grass at its base, warm afternoon light raking the earth … No
 > cross-section, no diagram, no cave, no black void.
 
+**PICKED 2026-08-09 (founder, R4): `b14-r4-s3`. THIS BEAT IS CANON AND NOTHING
+RE-RENDERS ON IT.** Promoted byte-for-byte to `stills/14-worth-staying-in.png`,
+sha256 `ab1ecdc901cd3cd488ad5817d2f74d70c04cc0664a033f9d5b1bc5f61d112ad9`, seed
+20263733, round 4; the full table is in `stills/README.md`. His words, in the
+message that also rejected beat 6 and the goblin sets: *"b14-r4-s3."* Four
+characters and no axis — a bare address is a complete verdict and no reason is
+attributed to him here.
+
+**HE TOOK THE TALLER FRAME AND THE STEWARD HAD PICKED THE SHORTER ONE** (ledger
+record 37: `ratify` at 0.40, pick `b14-r4-s0`, `predicted_flip_to: b14-r4-s3`).
+s0 and s3 were separated by one point out of 26 and the tie-break was A3: s0 has
+a soil line with the stem entering the earth, s3 has no ground in it at all, and
+the beat's script line is *"Low at the base of the trunk: roots gripping soil"*,
+so the steward took the grip. He took the height. **That is the third time the
+same trade has gone the same way** — beat 10's record wrote it down as a rule
+before this round drew (*"when the steward's objection is script fidelity and his
+preference is a named virtue, his virtue wins"*), the record predicted the flip
+in advance on exactly that ground, and it still picked against it. The rule is
+not a tendency any more; A7 outranks script fidelity on this tree until he says
+otherwise.
+
+**WHAT THE PICK RATIFIES, and it is the lever, not the adjective.** Round 4's
+only real change was transferring `b15-r3-s1`'s subject clause verbatim — *"one
+slender sapling standing tall, its thin stem rising well above the grass"* —
+plus an apex (`to near the top of the frame`) and a low soil line. Three rounds
+of height adjectives had not moved it; the wording of the one frame he had passed
+did, on the first try. **Copy the passed frame's grammar, do not paraphrase the
+note.**
+
+**A FAULT IN THE PROMOTED FRAME, RECORDED BECAUSE HE DID NOT MENTION IT AND
+SILENCE IS NOT APPROVAL.** `b14-r4-s3` has **no roots and no ground** — the
+prompt asks for *"pale roots gripping damp brown soil"* and this frame has
+neither, which is the exact objection the steward rejected it over. The ledger
+recorded that fault before he ruled, so it is not a discovery after the fact. He
+picked it anyway and the pick stands without argument; this is noted, not
+withdrawn and not a veto. If the missing grip bothers him at the v34 screening it
+is his call and the frame is one line of his own text away from being re-opened.
+
 **REJECTED 2026-08-08 (founder, R4): ALL FOUR — `b14-r1-s0..s3`.** His words:
 *"all too small, not good character consistency."* Two faults, and they are separate.
 

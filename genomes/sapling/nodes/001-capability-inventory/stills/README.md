@@ -38,6 +38,14 @@ other.
 > this section — the four `-REVOKED-` names, the four sha256s, the slate
 > behaviour, why `/status` counted wrong for two days — is unchanged and is why
 > those two beats slate.
+>
+> **AMENDED AGAIN, 2026-08-09 ~14:40Z: beat 14 now does too, and BEAT 6 IS THE
+> LAST ONE.** He picked `b14-r4-s3` in a later message the same afternoon —
+> section **"14 — picked 2026-08-09"** below. This directory holds **fourteen**
+> approved frames. **Beat 6 is the only beat in episode 1 without one**, he
+> rejected its round-4 set too (*"its getting worse"*), and it is the only beat
+> `render_t3` still slates. `14-worth-staying-in-REVOKED-abstract.png` and
+> `-REVOKED-illegible.png` keep their names beside the new canon frame.
 
 **This directory no longer holds fifteen approved frames. It holds eleven.** The
 founder refused four of them itemised in v32 on 2026-08-07 and each one kept its canon
@@ -188,6 +196,81 @@ built on four frames he had refused, which is what its own record says it is.
 his reason for that is recorded verbatim in `taste/steward-model.ledger.yaml`
 records 3 and 5: *"the two frames you guessed were wrong, but thats only because
 you didnt have any right ones to choose."*
+
+## 14 — picked 2026-08-09, and it leaves beat 6 alone as the last gap
+
+Later the same afternoon (R4, ~14:40Z) he answered beat 14 with a bare address
+and rejected two other things in the same breath. The whole message, verbatim,
+because the beat-14 clause is four characters long and means nothing without what
+surrounds it:
+
+> *"all the goblin images look like female demihumans, definitely need to
+> regenerate. and for the too blue image, its getting worse, many random girls
+> and very strange cloud formations. b14-r4-s3. no notes for v33, i'll wait for
+> the version with all the fixed images."*
+
+**`b14-r4-s3` is the pick and it carries no stated axis.** He named faults for
+the two things he rejected and gave beat 14 an address and nothing else. A bare
+address is a complete verdict; no reason is invented for him here or anywhere
+downstream.
+
+| | beat 14 — WORTH STAYING IN |
+|---|---|
+| his address | `b14-r4-s3` |
+| promoted from | `takes/stills/14-worth-staying-in-r4-s3.png` |
+| copied | byte-for-byte (`cmp` clean) |
+| sha256 | `ab1ecdc901cd3cd488ad5817d2f74d70c04cc0664a033f9d5b1bc5f61d112ad9` |
+| size | 832 × 1216 |
+| model | `cagliostrolab/animagine-xl-3.1` |
+| round | **4** (`candidate_set: r4`) |
+| seed | **20263733** |
+| task | `001-b14-r4-1786281289` |
+| steps / guidance | 40 / 7.5, 9s wall on the rtx5090 |
+| prompt | the round-4 fenced block under **Beat 14** in `shots.md` |
+| cost | $0 — local CUDA, no provider |
+| replaces | `14-worth-staying-in-REVOKED-illegible.png` |
+
+**Nothing was renamed.** Beat 14 already carried `-REVOKED-abstract` and
+`-REVOKED-illegible` from earlier refusals, so the canon name was free and this
+was a copy and nothing else. Revocations stack; a `-REVOKED-` name is one refusal
+with its reason in it, never a slot. **No sidecar sits beside the canon PNG**, for
+the same reason beats 3 and 10 have none: a `.meta.yaml` naming
+`cagliostrolab/animagine-xl-3.1` next to a canon still scores as a new CreativeML
+Open RAIL++-M finding and pushes CI's licence ratchet (D15, open, his). The
+provenance is this table, the take's own sidecar, and git.
+
+**THE SEED WAS READ OFF THE TAKE'S OWN SIDECAR AND THAT SIDECAR IS THE
+TRUSTWORTHY KIND.** `14-worth-staying-in-r4-s3.png.meta.yaml` was written AT
+RENDER TIME by `render_redraw2.py` on the rtx5090 and states the negative the
+model actually saw — unlike beat 10's, which was reconstructed from `wave.log`
+after the fact. `REVIEW-KEY-0808.md` independently resolves `b14-r4-s3` to this
+file at seed 20263733; the address map and the sidecar agree.
+
+**THE STEWARD PICKED THE OTHER FRAME AND THE MARGIN WAS ONE POINT.** Ledger
+record 37 predicted `ratify` at 0.40 with pick `b14-r4-s0` and
+`predicted_flip_to: b14-r4-s3`. s0 and s3 scored 26 and 25 and differ in one
+respect: s0 has a soil line with the stem entering the earth, **s3 has no ground
+in it at all**. The tie-break went to the script line — *"Low at the base of the
+trunk: roots gripping soil"* — and he went to height. Scored `partial`: the
+verdict `ratify` held and the ranking named his frame second, the pick itself was
+wrong. **This is the third consecutive time the steward has argued script
+fidelity against a named preference of his and lost** (beats 3, 10, now 14), and
+beat 10's record had already written the rule down before this round drew.
+
+**A FAULT IN THE PROMOTED FRAME, RECORDED BEFORE HE FOUND IT AND NOT WITHDRAWN BY
+THE PICK: there are no roots in it, and no ground.** The prompt asks for *"pale
+roots gripping damp brown soil"*. The ledger recorded this about all four r4
+frames before he ruled, so it is not hindsight. He picked it anyway; R4 decides.
+It is noted the way beat 10's rootlessness is noted — as a thing he may want to
+know at the v34 screening, not as a veto and not as a re-render.
+
+**WHAT THIS CHANGES DOWNSTREAM.** `hold_still.approved_still()` now answers with
+a real frame for beat 14, so `render_t3` stops slating it.
+`build_status.scenes()` reads **14 of 15** — verified by running it, not asserted
+— with **beat 6 the only scene still "waiting for the author's pick"**. Episode 1
+is one frame from complete. `review/provisional-v33/ep1-v33-PROVISIONAL.mp4` is
+untouched: a cut holds pixels and does not resolve them at read time, so it still
+carries `b14-r3-s3` from the set he rejected.
 
 ## 07 / 08 / 09 — the progression, picked 2026-08-08 (item 03)
 
