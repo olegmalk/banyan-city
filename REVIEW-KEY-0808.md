@@ -61,7 +61,11 @@ controlled pair — the close-up rewording is the only variable.
 
 ## `b06-*` — checklist item 02
 
-Beat 6 — sky only, no leaf. **r4 is the newest set** (drawn 2026-08-09); r3 was
+Beat 6 — sky only, no leaf. **r5 is the newest set** (drawn 2026-08-09, evening);
+r4 was rejected on all four the same day — *"for the too blue image, its getting
+worse, many random girls and very strange cloud formations"*. r5 reuses r4's own
+four seeds, so **columns on the `beat06-r5` sheet ARE controlled pairs** against
+the round he said that about. For the rounds before it: r3 was
 rejected on all four the same day with two named faults — *"for beat 06 none of
 them are right, problems are: women, too many clouds/weird cloud formations"*.
 His r1 verdict named NO fault, so r3's prompt was byte-unchanged and r3 drew the
@@ -80,19 +84,31 @@ round-2 tag belongs to beats 3 and 12; same label logic as beat 15's jump to r3)
 | **`b06-r3-s1`** | `06-too-blue-r3-s1.png` | 20265725 | `beat06-r3`, `beat06-r4` |
 | **`b06-r3-s2`** | `06-too-blue-r3-s2.png` | 20266725 | `beat06-r3`, `beat06-r4` |
 | **`b06-r3-s3`** | `06-too-blue-r3-s3.png` | 20267725 | `beat06-r3`, `beat06-r4` |
-| **`b06-r4-s0`** | `06-too-blue-r4-s0.png` | 20264725 | `beat06-r4` |
-| **`b06-r4-s1`** | `06-too-blue-r4-s1.png` | 20265725 | `beat06-r4` |
-| **`b06-r4-s2`** | `06-too-blue-r4-s2.png` | 20266725 | `beat06-r4` |
-| **`b06-r4-s3`** | `06-too-blue-r4-s3.png` | 20267725 | `beat06-r4` |
+| **`b06-r4-s0`** | `06-too-blue-r4-s0.png` | 20264725 | `beat06-r4`, `beat06-r5` |
+| **`b06-r4-s1`** | `06-too-blue-r4-s1.png` | 20265725 | `beat06-r4`, `beat06-r5` |
+| **`b06-r4-s2`** | `06-too-blue-r4-s2.png` | 20266725 | `beat06-r4`, `beat06-r5` |
+| **`b06-r4-s3`** | `06-too-blue-r4-s3.png` | 20267725 | `beat06-r4`, `beat06-r5` |
+| **`b06-r5-s0`** | `06-too-blue-r5-s0.png` | 20264725 | `beat06-r5` |
+| **`b06-r5-s1`** | `06-too-blue-r5-s1.png` | 20265725 | `beat06-r5` |
+| **`b06-r5-s2`** | `06-too-blue-r5-s2.png` | 20266725 | `beat06-r5` |
+| **`b06-r5-s3`** | `06-too-blue-r5-s3.png` | 20267725 | `beat06-r5` |
 
-**The steward offers NO pick from r4 and says so before you look.** Ledger record
-`ep1-b06-r4-provisional` predicts `reject_all` at 0.90: the round was aimed at his
-two named faults and the people fault got WORSE, 2 of 4 on r3 to 3 of 4 on r4
-(s1, s2, s3 are all a girl's face filling the frame), and the one frame clean of
-people, s0, is a white ring over a grass bank that is not a sky at all. Nothing
-here is pickable; the sheet is on the screen as the evidence for that claim, not
-as a menu. The cloud change cannot be scored, because three of the four are
-portraits and the fourth has no sky in it.
+**r4 was the round with no pick, and the reason is on the sheet.** Ledger record
+`ep1-b06-r4-provisional` predicted `reject_all` at 0.90 and he rejected it: three
+of the four are a girl's face filling the frame and the fourth is a white ring
+over a grass bank that is not a sky. It stays on the `beat06-r5` sheet as the top
+row, because r5 reuses its seeds and the comparison is the evidence.
+
+**The steward's PROVISIONAL pick from r5 is `b06-r5-s2`**, disclosed here in
+words and never marked on the sheet (gate G3). Ledger record
+`ep1-b06-r5-provisional` predicts `ratify` at 0.55 — its lowest-confidence
+positive call. What changed: `no humans` moved from the negative, where this
+genome had been putting it, into the POSITIVE where animagine-xl-3.1's Danbooru
+vocabulary actually reads it, and the person nouns came out of the negative
+altogether. **Zero people in 4 of 4**, against 2 of 4 on r3 and 3 of 4 on r4 with
+person negatives. The clouds are ordinary anime cumulus again. The risk the
+record pre-registers: none of the four looks straight UP — they are wide
+landscapes with a lot of sky, and s2 has mountains the script never mentions.
 
 ## `b10-*` — checklist item 02
 
@@ -321,7 +337,8 @@ Beat 7 *fix* set — **superseded, not on the checklist.** Beat 7's answer now c
 |---|---|---|
 | `LABELED-WAVE-0807-overview.png` | s0 of every set, all ten on one screen | **round 1 only** — its beat 3 and beat 12 tiles are the rejected r1 frames |
 | `LABELED-beat03-r3.png` | beat 3, r2 + r3, 8 frames, same seed per column | **current — use this one for beat 3** |
-| `LABELED-beat06-r4.png` | beat 6, r3 + r4, 8 frames, same seed per column | **newest for beat 6 — but the steward offers no pick from it; see `b06-*` above** |
+| `LABELED-beat06-r5.png` | beat 6, r4 + r5, 8 frames, same seed per column | **current — use this one for beat 6**; provisional pick `b06-r5-s2`, in words only |
+| `LABELED-beat06-r4.png` | beat 6, r3 + r4, 8 frames, same seed per column | superseded by `beat06-r5` (all four r4 rejected 2026-08-09) |
 | `LABELED-beat06-r3.png` | beat 6, r1 + r3, 8 frames, r3 on NEW seeds | superseded by `beat06-r4` (all four r3 rejected 2026-08-09) |
 | `LABELED-beat10-r3.png` | beat 10, r1 + r3, 8 frames, same seed per column | **current — use this one for beat 10** |
 | `LABELED-beat14-r4.png` | beat 14, r3 + r4, 8 frames, same seed per column | **current — use this one for beat 14** |

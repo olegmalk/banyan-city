@@ -1983,3 +1983,91 @@
     describes, the prompt fix is not what failed and the answer is another round on
     the still, not another render. Recorded now so that a rejection cannot later be
     read as the prompt fix failing.
+- id: ep1-b06-r5-provisional
+  date: 2026-08-09
+  subject: "node 001 beat 06 — too blue, round 5, Danbooru `no humans` moved to the POSITIVE"
+  kind: still
+  candidates: [b06-r5-s0, b06-r5-s1, b06-r5-s2, b06-r5-s3]
+  address_key: "REVIEW-KEY-0808.md `b06-*`; sheet LABELED-beat06-r5.png; frames at genomes/sapling/nodes/001-capability-inventory/takes/stills/06-too-blue-r5-sN.png, sidecars beside them"
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: b06-r5-s2
+  scores:
+    b06-r5-s2: {A2: 1, A3: 1, A4: 2, A5: 1, A6: 2}
+    b06-r5-s1: {A2: -1, A3: 0, A4: 2, A5: 1, A6: 2}
+    b06-r5-s3: {A2: -1, A3: 0, A4: 1, A5: 0, A6: 1}
+    b06-r5-s0: {A2: -2, A3: -2, A4: 1, A5: -1, A6: 1}
+  vetoed: [b06-r5-s0]
+  totals: {b06-r5-s2: 25, b06-r5-s1: 13, b06-r5-s3: 3, b06-r5-s0: -12}
+  predicted_verdict: ratify
+  predicted_flip_to: null
+  predicted_objection: null
+  confidence: 0.55
+  reasoning: >
+    BOTH FAULTS HE NAMED ARE GONE, AND THE FIRST ONE IS GONE COMPLETELY. Zero
+    people in 4 of 4 — checked at full resolution on the bottom 40% of every
+    frame, which is where r3's and r4's figures stood. Beat 06 has drawn a girl
+    in 2 of 4 (r3) and 3 of 4 (r4) with `humans` and then seven person singulars
+    in the NEGATIVE; it drew none in 4 of 4 with `no humans` in the POSITIVE and
+    no person term in the negative at all. That is the Danbooru mechanism
+    confirmed on the beat that disconfirmed the previous rule, and it is the
+    single most useful number in this record.
+
+    THE CLOUDS ARE ORDINARY AGAIN. r3 got "weird cloud formations", r4 got "very
+    strange cloud formations" off a prompt carrying `cirrus`, `cloudscape`,
+    `scalloped clouds` and `cumulonimbus` — none of which are Danbooru tags. With
+    plain `cloud` the model draws the well-formed anime cumulus and cirrus it was
+    trained on. What CANNOT be claimed is that the AMOUNT is right: s1 and s3 are
+    two-thirds cloud, and "too many clouds" was half of his r3 sentence. s2 is the
+    one frame where the cloud sits low and most of the picture is blue.
+
+    WHY s2 AND NOT s1. s1 is the purer sky and scores well, but its bottom edge is
+    a distant INDUSTRIAL SKYLINE — chimneys and low structures across a flat
+    horizon — and A2 is the axis he has been most severe on ("completely changes
+    the enviroment"). s2 puts a green field, a path and hedgerows along the bottom
+    edge, which is the founder's own composition device for this beat from
+    2026-08-07 ("a soft blurred green fringe of grass along the bottom edge" put
+    the camera on the ground) arriving without being asked for. s0 is vetoed
+    outright: it is the interior of a white mechanical ring or porthole with a
+    city through the gap — the same seed drew a white hoop in r4, so that shape is
+    this seed's, not the prompt's, and no reading of it is a sky seen from a field.
+
+    THE RISK, PRE-REGISTERED BEFORE HE LOOKS, AND IT IS AN AXIS HE HAS NOT YET
+    NAMED ON THIS BEAT. None of the four is a view straight UP. They are wide
+    landscapes with a horizon and a lot of sky, and s2 adds a mountain range the
+    script never mentions. The round bought that by deleting `seen from ground
+    level looking straight up` — `looking up` is a Danbooru POSE tag and `from
+    below` a character-relative camera tag, and removing the gaze vocabulary is
+    part of why nobody is in frame. If he rejects this set it will most likely be
+    for that trade and not for people or clouds, and the answer would then be a
+    camera-angle tag chosen for scenery rather than a return to person negatives.
+
+    CONFIDENCE 0.55, AND THE REASON IT IS NOT LOWER IS A PATTERN IN HIS OWN
+    RECORD. He has rejected this beat three times running, which argues down. But
+    in the 2026-08-09 pass he picked a frame from every round that answered the
+    fault he had named — b14-r4-s3, b10-r4-s2, b12-r4-s2, three for three — and
+    this round answers both of the two he named here. It is not higher than 0.55
+    because the composition changed while the faults were being fixed, and beat 12
+    is on the record as "follows the style well" AND rejected: fixing what he
+    named has never bought forgiveness for something new.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+  notes: >-
+    WHAT THIS RECORD IS EVIDENCE FOR BEYOND ONE BEAT. `sd_prompt._NEGATION`
+    (sd_prompt.py:89) lifts `no humans` out of every positive prompt in this
+    genome and appends `humans` to the negative. On a Danbooru-captioned model
+    that inverts the tag's meaning, and the fix here was applied BY THE RENDER
+    SCRIPT, not by the module — sd_prompt.py is unchanged and no other beat moved.
+    If he passes a frame from this sheet, the module change is a separate proposal
+    with this record as its evidence, and it is a look change to every prompt in
+    the tree that writes `no humans`, so it is not a change to slip in beside a
+    round. If he rejects the set on people anyway, the mechanism is disconfirmed
+    and beat 06 stops being a prompt problem.
+
+    THE PROMPT WAS NOT TRUNCATED, WHICH IS NEW ON THIS BEAT. Measured on the box's
+    real CLIP tokenizer before the render: positive 32 of 77, negative 51 of 77.
+    Round 4's negative sat at the 77 ceiling with five terms sacrificed by
+    fit_negative. Nothing this round asked for went unsent.

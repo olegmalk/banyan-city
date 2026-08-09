@@ -290,9 +290,106 @@ they are what the module is designed to sacrifice first so that a beat-specific
 instruction survives — his two named faults are both beat-specific. `text` stays
 negated (checked, not assumed).
 
+That wording — round 4, superseded by round 5 below and moved out of the fence so
+`parse_shots` reads one prompt per beat — was:
+
+> an empty expanse of clear deep blue morning sky filling the frame, seen from
+> ground level looking straight up, only two thin high wisps of white cirrus
+> cloud far above, a soft blurred green fringe of grass along the bottom edge,
+> calm gentle morning light, dreamy, detailed, newest, masterpiece, best quality,
+> very aesthetic No woman, no girl, no boy, no child, no person, no face, no
+> hand, no leaf, no plant, no stem, no foliage, no tree, no cumulus, no
+> cumulonimbus, no cloud bank, no towering clouds, no cloudscape, no scalloped
+> clouds. No photorealism, no 3D render look. 9:16 vertical, no text.
+
+
+**ROUND 4 WAS REJECTED 2026-08-09 (founder, R4): ALL FOUR — `b06-r4-s0..s3`.**
+His words: *"for the too blue image, its getting worse, many random girls and
+very strange cloud formations."* r3 drew a girl in 2 of 4 and r4 drew one in 3 of
+4, so both of the faults r4 was built to fix got WORSE, and "getting worse" is
+his comparison, not ours. **Beat 6 is the only beat in episode 1 without an
+approved frame.**
+
+**ROUND 5 — THE DIAGNOSIS FIRST, AND IT IS CONFIRMED OUTSIDE THIS REPO.** Two
+fixes aimed at two named faults both went backwards, so the next move was a
+diagnosis and not another prompt edit. The one thing to check before drawing
+anything: `no humans` against the model card. Checked, 2026-08-09, on
+huggingface.co/cagliostrolab/animagine-xl-3.1
+— the card says in its own words that the model is *"optimized for Danbooru-style
+tags rather than natural language prompts"*, and its prompt structure is
+`1girl/1boy, character name, from what series, everything else in any order`,
+i.e. **the presence of people is declared by a POSITIVE tag at the FRONT of the
+caption.** `no humans` is that declaration for a picture with nobody in it, and
+the published landscape templates for this model family put it in the positive
+next to `scenery` (`… beautiful scenery, no humans, masterpiece, best quality,
+very aesthetic`). Danbooru's own tag page could not be reached from here (the
+host timed out twice) and is NOT cited as if it had been.
+
+**WHAT THIS BEAT HAS ACTUALLY BEEN SENDING.** `sd_prompt._NEGATION` (line 89)
+matches `no <noun>` in the positive, deletes it, and appends the bare noun to the
+negative. So rounds 1 and 3 wrote `no humans` and the model received `humans` in
+the NEGATIVE — a request to suppress the no-people concept, which is the opposite
+of the tag — with **no person tag of any kind in the positive**. Round 4 replaced
+it with seven singulars and the rate went 2/4 → 3/4. Three rounds of this beat
+have therefore never once used the mechanism the model was trained on.
+
+**THREE FURTHER THINGS IN THE r4 POSITIVE THAT ASK FOR A PERSON, none of them
+noticed before.** (1) `seen from ground level looking straight up` — `looking up`
+is a Danbooru POSE tag and a pose needs a body; `from below` is a
+character-relative camera tag. The original note behind this beat was *"he can
+see himself when he is looking at the sky"*, and the gaze vocabulary outlived the
+leaf it was written for. (2) The subject slot is empty: `an empty expanse` names
+no object, and 002b b01 r6 — the 4/4 clean frame — differs precisely in having a
+seedling to draw. (3) `cirrus`, `cloudscape`, `scalloped clouds`, `cumulonimbus`
+are not Danbooru tags; six of them were negated and one asked for. On a
+tag-trained model that is out-of-vocabulary noise on the exact axis he called
+*"very strange"*, and it is the likeliest reason r4's clouds got worse than r3's.
+
+**ROUND 5 IS ONE TACTIC: SAY IT IN THE MODEL'S OWN DIALECT AND NAME NOTHING
+ELSE.** The positive is native tags only, `no humans` FIRST as the card's
+structure requires, `scenery` beside it, plain `cloud` instead of four invented
+cloud words, and not one noun in the frame that a body could be attached to — no
+grass, no ground, no gaze, no camera angle. **The person nouns come OUT of the
+negative**, because they are the mechanism that has now failed twice here and
+keeping them would leave the test unreadable. This is the cheap test the r4 note
+named, run as written. Both prompts are measured on the box's real CLIP tokenizer
+before the render — nothing is truncated, and for the first time on this beat the
+negative is not at its 77-token ceiling.
+
+The one deliberate deviation from the machine path is recorded and is the whole
+experiment: `sd_prompt.compress()` still lifts `no humans` out, so the render
+script puts it back at the head of the positive and deletes `humans` from the
+negative, prints both strings, and refuses to draw if either guard fails.
+**`sd_prompt.py` IS NOT CHANGED HERE.** If this round clears, the module fix is a
+separate proposal with this sheet as its evidence; if it fails, the finding is
+that the positive tag does not bind on a subjectless frame either, and beat 06
+stops being a prompt problem.
+
 ```
-an empty expanse of clear deep blue morning sky filling the frame, seen from ground level looking straight up, only two thin high wisps of white cirrus cloud far above, a soft blurred green fringe of grass along the bottom edge, calm gentle morning light, dreamy, detailed, newest, masterpiece, best quality, very aesthetic No woman, no girl, no boy, no child, no person, no face, no hand, no leaf, no plant, no stem, no foliage, no tree, no cumulus, no cumulonimbus, no cloud bank, no towering clouds, no cloudscape, no scalloped clouds. No photorealism, no 3D render look. 9:16 vertical, no text.
+no humans, scenery, sky, blue sky, day, cloud, sunlight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No leaf, no plant, no stem, no foliage, no tree. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
+
+**ROUND 5 RENDERED 2026-08-09 (`b06-r5-s0..s3`, sheet `LABELED-beat06-r5.png`,
+ledger `ep1-b06-r5-provisional`). ZERO PEOPLE IN 4 OF 4 — the mechanism holds.**
+Against 2 of 4 on r3 (`humans` in the negative) and 3 of 4 on r4 (seven person
+singulars in the negative), this round put `no humans` in the POSITIVE, took every
+person noun OUT of the negative, and drew nobody. Checked at full resolution on
+the bottom 40% of each frame, which is where r3's and r4's figures stood. Real
+CLIP before the render: positive **32/77**, negative **51/77** — the first round
+on this beat that was not truncated (r4's negative sat at the 77 ceiling with five
+terms sacrificed). The clouds are ordinary anime cumulus and cirrus again, which
+is what removing four non-tags (`cirrus`, `cloudscape`, `scalloped clouds`,
+`cumulonimbus`) bought. **PROVISIONAL pick `b06-r5-s2`, confidence 0.55, disclosed
+in words and never marked on the sheet.** `b06-r5-s0` is vetoed: it is the inside
+of a white mechanical ring with a city through the gap — and r4 drew a white hoop
+on that same seed, so the shape belongs to seed 20264725, not to either prompt.
+**THE COST IS PRE-REGISTERED BEFORE HE LOOKS: none of the four looks straight UP.**
+Deleting `seen from ground level looking straight up` is part of why nobody is in
+frame — `looking up` is a Danbooru POSE tag and `from below` a character-relative
+camera angle — and what came back is four wide landscapes with a lot of sky, s2
+with mountains the script never mentions. If he rejects the set it will most
+likely be for that trade, and the answer is a scenery-safe camera tag, **not** a
+return to person negatives. **Nothing here is approved, published or made canon.**
 
 ## Beat 07 — ZERO (0) MOVING PARTS (0:29–0:35) ⬜ needs footage07
 

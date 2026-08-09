@@ -1,0 +1,39 @@
+# Still provenance (7.2), written AT RENDER TIME by render_b06r5.py
+# on the rtx5090 (C:\banyan-farm\b06r5-0809).
+# The prompt and negative below are what the model actually saw.
+# sd_prompt's own output, BEFORE this round's one named transform, was:
+#   POS: , scenery, sky, blue sky, day, cloud, sunlight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+#   NEG: photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, humans, leaf, plant, stem, foliage, tree, photorealism, text
+# The transform: `no humans` restored to the HEAD of the positive as the
+# Danbooru tag it is, and `humans` deleted from the negative. Nothing else
+# moved, and sd_prompt.py itself is unchanged.
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+shot_beat: 6
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20267725
+seeds_in_batch: 4
+task: 001-b06-r5-sample-1786292829
+queue_entry: >-
+  none — this run took its OWN id and borrowed nothing, the honest half of the 2026-08-08 ruling. It still writes STARTED and DONE on farm-results-hand (claim_task.py --force), because a BOX RENDER belongs on the check-in log whether or not the queue filed it (founder, 2026-08-09).
+render_round: r5
+candidate_set: r5
+positive_tokens_real_clip: 32
+negative_tokens_real_clip: 51
+person_terms_in_negative: none — deliberate, this is the experiment
+negative_terms_removed: none (tall tree not present)
+recipe_inherited_from: >-
+  node 001, takes/stills/15-something-s-coming-r3-s1.png — the ONE SAMPLE the founder passed on 2026-08-08, by way of render_redraw2.py's r4 pass. Model, size, steps, cfg, seed rule and the one-term negative removal come from that frame's recipe. The prompt is this beat's shots.md entry as of the round note committed with this sidecar.
+wall_seconds: 9
+cost_usd: 0
+provisional: >-
+  PROVISIONAL. A steward-rendered CANDIDATE, not a pick and not canon. Scored against taste/steward-model.v1 and logged in taste/steward-model.ledger.yaml BEFORE the founder saw it. Ground truth is the founder (R4); he has ratified nothing here. Never takes a canon filename, is not published, not posted, and not assembled into an episode.
+note: |-
+  round 5, and the round is a DIAGNOSIS acted on rather than another wording edit. r3 was rejected (women, too many clouds/weird cloud formations) and r4 — built one change per named fault — was rejected harder: 'for the too blue image, its getting worse, many random girls and very strange cloud formations.' Girls went 2/4 to 3/4 on a round whose entire purpose was to remove them, so the mechanism was wrong, not the wording. THE MECHANISM, CHECKED OUTSIDE THIS REPO BEFORE A FRAME WAS DRAWN. animagine-xl-3.1's model card states it is 'optimized for Danbooru-style tags rather than natural language prompts' and gives the caption structure '1girl/1boy, character name, from what series, everything else in any order' — the presence of PEOPLE is declared by a POSITIVE tag at the front. `no humans` is that declaration for a picture with nobody in it, and the published landscape templates for this model family carry it in the positive next to `scenery`. sd_prompt._NEGATION (line 89) has been deleting that phrase from the positive and appending `humans` to the NEGATIVE on every round this beat has ever run, which asks the model to suppress the no-people concept. Danbooru's own tag page timed out from here twice and is not cited as if it had been read. WHAT ELSE IN THE r4 POSITIVE ASKED FOR A PERSON. `seen from ground level looking straight up` carries `looking up`, a Danbooru POSE tag, and `from below`, a character-relative camera tag — gaze vocabulary left over from the original 'he can see himself when he is looking at the sky' note, which the founder himself retired on 2026-08-07. The subject slot was also empty (`an empty expanse` names no object), and 002b b01 r6 — the 4/4 clean frame drawn on this same model, recipe and pass — differs precisely in having a seedling to draw. And `cirrus`, `cloudscape`, `scalloped clouds`, `cumulonimbus` are not Danbooru tags: six were negated and one asked for, out-of-vocabulary noise on the exact axis he called 'very strange'. ROUND 5 IS ONE TACTIC — say it in the model's own dialect and name nothing else. Native tags only; `no humans` FIRST as the card's structure requires, `scenery` beside it; plain `cloud` in place of four invented cloud words; and not one noun a body could attach to — no grass, no ground, no gaze, no camera angle. THE PERSON NOUNS ARE OUT OF THE NEGATIVE on purpose: they are the mechanism that has now failed twice here, and keeping them would leave the result unreadable. THE ONE DELIBERATE DEVIATION FROM THE MACHINE PATH is this script putting `no humans` back at the head of the positive and deleting `humans` from the negative after sd_prompt has run — printed, guarded, and recorded here because it is the experiment. sd_prompt.py is NOT modified by this round. WHAT DID NOT MOVE: no leaf in the image (his own 2026-08-07 composition note — a first-person POV cannot see its own body), so `leaf, plant, stem, foliage, tree` stay negated. `_SMALL` does not fire on this prompt, so no scale negatives attach and the `tall tree` removal is a no-op, not a skipped step. SEEDS ARE THIS BEAT'S OWN k=4..7, the same four r3 and r4 drew, so every column is a controlled triple.
+prompt: |-
+  no humans, scenery, sky, blue sky, day, cloud, sunlight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, leaf, plant, stem, foliage, tree, photorealism, text
