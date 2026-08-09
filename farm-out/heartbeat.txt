@@ -1,2 +1,3 @@
 15:29:00Z STARTED task=rtx5090-release-stale-redraw2-claim-1786290000 by-hand box back online; verifying the four cleanup points against the box rather than the report
 10:50:14Z DONE task=ep2-b13-r5-1786272529 by-hand backfilled from commit evidence 27f962d — b13 r5 sample, 4 seeds animagine-xl-3.1 on rtx5090, taste ledger record 27, box job sample-b13-r5
+11:04:13Z DONE task=002b-b01-r6-1786273272 by-hand backfilled from commit evidence d17a685 — b01 r6 redraw, 4 seeds on rtx5090, taste ledger record 28, box job redraw-0809 FINISHED 15:04:13 box local
