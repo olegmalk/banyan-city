@@ -4,6 +4,7 @@
   "buildCommand": "python3 pipeline/build_site.py",
   "outputDirectory": "_site",
   "cleanUrls": true,
+  "trailingSlash": false,
   "framework": null,
   "git": {
     "deploymentEnabled": {
