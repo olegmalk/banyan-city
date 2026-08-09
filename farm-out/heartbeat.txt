@@ -13,3 +13,4 @@
 15:38:35Z DONE task=rtx5090-release-stale-redraw2-claim-1786290000 by-hand all four verified against the box: claim file RELEASED (written 17:16 box local by the run itself), schtasks /Query banyan-redraw2 reports the task does not exist, card 0 pct 0 MiB; sequencing note appended for the overnight lanes
 16:03:23Z STARTED task=v34-refilm-b03-b10-1786291388 by-hand mac-side held re-film, new canon frames b03/b10 (a0a5170), $0 ffmpeg
 16:03:58Z DONE task=v34-refilm-b03-b10-1786291388 by-hand mac-side held re-film, new canon frames b03/b10 (a0a5170), $0 ffmpeg
+16:16:47Z STARTED task=002b-b12-promptfix-0809 by-hand beat 12 LTX clip, prompt-only fix — clause (g) of backlog entry i2v-prompt-plate-truth-1786280100; character clause OUT of the animation positive (66-byte deletion, negative byte-identical), plate 12-related-r4-s2 provisional, seed 20260806, ONE clip on rtx5090
