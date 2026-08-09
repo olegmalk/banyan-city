@@ -109,7 +109,7 @@ Low at the base of the trunk: roots gripping soil, holding on to the one patch o
 > **VO:** New constraint. Whatever comes over that hill — a storm, an axe, a war, a conversation — I will be *here* for all of it. I can't leave. I can only make this spot… worth staying in.
 
 **SOMETHING'S COMING — 1:34–1:37**
-Underground: the far-off thump-thump is closer now, the rings of light through the soil brighter and faster.
+The sapling in the grass, dusk light. The far-off thump-thump is closer now — each pulse felt through the ground, the leaves trembling with it.
 
 > **VO (quiet):** Something's coming.
 

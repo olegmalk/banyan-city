@@ -20,3 +20,57 @@ notes: >-
   then the reveal. "Yesterday I died fixing a server. Today I am a tree." is gone —
   it was a summary of events the audience had not yet seen, which is what read as a
   recap; the fall now shows it and "Huh. Green." lands instead.
+
+# Changes the founder made to the approved script AFTER approving it. The script
+# is not frozen by approval — it is revised by him, and each revision is his words
+# plus what they cost. approved_by stays `founder` because the change is his call.
+# Same convention as 002b-t0-c.yaml, which is where this block's shape comes from.
+revisions:
+  - date: 2026-08-09
+    beat: 15
+    quote: "yeah looks like a good proposal"
+    what: |-
+      His yes to a replacement motion brief put to him in chat, closing the fault
+      filed on 2026-08-09 (STATE.md) and carried as review-page item 15.
+
+      THE LINE THAT WAS THERE, verbatim, and it is kept here because a revision
+      is only legible next to what it replaced:
+
+        Underground: the far-off thump-thump is closer now, the rings of light
+        through the soil brighter and faster.
+
+      THE LINE THAT IS THERE NOW, verbatim, exactly as he was shown it:
+
+        The sapling in the grass, dusk light. The far-off thump-thump is closer
+        now — each pulse felt through the ground, the leaves trembling with it.
+
+      WHY IT HAD TO CHANGE. The old line describes a frame he threw out. On
+      2026-08-04 he asked "for beat 15, why is it showing the underground? i
+      think it should show the sapling, no?", the underground cross-section was
+      revoked (`stills/15-something-s-coming-REVOKED-underground.png`), and
+      `b15-r3-s1` — the sapling in tall grass under a raking dusk light — was
+      promoted to canon in d4488de. The still moved; the script's motion brief
+      never did. The beat's own negative list already forbids `underground`, so
+      the instruction and the rules contradicted each other inside one render.
+      Same event, same rising dread, told from above ground where the frame is.
+
+      WHAT HE WAS SHOWN IS NOT WHAT THE REVIEW PAGE PROPOSED, and both wordings
+      are recorded so nobody has to reconcile them later. Review-page item 15
+      carried "The thump-thump is closer now, felt through the ground — the grass
+      shivers and the sapling's two leaves tremble with each pulse." The chat
+      proposal he actually said yes to is the one above, and the one above is
+      what went into node.md. Neither says `underground`; they differ in whether
+      the grass is named and in whether the frame is established first.
+
+      WHAT THIS CHANGE DOES NOT DO, recorded because the opposite is the easy
+      thing to assume. It does not change what any renderer draws. `video_task.run`
+      and `bench_models` both read `motion_directions()` FIRST and fall back to
+      `beat_actions(node.md)` only when the node's `motion.yaml` has no entry for
+      the beat — and `motion.yaml` has had a beat-15 entry since 2026-08-06. So
+      this line is the fallback, and the fallback does not fire. `motion.yaml`'s
+      beat 15 still reads "the soil grains and small stones jump and scatter with
+      each thump, the raking light band slamming brighter and dimming back…",
+      written on 2026-08-06 for the ground-level soil macro that preceded the
+      grass plate, and it names soil grains and stones the current frame does not
+      contain. That file is steward-editable motion direction, not approved script
+      text, so it is flagged here rather than changed on this approval.
