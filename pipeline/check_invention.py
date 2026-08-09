@@ -47,6 +47,53 @@ score like an invention because structurally that is what it is. It is a
 FLAGGING tool: it says "look at this one", never "this one is bad". The founder's
 eye remains the verdict — this exists so his eye is spent on the shots that need
 it instead of on all fifteen.
+
+MEASURED RECALL: 0 OF 3. THIS TOOL IS UNVALIDATED AND THE NUMBER IS NOT AN
+ESTIMATE. On 2026-08-09 the beat-16 drift experiment produced the first clips
+whose labels are known by construction — same plate, same recipe, four seeds, two
+prompts 38 bytes apart — and three of them contain a full anime human who is not
+in the conditioning frame. This gate passed all three and printed "nothing
+flagged". The set, the harness and every number below are
+`pipeline/invention-labelled-set.yaml` and `pipeline/eval_invention.py`; run it
+before believing anything here.
+
+  - `monotonic > 0.70` RUNS BACKWARDS. Measured AUC 0.19 on the labelled set —
+    that is 0.81 in the wrong direction — because the leaf keeps swaying while
+    the man arrives, so the distance curve oscillates instead of climbing. All
+    three misses fail on this conjunct alone.
+  - DELETING IT DOES NOT PRODUCE A DETECTOR, it produces an alarm bell. With the
+    conjunct struck out the rule scores 3/3 recall and 6/6 FALSE ALARMS: on
+    six-second LTX output `return_ratio > 0.88 AND peak > 0.18` is true of every
+    clip, invented or not. The conjunct that runs backwards is the only thing
+    keeping the gate quiet, which means the gate carries no information on this
+    engine in either configuration.
+  - `peak > 0.18` DOES NO WORK ON LTX. Every labelled clip reads 0.61-0.95. The
+    threshold was calibrated against AnimateDiff clips that read 0.12-0.50, and
+    nobody rescaled it when the engine changed.
+  - `area_ratio` and `spread_ratio` miss because `fg()` masks pixels DARKER than
+    typical and an anime human in mid-tone linework is not darker than a peach
+    sky. Masking on linework density instead gets closer (AUC 0.94) and still
+    does not separate the set.
+
+WHAT WAS TRIED AND FAILED, recorded so it is not tried twice. The obvious repair
+— compute the drift shape PER BLOCK so a man arriving in one corner is not
+averaged away by a swaying leaf — is CONTRADICTED, not merely unsupported:
+`local_mono_max` scores AUC 0.31 and `local_oneway_max` 0.44, both pointing the
+wrong way. So does `shift_blob_frac` (0.17), the "an invention is a connected
+blob" idea. Ledger record 38's pre-registered lead, the fraction of consecutive
+frame pairs moving more than 1.0, does separate the labelled set perfectly and
+then FLAGS BEAT 11 AND BEAT 01 of the shipped episode-1 cut — the mitosis beat
+the founder called the best in the episode reads 1.00 — which is the circularity
+that record warned about, confirmed: it is measuring motion, and a person walking
+into a static shot is motion.
+
+WHY NOTHING WAS RETUNED HERE. `peak` separates the set perfectly with the widest
+margin, survives leave-one-out 9/9, and is the one leader that does NOT flag the
+episode-1 clips. It is still not shipped as a threshold, because nine clips
+cannot license one: three positives among nine give an exact two-sided p of
+2/84 = 0.024 at best, fifteen candidate metrics were tried, and 15 x 0.024 = 0.36.
+Twelve labelled clips with five invented would settle it. Until then this file
+prints how little it knows.
 """
 
 import argparse
@@ -56,11 +103,35 @@ import sys
 import tempfile
 from pathlib import Path
 
-import numpy as np
-from PIL import Image
+# numpy and PIL are imported INSIDE the measuring functions, not here. The
+# decision this file makes lives in verdict(), which is arithmetic on a dict, and
+# a module-level numpy import made that function unreachable from CI — where the
+# install list is pyyaml, pillow, markdown and nothing else. The consequence was
+# that the gate's rule was the one part of the pipeline no test could execute,
+# and it stayed 0-for-3 on the labelled set with every test green. Now
+# `import check_invention` costs nothing and test_pipeline.py runs verdict() on
+# the committed measurements.
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import licence_gate as lg  # noqa: E402 — the tolerant sidecar reader
+
+# PRINTED AFTER EVERY RUN, PASS OR FAIL. A quiet detector reads as an all-clear,
+# and this one's silence has been measured against ground truth exactly once — it
+# was silent on three clips with a man in them. Whoever reads the table next
+# should read that in the same breath, not find it in a docstring. The wording is
+# blunt on purpose: "0 of 3" is a fact about this tool, not a caveat about tools
+# in general.
+UNVALIDATED = """
+  ── INSUFFICIENT VALIDATION ─────────────────────────────────────────────────
+  An `ok` here is WEAK EVIDENCE and a silent run is not an all-clear. Measured
+  recall on the only labelled set this tool has (9 clips, 3 containing a human
+  the plate never had) is 0 OF 3: it passed all three. No threshold in it has
+  been validated against ground truth, and the `monotonic` conjunct is measured
+  running BACKWARDS (AUC 0.19) on those same clips.
+    labels   pipeline/invention-labelled-set.yaml
+    harness  python3 pipeline/eval_invention.py
+  Clearing a clip still needs eyes on frames. This tool cannot do it.
+  ────────────────────────────────────────────────────────────────────────────"""
 
 # Coarse on purpose. We are asking about composition, not texture: at 96x171 a
 # second sprout is unmissable and a leaf's serration is invisible, which is the
@@ -69,8 +140,10 @@ W, H = 96, 171
 SAMPLE_FPS = 8          # enough to see the shape of the curve, cheap to extract
 
 
-def frames(clip: Path) -> np.ndarray:
+def frames(clip: Path):
     """(n, H, W) float32 grayscale, contrast-normalised per frame."""
+    import numpy as np
+    from PIL import Image
     with tempfile.TemporaryDirectory() as td:
         r = subprocess.run(
             ["ffmpeg", "-v", "error", "-i", str(clip),
@@ -93,7 +166,7 @@ def frames(clip: Path) -> np.ndarray:
         return np.stack(out)
 
 
-def edges(f: np.ndarray) -> np.ndarray:
+def edges(f):
     """Gradient-magnitude map, contrast-normalised.
 
     MEASURE SHAPE, NOT BRIGHTNESS. The first version of this compared normalised
@@ -103,6 +176,7 @@ def edges(f: np.ndarray) -> np.ndarray:
     intensity distance cannot tell one from a rock changing silhouette. Edges can:
     a glow ramp leaves the edges where they are, while an invention moves them.
     """
+    import numpy as np
     gx = np.zeros_like(f); gy = np.zeros_like(f)
     gx[:, 1:-1] = f[:, 2:] - f[:, :-2]
     gy[1:-1, :] = f[2:, :] - f[:-2, :]
@@ -111,7 +185,8 @@ def edges(f: np.ndarray) -> np.ndarray:
     return (m - m.mean()) / (s if s > 1e-6 else 1.0)
 
 
-def measure(fr: np.ndarray) -> dict:
+def measure(fr) -> dict:
+    import numpy as np
     em = np.stack([edges(f) for f in fr])
     e0 = em[0]
     d = np.array([np.abs(e - e0).mean() for e in em])
@@ -158,9 +233,20 @@ def measure(fr: np.ndarray) -> dict:
 
 def verdict(m: dict) -> tuple:
     """(flag, why). Thresholds are deliberately loose — this points a human at a
-    clip, so a false alarm costs one look and a miss costs a shipped defect."""
+    clip, so a false alarm costs one look and a miss costs a shipped defect.
+
+    AND ON THE ONE LABELLED SET THEY ARE ALSO WRONG: 0 of 3 recall, the
+    `monotonic` conjunct measured pointing backwards (AUC 0.19), and `peak > 0.18`
+    true of every LTX clip ever measured. They are left exactly as they were
+    because the alternative offered by nine clips is a threshold fitted to three
+    positives, and the file's own churn note says why that is not an improvement.
+    `pipeline/eval_invention.py` is where a replacement has to earn its way in.
+    """
     why = []
-    # one-way drift: ends at its furthest point AND mostly climbed to get there
+    # one-way drift: ends at its furthest point AND mostly climbed to get there.
+    # MEASURED 2026-08-09 on invention-labelled-set.yaml — invented clips read
+    # monotonic 0.62 / 0.55 / 0.60 against a clean mean of 0.658, so this conjunct
+    # is what stops all three from flagging, and striking it out flags all nine.
     if m["return_ratio"] > 0.88 and m["monotonic"] > 0.70 and m["peak"] > 0.18:
         why.append(f"one-way drift (ends at {m['return_ratio']:.2f} of peak, "
                    f"{m['monotonic']:.0%} of steps climbing) — the composition "
@@ -242,6 +328,7 @@ def main():
                 print(f"      - {w}")
     else:
         print("\n  nothing flagged: every clip returns toward its opening frame")
+    print(UNVALIDATED)
     return 0
 
 

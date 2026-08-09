@@ -1,0 +1,146 @@
+# check_invention.py's FIRST LABELLED SET — ground truth, not recollection.
+#
+# Every threshold in check_invention.py before 2026-08-09 was tuned against
+# remembered viewings of beats 11 and 01. This file is the first set where the
+# label is KNOWN, and it is known because the clips were made one variable apart
+# on purpose (task 002b-b16-drift-0809, commit ea62f69): same plate bytes, same
+# recipe, same four seeds, two prompts differing by 38 bytes — the clause
+# "; the scavenger sits blurred behind it" and nothing else. Three of the four
+# control seeds drew a full anime human into a plant-only plate; none of the four
+# treatment seeds did.
+#
+# WHAT "INVENTED" MEANS HERE, precisely: the clip contains a person who is not in
+# the conditioning frame. It does NOT mean the clip is bad, and it does not mean
+# every other kind of invention (a morphing rock, a second sprout) looks like
+# this. A detector validated on this set is validated on ONE failure mode.
+#
+# THE SET IS SPENT IF IT IS FITTED. It is nine clips. A rule tuned until these
+# nine come out right has learned these nine, which is the mistake
+# check_invention.py's own churn note (check_invention.py:171) was written to
+# prevent. Evaluate against it, report the statistics honestly, and read
+# pipeline/eval_invention.py's family-wise correction before believing anything.
+#
+# THE CLIPS ARE NOT IN GIT. review/ is untracked by gate G5 — no candidate pixel
+# is committed — so the sha256 below is the whole of the provenance a future
+# reader gets. eval_invention.py verifies it and refuses a clip whose bytes have
+# changed rather than quietly measuring a different file.
+
+set_id: b16-drift-0809
+frozen: 2026-08-09
+labelled_by: >-
+  The founder's own eye on the first invented clip (he screenshotted the man in
+  ltx-002b-b16-prov.mp4, whose sha256 is byte-identical to control-s20260806
+  here); the steward's frame-sampling by eye on the other seven, reported in
+  STATE.md 2026-08-09 "The result, same day" and in commit ea62f69. No detector
+  output contributed to any label — the tool under test cannot grade itself.
+positives: 3
+negatives: 6
+
+clips:
+  # ---- arm A, control: the prompt exactly as it was rendered for review -------
+  - path: review/ltx-drift-0809/ltx-b16-control-s20260806.mp4
+    sha256: 0393efdc51f8f9f68c5375dcde2c80369385c60ea1fa8a4a92c233e8dde768d8
+    label: invented
+    seed: 20260806
+    arm: control
+    beat: 16
+    evidence: >-
+      THE STRONGEST LABEL IN THE SET. This file has the same sha256 as
+      review/ep2-prov-0809/ltx-002b-b16-prov.mp4, the clip the founder looked at
+      and called out for containing a man. The label is his, not the steward's.
+
+  - path: review/ltx-drift-0809/ltx-b16-control-s20260807.mp4
+    sha256: 3ce2c673ddb24070c19292ec521e31f28a2f00493ad9f4efcf6e0b3b15a10767
+    label: invented
+    seed: 20260807
+    arm: control
+    beat: 16
+    evidence: >-
+      A person moving behind the branches, seen by frame-sampling. Noted in
+      STATE.md as the seed whose motion figure drops most in the treatment arm,
+      because some of that clip's measured motion WAS the invention.
+
+  - path: review/ltx-drift-0809/ltx-b16-control-s20260808.mp4
+    sha256: 2ce257ca6cfaf5960b5b8224b5a9d974f0d74a04e5b43f25f7f9e9e2507023e7
+    label: invented
+    seed: 20260808
+    arm: control
+    beat: 16
+    evidence: A person, seen by frame-sampling (ea62f69, "3 of 4 — 20260806, 20260807, 20260808").
+
+  - path: review/ltx-drift-0809/ltx-b16-control-s20260809.mp4
+    sha256: 5bfc4b8768deef0af4b8f8d9ebe9fa2568cf6e8e2f6630ab0ce537dcc06d8580
+    label: clean
+    seed: 20260809
+    arm: control
+    beat: 16
+    evidence: >-
+      THE MOST VALUABLE NEGATIVE. Same prompt as the three above — the one asking
+      for the man — and no person appeared. It is the base rate, and it is why a
+      clean treatment arm means something: without it, four clean treatment clips
+      were a 1-in-4 coincidence away from meaning nothing. Any rule that keys on
+      the PROMPT rather than the PIXELS gets this clip wrong.
+
+  # ---- arm B, treatment: the same prompt minus the character clause -----------
+  - path: review/ltx-drift-0809/ltx-b16-treat-s20260806.mp4
+    sha256: bb1d81e2730a8e38790e77c7c46a02bc58634bb6a30d538cedfa649d37eb9811
+    label: clean
+    seed: 20260806
+    arm: treat
+    beat: 16
+    evidence: >-
+      No person, by frame-sampling. THE SHARPEST PAIR IN THE SET: this is the
+      seed that drew the man under the control prompt, so it and
+      control-s20260806 differ by 38 bytes of prompt and nothing else — same
+      plate bytes, same recipe, same noise.
+
+  - path: review/ltx-drift-0809/ltx-b16-treat-s20260807.mp4
+    sha256: 8f0a15cbd61dbd50ea2a0a0eb6fba30f0b701e9b8a0e36740922653ad93a9aaf
+    label: clean
+    seed: 20260807
+    arm: treat
+    beat: 16
+    evidence: >-
+      No person, by frame-sampling. Its control twin is the clip whose invented
+      figure MOVED behind the branches, which is why this seed's motion figure
+      drops most between the arms — some of that motion was the man.
+
+  - path: review/ltx-drift-0809/ltx-b16-treat-s20260808.mp4
+    sha256: 9caf0e1ee6a6fd5d86d18360a81000795fa7df4e665eff9e8dc1e0cb1f964128
+    label: clean
+    seed: 20260808
+    arm: treat
+    beat: 16
+    evidence: >-
+      No person, by frame-sampling. Its control twin drew one, so this is the
+      third of the three arm-pairs where the clause is the only difference.
+
+  - path: review/ltx-drift-0809/ltx-b16-treat-s20260809.mp4
+    sha256: d9cd70651f584ce3d78d3fc1776b6746afc9bee8d351f6b916dd3da0ac1e987f
+    label: clean
+    seed: 20260809
+    arm: treat
+    beat: 16
+    evidence: >-
+      No person, by frame-sampling. The one pair where BOTH arms are clean — its
+      control twin is the clip that establishes the base rate, so this pair says
+      nothing on its own and is here so the set is not four cherry-picked pairs.
+
+  # ---- the one clip that is NOT from the drift experiment ---------------------
+  - path: review/ep2-prov-0809/ltx-002b-b12-prov-v2.mp4
+    sha256: b474f66d74066d6f908dca28cfd24baee890eae0ca1ce09a5951e5d004bebdf3
+    label: clean
+    seed: 20260806
+    arm: treat
+    beat: 12
+    held_out_from: b16-drift-0809
+    evidence: >-
+      Rendered 2026-08-09 20:23 box local under task 002b-b12-promptfix-0809,
+      AFTER ledger record 38 pre-registered the moving-pair-fraction lead against
+      the eight clips above. Twenty-one of its 145 frames inspected by eye at
+      three samplings (every 12th across the clip, every 4th through the first two
+      seconds because beat 16's head entered at ~1s, and 0/48/96/144 at 352x640):
+      zero figures. Different beat, different plate, different staging line — so
+      for any statistic that was chosen after seeing the eight, THIS CLIP IS THE
+      ONLY OUT-OF-SAMPLE POINT THE SET HAS, and eval_invention.py scores it
+      separately for that reason.

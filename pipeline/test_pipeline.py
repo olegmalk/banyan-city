@@ -6098,6 +6098,205 @@ def test_the_reference_crop_keeps_only_the_subject():
           "53% of frame" in rip.describe((0.18, 0.02, 0.88, 0.78)))
 
 
+# ── check_invention against its first labelled set ───────────────────────────
+# These run in CI because check_invention.py's numpy import moved inside its
+# measuring functions and eval_invention.py's statistics are pure python. The
+# gate's RULE — the part that decides — was previously the one piece of the
+# pipeline no test could execute, which is how it stayed 0-for-3 with every test
+# green.
+
+def test_nine_clips_cannot_license_a_threshold_however_cleanly_they_split():
+    """The arithmetic that stops the next session shipping a fitted rule.
+
+    Three positives among nine give 84 labelings, so a metric that separates the
+    set perfectly earns an exact two-sided p of 2/84 and no better. This is not a
+    modelling choice or a convention — it is the number of ways the labels could
+    have fallen, and it is why 'it separates perfectly!' is not a result here.
+    """
+    import math
+    sys.path.insert(0, str(REPO / "pipeline"))
+    import eval_invention as ev
+
+    pos, neg = [0.9, 0.8, 0.7], [0.6, 0.5, 0.4, 0.3, 0.2, 0.1]
+    check("a perfect separator scores AUC 1.0", ev.auc(pos, neg) == 1.0)
+    check("its exact two-sided p is 2/84 and not smaller",
+          abs(ev.exact_p(pos, neg) - 2.0 / 84.0) < 1e-12)
+    check("the best p this set can produce still fails after the correction "
+          "for the metrics actually tried",
+          ev.exact_p(pos, neg) * ev.K >= 0.05)
+    # The honest exit: say what n would settle it. Twelve clips with five
+    # invented is the first place a perfect separator clears alpha at this K.
+    need = ev.sample_size_needed(ev.K)
+    check("the harness names the sample size that would settle it",
+          need is not None and need[0] > 9)
+    check("that n is the SMALLEST one that clears the bar, not a round number",
+          2.0 / math.comb(need[0], need[1]) * ev.K < 0.05
+          and all(2.0 / math.comb(n, max(1, round(n * 0.4))) * ev.K >= 0.05
+                  for n in range(4, need[0])))
+
+
+def test_a_metric_that_points_the_wrong_way_is_not_a_separator():
+    """`monotonic` splits the labelled set cleanly — backwards. A harness that
+    scores separation on |AUC - 0.5| alone would rank it as a find; the direction
+    has to be declared up front and checked, or a contradicted hypothesis reads
+    as a confirmed one."""
+    sys.path.insert(0, str(REPO / "pipeline"))
+    import eval_invention as ev
+
+    pos, neg = [0.1, 0.2, 0.3], [0.7, 0.8, 0.9]
+    perfect, gap, _ = ev.separation(pos, neg, hi_is_positive=True)
+    check("a backwards split is not reported as separated", perfect is False)
+    check("and its gap is negative rather than absolute", gap < 0)
+    check("declaring the other direction finds the same split",
+          ev.separation(pos, neg, hi_is_positive=False)[0] is True)
+    check("every candidate declares a direction before it is scored",
+          all(isinstance(h, bool) for _, h, _ in ev.CANDIDATES))
+    check("K is the number of candidates tried, not a constant someone typed",
+          ev.K == len(ev.CANDIDATES))
+    names = [n for n, _, _ in ev.CANDIDATES]
+    check("no candidate is counted twice", len(names) == len(set(names)))
+
+
+def test_leave_one_out_catches_the_threshold_that_only_fits_what_it_saw():
+    """In-sample separation and LOO disagree exactly where it matters.
+
+    These are the pair_moving_frac numbers: perfect in-sample, and the invented
+    clip nearest the boundary is misclassified the moment the threshold is not
+    allowed to see it. A harness reporting only 'separates perfectly' would hide
+    that.
+    """
+    sys.path.insert(0, str(REPO / "pipeline"))
+    import eval_invention as ev
+
+    vals = [0.7986, 0.4861, 0.4306, 0.3333, 0.3542, 0.3889, 0.3611, 0.3333, 0.3333]
+    labels = [True, True, True, False, False, False, False, False, False]
+    check("the set is perfectly separated in sample",
+          ev.separation([v for v, l in zip(vals, labels) if l],
+                        [v for v, l in zip(vals, labels) if not l], True)[0])
+    corr, tot, errs = ev.loo_threshold_accuracy(vals, labels, True)
+    check("leave-one-out still misses the boundary clip", corr == tot - 1)
+    check("and it names which one", errs and errs[0][0] == 2)
+
+
+def test_the_labelled_set_is_internally_consistent():
+    """A fixture that disagrees with itself is not ground truth. The clips are
+    untracked by gate G5, so these fields are the whole of what a future reader
+    gets."""
+    import re
+    import yaml
+    fx = yaml.safe_load(
+        (REPO / "pipeline" / "invention-labelled-set.yaml").read_text(encoding="utf-8"))
+    clips = fx["clips"]
+    inv = [c for c in clips if c["label"] == "invented"]
+    cln = [c for c in clips if c["label"] == "clean"]
+    check("the header's counts match the clips", len(inv) == fx["positives"]
+          and len(cln) == fx["negatives"])
+    check("every clip is labelled invented or clean",
+          len(inv) + len(cln) == len(clips))
+    check("every clip carries a full sha256",
+          all(re.fullmatch(r"[0-9a-f]{64}", c["sha256"]) for c in clips))
+    check("no clip is listed twice", len({c["path"] for c in clips}) == len(clips))
+    check("every clip says why it is labelled the way it is",
+          all(len(c.get("evidence", "")) > 40 for c in clips))
+    oos = [c for c in clips if "held_out_from" in c]
+    check("exactly one clip is marked out-of-sample", len(oos) == 1)
+    check("and it is a clean one that arrived after the set was frozen",
+          oos[0]["label"] == "clean" and oos[0]["beat"] != 16)
+
+
+def test_the_committed_measurements_cover_every_candidate_and_every_clip():
+    """The json is the record. If a candidate metric is added and nothing is
+    re-measured, evaluate() silently skips it and the report shrinks without
+    saying so — which would quietly lower K and make the correction look kinder
+    than it is."""
+    import json
+    import yaml
+    sys.path.insert(0, str(REPO / "pipeline"))
+    import eval_invention as ev
+
+    fx = yaml.safe_load(
+        (REPO / "pipeline" / "invention-labelled-set.yaml").read_text(encoding="utf-8"))
+    data = json.loads(
+        (REPO / "pipeline" / "invention-labelled-set.measured.json").read_text(
+            encoding="utf-8"))
+    by_sha = {c["sha256"]: c for c in data["clips"]}
+    check("every labelled clip has measurements on the record",
+          all(c["sha256"] in by_sha for c in fx["clips"]))
+    check("the measurements agree with the fixture's labels",
+          all(by_sha[c["sha256"]]["label"] == c["label"] for c in fx["clips"]))
+    wanted = {n for n, _, _ in ev.CANDIDATES}
+    check("every candidate metric is measured on every clip",
+          all(wanted <= set(c["metrics"]) for c in data["clips"]))
+    check("the record carries the K its numbers were corrected with",
+          data["K"] == ev.K)
+
+
+def test_the_detector_states_its_measured_recall_and_states_it_correctly():
+    """The gate's printed warning has to match what the gate actually does.
+
+    This runs check_invention's real verdict() over the committed measurements
+    and compares the recall it gets with the recall the warning claims. If
+    someone repairs the rule, this fails and says so — the point is not to freeze
+    0-of-3, it is to make the tool's claim about itself un-driftable.
+    """
+    import json
+    import re
+    sys.path.insert(0, str(REPO / "pipeline"))
+    import check_invention as ci
+
+    data = json.loads(
+        (REPO / "pipeline" / "invention-labelled-set.measured.json").read_text(
+            encoding="utf-8"))
+    inv = [c for c in data["clips"] if c["label"] == "invented"]
+    caught = sum(1 for c in inv if ci.verdict(c["metrics"])[0])
+    m = re.search(r"is (\d+) OF (\d+)", ci.UNVALIDATED)
+    check("the warning states a recall", m is not None)
+    check(f"and it is the recall verdict() actually gets ({caught} of {len(inv)})",
+          m is not None and int(m.group(1)) == caught
+          and int(m.group(2)) == len(inv))
+    check("the warning is printed on every run, not only on a flag",
+          "print(UNVALIDATED)" in
+          (REPO / "pipeline" / "check_invention.py").read_text(encoding="utf-8"))
+    check("it points at the labels and the harness by path",
+          "invention-labelled-set.yaml" in ci.UNVALIDATED
+          and "eval_invention.py" in ci.UNVALIDATED)
+    check("the files it points at exist",
+          (REPO / "pipeline" / "invention-labelled-set.yaml").exists()
+          and (REPO / "pipeline" / "eval_invention.py").exists())
+
+
+def test_striking_the_backwards_conjunct_would_flag_everything():
+    """Why the obvious fix was not shipped, kept as an executable fact.
+
+    `monotonic` runs backwards on the labelled set, so deleting it looks like
+    free recall. It is not: on six-second LTX output the surviving conjuncts are
+    true of every clip, and the gate goes from silent to flagging all nine. A
+    future session reaching for that edit finds the measurement here instead of
+    re-deriving it.
+    """
+    import json
+    sys.path.insert(0, str(REPO / "pipeline"))
+    import check_invention as ci
+
+    data = json.loads(
+        (REPO / "pipeline" / "invention-labelled-set.measured.json").read_text(
+            encoding="utf-8"))
+    def no_mono(m):
+        return bool((m["return_ratio"] > 0.88 and m["peak"] > 0.18)
+                    or m["area_ratio"] > 1.30 or m["spread_ratio"] > 1.25)
+
+    clean = [c for c in data["clips"] if c["label"] == "clean"]
+    inv = [c for c in data["clips"] if c["label"] == "invented"]
+    check("without the conjunct the rule catches all three",
+          all(no_mono(c["metrics"]) for c in inv))
+    check("and also flags every clean clip, which is not a detector",
+          all(no_mono(c["metrics"]) for c in clean))
+    check("the shipped rule is quiet on the same clean clips",
+          not any(ci.verdict(c["metrics"])[0] for c in clean))
+    check("peak > 0.18 is doing no work on this engine",
+          all(c["metrics"]["peak"] > 0.18 for c in data["clips"]))
+
+
 def main():
     import tempfile
     test_beat_duration_from_timecode()
@@ -6262,6 +6461,15 @@ def main():
     test_a_region_mask_conditions_its_box_and_nothing_else()
     test_a_box_that_names_no_region_is_refused_not_rounded()
     test_the_reference_crop_keeps_only_the_subject()
+    # CHECK_INVENTION AGAINST GROUND TRUTH — pure: the clips are untracked, so
+    # these read the committed measurements and run the real verdict() on them.
+    test_nine_clips_cannot_license_a_threshold_however_cleanly_they_split()
+    test_a_metric_that_points_the_wrong_way_is_not_a_separator()
+    test_leave_one_out_catches_the_threshold_that_only_fits_what_it_saw()
+    test_the_labelled_set_is_internally_consistent()
+    test_the_committed_measurements_cover_every_candidate_and_every_clip()
+    test_the_detector_states_its_measured_recall_and_states_it_correctly()
+    test_striking_the_backwards_conjunct_would_flag_everything()
     print()
     if FAILURES:
         print(f"✗ {len(FAILURES)} failure(s): {', '.join(FAILURES)}")

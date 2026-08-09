@@ -6536,3 +6536,95 @@ the overnight goblin designer's, adopted per lead handoff and rendered in
 and they are all this commit contains — the 001 files were reverted to `d395b88`
 untouched once it was clear their owner was alive, including a one-character
 whitespace difference that was not worth touching another lane's file for.
+
+## 2026-08-09 — the detector's first labelled set says nothing separates, and the lead we had flags the founder's favourite beat
+
+**THE SET IS FILED AND IT IS REPRODUCIBLE WITHOUT THE PIXELS.**
+`pipeline/invention-labelled-set.yaml` is `check_invention.py`'s first ground
+truth: the eight beat-16 drift clips (3 invented, 5 clean, `ea62f69`) plus the
+b12 promptfix clip rendered later the same night, nine in all, each carried by
+sha256. The clips live under `review/` and gate G5 keeps that untracked, so
+`pipeline/invention-labelled-set.measured.json` commits the numbers instead —
+fifteen metrics on nine clips. A second measuring pass from scratch reproduced
+all 135 values **bit-identically**, and the harness refuses a clip whose sha256
+has moved rather than quietly measuring a different file.
+
+**NOTHING SEPARATES THE SET AT ANY DEFENSIBLE CONFIDENCE, AND THE ARITHMETIC IS
+THE FINDING.** Three positives among nine give C(9,3) = 84 labelings, so a
+metric that separates PERFECTLY earns an exact two-sided p of 2/84 = 0.024 and
+no better. Fifteen candidates were declared in `eval_invention.py` before the
+first run and all fifteen were scored; 15 x 0.024 = **0.36**. Three of them do
+separate perfectly and not one survives the correction. Leave-one-out does not
+rescue this — it corrects for fitting a threshold, never for choosing the metric
+after looking. **A perfect separator needs n = 12 with 5 invented** to clear
+alpha 0.05 at this K, and the harness prints that number so the next session
+does not have to re-derive it.
+
+**THE PRE-REGISTERED LEAD IS DEAD, AND IT DIED ON EVIDENCE WE ALREADY HAD.**
+Ledger record 38's moving-pair fraction separates the nine perfectly (invented
+0.80/0.49/0.43 against clean 0.33-0.39) and then, at that boundary, **flags
+beat 11 and beat 01 of the episode-1 cut** — 11-grow, the mitosis beat the
+founder called the best in the episode, reads **1.0000**. That is the
+circularity the record itself warned about ("more pairs move" may be a
+restatement of "something is moving"), confirmed rather than argued: a person
+walking into a static shot is motion, and so is a leaf unfurling.
+`pair_motion_median` fails the same way on the same three clips. The check cost
+four clips and no GPU.
+
+**THE REPAIR THAT LOOKED OBVIOUS IS CONTRADICTED, NOT MERELY UNSUPPORTED.**
+`monotonic` runs backwards (AUC **0.19**, LOO 2/9), so the natural fix is to
+compute the drift shape PER BLOCK — a man arriving in one corner should not be
+averaged away by a swaying leaf. Measured: `local_mono_max` **0.31**,
+`local_oneway_max` **0.44**, both pointing the wrong way, as does
+`shift_blob_frac` (0.17), the "an invention is a connected blob" idea. Clause
+(c)'s suspicion was half right: masking on linework density instead of darkness
+gets `edgefg_area_ratio` to AUC 0.94, and 0.94 still does not separate.
+
+**AND DELETING THE BACKWARDS CONJUNCT DOES NOT PRODUCE A DETECTOR, IT PRODUCES
+AN ALARM BELL.** Struck out, the rule scores 3/3 recall and **6/6 false
+alarms**: on six-second LTX output `return_ratio > 0.88 AND peak > 0.18` is true
+of every clip. `peak > 0.18` does no work at all here — every labelled clip
+reads 0.61-0.95, because the threshold was calibrated against AnimateDiff clips
+that read 0.12-0.50 and nobody rescaled it when the engine changed. The conjunct
+that points the wrong way is the only thing keeping the gate quiet, so the gate
+carries no information on this engine in **either** configuration. That is now a
+test, not a paragraph.
+
+**WHAT IS SHIPPED: a warning, and not one retuned number.** `check_invention.py`
+prints an INSUFFICIENT VALIDATION block after every run, pass or fail, stating
+its measured 0-of-3 recall and naming the labels and the harness by path — a
+quiet detector reads as an all-clear and this one's silence has been checked
+against ground truth exactly once. Its numpy import moved inside the measuring
+functions, which makes `verdict()` — the part that decides, and previously the
+one piece of the pipeline no test could execute — reachable from CI. Seven new
+tests run the real rule over the committed measurements; one of them parses the
+recall out of the warning text and fails if the tool's claim about itself ever
+stops matching what it does, in either direction.
+
+**THE SURVIVING LEAD, pre-registered here and NOT shipped.** `peak` separates
+perfectly with the widest margin (0.21), LOO 9/9, out-of-sample clip on the
+right side, and it is the only leader that does **not** flag the episode-1
+clips (they read 0.12-0.50 against a boundary of 0.767). It is an incumbent
+column, so nothing new was invented to get it. It is still in-sample on nine
+clips at pK 0.36 and it is still a motion-magnitude statistic, so the same
+circularity has to be assumed until it is disproven. **The next move is data,
+not cleverness:** three more control-arm beat-16 seeds run at ~75% invented, so
+one $0 render batch takes the set to twelve with five invented, which is exactly
+where a perfect separator would start to mean something.
+
+Backlog entry `check-invention-labelled-set-1786280220` is answered on all four
+clauses — (a) the fixture exists, (b) the conjunct is re-examined and the
+locality repair is falsified, (c) the foreground definition was replaced and
+still misses, (d) no threshold was fitted and the tool stays a reporter. The
+entry itself was left untouched in `pipeline/farm-queue.yaml`: another lane has
+that file open with uncommitted edits tonight and one writer per file. Ledger
+record 38 is likewise not amended here, for the same reason — its
+`observation_not_a_finding` lead is falsified above and the ledger's own owner
+can carry it across.
+
+**No box, no GPU, no spend, nothing published and nothing opened on his screen.**
+All Mac-side ffmpeg on clips that already existed. lint rc=0, build_site rc=0;
+tests rc=1 on ONE failure that is not this lane's — `the worker never mentions
+backlog at all` fails because another lane's uncommitted `pipeline/farm_worker.py`
+now contains the word in a docstring, and every one of the seven new checks
+passes.
