@@ -435,3 +435,80 @@ promotion did the same thing on 2026-08-08 and it went unnoticed. Not fixed in t
 commit — the fix is in `build_site`, it needs a test, and it is not a stills-promotion
 change — but it is queued and named rather than left to be discovered on the page. If any of those clips is re-rendered it gets the new frame
 and a sidecar that names its bytes.
+
+## The promotion convention — a promoted frame keeps its record (2026-08-09)
+
+**A canon promotion is `cp takes/stills/<take>.png stills/<beat>-<slug>.png` and
+nothing else, and the copy arrives with no provenance beside it. That is not a
+gap in the paperwork; it is the step that strips the record which would have
+refused the frame.** `build_site.publishable()` reads an unprovenanced file as
+permitted — deliberately, because unprovenanced is the licence gate's finding
+and not the build's — so a frame that answers `(False, 'CreativeML Open
+RAIL++-M')` under `takes/stills/` answers `(True, "")` the moment it is promoted.
+Every held shot inherits that: `hold_still` writes `model: none` truthfully (no
+video model ran) and `model_licence: n/a — inherits the still's licence, see
+stills/README.md`, so the frame's record IS the licence answer for the clip, and
+for the episode the clip is muxed into. On 2026-08-09 that cleared
+`review/provisional-v34/ep1-v34-PROVISIONAL.mp4` — eleven animagine frames
+inside it, `publishable()` said yes.
+
+**THE CONVENTION, from today: a promotion writes a sidecar.** Beside the canon
+PNG, `<canon-name>.png.meta.yaml`, minimal and machine-first:
+
+```yaml
+# Canon promotion — provenance preserved (stills/README.md)
+model: cagliostrolab/animagine-xl-3.1     # the model that DREW it, named
+promoted_from: genomes/.../takes/stills/<take>.png   # repo-relative, posix
+promoted_from_sha256: <the take's sha256>
+sha256: <this file's sha256 — equal, a promotion is byte-for-byte>
+promoted_on: 2026-08-09
+approved_by: founder                       # his address, per R4, or omit
+```
+
+**`model:` must NAME THE MODEL. A pointer is not a record here**, and this is
+the one way to get the convention exactly backwards: `model: see the take's
+sidecar` names no model, `model_licences()` returns no hit, and `publishable()`
+treats "no licence question" as a pass — so a pointer sidecar would CLEAR the
+frame it was written to account for. Name the weights or write nothing.
+
+**What the code does in the meantime, and it is bytes, not names.**
+`build_site.source_frame()` follows a clip's `source_still_path` /
+`source_still_sha256` (and the `init_still` / `init_frame` dialects) to the
+frame, and `recorded_twin()` follows the BYTES from an unprovenanced canon frame
+to any file in the tree holding the same bytes WITH a record — which is the take
+it was copied from, still sitting in `takes/stills/` with the sidecar its render
+wrote. **Eight of the thirty frames in this directory answer that way today**
+(03, 07, 08, 09, 10, 12, 14, 15 — every promotion since 2026-08-08). The frame's
+licence then refuses the clip, the cut, and the episode, naming the take.
+
+**The other twenty-two are older than `takes/stills/` and hold no record
+anywhere** (01, 02, 04, 05, 11, 13, every `-REVOKED-` name, `ALT-07`, and 002b's
+one frame). Those are COUNTED AND PRINTED by the build, not refused — measured
+reason: refusing on absence withheld 23 of the 29 cuts on the `/review` page he
+screens from, every one of them for "nothing says what drew it" rather than for
+a licence, in the same commit that discovered the problem. That is the trade
+`lint_licences` already refused once ("failing the deploy over debt this gate
+itself just discovered would have blocked the founder's own goal for the day").
+A picture is not judged more harshly than the file that holds it.
+
+**THE BACKFILL IS NOT DONE, AND THE PRICE IS MEASURED RATHER THAN GUESSED.**
+Writing the twenty-two sidecars is what turns those counted absences into honest
+licence refusals. Measured by running it: **each sidecar naming animagine adds
+exactly one canon licence-debt line — 25 → 47, against a ratchet of 25** which
+`lint_genome.py` says may never be raised to make a build pass. The count is not
+one thing:
+
+* **fourteen** of them (the canon beat frames) would re-report liability the
+  debt already counts once, through `001-t3-d.yaml`'s fifteen `still_model:
+  cagliostrolab/animagine-xl-3.1` lines. Raising the ceiling to absorb a second
+  reporting of the same asset is precisely what the `ltx-video` comment in
+  `licence_gate.py` refuses to do ("a reporting artifact, with no new
+  unpublishable thing in the tree").
+* **eight** of them (the `-REVOKED-` frames and `ALT-07`) are counted nowhere
+  today, so writing them down IS the tree being found worse than recorded —
+  which is the one reason `LICENCE_DEBT` has ever legitimately risen (21 → 38 on
+  2026-08-03).
+
+Which of those the number should say, and whether the ratchet moves, is D15 and
+it is the founder's — the same answer the four sections above give, now with the
+arithmetic attached. Nothing here was backfilled on a steward's reading of it.

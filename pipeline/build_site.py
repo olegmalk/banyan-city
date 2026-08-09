@@ -474,6 +474,21 @@ COMPOSITE_REASON = {
                "cut, so its record no longer describes what is inside it",
     "unverifiable": "its record of what went into it is incomplete, so what is "
                     "inside it cannot be checked",
+    # A HELD SHOT IS NOT A CONCATENATION AND STILL HAS AN INSIDE. hold_still
+    # makes an mp4 out of ONE PNG and no model runs, so its record honestly says
+    # `model: none` and `model_licence: n/a — inherits the still's licence`. The
+    # licence it inherits was never fetched, so eleven of v34's fifteen beats
+    # were drawn by animagine and asked about nothing. These three say so in a
+    # visitor's words: the picture, not the mux, is what cannot ship.
+    "frame_refused": "the picture it holds comes from a frame this site cannot "
+                     "publish",
+    "frame_missing": "it records which frame it was drawn from, and nothing in "
+                     "the repo holds those pixels any more, so nobody can check "
+                     "what it shows",
+    "frame_unrecorded": "the frame it was drawn from has no provenance record "
+                        "beside it, so nothing says what drew it",
+    "frame_unverifiable": "its record of which frame it was drawn from is too "
+                          "vague to check, so what it shows cannot be verified",
 }
 
 
@@ -621,13 +636,32 @@ def composite_publishable(data: dict, f: Path, inside: frozenset = frozenset()) 
     Paths are repo-relative (render_t3 writes them that way whenever the source
     is inside the tree) and fall back to the cut's own directory, which is what
     makes a cut assembled and judged inside one temp directory answerable at all.
+
+    AND THE MANIFEST IS NOT THE ONLY WAY IN. `ingredients:` lists what render_t3
+    MUXED — clips and audio — and a held beat's clip is one of those rows, so the
+    walk above reaches it and stops there. Underneath it is a PNG that no row
+    names, because hold_still did not mux it: it drew a whole shot out of it.
+    Measured on 2026-08-09, that is how `ep1-v34-PROVISIONAL.mp4` came back
+    `(True, "")` with eleven animagine frames inside it while
+    `takes/stills/06-too-blue-r5-s2.png` — one of the eleven — came back
+    `(False, 'CreativeML Open RAIL++-M')` when asked by name one directory down.
+    `source_frame()` below is the second door, and it is asked for every record
+    that names a frame, not only for cuts: a held clip has no `ingredients:`
+    block at all and is exactly the file this hole was hiding behind.
     """
+    inside = inside | {str(f.resolve())}
     rows = data.get("ingredients")
-    if rows is None:
-        return True, ""
+    if rows is not None:
+        ok, why = ingredients_publishable(rows, f, inside)
+        if not ok:
+            return ok, why
+    return frame_publishable(data, f, inside)
+
+
+def ingredients_publishable(rows, f: Path, inside: frozenset) -> tuple:
+    """The `ingredients:` walk itself — see composite_publishable's docstring."""
     if not isinstance(rows, list) or not all(isinstance(r, dict) for r in rows):
         return False, f"{COMPOSITE_REASON['unverifiable']} (its ingredient list is unreadable)"
-    inside = inside | {str(f.resolve())}
     for row in rows:
         rel = str(row.get("path") or "").strip()
         want = str(row.get("sha256") or "").strip().lower()
@@ -652,6 +686,158 @@ def composite_publishable(data: dict, f: Path, inside: frozenset = frozenset()) 
         ok, why = publishable(src, inside)
         if not ok:
             return False, f"{COMPOSITE_REASON['refused']} — {label}: {why}"
+    return True, ""
+
+
+def source_frame(data: dict, f: Path) -> tuple:
+    """(frame | None, why) — the PNG this record says its pixels came from.
+
+    `(None, "")` means the record names no frame and there is nothing to ask
+    about. `(None, "<why>")` means it DOES name one and the claim cannot be
+    resolved, which is a refusal for the same reason an unresolvable ingredient
+    row is: a claim nobody can check must buy the file nothing, or deleting the
+    claim becomes the cheapest way past the gate.
+
+    RESOLVED BY BYTES WHEREVER BYTES ARE RECORDED, exactly as still_from_record
+    does for posters, and for a sharper reason here. A promotion COPIES a take
+    into `stills/` under a canon name, and canon names change hands: beat 15's
+    has held three different pictures. If this followed the name it would ask
+    about whichever frame is canon TODAY and clear a clip drawn from a frame the
+    founder has since refused. The hash is what makes the answer about this
+    file's pixels rather than about this beat's current pixels.
+
+    WHY takes/ IS SEARCHED TOO, and it is the half that survives promotion: a
+    candidate frame carries its own render-time sidecar under `takes/stills/`
+    and a promoted copy in `stills/` carries whatever the promotion wrote. Both
+    hold the same bytes, so either answers "what drew this"; the takes/ record is
+    the one that has always existed. Canon directories are searched first so the
+    reason a visitor reads names the file the page links.
+    """
+    name, want = record_still_claim(data)
+    hint = str(data.get("source_still_path")
+               or data.get("init_still_path") or "").strip()
+    frame = data.get("init_frame")
+    if not hint and isinstance(frame, dict):
+        hint = str(frame.get("path") or "").strip()
+    # The render box writes windows paths and a backslash is a legal posix
+    # filename character, so Path() would swallow the whole string as one name —
+    # the same trap record_still_claim documents.
+    hint = hint.replace("\\", "/").strip()
+    if not name and not want and not hint:
+        return None, ""
+    hinted = []
+    if hint:
+        p = Path(hint)
+        for cand in ((p if p.is_absolute() else REPO / p), f.parent / p.name):
+            if cand.exists() and cand not in hinted:
+                hinted.append(cand)
+    # Canon stills only for a NAME, which is still_from_record's rule and not an
+    # oversight: `12-undefined.png` exists in `stills/` AND in `takes/stills/`,
+    # and a bare name that matches two files is not evidence about either.
+    canon = [d / name for d in still_dirs() if name and (d / name).exists()]
+    if want:
+        for cand in hinted + canon:
+            if bytes_sha256(cand) == want:
+                return cand, ""
+        for d in frame_dirs():
+            for p in sorted(d.glob("*.png")):
+                if bytes_sha256(p) == want:
+                    return p, ""
+        return None, (f"{COMPOSITE_REASON['frame_missing']} "
+                      f"({name or want[:12] + '…'})")
+    if hinted:
+        return hinted[0], ""
+    if len(canon) == 1:
+        return canon[0], ""
+    if not canon:
+        return None, f"{COMPOSITE_REASON['frame_missing']} ({name})"
+    return None, (f"{COMPOSITE_REASON['frame_unverifiable']} ({name} — no hash, "
+                  f"and {len(canon)} nodes hold that name)")
+
+
+def recorded_twin(frame: Path):
+    """Another file in the tree with these exact bytes AND a record beside it.
+
+    A canon promotion is `cp takes/stills/<take>.png stills/<beat>.png` and
+    nothing else, so the take is still there, still byte-identical, still
+    carrying the sidecar its render wrote. That sidecar is the provenance the
+    copy did not inherit, and following the bytes to it is what stops a
+    promotion from laundering a licence.
+
+    Bytes, never the name: promotion RENAMES (`14-worth-staying-in-r4-s3.png` →
+    `14-worth-staying-in.png`) and canon names change hands between pictures, so
+    a name-based lookup would answer about the wrong frame in exactly the case
+    that matters.
+    """
+    want = bytes_sha256(frame)
+    for d in frame_dirs():
+        for p in sorted(d.glob("*.png")):
+            if p == frame:
+                continue
+            if bytes_sha256(p) == want and lg.sidecar_for(
+                    p, lg.RECORD_SIDECAR_EXT) is not None:
+                return p
+    return None
+
+
+def frame_publishable(data: dict, f: Path, inside: frozenset) -> tuple:
+    """(ok, why) for the frame a record was drawn from — see source_frame().
+
+    THE PROMOTION HOLE THIS CLOSES IS THE SECOND HALF, and it is the worse half.
+    Following the reference is only useful if the frame at the end of it carries
+    a record: `publishable()` reads an unprovenanced file as permitted (the
+    gate's finding, not the build's), so copying an animagine take into
+    `stills/` — which is what a canon promotion IS — stripped the very record
+    that would have refused it. Here, one level inside a cut, absence is a
+    refusal and not a pass; `stills/README.md` carries the matching convention,
+    that a promoted frame gets a sidecar naming the take it came from, its
+    sha256 and the model, so the answer is the licence and not the silence.
+    """
+    frame, why = source_frame(data, f)
+    if why:
+        return False, why
+    if frame is None or str(frame.resolve()) in inside:
+        return True, ""
+    if lg.sidecar_for(frame, lg.RECORD_SIDECAR_EXT) is None:
+        # THE RECORD THE PROMOTION STRIPPED IS USUALLY STILL IN THE TREE, under
+        # the take's name, holding the same bytes. Identical bytes are the
+        # identical picture and therefore the identical provenance — the same
+        # reasoning still_from_record uses to re-poster a renamed frame — so a
+        # canon still with no sidecar is asked through its recorded twin rather
+        # than waved through. Eight of the thirty frames in `stills/` answer
+        # this way today; the other twenty-two are older than `takes/stills/`
+        # and genuinely hold no record anywhere, which is a refusal below and a
+        # backfill in stills/README.md, not a pass.
+        twin = recorded_twin(frame)
+        if twin is None:
+            # AND HERE THE FRAME CHECK STOPS, DELIBERATELY, WITH A COUNT RATHER
+            # THAN A REFUSAL. Twenty-two of the thirty frames in `stills/` are
+            # older than `takes/stills/` and hold no record anywhere, so
+            # refusing on absence would have withheld 23 of the 29 cuts on the
+            # /review page — the surface he screens from — in the same commit
+            # that discovered the problem, and every one of them for "nothing
+            # says what drew it" rather than for a licence. That is the trade
+            # lint_licences already refused once: "failing the deploy over debt
+            # this gate itself just discovered would have blocked the founder's
+            # own goal for the day."
+            #
+            # It is also the rule publishable() states four lines into itself —
+            # unprovenanced is the GATE's finding, not the build's — and a
+            # picture must not be judged more harshly than the file that holds
+            # it. The absence is reported instead: named here, printed at the
+            # end of the build, and answered for real by the promotion sidecars
+            # `stills/README.md` now prescribes. Those cost licence-debt lines
+            # (25 -> 47, measured), which is D15's bill and the founder's call —
+            # which is exactly why this line does not quietly pre-empt it.
+            FRAME_WARNINGS.append(
+                f"{f.name}: drawn from {frame.name}, which carries no provenance "
+                f"record and no recorded twin — nothing in the tree says what "
+                f"drew it (stills/README.md: promotions need a sidecar)")
+            return True, ""
+        frame = twin
+    ok, why = publishable(frame, inside)
+    if not ok:
+        return False, f"{COMPOSITE_REASON['frame_refused']} — {frame.name}: {why}"
     return True, ""
 
 
@@ -868,6 +1054,11 @@ _SHA: dict = {}
 _STILL_DIRS: list = []
 # Every clip whose record cannot be honoured, reported at the end of the build.
 POSTER_WARNINGS: list = []
+# Every file whose source frame carries no provenance anywhere in the tree —
+# counted, not refused (see frame_publishable). Printed at the end of the build
+# so a promotion that strips a record is visible the same day it happens rather
+# than on the day someone asks what an episode is made of.
+FRAME_WARNINGS: list = []
 # How much newer than its clip a still may be before the name stops being
 # evidence. A promotion is hours or days later; a fresh `git clone` stamps every
 # file with the checkout time, so the honest window has to be wider than clock
@@ -902,6 +1093,28 @@ def still_dirs() -> list:
             d for g in sorted((REPO / "genomes").glob("*"))
             for d in sorted(g.glob("nodes/*/stills")) if d.is_dir())
     return _STILL_DIRS
+
+
+_FRAME_DIRS: list = []
+
+
+def frame_dirs() -> list:
+    """Every directory a SOURCE frame can live in — canon stills/ first, then
+    takes/stills/.
+
+    still_dirs() answers "which frame does the page show", and canon is the only
+    honest answer to that. This answers "which frame drew this file", where a
+    provisional pick out of `takes/stills/` is a perfectly real answer — v34
+    holds one on beat 6 — and where the takes/ copy is often the only one whose
+    record survived promotion. Order matters: a promoted frame exists twice, and
+    the refusal a visitor reads should name the file the site links.
+    """
+    global _FRAME_DIRS
+    if not _FRAME_DIRS:
+        _FRAME_DIRS = still_dirs() + sorted(
+            d for g in sorted((REPO / "genomes").glob("*"))
+            for d in sorted(g.glob("nodes/*/takes/stills")) if d.is_dir())
+    return _FRAME_DIRS
 
 
 def record_still_claim(data: dict) -> tuple:
@@ -2941,6 +3154,18 @@ def main() -> None:
                         (gdir / f"{media}-clips" / "WITHHELD.md").write_text(
                             withheld_note(withheld))
 
+    # THE COUNT THE PROMOTION HOLE COSTS, said out loud on every build. Each of
+    # these is a published file whose picture came out of a frame nothing in the
+    # tree can account for; the gate cannot refuse them on a licence it has no
+    # record of, so the honest reading is "we do not know what drew this", and a
+    # number nobody prints is a number nobody retires.
+    if FRAME_WARNINGS:
+        frames = sorted({w.split("drawn from ")[-1].split(",")[0] for w in FRAME_WARNINGS})
+        print(f"  ! {len(FRAME_WARNINGS)} published file(s) hold pixels from "
+              f"{len(frames)} unprovenanced frame(s) — a promotion copied the "
+              f"picture and left its record behind (stills/README.md)")
+        for w in FRAME_WARNINGS[:10]:
+            print(f"    · {w}")
     total = sum(len(g["nodes"]) for g in genomes)
     posters = sum(1 for v in _POSTERS.values() if v)
     print(f"✓ built _site/ — {len(genomes)} genome(s), {total} node pages, {posters} posters"

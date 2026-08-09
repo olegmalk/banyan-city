@@ -5833,6 +5833,174 @@ def test_a_steward_pick_stays_labelled_after_it_is_concatenated(tmp: Path):
           "provisional" not in chead and "provisional_beats" not in chead)
 
 
+# ====================================================================== #
+# A HELD SHOT IS ONLY AS PUBLISHABLE AS THE FRAME IT HOLDS
+# — canon-promotion-provenance-1786320000
+#
+# `ingredients:` closed the concatenation door and left the picture door open.
+# render_t3 lists what it MUXED — clips and audio — so a held beat's clip is a
+# row and the PNG hold_still drew it out of is not. Eleven of v34's fifteen
+# beats are held, every one of them says `model: none` honestly (no video model
+# ran), and on 2026-08-09 `publishable()` therefore cleared the whole cut while
+# `takes/stills/06-too-blue-r5-s2.png` — inside it — answered
+# `(False, 'CreativeML Open RAIL++-M')` when asked by name.
+#
+# The second half is worse and is what these pin: a canon promotion is a COPY
+# into `stills/`, the copy carries no sidecar, and publishable() reads
+# unprovenanced as permitted — so promoting a frame is what strips the record
+# that would have refused it. The bytes are the way back: the take is still in
+# the tree under its own name with its own record, and identical bytes are the
+# identical picture.
+# ====================================================================== #
+
+
+def _frame(d: Path, name: str, body: bytes, model) -> tuple:
+    """A PNG and (optionally) the render-time sidecar beside it."""
+    import hashlib
+
+    import yaml as _y
+    d.mkdir(parents=True, exist_ok=True)
+    p = d / name
+    p.write_bytes(body)
+    if model is not None:
+        (d / (name + ".meta.yaml")).write_text(_y.safe_dump(
+            {"platform": "local-gpu (rtx5090)", "model": model,
+             "seed": 20263722, "cost_usd": 0}, sort_keys=False))
+    return p, hashlib.sha256(body).hexdigest()
+
+
+def _held(tmp: Path, name: str, frame_rel: str, frame_sha: str) -> Path:
+    """A hold_still clip: no video model ran, and the frame is the whole shot."""
+    import yaml as _y
+    p = tmp / name
+    p.write_bytes(b"one still, pushed in on")
+    (tmp / (name + ".meta.yaml")).write_text(_y.safe_dump(
+        {"platform": "local-deterministic (pipeline/hold_still.py, ffmpeg)",
+         "model": "none",
+         "model_licence": "n/a — inherits the still's licence, see stills/README.md",
+         "source_still": Path(frame_rel).name,
+         "source_still_path": frame_rel,
+         "source_still_sha256": frame_sha, "cost_usd": 0}, sort_keys=False))
+    return p
+
+
+def test_a_held_shot_is_only_as_publishable_as_the_frame_it_holds(tmp: Path):
+    """`model: none` is the truth and it is not the answer.
+
+    Held clips are the majority of every recent cut, so the direction that
+    matters is asserted both ways: a clip drawn from a refused frame is
+    withheld and says WHICH frame, and a clip that names no frame at all is
+    untouched — a gate that withholds everything is as broken as one that
+    withholds nothing.
+    """
+    import build_site as bs
+
+    takes = tmp / "takes" / "stills"
+    frame, sha = _frame(takes, "06-too-blue-r5-s2.png",
+                        b"an animagine frame", "cagliostrolab/animagine-xl-3.1")
+    check("the frame does not publish on its own", bs.publishable(frame)[0] is False)
+
+    saved_still, saved_frame = bs._STILL_DIRS, bs._FRAME_DIRS
+    try:
+        # The record's path is repo-relative on the real tree; here the tree is
+        # the temp dir, so the resolver is pointed at it and nothing else.
+        bs._STILL_DIRS, bs._FRAME_DIRS = [], [takes]
+        held = _held(tmp, "06-too-blue.mp4", "takes/stills/06-too-blue-r5-s2.png", sha)
+        ok, why = bs.publishable(held)
+        check("a held shot drawn from a refused frame is withheld", ok is False)
+        check("...and the reason names the frame and its licence",
+              "06-too-blue-r5-s2.png" in why and "RAIL++" in why)
+
+        plain, _ = _clip(tmp, "02-b.mp4", b"a slate", "none")
+        check("a clip that names no frame is unaffected", bs.publishable(plain) == (True, ""))
+
+        # A frame the record can name but the tree cannot produce is a refusal,
+        # not a shrug: the claim is about bytes nobody holds.
+        gone = _held(tmp, "07-x.mp4", "takes/stills/07-never-existed.png", "f" * 64)
+        check("a frame claim no file in the tree can satisfy withholds the shot",
+              bs.publishable(gone)[0] is False)
+    finally:
+        bs._STILL_DIRS, bs._FRAME_DIRS = saved_still, saved_frame
+
+
+def test_a_canon_promotion_cannot_strip_the_record_that_refuses_it(tmp: Path):
+    """The promoted copy has no sidecar; the take it was copied from does.
+
+    This is the hole in one test. `cp takes/stills/03-...-r4-s3.png
+    stills/03-deploy-succeeded.png` is the whole of a canon promotion, and the
+    copy arrives unprovenanced — which publishable() reads as permitted. Asked
+    through the bytes instead of through the name, the take's own record is
+    still there and still says animagine.
+
+    THE SECOND HALF IS THE DELIBERATE LIMIT, and it is pinned so that nobody
+    "fixes" it by accident: when NO copy of those bytes carries a record, the
+    frame is counted and reported, not refused. Twenty-two of the thirty frames
+    in `stills/` are older than `takes/stills/` and answer that way, and
+    refusing them would empty the founder's review page over an absence the
+    licence gate already reports. stills/README.md's promotion sidecar is what
+    retires that list; this test asserts the count exists in the meantime.
+    """
+    import build_site as bs
+    import licence_gate as lg
+
+    stills, takes = tmp / "stills", tmp / "takes" / "stills"
+    take, sha = _frame(takes, "03-deploy-succeeded-r4-s3.png",
+                       b"the frame he picked", "cagliostrolab/animagine-xl-3.1")
+    promoted, _ = _frame(stills, "03-deploy-succeeded.png", take.read_bytes(), None)
+    saved_still, saved_frame, saved_warn = bs._STILL_DIRS, bs._FRAME_DIRS, list(bs.FRAME_WARNINGS)
+    try:
+        bs._STILL_DIRS, bs._FRAME_DIRS = [stills], [stills, takes]
+        bs.FRAME_WARNINGS.clear()
+        check("the promoted copy carries no record of its own",
+              lg.sidecar_for(promoted, lg.RECORD_SIDECAR_EXT) is None)
+        check("...so asked on its own it still reads as permitted",
+              bs.publishable(promoted) == (True, ""))
+
+        held = _held(tmp, "03-deploy-succeeded.mp4", "stills/03-deploy-succeeded.png", sha)
+        ok, why = bs.publishable(held)
+        check("a shot held on a promoted frame is refused through the take's record",
+              ok is False and "RAIL++" in why)
+        check("...and the reason names the take, which is where the record lives",
+              "03-deploy-succeeded-r4-s3.png" in why)
+        check("nothing was counted as unprovenanced — the record was found",
+              bs.FRAME_WARNINGS == [])
+
+        # Now the frame nobody kept a take of: same promotion, no twin anywhere.
+        orphan, osha = _frame(stills, "04-the-fall.png", b"a 2026-07-27 approval", None)
+        held2 = _held(tmp, "04-the-fall.mp4", "stills/04-the-fall.png", osha)
+        check("a frame with no record anywhere does not withhold the shot",
+              bs.publishable(held2) == (True, ""))
+        check("...it is counted and named instead, so the absence is visible",
+              len(bs.FRAME_WARNINGS) == 1 and "04-the-fall.png" in bs.FRAME_WARNINGS[0])
+    finally:
+        bs._STILL_DIRS, bs._FRAME_DIRS = saved_still, saved_frame
+        bs.FRAME_WARNINGS[:] = saved_warn
+
+
+def test_the_live_v34_cut_is_refused_by_the_frames_inside_it():
+    """The measured case, on the real tree, and it must stay refused.
+
+    `review/provisional-v34/ep1-v34-PROVISIONAL.mp4` is the cut the gate cleared
+    on 2026-08-09 with eleven animagine frames in it. The answer this asserts is
+    the licence one — not "unrecorded", not "missing" — because the fix is a
+    founder decision (D15) and a refusal that named the wrong reason would send
+    whoever reads it to re-record a sidecar instead.
+
+    It flips to publishable the day D15 is settled, and this test is meant to
+    fail then: that is a founder decision landing, not a regression.
+    """
+    import build_site as bs
+
+    cut = REPO / "review" / "provisional-v34" / "ep1-v34-PROVISIONAL.mp4"
+    if not cut.exists():
+        return                              # provisional cuts are not tracked
+    ok, why = bs.publishable(cut)
+    check("v34 is not publishable — its frames are refused one directory down",
+          ok is False)
+    check("...and the reason it gives is the licence, not a missing record",
+          "RAIL++" in why)
+
+
 def test_a_region_mask_conditions_its_box_and_nothing_else():
     """A masked IP-Adapter is only regional if the mask really has an outside.
 
@@ -6084,6 +6252,12 @@ def main():
         test_a_cut_whose_ingredients_all_pass_publishes_unchanged(Path(td))
     with tempfile.TemporaryDirectory() as td:
         test_a_steward_pick_stays_labelled_after_it_is_concatenated(Path(td))
+    # ...AND A HELD SHOT IS ONLY AS PUBLISHABLE AS THE FRAME IT HOLDS.
+    with tempfile.TemporaryDirectory() as td:
+        test_a_held_shot_is_only_as_publishable_as_the_frame_it_holds(Path(td))
+    with tempfile.TemporaryDirectory() as td:
+        test_a_canon_promotion_cannot_strip_the_record_that_refuses_it(Path(td))
+    test_the_live_v34_cut_is_refused_by_the_frames_inside_it()
     # REGIONAL IP-ADAPTER GEOMETRY (memo §3.3) — pure: PIL only, no torch.
     test_a_region_mask_conditions_its_box_and_nothing_else()
     test_a_box_that_names_no_region_is_refused_not_rounded()
