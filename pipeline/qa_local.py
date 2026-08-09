@@ -24,11 +24,17 @@ import re
 import subprocess
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = os.path.join(REPO, "_site")
 DEFAULT_BASE = "http://127.0.0.1:8787"
+
+# The screening server lives in the repo so the next session can find it. It is
+# the only one whose path resolution matches production — see its docstring.
+REPO_SERVER_REL = "pipeline/serve_local.py"
+REPO_SERVER = os.path.join(REPO, REPO_SERVER_REL)
 
 # Builders that contribute to _site/, in dependency order. build_site.py lays
 # down the tree; the others write pages into it and must run after.
@@ -72,25 +78,16 @@ DIRLIST_MARKER = "Directory listing for"
 # The fix belongs in serve_local.py, and the gate carries it rather than making
 # whoever hits this rediscover it.
 DIRLIST_NOTE = "served a DIRECTORY LISTING, not the page"
-DIRLIST_REMEDY = """A directory listing means the screening server prefers a directory over the
-sibling .html. Production (vercel.json: cleanUrls=true) prefers the .html, so
-the local server is the thing that is wrong. Patch translate_path in the
-serve_local.py named above to check for the shadowing case FIRST:
+DIRLIST_REMEDY = """The server resolved /x to the directory x/ instead of to x.html. Production
+(vercel.json: cleanUrls=true) resolves it the other way, so THE SERVER IS WRONG
+AND THE SITE IS FINE — banyan.city does not have this bug and must not be
+"fixed" for it. Restart the server named above using the repo's own, which gets
+the order right:
 
-    def translate_path(self, path):
-        p = super().translate_path(path)
-        if (os.path.isdir(p)
-                and not os.path.exists(os.path.join(p, "index.html"))
-                and os.path.exists(p.rstrip("/") + ".html")):
-            return p.rstrip("/") + ".html"     # cleanUrls: x.html beats x/
-        if os.path.exists(p):
-            return p
-        if not os.path.splitext(p)[1] and os.path.exists(p.rstrip("/") + ".html"):
-            return p.rstrip("/") + ".html"
-        return p
+    python3 %s _site <port>
 
-A running server has the old code loaded, so it must be restarted to pick this
-up. Coordinate before restarting — other lanes screen against the same port."""
+Editing a file is not enough: a running process holds the code it started with.
+""" % REPO_SERVER_REL
 
 
 # ---------------------------------------------------------------- utilities
@@ -125,6 +122,7 @@ def c(code, s):
 
 green = lambda s: c("32", s)
 red = lambda s: c("31", s)
+yellow = lambda s: c("33", s)
 bold = lambda s: c("1", s)
 
 
@@ -243,57 +241,113 @@ def fetch(base, route):
         return e.code, e.read().decode("utf-8", "replace"), url, rec.hops
 
 
-def running_server_cmd():
-    """Full command line of a running serve_local.py, if one is up."""
+def _run(argv):
     try:
-        ps = subprocess.run(
-            ["ps", "-Ao", "command"], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL
+        return subprocess.run(
+            argv, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL
         ).stdout.decode("utf-8", "replace")
     except Exception:
+        return ""
+
+
+def listening_cmd(base):
+    """Command line of whatever is actually listening on `base`'s port.
+
+    Asked by PID rather than by scanning for a name: several servers can be up at
+    once, and a failure that names the wrong one sends the reader to patch a file
+    that is not serving them. It also catches the case that matters most — the
+    thing on the port is not the server anyone thinks it is."""
+    port = urllib.parse.urlsplit(base).port
+    if not port:
         return None
-    for line in ps.splitlines():
-        if "serve_local.py" in line and "grep" not in line:
-            return line.strip()
-    return None
+    pids = _run(["lsof", "-nP", "-iTCP:%d" % port, "-sTCP:LISTEN", "-t"]).split()
+    if not pids:
+        return None
+    return _run(["ps", "-p", pids[0], "-o", "command="]).strip() or None
 
 
-def serve_local_script():
-    """Path to the serve_local.py backing the screening server — from the running
-    process if there is one, else by search. Sessions keep it in a scratchpad, so
-    the path is per-session and has to be discovered, never hardcoded."""
-    cmd = running_server_cmd()
-    if cmd:
-        for tok in cmd.split():
-            if tok.endswith("serve_local.py"):
-                return tok
-    for root in ("/private/tmp/claude-501", "/tmp"):
-        for dirpath, dirnames, filenames in os.walk(root):
-            if dirpath.count(os.sep) - root.count(os.sep) > 6:
-                dirnames[:] = []
-                continue
-            if "serve_local.py" in filenames:
-                return os.path.join(dirpath, "serve_local.py")
-    return None
+def screening_servers():
+    """(port, command) for every listening process that is a serve_local.py.
+
+    Found by asking who holds a listening socket, not by grepping ps for the
+    filename: the gate's own shell command line can contain "serve_local.py" and
+    match itself, which silently turned a one-server machine into an ambiguous
+    two-candidate scan and suppressed the diagnosis."""
+    out = []
+    for line in _run(["lsof", "-nP", "-iTCP", "-sTCP:LISTEN"]).splitlines()[1:]:
+        parts = line.split()
+        if len(parts) < 9:
+            continue
+        cmd = _run(["ps", "-p", parts[1], "-o", "command="]).strip()
+        if "serve_local.py" in cmd:
+            out.append((parts[8].rsplit(":", 1)[-1], cmd))
+    return out
+
+
+def running_server_cmd(base=None):
+    """The server behind `base` if one is listening there, else a lone screening
+    server on some other port — which makes "it is up, just not where you looked"
+    a diagnosis instead of a guess."""
+    if base:
+        cmd = listening_cmd(base)
+        if cmd:
+            return cmd
+    others = screening_servers()
+    return others[0][1] if len(others) == 1 else None
+
+
+def start_command(base):
+    """How to (re)start the screening server, always naming the REPO copy. A
+    scratchpad server dies with its session and cannot be found or fixed by the
+    next one, which is how the /watch resolution bug survived."""
+    if not os.path.isfile(REPO_SERVER):
+        return None
+    port = urllib.parse.urlsplit(base).port or 8787
+    return "python3 %s _site %d &" % (REPO_SERVER_REL, port)
 
 
 def server_start_hint(base):
     """The exact command to bring the screening server back up."""
-    cmd = running_server_cmd()
-    script = serve_local_script()
-    start = ("Start it with:\n    python3 %s %s &" % (script, SITE)) if script else None
-    if cmd:
+    start = start_command(base)
+    start_block = ("Start it with:\n    %s" % start) if start else None
+    others = screening_servers()
+    if others:
+        where = "\n".join("    port %s — %s" % (p, c) for p, c in others)
         msg = (
-            "A serve_local.py IS running but did not answer %s:\n    %s\n"
-            "Check it is bound to that host:port." % (base, cmd)
+            "Nothing is answering %s, but a screening server IS up elsewhere:\n%s\n"
+            "Point --base at that port, or start one here." % (base, where)
         )
-        return msg + "\n" + start if start else msg
-    if start:
-        return start
+        return (msg + "\n" + start_block) if start_block else msg
+    if start_block:
+        return start_block
     return (
-        "No serve_local.py found. Any static server with Vercel-style clean URLs\n"
-        "will do, e.g.:\n    python3 -m http.server 8787 --directory %s &\n"
-        "(note: the stock http.server has no clean URLs, which is what 404'd before)" % SITE
+        "%s is missing. Any static server with Vercel-style clean URLs will do,\n"
+        "e.g.:\n    python3 -m http.server 8787 --directory %s &\n"
+        "(note: the stock http.server has no clean URLs, which is what 404'd before)"
+        % (REPO_SERVER_REL, SITE)
     )
+
+
+# --------------------------------------------------------------- shadowing
+
+
+def shadowed_routes():
+    """Clean routes that two different files could answer: `<name>.html` and a
+    directory `<name>/`. Production resolves these to the .html; a server that
+    resolves to the directory serves a file listing instead of the page. Reported
+    even when the current server gets it right, because the collision is the
+    hazard — /watch was one of these and nobody knew until the founder saw it."""
+    out = []
+    if not os.path.isdir(SITE):
+        return out
+    for name in sorted(os.listdir(SITE)):
+        if not name.endswith(".html") or name == "index.html":
+            continue
+        stem = name[: -len(".html")]
+        d = os.path.join(SITE, stem)
+        if os.path.isdir(d):
+            out.append((stem, os.path.isfile(os.path.join(d, "index.html"))))
+    return out
 
 
 # ------------------------------------------------------------------- checks
@@ -397,7 +451,10 @@ def main():
         print()
         if any(DIRLIST_NOTE in note for _, _, _, note in failures):
             print(bold("HOW TO FIX THE DIRECTORY-LISTING FAILURES"))
-            print("  screening server: %s" % (serve_local_script() or "<not found>"))
+            print(
+                "  serving %s: %s"
+                % (args.base, running_server_cmd(args.base) or "could not identify the process")
+            )
             print(DIRLIST_REMEDY)
             print()
 
@@ -406,6 +463,21 @@ def main():
         mark = green(" ok ") if ok else red("FAIL")
         print("  %s %-*s %s" % (mark, width, route, note))
     print()
+
+    shadows = shadowed_routes()
+    if shadows:
+        print(bold("SHADOWED (%d) — two files claim one clean route" % len(shadows)))
+        for stem, has_index in shadows:
+            detail = (
+                "%s.html and %s/index.html both claim it; production picks one, "
+                "a local server may pick the other" % (stem, stem)
+                if has_index
+                else "%s.html and %s/ (no index.html); production serves the .html, "
+                "a server that picks the directory serves a file listing" % (stem, stem)
+            )
+            print("  %s %-*s %s" % (yellow("warn"), width, "/" + stem, detail))
+        print("  Not a failure while the routes above are green — a standing hazard.")
+        print()
 
     if failures:
         print(red("QA gate FAILED — do not hand this URL to the founder."))
