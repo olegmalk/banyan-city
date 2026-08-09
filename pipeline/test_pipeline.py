@@ -5175,6 +5175,44 @@ def test_a_hand_claim_writes_lines_every_reader_already_parses():
           ct.append_line("07:00:00Z STARTED task=x", "07:01:00Z DONE task=x")
           == "07:00:00Z STARTED task=x\n07:01:00Z DONE task=x\n")
 
+    # --at: the hour the work FINISHED, for a claim written after the fact. The
+    # log is the record, so a mark typed at 14:00 for a job that ended at 09:00
+    # should say 09:00 — the alternative is losing the hour or burying it in
+    # free text, which is what the 2026-08-09 catch-up lines had to do.
+    import time as _time
+
+    def _refuses(fn):
+        try:
+            fn()
+        except BaseException:
+            return True
+        return False
+
+    at = ct.clock_at("09:00:00Z")
+    late = ct.heartbeat_line("done", tid, clock=at)
+    check("--at stamps the hour the work finished, not the hour it was typed",
+          late.startswith("09:00:00Z DONE"))
+    check("...and the readers key on the mark exactly as they do for a live one",
+          fw.heartbeat_attempts(ct.append_line("", late))[0] == {tid}
+          and qp.parse_done(ct.append_line("", late)) == {tid})
+    check("a trailing Z is optional and a bare clock means the same instant",
+          ct.clock_at("09:00:00") == at)
+
+    # THE GUARD THAT MATTERS: today only. An earlier day cannot be expressed, so
+    # a yesterday completion cannot be typed into today's count. 40f6ca4 is the
+    # live example — 21:08 UTC on 2026-08-08, which reads as the 9th in a +04:00
+    # git log, and stamping it would have put yesterday's work in "finished today".
+    check("--at can only ever land on today, so no wrong-day claim is typeable",
+          _time.strftime("%Y-%m-%d", _time.gmtime(at))
+          == _time.strftime("%Y-%m-%d", _time.gmtime()))
+    check("a clock that is not a clock is refused rather than guessed",
+          _refuses(lambda: ct.clock_at("yesterday")))
+
+    # And it cannot ride the wrapper form, which writes DONE from an exit code
+    # that has not happened yet — there is no past hour to carry.
+    check("--at is refused with `-- <cmd>`, which claims work not yet run",
+          _refuses(lambda: ct.main(["some-id", "--at", "09:00:00Z", "--", "true"])))
+
 
 def test_a_hand_claim_reads_the_verdict_off_the_exit_code():
     """DONE is written from the exit code, never from intent.

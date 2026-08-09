@@ -55,9 +55,12 @@ Usage:
   python3 pipeline/claim_task.py <id> done
   python3 pipeline/claim_task.py <id> fail --note "why"
   python3 pipeline/claim_task.py <id> interrupted        # costs no attempt
-Flags: --branch <name>, --no-push (local only — says so loudly), --force
+  python3 pipeline/claim_task.py <id> done --at 09:00:00Z   # finished earlier today
+Flags: --branch <name>, --no-push (local only — says so loudly), --force,
+       --at HH:MM:SSZ (today only — see clock_at)
 """
 import argparse
+import calendar
 import os
 import subprocess
 import sys
@@ -222,11 +225,41 @@ def publish(branch: str, text: str, message: str, push: bool = True) -> tuple:
     return sha, True
 
 
+def clock_at(hhmmss: str) -> float:
+    """`HH:MM:SSZ` today (UTC) as epoch seconds — the `--at` catch-up stamp.
+
+    FOR A MARK WRITTEN AFTER THE WORK, which is the normal shape of a hand-run:
+    an agent finishes at 09:00Z, does three more things, and claims the task at
+    14:00Z. Without this the log says 14:00 and the hour the work actually
+    finished is lost, or survives only as free text in a note.
+
+    TODAY ONLY, and that is a guard rather than a missing feature. The heartbeat
+    carries a clock and no date; the DATE every reader uses comes from the commit
+    that publishes the line (build_sim.heartbeat_history). So a mark can carry the
+    hour the work really finished, but it is always published on the day it is
+    written, and a completion from an earlier day CANNOT be expressed here — which
+    is the point. On 2026-08-09 both candidate backfills for an earlier day
+    (held-zoom-rate-repick, and ep1-v33-assemble via 40f6ca4, which is 21:08 UTC
+    on 08-08 and only looks like the 9th because this box is +04:00) would have
+    landed a yesterday completion in "finished today". Backdating the COMMIT is
+    the only way to do that honestly, and forging a git timestamp to move a
+    number on a page is the thing this file exists to prevent.
+
+    IT DOES NOT CHANGE WHAT THE STATUS PAGE SHOWS. The page ages a mark from its
+    commit, so a catch-up line still reads as recent there; this puts the true
+    hour in the log, where the record is.
+    """
+    t = time.strptime(hhmmss.strip().rstrip("Zz"), "%H:%M:%S")
+    now = time.gmtime()
+    return calendar.timegm((now.tm_year, now.tm_mon, now.tm_mday,
+                            t.tm_hour, t.tm_min, t.tm_sec, 0, 0, 0))
+
+
 def mark(task_id: str, stage: str, note: str = "", branch: str = HAND_BRANCH,
-         push: bool = True) -> str:
+         push: bool = True, clock=None) -> str:
     """Append one mark for `task_id` and publish it. Returns the line written."""
     text, _parent = base_heartbeat(branch)
-    line = heartbeat_line(stage, task_id, note)
+    line = heartbeat_line(stage, task_id, note, clock)
     sha, pushed = publish(branch, append_line(text, line), f"hb: {line}", push=push)
     where = f"pushed to {branch}" if pushed else f"local commit {sha[:12]} — NOT pushed"
     print(f"  {line}   [{where}]", flush=True)
@@ -262,7 +295,20 @@ def main(argv: list = None) -> int:
                    help="write the commit and do not publish it — says so loudly")
     p.add_argument("--force", action="store_true",
                    help="claim an id that is not in pipeline/farm-queue.yaml")
+    p.add_argument("--at", default=None, metavar="HH:MM:SSZ",
+                   help="stamp the mark with the hour the work really finished "
+                        "(TODAY, UTC) instead of the hour it is being typed. For a "
+                        "claim written after the fact; an earlier day cannot be "
+                        "expressed and must not be. Does not change the age the "
+                        "status page shows, which comes from the commit")
     args = p.parse_args(own)
+    # --at records something that ALREADY happened, so it cannot ride the wrapper:
+    # that form writes STARTED before work that has not run and DONE from an exit
+    # code that does not exist yet, and neither of those has a past hour to carry.
+    if args.at and not args.stage:
+        p.error("--at records a mark for work that is already finished, so it "
+                "needs an explicit stage; it cannot be used with `-- <command>`")
+    clock = clock_at(args.at) if args.at else None
 
     if bool(args.stage) == bool(cmd):
         p.error("give exactly one of: a stage (started|done|fail|interrupted), "
@@ -284,7 +330,7 @@ def main(argv: list = None) -> int:
 
     push = not args.no_push
     if args.stage:
-        mark(args.task_id, args.stage, args.note, args.branch, push)
+        mark(args.task_id, args.stage, args.note, args.branch, push, clock)
         return 0
 
     mark(args.task_id, "started", args.note, args.branch, push)
