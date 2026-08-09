@@ -3365,3 +3365,82 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+- id: ep1-b14-v34-motion-sample
+  date: 2026-08-10
+  kind: clip
+  subject: "node 001 beat 14 WORTH STAYING IN - v34 plays this beat as a HELD
+    STILL with a 12% push-in and it measures median 0.01 with 88% of frame pairs
+    frozen (QA-v34-0810.md). Two LTX-2.3-Distilled i2v samples from the SAME
+    canon frame b14-r4-s3 (sha ab1ecdc9.., sha-verified byte-identical mac<->box
+    before either run). The still was NOT regenerated: shots.md rules the beat
+    canon and nothing re-renders on it, and the beat is marked `needs footage`."
+  steward_provisional: true
+  gates: {G1_approved_plate: pass, G2_script_approved: pass,
+          G5_provisional_labelled: pass}
+  pick: null
+  no_taste_verdict_offered: >-
+    R4 is the founder's. What is recorded here is a MEASURED defect with a
+    mechanical cause and its fix. Nothing was published, spent, promoted or put
+    on his screen; LTX clips are withheld by D16 regardless.
+  predictions_written_before_output_seen: true
+  predictions:
+    motion_median_band: "0.8 - 2.4, point estimate 1.5 (the band the three real-
+      motion beats 01/02/11 occupy at 1.75 / 2.35 / 2.36)"
+    frozen_share: "under 10% against the clip's 88%, confidence 0.70"
+    invents_humans: "no, confidence 0.70"
+    invents_other_objects: "possible, confidence 0.40"
+    subject_holds: "the sapling stays a single upright stem, confidence 0.65"
+    overall: "clears the moves bar (median > 0.8), confidence 0.70"
+  r1:
+    clip: "ltx23-b14-s20260745.mp4 sha ad75c9f47f35559a844352cad18a383e88f77365b2baf5980f038d4eca0fb7eb"
+    measured: {motion_median: 6.87, frozen: "0%", wall_s: 175, rc: 0}
+    verdict_mechanical: REJECT
+    why: >-
+      the sapling bends monotonically from frame 40 and is near-horizontal and
+      leaving frame by 64. Beat 14's line is "I can only make this spot worth
+      staying in" - the want of the series - so a wilting plant does not merely
+      look wrong, it states the opposite of the line it plays under.
+    cause: >-
+      the prompt, not the model. r1 said "its thin stem bending and springing
+      back"; LTX honoured `bending` and never `springing back`, because a
+      65-frame distilled i2v has no mechanism that returns a pose to its start.
+      Directional verbs are read as trajectories for the whole clip.
+  r2:
+    clip: "ltx23-b14r2-s20260745.mp4 sha 985a5f7875c7505bbb1dad3e013b5ef57205cb951798519645bc9e38f9efe451"
+    changed: "the prompt ONLY - ambient verbs, an explicit hold-position anchor,
+      locked framing. Seed held at 20260745, recipe byte-identical otherwise."
+    measured: {motion_median: 4.45, frozen: "0%", wall_s: 165, rc: 0}
+    verdict_mechanical: PASS
+    holds: "upright all 65 frames; style, palette and linework hold from the
+      conditioning frame; no human, hand, face or invented object in any frame."
+    residual_observation_not_a_verdict: >-
+      the framing drifts upward and the leaf tips crop at the top edge by frame
+      56. It reads as the plant growing, which suits the beat, but whether that
+      is right is R4's.
+  prediction_scorecard:
+    hits: "no invented humans; no invented objects; frozen share; beats baseline"
+    misses: >-
+      the motion band (predicted 0.8-2.4, got 6.87) and subject_holds. Both
+      misses were the same event and the direction of the miss WAS the finding.
+  the_finding_worth_keeping: >-
+    THE METRIC WOULD HAVE GREEN-LIT THE DEFECT. 6.87 is five times the cut the
+    founder picked (1.30) and three times the busiest real beat in the episode
+    (2.36), and it is that high precisely BECAUSE the subject is falling over.
+    mean-|delta| cannot separate "alive" from "collapsing" - both are large
+    frame-to-frame change - so on a beat like this a high score is as much a
+    defect signature as 0.01 is. Chaining the wave on the number alone would have
+    rendered five more beats before anyone looked at one. This is the same trap
+    CLAUDE.md records for the K recipe, arrived at from the opposite direction,
+    and it is the reason the sample rule is written the way it is.
+  negatives_cannot_help_here: >-
+    recorded so it is not re-discovered: at guidance 1.0 the distilled schedule
+    runs no unconditional pass, so the negative prompt changes NO pixel on this
+    path (the b01 sidecar says so in its own text). Every constraint has to be
+    stated positively in the positive prompt. No result in this record may be
+    attributed to a negative term.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
