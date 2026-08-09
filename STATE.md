@@ -5991,3 +5991,54 @@ already drawn, and it is a physical dependency, not a deferral.
 Sources for the tag finding: cagliostrolab/animagine-xl-3.1 model card
 (huggingface.co), prompthero.com published `no humans, scenery` prompts,
 techtactician.com booru-tagging guide for SDXL anime models.
+
+### Closed out 17:57 — the key the founder is sent to, and the claim the box is still holding
+
+The round above was complete in every place except the one the founder actually
+reads. `REVIEW-KEY-0808.md` had **no r4 rows at all**: it still called
+`beat06-r3` and `beat14-r3` "current", so a pick spoken as `b14-r4-s0` resolved
+nowhere, and the checklist and this file both send him to that key. Appended in
+`8bfe053` — r4 rows for both beats with source PNGs and seeds, r3 rows re-marked
+as also appearing on the r4 sheets, the sheet table naming `beat06-r4` and
+`beat14-r4` with the r3 sheets demoted. Both predictions are written into the
+key in words, because neither is marked on a sheet: beat 06 offers no pick at
+all, beat 14 offers `b14-r4-s0` with the argument against it and the no-roots
+fault beside it.
+
+**The anti-rule the round produced now lives in the model, not only in a
+sidecar.** `taste/steward-model.v1.md` gains a standing behaviour: silence on an
+element is not approval of it, and A5's anchor set is the frames he has PASSED
+and nothing else. Beat 6 r3 had been scored +2 on A5 for matching
+`06-too-blue-REVOKED-leaf.png` — a frame he threw out on 2026-08-07 — so the
+cloud dialect he then called *"weird cloud formations"* was rewarded for
+resembling a picture he had already rejected, because his verdict on it never
+mentioned clouds. It sits in §2 where the next scoring pass reads it.
+
+**The 5090 is still advertising a claim for work that finished.**
+`GPU-CLAIM.txt` reads CLAIMED by `beat06-14-r4-0809` and schtask
+`banyan-redraw2` is still registered, though the run exited rc=0 and its outputs
+were pulled and committed hours ago. Nothing in the repo said so — `grep
+banyan-redraw2` returned nothing — so the next lane wanting the card would read
+a live lock on finished work. Filed as `rtx5090-release-stale-redraw2-claim-…`
+in **`backlog:`**, not `tasks:` (workers read `tasks` only, and this cannot run),
+`gate: hardware`, with a four-step cleanup that includes querying the schtask
+back after the delete. **Treat that claim line as stale by evidence.**
+
+Two corrections against this lane's own work, recorded rather than quietly
+fixed. (1) The box address was pinged as `192.168.1.157` and the loss reported
+as proof it was down; the 5090 is `192.168.3.157`. Re-probed correctly at 17:55
+— 0 of 4 packets and an ssh `Operation timed out` on port 22 — so the
+conclusion held, but the first evidence was of a different machine (`8c5f84c`).
+An ssh probe attempted before that had also silently not run: it was wrapped in
+`timeout`, which does not exist on macOS. (2) This lane was handed "unreachable
+since ~13:30", and the r4 stills have local mtimes of **17:15:59 and 17:16:06**
+— a transfer off that box. The outage starts after 17:16, not at 13:30; the
+earlier figure puts it before the run it supposedly interrupted. Relatedly, the
+`telemetry: rtx5090 … (1441 min)` line pushed to `farm-results-rtx5090` at 17:50
+is WORKER-heartbeat age, not reachability: this was a hand-run that took its own
+id and left the queue alone, so `farm_worker` wrote no lines while it held the
+card.
+
+Lint 0 violations (ratchet unchanged at 25), 28 pipeline tests pass, CI green on
+`39c3b0d` (lint-genome, pages, mirror). Text and queue only — no candidate pixel
+was published and nothing was opened on his screen.
