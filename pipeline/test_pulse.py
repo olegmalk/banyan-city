@@ -16,6 +16,7 @@ planned" over a week when planning simply lived elsewhere, and 68 minutes of
 GPU work over a 24-hour cache reported as 2.4% of a 48-hour window.
 """
 
+import re
 import sys
 from pathlib import Path
 
@@ -231,14 +232,32 @@ def test_the_page_survives_a_hole_in_every_series():
         "jobs": {"events": [[now - 1800, "done", "rtx5090", "t"]], "branches": ["rtx5090"]},
     }
     out = bp.render(data, now=now)
-    check("a sparse cache still draws charts", out.count("<svg") == 4)
+    # Counted as FIGURES, not as <svg> elements. The window selector gives each
+    # figure one finished panel per offered window, so the number of svgs is a
+    # property of how much history the cache holds and has no business in an
+    # assertion about whether the four quantities are on the page.
+    check("a sparse cache still draws all four charts", out.count('class="pchart') == 4)
+    check("every chart carries at least one drawn window", out.count("<svg") >= 4)
     check("no None leaks into the reader's page", ">None<" not in out and " None " not in out)
     check("the page dates itself for the reader", "+04" in out)
 
     empty = bp.render({"generated": now, "gpu": {}, "queue": {"samples": []},
                        "jobs": {"events": [], "branches": []}}, now=now)
     check("an empty cache still renders a page", "<h1>The pulse</h1>" in empty)
-    check("an empty chart says it is empty, not zero", "no GPU samples cached" in empty)
+    # THE INVARIANT, not the wording: with nothing cached the page must draw no
+    # series at all and must say why in words. Which words is the page's business
+    # and has changed once already; that a reader is never shown a line at zero
+    # standing in for "we have no idea" is the thing worth failing a build over.
+    check("an empty cache draws no series at all",
+          'class="ln"' not in empty and 'class="fill"' not in empty)
+    # More than one accepted phrase, deliberately. The page has said this two
+    # ways — once per empty chart, and once as a greyed-out window selector —
+    # and both are honest answers to "why is there nothing here". Pinning the
+    # exact sentence would make a rewording look like a regression and tempt
+    # whoever hits it to weaken the check that matters, which is the line above.
+    said_why = any(p in empty for p in
+                   ("does not reach back", "no GPU samples cached", "not cached"))
+    check("an empty cache says why in words, rather than drawing zero", said_why)
 
 
 def test_the_page_never_divides_by_the_window():
@@ -256,8 +275,19 @@ def test_the_page_never_divides_by_the_window():
     }
     out = bp.render(data, now=now)
     check("a card at 100% for every measured slot reads as 100%, not 12.5%",
-          "100.0% of the card" in out)
-    check("the tile names the hours it measured", "6 h measured" in out)
+          "100.0% of the card" in out and "% of the card" in out)
+    check("no window dilutes the figure with time it could not see",
+          "12.5% of the card" not in out and "50.0% of the card" not in out)
+    # Read the denominator back out rather than matching a fixed string: the
+    # tile is now printed once per offered window and formats its hours with a
+    # decimal, and neither of those is the property under test. What is: no
+    # tile may claim to have measured more hours than the cache actually holds.
+    measured = [float(h) for h in re.findall(r"([\d.]+) h measured", out)]
+    check("every tile names the hours it measured", bool(measured))
+    check("no tile claims more measured hours than the cache holds",
+          max(measured) <= 6.0 + 1e-9)
+    check("the deepest window measures the whole six-hour cache",
+          any(abs(h - 6.0) < 1e-9 for h in measured))
 
 
 def main():
