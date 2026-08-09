@@ -8,3 +8,4 @@
 12:01:18Z DONE task=ep2-b13-r7-1786276813 by-hand backfilled from commit evidence 0ed515f — b13 r7 regional IP-Adapter sample, 4 seeds on rtx5090, taste ledger record 34, box job sample-b13-r7
 12:08:07Z DONE task=b15ab-pull-verify-0809 by-hand backfilled from commit evidence 0ed515f — b15ab wan+ltx pulled and sha256-verified byte-identical box-to-repo, orphan schtask banyan-b15ab deleted; NOT a render, the render itself finished 2026-08-08 and is deliberately not claimed today
 13:09:37Z DONE task=002b-b16-drift-0809 by-hand backfilled from commit evidence ea62f69 — beat 16 LTX drift experiment, 8 clips 704x1280 on rtx5090, taste ledger record 35, run-drift.log FINISHED 17:09:37 box local rc=0
+13:15:34Z DONE task=001-b06-r4-1786281217 by-hand backfilled from commit evidence bb8d983 — b06 r4 redraw, 4 seeds on rtx5090, taste ledger record 36, box job redraw2-0809 FINISHED 17:15:34 box local
