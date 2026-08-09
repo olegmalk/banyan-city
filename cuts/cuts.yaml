@@ -313,6 +313,7 @@ checklist:
         All four round-5 cold-open frames were provisionally rejected, so there is
         no A/B to put to you.
       where: "the `b01-r5` sheet is on this card, and again in item 10"
+      sheets_title: "The cold-open sheet — four candidates"
       how: "nothing — unless you disagree, in which case name a frame"
       body: |-
         **Your answer on the model question, in full:**
@@ -519,7 +520,8 @@ checklist:
       summary: >-
         100 candidates on the recipe your beat-15 yes settled. Four picks finish
         v33; twenty start episode 2; one gives item 06 its A/B back.
-      where: "on this card — nine sheets, tap one to open it full size"
+      where: "on this card — open the sheets, tap one to see it full size"
+      sheets_title: "The nine sheets — tap one to open it full size"
       how: "name an address, e.g. `b14-r3-s2` or `002b-b16-r3-s1`"
       body: |-
         **THE NINE SHEETS ARE BELOW** — they went onto this page on your word,
@@ -670,6 +672,7 @@ checklist:
       summary: >-
         Ninety seconds, fifteen beats, none slated. Two frames are our guess.
       where: "`review/provisional-v33/ep1-v33-PROVISIONAL.mp4` — 90.1s · 720x1280 · $0"
+      sheets_title: "The two frames we guessed — beats 6 and 14"
       how: "say it holds, or name what is wrong; say `b14-r3-s2` to swap beat 14"
       body: |-
         **THE THREE THINGS YOU ASKED FOR ON v32.**
@@ -738,6 +741,7 @@ checklist:
         Your whole 21-beat script end to end for the first time — three beats
         filmed, eighteen on slates.
       where: "`review/ep2-prov-0809/ep2-PROVISIONAL.mp4` — 119.2s · 720x1280 · $0"
+      sheets_title: "The three plates that got filmed — beats 16, 18, 21"
       how: "does it run? is any beat too long or short? does the ending land?"
       body: |-
         **18 SLATES SOUNDS LIKE A FAILURE AND IS NOT THE POINT OF IT.** The 21-beat

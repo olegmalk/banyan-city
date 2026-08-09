@@ -273,6 +273,12 @@ form.compose .hint { font: 500 .78rem/1.6 var(--mono); color: var(--faint); marg
 .check .sheets a { display: block; }
 .check .sheets img { display: block; width: 100%; min-width: 520px; height: auto;
   border-radius: 12px; border: 1px solid var(--line); background: var(--code-bg); }
+/* Same caption shape as a clip's. Without this the sheets inherited nothing and
+   the label ran straight into the note — "b03-r3-s0..s3rejected round on top". */
+.check .sheets figcaption { font: 600 .74rem/1.55 var(--mono); color: var(--faint);
+  margin-top: .4rem; }
+.check .sheets .k { display: block; color: var(--ink); letter-spacing: .1em;
+  text-transform: uppercase; }
 .check .voices figure { margin: 0 0 .8rem; max-width: none; }
 .check .voices audio { width: 100%; max-width: 420px; display: block; }
 /* Opens a labelled run of items — episode 2's questions are real but they do
@@ -2353,11 +2359,12 @@ def render_review() -> str:
         # and the browser opens the image on its own, where a pinch-zoom can
         # actually read a leaf. Same file either way, so it costs no extra bytes;
         # `loading="lazy"` keeps the ten of them off the first paint.
-        sheets = ""
+        sheets, n_sheets = "", 0
         for s in it.get("sheets") or []:
             rel = serve_image(str(s["file"]))
             if not rel:
                 continue
+            n_sheets += 1
             sheets += (f'<figure><a href="{html.escape(rel)}" target="_blank" '
                        f'rel="noopener"><img src="{html.escape(rel)}" loading="lazy" '
                        f'alt="{html.escape(str(s.get("alt", s.get("label", "candidate frames"))))}">'
@@ -2431,7 +2438,23 @@ def render_review() -> str:
         # he has to scroll to get past is the thing this page was rebuilt to
         # stop being, and the fold is one tap away.
         solo = clips_html if (n_clips == 1 and not sheets and not auds) else ""
-        folded = ("" if solo else clips_html) + sheets_html + audio_html
+        # PICTURES GET THEIR OWN FOLD, ABOVE THE ARGUMENT (2026-08-09). Nine
+        # contact sheets cannot sit open on a card — 2060x4024 apiece, and a card
+        # he has to scroll past is the thing this page was rebuilt to stop being.
+        # But burying them inside "Why we are asking" is worse on the one item
+        # whose entire job is choosing from pictures: the fold he needs is
+        # labelled as the fold he can skip. So the gallery is its own drawer, it
+        # is named and counted in its summary, and it comes first. `sheets_title:`
+        # overrides the wording, because items 12 and 13 hold picked plates
+        # rather than sheets and calling those "sheets" would be wrong.
+        sheet_fold = ""
+        if sheets_html:
+            title = str(it.get("sheets_title", "")).strip() or (
+                f"The {n_sheets} sheet{'' if n_sheets == 1 else 's'}")
+            sheet_fold = (f'<details class="drawer look"><summary>'
+                          f'{html.escape(title)}</summary>'
+                          f'<div class="drawer-body">{sheets_html}</div></details>')
+        folded = ("" if solo else clips_html) + audio_html
         # `gap` stays OUT of the fold on purpose. It is the sentence that says
         # the evidence never arrived, and a checklist that hides its own gaps is
         # how "seven new frames are ready" becomes a morning spent finding out
@@ -2445,7 +2468,7 @@ def render_review() -> str:
                if where_html else "")
             + (f'<p class="act"><span class="k">answer</span> {inline_md(how)}</p>'
                if how else "")
-            + solo + gap
+            + solo + gap + sheet_fold
             + (f'<details class="drawer"><summary>Why we are asking — and the evidence'
                f'</summary><div class="drawer-body">{body_md}{folded}</div></details>'
                if (body_md or folded) else "")
