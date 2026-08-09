@@ -5154,10 +5154,23 @@ def test_a_hand_claim_refuses_an_id_nobody_filed():
           (ct.queue_entry(text, "real-manual-task-1786000001") or {}).get("runner") == "manual")
     check("an id in neither list is not a task", ct.queue_entry(text, "invented-1786000002") is None)
 
-    # And the live file answers for the ids this tool was filed about.
+    # And the live file — two thousand lines of comment-heavy YAML, which is the
+    # thing worth exercising — parses, and answers for the ids actually in it.
+    # THOSE IDS ARE READ OUT OF THE FILE, never written in here: a literal id
+    # pins this test to one piece of work, and every piece of work eventually
+    # retires. This line named `composite-provenance-manifest-1786218000` and
+    # failed the hour that entry was done — a test breaking on success, which
+    # teaches the next reader to distrust it rather than the change.
+    import yaml
+
     live = (REPO / "pipeline" / "farm-queue.yaml").read_text(encoding="utf-8")
-    check("the real queue parses and answers for a real id",
-          ct.queue_entry(live, "composite-provenance-manifest-1786218000") is not None)
+    doc = yaml.safe_load(live) or {}
+    live_ids = [e["id"] for key in ("tasks", "backlog")
+                for e in (doc.get(key) or [])
+                if isinstance(e, dict) and e.get("id")]
+    check("the live queue still holds entries to claim", bool(live_ids))
+    check("the real queue parses and answers for every real id",
+          all(ct.queue_entry(live, i) is not None for i in live_ids))
     check("the real queue does not answer for an invented id",
           ct.queue_entry(live, "no-such-task-0000000000") is None)
 
@@ -5335,6 +5348,103 @@ def test_a_cut_whose_ingredients_all_pass_publishes_unchanged(tmp: Path):
           lg.classify(lg.engine_licence(_t3.ASSEMBLY_PLATFORM))[0] == "allow")
 
 
+def test_a_region_mask_conditions_its_box_and_nothing_else():
+    """A masked IP-Adapter is only regional if the mask really has an outside.
+
+    `render_b13r7.py` routes the goblin reference into one box and leaves the
+    plant to the text prompt, which scores 4/4 and must not be disturbed. Every
+    way that goes silently wrong is geometric: a box that rounds away to nothing
+    conditions no pixels, a box covering the frame conditions all of them, and
+    either one still renders four frames and writes four sidecars.
+    """
+    sys.path.insert(0, str(REPO / "pipeline"))
+    import regional_ip as rip
+
+    W, H = 832, 1216
+    box = (0.25, 0.5, 0.75, 1.0)
+    m = rip.region_mask(W, H, box, feather=0)
+    px = m.load()
+    check("region mask is one channel at frame size",
+          m.mode == "L" and m.size == (W, H))
+    check("inside the box conditions at full strength", px[W // 2, 900] == 255)
+    check("outside the box conditions not at all",
+          px[10, 10] == 0 and px[W - 10, 100] == 0 and px[10, 900] == 0)
+    check("the box lands on the pixels its fractions name",
+          rip.box_to_pixels(box, W, H) == (208, 608, 624, 1216))
+
+    # A feather softens the silhouette edge; too much of one turns a region into
+    # the whole frame, which is the failure that would look like it worked.
+    soft = rip.region_mask(W, H, box, feather=24).load()
+    check("a feathered mask still conditions its centre fully",
+          soft[W // 2, 900] > 250)
+    check("a feathered mask still leaves the far corner unconditioned",
+          soft[5, 5] == 0)
+    check("the feather is confined to the edge it softens",
+          0 < soft[208, 900] < 255)
+
+    check("coverage is reported as the fraction it is",
+          abs(rip.coverage(box) - 0.25) < 1e-9)
+    check("the free margins the plant needs are reported",
+          rip.side_bands(box) == (0.25, 0.25, 0.5, 0.0))
+    check("a whole-frame box reports no margin, so a guard can refuse it",
+          rip.coverage((0.0, 0.0, 1.0, 1.0)) == 1.0
+          and rip.side_bands((0.0, 0.0, 1.0, 1.0)) == (0.0, 0.0, 0.0, 0.0))
+
+
+def test_a_box_that_names_no_region_is_refused_not_rounded():
+    """Bad geometry must stop the render, not quietly become some other box."""
+    sys.path.insert(0, str(REPO / "pipeline"))
+    import regional_ip as rip
+
+    def raises(fn):
+        try:
+            fn()
+        except ValueError:
+            return True
+        return False
+
+    check("an inverted box is refused", raises(lambda: rip.validate_box((0.8, 0.1, 0.2, 0.9))))
+    check("a zero-area box is refused", raises(lambda: rip.validate_box((0.5, 0.1, 0.5, 0.9))))
+    check("an edge outside the frame is refused",
+          raises(lambda: rip.validate_box((-0.1, 0.0, 0.5, 0.5))))
+    check("a box with the wrong number of edges is refused",
+          raises(lambda: rip.validate_box((0.1, 0.2, 0.3))))
+    check("a non-numeric edge is refused", raises(lambda: rip.parse_box("0.1,0.2,x,0.4")))
+    check("a negative feather is refused",
+          raises(lambda: rip.region_mask(64, 64, (0.1, 0.1, 0.9, 0.9), feather=-1)))
+    check("a well-formed string parses to the box it names",
+          rip.parse_box(" 0.18, 0.02 ,0.88,0.78 ") == (0.18, 0.02, 0.88, 0.78))
+
+    # A box thinner than a pixel must still condition a pixel rather than
+    # collapse to an empty crop that PIL would hand back as a 0-wide image.
+    x0, y0, x1, y1 = rip.box_to_pixels((0.5, 0.5, 0.5001, 0.5001), 100, 100)
+    check("a sub-pixel box never rounds away to nothing", x1 > x0 and y1 > y0)
+
+
+def test_the_reference_crop_keeps_only_the_subject():
+    """CLIP encodes the whole reference, so what is in it is what transfers.
+
+    The r6 s2 frame carries three seedlings of its own; handing it in whole
+    would push plant evidence into the character's region — the fusion r6 just
+    cleared. Cropping to the subject is what makes the conditioning about the
+    goblin.
+    """
+    sys.path.insert(0, str(REPO / "pipeline"))
+    import regional_ip as rip
+    from PIL import Image
+
+    src = Image.new("RGB", (832, 1216), (10, 20, 10))
+    src.paste(Image.new("RGB", (200, 300), (240, 30, 30)), (300, 400))
+    crop = rip.crop_reference(src, (0.16, 0.06, 0.90, 0.88))
+    check("the crop is the pixel box of the fractions it was given",
+          crop.size == (616, 997))
+    check("subject pixels survive the crop", crop.getpixel((300 - 133 + 10, 400 - 73 + 10)) == (240, 30, 30))
+    check("a full-frame crop returns the frame unchanged",
+          rip.crop_reference(src, (0.0, 0.0, 1.0, 1.0)).size == src.size)
+    check("the box describes itself for the sidecar",
+          "53% of frame" in rip.describe((0.18, 0.02, 0.88, 0.78)))
+
+
 def main():
     import tempfile
     test_beat_duration_from_timecode()
@@ -5477,6 +5587,10 @@ def main():
         test_a_cut_whose_manifest_no_longer_describes_its_inputs_does_not_publish(Path(td))
     with tempfile.TemporaryDirectory() as td:
         test_a_cut_whose_ingredients_all_pass_publishes_unchanged(Path(td))
+    # REGIONAL IP-ADAPTER GEOMETRY (memo §3.3) — pure: PIL only, no torch.
+    test_a_region_mask_conditions_its_box_and_nothing_else()
+    test_a_box_that_names_no_region_is_refused_not_rounded()
+    test_the_reference_crop_keeps_only_the_subject()
     print()
     if FAILURES:
         print(f"✗ {len(FAILURES)} failure(s): {', '.join(FAILURES)}")
