@@ -23,6 +23,7 @@ ONE at a time — MPS shares unified memory with everything else on the machine
 """
 
 import argparse
+import os
 import sys
 import time
 from datetime import date
@@ -40,6 +41,30 @@ SEED = 20260719                        # + beat num, same as the notebook
 NEG = ("photorealistic, 3d render, abstract, text, watermark, signature, low quality, "
        "blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture")
 DROPS = Path.home() / "Desktop" / "banyan-drops"
+NO_OPEN_ENV = "BANYAN_NO_OPEN"
+
+
+def should_open(flag: bool, env: dict) -> bool:
+    """Whether to throw the finished stills onto the attached screen.
+
+    Default is True and stays True: this script exists for dad's 2026-07-27
+    five-minute loop, where the founder is sitting in front of the machine and
+    the whole point is that the picture appears. The guard is for the OTHER
+    callers. An agent rendering a sample has no screen of its own, so an
+    unconditional `open` puts unratified candidates in front of whoever is
+    using the Mac — at 3am, or mid-review of something else. r6 dodged that by
+    rendering on the 5090; the two-subject memo §4 flags it as the blocker for
+    anything that has to run here.
+
+    The env var exists as well as the flag because a detached or agent-driven
+    run can forget an argument, and the failure is not recoverable — once the
+    frames are on his screen the round has been shown. `BANYAN_NO_OPEN=1` in
+    the environment turns it off for every nested call at once.
+    """
+    if not flag:
+        return False
+    return str(env.get(NO_OPEN_ENV, "")).strip().lower() not in (
+        "1", "true", "yes", "on")
 
 
 def main() -> int:
@@ -70,6 +95,12 @@ def main() -> int:
                          "to change.")
     ap.add_argument("--strength", type=float, default=0.45,
                     help="img2img only: 0.3 = touch-up, 0.5 = real change, 0.8 = mostly new")
+    ap.add_argument("--no-open", action="store_true",
+                    help="write the stills and do NOT open them. For agent and "
+                         "detached runs: unratified candidates must not land on "
+                         "the founder's screen unasked. BANYAN_NO_OPEN=1 in the "
+                         "environment does the same thing and cannot be forgotten "
+                         "on a nested call.")
     ap.add_argument("--raw", default="",
                     help="EXPERIMENT: send this prompt verbatim instead of the beat's "
                          "shots.md prompt — for A/B-ing prompt dialects in the fast "
@@ -164,8 +195,10 @@ def main() -> int:
         print(f"{out.name}  contrast {spread:.0f}")
         if spread >= 20:
             opened.append(str(out))
-    if opened:
+    if opened and should_open(not a.no_open, os.environ):
         subprocess.run(["open"] + opened)
+    elif opened:
+        print(f"not opening {len(opened)} still(s) — they are in {DROPS}")
     return 0
 
 

@@ -6901,3 +6901,100 @@ stills and four sidecars pulled and **sha256-verified byte-identical**
 box-to-repo, 8 of 8. Heartbeats `STARTED`/`DONE` on `farm-results-hand` against
 the fresh id `ep2-b05-r4-guard-0810`. Nothing published, posted, spent, made
 canon, or opened on his screen.
+
+## 2026-08-10 — beat 1's height was never a wording problem, and the control arm is what proves it
+
+**Round 8 on episode 2's cold open, and it is the first round in eight that moved
+the axis he keeps naming.** Seven rounds argued with the prompt; this one stopped.
+The height instruction was deleted from the fence and the composition was supplied
+as pixels instead — img2img from `b15-r3-s1`, the one sapling-in-grass frame the
+founder has ever passed. Twelve frames, 71 GPU-seconds, $0, rtx5090. Ledger record
+44 (`ep2-b01-r8-sample`, `reject_all`, **0.72**), written BEFORE the sheet.
+
+**THREE ARMS ON THE SAME FOUR SEEDS, AND THE THIRD IS A CONTROL.** `i35` (img2img
+at strength 0.35), `i55` (0.55) and `t2i` (no init — r7's own architecture with the
+clause removed). One loaded set of weights, one device, one tokenizer, and a sent
+negative byte-identical to r6's and r7's, so the arms differ by the init image and
+nothing else.
+
+| arm | grounded, whole plant | person | pale slab | stem height |
+|---|---|---|---|---|
+| i35 | **4 of 4** | 0 | 0 | ~30% on all four |
+| i55 | **4 of 4** | 0 | 0 | ~25–34% |
+| t2i | 0 of 4 | 1 | 1 | apex OFF-FRAME on three |
+
+The control reproduced r5's, r6's and r7's failures on demand: s0 runs a stem the
+full height of the frame, s1 does the same and stands a child under it, s2 hangs
+the plant off the top edge ungrounded, s3 carries the pale rectangular column for
+the **third** round running on seed 20263720. All eight img2img frames are
+grounded, whole-plant, person-free, slab-free and at or inside the 32% hairline he
+revoked. **Seven rounds of wording could not produce one such frame; the init
+produced eight.** It also retires the idea that r7's clause caused the tall stem —
+deleting it changed nothing in the t2i arm.
+
+**AND THE ROUND STILL FAILS, ON THE AXIS IT DID NOT AIM AT, WHICH IS THE USEFUL
+PART.** The i-arms wear b15's palette and lens — deep amber dusk, a light shaft,
+macro bokeh — where beat 01 asks for `peach and gold sunrise sky, wide shot`. The
+t2i control draws that sky correctly on all four seeds, so the prompt is fine and
+the init is overriding it. **The ladder says this is not tunable:** at 0.35 the
+palette has not moved, and at 0.55 it has *still* not moved while the stem has
+begun growing back toward the ceiling. In this plate the palette IS the
+composition — the shaft is what makes it a macro and the macro is what makes the
+sapling read small — so strength cannot buy one without spending the other. The
+honest summary is **right size, wrong light**, and the next lever is a pose/depth
+ControlNet, which takes the b15 layout as geometry and leaves colour to beat 01's
+own prompt.
+
+**THE INIT WAS THE ONLY ADMISSIBLE ONE, NOT THE PREFERRED ONE.** G1 fails a
+candidate *conditioned on* a still that is revoked or was never approved, and an
+img2img round is conditioned on its init by definition. `b15-r3-s1` is the only
+approved sapling-in-grass frame in the tree; every beat-01 frame with the right
+palette (r2-s3, r3-s3, r6-s3) is unapproved or revoked and would have failed the
+round at G1 before he saw it. Its sha256 is asserted at render time.
+
+**THE ROUND COULD NOT HAVE BEEN RUN ON THE MAC, AND THE NEXT LANE NEEDS THIS.** It
+was briefed Mac-side on the grounds that img2img is MPS-only because
+`still_local.py` is. Two things are wrong and both were measured before a step was
+spent. (1) `StableDiffusionXLImg2ImgPipeline` imports fine on the 5090's venv with
+`image` and `strength` on its `__call__` (diffusers 0.29.2, torch 2.11.0+cu128).
+(2) Worse: **on the Mac this beat's negative comes out short by two terms.** There
+is no real CLIP tokenizer on the Mac's python, so `sd_prompt` falls back to the
+estimator that over-counts near 77 and `fit_negative` trims `extra limbs` and
+`deformed` to fit. A Mac render would have sent a different negative from r6 and
+r7 — destroying the single-variable claim, and dropping two anatomy negatives on
+the one beat whose person-binding is its only proven success. On the box the r7
+control reproduced the recorded r7 negative byte-for-byte
+(`identical_to_recorded_r7=True`), which is what validates every number above.
+
+**`shots.md` WAS NOT EDITED — the fence, that is.** The height predicate was
+stripped script-side after asserting the text on disk is byte-for-byte r7's, so a
+stale checkout could not have started and the approved shot list still carries one
+authored version of the beat rather than eight. Beat 01's running history in that
+file gained r8's section; the prompt block in it is unchanged, verified after the
+edit. Sent positive 65 of 77, anchor INTACT, nothing dropped, −7 tokens against
+the r7 control on the same tokenizer.
+
+**The fig is 0 of 12 and the observation is finally informative.** The init carries
+no fruit, so this was the first clean test of whether img2img adds an object the
+init lacks: at both strengths, no — a small green node at the leaf junction and
+nothing that reads as fruit. `t2i-s3` drew three rounded pink fruits lying in the
+grass, unattached to the plant. With 2026-08-06's settled result that size
+adjectives only make it *bigger*, the fruit is neither a prompt lever nor an
+img2img lever. It is an inpaint, or it is his call to drop it from this beat.
+
+**`still_local.py` no longer throws candidates onto whoever's screen is attached**
+(backlog `still-local-no-open-1786293600`, ungated, done here because this lane was
+briefed to render on the Mac). `--no-open` and a `BANYAN_NO_OPEN=1` env guard, the
+default unchanged so dad's five-minute loop still shows him the picture, and the
+decision is a pure function with a test covering both directions. The env guard
+exists as well as the flag because a detached run can forget an argument and the
+failure is not recoverable — once the frames are on his screen the round has been
+shown.
+
+**Box left clean.** `GPU-CLAIM.txt` claimed as `ep2-b01-r8-i2i-0810` and released,
+verified; card 0% / 0 MiB; schtask `banyan-b01r8` created for the run and deleted
+after it. All 12 frames and 12 sidecars pulled and **sha256-verified
+byte-identical** box-to-repo, 24 of 24. Heartbeats `STARTED`/`DONE` on
+`farm-results-hand` against the fresh id `ep2-b01-r8-i2i-1786307779`. Sheet
+`LABELED-b01-r8.png` built and **not opened**. Nothing published, posted, spent,
+made canon, or put on his screen.

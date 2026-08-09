@@ -2964,3 +2964,171 @@
   outcome: null
   miss_axis: null
   model_action: null
+- id: ep2-b01-r8-sample
+  date: 2026-08-10
+  subject: "node 002b beat 01 — cold open, round 8, THE ARCHITECTURE ROUND: the height instruction leaves the prompt and becomes the init image (img2img from the founder's b15 plate), with a text2img control arm on the same seeds"
+  kind: still
+  candidates: [b01-r8-i35-s0, b01-r8-i35-s1, b01-r8-i35-s2, b01-r8-i35-s3,
+               b01-r8-i55-s0, b01-r8-i55-s1, b01-r8-i55-s2, b01-r8-i55-s3,
+               b01-r8-t2i-s0, b01-r8-t2i-s1, b01-r8-t2i-s2, b01-r8-t2i-s3]
+  address_key: "sheet LABELED-b01-r8.png; frames at genomes/sapling/nodes/002b-first-citizen/takes/stills/01-cold-open-r8-<arm>-sN.png, sidecars beside them; arm is one of i35 / i55 / t2i and is in every sidecar as `arm:`"
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  scores:
+    b01-r8-i35-s0: {A1: 1, A2: -2, A3: 1, A4: 0, A5: 2, A6: -2, A7: 1}
+    b01-r8-i35-s1: {A1: 1, A2: -2, A3: 1, A4: 0, A5: 2, A6: -2, A7: 1}
+    b01-r8-i35-s2: {A1: 1, A2: -2, A3: 1, A4: 0, A5: 2, A6: -2, A7: 1}
+    b01-r8-i35-s3: {A1: 1, A2: -2, A3: 1, A4: 0, A5: 2, A6: -2, A7: 1}
+    b01-r8-i55-s0: {A1: 1, A2: -2, A3: 1, A4: 0, A5: 2, A6: -2, A7: 0}
+    b01-r8-i55-s1: {A1: 1, A2: -2, A3: 1, A4: 1, A5: 2, A6: -2, A7: 1}
+    b01-r8-i55-s2: {A1: 1, A2: -2, A3: 1, A4: 1, A5: 2, A6: -2, A7: 1}
+    b01-r8-i55-s3: {A1: 1, A2: -2, A3: 1, A4: 0, A5: 2, A6: -2, A7: 0}
+    b01-r8-t2i-s0: {A1: -2, A2: 1, A3: -2, A4: -1, A5: 0, A6: 2, A7: -2}
+    b01-r8-t2i-s1: {A1: -2, A2: 1, A3: -2, A4: -1, A5: 0, A6: 2, A7: -2}
+    b01-r8-t2i-s2: {A1: -2, A2: 1, A3: -2, A4: -1, A5: 0, A6: 2, A7: -2}
+    b01-r8-t2i-s3: {A1: -1, A2: 0, A3: -2, A4: -1, A5: 0, A6: 1, A7: 1}
+  vetoed: [b01-r8-i35-s0, b01-r8-i35-s1, b01-r8-i35-s2, b01-r8-i35-s3,
+           b01-r8-i55-s0, b01-r8-i55-s1, b01-r8-i55-s2, b01-r8-i55-s3,
+           b01-r8-t2i-s0, b01-r8-t2i-s1, b01-r8-t2i-s2, b01-r8-t2i-s3]
+  totals: {}
+  predicted_verdict: reject_all
+  predicted_flip_to: b01-r8-i55-s1
+  predicted_objection: >
+    That is the right size at last — but that is beat 15, not the cold open.
+    Where is the morning? And still no fig.
+  confidence: 0.72
+  reasoning: >
+    THE ARCHITECTURE WORKS, AND IT IS THE FIRST THING ON THIS BEAT IN EIGHT
+    ROUNDS THAT DOES. The round was controlled rather than demonstrated: three
+    arms on the SAME four seeds, the same 65-token positive, a sent negative
+    byte-identical to r6's and r7's, one loaded set of weights, one device. The
+    only difference between the i-arms and the t2i arm is the init image. The
+    counts are not close.
+
+      arm   grounded whole plant   person   pale slab   stem height
+      i35        4 of 4              0         0         ~30% x4
+      i55        4 of 4              0         0         ~25-34%
+      t2i        0 of 4              1         1         apex OFF-FRAME x3
+
+    In the t2i control, s0 runs a stem from the top edge to the bottom, s1 does
+    the same and stands a human child under it, s2 hangs the plant off the top
+    edge ungrounded, and s3 carries the tall pale rectangular column for the
+    THIRD round running on seed 20263720. Those are r5's, r6's and r7's exact
+    failures, reproduced on demand with the height clause deleted — which also
+    settles that the clause was not the cause. Every one of the eight img2img
+    frames is a grounded, whole-plant seedling nestled in grass with no person
+    and no slab, at 25-34% of frame height against the 32% hairline he revoked.
+    Seven rounds of wording could not produce one such frame; the init produced
+    eight.
+
+    AND THE ROUND STILL FAILS, ON THE AXIS IT DID NOT SET OUT TO MOVE. The
+    i-arms are in the b15 plate's palette and lens — deep amber dusk, a shaft of
+    light, heavy macro bokeh — and beat 01's own fence asks for `peach and gold
+    sunrise sky, wide shot`. The t2i control renders that sky correctly on all
+    four seeds, so the prompt is not the problem; the init is overriding it.
+    THE STRENGTH LADDER IS THE MEASUREMENT AND IT SAYS THIS IS NOT A TUNING
+    PROBLEM: at 0.35 the palette has not moved, and at 0.55 — the top of the
+    range the 2026-08-06 repaints ever measured — it has STILL not moved, while
+    the stem has begun to grow back toward the ceiling (i55-s0 ~34%). The two
+    things are coupled in this particular plate because its palette IS its
+    composition: the light shaft is what makes the frame a macro, and the macro
+    is what makes the sapling read small. Buying the sunrise by raising strength
+    would spend the composition that is the only reason to start here. This is
+    a finding about the plate, not about img2img.
+
+    SO THE HONEST READING IS "RIGHT SIZE, WRONG LIGHT", AND THAT IS WHY THE
+    CONFIDENCE IS 0.72 RATHER THAN r7's 0.88. He has rejected this beat eight
+    times and A6 sits at −2 across all eight i-frames — the palette drifting
+    against its own episode is the "twenty different shows" complaint he has
+    already made in those words, and it vetoes them as picks on its own. But
+    this is the first set that answers the sentence he actually keeps
+    repeating, and the objection it invites is narrow, nameable and one step
+    from a recipe: the next round needs the b15 SCALE in the b01 LIGHT. That is
+    a better outcome than a frame, and it is what a rejection here should buy.
+
+    A5 IS SCORED +2 AND THE REASON IS UNCOMFORTABLE ENOUGH TO WRITE DOWN. The
+    axis says its reference set is the frames he has PASSED and nothing else,
+    and these frames are a repaint of the one frame he has passed, so they match
+    it by construction. That is not evidence that the style is right for this
+    beat; it is evidence that A5 cannot distinguish "in the approved style" from
+    "a copy of the approved frame". Flagged rather than exploited — no candidate
+    is being argued up on it.
+
+    THE FIG IS 0 OF 12 AND THE OBSERVATION IS FINALLY INFORMATIVE. Not gated,
+    per the record's standing conclusion that size adjectives do not move it.
+    But the init carries NO fruit at all, so this is the first clean test of
+    whether img2img will add an object the init lacks, and the answer at both
+    strengths is no: the i-arms grow a small green node at the leaf junction and
+    nothing that reads as fruit. Meanwhile t2i-s3 drew three rounded pink
+    fruits — in the foreground grass, unattached to the plant. Eight rounds now
+    say the same thing from a new direction: the fruit is not a prompt lever and
+    it is not an img2img lever either. It is an inpaint, or it is his call to
+    drop it from this beat.
+
+    WHAT THIS RETIRES AND WHAT IT LEAVES. Retired: that beat 01's composition
+    needs better wording — it does not, it needs an init, and the control proves
+    it. Retired: that a low strength can carry a foreign palette — it cannot,
+    measured at two strengths. Left standing, in the order shots.md named them:
+    a pose/depth ControlNet, which would take the b15 LAYOUT as geometry while
+    leaving colour and light entirely to beat 01's own prompt — the exact
+    separation this round could not get from strength — and a different
+    checkpoint. A third option this round creates: img2img from a beat-01
+    sunrise frame instead, which is currently inadmissible because G1 requires
+    an approved init and no beat-01 frame is approved.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+  notes: >-
+    THE MEASUREMENT COULD NOT HAVE BEEN MADE ON THE MAC, AND THAT IS A FINDING
+    THE NEXT LANE NEEDS. This round was briefed to run Mac-side on the grounds
+    that img2img is MPS-only because still_local.py is. Two things are wrong
+    with that and both were measured before a step was spent. (1) The capability
+    is not MPS-only: StableDiffusionXLImg2ImgPipeline imports on the 5090's venv
+    with `image` and `strength` on its __call__ (diffusers 0.29.2, torch
+    2.11.0+cu128). (2) More seriously, on the Mac this beat's negative comes out
+    SHORT BY TWO TERMS. There is no real CLIP tokenizer on the Mac's python, so
+    sd_prompt falls back to the estimator that over-counts near 77, and
+    fit_negative trims `extra limbs` and `deformed` to fit. A Mac render would
+    have sent a different negative from r6 and r7 — silently destroying the
+    single-variable claim, and dropping two anatomy negatives on the one beat
+    whose person-binding is its only proven success. On the box the r7 control
+    reproduced the recorded r7 negative byte-for-byte
+    (`identical_to_recorded_r7=True`), which is what validates every number
+    above. The box is not a preference on this beat; it is the only place the
+    round is valid.
+
+    THE INIT WAS NOT A TASTE CHOICE, IT WAS THE ONLY ADMISSIBLE ONE. G1 fails
+    any candidate "staged on, conditioned on, or demonstrated with a still that
+    is REVOKED or was never approved". An img2img round is conditioned on its
+    init by definition, so the init must be a frame the founder has passed.
+    b15-r3-s1 is the only approved sapling-in-grass frame in the tree, which
+    makes it the only legal init for this beat — not merely the best one. Every
+    beat-01 frame that would have carried the right palette (r2-s3, r3-s3,
+    r6-s3) is unapproved or revoked and would have failed the round at G1 before
+    he ever saw it. Its sha256 is asserted at render time.
+
+    SHOTS.MD WAS NOT EDITED. The height predicate was stripped script-side after
+    asserting the fence on disk is byte-for-byte r7's, so a stale checkout could
+    not have started, and the approved shot list still carries one authored
+    version of this beat rather than eight. Sent positive 65 of 77, anchor
+    INTACT, nothing dropped, −7 tokens against the r7 control on the same
+    tokenizer.
+
+    THE t2i ARM IS A CONTROL AND IS NOT A CANDIDATE ANYONE SHOULD PICK FROM. It
+    is on the sheet because hiding the comparison would be the dishonest half of
+    a controlled round, and its four frames are scored here so the arms can be
+    read against each other. Three of them fail `whole plant in frame` outright.
+
+    A COUNT THAT LOOKS LIKE A BATCH AND IS NOT. Twelve frames is one sample of
+    one architecture on one beat, rendered as a bracket plus a control because a
+    single strength would have answered nothing it could not have guessed. Total
+    cost 71 GPU-seconds, $0.
+
+    NO GATE, NO WAVE, NOTHING OPENED. This record was written BEFORE the sheet
+    was built. The sheet carries arm labels, addresses and seeds only — no
+    favourite, no ordering by preference, and its footer says the rows are the
+    parameter axis. Nothing fires off this beat, nothing is published, and
+    nothing was put on the founder's screen.

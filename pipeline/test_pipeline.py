@@ -6491,6 +6491,39 @@ def test_striking_the_backwards_conjunct_would_flag_everything():
           all(c["metrics"]["peak"] > 0.18 for c in data["clips"]))
 
 
+def test_an_agent_run_cannot_put_candidates_on_the_founders_screen():
+    """`still_local.py` opened every still it drew, unconditionally.
+
+    Correct for the loop it was written for — dad's 2026-07-27 directive is that
+    the founder is sitting there and the picture appears — and wrong for every
+    other caller. An agent rendering an unratified candidate had no way to use
+    this Mac without throwing that candidate onto whatever screen was attached.
+    r6 avoided it only by rendering on the 5090.
+
+    So the default is asserted here too, not just the guard: a regression that
+    silenced the founder's own loop would be the opposite mistake.
+    """
+    sys.path.insert(0, str(REPO / "pipeline"))
+    from still_local import NO_OPEN_ENV, should_open
+
+    check("the founder's interactive loop still opens its stills",
+          should_open(True, {}))
+    check("--no-open stops it", not should_open(False, {}))
+    check("the env guard stops it without the flag",
+          not should_open(True, {NO_OPEN_ENV: "1"}))
+    for val in ("true", "YES", "On", " 1 "):
+        check(f"the env guard reads {val!r} as set",
+              not should_open(True, {NO_OPEN_ENV: val}))
+    check("an empty env var is not a guard",
+          should_open(True, {NO_OPEN_ENV: ""}))
+    check("an unrelated value is not a guard",
+          should_open(True, {NO_OPEN_ENV: "0"}))
+    # The flag is the stronger statement: an explicit --no-open is not undone by
+    # the environment saying nothing.
+    check("--no-open wins over an unset env var",
+          not should_open(False, {NO_OPEN_ENV: "0"}))
+
+
 def main():
     import tempfile
     test_beat_duration_from_timecode()
@@ -6669,6 +6702,7 @@ def main():
     test_the_metric_that_cleared_the_correction_still_misses_what_it_never_saw()
     test_striking_the_backwards_conjunct_would_flag_everything()
     # THE MAC'S RENDER LOOP MUST NOT PUBLISH TO HIS SCREEN BY ACCIDENT.
+    test_an_agent_run_cannot_put_candidates_on_the_founders_screen()
     print()
     if FAILURES:
         print(f"✗ {len(FAILURES)} failure(s): {', '.join(FAILURES)}")

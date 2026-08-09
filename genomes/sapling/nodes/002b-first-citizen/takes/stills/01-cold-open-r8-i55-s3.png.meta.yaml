@@ -1,0 +1,46 @@
+# Still provenance (7.2), written AT RENDER TIME by render_b01r8.py
+# on the rtx5090 (C:\banyan-farm\sample-b01-r8).
+# The negative below is what the model actually saw. The recipe's own
+# negative, before this script's one deliberate removal, was:
+#   photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, mature tree, large tree, tall tree, thick trunk, full canopy, forest, bush, shrubbery, girl, boy, child, person, chibi, mascot, creature, face, branches, night sky, photorealism
+#   NEGWARN: !! negative prompt over CLIP's 77-token budget; deduplicated: text; DROPPED: realistic skin texture, jpeg artifacts
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+shot_beat: 1
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20263720
+seeds_in_batch: 4
+arm: i55
+pipeline: img2img
+init_image: genomes/sapling/nodes/001-capability-inventory/stills/15-something-s-coming.png
+init_sha256: f60c1404f88d45720ca295dfc753e9eaabb815446710bcfffb3c7a07b7277f54
+strength: 0.55
+task: ep2-b01-r8-i2i-1786307779
+queue_entry: ep2-b01-r7-coldopen-1786292601
+render_round: r8
+candidate_set: r8-i55
+negative_terms_removed: tall tree
+prompt_source_sha256: c157fa4d4397da3930536e1e77bb5cd314c3d34208e1419dfd2b34118dcff5f9
+positive_clip_tokens: 65
+negative_clip_tokens: 72
+tokenizer: openai/clip-vit-large-patch14 (transformers, on the box)
+negative_identical_to_r7: true
+shots_md_edited: false
+single_variable: >-
+  The height instruction moves out of the text and into the init image: `its sturdy curved stem no taller than the grass around it,` -> `its sturdy curved stem,`, and the composition arrives as pixels from b15-r3-s1 instead. One move seen from both ends. The SENT negative is byte-identical to r6's and r7's, and the t2i arm holds the same prompt with no init so the arms differ by the init alone.
+provisional: >-
+  PROVISIONAL. A steward-rendered CANDIDATE, not a pick and not canon. Scored against taste/steward-model.v1 and logged in taste/steward-model.ledger.yaml BEFORE the founder saw it. Ground truth is the founder (R4); he has ratified nothing here. Never takes a canon filename, is not published, not posted, and not assembled into an episode.
+approved: false
+recipe_inherited_from: >-
+  round 7, takes/stills/01-cold-open-r7-s*.png — model, size, steps, cfg, seed rule, the one-term negative removal and every clause of the positive except the deleted height predicate are r7's unchanged. The init image is node 001's stills/15-something-s-coming.png (b15-r3-s1), the ONE sapling-in-grass frame the founder has passed.
+wall_seconds: 7
+cost_usd: 0
+note: |-
+  round 8, the ARCHITECTURE round: the height instruction leaves the prompt and becomes the init image. Seven rounds of wording are spent and the record closed the argument twice in its own voice — shots.md 2026-08-06 ("the levers that are left are all outside the prompt — img2img over a chosen plate, a pose controlnet, or a different checkpoint") and ledger records 28 and 41. r7 is the proof rather than the opinion: `no taller than the grass around it` was read as its own opposite, because CLIP does not encode negation and the clause is 31 characters where _NEGATION lifts at most 25, and the one seed that had been inside his ceiling at ~20% went to 39%. THE SINGLE VARIABLE is one move seen from both ends: the height predicate is DELETED from the fence (`its sturdy curved stem no taller than the grass around it,` -> `its sturdy curved stem,`, keeping the noun and both adjectives) and the composition arrives instead as pixels from the init. Replacing the clause with different words would have made this an eighth wording round; leaving it in would have pointed the text at the opposite of what the init is for. THE INIT IS HIS, NOT MINE: b15-r3-s1, the ONE sapling-in-grass frame the founder has ever passed (canon since d4488de), asserted by sha256 at render time — starting from a beat-01 frame I liked would have scored a height round against my own taste. SHOTS.MD WAS NOT EDITED; the strip happens script-side after asserting the fence on disk is byte-for-byte r7's, so a stale checkout cannot start. THREE ARMS ON THE SAME FOUR SEEDS, one axis: i35 (strength 0.35, most of his frame kept), i55 (0.55, the top of the range the 2026-08-06 repaints actually measured), and t2i (no init) as the CONTROL — r7's own pipeline on r7's own seeds with only the clause removed, so the difference between the arms is the init image and nothing else. All three share one set of loaded weights, one dtype, one device and one tokenizer. Why a bracket rather than one strength: the 0.35/0.55 precedent is all SAME-palette, and this init disagrees with the prompt — b15 is a dark amber macro under a shaft of light where beat 01 asks for a peach-and-gold sunrise wide shot, which is this round's real risk and is measured rather than assumed. THE SENT NEGATIVE IS BYTE-IDENTICAL to the string r6 and r7 were drawn with, as a precondition the script refuses to skip. THE PLATFORM IS THE BOX AND THAT IS A MEASUREMENT: img2img was briefed as MPS-only because still_local.py is, but StableDiffusionXLImg2ImgPipeline imports on the 5090 venv with `image` and `strength` on its __call__ (diffusers 0.29.2, torch 2.11.0+cu128), and r5/r6/r7 all rendered here in bf16 — an fp32 MPS control arm would not be comparable to the numbers it controls against. PRE-REGISTERED RUBRIC: the number is the stem height fraction, apex to groundline over frame height, per frame, against the 32% hairline he revoked and the ~20% of r6-s3; the round SUCCEEDS if the i-arms sit inside the ceiling where the t2i control does not and FAILS if the init makes no difference — and that failure is worth as much, because it retires img2img and leaves controlnet and the checkpoint swap as the named next levers. Person-binding reported n of 4 per arm, observed not assumed, because r7 regressed to 1 of 4 on a byte-identical negative. THE FIG IS OBSERVED AND NOT GATED: the record already settled that size adjectives do not shrink it — the 2026-08-06 repaints asked for a `nub` and a `pea-sized` fruit and both came back LARGER and rounder than the plate, so the note is "choose the frame instead" — and the init carries no fruit at all, so whether one appears is an observation about img2img rather than a prompt result. PROVISIONAL: steward-rendered candidates, not picks and not canon. Ledger record written BEFORE the sheet, the sheet carries labels and seeds only with no favourite and no ordering (R4), and nothing is opened on the founder's screen.
+prompt: |-
+  A tiny 40cm seedling standing in short grass, its sturdy curved stem, two oversized cotyledon leaves, one small round green fruit hanging from the stem, whole plant in frame, wide shot, peach and gold sunrise sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, mature tree, large tree, thick trunk, full canopy, forest, bush, shrubbery, girl, boy, child, person, chibi, mascot, creature, face, branches, night sky, photorealism

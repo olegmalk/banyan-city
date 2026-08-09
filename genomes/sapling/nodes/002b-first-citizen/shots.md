@@ -456,6 +456,82 @@ Ledger record 41 (`ep2-b01-r7-sample`, `reject_all`, 0.88) was written BEFORE th
 sheet. Sheet `LABELED-b01-r7.png`, labels and seeds only — no favourite, no
 ordering (R4) — built and not opened.
 
+**Round 8 stopped arguing with the prompt. THE FENCE ABOVE IS UNCHANGED** — r8
+was rendered by stripping the height predicate script-side, after asserting the
+text on disk is byte-for-byte r7's, so this list still carries one authored
+version of the beat instead of eight. `its sturdy curved stem no taller than the
+grass around it,` became `its sturdy curved stem,` for the render only: the noun
+and both adjectives stay, and only the height instruction leaves. It leaves
+because it is going somewhere else — into the init image. This is the lever this
+section named on 2026-08-06 (*"the levers that are left are all outside the
+prompt — img2img over a chosen plate, a pose controlnet, or a different
+checkpoint"*), taken at last.
+
+**The init was not a taste choice, it was the only admissible one.** Gate G1
+fails any candidate *conditioned on* a still that is revoked or was never
+approved, and an img2img round is conditioned on its init by definition. So the
+init has to be a frame the founder has passed, and
+`001-capability-inventory/stills/15-something-s-coming.png` (b15-r3-s1) is the
+only approved sapling-in-grass frame in the tree. Every beat-01 frame carrying
+the right palette — r2-s3, r3-s3, r6-s3 — is unapproved or revoked and would
+have failed the round before he saw it. Its sha256 is asserted at render time.
+
+**Three arms on the same four seeds, one axis, and the third arm is a control:**
+`i35` (img2img, strength 0.35), `i55` (0.55, the top of the range the
+2026-08-06 repaints ever measured) and `t2i` (no init — r7's architecture with
+the clause removed). One loaded set of weights, one device, and a sent negative
+byte-identical to r6's and r7's, so the arms differ by the init image alone.
+
+**THE ARCHITECTURE WORKS AND THE CONTROL IS WHY WE KNOW:**
+
+| arm | grounded, whole plant | person | pale slab | stem height |
+|---|---|---|---|---|
+| i35 | **4 of 4** | 0 | 0 | ~30% on all four |
+| i55 | **4 of 4** | 0 | 0 | ~25–34% |
+| t2i | 0 of 4 | 1 | 1 | apex OFF-FRAME on three |
+
+The t2i control reproduced r5's, r6's and r7's exact failures on demand — s0
+runs a stem the full height of the frame, s1 does the same and stands a child
+under it, s2 hangs the plant off the top edge ungrounded, s3 carries the pale
+column for the **third** round running on seed 20263720. Eight img2img frames
+are all grounded, whole-plant, person-free and slab-free. Seven rounds of
+wording could not produce one such frame; the init produced eight. It also
+settles that the r7 clause was not the cause of the tall stem — deleting it
+changed nothing in the t2i arm.
+
+**And it fails on the axis it did not set out to move, which is the finding.**
+The i-arms wear the b15 plate's palette and lens: deep amber dusk, a shaft of
+light, macro bokeh, where this beat asks for `peach and gold sunrise sky, wide
+shot`. The t2i control draws that sky correctly on all four seeds, so the prompt
+is fine and the init is overriding it. **The strength ladder says this is not a
+tuning problem:** at 0.35 the palette has not moved, and at 0.55 it has *still*
+not moved while the stem has begun growing back toward the ceiling (i55-s0
+~34%). In this particular plate the palette IS the composition — the light shaft
+is what makes it a macro, and the macro is what makes the sapling read small — so
+strength cannot buy one without spending the other.
+
+**What r9 should therefore be, and what it should not.** Not another strength. A
+**pose or depth ControlNet** takes the b15 LAYOUT as geometry while leaving
+colour and light entirely to this beat's own prompt — precisely the separation
+strength could not give us. The checkpoint swap is the other named option. A
+third exists and is currently illegal: img2img from a beat-01 *sunrise* frame,
+which G1 forbids until some beat-01 frame is approved.
+
+**The fig is 0 of 12, and for the first time the observation is informative.**
+The init carries no fruit at all, so this was a clean test of whether img2img
+adds an object the init lacks, and at both strengths the answer is no — a small
+green node at the leaf junction, nothing that reads as fruit. t2i-s3 drew three
+rounded pink fruits lying in the grass, unattached. Taken with 2026-08-06's
+settled result that size adjectives only make it bigger, the fruit is neither a
+prompt lever nor an img2img lever: it is an inpaint, or it is his call to drop it
+from this beat.
+
+Ledger record 44 (`ep2-b01-r8-sample`, `reject_all`, 0.72 — lower than r7's 0.88
+because this set finally answers the sentence he keeps repeating and invites a
+narrow, nameable objection) was written BEFORE the sheet. Sheet
+`LABELED-b01-r8.png`, twelve tiles, arm labels, addresses and seeds only, footer
+saying the rows are the parameter axis — built and not opened.
+
 ## Beat 02 — THE SPRINT (0:06–0:11) ⬜ needs footage
 
 No dialogue — pure action. Camera wide so the dive reads.
