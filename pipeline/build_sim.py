@@ -1045,6 +1045,58 @@ TEL_CSS = """
 .tel-mem { color: var(--leaf); }
 """
 
+# Plain string, not an f-string: JavaScript, full of braces. INFRA_* are emitted
+# beside it by build().
+INFRA_JS = """
+/* ---- the infra meter: how many times this site was built in the last day ----
+   Vercel's git integration opens a GitHub DEPLOYMENT per build, and that list is
+   public, free and CORS-enabled (Access-Control-Allow-Origin: *, verified
+   2026-08-09) — the only $0 source for this anyone has found; the host publishes
+   no free spend figure. Counted in the READER's browser for the same reason the
+   machines' logs are: a build-time count would only advance when a build
+   happens, and a flood of builds is precisely the failure being watched for.
+
+   FOUR WAYS THIS DECLINES TO ANSWER, and not one of them prints a number: no
+   fetch in the browser, a non-200 (the unauthenticated limit is 60/hour per IP
+   and every reader behind one shares it), a body that is not an array, and a row
+   with no readable date. The page says so in words and shows nothing else.
+
+   THE '+' IS LOAD-BEARING. One page is 100 rows and nothing pages further, so if
+   the OLDEST row on the page is itself inside the window, there were builds this
+   request could not see — 'N+' says that rather than passing a floor off as a
+   count. At the rate this repo builds, 100 production deployments reach back
+   about four days, so the + fires only when the rate roughly quadruples, which
+   is the alarm and not a gap. */
+(function () {
+  var n = document.getElementById("infra-n"), u = document.getElementById("infra-u");
+  if (!n || !u || !window.fetch) return;                /* no JS, no claim */
+  function give(text, big) {
+    n.textContent = text;
+    n.className = big ? "n" : "n none";
+  }
+  function fail() {
+    give(INFRA_UNAVAILABLE, false);
+    u.textContent = INFRA_TITLE.toLowerCase();
+  }
+  fetch(INFRA_API, {headers: {Accept: "application/vnd.github+json"}})
+    .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+    .then(function (rows) {
+      if (!Array.isArray(rows)) throw 0;
+      var since = Date.now() - INFRA_HOURS * 3600000, c = 0, oldest = Infinity;
+      for (var i = 0; i < rows.length; i++) {
+        var t = Date.parse(rows[i] && rows[i].created_at);
+        if (!t) throw 0;                       /* a shape we do not understand */
+        if (t < oldest) oldest = t;
+        if (t >= since) c++;
+      }
+      var capped = rows.length >= INFRA_PAGE && oldest >= since;
+      give(capped ? c + "+" : String(c), true);
+      u.textContent = (c === 1 && !capped) ? INFRA_UNIT_ONE : INFRA_UNIT_MANY;
+    })
+    .catch(fail);
+})();
+"""
+
 # Plain string, not an f-string: this is JavaScript and it is full of braces.
 # TEL_URL / TEL_STALE are emitted next to it by build().
 TEL_JS = """
@@ -1534,6 +1586,20 @@ body.away .walker, body.away .walker * { animation: none !important; }
 @keyframes puff { 0% { opacity: .9; transform: translateY(0) } 100% { opacity: 0; transform: translateY(-11px) } }
 .spend { font: 600 .8rem/1.6 var(--mono); color: var(--faint); text-align: center; }
 .spend b { color: var(--sap); }
+/* ---- the infra meter. Deliberately NOT one of the .vital tiles: those are
+   four numbers a reader can check against the repo, and this one is fetched
+   live from GitHub and can be absent. Mixing them would quietly weaken the
+   promise the vitals row makes. ---- */
+.infra { margin: 1rem auto 0; max-width: 44rem; text-align: center;
+  background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px;
+  padding: .8rem .9rem; }
+.infra .n { font: 700 1.5rem/1.2 var(--mono); color: var(--sap);
+  font-variant-numeric: tabular-nums; }
+.infra .n.none { font-size: .8rem; font-weight: 600; color: var(--faint);
+  line-height: 1.6; }
+.infra .u { font: 500 .78rem/1.6 var(--mono); color: var(--muted); }
+.infra .note { font: 400 .74rem/1.7 var(--sans, inherit); color: var(--faint);
+  margin: .5rem 0 0; text-align: left; }
 .scenes, .quests { list-style: none; padding: 0; margin: .4rem 0 0; }
 .scenes li, .quests li { padding: .55rem 0; border-bottom: 1px solid var(--line-soft); }
 .scenes li:last-child, .quests li:last-child { border-bottom: 0; }
@@ -1654,6 +1720,21 @@ def build(out_dir: Path):
     grow = data.growth(rows)
     takes = data.takes_tally()
     open_quests = sum(1 for r in rows if r["request"]) + 2  # + the standing two
+
+    # --- the infra meter (D18): rendered EMPTY and filled in by the reader's
+    # browser. The server-side copy states no number at all — not zero, not the
+    # last one we saw. A page that shipped a stale count would read as "the
+    # meter is fine" on exactly the failure it exists to catch, and a build-time
+    # read is the wrong instrument anyway: the thing being watched for is a
+    # flood of deploys, so a counter that only advances when one happens cannot
+    # see it. Same contract as the machines' logs and the render box's vitals.
+    meter = data.infra_meter()
+    infra_html = (
+        f'<div class="infra rise" id="infra">'
+        f'<div class="n none" id="infra-n">{_e(meter["counting"])}</div>'
+        f'<div class="u" id="infra-u">{_e(meter["title"].lower())}</div>'
+        f'<p class="note">{_e(meter["note"])}</p>'
+        f'</div>')
 
     # --- the grove: 15 leaves, each one an actual scene you can go look at.
     # Four tiers a glance can tell apart; the tooltip carries the exact words.
@@ -1914,6 +1995,7 @@ def build(out_dir: Path):
 </p>
 <p class="spend">total spent on renders so far: <b>${spend:.2f}</b> —
 everything else runs on the family's own machines for free</p>
+{infra_html}
 {vitals}
 </div>
 
@@ -2003,8 +2085,15 @@ var RAW_BASE = {json.dumps(RAW)}, QUEUE_URL = {json.dumps(QUEUE_URL)};
 var BUILT_AT = {int(now.timestamp())};
 var BUILT_QUEUE = {json.dumps({"tasks": [str(t.get("id")) for t in queue],
                                "backlog": [str(b.get("id")) for b in backlog]})};
+var INFRA_API = {json.dumps(meter["api"])},
+    INFRA_HOURS = {int(meter["hours"])}, INFRA_PAGE = {int(meter["page"])},
+    INFRA_TITLE = {json.dumps(meter["title"])},
+    INFRA_UNAVAILABLE = {json.dumps(meter["unavailable"])},
+    INFRA_UNIT_ONE = {json.dumps(meter["unit_one"])},
+    INFRA_UNIT_MANY = {json.dumps(meter["unit_many"])};
 {LIVE_JS}
 {TEL_JS}
+{INFRA_JS}
 </script>
 </body>
 </html>"""

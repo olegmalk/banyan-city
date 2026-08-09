@@ -221,6 +221,78 @@ def spend() -> float:
     return total
 
 
+# ---- the infra meter (D18's second obligation) --------------------------------
+# On 2026-08-08 this project billed over $100 of Vercel build time in under a
+# month, because every courier heartbeat and every 5-minute telemetry pulse
+# triggered a full site rebuild on a branch nobody reads: 2,344 courier pushes in
+# 29 days, 78% of all builds non-main. The ref allowlist stopped the spending.
+# D18 also says a metered service gets a monitoring line, and it had none — the
+# meter ran for a month with nothing anywhere in this repo reporting it, which is
+# why an invoice was the first anyone knew.
+#
+# BUILD TRIGGERS, NOT DOLLARS, and the difference is the whole design. Nobody has
+# a $0 source for the money: the new account is a cardless Hobby team and no
+# usage endpoint on it is known to be free (unverified — and buying a plan to
+# read a spend number would be the joke writing itself). Vercel's git integration
+# creates a GitHub DEPLOYMENT per build, and that list is public, free, and
+# CORS-enabled. Trigger count is therefore the number we can actually verify, and
+# it is also the number that went wrong.
+#
+# FETCHED BY THE READER'S BROWSER, like the machines' logs and the render box's
+# vitals (LIVE_JS in build_sim). A build-time read would make the meter as fresh
+# as the last deploy — and the failure being watched for is a flood of deploys,
+# so a counter that only advances when one happens is the wrong instrument. The
+# deploy server also has no `gh` CLI and no local refs, so this was never going
+# to be a repo fact.
+DEPLOY_API = f"https://api.github.com/repos/{GH_URL.split('github.com/')[-1]}/deployments"
+
+# A DAY, NOT A MONTH, and the reason is arithmetic rather than preference. One
+# unauthenticated request returns at most 100 deployments and the readers of this
+# page share a 60-request hour by IP, so paging a whole month would cost eight
+# requests a view and take the meter down for everybody. At the rate this repo
+# actually builds, 100 production deployments reach back about four days —
+# measured 2026-08-09: 100 rows spanning 08-05 to 08-09 — so a 24-hour window
+# fits inside one page with room, and stops being a window only when the rate
+# doubles, which is the alarm rather than a gap. `environment=Production` is
+# filtered SERVER-side because two thirds of this repo's deployments are the free
+# github-pages mirror, and counting those would inflate a bill nobody is paying.
+METER_HOURS = 24
+DEPLOY_PER_PAGE = 100
+
+
+def infra_meter() -> dict:
+    """Copy + source for the infra tile. No numbers: this module cannot know one.
+
+    Every string the tile can show lives here, including the ones for failure.
+    SITE.md's honesty rule bites hardest on a meter: an unavailable number is
+    said in words, never filled in from the last build and never estimated — a
+    stale meter is worse than no meter, because it reads as reassurance on
+    exactly the failure it exists to catch.
+    """
+    return {
+        "api": f"{DEPLOY_API}?environment=Production&per_page={DEPLOY_PER_PAGE}",
+        "hours": METER_HOURS,
+        "page": DEPLOY_PER_PAGE,
+        "title": "Site builds in the last 24 hours",
+        "counting": "counting them now…",
+        "unavailable": "GitHub did not answer, so this page will not put a "
+                       "number on it",
+        "unit_one": "build of this site was triggered in the last 24 hours",
+        "unit_many": "builds of this site were triggered in the last 24 hours",
+        "note": "Every one of these is billable build time on the host. In July "
+                "an automated push every five minutes triggered a build each "
+                "time — over $100 in under a month, publishing nothing new — so "
+                "builds are now limited to the main branch and this is the line "
+                "that would show it happening again. It counts triggers and not "
+                "dollars because the trigger count is the number checkable from "
+                "a free, public source: the host publishes no spend figure this "
+                "page can read without paying for a plan. Read live from "
+                f"GitHub's own record of the last {DEPLOY_PER_PAGE} production "
+                "builds; a figure shown with a + means there were more than this "
+                "page could see, which is itself the warning.",
+    }
+
+
 def inbox() -> list:
     """The author's decision queue — written for strangers in the yaml itself."""
     try:

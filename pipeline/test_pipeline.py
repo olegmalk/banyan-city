@@ -4840,6 +4840,77 @@ def test_every_served_cut_posters_the_frame_its_record_names():
               f"honoured): {', '.join(sorted(blank)[:6])}")
 
 
+def test_the_infra_meter_never_prints_a_number_the_page_did_not_measure():
+    """D18's monitoring line: a meter, and an honest one.
+
+    Over $100 of build time in under a month, because every courier heartbeat
+    triggered a full rebuild — and the first anyone knew was the invoice, because
+    nothing in this repo reported it. The allowlist stopped the spending; this is
+    the half that makes it legible.
+
+    THE FAILURE MODE OF A METER IS NOT BEING WRONG, IT IS BEING REASSURING. So
+    the page ships with no count in it at all — not zero, not the last one seen —
+    and the browser either measures one or the tile says in words that it could
+    not. These pin that contract, plus the two mechanical things that would break
+    it silently: a variable the script reads and build() forgets to emit, and a
+    source that stops being free.
+    """
+    import re
+
+    import build_sim as bs
+    import build_status as d
+
+    m = d.infra_meter()
+    src = (REPO / "pipeline" / "build_sim.py").read_text(encoding="utf-8")
+
+    check("the tile's copy carries every string it can need, including failure",
+          all(str(m.get(k, "")).strip()
+              for k in ("api", "title", "counting", "unavailable",
+                        "unit_one", "unit_many", "note")))
+    # The number slot ships holding `counting`, and neither that string nor the
+    # failure string may contain a digit — a "0" or a "—" in there would read as
+    # a measurement. The unit strings do carry the window ("last 24 hours"),
+    # which is a label on the question and not an answer to it.
+    check("the number slot ships with no digit in it at all",
+          not any(ch.isdigit() for ch in m["counting"] + m["unavailable"]))
+    check("...and the slot the server renders is that placeholder",
+          f'id="infra-n">{{_e(meter["counting"])}}' in src)
+    check("an unavailable number is said in words, not shown as 0 or a dash",
+          "not put a number on it" in m["unavailable"])
+
+    # $0 AND PUBLIC. The moment this needs a token or a paid plan it is not a
+    # source this project may use — the whole entry exists because a meter cost
+    # money to read. environment=Production is filtered server-side because two
+    # thirds of this repo's deployments are the free github-pages mirror.
+    check("the source is GitHub's public deployments list", m["api"].startswith(
+        "https://api.github.com/repos/olegmlkvorg/banyan-city/deployments?"))
+    check("...filtered to the builds that are actually billed",
+          "environment=Production" in m["api"])
+    check("...and carries no token, key or secret of any kind",
+          not any(w in m["api"].lower() for w in ("token", "access_token", "key=", "auth")))
+
+    # EVERY IDENTIFIER THE SCRIPT READS MUST BE EMITTED. This is the bug that
+    # nearly shipped: INFRA_HOURS was read by the fetch and defined nowhere, and
+    # an undefined global in a .catch()-wrapped promise fails SILENTLY into the
+    # "unavailable" branch — a meter that says GitHub did not answer when GitHub
+    # answered fine. No browser here, so it is checked structurally.
+    used = set(re.findall(r"\bINFRA_[A-Z_]+\b", bs.INFRA_JS))
+    block = re.search(r"var INFRA_API =.*?;", src, re.S)
+    emitted = set(re.findall(r"\bINFRA_[A-Z_]+\b", block.group(0) if block else ""))
+    check(f"every INFRA_* the script reads is emitted by build() ({len(used)} of them)",
+          bool(used) and used <= emitted)
+    check("...and nothing is emitted that the script never reads",
+          not (emitted - used))
+    check("the script is wired into the page it is written for",
+          "{INFRA_JS}" in src and 'id="infra-n"' in src and 'id="infra-u"' in src)
+
+    # NOT A VITAL. The vitals row promises four numbers a reader can check
+    # against the repo; this one is fetched live and can be absent, and quietly
+    # sitting it beside them would weaken the promise the row makes.
+    check("the meter is its own tile, not a fifth repo-checkable vital",
+          'class="infra rise"' in src and '<div class="vital"><b>{pct}%' in src)
+
+
 # ====================================================================== #
 # A HAND-RUN THAT BORROWS A QUEUE ID CLAIMS IT
 # — queue-id-borrowed-by-hand-run-1786190580, the lead's ruling of 2026-08-08
@@ -5272,6 +5343,7 @@ def main():
     with tempfile.TemporaryDirectory() as td:
         test_the_nested_init_frame_dialect_resolves_like_the_flat_one(Path(td))
     test_every_served_cut_posters_the_frame_its_record_names()
+    test_the_infra_meter_never_prints_a_number_the_page_did_not_measure()
     # A HAND-RUN THAT BORROWS A QUEUE ID CLAIMS IT — pure: no git, no network.
     test_a_hand_claim_writes_lines_every_reader_already_parses()
     test_a_hand_claim_reads_the_verdict_off_the_exit_code()
