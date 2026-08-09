@@ -61,3 +61,42 @@ corrections:
     wan_i2v, which is a render-CLI change and not a hygiene edit; queued as
     wan-bench-sidecar-beat-1786190640.
   corrected_by: steward
+- date: 2026-08-09
+  field: init_still
+  recorded: >-
+    nothing. This is a v1-shape sidecar: it has no `init_frame:` block and names
+    no still anywhere, so since 50e0358 it correctly gets NO poster on the review
+    page — an honest blank, where before it wore episode ONE's `09-whoami.png`.
+    The frame it holds was never unknown, only unwritten.
+  corrected_init_still: 01-cold-open-REVOKED-too-tall.png
+  corrected_init_still_sha256: 7cc22aa124229385b55e1e9ab68f403e6bb8b13bf781979f021751a4bcab3557
+  evidence: >-
+    Read out of this repo's history, the same way beats 7 and 12 were repaired in
+    b6d435f. This clip was written 2026-08-08 13:30; the last commit touching
+    `genomes/sapling/nodes/002b-first-citizen/stills/01-cold-open.png` before
+    that is 306ec3f ("r3-s3 and retire" — episode 2 has a canon frame, and it is
+    the one the renderers read), 2026-08-07T22:11:57+04:00, and that blob hashes
+    7cc22aa124229385b55e1e9ab68f403e6bb8b13bf781979f021751a4bcab3557. Those exact
+    bytes are on disk today under `01-cold-open-REVOKED-too-tall.png` — a1b650c
+    renamed the file on 2026-08-08T18:11, five hours AFTER this render, which is
+    R6 keeping a retired frame in place rather than deleting it. The name is
+    recorded for a reader; the hash is what resolves the poster, and it resolves
+    to those bytes under whatever name holds them.
+
+    CORROBORATED, not inferred: the two v2 re-renders of this same shot beside it
+    in review/ep2-b01/ (wan5b-b01-v2.mp4, ltx-b01-v2.mp4) each record
+    `init_frame.sha256: 7cc22aa1…` at render time, and the v2 run was the v1 argv
+    verbatim with the plate as the only variable. Three independent records, one
+    frame.
+  not_corrected: >-
+    `plate_sha256: 004dc1e8…` in those v2 blocks is NOT this frame and is not
+    recorded here. It is the 704x1280 cover-crop fed to the model, it exists in
+    no stills/ directory, and naming it would turn a resolvable poster into a
+    refusal.
+  cause: >-
+    The bench path wrote no frame reference at all in its v1 shape; video_task
+    gained the nested `init_frame:` block afterwards, which is why the v2 clips
+    of the same shot carry one and this does not. Nothing to fix in the renderer
+    from here — what was missing was a reader for the nested dialect and a record
+    for this one clip, and both land in the same commit as this line.
+  corrected_by: steward

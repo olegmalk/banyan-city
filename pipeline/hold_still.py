@@ -96,6 +96,7 @@ direction, the amount or the curve.
 """
 
 import argparse
+import hashlib
 import math
 import subprocess
 import sys
@@ -408,6 +409,22 @@ def sidecar(clip: Path, still: Path, beat: int, seconds: float,
     BOTH TOP LINES ARE CLASSIFIER INPUT, and until 2026-08-07 both failed. The
     honest record was here all along; the one tool that decides what may be
     published could not read it, which is the same as not having written it.
+
+    AND THE NAME IS NOT ENOUGH TO SAY WHICH PIXELS THESE ARE (2026-08-08).
+    `source_still: <name>` was the only frame reference this wrote, and a canon
+    filename changes hands the moment a redraw is promoted — which is how a tall
+    sapling ended up postering footage of bare soil on beats 7, 12 and 15.
+    build_site.still_from_record() prefers a recorded HASH over the name for
+    exactly that reason, and its only other defence ("the file under that name is
+    newer than the clip") CANNOT FIRE ON THE DEPLOY: a fresh clone stamps every
+    file with the checkout time, so on banyan.city — the one surface the founder
+    screens from — the hash is the only defence there is. Every held clip written
+    before today was defended on a laptop and undefended on Vercel; the five
+    published ones were repaired by reading their hashes out of git history by
+    hand (b6d435f), and this is what stops that repair being needed again.
+
+    Measured off the bytes this function was HANDED, never looked up by name
+    afterwards — looking it up by name later is the very failure being closed.
     """
     Path(str(clip) + ".meta.yaml").write_text(
         "# Shot provenance (7.2) — written by hold_still at build time\n"
@@ -453,9 +470,16 @@ def sidecar(clip: Path, still: Path, beat: int, seconds: float,
            f"{zoom_total_used / seconds * 100:.2f}%/s, linear, centred, "
            f"monotonic (never reverses)\n")
         + f"source_still: {still.name}\n"
+        + f"source_still_sha256: {hashlib.sha256(still.read_bytes()).hexdigest()}\n"
         "cost_usd: 0\n"
         "prompt: |-\n"
-        "  (none — the approved still is held; nothing was generated)\n"
+        # "the approved still" was false boilerplate and had been since the
+        # provisional picks began: this tool holds whatever frame it is handed,
+        # and on 2026-08-09 several of those were candidates the founder had not
+        # seen. Approval is the T0 leaf's word (STEWARDSHIP §6) and it is not
+        # this file's to assert — a record that claims an approval nobody gave is
+        # the same class of lie as a poster promising pixels the clip lacks.
+        "  (none — the chosen still is held; nothing was generated)\n"
         "negative: ''\n", encoding="utf-8")
 
 

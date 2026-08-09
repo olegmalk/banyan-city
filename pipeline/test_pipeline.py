@@ -1040,7 +1040,12 @@ def test_held_sidecar_is_readable_by_every_tool_that_reads_it(tmp: Path):
 
     clip = tmp / "03-deploy-succeeded.mp4"
     clip.write_bytes(b"v")
-    hs.sidecar(clip, tmp / "03-deploy-succeeded.png", 3, 2.5, zoom_total_used=0.03)
+    # The still has to EXIST now: sidecar() hashes the bytes it was handed
+    # (2026-08-09). A real call always has them — it just fed the file to ffmpeg
+    # — and this test was passing a path nothing had ever written.
+    still = tmp / "03-deploy-succeeded.png"
+    still.write_bytes(b"the deploy-succeeded frame")
+    hs.sidecar(clip, still, 3, 2.5, zoom_total_used=0.03)
     text = Path(str(clip) + ".meta.yaml").read_text(encoding="utf-8")
     data = yaml.safe_load(text)
 
@@ -2302,8 +2307,12 @@ def test_no_render_path_stretches_a_mismatched_still(tmp: Path):
     clip = tmp / "14-worth-staying-in.mp4"
     clip.write_bytes(b"v")
     note = pp.crop_note(832, 1216, W, H) + "; and then some (a: colon, in it)"
-    hs.sidecar(clip, tmp / "14-worth-staying-in.png", 14, 12.99,
-               zoom_total_used=0.12, framing=note)
+    # The still must EXIST: sidecar() hashes the bytes it was handed as of
+    # 2026-08-09, which is the only defence a held clip has on a fresh clone. A
+    # real call always has the file — it just fed it to ffmpeg.
+    still = tmp / "14-worth-staying-in.png"
+    src.save(still)
+    hs.sidecar(clip, still, 14, 12.99, zoom_total_used=0.12, framing=note)
     text = Path(str(clip) + ".meta.yaml").read_text(encoding="utf-8")
     d = yaml.safe_load(text)
     check("the held sidecar records which pixels the frame kept",
@@ -2321,7 +2330,7 @@ def test_no_render_path_stretches_a_mismatched_still(tmp: Path):
     # would read as "measured, nothing cropped", which is a different claim.
     frz = tmp / "14-frozen.mp4"
     frz.write_bytes(b"v")
-    hs.sidecar(frz, tmp / "14-worth-staying-in.png", 14, 12.99, frozen=True)
+    hs.sidecar(frz, still, 14, 12.99, frozen=True)
     frz_text = Path(str(frz) + ".meta.yaml").read_text(encoding="utf-8")
     check("a frozen hold claims no framing it did not apply",
           "framing:" not in frz_text
@@ -4639,6 +4648,134 @@ def test_a_shot_that_records_no_still_gets_no_poster(tmp: Path):
           got is None and why != "")
 
 
+def test_a_held_clip_records_the_bytes_it_was_handed(tmp: Path):
+    """hold_still writes the hash, so a held beat is defended on Vercel too.
+
+    `source_still: <name>` was the only frame reference this tool wrote, and the
+    resolver's one other defence — "the file under that name is newer than the
+    clip" — CANNOT FIRE ON THE DEPLOY, because a fresh clone stamps every file
+    with the checkout time. So every held clip ever made was right on a laptop
+    and undefended on banyan.city, which is the only surface the founder screens
+    from. Measured off the bytes the function was handed, never looked up by name
+    afterwards: looking it up later is the failure being closed.
+    """
+    import hashlib
+
+    import yaml
+
+    import build_site as bs
+
+    PIXELS = b"beat 14 as it was drawn: bare soil, low horizon"
+    stills = _stills_dir(tmp, "001-x", {"14-worth-staying-in.png": PIXELS})
+    clip = tmp / "beat-14-HELD-gentle.mp4"
+    clip.write_bytes(b"a computed push-in")
+    hs.sidecar(clip, stills / "14-worth-staying-in.png", 14, 2.5, zoom_total_used=0.12)
+    data = yaml.safe_load(Path(str(clip) + ".meta.yaml").read_text(encoding="utf-8"))
+
+    check("the held sidecar records the sha256 of exactly those bytes",
+          data.get("source_still_sha256") == hashlib.sha256(PIXELS).hexdigest())
+    check("...beside the name, which is kept for a reader",
+          data.get("source_still") == "14-worth-staying-in.png")
+    # The three classifier-input lines are untouched — pinned again here because
+    # this edit landed in the same function and hold_still's own comments say
+    # what each one breaks.
+    check("the classifier lines above it are unchanged",
+          data["platform"] == "local-deterministic (pipeline/hold_still.py, ffmpeg)"
+          and data["model"] == "none"
+          and str(data["model_licence"]).startswith("n/a — inherits the still's licence"))
+    # False boilerplate removed: this tool holds whatever frame it is handed, and
+    # several of those are provisional picks the founder has not seen. Approval
+    # is the T0 leaf's word (§6), not this file's to assert.
+    check("the prompt no longer claims an approval nobody gave",
+          "the chosen still is held" in str(data["prompt"])
+          and "approved" not in str(data["prompt"]))
+
+    # AND THE POINT OF THE HASH: the canon filename is re-promoted onto different
+    # pixels, R6 keeps the old frame in place under a -REVOKED- name, and this
+    # clip still posters the frame it actually holds.
+    (stills / "14-worth-staying-in-REVOKED-too-tall.png").write_bytes(PIXELS)
+    (stills / "14-worth-staying-in.png").write_bytes(b"a redraw promoted later")
+    got, why = bs.still_from_record(data, clip, [stills])
+    check("after a re-promotion the held clip posters its own pixels, not the name",
+          got is not None and got.name == "14-worth-staying-in-REVOKED-too-tall.png"
+          and why == "")
+    check("...and those really are the bytes the sidecar recorded",
+          got is not None and bs.bytes_sha256(got) == data["source_still_sha256"])
+
+
+def test_the_nested_init_frame_dialect_resolves_like_the_flat_one(tmp: Path):
+    """Episode 2's cold open was blank while its own record held the answer.
+
+    video_task's LTX/Wan renders write the frame as a NESTED mapping —
+    `init_frame: {path:, sha256:, plate_sha256:, …}` — and the resolver read only
+    the flat dialects, so it saw a record naming no still at all while two lines
+    down the same record carried sha256 7cc22aa1…, which is a frame on disk.
+    Two traps, and both are in here: the path is written with WINDOWS separators
+    (and a backslash is a legal posix filename character, so Path().name returns
+    the whole string instead of raising), and `plate_sha256` is the 704x1280
+    cover-crop fed to the model, which exists nowhere the resolver looks —
+    recording it would produce a refusal instead of a poster.
+    """
+    import hashlib
+
+    import build_site as bs
+
+    PIXELS = b"01-cold-open as episode 2 was filmed from it"
+    sha = hashlib.sha256(PIXELS).hexdigest()
+    plate = hashlib.sha256(b"the 704x1280 cover crop, which is nowhere").hexdigest()
+    d = _stills_dir(tmp, "002b-first-citizen", {"01-cold-open.png": PIXELS})
+    clip = tmp / "wan5b-b01-v2.mp4"
+    clip.write_bytes(b"an mp4")
+
+    nested = {"init_frame": {
+        "path": r"genomes\sapling\nodes\002b-first-citizen\stills\01-cold-open.png",
+        "sha256": sha, "plate_wxh": "704x1280",
+        "plate_path": r"C:\banyan-farm\b01\01-704x1280.png", "plate_sha256": plate}}
+    flat = {"init_still": "01-cold-open.png", "init_still_sha256": sha}
+    check("the nested dialect resolves to the same still the flat one does",
+          bs.still_from_record(nested, clip, [d]) == bs.still_from_record(flat, clip, [d]))
+    check("...and that is the frame, not a blank",
+          bs.still_from_record(nested, clip, [d])[0].name == "01-cold-open.png")
+    check("the Windows path is read as a basename, not swallowed whole",
+          bs.record_still_claim(nested)[0] == "01-cold-open.png")
+    check("plate_sha256 is never mistaken for the frame",
+          bs.record_still_claim(nested)[1] == sha)
+    # Proof that reading the plate hash would have COST something rather than
+    # being merely untidy: those bytes are in no stills/ dir, so it refuses.
+    only_plate = {"init_frame": {"path": "01-cold-open.png", "sha256": plate}}
+    check("...which matters, because the plate hash resolves to nothing at all",
+          bs.still_from_record(only_plate, clip, [d])[0] is None)
+
+    # A CORRECTION OUTRANKS THE RENDER-TIME FIELD, which is how a frame recovered
+    # out of git history reaches the resolver without rewriting what the renderer
+    # wrote. Same convention licence_gate reads as corrected_model.
+    (d / "01-cold-open-REVOKED-too-tall.png").write_bytes(PIXELS)
+    (d / "01-cold-open.png").write_bytes(b"a redraw promoted onto the same name")
+    corrected = {"corrections": [{"date": "2026-08-09", "field": "init_still",
+                                  "corrected_init_still": "01-cold-open-REVOKED-too-tall.png",
+                                  "corrected_init_still_sha256": sha}]}
+    got, why = bs.still_from_record(corrected, clip, [d])
+    check("a backfilled correction resolves the poster it names",
+          got is not None and got.name == "01-cold-open-REVOKED-too-tall.png" and why == "")
+
+    # THE LIVE CLIP THE BACKFILL WAS WRITTEN FOR. Episode 2 beat 1 is the next
+    # thing the founder screens after episode 1, and it must poster the frame it
+    # holds rather than whatever owns the name `01-cold-open.png` today.
+    import yaml
+
+    import licence_gate as lg
+    served = REPO / "cuts" / "checklist" / "002b-b01-5b.mp4"
+    side = lg.sidecar_for(served, lg.META_EXT)
+    rec = yaml.safe_load(side.read_text(encoding="utf-8"))
+    got, why = bs.still_from_record(rec, served, bs.still_dirs())
+    check("the served episode-2 cold open is no longer a blank player",
+          got is not None and why == "")
+    check("...and it posters the frame it was filmed from, by bytes",
+          got is not None and bs.bytes_sha256(got).startswith("7cc22aa1"))
+    check("...which is the RETIRED file, not whatever holds the canon name now",
+          got is not None and "REVOKED" in got.name)
+
+
 def test_every_served_cut_posters_the_frame_its_record_names():
     """The live review surface, on the real tree — not a fixture.
 
@@ -5130,6 +5267,10 @@ def main():
         test_a_hashless_name_that_changed_hands_is_refused(Path(td))
     with tempfile.TemporaryDirectory() as td:
         test_a_shot_that_records_no_still_gets_no_poster(Path(td))
+    with tempfile.TemporaryDirectory() as td:
+        test_a_held_clip_records_the_bytes_it_was_handed(Path(td))
+    with tempfile.TemporaryDirectory() as td:
+        test_the_nested_init_frame_dialect_resolves_like_the_flat_one(Path(td))
     test_every_served_cut_posters_the_frame_its_record_names()
     # A HAND-RUN THAT BORROWS A QUEUE ID CLAIMS IT — pure: no git, no network.
     test_a_hand_claim_writes_lines_every_reader_already_parses()

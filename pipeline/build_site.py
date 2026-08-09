@@ -850,6 +850,60 @@ def still_dirs() -> list:
     return _STILL_DIRS
 
 
+def record_still_claim(data: dict) -> tuple:
+    """(name, sha256) — the frame a clip's record CLAIMS it was drawn from.
+
+    THREE DIALECTS, because three writers grew independently and all three are
+    honest:
+      `init_still` / `init_still_sha256`        the renderers
+      `source_still` / `source_still_sha256`    hold_still
+      `init_frame: {path:, sha256:, …}`         video_task's LTX/Wan renders
+
+    The nested one was invisible until 2026-08-09, and expensively so: both v2
+    renders in review/ep2-b01/ record their frame that way, so the resolver saw a
+    record naming no still at all while two lines down it carried sha256
+    7cc22aa1… — byte-for-byte `01-cold-open-REVOKED-too-tall.png`, on disk,
+    findable, ignored. Episode 2's cold open was a blank player whose own
+    provenance held the answer.
+
+    TWO TRAPS IN THAT BLOCK, and both are load-bearing:
+      * `path` is written by the Windows render box with BACKSLASHES, and a
+        backslash is a legal filename character on posix — so Path(...).name
+        returns the whole string rather than raising. Split on both separators.
+      * `plate_sha256` is NOT the answer. It is the 704x1280 cover-crop fed to
+        the model, it exists in no stills/ directory, and recording it would turn
+        a resolvable poster into a refusal. Only `sha256` is read here.
+
+    AND A CORRECTION OUTRANKS ALL THREE. Render-time provenance is appended to,
+    never rewritten (the convention licence_gate already reads as
+    `corrected_model` / `corrected_platform`), so a frame recovered out of git
+    history lands in a dated `corrections:` entry as `corrected_init_still` and
+    `corrected_init_still_sha256` — and a correction that no reader consults is
+    just a comment. Last correction wins; they are appended in date order.
+    Precedence overall: correction, then the flat render-time keys, then the
+    nested block.
+    """
+    name = want = ""
+    for c in (data.get("corrections") or []):
+        if not isinstance(c, dict):
+            continue
+        name = str(c.get("corrected_init_still")
+                   or c.get("corrected_source_still") or name).strip()
+        want = str(c.get("corrected_init_still_sha256")
+                   or c.get("corrected_source_still_sha256") or want).strip().lower()
+    name = name or str(data.get("init_still") or data.get("source_still") or "").strip()
+    want = want or str(data.get("init_still_sha256")
+                       or data.get("source_still_sha256") or "").strip().lower()
+    frame = data.get("init_frame")
+    if isinstance(frame, dict):
+        if not name:
+            raw = str(frame.get("path") or "").strip().replace("\\", "/")
+            name = raw.rsplit("/", 1)[-1]
+        if not want:
+            want = str(frame.get("sha256") or "").strip().lower()
+    return name, want
+
+
 def still_from_record(data: dict, clip: Path, dirs: list) -> tuple:
     """WHICH PIXELS THIS CLIP HOLDS — answered by bytes, never by filename alone.
 
@@ -886,9 +940,7 @@ def still_from_record(data: dict, clip: Path, dirs: list) -> tuple:
          record was backfilled with its measured hash on 2026-08-08.
       5. no hash and the name is missing, or ambiguous across nodes — refuse.
     """
-    name = str(data.get("init_still") or data.get("source_still") or "").strip()
-    want = str(data.get("init_still_sha256")
-               or data.get("source_still_sha256") or "").strip().lower()
+    name, want = record_still_claim(data)
     if not name and not want:
         return None, ""
     named = [d / name for d in dirs if name and (d / name).exists()]
