@@ -28,19 +28,19 @@ authorised_by: >-
   licence question stays open and stays his.
 surface: /review gallery (unlisted, noindex — D17)
 canon: false
-derived_from: CONTACT-002b-r3-b07-11.png
-derived_from_sha256: 9fb1073bb8ede71d25c3ccae4d49269d87f5ca77fc8e2215710794d180ca95c5
-sha256: a7848b92c80d300f7495eb6dd7e33cc20bb21994b42ca17a502dc695f9affd5a
+derived_from: LABELED-beat06-r4.png
+derived_from_sha256: 58b207b7bb16efca43a0aabd1cb8f7fcab350abfcb423df251bbe828a0b98ecd
+sha256: 238d4ca2d6f4cd0102a84e33c59e1018c4523c2eaebc5c726c7f44181e77d710
 encoding: >-
   JPEG from the source PNG with ImageMagick 7 — no resize, no crop, no colour
-  conversion, metadata stripped. Quality 88,
+  conversion, metadata stripped. Quality 90,
   4:4:4 chroma so the burned-in labels stay crisp.
 cost_usd: 0
 sheet: true
-episode: 2
-shows: 002b-b07-r3-s0..s3 through 002b-b11-r3-s0..s3, one band per beat
+episode: 1
+shows: b06-r3-s0..s3 (top row) and b06-r4-s0..s3 (bottom row)
 what: >-
-  episode 2 beats 07-11, round 3
+  episode 1 beat 06 — the rejected round over the redraw, same seed per column
 sheet_note: >-
   A contact sheet: several candidate frames composited into one picture by our
   own labelling script, with an amber address badge and the seed burned under

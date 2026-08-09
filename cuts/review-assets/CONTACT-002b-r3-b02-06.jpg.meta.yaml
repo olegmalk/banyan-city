@@ -29,8 +29,8 @@ authorised_by: >-
 surface: /review gallery (unlisted, noindex — D17)
 canon: false
 derived_from: CONTACT-002b-r3-b02-06.png
-derived_from_sha256: b3dbfc9c77a9b1850658f83032e6cb5319d9c34f7fba587afcd7d00158343382
-sha256: 7209502df1be6ab3029b3df774d832540dab254c479a2f028813c1fe749b4b4d
+derived_from_sha256: 7210a55fc6a5e06aa0cfe342b2460c98b0a56243246bd1c69dd4f4028312f426
+sha256: 52ca29df7567bbfa9af067ad5783b94c5ac0aa753d319a74297cd50ad3101386
 encoding: >-
   JPEG from the source PNG with ImageMagick 7 — no resize, no crop, no colour
   conversion, metadata stripped. Quality 88,

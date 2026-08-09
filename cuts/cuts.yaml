@@ -520,85 +520,105 @@ checklist:
     - n: 10
       heading:
         title: "This morning — the ones that are yours"
-      ask: "The redrawn frames — nine sheets, a pick on each."
+      ask: "The redrawn frames — episode 2 is the open half now."
       state: open
       chip: "PICK"
       minutes: 5
       summary: >-
-        100 candidates on the recipe your beat-15 yes settled, plus four round-4
-        and round-6 redraws that came back while you slept. Two of those carry
-        new picks.
+        Beats 3 and 10 are canon on your answers. Episode 2's twenty beats are
+        still unanswered, and their tiles now carry addresses.
       where: "on this card — open the sheets, tap one to see it full size"
-      sheets_title: "The sheets — thirteen of them, tap one to open it full size"
-      how: "name an address, e.g. `b14-r3-s2` or `002b-b16-r3-s1`"
+      sheets_title: "The sheets — fifteen of them, tap one to open it full size"
+      how: "name an address, e.g. `002b-b16-r3-s1` or `b14-r4-s0`"
       body: |-
-        **THE NINE SHEETS ARE BELOW** — they went onto this page on your word,
-        2026-08-09: *"put the images from my computer onto there please, not like
-        theres any reason to hide it."* Addresses resolve through
-        `REVIEW-KEY-0808.md`.
+        **YOUR DEFECT REPORT IS FIXED FIRST, because it was blocking the biggest
+        half of this card.** *"ep2 beats dont have labels."* Correct — the
+        episode-2 sheets put the beat only in the band header, so no single tile
+        said what it was. **Every episode-2 tile now carries its full address**
+        (`002b-b02-r3-s0`) in the same amber chip the episode-1 sheets use. Same
+        frames, same order, same seeds; only the chips are new.
 
-        - **Episode 1 — the last four frames**, one sheet each: beats 03, 06, 10,
-          14. Eight frames apiece — the round you rejected on top, the new one
-          below, same seed per column, so a column is the same picture drawn twice.
-          Addresses read `b03-r3-s0`. **These four are all that stands between v33
-          and a complete set of stills.**
-        - **Episode 2 — all twenty**, four band sheets, four candidates per beat.
-          Quote these in the long form: `002b-b02-r3-s3`.
-        - **Episode 2's opening shot**, four candidates, `b01-r5-s0` to `s3`.
-          Labels and seeds only, no favourite marked — which is the whole reason
-          the last pick was void. Highest-leverage answer on the page (item 06).
+        **WHAT YOU ALREADY ANSWERED, so you can skip it.**
 
-        **AND FOUR MORE THAT LANDED SINCE, each answering a named fault rather
-        than re-rolling seeds.** They are the last four sheets in the gallery.
+        - **Beat 3 — `b03-r4-s3` is canon.** You said `b03-r3-s1` and then took
+          it back in the same message — *"nevermind b03-r3-s1, i prefer
+          b03-r4-s3"* — and the later sentence is the one that counts. That also
+          answers item 16 by picking.
+        - **Beat 10 — `b10-r1-s3` is canon.** The round-1 frame you floated on
+          2026-08-08, chosen over three rounds of root-chasing. **The steward
+          argued against it and you overruled that** — `b10-r4-s2` was offered
+          here at 0.65 and **that offer is withdrawn**, not left standing beside
+          your answer.
+        - **Episode 1 is 13 of 15.** Only beats **6** and **14** are still
+          missing a frame.
 
-        - **`b10-r4` — episode 1 beat 10. NEW PICK: `b10-r4-s2`, confidence
-          0.65.** Leading the prompt with the root-map worked: **this is the
-          first time in four rounds the beat has had roots at all**, which is
-          the thing its own on-screen card (`SENSE ✓ roots / air / vibration`)
-          has been contradicting. If you take it, beat 10 stops being one of
-          v33's two unfixed complaints.
-        - **`b12-r4` — episode 2 beat 12. NEW PICK: `b12-r4-s2`, confidence
-          0.70.** r3 drew the big ripe pink fruit in all four, on a beat whose
-          own text has no fruit in it. Removing one word (`mascot-simple`) and
-          adding beat 01's negative block **killed it in 4 of 4**.
-        - **`b01-r6` — the cold open again, provisionally rejected, 0.75.** The
-          person binding worked outright — **zero people in 4 of 4, against
-          three of four in r5** — and the beat still has no plate: three still
-          read too tall, and the fourth has a white block in it. This is item
-          06's question, still open.
-        - **`b13-r6` — episode 2 beat 13, provisionally rejected, 0.72.** The
-          plant-and-goblin fusion that survived three rounds of negatives is
-          **gone in 4 of 4**; what is left is that the goblin only reads as a
-          goblin in one of them. Real progress on the wave's worst beat, not a
-          frame to pick.
+        **BEATS 6 AND 14 — YOU REJECTED BOTH SETS AND NAMED THE AXES. ROUND 4 IS
+        RENDERED AND IS ON THIS CARD** (the last two sheets).
 
-        **WHAT THE STEWARD PROVISIONALLY PICKED, SO YOU CAN OVERRULE IT IN ONE
-        WORD.** All 100 frames of the r3 wave were scored before you saw any —
-        **five picks, twenty beats rejected** — and the four later sheets add
-        **two more picks and two more rejections**. Seven picks in all. The
-        sheets are untouched: no mark, no ordering.
+        - **Beat 6 — *"women, too many clouds/weird cloud formations".* Round 4
+          FAILED, and worse than round 3.** A girl appears in **3 of 4** now,
+          against 2 of 4 before, and the one frame without a person is not a sky.
+          **No pick offered.** The cause is worth one line because it is
+          everywhere in this tree: `no humans` is a Danbooru tag meaning *the
+          picture has nobody in it*, and our prompt builder has been moving it
+          into the negative — asking the model to remove the no-people idea. The
+          fix is a one-frame test, not another batch.
+        - **Beat 14 — *"they are all too short".* Round 4 answers it.** Three of
+          four now run from the bottom of the frame into the upper quarter. The
+          lever was not another adjective — it was `b15-r3-s1`'s own wording, the
+          one frame here you have passed. **Provisional pick `b14-r4-s0`,
+          confidence 0.40**, low on purpose: it is the *shortest* of the three
+          tall ones, chosen for having soil and a stem entering it. **Say
+          `b14-r4-s3` if you want the taller one.** And a fault in all four,
+          before you find it: **no roots in any of them**, though the prompt asks.
 
-        | sheet | provisional call | confidence |
-        |---|---|---|
-        | ep1 b06 | **pick `b06-r3-s2`** | 0.55 |
-        | ep1 b14 | **pick `b14-r3-s3`** | 0.45 |
-        | ep1 b03, b10 | **reject all 8** | 0.85 / 0.80 |
-        | ep2 b16 | **pick `002b-b16-r3-s2`** | 0.40 |
-        | ep2 b18 | **pick `002b-b18-r3-s0`** | 0.45 |
-        | ep2 b21 | **pick `002b-b21-r3-s3`** | 0.50 |
-        | ep2 b02–b15, b17, b19, b20 | **reject all 68** | 0.70–0.95 |
-        | ep2 cold open b01-r5 | **reject all 4** | 0.80 |
-        | ep1 b10 **r4** | **pick `b10-r4-s2`** | 0.65 |
-        | ep2 b12 **r4** | **pick `b12-r4-s2`** | 0.70 |
-        | ep2 cold open **b01-r6** | **reject all 4** | 0.75 |
-        | ep2 b13 **r6** | **reject all 4** | 0.72 |
+        **STILL WAITING ON YOU — this is the open half.**
 
-        Full reasoning per frame is in `PROVISIONAL-PICKS-0809.md`; every row is in
-        `taste/steward-model.ledger.yaml` with an empty verdict field waiting for
-        yours. **The picks carry the LOW numbers and the rejections the high
+        - **Episode 2 — all twenty beats**, four band sheets, four candidates per
+          beat, now addressable per tile. Quote the long form: `002b-b02-r3-s3`.
+        - **Episode 2's opening shot** — `b01-r5-s0..s3`, and `b01-r6-s0..s3`
+          after it. The person binding worked outright in r6 (**zero people in 4
+          of 4**) and the beat still has no plate: three read too tall and the
+          fourth has a white block in it. Highest-leverage answer on the page
+          (item 06).
+        - **`b12-r4` — episode 2 beat 12. PICK: `b12-r4-s2`, 0.70.** r3 drew a
+          big ripe pink fruit in all four on a beat whose text has no fruit;
+          removing one word and adding beat 01's negative block killed it 4 of 4.
+        - **`b13-r6` — episode 2 beat 13, all four provisionally rejected, 0.72.**
+          The plant-and-goblin fusion is **gone in 4 of 4**; what is left is that
+          the goblin only reads as a goblin in one of them. Progress, not a frame.
+
+        **WHAT THE STEWARD GUESSED, AND HOW BADLY.** Every frame was scored
+        before you saw any. **Six of those predictions now have your verdict: 1
+        hit, 2 partial, 3 miss — and 0 of 3 on picks.** It can say no with some
+        skill; no pick of its own has ever been ratified. The sheets are
+        untouched: no mark, no ordering.
+
+        | sheet | provisional call | confidence | your verdict |
+        |---|---|---|---|
+        | ep1 b06 | pick `b06-r3-s2` | 0.55 | **rejected all — women, clouds** |
+        | ep1 b14 | pick `b14-r3-s3` | 0.45 | **rejected all — too short** |
+        | ep1 b03 | reject all 4 | 0.85 | **you picked `b03-r4-s3` from r4** |
+        | ep1 b10 | reject all 4 | 0.80 | **you picked `b10-r1-s3` from r1** |
+        | ep1 b10 **r4** | ~~pick `b10-r4-s2`~~ | 0.65 | **withdrawn — b10 is answered** |
+        | ep1 b06 **r4** | **reject all 4** | 0.90 | open |
+        | ep1 b14 **r4** | **pick `b14-r4-s0`** | 0.40 | open |
+        | ep2 b16 | **pick `002b-b16-r3-s2`** | 0.40 | open |
+        | ep2 b18 | **pick `002b-b18-r3-s0`** | 0.45 | open |
+        | ep2 b21 | **pick `002b-b21-r3-s3`** | 0.50 | open |
+        | ep2 b02–b15, b17, b19, b20 | **reject all 68** | 0.70–0.95 | open |
+        | ep2 cold open b01-r5 | **reject all 4** | 0.80 | open |
+        | ep2 b12 **r4** | **pick `b12-r4-s2`** | 0.70 | open |
+        | ep2 cold open **b01-r6** | **reject all 4** | 0.75 | open |
+        | ep2 b13 **r6** | **reject all 4** | 0.72 | open |
+
+        Full reasoning per frame is in `PROVISIONAL-PICKS-0809.md`; every open row
+        is in `taste/steward-model.ledger.yaml` with an empty verdict field waiting
+        for yours. **The picks carry the LOW numbers and the rejections the high
         ones** — rejecting needs one named fault, choosing needs to predict a
-        preference, and the model is openly worse at the second. Everything built
-        overnight stands on those five weakest guesses.
+        preference, and the model is openly worse at the second. **Your four
+        verdicts so far confirm the split exactly**: both rejections held, both
+        picks fell, and they were the two lowest numbers on the page.
 
         **A SENTENCE THIS ITEM USED TO CARRY IS RETRACTED, not quietly edited.** It
         promised *"nothing is filmed from a frame you did not name."* Five of those
@@ -622,36 +642,42 @@ checklist:
         (**D16**) — that sign-off is a separate question you have not answered.
 
       sheets:
-        - file: review-assets/LABELED-beat03-r3.jpg
-          label: "ep1 beat 03 — b03-r3-s0..s3"
-          note: "rejected round on top, redraw below, same seed per column"
+        - file: review-assets/LABELED-beat06-r4.jpg
+          label: "ep1 beat 06 ROUND 4 — b06-r4-s0..s3"
+          note: "your two faults, both missed: a girl in 3 of 4 and no sky in the fourth. No pick."
+        - file: review-assets/LABELED-beat14-r4.jpg
+          label: "ep1 beat 14 ROUND 4 — b14-r4-s0..s3"
+          note: "height answered; provisional pick b14-r4-s0, 0.40 — say b14-r4-s3 for the taller one"
         - file: review-assets/LABELED-beat06-r3.jpg
-          label: "ep1 beat 06 — b06-r3-s0..s3"
-          note: "prompt unchanged, so these are new seeds and the columns are not pairs"
-        - file: review-assets/LABELED-beat10-r3.jpg
-          label: "ep1 beat 10 — b10-r3-s0..s3"
-          note: "rejected round on top, redraw below, same seed per column"
+          label: "ep1 beat 06 round 3 — b06-r3-s0..s3 — you rejected these"
+          note: "kept as the record of the round you named the faults on"
         - file: review-assets/LABELED-beat14-r3.jpg
-          label: "ep1 beat 14 — b14-r3-s0..s3"
-          note: "rejected round on top, redraw below, same seed per column"
+          label: "ep1 beat 14 round 3 — b14-r3-s0..s3 — you rejected these"
+          note: "kept as the record of the round you named the faults on"
+        - file: review-assets/LABELED-beat03-r3.jpg
+          label: "ep1 beat 03 round 3 — ANSWERED, b03-r4-s3 is canon"
+          note: "kept as the record; the frame you took is on item 16's sheet"
+        - file: review-assets/LABELED-beat10-r3.jpg
+          label: "ep1 beat 10 round 3 — ANSWERED, b10-r1-s3 is canon"
+          note: "kept as the record; you took the round-1 frame instead"
         - file: review-assets/CONTACT-002b-r3-b02-06.jpg
           label: "ep2 beats 02-06 — 002b-bNN-r3-sN"
-          note: "four candidates per beat, one band each"
+          note: "four candidates per beat, one band each; every tile now carries its full address"
         - file: review-assets/CONTACT-002b-r3-b07-11.jpg
           label: "ep2 beats 07-11 — 002b-bNN-r3-sN"
-          note: "four candidates per beat, one band each"
+          note: "four candidates per beat, one band each; every tile now carries its full address"
         - file: review-assets/CONTACT-002b-r3-b12-16.jpg
           label: "ep2 beats 12-16 — 002b-bNN-r3-sN"
-          note: "four candidates per beat, one band each"
+          note: "four candidates per beat, one band each; every tile now carries its full address"
         - file: review-assets/CONTACT-002b-r3-b17-21.jpg
           label: "ep2 beats 17-21 — 002b-bNN-r3-sN"
-          note: "four candidates per beat, one band each"
+          note: "four candidates per beat, one band each; every tile now carries its full address"
         - file: review-assets/LABELED-b01-r5.jpg
           label: "ep2 cold open — b01-r5-s0..s3"
           note: "the four replacing the frame you withdrew"
         - file: review-assets/LABELED-b10-r4.jpg
-          label: "ep1 beat 10 ROUND 4 — b10-r4-s0..s3"
-          note: "roots for the first time in four rounds; provisional pick b10-r4-s2, 0.65"
+          label: "ep1 beat 10 round 4 — MOOT, you answered beat 10 from r1"
+          note: "the b10-r4-s2 offer is withdrawn; kept because it is where the roots finally came"
         - file: review-assets/LABELED-b12-r4.jpg
           label: "ep2 beat 12 ROUND 4 — b12-r4-s0..s3"
           note: "the ripe fruit gone in 4 of 4; provisional pick b12-r4-s2, 0.70"
@@ -670,17 +696,39 @@ checklist:
     # frame (beat 3's close-up, his own instruction). Two of his rules meet and
     # one has to give. Ledger record `ep1-b03-r4-sample`, commit d17a685.
     - n: 16
-      ask: "Beat 3 — two of your rules collide. Pick one."
-      state: open
-      chip: "PICK"
-      minutes: 2
+      ask: "Beat 3 — answered. You picked instead of choosing a rule."
+      state: settled
+      chip: "CONFIRM"
+      minutes: 1
       summary: >-
-        Beat 1's screen wording killed the glyph junk 4/4 and left the screens
-        blank. Close-up and abstract glow cannot both hold.
-      where: "the `b03-r4` sheet is on this card"
-      how: "say **a**, **b**, or your own"
-      sheets_title: "Beat 3 round 4 — four candidates"
+        `b03-r4-s3` is canon. You wrote neither option, so neither is claimed.
+      where: "`stills/03-deploy-succeeded.png` — the sheet below is what it came from"
+      how: "nothing needed; say so if we heard it wrong"
+      sheets_title: "Beat 3 round 4 — the four this came from"
       body: |-
+        **ANSWERED 2026-08-09 BY PICKING** — *"nevermind b03-r3-s1, i prefer
+        b03-r4-s3."* Promoted byte-for-byte to `stills/03-deploy-succeeded.png`
+        (seed 20263722, round 4). Beat 3 is off the open list.
+
+        **WHICH OF THE OPTIONS BELOW THAT AMOUNTS TO IS NOT CLAIMED, because you
+        did not say.** You chose a close-up frame from round 4, so the close-up
+        stands with `r4-s3`'s screen exactly as drawn — but you wrote neither (a)
+        nor (b), and reading one into the pick would put a rule in your mouth. If
+        a later beat needs the rule stated, it is still open and still yours.
+
+        **The steward predicted you would reject all four, confidence 0.80. You
+        did not.** Scored as a miss in `taste/steward-model.ledger.yaml`.
+
+        **v33 does not have this frame in it.** The cut in item 12 was assembled
+        before you picked and still carries the old beat 3. It needs a rebuild,
+        not a redraw.
+
+        The original question is kept below, unedited, because it is the record
+        of what was asked — including its last two lines, which the answer above
+        has since overtaken.
+
+        ---
+
         **WHAT ROUND 4 CHANGED AND WHAT IT PROVED.** It copied beat 1's approved
         five-word screen treatment — the abstract glow, no words to read —
         straight into beat 3. Two of your instructions are now reliably met:
@@ -786,73 +834,84 @@ checklist:
           episode-2 pass carries three LTX renders (**D16**). Those are the two
           open licence questions that are yours, and a finished cut is not a way
           around them.
-      ask: "Episode 1, v33 — the cut you refused, rebuilt."
-      state: open
-      chip: "SCREEN"
-      minutes: 3
+      ask: "Episode 1, v33 — superseded by your own answers. Don't watch it."
+      state: gap
+      chip: "FYI"
+      minutes: 1
       summary: >-
-        Ninety seconds, fifteen beats, none slated. Two frames are our guess.
-      where: "`review/provisional-v33/ep1-v33-PROVISIONAL.mp4` — 90.1s · 720x1280 · $0"
-      sheets_title: "The two frames we guessed — beats 6 and 14"
-      how: "say it holds, or name what is wrong; say `b14-r3-s2` to swap beat 14"
+        Four of its fifteen beats are now wrong. Nothing to screen until it is
+        rebuilt.
+      where: "`review/provisional-v33/ep1-v33-PROVISIONAL.mp4` — kept as the record, not as the ask"
+      sheets_title: "The two frames we guessed — you rejected both sets"
+      how: "nothing needed here; beats 6 and 14 are item 10"
       body: |-
-        **THE THREE THINGS YOU ASKED FOR ON v32.**
+        **YOUR ANSWERS OVERTOOK THIS CUT. FOUR OF ITS FIFTEEN BEATS ARE NOW
+        WRONG, so there is nothing here worth ninety seconds of your time.**
 
-        - **The camera.** 12% on every held beat, linear, one-way, never
-          reversing. Ten beats carry it.
-        - **The stretch is gone.** Every beat is 704x1280 with nothing stretched.
-        - **The seven frames you named** — 3, 6, 7, 10, 12, 14, 15. Four moved.
-          **Two did not**, and that is the part to read before you watch.
+        - **Beats 6 and 14 — both guesses confirmed wrong.** *"the two frames you
+          guessed were wrong."* You rejected both whole SETS, not just our picks
+          from them, so `b06-r3-s2` and `b14-r3-s3` come out and neither has a
+          replacement yet. Round 4 for both is on item 10.
+        - **Beats 3 and 10 — you answered them, and this cut predates the
+          answer.** It carries the two frames you complained about on v32, which
+          was honest when it was assembled and is simply stale now: `b03-r4-s3`
+          and `b10-r1-s3` are canon as of 2026-08-09.
 
-        Five beats are filmed (Wan 2.2); ten are your stills with the 12% push.
+        **So v33 needs a rebuild, not a redraw** — beats 3 and 10 are a swap of
+        files it already has. It waits on 6 and 14 having frames at all.
 
         | beat | what it is | frame |
         |---|---|---|
         | 1, 2 | filmed | canon |
-        | **3** | filmed | **canon — unchanged. The redraw was rejected.** |
+        | **3** | filmed | **STALE — the cut has the frame you complained about; `b03-r4-s3` is now canon** |
         | 4, 5 | held | canon |
-        | **6** | held | **`b06-r3-s2` — PROVISIONAL, confidence 0.55** |
+        | **6** | held | **WRONG — `b06-r3-s2`, from a set you rejected. No frame yet.** |
         | 7, 8, 9 | held | canon — the frames you picked on 2026-08-08 |
-        | **10** | held | **canon — unchanged. The redraw was rejected.** |
+        | **10** | held | **STALE — the cut has the frame you complained about; `b10-r1-s3` is now canon** |
         | 11 | filmed | canon — the fix you ordered reverted, stays reverted |
         | 12 | held | canon |
         | 13 | filmed | canon |
-        | **14** | held | **`b14-r3-s3` — PROVISIONAL, confidence 0.45** |
+        | **14** | held | **WRONG — `b14-r3-s3`, from a set you rejected. No frame yet.** |
         | 15 | held | canon — `b15-r3-s1`, the frame you passed |
 
-        **THE TWO PROVISIONAL FRAMES, both below:**
+        **WHAT THE CUT DID GET RIGHT, and it still stands:** the camera is 12% on
+        every held beat, linear and one-way; nothing is stretched (every beat
+        704x1280); five beats are filmed (Wan 2.2) and ten are stills with the
+        push.
 
-        - **Beat 6 — `b06-r3-s2`.** Your own canon `06-too-blue` with the leaf
-          taken out: same blue, same clouds, same light. Picked because it is
-          measured against a frame you passed rather than against an opinion.
-          **Confidence 0.55** — low, because your round-1 rejection named no fault
-          at all (*"none quite work"*) and an unstated objection cannot be
-          predicted.
-        - **Beat 14 — `b14-r3-s3`.** Your fault was *"all too small, not good
-          character consistency."* Four-leaf sprout across the middle of the frame,
-          warm raking light, nothing man-made. **Confidence 0.45, the lowest on the
-          episode** — `b14-r3-s2` has a *bigger* plant and "too small" is a
-          comparative; it was passed over only for a window and a wall in the top
-          strip. **If you want the bigger one, say `b14-r3-s2`** — about a minute.
+        **WHY THE TWO GUESSES WERE MADE AND WHAT THEY COST — kept, because a
+        prediction you delete is a prediction that never scored.** Both were the
+        page's lowest-confidence calls and both missed:
 
-        **THE TWO THAT DID NOT MOVE ARE THIS CUT'S WEAKNESS.** Beats **3** and
-        **10** still carry the exact frames you named on v32, because all eight
-        redraws were rejected. **You are watching a cut that still has two of your
-        seven complaints in it**, and saying so is better than hoping you miss it
-        on a phone.
+        - **Beat 6 — `b06-r3-s2`, confidence 0.55, MISS.** Picked for matching
+          your own `06-too-blue` — same blue, same clouds, same light. That was
+          the error: the frame it was measured against is
+          `06-too-blue-REVOKED-leaf.png`, which you had **refused** on 2026-08-07
+          for the leaf. Your silence about its clouds was read as approval of
+          them, and you have since called that cloud dialect *"weird"*. The rule
+          that came out of it is now in the steward model: an anchor may only be
+          a frame you passed.
+        - **Beat 14 — `b14-r3-s3`, confidence 0.45, MISS.** Picked against *"all
+          too small"* by making the plant fill more of the frame. Your answer was
+          *"all too short"* — **height, not area** — so the whole set was aimed
+          at the wrong axis, not just the pick. Also recorded: **A7 is absolute,
+          not comparative.** Bigger than last round is not tall.
 
-        **WHAT YOUR ANSWER DOES.** Ratify the two and they are promoted to canon
-        and v33 stops being provisional. Flip either and that beat re-renders in a
-        minute. Reject the cut and we have lost a night that cost nothing and
-        learned which axis the model reads wrong.
+        **YOUR ATTRIBUTION IS RECORDED AS YOURS, AND IT DOES NOT CANCEL EITHER
+        MISS.** *"thats only because you didnt have any right ones to choose."*
+        Partly true — you rejected both sets. But both records predicted
+        **ratify**, not reject: the model did not pick the best of a bad set, it
+        said the set was good. Six predictions now have verdicts — **1 hit, 2
+        partial, 3 miss**, and **0 of 3 on picks.** The model can say no with
+        some skill and has never had a yes ratified.
 
       sheets:
         - file: review-assets/PICK-b06-r3-s2.jpg
-          label: "beat 06 — b06-r3-s2 — PROVISIONAL"
-          note: "our pick, confidence 0.55; held in v33, ratified by nobody"
+          label: "beat 06 — b06-r3-s2 — REJECTED with the set"
+          note: "our guess, 0.55; anchored on a frame you had revoked"
         - file: review-assets/PICK-b14-r3-s3.jpg
-          label: "beat 14 — b14-r3-s3 — PROVISIONAL"
-          note: "our pick, confidence 0.45; say b14-r3-s2 for the bigger plant"
+          label: "beat 14 — b14-r3-s3 — REJECTED with the set"
+          note: "our guess, 0.45; aimed at area when the fault was height"
     - n: 13
       ask: "Episode 2, first pass — mostly a listen."
       state: open
