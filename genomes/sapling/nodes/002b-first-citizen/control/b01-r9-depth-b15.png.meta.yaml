@@ -1,0 +1,115 @@
+# Control-map provenance (7.2, G1) — beat 01 round 9, stage 0.
+# This is NOT a render. No diffusion step has run against this map; it is the
+# conditioning input r9 stage 1 will use, committed and gated first.
+artifact: control map (depth), not a candidate frame and not canon
+kind: depth
+size: 832x1216
+mode: RGB (single depth channel replicated to 3, verified max |R-G| = |R-B| = 0)
+
+# ---------------------------------------------------------------- G1 chain
+# approved still -> pinned deterministic estimator -> committed map
+control_map: genomes/sapling/nodes/002b-first-citizen/control/b01-r9-depth-b15.png
+control_map_sha256: fda4bf6c8838c2da770ce79dd36c885f3c1699755fbb7ce4b0581fd1c32adc28
+control_map_derived_from: >-
+  b15-r3-s1,
+  genomes/sapling/nodes/001-capability-inventory/stills/15-something-s-coming.png
+  — APPROVED, canon since d4488de. The only G1-admissible source for this
+  round: every beat-01 frame with the right palette is unapproved or revoked.
+control_map_source_sha256: f60c1404f88d45720ca295dfc753e9eaabb815446710bcfffb3c7a07b7277f54
+depth_estimator: Intel/dpt-hybrid-midas
+depth_estimator_revision: 11eaf7a1cf4bd70740697dbc216f98980c0aeb03
+depth_estimator_licence: apache-2.0 (D15 SAFE — permissive, adds nothing)
+depth_estimator_params: 122377985
+
+g1_argument: >-
+  The map carries STRICTLY LESS than the approved still — one channel of
+  geometry, colour discarded — so it can subtract from approved content but
+  cannot introduce unapproved content. It is a pure function of the still: no
+  sampling, no seed, fixed parameters, pinned weights. Both hashes are asserted
+  by the deriving script, so neither the source nor the derivative can be
+  swapped without the round refusing to start. The caveat stated in the plan
+  holds and is why stage 0 exists: a monocular depth estimator is a neural net,
+  not a mechanical transform, so a human looks at the map before any diffusion
+  step runs.
+
+# ------------------------------------------------------------ how it was made
+derived_by: pipeline/derive_b01r9_depth.py
+platform: local-rtx5090
+device: >-
+  CPU, not the card (C:\banyan-farm\venv, fp32). Deliberate: the GPU was busy
+  with an LTX render, and fp32 on CPU removes autocast from the derivation
+  chain. The licence gate's platform allowlist has local-gpu / local-mps /
+  local-rtx5090 but no local-cpu, so the machine handle is used here and the
+  device is recorded separately rather than spelled into the platform key.
+torch: 2.11.0+cu128
+transformers: 4.44.2 (pinned, unchanged — no pip install was performed)
+diffusers: 0.29.2 (pinned, unchanged; not used at this stage)
+recipe: >-
+  DPTImageProcessor defaults -> torch.inference_mode -> bicubic interpolate to
+  832x1216 -> min-max normalise -> replicate to 3 channels -> uint8 PNG.
+  Matches the diffusers/controlnet-depth-sdxl-1.0 model card's get_depth_map
+  except for the output size, which is the render size rather than the card's
+  1024x1024.
+processor_input: 384x384 square squash (keep_aspect_ratio false, resample
+  BILINEAR, mean/std 0.5) — the estimator's own default, NOT short-side 518
+raw_depth_range: -0.44483235478401184 .. 1474.060302734375 (before normalise)
+reproducible: >-
+  Re-derived on the box via `derive_b01r9_depth.py --check` and the sha256
+  matched the committed file exactly.
+cost_usd: 0
+
+# ------------------------------------------------- stage 0 gates (plan §7)
+# Measured with numpy/PIL, no model. Numbers, not adjectives.
+gate_polarity:
+  result: PASS
+  evidence: >-
+    near reads bright, as MiDaS inverse depth requires. Bottom 90-100% (near
+    grass) mean 233.07; top 0-10% (sky, farthest) mean 4.52; delta +228.55 of
+    255. Sprout band sits between at 113.82. Not inverted.
+gate_sprout:
+  result: PASS
+  evidence: >-
+    The sprout is present with both cotyledon leaves and an unbroken stem.
+    Stem tracked as a bright depth ridge against the plate's dark stem line:
+    median |dx| = 4 px, within +-8 px on 9 of 14 sampled rows; the 4 rows that
+    diverge are below y=92% where the stem enters the near-field grass mass and
+    a nearer blade legitimately wins the ridge. Stem FWHM in the map 9 px.
+    Ridge detectable y=668..1069, i.e. 54.9%..87.9% of frame height. Sprout
+    band sits +109.30 levels above the far sky, so it is a distinct depth
+    region rather than smeared into the background.
+  downsample_retention: >-
+    The plan's §2 claim verified rather than assumed. Plate sprout-band
+    (y 60-80%, x 40-70%) luminance std 26.340; after round-trip through
+    short-side 518 it is 25.876 = 98.2% (plan said 98.7%); through short-side
+    384, 97.1%; and through the estimator's ACTUAL 384x384 squash, 96.9%. The
+    real path is the squash, which the plan did not measure — it retains more
+    than the plan's 384 figure of 94.6%, so the conclusion holds with margin.
+gate_shaft:
+  result: PASS
+  evidence: >-
+    b15's shaft of light does not survive into the map. The plate's top-25%
+    column-luminance profile peaks at x=333 at +39.2 levels above its band
+    mean; at that same x the map is +0.30 levels above its band mean. The map's
+    whole top-25% profile spans 0.06..9.39 of 255 — 3.7% of dynamic range —
+    against the plate's 54.8..113.2, and its detrended wedge rms is 2.32
+    against the plate's 18.10 (12.8%). Sky region (top 22%) mean 5.59, max 14,
+    and 0.00% of its pixels exceed level 32. The sky is a smooth near-zero far
+    field with no wedge in it, which is the whole point of the round.
+
+# ------------------------------------------------------------------ standing
+approved: false
+provisional: >-
+  PROVISIONAL. A steward-derived control input, not a pick and not canon.
+  Stage 1 (one frame, d60, seed 20260720) belongs to whoever holds the card and
+  runs only after the founder has looked at this map. Ground truth is the
+  founder (R4).
+note: >-
+  Stage 0 of B01-R9-PLAN.md. The round's claim is that depth separates what
+  strength could not: r8 proved the b15 init produces grounded whole-plant
+  frames on 8 of 8 and that all 8 wear the plate's amber dusk, because an RGB
+  init makes geometry and colour the same numbers. This map is the geometry
+  with the colour thrown away. The honest risk the plan names is unchanged and
+  is not a measurement question: the near-field blades are large and bright in
+  this map, so the macro ARRANGEMENT is encoded in the geometry even though the
+  macro LOOK is not — whether a sunrise wide shot built on it still reads
+  "small" to the founder is R4 and the frame that asks him is the deliverable.
