@@ -86,7 +86,7 @@ lanes:
       kind: file
       path: B01-R9-PLAN.md
     resume_brief: "VERIFY PARTIALS FIRST — B01-R9-PLAN.md was ABSENT at seed time, so assume nothing was written and check `git log --all --oneline -- B01-R9-PLAN.md` in case it landed on a branch. This is a RESEARCH task and research means OUTSIDE this repo (CLAUDE.md): read ControlNet/T2I-Adapter docs, the ComfyUI and diffusers issue threads, and what the community actually uses for pose and depth conditioning on SDXL — do not derive a plan from our own code comments. Beat 01's prior rounds r5-r8 have labelled contact sheets in the repo root (LABELED-b01-r5.png .. LABELED-b01-r8.png); read the taste ledger records for what was already rejected and why before proposing r9. Output is a PLAN only — no render, no spend."
-    status: dead
+    status: landed
   - name: qa-guard
     dispatched_at: "unknown"
     mission: "Build pipeline/qa_local.py — the QA gate that fetches and checks the locally built site before a founder ever sees it."
