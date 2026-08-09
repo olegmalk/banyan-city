@@ -2710,6 +2710,96 @@ def test_review_page_publishes_nothing_unprovenanced():
         print("      withheld:", ", ".join(blocked[:6]))
 
 
+def test_review_queue_comes_before_the_record(tmp: Path):
+    """What is still his to do renders ABOVE everything already decided.
+
+    The founder, 2026-08-09: *"why is banyan.city/review so big and long? its
+    hard to find what to do"*. He is fourteen and screens in five-minute passes
+    on a phone, and the page had reached fifty thousand pixels of scroll with
+    seven open asks scattered through a week of settled ones. The fix was a
+    presentation split — `state: open` first as tight cards, everything else
+    folded below — and this test pins the three properties of that split that
+    are easy to break by accident while editing the renderer:
+
+      1. AN OPEN ITEM IS ABOVE THE RECORD AND A SETTLED ONE IS BELOW IT. The
+         only thing deciding which half an item lands in is its `state`.
+      2. NOTHING IS DELETED BY FOLDING. A settled item's body, the page's own
+         `why:` and the note that came with the checklist all still print — one
+         fold down. "Shorter" must never be implemented as "gone".
+      3. THE NUMBER IS `n:`, NOT THE POSITION IN THE LIST. He answers by number
+         ("item 12: yes"). Splitting one list into two renumbers everything if
+         the loop index is used, so item 12 would silently become item 02 the
+         first time an item settled — and his answer would land on the wrong
+         thing. The count line is checked with it, because a page that opens by
+         claiming a number has to have counted.
+    """
+    sys.path.insert(0, str(REPO / "pipeline"))
+    import build_site as bs
+
+    cuts = tmp / "cuts"
+    cuts.mkdir(parents=True)
+    (cuts / "cuts.yaml").write_text("""
+page:
+  title: "Working cuts"
+  eyebrow: "UNLISTED"
+  why: "WHY-PROSE-the-page-explains-itself"
+checklist:
+  title: "the note that came with the list"
+  intro: "INTRO-PROSE-that-is-not-an-ask"
+  items:
+    - n: 4
+      ask: "A thing you already answered"
+      state: settled
+      chip: "CONFIRM"
+      body: "SETTLED-BODY-kept-word-for-word"
+    - n: 12
+      ask: "A thing that is yours to answer"
+      state: open
+      chip: "SCREEN"
+      body: |-
+        > `review/somewhere/a-cut.mp4`
+
+        OPEN-BODY-the-argument-behind-the-ask
+provenance: "receipts"
+""", encoding="utf-8")
+
+    keep_cuts, keep_out = bs.CUTS, bs.OUT
+    bs.CUTS, bs.OUT = cuts, tmp / "site"
+    try:
+        page = bs.render_review()
+    finally:
+        bs.CUTS, bs.OUT = keep_cuts, keep_out
+
+    def at(needle):
+        return page.find(needle)
+
+    record = at('id="record"')
+    check("the record section exists", record > 0)
+    check("the open item is above the record", 0 < at('id="item-12"') < record)
+    check("the settled item is below the record", at('id="item-04"') > record)
+    check("the settled item is folded", '<details' in page[at('id="item-04"') - 60:at('id="item-04"')])
+
+    check("nothing folded is deleted — the settled body still prints",
+          at("SETTLED-BODY-kept-word-for-word") > record)
+    check("the page's own why: survives, behind a fold",
+          at("WHY-PROSE-the-page-explains-itself") > record)
+    check("the checklist note survives, behind a fold",
+          at("INTRO-PROSE-that-is-not-an-ask") > record)
+
+    # The ask stays on the card; the argument goes one fold down, in that order.
+    check("the open item's argument is folded under its ask",
+          at("A thing that is yours to answer")
+          < at("Why we are asking") < at("OPEN-BODY-the-argument-behind-the-ask"))
+    check("the card lifts the item's own path as its where-line",
+          'class="where"' in page and at("review/somewhere/a-cut.mp4") < at("Why we are asking"))
+
+    check("the number is n:, not the loop index", '<span class="n">12</span>' in page)
+    check("no item was renumbered by the split", '<span class="n">02</span>' not in page)
+    check("the count line counts the open items", "1 thing needs you" in page)
+    check("the count line estimates off the chip (SCREEN = 3 min)",
+          "about 3 minutes" in page)
+
+
 def test_checklist_does_not_reask_a_closed_question():
     """An item on the morning checklist must be open THIS MORNING.
 
@@ -4706,6 +4796,8 @@ def main():
         test_dispatch_never_hands_a_renderer_a_raw_still(Path(td))
     test_vercel_build_guard_covers_every_site_input()
     test_review_page_publishes_nothing_unprovenanced()
+    with tempfile.TemporaryDirectory() as td:
+        test_review_queue_comes_before_the_record(Path(td))
     test_checklist_does_not_reask_a_closed_question()
     with tempfile.TemporaryDirectory() as td:
         test_beat11_direction_is_the_founders_revert(Path(td))

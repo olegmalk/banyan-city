@@ -287,6 +287,37 @@ h3.run { margin: 2.4rem 0 .2rem; padding-top: 1.2rem; border-top: 1px solid var(
    only being confirmed, dim = nothing to do here yet. */
 .check.settled { border-left-color: var(--leaf); }
 .check.gapbar { border-left-color: var(--sap-deep); }
+
+/* ---- queue first, record behind (2026-08-09) ----
+   His words: "why is banyan.city/review so big and long? its hard to find what
+   to do". Everything here exists to answer that in the first screenful: the
+   count, then the cards, then a fold over every word that is already decided. */
+.count { font: 700 1.02rem/1.6 var(--body); color: var(--ink); margin: .3rem 0 1.4rem; }
+.count b { color: var(--sap); }
+.count .sub { display: block; font: 600 .8rem/1.7 var(--mono); color: var(--faint);
+  letter-spacing: .04em; text-transform: uppercase; }
+.block { margin: 2.2rem 0; padding-top: 1.6rem; border-top: 1px solid var(--line); }
+.block > h2 { margin: 0 0 .3rem; }
+.block > .said { color: var(--muted); font-size: .95rem; margin: .2rem 0 1.2rem; }
+/* One standing line instead of the same warning repeated on nine cards. */
+.standing { margin: 0 0 1.2rem; }
+/* A queue card is a tight thing on purpose: ask, where, how, and a fold. */
+.check.q > .sum { color: var(--ink); font-size: .98rem; margin: .1rem 0 .6rem; }
+.check .where, .check .act { margin: .35rem 0; font-size: .93rem; color: var(--ink); }
+.check .where .k, .check .act .k { display: inline-block; min-width: 4.2rem;
+  font: 700 .68rem/1.6 var(--mono); letter-spacing: .14em; text-transform: uppercase;
+  color: var(--faint); margin-right: .35rem; }
+.check .where code { overflow-wrap: anywhere; }
+.check > details.drawer { margin: .9rem 0 0; background: var(--panel-2); }
+.check > details.drawer > summary { font-size: .72rem; padding: .6rem .9rem; }
+.check > details.drawer > .drawer-body { padding: 0 .9rem .8rem; }
+/* A settled item keeps every word it had; the drawer supplies the box, so the
+   .check padding is dropped and only its state bar survives. */
+details.check { padding: 0; }
+details.rec > summary { font: 600 .95rem/1.55 var(--body); letter-spacing: 0;
+  text-transform: none; color: var(--ink); }
+details.rec > summary .n { color: var(--faint); }
+details.rec[open] > summary { border-bottom: 1px solid var(--line); margin-bottom: .8rem; }
 """
 
 
@@ -1876,6 +1907,16 @@ REVIEW_NODE = REPO / "genomes" / "sapling" / "nodes" / "001-capability-inventory
 CUT_STAMP = ('<p class="stamp"><b>WORKING CUT — NOT THE EPISODE.</b> '
              'The author has not passed this. It is here so he can screen it; '
              'nothing about it is settled and it is not what the show is.</p>')
+# Said ONCE, above the queue, instead of on every card that stands on a guess.
+# Before 2026-08-09 each provisional item repeated its own version of this and
+# the repetition was most of what made the page long; the per-item prediction
+# and confidence lines still exist, one fold down, where they belong — they are
+# how his verdict scores the model, not how he finds the work.
+PROV_BANNER = ('<p class="notice standing"><b>Some of these were built ahead of you.</b> '
+               'Where the steward guessed your taste it says so, by address, inside '
+               'the item — nothing was published, posted, spent or made canon on a '
+               'guess. <b>Flips are cheap by design:</b> overturning one costs a word '
+               'and a re-render, and it is the answer that teaches the model most.</p>')
 
 
 def inline_md(text: str) -> str:
@@ -2028,10 +2069,74 @@ def render_review() -> str:
     # into a morning of finding out there are none. Filling the gap later is a
     # yaml edit: drop the file into `cuts/` with a sidecar and name it under
     # `sheets:` or `clips:`.
-    checks = []
+    # QUEUE FIRST, RECORD BEHIND — 2026-08-09, and the reason is one sentence of
+    # his: "why is banyan.city/review so big and long? its hard to find what to
+    # do". He is fourteen and screens in five-minute passes on a phone. The page
+    # had seven open asks in it and they were spread through a week of settled
+    # items, three cuts, nine comparison pairs and two pages of prose, so the
+    # first thing he met was everything that was already decided.
+    #
+    # So `state: open` items now come first, one tight card each — the number he
+    # quotes back at us, the ask, where the thing is, how to answer — and the
+    # argument, the evidence and the confidences go one fold down. Settled items
+    # keep every word they ever had and sit below, collapsed. NOTHING IS DELETED
+    # AND NOTHING IS REWORDED: this is presentation. Both halves still print the
+    # text in cuts.yaml, and an item's `state` is still the only thing that
+    # decides which half it lands in.
+    #
+    # AN ITEM MAY MAKE ITS OWN CARD TIGHTER, and every one of these is optional
+    # with a derived fallback, so an item written before today renders unchanged:
+    #   summary:  one sentence under the ask, when the ask alone is not enough
+    #   where:    where the thing to look at is — printed on the card
+    #   how:      the answer grammar in one line ("say `b14-r3-s2`")
+    #   minutes:  what it costs him; otherwise read off the chip
+    # Where `where:` is absent it is LIFTED from the item's own opening
+    # blockquote when that blockquote names a file, which is how three of
+    # today's items already write it. Where `how:` is absent it comes from the
+    # chip, which is already the verb — SCREEN, PICK, YES / NO.
+    #
+    # THE NUMBER IS `n:`, NOT THE LOOP INDEX. Splitting the list in two would
+    # otherwise renumber every item the moment one settled, and the numbers are
+    # how he answers ("item 12: yes"). `n:` is what cuts.yaml has always carried
+    # and what the anchors (`#item-12`) are built from.
+    CHIP_MINUTES = {"SCREEN": 3, "PICK": 3}          # crude on purpose: a screening
+    CHIP_ACTION = {                                  # costs minutes, a yes/no costs one
+        "SCREEN": "Watch it, then say it holds or say what is wrong with it.",
+        "PICK": "Answer by naming your choice.",
+        "YES / NO": "One word back — yes or no.",
+        "ON US": "Nothing to answer here today — this one is on us.",
+    }
+    FILE_RE = re.compile(r"`?[A-Za-z0-9_][\w./-]*\.(?:mp4|png|mp3|md|yaml)`?")
+
+    def lifted_where(body: str) -> str:
+        """The item's own "it is here" line, copied up onto its card.
+
+        Items 11, 12 and 13 all open by naming a path in a blockquote, which is
+        exactly the where-to-look line a card needs, already written and already
+        true. Reading it off the body rather than asking for a new yaml field
+        keeps the two from drifting apart — a card that names a different file
+        than the item under it would be worse than no card at all.
+
+        Deliberately narrow: only a blockquote, only in the first three blocks,
+        and only when its first line is a filename. The founder quote that opens
+        item 06 and the motion line quoted in item 15 are both blockquotes too,
+        and neither is a place to look.
+        """
+        for block in re.split(r"\n\s*\n", body.strip())[:3]:
+            lines = [ln.strip() for ln in block.splitlines() if ln.strip()]
+            if not lines or not all(ln.startswith(">") for ln in lines):
+                continue
+            quoted = [ln.lstrip("> ").strip() for ln in lines]
+            if quoted and FILE_RE.match(quoted[0]):
+                return "<br>".join(inline_md(q) for q in quoted)
+        return ""
+
+    queue, record, minutes, n_open = [], [], 0, 0
     ck = cfg.get("checklist") or {}
     for i, it in enumerate(ck.get("items") or [], 1):
+        num = int(it.get("n") or i)
         state = str(it.get("state", "")).strip().lower()
+        is_open = state == "open"
         klass = "check" + (f" {state}bar" if state == "gap" else
                            " settled" if state == "settled" else "")
         chip = str(it.get("chip", "")).strip()
@@ -2042,12 +2147,13 @@ def render_review() -> str:
         # Clips and sheets are both optional and both degrade the same way: a
         # named file that is not there is reported, and an item with nothing
         # named simply has no media row.
-        cells = ""
+        cells, n_clips = "", 0
         for c in it.get("clips") or []:
             got = serve(str(c["file"]))
             if not got:
                 continue
             rel, pos = got
+            n_clips += 1
             cells += (f'<figure><video controls playsinline preload="none" muted'
                       f'{poster_attr(pos, "../")} src="{html.escape(rel)}"></video>'
                       f'<figcaption><span class="k">{html.escape(str(c.get("label", "")))}</span>'
@@ -2089,24 +2195,89 @@ def render_review() -> str:
         # real but they do not block v33, so they sit under their own heading
         # below the ones that do — if he only has ten minutes, they should go on
         # the cut he already refused, not on the next episode.
+        # A run heading follows its item into whichever half that item is in, so
+        # a labelled group never ends up captioning nothing. Its intro folds:
+        # the title orients in one line, and the paragraph explaining the group
+        # is not what he came to the page for.
+        into = queue if is_open else record
         if it.get("heading"):
             h = it["heading"]
-            checks.append(f'<h3 class="run">{html.escape(str(h.get("title", "")))}</h3>'
-                          + md_to_html(str(h.get("intro", ""))))
+            intro = md_to_html(str(h.get("intro", "")))
+            into.append(f'<h3 class="run">{html.escape(str(h.get("title", "")))}</h3>'
+                        + (f'<details class="drawer"><summary>Why these are grouped'
+                           f'</summary><div class="drawer-body">{intro}</div></details>'
+                           if intro else ""))
 
-        checks.append(
-            f'<div class="{klass}"><h3><span class="n">{i:02d}</span>'
+        if not is_open:
+            record.append(
+                f'<details class="drawer rec {klass}" id="item-{num:02d}">'
+                f'<summary><span class="n">{num:02d}</span>'
+                f'{html.escape(str(it.get("ask", "")))}{chip_html}</summary>'
+                f'<div class="drawer-body">'
+                f'{body_md}{clips_html}{sheets_html}{audio_html}{gap}</div></details>')
+            continue
+
+        n_open += 1
+        minutes += int(it.get("minutes") or CHIP_MINUTES.get(chip.upper(), 1))
+        summary = str(it.get("summary", "")).strip()
+        where = str(it.get("where", "")).strip()
+        where_html = inline_md(where) if where else lifted_where(str(it.get("body", "")))
+        how = str(it.get("how", "")).strip() or CHIP_ACTION.get(chip.upper(), "")
+        # ONE player may sit on a card, and only when it IS the item's evidence:
+        # a single clip with no gallery beside it. Anything more folds — a card
+        # he has to scroll to get past is the thing this page was rebuilt to
+        # stop being, and the fold is one tap away.
+        solo = clips_html if (n_clips == 1 and not sheets and not auds) else ""
+        folded = ("" if solo else clips_html) + sheets_html + audio_html
+        # `gap` stays OUT of the fold on purpose. It is the sentence that says
+        # the evidence never arrived, and a checklist that hides its own gaps is
+        # how "seven new frames are ready" becomes a morning spent finding out
+        # there are none. It is short by construction; the body is the long half.
+        queue.append(
+            f'<div class="{klass} q" id="item-{num:02d}">'
+            f'<h3><span class="n">{num:02d}</span>'
             f'{html.escape(str(it.get("ask", "")))}{chip_html}</h3>'
-            f'{body_md}{clips_html}{sheets_html}{audio_html}{gap}</div>')
-
-    checklist_html = ""
-    if checks:
-        checklist_html = (
-            '<div class="cut" id="checklist">'
-            f'<h2>{html.escape(str(ck.get("title", "Your pass")))}</h2>'
-            f'{md_to_html(str(ck.get("intro", "")))}{"".join(checks)}'
-            + (f'{md_to_html(str(ck.get("outro", "")))}' if ck.get("outro") else "")
+            + (f'<p class="sum">{inline_md(summary)}</p>' if summary else "")
+            + (f'<p class="where"><span class="k">where</span> {where_html}</p>'
+               if where_html else "")
+            + (f'<p class="act"><span class="k">answer</span> {inline_md(how)}</p>'
+               if how else "")
+            + solo + gap
+            + (f'<details class="drawer"><summary>Why we are asking — and the evidence'
+               f'</summary><div class="drawer-body">{body_md}{folded}</div></details>'
+               if (body_md or folded) else "")
             + '</div>')
+
+    # The line he reads before anything else, and it is derived rather than
+    # written down: the count IS the number of open items and the estimate IS
+    # the sum of their chips, so neither can go stale while the list moves.
+    count_html = (f'<p class="count"><b>{n_open} thing{"" if n_open == 1 else "s"} '
+                  f'need{"s" if n_open == 1 else ""} you</b> — about {minutes} '
+                  f'minute{"" if minutes == 1 else "s"}.'
+                  f'<span class="sub">everything else on this page is already '
+                  f'decided and folded away below</span></p>'
+                  if queue else
+                  '<p class="count"><b>Nothing needs you right now.</b>'
+                  '<span class="sub">the record is below</span></p>')
+
+    queue_html = ""
+    if queue:
+        queue_html = ('<section class="block" id="checklist"><h2>Your queue</h2>'
+                      '<p class="said">Open items only, in the order they unblock '
+                      'the most. Each card says where the thing is and how to answer '
+                      'it; the argument behind it is one fold down.</p>'
+                      + PROV_BANNER + "".join(queue) + '</section>')
+
+    # The title and intro cuts.yaml writes for the checklist are the note that
+    # came WITH the list, not the list. They keep every word and move behind a
+    # fold at the head of the record, where the rest of the settled page is.
+    ck_note = ""
+    if ck.get("intro") or ck.get("outro"):
+        ck_note = ('<details class="drawer" id="checklist-note"><summary>'
+                   f'{html.escape(str(ck.get("title", "The note that came with this list")))}'
+                   '</summary><div class="drawer-body">'
+                   + md_to_html(str(ck.get("intro", "")))
+                   + md_to_html(str(ck.get("outro", ""))) + '</div></details>')
 
     sections = []
     for cut in cfg.get("cuts") or []:
@@ -2129,9 +2300,17 @@ def render_review() -> str:
         # notes being worked from only make sense next to it.
         status = (f'<p class="notice">{inline_md(str(cut["status"]))}</p>'
                   if cut.get("status") else "")
+        # Each cut folds under its own version and title. All three are the
+        # record of a screening that already happened — v32 was refused on
+        # 2026-08-07 and the two under it are how it got there — so none of them
+        # is work waiting on him, and none of them should cost him a scroll.
+        ver = html.escape(str(cut.get("version", "")))
         sections.append(
+            f'<details class="drawer" id="cut-{ver or len(sections) + 1}"><summary>'
+            f'{ver}{" — " if ver else ""}{html.escape(str(cut["title"]))}</summary>'
+            f'<div class="drawer-body">'
             f'<div class="cut"><h2>{html.escape(str(cut["title"]))} '
-            f'<span class="chip hot">{html.escape(str(cut.get("version", "")))}</span></h2>'
+            f'<span class="chip hot">{ver}</span></h2>'
             f'{status}{CUT_STAMP}'
             f'<div class="split"><div class="film">'
             f'<video controls playsinline preload="metadata"{poster_attr(pos, "../")} '
@@ -2143,7 +2322,7 @@ def render_review() -> str:
             f'<h3>What changed from {inline_md(cut.get("changed_from", "the previous cut"))}</h3>'
             f"<ul>{changed}</ul>"
             + (f"<h3>Known and still wrong</h3><ul>{wrong}</ul>" if wrong else "")
-            + '</div></div></div>')
+            + '</div></div></div></div></details>')
 
     # Side-by-side groups. No `loop` on these players, and that is not a style
     # choice: a held beat is a one-way push-in, so looping a 2.5s clip snaps the
@@ -2196,8 +2375,14 @@ def render_review() -> str:
                 + (f'<p class="why">{html.escape(str(p["verdict"]))}</p>'
                    if p.get("verdict") else "") + foot + '</div>')
         if items:
-            groups.append(f'<div class="cut"><h2>{html.escape(str(grp.get("title", "")))}</h2>'
-                          f'{md_to_html(str(grp.get("intro", "")))}{"".join(items)}</div>')
+            # The group's own title is the fold's label — it already says what
+            # the comparison is, and inventing a second name for it would be one
+            # more thing on the page that has to be kept true.
+            groups.append(f'<details class="drawer" id="cmp-{len(groups) + 1}"><summary>'
+                          f'{html.escape(str(grp.get("title", "")))}'
+                          f' ({len(items)})</summary><div class="drawer-body">'
+                          f'<div class="cut">{md_to_html(str(grp.get("intro", "")))}'
+                          f'{"".join(items)}</div></div></details>')
 
     notices = ""
     if withheld:
@@ -2213,16 +2398,35 @@ def render_review() -> str:
                     'named in <code>cuts/cuts.yaml</code> and the file has not landed in the '
                     f'repo, so there is nothing to play:<ul>{rows}</ul></p>')
 
+    # THE RECORD. Everything already decided, in the order it was decided in,
+    # every fold shut. The page's own `why:` leads it because a stranger who
+    # guesses this URL still has to be told what he is looking at — the fold's
+    # label says the load-bearing half of that out loud, so it is readable
+    # without opening anything.
+    record_html = (
+        '<section class="block" id="record"><h2>The record</h2>'
+        '<p class="said">Everything already settled — decisions, the cuts they '
+        'were made on, and the receipts. Nothing here needs you. Nothing has been '
+        'deleted either: open a fold and it is all still there, word for word.</p>'
+        + (f'<details class="drawer" id="about"><summary>What this page is — and '
+           f'what it is not</summary><div class="drawer-body">'
+           f'{md_to_html(str(meta.get("why", "")))}</div></details>'
+           if meta.get("why") else "")
+        + ck_note
+        + "".join(record)
+        + "".join(sections)
+        + "".join(groups)
+        + '<details class="drawer" id="receipts"><summary>Receipts</summary>'
+        + '<div class="drawer-body">'
+        + md_to_html(str(cfg.get("provenance", "")))
+        + '</div></details></section>')
+
     body = (f'<p class="eyebrow">{html.escape(str(meta.get("eyebrow", "WORKING CUTS")))}</p>'
             f'<h1>{html.escape(str(meta.get("title", "Working cuts")))}</h1>'
-            f'{md_to_html(str(meta.get("why", "")))}'
+            f'{count_html}'
+            f'{queue_html}'
             f'{notices}'
-            f'{checklist_html}'
-            f"{''.join(sections)}"
-            f"{''.join(groups)}"
-            + '<div class="cut"><h2>Receipts</h2>'
-            + md_to_html(str(cfg.get("provenance", "")))
-            + '</div>'
+            f'{record_html}'
             f'<p><a class="btn ghost" href="../index.html">← the tree</a> '
             f'<a class="btn ghost" href="../watch.html">the published episode</a></p>')
     return page(str(meta.get("title", "Working cuts")), body, depth=1,
