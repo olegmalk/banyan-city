@@ -611,6 +611,41 @@ def task_story(t: dict) -> tuple:
                 "composition, the render only decides what MOVES")
     return (f"{seeds} frames for {shots}", "queued by the studio")
 
+def queue_row_story(t: dict) -> tuple:
+    """(what, why) for one row of the RUNNABLE queue.
+
+    Two corrections to calling task_story() straight, and the first is the one
+    that would have printed a falsehood. task_story answers for RENDER work and
+    assumes it: everything it does not recognise falls out of its last line as
+    "N frames for world scenery", a sentence about four frames nobody asked for.
+    backlog_entry_view has always guarded that call with these same three keys
+    and shown the entry's own words instead when they are absent — but the
+    runnable list called it unguarded, so the moment a hand-run was queued (a
+    prompt sweep, a re-film, a diagnosis) this page would have described it as
+    scenery frames. Same guard, same fallback, one heading over.
+
+    Second, `why` is preferred over task_story's stock sentence wherever the
+    entry wrote one. The queue file asks for `why` to be "one line a stranger
+    understands, naming the consumer of the output" (farm-queue.yaml:84-85) and
+    the blocked list below prints exactly that; the runnable list was throwing it
+    away and publishing "queued by the studio" over the top of it, which is the
+    one thing on this page nobody can check.
+    """
+    # TRUTHINESS, NOT KEY PRESENCE, and the difference is not cosmetic here.
+    # backlog_entry_view can ask `k in b` because it reads raw entries; this
+    # function runs on merge_queue output, and merge_queue sets `t["beats"] =
+    # str(...)` on EVERY row it returns — so `"beats" in t` is true for all of
+    # them, including the ones with no beats, and the guard above would never
+    # have fired. Caught by building the page: the re-film row published itself
+    # as "4 frames for world scenery" with the fix already in.
+    if any(t.get(k) for k in ("beats", "seeds", "video")):
+        what, stock = task_story(t)
+    else:
+        what = ("a job run by hand" if str(t.get("runner") or "") == "manual"
+                else "a job for a machine")
+        stock = ""
+    return (what, plain(t.get("why")) or stock)
+
 
 # ---------------------------------------------------------------- citizens ---
 URL_RE = re.compile(r"\(?\bhttps?://\S+\)?")
@@ -2047,7 +2082,7 @@ def build(out_dir: Path):
     def _rows(tasks, stamp=None):
         html_rows = ""
         for t in merge_queue(tasks):
-            what, why = task_story(t)
+            what, why = queue_row_story(t)
             wkey = str(t.get("worker", "any"))
             wnice = MACHINES.get(wkey, (wkey, "🏠"))[0] if wkey != "any" else "any machine"
             extra = ""

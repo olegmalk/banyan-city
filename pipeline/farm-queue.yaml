@@ -220,7 +220,197 @@ tasks:
 # entry is both unblocked and worker-shaped today. `python3
 # pipeline/queue_promoter.py` prints which entry is held by what, and appends
 # anything it can promote at the end of this list.
+#
+# ---- TONIGHT'S LANES, 2026-08-09 --------------------------------------------
+# The paragraph above still holds for the reason it gives, and this list is not
+# empty tonight because the reason stopped applying: this is real work, running
+# or about to.
+#
+# WHY IT IS IN THE WORKER INBOX AT ALL. "Queued and runnable: 0" is what the
+# status page told the founder on a day with thirty renders behind it. That
+# counter reads THIS key and nothing else, and every lane running tonight is a
+# HAND-RUN, which by the convention above lives in backlog:. The count was true
+# about the inbox and false about the night, and a counter that is only true
+# about a data structure is the kind of thing this page exists not to publish.
+#
+# THE HAZARD THAT CREATES, WRITTEN DOWN RATHER THAN RISKED. farm_worker selects
+# on `worker:` and on ids it has already finished (farm_worker.py:610) and DOES
+# NOT LOOK AT `runner:` AT ALL — so a `runner: manual` entry sitting in this list
+# is a job a polling worker would hand straight to render_task. It is safe
+# tonight, and that was CHECKED rather than assumed: at 16:20Z the 5090's process
+# list holds telemetry.py --daemon and the two ltx_i2v.py --stage encode
+# processes of the b12 run below, and no farm_worker.py; the msi does not answer
+# on port 22; m1pro has never run one. BEFORE A WORKER IS RESTARTED ON ANY BOX,
+# move whatever is still unfinished here back to backlog: or give it a gate.
+#
+# A HAND CLAIM DOES NOT PROTECT THESE, WHICH IS THE HALF THAT IS EASY TO GET
+# WRONG. claim_task.py publishes to `farm-results-hand`, and finished_tasks()
+# reads the worker's OWN farm-out/heartbeat.txt on its own branch — so a worker
+# cannot see a hand claim, and a STARTED line on the hand ledger will not stop
+# one. What the claim IS for is the page and the promoter, both of which read
+# every farm-results-* branch.
+#
+# CLAIM THESE EXACT IDS — the ruling at the top of this file, and the practical
+# reason: claim_task.py refuses an id that is not in this file, so these entries
+# are what lets each lane claim WITHOUT --force.
+#     python3 pipeline/claim_task.py <id> started | done
 
+- id: ep2-b13-r8-goblin-1786292421
+  runner: manual
+  worker: rtx5090
+  needs: [cuda, vram20]
+  beats: 13
+  seeds: 4
+  window: any
+  est_minutes: 25
+  cmd: >-
+    Round 8 on node 002b beat 13. Bind the goblin as MALE, ROUND and GREEN in the
+    positive, and negate the reading he actually named — female demihuman — using
+    the singular-noun pattern that is the only one measured to bind on this tree:
+    `no girl, no boy, no child, no person` returned 0 people in 4 of 4 on 002b
+    beat 01, where the generic plural `no humans` drew a hand and a foot in 2 of 4
+    on 001 beat 10. Four seeds, recipe otherwise unchanged from r5-r7. ONE SAMPLE,
+    then his call — the taste verdict is R4 and is not the steward's to make.
+  why: >-
+    Rounds 5, 6 and 7 all drew the same wrong character, and the founder settled it
+    in one line on 2026-08-09 — "all the goblin images look like female demihumans,
+    definitely need to regenerate" (taste ledger records 32 and 33; record 33 scored
+    the steward's own pick a miss against exactly that). r7 changed the mechanism to
+    a regional IP-Adapter (record 34) and has no verdict yet, so the look is still
+    unsettled. The consumer is the founder's goblin-look call, and it is blocking
+    more than this beat: the beat 16 still redraw is explicitly gated on that call
+    (i2v-prompt-plate-truth clause h) and cannot start until this lands.
+
+- id: 001-b06-r5-1786292466
+  runner: manual
+  worker: rtx5090
+  needs: [cuda, vram20]
+  beats: 6
+  seeds: 4
+  window: any
+  est_minutes: 30
+  cmd: >-
+    DIAGNOSE FIRST, THEN ONE SAMPLE — r4 made this beat worse on two separate axes
+    and his verdict names both, so the diagnosis is not open-ended. (a) "many random
+    girls" is a person-binding failure, and the trap is that r4 was ALREADY the round
+    that added the person singulars (record 36's own subject line reads "person
+    singulars + clothing"), so on this beat the fix that is proven elsewhere did not
+    hold, and a fifth round should not spend the card until someone knows why —
+    token-measure the beat on the real sd_prompt path, because eleven negated nouns
+    is exactly the size at which fit_negative trims silently (cite e6995fc). (b)
+    "very strange cloud formations" is a positive-side problem and will not be fixed
+    by any negative. Then four seeds, and his call.
+  why: >-
+    Beat 6 is the only beat in node 001 with NO approved drawing at all — its canon
+    file on disk is `06-too-blue-REVOKED-leaf.png` and nothing has replaced it, so
+    every cut of episode 1 is holding on `06-too-blue-r3-s2`, a provisional pick at
+    confidence 0.55. r4 was meant to end that and the founder rejected it as a
+    regression: "and for the too blue image, its getting worse, many random girls and
+    very strange cloud formations" (taste ledger record 36). The consumer is the
+    episode 1 cut, which currently ships this beat on a picture nobody has approved.
+
+- id: b12-promptfix-0809
+  runner: manual
+  worker: rtx5090
+  needs: [cuda, vram20, video-venv]
+  video: true
+  video_model: ltx-2.3
+  beats: 12
+  seconds: 6.04
+  steps: 8
+  seed_base: 20260806
+  window: any
+  est_minutes: 15
+  cmd: >-
+    Already running — id read off the box's own GPU-CLAIM.txt ("CLAIMED 2026-08-09
+    by b12-promptfix-0809 at 20:15 box local"), so this entry exists to match it
+    rather than to start anything. One clip, 704x1280, 145 frames at 24fps, 8 steps,
+    guidance 1.0, seed 20260806, distilled sigmas, sequential offload. THE LANE
+    STILL OWES ITS CLAIM LINES: `claim_task.py b12-promptfix-0809 started|done`.
+  why: >-
+    Clause (g) of i2v-prompt-plate-truth, the half the founder resolved as ungated on
+    2026-08-09. Beat 12's staging line puts the scavenger "crouched behind the trunk,
+    below frame" (node.md:83), so he was never meant to be visible and the character
+    clause simply comes out of the animation positive — a 66-byte deletion with the
+    negative held byte-identical, so "perfectly still" survives and the stillness
+    classification is unchanged. One variable. The consumer is episode 2's beat 12
+    clip, which today animates a prompt asking for a character the plate does not
+    contain — the defect behind his "it's going off track and making random stuff
+    like this human sometimes".
+
+- id: ep1-held-refilms-v34-1786292556
+  runner: manual
+  worker: m1pro
+  needs: [mps]
+  window: any
+  est_minutes: 15
+  cmd: >-
+    Promote `b14-r4-s3` to canon `14-worth-staying-in.png` — his pick, quoted below,
+    and still unpromoted (a0a5170 moved only beats 3 and 10) — then re-film beat 14
+    as a held shot on the fixed geometry (5568113: ZOOM_TOTAL 0.12, linear, centred),
+    re-cut episode 1 to v34 and run qa_episode. ffmpeg on this laptop, $0, no model
+    runs. Beats 3 and 10 were already re-filmed on their new canon
+    (v34-refilm-b03-b10-1786291388). LEAVE BEAT 6 ON ITS v33 HELD FRAME: its r4 was
+    rejected and 001-b06-r5 above is still open, so there is nothing to promote.
+  why: >-
+    Beat 14's canon moved today — the founder picked `b14-r4-s3` ("b14-r4-s3.", taste
+    ledger record 37) — and the v33 cut still animates the superseded drawing. That is
+    the same defect that made beats 7, 8, 9, 12 and 15 held in the first place, and it
+    is measured rather than assumed: frame-0 MAD runs 48.7-81.5 against the current
+    plate where canon moved, against 9.6-20.9 where it did not. The consumer is the
+    founder's next screening of episode 1 — v34 is the first cut in which every beat
+    he ruled on today shows the frame he actually chose.
+
+- id: ep2-b01-r7-coldopen-1786292601
+  runner: manual
+  worker: rtx5090
+  needs: [cuda, vram20]
+  beats: 1
+  seeds: 4
+  after: [ep2-b13-r8-goblin-1786292421, 001-b06-r5-1786292466, b12-promptfix-0809]
+  window: any
+  est_minutes: 25
+  cmd: >-
+    Round 7 on node 002b beat 01, continuing r6's axis — grass-height framing, plus
+    the person-binding set r6 already proved on this exact beat. DO NOT SPEND THIS
+    ROUND ON THE HAIRLINE: it is a separate objection and deliberately not this
+    round's variable (lead direction, 2026-08-09), and one round that moves two
+    things answers neither. Four seeds, then his call. `after:` names tonight's three
+    because they share one card, not because anything here is blocked.
+  why: >-
+    Episode 2 opens on this frame and it has no approved drawing: the previous canon
+    was revoked as `01-cold-open-REVOKED-too-tall.png`, which is what put height on
+    the table in the first place. r6 took the grass-height framing (taste ledger
+    record 28) and returned 0 people in 4 of 4 on the singular-noun negatives — the
+    controlled half of the `no humans` finding — but drew no verdict from him. The
+    consumer is the founder's pick for episode 2's opening shot.
+
+- id: no-humans-sweep-sample-1786292646
+  runner: manual
+  worker: rtx5090
+  needs: [cuda, vram20]
+  beats: 10
+  seeds: 4
+  window: any
+  est_minutes: 45
+  cmd: >-
+    The ONE SAMPLE that no-humans-negative-sweep asks for at its clause (d), run
+    BEFORE the other seven beats are touched. Beat 10 of node 001 is the
+    worst-affected and the only one with a measured failure: replace its generic
+    `no humans` with the singular set plus the body-part nouns the failures were
+    actually made of, TOKEN-MEASURE the beat on the real sd_prompt path first
+    (eleven added negated nouns is exactly where fit_negative trims silently and the
+    positive tail drops — cite e6995fc), then four seeds against the b10 r4 control.
+  why: >-
+    `no humans` does not bind, and that is a controlled result rather than a guess:
+    beat 10 rendered with it drew a human hand and forearm in one frame and a bare
+    foot in another, 2 of 4, while node 002b beat 01 in the SAME pass with the
+    singular set returned 0 people in 4 of 4. Eight prompt fences in node 001 still
+    carry the generic plural, in a genome whose whole subject is a plant with no
+    people in it. The consumer is the sweep itself, which edits those eight live
+    beats and must not start unproven. Read this next to 001-b06-r5 above: that beat
+    HAD the singulars and still drew "many random girls", so this sample is also the
+    test of whether the fix generalises at all.
 
 
 backlog:
