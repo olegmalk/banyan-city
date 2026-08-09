@@ -1618,3 +1618,60 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+# FIRST NON-STILL RECORD. `kind: video`, and the axes below are not the A1-A7
+# still axes — this predicts his verdict on a MECHANICAL fix, not on a frame he
+# is choosing between. Written 2026-08-09 after the run and BEFORE he has seen
+# any of the eight clips. The backlog entry ledger-engine-kind-1786280160 exists
+# because this record had to invent its own shape; if that entry lands, this
+# record is what it should be able to express natively.
+- id: ep2-b16-drift-0809
+  date: 2026-08-09
+  subject: "node 002b beat 16 — does removing the character clause stop LTX drawing a person"
+  kind: video
+  candidates: [b16-treat-s20260806, b16-treat-s20260807, b16-treat-s20260808,
+               b16-treat-s20260809]
+  address_key: "review/ltx-drift-0809/ltx-b16-{control,treat}-s<seed>.mp4"
+  gates: {G1_approved_plate: fail, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  # NOT a prediction — measured before this record was written, both arms scored
+  # the same way, and the control at seed 20260806 is byte-identical (sha256
+  # 0393efdc) to the clip he screenshotted.
+  measured:
+    people_control: "3 of 4 seeds (20260806, 20260807, 20260808); 20260809 clean"
+    people_treat: "0 of 4 seeds"
+    motion_mean_abs_control: [9.44, 9.43, 5.64, 4.15]
+    motion_mean_abs_treat: [9.02, 6.67, 6.10, 4.36]
+    motion_note: >-
+      Same metric on both arms, and it is NOT the scale item 14 published
+      (it reads 9.44 where that table says 31.4). Comparable within this
+      experiment only. On it, Wan's three prov clips read 0.28-1.14, so the
+      treatment arm still moves 4-30x Wan.
+  predicted_verdict: ratify
+  predicted_flip_to: null
+  predicted_objection: >-
+    That beat 16 no longer has a scavenger in it at all — the fix deletes the
+    character from the prompt, and the beat's own staging line wants him blurred
+    behind the leaf while the tree talks about him.
+  confidence: 0.60
+  reasoning: >
+    The thing he named is gone, cleanly and on the seed that produced it: 3 of 4
+    control seeds draw a person and 0 of 4 treatment seeds do, one variable
+    between them, 38 bytes of prompt. The motion he called "just amazing" is
+    within 9% of the control arm on average and higher on two of the four seeds,
+    so the fix does not buy stillness back. Confidence is held down to 0.60 by
+    the objection, which is a real defect and not a quibble: the plate never had
+    the scavenger, our own ledger said so when it picked the frame, and this
+    experiment removes the request rather than fixing the picture. On a beat
+    whose VO is "he talks to me because I'm the only thing here that won't file a
+    report", a shot with nobody in it may read to him as the wrong shot even
+    though it is a clean one. The general rule the result establishes — an i2v
+    positive may only name what is in the plate — is not in doubt; what is in
+    doubt is whether DELETING the character is the right way to apply it here, or
+    whether beat 16's still has to be redrawn with him actually in it.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null

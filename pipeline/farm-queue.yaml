@@ -2074,3 +2074,42 @@ backlog:
     workaround, which is not a ledger and cannot be tallied against the model's
     hit rate. Engine and recipe calls are exactly the kind of expensive,
     hard-to-reverse guess the ledger exists to keep honest.
+
+- id: check-invention-labelled-set-1786280220
+  runner: manual
+  worker: m1pro
+  needs: []
+  window: any
+  est_minutes: 45
+  cmd: >-
+    (a) take the eight clips in review/ltx-drift-0809/ as check_invention.py's
+    first labelled fixture — 3 INVENTED (control seeds 20260806, 20260807,
+    20260808) and 5 CLEAN (control 20260809 plus all four treatment seeds), the
+    invented ones confirmed by the founder's own eye on the first of them; (b)
+    the one-way-drift rule at check_invention.py:164 needs `return_ratio > 0.88
+    AND monotonic > 0.70 AND peak > 0.18` and all three misses fail ONLY on
+    monotonic (0.62 / 0.55 / 0.60), so re-examine that conjunct specifically —
+    on this set monotonic is INVERTED, averaging 0.590 on the invented clips
+    against 0.658 on the clean ones, because the leaf keeps swaying while the man
+    arrives and the distance curve oscillates instead of climbing; (c) area_ratio
+    and spread_ratio also miss (1.06/0.61/1.04 and 1.01/1.07/1.16) because the
+    invented figure is not darker than the background and appears in the same
+    region as the subject, so `fg()`'s darker-than-typical mask may be the wrong
+    foreground definition for a character; (d) do NOT fit a threshold to these
+    three — the file's own churn note says why that is how a mean got trusted
+    over a median on 2026-08-03; if a rule cannot be found that separates the set
+    without special-casing it, RECORD THAT and leave the tool as a reporter.
+  why: >-
+    check_invention.py exists to catch exactly this — a video model inventing
+    content that is not in the approved still — and on 2026-08-09 it passed all
+    eight clips of the beat-16 drift experiment, including the three containing a
+    full anime human, printing "nothing flagged: every clip returns toward its
+    opening frame". Its own docstring says the thresholds are "deliberately loose"
+    because "a false alarm costs one look and a miss costs a shipped defect". It
+    missed three of three. Until now the tool had no labelled data at all and was
+    tuned against recollections of beats 11 and 01; this experiment produced
+    ground truth by construction, one variable apart, and it should not be spent.
+    The finding does not block the wave — the beat-16 scoring was done by
+    frame-sampling and never leaned on this tool — but anything that DOES lean on
+    it is currently trusting a detector with 0 of 3 recall on the only case we
+    can check.

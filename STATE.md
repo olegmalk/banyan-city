@@ -5810,3 +5810,73 @@ false: the head is already entering at ~1s, so a 4s render does not evade it.
 Guidance above 1.0 to re-arm negatives — treats the symptom while the positive
 prompt still asks for the man, and breaks the distilled recipe. Nothing was
 rendered on any of them.
+
+### The result, same day: 3 of 4 against 0 of 4, and the fix is two beats wide
+
+**THE CONTROL REPRODUCED HIS CLIP BYTE FOR BYTE.** `ltx-b16-control-s20260806.mp4`
+has the same sha256 as `review/ep2-prov-0809/ltx-002b-b16-prov.mp4`
+(`0393efdc…`), so the experiment is not an approximation of the thing he
+screenshotted — arm A *is* that clip, re-derived, and arm B differs from it by 38
+bytes of prompt.
+
+**THE INVENTION IS CAUSED BY THE CLAUSE AND REMOVING IT STOPS IT.**
+
+| arm | prompt | seeds drawing a person |
+|---|---|---|
+| A control | as rendered | **3 of 4** — 20260806, 20260807, 20260808 (20260809 clean) |
+| B treatment | clause removed | **0 of 4** |
+
+The base rate is why the control arm was rendered at all: one seed in four is
+clean on the unmodified prompt, so a clean treatment arm read against the single
+known failure would have been a 1-in-4 coincidence away from meaning nothing.
+
+**THE MOTION HE PRAISED SURVIVED.** Mean absolute frame-to-frame change, same
+code and settings on both arms — control 9.44 / 9.43 / 5.64 / 4.15, treatment
+9.02 / 6.67 / 6.10 / 4.36. Treatment averages 91% of control and is HIGHER on two
+of four seeds. **This is not the scale item 14 published** (it reads 9.44 where
+that table says 31.4), so it is comparable within this experiment only; on the
+same metric Wan's three prov clips read 0.28–1.14, so arm B still moves 4–30x
+Wan. Only seed 20260807 drops materially, and that is the seed whose control had
+a man moving behind branches — some of that clip's motion *was* the invention.
+
+**THE WAVE IS TWO BEATS, NOT FIFTEEN.** Fifteen of episode 2's twenty-one staging
+lines name a character, but on most of them the character IS the subject and the
+plate contains them, where naming them is correct. The failure needs a
+plant-only plate AND a staging line naming someone, and the repo already
+maintains the plant-only list (01, 12, 16, 18, 21). Crossing them leaves exactly
+two: **beat 16, confirmed, and beat 12, unrendered and predicted to fail the same
+way.** Beat 12's line is the starker one — *"Tight on the sapling's two leaves,
+perfectly still — the scavenger is still crouched behind the trunk, **below
+frame**"* — it says the man is out of shot and asks for him in the same sentence.
+Beats 01, 18 and 21 name nobody and were clean for all six seconds.
+
+**WHAT IS NOT SETTLED, AND IT IS THE REASON THE LEDGER RECORD IS ONLY 0.60.**
+Deleting the character from the prompt fixes the invention and *loses the
+staging*: beat 16's VO is *"he talks to me because I'm the only thing here that
+won't file a report"*, and arm B has nobody in it. The general rule is not in
+doubt — **an i2v positive may only name what is in the plate** — but on beats 12
+and 16 the right way to apply it may be to REDRAW THE STILL with the scavenger
+actually in it, not to delete him from the sentence. That is a taste call and a
+still-wave question, and it is the founder's. Ledger record `ep2-b16-drift-0809`,
+`kind: video`, written before he has seen any of the eight.
+
+**A DETECTOR WE WOULD HAVE TRUSTED SCORES 0 OF 3 ON THIS SET.**
+`check_invention.py` — built precisely to catch a video model inventing content —
+passes all eight clips, including the three with a full human in them, and prints
+*"nothing flagged: every clip returns toward its opening frame"*. All three misses
+fail on the same conjunct: its one-way-drift rule needs
+`return_ratio > 0.88 AND monotonic > 0.70 AND peak > 0.18`, and the three
+invented clips clear return_ratio and peak but read monotonic 0.62 / 0.55 / 0.60.
+**Monotonic runs BACKWARDS here** — it averages 0.590 on the clips with a human
+and 0.658 on the clean ones — because the leaf goes on swaying while the man
+arrives, so the distance curve oscillates instead of climbing. `area_ratio` and
+`spread_ratio` miss too: the man is not darker than the background and he appears
+in the same region as the leaf. This is the first LABELLED set the tool has ever
+had (3 invented, 5 clean, the invented ones confirmed by the founder's own eye),
+and it is filed as `check-invention-labelled-set`. Nothing in this report leans on
+that tool; the scoring above is frame-sampling by eye.
+
+**Box left clean:** 8 clips rc=0, encode rc=0, pulled to `review/ltx-drift-0809/`
+with sidecars, `GPU-CLAIM.txt` RELEASED, schtask `banyan-b16drift` deleted, card
+idle at 0% / 0 MiB. Nothing published, posted, spent, made canon, or opened on
+the founder's screen.
