@@ -293,8 +293,62 @@ rendered until a new plate is picked.** A model bake-off on a revoked frame is w
 he just refused; re-running it on the same frame would ask him the same question
 twice.
 
+**Round 5 rendered and was rejected (ledger record 1, `ep2-b01-r5-provisional`,
+`reject_all`, 0.80). The word `sturdy` did not move the drawing.** Three of the
+four did not put the plant on the ground at all — s0 and s2 hang it DOWN from the
+top edge like a vine, s1 floats a detached sprout above the horizon — and those
+same three stand a human child in a field the script calls empty. s3 is clean of
+both and then reproduces the revoked plate's own measurements: hairline stem, apex
+25% from the top, ~36% of frame height, *taller in frame than the 32% he threw
+out*.
+
+**Round 6 changes three things, and each one is a transfer from a beat that has
+already passed rather than a new idea.**
+
+1. **Grass-height framing, from the b15/b12 precedent.** The b15 plate he passed
+   on 2026-08-08 reads *"one slender sapling standing tall in short grass, its thin
+   stem rising well above the grass"*, and that is the wording that survives.
+   Beat 01 gets the same construction: `standing in short grass, its sturdy curved
+   stem rising well above the grass`. This is the round's real lever and it fixes
+   two separate failures with one clause. Short grass is a **ground plane**, which
+   is what s0/s1/s2 lacked when they hung the plant off the top edge or floated it;
+   and it is a **scale reference**, which converts "tall" from a proportion of the
+   FRAME into a proportion of the GRASS. His two sentences — *"the sapling reads
+   tall"* and *"its tooooo tall"* — only contradict each other while height is
+   measured against the frame. Measured against grass they are one instruction, and
+   this is the wording that lets the drawing obey both.
+2. **Person-binding in the positive-lift convention.** `no girl, no boy, no child,
+   no person`, comma-terminated and letter-initial so `sd_prompt` lifts them into
+   the negative (the tag forms `no 1girl` / `no 1boy` do NOT lift and would sit in
+   the positive asking for a girl — measured, see beat 13). Record 26 proved these
+   are necessary but **not sufficient on a beat whose subject clause names a
+   humanoid**. Beat 01 is the opposite case — the subject is a plant and no
+   character is named — so this is precisely where they are predicted to bind, and
+   the r6 result is a clean test of that boundary rather than a repeat of beat 13's.
+3. **Register fix from r4.** Measured on the real `sd_prompt` path: the r5 wording
+   with the person terms added **dropped `masterpiece, best quality, very
+   aesthetic` off the positive tail** — the exact defect `308c74e` found on beat 13,
+   arriving here the moment the negations grew. Four token-cuts pay for it, all of
+   them things the record has already retired: `banyan` (beat 13 renders without
+   it), `exactly` (the table above shows four wordings and none of them made the
+   model count, and *"dont overthink the leafs on it"* puts the count out of scope),
+   `alone in a vast empty grass field` (now said better by `short grass`), and
+   `sunrise, peach and gold morning sky` → `peach and gold sunrise sky`. Tail
+   verified intact before rendering, not after.
+
+`no extra leaves` also comes out, and that is a deliberate trade rather than a
+cut for space: the negative is at CLIP's ceiling, the four person terms have to
+fit, and the leaf count is the one thing on this beat he has explicitly put out of
+scope. `fit_negative` still sheds `realistic skin texture, jpeg artifacts,
+deformed, extra limbs` from the least-important end and says so out loud — cheap
+losses on a plant-only frame whose own negative already forbids people. Everything
+rounds 1-4 settled stands: `40cm`, `whole plant in frame`, `wide shot`, the fruit
+described without the word `fig`, the scale negatives, `no chibi / no mascot / no
+creature / no face`. Four candidates on this beat's own four seeds; the sheet
+carries labels and seeds only — no favourite, no ordering (R4).
+
 ```
-A tiny 40cm banyan seedling, exactly two oversized cotyledon leaves, sturdy curved stem, one small round green fruit hanging from the stem, alone in a vast empty grass field, whole plant in frame, wide shot, sunrise, peach and gold morning sky, no humans, no chibi, no mascot, no creature, no face, no extra leaves, no branches, no night sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+A tiny 40cm seedling standing in short grass, its sturdy curved stem rising well above the grass, two oversized cotyledon leaves, one small round green fruit hanging from the stem, whole plant in frame, wide shot, peach and gold sunrise sky, no girl, no boy, no child, no person, no chibi, no mascot, no creature, no face, no branches, no night sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 ## Beat 02 — THE SPRINT (0:06–0:11) ⬜ needs footage
@@ -381,8 +435,47 @@ Two round guards in mismatched armor walk away from camera across an empty field
 
 Line: the tree's. Camera ON THE TREE for the tree's own line — framed TIGHT on the leaves, because the scavenger is still hidden behind the trunk and a wide shot would read as him having left (caught by the comprehension gate).
 
+**Round 3 was rejected on all four (ledger record 19, `ep2-b12-r3-provisional`,
+`reject_all`, 0.88): every frame made a large pink RIPE FRUIT the subject of a beat
+whose own text says `no fruit`, s0 gave that fruit a face, and s2 put a city
+skyline behind it.**
+
+**Round 4 is the plant-only recipe, and it is two fixes that this file already
+owns.**
+
+**`mascot-simple` comes out, and it is the first cause.** Beat 01 recorded on
+2026-08-06 that this word — borrowed from beats 02-03, where it modifies a sapling
+a goblin hides *behind* — becomes the SUBJECT when it leads a plant clause, and
+three of four candidates there came back as a chibi mascot CREATURE with leaves on
+its head. It has been sitting in this beat's prompt ever since. s0's fruit with a
+face is that same failure: asking for a mascot and then being surprised by a face.
+So the word goes, and **beat 01's negative block — `no chibi, no mascot, no
+creature, no face` — comes in**, which is safe here for the reason `308c74e` set
+out: lifting `creature` and `face` is safe only on the **plant-only** beats (01,
+12, 16, 18, 21), and this is one of them. Beat 13, whose subject IS a creature with
+a face, must never get this block. `no city, no buildings` joins them for s2's
+skyline.
+
+**Register fix, same as beat 13's.** Beat 12 is on `308c74e`'s list of eleven
+tail-droppers (2, 3, 6, 7, 12, 13, 15, 16, 18, 19, 20) — beats where `compress()`
+was shedding the trailing sentence to reach CLIP's 77 tokens and taking `cinematic
+lighting, detailed, newest` and Animagine's `masterpiece, best quality, very
+aesthetic` with it. The long em-dash clause is what cost the budget, so the prose
+is rewritten tight and the tail was **measured intact before rendering**, not
+assumed. `sapling` also gives way to `seedling`: it is the botanical vocabulary the
+passing beats use, and it is in `sd_prompt._SMALL`, so the scale negatives keep
+firing.
+
+**What this round does NOT claim.** `no fruit` was already lifting into the
+negative in r3 and the model drew fruit anyway, so the ripe fig is not simply an
+un-negated word. The bet is that it was `mascot-simple` pulling a whole mascot
+composition — face, fruit and all — into a frame that asked for two leaves, and
+that a tight leaves-only subject with the mascot vocabulary gone leaves nothing for
+the fruit to hang off. If r4 comes back with fruit again, that hypothesis is dead
+and the next lever is the count tag, not more negations.
+
 ```
-Clouds drift and blur behind the two oversized leaves of a tiny mascot-simple sapling that fill the frame and stay utterly still — no trunk base, no ground, no fruit, no other character visible. The stillness of the tree against a moving peach and gold morning sky. Very slow push-in, tight close-up, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+Extreme close-up of two oversized green cotyledon leaves of a tiny seedling filling the frame, utterly still, peach and gold morning sky and drifting blurred clouds behind them, no trunk, no ground, no fruit, no chibi, no mascot, no creature, no face, no other character, no city, no buildings, very slow push-in, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 ## Beat 13 — THE SHADE (1:00–1:04) ⬜ needs footage
@@ -467,6 +560,51 @@ in the same sample would tell us nothing about either.)
 ```
 A tiny 40cm seedling with two oversized cotyledon leaves stands in open grass; a small round goblin folds into its patch of shade, knees up around his ears, no girl, no boy, no child, no person. Midday light, open green grass field, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
+
+**ROUND 5 RENDERED AND WAS REJECTED. Subject order was not the fault either**
+(ledger record 27, `ep2-b13-r5-sample`, `reject_all`, 0.90). Four seeds, 38
+GPU-seconds, 2026-08-09. Measured before rendering: 64 positive tokens on the box's
+real CLIP tokenizer with the boosters and style anchor intact, 69 negative,
+nothing dropped from either — so the r4 register fix is confirmed stable across a
+rewording, and it is the only thing here that is.
+
+**Zero of four contain the seedling as a plant, for the third round running.** s0
+is a chibi creature asleep in grass wearing leaves as a hood; s1 is an anime child
+in a leaf hat, human face, unmistakable; s2 collapsed both nouns into a single
+pale-green sphere the size of a boulder with leaves stuck to its sides; s3 is a
+pointed-eared chibi with two cotyledons **growing out of the top of its head** —
+beat 19's recorded fault, now drawn on this beat in two consecutive rounds. And the
+person negatives were verified lifted and s1 is still a child.
+
+**THE DIAGNOSIS THIS BUYS, AND IT IS WORTH THE FORTY SECONDS.** Three rounds have
+now attacked this beat through the positive prompt's grammar and A1 has not moved
+once:
+
+| round | what it changed | A1 |
+|---|---|---|
+| r3 | scale/creature negatives as the picks page recommended | -2 in 4 of 4 |
+| r4 | shortened until the style tail survived; botanical binding (`seedling`, `two oversized cotyledon leaves`) | -2 in 4 of 4 |
+| r5 | subject order inverted — seedling leads, goblin subordinate | -2 in 4 of 4 |
+
+Beat 01's botanical binding did not transfer, and neither did subject position. The
+theory that the goblin was winning because it held the subject slot predicted that
+promoting the seedling would separate them; **it did not separate them, it fused
+them harder** — r5's s2 is the two nouns as one object, which is a *worse* fusion
+than r4's, not a better one. So the remaining variable is the one r5's own note set
+aside on purpose: **the Danbooru count tag `1other`, which has been held constant
+at exactly one non-human character across r3, r4 and r5 while the beat needs two
+subjects in frame — a goblin AND a 40cm seedling.** Every round so far has asked
+this checkpoint to draw two things while a tag in the prompt asserts there is one,
+and the checkpoint has resolved the contradiction the only way it can: by merging
+them. That is now the leading hypothesis and it is the next experiment.
+
+**It is NOT run tonight, and no wave fires off this beat.** Two further things are
+recorded as candidates so the next round changes one of them and not three: the
+count tag itself (`sd_prompt.count_tag` is pipeline code, so changing it is a code
+change with its own tests, not a prompt edit), and the possibility that a
+two-subject frame is not a prompt problem at all — a plate composed from the beat
+01 seedling with the goblin drawn in by img2img would sidestep the count tag
+entirely. **Choosing between those is a taste and scope call, not a steward call.**
 
 ## Beat 14 — THE DEFENSE (1:04–1:10) ⬜ needs footage
 

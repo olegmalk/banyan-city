@@ -65,8 +65,40 @@ tokenizer: positive 69 tokens, negative 55; on the deliberately pessimistic tag
 estimate a machine without transformers falls back to, 74 and 58. Nothing dropped
 either way, and `text` is back in the negative where the other 176 beats keep it.
 
+**Round 3 was rejected on all four (ledger record 2, `ep1-b03-r3-provisional`,
+`reject_all`, 0.85), and the rejection is entirely inside the screen rectangle.**
+The house landed and the close-up landed — those two instructions are now banked
+across three rounds. What failed is the same thing that failed in r1 and r2: two
+frames put anime character art on the monitor, one sprayed gibberish glyphs, one
+was the neon vaporwave room the r2 rewrite existed to kill. Twelve candidates, one
+defect, three different wordings of the screen.
+
+**Round 4 stops inventing wordings for the screen and copies the one that works.**
+Beat 1 of this node has an APPROVED canon still (`stills/01-the-keyboard.png`) and
+it contains a monitor drawn correctly. Its wording is `one glowing monitor with
+code` — five words, no description of what is ON the screen — and it has rendered
+that way with `text` negated since 2026-07-27. This beat's three attempts all did
+the opposite: `dark terminal window, one bright green line of code, blinking
+cursor` describes screen CONTENT in detail, and every detail is an invitation for
+the model to fill the rectangle with something. **The r2 note already wrote down
+the principle — *"screens in this show are abstract glow"* and *"this beat is
+written to match [beat 1]"* — and then wrote a prompt that does not match beat 1.**
+Round 4 makes the match literal: beat 1's clause goes in verbatim and the content
+description comes out.
+
+Everything else on this beat is kept, because the record says it works: the
+close-up (his third instruction, 2026-08-08), and the domestic dressing — warm desk
+lamp, mug rim, houseplant, lived-in bedroom corner. `no girl, no boy` join the
+negative for the character art specifically, and `no poster` for wall art in a
+bedroom corner. Measured on the real `sd_prompt` path: positive 65, negative 65 on
+the pessimistic estimate, nothing dropped from either, and **`text` is verified
+present in the negative** — the `suppressed_negatives` bug that un-negated `text`
+for any beat naming a screen was the code-level cause of the glyph junk and was
+fixed in `95551fe`; this beat is the only one in the genome that rule ever fired
+on, so the check is worth making every round.
+
 ```
-tight close-up of a personal computer screen filling the frame, dark terminal window, one bright green line of code, blinking cursor, warm desk lamp and coffee mug rim at the frame edge, houseplant, lived-in bedroom corner behind, night, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No laboratory, no server room, no lab equipment, no person, no wallpaper, no neon. No photorealism, no 3D render look. 9:16 vertical, no text.
+tight close-up of one glowing monitor with code, filling the frame, warm desk lamp and coffee mug rim at the frame edge, houseplant, lived-in bedroom corner behind, night, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No laboratory, no server room, no lab equipment, no person, no girl, no boy, no wallpaper, no neon, no poster. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 **REJECTED 2026-08-08 (founder, R4): ALL EIGHT — `b03-r1-s0..s3` AND `b03-r2-s0..s3`.**
@@ -296,8 +328,45 @@ shown where the sprout meets the ground, in the episode's field and its morning
 light, with the water read as droplets in the earth rather than a surface. Rings
 remain a POST overlay.
 
+**Round 3 was rejected on all four (ledger record 4, `ep1-b10-r3-provisional`,
+`reject_all`, 0.80) and it split cleanly, one half won and one half lost.**
+
+**THE LENS NOTE WAS ANSWERED AND IS BANKED.** `b10-r3-s2` is genuinely lower and
+closer than beat 14 — the "10 and 14 came back as very nearly the same picture"
+complaint is settled, and round 4 must not spend that win. Its framing is what this
+round preserves: `very low shot at the soil line`.
+
+**THE ROOTS ARE STILL NOT THERE, in 0 of 4** — the same rejection recorded here on
+2026-08-08, not a new one. And three of four stood ARCHITECTURE in a wild field: a
+post or a fence where the script has open ground.
+
+**Round 4 leads the prompt with the root-map, which is what should have been tried
+first.** `pale roots visible in damp soil` sat sixth in a list of eight clauses,
+behind `plant focus` and the stem — and this checkpoint draws the first noun and
+treats the tail as decoration. The same lesson is being learned on episode 2's beat
+13 from the other direction. The difference, and it is why this is worth a round
+here when it failed there: on beat 13 the two nouns FUSE, because a goblin and a
+plant can be merged into one creature. Roots and soil cannot fuse with anything —
+they are simply absent, and absent things are what subject position fixes. So
+`node.md`'s own image line — *"an underground root-map, veins of dark water,
+mineral glitter"* — becomes the opening clause, in the script's own words.
+
+**What the round is careful NOT to undo.** The 2026-08-07 rewrite deliberately
+brought the camera UP out of the ground, because macro-underground framing with no
+horizon, no grass and no daylight resolved as *"a sapling in the middle of a long
+body of water, with a blank dark background"* — his words. Leading with the
+root-map risks walking straight back into that, so the word `underground` is
+**deliberately not used**: the frame keeps `short grass` above it and `warm morning
+light` on it, and `no dark background, no black void, no cave` stay in the
+negative. `no post, no fence, no pole, no building` are added for the architecture.
+
+Measured on the real `sd_prompt` path before rendering: the first draft **dropped
+`very aesthetic` off the positive tail**, so three clauses were tightened until the
+boosters survived — positive 69, negative 69, nothing dropped. Rings remain a POST
+overlay; three founder-rejected rounds proved the model cannot draw them.
+
 ```
-plant focus, no humans, very low shot at the soil line, one slender sapling's thin stem rising tall out of frame, pale roots visible in damp soil, water droplets in the earth, short grass at the edges, soft warm morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No lake, no water surface, no dark background, no black void, no cave. No photorealism, no 3D render look. 9:16 vertical, no text.
+root-map of pale spreading roots in dark damp soil, mineral glitter, veins of dark water, one slender stem rising into short grass, very low shot at the soil line, warm morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No post, no fence, no pole, no building, no lake, no water surface, no dark background, no black void, no cave, no humans. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 **REJECTED 2026-08-08 — the founder DELEGATED this one and the steward decided it

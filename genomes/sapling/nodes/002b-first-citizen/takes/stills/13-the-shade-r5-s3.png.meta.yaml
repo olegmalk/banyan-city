@@ -1,0 +1,29 @@
+# Still provenance (7.2), written AT RENDER TIME by render_b13r5.py
+# on the rtx5090 (C:\banyan-farm\sample-b13-r5).
+# The negative below is what the model actually saw. The recipe's own
+# negative, before this script's one deliberate removal, was:
+#   photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, mature tree, large tree, tall tree, thick trunk, full canopy, forest, bush, shrubbery, girl, boy, child, person, photorealism, text
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+shot_beat: 13
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20263732
+seeds_in_batch: 4
+task: ep2-b13-r5-1786272529
+queue_entry: ep2-b13-shade-r5-sample-1786221600
+render_round: r5
+candidate_set: r5
+negative_terms_removed: tall tree
+recipe_inherited_from: >-
+  node 001, takes/stills/15-something-s-coming-r3-s1.png — the ONE SAMPLE the founder passed on 2026-08-08. Model, size, steps, cfg, seed rule and the one-term negative removal come from that frame's recipe. The prompt is shots.md Beat 01 as of the round-5 note (committed with this sidecar).
+wall_seconds: 9
+cost_usd: 0
+note: |-
+  round 5, and it changes exactly one thing: which noun is the subject. Round 4 fixed the dropped style tail (all four came back cinematic anime instead of flat cartoon, so the register complaint has a measured remedy) and did NOT move A1 — zero of four contained the sapling as a plant, one grew the sprout out of the figure head, and the person negatives were verified in the negative while the checkpoint drew people anyway. Diagnosis: "A small round goblin" led the sentence, so the goblin was the subject and the seedling trailed in a prepositional phrase, and this checkpoint resolves a subordinate plant by fusing it into the character. Beat 01 worked because the plant was the only subject. r5 therefore inverts the grammar and changes nothing else: seedling as subject of the first clause, goblin subordinate after it. Same four seeds as r4 so the pair is controlled on wording. Measured 70 positive tokens with boosters and style intact, negatives unchanged, and count tag held at 1other exactly as in r4 — holding the tag constant is what makes subject order the only variable. Ledger record 27. STOP after this regardless of result: no wave fires tonight either way.
+prompt: |-
+  1other, a tiny 40cm seedling with two oversized cotyledon leaves stands in open grass; a small round goblin folds into its patch of shade, knees up around his ears. Midday light, open green grass field, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, mature tree, large tree, thick trunk, full canopy, forest, bush, shrubbery, girl, boy, child, person, photorealism, text

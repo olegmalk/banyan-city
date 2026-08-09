@@ -848,3 +848,74 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+# Record 27 — the r5 ONE SAMPLE. Like record 26 this is a refused sample, not a
+# pick, and it is logged with the full field set for the same reason: a sample
+# that fails is the cheapest prediction this file can be publicly wrong in.
+- id: ep2-b13-r5-sample
+  date: 2026-08-09
+  subject: "node 002b beat 13 — THE SHADE, round 5, subject order inverted"
+  kind: still
+  candidates: [b13-r5-s0, b13-r5-s1, b13-r5-s2, b13-r5-s3]
+  address_key: "this ledger entry; frames at genomes/sapling/nodes/002b-first-citizen/takes/stills/13-the-shade-r5-sN.png, sidecars beside them; sheet LABELED-b13-r5.png"
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  scores:
+    b13-r5-s0: {A1: -2, A2: 0, A3: -1, A4: -2, A5: 1, A6: 1}
+    b13-r5-s1: {A1: -2, A2: 1, A3: -2, A4: -1, A5: 1, A6: 1}
+    b13-r5-s2: {A1: -2, A2: 0, A3: -2, A4: -2, A5: 1, A6: 1}
+    b13-r5-s3: {A1: -2, A2: 1, A3: -2, A4: -1, A5: 1, A6: 1}
+  vetoed: [b13-r5-s0, b13-r5-s1, b13-r5-s2, b13-r5-s3]
+  totals: {}
+  predicted_verdict: reject_all
+  predicted_flip_to: null
+  predicted_objection: >
+    The third time in his vocabulary: where is the tree, and that one is a boy.
+    s3 grows the leaves out of its head, which is the fault he already named on
+    beat 19.
+  confidence: 0.90
+  reasoning: >
+    SUBJECT ORDER WAS NOT THE FAULT EITHER, AND THE WAY IT FAILED NARROWS THE
+    SEARCH. r5 changed exactly one thing against r4 — the seedling became the
+    subject of the first clause and the goblin followed it — on the same four
+    seeds, the same negatives, and the count tag held at 1other so word order was
+    the only variable. Measured 64 positive tokens on the box's real CLIP
+    tokenizer with boosters and style anchor intact, 69 negative, nothing dropped
+    from either.
+
+    A1 is -2 in four of four for the third consecutive round. s0 is a chibi
+    creature asleep in grass wearing leaves as a hood; s1 is an anime child in a
+    leaf hat with a human face; s2 collapsed both nouns into one pale-green
+    sphere the size of a boulder with leaves stuck to its sides; s3 is a
+    pointed-eared chibi with two cotyledons growing out of the top of its head —
+    beat 19's recorded fault, drawn on this beat in two consecutive rounds now.
+
+    THE PREDICTION THE ROUND MADE WAS WRONG IN A USEFUL DIRECTION. Promoting the
+    seedling to subject was supposed to separate the two nouns. It did not
+    separate them, it fused them harder: r5-s2 is the two nouns as a single
+    object, a worse fusion than anything r4 returned. So the fault is not which
+    noun holds the subject slot, and after r3 (negatives), r4 (botanical binding)
+    and r5 (subject order) the positive prompt's grammar is out of levers.
+
+    What is left is the variable all three rounds held constant on purpose: the
+    Danbooru count tag 1other, which asserts ONE non-human character in a beat
+    that needs a goblin AND a 40cm seedling in frame. The checkpoint has been
+    asked to draw two subjects while the prompt tells it there is one, and
+    merging them is a coherent way to satisfy both. That is the next experiment
+    and it is NOT a prompt edit — count_tag lives in pipeline/sd_prompt.py, so it
+    is a code change with tests. The alternative lever, also recorded and also
+    not run, is to stop asking one text-to-image pass for a two-subject frame at
+    all and compose the plate (beat 01's seedling, goblin added by img2img).
+    Choosing between them is scope and taste, not a steward call.
+
+    A5 and A6 hold at +1 across all four, which is the one positive result: the
+    r4 register fix survived a full rewording, so the style anchor is stable and
+    that half of the wave diagnosis stays banked.
+
+    NO WAVE FIRES OFF THIS BEAT. Second sample in a row to stop one.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
