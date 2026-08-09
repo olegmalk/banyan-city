@@ -3132,3 +3132,159 @@
     favourite, no ordering by preference, and its footer says the rows are the
     parameter axis. Nothing fires off this beat, nothing is published, and
     nothing was put on the founder's screen.
+
+- id: ep2-b05-r5-sample
+  date: 2026-08-09
+  subject: "node 002b beat 5 - THE PATROL, round 5, THE REGISTER WORDS RETURN
+    (`harmless` and `shapes` restored, `men` dropped while `2boys` is kept by a
+    declared script-side injection, `plump` added, defect 3's eight prescribed
+    negatives sent verbatim)"
+  kind: still
+  candidates: [b05-r5-s0, b05-r5-s1, b05-r5-s2, b05-r5-s3]
+  address_key: "sheet LABELED-b05-r5.png; frames at
+    genomes/sapling/nodes/002b-first-citizen/takes/stills/05-the-patrol-r5-sN.png,
+    sidecars beside them"
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  scores:
+    b05-r5-s0: {A2: -2, A3: -2, A4: -2, A5: 0, A6: 0}
+    b05-r5-s1: {A2: -2, A3: -2, A4: -2, A5: 0, A6: 0}
+    b05-r5-s2: {A2: -1, A3: -2, A4: -2, A5: 0, A6: 0}
+    b05-r5-s3: {A2: -1, A3: -2, A4: -2, A5: 0, A6: 0}
+  axes_not_applicable:
+    A1: >-
+      the recurring subject is not in this beat. Neither the sapling nor the
+      goblin appears in beat 5 - it is the two guards arriving - so there is no
+      character to be consistent with. Named rather than silently skipped, per
+      Stage 1, and identical to the r4 record's treatment so the two rounds
+      compare.
+    A7: no sapling in frame, so its proportion cannot be scored.
+    A8: >-
+      a still. The axis is zoom rate and motion band, which no frame carries.
+      NOTE that this round's dominant fault IS framing - all four abandon the
+      prompt's `Wide static camera` for extreme overhead or ankle-height crops -
+      but that is scored on A4 where a still's legibility belongs, not smuggled
+      into a motion axis, again matching r4 so the totals are comparable.
+  vetoed: [b05-r5-s0, b05-r5-s1, b05-r5-s2, b05-r5-s3]
+  totals: {b05-r5-s0: -24, b05-r5-s1: -24, b05-r5-s2: -20, b05-r5-s3: -20}
+  observed_predicates:
+    note: >-
+      The founder's guard axes, from his own r3 verdict - "it is a dark forest
+      and they look dangerous; they are supposed to be round and harmless in a
+      morning field" - read off the four frames, plus the four terms defect 3
+      prescribed as negatives and the armor risk this lane pre-registered before
+      the render.
+    two_guards_in_frame:  {s0: fail, s1: fail, s2: fail, s3: partial}
+    round_silhouette_as_body: {s0: partial, s1: fail, s2: fail, s3: fail}
+    round_only_as_cast_shadow: {s0: false, s1: false, s2: true, s3: true}
+    armor_present:        {s0: fail, s1: fail, s2: fail, s3: fail}
+    harmless_read:        {s0: partial, s1: fail, s2: fail, s3: fail}
+    morning_field:        {s0: fail, s1: fail, s2: pass, s3: pass}
+    daylight:             {s0: pass, s1: pass, s2: pass, s3: pass}
+    not_dark_fantasy:     {s0: pass, s1: pass, s2: pass, s3: pass}
+    no_glowing_eyes_visor: {s0: pass, s1: pass, s2: pass, s3: pass}
+    no_weapon:            {s0: pass, s1: pass, s2: pass, s3: pass}
+    no_hood:              {s0: pass, s1: pass, s2: pass, s3: pass}
+    no_girl:              {s0: pass, s1: pass, s2: pass, s3: pass}
+    no_child:             {s0: pass, s1: pass, s2: pass, s3: pass}
+    wide_static_camera:   {s0: fail, s1: fail, s2: fail, s3: fail}
+    modern_human_dress:   {s0: none_visible, s1: fail, s2: fail, s3: fail}
+    anachronistic_screen: {s0: pass, s1: pass, s2: pass, s3: fail}
+  predicted_verdict: reject_all
+  predicted_flip_to: null
+  predicted_objection: >
+    Where are the guards? Three of these are somebody's SHOES. One is a picture
+    of sand with a suitcase in it. The round thing he asked for is in two of
+    them as a SHADOW on the ground with no body above it casting it, and the
+    armor he wrote into his own sentence is gone from all four. And s3 has a
+    MOBILE PHONE with a lit screen in it, on the beat whose episode he has
+    already stopped once for a board that "reads as a lit screen".
+  rationale: >
+    THE REGISTER VETO CLEARED, FOR THE FIRST TIME IN FIVE ROUNDS, AND IT COST
+    THE SUBJECT. Defect 3's eight prescribed negatives were sent verbatim and
+    they did exactly what they were prescribed to do: not_dark_fantasy passes 4
+    of 4, daylight passes 4 of 4, and no glowing visor, no weapon and no hood
+    appear anywhere. r3 and r4 both returned grim armoured figures at night on
+    every frame; this round returns none. Both halves of the founder's veto -
+    "a dark forest", "they look dangerous" - are answered, and that is a real
+    result on the axis the beat has been failing since round 3.
+
+    IT IS STILL A REJECT ON ALL FOUR, BECAUSE THE GUARDS LEFT WITH THE GENRE.
+    Not one frame contains a readable guard. s1, s2 and s3 are ankle-height or
+    overhead crops of a person's legs and shoes; s0 is an aerial of pale sand
+    with one small rounded figure and the bark clipboard rendered as a monolith.
+    The roundness the founder asked for DID arrive, and it arrived as a cast
+    SHADOW - a large round blob on the ground in s2 and s3 with no body above it
+    to cast it. The prompt's own `Wide static camera` is abandoned in all four.
+
+    THE ARMOR RISK WAS PRE-REGISTERED BEFORE A STEP AND IT LANDED. The STARTED
+    line and the render script both say it: `armor plate` was negated while the
+    positive still carried the founder's own `mismatched ill-fitting armor`, and
+    CLIP does not compose negations. armor_present fails 4 of 4. The cause is on
+    the record because it was written down before the frames existed, not after
+    them. That term is the first thing to drop in r6, and it is the only one of
+    the eight that contradicts the authored sentence.
+
+    A SECOND EFFECT, NOT PRE-REGISTERED, CAUSE UNDETERMINED. The negative went
+    from 45 to 64 of 77 tokens in this round. Every added term suppresses an
+    attribute OF THE SUBJECT - its genre, its light, its headgear, its weapon,
+    its armor - and with `men` also removed from the prose there is very little
+    left telling the model what a guard positively IS. Whether the subject was
+    crowded out by the weight of the negative, or whether removing `men` and the
+    armor left the character with no visual anchor, this round cannot separate:
+    both changed together. Naming it rather than picking one.
+
+    DEFECT 2 IS VISIBLE HERE AND HAS A CHEAP, UNSPENT LEVER. The people who did
+    render are modern humans - dress trousers with loafers in s1, brown leather
+    shoes in s2 and s3 - and s3 puts a hand on a MODERN SMARTPHONE with a lit
+    UI, the same anachronism the r4 record logged on its own s2. The picks page
+    says plainly that `humans` does not bind this checkpoint and that the terms
+    which do are `1girl, 1boy, child, person, hand`. This round sent `girl` and
+    `child` and did NOT send `person` or `hand`. The negative has 13 free tokens
+    and those two words are within it. That is r6's cheapest change and it was
+    available tonight.
+
+    WHAT THIS ROUND DELIBERATELY DID NOT DO. `chibi` and `comedic` are legal on
+    this beat - the `no chibi / no mascot / no creature / no face` block is beat
+    01's, written for a PLANT beat after three of four candidates drew a mascot
+    creature as the sapling - and both were measured affordable at 2 tokens
+    each. They were held back because defect 4 names flat cartoon mascots as
+    their own failure, and sending a heavy style tag in the same round as the
+    register fix would have made a mascot result unattributable. Given that the
+    register veto has now cleared WITHOUT them, they remain untried and cheap.
+
+    THE TAG TRANSFORM WORKED AND IS DECLARED. `2boys` was kept while `men` was
+    deleted, which is impossible through the derived path - `_tag_from_clause`
+    returns `2others` once no male noun is in the first clause - so the leading
+    tag was rewritten after `compress()`, the same transform `render_b06r5.py`
+    used and that commit 1aab710 identified as the real mechanism behind that
+    round's clean frames. Trap 4 asserted both halves before a step: derived
+    `2others`, sent `2boys`. no_girl and no_child stay clean 4 of 4, so r4's one
+    win survived the removal of the word that bought it.
+
+    MEASURED ON THE BOX'S REAL CLIP BEFORE A STEP, NOT ESTIMATED. Positive 62 of
+    77 with the style anchor INTACT and nothing dropped; negative 64 of 77 with
+    all ten new terms surviving `fit_negative`'s trim; the r3 control rebuilt
+    from this checkout and asserted byte-for-byte against its recorded sidecars,
+    and the r4 control rebuilt in the same run at `2boys` - all three on one
+    tokenizer. Seeds are r3's own four, held for the third round running, so
+    across r3, r4 and r5 the wording is the only variable. shots.md NOT edited.
+
+    A BOX FAULT THIS LANE CAUSED AND FIXED. `git reset --hard` on the render
+    box found `core.autocrlf=true` and rewrote the whole checkout to CRLF, which
+    would have failed the byte-for-byte fence assertion and, worse, could have
+    been measured around. It was set to false and re-checked-out; shots.md
+    445b8c68.. and sd_prompt.py 72c7c33d.. were then verified byte-identical to
+    the mac before any number in this record was taken.
+
+    WRITTEN BEFORE THE SHEET WAS BUILT, per section 3, and the sheet carries
+    addresses and seeds only - no favourite, no ordering and no "closest to". No
+    pick is offered: every candidate is vetoed on at least three axes. 37 GPU
+    seconds plus 5s load, $0. Nothing was published, posted or spent, and
+    nothing has gone on his screen.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
