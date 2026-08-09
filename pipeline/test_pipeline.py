@@ -2578,7 +2578,8 @@ def test_vercel_build_guard_covers_every_site_input():
     #     builders name their inputs as `REPO / "..."` literals and as sibling
     #     module imports; both are enumerable without importing anything.
     builders = ["build_site.py", "build_status.py", "build_sim.py",
-                "build_shotboard.py", "site_theme.py", "licence_gate.py"]
+                "build_shotboard.py", "build_pulse.py", "site_theme.py",
+                "licence_gate.py"]
     seen, queue = set(), list(builders)
     # Seed the expected set with the builders themselves: build_site delegates to
     # build_status/build_sim/build_shotboard from *inside* main(), so the

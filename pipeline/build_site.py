@@ -388,6 +388,7 @@ Branch anything. Fork everything.<br>
 <a href="{root}city.html#promise">The Promise</a> ·
 <a href="{root}city.html#glossary">Glossary</a> ·
 <a href="{root}status.html">🏛 the studio — watch it being made</a> ·
+<a href="{root}pulse.html">📈 the pulse — queue &amp; machine over time</a> ·
 <a href="{root}feed.xml">RSS</a></footer>
 </main>
 {tail}</body>
@@ -3062,6 +3063,8 @@ def main() -> None:
     _build_status(OUT)
     from build_sim import build as _build_sim
     _build_sim(OUT)
+    from build_pulse import build as _build_pulse
+    _build_pulse(OUT)
     import shutil as _sh
     if (REPO / 'lab').is_dir():
         _sh.copytree(REPO / 'lab', OUT / 'lab', dirs_exist_ok=True)

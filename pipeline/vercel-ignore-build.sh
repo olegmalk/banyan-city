@@ -129,6 +129,9 @@ SITE_INPUTS=(
   pipeline/build_status.py
   pipeline/build_sim.py
   pipeline/build_shotboard.py
+  # build_pulse (build_site.py:3065) draws /pulse — the queue and the render
+  # box's vitals over time — from the cache below.
+  pipeline/build_pulse.py
   pipeline/site_theme.py
   pipeline/licence_gate.py
   pipeline/generate_shots.py
@@ -138,6 +141,15 @@ SITE_INPUTS=(
   pipeline/pending-founder.yaml
   # the render queue the status page reports. build_sim.py:282.
   pipeline/farm-queue.yaml
+  # the only history the /pulse graphs have. build_pulse.py:CACHE.
+  #
+  # THIS ONE COSTS A BUILD EVERY TIME IT IS REFRESHED, and that is the point of
+  # listing it rather than an oversight: it is a genuine input, so a guard that
+  # omitted it would leave banyan.city serving yesterday's graphs while claiming
+  # today's. The control is cadence, not the allowlist — `pulse_series.py` says
+  # so at its top. Do not put it on a five-minute timer; that is the shape of
+  # the spend this whole guard exists to prevent.
+  pipeline/pulse-series.json
   # /trials/ — README.md, prompts.md, scores.yaml and outputs/*/*.mp4.
   # build_site.py:1547, 1623-1624, 2095.
   pipeline/t3-trials
