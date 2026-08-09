@@ -3288,3 +3288,80 @@
   outcome: null
   miss_axis: null
   model_action: null
+- id: ep1-b10-r5-provisional
+  date: 2026-08-09
+  subject: "node 001 beat 10 - sense, round 5, the person-binding negatives
+    (defect 2's prescription `1girl, 1boy, child, person, hand` added as
+    fit_negative's EXPLICIT tier; `humans` HELD; positive byte-identical to r4)"
+  kind: still
+  candidates: [b10-r5-s0, b10-r5-s1, b10-r5-s2, b10-r5-s3]
+  address_key: "frames at
+    genomes/sapling/nodes/001-capability-inventory/takes/stills/10-sense-r5-sN.png,
+    sidecars beside them"
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: b10-r5-s2
+  scores: null
+  scores_withheld: >-
+    DELIBERATELY NULL, AND THIS IS THE POINT OF THE RECORD. The lane brief for
+    this round required the prediction to be written BEFORE the outputs were
+    looked at, so no frame of this set had been opened when every line below was
+    written. Per-candidate axis scores cannot be honestly filled in from an
+    unseen sheet, so they are null rather than invented. The prediction that
+    matters is falsifiable without them and is stated as such below.
+  predicted_verdict: pick_holds
+  predicted_flip_to: null
+  predicted_objection: >
+    If he rejects it, it is for the reason r4 was already at risk of - the roots
+    read as a compact dark tangle at the stem base rather than the spreading
+    root-MAP with `veins of dark water` and `mineral glitter` the script asks
+    for - or because the frames read softer than r4's, which this round has a
+    declared mechanism for (below).
+  confidence: 0.55
+  reasoning: >
+    THIS ROUND CHANGES ONE THING AND IT IS NOT THE THING HE WOULD BE JUDGING.
+    The sent positive is byte-identical to r4's, asserted at run time, and the
+    seeds are r4's own four, held. So s2 - r4's pick - is the same composition
+    from the same noise, and the prediction that it still reads as the pick is
+    close to a prediction that arithmetic works. Confidence is 0.55 and not
+    higher for two honest reasons, one of them this round's own doing.
+
+    THE FALSIFIABLE CLAIM, WHICH IS A MECHANISM CLAIM AND NOT A TASTE ONE: s0's
+    human hand and forearm and s1's bare foot - recorded on the r4 record as the
+    finding worth more than the pick - should be GONE, and no new person should
+    appear in any of the four. That is what defect 2 prescribes and what node
+    002b beat 01 returned 4 of 4 in the same pass. If people survive this
+    negative, the prescription does not generalise and the sweep of node 001's
+    eight fences must not be run - which is the whole reason this sample exists.
+    The counter-evidence is already on the record and is why this is a test
+    rather than a formality: node 001 beat 6 r5 HAD the person singulars and the
+    founder still called it "many random girls".
+
+    THE CONFOUND IS THIS ROUND'S OWN AND IS DECLARED, NOT DISCOVERED LATER. This
+    beat's negative was already full - r4 itself overran 77 tokens and shed two
+    terms - so the five added terms had to be paid for, and `fit_negative` shed
+    `blurry`, `low quality`, `deformed`, `extra limbs` and `signature` off the
+    house tier to fit them. Every candidate set was priced on the box's real
+    CLIP before a step (pipeline/measure_b10_negsets.py) and there is no free
+    version: even a three-term `1girl, 1boy, person` loses `blurry`. So the
+    choice was what to buy, not whether to pay, and the round bought defect 2's
+    prescription verbatim rather than a set of the steward's own. IF THESE
+    FRAMES READ SOFTER THAN r4's, THE SHED QUALITY NEGATIVES ARE A CANDIDATE
+    CAUSE AND THE ROUND SAYS SO IN ADVANCE. What keeps it readable is that r4 is
+    the control on these same seeds with the same positive, so the comparison is
+    direct rather than remembered.
+
+    WHAT THIS ROUND DELIBERATELY DID NOT DO. The roots are untouched. r4 was
+    also at risk on that axis and one round that moves two things answers
+    neither - the same direction the lead gave the b01 r7 lane about the
+    hairline. If the roots are the objection, that is r6's round and this record
+    predicts it rather than pre-empting it.
+
+    Written before the sheet and before any frame was opened. 4 stills, 37s GPU
+    plus 6s load, $0. Nothing published, posted or spent, and nothing has gone
+    on his screen.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null

@@ -1,0 +1,62 @@
+# Still provenance (7.2), written AT RENDER TIME by render_b10r5.py
+# on the rtx5090 (C:\banyan-farm\sample-b10-r5\out).
+# The negative below is what the model actually saw. The recipe's own
+# negative, before this script's one deliberate removal, was:
+#   photorealistic, 3d render, abstract, text, watermark, mature tree, large tree, tall tree, thick trunk, full canopy, forest, bush, shrubbery, post, fence, pole, building, lake, water surface, dark background, black void, cave, humans, photorealism, 1girl, 1boy, child, person, hand
+#   NEGWARN: !! negative prompt over CLIP's 77-token budget; deduplicated: text; DROPPED: realistic skin texture, jpeg artifacts, deformed, extra limbs, blurry, low quality, signature
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+shot_beat: 10
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20261729
+seeds_in_batch: 4
+task: 001-b10-r5-nohumans-0810
+queue_entry: no-humans-sweep-sample-1786292646
+render_round: r5
+candidate_set: r5
+negative_terms_removed: tall tree
+extra_negative_tier: person-binding-defect2
+extra_negative_terms: 1girl, 1boy, child, person, hand
+extra_negative_tier_note: >-
+  Passed as fit_negative's EXPLICIT tier, which is last in the drop order house->scale->beat->explicit. r4's negative was already over the 77-token budget on this beat, so terms written into the fence would land in the BEAT tier and could be shed without changing the picture anyone looks at. All seven are asserted present in the sent string at run time.
+why_the_fence_was_not_edited: >-
+  The generic plural is NOT removed from the fence even though it is the term that failed. Removing it would be a second variable, and the sweep lane already measured that the fence rewrite is a no-op on the machine path anyway: sd_prompt._NEGATION lifts `no humans` out of the positive and into the negative from any position, proven on all eight of node 001's fences (pipeline/measure_no_humans.py, commit 1aab710). So the fence text was never the defect. What the fence cannot do is choose WHICH tier the term lands in, and that is the whole of this round.
+additive_round: true
+negative_delta_from_r4: 1girl, 1boy, child, person, hand
+negative_cost_from_r4: blurry, low quality, deformed, extra limbs, signature — shed from the house tier by fit_negative to fit the five added terms
+negative_cost_note: >-
+  Priced on the box's real CLIP before a step (pipeline/measure_b10_negsets.py). This beat's negative was already full — r4 overran 77 and shed two terms of its own — so there is no free version of this round: even a three-term `1girl, 1boy, person` loses `blurry`. The round therefore buys defect 2's prescription VERBATIM rather than a set of the steward's own. THE CONFOUND IS DECLARED, NOT HIDDEN: if these frames read softer than r4's, the shed quality negatives are a candidate cause. It stays readable because r4's four frames are the control, on these same seeds, with a byte-identical positive.
+positive_delta_from_r4: none (byte-identical, asserted)
+held_negative_term: humans
+held_negative_note: >-
+  `humans` is deliberately KEPT so this round is purely additive. If the people go away, the seven added singulars are the only thing that can have done it — a swap would have left the result unattributable.
+shots_md_sha256: 53c2690edcfb9a46ac5dc6b2c4df0c499fd6c825e8b32dca288d2ab678e49079
+shots_md_edited: false
+authored_source: >-
+  genomes/sapling/nodes/001-capability-inventory/shots.md beat 10, byte-for-byte and asserted before a step. The round adds nothing to the positive; only the negative's explicit tier changes.
+tokenizer: openai/clip-vit-large-patch14 (transformers, on the box)
+positive_tokens: 58
+negative_tokens_sent: 73
+negative_tokens_r4_control: 74
+r4_control_reproduced: true
+controls_note: >-
+  r4 is rebuilt from this checkout in the same run on the same tokenizer and asserted byte-for-byte against its recorded sidecars, positive AND negative, so the delta below is one measurement rather than two instruments.
+anchor_intact: true
+seeds_held_from: >-
+  round 4, takes/stills/10-sense-r4-s*.png — this beat's own k=0..3. Same noise as the sheet that drew the hand and the foot, so the negative is the only variable across the two.
+provisional: >-
+  PROVISIONAL. A steward-rendered CANDIDATE, not a pick and not canon. Scored against taste/steward-model.v1 and logged in taste/steward-model.ledger.yaml BEFORE the founder saw it. Ground truth is the founder (R4); he has ratified nothing here. Never takes a canon filename, is not published, not posted, and not assembled into an episode.
+approved: false
+recipe_inherited_from: >-
+  round 4, takes/stills/10-sense-r4-s*.png — model, size, steps, cfg, the seed series and the one-term negative removal are unchanged from r4, which inherited them from node 001 takes/stills/15-something-s-coming-r3-s1.png, the ONE SAMPLE the founder passed on 2026-08-08.
+wall_seconds: 9
+cost_usd: 0
+note: |-
+  round 5, THE PERSON NEGATIVES THAT BIND. r4 drew a human hand and forearm in one frame and a bare foot in another, 2 of 4, on a beat whose text is roots, soil and a stem — and its negative ALREADY carried `humans`, so the term was sent and the model drew people through it. Defect 2 of the wave-level diagnosis (PROVISIONAL-PICKS-0809.md) is the controlled version of the same result: the plural failed on b01 r5, b14, b20, b21 and b15-s1, while node 002b beat 01 in the SAME pass with the singular set returned 0 people in 4 of 4. Its terms — `1girl, 1boy, child, person, hand` — are Danbooru subject tags and this checkpoint is animagine, trained on that vocabulary; the plural English noun is not in the dialect the tags are. THIS ROUND IS ADDITIVE: `humans` STAYS (trap 7), so if the people go away the seven added singulars are the only thing that can have done it. THE TERMS GO IN THE EXPLICIT TIER, NOT THE FENCE: fit_negative drops house->scale->beat->explicit, r4 was already over budget (its own NEGWARN deduplicated `text` and DROPPED `realistic skin texture, jpeg artifacts`), and writing them into shots.md would put them in the BEAT tier where they could be shed silently — the trim the queue entry named at e6995fc. Trap 5 asserts all seven arrived. THE POSITIVE IS BYTE-IDENTICAL TO r4 AND TRAP 6 PROVES IT: r4 was also rejected on the roots (absent 0 of 4) and this round deliberately does not touch that, because one round that moves two things answers neither. Seeds are r4's own four, held, so the negative is the only variable between the two sheets. shots.md NOT edited.
+prompt: |-
+  root-map of pale spreading roots in dark damp soil, mineral glitter, veins of dark water, one slender seedling stem rising into short grass, very low shot at the soil line, warm morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  photorealistic, 3d render, abstract, text, watermark, mature tree, large tree, thick trunk, full canopy, forest, bush, shrubbery, post, fence, pole, building, lake, water surface, dark background, black void, cave, humans, photorealism, 1girl, 1boy, child, person, hand
