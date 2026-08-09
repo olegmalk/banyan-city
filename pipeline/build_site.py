@@ -23,6 +23,7 @@ Design constraints:
 
 import hashlib
 import html
+import json
 import os
 import re
 import shutil
@@ -2711,6 +2712,17 @@ def render_feed(genomes: list) -> str:
 LINK_RE = re.compile(r'(?:href|src|poster)="([^"]+)"')
 
 
+def _trailing_slash() -> bool:
+    """`trailingSlash` as `vercel.json` actually has it, defaulting to Vercel's
+    own default (false) when the file or the key is absent — which is also what
+    the GitHub Pages mirror does, so the stricter reading is the safe one."""
+    try:
+        cfg = json.loads((REPO / "vercel.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return False
+    return bool(cfg.get("trailingSlash", False))
+
+
 def served_base(rel: str) -> str:
     """The URL directory a BROWSER resolves this page's relative links against.
 
@@ -2731,10 +2743,19 @@ def served_base(rel: str) -> str:
     other page is served where it sits. Get that right and the checker sees what
     a visitor sees. `/trials` had been broken the same way for as long as it has
     existed, and this function is why it is not any more.
+
+    THE RULE IS READ FROM `vercel.json`, NOT ASSUMED. Everything above is true of
+    `trailingSlash: false`; flip that setting and `<dir>/index.html` is served at
+    `/<dir>/` instead, which moves the base back down a level. Hard-coding the
+    current answer would leave this function quietly describing a host it no
+    longer runs on — the same class of staleness as the licence table that said
+    "outputs unrestricted" (D15). The config is the fact; this reads it.
     """
     p = Path(rel)
-    if p.name == "index.html" and p.parent != Path("."):
+    if p.name == "index.html" and p.parent != Path(".") and not _trailing_slash():
         return p.parent.parent.as_posix().strip(".")
+    if p.name == "index.html" and p.parent != Path("."):
+        return p.parent.as_posix().strip(".")
     return p.parent.as_posix().strip(".")
 
 
