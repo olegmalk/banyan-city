@@ -14,3 +14,4 @@
 16:03:23Z STARTED task=v34-refilm-b03-b10-1786291388 by-hand mac-side held re-film, new canon frames b03/b10 (a0a5170), $0 ffmpeg
 16:03:58Z DONE task=v34-refilm-b03-b10-1786291388 by-hand mac-side held re-film, new canon frames b03/b10 (a0a5170), $0 ffmpeg
 16:16:47Z STARTED task=002b-b12-promptfix-0809 by-hand beat 12 LTX clip, prompt-only fix — clause (g) of backlog entry i2v-prompt-plate-truth-1786280100; character clause OUT of the animation positive (66-byte deletion, negative byte-identical), plate 12-related-r4-s2 provisional, seed 20260806, ONE clip on rtx5090
+16:28:05Z STARTED task=001-b06-r5-sample-1786292829 by-hand node 001 beat 06 round 5 ONE SAMPLE, 4 seeds, animagine-xl-3.1 on rtx5090; own id, no queue entry borrowed
