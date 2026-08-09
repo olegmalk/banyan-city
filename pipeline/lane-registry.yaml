@@ -1,0 +1,121 @@
+# THE LANE REGISTRY — durable state for work dispatched into agent lanes.
+#
+# WHY THIS FILE EXISTS. On 2026-08-09 at 21:23Z every subagent in the fleet died
+# at once on an Anthropic session limit ("resets 4:20am Asia/Dubai"); earlier the
+# same night individual lanes died on mid-stream API drops. Every time, the
+# work-in-progress was recovered only because a human noticed and the orchestrator
+# hand-reconstructed the state by reading git. That reconstruction is the thing
+# this file makes unnecessary — and it has to live ON DISK, because a cron or a
+# task list inside the orchestrator's session dies with the session.
+#
+# The registry answers three questions that were previously only in one agent's
+# context window:
+#   1. what was dispatched, and what was it told to do
+#   2. what artifact PROVES it finished (not "the agent said done" — evidence)
+#   3. what a REPLACEMENT lane must be told to pick the work back up safely
+#
+# It is read by pipeline/reconcile_lanes.py, which checks each completion_artifact
+# against reality and prints a ready-to-paste resume brief for anything dead.
+#
+# ---- ENTRY SHAPE -----------------------------------------------------------
+#   name                 the lane's agent name, exactly as dispatched. This is the
+#                        SendMessage address, so it may not be invented or renamed.
+#   dispatched_at        ISO8601 Z. "unknown" is honest and allowed — several of
+#                        the seed entries below were recovered from evidence after
+#                        the fact, and a made-up timestamp would read as measured.
+#   mission              ONE line. What the lane was told to accomplish.
+#   owns                 repo-relative paths this lane may write. Two lanes sharing
+#                        a path is the duplicate-writer hazard; the reconciler
+#                        reports overlaps because a shared worktree makes them
+#                        silent (see the shared-worktree lesson: ` M` where you
+#                        expected `??` means another lane is already in the file).
+#   completion_artifact  the EVIDENCE that proves the lane finished. One of:
+#                          kind: file       path: p       [parse: py|yaml|json]
+#                            - exists, and optionally parses. Note that "parses"
+#                              is a weaker claim than "is finished": both untracked
+#                              partials seeded below parse fine and are complete
+#                              scripts, they were simply never committed.
+#                          kind: commit     pattern: <regex>   [ref: main]
+#                            - matched against commit SUBJECTS on ref.
+#                          kind: heartbeat  task_id: <id>
+#                            - a `DONE task=<id>` line on any origin/farm-results-*
+#                              branch, the same evidence queue_promoter retires on.
+#                          kind: heartbeat_fresh   max_age_min: N
+#                            - for SUSTAINED lanes that have no single finish: any
+#                              DONE line newer than N minutes proves it is still
+#                              producing. Staleness is the death signal.
+#                          kind: process    match: <substring of the command line>
+#                            - a live OS process. Only honest for daemons.
+#   resume_brief         what a REPLACEMENT lane must be told. Every one of these
+#                        must open by telling the replacement to verify partials
+#                        before writing anything, because the most expensive
+#                        recovery failure is a fresh lane redoing work that is
+#                        already sitting on disk uncommitted.
+#   status               live | landed | dead | blocked | unknown. Advisory and
+#                        allowed to be WRONG — the reconciler trusts the artifact
+#                        check over this field, always. Lane liveness cannot be
+#                        inferred from a self-report; it is re-derived every run.
+version: 1
+seeded_at: "2026-08-10T01:40Z"
+seeded_from: "evidence, not self-report: git log on main and origin/farm-results-*, working-tree status, artifact mtimes, and a live inspection of the rtx5090 box"
+lanes:
+  - name: card-runner-2
+    dispatched_at: "unknown"
+    mission: "Drive the rtx5090 render queue by hand over held-open ssh — sustained v34 motion-fix video renders, one sample per recipe change."
+    owns: "pipeline/farm-queue.yaml"
+    completion_artifact:
+      kind: heartbeat_fresh
+      max_age_min: 90
+    resume_brief: "VERIFY PARTIALS FIRST. Read origin/farm-results-hand's newest heartbeat before touching the card — the last DONE line names the task, the recipe and the verdict, and re-running a landed round wastes GPU and pollutes the taste ledger with a duplicate record. Then: check C:/banyan-farm/GPU-CLAIM.txt on the box (ssh rtx5090) — if it does not say RELEASED, another lane holds the card and you must not start. pipeline/farm-queue.yaml is CONTENDED; never edit it while it shows ` M` in git status. Claim your own task id via pipeline/claim_task.py rather than borrowing a queue entry's id (ruling, lead 2026-08-08). ONE SAMPLE BEFORE ANY BATCH."
+    status: live
+  - name: status-ux
+    dispatched_at: "unknown"
+    mission: "Time-window selection and production polish on the /status and /pulse pages."
+    owns: "pipeline/build_pulse.py, pipeline/pulse_series.py, pipeline/build_status.py"
+    completion_artifact:
+      kind: commit
+      pattern: "pulse|status page|time window|window select"
+      ref: main
+    resume_brief: "VERIFY PARTIALS FIRST. pipeline/build_pulse.py had an uncommitted diff when this registry was seeded — run `git diff pipeline/build_pulse.py` and read it before writing a line, because that diff is the dead lane's work and it is not in any commit. Do not revert it; finish it. The page builders are large (build_pulse.py is ~38KB); prefer Edit over Write so a partial rewrite cannot truncate a peer's in-flight change. Run `python3 pipeline/build_site.py` and open the built page before claiming the window selector works — QA before handover means fetching the exact artifact the founder will see."
+    status: live
+  - name: b01-r9-research
+    dispatched_at: "unknown"
+    mission: "Research a ControlNet plan for the beat 01 cold-open and write it to B01-R9-PLAN.md."
+    owns: "B01-R9-PLAN.md"
+    completion_artifact:
+      kind: file
+      path: B01-R9-PLAN.md
+    resume_brief: "VERIFY PARTIALS FIRST — B01-R9-PLAN.md was ABSENT at seed time, so assume nothing was written and check `git log --all --oneline -- B01-R9-PLAN.md` in case it landed on a branch. This is a RESEARCH task and research means OUTSIDE this repo (CLAUDE.md): read ControlNet/T2I-Adapter docs, the ComfyUI and diffusers issue threads, and what the community actually uses for pose and depth conditioning on SDXL — do not derive a plan from our own code comments. Beat 01's prior rounds r5-r8 have labelled contact sheets in the repo root (LABELED-b01-r5.png .. LABELED-b01-r8.png); read the taste ledger records for what was already rejected and why before proposing r9. Output is a PLAN only — no render, no spend."
+    status: dead
+  - name: qa-guard
+    dispatched_at: "unknown"
+    mission: "Build pipeline/qa_local.py — the QA gate that fetches and checks the locally built site before a founder ever sees it."
+    owns: "pipeline/qa_local.py"
+    completion_artifact:
+      kind: file
+      path: pipeline/qa_local.py
+      parse: py
+      tracked: true
+    resume_brief: "VERIFY PARTIALS FIRST, AND THE PARTIAL IS NEARLY DONE. pipeline/qa_local.py exists UNTRACKED (~12.9KB), parses clean under ast.parse, and already ends in a complete `if __name__ == main: sys.exit(main())` block — the lane died before COMMITTING, not mid-write, so the recovery job is to read it, run it, and land it, NOT to rewrite it. Start with `python3 pipeline/qa_local.py --help` and then a real run against a built _site/. Commit with an explicit pathspec (`git commit -- pipeline/qa_local.py`) — never `git add -A`, peers stage into the index in the gap. NOTE A DUPLICATE-WRITER HAZARD: a lane named qa-guard-2 was dispatched in the same fleet; check `git status` immediately before writing and stop if the file has changed under you."
+    status: live
+  - name: prov-hole
+    dispatched_at: "unknown"
+    mission: "Close the still-promotion provenance hole — pipeline/promote_still.py, so promoting a still to canon cannot strip the 7.2 record that justifies it."
+    owns: "pipeline/promote_still.py"
+    completion_artifact:
+      kind: file
+      path: pipeline/promote_still.py
+      parse: py
+      tracked: true
+    resume_brief: "VERIFY PARTIALS FIRST, AND THE PARTIAL IS NEARLY DONE. pipeline/promote_still.py exists UNTRACKED (~17.2KB), parses clean, and ends in a complete main block — read and finish it rather than starting over. The bug it exists to fix is commit 4eb4c61: promoting a still is what stripped the record that refuses it, and eleven of v34's beats went through that door — so the test that matters is that a promote of an unprovenanced still FAILS LOUDLY. Run pipeline/lint_genome.py and pipeline/test_pipeline.py as separate steps and read the exit codes before committing. Commit with an explicit pathspec."
+    status: live
+  - name: farm-worker-rtx5090
+    dispatched_at: "2026-08-05T16:01:44Z"
+    mission: "The only component that keeps rendering when the orchestrator session is dead: farm_worker.py polling pipeline/farm-queue.yaml on the rtx5090 and pushing results to origin/farm-results-rtx5090."
+    owns: "none — it renders, it does not author"
+    completion_artifact:
+      kind: process
+      match: "farm_worker.py"
+      host: rtx5090
+    resume_brief: "THIS IS A DAEMON, NOT A TASK — it is never 'done', and DEAD here means the fleet has no session-independent renderer at all. Its scheduled task is registered and Ready: `ssh rtx5090 schtasks /run /tn banyan-worker-start`, which launches `farm_worker.py --name rtx5090 --force`. TWO PRECONDITIONS BEFORE FIRING IT. (1) The card must be free: check C:/banyan-farm/GPU-CLAIM.txt says RELEASED and nvidia-smi reads 0%, because starting a worker on top of a hand-driven render is the documented 2026-08-03 collision that killed a 22-minute canary with STATUS_CONTROL_C_EXIT. (2) There must be something it can actually eat: it matches `worker` by EQUALITY at farm_worker.py:680 against 'any' or 'rtx5090', and at seed time every entry in tasks: was `worker: hand`, so it would poll forever printing 'queue empty for me'. Do NOT worker-shape the hand entries to give it food — they are manual agent instructions with no node:/prompt:/model: and it would crash on task['node']."
+    status: dead
