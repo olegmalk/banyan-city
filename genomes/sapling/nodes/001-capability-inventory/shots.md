@@ -134,6 +134,36 @@ already burns supplies everything the rectangle has to carry. The second is
 cheaper, needs no new wording, and matches how this show already draws its terminal
 cards. Neither is a steward call.
 
+**PICKED 2026-08-09 (founder, R4): `b03-r4-s3`. THIS BEAT IS CANON AND NOTHING
+RE-RENDERS ON IT.** Promoted byte-for-byte to `stills/03-deploy-succeeded.png`,
+sha256 `f38faecb350421154afcdd3ca0757496c82b4bb9d3bdbfa48fc59019c44a954a`, seed
+20263722; the full table is in `stills/README.md`.
+
+**He gave this beat two answers in one message and the second one is the pick.**
+His words, in his order: *"b03-r3-s1"* … *"nevermind b03-r3-s1, i prefer
+b03-r4-s3."* Both are recorded, in `stills/README.md` with the whole message
+around them and in `taste/steward-model.ledger.yaml` records 2 and 29. The
+correction is what was promoted. Do not cite the withdrawn one as a verdict.
+
+**THE STEWARD RECOMMENDED REJECTING THIS FRAME AND WAS WRONG** (ledger record 29:
+`reject_all` at 0.80 — with `predicted_flip_to: b03-r4-s3`, so the ranking was
+right and the verdict was not). The rejection was argued on the blank screen, and
+that is a script-fidelity argument, not a taste one: POST burns the `deploy
+succeeded` card over this plate, so the rectangle never had to carry the line.
+He took the frame.
+
+**AND THIS PICK ANSWERS THE COLLISION ABOVE BY PICKING, NOT BY RULING.** The two
+options put to him were: pull the lens back until the screen is small enough to be
+an abstract glow, walking back his own 2026-08-08 close-up instruction — or let the
+plate stop being a terminal and let the POST card carry the words. He wrote neither
+sentence. He chose a CLOSE-UP frame from round 4, so **the close-up stands, with
+r4-s3's screen exactly as drawn.** Which option that amounts to is not claimed here
+because he did not say it; the pick is the answer. What round 4 bought is
+independently true and stays banked because he acted on it: beat 1's verbatim
+`one glowing monitor with code` produced zero gibberish glyphs in 4 of 4 after r1,
+r2 and r3 all sank on them, and all four frames were unmistakably domestic. There
+is no round 5.
+
 **REJECTED 2026-08-08 (founder, R4): ALL EIGHT — `b03-r1-s0..s3` AND `b03-r2-s0..s3`.**
 Both rounds, the whole set. **NEW DIRECTION, his: make it a CLOSE-UP** — the third
 instruction on this beat, and it is a lens note rather than a content note, so it
@@ -193,6 +223,49 @@ light and palette get anchored to, so it stops being a frame from a different sh
 **QUEUED AND UN-GATED as of 2026-08-08** — item 07 was answered (no character sheet;
 the sapling reads tall) and the founder gate came off. Beat 15's sample is screened
 first. See the wave note at the foot of this file.
+
+**ROUND 3 RENDERED 2026-08-08 (`b06-r3-s0..s3`, sheet `LABELED-beat06-r3.png`) — and
+REJECTED 2026-08-09 (founder, R4): ALL FOUR.** His words, and this time he named the
+faults: *"for beat 06 none of them are right, problems are: women, too many
+clouds/weird cloud formations."* His r1 verdict named no axis; this one names two.
+The steward had picked `b06-r3-s2` and was wrong (ledger record 3: `ratify` at 0.55,
+scored `miss`). His own note on that guess, verbatim: *"the two frames you guessed
+were wrong, but thats only because you didnt have any right ones to choose."*
+
+**"WOMEN" — AND THE NEGATIVE ALREADY SAID `no humans`.** Two of the four put a girl
+in a first-person sky shot, which a POV of your own eyes cannot contain, and the
+prompt's `no humans` did not stop it. That is not bad luck, it is a measured
+mechanism: in the same 2026-08-09 pass, beat 10's r4 drew a human hand and a bare
+foot in 2 of 4 with `humans` in the negative, while node 002b's beat 01 r6 used
+`no girl, no boy, no child, no person` and returned **0 people in 4 of 4** on the
+same model and recipe. **The generic plural does not bind and the explicit singulars
+do.** Round 4 replaces `no humans` here with the explicit block plus the parts that
+have actually appeared: `no woman, no girl, no boy, no child, no person, no face,
+no hand`.
+
+**"TOO MANY CLOUDS/WEIRD CLOUD FORMATIONS" IS THE FAULT THAT KILLS THE PICK, AND IT
+IS A POSITIVE-SIDE PROBLEM.** The prompt asks for *"one thin wisp of white cloud"*
+and `no big clouds` is in the negative; what came back is a wall of big scalloped
+lobed cumulus filling the right half and the bottom of the frame. Negating a shape
+did not beat drawing it — the same lesson beat 10's r4 proved from the other side
+(what leads the prompt is what gets drawn). So round 4 leads with the EMPTINESS and
+names the cloud type instead of forbidding one: the vast blue is the subject, one or
+two thin high wisps are the only cloud, and `cumulus, cumulonimbus, cloud bank,
+towering clouds, cloudscape, scalloped clouds, stylized clouds` go to the negative
+in place of the vague `big clouds`. **The clouds do not go to zero** — the beat's
+own gag needs sky he can file as architecture, and *"Ceiling's gone. Open-plan
+hospital"* wants something up there to be a ceiling.
+
+**AND THE ANCHOR THE STEWARD SCORED AGAINST WAS A FRAME HE HAD REFUSED.** The pick
+was given its top style mark for being *"the canon 06-too-blue frame with the leaf
+taken out — same blue, same cloud dialect, same light"*. That frame is
+`stills/06-too-blue-REVOKED-leaf.png`. He rejected it on 2026-08-07 naming only the
+leaf, and the steward read the silence about everything else as approval of it — so
+the cloud dialect he has now called weird was scored a +2 for matching a frame he
+had thrown out. **SILENCE ON AN ELEMENT IS NOT APPROVAL OF IT.** Round 4 anchors on
+nothing revoked, and the word "banked" is not used on this beat again for anything
+he has not named.
+
 ## Beat 07 — ZERO (0) MOVING PARTS (0:29–0:35) ⬜ needs footage07
 
 Line: 'I appear to have zero (0) moving parts.' The STILLNESS is the joke - camera
@@ -444,6 +517,40 @@ which a whole-body noun may not reach at all. **Every beat relying on `no humans
 alone is now suspect**; the fix is beat 01's block plus explicit parts (`no hand,
 no hands, no fingers, no foot, no feet, no arm, no leg`), and it is r5's change here.
 
+**PICKED 2026-08-09 (founder, R4): `b10-r1-s3` — ROUND ONE. THERE IS NO ROUND 5 AND
+NOTHING RE-RENDERS ON THIS BEAT.** Promoted byte-for-byte to `stills/10-sense.png`,
+sha256 `f05fe4261d821176ace3b501ec60a2fa1d64ccd253b4945c6f3edfed3b474583`, seed
+20263729, from `takes/stills/10-sense-fix-s3.png` — the 2026-08-07 wave. Full table
+in `stills/README.md`. The r4 pick `b10-r4-s2` was not taken (ledger record 30:
+`pick_holds` at 0.65, scored `miss`); he went outside the r4 set entirely and back
+to round 1.
+
+**THIS OVERRULES THE STEWARD, AND IT IS THE SAME FRAME THE STEWARD REFUSED ON
+2026-08-08.** He floated it then with a doubt and a delegation — *"actually has
+character consistency, although it isn't exactly showing roots, so maybe it's not
+aligning with the correct idea, you decide"* — and the steward decided against it on
+the three counts written below: the POST card reads `SENSE ✓ roots / air /
+vibration`, `node.md`'s image line is an underground root-map, and the node's R1 is
+the demonstration of the sense. **He has taken the rootless frame. R4 decides, he
+owns the script as well as the taste, and the pick stands.**
+
+**The script-fidelity concern is NOT withdrawn and is NOT a veto — it is a note.**
+If, at the v34 screening, the overlay printing the word `roots` over a picture with
+no roots in it reads wrong to him, the cheap fix is one line of his own text (the
+card is deterministic POST, not model output) and the expensive one is a re-render
+nobody has asked for. It is written here so the reason is on the record before the
+screening rather than re-derived after it.
+
+**Three rounds of root-chasing are therefore closed, and what they measured
+survives them.** r4 got roots into this beat for the first time in four rounds and
+he did not want them; that costs nothing, because the finding r4 actually produced
+is about the negative and not the picture: **`no humans` does not bind** — 2 of 4
+here with a hand and a foot, against beat 01 r6's 0 of 4 on `no girl, no boy, no
+child, no person`. He named "women" on beat 06 the same day, a third instance on a
+third beat whose negative also carries the generic plural. That result is
+beat-independent, it is already applied to beat 06's round 4, and every beat in the
+genome relying on `no humans` alone is suspect.
+
 **REJECTED 2026-08-08 — the founder DELEGATED this one and the steward decided it
 against the script, not against taste.** His note on `b10-r1-s3` was: *"actually has
 character consistency, although it isn't exactly showing roots, so maybe it's not
@@ -599,6 +706,49 @@ soil"* is the script's own line; beat 10 is the one that moves. See beat 10 abov
 **QUEUED AND UN-GATED as of 2026-08-08** — item 07 was answered (no character sheet;
 the sapling reads tall) and the founder gate came off. Beat 15's sample is screened
 first. See the wave note at the foot of this file.
+
+**ROUND 3 RENDERED 2026-08-08 (`b14-r3-s0..s3`, sheet `LABELED-beat14-r3.png`) — and
+REJECTED 2026-08-09 (founder, R4): ALL FOUR.** His words: *"for beat 14 they are all
+too short."* The steward had picked `b14-r3-s3` and was wrong (ledger record 5:
+`ratify` at 0.45 — the lowest-confidence call on the whole page, and it still went
+the other way). His note on the guess, verbatim: *"the two frames you guessed were
+wrong, but thats only because you didnt have any right ones to choose."*
+
+**TWO VERDICTS ON ONE AXIS, AND THE SECOND IS NARROWER THAN THE FIRST. r3 answered
+the wrong one.** On 2026-08-08 the fault was *"all too small"* — AREA in frame. On
+2026-08-09 it is *"all too short"* — HEIGHT. r3 did what the first note asked: the
+plant is bigger, the four-leaf sprout sits across the middle of the frame in raking
+light. It is still a sprout lying low over a wide field of soil and stones, and its
+stem is a few centimetres of the picture. **Bigger is not taller**, and A7 in
+`taste/steward-model.v1.md` is not a comparative axis — it asks whether the sapling
+reads TALL in THIS frame, with the ceiling `b01` set at the other end
+(*"tooooo tall"*). The steward scored r3-s3 a +1 on A7 for being the biggest thing
+in the set, which is scoring against the previous round instead of against the
+picture, and that is the recorded reason the guess failed.
+
+**THE MEASUREMENT EXISTS AND ROUND 4 USES IT.** `b15-r3-s1` is the only frame on
+this tree he has ever passed, and it passed as a HEIGHT verdict: its subject clause
+is *"one slender sapling standing tall, its thin stem rising well above the grass"*
+and `tall tree` came out of the negative for it. Beat 14's r3 inherited that
+recipe's model, size, steps, cfg and the negative removal — the sidecar says so —
+but **not its composition.** r3 kept `low close shot ... filling the frame` with
+`roots gripping into damp brown soil`, so what filled the frame was EARTH. The lever
+is not another height adjective (`thin stem rising tall through the frame` was
+already in the prompt and did not deliver): it is the **ground line and the apex** —
+soil line low in frame, stem rising through most of the vertical, apex near the top,
+so that most of the picture is plant and light rather than dirt. Measured against
+b15-r3-s1, not against r3.
+
+**THE COLLISION THIS OPENS IS REAL AND IT IS HIS, NOT THE STEWARD'S.** The camera is
+down on the soil in the first place because the script's own line is *"Low at the
+base of the trunk: roots gripping soil"*, and the grip is what the beat means — this
+is the want of the series as a physical hold. Raising the plant in frame trades that
+read away by degrees. Round 4 goes as far as it can without dropping the roots (low
+camera, but the frame's height spent on stem rather than ground), and if that still
+comes back short, the next lever is the script line and only he can move it. Nothing
+here changes `sd_prompt`'s remaining scale block (`mature tree, large tree, thick
+trunk, full canopy`) without him either: `tall tree` is already out per b15, and A7
+has a ceiling he has enforced once.
 
 ## Beat 15 — SOMETHING'S COMING (1:34–1:37) ⬜ needs footage15
 

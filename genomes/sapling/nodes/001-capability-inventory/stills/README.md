@@ -30,6 +30,15 @@ other.
 
 ## 2026-08-09 — beats 3, 6, 10 and 14 have NO approved frame, and their names say why
 
+> **AMENDED THE SAME DAY, LATER: beats 3 and 10 now do.** He answered on
+> 2026-08-09 (~12:20Z) and the two promotions are recorded in the section
+> **"03 and 10 — picked 2026-08-09"** below. This directory holds **thirteen**
+> approved frames, not eleven; beats **6 and 14 are the two still waiting**, and
+> he rejected both of their round-3 sets in the same message. Everything else in
+> this section — the four `-REVOKED-` names, the four sha256s, the slate
+> behaviour, why `/status` counted wrong for two days — is unchanged and is why
+> those two beats slate.
+
 **This directory no longer holds fifteen approved frames. It holds eleven.** The
 founder refused four of them itemised in v32 on 2026-08-07 and each one kept its canon
 name anyway, so for two days every renderer in this repo read a refused frame as the
@@ -81,6 +90,104 @@ prompt" and this rename does not queue anything. Beats 3, 6, 10 and 14 are the f
 redraw wave still owes, `22b4cbe` records that beat 3 in particular is waiting on the
 founder to choose which of his own rules gives, and nothing here changes who decides
 what replaces them. R4: the pick is his.
+
+## 03 and 10 — picked 2026-08-09, and one of them overrules the steward
+
+The founder answered checklist item 10 in one message (R4, 2026-08-09 ~12:20Z).
+The whole of it, verbatim, because two of its clauses correct earlier clauses of
+itself and the record is worthless in pieces:
+
+> *"b03-r3-s1, for beat 06 none of them are right, problems are: women, too many
+> clouds/weird cloud formations. and b10-r1-s3, for beat 14 they are all too
+> short. ep2 beats dont have labels, nevermind b03-r3-s1, i prefer b03-r4-s3.
+> open v33, the two frames you guessed were wrong, but thats only because you
+> didnt have any right ones to choose."*
+
+Two picks in it, and **the beat-3 pick is the second one he gave** — he opened
+with `b03-r3-s1` and withdrew it later in the same message for `b03-r4-s3`. Both
+are recorded; the correction is what was promoted. Addresses resolved through
+`REVIEW-KEY-0808.md`, the pixel-matched address map, never by grid position.
+Beats 6 and 14 he rejected outright and they keep their `-REVOKED-` names.
+
+| | beat 03 — DEPLOY SUCCEEDED | beat 10 — SENSE |
+|---|---|---|
+| his address | `b03-r4-s3` | `b10-r1-s3` |
+| promoted from | `takes/stills/03-deploy-succeeded-r4-s3.png` | `takes/stills/10-sense-fix-s3.png` |
+| copied | byte-for-byte | byte-for-byte |
+| sha256 | `f38faecb350421154afcdd3ca0757496c82b4bb9d3bdbfa48fc59019c44a954a` | `f05fe4261d821176ace3b501ec60a2fa1d64ccd253b4945c6f3edfed3b474583` |
+| size | 832 × 1216 | 832 × 1216 |
+| model | `cagliostrolab/animagine-xl-3.1` | same |
+| round | **4** (`candidate_set: r4`) | **1** (`candidate_set: fix`) — the 2026-08-07 wave |
+| seed | **20263722** | **20263729** |
+| task | `ep1-b03-deploy-r4-1786300000` (queue), `001-b03-r4-1786273317` | `ep1-stills-rework-1786124640` |
+| steps / guidance | 40 / 7.5, 9s wall on the rtx5090 | 40 / 7.5, 9s wall on the rtx5090 |
+| prompt | the round-4 fenced block under **Beat 03** in `shots.md` | the 2026-08-07 rewrite's block, `shots.md` as of `fd056e5` |
+| cost | $0 — local CUDA, no provider | $0 |
+| replaces | `03-deploy-succeeded-REVOKED-terminal-lab.png` | `10-sense-REVOKED-style-change.png` |
+
+**Neither promotion renamed anything.** Both beats already carried two
+`-REVOKED-` frames each from the 2026-08-09 morning rename, so the canon name was
+free and this was a copy and nothing else. Beat 3 keeps `-REVOKED-magenta` and
+`-REVOKED-terminal-lab`; beat 10 keeps `-REVOKED-abstract` and
+`-REVOKED-style-change`. Revocations stack; a `-REVOKED-` name is one refusal
+with its reason in it, never a slot.
+
+**Seeds are read out of each PNG's own `.meta.yaml` sidecar under `takes/`, not
+off a sheet caption — and the two sidecars are not equally trustworthy, which is
+worth saying rather than levelling.** Beat 3's r4 sidecar was written AT RENDER
+TIME by `render_redraw.py` on the rtx5090 and states the negative the model
+actually saw. Beat 10's was **reconstructed on 2026-08-07 from `wave.log`**,
+because the wave script does not go through `farm_worker` and wrote no record;
+its own header comment says so, and it carries a `NEGWARN` — that run's negative
+was over CLIP's 77-token budget and `text` was deduplicated out. The frame he
+picked is the frame he picked either way; the provenance behind it is
+reconstruction, not observation.
+
+**THE BEAT-10 PICK OVERRULES THE STEWARD, AND THAT IS THE HONEST HEADLINE.**
+`b10-r1-s3` is the frame the founder floated on 2026-08-08 with a doubt attached
+— *"actually has character consistency, although it isn't exactly showing roots,
+so maybe it's not aligning with the correct idea, you decide"* — and the steward
+decided against it, on the ground that visible roots are load-bearing for this
+beat: the on-screen card POST burns reads `SENSE ✓ roots / air / vibration`,
+`node.md`'s image line is an underground root-map, and the node's R1 is the
+demonstration of the sense. Three rounds were then rendered chasing roots, and r4
+finally got them. **He has taken the rootless frame anyway. R4 decides, he owns
+the script as well as the taste, and the pick stands without argument.** The
+steward's concern is not withdrawn and is not a veto — it is recorded here and
+in `shots.md` so that if the SENSE overlay reading `roots` over a picture with no
+roots in it bothers him at the v34 screening, the reason is already written down
+and the fix is one line of his own text, not a re-render. Nothing re-renders on
+this beat.
+
+**And the beat-3 pick answers checklist item 16 by picking, not by ruling.** Item
+16 put the tension to him as two options: pull the lens back out until the screen
+is small enough to be an abstract glow — which walks back his own 2026-08-08
+close-up instruction — or let the plate stop being a terminal and let the POST
+`deploy succeeded` card carry the words. He wrote neither sentence. He chose a
+CLOSE-UP frame from round 4, so **the close-up stands, with r4-s3's screen exactly
+as drawn.** Which of the two options that amounts to is not claimed here, because
+he did not say; the pick is the answer. What round 4 demonstrably bought is
+recorded in `shots.md`: copying beat 1's approved `one glowing monitor with code`
+verbatim produced zero gibberish glyphs in 4 of 4, after r1, r2 and r3 all sank
+on them.
+
+**No sidecars beside either canon PNG**, for the reason the sections below and the
+foot of this file give: a `.meta.yaml` naming `cagliostrolab/animagine-xl-3.1`
+next to a canon still scores as a new CreativeML Open RAIL++-M finding and pushes
+CI's licence ratchet past 25 (D15, open, his to settle). The provenance is this
+table, the takes' own sidecars, and git.
+
+**WHAT THIS CHANGES DOWNSTREAM.** `hold_still.approved_still()` now answers with a
+real frame for beats 3 and 10 instead of None, so `render_t3` stops slating them;
+`build_status.scenes()` reads **13 of 15** with beats **6 and 14** waiting for the
+author's pick. `review/provisional-v33/ep1-v33-PROVISIONAL.mp4` is untouched — a
+cut holds pixels, it does not resolve them at read time — and it remains a cut
+built on four frames he had refused, which is what its own record says it is.
+
+**The two frames v33 guessed for beats 6 and 14 were the two he called wrong**, and
+his reason for that is recorded verbatim in `taste/steward-model.ledger.yaml`
+records 3 and 5: *"the two frames you guessed were wrong, but thats only because
+you didnt have any right ones to choose."*
 
 ## 07 / 08 / 09 — the progression, picked 2026-08-08 (item 03)
 

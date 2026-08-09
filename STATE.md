@@ -5641,3 +5641,94 @@ card idle at 0%, no schtask created so none to delete — only `banyan-telemetry
 and `banyan-worker-start` remain, both standing, and the `banyan-b15ab` r6
 flagged is gone. Weights `h94/IP-Adapter` 4.07 GB now cached on the box (the
 ViT-H encoder is 2.5 GB, not the ~700 MB the memo's arithmetic implied).
+
+## 2026-08-09 — he answered item 10, beats 3 and 10 are canon, and the model went 1-for-6 on its first scoring
+
+**The message (R4, ~12:20Z), verbatim and whole, because two of its clauses
+correct earlier clauses of itself:**
+
+> *"b03-r3-s1, for beat 06 none of them are right, problems are: women, too many
+> clouds/weird cloud formations. and b10-r1-s3, for beat 14 they are all too
+> short. ep2 beats dont have labels, nevermind b03-r3-s1, i prefer b03-r4-s3.
+> open v33, the two frames you guessed were wrong, but thats only because you
+> didnt have any right ones to choose."*
+
+**TWO PROMOTIONS.** `b03-r4-s3` → `stills/03-deploy-succeeded.png` (sha256
+`f38faec…4954a`, seed 20263722, round 4) and `b10-r1-s3` →
+`stills/10-sense.png` (sha256 `f05fe42…74583`, seed 20263729, **round 1**, the
+2026-08-07 wave). Byte copies; addresses resolved through `REVIEW-KEY-0808.md`;
+seeds out of each take's own sidecar. Both beats already carried two `-REVOKED-`
+frames, so nothing was renamed. The full tables and the caveats are in
+`genomes/sapling/nodes/001-capability-inventory/stills/README.md`. **`/status`
+now reads 13 of 15**, with beats **6 and 14** waiting — verified against
+`build_status.scenes()`, not asserted.
+
+**THE BEAT-10 PICK OVERRULES THE STEWARD AND THAT IS THE HEADLINE.** `b10-r1-s3`
+is the frame he floated on 2026-08-08 with a doubt and a delegation — *"actually
+has character consistency, although it isn't exactly showing roots, so maybe it's
+not aligning with the correct idea, you decide"* — and the steward decided
+against it, because the POST card over this beat reads `SENSE ✓ roots / air /
+vibration`, `node.md`'s image line is a root-map, and the node's R1 is the
+demonstration of the sense. Three rounds were then spent chasing roots and r4
+finally got them. He took the rootless frame anyway. **R4 decides and he owns the
+script too.** The concern is noted, not withdrawn and not a veto: if the overlay
+contradiction bothers him at the v34 screening it is one line of his own text —
+the card is deterministic POST — and no re-render. Nothing re-renders on beat 10.
+
+**THE BEAT-3 PICK ANSWERS CHECKLIST ITEM 16 BY PICKING.** Item 16 offered two
+options: pull the lens back until the screen is small enough to be an abstract
+glow, walking back his own 2026-08-08 close-up instruction — or let the plate stop
+being a terminal and let the POST `deploy succeeded` card carry the words. He
+wrote neither sentence and chose a CLOSE-UP frame from round 4, so the close-up
+stands with r4-s3's screen exactly as drawn. Which option that amounts to is not
+claimed, because he did not say. The pick is the answer.
+
+**TWO BEATS REJECTED, WITH DIRECTIONS.** Beat 06 — *"women, too many clouds/weird
+cloud formations"*: the negative already said `no humans` and a girl appeared
+anyway, so round 4 swaps in the explicit singular block, and the cloud fault is a
+POSITIVE-side problem — `no big clouds` lost to a cumulus wall, so r4 leads with
+the empty blue and names thin high wisps instead of forbidding a shape. Beat 14 —
+*"all too short"*: r3 answered the 08-08 note (*"all too small"*, AREA) and this
+one is HEIGHT; the fix is the ground line and the apex, measured against
+`b15-r3-s1`, the one frame on this tree he has passed. Both directions are in
+that node's `shots.md`.
+
+**FIRST SCORING OF THE PREDICTION LEDGER, and it is not flattering.** Six of 34
+predictions now have a verdict: **1 hit, 2 partial, 3 miss — 17% strict, 33%
+counting partials as half.** Broken out, the split is the whole story: **PICK
+predictions 0 of 3**, reject predictions 1 hit + 2 partial of 3. The model can say
+NO with some skill and cannot say YES at all; no pick of its own has been
+ratified. **Calibration held while the pick rate went to zero** — the two picks he
+threw out were the page's two LOWEST-confidence calls (b06 0.55, b14 0.45) and the
+reject_all calls that held were its high ones (b03 0.85, b10 0.80), which is
+exactly the asymmetry `PROVISIONAL-PICKS-0809.md` wrote down in advance.
+
+**HIS ATTRIBUTION FOR THE TWO WRONG GUESSES IS GENEROUS AND IT IS RECORDED AS
+HIS, NOT AS THE LEDGER'S:** *"the two frames you guessed were wrong, but thats
+only because you didnt have any right ones to choose."* Partly true — he rejected
+both SETS — and it does not cancel either miss, because both records predicted
+`ratify` rather than `reject_all`. The model did not pick the best of a bad set;
+it said the set was good.
+
+**THREE TASTE FACTS OUT OF THE MISSES, which is the only thing misses are for.**
+(1) **`no humans` does not bind.** Beat 06's women, beat 10 r4's hand and foot
+(2 of 4) — both with the generic plural verified in the negative — against node
+002b beat 01 r6's `no girl, no boy, no child, no person` returning 0 people in
+4 of 4, same pass, same model. Every beat relying on `no humans` alone is
+suspect. (2) **A new sky-composition axis is needed** — v1 has nothing that
+scores cloud COVERAGE against what the prompt asked for or cloud FORM against the
+show's dialect, so the b06 pick could not be priced. (3) **SILENCE ON AN ELEMENT
+IS NOT APPROVAL OF IT.** The b06 pick got its top style mark for matching *"the
+canon 06-too-blue frame"* — which is `06-too-blue-REVOKED-leaf.png`, refused on
+2026-08-07 for the leaf and for nothing else, whose cloud dialect the steward
+therefore treated as ratified. He has now called that dialect weird. A5 may never
+anchor on a REVOKED frame, and the word "banked" is suspect everywhere it appears
+in `shots.md`. Also confirmed: **A7 is absolute, not comparative** — bigger than
+last round is not tall.
+
+**ONE DEFECT HE REPORTED AND IT IS NOT FIXED HERE: *"ep2 beats dont have
+labels."*** The `CONTACT-002b-r3-*` sheets carry the beat and round in the band
+header and the slot and seed in each tile's caption strip, but no per-tile address
+badge like the `LABELED-*` episode-1 sheets have — so episode 2 cannot be answered
+the way episode 1 just was. Open, and it blocks nothing that has already been
+promoted.
