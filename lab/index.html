@@ -269,7 +269,7 @@ measured on the machines that make the episodes; nothing is a vendor claim.</p>
 
 <h2>Three experiments</h2>
 <div class="card rise" style="margin:.9rem 0">
-  <div class="title"><a href="model-bakeoff.html">Who should draw the show? Four AI artists,
+  <div class="title"><a href="/lab/model-bakeoff.html">Who should draw the show? Four AI artists,
   same prompts</a></div>
   <p class="teaser">Four free AI art models drew the same three shots at the same settings: the
   one the show uses now (Animagine 3.1) against 2026's contenders. The author picks the artist,
@@ -277,7 +277,7 @@ measured on the machines that make the episodes; nothing is a vendor claim.</p>
   <div class="meta">Measured 2026-07-30 · 24 frames · verdict pending</div>
 </div>
 <div class="card rise" style="margin:.9rem 0">
-  <div class="title"><a href="quality-tiers.html">What does "cheaper" cost? All 15 shots at
+  <div class="title"><a href="/lab/quality-tiers.html">What does "cheaper" cost? All 15 shots at
   three quality tiers</a></div>
   <p class="teaser">Every shot of episode 1 rendered three ways: full quality, a 60-second budget,
   and a 15-second budget. The finding: cheap settings don't just blur — they redraw the picture.
@@ -285,7 +285,7 @@ measured on the machines that make the episodes; nothing is a vendor claim.</p>
   <div class="meta">Measured 2026-07-30 · 45 frames · one machine, three settings</div>
 </div>
 <div class="card rise" style="margin:.9rem 0">
-  <div class="title"><a href="fleet-benchmark.html">The render farm, benchmarked</a></div>
+  <div class="title"><a href="/lab/fleet-benchmark.html">The render farm, benchmarked</a></div>
   <p class="teaser">Household laptops against a rented cloud GPU on identical work. The finding:
   one gaming laptop matches a datacenter card and beats an Apple-silicon Mac about 13× at this
   particular job.</p>
@@ -293,7 +293,7 @@ measured on the machines that make the episodes; nothing is a vendor claim.</p>
 </div>
 
 <h2>What the money looks like</h2>
-<p class="money"><b>$1.24</b> is the total cash this project has spent, ever — <b>$0.50</b> of rented cloud GPU (all of it on 2026-07-29, the day <a href="fleet-benchmark.html">the fleet benchmark</a> was measured) and <b>$0.74</b> of paid video-API tests. Everything rendered on the household machines cost $0. That is one number with one source: it is the sum of all 73 rows of <a href="https://github.com/olegmlkvorg/banyan-city/blob/main/ledger/render-spend.csv">ledger/render-spend.csv</a>, read 2026-07-30. Caps live in code — $8 per command, $20 lifetime (<a href="https://github.com/olegmlkvorg/banyan-city/blob/main/pipeline/budget.yaml">budget.yaml</a>), $5 per evening on the cloud lane.</p>
+<p class="money"><b>$1.24</b> is the total cash this project has spent, ever — <b>$0.50</b> of rented cloud GPU (all of it on 2026-07-29, the day <a href="/lab/fleet-benchmark.html">the fleet benchmark</a> was measured) and <b>$0.74</b> of paid video-API tests. Everything rendered on the household machines cost $0. That is one number with one source: it is the sum of all 73 rows of <a href="https://github.com/olegmlkvorg/banyan-city/blob/main/ledger/render-spend.csv">ledger/render-spend.csv</a>, read 2026-07-30. Caps live in code — $8 per command, $20 lifetime (<a href="https://github.com/olegmlkvorg/banyan-city/blob/main/pipeline/budget.yaml">budget.yaml</a>), $5 per evening on the cloud lane.</p>
 
 <h2>Why any of this is public</h2>
 <p class="measure">The repository is the product: scripts, renders, votes and receipts are all in

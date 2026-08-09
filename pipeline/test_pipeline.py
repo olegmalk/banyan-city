@@ -2625,6 +2625,83 @@ def test_vercel_build_guard_covers_every_site_input():
     check("the build guard covers every builder input", not uncovered)
 
 
+def test_links_resolve_against_the_url_a_page_is_served_at(tmp: Path):
+    """A page's relative links resolve against its URL, not its directory.
+
+    THE BREAK, 2026-08-09. The founder opened banyan.city/review and said
+    "images are broken". Nothing was missing: every file was in `_site` at the
+    path the page named, and `check_links` swept 70 pages green. The URL was
+    wrong. `vercel.json` sets `cleanUrls: true` with `trailingSlash: false`, so
+    `_site/review/index.html` is served at **`/review`** — and `/review/`
+    308-redirects to it, so there is no directory-shaped version of that URL.
+    A page at `/review` has base `/`, which makes `review-assets/x.jpg` mean
+    `/review-assets/x.jpg`. 119 references across three pages 404'd: every
+    image, every clip, every poster and every provenance link on /review, all
+    six trial videos on /trials, and /lab's three sub-page links.
+
+    The gate resolved each href against the page's directory ON DISK, so it was
+    asking a question the browser never asks and could not have caught any of
+    it. It models the served URL now. This test pins the two rules that make
+    that true, because they are invisible in the output when they are right:
+
+      1. `<dir>/index.html` is served one level UP from where it sits. Every
+         other page is served where it sits.
+      2. resolution is root-clamped, like a browser: `../index.html` from
+         `/review` is `/index.html`, not an escape from the site. Path
+         arithmetic calls that an escape and would fail the correct nav links
+         while passing the broken media ones.
+    """
+    sys.path.insert(0, str(REPO / "pipeline"))
+    import build_site as bs
+
+    check("a subdirectory index is served from its parent",
+          bs.served_base("review/index.html") == "")
+    check("...and so is the trials page", bs.served_base("trials/index.html") == "")
+    check("the root index is served from the root",
+          bs.served_base("index.html") == "")
+    check("a named page keeps its own directory",
+          bs.served_base("watch/season.html") == "watch")
+    check("...including a node's shot board",
+          bs.served_base("sapling/001-x-shots.html") == "sapling")
+
+    check("the break: a relative asset on /review points at the site root",
+          bs.resolve_url("", "review-assets/x.jpg") == "review-assets/x.jpg")
+    check("the fix: a root-absolute reference lands where the file is",
+          bs.resolve_url("", "/review/review-assets/x.jpg")
+          == "review/review-assets/x.jpg")
+    check("`..` is clamped at the root the way a browser clamps it",
+          bs.resolve_url("", "../index.html") == "index.html")
+    check("...and still walks up one real level when there is one",
+          bs.resolve_url("watch", "../index.html") == "index.html")
+    check("a page in a directory resolves its siblings",
+          bs.resolve_url("sapling", "001-x-shots.html") == "sapling/001-x-shots.html")
+
+    # And the gate itself must FAIL on the real shape of the bug rather than
+    # only reporting it prettily. Built as files, because check_links sweeps
+    # _site rather than taking HTML as an argument.
+    out = tmp / "_site"
+    (out / "review").mkdir(parents=True)
+    (out / "review" / "review-assets").mkdir()
+    (out / "review" / "review-assets" / "x.jpg").write_bytes(b"\xff\xd8\xff")
+    (out / "index.html").write_text("<a href='review/index.html'>r</a>")
+    old, bs.OUT = bs.OUT, out
+    try:
+        (out / "review" / "index.html").write_text(
+            '<img src="review-assets/x.jpg"><a href="../index.html">up</a>')
+        broken = bs.check_links(["index.html"])
+        check("the gate fails on a relative asset under a subdirectory index",
+              any("review-assets/x.jpg" in b for b in broken))
+        check("...and does not fail on the nav link beside it",
+              not any("index.html\"" in b or "../index.html" in b for b in broken))
+
+        (out / "review" / "index.html").write_text(
+            '<img src="/review/review-assets/x.jpg"><a href="../index.html">up</a>')
+        check("the gate passes once the reference is root-absolute",
+              bs.check_links(["index.html"]) == [])
+    finally:
+        bs.OUT = old
+
+
 def test_review_page_publishes_nothing_unprovenanced():
     """Every file the review area serves must exist, carry a record, and clear
     the licence gate — checked against `cuts/cuts.yaml`, not against the build.
@@ -5537,6 +5614,8 @@ def main():
     with tempfile.TemporaryDirectory() as td:
         test_dispatch_never_hands_a_renderer_a_raw_still(Path(td))
     test_vercel_build_guard_covers_every_site_input()
+    with tempfile.TemporaryDirectory() as td:
+        test_links_resolve_against_the_url_a_page_is_served_at(Path(td))
     test_review_page_publishes_nothing_unprovenanced()
     with tempfile.TemporaryDirectory() as td:
         test_the_review_gallery_clears_on_three_conditions_and_nothing_less(Path(td))

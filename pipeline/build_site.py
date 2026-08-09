@@ -2025,8 +2025,8 @@ def render_trials() -> str:
             pos = poster(mp4, f"trials/posters/{plat}-{mp4.stem}.jpg")
             dur = dur_label(mp4_seconds(mp4))
             players += (f'<figure class="phone"><video controls playsinline preload="none"'
-                        f'{poster_attr(pos, "../")} '
-                        f'src="{html.escape(plat)}/{html.escape(mp4.name)}"></video>'
+                        f'{poster_attr(pos, "/")} '
+                        f'src="/trials/{html.escape(plat)}/{html.escape(mp4.name)}"></video>'
                         f'<figcaption>shot {html.escape(str(meta.get("shot", mp4.stem)))}'
                         f'{" · " + dur if dur else ""}<br>'
                         f'{html.escape(str(meta.get("model", "model?")))}</figcaption></figure>')
@@ -2139,6 +2139,26 @@ def render_review() -> str:
     outdir.mkdir(parents=True, exist_ok=True)
     withheld, missing = [], []
 
+    def url(rel: str) -> str:
+        """The URL a browser must ask for, which is NOT the path on disk.
+
+        This page lives at `_site/review/index.html` and is SERVED at `/review`
+        — `vercel.json` sets `cleanUrls: true, trailingSlash: false`, and
+        `/review/` 308-redirects to the slashless form, so there is no version
+        of this URL with a directory in it. A relative `checklist/x.mp4`
+        therefore means `/checklist/x.mp4` and 404s, which is what the founder
+        saw on 2026-08-09: "images are broken". Every clip, poster, sheet and
+        provenance link on this page had the same defect, the images only made
+        it visible because there are now thirty of them.
+
+        Root-absolute is the fix that does not depend on how the host feels
+        about trailing slashes. The cost, stated because it is real: opening
+        `_site/review/index.html` over `file://` no longer loads media, since
+        `/review/…` is the filesystem root there. Serve the directory
+        (`python3 -m http.server -d _site`) to preview it locally.
+        """
+        return "/review/" + html.escape(rel)
+
     def still_for(src: Path):
         """The pixels this clip actually holds, or NO poster at all.
 
@@ -2236,7 +2256,7 @@ def render_review() -> str:
         if not side:
             return ""
         href = (Path(rel).parent / side.name).as_posix()
-        return f' · <a href="{html.escape(href)}">provenance</a>'
+        return f' · <a href="{url(href)}">provenance</a>'
 
     # ---- HIS MORNING CHECKLIST ----------------------------------------------
     # Why this sits ABOVE the cuts rather than under them. On the evening of
@@ -2348,7 +2368,7 @@ def render_review() -> str:
             rel, pos = got
             n_clips += 1
             cells += (f'<figure><video controls playsinline preload="none" muted'
-                      f'{poster_attr(pos, "../")} src="{html.escape(rel)}"></video>'
+                      f'{poster_attr(pos, "/")} src="{url(rel)}"></video>'
                       f'<figcaption><span class="k">{html.escape(str(c.get("label", "")))}</span>'
                       f'{html.escape(str(c.get("note", "")))}{rec_link(rel)}</figcaption></figure>')
         clips_html = f'<div class="two">{cells}</div>' if cells else ""
@@ -2365,8 +2385,8 @@ def render_review() -> str:
             if not rel:
                 continue
             n_sheets += 1
-            sheets += (f'<figure><a href="{html.escape(rel)}" target="_blank" '
-                       f'rel="noopener"><img src="{html.escape(rel)}" loading="lazy" '
+            sheets += (f'<figure><a href="{url(rel)}" target="_blank" '
+                       f'rel="noopener"><img src="{url(rel)}" loading="lazy" '
                        f'alt="{html.escape(str(s.get("alt", s.get("label", "candidate frames"))))}">'
                        f'</a><figcaption><span class="k">{html.escape(str(s.get("label", "")))}</span>'
                        f'{html.escape(str(s.get("note", "")))}{rec_link(rel)}</figcaption></figure>')
@@ -2390,7 +2410,7 @@ def render_review() -> str:
             if not rel:
                 continue
             auds += (f'<figure><audio controls preload="none" '
-                     f'src="{html.escape(rel)}"></audio>'
+                     f'src="{url(rel)}"></audio>'
                      f'<figcaption><span class="k">{html.escape(str(a.get("label", "")))}</span>'
                      f'{html.escape(str(a.get("note", "")))}{rec_link(rel)}</figcaption></figure>')
         audio_html = f'<div class="voices">{auds}</div>' if auds else ""
@@ -2536,8 +2556,8 @@ def render_review() -> str:
             f'<span class="chip hot">{ver}</span></h2>'
             f'{status}{CUT_STAMP}'
             f'<div class="split"><div class="film">'
-            f'<video controls playsinline preload="metadata"{poster_attr(pos, "../")} '
-            f'src="{html.escape(rel)}"></video>'
+            f'<video controls playsinline preload="metadata"{poster_attr(pos, "/")} '
+            f'src="{url(rel)}"></video>'
             f'<p class="facts">assembled {html.escape(str(cut.get("date", "")))} · '
             f'{html.escape(str(cut.get("beats", "")))}'
             f'{" · " + dur if dur else ""} · {mb:.1f} MB{rec_link(rel)}</p>'
@@ -2570,7 +2590,7 @@ def render_review() -> str:
                     (str(p.get("left_label", left_label)), left, p.get("left_note", "")),
                     (str(p.get("right_label", right_label)), right, p.get("right_note", ""))):
                 cells += (f'<figure><video controls playsinline preload="none" muted'
-                          f'{poster_attr(pos, "../")} src="{html.escape(rel)}"></video>'
+                          f'{poster_attr(pos, "/")} src="{url(rel)}"></video>'
                           f'<figcaption><span class="k">{html.escape(label)}</span>'
                           f'{html.escape(str(note))}{rec_link(rel)}</figcaption></figure>')
             why = (f'<p class="why"><strong>{html.escape(str(p.get("why_label", "Why:")))}'
@@ -2587,7 +2607,7 @@ def render_review() -> str:
                         f'{html.escape(str(fn.get("label", "for reference")))}</summary>'
                         '<div class="drawer-body"><div class="two">'
                         f'<figure><video controls playsinline preload="none" muted'
-                        f'{poster_attr(pos, "../")} src="{html.escape(rel)}"></video>'
+                        f'{poster_attr(pos, "/")} src="{url(rel)}"></video>'
                         f'<figcaption><span class="k">not an option</span>'
                         f'{html.escape(str(fn.get("note", "")))}{rec_link(rel)}'
                         '</figcaption></figure></div></div></details>')
@@ -2691,13 +2711,65 @@ def render_feed(genomes: list) -> str:
 LINK_RE = re.compile(r'(?:href|src|poster)="([^"]+)"')
 
 
+def served_base(rel: str) -> str:
+    """The URL directory a BROWSER resolves this page's relative links against.
+
+    THE HOLE THIS CLOSES, found 2026-08-09 when the founder opened /review and
+    said "images are broken". This gate resolved every href against the page's
+    directory ON DISK — `_site/review/index.html` + `review-assets/x.jpg` →
+    `_site/review/review-assets/x.jpg`, which exists, so the build went green
+    while every image on the deployed page 404'd.
+
+    The filesystem is not what the browser uses. `vercel.json` sets
+    `cleanUrls: true` and `trailingSlash: false`, so `_site/review/index.html`
+    is served at **`/review`** — and `https://banyan.city/review/` 308-redirects
+    TO the slashless form, so a reader cannot opt out. A page at `/review` has
+    base `/`, not `/review/`, and `review-assets/x.jpg` therefore means
+    `/review-assets/x.jpg`. Nothing on disk is wrong; the URL is.
+
+    So: `<dir>/index.html` is served one level UP from where it sits, and every
+    other page is served where it sits. Get that right and the checker sees what
+    a visitor sees. `/trials` had been broken the same way for as long as it has
+    existed, and this function is why it is not any more.
+    """
+    p = Path(rel)
+    if p.name == "index.html" and p.parent != Path("."):
+        return p.parent.parent.as_posix().strip(".")
+    return p.parent.as_posix().strip(".")
+
+
+def resolve_url(base: str, target: str) -> str:
+    """`target` from a page served under `base`, the way a browser does it.
+
+    Root-clamped on purpose: a browser cannot walk above `/`, so `../index.html`
+    from `/review` is `/index.html` and not an escape from the site. Doing this
+    in URL space rather than with Path arithmetic is what lets the checker accept
+    the nav links (which are correct) while rejecting the media links (which were
+    not) — path arithmetic calls both of them escapes.
+    """
+    parts = target.split("/") if target.startswith("/") else \
+        (base.split("/") if base else []) + target.split("/")
+    out: list = []
+    for seg in parts:
+        if seg in ("", "."):
+            continue
+        if seg == "..":
+            if out:
+                out.pop()
+            continue
+        out.append(seg)
+    return "/".join(out)
+
+
 def check_links(pages: list) -> list:
     """Every local reference in EVERY published page must resolve inside _site.
 
     The first version of this gate only checked the pages this module writes
     in-process, and it green-lit a build where 138 lab images and 15 shot-board
     receipts 404'd — a green self-check on a broken site is worse than none.
-    Now it sweeps the whole output tree: href, src, and poster alike.
+    Now it sweeps the whole output tree: href, src, and poster alike, each one
+    resolved against the URL the page is SERVED at rather than the directory it
+    is stored in. See served_base for what that distinction cost.
     """
     for rel in pages:
         if not (OUT / rel).exists():
@@ -2705,14 +2777,15 @@ def check_links(pages: list) -> list:
     broken = []
     for f in sorted(OUT.rglob("*.html")):
         rel = f.relative_to(OUT).as_posix()
+        base = served_base(rel)
         for href in LINK_RE.findall(f.read_text(errors="replace")):
             if href.startswith(("http://", "https://", "#", "mailto:", "data:", "//")):
                 continue
             target = href.split("#")[0].split("?")[0]
             if not target:
                 continue
-            if not (f.parent / target).exists():
-                broken.append(f"{rel} → {href}")
+            if not (OUT / resolve_url(base, target)).exists():
+                broken.append(f"{rel} (served at /{base}) → {href}")
     return broken
 
 
