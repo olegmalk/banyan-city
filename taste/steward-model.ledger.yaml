@@ -919,3 +919,250 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+# Records 28-31 — the four single-subject redraw ONE SAMPLEs of 2026-08-09, all
+# rendered in one sequential pass and all scored before he saw anything. Two
+# carry a provisional pick, two are refusals with a diagnosis. They are logged
+# together because the batch is a controlled comparison as well as four rounds:
+# b01 and b10 differ in HOW they negate people, and that difference is the most
+# useful thing in the set.
+- id: ep2-b01-r6-sample
+  date: 2026-08-09
+  subject: "node 002b beat 01 — cold open, round 6, grass-height framing + person binding"
+  kind: still
+  candidates: [b01-r6-s0, b01-r6-s1, b01-r6-s2, b01-r6-s3]
+  address_key: "sheet LABELED-b01-r6.png; frames at genomes/sapling/nodes/002b-first-citizen/takes/stills/01-cold-open-r6-sN.png, sidecars beside them"
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  scores:
+    b01-r6-s0: {A1: -1, A2: 1, A3: 0, A4: 0, A5: 1, A6: 1, A7: -2}
+    b01-r6-s1: {A1: -1, A2: 1, A3: -1, A4: -1, A5: 1, A6: 1, A7: -2}
+    b01-r6-s2: {A1: -2, A2: 1, A3: -2, A4: -2, A5: 1, A6: 1, A7: -2}
+    b01-r6-s3: {A1: 0, A2: 1, A3: -2, A4: -1, A5: 1, A6: 1, A7: 1}
+  vetoed: [b01-r6-s0, b01-r6-s1, b01-r6-s2, b01-r6-s3]
+  totals: {}
+  predicted_verdict: reject_all
+  predicted_flip_to: b01-r6-s3
+  predicted_objection: >
+    Still too tall in three of them, and what is the white block in the fourth.
+    Also the fig is still not there.
+  confidence: 0.75
+  reasoning: >
+    TWO OF THE THREE CHANGES WORKED AND THE BEAT STILL HAS NO PLATE.
+
+    PERSON BINDING: COMPLETE SUCCESS, 0 people in 4 of 4, against 3 of 4 in r5.
+    This confirms record 26's boundary from the other side — the same four terms
+    that failed on beat 13 bind perfectly here, and the difference is that beat
+    13's subject clause names a humanoid and this one names a plant. The rule is
+    now: `no girl, no boy, no child, no person` is sufficient on a beat whose
+    subject is not a character, and insufficient on one whose subject is.
+
+    GRASS-HEIGHT FRAMING: HALF SUCCESS. All four now have a ground plane, real
+    short grass and a sunrise horizon — the environment is the most consistent
+    this beat has ever produced and A2/A5/A6 are +1 across the set. But the
+    framing only fixed WHERE the plant stands, not HOW BIG it is. s0 runs a
+    hairline stem up 85% of the frame; s1 runs it straight out of the top edge,
+    so `whole plant in frame` fails outright; s2 REPEATS r5's exact failure and
+    hangs the plant DOWNWARD from the top edge like a vine.
+
+    s3 IS THE FIRST FRAME IN SIX ROUNDS INSIDE HIS CEILING. A small two-leaf
+    seedling sitting just above the grass line, maybe a fifth of the frame,
+    which is what `a tiny 40cm seedling, whole plant in frame` has been asking
+    for since round 1 — and it is ruined by a tall pale rectangular column
+    filling the right third of the picture, an unexplained architectural slab in
+    a field the script says is empty. So A7 finally goes positive and A3 goes to
+    -2 on the same frame. It is vetoed, and it is also the most informative
+    frame in the set: it proves the wording CAN produce the scale he wants.
+
+    THE FIG IS IN 0 OF 4 AGAIN, which is now 0 of 20 across six rounds. s1 has a
+    small pink fruit LYING IN THE GRASS, detached from the plant and the wrong
+    colour. The record already concluded this needs a lever outside the prompt
+    and this round is more evidence, not a new problem.
+
+    NEXT LEVER, and it is not another synonym: three of four failures are about
+    the stem's LENGTH, and `40cm` plus `whole plant in frame` plus `short grass`
+    have all now failed to bound it. The remaining prompt-side idea is to name
+    the grass as the measure directly rather than as scenery — the plant only as
+    tall as the grass around it — which is a different claim from `rising well
+    above the grass`, the clause this round took from b15. That clause is
+    probably the thing making it tall.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep1-b03-r4-sample
+  date: 2026-08-09
+  subject: "node 001 beat 03 — deploy succeeded, round 4, beat 1's screen wording copied verbatim"
+  kind: still
+  candidates: [b03-r4-s0, b03-r4-s1, b03-r4-s2, b03-r4-s3]
+  address_key: "sheet LABELED-b03-r4.png; frames at genomes/sapling/nodes/001-capability-inventory/takes/stills/03-deploy-succeeded-r4-sN.png, sidecars beside them"
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  scores:
+    b03-r4-s0: {A2: 1, A3: -2, A4: -1, A5: 0}
+    b03-r4-s1: {A2: 1, A3: 0, A4: -1, A5: 1}
+    b03-r4-s2: {A2: 1, A3: -1, A4: 0, A5: 1}
+    b03-r4-s3: {A2: 1, A3: -1, A4: 0, A5: 1}
+  vetoed: [b03-r4-s0, b03-r4-s1, b03-r4-s2, b03-r4-s3]
+  totals: {}
+  predicted_verdict: reject_all
+  predicted_flip_to: b03-r4-s3
+  predicted_objection: "the screens are empty, and there is an anime girl on one of them again"
+  confidence: 0.80
+  reasoning: >
+    THE ROUND'S HYPOTHESIS WAS RIGHT AND THE FIX TRADED ONE DEFECT FOR ANOTHER.
+    Copying beat 1's approved `one glowing monitor with code` verbatim KILLED THE
+    GLYPH JUNK: zero gibberish text in 4 of 4, against the sprayed nonsense that
+    sank r1, r2 and r3. The neon vaporwave room is gone too, and all four are
+    unmistakably domestic — warm lamp, mug, houseplant, lived-in bedroom corner.
+    Those two instructions of his are now reliably satisfied.
+
+    But the screens are BLANK. s1, s2 and s3 are flat pink-lavender gradients
+    with nothing on them; s2 has a stray pale triangle. Nothing in any of them
+    says a machine just finished a deploy. And s0 put an ANIME FACE back on the
+    monitor with `no girl, no boy, no person, no wallpaper` all verified in the
+    negative — the same failure r3 was rejected for, at 1 of 4 instead of 2 of 4.
+
+    THE DIAGNOSIS IS THAT THE WORDING IS SCALE-DEPENDENT, and this is the part
+    worth keeping. Beat 1's five words work at BEAT 1'S DISTANCE: there the
+    monitor is a small bright rectangle behind a pair of hands, and `one glowing
+    monitor with code` is all the model needs because the screen is a glow. Beat
+    3 is a CLOSE-UP with the screen filling the frame, and at that size those
+    same five words leave a large empty rectangle in the middle of the
+    composition with no instruction in it — so the model fills it with a gradient
+    or, once in four, with the thing it most likes putting on a screen. The
+    close-up (his instruction) and abstract glow (the house rule) are in direct
+    tension, and no wording resolves both while the screen is the whole frame.
+
+    So the next round chooses rather than rewords, and the choice is his, not the
+    steward's — either the lens comes back out so the screen is small enough to
+    be a glow, or the plate stops trying to be a terminal at all and the
+    deploy-succeeded card that POST already burns supplies everything the beat
+    needs from the rectangle. The second is cheaper and is consistent with how
+    this show already draws its terminal cards. Neither is a taste-free call.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep1-b10-r4-provisional
+  date: 2026-08-09
+  subject: "node 001 beat 10 — sense, round 4, root-map leading the prompt"
+  kind: still
+  candidates: [b10-r4-s0, b10-r4-s1, b10-r4-s2, b10-r4-s3]
+  address_key: "sheet LABELED-b10-r4.png; frames at genomes/sapling/nodes/001-capability-inventory/takes/stills/10-sense-r4-sN.png, sidecars beside them"
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: b10-r4-s2
+  scores:
+    b10-r4-s0: {A1: 0, A2: 0, A3: -2, A4: -1, A5: 1}
+    b10-r4-s1: {A1: -1, A2: 0, A3: -2, A4: -2, A5: 1}
+    b10-r4-s2: {A1: 1, A2: 1, A3: 1, A4: 1, A5: 1}
+    b10-r4-s3: {A1: -2, A2: 0, A3: -1, A4: 0, A5: 1}
+  vetoed: [b10-r4-s0, b10-r4-s1, b10-r4-s3]
+  totals: {}
+  predicted_verdict: pick_holds
+  predicted_flip_to: null
+  predicted_objection: >
+    If he rejects it, it is because the roots read as a small dark tangle rather
+    than the root-MAP the script describes, or because he wants the water read
+    more clearly.
+  confidence: 0.65
+  reasoning: >
+    LEADING WITH THE ROOT-MAP WORKED, AND IT IS THE FIRST TIME THIS BEAT HAS HAD
+    ROOTS IN FOUR ROUNDS. s2 shows dark roots spreading out from the stem base
+    below the soil line, in damp earth, with grass and warm morning light behind
+    — every element the 2026-08-08 rejection said was load-bearing (the on-screen
+    card reads `SENSE roots / air / vibration`; the script's image line is a
+    root-map; the node's R1 is the demonstration of the sense). The soil-line
+    lens that r3-s2 won is preserved, so 10 and 14 still read as different
+    distances on different subjects. No architecture in any of the four, so the
+    post-and-fence failure is fixed outright.
+
+    Confidence is 0.65 rather than higher for one honest reason: the roots are
+    a compact tangle at the stem base rather than the spreading MAP with `veins
+    of dark water` and `mineral glitter` that node.md describes. It satisfies
+    the requirement he rejected r3 for; it does not obviously satisfy the
+    sentence in the script. That is exactly the kind of gap he has ruled against
+    before, and it is why this is a prediction rather than an assumption.
+
+    AND THE BATCH PRODUCED A FINDING WORTH MORE THAN THE PICK. s0 has a human
+    HAND and forearm reaching into frame; s1 has a bare human FOOT standing on
+    the soil. `no humans` was verified lifted into the negative on the real path,
+    and the model drew people anyway — 2 of 4. Compare beat 01 r6, rendered in
+    this same pass, same model, same recipe: it used `no girl, no boy, no child,
+    no person` and got 0 people in 4 of 4. The two beats are a controlled
+    comparison and the conclusion is that THE GENERIC PLURAL DOES NOT BIND AND
+    THE SPECIFIC SINGULAR NOUNS DO. A plausible mechanism is vocabulary
+    frequency — `girl`, `boy`, `child`, `person` are common caption tokens with
+    strong embeddings and `humans` is not — and a second is that both failures
+    here are BODY PARTS, which a whole-body noun may not reach at all. Every
+    beat in the genome that relies on `no humans` alone is now suspect, and the
+    cheap fix is the beat 01 block plus explicit parts.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep2-b12-r4-provisional
+  date: 2026-08-09
+  subject: "node 002b beat 12 — related, round 4, mascot-simple removed + beat 01's negative block"
+  kind: still
+  candidates: [b12-r4-s0, b12-r4-s1, b12-r4-s2, b12-r4-s3]
+  address_key: "sheet LABELED-b12-r4.png; frames at genomes/sapling/nodes/002b-first-citizen/takes/stills/12-related-r4-sN.png, sidecars beside them"
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: b12-r4-s2
+  scores:
+    b12-r4-s0: {A1: -1, A2: 1, A3: 1, A4: -1, A5: 1, A6: 1}
+    b12-r4-s1: {A1: -1, A2: 1, A3: 0, A4: -1, A5: 1, A6: 1}
+    b12-r4-s2: {A1: 0, A2: 1, A3: 1, A4: 1, A5: 1, A6: 1}
+    b12-r4-s3: {A1: -1, A2: 1, A3: 1, A4: 0, A5: 1, A6: 1}
+  vetoed: [b12-r4-s0, b12-r4-s1, b12-r4-s3]
+  totals: {}
+  predicted_verdict: pick_holds
+  predicted_flip_to: b12-r4-s3
+  predicted_objection: >
+    If he rejects it, it is on continuity — these are long pointed leaves and the
+    sapling elsewhere in the show has broad rounded ones — or because he wants
+    the two leaves the line describes rather than a spray of five.
+  confidence: 0.70
+  reasoning: >
+    THE HYPOTHESIS WAS RIGHT AND IT WAS CHEAP TO TEST. r3 drew a large pink RIPE
+    FRUIT in 4 of 4 on a beat whose own text negates fruit; r4 removed
+    `mascot-simple` and added beat 01's `no chibi / no mascot / no creature / no
+    face` block, and the fruit is gone in 4 of 4. So was the face on s0's fruit,
+    and so is s2's city skyline. The reading that survives is the one the round
+    committed to in writing beforehand: `no fruit` was already lifting in r3 and
+    being ignored, because `mascot-simple` was importing a whole mascot
+    COMPOSITION — face and fruit together — that the negation of one noun could
+    not dismantle. Removing the word that summons the composition beat the
+    negation of its parts. That is a transferable result for beats 02 and 03,
+    which still carry `mascot-simple`.
+
+    s2 is the pick: several large backlit green leaves filling the left and
+    centre with sun and drifting cloud behind them, which is the beat's own
+    sentence — clouds moving behind still leaves, tight, no trunk base, no
+    ground, no other character. s0, s1 and s3 are all clean of the r3 defects but
+    are SKY pictures with leaves at the edge, and this beat exists to be the tree
+    holding still while the sky moves, so a frame where the sky is the subject
+    inverts it.
+
+    A1 is 0 rather than +1 on the pick and that is the risk: these are long
+    lanceolate leaves, and the sapling in b01's frames and the approved b15 plate
+    has broader rounded cotyledons. It is a close-up of leaves with no stem or
+    plant silhouette to anchor continuity, so the mismatch is arguable rather
+    than glaring — but it is the axis to watch. Leaf COUNT is deliberately not
+    scored: he put it out of scope on 2026-08-08 (`dont overthink the leafs on
+    it`) and four wordings have failed to make this model count.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null

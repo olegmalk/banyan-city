@@ -351,6 +351,42 @@ carries labels and seeds only — no favourite, no ordering (R4).
 A tiny 40cm seedling standing in short grass, its sturdy curved stem rising well above the grass, two oversized cotyledon leaves, one small round green fruit hanging from the stem, whole plant in frame, wide shot, peach and gold sunrise sky, no girl, no boy, no child, no person, no chibi, no mascot, no creature, no face, no branches, no night sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
+**r6 RENDERED AND REFUSED — two of the three changes worked and the beat still has
+no plate** (ledger record 28, `reject_all`, 0.75; sheet `LABELED-b01-r6.png`).
+
+**Person binding: complete success, 0 people in 4 of 4** against three of four in
+r5. Taken with record 26, the boundary is now measured from both sides and is worth
+stating as a rule for every other beat: **`no girl, no boy, no child, no person`
+binds on a beat whose subject is not a character, and does not bind on one whose
+subject clause names a humanoid.** Beat 13 is the second case; this is the first.
+
+**Grass-height framing: half. It fixed WHERE the plant stands and not HOW BIG it
+is.** All four have a real ground plane, short grass and a sunrise horizon, and
+A2/A5/A6 are +1 across the set — the most consistent environment this beat has
+produced. But s0 runs a hairline stem up 85% of the frame, s1 runs it straight out
+of the top edge so `whole plant in frame` fails outright, and s2 repeats r5's exact
+vine failure and hangs the plant DOWNWARD from the top.
+
+**s3 is the first frame in six rounds inside his ceiling** — a small two-leaf
+seedling sitting just above the grass at about a fifth of frame height, which is
+what `a tiny 40cm seedling, whole plant in frame` has been asking for since round 1
+— and it is ruined by a tall pale rectangular column filling the right third, an
+unexplained slab in a field the script calls empty. A7 finally goes positive and A3
+goes to -2 on the same frame. Vetoed, and still the most useful frame in the set:
+it proves this wording CAN reach the scale he wants.
+
+**The fig is in 0 of 4, which is 0 of 20 across six rounds** (s1 has a pink fruit
+lying detached in the grass). More evidence for a conclusion the record already
+reached, not a new problem.
+
+**The next lever is not another synonym.** Three of the four failures are about the
+stem's LENGTH, and `40cm`, `whole plant in frame` and now `short grass` have all
+failed to bound it. The one prompt-side idea left is that **`rising well above the
+grass` — the clause this round imported from b15 — is itself what makes it tall**,
+and that naming the grass as the measure (*no taller than the grass around it*)
+says the opposite thing. That is a different claim from the one b15 proved, so it
+is r7's single variable if there is an r7.
+
 ## Beat 02 — THE SPRINT (0:06–0:11) ⬜ needs footage
 
 No dialogue — pure action. Camera wide so the dive reads.
@@ -477,6 +513,33 @@ and the next lever is the count tag, not more negations.
 ```
 Extreme close-up of two oversized green cotyledon leaves of a tiny seedling filling the frame, utterly still, peach and gold morning sky and drifting blurred clouds behind them, no trunk, no ground, no fruit, no chibi, no mascot, no creature, no face, no other character, no city, no buildings, very slow push-in, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
+
+**r4 RENDERED, THE HYPOTHESIS HELD, AND `b12-r4-s2` IS A PROVISIONAL PICK** (ledger
+record 31, `pick_holds`, 0.70; sheet `LABELED-b12-r4.png`). PROVISIONAL — a
+steward prediction of his taste logged before he saw it. He has ratified nothing.
+
+**The ripe fruit is gone in 4 of 4**, against 4 of 4 carrying it in r3. So is the
+face s0 put on it and so is s2's city skyline. The reading this round committed to
+in writing beforehand is the one that survives: `no fruit` was already lifting into
+the negative in r3 and being ignored, because **`mascot-simple` was importing a
+whole mascot COMPOSITION — face and fruit together — that negating one noun could
+not dismantle. Removing the word that summons the composition beat negating its
+parts.**
+
+**That result transfers, and it should be spent: beats 02 and 03 still carry
+`mascot-simple`.** It is the correct word there — it modifies a sapling the goblin
+hides *behind*, so it is not the subject — but this beat carried it for the same
+reason and it took over anyway. Worth a look before either is redrawn.
+
+s2 is the pick: several large backlit green leaves filling the left and centre with
+sun and drifting cloud behind, which is this beat's own sentence. s0, s1 and s3 are
+clean of every r3 defect but are SKY pictures with leaves at the edge, and the beat
+exists to be the tree holding still while the sky moves — a frame where the sky is
+the subject inverts it. **The risk on the pick is A1, scored 0:** these are long
+lanceolate leaves and the sapling elsewhere in the show has broader rounded
+cotyledons. With no stem or silhouette in a close-up the mismatch is arguable
+rather than glaring, but it is the axis to watch. Leaf COUNT is deliberately not
+scored — out of scope since 2026-08-08.
 
 ## Beat 13 — THE SHADE (1:00–1:04) ⬜ needs footage
 

@@ -1,0 +1,32 @@
+# Still provenance (7.2), written AT RENDER TIME by render_redraw.py
+# on the rtx5090 (C:\banyan-farm\redraw-0809).
+# The negative below is what the model actually saw. The recipe's own
+# negative, before this script's deliberate removal, was:
+#   photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, mature tree, large tree, tall tree, thick trunk, full canopy, forest, bush, shrubbery, post, fence, pole, building, lake, water surface, dark background, black void, cave, humans, photorealism
+#   NEGWARN: !! negative prompt over CLIP's 77-token budget; deduplicated: text; DROPPED: realistic skin texture, jpeg artifacts
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+shot_beat: 10
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20262729
+seeds_in_batch: 4
+task: 001-b10-r4-1786273362
+queue_entry: ep1-b10-sense-r4-1786300000
+render_round: r4
+candidate_set: r4
+negative_terms_removed: tall tree
+recipe_inherited_from: >-
+  node 001, takes/stills/15-something-s-coming-r3-s1.png — the ONE SAMPLE the founder passed on 2026-08-08. Model, size, steps, cfg, seed rule and the one-term negative removal come from that frame's recipe. The prompt is this beat's shots.md entry as of the round note committed with this sidecar.
+wall_seconds: 9
+cost_usd: 0
+provisional: >-
+  PROVISIONAL. A steward-rendered CANDIDATE, not a pick and not canon. Scored against taste/steward-model.v1 and logged in taste/steward-model.ledger.yaml BEFORE the founder saw it. Ground truth is the founder (R4); he has ratified nothing here. Never takes a canon filename, is not published, not posted, and not assembled into an episode.
+note: |-
+  round 4. r3 was rejected on all four (ledger record 4) and it split cleanly. THE LENS NOTE WAS ANSWERED AND IS BANKED: b10-r3-s2 is genuinely lower and closer than beat 14, so the `10 and 14 are very nearly the same picture` complaint is settled and this round preserves that framing. THE ROOTS ARE STILL NOT THERE in 0 of 4 — the same rejection recorded on 2026-08-08 — and three of four stood architecture, a post or a fence, in a wild field. THIS ROUND LEADS WITH THE ROOT-MAP, which is what should have been tried first: `pale roots visible in damp soil` sat sixth of eight clauses, behind `plant focus` and the stem, and this checkpoint draws the first noun and treats the tail as decoration. Episode 2's beat 13 is learning the same lesson from the other direction, and the difference is why this is worth a round here when subject-position failed there: on beat 13 the two nouns FUSE, because a goblin and a plant can merge into one creature; roots and soil cannot fuse with anything, they were simply ABSENT, and absence is what subject position fixes. node.md's own image line (`an underground root-map, veins of dark water, mineral glitter`) becomes the opening clause in the script's own words. WHAT THE ROUND IS CAREFUL NOT TO UNDO: the 2026-08-07 rewrite deliberately brought the camera UP out of the ground because macro-underground framing resolved as `a sapling in the middle of a long body of water, with a blank dark background`. So the word `underground` is deliberately NOT used; short grass stays above the frame, warm morning light on it, and no dark background/no black void/no cave stay negated. `no post, no fence, no pole, no building` added. MEASUREMENT CAUGHT A SECOND FAULT: shortening `one slender sapling's thin stem` to `one slender stem` silently removed every scale negative, because sd_prompt attaches them only when a _SMALL word is present and `sapling` was carrying that — a root close-up with nothing forbidding a thick trunk or a forest above it. `seedling` goes back in as the trigger and restores all eight. Rings remain a POST overlay.
+prompt: |-
+  root-map of pale spreading roots in dark damp soil, mineral glitter, veins of dark water, one slender seedling stem rising into short grass, very low shot at the soil line, warm morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, mature tree, large tree, thick trunk, full canopy, forest, bush, shrubbery, post, fence, pole, building, lake, water surface, dark background, black void, cave, humans, photorealism

@@ -101,6 +101,39 @@ on, so the check is worth making every round.
 tight close-up of one glowing monitor with code, filling the frame, warm desk lamp and coffee mug rim at the frame edge, houseplant, lived-in bedroom corner behind, night, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No laboratory, no server room, no lab equipment, no person, no girl, no boy, no wallpaper, no neon, no poster. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
+**r4 RENDERED AND REFUSED. The hypothesis was right and the fix traded one defect
+for another** (ledger record 29, `reject_all`, 0.80; sheet `LABELED-b03-r4.png`).
+
+**Copying beat 1's wording killed the glyph junk: zero gibberish in 4 of 4**,
+against the sprayed nonsense that sank r1, r2 and r3. The neon vaporwave room is
+gone too and all four are unmistakably domestic — warm lamp, mug, houseplant,
+lived-in bedroom corner. Those two instructions of his are now reliably satisfied
+and should not be re-litigated.
+
+**But the screens are blank.** s1, s2 and s3 are flat pink-lavender gradients with
+nothing on them; s2 has a stray pale triangle. Nothing in any of them says a machine
+just finished a deploy. And **s0 put an anime face back on the monitor** with `no
+girl, no boy, no person, no wallpaper` all verified in the negative — the r3 failure
+again, at 1 of 4 instead of 2 of 4.
+
+**THE DIAGNOSIS: BEAT 1'S WORDING IS SCALE-DEPENDENT, and that is why copying it
+verbatim could not work here.** Those five words succeed at BEAT 1'S DISTANCE,
+where the monitor is a small bright rectangle behind a pair of hands and the screen
+is genuinely just a glow. Beat 3 is a CLOSE-UP with the screen filling the frame,
+and at that size the same five words leave a large empty rectangle in the middle of
+the composition with no instruction inside it — so the model fills it with a
+gradient, or once in four with the thing it most likes putting on a screen.
+**His close-up and the house's abstract-glow rule are in direct tension, and no
+wording resolves both while the screen is the whole frame.**
+
+**So round 5 chooses instead of rewording, and the choice is the founder's.**
+Either the lens comes back out until the screen is small enough to be a glow —
+which walks back his 2026-08-08 instruction and needs him to say so — or the plate
+stops trying to be a terminal at all, and the deploy-succeeded card that POST
+already burns supplies everything the rectangle has to carry. The second is
+cheaper, needs no new wording, and matches how this show already draws its terminal
+cards. Neither is a steward call.
+
 **REJECTED 2026-08-08 (founder, R4): ALL EIGHT — `b03-r1-s0..s3` AND `b03-r2-s0..s3`.**
 Both rounds, the whole set. **NEW DIRECTION, his: make it a CLOSE-UP** — the third
 instruction on this beat, and it is a lens note rather than a content note, so it
@@ -379,6 +412,37 @@ founder-rejected rounds proved the model cannot draw them.
 ```
 root-map of pale spreading roots in dark damp soil, mineral glitter, veins of dark water, one slender seedling stem rising into short grass, very low shot at the soil line, warm morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No post, no fence, no pole, no building, no lake, no water surface, no dark background, no black void, no cave, no humans. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
+
+**r4 RENDERED. LEADING WITH THE ROOT-MAP WORKED, and `b10-r4-s2` is a PROVISIONAL
+PICK** (ledger record 30, `pick_holds`, 0.65; sheet `LABELED-b10-r4.png`).
+PROVISIONAL — a steward prediction of his taste, logged before he saw it, ratified
+by nobody.
+
+**This beat has roots for the first time in four rounds.** s2 shows dark roots
+spreading from the stem base below the soil line in damp earth, grass and warm
+morning light behind — every element the 2026-08-08 rejection called load-bearing.
+The soil-line lens r3-s2 won is preserved, so 10 and 14 still read as different
+distances on different subjects, and no frame in the set stands architecture in the
+field, so the post-and-fence failure is fixed outright.
+
+Confidence is 0.65 for one honest reason: the roots are a compact tangle at the
+stem base rather than the spreading MAP with `veins of dark water` and `mineral
+glitter` that `node.md` describes. It satisfies what he rejected r3 for; it does not
+obviously satisfy the sentence in the script.
+
+**AND THE BATCH PRODUCED A FINDING BIGGER THAN THE PICK, which every beat in the
+genome should be checked against. `no humans` DOES NOT BIND.** s0 has a human hand
+and forearm reaching into frame; s1 has a bare human foot standing on the soil —
+2 of 4, with `humans` verified lifted into the negative on the real path. Beat 01
+of node 002b was rendered **in the same pass, same model, same recipe**, using `no
+girl, no boy, no child, no person` instead, and returned **0 people in 4 of 4**.
+The two beats are a controlled comparison and the conclusion is that **the generic
+plural does not bind and the specific singular nouns do.** Two plausible mechanisms,
+both cheap to act on: `girl`, `boy`, `child` and `person` are common caption tokens
+with strong embeddings while `humans` is not, and both failures here are BODY PARTS,
+which a whole-body noun may not reach at all. **Every beat relying on `no humans`
+alone is now suspect**; the fix is beat 01's block plus explicit parts (`no hand,
+no hands, no fingers, no foot, no feet, no arm, no leg`), and it is r5's change here.
 
 **REJECTED 2026-08-08 — the founder DELEGATED this one and the steward decided it
 against the script, not against taste.** His note on `b10-r1-s3` was: *"actually has

@@ -1,0 +1,32 @@
+# Still provenance (7.2), written AT RENDER TIME by render_redraw.py
+# on the rtx5090 (C:\banyan-farm\redraw-0809).
+# The negative below is what the model actually saw. The recipe's own
+# negative, before this script's deliberate removal, was:
+#   photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, mature tree, large tree, tall tree, thick trunk, full canopy, forest, bush, shrubbery, girl, boy, child, person, chibi, mascot, creature, face, branches, night sky, photorealism
+#   NEGWARN: !! negative prompt over CLIP's 77-token budget; deduplicated: text; DROPPED: realistic skin texture, jpeg artifacts
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+shot_beat: 1
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20260720
+seeds_in_batch: 4
+task: 002b-b01-r6-1786273272
+queue_entry: ep2-b01-cold-open-redraw-r6-1786300000
+render_round: r6
+candidate_set: r6
+negative_terms_removed: tall tree
+recipe_inherited_from: >-
+  node 001, takes/stills/15-something-s-coming-r3-s1.png — the ONE SAMPLE the founder passed on 2026-08-08. Model, size, steps, cfg, seed rule and the one-term negative removal come from that frame's recipe. The prompt is this beat's shots.md entry as of the round note committed with this sidecar.
+wall_seconds: 10
+cost_usd: 0
+provisional: >-
+  PROVISIONAL. A steward-rendered CANDIDATE, not a pick and not canon. Scored against taste/steward-model.v1 and logged in taste/steward-model.ledger.yaml BEFORE the founder saw it. Ground truth is the founder (R4); he has ratified nothing here. Never takes a canon filename, is not published, not posted, and not assembled into an episode.
+note: |-
+  round 6. r5 was rejected (ledger record 1): three of four never put the plant on the ground — s0/s2 hang it down from the top edge as a vine, s1 floats a detached sprout — and those same three stand a human child in a field the script calls empty; s3 reproduced the revoked plate's own measurements, ~36% of frame height against the 32% he threw out. THREE CHANGES, each transferred from something that passed. (1) Grass-height framing from the b15 plate he passed on 2026-08-08: `standing in short grass, its sturdy curved stem rising well above the grass`. One clause fixes both failures — short grass is a ground plane, which is what the vine and floating frames lacked, and it is a scale reference, which converts `tall` from a proportion of the FRAME to a proportion of the GRASS. His two sentences, `the sapling reads tall` and `its tooooo tall`, only contradict each other while height is measured against the frame. (2) Person terms `no girl, no boy, no child, no person` in the positive-lift convention (letter-initial and comma-terminated so sd_prompt lifts them; the tag forms `no 1girl`/`no 1boy` do NOT lift and would sit in the positive asking for a girl). Record 26 proved these are necessary but not sufficient on a beat whose subject clause names a humanoid — beat 01's subject is a plant, so this round is a clean test of that boundary. (3) Register fix: adding the person terms pushed `masterpiece, best quality, very aesthetic` off the positive tail, which is 308c74e's defect arriving on a new beat. Paid for by four cuts the record had already retired — `banyan`, `exactly`, `alone in a vast empty grass field`, and a shortened sky clause — plus `no extra leaves`, whose budget goes to the person terms because the leaf count is the one thing he put explicitly out of scope (`dont overthink the leafs on it`). Tail verified intact BEFORE rendering.
+prompt: |-
+  A tiny 40cm seedling standing in short grass, its sturdy curved stem rising well above the grass, two oversized cotyledon leaves, one small round green fruit hanging from the stem, whole plant in frame, wide shot, peach and gold sunrise sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, mature tree, large tree, thick trunk, full canopy, forest, bush, shrubbery, girl, boy, child, person, chibi, mascot, creature, face, branches, night sky, photorealism
