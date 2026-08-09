@@ -5,3 +5,4 @@
 11:04:13Z DONE task=001-b10-r4-1786273362 by-hand backfilled from commit evidence d17a685 — b10 r4 redraw, 4 seeds on rtx5090, taste ledger record 30, box job redraw-0809 FINISHED 15:04:13 box local
 11:04:13Z DONE task=002b-b12-r4-1786273408 by-hand backfilled from commit evidence d17a685 — b12 r4 redraw, 4 seeds on rtx5090, taste ledger record 31, box job redraw-0809 FINISHED 15:04:13 box local
 11:19:53Z DONE task=ep2-b13-r6-1786274330 by-hand backfilled from commit evidence 0a11297 — b13 r6 vocabulary sample, 4 seeds on rtx5090, taste ledger record 32, box job sample-b13-r6
+12:01:18Z DONE task=ep2-b13-r7-1786276813 by-hand backfilled from commit evidence 0ed515f — b13 r7 regional IP-Adapter sample, 4 seeds on rtx5090, taste ledger record 34, box job sample-b13-r7
