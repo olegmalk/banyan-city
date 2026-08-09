@@ -54,33 +54,49 @@
 #                   His words live on review item 08, which stays published as the
 #                   record; the VO manifests have no per-take approval field and one
 #                   was not invented for this. Full trace in STATE.md 2026-08-08.
+#
+# Removed 2026-08-09, on the founder's "the status page is wrong btw":
+#   ep2-scripts     ANSWERED SIX DAYS AGO, and the board went on asking. His words,
+#                   2026-08-03, recorded in
+#                   genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml
+#                   (`approved_by: founder`, `approved_on: 2026-08-03`): "approve
+#                   002b except.. we need to make SURE the fig growing on the sapling
+#                   is mentioned, last time we generated 002b it just.. appeared.
+#                   also, the sapling was able to flail a leaf in episode 1? why
+#                   couldnt it do that in 002b?" Both conditions were carried out and
+#                   both of his later revisions to the same script (beats 1 and 16,
+#                   2026-08-08) are recorded in that leaf beside the approval.
+#                   Everything the item said this read would unblock has since
+#                   happened on it: 21 shots, 18 voice takes in the voice he passed,
+#                   80 candidate frames and a first-pass cut he can watch on the
+#                   review page. The item was telling strangers the next episode was
+#                   blocked on a read that had already unblocked it — six days of the
+#                   public board being wrong because deleting an entry is a hand step
+#                   and nobody took it. Nothing about episode 3 is retired with it;
+#                   that item stays below and stops claiming to wait on this one.
 pending:
   - id: v6-verdict
     title: "Say yes or no on episode 1 — the next cut, built from the notes you gave"
-    detail: "Answered once and the answer was no. On the evening of 2026-08-07 the author watched the assembled remake and turned it down with a specific list rather than a shrug: the camera moves are far too slow; one scene reads as a laboratory when it is supposed to be inside a house; another shows a leaf in a shot where the character is looking at the sky, which cannot be what he is seeing; one shot drains the colour out of the show; three consecutive shots are the same picture; two more change the setting and the look entirely; one he could not identify at all; one earlier change he asked to be undone, because it was fixing a fault that was never there. Every one of those is now work in hand — new drawings for the shots he named, a faster camera move, three shots reworked as a wide-medium-close progression, and the wrong fix reverted. A rebuilt cut goes back on the review page for the same yes or no. That yes is still the only thing that unblocks posting, and nothing goes out until a cut has one."
+    detail: "Answered once and the answer was no. On the evening of 2026-08-07 the author watched the assembled remake and turned it down with a specific list rather than a shrug: the camera moves are far too slow; one scene reads as a laboratory when it is supposed to be inside a house; another shows a leaf in a shot where the character is looking at the sky, which cannot be what he is seeing; one shot drains the colour out of the show; three consecutive shots are the same picture; two more change the setting and the look entirely; one he could not identify at all; one earlier change he asked to be undone, because it was fixing a fault that was never there. The rebuilt cut now exists and he can play it: it went up on the review page on 2026-08-09, with the camera at the faster rate he confirmed, the three repeated shots reworked as a wide, a medium and a close, the shot he asked us to stop fixing put back the way it was, and new drawings in the scenes he named. Four of its fifteen scenes still carry a drawing he refused, because those four are the picks he has not made yet — the item directly below. So this is a yes or no on a film that is waiting for him rather than a promise of one, and it is still the only thing that unblocks posting anywhere."
     public: "review/index.html#checklist"
-    link_text: "your morning checklist — the questions the next cut needs answered, above the cut you turned down"
+    link_text: "your morning checklist — the rebuilt cut is item 12, and it plays on the page"
     since: 2026-07-29
   - id: ep1-frame-picks
     title: "Choose the replacement drawings for the shots you turned down"
-    detail: "Seven of the fifteen shots in episode 1 were refused on the drawing itself rather than on the movement — one that reads as a laboratory instead of a house, one showing a leaf in a shot of the sky, three consecutive shots that are the same picture, two that change the setting and the look, one that could not be identified at all. New drawings for all of them were rendered overnight, several candidates each, and they need one pass of the author's eye: pick one per shot or reject the set. This is separate from the yes-or-no on the finished cut above, and it comes first — the cut cannot be rebuilt out of frames nobody has chosen. Two related calls were already made and are not being re-asked: the camera speed, and the decision to shoot three of the shots as one scene at three distances."
+    detail: "Seven of the fifteen shots in episode 1 were refused on the drawing itself rather than on the movement. Three of them are settled: on 2026-08-08 he named the frame for each of the three consecutive shots that had all been the same picture, and he made one further pick in the same sitting. Four are left — scenes 3, 6, 10 and 14 — and each now has one sheet of eight drawings, the round he turned down on top and the new attempt underneath, same seed down each column so a column is the same picture drawn twice. The machine's own guess is printed beside each sheet with how confident it is, so one word overrules it and nothing waits on a long answer. These four are all that stands between the rebuilt cut above and a complete set of drawings. Twenty more sheets for episode 2 sit on the same page; any order is fine, and a sheet he skips simply stays a set of candidates."
     public: "review/index.html#checklist"
-    link_text: "the same morning checklist — items 02 and 03, which say plainly if the drawings have not finished rendering yet"
+    link_text: "the same morning checklist — item 10, nine sheets, with episode 1's four at the top"
     since: 2026-08-07
   - id: bakeoff-pick
     title: "Choose which AI model draws the show from now on"
     detail: "Four free models rendered the same three shots — the current one and 2026's best contenders. Whichever the author picks becomes the artist for every future frame."
     public: "lab/model-bakeoff.html"
     since: 2026-07-30
-  - id: ep2-scripts
-    title: "Read the three candidate scripts for episode 2"
-    detail: "Three different directions the story can take after episode 1 (a broken channel, a first citizen, an admin who may not exist). No footage may be made from an unread script — so this read is what unblocks the next episode."
-    public: "https://github.com/olegmlkvorg/banyan-city/tree/main/genomes/sapling/nodes"
-    since: 2026-07-29
   - id: ep3-scripts
-    title: "Read episode 3's three candidates (after the episode 2 choice)"
-    detail: "Each is a child of whichever episode 2 branch wins, so this waits on that call."
-    public: "https://github.com/olegmlkvorg/banyan-city/tree/main/genomes/sapling/nodes"
+    title: "Read episode 3 — the script that grows out of the episode 2 you approved"
+    detail: "This used to say it was waiting on the episode 2 choice. That is no longer true: he read the first-citizen script and approved it on 2026-08-03, and episode 2 has been made from it ever since. What follows it is one script rather than three — the other two episode 3 candidates grow out of the episode 2 branches he did not take, and they stay on the tree unread, which is how a branching story is supposed to work. Nothing may be filmed from this one until he has read it, so the read is the whole of what is being asked."
+    public: "https://github.com/olegmlkvorg/banyan-city/tree/main/genomes/sapling/nodes/003b-one-leaf-for-yes"
+    link_text: "read the script this branch leads to"
     since: 2026-07-30
   - id: animegen-speedup-licence
     title: "Decide whether a licence published in one place but not the other is good enough to publish from"
