@@ -1,7 +1,25 @@
 # banyan.city stopped deploying — 2026-08-09 22:14:47 (+04)
 
-**Status: the site is UP and serving, but frozen at the 21:52 build. It will not
-un-freeze on its own. The first step is a browser action only the founder can do.**
+> ## ⚠️ SUPERSEDED by [`REPO-MOVE.md`](REPO-MOVE.md) — 2026-08-10
+>
+> **The repair steps in this file are WITHDRAWN. Do not run them.**
+>
+> The 22:14 disconnect was not an outage: Roman has directed that the repo move
+> to a different GitHub account, because the current owner (`olegmlkvorg`) is
+> tied to the old Vercel account. The disconnect was **step one of that
+> migration**. Reconnecting the GitHub login as `olegmlkvorg` — "The fix" below
+> — would undo it.
+>
+> This file is kept as the **evidence record**, and its measurements stand: the
+> Vercel event log identifying the disconnect, the proof that the Hobby
+> deployment cap was never near (56 of 100), the CLI's exact failure mode, and
+> the push-cadence backlog at the end, which is still worth acting on.
+>
+> **Everything operational now lives in `REPO-MOVE.md`.**
+
+**Status (as recorded 2026-08-09): the site is UP and serving, but frozen at the
+21:52 build. It will not un-freeze on its own. The first step is a browser action
+only the founder can do.**
 
 Times are local (+04) unless marked Z.
 
@@ -69,7 +87,11 @@ membership; connecting `olegmalk` will not make the repo appear.
 **9 pushes to `main` have produced no deployment**, from `4eb4c61` (22:54:13)
 through `81a246a` (00:44:35). banyan.city is behind `main` by those 9 pushes.
 
-## The fix — founder browser steps, in this order
+## ~~The fix — founder browser steps, in this order~~ (WITHDRAWN)
+
+**Superseded — see `REPO-MOVE.md` §B.** These steps reconnect the repo under
+`olegmlkvorg`, the account the repo is moving *away* from. Left in place only so
+the 08-10 decision can be read against what it replaced.
 
 1. **vercel.com → Account Settings → Authentication** → add a **GitHub Login
    Connection**, authorising as **`olegmlkvorg`** (repo owner — not `olegmalk`).
