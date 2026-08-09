@@ -399,7 +399,7 @@ def slot_seconds(node_dir: Path, beat: int, fallback: float) -> float:
 
 def sidecar(clip: Path, still: Path, beat: int, seconds: float,
             frozen: bool = False, zoom_total_used: float = 0.0,
-            framing: str = "") -> None:
+            framing: str = "", provisional_reason: str = "") -> None:
     """§7.2 provenance. No video model ran, so none is claimed.
 
     The licence question that attaches to this clip is the STILL's, which is
@@ -427,7 +427,21 @@ def sidecar(clip: Path, still: Path, beat: int, seconds: float,
     afterwards — looking it up by name later is the very failure being closed.
     """
     Path(str(clip) + ".meta.yaml").write_text(
-        "# Shot provenance (7.2) — written by hold_still at build time\n"
+        # THE PROVISIONAL BANNER IS THE FIRST THING IN THE FILE, and it is a
+        # COMMENT so that no parser has to grow a case for it. v33 carried these
+        # exact lines and they were appended to the sidecar BY HAND after the
+        # tool had written it — which is the shape of defect f7de075 named on the
+        # review sheets ("the builders are not in the repo, and that is how the
+        # missing labels got in"). A label that a person has to remember is a
+        # label that goes missing on the one run nobody double-checks.
+        ("# ===================================================================\n"
+           "# PROVISIONAL — the frame under this clip is a STEWARD PICK the\n"
+           "# founder has not seen. Nothing here is canon, nothing here is\n"
+           "# approved, and no file made from it may be promoted to a canon\n"
+           "# name or published. Taste is the founder's (R4).\n"
+           "# ===================================================================\n"
+           if provisional_reason else "")
+        + "# Shot provenance (7.2) — written by hold_still at build time\n"
         # "local-cpu (ffmpeg)" resolved to NO licence route at all — not a
         # sentinel, not a pointer, no MODEL_LICENCES key — so licence_gate read
         # a held still as an unclassified model and refused it. Every word here
@@ -470,6 +484,12 @@ def sidecar(clip: Path, still: Path, beat: int, seconds: float,
            f"{zoom_total_used / seconds * 100:.2f}%/s, linear, centred, "
            f"monotonic (never reverses)\n")
         + f"source_still: {still.name}\n"
+        # WHERE THAT NAME LIVES, because a held frame is no longer always in
+        # `stills/`. A provisional pick sits in `takes/stills/`, and a resolver
+        # handed only a bare name searches the canon directories and finds
+        # nothing — the honest record has to say which directory it came out of.
+        # Repo-relative and posix-spelled, so the line reads the same on the box.
+        + f"source_still_path: {plate_prep.posix(plate_prep.rel_to_repo(still))}\n"
         + f"source_still_sha256: {hashlib.sha256(still.read_bytes()).hexdigest()}\n"
         "cost_usd: 0\n"
         "prompt: |-\n"
@@ -480,7 +500,15 @@ def sidecar(clip: Path, still: Path, beat: int, seconds: float,
         # this file's to assert — a record that claims an approval nobody gave is
         # the same class of lie as a poster promising pixels the clip lacks.
         "  (none — the chosen still is held; nothing was generated)\n"
-        "negative: ''\n", encoding="utf-8")
+        "negative: ''\n"
+        # MACHINE-READABLE, not just the banner. The comment at the top is for a
+        # person reading the file; `provisional: true` is for anything that ever
+        # decides whether this clip may be published, and the two cannot drift
+        # because one call writes both or neither.
+        + ("provisional: true\n"
+           "provisional_reason: |-\n"
+           + "".join(f"  {line}\n" for line in provisional_reason.splitlines())
+           if provisional_reason else ""), encoding="utf-8")
 
 
 def main():
@@ -503,6 +531,14 @@ def main():
                          "the screened setting for all of them, so reach for this "
                          "when one picture wants a different move, not to re-tune "
                          "the default — that number is the founder's")
+    ap.add_argument("--still", type=Path, default=None,
+                    help="hold THIS frame instead of the beat's canon still — for "
+                         "a beat that has none. Only a frame OUTSIDE the node's "
+                         "stills/ directory (a take), and only with --provisional")
+    ap.add_argument("--provisional", metavar="REASON", default="",
+                    help="stamp the clip's sidecar PROVISIONAL with this reason: a "
+                         "banner a person can see and `provisional: true` a gate "
+                         "can read. Say which pick and on whose authority")
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
 
@@ -510,9 +546,29 @@ def main():
     out_dir = Path(a.out)
     out_dir.mkdir(parents=True, exist_ok=True)
 
+    # A FRAME THAT IS NOT IN THE CANON DIRECTORY IS NOT CANON, and the guard says
+    # so rather than trusting the caller to remember. `--still` exists for exactly
+    # one situation — beat 06 on 2026-08-09, the only beat in episode 1 with no
+    # approved frame at all, where the alternative was promoting a steward pick
+    # into `stills/` to make `approved_still` find it. That promotion is R4's and
+    # nobody else's, and a tool that makes it convenient to fake is worse than no
+    # tool. So: one beat, a take, and a reason on the record.
+    if a.still is not None:
+        if len(a.beats) != 1:
+            ap.error("--still names one frame, so it takes exactly one beat")
+        if not a.still.is_file():
+            ap.error(f"--still {a.still}: no such file")
+        if a.still.resolve().parent == (node_dir / "stills").resolve():
+            ap.error("--still is for a frame outside stills/ — a canon frame is "
+                     "found by beat number, and naming one here would let a "
+                     "REVOKED frame in through the back door")
+        if not a.provisional:
+            ap.error('--still requires --provisional "<reason>": the founder has '
+                     "not seen this frame, and the clip must say so")
+
     made = 0
     for beat in a.beats:
-        still = approved_still(node_dir, beat)
+        still = a.still or approved_still(node_dir, beat)
         slug = slug_for(node_dir, beat)
         if not still or not slug:
             print(f"  beat {beat:02d}: no approved still or no slug — skipped")
@@ -523,10 +579,11 @@ def main():
         framing = hold(still, clip, secs, beat,
                        zoom=not a.frozen, zoom_override=a.zoom)
         sidecar(clip, still, beat, secs, frozen=a.frozen, zoom_total_used=zt,
-                framing=framing)
+                framing=framing, provisional_reason=a.provisional)
         move = "frozen" if a.frozen else f"push-in {zt * 100:.1f}%"
         print(f"  beat {beat:02d}  held {still.name}  ->  {clip.name} "
-              f"({secs}s, {move}, {clip.stat().st_size // 1024}KB)")
+              f"({secs}s, {move}, {clip.stat().st_size // 1024}KB)"
+              f"{'  [PROVISIONAL]' if a.provisional else ''}")
         made += 1
     print(f"  {made} held still(s)")
     return 0

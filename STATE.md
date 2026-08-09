@@ -6091,3 +6091,115 @@ make alone — but it should not stay a scratchpad artifact.
 `build_site.py` clean: 70 pages swept, no broken local references, /status still
 13 of 15. Lint 0 violations, ratchet unchanged; 28 tests pass. Nothing opened on
 his screen, nothing promoted to canon.
+
+## 2026-08-09 — v34 exists, all fifteen beats, and beat 6 is the one frame in it he has never seen
+
+**`review/provisional-v34/ep1-v34-PROVISIONAL.mp4` — 90.1s, 720x1280, 15 beats,
+ZERO SLATE, $0.** This is the cut he asked for when he said *"no notes for v33,
+i'll wait for the version with all the fixed images"*, and it shipped with
+fourteen of the fifteen frames being his own picks and **one being a steward
+guess that is labelled as one in three separate places**. NOT screened, NOT
+published, no leaf written (`leaf: bench (--out) — no leaf, not canon`), nothing
+opened on his screen. Queue entry `ep1-held-refilms-v34-1786292556`, claimed and
+retired with both heartbeats.
+
+**The two beats v33 could not close are closed.**
+
+| beat | held on | slot | standing |
+|---|---|---|---|
+| 06 | `takes/stills/06-too-blue-r5-s2.png` (`96b21abb…`) | 4.87s | **PROVISIONAL — steward pick, conf 0.55** |
+| 14 | `stills/14-worth-staying-in.png` (`ab1ecdc9…`) | 12.99s | **canon — his own 14:40Z pick `b14-r4-s3`** |
+
+**BEAT 14 WAS VERIFIED, NOT WAITED FOR, and that is the difference from the
+16:30Z lane that left it out.** That lane watched `origin/main` for a promotion
+commit and timed out; it was right to stop, because the alternative it was
+avoiding — filming a frame he never ratified — is exactly what produced v33's
+bad beats. But a commit is not the only evidence a promotion happened. The file
+on disk is **`cmp`-clean byte-for-byte against
+`takes/stills/14-worth-staying-in-r4-s3.png`**, the take his message names, at
+the sha256 `stills/README.md` records for that pick. His verdict is quoted
+verbatim in two places (`shots.md` beat 14, `stills/README.md` §14). So the frame
+is his and the beat is not provisional. **The promotion COMMIT is still owed and
+this lane did not take it** — the verdicts lane holds the `stills/README.md`
+table for it, and racing a lane for a file it is mid-way through writing is how
+two lanes clobber each other. `stills/14-worth-staying-in.png` is still untracked
+on disk. *Somebody has to commit it.*
+
+**BEAT 6 IS HELD ON A GUESS AND SAYS SO THREE TIMES.** r5 (82fd4ff) cleared the
+axis he named twice — zero people in 4 of 4, ordinary clouds — but clearing is a
+measurement and choosing is R4's. The pick `b06-r5-s2` is the steward's, at
+confidence 0.55, from taste ledger `ep1-b06-r5-provisional`, which was written
+BEFORE the sheet existed and is reused here rather than re-scored: no new sheet
+was drawn tonight, so no new prediction was owed. It is labelled in (1) a
+PROVISIONAL banner at the top of the clip's sidecar, (2) `provisional: true` in
+that sidecar, and (3) `provisional:` on its row in the cut's manifest. The
+pre-registered cost stands: none of the r5 four looks straight *up*, and s2 has
+mountains the script never mentions.
+
+**THE LABEL IS NOW WRITTEN BY THE TOOL, WHICH IS THE ONLY REASON TO TRUST IT.**
+v33 carried the same three lines and a person appended them by hand after
+`hold_still` had written the file — the shape of defect `f7de075` named on the
+review sheets (*the builders are not in the repo, and that is how the missing
+labels got in*). Two code changes, both tested:
+
+- `hold_still.py` grows `--still <take>` and `--provisional "<reason>"`. Beat 6
+  is the only beat in episode 1 with no approved frame, so `approved_still()`
+  returns nothing for it and the only previous way to film it was **promoting a
+  steward pick into `stills/`** — a canon promotion, which is R4's alone. The
+  guard makes the honest path the available one: `--still` takes one beat, it
+  refuses a path inside `stills/`, and it refuses to run at all without a reason
+  on the record.
+- `render_t3.ingredient_row` carries a clip's `provisional:` onto its row in the
+  cut's manifest, and `assembly_sidecar` points at the flagged beats from the
+  head. Before this, beat 6 appeared in the manifest as `publishable: true` —
+  true, and about the LICENCE — sitting indistinguishable beside fourteen frames
+  he chose himself.
+
+**AND THE WORD `provisional` IS OVERLOADED, WHICH THIS FOUND RATHER THAN FIXED.**
+The cut's head lists **twelve** flagged beats, not one. Twelve clips are
+byte-for-byte v33 copies whose inherited sidecars use the flag for four different
+things: *"canon, unchanged"*, *"the founder's face-B pick"*, *"old footage is the
+superseded picture"*, and an actual unratified guess. `15-something-s-coming`
+holds both readings in one file — reason *"canon b15-r3-s1, approved
+2026-08-08"*, authority *"the founder has ratified nothing here"*. So the new
+code **copies the flag and never interprets it**: a row means "this ingredient's
+own record marks itself provisional, read its reason". Deriving a taste verdict
+from a field that means four things would be inventing one. **Settling that
+vocabulary is the author's job and is filed, not guessed at** — and until it is
+settled, no gate should branch on `provisional:` alone.
+
+**Verification, on the encoded files rather than the recipe.** Frame 0 of both
+new clips IS `plate_prep.fit_cover(still)` byte for byte; PSNR against
+`hold_still`'s recomputed frames at start/mid/end is 40.83/41.10/40.19 dB (beat
+06) and 43.89/44.00/43.57 dB (beat 14), the same h264-quantisation profile the
+03 and 10 re-films measured; the crop window runs 669→597 px, non-increasing,
+one-way, so no ping-pong. Frame counts were probed, not assumed: 117 and 312 at
+704x1280, exactly what the tool computed. `qa_episode` 13 checks pass with 2
+warnings, both pre-existing and structural (a 5.5s dialogue hole at 12s where
+beats 04/05 have no VO; opening mean luma 45/255, beat 01 being a dark room).
+`check_sync sapling 001` clean on every beat.
+
+**No box, no GPU, no spend.** All of it is Mac-side ffmpeg. The two box-hygiene
+items in tonight's brief were already done and are on the record twice: the
+stale claim was released by its own run at 17:16 box local (heartbeat 15:38:35Z),
+`banyan-redraw2` no longer exists, and the claim standing on the card this
+evening belonged to the live `b12-promptfix-0809` lane, which released it at
+16:36Z. Nothing was touched on the box.
+
+**Heartbeats, both of them, because a held re-film and an assembly are
+render-shaped work:**
+
+```
+16:55:36Z STARTED task=ep1-held-refilms-v34-1786292556 by-hand by-hand mac-side v34 ASSEMBLE: beat 14 held on his canon b14-r4-s3 (ab1ecdc9.., verified byte-identical to the take he named), beat 06 held on the r5 PROVISIONAL pick b06-r5-s2 (ledger ep1-b06-r5-provisional, conf 0.55) — this supersedes the entry's 'LEAVE BEAT 6 ON ITS v33 HELD FRAME', written before r5 existed; then render_t3 all 15, qa_episode, check_sync. $0 ffmpeg, no GPU, no box, nothing opened on his screen
+17:03:57Z DONE task=ep1-held-refilms-v34-1786292556 by-hand rc=0 — v34 assembled, ALL 15 BEATS, 0 SLATE, 90.1s, $0, mac-side ffmpeg, no model ran. …
+```
+
+The entry's own `cmd` said *"LEAVE BEAT 6 ON ITS v33 HELD FRAME … there is
+nothing to promote"*; it was written at 16:22Z, six minutes before r5 started.
+The deviation is on the STARTED line rather than discovered afterwards in a diff.
+
+**What v34 waits on: his eyes, and nothing else.** No beat is slated, no render
+is pending, no machine is holding anything for it. Two questions to put to him
+with it — beat 06 (ratify `b06-r5-s2`, or reject it for the camera and take a
+scenery-safe tag next round) and beat 03, which he has only ever seen *moving*
+and which is a held still in this cut.

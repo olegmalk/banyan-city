@@ -4916,6 +4916,66 @@ def test_a_held_clip_records_the_bytes_it_was_handed(tmp: Path):
           got is not None and bs.bytes_sha256(got) == data["source_still_sha256"])
 
 
+def test_a_held_pick_the_founder_has_not_seen_says_so_in_its_own_record(tmp: Path):
+    """The PROVISIONAL label is written by the tool or it is not written.
+
+    Beat 06 was the only beat in episode 1 with no approved frame — he refused
+    r3 ("women, too many clouds") and r4 ("its getting worse") — so v34 holds a
+    STEWARD PICK there, `b06-r5-s2`, out of `takes/stills/`. v33 did the same
+    thing and carried the same three lines, and they were appended to the
+    sidecar BY HAND after hold_still had written it. That is the defect f7de075
+    named one directory over: the label lives outside the tool, so it survives
+    exactly as long as somebody remembers it.
+
+    Two halves and they cannot come apart, because one call writes both: a
+    BANNER a person sees at the top of the file, and `provisional: true` for
+    anything that decides what may be published. Plus the frame's PATH — a pick
+    in `takes/stills/` is not findable by name in the canon directories, so a
+    bare `source_still:` names pixels no resolver can reach.
+    """
+    import yaml
+
+    takes = tmp / "takes" / "stills"
+    takes.mkdir(parents=True)
+    frame = takes / "06-too-blue-r5-s2.png"
+    frame.write_bytes(b"low cloud, mostly blue, nobody in it")
+    clip = tmp / "06-too-blue.mp4"
+    clip.write_bytes(b"a computed push-in")
+
+    hs.sidecar(clip, frame, 6, 4.87, zoom_total_used=0.12,
+               provisional_reason="PROVISIONAL PICK b06-r5-s2 (conf 0.55)")
+    text = Path(str(clip) + ".meta.yaml").read_text(encoding="utf-8")
+    data = yaml.safe_load(text)
+
+    check("a provisional hold says PROVISIONAL before anything else in the file",
+          text.lstrip().startswith("# ====") and "PROVISIONAL" in text.split("\n")[1])
+    check("...and says it again where a gate can read it",
+          data.get("provisional") is True
+          and "b06-r5-s2" in str(data.get("provisional_reason")))
+    check("the frame's directory is on the record, not just its name",
+          str(data.get("source_still_path")).endswith(
+              "takes/stills/06-too-blue-r5-s2.png")
+          and data.get("source_still") == "06-too-blue-r5-s2.png")
+    # THE BANNER IS A COMMENT AND THE CLASSIFIER LINES ARE UNMOVED. Putting six
+    # lines above `platform:` is exactly the sort of edit that takes licence_gate
+    # down with it — SENTINELS matches `model:` on the whole value, render_t3
+    # substring-matches "model: none" to decide whether to ping-pong the clip.
+    check("the three classifier lines survive the banner",
+          data["platform"] == "local-deterministic (pipeline/hold_still.py, ffmpeg)"
+          and data["model"] == "none"
+          and "model: none" in text)
+
+    # AND THE DEFAULT IS SILENT: a canon hold must not grow a provisional stamp,
+    # or the word stops meaning anything on the clips that carry it.
+    plain = tmp / "10-sense.mp4"
+    plain.write_bytes(b"another push-in")
+    hs.sidecar(plain, frame, 10, 2.5, zoom_total_used=0.12)
+    ptext = Path(str(plain) + ".meta.yaml").read_text(encoding="utf-8")
+    check("a hold with no reason given carries no provisional stamp at all",
+          "PROVISIONAL" not in ptext
+          and yaml.safe_load(ptext).get("provisional") is None)
+
+
 def test_the_nested_init_frame_dialect_resolves_like_the_flat_one(tmp: Path):
     """Episode 2's cold open was blank while its own record held the answer.
 
@@ -5717,6 +5777,62 @@ def test_a_cut_whose_ingredients_all_pass_publishes_unchanged(tmp: Path):
           lg.classify(lg.engine_licence(_t3.ASSEMBLY_PLATFORM))[0] == "allow")
 
 
+def test_a_steward_pick_stays_labelled_after_it_is_concatenated(tmp: Path):
+    """`publishable` is the licence's word and says nothing about whether he
+    has SEEN the frame — so the manifest has to carry both.
+
+    v34 beat 06 is the case: the founder refused r3 and r4, r5 finally drew
+    nobody, and the cut holds the steward's own pick out of `takes/`. That clip
+    is perfectly licensed — local ffmpeg over a frame we already own — so its
+    row reads `publishable: true`, and it sat there indistinguishable from the
+    fourteen frames he chose himself. Nothing in the manifest said which beat
+    was a guess. The clip's sidecar knew (hold_still writes `provisional: true`
+    on it); the concatenation dropped the fact, which is the same laundering
+    `ingredient_row` was written to stop, one field over.
+
+    THE FLAG IS COPIED, NEVER INTERPRETED, and that is asserted here too. Twelve
+    of v34's clips inherit `provisional:` from v33's hand-written labels, where
+    it meant four different things — so a row carries the ingredient's own word
+    and the head is a pointer at the rows, not a taste verdict derived from them.
+    """
+    import yaml as _y
+
+    import render_t3 as t3
+
+    seen, _ = _clip(tmp, "14-worth-staying-in.mp4", b"his own pick, held", "none")
+    guess, _ = _clip(tmp, "06-too-blue.mp4", b"a steward pick, held", "none")
+    # hold_still's stamp, as it writes it
+    side = tmp / "06-too-blue.mp4.meta.yaml"
+    rec = _y.safe_load(side.read_text())
+    rec["provisional"] = True
+    rec["provisional_reason"] = "PROVISIONAL PICK b06-r5-s2 (conf 0.55) — NOT canon"
+    side.write_text(_y.safe_dump(rec, sort_keys=False))
+
+    rows = [t3.ingredient_row(seen, 14, "clip"), t3.ingredient_row(guess, 6, "clip")]
+    check("an ingredient whose record says nothing carries no provisional mark",
+          rows[0].get("provisional") is None)
+    check("an ingredient that marks itself provisional says so in the manifest",
+          rows[1].get("provisional") is True)
+    check("...and the licence verdict is untouched by it — they are two questions",
+          rows[0]["publishable"] is True and rows[1]["publishable"] is True)
+
+    out = tmp / "ep1-v34-PROVISIONAL.mp4"
+    out.write_bytes(b"the assembled cut")
+    side = t3.assembly_sidecar(out, "001", "", 0.0, 15, [], rows, 90.1, [])
+    head = _y.safe_load(side.read_text(encoding="utf-8"))
+    check("the cut's head points at the flagged beats instead of hiding them",
+          head.get("provisional") is True and head.get("provisional_beats") == [6])
+
+    # AND A CUT WITH NOTHING FLAGGED MUST NOT GROW THE FIELD — a warning printed
+    # on every cut is a warning nobody reads.
+    clean = tmp / "ep1-v35.mp4"
+    clean.write_bytes(b"a cut of ratified frames")
+    cside = t3.assembly_sidecar(clean, "001", "", 0.0, 15, [], [rows[0]], 90.1, [])
+    chead = _y.safe_load(cside.read_text(encoding="utf-8"))
+    check("a cut whose ingredients flag nothing says nothing about provisionality",
+          "provisional" not in chead and "provisional_beats" not in chead)
+
+
 def test_a_region_mask_conditions_its_box_and_nothing_else():
     """A masked IP-Adapter is only regional if the mask really has an outside.
 
@@ -5943,6 +6059,8 @@ def main():
     with tempfile.TemporaryDirectory() as td:
         test_a_held_clip_records_the_bytes_it_was_handed(Path(td))
     with tempfile.TemporaryDirectory() as td:
+        test_a_held_pick_the_founder_has_not_seen_says_so_in_its_own_record(Path(td))
+    with tempfile.TemporaryDirectory() as td:
         test_the_nested_init_frame_dialect_resolves_like_the_flat_one(Path(td))
     test_every_served_cut_posters_the_frame_its_record_names()
     test_the_infra_meter_never_prints_a_number_the_page_did_not_measure()
@@ -5964,6 +6082,8 @@ def main():
         test_a_cut_whose_manifest_no_longer_describes_its_inputs_does_not_publish(Path(td))
     with tempfile.TemporaryDirectory() as td:
         test_a_cut_whose_ingredients_all_pass_publishes_unchanged(Path(td))
+    with tempfile.TemporaryDirectory() as td:
+        test_a_steward_pick_stays_labelled_after_it_is_concatenated(Path(td))
     # REGIONAL IP-ADAPTER GEOMETRY (memo §3.3) — pure: PIL only, no torch.
     test_a_region_mask_conditions_its_box_and_nothing_else()
     test_a_box_that_names_no_region_is_refused_not_rounded()

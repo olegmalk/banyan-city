@@ -816,6 +816,36 @@ def ingredient_row(src: Path, beat: int, kind: str) -> dict:
            "sha256": file_sha256(src), "publishable": bool(ok)}
     if why:
         row["why"] = why
+    # AND WHETHER THE INGREDIENT CALLS ITSELF PROVISIONAL, which `publishable`
+    # does not answer and was never asked to: that flag is the LICENCE gate's
+    # word, and a steward pick out of `takes/` is perfectly licensed and
+    # completely unratified. Beat 06 of v34 is exactly that clip — `hold_still`
+    # stamps `provisional: true` on it (2026-08-09) — and without this line the
+    # cut's manifest showed it as `publishable: true` beside fourteen frames the
+    # founder chose himself, with nothing to tell them apart. That is the
+    # laundering this function exists to stop, one field over.
+    #
+    # WHAT IT DOES NOT MEAN, and this is why the flag is COPIED rather than
+    # interpreted. `provisional:` is not a settled vocabulary: twelve of v34's
+    # fifteen clips inherit the flag from v33, where one lane wrote it by hand
+    # onto a whole review set, and their `provisional_reason` lines say four
+    # different things — "canon, unchanged", "the founder's face-B pick", "old
+    # footage is the superseded picture", and beat 06's actual unratified guess.
+    # Beat 15's record manages both at once: reason "canon b15-r3-s1, approved
+    # 2026-08-08" under an authority line reading "the founder has ratified
+    # nothing here". So a row's flag means EXACTLY "this ingredient's own record
+    # marks itself provisional, see its `provisional_reason`" and nothing more
+    # precise; reading a taste verdict out of it would be inventing one. Cleaning
+    # up that vocabulary is a separate job and it is the author's, not this
+    # function's — filed rather than guessed at here.
+    side = Path(str(src) + ".meta.yaml")
+    if side.is_file():
+        try:
+            rec = yaml.safe_load(side.read_text(encoding="utf-8"))
+        except yaml.YAMLError:
+            rec = None          # an unreadable record is publishable()'s to refuse
+        if isinstance(rec, dict) and rec.get("provisional") is True:
+            row["provisional"] = True
     return row
 
 
@@ -836,12 +866,18 @@ def assembly_sidecar(out: Path, node_id: str, leaf: str, cost: float,
     """
     prov = beat_provenance(all_clips)
     footage = sorted({r["beat"] for r in ingredients if r["kind"] == "clip"})
+    # WHICH BEATS TO GO AND READ, in the cut's own head rather than N sidecars
+    # down. A pointer, not a verdict — see ingredient_row on why this list is not
+    # "the beats he has not seen": the flag's meaning lives in each ingredient's
+    # `provisional_reason` and it is not the same sentence in all of them.
+    flagged = sorted({r["beat"] for r in ingredients if r.get("provisional")})
     body = {
         "platform": ASSEMBLY_PLATFORM,
         "model": prov["model"],
         "cost_usd": cost,
         "node": node_id,
         "leaf": leaf or "bench (--out) — no leaf, not canon",
+        **({"provisional": True, "provisional_beats": flagged} if flagged else {}),
         "beats": beats,
         "footage_beats": footage,
         "slate_beats": [b for b in range(1, beats + 1) if b not in footage],
@@ -858,7 +894,12 @@ def assembly_sidecar(out: Path, node_id: str, leaf: str, cost: float,
         "# walks: one row per file muxed into this cut, its bytes as muxed, and\n"
         "# the verdict it carried then. A row that no longer resolves, no longer\n"
         "# hashes the same, or no longer passes is a REFUSAL for this whole cut —\n"
-        "# a concatenation must not launder what went into it.\n"
+        "# a concatenation must not launder what went into it. `provisional:` on\n"
+        "# a row is copied from that ingredient's OWN record and means only that\n"
+        "# it marks itself provisional — read its `provisional_reason` for what\n"
+        "# that means there, because the phrase is not used consistently across\n"
+        "# this tree. It is a separate question from `publishable:`, which is the\n"
+        "# licence gate's word and says nothing about taste either way.\n"
         + yaml.safe_dump(body, sort_keys=False, allow_unicode=True), encoding="utf-8")
     return side
 
