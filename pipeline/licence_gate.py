@@ -913,6 +913,96 @@ def is_candidate(path: Path, root: Path = REPO) -> bool:
     return "takes" in parts
 
 
+# ---------------------------------------------------------------------------
+# THE FOUNDER MAY NARROW WHAT WE OFFER OVER ONE SURFACE, and D15 way-out 1 is
+# what that looks like when it is exercised. Added 2026-08-09.
+#
+# D15's problem was never ownership. animagine-xl-3.1 is CreativeML Open RAIL++-M
+# and its own text says "Licensor claims no rights in the Output You generate" —
+# what it does say is that the output's USE stays bound to Attachment A. Our own
+# release offers reusers CC BY 4.0, i.e. unrestricted use, so publishing an
+# animagine frame under the site's blanket offer grants what we do not hold.
+# That is the whole conflict, and D15 listed three ways out. The first is
+# "narrow our own offer".
+#
+# On 2026-08-09 the founder authorised the candidate frames onto /review: "put
+# the images from my computer onto there please, not like theres any reason to
+# hide it." That settles VISIBILITY and nothing else — he did not decide what
+# licence the tree offers, and nobody here may decide it for him. So the frames
+# publish under a narrowed offer, stated on the page and in every record: they
+# carry OpenRAIL++'s use restrictions and are NOT CC BY 4.0.
+#
+# WHY THAT IS A CLEARANCE AND NOT A HOLE, because the difference is the whole
+# argument. The gate refuses an asset when we cannot honestly make our offer
+# over it. Where the offer is narrowed to exactly the terms the upstream licence
+# imposes, nothing is being granted that we do not hold, and the asset is
+# publishable — not "publishable if nobody looks". The debt ratchet counts
+# assets we CANNOT publish; these are not among them, so counting them would
+# make the number mean something else.
+#
+# THREE CONDITIONS, ALL REQUIRED, and each one closes a different way past:
+#
+#   1. THE DIRECTORY. A declaration, like `archive/` and `takes/` — the surface
+#      the founder actually named. A frame that moves out of it is judged with
+#      nothing softened, same rule as promoting an archived take.
+#   2. THE RECORD SAYS SO. The sidecar must carry `published_under:`. This is
+#      the condition that matters most: without it, dropping a file into the
+#      right directory would be the cheapest route past the gate, which is hole
+#      2 ("absence is never safer than presence") wearing a new hat. The
+#      exemption has to be WRITTEN, per file, or it does not exist.
+#   3. THE MODEL IS ONE HE AUTHORISED. Only the D15 model. An LTX clip in this
+#      directory is still refused — D16's sign-off is a separate open question
+#      and is still his — and a model in no table is still refused, because an
+#      unread licence cannot be narrowed to terms nobody has read.
+#
+# Anything that fails any of the three is canon debt in this directory exactly
+# as it would be anywhere else. build_site.publishable() asks the same three
+# questions through review_narrowed() below, so the gate and the publish path
+# cannot drift into disagreeing about which files these are.
+REVIEW_GALLERY = ("cuts", "review-assets")
+# The key a record uses to state the offer WE make over this file, as opposed to
+# `model_licence`, which states what came in. The two are different sentences and
+# the gate needs the second one said out loud.
+NARROWED_KEY = "published_under"
+# Model keys the founder has authorised for a narrowed publication, each with the
+# decision that authorised it. Adding a name here is recording a founder call,
+# never a steward's reading — the same bar as moving an entry into ALLOW.
+FOUNDER_NARROWED = {
+    "animagine": "founder, 2026-08-09 (D15 visibility half) — the candidate frames "
+                 "publish to /review under OpenRAIL++'s use restrictions rather "
+                 "than under the tree's CC BY 4.0",
+    "cagliostrolab": "founder, 2026-08-09 (D15 visibility half) — same decision; "
+                     "this is the same weights under the org name",
+}
+
+
+def is_review_gallery(path: Path, root: Path = REPO) -> bool:
+    """Inside the founder-authorised review gallery directory (condition 1)."""
+    try:
+        parts = path.relative_to(root).parts[:-1]
+    except ValueError:
+        parts = path.parts[:-1]
+    n = len(REVIEW_GALLERY)
+    return any(parts[i:i + n] == REVIEW_GALLERY for i in range(len(parts) - n + 1))
+
+
+def review_narrowed(path: Path, data, root: Path = REPO) -> bool:
+    """All three conditions except the per-model one, which is per-finding.
+
+    `data` is the parsed record. Kept as one function because build_site's
+    publishable() must ask exactly what the gate asks; two copies of a
+    three-part test is two chances for the publish path to be looser than the
+    report."""
+    if not is_review_gallery(path, root):
+        return False
+    return any(NARROWED_KEY in r for r in records(data))
+
+
+def narrowed_model(names) -> bool:
+    """Every model behind one licence is one the founder authorised (condition 3)."""
+    return bool(names) and all(n in FOUNDER_NARROWED for n in names)
+
+
 def is_archived(path: Path, root: Path = REPO) -> bool:
     """Superseded material, kept for provenance (R6).
 
@@ -1023,16 +1113,23 @@ class Gate:
         self._reported = set()     # (where, licence) already named — see check_provenance
 
     def tier_of(self, path: Path) -> str:
-        """"canon" | "candidate" | "archived" — which of the three the file is.
+        """"canon" | "candidate" | "archived" | "narrowed" — which the file is.
 
         Archive is checked FIRST: `takes/archive/` is both, and an archived take
         is the more specific statement (it was shot, considered and set aside),
         so it keeps the advisory treatment it has always had rather than being
-        re-labelled a live candidate."""
+        re-labelled a live candidate.
+
+        "narrowed" is the directory half of the review-gallery clearance and is
+        NOT the whole test — _scan_records demotes it back to canon unless the
+        record itself declares the offer, and check_provenance demotes it per
+        licence unless the founder authorised that model. See REVIEW_GALLERY."""
         if is_archived(path, self.repo):
             return "archived"
         if is_candidate(path, self.repo):
             return "candidate"
+        if is_review_gallery(path, self.repo):
+            return "narrowed"
         return "canon"
 
     def err(self, where: str, msg: str) -> None:
@@ -1059,13 +1156,22 @@ class Gate:
         canon      → violation, counted against the debt ratchet
         candidate  → reported on its own line, not counted (see is_candidate)
         archived   → advisory, collapsed by message
+        narrowed   → advisory, collapsed: publishable under an offer the founder
+                     narrowed for one surface, so it is not debt (REVIEW_GALLERY)
 
         `tier` was a `shipping: bool` until 2026-08-07. A boolean could only
         ever say fails / does-not-fail, so the day a third tier appeared the
         choice was to call candidates shipping (and let one 40-frame wave move
         the ratchet by 40) or to call them archived (and bury a live question in
         a list that exists to be scrolled past). Neither is true of them."""
-        if tier == "candidate":
+        if tier == "narrowed":
+            self.advise(where, f"{msg} — PUBLISHED ANYWAY, under an offer narrowed "
+                               "to those very restrictions by the founder rather "
+                               "than under the tree's CC BY 4.0. Not debt: the "
+                               "ratchet counts what we cannot publish. Moving the "
+                               "file off that surface, or dropping its "
+                               f"`{NARROWED_KEY}:` line, makes this fatal")
+        elif tier == "candidate":
             self.candidate(where, f"{msg} — a takes/ candidate, so it is not "
                                   "counted against the debt ratchet; publishing "
                                   "it is blocked by publishable(), and promoting "
@@ -1103,7 +1209,12 @@ class Gate:
         # the alternative is a rule that charges you for honest provenance and
         # refunds you for vague provenance. The gate must never make the
         # unreadable record the cheap one.
-        blocked = tier if tier != "candidate" else "canon"
+        # The same reasoning applies to "narrowed", and for a sharper reason: a
+        # record that names no model at all has nothing to narrow. You cannot
+        # publish under "the terms this model imposes" without saying which
+        # model, so an empty or unreadable value in the review gallery is canon
+        # debt exactly as it is anywhere else.
+        blocked = tier if tier not in ("candidate", "narrowed") else "canon"
         norm = normalise(value)
         if not norm:
             self.report(where, f"{what} is empty — an asset with no provenance has no "
@@ -1138,8 +1249,17 @@ class Gate:
             if (where, licence) in self._reported:
                 continue
             self._reported.add((where, licence))
+            # CONDITION 3, per licence rather than per file. The narrowed offer
+            # covers the models the founder named and only those, so a review-
+            # gallery record that also names an LTX motion model reports the LTX
+            # licence as canon debt and the animagine one as narrowed. Judging
+            # the file by its softest ingredient is how a compound provenance
+            # string laundered its worst clause the first time (hole 1).
+            row = tier
+            if row == "narrowed" and not narrowed_model(names):
+                row = "canon"
             self.report(where, f"{what} '{value}' is made with {'/'.join(names)} "
-                               f"({licence}), which cannot ship: {why}{note}", tier)
+                               f"({licence}), which cannot ship: {why}{note}", row)
 
     def check_engine(self, where: str, engine, what: str, tier: str = "canon") -> None:
         """Voice engines, kept as its own name because that is what the VO path
@@ -1193,6 +1313,14 @@ class Gate:
         sidecars and manifests are all read the same way now."""
         where = _rel(path)
         recs = list(records(data))
+        # CONDITION 2 of the review-gallery clearance, and the load-bearing one:
+        # the directory is where the founder put the surface, but the RECORD is
+        # what states the narrowed offer. Without this line, copying any refused
+        # frame into cuts/review-assets/ would clear it, and writing nothing
+        # would be cheaper than writing the truth — hole 2 exactly. The
+        # exemption must be declared per file or it does not exist.
+        if tier == "narrowed" and not any(NARROWED_KEY in r for r in recs):
+            tier = "canon"
         # A sidecar or manifest exists to answer "what made this and under what
         # licence". One that declares no model, engine or platform answers
         # nothing — and it would otherwise satisfy scan_media, which only looks

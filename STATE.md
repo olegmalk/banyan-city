@@ -5436,3 +5436,43 @@ readable, **not vendorable** into this tree.
 Also noted for whoever runs r6: `still_local.py` ends in
 `subprocess.run(["open"] + opened)` and throws every still onto the founder's
 screen. It needs a no-open path before the first sample, not after.
+
+## 2026-08-09 — /review is shorter, and the candidate frames are on it
+
+Two directives from the founder, both acted on the same day.
+
+**"make banyan.city/review simplified, there's too much unnessecary yap."** The
+page went from 13,931 rendered words to 7,982 (124.6 KB to 91.3 KB) without
+deleting a single quote of his, recorded verdict, address, confidence or
+measurement. What went was our narration about the narration. The seven open
+items' `ask:` lines averaged 22 words and ran to 27; they average 10 now, and
+every one of them gained a `where:` and a `how:` — where the thing is and how to
+answer it — which five of the seven previously made him open a fold to find. The
+provisional banner is one line instead of five.
+
+**"put the images from my computer onto there please, not like theres any reason
+to hide it."** Fifteen images now publish on /review: the nine live contact
+sheets, `LABELED-beat15-r3` (the sample he passed), and the five provisionally
+picked plates. Committed as JPEG renditions in `cuts/review-assets/` — 9.8 MB,
+against 54 MB for the source PNGs — each with a sidecar naming the source file,
+its SHA-256 and the encoding. They are lazy-loaded, and tapping one opens it
+full size, which is the only way to judge a 2060x4024 contact sheet on a phone.
+
+**This closes the visibility half of D15 and nothing else.** The licence
+conflict is untouched and still his: the images go out under an offer narrowed
+to OpenRAIL++'s use restrictions rather than under the tree's CC BY 4.0, stated
+in a line under every gallery and in every sidecar. `licence_gate.REVIEW_GALLERY`
+holds the three conditions (the directory, a `published_under:` line in the
+record, and a model he authorised); anything failing any of them is refused
+exactly as before. **D16's LTX clips are still withheld** — that sign-off is a
+separate open question. Licence debt stayed at 25 across the change: these are
+publishable under the narrowed offer, so they are not debt, and lint prints them
+every run as one advisory rather than hiding them.
+
+One bug found by a test written for the new path and fixed with it: inside the
+gallery, `publishable()` would have shipped a file whose model matches nothing in
+`MODEL_LICENCES`. Everywhere else that is deliberate — the build does not
+withhold what it cannot judge and CI fails on it instead — but a clearance that
+means "published under the terms this model imposes" cannot survive a model
+nobody has read, or the exemption becomes one invented model name plus one
+`published_under:` line.

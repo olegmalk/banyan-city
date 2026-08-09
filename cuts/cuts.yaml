@@ -111,6 +111,12 @@ page:
     gate refuses both cuts, which is the gate working. The checklist names
     where they sit on the machine.
 
+    **The candidate frames themselves ARE here**, on the founder's word of
+    2026-08-09. They publish under an offer narrowed to the terms their model
+    imposes — `animagine-xl-3.1`, CreativeML Open RAIL++-M, whose use
+    restrictions travel — so they are **not** under this site's CC BY 4.0. The
+    line under each gallery says so, and every image carries its record.
+
 checklist:
   title: "Your morning pass — two cuts, then the sheets."
   intro: |-
@@ -203,9 +209,13 @@ checklist:
         is the one that moves** (lower, to the soil line, where its roots are);
         14's framing is the script's own *"Low at the base of the trunk"*.
 
-        Beat 15's sheet — the sample that set the recipe every later redraw runs
-        on — is `LABELED-beat15-r3.png`.
+        Beat 15's sheet is below — the sample that set the recipe every later
+        redraw runs on.
 
+      sheets:
+        - file: review-assets/LABELED-beat15-r3.jpg
+          label: "beat 15 — the sample you passed"
+          note: "the round you rejected on top, round 3 below; b15-r3-s1 is now canon"
     - n: 3
       ask: "Beats 7, 8 and 9 — ANSWERED. All three picked."
       state: settled
@@ -302,7 +312,7 @@ checklist:
       summary: >-
         All four round-5 cold-open frames were provisionally rejected, so there is
         no A/B to put to you.
-      where: "the `b01-r5` sheet, also in item 10"
+      where: "the `b01-r5` sheet is on this card, and again in item 10"
       how: "nothing — unless you disagree, in which case name a frame"
       body: |-
         **Your answer on the model question, in full:**
@@ -350,6 +360,10 @@ checklist:
         **One number, explicitly not an argument:** LTX drew those six seconds in
         **207 seconds against Wan's 539** — 2.6x faster at a third of peak memory.
         Over twenty-one beats that is real, and it still does not pick a look.
+      sheets:
+        - file: review-assets/LABELED-b01-r5.jpg
+          label: "the cold open, round 5 — b01-r5-s0 to s3"
+          note: "labels and seeds only, no favourite marked; all four provisionally rejected"
       clips:
         - file: checklist/002b-b01-5b.mp4
           label: "Wan 2.2 — 6.0s — OF THE WITHDRAWN FRAME"
@@ -505,10 +519,13 @@ checklist:
       summary: >-
         100 candidates on the recipe your beat-15 yes settled. Four picks finish
         v33; twenty start episode 2; one gives item 06 its A/B back.
-      where: "the nine sheets are at the top level of the repo folder on this machine, beside `REVIEW-KEY-0808.md`"
+      where: "on this card — nine sheets, tap one to open it full size"
       how: "name an address, e.g. `b14-r3-s2` or `002b-b16-r3-s1`"
       body: |-
-        **THE NINE SHEETS.** Addresses resolve through `REVIEW-KEY-0808.md`.
+        **THE NINE SHEETS ARE BELOW** — they went onto this page on your word,
+        2026-08-09: *"put the images from my computer onto there please, not like
+        theres any reason to hide it."* Addresses resolve through
+        `REVIEW-KEY-0808.md`.
 
         - **Episode 1 — the last four frames**, one sheet each: beats 03, 06, 10,
           14. Eight frames apiece — the round you rejected on top, the new one
@@ -556,6 +573,43 @@ checklist:
         say what is wrong and it is drawn again, the way beat 15 was. **If you flip
         one of the five, the clip built on it is thrown away, not defended.**
 
+        **On the licence, since these are published now rather than sitting on a
+        laptop.** They are still drawn by `cagliostrolab/animagine-xl-3.1`, whose
+        use restrictions travel to the output, and **D15 is still open and still
+        yours.** Your word settled that they are not hidden; it did not settle
+        what the tree offers reusers. So they go out under those restrictions
+        rather than under our CC BY 4.0, said in one line under the gallery.
+        Nothing else on the site moved, and the LTX clips stay withheld
+        (**D16**) — that sign-off is a separate question you have not answered.
+
+      sheets:
+        - file: review-assets/LABELED-beat03-r3.jpg
+          label: "ep1 beat 03 — b03-r3-s0..s3"
+          note: "rejected round on top, redraw below, same seed per column"
+        - file: review-assets/LABELED-beat06-r3.jpg
+          label: "ep1 beat 06 — b06-r3-s0..s3"
+          note: "prompt unchanged, so these are new seeds and the columns are not pairs"
+        - file: review-assets/LABELED-beat10-r3.jpg
+          label: "ep1 beat 10 — b10-r3-s0..s3"
+          note: "rejected round on top, redraw below, same seed per column"
+        - file: review-assets/LABELED-beat14-r3.jpg
+          label: "ep1 beat 14 — b14-r3-s0..s3"
+          note: "rejected round on top, redraw below, same seed per column"
+        - file: review-assets/CONTACT-002b-r3-b02-06.jpg
+          label: "ep2 beats 02-06 — 002b-bNN-r3-sN"
+          note: "four candidates per beat, one band each"
+        - file: review-assets/CONTACT-002b-r3-b07-11.jpg
+          label: "ep2 beats 07-11 — 002b-bNN-r3-sN"
+          note: "four candidates per beat, one band each"
+        - file: review-assets/CONTACT-002b-r3-b12-16.jpg
+          label: "ep2 beats 12-16 — 002b-bNN-r3-sN"
+          note: "four candidates per beat, one band each"
+        - file: review-assets/CONTACT-002b-r3-b17-21.jpg
+          label: "ep2 beats 17-21 — 002b-bNN-r3-sN"
+          note: "four candidates per beat, one band each"
+        - file: review-assets/LABELED-b01-r5.jpg
+          label: "ep2 cold open — b01-r5-s0..s3"
+          note: "the four replacing the frame you withdrew"
     - n: 11
       ask: "The 704x1280 crop — is the framing still right?"
       state: open
@@ -642,7 +696,7 @@ checklist:
         | **14** | held | **`b14-r3-s3` — PROVISIONAL, confidence 0.45** |
         | 15 | held | canon — `b15-r3-s1`, the frame you passed |
 
-        **THE TWO PROVISIONAL FRAMES:**
+        **THE TWO PROVISIONAL FRAMES, both below:**
 
         - **Beat 6 — `b06-r3-s2`.** Your own canon `06-too-blue` with the leaf
           taken out: same blue, same clouds, same light. Picked because it is
@@ -668,6 +722,13 @@ checklist:
         minute. Reject the cut and we have lost a night that cost nothing and
         learned which axis the model reads wrong.
 
+      sheets:
+        - file: review-assets/PICK-b06-r3-s2.jpg
+          label: "beat 06 — b06-r3-s2 — PROVISIONAL"
+          note: "our pick, confidence 0.55; held in v33, ratified by nobody"
+        - file: review-assets/PICK-b14-r3-s3.jpg
+          label: "beat 14 — b14-r3-s3 — PROVISIONAL"
+          note: "our pick, confidence 0.45; say b14-r3-s2 for the bigger plant"
     - n: 13
       ask: "Episode 2, first pass — mostly a listen."
       state: open
@@ -688,7 +749,7 @@ checklist:
 
         **The three filmed beats happen to be the ending** — luck, not design; they
         are the only three of twenty whose frames survived. They run 1:15 to the
-        end.
+        end, and their three plates are below.
 
         | beat | shot | frame | predicted | conf |
         |---|---|---|---|---|
@@ -719,6 +780,16 @@ checklist:
         to act on — no frame is being defended there. The twenty rejected beats go
         back for a round 4 built on composition and negatives, not adjectives.
 
+      sheets:
+        - file: review-assets/PICK-002b-b16-r3-s2.jpg
+          label: "beat 16 — 002b-b16-r3-s2 — PROVISIONAL"
+          note: "confidence 0.40; the goblin the prompt asked for is absent"
+        - file: review-assets/PICK-002b-b18-r3-s0.jpg
+          label: "beat 18 — 002b-b18-r3-s0 — PROVISIONAL"
+          note: "confidence 0.45; white dashed sketch marks ring the fruit"
+        - file: review-assets/PICK-002b-b21-r3-s3.jpg
+          label: "beat 21 — 002b-b21-r3-s3 — PROVISIONAL"
+          note: "confidence 0.50; the tilt reads as a decision, not as wind"
     - n: 14
       ask: "Wan against LTX — filmed, and half of it can't be shown."
       state: open

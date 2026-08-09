@@ -535,6 +535,67 @@ pass-through half of the argument above. Nothing here is resolved and the ratche
 still stands at 38 — but the three ways out must be re-read against what Attachment
 A actually forbids. See item 4 of the 2026-08-04 entry below.
 
+### HALF OF IT IS DECIDED — the visibility half, by the founder, 2026-08-09
+
+His words, in full and unedited:
+
+> put the images from my computer onto there please, not like theres any reason
+> to hide it
+
+**What that settles.** The candidate frames — ten contact sheets and the five
+provisionally picked plates — publish to `banyan.city/review`. They had been
+held back on this entry: item 02 of the checklist said *"the frames are not on
+this page"* and named D15 as the reason, which was the right call while nobody
+had asked him. He asked.
+
+**What it does NOT settle, and nobody here may settle it for him.** The three
+ways out above are still three; he picked none of them in general. The licence
+conflict is untouched: `animagine-xl-3.1` is CreativeML Open RAIL++-M, its use
+restrictions travel to the output, and this tree still offers reusers CC BY 4.0.
+"There is no reason to hide it" is a statement about secrecy, not about what we
+warrant to a stranger who downloads a frame.
+
+**So the implementation is way-out 1, applied to one surface only.** Those images
+publish under an offer narrowed to the restrictions they carry — OpenRAIL++'s
+Attachment A, *not* CC BY 4.0 — said out loud in three places: one line under
+every gallery on the page, a `published_under:` field in each image's sidecar,
+and this entry. Granting only what we hold is what makes them publishable at
+all; the gate is not being relaxed, it is being told what the offer is.
+
+**Three conditions in code, in `licence_gate.REVIEW_GALLERY`, and each closes a
+different route:**
+
+1. the **directory** he named, `cuts/review-assets/` — a declaration, like
+   `archive/` and `takes/`. A frame that moves out is judged with nothing
+   softened;
+2. the **record says so** — no `published_under:` line, no clearance. Without
+   this, dropping a refused file into the right directory would clear it and
+   writing nothing would be cheaper than writing the truth, which is hole 2
+   wearing a new hat;
+3. the **model is one he authorised** — only this one. **D16's LTX clips stay
+   withheld**, because that sign-off is a separate question and he has not
+   answered it, and a model in no table stays withheld too: a licence nobody has
+   read cannot be narrowed to terms nobody has read.
+
+**The debt ratchet does not move, and that is the point rather than a
+convenience.** It counts assets we *cannot* publish. These we can, under the
+narrowed offer, so counting them would make the number mean something else — and
+raising it to absorb them is the move the ratchet exists to stop. They stay
+visible: lint prints them every run as one collapsed advisory that says
+"PUBLISHED ANYWAY, under an offer narrowed…". Debt stayed at 25 across this
+change, verified before and after.
+
+**What is committed is a JPEG rendition, not the original PNG.** 54 MB became
+9.8 MB and clone time is a real cost. Each sidecar records the source path, its
+SHA-256 and the encoding, so a published image is checkable against the frame it
+came from; the candidate PNGs stay gitignored, and this is a published copy
+rather than a promotion to canon.
+
+**Still open and still his:** whether the tree narrows its offer generally
+(which would also answer D13's google-flow finding), re-draws the fifteen
+approved stills on a model whose grant we can pass on, or reasons that the
+restrictions do not conflict in our case.
+
 ---
 
 ## D16 — LTX-2/2.3 is a CANDIDATE under watch-only, gated on three things we control (OPEN — founder call, 2026-08-04; **gate (c) FIRED TWICE on 2026-08-06 — suspended, then SCREENED AND CLEARED ON LOOK; still OPEN because adoption now waits on integration work that is not done. Two addenda at the end, in order. The licence analysis is unchanged throughout**)

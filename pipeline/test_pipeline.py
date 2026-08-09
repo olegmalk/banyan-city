@@ -2702,21 +2702,140 @@ def test_review_page_publishes_nothing_unprovenanced():
     # is kept anyway: this test's job is that the PUBLISHED SET is clean, and it
     # should keep answering that question on its own evidence rather than
     # inheriting whatever the gate currently believes.
-    blocked = []
+    #
+    # ONE CLASS OF ASSET CLEARS WITHOUT AN `allow` LICENCE, and it is a founder
+    # decision rather than an exception this test grew (2026-08-09). The
+    # candidate frames are drawn by animagine-xl-3.1, whose OpenRAIL++ use
+    # restrictions travel; he authorised them onto /review — "not like theres any
+    # reason to hide it" — and they publish under an offer narrowed to those very
+    # restrictions instead of under the site's CC BY 4.0. Granting only what we
+    # hold is what makes them publishable, so they are not a hole in this
+    # assertion; they are a second way of satisfying it, and it is spelled out
+    # here rather than waved through by loosening the check above.
+    blocked, narrowed = [], []
     for n in present:
         side = lg.sidecar_for(cuts_dir / n, lg.META_EXT)
         data = yaml.safe_load(side.read_text(encoding="utf-8")) or {}
         if not isinstance(data, dict):
             continue
+        cleared = lg.review_narrowed(cuts_dir / n, data)
         for key, value in data.items():
             if key.lower() not in lg.PROVENANCE_KEYS:
                 continue
-            licence = lg.engine_licence(value)
-            if licence and lg.classify(licence)[0] != "allow":
+            hits = lg.model_licences(value)
+            for licence in dict.fromkeys(l for _m, l in hits):
+                if lg.classify(licence)[0] == "allow":
+                    continue
+                names = [m for m, l in hits if l == licence]
+                if cleared and lg.narrowed_model(names):
+                    narrowed.append(n)
+                    continue
                 blocked.append(f"{n} ({key})")
     check("every published asset's own record clears the licence gate", not blocked)
     if blocked:
         print("      withheld:", ", ".join(blocked[:6]))
+
+    # The narrowed set is not allowed to quietly spread. Every member must be in
+    # the one directory he named, and the page must say on its face what those
+    # images are served under — a licence recorded only in a sidecar nobody opens
+    # is a licence recorded nowhere.
+    stray = [n for n in set(narrowed) if not n.startswith("review-assets/")]
+    check("nothing outside the review gallery publishes on the narrowed offer", not stray)
+    if stray:
+        print("      stray:", ", ".join(stray[:6]))
+    if narrowed:
+        gallery = {str(s["file"]) for it in (cfg.get("checklist") or {}).get("items") or []
+                   for s in (it.get("sheets") or [])}
+        check("every narrowed asset is shown as a sheet, where the licence line prints",
+              set(narrowed) <= gallery)
+
+
+def test_the_review_gallery_clears_on_three_conditions_and_nothing_less(tmp: Path):
+    """D15's visibility half, and the three things that have to be true for it.
+
+    THE DECISION. The founder, 2026-08-09: *"put the images from my computer onto
+    there please, not like theres any reason to hide it."* That put the candidate
+    frames on /review. It did NOT resolve D15 — animagine-xl-3.1 is CreativeML
+    Open RAIL++-M, its use restrictions travel to the output, and what the tree
+    offers reusers is his call and still open. So the frames publish under an
+    offer narrowed to those restrictions rather than under CC BY 4.0, and
+    narrowing is what makes them genuinely publishable: we grant nothing we do
+    not hold.
+
+    WHY THIS TEST EXISTS RATHER THAN A COMMENT. An exemption in a licence gate is
+    the most dangerous shape of code in this repo — every hole the 2026-08-01
+    audits found was something that looked like a reasonable special case. This
+    one is narrow by construction and each condition closes a different route:
+
+      1. the DIRECTORY he named — `cuts/review-assets/`. A frame that moves out
+         is judged with nothing softened, same rule as promoting an archived take.
+      2. the RECORD declares the offer (`published_under:`). Without this,
+         copying a refused file into the right directory would clear it, and
+         writing nothing would be cheaper than writing the truth — hole 2
+         ("absence is never safer than presence") in a new hat.
+      3. the MODEL is one he authorised. **D16's LTX clips stay refused**: that
+         sign-off is a separate open question and it is still his. A model in no
+         table stays refused too, because a licence nobody has read cannot be
+         narrowed to terms nobody has read.
+
+    And the two halves must agree. licence_gate reports and build_site publishes;
+    if they disagreed about which files these are, lint would print a clean tree
+    while the build shipped something else. Both ask review_narrowed().
+    """
+    sys.path.insert(0, str(REPO / "pipeline"))
+    import yaml
+    import build_site as bs
+    import licence_gate as lg
+
+    good = {"platform": "local-gpu (rtx5090)",
+            "model": "cagliostrolab/animagine-xl-3.1",
+            "published_under": "CreativeML Open RAIL++-M use restrictions, not CC BY 4.0"}
+
+    def case(where: str, rec: dict):
+        """(publishable, gate_errors) for one record in one directory."""
+        root = tmp / where.replace("/", "_")
+        d = root / where
+        d.mkdir(parents=True, exist_ok=True)
+        img = d / f"{len(list(root.rglob('*.jpg')))}.jpg"
+        img.write_bytes(b"\xff\xd8\xff\xdb" + b"0" * 64)
+        (img.parent / (img.name + ".meta.yaml")).write_text(yaml.safe_dump(rec))
+        g = lg.Gate(root)
+        side = img.parent / (img.name + ".meta.yaml")
+        g.scan_record_file(side, tier=g.tier_of(side))
+        # publishable() resolves the gallery by path, so it is asked about the
+        # real repo-relative shape rather than the temp root.
+        return bs.publishable(img)[0], len(g.errors)
+
+    ok, errs = case("cuts/review-assets", dict(good))
+    check("all three conditions: it publishes and is not debt", ok and errs == 0)
+
+    ok, errs = case("cuts/review-assets", {k: v for k, v in good.items()
+                                           if k != "published_under"})
+    check("no `published_under:` line: refused, and counted", not ok and errs == 1)
+
+    ok, errs = case("cuts/checklist", dict(good))
+    check("right record, wrong directory: refused, and counted", not ok and errs == 1)
+
+    ok, errs = case("cuts/review-assets", dict(good, model="Lightricks/LTX-2.3-Distilled"))
+    check("D16's LTX is still refused inside the gallery", not ok and errs == 1)
+
+    ok, errs = case("cuts/review-assets", dict(good, model="someone/never-heard-of-it-v9"))
+    check("an unclassified model is still refused inside the gallery",
+          not ok and errs == 1)
+
+    # The compound string is the one that has bitten before: judging a value by
+    # its softest ingredient is hole 1, and an exemption re-opens it if the
+    # publish path stops at the first licence it can excuse.
+    ok, errs = case("cuts/review-assets", dict(
+        good, model="still: cagliostrolab/animagine-xl-3.1 | motion: Lightricks/LTX-2.3"))
+    check("animagine beside LTX in one value loses on the LTX clause",
+          not ok and errs == 1)
+
+    check("the authorised list names only the D15 model",
+          set(lg.FOUNDER_NARROWED) == {"animagine", "cagliostrolab"})
+    check("every authorised entry cites the decision that authorised it",
+          all("founder" in v and "2026-08-09" in v
+              for v in lg.FOUNDER_NARROWED.values()))
 
 
 def test_review_queue_comes_before_the_record(tmp: Path):
@@ -5309,6 +5428,8 @@ def main():
         test_dispatch_never_hands_a_renderer_a_raw_still(Path(td))
     test_vercel_build_guard_covers_every_site_input()
     test_review_page_publishes_nothing_unprovenanced()
+    with tempfile.TemporaryDirectory() as td:
+        test_the_review_gallery_clears_on_three_conditions_and_nothing_less(Path(td))
     with tempfile.TemporaryDirectory() as td:
         test_review_queue_comes_before_the_record(Path(td))
     test_checklist_does_not_reask_a_closed_question()

@@ -268,6 +268,9 @@ form.compose .hint { font: 500 .78rem/1.6 var(--mono); color: var(--faint); marg
 /* A contact sheet is wide and detailed — it gets the full column and its own
    scroll rather than being squeezed into a phone-shaped box like a clip. */
 .check .sheets figure { margin: 0 0 1.1rem; max-width: none; overflow-x: auto; }
+/* The anchor is the tap target for "open this full size", so it has to be the
+   size of the picture rather than of an inline box around it. */
+.check .sheets a { display: block; }
 .check .sheets img { display: block; width: 100%; min-width: 520px; height: auto;
   border-radius: 12px; border: 1px solid var(--line); background: var(--code-bg); }
 .check .voices figure { margin: 0 0 .8rem; max-width: none; }
@@ -514,14 +517,58 @@ def publishable(f: Path, _inside: frozenset = frozenset()) -> tuple:
         return True, ""
     if not isinstance(data, dict):
         return True, ""
+    # THE ONE PLACE A REFUSED LICENCE STILL PUBLISHES, and it is a founder call
+    # rather than a softening (2026-08-09). D15's conflict is that our CC BY 4.0
+    # offer grants what OpenRAIL++ withholds — so a frame published under an
+    # offer narrowed to OpenRAIL++'s own terms grants nothing we do not hold and
+    # is genuinely publishable. He authorised exactly that for the review
+    # gallery: "put the images from my computer onto there please, not like
+    # theres any reason to hide it."
+    #
+    # The three conditions live in licence_gate (REVIEW_GALLERY) and are asked
+    # THERE, not re-implemented here, because the report and the publish path
+    # disagreeing about which files these are is the failure that matters: lint
+    # would print a clean tree while the build shipped something else. This call
+    # answers the two that are about the file; the per-model one is below, so a
+    # record naming both animagine and LTX still loses on the LTX clause.
+    #
+    # EVERY LICENCE A VALUE NAMES, not just the first one that fails. This used
+    # to ask engine_licence(), which returns the FIRST non-allow licence and
+    # stops — fine while any single failure refused the file, and a hole the
+    # moment one licence can be excused: `still: animagine | motion: LTX-2.3`
+    # would have been excused on the animagine clause and never asked about the
+    # LTX one. Which is hole 1 verbatim ("a compound field is judged by EVERY
+    # model it names"), re-opened by the exemption rather than by the matcher.
+    # The iteration order is model_licences()' own, so the licence NAMED in a
+    # refusal message is the same one it was before this changed.
+    narrowed = lg.review_narrowed(f, data)
     for key, value in data.items():
         if key.lower() not in lg.PROVENANCE_KEYS:
             continue
-        licence = lg.engine_licence(value)
-        if licence is None:
-            continue
-        verdict, _why = lg.classify(licence)
-        if verdict != "allow":
+        hits = lg.model_licences(value)
+        # A NARROWED OFFER NEEDS A MODEL TO NARROW TO. Everywhere else on the
+        # site a value naming no model we have classified is copied out and left
+        # for the licence gate to report as debt — deliberate, and documented in
+        # licence_gate.is_candidate: the build does not withhold what it cannot
+        # judge, CI fails on it instead. That trade stops working in this one
+        # directory. The gallery's whole clearance is "published under the terms
+        # this model imposes", so a record naming a model nobody has read states
+        # terms nobody has read, and the exemption would become the cheapest way
+        # onto the site: any refused file, one invented model name, one
+        # `published_under:` line. Sentinels and pointers are honoured as they
+        # are in the gate — `model: none` on a slate declares no model rather
+        # than hiding one.
+        if narrowed and not hits:
+            norm = lg.normalise(value)
+            if norm not in lg.SENTINELS and not lg.POINTER.search(norm):
+                return False, (f"{PUBLIC_REASON['unknown']} — nobody here has "
+                               "written down what made it")
+        for licence in dict.fromkeys(licence for _n, licence in hits):
+            verdict, _why = lg.classify(licence)
+            if verdict == "allow":
+                continue
+            if narrowed and lg.narrowed_model([n for n, l in hits if l == licence]):
+                continue                   # D15 visibility half — see above
             # 'unknown' is withheld too, not waved through. Unknown means
             # nobody has read the terms — and "we do not know whether we may
             # publish this" is not a reason to publish it to the open web. It
@@ -2046,16 +2093,17 @@ REVIEW_NODE = REPO / "genomes" / "sapling" / "nodes" / "001-capability-inventory
 CUT_STAMP = ('<p class="stamp"><b>WORKING CUT — NOT THE EPISODE.</b> '
              'The author has not passed this. It is here so he can screen it; '
              'nothing about it is settled and it is not what the show is.</p>')
-# Said ONCE, above the queue, instead of on every card that stands on a guess.
-# Before 2026-08-09 each provisional item repeated its own version of this and
-# the repetition was most of what made the page long; the per-item prediction
-# and confidence lines still exist, one fold down, where they belong — they are
-# how his verdict scores the model, not how he finds the work.
-PROV_BANNER = ('<p class="notice standing"><b>Some of these were built ahead of you.</b> '
-               'Where the steward guessed your taste it says so, by address, inside '
-               'the item — nothing was published, posted, spent or made canon on a '
-               'guess. <b>Flips are cheap by design:</b> overturning one costs a word '
-               'and a re-render, and it is the answer that teaches the model most.</p>')
+# Said ONCE, above the queue, instead of on every card that stands on a guess —
+# and said in one line, because on 2026-08-09 he read the five-line version of it
+# and called the page yap. Everything the long one said is still true and still
+# printed where it is actionable: the address of each guess and its confidence
+# are in the item they belong to, and "nothing was published, posted, spent or
+# made canon" is the record's job rather than a standing header's.
+PROV_BANNER = ('<p class="notice standing">Some picks below are the machine’s '
+               'guesses — flip anything.</p>')
+# The line under "Your queue". Same rule: it labels the section, it does not
+# explain the design of the section.
+QUEUE_LEDE = '<p class="said">The argument behind each is one fold down.</p>'
 
 
 def inline_md(text: str) -> str:
@@ -2299,16 +2347,32 @@ def render_review() -> str:
                       f'{html.escape(str(c.get("note", "")))}{rec_link(rel)}</figcaption></figure>')
         clips_html = f'<div class="two">{cells}</div>' if cells else ""
 
+        # A CONTACT SHEET IS FOUR TO TWENTY PICTURES IN ONE FILE, so the inline
+        # copy is never the copy he judges from — it is 2060x4024 squeezed into a
+        # phone column. The <a> is what makes the item answerable: tap the sheet
+        # and the browser opens the image on its own, where a pinch-zoom can
+        # actually read a leaf. Same file either way, so it costs no extra bytes;
+        # `loading="lazy"` keeps the ten of them off the first paint.
         sheets = ""
         for s in it.get("sheets") or []:
             rel = serve_image(str(s["file"]))
             if not rel:
                 continue
-            sheets += (f'<figure><img src="{html.escape(rel)}" loading="lazy" '
+            sheets += (f'<figure><a href="{html.escape(rel)}" target="_blank" '
+                       f'rel="noopener"><img src="{html.escape(rel)}" loading="lazy" '
                        f'alt="{html.escape(str(s.get("alt", s.get("label", "candidate frames"))))}">'
-                       f'<figcaption><span class="k">{html.escape(str(s.get("label", "")))}</span>'
+                       f'</a><figcaption><span class="k">{html.escape(str(s.get("label", "")))}</span>'
                        f'{html.escape(str(s.get("note", "")))}{rec_link(rel)}</figcaption></figure>')
-        sheets_html = f'<div class="sheets">{sheets}</div>' if sheets else ""
+        # §7.2 ON THE SURFACE, not only in the sidecar. These frames publish under
+        # an offer narrowed away from the site's CC BY 4.0 (D15, founder,
+        # 2026-08-09), and a reader who saves one is owed that in the place he
+        # saves it from — a licence stated only in a yaml file nobody opens is a
+        # licence stated nowhere. One line under the gallery, not one per image.
+        sheets_html = (f'<div class="sheets">{sheets}</div>'
+                       '<p class="smallprint">Drawn by <code>animagine-xl-3.1</code>; '
+                       'CreativeML Open RAIL++-M — outputs carry use restrictions, so '
+                       'these images are <b>not</b> under this site’s CC BY 4.0. '
+                       'Provenance beside each.</p>') if sheets else ""
 
         # Narration is judged by ear, so it gets a real player rather than a
         # link. Same gate, same travelling record: a voice take whose engine
@@ -2402,10 +2466,7 @@ def render_review() -> str:
     queue_html = ""
     if queue:
         queue_html = ('<section class="block" id="checklist"><h2>Your queue</h2>'
-                      '<p class="said">Open items only, in the order they unblock '
-                      'the most. Each card says where the thing is and how to answer '
-                      'it; the argument behind it is one fold down.</p>'
-                      + PROV_BANNER + "".join(queue) + '</section>')
+                      + QUEUE_LEDE + PROV_BANNER + "".join(queue) + '</section>')
 
     # The title and intro cuts.yaml writes for the checklist are the note that
     # came WITH the list, not the list. They keep every word and move behind a
