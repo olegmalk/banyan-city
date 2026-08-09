@@ -126,6 +126,7 @@ JUST_FINISHED_MINUTES = 30      # a machine that just handed work in is still wa
 # invisible-buildings bug, 2026-07-30). Failures are collected here and printed
 # on the page in words.
 FETCH_ERRORS: list = []
+BRANCH_LIST_LABEL = "the list of machine branches"
 
 
 def _reason(exc) -> str:
@@ -138,12 +139,15 @@ def _reason(exc) -> str:
     return str(exc) or exc.__class__.__name__
 
 
-def _get(url, label=None):
-    """Fetch text. On failure return "" AND record a printable reason.
+def _fetch(url, label=None, absent_ok=False):
+    """(text, status) where status is "ok", "absent" or "failed".
 
-    `label` names the datum in a stranger's words; pass None only when the file
-    being asked for is legitimately optional (not every machine publishes
-    vitals), so a normal absence does not read as a fault.
+    THE THREE ARE NOT TWO. "The file is not there" and "we could not ask" have
+    always collapsed into the same empty string here, and every caller that
+    treated the result as data therefore published a guess as a fact. They are
+    split at the source so no reader has to guess which one it got: `absent`
+    only ever means a 404 the caller said it could live with, and everything
+    else that goes wrong is `failed` and is printed on the page in words.
     """
     headers = {"User-Agent": "banyan-sim-build"}
     token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
@@ -152,15 +156,35 @@ def _get(url, label=None):
     try:
         req = urllib.request.Request(url, headers=headers)
         with urllib.request.urlopen(req, timeout=15) as r:
-            return r.read().decode()
+            return r.read().decode(), "ok"
     except Exception as e:
+        if absent_ok and getattr(e, "code", None) == 404:
+            return "", "absent"
         if label:
             FETCH_ERRORS.append((label, _reason(e)))
-        return ""
+        return "", "failed"
 
 
-def _api(path, label):
-    raw = _get(f"{API}{path}", label)
+def _get(url, label=None):
+    """Fetch text. On failure return "" AND record a printable reason.
+
+    `label` names the datum in a stranger's words; pass None only when the file
+    being asked for is legitimately optional (not every machine publishes
+    vitals), so a normal absence does not read as a fault.
+    """
+    return _fetch(url, label)[0]
+
+
+def _api(path, label, absent_ok=False):
+    """Parsed JSON, or None when we could not find out.
+
+    With `absent_ok`, a 404 answers `[]` — the thing does not exist, which is a
+    complete answer and not a failure. None is reserved for "we asked and do not
+    know", and callers key their wording on the difference.
+    """
+    raw, status = _fetch(f"{API}{path}", label, absent_ok=absent_ok)
+    if status == "absent":
+        return []
     if not raw:
         return None
     try:
@@ -226,15 +250,25 @@ def age_el(then, now=None) -> str:
 def farm_branches():
     """farm-results-* branches via the public API — the deploy server has no
     local refs (the invisible-buildings bug, 2026-07-30). If the API cannot be
-    reached we fall back to the machines this file already knows by name, so the
-    street is never silently empty; the missing datum is reported instead."""
-    data = _api("/branches?per_page=100", "the list of machine branches")
+    reached we fall back to every branch this file already knows by name, so the
+    street is never silently empty; the missing datum is reported instead.
+
+    THE FALLBACK HAS TO NAME THE LEDGERS TOO. It listed MACHINES alone, and
+    every reader of a ledger — read_ledgers, and through it "Finished today",
+    the done-id set and the rendering-now check — comes through this one
+    function. So a rate-limited build did not merely lose the hand branch's
+    tile (it has none); it published "Finished today: 0" on a day people had
+    finished work by hand, and re-opened their queue entries as runnable. A
+    zero that means "we could not ask" is the invisible-buildings bug again,
+    one heading over.
+    """
+    data = _api("/branches?per_page=100", BRANCH_LIST_LABEL)
     if isinstance(data, list):
         names = sorted(b["name"] for b in data
                        if str(b.get("name", "")).startswith("farm-results-"))
         if names:
             return names
-    return [f"farm-results-{k}" for k in MACHINES]
+    return sorted(f"farm-results-{k}" for k in list(MACHINES) + list(LEDGERS))
 
 
 def branch_heartbeat(branch):
@@ -244,7 +278,69 @@ def branch_heartbeat(branch):
     return txt.strip().splitlines()[-1] if txt.strip() else ""
 
 
-def heartbeat_history(branch, n=30):
+def line_time(line: str, commit_when):
+    """When a check-in line says IT happened, dated by the commit that carried it.
+
+    A commit time is when a line was pushed. The `HH:MM:SSZ` at the head of the
+    line is when the thing it reports happened, written by the runner at that
+    moment — and the footer promises every age on this page counts from the
+    moment its own datum was recorded. For these lines the stamp IS that moment;
+    the commit only says when we got told. Courier pushes a machine's log on a
+    cycle, and a person claiming a task by hand pushes whenever they get to it,
+    so the gap is real and always in the same direction.
+
+    Only the clock is on the line; the DAY comes from the commit, which is safe
+    in the one direction that matters. A line cannot be committed before it is
+    written, so a stamp landing AFTER its own commit was written the previous
+    day and pushed past midnight — the two minutes of slack absorb clock skew
+    between a box and GitHub, not a real interval. Past a day of lag there is
+    nothing on the line to reconstruct from and the commit time stands, which is
+    also what happens for farm_worker's subjects: it commits `hb: {stage}` and
+    keeps the clock in the file, so those lines simply have no stamp to prefer.
+    """
+    m = re.match(r"^(\d{2}):(\d{2}):(\d{2})Z(?:\s|$)", line or "")
+    if not m or commit_when is None:
+        return commit_when
+    h, mi, s = (int(x) for x in m.groups())
+    if h > 23 or mi > 59 or s > 59:
+        return commit_when
+    stamped = commit_when.replace(hour=h, minute=mi, second=s, microsecond=0)
+    if stamped - commit_when > datetime.timedelta(minutes=2):
+        stamped -= datetime.timedelta(days=1)
+    return stamped
+
+
+def log_label(branch) -> str:
+    """What a failed check-in read is called on the page — one spelling, because
+    logs_unread() matches on it and a second spelling would silently stop
+    matching."""
+    return f"the check-in dates for {branch}"
+
+
+def logs_unread() -> list:
+    """The check-in logs this build asked for and did not get, by branch.
+
+    "Nothing finished today" and "we could not find out what finished today" are
+    different statements and the page had only ever been able to make the first.
+    Everything that answers the work-list counters comes through the branch list
+    and the per-branch log reads, so a failure in either means the counters do
+    not know — and a counter that does not know must say so rather than print a
+    zero. Read off FETCH_ERRORS, which is already the record of what failed.
+    """
+    out = []
+    for lab, _why in FETCH_ERRORS:
+        if lab == BRANCH_LIST_LABEL:
+            name = "the branch list"
+        elif lab.startswith("the check-in dates for "):
+            name = lab.split("the check-in dates for ")[-1]
+        else:
+            continue
+        if name not in out:   # the branch list is asked for once per reader
+            out.append(name)
+    return out
+
+
+def heartbeat_history(branch, n=30, absent_ok=False):
     """[(when, line)] newest first — the check-in log WITH real dates.
 
     THIS IS THE FIX FOR THE OLDEST LIE ON THE PAGE. heartbeat.txt records
@@ -253,17 +349,23 @@ def heartbeat_history(branch, n=30):
     "12 h ago". The worker commits each line separately with the line as the
     commit message, so the history of that one path is the same log with the
     date attached — one request per machine, exact, no reconstruction.
+
+    The commit supplies the DATE; where the line carries its own clock the line
+    supplies the TIME (see line_time), so an entry is aged from when it was
+    written and not from when it reached us. Re-sorted on that reading, because
+    every caller below walks this list newest-first.
     """
     data = _api(f"/commits?sha={branch}&path=farm-out/heartbeat.txt&per_page={n}",
-                f"the check-in dates for {branch}")
+                log_label(branch), absent_ok=absent_ok)
     out = []
     for c in data or []:
         when = _iso((c.get("commit") or {}).get("committer", {}).get("date"))
         if when is None:
             continue
         msg = str((c.get("commit") or {}).get("message", "")).splitlines()[0]
-        out.append((when, msg[4:].strip() if msg.startswith("hb: ") else msg.strip()))
-    return out
+        line = msg[4:].strip() if msg.startswith("hb: ") else msg.strip()
+        out.append((line_time(line, when), line))
+    return sorted(out, key=lambda r: r[0], reverse=True)
 
 
 def telemetry_head(branch):
@@ -702,9 +804,14 @@ def read_ledgers(now=None) -> list:
     of these should fail loudly rather than publish a machine that does not
     exist. `history` and `name` are what the counters need and all they get.
 
-    Only branches the API actually listed are read. Reaching for a ledger branch
-    that has not been created yet would post a fetch failure on the page about a
-    file nobody ever promised was there.
+    Normally only branches the API actually listed are read: reaching for a
+    ledger branch that has not been created yet would post a fetch failure on
+    the page about a file nobody ever promised was there. The one exception is
+    the fallback, where the API answered nothing at all and farm_branches names
+    the ledgers from this file — the same assumption it has always made about
+    the machines, and the cheaper of the two errors. A fetch note about a branch
+    we could not read is a true statement; "nobody finished anything today",
+    printed because we never asked, is not.
     """
     now = now or utcnow()
     out = []
@@ -713,7 +820,8 @@ def read_ledgers(now=None) -> list:
         if key not in LEDGERS:
             continue
         out.append({"key": key, "branch": branch, "name": LEDGERS[key],
-                    "ledger": True, "history": heartbeat_history(branch)})
+                    "ledger": True,
+                    "history": heartbeat_history(branch, absent_ok=True)})
     return out
 
 
@@ -734,14 +842,33 @@ def hb_mark(line: str) -> str:
     return m.group(1) if m else ""
 
 
+def hb_note(line: str) -> str:
+    """The free text a check-in line carries beyond the format — a runner's own
+    words about the job, or "" when it wrote none.
+
+    Everything the format defines is stripped: the leading clock, the mark, the
+    `task=<id>` token and the `by-hand` marker. What is left is a sentence
+    somebody typed, and for a claim written after the fact it is the only place
+    the evidence commit is named. farm_worker types nothing, so its lines answer
+    "" here and the caller falls back as it always did.
+    """
+    rest = re.sub(r"^(?:\d{2}:\d{2}:\d{2}Z\s+)?[A-Z][A-Z_]*\b", "", line or "")
+    rest = re.sub(r"\btask=[\w.-]+", "", rest)
+    rest = re.sub(r"\bby-hand\b", "", rest)
+    return " ".join(rest.split())
+
+
 def finished_today(records: list, now=None) -> list:
-    """[(when, who, task id)] for every job that finished since midnight UTC —
+    """[(when, who, task id, note)] for every job that finished since midnight —
     read off the dated commit log, so 'today' is a fact and not an inference
     from a clock time with no day attached.
 
     `records` is the machines PLUS the ledgers (read_ledgers), so "who" is
     either a machine's name or "run by hand". A job a person finished is a job
     finished, and it is the one kind this counter used to be unable to see.
+
+    The line's own note rides along, because for the rows most likely to need it
+    the queue has already forgotten the id (finished_line_story).
     """
     now = now or utcnow()
     start = now.replace(hour=0, minute=0, second=0, microsecond=0)
@@ -751,8 +878,28 @@ def finished_today(records: list, now=None) -> list:
             if when < start or hb_mark(line) != "DONE":
                 continue
             tid = re.search(r"task=([\w.-]+)", line)
-            out.append((when, m["name"], tid.group(1) if tid else ""))
+            out.append((when, m["name"], tid.group(1) if tid else "", hb_note(line)))
     return sorted(out, reverse=True)
+
+
+def finished_line_story(task: dict, note: str) -> str:
+    """What a "Finished today" row calls the job it reports.
+
+    The queue entry is the better answer and usually there is one. When there is
+    not, the row used to read "a job the queue no longer lists" — and that is
+    not a rare case, it is the NORMAL end state: the promoter retires an entry
+    the moment its DONE line lands, so the ids most certain to miss the lookup
+    are the ones whose work most certainly shipped. Five such rows published the
+    same eleven words on 2026-08-09, indistinguishable and uncheckable.
+
+    The line is not silent about itself. A claim carries the claimer's note,
+    which names the commit the work landed in — more specific than the queue's
+    own wording and checkable against the repo, which the generic sentence never
+    was. It only falls back when the runner really did write nothing.
+    """
+    if task:
+        return task_story(task)[0]
+    return note or "a job the queue no longer lists"
 
 
 def task_ids_done(records: list) -> set:
@@ -793,6 +940,14 @@ def task_running(tid: str, records: list) -> dict:
 # ------------------------------------------------------------------- pieces ---
 def _e(s):
     return html.escape(str(s))
+
+
+def _and_list(items) -> str:
+    """`a`, `a and b`, `a, b and c` — names in a sentence, not a bare count."""
+    items = [str(i) for i in items]
+    if len(items) <= 1:
+        return items[0] if items else ""
+    return ", ".join(items[:-1]) + " and " + items[-1]
 
 
 def scene_list_html(rows: list) -> str:
@@ -1930,18 +2085,40 @@ def build(out_dir: Path):
     fin = finished_today(records, now)
     if fin:
         fin_rows = ""
-        for when, who, tid in fin:
-            t = by_id.get(tid)
-            what = task_story(t)[0] if t else "a job the queue no longer lists"
+        for when, who, tid, note in fin:
+            what = finished_line_story(by_id.get(tid), note)
             fin_rows += (f'<div class="prod-row"><b>{_e(who)}</b> · {_e(what)}'
                          f'<br><span class="mono">finished {age_el(when, now)}</span></div>')
         done_html = (f'<h3>✅ Finished today <span class="count">{len(fin)}</span></h3>'
                      + fin_rows)
+    elif logs_unread():
+        # NO NUMBER AT ALL — the infra meter's contract, for the same reason. A
+        # zero printed off a read that failed is this page inventing the most
+        # reassuring answer on exactly the failure it exists to catch.
+        unread = logs_unread()
+        named = (_and_list(unread) if len(unread) <= 3
+                 else f"{len(unread)} of the check-in logs")
+        done_html = ('<h3>✅ Finished today <span class="count">—</span></h3>'
+                     f'<p class="notice">This build could not read {_e(named)}, so '
+                     'it does not know what finished today and will not print a zero '
+                     'it did not measure. The reason is listed with the other fetch '
+                     'failures above.</p>')
     else:
+        # WHAT THE ZERO ACTUALLY MEANS, in the words it can defend. "No job has
+        # finished" is false in plain English on a day when plenty of work
+        # shipped — the check-in log only ever records what a RENDER runner ran.
+        # A code or writing task finishes by having its queue entry retired and
+        # never writes a check-in line at all (pipeline/farm-queue.yaml:65-67,
+        # the rule `after:` is built on), so a full day of it still reads 0 here.
+        # Written after five such jobs were given heartbeat lines they were not
+        # entitled to, purely to move this number off 0, and retracted (4924a29).
         done_html = ('<h3>✅ Finished today <span class="count">0</span></h3>'
-                     '<p class="notice">No job has finished since midnight UTC. '
-                     'Today is read off the dated check-in log, not guessed from a '
-                     'clock time with no day attached.</p>')
+                     '<p class="notice">No render job has finished since midnight '
+                     'UTC. This counts work a render machine ran and logged; a code '
+                     'or writing task finishes by its queue entry being retired and '
+                     'never writes a check-in line, so a day of that work still '
+                     'reads 0 here. Today is read off the dated check-in log, not '
+                     'guessed from a clock time with no day attached.</p>')
 
     blocked_total = sum(v["est"] or 0 for v in map(backlog_entry_view, backlog))
     production = (

@@ -2654,15 +2654,32 @@ def test_links_resolve_against_the_url_a_page_is_served_at(tmp: Path):
     sys.path.insert(0, str(REPO / "pipeline"))
     import build_site as bs
 
-    check("a subdirectory index is served from its parent",
-          bs.served_base("review/index.html") == "")
-    check("...and so is the trials page", bs.served_base("trials/index.html") == "")
-    check("the root index is served from the root",
-          bs.served_base("index.html") == "")
-    check("a named page keeps its own directory",
-          bs.served_base("watch/season.html") == "watch")
-    check("...including a node's shot board",
-          bs.served_base("sapling/001-x-shots.html") == "sapling")
+    # Pinned against BOTH host settings rather than against whatever vercel.json
+    # says today: a config agent is free to turn trailingSlash on, and a test
+    # that silently re-pointed at the new answer would stop testing anything.
+    import json as _json
+    real = bs._trailing_slash
+    bs._trailing_slash = lambda: False
+    try:
+        check("a subdirectory index is served from its parent",
+              bs.served_base("review/index.html") == "")
+        check("...and so is the trials page", bs.served_base("trials/index.html") == "")
+        check("the root index is served from the root",
+              bs.served_base("index.html") == "")
+        check("a named page keeps its own directory",
+              bs.served_base("watch/season.html") == "watch")
+        check("...including a node's shot board",
+              bs.served_base("sapling/001-x-shots.html") == "sapling")
+        bs._trailing_slash = lambda: True
+        check("turn trailingSlash on and the base moves back down a level",
+              bs.served_base("review/index.html") == "review")
+        check("...while a named page is unaffected by the setting",
+              bs.served_base("watch/season.html") == "watch")
+    finally:
+        bs._trailing_slash = real
+    cfg = _json.loads((REPO / "vercel.json").read_text(encoding="utf-8"))
+    check("and the live rule is READ from vercel.json, never assumed",
+          bs._trailing_slash() == bool(cfg.get("trailingSlash", False)))
 
     check("the break: a relative asset on /review points at the site root",
           bs.resolve_url("", "review-assets/x.jpg") == "review-assets/x.jpg")
@@ -5336,7 +5353,7 @@ def test_a_job_run_by_hand_reaches_the_status_counters():
 
     fin = bs.finished_today([box, hand], now)
     check("a job finished by hand is in Finished today",
-          [who for _w, who, t in fin if t == tid] == ["run by hand"])
+          [who for _w, who, t, _n in fin if t == tid] == ["run by hand"])
     check("...beside the machine's, not instead of it", len(fin) == 2)
     check("...and its queue entry stops publishing itself as runnable",
           tid in bs.task_ids_done([box, hand]))
@@ -5352,6 +5369,190 @@ def test_a_job_run_by_hand_reaches_the_status_counters():
                               [(now - datetime.timedelta(days=1), done)]}], now) == [])
     check("and the ledger still gets no building on the street",
           "hand" in bs.NOT_A_MACHINE and "hand" not in bs.MACHINES)
+
+
+def test_a_retired_id_still_says_what_the_job_was():
+    """"Finished today" reads the LINE when the queue has forgotten the entry.
+
+    The fallback wording, "a job the queue no longer lists", was written for a
+    rare case and lands on the common one: the promoter retires an entry the
+    instant its DONE line appears, so the ids most sure to miss the lookup are
+    the ones whose work most surely shipped. On 2026-08-09 five rows printed
+    those same eleven words — five finished jobs, nothing to tell them apart,
+    nothing a reader could check. The claim line itself names its evidence
+    commit, and that sentence is what the row should be saying.
+    """
+    import claim_task as ct
+    import build_sim as bs
+
+    tid = "composite-provenance-manifest-1786218000"
+    note = "backfilled 2026-08-09 by status-audit; ran and completed 11:04:00Z, evidence 39224e5"
+    # Built by claim_task, for the same reason the test above does it: the note
+    # has to survive the exact format that writer produces, not a literal here.
+    line = ct.heartbeat_line("done", tid, note=note, clock=0)
+    check("the note is read back whole, past the clock, mark, id and by-hand",
+          bs.hb_note(line) == note)
+    check("a worker line that carries no note answers with no note",
+          bs.hb_note("DONE task=a-box-task-1786000001") == "")
+    check("...and neither reading disturbs the mark or the id",
+          bs.hb_mark(line) == "DONE" and f"task={tid}" in line)
+
+    check("a retired id reports the claim's own words, not the generic sentence",
+          bs.finished_line_story(None, bs.hb_note(line)) == note)
+    check("...and a runner that wrote nothing still gets the honest fallback",
+          bs.finished_line_story(None, "") == "a job the queue no longer lists")
+    # A live queue entry is the better answer and keeps winning: the note is the
+    # fallback's fallback, never an override of what the queue says it asked for.
+    task = {"id": tid, "video": True, "video_model": "ti2v-5b", "seconds": 3.0}
+    check("a queue entry that still exists is still what the row reports",
+          bs.finished_line_story(task, note) == bs.task_story(task)[0] != note)
+
+    import datetime
+    now = datetime.datetime(2026, 8, 9, 16, 30, tzinfo=datetime.timezone.utc)
+    hand = {"name": bs.LEDGERS["hand"],
+            "history": [(now - datetime.timedelta(hours=4), line)]}
+    check("and the note travels out of the counter, not just off the line",
+          [n for _w, _who, _t, n in bs.finished_today([hand], now)] == [note])
+
+
+def test_an_age_counts_from_the_line_not_from_the_push():
+    """A check-in is as old as its own stamp, not as old as its commit.
+
+    heartbeat_history dated every entry by commit time, which is when a line
+    reached GitHub. Courier pushes a box's log on a cycle and a person pushes a
+    hand claim whenever they get to it, so the commit always trails the event by
+    an unknown amount — and the page's footer promises the opposite, that every
+    age counts from the moment its own datum was recorded. The line's own clock
+    IS that moment wherever a writer stamps one.
+    """
+    import datetime
+    import build_sim as bs
+
+    commit = datetime.datetime(2026, 8, 9, 12, 30, 0, tzinfo=datetime.timezone.utc)
+    check("a line pushed half an hour late is aged from when it was written",
+          bs.line_time("12:00:00Z DONE task=x by-hand", commit)
+          == commit.replace(hour=12, minute=0, second=0))
+    # farm_worker commits `hb: {stage}` and keeps the clock in the file, so its
+    # subjects have no stamp to prefer and must fall through untouched.
+    check("a line with no clock of its own keeps its commit time",
+          bs.line_time("DONE task=x", commit) == commit)
+    check("...and so does one whose clock is not a time",
+          bs.line_time("99:99:99Z DONE task=x", commit) == commit)
+    check("no commit date, nothing to date a clock against",
+          bs.line_time("12:00:00Z DONE task=x", None) is None)
+
+    # WRITTEN BEFORE MIDNIGHT, PUSHED AFTER. The commit supplies the day, so a
+    # stamp landing after its own commit can only be the previous one — a line
+    # cannot be committed before it is written.
+    after_midnight = datetime.datetime(2026, 8, 9, 0, 10, 0, tzinfo=datetime.timezone.utc)
+    check("a line pushed past midnight belongs to the day it was written",
+          bs.line_time("23:50:00Z DONE task=x by-hand", after_midnight)
+          == datetime.datetime(2026, 8, 8, 23, 50, tzinfo=datetime.timezone.utc))
+    check("...while a second of clock skew is skew, not a whole day back",
+          bs.line_time("00:10:01Z DONE task=x by-hand", after_midnight).day == 9)
+
+    # And the consequence that matters: a job whose line was written yesterday
+    # and pushed today is yesterday's work, however today the commit looks.
+    now = datetime.datetime(2026, 8, 9, 6, 0, tzinfo=datetime.timezone.utc)
+    line = "23:50:00Z DONE task=x by-hand"
+    hand = {"name": bs.LEDGERS["hand"],
+            "history": [(bs.line_time(line, after_midnight), line)]}
+    check("yesterday's line does not become today's by being pushed today",
+          bs.finished_today([hand], now) == [])
+
+
+def test_a_rate_limited_build_can_still_see_hand_work():
+    """The API-down fallback names the ledgers, not the machines alone.
+
+    farm_branches is the single door every branch reader goes through, so a
+    fallback listing MACHINES only did not just cost the hand ledger a tile it
+    never had: read_ledgers returned nothing, "Finished today" printed 0 on a
+    day people had finished work, and their retired queue entries re-opened as
+    runnable. That is the invisible-buildings bug one heading over — a zero that
+    actually means "we could not ask".
+    """
+    import build_sim as bs
+
+    real_api = bs._api
+    try:
+        bs._api = lambda *a, **k: None          # GitHub rate-limited us
+        fallback = bs.farm_branches()
+    finally:
+        bs._api = real_api
+
+    check("the fallback still names every machine",
+          all(f"farm-results-{k}" in fallback for k in bs.MACHINES))
+    check("and it names the ledgers, which it used to drop",
+          all(f"farm-results-{k}" in fallback for k in bs.LEDGERS))
+    check("nothing else is invented", len(fallback) == len(bs.MACHINES) + len(bs.LEDGERS))
+    # The ledger is in the branch list and still not a building: read_machines
+    # drops it on NOT_A_MACHINE, which is the only thing that exclusion was for.
+    check("...and the ledger branch is still not a machine",
+          [b for b in fallback if b.split("farm-results-")[-1] in bs.NOT_A_MACHINE]
+          == ["farm-results-hand"])
+
+
+def test_a_log_it_could_not_read_is_not_a_day_with_no_work():
+    """"Nothing finished" and "we could not find out" must not print the same.
+
+    The zero-state sentence asserted an empty day off a read that may never have
+    happened: rate-limit the branch list and every counter on the work list goes
+    quiet, with the most reassuring possible wording. That is the infra meter's
+    lesson one heading over — where a failed read prints NO number rather than a
+    stale or invented one — so the same contract applies here.
+
+    The other half is that a 404 is not a failure. A ledger branch exists only
+    once somebody has claimed a task by hand; on a day nobody has, asking for it
+    correctly answers "there is nothing there", and that is knowledge, not an
+    outage. farm-results-hand was deleted on 2026-08-09 (4924a29) and the page
+    must read that as a quiet true zero, not as a fault.
+    """
+    import build_sim as bs
+
+    saved = list(bs.FETCH_ERRORS)
+    try:
+        bs.FETCH_ERRORS[:] = []
+        check("a build with every read intact knows what it knows",
+              bs.logs_unread() == [])
+
+        bs.FETCH_ERRORS[:] = [(bs.BRANCH_LIST_LABEL, "GitHub is rate-limiting this build")]
+        check("a rate-limited branch list is an unread log, not an empty day",
+              bs.logs_unread() == ["the branch list"])
+
+        bs.FETCH_ERRORS[:] = [(bs.log_label("farm-results-hand"), "GitHub answered HTTP 500")]
+        check("...and so is one branch's own log failing",
+              bs.logs_unread() == ["farm-results-hand"])
+        # The label is built in one place precisely so this match cannot rot.
+        check("the failure the page prints is the one logs_unread looks for",
+              bs.log_label("farm-results-msi") == "the check-in dates for farm-results-msi")
+    finally:
+        bs.FETCH_ERRORS[:] = saved
+
+    # A 404 the caller said it could live with is an ANSWER: empty list, and
+    # nothing added to the page's list of faults.
+    import urllib.error
+    saved = list(bs.FETCH_ERRORS)
+    real_fetch = bs.urllib.request.urlopen
+    try:
+        bs.FETCH_ERRORS[:] = []
+
+        def gone(*a, **k):
+            raise urllib.error.HTTPError("u", 404, "Not Found", {}, None)
+        bs.urllib.request.urlopen = gone
+        check("a ledger branch that does not exist reads as empty, not as broken",
+              bs.heartbeat_history("farm-results-hand", absent_ok=True) == [])
+        check("...and posts no fault about a branch nobody promised was there",
+              bs.FETCH_ERRORS == [] and bs.logs_unread() == [])
+
+        def limited(*a, **k):
+            raise urllib.error.HTTPError("u", 429, "Too Many Requests", {}, None)
+        bs.urllib.request.urlopen = limited
+        check("a rate limit is still a fault even where absence is tolerated",
+              bs.heartbeat_history("farm-results-hand", absent_ok=True) == []
+              and bs.logs_unread() == ["farm-results-hand"])
+    finally:
+        bs.urllib.request.urlopen = real_fetch
+        bs.FETCH_ERRORS[:] = saved
 
 
 # ====================================================================== #
@@ -5750,6 +5951,11 @@ def main():
     test_a_hand_claim_reads_the_verdict_off_the_exit_code()
     test_a_hand_claim_refuses_an_id_nobody_filed()
     test_a_job_run_by_hand_reaches_the_status_counters()
+    # WHAT THE WORK LIST SAYS WHEN IT DOES NOT KNOW — pure: urlopen is stubbed.
+    test_a_retired_id_still_says_what_the_job_was()
+    test_an_age_counts_from_the_line_not_from_the_push()
+    test_a_rate_limited_build_can_still_see_hand_work()
+    test_a_log_it_could_not_read_is_not_a_day_with_no_work()
     # A CONCATENATION MUST NOT LAUNDER ITS INPUTS — own temp dir each: these
     # rewrite and delete source clips under a manifest that names them.
     with tempfile.TemporaryDirectory() as td:
