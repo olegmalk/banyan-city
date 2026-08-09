@@ -1,0 +1,65 @@
+# Still provenance (7.2), written AT RENDER TIME by render_b05r5.py
+# on the rtx5090 (C:\banyan-farm\sample-b05-r5\out).
+# The negative below is what the model actually saw. The recipe's own
+# negative, before this script's one deliberate removal, was:
+#   photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, girl, child, photorealism, text, dark fantasy, night, glowing eyes, hood, weapon, sword, knife, armor plate
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+shot_beat: 5
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20264724
+seeds_in_batch: 4
+task: ep2-b05-r5-register-0810
+queue_entry: ep2-b05-r5-register-0810
+render_round: r5
+candidate_set: r5
+negative_terms_removed: none (tall tree not present)
+count_tag: 2boys
+count_tag_derived: 2others
+count_tag_r3: 2others
+count_tag_r4: 2boys
+count_tag_injected: true
+count_tag_note: >-
+  INJECTED SCRIPT-SIDE, NOT DERIVED, AND THE PROSE CONTAINS NO MALE NOUN. sd_prompt._tag_from_clause tests _MALE before _OTHER on the first comma-clause: r4's `Two round guard men` hit `men` and returned 2boys, and deleting `men` — which is this round's point, it composed with the armor into a knight — returns 2others, the indeterminate humanoid tag the earlier failures came out of. Keeping r4's one proven win while dropping the word that caused its failure is therefore impossible through the derived path. The leading tag is rewritten after compress(), the same declared transform render_b06r5.py used on node 001 beat 6 and that commit 1aab710 identified as the real mechanism behind that round's clean frames. Derived and sent are both asserted at run time.
+positive_before_tag_injection: 2others, two plump guards drawn as round harmless shapes in mismatched ill-fitting armor jog into frame and halt, scanni…
+extra_negative_tier: guard-defect3
+extra_negative_tier_note: >-
+  Defect 3 prescribes `round, harmless, comedic, chibi-proportioned, daylight` leading the guard clause with `dark fantasy, night, glowing eyes, hood, weapon, sword, knife, armor plate` negated. THE EIGHT NEGATIVES ARE SENT VERBATIM THIS ROUND. Of the positive half, `round` and `harmless` are present; `comedic` (2 tokens) and `chibi-proportioned` (`chibi`, 2 tokens) are measured, affordable and deliberately NOT sent, so that a result here is attributable to the register fix rather than to a style tag that pulls toward defect 4's flat cartoon mascots.
+armor_negative_risk: >-
+  PRE-REGISTERED BEFORE A STEP. `armor plate` is negated while the positive still carries the founder's own `mismatched ill-fitting armor`. CLIP does not compose negations, so the negative may suppress armor generally and return unarmoured guards, which the script does not describe. The term is sent anyway because defect 3 prescribes it verbatim and the picks page is the founder's own diagnosis; this note exists so that if the armor vanishes, the cause is already on the record rather than discovered after the fact.
+shots_md_sha256: 445b8c682a5f94954d98a2a0be5209876c0c558c666c085ba126b35614e491c9
+shots_md_edited: false
+authored_source: >-
+  this lane, from the r4 finding (ledger ep2-b05-r4-sample, commit 5f103b0). NOT shots.md, NOT canon and NOT the WAVE-PREP draft — r4 rendered that draft verbatim and it was rejected. Injected script-side; the r3 fence is asserted byte-for-byte before a step is spent.
+authored_r5_sha256: 7c8d223c9b9a96473f5eb926502fc0f83eb381930497760444c3cd015d01295a
+tokenizer: openai/clip-vit-large-patch14 (transformers, on the box)
+positive_tokens: 62
+positive_tokens_r3_control: 68
+positive_tokens_r4_control: 57
+negative_tokens_sent: 64
+negative_delta_from_r3: girl, child, dark fantasy, night, glowing eyes, hood, weapon, sword, knife, armor plate
+negative_delta_from_r4: dark fantasy, night, glowing eyes, hood, weapon, sword, knife, armor plate
+r3_control_reproduced: true
+r4_control_reproduced: true
+controls_note: >-
+  BOTH rejected rounds are rebuilt from this checkout in the same run on the same tokenizer — r3 asserted byte-for-byte against its recorded sidecars, r4 against the draft text it rendered — so the two deltas below are one measurement rather than three instruments.
+anchor_intact: true
+anchor_note: >-
+  Intact on r3, on r4 and here. Beat 5 was never one of the eleven beats compress() shed the style sentence from, so the b13-r4 anchor finding is not and has never been the mechanism available on this beat.
+seeds_held_from: >-
+  r3's own four (k=4..7 of this beat's series), held for the third round running. Same noise as both sheets the founder rejected, so the wording stays the only variable.
+provisional: true
+approved: false
+recipe_inherited_from: >-
+  round 4, takes/stills/05-the-patrol-r4-s*.png — model, size, steps, cfg, the seed series and the one-term negative removal are unchanged from r4, which inherited them from r3 and ultimately from node 001 takes/stills/15-something-s-coming-r3-s1.png, the ONE SAMPLE the founder passed on 2026-08-08.
+wall_seconds: 10
+cost_usd: 0
+note: |-
+  round 5, THE REGISTER WORDS RETURN. r4 was rejected on every axis and its finding is this round's direction: the draft sold `harmless` and `shapes` — one of the two words in the founder's pass condition, and the word that declined to say *man* — to buy the count tag, then added `men` in the same round, and came back knights in matched plate. THREE CHANGES. (1) `harmless` and `shapes` return and `men` goes, while `2boys` is KEPT: r4 proved that tag binds gender (no girl / no child clean 4 of 4, which r3 could not claim). Those are incompatible through the derived path — delete `men` and _tag_from_clause returns `2others` — so the tag is rewritten AFTER compress(), the same declared script-level transform render_b06r5.py used, and trap 4 asserts derived=2others AND sent=2boys. (2) `plump` is added as a corpus tag for the roundness his sentence asks for, per record 39's tag-beats-prose finding one beat over. (3) Defect 3's eight prescribed negatives go in VERBATIM — the costed lever r4 left on the table — measured at 19 tokens against 32 free. WORDS ALONE WERE NOT AN OPTION: r3 already sent `round harmless shapes` and `an empty morning field` with the anchor intact and still returned a dark forest, so restoring the words without the tag and the negatives would have re-run a known failure. `chibi` is LEGAL here (the no-chibi block is beat 01's, written for a plant beat) and is still left out: defect 4 names flat cartoon mascots as their own failure, so it stays a costed untried lever at 2 measured tokens rather than a fourth variable. Seeds are r3's own four, held for the third round running, so the words remain the only variable across the two sheets he has rejected.
+prompt: |-
+  2boys, two plump guards drawn as round harmless shapes in mismatched ill-fitting armor jog into frame and halt, scanning an empty morning field, one carrying a bark clipboard. Wide static camera, long soft shadows, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, girl, child, photorealism, text, dark fantasy, night, glowing eyes, hood, weapon, sword, knife, armor plate
