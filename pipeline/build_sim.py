@@ -404,11 +404,21 @@ def queue_doc() -> dict:
         return {"tasks": [], "backlog": [], "readable": False}
     tasks = doc.get("tasks")
     backlog = doc.get("backlog")
+    # AN ENTRY THAT IS NOT A DICT IS NOT A NON-ENTRY. The two filters below have
+    # always dropped them, which is right for every counter and every renderer —
+    # none of them can read a bare string. But dropping is not the same as
+    # knowing, and the entry-by-entry record exists precisely so the queue cannot
+    # quietly publish 23 of its 24 rows. What was filtered is carried out with
+    # the list it came from, and printed as a fault.
+    dropped = [(name, i, repr(e)[:120])
+               for name, lst in (("tasks", tasks), ("backlog", backlog))
+               for i, e in enumerate(lst or []) if not isinstance(e, dict)]
     return {"tasks": [t for t in (tasks or []) if isinstance(t, dict)],
             "backlog": [b for b in (backlog or []) if isinstance(b, dict)],
             # `backlog:` is landing in a parallel change; its absence is not a
             # fault, and unknown keys inside an entry are ignored, not fatal.
             "has_backlog": isinstance(backlog, list),
+            "dropped": dropped,
             "readable": True}
 
 
@@ -980,6 +990,172 @@ def task_running(tid: str, records: list) -> dict:
     return None
 
 
+# ---- the queue, entry by entry -----------------------------------------------
+# "status should show exactly the queue of work with all details" (founder,
+# 2026-08-09). The work list above is the READABLE account of the queue and stays
+# that way: it merges identical rows into one sentence, keeps task ids out as log
+# tokens, and answers "what is the studio doing" for someone who has never read
+# this repo. That section is not this one and neither replaces the other.
+#
+# This is the RECORD. Every entry in farm-queue.yaml appears exactly once, under
+# its own id, with every field it carries — including fields this file has never
+# heard of, which are printed as themselves rather than ignored. Nothing is
+# merged, nothing is truncated, and the house dialect does not run over it: the
+# point of the record is that a reader can diff it against the file. That is the
+# same trade SITE.md already makes ("if a design choice trades away legibility of
+# how it was made, that is the wrong trade").
+#
+# An entry that cannot be read gets printed LOUDLY instead of skipped. A queue
+# page that silently shows 23 of 24 rows is worse than no queue page, because it
+# is the one failure the page exists to catch.
+
+# The fields the file's own header declares (farm-queue.yaml:23-89) and every
+# reader downstream assumes. test_pipeline.py already asserts three of these four
+# over the live file; this prints the fault instead of failing the build, because
+# a status page that refuses to render is not a status page.
+QUEUE_REQUIRED = ("id", "why", "runner", "worker")
+QUEUE_RUNNERS = ("farm", "manual")
+QUEUE_GATES = ("founder", "code", "hardware")
+
+# state → (emoji, word, what the word is claiming). Every one of these is read
+# off a file: the list an entry sits in, its `gate`/`after` keys, or a check-in
+# line on a farm-results-* branch. None of them is a guess about a machine.
+QSTATES = {
+    "running":  ("🔴", "RUNNING",
+                 "a check-in log holds STARTED for this id with no DONE after it"),
+    "failed":   ("💥", "FAILED",
+                 "the newest check-in line for this id is a FAIL — the entry stays "
+                 "queued and nothing has retired it"),
+    "runnable": ("▶️", "RUNNABLE",
+                 "sitting in tasks: — the next machine that polls the queue may "
+                 "claim it without anyone deciding anything"),
+    "waiting":  ("⛓", "WAITING ON ANOTHER JOB",
+                 "in tasks:, but `after:` names work with no DONE line yet"),
+    "blocked":  ("⛔", "BLOCKED",
+                 "in backlog: with a gate — no worker can see it and the promoter "
+                 "cannot clear it; a person deletes the key in a commit"),
+    "planned":  ("🗒", "PLANNED",
+                 "in backlog: with nothing blocking it — but backlog: is invisible "
+                 "to every worker, so it needs promoting or running by hand"),
+    "done":     ("✅", "DONE",
+                 "a check-in log holds DONE for this id; the entry is still in the "
+                 "file until the promoter's next run retires it"),
+}
+QSTATE_ORDER = ("running", "failed", "runnable", "waiting", "blocked",
+                "planned", "done")
+
+
+def claim_lines(records: list) -> dict:
+    """task id → [(when, mark, who, note)], newest first, off every check-in log.
+
+    task_running() and task_ids_done() each walk the same histories for one
+    question apiece; the record needs all of it — when a job started, when it
+    ended, which runner, and whatever the runner typed. Same `records` list
+    (machines PLUS the hand ledger), so a job a person claimed is a job claimed.
+    """
+    out = {}
+    for m in records:
+        for when, line in m["history"]:
+            tid = re.search(r"task=([\w.-]+)", line)
+            if not tid:
+                continue
+            out.setdefault(tid.group(1), []).append(
+                (when, hb_mark(line), m["name"], hb_note(line)))
+    for v in out.values():
+        v.sort(key=lambda r: r[0], reverse=True)
+    return out
+
+
+def entry_faults(e: dict) -> list:
+    """Everything wrong with one entry, in the words of the file's own header.
+
+    Only structural faults — a missing field, or a value outside the small set
+    the header defines. Not taste, not staleness: this list is the difference
+    between "the page can describe this entry" and "the page cannot", and a
+    non-empty one sends the entry to the MALFORMED heading.
+    """
+    faults = []
+    for k in QUEUE_REQUIRED:
+        if not str(e.get(k) if e.get(k) is not None else "").strip():
+            faults.append(f"no `{k}` — the file's header lists it as required")
+    runner = str(e.get("runner") or "").strip()
+    if runner and runner not in QUEUE_RUNNERS:
+        faults.append(f"`runner: {runner}` is neither `farm` nor `manual`, so "
+                      "neither the promoter nor a person knows if it is theirs")
+    gate = str(e.get("gate") or "").strip()
+    if gate and gate not in QUEUE_GATES:
+        faults.append(f"`gate: {gate}` is not one of founder/code/hardware")
+    if gate and not str(e.get("gate_ref") or "").strip():
+        faults.append("a `gate` with no `gate_ref` — blocked, without saying by "
+                      "what, which is the one thing a gate has to say")
+    return faults
+
+
+def queue_entry_state(e: dict, listname: str, claims: dict, done_ids: set) -> str:
+    """Which of QSTATES this entry is in, decided newest-evidence-first.
+
+    A check-in line outranks the list the entry sits in, and that ordering is the
+    whole point: the queue file is intent, the heartbeat is what happened, and an
+    entry stays in `tasks:` after it finishes until the promoter retires it. The
+    NEWEST decisive mark wins rather than "any DONE anywhere", so a re-queued id
+    that failed after an old success reads FAILED and not DONE.
+    """
+    lines = claims.get(str(e.get("id") or ""), [])
+    newest = next((m for _w, m, _who, _n in lines
+                   if m in ("STARTED", "DONE", "FAIL")), "")
+    if newest == "DONE":
+        return "done"
+    if newest == "FAIL":
+        return "failed"
+    if newest == "STARTED":
+        return "running"
+    if listname == "backlog":
+        return "blocked" if str(e.get("gate") or "").strip() else "planned"
+    after = e.get("after") or []
+    if isinstance(after, str):
+        after = [after]
+    if any(str(a) not in done_ids for a in after):
+        return "waiting"
+    return "runnable"
+
+
+# Field → the label the record prints for it. `id`, `why`, `cmd`, `gate_ref` and
+# `after` are laid out on their own and deliberately absent here. Any key NOT in
+# this map still prints — see queue_entry_html — flagged as one the page does not
+# know, because a field invented tomorrow must not vanish from the record today.
+QFIELD_WORDS = {
+    "worker": "worker", "runner": "runner", "needs": "needs", "window": "window",
+    "est_minutes": "estimate", "gate": "gate", "node": "node", "beats": "beats",
+    "seeds": "seeds", "seed_base": "seed base", "steps": "steps",
+    "seconds": "seconds", "size": "size", "width": "width", "height": "height",
+    "video": "video", "video_model": "model", "prefetch": "prefetch",
+    "slug": "slug",
+}
+
+
+def qvalue(key: str, val) -> str:
+    """One field value as the record prints it: the file's own value first, and a
+    gloss only where the raw value is a token the reader cannot resolve."""
+    if isinstance(val, bool):
+        return "yes" if val else "no"
+    if isinstance(val, (list, tuple)):
+        return ", ".join(str(v) for v in val) or "—"
+    s = str(val)
+    if key == "worker":
+        nice = MACHINES.get(s, (None,))[0]
+        if nice:
+            return f"{s} ({nice})"
+        return f"{s} (any machine that matches `needs`)" if s == "any" else s
+    if key == "est_minutes":
+        try:
+            return f"{int(val)} min (an estimate, not a measurement)"
+        except (TypeError, ValueError):
+            return s
+    if key == "window":
+        return f"{s} — advisory only; the promoter never delays on it"
+    return s
+
+
 # ------------------------------------------------------------------- pieces ---
 def _e(s):
     return html.escape(str(s))
@@ -1160,6 +1336,140 @@ def backlog_html(backlog: list) -> str:
                       + (f' · {_e(hours_words(mins))} of work' if mins else "")
                       + "</p>")
                    + f'<ol class="blist">{items}</ol></div>')
+    return "".join(out)
+
+
+def queue_entry_html(e: dict, listname: str, state: str, claims: dict,
+                     done_ids: set, faults: list, now=None) -> str:
+    """One queue entry, whole. Every key the entry carries reaches the page."""
+    now = now or utcnow()
+    tid = str(e.get("id") or "")
+    emoji, word, _blurb = QSTATES.get(state, ("•", state.upper(), ""))
+    anchor = re.sub(r"[^\w.-]", "-", tid) or "unnamed"
+
+    # The one-line summary the readable section would print, when the entry is
+    # shaped like a render. Guarded exactly as backlog_entry_view guards it —
+    # task_story answers for render work and calls everything else "frames for
+    # world scenery", which on this page would be a falsehood with an id on it.
+    what = task_story(e)[0] if any(e.get(k) for k in ("beats", "seeds", "video")) else ""
+
+    bits = [f'<div class="qtop"><span class="qchip {state}">{emoji} {_e(word)}</span>'
+            f'<code class="qid">{_e(tid) or "(no id)"}</code>'
+            f'<span class="qlist">{_e(listname)}:</span></div>']
+    if faults:
+        bits.append('<div class="qfault"><b>this entry cannot be read as queued '
+                    'work</b><ul>'
+                    + "".join(f"<li>{_e(f)}</li>" for f in faults) + "</ul></div>")
+    if what:
+        bits.append(f'<div class="qwhat">{_e(what)}</div>')
+    if e.get("why"):
+        bits.append(f'<div class="qwhy">{_e(str(e["why"]).strip())}</div>')
+    if e.get("gate_ref"):
+        bits.append('<div class="qgate"><b>blocked by</b> '
+                    f'{_e(str(e["gate_ref"]).strip())}</div>')
+
+    # `after:` is a real gate with a checkable answer, so it says which of the
+    # ids it names has landed rather than only that it is waiting.
+    after = e.get("after") or []
+    if isinstance(after, str):
+        after = [after]
+    if after:
+        deps = ", ".join(
+            f'<code>{_e(str(a))}</code> {"✅ done" if str(a) in done_ids else "⏳ not yet"}'
+            for a in after)
+        bits.append(f'<div class="qdeps"><b>after</b> {deps}</div>')
+
+    # EVERY REMAINING KEY, known or not. `id`/`why`/`cmd`/`gate_ref`/`after` are
+    # already laid out above; anything else lands here, and a key this file has
+    # never heard of is labelled as such instead of dropped.
+    laid_out = {"id", "why", "cmd", "gate_ref", "after"}
+    fields = ""
+    for k in sorted(e.keys(), key=lambda k: (k not in QFIELD_WORDS, str(k))):
+        if k in laid_out:
+            continue
+        known = k in QFIELD_WORDS
+        label = QFIELD_WORDS.get(k, str(k))
+        note = "" if known else ' <span class="qunknown">field not known to this page</span>'
+        fields += (f'<div><dt>{_e(label)}</dt>'
+                   f'<dd>{_e(qvalue(str(k), e.get(k)))}{note}</dd></div>')
+    if fields:
+        bits.append(f'<dl class="qfields">{fields}</dl>')
+
+    lines = claims.get(tid, [])
+    if lines:
+        rows = "".join(
+            f'<li><b>{_e(mark or "?")}</b> · {_e(who)} · {age_el(when, now)}'
+            + (f'<br><span class="qnote">{_e(note)}</span>' if note else "")
+            + "</li>"
+            for when, mark, who, note in lines)
+        bits.append(f'<div class="qclaims"><b>check-in lines for this id</b>'
+                    f'<ul>{rows}</ul></div>')
+    elif state in ("runnable", "waiting"):
+        bits.append('<div class="qclaims mono">no check-in line for this id — '
+                    'nobody has claimed it</div>')
+
+    if e.get("cmd"):
+        bits.append(f'<pre class="qcmd">{_e(str(e["cmd"]).strip())}</pre>')
+    return f'<li class="qrow" id="q-{_e(anchor)}">{"".join(bits)}</li>'
+
+
+def queue_record_html(tasks: list, backlog: list, records: list, dropped: list,
+                      now=None) -> str:
+    """The whole queue, entry by entry, grouped by state — malformed first.
+
+    Malformed goes FIRST and not last on purpose. It is the only group whose
+    contents mean the page itself is unreliable, and a fault printed under
+    twenty-four healthy rows is a fault nobody scrolls to.
+    """
+    now = now or utcnow()
+    claims = claim_lines(records)
+    done_ids = task_ids_done(records)
+
+    groups, bad = {}, []
+    for listname, entries in (("tasks", tasks), ("backlog", backlog)):
+        for e in entries:
+            faults = entry_faults(e)
+            state = queue_entry_state(e, listname, claims, done_ids)
+            row = queue_entry_html(e, listname, state, claims, done_ids, faults, now)
+            (bad if faults else groups.setdefault(state, [])).append(row)
+
+    total = len(tasks) + len(backlog)
+    out = [f'<p class="mono">{total} entr{"y" if total == 1 else "ies"} in '
+           '<code>pipeline/farm-queue.yaml</code> at build time — '
+           f'{len(tasks)} runnable-now (<code>tasks:</code>) and {len(backlog)} '
+           f'planned (<code>backlog:</code>). Every one of them is below, '
+           'unmerged, with the fields exactly as the file writes them.</p>']
+
+    # A dropped entry never became a dict, so it has no id to print and no state
+    # to be in — it is reported as the parse fault it is, with its position.
+    if dropped:
+        out.append(
+            f'<div class="qbad"><h3>🚨 MALFORMED — {len(dropped)} entr'
+            f'{"y" if len(dropped) == 1 else "ies"} in the file are not entries</h3>'
+            '<p class="mono">These are not shaped like queue entries at all, so '
+            'no reader in this repo can act on them. They are listed by position '
+            'because they have no id to be listed by.</p><ul class="qraw">'
+            + "".join(f'<li><code>{_e(name)}:[{i}]</code> → <code>{_e(raw)}</code></li>'
+                      for name, i, raw in dropped)
+            + "</ul></div>")
+    if bad:
+        out.append(
+            f'<div class="qbad"><h3>🚨 MALFORMED — {len(bad)} entr'
+            f'{"y" if len(bad) == 1 else "ies"} missing a required field</h3>'
+            '<p class="mono">Shown in full rather than skipped. Each names what '
+            'it is missing, against the entry shape the queue file\'s own header '
+            'defines. Silent truncation is the failure this section exists to '
+            f'prevent.</p><ol class="qlist-ol">{"".join(bad)}</ol></div>')
+
+    for state in QSTATE_ORDER:
+        rows = groups.get(state)
+        if not rows:
+            continue
+        emoji, word, blurb = QSTATES[state]
+        out.append(f'<div class="qgroup"><h3>{emoji} {_e(word)} '
+                   f'<span class="count">{len(rows)}</span></h3>'
+                   f'<p class="mono">{_e(blurb)}</p>'
+                   f'<ol class="qlist-ol">{"".join(rows)}</ol></div>')
     return "".join(out)
 
 
@@ -1902,6 +2212,65 @@ h3 .count, .bgroup .count { display: inline-block; font: 700 .68rem/1 var(--mono
   font: 500 .76rem/1.6 var(--mono); color: var(--faint); }
 .quests .held b { color: var(--ink); }
 
+/* ---- the queue record: every entry, every field --------------------------
+   Deliberately denser and more clerical than the work list above it. That
+   section is prose for a stranger; this one is a file rendered legibly, so it
+   leans on the mono face, keeps the ids selectable, and lets long values wrap
+   rather than truncating anything. --alarm is local: the theme has a green and
+   an amber and no red, and MALFORMED must not read as merely warm. ---- */
+.qrec { --alarm: #e2564d; }
+@media (prefers-color-scheme: light) { .qrec { --alarm: #b3261e; } }
+.qgroup, .qbad { margin: 1.1rem 0 .2rem; }
+.qgroup h3, .qbad h3 { margin-bottom: .1rem; }
+.qbad { border: 1px solid var(--alarm); border-radius: 14px;
+  padding: .2rem .8rem .7rem; margin-bottom: 1.2rem; }
+.qbad h3 { color: var(--alarm); }
+.qlist-ol, .qraw { list-style: none; padding: 0; margin: .4rem 0 0; }
+.qraw li { font: 500 .76rem/1.7 var(--mono); overflow-wrap: anywhere; }
+.qrow { background: linear-gradient(180deg, var(--panel-2), var(--panel));
+  border: 1px solid var(--line); border-radius: 14px; padding: .7rem .95rem;
+  margin: .6rem 0; }
+.qtop { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; }
+.qchip { display: inline-block; font: 700 .64rem/1 var(--mono);
+  letter-spacing: .09em; border: 1px solid var(--line); border-radius: 999px;
+  padding: .28rem .5rem; color: var(--faint); white-space: nowrap; }
+.qchip.running { color: var(--sap); border-color: var(--sap-deep); }
+.qchip.runnable { color: var(--leaf); border-color: var(--leaf-deep); }
+.qchip.done { color: var(--leaf); border-color: var(--leaf-deep); opacity: .75; }
+.qchip.failed { color: var(--alarm); border-color: var(--alarm); }
+.qid { font: 600 .74rem/1.5 var(--mono); color: var(--muted);
+  background: var(--code-bg); border-radius: 6px; padding: .12rem .35rem;
+  overflow-wrap: anywhere; user-select: all; }
+.qlist { font: 500 .68rem/1.5 var(--mono); color: var(--faint); }
+.qwhat { font-weight: 600; margin: .4rem 0 .1rem; }
+.qwhy { color: var(--muted); font-size: .86rem; }
+.qgate { margin-top: .35rem; font-size: .84rem; color: var(--ink); }
+.qgate b, .qdeps b, .qclaims b { color: var(--sap); font: 700 .68rem/1.6 var(--mono);
+  letter-spacing: .06em; text-transform: uppercase; margin-right: .3rem; }
+.qdeps { margin-top: .3rem; font: 500 .78rem/1.7 var(--mono); }
+.qfields { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: .1rem .8rem; margin: .5rem 0 0; padding: .5rem 0 0;
+  border-top: 1px solid var(--line-soft); }
+.qfields dt { font: 700 .66rem/1.6 var(--mono); letter-spacing: .06em;
+  text-transform: uppercase; color: var(--faint); }
+.qfields dd { margin: 0 0 .3rem; font: 500 .78rem/1.6 var(--mono);
+  color: var(--ink); overflow-wrap: anywhere; }
+.qunknown { color: var(--alarm); font-size: .72rem; }
+.qfault { margin: .45rem 0 .2rem; padding: .45rem .6rem; border-radius: 10px;
+  border: 1px solid var(--alarm); font-size: .82rem; }
+.qfault b { color: var(--alarm); }
+.qfault ul { margin: .25rem 0 0; padding-left: 1.1rem;
+  font: 500 .76rem/1.7 var(--mono); }
+.qclaims { margin-top: .45rem; padding-top: .4rem;
+  border-top: 1px solid var(--line-soft); }
+.qclaims ul { list-style: none; padding: 0; margin: .2rem 0 0;
+  font: 500 .76rem/1.7 var(--mono); }
+.qclaims .qnote { color: var(--faint); }
+.qcmd { margin: .5rem 0 0; padding: .5rem .6rem; background: var(--code-bg);
+  border: 1px solid var(--line-soft); border-radius: 10px;
+  font: 500 .74rem/1.6 var(--mono); color: var(--muted);
+  white-space: pre-wrap; overflow-wrap: anywhere; }
+
 /* ---- vitals: the four numbers a visitor can check against the repo ---- */
 .vitals { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: .6rem; margin: .9rem 0 .4rem; }
@@ -2185,6 +2554,60 @@ def build(out_dir: Path):
           'get checked, and show up as choices on the '
           '<a href="sapling/001-capability-inventory-shots.html">shot board</a> — '
           'the author (and anyone watching) picks what survives.</p>')
+
+    # --- the same queue again, entry by entry: the record, not the account ---
+    # Work that finished today is listed here BY ID, including ids the queue file
+    # no longer holds. The promoter retires an entry the moment its DONE line
+    # lands, so a record built only from the file would lose each job at exactly
+    # the moment it succeeded — the same trap finished_line_story documents.
+    if fin:
+        fin_rows_rec = ""
+        for when, who, tid, note in fin:
+            entry = by_id.get(tid)
+            gone = ("" if entry else ' <span class="qlist">· entry already retired '
+                    'from the queue file</span>')
+            fin_rows_rec += (
+                '<li class="qrow"><div class="qtop">'
+                '<span class="qchip done">✅ FINISHED TODAY</span>'
+                f'<code class="qid">{_e(tid) or "(the line carries no id)"}</code>'
+                '</div>'
+                f'<div class="qwhat">{_e(finished_line_story(entry, note))}</div>'
+                f'<div class="qwhy">{_e(who)} · finished {age_el(when, now)}{gone}</div>'
+                '</li>')
+        fin_record = (f'<div class="qgroup"><h3>✅ Finished today '
+                      f'<span class="count">{len(fin)}</span></h3>'
+                      '<p class="mono">Every DONE check-in line since midnight UTC, '
+                      'by id. Read off the dated commit log, so "today" is a fact '
+                      'and not an inference from a clock with no day attached.</p>'
+                      f'<ol class="qlist-ol">{fin_rows_rec}</ol></div>')
+    else:
+        fin_record = ('<div class="qgroup"><h3>✅ Finished today '
+                      '<span class="count">0</span></h3><p class="mono">No DONE '
+                      'check-in line has landed since midnight UTC. A code or '
+                      'writing task finishes by having its entry retired and never '
+                      'writes a check-in line, so a day of that work still reads 0 '
+                      'here.</p></div>')
+    queue_record = (
+        '<h2 id="queue">📋 The work queue, entry by entry</h2>'
+        '<p style="margin:.2rem 0 .6rem;color:var(--muted)">The work list above is '
+        'the readable account of this queue, and it merges repeats and leaves out '
+        'the machine-facing detail on purpose. This is the record. Every entry in '
+        '<code>pipeline/farm-queue.yaml</code> appears here exactly once under its '
+        'own id, with every field it carries — including fields this page does not '
+        'recognise — and every check-in line that claims it. Nothing is merged and '
+        'nothing is summarised away, so you can read it against the file.</p>'
+        f'<section class="qrec">'
+        + queue_record_html(queue, backlog, records,
+                            qdoc.get("dropped") or [], now)
+        + fin_record
+        + '</section>'
+        + '<p class="whyfoot">The queue file is what the studio intends; the '
+          'check-in lines are what happened. Where the two disagree the lines win, '
+          'which is why an entry can sit in the file reading <b>DONE</b> — the '
+          'promoter has not retired it yet. Read the file yourself: '
+          f'<a href="https://github.com/{GH}/blob/main/pipeline/farm-queue.yaml">'
+          'pipeline/farm-queue.yaml</a>.</p>')
+
     town_legend = " · ".join(STATE_WORDS[s] for s in STATE_WORDS if s in seen_states) \
         or "no machine has checked in yet"
 
@@ -2308,6 +2731,8 @@ machine”; the render box also publishes its own temperature and memory every f
 which is the only thing that can say a box is switched on. Where a machine can be seen but
 cannot work, the reason below is the one its own queue entry records.</p>
 {production}
+
+{queue_record}
 
 <h2>🏟 The render box, minute by minute</h2>
 <section id="tel">
