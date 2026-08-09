@@ -6466,3 +6466,73 @@ held-open ssh, so there was nothing to delete. All four frames pulled and
 `farm-results-hand`, both of them, against the queue id
 `ep2-b13-r8-goblin-1786292421`. Nothing published, posted, or opened on his
 screen.
+
+## 2026-08-09 — the lane presumed dead was alive, and the only right move was to take my hands off its work
+
+**A HANDOFF WAS ISSUED ON A PRESUMPTION AND THE PRESUMPTION WAS WRONG.** This
+lane was told the afternoon verdicts recorder had died at the 15:42-15:46Z weekly
+limit and its overnight successor was "presumed dead like its sibling", and was
+handed the whole orphaned verdict workstream to land: the b14 promotion, the 001
+README and shots.md notes, the ledger scoring. **The verdicts lane was alive.** It
+landed all three files itself in `d395b88` — 121 insertions, the promotion PNG
+included — while this lane was verifying them. Nothing was lost and nothing was
+double-committed, because the check that caught it was running `git log` again
+before staging rather than trusting a status read from minutes earlier.
+
+**WHAT THIS LANE ACTUALLY CONTRIBUTED TO THAT WORKSTREAM IS VERIFICATION, AND IT
+ALL PASSED.** Before the handoff was withdrawn by events, the b14 promotion was
+checked three ways and every check held: sha256
+`ab1ecdc901cd3cd488ad5817d2f74d70c04cc0664a033f9d5b1bc5f61d112ad9` matches the
+README's table exactly; `cmp` against `takes/stills/14-worth-staying-in-r4-s3.png`
+is clean; and every field in that table — 832×1216, seed 20263733, round 4, task
+`001-b14-r4-1786281289`, 40 steps, 7.5 guidance, 9s, $0 — matches the take's own
+render-time sidecar. The downstream claims were verified by RUNNING the code
+rather than reading the note that asserted them: `build_status.scenes()` returns
+14 of 15 with exactly one waiting, beat 6, "the author's pick", and
+`hold_still.approved_still()` resolves beat 14 to the promoted frame while
+correctly skipping both `-REVOKED-` names and returning `None` for beat 6.
+**Episode 1 is one frame from complete and beat 6 is the last gap.**
+
+**THE DUPLICATE BOTH LANES CAUGHT INDEPENDENTLY, WHICH IS THE USEFUL PART.** The
+dead designer's `001/shots.md` hunk carried a beat-06 round-4 rejection note, and
+the r5 lane had already committed its own note for that same rejection — landing
+the orphan verbatim would have put two rejection headers for one round back to
+back. The orphan's version was also **stale**: it says "NO ROUND 5 IS SPECIFIED
+HERE, ON PURPOSE", tells a future lane to "confirm it against the model card …
+before a frame is drawn", and ends "ONE SAMPLE GATES ANY r5 SET" — all written
+before r5 actually ran at 16:30Z. The committed block already does everything the
+orphan asked for and more: it **confirmed** the `no humans` Danbooru hypothesis
+against the model card, and states the orphan's own leading hypothesis (b01 has a
+concrete subject noun; this beat's subject is an absence) as a finding rather
+than a guess. This lane reached "drop the beat-06 block, keep the beat-14 block"
+by reading both; `d395b88` shipped exactly that. **Two lanes converging on the
+same call from the same evidence is the cheapest confirmation available**, and it
+is worth more than either lane's assertion alone.
+
+**THE STANDING LESSON, because this is the second time tonight.** A queue
+annotation said an id was held when the ledger, the claim file and the card all
+said otherwise, and it was right. A handoff said a lane was dead when it was
+merely slow, and it was wrong. **Liveness cannot be inferred from silence in
+either direction** — the working tree and `git log` are the only witnesses that
+do not go stale, and both must be re-read immediately before staging, not at the
+start of the task.
+
+**RECORD 39 AMENDED ONCE, BEFORE ANY VERDICT, AND THE RECORD SAYS SO.** The
+Danbooru corpus evidence the goblin designer gathered now sits in the record's
+reasoning where it belongs: **`female goblin` is 1,717 posts of `goblin`'s 4,257
+and implicates it, so 40.3% of everything carrying the token `goblin` is female**
+— his complaint was the corpus sampled faithfully, not a mis-render — and `elf`
+outweighs `goblin` 111,449 to 4,257 while implying `pointy ears`. The prediction
+did not move: `reject_all` at 0.85, `pick: null`, as first written. **That 40.3%
+is the single most useful sentence for tomorrow's card** and the board lane
+should have it; it converts "the model keeps drawing it wrong" into "the token
+means that", which is a different and cheaper class of problem.
+
+**Attribution, and this commit claims none of the first two.** The b14 promotion,
+its README section and the beat-14 shots.md note are the verdicts lane's work and
+were landed by that lane in `d395b88`. The r8 recipe and the corpus counts are
+the overnight goblin designer's, adopted per lead handoff and rendered in
+`0b6bf59`. Only the record 39 amendment and this entry are the rendering lane's,
+and they are all this commit contains — the 001 files were reverted to `d395b88`
+untouched once it was clear their owner was alive, including a one-character
+whitespace difference that was not worth touching another lane's file for.

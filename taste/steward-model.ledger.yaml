@@ -2374,6 +2374,23 @@
     mechanism. That generalises past this beat and is the thing worth keeping
     whatever he says about the pictures.
 
+    HIS COMPLAINT WAS THE CORPUS, SAMPLED FAITHFULLY, AND THE NUMBER SAYS SO.
+    Danbooru post counts, read 2026-08-09 by the lane that designed this round:
+    `goblin` 4,257 posts, `female goblin` 1,717 — and the child tag IMPLICATES
+    the parent, so **40.3% of everything carrying the token `goblin` is tagged
+    female.** Every one of those posts trained the word on a female demihuman.
+    "All the goblin images look like female demihumans" is not a mis-render and
+    was never a prompt-grammar bug; it is what the token means in the training
+    distribution. The elf is the same story one step up: `elf` is 111,449 posts
+    against `goblin`'s 4,257, outweighing it 26 to 1, and it implies `pointy
+    ears`, so a young pointed-eared humanoid resolves to the far heavier tag.
+    Neither `female goblin` nor `elf` had ever been in a negative on this beat.
+    That is the same class of gap §1b found for the fusion classes, and closing
+    that gap is what took P1/P3/P4 from 0/4 to 4/4 in r6. THE LESSON IS NOT
+    ABOUT GOBLINS: when a prompt keeps returning the wrong thing, the first
+    question is what the token is weighted toward in the corpus, and that is
+    answerable from outside this repo in minutes.
+
     WHAT THE ROUND DOES NOT ESTABLISH, AND THE RECORD IS EXPLICIT SO NOBODY READS
     THE GREEN AS SUCCESS. The founder's sentence had four axes and only one is
     cleanly delivered. Male reads unambiguously on s0 alone; s1 and s3 are
@@ -2436,3 +2453,21 @@
     until he defines the goblin, and no r8 may be scored against the old one."
     The predicate block above is observation. No wave fires off this beat, the
     sheet was built but not opened, and nothing went on his screen.
+
+    ATTRIBUTION, BECAUSE THE ROUND HAD TWO AUTHORS. The recipe this record scores
+    — `green skin` + `plump` in the positive, `female goblin` + `elf` in the
+    explicit negative tier, and the corpus counts above — was designed by the
+    overnight goblin lane, which died before it reached the box, leaving the
+    design uncommitted in `shots.md`. This lane adopted it per lead handoff,
+    validated its token budget independently on the box's real CLIP tokenizer,
+    added the style-anchor assertion, rendered it and wrote this record. The
+    prediction, the observations and the confidence are this lane's; the
+    hypothesis is not.
+
+    AMENDED ONCE, BEFORE ANY VERDICT, AND SAID PLAINLY BECAUSE THIS FILE IS
+    APPEND-ONLY. The corpus paragraph and this note were added after the record
+    was first committed (0b6bf59) and before the founder had seen anything. No
+    prediction changed: `reject_all` at 0.85 and `pick: null` are as first
+    written. The file's rule exists to stop a prediction being edited toward a
+    verdict; there is no verdict here yet, and the edit adds the evidence the
+    round was designed from rather than changing what it claims.
