@@ -1,0 +1,58 @@
+# Still provenance (7.2), written AT RENDER TIME by render_b05r4.py
+# on the rtx5090 (C:\banyan-farm\sample-b05-r4\out).
+# The negative below is what the model actually saw. The recipe's own
+# negative, before this script's one deliberate removal, was:
+#   photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, girl, child, photorealism, text
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+shot_beat: 5
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20264724
+seeds_in_batch: 4
+task: ep2-b05-r4-guard-0810
+queue_entry: ep2-b05-r4-guard-0810
+render_round: r4
+candidate_set: r4
+negative_terms_removed: none (tall tree not present)
+count_tag: 2boys
+count_tag_r3: 2others
+count_tag_note: >-
+  DERIVED, NOT TYPED. sd_prompt._tag_from_clause reads the first comma-clause of the first sentence and tests _MALE before _OTHER. r3's `two patrol guards drawn as round harmless shapes` reaches neither male word and matches `guards` under _OTHER, returning `2others`; the draft's `Two round guard men` hits `men` and returns `2boys`. Nothing in the draft types a tag — the wording change is the tag change, which is why the wording could not be tightened without moving it.
+extra_negative_tier: guard
+extra_negative_tier_note: >-
+  No goblin and no plant in this frame, so neither r6's nine fusion tags nor r8's two species tags apply. They would spend roughly twenty tokens of a 77-token budget suppressing a collision that cannot occur in a beat with two guards and an empty field in it.
+shots_md_sha256: 5d8212762551c76263a9bf1aaf4a714c96864f753149df32c2980eb18af504ac
+shots_md_edited: false
+authored_source: >-
+  WAVE-PREP-0810-drafts.yaml beat 5, verbatim. NOT shots.md and NOT canon — the draft is unapproved script text, injected script-side and asserted byte-for-byte against that file before a step is spent. The guard beats carry no {{GOBLIN}} slot, so this one waits on nothing the founder has yet to define.
+authored_source_sha256: 9b70f4ddd495dfa6b86962223dc31de43317615aedbb9052da0cf069a354cbe3
+tokenizer: openai/clip-vit-large-patch14 (transformers, on the box)
+positive_tokens: 57
+positive_tokens_r3_control: 68
+negative_tokens_sent: 45
+negative_delta_from_r3: girl, child
+r3_control_reproduced: true
+r3_control_note: >-
+  The r3 positive and negative were rebuilt from this checkout in the same run and asserted byte-for-byte against the strings recorded in the r3 sidecars, on this tokenizer. Without that the token delta below would be two instruments, not one measurement.
+anchor_intact: true
+anchor_note: >-
+  THE ANCHOR WAS ALREADY INTACT ON r3. Beat 5 was not one of the eleven beats compress() was shedding the style sentence from, so the b13-r4 finding — anchor restored, soft cinematic anime 4 of 4 — is NOT the mechanism available here. r3 sent the anchor, sent `round harmless shapes` and sent `an empty morning field`, and returned a dark forest with dangerous-looking figures on all four. This round tests the count tag and the tightened subject clause instead.
+prescription_not_tested: >-
+  PROVISIONAL-PICKS-0809 defect 3 prescribes `round, harmless, comedic, chibi-proportioned, daylight` leading the guard clause and `dark fantasy, night, glowing eyes, hood, weapon, sword, knife, armor plate` negated. NONE of those negatives are in this draft, and the draft drops `harmless` from the positive, which r3 had. This round is therefore not a test of that prescription; it is a test of the cheaper change in front of it, and the prescription stays a costed untried lever.
+seeds_held_from: >-
+  r3's own four (k=4..7 of this beat's series), NOT advanced. r3 advanced because no fault was named and new noise was its only lever; a fault is named now and the words move, so holding the noise makes r4 a direct A/B against the four frames he rejected. This is b13's convention from r4 to r9.
+provisional: true
+approved: false
+recipe_inherited_from: >-
+  round 3, takes/stills/05-the-patrol-r3-s*.png — model, size, steps, cfg, the seed series and the one-term negative removal are r3's unchanged. r3 inherited those from node 001 takes/stills/15-something-s-coming-r3-s1.png, the ONE SAMPLE the founder passed on 2026-08-08.
+wall_seconds: 10
+cost_usd: 0
+note: |-
+  round 4, THE GUARD REGISTER. Beat 5 was picked off PROVISIONAL-PICKS-0809, which names five faults in its verdict ("it is a dark forest and they look dangerous; they are supposed to be round and harmless in a morning field") against four, three, three, three and one on the other five guard beats, and is the only guard beat with all four candidates at BOTH A2 -2 and A5 -2. Authored text is WAVE-PREP-0810-drafts.yaml beat 5 verbatim, asserted against that file before a step. Four changes from the r3 fence: the count tag moves 2others -> 2boys (derived, not typed — `two patrol guards` matches _OTHER, `Two round guard men` tests _MALE first), `round` moves to the front of the noun phrase, `No girl, no child.` is appended and lifts into the negative, and the action clauses tighten. THE ANCHOR WAS ALREADY INTACT ON r3, so the b13-r4 register win cannot be the mechanism here: this beat never lost it, and the words were already right — `round harmless shapes`, `an empty morning field` — when it came back a dark forest. DEFECT 3'S PRESCRIBED NEGATIVES (dark fantasy, night, glowing eyes, hood, weapon, sword, knife) ARE NOT IN THIS DRAFT and `harmless` was dropped from the positive, so a failure here leaves those a known untried lever rather than a new idea. Seeds are r3's own four, held rather than advanced, so the words are the only variable against the sheet he rejected.
+prompt: |-
+  2boys, two round guard men in mismatched ill-fitting armor jog into frame and halt, scanning an empty morning field, one carrying a bark clipboard. Wide static camera, long soft shadows, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, girl, child, photorealism, text

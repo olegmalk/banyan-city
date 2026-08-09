@@ -6808,3 +6808,96 @@ Heartbeats `STARTED`/`DONE` on `farm-results-hand` against the fresh id
 these are DETECTOR DATA — no contact sheet was built and none is wanted, because
 nothing here is founder review material. Nothing published, posted, spent, made
 canon, or opened on his screen.
+
+## 2026-08-09 — beat 5 THE PATROL, round 4: the guard register did NOT transfer, and the wave stands down
+
+**ONE SAMPLE, and it says do not fire the other five.** Four frames, 37 GPU-
+seconds, $0, on beat 5's own r3 seeds. The lane was briefed to report the six
+guard beats wave-ready if this cleared. **It did not clear**, so beats 06, 07,
+09, 10 and 11 were NOT rendered and the guard drafts in
+`WAVE-PREP-0810-drafts.yaml` should not be run as written. Beat 08 was never in
+scope — two-subject, carries a goblin, still gated on the founder's definition.
+
+**Why beat 5, checkable rather than asserted.** `PROVISIONAL-PICKS-0809.md`'s
+verdict column names five faults on beat 5 (*dark forest · they look dangerous ·
+not round · not harmless · not a morning field*) against four on 06, three each
+on 09/10/11, and one on 07 — where he wrote *"the field is RIGHT"*. Beat 5 is
+also the only guard beat with all four candidates at BOTH A2 −2 and A5 −2, and
+the first guard beat in cut order.
+
+**The result.** Dark-fantasy or heroic-fantasy register **4 of 4**; the morning
+field in **1 of 4**; round and harmless **0 of 4**; `mismatched, ill-fitting`
+armor **0 of 4** — every suit is a clean matched harness. s0 carries the
+**glowing visor** he named by hand. That is r3's verdict reproduced on r3's own
+four seeds with the words moved.
+
+**The count tag bound GENDER and nothing else.** `no girl` / `no child` are
+clean 4 of 4, which r3 could not claim, and every figure reads unambiguously
+male and adult. But `2boys` did not bind COUNT — only s3 has two figures, s2 has
+one knight plus a disembodied arm — and it did not touch GENRE. On Danbooru
+`2boys` is a young-male tag; composed with `guard men in mismatched ill-fitting
+armor` the checkpoint resolves the phrase to KNIGHT, and knight is the fault.
+
+**THE DRAFT SOLD THE TWO WORDS THAT WERE DOING THE WORK.** r3 said *"two patrol
+guards drawn as round harmless SHAPES"*; the draft says *"Two round guard MEN"*.
+It deleted `harmless` — the founder's own adjective, one of the two words in his
+pass condition — and `shapes`, whose whole function was to decline to say "man",
+and then added a male-human tag in the same round. Both edits pull toward a man
+in armor and the round carried no counter-pull. **r3 was closer to his sentence
+than r4 is.**
+
+**A finding already in the ledger went unused.** Record 39 (b13 r8) established
+on this same checkpoint that **the tag name beats the mechanism** — prose
+`round` replaced by the Danbooru tag `plump` moved the predicate to 3 of 4. This
+draft asks for roundness with the PROSE word `round`, the exact form already
+measured not to bind, and carries no `chibi`.
+
+**The prescribed negatives were never tried, and not for budget reasons.**
+Defect 3 prescribes negating `dark fantasy, night, glowing eyes, hood, weapon,
+sword, knife, armor plate`. None is in the draft. Measured on the box's real
+CLIP in the same run: **that whole list costs 19 tokens**, and the sent negative
+was at **45 of 77 with thirty-two free**, the positive at **57 of 77 with twenty
+free**. Affordable twice over. So this round is not evidence against the
+prescription — it is evidence the cheaper change in front of it fails alone.
+
+**The anchor was never this beat's problem, and the control proves it.** The
+b13-r4 win (anchor restored → soft cinematic anime 4 of 4) cannot transfer here:
+beat 5 never lost the anchor. The r3 control was rebuilt from this checkout in
+the same run and asserted byte-for-byte against the r3 sidecars — **68 of 77,
+anchor INTACT**, already containing `round harmless shapes` AND `an empty
+morning field`. The words were right and the picture was a dark forest.
+
+**s2 adds a failure r3 did not have.** A giant disembodied human arm holding a
+modern **smartphone**, screen lit with UI icons, over a medieval field — a human
+hand in a beat with no humans, a literal screen in an episode where *"the blank
+board reads as a lit screen"* is already a recorded fault, in a prompt whose
+negative carries `text` twice. The bark clipboard is what the prompt puts in a
+guard's hands and the checkpoint reached for a tablet.
+
+**The draft was rendered VERBATIM and deliberately not amended.** Amending a
+recipe on the steward's own metric and then scaling it is the K-recipe failure
+the ONE SAMPLE rule exists to prevent. The gap between the draft and defect 3's
+prescription is reported, not silently patched.
+
+**Discipline.** All seven traps passed on the box's real CLIP before a step:
+fence byte-for-byte, draft byte-for-byte against `WAVE-PREP-0810-drafts.yaml`
+(sha 9b70f4dd..), r3 control reproduced, count tag read off the real code path,
+negative delta exactly `girl, child`, anchor intact, nothing dropped. `--dry`
+rc=0 before firing. Taste ledger record 43 `ep2-b05-r4-sample`, `reject_all`
+0.90, **written BEFORE the sheet**; `LABELED-b05-r4.png` built, neutral
+(addresses and seeds only, no favourite, no ordering) and **NOT opened**,
+untracked per convention. shots.md NOT edited.
+
+**The box clone was stale and was proven so before it was touched.** It held
+beat 01's pre-r7 wording as an uncommitted diff; the working blob was
+`62da0a49`, byte-identical to the blob at `f48b096^` — a strictly committed
+ancestor state with zero uncommitted authorship — and only then reset to
+`origin/main`. A dirty box clone is not automatically a live lane, and it is not
+automatically safe either; this one was checked rather than assumed.
+
+**Box left clean.** `GPU-CLAIM.txt` claimed as `ep2-b05-r4-guard-0810` and
+released, verified; card 0% / 0 MiB; no schtask created (held-open ssh). Four
+stills and four sidecars pulled and **sha256-verified byte-identical**
+box-to-repo, 8 of 8. Heartbeats `STARTED`/`DONE` on `farm-results-hand` against
+the fresh id `ep2-b05-r4-guard-0810`. Nothing published, posted, spent, made
+canon, or opened on his screen.

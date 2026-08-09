@@ -2801,3 +2801,166 @@
     sheet was built; the sheet carries addresses and seeds only, with no
     favourite, no ordering and no "closest to". No wave fires off this beat,
     nothing is published, and nothing went on his screen.
+
+- id: ep2-b05-r4-sample
+  date: 2026-08-09
+  subject: "node 002b beat 5 — THE PATROL, round 4, THE GUARD REGISTER (count tag 2others -> 2boys, `round` fronted, `No girl, no child.` appended; WAVE-PREP-0810-drafts.yaml beat 5 verbatim)"
+  kind: still
+  candidates: [b05-r4-s0, b05-r4-s1, b05-r4-s2, b05-r4-s3]
+  address_key: "sheet LABELED-b05-r4.png; frames at genomes/sapling/nodes/002b-first-citizen/takes/stills/05-the-patrol-r4-sN.png, sidecars beside them"
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  scores:
+    b05-r4-s0: {A2: -2, A3: -1, A4: -1, A5: -2, A6: -1}
+    b05-r4-s1: {A2: -2, A3: -1, A4: -1, A5: -2, A6: -1}
+    b05-r4-s2: {A2: 1, A3: -2, A4: -2, A5: -2, A6: 0}
+    b05-r4-s3: {A2: -2, A3: -1, A4: -2, A5: -2, A6: -1}
+  axes_not_applicable:
+    A1: >-
+      the recurring subject is not in this beat. Neither the sapling nor the
+      goblin appears in beat 5 — it is the two guards arriving — so there is no
+      character to be consistent with. Named rather than silently skipped, per
+      Stage 1.
+    A7: no sapling in frame, so its proportion cannot be scored.
+    A8: a still. The axis is zoom rate and motion band, which no frame carries.
+  vetoed: [b05-r4-s0, b05-r4-s1, b05-r4-s2, b05-r4-s3]
+  totals: {b05-r4-s0: -25, b05-r4-s1: -25, b05-r4-s2: -18, b05-r4-s3: -29}
+  observed_predicates:
+    note: >-
+      The founder's guard axes, from his own r3 verdict — "it is a dark forest
+      and they look dangerous; they are supposed to be round and harmless in a
+      morning field" — read off the four frames.
+    two_figures:         {s0: fail, s1: fail, s2: fail, s3: pass}
+    round_silhouette:    {s0: fail, s1: fail, s2: fail, s3: fail}
+    harmless_read:       {s0: fail, s1: fail, s2: fail, s3: fail}
+    morning_field:       {s0: fail, s1: fail, s2: pass, s3: fail}
+    daylight:            {s0: fail, s1: fail, s2: pass, s3: fail}
+    not_dark_fantasy:    {s0: fail, s1: fail, s2: fail, s3: fail}
+    no_glowing_visor:    {s0: fail, s1: pass, s2: pass, s3: pass}
+    mismatched_ill_fitting_armor: {s0: fail, s1: fail, s2: fail, s3: fail}
+    bark_clipboard:      {s0: partial, s1: fail, s2: fail, s3: partial}
+    no_girl:             {s0: pass, s1: pass, s2: pass, s3: pass}
+    no_child:            {s0: pass, s1: pass, s2: pass, s3: pass}
+  predicted_verdict: reject_all
+  predicted_flip_to: null
+  predicted_objection: >
+    These are the same knights again. It is night in three of them, one has a
+    GLOWING VISOR — the thing he named — and none of them is round or harmless.
+    Then the phone: s2 puts a giant human arm holding a modern smartphone with a
+    lit UI over a medieval field, which is a human hand, a screen and an
+    anachronism in one frame, on a beat whose own negative carries `girl, child`
+    and whose episode he has already stopped once for "a blank dark background"
+    and once for a board that "reads as a lit screen". And the armor is a clean
+    matched harness in all four where the script says MISMATCHED, ILL-FITTING.
+  confidence: 0.90
+  reasoning: >
+    THE ROUND FAILED AND THE FAILURE IS INFORMATIVE, WHICH IS THE ONLY THING IT
+    WAS FOR. Four frames, 37 GPU-seconds, $0. Register is dark-fantasy or heroic
+    fantasy 4 of 4; the morning field appears in 1 of 4; round and harmless are
+    0 of 4. That is r3's verdict reproduced almost exactly, on r3's own four
+    seeds, with the words moved.
+
+    THE COUNT TAG BOUND GENDER AND NOTHING ELSE. `2boys` did what it was
+    designed to do one beat over and no more: `no girl` and `no child` are clean
+    4 of 4, which r3 could not claim, and every figure reads unambiguously male
+    and adult. But it did NOT bind COUNT — only s3 contains two figures, and s2
+    contains one knight plus a disembodied arm — and it did not touch GENRE at
+    all. On Danbooru `2boys` is a young-male tag; composed with `guard men in
+    mismatched ill-fitting armor` the checkpoint resolves the whole phrase to
+    KNIGHT, and knight is the fault.
+
+    THE DRAFT SOLD THE TWO WORDS THAT WERE DOING THE WORK, AND THAT IS THE
+    MECHANISM. r3 said `two patrol guards drawn as round harmless SHAPES`; the
+    draft says `Two round guard MEN`. It deleted `harmless` — the founder's own
+    adjective, one of the two words in his pass condition — and it deleted
+    `shapes`, whose whole function was to decline to say "man". Then, in the
+    same round, it added a male-human tag. Both edits pull the same way, toward
+    a man in armor, and the round carried no counter-pull whatsoever. r3 was
+    closer to his sentence than r4 is.
+
+    THE FINDING THAT WAS ALREADY IN THIS FILE AND WENT UNUSED. Record 39 (r8,
+    beat 13) established on this same checkpoint that THE TAG NAME BEATS THE
+    MECHANISM: the prose word `round` was replaced with the Danbooru tag `plump`
+    and the predicate moved to 3 of 4. This draft asks for roundness with the
+    PROSE word `round` — the exact form already measured not to bind — and does
+    not carry `chibi`, which is the real, heavy corpus tag for the proportion
+    the script is describing. So the one lever with a measured success on this
+    checkpoint was available, costed and not spent.
+
+    THE PRESCRIBED NEGATIVES WERE NEVER TRIED AND THERE WAS NO BUDGET REASON.
+    PROVISIONAL-PICKS-0809 defect 3 prescribes negating `dark fantasy, night,
+    glowing eyes, hood, weapon, sword, knife, armor plate`. None of them is in
+    this draft. Measured on the box's real CLIP in the same run: that whole list
+    costs 19 tokens, and the sent negative was at 45 of 77 with THIRTY-TWO free,
+    the positive at 57 of 77 with twenty free. The prescription was affordable
+    twice over. This round is therefore NOT evidence against it — it is evidence
+    that the cheaper change in front of it does not work on its own, which is
+    what a one-sample is for.
+
+    THE ANCHOR WAS NEVER THE PROBLEM HERE AND THE CONTROL PROVES IT. The b13-r4
+    win — style anchor restored, soft cinematic anime 4 of 4 — cannot transfer
+    to this beat, because beat 5 never lost the anchor. The r3 control was
+    rebuilt from this checkout in the same run and asserted byte-for-byte
+    against the strings in the r3 sidecars: 68 of 77 with the anchor INTACT, and
+    it already contained `round harmless shapes` AND `an empty morning field`.
+    The words were right and the picture was a dark forest. Wave defect 4 is a
+    real defect with a real remedy and it is not this beat's defect.
+
+    WHAT s2 ADDS THAT r3 DID NOT HAVE. A giant disembodied human arm entering
+    from the top corner holding a modern smartphone, screen lit, UI icons and a
+    photograph visible on it. It is the only frame with the field in it and it
+    is the worst frame in the set: a human hand in a beat with no humans, a
+    literal screen in an episode where "the blank board reads as a lit screen"
+    is already a recorded fault, and a rendered UI in a prompt whose negative
+    carries `text` twice. Logged as a new failure mode of this beat rather than
+    a seed accident, because the bark clipboard is what the prompt puts in a
+    guard's hands and the checkpoint reached for a tablet.
+  notes: >-
+    NO WAVE FIRES OFF THIS. The lane was briefed to report the six guard beats
+    wave-ready if this sample cleared. IT DID NOT CLEAR, so the other five guard
+    beats (06, 07, 09, 10, 11) were NOT rendered and the guard drafts in
+    WAVE-PREP-0810-drafts.yaml should not be run as written. Beat 08 was never
+    in scope — it is two-subject, carries a goblin, and stays gated on the
+    founder's definition.
+
+    WHY BEAT 5 AND NOT ANOTHER GUARD BEAT, so the choice is checkable rather
+    than asserted. PROVISIONAL-PICKS-0809's verdict column names five faults on
+    beat 5 (dark forest, they look dangerous, not round, not harmless, not a
+    morning field) against four on 06, three each on 09, 10 and 11, and one on
+    07 — where he wrote "the field is RIGHT". Beat 5 is also the only guard beat
+    with all four candidates at BOTH A2 -2 and A5 -2, and the first guard beat
+    in cut order, so it sets the register the other five are read against.
+
+    THE SEEDS WERE HELD, NOT ADVANCED, WHICH INVERTS r3's OWN RULE ON PURPOSE.
+    r3's sidecar advanced to k=4..7 because no fault was named and new noise was
+    its only honest lever. A fault is named now and the words move, so holding
+    k=4..7 makes this a direct A/B against the exact four frames he rejected and
+    makes any change attributable to the wording. Same convention beat 13 has
+    used from r4 through r9.
+
+    THE AUTHORED TEXT IS THE DRAFT, UNCHANGED BY THIS LANE, AND THAT WAS
+    DELIBERATE. `WAVE-PREP-0810-drafts.yaml` beat 5 was rendered verbatim and
+    asserted byte-for-byte against that file before a step was spent
+    (sha256 9b70f4dd..). The steward did NOT amend it toward its own theory of
+    the fix — amending a recipe on the steward's own metric and then scaling it
+    is the K-recipe failure the ONE SAMPLE rule exists to prevent. The gap
+    between the draft and defect 3's prescription is reported, not silently
+    patched.
+
+    SHOTS.MD WAS NOT EDITED. The draft is unapproved script text; it was
+    injected script-side and the r3 fence was asserted byte-for-byte first, so a
+    stale checkout could not start. The box clone WAS stale — it held beat 01's
+    pre-r7 wording as an uncommitted diff — and was proven to be a strictly
+    committed ancestor state (working blob 62da0a49 == the blob at f48b096^,
+    zero uncommitted authorship) before being reset to origin/main.
+
+    WRITTEN BEFORE THE SHEET WAS BUILT, per §3, and the sheet carries addresses
+    and seeds only — no favourite, no ordering, no "closest to". No pick is
+    offered: every candidate is vetoed on at least two axes. Nothing was
+    published, posted or spent, and nothing has gone on his screen.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
