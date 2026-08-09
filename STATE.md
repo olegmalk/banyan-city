@@ -5539,12 +5539,28 @@ its 0/4 is not evidence about subject order**: it changed word order on top of t
 two causes r6 has now shown were live and untouched at the time. The memo said
 that before r6 ran, and r6 did not change it.
 
-**Box left clean:** schtask `banyan-b13r6` deleted and verified absent (only the
-pre-existing `banyan-telemetry`, `banyan-worker-start` and the wan-lane's
-`banyan-b15ab` remain — that one reported, not touched), `GPU-CLAIM.txt`
-released, card idle at 0% / 0 MiB. Nothing published, posted, spent, or opened on
-the founder's screen. One backlog entry filed:
+**Box left clean:** schtask `banyan-b13r6` deleted and verified absent,
+`GPU-CLAIM.txt` released, card idle at 0% / 0 MiB. Nothing published, posted,
+spent, or opened on the founder's screen. Two backlog entries filed:
 `still-local-no-open-1786293600` — `still_local.py` ends with
 `subprocess.run(["open"] + opened)`, so any Mac-side sample throws its stills onto
 whatever screen is attached; r6 dodged it by running on the 5090, and §3.2's
-two-pass inpaint is the next rung that would want the Mac.
+two-pass inpaint is the next rung that would want the Mac — and
+`no-humans-negative-sweep-1786293900`, the sweep asked for by `dde4ade`'s
+controlled finding that the generic plural `no humans` does not bind while the
+specific singulars do. Eight prompt fences in node 001 still rely on the plural
+alone; node 002b has none.
+
+**AND THE ORPHAN SCHTASK IS GONE, WITH THE EVIDENCE CHECKED FIRST.** The paragraph
+above originally recorded `banyan-b15ab` as "reported, not touched" — that was
+true when written and is no longer, so it is corrected here rather than left to
+contradict itself. It was deleted `/f` and verified absent on a second query, but
+only after four things were confirmed independently rather than taken on report:
+Last Result **0** from its 01:38 run, a trigger-less `31/12/2099` Next Run (the
+expired-placeholder class the 2026-08-08 sweep defined as safe), the card idle at
+0% / 0 MiB with no banyan task running, and **both of its outputs sha256-verified
+byte-identical between the box and the repo** — `b15ab-wan.mp4`
+`1fcaf0cf…` and `b15ab-ltx.mp4` `ee5572d4…` against `review/ep2-prov-0809/`.
+Deleting another lane's handle on the strength of "its outputs are pulled" alone
+would have been the collision this discipline exists to prevent. Only
+`banyan-telemetry` (Running) and `banyan-worker-start` (Ready) remain.

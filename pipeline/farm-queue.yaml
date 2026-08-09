@@ -1894,3 +1894,42 @@ backlog:
     set the equivalent) BEFORE the first sample, not after." r6 dodged it by
     running on the 5090; §3.2's two-pass inpaint is the next thing in the ladder
     that would want the Mac, so this is cheap to fix before it is needed.
+
+# The controlled finding from the 2026-08-09 single-subject redraw pass
+# (dde4ade; ledger records 28 and 30). Ungated — it needs no founder call and no
+# hardware, only the sample at the end before the set is trusted.
+- id: no-humans-negative-sweep-1786293900
+  runner: manual
+  worker: any
+  needs: []
+  window: any
+  est_minutes: 90
+  cmd: >-
+    (a) grep both shots.md files for `no humans` — it appears in EIGHT prompt
+    fences in genomes/sapling/nodes/001-capability-inventory/shots.md (beats at
+    lines 177, 260, 319, 347, 413, 529, 576, 617) and in ZERO prompts in 002b,
+    where the only two hits are prose notes; (b) replace the generic plural with
+    the proven singular set `no girl, no boy, no child, no person` plus the
+    explicit body parts the failures were made of — `no hand, no hands, no
+    fingers, no foot, no feet, no arm, no leg`; (c) TOKEN-MEASURE EVERY EDITED
+    BEAT on the real sd_prompt path before trusting any of it — adding eleven
+    negated nouns adds eleven terms to the beat tier, and both the positive
+    tail-drop and fit_negative's silent trim bite at exactly this size (cite
+    e6995fc, where shortening beat 10 quietly took its scale negatives away, and
+    the r6 sample, where nine added tags cost seven house terms); (d) ONE SAMPLE
+    on the worst-affected beat before the set is trusted, per CLAUDE.md.
+  why: >-
+    `no humans` DOES NOT BIND, and this is a controlled result rather than a
+    guess: node 001 beat 10 and node 002b beat 01 were rendered in the SAME pass,
+    same model, same recipe, differing only in how they negate people. b10 used
+    `no humans` with `humans` verified lifted onto the real negative path and drew
+    a human hand and forearm in s0 and a bare human foot in s1 — 2 of 4. b01 used
+    `no girl, no boy, no child, no person` and returned 0 people in 4 of 4. Two
+    plausible mechanisms, both cheap to act on and neither needing to be resolved
+    first: `girl`, `boy`, `child` and `person` are common caption tokens with
+    strong embeddings while `humans` is not, and both observed failures are BODY
+    PARTS, which a whole-body noun may not reach at all. Every beat still relying
+    on the generic plural alone is therefore suspect, and eight of them are live
+    in 001 — a genome whose whole subject is a plant with no people in it. The
+    finding is already written up in that node's own shots.md; this entry is the
+    sweep it asks for.
