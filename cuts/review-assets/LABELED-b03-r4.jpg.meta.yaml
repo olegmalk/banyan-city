@@ -1,0 +1,53 @@
+# Provenance for one image on the /review gallery (STEWARDSHIP §7.2).
+#
+# WHAT THIS FILE IS SERVED UNDER, because it is not what the rest of the tree is
+# served under. banyan.city publishes CC BY 4.0. This picture was drawn by
+# cagliostrolab/animagine-xl-3.1, whose CreativeML Open RAIL++-M licence attaches
+# use restrictions that travel to the output — the open conflict recorded as D15.
+# The founder authorised these frames onto the review page on 2026-08-09; he did
+# not resolve the licence question, and publishing them under a blanket CC BY
+# offer would grant what we do not hold. So the offer is NARROWED for this file
+# and said out loud on the page: it carries OpenRAIL++'s Attachment A use
+# restrictions and is not CC BY 4.0. Everything else on the site is unaffected.
+#
+# The pixels here are a JPEG re-encode, not the original bytes. The source file
+# and its SHA-256 are recorded below, so the rendition is checkable against the
+# frame it came from.
+
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+published_under: >-
+  CreativeML Open RAIL++-M use restrictions (Attachment A) — NOT the tree's
+  CC BY 4.0. Founder-authorised for the /review gallery only; not canon,
+  not published elsewhere, not promoted to a stills/ filename.
+authorised_by: >-
+  founder (Roman), 2026-08-09 — "put the images from my computer onto there
+  please, not like theres any reason to hide it". Visibility only: D15's
+  licence question stays open and stays his.
+surface: /review gallery (unlisted, noindex — D17)
+canon: false
+derived_from: LABELED-b03-r4.png
+derived_from_sha256: 8040ef29102a00d072dc10d6e07ed80e54149aef2331158f387d119ff665b542
+sha256: cfdad2506b38f4f396f3bd020e2cc37305a9886bc0d9f0ffb7214ef2d9bf6da3
+encoding: >-
+  JPEG from the source PNG with ImageMagick 7 — no resize, no crop, no colour
+  conversion, metadata stripped. Quality 90, 4:4:4 chroma so the burned-in
+  labels stay crisp.
+cost_usd: 0
+sheet: true
+episode: 1
+shows: b03-r4-s0..s3
+what: >-
+  episode 1 beat 03, round 4 — beat 1's approved screen wording copied verbatim.
+  It killed the glyph junk in 4 of 4 and left the screens blank; ledger record
+  ep1-b03-r4-sample, commit d17a685.
+sheet_note: >-
+  A contact sheet: four candidate frames composited into one picture by our own
+  labelling script, with an address badge and the seed burned under each tile.
+  Every tile is a cagliostrolab/animagine-xl-3.1 draw; the compositing and the
+  badges are our code and carry no model. Addresses resolve through
+  REVIEW-KEY-0808.md.
+neutral: >-
+  Labels and seeds only. No favourite is marked, nothing is ordered by
+  preference, and no tile says "closest to" anything (gate G3).

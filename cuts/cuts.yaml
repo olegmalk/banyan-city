@@ -612,6 +612,78 @@ checklist:
         - file: review-assets/LABELED-b01-r5.jpg
           label: "ep2 cold open — b01-r5-s0..s3"
           note: "the four replacing the frame you withdrew"
+    # BEAT 3 IS NOT BLOCKED ON A BETTER PROMPT, which is why this is an item and
+    # not a queue entry. Round 4 copied beat 1's approved screen wording verbatim
+    # and it worked: the glyph junk that sank r1, r2 and r3 is gone in 4 of 4.
+    # What it exposed is that the wording is SCALE-DEPENDENT — it describes a
+    # glow, and a glow is enough when the monitor is a small rectangle behind a
+    # pair of hands (beat 1) and is nothing at all when the screen fills the
+    # frame (beat 3's close-up, his own instruction). Two of his rules meet and
+    # one has to give. Ledger record `ep1-b03-r4-sample`, commit d17a685.
+    - n: 16
+      ask: "Beat 3 — two of your rules collide. Pick one."
+      state: open
+      chip: "PICK"
+      minutes: 2
+      summary: >-
+        Beat 1's screen wording killed the glyph junk 4/4 and left the screens
+        blank. Close-up and abstract glow cannot both hold.
+      where: "the `b03-r4` sheet is on this card"
+      how: "say **a**, **b**, or your own"
+      sheets_title: "Beat 3 round 4 — four candidates"
+      body: |-
+        **WHAT ROUND 4 CHANGED AND WHAT IT PROVED.** It copied beat 1's approved
+        five-word screen treatment — the abstract glow, no words to read —
+        straight into beat 3. Two of your instructions are now reliably met:
+
+        - **the glyph junk is gone, 4 of 4.** The sprayed nonsense text that sank
+          r1, r2 and r3 does not appear once.
+        - **it is unmistakably inside a house**, 4 of 4 — warm lamp, mug,
+          houseplant, lived-in corner. The neon vaporwave room is gone too.
+
+        **AND THE SCREENS CAME BACK EMPTY.** Three of the four are flat
+        pink-lavender gradients with nothing on them (s2 has a stray pale
+        triangle). Nothing in any of them says a machine just finished a deploy.
+
+        **THE REASON IS SCALE, AND IT IS WHY THIS IS YOURS.** Those five words
+        describe a *glow*. At beat 1's distance the monitor is a small bright
+        rectangle behind a pair of hands, and a glow is all it needs to be. Beat
+        3 is a **close-up** — your instruction, 2026-08-08 — with the screen
+        filling the middle of the frame, and there a glow is a large empty
+        rectangle with no instruction in it. So the model fills it with a
+        gradient. **Your close-up and your no-text screen rule are in direct
+        tension, and no rewording satisfies both while the screen is the frame.**
+        Round 5 has to choose, and choosing between two of your own rules is not
+        ours to do.
+
+        **THE THREE ANSWERS:**
+
+        - **(a) Keep the close-up.** The screen stays an abstract glow and the
+          `DEPLOY SUCCEEDED ✓` card already burned over this beat carries the
+          information. Cheapest, and it is how this show draws its terminal cards
+          everywhere else. We can add faint interface shapes — panels, a cursor
+          block — but never text.
+        - **(b) Pull the lens back** to beat 1's distance, where the monitor is
+          small enough that a glow reads as a working machine. Costs the close-up
+          you asked for.
+        - **(c) Your own.**
+
+        **ONE THING THAT IS NOT PART OF THE CHOICE, and it is being fixed either
+        way.** `b03-r4-s0` put an anime face on the monitor again — the fault you
+        rejected r3 for — with `no girl, no boy, no person, no wallpaper` all
+        verified present in the negative. It is **1 of 4 here against 2 of 4 in
+        r3**, so it is getting rarer and the negative is not what binds it. That
+        is ours to solve, not a question.
+
+        **v33 is unaffected.** Item 12's cut still holds the canon beat-3 frame
+        and will until this is answered and a round 5 lands.
+
+        **Predicted: you reject all four. Confidence 0.80.**
+      sheets:
+        - file: review-assets/LABELED-b03-r4.jpg
+          label: "ep1 beat 03 round 4 — b03-r4-s0..s3"
+          note: "glyph junk gone 4/4, house 4/4, screens blank 3/4, anime face on s0"
+
     - n: 11
       ask: "The 704x1280 crop — is the framing still right?"
       state: open
