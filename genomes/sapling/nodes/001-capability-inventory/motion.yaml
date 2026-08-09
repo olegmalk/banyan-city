@@ -187,4 +187,41 @@ motion_prompts:
   # describes a light that is not where the new frame puts it. Naming the band
   # itself cannot contradict the init frame, and the long shadows are the most
   # legible thing in the picture that a pulse can move.
-  15: "the soil grains and small stones jump and scatter with each thump, the raking light band slamming brighter and dimming back, the long shadows jolting with it, dust bursting loose in sheets"
+  #
+  # 2026-08-09, SUPERSEDED — everything in the paragraph above describes a frame
+  # that no longer exists. That soil-and-stones macro was retired on 2026-08-08 as
+  # stills/15-something-s-coming-REVOKED-underground.png when the founder passed
+  # b15-r3-s1 (d4488de, seed 20261734): a small sapling standing in TALL GRASS at
+  # dusk, one orange light shaft coming down from the top of frame, embers floating
+  # in it. No soil grains in that picture, no stones, no raking band from the right,
+  # no long shadows — every noun the old direction moved is gone from the plate, so
+  # it was directing a picture we do not have. Same defect as beat 12's, fixed the
+  # same way: named parts only, and only parts that are in the frame.
+  #
+  # The old line, kept for the record:
+  #   "the soil grains and small stones jump and scatter with each thump, the
+  #   raking light band slamming brighter and dimming back, the long shadows
+  #   jolting with it, dust bursting loose in sheets"
+  #
+  # This entry is why the fix matters here rather than in node.md: motion.yaml
+  # WINS. video_task reads motion_directions() first and only falls back to
+  # node.md's action line (video_task.py:1340, :1466, :1551), and bench_models
+  # does the same (bench_models.py:91). So the beat-15 line the founder approved
+  # on 2026-08-09 (01212d8) — "The sapling in the grass, dusk light. The far-off
+  # thump-thump is closer now — each pulse felt through the ground, the leaves
+  # trembling with it." — could not have reached a renderer while the old override
+  # stood. The line below is that script line's motion on the plate's own nouns:
+  # grass first because it fills the frame, the leaves trembling because the script
+  # says exactly that, the shaft carrying the pulse as luminance (beat 10's
+  # mechanism — what a thump looks like when the thing arriving may not be shown),
+  # embers because they are the only free-floating objects in the picture. No leaf
+  # count is asserted: the apex reads two or three blades depending where you cut
+  # it, and beat 9's comment above records what asserting a count costs. Nothing is
+  # negated either — the hook's "no figure, no monster" already arrives from the
+  # shot-board prompt, and video_prompt dedupes what it is sent twice.
+  #
+  # NOT RENDERED, deliberately: no consumer exists for a beat-15 clip today, and
+  # nothing here queues one. Whenever one IS queued this is a recipe change, so it
+  # draws ONE SAMPLE for the founder before any second clip — the plate itself was
+  # screened that way on 2026-08-08.
+  15: "the tall grass shudders and thrashes with each thump-pulse, waves of blades whipping over and springing back, the sapling's leaves trembling hard on the thin stem, the orange light shaft surging brighter and dimming back on every pulse, embers drifting up through it"
