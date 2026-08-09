@@ -88,9 +88,10 @@ pending:
     link_text: "the same morning checklist — item 10, nine sheets, with episode 1's four at the top"
     since: 2026-08-07
   - id: bakeoff-pick
-    title: "Choose which AI model draws the show from now on"
-    detail: "Four free models rendered the same three shots — the current one and 2026's best contenders. Whichever the author picks becomes the artist for every future frame."
+    title: "Choose which AI model DRAWS the show from now on"
+    detail: "Four free models rendered the same three shots — the current one and 2026's best contenders. Whichever the author picks becomes the artist for every future frame. This is the drawing question and not the moving one, and the two have already been mistaken for each other once: on 2026-08-08 he was asked which of two engines should film episode 2, answered \"neither\", and that was recorded as a refusal to judge a motion test built on a picture he had just withdrawn — not as a verdict on any model. That question is separate, it is still open, and it lives on the review page. Nothing here is blocked in the meantime: every frame since has been drawn by the model currently in the house seat."
     public: "lab/model-bakeoff.html"
+    link_text: "the four artists, same three shots, side by side — no verdict on it yet"
     since: 2026-07-30
   - id: ep3-scripts
     title: "Read episode 3 — the script that grows out of the episode 2 you approved"
@@ -100,7 +101,7 @@ pending:
     since: 2026-07-30
   - id: animegen-speedup-licence
     title: "Decide whether a licence published in one place but not the other is good enough to publish from"
-    detail: "The model that draws the show in anime style has a companion file that makes it about thirteen times faster — roughly nine minutes per shot instead of nearly two hours, measured on our own card. The people who made it did publish their licence, and it is the permissive kind, but they published it alongside their code and not on the download page the show actually pulls the file from. The show's standing rule is that nothing gets published unless every part of it has a licence we can quote, so today the fast version is used for tests only and every releasable anime shot takes the slow path. The evidence has been read and written up on both pages. What is missing is the author saying that a licence verified in the makers' own repository counts as proof for footage that goes out."
+    detail: "The model that draws the show in anime style has a companion file that makes it about thirteen times faster — roughly nine minutes per shot instead of nearly two hours, measured on our own card. The people who made it did publish their licence, and it is the permissive kind, but they published it alongside their code and not on the download page the show actually pulls the file from. The show's standing rule is that nothing gets published unless every part of it has a licence we can quote, so the fast version is used for tests only and every releasable anime shot takes the slow path. The evidence has been read and written up on both pages. What is missing is the author saying that a licence verified in the makers' own repository counts as proof for footage that goes out. NOTHING IS WAITING ON THIS TODAY, and it is written down rather than left for him to discover: the speedup only fits the larger of the two models, that model has been parked since 2026-08-04 because it does not fit the machine, and every frame the show is drawing now goes through the smaller one, where the fast file does not apply at all. So this is a rule to settle before it is next needed, not a gate holding anything up — worth his minute when he has one, and not worth interrupting a screening pass for."
     public: "https://github.com/olegmlkvorg/banyan-city/blob/main/pipeline/research/models-licence.md#link-4-answered--lightx2vwan22-lightning-no-license-on-hf-but-apache-20-verified-on-github"
     link_text: "read what was found on each of the two pages"
     since: 2026-08-07
