@@ -19,6 +19,11 @@ The episode being remade is just the loop's test bench.
    unchanged.
 4. **SCREEN** — founder watches old vs new side by side. Keep or revert.
    If clearly better: post it; platform metrics become the external score.
+   **PROVISIONAL MODE (D19, dad 2026-08-09):** step 3 does not wait for this —
+   the cut is labelled provisional and a predicted verdict with a confidence is
+   written into `taste/steward-model.ledger.yaml` *before* it reaches a screen,
+   so his words score the taste model as well as the cut. Publication and spend
+   still wait for him; rendering, voice and assembly no longer do.
 5. **LOG** — `pipeline/loop/cycle-NNN.md`: defects found → fixes applied →
    what the founder felt → what the numbers did. Then go to 1.
 
