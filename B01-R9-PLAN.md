@@ -154,6 +154,46 @@ a plan that fails on the box:
   finetune, so generic SDXL ControlNets are architecturally compatible, and
   832x1216 is one of the resolutions its card lists.
 
+### The diffusers version question — stay on 0.29.2, and here is the risk both ways
+
+**Recommendation: stay on 0.29.2 for r9 and for the foreseeable beats. Do not
+upgrade.** Stated as a recommendation rather than a hedge, with what it costs.
+
+The only capability an upgrade buys is ControlNet-Union, and the tag probe puts
+that out of reach anyway: `ControlNetUnionModel` does not exist at v0.29.2
+through v0.31.0 and first appears at **v0.32.0** (PR #10131, merged 2024-12-11),
+while the Union fixes for issue #11861 only land in **v0.35.0** — so "upgrade for
+Union" means a six-minor-version jump, not one.
+
+**What we give up by staying: nothing r9 needs, and less than it looks.** Union's
+pitch is many control types in one model. We need one. And multi-control does
+not actually require Union — 0.29.2's SDXL ControlNet pipeline already accepts
+`Union[ControlNetModel, List[ControlNetModel], MultiControlNetModel]` and
+converts a list into a `MultiControlNetModel` itself, so even a depth+lineart
+round is reachable on the pin we have.
+
+**What we risk by upgrading, which is the larger number.** r9's whole value is
+comparability: r5, r6, r7 and r8 all rendered on this exact stack, and the
+pre-registered rubric in §8 scores r9 against r8's measured `~30%`. Change the
+renderer in the same round that changes the architecture and the result answers
+neither question — the same two-variables-at-once error r8 was careful to avoid
+on platform. Beyond this beat, `C:\banyan-farm\venv` is the venv every render in
+flight uses. Worth noting honestly in the other direction: diffusers 0.29.2
+shipped 2024-06-27, ten months before PyTorch added Blackwell support, so the
+stack is already an untested pairing that happens to work — which is an argument
+for not disturbing it, not for churning it.
+
+**When to revisit:** if a beat ever needs three or more simultaneous controls
+where Union's single-model efficiency actually matters. Qualify it then in a
+**separate** environment, which is this repo's established pattern
+(`C:\banyan-video` exists for exactly this reason), never as an in-place upgrade
+of the image venv.
+
+One trap if anyone tries Union on the current pin regardless: its configs
+declare `_class_name: "ControlNetModel"`, so `from_pretrained` will *attempt*
+the load and then fail or misload on the extra Union tensors rather than
+refusing cleanly.
+
 ### Polarity — the silent failure to guard against
 
 MiDaS/DPT predicts *inverse* depth: larger value = nearer. The card's
@@ -167,7 +207,21 @@ any diffusion runs.
 ## 4. G1 — the provenance chain through a derived map
 
 G1, as `shots.md` states it, "fails any candidate *conditioned on* a still that
-is revoked or was never approved". The chain r9 is conditioned on:
+is revoked or was never approved".
+
+**This is also why b15 is the only admissible geometry source, and that is worth
+saying plainly because it looks like a taste choice and is not one.** The obvious
+move — condition on a beat-01 frame that already has the right sunrise palette —
+is illegal, not merely worse: as `shots.md` records, "every beat-01 frame
+carrying the right palette — r2-s3, r3-s3, r6-s3 — is unapproved or revoked and
+would have failed the round before he saw it." `15-something-s-coming.png`
+(b15-r3-s1) is the only approved sapling-in-grass frame in the tree. So the
+palette collision r8 hit was not bad luck in choosing an init; it is structural,
+and it is exactly why the fix has to be to *discard* the init's colour rather
+than to find a better-coloured init. There is no better-coloured init to find
+until the founder approves a beat-01 frame.
+
+The chain r9 is conditioned on:
 
 ```
 b15-r3-s1  genomes/sapling/nodes/001-capability-inventory/stills/15-something-s-coming.png
@@ -261,6 +315,17 @@ and nothing else.
 | positive | byte-identical to r8's sent positive, 65 CLIP tokens |
 | negative | byte-identical to `R7_NEG_SENT`, 72 CLIP tokens |
 | shots.md | **not edited**; the height predicate is stripped script-side after asserting the fence on disk is byte-for-byte r7's |
+
+**The token counts must be measured on the BOX, and the script must refuse to
+run without a real CLIP tokenizer** — the same trap r7 and r8 both carried, kept
+here unchanged. `sd_prompt._token_estimate` over-counts a positive of this shape
+by roughly 3 tokens near the 77 boundary, so a count taken on the Mac is not the
+count the model sees. Since the whole comparability claim of this round rests on
+the positive being byte-identical to r8's 65 tokens and the negative to r7's 72,
+a Mac-side measurement would not merely be imprecise, it would invalidate the
+round. `if _clip_tokenizer() is None: return 8` stays exactly as r8 has it, and
+`--measure` prints the r8 control beside r9 on the box's own tokenizer before
+anything is drawn.
 
 The sent positive, for reference — this exact string, from r8's sidecars:
 
@@ -365,13 +430,13 @@ new here and should not pretend to.
 
 ---
 
-## 9. Download list — for the card-runner lane, not fired here
-
-Nothing below has been downloaded. Sizes are as shown on the Hugging Face files
-pages.
+## 9. Download list — staged on the box 2026-08-10
 
 Byte sizes are from the Hugging Face API `tree/main` endpoint, not the rounded
-figures on the web page.
+figures on the web page, and every file is pulled by exact name via
+`allow_patterns` — several of these repos carry ComfyUI-format siblings that a
+bare `snapshot_download` would drag along by the gigabyte. Sizes are verified
+against these counts after landing.
 
 | Artifact | Files | Exact bytes | Notes |
 |---|---|---|---|
@@ -386,24 +451,75 @@ Smaller fallbacks on the same licence, if 2.99 GB is ever the objection:
 `diffusers/controlnet-depth-sdxl-1.0-mid` at 545,197,729 B fp16 and
 `-small` at 320,237,179 B fp16. Both take `variant="fp16"`.
 
+### The wider set staged on the box, with D15 verdicts
+
+Staged 2026-08-10 so later rounds and other beats do not wait on a download.
+**Staging is not endorsement** — the r9 recipe uses only the first two rows, and
+the licence column is what decides whether a weight may ever touch a canon
+still.
+
+| Repo / file | Bytes | Licence | D15 verdict |
+|---|---|---|---|
+| `diffusers/controlnet-depth-sdxl-1.0` fp16 | 2,502,139,134 | `openrail++` | **OK for canon** — r9's arm |
+| `Intel/dpt-hybrid-midas` `pytorch_model.bin` | 489,648,389 | `apache-2.0` | **OK for canon** — r9's estimator |
+| `Intel/dpt-large` `model.safetensors` | 1,367,456,044 | `apache-2.0` | **OK for canon** — safetensors fallback |
+| `xinsir/controlnet-depth-sdxl-1.0` | 2,502,139,104 | `apache-2.0` | **OK for canon** — the named r10 substitution |
+| `xinsir/controlnet-canny-sdxl-1.0` | 2,502,139,104 | `apache-2.0` | OK for canon, but see §2 — canny finds 0.12 % of this plate |
+| `xinsir/controlnet-scribble-sdxl-1.0` | 2,502,139,104 | `apache-2.0` | OK for canon; same edge-density objection |
+| `TheMistoAI/MistoLine` fp16 | 2,502,139,104 | `openrail++` **+ attribution condition** | **OK for canon ONLY with visible credit** — the README requires commercial users to acknowledge TheMisto.ai "in the documentation, website, or other prominent and visible locations". Usable, but it puts a standing obligation on anything it renders. |
+| `LiheYoung/depth-anything-large-hf` | 1,341,322,868 | `apache-2.0` | **OK for canon** — the permissive alternative to the NC V2 weights |
+| `lllyasviel/Annotators` — `sk_model.pth`, `sk_model2.pth`, `netG.pth` | 17,173,511 + 17,173,511 + 217,631,959 | **NONE DECLARED** | 🚨 **DO NOT USE FOR CANON STILLS.** Card says `license: other`, the README is 23 bytes of YAML, there is no LICENSE file, and per-file upstream terms differ (informative-drawings, Anime2Sketch, HED, CMU OpenPose — OpenPose upstream is itself non-commercial). Evaluation only until someone establishes per-file provenance. |
+
+**Explicitly NOT staged, and not to be staged:** every `cc-by-nc-4.0` weight —
+`Depth-Anything-V2-Base-hf` and `-Large-hf`, and
+`bdsqlsz/qinglong_controlnet-lllite` (`cc-by-nc-sa-4.0`, and in a format
+`ControlNetModel` cannot load anyway). Also avoided:
+`ShermanG/ControlNet-Standard-Lineart-for-SDXL`, which declares **no licence at
+all**, and `Eugeoter/noob-sdxl-controlnet-lineart_anime`, whose Fair AI Public
+License 1.0-SD is copyleft-style — commercial use is allowed but derivatives and
+public deployments must carry the same terms, which is a governance decision
+rather than a steward's.
+
+**Two things that need no download at all**, worth knowing before anyone stages
+more weight: Canny is pure OpenCV with **no model and zero licence exposure**,
+and `LineartStandardDetector` is likewise model-free — a Gaussian-difference in
+OpenCV. If we ever want a lineart arm with no licence question attached, that is
+the one to try first.
+
 **No pip install of any kind.** Both additions load through `diffusers 0.29.2`
 and `transformers 4.44.2` exactly as pinned; that is the main reason this
 pairing was chosen over the alternatives, and it is a constraint on r9 rather
 than a convenience.
 
-Two things that will otherwise cost the box a failed run:
+### The load-pattern trap — every repo wants a different call
 
-- **Load the ControlNet in bf16, not fp16.** `variant="fp16"` selects which
-  *file* to download; `torch_dtype` sets the in-memory dtype, and it must match
-  the UNet's. So
+There is no single incantation, and the differences are silent rather than
+loud. Getting these wrong costs a run each:
+
+| Repo | `variant="fp16"` | Why |
+|---|---|---|
+| `diffusers/controlnet-*` | **pass it** | ships both `…fp16.safetensors` and fp32 |
+| `xinsir/controlnet-*` | **must NOT pass it** | no `*.fp16.safetensors` exists; the single default file already holds fp16 weights, so passing `variant` raises |
+| `TheMistoAI/MistoLine` | **must pass it** | the *inverse* case — it ships **only** the fp16 variant, so omitting `variant` raises |
+| `TencentARC/t2i-adapter-*` | pass it — spelled correctly | the official cards contain the typo `varient="fp16"`, which is silently swallowed and downloads the 316 MB fp32 file instead |
+
+Two more, both dtype and format rather than naming:
+
+- **Load the ControlNet in bf16, not fp16.** `variant` selects which *file* to
+  download; `torch_dtype` sets the in-memory dtype, and it must match the
+  UNet's. So
   `ControlNetModel.from_pretrained(..., variant="fp16", torch_dtype=torch.bfloat16, use_safetensors=True)`.
   A ControlNet left in fp16 against a bf16 UNet fails at the first forward pass
-  with a scalar-type mismatch.
-- **`Intel/dpt-hybrid-midas` ships `pytorch_model.bin` only** — there is no
-  safetensors file in that repo, so `use_safetensors=True` cannot be passed to
-  the estimator and the load goes through `torch.load`. Expected to work on the
-  pinned transformers, but it is the one load in this recipe without a
-  safetensors path, so it is the one to watch on first run.
+  on a scalar-type mismatch.
+- **`Intel/dpt-hybrid-midas` ships `pytorch_model.bin` only — a pickle, and this
+  is a live hazard rather than a note.** PyTorch 2.6 flipped `torch.load` to
+  default `weights_only=True`, and the box runs torch 2.11. Transformers is
+  expected to handle it, but this is the one load in the recipe with no
+  safetensors path. **Fallback if it fails: `Intel/dpt-large`** —
+  1,367,456,044 B, `apache-2.0`, real `model.safetensors`, same DPT/MiDaS
+  family and the same `DPTForDepthEstimation` API. Both are staged so Stage 0
+  can simply use whichever loads. Prefer safetensors everywhere else in this
+  manifest for the same reason.
 
 **On `xinsir/controlnet-depth-sdxl-1.0` — the named r10 substitution if r9's
 geometry comes back too weak.** apache-2.0 (licence-preferable), 2,502,139,104 B,
