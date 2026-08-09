@@ -1670,11 +1670,51 @@
     positive may only name what is in the plate — is not in doubt; what is in
     doubt is whether DELETING the character is the right way to apply it here, or
     whether beat 16's still has to be redrawn with him actually in it.
-  founder_verdict: null
-  founder_verdict_date: null
-  outcome: null
-  miss_axis: null
-  model_action: null
+  founder_verdict: |-
+    "if he was there on purpose then fine, it wont ruin anything right?"
+  founder_verdict_date: 2026-08-09
+  outcome: partial
+  miss_axis: >-
+    Script fidelity / staging authority. The model asked "does the person go
+    away" and he answers on "is the person supposed to be there". It named that
+    objection itself and then predicted past it.
+  model_action: reweight
+  notes: >-
+    RIGHT RULE, WRONG BEAT TO APPLY IT ON — and the model's own hedge is what
+    came true. `predicted_verdict` was `ratify` at 0.60, with the confidence
+    explicitly "held down to 0.60 by the objection". The objection is the part
+    that landed. He kept the scavenger, so beat 16 does NOT get the clause
+    deleted: its plate gets REDRAWN with the goblin blurred behind the leaf, as
+    the script always staged him, gated on his approval of the goblin look (the
+    /review card for it, item 17, is being written separately — the gate is his
+    yes, not the card). The prompt-only fix goes to BEAT 12 instead, whose staging line
+    says "crouched behind the trunk, below frame" — a beat where he was never
+    meant to be visible, so removing the clause removes nothing the script wants.
+    Ungated, and the still `b12-r4-s2` stands.
+
+    WHAT IS BANKED. The measurement is untouched and the general rule holds: an
+    i2v positive may only name what is in the conditioning frame. 3 of 4 control
+    seeds drew a person, 0 of 4 treatment seeds did, one variable and 38 bytes
+    apart. Nothing in his answer disputes the experiment; it disputes which of
+    the two available repairs beat 16 gets.
+
+    WHAT THE INVENTED CLIPS ARE WORTH. Rejected as not-the-character — the figure
+    LTX drew is a generic human who walks in about a second into a static close
+    shot, neither the goblin this show draws nor the staging the script asks for.
+    They are kept as the labelled-invented half of
+    `check-invention-labelled-set-1786280220`, not as usable footage.
+
+    WHY `partial` AND NOT `hit`. This record's subject is beat 16, and beat 16 is
+    not being fixed the way the record predicted he would accept. Not a `miss`
+    either: he rejected nothing the model measured, and the model had already
+    written the deciding sentence into its own `predicted_objection`. The
+    correction is to weight that class of objection above the measurement when
+    the two disagree — when a mechanical i2v fix contradicts the beat's own
+    staging line, the staging line wins and the PLATE moves, not the prompt.
+
+    ENGINE-SHAPED RECORD, STILL. Scored in the `kind: still` fields because
+    `ledger-engine-kind-1786280160` has not landed; `pick` stays null because he
+    chose no frame, and the per-beat split above is the substance of the verdict.
 
 - id: ep1-b06-r4-provisional
   date: 2026-08-09

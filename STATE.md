@@ -5858,7 +5858,8 @@ doubt — **an i2v positive may only name what is in the plate** — but on beat
 and 16 the right way to apply it may be to REDRAW THE STILL with the scavenger
 actually in it, not to delete him from the sentence. That is a taste call and a
 still-wave question, and it is the founder's. Ledger record `ep2-b16-drift-0809`,
-`kind: video`, written before he has seen any of the eight.
+`kind: video`, written before he has seen any of the eight. **He settled it the
+same day — see "The founder resolved it per beat" below.**
 
 **A DETECTOR WE WOULD HAVE TRUSTED SCORES 0 OF 3 ON THIS SET.**
 `check_invention.py` — built precisely to catch a video model inventing content —
@@ -5880,6 +5881,46 @@ that tool; the scoring above is frame-sampling by eye.
 with sidecars, `GPU-CLAIM.txt` RELEASED, schtask `banyan-b16drift` deleted, card
 idle at 0% / 0 MiB. Nothing published, posted, spent, made canon, or opened on
 the founder's screen.
+
+### 2026-08-09 — the founder resolved it per beat, and the two beats do not get the same fix
+
+**HIS ANSWER, VERBATIM.** Asked whether the scavenger was in beat 16 on purpose,
+Roman (R4): *"if he was there on purpose then fine, it wont ruin anything
+right?"* He was, and he stays — **the scavenger remains in the story exactly as
+scripted.** The open question was never whether to write him out; it was which of
+the two repairs each beat gets, and the answer is that their own staging lines
+decide.
+
+**BEAT 12 — PROMPT-ONLY, UNGATED, RUNNABLE NOW.** `node.md:83` reads *"the
+scavenger is still crouched behind the trunk, **below frame**"*. He was never
+meant to be visible in that shot, so the character clause simply comes OUT of the
+animation prompt — the proven 38-byte class of fix, 0 of 4 treatment seeds — and
+nothing the script wants is lost. The still stands: `b12-r4-s2`, the provisional
+pick. No founder gate on this half.
+
+**BEAT 16 — STILL REDRAW, GATED.** `node.md:103` reads *"the scavenger sits
+blurred behind it"*. That staging is deliberate, so deleting the clause would
+delete a character the script puts on screen. The plate has to catch up to the
+script instead: **the still gets redrawn with the goblin actually drawn in,
+blurred, behind the leaf.** GATED on the founder approving the goblin's look
+first — the redraw cannot be specified before the character design it draws is
+settled.
+
+**THE INVENTED CLIPS ARE REJECTED AS NOT-THE-CHARACTER.** The figure LTX drew is
+a generic human who enters a static close-up about a second in — neither the
+goblin this show draws nor anything the script stages. They are not usable
+footage; they stay as the labelled-invented half of the
+`check-invention-labelled-set` fixture.
+
+**WHAT IS BANKED AND WHAT MOVED.** The general rule is untouched and confirmed:
+an i2v positive may only name what is in the conditioning frame. What moved is
+its application — when a mechanical i2v fix contradicts the beat's own staging
+line, the staging line wins and the PLATE moves, not the prompt. Recorded in the
+ledger (`ep2-b16-drift-0809`, outcome **partial** — the model predicted `ratify`
+at 0.60 and its own `predicted_objection` is the part that landed), on the
+backlog entry `i2v-prompt-plate-truth-1786280100` as clauses (g) and (h), and on
+/review item 14. Nothing rendered, spent, published, or opened on his screen for
+this.
 
 ## 2026-08-09 — node 001 redraws round 4: beat 14 lands, beat 06 fails worse, and the reason is a tag we have been using upside-down
 

@@ -923,7 +923,7 @@ checklist:
       summary: >-
         You chose LTX on its motion and named the thing that disqualifies it. The
         invention has a cause and it is our prompt, not the model.
-      where: "nothing to watch — the fix is being tested on the machine"
+      where: "nothing to watch — beat 12's fix is going in; beat 16's redraw waits on the goblin's look"
       how: "nothing, unless we misheard you"
       body: |-
         **Your answer, in full and unedited:**
@@ -967,15 +967,34 @@ checklist:
         negative field itself. The only text that acts is the positive one, and the
         positive one was asking for a man.
 
-        **WHAT IS RUNNING NOW.** Eight clips on beat 16: the same picture, the same
-        recipe, four seeds — half with that clause, half with it removed and nothing
-        else changed. If the people vanish, this is a one-line fix and LTX is your
-        engine. If they do not, LTX has a real drift problem and you will be told
-        that instead. **Nothing goes to a screen until it is scored.**
+        **THE TEST IS DONE AND THE CLAUSE IS THE CAUSE.** Eight clips on beat 16:
+        same picture, same recipe, four seeds — half with that clause, half with it
+        removed and nothing else changed. **People in 3 of the 4 with it. People in
+        0 of the 4 without it.** One variable, 38 bytes. The motion you liked
+        survives: the clean half moves within 9% of the other half on average, and
+        more on two of the four seeds.
+
+        **THEN YOU SETTLED THE PART THE TEST COULD NOT.** Asked whether the
+        scavenger was in beat 16 on purpose:
+
+        > if he was there on purpose then fine, it wont ruin anything right?
+
+        He was, and he stays. So **deleting him from the prompt is the wrong repair
+        for beat 16** — it would take a character out of a shot the script puts him
+        in. The two beats split on what their own scripts say:
+
+        | beat | how the script stages him | the fix |
+        |---|---|---|
+        | **12** | *"crouched behind the trunk, below frame"* | never meant to be seen — **the clause comes out of the prompt.** Going in now |
+        | **16** | *"the scavenger sits blurred behind it"* | meant to be seen — **the picture gets redrawn with him in it, blurred.** Waits on your yes to the goblin's look |
+
+        **The strangers LTX drew are thrown out either way.** A generic human who
+        walks into a static close-up a second in is not our goblin and is not in any
+        script — he is evidence, not footage.
       pending: >-
         **Nothing is embedded here** — the LTX clips fail the licence gate
-        (**D16**, open, yours), and the eight-clip test is still rendering. They sit
-        at `review/ep2-prov-0809/` and `review/ltx-drift-0809/`.
+        (**D16**, open, yours). They sit at `review/ep2-prov-0809/` and
+        `review/ltx-drift-0809/`.
 
     - n: 15
       ask: "Beat 15's motion line — ANSWERED. You approved the replacement."

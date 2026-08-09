@@ -2033,7 +2033,23 @@ backlog:
     docstring is where this bug family is tracked and the new member belongs in
     it; (e) `test_pipeline.py:403` already pins beat 16's staging line as a
     fixture, so the regression test has its input ready; (f) ONE SAMPLE before
-    any set, per CLAUDE.md.
+    any set, per CLAUDE.md; (g) THE FIX IS PER-BEAT AND THE SCRIPT DECIDES WHICH
+    ONE — resolved by the founder 2026-08-09, see `why`. BEAT 12 is the ungated
+    half: its staging line (`node.md:83`) puts the scavenger "crouched behind the
+    trunk, below frame", so he was never meant to be visible, the character
+    clause simply comes OUT of the animation prompt — the proven 38-byte class of
+    fix, 0 of 4 treatment seeds drew a person — and the still stands
+    (`b12-r4-s2`, the provisional pick). Runnable now, nothing waits on it;
+    (h) BEAT 16 IS NOT FIXED THAT WAY. Its staging line puts him visible-blurred
+    behind the leaf ON PURPOSE, so deleting the clause would delete a character
+    the script wants on screen. The resolution is a STILL REDRAW — the scavenger
+    actually drawn into the plate, blurred, behind the leaf — and it is GATED on
+    the founder approving the goblin look first (the /review goblin-look card,
+    item 17, is being written separately; this gate is his yes, not the card's
+    existence). Do NOT strip
+    the clause on this beat. The eight-clip experiment's invented humans are
+    REJECTED as not-the-character: a generic human who enters mid-shot, neither
+    scripted nor consistent with the goblin this show draws.
   why: >-
     The founder on 2026-08-09: "ltx is just amazing.. buuut it's going off track
     and making random stuff like this human sometimes." It is NOT going off
@@ -2050,6 +2066,18 @@ backlog:
     composer's own docstring, so the pattern is known and the general rule is
     not yet written down anywhere the code enforces it. Measured result of the
     one-variable experiment is in STATE.md 2026-08-09 (task 002b-b16-drift-0809).
+
+    RESOLVED PER BEAT, 2026-08-09, BY THE FOUNDER (R4). Asked whether the
+    scavenger was in beat 16 on purpose, he answered: "if he was there on purpose
+    then fine, it wont ruin anything right?" — the scavenger STAYS IN THE STORY
+    exactly as scripted, and the question was never whether to write him out. So
+    the general rule survives untouched (an i2v positive may only name what is in
+    the conditioning frame) and the two beats it lands on split, because their
+    own staging lines differ: beat 12 hides him below frame, beat 16 shows him
+    blurred. Deleting the clause is right on 12 and wrong on 16 — on 16 the plate
+    has to catch up to the script instead. That is clauses (g) and (h) above, and
+    it is why this entry is half-runnable rather than gated as a whole. The
+    ledger record `ep2-b16-drift-0809` carries his sentence and the scoring.
 
 - id: ledger-engine-kind-1786280160
   runner: manual
