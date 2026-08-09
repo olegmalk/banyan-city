@@ -274,24 +274,73 @@ tasks:
 # backlog:, a real `runner: farm` entry — it carries `node:` because a worker
 # entry has to.
 #
-# DO NOT "FIX" THAT BY ADDING `node:`. These are hand-lane rounds whose variable
-# is prompt text, and the stills path builds both halves of the prompt itself: the
-# positive from shots.md through parse_shots and compress (:476, :514), the
-# negative from sd_prompt.beat_negative (:515). A task dict has NO negative field
-# at all. So `no-humans-sweep-sample`, whose entire variable IS the negative,
-# cannot be expressed in this shape at any length; and a node-ful
-# `ep2-b01-r7-coldopen` would render the CURRENT shots.md text and stamp round 7's
-# id on control frames. Adding the field converts a loud KeyError into a silent
-# wrong render carrying a real id, which is the borrowed-id failure the header of
-# this file spends forty lines on. A loud failure is the better shape until the
-# recipe lives somewhere a worker can read.
+# DO NOT "FIX" THAT BY ADDING `node:` ALONE — that half of the 16:44Z reading
+# stands and is the important half. A node-ful `ep2-b01-r7-coldopen` renders the
+# CURRENT shots.md text and stamps round 7's id on control frames; a node-ful
+# `no-humans-sweep-sample` renders the control and calls it the sample. Either
+# converts a loud KeyError into a silent wrong render carrying a real id, which is
+# the borrowed-id failure the header of this file spends forty lines on.
 #
-# SO THE FIX IS THE ONE THE PARAGRAPH ABOVE ALREADY ASKS FOR, and it is cheap:
-# before a worker is restarted on any box, move whatever is unfinished here into
-# backlog: or give it a gate. An id keeps working after the move —
-# claim_task.queue_entry reads BOTH lists (claim_task.py:99), so a lane still
-# claims it without --force. `ep1-held-refilms-v34-1786292556` was moved tonight
-# on exactly this reasoning and its entry says so.
+# BUT THE REASON GIVEN FOR IT WAS WRONG, and it is corrected here because it would
+# have foreclosed the actual fix. 16:44Z said "this round's variable is prompt
+# text, which a task dict cannot carry" and "a task dict has NO negative field at
+# all". Read against the reader, both halves of the prompt ARE carryable:
+#   * POSITIVE — `if task.get("prompt")` at farm_worker.py:553-555 builds the job
+#     list from the task's own text and names the output off `slug:`, bypassing
+#     shots.md and parse_shots entirely. That is not a new field; it is the
+#     world-reference path, already in use.
+#   * NEGATIVE — it is authored INSIDE that same string. beat_negative (:589) →
+#     sd_prompt.extra_negative_parts → `_negated_nouns` (sd_prompt.py:92) lifts
+#     every `no <noun>` fence out of the positive into the negative, which is the
+#     whole mechanism the singular-noun finding is written in. A round whose
+#     variable is the negative is expressible exactly by writing its fences into
+#     `prompt:`.
+# So a future round of EITHER kind is worker-shapeable: `node:` + `prompt:` +
+# `slug:`, no beats. What is missing tonight is not a field, it is the text — the
+# two lanes are choosing it at the card right now, and inventing it here to make
+# an entry look runnable would be a steward writing a taste round.
+#
+# WHAT WAS DONE INSTEAD, 2026-08-09 18:5xZ: every entry in `tasks:` now reads
+# `worker: hand`. It is one word and it removes the whole KeyError class — worker
+# selection is `task.get("worker", "any") not in ("any", a.name)` (farm_worker.py
+# :680), no machine is ever started as `--name hand`, so a revived worker skips
+# these entries instead of picking them up, crashing, and writing `FAIL task=<id>`
+# over a hand run that SUCCEEDED. It costs nothing else: `hand` is not a fiction,
+# it is where these runs already report — claim_task publishes to
+# `farm-results-hand` (claim_task.py:76) — and claim_task.queue_entry keys on the
+# id, never on `worker:` (claim_task.py:99), so no claim is disturbed. The
+# alternative 16:44Z proposed (move them out of `tasks:`) does the same job but
+# hides live work from the status page; this keeps them visible and honest.
+#
+# AND A WORKER CANNOT SILENTLY GO BACK TO CHOKING ON THEM. The rule above is now
+# enforced by a test rather than by this comment: every `tasks:` entry a worker
+# would actually select must pass queue_promoter.promotable(), the same structural
+# check the promoter has always applied before promoting anything into this list
+# (`test_a_revived_worker_cannot_choke_on_the_tasks_list`).
+#
+# ---- THE WORKER-RUNNABLE SHAPE, read off render_task, for the next entry -------
+# Every key farm_worker actually looks at, with the default it falls back to. A
+# field not on this list is documentation for humans and changes no render.
+#     id:          required — prefixes every output file (farm_worker.py:607) and
+#                  is the name on the heartbeat, so two tasks on one beat cannot
+#                  overwrite each other
+#     worker:      "any" or a machine handle; `hand` = no machine, see above (:680)
+#     node:        required, SUBSCRIPTED — the dir under genomes/sapling/nodes
+#                  (:512 video, :534 stills). Its newest T0 leaf must read
+#                  `approved_by: founder` or the task exits on STEWARDSHIP §6
+#     beats:       "10" or "3,4,5" — looked up in that node's shots.md
+#     prompt:      instead of beats: the task's own positive, `no <noun>` fences
+#                  included; needs slug: for the filename (:553-555)
+#     seeds:       4       — draws per beat, seed = seed_base + beat + k*1000
+#     seed_base:   20260719
+#     model:       cagliostrolab/animagine-xl-3.1 — any OPEN model, for bake-offs
+#     steps:       40
+#     width/height: 832 / 1216
+#     guidance:    7.5 (recorded in the sidecar; the call itself is fixed at 7.5)
+#     init:        repo-relative still ⇒ img2img, cover-cropped, with strength:
+#     strength:    0.5, img2img only
+#     video: true  ⇒ the whole dict goes to video_task instead, which reads
+#                  video_model:, seconds:, steps:, seed_base: itself
 
 # MAY BE HAND-COMPLETED — CHECK farm-results-hand BEFORE RUNNING THIS. A lane
 # claimed this exact id by hand tonight and is rendering it now, so its DONE line
@@ -303,7 +352,9 @@ tasks:
 # ledgers disagree about one id and neither is wrong about itself.
 - id: ep2-b13-r8-goblin-1786292421
   runner: manual
-  worker: rtx5090
+  # hand-run in progress 2026-08-09 on the rtx5090; `hand` is the ledger it
+  # reports to, not a demotion. See the shape block above.
+  worker: hand
   needs: [cuda, vram20]
   beats: 13
   seeds: 4
@@ -338,7 +389,9 @@ tasks:
 # runnable on the status page for as long as it sat here.
 - id: 001-b06-r5-sample-1786292829
   runner: manual
-  worker: rtx5090
+  # hand-run 2026-08-09 on the rtx5090, DONE at 16:30:24Z on farm-results-hand;
+  # `hand` matches where its lines actually live. See the shape block above.
+  worker: hand
   needs: [cuda, vram20]
   beats: 6
   seeds: 4
@@ -371,7 +424,10 @@ tasks:
 # file is a note to whoever wants the card, not a record of anything.
 - id: 002b-b12-promptfix-0809
   runner: manual
-  worker: rtx5090
+  # hand-run in progress 2026-08-09 on the rtx5090 (STARTED 16:16:47Z, DONE still
+  # owed). The video path subscripts `node:` too (farm_worker.py:512), so this one
+  # was in the same KeyError class. See the shape block above.
+  worker: hand
   needs: [cuda, vram20, video-venv]
   video: true
   video_model: ltx-2.3
@@ -405,13 +461,22 @@ tasks:
 # farm_worker.py:606 and hands an ffmpeg-and-promote job to an SDXL pipeline. Its
 # text and its claim are unchanged; only the list it sits in is.
 
-# NOT WORKER-RUNNABLE AS WRITTEN, and left that way on purpose — see the
-# verification block above the first entry. This round's variable is prompt text,
-# which a task dict cannot carry, so a hand lane runs it and a worker that reached
-# it would KeyError on the missing `node:` rather than render anything.
+# NOT WORKER-RUNNABLE AS WRITTEN, and now it does not have to be: `worker: hand`
+# means no machine ever selects it, so nothing KeyErrors and nothing renders the
+# wrong text under this id. HAND-RUN IN PROGRESS 2026-08-09 — the shape work below
+# is for FUTURE rounds and takes nothing away from the lane holding this id; the
+# claim lives on farm-results-hand and is untouched by any edit here.
+#
+# WHAT A WORKER-SHAPED r8 WOULD LOOK LIKE, since this round proved it is possible:
+# drop `beats: 1`, add `node: 002b-first-citizen`, `slug: cold-open`, and a
+# `prompt:` holding the round's full positive with its `no girl, no boy, no child,
+# no person` fences written in — sd_prompt lifts those into the negative itself
+# (sd_prompt.py:92). What blocks it tonight is not the format, it is that the text
+# is being chosen at the card right now, and writing a round's prompt to make an
+# entry look runnable would be the steward authoring a taste round.
 - id: ep2-b01-r7-coldopen-1786292601
   runner: manual
-  worker: rtx5090
+  worker: hand
   needs: [cuda, vram20]
   beats: 1
   seeds: 4
@@ -434,15 +499,25 @@ tasks:
     controlled half of the `no humans` finding — but drew no verdict from him. The
     consumer is the founder's pick for episode 2's opening shot.
 
-# NOT WORKER-RUNNABLE, and this is the one that cannot be made so by any edit to
-# this entry: the variable IS the negative, and render_task derives the negative
-# from the beat's own prompt through sd_prompt.beat_negative (farm_worker.py:515)
-# with no task field anywhere that overrides it. A worker handed this renders the
-# control and calls it the sample. Hand lane only, until the sweep's fix lands in
-# shots.md or sd_prompt where a worker can see it.
+# "CANNOT BE MADE WORKER-RUNNABLE BY ANY EDIT" — CORRECTED 2026-08-09. That was
+# written on the belief that no task field reaches the negative, and the belief is
+# wrong in a way that matters to this exact sweep: the negative is not a field, it
+# is a PROPERTY OF THE POSITIVE. beat_negative (farm_worker.py:589) hands the
+# prompt to sd_prompt.extra_negative_parts, which lifts every `no <noun>` fence out
+# of it (sd_prompt.py:92) — so a task carrying its own `prompt:` (:553-555) carries
+# its own negative with it, and this round's variable is expressible after all:
+# `node: 001-capability-inventory`, `slug: sense`, no beats, and a `prompt:` that
+# is beat 10's text with the generic `no humans` replaced by the singular set and
+# the body-part nouns. Left unshaped tonight for one reason only, and it is not the
+# format: HAND-RUN IN PROGRESS 2026-08-09, and the entry's own cmd requires a
+# TOKEN-MEASUREMENT on the real sd_prompt path BEFORE the fences are chosen —
+# eleven negated nouns is where fit_negative trims silently (e6995fc). Writing the
+# string here would be guessing at the measured result the lane is producing.
+# `worker: hand` keeps a revived worker off it in the meantime, which is what the
+# old comment wanted and could not get from prose.
 - id: no-humans-sweep-sample-1786292646
   runner: manual
-  worker: rtx5090
+  worker: hand
   needs: [cuda, vram20]
   beats: 10
   seeds: 4

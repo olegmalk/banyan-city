@@ -3637,13 +3637,91 @@ def test_giveup_needs_no_fail_line(tmp: Path):
         "STARTED task=fine beats=1 on cuda\n"
         "DONE task=fine\n"
         "STARTED task=once beats=1 on cuda\n", encoding="utf-8")
-    skip, gave_up = finished_tasks(Stub())
+    # fetch is stubbed to an EMPTY ledger, not left to its default: the default
+    # talks to origin, and this suite promises no network in CI.
+    skip, gave_up = finished_tasks(Stub(), fetch=lambda: "")
     check("a task started MAX_ATTEMPTS times with no DONE is skipped",
           "killer" in skip and gave_up.get("killer") == MAX_ATTEMPTS)
     check("a completed task is skipped but not accused",
           "fine" in skip and "fine" not in gave_up)
     check("a task with one start left is still runnable",
           "once" not in skip and "once" not in gave_up)
+
+
+def test_a_hand_ledger_done_stops_a_worker_that_never_ran_it(tmp: Path):
+    """finished_tasks() unions the shared farm-results-* ledgers into done.
+
+    A hand-run that borrows a queue id MUST claim it (farm-queue.yaml's 2026-08-08
+    ruling), and claim_task publishes those lines to `farm-results-hand`. Until
+    this, finished_tasks() opened exactly one file on one disk — so every
+    hand-completed id was invisible to every worker and its entry kept reading as
+    unstarted. On 2026-08-09 all five entries in `tasks:` were hand-runs on queue
+    ids, so a worker revived on the 5090 would have re-rendered the finished ones.
+
+    Three calls this pins, because each is a way the fix could be wrong:
+      1. a hand DONE stops the worker exactly like its own DONE;
+      2. a hand STARTED or FAIL costs this machine NOTHING — another lane's
+         attempts must not be able to exhaust a task's retries here;
+      3. a failed read falls back to the local file and NEVER to an empty done
+         set, which is the thing that would re-render everything.
+    """
+    from farm_worker import MAX_ATTEMPTS, finished_tasks
+
+    class Stub:
+        out = tmp
+    (tmp / "heartbeat.txt").write_text(
+        "10:00:00Z STARTED task=mine beats=1 on cuda\n"
+        "10:04:00Z DONE task=mine\n"
+        "10:05:00Z STARTED task=twice beats=1 on cuda\n"
+        "10:09:00Z STARTED task=twice beats=1 on cuda\n", encoding="utf-8")
+    hand = ("17:27:06Z STARTED task=ep2-b13-r8-goblin-1786292421 by-hand\n"
+            "17:43:29Z DONE task=ep2-b13-r8-goblin-1786292421 by-hand rc=0 4 stills\n"
+            "16:16:47Z STARTED task=002b-b12-promptfix-0809 by-hand\n"
+            "18:00:00Z FAIL task=002b-b12-promptfix-0809 by-hand\n"
+            "18:10:00Z STARTED task=002b-b12-promptfix-0809 by-hand\n"
+            "18:20:00Z FAIL task=002b-b12-promptfix-0809 by-hand\n"
+            "18:30:00Z STARTED task=002b-b12-promptfix-0809 by-hand\n")
+
+    skip, gave_up = finished_tasks(Stub(), fetch=lambda: hand)
+    check("a hand DONE stops a worker that never ran the task",
+          "ep2-b13-r8-goblin-1786292421" in skip)
+    check("...and it is not accused of having failed",
+          "ep2-b13-r8-goblin-1786292421" not in gave_up)
+    check("another lane's STARTED and FAIL spend none of THIS worker's attempts",
+          "002b-b12-promptfix-0809" not in skip
+          and "002b-b12-promptfix-0809" not in gave_up)
+    check("this machine's own ledger still counts its own attempts",
+          gave_up.get("twice") == MAX_ATTEMPTS and "mine" in skip)
+
+    # A LOCAL GIVEUP THAT SOMEONE ELSE FINISHED IS NOT A GIVEUP. `twice` is two
+    # starts with no DONE here; a hand DONE for it means the work exists, so the
+    # worker skips it without printing the "fix the cause" accusation.
+    skip, gave_up = finished_tasks(Stub(), fetch=lambda: "19:00:00Z DONE task=twice\n")
+    check("a hand DONE clears a local giveup instead of accusing it",
+          "twice" in skip and "twice" not in gave_up)
+
+    # 3. THE FAILED READ. None is "could not read", and the fallback is the local
+    # file — never an empty done set, which is what re-renders everything.
+    skip, gave_up = finished_tasks(Stub(), fetch=lambda: None)
+    check("an unreadable ledger falls back to the local file, not to empty",
+          "mine" in skip and gave_up.get("twice") == MAX_ATTEMPTS)
+    check("...and an id only the hand ledger knew about is simply unknown again",
+          "ep2-b13-r8-goblin-1786292421" not in skip)
+
+    def boom():
+        raise OSError("git not on PATH")
+    skip, gave_up = finished_tasks(Stub(), fetch=boom)
+    check("a ledger read that RAISES cannot take the worker down with it",
+          "mine" in skip)
+
+    # THE SECOND CALL, recorded where it is enforced: every farm-results-* branch,
+    # not the hand ledger alone, so a re-imaged box recovers its own history the
+    # way queue_promoter.fetch_heartbeats already reads it.
+    src = (REPO / "pipeline" / "farm_worker.py").read_text(encoding="utf-8")
+    check("the shared read globs every farm-results-* branch, not just hand",
+          "refs/heads/farm-results-*:refs/remotes/origin/farm-results-*" in src)
+    check("a fetch failure with no readable ref returns None, not an empty ledger",
+          'return "" if fetched else None' in src)
 
 
 def test_child_verdict_names_a_corpse():
@@ -3771,6 +3849,70 @@ def test_queue_backlog_is_invisible_to_workers():
           all(e.get("why") for e in (live.get("backlog") or [])))
     check("every gated backlog entry names what specifically",
           all(e.get("gate_ref") for e in (live.get("backlog") or []) if e.get("gate")))
+
+
+def test_a_revived_worker_cannot_choke_on_the_tasks_list():
+    """Every `tasks:` entry a worker would SELECT must be one it can RUN.
+
+    On 2026-08-09 all five entries in tasks: were hand-lane rounds carrying
+    `worker: rtx5090` and no `node:` — and render_task subscripts `node`
+    directly (farm_worker.py:512 video, :534 stills). So the founder's morning
+    login on the 5090 would have had the worker pick up each one, raise
+    KeyError('node') before loading a model, and write `FAIL task=<id>` to its
+    heartbeat for renders that a hand lane had already finished. Two ledgers
+    disagreeing about one id, and neither wrong about itself.
+
+    The fix in the file is `worker: hand` — a handle no machine is ever started
+    under — and the fix here is that prose cannot be the enforcement. The check
+    reuses queue_promoter.promotable(), which is the same structural test the
+    promoter already applies before it puts anything IN this list; running it on
+    what is already in the list closes the door hand-editing opens.
+
+    Two halves, because either alone is passable by accident:
+      1. `hand` really is unselectable — it is in no capability table, so no
+         worker can be started as `--name hand` and match it;
+      2. the guard can actually fail — a node-less entry aimed at a real machine
+         is rejected, so a green run means the queue is clean, not that the
+         check is vacuous.
+    """
+    import yaml as _y
+
+    from queue_promoter import CAPS, PREFERENCE, promotable
+
+    live = _y.safe_load((REPO / "pipeline" / "farm-queue.yaml").read_text(
+        encoding="utf-8")) or {}
+    tasks = live.get("tasks") or []
+    check("the live tasks: list is non-empty, so this test is looking at something",
+          len(tasks) > 0)
+
+    # SELECTION IS THE WORKER'S RULE, COPIED EXACTLY: farm_worker.py:680 reads
+    # `task.get("worker", "any") not in ("any", a.name)` and skips on true. So an
+    # entry is selectable iff its worker is "any" or a handle a machine runs under.
+    handles = set(CAPS) | set(PREFERENCE)
+    selectable = [e for e in tasks
+                  if str(e.get("worker", "any")).strip() in {"any"} | handles]
+    for e in selectable:
+        why = promotable(e)
+        check(f"a worker could actually run {e.get('id')} ({why or 'shaped'})",
+              why is None)
+
+    check("`hand` is not a machine handle, so `worker: hand` is never selected",
+          "hand" not in handles)
+    check("the worker's selection rule is still the one this test copies",
+          'task.get("worker", "any") not in ("any", a.name)'
+          in (REPO / "pipeline" / "farm_worker.py").read_text(encoding="utf-8"))
+
+    # 2. the guard bites. These are the two shapes that actually reached the file.
+    check("a node-less entry aimed at a real machine is rejected",
+          promotable({"id": "x", "worker": "rtx5090", "beats": 1})
+          == "farm entry names no node")
+    check("...and so is one with a node but nothing to render",
+          promotable({"id": "x", "worker": "rtx5090", "node": "001-capability-inventory"})
+          == "farm entry names neither beats nor a prompt")
+    check("a prompt counts instead of beats — that is the worker-shaped round",
+          promotable({"id": "x", "worker": "rtx5090",
+                      "node": "001-capability-inventory",
+                      "slug": "sense", "prompt": "a sprout, no person"}) is None)
 
 
 def test_queue_promoter_gate_beats_everything():
@@ -6360,6 +6502,7 @@ def main():
         test_t3_check_clips_dir(Path(td))
     test_attempts_survive_a_dead_host()
     test_queue_backlog_is_invisible_to_workers()
+    test_a_revived_worker_cannot_choke_on_the_tasks_list()
     test_queue_promoter_gate_beats_everything()
     test_queue_promotion_is_one_atomic_move()
     test_argparse_declares_every_flag_it_reads()
@@ -6367,6 +6510,8 @@ def main():
     test_a_busy_card_refuses_the_render()
     with tempfile.TemporaryDirectory() as td:
         test_giveup_needs_no_fail_line(Path(td))
+    with tempfile.TemporaryDirectory() as td:
+        test_a_hand_ledger_done_stops_a_worker_that_never_ran_it(Path(td))
     with tempfile.TemporaryDirectory() as td:
         test_animegen_casts_before_the_second_expert(Path(td))
     with tempfile.TemporaryDirectory() as td:

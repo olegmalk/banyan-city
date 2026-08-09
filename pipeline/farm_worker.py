@@ -324,7 +324,46 @@ def heartbeat_attempts(text: str) -> tuple:
     return done, attempts
 
 
-def finished_tasks(courier: Courier) -> tuple:
+def farm_result_heartbeats():
+    """Every `farm-results-*` heartbeat on origin as one blob of text, or None.
+
+    NONE MEANS "COULD NOT READ", and that is a different fact from "nobody has
+    finished anything" — the same distinction queue_head() had to learn on
+    2026-08-01, one level down. An empty done set is what re-renders the whole
+    queue, so a failed read must never be able to produce one; the caller falls
+    back to this machine's own file and says so out loud.
+
+    EVERY BRANCH, not `farm-results-hand` alone. The hand ledger is what prompted
+    this (a hand-run that claims a queue id writes its STARTED and DONE there —
+    claim_task.HAND_BRANCH), but globbing is what queue_promoter and the status
+    page already do (queue_promoter.fetch_heartbeats), and it buys one thing the
+    hand ledger cannot: a re-imaged box, or one whose farm-out was wiped, reads
+    its OWN completed history back off its OWN branch instead of re-rendering
+    everything it has ever rendered.
+
+    Stale refs beat no refs. If the fetch fails but remote-tracking branches are
+    already on disk, their text is returned rather than None: `DONE` is monotone,
+    an id that finished does not un-finish, so an old copy can only ever
+    under-report — and under-reporting is exactly the conservative direction.
+    """
+    fetched = sh("git", "fetch", "-q", "origin",
+                 "refs/heads/farm-results-*:refs/remotes/origin/farm-results-*",
+                 check=False, capture=True).returncode == 0
+    refs = sh("git", "for-each-ref", "--format=%(refname:short)",
+              "refs/remotes/origin/farm-results-*", check=False, capture=True)
+    texts = []
+    for ref in (refs.stdout or "").split():
+        hb = sh("git", "show", f"{ref}:farm-out/heartbeat.txt",
+                check=False, capture=True)
+        if hb.returncode == 0 and hb.stdout:
+            texts.append(hb.stdout)
+    if texts:
+        return "\n".join(texts)
+    # no text at all: only an honest fetch can call that an empty ledger
+    return "" if fetched else None
+
+
+def finished_tasks(courier: Courier, fetch=farm_result_heartbeats) -> tuple:
     """`(ids not to pick up, {id: attempts} for the ones we gave up on)`.
 
     `done_ids` used to live only in memory, and this worker RESTARTS ITSELF
@@ -353,10 +392,45 @@ def finished_tasks(courier: Courier) -> tuple:
     nobody is waiting on train you to ignore the log, which is the opposite of
     what a heartbeat is for. The skip is still recorded; the WARNING now happens
     in the task loop, where we know the task is actually queued (and once).
+
+    IT IS NOT ONLY THIS MACHINE'S LEDGER ANY MORE. A hand-run that borrows a
+    queue id is obliged to claim it (the 2026-08-08 ruling at the top of
+    farm-queue.yaml) and claim_task writes that id's STARTED and DONE to
+    `farm-results-hand` — but this function opened one file on one disk, so a
+    hand-completed id stayed invisible to every worker and its entry read as
+    unstarted for as long as it sat in `tasks:`. On the night of 2026-08-09 every
+    entry in `tasks:` was a hand-run on a queue id, which made each finished one a
+    ghost re-render waiting for the next worker to wake up on the 5090.
+
+    THE UNION TAKES `DONE` AND NOTHING ELSE. Another lane's STARTED or FAIL is
+    that lane's attempt, not this worker's; counting it would let a hand run
+    exhaust a task's retries on a machine that has never touched it, and the
+    machine would then skip work nobody is doing. `attempts` is therefore still
+    read from the local file alone, and only the done set is widened.
+
+    `fetch` is injected so this stays testable without a network (the queue entry
+    that asked for this fix asked for exactly that): it returns heartbeat text, or
+    None for "could not read", which falls back to the local file and never to an
+    empty set. And the word for the queue file's PLANNING list is deliberately
+    not spelled anywhere in this module, not even in a comment: a test asserts
+    this file never mentions it, so that no reader can mistake prose for a code
+    path into work that is gated on purpose.
     """
     hb = courier.out / "heartbeat.txt"
     text = hb.read_text(encoding="utf-8", errors="replace") if hb.exists() else ""
     done, attempts = heartbeat_attempts(text)
+    try:
+        shared = fetch()
+    except Exception as e:                       # noqa: BLE001 — a read, not the job
+        print(f"!! farm-results-* ledger read raised {type(e).__name__}: {e}",
+              flush=True)
+        shared = None
+    if shared is None:
+        print("!! could not read the farm-results-* ledgers — using THIS machine's "
+              "heartbeat alone. Work another lane already finished may be picked "
+              "up again; this is a stale view, not an empty one.", flush=True)
+    else:
+        done |= heartbeat_attempts(shared)[0]
     gave_up = {tid: n for tid, n in attempts.items()
                if n >= MAX_ATTEMPTS and tid not in done}
     return done | set(gave_up), gave_up
