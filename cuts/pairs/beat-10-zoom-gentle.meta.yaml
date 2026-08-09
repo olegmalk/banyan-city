@@ -28,3 +28,19 @@ note: |-
 prompt: |-
   (none — a still is held; nothing was generated)
 negative: ''
+
+# ---- CORRECTIONS — appended 2026-08-09. NOTHING ABOVE IS EDITED. ----
+# `10-sense.png` was revoked on 2026-08-09 and R6 keeps its pixels in place as
+# `10-sense-REVOKED-style-change.png`: he refused that frame in v32 on 2026-08-07 — "another major style change and it
+# looks a sapling in the middle of a long body of water, with a blank dark
+# background", and no
+# replacement has been drawn, so NOTHING holds the old name now. This clip is
+# still those exact pixels — what changed is the filename, not the picture.
+#
+# Read out of the repository's own history and not measured off this picture:
+# `git rev-list -1 --before=<this clip's commit> HEAD -- <the still>`, then
+# sha256 of that blob — the method beat-07-zoom-gentle records for the same
+# class of rename. Recording it is what lets still_from_record find the bytes
+# under their new name (rule 2); without it the review page withholds this
+# clip's poster, because the filename it names is in no node's stills/.
+source_still_sha256: 3f84af7209d8c474d1f963f9127cabec4ca3fddcd537c78c8aa37bddf687ec27

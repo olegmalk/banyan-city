@@ -28,3 +28,18 @@ note: |-
 prompt: |-
   (none — the approved still is held; nothing was generated)
 negative: ''
+
+# ---- CORRECTIONS — appended 2026-08-09. NOTHING ABOVE IS EDITED. ----
+# `03-deploy-succeeded.png` was revoked on 2026-08-09 and R6 keeps its pixels in place as
+# `03-deploy-succeeded-REVOKED-terminal-lab.png`: he refused that frame in v32 on 2026-08-07 — "Beat 3 looks more like a terminal
+# in some.. lab. not realistic … make sure it looks like its inside a house", and no
+# replacement has been drawn, so NOTHING holds the old name now. This clip is
+# still those exact pixels — what changed is the filename, not the picture.
+#
+# Read out of the repository's own history and not measured off this picture:
+# `git rev-list -1 --before=<this clip's commit> HEAD -- <the still>`, then
+# sha256 of that blob — the method beat-07-zoom-gentle records for the same
+# class of rename. Recording it is what lets still_from_record find the bytes
+# under their new name (rule 2); without it the review page withholds this
+# clip's poster, because the filename it names is in no node's stills/.
+source_still_sha256: 8f5420d8a14897e6cefb9eacd54b04f8547d43434c58234b6035a0e444cf7f2d
