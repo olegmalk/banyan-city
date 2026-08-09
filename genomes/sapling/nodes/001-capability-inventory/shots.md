@@ -201,11 +201,13 @@ leaf in the image, doesnt make sense that he can see himself when he is looking 
 the sky."* Correct — the leaf leaning into frame was HIM, and a first-person POV
 cannot contain its own body. The whole foreground is gone: open sky, one drifting
 wisp, and only a soft blurred green fringe at the very bottom edge to place the
-camera on the ground. `no leaf, no plant, no stem` are in the negative now.
+camera on the ground. `no leaf, no plant, no stem` are in the negative now. That
+wording — rounds 1 and 3 — was:
 
-```
-a vast open sky filling the frame seen from ground level looking straight up, no humans, deep clear blue morning sky, one thin wisp of white cloud drifting high above, a soft blurred green fringe of grass along the bottom edge, gentle morning light, dreamy, detailed, newest, masterpiece, best quality, very aesthetic No leaf, no plant, no stem, no foliage, no big clouds, no tree. No photorealism, no 3D render look. 9:16 vertical, no text.
-```
+> a vast open sky filling the frame seen from ground level looking straight up, no
+> humans, deep clear blue morning sky, one thin wisp of white cloud drifting high
+> above, a soft blurred green fringe of grass along the bottom edge, gentle morning
+> light, dreamy … No leaf, no plant, no stem, no foliage, no big clouds, no tree.
 
 **REJECTED 2026-08-08 (founder, R4): ALL FOUR — `b06-r1-s0..s3`.** Recorded as
 **rejected without a stated axis**: his words were that none of them quite work, and
@@ -265,6 +267,32 @@ the cloud dialect he has now called weird was scored a +2 for matching a frame h
 had thrown out. **SILENCE ON AN ELEMENT IS NOT APPROVAL OF IT.** Round 4 anchors on
 nothing revoked, and the word "banked" is not used on this beat again for anything
 he has not named.
+
+**THE ROUND 4 PROMPT, AND WHAT WAS MEASURED BEFORE IT DREW.** The person nouns are
+written in the positive-lift convention — letter-initial and comma-terminated — so
+`sd_prompt._NEGATION` moves them into the negative; the Danbooru tag forms
+`no 1girl`/`no 1boy` do NOT lift and would sit in the positive asking for a girl.
+The cloud change is on the POSITIVE side first: the frame's subject is now the
+emptiness (`an empty expanse of clear deep blue morning sky filling the frame`) and
+the only cloud named is the kind that is wanted, `only two thin high wisps of white
+cirrus cloud far above` — the negative alone lost this argument in r3, where
+`no big clouds` was lifted and the model drew a wall of lobed cumulus anyway. The
+cloud shapes go to the negative as well, but as a second line of defence rather than
+the plan. `_SMALL` does not fire on this beat (nothing in it names a small plant),
+so no scale negatives are attached and there is no `tall tree` to remove — the same
+no-op the r3 sidecar recorded, not a skipped step. Measured on the box's real CLIP
+tokenizer before the render: **positive 71 tokens** with `very aesthetic` intact and
+no sentence or clause dropped; **negative 77 of 77** after `fit_negative` sheds
+`realistic skin texture, jpeg artifacts, deformed, extra limbs, blurry` from the
+least-important end and says so in the sidecar. All five are human-anatomy and
+photo-artifact boilerplate on a frame that contains no body and no photograph, and
+they are what the module is designed to sacrifice first so that a beat-specific
+instruction survives — his two named faults are both beat-specific. `text` stays
+negated (checked, not assumed).
+
+```
+an empty expanse of clear deep blue morning sky filling the frame, seen from ground level looking straight up, only two thin high wisps of white cirrus cloud far above, a soft blurred green fringe of grass along the bottom edge, calm gentle morning light, dreamy, detailed, newest, masterpiece, best quality, very aesthetic No woman, no girl, no boy, no child, no person, no face, no hand, no leaf, no plant, no stem, no foliage, no tree, no cumulus, no cumulonimbus, no cloud bank, no towering clouds, no cloudscape, no scalloped clouds. No photorealism, no 3D render look. 9:16 vertical, no text.
+```
 
 ## Beat 07 — ZERO (0) MOVING PARTS (0:29–0:35) ⬜ needs footage07
 
@@ -677,11 +705,12 @@ nothing in frame to tell a viewer what they are looking at — it reads as textu
 The script's line is *"Low at the base of the trunk: roots gripping soil"*, so the
 subject is restored: the sprout is IN the shot, stem rising out of the earth, roots
 gripping down into it, field behind. The grip is legible because the thing gripping
-is visible.
+is visible. That wording — rounds 1 and 3 — was:
 
-```
-plant focus, no humans, low close shot of one slender sapling filling the frame, thin stem rising tall through the frame, pale roots gripping into damp brown soil, stones and short grass at its base, warm afternoon light raking the earth, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No cross-section, no diagram, no cave, no black void. No photorealism, no 3D render look. 9:16 vertical, no text.
-```
+> plant focus, no humans, low close shot of one slender sapling filling the frame,
+> thin stem rising tall through the frame, pale roots gripping into damp brown soil,
+> stones and short grass at its base, warm afternoon light raking the earth … No
+> cross-section, no diagram, no cave, no black void.
 
 **REJECTED 2026-08-08 (founder, R4): ALL FOUR — `b14-r1-s0..s3`.** His words:
 *"all too small, not good character consistency."* Two faults, and they are separate.
@@ -749,6 +778,35 @@ comes back short, the next lever is the script line and only he can move it. Not
 here changes `sd_prompt`'s remaining scale block (`mature tree, large tree, thick
 trunk, full canopy`) without him either: `tall tree` is already out per b15, and A7
 has a ceiling he has enforced once.
+
+**THE ROUND 4 PROMPT, AND WHAT WAS MEASURED BEFORE IT DREW.** The subject clause is
+`b15-r3-s1`'s, the one frame on this tree he has passed, moved onto this beat's
+framing: *one slender sapling standing tall, its thin stem rising well above the
+grass* — his validated grammar — with *to near the top of the frame* carrying the
+apex, and the soil pushed down to *along a low soil line*. Those two together are
+the round's whole bet: r3 asked for a plant "filling the frame" and got a frame
+filled with EARTH, so this one spends the vertical on stem and light and gives the
+ground a line to sit on rather than a share of the picture. His lens note survives
+intact — `low close shot at the base of the stem` is the script's own *"Low at the
+base of the trunk"*, and the roots are still gripping soil, which is what the beat
+means. `stones` and `raking the earth` came out for budget, not for taste; the
+grass is now doing the scale job it does in b15. **A second, protective change,
+named rather than smuggled:** `no humans` is replaced by `no woman, no girl, no boy,
+no child, no person`. That is not a new idea on this beat, it is the measurement
+from its twin — beat 10 kept `no humans`, verified lifted, and drew a human hand and
+a bare foot in 2 of 4 on 2026-08-09, while `no girl, no boy, no child, no person`
+returned 0 people in 4 of 4 in the same pass on the same model. Replacing a term
+proven not to bind with terms proven to bind is not a second variable in the height
+experiment. Measured on the box's real CLIP tokenizer before the render: positive
+tokens with `very aesthetic` intact and nothing dropped; the negative fitted to 77
+with `tall tree` removed — required, since it is the term that cancels the tall rule
+and b15 passed without it — and the remaining scale block
+(`mature tree, large tree, thick trunk, full canopy, forest, bush, shrubbery`) left
+alone, because A7 has a ceiling and only he moves it.
+
+```
+plant focus, one slender sapling standing tall, its thin stem rising well above the grass to near the top of the frame, pale roots gripping damp brown soil along a low soil line, low close shot at the base of the stem, warm afternoon light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No cross-section, no diagram, no cave, no black void, no woman, no girl, no boy, no child, no person. No photorealism, no 3D render look. 9:16 vertical, no text.
+```
 
 ## Beat 15 — SOMETHING'S COMING (1:34–1:37) ⬜ needs footage15
 

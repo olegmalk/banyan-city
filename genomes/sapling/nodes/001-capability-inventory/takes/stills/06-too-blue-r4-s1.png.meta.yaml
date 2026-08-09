@@ -1,0 +1,32 @@
+# Still provenance (7.2), written AT RENDER TIME by render_redraw2.py
+# on the rtx5090 (C:\banyan-farm\redraw2-0809).
+# The negative below is what the model actually saw. The recipe's own
+# negative, before this script's deliberate removal, was:
+#   photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, woman, girl, boy, child, person, face, hand, leaf, plant, stem, foliage, tree, cumulus, cumulonimbus, cloud bank, towering clouds, cloudscape, scalloped clouds, photorealism
+#   NEGWARN: !! negative prompt over CLIP's 77-token budget; deduplicated: text; DROPPED: realistic skin texture, jpeg artifacts
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+shot_beat: 6
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20265725
+seeds_in_batch: 4
+task: 001-b06-r4-1786281217
+queue_entry: none — this run took its own id and left the queue alone
+render_round: r4
+candidate_set: r4
+negative_terms_removed: none (tall tree not present)
+recipe_inherited_from: >-
+  node 001, takes/stills/15-something-s-coming-r3-s1.png — the ONE SAMPLE the founder passed on 2026-08-08. Model, size, steps, cfg, seed rule and the one-term negative removal come from that frame's recipe. The prompt is this beat's shots.md entry as of the round note committed with this sidecar.
+wall_seconds: 9
+cost_usd: 0
+provisional: >-
+  PROVISIONAL. A steward-rendered CANDIDATE, not a pick and not canon. Scored against taste/steward-model.v1 and logged in taste/steward-model.ledger.yaml BEFORE the founder saw it. Ground truth is the founder (R4); he has ratified nothing here. Never takes a canon filename, is not published, not posted, and not assembled into an episode.
+note: |-
+  round 4. r3 was rejected on all four (ledger record 3) and this time he named the faults: 'for beat 06 none of them are right, problems are: women, too many clouds/weird cloud formations.' TWO CHANGES, one per fault, and both are changes of MECHANISM rather than of wording. (1) WOMEN. The prompt already said `no humans`, verified lifted into the negative on the real path, and two of four drew a girl into a first-person sky shot that cannot contain a body at all. The generic plural does not bind and the explicit singulars do — measured in the same 2026-08-09 pass, where beat 10 kept `no humans` and drew a human hand and a bare foot in 2 of 4 while 002b beat 01 used `no girl, no boy, no child, no person` and returned 0 people in 4 of 4 on this same model and recipe. So `no humans` is replaced by `no woman, no girl, no boy, no child, no person, no face, no hand` — his named noun first, the four proven ones, and the two body parts that have actually appeared. Written letter-initial and comma-terminated so sd_prompt lifts them; the tag forms `no 1girl`/`no 1boy` do NOT lift and would sit in the positive asking for a girl. (2) CLOUDS, AND IT IS A POSITIVE-SIDE PROBLEM. r3 asked for `one thin wisp of white cloud` with `no big clouds` negated and came back with a wall of lobed scalloped cumulus filling half the frame: negating a shape did not beat drawing it, the same lesson beat 10's r4 proved from the other side. So round 4 leads with the EMPTINESS as the subject and names the cloud it wants — `only two thin high wisps of white cirrus cloud far above` — and the unwanted shapes go to the negative as a second line of defence, `cumulus, cumulonimbus, cloud bank, towering clouds, cloudscape, scalloped clouds` in place of the vague `big clouds`. The clouds deliberately do NOT go to zero: the beat's gag is that he files the sky as architecture, and 'Ceiling's gone. Open-plan hospital' wants something up there to be a ceiling. WHAT DID NOT MOVE: no leaf in the image, which is his own 2026-08-07 composition note (a first-person POV cannot see its own body), and the blurred green fringe at the bottom edge that puts the camera on the ground. NOTHING IS ANCHORED ON THE REVOKED FRAME. r3's pick was scored +2 on style for matching `06-too-blue-REVOKED-leaf.png` — the frame he rejected on 2026-08-07 — so the cloud dialect he has now called weird was rewarded for matching a picture he had thrown out. Silence on an element was read as approval of it; it is not. `_SMALL` does not fire on this beat, so no scale negatives are attached and the `tall tree` removal is a no-op here, not a skipped step. SEEDS ARE r3's OWN FOUR (k=4..7), so every column of the sheet is a controlled pair against the round he named the faults on.
+prompt: |-
+  an empty expanse of clear deep blue morning sky filling the frame, seen from ground level looking straight up, only two thin high wisps of white cirrus cloud far above, a soft blurred green fringe of grass along the bottom edge, calm gentle morning light, dreamy, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, woman, girl, boy, child, person, face, hand, leaf, plant, stem, foliage, tree, cumulus, cumulonimbus, cloud bank, towering clouds, cloudscape, scalloped clouds, photorealism

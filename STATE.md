@@ -5880,3 +5880,73 @@ that tool; the scoring above is frame-sampling by eye.
 with sidecars, `GPU-CLAIM.txt` RELEASED, schtask `banyan-b16drift` deleted, card
 idle at 0% / 0 MiB. Nothing published, posted, spent, made canon, or opened on
 the founder's screen.
+
+## 2026-08-09 — node 001 redraws round 4: beat 14 lands, beat 06 fails worse, and the reason is a tag we have been using upside-down
+
+Both batches rendered on the rtx5090 (animagine-xl-3.1, 832x1216, 40 steps, cfg
+7.5, recipe otherwise verbatim from the r3 wave), four seeds each, **and both
+rounds reuse their own beat's r3 seeds — so every column of both sheets is a
+controlled pair and the prompt is the only variable.** Sheets
+`LABELED-beat06-r4.png` and `LABELED-beat14-r4.png` at repo root, neutral (G3:
+no favourite mark, no ordering), addresses and seeds burned from each PNG's own
+sidecar. Ledger records `ep1-b06-r4-provisional` and `ep1-b14-r4-provisional`
+were written BEFORE either sheet existed. $0, nothing published, nothing opened
+on his screen.
+
+**BEAT 14 — the height verdict is answered.** His r3 words were *"for beat 14
+they are all too short"*, on top of *"all too small"* on r1. Three of the four
+now stand a single slender sprout whose stem runs from the bottom of the frame
+into the upper quarter, against r3's sprout lying low across a wide field of
+soil. The lever was not another height adjective — `thin stem rising tall
+through the frame` was already in r3 and did nothing — it was `b15-r3-s1`'s own
+subject clause (the one frame on this tree he has ever passed) plus an apex
+(`to near the top of the frame`) and a ground line (`along a low soil line`)
+that stops the earth taking the picture's share. His lens note is kept verbatim.
+PROVISIONAL pick **`b14-r4-s0`**, disclosed in words and never marked on the
+sheet; confidence 0.40, because the pick is the *shortest* of the three tall
+frames and was chosen on script fidelity over height — the exact trade the
+beat-10 record says he reverses. **A fault in all four, recorded before he finds
+it: there are no roots in any of them**, though the prompt asks for them.
+
+**BEAT 06 — the round failed, and it failed worse than the round it was
+fixing.** His two named faults were *"women, too many clouds/weird cloud
+formations"*. r3 drew a girl in 2 of 4; **r4 draws one in 3 of 4**, and the only
+frame clean of people is a giant white ring over a grass bank that is not a sky
+at all. 0 of 4, nothing to pick, `reject_all` predicted at 0.90.
+
+**WHY, AND THIS PART IS RESEARCHED OUTSIDE THE REPO RATHER THAN REASONED INSIDE
+IT.** The round bet on a rule the 2026-08-09 pass had inferred — that the
+generic plural `no humans` does not bind and explicit singulars do. It put all
+five singulars on beat 06, verified lifted into the negative at render time, and
+**the people rate went UP**. The rule as stated is wrong, and the real mechanism
+is simpler: **`no humans` is a POSITIVE Danbooru tag** meaning the picture
+contains no people, and animagine-xl-3.1 is Danbooru-tag trained. Cagliostro's
+own landscape example prompt reads *"anime landscape … beautiful scenery, no
+humans, masterpiece, best quality, very aesthetic"* — `no humans` in the
+POSITIVE, with `scenery` as its companion tag; the same pairing is the standard
+community recipe for an empty-of-people shot (a published prompt for exactly our
+beat: *"no humans, scenery, vanishing point, from below … blue sky,
+perspective"*).
+
+`pipeline/sd_prompt.py:89` `_NEGATION` matches `\bno\s+(word)` and **strips it
+out of the positive and appends the bare noun to the negative**. So every
+`no humans` this genome has ever written has been turned into `humans` in the
+NEGATIVE — asking the model to suppress the *no-humans* concept, which is the
+opposite of the tag's meaning — and the positive was left with no subject noun
+at all on a shot whose subject is emptiness. That single defect is consistent
+with beat 06 r3, with beat 10 r4's hand and bare foot, and with this round.
+Beat 01 r6 came back clean of people because its positive has a concrete subject
+(a seedling in grass) to draw instead.
+
+**NOT FIXED, NOT FIRED, AND DELIBERATELY SO.** No r5 goes on the card on this
+finding alone: it is a recipe change, and a recipe change is gated by ONE SAMPLE
+in front of the founder, not by a batch. The cheap next test is one frame with
+`no humans, scenery` in the POSITIVE and the person nouns taken back out of the
+negative. **The box was unreachable when this was written** (192.168.3.157, ping
+100% loss, ssh timeout), so nothing could be fired and no GPU claim could be
+checked or released from here — that is the only reason the sample is not
+already drawn, and it is a physical dependency, not a deferral.
+
+Sources for the tag finding: cagliostrolab/animagine-xl-3.1 model card
+(huggingface.co), prompthero.com published `no humans, scenery` prompts,
+techtactician.com booru-tagging guide for SDXL anime models.

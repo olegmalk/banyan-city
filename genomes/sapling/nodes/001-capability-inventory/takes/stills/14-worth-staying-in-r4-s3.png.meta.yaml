@@ -1,0 +1,32 @@
+# Still provenance (7.2), written AT RENDER TIME by render_redraw2.py
+# on the rtx5090 (C:\banyan-farm\redraw2-0809).
+# The negative below is what the model actually saw. The recipe's own
+# negative, before this script's deliberate removal, was:
+#   photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, mature tree, large tree, tall tree, thick trunk, full canopy, forest, bush, shrubbery, cross-section, diagram, cave, black void, woman, girl, boy, child, person, photorealism
+#   NEGWARN: !! negative prompt over CLIP's 77-token budget; deduplicated: text; DROPPED: realistic skin texture, jpeg artifacts
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+shot_beat: 14
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20263733
+seeds_in_batch: 4
+task: 001-b14-r4-1786281289
+queue_entry: none — this run took its own id and left the queue alone
+render_round: r4
+candidate_set: r4
+negative_terms_removed: tall tree
+recipe_inherited_from: >-
+  node 001, takes/stills/15-something-s-coming-r3-s1.png — the ONE SAMPLE the founder passed on 2026-08-08. Model, size, steps, cfg, seed rule and the one-term negative removal come from that frame's recipe. The prompt is this beat's shots.md entry as of the round note committed with this sidecar.
+wall_seconds: 9
+cost_usd: 0
+provisional: >-
+  PROVISIONAL. A steward-rendered CANDIDATE, not a pick and not canon. Scored against taste/steward-model.v1 and logged in taste/steward-model.ledger.yaml BEFORE the founder saw it. Ground truth is the founder (R4); he has ratified nothing here. Never takes a canon filename, is not published, not posted, and not assembled into an episode.
+note: |-
+  round 4. r3 was rejected on all four (ledger record 5): 'for beat 14 they are all too short.' TWO VERDICTS ON ONE AXIS AND THE SECOND IS NARROWER THAN THE FIRST — on 2026-08-08 it was 'all too small', which is AREA, and r3 answered that one: the sprout got bigger and sat across the middle of the frame in raking light. It is still a low sprout over a wide field of soil, and its stem is a few centimetres of the picture. Bigger is not taller. THE LEVER IS THE GROUND LINE AND THE APEX, not another height adjective — `thin stem rising tall through the frame` was already in r3's prompt and did not deliver. `b15-r3-s1` is the only frame on this tree the founder has ever passed and it passed as a HEIGHT verdict, so its subject clause is transferred verbatim onto this beat's framing: `one slender sapling standing tall, its thin stem rising well above the grass`, with `to near the top of the frame` carrying the apex and `along a low soil line` pushing the earth down out of the picture's share. HIS LENS NOTE IS KEPT: `low close shot at the base of the stem` is the script's own line, 'Low at the base of the trunk: roots gripping soil', and the roots are still gripping — the grip is what the beat means, and raising the plant in frame trades that read away by degrees. This round goes as far as it can without dropping the roots; if it still comes back short the next lever is the script line and only the founder can move it. `stones` and `raking the earth` came out for token budget, not for taste, and the grass now does the scale job it does in b15. A SECOND CHANGE, PROTECTIVE AND NAMED RATHER THAN SMUGGLED: `no humans` becomes `no woman, no girl, no boy, no child, no person`. That is not a new idea on this beat, it is the measurement from its twin — beat 10 kept `no humans` on 2026-08-09, verified lifted, and drew a human hand and a bare foot in 2 of 4, while the four explicit singulars returned 0 people in 4 of 4 in the same pass. Replacing a term proven not to bind with terms proven to bind is not a second variable in the height experiment. `tall tree` is removed from the negative, as it was for b15: it arrives via sd_prompt.SCALE_NEGATIVES because the prompt says `sapling`, and it forbids the exact thing this round exists to produce. The rest of the scale block stays — A7 has a ceiling the founder has enforced once ('tooooo tall'), and only he moves it. Seeds are this beat's own k=0..3, the same four r1 and r3 drew, so every column is a controlled pair.
+prompt: |-
+  plant focus, one slender sapling standing tall, its thin stem rising well above the grass to near the top of the frame, pale roots gripping damp brown soil along a low soil line, low close shot at the base of the stem, warm afternoon light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, mature tree, large tree, thick trunk, full canopy, forest, bush, shrubbery, cross-section, diagram, cave, black void, woman, girl, boy, child, person, photorealism

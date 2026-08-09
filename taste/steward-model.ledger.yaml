@@ -1675,3 +1675,145 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+- id: ep1-b06-r4-provisional
+  date: 2026-08-09
+  subject: "node 001 beat 06 — too blue, round 4, person singulars + cloud fix"
+  kind: still
+  candidates: [b06-r4-s0, b06-r4-s1, b06-r4-s2, b06-r4-s3]
+  address_key: "sheet LABELED-beat06-r4.png; frames at genomes/sapling/nodes/001-capability-inventory/takes/stills/06-too-blue-r4-sN.png, sidecars beside them"
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  scores:
+    b06-r4-s0: {A2: -1, A3: -2, A4: -2, A5: -1, A6: 1}
+    b06-r4-s1: {A3: -2, A4: 0, A5: 0, A6: 1}
+    b06-r4-s2: {A3: -2, A4: -1, A5: 0, A6: 1}
+    b06-r4-s3: {A3: -2, A4: 0, A5: 0, A6: 1}
+  vetoed: [b06-r4-s0, b06-r4-s1, b06-r4-s2, b06-r4-s3]
+  totals: {}
+  predicted_verdict: reject_all
+  predicted_flip_to: null
+  predicted_objection: "A3 — 'women' again, in three of four, and the one frame without a person is not a sky at all"
+  confidence: 0.90
+  reasoning: >
+    THE ROUND FAILED AND IT FAILED WORSE THAN THE ROUND IT WAS FIXING. His two
+    named faults were "women, too many clouds/weird cloud formations". r3 drew a
+    girl in 2 of 4. r4 draws one in 3 of 4 — s1, s2 and s3 are all a green-haired
+    anime girl's face filling a vertical frame with grass around her — and the
+    only frame clean of people, s0, is a giant white ring or hoop with translucent
+    feather-like strands inside it, floating over a grass bank, with a dark teal
+    band across the bottom left. No reading of that frame is a deep blue sky seen
+    from ground level, so the beat is 0 of 4 and there is nothing here to pick.
+
+    THE MECHANISM THE ROUND BET ON DID NOT HOLD, AND THAT IS THE FINDING. The
+    2026-08-09 pass concluded that the generic plural does not bind and the
+    explicit singulars do — beat 01 r6 used `no girl, no boy, no child, no person`
+    and returned 0 people in 4 of 4. This round put all five singulars on beat 06,
+    verified lifted into the negative on the real path at render time (the log
+    prints PERSON SINGULARS PRESENT ['woman','girl','boy','child','person'] and
+    'humans' STILL PRESENT False), and the people rate went UP, from 2 of 4 to 3
+    of 4. So the rule as written in v1 and in the two shots.md round notes is
+    WRONG AS STATED and must be narrowed: the singulars bound on beat 01, whose
+    positive prompt has a concrete subject (a seedling in grass), and did not bind
+    here, whose positive prompt has NO subject noun at all — its subject is "an
+    empty expanse of clear deep blue morning sky". A negative can suppress a noun;
+    it cannot supply the subject a caption-trained model expects to find. That is
+    a HYPOTHESIS with one controlled pair behind it, not a fact, and it is written
+    here as a hypothesis on purpose.
+
+    THE CHEAP TEST THAT SHOULD RUN BEFORE ANY r5, AND IT IS RESEARCH, NOT A GUESS:
+    animagine-xl-3.1 is trained on Danbooru captions, and Danbooru's vocabulary
+    for a picture with nobody in it is the POSITIVE tag `no humans`, usually with
+    `scenery`. If that is right then every use of `no humans` in this genome has
+    been backwards — the phrase has been lifted into the NEGATIVE, which asks the
+    model to remove the no-humans concept — and it would explain beat 06 r3, beat
+    10 r4's hand and foot, and this round in one stroke. It is checkable against
+    the model card and the tag list before a single frame is drawn, and it must be
+    checked outside this repo rather than reasoned about inside it. NOT FIRED: no
+    r5 goes on the card on the steward's own theory, and one sample gates the set.
+
+    THE CLOUD CHANGE CANNOT BE SCORED, because three of the four frames are
+    portraits and the fourth is not a sky. What can be said is that the six new
+    cloud negatives (`cumulus, cumulonimbus, cloud bank, towering clouds,
+    cloudscape, scalloped clouds`) did not produce two thin cirrus wisps in any
+    frame; s0 substituted a shape that is not a cloud at all. Negating six words
+    for a thing the shot still needs may have removed the model's whole vocabulary
+    for drawing it, which is the same failure mode as the cloud wall, one turn
+    later.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep1-b14-r4-provisional
+  date: 2026-08-09
+  subject: "node 001 beat 14 — worth staying in, round 4, b15's passed height grammar + apex and low soil line"
+  kind: still
+  candidates: [b14-r4-s0, b14-r4-s1, b14-r4-s2, b14-r4-s3]
+  address_key: "sheet LABELED-beat14-r4.png; frames at genomes/sapling/nodes/001-capability-inventory/takes/stills/14-worth-staying-in-r4-sN.png, sidecars beside them"
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: b14-r4-s0
+  scores:
+    b14-r4-s0: {A1: 1, A2: 1, A3: 1, A4: 1, A5: 1, A6: 1, A7: 1}
+    b14-r4-s3: {A1: 1, A2: 1, A3: 0, A4: 1, A5: 1, A6: 1, A7: 2}
+    b14-r4-s1: {A1: -1, A2: 0, A3: 0, A4: 2, A5: 1, A6: 0, A7: 2}
+    b14-r4-s2: {A1: -1, A2: 1, A3: 0, A4: 0, A5: 0, A6: 0, A7: 0}
+  vetoed: []
+  totals: {b14-r4-s0: 26, b14-r4-s3: 25, b14-r4-s1: 12, b14-r4-s2: -1}
+  predicted_verdict: ratify
+  predicted_flip_to: b14-r4-s3
+  predicted_objection: "A7 again — 'still too short' on s0, in which case the answer inside this set is s3 and then s1"
+  confidence: 0.40
+  reasoning: >
+    HEIGHT MOVED, AND UNLIKE r3 IT MOVED ON THE AXIS HE NAMED. Three of the four
+    stand a single slender sprout whose stem runs from the bottom of the frame to
+    the upper quarter, against r3's sprout lying low across the middle of a wide
+    field of soil. The b15 subject clause plus an apex and a low soil line did the
+    work that "filling the frame" did not.
+
+    THE PICK IS s0 BY ONE POINT AND THE TIE-BREAK IS A3. s0 and s3 score 26 and 25
+    and are the same frame in every respect but two: s0 has a visible soil line
+    with the stem entering the earth and grass tufts at its base, and s3 has no
+    ground in it at all. The beat's own script line is "Low at the base of the
+    trunk: roots gripping soil", the grip is what the beat MEANS, and Stage 3's
+    tie-break runs A1, A2, A3 in order — A1 and A2 tie at +1, A3 separates them.
+    s3 is taller and is the flip if he says short again. s1 is the tallest and
+    most immediately legible frame in the set and is NOT the pick because it grows
+    six leaves on a woody stem — a different plant from the two-cotyledon sapling
+    every other beat draws, which is A1 at weight 5. s2 draws TWO sprouts, so the
+    recurring subject is ambiguous in a shot that is supposed to be him.
+
+    CONFIDENCE IS 0.40 AND THAT IS THE HONEST NUMBER, FOR THREE REASONS. (1) The
+    model is 0 for 3 on PICK predictions and has never had one ratified; its
+    skill so far is entirely in saying no. (2) His verdict was "all too short",
+    and the pick is the SHORTEST of the three tall frames — chosen on script
+    fidelity over height, which is exactly the trade the beat-10 record says he
+    reverses ("when the steward's objection is script fidelity and his preference
+    is a named virtue, his virtue wins"). That precedent argues for s3 or s1 and
+    it is recorded here against the pick, not hidden. (3) A7 has a ceiling he has
+    enforced once ("tooooo tall"), and s1 in particular is close to the shape that
+    got episode 2's plate revoked.
+
+    A FAULT IN ALL FOUR, RECORDED BEFORE HE FINDS IT: THERE ARE NO ROOTS. The
+    prompt asks for "pale roots gripping damp brown soil" and not one frame draws
+    a root. s0 has soil and a stem going into it; s1 and s3 have no ground at all;
+    s2 has a lit mud bank. This is beat 10's r3 failure repeating on its twin, and
+    if he rejects the set this is the likelier axis after height.
+
+    AND A MEASUREMENT THAT WAS ATTEMPTED AND THROWN AWAY, said out loud because a
+    number nobody can check is worse than no number. Two automatic apex measures
+    were written to put a figure on "tall" — a green-dominance mask and a
+    dark-silhouette mask — and both were discarded: the first returned "no plant"
+    on frames that plainly contain one, because the warm sunset grade makes the
+    foliage warmer than it is green, and the second returned an apex of 0.0% on
+    every r3 frame by locking onto the vignette at the top edge. The A7 scores
+    above are therefore a VISUAL reading, labelled as one. No apex percentage is
+    published for this round.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
