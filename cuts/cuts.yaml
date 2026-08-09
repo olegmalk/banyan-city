@@ -978,43 +978,52 @@ checklist:
         at `review/ep2-prov-0809/` and `review/ltx-drift-0809/`.
 
     - n: 15
-      ask: "Beat 15's motion line still describes the frame you threw out."
-      state: open
-      chip: "YES / NO"
-      minutes: 1
-      summary: >-
-        The still was replaced and the motion brief was not, so every render gets
-        a description of the picture you rejected.
-      where: "`node.md`, episode 1 beat 15 — the approved script, yours to change"
-      how: "yes and it goes in; no and we keep the override"
+      ask: "Beat 15's motion line — ANSWERED. You approved the replacement."
+      state: settled
+      chip: "CONFIRM"
       body: |-
-        You asked *"for beat 15, why is it showing the underground? i think it
-        should show the sapling, no?"* The still was replaced —
-        `15-something-s-coming-REVOKED-underground.png` is retired and `b15-r3-s1`
-        is canon. **The motion line was never changed with it.** It still reads:
+        **You said *"yeah looks like a good proposal"*, and it is in the script.**
+        Episode 1 beat 15 now reads:
+
+        > The sapling in the grass, dusk light. The far-off thump-thump is closer
+        > now — each pulse felt through the ground, the leaves trembling with it.
+
+        What it replaced, kept here because that is the whole point of the change:
 
         > Underground: the far-off thump-thump is closer now, the rings of light
         > through the soil brighter and faster
 
-        The beat's own negative list already forbids `underground`, so the
-        instruction and the rules contradict each other inside one render.
+        That line described the frame you threw out — *"for beat 15, why is it
+        showing the underground? i think it should show the sapling, no?"* The
+        still was swapped for `b15-r3-s1` and promoted to canon; the motion line
+        was not, and the beat's own negative already forbade `underground`. Your
+        script and your rules were contradicting each other inside one render, and
+        now they are not.
 
-        **WE DID NOT EDIT IT.** `node.md` is the approved script; changing what a
-        beat says is yours. Last night's A/B used a temporary stand-in line so the
-        two models were not told to draw a cave, recorded in the clip's sidecar and
-        changing nothing in the repo.
+        **ONE HONEST FOOTNOTE.** The wording you approved in chat is not word for
+        word what this card proposed. This card offered *"The thump-thump is closer
+        now, felt through the ground — the grass shivers and the sapling's two
+        leaves tremble with each pulse."* You were shown, and said yes to, the
+        version above — it establishes the frame first. **The version you said yes
+        to is the one that went in**, and both are recorded in the leaf
+        (`leaves/001-t0-d.yaml`, `revisions`) so nobody re-litigates which was which.
 
-        **PROPOSED REPLACEMENT:**
+        **A SECOND FILE SAID THE SAME WRONG THING AND IT HAS BEEN FIXED TOO.**
+        Your line lives in the script, but no renderer reads the script first:
+        every render path takes `motion.yaml` and only falls back to `node.md`
+        when that file has nothing for the beat. `motion.yaml` had carried a
+        beat-15 direction since 2026-08-06, written for the *soil-and-stones*
+        macro that came between the cave and the grass — it moved soil grains,
+        small stones and a raking light band the grass plate does not contain. So
+        the fault you just closed in the script was still sitting one file down,
+        and it was closed there as well the same day, in the same words as yours.
+        **That was a steward fix, not a taste call**, which is why it happened
+        without asking you.
 
-        > The thump-thump is closer now, felt through the ground — the grass
-        > shivers and the sapling's two leaves tremble with each pulse.
-
-        Same event, same rising dread, told from above ground where your frame is.
-        Saying nothing leaves the override standing, which is the one option that
-        quietly rots.
-      pending: >-
-        **Nothing is blocked today.** It bites the moment beat 15 is filmed for
-        real.
+        **WHAT IS LEFT IS A RENDER, NOT A DECISION.** Both files now describe your
+        frame, and **the beat has not been filmed from them yet** — there is no
+        beat-15 clip on the corrected direction. It comes back to you as a moving
+        picture rather than as another question.
 
 cuts:
   - file: ep1-v32-gentleholds.mp4
