@@ -1865,3 +1865,32 @@ backlog:
     the next assembly. Same shape as D18: a guard that cannot read the thing it is
     being asked to clear. Cheap to hold to, because render_t3 already knows every
     ingredient at the moment it muxes them; nothing has to be re-derived later.
+
+# Found while running the r6 vocabulary sample (2026-08-09). Not a blocker for
+# that round, which ran on the 5090 and never touched still_local — it is a
+# blocker for the NEXT Mac-side sample, and the founder is reviewing right now.
+- id: still-local-no-open-1786293600
+  runner: manual
+  worker: any
+  needs: []
+  window: any
+  est_minutes: 20
+  cmd: >-
+    Add a `--no-open` flag to pipeline/still_local.py (and honour an env guard,
+    e.g. BANYAN_NO_OPEN=1, so a detached or agent-driven run cannot forget it),
+    gating the final `subprocess.run(["open"] + opened)` at still_local.py:167-168.
+    Default stays as-is so the founder's own 5-minute loop is unchanged — the
+    point is that a non-interactive caller can opt out. Test per test_pipeline
+    conventions: the open call is skipped when the flag or the env var is set.
+  why: >-
+    still_local.py ends by throwing every rendered still onto whatever screen is
+    attached — `subprocess.run(["open"] + opened)`, unconditional. That is correct
+    for the loop it was written for (dad's 2026-07-27 directive: render, look,
+    fix, repeat) and wrong for every other caller, because an agent running a
+    sample has no way to render on this Mac without interrupting whatever the
+    founder is doing. Named as a hazard by
+    pipeline/research/two-subject-composition.md §4 — "he is reviewing right now.
+    Any r6 run must land in takes/stills/ without `open`; add a --no-open flag (or
+    set the equivalent) BEFORE the first sample, not after." r6 dodged it by
+    running on the 5090; §3.2's two-pass inpaint is the next thing in the ladder
+    that would want the Mac, so this is cheap to fix before it is needed.

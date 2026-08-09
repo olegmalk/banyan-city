@@ -620,9 +620,16 @@ character while this beat needs a goblin AND a plant in frame. That may be part 
 the fusion and it is a *different* experiment; changing the tag and the word order
 in the same sample would tell us nothing about either.)
 
-```
-A tiny 40cm seedling with two oversized cotyledon leaves stands in open grass; a small round goblin folds into its patch of shade, knees up around his ears, no girl, no boy, no child, no person. Midday light, open green grass field, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
-```
+> *The round-5 wording, retired as the live fence when round 6 replaced it —
+> `parse_shots` reads the FIRST fence in a beat's section, so a superseded prompt
+> cannot stay fenced or it is the one that renders. Recorded verbatim in the four
+> `13-the-shade-r5-s*.png.meta.yaml` sidecars, which is where prompt provenance
+> actually lives:* "A tiny 40cm seedling with two oversized cotyledon leaves
+> stands in open grass; a small round goblin folds into its patch of shade, knees
+> up around his ears, no girl, no boy, no child, no person. Midday light, open
+> green grass field, cinematic lighting, detailed, newest, masterpiece, best
+> quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no
+> text."
 
 **ROUND 5 RENDERED AND WAS REJECTED. Subject order was not the fault either**
 (ledger record 27, `ep2-b13-r5-sample`, `reject_all`, 0.90). Four seeds, 38
@@ -668,6 +675,116 @@ change with its own tests, not a prompt edit), and the possibility that a
 two-subject frame is not a prompt problem at all — a plate composed from the beat
 01 seedling with the goblin drawn in by img2img would sidestep the count tag
 entirely. **Choosing between those is a taste and scope call, not a steward call.**
+
+**ROUND 6 IS THE VOCABULARY CORRECTION, and it is the first round that attacks
+the count tag.** Specified in full by `pipeline/research/two-subject-composition.md`
+§3.1 and §5 — a research memo built from the Animagine model card, the Danbooru
+wiki and the diffusers docs, not from our own code comments. The memo's finding is
+that r5's own closing note was half right: `1other` is indeed the remaining
+variable, but the Danbooru wiki defines it as *"a **humanoid** character of
+ambiguous or indeterminate gender"* — it is not a "not a person" tag at all. So
+every round so far has opened by asserting the humanoid its own negatives were
+trying to remove, which is why r4's s1 and r5's s1 came back as anime children
+*after* `girl, boy, child, person` were verified lifted into the negative. Second
+finding, never yet tested: the fusion classes have exact Danbooru tag names —
+`leaf on head` alone carries ~10.5k posts — and **not one of them has ever been in
+our negative.** The prose `no girl, no boy` that `_NEGATION` lifts are weak
+negatives on a checkpoint trained on comma-separated tags.
+
+Three changes, all inside existing tooling, and nothing else moves:
+
+1. **Count tag `1other` → `1boy`,** obtained the only way it can be — by the
+   leading clause, since `_tag_from_clause` derives the tag and you cannot set it
+   by writing it. `a small round goblin boy` puts a `_MALE` token in the first
+   comma-clause, and `_MALE` is tested before `_OTHER`, so the deriver returns
+   `1boy` with `goblin` still at token four. `solo` follows it: it asserts
+   *exactly one character*, which forbids the second figure while leaving the
+   plant free, because scenery is not a character and no count tag can ask for one.
+   **Entailed by this and stated so it is not mistaken for a fourth change:
+   `no boy` and `no person` come OUT of the prose.** Declaring `1boy` and negating
+   `boy` in the same prompt is the exact self-contradiction §1a says is the defect;
+   keeping it would reintroduce the fault under a new name. `no girl` and
+   `no child` stay — they target r4/r5's actual failure and contradict nothing.
+2. **The fusion classes negated in tag form**, through the `explicit` tier so
+   `fit_negative` protects them: `leaf on head, plant girl, alraune, monster girl,
+   flower on head, head wreath, hair ornament, leaf hair ornament, plant hair`.
+   These are the *exact names of what r4 and r5 drew*.
+3. **The plant re-bound as scenery** — `Plant, grass, outdoors` opening its own
+   sentence, rather than hanging off the goblin in a prepositional phrase. This is
+   Danbooru's grammar for "a plant is in the shot and belongs to the ground".
+
+Deliberately NOT bundled: the two-pass inpaint (§3.2), regional IP-Adapter (§3.3)
+and the checkpoint swap (§3.8). Running vocabulary and architecture in one sample
+would tell us nothing about either — the same argument r5 made for holding the tag
+constant while inverting word order, one rung up.
+
+**Pre-registered gate, written before the render.** Per seed, four binary
+predicates (memo §5): P1 the plant is present *as a plant*, rooted, not touching
+the character; P2 the goblin is a goblin, not a human child; P3 no fusion —
+nothing plant-like growing from head or body; P4 two separate silhouettes with
+background visible between them. r4 and r5 both scored **0/4**. **Pass = at least
+3 of 4 seeds passing all four predicates.** Any result above zero is information;
+only ≥3/4 unblocks the fifteen goblin-and-plant beats.
+
+```
+A small round goblin boy, solo, folds into a thin patch of shade, knees up around his ears, no girl, no child. Plant, grass, outdoors, a tiny 40cm seedling with two oversized cotyledon leaves rooted in the ground beside him. Midday light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+```
+
+**ROUND 6 RENDERED. THE FUSION IS GONE AND THE GATE STILL FAILED, 1 of 4**
+(ledger record 32, `ep2-b13-r6-sample`, `reject_all`, 0.72). Four seeds, 37
+GPU-seconds, 2026-08-09. Measured on the box's real CLIP tokenizer before a step
+was spent: **count tag `1boy`** confirmed off the real `sd_prompt` path, 72
+positive tokens with boosters and style anchor intact and **nothing dropped from
+the positive**, negative 73 sent.
+
+**Three rounds of grammar moved nothing; the vocabulary correction moved three
+predicates out of four on the first try:**
+
+| round | what it changed | P1 plant | P2 goblin | P3 no fusion | P4 two shapes | all four |
+|---|---|---|---|---|---|---|
+| r3 | scale/creature negatives | 0/4 | — | 0/4 | 0/4 | 0/4 |
+| r4 | style tail saved; botanical binding | 0/4 | 1/4 | 0/4 | 0/4 | 0/4 |
+| r5 | subject order inverted (confounded — see below) | 0/4 | 0/4 | 0/4 | 0/4 | 0/4 |
+| **r6** | **`1boy, goblin, solo` + fusion tags negated + plant as scenery** | **4/4** | **1/4** | **4/4** | **4/4** | **1/4** |
+
+Not one frame wears a leaf, grows a cotyledon out of its head, or collapses the
+two nouns into a single object, and every frame has a rooted plant with clear
+background between it and the character. **The count tag was the cause**, exactly
+as the memo argued from the Danbooru wiki: `1other` asserts a humanoid, so r3–r5
+spent every round asking for the very thing their negatives were deleting, and no
+count tag can give a plant a slot because plants are not characters.
+
+**P2 is what failed, and it is now a different problem than it was.** It is no
+longer the prompt contradicting itself — it is `goblin` losing to `1boy` in three
+seeds of four: s0 is a pale elf child, s1 a featureless dome-headed figure, s3 a
+hood with no face. **s2 proves the tag can win** — green skin, long pointed ears,
+grey cloak, the closest thing to this show's goblin yet drawn on any beat — so
+this is weighting and conditioning, not impossibility.
+
+**The memo's pre-committed ladder therefore selects §3.3, regional IP-Adapter on
+the 5090 box**, conditioning the goblin region on an approved goblin still: "that
+is an A1 problem and IP-Adapter is the A1 tool." The ladder was fixed in advance
+precisely so this choice would not be made by whoever was disappointed, and it is
+not being re-made now. **No wave fires** — the gate said ≥3 of 4 and the answer is
+1 of 4.
+
+Two things recorded so they are not rediscovered as surprises. **The negative
+budget collision was real and harmless:** nine fusion tags push the negative to 99
+CLIP tokens, and `fit_negative` sacrificed seven house terms to fit (`realistic
+skin texture, jpeg artifacts, deformed, extra limbs, blurry, low quality,
+signature`) — pre-authorised by the memo, asserted by the render script (every
+fusion term had to survive or it stopped), and the frames came back clean anyway
+at A5/A6 +1 in four of four. **And re-binding the plant as scenery bought
+separation at the cost of intimacy:** no frame draws the shade *relationship* the
+line depends on — nobody sits in shade cast by the seedling he is thanking — and
+s1 draws a thick tree trunk, which the scale negatives forbid and which inverts
+the joke the beat is built on. That is the next prompt problem after the identity
+one.
+
+**r5's result cannot confirm or deny its own hypothesis, and is scored here only
+for completeness.** It changed subject order on top of the two causes r6 has now
+shown to be live and untouched at the time, so its 0/4 is not evidence about
+subject order — the memo said so before r6 ran, and r6 did not change that.
 
 ## Beat 14 — THE DEFENSE (1:04–1:10) ⬜ needs footage
 

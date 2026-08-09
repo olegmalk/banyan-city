@@ -5476,3 +5476,75 @@ withhold what it cannot judge and CI fails on it instead — but a clearance tha
 means "published under the terms this model imposes" cannot survive a model
 nobody has read, or the exemption becomes one invented model name plus one
 `published_under:` line.
+
+## 2026-08-09 — the vocabulary fix broke the fusion on the first try, and the gate still said no
+
+**`ep2-b13-r6-sample`, ledger record 32, `reject_all`, confidence 0.72. Four
+seeds, 37 GPU-seconds, $0, rtx5090.** The ONE SAMPLE for the r6 round specified
+by `pipeline/research/two-subject-composition.md` §3.1/§5 — the memo committed by
+`92a5c9c`, written from the Animagine model card, the Danbooru wiki and the
+diffusers docs rather than from our own code comments. Frames and sidecars at
+`genomes/sapling/nodes/002b-first-citizen/takes/stills/13-the-shade-r6-s*.png`;
+neutral sheet `LABELED-b13-r6.png`, built and **not opened** — he is reviewing.
+
+**Measured on the real `sd_prompt` path before a step was spent** (the memo's own
+trap: you cannot set the count tag by writing it, `_tag_from_clause` derives it):
+count tag confirmed **`1boy`**, 72 positive tokens with boosters and style anchor
+intact and **nothing dropped from the positive**, negative 73 sent. The render
+script refused to draw unless all three held.
+
+**Three rounds of prompt grammar moved nothing; the vocabulary correction moved
+three of the four predicates on its first attempt.**
+
+| round | what it changed | P1 plant | P2 goblin | P3 no fusion | P4 two shapes | all four |
+|---|---|---|---|---|---|---|
+| r3 | scale/creature negatives | 0/4 | — | 0/4 | 0/4 | 0/4 |
+| r4 | style tail saved; botanical binding | 0/4 | 1/4 | 0/4 | 0/4 | 0/4 |
+| r5 | subject order inverted — **confounded, see below** | 0/4 | 0/4 | 0/4 | 0/4 | 0/4 |
+| **r6** | **`1boy, goblin, solo` + fusion tags negated in tag form + plant as scenery** | **4/4** | **1/4** | **4/4** | **4/4** | **1/4** |
+
+Not one r6 frame wears a leaf, grows a cotyledon out of its head, or collapses
+the two nouns into one object, and all four put a rooted plant in frame with
+background visible between it and the character. **`1other` was the cause**, as
+the memo argued: it is the Danbooru tag for a *humanoid* of indeterminate gender,
+so r3–r5 opened every prompt by asserting the thing their own negatives were
+deleting — and no count tag can give a plant a slot, because plants are not
+characters.
+
+**THE GATE FAILED HONESTLY: 1 of 4 against a pre-registered ≥3 of 4, and no wave
+fires.** P2 is what failed — `goblin` loses to `1boy` in three seeds (a pale elf
+child, a featureless dome-headed figure, a hood with no face). It is no longer
+the prompt contradicting itself; **s2 proves the tag can win** — green skin, long
+pointed ears, grey cloak, the closest thing to this show's goblin yet drawn — so
+it is weighting and conditioning. The memo's ladder was fixed *in advance* for
+exactly this branch and selects **§3.3, regional IP-Adapter on the 5090**,
+conditioning the goblin region on an approved goblin still: an A1 problem, and
+IP-Adapter is the A1 tool. **The fifteen goblin-and-plant beats stay blocked.**
+
+**The predicted negative-budget collision was real and did not bite.** Nine
+fusion tags push the negative to 99 CLIP tokens, so `fit_negative` sacrificed
+seven house terms to fit — `realistic skin texture, jpeg artifacts, deformed,
+extra limbs, blurry, low quality, signature`. The memo pre-authorised precisely
+that ("what it trims must be the house boilerplate, not these"), the script
+asserted every fusion term survived before spending a step, and the frames came
+back clean anyway at A5/A6 +1 in four of four. Those seven terms are cheaper than
+they look on a 40-step CFG-7.5 animagine render.
+
+**Two costs recorded so they are not rediscovered later.** Re-binding the plant
+as scenery bought separation and spent intimacy: no frame draws the shade
+*relationship* the line depends on — nobody sits in shade cast by the seedling he
+is thanking — and s1 draws a thick tree trunk, which the scale negatives forbid
+and which inverts the beat's joke. And **r5 was scored too, for completeness, but
+its 0/4 is not evidence about subject order**: it changed word order on top of the
+two causes r6 has now shown were live and untouched at the time. The memo said
+that before r6 ran, and r6 did not change it.
+
+**Box left clean:** schtask `banyan-b13r6` deleted and verified absent (only the
+pre-existing `banyan-telemetry`, `banyan-worker-start` and the wan-lane's
+`banyan-b15ab` remain — that one reported, not touched), `GPU-CLAIM.txt`
+released, card idle at 0% / 0 MiB. Nothing published, posted, spent, or opened on
+the founder's screen. One backlog entry filed:
+`still-local-no-open-1786293600` — `still_local.py` ends with
+`subprocess.run(["open"] + opened)`, so any Mac-side sample throws its stills onto
+whatever screen is attached; r6 dodged it by running on the 5090, and §3.2's
+two-pass inpaint is the next rung that would want the Mac.

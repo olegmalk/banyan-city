@@ -1,0 +1,34 @@
+# Still provenance (7.2), written AT RENDER TIME by render_b13r6.py
+# on the rtx5090 (C:\banyan-farm\sample-b13-r6).
+# The negative below is what the model actually saw. The recipe's own
+# negative, before this script's one deliberate removal, was:
+#   photorealistic, 3d render, abstract, text, watermark, mature tree, large tree, tall tree, thick trunk, full canopy, forest, bush, shrubbery, girl, child, photorealism, leaf on head, plant girl, alraune, monster girl, flower on head, head wreath, hair ornament, leaf hair ornament, plant hair
+#   NEGWARN: !! negative prompt over CLIP's 77-token budget; deduplicated: text; DROPPED: realistic skin texture, jpeg artifacts, deformed, extra limbs, blurry, low quality, signature
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+shot_beat: 13
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20262732
+seeds_in_batch: 4
+task: ep2-b13-r6-1786274330
+queue_entry: ep2-b13-shade-r6-vocabulary-1786290000
+render_round: r6
+candidate_set: r6
+negative_terms_removed: tall tree
+count_tag: 1boy
+extra_negative_tier: explicit
+extra_negative: >-
+  leaf on head, plant girl, alraune, monster girl, flower on head, head wreath, hair ornament, leaf hair ornament, plant hair
+recipe_inherited_from: >-
+  node 001, takes/stills/15-something-s-coming-r3-s1.png — the ONE SAMPLE the founder passed on 2026-08-08. Model, size, steps, cfg, seed rule and the one-term negative removal come from that frame's recipe, unchanged since r4. The prompt is shots.md Beat 13 as of the round-6 note, and the round is specified by pipeline/research/two-subject-composition.md §5 (both committed with this sidecar).
+wall_seconds: 9
+cost_usd: 0
+note: |-
+  round 6, the Danbooru-native VOCABULARY correction, specified by pipeline/research/two-subject-composition.md §3.1/§5 from the Animagine model card and the Danbooru wiki. r3, r4 and r5 each attacked this beat through the positive prompt grammar — negatives, botanical binding, subject order — and A1 was 0 of 4 every time. The memo finds two causes never tested: `1other` is the Danbooru tag for a HUMANOID of indeterminate gender, not for a non-human, so every round so far opened by asserting the humanoid its own negatives were removing (r4 s1 and r5 s1 both came back as anime children with girl/boy/child/person verified in the negative); and the fusion classes have exact tag names — `leaf on head` alone ~10.5k Danbooru posts — of which not one has ever been in our negative. Three changes and nothing else: the count tag becomes 1boy via the leading clause (the deriver reads it off the first comma-clause; you cannot set it by writing it), with `goblin` and `solo` following; the fusion classes go into the negative in TAG form through the explicit tier, which fit_negative protects last; and the plant is re-bound as scenery in its own sentence (`Plant, grass, outdoors`) instead of hanging off the goblin in a prepositional phrase. Entailed by change one and not a fourth change: `no boy` and `no person` leave the prose, because declaring 1boy while negating boy is the self-contradiction the memo names as the defect. Same four seeds as r4 and r5, so the column is a controlled comparison against a recorded 0/4. The nine fusion tags push the negative past CLIP 77 and fit_negative trims house boilerplate to fit — pre-authorised by the memo, asserted by this script (every fusion term must survive or it stops), and the dropped house terms are named in the NEGWARN header above rather than lost in silence. Pre-registered gate (memo §5): four binary predicates per seed — plant is a plant, goblin is a goblin, no fusion, two separate silhouettes — and a pass is at least 3 of 4 seeds passing all four. Ledger record written BEFORE any screen. No wave fires off this beat without the founder.
+prompt: |-
+  1boy, a small round goblin boy, solo, folds into a thin patch of shade, knees up around his ears. Plant, grass, outdoors, a tiny 40cm seedling with two oversized cotyledon leaves rooted in the ground beside him. Midday light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  photorealistic, 3d render, abstract, text, watermark, mature tree, large tree, thick trunk, full canopy, forest, bush, shrubbery, girl, child, photorealism, leaf on head, plant girl, alraune, monster girl, flower on head, head wreath, hair ornament, leaf hair ornament, plant hair

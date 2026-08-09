@@ -1166,3 +1166,103 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+# Record 32 — the r6 VOCABULARY sample. Scored and written BEFORE the contact
+# sheet was built, which is the only order that makes a prediction worth
+# anything. The round was pre-registered in full — prompt, negative, gate and
+# fallback ladder — by pipeline/research/two-subject-composition.md §5, so the
+# rubric below could be failed by a machine and was not chosen after looking.
+- id: ep2-b13-r6-sample
+  date: 2026-08-09
+  subject: "node 002b beat 13 — THE SHADE, round 6, Danbooru-native vocabulary (1boy/goblin/solo + fusion tags negated + plant re-bound as scenery)"
+  kind: still
+  candidates: [b13-r6-s0, b13-r6-s1, b13-r6-s2, b13-r6-s3]
+  address_key: "sheet LABELED-b13-r6.png; frames at genomes/sapling/nodes/002b-first-citizen/takes/stills/13-the-shade-r6-sN.png, sidecars beside them"
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  scores:
+    b13-r6-s0: {A1: -2, A2: 0, A3: -1, A4: 1, A5: 1, A6: 1}
+    b13-r6-s1: {A1: -2, A2: -2, A3: -2, A4: -1, A5: 1, A6: 1}
+    b13-r6-s2: {A1: 1, A2: 1, A3: 0, A4: 1, A5: 1, A6: 1}
+    b13-r6-s3: {A1: -1, A2: 1, A3: -1, A4: -1, A5: 1, A6: 1}
+  vetoed: [b13-r6-s0, b13-r6-s1, b13-r6-s3]
+  totals: {}
+  pre_registered_gate:
+    rubric: "memo §5 — per seed, four binary predicates; pass = >=3 of 4 seeds passing ALL four"
+    P1_plant_is_a_plant:      {s0: pass, s1: pass, s2: pass, s3: pass}
+    P2_goblin_is_a_goblin:    {s0: fail, s1: fail, s2: pass, s3: fail}
+    P3_no_fusion:             {s0: pass, s1: pass, s2: pass, s3: pass}
+    P4_two_silhouettes:       {s0: pass, s1: pass, s2: pass, s3: pass}
+    seeds_passing_all_four: 1
+    gate: FAIL
+  predicted_verdict: reject_all
+  predicted_flip_to: b13-r6-s2
+  predicted_objection: >
+    "That is not the goblin" on three of four — a pale elf child in s0, a
+    featureless dome-headed thing in s1, a hood with no face in s3 — and on s2,
+    which IS green with the ears and the cloak, the question he has asked of this
+    beat since r1: where is the shade, and why is the plant he is thanking three
+    seedlings behind him instead of the one over his head. s1 draws a thick tree
+    trunk, which deletes the joke the whole beat is.
+  confidence: 0.72
+  reasoning: >
+    THE GATE FAILED AT 1 OF 4 AND IT IS NOT A NULL RESULT — the fusion this beat
+    has been stuck on for three rounds is GONE. P1, P3 and P4 all went 0/4 -> 4/4
+    in one round. Not one frame wears a leaf, grows a cotyledon out of its head,
+    or collapses the two nouns into one object; every frame has a rooted plant
+    with clear background between it and the character. r3 attacked this with
+    negatives, r4 with botanical binding, r5 with subject order, and A1 was -2 in
+    four of four each time. The vocabulary correction moved it on the first try,
+    which is what the memo predicted and the reason it was ranked first on
+    (probability of clearing A1) / cost: one hour, zero new dependencies, 37
+    GPU-seconds.
+
+    THE CAUSE IS IDENTIFIED AND IT IS THE COUNT TAG, not the negatives. `1other`
+    is the Danbooru tag for a HUMANOID of indeterminate gender, so r3-r5 opened by
+    asserting the humanoid their own negatives were trying to delete, and a count
+    tag cannot grant a slot to a plant because plants are not characters. `1boy,
+    solo` declares exactly one character and thereby leaves the plant free to be
+    scenery — and the plant became scenery in 4 of 4. The nine fusion tags
+    (`leaf on head`, `plant girl`, `alraune`, ...) are the exact names of what r4
+    and r5 drew and had never been in any negative we ship.
+
+    WHAT DID NOT MOVE IS P2, AND IT IS NOW A DIFFERENT PROBLEM THAN IT WAS. It is
+    no longer the prompt contradicting itself; it is the `goblin` tag losing to
+    `1boy` in three seeds of four. s2 proves the tag can win — green skin, long
+    pointed ears, grey cloak, the closest thing to this show's goblin that has
+    ever been drawn — so this is a weighting and conditioning problem, not an
+    impossibility. That is exactly the branch the memo pre-committed to: "r6 fails
+    on P2 (goblin off-model / a human) -> §3.3, regional IP-Adapter on the 5090
+    box, conditioning the goblin region on an approved goblin still. That is an A1
+    problem and IP-Adapter is the A1 tool." The ladder was fixed in advance so the
+    next step would not be chosen by whoever was disappointed, and it is not being
+    re-chosen now.
+
+    A COLLATERAL THAT WAS PREDICTED, PRE-AUTHORISED AND DID NOT BITE. The nine
+    fusion tags push the negative to 99 CLIP tokens, so `fit_negative` sacrificed
+    seven house terms to fit — realistic skin texture, jpeg artifacts, deformed,
+    extra limbs, blurry, low quality, signature. The memo authorised exactly this
+    ("what it trims must be the house boilerplate, not these") and the script
+    asserted every fusion term survived before spending a step. The frames came
+    back clean anyway: A5 and A6 are +1 in four of four, no mangled hands, no
+    artefacts. Worth banking — those seven terms are cheaper than they look on a
+    40-step CFG-7.5 animagine render.
+
+    A2/A3 ARE THE HONEST WEAKNESS AND THEY ARE NOT WHAT THE ROUND WAS ABOUT. No
+    frame draws the SHADE RELATIONSHIP the line depends on — nobody is sitting in
+    a patch of shade cast by the seedling he is thanking. s1 is the worst of it: a
+    thick tree trunk, which the scale negatives explicitly forbid and which
+    inverts the beat's joke. Re-binding the plant as scenery bought separation and
+    cost intimacy; the two subjects are now in the same frame and not yet in the
+    same STORY. That is the next prompt problem after the identity one, and it is
+    named here so it is not discovered as a surprise later.
+
+    NO WAVE FIRES. The gate said >=3 of 4 and the answer is 1 of 4. Third sample
+    in a row to stop a wave, and the first one that stopped it while moving the
+    defect.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
