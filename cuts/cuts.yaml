@@ -282,104 +282,6 @@ checklist:
         - **Nothing has been published, posted or made canon.** No episode file was
           written from v32 and none will be written from v33 without your yes.
 
-    # ---- EPISODE 2 ----------------------------------------------------------
-    # None of this block blocks v33. It is here because his "r3-s3 and retire" on
-    # 2026-08-07 took the founder gate off four lanes at once, and this is where
-    # their output arrives.
-    #
-    # HE TOOK THAT PICK BACK ON 2026-08-08 ("a frame i never approved, and its
-    # tooooo tall"), so the FRAME is revoked and item 06 is re-staged around that.
-    # What survives is the DIALECT, and it survives on later rulings of his — he
-    # has since directed episode 2's twenty redraws by name and approved its
-    # narration voice. That reading is written down as a reading, with the place
-    # it would be wrong named, in the node's shots.md under Beat 01. If the
-    # dialect went back open with the frame, beats 02-21 stop and this is the
-    # thread to pull.
-    - n: 6
-      heading:
-        title: "Episode 2"
-        intro: |-
-          Your five words on 2026-08-07 — **"r3-s3 and retire"** — started four
-          jobs, and their results land here. **You then took that frame back on
-          2026-08-08** (*"you used a frame i never approved, and its tooooo
-          tall"*), so episode 2's opening picture is open again. Nothing built on
-          it cannot be redrawn: the words of all 21 shots stand, and so does the
-          voice.
-      ask: "Episode 2's opening shot — still on us."
-      state: open
-      chip: "ON US"
-      minutes: 1
-      summary: >-
-        All four round-5 cold-open frames were provisionally rejected, so there is
-        no A/B to put to you.
-      where: "the `b01-r5` sheet is on this card, and again in item 10"
-      sheets_title: "The cold-open sheet — four candidates"
-      how: "nothing — unless you disagree, in which case name a frame"
-      body: |-
-        **Your answer on the model question, in full:**
-
-        > for the wan or ltx decision, **neither**. you used a frame i never
-        > approved, and its tooooo tall.
-
-        **We are not reading "neither" as a verdict on the two models.** You
-        refused to judge a motion test built on a picture you had just withdrawn —
-        whichever clip looked better would have been the better film *of the wrong
-        frame*. So the model question was not answered here, not abandoned, and not
-        re-asked until there was a frame behind it that you passed.
-
-        **THAT HAPPENED ON 2026-08-09 and the model question is now closed
-        elsewhere.** The A/B was re-filmed on `b15-r3-s1`, which is canon and
-        yours, and you answered it: *"wan has nearly no motion, and ltx is just
-        amazing.. buuut it's going off track and making random stuff like this
-        human sometimes."* **That verdict and the condition attached to it live in
-        item 14.** Only the cold-open frame is still open here.
-
-        **The frame is withdrawn and we are not arguing.** The sheet you picked
-        `r3-s3` from had our own **"BEST PLATE"** label beside that candidate.
-        Marking a favourite on a sheet we hand you is not asking you to choose, so
-        the pick is void on that ground alone (R4). It is retired under a
-        `REVOKED` name; **episode 2 has no approved opening picture.**
-
-        **"Too tall" is taken as a measurement.** That stem is a hairline standing
-        about a third of screen height with its tip in the top quarter, where the
-        shot asks for a 40cm seedling with the whole plant in frame.
-
-        **UPDATE 2026-08-09 — the redraw did not fix it.** Four new candidates,
-        one sheet, no favourite marked. The steward **provisionally rejected all
-        four**: three put a human child in a field your script says is empty, and
-        the fourth is clean in every other way and is *the picture you withdrew,
-        redrawn* — standing **36% of frame height against the revoked plate's
-        32%**. Taller than the one you threw out. **Confidence 0.80.**
-
-        **If you agree, the next move is not another sheet.** Round 5's only lever
-        was `thin` → `sturdy` and the drawing did not move, so adjectives are spent
-        here. What changes is composition and negatives: camera **down and in** so
-        a 40cm plant is not drawn as a tall weed to be visible at all — the two
-        frames of this plant you have kept, `b15-r3-s1` and canon `12-undefined`,
-        are both grass-height shots — plus the negative terms that actually bind
-        (`1girl, 1boy, child, person`), because `no humans` is demonstrably not
-        firing on this wave. **One sample before any set of four.**
-
-        **The Wan film of the withdrawn frame is below**, as the record of what you
-        were asked and refused. **The LTX film of it exists and this page still may
-        not show it** — LTX's licence keeps its output off anything we publish
-        (**D16**, open, yours). It sits at `review/ep2-b01/ltx-b01-v2.mp4`.
-
-        **One number, explicitly not an argument:** LTX drew those six seconds in
-        **207 seconds against Wan's 539** — 2.6x faster at a third of peak memory.
-        Over twenty-one beats that is real, and it still does not pick a look.
-      sheets:
-        - file: review-assets/LABELED-b01-r5.jpg
-          label: "the cold open, round 5 — b01-r5-s0 to s3"
-          note: "labels and seeds only, no favourite marked; all four provisionally rejected"
-      clips:
-        - file: checklist/002b-b01-5b.mp4
-          label: "Wan 2.2 — 6.0s — OF THE WITHDRAWN FRAME"
-          note: "the record of the question you refused, not a candidate; 539s to render"
-      pending: >-
-        **The Wan clip is withheld too** — a licence-gate refusal, not a missing
-        render.
-
     - n: 7
       ask: "Character consistency — ANSWERED. No sheet; the sapling reads tall."
       state: settled
@@ -517,19 +419,102 @@ checklist:
 
         Beat 16 was voiced the same day, 8.2s, in the voice you approved.
 
+    # THE GOBLIN LOOK IS A GATE, NOT A BEAT, which is why it leads the queue. Two
+    # consumers, and only one of them is this beat: the founder's own goblin-look
+    # call, and beat 16's still redraw, which clause (h) of the backlog entry
+    # i2v-prompt-plate-truth blocks until that call exists.
+    #
+    # ROUND 8 LANDED WHILE THIS CARD WAS BEING WRITTEN — queue entry
+    # ep2-b13-r8-goblin-1786292421, STARTED 17:27:06Z on farm-results-hand, four
+    # stills pulled and the claim released at 17:32Z. The card was drafted as a
+    # diagnosis ("r8 is not drawn") and rewritten against the frames rather than
+    # shipped stale. THE SCORING IS NOT HERE ON PURPOSE: the rendering lane owns
+    # `taste/steward-model.ledger.yaml` for this round and was still writing it,
+    # and record 32 already ruled the goblin predicate unscorable until the
+    # founder defines the goblin. This card carries the picture and the ask.
+    - n: 18
+      ask: "The goblin — round 8 is green. Is this him?"
+      state: open
+      chip: "PICK"
+      minutes: 3
+      summary: >-
+        Four rounds chased this and round 8 landed tonight: green in 4 of 4, no
+        white hair, no elf. It is deliberately unscored — nothing can score it
+        until you say what the goblin is.
+      where: "the round-8 sheet is first on this card; tap it to open full size"
+      how: "name the closest, e.g. `002b-b13-r8-s2`, or say in one line what the goblin is"
+      sheets_title: "Round 8 first, then the two rounds it corrects"
+      body: |-
+        **YOUR LINE, 2026-08-09:** *"all the goblin images look like female
+        demihumans, definitely need to regenerate."*
+
+        **ROUND 8 IS THAT REGENERATION AND IT LANDED TONIGHT** — four seeds, five
+        minutes on the 5090, $0, nothing opened on your screen.
+
+        | round | what it changed | what came back |
+        |---|---|---|
+        | r6 | words — `1boy, goblin, solo`, the fusion terms negated | goblin reads as a goblin in **1 of 4** |
+        | r7 | machinery — the character region conditioned on r6's best goblin | **0 of 4.** Four identical white-haired elves |
+        | **r8** | words again — `green skin` and `plump` in, **`female goblin` and `elf` negated** | **green in 4 of 4** |
+
+        **WHY THE WORDS WORKED WHERE THE MACHINERY DID NOT.** Round 7's technique
+        did what it promised: four seeds returned **recognisably the same
+        character**, which had never happened on this beat. What it could not
+        carry was the green — in the picture it copied from, the head is bowed
+        under a brightly lit white bob and the green skin is a small dark patch
+        underneath, so it took the hair and the coat and left the one thing that
+        mattered. Round 8 stopped copying a picture and named the attribute
+        instead. The measurement behind it: **`female goblin` is 1,717 of the
+        4,257 pictures this model knows as `goblin`**, so what you were seeing was
+        not a mis-render — it was the word doing exactly what it means 40% of the
+        time. That tag had never once been in the negative.
+
+        **WHAT IS IN THE FOUR, plainly and with no favourite marked.** All four
+        are green, round-headed, small and heavy-set. Two wear a white cloth cap.
+        `s2` has red eyes. **The ears are still pointed** — we expected to lose
+        them when `elf` went into the negative and we did not. **The weak half is
+        the plant:** the line needs a small two-leaf seedling beside him, and only
+        `s1` and `s2` clearly have one; `s0` and `s3` give grass and leaf-shadow.
+
+        **IT IS NOT SCORED AND THAT IS DELIBERATE.** Our own rule from your last
+        answer says the goblin test is not a real test until you define the
+        goblin, so scoring these against the old definition would be marking our
+        own homework. **This round exists to give you something to point at.**
+
+        **ONE ROUND WAS THROWN OUT ON A RULE RATHER THAN A LOOK, and you should
+        know we did it.** Round 7 conditioned four renders on `b13-r6-s2` — a
+        frame **you have never ruled on**. That is recorded as a gate failure
+        against us, and it is why round 7 is on this card as evidence and not as
+        a set to choose from.
+
+        **TWO THINGS WAIT ON YOUR ANSWER, AND THE SECOND IS THE EXPENSIVE ONE.**
+        The first is this beat. The second is **beat 16's redraw** — you said the
+        scavenger was in that shot on purpose (*"if he was there on purpose then
+        fine, it wont ruin anything right?"*), so that picture gets drawn again
+        with him in it, blurred, and it cannot start until the goblin has a look
+        you have approved.
+      sheets:
+        - file: review-assets/SHEET-b13-r8.jpg
+          label: "ep2 beat 13 ROUND 8 — 002b-b13-r8-s0..s3"
+          note: "green in 4 of 4, ears still pointed, the seedling faint in two. No pick, no score."
+        - file: review-assets/LABELED-b13-r7.jpg
+          label: "ep2 beat 13 round 7 — b13-r7-s0..s3"
+          note: "the machinery round: one consistent character, zero green — all four rejected, 0.86"
+        - file: review-assets/LABELED-b13-r6.jpg
+          label: "ep2 beat 13 round 6 — b13-r6-s0..s3"
+          note: "s2 is the frame round 7 copied from, and it is one you never ruled on"
     - n: 10
-      heading:
-        title: "This morning — the ones that are yours"
-      ask: "The redrawn frames — episode 2 is the open half now."
+      ask: "Beat 6 — round 5 clears both faults you named."
       state: open
       chip: "PICK"
       minutes: 5
       summary: >-
-        Beats 3 and 10 are canon on your answers. Episode 2's twenty beats are
-        still unanswered, and their tiles now carry addresses.
-      where: "on this card — open the sheets, tap one to see it full size"
-      sheets_title: "The sheets — fifteen of them, tap one to open it full size"
-      how: "name an address, e.g. `002b-b16-r3-s1` or `b14-r4-s0`"
+        Zero people in 4 of 4 and the clouds are ordinary again. Our pick is
+        `b06-r5-s2` at 0.55 and it is the one frame in v34 you have never seen.
+        Episode 2's twenty beats are still open under it.
+      where: "on this card — the beat 06 round 5 sheet is first; tap it to open full size"
+      sheets_title: "The sheets — sixteen of them, round 5 first; tap one to open it full size"
+      how: "say `b06-r5-s2`, name another `b06-r5-sN`, or reject the set and say why"
       body: |-
         **YOUR DEFECT REPORT IS FIXED FIRST, because it was blocking the biggest
         half of this card.** *"ep2 beats dont have labels."* Correct — the
@@ -549,28 +534,49 @@ checklist:
           argued against it and you overruled that** — `b10-r4-s2` was offered
           here at 0.65 and **that offer is withdrawn**, not left standing beside
           your answer.
-        - **Episode 1 is 13 of 15.** Only beats **6** and **14** are still
-          missing a frame.
+        - **Beat 14 — `b14-r4-s3` is canon.** Your answer this afternoon, and it
+          is the taller frame — we had offered `b14-r4-s0` and you took the flip
+          we listed beside it.
+        - **Episode 1 is 14 of 15.** Only beat **6** is still missing a frame.
 
-        **BEATS 6 AND 14 — YOU REJECTED BOTH SETS AND NAMED THE AXES. ROUND 4 IS
-        RENDERED AND IS ON THIS CARD** (the last two sheets).
+        **BEAT 6 — ROUND 5, AND BOTH FAULTS YOU NAMED ARE GONE.** It is the last
+        beat in episode 1 with no frame of yours, and v34 is holding it on our
+        guess until you say otherwise.
 
-        - **Beat 6 — *"women, too many clouds/weird cloud formations".* Round 4
-          FAILED, and worse than round 3.** A girl appears in **3 of 4** now,
-          against 2 of 4 before, and the one frame without a person is not a sky.
-          **No pick offered.** The cause is worth one line because it is
-          everywhere in this tree: `no humans` is a Danbooru tag meaning *the
-          picture has nobody in it*, and our prompt builder has been moving it
-          into the negative — asking the model to remove the no-people idea. The
-          fix is a one-frame test, not another batch.
-        - **Beat 14 — *"they are all too short".* Round 4 answers it.** Three of
-          four now run from the bottom of the frame into the upper quarter. The
-          lever was not another adjective — it was `b15-r3-s1`'s own wording, the
-          one frame here you have passed. **Provisional pick `b14-r4-s0`,
-          confidence 0.40**, low on purpose: it is the *shortest* of the three
-          tall ones, chosen for having soil and a stem entering it. **Say
-          `b14-r4-s3` if you want the taller one.** And a fault in all four,
-          before you find it: **no roots in any of them**, though the prompt asks.
+        - **People: zero in 4 of 4.** Round 3 drew a girl in 2 of 4, round 4 in
+          3 of 4. Counted at full resolution on the bottom 40% of every frame,
+          which is where the earlier figures stood.
+        - **Clouds: ordinary again.** Round 4's prompt carried `cirrus`,
+          `cloudscape`, `scalloped clouds` and `cumulonimbus` — **not one of
+          those is a tag this model knows**, so it invented shapes for them.
+          Plain `cloud` gets the anime cumulus and cirrus it was trained on.
+        - **The sheet is a controlled pair.** Round 5 reuses round 4's four
+          seeds in the same column order, so each column is one seed and the
+          prompt is the only thing that changed between the rows.
+
+        **THE CAUSE WAS ONE TAG IN THE WRONG HALF OF THE PROMPT.** `no humans` is
+        a Danbooru tag meaning *the picture contains nobody*, and our builder had
+        been putting it in the NEGATIVE every round — asking the model to remove
+        the no-people idea. Round 5 moved it to the front of the positive and
+        took every person word out of the negative. That is the whole change.
+
+        **OUR PICK IS `b06-r5-s2`, CONFIDENCE 0.55, AND THE COST IS WRITTEN DOWN
+        BEFORE YOU LOOK.** None of the four looks straight *up* — they are wide
+        landscapes with a horizon, because the round bought the empty sky by
+        deleting the gaze wording, and **s2 adds a mountain range the script
+        never mentions.** `s1` is the purer sky but its bottom edge is an
+        industrial skyline. `s0` is vetoed outright: a white mechanical ring with
+        a city through the gap, which is that seed's habit and not a sky. If you
+        reject the set we expect it to be for the camera angle, and the next
+        round is then a scenery camera tag, not a return to person negatives.
+
+        **ROUND 4, KEPT AS THE RECORD.** *"its getting worse, many random girls
+        and very strange cloud formations."* You were right and the numbers
+        agreed. Both of that round's changes were aimed at the faults you named
+        that morning and both made it worse: the seven-word person block in the
+        negative did nothing here though it had worked on episode 2's cold open,
+        and the cloud fix named the wisps we wanted instead of forbidding the
+        shapes we did not.
 
         **STILL WAITING ON YOU — this is the open half.**
 
@@ -611,6 +617,8 @@ checklist:
         | ep2 b12 **r4** | **pick `b12-r4-s2`** | 0.70 | open |
         | ep2 cold open **b01-r6** | **reject all 4** | 0.75 | open |
         | ep2 b13 **r6** | **reject all 4** | 0.72 | open |
+        | ep1 b06 **r5** | **pick `b06-r5-s2`** | 0.55 | open |
+        | ep2 b13 **r7** | **reject all 4** | 0.86 | open |
 
         Full reasoning per frame is in `PROVISIONAL-PICKS-0809.md`; every open row
         is in `taste/steward-model.ledger.yaml` with an empty verdict field waiting
@@ -642,12 +650,15 @@ checklist:
         (**D16**) — that sign-off is a separate question you have not answered.
 
       sheets:
+        - file: review-assets/LABELED-beat06-r5.jpg
+          label: "ep1 beat 06 ROUND 5 — round 4 on top, round 5 under it, same seeds"
+          note: "zero people in 4 of 4, clouds ordinary; our pick b06-r5-s2, 0.55 — this is the frame in v34"
         - file: review-assets/LABELED-beat06-r4.jpg
           label: "ep1 beat 06 ROUND 4 — b06-r4-s0..s3"
           note: "your two faults, both missed: a girl in 3 of 4 and no sky in the fourth. No pick."
         - file: review-assets/LABELED-beat14-r4.jpg
-          label: "ep1 beat 14 ROUND 4 — b14-r4-s0..s3"
-          note: "height answered; provisional pick b14-r4-s0, 0.40 — say b14-r4-s3 for the taller one"
+          label: "ep1 beat 14 ROUND 4 — ANSWERED, b14-r4-s3 is canon"
+          note: "you took the taller flip we listed beside our b14-r4-s0; that offer is withdrawn"
         - file: review-assets/LABELED-beat06-r3.jpg
           label: "ep1 beat 06 round 3 — b06-r3-s0..s3 — you rejected these"
           note: "kept as the record of the round you named the faults on"
@@ -687,6 +698,124 @@ checklist:
         - file: review-assets/LABELED-b13-r6.jpg
           label: "ep2 beat 13 ROUND 6 — b13-r6-s0..s3"
           note: "the plant/goblin fusion gone in 4 of 4; all four provisionally rejected"
+    # V34 IS NOT LISTED UNDER `cuts:` AND THE REASON IS A GATE HOLE, NOT A RULE.
+    # Measured 2026-08-09: build_site.publishable() returns (True, "") for
+    # review/provisional-v34/ep1-v34-PROVISIONAL.mp4, and the clear is FALSE in
+    # two independent ways.
+    #
+    #   1. THE COMPOSITE NEVER ASKS ABOUT STILLS. `composite_publishable` walks
+    #      `ingredients:`, which render_t3 fills with clips and audio only. All
+    #      26 rows pass. Eleven of the fifteen beats are hold_still outputs whose
+    #      own sidecars read `model: none` / `model_licence: n/a — inherits the
+    #      still's licence, see stills/README.md`, so the PNG under each one is
+    #      never a row and is never asked. Asked directly,
+    #      takes/stills/06-too-blue-r5-s2.png returns
+    #      (False, 'CreativeML Open RAIL++-M').
+    #   2. AND IF IT DID ASK, TEN OF THE ELEVEN WOULD CLEAR FOR A WORSE REASON.
+    #      genomes/sapling/nodes/001-capability-inventory/stills/*.png have NO
+    #      sidecar — lg.sidecar_for() returns None for 03, 14, 15 and the rest —
+    #      and publishable() reads unprovenanced as permitted. Promoting an
+    #      animagine frame out of takes/ into stills/ therefore drops the
+    #      provenance that would have refused it.
+    #
+    # v33 was refused only because a HUMAN had typed animagine into its
+    # top-level `model:` field; v34's is tool-written and says
+    # `Wan-AI/Wan2.2-TI2V-5B-Diffusers+none`. This is the laundering shape the
+    # publishable() docstring says `ingredients:` closed, one level further down.
+    # Named here and in STATE.md, not fixed by this lane, and NOT acted on:
+    # nothing publishes on a green light we do not trust.
+    - n: 19
+      ask: "Episode 1, v34 — all fifteen beats, no slates."
+      state: open
+      chip: "SCREEN"
+      minutes: 2
+      summary: >-
+        Ninety seconds, every beat on a real picture. Fourteen of the fifteen are
+        frames you chose; beat 6 is ours and is labelled as ours in three places.
+      where: "`review/provisional-v34/ep1-v34-PROVISIONAL.mp4` on this machine — why it is not on this page is below"
+      how: "watch it and say what is wrong, or answer beat 6 on item 10 and we rebuild"
+      body: |-
+        **2026-08-09:** *"no notes for v33, i'll wait for the version with all the
+        fixed images."* **This is that version.**
+
+        | | v33 | v34 |
+        |---|---|---|
+        | beats with a picture | 15 | 15 |
+        | slates | 0 | 0 |
+        | beats holding a frame you rejected | **4** | **0** |
+        | beats holding a frame you have never seen | 2 | **1 — beat 6** |
+        | length | 89.9s | 89.9s |
+
+        **THE FOUR STALE BEATS ARE RE-FILMED FROM YOUR OWN PICKS** — beat 3 on
+        `b03-r4-s3`, beat 10 on `b10-r1-s3`, beat 14 on `b14-r4-s3`. Beat 14's
+        file was compared byte for byte against the take you named before it was
+        used, rather than waited for.
+
+        **BEAT 6 IS OURS.** It holds `b06-r5-s2`, the round-5 pick at confidence
+        0.55, and item 10 is where you answer it. Flip it and this cut is rebuilt
+        in about a minute — nothing here is defended.
+
+        **BEAT 3 IS THE OTHER THING TO WATCH FOR.** You have only ever seen it
+        moving; in this cut it is a held still with the camera pushing in.
+
+        **WHY IT IS NOT ON THIS PAGE, and this is our fault rather than a rule.**
+        The check that decides what may be published said **yes** to this cut
+        tonight, and the yes is wrong twice over. Eleven of the fifteen beats are
+        still pictures with the camera pushing in; the check only reads the moving
+        files, so the picture under each one is never asked about at all. And if
+        it were asked, ten of those eleven would pass only because promoting a
+        picture into the canon folder leaves it with no record — and a picture
+        with no record reads as allowed. The eleventh, beat 6, is refused outright
+        when you ask it directly. **So the licence question that is yours (D15)
+        was never put.** We are not publishing on a green light we do not trust.
+        Fixing the check is ours; the call underneath it is yours.
+
+        **What it cost: nothing.** No model ran, no GPU, no money — every beat is
+        ffmpeg over frames that already existed.
+    # D16 GETS ITS OWN CARD BECAUSE IT HAS BEEN BURIED TWICE. It has been a
+    # sentence at the bottom of item 10's licence paragraph and a `pending:` note
+    # under item 14, and he has passed over both. The licence analysis behind this
+    # card is DECISIONS.md D16, read end to end three times against the primary
+    # text with nothing changed by any of the three readings.
+    - n: 20
+      ask: "LTX clips on the site — one yes or no."
+      state: open
+      chip: "YES / NO"
+      minutes: 1
+      summary: >-
+        This has been buried inside two other cards and you have passed it twice.
+        It is on its own now because one word from you moves real footage onto
+        this page.
+      where: "nothing to watch — this card IS the question"
+      how: "yes, or no, or name what you want checked first"
+      body: |-
+        **ONE PARAGRAPH, then what it costs.** LTX-2.3 is the model that drew the
+        motion you called *"just amazing"*. Its licence lets us use it **for any
+        purpose**, worldwide, commercially, free until this project earns
+        **$10,000,000 a year**, and it **claims no rights over what it draws** —
+        so someone watching one of our clips is never a party to anything. The
+        licence was never the reason we held back: it has been read end to end
+        three times and cleared three times. What is missing is your word.
+        **Say yes and the LTX clips go on this page** — the clean beat 12 clip on
+        item 14 first, then the beat 16 experiments and every LTX beat of episode
+        2 after them. Say no and they stay on this machine and episode 2 keeps
+        rendering on Wan, which you described as *"nearly no motion"*.
+
+        **Three duties a yes puts on us. None of them is yours and none costs
+        money.**
+
+        - **Every post carrying LTX footage sets the AI-generated label.** The
+          duty attaches to each surface, not to the repo; TikTok has a switch.
+        - **We never train anything on LTX frames.** No LoRA, no finetune.
+        - **We never turn LTX into a generation service for other people.** It
+          may render our episodes; the contributor shot board must never run on
+          it, because the licence bars competing with the company's own product.
+
+        **The one thing we cannot promise.** The restriction list points at an
+        acceptable-use document the company may revise on its own, so this verdict
+        is only as stable as a page we do not control. If that bothers you, the
+        fallback is an older, weaker LTX whose licence cannot reach the shot board
+        at all.
     # BEAT 3 IS NOT BLOCKED ON A BETTER PROMPT, which is why this is an item and
     # not a queue entry. Round 4 copied beat 1's approved screen wording verbatim
     # and it worked: the glyph junk that sank r1, r2 and r3 is gone in 4 of 4.
@@ -780,6 +909,103 @@ checklist:
         - file: review-assets/LABELED-b03-r4.jpg
           label: "ep1 beat 03 round 4 — b03-r4-s0..s3"
           note: "glyph junk gone 4/4, house 4/4, screens blank 3/4, anime face on s0"
+    - n: 14
+      ask: "Wan against LTX — ANSWERED. LTX, once it stops inventing people."
+      state: open
+      chip: "ON US"
+      minutes: 1
+      summary: >-
+        You chose LTX on its motion and named the thing that disqualifies it. The
+        invention has a cause and it is our prompt, not the model.
+      where: "nothing to watch here — the fixed beat 12 clip is on this machine until item 20 is answered"
+      how: "nothing, unless we misheard you"
+      body: |-
+        **Your answer, in full and unedited:**
+
+        > wan has nearly no motion, and ltx is just amazing.. buuut it's going off
+        > track and making random stuff like this human sometimes.
+
+        **This is read as a direction, not a settled choice.** LTX is the engine we
+        build episode 2 on **if** the invention can be killed. If it cannot, the
+        choice reopens — you named a fault, and a model that draws a stranger into
+        a two-hander is not usable at twenty-one beats whatever its motion is like.
+
+        **YOUR TWO SENTENCES BOTH MATCHED THE MEASUREMENT**, which was published
+        here before you saw the clips. Frame-to-frame change on three beats:
+
+        | beat | LTX | Wan |
+        |---|---|---|
+        | 16 | 31.4 | **0.9** |
+        | 18 | 19.8 | **4.3** |
+        | 21 | 23.9 | **0.8** |
+
+        We wrote *"Wan barely moves at all"* and you wrote *"nearly no motion"*.
+        Recorded as a hit for the measurement, and the caveat we hedged it with —
+        *"the stiller one is not automatically worse"* — is recorded as wrong.
+
+        **THE HUMAN IS NOT RANDOM AND WE ARE NOT GUESSING.** It is beat 16, and
+        **the prompt asks for him by name.** The sentence sent to LTX contains
+        *"Close on the sapling's leaf; **the scavenger sits blurred behind it**"* —
+        the script's own staging line (`node.md:103`), passed straight into the
+        POSITIVE prompt. **The picture it was animating has no person in it at
+        all**, just the leaf. So the model was handed a plate with no character and
+        a sentence asking for one, and it drew one. He arrives about a second in
+        and is in focus by three.
+
+        **We had already written down that the frame was missing him** — the note
+        beside that frame's pick reads *"the goblin the prompt wants blurred behind
+        the leaf is absent"* — and then sent the sentence anyway.
+
+        **Negatives could never have caught it.** At the settings these run on, the
+        negative prompt is not read at all; every clip's own record says so in the
+        negative field itself. The only text that acts is the positive one, and the
+        positive one was asking for a man.
+
+        **THE TEST IS DONE AND THE CLAUSE IS THE CAUSE.** Eight clips on beat 16:
+        same picture, same recipe, four seeds — half with that clause, half with it
+        removed and nothing else changed. **People in 3 of the 4 with it. People in
+        0 of the 4 without it.** One variable, 38 bytes. The motion you liked
+        survives: the clean half moves within 9% of the other half on average, and
+        more on two of the four seeds.
+
+        **THEN YOU SETTLED THE PART THE TEST COULD NOT.** Asked whether the
+        scavenger was in beat 16 on purpose:
+
+        > if he was there on purpose then fine, it wont ruin anything right?
+
+        He was, and he stays. So **deleting him from the prompt is the wrong repair
+        for beat 16** — it would take a character out of a shot the script puts him
+        in. The two beats split on what their own scripts say:
+
+        | beat | how the script stages him | the fix |
+        |---|---|---|
+        | **12** | *"crouched behind the trunk, below frame"* | never meant to be seen — **the clause came out of the prompt. DONE, and it worked** |
+        | **16** | *"the scavenger sits blurred behind it"* | meant to be seen — **the picture gets redrawn with him in it, blurred.** Waits on your yes to the goblin's look (item 18) |
+
+        **BEAT 12 IS FIXED AND THE CLIP EXISTS.** One clip, one variable: the
+        character sentence deleted from the positive prompt, **66 bytes**, with
+        the negative held byte-identical so nothing else could have moved. Same
+        picture, same seed, same eight steps.
+
+        - **Zero figures.** 21 of its 145 frames looked at by eye, sampled densest
+          across the first two seconds because that is where beat 16's stranger
+          walked in. No person, no face, no second sprout, no scene change.
+        - **The automatic people-detector also said clear, and we are not counting
+          that.** Its own record shows it passing all three clips we know had a
+          man in them, on numbers this clip sits inside. The eye is the evidence
+          here; the detector is reported for completeness and nothing else.
+        - **199 seconds on the 5090, $0.**
+
+        It is at `review/ep2-prov-0809/ltx-002b-b12-prov-v2.mp4` and **it is not
+        on this page** — that is item 20, the LTX sign-off, and it is one word.
+
+        **The strangers LTX drew are thrown out either way.** A generic human who
+        walks into a static close-up a second in is not our goblin and is not in any
+        script — he is evidence, not footage.
+      pending: >-
+        **Nothing is embedded here** — the LTX clips are withheld until you answer
+        **item 20**. They sit at `review/ep2-prov-0809/` (including the fixed beat
+        12) and `review/ltx-drift-0809/`.
 
     - n: 11
       ask: "The 704x1280 crop — is the framing still right?"
@@ -789,7 +1015,7 @@ checklist:
       summary: >-
         Reaching 704x1280 from an 832x1216 still costs 19.6% of its width — 81
         pixels off the left, 82 off the right.
-      where: "any beat of v33 (item 12) — the geometry is in all of them"
+      where: "any beat of v34 (item 19) — the geometry is in all fifteen"
       how: "yes, or say what the crop breaks"
       body: |-
         **You are being asked twice because the first ask was broken.** The demo
@@ -812,9 +1038,10 @@ checklist:
           with no aspect term. That is fixed and this clip is the proof.
 
         **A yes authorises nothing — it was already released.** Under your
-        2026-08-09 rule the machines did not wait: all ten held beats were
-        re-filmed on this geometry and v33 is built. So you are auditing, not
-        authorising, and the honest way to answer is to watch v33.
+        2026-08-09 rule the machines did not wait: every held beat was re-filmed
+        on this geometry and v34 is built — eleven of its fifteen beats are this
+        crop. So you are auditing, not authorising, and the honest way to answer
+        is to watch v34.
 
         **A no costs about fifteen minutes of an idle machine.** The framing policy
         is one function; ten held beats re-render in about a minute each and the
@@ -834,19 +1061,37 @@ checklist:
           episode-2 pass carries three LTX renders (**D16**). Those are the two
           open licence questions that are yours, and a finished cut is not a way
           around them.
-      ask: "Episode 1, v33 — superseded by your own answers. Don't watch it."
-      state: gap
-      chip: "FYI"
+      ask: "Episode 1, v33 — ANSWERED. No notes, and you are waiting for the fixed one."
+      state: settled
+      chip: "CONFIRM"
       minutes: 1
       summary: >-
-        Four of its fifteen beats are now wrong. Nothing to screen until it is
-        rebuilt.
+        You skipped it, which was the right call. v34 now waits on one frame and
+        four re-films.
       where: "`review/provisional-v33/ep1-v33-PROVISIONAL.mp4` — kept as the record, not as the ask"
       sheets_title: "The two frames we guessed — you rejected both sets"
-      how: "nothing needed here; beats 6 and 14 are item 10"
+      how: "nothing needed here; beat 6 is the last open frame, on item 10"
       body: |-
-        **YOUR ANSWERS OVERTOOK THIS CUT. FOUR OF ITS FIFTEEN BEATS ARE NOW
-        WRONG, so there is nothing here worth ninety seconds of your time.**
+        **2026-08-09:** *"no notes for v33, i'll wait for the version with all the
+        fixed images."*
+
+        **Nothing is asked of you here and nothing was defended.** You were told
+        not to watch this cut and you did not; the card said four of its fifteen
+        beats were wrong and you took that at face value rather than spending the
+        ninety seconds. It is kept below as the record of what was assembled, not
+        as a screening.
+
+        **"THE VERSION WITH ALL THE FIXED IMAGES" EXISTS — it is v34, on item
+        19.** All fifteen beats, no slates, the four stale beats re-filmed from
+        your own picks, and beat 6 held on a round-5 frame that is ours and is
+        labelled as ours. It was assembled the same evening you asked for it.
+
+        ---
+
+        **WHAT THE CUT WAS, kept as the record.**
+
+        **YOUR ANSWERS OVERTOOK THIS CUT. FOUR OF ITS FIFTEEN BEATS WERE
+        WRONG, so there was nothing here worth ninety seconds of your time.**
 
         - **Beats 6 and 14 — both guesses confirmed wrong.** *"the two frames you
           guessed were wrong."* You rejected both whole SETS, not just our picks
@@ -912,6 +1157,105 @@ checklist:
         - file: review-assets/PICK-b14-r3-s3.jpg
           label: "beat 14 — b14-r3-s3 — REJECTED with the set"
           note: "our guess, 0.45; aimed at area when the fault was height"
+
+    # ---- EPISODE 2 ----------------------------------------------------------
+    # None of this block blocks v33. It is here because his "r3-s3 and retire" on
+    # 2026-08-07 took the founder gate off four lanes at once, and this is where
+    # their output arrives.
+    #
+    # HE TOOK THAT PICK BACK ON 2026-08-08 ("a frame i never approved, and its
+    # tooooo tall"), so the FRAME is revoked and item 06 is re-staged around that.
+    # What survives is the DIALECT, and it survives on later rulings of his — he
+    # has since directed episode 2's twenty redraws by name and approved its
+    # narration voice. That reading is written down as a reading, with the place
+    # it would be wrong named, in the node's shots.md under Beat 01. If the
+    # dialect went back open with the frame, beats 02-21 stop and this is the
+    # thread to pull.
+    - n: 6
+      heading:
+        title: "Episode 2"
+        intro: |-
+          Your five words on 2026-08-07 — **"r3-s3 and retire"** — started four
+          jobs, and their results land here. **You then took that frame back on
+          2026-08-08** (*"you used a frame i never approved, and its tooooo
+          tall"*), so episode 2's opening picture is open again. Nothing built on
+          it cannot be redrawn: the words of all 21 shots stand, and so does the
+          voice.
+      ask: "Episode 2's opening shot — still on us."
+      state: open
+      chip: "ON US"
+      minutes: 1
+      summary: >-
+        Rounds 5 and 6 were both rejected outright, so there is still no A/B to
+        put to you. Round 6 killed the people and left the plate; round 7 is
+        queued behind the goblin.
+      where: "the `b01-r5` sheet is on this card, and `b01-r6` in item 10"
+      sheets_title: "The cold-open sheet — four candidates"
+      how: "nothing — unless you disagree, in which case name a frame"
+      body: |-
+        **Your answer on the model question, in full:**
+
+        > for the wan or ltx decision, **neither**. you used a frame i never
+        > approved, and its tooooo tall.
+
+        **We are not reading "neither" as a verdict on the two models.** You
+        refused to judge a motion test built on a picture you had just withdrawn —
+        whichever clip looked better would have been the better film *of the wrong
+        frame*. So the model question was not answered here, not abandoned, and not
+        re-asked until there was a frame behind it that you passed.
+
+        **THAT HAPPENED ON 2026-08-09 and the model question is now closed
+        elsewhere.** The A/B was re-filmed on `b15-r3-s1`, which is canon and
+        yours, and you answered it: *"wan has nearly no motion, and ltx is just
+        amazing.. buuut it's going off track and making random stuff like this
+        human sometimes."* **That verdict and the condition attached to it live in
+        item 14.** Only the cold-open frame is still open here.
+
+        **The frame is withdrawn and we are not arguing.** The sheet you picked
+        `r3-s3` from had our own **"BEST PLATE"** label beside that candidate.
+        Marking a favourite on a sheet we hand you is not asking you to choose, so
+        the pick is void on that ground alone (R4). It is retired under a
+        `REVOKED` name; **episode 2 has no approved opening picture.**
+
+        **"Too tall" is taken as a measurement.** That stem is a hairline standing
+        about a third of screen height with its tip in the top quarter, where the
+        shot asks for a 40cm seedling with the whole plant in frame.
+
+        **UPDATE 2026-08-09 — the redraw did not fix it.** Four new candidates,
+        one sheet, no favourite marked. The steward **provisionally rejected all
+        four**: three put a human child in a field your script says is empty, and
+        the fourth is clean in every other way and is *the picture you withdrew,
+        redrawn* — standing **36% of frame height against the revoked plate's
+        32%**. Taller than the one you threw out. **Confidence 0.80.**
+
+        **If you agree, the next move is not another sheet.** Round 5's only lever
+        was `thin` → `sturdy` and the drawing did not move, so adjectives are spent
+        here. What changes is composition and negatives: camera **down and in** so
+        a 40cm plant is not drawn as a tall weed to be visible at all — the two
+        frames of this plant you have kept, `b15-r3-s1` and canon `12-undefined`,
+        are both grass-height shots — plus the negative terms that actually bind
+        (`1girl, 1boy, child, person`), because `no humans` is demonstrably not
+        firing on this wave. **One sample before any set of four.**
+
+        **The Wan film of the withdrawn frame is below**, as the record of what you
+        were asked and refused. **The LTX film of it exists and this page still may
+        not show it** — LTX's licence keeps its output off anything we publish
+        (**D16**, open, yours). It sits at `review/ep2-b01/ltx-b01-v2.mp4`.
+
+        **One number, explicitly not an argument:** LTX drew those six seconds in
+        **207 seconds against Wan's 539** — 2.6x faster at a third of peak memory.
+        Over twenty-one beats that is real, and it still does not pick a look.
+      sheets:
+        - file: review-assets/LABELED-b01-r5.jpg
+          label: "the cold open, round 5 — b01-r5-s0 to s3"
+          note: "labels and seeds only, no favourite marked; all four provisionally rejected"
+      clips:
+        - file: checklist/002b-b01-5b.mp4
+          label: "Wan 2.2 — 6.0s — OF THE WITHDRAWN FRAME"
+          note: "the record of the question you refused, not a candidate; 539s to render"
+      pending: >-
+        **The Wan clip is withheld too** — a licence-gate refusal, not a missing
+        render.
     - n: 13
       ask: "Episode 2, first pass — mostly a listen."
       state: open
@@ -974,86 +1318,6 @@ checklist:
         - file: review-assets/PICK-002b-b21-r3-s3.jpg
           label: "beat 21 — 002b-b21-r3-s3 — PROVISIONAL"
           note: "confidence 0.50; the tilt reads as a decision, not as wind"
-    - n: 14
-      ask: "Wan against LTX — ANSWERED. LTX, once it stops inventing people."
-      state: open
-      chip: "ON US"
-      minutes: 1
-      summary: >-
-        You chose LTX on its motion and named the thing that disqualifies it. The
-        invention has a cause and it is our prompt, not the model.
-      where: "nothing to watch — beat 12's fix is going in; beat 16's redraw waits on the goblin's look"
-      how: "nothing, unless we misheard you"
-      body: |-
-        **Your answer, in full and unedited:**
-
-        > wan has nearly no motion, and ltx is just amazing.. buuut it's going off
-        > track and making random stuff like this human sometimes.
-
-        **This is read as a direction, not a settled choice.** LTX is the engine we
-        build episode 2 on **if** the invention can be killed. If it cannot, the
-        choice reopens — you named a fault, and a model that draws a stranger into
-        a two-hander is not usable at twenty-one beats whatever its motion is like.
-
-        **YOUR TWO SENTENCES BOTH MATCHED THE MEASUREMENT**, which was published
-        here before you saw the clips. Frame-to-frame change on three beats:
-
-        | beat | LTX | Wan |
-        |---|---|---|
-        | 16 | 31.4 | **0.9** |
-        | 18 | 19.8 | **4.3** |
-        | 21 | 23.9 | **0.8** |
-
-        We wrote *"Wan barely moves at all"* and you wrote *"nearly no motion"*.
-        Recorded as a hit for the measurement, and the caveat we hedged it with —
-        *"the stiller one is not automatically worse"* — is recorded as wrong.
-
-        **THE HUMAN IS NOT RANDOM AND WE ARE NOT GUESSING.** It is beat 16, and
-        **the prompt asks for him by name.** The sentence sent to LTX contains
-        *"Close on the sapling's leaf; **the scavenger sits blurred behind it**"* —
-        the script's own staging line (`node.md:103`), passed straight into the
-        POSITIVE prompt. **The picture it was animating has no person in it at
-        all**, just the leaf. So the model was handed a plate with no character and
-        a sentence asking for one, and it drew one. He arrives about a second in
-        and is in focus by three.
-
-        **We had already written down that the frame was missing him** — the note
-        beside that frame's pick reads *"the goblin the prompt wants blurred behind
-        the leaf is absent"* — and then sent the sentence anyway.
-
-        **Negatives could never have caught it.** At the settings these run on, the
-        negative prompt is not read at all; every clip's own record says so in the
-        negative field itself. The only text that acts is the positive one, and the
-        positive one was asking for a man.
-
-        **THE TEST IS DONE AND THE CLAUSE IS THE CAUSE.** Eight clips on beat 16:
-        same picture, same recipe, four seeds — half with that clause, half with it
-        removed and nothing else changed. **People in 3 of the 4 with it. People in
-        0 of the 4 without it.** One variable, 38 bytes. The motion you liked
-        survives: the clean half moves within 9% of the other half on average, and
-        more on two of the four seeds.
-
-        **THEN YOU SETTLED THE PART THE TEST COULD NOT.** Asked whether the
-        scavenger was in beat 16 on purpose:
-
-        > if he was there on purpose then fine, it wont ruin anything right?
-
-        He was, and he stays. So **deleting him from the prompt is the wrong repair
-        for beat 16** — it would take a character out of a shot the script puts him
-        in. The two beats split on what their own scripts say:
-
-        | beat | how the script stages him | the fix |
-        |---|---|---|
-        | **12** | *"crouched behind the trunk, below frame"* | never meant to be seen — **the clause comes out of the prompt.** Going in now |
-        | **16** | *"the scavenger sits blurred behind it"* | meant to be seen — **the picture gets redrawn with him in it, blurred.** Waits on your yes to the goblin's look |
-
-        **The strangers LTX drew are thrown out either way.** A generic human who
-        walks into a static close-up a second in is not our goblin and is not in any
-        script — he is evidence, not footage.
-      pending: >-
-        **Nothing is embedded here** — the LTX clips fail the licence gate
-        (**D16**, open, yours). They sit at `review/ep2-prov-0809/` and
-        `review/ltx-drift-0809/`.
 
     - n: 15
       ask: "Beat 15's motion line — ANSWERED. You approved the replacement."

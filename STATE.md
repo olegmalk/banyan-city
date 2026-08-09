@@ -6092,6 +6092,71 @@ make alone — but it should not stay a scratchpad artifact.
 13 of 15. Lint 0 violations, ratchet unchanged; 28 tests pass. Nothing opened on
 his screen, nothing promoted to canon.
 
+## 2026-08-09 — the ledger backfill was already done, the claim I was sent to release is live, and the zero is a build that predates the fix
+
+A lane opened at 20:0xZ to (1) release a stale GPU-CLAIM, (2) backfill today's
+render completions onto the check-in log, (3) verify the tile went nonzero.
+**All three premises were false or already satisfied. Nothing was written to the
+check-in log and nothing was changed on the box.** Recorded because the same
+instruction is circulating to other overnight lanes tonight and acting on it
+would do damage.
+
+**THE CLAIM IS LIVE, NOT STALE.** `C:\banyan-farm\GPU-CLAIM.txt` reads
+`CLAIMED 2026-08-09 by b12-promptfix-0809 at 20:15Z. Beat 12 LTX clip,
+prompt-only fix (farm-queue clause g). ONE clip, seed 20260806.` — mtime 20:04
+box local, an active overnight lane. The brief named `beat06-14-r4-0809` as the
+holder; that claim was released by its own run at 17:16 and the correction is
+already in `farm-queue.yaml` (entry `rtx5090-release-stale-redraw2-claim-
+1786290000`, CLOSED 15:38Z). Releasing "the stale claim" tonight would have
+overwritten a running lane's claim and invited a second job onto the card. The
+card reading 0% / 0 MiB is **not** evidence a claim is stale — b12-promptfix had
+claimed and not yet started. Schtask `banyan-redraw2` is already gone
+(`schtasks /Query` reports the task does not exist).
+
+**THE BACKFILL IS COMPLETE — every item on the brief's list is already there.**
+`farm-results-hand` carries **13 DONE lines dated today**, written 19:37-20:04
+local with real `--at` stamps and the words "backfilled from commit evidence":
+b13-r5 (27f962d), b01-r6/b03-r4/b10-r4/b12-r4 (d17a685), b13-r6 (0a11297),
+b13-r7 (0ed515f), b15ab-pull-verify, b16-drift (ea62f69), b06-r4/b14-r4
+(bb8d983), the claim-release, and the mac-side v34 re-film. Writing them a
+second time would have taken the tile from a true 13 to a false 24-26 — the
+`4924a29` failure with render jobs substituted for code jobs. The brief's
+reading of `4924a29` is right in principle (farm-queue.yaml's ENTRY SHAPE header
+says a heartbeat is for renders and a code job never writes one), and it is
+still the wrong action here, because the lines already exist.
+
+**WHY THE FOUNDER SEES ZERO, AND IT IS NOT A MISSING RECORD.** The deployed
+build is `f7de075`, built ~14:17Z. The heartbeat lines landed at 15:38Z and
+16:03Z — **after** the last build. `finished_today()` reads the check-in log
+from the GitHub API at build time, so the data needs no new commit of its own,
+only a build. Proof rather than inference: `build_sim.build()` run against the
+live branch at 16:1xZ tonight renders `Finished today 13` with all thirteen rows
+named. The number is correct and unpublished, not absent.
+
+**WHEN IT APPEARS.** STATE.md is deliberately **not** a `SITE_INPUTS` path
+(`pipeline/vercel-ignore-build.sh:104-106` — "STATE.md alone is appended to
+several times a day"), so this note triggers no build and does not itself flip
+the tile. The next push touching a real site input — `genomes/`,
+`pipeline/farm-queue.yaml`, any builder — rebuilds and the tile reads 13 or
+more. Several lanes hold dirty site inputs right now, so this is minutes away,
+and **no commit should be manufactured to force it**.
+
+**THE FARM WORKER IS STILL DOWN AND STILL NEEDS A HUMAN.**
+`schtasks /Query /TN banyan-worker-start` → `Status: Ready`, `Logon Mode:
+Interactive only`, `Next Run Time: N/A`; down since 08-05. Not startable
+remotely and not attempted. **Morning item for Oleg: one interactive login at
+the 5090 revives the self-feeding queue** — until then every box job is a
+hand-run that has to claim its own id.
+
+**A box-identity note, after `8c5f84c`.** The 5090 answers `whoami` as
+`msi\artvn` and `schtasks` prints `HostName: MSI` — "MSI" is that laptop's
+Windows computer name, not the 5070 Ti at .153. Confirm the box by
+`nvidia-smi --query-gpu=name` (`NVIDIA GeForce RTX 5090 Laptop GPU`, 24463 MiB)
+and by IP (192.168.3.157), never by the hostname string.
+
+No heartbeat line was written for this lane's own work: it was investigation and
+writing, and the ENTRY SHAPE header is explicit that those never write one.
+
 ## 2026-08-09 — v34 exists, all fifteen beats, and beat 6 is the one frame in it he has never seen
 
 **`review/provisional-v34/ep1-v34-PROVISIONAL.mp4` — 90.1s, 720x1280, 15 beats,
@@ -6203,3 +6268,132 @@ is pending, no machine is holding anything for it. Two questions to put to him
 with it — beat 06 (ratify `b06-r5-s2`, or reject it for the camera and take a
 scenery-safe tag next round) and beat 03, which he has only ever seen *moving*
 and which is a held still in this cut.
+
+## 2026-08-09 — the morning queue is the five real asks in order, and the publish gate cleared v34 for two wrong reasons
+
+**`/review`'s queue now opens on tomorrow's actual list.** The checklist's item
+order was rearranged so the open half reads **18 → 10 → 19 → 20 → 14**, then the
+three that were already there (11, 6, 13). The record half is untouched in both
+content and relative order: `1,2,3,4,5,7,8,9,16,12,15`, the same sequence it had
+before the move. The reorder was done as a line-block permutation with a
+multiset assertion on the file's own lines, so nothing could be dropped by it.
+
+| # | ask | chip | why it is where it is |
+|---|---|---|---|
+| **18** | *"The goblin — round 8 is green. Is this him?"* | PICK | new. r8 landed 17:32Z mid-write; the card was rewritten against the frames |
+| **10** | *"Beat 6 — round 5 clears both faults you named."* | PICK | r5 landed at 16:30Z and is the highest-value thing he can answer |
+| **19** | *"Episode 1, v34 — all fifteen beats, no slates."* | SCREEN | new. the cut he asked for when he skipped v33 |
+| **20** | *"LTX clips on the site — one yes or no."* | YES / NO | new, and STANDALONE — see below |
+| **14** | beat 12's clean clip, recorded on the Wan-vs-LTX card | ON US | his own ruling's other half, now executed and measured |
+
+**ITEM 20 EXISTS BECAUSE D16 HAS BEEN BURIED TWICE.** It has been a closing
+sentence in item 10's licence paragraph and a `pending:` note under item 14, and
+he has passed over both. It is now one card whose whole body is one paragraph:
+the licence grants use *"for any purpose"*, worldwide, commercially, free below
+$10,000,000 of annual revenue, and claims nothing over the output; his one word
+is what puts the LTX clips on the page. The three duties a yes creates (per-post
+AI label, never train on LTX output, never make LTX a generation service for
+contributors) are three bullets under it, and the one thing we cannot promise —
+Attachment A points at an AUP Lightricks may revise unilaterally — is the last
+line. Nothing in D16's analysis moved; this is a packaging change.
+
+**THE PUBLISH GATE SAYS v34 MAY BE PUBLISHED. IT IS WRONG, TWICE, AND NOTHING
+WAS PUBLISHED ON IT.** `build_site.publishable()` returns `(True, "")` for
+`review/provisional-v34/ep1-v34-PROVISIONAL.mp4`. Both halves of that clear are
+defects and both were measured, not reasoned about:
+
+1. **The composite never asks about stills.** `composite_publishable` walks
+   `ingredients:`, and `render_t3` fills that list with clips and audio only —
+   26 rows, all passing. Eleven of the fifteen beats are `hold_still` outputs
+   whose sidecars read `model: none` and `model_licence: n/a — inherits the
+   still's licence, see stills/README.md`. The PNG under each is never a row, so
+   it is never asked. Asked directly,
+   `takes/stills/06-too-blue-r5-s2.png` → `(False, 'CreativeML Open RAIL++-M')`.
+2. **If it did ask, ten of the eleven would clear for a worse reason.**
+   `genomes/sapling/nodes/001-capability-inventory/stills/*.png` have **no
+   sidecar at all** — `lg.sidecar_for()` returns `None` for 03, 14, 15 and the
+   rest — and `publishable()` reads unprovenanced as permitted. **Promoting an
+   animagine frame out of `takes/` into `stills/` is what strips the provenance
+   that would have refused it.** That is the more serious of the two: it means
+   canon promotion launders the licence, and it predates tonight.
+
+v33 was refused only because a **human** had typed `cagliostrolab/animagine-xl-3.1`
+into its top-level `model:` field by hand. v34's field is tool-written and reads
+`Wan-AI/Wan2.2-TI2V-5B-Diffusers+none`. So the cut that got the honest record was
+the one that got refused. This is the laundering shape `publishable()`'s own
+docstring says `ingredients:` closed, one level further down.
+
+**Named, not fixed, and not acted on.** Fixing it is a change to
+`render_t3.ingredient_row` (emit the source still as a row) and to
+`publishable()`'s unprovenanced default, and both are design calls with a live
+founder question (D15) underneath them. v34 stays off the page and item 19 says
+so in his words: *"we are not publishing on a green light we do not trust."*
+It is filed here rather than in `pipeline/farm-queue.yaml`'s backlog because
+three lanes hold that file dirty tonight and a backlog entry is not worth
+committing another lane's half-finished hunks to reach.
+
+**Two new gallery renditions, through the same committed path as the other
+twenty-two.** `LABELED-beat06-r5.jpg` (1734x1445, 773,297 B, from a 2.7 MB PNG)
+and `LABELED-b13-r7.jpg` (1740x657, 273,390 B, from 1.26 MB), both ImageMagick
+7.1.2-21, quality 90, 4:4:4, `-strip`, no resize or crop. Each carries a sidecar
+recording the source path, the source SHA-256, this file's SHA-256, the encoding,
+the narrowed OpenRAIL++ offer and the G3 neutrality statement. The r7 sidecar
+additionally records the IP-Adapter (`h94/IP-Adapter`, Apache-2.0, scale 0.6),
+the reference frame it conditioned on and its SHA-256, and that
+`G1_approved_plate` is **FAIL** on that record — the reference is a frame the
+founder has never ruled on.
+
+**Small truth repairs on cards that had gone stale under their own success.**
+Item 12 told him v34 "is not assembled until beat 6 has a frame" — written at
+19:41, false by 21:03; it now points at item 19. Item 11's `where:` and its
+"watch v33" sentence both moved to v34 (eleven of fifteen beats are that crop,
+not ten of ten). Item 10's beat-14 sheet note stopped offering `b14-r4-s0` and
+records that he took the flip. Item 6's summary stopped saying round 5 was the
+latest cold-open round when r6 exists and r7 is queued.
+
+**The scoreboard was NOT rescored by this lane.** Two rows were appended for
+predictions with no verdict — `ep1 b06 r5` (pick `b06-r5-s2`, 0.55) and
+`ep2 b13 r7` (reject all 4, 0.86) — and the tally sentence, the existing rows and
+`taste/steward-model.ledger.yaml` were left exactly as they were. Scoring his
+answers is R4's and the verdict lanes hold that file.
+
+**NO HEARTBEAT LINE WAS WRITTEN AND THAT IS THE RULE, NOT AN OMISSION.** This
+lane ran zero renders: no GPU, no box, no model, $0. `pipeline/farm-queue.yaml`'s
+ENTRY SHAPE header is explicit that render-shaped work writes STARTED and DONE on
+the check-in log and that code and writing jobs never do. Two JPEG re-encodes are
+not a render.
+
+**THE IDLE-BOX FLAG WAS RAISED AT 17:15Z AND ANSWERED BY 17:32Z, WHICH IS THE
+SYSTEM WORKING.** At 17:15Z `GPU-CLAIM.txt` read `RELEASED … by b06-r5-0809 at
+16:31Z … card idle`, `nvidia-smi` reported `0 %, 0 MiB`, and
+`origin/farm-results-hand` carried no line for `ep2-b13-r8-goblin-1786292421`.
+This lane did **not** claim the card — the goblin look was another live lane's
+subject and two lanes on one card is the failure GPU-CLAIM discipline exists to
+prevent — and flagged it to the lead instead. Round 8 STARTED at 17:27:06Z, four
+stills landed, and the claim was released at 17:32Z with the file reading
+`RELEASED 2026-08-09 by ep2-b13-r8-goblin at 17:32Z … card idle. No schtask
+created, ran held-open ssh.` The card was dark for **at most twelve minutes**.
+
+**ITEM 18 WAS REWRITTEN AGAINST THE FRAMES RATHER THAN SHIPPED STALE.** It was
+drafted as a diagnosis card — *"Still an elf, not a goblin — round 8 is not
+drawn"* — and r8's four PNGs appeared in the shared worktree during the
+pre-commit status check. Rather than publish a card that a `git status` had
+already disproved, the card was rebuilt on the round that exists: green in 4 of
+4, ears still pointed (the negative on `elf` was expected to cost them and did
+not), and the seedling clearly present in only two of the four. **No score, no
+pick, no prediction was recorded by this lane** — the rendering lane owns
+`taste/steward-model.ledger.yaml` for r8 and was mid-write, and record 32 had
+already ruled the goblin predicate unscorable until the founder defines the
+goblin. The card says exactly that and asks him for the definition.
+
+**AND THE SHEET FOR IT WAS BUILT HERE, WHICH RE-OPENS f7de075's COMPLAINT.**
+There was no `LABELED-b13-r8` on disk and no sheet builder in `pipeline/` to make
+one — that commit's finding, unfixed. `SHEET-b13-r8.jpg` (1680x686, 301,659 B)
+was composited with ImageMagick and the **exact command is written into its
+sidecar** along with all four source paths, addresses, seeds and SHA-256s, so the
+file is reproducible from the tree without the script that made it. That is a
+mitigation, not the fix; putting a sheet builder in `pipeline/` is still the open
+design call. **If the rendering lane also ships a `LABELED-b13-r8`, one of the
+two should come off item 18** — a duplicate sheet of one round is the cost of two
+lanes reaching the same beat within five minutes, and it is visible rather than
+silent.

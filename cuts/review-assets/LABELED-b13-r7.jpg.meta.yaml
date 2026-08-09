@@ -1,0 +1,66 @@
+# Provenance for one image on the /review gallery (STEWARDSHIP §7.2).
+#
+# WHAT THIS FILE IS SERVED UNDER, because it is not what the rest of the tree is
+# served under. banyan.city publishes CC BY 4.0. This picture was drawn by
+# cagliostrolab/animagine-xl-3.1, whose CreativeML Open RAIL++-M licence attaches
+# use restrictions that travel to the output — the open conflict recorded as D15.
+# The founder authorised these frames onto the review page on 2026-08-09; he did
+# not resolve the licence question, and publishing them under a blanket CC BY
+# offer would grant what we do not hold. So the offer is NARROWED for this file
+# and said out loud on the page: it carries OpenRAIL++'s Attachment A use
+# restrictions and is not CC BY 4.0. Everything else on the site is unaffected.
+#
+# The pixels here are a JPEG re-encode, not the original bytes. The source file
+# and its SHA-256 are recorded below, so the rendition is checkable against the
+# frame it came from.
+
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+conditioning: regional IP-Adapter (h94/IP-Adapter, sdxl_models/ip-adapter_sdxl_vit-h)
+conditioning_licence: Apache-2.0 (h94/IP-Adapter; claims nothing over output)
+conditioning_reference: >-
+  genomes/sapling/nodes/002b-first-citizen/takes/stills/13-the-shade-r6-s2.png
+  (sha256 89310f55aa56c23d281852631260ffbfdc1686137287234007bc1309a948f1f1),
+  cropped to the character and masked to a box over head and torso, scale 0.6.
+  RECORDED AS A GATE FAILURE, not as a licence one: the reference is a frame the
+  founder has never ruled on, so `G1_approved_plate` is FAIL on taste ledger
+  record `ep2-b13-r7-sample`. That is why this round is evidence and not a set to
+  pick from.
+published_under: >-
+  CreativeML Open RAIL++-M use restrictions (Attachment A) — NOT the tree's
+  CC BY 4.0. Founder-authorised for the /review gallery only; not canon,
+  not published elsewhere, not promoted to a stills/ filename.
+authorised_by: >-
+  founder (Roman), 2026-08-09 — "put the images from my computer onto there
+  please, not like theres any reason to hide it". Visibility only: D15's
+  licence question stays open and stays his.
+surface: /review gallery (unlisted, noindex — D17)
+canon: false
+derived_from: LABELED-b13-r7.png
+derived_from_sha256: cc4c21b40e3f122f53dd3e8e16d36d8aacddb203e1c275c8cddd1a19e7a069e0
+sha256: 4c3ad28f219f1465d7a28eb779318e75c77620e992fc5c0c5fe50632ba250daa
+encoding: >-
+  JPEG from the source PNG with ImageMagick 7.1.2-21 — no resize, no crop, no
+  colour conversion, metadata stripped. Quality 90,
+  4:4:4 chroma so the burned-in labels stay crisp.
+cost_usd: 0
+sheet: true
+episode: 2
+shows: b13-r7-s0..s3
+what: >-
+  episode 2 beat 13 — the round that changed the MECHANISM rather than the
+  words, conditioning the character region on an earlier goblin draw
+sheet_note: >-
+  A contact sheet: four candidate frames composited into one picture by our own
+  labelling script, each tile carrying its address and its seed. Every tile is a
+  cagliostrolab/animagine-xl-3.1 draw under IP-Adapter conditioning; the
+  compositing and the labels are our code and carry no model. Addresses resolve
+  through REVIEW-KEY-0808.md.
+neutral: >-
+  Labels and seeds only. No favourite is marked and no tile is offered as a pick
+  (gate G3). All four are provisionally rejected in prose on the card.
+source_frames: >-
+  genomes/sapling/nodes/002b-first-citizen/takes/stills/13-the-shade-r7-s0..s3.png,
+  sidecars beside them; taste ledger records `ep2-b13-r7-reference-provisional`
+  and `ep2-b13-r7-sample`.

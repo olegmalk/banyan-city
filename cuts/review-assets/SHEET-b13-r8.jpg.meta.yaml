@@ -1,0 +1,82 @@
+# Provenance for one image on the /review gallery (STEWARDSHIP §7.2).
+#
+# WHAT THIS FILE IS SERVED UNDER, because it is not what the rest of the tree is
+# served under. banyan.city publishes CC BY 4.0. These pictures were drawn by
+# cagliostrolab/animagine-xl-3.1, whose CreativeML Open RAIL++-M licence attaches
+# use restrictions that travel to the output — the open conflict recorded as D15.
+# The founder authorised these frames onto the review page on 2026-08-09; he did
+# not resolve the licence question. So the offer is NARROWED for this file and
+# said out loud on the page: it carries OpenRAIL++'s Attachment A use
+# restrictions and is not CC BY 4.0.
+#
+# THE COMPOSITING SCRIPT IS NOT IN THE TREE, and that is the defect commit
+# f7de075 named ("the sheet builders that drew his review surfaces are not in the
+# repo, and that is how the missing labels got in"). It is not fixed here — a
+# sheet builder in pipeline/ is a design call this lane should not make alone —
+# so the mitigation is that the EXACT command is recorded below and the four
+# source frames are named with their SHA-256s. Anyone can reproduce this file
+# byte-for-byte from the tree without the script.
+
+platform: local-gpu (rtx5090) for the frames; local ImageMagick for the sheet
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+published_under: >-
+  CreativeML Open RAIL++-M use restrictions (Attachment A) — NOT the tree's
+  CC BY 4.0. Founder-authorised for the /review gallery only; not canon,
+  not published elsewhere, not promoted to a stills/ filename.
+authorised_by: >-
+  founder (Roman), 2026-08-09 — "put the images from my computer onto there
+  please, not like theres any reason to hide it". Visibility only: D15's
+  licence question stays open and stays his.
+surface: /review gallery (unlisted, noindex — D17)
+canon: false
+sha256: d81ef2c5ab204ba800a727ece0539b9acd9ef129f1b31227fa880b1866fe1af1
+derived_from: SHEET-b13-r8.png
+derived_from_sha256: 31b8d9309a0143ad2601b401d5c4fbcdc7397fc9f0e1518355f370deadf782cd
+source_frames:
+  - path: genomes/sapling/nodes/002b-first-citizen/takes/stills/13-the-shade-r8-s0.png
+    address: 002b-b13-r8-s0
+    seed: 20260732
+    sha256: b43c43e5a57f6fdc487a5608a6c5b7672f322e0a5d1dd5ccd511b514ed1a44eb
+  - path: genomes/sapling/nodes/002b-first-citizen/takes/stills/13-the-shade-r8-s1.png
+    address: 002b-b13-r8-s1
+    seed: 20261732
+    sha256: 9b67f6182a6a33ae09f7a6740b6b31c58820d03e32ea64158530e46908e8e1da
+  - path: genomes/sapling/nodes/002b-first-citizen/takes/stills/13-the-shade-r8-s2.png
+    address: 002b-b13-r8-s2
+    seed: 20262732
+    sha256: 335afa5c8708a124a7a2ce3a04ad7c6e77a2e044765cc4db03f446b936fd84eb
+  - path: genomes/sapling/nodes/002b-first-citizen/takes/stills/13-the-shade-r8-s3.png
+    address: 002b-b13-r8-s3
+    seed: 20263732
+    sha256: 28acd4e6ecb48ca766737aace3b8dc27744a749a497a12090f1a9d6fb41a7b8b
+composited_by: >-
+  ImageMagick 7.1.2-21, per tile:
+  `magick <frame> -resize 420x614 -background '#111111' -gravity north
+  -splice 0x38 -font '/System/Library/Fonts/Supplemental/Arial Bold.ttf'
+  -pointsize 21 -fill '#ffbf3f' -gravity northwest -annotate +10+8 '<address>'
+  -pointsize 15 -fill '#9a9a9a' -gravity northeast -annotate +10+11 'seed <seed>' t<i>.png`
+  then `magick t0 t1 t2 t3 +append -background '#111111' strip.png` and a 34px
+  north splice carrying the title line. No crop, no colour conversion. The JPEG
+  rendition is `-strip -quality 90 -sampling-factor 1x1` off that PNG.
+encoding: >-
+  JPEG from the composited PNG with ImageMagick 7.1.2-21 — no resize, no crop,
+  no colour conversion, metadata stripped. Quality 90, 4:4:4 chroma so the
+  burned-in addresses stay crisp.
+cost_usd: 0
+sheet: true
+episode: 2
+shows: 002b-b13-r8-s0..s3 — the same four seeds rounds 4 through 7 used
+what: >-
+  episode 2 beat 13 — round 8, the species correction, rendered 17:27-17:32Z on
+  the rtx5090 under queue entry `ep2-b13-r8-goblin-1786292421`
+neutral: >-
+  Addresses and seeds only, in source order. No favourite is marked, nothing is
+  ordered by preference and no tile is offered as a pick (gate G3). This round is
+  explicitly NOT a gate attempt — taste ledger record 32 ruled that the
+  goblin predicate is not scorable until the founder defines the goblin, so the
+  sheet exists to give him something to define it with.
+not_scored_here: >-
+  No taste verdict, no pick and no prediction is recorded by the lane that built
+  this rendition. The round's own ledger record is owned by the lane that
+  rendered it; this file is the picture, not the reading of it.
