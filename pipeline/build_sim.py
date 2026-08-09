@@ -931,8 +931,16 @@ def finished_line_story(task: dict, note: str) -> str:
     which names the commit the work landed in — more specific than the queue's
     own wording and checkable against the repo, which the generic sentence never
     was. It only falls back when the runner really did write nothing.
+
+    AND THE QUEUE ENTRY ONLY WINS WHEN IT DESCRIBES A RENDER. This was the third
+    unguarded call to task_story and the only one that reached the live page: the
+    GPU-claim cleanup finished at 15:38Z, its entry was still in `backlog:` for
+    the lookup to find, and the row published "4 frames for world scenery" about
+    a job that released a lock. The claim's own note is the better answer for
+    everything that is not a render, which is what the paragraph above already
+    argues — it just could not get there while any entry at all outranked it.
     """
-    if task:
+    if task and any(task.get(k) for k in ("beats", "seeds", "video")):
         return task_story(task)[0]
     return note or "a job the queue no longer lists"
 

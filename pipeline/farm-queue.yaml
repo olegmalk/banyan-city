@@ -281,7 +281,16 @@ tasks:
     more than this beat: the beat 16 still redraw is explicitly gated on that call
     (i2v-prompt-plate-truth clause h) and cannot start until this lands.
 
-- id: 001-b06-r5-1786292466
+# ID CORRECTED TO THE ONE THE LANE ACTUALLY CLAIMED, and it is already DONE.
+# This entry was written as `001-b06-r5-1786292466`; the lane took its own id and
+# said so on the ledger — "own id, no queue entry borrowed", the honest
+# alternative the ruling at the top of this file explicitly keeps open. Left
+# renamed rather than deleted so queue_promoter retires it off its own DONE line
+# (16:30:24Z, `4 stills rc=0, 06-too-blue-r5-s0..s3, 37s GPU, $0`) the way every
+# other finished entry retires. Renaming it is not cosmetic: an id that matches
+# nothing on any heartbeat is a ghost, and it would have advertised itself as
+# runnable on the status page for as long as it sat here.
+- id: 001-b06-r5-sample-1786292829
   runner: manual
   worker: rtx5090
   needs: [cuda, vram20]
@@ -309,7 +318,12 @@ tasks:
     very strange cloud formations" (taste ledger record 36). The consumer is the
     episode 1 cut, which currently ships this beat on a picture nobody has approved.
 
-- id: b12-promptfix-0809
+# ID CORRECTED, and the box's own claim file is the thing that was wrong. This
+# entry was written as `b12-promptfix-0809`, read off `GPU-CLAIM.txt`; the lane
+# then claimed `002b-b12-promptfix-0809` on the ledger at 16:16:47Z. The ledger
+# wins — it is what the promoter and the status page both read — and the claim
+# file is a note to whoever wants the card, not a record of anything.
+- id: 002b-b12-promptfix-0809
   runner: manual
   worker: rtx5090
   needs: [cuda, vram20, video-venv]
@@ -322,11 +336,12 @@ tasks:
   window: any
   est_minutes: 15
   cmd: >-
-    Already running — id read off the box's own GPU-CLAIM.txt ("CLAIMED 2026-08-09
-    by b12-promptfix-0809 at 20:15 box local"), so this entry exists to match it
-    rather than to start anything. One clip, 704x1280, 145 frames at 24fps, 8 steps,
-    guidance 1.0, seed 20260806, distilled sigmas, sequential offload. THE LANE
-    STILL OWES ITS CLAIM LINES: `claim_task.py b12-promptfix-0809 started|done`.
+    Already running and already claimed STARTED at 16:16:47Z, so this entry exists
+    to match the lane rather than to start anything; it still owes its DONE line.
+    One clip, 704x1280, 145 frames at 24fps, 8 steps, guidance 1.0, seed 20260806,
+    distilled sigmas, sequential offload — read off the box's own run-b12.cmd, not
+    from the defaults, because ltx_i2v's `--frames` default is 65 and this run is
+    145.
   why: >-
     Clause (g) of i2v-prompt-plate-truth, the half the founder resolved as ungated on
     2026-08-09. Beat 12's staging line puts the scavenger "crouched behind the trunk,
@@ -367,7 +382,8 @@ tasks:
   needs: [cuda, vram20]
   beats: 1
   seeds: 4
-  after: [ep2-b13-r8-goblin-1786292421, 001-b06-r5-1786292466, b12-promptfix-0809]
+  after: [ep2-b13-r8-goblin-1786292421, 001-b06-r5-sample-1786292829,
+          002b-b12-promptfix-0809]
   window: any
   est_minutes: 25
   cmd: >-
