@@ -16,9 +16,10 @@ it, R6 keeps history). The renderers skip any name containing `REVOKED`
 1182/1295/1359, moved when that module grew on 2026-08-08; the three `"REVOKED" not
 in` guards are the same three), so a revoked frame stays readable as evidence without
 ever being animated again. Deleting works too and is what this file used to say;
-renaming is better, and it is what beats 3, 7, 8, 9, 10, 12, 14 and 15 do.
+renaming is better, and it is what beats 3, 6, 7, 8, 9, 10, 12, 14 and 15 do.
 
-**Revocations STACK, and beat 15 is the first beat here to carry two.** A `-REVOKED-`
+**Revocations STACK, and beat 15 was the first beat here to carry two** — beats 3, 10 and
+14 have carried two since 2026-08-09 as well (the section below). A `-REVOKED-`
 name is not a slot; it is one refusal with its reason in it. Beat 15 now holds
 `15-something-s-coming-REVOKED-abstract.png` (the vertical-streak frame the
 "underground side view" prompt produced, retired 2026-08-04 by `049c519`'s reframe to
@@ -26,6 +27,60 @@ ground-level macro) and `15-something-s-coming-REVOKED-underground.png` (that re
 itself — soil, stones and a raking light band, no plant in it — refused by the founder
 in v32 on 2026-08-07). Both are skipped by the same guard and neither overwrote the
 other.
+
+## 2026-08-09 — beats 3, 6, 10 and 14 have NO approved frame, and their names say why
+
+**This directory no longer holds fifteen approved frames. It holds eleven.** The
+founder refused four of them itemised in v32 on 2026-08-07 and each one kept its canon
+name anyway, so for two days every renderer in this repo read a refused frame as the
+approved one and `/status` published "15 of 15 scene frames approved". The names are
+now what the rest of this directory's names are: the refusal with its reason in it.
+
+| beat | now | sha256 | his words, v32, 2026-08-07 |
+|---|---|---|---|
+| 3 | `03-deploy-succeeded-REVOKED-terminal-lab.png` | `8f5420d8a14897e6cefb9eacd54b04f8547d43434c58234b6035a0e444cf7f2d` | *"Beat 3 looks more like a terminal in some.. lab. not realistic. whatever you intended it to be, you should make a new image for it and make sure it looks like its inside a house."* |
+| 6 | `06-too-blue-REVOKED-leaf.png` | `8fdc2f747c965fe7c644952d494e7f681b9924335a5534c7a12f0770db0803ae` | *"for beat 6, there shouldnt be a leaf in the image, doesnt make sense that he can see himself when he is looking at the sky."* |
+| 10 | `10-sense-REVOKED-style-change.png` | `3f84af7209d8c474d1f963f9127cabec4ca3fddcd537c78c8aa37bddf687ec27` | *"for beat 10, another major style change and it looks a sapling in the middle of a long body of water, with a blank dark background."* |
+| 14 | `14-worth-staying-in-REVOKED-illegible.png` | `3c9b104225081f94549ed3f7adbfe2dd5ad88f88c45f9ecb1de3b1ec422e1b0b` | *"beat 14 is.. i dont know what?? what is it supposed to be? i think you need to regenerate it."* |
+
+All four are 832 × 1216, `cagliostrolab/animagine-xl-3.1`, and unchanged in every byte —
+this was `git mv` and nothing else. Beats 3, 10 and 14 each already carried one earlier
+revocation (`-magenta`, `-abstract`, `-abstract`); these are their second, and beat 6's
+is its first. Nothing overwrote anything, which is the whole reason the reason word is
+in the name.
+
+**WHAT THIS CHANGES ON PURPOSE, and none of it is a regression to be undone.**
+`hold_still.approved_still()` globs `NN-*.png` and skips any name containing `REVOKED`,
+so it now answers None for these four beats: **render_t3 will SLATE beats 3, 6, 10 and
+14 in any assembly built from here on**, until replacements land. A slate is the honest
+picture of a beat whose frame the author refused; the alternative was to keep quietly
+animating frames he had said no to, which is what was happening. `build_status.scenes()`
+tests for the exact `NN-<slug>.png` name, so `/status` now reads **11 of 15 approved**
+with four scenes "waiting for the author's pick" — the same four the /review checklist
+asks about, and the same four `ep1-v33-assemble-1786124760` is gated on.
+
+**`review/provisional-v33/ep1-v33-PROVISIONAL.mp4` is not affected.** It was assembled before this rename, from these
+pixels, and it still holds them; a cut is rendered, not resolved at read time. What it
+is a cut OF has not changed — it was always a provisional cut built on four frames he
+had refused, and that is exactly what its own record and STATE.md say it is.
+
+**Six clip records were given their measured still hash in the commit before this one,
+so no poster broke.** `cuts/pairs/beat-03-held-approved`, `beat-10-zoom-18pct`,
+`beat-10-zoom-gentle`, `beat-14-zoom-18pct`, `beat-14-zoom-gentle` and
+`cuts/checklist/beat-14-HELD-moderate` each named their still by filename with no hash,
+and `still_from_record` refuses a name it cannot find rather than guessing — six blank
+players on the review page. Each hash was read out of the repository's own history
+(`git rev-list -1 --before=<the clip's commit> HEAD -- <the still>`, then sha256 of that
+blob), the method `cuts/pairs/beat-07-zoom-gentle.meta.yaml` records for beat 7's
+re-promotion, and all six matched the bytes now under the new names. With the hash
+recorded, rule 2 of `still_from_record` finds the renamed file and the posters are the
+frames the clips actually hold.
+
+**WHAT DOES NOT FOLLOW FROM THIS.** These four beats are not "waiting on a better
+prompt" and this rename does not queue anything. Beats 3, 6, 10 and 14 are the four the
+redraw wave still owes, `22b4cbe` records that beat 3 in particular is waiting on the
+founder to choose which of his own rules gives, and nothing here changes who decides
+what replaces them. R4: the pick is his.
 
 ## 07 / 08 / 09 — the progression, picked 2026-08-08 (item 03)
 
