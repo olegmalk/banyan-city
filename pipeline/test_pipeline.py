@@ -6120,6 +6120,247 @@ def test_a_canon_promotion_cannot_strip_the_record_that_refuses_it(tmp: Path):
         bs.FRAME_WARNINGS[:] = saved_warn
 
 
+def _promo_tree(tmp: Path, take_record: str, body: bytes = b"the frame he picked"):
+    """A one-node tree promote_still can run inside, and the take to promote.
+
+    promote_still and build_site both resolve everything from their module-level
+    REPO, so the tree has to be shaped like the real one — genome, node, shots.md
+    for the canon slug, and takes/stills/ beside the canon stills/ — rather than
+    passed in as arguments.
+    """
+    node = tmp / "genomes" / "sapling" / "nodes" / "001-x"
+    (node / "stills").mkdir(parents=True, exist_ok=True)
+    takes = node / "takes" / "stills"
+    takes.mkdir(parents=True, exist_ok=True)
+    (node / "shots.md").write_text(
+        "# Shots\n\n## Beat 14 — WORTH STAYING IN\n\n```\na sapling\n```\n",
+        encoding="utf-8")
+    take = takes / "14-worth-staying-in-r4-s3.png"
+    take.write_bytes(b"\x89PNG\r\n\x1a\n" + body)
+    (takes / (take.name + ".meta.yaml")).write_text(take_record, encoding="utf-8")
+    return node, take, takes
+
+
+def _at_repo(tmp: Path):
+    """Point build_site and promote_still at `tmp` — restore with the callable."""
+    import build_site as bs
+    import promote_still as ps
+    saved = (bs.REPO, ps.REPO, bs._STILL_DIRS, bs._FRAME_DIRS)
+    bs.REPO, ps.REPO = tmp, tmp
+    bs._STILL_DIRS, bs._FRAME_DIRS = [], []
+
+    def restore():
+        bs.REPO, ps.REPO, bs._STILL_DIRS, bs._FRAME_DIRS = saved
+    return restore
+
+
+def test_a_promotion_records_the_weights_and_not_the_machine(tmp: Path):
+    """`platform:` is written first in every sidecar, and it resolves.
+
+    The first draft of promote_still took the first provenance key licence_gate
+    could resolve, which on the real `03-deploy-succeeded-fix-s0` record is
+    `platform: local-gpu (rtx5090)` → `CC-BY-4.0 (our own output)`. It would have
+    stamped our own licence on an animagine frame and cleared it, in the one file
+    written to do the opposite. The weights win over the machine that ran them.
+    """
+    import build_site as bs
+    import promote_still as ps
+
+    node, take, _ = _promo_tree(tmp, (
+        "platform: local-gpu (rtx5090)\n"
+        "model: cagliostrolab/animagine-xl-3.1\n"
+        "model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)\n"
+        "seed: 20260722\n"))
+    restore = _at_repo(tmp)
+    try:
+        import yaml as _y
+        dest = ps.promote(node, 14, take, "b14-r4-s3", "founder", False)
+        written = _y.safe_load((dest.parent / (dest.name + ".meta.yaml"))
+                               .read_text(encoding="utf-8"))
+        check("the canon record names the weights",
+              written.get("model") == "cagliostrolab/animagine-xl-3.1")
+        check("...and keeps the platform too, rather than choosing between them",
+              written.get("platform") == "local-gpu (rtx5090)")
+        bs._STILL_DIRS, bs._FRAME_DIRS = [], []
+        ok, why = bs.publishable(dest)
+        check("an honest promotion REFUSES the frame it documents",
+              ok is False and "RAIL++" in why)
+        check("the record says whose pick it was, in his words",
+              written.get("approved_by") == "founder"
+              and written.get("his_address") == "b14-r4-s3")
+        check("the take stays where recorded_twin can still reach it", take.is_file())
+    finally:
+        restore()
+
+
+def test_a_promoted_composite_carries_the_frame_it_was_drawn_from(tmp: Path):
+    """A partial record is worse than none, because it switches off the twin.
+
+    `recorded_twin()` is consulted only when the promoted frame has NO sidecar
+    (build_site.py:803). So a promotion sidecar naming just the take's own model
+    answers in the twin's place while knowing less than it: measured on this
+    exact shape, the bare `cp` was refused as a source frame and the partial
+    sidecar CLEARED. The composite reference has to travel with the pixels.
+    """
+    import build_site as bs
+    import promote_still as ps
+
+    node, take, takes = _promo_tree(tmp, "")
+    src = takes / "src-animagine.png"
+    src.write_bytes(b"\x89PNG\r\n\x1a\nANIMAGINE-SOURCE")
+    (takes / (src.name + ".meta.yaml")).write_text(
+        "model: cagliostrolab/animagine-xl-3.1\n", encoding="utf-8")
+    import hashlib
+    (takes / (take.name + ".meta.yaml")).write_text(
+        "platform: local-gpu (rtx5090)\n"
+        "model: wan\n"
+        "model_licence: Apache-2.0\n"
+        "source_still_path: genomes/sapling/nodes/001-x/takes/stills/src-animagine.png\n"
+        f"source_still_sha256: {hashlib.sha256(src.read_bytes()).hexdigest()}\n",
+        encoding="utf-8")
+
+    restore = _at_repo(tmp)
+    try:
+        import yaml as _y
+        check("the composite take is refused on the frame underneath it",
+              bs.publishable(take)[0] is False)
+        dest = ps.promote(node, 14, take, "b14-r4-s3", "founder", False)
+        written = _y.safe_load((dest.parent / (dest.name + ".meta.yaml"))
+                               .read_text(encoding="utf-8"))
+        check("the frame reference travelled into canon",
+              "source_still_path" in written and "source_still_sha256" in written)
+        check("...and so did the take's own model", written.get("model") == "wan")
+        bs._STILL_DIRS, bs._FRAME_DIRS = [], []
+        ok, why = bs.publishable(dest)
+        check("the canon copy is refused for the same reason the take was",
+              ok is False and "RAIL++" in why)
+        # The door the bare `cp` left open: asked as some clip's source frame.
+        rec = {"source_still_path":
+               "genomes/sapling/nodes/001-x/stills/" + dest.name,
+               "source_still_sha256":
+               hashlib.sha256(dest.read_bytes()).hexdigest()}
+        bs._STILL_DIRS, bs._FRAME_DIRS = [], []
+        ok2, _ = bs.frame_publishable(rec, node / "clips" / "14.mp4", frozenset())
+        check("...and refused again when a clip reaches it as a source frame",
+              ok2 is False)
+    finally:
+        restore()
+
+
+def test_a_promotion_that_would_launder_a_licence_writes_nothing(tmp: Path):
+    """CARRY is a list and a list goes stale, so the guarantee is measured.
+
+    `init_image` is already a fourth frame-reference dialect that build_site
+    cannot read, found by reading render_b01r8 rather than by anything failing —
+    the next one will arrive the same way. Simulated here by taking two keys out
+    of CARRY: the promotion must refuse, name the dropped fields, and leave
+    neither the PNG nor a sidecar behind. A half-written promotion on disk is the
+    bare `cp` again, reached by a longer route.
+    """
+    import build_site as bs
+    import promote_still as ps
+
+    node, take, takes = _promo_tree(tmp, "")
+    src = takes / "src-animagine.png"
+    src.write_bytes(b"\x89PNG\r\n\x1a\nANIMAGINE-SOURCE")
+    (takes / (src.name + ".meta.yaml")).write_text(
+        "model: cagliostrolab/animagine-xl-3.1\n", encoding="utf-8")
+    import hashlib
+    (takes / (take.name + ".meta.yaml")).write_text(
+        "model: wan\n"
+        "source_still_path: genomes/sapling/nodes/001-x/takes/stills/src-animagine.png\n"
+        f"source_still_sha256: {hashlib.sha256(src.read_bytes()).hexdigest()}\n",
+        encoding="utf-8")
+
+    restore = _at_repo(tmp)
+    saved_carry = ps.CARRY
+    ps.CARRY = saved_carry - {"source_still_path", "source_still_sha256"}
+    try:
+        refused = ""
+        try:
+            ps.promote(node, 14, take, "b14-r4-s3", "founder", False)
+        except SystemExit as e:
+            refused = str(e)
+        check("a promotion more publishable than its take is refused",
+              "REFUSED" in refused and "MORE publishable" in refused)
+        check("...and the refusal names the exact fields that went missing",
+              "`source_still_path:`" in refused
+              and "`source_still_sha256:`" in refused)
+        dest = node / "stills" / "14-worth-staying-in.png"
+        check("no canon frame is left on disk", not dest.exists())
+        check("...and no half-written record either",
+              not (dest.parent / (dest.name + ".meta.yaml")).exists())
+    finally:
+        ps.CARRY = saved_carry
+        restore()
+
+
+def test_a_take_the_tree_cannot_account_for_is_refused_by_name(tmp: Path):
+    """Three silent shapes, three refusals, each naming its own field.
+
+    "Not allowed" sends whoever hit it to read the source; naming the field sends
+    them to the record. The pointer case earns its own branch because it LOOKS
+    like diligence: a value that resolves to no model is read by publishable() as
+    no licence question at all, so a sidecar written to account for a frame would
+    be the thing that clears it.
+    """
+    import promote_still as ps
+
+    restore = _at_repo(tmp)
+    try:
+        def why(record, body):
+            node, take, takes = _promo_tree(tmp, record, body)
+            if record == "":
+                (takes / (take.name + ".meta.yaml")).unlink()
+            try:
+                ps.promote(node, 14, take, "b14-r4-s3", "founder", True)
+            except SystemExit as e:
+                return str(e)
+            return ""
+
+        bare = why("", b"no record at all")
+        check("a take with no record cannot be promoted",
+              "no provenance record" in bare and ".meta.yaml" in bare)
+        blank = why("platform: local-gpu (rtx5090)\nseed: 3\n", b"no model key")
+        check("a record that names no model refuses on the missing field",
+              "missing field: `model:`" in blank)
+        ptr = why("model: see-below\n", b"a pointer")
+        check("a pointer is refused for pointing, not for being unknown",
+              "points instead of naming" in ptr)
+        unknown = why("model: some-new-checkpoint\n", b"unclassified")
+        check("an unclassified model is refused before it reaches canon",
+              "MODEL_LICENCES" in unknown)
+    finally:
+        restore()
+
+
+def test_a_canon_name_is_freed_by_recording_the_refusal(tmp: Path):
+    """Revocations stack; the canon name is not a slot to overwrite.
+
+    The bytes are the only thing separating the frame that was refused from the
+    one replacing it, so clobbering the name destroys the record of the refusal
+    and does it silently.
+    """
+    import promote_still as ps
+
+    node, take, _ = _promo_tree(tmp, "model: cagliostrolab/animagine-xl-3.1\n")
+    restore = _at_repo(tmp)
+    try:
+        dest = ps.promote(node, 14, take, "b14-r4-s3", "founder", False)
+        again = ""
+        try:
+            ps.promote(node, 14, take, "b14-r4-s4", "founder", False)
+        except SystemExit as e:
+            again = str(e)
+        check("promoting onto an occupied canon name is refused",
+              "already exists" in again)
+        check("...and the refusal prescribes the -REVOKED- rename",
+              "REVOKED" in again)
+        check("the frame that was there is untouched", dest.is_file())
+    finally:
+        restore()
+
+
 def test_the_live_v34_cut_is_refused_by_the_frames_inside_it():
     """The measured case, on the real tree, and it must stay refused.
 
@@ -6687,6 +6928,19 @@ def main():
         test_a_held_shot_is_only_as_publishable_as_the_frame_it_holds(Path(td))
     with tempfile.TemporaryDirectory() as td:
         test_a_canon_promotion_cannot_strip_the_record_that_refuses_it(Path(td))
+    # ...AND THE PROMOTION ITSELF CARRIES THE RECORD OR DOES NOT HAPPEN. Own temp
+    # dir each: promote_still and build_site are pointed at the tree as their
+    # REPO, so two trees in one directory would answer for each other.
+    with tempfile.TemporaryDirectory() as td:
+        test_a_promotion_records_the_weights_and_not_the_machine(Path(td))
+    with tempfile.TemporaryDirectory() as td:
+        test_a_promoted_composite_carries_the_frame_it_was_drawn_from(Path(td))
+    with tempfile.TemporaryDirectory() as td:
+        test_a_promotion_that_would_launder_a_licence_writes_nothing(Path(td))
+    with tempfile.TemporaryDirectory() as td:
+        test_a_take_the_tree_cannot_account_for_is_refused_by_name(Path(td))
+    with tempfile.TemporaryDirectory() as td:
+        test_a_canon_name_is_freed_by_recording_the_refusal(Path(td))
     test_the_live_v34_cut_is_refused_by_the_frames_inside_it()
     # REGIONAL IP-ADAPTER GEOMETRY (memo §3.3) — pure: PIL only, no torch.
     test_a_region_mask_conditions_its_box_and_nothing_else()
