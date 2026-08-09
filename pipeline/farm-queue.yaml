@@ -23,6 +23,36 @@
 #   id           REQUIRED, slug-epoch. heartbeat_attempts() counts STARTED lines
 #                keyed on id, so re-queued work MUST take a new id or it inherits
 #                the old one's spent attempts.
+#
+#                CARRYING AN ID OBLIGES YOU TO CLAIM IT (ruling, lead 2026-08-08,
+#                queue-id-borrowed-by-hand-run-1786190580). An id is how every
+#                reader downstream — sidecars, the promoter, this file — says
+#                which piece of queued work produced a file, so it may not mean
+#                two things. A HAND-RUN that puts a task's id on its output MUST
+#                write that task's STARTED and DONE heartbeat lines; the standing
+#                alternative, take your own id and leave the entry open, is still
+#                available and is the honest choice when you are not running the
+#                recipe the entry asks for. What is NOT available is the third
+#                thing that used to happen by default: borrow the id, write no
+#                lines, and leave an entry sitting in tasks: reading as unstarted
+#                while its output is already on the review page. That is
+#                `002b-b01-video-5b-1786089900` — the entry asks for seconds 2.5,
+#                the clip carrying its id is 4.71s, and STATE.md 2026-08-08 spent
+#                a paragraph on a pipeline bug that never existed.
+#
+#                THE EASY PATH IS THE HONEST ONE, which is the only reason the
+#                ruling holds — both were one command before:
+#
+#                  python3 pipeline/claim_task.py <id> -- <the command>
+#
+#                writes STARTED, runs it, and writes DONE or FAIL off the exit
+#                code, so the lines cannot be forgotten separately from the run.
+#                `<id> started` / `<id> done` exist for multi-step work. It
+#                publishes to `farm-results-hand` — never a borrowed machine's own
+#                branch, which courier force-pushes from that box's disk and would
+#                erase the claim — and it touches neither HEAD, the index, nor any
+#                file on disk. queue_promoter globs `farm-results-*`, so the entry
+#                retires exactly as a worker's would.
 #   worker       plain string, matched by equality at farm_worker.py:488
 #                ("any" is the wildcard). Never a list.
 #   runner       farm   — a farm_worker task. The ONLY kind the promoter moves.
@@ -1348,40 +1378,57 @@ backlog:
 
 # ---- THE INFRA METER, FILED THE DAY IT COST MONEY ---------------------------
 #
-# Both entries below come out of the 2026-08-08 Vercel incident: >$100 in under a
-# month because every courier heartbeat and every 5-minute telemetry pulse
-# triggered a full site rebuild on a branch nobody reads (STATE.md 2026-08-08,
-# D18). 2,344 courier pushes in 29 days; 78% of all builds were non-main.
+# Two entries came out of the 2026-08-08 Vercel incident: >$100 in under a month
+# because every courier heartbeat and every 5-minute telemetry pulse triggered a
+# full site rebuild on a branch nobody reads (STATE.md 2026-08-08, D18). 2,344
+# courier pushes in 29 days; 78% of all builds were non-main. The first is
+# retired directly below; the second is still open, still gated, and still dad's.
 #
-# D18's second obligation, and the one that is ours rather than dad's. The guard
-# stops the spending; this makes it *legible*, which is the half that was missing
-# — the meter ran for a month with no line anywhere in this repo reporting it.
-- id: infra-spend-tile-1786166880
-  runner: manual
-  worker: any
-  needs: []
-  window: any
-  est_minutes: 90
-  cmd: >-
-    add an "infra spend" tile to the studio page via pipeline/build_status.py
-    (composed by build_sim.py — one generator, one file, per that module's own
-    house rule), fed ONLY by $0 sources, and make it say plainly when a number is
-    unavailable rather than printing a stale or invented one
-  why: >-
-    D18 says a metered service gets a monitoring line on the status page, and a
-    meter nobody can read is not a meter. The consumer is dad, who paid the >$100
-    and asked for money to be kept in mind permanently — he should be able to see
-    the current month's build volume on the page instead of on an invoice a month
-    later. $0 sources only, and only two are known to exist: the new account's
-    Vercel usage endpoint IF that account's tier exposes one (unverified — do not
-    assume it does, and do not add a paid plan to get it), and GitHub's Actions
-    usage API. Note build_status.py's constraint before starting: the deploy
-    server has no local git refs and no `gh` CLI, so anything read at build time
-    must come from the public GitHub API or a repo file. Cheapest honest v1, if
-    Vercel exposes nothing free: count pushes per ref from the same repository
-    activity API this incident was measured with, and show BUILD TRIGGERS rather
-    than dollars — trigger count is the number we can actually verify, and it is
-    the number that went wrong.
+# RETIRED 2026-08-09 — infra-spend-tile-1786166880, done by 240ade4 (`the meter
+# that billed over $100 had no line anywhere in this repo, and a stale one would
+# have been worse than none`). D18's second obligation, and the one that was ours
+# rather than dad's: the ref allowlist stopped the spending, this makes it
+# legible.
+#
+# TRIGGERS, NOT DOLLARS — the entry's own fallback, taken because the fallback
+# was the honest option and not because the first choice failed to work. There is
+# no $0 dollar source: the new account is a cardless Hobby team, no free usage
+# endpoint on it is known to exist, and buying a plan to read a spend number
+# would be the joke writing itself. Vercel's git integration opens a GitHub
+# DEPLOYMENT per build; that list is public, free and CORS-enabled (verified
+# 2026-08-09). `environment=Production` is filtered server-side because two
+# thirds of this repo's deployments are the free github-pages mirror and counting
+# those would inflate a bill nobody is paying.
+#
+# A DAY, NOT A MONTH, which is arithmetic rather than taste and is the one place
+# the entry's wording ("the current month's build volume") could not be met. One
+# unauthenticated request returns 100 rows and readers share a 60-request hour by
+# IP, so paging a month would cost eight requests a view and take the meter down
+# for everybody. At this repo's real rate 100 production deployments reach back
+# about four days (measured: 100 rows spanning 08-05 to 08-09), so 24 hours fits
+# inside one page with room — and stops fitting only when the rate quadruples,
+# which is the alarm rather than a gap.
+#
+# COUNTED IN THE READER'S BROWSER, like the machines' logs and the render box's
+# vitals, and for a reason specific to this number: a build-time count only
+# advances when a build happens, and a flood of builds is the failure being
+# watched for. build_status.py also has no `gh` CLI and no local refs on the
+# deploy server, as the entry warned, so this was never going to be a repo fact.
+# The page therefore ships with NO count in it — not zero, not the last one seen.
+# Four ways it declines to answer (no fetch, non-200, a body that is not an
+# array, an unreadable date) and every one says so in words. The '+' is
+# load-bearing: if the oldest row on the page is inside the window there were
+# builds this request could not see, so it prints 'N+' rather than passing a
+# floor off as a count.
+#
+# Its own tile and deliberately not a fifth `.vital` — that row promises four
+# numbers a reader can check against the repo, and this one is live and can be
+# absent. Pinned by test_the_infra_meter_never_prints_a_number_the_page_did_not_
+# measure, which checks every INFRA_* the browser script reads against what
+# build() emits IN BOTH DIRECTIONS: INFRA_HOURS was read by the fetch and defined
+# nowhere for one revision, and an undefined global inside a .catch()'d promise
+# fails into the "unavailable" branch — a meter reporting that GitHub did not
+# answer when GitHub answered fine. There is no browser in CI to catch that.
 
 # PROPOSAL ONLY — do not implement off this entry. It changes how quickly the
 # status page can notice a dead box, which is a call about what we are willing to
@@ -1614,34 +1661,48 @@ backlog:
 # against a task that is gone. They stop a download that finished on 05/08; leaving
 # them is harmless and rewriting box scripts was not in this brief.
 
-# NOT the frames bug it looked like. Kept as an entry because what it IS is worse
-# for the queue's honesty than an arithmetic error would have been.
-- id: queue-id-borrowed-by-hand-run-1786190580
-  runner: manual
-  worker: any
-  needs: []
-  window: any
-  est_minutes: 30
-  cmd: >-
-    decide what a hand-run should do with a queue task's id. Either it claims the
-    task properly (write the STARTED/DONE heartbeat lines, so the promoter can
-    retire it) or it takes its own id and the queue entry stays open. Then make
-    the chosen one the easy path — today both are equally easy and one of them
-    lies. Whatever is decided, record it in this file's ENTRY SHAPE header, since
-    that is where the next person looks for what an id means.
-  why: >-
-    STATE.md 2026-08-08 records "that queue entry asks for seconds 2.5 and the
-    pipeline delivered 4.708s — nobody has explained the gap". The frames
-    derivation is not the gap and is not broken: wan_i2v computes
-    `frames = int(seconds * fps)` and video_task passes the task's `seconds`
-    straight through, which reproduces all three clips exactly — 4.71s to 113
-    frames, 6.05s to 145, 6.042s to 145. The clip's own sidecar says
-    `seconds: 4.71`, and write_sidecar can only have read that from the task dict.
-    So nothing ever asked the pipeline for 2.5: the render was hand-run with the
-    queue entry's ID and a different recipe, which is also why no `DONE
-    task=002b-b01-video-5b-1786089900` line exists on any heartbeat. The consumer
-    is anyone reading this queue to find out what has actually been rendered —
-    right now an id in a sidecar does not mean the queue entry ran.
+# RETIRED 2026-08-09 — queue-id-borrowed-by-hand-run-1786190580. The RULING was
+# the lead's on 2026-08-08; the helper that makes it the easy path is 39224e5 (`a
+# concat laundered every refusal inside it, and a hand-run could borrow a queue
+# id without ever claiming it`), and the ENTRY SHAPE header records it as of this
+# commit, which was the third thing the entry asked for and the last one open.
+#
+# THE DECISION, of the two the entry offered: a hand-run carrying a task's id
+# MUST write that task's STARTED and DONE lines. Taking your own id and leaving
+# the entry open stays available and stays honest. What is gone is doing neither.
+#
+# `pipeline/claim_task.py <id> -- <cmd>` writes STARTED, runs the command, and
+# writes DONE or FAIL FROM THE EXIT CODE — not from intent, so the two lines
+# cannot be forgotten separately from the run and a crash cannot leave a bare
+# STARTED behind. `started`/`done`/`fail`/`interrupted` halves exist for
+# multi-step work; `interrupted` costs no attempt.
+#
+# TWO DESIGN CALLS WORTH KEEPING, because both are places the obvious version
+# would have been wrong. It publishes to `farm-results-hand` rather than the
+# borrowed machine's own branch: courier force-pushes `farm-results-<name>` from
+# whatever heartbeat.txt is on that box's disk, so a line written there is erased
+# the next time that worker checks in, and a claim a machine can silently delete
+# is not a claim. queue_promoter globs `farm-results-*`, so it reads identically.
+# And it never touches the working tree — courier's `git checkout -qB` is safe in
+# a dedicated worker checkout and would be a disaster in the one a person is
+# working in, so the commit is built with plumbing against a temp index
+# (hash-object, read-tree, write-tree, commit-tree, push) and HEAD, the index and
+# every file on disk are left alone. $0 and CI-silent: vercel.json disables
+# deployments for `farm-results-*` and both workflows carry branches-ignore.
+#
+# Three tests: the lines match what heartbeat_attempts() and the promoter already
+# parse, the verdict is read off the exit code, and an id nobody filed is refused
+# rather than claimed.
+#
+# WHAT THIS WAS FILED OFF, since STATE.md still carries the wrong read: STATE.md
+# 2026-08-08 says "that queue entry asks for seconds 2.5 and the pipeline
+# delivered 4.708s — nobody has explained the gap". The frames derivation is not
+# the gap and is not broken. wan_i2v computes `frames = int(seconds * fps)` and
+# video_task passes the task's own `seconds` straight through, reproducing all
+# three clips exactly (4.71s→113, 6.05s→145, 6.042s→145). Nothing ever asked the
+# pipeline for 2.5: the render was hand-run with the entry's id and a different
+# recipe, which is also why no `DONE task=002b-b01-video-5b-1786089900` line
+# exists on any heartbeat.
 
 # RETIRED 2026-08-08 — wan-bench-sidecar-beat-1786190640, done by 49f54ac (`the
 # bench path can be told which beat it is rendering, and says nothing when nobody
@@ -1726,11 +1787,31 @@ backlog:
     hour; the transfer itself takes up to a week of wall clock, which is why the
     deadline is June and not July.
 
-# ---- THE HASH THAT KEEPS THE POSTER FIX WORKING, WRITTEN AT RENDER TIME ------
+# RETIRED 2026-08-09 — hold-still-sidecar-sha-1786215600, done by 39fc1eb (`every
+# held clip re-armed the stale-poster bug on the one host that cannot catch it,
+# and episode 2's cold open was blank over a record that named its frame`).
 #
-# Filed off the poster fix that landed tonight (50e0358 + b6d435f), by the agent
-# that audited it rather than the one that wrote it. Not a defect in that change:
-# a hole it can see and cannot close from where it sits.
+# hold_still.sidecar() writes `source_still_sha256:` beside `source_still:`,
+# measured off the bytes the function was handed — `hashlib.sha256(
+# still.read_bytes())` on the open object, never looked up by name afterwards,
+# because looking it up later is the failure this defends against.
+#
+# THE THREE CLASSIFIER-INPUT LINES ARE UNTOUCHED, as the entry required, and the
+# new test pins the platform string again from the reader's side so a later edit
+# in that function cannot quietly reclassify a held clip.
+#
+# The boilerplate correction shipped with it: "the approved still is held" became
+# "the chosen still". This tool holds whatever frame it is handed and several of
+# those are provisional picks the founder has not seen — approval is the T0
+# leaf's word (§6), not this file's, and provisional mode (D19) makes that gap
+# routine rather than exceptional.
+#
+# BACKFILL WAS CORRECTLY NOT NEEDED: the five published held clips keep the
+# hashes b6d435f read out of git history by hand. What ends is the hand repair.
+# Two tests in that file had been passing a still path nothing ever wrote; they
+# write the file now, which is what a real call always has.
+#
+# ---- the read it was filed on, kept ------------------------------------------
 #
 # `build_site.still_from_record()` resolves a review-page poster against the still
 # the clip was ACTUALLY drawn from by preferring a recorded hash over the
@@ -1749,40 +1830,44 @@ backlog:
 # needed again. The still object is already open in that function — the hash is
 # one line beside the name that is missing it.
 #
-# READ GIT LOG BEFORE OPENING THE FILE: hold_still.py took two commits on
-# 2026-08-08 (5568113 17:07, the output aspect; a902dd3 19:46, the 12% zoom
-# confirm), so someone else was in it the same day.
-- id: hold-still-sidecar-sha-1786215600
-  runner: manual
-  worker: m1pro
-  needs: []
-  window: any
-  est_minutes: 20
-  cmd: >-
-    in pipeline/hold_still.py sidecar(), beside the `source_still:` line
-    (hold_still.py:455), also write `source_still_sha256:` — the sha256 of the
-    bytes of the still that function was handed, measured off that file rather
-    than looked up by name afterwards. Backfill nothing: the five published held
-    clips already carry their hashes from b6d435f. Add a test in test_pipeline
-    conventions that a sidecar written for a known still carries the hash of
-    exactly those bytes, and that build_site.still_from_record() then resolves
-    that clip's poster correctly after the canon filename is re-promoted onto
-    different pixels. Do NOT touch the three classifier-input lines above it
-    (platform / `model: none` / model_licence) — hold_still.py's own comments say
-    what each one breaks.
-  why: >-
-    Every future held beat re-arms the stale-poster bug the review page was fixed
-    for tonight, and re-arms it in the one place the fix cannot see — the mtime
-    fallback is worthless on a fresh clone, so an unhashed held clip is right on
-    the laptop and wrong on banyan.city. The consumer is the founder's phone: a
-    poster is the first frame he sees, and one promising a picture the clip does
-    not contain is the review surface lying about footage. $0, no GPU, ~20
-    minutes, and it stops the debt growing instead of paying it again by hand.
+# The consumer was the founder's phone: a poster is the first frame he sees, and
+# one promising a picture the clip does not contain is the review surface lying
+# about footage.
 
-# ---- EPISODE 2'S COLD OPEN IS BLANK, AND ITS OWN RECORDS HOLD THE ANSWER -----
+# RETIRED 2026-08-09 — checklist-b01-poster-backfill-1786215660, done by 39fc1eb
+# (`every held clip re-armed the stale-poster bug on the one host that cannot
+# catch it, and episode 2's cold open was blank over a record that named its
+# frame`), the same commit as the entry above and for the same reason the two
+# were filed together.
 #
-# The other half of the same audit, filed as one entry because both halves share a
-# consumer and one of them is unreachable without the other.
+# THE DIALECT. record_still_claim() now reads all three record shapes plus
+# corrections in one precedence order — `init_still`/`_sha256` (the renderers),
+# `source_still`/`_sha256` (hold_still), and the nested
+# `init_frame: {path:, sha256:, …}` that video_task's LTX/Wan renders write. Both
+# traps the entry named are handled and both are pinned by tests. The path is
+# written with WINDOWS separators and a backslash is a legal posix filename
+# character, so `Path().name` returns the whole string rather than raising —
+# hence basename by hand, and the sha preferred over the name anyway.
+# `plate_sha256` (004dc1e8…) is NOT read: it is the 704x1280 cover-crop fed to
+# the model, it exists in no stills/ directory, and a test proves that reading it
+# would have produced a REFUSAL rather than merely being untidy.
+#
+# THE BACKFILL. `cuts/checklist/002b-b01-5b.mp4.meta.yaml` carries a dated
+# CORRECTIONS block, appended, with nothing above the line edited. The frame was
+# recovered exactly as beats 7 and 12 were: the last commit touching
+# 01-cold-open.png before this clip was written (306ec3f, 2026-08-07T22:11)
+# hashes 7cc22aa1…, and those bytes are on disk today as
+# `01-cold-open-REVOKED-too-tall.png` — a1b650c renamed the file five hours AFTER
+# the render, which is R6 keeping a retired frame in place. The two v2 sidecars
+# in review/ep2-b01/ record the same hash at render time, so three independent
+# records name one frame. Read through `corrected_init_still`, the convention
+# licence_gate already reads as `corrected_model`, so the correction is consulted
+# rather than merely written down.
+#
+# Covered by test_the_nested_init_frame_dialect_resolves_like_the_flat_one and
+# test_every_served_cut_posters_the_frame_its_record_names.
+#
+# ---- the entry, kept for the read it was filed on ---------------------------
 #
 # THE READ. The v2 renders in review/ep2-b01/ (wan5b-b01-v2.mp4, ltx-b01-v2.mp4)
 # record their init frame as a NESTED mapping — `init_frame: {path:, sha256:,
@@ -1804,67 +1889,47 @@ backlog:
 # wore episode ONE's `09-whoami.png`. Its frame is recoverable exactly as beats 7
 # and 12 were, out of this repo's history, and the v2 sidecars beside it record
 # the same hash for the same frame, which is the corroboration.
-- id: checklist-b01-poster-backfill-1786215660
-  runner: manual
-  worker: m1pro
-  needs: []
-  window: any
-  est_minutes: 40
-  cmd: >-
-    (a) teach build_site.still_from_record() the nested `init_frame:` dialect —
-    basename of `init_frame.path` (Windows separators) as the name,
-    `init_frame.sha256` as the hash, ignoring `plate_sha256`; (b) append a dated
-    CORRECTIONS block to cuts/checklist/002b-b01-5b.mp4.meta.yaml recording
-    init_still and init_still_sha256 read out of git history —
-    `git rev-list -1 --before=<that clip's render time> HEAD --
-    genomes/sapling/nodes/002b-first-citizen/stills/01-cold-open.png`, then sha256
-    of that blob, which should come back 7cc22aa1… — naming the two v2 sidecars in
-    review/ep2-b01/ as corroboration and editing nothing above the line; (c) tests
-    per test_pipeline conventions that the nested dialect resolves to the same
-    still the flat one would, and that this clip posters
-    01-cold-open-REVOKED-too-tall.png rather than whatever holds the name
-    01-cold-open.png at the time.
-  why: >-
-    Episode 2's cold open is the next thing the founder screens after episode 1,
-    and today it is a blank player whose own provenance already names the frame it
-    holds. The consumer is the review page: it stops being blank where it can be
-    right, and it stops going stale the moment ep2-b01-cold-open-redraw promotes a
-    new 01-cold-open.png — the third stale-poster pair the original entry
-    predicted, and the last piece of preventing it.
+# STILL TRUE AND WORTH KEEPING: this stops going stale the moment
+# ep2-b01-cold-open-redraw promotes a new 01-cold-open.png, which would have been
+# the third stale-poster pair the original entry predicted.
 
-# Filed 2026-08-09 by the speculative-render agent at the lead's direction, off
-# 2a6f80e ("episode 2 is a cut for the first time, and the gate that clears it
-# cannot see what is inside it"). That commit hand-plugged two live instances;
-# this is the general fix, which is why it is a queue row and not a follow-up
-# comment on the commit.
-- id: composite-provenance-manifest-1786218000
-  runner: manual
-  worker: m1pro
-  needs: []
-  window: any
-  est_minutes: 90
-  cmd: >-
-    (a) render_t3 writes an `ingredients:` block into the assembled cut's own
-    sidecar — one row per source clip with its path, its sha256 as muxed, and the
-    publishable verdict that clip carried AT ASSEMBLY TIME; (b)
-    build_site.publishable() walks that block and refuses the cut when any
-    ingredient is refused, is missing a sidecar, or no longer hashes to the value
-    recorded — an unresolvable ingredient is a refusal, not a pass, for the same
-    reason lint treats a missing record as a failure; (c) tests per
-    test_pipeline conventions: a cut holding one refused ingredient must not
-    publish, a cut whose manifest names a file that has since changed must not
-    publish, and a cut whose ingredients all pass must publish unchanged.
-  why: >-
-    publishable() reads only a file's OWN sidecar, so concatenation launders every
-    refusal inside it: the moment N clips are muxed into one mp4 the gate sees one
-    new file with one clean record and no way to ask what went into it. Refused
-    ingredients therefore publish, which is precisely the failure the gate exists
-    to prevent, and it gets more likely as more cuts are assembled rather than
-    less. Two instances were found and hand-plugged on 2026-08-09 by 2a6f80e (the
-    provisional ep2 cut, and v33) — hand-plugging is per-cut and does not survive
-    the next assembly. Same shape as D18: a guard that cannot read the thing it is
-    being asked to clear. Cheap to hold to, because render_t3 already knows every
-    ingredient at the moment it muxes them; nothing has to be re-derived later.
+# RETIRED 2026-08-09 — composite-provenance-manifest-1786218000, done by 39224e5
+# (`a concat laundered every refusal inside it, and a hand-run could borrow a
+# queue id without ever claiming it`). All three halves shipped.
+#
+# render_t3.ingredient_row() writes one row per muxed source — beat, kind, repo-
+# relative path, sha256 of the bytes as muxed, and the verdict — and it gets that
+# verdict by CALLING build_site.publishable() rather than re-deriving one, the
+# same way this module already borrows render_local.approved() for §6. One gate,
+# one implementation, so a licence classified once cannot mean two things.
+# assembly_sidecar() writes the block for BENCH CUTS TOO (`--out`), which is the
+# point and not an oversight: the review page serves working cuts out of `cuts/`
+# and those were exactly the files carrying no record at all.
+#
+# build_site.composite_publishable() walks it, and FOUR WAYS A ROW FAILS — three
+# of them absences, as the entry asked. Recorded verdict already false; no file
+# or no hash on the row; the file no longer hashing to the recorded value; or the
+# file passing then and refused NOW, re-asked through publishable() itself so a
+# licence reclassified after assembly is caught on the next build. `_inside`
+# carries the chain being judged, so a manifest naming itself is answered once
+# instead of forever.
+#
+# THE ENTRY DID NOT ASK FOR THE ABSOLUTE-PATH CASE and it is the one worth
+# knowing: footage from outside the tree is recorded as its absolute path, which
+# will not resolve on another machine — deliberately, because a cut whose inputs
+# nobody else can check is a cut nobody else should publish, and the gate reads
+# an unresolvable ingredient as a refusal.
+#
+# The three named tests exist under those names —
+# test_a_cut_holding_one_refused_ingredient_does_not_publish,
+# test_a_cut_whose_manifest_no_longer_describes_its_inputs_does_not_publish,
+# test_a_cut_whose_ingredients_all_pass_publishes_unchanged — plus a fourth that
+# pins the compatibility case: a cut with NO ingredients block is judged exactly
+# as it was before, so nothing already on the site changed meaning.
+#
+# The two hand-plugged sidecars from 2a6f80e (the provisional ep2 cut and v33)
+# keep their hand-written blocks. They are correct and render-time provenance is
+# not rewritten; what changed is that the NEXT assembly needs no hand-plug.
 
 # Found while running the r6 vocabulary sample (2026-08-09). Not a blocker for
 # that round, which ran on the 5090 and never touched still_local — it is a
