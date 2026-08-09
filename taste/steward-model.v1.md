@@ -376,6 +376,15 @@ Ties break by the highest-ranked applicable axis (A1 first, then A2, A3, …).
   (K recipe), the leaf-count fix (scored the episode's best beat), the trio
   colour spread (was measuring composition). When a metric and this model agree,
   that is two guesses, not a confirmation.
+- **Silence on an element is not approval of it, and A5 may never anchor on a
+  frame he has revoked.** Beat 6 r3 was scored +2 on A5 for matching
+  `06-too-blue-REVOKED-leaf.png` — a frame he had thrown out on 2026-08-07 — so
+  the cloud dialect he then called *"weird cloud formations"* had been REWARDED
+  for resembling a picture he had already rejected. He had not mentioned the
+  clouds on that frame, and the model read the omission as consent. The anchor
+  set for A5 is the frames he has PASSED, and nothing else: a revoked frame
+  carries no approval for any element in it, including the elements his verdict
+  never named.
 
 ---
 
