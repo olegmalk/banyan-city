@@ -98,6 +98,22 @@ def read_text(path):
         return fh.read().decode("utf-8", "replace")
 
 
+def _run(argv):
+    try:
+        return subprocess.run(
+            argv, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL
+        ).stdout.decode("utf-8", "replace")
+    except Exception:
+        return ""
+
+
+def uncommitted(rel_path):
+    """Does this path differ from HEAD? Several lanes edit this tree at once, so a
+    builder that fails is more often someone mid-save than a bug — and the answer
+    changes the advice from "fix it" to "wait and re-run"."""
+    return bool(_run(["git", "-C", REPO, "status", "--porcelain", "--", rel_path]).strip())
+
+
 def title_of(path):
     """The <title> of a built file, normalised. This is the expected marker for
     whatever route that file backs — derived at runtime, so it never goes stale."""
@@ -160,10 +176,29 @@ def run_builders():
         out = proc.stdout.decode("utf-8", "replace")
         if proc.returncode != 0:
             tail = "\n".join(out.rstrip().splitlines()[-25:])
+            rel = "pipeline/" + b
+            # A dirty builder in a shared tree is a lane mid-save far more often
+            # than a bug. Saying so here is what stops the next reader "fixing" it
+            # by reverting, which throws away work that was never broken.
+            live = (
+                "\n%s HAS UNCOMMITTED CHANGES — most likely a lane is mid-edit.\n"
+                "RE-RUN before touching it, and do NOT revert it to HEAD to go green:\n"
+                "that destroys in-flight work.\n" % rel
+                if uncommitted(rel)
+                else ""
+            )
             die(
-                "Builder failed: pipeline/%s (exit %d)\n"
-                "Nothing was screened — the site in _site/ may be incomplete.\n"
-                "\n--- tail of pipeline/%s output ---\n%s" % (b, proc.returncode, b, tail)
+                "Builder failed: %s (exit %d)\n"
+                "\nTHIS IS A WORKING-TREE RESULT AND SAYS NOTHING ABOUT PRODUCTION.\n"
+                "banyan.city builds from HEAD on Vercel; a broken working copy here\n"
+                "does not mean the site is down. 'The build is down' and 'the site is\n"
+                "down' are different sentences.\n"
+                "%s\n"
+                "Nothing was screened. If build_site.py was the one that died it wipes\n"
+                "_site/ before rebuilding, so this tree may now hold a PARTIAL site that\n"
+                "other lanes are screening against — re-run once it builds.\n"
+                "\n--- tail of %s output ---\n%s"
+                % (rel, proc.returncode, live, rel, tail)
             )
         print("  %s pipeline/%-16s rc=0" % (green("ok"), b))
     print()
@@ -239,15 +274,6 @@ def fetch(base, route):
             return resp.getcode(), body, resp.geturl(), rec.hops
     except urllib.error.HTTPError as e:
         return e.code, e.read().decode("utf-8", "replace"), url, rec.hops
-
-
-def _run(argv):
-    try:
-        return subprocess.run(
-            argv, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL
-        ).stdout.decode("utf-8", "replace")
-    except Exception:
-        return ""
 
 
 def listening_cmd(base):
