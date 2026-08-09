@@ -5263,6 +5263,59 @@ def test_a_hand_claim_refuses_an_id_nobody_filed():
           not (set(bs.MACHINES) & bs.NOT_A_MACHINE))
 
 
+def test_a_job_run_by_hand_reaches_the_status_counters():
+    """No building on the street, and counted all the same.
+
+    NOT_A_MACHINE was only ever meant to be about the TILE — its own comment
+    said "read_machines() drops these; nothing else about them changes" — but
+    finished_today(), task_ids_done() and task_running() each walked the machine
+    list, so a job a person ran and claimed could not appear in "Finished
+    today", could not stop its own queue entry from publishing as runnable, and
+    could not read as rendering while it ran. Both halves are pinned here.
+    """
+    import datetime
+    import build_sim as bs
+    import claim_task as ct
+
+    now = datetime.datetime(2026, 8, 9, 18, 0, tzinfo=datetime.timezone.utc)
+    tid = "a-hand-task-1786000000"
+    # BUILT BY claim_task ITSELF, not typed as a literal here: the page reads
+    # these off the commit SUBJECT, and claim_task's subject carries a leading
+    # clock that farm_worker's does not. A literal would let the two files drift
+    # apart and still pass — which is exactly how the second half of this bug
+    # would have survived the first.
+    started = ct.heartbeat_line("started", tid, clock=0)
+    done = ct.heartbeat_line("done", tid, clock=0)
+    check("the mark is read through claim_task's leading clock and without it",
+          bs.hb_mark(done) == "DONE" == bs.hb_mark("DONE task=x"))
+
+    hand = {"key": "hand", "branch": "farm-results-hand", "ledger": True,
+            "name": bs.LEDGERS["hand"],
+            "history": [(now - datetime.timedelta(minutes=5), done),
+                        (now - datetime.timedelta(minutes=9), started)]}
+    box = {"key": "rtx5090", "name": "the big render house", "history":
+           [(now - datetime.timedelta(hours=3), "DONE task=a-box-task-1786000001")]}
+
+    fin = bs.finished_today([box, hand], now)
+    check("a job finished by hand is in Finished today",
+          [who for _w, who, t in fin if t == tid] == ["run by hand"])
+    check("...beside the machine's, not instead of it", len(fin) == 2)
+    check("...and its queue entry stops publishing itself as runnable",
+          tid in bs.task_ids_done([box, hand]))
+
+    open_hand = {**hand, "history": hand["history"][1:]}   # STARTED, no DONE yet
+    r = bs.task_running(tid, [box, open_hand])
+    check("a hand-run in progress reads as rendering, not as queued",
+          r is not None and r["runner"]["name"] == "run by hand")
+    check("...and stops reading as rendering the moment its DONE lands",
+          bs.task_running(tid, [box, hand]) is None)
+    check("yesterday's hand work is not today's",
+          bs.finished_today([{**hand, "history":
+                              [(now - datetime.timedelta(days=1), done)]}], now) == [])
+    check("and the ledger still gets no building on the street",
+          "hand" in bs.NOT_A_MACHINE and "hand" not in bs.MACHINES)
+
+
 # ====================================================================== #
 # A CONCATENATION MUST NOT LAUNDER WHAT WENT INTO IT
 # — composite-provenance-manifest-1786218000
@@ -5658,6 +5711,7 @@ def main():
     test_a_hand_claim_writes_lines_every_reader_already_parses()
     test_a_hand_claim_reads_the_verdict_off_the_exit_code()
     test_a_hand_claim_refuses_an_id_nobody_filed()
+    test_a_job_run_by_hand_reaches_the_status_counters()
     # A CONCATENATION MUST NOT LAUNDER ITS INPUTS — own temp dir each: these
     # rewrite and delete source clips under a manifest that names them.
     with tempfile.TemporaryDirectory() as td:

@@ -97,9 +97,17 @@ MACHINES = {
 # channel a hand-run claims a queue task on (pipeline/claim_task.py) — there is
 # no box behind it, so a building for it would publish a machine that is
 # permanently "faded = not heard from", i.e. a dead render box that does not
-# exist. read_machines() drops these; nothing else about them changes, and
-# queue_promoter still reads their DONE lines exactly as it reads a worker's.
-NOT_A_MACHINE = {"hand"}
+# exist. It gets no building, no tile and no vitals.
+#
+# IT STILL HAS TO COUNT. "read_machines() drops these; nothing else about them
+# changes" was the intent and was not the code: finished_today(), task_ids_done()
+# and task_running() all walked the machine list, so a job a person ran and
+# claimed could never appear as finished, and its queue entry kept publishing
+# itself as open after the work shipped. The work-list counters read the ledgers
+# below alongside the machines and attribute them by name; queue_promoter has
+# always read their DONE lines exactly as it reads a worker's.
+LEDGERS = {"hand": "run by hand"}
+NOT_A_MACHINE = set(LEDGERS)   # the keys alone, for readers that only ask "is this a box"
 STATE_WORDS = {  # css state → the legend under the town
     "working": "glowing = rendering right now",
     "idle": "dim = switched on, not rendering",
@@ -686,51 +694,99 @@ def read_machines(queue: list, backlog: list = None, now=None) -> list:
     return out
 
 
-def finished_today(machines: list, now=None) -> list:
-    """[(when, machine name, task id)] for every job that finished since
-    midnight UTC — read off the dated commit log, so 'today' is a fact and not
-    an inference from a clock time with no day attached."""
+def read_ledgers(now=None) -> list:
+    """The non-machine ledger branches, shaped for the counters and nothing else.
+
+    Deliberately carries no state, no telemetry and no emoji: there is no box
+    here to be on or off, and any caller that tried to build a tile out of one
+    of these should fail loudly rather than publish a machine that does not
+    exist. `history` and `name` are what the counters need and all they get.
+
+    Only branches the API actually listed are read. Reaching for a ledger branch
+    that has not been created yet would post a fetch failure on the page about a
+    file nobody ever promised was there.
+    """
+    now = now or utcnow()
+    out = []
+    for branch in farm_branches():
+        key = branch.split("farm-results-")[-1]
+        if key not in LEDGERS:
+            continue
+        out.append({"key": key, "branch": branch, "name": LEDGERS[key],
+                    "ledger": True, "history": heartbeat_history(branch)})
+    return out
+
+
+def hb_mark(line: str) -> str:
+    """The MARK word of a check-in line, tolerating a leading clock.
+
+    THE TWO WRITERS DISAGREE ABOUT THE COMMIT SUBJECT and both are defensible.
+    farm_worker writes `{clock} {stage}` into the file and commits `hb: {stage}`
+    — the file carries the clock, the commit carries the date. claim_task
+    commits the whole file line, `hb: 12:00:00Z DONE task=… by-hand`, which is
+    strictly more information. A reader keyed on `startswith("DONE")` reads the
+    first and silently drops the second: not an error anywhere, just a finished
+    job that does not exist as far as this page is concerned. Keying on the mark
+    makes the two formats one, and keeps a future third writer from re-opening
+    this by adding a prefix.
+    """
+    m = re.match(r"^(?:\d{2}:\d{2}:\d{2}Z\s+)?([A-Z][A-Z_]*)\b", line or "")
+    return m.group(1) if m else ""
+
+
+def finished_today(records: list, now=None) -> list:
+    """[(when, who, task id)] for every job that finished since midnight UTC —
+    read off the dated commit log, so 'today' is a fact and not an inference
+    from a clock time with no day attached.
+
+    `records` is the machines PLUS the ledgers (read_ledgers), so "who" is
+    either a machine's name or "run by hand". A job a person finished is a job
+    finished, and it is the one kind this counter used to be unable to see.
+    """
     now = now or utcnow()
     start = now.replace(hour=0, minute=0, second=0, microsecond=0)
     out = []
-    for m in machines:
+    for m in records:
         for when, line in m["history"]:
-            if when < start or not line.startswith("DONE"):
+            if when < start or hb_mark(line) != "DONE":
                 continue
             tid = re.search(r"task=([\w.-]+)", line)
             out.append((when, m["name"], tid.group(1) if tid else ""))
     return sorted(out, reverse=True)
 
 
-def task_ids_done(machines: list) -> set:
-    """Every task id with a `DONE` line on any machine's log, at any date.
+def task_ids_done(records: list) -> set:
+    """Every task id with a `DONE` line on any machine or ledger log, any date.
 
     The queue file is not self-clearing — an entry sits in `tasks:` until the
     promoter retires it — so a finished job would otherwise be published as
     still-queued. The heartbeat is the record of what actually happened; the
-    queue is only the intent.
+    queue is only the intent. That holds whoever ran it: the promoter retires an
+    entry on a hand claim's DONE line, and a page that could not read the same
+    line went on advertising the entry as runnable.
     """
     out = set()
-    for m in machines:
+    for m in records:
         for _when, line in m["history"]:
-            if line.startswith("DONE"):
+            if hb_mark(line) == "DONE":
                 tid = re.search(r"task=([\w.-]+)", line)
                 if tid:
                     out.add(tid.group(1))
     return out
 
 
-def task_running(tid: str, machines: list) -> dict:
-    """The machine that has a fresh STARTED for this id and no DONE after it,
-    or None. This is the difference between QUEUED and RENDERING — a heading
-    that called the whole queue "in production" was the third lie."""
-    for m in machines:
+def task_running(tid: str, records: list) -> dict:
+    """The machine or hand-run with a fresh STARTED for this id and no DONE
+    after it, or None. This is the difference between QUEUED and RENDERING — a
+    heading that called the whole queue "in production" was the third lie."""
+    for m in records:
         for when, line in m["history"]:            # newest first
             if f"task={tid}" not in line:
                 continue
-            if line.startswith(("DONE", "FAIL")):
+            mark = hb_mark(line)
+            if mark in ("DONE", "FAIL"):
                 return None
-            return {"machine": m, "since": when} if line.startswith("STARTED") else None
+            return {"runner": m, "since": when} if mark == "STARTED" else None
     return None
 
 
@@ -1772,6 +1828,11 @@ def build(out_dir: Path):
     qdoc = queue_doc()
     queue, backlog = qdoc["tasks"], qdoc["backlog"]
     machines = read_machines(queue, backlog, now)
+    # The street and the tiles below are the MACHINES; the work-list counters
+    # further down are the machines AND the hand ledger. That split is the whole
+    # of NOT_A_MACHINE: no building for a thing that is not a box, no blindness
+    # about work it finished.
+    records = machines + read_ledgers(now)
     bldgs, machlist, seen_states = "", "", []
     for m in machines:
         st = m["state"]
@@ -1818,10 +1879,10 @@ def build(out_dir: Path):
     # finished four days ago and had not been retired out of the file, both read
     # as work happening now. A task is RENDERING only when a machine's own log
     # holds a fresh STARTED for its id and no DONE after it.
-    done_ids = task_ids_done(machines)
+    done_ids = task_ids_done(records)
     running = {}
     for t in queue:
-        r = task_running(str(t.get("id")), machines)
+        r = task_running(str(t.get("id")), records)
         if r:
             running[str(t.get("id"))] = r
     running_t = [t for t in queue if str(t.get("id")) in running]
@@ -1836,6 +1897,11 @@ def build(out_dir: Path):
             wnice = MACHINES.get(wkey, (wkey, "🏠"))[0] if wkey != "any" else "any machine"
             extra = ""
             r = running.get(str(t.get("id")))
+            if r:
+                # Who is ACTUALLY running it beats who the queue asked for. For a
+                # machine picking up its own task these are the same string; for a
+                # hand-run, `worker:` names a box that is not doing the work.
+                wnice = r["runner"]["name"]
             if stamp and r:
                 extra = f'<br><span class="mono">started {age_el(r["since"], now)}</span>'
             html_rows += (f'<div class="prod-row"><b>{_e(wnice)}</b> · {_e(what)}{extra}'
@@ -1846,8 +1912,8 @@ def build(out_dir: Path):
         rendering = ('<h3>🔴 Rendering right now</h3>' + _rows(running_t, stamp=True))
     else:
         rendering = ('<h3>🔴 Rendering right now</h3><p class="notice">Nothing is '
-                     'rendering this minute — no machine has an unfinished job in its '
-                     'own log.</p>')
+                     'rendering this minute — no machine, and nobody by hand, has an '
+                     'unfinished job in the check-in log.</p>')
     if queued_t:
         queued_html = (f'<h3>⏭ Queued and runnable <span class="count">{len(queued_t)}'
                        '</span></h3><p class="mono">Claimed by whichever named machine '
@@ -1861,7 +1927,7 @@ def build(out_dir: Path):
 
     # --- finished today: DONE lines with real dates on them ---
     by_id = {str(t.get("id")): t for t in list(queue) + list(backlog)}
-    fin = finished_today(machines, now)
+    fin = finished_today(records, now)
     if fin:
         fin_rows = ""
         for when, who, tid in fin:
