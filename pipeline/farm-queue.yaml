@@ -2285,6 +2285,32 @@ backlog:
     it is why this entry is half-runnable rather than gated as a whole. The
     ledger record `ep2-b16-drift-0809` carries his sentence and the scoring.
 
+    CLAUSE (g) IS EXECUTED, 2026-08-09 20:23 box local. THE ENTRY STAYS OPEN —
+    (a) through (f) and (h) are untouched and this is not a DONE. Beat 12's clip
+    was re-rendered from the b12-r4-s2 provisional plate with the character clause
+    stripped from the animation positive: 434 bytes -> 368, a 66-byte deletion of
+    " — the scavenger is still crouched behind the trunk, below frame", negative
+    byte-identical between the two, LTX recipe verbatim from run-prov.cmd
+    (two-stage 8@352x640 -> 3@704x1280, guidance 1.0, distilled sigmas, image-crf
+    33, seed 20260806, 145 frames @24fps). Output
+    `review/ep2-prov-0809/ltx-002b-b12-prov-v2.mp4` (sha256 b474f66d..), full
+    §7.2 sidecar with `init_frame` and the PROVISIONAL banner beside it. Zero
+    figures in 21 frames inspected by eye. Hand-run under its own id
+    `002b-b12-promptfix-0809`, STARTED/DONE on `farm-results-hand`; that id and
+    NOT this entry's is what the clip's sidecar carries, so no heartbeat line
+    here can retire an entry whose code clauses have not been written.
+    NOTE FOR CLAUSE (b)'s AUTHOR: the run did not go through `video_task`'s queue
+    path at all — the prompts were composed by `video_prompt` on the mac and the
+    character clause was deleted BY HAND before the text reached the box. The
+    code fix (a)/(b) — making the composer refuse to name a subject the plate does
+    not contain — is therefore still entirely unwritten, and beat 12 is now a
+    worked example to test it against, not evidence that it exists.
+    NOTE FOR CLAUSE (b)'s SIBLING, check-invention-labelled-set-1786280220:
+    check_invention returned `ok` on this clip at mono 0.60 — inside the exact
+    band that entry records as its blind spot — so the `ok` was not worth
+    anything and the clip was cleared by eye. A possible replacement signal is
+    pre-registered, with its caveats, in ledger record 38.
+
 - id: ledger-engine-kind-1786280160
   runner: manual
   worker: m1pro

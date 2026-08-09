@@ -1857,3 +1857,129 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+# SECOND `kind: video` RECORD, and the first one written for a clip that had not
+# been looked at when the prediction was fixed. The prediction below was written
+# to a file and hashed BEFORE the render finished and before any frame of it was
+# viewed; `prediction_preregistered` carries that hash so the ordering is checkable
+# rather than asserted. The tally paragraph at the top of this file is NOT updated
+# here — another lane is rewriting it in the same working tree tonight, and two
+# writers on one paragraph is how it went stale twice already. This is record 38.
+- id: ep2-b12-promptfix-0809
+  date: 2026-08-09
+  subject: "node 002b beat 12 — the prompt-only fix on the beat the founder's ruling sent it to"
+  kind: video
+  candidates: [b12-treat-s20260806]
+  address_key: "review/ep2-prov-0809/ltx-002b-b12-prov-v2.mp4"
+  gates: {G1_approved_plate: FAIL, G2_script_approved: pass, G3_neutral_sheet: n/a,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  gates_note: >-
+    G1 FAILS: the conditioning plate is `12-related-r4-s2.png`, a round-4 steward
+    render from takes/stills/, and the founder has ratified no frame for this beat.
+    G3 is n/a because there is no sheet — one clip, no set to choose from, nothing
+    ordered for him to look at.
+  pick: null
+  prediction_preregistered:
+    sha256: 461a98c907e543ab9840c340973e754da8620c4c82da589a2115019eb10b74ec
+    note: >-
+      Written before the render's `[1/1] wrote` line and before any frame was
+      viewed. The four prediction fields below are that file's, unedited.
+  # NOT predictions — measured after the clip landed, before he has seen it.
+  measured:
+    clip: "145 frames, 704x1280, 24fps, 6.042s, h264, 583,391 bytes"
+    render: "199s wall on rtx5090, 0.0303 s(video)/s(wall), peak torch 7.5GB, $0"
+    people_visual: >-
+      ZERO figures. 21 distinct frames of 145 inspected by eye at three samplings:
+      every 12th frame across the whole clip (13 frames, 0.5s apart), the first two
+      seconds every 4th frame (13 frames, 1/6s apart — beat 16's invented head
+      entered at ~1s, so that window was sampled densely on purpose), and frames
+      0/48/96/144 at 352x640. No person, no face, no goblin, no second sprout, no
+      scene change. The composition is the plate's own five stacked leaves against
+      the sun and clouds, held for the full six seconds.
+    people_detector: >-
+      check_invention.py returns `ok`, ret 0.95 / mono 0.60 / peak 0.69 / chrn 0.41.
+      THIS IS NOT EVIDENCE AND THE RECORD SAYS SO. 0.95/0.60/0.69 is the exact
+      profile the tool's own backlog entry (check-invention-labelled-set-1786280220)
+      records as its blind spot: all three known-invented clips passed ONLY because
+      monotonic fell short of 0.70 (0.62/0.55/0.60), and this clip's 0.60 is inside
+      that band. The tool would have said `ok` to a clip with a man in it. The
+      visual sample above is the evidence; the detector is reported for completeness.
+    motion_definition: >-
+      mean |Δ| between CONSECUTIVE frames, full 704x1280, 8-bit Rec.601 luma, 0-255
+      scale, averaged over all 144 pairs. Defined here in full because the metric in
+      record 35 (`motion_mean_abs`) has no implementation in this repo and could not
+      be reproduced — these numbers are NOT comparable to that record's, and no
+      comparison to it is made.
+    motion_mean: 2.233
+    motion_median: 0.335
+    motion_max_pair: 11.953
+    frame0_vs_frame144: 25.565
+    cadence: >-
+      THE CLIP ANIMATES ON THREES. 48 of 144 consecutive pairs (33%) differ by more
+      than 1.0; the other 96 sit at ~0.3, i.e. near-duplicates. The picture changes
+      on roughly every third frame, so the effective animation rate is ~8fps inside
+      a 24fps container — limited animation, which is what hand-drawn anime does.
+      Not requested, not previously recorded, and not a defect on its face.
+  observation_not_a_finding: >-
+    A LEAD FOR check_invention, PRE-REGISTERED AS WEAK. On the eight labelled drift
+    clips, the fraction of consecutive pairs moving more than 1.0 separates the set
+    perfectly: INVENTED 43% / 49% / 80%, clean 33% / 35% / 36% / 39%. Tonight's beat
+    12 clip reads 33%, the bottom of the clean band. THE CAVEATS ARE LARGER THAN THE
+    RESULT: n is 8, the 1.0 threshold was chosen after seeing the numbers, and the
+    mechanism may be circular — a human who walks into a static shot moves in every
+    frame, so "more pairs move" could be a restatement of "something is moving"
+    rather than an independent signal. It is worth trying against the `monotonic`
+    conjunct that entry says is inverted; it is not worth believing yet.
+  predicted_verdict: ratify
+  predicted_flip_to: null
+  confidence: 0.65
+  predicted_objection: >-
+    Motion, not people. Beat 12's own staging line is "perfectly still" and LTX is
+    the engine that measurably will not hold still — the drift experiment's
+    treatment arm read 4.36-9.02 on its motion metric where Wan's provisional clips
+    read 0.28-1.14 on the same scale, 4-30x. The character clause coming out does
+    nothing about that. The founder called LTX "just amazing" for exactly this
+    liveliness, so the objection is not certain to fire; but on a six-second extreme
+    close-up of two leaves that the script wants motionless, the failure mode
+    available to him is "it's crawling" or the leaves morphing shape across the six
+    seconds, not "there's a man in it".
+  reasoning: >
+    The mechanism is proven on the adjacent beat and it is the same mechanism, not
+    an analogy: 3 of 4 control seeds drew a person, 0 of 4 treatment seeds did, one
+    variable between the arms. Here the variable is the same clause type and the
+    deletion is larger (66 bytes vs 38) because beat 12's clause is longer. Seed
+    20260806 is the seed that produced the figure he screenshotted on beat 16, so if
+    the fix holds anywhere it has to hold here, on that seed, and this run is that
+    test.
+
+    Beat 12 is also the beat the founder's own ruling SENT this fix to — he kept the
+    scavenger in beat 16 and the resolution recorded on 2026-08-09 was that beat 12
+    is the ungated half, because its staging line puts the man "crouched behind the
+    trunk, below frame" and the plate never had him. So a clean clip here is what he
+    asked for rather than something he has to be talked into, which is why the
+    verdict is `ratify` and not a hedge.
+
+    Confidence is 0.65 and not higher for two reasons. First, this is a single clip
+    on a single seed: the drift experiment had four seeds per arm and this has one,
+    so "0 of 1 seeds drew a person" is much weaker evidence than "0 of 4" even
+    though the mechanism is the same. Second, the plate is PROVISIONAL —
+    b12-r4-s2 is a steward-rendered candidate the founder has never ratified (G1
+    fails), so he can reject the clip on the frame it was built from without ever
+    reaching the prompt fix, and record 37 shows he will pick a different frame from
+    a set the steward thought was settled. It is not lower than 0.65 because the
+    failure this record is nominally about — an invented human — is the one thing
+    the mechanism is measured to prevent.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+  notes: >-
+    ONE FAULT THIS RECORD PRE-REGISTERS BEFORE HE FINDS IT, AND IT IS THE PLATE, NOT
+    THE CLIP. The script asks for "two oversized green cotyledon leaves of a tiny
+    seedling filling the frame". `12-related-r4-s2.png` shows FIVE stacked mature
+    leaves and a sun. The clip is faithful to the plate — it invents nothing and
+    drops nothing — so if he rejects this shot for not being the shot the script
+    describes, the prompt fix is not what failed and the answer is another round on
+    the still, not another render. Recorded now so that a rejection cannot later be
+    read as the prompt fix failing.
