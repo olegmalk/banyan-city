@@ -5398,3 +5398,41 @@ to correct.
 **Composite provenance** — `build_site.publishable()` reads only a file's own
 sidecar, so a concatenated cut launders every refusal inside it. Filed as
 `composite-provenance-manifest-1786218000` (`ceefaf1`), off `2a6f80e`.
+
+## 2026-08-09 — the two-subject memo: `1other` was asking for the humanoid we were negating
+
+`pipeline/research/two-subject-composition.md` — external research (papers,
+model cards, the Danbooru wiki, diffusers docs, the source repos of every
+extension that claims to solve this), for the goblin+seedling wave that blocks
+**15 of node 002b's 21 beats** (all but the five plant-only beats and beat 08).
+
+The finding that changes the next move: **the Danbooru wiki defines `1other` as
+"a humanoid character of ambiguous or indeterminate gender"** — not "one
+non-human character", which is how shots.md reads it. Every r3/r4/r5 goblin
+prompt opens with it, so the count tag has been asking for the very humanoid the
+`no girl, no boy, no child, no person` negatives were trying to remove, which is
+exactly what r4 returned (an anime child, bare human legs). Count tags count
+*characters*; plants are not characters, so no count tag can ever declare the
+seedling. Second untested cause: the fusion classes have exact tag names in the
+model's own vocabulary — `leaf on head` alone is ~10.5k Danbooru posts — and not
+one of them is in any negative we ship, while our negatives are prose nouns on a
+checkpoint whose own card says it is "optimized for Danbooru-style tags rather
+than natural language prompts".
+
+Ten options ranked with hours, deps and licence. Recommended **r6 = vocabulary
+only** (count tag → `1boy, goblin, solo`; fusion tags into `--extra-neg`; plant
+re-bound as scenery), one beat, four seeds, ~1 h and ~40 GPU-seconds, scored on
+a four-predicate A1 rubric against r4's recorded 0/4 before anything reaches a
+screen. Architecture is deliberately NOT bundled in — same argument shots.md
+made for holding the count tag constant while inverting word order, one rung up.
+Fallback ladder fixed in advance: two-pass inpaint (diffusers core, ~5 h, the
+plant is outside the mask so it *structurally* cannot fuse) → regional
+IP-Adapter masks (Apache-2.0, native diffusers, 5090 box) → Bounded Attention
+(MIT, SDXL). BREAK is rejected on mechanism: it is A1111 75-token chunk padding
+with no spatial semantics, and diffusers has no such thing. Attention Couple's
+mature implementations are all GPL-3.0/AGPL-3.0 ComfyUI/Forge extensions —
+readable, **not vendorable** into this tree.
+
+Also noted for whoever runs r6: `still_local.py` ends in
+`subprocess.run(["open"] + opened)` and throws every still onto the founder's
+screen. It needs a no-open path before the first sample, not after.
