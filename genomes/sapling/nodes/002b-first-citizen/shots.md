@@ -726,9 +726,16 @@ background visible between them. r4 and r5 both scored **0/4**. **Pass = at leas
 3 of 4 seeds passing all four predicates.** Any result above zero is information;
 only ≥3/4 unblocks the fifteen goblin-and-plant beats.
 
-```
-A small round goblin boy, solo, folds into a thin patch of shade, knees up around his ears, no girl, no child. Plant, grass, outdoors, a tiny 40cm seedling with two oversized cotyledon leaves rooted in the ground beside him. Midday light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
-```
+> *The round-6 wording, retired as the live fence when round 8 replaced it —
+> `parse_shots` reads the FIRST fence in a beat's section, so a superseded prompt
+> cannot stay fenced or it is the one that renders. Recorded verbatim in the four
+> `13-the-shade-r6-s*.png.meta.yaml` sidecars, and inherited byte-for-byte by
+> round 7, which changed only the conditioning:* "A small round goblin boy, solo,
+> folds into a thin patch of shade, knees up around his ears, no girl, no child.
+> Plant, grass, outdoors, a tiny 40cm seedling with two oversized cotyledon leaves
+> rooted in the ground beside him. Midday light, cinematic lighting, detailed,
+> newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render
+> look. 9:16 vertical, no text."
 
 **ROUND 6 RENDERED. THE FUSION IS GONE AND THE GATE STILL FAILED, 1 of 4**
 (ledger record 32, `ep2-b13-r6-sample`, `reject_all`, 0.72). Four seeds, 37
@@ -785,6 +792,111 @@ one.
 for completeness.** It changed subject order on top of the two causes r6 has now
 shown to be live and untouched at the time, so its 0/4 is not evidence about
 subject order — the memo said so before r6 ran, and r6 did not change that.
+
+**ROUND 8 IS THE SPECIES CORRECTION, and the founder ordered it.** His words,
+2026-08-09: *"all the goblin images look like female demihumans, definitely need
+to regenerate"* — set against the script's own noun, *"a small round goblin"*.
+Four axes fall out of that sentence and they are the round's target: **male,
+round, green-skinned, and not an elf.**
+
+**r8 goes back to the r6 branch, and that is forced, not preferred.** Record 34
+ruled that G1 — "staged on, CONDITIONED ON, or demonstrated with a still that is
+REVOKED or was never approved" — fails every frame the regional IP-Adapter
+produces, because it conditions on `13-the-shade-r6-s2`, which the founder has
+now explicitly rejected along with the rest. The same bar disqualifies §3.2, the
+two-pass inpaint, which would need an approved plate we do not have. **The only
+admissible branch tonight is the one that draws from text alone**, and the memo's
+own §3.1 result is the reason it is worth taking: the vocabulary correction is
+the only move that has ever shifted a predicate on this beat, and it shifted
+three at once.
+
+**THE MECHANISM IS MEASURED, not reasoned from our own frames.** Danbooru wiki
+post counts, read 2026-08-09:
+
+| tag | posts | what the corpus says |
+|---|---|---|
+| `goblin` | 4,257 | *"child-sized, with green skin, fangs, pointy noses, and pointy ears"* — the show's goblin IS the canonical one |
+| `female goblin` | 1,717 | **implicates `goblin`** — so **40.3% of everything carrying the token `goblin` is female** |
+| `elf` | 111,449 | *"grace, finesse, and youthful appearance"*; implies `pointy ears`. Outweighs `goblin` **26 to 1** |
+| `green skin` | 30,541 | implicates `colored skin`; *"often associated with orcs"* |
+| `colored skin` | 208,206 | *"any color that would be unnatural for a normal human"* |
+| `plump` | 43,371 | *"slightly chubby, but not enough to be fat"* |
+| `fat` | 19,390 | *"chubbier than plump"* — overshoots the script's "round" |
+| `male focus` | 1,106,133 | *"can be tagged with either 1boy or multiple boys"* — additive to the count tag, not a replacement |
+
+**That table answers the founder's complaint with a number.** Two in five posts
+carrying the token `goblin` are tagged `female goblin`, and because the child tag
+implicates the parent, every one of them trained the word `goblin` on a female
+demihuman. *"All the goblin images look like female demihumans"* is not a
+mis-render — it is the corpus, sampled faithfully. And the elf is the same story
+one step up: `elf` outweighs `goblin` 26:1 and carries pointy ears with it, so a
+young pointy-eared humanoid resolves to the far heavier tag. **These are the
+exact tag names of both failures, and neither has ever been in a negative on this
+beat** — the same class of gap §1b found for the fusion classes, which is the gap
+r6 closed to take P1/P3/P4 from 0/4 to 4/4.
+
+**`1boy` IS NOT THE FAULT AND IT STAYS — this was checked before it was kept.**
+The suspicion was that `1boy` pulls the pretty-boy/elf reading. It does not
+survive the evidence. `_tag_from_clause` derives the tag from the first
+comma-clause and tests `_MALE` before `_OTHER`, so removing "boy" does not give a
+neutral prompt — it gives `1other` back, the tag §1a proved asserts *"a humanoid
+character of ambiguous or indeterminate gender"* and which cost r3–r5 three
+rounds at 0/4. Dropping `1boy` would attack the not-female axis by deleting the
+only token asserting male. The female mass is measured to be inside `goblin`,
+not inside `1boy`. **`monster boy` was considered and rejected on its definition,
+not on taste:** it denotes *"a bishounen or ikemen mixed with a monster"* — it
+names the pretty-boy failure rather than curing it.
+
+**THE BUDGET DECIDED HOW MUCH VOCABULARY FITS, and it was measured on the box's
+real CLIP tokenizer before a step was spent.** Seven candidate wordings were run
+through the real `compress()`. Every variant carrying three or more species tags
+came back **with the style anchor deleted** — `compress()` sheds the trailing
+sentence to reach 77, and that sentence is `Midday light, cinematic lighting,
+detailed, newest, masterpiece, best quality, very aesthetic`. That is precisely
+the r4 defect this beat already paid for once, so it is a hard stop, not a
+trade. Measured: `green skin, colored skin, plump` = 61 tokens **with the anchor
+gone**; `green skin, plump, male focus` = 62 **with the anchor gone**;
+**`green skin, plump` = 77 tokens with the anchor and the plant sentence intact
+and nothing dropped.** Two tags is what the budget buys, so `colored skin`,
+`male focus` and `pointy ears` are **filed, not bundled** — and `pointy ears`
+would in any case be arguing for the elf, which implies it.
+
+**Exactly one axis moves: the species/build assertion, said in the checkpoint's
+own vocabulary.** Both halves are that one axis, which is r6's move applied to
+species instead of count — assert what the goblin IS, negate the exact tag names
+of what it keeps coming back as:
+
+1. **Positive:** the prose word `round` gives way to the tag `plump`, and the tag
+   `green skin` is added. `green skin` is the attribute P2 turns on and record 34
+   filed it as a candidate after r7 failed to transfer it from an image. Nothing
+   else in the sentence moves; the plant sentence and the style tail are r6's,
+   byte-for-byte, because P1/P3/P4 are at 4/4 and this round must not touch them.
+2. **Negative:** `female goblin` and `elf` join r6's nine fusion tags in the
+   `explicit` tier, where `fit_negative` protects them. Measured: all eleven
+   survive at 76 tokens, at the cost of two more house terms (`watermark`,
+   `abstract`) on top of the seven r6 already sacrificed — pre-authorised here
+   the same way r6 pre-authorised its seven, and asserted by the render script,
+   which stops if any of the eleven is dropped.
+
+**The known risk, stated in advance.** `elf` implies `pointy ears`, and the
+Danbooru goblin has pointy ears, so negating `elf` may cost the ears this
+creature is supposed to have. If r8 comes back green and plump with small round
+human ears, **that** is the trade and `pointy ears` is the next positive tag to
+buy — which is also the round that would need `colored skin` cut to pay for it.
+
+**Pre-registered gate, written before the render, and it grows by the founder's
+two axes.** Per seed, the memo §5 four, plus the two his verdict added: P1 the
+plant is present *as a plant*, rooted, not touching the character; P2 the goblin
+is a goblin, not a human child; P3 no fusion; P4 two separate silhouettes;
+**P5 not female — the figure reads male or at minimum not feminine-coded; P6 not
+an elf — green-skinned goblin, not a pale graceful fantasy humanoid.** r6 scored
+1/4 on the original four and r7 scored 0/4. **Pass = at least 3 of 4 seeds
+passing ALL SIX.** Ledger record written BEFORE any sheet is built. No wave fires
+off this beat without the founder, and nothing here goes on his screen tonight.
+
+```
+A small goblin boy, green skin, plump, solo, folds into a thin patch of shade, knees up around his ears, no girl, no child. Plant, grass, outdoors, a tiny 40cm seedling with two oversized cotyledon leaves rooted in the ground beside him. Midday light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+```
 
 ## Beat 14 — THE DEFENSE (1:04–1:10) ⬜ needs footage
 

@@ -6397,3 +6397,72 @@ design call. **If the rendering lane also ships a `LABELED-b13-r8`, one of the
 two should come off item 18** — a duplicate sheet of one round is the cost of two
 lanes reaching the same beat within five minutes, and it is visible rather than
 silent.
+
+## 2026-08-09 — two words of vocabulary did what an architecture change could not, and the goblin is green in four of four
+
+**`ep2-b13-r8-sample`, ledger record 39, `reject_all`, confidence 0.85. Four
+seeds, 37 GPU-seconds, $0, rtx5090.** The ONE SAMPLE for the SPECIES correction
+the founder ordered — *"all the goblin images look like female demihumans,
+definitely need to regenerate"*. Frames and sidecars at
+`genomes/sapling/nodes/002b-first-citizen/takes/stills/13-the-shade-r8-s*.png`;
+neutral sheet `LABELED-b13-r8.png`, built and **not opened**.
+
+**`green skin` is 4 of 4, and that is the whole finding.** It is the attribute
+P2 turns on, it had never appeared in a prompt on this beat, and record 34 filed
+it as a candidate precisely because r7's regional IP-Adapter *could not transfer
+it from an image* — the green in the reference was a small dark low-contrast
+region under a lit white bob, so CLIP encoded the bob. Two Danbooru tags in the
+positive did in 37 seconds what the architecture change could not. Same shape as
+r6's result: **on this checkpoint the tag name beats the mechanism.**
+
+**The round is NOT a gate attempt and the record makes no pick.** Record 32:
+*"P2 is not a valid gate until he defines the goblin, and no r8 may be scored
+against the old one."* r8 exists to give him something to define the goblin
+*with*. Choosing a favourite is the exact error record 33 was scored a miss for.
+
+**What the other three axes actually did, recorded rather than smoothed.** Plump
+3 of 4 (s0 is compact, not round). Male reads clean on s0 alone — s1 and s3 are
+bald dome-heads and gender-neutral, which is better than "female demihuman" but
+is not what `1boy` bought, and **s2 has red eyes, blush and a soft round face,
+the frame closest to the reading he rejected.** Not-an-elf is the quiet win:
+none of the four is the pale graceful elf, and the predicted trade — that
+negating `elf` would cost the pointed ears — **did not bite**, all four keep
+them. Three nouns from his own script are absent from every frame: the broken
+tusk (0 of 4, and never in the prompt), the "enormous" ears, and the faded green
+patchwork cloak. Lighting regressed on s0, s1 and s3 to dusk despite `Midday
+light` verified present in the sent positive, and s0 loses the seedling
+altogether, failing P1 and P4 on a frame after r6 took both to 4/4.
+
+**The budget is spent to the last token and the next round must buy before it
+adds.** Measured on the box's real CLIP tokenizer before a step: positive
+**exactly 77 of 77** with the style anchor and the plant sentence intact,
+negative 76 fitted to 73 sent, all **eleven** explicit negatives surviving —
+r6's nine fusion tags plus `female goblin` and `elf`. Every variant carrying a
+third species tag (`colored skin`, or `male focus`) came back at 62 tokens **with
+the style anchor deleted**, the r4 defect this beat already paid for once. So
+`colored skin`, `male focus` and `pointy ears` are filed, not bundled. Because
+77 of 77 leaves no headroom, `render_b13r8.py` **asserts the anchor survived** —
+a trap r6 never needed at 72 of 77, and one that should stay in whatever renders
+this beat next.
+
+**A measurement trap worth not repeating.** The same check run on the Mac said
+61 tokens with the anchor DROPPED, which would have read as this round failing
+its own hard stop. It was wrong: `sd_prompt._token_estimate` silently falls back
+to an approximation when `transformers` is absent, and it over-counts the
+positive by about 3 — straddling the 77 threshold. **The box is the only place
+this beat's budget can be measured**, and the r6 control reproducing its recorded
+72 exactly is what validates any run of it.
+
+**Two sheets of one round now exist and neither is being deleted.**
+`SHEET-b13-r8.jpg` is the review-board rendition built by the board lane from
+these frames; `LABELED-b13-r8.png` is this lane's untracked working sheet, the
+same pairing r6 and r7 already have. Item 18 is the board lane's call, not this
+one's.
+
+**Box left clean.** `GPU-CLAIM.txt` claimed as `ep2-b13-r8-goblin` and released,
+verified; card 0% / 0 MiB; **no schtask created** — the render ran ~40s on a
+held-open ssh, so there was nothing to delete. All four frames pulled and
+**sha256-verified byte-identical** box-to-repo. Heartbeats on
+`farm-results-hand`, both of them, against the queue id
+`ep2-b13-r8-goblin-1786292421`. Nothing published, posted, or opened on his
+screen.

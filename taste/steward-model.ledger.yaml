@@ -9,23 +9,42 @@
 #
 # Ground truth is the founder (R4). This file never overrules him.
 #
-# Rolling hit rate, first scoring, 2026-08-09 (founder verdict ~12:20Z):
-#   6 of 34 predictions now have a verdict. 1 hit · 2 partial · 3 miss.
-#   STRICT (hits only)                 1/6 = 17%
-#   partials counted as half           2/6 = 33%
-#   PICK predictions (ratify/pick_holds — records 3, 5, 30)   0 of 3 = 0%
-#   REJECT predictions (reject_all — records 2, 4, 29)        1 hit + 2 partial of 3
-# The asymmetry is the one thing the page got right in advance, and the
-# confidences say so: the two picks he threw out were its two LOWEST-confidence
-# calls (b06 0.55, b14 0.45) and the reject_all calls that held were its high
-# ones (b03 0.85, b10 0.80). PROVISIONAL-PICKS-0809.md, on b06: "Held down, not
-# up, by the one thing the model cannot model: his last verdict on this beat
-# named no axis, and a rejection with no stated axis is legal, complete, and
-# unpredictable by construction"; on b14: "Lowest confidence on the page: 'too
-# small' is comparative, s2 is the biggest thing in the set, and a reject_all on
-# consistency across the four sprouts is also live." Calibration held while the
-# pick rate went to zero. The model can currently say NO with some skill and
-# cannot say YES at all — 0 for 3 — and no pick of its own has been ratified.
+# Rolling hit rate, SECOND scoring, 2026-08-09 (his ~14:40Z verdict added to the
+# ~12:20Z one). Recomputed from this file by reading every `outcome:` in it, not
+# by adding to the previous paragraph — that paragraph had already gone stale
+# twice, saying "6 of 34" after record 35 was scored and three records appended.
+#   11 of 37 predictions now have a verdict. 2 hit · 5 partial · 4 miss.
+#   STRICT (hits only)                 2/11 = 18%
+#   partials counted as half         4.5/11 = 41%
+#   PICK predictions (a frame or image chosen — records 3, 5, 30, 33, 37)
+#                                      0 hit · 1 partial · 4 miss of 5
+#   REJECT predictions (reject_all — records 2, 4, 29, 32, 36)
+#                                      2 hit · 3 partial · 0 miss of 5
+#   MECHANICAL (kind: video, no frame chosen — record 35)   1 partial of 1
+# THE ASYMMETRY IS NOW FIVE AND FIVE AND IT HAS NOT MOVED. Every hit is a
+# rejection; no reject_all has ever been a miss; no pick has ever been ratified
+# outright. Record 37 is the closest a pick has come — he took the frame it named
+# in `predicted_flip_to` rather than the one it picked — and it is a partial, not
+# a hit.
+#
+# CALIBRATION: THE NUMBER IS ONLY MEANINGFUL INSIDE A CLASS, AND THAT IS NEW.
+# Ranked by confidence, the five calls at >=0.72 are four rejections (all held:
+# 0.90, 0.85, 0.80, 0.80, 0.72) and ONE pick (0.80, record 33) — and that pick is
+# the model's first high-confidence miss. So "0.80" has meant ~100% when attached
+# to a rejection and 0% when attached to a pick. A confidence that does not
+# transfer across the two kinds of claim is not one scale; until a pick is
+# ratified, treat every pick confidence as an upper bound and nothing more.
+# The old note that "calibration held while the pick rate went to zero" was true
+# of the first six and is NOT true of these eleven; record 33 is the counterexample
+# and it is left standing rather than smoothed.
+#
+# WHAT THE SECOND SCORING ADDED THAT THE FIRST DID NOT HAVE: a rejection that was
+# right about a REGRESSION (record 36 — he said "its getting worse" of a round
+# built to fix the two faults he had named, and the model had predicted the
+# failure at 0.90 while being the author of it), and a falsified GATE (record 32 —
+# `P2_goblin_is_a_goblin` scored a frame `pass` that he calls a female demihuman,
+# so a pre-registered binary predicate returned the wrong answer on the one seed
+# it mattered on and a whole branch was built on it).
 #
 # HIS OWN ATTRIBUTION FOR THE TWO WRONG GUESSES, verbatim, and it is generous:
 #   "the two frames you guessed were wrong, but thats only because you didnt
@@ -1470,11 +1489,64 @@
     NO WAVE FIRES. The gate said >=3 of 4 and the answer is 1 of 4. Third sample
     in a row to stop a wave, and the first one that stopped it while moving the
     defect.
-  founder_verdict: null
-  founder_verdict_date: null
-  outcome: null
-  miss_axis: null
-  model_action: null
+  founder_verdict: |-
+    "all the goblin images look like female demihumans, definitely need to
+    regenerate."
+  founder_verdict_date: 2026-08-09
+  outcome: partial
+  miss_axis: >-
+    A1 — and it is a READ the model does not carry rather than a weight it set
+    wrong. He rejected on GENDER plus SPECIES together, "female demihumans".
+    Nothing in v1's A1, and no line in this record or record 33, ever asks
+    whether a character reads as female. The model described these frames as "a
+    pale elf child", "a featureless dome-headed thing", "a hood with no face" —
+    species-wrong, and it never saw the gender read at all.
+  model_action: new_axis
+  notes: >-
+    `reject_all` AT 0.72 HELD AND THE PRE-REGISTERED GATE DID NOT. He rejected
+    all four, which is what the record predicted, so the direction is right. It
+    is `partial` and not `hit` because of what he rejected WITH them: `s2`.
+
+    THE FLIP-TO WAS REJECTED, AND s2 IS NOT AN ORDINARY WRONG GUESS — IT IS THE
+    ONE FRAME THIS RECORD MEASURED AS CORRECT. `P2_goblin_is_a_goblin` scored
+    s2 `pass` — the only pass in the round — and the reasoning called it "green
+    skin, long pointed ears, grey cloak, the closest thing to this show's goblin
+    that has ever been drawn". He looked at the same frame and called it a
+    female demihuman. **A binary predicate in a pre-registered gate returned the
+    wrong answer on the one seed it mattered on**, and that predicate is the
+    whole scoreboard this beat has been run against for two rounds. P2 as
+    written measures green skin + pointed ears + cloak; his "goblin" evidently
+    also requires not reading as a girl, and possibly more that he has not said.
+    **P2 is not a valid gate until he defines the goblin, and no r8 may be
+    scored against the old one.**
+
+    THIS IS THE DISCRIMINATOR §3 USES BETWEEN `hit` AND `partial`, APPLIED
+    HONESTLY. Record 2 was a `hit` on the same shape — reject_all held, model
+    wrong about which frame was closest — and its note says "No axis moved;
+    nothing in v2 turns on this record." Here an axis moves: a new read is
+    needed, the gate's own predicate is falsified, and the §3.3 branch was built
+    on the falsified call. Record 4's test is met, so record 4's grade applies.
+
+    THE COST OF THE WRONG CALL IS ALREADY SPENT AND IT IS RECORDED IN RECORD 33.
+    s2 was not only the flip-to, it was promoted to the IP-Adapter REFERENCE, so
+    round 7 conditioned four frames on a picture he considers a female
+    demihuman. That is why record 33 is a miss and why r7's frames are not
+    merely off-model but conditioned on the wrong target.
+
+    WHAT SURVIVES THE VERDICT, because the round did move something real: P1, P3
+    and P4 went 0/4 to 4/4 and he did not contradict any of it — the
+    plant/goblin fusion is gone, every frame has a rooted plant with clear
+    background between it and the character. His objection is entirely about WHO
+    the character is. The Danbooru vocabulary correction (`1boy, solo` in place
+    of `1other`, nine fusion tags negated) is banked and should not be reverted
+    by whatever fixes the identity.
+
+    WHAT MUST NOT HAPPEN NEXT: an r8 chosen by the steward on the steward's own
+    theory of what a goblin is. He said "definitely need to regenerate" and that
+    is an instruction to redraw, not a description to design from. The gap is
+    that this tree has never had an approved goblin — no character sheet, no
+    passed frame, nothing — and every round has been aiming at a target only he
+    can see.
 
 - id: ep2-b13-r7-reference-provisional
   date: 2026-08-09
@@ -1523,11 +1595,55 @@
     three seedlings of its own, which is why the script crops to the subject
     before encoding — an uncropped reference would push plant evidence into the
     character's region and re-open the fusion r6 just closed.
-  founder_verdict: null
-  founder_verdict_date: null
-  outcome: null
-  miss_axis: null
-  model_action: null
+  founder_verdict: |-
+    "all the goblin images look like female demihumans, definitely need to
+    regenerate."
+  founder_verdict_date: 2026-08-09
+  outcome: miss
+  miss_axis: >-
+    A1 — the same missing read as record 32, and here it is load-bearing rather
+    than incidental. The pick asserted b13-r6-s2 IS this show's goblin. He says
+    it is a female demihuman. The model has no representation of the gender read
+    that decided his verdict.
+  model_action: new_axis
+  notes: >-
+    HE REJECTED THE PICK. §3: "`miss` — he picked something else, rejected the
+    pick, or refused to judge." `pick_holds` at 0.80 was the prediction; the
+    frame it holds is `b13-r6-s2`, which was on the `LABELED-b13-r6` sheet on
+    item 10's card, and "all the goblin images" covers it. Clean miss, and the
+    highest-confidence PICK prediction the model has made.
+
+    PICK PREDICTIONS ARE NOW 0 FOR 5 AND THIS ONE COST A ROUND. The other four
+    were choices between candidate frames and cost nothing when they fell. This
+    one was a TOOL INPUT: it selected the image that conditioned round 7, so
+    four r7 frames were generated toward a target he rejects. The record's own
+    defence — "what the pick costs if it is wrong is one re-run, and that is why
+    it is safe to make without him" — was accurate about the GPU cost and wrong
+    about the epistemic cost. The re-run is cheap; the two rounds of reasoning
+    built on "s2 is our goblin" are not, and record 34's whole analysis is
+    downstream of it.
+
+    THE RECORD PREDICTED ITS OWN FAILURE MODE AND STILL MISSED THE REASON.
+    `predicted_objection` said "If he flips it he will do it by naming a goblin
+    he likes better." He did not name one — he rejected the whole class and
+    ordered a regeneration, which leaves the reference with no replacement and
+    no target. The record also warned the reference "carries skin colour, ear
+    shape, hair and costume and nothing else"; the attribute that actually
+    decided it, whether the character reads female, is not in that list either.
+
+    THE STRUCTURAL LESSON, AND IT IS BIGGER THAN THE GOBLIN. Record 34 already
+    found that G1 fails anything "conditioned on a still that is REVOKED or was
+    never approved", and b13-r6-s2 was never approved. That gate would have
+    stopped this branch before the reference was chosen, and it was noticed only
+    after r7 had run. **A steward pick used as a TOOL INPUT is still a taste
+    claim** — it asserts the frame is on-model — and this one was made on the
+    steward's own authority precisely because it looked like plumbing. It was
+    not.
+
+    NO REPLACEMENT REFERENCE IS CHOSEN HERE. Picking a different frame from the
+    same rejected set would repeat the error with a lower-scoring frame. Beat 13
+    needs either a goblin the founder passes or a description from him; both are
+    R4 and neither is tonight's.
 
 - id: ep2-b13-r7-sample
   date: 2026-08-09
@@ -1618,6 +1734,29 @@
   outcome: null
   miss_axis: null
   model_action: null
+  notes: >-
+    DELIBERATELY NOT SCORED BY THE 2026-08-09 ~14:40Z VERDICT, AND THE REASON IS
+    recorded so nobody scores it later by assuming. His words were "all the
+    goblin images look like female demihumans", which is sweeping enough to
+    sound like it covers this round — but **the r7 frames were never put on his
+    screen.** Item 10's card carries `LABELED-b13-r6.jpg` and no r7 sheet, by
+    this record's own G1 ruling: every frame regional IP-Adapter produced is
+    inadmissible until he approves a goblin reference, so the sheet exists as
+    evidence and not as a pick. Scoring a prediction against a verdict on
+    pictures he did not see would be inventing a verdict, which is the one thing
+    this file exists to prevent.
+
+    IT IS NOT `unjudged` EITHER, because it has not been superseded or
+    withdrawn — it is simply unseen, and it stays null until he addresses r7
+    directly or the branch is dropped.
+
+    WHAT HIS VERDICT DOES DO TO THIS RECORD IS STRONGER THAN A SCORE. Records 32
+    and 33 are scored on it, and this round was conditioned on the frame he
+    rejected, so r7's hypothesis was aimed at the wrong target regardless of how
+    the pixels came out. The finding that survives independently is the
+    technique one and it is worth keeping: the IP-Adapter transferred silhouette,
+    ears, hair and cloak consistently across four seeds, which had never happened
+    on this beat. The conditioning works; what it was conditioned on does not.
 
 # FIRST NON-STILL RECORD. `kind: video`, and the axes below are not the A1-A7
 # still axes — this predicts his verdict on a MECHANICAL fix, not on a frame he
@@ -1781,11 +1920,63 @@
     for a thing the shot still needs may have removed the model's whole vocabulary
     for drawing it, which is the same failure mode as the cloud wall, one turn
     later.
-  founder_verdict: null
-  founder_verdict_date: null
-  outcome: null
+  founder_verdict: |-
+    "and for the too blue image, its getting worse, many random girls and very
+    strange cloud formations."
+  founder_verdict_date: 2026-08-09
+  outcome: hit
   miss_axis: null
-  model_action: null
+  model_action: none
+  notes: >-
+    `reject_all` AT 0.90 HELD, ON THE AXIS IT NAMED. He rejected the set and led
+    with people — "many random girls" — which is `predicted_objection`'s A3
+    almost word for word. §3: a hit is "he rejected what the model expected him
+    to reject". This is the model's highest-confidence call to date and its
+    second hit, and both hits are rejections.
+
+    THE ROUND IS A REGRESSION AND THE PREDICTION BEING RIGHT DOES NOT SOFTEN IT.
+    These are two different facts and they are kept apart on purpose: the
+    steward correctly predicted a failure it had itself produced. Both of round
+    4's changes were aimed at faults he named on round 3, and both went
+    BACKWARDS in his reading — "its getting worse" is his comparison, not ours.
+    (1) People: r3 drew a girl in 2 of 4, r4 in 3 of 4, and he saw the increase.
+    (2) Clouds: r3 got "weird cloud formations", r4 got "very strange cloud
+    formations" — a stronger word on a round that added six cloud negatives.
+
+    THE MECHANISM THIS ROUND BET ON IS NOW DISCONFIRMED, WHICH IS THE ONLY
+    VALUABLE THING IN THIS RECORD. The seven-noun block (`woman, girl, boy,
+    child, person, face, hand`) was verified in the negative at render time on
+    the real path — the log printed PERSON SINGULARS PRESENT and "'humans' STILL
+    PRESENT False" — and it is the SAME block that returned 0 people in 4 of 4
+    on node 002b beat 01 r6, same model, same recipe, same pass. One beat
+    confirms it, one beat refutes it. So the rule as written into v1 and into
+    two shots.md round notes — "the generic plural does not bind and the
+    explicit singulars do" — is WRONG AS STATED and must not be cited again
+    without its counterexample.
+
+    THE AXIS THE MODEL DOES NOT HAVE IS STILL MISSING, AND THAT DEBT SITS ON
+    RECORD 3, NOT HERE. This record declared the cloud change unscoreable
+    ("three of the four frames are portraits and the fourth is not a sky") and
+    he scored it anyway. v1 has no axis that prices cloud COVERAGE against what
+    the prompt asked for or cloud FORM against the show's dialect, so this is
+    the second verdict in a row naming a fault the model cannot represent.
+    `model_action` is `none` on this record because §3 is explicit that only
+    misses drive v2 and this is a hit; the sky-composition axis is owed by
+    record 3, which is a miss, and this record is the evidence that strengthens
+    it rather than a second claim on it.
+
+    DIAGNOSIS IS ASSIGNED TO THE r5 LANE AND NOTHING IS QUEUED FROM HERE. Two
+    targeted fixes both regressed, so the next move is a diagnosis, not a third
+    prompt edit. The checkable question this record already wrote down goes with
+    it: `no humans` is a Danbooru POSITIVE tag meaning the picture has nobody in
+    it, and this genome lifts it into the NEGATIVE. That is verifiable against
+    the model card and the tag list OUTSIDE this repo before a frame is drawn,
+    and it would explain b06 r3, b10 r4's hand and foot, and this round at once.
+    ONE SAMPLE gates any r5 set.
+
+    BEAT 6 IS NOW THE ONLY BEAT IN EPISODE 1 WITHOUT AN APPROVED FRAME. He
+    answered beat 14 in the same message, so `build_status.scenes()` reads 14 of
+    15 and this beat is the single remaining slate.
 
 - id: ep1-b14-r4-provisional
   date: 2026-08-09
@@ -1852,11 +2043,62 @@
     every r3 frame by locking onto the vignette at the top edge. The A7 scores
     above are therefore a VISUAL reading, labelled as one. No apex percentage is
     published for this round.
-  founder_verdict: null
-  founder_verdict_date: null
-  outcome: null
-  miss_axis: null
-  model_action: null
+  founder_verdict: |-
+    "b14-r4-s3."
+  founder_verdict_date: 2026-08-09
+  outcome: partial
+  miss_axis: >-
+    A3 vs A7 — the tie-break, not the ranking. The set was pickable, which is
+    what `ratify` claimed, and `predicted_flip_to` named his exact frame. What
+    the model got wrong is the ORDER of the last two: it spent its A3 tie-break
+    on the soil line and he spent his on height.
+  model_action: reweight
+  notes: >-
+    HE TOOK THE FLIP, NOT THE PICK. `pick: b14-r4-s0`, he said `b14-r4-s3`, and
+    `predicted_flip_to: b14-r4-s3` had named that frame in advance with the
+    condition attached — "A7 again — 'still too short' on s0, in which case the
+    answer inside this set is s3". The condition was right and the primary was
+    wrong.
+
+    SCORED `partial` AND THE LETTER OF §3 IS QUOTED SO A LATER READER CAN
+    RESCORE. §3's `miss` clause reads "he picked something else", and read
+    literally that is what happened. It is scored `partial` on the record-29
+    precedent, which is this case mirrored: record 29 predicted `reject_all`
+    with `predicted_flip_to: b03-r4-s3`, he took `b03-r4-s3`, and it was scored
+    partial because the ranking was right and the verdict was not. Here the
+    VERDICT was right — he did ratify from this set, which no PICK prediction
+    before this one has achieved — and the ranking's second place was right.
+    That is at least as good as record 29 and is scored the same. If the founder
+    reads it as a miss, it is a miss; this is the steward scoring itself and the
+    reasoning is exposed rather than the number defended.
+
+    THE PICK PREDICTION IS STILL NOT A HIT AND THE HEADER SAYS SO. Five PICK
+    predictions now have verdicts and none has been ratified outright: records
+    3, 5, 30 and 33 are misses, this is a partial. The model has still never had
+    a frame of its own choosing taken.
+
+    THE REWEIGHT, AND IT IS THE THIRD TIME THE SAME TRADE HAS GONE THE SAME WAY.
+    s0 and s3 scored 26 and 25 and are the same frame but for the ground: s0 has
+    a soil line with the stem entering it, s3 has no ground at all. The steward
+    broke the tie on the beat's own script line, "Low at the base of the trunk:
+    roots gripping soil". Record 30 had ALREADY written the governing rule down
+    before this round drew — "when the steward's objection is script fidelity
+    and his preference is a named virtue, his virtue wins" — and this record
+    cited that rule in its own reasoning as an argument against its own pick,
+    and picked anyway. Beats 3, 10 and now 14. A7 outranks script fidelity on
+    this tree until he says otherwise; that is no longer a tendency to weigh, it
+    is a precedence rule to apply.
+
+    CALIBRATION HELD AGAIN. 0.40 was the lowest number on the page and the
+    reasoning named all three grounds for doubt, including the precedent that
+    actually beat it. The model knew which way it would break and picked the
+    other way, which is a decision-rule fault, not a calibration fault.
+
+    THE FRAME HE TOOK HAS THE FAULT THIS RECORD PRE-REGISTERED. "A FAULT IN ALL
+    FOUR, RECORDED BEFORE HE FINDS IT: THERE ARE NO ROOTS." `b14-r4-s3` has no
+    roots and no ground. He did not mention it and silence is not approval — the
+    frame is promoted, the fault is carried forward in `stills/README.md` and
+    `shots.md`, and it is his to re-open or ignore.
 
 # SECOND `kind: video` RECORD, and the first one written for a clip that had not
 # been looked at when the prediction was fixed. The prediction below was written
@@ -2071,3 +2313,126 @@
     real CLIP tokenizer before the render: positive 32 of 77, negative 51 of 77.
     Round 4's negative sat at the 77 ceiling with five terms sacrificed by
     fit_negative. Nothing this round asked for went unsent.
+
+# THIS RECORD DELIBERATELY MAKES NO PICK, AND THAT IS RECORD 32'S RULING RATHER
+# THAN modesty: "P2 is not a valid gate until he defines the goblin, and no r8
+# may be scored against the old one." r8 is not a gate attempt. It exists to put
+# four green goblins in front of him so he can say which one is his — the gap
+# record 32 named, that "this tree has never had an approved goblin, no character
+# sheet, no passed frame, nothing, and every round has been aiming at a target
+# only he can see." Predicting a verdict is still required by §3; picking a
+# favourite would be the exact error record 33 was scored a miss for.
+- id: ep2-b13-r8-sample
+  date: 2026-08-09
+  subject: "node 002b beat 13 — THE SHADE, round 8, the SPECIES correction (`green skin` + `plump` asserted, `female goblin` + `elf` negated)"
+  kind: still
+  candidates: [b13-r8-s0, b13-r8-s1, b13-r8-s2, b13-r8-s3]
+  address_key: "sheet LABELED-b13-r8.png; frames at genomes/sapling/nodes/002b-first-citizen/takes/stills/13-the-shade-r8-sN.png, sidecars beside them"
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  scores: {}
+  vetoed: []
+  totals: {}
+  observed_predicates:
+    note: >-
+      RECORDED AS OBSERVATIONS, NOT AS A GATE. P1/P3/P4 are the memo §5
+      predicates and still mean what they meant. P2 is suspended by record 32.
+      P5 and P6 are the two axes his verdict added and they are the steward's
+      reading of his words, not his ruling, so they describe rather than score.
+    P1_plant_is_a_plant:   {s0: fail, s1: pass, s2: pass, s3: pass}
+    P2_goblin_is_a_goblin: SUSPENDED — record 32
+    P3_no_fusion:          {s0: pass, s1: pass, s2: pass, s3: pass}
+    P4_two_silhouettes:    {s0: fail, s1: pass, s2: pass, s3: pass}
+    P5_not_female:         {s0: pass, s1: neutral, s2: AT RISK, s3: neutral}
+    P6_not_an_elf:         {s0: pass, s1: pass, s2: pass, s3: pass}
+    green_skin:            {s0: pass, s1: pass, s2: pass, s3: pass}
+    plump:                 {s0: fail, s1: pass, s2: pass, s3: pass}
+    broken_tusk:           {s0: fail, s1: fail, s2: fail, s3: fail}
+  predicted_verdict: reject_all
+  predicted_flip_to: null
+  predicted_objection: >
+    That the tusk is missing — it is 0 of 4, it is in his script's own sentence
+    ("enormous ears, one broken tusk, faded green patchwork cloak"), and none of
+    the three costume nouns arrived either. Then that these are the wrong KIND of
+    green creature: s1 and s3 are bald dome-heads that read Namekian or Yoda
+    rather than goblin, which is the "featureless dome-headed thing" record 32
+    already recorded him rejecting once. On s2, that it is still cute and still
+    arguably a girl — red eyes, blush, soft round face. And on s0, s1 and s3,
+    that the picture is dark: `Midday light` survived into the sent positive and
+    the model drew dusk anyway.
+  confidence: 0.85
+  reasoning: >
+    THE GREEN LEVER WORKED AND IT IS THE ONLY UNAMBIGUOUS RESULT IN THE ROUND.
+    `green skin` is 4 of 4. This is the attribute P2 turns on, it has never been
+    in a prompt on this beat, and record 34 filed it as a candidate precisely
+    because r7's regional IP-Adapter could not transfer it from an image — the
+    green in the reference was "a small, dark, low-contrast region" under a lit
+    white bob, so CLIP encoded the bob. Two words of Danbooru vocabulary did in
+    one 37-second run what an architecture change could not, which is the same
+    shape of finding as r6's: on this checkpoint, the tag name beats the
+    mechanism. That generalises past this beat and is the thing worth keeping
+    whatever he says about the pictures.
+
+    WHAT THE ROUND DOES NOT ESTABLISH, AND THE RECORD IS EXPLICIT SO NOBODY READS
+    THE GREEN AS SUCCESS. The founder's sentence had four axes and only one is
+    cleanly delivered. Male reads unambiguously on s0 alone; s1 and s3 are
+    gender-neutral rather than male, which is better than "female demihuman" but
+    is not what `1boy` and `male focus` were supposed to buy; s2 is the frame
+    closest to the failure he named. Round is 3 of 4. Not-an-elf is the quiet
+    success — none of the four is the pale graceful elf, and `elf` in the
+    negative is the likeliest reason — but all four keep long pointed ears, so
+    the predicted trade (negating `elf` costs the ears) did NOT bite, and the
+    ears are ordinary rather than "enormous".
+
+    THE ENVIRONMENT REGRESSED AND IT IS RECORDED RATHER THAN SMOOTHED. Three of
+    four are dark or dusk-lit despite `Midday light, cinematic lighting` being
+    verified present in the sent positive at 77 of 77 tokens. s0 additionally
+    loses the plant: there are grass tufts but no 40cm two-cotyledon seedling
+    reads as the second subject, so P1 and P4 fail on that frame after r6 took
+    them to 4/4. One frame is not a trend, but it is the first slippage on
+    predicates r6 bought and the next round must check them rather than assume.
+
+    WHY reject_all AT 0.85 AND WHY THAT NUMBER IS AN UPPER BOUND ON NOTHING. The
+    file's own calibration note says reject predictions have held 5 for 5 while
+    picks are 0 for 5, so a rejection is the class this model is actually
+    calibrated in. He has rejected this beat in every round it has run. Three
+    nouns from his own script — the tusk, the enormous ears, the faded green
+    patchwork cloak — are absent from all four frames, and he has twice rejected
+    sets for missing a thing he wrote down. It is not higher than 0.85 because
+    the round changes the species read enough that "definitely need to
+    regenerate" may become a narrower instruction instead of another rejection,
+    and a narrower instruction is what this round was actually for.
+
+    WHAT WOULD MAKE THIS ROUND A SUCCESS EVEN IF HE REJECTS ALL FOUR: one
+    sentence from him naming which green creature is his goblin. That is the
+    output being sought, not a frame.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+  notes: >-
+    THE BUDGET IS SPENT TO THE LAST TOKEN AND THE NEXT ROUND MUST BUY BEFORE IT
+    ADDS. Measured on the box's real CLIP tokenizer before the render: positive
+    exactly 77 of 77 with the style anchor and the plant sentence intact,
+    negative 76 fitted to 73 sent. Every variant carrying a third species tag
+    (`colored skin`, or `male focus`) came back at 62 tokens WITH THE STYLE
+    ANCHOR DELETED, which is the r4 defect this beat already paid for once. So
+    `colored skin`, `male focus` and `pointy ears` are filed and not bundled, and
+    any round that wants one of them must cut something to pay for it. This
+    script asserts the anchor survived, which r6 never had to at 72 of 77; that
+    assertion is new in r8 and should stay in whatever renders this beat next.
+
+    THE TUSK IS THE CHEAPEST UNTRIED LEVER AND IT IS FILED HERE SO IT IS NOT
+    REDISCOVERED. `tusks` is a real Danbooru tag and the script asks for "one
+    broken tusk". It has never been in a positive on this beat. It was left out
+    of r8 only because the budget bought two tags and `green skin` and `plump`
+    were the two the founder's sentence weighted highest. If he asks where the
+    tusk is, the answer is that it was affordable and deferred, not that it was
+    tried and failed.
+
+    NOT SCORED AGAINST THE OLD GATE, BY RULE. Record 32: "P2 is not a valid gate
+    until he defines the goblin, and no r8 may be scored against the old one."
+    The predicate block above is observation. No wave fires off this beat, the
+    sheet was built but not opened, and nothing went on his screen.
