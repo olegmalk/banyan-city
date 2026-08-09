@@ -93,6 +93,13 @@ MACHINES = {
     "msi": ("the fast-GPU laptop", "🏭"),
     "rtx5090": ("the big render house", "🏟"),
 }
+# NOT EVERY farm-results-* BRANCH IS A MACHINE. `farm-results-hand` is the
+# channel a hand-run claims a queue task on (pipeline/claim_task.py) — there is
+# no box behind it, so a building for it would publish a machine that is
+# permanently "faded = not heard from", i.e. a dead render box that does not
+# exist. read_machines() drops these; nothing else about them changes, and
+# queue_promoter still reads their DONE lines exactly as it reads a worker's.
+NOT_A_MACHINE = {"hand"}
 STATE_WORDS = {  # css state → the legend under the town
     "working": "glowing = rendering right now",
     "idle": "dim = switched on, not rendering",
@@ -664,6 +671,8 @@ def read_machines(queue: list, backlog: list = None, now=None) -> list:
     out = []
     for branch in farm_branches():
         key = branch.split("farm-results-")[-1]
+        if key in NOT_A_MACHINE:
+            continue
         nice, emoji = MACHINES.get(key, (key, "🏠"))
         tail = branch_heartbeat(branch)
         hist = heartbeat_history(branch)

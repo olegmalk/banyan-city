@@ -42,6 +42,7 @@ Usage:
 
 import argparse
 import os
+import hashlib
 import json
 import math
 import re
@@ -765,6 +766,103 @@ def beat_provenance(clips: list) -> dict:
             "cost_usd": round(sum((float(p.get("cost_usd", 0) or 0) for p in provs), 0.0), 4)}
 
 
+# --------------------------------------------------- what went into the cut
+# The platform line for the assembly step itself. VERBATIM from the licence
+# table (`local-deterministic (pipeline/hold_still.py, render_t3.py, ffmpeg)` →
+# CC-BY-4.0, our own output), and pinned there by test_pipeline's UNCHANGED set.
+# Inventing a new phrasing here would hand the gate an unclassified string and
+# make every cut we assemble 'unknown', i.e. unpublishable, for no reason.
+ASSEMBLY_PLATFORM = "local-deterministic (pipeline/hold_still.py, render_t3.py, ffmpeg)"
+
+
+def file_sha256(p: Path) -> str:
+    """sha256 of a file's bytes, read in chunks — a 90s cut's inputs are large."""
+    h = hashlib.sha256()
+    with p.open("rb") as fh:
+        for block in iter(lambda: fh.read(1 << 20), b""):
+            h.update(block)
+    return h.hexdigest()
+
+
+def ingredient_row(src: Path, beat: int, kind: str) -> dict:
+    """One line of a cut's `ingredients:` manifest: what went in, which bytes,
+    and what the licence gate said about it AT THIS MOMENT.
+
+    THE HOLE THIS FILLS. build_site.publishable() reads a file's own sidecar, and
+    a concatenation keeps no trace of its inputs — so muxing N clips produced one
+    new file with one clean record and every refusal inside it laundered. Two
+    live instances were plugged by hand-written sidecars on 2026-08-09 (the
+    provisional ep2 cut and v33, both made of material refused one directory
+    down); a hand-plug is per-cut and does not survive the next assembly. This is
+    the assembly writing down what it knows at the only moment it knows it.
+
+    ASKS build_site.publishable ITSELF rather than re-deriving the verdict, the
+    same way this module already borrows render_local.approved() for §6: one
+    gate, one implementation. Imported inside the function because build_site
+    pulls in markdown and the site theme, which an assembly has no other use for.
+    """
+    from build_site import publishable
+    ok, why = publishable(src)
+    resolved = src.resolve()
+    try:
+        rel = resolved.relative_to(REPO).as_posix()
+    except ValueError:
+        # Footage from outside the tree. Recorded as its absolute path, which
+        # will not resolve on another machine — and that is the honest answer:
+        # a cut nobody else can check the inputs of is a cut nobody else should
+        # publish. The gate reads an unresolvable ingredient as a refusal.
+        rel = resolved.as_posix()
+    row = {"beat": beat, "kind": kind, "path": rel,
+           "sha256": file_sha256(src), "publishable": bool(ok)}
+    if why:
+        row["why"] = why
+    return row
+
+
+def assembly_sidecar(out: Path, node_id: str, leaf: str, cost: float,
+                     beats: int, sources: list, ingredients: list,
+                     seconds: float, all_clips: list) -> Path:
+    """Write `<cut>.mp4.meta.yaml` — the record that lets the gate see inside.
+
+    Written for BENCH CUTS TOO, and that is the point rather than an oversight:
+    the review page serves working cuts out of `cuts/`, every one of them made
+    with `--out`, and those are exactly the files that had no record at all.
+
+    `model:` is the join across every source clip, the same rule beat_provenance
+    applies within one beat, so an LTX beat inside a Wan cut is named in the
+    cut's own top line and refused by publishable()'s ordinary path before the
+    manifest is even walked. Belt and braces on purpose: the join catches a
+    licence, the manifest catches a licence AND a substitution.
+    """
+    prov = beat_provenance(all_clips)
+    footage = sorted({r["beat"] for r in ingredients if r["kind"] == "clip"})
+    body = {
+        "platform": ASSEMBLY_PLATFORM,
+        "model": prov["model"],
+        "cost_usd": cost,
+        "node": node_id,
+        "leaf": leaf or "bench (--out) — no leaf, not canon",
+        "beats": beats,
+        "footage_beats": footage,
+        "slate_beats": [b for b in range(1, beats + 1) if b not in footage],
+        "duration_s": round(seconds, 2),
+        "size": f"{WIDTH}x{HEIGHT}",
+        "source_platforms": prov["platform"],
+        "ingredients": ingredients,
+        "sources": sources,
+    }
+    side = out.with_name(out.name + ".meta.yaml")
+    side.write_text(
+        "# Assembly provenance (§7.2) — written by pipeline/render_t3.py at\n"
+        "# assembly time. `ingredients:` is the list build_site.publishable()\n"
+        "# walks: one row per file muxed into this cut, its bytes as muxed, and\n"
+        "# the verdict it carried then. A row that no longer resolves, no longer\n"
+        "# hashes the same, or no longer passes is a REFUSAL for this whole cut —\n"
+        "# a concatenation must not launder what went into it.\n"
+        + yaml.safe_dump(body, sort_keys=False, allow_unicode=True), encoding="utf-8")
+    return side
+
+
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("genome")
@@ -803,6 +901,11 @@ def main() -> int:
     # timeline: ordered (video_part, duration, audio_or_None) — audio aligns to
     # each part's slot so VO stays in sync; cards are silent.
     timeline, sources, missing = [], [], 0
+    # every file muxed in that the assembly did not itself make — see
+    # ingredient_row(). Cards, slates and captions are generated here from repo
+    # text, so they are not ingredients; a TTS take written into workdir is not
+    # one either, and recording its temp path would refuse the cut forever.
+    ingredients, all_clips = [], []
 
     tts_cost = 0.0
     tts_fn = None
@@ -870,6 +973,10 @@ def main() -> int:
                         **({"voice_engine": manifest["engine"]}
                            if manifest and manifest.get("engine") else {}),
                         **beat_provenance(beat_clips)})
+        all_clips += beat_clips
+        ingredients += [ingredient_row(c, i, "clip") for c in beat_clips]
+        if audio is not None and workdir not in audio.parents:
+            ingredients.append(ingredient_row(audio, i, "audio"))
 
     if mismatched:
         print(f"  IGNORED {len(mismatched)} clip(s) made for a different beat "
@@ -1099,6 +1206,18 @@ def main() -> int:
     cost = round(tts_cost + sum(s["cost_usd"] for s in sources), 2)
     print(f"✓ assembled {out.name}: {len(beats)} beats ({len(beats) - missing} footage, "
           f"{missing} slate), ~{total:.0f}s, cost ${cost:.2f}")
+
+    # BEFORE the bench return, because a bench cut is exactly the file that had
+    # no record: `cuts/` is served to the review page and every cut in it was
+    # made with --out.
+    side = assembly_sidecar(out, node["id"], "" if args.out else leaf_id, cost,
+                            len(beats), sources, ingredients, total, all_clips)
+    blocked = [r for r in ingredients if not r["publishable"]]
+    print(f"  ↳ {side.name}: {len(ingredients)} ingredient(s)"
+          + (f", {len(blocked)} REFUSED by the licence gate — this cut will be "
+             "withheld from the site" if blocked else ""))
+    for r in blocked[:6]:
+        print(f"    ✗ {r['path']} — {r.get('why', 'refused')}")
 
     if args.out:
         return 0  # bench render — no leaf, no lineage

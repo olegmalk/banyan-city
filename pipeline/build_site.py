@@ -451,8 +451,23 @@ PUBLIC_REASON = {
     "unknown": "its licence has not been cleared for redistribution yet",
 }
 
+# The same, for a CUT — a file whose own record is clean and whose insides are
+# not. Each is completed by the caller with the ingredient it is about, so a
+# reader is told which piece of the episode failed and not merely that one did.
+COMPOSITE_REASON = {
+    "refused": "it was assembled from material this site cannot publish",
+    "missing": "it was assembled from a file the repo no longer carries, so "
+               "nobody can check what is inside it",
+    "unrecorded": "one of the files assembled into it has no provenance record "
+                  "beside it, so nothing says what made it",
+    "changed": "one of the files assembled into it has changed since it was "
+               "cut, so its record no longer describes what is inside it",
+    "unverifiable": "its record of what went into it is incomplete, so what is "
+                    "inside it cannot be checked",
+}
 
-def publishable(f: Path) -> tuple:
+
+def publishable(f: Path, _inside: frozenset = frozenset()) -> tuple:
     """(ok, why) — may this take be copied onto the public site?
 
     The shot board publishes `takes/clips/` wholesale (D11: the crowd can only
@@ -466,6 +481,17 @@ def publishable(f: Path) -> tuple:
     once is enforced everywhere. Records (sidecars, manifests) always travel:
     withholding the provenance of a withheld clip would be the exact opposite
     of the point.
+
+    A FILE'S OWN RECORD IS NOT THE WHOLE ANSWER WHEN THE FILE IS A CUT. Muxing
+    N clips into one mp4 used to produce one new file with one clean record and
+    no way to ask what went into it, so every refusal inside a concatenation was
+    laundered by the concatenation — the gate cleared episode 2 and v33 on
+    2026-08-09 while the LTX-2 footage and the animagine stills they are made of
+    were refused one directory down (D16, D15). `ingredients:` is render_t3
+    writing down what it muxed, and `composite_publishable` below is this
+    function asking that list the same question it asked about the file itself.
+    `_inside` is the ingredient chain already being judged, so a manifest that
+    names itself is answered once instead of forever.
     """
     if f.suffix.lower() in {".yaml", ".yml", ".json", ".md"}:
         return True, ""
@@ -511,6 +537,67 @@ def publishable(f: Path) -> tuple:
             # drawers. The licence NAME stays, because that part is genuinely
             # informative and a reader can look it up.
             return False, f"{PUBLIC_REASON[verdict]} ({public_licence(licence)})"
+    return composite_publishable(data, f, _inside)
+
+
+def composite_publishable(data: dict, f: Path, inside: frozenset = frozenset()) -> tuple:
+    """(ok, why) for the `ingredients:` manifest an assembled cut carries.
+
+    A cut is only as publishable as the material inside it, and the mp4 itself
+    cannot be asked — a concatenation keeps no trace of its inputs. So render_t3
+    writes one row per source file at the moment it muxes them (path, sha256,
+    and the verdict that file carried then) and this re-asks the question now.
+
+    FOUR WAYS A ROW FAILS, and three of them are absences. That is deliberate,
+    and it is the same rule lint applies to a missing record: an ingredient we
+    cannot resolve is a REFUSAL, never a pass. A manifest is a claim about what
+    is inside a file nobody can look inside; a claim that cannot be checked buys
+    the cut nothing, and treating it as a pass would make deleting a row the
+    cheapest way past the gate.
+
+      1. the row's own recorded verdict was already `publishable: false`
+      2. the file it names is not on disk, or the row names no file, or names it
+         without a hash — nothing to check the cut against
+      3. the file is there and no longer hashes to the recorded value — the cut
+         holds bytes this manifest does not describe
+      4. the file is there, unchanged, and refused NOW — by its own sidecar,
+         which is checked with the same publishable() the cut went through, so a
+         licence reclassified after assembly is caught on the next build
+
+    Paths are repo-relative (render_t3 writes them that way whenever the source
+    is inside the tree) and fall back to the cut's own directory, which is what
+    makes a cut assembled and judged inside one temp directory answerable at all.
+    """
+    rows = data.get("ingredients")
+    if rows is None:
+        return True, ""
+    if not isinstance(rows, list) or not all(isinstance(r, dict) for r in rows):
+        return False, f"{COMPOSITE_REASON['unverifiable']} (its ingredient list is unreadable)"
+    inside = inside | {str(f.resolve())}
+    for row in rows:
+        rel = str(row.get("path") or "").strip()
+        want = str(row.get("sha256") or "").strip().lower()
+        label = rel or "an unnamed source file"
+        if row.get("publishable") is False:
+            note = str(row.get("why") or "").strip()
+            return False, (f"{COMPOSITE_REASON['refused']} — {label}"
+                           + (f": {note}" if note else ""))
+        if not rel or not want:
+            return False, f"{COMPOSITE_REASON['unverifiable']} ({label})"
+        src = Path(rel) if Path(rel).is_absolute() else REPO / rel
+        if not src.exists():
+            src = f.parent / Path(rel).name
+        if not src.exists():
+            return False, f"{COMPOSITE_REASON['missing']} ({label})"
+        if bytes_sha256(src) != want:
+            return False, f"{COMPOSITE_REASON['changed']} ({label})"
+        if lg.sidecar_for(src, lg.RECORD_SIDECAR_EXT) is None:
+            return False, f"{COMPOSITE_REASON['unrecorded']} ({label})"
+        if str(src.resolve()) in inside:
+            continue                      # already being judged further up
+        ok, why = publishable(src, inside)
+        if not ok:
+            return False, f"{COMPOSITE_REASON['refused']} — {label}: {why}"
     return True, ""
 
 

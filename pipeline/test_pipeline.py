@@ -4703,6 +4703,311 @@ def test_every_served_cut_posters_the_frame_its_record_names():
               f"honoured): {', '.join(sorted(blank)[:6])}")
 
 
+# ====================================================================== #
+# A HAND-RUN THAT BORROWS A QUEUE ID CLAIMS IT
+# — queue-id-borrowed-by-hand-run-1786190580, the lead's ruling of 2026-08-08
+#
+# `002b-b01-video-5b-1786089900` asked for seconds 2.5; the clip carrying that
+# id in its sidecar is 4.71s and no `DONE task=` line for it exists anywhere. The
+# render was hand-run with the queue entry's id and a different recipe, so the
+# promoter could not retire the entry and it read as unstarted while its output
+# was already on the review page. The ruling: a hand-run carrying a queue id MUST
+# write the STARTED/DONE lines. claim_task.py is what makes that the short path.
+#
+# These pin the parts that break silently: the LINE FORMAT (every reader keys on
+# `task=(\S+)`, and a line the readers cannot parse is worse than no line), the
+# exit-code mapping, and the refusal to claim an id nobody filed.
+# ====================================================================== #
+
+
+def test_a_hand_claim_writes_lines_every_reader_already_parses():
+    """The line format is the contract, and its two readers are the test.
+
+    farm_worker.heartbeat_attempts() decides whether a task is retried and
+    queue_promoter.parse_done() decides whether it is retired. A helper that
+    writes a line neither of them keys on would be worse than writing nothing:
+    it would look like a claim in the log and count for nothing anywhere.
+    """
+    import claim_task as ct
+    import farm_worker as fw
+    import queue_promoter as qp
+
+    tid = "002b-b01-video-5b-1786089900"
+    started = ct.heartbeat_line("started", tid, note="hand-run, ltx_i2v")
+    done = ct.heartbeat_line("done", tid)
+
+    check("a hand STARTED line is stamped and marks the id",
+          started.split()[1] == "STARTED" and f"task={tid}" in started)
+    check("a note follows the id and never joins it — \\S+ would swallow it",
+          f"task={tid} " in started and started.rstrip().endswith("ltx_i2v"))
+
+    log = "\n".join([started, done]) + "\n"
+    done_ids, attempts = fw.heartbeat_attempts(log)
+    check("the worker's own reader sees the task as done", done_ids == {tid})
+    # The DONE set is what excludes a finished task from being picked up again
+    # (finished_tasks reads it); the attempt count just records honestly that one
+    # run happened. Both come off the same two lines.
+    check("...and the same lines record exactly one run of it", attempts.get(tid) == 1)
+    check("the promoter's DONE reader retires on the same line", qp.parse_done(log) == {tid})
+
+    # INTERRUPTED subtracts a start, exactly as it does for the worker — a Ctrl+C
+    # in a hand-run must not spend an attempt either.
+    stopped = "\n".join([ct.heartbeat_line("started", tid),
+                         ct.heartbeat_line("interrupted", tid)]) + "\n"
+    check("an interrupted hand-run costs no attempt",
+          fw.heartbeat_attempts(stopped)[1].get(tid, 0) == 0)
+    failed = "\n".join([ct.heartbeat_line("started", tid),
+                        ct.heartbeat_line("fail", tid, note="OOM")]) + "\n"
+    check("a failed hand-run counts as one attempt, like the worker's",
+          fw.heartbeat_attempts(failed)[1].get(tid) == 1)
+
+    # The append log is never rewritten: two starts are two attempts, and a
+    # helper that de-duplicated them would hand a crash loop a fresh budget.
+    twice = ct.append_line(ct.append_line("", ct.heartbeat_line("started", tid)),
+                           ct.heartbeat_line("started", tid))
+    check("two claims of the same id are two attempts, not one",
+          fw.heartbeat_attempts(twice)[1].get(tid) == 2)
+    check("append_line repairs a heartbeat that lost its final newline",
+          ct.append_line("07:00:00Z STARTED task=x", "07:01:00Z DONE task=x")
+          == "07:00:00Z STARTED task=x\n07:01:00Z DONE task=x\n")
+
+
+def test_a_hand_claim_reads_the_verdict_off_the_exit_code():
+    """DONE is written from the exit code, never from intent.
+
+    That is the whole reason the wrapper form exists: the STARTED line and the
+    DONE line cannot be forgotten separately from the run, and a crash cannot
+    leave a bare STARTED behind — which is the state that made the 5090's
+    bluescreened AnimeGen task look brand new forever.
+    """
+    import claim_task as ct
+    check("exit 0 is DONE", ct.stage_for(0) == "done")
+    check("a non-zero exit is FAIL, not DONE", ct.stage_for(1) == "fail")
+    check("SIGINT is INTERRUPTED — a Ctrl+C is not a failed render",
+          ct.stage_for(130) == "interrupted" and ct.stage_for(-2) == "interrupted")
+    check("every stage the CLI offers is one the readers key on",
+          set(ct.STAGES) == {"started", "done", "fail", "interrupted"})
+
+    # The `--` split is done by hand because argparse.REMAINDER swallows every
+    # flag after the first positional: `claim_task.py <id> started --note x`
+    # parsed `--note x` as a command to run and then rejected the whole call.
+    own, cmd = ct.split_command(["t1", "started", "--note", "x"])
+    check("our own flags stay ours when there is no command",
+          own == ["t1", "started", "--note", "x"] and cmd == [])
+    own, cmd = ct.split_command(["t1", "--no-push", "--", "python3", "-c", "print(1)"])
+    check("everything after the first bare -- is the wrapped command",
+          own == ["t1", "--no-push"] and cmd == ["python3", "-c", "print(1)"])
+    own, cmd = ct.split_command(["t1", "--", "sh", "-c", "a -- b"])
+    check("...and a second -- inside the command is the command's business",
+          cmd == ["sh", "-c", "a -- b"])
+
+
+def test_a_hand_claim_refuses_an_id_nobody_filed():
+    """The other half of the ruling: do not claim what was never queued.
+
+    `DONE task=<id>` means "that queue entry ran". A line for an id in no list
+    retires nothing and tells the next reader an entry exists when none does —
+    the same untruth as a borrowed id, pointed the other way.
+    """
+    import claim_task as ct
+
+    text = (
+        "tasks:\n"
+        "- id: real-farm-task-1786000000\n"
+        "  worker: rtx5090\n"
+        "backlog:\n"
+        "- id: real-manual-task-1786000001\n"
+        "  runner: manual\n"
+        "  why: a person runs this one\n")
+    check("an id in tasks: is claimable",
+          (ct.queue_entry(text, "real-farm-task-1786000000") or {}).get("worker") == "rtx5090")
+    # backlog too: a `runner: manual` entry never leaves backlog, and manual
+    # entries are exactly the ones a person runs by hand.
+    check("an id in backlog: is claimable, because manual work never leaves it",
+          (ct.queue_entry(text, "real-manual-task-1786000001") or {}).get("runner") == "manual")
+    check("an id in neither list is not a task", ct.queue_entry(text, "invented-1786000002") is None)
+
+    # And the live file answers for the ids this tool was filed about.
+    live = (REPO / "pipeline" / "farm-queue.yaml").read_text(encoding="utf-8")
+    check("the real queue parses and answers for a real id",
+          ct.queue_entry(live, "composite-provenance-manifest-1786218000") is not None)
+    check("the real queue does not answer for an invented id",
+          ct.queue_entry(live, "no-such-task-0000000000") is None)
+
+    # The claim branch is NOT a worker's: Courier force-pushes farm-results-<name>
+    # from the box's own disk, so a line written to one would be erased by the
+    # machine it borrowed. And the status page must not grow a building for it.
+    import build_sim as bs
+    check("hand claims land on their own branch, which no worker force-pushes",
+          ct.HAND_BRANCH == "farm-results-hand")
+    check("...and the town does not publish it as a machine that is never on",
+          ct.HAND_BRANCH.split("farm-results-")[-1] in bs.NOT_A_MACHINE)
+    check("...while the real machines all still have buildings",
+          not (set(bs.MACHINES) & bs.NOT_A_MACHINE))
+
+
+# ====================================================================== #
+# A CONCATENATION MUST NOT LAUNDER WHAT WENT INTO IT
+# — composite-provenance-manifest-1786218000
+#
+# publishable() read a file's OWN sidecar and nothing else, so the moment N
+# clips were muxed into one mp4 the gate saw one new file with one clean record
+# and no way to ask what was inside it. On 2026-08-09 that cleared two cuts whose
+# footage and stills are refused one directory down (D16 LTX-2, D15 animagine);
+# both were plugged by hand-written composite sidecars, and a hand-plug is
+# per-cut — the next assembly re-opens the hole.
+#
+# render_t3 now writes `ingredients:` (one row per muxed file: path, sha256 as
+# muxed, verdict at assembly time) and composite_publishable() walks it. These
+# three pin the three answers that matter: refused stays refused through a
+# concat, a manifest that no longer describes the file it names is a refusal,
+# and a clean cut is untouched.
+# ====================================================================== #
+
+
+def _cut_with_ingredients(tmp: Path, rows: list) -> Path:
+    """A cut mp4 plus the assembly sidecar render_t3 writes beside it."""
+    import yaml as _y
+    cut = tmp / "ep1-v34.mp4"
+    cut.write_bytes(b"a concatenated episode")
+    (tmp / (cut.name + ".meta.yaml")).write_text(_y.safe_dump(
+        {"platform": "local-deterministic (pipeline/hold_still.py, render_t3.py, ffmpeg)",
+         "model": "none", "cost_usd": 0.0, "ingredients": rows}, sort_keys=False))
+    return cut
+
+
+def _clip(tmp: Path, name: str, body: bytes, model: str) -> tuple:
+    """A source clip and its own sidecar. Returns (path, sha256)."""
+    import hashlib
+
+    import yaml as _y
+    p = tmp / name
+    p.write_bytes(body)
+    (tmp / (name + ".meta.yaml")).write_text(_y.safe_dump(
+        {"platform": "local-gpu (rtx5090)", "model": model, "cost_usd": 0}, sort_keys=False))
+    return p, hashlib.sha256(body).hexdigest()
+
+
+def test_a_cut_holding_one_refused_ingredient_does_not_publish(tmp: Path):
+    """One bad clip out of three withholds the whole cut, and says which one.
+
+    The cut's own record is spotless — this is the laundering case exactly: an
+    assembly whose top line is honest and whose insides are not. The reason
+    string has to name the ingredient, because "this episode is withheld" with no
+    path in it is a message nobody can act on.
+    """
+    import build_site as bs
+
+    good, good_sha = _clip(tmp, "01-a.mp4", b"wan footage", "Wan-AI/Wan2.2-TI2V-5B-Diffusers")
+    bad, bad_sha = _clip(tmp, "13-b.mp4", b"pixverse footage", "PixVerse V6")
+    check("the clean ingredient publishes on its own", bs.publishable(good) == (True, ""))
+    check("the refused ingredient does not publish on its own", bs.publishable(bad)[0] is False)
+
+    cut = _cut_with_ingredients(tmp, [
+        {"beat": 1, "kind": "clip", "path": good.name, "sha256": good_sha, "publishable": True},
+        {"beat": 13, "kind": "clip", "path": bad.name, "sha256": bad_sha, "publishable": False,
+         "why": bs.publishable(bad)[1]},
+    ])
+    ok, why = bs.publishable(cut)
+    check("a cut containing one refused clip is withheld", ok is False)
+    check("...and the reason names the clip, not just the cut", "13-b.mp4" in why)
+
+    # The row's recorded verdict is not the only defence: a manifest that claims
+    # every ingredient passed is still re-asked, so a licence reclassified after
+    # assembly is caught on the next build rather than never.
+    lying = _cut_with_ingredients(tmp, [
+        {"beat": 13, "kind": "clip", "path": bad.name, "sha256": bad_sha, "publishable": True},
+    ])
+    check("a manifest claiming a refused clip passed is overruled by re-asking",
+          bs.publishable(lying)[0] is False)
+
+
+def test_a_cut_whose_manifest_no_longer_describes_its_inputs_does_not_publish(tmp: Path):
+    """Changed bytes, a deleted file and a row with no hash are all refusals.
+
+    Three absences, one rule: an ingredient we cannot resolve is a REFUSAL and
+    never a pass — the same way lint reads a missing record. A manifest is a
+    claim about a file nobody can look inside, so a claim that cannot be checked
+    must buy the cut nothing; otherwise deleting a row is the cheapest way past
+    the gate.
+    """
+    import build_site as bs
+
+    clip, sha = _clip(tmp, "01-a.mp4", b"the bytes that were muxed", "Wan-AI/Wan2.2-TI2V-5B-Diffusers")
+    row = {"beat": 1, "kind": "clip", "path": clip.name, "sha256": sha, "publishable": True}
+    cut = _cut_with_ingredients(tmp, [dict(row)])
+    check("the cut publishes while the manifest still describes the file", bs.publishable(cut) == (True, ""))
+
+    clip.write_bytes(b"different footage under the same name")
+    ok, why = bs.publishable(cut)
+    check("a source file that changed since the cut was made withholds the cut", ok is False)
+    check("...and the reason says the record no longer describes the contents",
+          "changed" in why and clip.name in why)
+
+    clip.unlink()
+    ok, why = bs.publishable(cut)
+    check("a source file the repo no longer carries withholds the cut", ok is False)
+    check("...and says so rather than passing on an unresolvable row", "no longer carries" in why)
+
+    # An ingredient with no hash cannot be checked against anything.
+    nohash = tmp / "nohash"
+    nohash.mkdir()
+    _clip(nohash, "01-a.mp4", b"the bytes that were muxed", "Wan-AI/Wan2.2-TI2V-5B-Diffusers")
+    unhashed = _cut_with_ingredients(
+        nohash, [{"beat": 1, "kind": "clip", "path": "01-a.mp4", "publishable": True}])
+    check("a row naming a file with no hash is unverifiable, so withheld",
+          bs.publishable(unhashed)[0] is False)
+
+    # And an ingredient with no record beside it: unprovenanced is a pass for a
+    # standalone take (the gate's finding, not the build's) and a REFUSAL inside
+    # a cut, because the manifest promised the cut could be audited.
+    bare = tmp / "bare"
+    bare.mkdir()
+    import hashlib
+    raw = bare / "02-c.mp4"
+    raw.write_bytes(b"no sidecar anywhere")
+    check("a clip with no record publishes on its own", bs.publishable(raw) == (True, ""))
+    cut2 = _cut_with_ingredients(bare, [
+        {"beat": 2, "kind": "clip", "path": raw.name,
+         "sha256": hashlib.sha256(b"no sidecar anywhere").hexdigest(), "publishable": True}])
+    check("...and withholds the cut it is muxed into", bs.publishable(cut2)[0] is False)
+
+
+def test_a_cut_whose_ingredients_all_pass_publishes_unchanged(tmp: Path):
+    """The regression guard on the other side: this must not withhold everything.
+
+    A gate that refuses a clean cut is as broken as one that clears a dirty one,
+    and it fails in the direction nobody notices until the review page is empty.
+    Also pins the no-manifest case: every cut assembled before today has no
+    `ingredients:` block at all, and those keep answering exactly as they did.
+    """
+    import build_site as bs
+
+    a, a_sha = _clip(tmp, "01-a.mp4", b"wan beat one", "Wan-AI/Wan2.2-TI2V-5B-Diffusers")
+    b, b_sha = _clip(tmp, "02-b.mp4", b"a held still push-in", "none")
+    cut = _cut_with_ingredients(tmp, [
+        {"beat": 1, "kind": "clip", "path": a.name, "sha256": a_sha, "publishable": True},
+        {"beat": 2, "kind": "clip", "path": b.name, "sha256": b_sha, "publishable": True},
+    ])
+    check("a cut whose every ingredient passes publishes, with no warning",
+          bs.publishable(cut) == (True, ""))
+
+    plain = tmp / "old-cut.mp4"
+    plain.write_bytes(b"assembled before manifests existed")
+    (tmp / "old-cut.mp4.meta.yaml").write_text(
+        "platform: local-deterministic (pipeline/hold_still.py, render_t3.py, ffmpeg)\n"
+        "model: none\ncost_usd: 0\n")
+    check("a cut with no ingredients block is judged exactly as it was before",
+          bs.publishable(plain) == (True, ""))
+
+    # render_t3 writes the platform line VERBATIM from the licence table; if that
+    # string ever stops resolving to an allow, every cut we assemble goes unknown.
+    import licence_gate as lg
+    import render_t3 as _t3
+    check("the assembly platform line render_t3 writes is a classified allow",
+          lg.classify(lg.engine_licence(_t3.ASSEMBLY_PLATFORM))[0] == "allow")
+
+
 def main():
     import tempfile
     test_beat_duration_from_timecode()
@@ -4826,6 +5131,18 @@ def main():
     with tempfile.TemporaryDirectory() as td:
         test_a_shot_that_records_no_still_gets_no_poster(Path(td))
     test_every_served_cut_posters_the_frame_its_record_names()
+    # A HAND-RUN THAT BORROWS A QUEUE ID CLAIMS IT — pure: no git, no network.
+    test_a_hand_claim_writes_lines_every_reader_already_parses()
+    test_a_hand_claim_reads_the_verdict_off_the_exit_code()
+    test_a_hand_claim_refuses_an_id_nobody_filed()
+    # A CONCATENATION MUST NOT LAUNDER ITS INPUTS — own temp dir each: these
+    # rewrite and delete source clips under a manifest that names them.
+    with tempfile.TemporaryDirectory() as td:
+        test_a_cut_holding_one_refused_ingredient_does_not_publish(Path(td))
+    with tempfile.TemporaryDirectory() as td:
+        test_a_cut_whose_manifest_no_longer_describes_its_inputs_does_not_publish(Path(td))
+    with tempfile.TemporaryDirectory() as td:
+        test_a_cut_whose_ingredients_all_pass_publishes_unchanged(Path(td))
     print()
     if FAILURES:
         print(f"✗ {len(FAILURES)} failure(s): {', '.join(FAILURES)}")
