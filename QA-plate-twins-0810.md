@@ -33,9 +33,14 @@ ran the policy it claimed to run rather than something nearby.
 | **08-ltx-r2-plate-s20260739** | 17.22 | **2.83** | **COVER-CROP** |
 | 07-ltx-r5-g20-s20260738 (raw init, pair) | 2.76 | 11.88 | STRETCH |
 | **07-ltx-r5-g20-plate-s20260738** | 11.81 | **2.69** | **COVER-CROP** |
+| 07-ltx-r4-s20260738 (raw init, pair) | 2.72 | 11.86 | STRETCH |
+| **07-ltx-r4-plate-s20260738** | 11.77 | **2.63** | **COVER-CROP** |
+| 04-ltx-r4-s20260735 (raw init, pair) | 3.57 | 16.93 | STRETCH |
+| **04-ltx-r4-plate-s20260735** | 16.66 | **3.22** | **COVER-CROP** |
+| *04-the-fall.mp4 — already in the v34 cut* | *16.54* | *1.41* | *COVER-CROP* |
 
-Exactly inverted, on two different beats with two different stills and two
-different guidance values (1.0 and 2.0) — and inverted the right way round: the
+Exactly inverted, on three beats with three stills and two guidance values
+(1.0 and 2.0) — and inverted the right way round: the
 plate arms now measure the way the clips already in the v34 cut measure
 (1.64 vs crop, 11.68 vs stretch), the raw arms the way the stretched
 replacements do.
@@ -43,6 +48,23 @@ replacements do.
 The `vs crop` figure for a passing twin sits at 2.7-2.8 rather than 0 because a
 clip's frame 0 is a diffusion output conditioned on the plate, not a copy of it.
 The pairing is what carries the finding, not the absolute value.
+
+### The row that settles it
+
+`04-the-fall.mp4` is the clip **already in the v34 cut**, and it measures on the
+same side as the twins (1.41 vs crop) and the opposite side from the raw-init
+replacement that was rendered to replace it (16.93 vs crop). The twin is not a
+new framing — it is the framing the cut already uses. The replacement was the
+odd one out.
+
+That matters most on beat 04, where the correction is large and obvious rather
+than subtle. `AB04-vs-cut.png` puts the three frame 0s side by side: the twin
+sits on top of the cut clip, and the raw-init replacement is visibly squeezed
+narrow-and-tall beside both. The cover-crop drops 19.6% of the width (81px left,
+82px right), which `plate_prep.py:38-42` warned would be visible on compositions
+whose subject sits near a side edge — beat 04's hand is one of those. It is
+still the right framing, because it is the framing render_t3 has applied to
+every delivered episode.
 
 ## Content
 
