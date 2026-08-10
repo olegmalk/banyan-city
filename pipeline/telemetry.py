@@ -72,6 +72,9 @@ import sys
 import time
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import repo_slug  # noqa: E402  one source for "which repo is this"
+
 FARM = Path(os.environ.get("BANYAN_FARM", r"C:\banyan-farm"))
 CSV_PATH = FARM / "telemetry.csv"
 JSON_PATH = FARM / "telemetry.json"
@@ -80,7 +83,12 @@ TEL_GIT = FARM / "telemetry-git"
 # The key the farm worker already pushes with. Referenced BY PATH only — this
 # script never reads, copies or logs its contents.
 DEPLOY_KEY = FARM / "farm_deploy_key"
-REMOTE = "git@github.com:olegmlkvorg/banyan-city.git"
+# The repo changed owner on 2026-08-10 and this line used to spell the old one.
+# Pushes to a retired owner's path survive only on a GitHub redirect, which one
+# accidental repo creation at the old name deletes forever — so the courier
+# resolves the remote instead of remembering it. On a fork's box this correctly
+# pushes to the fork.
+REMOTE = repo_slug.SSH_REMOTE
 BRANCH = "farm-results-rtx5090"
 PUBLISH_PATH = "telemetry.json"      # path inside BRANCH → the raw URL the page fetches
 HOST = "rtx5090"

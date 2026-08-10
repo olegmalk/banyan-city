@@ -73,11 +73,12 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "pipeline"))
+import repo_slug  # noqa: E402  one source for "which repo is this"
 from site_theme import THEME_CSS  # noqa: E402  the one visual language
 
-GH = "olegmlkvorg/banyan-city"
-API = f"https://api.github.com/repos/{GH}"
-RAW = f"https://raw.githubusercontent.com/{GH}"
+GH = repo_slug.GH_REPO            # pipeline/repo_slug.py — never hardcode the owner
+API = repo_slug.API_URL
+RAW = repo_slug.RAW_URL
 CANONICAL = "https://banyan.city"
 PAGE = "status.html"
 # One name for this page, used in the <title>, the <h1> and our own nav.

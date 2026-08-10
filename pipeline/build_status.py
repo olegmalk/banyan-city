@@ -21,8 +21,9 @@ import yaml
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "pipeline"))
 from generate_shots import parse_shots  # noqa: E402
+import repo_slug  # noqa: E402  one source for "which repo is this"
 
-GH_URL = "https://github.com/olegmlkvorg/banyan-city"
+GH_URL = repo_slug.REPO_URL
 REQUESTS_URL = f"{GH_URL}/issues?q=label%3Arender-request"
 THREAD_URL = f"{GH_URL}/issues/1"
 GENOME = "sapling"

@@ -7108,3 +7108,55 @@ on the stem, colour, ripeness. The mask ellipse (462, 848) r(34, 36) is the
 steward's and is labelled as such in the spec, the sidecar and the card.
 `pipeline/inpaint_fruit.py` refuses to run unless the init's sha256 matches, so
 G1 is asserted on bytes rather than on a filename.
+
+## 2026-08-10 — the repo changed owner, and 77 files still said otherwise
+
+**`olegmlkvorg/banyan-city` → `olegmalk/banyan-city`.** The transfer itself was
+Roman's browser work and it completed; `gh api repos/olegmalk/banyan-city`
+resolves and the old path 301s. What this entry records is the code-side
+cleanup, which is §C of `REPO-MOVE.md`.
+
+**What actually broke, measured rather than assumed.** Exactly one surface:
+the Pages mirror. `https://olegmlkvorg.github.io/banyan-city/review/` → **404**,
+and it will 404 forever — GitHub publishes redirects for the repo but explicitly
+not for Pages. That was the founder's working review link all day.
+`https://olegmalk.github.io/banyan-city/review/` → **200**. Everything else —
+`gh`, this Mac's `origin`, the box's SSH courier, the 16 reaction issues, every
+`raw.githubusercontent.com` fetch the status page makes — kept working on the
+redirect, unchanged, no credential touched.
+
+**The trap was the one file that looked already-fixed.** `build_site.py` read
+`os.environ.get("GITHUB_REPOSITORY", "olegmlkvorg/banyan-city")`. GitHub Actions
+sets `GITHUB_REPOSITORY`; **Vercel does not** — its variables are
+`VERCEL_GIT_REPO_OWNER` / `VERCEL_GIT_REPO_SLUG`. The free mirror builds on
+Actions and banyan.city builds on Vercel, so the mirror would have quietly
+corrected itself to the new owner while **production kept publishing the old
+one**. Two surfaces disagreeing about who owns the product, neither raising an
+error, and the env-var default is exactly what made it invisible.
+
+The fix is not a new literal. `pipeline/repo_slug.py` answers "which repo is
+this" once, in precedence order: `BANYAN_GH_REPO` → `GITHUB_REPOSITORY` →
+Vercel's pair → the checkout's own `origin` → a last-resort literal that four
+earlier steps have to fail before it is reached. Ten pipeline modules now import
+it instead of holding a copy: `build_site`, `build_sim`, `build_pulse`,
+`build_shotboard`, `build_status`, `harvest_sap`, `ops_board`, `render_t1`,
+`runpod_lane`, `telemetry`. `render_t1.py`'s footer is stamped into **every T1
+leaf**, so that one had to land before the next T1 render, and it did.
+
+`test_pipeline.py` grew the guard that stops this recurring: it asserts the
+precedence (including that Vercel's pair is read at all — the whole bug in one
+line), that a half-set pair is not an answer, that each builder imports
+`repo_slug`, and that **no module under `pipeline/` names the retired owner**.
+The old assertion that hardcoded the deployments API URL now derives it, because
+a test edited by hand at every move is a test that gets edited wrongly.
+
+**Standing hazard, written at the top of `OPERATOR.md`:** nobody may ever create
+a repo named `banyan-city` under `olegmlkvorg`. The redirect keeping the couriers
+and every published raw URL alive is deleted permanently the moment that name is
+reused. It is a grace period being spent down on purpose, not a dependency.
+
+`MIGRATION.md` and the line at 3316 above keep the old name where it is a record
+of what was measured at the time; it was corrected only where it was an
+*instruction* — §C4's mirror check, §C5's `gh api` call, and §E's DNS fallback,
+which told a future reader to CNAME `www` at an account that no longer hosts the
+site.

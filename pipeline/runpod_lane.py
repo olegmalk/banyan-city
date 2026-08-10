@@ -26,6 +26,9 @@ from datetime import date
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(REPO / "pipeline"))
+import repo_slug  # noqa: E402  one source for "which repo is this"
+
 API = "https://api.runpod.io/graphql"
 GPU = "NVIDIA GeForce RTX 4090"
 # cuda 11.8 runs on nearly any community driver — the 12.4 image hit
@@ -82,7 +85,7 @@ def cmd_render(beats: str, seeds: int, init: str = "", strength: float = 0.5,
     # quoting. All logic is in runpod_boot.sh (versioned, heartbeats every
     # stage); all parameters travel as pod env vars, never inline shell.
     script = ("bash -c 'cd /workspace && "
-              "git clone --depth 1 https://github.com/olegmlkvorg/banyan-city.git && "
+              f"git clone --depth 1 {repo_slug.REPO_URL}.git && "
               "bash banyan-city/pipeline/runpod_boot.sh'")
     pod_env = [{"key": "DEPLOY_KEY", "value": key_b64},
                {"key": "BEATS", "value": beats},

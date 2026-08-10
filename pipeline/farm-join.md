@@ -27,11 +27,11 @@ ledger (`type: compute`).
 ## Setup (any OS)
 
 1. Install Git and Python 3.12.
-2. `git clone https://github.com/olegmlkvorg/banyan-city.git` into its own
+2. `git clone https://github.com/olegmalk/banyan-city.git` into its own
    folder (e.g. `banyan-farm/`).
 3. Wire the courier key:
    `git config core.sshCommand "ssh -i <path-to-key> -o StrictHostKeyChecking=no"`
-   `git remote set-url origin git@github.com:olegmlkvorg/banyan-city.git`
+   `git remote set-url origin git@github.com:olegmalk/banyan-city.git`
 4. Make a venv; install torch for YOUR hardware first, then the rest:
    - NVIDIA RTX 50-series: `pip install torch --index-url https://download.pytorch.org/whl/cu128`
      (older wheels don't know Blackwell; a flaky connection survives better

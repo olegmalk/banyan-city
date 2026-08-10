@@ -16,10 +16,14 @@ import re
 import subprocess
 import time
 import urllib.request
+import sys
 from datetime import date
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(REPO / "pipeline"))
+import repo_slug  # noqa: E402  one source for "which repo is this"
+
 OUT = Path.home() / "Desktop" / "banyan-drops" / "OPS.html"
 NODE = REPO / "genomes/sapling/nodes/001-capability-inventory"
 
@@ -185,8 +189,9 @@ def main():
     if ballots:
         moves.append(f"<b>Vote beats {', '.join(f'{b:02d}' for b in ballots)}</b> — candidates on "
                      f"<a href='https://banyan.city/sapling/001-capability-inventory-shots'>the board</a>, "
-                     f"verdicts on <a href='https://github.com/olegmlkvorg/banyan-city/issues/1'>the thread</a>")
-    moves.append("PixVerse daily credits → <a href='https://github.com/olegmlkvorg/banyan-city/issues?q=label%3Arender-request'>open requests</a>")
+                     f"verdicts on <a href='{repo_slug.REPO_URL}/issues/1'>the thread</a>")
+    moves.append(f"PixVerse daily credits → <a href='{repo_slug.REPO_URL}"
+                 "/issues?q=label%3Arender-request'>open requests</a>")
     moves.append("Screening: the full cut, once stills close")
 
     OUT.write_text(f"""<!doctype html><meta charset="utf-8">

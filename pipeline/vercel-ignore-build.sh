@@ -134,6 +134,10 @@ SITE_INPUTS=(
   pipeline/build_pulse.py
   pipeline/site_theme.py
   pipeline/licence_gate.py
+  # every github.com / raw.githubusercontent link the site emits is built from
+  # the slug this resolves. It is a build input in the strictest sense: change
+  # it and every one of those hrefs changes, with no other file touched.
+  pipeline/repo_slug.py
   pipeline/generate_shots.py
   pipeline/sd_prompt.py
   # read at build time for the founder's inbox on the status page.

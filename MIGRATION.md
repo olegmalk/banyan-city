@@ -1,5 +1,19 @@
 # Migrating banyan.city to its own Vercel account
 
+> ## OWNER CHANGED SINCE THIS WAS WRITTEN — 2026-08-10
+>
+> The repository moved from **`olegmlkvorg`** to **`olegmalk`** (see
+> `REPO-MOVE.md`). Below, the old name is *true as a record of what was measured
+> on 2026-08-08* and has been left standing wherever it is a measurement. It has
+> been **corrected in the two places where it is an instruction to a future
+> reader** — §C4's mirror check, §C5's `gh api` call and §E's DNS fallback — each
+> marked in place, because following those as written would now point work at an
+> account that no longer hosts the site.
+>
+> **`olegmlkvorg` must never own a repo named `banyan-city` again**: the old
+> path survives on a GitHub redirect, and creating that name deletes the
+> redirect permanently. Full statement at the top of `OPERATOR.md`.
+
 > ## MIGRATION COMPLETE — 2026-08-08, ~09:13Z
 >
 > **Every step in §B is done.** The domain is in
@@ -507,8 +521,12 @@ confirm the deployment is current rather than a stale cached edge response.
 ### C4. Continuously — the mirror still works as fallback
 
 ```sh
-curl -sI https://olegmlkvorg.github.io/banyan-city/ | head -3
+curl -sI https://olegmalk.github.io/banyan-city/ | head -3
 ```
+
+*(URL corrected 2026-08-10 — the repo changed owner and Pages does not redirect.
+`olegmlkvorg.github.io/banyan-city/` now 404s, so a check written against it
+would fail forever and read as an outage that is not happening.)*
 
 Pass: **200**. The mirror is what has been carrying banyan.city through this
 outage, and it stays live as the fallback. It must keep answering on its own
@@ -517,7 +535,7 @@ outage, and it stays live as the fallback. It must keep answering on its own
 ### C5. Ongoing — the deployment count is the spend meter
 
 ```sh
-gh api "repos/olegmlkvorg/banyan-city/deployments?per_page=100" --paginate \
+gh api "repos/olegmalk/banyan-city/deployments?per_page=100" --paginate \
   --jq '.[] | select(.creator.login=="vercel[bot]") | .created_at[0:10]' \
   | sort | uniq -c
 ```
@@ -583,13 +601,16 @@ entirely. Path A is instant; this trades a clean 404 for hours of TLS warning.
 1. **DNS first.** In whichever zone is authoritative, replace the apex `A`
    records with GitHub's four: `185.199.108.153`, `185.199.109.153`,
    `185.199.110.153`, `185.199.111.153`. Optional AAAA: `2606:50c0:8000::153`
-   through `:8003::153`. Point `www` at a **CNAME → `olegmlkvorg.github.io`**.
+   through `:8003::153`. Point `www` at a **CNAME → `olegmalk.github.io`**.
+   *(Owner corrected 2026-08-10: the repo moved `olegmlkvorg` → `olegmalk` and
+   GitHub publishes no redirect for Pages, so the pre-move spelling of this step
+   would have pointed the apex at an account that no longer hosts the site.)*
 2. **Then** repo → **Settings → Pages → Custom domain** → `banyan.city` → Save.
 3. Wait for the certificate to issue, **then** tick **Enforce HTTPS**.
 
 **Every caveat:**
 
-- Setting the custom domain makes `olegmlkvorg.github.io/banyan-city` **redirect**
+- Setting the custom domain makes `olegmalk.github.io/banyan-city` **redirect**
   to `banyan.city`. Do it before DNS resolves and you take down the one URL that
   currently works. That is why DNS is step 1.
 - HTTPS is not instant — GitHub says Enforce HTTPS can take **up to 24 hours** to

@@ -36,6 +36,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "pipeline"))
 import licence_gate as lg  # noqa: E402 — the tolerant sidecar reader
+import repo_slug  # noqa: E402  one source for "which repo is this"
 from generate_shots import parse_shots  # noqa: E402
 from sd_prompt import compress, extra_negatives, suppressed_negatives  # noqa: E402
 from site_theme import THEME_CSS  # noqa: E402  — one palette for every page
@@ -51,8 +52,8 @@ MOTION = {"engine": "LTX-Video (Lightricks/LTX-Video) under evaluation; "
           "Pika, Runway: start from the SAME frame and prompt, and say what you used"}
 
 CANONICAL = "https://banyan.city"       # same host build_site.py publishes to
-GH_REPO = "olegmlkvorg/banyan-city"
-REPO_URL = f"https://github.com/{GH_REPO}"
+GH_REPO = repo_slug.GH_REPO       # pipeline/repo_slug.py — never hardcode the owner
+REPO_URL = repo_slug.REPO_URL
 
 # Bare uppercase filename tags are meaningless to a stranger. Name the engine,
 # and say in one clause why it was tried at all.

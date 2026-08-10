@@ -38,7 +38,7 @@ they stay alive and can take the lead later.
 renders contributor episodes the same way it renders mine.
 
 Site (all 7 episodes free): banyan.city
-Repo: github.com/olegmlkvorg/banyan-city
+Repo: github.com/olegmalk/banyan-city
 
 Happy to answer anything about the pipeline — the $0 constraint forced some
 fun decisions (local TTS casting per character, keyframe→i2v to hold the

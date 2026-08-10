@@ -35,13 +35,18 @@ import markdown
 import yaml
 
 import licence_gate as lg
+import repo_slug
 from site_theme import THEME_CSS
 
 REPO = Path(__file__).resolve().parent.parent
 OUT = REPO / "_site"
-# Forkable: in CI GITHUB_REPOSITORY names the fork; locally fall back to origin
-GH_REPO = os.environ.get("GITHUB_REPOSITORY", "olegmlkvorg/banyan-city")
-REPO_URL = f"https://github.com/{GH_REPO}"
+# Forkable, and platform-agnostic: this used to read GITHUB_REPOSITORY with a
+# hardcoded default, which Actions sets and VERCEL DOES NOT — so after the
+# 2026-08-10 owner change the Pages mirror would have corrected itself while
+# banyan.city, which builds on Vercel, kept publishing the old owner. See
+# pipeline/repo_slug.py; the question is asked in exactly one place now.
+GH_REPO = repo_slug.GH_REPO
+REPO_URL = repo_slug.REPO_URL
 REPO_NAME = GH_REPO.split("/")[-1]
 CANONICAL = "https://banyan.city"  # canonical host; Pages stays as free mirror
 MD = markdown.Markdown(extensions=["tables", "fenced_code"])
@@ -2160,7 +2165,7 @@ every version. <a href="{REPO_URL}/blob/main/WATERING.md">How to water with comp
 <p>Every episode publishes its complete recipe — approved frames, exact prompts, every take with
 provenance. Read <a href="machine.html">how the whole loop runs</a>, open
 <a href="sapling/001-capability-inventory-shots.html">episode 1's shot board</a> to see it live, or
-grab an <a href="https://github.com/olegmlkvorg/banyan-city/issues?q=is%3Aissue+is%3Aopen+label%3Arender-request">open
+grab an <a href="{REPO_URL}/issues?q=is%3Aissue+is%3Aopen+label%3Arender-request">open
 render request</a> and hand back a shot made with your own tools — your name goes in the public
 ledger.</p></div></div>
 <hr>

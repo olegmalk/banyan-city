@@ -73,7 +73,7 @@ cd C:\banyan-farm
 ```
 
 ```
-git clone --depth 50 https://github.com/olegmlkvorg/banyan-city.git
+git clone --depth 50 https://github.com/olegmalk/banyan-city.git
 ```
 
 (If it says the folder already exists, that step is already done — carry on.)
@@ -97,7 +97,7 @@ git config core.sshCommand "ssh -i C:/banyan-farm/farm_deploy_key -o StrictHostK
 ```
 
 ```
-git remote set-url origin git@github.com:olegmlkvorg/banyan-city.git
+git remote set-url origin git@github.com:olegmalk/banyan-city.git
 ```
 
 ```

@@ -23,6 +23,9 @@ from pathlib import Path
 import yaml
 
 REPO = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(REPO / "pipeline"))
+import repo_slug  # noqa: E402  one source for "which repo is this"
+
 
 FRAME_CSS = """
 :root { --bg:#0e1410; --screen:#0a0f0b; --ink:#e6efe8; --muted:#93a698;
@@ -166,7 +169,7 @@ def render_node(genome: str, node: dict, genome_dir: Path) -> str:
 <h1>{html.escape(node['id'])} — {html.escape(node['title'])}</h1>
 <div class="sub">T1 storyboard leaf <code>{leaf_id}</code> · compiled from the T0 script · 9:16</div>
 {body}
-<footer>A leaf of the <a href="https://github.com/olegmlkvorg/banyan-city">Banyan City</a> tree.
+<footer>A leaf of the <a href="{repo_slug.REPO_URL}">Banyan City</a> tree.
 Rendered by pipeline/render_t1.py at $0 — provenance in leaves/{leaf_id}.yaml</footer>
 </main></body></html>"""
 

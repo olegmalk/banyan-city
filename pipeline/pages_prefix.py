@@ -10,8 +10,8 @@ resolves to `/checklist/x.mp4` and 404s. That is the bug the founder hit on
 2026-08-09 ("images are broken"); `build_site.py`'s `url()` docstring records it.
 
 The GitHub Pages mirror has the opposite geometry. It serves the same tree from
-`https://olegmlkvorg.github.io/banyan-city/`, so `/review/x.jpg` means
-`olegmlkvorg.github.io/review/x.jpg` — outside the repo's subpath, and a 404 for
+`https://olegmalk.github.io/banyan-city/`, so `/review/x.jpg` means
+`olegmalk.github.io/review/x.jpg` — outside the repo's subpath, and a 404 for
 every clip, poster and sheet on the page. Measured 2026-08-10: the mirror's
 review page was byte-identical to a local build and current, while all 186 of its
 media references 404'd. Vercel had the mirror image of the fault — every image

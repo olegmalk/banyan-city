@@ -23,8 +23,11 @@ from pathlib import Path
 import yaml
 
 REPO_DIR = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(REPO_DIR / "pipeline"))
+import repo_slug  # noqa: E402  one source for "which repo is this"
+
 API = "https://api.github.com"
-GH_REPO = os.environ.get("GITHUB_REPOSITORY", "olegmlkvorg/banyan-city")
+GH_REPO = repo_slug.GH_REPO       # pipeline/repo_slug.py — never hardcode the owner
 TOKEN = os.environ.get("GITHUB_TOKEN", "")
 # traffic endpoints need admin:read, which Actions' built-in token lacks —
 # a founder-created fine-grained PAT (secret TRAFFIC_TOKEN) covers them

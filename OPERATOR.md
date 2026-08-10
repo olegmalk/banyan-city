@@ -10,6 +10,28 @@ executes them, then edits this file — filling in the `RESULT` line and checkin
 the box — and commits with message `operator: <task-id> done`. The steward
 verifies outcomes independently (DNS, HTTP, ledger) on its next tending pass.
 
+## ⛔ STANDING HAZARD — never create a repo named `banyan-city` under `olegmlkvorg`
+
+Recorded 2026-08-10, the day the repo moved `olegmlkvorg` → **`olegmalk`**. This
+does not expire and it is not a preference.
+
+GitHub keeps the old path alive by **redirect**: `github.com/olegmlkvorg/banyan-city`
+still resolves, this Mac's `origin` remote still pushes, the render box's SSH
+courier still pushes, and every `raw.githubusercontent.com/olegmlkvorg/...` URL
+already published in the wild still fetches — all of it on that one redirect.
+
+**Creating any new repository named `banyan-city` under `olegmlkvorg` deletes
+that redirect permanently.** Not suspends — deletes. Every one of the surfaces
+above breaks at once, and most of them break silently: a courier push failing on
+a cron, a browser fetch falling into a `.catch()`. The old name is not free to
+reuse and there is no way to undo it.
+
+The redirect is a grace period we are spending down deliberately, not a
+dependency. If you find a live reference to `olegmlkvorg`, fix it —
+`pipeline/test_pipeline.py` fails if one appears anywhere under `pipeline/`.
+The one surface that got **no** redirect is GitHub Pages: `olegmlkvorg.github.io/banyan-city/`
+404s today and forever. The mirror is `https://olegmalk.github.io/banyan-city/`.
+
 ## Rules for the operator (read first)
 
 1. **Standing grant (founder, 2026-07-11, stated non-negotiable):** the
@@ -88,7 +110,7 @@ verifies outcomes independently (DNS, HTTP, ledger) on its next tending pass.
      ignored-build-step set; build/install/output left `null` so Vercel reads
      `vercel.json`). What is left is connecting the repo to it: project
      `banyan-city` → **Settings → Git → Connect Git Repository** → GitHub →
-     `olegmlkvorg/banyan-city` **only**. Full detail in `MIGRATION.md` B2b/B6.
+     `olegmalk/banyan-city` **only**. Full detail in `MIGRATION.md` B2b/B6.
   4. New project → **Settings → Domains → Add Domain** → `banyan.city`. Accept
      the `www` prompt and let it redirect to the apex, as V2 had it.
   5. Because the nameservers are already Vercel's and the zone came with the

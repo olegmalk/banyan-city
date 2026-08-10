@@ -31,7 +31,7 @@ chmod 600 /workspace/.courier_key
 export GIT_SSH_COMMAND="ssh -i /workspace/.courier_key -o StrictHostKeyChecking=no"
 git config user.email runpod@banyan.city
 git config user.name runpod-courier
-git remote set-url origin git@github.com:olegmlkvorg/banyan-city.git
+git remote set-url origin git@github.com:olegmalk/banyan-city.git
 git checkout -qB runpod-results
 mark "STARTED beats=${BEATS:-?} gpu=$(nvidia-smi --query-gpu=name --format=csv,noheader 2>/dev/null || echo none)"
 

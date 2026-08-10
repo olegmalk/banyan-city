@@ -96,12 +96,12 @@ pending:
   - id: ep3-scripts
     title: "Read episode 3 — the script that grows out of the episode 2 you approved"
     detail: "This used to say it was waiting on the episode 2 choice. That is no longer true: he read the first-citizen script and approved it on 2026-08-03, and episode 2 has been made from it ever since. What follows it is one script rather than three — the other two episode 3 candidates grow out of the episode 2 branches he did not take, and they stay on the tree unread, which is how a branching story is supposed to work. Nothing may be filmed from this one until he has read it, so the read is the whole of what is being asked."
-    public: "https://github.com/olegmlkvorg/banyan-city/tree/main/genomes/sapling/nodes/003b-one-leaf-for-yes"
+    public: "https://github.com/olegmalk/banyan-city/tree/main/genomes/sapling/nodes/003b-one-leaf-for-yes"
     link_text: "read the script this branch leads to"
     since: 2026-07-30
   - id: animegen-speedup-licence
     title: "Decide whether a licence published in one place but not the other is good enough to publish from"
     detail: "The model that draws the show in anime style has a companion file that makes it about thirteen times faster — roughly nine minutes per shot instead of nearly two hours, measured on our own card. The people who made it did publish their licence, and it is the permissive kind, but they published it alongside their code and not on the download page the show actually pulls the file from. The show's standing rule is that nothing gets published unless every part of it has a licence we can quote, so the fast version is used for tests only and every releasable anime shot takes the slow path. The evidence has been read and written up on both pages. What is missing is the author saying that a licence verified in the makers' own repository counts as proof for footage that goes out. NOTHING IS WAITING ON THIS TODAY, and it is written down rather than left for him to discover: the speedup only fits the larger of the two models, that model has been parked since 2026-08-04 because it does not fit the machine, and every frame the show is drawing now goes through the smaller one, where the fast file does not apply at all. So this is a rule to settle before it is next needed, not a gate holding anything up — worth his minute when he has one, and not worth interrupting a screening pass for."
-    public: "https://github.com/olegmlkvorg/banyan-city/blob/main/pipeline/research/models-licence.md#link-4-answered--lightx2vwan22-lightning-no-license-on-hf-but-apache-20-verified-on-github"
+    public: "https://github.com/olegmalk/banyan-city/blob/main/pipeline/research/models-licence.md#link-4-answered--lightx2vwan22-lightning-no-license-on-hf-but-apache-20-verified-on-github"
     link_text: "read what was found on each of the two pages"
     since: 2026-08-07

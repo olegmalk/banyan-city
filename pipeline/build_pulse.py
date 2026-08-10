@@ -39,9 +39,13 @@ from __future__ import annotations
 import datetime
 import html
 import json
+import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(REPO / "pipeline"))
+import repo_slug  # noqa: E402  one source for "which repo is this"
+
 CACHE = REPO / "pipeline" / "pulse-series.json"
 
 # Oleg reads this page, and he reads it in Dubai. Every clock face on it is
@@ -55,8 +59,8 @@ TZ_LABEL = "+04"
 WINDOW_HOURS = 48
 LONG_WINDOW_HOURS = 24 * 7
 
-GH = "olegmlkvorg/banyan-city"
-RAW = f"https://raw.githubusercontent.com/{GH}"
+GH = repo_slug.GH_REPO            # pipeline/repo_slug.py — never hardcode the owner
+RAW = repo_slug.RAW_URL
 TELEMETRY_URL = f"{RAW}/farm-results-rtx5090/telemetry.json"
 QUEUE_URL = f"{RAW}/main/pipeline/farm-queue.yaml"
 

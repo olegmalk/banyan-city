@@ -5298,8 +5298,16 @@ def test_the_infra_meter_never_prints_a_number_the_page_did_not_measure():
     # source this project may use — the whole entry exists because a meter cost
     # money to read. environment=Production is filtered server-side because two
     # thirds of this repo's deployments are the free github-pages mirror.
+    # Owner-derived, not owner-spelled. The repo changed hands on 2026-08-10 and
+    # this assertion was one of the things pinning the old name in place; a test
+    # that has to be edited by hand at every move is a test that will be edited
+    # wrongly. What matters here is the HOST and the ENDPOINT — the two things
+    # that make the meter free and public — so those are what get named.
+    import repo_slug
     check("the source is GitHub's public deployments list", m["api"].startswith(
-        "https://api.github.com/repos/olegmlkvorg/banyan-city/deployments?"))
+        f"{repo_slug.API_URL}/deployments?"))
+    check("...on api.github.com, which needs no account to read",
+          m["api"].startswith("https://api.github.com/repos/"))
     check("...filtered to the builds that are actually billed",
           "environment=Production" in m["api"])
     check("...and carries no token, key or secret of any kind",
@@ -6766,6 +6774,91 @@ def test_an_agent_run_cannot_put_candidates_on_the_founders_screen():
           not should_open(False, {NO_OPEN_ENV: "0"}))
 
 
+def test_the_repo_owner_is_read_from_the_platform_that_is_building():
+    """The trap the 2026-08-10 owner change set, pinned so it cannot be reset.
+
+    `build_site.py` used to read `GITHUB_REPOSITORY` with a hardcoded default.
+    GitHub Actions sets that variable; VERCEL DOES NOT — it sets
+    `VERCEL_GIT_REPO_OWNER` / `VERCEL_GIT_REPO_SLUG`. banyan.city builds on
+    Vercel and the free mirror builds on Actions, so when the repo moved the
+    mirror silently corrected itself while production kept publishing the old
+    owner: two surfaces disagreeing, neither erroring, nothing to notice.
+
+    So the contract is about PRECEDENCE, not about a name. Whichever platform
+    is running the build gets to answer, and no builder is allowed to keep its
+    own copy of the answer.
+    """
+    import os
+    import re
+
+    import repo_slug
+
+    env = {"BANYAN_GH_REPO": "", "GITHUB_REPOSITORY": "",
+           "VERCEL_GIT_REPO_OWNER": "", "VERCEL_GIT_REPO_SLUG": ""}
+    saved = {k: os.environ.get(k) for k in env}
+
+    def with_env(**kw):
+        for k in env:
+            os.environ.pop(k, None)
+        for k, v in kw.items():
+            os.environ[k] = v
+        return repo_slug.gh_repo()
+
+    try:
+        check("Vercel's variables are read at all — the whole bug in one line",
+              with_env(VERCEL_GIT_REPO_OWNER="someone",
+                       VERCEL_GIT_REPO_SLUG="banyan-city") == "someone/banyan-city")
+        check("Actions' variable still wins where both exist, so a fork stays a fork",
+              with_env(GITHUB_REPOSITORY="forker/banyan-city",
+                       VERCEL_GIT_REPO_OWNER="someone",
+                       VERCEL_GIT_REPO_SLUG="banyan-city") == "forker/banyan-city")
+        check("an explicit override outranks both",
+              with_env(BANYAN_GH_REPO="me/mine",
+                       GITHUB_REPOSITORY="forker/banyan-city") == "me/mine")
+        # A half-set pair is the shape a partial platform migration takes, and
+        # "owner/" is a URL that 404s rather than a build that fails loudly.
+        check("half of Vercel's pair is not an answer",
+              with_env(VERCEL_GIT_REPO_OWNER="someone") != "someone/")
+        check("and neither is a slug with no owner in it",
+              "/" in with_env(GITHUB_REPOSITORY="no-slash-here"))
+    finally:
+        for k, v in saved.items():
+            if v is None:
+                os.environ.pop(k, None)
+            else:
+                os.environ[k] = v
+
+    # NO BUILDER KEEPS ITS OWN COPY. This is the half that stops the sweep from
+    # having to happen again: eight files each held the literal last time, and
+    # every one of them was written by copying the file next door. The retired
+    # owner is the thing being banned — a live URL naming `olegmlkvorg` is a
+    # link that survives today only on a GitHub redirect that one accidental
+    # repo creation at the old name would delete.
+    # A `#` comment is exempt on purpose: the move left annotations behind that
+    # are worth keeping ("this URL used to be X, it 404s now"), and REPO-MOVE.md's
+    # rule for historical records is annotate, never erase. What is banned is the
+    # old name reaching a URL the code actually builds or fetches.
+    retired = re.compile(r"olegmlkvorg")
+    stale = []
+    for py in sorted((REPO / "pipeline").rglob("*.py")):
+        if py.name in ("repo_slug.py", "test_pipeline.py"):
+            continue
+        for i, line in enumerate(py.read_text(encoding="utf-8").splitlines(), 1):
+            if retired.search(line) and not line.lstrip().startswith("#"):
+                stale.append(f"{py.name}:{i}")
+    for s in stale:
+        print(f"      x  {s} still names the retired owner in live code")
+    check("no pipeline module names the retired owner outside a comment", not stale)
+
+    # And the builders that publish links get theirs from the one place, so a
+    # future move is a one-file edit rather than an archaeology exercise.
+    for mod in ("build_site", "build_sim", "build_pulse", "build_shotboard",
+                "build_status", "harvest_sap", "render_t1", "ops_board"):
+        src = (REPO / "pipeline" / f"{mod}.py").read_text(encoding="utf-8")
+        check(f"{mod}.py asks repo_slug rather than spelling the owner",
+              "import repo_slug" in src)
+
+
 def main():
     import tempfile
     test_beat_duration_from_timecode()
@@ -6958,6 +7051,8 @@ def main():
     test_striking_the_backwards_conjunct_would_flag_everything()
     # THE MAC'S RENDER LOOP MUST NOT PUBLISH TO HIS SCREEN BY ACCIDENT.
     test_an_agent_run_cannot_put_candidates_on_the_founders_screen()
+    # THE MIRROR AND PRODUCTION MUST NAME THE SAME OWNER.
+    test_the_repo_owner_is_read_from_the_platform_that_is_building()
     print()
     if FAILURES:
         print(f"✗ {len(FAILURES)} failure(s): {', '.join(FAILURES)}")

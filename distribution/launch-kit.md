@@ -49,7 +49,7 @@ The part HN might find interesting:
   one unamendable rule is that the right to branch can never be revoked.
 
 Live tree: https://banyan.city
-Repo: https://github.com/olegmlkvorg/banyan-city
+Repo: https://github.com/olegmalk/banyan-city
 
 The renders are rough — first leaves, honestly labeled as such on the site.
 The experiment is whether an open pipeline + right-to-branch can grow them
@@ -135,7 +135,7 @@ The structure is the experiment. Instead of one linear plot:
   as such; regrowing them is the point.
 
 Site (no git needed): https://banyan.city
-Repo: https://github.com/olegmlkvorg/banyan-city
+Repo: https://github.com/olegmalk/banyan-city
 
 Full disclosure: episodes past the root are model-written (labeled in each
 episode's provenance metadata), curated by a human taste file. Feedback on
@@ -176,7 +176,7 @@ The story branches. You pick what survives. banyan.city
 
 **Pinned-comment / reply (all platforms):**
 Every episode's script, render prompts, costs, and even the editorial
-rulebook are public: github.com/olegmlkvorg/banyan-city — you can write a
+rulebook are public: github.com/olegmalk/banyan-city — you can write a
 rival next episode yourself. Declaring the parent episode is the only rule.
 
 ---
