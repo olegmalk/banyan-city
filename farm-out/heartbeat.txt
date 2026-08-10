@@ -10,3 +10,4 @@
 02:02:25Z box-runner up pid=12516 host=MSI
 02:02:28Z box-runner idle ready=0
 02:12:31Z box-runner idle ready=0
+02:12:46Z STARTED task=box-preflight-0810-1786327962 attempt=1 on box-runner
