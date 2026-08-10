@@ -5184,3 +5184,138 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+# WRITTEN BEFORE A SINGLE FRAME OF THIS ROUND EXISTED — the jobs were queued at
+# 2026-08-10 11:27Z and this record was appended while the box was still running
+# somebody else's job. It deliberately contains NO PICK AND NO PREFERENCE BETWEEN
+# THE TWO ARMS. The founder named two acceptable compositions and chose neither;
+# choosing for him is the exact error records 3, 5 and 40 were scored misses for,
+# and it is also outside this lane's authority. What is predicted instead is a
+# set of FALSIFIABLE PREDICATES per arm — things a person can count on the sheet
+# and disagree with — plus, because §3 requires a verdict prediction and not just
+# measurements, a per-arm call on how he rules.
+- id: ep1-b06-r6-two-arms-sample
+  date: 2026-08-10
+  subject: "node 001 beat 06 — too blue, ROUND 6, his two compositions rendered as two arms: A ground under tall grass, B sky with no ground"
+  kind: still
+  candidates: [b06-r6a-s0, b06-r6a-s1, b06-r6a-s2, b06-r6a-s3,
+               b06-r6b-s0, b06-r6b-s1, b06-r6b-s2, b06-r6b-s3]
+  address_key: "frames at C:\\banyan-farm\\b06-r6\\out\\06-too-blue-r6{a,b}-s{0..3}.png on the box, sidecars beside them; jobs pipeline/jobs/ep1-b06-r6a-tallgrass.yaml and ep1-b06-r6b-sky.yaml; script pipeline/render_b06r6.py at commit fa479ad"
+  gates: {G1_approved_plate: pass, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  no_pick_between_arms: >-
+    Deliberate and load-bearing. A and B are the founder's own two options,
+    written in one sentence, and he chose neither. Ranking them here would hand
+    him a steward preference dressed as a finding on the one question he
+    reserved. No arm is called better anywhere in this record, in either job
+    spec, in the render script or on the contact sheet.
+  founder_direction_verbatim: >-
+    none of the beat 6 images will work, you either show the ground as having
+    tall grass or dont show the ground at all and show the sky, right now its
+    showing the ground as some flat place, or showing cities for some reason
+  the_change: >-
+    Both arms delete the Danbooru tag `scenery` from the positive and add
+    `cityscape, city, building, skyline, road, mountain` to the negative's
+    EXPLICIT tier. Arm A replaces `scenery` with `tall grass, grass` and drops
+    `plant, foliage` from the negative (grass is a plant; forbidding it would
+    cancel the arm). Arm B deletes `scenery` and puts nothing in its place, and
+    negates `grass, field, horizon, ground` on top of the urban block. Held fixed
+    in both: `no humans` at the HEAD of the positive with no person noun anywhere
+    in the negative — r5's one confirmed win. Seeds are r5's own four. shots.md
+    is not edited and sd_prompt.py is not modified.
+  measured: >-
+    On the box's real CLIP before either job was queued, not on the Mac
+    estimator. Arm A: positive 35/77, negative 59/77, nothing trimmed, all 9
+    required negatives present. Arm B: positive 30/77, negative 71/77, nothing
+    trimmed, all 15 required negatives present. The r5 control rebuilt from the
+    box clone reproduces its recorded sidecars byte-for-byte on BOTH halves
+    (negative 51 tokens, as recorded). The local estimator called arm B's
+    negative over budget at 74 and warned; real CLIP says 71. That gap is why the
+    script exits 8 rather than measure anywhere but on the card.
+  predicted_predicates:
+    P1_armA_people_zero_of_4: {predict: true, confidence: 0.85}
+    P2_armA_no_urban_structure_zero_of_4: {predict: true, confidence: 0.80}
+    P3_armA_grass_reads_TALL_in_3_or_4_of_4: {predict: false, confidence: 0.55}
+    P4_armA_horizon_line_present_in_3_or_more: {predict: true, confidence: 0.70}
+    P5_armB_people_zero_of_4: {predict: true, confidence: 0.85}
+    P6_armB_no_urban_structure_zero_of_4: {predict: true, confidence: 0.85}
+    P7_armB_no_ground_or_horizon_in_3_or_more: {predict: true, confidence: 0.50}
+  predicted_verdict: reject_all
+  predicted_flip_to: null
+  predicted_objection: >-
+    ARM A — "still a flat place": the grass reads as ordinary short field grass
+    rather than the tall grass he asked for, so the ground is green and smooth
+    and his first named defect survives the fix aimed at it. ARM B — "thats still
+    the ground": a horizon line survives in most of the four, so the frame is
+    still a landscape with a lot of sky rather than sky.
+  confidence: 0.60
+  reasoning: >
+    THE CITIES SHOULD GO AND THAT IS THE PART I AM MOST SURE OF, BECAUSE IT IS
+    THE PART WITH A DIAGNOSIS UNDER IT RATHER THAN A GUESS. A city has never once
+    been forbidden on this beat — every negative r3, r4, r5 and the fix set sent
+    is free of city, cityscape, building, skyline, skyscraper, industrial, town
+    and architecture, read back from the sidecars themselves. And it was never a
+    trim: r5's negative measured 51 of 77 with 26 tokens spare. So the term was
+    simply never written, and writing it is a fix to an untouched lever rather
+    than another push on a lever that has already failed twice here. The positive
+    side doubles it: `scenery` is new in r5, `scenery` is the Danbooru umbrella
+    whose children include `cityscape` (62,273 posts against 19,945), and r5 is
+    the round that drew a city through s0's ring and a skyline on s1's edge. Two
+    independent fixes for one defect, and both survived the token budget.
+
+    THE PEOPLE SHOULD STAY GONE BECAUSE NOTHING ABOUT THAT MECHANISM MOVED. `no
+    humans` still leads the positive, no person noun is in either negative, and
+    traps 7 and 8 refuse the run if either slips. r5 got zero in 4 of 4 with this
+    exact arrangement and he did not mention people in this verdict.
+
+    WHAT I EXPECT TO FAIL, AND IT IS ARM A, AND THE NUMBER WAS MEASURED BEFORE
+    THE RENDER RATHER THAN AFTER. `tall_grass` is a real tag on this
+    checkpoint's vocabulary and a nearly empty one: 785 posts, against 89,292 for
+    plain `grass`. The term that carries the conditioning is the term that means
+    ORDINARY grass. So the modal draw for `tall grass, grass` on this checkpoint
+    is a green field — which is exactly the flat place he rejected, arriving
+    through the fix meant to cure it. That is P3 at 0.55, and it is the reason
+    arm A's predicted verdict is a rejection rather than a shrug. If it happens,
+    the answer is NOT another adjective: it is either a stronger native
+    composition tag for grass in the foreground or a reference image, and that
+    is a decision to bring back rather than to make.
+
+    WHAT MIGHT FAIL ON ARM B AND WHY I AM ONLY AT 0.50 ON IT. r5 named no ground
+    noun in either half of its prompt and still returned four wide landscapes on
+    a horizon. This arm negates five ground terms — but a negative losing to a
+    drawing prior is this beat's oldest story: `no big clouds` lost to a wall of
+    cumulus in r3, and negating six cloud shapes in r4 made the clouds worse. The
+    thing that is genuinely different is that r5's horizon had a POSITIVE
+    supplier, `scenery`, and this arm has removed it. So B is the arm where the
+    diagnosis, if it is right, does the work on its own and the negatives are the
+    second line. I cannot get above a coin flip on it because no beat in this
+    tree has yet produced a frame with no ground in it at all, so there is no
+    prior to reason from.
+
+    WHY THE VERDICT CALL IS reject_all AT 0.60 AND WHAT WOULD MAKE THAT A GOOD
+    MISS. He has rejected this beat five times running. The header's own standing
+    finding is that this model can say no with some skill and has never had a yes
+    ratified — 0 for 7 on picks, 2 hit and 3 partial and no miss on rejections —
+    so a rejection is the calibrated call and I am not dressing it up as
+    modesty. But this round differs from the five before it in one way that
+    matters: it is the first where he supplied the composition instead of only
+    the fault, so the target is no longer one only he can see. If a frame from
+    either arm shows him tall grass or a clean sky and he takes it, this record
+    is a MISS and it is the most useful miss the file could get, because it would
+    be the first evidence that the failure on this beat was ever a prompt problem
+    and not a taste target we could not see. Scored honestly either way.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+  notes: >-
+    WHAT THIS RECORD CANNOT SETTLE, STATED SO IT IS NOT CLAIMED LATER. It cannot
+    tell A from B on taste, and it must not: that is the founder's call and the
+    whole reason two arms exist. It also cannot separate "the urban negatives
+    worked" from "removing `scenery` worked" — both fixes ship in both arms
+    together, on purpose, because he is owed a usable frame today and not a
+    clean experiment. If a later round needs to know which lever did it, the
+    control is one arm with `scenery` restored and the urban block kept, and it
+    is not worth the card time unless something forces the question.
