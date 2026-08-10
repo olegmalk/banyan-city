@@ -1,0 +1,71 @@
+# Still provenance (7.2), written AT RENDER TIME by render_b06r6.py
+# on the rtx5090 (C:\banyan-farm\b06-r6\out).
+# The prompt and negative below are what the model actually saw.
+# sd_prompt's own output, BEFORE this round's named transforms, was:
+#   POS: no humans, scenery, sky, blue sky, day, cloud, sunlight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+#   NEG: photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, humans, leaf, plant, stem, foliage, tree, photorealism, text, cityscape, city, building, skyline, road, mountain
+# The transforms, all three of them named: `no humans` restored to
+# the HEAD of the positive and `humans` deleted from the negative
+# (r5's deviation, unchanged); `scenery` removed from the positive;
+# this arm's own substitution and negative block. sd_prompt.py is
+# NOT modified by this round and shots.md is NOT edited.
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+shot_beat: 6
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20266725
+seeds_in_batch: 4
+task: 001-b06-r6a-tallgrass-0810
+queue_entry: ep1-b06-r6a-tallgrass
+render_round: r6
+candidate_set: r6a
+arm: A
+arm_label: ground visible, TALL GRASS
+arm_is_not_a_pick: >-
+  Round 6 has TWO arms because the founder gave two acceptable compositions and chose neither. A and B are alternatives, not a sweep with a winner. No arm is preferred, ranked or recommended anywhere in this round, and the steward makes no pick between them — that choice is R4's and only his.
+founder_direction_verbatim: >-
+  none of the beat 6 images will work, you either show the ground as having tall grass or dont show the ground at all and show the sky, right now its showing the ground as some flat place, or showing cities for some reason
+founder_direction_date: 2026-08-10
+why_this_arm: >-
+  HIS OPTION A, WORD FOR WORD: "show the ground as having tall grass". `tall grass` is his term and a real tag on this checkpoint's vocabulary, but a thin one — 785 posts against 89,292 for `grass` — so `grass` is sent behind it to carry the conditioning. `plant` and `foliage` come OUT of the negative for this arm and this arm only: grass is a plant, and asking for it while forbidding it is the self-cancelling prompt that gave r3 a wall of cumulus against `no big clouds`. `leaf`, `stem` and `tree` stay — those are the founder's 2026-08-07 rule about the CHARACTER, not about the ground. `mountain` is negated because r5's picked frame added a range the script never mentions.
+cities_diagnosis: >-
+  NOT a trimmed term — a term that was never written. Every negative this beat has sent was read back from its own sidecars (r3, r4, r5 and the fix set) and not one contains city, cityscape, building, skyline, skyscraper, industrial, town or architecture. r5's negative measured 51 of 77 on the box's real CLIP, so nothing was trimmed and there were 26 tokens spare. The positive side is the other half: r5 introduced the Danbooru tag `scenery`, the umbrella whose children include `cityscape` (62,273 posts against 19,945, qdlabs/danbooru-tags mirror read 2026-08-10; donmai.us itself timed out and is not cited). r5 is the first round on this beat to carry `scenery` and the round that drew a city through s0's ring and a skyline on s1's bottom edge. Both arms delete the tag AND negate the block.
+positive_tag_removed: scenery
+urban_negatives_added: cityscape, city, building, skyline, road, mountain
+urban_negatives_tier: explicit (last in fit_negative's drop order)
+negative_terms_removed: plant, foliage
+negative_removal_reason: >-
+  Arm A only: grass is a plant, so `plant` and `foliage` in the negative would cancel the arm the founder asked for. `leaf`, `stem` and `tree` are kept in both arms — those are his 2026-08-07 rule about the character's own body, not about the ground.
+mechanism_held_from_r5: >-
+  `no humans` at the HEAD of the POSITIVE and NOT ONE person noun in the negative. That took this beat from a girl in 2 of 4 (r3) and 3 of 4 (r4) to zero in 4 of 4 (r5), and his 2026-08-10 verdict does not mention people. It is held fixed while the composition moves, and traps 7 and 8 refuse the run if either half of it slips.
+person_terms_in_negative: none — asserted at run time (trap 8)
+shots_md_sha256: 53c2690edcfb9a46ac5dc6b2c4df0c499fd6c825e8b32dca288d2ab678e49079
+shots_md_edited: false
+authored_source: >-
+  genomes/sapling/nodes/001-capability-inventory/shots.md beat 06, byte-for-byte and asserted before a weight loads. Every change this round makes is applied script-side, printed, and listed above.
+tokenizer: openai/clip-vit-large-patch14 (transformers, on the box)
+positive_tokens_real_clip: 35
+negative_tokens_real_clip: 59
+negative_tokens_r5_control: 51
+r5_control_reproduced: true
+controls_note: >-
+  r5 is rebuilt from this checkout in the same run on the same tokenizer and asserted byte-for-byte against its recorded sidecars, positive AND negative, so the delta is one measurement rather than two instruments.
+anchor_intact: true
+seeds_held_from: >-
+  round 5, takes/stills/06-too-blue-r5-s*.png — this beat's own k=4..7, which r3 and r4 also drew. Both arms run the same four, so A against B is a comparison of the prompt and not of the noise, and either arm can still be set beside the rejected rounds column for column.
+provisional: >-
+  PROVISIONAL. A steward-rendered CANDIDATE, not a pick and not canon. Ground truth is the founder (R4); he has ratified nothing here and this round deliberately offers him no preference between its two arms. Never takes a canon filename, is not published, not posted, and not assembled into an episode.
+approved: false
+recipe_inherited_from: >-
+  round 5, takes/stills/06-too-blue-r5-s*.png — model, size, steps, cfg and the seed series are unchanged from r5, which inherited them from node 001 takes/stills/15-something-s-coming-r3-s1.png, the ONE SAMPLE the founder passed on 2026-08-08.
+wall_seconds: 9
+cost_usd: 0
+note: |-
+  round 6, ARM A — ground visible, TALL GRASS. Every beat-6 candidate this tree has ever drawn was rejected by the founder on 2026-08-10, with a composition given in the same sentence: "you either show the ground as having tall grass or dont show the ground at all and show the sky, right now its showing the ground as some flat place, or showing cities for some reason". Two readings, two arms, one candidate set each, and the steward picks between them nowhere. HIS OPTION A, WORD FOR WORD: "show the ground as having tall grass". `tall grass` is his term and a real tag on this checkpoint's vocabulary, but a thin one — 785 posts against 89,292 for `grass` — so `grass` is sent behind it to carry the conditioning. `plant` and `foliage` come OUT of the negative for this arm and this arm only: grass is a plant, and asking for it while forbidding it is the self-cancelling prompt that gave r3 a wall of cumulus against `no big clouds`. `leaf`, `stem` and `tree` stay — those are the founder's 2026-08-07 rule about the CHARACTER, not about the ground. `mountain` is negated because r5's picked frame added a range the script never mentions. THE CITIES WERE NEVER FORBIDDEN: every negative this beat has sent, read back from its own sidecars across r3, r4, r5 and the fix set, is free of city, cityscape, building, skyline, skyscraper, industrial, town and architecture — and r5's negative had 26 spare tokens (51 of 77 on real CLIP), so this was never a trim. The positive was asking for them: r5's `scenery` is the Danbooru umbrella whose children include `cityscape` (62,273 posts to 19,945), it is new in r5, and r5 is where the city and the industrial skyline appear. Both arms delete the tag and negate the block. WHAT IS HELD FIXED: `no humans` at the head of the POSITIVE with no person noun in the negative — r5's one confirmed win, zero people in 4 of 4, and not mentioned in his verdict. Seeds are r5's own four. shots.md NOT edited; sd_prompt.py NOT modified. Nothing here is a pick, a promotion, a publication or a spend.
+prompt: |-
+  no humans, tall grass, grass, sky, blue sky, day, cloud, sunlight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, leaf, stem, tree, photorealism, text, cityscape, city, building, skyline, road, mountain
