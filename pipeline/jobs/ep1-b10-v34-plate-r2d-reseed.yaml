@@ -1,0 +1,140 @@
+# ep1 beat 10 — an ADDITIONAL DRAW on the ratified cover-centre plate recipe,
+# cloned from ep1-b10-v34-plate-twin-r2.yaml with exactly one token changed:
+# the seed, 20260741 -> 20260883.
+#
+# WHY THIS BEAT. It is one of the seven frozen beats of the v34 cut
+# (QA-v34-0810.md §1: median 0.01, 85% of frame pairs frozen) — it plays a held
+# still with a push-in below the encoder's noise floor, and the founder has
+# accepted no clip for it.
+#
+# WHY IT NEEDS NO FRESH SAMPLE. The plate recipe is ratified — he approved the
+# crop today ("the crop -- yes") — and wording, guidance 1.0, steps, size, frames
+# and the plate step are the source spec's verbatim, itself read out of the
+# clip's own .meta.yaml. This is an approved recipe queued in DEPTH, which the
+# one-sample rule permits; it is not a recipe change, which is what that rule
+# stops.
+#
+# WHY MORE THAN ONE PER BEAT. Beat 08 r1 is the single raw/plate pair of thirteen
+# where plating cost the motion (0% -> 62% frozen at an identical seed), so a
+# given draw's outcome on a never-plated beat is genuinely unknown. Independent
+# draws mean one unlucky seed does not leave a frozen beat unfilled for another
+# cycle, and they give R4 several correctly-framed candidates to choose between
+# rather than the one the card happened to produce.
+#
+# NO DRAW IS RANKED AND NO METRIC CHOOSES BETWEEN THEM. On beat 14 the flow metric
+# scored HIGHEST on the round where the sapling falls over (131e433). A clip where
+# the plant bends, droops or falls is a fail here however it measures, and the
+# pick is R4's.
+
+id: ep1-b10-v34-plate-r2d-reseed
+task: ep1-b10-v34-plate-r2d-reseed-0810
+node: 001-capability-inventory
+beat: 10
+runner: box
+needs_gpu: true
+priority: 30
+max_attempts: 1
+owner: queue-depth lane (frozen v34 beats, ratified plate recipe)
+source_clip: C:\banyan-farm\v34-motion-0810\10-ltx-r2-s20260741.mp4
+consumer: the v35 provisional screening cut, for beat 10 — a frozen beat that currently plays a held still
+  and has no clip the founder has accepted. One more correctly-framed candidate for him to choose among;
+  all draws go to him unranked.
+success: 'A 704x1280 65-frame mp4 at C:\banyan-farm\v34-motion-0810\10-ltx-r2d-plate-s20260883.mp4. Judged
+  on the PICTURE: the plant upright with its stem straight for all 65 frames — a clip where it bends,
+  droops or falls is a FAIL however much motion it has — style, palette and linework holding from the
+  plate, no human, hand, face or invented object, and frame 0 matching a cover-centre crop of the beat''s
+  still rather than a naive stretch. Whether the framing drifts and crops the subject is a finding to
+  report, not a verdict.'
+why: 'One variable against ep1-b10-v34-plate-twin-r2: seed 20260883 instead of 20260741. Same wording,
+  same ratified cover-centre plate step, same guidance 1.0.'
+est_minutes: 5
+needs:
+- cuda
+- vram20
+- video-venv
+payload:
+  C:\banyan-farm\v34-plates-0810\ep1-b10-v34-plate-r2d-reseed-prompt.txt: '2D anime, hand-drawn cel animation,
+    flat cel shading, clean ink linework, anime key art. a locked-off tripod shot: the camera never moves,
+    the sprout stays at exactly the same height in the frame with its leaf tips at the same level from
+    the first frame to the last, the horizon of grass stays at the same height, the sprout stays the same
+    size and in the same place, the composition is identical in every frame. within that fixed frame the
+    sprout stands upright and rooted, stem straight and steady, and only these things move: its two small
+    leaves tremble very slightly, the tall grass around it sways in a light breeze, dust motes drift through
+    the warm hazy air, soft light shifts across the stem, living scene. Subject already in frame: no human,
+    no person, no man, no woman, no boy, no girl, no hand, no face, one small sprout with two leaves on
+    a thin upright stem, tall grass around it, warm hazy amber light.'
+  C:\banyan-farm\v34-plates-0810\ep1-b10-v34-plate-r2d-reseed-negative.txt: wilting, drooping, bending
+    over, falling over, collapsing, sagging, plant dying, human, person, man, woman, boy, girl, extra
+    hand, extra arm, foot, face, crowd, animal, bird, insect, new object appearing, photorealism, 3D render
+    look, text, 静态, 静止, frozen frame, still image, no motion, photorealistic, photograph, live action,
+    film still, 3D render, CGI, octane, scene change, shot change, cut to another angle, second scene,
+    new camera angle, different location, split screen, montage
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: plate
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - -c
+  - "import sys; sys.path.insert(0, r\"C:\\banyan-farm\\banyan-city\\pipeline\")\nfrom plate_prep import\
+    \ prepare_plate\nout, rec = prepare_plate(\n    r\"C:\\banyan-farm\\banyan-city\\genomes\\sapling\\\
+    nodes\\001-capability-inventory\\stills\\10-sense.png\",\n    \"704x1280\", r\"C:\\banyan-farm\\v34-plates-0810\"\
+    , \"10\")\nprint(\"plate\", out); print(rec[\"plate_wxh\"], rec[\"crop_policy\"])\n"
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\ltx_i2v.py
+  - --stage
+  - encode
+  - --embeds
+  - C:\banyan-farm\v34-plates-0810\ltx-embeds-ep1-b10-v34-plate-r2d-reseed.pt
+  - --prompt-file
+  - C:\banyan-farm\v34-plates-0810\ep1-b10-v34-plate-r2d-reseed-prompt.txt
+  - --negative-file
+  - C:\banyan-farm\v34-plates-0810\ep1-b10-v34-plate-r2d-reseed-negative.txt
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\ltx_i2v.py
+  - --stage
+  - render
+  - --embeds
+  - C:\banyan-farm\v34-plates-0810\ltx-embeds-ep1-b10-v34-plate-r2d-reseed.pt
+  - --prompt-file
+  - C:\banyan-farm\v34-plates-0810\ep1-b10-v34-plate-r2d-reseed-prompt.txt
+  - --negative-file
+  - C:\banyan-farm\v34-plates-0810\ep1-b10-v34-plate-r2d-reseed-negative.txt
+  - --init
+  - C:\banyan-farm\v34-plates-0810\10-704x1280.png
+  - --out
+  - C:\banyan-farm\v34-motion-0810\10-ltx-r2d-plate-s20260883.mp4
+  - --size
+  - 704x1280
+  - --frames
+  - '65'
+  - --fps
+  - '24'
+  - --steps
+  - '8'
+  - --guidance
+  - '1.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --seed
+  - '20260883'
+  - --beat
+  - '10'
+  - --task
+  - ep1-b10-v34-plate-r2d-reseed-0810
+  - --worker
+  - rtx5090
+artifacts:
+- C:\banyan-farm\v34-plates-0810\10-704x1280.png
+- C:\banyan-farm\v34-motion-0810\10-ltx-r2d-plate-s20260883.mp4
