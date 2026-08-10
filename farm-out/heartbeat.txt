@@ -263,3 +263,4 @@
 18:26:02Z box-runner idle ready=0 failed=1
 18:29:19Z STARTED task=ep1-b04-longclip-385f-sample-1786386552 attempt=1 on box-runner
 18:36:06Z DONE task=ep1-b04-longclip-385f-sample-1786386552 rc=0 artifacts=1
+18:36:09Z box-runner idle ready=0 failed=1
