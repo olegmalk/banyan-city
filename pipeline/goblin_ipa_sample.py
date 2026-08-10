@@ -120,6 +120,31 @@ WINDOW_SCALE = 0.6
 CELLS_WINDOW = [(0, WINDOW_SCALE, 0.15), (0, WINDOW_SCALE, 0.25),
                 (0, WINDOW_SCALE, 0.40), (0, WINDOW_SCALE, 0.60)]
 
+# ARM 4 — the negative, and it is the only lever here that does not touch the
+# adapter at all. Arms 1-3 all ask WHERE, HOW HARD or WHEN the reference should
+# push. This one leaves arm 1 exactly as it was and pushes back from the other
+# side.
+#
+# WHY IT IS WORTH A ROUND. The negative prompt this wave has been sending for
+# every frame — 50 tokens of it — contains no colour term whatsoever. Not
+# `greyscale`, not `monochrome`, nothing. That is a real gap and not a theory:
+# these are the two most standard negatives in the anime-model dialect
+# precisely because they hold saturation up, and animagine-xl-3.1 is trained on
+# the tag vocabulary they come from. So the drained skin arm 1 produces has
+# never had anything opposing it.
+#
+# IT COSTS ZERO POSITIVE TOKENS. Beat 08 of this wave has 9 tokens of headroom
+# on the real CLIP tokenizer and compress() drops TRAILING sentences, so the
+# positive side is where there is no room. The negative is at 50 of 77, so an
+# anchor of this size fits with margin, and it adds no word to the description
+# of the goblin — nothing here argues with "nothing complex".
+#
+# ALL FOUR REFERENCES, at the same 0.6 that arm 1 ran, so every cell differs
+# from an already-rendered arm-1 row by exactly one thing: these five words in
+# the negative. Nobody has picked a canonical goblin and this arm does not.
+NEG_COLOUR_ANCHOR = "greyscale, monochrome, desaturated, grey skin, pale skin"
+CELLS_NEGCOLOR = [(0, 0.6), (1, 0.6), (2, 0.6), (3, 0.6)]
+
 # ONE REFERENCE ON PURPOSE, and it is not a pick. Reference s0 at scale 0.6 is
 # an EXISTING measured row (arm 1, ipa-r0-c060: DINO 0.8069, green 0.00), so
 # every cell below differs from a rendered control by one variable and nothing
@@ -229,6 +254,12 @@ def sidecar(png: Path, *, seed: int, row: dict, secs: float, task: str,
         block(row["pos"]),
         "negative_prompt: >-",
         block(row["neg"]),
+        # Spelled out separately from the negative it is already inside, so a
+        # reader comparing this frame against an arm-1 frame can see the one
+        # variable without diffing two 60-token strings.
+        ("colour_anchor_negative: none (negative byte-identical to arm 1)"
+         if not row.get("neg_anchor") else
+         "colour_anchor_negative: " + row["neg_anchor"]),
         f"render_seconds: {secs:.1f}",
         "founder_verdict: null",
         "scored: false",
@@ -246,16 +277,19 @@ def main() -> int:
                     help="dir holding 04-the-footnote-wave1-s0..3.png")
     ap.add_argument("--out", required=True)
     ap.add_argument("--task", default=None)
-    ap.add_argument("--arm", choices=("whole", "content", "window"),
+    ap.add_argument("--arm",
+                    choices=("whole", "content", "window", "negcolor"),
                     default="whole",
                     help="whole = adapter on every block at a float scale; "
                          "content = adapter scoped to down block_2 only; "
                          "window = adapter on every block at 0.6 but only for "
-                         "the first N%% of the denoise steps")
+                         "the first N%% of the denoise steps; "
+                         "negcolor = arm 1 unchanged, plus a colour anchor in "
+                         "the negative")
     ap.add_argument("--dry", action="store_true", help="measure, draw nothing")
     a = ap.parse_args()
     cells = {"whole": CELLS_WHOLE, "content": CELLS_CONTENT,
-             "window": CELLS_WINDOW}[a.arm]
+             "window": CELLS_WINDOW, "negcolor": CELLS_NEGCOLOR}[a.arm]
 
     harness = Path(a.harness).resolve()
     sys.path.insert(0, str(harness))
@@ -279,6 +313,36 @@ def main() -> int:
     if row["faults"]:
         print("\n!! FAULTS — nothing drawn: " + "; ".join(row["faults"]), flush=True)
         return 1
+
+    # ARM 4's whole variable, applied here and nowhere else. Terms already in
+    # the negative are dropped rather than repeated, so the anchor can never
+    # silently double-weight a term the recipe was already sending.
+    row["neg_anchor"] = None
+    if a.arm == "negcolor":
+        have = {p.strip() for p in row["neg"].split(",")}
+        add = [t.strip() for t in NEG_COLOUR_ANCHOR.split(",")
+               if t.strip() not in have]
+        if not add:
+            print("!! every colour-anchor term is already in the negative — "
+                  "this arm would be byte-identical to arm 1. Refusing.",
+                  flush=True)
+            return 5
+        row["neg_anchor"] = ", ".join(add)
+        row["neg"] = row["neg"] + ", " + row["neg_anchor"]
+        before = row["neg_tok"]
+        row["neg_tok"] = sd.negative_tokens(row["neg"])
+        # A negative over budget is not truncated by the tokenizer in any way we
+        # can predict per-term, so it is refused rather than sent and reported.
+        if row["neg_tok"] > 77:
+            print(f"!! colour anchor puts the negative at {row['neg_tok']}/77 "
+                  f"tokens (was {before}). Over budget — refusing rather than "
+                  "sending a prompt whose tail may not bind.", flush=True)
+            return 6
+        print(f"\n   ARM 4 colour anchor: +{row['neg_anchor']}", flush=True)
+        print(f"   negative tokens: {before} -> {row['neg_tok']} (budget 77)",
+              flush=True)
+        print(f"   NEG(sent): {row['neg']}", flush=True)
+        print("   positive prompt UNCHANGED, 0 tokens added to it", flush=True)
 
     refs_dir = Path(a.refs).resolve()
     refs = [refs_dir / f"04-the-footnote-wave1-s{i}.png" for i in range(4)]
@@ -348,7 +412,12 @@ def main() -> int:
             on_steps = max(1, min(wg.STEPS, round(end_frac * wg.STEPS)))
             window = (on_steps, end_frac)
 
-        if end_frac is None:
+        if a.arm == "negcolor":
+            # Distinct from arm 1's r0-c060 even though the adapter config is
+            # identical, because the only difference is in the negative and a
+            # shared filename would make the two indistinguishable in a glob.
+            tag = f"r{ref_i}-neg"
+        elif end_frac is None:
             tag = (f"r{ref_i}-content" if scale is None
                    else f"r{ref_i}-c{int(round(scale * 100)):03d}")
         else:

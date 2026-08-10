@@ -1,0 +1,191 @@
+# 002b beat 04 — ARM 4. Arm 1 unchanged in every respect, plus five words in
+# the NEGATIVE. One variable against the already-rendered arm-1 rows r0-c060
+# through r3-c060.
+#
+# THE VERDICT THIS ANSWERS TO. Roman, 2026-08-10 ~15:00: "the goblin needs abit
+# more regeneration." Ledger record ep2-goblin-regen-directive-0810. A reject and
+# a direction to iterate, not a pick and not permission to scale.
+#
+# WHY THIS IS A DIFFERENT LEVER FROM ARM 3 AND NOT A VARIATION OF IT. Arm 3
+# (queued first, ep2-b04-goblin-ipa-window) changes WHEN the adapter is applied.
+# This one does not touch the adapter at all — same weights, same scale 0.6,
+# same every-block application, same references, same seeds, same positive
+# prompt. It pushes back from the other side. The two are independent and
+# neither result depends on the other, which is why both are queued rather than
+# one waiting on the other's read.
+#
+# THE GAP IT CLOSES, AND IT IS A FACT ABOUT OUR OWN NEGATIVE, NOT A THEORY. The
+# 50-token negative this wave has sent for every single frame contains no colour
+# term at all — no `greyscale`, no `monochrome`, nothing. Those two are the most
+# standard saturation-holding negatives in the anime-model tag dialect
+# animagine-xl-3.1 is trained on, and neither has ever been sent. So across
+# every arm-1 cell, the drained skin had nothing opposing it. Anchor added:
+# `greyscale, monochrome, desaturated, grey skin, pale skin`. Measured on the
+# real CLIP tokenizer on the box: negative 50 -> 64 of 77, positive unchanged at
+# 69.
+#
+# ZERO POSITIVE TOKENS, WHICH IS THE POINT. The positive side is where there is
+# no room — beat 08 has 9 tokens of headroom and compress() drops TRAILING
+# sentences, so an overrun comes back unstyled rather than truncated. And the
+# founder said "nothing complex": a lever that adds words describing the goblin
+# spends that constraint, and this one adds no word to the description of him.
+# The sampler drops any anchor term already present in the recipe negative, so
+# the anchor can never silently double-weight something already being sent.
+#
+# ALL FOUR REFERENCES at the same scale arm 1 ran, so each cell differs from a
+# rendered, measured arm-1 row by exactly these five words. Nobody has chosen a
+# canonical goblin and this arm does not choose one.
+#
+# LICENCES. Nothing new. animagine-xl-3.1 (CreativeML Open RAIL++-M, D15 open),
+# h94/IP-Adapter Plus SDXL (Apache-2.0) with the ViT-H image encoder
+# (MIT-derived), diffusers 0.29.2 (Apache-2.0). All in the box cache; nothing
+# downloaded, nothing spent.
+
+id: ep2-b04-goblin-ipa-negcolor
+task: ep2-b04-goblin-ipa-negcolor-0810
+node: 002b-first-citizen
+beat: 4
+runner: box
+needs_gpu: true
+priority: 41
+max_attempts: 1
+owner: goblin-regen lane
+
+consumer: >-
+  The same open question: whether one goblin across fifteen beats can be had
+  without losing the one attribute the founder named. If a colour anchor
+  restores arm 1's green while its identity hold survives, the mechanism to take
+  to him is arm 1 plus five negative words and nothing else. If the skin stays
+  drained with the anchor in place, that is strong evidence the drain is the
+  adapter overriding text conditioning outright rather than an absent
+  instruction — which would be a real finding about IP-Adapter on this beat and
+  would point the search off it.
+
+success: >-
+  16 PNGs at C:\banyan-farm\goblin-ipa-0810\out4 (4 references x 4 seeds) with
+  per-frame 7.2 sidecars naming the anchor separately from the negative it sits
+  inside, plus identity-agreement-negcolor.yaml measuring the wave-1 baseline,
+  the four arm-1 controls and these four on one build of one metric. A result
+  showing the anchor changes nothing is a success: the job produces the
+  measurement, not a preferred answer.
+
+metric_warning: >-
+  DINOv2 seed agreement is unreliable on beat 04 (724b616, 93356b1 — on a face
+  close-up against a constant background it is largely scoring the background)
+  and no arm may be ranked by it. It is run for series continuity only. The read
+  is by eye.
+
+why: >-
+  One variable against arm 1 r0..r3-c060: five colour terms appended to the
+  negative. Adapter untouched. Sequential, one image at a time — batch-of-4
+  configs are banned on this card.
+
+est_minutes: 8
+
+needs:
+- cuda
+- vram20
+- farm-venv
+
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\out
+  - --out
+  - C:\banyan-farm\goblin-ipa-0810\out4
+  - --arm
+  - negcolor
+  - --task
+  - ep2-b04-goblin-ipa-negcolor-0810
+
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\identity_agreement.py
+  - --group
+  - wave1-baseline=C:\banyan-farm\wave-goblin-prep\out\04-the-footnote-wave1-s*.png
+  - --group
+  - arm1-ref0-scale060=C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r0-c060-s*.png
+  - --group
+  - arm1-ref1-scale060=C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r1-c060-s*.png
+  - --group
+  - arm1-ref2-scale060=C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r2-c060-s*.png
+  - --group
+  - arm1-ref3-scale060=C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r3-c060-s*.png
+  - --group
+  - arm4-ref0-negcolor=C:\banyan-farm\goblin-ipa-0810\out4\04-the-footnote-ipa-r0-neg-s*.png
+  - --group
+  - arm4-ref1-negcolor=C:\banyan-farm\goblin-ipa-0810\out4\04-the-footnote-ipa-r1-neg-s*.png
+  - --group
+  - arm4-ref2-negcolor=C:\banyan-farm\goblin-ipa-0810\out4\04-the-footnote-ipa-r2-neg-s*.png
+  - --group
+  - arm4-ref3-negcolor=C:\banyan-farm\goblin-ipa-0810\out4\04-the-footnote-ipa-r3-neg-s*.png
+  - --ref-for
+  - arm4-ref0-negcolor=C:\banyan-farm\wave-goblin-prep\out\04-the-footnote-wave1-s0.png
+  - --ref-for
+  - arm4-ref1-negcolor=C:\banyan-farm\wave-goblin-prep\out\04-the-footnote-wave1-s1.png
+  - --ref-for
+  - arm4-ref2-negcolor=C:\banyan-farm\wave-goblin-prep\out\04-the-footnote-wave1-s2.png
+  - --ref-for
+  - arm4-ref3-negcolor=C:\banyan-farm\wave-goblin-prep\out\04-the-footnote-wave1-s3.png
+  - --out
+  - C:\banyan-farm\goblin-ipa-0810\out4\identity-agreement-negcolor.yaml
+
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b04-goblin-ipa-negcolor"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/goblin-ipa-0810/out4/*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b04-goblin-ipa-negcolor.sha256"), "w") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    # 16 stills + 16 sidecars + identity-agreement-negcolor.yaml.
+    raise SystemExit(0 if len(src) == 33 else 1)
+
+artifacts:
+- C:\banyan-farm\goblin-ipa-0810\out4\identity-agreement-negcolor.yaml
+- C:\banyan-farm\goblin-ipa-0810\out4\04-the-footnote-ipa-r0-neg-s0.png
+- C:\banyan-farm\goblin-ipa-0810\out4\04-the-footnote-ipa-r0-neg-s1.png
+- C:\banyan-farm\goblin-ipa-0810\out4\04-the-footnote-ipa-r0-neg-s2.png
+- C:\banyan-farm\goblin-ipa-0810\out4\04-the-footnote-ipa-r0-neg-s3.png
+- C:\banyan-farm\goblin-ipa-0810\out4\04-the-footnote-ipa-r1-neg-s0.png
+- C:\banyan-farm\goblin-ipa-0810\out4\04-the-footnote-ipa-r1-neg-s1.png
+- C:\banyan-farm\goblin-ipa-0810\out4\04-the-footnote-ipa-r1-neg-s2.png
+- C:\banyan-farm\goblin-ipa-0810\out4\04-the-footnote-ipa-r1-neg-s3.png
+- C:\banyan-farm\goblin-ipa-0810\out4\04-the-footnote-ipa-r2-neg-s0.png
+- C:\banyan-farm\goblin-ipa-0810\out4\04-the-footnote-ipa-r2-neg-s1.png
+- C:\banyan-farm\goblin-ipa-0810\out4\04-the-footnote-ipa-r2-neg-s2.png
+- C:\banyan-farm\goblin-ipa-0810\out4\04-the-footnote-ipa-r2-neg-s3.png
+- C:\banyan-farm\goblin-ipa-0810\out4\04-the-footnote-ipa-r3-neg-s0.png
+- C:\banyan-farm\goblin-ipa-0810\out4\04-the-footnote-ipa-r3-neg-s1.png
+- C:\banyan-farm\goblin-ipa-0810\out4\04-the-footnote-ipa-r3-neg-s2.png
+- C:\banyan-farm\goblin-ipa-0810\out4\04-the-footnote-ipa-r3-neg-s3.png
