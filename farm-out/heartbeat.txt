@@ -20,3 +20,4 @@
 02:41:02Z box-runner idle ready=0
 02:51:06Z box-runner idle ready=0
 03:01:11Z box-runner idle ready=0
+03:11:15Z box-runner waiting for GPU: GPU-CLAIM.txt held: CLAIMED by ep1-b07-v34-motion-r4-0810 - LIVE LTX render since 2026-08-10 03:0xZ, card-runner lane.
