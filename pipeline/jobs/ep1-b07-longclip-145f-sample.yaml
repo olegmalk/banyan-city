@@ -1,0 +1,130 @@
+# ep1 beat 07 "zero-0-moving-parts" — LONG-CLIP CANARY. ONE SAMPLE, frames only.
+#
+# THE QUESTION. render_t3.fit_duration() sizes each beat to its voice line and
+# LOOPS the clip when the voice outruns it. Episode 1's shipped cut loops on 7
+# of 15 beats. Roman, tonight: "lets do a looping fix for all them, i'd rather
+# not have any looping, it looks bad." The cheapest fix that needs no script
+# rewrite is longer clips — and 65 frames is the ONLY value this repo has ever
+# rendered. ltx_i2v.py:1293 has `--frames` as a plain argument, default 65,
+# constraint 8n+1. Nothing caps it. It has simply never been tried.
+#
+# 145 frames = 6.04s at 24fps. NOT 305, NOT 385: if a long render fails it
+# should fail cheaply, and 145 covers beat 07's ~2.0-2.3x loop outright while
+# being the smallest step that answers the question.
+#
+# ONE VARIABLE, and it is the frame count. Everything else is byte-identical to
+# ep1-b07-v34-motion-r2.yaml, which landed: the same plate
+# (C:\banyan-farm\v34-r2\07-704x1280.png, prepare_plate from the ratified still),
+# the same text embeds already on the box (b07-embeds.pt — text embeddings do
+# not depend on frame count), the same seed 20260838, the same two-stage
+# distilled recipe, the same sequential offload, the same script
+# C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py (sha256 8cdd186e.., which is
+# repo HEAD — verified on the box tonight). That makes the output directly
+# comparable to 07-zero-0-moving-parts-LTX-r2.mp4 sitting beside it.
+#
+# WHY BEAT 07 AND NOT 11. Beat 07 is a real looper with a ratified plate ALREADY
+# PREPARED on the box, embeds already encoded, and a landed 65-frame clip in the
+# same directory to compare against. Beat 11 has no v34 motion spec, no plate on
+# the box and no 65-frame clip — it would have needed three extra steps before
+# the actual question got asked.
+#
+# NO ENCODE STEP. b07-embeds.pt was written by the r2 run from b07-prompt.txt /
+# b07-negative.txt, both still on the box unchanged. Re-encoding would reload
+# 24.4GB of text encoder to produce the same tensor.
+#
+# WHAT THIS DOES NOT DECIDE. Whether a 6-second LTX clip looks good enough to
+# ship is Roman's call, not the steward's, and NOT the flow metric's — that
+# metric is disqualified on this series (131e433: it scored highest on the beat
+# where the plant fell over). This job establishes only whether 145 frames
+# COMPLETES, how long it takes, and what the picture actually does over 6s.
+
+id: ep1-b07-longclip-145f-sample
+task: ep1-b07-longclip-145f-sample-0810
+node: 001-capability-inventory
+beat: 7
+runner: box
+needs_gpu: true
+priority: 20
+max_attempts: 1
+sample: true
+owner: long-clip-sample
+
+consumer: >-
+  the de-looping decision for episode 1. render_t3 loops 7 of 15 beats (08 at
+  4.6x, 10 at 3.7x, 13 at 3.3x, 07/11/02/03 between 1.2x and 2.3x) and Roman has
+  said he does not want any of it. If 145 frames completes at a usable wall time
+  and the picture holds, longer renders de-loop most of the episode with no
+  script rewrite. If it OOMs or degrades, the fix has to come from the script
+  side instead, and knowing that tonight is worth one render.
+
+success: >-
+  A 704x1280 mp4 at C:\banyan-farm\v34-r2\07-zero-0-moving-parts-LTX-145f.mp4,
+  145 frames, that PLAYS THROUGH — i.e. ffprobe reports 145 frames and the last
+  second is the same scene as the first. Judged by eye on a frame strip across
+  the whole clip, not by any median-frame-delta number. An OOM is also a
+  RESULT and gets reported as one; it does not get retried at a smaller size
+  without saying so.
+
+why: >-
+  65 frames is the only clip length this repo has ever rendered, and the looping
+  it forces is the defect the founder named tonight.
+
+est_minutes: 15   # 65f measures 4m38s-4m48s wall incl. model load; 145f is 2.23x
+                  # the frames and attention is superlinear, so this is a ceiling
+                  # guess, not a measurement. Do not read a 12-minute run as a stall.
+needs: [cuda, vram20, video-venv]
+
+payload:
+  C:\banyan-farm\v34-r2\b07-jobs-render-145.json: |-
+    [{"beat": 7,
+      "seed": 20260838,
+      "embeds": "C:\\banyan-farm\\v34-r2\\b07-embeds.pt",
+      "init": "C:\\banyan-farm\\v34-r2\\07-704x1280.png",
+      "out": "C:\\banyan-farm\\v34-r2\\07-zero-0-moving-parts-LTX-145f.mp4"}]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  - name: render
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+      - --stage
+      - render
+      - --jobs
+      - C:\banyan-farm\v34-r2\b07-jobs-render-145.json
+      - --size
+      - 704x1280
+      - --frames
+      - "145"
+      - --fps
+      - "24"
+      - --guidance
+      - "1.0"
+      - --distilled-sigmas
+      - --two-stage
+      - --image-crf
+      - "33"
+      - --offload
+      - sequential
+      - --mode
+      - production
+      - --task
+      - ep1-b07-longclip-145f-sample-0810
+      - --worker
+      - rtx5090
+      - --bench-jsonl
+      - C:\banyan-farm\v34-r2\bench-b07-145f.jsonl
+      - --bench-label
+      - b07-longclip-145f
+
+artifacts:
+  - C:\banyan-farm\v34-r2\07-zero-0-moving-parts-LTX-145f.mp4
