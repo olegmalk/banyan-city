@@ -1,0 +1,80 @@
+# Still provenance (7.2), written AT RENDER TIME by render_b01r9.py
+# on the rtx5090 (C:\banyan-farm\sample-b01-r9).
+# The negative below is what the model actually saw. The recipe's own
+# negative, before this script's one deliberate removal, was:
+#   photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, mature tree, large tree, tall tree, thick trunk, full canopy, forest, bush, shrubbery, girl, boy, child, person, chibi, mascot, creature, face, branches, night sky, photorealism
+#   NEGWARN: !! negative prompt over CLIP's 77-token budget; deduplicated: text; DROPPED: realistic skin texture, jpeg artifacts
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_revision: 483f0c322568ed13697ed01dd0be07204746d12b
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+controlnet: diffusers/controlnet-depth-sdxl-1.0
+controlnet_revision: 17bb97973f29801224cd66f192c5ffacf82648b4
+controlnet_variant: fp16 (file selector; dtype is bfloat16)
+controlnet_licence: openrail++ (D15 SAFE — same family as the base)
+controlnet_conditioning_scale: 0.8
+control_guidance_start: 0.0
+control_guidance_end: 1.0
+control_map: genomes/sapling/nodes/002b-first-citizen/control/b01-r9-depth-b15.png
+control_map_in_repo: true
+control_map_at_repo_commit: unknown
+control_map_abs: 'C:\banyan-farm\banyan-city\genomes\sapling\nodes\002b-first-citizen\control\b01-r9-depth-b15.png'
+control_map_sha256: fda4bf6c8838c2da770ce79dd36c885f3c1699755fbb7ce4b0581fd1c32adc28
+control_map_derived_from: genomes/sapling/nodes/001-capability-inventory/stills/15-something-s-coming.png
+control_map_source_sha256: f60c1404f88d45720ca295dfc753e9eaabb815446710bcfffb3c7a07b7277f54
+depth_estimator: Intel/dpt-hybrid-midas
+depth_estimator_revision: 11eaf7a1cf4bd70740697dbc216f98980c0aeb03
+depth_estimator_licence: apache-2.0 (D15 SAFE — permissive, adds nothing)
+depth_estimator_loaded_at_render_time: false
+shot_beat: 1
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20260720
+seed_rule: SEED(20260719) + BEAT(1) + i*1000
+seeds_in_batch: 4
+arm: d80
+pipeline: StableDiffusionXLControlNetPipeline (text2img + depth control)
+init_image: none (r9 conditions on geometry, not pixels)
+strength: n/a
+task: ep2-b01-r9-depth-controlnet
+queue_entry: ep2-b01-r7-coldopen-1786292601
+render_round: r9
+candidate_set: r9-d80
+negative_terms_removed: tall tree
+prompt_source_sha256: 445b8c682a5f94954d98a2a0be5209876c0c558c666c085ba126b35614e491c9
+positive_clip_tokens: 65
+negative_clip_tokens: 72
+tokenizer: openai/clip-vit-large-patch14 (transformers, on the box)
+positive_identical_to_r8: true
+negative_identical_to_r7: true
+negative_is_budget_trimmed: true
+shots_md_edited: false
+repo_commit: 9e0a0aeb06a29e3dab02f33c8e2c093829576d8e
+provenance_warning: >-
+  control_map's presence at repo_commit 9e0a0aeb06a29e3dab02f33c8e2c093829576d8e could NOT be verified here (git unusable: not on PATH, HEAD unresolved, or the commit is not in this clone). Treat control_map_at_repo_commit: unknown as unverified, never as confirmed. The bytes are sha-asserted (fda4bf6c8838c2da770ce79dd36c885f3c1699755fbb7ce4b0581fd1c32adc28).
+rendered_at_utc: '2026-08-10T08:41:35Z'
+device: 'cuda:0'
+dtype: bfloat16
+scheduler: EulerAncestralDiscreteScheduler
+python_version: 3.12.10
+torch_version: 2.11.0+cu128
+diffusers_version: 0.29.2
+transformers_version: 4.44.2
+single_variable: >-
+  The conditioning, and only the conditioning. Base, dtype, device, size, steps, cfg, seed rule, sent positive and sent negative are r8's byte for byte; the b15 plate arrives as a committed depth map through diffusers/controlnet-depth-sdxl-1.0 instead of as an img2img init. control_guidance_start/end are pinned at 0.0/1.0 so no second axis is opened.
+g1_chain: >-
+  b15-r3-s1 (APPROVED, canon since d4488de, sha256 f60c1404f88d45720ca295dfc753e9eaabb815446710bcfffb3c7a07b7277f54) -> Intel/dpt-hybrid-midas @ 11eaf7a1cf4bd70740697dbc216f98980c0aeb03, fixed parameters, no sampling -> committed map (sha256 fda4bf6c8838c2da770ce79dd36c885f3c1699755fbb7ce4b0581fd1c32adc28) -> ControlNet. Both hashes are asserted at render time. The map carries strictly less than the approved still — one channel of geometry, colour discarded — so it can subtract from approved content but cannot introduce unapproved content. The plate itself was read for its hash only and was never passed to the pipeline.
+provisional: >-
+  PROVISIONAL. A steward-rendered CANDIDATE, not a pick and not canon. Scored against taste/steward-model.v1 and logged in taste/steward-model.ledger.yaml BEFORE the founder saw it. Ground truth is the founder (R4); he has ratified nothing here. Never takes a canon filename, is not published, not posted, and not assembled into an episode.
+approved: false
+recipe_inherited_from: >-
+  round 8, takes/stills/01-cold-open-r8-*.png — model, size, steps, cfg, seed rule, the one-term negative removal, the script-side strip of the height predicate and both sent prompts are r8's unchanged. What is new is the depth ControlNet in place of the img2img init, per B01-R9-PLAN.md.
+wall_seconds: 14
+cost_usd: 0
+note: |-
+  round 9, the DEPTH-CONTROLNET round: the plate is taken as GEOMETRY ONLY, its colour discarded before the first denoise step. r8 settled half of this beat — seven rounds of wording produced no grounded whole-plant frame and the b15 init produced 8 of 8, at ~30% (i35) and ~25-34% (i55) stem height — and left the other half open: all eight wear the plate's amber dusk, its light shaft and its macro bokeh where the beat asks for `peach and gold sunrise sky, wide shot`, while r8's own t2i control drew that sky correctly on all four seeds. So the prompt is fine and the init is overriding it. r8's closing sentence — "in this particular plate the palette IS the composition, so strength cannot buy one without spending the other" — is true about STRENGTH and does not generalise to DEPTH: an RGB init makes geometry and colour the same numbers and `strength` is one scalar over both, whereas a depth map separates them BEFORE diffusion starts, one channel of geometry with no colour left to leak. THE SINGLE VARIABLE is the conditioning: base checkpoint, bf16/cuda, 832x1216, 40 steps, cfg 7.5, the seed rule, the sent positive (65 tokens) and the sent negative (72, r7's string) are all r8's byte for byte, and the plate arrives as image=<depth map> through diffusers/controlnet-depth-sdxl-1.0 instead of as an init. control_guidance_start/end are pinned at 0.0/1.0 deliberately: ending control early is the standard trick for letting the prompt own late-stage colour, but a depth map carries no colour, so here it would be a second variable bought against a problem the architecture already solves — if geometry and palette fight late in the denoise, that is r10's axis. ONE SET OF WEIGHTS: the base pipeline loads once and AutoPipelineForText2Image.from_pipe(pipe, controlnet=cn) swaps the class while reusing the loaded modules, the same discipline as r8's from_pipe. THE MAP IS COMMITTED, NOT DERIVED HERE — Intel/dpt-hybrid-midas never loads in this script; Stage 0 derived the map, a human passed it against three gates (polarity: near is bright, per MiDaS inverse depth; the sprout survives the estimator's downsample; b15's light shaft is gone from the sky band), and it was committed with its own sidecar so the round stays reproducible even if the estimator's weights or defaults move. G1 CHAIN, both ends asserted: approved plate b15-r3-s1 (canon since d4488de, sha f60c1404…) -> pinned estimator -> committed map (sha fda4bf6c…) -> pipeline. The map carries strictly LESS than the approved still, so it can subtract from approved content but cannot introduce unapproved content, and the plate itself is read for its hash only and is never passed to the pipeline. b15 is the only admissible geometry source and that is structural rather than a taste choice: every beat-01 frame carrying the right palette — r2-s3, r3-s3, r6-s3 — is unapproved or revoked and would fail G1 before the founder saw it, which is exactly why the fix has to be to discard the init's colour rather than to find a better-coloured init. SHOTS.MD WAS NOT EDITED; the height predicate is stripped script-side after asserting the fence on disk is byte-for-byte r7's, so a stale checkout cannot start. ONE SAMPLE IS ENFORCED IN CODE: --frames defaults to 1 and more than one frame refuses without an explicit --stage2, so Stage 1 (d60, seed 20260720, one frame) cannot be skipped past. THE TOKEN COUNTS ARE A BOX MEASUREMENT — the script refuses to run without a real CLIP tokenizer, because the estimator over-counts a positive of this shape by ~3 near the 77 boundary and the comparability claim rests on 65 and 72 exactly. PRE-REGISTERED RUBRIC, two axes: (A) geometry unchanged from r8 so the numbers compare — stem height fraction against the 32% ceiling he revoked, with r8's ~30% standing, plus grounded/person/pale-slab counts n of 4, person-binding observed not assumed; (B) palette, measured not eyeballed — mean sky RGB over the top 25% against the plate, r8-i35-s0 (the leak) and r8-t2i-s0 (the correct sky), plus the column-luminance profile whose plate peak sits at x=333 of 832. Both must hold: geometry-holds-palette-leaks retires structure-control for this beat and leaves the checkpoint swap and inpaint; palette-free-geometry-gone is a scale question and argues for a higher-scale r10. THE HONEST RISK, named before the pixels: if what made the sapling read small was the macro LOOK rather than the size relationship, a sunrise wide shot on the same geometry may not read small to him — that is R4 and no measurement here settles it; this frame exists to ask him. THE FIG STAYS OBSERVED AND UNGATED: 0 of 12 in r8, size adjectives make it larger, and a depth map of a fruitless plate carries no fruit. PROVISIONAL: steward-rendered candidate, not a pick and not canon, and nothing is opened on the founder's screen.
+prompt: |-
+  A tiny 40cm seedling standing in short grass, its sturdy curved stem, two oversized cotyledon leaves, one small round green fruit hanging from the stem, whole plant in frame, wide shot, peach and gold sunrise sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, mature tree, large tree, thick trunk, full canopy, forest, bush, shrubbery, girl, boy, child, person, chibi, mascot, creature, face, branches, night sky, photorealism

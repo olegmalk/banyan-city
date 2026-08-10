@@ -1,0 +1,707 @@
+#### job ep2-b01-r9-stage2-1786351129 attempt 1 start 2026-08-10T08:38:52Z
+
+==== step d40 START 2026-08-10T08:38:56Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\banyan-city\\pipeline\\render_b01r9.py", "--root", "C:\\banyan-farm\\banyan-city", "--arm", "d40", "--frames", "4", "--stage2", "--out", "C:\\banyan-farm\\b01-r9-stage2\\out"]
+
+== beat 01 cold-open [r9] arm d40 scale 0.4 — depth ControlNet
+   root:     C:\banyan-farm\banyan-city  (commit 9e0a0aeb06a29e3dab02f33c8e2c093829576d8e)
+   out:      C:\banyan-farm\b01-r9-stage2\out
+   shots.md: C:\banyan-farm\banyan-city\genomes\sapling\nodes\002b-first-citizen\shots.md
+   shots sha256: 445b8c682a5f94954d98a2a0be5209876c0c558c666c085ba126b35614e491c9
+   fence: byte-identical to r7's authored text
+   control:  C:\banyan-farm\banyan-city\genomes\sapling\nodes\002b-first-citizen\control\b01-r9-depth-b15.png
+   control sha256: fda4bf6c8838c2da770ce79dd36c885f3c1699755fbb7ce4b0581fd1c32adc28
+   control size: 832x1216
+   plate:    genomes/sapling/nodes/001-capability-inventory/stills/15-something-s-coming.png
+   plate sha256: f60c1404f88d45720ca295dfc753e9eaabb815446710bcfffb3c7a07b7277f54  (provenance only — NOT passed to the pipeline)
+   control_map (recorded): genomes/sapling/nodes/002b-first-citizen/control/b01-r9-depth-b15.png
+   control_map_in_repo: true   at repo_commit 9e0a0aeb06a29e3dab02f33c8e2c093829576d8e: unknown
+
+   !! PROVENANCE WARNING — the render is fine, the RECORD is not clean:
+      control_map's presence at repo_commit 9e0a0aeb06a29e3dab02f33c8e2c093829576d8e could NOT be verified here (git unusable: not on PATH, HEAD unresolved, or the commit is not in this clone).
+      Treat control_map_at_repo_commit: unknown as unverified, never as confirmed.
+      The bytes are sha-asserted (fda4bf6c8838c2da770ce79dd36c885f3c1699755fbb7ce4b0581fd1c32adc28).
+      recorded control_map: genomes/sapling/nodes/002b-first-citizen/control/b01-r9-depth-b15.png
+      recorded repo_commit: 9e0a0aeb06a29e3dab02f33c8e2c093829576d8e
+      This is written into every sidecar this run produces as `provenance_warning:`, so no reader is misled.
+
+   arms available: d40=0.4, d60=0.6, d80=0.8
+   control_guidance: 0.0 -> 1.0 (pinned; r10's axis, not r9's)
+   frames: 4  seeds: [20260720, 20261720, 20262720, 20263720]  [stage2]
+C:\banyan-farm\venv\Lib\site-packages\transformers\tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+Token indices sequence length is longer than the specified maximum sequence length for this model (85 > 77). Running this sequence through the model will result in indexing errors
+
+   AUTHORED(r7, on disk): A tiny 40cm seedling standing in short grass, its sturdy curved stem no taller than the grass around it, two oversized cotyledon leaves, one small round green fruit hanging from the stem, whole plant in frame, wide shot, peach and gold sunrise sky, no girl, no boy, no child, no person, no chibi, no mascot, no creature, no face, no branches, no night sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+   AUTHORED(r9, stripped): A tiny 40cm seedling standing in short grass, its sturdy curved stem, two oversized cotyledon leaves, one small round green fruit hanging from the stem, whole plant in frame, wide shot, peach and gold sunrise sky, no girl, no boy, no child, no person, no chibi, no mascot, no creature, no face, no branches, no night sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+   POS: A tiny 40cm seedling standing in short grass, its sturdy curved stem, two oversized cotyledon leaves, one small round green fruit hanging from the stem, whole plant in frame, wide shot, peach and gold sunrise sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+   NEG(recipe): photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, mature tree, large tree, tall tree, thick trunk, full canopy, forest, bush, shrubbery, girl, boy, child, person, chibi, mascot, creature, face, branches, night sky, photorealism
+   NEG(sent):   photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, mature tree, large tree, thick trunk, full canopy, forest, bush, shrubbery, girl, boy, child, person, chibi, mascot, creature, face, branches, night sky, photorealism
+   positive tokens: 65 (budget 77, r8 measured 65)
+   negative tokens: recipe 75 -> sent 72 (budget 77, r7 measured 72)
+   NEGWARN: !! negative prompt over CLIP's 77-token budget; deduplicated: text; DROPPED: realistic skin texture, jpeg artifacts
+C:\banyan-farm\venv\Lib\site-packages\diffusers\models\vq_model.py:20: FutureWarning: `VQEncoderOutput` is deprecated and will be removed in version 0.31. Importing `VQEncoderOutput` from `diffusers.models.vq_model` is deprecated and this will be removed in a future version. Please use `from diffusers.models.autoencoders.vq_model import VQEncoderOutput`, instead.
+  deprecate("VQEncoderOutput", "0.31", deprecation_message)
+C:\banyan-farm\venv\Lib\site-packages\diffusers\models\vq_model.py:25: FutureWarning: `VQModel` is deprecated and will be removed in version 0.31. Importing `VQModel` from `diffusers.models.vq_model` is deprecated and this will be removed in a future version. Please use `from diffusers.models.autoencoders.vq_model import VQModel`, instead.
+  deprecate("VQModel", "0.31", deprecation_message)
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:00, 15.61it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:02<00:02,  1.50it/s]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:02<00:01,  1.89it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.69it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cuda/bfloat16 in 9s (StableDiffusionXLControlNetPipeline)
+RUNTIME device=cuda:0 dtype=bfloat16 scheduler=EulerAncestralDiscreteScheduler python=3.12.10 torch=2.11.0+cu128 diffusers=0.29.2 transformers=4.44.2
+
+  0%|          | 0/40 [00:00<?, ?it/s]
+  2%|▎         | 1/40 [00:00<00:20,  1.89it/s]
+  5%|▌         | 2/40 [00:00<00:15,  2.53it/s]
+  8%|▊         | 3/40 [00:01<00:13,  2.68it/s]
+ 10%|█         | 4/40 [00:01<00:12,  2.80it/s]
+ 12%|█▎        | 5/40 [00:01<00:11,  2.97it/s]
+ 15%|█▌        | 6/40 [00:02<00:11,  2.98it/s]
+ 18%|█▊        | 7/40 [00:02<00:11,  2.99it/s]
+ 20%|██        | 8/40 [00:02<00:10,  3.04it/s]
+ 22%|██▎       | 9/40 [00:03<00:10,  3.03it/s]
+ 25%|██▌       | 10/40 [00:03<00:09,  3.02it/s]
+ 28%|██▊       | 11/40 [00:03<00:09,  3.11it/s]
+ 30%|███       | 12/40 [00:04<00:09,  3.06it/s]
+ 32%|███▎      | 13/40 [00:04<00:08,  3.04it/s]
+ 35%|███▌      | 14/40 [00:04<00:08,  3.10it/s]
+ 38%|███▊      | 15/40 [00:05<00:08,  3.07it/s]
+ 40%|████      | 16/40 [00:05<00:07,  3.05it/s]
+ 42%|████▎     | 17/40 [00:05<00:07,  3.09it/s]
+ 45%|████▌     | 18/40 [00:06<00:07,  3.11it/s]
+ 48%|████▊     | 19/40 [00:06<00:06,  3.08it/s]
+ 50%|█████     | 20/40 [00:06<00:06,  3.10it/s]
+ 52%|█████▎    | 21/40 [00:07<00:06,  3.08it/s]
+ 55%|█████▌    | 22/40 [00:07<00:05,  3.10it/s]
+ 57%|█████▊    | 23/40 [00:07<00:05,  3.07it/s]
+ 60%|██████    | 24/40 [00:07<00:05,  3.09it/s]
+ 62%|██████▎   | 25/40 [00:08<00:04,  3.06it/s]
+ 65%|██████▌   | 26/40 [00:08<00:04,  3.09it/s]
+ 68%|██████▊   | 27/40 [00:08<00:04,  3.10it/s]
+ 70%|███████   | 28/40 [00:09<00:03,  3.09it/s]
+ 72%|███████▎  | 29/40 [00:09<00:03,  3.06it/s]
+ 75%|███████▌  | 30/40 [00:09<00:03,  3.09it/s]
+ 78%|███████▊  | 31/40 [00:10<00:02,  3.06it/s]
+ 80%|████████  | 32/40 [00:10<00:02,  3.09it/s]
+ 82%|████████▎ | 33/40 [00:10<00:02,  3.07it/s]
+ 85%|████████▌ | 34/40 [00:11<00:01,  3.09it/s]
+ 88%|████████▊ | 35/40 [00:11<00:01,  3.07it/s]
+ 90%|█████████ | 36/40 [00:11<00:01,  3.09it/s]
+ 92%|█████████▎| 37/40 [00:12<00:00,  3.07it/s]
+ 95%|█████████▌| 38/40 [00:12<00:00,  3.09it/s]
+ 98%|█████████▊| 39/40 [00:12<00:00,  3.06it/s]
+100%|██████████| 40/40 [00:13<00:00,  3.09it/s]
+100%|██████████| 40/40 [00:13<00:00,  3.03it/s]
+   01-cold-open-r9-d40-s0.png seed=20260720 14s  (1/4)
+
+  0%|          | 0/40 [00:00<?, ?it/s]
+  2%|▎         | 1/40 [00:00<00:11,  3.46it/s]
+  5%|▌         | 2/40 [00:00<00:11,  3.27it/s]
+  8%|▊         | 3/40 [00:00<00:12,  3.08it/s]
+ 10%|█         | 4/40 [00:01<00:11,  3.11it/s]
+ 12%|█▎        | 5/40 [00:01<00:11,  3.11it/s]
+ 15%|█▌        | 6/40 [00:01<00:11,  3.04it/s]
+ 18%|█▊        | 7/40 [00:02<00:10,  3.05it/s]
+ 20%|██        | 8/40 [00:02<00:10,  3.12it/s]
+ 22%|██▎       | 9/40 [00:02<00:10,  3.08it/s]
+ 25%|██▌       | 10/40 [00:03<00:09,  3.06it/s]
+ 28%|██▊       | 11/40 [00:03<00:09,  3.09it/s]
+ 30%|███       | 12/40 [00:03<00:09,  3.06it/s]
+ 32%|███▎      | 13/40 [00:04<00:08,  3.04it/s]
+ 35%|███▌      | 14/40 [00:04<00:08,  3.08it/s]
+ 38%|███▊      | 15/40 [00:04<00:08,  3.06it/s]
+ 40%|████      | 16/40 [00:05<00:07,  3.09it/s]
+ 42%|████▎     | 17/40 [00:05<00:07,  3.07it/s]
+ 45%|████▌     | 18/40 [00:05<00:07,  3.09it/s]
+ 48%|████▊     | 19/40 [00:06<00:06,  3.06it/s]
+ 50%|█████     | 20/40 [00:06<00:06,  3.09it/s]
+ 52%|█████▎    | 21/40 [00:06<00:06,  3.07it/s]
+ 55%|█████▌    | 22/40 [00:07<00:05,  3.04it/s]
+ 57%|█████▊    | 23/40 [00:07<00:05,  3.09it/s]
+ 60%|██████    | 24/40 [00:07<00:05,  3.07it/s]
+ 62%|██████▎   | 25/40 [00:08<00:04,  3.04it/s]
+ 65%|██████▌   | 26/40 [00:08<00:04,  3.07it/s]
+ 68%|██████▊   | 27/40 [00:08<00:04,  3.10it/s]
+ 70%|███████   | 28/40 [00:09<00:03,  3.07it/s]
+ 72%|███████▎  | 29/40 [00:09<00:03,  3.09it/s]
+ 75%|███████▌  | 30/40 [00:09<00:03,  3.07it/s]
+ 78%|███████▊  | 31/40 [00:10<00:02,  3.03it/s]
+ 80%|████████  | 32/40 [00:10<00:02,  3.09it/s]
+ 82%|████████▎ | 33/40 [00:10<00:02,  3.06it/s]
+ 85%|████████▌ | 34/40 [00:11<00:01,  3.03it/s]
+ 88%|████████▊ | 35/40 [00:11<00:01,  3.08it/s]
+ 90%|█████████ | 36/40 [00:11<00:01,  3.06it/s]
+ 92%|█████████▎| 37/40 [00:12<00:00,  3.04it/s]
+ 95%|█████████▌| 38/40 [00:12<00:00,  3.07it/s]
+ 98%|█████████▊| 39/40 [00:12<00:00,  3.06it/s]
+100%|██████████| 40/40 [00:13<00:00,  3.08it/s]
+100%|██████████| 40/40 [00:13<00:00,  3.08it/s]
+   01-cold-open-r9-d40-s1.png seed=20261720 13s  (2/4)
+
+  0%|          | 0/40 [00:00<?, ?it/s]
+  2%|▎         | 1/40 [00:00<00:11,  3.45it/s]
+  5%|▌         | 2/40 [00:00<00:11,  3.24it/s]
+  8%|▊         | 3/40 [00:00<00:11,  3.09it/s]
+ 10%|█         | 4/40 [00:01<00:11,  3.11it/s]
+ 12%|█▎        | 5/40 [00:01<00:11,  3.12it/s]
+ 15%|█▌        | 6/40 [00:01<00:11,  3.03it/s]
+ 18%|█▊        | 7/40 [00:02<00:10,  3.07it/s]
+ 20%|██        | 8/40 [00:02<00:10,  3.10it/s]
+ 22%|██▎       | 9/40 [00:02<00:10,  3.02it/s]
+ 25%|██▌       | 10/40 [00:03<00:09,  3.06it/s]
+ 28%|██▊       | 11/40 [00:03<00:09,  3.09it/s]
+ 30%|███       | 12/40 [00:03<00:09,  3.07it/s]
+ 32%|███▎      | 13/40 [00:04<00:08,  3.01it/s]
+ 35%|███▌      | 14/40 [00:04<00:08,  3.09it/s]
+ 38%|███▊      | 15/40 [00:04<00:08,  3.07it/s]
+ 40%|████      | 16/40 [00:05<00:07,  3.05it/s]
+ 42%|████▎     | 17/40 [00:05<00:07,  3.08it/s]
+ 45%|████▌     | 18/40 [00:05<00:07,  3.06it/s]
+ 48%|████▊     | 19/40 [00:06<00:06,  3.04it/s]
+ 50%|█████     | 20/40 [00:06<00:06,  3.07it/s]
+ 52%|█████▎    | 21/40 [00:06<00:06,  3.06it/s]
+ 55%|█████▌    | 22/40 [00:07<00:05,  3.01it/s]
+ 57%|█████▊    | 23/40 [00:07<00:05,  3.04it/s]
+ 60%|██████    | 24/40 [00:07<00:05,  3.08it/s]
+ 62%|██████▎   | 25/40 [00:08<00:04,  3.06it/s]
+ 65%|██████▌   | 26/40 [00:08<00:04,  3.05it/s]
+ 68%|██████▊   | 27/40 [00:08<00:04,  3.08it/s]
+ 70%|███████   | 28/40 [00:09<00:03,  3.06it/s]
+ 72%|███████▎  | 29/40 [00:09<00:03,  3.05it/s]
+ 75%|███████▌  | 30/40 [00:09<00:03,  3.03it/s]
+ 78%|███████▊  | 31/40 [00:10<00:02,  3.07it/s]
+ 80%|████████  | 32/40 [00:10<00:02,  3.04it/s]
+ 82%|████████▎ | 33/40 [00:10<00:02,  3.04it/s]
+ 85%|████████▌ | 34/40 [00:11<00:01,  3.08it/s]
+ 88%|████████▊ | 35/40 [00:11<00:01,  3.06it/s]
+ 90%|█████████ | 36/40 [00:11<00:01,  3.09it/s]
+ 92%|█████████▎| 37/40 [00:12<00:00,  3.04it/s]
+ 95%|█████████▌| 38/40 [00:12<00:00,  3.05it/s]
+ 98%|█████████▊| 39/40 [00:12<00:00,  3.05it/s]
+100%|██████████| 40/40 [00:13<00:00,  3.08it/s]
+100%|██████████| 40/40 [00:13<00:00,  3.07it/s]
+   01-cold-open-r9-d40-s2.png seed=20262720 13s  (3/4)
+
+  0%|          | 0/40 [00:00<?, ?it/s]
+  2%|▎         | 1/40 [00:00<00:11,  3.36it/s]
+  5%|▌         | 2/40 [00:00<00:11,  3.24it/s]
+  8%|▊         | 3/40 [00:00<00:12,  3.06it/s]
+ 10%|█         | 4/40 [00:01<00:11,  3.06it/s]
+ 12%|█▎        | 5/40 [00:01<00:11,  3.10it/s]
+ 15%|█▌        | 6/40 [00:01<00:11,  3.05it/s]
+ 18%|█▊        | 7/40 [00:02<00:10,  3.04it/s]
+ 20%|██        | 8/40 [00:02<00:10,  3.08it/s]
+ 22%|██▎       | 9/40 [00:02<00:10,  3.05it/s]
+ 25%|██▌       | 10/40 [00:03<00:09,  3.03it/s]
+ 28%|██▊       | 11/40 [00:03<00:09,  3.07it/s]
+ 30%|███       | 12/40 [00:03<00:09,  3.06it/s]
+ 32%|███▎      | 13/40 [00:04<00:08,  3.04it/s]
+ 35%|███▌      | 14/40 [00:04<00:08,  3.07it/s]
+ 38%|███▊      | 15/40 [00:04<00:08,  3.05it/s]
+ 40%|████      | 16/40 [00:05<00:07,  3.04it/s]
+ 42%|████▎     | 17/40 [00:05<00:07,  3.07it/s]
+ 45%|████▌     | 18/40 [00:05<00:07,  3.05it/s]
+ 48%|████▊     | 19/40 [00:06<00:06,  3.03it/s]
+ 50%|█████     | 20/40 [00:06<00:06,  3.08it/s]
+ 52%|█████▎    | 21/40 [00:06<00:06,  3.06it/s]
+ 55%|█████▌    | 22/40 [00:07<00:05,  3.02it/s]
+ 57%|█████▊    | 23/40 [00:07<00:05,  3.09it/s]
+ 60%|██████    | 24/40 [00:07<00:05,  3.06it/s]
+ 62%|██████▎   | 25/40 [00:08<00:04,  3.05it/s]
+ 65%|██████▌   | 26/40 [00:08<00:04,  3.03it/s]
+ 68%|██████▊   | 27/40 [00:08<00:04,  3.07it/s]
+ 70%|███████   | 28/40 [00:09<00:03,  3.05it/s]
+ 72%|███████▎  | 29/40 [00:09<00:03,  3.04it/s]
+ 75%|███████▌  | 30/40 [00:09<00:03,  3.03it/s]
+ 78%|███████▊  | 31/40 [00:10<00:02,  3.07it/s]
+ 80%|████████  | 32/40 [00:10<00:02,  3.03it/s]
+ 82%|████████▎ | 33/40 [00:10<00:02,  3.04it/s]
+ 85%|████████▌ | 34/40 [00:11<00:01,  3.04it/s]
+ 88%|████████▊ | 35/40 [00:11<00:01,  3.07it/s]
+ 90%|█████████ | 36/40 [00:11<00:01,  3.05it/s]
+ 92%|█████████▎| 37/40 [00:12<00:00,  3.04it/s]
+ 95%|█████████▌| 38/40 [00:12<00:00,  3.07it/s]
+ 98%|█████████▊| 39/40 [00:12<00:00,  3.04it/s]
+100%|██████████| 40/40 [00:13<00:00,  3.05it/s]
+100%|██████████| 40/40 [00:13<00:00,  3.06it/s]
+   01-cold-open-r9-d40-s3.png seed=20263720 13s  (4/4)
+
+DONE 4 still(s) in C:\banyan-farm\b01-r9-stage2\out
+==== step d40 END rc=0 2026-08-10T08:40:02Z ====
+
+==== step d60 START 2026-08-10T08:40:02Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\banyan-city\\pipeline\\render_b01r9.py", "--root", "C:\\banyan-farm\\banyan-city", "--arm", "d60", "--frames", "4", "--stage2", "--out", "C:\\banyan-farm\\b01-r9-stage2\\out"]
+
+== beat 01 cold-open [r9] arm d60 scale 0.6 — depth ControlNet
+   root:     C:\banyan-farm\banyan-city  (commit 9e0a0aeb06a29e3dab02f33c8e2c093829576d8e)
+   out:      C:\banyan-farm\b01-r9-stage2\out
+   shots.md: C:\banyan-farm\banyan-city\genomes\sapling\nodes\002b-first-citizen\shots.md
+   shots sha256: 445b8c682a5f94954d98a2a0be5209876c0c558c666c085ba126b35614e491c9
+   fence: byte-identical to r7's authored text
+   control:  C:\banyan-farm\banyan-city\genomes\sapling\nodes\002b-first-citizen\control\b01-r9-depth-b15.png
+   control sha256: fda4bf6c8838c2da770ce79dd36c885f3c1699755fbb7ce4b0581fd1c32adc28
+   control size: 832x1216
+   plate:    genomes/sapling/nodes/001-capability-inventory/stills/15-something-s-coming.png
+   plate sha256: f60c1404f88d45720ca295dfc753e9eaabb815446710bcfffb3c7a07b7277f54  (provenance only — NOT passed to the pipeline)
+   control_map (recorded): genomes/sapling/nodes/002b-first-citizen/control/b01-r9-depth-b15.png
+   control_map_in_repo: true   at repo_commit 9e0a0aeb06a29e3dab02f33c8e2c093829576d8e: unknown
+
+   !! PROVENANCE WARNING — the render is fine, the RECORD is not clean:
+      control_map's presence at repo_commit 9e0a0aeb06a29e3dab02f33c8e2c093829576d8e could NOT be verified here (git unusable: not on PATH, HEAD unresolved, or the commit is not in this clone).
+      Treat control_map_at_repo_commit: unknown as unverified, never as confirmed.
+      The bytes are sha-asserted (fda4bf6c8838c2da770ce79dd36c885f3c1699755fbb7ce4b0581fd1c32adc28).
+      recorded control_map: genomes/sapling/nodes/002b-first-citizen/control/b01-r9-depth-b15.png
+      recorded repo_commit: 9e0a0aeb06a29e3dab02f33c8e2c093829576d8e
+      This is written into every sidecar this run produces as `provenance_warning:`, so no reader is misled.
+
+   arms available: d40=0.4, d60=0.6, d80=0.8
+   control_guidance: 0.0 -> 1.0 (pinned; r10's axis, not r9's)
+   frames: 4  seeds: [20260720, 20261720, 20262720, 20263720]  [stage2]
+C:\banyan-farm\venv\Lib\site-packages\transformers\tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+Token indices sequence length is longer than the specified maximum sequence length for this model (85 > 77). Running this sequence through the model will result in indexing errors
+
+   AUTHORED(r7, on disk): A tiny 40cm seedling standing in short grass, its sturdy curved stem no taller than the grass around it, two oversized cotyledon leaves, one small round green fruit hanging from the stem, whole plant in frame, wide shot, peach and gold sunrise sky, no girl, no boy, no child, no person, no chibi, no mascot, no creature, no face, no branches, no night sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+   AUTHORED(r9, stripped): A tiny 40cm seedling standing in short grass, its sturdy curved stem, two oversized cotyledon leaves, one small round green fruit hanging from the stem, whole plant in frame, wide shot, peach and gold sunrise sky, no girl, no boy, no child, no person, no chibi, no mascot, no creature, no face, no branches, no night sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+   POS: A tiny 40cm seedling standing in short grass, its sturdy curved stem, two oversized cotyledon leaves, one small round green fruit hanging from the stem, whole plant in frame, wide shot, peach and gold sunrise sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+   NEG(recipe): photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, mature tree, large tree, tall tree, thick trunk, full canopy, forest, bush, shrubbery, girl, boy, child, person, chibi, mascot, creature, face, branches, night sky, photorealism
+   NEG(sent):   photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, mature tree, large tree, thick trunk, full canopy, forest, bush, shrubbery, girl, boy, child, person, chibi, mascot, creature, face, branches, night sky, photorealism
+   positive tokens: 65 (budget 77, r8 measured 65)
+   negative tokens: recipe 75 -> sent 72 (budget 77, r7 measured 72)
+   NEGWARN: !! negative prompt over CLIP's 77-token budget; deduplicated: text; DROPPED: realistic skin texture, jpeg artifacts
+C:\banyan-farm\venv\Lib\site-packages\diffusers\models\vq_model.py:20: FutureWarning: `VQEncoderOutput` is deprecated and will be removed in version 0.31. Importing `VQEncoderOutput` from `diffusers.models.vq_model` is deprecated and this will be removed in a future version. Please use `from diffusers.models.autoencoders.vq_model import VQEncoderOutput`, instead.
+  deprecate("VQEncoderOutput", "0.31", deprecation_message)
+C:\banyan-farm\venv\Lib\site-packages\diffusers\models\vq_model.py:25: FutureWarning: `VQModel` is deprecated and will be removed in version 0.31. Importing `VQModel` from `diffusers.models.vq_model` is deprecated and this will be removed in a future version. Please use `from diffusers.models.autoencoders.vq_model import VQModel`, instead.
+  deprecate("VQModel", "0.31", deprecation_message)
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:00<00:00,  7.79it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:00,  8.68it/s]
+Loading pipeline components...:  43%|████▎     | 3/7 [00:00<00:00,  7.09it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:00<00:00,  5.98it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  1.84it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.61it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cuda/bfloat16 in 10s (StableDiffusionXLControlNetPipeline)
+RUNTIME device=cuda:0 dtype=bfloat16 scheduler=EulerAncestralDiscreteScheduler python=3.12.10 torch=2.11.0+cu128 diffusers=0.29.2 transformers=4.44.2
+
+  0%|          | 0/40 [00:00<?, ?it/s]
+  2%|▎         | 1/40 [00:00<00:20,  1.93it/s]
+  5%|▌         | 2/40 [00:00<00:14,  2.55it/s]
+  8%|▊         | 3/40 [00:01<00:13,  2.71it/s]
+ 10%|█         | 4/40 [00:01<00:12,  2.81it/s]
+ 12%|█▎        | 5/40 [00:01<00:11,  2.99it/s]
+ 15%|█▌        | 6/40 [00:02<00:11,  2.94it/s]
+ 18%|█▊        | 7/40 [00:02<00:11,  2.97it/s]
+ 20%|██        | 8/40 [00:02<00:10,  3.08it/s]
+ 22%|██▎       | 9/40 [00:03<00:10,  3.00it/s]
+ 25%|██▌       | 10/40 [00:03<00:09,  3.00it/s]
+ 28%|██▊       | 11/40 [00:03<00:09,  3.06it/s]
+ 30%|███       | 12/40 [00:04<00:09,  3.04it/s]
+ 32%|███▎      | 13/40 [00:04<00:08,  3.02it/s]
+ 35%|███▌      | 14/40 [00:04<00:08,  3.07it/s]
+ 38%|███▊      | 15/40 [00:05<00:08,  3.06it/s]
+ 40%|████      | 16/40 [00:05<00:07,  3.04it/s]
+ 42%|████▎     | 17/40 [00:05<00:07,  3.07it/s]
+ 45%|████▌     | 18/40 [00:06<00:07,  3.10it/s]
+ 48%|████▊     | 19/40 [00:06<00:06,  3.07it/s]
+ 50%|█████     | 20/40 [00:06<00:06,  3.05it/s]
+ 52%|█████▎    | 21/40 [00:07<00:06,  3.08it/s]
+ 55%|█████▌    | 22/40 [00:07<00:05,  3.06it/s]
+ 57%|█████▊    | 23/40 [00:07<00:05,  3.05it/s]
+ 60%|██████    | 24/40 [00:08<00:05,  3.08it/s]
+ 62%|██████▎   | 25/40 [00:08<00:04,  3.03it/s]
+ 65%|██████▌   | 26/40 [00:08<00:04,  3.10it/s]
+ 68%|██████▊   | 27/40 [00:09<00:04,  3.04it/s]
+ 70%|███████   | 28/40 [00:09<00:03,  3.04it/s]
+ 72%|███████▎  | 29/40 [00:09<00:03,  3.10it/s]
+ 75%|███████▌  | 30/40 [00:09<00:03,  3.07it/s]
+ 78%|███████▊  | 31/40 [00:10<00:02,  3.04it/s]
+ 80%|████████  | 32/40 [00:10<00:02,  3.09it/s]
+ 82%|████████▎ | 33/40 [00:10<00:02,  3.06it/s]
+ 85%|████████▌ | 34/40 [00:11<00:01,  3.05it/s]
+ 88%|████████▊ | 35/40 [00:11<00:01,  3.08it/s]
+ 90%|█████████ | 36/40 [00:11<00:01,  3.05it/s]
+ 92%|█████████▎| 37/40 [00:12<00:00,  3.09it/s]
+ 95%|█████████▌| 38/40 [00:12<00:00,  3.07it/s]
+ 98%|█████████▊| 39/40 [00:12<00:00,  3.05it/s]
+100%|██████████| 40/40 [00:13<00:00,  3.04it/s]
+100%|██████████| 40/40 [00:13<00:00,  3.02it/s]
+   01-cold-open-r9-d60-s0.png seed=20260720 14s  (1/4)
+
+  0%|          | 0/40 [00:00<?, ?it/s]
+  2%|▎         | 1/40 [00:00<00:11,  3.39it/s]
+  5%|▌         | 2/40 [00:00<00:11,  3.26it/s]
+  8%|▊         | 3/40 [00:00<00:12,  3.05it/s]
+ 10%|█         | 4/40 [00:01<00:11,  3.07it/s]
+ 12%|█▎        | 5/40 [00:01<00:11,  3.12it/s]
+ 15%|█▌        | 6/40 [00:01<00:11,  3.05it/s]
+ 18%|█▊        | 7/40 [00:02<00:10,  3.03it/s]
+ 20%|██        | 8/40 [00:02<00:10,  3.12it/s]
+ 22%|██▎       | 9/40 [00:02<00:10,  3.04it/s]
+ 25%|██▌       | 10/40 [00:03<00:09,  3.03it/s]
+ 28%|██▊       | 11/40 [00:03<00:09,  3.07it/s]
+ 30%|███       | 12/40 [00:03<00:09,  3.05it/s]
+ 32%|███▎      | 13/40 [00:04<00:08,  3.03it/s]
+ 35%|███▌      | 14/40 [00:04<00:08,  3.08it/s]
+ 38%|███▊      | 15/40 [00:04<00:08,  3.06it/s]
+ 40%|████      | 16/40 [00:05<00:07,  3.04it/s]
+ 42%|████▎     | 17/40 [00:05<00:07,  3.07it/s]
+ 45%|████▌     | 18/40 [00:05<00:07,  3.05it/s]
+ 48%|████▊     | 19/40 [00:06<00:06,  3.04it/s]
+ 50%|█████     | 20/40 [00:06<00:06,  3.08it/s]
+ 52%|█████▎    | 21/40 [00:06<00:06,  3.06it/s]
+ 55%|█████▌    | 22/40 [00:07<00:05,  3.04it/s]
+ 57%|█████▊    | 23/40 [00:07<00:05,  3.08it/s]
+ 60%|██████    | 24/40 [00:07<00:05,  3.05it/s]
+ 62%|██████▎   | 25/40 [00:08<00:04,  3.04it/s]
+ 65%|██████▌   | 26/40 [00:08<00:04,  3.07it/s]
+ 68%|██████▊   | 27/40 [00:08<00:04,  3.05it/s]
+ 70%|███████   | 28/40 [00:09<00:03,  3.08it/s]
+ 72%|███████▎  | 29/40 [00:09<00:03,  3.06it/s]
+ 75%|███████▌  | 30/40 [00:09<00:03,  3.05it/s]
+ 78%|███████▊  | 31/40 [00:10<00:02,  3.08it/s]
+ 80%|████████  | 32/40 [00:10<00:02,  3.06it/s]
+ 82%|████████▎ | 33/40 [00:10<00:02,  3.04it/s]
+ 85%|████████▌ | 34/40 [00:11<00:01,  3.08it/s]
+ 88%|████████▊ | 35/40 [00:11<00:01,  3.06it/s]
+ 90%|█████████ | 36/40 [00:11<00:01,  3.04it/s]
+ 92%|█████████▎| 37/40 [00:12<00:00,  3.08it/s]
+ 95%|█████████▌| 38/40 [00:12<00:00,  3.06it/s]
+ 98%|█████████▊| 39/40 [00:12<00:00,  3.04it/s]
+100%|██████████| 40/40 [00:13<00:00,  3.03it/s]
+100%|██████████| 40/40 [00:13<00:00,  3.06it/s]
+   01-cold-open-r9-d60-s1.png seed=20261720 13s  (2/4)
+
+  0%|          | 0/40 [00:00<?, ?it/s]
+  2%|▎         | 1/40 [00:00<00:11,  3.33it/s]
+  5%|▌         | 2/40 [00:00<00:11,  3.23it/s]
+  8%|▊         | 3/40 [00:00<00:12,  3.04it/s]
+ 10%|█         | 4/40 [00:01<00:11,  3.10it/s]
+ 12%|█▎        | 5/40 [00:01<00:11,  3.12it/s]
+ 15%|█▌        | 6/40 [00:01<00:11,  3.02it/s]
+ 18%|█▊        | 7/40 [00:02<00:10,  3.03it/s]
+ 20%|██        | 8/40 [00:02<00:10,  3.11it/s]
+ 22%|██▎       | 9/40 [00:02<00:10,  3.02it/s]
+ 25%|██▌       | 10/40 [00:03<00:09,  3.07it/s]
+ 28%|██▊       | 11/40 [00:03<00:09,  3.10it/s]
+ 30%|███       | 12/40 [00:03<00:09,  3.02it/s]
+ 32%|███▎      | 13/40 [00:04<00:08,  3.02it/s]
+ 35%|███▌      | 14/40 [00:04<00:08,  3.06it/s]
+ 38%|███▊      | 15/40 [00:04<00:08,  3.04it/s]
+ 40%|████      | 16/40 [00:05<00:07,  3.03it/s]
+ 42%|████▎     | 17/40 [00:05<00:07,  3.06it/s]
+ 45%|████▌     | 18/40 [00:05<00:07,  3.06it/s]
+ 48%|████▊     | 19/40 [00:06<00:06,  3.04it/s]
+ 50%|█████     | 20/40 [00:06<00:06,  3.07it/s]
+ 52%|█████▎    | 21/40 [00:06<00:06,  3.04it/s]
+ 55%|█████▌    | 22/40 [00:07<00:05,  3.03it/s]
+ 57%|█████▊    | 23/40 [00:07<00:05,  3.06it/s]
+ 60%|██████    | 24/40 [00:07<00:05,  3.05it/s]
+ 62%|██████▎   | 25/40 [00:08<00:04,  3.06it/s]
+ 65%|██████▌   | 26/40 [00:08<00:04,  3.09it/s]
+ 68%|██████▊   | 27/40 [00:08<00:04,  3.06it/s]
+ 70%|███████   | 28/40 [00:09<00:03,  3.05it/s]
+ 72%|███████▎  | 29/40 [00:09<00:03,  3.07it/s]
+ 75%|███████▌  | 30/40 [00:09<00:03,  3.05it/s]
+ 78%|███████▊  | 31/40 [00:10<00:02,  3.03it/s]
+ 80%|████████  | 32/40 [00:10<00:02,  3.07it/s]
+ 82%|████████▎ | 33/40 [00:10<00:02,  3.05it/s]
+ 85%|████████▌ | 34/40 [00:11<00:01,  3.04it/s]
+ 88%|████████▊ | 35/40 [00:11<00:01,  3.07it/s]
+ 90%|█████████ | 36/40 [00:11<00:01,  3.05it/s]
+ 92%|█████████▎| 37/40 [00:12<00:00,  3.04it/s]
+ 95%|█████████▌| 38/40 [00:12<00:00,  3.03it/s]
+ 98%|█████████▊| 39/40 [00:12<00:00,  3.07it/s]
+100%|██████████| 40/40 [00:13<00:00,  3.05it/s]
+100%|██████████| 40/40 [00:13<00:00,  3.06it/s]
+   01-cold-open-r9-d60-s2.png seed=20262720 13s  (3/4)
+
+  0%|          | 0/40 [00:00<?, ?it/s]
+  2%|▎         | 1/40 [00:00<00:11,  3.36it/s]
+  5%|▌         | 2/40 [00:00<00:11,  3.34it/s]
+  8%|▊         | 3/40 [00:00<00:12,  3.04it/s]
+ 10%|█         | 4/40 [00:01<00:11,  3.08it/s]
+ 12%|█▎        | 5/40 [00:01<00:11,  3.11it/s]
+ 15%|█▌        | 6/40 [00:01<00:11,  3.02it/s]
+ 18%|█▊        | 7/40 [00:02<00:10,  3.02it/s]
+ 20%|██        | 8/40 [00:02<00:10,  3.11it/s]
+ 22%|██▎       | 9/40 [00:02<00:10,  3.01it/s]
+ 25%|██▌       | 10/40 [00:03<00:09,  3.03it/s]
+ 28%|██▊       | 11/40 [00:03<00:09,  3.07it/s]
+ 30%|███       | 12/40 [00:03<00:09,  3.05it/s]
+ 32%|███▎      | 13/40 [00:04<00:09,  3.00it/s]
+ 35%|███▌      | 14/40 [00:04<00:08,  3.05it/s]
+ 38%|███▊      | 15/40 [00:04<00:08,  3.03it/s]
+ 40%|████      | 16/40 [00:05<00:07,  3.02it/s]
+ 42%|████▎     | 17/40 [00:05<00:07,  3.06it/s]
+ 45%|████▌     | 18/40 [00:05<00:07,  3.04it/s]
+ 48%|████▊     | 19/40 [00:06<00:06,  3.03it/s]
+ 50%|█████     | 20/40 [00:06<00:06,  3.07it/s]
+ 52%|█████▎    | 21/40 [00:06<00:06,  3.05it/s]
+ 55%|█████▌    | 22/40 [00:07<00:05,  3.01it/s]
+ 57%|█████▊    | 23/40 [00:07<00:05,  3.08it/s]
+ 60%|██████    | 24/40 [00:07<00:05,  3.06it/s]
+ 62%|██████▎   | 25/40 [00:08<00:04,  3.04it/s]
+ 65%|██████▌   | 26/40 [00:08<00:04,  3.07it/s]
+ 68%|██████▊   | 27/40 [00:08<00:04,  3.05it/s]
+ 70%|███████   | 28/40 [00:09<00:03,  3.02it/s]
+ 72%|███████▎  | 29/40 [00:09<00:03,  3.04it/s]
+ 75%|███████▌  | 30/40 [00:09<00:03,  3.07it/s]
+ 78%|███████▊  | 31/40 [00:10<00:02,  3.05it/s]
+ 80%|████████  | 32/40 [00:10<00:02,  3.04it/s]
+ 82%|████████▎ | 33/40 [00:10<00:02,  3.03it/s]
+ 85%|████████▌ | 34/40 [00:11<00:01,  3.03it/s]
+ 88%|████████▊ | 35/40 [00:11<00:01,  3.04it/s]
+ 90%|█████████ | 36/40 [00:11<00:01,  3.05it/s]
+ 92%|█████████▎| 37/40 [00:12<00:00,  3.03it/s]
+ 95%|█████████▌| 38/40 [00:12<00:00,  3.07it/s]
+ 98%|█████████▊| 39/40 [00:12<00:00,  3.04it/s]
+100%|██████████| 40/40 [00:13<00:00,  3.05it/s]
+100%|██████████| 40/40 [00:13<00:00,  3.05it/s]
+   01-cold-open-r9-d60-s3.png seed=20263720 13s  (4/4)
+
+DONE 4 still(s) in C:\banyan-farm\b01-r9-stage2\out
+==== step d60 END rc=0 2026-08-10T08:41:09Z ====
+
+==== step d80 START 2026-08-10T08:41:09Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\banyan-city\\pipeline\\render_b01r9.py", "--root", "C:\\banyan-farm\\banyan-city", "--arm", "d80", "--frames", "4", "--stage2", "--out", "C:\\banyan-farm\\b01-r9-stage2\\out"]
+
+== beat 01 cold-open [r9] arm d80 scale 0.8 — depth ControlNet
+   root:     C:\banyan-farm\banyan-city  (commit 9e0a0aeb06a29e3dab02f33c8e2c093829576d8e)
+   out:      C:\banyan-farm\b01-r9-stage2\out
+   shots.md: C:\banyan-farm\banyan-city\genomes\sapling\nodes\002b-first-citizen\shots.md
+   shots sha256: 445b8c682a5f94954d98a2a0be5209876c0c558c666c085ba126b35614e491c9
+   fence: byte-identical to r7's authored text
+   control:  C:\banyan-farm\banyan-city\genomes\sapling\nodes\002b-first-citizen\control\b01-r9-depth-b15.png
+   control sha256: fda4bf6c8838c2da770ce79dd36c885f3c1699755fbb7ce4b0581fd1c32adc28
+   control size: 832x1216
+   plate:    genomes/sapling/nodes/001-capability-inventory/stills/15-something-s-coming.png
+   plate sha256: f60c1404f88d45720ca295dfc753e9eaabb815446710bcfffb3c7a07b7277f54  (provenance only — NOT passed to the pipeline)
+   control_map (recorded): genomes/sapling/nodes/002b-first-citizen/control/b01-r9-depth-b15.png
+   control_map_in_repo: true   at repo_commit 9e0a0aeb06a29e3dab02f33c8e2c093829576d8e: unknown
+
+   !! PROVENANCE WARNING — the render is fine, the RECORD is not clean:
+      control_map's presence at repo_commit 9e0a0aeb06a29e3dab02f33c8e2c093829576d8e could NOT be verified here (git unusable: not on PATH, HEAD unresolved, or the commit is not in this clone).
+      Treat control_map_at_repo_commit: unknown as unverified, never as confirmed.
+      The bytes are sha-asserted (fda4bf6c8838c2da770ce79dd36c885f3c1699755fbb7ce4b0581fd1c32adc28).
+      recorded control_map: genomes/sapling/nodes/002b-first-citizen/control/b01-r9-depth-b15.png
+      recorded repo_commit: 9e0a0aeb06a29e3dab02f33c8e2c093829576d8e
+      This is written into every sidecar this run produces as `provenance_warning:`, so no reader is misled.
+
+   arms available: d40=0.4, d60=0.6, d80=0.8
+   control_guidance: 0.0 -> 1.0 (pinned; r10's axis, not r9's)
+   frames: 4  seeds: [20260720, 20261720, 20262720, 20263720]  [stage2]
+C:\banyan-farm\venv\Lib\site-packages\transformers\tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+Token indices sequence length is longer than the specified maximum sequence length for this model (85 > 77). Running this sequence through the model will result in indexing errors
+
+   AUTHORED(r7, on disk): A tiny 40cm seedling standing in short grass, its sturdy curved stem no taller than the grass around it, two oversized cotyledon leaves, one small round green fruit hanging from the stem, whole plant in frame, wide shot, peach and gold sunrise sky, no girl, no boy, no child, no person, no chibi, no mascot, no creature, no face, no branches, no night sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+   AUTHORED(r9, stripped): A tiny 40cm seedling standing in short grass, its sturdy curved stem, two oversized cotyledon leaves, one small round green fruit hanging from the stem, whole plant in frame, wide shot, peach and gold sunrise sky, no girl, no boy, no child, no person, no chibi, no mascot, no creature, no face, no branches, no night sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+   POS: A tiny 40cm seedling standing in short grass, its sturdy curved stem, two oversized cotyledon leaves, one small round green fruit hanging from the stem, whole plant in frame, wide shot, peach and gold sunrise sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+   NEG(recipe): photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, mature tree, large tree, tall tree, thick trunk, full canopy, forest, bush, shrubbery, girl, boy, child, person, chibi, mascot, creature, face, branches, night sky, photorealism
+   NEG(sent):   photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, mature tree, large tree, thick trunk, full canopy, forest, bush, shrubbery, girl, boy, child, person, chibi, mascot, creature, face, branches, night sky, photorealism
+   positive tokens: 65 (budget 77, r8 measured 65)
+   negative tokens: recipe 75 -> sent 72 (budget 77, r7 measured 72)
+   NEGWARN: !! negative prompt over CLIP's 77-token budget; deduplicated: text; DROPPED: realistic skin texture, jpeg artifacts
+C:\banyan-farm\venv\Lib\site-packages\diffusers\models\vq_model.py:20: FutureWarning: `VQEncoderOutput` is deprecated and will be removed in version 0.31. Importing `VQEncoderOutput` from `diffusers.models.vq_model` is deprecated and this will be removed in a future version. Please use `from diffusers.models.autoencoders.vq_model import VQEncoderOutput`, instead.
+  deprecate("VQEncoderOutput", "0.31", deprecation_message)
+C:\banyan-farm\venv\Lib\site-packages\diffusers\models\vq_model.py:25: FutureWarning: `VQModel` is deprecated and will be removed in version 0.31. Importing `VQModel` from `diffusers.models.vq_model` is deprecated and this will be removed in a future version. Please use `from diffusers.models.autoencoders.vq_model import VQModel`, instead.
+  deprecate("VQModel", "0.31", deprecation_message)
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:00,  7.17it/s]
+Loading pipeline components...:  43%|████▎     | 3/7 [00:01<00:02,  1.37it/s]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:02<00:01,  2.00it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  3.24it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.72it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cuda/bfloat16 in 10s (StableDiffusionXLControlNetPipeline)
+RUNTIME device=cuda:0 dtype=bfloat16 scheduler=EulerAncestralDiscreteScheduler python=3.12.10 torch=2.11.0+cu128 diffusers=0.29.2 transformers=4.44.2
+
+  0%|          | 0/40 [00:00<?, ?it/s]
+  2%|▎         | 1/40 [00:00<00:22,  1.75it/s]
+  5%|▌         | 2/40 [00:00<00:15,  2.41it/s]
+  8%|▊         | 3/40 [00:01<00:14,  2.59it/s]
+ 10%|█         | 4/40 [00:01<00:13,  2.75it/s]
+ 12%|█▎        | 5/40 [00:01<00:11,  2.93it/s]
+ 15%|█▌        | 6/40 [00:02<00:11,  2.91it/s]
+ 18%|█▊        | 7/40 [00:02<00:11,  2.94it/s]
+ 20%|██        | 8/40 [00:02<00:10,  3.06it/s]
+ 22%|██▎       | 9/40 [00:03<00:10,  2.99it/s]
+ 25%|██▌       | 10/40 [00:03<00:09,  3.00it/s]
+ 28%|██▊       | 11/40 [00:03<00:09,  3.05it/s]
+ 30%|███       | 12/40 [00:04<00:09,  3.03it/s]
+ 32%|███▎      | 13/40 [00:04<00:08,  3.01it/s]
+ 35%|███▌      | 14/40 [00:04<00:08,  3.06it/s]
+ 38%|███▊      | 15/40 [00:05<00:08,  3.06it/s]
+ 40%|████      | 16/40 [00:05<00:07,  3.04it/s]
+ 42%|████▎     | 17/40 [00:05<00:07,  3.08it/s]
+ 45%|████▌     | 18/40 [00:06<00:07,  3.06it/s]
+ 48%|████▊     | 19/40 [00:06<00:06,  3.04it/s]
+ 50%|█████     | 20/40 [00:06<00:06,  3.07it/s]
+ 52%|█████▎    | 21/40 [00:07<00:06,  3.06it/s]
+ 55%|█████▌    | 22/40 [00:07<00:05,  3.02it/s]
+ 57%|█████▊    | 23/40 [00:07<00:05,  3.08it/s]
+ 60%|██████    | 24/40 [00:08<00:05,  3.06it/s]
+ 62%|██████▎   | 25/40 [00:08<00:04,  3.04it/s]
+ 65%|██████▌   | 26/40 [00:08<00:04,  3.08it/s]
+ 68%|██████▊   | 27/40 [00:09<00:04,  3.03it/s]
+ 70%|███████   | 28/40 [00:09<00:03,  3.05it/s]
+ 72%|███████▎  | 29/40 [00:09<00:03,  3.08it/s]
+ 75%|███████▌  | 30/40 [00:10<00:03,  3.06it/s]
+ 78%|███████▊  | 31/40 [00:10<00:02,  3.02it/s]
+ 80%|████████  | 32/40 [00:10<00:02,  3.04it/s]
+ 82%|████████▎ | 33/40 [00:11<00:02,  3.08it/s]
+ 85%|████████▌ | 34/40 [00:11<00:01,  3.06it/s]
+ 88%|████████▊ | 35/40 [00:11<00:01,  3.04it/s]
+ 90%|█████████ | 36/40 [00:12<00:01,  3.03it/s]
+ 92%|█████████▎| 37/40 [00:12<00:00,  3.08it/s]
+ 95%|█████████▌| 38/40 [00:12<00:00,  3.05it/s]
+ 98%|█████████▊| 39/40 [00:13<00:00,  3.04it/s]
+100%|██████████| 40/40 [00:13<00:00,  3.03it/s]
+100%|██████████| 40/40 [00:13<00:00,  3.00it/s]
+   01-cold-open-r9-d80-s0.png seed=20260720 14s  (1/4)
+
+  0%|          | 0/40 [00:00<?, ?it/s]
+  2%|▎         | 1/40 [00:00<00:11,  3.32it/s]
+  5%|▌         | 2/40 [00:00<00:11,  3.34it/s]
+  8%|▊         | 3/40 [00:00<00:12,  3.04it/s]
+ 10%|█         | 4/40 [00:01<00:11,  3.09it/s]
+ 12%|█▎        | 5/40 [00:01<00:11,  3.11it/s]
+ 15%|█▌        | 6/40 [00:01<00:11,  3.03it/s]
+ 18%|█▊        | 7/40 [00:02<00:10,  3.02it/s]
+ 20%|██        | 8/40 [00:02<00:10,  3.12it/s]
+ 22%|██▎       | 9/40 [00:02<00:10,  3.02it/s]
+ 25%|██▌       | 10/40 [00:03<00:09,  3.04it/s]
+ 28%|██▊       | 11/40 [00:03<00:09,  3.06it/s]
+ 30%|███       | 12/40 [00:03<00:09,  3.06it/s]
+ 32%|███▎      | 13/40 [00:04<00:08,  3.01it/s]
+ 35%|███▌      | 14/40 [00:04<00:08,  3.09it/s]
+ 38%|███▊      | 15/40 [00:04<00:08,  3.02it/s]
+ 40%|████      | 16/40 [00:05<00:07,  3.02it/s]
+ 42%|████▎     | 17/40 [00:05<00:07,  3.06it/s]
+ 45%|████▌     | 18/40 [00:05<00:07,  3.04it/s]
+ 48%|████▊     | 19/40 [00:06<00:06,  3.03it/s]
+ 50%|█████     | 20/40 [00:06<00:06,  3.07it/s]
+ 52%|█████▎    | 21/40 [00:06<00:06,  3.05it/s]
+ 55%|█████▌    | 22/40 [00:07<00:05,  3.04it/s]
+ 57%|█████▊    | 23/40 [00:07<00:05,  3.07it/s]
+ 60%|██████    | 24/40 [00:07<00:05,  3.04it/s]
+ 62%|██████▎   | 25/40 [00:08<00:04,  3.03it/s]
+ 65%|██████▌   | 26/40 [00:08<00:04,  3.07it/s]
+ 68%|██████▊   | 27/40 [00:08<00:04,  3.05it/s]
+ 70%|███████   | 28/40 [00:09<00:03,  3.04it/s]
+ 72%|███████▎  | 29/40 [00:09<00:03,  3.03it/s]
+ 75%|███████▌  | 30/40 [00:09<00:03,  3.03it/s]
+ 78%|███████▊  | 31/40 [00:10<00:02,  3.06it/s]
+ 80%|████████  | 32/40 [00:10<00:02,  3.05it/s]
+ 82%|████████▎ | 33/40 [00:10<00:02,  3.04it/s]
+ 85%|████████▌ | 34/40 [00:11<00:01,  3.03it/s]
+ 88%|████████▊ | 35/40 [00:11<00:01,  3.04it/s]
+ 90%|█████████ | 36/40 [00:11<00:01,  3.06it/s]
+ 92%|█████████▎| 37/40 [00:12<00:00,  3.05it/s]
+ 95%|█████████▌| 38/40 [00:12<00:00,  3.04it/s]
+ 98%|█████████▊| 39/40 [00:12<00:00,  3.07it/s]
+100%|██████████| 40/40 [00:13<00:00,  3.05it/s]
+100%|██████████| 40/40 [00:13<00:00,  3.05it/s]
+   01-cold-open-r9-d80-s1.png seed=20261720 13s  (2/4)
+
+  0%|          | 0/40 [00:00<?, ?it/s]
+  2%|▎         | 1/40 [00:00<00:11,  3.40it/s]
+  5%|▌         | 2/40 [00:00<00:11,  3.35it/s]
+  8%|▊         | 3/40 [00:00<00:12,  3.05it/s]
+ 10%|█         | 4/40 [00:01<00:11,  3.03it/s]
+ 12%|█▎        | 5/40 [00:01<00:11,  3.10it/s]
+ 15%|█▌        | 6/40 [00:01<00:11,  3.05it/s]
+ 18%|█▊        | 7/40 [00:02<00:10,  3.00it/s]
+ 20%|██        | 8/40 [00:02<00:10,  3.09it/s]
+ 22%|██▎       | 9/40 [00:02<00:10,  3.01it/s]
+ 25%|██▌       | 10/40 [00:03<00:09,  3.02it/s]
+ 28%|██▊       | 11/40 [00:03<00:09,  3.06it/s]
+ 30%|███       | 12/40 [00:03<00:09,  3.04it/s]
+ 32%|███▎      | 13/40 [00:04<00:08,  3.03it/s]
+ 35%|███▌      | 14/40 [00:04<00:08,  3.07it/s]
+ 38%|███▊      | 15/40 [00:04<00:08,  3.06it/s]
+ 40%|████      | 16/40 [00:05<00:07,  3.04it/s]
+ 42%|████▎     | 17/40 [00:05<00:07,  3.07it/s]
+ 45%|████▌     | 18/40 [00:05<00:07,  3.01it/s]
+ 48%|████▊     | 19/40 [00:06<00:06,  3.01it/s]
+ 50%|█████     | 20/40 [00:06<00:06,  3.05it/s]
+ 52%|█████▎    | 21/40 [00:06<00:06,  3.03it/s]
+ 55%|█████▌    | 22/40 [00:07<00:05,  3.04it/s]
+ 57%|█████▊    | 23/40 [00:07<00:05,  3.07it/s]
+ 60%|██████    | 24/40 [00:07<00:05,  3.03it/s]
+ 62%|██████▎   | 25/40 [00:08<00:04,  3.02it/s]
+ 65%|██████▌   | 26/40 [00:08<00:04,  3.05it/s]
+ 68%|██████▊   | 27/40 [00:08<00:04,  3.03it/s]
+ 70%|███████   | 28/40 [00:09<00:03,  3.07it/s]
+ 72%|███████▎  | 29/40 [00:09<00:03,  3.05it/s]
+ 75%|███████▌  | 30/40 [00:09<00:03,  3.04it/s]
+ 78%|███████▊  | 31/40 [00:10<00:02,  3.03it/s]
+ 80%|████████  | 32/40 [00:10<00:02,  3.07it/s]
+ 82%|████████▎ | 33/40 [00:10<00:02,  3.05it/s]
+ 85%|████████▌ | 34/40 [00:11<00:01,  3.04it/s]
+ 88%|████████▊ | 35/40 [00:11<00:01,  3.07it/s]
+ 90%|█████████ | 36/40 [00:11<00:01,  3.05it/s]
+ 92%|█████████▎| 37/40 [00:12<00:00,  3.04it/s]
+ 95%|█████████▌| 38/40 [00:12<00:00,  3.03it/s]
+ 98%|█████████▊| 39/40 [00:12<00:00,  3.02it/s]
+100%|██████████| 40/40 [00:13<00:00,  3.06it/s]
+100%|██████████| 40/40 [00:13<00:00,  3.05it/s]
+   01-cold-open-r9-d80-s2.png seed=20262720 14s  (3/4)
+
+  0%|          | 0/40 [00:00<?, ?it/s]
+  2%|▎         | 1/40 [00:00<00:11,  3.33it/s]
+  5%|▌         | 2/40 [00:00<00:11,  3.33it/s]
+  8%|▊         | 3/40 [00:00<00:12,  3.04it/s]
+ 10%|█         | 4/40 [00:01<00:11,  3.03it/s]
+ 12%|█▎        | 5/40 [00:01<00:11,  3.11it/s]
+ 15%|█▌        | 6/40 [00:01<00:11,  3.05it/s]
+ 18%|█▊        | 7/40 [00:02<00:10,  3.03it/s]
+ 20%|██        | 8/40 [00:02<00:10,  3.07it/s]
+ 22%|██▎       | 9/40 [00:02<00:10,  3.00it/s]
+ 25%|██▌       | 10/40 [00:03<00:10,  3.00it/s]
+ 28%|██▊       | 11/40 [00:03<00:09,  3.10it/s]
+ 30%|███       | 12/40 [00:03<00:09,  3.03it/s]
+ 32%|███▎      | 13/40 [00:04<00:08,  3.02it/s]
+ 35%|███▌      | 14/40 [00:04<00:08,  3.06it/s]
+ 38%|███▊      | 15/40 [00:04<00:08,  3.00it/s]
+ 40%|████      | 16/40 [00:05<00:07,  3.00it/s]
+ 42%|████▎     | 17/40 [00:05<00:07,  3.05it/s]
+ 45%|████▌     | 18/40 [00:05<00:07,  3.04it/s]
+ 48%|████▊     | 19/40 [00:06<00:06,  3.03it/s]
+ 50%|█████     | 20/40 [00:06<00:06,  3.07it/s]
+ 52%|█████▎    | 21/40 [00:06<00:06,  3.05it/s]
+ 55%|█████▌    | 22/40 [00:07<00:05,  3.04it/s]
+ 57%|█████▊    | 23/40 [00:07<00:05,  3.03it/s]
+ 60%|██████    | 24/40 [00:07<00:05,  3.02it/s]
+ 62%|██████▎   | 25/40 [00:08<00:04,  3.02it/s]
+ 65%|██████▌   | 26/40 [00:08<00:04,  3.04it/s]
+ 68%|██████▊   | 27/40 [00:08<00:04,  3.04it/s]
+ 70%|███████   | 28/40 [00:09<00:03,  3.04it/s]
+ 72%|███████▎  | 29/40 [00:09<00:03,  3.07it/s]
+ 75%|███████▌  | 30/40 [00:09<00:03,  3.05it/s]
+ 78%|███████▊  | 31/40 [00:10<00:02,  3.04it/s]
+ 80%|████████  | 32/40 [00:10<00:02,  3.03it/s]
+ 82%|████████▎ | 33/40 [00:10<00:02,  3.02it/s]
+ 85%|████████▌ | 34/40 [00:11<00:01,  3.02it/s]
+ 88%|████████▊ | 35/40 [00:11<00:01,  3.06it/s]
+ 90%|█████████ | 36/40 [00:11<00:01,  3.04it/s]
+ 92%|█████████▎| 37/40 [00:12<00:00,  3.03it/s]
+ 95%|█████████▌| 38/40 [00:12<00:00,  3.02it/s]
+ 98%|█████████▊| 39/40 [00:12<00:00,  3.06it/s]
+100%|██████████| 40/40 [00:13<00:00,  3.05it/s]
+100%|██████████| 40/40 [00:13<00:00,  3.04it/s]
+   01-cold-open-r9-d80-s3.png seed=20263720 14s  (4/4)
+
+DONE 4 still(s) in C:\banyan-farm\b01-r9-stage2\out
+==== step d80 END rc=0 2026-08-10T08:42:17Z ====
+#### job ep2-b01-r9-stage2-1786351129 finished rc=0 2026-08-10T08:42:17Z
