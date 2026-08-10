@@ -2325,6 +2325,14 @@ PROV_BANNER = ('<p class="notice standing">Some picks below are the machine’s 
 # The line under "Your queue". Same rule: it labels the section, it does not
 # explain the design of the section.
 QUEUE_LEDE = '<p class="said">The argument behind each is one fold down.</p>'
+# `checklist.lede:` OVERRIDES THAT ONE LINE, and the reason is ordering. Open
+# items render in the order cuts.yaml lists them, and that order is not always
+# the order of leverage: on 2026-08-10 the item gating twelve queued renders sat
+# ninth because its card carries the "Episode 2" run heading and hoisting it
+# would have left that heading captioning two episode-1 items. Moving prose to
+# fix a sort is the wrong trade — a sentence naming the anchors costs nothing and
+# reorders nothing. The `intro:` is NOT the place for it: that folds away behind
+# a drawer, so anything written there is not what he sees first.
 
 
 def inline_md(text: str) -> str:
@@ -2723,8 +2731,10 @@ def render_review() -> str:
 
     queue_html = ""
     if queue:
+        lede = str(ck.get("lede", "")).strip()
+        lede_html = f'<p class="said">{inline_md(lede)}</p>' if lede else QUEUE_LEDE
         queue_html = ('<section class="block" id="checklist"><h2>Your queue</h2>'
-                      + QUEUE_LEDE + PROV_BANNER + "".join(queue) + '</section>')
+                      + lede_html + PROV_BANNER + "".join(queue) + '</section>')
 
     # The title and intro cuts.yaml writes for the checklist are the note that
     # came WITH the list, not the list. They keep every word and move behind a

@@ -119,6 +119,16 @@ page:
 
 checklist:
   title: "Your morning pass — define the goblin, then two cuts."
+  # The one line above every card. It exists to give the ORDER OF LEVERAGE,
+  # which is not the order the cards are in — see the note beside QUEUE_LEDE in
+  # build_site.py. Keep it to a sentence or two: he reads this page on a phone in
+  # five-minute passes, and a lede he has to scroll is not a lede.
+  lede: |-
+    **The four cheapest wins, if you only have two minutes:** [18](#item-18)
+    defines the goblin and releases fifteen waiting beats; [06](#item-06)
+    releases twelve frames that are already drawn-and-locked; [21](#item-21) and
+    [22](#item-22) are one word each. The argument behind every item is one fold
+    down.
   intro: |-
     **Items 01 to 09 are a record, not a list of questions.** You answered every
     one of them on 2026-08-08; they are kept so you can catch us hearing
@@ -557,6 +567,100 @@ checklist:
         - file: review-assets/LABELED-b13-r6.jpg
           label: "ep2 beat 13 round 6 — b13-r6-s0..s3"
           note: "s2 is the frame round 7 copied from, and it is one you never ruled on"
+    # TWO ONE-WORD ITEMS SIT HERE, DIRECTLY UNDER THE GOBLIN, because they are
+    # the cheapest things on the page and each one closes a thread that has been
+    # running for days. Neither costs GPU time and that is said on both cards
+    # rather than implied — an item that claims to unblock hours it does not
+    # unblock is how a queue stops being trusted.
+    - n: 21
+      ask: "The fig on beat 01 — drop it, or approve an inpaint?"
+      state: open
+      chip: "ONE WORD"
+      minutes: 1
+      summary: >-
+        You asked on 2026-08-03 that the fig be seen GROWING rather than just
+        appearing. **It has now failed to draw in 20 of 20 candidate frames**
+        across four wordings, and we are out of prompt ideas. Two ways forward
+        and both are yours.
+      where: "nothing to look at — it is what is MISSING from every beat-01 sheet on item 06"
+      how: "`drop` — or `inpaint`, and we paint it in as a separate step"
+      body: |-
+        **YOUR CONDITION, 2026-08-03:** *"we need to make SURE the fig growing on
+        the sapling is mentioned, last time we generated 002b it just..
+        appeared."* It is not decoration — episode 1 established that growing
+        slowly is the one thing this character can do, so the fig growing here is
+        continuity and the ending's payoff in the same frame.
+
+        **THE PROMPT CANNOT PRODUCE IT, AND THAT IS MEASURED RATHER THAN
+        ASSUMED.**
+
+        - **0 of 8** after the first two rewrites. The likely reason was found
+          rather than guessed: **`fig` in this model's vocabulary names the LEAF,
+          not the fruit** — so the word was doing nothing we wanted.
+        - The fruit was then described **without the word** — *"one small round
+          green fruit hanging from the stem"*. That wording is in every round
+          since, including all twelve of round 8. **0 of 12.**
+        - **Size adjectives make it bigger, not likelier.** An earlier round drew
+          a big ripe orange-pink peach; the fix that killed the peach also killed
+          any fruit at all.
+        - Round 9 says nothing new here and does not pretend to: it conditions on
+          a depth map of a plate that has no fruit in it, so no fruit can come
+          through.
+
+        **THE TWO LEVERS LEFT, and choosing between them is a taste call, not a
+        technical one.**
+
+        - **`drop`** — beat 01 stops asking for the fruit. The growth beat moves
+          to where the fruit already draws reliably (beats 18–20 have it), and
+          every future cold-open round stops carrying a requirement that has
+          failed twenty times.
+        - **`inpaint`** — the frame is drawn without it and the fruit is painted
+          into that one region as a second, separate step. This is the only
+          method with a real chance of putting it exactly where you want it. It
+          is more machinery and it is a new step in the pipeline.
+
+        **WHAT THIS COSTS IN MACHINE TIME: nothing either way, and it is not a
+        GPU question.** It is on this list because every round of beat 01 is
+        currently chasing a fruit the model will not draw, and you are the only
+        person who can say to stop.
+
+    - n: 22
+      ask: "Which GitHub account should own the repo?"
+      state: open
+      chip: "ONE WORD"
+      minutes: 1
+      summary: >-
+        You said on 2026-08-10 that the repo should move off the account tangled
+        up with the old Vercel billing. **The whole move is written and waiting on
+        one username.** The steward does not get to choose who owns the product.
+      where: "`REPO-MOVE.md` in the repo has every step, written against a blank where the name goes"
+      how: "one word — the account name (`olegmalk` is the obvious candidate, but it is your call)"
+      body: |-
+        **YOUR DIRECTION, 2026-08-10, about 01:20:** *"the repo should be moved to
+        a different github account"* / *"current account associated with other
+        vercel account"*.
+
+        **THE PLAN IS FINISHED AND PARAMETERISED.** Every step of the transfer is
+        written down against a placeholder — nothing in it is guesswork, and the
+        transfer semantics are quoted from GitHub's own documentation rather than
+        remembered. **Nothing can start until that placeholder is a real
+        username.**
+
+        **THE OBVIOUS CANDIDATE, offered as information and not as a
+        recommendation:** `olegmalk` — your own GitHub, already a collaborator
+        with push access here, and checked: it holds **no `banyan-city` repo and
+        no fork**, so a transfer would not collide with anything. **We are not
+        picking it.** Which account owns the product is not a stewardship call.
+
+        **ONE PROPERTY OF THE MECHANISM WORTH KNOWING BEFORE YOU ANSWER:** a
+        GitHub transfer is an invitation, and it **expires 24 hours after it is
+        sent.** So it should be sent when the receiving account can accept in the
+        same sitting — not fired off and left. Say the name and we will ask you
+        when to send it.
+
+        **WHAT THIS COSTS IN MACHINE TIME: nothing, and no GPU work is waiting on
+        it.** It is on this list because it is one word and it has been blocking
+        the whole deploy and domain cleanup since last night.
     - n: 10
       ask: "Beat 6 — round 5 clears both faults you named."
       state: open
@@ -848,8 +952,8 @@ checklist:
         frames you chose. Seven of the fifteen barely move, so we started
         re-animating them overnight — and **the motion score came back HIGHEST on
         the beat where the plant falls over**, which is why no wave was chained
-        behind it. The adjacency strip is on this card.
-      where: "`review/provisional-v34/ep1-v34-PROVISIONAL.mp4` on this machine — why it is not on this page is below; the adjacency strip IS on this card"
+        behind it.
+      where: "`review/provisional-v34/ep1-v34-PROVISIONAL.mp4` on this machine — the cut and the adjacency strip are both refused by the licence gate, and why is on the card"
       how: "watch it and say what is wrong, or answer beat 6 on item 10 and we rebuild"
       body: |-
         **2026-08-09:** *"no notes for v33, i'll wait for the version with all the
@@ -907,10 +1011,21 @@ checklist:
         stretched. Thirteen automatic checks pass and the two warnings are the
         sound hole above and the known dark opening.
 
-        **THE ADJACENCY STRIP IS ON THIS CARD** — the first frame of all fifteen
-        beats in order, in one row. It is an eyeball aid and not a score; nothing
-        in this repo computes an adjacency number, and we are not inventing one.
-        Two things stand out in it: **05 to 06 is the hardest jump in the cut**
+        **THE ADJACENCY STRIP IS BUILT AND THE GATE REFUSES IT — the strip is
+        named at the bottom of this page as withheld rather than quietly left
+        out.** It is the first frame of all fifteen beats in order, in one row, at
+        `CONTACT-v34-adjacency.png` on this machine. **Why it cannot be shown, and
+        it is a different reason from everything else on this page:** your
+        2026-08-09 word put *animagine* candidate frames onto this page under
+        narrowed terms, and **four of these fifteen beats — 01, 02, 11 and 13 —
+        were drawn by Wan, which that word did not cover.** One strip contains
+        both, so it publishes only if a decision you have not made is assumed.
+        We are not assuming it.
+
+        It is an eyeball aid and not a score; nothing in this repo computes an
+        adjacency number, and we are not inventing one. **Two things stand out in
+        it, so you get the finding even without the picture:** **05 to 06 is the
+        hardest jump in the cut**
         (near-black interior straight into bright daylight, which is also the act
         break and may be exactly right), and beats 12-13-14 swing warm, cool,
         warm rather than progressing.
@@ -1006,11 +1121,23 @@ checklist:
         **What the cut itself cost: nothing.** No model ran, no GPU, no money —
         every beat is ffmpeg over frames that already existed. The re-animation
         tests above are separate and also $0: local GPU, nothing bought.
-      sheets_title: "The adjacency strip — fifteen first frames in cut order"
-      sheets:
-        - file: review-assets/CONTACT-v34-adjacency.jpg
-          label: "ep1 v34 — the first frame of all fifteen beats, in cut order"
-          note: "an eyeball aid, not a score. Nothing here computes an adjacency number and none was invented."
+      # THE ADJACENCY STRIP IS DELIBERATELY NOT LISTED UNDER `sheets:`, AND THAT
+      # IS THE SECOND ANSWER TO THIS QUESTION, NOT THE FIRST. It was staged into
+      # review-assets/ and wired here on 2026-08-10; the licence gate refused it
+      # (four of the fifteen beats are Wan-drawn and the founder's 2026-08-09
+      # narrowing covers animagine only), which was correct. Listing a refused
+      # file does put it in the page's withheld notice — but the re-encode also
+      # had to EXIST in the repo to be listed, and an unpublishable asset in the
+      # tree raises the licence-debt ratchet and fails lint and CI. So the copy
+      # was removed, the source PNG stays on the machine, and the refusal is told
+      # in prose and in `pending:` instead. Do not re-add the jpg to make the
+      # gallery look fuller; the block is D15/Wan and only the founder moves it.
+      pending: >-
+        **The adjacency strip is withheld, not missing.** It is built and it sits
+        at `CONTACT-v34-adjacency.png` on this machine; the licence gate refuses
+        it because four of the fifteen beats in it were drawn by Wan, which your
+        2026-08-09 narrowing did not cover. Its two findings are written out on
+        the card above so you have them without the picture.
     # D16 GETS ITS OWN CARD BECAUSE IT HAS BEEN BURIED TWICE. It has been a
     # sentence at the bottom of item 10's licence paragraph and a `pending:` note
     # under item 14, and he has passed over both. The licence analysis behind this
