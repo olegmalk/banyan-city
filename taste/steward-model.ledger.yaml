@@ -5012,3 +5012,103 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+- id: ep2-b04-goblin-ipa-window-observed
+  date: 2026-08-10
+  kind: observation
+  subject: "node 002b beat 04 — ARM 3, the denoise-step window, scored against
+    the sealed prediction in ep2-b04-goblin-ipa-window-predicted"
+  steward_provisional: true
+  pick: null
+  scores: {}
+  address_key: >-
+    C:\banyan-farm\goblin-ipa-0810\out3\04-the-footnote-ipa-r0-wNNN-sN.png on the
+    rtx5090, sidecars beside them, published to
+    farm-out/ep2-b04-goblin-ipa-window/ with a .sha256 manifest. Job
+    ep2-b04-goblin-ipa-window-1786360023, rc 0, sampler sha256 3800386c (now in
+    the tree at pipeline/goblin_ipa_sample.py, commit 7599797).
+  how_it_was_read: >-
+    By eye, on two contact sheets built locally: a 6-row full-frame sheet
+    (baseline, arm-1 r0-c060 control, then the four windows) and a second sheet
+    cropped to the MOUTH LINE at 700x520+66+620 of each 832x1216 frame, because
+    the first crop I built caught eyes rather than mouths and could not have
+    counted a tusk. Both sheets put the tags-only baseline and the arm-1 control
+    in the same picture as the new cells. Numbers below are stated where they
+    exist, but no arm was ranked by one.
+  green_by_the_same_instrument_as_record_77e13e4: >-
+    pipeline/green_share.py, full frames, one run. baseline 0.3627 / arm-1
+    r0-c060 0.0124 / w015 0.3353 / w025 0.1916 / w040 0.0398 / w060 0.0343. On
+    the narrow band: 0.2465 / 0.0038 / 0.1515 / 0.0546 / 0.0034 / 0.0058. Mean
+    saturation is not the story — it barely moves (0.261 baseline, 0.253 arm 1,
+    0.298 at w015) — the HUE does, exactly as the arm-1 correction in 77e13e4
+    said it would. And by eye the sheet agrees with the numbers without needing
+    them: the w015 row is mint-green skin, the w060 row is arm 1's grey-blue.
+  identity_by_eye_and_this_is_the_part_the_metric_cannot_do: >-
+    ALL FOUR WINDOW ROWS HOLD ONE CREATURE. Read across any of them and it is
+    the same big round bald-headed goblin in the same room, differing in
+    expression; read across the baseline row and it is a plush rabbit-eared
+    thing, a flat-faced amphibian, a bright gremlin and an angry brute. The
+    w015 row is visibly LOOSER than arm 1's — arm 1's four are nearly the same
+    drawing, w015's four differ in expression, brow and mouth — but loose in
+    expression is not loose in species, and that is the difference that matters.
+    The DINO numbers for the record and NOT as a ranking: baseline 0.6967, arm 1
+    0.8069, w015 0.7556, w025 0.7991, w040 0.7991, w060 0.8028. They would have
+    put w015 LAST of the four windows on identity, which by eye is not what a
+    reader of the sheet would say, and is the third time on this beat that
+    number has disagreed with the frames.
+  the_composition_copying_is_NOT_reduced_and_this_is_the_honest_caveat: >-
+    Every window row still reproduces reference s0's specific picture — the head
+    at the same place in frame, the lit window over the same shoulder, both
+    hands on the same plank, the same breath puff. to-reference DINO is 0.7928 /
+    0.8151 / 0.8189 / 0.8068 across the windows, as high as arm 1's. So the
+    window bought back the COLOUR and changed nothing about the reference
+    dictating the composition. On this beat that is invisible as a fault,
+    because the reference's scene IS the beat's scene. On a different beat it
+    would be beat 04's room appearing in another beat's action. Nothing here
+    settles that, and the frames cannot.
+  tusks_the_sharp_call_partly_landed: >-
+    Counted at mouth-level zoom. Arm 1: 0 of 4, four closed line-mouths,
+    confirming record ep2-b04-goblin-ipa-observed exactly. The window rows do
+    reopen the mouth as the window shortens — w060 0 of 4, w040 about 1 of 4 on
+    an ambiguous curved white shape, w025 about 2 of 4 (one gritted-teeth mouth,
+    one pointed white shape), w015 1 to 2 of 4 with s3 an unambiguous open grin
+    with a fang. But it does NOT come back to the baseline, which is 2 of 4
+    unambiguous on my crop against the 3 of 4 recorded on full frames. So the
+    direction I staked is right and the size is wrong: the late steps get SOME
+    of the mouth back, not the tag's own authority over it. I am also flagging a
+    confound I nearly counted through — the beat's own breath puff renders as
+    white cloud shapes at the mouth, and at small scale those read as fangs.
+  the_prediction_scored: >-
+    GREEN: right, and more precisely than I had any standing to expect —
+    monotonic in the window length, with w015 landing at 0.335 against the
+    baseline's 0.363.
+    IDENTITY AT 15%: WRONG, and it was the concrete falsifiable form I chose. I
+    predicted at least two of the four seeds at 15% would read as different
+    creatures. None do.
+    TUSKS: half right — direction yes, magnitude no.
+    THE ONE THAT MATTERS: I wrote that the most likely single outcome was a
+    clean monotonic trade with no crossover, green returning at exactly the rate
+    identity left, making the window one more way to sit on the same line. That
+    is wrong. Green went from 0.012 to 0.335 while identity by eye stayed on the
+    arm-1 side of the baseline. The two costs came apart. This is the first
+    result in this lane that is not a trade, and I predicted against it.
+  what_this_does_not_establish: >-
+    ONE REFERENCE. Every cell used s0, and s0 is the peculiar one — the single
+    baseline frame with a closed frown, chosen precisely because that made the
+    tusks a readout. "The window works" and "the window works on s0" are not
+    separated by this job, which is why ep2-b04-goblin-ipa-window4-1786361038 is
+    already queued and running the same 15% window across all four references,
+    with its r0 cell a deliberate byte-identity repeat of this one.
+    Also unestablished: anything about a different beat, and anything about
+    whether the reference imports a wrong SETTING, for the reason above.
+  what_this_does_not_claim: >-
+    No arm is recommended, no frame is picked, ranked or promoted, no goblin is
+    made canonical, and the fourteen staged wave specs in pipeline/jobs/ stay
+    staged. The slot tags `green skin, tusks` remain the steward's unratified
+    translation of the founder's sentence. Which cost is acceptable, and what
+    the goblin looks like, are R4's and are untouched here.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null

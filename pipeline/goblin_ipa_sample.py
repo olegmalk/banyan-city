@@ -145,6 +145,30 @@ CELLS_WINDOW = [(0, WINDOW_SCALE, 0.15), (0, WINDOW_SCALE, 0.25),
 NEG_COLOUR_ANCHOR = "greyscale, monochrome, desaturated, grey skin, pale skin"
 CELLS_NEGCOLOR = [(0, 0.6), (1, 0.6), (2, 0.6), (3, 0.6)]
 
+# ARM 5 — the arm-3 sweep's own stated next step, and the only thing that turns
+# it from a result on one reference into a claim about a MECHANISM.
+#
+# WHAT ARM 3 FOUND. Sweeping the window on reference s0: green comes back
+# monotonically as the window shortens — green_share 0.034 at 60% of the steps,
+# 0.040 at 40%, 0.192 at 25%, 0.335 at 15%, against the tags-only baseline's
+# 0.363 and arm 1's 0.012 — and by eye the four seeds at 15% are still one
+# creature, not the baseline's four. The two costs decoupled, which is what a
+# structure-early / colour-late account of the denoise predicts.
+#
+# WHY IT IS NOT YET A MECHANISM. Every arm-3 cell used reference s0. One
+# reference cannot tell "windowing works" from "windowing works on s0", and s0
+# is a peculiar reference: record ep2-b04-goblin-ipa-observed established it is
+# the ONE baseline frame with a closed frown and no tusks, which is precisely
+# why it was chosen as a readout. A conclusion drawn from it alone would be the
+# same shape of error the metric made twice on this beat.
+#
+# So: the 15% window, held fixed, across all four references. The r0 cell is a
+# deliberate REPEAT of an already-rendered arm-3 cell at identical config and
+# seeds — it should come back byte-identical, and if it does not, determinism on
+# this card is a bigger problem than the goblin.
+CELLS_WINDOW4 = [(0, WINDOW_SCALE, 0.15), (1, WINDOW_SCALE, 0.15),
+                 (2, WINDOW_SCALE, 0.15), (3, WINDOW_SCALE, 0.15)]
+
 # ONE REFERENCE ON PURPOSE, and it is not a pick. Reference s0 at scale 0.6 is
 # an EXISTING measured row (arm 1, ipa-r0-c060: DINO 0.8069, green 0.00), so
 # every cell below differs from a rendered control by one variable and nothing
@@ -278,18 +302,21 @@ def main() -> int:
     ap.add_argument("--out", required=True)
     ap.add_argument("--task", default=None)
     ap.add_argument("--arm",
-                    choices=("whole", "content", "window", "negcolor"),
+                    choices=("whole", "content", "window", "negcolor",
+                             "window4"),
                     default="whole",
                     help="whole = adapter on every block at a float scale; "
                          "content = adapter scoped to down block_2 only; "
                          "window = adapter on every block at 0.6 but only for "
                          "the first N%% of the denoise steps; "
                          "negcolor = arm 1 unchanged, plus a colour anchor in "
-                         "the negative")
+                         "the negative; "
+                         "window4 = the 15%% window across all four references")
     ap.add_argument("--dry", action="store_true", help="measure, draw nothing")
     a = ap.parse_args()
     cells = {"whole": CELLS_WHOLE, "content": CELLS_CONTENT,
-             "window": CELLS_WINDOW, "negcolor": CELLS_NEGCOLOR}[a.arm]
+             "window": CELLS_WINDOW, "negcolor": CELLS_NEGCOLOR,
+             "window4": CELLS_WINDOW4}[a.arm]
 
     harness = Path(a.harness).resolve()
     sys.path.insert(0, str(harness))

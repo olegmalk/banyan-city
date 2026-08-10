@@ -1,0 +1,207 @@
+# 002b beat 04 — ARM 5. The arm-3 window held FIXED at 15% and swept across all
+# four references instead of one. This is arm 3's own stated next step and the
+# only thing that turns its result into a claim about a mechanism.
+#
+# THE VERDICT THIS ANSWERS TO. Roman, 2026-08-10 ~15:00: "the goblin needs abit
+# more regeneration." Ledger ep2-goblin-regen-directive-0810. A reject and a
+# direction to iterate. Nothing here picks, ranks or promotes a frame.
+#
+# WHAT ARM 3 FOUND, ON ONE REFERENCE. Sweeping WHEN the adapter is applied, on
+# reference s0 at scale 0.6: green returns monotonically as the window shortens
+# — green_share 0.034 at 60% of the 40 steps, 0.040 at 40%, 0.192 at 25%, 0.335
+# at 15%, against the tags-only baseline's 0.363 and arm 1's 0.012 — and by eye
+# the four seeds at 15% are still ONE creature where the baseline is four. The
+# two costs that arms 1 and 2 traded against each other came apart. That is what
+# a structure-early / colour-late account of the denoise predicts, and it is the
+# first result in this lane that is not a trade.
+#
+# WHY IT IS NOT YET A MECHANISM, AND WHY THIS JOB EXISTS. Every arm-3 cell used
+# reference s0. One reference cannot separate "the window works" from "the
+# window works on s0", and s0 is a peculiar reference: record
+# ep2-b04-goblin-ipa-observed established it is the ONE baseline frame with a
+# closed frown and no tusks, which is exactly why arm 3 chose it as a readout.
+# Generalising from it alone would be the same shape of error the DINO metric
+# made twice on this beat. Four references, one window, one variable.
+#
+# THE r0 CELL IS A DELIBERATE REPEAT of an already-rendered arm-3 cell at
+# identical config, seeds, prompt and window. It should come back byte-identical
+# to C:\banyan-farm\goblin-ipa-0810\out3\04-the-footnote-ipa-r0-w015-s*.png. If
+# it does not, determinism on this card is a larger problem than the goblin and
+# every A/B in this lane is weaker than it reads. Costs four frames to know.
+#
+# STILL ZERO PROMPT TOKENS. Nothing is added to the description of the goblin,
+# so nothing here spends "nothing complex".
+#
+# LICENCES. Nothing new: animagine-xl-3.1 (CreativeML Open RAIL++-M, D15 open),
+# h94/IP-Adapter Plus SDXL (Apache-2.0), ViT-H image encoder (MIT-derived),
+# diffusers 0.29.2 (Apache-2.0). All in the box cache; nothing spent.
+
+id: ep2-b04-goblin-ipa-window4
+task: ep2-b04-goblin-ipa-window4-0810
+node: 002b-first-citizen
+beat: 4
+runner: box
+needs_gpu: true
+priority: 42
+max_attempts: 1
+owner: goblin-regen lane
+
+consumer: >-
+  Whether the step window is a property of IP-Adapter on this beat or a property
+  of one reference frame. If green returns and identity holds on all four, the
+  finding to take to the founder is a mechanism — one goblin per beat without
+  losing the colour he named — and the next question becomes whether it survives
+  a DIFFERENT beat, which is a separate job and is not queued. If it holds only
+  on s0, arm 3's result is an artifact and says so.
+
+success: >-
+  16 PNGs at C:\banyan-farm\goblin-ipa-0810\out5 with per-frame 7.2 sidecars,
+  plus identity-agreement-window4.yaml measuring the baseline, the four arm-1
+  controls and these four on one build of one metric. A result showing the
+  window works only on s0 is a success: the job produces the measurement.
+
+metric_warning: >-
+  DINOv2 seed agreement is unreliable on beat 04 (724b616, 93356b1 — on a face
+  close-up against a constant background it is largely scoring the background)
+  and no arm may be ranked by it. Run for series continuity only; the read is by
+  eye, at mouth-level zoom for the tusks.
+
+why: >-
+  One variable against arm 3: the reference. Window fixed at 15% of 40 steps
+  (6 steps), scale fixed at 0.6, references s0 through s3. Sequential, one image
+  at a time — batch-of-4 configs are banned on this card.
+
+est_minutes: 8
+
+needs:
+- cuda
+- vram20
+- farm-venv
+
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\out
+  - --out
+  - C:\banyan-farm\goblin-ipa-0810\out5
+  - --arm
+  - window4
+  - --task
+  - ep2-b04-goblin-ipa-window4-0810
+
+# The determinism check, run BEFORE the metric so a nondeterministic card is
+# reported even if the measure step falls over. allow_fail so a mismatch is
+# recorded in the log rather than retiring the job's output.
+- name: repeat-check
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import hashlib, pathlib
+    a = pathlib.Path("C:/banyan-farm/goblin-ipa-0810/out3")
+    b = pathlib.Path("C:/banyan-farm/goblin-ipa-0810/out5")
+    same = diff = 0
+    for s in range(4):
+        n = "04-the-footnote-ipa-r0-w015-s%d.png" % s
+        pa, pb = a / n, b / n
+        if not (pa.exists() and pb.exists()):
+            print("MISSING", n); diff += 1; continue
+        ha = hashlib.sha256(pa.read_bytes()).hexdigest()
+        hb = hashlib.sha256(pb.read_bytes()).hexdigest()
+        print(("SAME  " if ha == hb else "DIFFER"), n, ha[:16], hb[:16])
+        same += ha == hb
+        diff += ha != hb
+    print("determinism: %d byte-identical, %d differing" % (same, diff))
+
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\identity_agreement.py
+  - --group
+  - wave1-baseline=C:\banyan-farm\wave-goblin-prep\out\04-the-footnote-wave1-s*.png
+  - --group
+  - arm1-ref0-scale060=C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r0-c060-s*.png
+  - --group
+  - arm1-ref1-scale060=C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r1-c060-s*.png
+  - --group
+  - arm1-ref2-scale060=C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r2-c060-s*.png
+  - --group
+  - arm1-ref3-scale060=C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r3-c060-s*.png
+  - --group
+  - arm5-ref0-window015=C:\banyan-farm\goblin-ipa-0810\out5\04-the-footnote-ipa-r0-w015-s*.png
+  - --group
+  - arm5-ref1-window015=C:\banyan-farm\goblin-ipa-0810\out5\04-the-footnote-ipa-r1-w015-s*.png
+  - --group
+  - arm5-ref2-window015=C:\banyan-farm\goblin-ipa-0810\out5\04-the-footnote-ipa-r2-w015-s*.png
+  - --group
+  - arm5-ref3-window015=C:\banyan-farm\goblin-ipa-0810\out5\04-the-footnote-ipa-r3-w015-s*.png
+  - --ref-for
+  - arm5-ref0-window015=C:\banyan-farm\wave-goblin-prep\out\04-the-footnote-wave1-s0.png
+  - --ref-for
+  - arm5-ref1-window015=C:\banyan-farm\wave-goblin-prep\out\04-the-footnote-wave1-s1.png
+  - --ref-for
+  - arm5-ref2-window015=C:\banyan-farm\wave-goblin-prep\out\04-the-footnote-wave1-s2.png
+  - --ref-for
+  - arm5-ref3-window015=C:\banyan-farm\wave-goblin-prep\out\04-the-footnote-wave1-s3.png
+  - --out
+  - C:\banyan-farm\goblin-ipa-0810\out5\identity-agreement-window4.yaml
+
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b04-goblin-ipa-window4"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/goblin-ipa-0810/out5/*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b04-goblin-ipa-window4.sha256"), "w") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    # 16 stills + 16 sidecars + identity-agreement-window4.yaml.
+    raise SystemExit(0 if len(src) == 33 else 1)
+
+artifacts:
+- C:\banyan-farm\goblin-ipa-0810\out5\identity-agreement-window4.yaml
+- C:\banyan-farm\goblin-ipa-0810\out5\04-the-footnote-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0810\out5\04-the-footnote-ipa-r0-w015-s1.png
+- C:\banyan-farm\goblin-ipa-0810\out5\04-the-footnote-ipa-r0-w015-s2.png
+- C:\banyan-farm\goblin-ipa-0810\out5\04-the-footnote-ipa-r0-w015-s3.png
+- C:\banyan-farm\goblin-ipa-0810\out5\04-the-footnote-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0810\out5\04-the-footnote-ipa-r1-w015-s1.png
+- C:\banyan-farm\goblin-ipa-0810\out5\04-the-footnote-ipa-r1-w015-s2.png
+- C:\banyan-farm\goblin-ipa-0810\out5\04-the-footnote-ipa-r1-w015-s3.png
+- C:\banyan-farm\goblin-ipa-0810\out5\04-the-footnote-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0810\out5\04-the-footnote-ipa-r2-w015-s1.png
+- C:\banyan-farm\goblin-ipa-0810\out5\04-the-footnote-ipa-r2-w015-s2.png
+- C:\banyan-farm\goblin-ipa-0810\out5\04-the-footnote-ipa-r2-w015-s3.png
+- C:\banyan-farm\goblin-ipa-0810\out5\04-the-footnote-ipa-r3-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0810\out5\04-the-footnote-ipa-r3-w015-s1.png
+- C:\banyan-farm\goblin-ipa-0810\out5\04-the-footnote-ipa-r3-w015-s2.png
+- C:\banyan-farm\goblin-ipa-0810\out5\04-the-footnote-ipa-r3-w015-s3.png
