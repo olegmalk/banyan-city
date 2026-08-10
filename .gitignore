@@ -61,3 +61,9 @@ review/**/*.png
 review/**/*.jpg
 review/**/*.mp3
 review/**/*.wav
+
+# poll_decisions.py's "when did we last look" note. Not the watermark — the
+# watermark is pipeline/founder-answers.jsonl, whose comment ids are what stop a
+# reply being recorded twice. This file is a convenience, so it is local-only and
+# deleting it costs nothing.
+pipeline/.decisions-state.json

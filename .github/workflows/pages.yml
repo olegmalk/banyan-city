@@ -33,6 +33,19 @@ jobs:
       - run: pip install pyyaml markdown
       - run: python pipeline/lint_genome.py
       - run: python pipeline/build_site.py
+      # The mirror is served from a SUBPATH (…github.io/banyan-city/), and three
+      # pages — /review, /trials, /lab — reference their media root-absolutely
+      # because that is what banyan.city's cleanUrls geometry requires. On the
+      # mirror those 202 URLs point outside the repo's subpath and 404: measured
+      # 2026-08-10, the review page was current and byte-identical to a local
+      # build while every one of its clips, posters and sheets was missing. This
+      # re-bases them onto the mirror's root. Artifact-only — it runs after the
+      # build and touches nothing Vercel ever sees. Idempotent, so a retried job
+      # is harmless. The prefix is derived rather than hard-coded so it stays
+      # correct through the account move in REPO-MOVE.md: GITHUB_REPOSITORY is
+      # `owner/repo` and is set on every event, including the half-hourly
+      # `schedule` run, whose payload carries no repository object at all.
+      - run: python pipeline/pages_prefix.py "/${GITHUB_REPOSITORY##*/}"
       - uses: actions/configure-pages@v5
         with:
           enablement: true
