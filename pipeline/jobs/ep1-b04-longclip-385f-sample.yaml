@@ -1,0 +1,140 @@
+# ep1 beat 04 "the-fall" — LONG-CLIP CEILING TEST at 385 frames. ONE SAMPLE.
+#
+# THE QUESTION IS THE CEILING, NOT THE BEAT. 145 frames landed on beat 07 (rc=0,
+# 214.5s, peak torch 7.5GB of 25.7, picture sustained — commit 2f2be97). 385
+# frames is 2.66x further out and is the value that would cover the longest beat
+# in the episode. It is NOT an extrapolation from 145 and must not be one:
+# attention sequence length goes as the latent frame count (49 latent frames here
+# against 19 at 145), the decoded [F,H,W,C] array goes from ~1.6GB to ~4.2GB of
+# HOST ram, and host ram is the measured ceiling on this box — the 145-frame run
+# peaked at 63.1GB of 68.1. If this OOMs, that is the answer and the run stops.
+#
+# READ THIS BEFORE USING THE RESULT TO PLAN DE-LOOPING. Beat 04 has NO VOICE
+# LINE. There is no 04-vo.mp3 in the episode's clips at all (verified: the media
+# dir carries 02, 05, 06, 07, 08, 10, 11, 12, 13, 14, 15 and no 04), and
+# render_t3.fit_duration's own comment names it — "Beat 4 of 001 — the fall, no
+# VO". On the vdur=0 branch a beat is TRIMMED to its script slot,
+# `min(cdur, script_s)`, and never looped. So beat 04 cannot loop today and 385
+# frames does not de-loop anything by being rendered here.
+#
+# It is still the right place to spend this render, for two reasons that hold
+# regardless: the ceiling question is about frame count and this box, not about
+# which beat's pixels are in the plate; and beat 04 is fully staged and directly
+# comparable — plate, embeds, prompt, negative and a landed 65-frame clip
+# (04-the-fall-LTX-r2.mp4) all already sit in C:\banyan-farm\v34-r2 from the r2
+# round. Re-plating or re-encoding another beat would have cost a model load to
+# answer the same question.
+#
+# WHAT THE REAL DE-LOOP TABLE IS, measured off the actual vo mp3 durations, so
+# that nobody plans off the wrong row. Frames must satisfy clip >= vo + 0.4 and
+# be 8n+1:
+#     beat 02  vo  4.38s -> 121 frames      beat 11  vo  4.97s -> 129 frames
+#     beat 07  vo  5.73s -> 153 frames      beat 13  vo  8.36s -> 217 frames
+#     beat 10  vo 10.12s -> 257 frames      beat 08  vo 12.51s -> 313 frames
+# The worst genuine looper is BEAT 08 at 313, not beat 04 at 385. A 385-frame
+# result therefore covers every looping beat in the episode with margin, which
+# is exactly what makes it worth measuring — but the margin is 72 frames, not a
+# beat of its own.
+#
+# ONE VARIABLE. Everything but --frames is byte-identical to
+# ep1-b04-v34-motion-r2.yaml: same plate, same seed 20260835, same embeds, same
+# two-stage distilled recipe, same sequential offload, same script
+# (C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py, sha256 8cdd186e = repo HEAD).
+#
+# NOTHING SCALES OFF THIS. If it holds, the next step is Roman's, not the
+# steward's: re-rendering the episode at longer lengths is scaling an unapproved
+# result and CLAUDE.md reserves that.
+
+id: ep1-b04-longclip-385f-sample
+task: ep1-b04-longclip-385f-sample-0810
+node: 001-capability-inventory
+beat: 4
+runner: box
+needs_gpu: true
+priority: 20
+max_attempts: 1
+sample: true
+owner: long-clip-sample
+
+consumer: >-
+  the de-looping decision for episode 1, as the CEILING measurement. 145 frames
+  is proven; 313 is what the worst genuine looper (beat 08, 12.51s of voice)
+  actually needs. 385 brackets that with margin. If it completes and the picture
+  holds over sixteen seconds, longer renders de-loop the whole episode with no
+  script rewrite. If it OOMs or degrades, the ceiling is real and Roman's
+  proposed beat restructure becomes necessary rather than optional. Either way
+  the answer arrives tonight instead of being guessed at.
+
+success: >-
+  A 704x1280 mp4 at C:\banyan-farm\v34-r2\04-the-fall-LTX-385f.mp4 that PLAYS
+  THROUGH — ffprobe counts 385 decoded frames and the sixteenth second is still
+  the same shot as the first. Judged by eye on a 16-sample frame strip, not by
+  any median-frame-delta number: the flow metric is disqualified on this series
+  (131e433 — it scored highest on the beat where the plant fell over). An OOM or
+  a host-RAM death is a RESULT and gets reported as one; it does not get quietly
+  retried at an intermediate frame count.
+
+why: >-
+  Whether the looping Roman rejected can be fixed by one number or needs the
+  scripts reopened turns on whether this completes.
+
+est_minutes: 20   # 65f = 142.5s of sample, 145f = 214.5s (sublinear, 1.51x for
+                  # 2.23x the frames). If that trend held, 385 would be ~7min —
+                  # but attention is superlinear in sequence length and this is
+                  # the run that finds out. A 15-minute render is NOT a stall.
+needs: [cuda, vram20, video-venv]
+
+payload:
+  C:\banyan-farm\v34-r2\b04-jobs-render-385.json: |-
+    [{"beat": 4,
+      "seed": 20260835,
+      "embeds": "C:\\banyan-farm\\v34-r2\\b04-embeds.pt",
+      "init": "C:\\banyan-farm\\v34-r2\\04-704x1280.png",
+      "out": "C:\\banyan-farm\\v34-r2\\04-the-fall-LTX-385f.mp4"}]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  - name: render
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+      - --stage
+      - render
+      - --jobs
+      - C:\banyan-farm\v34-r2\b04-jobs-render-385.json
+      - --size
+      - 704x1280
+      - --frames
+      - "385"
+      - --fps
+      - "24"
+      - --guidance
+      - "1.0"
+      - --distilled-sigmas
+      - --two-stage
+      - --image-crf
+      - "33"
+      - --offload
+      - sequential
+      - --mode
+      - production
+      - --task
+      - ep1-b04-longclip-385f-sample-0810
+      - --worker
+      - rtx5090
+      - --bench-jsonl
+      - C:\banyan-farm\v34-r2\bench-b04-385f.jsonl
+      - --bench-label
+      - b04-longclip-385f
+
+artifacts:
+  - C:\banyan-farm\v34-r2\04-the-fall-LTX-385f.mp4
