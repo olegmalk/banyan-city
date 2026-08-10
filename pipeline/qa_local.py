@@ -615,6 +615,39 @@ def is_cache_fill_clock(headers):
     return abs(lm - (served - age)) <= FILL_CLOCK_EPSILON_S
 
 
+BUILT_RE = re.compile(r'data-built="(\d{9,11})"')
+
+
+def build_stamp(base, probe):
+    """The page's own build time from its HTML, or None if it carries none.
+
+    THIS IS THE CLOCK THE HEADER COULD NOT BE. `last-modified` on Vercel is the
+    edge's cache-fill instant (see is_cache_fill_clock), which is why both
+    signals below were blind. But the status page already publishes the real
+    thing and has all along: `build_sim.py` stamps `data-built="<epoch>"` on
+    every entry as it writes them. That is a fact about the BUILD, baked into
+    the bytes, so no amount of CDN caching can move it — a page frozen for a day
+    reports the day-old stamp no matter which edge serves it or when.
+
+    It also repairs the cross-check. Comparing a cache-fill instant against the
+    mirror's genuine build time made the drift permanently negative; comparing
+    two build stamps compares like with like, so "the mirror rebuilt and the
+    primary did not" means what it says again.
+
+    Newest wins: the page holds one stamp per entry and a build only moves
+    forward, so max() is the build that produced this page. Returning None is
+    the honest answer when the page has no stamp, and the caller falls back to
+    announcing that it is blind rather than passing."""
+    try:
+        status, body, _, _ = fetch(base, probe)
+    except Exception:
+        return None
+    if status != 200:
+        return None
+    stamps = [int(s) for s in BUILT_RE.findall(body)]
+    return max(stamps) if stamps else None
+
+
 def _ago(seconds):
     if seconds < 90:
         return "%ds" % int(seconds)
@@ -677,27 +710,39 @@ def check_public_freshness():
               % yellow("warn"))
         return failures
 
-    # Both signals below read pub_lm. If it is only the edge's cache-fill
-    # instant it cannot answer either question, and saying "ok" would be the
-    # exact false green this section exists to prevent — so say blind and stop.
-    if is_cache_fill_clock(pub_headers):
+    # Which clock are we allowed to believe? The page's own data-built stamp is
+    # a build time; last-modified is only usable when it is NOT the edge's fill
+    # instant. If neither holds, say blind — a false green here is the exact
+    # failure this section exists to prevent.
+    pub_built = build_stamp(PUBLIC_BASE, PUBLIC_PROBE)
+    mir_built = build_stamp(MIRROR_BASE, MIRROR_PROBE) if mir_status == 200 else None
+
+    if pub_built is not None:
+        pub_time, clock = pub_built, "data-built"
+        print("  %s %-10s data-built=%s (build time, immune to CDN caching)"
+              % (green(" ok "), "clock", time.strftime("%H:%M:%SZ", time.gmtime(pub_built))))
+    elif is_cache_fill_clock(pub_headers):
         print("  %s %-10s last-modified is the CDN cache-fill instant, not a build "
-              "time" % (yellow("warn"), "clock"))
+              "time, and the page carries no data-built stamp"
+              % (yellow("warn"), "clock"))
         print("  %s %-10s BLIND — cannot tell a current deploy from a frozen one "
               "by header" % (yellow("warn"), "lag"))
         print("  %s to judge this deploy: build origin/main and diff the bytes "
               "against the\n       served page, or check `vercel ls` for a Ready "
               "production deployment.\n" % yellow("    "))
         return failures
+    else:
+        pub_time, clock = pub_lm, "last-modified"
 
     # 1. lag behind HEAD
     if head_ct:
-        lag = head_ct - pub_lm
+        lag = head_ct - pub_time
         if lag > PUBLIC_STALE_FAIL_S:
             failures.append(
-                "banyan.city is %s BEHIND HEAD (deployed %s, HEAD committed %s). "
-                "The deploy is not firing — pushing again will not fix it."
-                % (_ago(lag), time.strftime("%H:%M:%SZ", time.gmtime(pub_lm)),
+                "banyan.city is %s BEHIND HEAD (built %s per %s, HEAD committed %s). "
+                "The deploy is not firing — pushing again will not fix it; "
+                "publish with REPO-MOVE.md A0."
+                % (_ago(lag), time.strftime("%H:%M:%SZ", time.gmtime(pub_time)), clock,
                    time.strftime("%H:%M:%SZ", time.gmtime(head_ct)))
             )
             print("  %s %-10s %s behind HEAD" % (red("FAIL"), "lag", _ago(lag)))
@@ -707,12 +752,21 @@ def check_public_freshness():
         else:
             print("  %s %-10s %s behind HEAD" % (green(" ok "), "lag", _ago(max(lag, 0))))
 
-    # 2. mirror cross-check
-    mir_lm = http_date(mir_headers) if mir_status == 200 else None
-    if mir_lm is None:
-        print("  %s %-10s unavailable — cross-check skipped" % (yellow("warn"), "mirror"))
+    # 2. mirror cross-check — only ever clock-vs-same-clock. Comparing the
+    # mirror's real build time against a cache-fill instant is what made this
+    # permanently negative before; mixing them silently is worse than skipping.
+    if mir_status != 200:
+        mir_time = None
+    elif clock == "data-built":
+        mir_time = mir_built
     else:
-        drift = mir_lm - pub_lm
+        mir_time = http_date(mir_headers)
+
+    if mir_time is None:
+        print("  %s %-10s no comparable %s clock — cross-check skipped"
+              % (yellow("warn"), "mirror", clock))
+    else:
+        drift = mir_time - pub_time
         if drift > PUBLIC_STALE_FAIL_S:
             failures.append(
                 "the Pages mirror is %s NEWER than banyan.city — the mirror rebuilt "
