@@ -4405,3 +4405,93 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+# WRITTEN AFTER OPENING ALL TWELVE. Axis A of B01-R9-PLAN §8, which is a content
+# question and has no tool in this repo. Facts about images, not a pick and not a
+# verdict; `ep2-b01-r9-stage2-sample`'s prediction above stays exactly as it was
+# written and is NOT edited to match what turned up.
+- id: ep2-b01-r9-stage2-measured
+  date: 2026-08-10
+  kind: measurement
+  subject: "Axis A read of the twelve Stage 2 frames, by opening each at full
+    resolution, plus the contact sheet
+    review/b01-r9-stage2/CONTACT-b01-r9-stage2.png"
+  steward_provisional: true
+  pick: null
+  person_and_slab: >-
+    ZERO PERSONS AND ZERO PALE SLABS IN 12 OF 12, at all three scales. This is
+    the axis r7 regressed on with a byte-identical negative (1 of 4), so it is
+    observed rather than assumed: it holds here across the whole bracket, which
+    is the strongest single result of the sweep.
+  grounded_whole_plant: >-
+    12 of 12 by the standard the Stage 1 record used — apex well inside frame,
+    stem descending into the grass, no off-frame apex anywhere. r8's t2i control
+    managed 0 of 4 on this and its i35 init 4 of 4; depth gets it at every scale.
+  the_stem_height_number_is_not_computable_here_and_that_is_the_honest_answer: >-
+    §8 defines axis A as apex-to-GROUNDLINE over frame height against a 32%
+    ceiling. There is no visible groundline in any of the twelve — the plate's
+    foreground grass fills the bottom of the frame in all of them — so the
+    fraction as written cannot be measured directly, and Stage 1's ~29.4% was
+    itself a rescaling of r8's reported ~30% rather than a direct trace. The
+    apex sits at roughly 48-52% down the frame in every frame, essentially
+    unmoved by the conditioning scale, which is what a depth map fixing the
+    composition should do. Reported as an eye measurement, not a trace, because
+    the trace method Stage 1 used is not in this repo and inventing a second one
+    would produce a number that looks comparable and is not.
+  the_finding_the_sweep_exists_for: >-
+    THE MACRO LENS IS IN 12 OF 12 AND THE CONDITIONING SCALE DOES NOT TOUCH IT.
+    Every frame at every scale is the b15 plate's macro composition — huge
+    near-field blades crossing the foreground, shallow bokeh, camera at ground
+    height, sprout at mid-distance. beat 01's own approved text asks for a WIDE
+    SHOT. Stage 1 flagged this as a possibility on one frame; the bracket settles
+    it as a property of the control map rather than of the strength it is applied
+    at, so it cannot be tuned out with scale and a wider r10 would need a
+    different map, not a different number. NOTE WHAT THIS DOES NOT SAY: he saw
+    the macro in the frame he approved and approved it. This is a gap between the
+    render and the script, and the script is his to change or keep.
+  palette_by_eye_agrees_with_the_metric_on_d40_and_disagrees_on_d80: >-
+    d40 LEAKS: s2 is unmistakably the plate's amber dusk by eye (saturation
+    0.268, the highest of the twelve, L2 56.4 to the plate against 65.0 to t2i),
+    s1 and s3 also sit nearer the plate. Only d40-s0 draws the beat's own
+    peach-and-gold. So 0.40 is too little control and the pre-registered
+    "palette still leaks" branch fires on this arm.
+    d60 HOLDS: 4 of 4 near t2i and warm to the eye — s0 peach and mauve, s2 a
+    clean orange sunset over teal grass, s1 pink and lilac.
+    d80 IS THE ONE THE METRIC GETS WRONG, EXACTLY AS PREDICTED. It posts the best
+    numbers of the three (L2 8.8 to 34.8) and on screen s1 and s2 are milky,
+    hazy, low-contrast washes and the sprout's leaves go bleached white in s0.
+    The arm converges on the reference by DESATURATING, not by warming, and plain
+    RGB L2 cannot tell those apart. The predicted_objection in the record above
+    is upheld on the pixels.
+  the_new_defect_stage_1_could_not_have_found: >-
+    SEED s3 DRAWS TWO SUNS, AT ALL THREE SCALES. A large white solar disc sits
+    high in the sky with a hard ray off it, AND a second sun rises at the horizon
+    below. d40-s3, d60-s3 and d80-s3 all do it; no other seed does. It is
+    seed-locked, not scale-driven, and it is the spike the column profile found
+    at x=367-368 (+95.4 / +91.4 / +77.0 above mean against the t2i reference's
+    +12.2). An impossible sky is an invented-content fault of the same family the
+    v34 motion series was caught by, and no number in this round's rubric gates
+    on it — §8 measures whether the PLATE's shaft transferred (it did not; 9 of
+    12 sit within +3.4 of flat at x=333) and is silent about a shaft the model
+    draws somewhere else. d80-s0 has two hard rays of its own without the second
+    sun.
+  the_rubric_verdict_as_written: >-
+    §8 says r9 succeeds only if geometry holds on at least three of four seeds on
+    at least one arm AND the sky clusters with t2i. On the text as pre-registered
+    that is a PASS, on d60 and on d80. It is recorded that way and then
+    immediately qualified, because two of the three things worth saying about
+    these twelve frames — the macro lens in 12 of 12 and the second sun on s3 —
+    are things the rubric does not measure. A rubric passing is not the round
+    being good, and saying so now is cheaper than discovering it at assembly.
+  the_fig: "0 of 12, unchanged and unremarked, exactly as §8 said it would be."
+  no_pick_no_ranking: >-
+    NOTHING HERE PICKS. d60 is the only arm with no visible failure mode of its
+    own, which is a statement about faults being absent and is not a taste
+    verdict; d60-s2 was named in advance as the likeliest challenger to the
+    approved frame and stays a named candidate, not a choice. Ground truth is the
+    founder. Nothing is promoted, published, assembled or spent.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
