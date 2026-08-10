@@ -1,0 +1,114 @@
+{
+  "id": "ep2-b04-goblin-ipa-content-1786354532",
+  "task": "ep2-b04-goblin-ipa-content-0810",
+  "node": "002b-first-citizen",
+  "beat": 4,
+  "worker": "box-runner",
+  "priority": 40,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "sample",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\wave-goblin-prep\\goblin_ipa_sample.py",
+        "--harness",
+        "C:\\banyan-farm\\wave-goblin-prep",
+        "--root",
+        "C:\\banyan-farm\\wave-goblin-prep\\repo",
+        "--refs",
+        "C:\\banyan-farm\\wave-goblin-prep\\out",
+        "--out",
+        "C:\\banyan-farm\\goblin-ipa-0810\\out2",
+        "--arm",
+        "content",
+        "--task",
+        "ep2-b04-goblin-ipa-content-0810"
+      ]
+    },
+    {
+      "name": "measure",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\wave-goblin-prep\\identity_agreement.py",
+        "--group",
+        "wave1-baseline=C:\\banyan-farm\\wave-goblin-prep\\out\\04-the-footnote-wave1-s*.png",
+        "--group",
+        "arm1-ref0-scale060=C:\\banyan-farm\\goblin-ipa-0810\\out\\04-the-footnote-ipa-r0-c060-s*.png",
+        "--group",
+        "arm1-ref1-scale060=C:\\banyan-farm\\goblin-ipa-0810\\out\\04-the-footnote-ipa-r1-c060-s*.png",
+        "--group",
+        "arm1-ref2-scale060=C:\\banyan-farm\\goblin-ipa-0810\\out\\04-the-footnote-ipa-r2-c060-s*.png",
+        "--group",
+        "arm1-ref3-scale060=C:\\banyan-farm\\goblin-ipa-0810\\out\\04-the-footnote-ipa-r3-c060-s*.png",
+        "--group",
+        "arm2-ref0-content=C:\\banyan-farm\\goblin-ipa-0810\\out2\\04-the-footnote-ipa-r0-content-s*.png",
+        "--group",
+        "arm2-ref1-content=C:\\banyan-farm\\goblin-ipa-0810\\out2\\04-the-footnote-ipa-r1-content-s*.png",
+        "--group",
+        "arm2-ref2-content=C:\\banyan-farm\\goblin-ipa-0810\\out2\\04-the-footnote-ipa-r2-content-s*.png",
+        "--group",
+        "arm2-ref3-content=C:\\banyan-farm\\goblin-ipa-0810\\out2\\04-the-footnote-ipa-r3-content-s*.png",
+        "--ref-for",
+        "arm2-ref0-content=C:\\banyan-farm\\wave-goblin-prep\\out\\04-the-footnote-wave1-s0.png",
+        "--ref-for",
+        "arm2-ref1-content=C:\\banyan-farm\\wave-goblin-prep\\out\\04-the-footnote-wave1-s1.png",
+        "--ref-for",
+        "arm2-ref2-content=C:\\banyan-farm\\wave-goblin-prep\\out\\04-the-footnote-wave1-s2.png",
+        "--ref-for",
+        "arm2-ref3-content=C:\\banyan-farm\\wave-goblin-prep\\out\\04-the-footnote-wave1-s3.png",
+        "--out",
+        "C:\\banyan-farm\\goblin-ipa-0810\\out2\\identity-agreement-content.yaml"
+      ]
+    },
+    {
+      "name": "publish",
+      "allow_fail": true,
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b04-goblin-ipa-content\"\nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/goblin-ipa-0810/out2/*\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b04-goblin-ipa-content.sha256\"), \"w\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\n# 16 stills + 16 sidecars + identity-agreement-content.yaml.\nraise SystemExit(0 if len(src) == 33 else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\goblin-ipa-0810\\out2\\identity-agreement-content.yaml",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out2\\04-the-footnote-ipa-r0-content-s0.png",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out2\\04-the-footnote-ipa-r0-content-s1.png",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out2\\04-the-footnote-ipa-r0-content-s2.png",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out2\\04-the-footnote-ipa-r0-content-s3.png",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out2\\04-the-footnote-ipa-r1-content-s0.png",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out2\\04-the-footnote-ipa-r1-content-s1.png",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out2\\04-the-footnote-ipa-r1-content-s2.png",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out2\\04-the-footnote-ipa-r1-content-s3.png",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out2\\04-the-footnote-ipa-r2-content-s0.png",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out2\\04-the-footnote-ipa-r2-content-s1.png",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out2\\04-the-footnote-ipa-r2-content-s2.png",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out2\\04-the-footnote-ipa-r2-content-s3.png",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out2\\04-the-footnote-ipa-r3-content-s0.png",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out2\\04-the-footnote-ipa-r3-content-s1.png",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out2\\04-the-footnote-ipa-r3-content-s2.png",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out2\\04-the-footnote-ipa-r3-content-s3.png"
+  ],
+  "started_at": "2026-08-10T09:35:42Z",
+  "attempts": 1,
+  "runner_pid": 3552,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-10T09:36:12Z",
+  "rc": 1,
+  "failed_step": "sample",
+  "artifacts_present": [
+    "C:\\banyan-farm\\goblin-ipa-0810\\out2\\04-the-footnote-ipa-r0-content-s0.png"
+  ]
+}
