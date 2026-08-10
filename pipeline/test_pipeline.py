@@ -6774,6 +6774,109 @@ def test_an_agent_run_cannot_put_candidates_on_the_founders_screen():
           not should_open(False, {NO_OPEN_ENV: "0"}))
 
 
+def test_a_review_page_the_build_never_copied_cannot_pass_the_gate(tmp: Path):
+    """A page in the repo and not on the site is a FAILURE, not a quiet absence.
+
+    2026-08-10: `review/approvals/index.html` was written, committed and asked
+    for by name, and the URL 404'd. build_site.py published no such route, exit
+    0; its link check passed; qa_local swept every route and passed. All three
+    only ever read `_site/`, and a page that was never copied there is not a
+    broken route — it is nothing at all. So the gate has to start from the repo,
+    and the builder has to have a rule that picks the page up.
+    """
+    import build_site as bsite
+    import qa_local as qa
+
+    (tmp / "review" / "approvals").mkdir(parents=True)
+    (tmp / "review" / "approvals" / "index.html").write_text("<h1>yes</h1>")
+    (tmp / "review" / "v34-motion").mkdir()          # scratch: clips, no page
+    (tmp / "review" / "v34-motion" / "b01.mp4").write_bytes(b"x")
+    (tmp / "review" / ".cache").mkdir()
+    (tmp / "review" / ".cache" / "index.html").write_text("<h1>no</h1>")
+
+    found = [d.name for d in bsite.review_page_dirs(tmp / "review")]
+    check("a review dir carrying index.html is a page", found == ["approvals"])
+    check("a scratch dir of clips is not a page", "v34-motion" not in found)
+    check("a dot-directory is not a page", ".cache" not in found)
+
+    # The publisher stamps noindex; the review area is reachable, never
+    # advertised (D17), and a hand-authored page does not pass through page().
+    stamped = bsite.unlisted_html("<h1>yes</h1>")
+    check("an unstamped page is published noindex", bsite.NOINDEX_META in stamped)
+    check("...and keeps every word it had", "<h1>yes</h1>" in stamped)
+    inhead = bsite.unlisted_html("<html><head><title>t</title></head><body>b</body>")
+    check("the stamp lands inside <head> when there is one",
+          inhead.index(bsite.NOINDEX_META) < inhead.index("<title>"))
+    deliberate = '<head><meta name="robots" content="noindex, follow"></head>'
+    check("a robots value the author chose is left alone",
+          bsite.unlisted_html(deliberate) == deliberate)
+
+    # The gate. `site` holds no review/ at all — the exact 2026-08-10 state.
+    (tmp / "_site").mkdir()
+    gaps = qa.unpublished_review_pages(repo=str(tmp), site=str(tmp / "_site"),
+                                       is_tracked=lambda rel: True)
+    check("a tracked page missing from _site fails, named",
+          gaps == [("review/approvals/index.html", "unpublished")])
+
+    untracked = qa.unpublished_review_pages(repo=str(tmp), site=str(tmp / "_site"),
+                                            is_tracked=lambda rel: False)
+    check("and an uncommitted one fails for the other reason",
+          untracked == [("review/approvals/index.html", "untracked")])
+    check("both reasons carry a remedy the reader can run",
+          all(r in qa.REVIEW_GAP_REMEDY for _, r in gaps + untracked))
+
+    built = tmp / "_site" / "review" / "approvals"
+    built.mkdir(parents=True)
+    (built / "index.html").write_text("<h1>yes</h1>")
+    check("a page the build published is not a gap",
+          qa.unpublished_review_pages(repo=str(tmp), site=str(tmp / "_site"),
+                                      is_tracked=lambda rel: True) == [])
+
+    # And the live page itself, so the rule cannot pass on a fixture while the
+    # one page this was written for stops matching it.
+    if (REPO / "review" / "approvals" / "index.html").exists():
+        check("the real approvals page is one the builder publishes",
+              "approvals" in [d.name for d in bsite.review_page_dirs()])
+
+
+def test_a_queue_entry_dates_itself_only_from_a_check_in():
+    """The record's age chip may only report a time somebody actually recorded.
+
+    farm-queue.yaml carries no timestamps — no `added`, no `since` — so for an
+    entry nobody has claimed there IS no age, and the row has to say so. The
+    tempting alternative is to date it from the build, which restarts at every
+    deploy and would show a queue that never gets old however long it sat.
+    """
+    import datetime
+
+    import build_sim as bs
+
+    now = bs.utcnow()
+    then = now - datetime.timedelta(hours=5)
+    entry = {"id": "t-1", "why": "because", "runner": "farm", "worker": "any"}
+
+    claimed = bs.queue_entry_html(
+        entry, "tasks", "running",
+        {"t-1": [(then, "STARTED", "rtx5090", "")]}, set(), [], now)
+    check("an entry with a check-in line wears that line's age",
+          'class="qage"' in claimed and "last check-in" in claimed
+          and str(int(then.timestamp())) in claimed)
+
+    bare = bs.queue_entry_html(entry, "tasks", "runnable", {}, set(), [], now)
+    check("an entry nobody claimed says so instead of inventing an age",
+          "never claimed" in bare)
+    check("and it does not date itself from this build",
+          str(int(now.timestamp())) not in bare.split('class="qage"')[1])
+
+    # Every state the record can print must be distinguishable, not just the
+    # four that had a colour: the chip carries its own word in full either way.
+    for state in bs.QSTATE_ORDER:
+        row = bs.queue_entry_html(entry, "tasks", state, {}, set(), [], now)
+        _emoji, word, _blurb = bs.QSTATES[state]
+        check(f"the {state} chip names its state in words",
+              f'class="qchip {state}"' in row and word in row)
+
+
 def test_the_repo_owner_is_read_from_the_platform_that_is_building():
     """The trap the 2026-08-10 owner change set, pinned so it cannot be reset.
 
@@ -7051,6 +7154,10 @@ def main():
     test_striking_the_backwards_conjunct_would_flag_everything()
     # THE MAC'S RENDER LOOP MUST NOT PUBLISH TO HIS SCREEN BY ACCIDENT.
     test_an_agent_run_cannot_put_candidates_on_the_founders_screen()
+    test_a_queue_entry_dates_itself_only_from_a_check_in()
+    # A PAGE HE WAS PROMISED MUST REACH THE SITE, AND ITS ABSENCE MUST BE LOUD.
+    with tempfile.TemporaryDirectory() as td:
+        test_a_review_page_the_build_never_copied_cannot_pass_the_gate(Path(td))
     # THE MIRROR AND PRODUCTION MUST NAME THE SAME OWNER.
     test_the_repo_owner_is_read_from_the_platform_that_is_building()
     print()

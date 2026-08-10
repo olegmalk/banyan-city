@@ -398,6 +398,70 @@ def shadowed_routes():
     return out
 
 
+# ------------------------------------------------------- pages that never ran
+
+
+def tracked_in_git(rel):
+    """Does the tree carry this path? A file the deploy will not have is not
+    published, however well it renders on the laptop that wrote it."""
+    return bool(_run(["git", "-C", REPO, "ls-files", "--", rel]).strip())
+
+
+def unpublished_review_pages(repo=REPO, site=SITE, is_tracked=None):
+    """Review pages that exist in the repo and NOT in the built site.
+
+    THE HOLE THIS CLOSES, measured 2026-08-10. A lane wrote a 131 KB approvals
+    page to `review/approvals/index.html`, the founder asked for it, and the URL
+    404'd — `build_site.py` published no such route. Every gate in this file
+    passed while it did, and they were structurally incapable of doing anything
+    else: the sweep enumerates `_site/`, and the build's own link check walks
+    `_site/`, so a page that was never copied there is not a failing route, it
+    is not a route. **Absence was invisible because everything only ever looked
+    at the output.** This is the one check that starts from the repo instead.
+
+    Two distinct failures wear the same 404, and the remedy is different, so the
+    reason is carried rather than flattened:
+
+      `unpublished` — tracked, and the builder did not emit it. A publishing
+        rule is missing (see build_site.review_page_dirs).
+      `untracked`  — the builder deliberately skips it, because git is what CI
+        clones and what the deploy serves. Committing it is the whole fix; it is
+        also why this cannot be downgraded to a warning, since the local tree is
+        precisely where this one looks fine.
+
+    -> [(rel, reason)], empty when every review page in the repo is on the site.
+    """
+    if is_tracked is None:
+        is_tracked = tracked_in_git
+    root = os.path.join(repo, "review")
+    if not os.path.isdir(root):
+        return []
+    gaps = []
+    for name in sorted(os.listdir(root)):
+        if name.startswith("."):
+            continue
+        rel = "review/%s/index.html" % name
+        if not os.path.isfile(os.path.join(root, name, "index.html")):
+            continue
+        if os.path.isfile(os.path.join(site, "review", name, "index.html")):
+            continue
+        gaps.append((rel, "unpublished" if is_tracked(rel) else "untracked"))
+    return gaps
+
+
+REVIEW_GAP_REMEDY = {
+    "unpublished": (
+        "tracked, but build_site.py wrote no _site/%s.\n"
+        "       The builder needs a rule that publishes it — review_page_dirs()\n"
+        "       in build_site.py picks up review/<name>/index.html."
+    ),
+    "untracked": (
+        "NOT IN GIT, so the build skipped it and the deploy will not have it.\n"
+        "       git commit -- %s"
+    ),
+}
+
+
 # ------------------------------------------------------------------- checks
 
 
@@ -426,7 +490,17 @@ def check_route(base, route, backing):
         return False, "only %d bytes (floor %d) — page rendered empty or truncated" % (size, floor)
 
     want = title_of(backing)
-    if want and want not in " ".join(body.split()):
+    # BOTH SIDES UNESCAPED, or the comparison is between two spellings of the
+    # same string. title_of() unescapes what it reads off disk, and this used to
+    # search for the result inside the RAW body — so a title written
+    # `yes &mdash; banyan.city` could never contain `yes — banyan.city`, and the
+    # failure printed the two as identical text (2026-08-10, /review/approvals).
+    # Every page page() emits escapes with html.escape, which touches only &<>",
+    # so no generated title had ever carried an entity and the flaw sat unseen
+    # until a hand-authored page arrived. Substring, not equality, deliberately:
+    # that is the rule these routes already pass under, and tightening it is a
+    # different change from making it read what is on the page.
+    if want and want not in html.unescape(" ".join(body.split())):
         got = TITLE_RE.search(body)
         got = html.unescape(" ".join(got.group(1).split())) if got else "<no title>"
         return False, "wrong page: expected title %r (from %s), served %r" % (
@@ -683,6 +757,11 @@ def main():
             "The build produced nothing to screen. Run: python3 pipeline/build_site.py"
         )
 
+    # Asked of the REPO, not of _site/ — the one gate here that can see a page
+    # which was never published. Everything below sweeps the output and would
+    # stay green while a page the founder was promised does not exist.
+    page_gaps = unpublished_review_pages()
+
     public_failures = check_public_freshness() if args.public else []
 
     results = []
@@ -745,7 +824,19 @@ def main():
         )
         print()
 
-    total = len(failures) + len(public_failures)
+    if page_gaps:
+        print(bold("REVIEW PAGES IN THE REPO THAT THE SITE DOES NOT PUBLISH (%d)"
+                   % len(page_gaps)))
+        for rel, reason in page_gaps:
+            print("  %s %s — %s" % (red("FAIL"), rel, REVIEW_GAP_REMEDY[reason] % rel))
+        print(
+            "  These are 404s, not slow pages: no route above covers them, because a\n"
+            "  page that was never copied into _site/ is not a route to sweep. Do not\n"
+            "  hand out a /review/ URL until this clears."
+        )
+        print()
+
+    total = len(failures) + len(public_failures) + len(page_gaps)
     if total:
         print(red("QA gate FAILED — do not hand this URL to the founder."))
         print("QA-GATE: FAIL failures=%d" % total)

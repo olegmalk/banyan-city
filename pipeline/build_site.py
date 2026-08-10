@@ -338,6 +338,17 @@ h3.run { margin: 2.4rem 0 .2rem; padding-top: 1.2rem; border-top: 1px solid var(
 .check > details.drawer { margin: .9rem 0 0; background: var(--panel-2); }
 .check > details.drawer > summary { font-size: .72rem; padding: .6rem .9rem; }
 .check > details.drawer > .drawer-body { padding: 0 .9rem .8rem; }
+/* A comparison table inside a drawer is WIDER THAN A PHONE, and `details.drawer`
+   clips rather than scrolls — so on a 390px screen the right-hand columns were
+   simply gone, unreachable by any gesture. Measured 2026-08-10 against the
+   published mirror at a real 390px layout viewport: two tables, 371px and 407px
+   of content in a 277px box, both `overflow-x: hidden` at the ancestor. The v33
+   -vs-v34 table is one of them, and its right-hand column is the whole point of
+   it. `display: block` turns the table itself into the scroller, which is the
+   only fix that does not need a wrapper element around markdown the page renders
+   verbatim. The sheets already behave — their <figure> is overflow-x: auto, and
+   a 520px contact sheet swipes correctly at 390. */
+.drawer-body table { display: block; max-width: 100%; overflow-x: auto; }
 /* A settled item keeps every word it had; the drawer supplies the box, so the
    .check padding is dropped and only its state bar survives. */
 details.check { padding: 0; }
@@ -2352,6 +2363,68 @@ QUEUE_LEDE = '<p class="said">The argument behind each is one fold down.</p>'
 # a drawer, so anything written there is not what he sees first.
 
 
+REVIEW_SRC = REPO / "review"
+NOINDEX_META = '<meta name="robots" content="noindex, nofollow">'
+ROBOTS_META_RE = re.compile(r"""<meta[^>]+name=["']robots["']""", re.I)
+HEAD_OPEN_RE = re.compile(r"<head[^>]*>", re.I)
+
+
+def review_page_dirs(src: Path = None) -> list:
+    """Hand-authored pages under `review/<name>/index.html`.
+
+    THE HOLE THIS CLOSES, measured 2026-08-10. A lane wrote a script-approval
+    page to `review/approvals/index.html` — 131 KB, self-contained, asked for by
+    the founder — and it 404'd, because the only thing `main()` publishes under
+    `review/` is `render_review()`'s own `index.html`. Nothing was broken and
+    nothing said so: `build_site.py` exited 0 and its link check passed, since
+    check_links can only walk pages that reached `_site/`. **A page that is
+    never copied is invisible to every gate that reads the output.** The absence
+    had to become a fact something could read, and this function is that fact.
+
+    The rule is deliberately narrow: a DIRECTORY under `review/` that carries
+    its own `index.html`. `review/` is also the render lanes' scratch yard —
+    contact sheets, hundreds of megabytes of working mp4s, per-round subdirs —
+    and none of that is a page. Carrying an `index.html` is the author saying
+    "this is meant to be read at a URL", which is exactly the distinction the
+    publisher needs and the only one it should be making on its own.
+
+    Ordering with `render_review()` is not an accident either: the cuts page
+    owns `review/index.html` and these own `review/<name>/index.html`, so the
+    two can never write the same file.
+    """
+    src = REVIEW_SRC if src is None else src
+    if not src.is_dir():
+        return []
+    return [d for d in sorted(src.iterdir())
+            if d.is_dir() and not d.name.startswith(".")
+            and (d / "index.html").is_file()]
+
+
+def unlisted_html(text: str) -> str:
+    """Stamp `noindex, nofollow` on a page this module did not generate.
+
+    Everything `page()` emits gets its robots meta from one argument (D17, and
+    see page()'s own docstring on why meta rather than a robots.txt Disallow).
+    A hand-authored page never passes through `page()`, so the review area's
+    "reachable but not advertised" rule would rest on whoever wrote the file
+    having remembered it — and the approvals page had no robots meta at all.
+    The publisher stamps it instead, which makes unlisted a property of being
+    published under `review/` rather than a property of the author's memory.
+
+    An existing robots meta is left alone: a page may legitimately want
+    `noindex, follow`, and overwriting a deliberate value is the publisher
+    exceeding its remit. Insert point is inside `<head>` when there is one, and
+    the top of the document otherwise — the approvals page is a bare fragment
+    with no doctype, where a leading meta is hoisted into the implicit head.
+    """
+    if ROBOTS_META_RE.search(text):
+        return text
+    m = HEAD_OPEN_RE.search(text)
+    if m:
+        return text[:m.end()] + "\n" + NOINDEX_META + text[m.end():]
+    return NOINDEX_META + "\n" + text
+
+
 def inline_md(text: str) -> str:
     """One line of markdown with the paragraph wrapper taken off again."""
     out = md_to_html(str(text).strip())
@@ -3127,6 +3200,44 @@ def main() -> None:
         # the point, and is why the line names the record and not the poster.
         for w in POSTER_WARNINGS:
             print(f"  ! poster withheld — {w}")
+    # Hand-authored pages in the same unlisted area — `review/<name>/index.html`
+    # in the repo becomes `/review/<name>`. Same treatment as the cuts page: not
+    # in `mine`'s nav, linked from nothing, noindex (stamped by unlisted_html
+    # since these do not pass through page()), and swept by check_links because
+    # the index goes into `mine`.
+    #
+    # in_the_tree() before copying, exactly as the shot board does with takes/:
+    # an untracked page is on one laptop and not on the deploy, and publishing
+    # it locally would let a lane screen a URL that CI cannot build. The line
+    # below is what tells them which of the two situations they are in.
+    for d in review_page_dirs():
+        rel_dir = f"review/{d.name}"
+        files = in_the_tree(sorted(p for p in d.rglob("*") if p.is_file()))
+        if (d / "index.html") not in files:
+            print(f"  ! {rel_dir}/index.html is NOT in the tree — not published "
+                  f"(commit it; the deploy does not have this file)")
+            continue
+        copied, withheld = 0, []
+        for p in files:
+            # The licence gate applies here for the same reason it applies to
+            # takes/: two directories side by side, one gated and one not, is
+            # not a policy. HTML the repo carries is prose, not a render.
+            if p.suffix.lower() not in (".html", ".htm"):
+                ok, why = publishable(p)
+                if not ok:
+                    withheld.append((p.name, why))
+                    continue
+            dest = OUT / rel_dir / p.relative_to(d)
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            if p.suffix.lower() in (".html", ".htm"):
+                dest.write_text(unlisted_html(p.read_text(errors="replace")))
+            else:
+                shutil.copy(p, dest)
+            copied += 1
+        if withheld:
+            (OUT / rel_dir / "WITHHELD.md").write_text(withheld_note(withheld))
+        mine.append(f"{rel_dir}/index.html")
+        print(f"✓ {rel_dir}/ published — unlisted hand-authored page, {copied} file(s)")
     (OUT / "trials").mkdir(exist_ok=True)
     trials_out = REPO / "pipeline" / "t3-trials" / "outputs"
     if trials_out.exists():

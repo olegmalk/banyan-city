@@ -107,6 +107,20 @@ SITE_INPUTS=(
   # cuts/cuts.yaml builds the unlisted /review/ area (D17); the mp4s beside it
   # are the one place media is committed. build_site.py:1676.
   cuts
+  # review/<name>/index.html — hand-authored pages published into the same
+  # unlisted area (build_site.review_page_dirs). The approvals page lives here,
+  # and on 2026-08-10 it 404'd for a whole afternoon; a guard that skipped the
+  # push which fixes that would put the same 404 on banyan.city instead.
+  #
+  # IT IS THE WHOLE DIRECTORY AND THAT COSTS BUILDS, deliberately, same trade as
+  # pulse-series.json below. review/ is also the render lanes' scratch yard, so
+  # a commit of round-N contact frames now triggers a site build that publishes
+  # nothing. Two things keep it small: only TRACKED files can trigger anything
+  # (.gitignore:57 swallows every mp4 under review/, which is the bulk of it),
+  # and a handful of pushes a day is not the 288 this guard was written against.
+  # A narrower pathspec cannot be written here: the builder discovers pages by
+  # scanning the directory, so the directory is the input.
+  review
   # copied wholesale into _site/lab/ when present. build_site.py:2077-2079.
   lab
   # assets/og.png is the social-share image every page's <meta> points at.
