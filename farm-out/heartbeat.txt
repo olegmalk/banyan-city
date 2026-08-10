@@ -109,3 +109,4 @@
 10:43:03Z box-runner idle ready=0
 10:53:08Z box-runner idle ready=0
 11:03:11Z box-runner idle ready=0
+11:07:06Z STARTED task=ep2-b04-goblin-ipa-window-1786360023 attempt=1 on box-runner
