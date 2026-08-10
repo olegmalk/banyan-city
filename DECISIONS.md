@@ -1280,3 +1280,43 @@ other direction.
 founder's one commit. The prediction ledger is the evidence this decision will
 be judged on — if the model's rolling hit rate does not earn the licence to run
 ahead, the licence is what should shrink, not the record of what it predicted.
+
+---
+
+## D20 — The name `banyan-city` is retired under the old account, permanently (RESOLVED — falls out of the 2026-08-10 transfer Roman approved)
+
+**Status:** `resolved (2026-08-10, recorded by the steward as a consequence of
+the move)`. Logged as a decision because it is permanent and because the cost of
+breaking it is unrecoverable — but it is not a question anyone needs to reopen.
+
+**The rule:** the GitHub account **`olegmlkvorg`** must never again own a
+repository named **`banyan-city`**. Not a fresh start, not a backup, not a
+placeholder, not for five minutes.
+
+**Why — in plain words.** On 2026-08-10 the repo moved from `olegmlkvorg` to
+`olegmalk`. GitHub left a forwarding address behind at the old name, and a
+surprising amount of the project still travels on it: this Mac, the render box
+in the other room, and every link to the old address that has already been
+published where we cannot edit it.
+
+Creating a new repo at the old name **deletes that forwarding address** —
+deletes, not pauses, and there is no undo. From that moment some parts of the
+project would be pointing at the real repo and some at the new empty one, and
+the site could end up being published from two different places that disagree
+about what the latest version is.
+
+The dangerous part is that this would not look like a breakage. Nobody gets an
+error message. The old web address still loads a page and still reports "OK", so
+a person clicking around sees nothing wrong; the things that do fail fail
+quietly — a background job at four in the morning that tells no one, a page that
+asks for a file, doesn't get it, and just shows a blank space. We would find out
+weeks later from something that had been silently out of date the whole time.
+
+**Full mechanics** — every surface that dies, and in what order — are in
+[OPERATOR.md](OPERATOR.md) under "⛔ STANDING HAZARD". One surface got no
+forwarding address at all: the old mirror `olegmlkvorg.github.io/banyan-city/`
+404s today and forever. The live mirror is `https://olegmalk.github.io/banyan-city/`.
+
+**How to revisit:** don't. If someone thinks they need the old name back, that
+is a founder call, and the underlying want is almost certainly solvable without
+spending the one thing here that cannot be bought back.
