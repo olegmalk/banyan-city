@@ -138,3 +138,4 @@
 12:04:34Z DONE task=ep1-b06-r7a-tallgrass-1786363375 rc=0 artifacts=4
 12:04:56Z STARTED task=ep1-b06-r7b-sky-1786363380 attempt=1 on box-runner
 12:05:46Z DONE task=ep1-b06-r7b-sky-1786363380 rc=0 artifacts=4
+12:06:11Z STARTED task=ep2-b04-goblin-ipa-wscale-1786362886 attempt=1 on box-runner
