@@ -1,0 +1,173 @@
+# ep1 beat 06 — THE CLOUD LADDER'S STEP 4. ONE SAMPLE, ONE VARIABLE.
+#
+# THE VERDICT THIS SERVES, VERBATIM (2026-08-10, ~17:40): "this one, now im
+# gonna go, bye. but actually, regenerate it. too many clouds. you almost got
+# it". Composition closed — arm B, sky, no ground. The framing, the low upward
+# camera and the daylight palette are his and nothing here touches them. The
+# only thing that moves is how much of the frame is cloud.
+#
+# ---------------------------------------------------------------------------
+# WHY STEP 4 EXISTS NOW AND DID NOT AN HOUR AGO
+#
+# Steps 4 and 5 were held at UNAUTHORED on purpose: they had previously read
+# "step 3 plus X" on top of a step 3 that drew a robot, so they inherited the
+# defect and drew one too, and re-authoring them before anyone had SEEN a
+# working step 3 would have been guessing two more points on a dial. That
+# condition is now discharged. ep1-b06-r8d-step3 ran and finished rc=0 with
+# four files published to farm-out, and it reads as genuine sky — so the last
+# known-good rung is step 3, and this job moves one variable off it.
+#
+# THE ONE VARIABLE: `sun` ADDED TO THE POSITIVE. Nothing else moves — same
+# model, same 832x1216, same steps, same guidance 7.5, same two seeds, same
+# negative byte for byte, every other tag identical.
+#
+# WHY `sun` AND NOT A NEGATIVE. The obvious next move — negating `cloud` — is
+# the one move this ladder now KNOWS is the failure, and it is not taken here
+# or at any step. `cloud` is the only SUBJECT_ANCHOR arm B can hold (`scenery`
+# is in arm B's forbid_pos), and sending `cloud` on both sides at guidance 7.5
+# cancels exactly the direction that DELETING it cancelled on 2026-08-10, when
+# six frames came back as a machine housing, a wolf head and a rabbit-demon.
+# Trap 10 would not save us from it either: trap 10 reads the positive TEXT, so
+# a `cloud` that is present but negated away passes the guard green and still
+# empties the subject slot. That is the same failure with a passing test on top
+# of it, which is worse than the failure.
+#
+# So the lever stays on the positive, and `sun` is the right one: it is a real
+# tag on this Danbooru-captioned vocabulary, it names a THING in the frame
+# rather than more atmosphere, and a sky with a visible sun in it is a sky with
+# room around the cloud. It STRENGTHENS the subject slot instead of draining
+# it, which is the opposite of what broke steps 3-5 the first time.
+#
+# MEASURED ON THE BOX'S REAL CLIP BEFORE THIS FILE WAS WRITTEN (--measure, drew
+# nothing). Positive 37/77, negative recipe 74 -> sent 72/77 — identical to
+# step 3's negative, because the negative does not move at this step. All 20
+# required negatives survived the trim; traps 2, 5, 6, 7+8, 9 and 10 green,
+# trap 10 confirming the anchor: "positive keeps the subject anchor cloud".
+#   POS  no humans, clear sky, sunny, sun, sky, blue sky, day, cloud, sunlight,
+#        cinematic lighting, detailed, newest, masterpiece, best quality,
+#        very aesthetic
+#   NEG  photorealistic, 3d render, abstract, text, watermark, signature, low
+#        quality, blurry, extra limbs, deformed, leaf, plant, stem, foliage,
+#        tree, photorealism, cityscape, city, building, skyline, road,
+#        mountain, grass, field, horizon, ground, animal, bird, aircraft,
+#        cloudy sky, overcast
+# The protective block — animal, bird, aircraft and the whole urban and ground
+# set — survives intact. That was the hard constraint: if the budget could not
+# hold both those and the step's new words, the protective terms win and the
+# dial moves some other way. Losing them is what produced the wolf heads. Only
+# `realistic skin texture` and `jpeg artifacts` were shed, as at every step.
+#
+# THE DRIVER. pipeline/render_b06r8.py over render_b06r7.py, so r7's nine traps
+# still run on every frame, plus trap 10. scp'd to the box and verified
+# byte-identical to the repo copy before this spec was written
+# (sha256 6259529d...).
+#
+# NOTHING HERE IS A PICK, A PROMOTION, A PUBLICATION OR A SPEND. How few clouds
+# is few enough is Roman's call alone and this job makes no part of it.
+
+id: ep1-b06-r8d-step4
+task: 001-b06-r8d-step4-0810
+node: 001-capability-inventory
+beat: 6
+runner: box
+needs_gpu: true
+priority: 3
+max_attempts: 1
+owner: polish-queue lane (founder verdict 2026-08-10, ladder extended off a seen step 3)
+
+consumer: >-
+  Roman, who is looking at the beat-6 cloud ladder right now and may pick at
+  any moment. He named one fix — fewer clouds — and what he can currently
+  choose between is three rungs: steps 1, 2 and the corrected 3. Beat 6 is the
+  last unresolved FRAME in episode 1 and "finished" now means episode 1
+  polished and ready to publish, so the ladder needs to reach far enough down
+  the axis that his pick is a choice rather than the end of what was rendered.
+  This is the fourth rung.
+
+success: >-
+  Two 832x1216 PNGs with sidecars in C:\banyan-farm\b06-r8\out-step4, named
+  06-too-blue-r8d-step4-s{0,1}.png, published to
+  C:\banyan-farm\courier-box\farm-out\ep1-b06-r8d-step4. Read against four
+  things. First and still the one that matters: IS IT SKY — no machine, no
+  creature, no animal head, no figure of any kind, which is where r8c steps 3-5
+  failed. Then: is there visibly more open blue than in
+  06-too-blue-r8d-step3-s0.png, the rung below it; is the low upward angle, the
+  palette and the daylight feel still his; and does the ground stay out — no
+  ground, horizon, landmass, city, skyline, bird or aircraft, which arm B has
+  got 4 of 4 and must not lose. A watch-out specific to this step: `sun` could
+  arrive as a large sun disc dominating the frame rather than as light in an
+  open sky. If it does, that is a finding about the tag, not about the dial.
+  A step that changes nothing visible is also a finding: it locates the bottom.
+
+why: >-
+  One variable against ep1-b06-r8d-step3 at the same two seeds: `sun` added to
+  the positive. `cloud` is kept as the subject anchor and the negative is
+  unchanged, byte for byte. Everything else — model, size, steps, guidance 7.5,
+  seeds, every other tag — is the frame he approved.
+
+est_minutes: 2
+
+needs: [cuda, vram12, sdxl-venv]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  - name: step4
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - C:\banyan-farm\b06-r8\render_b06r8.py
+      - --variant
+      - b-clear
+      - --step
+      - '4'
+      - --seeds
+      - 20264725,20265725
+      - --set
+      - r8d-step4
+      - --r7-dir
+      - C:\banyan-farm\b06-r7
+      - --root
+      - C:\banyan-farm\banyan-city
+      - --task
+      - 001-b06-r8d-step4-0810
+      - --queue-entry
+      - ep1-b06-r8d-step4
+      - --out
+      - C:\banyan-farm\b06-r8\out-step4
+
+  # allow_fail on purpose: a copy that falls over must never retire rendered
+  # frames. The frames are the deliverable.
+  - name: publish
+    allow_fail: true
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - -c
+      - |
+        import glob, hashlib, os, shutil
+        dst = "C:/banyan-farm/courier-box/farm-out/ep1-b06-r8d-step4"
+        os.makedirs(dst, exist_ok=True)
+        src = sorted(glob.glob("C:/banyan-farm/b06-r8/out-step4/*"))
+        lines = []
+        for f in src:
+            shutil.copy2(f, dst)
+            c = os.path.join(dst, os.path.basename(f))
+            with open(c, "rb") as fh:
+                h = hashlib.sha256(fh.read()).hexdigest()
+            lines.append(h + "  " + os.path.basename(f))
+        with open(os.path.join(dst, "ep1-b06-r8d-step4.sha256"), "w") as fh:
+            fh.write("\n".join(lines) + "\n")
+        print("published", len(src), "file(s) + manifest ->", dst)
+        # 2 stills + 2 sidecars.
+        raise SystemExit(0 if len(src) == 4 else 1)
+
+artifacts:
+  - C:\banyan-farm\b06-r8\out-step4\06-too-blue-r8d-step4-s0.png
+  - C:\banyan-farm\b06-r8\out-step4\06-too-blue-r8d-step4-s1.png

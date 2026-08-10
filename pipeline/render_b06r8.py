@@ -166,14 +166,60 @@ CLOUD_LADDER = {
         "what": "step 2 plus `sunny` — the open bright-daylight reading of the "
                 "same frame, with `cloud` kept as the subject anchor so the "
                 "dial moves by describing the sky, not by emptying it"},
-    # Steps 4 and 5 previously read "step 3 plus X" on top of a step 3 that drew
-    # a robot, so they inherited the defect and drew one too. They are NOT
-    # re-authored here: the next rung has to be built on top of a rung that has
-    # been SEEN to work, and the corrected step 3 has not been looked at yet.
-    # Authoring them now would be guessing two more points on a dial whose last
-    # known-good point is step 2 (founder's ONE SAMPLE rule, 2026-08-03).
-    4: UNAUTHORED,
-    5: UNAUTHORED,
+    # STEPS 4 AND 5, AUTHORED 2026-08-10 ~20:00 — and the rung they are built on
+    # is the corrected step 3, which has now been SEEN. ep1-b06-r8d-step3 came
+    # back rc=0 with four files published and reads as genuine sky, so the ONE
+    # SAMPLE condition that held these two back is discharged: the last
+    # known-good point on the dial is step 3, not step 2, and each of these
+    # moves exactly one variable off it.
+    #
+    # THE LEVER THAT IS NOT AVAILABLE, AND WHY THAT SHAPES BOTH STEPS.
+    # The original sketch of this ladder said the negative side would gain
+    # "`cloudy sky`, `overcast`, and finally `cloud` itself". That last move is
+    # now KNOWN to be the failure and it is not taken here. `cloud` is the only
+    # SUBJECT_ANCHOR arm B can hold — `scenery` is in arm B's forbid_pos — and
+    # sending `cloud` on both sides at guidance 7.5 cancels the same direction
+    # that deleting it cancelled. Trap 10 would not catch it either: trap 10
+    # reads the positive TEXT, so a `cloud` that is present but negated away
+    # passes the guard and still empties the subject slot. That is precisely the
+    # robot-and-wolf-heads failure with a green trap on top of it. So the bare
+    # word `cloud` never enters the negative on this ladder, at any step.
+    #
+    # WHAT IS LEFT, THEREFORE, IS NARROW, AND THESE TWO STEPS SPEND IT HONESTLY.
+    # Step 3's positive already carries `clear sky, sunny, sky, blue sky, day,
+    # sunlight`; the open-daylight axis is close to saturated. Each remaining
+    # rung is a smaller push than the one below it, and that is expected — the
+    # job specs say so out loud. A step that changes nothing visible is not a
+    # failed render, it LOCATES THE BOTTOM OF THE DIAL, which is a real answer
+    # to "how few clouds can this composition go" and one the founder currently
+    # does not have.
+    4: {"pos_add": "clear sky, sunny, sun", "drop_pos": (),
+        "neg": "cloudy sky, overcast",
+        "what": "step 3 plus `sun` — one variable, on the POSITIVE, and it "
+                "strengthens the subject slot rather than draining it: `sun` "
+                "is a real tag on this vocabulary naming a THING in the frame, "
+                "and a sky with a visible sun in it is a sky with room around "
+                "the cloud. The negative does not move"},
+    # Step 5 is the only rung that touches the negative, and it names the CLOUD
+    # FORMS that carry mass — `storm cloud` — rather than the word `cloud`. The
+    # anchor survives untouched in the positive and the suppression lands on the
+    # banked, frame-filling shapes he objected to.
+    #
+    # THE HARD CONSTRAINT ON THIS STEP, inherited from the step-3 spec and not
+    # negotiable: step 3 measured negative 74 recipe -> 72 sent with all 20
+    # required negatives surviving, so there are about five tokens of headroom
+    # and the protective block (animal, bird, aircraft, and the whole urban and
+    # ground set) has to be inside them. If `storm cloud` cannot fit alongside
+    # those, the protective terms WIN and this step does not ship — losing them
+    # is what produced the wolf heads. Trap 5 enforces that rather than trusting
+    # it: the run stops instead of quietly testing a prompt the model never saw.
+    5: {"pos_add": "clear sky, sunny, sun", "drop_pos": (),
+        "neg": "cloudy sky, overcast, storm cloud",
+        "what": "step 4 plus `storm cloud` negated — the bottom of the dial. "
+                "The mass-carrying cloud FORM is named on the negative side "
+                "while the bare anchor `cloud` stays only in the positive, "
+                "which is the furthest this composition can be pushed without "
+                "re-opening the empty-subject failure"},
 }
 
 VARIANTS = {
