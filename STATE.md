@@ -7058,3 +7058,53 @@ media files, 156.3 MiB, **96 with no byte-identical copy on the box**. Same
 pattern would close it, but live lanes are writing there right now and copying
 under an active writer archives half-written files. Its own pass, once the card
 lanes settle.
+
+
+## 2026-08-10 — the fig on beat 01: he chose `inpaint`, and the first sample has a fruit on the stem
+
+**HIS WORD, ~12:20 local, answering cuts item 21 ("The fig on beat 01 — drop it,
+or approve an inpaint?"):** *"inpaint"*. `drop` was on the card and he did not
+take it, so his 2026-08-03 condition stands and the growth beat does NOT move to
+beats 18-20. Recorded before any render: cuts item 21 -> `state: settled`, and
+ledger record `ep2-b01-fig-route-0810` (`kind: direction`, the same shape as the
+goblin definition — it scores nothing and the rolling hit rate is unchanged).
+
+**THE GATE BIT IMMEDIATELY AND IT IS REPORTED, NOT ROUTED AROUND.** No beat-01
+still has ever been approved — the only canon file for that shot is
+`01-cold-open-REVOKED-too-tall.png`, revoked — so under G1 the only legal init is
+`b15-r3-s1` (`001-capability-inventory/stills/15-something-s-coming.png`), the
+same conclusion record `ep2-b01-r8-sample` reached. The sample is painted onto
+that plate and is NOT a beat-01 candidate frame.
+
+**THE METHOD, researched outside this repo before anything was built.** animagine
+has no inpaint variant, so `StableDiffusionXLInpaintPipeline` runs on the BASE
+weights; diffusers 0.29.2 branches on `unet.config.in_channels` and at 4 takes a
+latent-blend path (`latents = (1 - init_mask) * init_latents_proper + init_mask *
+latents`) instead of concatenating mask channels. HF's own docs name the
+trade-off — lower patch quality, but the unmasked area is preserved, which is
+exactly what an approved plate needs. `padding_mask_crop=64` crops the masked
+region, draws it at full model resolution and pastes it back: the documented
+answer to a small object in a large frame, which is the failure this beat has.
+**Nothing new was downloaded**, so no new licence: animagine is OpenRAIL++-M and
+already declared. `diffusers/stable-diffusion-xl-1.0-inpainting-0.1` (a true
+9-channel inpaint UNet, also OpenRAIL++-M) was deliberately not used — wrong
+dialect for an anime frame.
+
+**RESULT: THERE IS A FRUIT, the first in 36 frames** (0 of 24 prompted, 0 of 12
+img2img). 9.8s render, 17s wall, $0, `pipeline/jobs/ep2-b01-fig-inpaint-s1.yaml`
+through the SYSTEM box runner. **His plate is unchanged outside the ellipse and
+that is measured:** mean absolute RGB difference 0.011 of a possible 765, max 20,
+and every pixel that moved by more than 30 sits inside the mask box
+(430, 814)-(496, 881).
+
+**THREE FAULTS, DISCLOSED ON THE CARD BEFORE HE LOOKS:** the fruit does not take
+the plate's dusk light (saturated green + cream cap under amber), it sits ON the
+stem rather than hanging from it, and it reads closer to an unripe tomato than a
+fig. **Nothing has been iterated on any of them.** One sample, then stop — three
+unattended knobs is the K recipe.
+
+**WHAT HIS ONE WORD DID NOT DECIDE, and none of it was invented:** size, position
+on the stem, colour, ripeness. The mask ellipse (462, 848) r(34, 36) is the
+steward's and is labelled as such in the spec, the sidecar and the card.
+`pipeline/inpaint_fruit.py` refuses to run unless the init's sha256 matches, so
+G1 is asserted on bytes rather than on a filename.
