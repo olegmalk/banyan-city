@@ -1320,3 +1320,61 @@ forwarding address at all: the old mirror `olegmlkvorg.github.io/banyan-city/`
 **How to revisit:** don't. If someone thinks they need the old name back, that
 is a founder call, and the underlying want is almost certainly solvable without
 spending the one thing here that cannot be bought back.
+
+---
+
+## D21 — "Finished" has a definition now, and it is the founder's (RESOLVED — Roman, 2026-08-10)
+
+**Question:** what does it mean for episode 1 to be *finished*? Asked three
+times on 2026-08-10 and unanswerable from anything in this repo. Every
+scheduling argument of the past two weeks — what to render next, what to defer,
+what counts as done for the night — has been made against a finish line nobody
+had written down.
+
+**Status:** **resolved (2026-08-10, Roman, in session).**
+
+**The record — his words, verbatim and unedited, 2026-08-10 ~19:55:**
+
+> finished means that the episode 1 video has been polished. promoted to canon,
+> and ready to be published.
+
+That sentence is the record. It is not summarised anywhere in this entry; the
+rest of this file's job is to say what it *implies*, and the implication is
+never allowed to replace the words.
+
+**Three gates, and they are three different kinds of thing — which is why the
+sentence is more useful than it looks.**
+
+1. **"polished"** — a **taste** gate. R4, his, and there is no ratified written
+   standard for it (see the note below and
+   [D9](#d9--when-is-a-nodes-t3-video-leaf-publishable) criterion 4, drafted
+   2026-07-19 and never ratified). Only he can close it.
+2. **"promoted to canon"** — a **mechanical** gate. Defined operations on
+   defined files in this repo, enforced by `lint_genome.py`. It takes minutes
+   once the word is given. The *word* is R4 and founder-reserved; the *typing*
+   is not.
+3. **"ready to be published"** — a **clearance** gate: licence
+   (`pipeline/licence_gate.py`), provenance (§7.2), and the distribution
+   surfaces. Mostly checkable by machine, and publication itself is
+   founder-reserved (STEWARDSHIP §4, and the reserved list in `CLAUDE.md`).
+
+**What this entry does NOT do.** It authorises nothing. Defining the finish line
+is not permission to cross it: canon promotion is R4, publishing is
+founder-reserved, and no steward may do either because the definition now exists.
+It also does not close **D9**, which asks a narrower and still-open question —
+when a *node's T3 leaf* is publishable. D21 is the episode-level finish line;
+D9 is the leaf-level one, and D9's criterion 4 is D21's gate 1 seen from the
+other side.
+
+**On gate 1, stated honestly: "polished" is currently undefined in writing.**
+The nearest things that exist are D9's unratified draft criteria,
+`taste/sapling.founder.v0.3.md` (R1–R8, written about scripts more than
+pictures), and `taste/steward-model.v1.md` (the steward's *predictor* of him,
+which by its own header authorises nothing). The empirical bar is the list of
+defects he has personally rejected cuts for, recorded across
+`pipeline/loop/cycle-NNN.md` and `STATE.md`. A written polish standard would be
+worth having and would be **a proposal needing his sign-off**, not a decision
+anyone else can enter here.
+
+**How to revisit:** it is his sentence, so he amends it by saying a different
+one. Guideline 6 otherwise.
