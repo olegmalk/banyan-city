@@ -3937,3 +3937,89 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+# THE SUSPENSION IS LIFTED. Record 32 ruled `P2_goblin_is_a_goblin` invalid
+# "until he defines the goblin"; he defined the goblin on 2026-08-10. The record
+# below is not a prediction and does not pretend to be one — it is the founder's
+# own words, written down the same day, plus an explicit statement of what they
+# do NOT decide. Records 34, 40 and 42 (r7, r8, r9) keep `founder_verdict: null`.
+- id: ep2-goblin-definition-0810
+  date: 2026-08-10
+  kind: definition
+  subject: "node 002b — THE GOBLIN, defined by the founder. Lifts the record-32
+    suspension of P2_goblin_is_a_goblin, which had held the fifteen-beat episode-2
+    wave since 2026-08-09."
+  steward_provisional: false
+  founder_words_verbatim: "he is just a simple green goblin, nothing complex"
+  founder_words_context: >-
+    2026-08-10, ~12:15 local, answering the direct question "The goblin — what is
+    he?" put to him as `cuts/cuts.yaml` item 18 (`chip: DEFINE`, open since
+    2026-08-09). One sentence, unprompted by any list of options. Item 18 is
+    retired to `state: settled` in the same commit as this record.
+  this_is_not_a_prediction: >-
+    THIS RECORD SCORES NOTHING AND IT IS FILED THAT WAY DELIBERATELY. Every other
+    record in this file is a provisional call written before he looked; this one
+    is his answer written down. No prediction of the DEFINITION'S CONTENT exists
+    anywhere in this file to score it against — the steward never wrote one, and
+    fabricating one now to claim a hit would be the exact fraud the header
+    forbids. The rolling hit rate at the top of this file is therefore unchanged:
+    11 of 37 with a verdict, 2 hit / 5 partial / 4 miss.
+  what_it_confirms: >-
+    GREEN, AND ONLY GREEN, IS BOTH PROVEN AND SPOKEN. `green_skin` was pass 4/4
+    in record 40 (r8) and pass 4/4 in record 42 (r9), and he has now named it
+    himself. That closes the one attribute where render evidence and founder
+    words agree.
+  what_it_adds: >-
+    "SIMPLE / NOTHING COMPLEX" IS THE NEW INFORMATION AND IT IS A CONSTRAINT
+    AGAINST ELABORATION. It is the first thing he has said about this character
+    that is subtractive rather than additive, and it names the failure mode of
+    all nine rounds: every round added. r6 added nine negated fusion terms, r7
+    added a regional IP-Adapter conditioned on a frame he had never ruled on
+    (record 33, miss), r8 added `green skin` and `plump`, r9 added `tusks`. The
+    frames the rounds returned were elaborate in the ways he kept rejecting —
+    female demihuman features, dark-fantasy ornament, knightly detail, a
+    brightly lit white bob and a coat (record 32's own description of the r7
+    reference). The correct next move on this sentence is to REMOVE terms, not
+    to buy another tag with the remaining token headroom.
+  what_it_does_not_say: >-
+    NOTHING IS READ IN. He gave no size, no clothing, no expression, no palette
+    beyond green, and no ranking. Specifically: HE DID NOT NAME THE TUSKS. They
+    were in the headline of the ask ("green and tusks now hold") and he did not
+    strike them, but silence inside a question is not a verdict — `tusks_present`
+    4/4 in record 42 remains a RENDER FACT and not an approval. `plump`,
+    `patchwork_cloak`, `midday_light` and the one-broken-tusk requirement are all
+    unaddressed by this sentence and stay exactly as open as they were.
+  the_one_reading_being_made: >-
+    STATED SO HE CAN KNOCK IT DOWN. His own approved shots.md for beat 13 says
+    ONE BROKEN TUSK. This record reads "nothing complex" as a bar on ornament the
+    STEWARD invented, not as a retraction of what HE already wrote, so the script
+    keeps its broken tusk. That is an inference and it is labelled as one; if he
+    meant it to strip the script too, his correction overrules this line.
+  what_is_explicitly_not_decided: >-
+    HE DEFINED THE CHARACTER. HE DID NOT RANK THE ROUNDS. No verdict is written
+    into record 34 (`ep2-b13-r7-sample`), record 40 (`ep2-b13-r8-sample`) or
+    record 42 (`ep2-b13-r9-sample`); all three keep `founder_verdict: null`,
+    `outcome: null`, and no frame from r7, r8 or r9 is picked, scored, promoted
+    or treated as canon by this definition. Records 32 and 33 keep the outcomes
+    they were already scored with (partial, miss) from his 2026-08-09 rejection.
+    Reading a ranking out of a character definition would be the same error
+    record 33 was graded a miss for.
+  what_it_releases: >-
+    (1) `P2_goblin_is_a_goblin` is no longer suspended — but it must be REWRITTEN
+    against this sentence before it is used, because P2 as written measures green
+    skin + pointed ears + cloak and he named neither ears nor cloak. A gate that
+    still asserts unspoken attributes is the falsified gate of record 32 rebuilt.
+    (2) The fifteen-beat episode-2 wave may run its fit check and ONE sample.
+    (3) Beat 16's still redraw is unblocked (backlog i2v-prompt-plate-truth
+    clause (h)).
+  what_it_does_not_release: >-
+    NOT THE WAVE. His definition is a RECIPE CHANGE, so exactly one beat renders
+    and stops; his verdict on that one sample releases the other fourteen.
+    `render_wave_goblin.py` refuses a whole-wave render and exits 8, and that
+    refusal is correct. Beat 13 r9 belongs to its own lane, and nothing here
+    publishes or spends.
+  founder_verdict: "DEFINITION GIVEN — see founder_words_verbatim"
+  founder_verdict_date: 2026-08-10
+  outcome: n/a
+  miss_axis: null
+  model_action: rewrite_gate

@@ -437,37 +437,76 @@ checklist:
 
         Beat 16 was voiced the same day, 8.2s, in the voice you approved.
 
-    # THE GOBLIN LOOK IS A GATE, NOT A BEAT, which is why it leads the queue. Two
-    # consumers, and only one of them is this beat: the founder's own goblin-look
-    # call, and beat 16's still redraw, which clause (h) of the backlog entry
-    # i2v-prompt-plate-truth blocks until that call exists.
+    # THE GOBLIN LOOK WAS A GATE AND HE HAS LIFTED IT — 2026-08-10, "he is just a
+    # simple green goblin, nothing complex". The card below is now the record of
+    # the answer, not an ask. Both consumers unblock: his own goblin-look call is
+    # made, and beat 16's still redraw, which clause (h) of the backlog entry
+    # i2v-prompt-plate-truth blocked until that call existed.
     #
-    # ROUND 8 LANDED WHILE THIS CARD WAS BEING WRITTEN — queue entry
-    # ep2-b13-r8-goblin-1786292421, STARTED 17:27:06Z on farm-results-hand, four
-    # stills pulled and the claim released at 17:32Z. The card was drafted as a
-    # diagnosis ("r8 is not drawn") and rewritten against the frames rather than
-    # shipped stale. THE SCORING IS NOT HERE ON PURPOSE: the rendering lane owns
-    # `taste/steward-model.ledger.yaml` for this round and was still writing it,
-    # and record 32 already ruled the goblin predicate unscorable until the
-    # founder defines the goblin. This card carries the picture and the ask.
+    # WHAT IT DOES NOT DO, and the card says this above the fold: he defined the
+    # CHARACTER, he did not rank r7, r8 or r9. Those three rounds keep
+    # `founder_verdict: null` in `taste/steward-model.ledger.yaml` and no frame
+    # from them is picked, scored or promoted by this answer.
     - n: 18
-      ask: "Define the goblin — green and tusks now hold."
-      state: open
-      chip: "DEFINE"
-      minutes: 3
+      ask: "Define the goblin — ANSWERED. Simple, green, nothing complex."
+      state: settled
+      chip: "CONFIRM"
+      minutes: 1
       summary: >-
-        Two more rounds landed overnight: green 4 of 4, tusks 4 of 4, and nothing
-        reads female any more. Nothing can be scored until you say what the
-        goblin IS — and your words release fifteen waiting beats.
-      where: "the round-9 sheet is first on this card, round 8 under it; tap either to open full size"
-      how: "tags, labels or one sentence — e.g. `green skin, plump, tusks`, or just describe him"
-      sheets_title: "Round 9 first, then the three rounds behind it"
+        Nine rounds of the model adding complexity, and the answer was to stop
+        adding it. Fifteen beats are released; no round is scored and no frame is
+        picked.
+      where: "one sample only fires next — beat 07 — and nothing publishes"
+      how: "nothing needed; say so if we heard it wrong"
+      sheets_title: "The rounds this answers over — round 9 first"
       body: |-
+        **YOUR LINE, 2026-08-10:** *"he is just a simple green goblin, nothing
+        complex."*
+
+        **THAT RETIRES THE SUSPENSION THAT WAS HOLDING FIFTEEN BEATS.** Our own
+        rule — ledger record 32, written against your last answer — was that the
+        goblin test is not a real test until you define the goblin. It now is
+        one. Recorded verbatim in `taste/steward-model.ledger.yaml`.
+
+        **WHAT YOUR SENTENCE CONFIRMS AND WHAT IT ADDS**, kept apart on purpose.
+
+        - **Confirmed: green.** Already drawn 4 of 4 across rounds 8 and 9, and
+          you have now named it. That is the one attribute that is both proven
+          and spoken.
+        - **New, and it is the whole answer: SIMPLE.** *"nothing complex"* is a
+          constraint AGAINST elaboration, and it is the exact failure of all nine
+          rounds — the model kept adding. Female demihuman features, dark-fantasy
+          ornament, knightly detail, a white bob and a coat. Every round tried to
+          fix that by adding one more word. You said take words out.
+        - **Not re-confirmed by name: the tusks.** They were in the headline of
+          the question and you did not strike them, but you did not say them
+          either. They are drawn 4 of 4; that is a render fact, not your verdict.
+          Round 9's tusks stand as evidence and not as approval.
+        - **Nothing else is read in.** No size, no clothing, no expression, no
+          palette past green. If a round needs one of those, it is a new ask.
+
+        **THE ONE READING WE ARE MAKING, so you can knock it down.** Your script
+        for this beat says one broken tusk. We are treating *"nothing complex"*
+        as a bar on ornament we invented, not on what you already wrote — so the
+        script keeps its broken tusk. If you meant it to strip that too, say so
+        and it goes.
+
+        **WHAT HAPPENS NEXT, and it is one thing.** Your definition is a recipe
+        change, so exactly ONE beat renders against it and stops. Not fifteen.
+        Your verdict on that one sample releases the other fourteen.
+
+        **THE SUB-ASK BELOW IS STILL OPEN AND IS NOT CLOSED BY THIS.** Beat 14 —
+        tagged `1boy` or untagged — is a one-word answer we still do not have.
+
+        ---
+
+        **WHAT THE CARD ASKED OVER, kept as the record.**
+
         **YOUR LINE, 2026-08-09:** *"all the goblin images look like female
         demihumans, definitely need to regenerate."*
 
         **THAT COMPLAINT IS NOW FIXED AND THE BEAT IS STILL NOT DRAWN**, which is
-        why this card asks for a definition and not a pick. Two rounds ran
+        why this card asked for a definition and not a pick. Two rounds ran
         overnight — four seeds each, 37 GPU-seconds each, $0, nothing opened on
         your screen.
 
