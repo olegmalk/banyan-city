@@ -329,6 +329,162 @@ def test_claim_round_trip_and_no_theft():
            "claim: a hand lane's claim is never released by us")
 
 
+def test_the_claim_file_is_not_invented_on_a_non_windows_box():
+    """GPU_CLAIM_FILE is a Windows absolute path and a POSIX RELATIVE one.
+
+    So every default-path claim call on a Mac read and wrote a file literally
+    named `C:\\banyan-farm\\GPU-CLAIM.txt` in the cwd. Running this suite from a
+    checkout left one untracked in the repo root — one `git add -A` from being
+    committed — and read_claim would have believed a stale HELD line in it.
+    """
+    if os.name == "nt":
+        eq(br._claim_path(), br.GPU_CLAIM_FILE, "claim: Windows uses the real path")
+    else:
+        check(br._claim_path() is None, "claim: no claim convention off Windows")
+        eq(br.read_claim(), "", "claim: and the default read is empty, not a file")
+        before = os.path.isfile(br.GPU_CLAIM_FILE)
+        br.take_claim("j-1")
+        br.drop_claim("j-1")
+        eq(os.path.isfile(br.GPU_CLAIM_FILE), before,
+           "claim: and no C:\\... file is created in the cwd")
+    eq(br._claim_path("/tmp/explicit"), "/tmp/explicit",
+       "claim: an explicit path is always honoured")
+
+
+def test_an_unreadable_claim_file_is_not_an_absent_one():
+    """A claim we cannot read must not be spelled the same way as no claim.
+
+    read_claim() caught every OSError and returned "", so a permission error or a
+    dead network path on GPU-CLAIM.txt read as "the card is free" -- and that is
+    the one file that catches a hand lane which has claimed the card and is still
+    in LTX's several-minute encode stage, where no process or VRAM probe can see
+    it. Missing is still "", because a missing file genuinely means nobody has
+    claimed the card.
+    """
+    with TempRoot() as root:
+        missing = os.path.join(root, "no-such-claim.txt")
+        eq(br.read_claim(missing), "", "claim: a missing file is genuinely free")
+        check(not br.claim_is_foreign(br.read_claim(missing)),
+              "claim: a missing file does not block the runner")
+
+        # a directory where the file should be: open() raises IsADirectoryError
+        # (an OSError that is not FileNotFoundError), the same shape a permission
+        # error or an unreachable UNC path takes
+        blocked = os.path.join(root, "blocked-claim.txt")
+        os.makedirs(blocked)
+        text = br.read_claim(blocked)
+        check(br.CLAIM_UNREADABLE in text, "claim: an unreadable file says so")
+        check(br.claim_is_foreign(text),
+              "claim: an unreadable claim counts as held, not as free")
+
+
+# -- probe failures must not read as a free card ----------------------------
+
+def test_a_failed_process_probe_counts_as_a_busy_card():
+    """powershell not answering is not the same fact as "nothing is rendering".
+
+    _foreign_render_processes() returned [] on any exception, which gpu_busy()
+    read as "no foreign render" and passed straight through to the VRAM probe.
+    Two probes down and the third also failing open meant the runner would claim
+    the card and start a second render on top of a live one -- the documented
+    way this box earns a WDDM-thrash bugcheck.
+    """
+    # read_claim is pinned too: the claim path is absolute-on-Windows and
+    # therefore RELATIVE on this Mac, so a stray file of that name in the cwd
+    # would decide these assertions instead of the probe under test.
+    real, real_claim = br._foreign_render_processes, br.read_claim
+    try:
+        br.read_claim = lambda path=None: ""
+        br._foreign_render_processes = lambda: None
+        busy, why = br.gpu_busy()
+        check(busy, "probe: a failed process probe is busy")
+        check("process probe FAILED" in why, "probe: the reason names the probe")
+
+        br._foreign_render_processes = lambda: []
+        real_vram = br._gpu_vram_mib
+        try:
+            br._gpu_vram_mib = lambda: 0
+            busy, why = br.gpu_busy()
+            check(not busy, "probe: both probes answering free means free")
+        finally:
+            br._gpu_vram_mib = real_vram
+    finally:
+        br._foreign_render_processes, br.read_claim = real, real_claim
+
+
+def test_a_failed_vram_probe_counts_as_a_busy_card():
+    """nvidia-smi timing out returned 0 MiB -- the empty-card number.
+
+    And the other half, which is what makes this safe to ship: nvidia-smi being
+    ABSENT is not doubt, it is a machine without an NVIDIA card. Conflating the
+    two wedges every Mac and every CI runner shut -- the first cut of this fix
+    did exactly that and left the box suite waiting for a GPU on a laptop.
+    """
+    real_proc, real_vram = br._foreign_render_processes, br._gpu_vram_mib
+    real_claim = br.read_claim
+    try:
+        br.read_claim = lambda path=None: ""
+        br._foreign_render_processes = lambda: []
+
+        br._gpu_vram_mib = lambda: br.VRAM_PROBE_FAILED
+        busy, why = br.gpu_busy()
+        check(busy, "probe: nvidia-smi present but silent is busy")
+        check("VRAM probe FAILED" in why, "probe: the reason names the probe")
+
+        br._gpu_vram_mib = lambda: br.VRAM_PROBE_UNAVAILABLE
+        busy, why = br.gpu_busy()
+        check(not busy, "probe: no nvidia-smi on this machine is not doubt")
+
+        br._gpu_vram_mib = lambda: br.GPU_BUSY_VRAM_MIB + 1
+        busy, _ = br.gpu_busy()
+        check(busy, "probe: a loaded card is still busy")
+    finally:
+        br._foreign_render_processes, br._gpu_vram_mib = real_proc, real_vram
+        br.read_claim = real_claim
+
+
+def test_the_vram_probe_tells_absent_apart_from_broken():
+    """The sentinel each real failure maps to, driven through subprocess.run."""
+    real_run = br.subprocess.run
+    try:
+        def missing(*a, **kw):
+            raise FileNotFoundError(2, "No such file or directory", "nvidia-smi")
+        br.subprocess.run = missing
+        eq(br._gpu_vram_mib(), br.VRAM_PROBE_UNAVAILABLE,
+           "vram: a machine with no nvidia-smi says UNAVAILABLE")
+
+        def timeout(*a, **kw):
+            raise br.subprocess.TimeoutExpired(cmd="nvidia-smi", timeout=30)
+        br.subprocess.run = timeout
+        eq(br._gpu_vram_mib(), br.VRAM_PROBE_FAILED,
+           "vram: a timeout says FAILED, never 0 MiB")
+
+        class R:
+            def __init__(self, rc, out):
+                self.returncode, self.stdout = rc, out
+        br.subprocess.run = lambda *a, **kw: R(9, "")
+        eq(br._gpu_vram_mib(), br.VRAM_PROBE_FAILED, "vram: a nonzero exit says FAILED")
+        br.subprocess.run = lambda *a, **kw: R(0, "")
+        eq(br._gpu_vram_mib(), br.VRAM_PROBE_FAILED, "vram: empty output says FAILED")
+        br.subprocess.run = lambda *a, **kw: R(0, "1024\n7\n")
+        eq(br._gpu_vram_mib(), 1024, "vram: a real reading is the busiest card")
+    finally:
+        br.subprocess.run = real_run
+
+
+def test_an_unreadable_failed_dir_does_not_report_zero_failures():
+    """The corpse-counting guard must not have the same hole one level down."""
+    with TempRoot() as root:
+        q = br.Queue(root)
+        eq(q.failed_count(), 0, "failed: an empty dir is genuinely zero")
+        shutil.rmtree(q.dir("failed"))
+        # a FILE where the failed/ directory should be: listdir raises
+        with open(q.dir("failed"), "w") as fh:
+            fh.write("not a directory")
+        eq(q.failed_count(), -1,
+           "failed: an uncountable dir reports -1, never a healthy 0")
+
+
 # -- courier ----------------------------------------------------------------
 
 def test_quiet_events_are_thinned_but_job_events_never_are():
@@ -418,7 +574,13 @@ def test_failed_count_is_visible_without_watching_for_the_event():
         br.write_json(os.path.join(root, "failed", "j-dead2.json"), {"id": "j-dead2"})
         eq(q.failed_count(), 2, "failed_count: counts each failed job")
         shutil.rmtree(os.path.join(root, "failed"))
-        eq(q.failed_count(), 0, "failed_count: unreadable dir never raises")
+        # NOT 0. It was 0, and 0 is the healthy number -- so the guard that exists
+        # to make a corpse visible to a sampler reported "clean queue" whenever
+        # its own count failed. Queue.__init__ creates failed/, so a missing one
+        # means something removed it, which is a fact worth seeing. Still never
+        # raises, which was the other half of this assertion's job.
+        eq(q.failed_count(), -1, "failed_count: uncountable dir never raises, and "
+                                 "never reports a healthy zero")
 
 
 def test_recurring_heartbeats_carry_the_failed_count():

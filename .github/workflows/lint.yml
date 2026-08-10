@@ -29,3 +29,14 @@ jobs:
       # The founder's phone channel: the mirror's subpath rewrite, and the
       # answer poller's standing guarantee that it records without acting.
       - run: python pipeline/test_founder_channel.py
+      # THE UNATTENDED RENDER PATH HAD A TEST SUITE AND NO CALLER. box_runner is
+      # what keeps the card working when every session is dead, its 98 checks
+      # cover the crash-safety and GPU-contention logic that decides whether a
+      # second render lands on a busy card — and nothing ran them but a human
+      # remembering to. A suite nobody runs is the same shape as the bugs it
+      # tests for: it reports nothing, and nothing is read as fine. Pure stdlib
+      # and no GPU, so it belongs here beside the others.
+      - run: python pipeline/test_box_runner.py
+      # The guards against a check that stays green while the thing it reads is
+      # broken (2026-08-10's four silent failures). See the file's docstring.
+      - run: python pipeline/test_silent_gates.py

@@ -104,6 +104,16 @@ def queue_head():
         _stale_fetches = 0
     r = sh("git", "show", f"origin/main:{QUEUE}", check=False, capture=True)
     if r.returncode != 0:
+        # THE SAME FACT AS THE TWO BRANCHES EITHER SIDE OF THIS ONE, and it was
+        # the only one of the three that said nothing. A worker whose origin/main
+        # ref is missing (a fresh or re-imaged clone that has never fetched), or
+        # one where the queue file moved, printed "queue empty for me" once a
+        # minute forever beside a queue full of work. The whole docstring above
+        # is about that distinction; this branch was left out of it.
+        print(f"!! CANNOT READ {QUEUE} at origin/main (git show exit "
+              f"{r.returncode}) — this is NOT an empty queue, it is a queue this "
+              f"machine cannot see.\n"
+              f"   {(r.stderr or r.stdout or '').strip()[-300:]}", flush=True)
         return []
     if not r.stdout:
         # Exit 0 with no text = the read itself broke (decode failure in the
@@ -112,7 +122,25 @@ def queue_head():
         print("!! queue read returned NOTHING at exit 0 — cannot see the queue; "
               "this is not an empty queue.", flush=True)
         return []
-    return (yaml.safe_load(r.stdout) or {}).get("tasks", []) or []
+    try:
+        parsed = yaml.safe_load(r.stdout) or {}
+    except yaml.YAMLError as e:
+        # A MALFORMED QUEUE MUST NOT KILL THE DAEMON. This raised straight out of
+        # queue_head into main(), which has no handler, so one lane pushing a
+        # queue with a bad indent would end unattended rendering on the 5090 until
+        # a human logged in to restart the worker. It is the sharpest version of
+        # loud-taken-too-far: the queue is fixable in one push, but nothing is
+        # left running to notice the fix.
+        #
+        # Loud and alive instead: say what broke, treat the queue as unreadable
+        # (which prints as such above, never as empty), and poll again — the next
+        # good push is picked up without anyone touching the box.
+        print(f"!! {QUEUE} at origin/main DOES NOT PARSE ({type(e).__name__}) — "
+              f"treating as unreadable, NOT as empty. The worker stays up and will "
+              f"re-read it every {POLL_SECONDS}s; fix the file and it resumes.\n"
+              f"   {str(e).strip()[:300]}", flush=True)
+        return []
+    return parsed.get("tasks", []) or []
 
 
 def pick_device():
@@ -164,7 +192,26 @@ class Courier:
         # agree about what this commit is for.
         # Note for whoever reads a heartbeat that still looks wrong: this only
         # takes effect on a box once its checkout turns over.
-        sh("git", "commit", "-qm", f"hb: {stage}", "--", str(self.out), check=False)
+        c = sh("git", "commit", "-qm", f"hb: {stage}", "--", str(self.out),
+               check=False, capture=True)
+        # AND READ WHAT THE COMMIT SAID. Only the push below was checked, so a
+        # commit that failed — an index.lock held by one of the other lanes
+        # sharing this checkout is the everyday way — left the push to succeed
+        # against the PREVIOUS state and say nothing. The courier then printed
+        # its usual silence, which reads as delivered, while the branch stopped
+        # advancing: the same "a courier that cannot deliver has to SAY SO"
+        # lesson as the push, one call earlier. box_runner.Courier._publish has
+        # checked this since it was written; this one had not caught up.
+        #
+        # "nothing to commit" is not a failure: mark() runs on a timer and most
+        # ticks change nothing but the heartbeat line, and an unchanged tree is
+        # the normal quiet case.
+        if c.returncode and "nothing to commit" not in (
+                (c.stdout or "") + (c.stderr or "")):
+            print(f"!! HEARTBEAT COMMIT FAILED — the push below will ship the "
+                  f"PREVIOUS state, so this stage ({stage}) is not on the branch\n"
+                  f"   {((c.stderr or '') + (c.stdout or '')).strip()[-300:]}",
+                  flush=True)
         # The push is the ONLY thing that makes any of this visible, and it ran
         # with its error suppressed AND -q. On 2026-08-01 the 5090 rendered its
         # way through the whole queue — "7 task(s) done this session" — while

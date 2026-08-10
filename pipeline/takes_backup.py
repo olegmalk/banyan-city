@@ -93,6 +93,15 @@ def cmd_manifest(args) -> int:
         return 2
     lines = manifest_lines(takes)
     path = takes / MANIFEST_NAME
+    if not lines:
+        # A manifest of nothing is the shape of a backup that never ran: it
+        # writes cleanly, exits 0, and every later `verify` against it passes.
+        # Refuse to create the thing that would go on being green.
+        print(f"refusing to write an EMPTY manifest: {takes} holds no files to "
+              f"record. That is either the wrong node, or a corpus that was never "
+              f"copied here — both look identical to a clean run once the manifest "
+              f"exists.", file=sys.stderr)
+        return 2
     path.write_text(
         HEADER.format(node=args.node, manifest=path.relative_to(REPO).as_posix())
         + "\n".join(lines)
@@ -110,6 +119,17 @@ def cmd_verify(args) -> int:
         print(f"no manifest at {path} — run `manifest` first", file=sys.stderr)
         return 2
     recorded = parse_manifest(path.read_text())
+    if not recorded:
+        # "0/0 match" then "TAKES-VERIFY: PASS" — a verify against a manifest
+        # that lists nothing compared nothing and said so in the words that mean
+        # the copy is intact. A truncated manifest, a manifest built before the
+        # frames were copied, or one written against the wrong directory all land
+        # here, and this is the only in-repo record those frames ever existed.
+        print(f"{path} records NO files — nothing to verify. This is not a pass: "
+              f"a manifest that lists nothing matches every directory on earth, "
+              f"including an empty one. Rebuild it with `manifest`.",
+              file=sys.stderr)
+        return 2
 
     target = Path(args.dir).expanduser().resolve() if args.dir else takes
     if not target.is_dir():

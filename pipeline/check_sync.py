@@ -144,6 +144,29 @@ def check(genome: str, node: str) -> list:
     def add(sev, beat, what, detail):
         findings.append({"sev": sev, "beat": beat, "what": what, "detail": detail})
 
+    # ---- 0. THIS GATE MUST NOT PASS ON NOTHING -------------------------------
+    # Every check below is a loop over `script` or `shots`, and the verdict is
+    # "no findings". So a parse that returns zero beats — a node.md with no
+    # `## Script` heading, a heading style that drifts from the
+    # `**TITLE — 0:00–0:05**` line parse_script matches, a shots.md that moved —
+    # ran every loop zero times and printed "picture, script and voice agree on
+    # every beat". Green, in the exact words a reader trusts, having compared
+    # nothing at all. Both files empty is even quieter: `len(script) != len(shots)`
+    # is 0 != 0, so the one structural check also stays silent.
+    #
+    # The question every check has to answer is what it would print if the thing
+    # it reads were completely broken. This one printed a tick. It is a render
+    # gate (render_local.py) and its sentence is quoted verbatim in the review
+    # READMEs the founder reads, so the tick travels.
+    if not script:
+        add("FAIL", 0, "unreadable script",
+            f"parsed 0 beats out of {d.name}/node.md — this gate compared nothing. "
+            f"Expected `## Script` and beats headed `**TITLE — 0:00–0:05**`")
+    if not shots:
+        add("FAIL", 0, "unreadable shots",
+            f"parsed 0 beats out of {d.name}/shots.md — this gate compared nothing. "
+            f"Expected beats headed `## Beat NN — TITLE`")
+
     # ---- A. the script's beat order must equal shots.md's beat order ----------
     # Caught by hand tonight: node.md's flail beat sat at 0:29 while shots.md
     # beat 06 was TOO BLUE at 0:24, so "beat 6" meant two different shots

@@ -209,8 +209,20 @@ def release_lock(path: str) -> None:
 # GPU contention
 # --------------------------------------------------------------------------
 
-def _foreign_render_processes() -> list:
-    """Command lines of render processes this runner did not start."""
+def _foreign_render_processes():
+    """Command lines of render processes this runner did not start.
+
+    `[]` means "asked, and there are none". `None` means THE QUESTION WAS NOT
+    ANSWERED -- powershell missing, blocked, or past its timeout -- and those are
+    opposite facts that used to return the same empty list. gpu_busy() promises
+    conservatism and this was one of three probes that quietly reported "free"
+    whenever it broke; a wrong "free" here starts a second render on top of a
+    live one, which is how this card earns a WDDM bugcheck.
+
+    Not-Windows still returns `[]`, and that is a real answer rather than a
+    failure: there is no process scan on this platform and never was, so the
+    other two probes carry the decision.
+    """
     if os.name != "nt":
         return []
     ps = ("Get-CimInstance Win32_Process -Filter \"Name='python.exe'\" | "
@@ -222,7 +234,7 @@ def _foreign_render_processes() -> list:
             timeout=45,
         ).stdout or ""
     except Exception:
-        return []
+        return None
     hits = []
     for line in out.splitlines():
         low = line.lower()
@@ -233,25 +245,91 @@ def _foreign_render_processes() -> list:
     return hits
 
 
+VRAM_PROBE_FAILED = -1        # nvidia-smi is installed and did not answer
+VRAM_PROBE_UNAVAILABLE = -2   # there is no nvidia-smi on this machine at all
+
+
 def _gpu_vram_mib() -> int:
+    """MiB resident on the busiest GPU, or one of the two sentinels above.
+
+    The old version returned 0 -- the empty-card number -- for every failure,
+    so a timed-out or crashing nvidia-smi told gpu_busy() to go ahead and start
+    a render. But the fix has to separate two failures that are not alike, and
+    the first version of it did not:
+
+      * NO NVIDIA-SMI HERE (FileNotFoundError) is a permanent, honest answer,
+        the exact counterpart of "this is not Windows so there is no process
+        scan". Every Mac, every CI runner and the test suite are in this case,
+        and treating it as doubt wedges the runner shut forever -- the box test
+        suite caught precisely that and sat waiting for a GPU on a laptop.
+      * IT IS HERE AND IT DID NOT ANSWER (timeout, nonzero exit, unparseable
+        output) is doubt, and it is doubt in the dangerous direction: a card
+        under a heavy render is exactly when nvidia-smi is slow to reply.
+
+    So the first is "no information, let the other probes decide" and the second
+    is "assume the card is held".
+    """
     try:
-        out = (subprocess.run(
+        r = subprocess.run(
             ["nvidia-smi", "--query-gpu=memory.used", "--format=csv,noheader,nounits"],
             capture_output=True, text=True, encoding="utf-8", errors="replace",
             timeout=30,
-        ).stdout or "").strip().splitlines()
-        return max(int(v.strip()) for v in out if v.strip())
+        )
+    except (FileNotFoundError, NotADirectoryError):
+        return VRAM_PROBE_UNAVAILABLE
     except Exception:
-        return 0
+        return VRAM_PROBE_FAILED
+    if r.returncode != 0:
+        return VRAM_PROBE_FAILED
+    try:
+        return max(int(v.strip()) for v in (r.stdout or "").splitlines() if v.strip())
+    except ValueError:
+        # includes max() of an empty sequence: nvidia-smi answered with nothing
+        return VRAM_PROBE_FAILED
+
+
+CLAIM_UNREADABLE = "UNREADABLE claim file"
+
+
+def _claim_path(path: str = None):
+    """The claim file to use, or None where the convention does not exist.
+
+    GPU_CLAIM_FILE is a Windows ABSOLUTE path, which on any other OS is an
+    ordinary RELATIVE filename — so every claim call on a Mac read and wrote a
+    file literally named `C:\\banyan-farm\\GPU-CLAIM.txt` in whatever the cwd
+    happened to be. Running the box test suite from a checkout therefore left one
+    sitting untracked in the repo root, one `git add -A` away from being
+    committed, and it is a live claim file as far as read_claim is concerned: a
+    stale HELD line in it would have told a POSIX run that the card was taken.
+
+    An explicit path is always honoured, which is what the tests pass.
+    """
+    if path:
+        return path
+    return GPU_CLAIM_FILE if os.name == "nt" else None
 
 
 def read_claim(path: str = None) -> str:
-    """Contents of the hand lanes' GPU claim file, or "" if there is none."""
-    try:
-        with open(path or GPU_CLAIM_FILE, encoding="utf-8", errors="replace") as fh:
-            return fh.read().strip()
-    except OSError:
+    """Contents of the hand lanes' GPU claim file, or "" if there is none.
+
+    A MISSING file is "" -- nobody has claimed the card, which is the ordinary
+    resting state. Any OTHER OSError (permission, a locked file, a dead network
+    path) returns CLAIM_UNREADABLE instead, because "I could not read the file
+    that says whether a lane holds the card" is not the same fact as "no lane
+    holds the card" and used to be spelled the same way. claim_is_foreign() sees
+    a non-empty string that says neither RELEASED nor box-runner and calls it a
+    live foreign claim, which is the answer we want when we cannot tell.
+    """
+    path = _claim_path(path)
+    if path is None:
         return ""
+    try:
+        with open(path, encoding="utf-8", errors="replace") as fh:
+            return fh.read().strip()
+    except FileNotFoundError:
+        return ""
+    except OSError as exc:
+        return "%s: %s" % (CLAIM_UNREADABLE, exc)
 
 
 def claim_is_foreign(text: str) -> bool:
@@ -270,7 +348,9 @@ def claim_is_foreign(text: str) -> bool:
 
 def take_claim(job_id: str, path: str = None) -> None:
     """Announce to the hand lanes that the card is ours. Never raises."""
-    path = path or GPU_CLAIM_FILE
+    path = _claim_path(path)
+    if path is None:
+        return
     try:
         os.makedirs(os.path.dirname(path), exist_ok=True)
         with open(path, "w", encoding="utf-8") as fh:
@@ -286,7 +366,9 @@ def drop_claim(job_id: str = "", path: str = None) -> None:
     The guard matters: a hand lane that took the card while we were finishing
     must not have its claim deleted by our cleanup.
     """
-    path = path or GPU_CLAIM_FILE
+    path = _claim_path(path)
+    if path is None:
+        return
     text = read_claim(path)
     if text and CLAIM_HOLDER not in text:
         return
@@ -298,14 +380,40 @@ def drop_claim(job_id: str = "", path: str = None) -> None:
 
 
 def gpu_busy():
-    """(busy, reason). Conservative: any doubt counts as busy."""
+    """(busy, reason). Conservative: any doubt counts as busy.
+
+    The docstring said this before the code did. All three probes below used to
+    report the free-looking value when they THEMSELVES failed -- no claim file,
+    no processes, 0 MiB -- so a box with a broken nvidia-smi or a powershell that
+    timed out would have started a render on top of whatever was already running.
+    "What would this print if the thing were completely broken?" answered
+    "not busy, go ahead", which means it was not a check.
+
+    A failed probe is now busy WITH ITS OWN REASON, which is the loud-but-not-
+    fatal shape: the runner keeps polling, `runner_waiting_for_gpu` carries the
+    broken probe's name to the branch every COURIER_IDLE_MINUTES, and the moment
+    the probe answers again the queue drains. Nothing here can end unattended
+    rendering; it can only postpone it visibly.
+
+    A probe that is not INSTALLED is a different matter and is not doubt at all
+    -- see _gpu_vram_mib, and the `os.name != "nt"` arm of the process scan. Those
+    machines simply have fewer probes, and the ones they do have decide.
+    """
     claim = read_claim()
     if claim_is_foreign(claim):
         return True, "GPU-CLAIM.txt held: %s" % claim.splitlines()[0][:120]
     foreign = _foreign_render_processes()
+    if foreign is None:
+        return True, ("process probe FAILED (powershell did not answer) -- cannot "
+                      "tell whether a hand lane is rendering, so treating the card "
+                      "as held")
     if foreign:
         return True, "foreign render process: %s" % foreign[0]
     vram = _gpu_vram_mib()
+    if vram == VRAM_PROBE_FAILED:
+        return True, ("VRAM probe FAILED (nvidia-smi is installed and did not "
+                      "answer) -- cannot tell whether the card is loaded, so "
+                      "treating it as held")
     if vram >= GPU_BUSY_VRAM_MIB:
         return True, "%d MiB VRAM in use by another process" % vram
     return False, ""
@@ -360,9 +468,12 @@ class Queue:
             return sum(1 for n in os.listdir(self.dir("failed"))
                        if n.endswith(".json"))
         except OSError:
-            # Never let bookkeeping stop a render; an unreadable dir reports 0
-            # and the FAIL event heartbeat is still the authoritative record.
-            return 0
+            # -1, NOT 0. Never let bookkeeping stop a render -- but this guard
+            # exists precisely so a sample of current state can see a corpse, and
+            # reporting the healthy number when the count itself failed rebuilds
+            # the hole one level down. `failed=-1` on a heartbeat is obviously not
+            # a count; `failed=0` is indistinguishable from a clean queue.
+            return -1
 
     def claim(self, name: str):
         """Atomically move ready/name -> running/name. None if someone beat us."""

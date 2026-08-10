@@ -93,6 +93,78 @@ def test_verify_detects_a_missing_file():
         check("deletion shows up as missing", set(recorded) - present == {"stills/02-b.png"})
 
 
+class Args:
+    """The attribute bag argparse would hand cmd_manifest / cmd_verify."""
+
+    def __init__(self, **kw):
+        self.__dict__.update({"genome": "sapling", "node": "n", "dir": None})
+        self.__dict__.update(kw)
+
+
+def fake_repo(td: Path, files: dict) -> Path:
+    """A REPO root holding genomes/sapling/nodes/n/takes/ with `files` in it."""
+    takes = td / "genomes" / "sapling" / "nodes" / "n" / "takes"
+    takes.mkdir(parents=True)
+    for rel, body in files.items():
+        p = takes / rel
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_bytes(body)
+    return takes
+
+
+def test_an_empty_manifest_is_not_a_pass():
+    """A manifest that lists nothing matched every directory and said PASS.
+
+    `0/0 match` then `TAKES-VERIFY: PASS` is the whole failure: verify compared
+    nothing and printed the sentence that means the copy is intact. A manifest
+    truncated to its header, one built before the frames were copied, or one
+    written against the wrong path all produce it — and this file is the only
+    in-repo record that the gitignored frames ever existed, so nothing else
+    would ever contradict it.
+    """
+    real_repo = tb.REPO
+    with tempfile.TemporaryDirectory() as td:
+        try:
+            tb.REPO = Path(td)
+            takes = fake_repo(Path(td), {"stills/01-a.png": b"pixels-a"})
+            # a manifest with only its header — parse_manifest skips comments,
+            # so `recorded` comes out empty
+            (takes / tb.MANIFEST_NAME).write_text("# a header and nothing else\n")
+            rc = tb.cmd_verify(Args())
+            check("an empty manifest fails verify instead of passing it", rc != 0)
+
+            # and the ordinary case still passes, so this is not just "always red"
+            (takes / tb.MANIFEST_NAME).write_text(
+                "\n".join(tb.manifest_lines(takes)) + "\n")
+            check("a real manifest still verifies clean", tb.cmd_verify(Args()) == 0)
+        finally:
+            tb.REPO = real_repo
+
+
+def test_manifesting_an_empty_corpus_is_refused():
+    """Writing the empty manifest is the moment the green starts.
+
+    `manifest` on a takes/ with no files wrote a header, printed
+    "0 files, 0 bytes" and exited 0 — a backup that never ran, recorded as done.
+    Refusing at write time means the passing verify above can never be created.
+    """
+    real_repo = tb.REPO
+    with tempfile.TemporaryDirectory() as td:
+        try:
+            tb.REPO = Path(td)
+            takes = fake_repo(Path(td), {})
+            rc = tb.cmd_manifest(Args())
+            check("manifesting an empty takes/ is refused", rc != 0)
+            check("and no empty manifest is left behind",
+                  not (takes / tb.MANIFEST_NAME).exists())
+
+            (takes / "stills").mkdir()
+            (takes / "stills" / "01-a.png").write_bytes(b"pixels-a")
+            check("a real corpus still manifests", tb.cmd_manifest(Args()) == 0)
+        finally:
+            tb.REPO = real_repo
+
+
 def main() -> int:
     for fn in [
         test_manifest_covers_every_file_but_itself,
@@ -100,6 +172,8 @@ def main() -> int:
         test_parse_manifest_ignores_comments_and_blanks,
         test_verify_detects_a_corrupted_copy,
         test_verify_detects_a_missing_file,
+        test_an_empty_manifest_is_not_a_pass,
+        test_manifesting_an_empty_corpus_is_refused,
     ]:
         print(fn.__name__)
         fn()
