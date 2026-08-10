@@ -195,7 +195,7 @@ verifies outcomes independently (DNS, HTTP, ledger) on its next tending pass.
 
 ### V9 — Stopgap: park banyan.city on the free Pages mirror (only if V7 stalls)
 - [ ] Status: **open — use only if V6 shows the domain is not reachable today**
-- **Why it is a real option:** `https://olegmlkvorg.github.io/banyan-city/`
+- **Why it is a real option:** `https://olegmalk.github.io/banyan-city/`
   answers **200** right now, and the generator emits **only relative links**
   (`href="city.html"`, zero root-relative `/…` paths — checked, not assumed), so
   every page works unchanged when the site moves from `/banyan-city/` to the apex
@@ -205,11 +205,11 @@ verifies outcomes independently (DNS, HTTP, ledger) on its next tending pass.
      Name.com), replace the apex A records with GitHub's four:
      `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
      (AAAA, optional: `2606:50c0:8000::153` … `:8003::153`). Point `www` at a
-     **CNAME → `olegmlkvorg.github.io`**.
+     **CNAME → `olegmalk.github.io`**.
   2. **Then** repo → **Settings → Pages → Custom domain** → `banyan.city` → Save.
   3. Wait for the cert, **then** tick **Enforce HTTPS**.
 - **Caveats, all of them:**
-  - **Setting the custom domain makes `olegmlkvorg.github.io/banyan-city`
+  - **Setting the custom domain makes `olegmalk.github.io/banyan-city`
     redirect to `banyan.city`.** Do it before DNS resolves and you take down the
     one URL that currently works. Hence DNS first.
   - **HTTPS is not instant** — GitHub says the Enforce HTTPS option can take

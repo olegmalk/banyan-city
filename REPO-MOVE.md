@@ -8,21 +8,77 @@ account"*.
 Vercel account — stops owning `banyan-city`. A different account takes ownership
 and pairs cleanly with the NEW Vercel account (`olegmalkov2023-1685`).
 
-> ## ⛔ THE ONE OPEN QUESTION — needs one word from Roman
+> ## ✅ ANSWERED AND DONE — `<NEW_OWNER>` = **`olegmalk`**, transfer already executed
 >
-> **WHICH GitHub account owns the repo?**
+> Measured 2026-08-10 16:30, not assumed: `gh api repos/olegmlkvorg/banyan-city`
+> resolves to **`olegmalk/banyan-city`**, and the Pages site moved with it —
+> `https://olegmalk.github.io/banyan-city/` serves 200, while the old
+> `https://olegmlkvorg.github.io/banyan-city/` now **404s everywhere**, root
+> included. Anyone still quoting the old mirror URL is handing out a dead link;
+> `README.md`, `OPERATOR.md` and `pipeline/qa_local.py` were corrected.
 >
-> Everything below is written against `<NEW_OWNER>`. Nothing can start until
-> that is a real username. Likely candidate: **`olegmalk`** — Roman's own
-> GitHub, already a push collaborator here, and verified below as having **no
-> `banyan-city` repo and no fork**, so the transfer would not collide. But the
-> steward does not get to pick the account that owns the product. One word.
+> The old path still redirects, so this Mac's `gh`, the `origin` remote (which
+> still reads `olegmlkvorg`) and the box's SSH pushes keep working untouched.
+>
+> **What this does NOT do:** it does not reconnect Vercel. Pushes to `main`
+> still produce no deployment. Publishing goes through §A0 until someone
+> completes §B3 in a browser.
+>
+> Original question, kept for the record: *which GitHub account owns the repo?*
+> The steward did not get to pick it, and did not.
 
 Times are local (+04). Every fact below was measured on 2026-08-10, not assumed;
 GitHub's transfer semantics are quoted from
 <https://docs.github.com/en/repositories/creating-and-managing-repositories/transferring-a-repository>.
 
 ---
+
+## A0. The site does NOT have to stay frozen while the move is decided — 2026-08-10 16:20
+
+**Publishing and git-integration are two different things, and only one of them
+needs a browser.** This file and `DEPLOY-BROKEN-0810.md` both read as "nothing
+can ship until Roman clicks" — true of *reconnecting the repo*, false of
+*getting current content onto banyan.city*. The site sat 15.8 hours stale on
+that misreading.
+
+`vercel deploy --prebuilt --prod` uploads a locally-built site straight to the
+existing project. It needs no GitHub connection, creates no project, spends
+nothing, and does not touch the migration. The CLI on this Mac is already
+authenticated as `olegmalkov2023-1685`, so it just works:
+
+    python3 pipeline/build_site.py            # (+ build_sim.py, build_pulse.py)
+    vercel build --prod --yes
+    vercel deploy --prebuilt --prod --archive=tgz --yes
+
+**`--archive=tgz` is load-bearing, not decoration.** Without it the CLI opens
+many parallel uploads for ~530 files / 482 MB and dies partway with
+`FetchError: … write EPIPE` (also seen as an `EPROTO … invalid session id` TLS
+abort) against `api.vercel.com/v2/files`. Measured: plain and prebuilt uploads
+failed four times, at 0 B and at 120 MB. The same endpoint accepts a single file
+over `curl` without complaint, so it is the CLI's concurrent-socket behaviour on
+Node 25, not the network and not a size cap. `--archive=tgz` sends one stream
+and succeeded first try.
+
+The first CLI deploy must push the whole 482 MB, because files built server-side
+by earlier git deploys are not in the CLI's content-addressed upload store.
+Later deploys dedupe and are fast.
+
+**This is the standing unblock.** While the repo move is pending, a push to
+`main` still publishes nothing — so anything that must be visible to the founder
+gets deployed with the three commands above, and `pipeline/qa_local.py` now
+fails if the public site falls behind (§A1).
+
+## A1. The gate now catches a frozen site
+
+A stuck deploy does not go down — it serves a correct page from the past, at
+`200 OK`, which is why every check we had passed for 15.8 hours.
+`pipeline/qa_local.py` grew a **PUBLIC DEPLOY FRESHNESS** section that fails on
+two independent signals: the deployed page's `last-modified` trailing HEAD by
+more than three hours, and the Pages mirror being materially newer than
+banyan.city (the mirror builds from the same repo by a different mechanism, so
+if it rebuilt and the primary did not, the primary is stuck). Unreachable is a
+warn, not a fail — an offline laptop must not red a local run; `--no-public`
+skips the section outright.
 
 ## A. What happened tonight, re-framed
 

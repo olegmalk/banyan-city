@@ -69,7 +69,7 @@ Citizens fund **specific renders**, not vague content ("Node 002b, 8 candidates,
 
 ## Read it without git
 
-The tree lives at **<https://banyan.city>** — the lineage as an explorable tree, every node's script, every leaf's cost, and a 💧 react link per node. (Free mirror: <https://olegmlkvorg.github.io/banyan-city/> — the canonical layer is git; rendering surfaces are plural and disposable.)
+The tree lives at **<https://banyan.city>** — the lineage as an explorable tree, every node's script, every leaf's cost, and a 💧 react link per node. (Free mirror: <https://olegmalk.github.io/banyan-city/> — the canonical layer is git; rendering surfaces are plural and disposable.)
 
 Reactions are mapped to GitHub issues (one per node — [#1](https://github.com/olegmlkvorg/banyan-city/issues/1) onward, one issue per node as the tree grows); each node's `sap/reactions.yaml` records its channel canonically.
 

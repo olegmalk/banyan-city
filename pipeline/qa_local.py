@@ -18,11 +18,13 @@ Last line is machine-parseable:  QA-GATE: PASS routes=N | QA-GATE: FAIL failures
 """
 
 import argparse
+import email.utils
 import html
 import os
 import re
 import subprocess
 import sys
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -30,6 +32,25 @@ import urllib.request
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = os.path.join(REPO, "_site")
 DEFAULT_BASE = "http://127.0.0.1:8787"
+
+# The public surfaces. The mirror is not a fallback nicety — it is the control
+# in the freshness experiment below, since it builds from the same repo by a
+# different mechanism.
+PUBLIC_BASE = "https://banyan.city"
+PUBLIC_PROBE = "/status"
+# Owner-dependent: the repo moved olegmlkvorg -> olegmalk on 2026-08-10, and the
+# Pages URL moved with it. `olegmlkvorg.github.io/banyan-city/` now 404s, so a
+# hardcoded old owner would make the control look "down" and quietly disable the
+# cross-check. Derived from the git remote (which GitHub redirects, so the remote
+# itself can still read old) with the API's answer as the source of truth.
+MIRROR_BASE = "https://olegmalk.github.io/banyan-city"
+MIRROR_PROBE = "/status.html"
+
+# How far the public site may trail HEAD before we call it. Deliberately loose:
+# a real deploy lands in ~1-2 minutes, and docs-only pushes are skipped on
+# purpose, so anything under half an hour is normal. Three hours is not.
+PUBLIC_STALE_WARN_S = 30 * 60
+PUBLIC_STALE_FAIL_S = 3 * 60 * 60
 
 # The screening server lives in the repo so the next session can find it. It is
 # the only one whose path resolution matches production — see its docstring.
@@ -190,9 +211,10 @@ def run_builders():
             die(
                 "Builder failed: %s (exit %d)\n"
                 "\nTHIS IS A WORKING-TREE RESULT AND SAYS NOTHING ABOUT PRODUCTION.\n"
-                "banyan.city builds from HEAD on Vercel; a broken working copy here\n"
-                "does not mean the site is down. 'The build is down' and 'the site is\n"
-                "down' are different sentences.\n"
+                "A broken working copy here does not mean the site is down. 'The build\n"
+                "is down' and 'the site is down' are different sentences — and so is\n"
+                "'the site is up but frozen', which is what the PUBLIC DEPLOY FRESHNESS\n"
+                "section exists to catch. Do not read this failure as either.\n"
                 "%s\n"
                 "Nothing was screened. If build_site.py was the one that died it wipes\n"
                 "_site/ before rebuilding, so this tree may now hold a PARTIAL site that\n"
@@ -433,11 +455,156 @@ def check_route(base, route, backing):
 # --------------------------------------------------------------------- main
 
 
+# --------------------------------------------------------- public freshness
+
+
+def http_head(url):
+    """HEAD following redirects. -> (status, headers) or (None, reason-string)."""
+    req = urllib.request.Request(url, method="HEAD")
+    try:
+        with urllib.request.urlopen(req, timeout=20) as resp:
+            return resp.getcode(), dict(resp.headers)
+    except urllib.error.HTTPError as e:
+        return e.code, dict(e.headers or {})
+    except Exception as e:  # DNS, TLS, no route — unreachable, not "stale"
+        return None, "%s: %s" % (type(e).__name__, e)
+
+
+def header(headers, name):
+    """Case-insensitive header lookup — urllib hands back `Last-Modified`, and a
+    plain .get("last-modified") silently misses it."""
+    for k, v in (headers or {}).items():
+        if k.lower() == name.lower():
+            return v
+    return None
+
+
+def http_date(headers, name="last-modified"):
+    raw = header(headers, name)
+    if not raw:
+        return None
+    try:
+        return email.utils.parsedate_to_datetime(raw).timestamp()
+    except Exception:
+        return None
+
+
+def head_commit_epoch():
+    out = _run(["git", "-C", REPO, "log", "-1", "--format=%ct"]).strip()
+    return int(out) if out.isdigit() else None
+
+
+def _ago(seconds):
+    if seconds < 90:
+        return "%ds" % int(seconds)
+    if seconds < 5400:
+        return "%.0fm" % (seconds / 60.0)
+    return "%.1fh" % (seconds / 3600.0)
+
+
+def check_public_freshness():
+    """Is the PUBLIC site actually serving current work?
+
+    WHY THIS EXISTS. On 2026-08-10 banyan.city served HTTP 200 for ~16 hours
+    while frozen at the previous evening's build: the Vercel project had been
+    disconnected from the repo, so pushes produced no deploy. Every check we
+    had passed the whole time, because a stuck deploy does not go down — it
+    keeps serving a correct page from the past. `200 OK` is evidence the CDN
+    is up, and evidence of nothing else.
+
+    Two independent signals, because either alone can lie:
+
+      1. LAG vs HEAD — the deployed page's `last-modified` against the newest
+         commit. Generous threshold: a docs-only push is deliberately CANCELED
+         (see pipeline/vercel-ignore-build.sh), so a small lag is correct
+         behaviour and must not red the gate. Hours of lag is not.
+      2. MIRROR CROSS-CHECK — the GitHub Pages mirror builds from the same
+         repo by a different mechanism. If the mirror rebuilt and the primary
+         did not, the primary's pipeline is stuck no matter what HEAD's
+         timestamp says. This is the signal that actually catches a
+         disconnected git integration, and it needs no threshold tuning.
+
+    Unreachable is a WARN, not a FAIL: a laptop offline mid-flight must not
+    red a local screening run. A non-200 from a reachable host IS a FAIL.
+    Returns a list of failure strings (empty = pass)."""
+    failures = []
+    print(bold("PUBLIC DEPLOY FRESHNESS"))
+
+    head_ct = head_commit_epoch()
+    pub_status, pub_headers = http_head(PUBLIC_BASE + PUBLIC_PROBE)
+    mir_status, mir_headers = http_head(MIRROR_BASE + MIRROR_PROBE)
+
+    if pub_status is None:
+        print("  %s %-10s unreachable (%s) — cannot judge freshness"
+              % (yellow("warn"), "primary", pub_headers))
+        print("  %s the founder may still be able to reach it; this box may not be online.\n"
+              % yellow("    "))
+        return failures
+
+    if pub_status != 200:
+        failures.append("%s%s returned HTTP %s" % (PUBLIC_BASE, PUBLIC_PROBE, pub_status))
+        print("  %s %-10s HTTP %s" % (red("FAIL"), "primary", pub_status))
+        print()
+        return failures
+
+    pub_lm = http_date(pub_headers)
+    print("  %s %-10s HTTP 200  last-modified=%s"
+          % (green(" ok "), "primary", header(pub_headers, "last-modified") or "(none)"))
+
+    if pub_lm is None:
+        print("  %s no last-modified header — freshness cannot be measured this way\n"
+              % yellow("warn"))
+        return failures
+
+    # 1. lag behind HEAD
+    if head_ct:
+        lag = head_ct - pub_lm
+        if lag > PUBLIC_STALE_FAIL_S:
+            failures.append(
+                "banyan.city is %s BEHIND HEAD (deployed %s, HEAD committed %s). "
+                "The deploy is not firing — pushing again will not fix it."
+                % (_ago(lag), time.strftime("%H:%M:%SZ", time.gmtime(pub_lm)),
+                   time.strftime("%H:%M:%SZ", time.gmtime(head_ct)))
+            )
+            print("  %s %-10s %s behind HEAD" % (red("FAIL"), "lag", _ago(lag)))
+        elif lag > PUBLIC_STALE_WARN_S:
+            print("  %s %-10s %s behind HEAD (build latency, or a skipped docs-only push)"
+                  % (yellow("warn"), "lag", _ago(lag)))
+        else:
+            print("  %s %-10s %s behind HEAD" % (green(" ok "), "lag", _ago(max(lag, 0))))
+
+    # 2. mirror cross-check
+    mir_lm = http_date(mir_headers) if mir_status == 200 else None
+    if mir_lm is None:
+        print("  %s %-10s unavailable — cross-check skipped" % (yellow("warn"), "mirror"))
+    else:
+        drift = mir_lm - pub_lm
+        if drift > PUBLIC_STALE_FAIL_S:
+            failures.append(
+                "the Pages mirror is %s NEWER than banyan.city — the mirror rebuilt "
+                "and the primary did not, so the primary's deploy is STUCK. "
+                "Current content is at %s%s"
+                % (_ago(drift), MIRROR_BASE, MIRROR_PROBE)
+            )
+            print("  %s %-10s %s newer than primary — primary deploy is STUCK"
+                  % (red("FAIL"), "mirror", _ago(drift)))
+        else:
+            print("  %s %-10s within %s of primary" % (green(" ok "), "mirror", _ago(abs(drift))))
+    print()
+    return failures
+
+
 def main():
     ap = argparse.ArgumentParser(description="Local screening QA gate for _site/.")
     ap.add_argument("--base", default=DEFAULT_BASE, help="base URL (default %s)" % DEFAULT_BASE)
     ap.add_argument("--no-build", dest="build", action="store_false", help="skip the builders")
-    ap.set_defaults(build=True)
+    ap.add_argument(
+        "--no-public",
+        dest="public",
+        action="store_false",
+        help="skip the public-deploy freshness check (offline runs)",
+    )
+    ap.set_defaults(build=True, public=True)
     args = ap.parse_args()
 
     print()
@@ -455,6 +622,8 @@ def main():
             "_site/ exists but publishes no routes (no index.html, no top-level *.html).\n"
             "The build produced nothing to screen. Run: python3 pipeline/build_site.py"
         )
+
+    public_failures = check_public_freshness() if args.public else []
 
     results = []
     for route, backing in routes:
@@ -505,9 +674,21 @@ def main():
         print("  Not a failure while the routes above are green — a standing hazard.")
         print()
 
-    if failures:
+    if public_failures:
+        print(bold("PUBLIC SITE IS NOT SERVING CURRENT WORK"))
+        for f in public_failures:
+            print("  %s %s" % (red("FAIL"), f))
+        print(
+            "  This is about banyan.city, NOT about _site/ above: the local build can be\n"
+            "  perfect while the public site serves something hours old. Do not hand out\n"
+            "  the banyan.city link until this clears."
+        )
+        print()
+
+    total = len(failures) + len(public_failures)
+    if total:
         print(red("QA gate FAILED — do not hand this URL to the founder."))
-        print("QA-GATE: FAIL failures=%d" % len(failures))
+        print("QA-GATE: FAIL failures=%d" % total)
         return 1
 
     print(green("All %d routes served correctly. Safe to hand over." % len(results)))
