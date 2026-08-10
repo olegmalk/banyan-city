@@ -1,0 +1,71 @@
+{
+  "id": "ep2-b02-goblin-founderpick-sample-1786392259",
+  "task": "ep2-b02-goblin-founderpick-sample-0810",
+  "node": "002b-first-citizen",
+  "beat": 2,
+  "worker": "box-runner",
+  "priority": 40,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "sample",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\wave-goblin-prep\\goblin_ipa_beat.py",
+        "--beat",
+        "2",
+        "--harness",
+        "C:\\banyan-farm\\wave-goblin-prep",
+        "--root",
+        "C:\\banyan-farm\\wave-goblin-prep\\repo",
+        "--refs",
+        "C:\\banyan-farm\\goblin-ipa-0810\\refs-founder-pick",
+        "--out",
+        "C:\\banyan-farm\\goblin-ipa-0810\\out-b02-founderpick",
+        "--arm",
+        "window4",
+        "--task",
+        "ep2-b02-goblin-founderpick-sample-0810"
+      ]
+    },
+    {
+      "name": "publish",
+      "allow_fail": true,
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b02-goblin-founderpick-sample\"\nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/goblin-ipa-0810/out-b02-founderpick/*\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    # Hash the COPY: the manifest must attest to the bytes that get committed.\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n    print(\"   \", os.path.basename(f), h[:16])\n# newline=\"\\n\" is load-bearing on Windows: text mode would append \\r to every\n# filename and shasum -c on the Mac could not open one of them.\nwith open(os.path.join(dst, \"ep2-b02-goblin-founderpick-sample.sha256\"),\n          \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\goblin-ipa-0810\\out-b02-founderpick\\02-the-sprint-ipa-r0-w015-s0.png",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out-b02-founderpick\\02-the-sprint-ipa-r1-w015-s0.png",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out-b02-founderpick\\02-the-sprint-ipa-r2-w015-s0.png",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out-b02-founderpick\\02-the-sprint-ipa-r3-w015-s0.png"
+  ],
+  "started_at": "2026-08-10T20:04:23Z",
+  "attempts": 1,
+  "runner_pid": 9388,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-10T20:07:17Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\goblin-ipa-0810\\out-b02-founderpick\\02-the-sprint-ipa-r0-w015-s0.png",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out-b02-founderpick\\02-the-sprint-ipa-r1-w015-s0.png",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out-b02-founderpick\\02-the-sprint-ipa-r2-w015-s0.png",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out-b02-founderpick\\02-the-sprint-ipa-r3-w015-s0.png"
+  ]
+}
