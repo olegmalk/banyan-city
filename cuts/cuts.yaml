@@ -612,56 +612,72 @@ checklist:
     # rather than implied — an item that claims to unblock hours it does not
     # unblock is how a queue stops being trusted.
     - n: 21
-      ask: "The fig on beat 01 — drop it, or approve an inpaint?"
-      state: open
-      chip: "ONE WORD"
+      ask: "The fig on beat 01 — ANSWERED. Inpaint, not drop."
+      state: settled
+      chip: "CONFIRM"
       minutes: 1
       summary: >-
-        You asked on 2026-08-03 that the fig be seen GROWING rather than just
-        appearing. **It has now failed to draw in 20 of 20 candidate frames**
-        across four wordings, and we are out of prompt ideas. Two ways forward
-        and both are yours.
-      where: "nothing to look at — it is what is MISSING from every beat-01 sheet on item 06"
-      how: "`drop` — or `inpaint`, and we paint it in as a separate step"
+        **2026-08-10, ~12:20:** *"inpaint"*. The fruit stays on beat 01 and it
+        gets painted in as its own step. Twenty-four frames of prompting and
+        twelve of img2img could not put it there; this closes the thread and
+        opens a pipeline step.
+      where: "the one inpainted sample is below — it is the first frame of this route"
+      how: "nothing needed unless the fruit itself is wrong; the questions your word did NOT answer are listed at the end"
       body: |-
-        **YOUR CONDITION, 2026-08-03:** *"we need to make SURE the fig growing on
-        the sapling is mentioned, last time we generated 002b it just..
-        appeared."* It is not decoration — episode 1 established that growing
-        slowly is the one thing this character can do, so the fig growing here is
-        continuity and the ending's payoff in the same frame.
+        **YOUR WORD, 2026-08-10 ~12:20, in full:** *"inpaint"* — answering
+        *"The fig on beat 01 — drop it, or approve an inpaint?"*. `drop` is
+        refused, `inpaint` is approved, and nothing else is read into one word.
 
-        **THE PROMPT CANNOT PRODUCE IT, AND THAT IS MEASURED RATHER THAN
-        ASSUMED.**
+        **YOUR CONDITION IT SERVES, 2026-08-03:** *"we need to make SURE the fig
+        growing on the sapling is mentioned, last time we generated 002b it
+        just.. appeared."* Episode 1 established that growing slowly is the one
+        thing this character can do, so the fig growing here is continuity and
+        the ending's payoff in the same frame.
 
-        - **0 of 8** after the first two rewrites. The likely reason was found
-          rather than guessed: **`fig` in this model's vocabulary names the LEAF,
-          not the fruit** — so the word was doing nothing we wanted.
+        **THE EVIDENCE THAT MADE THIS THE QUESTION, kept because the route is
+        built on it.**
+
+        - **0 of 8** after the first two rewrites. The reason was found rather
+          than guessed: **`fig` in this model's vocabulary names the LEAF, not
+          the fruit** — so the word was doing nothing we wanted.
         - The fruit was then described **without the word** — *"one small round
           green fruit hanging from the stem"*. That wording is in every round
-          since, including all twelve of round 8. **0 of 12.**
-        - **Size adjectives make it bigger, not likelier.** An earlier round drew
-          a big ripe orange-pink peach; the fix that killed the peach also killed
-          any fruit at all.
-        - Round 9 says nothing new here and does not pretend to: it conditions on
-          a depth map of a plate that has no fruit in it, so no fruit can come
-          through.
+          since. **0 of 24 across the prompt rounds.**
+        - **0 of 12 in round 8's img2img**, and that one is the informative
+          failure: the init carried no fruit, so it was a clean test of whether
+          img2img will ADD an object the init lacks. At strength 0.35 and at
+          0.55 the answer is no.
+        - **Size adjectives make it bigger, not likelier.** Two repaints over
+          `01-cold-open-r3-s3.png` asked for a *nub* and a *pea-sized* fruit and
+          both came back larger and rounder than the plate.
+        - **Round 3 is the existence proof.** It drew a round green fruit on the
+          stem, so the checkpoint can render one; the likely reason later rounds
+          could not is that grass-height framing makes the plant too small to
+          carry a fruit at this resolution. That is a hypothesis and is labelled
+          as one.
 
-        **THE TWO LEVERS LEFT, and choosing between them is a taste call, not a
-        technical one.**
+        **WHAT THE INPAINT ROUTE IS, in one paragraph.** The frame is drawn
+        without the fruit, a small region of the stem is masked, and only that
+        region is re-drawn. It runs on the weights we already have — no new
+        model, no new licence, **$0** — and the region is cropped out, drawn at
+        full resolution and pasted back, which is the documented fix for exactly
+        the failure above: a small object in a large frame.
 
-        - **`drop`** — beat 01 stops asking for the fruit. The growth beat moves
-          to where the fruit already draws reliably (beats 18–20 have it), and
-          every future cold-open round stops carrying a requirement that has
-          failed twenty times.
-        - **`inpaint`** — the frame is drawn without it and the fruit is painted
-          into that one region as a second, separate step. This is the only
-          method with a real chance of putting it exactly where you want it. It
-          is more machinery and it is a new step in the pipeline.
+        **WHERE IT IS PAINTED, and why it is not a beat-01 frame.** **No beat-01
+        still has ever been approved** — the only canon file for that shot is
+        `01-cold-open-REVOKED-too-tall.png`, and it is revoked. Our own gate says
+        a conditioned render must start from a frame you have passed, so the
+        sample below is painted onto **`15-something-s-coming.png`**, the one
+        sapling-in-grass frame you have ever approved and the same init round 8
+        used. That plate is not changed; a new file is written beside it.
 
-        **WHAT THIS COSTS IN MACHINE TIME: nothing either way, and it is not a
-        GPU question.** It is on this list because every round of beat 01 is
-        currently chasing a fruit the model will not draw, and you are the only
-        person who can say to stop.
+        **THE FOUR THINGS YOUR ONE WORD DID NOT SAY, and none of them have been
+        decided for you:** how big the fruit is, exactly where on the stem it
+        hangs, what colour and how ripe, and whether it reads as a fig at all.
+        The sample uses your own approved script wording — *"one small round
+        green fruit hanging from the stem"* — for everything but the pixel
+        geometry of the mask, and that geometry is the steward's and is
+        described in the note beside the frame so you can move it.
 
     - n: 22
       ask: "Which GitHub account should own the repo?"
