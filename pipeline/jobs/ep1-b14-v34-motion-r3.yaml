@@ -1,0 +1,157 @@
+# ep1 beat 14 "worth-staying-in" — LTX motion re-render, round 3.
+#
+# THE OTHER UNGATED FROZEN BEAT. QA-v34-0810.md names seven dead beats in v34
+# (03, 04, 06, 07, 08, 10, 14). 14 is tied with 08 for the worst of them —
+# median 0.01, 88% of frame deltas under 0.2 (QA-v34-0810.md:37) — and it is the
+# only one of the seven whose EVERY round predates the correction: r1 (kept as
+# `-COLLAPSES`) and r2 both landed 01:58, and 07218cb landed 06:30. 03/04/07 have
+# r2 and r3 under the correction, 10 has r2, 08 has its own r2 spec beside this
+# one. 06 is EXCLUDED and stays excluded — its frame is the b06-r5 PROVISIONAL
+# pick, not founder canon, and §6 does not let a render stand on an unratified
+# still. So 14 is the last beat in the list with no corrected round at all.
+#
+# THE DEFECT IS IN r2's OWN RECORD, not in a score. Its prompt
+# (14-worth-staying-in-LTX-r2.mp4.meta.yaml) reads:
+#     "small ambient motion only, the plant stays standing tall and centred,
+#      framing unchanged, gentle camera drift, living scene"
+# — a negation-style lock and an explicit REQUEST for camera movement, four
+# tokens apart. 07218cb established why the first half cannot work: at guidance
+# 1.0 the distilled schedule runs no unconditional pass, so a negation earns no
+# gradient away from what it names, and in the positive prompt the phrasing
+# contributes the very tokens it means to forbid. The second half is worse than
+# inert — it asks for the drift. r2 is therefore defective in SETUP independent
+# of any measurement, and this round is a strict improvement in method.
+#
+# ONE VARIABLE: the framing clause. The ambient verbs, the plant anchor, the
+# subject tail, the negative, the seed 20260745 and the still are byte-identical
+# to r2. The clause above is replaced by the affirmative form already rendered
+# on this series in beat 08 r2 — same wording, "young plant" -> "sapling" — so
+# the change here is the same change, not a second new recipe.
+#
+# NO METRIC PICKS A WINNER HERE. collect_farm.measure is disqualified as a
+# selection criterion on this series, twice over: 131e433 recorded its highest
+# score on the beat where the plant FELL OVER, and beat 04 r3's best-scoring arm
+# is the one that re-invents the phone at the wrist. Beat 14 is precisely a beat
+# whose subject must stay standing, so a metric that rewards a collapse is
+# actively pointed the wrong way. The median may be reported; it must not choose.
+#
+# PROVENANCE FLAG, DELIBERATE, and it is why this file was re-cut: the script
+# below is C:\banyan-farm\ltx_i2v.py, sha256 d49f8ecb.., which matches NEITHER
+# repo HEAD nor the box checkout (C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+# hashes 8cdd186e.., verified on the box). d49f8ecb is what every clip in this
+# series was rendered with, so using it is what makes beat 14 comparable to
+# 03/04/07/08/10. An earlier draft of this spec called the checkout copy and
+# added a plate_prep step; both were withdrawn from the queue before they ran,
+# because swapping the binary on a round meant to isolate one wording change is
+# the exact confound the round exists to avoid. It also means none of this
+# series is reproducible from the repo alone — recorded, not quietly swapped.
+
+id: ep1-b14-v34-motion-r3
+task: ep1-b14-v34-motion-r3-0810
+node: 001-capability-inventory
+beat: 14
+runner: box
+needs_gpu: true
+priority: 21
+max_attempts: 1
+sample: true
+owner: queue-fill (box lane); recipe shape and binary follow motion-recipe's b08 r2
+
+consumer: >-
+  the v35 screening cut. Beat 14 is tied for the most frozen beat in v34, has no
+  corrected round, and sits second-to-last in the cut — a dead frame there is
+  the last thing before the closing beat. The output goes in front of the
+  founder beside 03/04/07/08/10 as an unranked set; his verdict, not the
+  steward's.
+
+success: >-
+  A 704x1280 65-frame mp4 at
+  C:\banyan-farm\v34-motion-0810\14-ltx-r3-s20260745.mp4.
+  Judged on FRAMING and CONTENT, not on the flow number: the sapling's leaf tips
+  at the same height in the last frame as the first, no drift, no push-in, and
+  the thin stem straight and vertical for all 65 frames. A clip where the stem
+  bends, droops or falls is a FAIL however much motion it has — that is the
+  confusion 131e433 recorded. A clip that moves because the CAMERA moved is also
+  a FAIL: removing that drift is the one change this round makes.
+
+why: >-
+  With 08 r2, this closes the corrected-recipe pass over every dead ep1 beat
+  that is not gated on a person. Only 06 would remain, and 06 is gated.
+
+est_minutes: 5   # series measured 126-127s sample + ~2min model load per beat
+needs: [cuda, vram20, video-venv]
+
+payload:
+  # The framing clause is the delta from r2. Everything before "small ambient
+  # motion only" and everything from "Subject already in frame:" is r2 verbatim.
+  C:\banyan-farm\b14r3-prompt.txt: |-
+    2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. the sapling stands upright and holds its position, stem straight and steady, rooted firmly in place; only its two leaves tremble very slightly, the short grass around its base ripples in a light breeze, dust motes drift in the air, warm afternoon light shifts gently across the leaves. small ambient motion only, the camera is locked on a tripod and stays perfectly still, the sapling stays centred in frame at the same size throughout, the horizon keeps the same height in frame, the grass stays spread around the sapling from first frame to last, the composition is identical in every frame, living scene. Subject already in frame: no human, no person, no man, no woman, no boy, no girl, no hand, no face, plant focus, one slender sapling standing tall and erect, thin stem rising well above the grass to near the top of the frame, short grass, warm afternoon light.
+  # r2's negative verbatim — it carries this beat's own extra terms ("stem
+  # bending", "depth of field bokeh"). At guidance 1.0 on the distilled schedule
+  # it changes no pixel; it is carried for the provenance record and the sidecar
+  # says as much.
+  C:\banyan-farm\b14r3-negative.txt: |-
+    wilting, drooping, bending over, falling over, collapsing, stem bending, plant dying, sagging, human, person, man, woman, boy, girl, hand, arm, foot, face, photorealism, 3D render look, text, 静态, 静止, frozen frame, still image, no motion, photorealistic, photograph, live action, film still, 3D render, CGI, octane, depth of field bokeh, scene change, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  - name: encode
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\ltx_i2v.py
+      - --stage
+      - encode
+      - --embeds
+      - C:\banyan-farm\v34-motion-0810\ltx-embeds-b14r3.pt
+      - --prompt-file
+      - C:\banyan-farm\b14r3-prompt.txt
+      - --negative-file
+      - C:\banyan-farm\b14r3-negative.txt
+  - name: render
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\ltx_i2v.py
+      - --stage
+      - render
+      - --embeds
+      - C:\banyan-farm\v34-motion-0810\ltx-embeds-b14r3.pt
+      - --prompt-file
+      - C:\banyan-farm\b14r3-prompt.txt
+      - --negative-file
+      - C:\banyan-farm\b14r3-negative.txt
+      - --init
+      - C:\banyan-farm\banyan-city\genomes\sapling\nodes\001-capability-inventory\stills\14-worth-staying-in.png
+      - --out
+      - C:\banyan-farm\v34-motion-0810\14-ltx-r3-s20260745.mp4
+      - --size
+      - 704x1280
+      - --frames
+      - "65"
+      - --fps
+      - "24"
+      - --steps
+      - "8"
+      - --guidance
+      - "1.0"
+      - --distilled-sigmas
+      - --two-stage
+      - --seed
+      - "20260745"
+      - --beat
+      - "14"
+      - --task
+      - ep1-b14-v34-motion-r3-0810
+      - --worker
+      - rtx5090
+
+artifacts:
+  - C:\banyan-farm\v34-motion-0810\14-ltx-r3-s20260745.mp4
