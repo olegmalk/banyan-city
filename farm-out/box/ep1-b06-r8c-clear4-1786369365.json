@@ -1,0 +1,71 @@
+{
+  "id": "ep1-b06-r8c-clear4-1786369365",
+  "task": "001-b06-r8c-clear4-0810",
+  "node": "001-capability-inventory",
+  "beat": 6,
+  "worker": "box-runner",
+  "priority": 4,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "clear4",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b06-r8\\render_b06r8.py",
+        "--variant",
+        "b-clear",
+        "--step",
+        "4",
+        "--seeds",
+        "20264725,20265725",
+        "--set",
+        "r8c-step4",
+        "--r7-dir",
+        "C:\\banyan-farm\\b06-r7",
+        "--root",
+        "C:\\banyan-farm\\banyan-city",
+        "--task",
+        "001-b06-r8c-clear4-0810",
+        "--queue-entry",
+        "ep1-b06-r8c-clear4",
+        "--out",
+        "C:\\banyan-farm\\b06-r8\\out-clear4"
+      ]
+    },
+    {
+      "name": "publish",
+      "allow_fail": true,
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep1-b06-r8c-clear4\"\nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/b06-r8/out-clear4/*\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep1-b06-r8c-clear4.sha256\"), \"w\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\n# 2 stills + 2 sidecars.\nraise SystemExit(0 if len(src) == 4 else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\b06-r8\\out-clear4\\06-too-blue-r8c-step4-s0.png",
+    "C:\\banyan-farm\\b06-r8\\out-clear4\\06-too-blue-r8c-step4-s1.png"
+  ],
+  "started_at": "2026-08-10T13:49:59Z",
+  "attempts": 1,
+  "runner_pid": 3552,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-10T13:50:31Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\b06-r8\\out-clear4\\06-too-blue-r8c-step4-s0.png",
+    "C:\\banyan-farm\\b06-r8\\out-clear4\\06-too-blue-r8c-step4-s1.png"
+  ]
+}
