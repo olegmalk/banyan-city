@@ -1,0 +1,91 @@
+# Identity agreement across seeds — measured, not judged.
+# Written by identity_agreement.py. Mean cosine over all pairs within
+# each group. Whole-frame embeddings on a beat whose framing is
+# identical in every frame, so absolute values are inflated in BOTH
+# arms and only the delta between groups carries meaning.
+dino_model: facebook/dinov2-base
+dino_licence: Apache-2.0
+clip_model: openai/clip-vit-large-patch14
+clip_licence: MIT
+primary_metric: dino_mean (DreamBooth: CLIP-I cannot separate two
+  different subjects sharing one description, which is this defect)
+groups:
+- name: wave1-baseline
+  frames: 4
+  pairs: 6
+  dino_mean: 0.6967
+  dino_min: 0.6420
+  clip_mean: 0.8931
+  clip_min: 0.8667
+- name: arm1-ref0-scale060
+  frames: 4
+  pairs: 6
+  dino_mean: 0.8069
+  dino_min: 0.7496
+  clip_mean: 0.9276
+  clip_min: 0.9088
+- name: arm1-ref1-scale060
+  frames: 4
+  pairs: 6
+  dino_mean: 0.7974
+  dino_min: 0.7119
+  clip_mean: 0.9261
+  clip_min: 0.9153
+- name: arm1-ref2-scale060
+  frames: 4
+  pairs: 6
+  dino_mean: 0.8345
+  dino_min: 0.7913
+  clip_mean: 0.9309
+  clip_min: 0.8995
+- name: arm1-ref3-scale060
+  frames: 4
+  pairs: 6
+  dino_mean: 0.7828
+  dino_min: 0.7467
+  clip_mean: 0.9172
+  clip_min: 0.8861
+- name: arm2-ref0-content
+  frames: 4
+  pairs: 6
+  dino_mean: 0.7968
+  dino_min: 0.7483
+  clip_mean: 0.8917
+  clip_min: 0.8686
+  reference: 04-the-footnote-wave1-s0.png
+  to_ref_dino_mean: 0.7623
+  to_ref_note: >-
+    high here AND high within-group is the signature of copying the reference rather than holding a character.
+- name: arm2-ref1-content
+  frames: 4
+  pairs: 6
+  dino_mean: 0.7449
+  dino_min: 0.7183
+  clip_mean: 0.8757
+  clip_min: 0.8548
+  reference: 04-the-footnote-wave1-s1.png
+  to_ref_dino_mean: 0.7259
+  to_ref_note: >-
+    high here AND high within-group is the signature of copying the reference rather than holding a character.
+- name: arm2-ref2-content
+  frames: 4
+  pairs: 6
+  dino_mean: 0.7155
+  dino_min: 0.6020
+  clip_mean: 0.9001
+  clip_min: 0.8819
+  reference: 04-the-footnote-wave1-s2.png
+  to_ref_dino_mean: 0.7167
+  to_ref_note: >-
+    high here AND high within-group is the signature of copying the reference rather than holding a character.
+- name: arm2-ref3-content
+  frames: 4
+  pairs: 6
+  dino_mean: 0.7604
+  dino_min: 0.6923
+  clip_mean: 0.9058
+  clip_min: 0.8835
+  reference: 04-the-footnote-wave1-s3.png
+  to_ref_dino_mean: 0.8028
+  to_ref_note: >-
+    high here AND high within-group is the signature of copying the reference rather than holding a character.
