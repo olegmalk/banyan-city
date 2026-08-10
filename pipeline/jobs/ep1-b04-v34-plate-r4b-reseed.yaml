@@ -1,0 +1,133 @@
+# ep1 beat 04 — an ADDITIONAL DRAW on the ratified plate recipe, cloned from
+# ep1-b04-v34-plate-twin-r4.yaml and moving exactly one variable: the seed
+# (20260735 -> 20260863).
+#
+# WHY. Beat 04 is one of the seven frozen beats in the v34 cut (QA-v34-0810.md
+# §1: median 0.05, 57% of frame pairs frozen) — it plays a held still with a
+# push-in below the encoder's noise floor. The plate recipe is ratified: the
+# founder approved the cover-centre crop today ("the crop -- yes"), so this is a
+# beat queued in DEPTH on an already-approved recipe, not a recipe change, and it
+# owes no fresh sample.
+#
+# Beats 07, 08 and 14 already have reseeds in flight; this beat had 4 draw(s)
+# and gets more, so the founder has several correctly-framed candidates to choose
+# between on every frozen beat rather than one lucky or unlucky one.
+#
+# NO PICK IS MADE AND NO DRAW IS RANKED. On beat 14 the flow metric scored highest
+# on the round where the sapling falls over (131e433); the metric is disqualified
+# for this call and the choice between draws is R4's.
+#
+# Wording, guidance 1.0, steps, size, frames and the plate step are the source
+# spec's verbatim. Nothing else moves.
+
+id: ep1-b04-v34-plate-r4b-reseed
+task: ep1-b04-v34-plate-r4b-reseed-0810
+node: 001-capability-inventory
+beat: 4
+runner: box
+needs_gpu: true
+priority: 34
+max_attempts: 1
+owner: queue-depth lane (frozen v34 beats, ratified plate recipe)
+source_clip: C:\banyan-farm\v34-motion-0810\04-ltx-r4-s20260735.mp4
+consumer: the v35 provisional screening cut, for beat 04 — one of the seven frozen beats, which currently
+  plays a held still. An additional correctly-framed candidate so the founder chooses between several
+  draws on this beat instead of one. All draws go to him unranked.
+success: 'A 704x1280 65-frame mp4 named for this id under C:\banyan-farm\v34-motion-0810. Judged on the
+  PICTURE: the plant upright with its stem straight for all 65 frames — a clip where it bends, droops
+  or falls is a FAIL however much motion it has — style, palette and linework holding from the plate,
+  no human, hand, face or invented object, and frame 0 matching a cover-centre crop of the beat''s still
+  rather than a naive stretch. Whether the framing drifts and crops the subject is a finding to report,
+  not a verdict.'
+why: 'One variable against ep1-b04-v34-plate-twin-r4: seed 20260863 instead of 20260735. Same wording,
+  same ratified cover-centre plate step, same guidance 1.0.'
+est_minutes: 5
+needs:
+- cuda
+- vram20
+- video-venv
+payload:
+  C:\banyan-farm\v34-plates-0810\ep1-b04-v34-plate-r4b-reseed-prompt.txt: '2D anime, hand-drawn cel animation,
+    flat cel shading, clean ink linework, anime key art. the edges of the scattered sheets lift and settle
+    very slightly where they lie, the fallen phone glows and flickers faintly on the floor, the fingers
+    rest still and tremble faintly against the paper, dim light shifts slowly across the floor. small
+    ambient motion only, the camera is locked on a tripod and stays perfectly still, the hands stay resting
+    flat on the papers in the same spot the whole time, the papers stay spread on the floor where they
+    fell, the composition is identical in every frame, living scene. Subject already in frame: no second
+    person, no crowd, no face, one pair of hands on scattered papers on a dark floor, a phone lying screen-up
+    nearby, deep blue night light.'
+  C:\banyan-farm\v34-plates-0810\ep1-b04-v34-plate-r4b-reseed-negative.txt: wilting, drooping, bending
+    over, falling over, collapsing, sagging, plant dying, human, person, man, woman, boy, girl, extra
+    hand, extra arm, foot, face, crowd, animal, bird, insect, new object appearing, photorealism, 3D render
+    look, text, 静态, 静止, frozen frame, still image, no motion, photorealistic, photograph, live action,
+    film still, 3D render, CGI, octane, scene change, shot change, cut to another angle, second scene,
+    new camera angle, different location, split screen, montage
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: plate
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - -c
+  - "import sys; sys.path.insert(0, r\"C:\\banyan-farm\\banyan-city\\pipeline\")\nfrom plate_prep import\
+    \ prepare_plate\nout, rec = prepare_plate(\n    r\"C:\\banyan-farm\\banyan-city\\genomes\\sapling\\\
+    nodes\\001-capability-inventory\\stills\\04-the-fall.png\",\n    \"704x1280\", r\"C:\\banyan-farm\\\
+    v34-plates-0810\", \"04\")\nprint(\"plate\", out); print(rec[\"plate_wxh\"], rec[\"crop_policy\"])\n"
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\ltx_i2v.py
+  - --stage
+  - encode
+  - --embeds
+  - C:\banyan-farm\v34-plates-0810\ltx-embeds-ep1-b04-v34-plate-r4b-reseed.pt
+  - --prompt-file
+  - C:\banyan-farm\v34-plates-0810\ep1-b04-v34-plate-r4b-reseed-prompt.txt
+  - --negative-file
+  - C:\banyan-farm\v34-plates-0810\ep1-b04-v34-plate-r4b-reseed-negative.txt
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\ltx_i2v.py
+  - --stage
+  - render
+  - --embeds
+  - C:\banyan-farm\v34-plates-0810\ltx-embeds-ep1-b04-v34-plate-r4b-reseed.pt
+  - --prompt-file
+  - C:\banyan-farm\v34-plates-0810\ep1-b04-v34-plate-r4b-reseed-prompt.txt
+  - --negative-file
+  - C:\banyan-farm\v34-plates-0810\ep1-b04-v34-plate-r4b-reseed-negative.txt
+  - --init
+  - C:\banyan-farm\v34-plates-0810\04-704x1280.png
+  - --out
+  - C:\banyan-farm\v34-motion-0810\04-ltx-r4b-plate-s20260863.mp4
+  - --size
+  - 704x1280
+  - --frames
+  - '65'
+  - --fps
+  - '24'
+  - --steps
+  - '8'
+  - --guidance
+  - '1.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --seed
+  - '20260863'
+  - --beat
+  - '4'
+  - --task
+  - ep1-b04-v34-plate-r4b-reseed-0810
+  - --worker
+  - rtx5090
+artifacts:
+- C:\banyan-farm\v34-plates-0810\04-704x1280.png
+- C:\banyan-farm\v34-motion-0810\04-ltx-r4b-plate-s20260863.mp4
