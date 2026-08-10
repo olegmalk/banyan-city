@@ -1,0 +1,174 @@
+# 002b -- ONE SAMPLE. Beat 14 the-defense, the nearest-framed UNTESTED goblin
+# beat, conditioned on the frame the founder picked. One job, not eight.
+#
+# THE PREDICTION THIS TESTS. Commit 0019923 concluded the IP-Adapter is
+# TRANSFERRING COMPOSITION, NOT IDENTITY: beat 02 conditioned on Roman's pick
+# (a head filling the frame) came back with the goblin a speck under an enormous
+# dark dome -- a head-filling layout imposed on a full-body sprint, and it failed
+# WORSE with the better reference. That retro-explains the crossbeat run: 04 held
+# (face close-up), 20 held, 15 drifted (medium), 02 collapsed (wide).
+#
+# If the mechanism carries layout rather than identity, the falsifiable
+# consequence is that a beat whose OWN framing is a close-up should hold his
+# goblin. Nobody has tested that. Beat 14 is the only untested goblin beat in the
+# staged fourteen whose draft carries an explicit close-up tag
+# ("Intimate low close-up"). 02, 15 and 20 are spent.
+#
+# HONEST CAVEAT ON THE MATCH. Beat 14's close-up is framed on the goblin's
+# CLAWED FINGERS picking at dirt with his face above them -- a hand-level
+# close-up, not the head-filling portrait beat 04 is. It is the closest framing
+# available among the untested beats, not an identical one. If the goblin holds
+# here the prediction survives on a near-match; if it does not, either the
+# composition hypothesis is wrong or the match was not close enough, and the
+# report must say which reading the picture supports rather than picking the
+# flattering one.
+#
+# THE ONE VARIABLE AGAINST ep2-b02-goblin-founderpick-sample-0810: the beat.
+# Same harness, same wrapper, same arm `window4`, same 15% window at scale 0.6,
+# same seed arithmetic, same reference bytes, zero prompt tokens added.
+#
+# WHICH REFERENCE DIRECTORY, AND WHY NOT THE ONE NAMED "TRUE".
+# --refs points at refs-founder-pick. VERIFIED BY HASH before this spec was
+# written, not inferred from the filenames:
+#
+#   refs-founder-pick\04-the-footnote-wave1-s0.png  48d02b11bb96d872...
+#   refs-founder-pick\04-the-footnote-wave1-s1.png  48d02b11bb96d872...
+#   refs-founder-pick\04-the-footnote-wave1-s2.png  48d02b11bb96d872...
+#   refs-founder-pick\04-the-footnote-wave1-s3.png  48d02b11bb96d872...
+#   refs-true-pick\04-the-footnote-ipa-r1-w015-s6.png  48d02b11bb96d872...
+#
+# All five are the SAME BYTES: Roman's pick, sha256 48d02b11bb96d872db32c090
+# fba8a2ff748ff74bfc240c89ae30863564d433d4. refs-founder-pick holds it four
+# times under the four names goblin_ipa_sample.py:446 hardcodes
+# (`04-the-footnote-wave1-s{i}.png`); the names lie about the contents and the
+# sampler has no flag to change them. refs-true-pick holds the SAME image under
+# its real name, which the sampler never opens -- line 448 existence-checks the
+# four hardcoded names and returns 4. Pointing at refs-true-pick renders nothing
+# and burns max_attempts. The real wave-1 baseline stills (sha prefixes dc2d32cc,
+# 8f2e4b23, 026ccb64, b828a73c) are in the repo and are in NEITHER directory.
+#
+# KNOWN AND ACCEPTED WASTE, stated rather than hidden: seeds are
+# `SEED + BEAT + i*1000`, indexed by SEED and not by reference, so four identical
+# references draw four identical rows. 16 renders, 4 distinct frames, ~3 minutes
+# of otherwise-idle GPU -- and no edit to a working sampler at 1am.
+#
+# NOT A WAVE, AND NOTHING SCALES OFF THIS. The other seven goblin beats stay
+# staged and un-enqueued whatever this returns. Firing them is Roman's call
+# (CLAUDE.md, founder 2026-08-03: one sample per recipe change).
+
+id: ep2-b14-goblin-facepick-sample
+task: ep2-b14-goblin-facepick-sample-0811
+node: 002b-first-citizen
+beat: 14
+runner: box
+needs_gpu: true
+priority: 40
+max_attempts: 1
+owner: goblin-framing lane
+
+consumer: >-
+  The answer to how much of episode 2's goblin work is actually blocked. Right
+  now the read is "the reference mechanism is closed" -- but that conclusion was
+  drawn from a wide beat and a medium beat. If a close-framed beat holds his
+  goblin, the blocked set shrinks to the wide and medium beats and the
+  close-framed ones are renderable pending his look; if it does not hold, the
+  reference mechanism is dead for this character on every beat including the
+  ones that appeared to work, and the wave needs a different answer entirely.
+  Either way this is a number the founder gets in the morning instead of a
+  guess.
+
+success: >-
+  Sixteen PNGs with provenance sidecars under
+  C:\banyan-farm\goblin-ipa-0810\out-b14-facepick, of which four are distinct by
+  construction (see the seed note above), published to
+  farm-out/ep2-b14-goblin-facepick-sample/ with a .sha256 manifest. The job
+  succeeds by producing candidates; whether the creature in them is his is R4's
+  call and no step here scores it.
+
+why: >-
+  One variable against ep2-b02-goblin-founderpick-sample-0810: the beat, chosen
+  because its own framing is close and beat 02's was wide. Same arm, same
+  window, same scale, same seeds arithmetic, same reference bytes, same prompt
+  construction. Any difference in how well the creature holds is the beat's
+  framing and nothing else.
+
+no_metric: >-
+  green_share is NOT run and the DINOv2 identity metric is NOT run. The identity
+  metric is disqualified in taste/steward-model.ledger.yaml for failing to tell
+  one creature from four (724b616, 93356b1), and the founder's standing rule is
+  that a metric agreeing with the steward is not a sample. This is read by eye
+  against his pick.
+
+est_minutes: 3
+needs:
+- cuda
+- vram20
+- farm-venv
+
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '14'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\goblin-ipa-0810\refs-founder-pick
+  - --out
+  - C:\banyan-farm\goblin-ipa-0810\out-b14-facepick
+  - --arm
+  - window4
+  - --task
+  - ep2-b14-goblin-facepick-sample-0811
+
+# Durability: the courier commits farm-out and force-pushes on every job_done,
+# and farm-out is NOT gitignored, so publishing is a COPY and needs no runner
+# change. allow_fail so a failed copy never marks a good render failed.
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b14-goblin-facepick-sample"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/goblin-ipa-0810/out-b14-facepick/*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        # Hash the COPY: the manifest must attest to the bytes that get committed.
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+        print("   ", os.path.basename(f), h[:16])
+    # newline="\n" is load-bearing on Windows: text mode would append \r to every
+    # filename and shasum -c on the Mac could not open one of them.
+    with open(os.path.join(dst, "ep2-b14-goblin-facepick-sample.sha256"),
+              "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+
+# The four DISTINCT frames (one per seed, r0 row). r1/r2/r3 are byte-identical
+# to r0 at the same seed because all four references are the same image, so
+# declaring them as artifacts would assert four facts about one file.
+artifacts:
+- C:\banyan-farm\goblin-ipa-0810\out-b14-facepick\14-the-defense-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0810\out-b14-facepick\14-the-defense-ipa-r0-w015-s1.png
+- C:\banyan-farm\goblin-ipa-0810\out-b14-facepick\14-the-defense-ipa-r0-w015-s2.png
+- C:\banyan-farm\goblin-ipa-0810\out-b14-facepick\14-the-defense-ipa-r0-w015-s3.png
