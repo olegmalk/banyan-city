@@ -35,6 +35,14 @@ it: run over beat 07 it returns on-twos 6.0x for r1 and 9.5x for r3, matching th
 two figures the card-runner lane published in its own r3 heartbeat before this
 file existed. That agreement was the acceptance test.
 
+READ THE PAN COLUMN, TREAT THE ZOOM COLUMN AS SOFT. Pan is validated against an
+independently measured figure (below). Zoom is not: it is fitted from per-block
+residuals after the global pan has been rolled out, and `np.roll` wraps content
+around the edges, which every block in a 4x4 grid touches. It is good enough to
+separate "there is a push-in here" from "there is not" -- it moved 1.31 -> 0.998
+on the b03 round where the push-in was removed -- and it should not be quoted to
+three decimals as though it were the pan.
+
 AND IT STILL MAY NOT PICK A WINNER. ad35e43 demoted the flow metric to
 report-only after it ranked the arm that re-invents the phone first on beat 04
 and the collapsing sapling first on beat 14. Nothing here ranks anything. The
@@ -100,7 +108,20 @@ def shift(a, b):
 
 
 def framing(fs):
-    """Per-frame (pan_x, pan_y, zoom) vs frame 0, fitted over a block grid."""
+    """Per-frame (pan_x, pan_y, zoom) vs frame 0.
+
+    TWO PASSES, AND THE FIRST ONE IS NOT OPTIONAL. A block of a 176-wide frame
+    under a 4x4 grid is 44px across, and phase correlation over an NxM window
+    cannot report a shift beyond +-N/2 -- past that the peak wraps and the number
+    comes back small and confident. Measured: a single-pass block fit put beat
+    03 r1 at 15.6px when the lane that rendered it had measured ~61px, because
+    every block had saturated at its own half-width. So the GLOBAL pan is taken
+    first, on the whole frame, where the limit is +-88px instead of +-22px; the
+    blocks then only ever see the residual, which is the zoom, and stay inside
+    their range by construction. The r2/r3 rounds are small enough that both
+    methods agree -- it is exactly the large pans, the ones worth catching, that
+    the single-pass version silently under-reported.
+    """
     h, w = fs[0].shape
     bh, bw = h // BLOCK, w // BLOCK
     cx, cy = w / 2.0, h / 2.0
@@ -110,11 +131,15 @@ def framing(fs):
             centres.append((bx * bw + bw / 2.0 - cx, by * bh + bh / 2.0 - cy))
     centres = np.array(centres)
     for f in fs:
+        gx, gy = shift(fs[0], f)
+        # Undo the global pan before the blocks look, so their residual is zoom.
+        rolled = np.roll(np.roll(f, -int(round(gy)), axis=0), -int(round(gx)), axis=1)
         disp = []
         for by in range(BLOCK):
             for bx in range(BLOCK):
                 sl = (slice(by * bh, (by + 1) * bh), slice(bx * bw, (bx + 1) * bw))
-                disp.append(shift(fs[0][sl], f[sl]))
+                dx, dy = shift(fs[0][sl], rolled[sl])
+                disp.append((dx + gx, dy + gy))
         disp = np.array(disp)
         # d = (s-1)*centre + t   -> least squares for s and t on both axes at once
         A = np.zeros((2 * len(centres), 3))
