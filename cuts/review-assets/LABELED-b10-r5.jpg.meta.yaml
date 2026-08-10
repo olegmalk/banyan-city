@@ -1,0 +1,91 @@
+# Provenance for one image on the /review gallery (STEWARDSHIP §7.2).
+#
+# WHAT THIS FILE IS SERVED UNDER, because it is not what the rest of the tree is
+# served under. banyan.city publishes CC BY 4.0. This picture was drawn by
+# cagliostrolab/animagine-xl-3.1, whose CreativeML Open RAIL++-M licence attaches
+# use restrictions that travel to the output — the open conflict recorded as D15.
+# The founder authorised these frames onto the review page on 2026-08-09; he did
+# not resolve the licence question, and publishing them under a blanket CC BY
+# offer would grant what we do not hold. So the offer is NARROWED for this file
+# and said out loud on the page: it carries OpenRAIL++'s Attachment A use
+# restrictions and is not CC BY 4.0. Everything else on the site is unaffected.
+#
+# The pixels here are a JPEG re-encode, not the original bytes. The source file
+# and its SHA-256 are recorded below, so the rendition is checkable against the
+# frame it came from.
+
+platform: local-gpu (rtx5090) for the frames; local ImageMagick for the sheet
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+conditioning: >-
+  none — the sent positive is byte-identical to r4's, asserted at run time, on
+  r4's own four seeds
+sheet: true
+episode: 1
+render_round: r5
+shows: b10-r5-s0..s3 against r4's same four seeds
+what: >-
+  episode 1 beat 10, SENSE, round 5 — THE PERSON-BINDING NEGATIVES. Defect 2's
+  prescription (`1girl, 1boy, child, person, hand`) is added as fit_negative's
+  EXPLICIT tier and `humans` is held. The falsifiable claim is mechanical, not
+  a matter of taste: r4's human hand and forearm on s0 and its bare foot on s1
+  should be GONE and no new person should appear. Counted at full resolution:
+  people 2 of 4 -> 0 of 4.
+declared_confound: >-
+  This beat's negative was already over budget — r4 itself overran 77 CLIP
+  tokens and shed two terms — so the five added terms had to be paid for, and
+  `fit_negative` shed `blurry`, `low quality`, `deformed`, `extra limbs` and
+  `signature` off the house tier to fit them. Every candidate set was priced
+  on the box's real CLIP before a step was spent
+  (pipeline/measure_b10_negsets.py) and there is no free version. IF THESE
+  FRAMES READ SOFTER THAN r4'S, THE SHED QUALITY NEGATIVES ARE A CANDIDATE
+  CAUSE, and the round said so in advance rather than after.
+not_scored_here: >-
+  The ledger record `ep1-b10-r5-provisional` carries pick_holds on b10-r5-s2
+  at confidence 0.55, written before the founder saw anything. Beat 10 is
+  ALREADY CANON on the founder's own `b10-r1-s3` and this round does not
+  reopen it: the sheet is evidence about a mechanism, not a set to choose
+  from.
+neutral: >-
+  Labels and seeds only, in source order. No favourite is marked and no tile
+  is offered as a pick (gate G3).
+sheet_note: >-
+  A contact sheet: candidate frames composited into one picture by our own
+  labelling script, each tile carrying its address and its seed. The
+  compositing and the labels are our code and carry no model. Addresses
+  resolve through REVIEW-KEY-0808.md.
+derived_from: LABELED-b10-r5.png
+derived_from_sha256: 9c941dad3d1a834e3538cff08845169b4d7f4e3fdc296a16cfa62249eeda3963
+sha256: 4851c512e76fd1234c4926818e1a6c0d4b5986bae1964251d01fb0f714c2cf53
+encoding: >-
+  JPEG from the source PNG with ImageMagick 7.1.2-21 — no resize, no crop, no
+  colour conversion, metadata stripped. Quality 90, 4:4:4 chroma so the
+  burned-in labels stay crisp.
+published_under: >-
+  CreativeML Open RAIL++-M use restrictions (Attachment A) — NOT the tree's CC
+  BY 4.0. Founder-authorised for the /review gallery only; not canon, not
+  published elsewhere, not promoted to a stills/ filename.
+authorised_by: >-
+  founder (Roman), 2026-08-09 — "put the images from my computer onto there
+  please, not like theres any reason to hide it". Visibility only: D15's
+  licence question stays open and stays his.
+surface: /review gallery (unlisted, noindex — D17)
+canon: false
+cost_usd: 0
+source_frames:
+  - path: genomes/sapling/nodes/001-capability-inventory/takes/stills/10-sense-r5-s0.png
+    address: b10-r5-s0
+    seed: 20260729
+    sha256: bf9c65db3f15e9218124919e4cfbbfec19af24e56a94bae5c510602f1966df2c
+  - path: genomes/sapling/nodes/001-capability-inventory/takes/stills/10-sense-r5-s1.png
+    address: b10-r5-s1
+    seed: 20261729
+    sha256: 49ec691ba03d153cda03d1729043b8d1b255440ddbed0d8a6d37e210410c8a39
+  - path: genomes/sapling/nodes/001-capability-inventory/takes/stills/10-sense-r5-s2.png
+    address: b10-r5-s2
+    seed: 20262729
+    sha256: 25e49a3709761bb417cc15c8cd70afbbc6a6486b55b75e1f8ba8f943d6fddf4e
+  - path: genomes/sapling/nodes/001-capability-inventory/takes/stills/10-sense-r5-s3.png
+    address: b10-r5-s3
+    seed: 20263729
+    sha256: aa2bffa17a5cc10c7170de6856391a2b9eb44b771a366e2c7418aa808c677195

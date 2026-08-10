@@ -567,7 +567,7 @@ checklist:
         `b06-r5-s2` at 0.55 and it is the one frame in v34 you have never seen.
         Episode 2's twenty beats are still open under it.
       where: "on this card — the beat 06 round 5 sheet is first; tap it to open full size"
-      sheets_title: "The sheets — sixteen of them, round 5 first; tap one to open it full size"
+      sheets_title: "The sheets — nineteen of them, round 5 first; tap one to open it full size"
       how: "say `b06-r5-s2`, name another `b06-r5-sN`, or reject the set and say why"
       body: |-
         **YOUR DEFECT REPORT IS FIXED FIRST, because it was blocking the biggest
@@ -658,6 +658,46 @@ checklist:
           card. Green and tusks both hold 4 of 4 and nothing reads female any
           more; what is missing is your definition. **Item 18**, and it is the one
           answer that releases fifteen other beats.
+
+        **THE SIZE OF THE EPISODE-2 PILE, STATED ONCE SO IT IS NOT A SURPRISE.**
+        **Episode 2 is 0 of 21.** Every one of its twenty-one beats has a full
+        set of candidates drawn and not one of them is approved — it is the
+        largest single block of decisions in the project, and it is all waiting
+        on the same kind of answer. You do not have to take it in one sitting;
+        every beat you answer is one that stops being re-drawn.
+
+        **AND ONE THING ABOUT WHERE THOSE PICTURES LIVE, because you should not
+        find it out by losing them.** The candidate frames themselves — **237
+        PNG files** — are deliberately kept out of the repository (the
+        `.gitignore` rule that keeps render output from bloating the tree), so
+        **the full-resolution originals exist on this laptop and nowhere else.**
+        The sheets on this page are re-encoded copies; the frames behind them are
+        not backed up anywhere yet. Another lane is fixing that now. Nothing is
+        lost and nothing is being asked of you here — it is a fact about the
+        pile, recorded rather than discovered later.
+
+        **THREE MORE SHEETS LANDED OVERNIGHT AND NOT ONE OF THEM IS A PICK.**
+        They are on this card under the others.
+
+        - **`b10-r5` — episode 1 beat 10, and this one is a MECHANISM TEST, not
+          a set to choose from.** Beat 10 is already canon on **your own**
+          `b10-r1-s3` and this round does not reopen it. What it tested: adding
+          `1girl, 1boy, child, person, hand` to the negative should remove
+          round 4's human hand and forearm and its bare foot. It did — **people
+          2 of 4 down to 0 of 4**, counted at full resolution. **The cost was
+          declared before the render ran**, not after: that beat's negative was
+          already over the model's 77-token ceiling, so paying for those five
+          words meant shedding `blurry`, `low quality`, `deformed`,
+          `extra limbs` and `signature`. **If these frames read softer than
+          round 4's, that is the candidate cause and it was named in advance.**
+        - **`b05-r4` and `b05-r5` — episode 2 beat 05, the patrol.** Two rounds
+          on how to word the two guards so the model draws two men and not two
+          girls: r4 moves the count tag to `2boys` and appends *"No girl, no
+          child."*; r5 brings back `harmless` and `shapes`, keeps `2boys`, adds
+          `plump`, and sends eight prescribed negatives. Both are logged
+          reject-all with no pick. They are the same register problem as the
+          goblin, on a different beat, and **your item-18 answer is what settles
+          the vocabulary for both.**
 
         **WHAT THE STEWARD GUESSED, AND HOW BADLY.** Every frame was scored
         before you saw any. **Six of those predictions now have your verdict: 1
@@ -766,6 +806,15 @@ checklist:
         - file: review-assets/LABELED-b13-r6.jpg
           label: "ep2 beat 13 ROUND 6 — b13-r6-s0..s3"
           note: "the plant/goblin fusion gone in 4 of 4; the goblin's later rounds are on item 18"
+        - file: review-assets/LABELED-b10-r5.jpg
+          label: "ep1 beat 10 ROUND 5 — a mechanism test, NOT a set to choose from"
+          note: "beat 10 is already canon on your b10-r1-s3. People 2 of 4 down to 0 of 4; five quality negatives were shed to pay for it, declared before the render."
+        - file: review-assets/LABELED-b05-r5.jpg
+          label: "ep2 beat 05 ROUND 5 — the patrol, 002b-b05-r5-s0..s3"
+          note: "the register words return: harmless, shapes, 2boys, plump. Reject-all, no pick."
+        - file: review-assets/LABELED-b05-r4.jpg
+          label: "ep2 beat 05 ROUND 4 — the patrol, 002b-b05-r4-s0..s3"
+          note: "the guard register: 2others becomes 2boys, 'No girl, no child.' appended. Reject-all, no pick."
     # V34 IS NOT LISTED UNDER `cuts:` AND THE GATE NOW SAYS SO ITSELF. This
     # comment used to describe a hole; the hole was closed on 2026-08-09 by
     # 4eb4c61, and the paragraph on item 19 has been rewritten to match rather

@@ -1,0 +1,75 @@
+# Provenance for one image on the /review gallery (STEWARDSHIP §7.2).
+#
+# WHAT THIS FILE IS SERVED UNDER, because it is not what the rest of the tree is
+# served under. banyan.city publishes CC BY 4.0. This picture was drawn by
+# cagliostrolab/animagine-xl-3.1, whose CreativeML Open RAIL++-M licence attaches
+# use restrictions that travel to the output — the open conflict recorded as D15.
+# The founder authorised these frames onto the review page on 2026-08-09; he did
+# not resolve the licence question, and publishing them under a blanket CC BY
+# offer would grant what we do not hold. So the offer is NARROWED for this file
+# and said out loud on the page: it carries OpenRAIL++'s Attachment A use
+# restrictions and is not CC BY 4.0. Everything else on the site is unaffected.
+#
+# The pixels here are a JPEG re-encode, not the original bytes. The source file
+# and its SHA-256 are recorded below, so the rendition is checkable against the
+# frame it came from.
+
+platform: local-gpu (rtx5090) for the frames; local ImageMagick for the sheet
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+conditioning: none — this round moved words only
+sheet: true
+episode: 2
+render_round: r4
+shows: 002b-b05-r4-s0..s3 — four seeds
+what: >-
+  episode 2 beat 05, THE PATROL, round 4 — THE GUARD REGISTER. The count tag
+  moves `2others` -> `2boys`, `round` is fronted and `No girl, no child.` is
+  appended; WAVE-PREP-0810-drafts.yaml beat 5 verbatim.
+not_scored_here: >-
+  The ledger record `ep2-b05-r4-sample` carries reject_all with all four
+  vetoed and pick: null, written before the founder saw anything. A steward
+  prediction, not a verdict; R4 is his.
+neutral: >-
+  Labels and seeds only, in source order. No favourite is marked and no tile
+  is offered as a pick (gate G3).
+sheet_note: >-
+  A contact sheet: candidate frames composited into one picture by our own
+  labelling script, each tile carrying its address and its seed. The
+  compositing and the labels are our code and carry no model. Addresses
+  resolve through REVIEW-KEY-0808.md.
+derived_from: LABELED-b05-r4.png
+derived_from_sha256: 49907bd627f77f181f9d3eca96599b9027524124e89249e30aa612bbf0d76b3a
+sha256: 3f6012e911af96f5ad9a08e132716c1dc7882a2554f66fc2b6d913ce254f458e
+encoding: >-
+  JPEG from the source PNG with ImageMagick 7.1.2-21 — no resize, no crop, no
+  colour conversion, metadata stripped. Quality 90, 4:4:4 chroma so the
+  burned-in labels stay crisp.
+published_under: >-
+  CreativeML Open RAIL++-M use restrictions (Attachment A) — NOT the tree's CC
+  BY 4.0. Founder-authorised for the /review gallery only; not canon, not
+  published elsewhere, not promoted to a stills/ filename.
+authorised_by: >-
+  founder (Roman), 2026-08-09 — "put the images from my computer onto there
+  please, not like theres any reason to hide it". Visibility only: D15's
+  licence question stays open and stays his.
+surface: /review gallery (unlisted, noindex — D17)
+canon: false
+cost_usd: 0
+source_frames:
+  - path: genomes/sapling/nodes/002b-first-citizen/takes/stills/05-the-patrol-r4-s0.png
+    address: 002b-b05-r4-s0
+    seed: 20264724
+    sha256: 0c5507387f91a0a3bc06fc29bcc858989d93abc340dee1bce9240482a15eab24
+  - path: genomes/sapling/nodes/002b-first-citizen/takes/stills/05-the-patrol-r4-s1.png
+    address: 002b-b05-r4-s1
+    seed: 20265724
+    sha256: fdd715f31e4080e35fd1c94bf4647d1a91c940f0af323d0c01a91a7a5f0dd64a
+  - path: genomes/sapling/nodes/002b-first-citizen/takes/stills/05-the-patrol-r4-s2.png
+    address: 002b-b05-r4-s2
+    seed: 20266724
+    sha256: 0e0a2a93d762167f13a097ccf1fc3c3d0aa5e545dd446862d07c842c5b3a3f14
+  - path: genomes/sapling/nodes/002b-first-citizen/takes/stills/05-the-patrol-r4-s3.png
+    address: 002b-b05-r4-s3
+    seed: 20267724
+    sha256: 216d0be92a6a21945427c393d78e3f519dea042655e0734b4619eab754e3481a
