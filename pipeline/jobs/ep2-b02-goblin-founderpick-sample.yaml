@@ -1,0 +1,156 @@
+# 002b -- ONE SAMPLE. Beat 02 the-sprint, conditioned on THE FRAME THE FOUNDER
+# PICKED. One job, not fourteen.
+#
+# WHY THIS EXISTS AND WHY IT IS ONE. Roman picked the goblin at 2026-08-10 ~23:50
+# ("alright, ill take this one for the goblin.", frame
+# 04-the-footnote-ipa-r1-w015-s6, ledger `ep2-goblin-founder-pick-0810`). Before
+# scaling anything off that, the three already-finished crossbeat jobs were
+# looked at against his pick -- and the recipe holds on ONE beat of three.
+# Beat 20 keeps his creature on all four seeds; beat 15 returns an elongated
+# skull with blank grey eyes; beat 02 returns four different creatures including
+# a full-body lizard. Ledger `ep2-goblin-crossbeat-observed-0810`.
+#
+# THE ONE VARIABLE THIS CHANGES. The crossbeat rows conditioned on the four
+# TAGS-ONLY baseline frames (04-the-footnote-wave1-s0..s3) -- the four different
+# creatures the words drew, none of which he has ever approved. This job
+# conditions on the frame he DID approve, and changes nothing else: same harness,
+# same arm `window4`, same 15% window at scale 0.6, same seed arithmetic, same
+# byte-identical prompt, zero prompt tokens added. "nothing complex" is untouched.
+#
+# WHY BEAT 02 AND NOT AN EASIER ONE. It failed hardest. It is a full-body sprint,
+# the framing furthest from a face-filling reference, and it is where the
+# creature collapsed completely. If his pick as the reference rescues beat 02,
+# the lever is real and the easier beats follow. If it does not, the finding is
+# that the mechanism is bounded by COMPOSITION and no reference swap fixes it --
+# which is the conclusion the crossbeat evidence already points at, and this job
+# is the cheapest way to be wrong about it.
+#
+# HOW THE REFERENCE IS POINTED. goblin_ipa_sample.py hardcodes its four reference
+# filenames (04-the-footnote-wave1-s{0..3}.png) inside the --refs dir and has no
+# flag to select a subset, so the reference is repointed by giving it a DIFFERENT
+# --refs DIRECTORY holding his pick under those four names. The sampler is not
+# edited; nothing on the box's harness changes.
+#
+# KNOWN AND ACCEPTED WASTE, stated rather than hidden: seeds are
+# `SEED + BEAT + i*1000`, indexed by SEED only and not by reference, so four
+# identical references draw four identical rows. This job therefore yields 4
+# DISTINCT frames out of 16 renders. That is ~2 minutes of otherwise-idle GPU and
+# it buys not editing a working sampler to add a flag at midnight.
+#
+# NOT A WAVE. The fourteen staged ep2-b*-goblin-wave1.yaml specs are NOT enqueued
+# by this and must not be: they call render_wave_sample.py with the tags-only
+# "green skin, tusks" recipe from 12:37, which is the recipe whose
+# four-different-creatures failure caused all of this work. His verdict does not
+# release them, it obsoletes them, and they must be re-cut before they are worth
+# running. Their own `gate:` key blocks them and box_enqueue.py honours it.
+
+id: ep2-b02-goblin-founderpick-sample
+task: ep2-b02-goblin-founderpick-sample-0810
+node: 002b-first-citizen
+beat: 2
+runner: box
+needs_gpu: true
+priority: 40
+max_attempts: 1
+owner: goblin-wave lane
+
+consumer: >-
+  The decision on whether episode 2's goblin beats can be rendered off the frame
+  Roman picked. Three crossbeat jobs said the recipe transfers on one beat of
+  three; this says whether conditioning on HIS frame instead of on an unapproved
+  tags-only frame is what closes the gap. Its four stills go in front of him
+  beside beat 20's -- which already holds -- and beside his pick. If it holds,
+  the remaining goblin beats get re-cut against this recipe; if it does not, the
+  mechanism is bounded by composition and the wave needs a different answer
+  before any of it renders.
+
+success: >-
+  Sixteen PNGs with provenance sidecars under
+  C:\banyan-farm\goblin-ipa-0810\out-b02-founderpick, of which four are distinct
+  by construction (see the seed note above), published to
+  farm-out/ep2-b02-goblin-founderpick-sample/ with a .sha256 manifest. The job
+  succeeds by producing candidates; whether the creature in them is his is R4's
+  call and no step here scores it.
+
+why: >-
+  One variable against the crossbeat run: the reference image. Same beat, same
+  arm, same window, same scale, same seeds, same prompt. Any difference in the
+  output is the reference and nothing else.
+
+no_metric: >-
+  green_share is NOT run and the DINOv2 identity metric is NOT run. The identity
+  metric is disqualified in taste/steward-model.ledger.yaml for failing to tell
+  one creature from four (724b616, 93356b1), and the founder's standing rule is
+  that a metric agreeing with the steward is not a sample. This is read by eye
+  against his pick.
+
+est_minutes: 3
+needs:
+- cuda
+- vram20
+- farm-venv
+
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '2'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\goblin-ipa-0810\refs-founder-pick
+  - --out
+  - C:\banyan-farm\goblin-ipa-0810\out-b02-founderpick
+  - --arm
+  - window4
+  - --task
+  - ep2-b02-goblin-founderpick-sample-0810
+
+# Durability: the courier commits farm-out and force-pushes on every job_done,
+# and farm-out is NOT gitignored, so publishing is a COPY and needs no runner
+# change. allow_fail so a failed copy never marks a good render failed.
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b02-goblin-founderpick-sample"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/goblin-ipa-0810/out-b02-founderpick/*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        # Hash the COPY: the manifest must attest to the bytes that get committed.
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+        print("   ", os.path.basename(f), h[:16])
+    # newline="\n" is load-bearing on Windows: text mode would append \r to every
+    # filename and shasum -c on the Mac could not open one of them.
+    with open(os.path.join(dst, "ep2-b02-goblin-founderpick-sample.sha256"),
+              "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+
+artifacts:
+- C:\banyan-farm\goblin-ipa-0810\out-b02-founderpick\02-the-sprint-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0810\out-b02-founderpick\02-the-sprint-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0810\out-b02-founderpick\02-the-sprint-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0810\out-b02-founderpick\02-the-sprint-ipa-r3-w015-s0.png
