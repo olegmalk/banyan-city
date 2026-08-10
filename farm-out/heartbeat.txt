@@ -272,3 +272,4 @@
 19:36:30Z box-runner idle ready=0 failed=1
 19:46:33Z box-runner idle ready=0 failed=1
 19:56:36Z box-runner idle ready=0 failed=1
+20:04:23Z STARTED task=ep2-b02-goblin-founderpick-sample-1786392259 attempt=1 on box-runner
