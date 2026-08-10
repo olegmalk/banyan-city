@@ -1,0 +1,186 @@
+# 002b — THE GOBLIN WINDOW MECHANISM ON A BEAT THAT IS NOT BEAT 04.
+# Beat 02, the-sprint. Same recipe, beat-04 references held, the BEAT is the
+# variable.
+#
+# THE VERDICT THIS ANSWERS TO. Roman, 2026-08-10 ~15:00: "the goblin needs abit
+# more regeneration." Nothing here picks, ranks or promotes a frame, and nothing
+# here decides what the goblin looks like — that is R4's and it is not delegated.
+#
+# WHAT IS ALREADY MEASURED, SO THIS DOES NOT RE-ASK IT. On beat 04 the 15%
+# denoise window gets the green back without losing the creature (green_share
+# 0.455 against the tags-only baseline's 0.492 and 0.012 when the reference owns
+# all forty steps, a1dcd32), and it survived being handed twice the evidence
+# that produced it (eight seeds, ep2-b04-goblin-ipa-w015-seeds8). The SECOND
+# KNOB is done too, and it is done today: ep2-b04-goblin-ipa-wscale swept the
+# adapter's strength inside the short window and found the colour drains as
+# strength rises — 0.455 at scale 0.6, 0.404 at 0.8, 0.209 at 1.0. Time and
+# strength are both mapped on beat 04. Re-running either is spending the card on
+# a question with an answer.
+#
+# THE AXIS NOBODY HAS TOUCHED IS THE BEAT, AND IT IS THE ONE THE WAVE DEPENDS
+# ON. Every cell ever drawn used beat 04's prompt AND beat 04's own frames as
+# the reference: a face filling the frame, conditioned on four other faces
+# filling the frame at the same composition. "One creature across seeds"
+# measured that way is partly a statement about a fixed composition — four draws
+# agreeing is not a rare event when the thing they agree on is a face at a fixed
+# framing. The fourteen staged wave beats ask something else entirely: does a
+# beat-04 reference carry the SAME creature into a beat framed nothing like it?
+# If it does not, the wave cannot be rendered off this mechanism whatever the
+# beat-04 numbers say, and "this gives you one goblin per beat" would be a
+# sentence the evidence never supported.
+#
+# WHY BEAT 02 IS THE FIRST ONE ASKED. It is the furthest thing in the set from
+# beat 04: a full-body wide shot of the goblin sprinting and diving, against
+# beat 04's face close-up. If identity survives THAT transfer it will likely
+# survive the medium shots; if it fails, it fails on the easiest case to see —
+# a body, a build and a silhouette, not a subtle facial drift. Beats 15 and 20
+# are queued behind it as the medium and the near cases
+# (ep2-b15-goblin-ipa-crossbeat, ep2-b20-goblin-ipa-crossbeat).
+#
+# NOTHING IN THE RECIPE MOVES. Arm `window4`: the 15% window at scale 0.6 across
+# all four beat-04 references, four seeds each. The seed arithmetic (SEED + beat
+# + i*1000) makes this beat's four distinct from beat 04's by construction, so
+# nothing can overwrite anything. Verified by a --dry run on the box before this
+# spec was written: beat 02 resolves to the-sprint, positive 67/77 real CLIP
+# with 10 tokens of headroom left for the goblin definition, negative 73/77, the
+# style anchor present, the count tag `1boy` as the draft declares.
+#
+# THE READ IS BY EYE AND IT IS A COMPARISON: these sixteen beside the beat-04
+# frames drawn from the same reference. Same creature — same face, same build,
+# same skin — or the beat-04 goblin only when the composition is beat 04's?
+# green_share is run for the COLOUR half only. THE IDENTITY METRIC IS NOT RUN
+# AND NO NUMBER HERE MAY ANSWER THE IDENTITY QUESTION: DINOv2 seed agreement
+# failed twice on this beat family (724b616, 93356b1), calling four visibly
+# different faces one creature. Where a number and the picture disagree, the
+# picture wins.
+#
+# ZERO PROMPT TOKENS ADDED — the founder's "nothing complex" is untouched.
+#
+# THE DRIVER. pipeline/goblin_ipa_beat.py, a wrapper over goblin_ipa_sample.py
+# that owns no sampler code: it names the beat and hands off, so the arms, the
+# window, the sidecars and the seed arithmetic stay in one file and the sidecars
+# keep meaning the same thing. It refuses any beat whose wave draft carries no
+# goblin. scp'd to the box and verified byte-identical to the repo copy before
+# this spec was written (sha256 5e943271...); the sampler is unchanged and
+# stamps its own sha256 b245ee53... into every sidecar.
+#
+# LICENCES, nothing new: animagine-xl-3.1 (CreativeML Open RAIL++-M, D15 open),
+# h94/IP-Adapter Plus SDXL (Apache-2.0), ViT-H image encoder (MIT-derived),
+# diffusers 0.29.2 (Apache-2.0). All cached on the box. $0.
+
+id: ep2-b02-goblin-ipa-crossbeat
+task: ep2-b02-goblin-ipa-crossbeat-0810
+node: 002b-first-citizen
+beat: 2
+runner: box
+needs_gpu: true
+priority: 20
+max_attempts: 1
+owner: refill lane (goblin regeneration, founder directive 2026-08-10)
+
+consumer: >-
+  the fourteen staged goblin wave beats, which are blocked behind the founder's
+  "is this my goblin" verdict and which this mechanism is supposed to unblock.
+  Whether the beat-04 reference holds the creature in a beat framed nothing like
+  beat 04 decides whether those fourteen can be rendered off this recipe at all
+  — and it decides which sentence he gets: "this gives you one goblin across the
+  episode" or "this gives you the green back and the identity holds only inside
+  one composition".
+
+success: >-
+  16 PNGs at C:\banyan-farm\goblin-ipa-0810\out-b02 named
+  02-the-sprint-ipa-r{0..3}-w015-s{0..3}.png with per-frame 7.2 sidecars,
+  published to C:\banyan-farm\courier-box\farm-out\ep2-b02-goblin-ipa-crossbeat,
+  plus a green_share table putting them beside beat 04's w015 rows and the
+  tags-only baseline. A result showing the creature does NOT transfer is a
+  success: the job produces the observation that stops a bad claim before the
+  founder hears it.
+
+metric_warning: >-
+  No identity number is produced here and none may be quoted. The identity read
+  is by eye, comparing this beat's frames against the beat-04 frames from the
+  same reference. green_share measures colour only, and only because its
+  discrimination on this exact footage is recorded in its docstring.
+
+why: >-
+  One variable against ep2-b04-goblin-ipa-window4: the beat. Same arm, same 15%
+  window, same scale 0.6, same four beat-04 references, same seeds-per-cell.
+  Sequential, one image at a time — batch-of-4 configs are banned on this card.
+
+est_minutes: 9
+
+needs: [cuda, vram20, farm-venv]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  - name: sample
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+      - --beat
+      - '2'
+      - --harness
+      - C:\banyan-farm\wave-goblin-prep
+      - --root
+      - C:\banyan-farm\wave-goblin-prep\repo
+      - --refs
+      - C:\banyan-farm\wave-goblin-prep\out
+      - --out
+      - C:\banyan-farm\goblin-ipa-0810\out-b02
+      - --arm
+      - window4
+      - --task
+      - ep2-b02-goblin-ipa-crossbeat-0810
+
+  # allow_fail on purpose: a measurement that falls over must never retire
+  # sixteen rendered frames. The frames are the deliverable; the table is a
+  # convenience, and it answers the colour half only.
+  - name: green
+    allow_fail: true
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - C:\banyan-farm\wave-goblin-prep\green_share.py
+      - baseline-tags-only-b04|C:\banyan-farm\wave-goblin-prep\out\04-the-footnote-wave1-s*.png|sq
+      - b04-w015-r0|C:\banyan-farm\goblin-ipa-0810\out5\04-the-footnote-ipa-r0-w015-s*.png|sq
+      - b02-w015-r0|C:\banyan-farm\goblin-ipa-0810\out-b02\02-the-sprint-ipa-r0-w015-s*.png|sq
+      - b02-w015-r1|C:\banyan-farm\goblin-ipa-0810\out-b02\02-the-sprint-ipa-r1-w015-s*.png|sq
+      - b02-w015-r2|C:\banyan-farm\goblin-ipa-0810\out-b02\02-the-sprint-ipa-r2-w015-s*.png|sq
+      - b02-w015-r3|C:\banyan-farm\goblin-ipa-0810\out-b02\02-the-sprint-ipa-r3-w015-s*.png|sq
+
+  - name: publish
+    allow_fail: true
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - -c
+      - |
+        import glob, hashlib, os, shutil
+        dst = "C:/banyan-farm/courier-box/farm-out/ep2-b02-goblin-ipa-crossbeat"
+        os.makedirs(dst, exist_ok=True)
+        src = sorted(glob.glob("C:/banyan-farm/goblin-ipa-0810/out-b02/*"))
+        lines = []
+        for f in src:
+            shutil.copy2(f, dst)
+            c = os.path.join(dst, os.path.basename(f))
+            with open(c, "rb") as fh:
+                h = hashlib.sha256(fh.read()).hexdigest()
+            lines.append(h + "  " + os.path.basename(f))
+        with open(os.path.join(dst, "ep2-b02-goblin-ipa-crossbeat.sha256"), "w") as fh:
+            fh.write("\n".join(lines) + "\n")
+        print("published", len(src), "file(s) + manifest ->", dst)
+        # 16 stills + 16 sidecars.
+        raise SystemExit(0 if len(src) == 32 else 1)
+
+artifacts:
+  - C:\banyan-farm\goblin-ipa-0810\out-b02\02-the-sprint-ipa-r0-w015-s0.png
+  - C:\banyan-farm\goblin-ipa-0810\out-b02\02-the-sprint-ipa-r1-w015-s0.png
+  - C:\banyan-farm\goblin-ipa-0810\out-b02\02-the-sprint-ipa-r2-w015-s0.png
+  - C:\banyan-farm\goblin-ipa-0810\out-b02\02-the-sprint-ipa-r3-w015-s0.png

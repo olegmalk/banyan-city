@@ -1,0 +1,160 @@
+# ep1 beat 06 "too blue" — ROUND 8, ARM A: ground visible, TALL GRASS.
+# ONE SAMPLE of ONE new formulation. Not a reseed, not a spread.
+#
+# WHY ARM A IS TREATED DIFFERENTLY FROM ARM B THIS ROUND. r7 split: arm B came
+# back clean 4 of 4, arm A came back 2 of 4 contaminated — flat ground and a
+# city skyline still arriving, which are the two things the founder's verdict
+# named ("right now its showing the ground as some flat place, or showing cities
+# for some reason"). A defect that survives a round is not a seed that went
+# wrong; drawing the same prompt at new seeds would be running the leak again
+# and hoping. So arm B is scaled at fresh seeds and arm A's PROMPT moves while
+# its seeds are held at r5's four — the formulation is the variable, and this
+# sets beside r7a column for column.
+#
+# THE FORMULATION, AND IT IS TWO NAMED CHANGES ON TOP OF r7a:
+#
+#   1. `horizon, field` INTO THE NEGATIVE. Arm B already negates `horizon,
+#      field, ground` and arm B is the arm with no leak. Arm A cannot negate
+#      `ground` — its ground is the point — but the other two cost it nothing
+#      and target the defect exactly: a flat plane meeting the sky IS a horizon,
+#      and `field` is the tag for the mown-lawn-to-the-distance composition that
+#      plain `grass` keeps importing. Measured on the box's real CLIP before
+#      this file was written: negative 68/77 sent, all 18 required negatives
+#      surviving the trim (the two new terms are asserted by name, so a silent
+#      trim stops the run instead of testing a prompt the model never saw).
+#
+#   2. `from below` ON THE POSITIVE. This is the second change and it is why
+#      the variant is one job rather than two: a camera looking up through tall
+#      grass CANNOT show a flat plane or a skyline — the blades are between the
+#      lens and the horizon — so it attacks both halves of his verdict as
+#      composition rather than as one more forbidden noun. `from below` is a
+#      real tag on this checkpoint's Danbooru-captioned vocabulary meaning
+#      exactly that camera. It is his own reading of arm A ("show the ground as
+#      having tall grass") stated as a camera instead of as a noun. Positive
+#      measures 38/77, well inside budget, and the style anchor is intact.
+#
+# WHY ONLY ONE ARM-A JOB IN THIS ROUND. Two reasons, both honest. The one-sample
+# rule: this formulation is unproven and gets exactly one 4-seed sample; if it
+# comes back clean it may then be scaled, and that is the founder's call. And a
+# scheduling one: he is being asked to choose between arm A and arm B right now,
+# and if he picks arm B every arm-A frame is waste — so arm A takes one slot of
+# this round's five and arm B takes four.
+#
+# A SECOND FORMULATION WAS MEASURED AND DELIBERATELY NOT QUEUED: `a-neg`, the
+# negative change alone without `from below` (68/77, all traps green). It is the
+# cleaner experiment — it would separate which of the two changes did the work —
+# and it is skipped because separating them is a steward's curiosity and the
+# founder needs a frame. render_b06r8.py keeps it as a named variant, so it is
+# one job away if arm A survives his pick.
+#
+# NOTHING HERE IS A PICK. He gave two acceptable compositions and chose neither.
+#
+# THE DRIVER. pipeline/render_b06r8.py over render_b06r7.py — the wrapper owns no
+# render code, so all nine of r7's traps still run: the byte-for-byte shots.md
+# fence, the r5 control rebuilt and asserted both halves, the anchor, the
+# 77-token survival check extended to this variant's two new terms, `no humans`
+# at the head with no person noun in the negative, and trap 9's occupancy
+# pre-flight. Both files were scp'd to the box and verified byte-identical to
+# the repo copies before this spec was written (render_b06r8.py sha256
+# 61f1697d..., render_b06r7.py sha256 973dc35e..., unchanged from the copy r7
+# itself ran).
+
+id: ep1-b06-r8a2-tallgrass-below
+task: 001-b06-r8a2-tallgrass-below-0810
+node: 001-capability-inventory
+beat: 6
+runner: box
+needs_gpu: true
+priority: 10
+max_attempts: 1
+owner: refill lane (beat 6, founder direction 2026-08-10)
+
+consumer: >-
+  the founder's pick on beat 6, keeping his OTHER option alive. He named two
+  acceptable compositions and chose neither; arm B now has a set and arm A has
+  four frames of which two leak the exact defect he named. If he wants the tall
+  grass, this is whether we can draw it clean. If he picks the sky, this job is
+  the last card arm A costs.
+
+success: >-
+  Four 832x1216 PNGs with sidecars in C:\banyan-farm\b06-r8\out-a2, named
+  06-too-blue-r8a2-s{0..3}.png, published to
+  C:\banyan-farm\courier-box\farm-out\ep1-b06-r8a2-tallgrass-below. Read against
+  the defect and nothing else, as a count out of four beside r7a's 2 of 4: is
+  there a flat plane or a distant horizon line; is there any city, skyline or
+  building; is the ground actually TALL GRASS with blades near the camera (r7a
+  got the grass 4 of 4 and this must not lose it); do people stay at zero of
+  four. A result showing `from below` traded the grass away for a clean horizon
+  is a finding, not a failure — it is the sentence he needs either way.
+
+why: >-
+  One formulation change against ep1-b06-r7a-tallgrass, applied as two named
+  terms: `horizon, field` added to the negative and `from below` added to the
+  positive. Seeds held at r5's four so the prompt is the only variable. Measured
+  on the box's real CLIP before queueing: positive 38/77, negative 68/77, traps
+  2 and 5 through 9 green.
+
+est_minutes: 3
+
+needs: [cuda, vram12, sdxl-venv]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  - name: armA
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - C:\banyan-farm\b06-r8\render_b06r8.py
+      - --variant
+      - a-below
+      - --set
+      - r8a2
+      - --r7-dir
+      - C:\banyan-farm\b06-r7
+      - --root
+      - C:\banyan-farm\banyan-city
+      - --task
+      - 001-b06-r8a2-tallgrass-below-0810
+      - --queue-entry
+      - ep1-b06-r8a2-tallgrass-below
+      - --out
+      - C:\banyan-farm\b06-r8\out-a2
+
+  # allow_fail on purpose: a copy that falls over must never retire four
+  # rendered frames. The frames are the deliverable.
+  - name: publish
+    allow_fail: true
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - -c
+      - |
+        import glob, hashlib, os, shutil
+        dst = "C:/banyan-farm/courier-box/farm-out/ep1-b06-r8a2-tallgrass-below"
+        os.makedirs(dst, exist_ok=True)
+        src = sorted(glob.glob("C:/banyan-farm/b06-r8/out-a2/*"))
+        lines = []
+        for f in src:
+            shutil.copy2(f, dst)
+            c = os.path.join(dst, os.path.basename(f))
+            with open(c, "rb") as fh:
+                h = hashlib.sha256(fh.read()).hexdigest()
+            lines.append(h + "  " + os.path.basename(f))
+        with open(os.path.join(dst, "ep1-b06-r8a2-tallgrass-below.sha256"), "w") as fh:
+            fh.write("\n".join(lines) + "\n")
+        print("published", len(src), "file(s) + manifest ->", dst)
+        # 4 stills + 4 sidecars.
+        raise SystemExit(0 if len(src) == 8 else 1)
+
+artifacts:
+  - C:\banyan-farm\b06-r8\out-a2\06-too-blue-r8a2-s0.png
+  - C:\banyan-farm\b06-r8\out-a2\06-too-blue-r8a2-s1.png
+  - C:\banyan-farm\b06-r8\out-a2\06-too-blue-r8a2-s2.png
+  - C:\banyan-farm\b06-r8\out-a2\06-too-blue-r8a2-s3.png

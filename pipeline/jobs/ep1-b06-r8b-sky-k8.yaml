@@ -1,0 +1,134 @@
+# ep1 beat 06 "too blue" — ROUND 8, ARM B: no ground at all, the frame is SKY.
+# The recipe r7 sent, not one token moved, at four seeds this beat has never
+# drawn. Set 1 of 4 (k=8..11).
+#
+# WHY THIS IS DEPTH AND NOT A NEW RECIPE. r7's arm B came back CLEAN 4 of 4: no
+# ground, no horizon, no landmass, no city, no skyline, no building, no bird, no
+# aircraft, no people. Measured on the box before this file was written, the
+# wrapper sends arm B's positive and negative byte-for-byte as r7 sent them —
+# positive 30/77, negative recipe 77 -> sent 75/77, all 18 required negatives
+# surviving the trim, traps 2 and 5 through 9 green. Nothing about the recipe
+# moves here. What the founder does not have on this composition is a SET: he
+# named it himself ("dont show the ground at all and show the sky"), r7 drew
+# four, and four frames is a thin thing to choose a beat from. This is an
+# approved result queued in depth, which the one-sample rule permits; it is not
+# a recipe change, which is what that rule stops.
+#
+# THE SEEDS CONTINUE THIS BEAT'S OWN ARITHMETIC. 20260725 + k*1000, at k=8..11.
+# r3, r4, r5, r6 and r7 all drew k=4..7, so nothing here can collide with a
+# frame already on disk, and any new frame still sets beside the old ones column
+# for column. The filename tag `r8b-k8` and this job's own out dir keep the four
+# sets apart on the card.
+#
+# NO PICK IS MADE. The founder gave two acceptable compositions and chose
+# neither; the steward chooses between them nowhere. Arm A is being drawn in the
+# same round (ep1-b06-r8a2-tallgrass-below) and neither arm is preferred,
+# ranked, or recommended here.
+#
+# THE DRIVER. pipeline/render_b06r8.py, a wrapper over render_b06r7.py that owns
+# no render code of its own — it names a seed list and hands off, so all nine of
+# r7's traps still run: the byte-for-byte shots.md fence, the r5 control
+# rebuilt and asserted both halves, the anchor, the 77-token survival check on
+# every required negative, `no humans` at the head with no person noun in the
+# negative, and trap 9's occupancy pre-flight. Both files were scp'd to the box
+# and verified byte-identical to the repo copies before this spec was written
+# (render_b06r8.py sha256 61f1697d..., render_b06r7.py sha256 973dc35e...,
+# unchanged from the copy r7 itself ran).
+
+id: ep1-b06-r8b-sky-k8
+task: 001-b06-r8b-sky-k8-0810
+node: 001-capability-inventory
+beat: 6
+runner: box
+needs_gpu: true
+priority: 11
+max_attempts: 1
+owner: refill lane (beat 6, founder direction 2026-08-10)
+
+consumer: >-
+  the founder's pick on beat 6 — the only beat in episode 1 with no frame he has
+  accepted, and the one thing the v35 cut is waiting on (QA-v34-0810.md §"What
+  fires the moment he rules on beat 6"). He named this composition himself and
+  r7 delivered it clean 4 of 4; what he lacks is a set to choose from. These
+  four go to him unranked, beside r7b's four.
+
+success: >-
+  Four 832x1216 PNGs with sidecars in C:\banyan-farm\b06-r8\out-k8, named
+  06-too-blue-r8b-k8-s{0..3}.png, published to
+  C:\banyan-farm\courier-box\farm-out\ep1-b06-r8b-sky-k8. Read against the same
+  four things r7b was read against and nothing else: no ground, horizon or
+  landmass; no bird, aircraft or other occupant in the sky; no city, skyline or
+  building; no people. r7b got 4 of 4 on all four and this round must not lose
+  it. No pick is made and no arm is preferred.
+
+why: >-
+  Zero variables against ep1-b06-r7b-sky except the seed. Same model, size,
+  steps, guidance, positive and negative — verified on the box's real CLIP
+  tokenizer before this file was written.
+
+est_minutes: 3   # r6/r7 measured ~10s/frame on this recipe, plus one model load
+
+needs: [cuda, vram12, sdxl-venv]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  - name: armB
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - C:\banyan-farm\b06-r8\render_b06r8.py
+      - --variant
+      - skyseeds
+      - --seeds
+      - 20268725,20269725,20270725,20271725
+      - --set
+      - r8b-k8
+      - --r7-dir
+      - C:\banyan-farm\b06-r7
+      - --root
+      - C:\banyan-farm\banyan-city
+      - --task
+      - 001-b06-r8b-sky-k8-0810
+      - --queue-entry
+      - ep1-b06-r8b-sky-k8
+      - --out
+      - C:\banyan-farm\b06-r8\out-k8
+
+  # allow_fail on purpose: a copy that falls over must never retire four
+  # rendered frames. The frames are the deliverable.
+  - name: publish
+    allow_fail: true
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - -c
+      - |
+        import glob, hashlib, os, shutil
+        dst = "C:/banyan-farm/courier-box/farm-out/ep1-b06-r8b-sky-k8"
+        os.makedirs(dst, exist_ok=True)
+        src = sorted(glob.glob("C:/banyan-farm/b06-r8/out-k8/*"))
+        lines = []
+        for f in src:
+            shutil.copy2(f, dst)
+            c = os.path.join(dst, os.path.basename(f))
+            with open(c, "rb") as fh:
+                h = hashlib.sha256(fh.read()).hexdigest()
+            lines.append(h + "  " + os.path.basename(f))
+        with open(os.path.join(dst, "ep1-b06-r8b-sky-k8.sha256"), "w") as fh:
+            fh.write("\n".join(lines) + "\n")
+        print("published", len(src), "file(s) + manifest ->", dst)
+        # 4 stills + 4 sidecars.
+        raise SystemExit(0 if len(src) == 8 else 1)
+
+artifacts:
+  - C:\banyan-farm\b06-r8\out-k8\06-too-blue-r8b-k8-s0.png
+  - C:\banyan-farm\b06-r8\out-k8\06-too-blue-r8b-k8-s1.png
+  - C:\banyan-farm\b06-r8\out-k8\06-too-blue-r8b-k8-s2.png
+  - C:\banyan-farm\b06-r8\out-k8\06-too-blue-r8b-k8-s3.png
