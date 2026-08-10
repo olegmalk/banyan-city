@@ -403,6 +403,55 @@ def test_tail_text_never_raises():
     check("unreadable" in br.tail_text("/definitely/not/here.log"), "tail: missing file handled")
 
 
+def test_failed_count_is_visible_without_watching_for_the_event():
+    """A corpse in failed/ must be countable from current state alone.
+
+    The FAIL heartbeat fires once and is gone; this is the standing number that
+    a tick sampling the queue can actually see.
+    """
+    with TempRoot() as root:
+        q = br.Queue(root)
+        eq(q.failed_count(), 0, "failed_count: empty queue reads 0")
+        br.write_json(os.path.join(root, "failed", "j-dead.json"), {"id": "j-dead"})
+        open(os.path.join(root, "failed", "j-dead.log"), "w").write("boom")
+        eq(q.failed_count(), 1, "failed_count: one corpse, log not double-counted")
+        br.write_json(os.path.join(root, "failed", "j-dead2.json"), {"id": "j-dead2"})
+        eq(q.failed_count(), 2, "failed_count: counts each failed job")
+        shutil.rmtree(os.path.join(root, "failed"))
+        eq(q.failed_count(), 0, "failed_count: unreadable dir never raises")
+
+
+def test_recurring_heartbeats_carry_the_failed_count():
+    """Idle and waiting-for-GPU are the lines a sampler sees; both must say it.
+
+    And the token must not read as a job failure to farm_worker's parser, which
+    keys on an uppercase `FAIL task=<id>`.
+    """
+    seen = []
+
+    class FakeCourier(br.Courier):
+        def __init__(self):
+            br.Courier.__init__(self, "/nope", "b", "/nope")
+
+        def mark(self, line, message, files=None):
+            seen.append(line)
+
+    c = FakeCourier()
+    c.emit({"event": "runner_idle", "ready": 0, "failed": 2})
+    c.emit({"event": "runner_waiting_for_gpu", "reason": "busy", "failed": 1})
+    check("failed=2" in seen[0], "idle line carries the failed count")
+    check("failed=1" in seen[1], "waiting line carries the failed count")
+    _done, attempts = br_farm_attempts("\n".join(seen))
+    eq(attempts, {}, "failed=N is not parsed as a FAIL task= mark")
+
+
+def br_farm_attempts(text):
+    """farm_worker's parser, imported lazily so this file stays standalone."""
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import farm_worker  # noqa: E402
+    return farm_worker.heartbeat_attempts(text)
+
+
 def test_queue_creates_its_layout():
     with TempRoot() as root:
         sub = os.path.join(root, "fresh")

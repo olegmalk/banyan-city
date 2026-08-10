@@ -343,6 +343,27 @@ class Queue:
             return (prio, name)
         return sorted(out, key=key)
 
+    def failed_count(self) -> int:
+        """How many jobs are sitting in failed/ right now.
+
+        A job failure already ships once, as a `FAIL task=<id>` heartbeat at the
+        moment it happens. That is an EVENT, and an event is only seen by a
+        reader who was looking when it went past. Every recurring signal this
+        runner emits described the queue as ready/running/done, so a watcher that
+        samples current state -- a tick, a status page, a human running one
+        `dir` -- saw a perfectly healthy queue with a corpse in it. On
+        2026-08-10 `ep2-b04-goblin-ipa-content-1786354532` sat failed for 3.5
+        hours that way. A standing count turns that into something a sample can
+        see.
+        """
+        try:
+            return sum(1 for n in os.listdir(self.dir("failed"))
+                       if n.endswith(".json"))
+        except OSError:
+            # Never let bookkeeping stop a render; an unreadable dir reports 0
+            # and the FAIL event heartbeat is still the authoritative record.
+            return 0
+
     def claim(self, name: str):
         """Atomically move ready/name -> running/name. None if someone beat us."""
         src = os.path.join(self.dir("ready"), name)
@@ -551,10 +572,12 @@ class Courier:
             self.mark("box-runner down after %s job(s)"
                       % record.get("jobs_completed"), "hb: runner down")
         elif event == "runner_idle":
-            self.mark("box-runner idle ready=%s" % record.get("ready", 0),
+            self.mark("box-runner idle ready=%s failed=%s"
+                      % (record.get("ready", 0), record.get("failed", 0)),
                       "hb: idle")
         elif event == "runner_waiting_for_gpu":
-            self.mark("box-runner waiting for GPU: %s" % record.get("reason"),
+            self.mark("box-runner waiting for GPU: %s failed=%s"
+                      % (record.get("reason"), record.get("failed", 0)),
                       "hb: waiting for GPU")
 
 
@@ -806,7 +829,8 @@ def main(argv=None) -> int:
                         break
                     now = time.time()
                     if now - last_idle_beat > HEARTBEAT_SECONDS:
-                        queue.beat({"event": "runner_idle", "ready": 0})
+                        queue.beat({"event": "runner_idle", "ready": 0,
+                                    "failed": queue.failed_count()})
                         last_idle_beat = now
                     time.sleep(args.poll)
                     consecutive_errors = 0
@@ -828,7 +852,8 @@ def main(argv=None) -> int:
                         if now - last_idle_beat > HEARTBEAT_SECONDS:
                             say("waiting for GPU (%s) -- %s queued" % (why, len(names)))
                             queue.beat({"event": "runner_waiting_for_gpu", "reason": why,
-                                        "next_job": name[:-5], "ready": len(names)})
+                                        "next_job": name[:-5], "ready": len(names),
+                                        "failed": queue.failed_count()})
                             last_idle_beat = now
                         if args.once and args.no_wait:
                             say("GPU busy and --no-wait -- exiting")
