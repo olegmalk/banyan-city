@@ -1,0 +1,171 @@
+# ep1 beat 06 — HIS FRAME, REGENERATED WITH LESS CLOUD. Ladder step 4 of 5.
+#
+# THE VERDICT, VERBATIM (2026-08-10, ~17:40, then he left): "this one, now im
+# gonna go, bye. but actually, regenerate it. too many clouds. you almost got
+# it".
+#
+# WHAT IS SETTLED BY THAT SENTENCE, AND IS NOT REOPENED HERE. He was pointing at
+# an ARM B frame, so the composition question is closed: sky, no ground. Arm A —
+# the tall-grass reading — stops here; the one a-below sample already queued is
+# the last of it. "You almost got it" is the other half of the instruction and
+# it is a constraint, not a compliment: the framing, the low upward camera and
+# the bright daylight palette are RIGHT, and nothing in this job touches them.
+#
+# WHICH FRAME HE MEANT, AND HOW THAT WAS ESTABLISHED — read this before trusting
+# the seed. The four arm-B candidates were pulled off the box and looked at.
+# 06-too-blue-r7b-s0.png is the only one matching the frame he was shown: cumulus
+# banked across the top, both sides and the bottom, open blue reduced to narrow
+# wedges at upper-left and centre-left, a faint rainbow streak right of centre
+# and a lens-flare sun star. s1 is a single central tower with broad open blue,
+# s2 keeps half the frame clear on the left, s3 puts its blue on the right. So
+# the seed here is s0's, 20264725. THIS IS AN INFERENCE FROM A DESCRIPTION OF
+# WHAT HE POINTED AT, not something he said, and it is written down as such: if
+# it is wrong, the ladder is drawing the right fix on the wrong picture and the
+# whole set should be re-run at the true seed. 20265725 (s1) rides along as the
+# second seed so each step also shows what it does to a frame with a different
+# cloud arrangement.
+#
+# WHY A LADDER AND NOT ONE GUESS. "Fewer clouds" is a dial, not a setting, and
+# nobody has drawn this beat anywhere along it. He is gone and cannot look at a
+# sample, so scaling one untested formulation to sixteen frames is exactly what
+# the ONE SAMPLE rule forbids — that is how fifteen beats were once rendered on
+# a recipe nobody had looked at. Stepping the axis instead is exploration, which
+# is sanctioned: five formulations, one job each, two seeds each, so when he is
+# back he picks a POINT ON THE DIAL rather than re-rejecting another guess.
+# THE STEWARD PICKS NO POINT ON IT.
+#
+#   step 1             `clear sky` asked for, `cloud` still in the positive
+#   step 2             + `overcast` negated
+#   step 3             `cloud` OUT of the positive
+#   step 4             + `sunny`
+#   step 5             `cloud` negated outright — the far end, to bound the dial
+#
+# THIS JOB IS STEP 4: step 3 plus `sunny` — the open bright-daylight reading of the same frame,
+# still without negating cloud outright.
+#
+# THE LEVER IS THE POSITIVE AND THE NEGATIVE IS BACKUP. `clear sky` is a real
+# tag on this checkpoint's Danbooru-captioned vocabulary and it goes into the
+# slot r7 deleted `scenery` from, so no other tag in the positive moves. The
+# negative side carries `cloudy sky` underneath it. That reinforcement is worth
+# having HERE because this path runs at guidance 7.5: at guidance 1.0 the
+# negative is never evaluated at all and every suppression written into it is
+# decoration. (That is the trap the LTX video jobs live with, not this one.)
+#
+# MEASURED ON THE BOX'S REAL CLIP BEFORE THIS FILE WAS WRITTEN — positive 33/77,
+# negative recipe 74 -> sent 72/77, all 20 required negatives surviving the trim,
+# traps 2 and 5 through 9 green:
+#   POS  no humans, clear sky, sunny, sky, blue sky, day, sunlight, cinematic
+#        lighting, detailed, newest, masterpiece, best quality, very aesthetic
+#   NEG  photorealistic, 3d render, abstract, text, watermark, signature, low
+#        quality, blurry, extra limbs, deformed, jpeg artifacts, leaf, plant,
+#        stem, foliage, tree, photorealism, cityscape, city, building, skyline,
+#        road, mountain, grass, field, horizon, ground, animal, bird, aircraft,
+#        cloudy sky, overcast
+#
+# THE DRIVER. pipeline/render_b06r8.py over render_b06r7.py, so r7's nine traps
+# still run on every frame — including trap 5 asserting this step's own new
+# terms reached the model rather than being trimmed at 77, and trap 6 asserting
+# the ground stays out. scp'd to the box and verified byte-identical to the repo
+# copy before this spec was written (sha256 fa1d8f91...).
+#
+# NOTHING HERE IS A PICK, A PROMOTION, A PUBLICATION OR A SPEND.
+
+id: ep1-b06-r8c-clear4
+task: 001-b06-r8c-clear4-0810
+node: 001-capability-inventory
+beat: 6
+runner: box
+needs_gpu: true
+priority: 4
+max_attempts: 1
+owner: refill lane (beat 6 cloud ladder, founder verdict 2026-08-10)
+
+consumer: >-
+  the founder, the moment he is back. He chose this composition and named one
+  fix; beat 6 is the last unresolved frame in episode 1 and the v35 cut fires on
+  his ruling (QA-v34-0810.md). This is the open-daylight step he asked
+  for, and it exists so his choice is "which of these" rather than "no, again".
+
+success: >-
+  Two 832x1216 PNGs with sidecars in C:\banyan-farm\b06-r8\out-clear4, named
+  06-too-blue-r8c-step4-s{0,1}.png, published to
+  C:\banyan-farm\courier-box\farm-out\ep1-b06-r8c-clear4. Read against three
+  things: is there visibly MORE open blue than in 06-too-blue-r7b-s0.png (the
+  frame he called "too many clouds"); is the low upward angle, the palette and
+  the daylight feel still his; and does the ground stay out — no ground,
+  horizon, landmass, city, skyline, bird or aircraft, which arm B got 4 of 4 and
+  must not lose. A step that changes nothing visible is a finding: it locates
+  the bottom of the dial.
+
+why: >-
+  One variable against ep1-b06-r7b-sky at the same seed: cloud density. `clear
+  sky` added to the positive in the slot `scenery` vacated, `cloudy sky` added
+  to the negative. Everything else — model, size, steps, guidance 7.5, seed,
+  every other tag — is the frame he approved.
+
+est_minutes: 2
+
+needs: [cuda, vram12, sdxl-venv]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  - name: clear4
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - C:\banyan-farm\b06-r8\render_b06r8.py
+      - --variant
+      - b-clear
+      - --step
+      - '4'
+      - --seeds
+      - 20264725,20265725
+      - --set
+      - r8c-step4
+      - --r7-dir
+      - C:\banyan-farm\b06-r7
+      - --root
+      - C:\banyan-farm\banyan-city
+      - --task
+      - 001-b06-r8c-clear4-0810
+      - --queue-entry
+      - ep1-b06-r8c-clear4
+      - --out
+      - C:\banyan-farm\b06-r8\out-clear4
+
+  # allow_fail on purpose: a copy that falls over must never retire rendered
+  # frames. The frames are the deliverable.
+  - name: publish
+    allow_fail: true
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - -c
+      - |
+        import glob, hashlib, os, shutil
+        dst = "C:/banyan-farm/courier-box/farm-out/ep1-b06-r8c-clear4"
+        os.makedirs(dst, exist_ok=True)
+        src = sorted(glob.glob("C:/banyan-farm/b06-r8/out-clear4/*"))
+        lines = []
+        for f in src:
+            shutil.copy2(f, dst)
+            c = os.path.join(dst, os.path.basename(f))
+            with open(c, "rb") as fh:
+                h = hashlib.sha256(fh.read()).hexdigest()
+            lines.append(h + "  " + os.path.basename(f))
+        with open(os.path.join(dst, "ep1-b06-r8c-clear4.sha256"), "w") as fh:
+            fh.write("\n".join(lines) + "\n")
+        print("published", len(src), "file(s) + manifest ->", dst)
+        # 2 stills + 2 sidecars.
+        raise SystemExit(0 if len(src) == 4 else 1)
+
+artifacts:
+  - C:\banyan-farm\b06-r8\out-clear4\06-too-blue-r8c-step4-s0.png
+  - C:\banyan-farm\b06-r8\out-clear4\06-too-blue-r8c-step4-s1.png
