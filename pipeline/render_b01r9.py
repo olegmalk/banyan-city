@@ -573,8 +573,24 @@ def sidecar(png: Path, *, seed: int, arm: str, scale: float, pos: str, neg: str,
             f"positive_clip_tokens: {pos_tokens}",
             f"negative_clip_tokens: {neg_tokens}",
             "tokenizer: openai/clip-vit-large-patch14 (transformers, on the box)",
-            "positive_identical_to_r8: true",
-            "negative_identical_to_r7: true",
+            # COMPUTED, not asserted. Both were literal `true` through Stage 1,
+            # which was safe only by luck of ordering: C2 and C3 above refuse the
+            # run (exit 5 / exit 7) before a pixel exists if either string has
+            # moved, so no sidecar could ever have been written with a false
+            # claim here. "Safe because something else refuses first" is not the
+            # same as "checked", and twelve Stage 2 sidecars are twelve copies of
+            # the difference. The comparison is now the one the field names.
+            f"positive_identical_to_r8: {str(pos == R8_POS_SENT).lower()}",
+            f"negative_identical_to_r7: {str(neg == R7_NEG_SENT).lower()}",
+            # The SENT negative is r7's 72-token string, which is the 75-token
+            # written recipe minus `realistic skin texture` and `jpeg artifacts`
+            # — dropped by the shared 77-token budget trimmer, not by this
+            # script. Recorded so a reader of these twelve sidecars does not have
+            # to diff NEG against R7_NEG_SENT to discover the round is running a
+            # trimmed negative on purpose. The untrimmed text is in this file's
+            # own header comment, and the terms the budget dropped are in the
+            # NEGWARN line beside it.
+            f"negative_is_budget_trimmed: {str(neg != neg_full).lower()}",
             "shots_md_edited: false",
             f"repo_commit: {commit}",
             "provenance_warning: >-" if prov_warning else
