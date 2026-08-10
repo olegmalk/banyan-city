@@ -1,0 +1,155 @@
+# ep1 beat 06 "too blue" — ROUND 6, ARM B: no ground at all, the frame is SKY.
+# One candidate set, four seeds. The other half of this round is
+# `ep1-b06-r6a-tallgrass.yaml` and the two are ALTERNATIVES, not a sweep with a
+# winner.
+#
+# WHY THIS EXISTS. The founder (R4) rejected every beat-6 candidate this tree has
+# ever drawn — rounds 3, 4, 5 and the `fix` set — on 2026-08-10 ~15:00 local, and
+# gave the composition in the same sentence:
+#
+#     "none of the beat 6 images will work, you either show the ground as having
+#     tall grass or dont show the ground at all and show the sky, right now its
+#     showing the ground as some flat place, or showing cities for some reason"
+#
+# Two acceptable readings, and he chose neither. This job renders the second one.
+# THE STEWARD MAKES NO PICK BETWEEN THE ARMS anywhere in this round — showing him
+# both is the point of it. Recorded in taste/steward-model.ledger.yaml at commit
+# d71cadb, where the round-5 pick `b06-r5-s2` is scored an honest MISS.
+#
+# THE CITIES ARE A DIAGNOSED PROMPT FAULT, NOT BAD LUCK, AND NOT A TRIM. Every
+# negative this beat has ever sent was read back from its own sidecars — r3, r4,
+# r5 and the fix set — and NOT ONE contains city, cityscape, building, skyline,
+# skyscraper, industrial, town or architecture. A city has never once been
+# forbidden here. It is also not the token budget: r5's negative measured 51 of
+# 77 on the box's real CLIP with 26 tokens spare, so nothing was trimmed away.
+# The term was never written. The positive side is the other half: r5's one
+# tactic was to speak native Danbooru tags and the tag it chose for "a landscape"
+# was `scenery` — the umbrella whose children include `cityscape`, 62,273 posts
+# against 19,945 (qdlabs/danbooru-tags mirror on HuggingFace, read 2026-08-10;
+# danbooru.donmai.us itself timed out from here as it did for r5 and is NOT cited
+# as if it had been read). r5 is the first round on this beat to carry `scenery`,
+# and r5 is the round that drew a city through s0's ring and an industrial
+# skyline along s1's bottom edge. Both arms delete the tag AND negate the block.
+#
+# WHAT ARM B SENDS, MEASURED ON THE BOX'S REAL CLIP BEFORE THIS FILE WAS WRITTEN
+# (positive 30/77, negative 71/77, all fifteen required terms survived the trim,
+# r5 control reproduced byte-for-byte on both halves):
+#   POS  no humans, sky, blue sky, day, cloud, sunlight, cinematic lighting,
+#        detailed, newest, masterpiece, best quality, very aesthetic
+#   NEG  photorealistic, 3d render, abstract, text, watermark, signature, low
+#        quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin
+#        texture, leaf, plant, stem, foliage, tree, photorealism, text,
+#        cityscape, city, building, skyline, road, mountain, grass, field,
+#        horizon, ground
+#
+# THE POSITIVE IS r5's WITH `scenery` DELETED AND NOTHING PUT IN ITS PLACE.
+# `sky, blue sky, day, cloud, sunlight` is already the whole subject. What is new
+# is that the GROUND LEAVES THROUGH THE NEGATIVE rather than through silence —
+# which is exactly what r5 tried and what failed. r5 named no ground noun in
+# either half of its prompt and still came back with four wide landscapes on a
+# horizon, because `scenery` supplied one. So `grass, field, horizon, ground,
+# mountain` are negated here, and `grass` is negated in precisely the arm that is
+# not about grass.
+#
+# THE LOCAL ESTIMATOR SAID THIS NEGATIVE WAS OVER BUDGET AND IT WAS WRONG.
+# `sd_prompt._token_estimate` without transformers called it 74 and warned; the
+# box's real CLIP says 71 with every required term present. That is the standing
+# reason this script exits 8 rather than measure anywhere but on the card.
+#
+# WHAT IS HELD FIXED WHILE THE COMPOSITION MOVES: `no humans` at the HEAD of the
+# POSITIVE with no person noun anywhere in the negative. That is r5's one
+# confirmed win — a girl in 2 of 4 (r3) and 3 of 4 (r4) down to zero in 4 of 4 —
+# and his verdict does not mention people. Traps 7 and 8 refuse the run if either
+# half of it slips.
+#
+# SEEDS ARE r5's OWN FOUR, this beat's k=4..7, which r3 and r4 also drew. Both
+# arms run the same four, so A against B is a comparison of the prompt and not of
+# the noise, and either arm still sets beside the rejected rounds column for
+# column.
+#
+# THE SCRIPT IS NOT READ FROM THE SHARED CLONE, ON PURPOSE. Other lanes are
+# rendering out of C:\banyan-farm\banyan-city right now and pulling it forward
+# could change a file under a running job. render_b06r6.py was copied to its own
+# directory and verified byte-for-byte at both ends (sha256
+# 074fdcc2a975ac950423251f95f7c725c6eb21c215a9f0197a31247c3ff3982d, repo commit
+# fa479ad). The clone is still used for --root, and that is safe BECAUSE of the
+# traps rather than in spite of them: trap 1 asserts the beat-6 fence is
+# byte-identical to what r5 rendered and trap 2 rebuilds r5's exact sent prompt
+# and negative from that checkout's own sd_prompt.py. A clone behind HEAD cannot
+# pass both and silently send something else.
+#
+# SEQUENTIAL, NOT BATCHED. This is a second job rather than a second step in arm
+# A's, so either arm can fail alone and neither waits on the other's model load
+# being reusable. Batch-of-4 configs are banned on this box (WDDM bugchecks).
+#
+# WHAT THIS IS NOT: no pick, no ranking, no arm recommended, no promotion to
+# canon, no publication, no spend, and shots.md is not edited.
+
+id: ep1-b06-r6b-sky
+task: 001-b06-r6b-sky-0810
+node: 001-capability-inventory
+beat: 6
+runner: box
+needs_gpu: true
+priority: 13
+max_attempts: 1
+owner: b06-r6
+
+consumer: >-
+  the founder's choice between his own two options. He rejected every beat-6
+  frame that exists and named two compositions he would accept; this is the
+  second of them, and showing him only one would be the steward choosing for
+  him. Beat 6 is the last beat in episode 1 with no frame of his, and v34 is
+  currently holding a frame he has rejected. Priority 13 puts it immediately
+  behind arm A so the pair lands together for one review pass.
+
+success: >-
+  Four 832x1216 PNGs with sidecars in C:\banyan-farm\b06-r6\out, named
+  06-too-blue-r6b-s{0..3}.png. Read against exactly three things and nothing
+  else: is there NO ground in frame at all — no horizon line, no field, no
+  grass, no mountain, the picture is sky; is there any city, skyline, building
+  or industrial silhouette anywhere (his second named defect — zero of four is
+  the bar); and does r5's people result hold at zero of four with the person
+  nouns still out of the negative. No pick is made and no arm is preferred.
+
+why: >-
+  r5 removed every ground noun from its prompt and still drew a horizon, because
+  `scenery` supplied one. This arm removes the tag AND negates the ground
+  explicitly, which is the difference between not asking for something and
+  refusing it.
+
+est_minutes: 2   # r5 measured 9s/frame on this recipe, plus one model load
+
+needs: [cuda, vram12, sdxl-venv]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  - name: armB
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - C:\banyan-farm\b06-r6\render_b06r6.py
+      - --root
+      - C:\banyan-farm\banyan-city
+      - --arm
+      - B
+      - --task
+      - 001-b06-r6b-sky-0810
+      - --queue-entry
+      - ep1-b06-r6b-sky
+      - --out
+      - C:\banyan-farm\b06-r6\out
+
+artifacts:
+  - C:\banyan-farm\b06-r6\out\06-too-blue-r6b-s0.png
+  - C:\banyan-farm\b06-r6\out\06-too-blue-r6b-s1.png
+  - C:\banyan-farm\b06-r6\out\06-too-blue-r6b-s2.png
+  - C:\banyan-farm\b06-r6\out\06-too-blue-r6b-s3.png
