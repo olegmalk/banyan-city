@@ -1,0 +1,139 @@
+# 002b goblin wave, round 1 -- beat 11 they-leave. STAGED, NOT QUEUED.
+#
+# One of fourteen. The fifteenth (beat 04 the-footnote) is the ONE SAMPLE and it
+# has already been drawn; these fourteen wait on the founder's verdict on it.
+# Written by the queue-fill lane on 2026-08-10, untracked-adjacent: nothing here
+# has been enqueued and no GPU time was spent writing it.
+#
+# MEASURED, NOT GUESSED. On the real CLIP tokenizer on the box, this beat is
+# 59/77 positive tokens with the goblin slot filled by `green skin`, leaving
+# 18 tokens of headroom, and 45 negative. The binding beat of the whole wave is
+# 08 inside-him at 9 headroom. The measurement matters because compress() drops
+# TRAILING sentences and the style anchor is always last -- an overrun does not
+# come back truncated, it comes back unstyled, silently.
+
+id: ep2-b11-goblin-wave1
+task: ep2-b11-goblin-wave1-0810
+node: 002b-first-citizen
+beat: 11
+runner: box
+needs_gpu: true
+priority: 45
+max_attempts: 1
+owner: queue-fill (002b goblin wave)
+
+gate: >-
+  The founder has NOT ruled on the one sample. Beat 04 was drawn at
+  12:37 on 2026-08-10 (4 seeds, out\04-the-footnote-wave1-s*.png) against his
+  definition; his verdict on THAT is what releases these fourteen. CLAUDE.md,
+  founder 2026-08-03: one sample per recipe change, and his definition is the
+  recipe change. box_enqueue.py refuses any spec carrying this key, so the
+  wave cannot fire by accident -- clearing it is a human deleting the key
+  after he says yes, and if he says no the goblin_def below is wrong and
+  every one of these specs must be re-cut before it is worth enqueueing.
+
+consumer: >-
+  The founder's pick sheet for episode 2. Beat 11 they-leave has no candidate
+  frame drawn against his goblin definition -- every existing candidate for it
+  predates 2026-08-10 and was scored against a goblin he had not defined, which
+  is what taste ledger record 32 suspended P2 over. This job draws the four he
+  picks one of. No pick, no still for the beat, no episode 2.
+
+success: >-
+  Four PNGs at C:\banyan-farm\wave-goblin-prep\out\11-they-leave-wave1-s0..3.png,
+  each with its .yaml provenance sidecar written at render time (7.2), all four
+  declared as artifacts so a missing one fails the job rc=92 rather than passing
+  quietly. Whether the goblin in them is right is R4's call, not this job's --
+  the job succeeds by producing candidates, not by them being good.
+
+why: >-
+  One variable against the sample: the beat. Same harness, same drafts file, same
+  goblin definition string, same seeds base, same steps and guidance. If this
+  comes back different in kind from beat 04's sample, the difference is the
+  beat's own staging and not the recipe.
+
+goblin_def: green skin, tusks
+goblin_def_source: >-
+  The founder, 2026-08-10 ~12:15, verbatim: "he is just a simple green goblin,
+  nothing complex" (cuts/cuts.yaml item 18, settled; commit d33fb09). The string
+  above is the STEWARD'S TRANSLATION of that sentence into slot tags and is NOT
+  his words -- `green skin` is his one named attribute, `tusks` is not a word he
+  said. It is pinned here only because it is the exact string the ONE SAMPLE was
+  drawn with; changing it here without redrawing the sample would mean these
+  fourteen render a recipe he never saw.
+
+est_minutes: 2
+needs:
+- cuda
+- vram20
+- farm-venv
+
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '11'
+  - --goblin-def
+  - green skin, tusks
+  - --task
+  - ep2-b11-goblin-wave1-0810
+
+# DURABILITY. Every clip and still this farm has made lands single-copy on a
+# box nothing backs up, and 04-the-fall-LTX-r4.mp4 sat stranded eight hours
+# because .gitignore:57 swallows media under review/ so git showed nothing
+# missing. This step closes that WITHOUT touching the runner: the courier
+# already commits `git add -A -- farm-out` and force-pushes
+# farm-results-rtx5090 on every job_done (box_runner.py:486-506), farm-out is
+# NOT gitignored (verified with git check-ignore), and it is already carrying a
+# 406KB mp4 that is live on origin right now. So publishing is a COPY, not a git
+# command -- no credentials, no second worktree, no daemon change, and the
+# runner that survived the fleet wipe stays byte-identical.
+#
+# allow_fail: a failed copy must never mark a good render failed. If it fails
+# the stills are still on the box and the log says so.
+# Forward slashes on purpose: Windows Python takes them, and they keep this
+# code out of YAML's backslash-escape minefield.
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-goblin-wave1"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/wave-goblin-prep/out/11-they-leave-wave1-s*.*"))
+    for f in src:
+        shutil.copy2(f, dst)
+    print("published", len(src), "file(s) ->", dst)
+    for f in src:
+        print("   ", os.path.basename(f))
+    # 4 stills + 4 sidecars. Fewer means the render wrote less than it
+    # promised, and allow_fail keeps that a loud log line, not a failed job.
+    raise SystemExit(0 if len(src) == 8 else 1)
+
+artifacts:
+- C:\banyan-farm\wave-goblin-prep\out\11-they-leave-wave1-s0.png
+- C:\banyan-farm\wave-goblin-prep\out\11-they-leave-wave1-s1.png
+- C:\banyan-farm\wave-goblin-prep\out\11-they-leave-wave1-s2.png
+- C:\banyan-farm\wave-goblin-prep\out\11-they-leave-wave1-s3.png
+- C:\banyan-farm\wave-goblin-prep\out\11-they-leave-wave1-s0.yaml
+- C:\banyan-farm\wave-goblin-prep\out\11-they-leave-wave1-s1.yaml
+- C:\banyan-farm\wave-goblin-prep\out\11-they-leave-wave1-s2.yaml
+- C:\banyan-farm\wave-goblin-prep\out\11-they-leave-wave1-s3.yaml
