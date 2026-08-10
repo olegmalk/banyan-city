@@ -1,0 +1,35 @@
+# Leaf metadata — every render publishes its full provenance (§7.2)
+leaf: 006b-t0-b
+node: "006b"
+tier: T0
+form: text-script
+content: ../node.md
+author: steward (model-written to SCRIPT-SPEC.md 'one beat = one shot'; successor of 006b-t0-a)
+model: claude-opus-5
+prompt: loop cycle 007 (shot density) applied 2026-08-10 + 006b-t0-a scenes and dialogue verbatim + style.md growth ladder (~1.6 m, same rung as sibling 006a)
+seed: none
+cost_usd: 0.00
+status: live
+platform_urls: []
+notes: >-
+  36 beats / ~182s = a cut every 5.1s at 0.8 spoken lines per shot, replacing 4
+  shots for the same material (one picture every 22 seconds). Nothing was
+  added: the four scenes were cut into their own pictures and the long speeches
+  split at the sentence. No beat carries more than ~6s of voice, so no clip has
+  to loop or freeze to cover its line.
+  RUNTIME IS THE AUTHOR'S CALL (R4): 006b-t0-a's header said 60-90s, but its
+  text has always held ~3 minutes of speech — the header was a guess, not a
+  measurement, and re-cutting revealed it rather than causing it. Getting to
+  ~2:00 means cutting material, which is the founder's decision, not the
+  steward's. Cheapest candidates if he wants them, in order: beats 13-14
+  ("ledger versus production" / "a worse robe"), beat 21 (the seal), beat 11
+  ("the sky, ma'am?"), beat 05 (the headcount).
+  Two beats run 7s by design — 23 (the console line, the episode's central
+  idea) and 36 (the closing hook). Both are far inside the 16.04s clip ceiling
+  measured 2026-08-10.
+  Beat time ranges are ESTIMATED from word counts, not measured: retime_beats.py
+  needs voice takes and this node has none. They must be re-derived the first
+  time it is voiced.
+comprehension_gate: see sap/gate-t0-b-transcript.md (two independent cold readers, 2026-08-10)
+approved_by: none          # STEWARDSHIP.md §6 — DRAFT until the founder
+                           # has read it; no media may be produced from it

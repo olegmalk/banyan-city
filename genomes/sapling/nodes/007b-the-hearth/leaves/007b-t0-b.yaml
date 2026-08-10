@@ -1,0 +1,32 @@
+# Leaf metadata — every render publishes its full provenance (§7.2)
+leaf: 007b-t0-b
+node: "007b"
+tier: T0
+form: text-script
+content: ../node.md
+author: steward (model-written to SCRIPT-SPEC.md 'one beat = one shot'; successor of 007b-t0-a)
+model: claude-opus-5
+prompt: loop cycle 007 (shot density) applied 2026-08-10 + 007b-t0-a scenes and dialogue verbatim + style.md growth ladder (~1.6 m, same rung as 006b/007a)
+seed: none
+cost_usd: 0.00
+status: live
+platform_urls: []
+notes: >-
+  36 beats / ~173s = a cut every 4.8s at 0.75 spoken lines per shot, replacing
+  5 shots for the same material. The investigation was the worst offender: four
+  days of findings lived in one code block under one held image, and each day
+  is now its own wireframe picture with its own line. Nothing was added; the
+  speeches were split at the sentence. No beat carries more than ~6s of voice.
+  RUNTIME IS THE AUTHOR'S CALL (R4) — same as 006b-t0-b: the 60-90s header was
+  a guess and the text has always held ~3 minutes of speech. Cheapest cuts if
+  the founder wants ~2:00, in order: beats 04-05 (the slab stack and the
+  dashboards joke), beat 28 ("you never get the hours back"), beat 13 (the
+  hearth-tax notice), beat 03 (four characters).
+  Beat 23 runs 7s by design (the uptime line). Well inside the 16.04s clip
+  ceiling measured 2026-08-10.
+  Beat time ranges are ESTIMATED from word counts, not measured: retime_beats.py
+  needs voice takes and this node has none. They must be re-derived the first
+  time it is voiced.
+comprehension_gate: see sap/gate-t0-b-transcript.md (two independent cold readers, 2026-08-10)
+approved_by: none          # STEWARDSHIP.md §6 — DRAFT until the founder
+                           # has read it; no media may be produced from it
