@@ -184,3 +184,4 @@
 13:38:41Z STARTED task=ep1-b06-r8b-sky-k16-1786368660 attempt=1 on box-runner
 13:39:31Z DONE task=ep1-b06-r8b-sky-k16-1786368660 rc=0 artifacts=4
 13:40:18Z STARTED task=ep1-b10-v34-plate-r2e-reseed-1786364799 attempt=1 on box-runner
+13:45:02Z DONE task=ep1-b10-v34-plate-r2e-reseed-1786364799 rc=0 artifacts=2
