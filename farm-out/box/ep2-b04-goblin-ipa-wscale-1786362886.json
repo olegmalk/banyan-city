@@ -1,0 +1,91 @@
+{
+  "id": "ep2-b04-goblin-ipa-wscale-1786362886",
+  "task": "ep2-b04-goblin-ipa-wscale-0810",
+  "node": "002b-first-citizen",
+  "beat": 4,
+  "worker": "box-runner",
+  "priority": 41,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "sample",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\wave-goblin-prep\\goblin_ipa_sample.py",
+        "--harness",
+        "C:\\banyan-farm\\wave-goblin-prep",
+        "--root",
+        "C:\\banyan-farm\\wave-goblin-prep\\repo",
+        "--refs",
+        "C:\\banyan-farm\\wave-goblin-prep\\out",
+        "--out",
+        "C:\\banyan-farm\\goblin-ipa-0810\\out8",
+        "--arm",
+        "wscale",
+        "--task",
+        "ep2-b04-goblin-ipa-wscale-0810"
+      ]
+    },
+    {
+      "name": "green",
+      "allow_fail": true,
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\wave-goblin-prep\\green_share.py",
+        "baseline-tags-only|C:\\banyan-farm\\wave-goblin-prep\\out\\04-the-footnote-wave1-s*.png|sq",
+        "arm1-r0-all40steps|C:\\banyan-farm\\goblin-ipa-0810\\out\\04-the-footnote-ipa-r0-c060-s*.png|sq",
+        "arm3-r0-w015|C:\\banyan-farm\\goblin-ipa-0810\\out3\\04-the-footnote-ipa-r0-w015-s*.png|sq",
+        "arm3-r0-w025|C:\\banyan-farm\\goblin-ipa-0810\\out3\\04-the-footnote-ipa-r0-w025-s*.png|sq",
+        "arm7-r0-w015-scale080|C:\\banyan-farm\\goblin-ipa-0810\\out8\\04-the-footnote-ipa-r0-w015-c080-s*.png|sq",
+        "arm7-r0-w015-scale100|C:\\banyan-farm\\goblin-ipa-0810\\out8\\04-the-footnote-ipa-r0-w015-c100-s*.png|sq"
+      ]
+    },
+    {
+      "name": "publish",
+      "allow_fail": true,
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b04-goblin-ipa-wscale\"\nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/goblin-ipa-0810/out8/*\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b04-goblin-ipa-wscale.sha256\"), \"w\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\n# 8 stills + 8 sidecars.\nraise SystemExit(0 if len(src) == 16 else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\goblin-ipa-0810\\out8\\04-the-footnote-ipa-r0-w015-c080-s0.png",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out8\\04-the-footnote-ipa-r0-w015-c080-s1.png",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out8\\04-the-footnote-ipa-r0-w015-c080-s2.png",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out8\\04-the-footnote-ipa-r0-w015-c080-s3.png",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out8\\04-the-footnote-ipa-r0-w015-c100-s0.png",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out8\\04-the-footnote-ipa-r0-w015-c100-s1.png",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out8\\04-the-footnote-ipa-r0-w015-c100-s2.png",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out8\\04-the-footnote-ipa-r0-w015-c100-s3.png"
+  ],
+  "started_at": "2026-08-10T12:06:11Z",
+  "attempts": 1,
+  "runner_pid": 3552,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-10T12:07:44Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\goblin-ipa-0810\\out8\\04-the-footnote-ipa-r0-w015-c080-s0.png",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out8\\04-the-footnote-ipa-r0-w015-c080-s1.png",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out8\\04-the-footnote-ipa-r0-w015-c080-s2.png",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out8\\04-the-footnote-ipa-r0-w015-c080-s3.png",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out8\\04-the-footnote-ipa-r0-w015-c100-s0.png",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out8\\04-the-footnote-ipa-r0-w015-c100-s1.png",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out8\\04-the-footnote-ipa-r0-w015-c100-s2.png",
+    "C:\\banyan-farm\\goblin-ipa-0810\\out8\\04-the-footnote-ipa-r0-w015-c100-s3.png"
+  ]
+}
