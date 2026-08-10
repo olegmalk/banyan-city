@@ -4495,3 +4495,74 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+# OBSERVATIONS ON THE BEAT 04 SAMPLE — written AFTER the frames were opened and
+# filed as its own record so that nothing here can be mistaken for the
+# prediction above. Record ep2-b04-wave-sample-1 is left exactly as written.
+# NOT A SCORE AND NOT A PICK: the founder has not seen these, no frame is
+# ranked, no favourite is named, and the goblin predicate P2 stays un-reinstated.
+- id: ep2-b04-wave-sample-1-observed
+  date: 2026-08-10
+  kind: observation
+  subject: "node 002b beat 04 — what the four frames actually contain, and how
+    the prediction in ep2-b04-wave-sample-1 fared against them."
+  steward_provisional: true
+  pick: null
+  scores: {}
+  observed:
+    green_skin: "4 of 4. Unambiguous on every seed."
+    not_female: "4 of 4. No feminine read on any frame — the strongest result
+      this beat has had, and it holds without `plump`."
+    not_an_elf: "4 of 4."
+    tusks_present: "3 of 4. s2 and s3 show two clear white tusks from the lower
+      jaw; s1 shows a row of small pointed teeth rather than tusks; s0 shows
+      none — its mouth is a closed frown."
+    tusk_is_one_and_broken: "0 of 4, exactly as predicted and as record 42 said
+      it would be. Two and whole wherever they appear. The break is not a
+      prompt lever."
+    morning_light: "0 of 4 — WORSE THAN r9's 1 of 4. The draft asks for `soft
+      morning light` and all four came back dark: s0 night interior with a warm
+      window, s1 dim backlight, s2 night sky with visible stars, s3 dark
+      interior. Three rounds have now sent a daylight word to this stack and
+      drawn dusk or night. This is a recipe fault, not a seed fault."
+    simple_not_ornate: "PASSES, and it is the one axis his sentence added. These
+      are flat, low-ornament cartoon faces — no dark-fantasy detail, no knightly
+      trim, no elaborate hair. Nothing in these four resembles the ornate reads
+      of r6 or r7."
+    character_consistency: "0 of 4, and this is the finding that matters most.
+      The four seeds are four DIFFERENT creatures: s0 a round plush thing with
+      long drooping rabbit-like ears, s1 a bald hard-faced amphibian with yellow
+      eyes and a dark collar, s2 a cheerful big-eyed gremlin, s3 a heavy-browed
+      angry brute with pink pinprick pupils. Green and tusked, but not the same
+      character twice."
+  the_prediction_missed_and_it_missed_usefully: >-
+    THE PREDICTED OBJECTION WAS WRONG. The record above argued the style anchor's
+    `detailed, masterpiece, best quality` would fight "nothing complex" and
+    return a goblin more ornate than his words describe. It did not: the anchor
+    coexisted with his simplicity and the frames are plainly simple. That
+    argument should not be carried into the next round, and the anchor should NOT
+    be trimmed on the strength of it — the trim would have been a fix for a
+    defect that is not there.
+    Two sub-predictions did land: the light came back darker than asked (called
+    for "at least one of four"; it was four of four, so the direction was right
+    and the severity was understated), and the tusks are two and whole.
+    WHAT NO PREDICTION NAMED AT ALL is the consistency failure. Nine rounds of
+    this beat's history are about WHAT the goblin is; this sample is the first to
+    show that even a working description does not make him the SAME goblin twice.
+    r7 is the only round that ever achieved seed-to-seed identity, and it did it
+    with a regional IP-Adapter reference — the technique record 33 was graded a
+    miss for, because it was conditioned on a frame he had never ruled on. A
+    reference conditioned on a frame he HAS ruled on is the obvious next lever
+    and it cannot be built until he rules on one.
+  what_this_does_not_claim: >-
+    No frame is picked, ranked or promoted. `simple_not_ornate` reads as a pass
+    on the steward's own eye, and the steward's eye is exactly what record 32
+    established is not the standard — he called a frame a female demihuman that
+    P2 had scored as the best goblin ever drawn. These are observations offered
+    with the frames, not a verdict on them, and the sample is one beat and a
+    close-up, so it says nothing about the goblin at full figure.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
