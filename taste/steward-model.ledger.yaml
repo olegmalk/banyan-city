@@ -4319,3 +4319,89 @@
   outcome: n/a
   miss_axis: null
   model_action: none
+
+# WRITTEN BEFORE ANY STAGE-2 FRAME WAS OPENED. Axis B was computed first (it is
+# numpy over PNGs and opens nothing), so this record knows the palette and shaft
+# numbers and knows NOTHING about what the twelve images look like. That is
+# stated rather than hidden, because it makes the prediction easier than a blind
+# one and the score has to be read in that light. This record exists because the
+# Stage 1 record shipped without a `predicted_verdict` and could not be scored;
+# `ep2-b01-r9-stage1-scoring` filed carrying one as an obligation on this round.
+- id: ep2-b01-r9-stage2-sample
+  date: 2026-08-10
+  kind: still
+  subject: "beat 01 cold open, B01-R9-PLAN Stage 2: the conditioning-scale sweep.
+    Twelve frames, arms d40/d60/d80 (controlnet_conditioning_scale 0.40/0.60/0.80,
+    bracketing the diffusers card's published 0.5) x the four r6/r7/r8 seeds
+    20260720/20261720/20262720/20263720. 832x1216, 40 steps, cfg 7.5,
+    animagine-xl-3.1 + diffusers/controlnet-depth-sdxl-1.0 on the b15 depth map.
+    Sent positive and sent negative byte-identical to r8/r7, both now COMPUTED in
+    every sidecar rather than asserted (9e0a0ae)."
+  steward_provisional: true
+  candidates: [b01-r9-d40-s0, b01-r9-d40-s1, b01-r9-d40-s2, b01-r9-d40-s3,
+               b01-r9-d60-s0, b01-r9-d60-s1, b01-r9-d60-s2, b01-r9-d60-s3,
+               b01-r9-d80-s0, b01-r9-d80-s1, b01-r9-d80-s2, b01-r9-d80-s3]
+  address_key: "review/b01-r9-stage2/01-cold-open-r9-{d40,d60,d80}-s{0..3}.png,
+    sidecars beside them, axis-B numbers in review/b01-r9-stage2/palette.json"
+  gates: {G1_approved_plate: pass, G2_script_approved: pass,
+          G5_provisional_labelled: pass,
+          one_sample_gate: "SATISFIED — the founder opened the Stage 1 frame at
+          full resolution on 2026-08-10 and said it looks good; --stage2 was
+          passed only after that verdict was committed at 2d23477"}
+  pick: null
+  what_this_record_knows_and_does_not: >-
+    It has axis B (palette and shaft, numpy over the PNGs) and it has NOT seen a
+    single image. Axis A — stem height, grounded whole plant, person count, pale
+    slab count — is a content question with no tool in this repo, is answered by
+    opening the frames, and is therefore entirely absent from the basis of this
+    prediction.
+  predicted_verdict: pick_holds
+  predicted_flip_to: b01-r9-d60-s2
+  predicted_objection: >-
+    the d80 arm reads WASHED OUT rather than peach-and-gold, and seed s3 puts a
+    hard light shaft in the frame at every scale.
+  confidence: 0.55
+  reasoning: >-
+    THE PALETTE AXIS IMPROVES MONOTONICALLY WITH SCALE AND I DO NOT TRUST WHAT
+    THAT NUMBER IS MEASURING. L2 from the top-25% mean RGB to the r8-t2i sunrise
+    reference runs d40 {53.4, 71.5, 65.0, 70.3}, d60 {52.2, 44.9, 21.8, 67.8},
+    d80 {27.6, 18.6, 8.8, 34.8}; against the b15 plate it runs the other way, so
+    12 of 12 sit nearer t2i than the plate on d60 and d80 and 1 of 4 on d40. On
+    the pre-registered gate that is a pass and a clean monotone trend. But
+    SATURATION SAYS THE OPPOSITE ABOUT WHY. t2i's own sky is 0.154 and d80's are
+    0.022 / 0.039 / 0.186 / 0.032 — three of four are markedly LESS saturated
+    than the reference they are converging on. A bright neutral grey is close to
+    a warm peach in plain RGB L2 while looking nothing like it, so the metric
+    cannot separate "drew the sunrise" from "drew nothing and left it pale". I
+    am predicting against my own gate here, on purpose, and the frames decide it.
+    THE SHAFT SPLITS INTO TWO DIFFERENT ANSWERS. Sampled at the plate's own peak
+    column x=333, the plate's shaft is GONE in 9 of 12 (0.26 to 3.41 against the
+    plate's 42.17) — depth did strip it. But each frame's OWN highest column
+    tells another story: d40-s3 95.4, d60-s3 91.4, d80-s0 89.5, d80-s3 77.0,
+    d80-s2 33.7, d80-s1 24.3 against a t2i reference of 12.2. Seed s3 spikes at
+    x=367-368 on ALL THREE ARMS — that is seed-locked, not scale-driven — and the
+    whole d80 arm spikes somewhere. Stage 1 saw a re-invented diagonal ray by eye
+    and had no number; this is the number, and it says the effect is systematic.
+    WHY `pick_holds` AND NOT `ratify`. He has already liked one frame in this
+    round, so `reject_all` is the wrong shape of claim; the live question is
+    whether anything in the sweep displaces d60-s0. I say nothing does. d60-s2 is
+    the one real challenger and is named in predicted_flip_to on numbers alone:
+    the warmest sky in the middle arm (saturation 0.204, L2 21.8 to t2i) and the
+    FLATTEST shaft profile of all twelve (peak +5.17 above mean, below even the
+    t2i reference's 12.19). If any frame beats the one he approved, it is that one.
+    AND THE HONEST DISCOUNT ON MY OWN CONFIDENCE. This file's standing asymmetry
+    is that every rejection has held and no pick has ever been ratified, 0 hit /
+    1 partial / 4 miss on five pick predictions. `pick_holds` is a pick-shaped
+    claim. 0.55 is deliberately below the 0.72 band where this model's picks have
+    been outright wrong, and it should be read as an upper bound.
+  what_a_miss_would_teach: >-
+    If he prefers a d80 frame, the washed-out reading is wrong and brightness
+    rather than warmth is what he was after, which would reopen the palette gate
+    entirely. If he rejects the whole sweep including d60-s0, then the Stage 1
+    approval was of a single image and not of the approach, and depth-conditioning
+    is not settled by this round at all.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
