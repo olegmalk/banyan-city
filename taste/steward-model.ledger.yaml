@@ -4655,3 +4655,122 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+# Record 45 — what the 44 frames actually contain, scored against record 44's
+# sealed prediction (commit f2c4b7d, written before any PNG was decoded).
+- id: ep2-b04-goblin-ipa-observed
+  date: 2026-08-10
+  kind: observation
+  subject: "node 002b beat 04 — the IP-Adapter arms opened and scored by eye
+    against the four-different-creatures baseline."
+  steward_provisional: true
+  pick: null
+  scores: {}
+  method: >-
+    Two instruments, and they disagree in one place that matters. (1) The box's
+    mean pairwise DINOv2 across the four seeds of each group, already committed.
+    (2) The steward opening all 44 frames as per-arm rows of four and scoring a
+    fixed feature set — silhouette, ear shape, snout, eye shape, tusk count and
+    placement, build, skin hue — plus a mouth-level zoom on the rows where the
+    tusk call was load-bearing. Green was additionally measured as a plain hue
+    histogram over the middle 60% x 58% of each frame with PIL. The flow and pan
+    metrics were NOT used and are disqualified on this project. Where the number
+    and the picture disagree below, the picture wins and the disagreement is
+    named rather than averaged away.
+  observed:
+    identity_arm1: >-
+      HELD, and this is the finding. Every arm-1 row is recognisably ONE creature
+      across four seeds where the baseline row is four. r0 is the round eared
+      plush thing four times, r1 the broad-snouted amphibian four times, r2 the
+      big-eyed gremlin four times, r3 the heavy-browed brute four times. What
+      varies inside a row is expression and head angle — what a character does,
+      not what a character is. Against a baseline of 0 of 4, arm 1 is 4 of 4 on
+      every reference.
+    identity_arm2: >-
+      DID NOT HOLD, and the metric does not show it. r0-content is a plush eared
+      creature, then a spiky-green-haired boy with orange eyes, then a
+      pointed-eared green kid, then a laughing white-haired kid — four
+      characters, the baseline defect again. r1 and r2 are the same story. Yet
+      DINO puts arm2-r0 at 0.7968 against arm1-r0's 0.8069, a gap of 0.010, while
+      the baseline sits at 0.6967. So a rise of 0.10 over baseline means "one
+      creature" in arm 1 and "still four creatures" in arm 2. THE NUMBER CANNOT
+      SEPARATE THEM and should not be quoted as if it could: it is a whole-frame
+      embedding on a beat whose framing never changes, so it is scoring
+      composition and palette, and arm 1's rows are additionally uniform in
+      palette because the colour drained out of all of them, which inflates
+      exactly the arm that also happens to be right. The file warns about this on
+      its own face; this is the case it was warning about.
+    green_arm1: >-
+      LOST. r1 and r3 go flatly grey — green share 0.000 and 0.005 against the
+      baseline's 0.455. r2 is the trap: its share reads 0.668, the highest number
+      on the sheet, at a median saturation of 0.094 against the baseline's 0.274,
+      which by eye is a washed sage, not a green goblin. r0 slides to a pale
+      mint-teal that a narrow hue band scores at 0.002 and a band widened to 200
+      degrees scores at 0.62 — the two bands disagree because the skin sits right
+      on the green/cyan boundary, and the eye calls it grey-blue. The band choice
+      changes which arm-1 row looks worst; it does not change the conclusion,
+      because no arm-1 row looks like the baseline's green on any band.
+    green_arm2: >-
+      RESTORED, and slightly beyond the baseline. Green share 0.37-0.48 at median
+      saturation 0.33-0.36 against the baseline's 0.455 at 0.274. Unambiguous on
+      every band and unambiguous by eye — these are green goblins. Scoping the
+      adapter to down block_2 did exactly what the arm-2 spec argued it would do
+      to the colour. It just took the character with it.
+    tusks: >-
+      THE REFERENCE OVERRIDES THE PROMPT ON A PROMPT-LEVEL ATTRIBUTE, which is
+      the sharpest single result here. Tusks track the REFERENCE frame's own
+      mouth, not the `tusks` tag that is still in every prompt. wave1-s0 is the
+      one baseline frame with no tusks — a closed frown — and every row built on
+      it is 0 of 4: c040, c060 and c080 alike are closed frowns at mouth-level
+      zoom. Rows built on the tusked references keep them: r2-c060 4 of 4,
+      r3-c060 4 of 4, r1-c060 about 3 of 4. So arm 1 did not merely fail to
+      improve tusks, it made them a property of whichever frame is chosen as the
+      reference. The baseline drew them 3 of 4 from the tag alone.
+    does_the_reference_override_the_beat: >-
+      AT 0.80, YES, VISIBLY — and the sheet shows it without needing the number.
+      The four c080 frames are very nearly the same picture: same head position,
+      same window over the right shoulder, same hand on the same plank, same
+      closed mouth, differing mostly in eye shape. That is consistency bought by
+      reproducing a photograph rather than by holding a character, and it is what
+      the pairing of the highest within-group score (0.8601) with the highest
+      to-reference score (0.8367) means. 0.60 is looser and 0.40 looser again.
+    the_limit_of_this_test_and_it_is_a_real_one: >-
+      THIS SAMPLE CANNOT FULLY ANSWER THE OVERRIDE QUESTION, and saying otherwise
+      would overclaim. Every reference is itself a beat-04 frame, so the
+      reference's scene IS this beat's scene and there is no way to see the
+      reference importing a WRONG setting. What the c080 row does show is that
+      the adapter reproduces the reference's specific composition — window, plank,
+      hand, closed mouth — and a composition carried into beat 09 would be beat
+      04's room in beat 09's action. The failure mode is demonstrated in kind but
+      not in place, and the only thing that would settle it is one frame of a
+      DIFFERENT beat conditioned on a beat-04 reference. That job is not queued
+      and is not being queued without a decision.
+  the_prediction_scored: >-
+    Record 44 was right on the two calls it staked itself on and wrong about the
+    size of one trade. RIGHT: arm 1 holds one creature per row; arm 1 loses the
+    green; the r0 rows lose the tusks 0 of 4 by inheriting s0's closed frown,
+    which was the sharpest falsifiable call and it landed; scale 0.80 shows the
+    override; arm 2 buys colour back. Also right, and worth keeping, was the
+    stated risk that the hue statistic might be measuring the room rather than
+    the skin — it turned out to be measuring the skin, and the crop test is what
+    established that rather than the assumption.
+    WRONG, AND IN THE DIRECTION THAT MATTERS: record 44 predicted arm 2 would
+    land "between baseline and arm 1" on identity, reading the DINO numbers as if
+    a 0.72-0.80 band meant partial success. By eye arm 2 is not partway; it is
+    essentially back at the baseline defect. The prediction inherited the
+    metric's blind spot instead of anticipating it, and the lesson is the one the
+    project has already paid for twice: a number agreeing with the steward is not
+    a sample.
+  what_this_does_not_claim: >-
+    No arm is recommended, no frame is picked, ranked or promoted, no goblin is
+    made canonical and the fourteen staged wave specs in pipeline/jobs/ stay
+    staged. The question of which cost is acceptable — arm 1's drained colour or
+    arm 2's drifting character — is a taste call and it is R4's. The steward's
+    eye is explicitly not the standard here; record 32 established that when he
+    called a frame a female demihuman that the model had scored as the best
+    goblin yet drawn.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
