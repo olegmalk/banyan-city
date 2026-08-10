@@ -25,3 +25,4 @@
 03:21:59Z DONE task=ep1-b08-v34-motion-r2-1786331505 rc=0 artifacts=1
 03:22:04Z box-runner waiting for GPU: GPU-CLAIM.txt held: CLAIMED by ep1-b04-v34-motion-r4-0810 - LIVE LTX render since 2026-08-10 03:1xZ, card-runner lane.
 03:32:07Z box-runner idle ready=0
+03:37:02Z STARTED task=ep1-b08-v34-plate-ab-1786333014 attempt=1 on box-runner
