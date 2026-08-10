@@ -1,0 +1,111 @@
+# Still provenance (7.2).
+#
+# HONESTY NOTE ON WHERE THESE FIELDS COME FROM — READ IT BEFORE QUOTING THEM.
+# Unlike every other 06-* sidecar in this directory, this one was NOT written at
+# render time by the driver on the box. The r8d publish step wrote two PNGs and
+# two sidecars into C:\banyan-farm\courier-box\farm-out\ep1-b06-r8d-step3, but
+# only the two PNGs ever reached this repo (review/b06-r8d-fix/ holds exactly
+# two files and no .meta.yaml exists anywhere under this checkout for r8d). The
+# fields below are RECONSTRUCTED, on 2026-08-10, from two sources that are in
+# git and can be re-read: the job spec `pipeline/jobs/ep1-b06-r8d-step3.yaml`
+# (which carries the positive and negative as MEASURED on the box's real CLIP
+# before the file was written, and the exact argv) and the driver constants in
+# `pipeline/render_b06r7.py` line 149 (`W, H, STEPS, CFG = 832, 1216, 40, 7.5`),
+# which `pipeline/render_b06r8.py` renders through unchanged. The seed mapping
+# is the driver's own filename rule, `f"{BEAT:02d}-{slug}-{set}-s{i}.png"` with
+# i indexing the --seeds list, so s0 is the first of `20264725,20265725`.
+# If the box's own sidecar is ever recovered, it supersedes this file wholesale.
+#
+# The one thing NOT reconstructed is the founder's verdict below. That is his
+# own words, dated, and it is why this take exists as more than a candidate.
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15 open)
+shot_beat: 6
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20264725
+seeds_in_batch: 2
+task: 001-b06-r8d-step3-0810
+queue_entry: ep1-b06-r8d-step3
+render_round: r8d
+candidate_set: r8d-step3
+arm: B
+arm_label: no ground, SKY only
+cost_usd: 0
+provenance_source: reconstructed
+provenance_reconstructed_from:
+  - pipeline/jobs/ep1-b06-r8d-step3.yaml
+  - pipeline/render_b06r8.py
+  - pipeline/render_b06r7.py (W, H, STEPS, CFG at line 149)
+source_copied_from: review/b06-r8d-fix/06-too-blue-r8d-step3-s0.png
+sha256: 6e44d328f8d8d57502018ebe4f2639c47035f428aa4059c489de22af9a84c3a2
+
+founder_verdict: approved_as_the_beat_6_frame
+founder_verdict_date: 2026-08-10
+founder_verdict_verbatim: >-
+  now you're adding some wolf and some weird metal robot thing.. anyways this
+  one is good enough lets not overthink it, use that.
+founder_verdict_time_local: "~19:58"
+founder_verdict_scope: >-
+  HE APPROVED THIS FRAME. He did not approve the episode, the cut, a canon
+  promotion or a publication, and none of those has been done. "use that" is an
+  instruction to put this picture in beat 6, which is what the v35 clip below
+  does and all it does.
+frame_identified_by: >-
+  THE STEWARD, VISUALLY — HE NAMED NO FILENAME, and this matters enough to say
+  in the file rather than in a report. r8d-step3 produced exactly two frames and
+  they are not close: s0 (this one) is a centred sunburst star with the cloud
+  banked into the left and right edges and a large open blue field; s1 puts the
+  sun off the TOP-RIGHT corner behind one broad diagonal ray with a continuous
+  cumulus bank across the middle third. Both were opened. s0 was taken because
+  it is the one that answers the fault he actually named — "too many clouds" —
+  s1 carries visibly more cloud area than s0 and would not be a fix. One caveat
+  recorded rather than smoothed over: the lane that identified it described the
+  sunburst as "centre-left"; it reads as centre, a little left of the vertical
+  midline. The elimination between two frames is unambiguous either way, but the
+  identification is an inference from a description and not a filename he typed.
+  If he names the other one, correct this file and the v35 clip together.
+identification_confidence: high (2 candidates, one visibly matches the stated fault-fix)
+
+approved: false
+canon: false
+promoted_to_stills: false
+published: false
+not_canon_note: >-
+  Approval of a FRAME is not promotion to canon and not publication. Promoting a
+  take into `genomes/sapling/nodes/001-capability-inventory/stills/` and the
+  OpenRAIL++ licence question (D15) are both open and both the founder's (R4).
+  `approved: false` above is the pipeline's canon flag and is deliberately left
+  false; his verdict lives in `founder_verdict` where no gate will mistake it
+  for a promotion.
+
+what_this_round_changed: >-
+  ONE VARIABLE against r8c-step2, which was the highest rung of the cloud ladder
+  that had been SEEN to work: the word `sunny` added to the positive. The
+  negative did not move at all and neither did model, size, steps, guidance or
+  the two seeds. Cloud coverage comes down by describing an open bright sky.
+why_there_was_an_r8d: >-
+  r8c steps 3, 4 and 5 drew a metal porthole with a red-eyed head, a white
+  rabbit-demon and a wolf head instead of sky — the "wolf" and "weird metal
+  robot thing" in his verdict above. Diagnosed at commit 2acabe7: the negative
+  was byte-identical between the frame that worked and the frame that drew a
+  robot, and the whole delta was the word `cloud` leaving the POSITIVE, which
+  emptied the subject slot on a Danbooru-captioned checkpoint. r8d restores
+  `cloud` as the subject anchor and moves the dial with `sunny` instead. Trap 10
+  in pipeline/render_b06r8.py now refuses any run whose positive names no
+  subject.
+prior_rejections_this_beat: >-
+  r3 and r4 ("women, too many clouds/weird cloud formations", "its getting
+  worse"); r5/r6/r7 compositions ("none of the beat 6 images will work ... its
+  showing the ground as some flat place, or showing cities for some reason");
+  r7b-s0 ("this one ... but actually, regenerate it. too many clouds. you almost
+  got it"). Five rounds of refusals, all of them about what OCCUPIES the frame.
+tokenizer: openai/clip-vit-large-patch14 (measured on the box before the render)
+positive_tokens_real_clip: 35
+negative_tokens_real_clip: 72
+prompt: |-
+  no humans, clear sky, sunny, sky, blue sky, day, cloud, sunlight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, leaf, plant, stem, foliage, tree, photorealism, cityscape, city, building, skyline, road, mountain, grass, field, horizon, ground, animal, bird, aircraft, cloudy sky, overcast

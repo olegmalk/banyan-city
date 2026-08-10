@@ -94,10 +94,9 @@ ingredients:
 - beat: 6
   kind: clip
   path: review/provisional-v35/clips/06-too-blue.mp4
-  sha256: eef25a0b6209610d99931d9f2e3ed005e30b4d5b582cb8c1d71465f8af8cce66
+  sha256: 6460afb8045b32913cc7810198c5e81e22eeab95ac4e049e444ffa59e64d1829
   publishable: false
-  why: 'the picture it holds comes from a frame this site cannot publish — 06-too-blue-r5-s2.png:
-    its licence has not been cleared for redistribution yet (CreativeML Open RAIL++-M)'
+  why: its licence has not been cleared for redistribution yet (CreativeML Open RAIL++-M)
   provisional: true
 - beat: 6
   kind: audio

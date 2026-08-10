@@ -14,15 +14,44 @@ size: 704x1280
 seconds: 4.87
 framing: "cover-centre (render_t3 policy: scale to cover, then centre crop): 832x1216, cropped 163px of width (81 left, 82 right) = 19.6%, kept 669x1216, LANCZOS to 704x1280; the push-in then cuts each frame from inside that window, in the native still, one resample per frame"
 zoom: push-in 12.0% over 4.87s, 2.46%/s, linear, centred, monotonic (never reverses)
-source_still: 06-too-blue-r5-s2.png
-source_still_path: genomes/sapling/nodes/001-capability-inventory/takes/stills/06-too-blue-r5-s2.png
-source_still_sha256: 96b21abb6cd45c14de7f84eb0e641e2e40d8e2a749229f81c1fb777e8c96bef4
+source_still: 06-too-blue-r8d-step3-s0.png
+source_still_path: genomes/sapling/nodes/001-capability-inventory/takes/stills/06-too-blue-r8d-step3-s0.png
+source_still_sha256: 6e44d328f8d8d57502018ebe4f2639c47035f428aa4059c489de22af9a84c3a2
 cost_usd: 0
-prompt: |-
-  (none — the chosen still is held; nothing was generated)
-negative: ''
+# --- the still's own generation provenance (7.2), carried up from
+# takes/stills/06-too-blue-r8d-step3-s0.png.meta.yaml so this clip is readable
+# on its own. Those fields are RECONSTRUCTED from the job spec and the driver
+# constants, not written by the box — the caveat is spelled out in the take's
+# sidecar and applies verbatim here.
+still_model: cagliostrolab/animagine-xl-3.1
+still_model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15 open)
+still_seed: 20264725
+still_steps: 40
+still_guidance: 7.5
+still_size: 832x1216
+still_render_round: r8d
+still_queue_entry: ep1-b06-r8d-step3
+still_cost_usd: 0
+still_prompt: |-
+  no humans, clear sky, sunny, sky, blue sky, day, cloud, sunlight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+still_negative: |-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, leaf, plant, stem, foliage, tree, photorealism, cityscape, city, building, skyline, road, mountain, grass, field, horizon, ground, animal, bird, aircraft, cloudy sky, overcast
+# --- the verdict this clip exists to serve
+founder_verdict: approved_as_the_beat_6_frame
+founder_verdict_date: 2026-08-10
+founder_verdict_scope: >-
+  THE FRAME, AND NOTHING ELSE. He approved the picture; he has not ratified this
+  clip, this cut, a canon promotion or a publication. `provisional: true` below
+  stays true on purpose — v35 is a screening cut and the beat is not signed off
+  as finished. See `beat_6_still_needs` for what remains.
+beat_6_still_needs: >-
+  A MOTION DECISION. This is a held still with a 12% push-in and it measures
+  median 0.01 / 69% frozen frames (QA-v34-0810.md §1) — one of the seven beats
+  that "read static". Beats 05/09/12/15 were settled as held stills by his "yeah
+  keep em still"; BEAT 6 WAS NOT IN THAT GROUP and no ruling covers it. Either
+  he extends that ruling to beat 6, or an LTX i2v pass runs on this new plate.
+  Not queued here: beat 6 is closed to further ladder work and the queue is the
+  polish-queue lane's.
 provisional: true
 provisional_reason: |-
-  PROVISIONAL PICK b06-r5-s2 (steward-model.v1, taste ledger record ep1-b06-r5-provisional, confidence 0.55, predicted verdict: ratify) — NOT canon.
-  Beat 06 is the only beat in episode 1 with no approved frame: he refused r3 ("women, too many clouds/weird cloud formations") and r4 ("its getting worse"). Round 5 drew ZERO PEOPLE in 4 of 4 and the steward picked s2; the founder has ratified nothing here and this clip exists so that v34 shows him a beat 6 instead of a slate.
-  Authority: steward prediction under PROVISIONAL MODE (2026-08-09). Taste is the founder's (R4).
+  FOUNDER PICK, 2026-08-10 ~19:58, verbatim: 'now you're adding some wolf and some weird metal robot thing.. anyways this one is good enough lets not overthink it, use that.' The frame is 06-too-blue-r8d-step3-s0 (r8d step 3, the corrected rung after r8c steps 3-5 drew a robot and two wolf heads — commit 2acabe7). It replaces b06-r5-s2, a frame he had EXPLICITLY REJECTED and which v34 was still holding. Held from a TAKE because beat 6 has no canon still: 001's stills/ holds only 06-too-blue-REVOKED-leaf.png, revoked 2026-08-07. He approved the FRAME, not the episode — not canon, not promoted, not published (R4, D15 open).

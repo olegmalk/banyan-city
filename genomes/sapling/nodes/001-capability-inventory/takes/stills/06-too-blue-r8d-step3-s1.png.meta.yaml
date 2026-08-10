@@ -1,0 +1,45 @@
+# Still provenance (7.2).
+#
+# SAME RECONSTRUCTION CAVEAT AS ITS SIBLING: the box's own render-time sidecar
+# never reached this repo (review/b06-r8d-fix/ holds two PNGs and no yaml).
+# Every field below is re-read from `pipeline/jobs/ep1-b06-r8d-step3.yaml` and
+# the driver constants in `pipeline/render_b06r7.py` line 149, not copied from
+# the box. See 06-too-blue-r8d-step3-s0.png.meta.yaml for the full note.
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15 open)
+shot_beat: 6
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20265725
+seeds_in_batch: 2
+task: 001-b06-r8d-step3-0810
+queue_entry: ep1-b06-r8d-step3
+render_round: r8d
+candidate_set: r8d-step3
+arm: B
+arm_label: no ground, SKY only
+cost_usd: 0
+provenance_source: reconstructed
+provenance_reconstructed_from:
+  - pipeline/jobs/ep1-b06-r8d-step3.yaml
+  - pipeline/render_b06r8.py
+  - pipeline/render_b06r7.py (W, H, STEPS, CFG at line 149)
+source_copied_from: review/b06-r8d-fix/06-too-blue-r8d-step3-s1.png
+sha256: 8557d0276055075179cc6a04f39f9c5c374ad460016cc57392b0686273c6bf03
+
+approved: false
+canon: false
+published: false
+role: >-
+  THE SIBLING, NOT THE PICK. Kept because it is the other half of the sample the
+  founder ruled on and the elimination between the two is the only evidence for
+  which frame he meant. s1 puts the sun off the TOP-RIGHT corner behind one
+  broad diagonal ray with a continuous cumulus bank across the middle third —
+  visibly more cloud area than s0, which is the fault he named. If he ever says
+  he meant this one, this file and the v35 beat-6 clip both have to change.
+prompt: |-
+  no humans, clear sky, sunny, sky, blue sky, day, cloud, sunlight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, leaf, plant, stem, foliage, tree, photorealism, cityscape, city, building, skyline, road, mountain, grass, field, horizon, ground, animal, bird, aircraft, cloudy sky, overcast

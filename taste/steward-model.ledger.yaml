@@ -5615,3 +5615,161 @@
   founder_verdict_date: 2026-08-10
   outcome: n/a
   miss_axis: null
+
+- id: ep1-b06-r8d-founder-pick
+  date: 2026-08-10
+  beat: 6
+  round: r8d
+  kind: founder_verdict_recorded_after_the_fact
+  candidates:
+    - 06-too-blue-r8d-step3-s0.png
+    - 06-too-blue-r8d-step3-s1.png
+  founder_verdict_verbatim: >-
+    now you're adding some wolf and some weird metal robot thing.. anyways this
+    one is good enough lets not overthink it, use that.
+  founder_verdict_time_local: "~19:58"
+  founder_verdict: frame_approved
+  founder_verdict_date: 2026-08-10
+  founder_pointed_at:
+    frame: 06-too-blue-r8d-step3-s0
+    identified_by: >-
+      THE STEWARD, VISUALLY — HE NAMED NO FILENAME, exactly as on the round
+      before this one. The set is only two frames and they are not close. s0 is
+      a centred sunburst star with the cloud banked into the left and right
+      edges and a large open blue field; s1 puts the sun off the TOP-RIGHT
+      corner behind one broad diagonal ray with a continuous cumulus bank across
+      the middle third. Both were opened at full size. s0 was taken because it
+      is the frame that answers the fault he named on the round before — "too
+      many clouds" — and s1 carries visibly MORE cloud area than s0, so s1
+      cannot be a fix to that complaint.
+    caveat_recorded_not_smoothed: >-
+      The lane that first identified it described the sunburst as "centre-left".
+      It reads as centre, a little left of the vertical midline. That does not
+      move the elimination — between two frames one of which has more cloud than
+      the round he rejected, only s0 is a candidate — but the identification is
+      still an inference from a description rather than a filename he typed, and
+      this file has now made the same kind of inference twice on the same beat.
+    residual_risk: >-
+      Low, and lower than the r6/r7 twin problem in the record above: there is no
+      same-seed near-twin here, only one alternative, and it fails the stated
+      fault. If he names s1, correct this record, the take sidecar and the v35
+      beat-6 clip together — all three carry the same identification.
+  scoring: not_scoreable_no_prediction_was_written
+  scoring_of_the_standing_prediction: >-
+    THERE IS NO PREDICTION TO SCORE, AND THAT IS THE FINDING OF THIS RECORD.
+
+    Every ledger id was read before this was written. The last beat-6 records are
+    `ep1-b06-r6-two-arms-sample`, `ep1-b06-r6-two-arms-observed` and
+    `ep1-b06-r6r7-founder-verdict`. Nothing exists for r8, r8a, r8b, r8c or r8d —
+    not a prediction, not an observation, not a stub. The ten-frame r8c cloud
+    ladder was specified, rendered and looked at, and the r8d repair was
+    specified, rendered, published to review/b06-r8d-fix/ and put in front of him,
+    with nothing written down beforehand about what he would do with any of it.
+
+    NO PREDICTION IS INVENTED FOR IT RETROACTIVELY. The rolling hit-rate header
+    at the top of this file is NOT edited by this record: no prediction was
+    scored, so no class arithmetic moves, and rewriting that paragraph to
+    mention an unscoreable round would make the numbers look like they had been
+    re-examined when they have not.
+  this_is_the_SECOND_consecutive_unpredicted_round: >-
+    STATED AS AN ESCALATION, NOT A REPEAT. Commit 015e3f5 (`the round he ruled
+    on had no prediction under it at all`) recorded exactly this failure one
+    verdict ago, for round 7, and wrote the rule that was supposed to stop it:
+    *"when a round is put in front of him beside an older round, the NEW round
+    needs its own record before the sheet is sent, or the verdict lands on
+    nothing."* Between that rule being written and this verdict, TWELVE more
+    beat-6 frames were rendered across r8c and r8d and shown to him, and not one
+    of them got a record. The rule was written and then not followed, which is a
+    different and worse fact than the rule not existing.
+
+    So the two verdicts that actually settled this beat — the composition on
+    2026-08-10 ~17:40 and the frame on 2026-08-10 ~19:58 — both landed on
+    unpredicted rounds. The model's beat-6 predictions covered r3, r4, r5 and r6,
+    every one of which he refused, and covered neither round he accepted. A
+    ledger that predicts only the rounds that get rejected is measuring the
+    rejection rate of a pipeline, not modelling a person.
+
+    WHAT WOULD FIX IT IS A GATE, NOT A REMINDER. The reminder has now been tried
+    once and failed within a day. The shape that would work is the one this
+    project already uses for everything else it cares about: the thing that
+    publishes a review directory refuses to publish when the round has no ledger
+    id, the way `render_b06r8.py` trap 10 refuses a positive with no subject
+    anchor. That is a proposal here and is NOT built by this record — it touches
+    the review/publish path, which is another lane's.
+  the_transferable_rule: >-
+    ONE SIGNAL GENERALISES CLEANLY AND IT IS THE ONE THIS FILE ALREADY NAMED.
+    `ep1-b06-r6r7-founder-verdict` proposed axis A14 — sky coverage as a VETO on
+    empty-exterior beats — off two complaints a week apart. This verdict is the
+    third data point and it is the confirming one: the ONLY variable between the
+    frame he refused ("too many clouds. you almost got it") and the frame he took
+    is cloud AREA. Same composition, same arm, same camera, same palette, same
+    model, same two seeds, one word added to the positive. Nothing else moved and
+    he went from refusing to accepting. A14 should be in v2.
+
+    THE OCCUPANCY READING NOW HAS SIX ROUNDS BEHIND IT AND NO COUNTER-EXAMPLE.
+    Everything he has ever faulted on this beat is what occupies the frame:
+    women (r3), a city (r5), "some flat place" for a ground (r6/r7), cloud mass
+    (r7), and now "some wolf and some weird metal robot thing" (r8c). Six rounds,
+    zero complaints about line, colour, rendering, style or composition-as-such.
+    On an empty-exterior beat the axis he rules on is OCCUPANCY — presence by
+    class and coverage by area — and nothing else has ever been the reason.
+
+    HIS COMPLAINT NAMED THE DEFECT THE PIPELINE HAD ALREADY DIAGNOSED. The wolf
+    and the robot are r8c steps 3-5, whose cause was found at commit 2acabe7
+    before he saw them: `cloud` left the POSITIVE, emptying the subject slot on a
+    Danbooru-captioned checkpoint. He was shown frames the lane already knew were
+    broken. That is not a taste signal, it is a review-hygiene one, and it is
+    recorded here because it cost him the first half of his sentence.
+  the_process_signal_and_its_limits: >-
+    "GOOD ENOUGH LETS NOT OVERTHINK IT" IS EVIDENCE ABOUT ITERATION DEPTH, AND IT
+    IS THE FOUNDER STOPPING THE LOOP HIMSELF. Beat 6 ran six rounds and roughly
+    fifty frames over one day. He did not ask for a seventh; he took the third
+    rung of a five-rung ladder whose steps 4 and 5 were never authored and told
+    the loop to stop. Read together with his 2026-08-03 ONE SAMPLE rule and his
+    2026-07-27 "review every ~5 min", the pattern is that HE sets the stopping
+    point and the steward has repeatedly set it too late.
+
+    WHAT THIS DOES NOT LICENSE, AND THE DISTINCTION IS THE WHOLE VALUE OF WRITING
+    IT DOWN. It is not permission to lower the bar, to skip a sample, to ship a
+    defect on the grounds that he said not to overthink, or to stop showing him
+    things. It is one sentence about ONE beat that had already consumed a day. If
+    it is ever quoted back at him as a general standard, this file was misused.
+
+    AND IT IS NOT A RATIFICATION OF THE LADDER METHOD. The ladder produced two
+    usable rungs out of ten frames and six robots and wolves. What got him a
+    frame he would take was the ONE SAMPLE that repaired step 3, not the sweep.
+  what_does_NOT_generalise: >-
+    A NUMBER. He still has never given a cloud fraction — not "half", not "a
+    few", not a percentage. `06-too-blue-r8d-step3-s0` is one measurement of
+    where his line sits and nothing licenses treating its exact coverage as a
+    target on another beat. Any future cloud-density ladder is still a way of
+    ASKING him, never of answering.
+
+    ALSO NOT GENERALISED: nothing here says anything about beats other than the
+    empty-exterior ones, about motion, about pacing, or about the episode as a
+    whole. He approved a picture.
+  model_action: confirms_proposed_axis_A14
+  proposed_v2_axis_status: >-
+    A14 (sky coverage, empty-exterior beats, VETO not scored axis) was proposed
+    one record ago on two data points and now has a third that isolates it as the
+    single variable. Still a PROPOSAL: `taste/steward-model.v1.md` amends by
+    version and this record does not write into it, and
+    `taste/sapling.founder.v0.3.md` is the founder's and is untouched, as always.
+  what_this_unblocks: >-
+    Beat 6 was the only beat in episode 1 with no frame he had accepted, and the
+    v35 cut was still holding `b06-r5-s2` — a frame he had EXPLICITLY REJECTED.
+    That is now fixed: beat 6 in `review/provisional-v35/clips/06-too-blue.mp4`
+    is held from `06-too-blue-r8d-step3-s0` and
+    `review/provisional-v35/ep1-v35-PROVISIONAL.mp4` was re-assembled at $0
+    (15 beats, 0 slate, ~89s, sha256 7d09b46b5be26ec5…). Every beat in the
+    screening cut now sits on a frame he has either approved or not rejected.
+  what_this_record_does_not_do: >-
+    It promotes nothing to canon, marks no beat final, writes no leaf and no
+    `stills/` sidecar, publishes nothing, queues nothing and spends nothing. It
+    does not edit the rolling hit-rate header, because nothing was scored. It
+    does not touch the founder's taste file. It does not convert "use that" into
+    approval of the episode, the cut, or beat 6 as finished — beat 6 is still a
+    held still measuring 69% frozen frames and no ruling covers whether it stays
+    one.
+  outcome: n/a
+  miss_axis: null
