@@ -1,0 +1,130 @@
+# ep1 beat 07 "zero-0-moving-parts" — LTX motion re-render, round 2.
+#
+# r1 landed and half-worked: "07 partial (41% still frozen)"
+# (origin/farm-results-hand, DONE task=ep1-v34-motion-wave-0810 at 01:49:12Z).
+# The recipe produced clean clips on beats 08, 10 and 14-r2, so the recipe is
+# not what is wrong with 07 — the draw is. This is therefore a SEED-ONLY retry,
+# and that is deliberate: rewriting the prompt to chase 41% would be changing
+# the recipe on a sample size of one beat, and the identical recipe is what the
+# other five landed clips were measured under.
+#
+# ONE SAMPLE: one beat, nothing scales off it.
+#
+# OWNERSHIP — READ BEFORE FIRING. Beats 03/04/07 belong to lane card-runner-3,
+# live on them at 05:43. This spec is here so the box can take the beat if that
+# lane dies, not so two renders can race. Check for a STARTED/DONE on
+# ep1-b07-v34-motion-r2 and confirm C:\banyan-farm\GPU-CLAIM.txt says RELEASED.
+
+id: ep1-b07-v34-motion-r2
+task: ep1-b07-v34-motion-r2-0810
+node: 001-capability-inventory
+beat: 7
+runner: box
+needs_gpu: true
+priority: 21
+max_attempts: 1
+after: [box-preflight-0810]
+owner: card-runner-3
+sample: true
+
+consumer: >-
+  the v35 screening cut, assembled by scripts/v35-assemble.sh. Beat 07 measured
+  0.01 median / 77% frozen at QA-v34-0810.md:33 and is one of the two beats
+  still standing between v34 and a screenable v35.
+
+success: >-
+  A 704x1280 mp4 at C:\banyan-farm\v34-r2\07-zero-0-moving-parts-LTX-r2.mp4,
+  65 frames, median frame delta above 0.30 with under 20% of frames below 0.2
+  (collect_farm.measure — median, not mean). Grass rippling across the whole
+  frame rather than in one corner. If it comes back partial again on a second
+  seed, the honest read is that the still cannot carry motion and the beat needs
+  a redraw, not a third seed.
+
+why: >-
+  Six of seven dead ep1 beats now have motion clips; 04 and 07 are the gap.
+
+est_minutes: 4   # the wave measured 137-204s wall per beat, 65 frames
+needs: [cuda, vram20, video-venv]
+
+payload:
+  C:\banyan-farm\v34-r2\b07-prompt.txt: |-
+    2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. the field of grass ripples in slow waves across the whole frame, the clouds drift very slowly and keep their shapes, warm sunset light shifts gently over the field. small ambient motion only, everything holds its position, framing locked, no zoom, no push-in, no camera rise, subject stays the same size and place in frame, living scene. Subject already in frame: no human, no person, no man, no woman, no boy, no girl, no hand, no face, a wide open grass field at sunset, low sun on the horizon, a broad sky with soft clouds, no buildings.
+  C:\banyan-farm\v34-r2\b07-negative.txt: |-
+    wilting, drooping, bending over, falling over, collapsing, sagging, plant dying, human, person, man, woman, boy, girl, extra hand, extra arm, foot, face, crowd, animal, bird, insect, new object appearing, photorealism, 3D render look, text, 静态, 静止, frozen frame, still image, no motion, photorealistic, photograph, live action, film still, 3D render, CGI, octane, scene change, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+  C:\banyan-farm\v34-r2\b07-jobs-encode.json: |-
+    [{"beat": 7,
+      "embeds": "C:\\banyan-farm\\v34-r2\\b07-embeds.pt",
+      "prompt_file": "C:\\banyan-farm\\v34-r2\\b07-prompt.txt",
+      "negative_file": "C:\\banyan-farm\\v34-r2\\b07-negative.txt"}]
+  C:\banyan-farm\v34-r2\b07-jobs-render.json: |-
+    [{"beat": 7,
+      "seed": 20260838,
+      "embeds": "C:\\banyan-farm\\v34-r2\\b07-embeds.pt",
+      "init": "C:\\banyan-farm\\v34-r2\\07-704x1280.png",
+      "out": "C:\\banyan-farm\\v34-r2\\07-zero-0-moving-parts-LTX-r2.mp4"}]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  - name: plate
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - -c
+      - |
+        import sys; sys.path.insert(0, r"C:\banyan-farm\banyan-city\pipeline")
+        from plate_prep import prepare_plate
+        out, rec = prepare_plate(
+            r"C:\banyan-farm\banyan-city\genomes\sapling\nodes\001-capability-inventory\stills\07-zero-0-moving-parts.png",
+            "704x1280", r"C:\banyan-farm\v34-r2", "07")
+        print("plate", out); print(rec["plate_wxh"], rec["crop_policy"])
+  - name: encode
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+      - --stage
+      - encode
+      - --jobs
+      - C:\banyan-farm\v34-r2\b07-jobs-encode.json
+  - name: render
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+      - --stage
+      - render
+      - --jobs
+      - C:\banyan-farm\v34-r2\b07-jobs-render.json
+      - --size
+      - 704x1280
+      - --frames
+      - "65"
+      - --fps
+      - "24"
+      - --guidance
+      - "1.0"
+      - --distilled-sigmas
+      - --two-stage
+      - --image-crf
+      - "33"
+      - --offload
+      - sequential
+      - --mode
+      - production
+      - --task
+      - ep1-b07-v34-motion-r2-0810
+      - --worker
+      - rtx5090
+      - --bench-jsonl
+      - C:\banyan-farm\v34-r2\bench-b07-r2.jsonl
+      - --bench-label
+      - b07-v34-motion-r2
+
+artifacts:
+  - C:\banyan-farm\v34-r2\07-zero-0-moving-parts-LTX-r2.mp4

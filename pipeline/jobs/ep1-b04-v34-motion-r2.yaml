@@ -1,0 +1,138 @@
+# ep1 beat 04 "the-fall" — LTX motion re-render, round 2.
+#
+# r1 exists and was rejected on a mechanical defect, not on taste: a phone
+# materialises in-hand mid-clip ("04 REJECT (a phone materialises in-hand
+# mid-clip)", origin/farm-results-hand, DONE task=ep1-v34-motion-wave-0810 at
+# 01:49:12Z). That is an invention defect, which is a thing the negative can be
+# aimed at, so this is a re-render of a known recipe rather than a new one.
+#
+# ONE SAMPLE: this IS one beat. Nothing scales off it. The only change from the
+# r1 recipe is the seed and three added negative terms aimed at the specific
+# defect; every other parameter is byte-identical to the wave that produced six
+# other clips at rc 0, so this is not a new recipe needing its own sample.
+#
+# OWNERSHIP — READ BEFORE FIRING. Beats 03/04/07 belong to lane card-runner-3,
+# which was live on them at 05:43. This spec exists so the box can pick the beat
+# up if that lane dies (two lanes died on API disconnects tonight), NOT so two
+# renders can race. Check for a DONE/STARTED on ep1-b04-v34-motion-r2 first, and
+# check C:\banyan-farm\GPU-CLAIM.txt says RELEASED.
+
+id: ep1-b04-v34-motion-r2
+task: ep1-b04-v34-motion-r2-0810
+node: 001-capability-inventory
+beat: 4
+runner: box
+needs_gpu: true
+priority: 20
+max_attempts: 1
+after: [box-preflight-0810]
+owner: card-runner-3
+sample: true
+
+consumer: >-
+  the v35 screening cut, assembled by scripts/v35-assemble.sh. Beat 04 is one of
+  the seven dead beats in QA-v34-0810.md:29 (median 0.05, 57% frozen) and the
+  cut cannot be ratified while it is either frozen or inventing a prop.
+
+success: >-
+  A 704x1280 mp4 at C:\banyan-farm\v34-r2\04-the-fall-LTX-r2.mp4, 65 frames,
+  in which NO phone appears in or moves into the hands at any point, and whose
+  median frame delta is above 0.30 with under 20% of frames below 0.2 (the
+  metric in collect_farm.measure — median, not mean; the mean is what
+  recommended a clip the founder called "literally just frozen frames").
+  A clip that is smooth but still invents the phone is a FAIL, not a partial.
+
+why: >-
+  Six of the seven dead ep1 beats now have motion clips; 04 and 07 are what
+  stand between v34 and a screenable v35 cut.
+
+est_minutes: 4   # r1 measured 199s wall for 145 frames; this is 65 frames
+needs: [cuda, vram20, video-venv]
+
+payload:
+  C:\banyan-farm\v34-r2\b04-prompt.txt: |-
+    2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. the scattered sheets of paper settle and their edges lift very slightly, the fallen phone's screen glows and flickers faintly, the fingers twitch once, dim light shifts across the floor. small ambient motion only, everything holds its position, framing locked, no zoom, no push-in, no camera rise, subject stays the same size and place in frame, living scene. Subject already in frame: no second person, no crowd, no face, one pair of hands on scattered papers on a dark floor, a phone lying screen-up nearby, deep blue night light.
+  # The three leading terms are the whole delta from r1: they name the r1 defect
+  # directly. Everything after them is the wave negative, unchanged.
+  C:\banyan-farm\v34-r2\b04-negative.txt: |-
+    phone appearing in hand, object materialising, hand picking up phone, wilting, drooping, bending over, falling over, collapsing, sagging, plant dying, human, person, man, woman, boy, girl, extra hand, extra arm, foot, face, crowd, animal, bird, insect, new object appearing, photorealism, 3D render look, text, 静态, 静止, frozen frame, still image, no motion, photorealistic, photograph, live action, film still, 3D render, CGI, octane, scene change, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+  C:\banyan-farm\v34-r2\b04-jobs-encode.json: |-
+    [{"beat": 4,
+      "embeds": "C:\\banyan-farm\\v34-r2\\b04-embeds.pt",
+      "prompt_file": "C:\\banyan-farm\\v34-r2\\b04-prompt.txt",
+      "negative_file": "C:\\banyan-farm\\v34-r2\\b04-negative.txt"}]
+  C:\banyan-farm\v34-r2\b04-jobs-render.json: |-
+    [{"beat": 4,
+      "seed": 20260835,
+      "embeds": "C:\\banyan-farm\\v34-r2\\b04-embeds.pt",
+      "init": "C:\\banyan-farm\\v34-r2\\04-704x1280.png",
+      "out": "C:\\banyan-farm\\v34-r2\\04-the-fall-LTX-r2.mp4"}]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  # The plate is not optional and not cosmetic: ltx_i2v hands `init` straight to
+  # the pipeline's preprocessor, which resizes to --size ignoring aspect. Feed it
+  # the raw 832x1216 still and the clip comes back stretched 24.4% vertically.
+  - name: plate
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - -c
+      - |
+        import sys; sys.path.insert(0, r"C:\banyan-farm\banyan-city\pipeline")
+        from plate_prep import prepare_plate
+        out, rec = prepare_plate(
+            r"C:\banyan-farm\banyan-city\genomes\sapling\nodes\001-capability-inventory\stills\04-the-fall.png",
+            "704x1280", r"C:\banyan-farm\v34-r2", "04")
+        print("plate", out); print(rec["plate_wxh"], rec["crop_policy"])
+  - name: encode
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+      - --stage
+      - encode
+      - --jobs
+      - C:\banyan-farm\v34-r2\b04-jobs-encode.json
+  - name: render
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+      - --stage
+      - render
+      - --jobs
+      - C:\banyan-farm\v34-r2\b04-jobs-render.json
+      - --size
+      - 704x1280
+      - --frames
+      - "65"
+      - --fps
+      - "24"
+      - --guidance
+      - "1.0"
+      - --distilled-sigmas
+      - --two-stage
+      - --image-crf
+      - "33"
+      - --offload
+      - sequential
+      - --mode
+      - production
+      - --task
+      - ep1-b04-v34-motion-r2-0810
+      - --worker
+      - rtx5090
+      - --bench-jsonl
+      - C:\banyan-farm\v34-r2\bench-b04-r2.jsonl
+      - --bench-label
+      - b04-v34-motion-r2
+
+artifacts:
+  - C:\banyan-farm\v34-r2\04-the-fall-LTX-r2.mp4

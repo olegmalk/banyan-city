@@ -144,6 +144,33 @@ def gate_checks(spec: dict, job: dict) -> list:
     return problems
 
 
+def send_payload(payload: dict) -> None:
+    """Write a spec's `payload:` files onto the box before the job goes live.
+
+    An LTX render needs a positive file, a negative file and a two-stage jobs
+    json, all at absolute paths, before its first step runs. Without this every
+    render would need a bespoke driver script committed alongside it -- which is
+    how the repo has done it so far, one run-bNN.cmd per round, none reusable.
+    Shipping them as part of the spec keeps the whole job in one reviewable file.
+
+    Files land BEFORE the job is moved into ready/, so the runner can never
+    claim a job whose inputs are still in flight.
+    """
+    for dest, body in (payload or {}).items():
+        local = os.path.join("/tmp", "payload-" + os.path.basename(dest))
+        with open(local, "w", encoding="utf-8", newline="\n") as fh:
+            fh.write(body if isinstance(body, str) else json.dumps(body, indent=2))
+        parent = dest.rsplit("\\", 1)[0]
+        ssh('if not exist "%s" mkdir "%s"' % (parent, parent))
+        cp = subprocess.run(["scp", "-o", "ConnectTimeout=25", local,
+                             "%s:%s" % (SSH_HOST, dest.replace("\\", "/"))],
+                            capture_output=True, text=True, encoding="utf-8",
+                            errors="replace", timeout=120)
+        if cp.returncode:
+            sys.exit("!! payload scp failed for %s: %s" % (dest, cp.stderr or cp.stdout))
+        print("  payload -> %s" % dest)
+
+
 def enqueue(job: dict) -> None:
     name = job["id"] + ".json"
     local = os.path.join("/tmp", name)
@@ -200,9 +227,12 @@ def main(argv=None) -> int:
             failures += 1
             continue
         if args.dry_run:
+            for dest in (spec.get("payload") or {}):
+                print("  would send payload -> %s" % dest)
             print(json.dumps(job, indent=2)[:2000])
             print("  (dry run -- not queued)")
             continue
+        send_payload(spec.get("payload"))
         enqueue(job)
     return 1 if failures else 0
 

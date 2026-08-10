@@ -1,0 +1,126 @@
+# Fire order for pipeline/jobs/. The README has pointed at this file since it
+# was written; this is the first version of it that exists.
+#
+# Read this before any job file. It describes the SET — what may fire now, what
+# is waiting on a machine, and what is waiting on a person — and it is the only
+# file here that does.
+#
+# Fire with:  python3 pipeline/box_enqueue.py pipeline/jobs/<id>.yaml
+# Inspect:    python3 pipeline/box_enqueue.py --list
+#
+# box_enqueue refuses, on its own, to queue a job that names an unapproved node,
+# carries a `gate` key, or has an unfilled `recipe_slot`. That refusal is code,
+# not a convention, because the §6 approval gate raises SystemExit rather than
+# an exception — an unapproved node does not fail its job, it kills the daemon.
+
+updated: 2026-08-10T02:20Z
+queue_root: C:\banyan-queue          # ready/ running/ done/ failed/ on the box
+runner: pipeline/box_runner.py        # drains it; started as SYSTEM by \banyan-box-runner
+
+approved_nodes:
+  # The ONLY two nodes any job here may name. Verified on the box by
+  # box-preflight-0810 at 02:12:49Z, reading the same leaf the render gate reads.
+  - id: 001-capability-inventory
+    leaf: 001-t0-d.yaml
+    approved_by: founder            # 2026-07-27
+  - id: 002b-first-citizen
+    leaf: 002b-t0-c.yaml
+    approved_by: founder            # 2026-08-03
+
+approved_nodes_note: >-
+  Fourteen other nodes exist and NONE of them are approved. Five say
+  `approved_by: none` outright; nine have no approved_by key at all, which the
+  gate reads as "none". Naming one is not a bad job, it is a dead card.
+
+jobs:
+  - id: box-preflight-0810
+    state: DRAINED
+    needs_gpu: false
+    blocker: null
+    result: >-
+      rc 0 at 02:12:51Z, runner_pid 12516 (the SYSTEM task, unattended).
+      verdict READY — both nodes approved, 5090 with 22.6 GiB free.
+      Published as DONE task=box-preflight-0810-1786327962 on
+      farm-results-rtx5090.
+    note: >-
+      Re-fire this whenever the box changes underneath us — a driver update, a
+      venv rebuild, a new node approval. It is CPU-only, so it drains while a
+      hand lane holds the card.
+
+  - id: ep1-b04-v34-motion-r2
+    state: READY-BUT-OWNED
+    needs_gpu: true
+    after: [box-preflight-0810]
+    blocker: >-
+      lane card-runner-3 owns ep1 beats 03/04/07 and was live on them at 05:43.
+      Not a founder gate and not a code gate — a collision risk. Fire only after
+      confirming that lane is dead or has released the beat, and that
+      C:\banyan-farm\GPU-CLAIM.txt reads RELEASED.
+    why_prepared: >-
+      Two lanes died on API disconnects tonight. If the third goes the same way,
+      this beat should cost a `box_enqueue` call, not a re-derivation.
+
+  - id: ep1-b07-v34-motion-r2
+    state: READY-BUT-OWNED
+    needs_gpu: true
+    after: [box-preflight-0810]
+    blocker: same as ep1-b04-v34-motion-r2 — card-runner-3 owns the beat.
+
+# --------------------------------------------------------------------------
+# NOT QUEUED, AND WHY. This half of the file is the honest half.
+# --------------------------------------------------------------------------
+#
+# The instruction was to fill this directory with hours of runnable work. It
+# cannot honestly be filled, and the reason is worth writing down rather than
+# padding around: almost every render this tree wants next is waiting on a
+# person, not on a machine.
+
+not_queued:
+  - what: the fifteen-beat ep2 goblin wave (beats 02-11, 13-15, 17, 19, 20)
+    gate: founder
+    gate_ref: cuts.yaml item 18 / n:444, state open, chip DEFINE
+    detail: >-
+      Fully drafted and box-token-measured already, in WAVE-PREP-0810.md and
+      WAVE-PREP-0810-drafts.yaml. Every prompt carries a {{GOBLIN}} slot. The
+      founder's only recorded words on the goblin are the rejection "all the
+      goblin images look like female demihumans". The slot value IS the recipe,
+      so filling it here would be inventing the thing being asked for. This is
+      roughly six GPU-hours that unlock on one sentence from him.
+
+  - what: ep1 beat 06 motion clip
+    gate: founder
+    gate_ref: cuts.yaml n:561
+    detail: >-
+      The only node-001 beat with no approved drawing. v34 holds it on a
+      provisional pick at confidence 0.55. Excluded from the motion wave on
+      purpose ("beat 06 excluded, unratified frame").
+
+  - what: ep2 beat 01 r9 Stage 2 (ControlNet-depth)
+    gate: founder
+    detail: >-
+      Stage 1 shows STARTED on farm-results-hand with no DONE — the one-sample
+      gate is enforced in code (render_b01r9.py refuses --frames>1 without
+      --stage2) and the sample has no verdict yet.
+
+  - what: the other 15 unrendered ep2 beats as video
+    gate: founder
+    detail: >-
+      002b's shots.md defines 21 beats and all 21 are still marked "needs
+      footage"; 6 have clips, none accepted. No ep2 conditioning plate has been
+      ratified, so every one of them would be conditioned on a steward's own
+      pick — which is the G1 failure already recorded against beat 12
+      (taste/steward-model.ledger.yaml:2117).
+
+  - what: the v34 QA re-check over review/v34-motion/
+    gate: null
+    detail: >-
+      Genuinely needed and genuinely un-owned, but it is NOT box work: the clips
+      live on the Mac and the box has no ffmpeg on PATH, which
+      collect_farm.measure shells out to. Runs here in seconds. Left out of this
+      directory rather than queued somewhere it cannot run.
+
+standing_rule: >-
+  No work without a consumer. An empty queue with the reason written down beats
+  a full one that exists to keep a card warm — the founder has rejected the
+  latter by name. When the goblin gets defined, this file gets fifteen entries
+  in one commit.
