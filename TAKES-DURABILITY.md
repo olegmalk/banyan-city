@@ -59,13 +59,51 @@ Still open, measured but not acted on (see "What is not covered"):
 **`review/` holds 227 ignored media files, 156.3 MiB, of which 96 have no
 byte-identical copy on the box.**
 
+## Re-measured 17:35, same day — and the scary number was a counting error
+
+A later pass counted **457** `takes/**/*.png|jpg` on disk and read it as "the
+237 nearly doubled while the card rendered all afternoon". It did not. 457 is
+**both nodes added together**, and the split is the whole answer:
+
+| | files | where it lives |
+|---|---|---|
+| 001's stills | 216 | **tracked in git**, all 216 present in `origin/main` |
+| 002b's manifest corpus | 237 | laptop + box archive, byte-identical |
+| 002b's `04-the-footnote-wave1-*` | 4 | **tracked in git** (force-added at `4d3ffc5`), in `origin/main` |
+| | **457** | |
+
+Nothing rendered into `takes/` after **12:38** — the afternoon's output went to
+`review/`, which is a different (and still open) problem. So the corpus did not
+grow by 220 files; the count changed because it started including a node whose
+stills were never at risk.
+
+Re-verified rather than assumed, by hash on both ends:
+
+- Every one of 002b's 237 manifest stills and 216 sidecars is on the box
+  **byte-identical** — 453/453, no truncation, no same-name-different-bytes.
+- The 4 new stills were the only files missing anywhere, and only from the box;
+  git already held them. They have since been copied over and hashed at both
+  ends, 9/9 match (4 png + 4 yaml + a per-round `.sha256`).
+- Manifest rebuilt to **462 files, 291,247,279 bytes**; `verify` now says
+  `462/462 match  /  TAKES-VERIFY: PASS` with nothing unrecorded.
+
+**Files that exist in exactly one place: zero.** Every still in `takes/` is on
+at least two machines, and 220 of the 457 are in GitHub as well.
+
+**The tool has no schedule and never had one.** `takes_backup.py` is invoked by
+hand; CI runs `test_takes_backup.py` (that the tool works), never the tool
+itself. No crontab entry, no LaunchAgent, nothing in `farm-queue.yaml`. Between
+06:42 and 17:35 the manifest silently fell 9 files behind, which is exactly the
+failure this file was written to make visible — and the reason `verify` prints
+`UNRECORDED` instead of staying quiet. Rebuild it after every round.
+
 ## What was done
 
 1. **A second physical copy, on the box**, at
-   `C:\banyan-farm\take-archive\002b-first-citizen\stills\` — all 453 files
-   under their repo filenames, not scattered run-local names. 267.9 GB free
-   there; the transfer took 93 s over the LAN.
-2. **`takes/MANIFEST.sha256`, tracked in git** — sha256 and path for all 453
+   `C:\banyan-farm\take-archive\002b-first-citizen\stills\` — all 462 files
+   (453 at 06:42, +9 at 17:41) under their repo filenames, not scattered
+   run-local names. 267.9 GB free there; the transfer took 93 s over the LAN.
+2. **`takes/MANIFEST.sha256`, tracked in git** — sha256 and path for all 462
    files. Text, ~40 KB, so it costs the repo nothing and it is what turns an
    off-repo copy into a *restorable* one: without it, the box copies are
    duplicates nobody can map back to filenames.
@@ -93,7 +131,7 @@ cd       genomes/sapling/nodes/002b-first-citizen/takes/stills
 scp rtx5090:'C:/banyan-farm/take-archive/002b-first-citizen/stills/*' .
 cd /Users/artovonkugler/banyan-city
 python3 pipeline/takes_backup.py verify sapling 002b-first-citizen
-# expect: 453/453 match  /  TAKES-VERIFY: PASS
+# expect: 462/462 match  /  TAKES-VERIFY: PASS
 ```
 
 `rtx5090` is an ssh alias for 192.168.3.157 (see `~/.ssh/config`); the box uses
