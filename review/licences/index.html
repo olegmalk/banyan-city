@@ -1,0 +1,462 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The picture licences &mdash; a correction, and what is actually open</title>
+<style>
+:root{
+  --bg:#faf8f4; --panel:#fff; --ink:#1a1714; --dim:#6b625a; --line:#e2dbd0;
+  --accent:#2f6b4f; --accent-soft:#e8f1ea;
+  --stop:#a6371f; --stop-soft:#fbeae5;
+  --watch:#8a6512; --watch-soft:#fbf2dc;
+  --quote:#fdfcfa;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#14120f; --panel:#1d1a16; --ink:#ece6dd; --dim:#9c9287; --line:#332e28;
+    --accent:#7fc2a1; --accent-soft:#1b2a22;
+    --stop:#e8917a; --stop-soft:#2e1c17;
+    --watch:#d9b064; --watch-soft:#2b2318;
+    --quote:#191612;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#14120f; --panel:#1d1a16; --ink:#ece6dd; --dim:#9c9287; --line:#332e28;
+  --accent:#7fc2a1; --accent-soft:#1b2a22;
+  --stop:#e8917a; --stop-soft:#2e1c17;
+  --watch:#d9b064; --watch-soft:#2b2318;
+  --quote:#191612;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.62 ui-serif,Georgia,"Iowan Old Style",serif;
+  -webkit-text-size-adjust:100%;padding:0 0 5rem}
+.wrap{max-width:44rem;margin:0 auto;padding:0 1.1rem}
+h1{font-size:1.85rem;line-height:1.18;margin:1.6rem 0 .3rem;letter-spacing:-.015em}
+h2{font-size:1.35rem;line-height:1.24;margin:2.4rem 0 .5rem;letter-spacing:-.01em}
+h3{font-size:1.06rem;line-height:1.3;margin:1.5rem 0 .35rem;
+  font-family:ui-sans-serif,system-ui,sans-serif;font-weight:650}
+.sub{color:var(--dim);font-size:.94rem;margin:0 0 1.4rem}
+p{margin:.75rem 0}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;
+  padding:1.15rem;margin:1.3rem 0}
+.panel.stop{border-color:var(--stop);border-width:1.5px}
+.tag{display:inline-block;font-family:ui-sans-serif,system-ui,sans-serif;font-size:.7rem;
+  font-weight:650;text-transform:uppercase;letter-spacing:.07em;padding:.2rem .5rem;
+  border-radius:5px;margin:0 0 .6rem}
+.tag.stop{background:var(--stop-soft);color:var(--stop)}
+.tag.ok{background:var(--accent-soft);color:var(--accent)}
+.tag.watch{background:var(--watch-soft);color:var(--watch)}
+blockquote{margin:.7rem 0;padding:.5rem .8rem;border-left:3px solid var(--accent);
+  background:var(--quote);border-radius:0 8px 8px 0;font-size:.97rem}
+blockquote p:first-child{margin-top:0} blockquote p:last-child{margin-bottom:0}
+.note{border-left:3px solid var(--line);padding:.5rem .8rem;margin:.9rem 0;
+  font-size:.95rem;border-radius:0 8px 8px 0}
+.note.stop{border-color:var(--stop);background:var(--stop-soft)}
+.note.watch{border-color:var(--watch);background:var(--watch-soft)}
+.note.ok{border-color:var(--accent);background:var(--accent-soft)}
+.note .lab{font-family:ui-sans-serif,system-ui,sans-serif;font-size:.7rem;font-weight:650;
+  text-transform:uppercase;letter-spacing:.07em;display:block;margin-bottom:.2rem}
+.note.stop .lab{color:var(--stop)} .note.watch .lab{color:var(--watch)}
+.note.ok .lab{color:var(--accent)}
+.note p:first-child{margin-top:0} .note p:last-child{margin-bottom:0}
+ul,ol{margin:.6rem 0;padding-left:1.3rem}
+li{margin:.35rem 0}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:.9rem 0}
+table{width:100%;border-collapse:collapse;font-size:.9rem;
+  font-family:ui-sans-serif,system-ui,sans-serif}
+th,td{text-align:left;padding:.5rem .55rem;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.74rem;text-transform:uppercase;letter-spacing:.06em;color:var(--dim);font-weight:600}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.87em;
+  background:var(--bg);padding:.1rem .3rem;border-radius:4px;border:1px solid var(--line)}
+.opt{background:var(--panel);border:1px solid var(--line);border-radius:14px;
+  padding:1.1rem;margin:1.1rem 0}
+.opt h3{margin-top:0}
+.cost{font-family:ui-sans-serif,system-ui,sans-serif;font-size:.88rem;color:var(--dim);
+  border-top:1px solid var(--line);margin-top:.8rem;padding-top:.6rem}
+.cost b{color:var(--ink);font-weight:650}
+.rule{font-size:.9rem;color:var(--dim);border-top:1px solid var(--line);
+  margin-top:2.5rem;padding-top:1rem}
+.toc{background:var(--panel);border:1px solid var(--line);border-radius:14px;
+  padding:.9rem 1.15rem;margin:1.3rem 0;font-family:ui-sans-serif,system-ui,sans-serif;
+  font-size:.93rem}
+.toc ol{margin:.3rem 0;padding-left:1.4rem}
+.toc a{color:var(--accent)}
+</style>
+<div class="wrap">
+
+<h1>The picture licences &mdash; a correction, and what is actually open</h1>
+<p class="sub">Written for you, 2026&#8209;08&#8209;10. Two decisions are waiting on you here:
+<b>D15</b> (the stills we drew episode&nbsp;1 from) and <b>D16</b> (LTX, the video model).
+This page starts by taking back something I told you that was wrong, then lays out where
+each decision actually stands. Neither of us is a lawyer and I say so again at the end,
+with a list of everything I could not settle.</p>
+
+<div class="toc">
+<ol>
+<li><a href="#correction">What I got wrong</a></li>
+<li><a href="#says">What the stills licence actually says</a></li>
+<li><a href="#d15">Where D15 stands now</a></li>
+<li><a href="#d16">D16 &mdash; LTX</a></li>
+<li><a href="#options">Your options</a></li>
+<li><a href="#happens">What happens the moment you decide</a></li>
+<li><a href="#unknown">Everything I do not know</a></li>
+</ol>
+</div>
+
+<h2 id="correction">1. What I got wrong</h2>
+
+<div class="panel stop">
+<span class="tag stop">Correction</span>
+<p>I told you the licence on our stills contained two rules: that <b>nobody may train
+another AI model on our pictures</b>, and that <b>we may not present the work as
+human&#8209;made</b>.</p>
+<p><b>Neither sentence is in that licence.</b> I searched the full text for them. They
+are not there in any wording.</p>
+<p>Where they came from: our own lint tool prints a line describing <b>Google Flow</b> &mdash;
+a different licence entirely, sitting on three archived files that have nothing to do with
+the stills. I read our tool's description of Flow and attached it to animagine, the model
+that drew the stills. Then I built the whole D15 argument on top of it.</p>
+</div>
+
+<p>This matters more than a normal mistake would, because those two invented rules were
+doing real work. "You cannot present it as human&#8209;made" is the kind of clause that
+would reach our TikTok posts and our own website. It would have been a genuine constraint
+on you. It does not exist.</p>
+
+<p>Everything below is read from the licence text itself, not from our notes about it.</p>
+
+<h2 id="says">2. What the stills licence actually says</h2>
+
+<p>The model that drew all fifteen approved stills is <code>cagliostrolab/animagine-xl-3.1</code>.
+Its licence is <b>CreativeML Open RAIL++&#8209;M</b> &mdash; the same document Stability
+publishes with Stable Diffusion XL, which is where I read it from.</p>
+
+<h3>The parts that are plainly good for us</h3>
+<blockquote><p>"Except as set forth herein, <b>Licensor claims no rights in the Output</b>
+You generate using the Model."</p></blockquote>
+<ul>
+<li><b>The frames are ours.</b> Nobody upstream claims them.</li>
+<li><b>Commercial use is permitted.</b></li>
+<li><b>No credit is required.</b> No line saying which model drew it, anywhere.</li>
+<li><b>No AI&#8209;disclosure is required.</b> Nothing in this licence asks us to label a
+picture as machine&#8209;generated.</li>
+<li><b>Nothing bars presenting the work as our own.</b> This is the invented rule from
+section&nbsp;1, and its absence is the single biggest change to the picture.</li>
+</ul>
+
+<h3>The duties that do exist attach to the model file, not to a video</h3>
+<p>The licence has real obligations &mdash; pass the terms along, include the restrictions,
+give notice. Every one of them is triggered by <b>"Distribution"</b>, and Distribution is a
+<i>defined term</i> in the document: it covers handing on <b>the Model, or Derivatives of the
+Model</b>. Publishing a video is not Distribution under this licence, and the section
+containing those duties imposes nothing on it.</p>
+
+<p>The obvious follow&#8209;up is whether our film counts as a "Derivative of the Model".
+It does not. I read that definition branch by branch and <b>every branch ends in another
+model</b> &mdash; a modification of the weights, a fine&#8209;tune, a model transferring the
+original's behaviour. A LoRA trained on our stills would be a Derivative. An episode is not.</p>
+
+<h3>The restriction list, and the one sentence that is live</h3>
+<p>The licence carries <b>Attachment&nbsp;A</b>: eleven prohibited uses. Its opening line is
+<b>"You agree not to use the Model or Derivatives of the Model"</b> &mdash; grammatically,
+it is about using the model. Nothing on the list touches publishing an animated short unless
+the film's own content does one of the listed things: defaming or harassing people,
+exploiting minors, generating harmful disinformation, unlawful discrimination, and so on.
+Ours does none of them.</p>
+
+<div class="note watch">
+<span class="lab">The one clause that reaches our output</span>
+<p>Section 6, third sentence: <b>"No use of the output can contravene any provision as stated
+in the License."</b> The natural reading is that the film's <i>content</i> must not itself do
+the Attachment&nbsp;A things. On that reading we already comply, and always have.</p>
+</div>
+
+<div class="note stop">
+<span class="lab">Genuinely unresolved &mdash; and I want to be blunt about it</span>
+<p>Whether that sentence binds <b>people who merely watch or reshare our video</b> is
+<b>not answered by the licence</b>. It never spells out a mechanism &mdash; how a rule
+would attach to a stranger who was never given the model and never agreed to anything.</p>
+<p>I checked the two places you would expect an answer. The RAIL Initiative's own FAQ and
+Hugging Face's OpenRAIL explainer <b>never use the word "output" at all.</b> Every claim
+online that the restrictions follow the pictures downstream to viewers is somebody's
+extrapolation from that one cross&#8209;reference. It is not text.</p>
+</div>
+
+<h3>Two side facts worth having</h3>
+<ul>
+<li><b>OpenRAIL&#8209;M and OpenRAIL++&#8209;M differ in exactly one working way.</b> The
+"++" version deleted a duty to use the latest version of the model. Attachment&nbsp;A is
+word&#8209;for&#8209;word identical between them. So if you see either name in our notes,
+the restriction list is the same list.</li>
+<li><b>Animagine's licence was switched on 2025&#8209;12&#8209;22</b>, by a one&#8209;line
+commit. Before that date it was the Fair AI Public License 1.0&#8209;SD. Any note in our
+repo written earlier names the old one, and that is not a contradiction, it is a date.
+<b>Under both licences, publishing a film was unencumbered</b> &mdash; the old one's extra
+duties were also about modified models and source code.</li>
+</ul>
+<p class="sub">One citation caveat: the <code>LICENSE.md</code> Stability publishes has lost
+its clause numbers along the way. It cross&#8209;references "paragraph 5" but shows no digits
+anywhere. I have quoted sentences rather than numbers for that reason.</p>
+
+<h2 id="d15">3. Where D15 stands now</h2>
+
+<p>D15's original argument had two halves. Both are gone, for different reasons.</p>
+
+<div class="scroll">
+<table>
+<tr><th>The half</th><th>What happened to it</th></tr>
+<tr><td><b>Pass&#8209;through.</b> Our site offers everything under CC BY 4.0, which grants
+strangers unrestricted reuse. We cannot grant rights we do not hold.</td>
+<td>Removed on 2026&#8209;08&#8209;04 by dad's <b>watch&#8209;only</b> call &mdash; <i>"when we
+publish clips they are for people to watch, not use for anything."</i> With no reuse offer on
+the media, there is nothing to pass through.</td></tr>
+<tr><td><b>The two extra clauses</b> I said the licence contained.</td>
+<td>They were never in it. Section&nbsp;1 above.</td></tr>
+</table>
+</div>
+
+<div class="note ok">
+<span class="lab">So the honest question has changed</span>
+<p>It is no longer <i>"the restrictions travel, so we cannot offer this under CC BY 4.0."</i>
+It is now: <b>does our own gate refuse more than the licence requires?</b></p>
+</div>
+
+<h3>What is settled by the text</h3>
+<p>Nothing in OpenRAIL++&#8209;M stops us publishing an animated short made from animagine
+stills &mdash; on banyan.city, on TikTok, commercially, without credit and without an AI
+label &mdash; provided the film's own content is not one of the eleven prohibited things.</p>
+
+<h3>What is genuinely ambiguous</h3>
+<p>Whether the restrictions reach the people who watch it. Under watch&#8209;only this may
+not matter to us at all, because we are not granting viewers anything in the first place.
+But "probably does not matter" is not the same as "answered", and it is not answered.</p>
+
+<h3>What that means for the nine beats</h3>
+<p>Measured against the live gate on 2026&#8209;08&#8209;10, not remembered:
+<b>nine of the fifteen beats refuse</b> &mdash; <b>03, 06, 07, 08, 09, 10, 12, 14, 15</b>
+&mdash; and all nine refuse for that one reason, the OpenRAIL++ classification. The composite
+cut reports only the first one it hits, which is why error messages name beat 03 alone.</p>
+<ul>
+<li><b>Beats 01, 02, 11 and 13</b> pass on their own records.</li>
+<li><b>Beats 04 and 05 pass by silence, not by clearance.</b> Their records say
+<code>model: none</code> and point at stills that have no provenance file beside them at all.
+The gate reads unprovenanced as permitted, on purpose. <b>If anyone writes an honest record
+naming animagine, the refusals go from nine to eleven.</b> Writing that record is your call,
+not a lane's.</li>
+</ul>
+
+<div class="note watch">
+<span class="lab">The recommendation I am allowed to make, and the line I did not cross</span>
+<p>Our own decision record already says the gate is stricter than we now need. D16's item 3
+puts it plainly: <code>licence_gate.py</code> still implements the old test &mdash; "does the
+grant reach the output" &mdash; which is <i>"stricter than we now need but never wrong in the
+dangerous direction."</i></p>
+<p><b>I think the gate over&#8209;refuses these nine beats.</b> I did not change it. Reclassifying
+animagine is a governance call and it is yours; a steward quietly relaxing the one gate that
+can stop an unpublishable episode is exactly the failure the gate exists to prevent.</p>
+</div>
+
+<h3>One thing D15 does not reach</h3>
+<p>D13 blocks five beats of the <i>live</i> episode for a completely different reason: PixVerse's
+free tier is personal&#8209;use&#8209;only, and that binds <b>us</b>, the people rendering and
+posting. Watch&#8209;only does not clear it and neither does anything on this page. Keep the two
+apart &mdash; deciding D15 does not unblock D13.</p>
+
+<h2 id="d16">4. D16 &mdash; LTX, the video model</h2>
+
+<p>Same treatment, read from the LTX&#8209;2 Community Licence itself.</p>
+
+<h3>The parts that are good for us</h3>
+<ul>
+<li><b>Free under $10M of annual company revenue.</b> The threshold gates using the model,
+not what we do with the output. We are nowhere near it.</li>
+<li><b>"Licensor claims no rights in the Output you generate using LTX&#8209;2."</b> The
+footage is ours.</li>
+<li><b>No credit required</b> &mdash; and section 8 actually <i>forbids</i> implying that
+Lightricks endorses us.</li>
+<li><b>The pass&#8209;along duties attach to distributing the model or a derivative</b> &mdash;
+weights, a LoRA, a model trained on our outputs. Publishing a video triggers none of them.</li>
+</ul>
+
+<h3>The one real obligation</h3>
+<div class="note watch">
+<span class="lab">Attachment A, item 5</span>
+<p>Wherever the content is posted, it must <b>"expressly and intelligibly"</b> disclaim that
+it is machine generated.</p>
+<p><b>The licence does not say what form this takes.</b> A line in the caption, a card on
+screen, or TikTok's own "AI&#8209;generated" toggle could each plausibly satisfy it. That is
+genuinely unspecified, and choosing the form is a decision, not a lookup.</p>
+</div>
+
+<p>Two more that stay live:</p>
+<ul>
+<li><b>Item 7</b> &mdash; no impersonating real people without their consent.</li>
+<li><b>Item 20</b> &mdash; no product that <i>"directly competes with Lightricks'
+offerings."</i> Undefined and ambiguous. This is the clause behind our standing rule that a
+contributor&#8209;facing render service is the one thing LTX must never power, and it is the
+open question you were already being asked about.</li>
+</ul>
+
+<div class="note">
+<p><b>An important difference from the older LTX licence:</b> the restrictions now follow
+<b>the Outputs</b>, not just the model. That constrains what <i>we</i> do with our own
+footage. It does <b>not</b> force us to bind viewers.</p>
+</div>
+
+<h3>Is D16 independent of D15?</h3>
+<p><b>Yes.</b> Different models, different licences, different beats. Deciding D15 does not
+decide D16, and vice versa. The only thing they share is the direction of travel: both
+licences turn out to say considerably less about published video than we had assumed.</p>
+
+<div class="note stop">
+<span class="lab">A defect on our side, and a concrete fix</span>
+<p>The repo we actually load weights from, <code>diffusers/LTX-2.3-Distilled-Diffusers</code>,
+<b>has no LICENSE file at all</b>, and names a licence document that does not exist
+(<code>ltx-video-2-open-source-license</code>). Its link happens to resolve to the right
+text, so nothing is actually mis&#8209;licensed &mdash; but our provenance cites a document by
+a name nothing serves, which is the kind of thing that reads as diligence and is not.</p>
+<p><b>Recommendation:</b> cite <code>Lightricks/LTX-2.3/raw/main/LICENSE</code> instead. It is
+a record fix, not a decision. I have not made it, because it touches the gate's tables and I
+was told to keep out of them.</p>
+</div>
+
+<h2 id="options">5. Your options</h2>
+
+<p>These are laid out flat. I am not steering you toward one, and I have said where I think
+the text points rather than what you should do about it.</p>
+
+<h3>For D15 (the stills)</h3>
+
+<div class="opt">
+<h3>A. Change nothing.</h3>
+<p>The gate keeps refusing nine beats. Episode 1 stays where it is. You revisit whenever you
+want to.</p>
+<p><b>This is a real option, not a null one.</b> The gate erring conservative is defensible:
+you are fourteen, publishing under your dad's oversight, and "we could probably publish this
+but we are choosing not to yet" is a legitimate answer that costs nothing irreversible. The
+work does not disappear; it waits.</p>
+<p class="cost"><b>Cost:</b> episode 1 does not go to canon. The nine beats stay unshowable
+on the public site. No re-renders, no risk.</p>
+</div>
+
+<div class="opt">
+<h3>B. Decide the licence permits publication, and let the gate say so.</h3>
+<p>You record that OpenRAIL++'s restrictions are about using the model and about the film's
+own content, that our film complies, and that the gate should stop treating animagine as
+unpublishable. Someone then reclassifies it in <code>licence_gate.py</code>.</p>
+<p class="cost"><b>Cost:</b> a judgement call about a genuine ambiguity, made without a
+lawyer. If it is wrong, the exposure is that we published a film whose upstream terms
+someone reads more broadly than we did &mdash; there is no money and no contract in play, but
+it would be a public position we would have to walk back.
+<b>Gets you:</b> nine beats clear at once.</p>
+</div>
+
+<div class="opt">
+<h3>C. Narrow what we offer, in writing, generally.</h3>
+<p>This is D15's original "way out 1", and we have already done it for one surface &mdash; the
+review gallery images publish under a narrowed offer rather than CC BY 4.0. You could extend
+that to all rendered media: text, scripts, node writing, taste files, pipeline and the repo
+stay open exactly as they are; only the mp4s come out of the reuse offer.</p>
+<p class="cost"><b>Cost:</b> needs an amendment to D1 (our content licence) and a licence file
+that says so &mdash; a change to a resolved governance decision, which is yours to make. No
+re-renders. <b>Gets you:</b> the ambiguity stops mattering, because we would no longer be
+promising anyone anything we might not hold.</p>
+</div>
+
+<div class="opt">
+<h3>D. Re-draw the fifteen stills on a model whose grant we can pass on freely.</h3>
+<p>Removes the question instead of answering it.</p>
+<p class="cost"><b>Cost:</b> a full still pass on fifteen compositions, a new approval round
+from you on all fifteen, and <b>the look will shift</b> &mdash; these are the stills the
+current style was built on. Realistically days of loop, not hours, and no candidate model has
+been surveyed yet. <b>Gets you:</b> certainty, at the price of the pictures you already
+approved.</p>
+</div>
+
+<h3>For D16 (LTX) &mdash; decided separately</h3>
+
+<div class="opt">
+<h3>E. Answer item 20 and pick the label form.</h3>
+<p>Two things in one: say that we will never build a contributor&#8209;facing render service
+powered by LTX (which is the standing rule already, it just needs your word), and choose how
+we satisfy the machine&#8209;generated disclaimer &mdash; caption line, on&#8209;screen card,
+or platform toggle.</p>
+<p class="cost"><b>Cost:</b> one sentence of policy plus one label per post, forever.
+<b>Gets you:</b> the v35 cut and the sixteen re&#8209;draws become showable.</p>
+</div>
+
+<div class="opt">
+<h3>F. Leave LTX withheld.</h3>
+<p>The footage exists and stays unpublished. Nothing breaks.</p>
+<p class="cost"><b>Cost:</b> a whole cut of episode 1 and today's sixteen clips stay invisible
+outside this machine.</p>
+</div>
+
+<h2 id="happens">6. What happens the moment you decide</h2>
+
+<div class="scroll">
+<table>
+<tr><th>You say</th><th>What clears</th><th>What still blocks</th><th>Roughly how long</th></tr>
+<tr><td><b>A</b> &mdash; change nothing</td><td>nothing</td><td>everything currently blocked</td><td>&mdash;</td></tr>
+<tr><td><b>B</b> &mdash; the licence permits it</td>
+<td>beats 03, 06, 07, 08, 09, 10, 12, 14, 15 stop refusing</td>
+<td>D13's five PixVerse beats (different reason entirely); anything LTX until D16;
+the licence&#8209;debt ratchet has to be re&#8209;counted and lowered honestly before the cut
+can be promoted to canon</td>
+<td>the code change and re&#8209;measure is under an hour; promoting the cut is a separate
+build&#8209;and&#8209;check pass</td></tr>
+<tr><td><b>C</b> &mdash; narrow the offer</td>
+<td>the same nine, and D13's Flow finding along with them</td>
+<td>PixVerse still blocked &mdash; it binds us, not our reusers; LTX still needs D16</td>
+<td>a governance edit plus licence file; same day</td></tr>
+<tr><td><b>D</b> &mdash; re&#8209;draw</td>
+<td>eventually all fifteen, cleanly</td>
+<td>everything, until the new stills exist and you have approved them</td>
+<td>days, plus a fresh approval round on fifteen compositions</td></tr>
+<tr><td><b>E</b> &mdash; answer item 20 + label</td>
+<td>the v35 cut and the sixteen re&#8209;draws become showable</td>
+<td>D15's nine beats, independently</td>
+<td>immediate</td></tr>
+<tr><td><b>F</b> &mdash; keep LTX withheld</td><td>nothing</td><td>the v35 cut stays on this machine</td><td>&mdash;</td></tr>
+</table>
+</div>
+
+<div class="note">
+<p><b>One thing that blocks regardless of D15 and D16:</b> promoting the current cut to canon
+fails lint today. Moving its record into <code>leaves/</code> pushes the licence debt past its
+ratchet of 25, and that number may only ever go down. It comes down as assets genuinely clear
+&mdash; which is what option B or C would cause &mdash; never by being raised to let a build
+pass.</p>
+</div>
+
+<h2 id="unknown">7. Everything I do not know</h2>
+
+<p>Listed as unknown, not softened into "probably fine".</p>
+
+<ol>
+<li><b>Whether OpenRAIL++'s restrictions bind viewers and resharers.</b> The licence gives no
+mechanism. Its own drafters' FAQ does not address output at all. This is the central
+ambiguity and it is unresolved by the document itself.</li>
+<li><b>Whether "no use of the output can contravene any provision" means the film's content,
+or something broader.</b> I have given you the natural reading. I cannot give you the
+authoritative one.</li>
+<li><b>What form LTX's "expressly and intelligibly" disclaimer must take.</b> Unspecified in
+the licence. Caption, card and platform toggle are all plausible; none is confirmed.</li>
+<li><b>What "directly competes with Lightricks' offerings" covers</b> (LTX item 20). Undefined
+in the text. Our standing rule is a cautious guess at its edge, not a reading of it.</li>
+<li><b>Whether any court or the licence stewards have ever tested any of this.</b> I found no
+such thing, and absence of a finding is not a finding of absence.</li>
+<li><b>Neither of us is a lawyer.</b> This is a careful reading of two documents by someone
+who is not qualified to give you legal advice, and everything above should be weighted
+accordingly. If a decision here ever starts carrying real money, that is the point to get a
+real opinion.</li>
+</ol>
+
+<p class="rule">Written by the licence&#8209;brief lane, 2026&#8209;08&#8209;10. The primary
+sources are <code>stabilityai/stable-diffusion-xl-base-1.0</code>'s <code>LICENSE.md</code>
+(the OpenRAIL++&#8209;M text) and <code>Lightricks/LTX-2</code>'s <code>LICENSE</code>, both
+read end to end. Gate figures re&#8209;measured against the live
+<code>pipeline/licence_gate.py</code> on the day of writing, not recalled. Nothing on this page
+changed any code, any classification or any licence file &mdash; D15 and D16 are still open and
+still yours.</p>
+
+</div>
