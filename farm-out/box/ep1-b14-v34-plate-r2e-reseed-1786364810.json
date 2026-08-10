@@ -1,0 +1,99 @@
+{
+  "id": "ep1-b14-v34-plate-r2e-reseed-1786364810",
+  "task": "ep1-b14-v34-plate-r2e-reseed-0810",
+  "node": "001-capability-inventory",
+  "beat": 14,
+  "worker": "box-runner",
+  "priority": 30,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "plate",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "-c",
+        "import sys; sys.path.insert(0, r\"C:\\banyan-farm\\banyan-city\\pipeline\")\nfrom plate_prep import prepare_plate\nout, rec = prepare_plate(\n    r\"C:\\banyan-farm\\banyan-city\\genomes\\sapling\\nodes\\001-capability-inventory\\stills\\14-worth-staying-in.png\",\n    \"704x1280\", r\"C:\\banyan-farm\\v34-plates-0810\", \"14\")\nprint(\"plate\", out); print(rec[\"plate_wxh\"], rec[\"crop_policy\"])\n"
+      ]
+    },
+    {
+      "name": "encode",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ltx_i2v.py",
+        "--stage",
+        "encode",
+        "--embeds",
+        "C:\\banyan-farm\\v34-plates-0810\\ltx-embeds-ep1-b14-v34-plate-r2e-reseed.pt",
+        "--prompt-file",
+        "C:\\banyan-farm\\v34-plates-0810\\ep1-b14-v34-plate-r2e-reseed-prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\v34-plates-0810\\ep1-b14-v34-plate-r2e-reseed-negative.txt"
+      ]
+    },
+    {
+      "name": "render",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ltx_i2v.py",
+        "--stage",
+        "render",
+        "--embeds",
+        "C:\\banyan-farm\\v34-plates-0810\\ltx-embeds-ep1-b14-v34-plate-r2e-reseed.pt",
+        "--prompt-file",
+        "C:\\banyan-farm\\v34-plates-0810\\ep1-b14-v34-plate-r2e-reseed-prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\v34-plates-0810\\ep1-b14-v34-plate-r2e-reseed-negative.txt",
+        "--init",
+        "C:\\banyan-farm\\v34-plates-0810\\14-704x1280.png",
+        "--out",
+        "C:\\banyan-farm\\v34-motion-0810\\14-ltx-r2e-plate-s20260888.mp4",
+        "--size",
+        "704x1280",
+        "--frames",
+        "65",
+        "--fps",
+        "24",
+        "--steps",
+        "8",
+        "--guidance",
+        "1.0",
+        "--distilled-sigmas",
+        "--two-stage",
+        "--seed",
+        "20260888",
+        "--beat",
+        "14",
+        "--task",
+        "ep1-b14-v34-plate-r2e-reseed-0810",
+        "--worker",
+        "rtx5090"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\v34-plates-0810\\14-704x1280.png",
+    "C:\\banyan-farm\\v34-motion-0810\\14-ltx-r2e-plate-s20260888.mp4"
+  ],
+  "started_at": "2026-08-10T14:08:45Z",
+  "attempts": 1,
+  "runner_pid": 3552,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-10T14:13:25Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\v34-plates-0810\\14-704x1280.png",
+    "C:\\banyan-farm\\v34-motion-0810\\14-ltx-r2e-plate-s20260888.mp4"
+  ]
+}
