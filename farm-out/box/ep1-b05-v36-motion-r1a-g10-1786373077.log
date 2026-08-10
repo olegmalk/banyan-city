@@ -1,0 +1,78 @@
+#### job ep1-b05-v36-motion-r1a-g10-1786373077 attempt 1 start 2026-08-10T15:51:12Z
+
+==== step plate START 2026-08-10T15:51:15Z ====
+argv: ["C:\\banyan-video\\venv\\Scripts\\python.exe", "-c", "import sys; sys.path.insert(0, r\"C:\\banyan-farm\\banyan-city\\pipeline\")\nfrom plate_prep import prepare_plate\nout, rec = prepare_plate(\n    r\"C:\\banyan-farm\\banyan-city\\genomes\\sapling\\nodes\\001-capability-inventory\\stills\\05-fan-spinning-down.png\",\n    \"704x1280\", r\"C:\\banyan-farm\\v36-newbeats-0810\", \"05\")\nprint(\"plate\", out); print(rec[\"plate_wxh\"], rec[\"crop_policy\"])\n"]
+plate C:\banyan-farm\v36-newbeats-0810\05-704x1280.png
+704x1280 cover-centre (render_t3 policy: scale to cover, then centre crop): 832x1216, cropped 163px of width (81 left, 82 right) = 19.6%, kept 669x1216, LANCZOS to 704x1280
+==== step plate END rc=0 2026-08-10T15:51:16Z ====
+
+==== step encode START 2026-08-10T15:51:16Z ====
+argv: ["C:\\banyan-video\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ltx_i2v.py", "--stage", "encode", "--embeds", "C:\\banyan-farm\\v36-newbeats-0810\\ltx-embeds-ep1-b05-v36-motion-r1a-g10.pt", "--prompt-file", "C:\\banyan-farm\\v36-newbeats-0810\\ep1-b05-v36-motion-r1a-g10-prompt.txt", "--negative-file", "C:\\banyan-farm\\v36-newbeats-0810\\ep1-b05-v36-motion-r1a-g10-negative.txt"]
+-- begin-encode: phys 11.7/68.1GB, commit 15.1/128.2GB (load 17%)
+loading text encoder from C:\Users\artvn\.cache\huggingface\hub\models--Lightricks--gemma-3-12b-it-qat-q4_0-unquantized\snapshots\d62fe4f1995ade703b49a0f3c0d0f161237ef437
+
+Loading weights:   0%|          | 0/1065 [00:00<?, ?it/s]
+Loading weights:  28%|██▊       | 293/1065 [00:00<00:00, 2657.00it/s]
+Loading weights:  53%|█████▎    | 568/1065 [00:00<00:00, 2555.77it/s]
+Loading weights:  80%|████████  | 854/1065 [00:00<00:00, 2577.62it/s]
+Loading weights: 100%|██████████| 1065/1065 [00:00<00:00, 2704.17it/s]
+encoded to C:\banyan-farm\v36-newbeats-0810\ltx-embeds-ep1-b05-v36-motion-r1a-g10.pt (1, 1024, 188160)
+{"peak_commit_gb": 44.0, "peak_phys_gb": 38.3, "last_stage": "begin-encode"}
+==== step encode END rc=0 2026-08-10T15:52:51Z ====
+
+==== step render START 2026-08-10T15:52:51Z ====
+argv: ["C:\\banyan-video\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ltx_i2v.py", "--stage", "render", "--embeds", "C:\\banyan-farm\\v36-newbeats-0810\\ltx-embeds-ep1-b05-v36-motion-r1a-g10.pt", "--prompt-file", "C:\\banyan-farm\\v36-newbeats-0810\\ep1-b05-v36-motion-r1a-g10-prompt.txt", "--negative-file", "C:\\banyan-farm\\v36-newbeats-0810\\ep1-b05-v36-motion-r1a-g10-negative.txt", "--init", "C:\\banyan-farm\\v36-newbeats-0810\\05-704x1280.png", "--out", "C:\\banyan-farm\\v36-motion-0810\\05-ltx-r1a-g10-s20260905.mp4", "--size", "704x1280", "--frames", "65", "--fps", "24", "--steps", "8", "--guidance", "1.0", "--distilled-sigmas", "--two-stage", "--seed", "20260905", "--beat", "05", "--task", "ep1-b05-v36-motion-r1a-g10-0810", "--worker", "rtx5090"]
+-- begin-render: phys 11.8/68.1GB, commit 15.1/128.2GB (load 17%)
+transformer  C:\Users\artvn\.cache\huggingface\hub\models--diffusers--LTX-2.3-Distilled-Diffusers\snapshots\432e0d3c2d1769aaa4d295f9243f7062bf6b47ee [subfolder=transformer, bf16]
+scheduler    C:\Users\artvn\.cache\huggingface\hub\models--diffusers--LTX-2.3-Distilled-Diffusers\snapshots\432e0d3c2d1769aaa4d295f9243f7062bf6b47ee [subfolder=scheduler, distilled]
+other parts  C:\Users\artvn\.cache\huggingface\hub\models--diffusers--LTX-2.3-Diffusers\snapshots\8eee8edcf067e838b843f926ec4d4cc9b2be1aaf
+-- load-transformer-bf16-38GB: phys 12.5/68.1GB, commit 16.9/128.2GB (load 18%)
+
+Loading checkpoint shards:   0%|          | 0/8 [00:00<?, ?it/s]
+Loading checkpoint shards:  12%|█▎        | 1/8 [00:00<00:00,  9.24it/s]
+Loading checkpoint shards:  25%|██▌       | 2/8 [00:00<00:00,  9.51it/s]
+Loading checkpoint shards:  50%|█████     | 4/8 [00:00<00:00,  7.93it/s]
+Loading checkpoint shards: 100%|██████████| 8/8 [00:00<00:00, 13.91it/s]
+-- load-connectors-12.7GB-and-vae: phys 12.6/68.1GB, commit 55.3/128.2GB (load 18%)
+
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]
+Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 257.98it/s]
+-- offload-setup: phys 12.6/68.1GB, commit 64.9/128.2GB (load 18%)
+C:\banyan-video\venv\Lib\site-packages\accelerate\utils\modeling.py:345: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  new_value = old_value.to(device, non_blocking=non_blocking)
+-- stage1-denoise-352x640-8steps: phys 13.4/68.1GB, commit 65.2/128.2GB (load 19%)
+
+  0%|          | 0/8 [00:00<?, ?it/s]
+ 12%|█▎        | 1/8 [01:12<08:28, 72.62s/it]
+ 25%|██▌       | 2/8 [01:19<03:22, 33.78s/it]
+ 38%|███▊      | 3/8 [01:25<01:45, 21.06s/it]
+ 50%|█████     | 4/8 [01:30<00:59, 14.86s/it]
+ 62%|██████▎   | 5/8 [01:36<00:34, 11.50s/it]
+ 75%|███████▌  | 6/8 [01:41<00:19,  9.58s/it]
+ 88%|████████▊ | 7/8 [01:47<00:08,  8.35s/it]
+100%|██████████| 8/8 [01:54<00:00,  7.70s/it]
+100%|██████████| 8/8 [01:54<00:00, 14.25s/it]
+stage1 latents (1, 128, 9, 20, 11)
+-- upsample-2x-latent: phys 60.1/68.1GB, commit 66.9/128.2GB (load 88%)
+There are modules in LTX2LatentUpsamplerModel that should be kept in float32: []. Casting directly with `to()` can lead to inconsistent results; set `torch_dtype` in `from_pretrained()` instead to keep these modules in float32.
+upsampled latents (1, 128, 9, 40, 22)
+-- stage2-refine-704x1280-3steps: phys 62.4/68.1GB, commit 70.7/128.2GB (load 91%)
+
+  0%|          | 0/3 [00:00<?, ?it/s]
+ 33%|███▎      | 1/3 [00:11<00:22, 11.50s/it]
+ 67%|██████▋   | 2/3 [00:22<00:11, 11.44s/it]
+100%|██████████| 3/3 [00:33<00:00, 11.24s/it]
+100%|██████████| 3/3 [00:33<00:00, 11.30s/it]
+-- decode-and-export: phys 64.5/68.1GB, commit 71.3/128.2GB (load 94%)
+[1/1] wrote C:\banyan-farm\v36-motion-0810\05-ltx-r1a-g10-s20260905.mp4 in 164s (65 frames, 704x1280, 8@352x640+3@704x1280 steps, peak torch 4.1GB, device 2.5/26GB)
+{"sample_s": 164.0, "peak_gb": 4.1, "peak_commit_gb": 73.5, "frames": 65, "size": "704x1280", "steps": "8@352x640+3@704x1280", "two_stage": true, "image_crf": 0, "offload": "sequential"}
+{"peak_commit_gb": 73.5, "peak_phys_gb": 65.0, "last_stage": "decode-and-export"}
+==== step render END rc=0 2026-08-10T15:55:49Z ====
+
+==== step publish START 2026-08-10T15:55:49Z ====
+argv: ["C:\\banyan-video\\venv\\Scripts\\python.exe", "-c", "import glob, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep1-b05-v36-motion-r1a-g10\"\nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/v36-motion-0810/05-ltx-r1a-g10-s20260905.*\"))\nfor f in src:\n    shutil.copy2(f, dst)\nprint(\"published\", len(src), \"file(s) ->\", dst)\nfor f in src:\n    print(\"   \", os.path.basename(f), os.path.getsize(f), \"bytes\")\n# The mp4 alone is worth publishing; a missing sidecar is a\n# finding, not a reason to lose the clip.\nraise SystemExit(0 if any(f.endswith(\".mp4\") for f in src) else 1)\n"]
+published 2 file(s) -> C:/banyan-farm/courier-box/farm-out/ep1-b05-v36-motion-r1a-g10
+    05-ltx-r1a-g10-s20260905.mp4 115921 bytes
+    05-ltx-r1a-g10-s20260905.mp4.meta.yaml 1817 bytes
+==== step publish END rc=0 2026-08-10T15:55:49Z ====
+#### job ep1-b05-v36-motion-r1a-g10-1786373077 finished rc=0 2026-08-10T15:55:49Z
