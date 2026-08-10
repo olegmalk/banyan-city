@@ -1,0 +1,57 @@
+# The job that clears the others. Runs first, on the box, CPU only.
+#
+# Every render job in this directory depends on three facts that only the box
+# can establish: the node it names is founder-approved as the gate reads it, the
+# conditioning plate exists at the absolute path ltx_i2v will open, and the
+# prompt's token count came from a real tokenizer rather than the Mac's prose
+# estimator. This job establishes all three and writes them down.
+#
+# It needs no GPU, so it drains while the card is busy with a hand lane -- which
+# is also why it is the safe thing to prove the runner on.
+
+id: box-preflight-0810
+task: box-preflight-0810
+runner: box
+needs_gpu: false
+priority: 1
+max_attempts: 2
+
+consumer: >-
+  every render job in pipeline/jobs/ -- this is the `after:` dependency they all
+  carry. Also the lead's status report: its artifact is the box's own statement
+  of whether it can render right now.
+
+success: >-
+  preflight.yaml exists on the box and reads `verdict: READY`, with
+  001-capability-inventory and 002b-first-citizen both `approved: true` and a
+  CUDA device named. A `verdict: BLOCKED` is a successful measurement of a real
+  problem, and shows up as rc 1 -- read the `problems:` list rather than
+  re-running it.
+
+why: >-
+  A job pointing at an unapproved node does not fail, it raises SystemExit and
+  takes the whole daemon down with it (farm_worker.py:517). Checking before
+  queueing is the difference between one red job and a card that stops.
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+
+steps:
+  - name: preflight
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\box_preflight.py
+      - --repo
+      - C:\banyan-farm\banyan-city
+      - --node
+      - 001-capability-inventory
+      - --node
+      - 002b-first-citizen
+      - --out
+      - C:\banyan-queue\preflight.yaml
+
+artifacts:
+  - C:\banyan-queue\preflight.yaml
