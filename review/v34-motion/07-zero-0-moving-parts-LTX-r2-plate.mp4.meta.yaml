@@ -1,0 +1,17 @@
+# Shot provenance (7.2) — written by video_task at render time
+platform: local-gpu (rtx5090)
+model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+model_licence: LTX-2 Community License Agreement
+shot_beat: 7
+size: 704x1280
+seconds: 2.708
+steps: 8@352x640+3@704x1280
+guidance: 1.0
+seed: 20260738
+task: ep1-b07-v34-plate-twin-r2-0810
+cost_usd: 0
+prompt: |-
+  2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. a locked-off tripod shot: the camera never moves, the horizon line stays at the same height in the frame, the low sun stays in the same place on the horizon, the composition is identical in every frame. within that fixed frame the whole field is continuously in motion: the grass ripples and sways across the entire frame without ever stopping, wave after wave running through it from edge to edge, every blade moving all the time, the clouds drift steadily across the sky and keep their shapes, warm sunset light shifts and flickers over the field throughout, living scene, constant ambient motion everywhere. Subject already in frame: no human, no person, no man, no woman, no boy, no girl, no hand, no face, a wide open grass field at sunset, low sun on the horizon, a broad sky with soft clouds, no buildings.
+negative: |-
+  wilting, drooping, bending over, falling over, collapsing, sagging, plant dying, human, person, man, woman, boy, girl, extra hand, extra arm, foot, face, crowd, animal, bird, insect, new object appearing, photorealism, 3D render look, text, 静态, 静止, frozen frame, still image, no motion, photorealistic, photograph, live action, film still, 3D render, CGI, octane, scene change, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+  [unused: guidance 1.0 on the distilled path runs no uncond pass, so this changed no pixel]
