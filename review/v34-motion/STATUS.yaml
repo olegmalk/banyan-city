@@ -1,0 +1,37 @@
+# ===================================================================
+# STEWARD-PROVISIONAL. Nothing in this directory is canon, approved,
+# screened or publishable. Taste is the founder's (R4). No verdict of
+# the steward's own is offered on any file here.
+# ===================================================================
+what: >-
+  Footage generated for episode-1 beats that the v34 cut currently plays as HELD
+  STILLS with a 12% push-in. QA-v34-0810.md measured seven such beats at median
+  0.01-0.05 with 57-88% of frame pairs frozen. The conditioning frames are the
+  founder's own promoted stills, byte-identical and sha-verified; NO still was
+  regenerated. These beats are marked "needs footage" in shots.md.
+model: diffusers/LTX-2.3-Distilled-Diffusers
+model_licence: LTX-2 Community License Agreement
+licence_status: >-
+  D16 is OPEN and LTX clips are WITHHELD from publication by DECISIONS.md
+  ("D16's LTX clips stay withheld ... that sign-off is a separate question and he
+  has not answered it"). The consumer of this work is therefore a SCREENING cut,
+  not a publish. Nothing here may go on the site.
+cost_usd: 0
+files:
+  14-worth-staying-in-LTX-r1-COLLAPSES.mp4: >-
+    REJECTED ON EYES by the steward as a mechanical defect, not a taste call. The
+    sapling bends monotonically from frame 40 and is near-horizontal and leaving
+    frame by 64. It measured median 4.45->6.87 (6.87), the HIGHEST number in the
+    episode, because a subject falling over is large frame-to-frame change. Kept
+    as evidence that the motion metric cannot tell "alive" from "collapsing".
+  14-worth-staying-in-LTX-r2.mp4: >-
+    Same seed 20260745, prompt the only variable, ambient-only motion wording.
+    The sapling stays upright for all 65 frames; style, palette and linework hold
+    from the conditioning frame; no human, hand, face or invented object appears.
+    Median 4.45, 0% frozen. ONE RESIDUAL, offered as an observation and NOT as a
+    verdict: the framing drifts upward and the leaf tips crop at the top edge by
+    frame 56. It reads as the plant growing, which suits the beat's line, but
+    whether that is right is R4's and nobody else's.
+  B14-MOTION-COMPARE.mp4: side by side, v34 held still (left) vs r2 (right).
+  SHEET-b14-r1-collapse.png: conditioning frame + 9 frames, the collapse.
+  SHEET-b14-r2.png: conditioning frame + 9 frames, upright.

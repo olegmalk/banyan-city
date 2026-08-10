@@ -1,0 +1,17 @@
+# Shot provenance (7.2) — written by video_task at render time
+platform: local-gpu (rtx5090)
+model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+model_licence: LTX-2 Community License Agreement
+shot_beat: 14
+size: 704x1280
+seconds: 2.708
+steps: 8@352x640+3@704x1280
+guidance: 1.0
+seed: 20260745
+task: ep1-b14-v34-motion-0810
+cost_usd: 0
+prompt: |-
+  2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. the slender sapling sways gently in a steady breeze, its thin stem bending and springing back, leaves trembling and turning over, the short grass rippling in waves around its base, warm afternoon light shifting across the leaves. subtle continuous motion, gentle camera drift, living scene. Subject already in frame: no humans, plant focus, one slender sapling standing tall, thin stem rising well above the grass to near the top of the frame, short grass, warm afternoon light.
+negative: |-
+  photorealism, 3D render look, text, 静态, 静止, 静止不动的画面, frozen frame, still image, no motion, humans, people, person, 1boy, 1girl, figure, silhouette, hands, face, crowd, animals, birds, insects, buildings, machinery, new objects appearing, photorealistic, photograph, live action, film still, 3D render, CGI, octane, depth of field bokeh, motion blur, scene change, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+  [unused: guidance 1.0 on the distilled path runs no uncond pass, so this changed no pixel]

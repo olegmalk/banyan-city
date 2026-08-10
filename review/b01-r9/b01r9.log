@@ -1,0 +1,39 @@
+
+== beat 01 cold-open [r9] arm d60 scale 0.6 — depth ControlNet
+   root:     C:\banyan-farm\banyan-city  (commit 11e5ab176b8d10ff2b021391ec3cf8075d6cf112)
+   out:      C:\banyan-farm\sample-b01-r9\out
+   shots.md: C:\banyan-farm\banyan-city\genomes\sapling\nodes\002b-first-citizen\shots.md
+   shots sha256: 445b8c682a5f94954d98a2a0be5209876c0c558c666c085ba126b35614e491c9
+   fence: byte-identical to r7's authored text
+   control:  C:\banyan-farm\b01-r9-depth-b15.png
+   control sha256: fda4bf6c8838c2da770ce79dd36c885f3c1699755fbb7ce4b0581fd1c32adc28
+   control size: 832x1216
+   plate:    genomes/sapling/nodes/001-capability-inventory/stills/15-something-s-coming.png
+   plate sha256: f60c1404f88d45720ca295dfc753e9eaabb815446710bcfffb3c7a07b7277f54  (provenance only — NOT passed to the pipeline)
+   arms available: d40=0.4, d60=0.6, d80=0.8
+   control_guidance: 0.0 -> 1.0 (pinned; r10's axis, not r9's)
+   frames: 1  seeds: [20260720]  [stage 1, one sample]
+C:\banyan-farm\venv\Lib\site-packages\transformers\tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+Token indices sequence length is longer than the specified maximum sequence length for this model (85 > 77). Running this sequence through the model will result in indexing errors
+
+   AUTHORED(r7, on disk): A tiny 40cm seedling standing in short grass, its sturdy curved stem no taller than the grass around it, two oversized cotyledon leaves, one small round green fruit hanging from the stem, whole plant in frame, wide shot, peach and gold sunrise sky, no girl, no boy, no child, no person, no chibi, no mascot, no creature, no face, no branches, no night sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+   AUTHORED(r9, stripped): A tiny 40cm seedling standing in short grass, its sturdy curved stem, two oversized cotyledon leaves, one small round green fruit hanging from the stem, whole plant in frame, wide shot, peach and gold sunrise sky, no girl, no boy, no child, no person, no chibi, no mascot, no creature, no face, no branches, no night sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+   POS: A tiny 40cm seedling standing in short grass, its sturdy curved stem, two oversized cotyledon leaves, one small round green fruit hanging from the stem, whole plant in frame, wide shot, peach and gold sunrise sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+   NEG(recipe): photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, mature tree, large tree, tall tree, thick trunk, full canopy, forest, bush, shrubbery, girl, boy, child, person, chibi, mascot, creature, face, branches, night sky, photorealism
+   NEG(sent):   photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, mature tree, large tree, thick trunk, full canopy, forest, bush, shrubbery, girl, boy, child, person, chibi, mascot, creature, face, branches, night sky, photorealism
+   positive tokens: 65 (budget 77, r8 measured 65)
+   negative tokens: recipe 75 -> sent 72 (budget 77, r7 measured 72)
+   NEGWARN: !! negative prompt over CLIP's 77-token budget; deduplicated: text; DROPPED: realistic skin texture, jpeg artifacts
+C:\banyan-farm\venv\Lib\site-packages\diffusers\models\vq_model.py:20: FutureWarning: `VQEncoderOutput` is deprecated and will be removed in version 0.31. Importing `VQEncoderOutput` from `diffusers.models.vq_model` is deprecated and this will be removed in a future version. Please use `from diffusers.models.autoencoders.vq_model import VQEncoderOutput`, instead.
+  deprecate("VQEncoderOutput", "0.31", deprecation_message)
+C:\banyan-farm\venv\Lib\site-packages\diffusers\models\vq_model.py:25: FutureWarning: `VQModel` is deprecated and will be removed in version 0.31. Importing `VQModel` from `diffusers.models.vq_model` is deprecated and this will be removed in a future version. Please use `from diffusers.models.autoencoders.vq_model import VQModel`, instead.
+  deprecate("VQModel", "0.31", deprecation_message)
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]Loading pipeline components...:  14%|█▍        | 1/7 [00:05<00:35,  5.92s/it]Loading pipeline components...:  57%|█████▋    | 4/7 [00:06<00:04,  1.34s/it]Loading pipeline components...:  71%|███████▏  | 5/7 [00:07<00:02,  1.26s/it]Loading pipeline components...:  86%|████████▌ | 6/7 [00:28<00:06,  6.90s/it]Loading pipeline components...: 100%|██████████| 7/7 [00:28<00:00,  4.13s/it]
+MODEL_LOADED cuda/bfloat16 in 43s (StableDiffusionXLControlNetPipeline)
+  0%|          | 0/40 [00:00<?, ?it/s]  2%|▎         | 1/40 [00:00<00:38,  1.01it/s]  5%|▌         | 2/40 [00:01<00:22,  1.71it/s]  8%|▊         | 3/40 [00:01<00:17,  2.09it/s] 10%|█         | 4/40 [00:01<00:14,  2.42it/s] 12%|█▎        | 5/40 [00:02<00:13,  2.64it/s] 15%|█▌        | 6/40 [00:02<00:12,  2.75it/s] 18%|█▊        | 7/40 [00:02<00:11,  2.83it/s] 20%|██        | 8/40 [00:03<00:10,  2.93it/s] 22%|██▎       | 9/40 [00:03<00:10,  2.95it/s] 25%|██▌       | 10/40 [00:03<00:10,  2.97it/s] 28%|██▊       | 11/40 [00:04<00:09,  3.07it/s] 30%|███       | 12/40 [00:04<00:09,  3.05it/s] 32%|███▎      | 13/40 [00:04<00:08,  3.03it/s] 35%|███▌      | 14/40 [00:05<00:08,  3.07it/s] 38%|███▊      | 15/40 [00:05<00:08,  3.05it/s] 40%|████      | 16/40 [00:05<00:07,  3.04it/s] 42%|████▎     | 17/40 [00:06<00:07,  3.07it/s] 45%|████▌     | 18/40 [00:06<00:07,  3.09it/s] 48%|████▊     | 19/40 [00:06<00:06,  3.07it/s] 50%|█████     | 20/40 [00:07<00:06,  3.09it/s] 52%|█████▎    | 21/40 [00:07<00:06,  3.07it/s] 55%|█████▌    | 22/40 [00:07<00:05,  3.05it/s] 57%|█████▊    | 23/40 [00:08<00:05,  3.08it/s] 60%|██████    | 24/40 [00:08<00:05,  3.06it/s] 62%|██████▎   | 25/40 [00:08<00:04,  3.09it/s] 65%|██████▌   | 26/40 [00:09<00:04,  3.06it/s] 68%|██████▊   | 27/40 [00:09<00:04,  3.06it/s] 70%|███████   | 28/40 [00:09<00:03,  3.06it/s] 72%|███████▎  | 29/40 [00:10<00:03,  3.06it/s] 75%|███████▌  | 30/40 [00:10<00:03,  3.06it/s] 78%|███████▊  | 31/40 [00:10<00:02,  3.06it/s] 80%|████████  | 32/40 [00:11<00:02,  3.06it/s] 82%|████████▎ | 33/40 [00:11<00:02,  3.07it/s] 85%|████████▌ | 34/40 [00:11<00:01,  3.06it/s] 88%|████████▊ | 35/40 [00:12<00:01,  3.06it/s] 90%|█████████ | 36/40 [00:12<00:01,  3.07it/s] 92%|█████████▎| 37/40 [00:12<00:00,  3.06it/s] 95%|█████████▌| 38/40 [00:13<00:00,  3.06it/s] 98%|█████████▊| 39/40 [00:13<00:00,  3.07it/s]100%|██████████| 40/40 [00:13<00:00,  3.07it/s]100%|██████████| 40/40 [00:13<00:00,  2.92it/s]
+   01-cold-open-r9-d60-s0.png seed=20260720 15s  (1/1)
+
+DONE 1 still(s) in C:\banyan-farm\sample-b01-r9\out
+STAGE 1 COMPLETE — a human looks at this frame before --stage2 unlocks the remaining twelve.
+rc=0
