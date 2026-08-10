@@ -140,3 +140,4 @@
 12:05:46Z DONE task=ep1-b06-r7b-sky-1786363380 rc=0 artifacts=4
 12:06:11Z STARTED task=ep2-b04-goblin-ipa-wscale-1786362886 attempt=1 on box-runner
 12:07:44Z DONE task=ep2-b04-goblin-ipa-wscale-1786362886 rc=0 artifacts=8
+12:08:10Z STARTED task=ep2-b04-goblin-ipa-wedge-1786362617 attempt=1 on box-runner
