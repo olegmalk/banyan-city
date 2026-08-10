@@ -128,7 +128,7 @@ nodes:
     parent: "005"
     trunk: false              # alive per R6; 006 trunk is 006a (edl.md 2026-07-22)
     status: hot
-    leaves: [006b-t0-a, 006b-t1-a, 006b-t2-a]
+    leaves: [006b-t0-a, 006b-t1-a, 006b-t2-a, 006b-t0-b]
 
   - id: "007a"
     released: 2026-07-19
@@ -146,7 +146,7 @@ nodes:
     parent: "006b"
     trunk: false              # alive per R6 on the 006b branch
     status: hot
-    leaves: [007b-t0-a, 007b-t1-a, 007b-t2-a]
+    leaves: [007b-t0-a, 007b-t1-a, 007b-t2-a, 007b-t0-b]
 
 # Grafts performed: 004 absorbs the mended-water/cairn motifs of the 002a/003a
 # line and the sunset-overlay registration of the 002c/003c line (branches stay

@@ -3,7 +3,7 @@ leaf: 007b-t0-a
 node: "007b"
 tier: T0
 form: text-script
-content: ../node.md
+content: 007b-t0-a.md
 author: claude-fable-5 (delegated steward — see STEWARDSHIP.md and genomes/sapling/edl.md)
 model: claude-fable-5
 prompt: continuation of 006b under taste file sapling.founder.v0.2 (deepens the 006b line for the founder's R4 trunk call between the 006 siblings)
@@ -11,3 +11,4 @@ seed: none
 cost_usd: 0.00
 status: live
 platform_urls: []
+superseded_by: 007b-t0-b   # cycle-007 shot-density rewrite, 2026-08-10; alive per R6
