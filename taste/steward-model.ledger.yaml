@@ -6054,3 +6054,99 @@
   outcome: n/a
   miss_axis: null
   model_action: none_no_prediction_existed
+
+- id: ep2-b02-goblin-founderpick-observed-0810
+  date: 2026-08-10
+  kind: observation
+  subject: "node 002b beat 02 — ONE SAMPLE: the same recipe conditioned on the frame the founder PICKED instead of on an unapproved tags-only frame. A negative result, and it is worse than what it replaced."
+  steward_provisional: true
+  pick: null
+  scores: {}
+  address_key: >-
+    Job `ep2-b02-goblin-founderpick-sample-1786392259`, rc 0, failed_step null.
+    Sixteen PNGs (four distinct — see the seed note) under
+    `C:\banyan-farm\goblin-ipa-0810\out-b02-founderpick`, published to
+    `farm-out/ep2-b02-goblin-founderpick-sample/` with a .sha256 manifest. Spec
+    in the tree at commit eeb6e41.
+  what_was_pre_registered_and_when: >-
+    A REAL PRE-REGISTRATION, AND IT IS THE FIRST ONE OF THE NIGHT. The spec was
+    written and dry-run BEFORE the job was queued, and it states both outcomes in
+    advance: "If his pick as the reference rescues beat 02, the lever is real and
+    the easier beats follow. If it does not, the finding is that the mechanism is
+    bounded by COMPOSITION and no reference swap fixes it — which is the
+    conclusion the crossbeat evidence already points at, and this job is the
+    cheapest way to be wrong about it."
+    The frames were opened after that text existed. The commit (eeb6e41) landed
+    while the job was still rendering, which is the same ordering
+    `ep2-b04-goblin-ipa-negcolor-observed` describes for itself.
+  the_lever: >-
+    EXACTLY ONE VARIABLE against the crossbeat run: the reference image. The
+    crossbeat rows conditioned on the four tags-only baseline frames
+    (`04-the-footnote-wave1-s0..s3`) — the four different creatures the WORDS
+    drew, none of which he has ever approved. This run conditions on
+    `04-the-footnote-ipa-r1-w015-s6`, the frame he took. Same beat, same arm
+    window4, same 15% window at scale 0.6, same seed arithmetic, same
+    byte-identical prompt, zero prompt tokens added. Repointed by giving --refs a
+    different directory holding his pick under the four filenames the sampler
+    hardcodes; `goblin_ipa_sample.py` was not edited.
+  the_result_and_it_is_a_CLEAN_NEGATIVE: >-
+    IT DID NOT RESCUE BEAT 02, AND IT DID NOT FAIL IN THE SAME DIRECTION EITHER —
+    IT FAILED WORSE.
+
+    The four frames: s0 is an enormous dark dome filling the frame with a tiny
+    green figure standing on a hill far below it. s1 is a bloated dark-teal
+    creature with GLOWING RED EYES and a gritted mouth, belly filling the lower
+    half. s2 is a colossal round head looming over a small landscape, pink-red
+    slit eyes and two fangs. s3 is another dark dome with two glowing red dots
+    for eyes and a tiny figure beneath it.
+
+    Against his pick this is not close. His frame has warm ORANGE-YELLOW irises
+    and a soft register; three of these four have GLOWING RED eyes and read as
+    menacing. And the creature is not the subject of the shot in half of them —
+    in s0 and s3 the goblin is a speck at the bottom of the frame while something
+    enormous fills the rest.
+  the_mechanism_and_this_is_what_the_sample_bought: >-
+    THE ADAPTER IS TRANSFERRING COMPOSITION, NOT IDENTITY. That single sentence
+    explains every result this wave has produced and it is now hard to avoid.
+
+    His pick is a HEAD FILLING THE FRAME. Conditioned on it, beat 02 came back
+    with a HEAD FILLING THE FRAME — a huge round dome — layered over a full-body
+    sprint the beat's own prompt is still asking for. The two fight, and what
+    comes out is a giant looming skull above a miniature landscape. The adapter
+    copied the layout of the reference faithfully and the creature in it barely
+    at all.
+
+    Read backwards, this retro-explains the whole set. Beat 04 measured as "one
+    creature across seeds" because every reference was a beat-04 face at beat
+    04's composition — identity and layout were confounded and could not be told
+    apart. Beat 20 held because it is also a face-filling close-up, so copying
+    the layout happened to also deliver the face. Beat 15 drifted because it is a
+    medium shot. Beat 02 collapsed because it is a full-body sprint, and now
+    collapses HARDER with a stronger, cleaner face reference — which is the
+    signature of a layout transfer, not a character transfer. A better picture of
+    the character made the wrong-composition problem worse, not better.
+  the_lever_is_closed: >-
+    DO NOT RE-RUN A REFERENCE SWAP AGAINST A DIFFERENTLY-FRAMED BEAT. Swapping to
+    the best possible reference — the one the founder himself chose — is the
+    strongest version of this lever available, and it made the worst beat worse.
+    Another reference will not fix beat 02.
+    WHAT IS NOT CLOSED, and neither is queued or recommended here: conditioning
+    a beat on a reference that MATCHES ITS OWN FRAMING (which would need an
+    approved full-body drawing of him, and none exists), or dropping the adapter
+    on wide beats and carrying identity some other way. Both are different
+    mechanisms, both need the founder, and neither is started by this record.
+  what_this_costs_and_what_it_saved: >-
+    Three minutes of otherwise-idle GPU, $0, local. It replaced a fourteen-beat
+    wave that would have taken ~45 minutes and handed him back the exact
+    complaint he has made all week.
+  what_this_does_not_claim: >-
+    No arm recommended, no frame picked, ranked or promoted, no goblin made
+    canonical beyond the one HE named, no taste call. Beat 02 is one beat and ten
+    of the fifteen goblin beats remain untested. The composition reading is a
+    mechanism hypothesis with four beats behind it (04, 20, 15, 02) and no
+    counter-example, not a proven law.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
