@@ -280,6 +280,18 @@ form.compose .hint { font: 500 .78rem/1.6 var(--mono); color: var(--faint); marg
   margin-top: .4rem; }
 .check .sheets .k { display: block; color: var(--ink); letter-spacing: .1em;
   text-transform: uppercase; }
+/* Story context for the beats ON a sheet. He cannot judge a candidate against a
+   script he cannot see, so each beat's one line of plot and its one load-bearing
+   visual sit under the picture they belong to rather than in a chat message. */
+.check .sheets .beatctx { list-style: none; margin: .55rem 0 0; padding: 0;
+  border-top: 1px solid var(--line); }
+.check .sheets .beatctx li { padding: .45rem 0; border-bottom: 1px solid var(--line);
+  font: 400 .74rem/1.6 var(--mono); color: var(--faint); }
+.check .sheets .beatctx b { display: block; color: var(--ink); font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase; }
+.check .sheets .beatctx span { display: block; }
+.check .sheets .beatctx span i { font-style: normal; color: var(--ink);
+  letter-spacing: .06em; }
 .check .voices figure { margin: 0 0 .8rem; max-width: none; }
 .check .voices audio { width: 100%; max-width: 420px; display: block; }
 /* Opens a labelled run of items — episode 2's questions are real but they do
@@ -2608,11 +2620,21 @@ def render_review() -> str:
             if not rel:
                 continue
             n_sheets += 1
+            # `beats:` is the story context for what is ON this sheet — optional,
+            # and absent on every sheet that predates it. Two lines per beat: what
+            # happens, and the one thing a candidate must show to be answerable at
+            # all. It is deliberately NOT a ranking; nothing here names a frame.
+            ctx = ""
+            for b in s.get("beats") or []:
+                ctx += (f'<li><b>{html.escape(str(b.get("beat", "")))}</b>'
+                        f'<span><i>Happens</i> — {html.escape(str(b.get("happens", "")))}</span>'
+                        f'<span><i>Must show</i> — {html.escape(str(b.get("shows", "")))}</span></li>')
+            ctx = f'<ul class="beatctx">{ctx}</ul>' if ctx else ""
             sheets += (f'<figure><a href="{url(rel)}" target="_blank" '
                        f'rel="noopener"><img src="{url(rel)}" loading="lazy" '
                        f'alt="{html.escape(str(s.get("alt", s.get("label", "candidate frames"))))}">'
                        f'</a><figcaption><span class="k">{html.escape(str(s.get("label", "")))}</span>'
-                       f'{html.escape(str(s.get("note", "")))}{rec_link(rel)}</figcaption></figure>')
+                       f'{html.escape(str(s.get("note", "")))}{rec_link(rel)}{ctx}</figcaption></figure>')
         # §7.2 ON THE SURFACE, not only in the sidecar. These frames publish under
         # an offer narrowed away from the site's CC BY 4.0 (D15, founder,
         # 2026-08-09), and a reader who saves one is owed that in the place he

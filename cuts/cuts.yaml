@@ -922,18 +922,87 @@ checklist:
         - file: review-assets/LABELED-beat10-r3.jpg
           label: "ep1 beat 10 round 3 — ANSWERED, b10-r1-s3 is canon"
           note: "kept as the record; you took the round-1 frame instead"
+        # THE STORY, BESIDE THE PICTURES. Added 2026-08-10 because he was asked to
+        # judge twenty candidate sets against a script that was nowhere on the
+        # page. Every line below is the shot list and `node.md` restated in plain
+        # English — no frame is named, ranked or recommended, and where the script
+        # is genuinely undecided the line says so instead of inventing a reading.
         - file: review-assets/CONTACT-002b-r3-b02-06.jpg
           label: "ep2 beats 02-06 — 002b-bNN-r3-sN"
           note: "four candidates per beat, one band each; every tile now carries its full address"
+          beats:
+            - beat: "02 · The sprint"
+              happens: "No dialogue. The goblin sprints into the empty field, skids in the grass and dives behind the sapling."
+              shows: "Wide enough that the dive reads — goblin mid-dive AND the 40cm sapling in one frame, dust kicked up."
+            - beat: "03 · Bad cover"
+              happens: "He crouches behind a trunk that hides about one-sixth of him. Tree: \"A creature is using me as cover. I am forty centimeters tall.\""
+              shows: "The size mismatch itself: pencil-thin sapling, whole goblin, the plant plainly failing to hide him."
+            - beat: "04 · The footnote"
+              happens: "He holds his breath, eyes darting, while the tree narrates the architect-hiding-an-outage-in-a-footnote joke."
+              shows: "His face filling the frame — puffed cheeks, huge eyes darting, ears twitching. No sapling in this shot."
+            - beat: "05 · The patrol"
+              happens: "Two patrol guards jog in and halt, scanning the field. GUARD 1: \"He went this way. Apple thief.\""
+              shows: "Two guards, round and harmless, mismatched ill-fitting armour, an empty field; one carries a bark clipboard."
+            - beat: "06 · The clipboard"
+              happens: "Guard 2 reads off the bark clipboard and reclassifies the crime as unlicensed consumption."
+              shows: "The clipboard, legible AS a bark clipboard, filling the lower third, a finger tracing a line on it."
         - file: review-assets/CONTACT-002b-r3-b07-11.jpg
           label: "ep2 beats 07-11 — 002b-bNN-r3-sN"
           note: "four candidates per beat, one band each; every tile now carries its full address"
+          beats:
+            - beat: "07 · Confiscate"
+              happens: "Guard 1 points off-frame, decisive and wrong. \"So we confiscate the apple.\""
+              shows: "One guard, arm thrust out pointing OFF-frame, chin up; his partner's shoulder just at the frame edge."
+            - beat: "08 · Inside him"
+              happens: "Guard 2 lowers the clipboard and points flatly at the goblin's belly. \"The apple is inside him, Dren.\""
+              shows: "Guard and goblin in one deadpan two-shot, the pointing arm aimed at the belly, the goblin looking down at himself."
+            - beat: "09 · The pause"
+              happens: "Guard 1's face works through it slowly. \"…We confiscate the goblin?\""
+              shows: "ONE held close-up on ONE guard's face mid-realisation — the previous round drew split comic panels in all four seeds."
+            - beat: "10 · No form"
+              happens: "Guard 2 flips the clipboard around; the back is blank. \"There's no form for that.\""
+              shows: "The blank back of the bark clipboard dominating the frame, held up toward the partner."
+            - beat: "11 · They leave"
+              happens: "The guards walk off arguing. Tree: \"Nobody in this scene is evil. Everybody is trapped in a workflow.\""
+              shows: "Both guards from behind, receding across an empty field, still gesturing at each other; long morning shadows."
         - file: review-assets/CONTACT-002b-r3-b12-16.jpg
           label: "ep2 beats 12-16 — 002b-bNN-r3-sN"
           note: "four candidates per beat, one band each; every tile now carries its full address"
+          beats:
+            - beat: "12 · Related"
+              happens: "Tight on the sapling's two leaves, perfectly still, the goblin still hidden below frame. Tree: \"I have never related to a fantasy world more.\""
+              shows: "The LEAVES as subject, filling the frame, sky moving behind them. A sky picture with leaves at the edge inverts the beat."
+            - beat: "13 · The shade"
+              happens: "The goblin slides down the trunk and folds into the sapling's tiny shade. First thing he says to it: \"…Thanks for the shade.\""
+              shows: "Goblin and rooted seedling as two separate things in one frame — and, ideally, him sitting in shade the seedling actually casts."
+            - beat: "14 · The defense"
+              happens: "Embarrassed, he picks at the dirt. \"It was one apple. It fell off the cart. On the ground, that's — that's foraging.\""
+              shows: "His hands in the dirt as the subject — clawed fingers picking, pebbles flicked — face glancing away above them. Green grass, not desert."
+            - beat: "15 · Good listener"
+              happens: "He looks up at the sapling. \"You're a good listener. The last three people I talked to filed a report.\""
+              shows: "BOTH of them in one frame — the conversation is the subject. He looks UP; the two oversized leaves hang above him."
+            - beat: "16 · Why"
+              happens: "Tree's longest thought: he talks to me because I'm the only thing here that won't file a report — \"I can't even wave.\""
+              shows: "One leaf filling the frame and sharp; the goblin small, behind it, out of focus. The depth separation is the shot."
         - file: review-assets/CONTACT-002b-r3-b17-21.jpg
           label: "ep2 beats 17-21 — 002b-bNN-r3-sN"
           note: "four candidates per beat, one band each; every tile now carries its full address"
+          beats:
+            - beat: "17 · Goodbye"
+              happens: "He stands, brushes off, turns to go. \"If anyone asks — you didn't see me. Which is true. You're a plant.\""
+              shows: "Him rising and turning AWAY from the sapling toward the open field, both in frame. Afternoon light warming toward amber."
+            - beat: "18 · The decision"
+              happens: "The tree decides to spend the only thing he owns. Extreme close-up on the one fruit, its stem trembling."
+              shows: "One SMALL ROUND GREEN fruit on the thinnest branch, stem visibly flexing. Earlier rounds drew a big ripe orange-pink one."
+            - beat: "19 · The drop"
+              happens: "No dialogue. The stem lets go; the fruit falls, bounces off his head, lands in the grass at his feet and he stops mid-step."
+              shows: "Tree AND goblin in ONE wide frame so cause and effect read in a single take. A macro here breaks the beat."
+            - beat: "20 · Evidence"
+              happens: "He picks the fruit up with both hands and looks up. Whisper: \"…Did you just answer me?\" — the episode's hook."
+              shows: "The fruit held up like evidence, eyes wide, looking up at a BARE branch. Warm amber afternoon — a round of this came back at night."
+            - beat: "21 · The answer"
+              happens: "In dead-still air the sapling's leaf tilts, slowly and deliberately — the first thing he has ever moved on purpose — and holds."
+              shows: "One leaf tilted, and NOTHING else in frame moving. The tilt has to read as intentional, not as wind."
         - file: review-assets/LABELED-b01-r5.jpg
           label: "ep2 cold open — b01-r5-s0..s3"
           note: "the four replacing the frame you withdrew"
@@ -946,6 +1015,10 @@ checklist:
         - file: review-assets/LABELED-b01-r6.jpg
           label: "ep2 cold open ROUND 6 — b01-r6-s0..s3"
           note: "zero people in 4 of 4, and still no plate; all four provisionally rejected"
+          beats:
+            - beat: "01 · Cold open"
+              happens: "The sapling alone in a green field; a green nub on the thinnest branch swells and rounds into one fig. \"I used to be an engineer. Now I'm a tree. …Well. A sapling.\""
+              shows: "A tiny 40cm two-leaf seedling, WHOLE plant in frame, peach-and-gold sunrise, and one small green fruit that GROWS here rather than already hanging."
         - file: review-assets/LABELED-b13-r6.jpg
           label: "ep2 beat 13 ROUND 6 — b13-r6-s0..s3"
           note: "the plant/goblin fusion gone in 4 of 4; the goblin's later rounds are on item 18"
