@@ -90,3 +90,4 @@
 08:58:59Z DONE task=ep1-b07-v34-motion-r2-1786351807 rc=0 artifacts=1
 08:59:06Z STARTED task=ep2-b01-fig-inpaint-s1-1786352262 attempt=1 on box-runner
 08:59:29Z DONE task=ep2-b01-fig-inpaint-s1-1786352262 rc=0 artifacts=3
+08:59:34Z box-runner idle ready=0
