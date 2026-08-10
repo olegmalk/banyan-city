@@ -1,0 +1,89 @@
+{
+  "id": "ep1-b08-v34-motion-r2-1786331505",
+  "task": "ep1-b08-v34-motion-r2-0810",
+  "node": "001-capability-inventory",
+  "beat": 8,
+  "worker": "box-runner",
+  "priority": 20,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "encode",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ltx_i2v.py",
+        "--stage",
+        "encode",
+        "--embeds",
+        "C:\\banyan-farm\\v34-motion-0810\\ltx-embeds-b08r2.pt",
+        "--prompt-file",
+        "C:\\banyan-farm\\b08r2-prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\b08r2-negative.txt"
+      ]
+    },
+    {
+      "name": "render",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ltx_i2v.py",
+        "--stage",
+        "render",
+        "--embeds",
+        "C:\\banyan-farm\\v34-motion-0810\\ltx-embeds-b08r2.pt",
+        "--prompt-file",
+        "C:\\banyan-farm\\b08r2-prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\b08r2-negative.txt",
+        "--init",
+        "C:\\banyan-farm\\banyan-city\\genomes\\sapling\\nodes\\001-capability-inventory\\stills\\08-sev-1.png",
+        "--out",
+        "C:\\banyan-farm\\v34-motion-0810\\08-ltx-r2-s20260739.mp4",
+        "--size",
+        "704x1280",
+        "--frames",
+        "65",
+        "--fps",
+        "24",
+        "--steps",
+        "8",
+        "--guidance",
+        "1.0",
+        "--distilled-sigmas",
+        "--two-stage",
+        "--seed",
+        "20260739",
+        "--beat",
+        "8",
+        "--task",
+        "ep1-b08-v34-motion-r2-0810",
+        "--worker",
+        "rtx5090"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\v34-motion-0810\\08-ltx-r2-s20260739.mp4"
+  ],
+  "started_at": "2026-08-10T03:17:30Z",
+  "attempts": 1,
+  "runner_pid": 3552,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-10T03:21:59Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\v34-motion-0810\\08-ltx-r2-s20260739.mp4"
+  ]
+}
