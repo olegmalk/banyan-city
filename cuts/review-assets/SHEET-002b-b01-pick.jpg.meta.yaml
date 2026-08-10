@@ -1,0 +1,130 @@
+# Provenance for one image on the /review gallery (STEWARDSHIP §7.2).
+#
+# WHAT THIS FILE IS SERVED UNDER. banyan.city publishes CC BY 4.0. These pictures
+# were drawn by cagliostrolab/animagine-xl-3.1, whose CreativeML Open RAIL++-M
+# licence attaches use restrictions that travel to the output — D15, still open.
+# The offer is NARROWED for this file and said out loud on the page: it carries
+# OpenRAIL++'s Attachment A use restrictions and is not CC BY 4.0.
+#
+# THE TWO HELPERS ARE LICENCE-CLEAN AND THAT IS NOT AN ACCIDENT. The depth
+# ControlNet is openrail++, the same family as the base and so adding nothing new,
+# and the depth estimator is apache-2.0. Neither widens D15. The base checkpoint is
+# still the whole of the debt. The helpers touch the round-9 rows only; round 8's
+# twelve frames used the base checkpoint alone, so those rows carry strictly less
+# licence surface, not more.
+#
+# WHY THIS SHEET EXISTS. Beat 01 has two finished rounds on disk answering the same
+# question — how does the founder's plate get into the frame — and they have only
+# ever been shown apart: round 8's twelve img2img frames on their own sheet, round 9's
+# twelve depth-ControlNet frames on theirs. Asking him to pick across two sheets is
+# asking him to hold twelve frames in his head while looking at twelve others. All
+# twenty-four are here, one grid, one scroll, so ONE address is a sufficient answer.
+#
+# TWO PIPELINES ON ONE SHEET, RECORDED SEPARATELY. Rows 1-3 are img2img with NO
+# ControlNet; rows 4-6 are text2img under a depth ControlNet. Everything below that
+# differs between them is written as two keys rather than one averaged one.
+
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_revision: 483f0c322568ed13697ed01dd0be07204746d12b
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+controlnet: diffusers/controlnet-depth-sdxl-1.0
+controlnet_revision: 17bb97973f29801224cd66f192c5ffacf82648b4
+controlnet_licence: openrail++ (D15 SAFE — same family as the base)
+depth_estimator: Intel/dpt-hybrid-midas
+depth_estimator_revision: 11eaf7a1cf4bd70740697dbc216f98980c0aeb03
+depth_estimator_licence: apache-2.0 (D15 SAFE — permissive, adds nothing)
+controlnet_applies_to: >-
+  ROUND 9 ROWS ONLY (rows 4-6, b01-r9-d40/d60/d80). Round 8's rows 1-3 ran the base
+  checkpoint with no ControlNet, no depth map and no depth estimator — the three
+  helper keys above do not describe them.
+control_map: genomes/sapling/nodes/002b-first-citizen/control/b01-r9-depth-b15.png
+init_image: >-
+  genomes/sapling/nodes/001-capability-inventory/stills/15-something-s-coming.png
+  (b15-r3-s1, sha256 f60c1404f88d45720ca295dfc753e9eaabb815446710bcfffb3c7a07b7277f54)
+  — round 8's i35/i55 rows only. The t2i row has no init image, and round 9 takes the
+  same plate as a depth map rather than as pixels.
+pipeline: >-
+  TWO. Rows 1-2 StableDiffusionXLImg2ImgPipeline (img2img, no ControlNet);
+  row 3 the same weights as text2img with no init (round 8's control arm);
+  rows 4-6 StableDiffusionXLControlNetPipeline (text2img + depth control).
+published_under: >-
+  CreativeML Open RAIL++-M use restrictions (Attachment A) — NOT the tree's
+  CC BY 4.0. Founder-authorised for the /review gallery only; not canon,
+  not published elsewhere, not promoted to a stills/ filename.
+authorised_by: >-
+  founder (Roman), 2026-08-09 — "put the images from my computer onto there
+  please, not like theres any reason to hide it". Visibility only: D15's
+  licence question stays open and stays his.
+surface: /review gallery (unlisted, noindex — D17)
+canon: false
+sha256: ee1bfcdf34dec33bd621a935b7c5f4e59f547f363e3fd12ef623318815d93a56
+encoding: >-
+  JPEG (1784x4396, quality 88, progressive) composited by our own labelling script
+  from the twenty-four source PNGs, each downscaled to 430x628, amber address badge
+  burned on each tile. The compositing and the badges are our code and carry no model.
+cost_usd: 0
+sheet: true
+episode: 2
+shot_beat: 1
+what: >-
+  episode 2's opening shot — every live candidate frame from both finished rounds in
+  one grid, built so the founder can name ONE address. Six rows are the six settings
+  (round 8: plate as a starting image at strength 0.35 and 0.55, plus the no-plate
+  words-only control; round 9: plate as geometry only at depth-ControlNet
+  conditioning scale 0.40, 0.60 and 0.80). Columns are the four seeds in the same
+  order on every row, so a column is one seed and the row is the only thing that
+  changed down it.
+shows: >-
+  b01-r8-i35-s0..s3 (row 1), b01-r8-i55-s0..s3 (row 2), b01-r8-t2i-s0..s3 (row 3),
+  b01-r9-d40-s0..s3 (row 4), b01-r9-d60-s0..s3 (row 5), b01-r9-d80-s0..s3 (row 6)
+size: 832x1216 per source frame
+steps: 40
+guidance: 7.5
+seeds: 20260720, 20261720, 20262720, 20263720
+seed_rule: >-
+  base 20260720 + i*1000, the same four seeds in the same column order in both
+  rounds. NOTE: the sidecar of the earlier round-9 sheet
+  (SHEET-002b-b01-r9-stage2.jpg.meta.yaml) prints these as 20260720..20260723 with a
+  rule of SEED(20260719)+BEAT(1)+i*1000; that is wrong on its face — it disagrees with
+  its own rule — and disagrees with the render-time sidecars, which record
+  20260720/20261720/20262720/20263720. The render-time sidecars are the record.
+strength_swept: 0.35, 0.55 (round 8 img2img rows; the t2i control row has none)
+controlnet_conditioning_scale_swept: 0.4, 0.6, 0.8 (round 9 rows)
+render_round: r8 and r9
+task: >-
+  ep2-b01-r8-i2i-1786307779 (rows 1-3), ep2-b01-r9-depth-controlnet (rows 4-6)
+controlled_pairs: >-
+  One prompt, one negative, one seed series, one frame size, one step count and one
+  guidance value across all twenty-four. Within round 8 the only variable is how much
+  of the plate survives (strength, with t2i as the zero); within round 9 the only
+  variable is how hard the depth map pushes. ACROSS the rounds the variable is the
+  KIND of plate use — pixels versus geometry — and that comparison is the reason both
+  are on one sheet. The rows are a parameter axis, not an order of preference.
+prompt: >-
+  A tiny 40cm seedling standing in short grass, its sturdy curved stem, two
+  oversized cotyledon leaves, one small round green fruit hanging from the stem,
+  whole plant in frame, wide shot, peach and gold sunrise sky, cinematic lighting,
+  detailed, newest, masterpiece, best quality, very aesthetic
+negative: >-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality,
+  blurry, extra limbs, deformed, mature tree, large tree, thick trunk, full canopy,
+  forest, bush, shrubbery, girl, boy, child, person, chibi, mascot, creature, face,
+  branches, night sky, photorealism
+neutral: >-
+  Addresses only (gate G3). No favourite is marked, no tile is starred, boxed or
+  ordered by preference, no score or metric of any kind is printed, and no tile says
+  "closest to" anything. Row order is the parameter axis in its numeric order —
+  0.35, 0.55, control; 0.40, 0.60, 0.80 — and the row headers name the setting rather
+  than judging it. The one frame the review page had already shown,
+  B01-R9-d60-s0.jpg, sits here as b01-r9-d60-s0 with no mark distinguishing it from
+  the other twenty-three. The footer says so on the page.
+source_frames: >-
+  genomes/sapling/nodes/002b-first-citizen/takes/stills/01-cold-open-r8-{i35,i55,t2i}-s{0..3}.png
+  and review/b01-r9-stage2/01-cold-open-r9-d{40,60,80}-s{0..3}.png in this checkout,
+  each with its render-time <name>.png.meta.yaml beside it.
+provisional: >-
+  PROVISIONAL. Steward-rendered CANDIDATES, not a pick and not canon. Ground truth
+  is the founder (R4). Episode 2's opening picture has been open since he took
+  r3-s3 back on 2026-08-08.
+approved: false

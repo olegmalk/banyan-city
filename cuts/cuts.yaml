@@ -124,13 +124,20 @@ checklist:
   # build_site.py. Keep it to a sentence or two: he reads this page on a phone in
   # five-minute passes, and a lede he has to scroll is not a lede.
   lede: |-
-    **NEW SINCE YOU LAST LOOKED, and it is all pictures:** [10](#item-10) —
-    **beat 6 is drawn both ways you asked for, sixteen frames**, and no flat
-    ground or city in any of them; [23](#item-23) has thirty-two more goblins;
-    [06](#item-06) now shows all twelve of round 9 instead of one. **The three
-    cheapest wins:** [20](#item-20) is one word and unlocks two whole cuts
-    ([19](#item-19) and [24](#item-24)); [21](#item-21) and [22](#item-22) are
-    one word each. The argument behind every item is one fold down.
+    **"I WANT TO FINISH EPISODE 1 TODAY" — so here is which items are episode 1
+    and which are not.** Episode 1 is **[10](#item-10)** (beat 6, the last beat
+    without a frame you chose), **[20](#item-20)** (one word, unlocks both
+    cuts), **[19](#item-19)** and **[24](#item-24)** (the cuts themselves) and
+    **[11](#item-11)** (the crop). **That is the whole list.**
+
+    **The two you asked for are EPISODE 2, and we are telling you rather than
+    letting them eat the day:** the goblin is **[23](#item-23)** — episode 2
+    beat 04, he is not in episode 1 at any beat — and the beat-01 frame sweep is
+    **[06](#item-06)**, episode 2's opening shot. **Episode 1's beat 01 is
+    settled and has one approved frame.** Both are on the page now with new
+    sheets, because you asked to see them.
+
+    The argument behind every item is one fold down.
   intro: |-
     **Items 01 to 09 are a record, not a list of questions.** You answered every
     one of them on 2026-08-08; they are kept so you can catch us hearing
@@ -848,6 +855,9 @@ checklist:
 
         **COST SO FAR: $0.** Local GPU, nothing bought, no money rail touched.
       sheets:
+        - file: review-assets/SHEET-002b-b04-goblin-identity.jpg
+          label: "NEW — IS THIS YOUR GOBLIN? the four candidates, and what each one looks like when it is held"
+          note: "a COLUMN is one creature. Top row is the four creatures the words drew; everything under it is that same creature redrawn on fresh seeds. A/B/C/D are names to answer with, not an order."
         - file: review-assets/SHEET-002b-b04-ipa-identity.jpg
           label: "ep2 beat 04 — the wave-1 baseline and ten IP-Adapter arms, four seeds each"
           note: "read across a row. Baseline is four creatures; arm 1 is one creature and no green; arm 2 is green and four creatures. No pick, no score, no arm recommended."
@@ -2129,8 +2139,11 @@ checklist:
         **207 seconds against Wan's 539** — 2.6x faster at a third of peak memory.
         Over twenty-one beats that is real, and it still does not pick a look.
       sheets:
+        - file: review-assets/SHEET-002b-b01-pick.jpg
+          label: "NEW — THE FRAMES TO PICK ONE FROM — 24 frames, rounds 8 and 9 on one sheet"
+          note: "six settings, the same four seeds across every row, so a column is one seed. Round 8 hands the model your plate as a starting image; round 9 hands it the same plate as geometry only. Answer by naming one address."
         - file: review-assets/SHEET-002b-b01-r9-stage2.jpg
-          label: "NEW — the cold open, ROUND 9 SWEEP — twelve frames, depth 0.40 / 0.60 / 0.80"
+          label: "the cold open, ROUND 9 SWEEP alone — twelve frames, depth 0.40 / 0.60 / 0.80"
           note: "your plate as geometry only, at three strengths. Rows are the strength, columns are the four seeds in the same order, so a column is one seed and the strength is the only thing changing down it. No pick, no score, no favourite marked."
         - file: review-assets/B01-R9-d60-s0.jpg
           label: "the cold open, ROUND 9 — the ONE frame the sweep was unlocked by, 002b-b01-r9-d60-s0"

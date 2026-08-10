@@ -1,0 +1,110 @@
+# Provenance for one image on the /review gallery (STEWARDSHIP §7.2).
+#
+# WHAT THIS FILE IS SERVED UNDER. banyan.city publishes CC BY 4.0. These pictures
+# were drawn by cagliostrolab/animagine-xl-3.1, whose CreativeML Open RAIL++-M
+# licence attaches use restrictions that travel to the output — D15, still open.
+# The offer is NARROWED for this file and said out loud on the page: it carries
+# OpenRAIL++'s Attachment A use restrictions and is not CC BY 4.0.
+#
+# WHY THIS SHEET EXISTS. The earlier goblin sheets are laid out by MECHANISM —
+# one arm per row, references mixed down a column. That layout cannot answer the
+# only question the founder is actually asking, "is this your goblin?", because
+# it never puts one creature in one place. This sheet is re-cut by CREATURE: four
+# columns, one per wave-1 draw, each column showing that same creature held on
+# eight further seeds. Nothing is re-rendered; it is the same PNGs, re-arranged
+# so a column can be read down.
+
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+consistency_mechanism: IP-Adapter Plus (SDXL, ViT-H image encoder)
+ip_adapter_repo: h94/IP-Adapter
+ip_adapter_weight: sdxl_models/ip-adapter-plus_sdxl_vit-h.safetensors
+ip_adapter_licence: >-
+  Apache-2.0 (h94/IP-Adapter); image encoder weights derive from
+  laion/CLIP-ViT-H-14-laion2B-s32B-b79K, MIT
+published_under: >-
+  CreativeML Open RAIL++-M use restrictions (Attachment A) — NOT the tree's
+  CC BY 4.0. Founder-authorised for the /review gallery only; not canon,
+  not published elsewhere, not promoted to a stills/ filename.
+authorised_by: >-
+  founder (Roman), 2026-08-09 — "put the images from my computer onto there
+  please, not like theres any reason to hide it". Visibility only: D15's
+  licence question stays open and stays his.
+surface: /review gallery (unlisted, noindex — D17)
+canon: false
+sha256: f9a4a6e5a8dfa22bcdd9e41c9a3d8fb3b89d95968d08dfb0f2b28b6a0048d356
+encoding: >-
+  JPEG composited by our own labelling script from the thirty-six source PNGs,
+  amber address badge burned on each tile. The compositing and the badges are our
+  code and carry no model.
+cost_usd: 0
+sheet: true
+episode: 2
+shot_beat: 4
+beat_slug: the-footnote
+what: >-
+  episode 2 beat 04 — the identity question, cut by creature instead of by
+  mechanism: the four wave-1 draws are the four candidates, each one the head of
+  its own column, and under each is that same creature used as the IP-Adapter
+  reference and redrawn on eight further seeds. Read a column down and you can
+  see whether that creature holds.
+shows: >-
+  36 tiles, 4 columns x 9 rows, one column per candidate creature.
+  Row 1 (largest): wave1-s0, wave1-s1, wave1-s2, wave1-s3 — chipped goblin-A,
+  goblin-B, goblin-C, goblin-D respectively, each with its real address.
+  Rows 2-5: ipa-r{0,1,2,3}-w015-s{4,5,6,7} — column N is reference wave1-sN.
+  Rows 6-9: ipa-r{0,1,2,3}-c060-s{0,1,2,3} — same four references at the
+  stronger conditioning setting. Column alignment is the argument: column 1 is
+  goblin-A throughout, column 2 goblin-B, and so on.
+size: 832x1216 per source frame
+sheet_pixels: 1996x5329
+steps: 40
+guidance: 7.5
+prompt_tokens_added_by_mechanism: 0
+prompt_note: >-
+  The prompt string is byte-identical across every tile on this sheet, including
+  the four wave-1 candidates that were drawn with no reference at all. Zero tokens
+  added. The four different creatures in row 1 came out of the same words.
+prompt: >-
+  1boy, a small goblin boy, green skin, tusks, solo, his face filling the frame,
+  holding his breath with cheeks puffed and huge eyes darting, enormous ears
+  twitching. Slow push-in, close-up, soft morning light, cinematic lighting,
+  detailed, newest, masterpiece, best quality, very aesthetic
+negative_prompt: >-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality,
+  blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, girl,
+  child, photorealism, text, female goblin, elf
+goblin_definition_source: >-
+  the founder, 2026-08-10, verbatim: "he is just a simple green goblin, nothing
+  complex". Recorded in cuts/cuts.yaml item 18 (settled) and
+  taste/steward-model.ledger.yaml record ep2-goblin-definition-0810.
+goblin_definition_as_sent: >-
+  green skin, tusks — the steward's translation of his sentence into slot tags,
+  which he has NOT ratified. Held fixed across every tile on purpose, so the only
+  thing varying down a column is the seed.
+reference_note: >-
+  Each column's reference is the wave-1 frame at the head of that column, and all
+  four are used. None of them is a canonical goblin and nobody has picked one.
+  Choosing the goblin is R4's call — this sheet exists to let him make it, and
+  makes no part of it itself.
+neutral: >-
+  Addresses only. The A/B/C/D letters are ADDRESSING LABELS so he has something
+  short to answer with — they are assigned in file order (s0, s1, s2, s3) and
+  imply NO order, NO ranking and NO preference. No favourite is marked, no column
+  is recommended, nothing is starred, and NO AGREEMENT SCORE OR ANY OTHER METRIC
+  IS PRINTED ON THIS SHEET. The automatic identity metric is deliberately absent:
+  on 2026-08-10 it could not tell one creature from four, because on this beat it
+  is mostly scoring a background that never changes. His eyes are the instrument
+  (gate G3).
+source_frames: >-
+  farm-out/ep2-goblin-wave1/, farm-out/ep2-b04-goblin-ipa-w015-seeds8/ and
+  farm-out/ep2-b04-goblin-ipa/ on branch farm-results-rtx5090, each PNG with its
+  render-time <stem>.yaml beside it. The c040 and c080 frames in the third
+  directory are NOT on this sheet. Those PNGs stay on the results branch; this
+  sheet is the published rendition.
+provisional: >-
+  PROVISIONAL. A steward-built PICK SHEET for the founder's identity call. No
+  frame here is promoted, no goblin is made canonical by its presence, and the
+  sheet records no verdict of its own.
+approved: false

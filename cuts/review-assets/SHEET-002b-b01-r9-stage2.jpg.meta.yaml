@@ -58,8 +58,14 @@ shows: >-
 size: 832x1216 per source frame
 steps: 40
 guidance: 7.5
-seeds: 20260720, 20260721, 20260722, 20260723
+seeds: 20260720, 20261720, 20262720, 20263720
 seed_rule: SEED(20260719) + BEAT(1) + i*1000
+seeds_correction: >-
+  This line read "20260720, 20260721, 20260722, 20260723" when this sidecar was
+  first written on 2026-08-10 and that was wrong — those are consecutive integers,
+  which the stated rule (i*1000) cannot produce. The four values above are read
+  back from the twelve render-time sidecars beside the source PNGs, which agree.
+  Corrected the same day, before any verdict was given on this sheet.
 controlnet_conditioning_scale_swept: 0.4, 0.6, 0.8
 render_round: r9
 task: ep2-b01-r9-depth-controlnet
