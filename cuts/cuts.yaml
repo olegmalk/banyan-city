@@ -796,9 +796,11 @@ checklist:
       minutes: 2
       summary: >-
         Ninety seconds, every beat on a real picture. Fourteen of the fifteen are
-        frames you chose. We measured it overnight and there is one finding worth
-        your eye: seven of the fifteen barely move.
-      where: "`review/provisional-v34/ep1-v34-PROVISIONAL.mp4` on this machine — why it is not on this page is below"
+        frames you chose. Seven of the fifteen barely move, so we started
+        re-animating them overnight — and **the motion score came back HIGHEST on
+        the beat where the plant falls over**, which is why no wave was chained
+        behind it. The adjacency strip is on this card.
+      where: "`review/provisional-v34/ep1-v34-PROVISIONAL.mp4` on this machine — why it is not on this page is below; the adjacency strip IS on this card"
       how: "watch it and say what is wrong, or answer beat 6 on item 10 and we rebuild"
       body: |-
         **2026-08-09:** *"no notes for v33, i'll wait for the version with all the
@@ -856,19 +858,80 @@ checklist:
         stretched. Thirteen automatic checks pass and the two warnings are the
         sound hole above and the known dark opening.
 
-        **THE ADJACENCY STRIP IS ON THE MACHINE** at `CONTACT-v34-adjacency.png`
-        — the first frame of all fifteen beats in order, in one row. It is an
-        eyeball aid and not a score; nothing in this repo computes an adjacency
-        number, and we are not inventing one. Two things stand out in it: **05 to
-        06 is the hardest jump in the cut** (near-black interior straight into
-        bright daylight, which is also the act break and may be exactly right),
-        and beats 12-13-14 swing warm, cool, warm rather than progressing.
+        **THE ADJACENCY STRIP IS ON THIS CARD** — the first frame of all fifteen
+        beats in order, in one row. It is an eyeball aid and not a score; nothing
+        in this repo computes an adjacency number, and we are not inventing one.
+        Two things stand out in it: **05 to 06 is the hardest jump in the cut**
+        (near-black interior straight into bright daylight, which is also the act
+        break and may be exactly right), and beats 12-13-14 swing warm, cool,
+        warm rather than progressing.
 
         **THE DECISION THIS PUTS IN FRONT OF YOU IS RE-ANIMATING THE HELD SHOTS.**
         Seven beats being stills with a slow push is a choice we made, not a
         fault that appeared; it is cheap to keep and not cheap to change. We are
         not proposing it until you have watched the cut and said whether it reads
         as still or as calm.
+
+        ---
+
+        **WE STARTED TESTING THAT RE-ANIMATION OVERNIGHT, AND TWO FINDINGS CHANGE
+        HOW EVERY EARLIER MOTION RESULT SHOULD BE READ.** Nothing below is a
+        proposal and none of it is in any cut. Beats 03, 04, 07, 08, 10 and 14
+        have test clips as of 06:40 this morning and the lane is still running.
+
+        **ONE — THE MOTION NUMBER WAS HIGHEST ON THE BEAT WHERE THE PLANT FALLS
+        OVER.** Beat 14 was sampled first, because it was tied-worst in the cut
+        at a median change of 0.01 with 88% of its frame pairs frozen, and its
+        still is canon and uncomplicated. Its first attempt scored **6.87** —
+        **five times the cut you picked and three times the busiest beat in the
+        episode.** It scored that high because the sapling **bends steadily from
+        frame 40 and is nearly horizontal by frame 64.** The plant is falling
+        over, and the measurement calls that the liveliest thing in the film.
+        **A frame-difference number cannot tell "alive" from "collapsing".** On
+        the number alone, five more beats would have been chained behind it
+        before a human looked at one.
+
+        The cause was the wording: *"bending and springing back"* gave a
+        65-frame model a direction and no mechanism to come back from it. The
+        second attempt changed the words only, seed held — upright for all 65
+        frames, no invented person or object, style and palette holding. **Its
+        framing drifts up and crops the leaf tips**, recorded as an observation
+        and left to you.
+
+        **TWO — THE FRAMING LOCK WAS WRITTEN AS A NEGATION, AND NOTHING WAS
+        READING IT.** Beat 03's prompt said *"framing locked, no zoom, no
+        push-in, no camera rise"* and the camera panned **35% of the frame
+        width** anyway. Two faults at once. This model runs with no separate
+        pass over the negative prompt, so **a negative prompt changes no pixel at
+        all on this path** — and these particular negations were sitting in the
+        POSITIVE prompt, where *"no zoom"* contributes the word **`zoom`**. Saying
+        the same constraints affirmatively — naming where each object **stays** —
+        and changing nothing else moved every framing axis at once: the push-in
+        gone, the vertical wander gone, an invented object gone, the pan cut
+        **4.7x**, and the ambient motion survived rather than freezing. It is
+        **still a reject** by the test written before the clip existed: a uniform
+        7% slide remains and crops the monitor's bezel.
+
+        **WHY THAT SECOND ONE MATTERS BEYOND BEAT 03.** Every framing constraint
+        on the motion renders before it was written the same way, which means
+        **those constraints were doing nothing** — the earlier results were not
+        "the constraint was too weak", they were "there was no constraint". Any
+        reading of them that assumed otherwise is withdrawn here rather than left
+        standing.
+
+        **One more, recorded because it cannot be attributed cleanly:** beat 04's
+        invented wrist phone is gone, but three edits shipped in that one prompt,
+        so we do not know which of them did it and the record says so.
+
+        **YOU CANNOT WATCH ANY OF THESE HERE AND THAT IS THE GATE, NOT AN
+        OVERSIGHT.** They are LTX renders, and LTX's licence keeps its output off
+        anything we publish — **D16, open, and yours** (item 20 is the one-word
+        version of it). They sit in `review/v34-motion/` on this machine with
+        frame-strip sheets beside them: `SHEET-b14-r1-collapse.png` is the fall,
+        `SHEET-b14-r2.png` is the fix, `SHEET-b03.png` is the framing pair.
+        **Answering item 20 is what would put them in front of your eyes.**
+
+        Cost so far: **$0**, local GPU, nothing published and nothing in a cut.
 
         **WHY IT IS NOT ON THIS PAGE, and this is now the gate working rather
         than a hole in it.** The check that decides what may be published
@@ -891,8 +954,14 @@ checklist:
         we re-measured against the live check this morning instead of repeating
         the sentence. The cut refuses on its own now.
 
-        **What it cost: nothing.** No model ran, no GPU, no money — every beat is
-        ffmpeg over frames that already existed.
+        **What the cut itself cost: nothing.** No model ran, no GPU, no money —
+        every beat is ffmpeg over frames that already existed. The re-animation
+        tests above are separate and also $0: local GPU, nothing bought.
+      sheets_title: "The adjacency strip — fifteen first frames in cut order"
+      sheets:
+        - file: review-assets/CONTACT-v34-adjacency.jpg
+          label: "ep1 v34 — the first frame of all fifteen beats, in cut order"
+          note: "an eyeball aid, not a score. Nothing here computes an adjacency number and none was invented."
     # D16 GETS ITS OWN CARD BECAUSE IT HAS BEEN BURIED TWICE. It has been a
     # sentence at the bottom of item 10's licence paragraph and a `pending:` note
     # under item 14, and he has passed over both. The licence analysis behind this
