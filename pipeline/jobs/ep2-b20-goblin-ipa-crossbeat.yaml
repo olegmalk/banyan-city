@@ -67,13 +67,25 @@
 # h94/IP-Adapter Plus SDXL (Apache-2.0), ViT-H image encoder (MIT-derived),
 # diffusers 0.29.2 (Apache-2.0). All cached on the box. $0.
 
+# WHERE THIS SITS IN THE QUEUE, AND WHY IT MOVED. Priority 92, behind every
+# episode-1 job on the card. Two live instructions from Roman on 2026-08-10
+# were pulling against each other: "i want to finish episode 1 today finally,
+# so lets focus on it" and, in the same breath, "i need the is this your goblin
+# images". This job was pulled from the queue once on the first of those and
+# put back on the second, at the back rather than the front. At ~9s an image
+# the three cross-beat jobs cost about five minutes against ~100 minutes of
+# queued episode-1 work, so episode 1 keeps the card for as long as it has work
+# and these draw in the gaps. A founder request is not optimised away for
+# efficiency; where one genuinely conflicts with a priority, that is a question
+# for him and not something the steward settles quietly.
+#
 id: ep2-b20-goblin-ipa-crossbeat
 task: ep2-b20-goblin-ipa-crossbeat-0810
 node: 002b-first-citizen
 beat: 20
 runner: box
 needs_gpu: true
-priority: 22
+priority: 92
 max_attempts: 1
 owner: refill lane (goblin regeneration, founder directive 2026-08-10)
 
