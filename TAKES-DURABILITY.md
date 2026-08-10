@@ -57,7 +57,8 @@ Two things that were *not* at risk, both verified rather than assumed:
 
 Still open, measured but not acted on (see "What is not covered"):
 **`review/` holds 227 ignored media files, 156.3 MiB, of which 96 have no
-byte-identical copy on the box.**
+byte-identical copy on the box.** — *closed the same day, 17:50; the figure had
+moved to 332 files / 120 single-copy by then. See "What is not covered".*
 
 ## Re-measured 17:35, same day — and the scary number was a counting error
 
@@ -172,11 +173,26 @@ exists to prevent, so rebuild it.
 
 ## What is not covered
 
-- **`review/`** — 227 ignored media files, 156.3 MiB, **96 of them single-copy**
-  (no byte-identical twin on the box). Same pattern would fix it. Not done here
-  because live lanes are writing into `review/` right now and copying under an
-  active writer is how you archive a half-written file. Worth doing as its own
-  pass once the card lanes settle.
+- ~~**`review/`**~~ — **done 2026-08-10 17:50.** It had grown to 332 ignored
+  media files, 232.2 MiB; hashing all of them against every media file on the
+  box (1,517 distinct digests under `C:\banyan-farm` and `C:\banyan-queue`)
+  found **120 with no byte-identical twin**, 11 of which git already tracked.
+  The remaining **109 files, 114.9 MiB**, were the only genuinely single-copy
+  media in the repo. The active-writer worry that deferred this turned out not
+  to apply: 69 files had been written since 16:00 but every one of them already
+  had a twin on the box, and all 120 single-copy files were untouched for
+  >30 min. They now sit at
+  `C:\banyan-farm\take-archive\review-0810\review\...` under their repo-relative
+  paths, verified 109/109 by sha256 on both ends, with
+  **`REVIEW-MANIFEST.sha256` tracked at the repo root**:
+
+  ```sh
+  shasum -a 256 -c REVIEW-MANIFEST.sha256      # from the repo root
+  ```
+
+  It is plain `shasum -c` format rather than a `takes_backup.py` node, because
+  `review/` is not a node — rebuild it the same way after a batch lands
+  (`find review -type f \( -name '*.mp4' -o … \) | xargs shasum -a 256`).
 - **Other nodes' `takes/`** — only 001 (tracked) and 002b (this) exist today.
   `takes_backup.py` takes any genome/node, so the same two commands cover the
   next one.
