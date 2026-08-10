@@ -106,6 +106,48 @@ HELD_SEEDS = [20264725, 20265725, 20266725, 20267725]
 # Each step's own terms are appended to require_pos/require_neg, so r7's trap 5
 # and trap 6 assert that the thing the step is FOR actually survived the
 # 77-token trim and reached the model.
+#
+# ---------------------------------------------------------------------------
+# WHAT THE FIRST CUT OF THIS LADDER GOT WRONG, 2026-08-10, and what the logs say
+#
+# Steps 1 and 2 came back as clean upward sky. Steps 3, 4 and 5 came back as a
+# machine housing with a red-eyed head in it, a rabbit-demon and a wolf head —
+# six frames, not one of them sky. The cause is read off the box logs in
+# `C:\banyan-queue\done\ep1-b06-r8c-clear{2,3}*.log` and it is not what it was
+# first guessed to be:
+#
+#   * The NEGATIVE sent at step 2 (clean) and step 3 (a robot) is IDENTICAL,
+#     byte for byte. The seeds are identical too — 20264725, 20265725 both times.
+#   * Nothing was silently truncated. The sent negative measures 72 tokens on the
+#     box's own CLIPTokenizer, under the 77 ceiling. The `84 > 77` line in the log
+#     is transformers' once-per-process warning fired by `fit_negative`'s own
+#     pre-trim `count(joined)`; the trim then did its job and NAMED everything it
+#     shed. Trap 5 reported truthfully: all 20 required negatives were sent.
+#   * So the ONLY variable between a clean sky and a robot is `cloud` leaving the
+#     POSITIVE.
+#
+# WHY ONE WORD DID THAT. animagine-xl-3.1 is captioned on Danbooru, where nearly
+# every image has a subject. `cloud` was the only tag in this positive naming a
+# THING; the rest — `sky`, `blue sky`, `clear sky`, `day`, `sunlight` — are
+# atmosphere, and r7 had already deleted `scenery`, the tag that tells this
+# vocabulary "this picture has no subject, it is a landscape". Take `cloud` out
+# and the subject slot is empty, so the checkpoint fills it from its own prior.
+# `no humans` steers that prior away from people — which is exactly why what
+# arrived was a mecha, a wolf and a rabbit-demon rather than a girl. Nothing in
+# the negative forbids those: `humans` is lifted out by design (traps 7+8) and
+# there is no `mecha`, `robot`, `creature` or `monster` term in it.
+#
+# THE RULE THAT FOLLOWS, and it is enforced below rather than written down and
+# hoped for: AN EMPTY SKY HAS TO BE ASKED FOR, NOT PRODUCED BY DELETING THE ONLY
+# WORD THAT NAMES THE FRAME. Cloud COVERAGE comes down by describing an open
+# bright sky, never by removing the subject.
+SUBJECT_ANCHORS = ("cloud", "scenery")
+# Deliberately NOT anchors: `sky`, `blue sky`, `clear sky`, `day`, `sunlight`,
+# `sunny`. All but `sunny` were present in the step-3 positive that drew a
+# machine, so they are disproven as subject anchors by that frame, not by taste.
+
+UNAUTHORED = "unauthored"
+
 CLOUD_LADDER = {
     1: {"pos_add": "clear sky", "drop_pos": (),
         "neg": "cloudy sky",
@@ -115,18 +157,23 @@ CLOUD_LADDER = {
         "neg": "cloudy sky, overcast",
         "what": "step 1 plus `overcast` negated — the banked, sky-filling mass "
                 "named on the negative side while `cloud` stays in the positive"},
-    3: {"pos_add": "clear sky", "drop_pos": ("cloud",),
+    # RE-AUTHORED after the six bad frames. One variable from step 2, which is
+    # proven: `sunny` added to the positive. `cloud` STAYS — it is the anchor —
+    # and the negative does not move at all, so this step is step 2 asked to be
+    # brighter and more open rather than step 2 with its subject deleted.
+    3: {"pos_add": "clear sky, sunny", "drop_pos": (),
         "neg": "cloudy sky, overcast",
-        "what": "`cloud` OUT of the positive, clear sky in — the model is no "
-                "longer asked for cloud at all, only no longer forbidden it"},
-    4: {"pos_add": "clear sky, sunny", "drop_pos": ("cloud",),
-        "neg": "cloudy sky, overcast",
-        "what": "step 3 plus `sunny` — the open bright-daylight reading of the "
-                "same frame, still without negating cloud outright"},
-    5: {"pos_add": "clear sky, sunny", "drop_pos": ("cloud",),
-        "neg": "cloudy sky, overcast, cloud",
-        "what": "the far end: cloud negated outright. Expect few or none — this "
-                "step exists to bound the dial, not because it is the answer"},
+        "what": "step 2 plus `sunny` — the open bright-daylight reading of the "
+                "same frame, with `cloud` kept as the subject anchor so the "
+                "dial moves by describing the sky, not by emptying it"},
+    # Steps 4 and 5 previously read "step 3 plus X" on top of a step 3 that drew
+    # a robot, so they inherited the defect and drew one too. They are NOT
+    # re-authored here: the next rung has to be built on top of a rung that has
+    # been SEEN to work, and the corrected step 3 has not been looked at yet.
+    # Authoring them now would be guessing two more points on a dial whose last
+    # known-good point is step 2 (founder's ONE SAMPLE rule, 2026-08-03).
+    4: UNAUTHORED,
+    5: UNAUTHORED,
 }
 
 VARIANTS = {
@@ -179,7 +226,9 @@ def main() -> int:
     ap.add_argument("--set", dest="set_tag", default=None,
                     help="filename tag, default the variant's own (r8b/r8a1/r8a2)")
     ap.add_argument("--step", type=int, default=None,
-                    help="cloud-ladder step 1..5, required by --variant b-clear")
+                    help="cloud-ladder step, required by --variant b-clear. "
+                         "1-3 are authored; 4 and 5 are empty until the "
+                         "corrected step 3 has been looked at")
     ap.add_argument("--r7-dir", default=DEFAULT_R7_DIR,
                     help="directory holding render_b06r7.py")
     known, rest = ap.parse_known_args()
@@ -193,6 +242,14 @@ def main() -> int:
         print(f"!! --step means nothing to --variant {known.variant}.",
               flush=True)
         return 25
+    if v.get("ladder") and CLOUD_LADDER[known.step] == UNAUTHORED:
+        print(f"!! cloud-ladder step {known.step} is not authored. Steps 3, 4 "
+              f"and 5 as first written drew a machine, a wolf and a "
+              f"rabbit-demon instead of sky; step 3 has been re-authored and "
+              f"the rungs above it are deliberately empty until that corrected "
+              f"sample has been LOOKED AT. Build the next rung on a rung that "
+              f"is known to work, not on one nobody has seen.", flush=True)
+        return 28
 
     r7_dir = Path(known.r7_dir)
     if not (r7_dir / "render_b06r7.py").is_file():
@@ -263,16 +320,32 @@ def main() -> int:
         # and trap 6 is what proves the tag left rather than the wrapper
         # believing it did.
         arm["forbid_pos"] = tuple(arm["forbid_pos"]) + tuple(step["drop_pos"])
-        if step["drop_pos"]:
-            inner = r7.build
 
-            def build(authored, compress, beat_negative, arm_, _inner=inner,
-                      _drop=step["drop_pos"]):
-                pos, neg, neg_full, dropped, warns, dropped_terms = _inner(
-                    authored, compress, beat_negative, arm_)
-                # tag-wise, never substring: `cloud` must not eat `cloudy sky`
-                # if a later step ever puts one in the positive.
-                parts = [p.strip() for p in pos.split(",")]
+        # TRAP 10 — THE SUBJECT ANCHOR, and it runs on EVERY ladder step, not
+        # only the ones that delete something.
+        #
+        # r7's nine traps all watch the negative side or check that a tag the
+        # step ASKED for arrived. Not one of them asks the opposite question:
+        # after this step has had its way with the positive, is there still a
+        # word in there naming what the picture is OF? There was no such guard
+        # on 2026-08-10, which is why steps 3-5 rendered six frames of robots
+        # and wolves with every trap reporting OK — truthfully. Trap 5 in
+        # particular was never the guard for this and did not fail: it asserts
+        # required NEGATIVES survived the trim, they did, and it said so.
+        #
+        # This is the guard that was missing. It reads the positive actually
+        # about to be sent, tag-wise and never as a substring, and stops the
+        # run if the subject slot is empty.
+        inner = r7.build
+
+        def build(authored, compress, beat_negative, arm_, _inner=inner,
+                  _drop=step["drop_pos"], _stepno=known.step):
+            pos, neg, neg_full, dropped, warns, dropped_terms = _inner(
+                authored, compress, beat_negative, arm_)
+            # tag-wise, never substring: `cloud` must not eat `cloudy sky`
+            # if a later step ever puts one in the positive.
+            parts = [p.strip() for p in pos.split(",")]
+            if _drop:
                 kept = [p for p in parts if p.lower() not in
                         {d.lower() for d in _drop}]
                 if len(kept) == len(parts):
@@ -280,10 +353,28 @@ def main() -> int:
                           f"and none of them were there — the recipe moved "
                           f"under this ladder; stopping.", flush=True)
                     raise SystemExit(27)
-                return (", ".join(kept), neg, neg_full, dropped, warns,
-                        dropped_terms)
+                parts = kept
+            anchors = [p for p in parts
+                       if p.lower() in {a.lower() for a in SUBJECT_ANCHORS}]
+            if not anchors:
+                print(f"   !! NO SUBJECT ANCHOR — cloud-ladder step {_stepno} "
+                      f"would send a positive that names no thing in the "
+                      f"frame, only atmosphere: {', '.join(parts)}\n"
+                      f"      one of {', '.join(SUBJECT_ANCHORS)} has to "
+                      f"survive. On 2026-08-10 this exact prompt shape drew a "
+                      f"machine housing, a wolf and a rabbit-demon: this "
+                      f"checkpoint fills an empty subject slot from its own "
+                      f"prior, and `no humans` only steers that prior away "
+                      f"from people. Reduce cloud COVERAGE by describing an "
+                      f"open sky, not by deleting the subject; stopping.",
+                      flush=True)
+                raise SystemExit(29)
+            print(f"   trap 10 OK — positive keeps the subject anchor "
+                  f"{', '.join(anchors)}", flush=True)
+            return (", ".join(parts), neg, neg_full, dropped, warns,
+                    dropped_terms)
 
-            r7.build = build
+        r7.build = build
     arm["why"] = ("ROUND 8, variant `%s` — %s. %s\n\nINHERITED FROM ROUND 7: %s"
                   % (known.variant + (" step %d" % known.step
                                       if v.get("ladder") else ""),

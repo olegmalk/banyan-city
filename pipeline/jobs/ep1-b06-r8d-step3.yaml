@@ -1,0 +1,195 @@
+# ep1 beat 06 — THE CLOUD LADDER'S STEP 3, RE-AUTHORED. ONE SAMPLE.
+#
+# THE VERDICT THIS SERVES, VERBATIM (2026-08-10, ~17:40, then he left): "this
+# one, now im gonna go, bye. but actually, regenerate it. too many clouds. you
+# almost got it". Composition closed — arm B, sky, no ground. The framing, the
+# low upward camera and the daylight palette are his and nothing here touches
+# them. The only thing that moves is how much of the frame is cloud.
+#
+# ---------------------------------------------------------------------------
+# WHY THERE IS AN r8d AT ALL: r8c STEPS 3, 4 AND 5 DID NOT DRAW SKY
+#
+# The first cut of the ladder rendered ten frames. Steps 1 and 2 are clean
+# upward sky with the cloud mass visibly reducing — those stand and are NOT
+# re-run. Steps 3, 4 and 5 returned six frames of a metal porthole with a
+# red-eyed head in it, a white rabbit-demon, a wolf head and two more machine
+# housings. Not sky.
+#
+# THE MECHANISM, READ OFF THE BOX LOGS AND NOT GUESSED
+# (C:\banyan-queue\done\ep1-b06-r8c-clear{2,3}-*.log):
+#
+#   * The NEGATIVE sent at step 2 (clean sky) and step 3 (a machine) is
+#     IDENTICAL, byte for byte. The seeds are identical: 20264725, 20265725.
+#   * Nothing was silently trimmed away. The sent negative measures 72 tokens
+#     on the box's own CLIPTokenizer — under the 77 ceiling, re-measured
+#     directly to check. The `84 > 77` line in those logs is transformers'
+#     once-per-process warning fired by fit_negative's own PRE-trim count; the
+#     trim then worked and named everything it shed. Trap 5 reported the truth.
+#   * So the whole delta between a clean sky and a robot is one word: `cloud`
+#     leaving the POSITIVE at step 3.
+#
+# WHY ONE WORD DID THAT. animagine-xl-3.1 is captioned on Danbooru, where
+# almost every image has a subject. `cloud` was the only tag in this positive
+# naming a THING; `sky`, `blue sky`, `clear sky`, `day` and `sunlight` are all
+# atmosphere, and r7 had already deleted `scenery` — the tag that tells this
+# vocabulary "no subject, this is a landscape". Remove `cloud` and the subject
+# slot is empty, so the checkpoint fills it from its own prior. `no humans`
+# steers that prior away from people, which is precisely why what arrived was a
+# mecha, a wolf and a rabbit-demon rather than a girl: nothing in the negative
+# forbids those. `humans` is lifted out by design (traps 7+8) and there is no
+# `mecha`, `robot`, `creature` or `monster` term anywhere in it.
+#
+# NO GUARD FAILED SILENTLY — THERE WAS NO GUARD. Trap 5 asserts required
+# NEGATIVES survived the trim; they did, and it said so honestly. Trap 6
+# asserts the tags the step ASKED for arrived; they did. Not one of r7's nine
+# traps asked whether the positive still names what the picture is OF. That
+# guard now exists: trap 10 in pipeline/render_b06r8.py, which reads the
+# positive about to be sent, tag-wise, and exits 29 if no subject anchor
+# survives. It was tested against the exact step-3 positive that drew the
+# machine (refused, 29) and against this job's positive (passes).
+#
+# ---------------------------------------------------------------------------
+# WHAT THIS STEP 3 IS: STEP 2 PLUS `sunny`. ONE VARIABLE.
+#
+# Step 2 is proven, so the dial moves off a rung that was SEEN to work. `cloud`
+# STAYS in the positive as the subject anchor and the negative does not move at
+# all. Cloud coverage comes down by describing an open bright sky, never by
+# deleting the subject — steps 1 and 2 prove that route works.
+#
+# MEASURED ON THE BOX'S REAL CLIP BEFORE THIS FILE WAS WRITTEN (--measure, drew
+# nothing) — positive 35/77, negative recipe 74 -> sent 72/77, all 20 required
+# negatives surviving the trim, traps 2, 5, 6, 7+8, 9 and 10 green:
+#   POS  no humans, clear sky, sunny, sky, blue sky, day, cloud, sunlight,
+#        cinematic lighting, detailed, newest, masterpiece, best quality,
+#        very aesthetic
+#   NEG  photorealistic, 3d render, abstract, text, watermark, signature, low
+#        quality, blurry, extra limbs, deformed, leaf, plant, stem, foliage,
+#        tree, photorealism, cityscape, city, building, skyline, road,
+#        mountain, grass, field, horizon, ground, animal, bird, aircraft,
+#        cloudy sky, overcast
+# Every protective term — animal, bird, aircraft, and the whole urban and
+# ground block — survives the trim at this step. That was the hard constraint:
+# if the budget could not hold both those and the new cloud words, the
+# protective terms win and the dial moves some other way.
+#
+# STEPS 4 AND 5 ARE NOT QUEUED AND ARE NOT EVEN AUTHORED. They previously read
+# "step 3 plus X" on top of a step 3 that drew a robot, so they inherited the
+# defect and drew one too. render_b06r8.py now exits 28 if either is asked for.
+# The next rung gets built on a rung that has been looked at — that is the ONE
+# SAMPLE rule (founder, 2026-08-03), and this failure is exactly what it exists
+# to catch.
+#
+# THE SET TAG IS r8d, NOT r8c, on purpose: the bad r8c-step3 frames are
+# evidence and must not be overwritten by their own fix.
+#
+# THE DRIVER. pipeline/render_b06r8.py over render_b06r7.py, so r7's nine traps
+# still run on every frame, plus trap 10. scp'd to the box and verified
+# byte-identical to the repo copy before this spec was written
+# (sha256 0d375533...).
+#
+# NOTHING HERE IS A PICK, A PROMOTION, A PUBLICATION OR A SPEND. How few clouds
+# is few enough is Roman's call alone and this job makes no part of it.
+
+id: ep1-b06-r8d-step3
+task: 001-b06-r8d-step3-0810
+node: 001-capability-inventory
+beat: 6
+runner: box
+needs_gpu: true
+priority: 3
+max_attempts: 1
+owner: beat-6 ladder repair lane (founder verdict 2026-08-10)
+
+consumer: >-
+  the founder, the moment he is back. He chose this composition and named one
+  fix; beat 6 is the last unresolved frame in episode 1 and the v35 cut fires
+  on his ruling (QA-v34-0810.md). Six of the ten frames he was going to be
+  shown are robots and wolves, so the dial he was promised currently has two
+  usable rungs. This is the third, and it is the sample that decides whether
+  the ladder can be extended at all.
+
+success: >-
+  Two 832x1216 PNGs with sidecars in C:\banyan-farm\b06-r8\out-step3, named
+  06-too-blue-r8d-step3-s{0,1}.png, published to
+  C:\banyan-farm\courier-box\farm-out\ep1-b06-r8d-step3. Read against four
+  things, the first of which is now the one that matters: IS IT SKY — no
+  machine, no creature, no animal head, no figure of any kind, which is where
+  r8c steps 3-5 failed. Then: is there visibly more open blue than in
+  06-too-blue-r8c-step2-s0.png, the rung below it; is the low upward angle, the
+  palette and the daylight feel still his; and does the ground stay out — no
+  ground, horizon, landmass, city, skyline, bird or aircraft, which arm B got
+  4 of 4 and must not lose. A step that changes nothing visible is a finding:
+  it locates the bottom of the dial.
+
+why: >-
+  One variable against ep1-b06-r8c-clear2 at the same two seeds: `sunny` added
+  to the positive. `cloud` is kept as the subject anchor and the negative is
+  unchanged. Everything else — model, size, steps, guidance 7.5, seeds, every
+  other tag — is the frame he approved.
+
+est_minutes: 2
+
+needs: [cuda, vram12, sdxl-venv]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  - name: step3
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - C:\banyan-farm\b06-r8\render_b06r8.py
+      - --variant
+      - b-clear
+      - --step
+      - '3'
+      - --seeds
+      - 20264725,20265725
+      - --set
+      - r8d-step3
+      - --r7-dir
+      - C:\banyan-farm\b06-r7
+      - --root
+      - C:\banyan-farm\banyan-city
+      - --task
+      - 001-b06-r8d-step3-0810
+      - --queue-entry
+      - ep1-b06-r8d-step3
+      - --out
+      - C:\banyan-farm\b06-r8\out-step3
+
+  # allow_fail on purpose: a copy that falls over must never retire rendered
+  # frames. The frames are the deliverable.
+  - name: publish
+    allow_fail: true
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - -c
+      - |
+        import glob, hashlib, os, shutil
+        dst = "C:/banyan-farm/courier-box/farm-out/ep1-b06-r8d-step3"
+        os.makedirs(dst, exist_ok=True)
+        src = sorted(glob.glob("C:/banyan-farm/b06-r8/out-step3/*"))
+        lines = []
+        for f in src:
+            shutil.copy2(f, dst)
+            c = os.path.join(dst, os.path.basename(f))
+            with open(c, "rb") as fh:
+                h = hashlib.sha256(fh.read()).hexdigest()
+            lines.append(h + "  " + os.path.basename(f))
+        with open(os.path.join(dst, "ep1-b06-r8d-step3.sha256"), "w") as fh:
+            fh.write("\n".join(lines) + "\n")
+        print("published", len(src), "file(s) + manifest ->", dst)
+        # 2 stills + 2 sidecars.
+        raise SystemExit(0 if len(src) == 4 else 1)
+
+artifacts:
+  - C:\banyan-farm\b06-r8\out-step3\06-too-blue-r8d-step3-s0.png
+  - C:\banyan-farm\b06-r8\out-step3\06-too-blue-r8d-step3-s1.png
