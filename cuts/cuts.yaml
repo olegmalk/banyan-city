@@ -751,6 +751,93 @@ checklist:
         **WHAT THIS COSTS IN MACHINE TIME: nothing, and no GPU work is waiting on
         it.** It is on this list because it is one word and it has been blocking
         the whole deploy and domain cleanup since last night.
+    # THE GOBLIN CONSISTENCY CARD SITS THIRD IN THE GOBLIN RUN, under the two
+    # one-word items rather than directly under 18, so that their own comment
+    # above stays true. It belongs to 18 all the same: it is what his definition
+    # ran into the moment fifteen beats were released against it.
+    #
+    # WHY THIS IS A SCREEN AND NOT A PICK. The lane measured a MECHANISM and is
+    # forbidden from ranking its arms (R4). Every number on the sheet is a
+    # measurement and the card says so twice. The one thing being asked for is
+    # which of two costs he is willing to pay, and "neither, keep looking" is a
+    # real answer that the card names as such — an ask that only accepts the
+    # options the steward drew is a pick sheet wearing a screen's chip.
+    - n: 23
+      ask: "The goblin is a different creature every beat. Two fixes, each with a cost."
+      state: open
+      chip: "SCREEN"
+      minutes: 3
+      summary: >-
+        Your definition released fifteen beats, and the first sample found a
+        fault none of the nine rounds had shown: **the same words draw a
+        different animal on every seed.** A reference picture fixes that — one
+        creature, four seeds, and **not one word added to the prompt.** But the
+        arm that holds him best **drains the green out of him**, and the arm that
+        keeps him green **loses the character again.**
+      where: "`review-assets/SHEET-002b-b04-ipa-identity.jpg` on this page — 44 frames, the baseline on top and ten arms under it"
+      how: "look down the sheet and say which cost is acceptable, or say neither and we keep looking"
+      body: |-
+        **THE FAULT, and it is technical rather than a matter of taste.** Beat 04
+        was rendered on four seeds with your definition. It came back **green 4 of
+        4, tusks 3 of 4 — and four different creatures**: a round plush thing with
+        drooping ears, a bald amphibian, a cheerful gremlin, an angry brute. A
+        fifteen-beat episode whose goblin changes species every beat is broken
+        whatever anyone prefers, so this got fixed before anything else was
+        rendered.
+
+        **WHY WE DID NOT JUST WRITE MORE WORDS.** The ordinary fix for this is a
+        longer character description, and it argues with the only instruction you
+        gave: *"nothing complex."* So instead the model was shown a **reference
+        picture** alongside the prompt. **The prompt string is byte-identical to
+        the one that drew the four creatures — zero tokens added.** Whatever this
+        costs, it does not cost your simplicity.
+
+        **WHAT THE SHEET SHOWS.** Read across a row; each row is four seeds.
+
+        | | holds one creature? | still green? | tusks |
+        |---|---|---|---|
+        | **baseline** — words only | **no — four creatures** | yes | 3 of 4 |
+        | **arm 1** — reference on the whole image | **yes, on all four references** | **no — grey, or a washed sage** | follows the reference, not the tag |
+        | **arm 2** — reference on shape only | **no — four creatures again** | **yes, and slightly stronger than baseline** | 2–4 of 4 |
+
+        **THE PART THAT SHOULD BOTHER YOU MOST.** In arm 1 the tusks stopped
+        obeying the prompt. The word `tusks` is still in every prompt, but the
+        rows built on the one baseline frame that had **no** tusks came back
+        **0 of 4** — it copied the closed mouth. The reference now decides
+        attributes you thought the words controlled.
+
+        **AND THERE IS A DIAL THAT GOES TOO FAR.** At the strongest setting the
+        four frames are very nearly the same picture — same window, same hand,
+        same plank, same mouth. That is not one character, that is one
+        photograph four times. It would carry beat 04's room into beat 09.
+
+        **THIS HAS HAPPENED ONCE BEFORE AND YOU ALREADY SAW IT.** Round 7 on beat
+        13 is the only earlier round that ever held one character across seeds,
+        and it did it the same way, with a reference — and it also came back with
+        no green. You rejected all four. Your stated reason then was different
+        (*"they look like female demihumans"*), so this is not us telling you that
+        you already answered this. It is us saying the trade has shown up twice.
+
+        **WHAT WE ARE NOT DOING.** No arm is recommended, no frame is picked, no
+        goblin is made canonical, and **the other fourteen beats are staged and
+        stopped** until you have looked. The numbers on the sheet are
+        measurements, not scores. One of them is even misleading and the sheet
+        says which: the automatic agreement score cannot tell arm 1's one
+        creature from arm 2's four, because it is mostly scoring the background,
+        which never changes on this beat. **Your eyes are the instrument here.**
+
+        **COST SO FAR: $0.** Local GPU, nothing bought, no money rail touched.
+      sheets:
+        - file: review-assets/SHEET-002b-b04-ipa-identity.jpg
+          label: "ep2 beat 04 — the wave-1 baseline and ten IP-Adapter arms, four seeds each"
+          note: "read across a row. Baseline is four creatures; arm 1 is one creature and no green; arm 2 is green and four creatures. No pick, no score, no arm recommended."
+      pending: >-
+        **One thing this sample genuinely cannot tell you.** Every reference used
+        is itself a beat-04 picture, so there was no way to catch the reference
+        dragging the *wrong scene* into a shot — the reference's room and the
+        beat's room are the same room. Proving that would take one frame of a
+        different beat conditioned on a beat-04 reference. It is **not queued**,
+        because queuing it presumes you want this mechanism at all.
     - n: 10
       ask: "Beat 6 — round 5 clears both faults you named."
       state: open
