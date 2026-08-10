@@ -1,0 +1,72 @@
+{
+  "id": "ep2-b01-fig-inpaint-s1-1786352262",
+  "task": "ep2-b01-fig-inpaint-s1-0810",
+  "node": "002b-first-citizen",
+  "beat": 1,
+  "worker": "box-runner",
+  "priority": 20,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "inpaint",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\fig-inpaint\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\banyan-city\\genomes\\sapling\\nodes\\001-capability-inventory\\stills\\15-something-s-coming.png",
+        "--init-sha256",
+        "f60c1404f88d45720ca295dfc753e9eaabb815446710bcfffb3c7a07b7277f54",
+        "--ellipse",
+        "462,848,34,36",
+        "--prompt-file",
+        "C:\\banyan-farm\\fig-inpaint\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\fig-inpaint\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\fig-inpaint\\b01-fig-inpaint-s1.png",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--strength",
+        "0.99",
+        "--seed",
+        "20260810",
+        "--pad-crop",
+        "64",
+        "--blur",
+        "8",
+        "--note",
+        "ONE SAMPLE on his 2026-08-10 word `inpaint` (cuts item 21, ledger ep2-b01-fig-route-0810). Fruit painted into b15-r3-s1, the only founder-approved sapling-in-grass frame and therefore the only G1-legal init for beat 01. Mask geometry is the steward's; his word named a method only."
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\fig-inpaint\\b01-fig-inpaint-s1.png",
+    "C:\\banyan-farm\\fig-inpaint\\b01-fig-inpaint-s1-mask.png",
+    "C:\\banyan-farm\\fig-inpaint\\b01-fig-inpaint-s1.png.meta.yaml"
+  ],
+  "started_at": "2026-08-10T08:59:06Z",
+  "attempts": 1,
+  "runner_pid": 3552,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-10T08:59:29Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\fig-inpaint\\b01-fig-inpaint-s1.png",
+    "C:\\banyan-farm\\fig-inpaint\\b01-fig-inpaint-s1-mask.png",
+    "C:\\banyan-farm\\fig-inpaint\\b01-fig-inpaint-s1.png.meta.yaml"
+  ]
+}

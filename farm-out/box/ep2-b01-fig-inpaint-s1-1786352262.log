@@ -1,0 +1,20 @@
+#### job ep2-b01-fig-inpaint-s1-1786352262 attempt 1 start 2026-08-10T08:59:06Z
+
+==== step inpaint START 2026-08-10T08:59:09Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\fig-inpaint\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\banyan-city\\genomes\\sapling\\nodes\\001-capability-inventory\\stills\\15-something-s-coming.png", "--init-sha256", "f60c1404f88d45720ca295dfc753e9eaabb815446710bcfffb3c7a07b7277f54", "--ellipse", "462,848,34,36", "--prompt-file", "C:\\banyan-farm\\fig-inpaint\\prompt.txt", "--negative-file", "C:\\banyan-farm\\fig-inpaint\\negative.txt", "--out", "C:\\banyan-farm\\fig-inpaint\\b01-fig-inpaint-s1.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.99", "--seed", "20260810", "--pad-crop", "64", "--blur", "8", "--note", "ONE SAMPLE on his 2026-08-10 word `inpaint` (cuts item 21, ledger ep2-b01-fig-route-0810). Fruit painted into b15-r3-s1, the only founder-approved sapling-in-grass frame and therefore the only G1-legal init for beat 01. Mask geometry is the steward's; his word named a method only."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:00<00:03,  1.92it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:03<00:08,  1.80s/it]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:03<00:02,  1.40it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:03<00:00,  2.17it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:03<00:00,  1.87it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 7s
+WROTE C:\banyan-farm\fig-inpaint\b01-fig-inpaint-s1.png
+WROTE C:\banyan-farm\fig-inpaint\b01-fig-inpaint-s1-mask.png
+WROTE C:\banyan-farm\fig-inpaint\b01-fig-inpaint-s1.png.meta.yaml
+rc=0 render_s=9.8
+==== step inpaint END rc=0 2026-08-10T08:59:29Z ====
+#### job ep2-b01-fig-inpaint-s1-1786352262 finished rc=0 2026-08-10T08:59:29Z
