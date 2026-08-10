@@ -1,0 +1,185 @@
+# ep1 beat 08 "sev-1" — THE ONE SAMPLE for guidance 2.0. Do not scale from this
+# until the founder has looked at the clip it produces.
+#
+# WHAT QUESTION THIS ANSWERS, AND WHY THE EXISTING g2.0 EVIDENCE COULD NOT.
+# 07218cb established that the series runs at guidance 1.0, where the distilled
+# path does no classifier-free guidance, so the negative prompt was never
+# evaluated — every anti-freeze term ("frozen frame", "still image", "no motion")
+# has been inert all along. One g2.0 arm exists, beat 07 r5-g20. I compared it
+# frame by frame against its g1.0 pair r4 (same beat, same seed 20260738, one
+# variable) and the result is:
+#
+#   * THE PICTURE HOLDS. The pre-registered risk was that off-spec guidance would
+#     bleach or over-saturate a model distilled for CFG 1.0. It did not. Chroma
+#     at frame 0 is Cab 23.10 (g2.0) against 23.08 (g1.0); mean luma 144.0 against
+#     144.1; R (chroma retention f64/f0) 0.992 against 0.986. On the frames the
+#     cel palette, the ink linework, the horizon and the cloud forms all hold, and
+#     neither arm invents an object.
+#   * THE MOTION GAIN IS MARGINAL. Total motion extent (mean of per-pixel
+#     max-minus-min over the clip) 21.35 against 19.31, about +10%. Per-step
+#     displacement is larger (peak consecutive-pair delta 6.25 against 3.31) but
+#     g2.0 holds the on-twos cadence slightly HARDER, not less: 28 of 64 pairs
+#     under 0.2 against 25 of 64.
+#   * AND CRUCIALLY IT PROVES NOTHING ABOUT FREEZING, because beat 07 was never
+#     frozen. It animates on twos at ~12fps effective and the original QA note
+#     misread that cadence as a fault. Asking "does g2.0 unfreeze a frozen beat?"
+#     of a beat that was already moving cannot return an answer.
+#
+# SO THE VERDICT WAS: queue the settled beats at g1.0, and test g2.0 exactly once,
+# on a beat that is genuinely frozen. That is this job.
+#
+# WHY BEAT 08 IS THE RIGHT SUBJECT. It is the only beat in the cut with NO usable
+# candidate at all — every correctly-framed arm of it is frozen:
+#     08-sev-1-LTX.mp4         (r1, raw/stretched)  median 1.210,  0% frozen
+#     08-sev-1-LTX-plate.mp4   (r1, plate)          median 0.131, 62% frozen
+#     08-sev-1-LTX-r2.mp4      (r2, raw/stretched)  median 0.106, 62% frozen
+#     08-sev-1-LTX-r2-plate    (r2, plate)          median 0.148, 62% frozen
+# The v35 cut plays the r2 plate and it is the beat's worst option. The README
+# says "r1 is the alternative and it moves" — that is true only of the RAW r1,
+# which is a 24.4% vertical stretch and cannot go in the cut. The r1 PLATE, which
+# is the only correctly-framed version of the round that moves, is frozen at 62%.
+# So beat 08 cannot be fixed by overriding the round; there is nothing to
+# override to. It needs new footage, which makes it the honest place to spend the
+# one guidance experiment.
+#
+# ONE VARIABLE, AND IT IS EXACTLY THE ONE UNDER TEST. Everything here — prompt,
+# negative, plate, size, frames, fps, steps, sigmas, two-stage, renderer binary,
+# and the SEED 20260739 — is byte-identical to ep1-b08-v34-plate-twin-r1, the
+# clip measured above at 62% frozen. Only --guidance changes, 1.0 -> 2.0. The
+# comparison is therefore against a known-frozen clip rather than against nothing.
+#
+# PRE-REGISTERED PREDICTION, written before the frames exist so it can be scored:
+# if the inert negative was ever load-bearing, the frozen-pair share should fall
+# well below 62% and the sapling and grass should carry continuous ambient motion.
+# If it lands near 62% anyway, then the freeze is the sampler and the conditioning
+# frame, the negative prompt was never the lever, and g2.0 should be abandoned for
+# this series rather than tried on more beats. I expect the picture to survive
+# either way, on the beat-07 colour evidence above.
+#
+# HOW TO READ THE RESULT: on the frames. The flow metric is disqualified as a
+# selection criterion on this series (131e433: its highest score was the beat
+# where the plant fell over; bb769ad: its best beat-04 arm is the one that
+# hallucinates a phone). Frozen-pair share is reported here because it is a
+# CADENCE count on a beat with a measured freeze, not a quality ranking — and if
+# it disagrees with the picture, the picture wins and the report says so.
+
+id: ep1-b08-v34-plate-g20-sample
+task: ep1-b08-v34-plate-g20-sample-0810
+node: 001-capability-inventory
+beat: 8
+runner: box
+needs_gpu: true
+priority: 31
+max_attempts: 1
+sample: true
+owner: v34-frozen-beats lane — SINGLE SAMPLE, gates any further g2.0 work
+
+consumer: >-
+  the v35 provisional screening cut, for beat 08, which currently plays its worst
+  available option and has no correctly-framed moving candidate in existence.
+  Second consumer: the recipe decision itself — whether guidance 2.0 goes any
+  further than this one clip depends on the founder looking at it.
+
+success: >-
+  A 704x1280 65-frame mp4 at
+  C:\banyan-farm\v34-motion-0810\08-ltx-g20-plate-s20260739.mp4.
+  The clip is a SUCCESS as an experiment whichever way the motion falls — a g2.0
+  arm that stays frozen is a real answer and retires the idea. It is a FAILURE
+  only if the picture breaks: bleached or over-saturated colour, lost cel
+  linework, a subject that bends, droops or falls, or any human, hand, face or
+  invented object. Report the frozen-pair share against the 62% of its g1.0 pair,
+  and report what the frames actually look like.
+
+why: >-
+  One variable against ep1-b08-v34-plate-twin-r1 (08-ltx-plate-s20260739.mp4,
+  62% frozen): --guidance 2.0 instead of 1.0. Same seed, same plate, same text.
+  This is the first time the negative prompt will be evaluated on a beat that is
+  actually frozen.
+
+est_minutes: 5
+needs: [cuda, vram20, video-venv]
+
+payload:
+  # Byte-identical to ep1-b08-v34-plate-twin-r1's payload. Copied from
+  # 08-sev-1-LTX.mp4.meta.yaml, the text that actually rendered.
+  C:\banyan-farm\v34-plates-0810\ep1-b08-v34-plate-g20-sample-prompt.txt: |-
+    2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. the broad leaves sway gently and hold their shape, the tall grass blades ripple in a light breeze, warm low sunlight shimmers along the leaf edges. the plant stays upright and rooted, stem straight and steady. small ambient motion only, everything holds its position, framing locked, no zoom, no push-in, no camera rise, subject stays the same size and place in frame, living scene. Subject already in frame: no human, no person, no man, no woman, no boy, no girl, no hand, no face, one young plant with broad green leaves standing upright, tall grass around it, bright blue sky, low sun behind.
+  # THIS TEXT IS THE EXPERIMENT. At guidance 1.0 it changed no pixel. At 2.0 the
+  # unconditional pass runs and these terms are evaluated for the first time.
+  C:\banyan-farm\v34-plates-0810\ep1-b08-v34-plate-g20-sample-negative.txt: |-
+    wilting, drooping, bending over, falling over, collapsing, sagging, plant dying, human, person, man, woman, boy, girl, extra hand, extra arm, foot, face, crowd, animal, bird, insect, new object appearing, photorealism, 3D render look, text, 静态, 静止, frozen frame, still image, no motion, photorealistic, photograph, live action, film still, 3D render, CGI, octane, scene change, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  - name: plate
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - -c
+      - |
+        import sys; sys.path.insert(0, r"C:\banyan-farm\banyan-city\pipeline")
+        from plate_prep import prepare_plate
+        out, rec = prepare_plate(
+            r"C:\banyan-farm\banyan-city\genomes\sapling\nodes\001-capability-inventory\stills\08-sev-1.png",
+            "704x1280", r"C:\banyan-farm\v34-plates-0810", "08")
+        print("plate", out); print(rec["plate_wxh"], rec["crop_policy"])
+  - name: encode
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\ltx_i2v.py
+      - --stage
+      - encode
+      - --embeds
+      - C:\banyan-farm\v34-plates-0810\ltx-embeds-ep1-b08-v34-plate-g20-sample.pt
+      - --prompt-file
+      - C:\banyan-farm\v34-plates-0810\ep1-b08-v34-plate-g20-sample-prompt.txt
+      - --negative-file
+      - C:\banyan-farm\v34-plates-0810\ep1-b08-v34-plate-g20-sample-negative.txt
+  - name: render
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\ltx_i2v.py
+      - --stage
+      - render
+      - --embeds
+      - C:\banyan-farm\v34-plates-0810\ltx-embeds-ep1-b08-v34-plate-g20-sample.pt
+      - --prompt-file
+      - C:\banyan-farm\v34-plates-0810\ep1-b08-v34-plate-g20-sample-prompt.txt
+      - --negative-file
+      - C:\banyan-farm\v34-plates-0810\ep1-b08-v34-plate-g20-sample-negative.txt
+      - --init
+      - C:\banyan-farm\v34-plates-0810\08-704x1280.png
+      - --out
+      - C:\banyan-farm\v34-motion-0810\08-ltx-g20-plate-s20260739.mp4
+      - --size
+      - 704x1280
+      - --frames
+      - "65"
+      - --fps
+      - "24"
+      - --steps
+      - "8"
+      - --guidance
+      - "2.0"
+      - --distilled-sigmas
+      - --two-stage
+      - --seed
+      - "20260739"
+      - --beat
+      - "8"
+      - --task
+      - ep1-b08-v34-plate-g20-sample-0810
+      - --worker
+      - rtx5090
+
+artifacts:
+  - C:\banyan-farm\v34-plates-0810\08-704x1280.png
+  - C:\banyan-farm\v34-motion-0810\08-ltx-g20-plate-s20260739.mp4

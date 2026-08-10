@@ -1,0 +1,173 @@
+# ep1 beat 14 "worth-staying-in" — PLATE TWIN of the r2 round.
+#
+# WHY THIS IS THE HIGHEST-VALUE JOB IN THE QUEUE. Beat 14 is the biggest
+# remaining hole in the v35 cut. Measured on the cut's own clip today:
+# median frame-pair delta 0.008, 88% of pairs under 0.2 — the most frozen beat
+# in the episode, and it sits second-to-last, so a dead frame there is the last
+# thing before the closing beat. v35 plays a HELD STILL here (312 frames) because
+# beat 14 is the one frozen beat that was deliberately given no twin.
+#
+# IT ALREADY HAS A GOOD ROUND. `14-worth-staying-in-LTX-r2.mp4` measures median
+# 4.524 with 0% frozen pairs — the most motion of any candidate in the whole v34
+# series — and its own STATUS.yaml records the picture as upright, style-holding,
+# with no human/hand/face/invented object. Its ONLY blocking defect is geometry:
+# like every clip in the series it was rendered off a raw 832x1216 still resized
+# to 704x1280, a 24.4% vertical stretch, so it cannot sit next to its neighbours.
+#
+# SO THIS JOB CHANGES EXACTLY ONE THING: --init is a 704x1280 cover-centre plate
+# from plate_prep.prepare_plate instead of the raw still. Prompt, negative, seed
+# (20260745), size, frames, fps, steps, guidance, sigmas, two-stage and the
+# renderer binary are held byte-fixed to what r2's own sidecar records — the text
+# that actually rendered, not a spec that might have drifted from it.
+#
+# THE RECIPE IS RATIFIED, NOT A CHANGE. The founder approved the cover-centre
+# crop today ("the crop -- yes"). Thirteen raw/plate pairs are already on disk and
+# I measured all of them: twelve held their motion under plating and most gained
+# (03 r3 0.825->3.391, 04 r4 0.872->1.387, 10 r2 1.688->1.243). So this is an
+# approved recipe applied to a new beat, not a recipe under test.
+#
+# THE ONE HONEST RISK, NAMED. Beat 08 r1 is the single pair of the thirteen where
+# plating cost the motion: identical recipe and seed, raw 1.210/0% frozen ->
+# plate 0.131/62% frozen. A crop cannot turn 0% duplicate pairs into 62%, so that
+# was a bad draw, not a property of plate_prep. It is still the reason this beat
+# gets a second seed (ep1-b14-v34-plate-r2b-reseed) rather than one attempt.
+#
+# NOT THE GATED SPEC. `ep1-b14-v34-motion-r3.yaml` carries a `gate:` key and is
+# UNTOUCHED by this file — I did not delete it and it must not be fired. That
+# spec's two recorded objections were (1) no plate step and (2) it applied beat
+# 08's affirmative framing lock, which costs motion, to a beat believed to be the
+# most frozen in the cut. This job answers (1) and simply does not do (2): the
+# wording here is r2 verbatim with no lock added. Releasing that gate is still a
+# human act and this job does not perform it.
+#
+# NO METRIC PICKS ANYTHING HERE. collect_farm.measure is disqualified as a
+# selection criterion on this series — 131e433 recorded its highest score on the
+# beat where the plant FELL OVER, which is beat 14's own r1. Numbers above are
+# reported to say what changed, never to choose. Which round of beat 14 enters
+# the cut is R4's.
+
+id: ep1-b14-v34-plate-twin-r2
+task: ep1-b14-v34-plate-twin-r2-0810
+node: 001-capability-inventory
+beat: 14
+runner: box
+needs_gpu: true
+priority: 30
+max_attempts: 1
+owner: v34-frozen-beats lane (queue depth, settled plate recipe)
+
+consumer: >-
+  the v35 provisional screening cut, which the founder is watching now. Beat 14
+  is its most frozen beat (0.008 median, 88% frozen pairs) and currently plays a
+  held still. This produces the first correctly-framed moving candidate that beat
+  has ever had. Offered unranked beside the beat-08 rounds; the verdict is his.
+
+success: >-
+  A 704x1280 65-frame mp4 at
+  C:\banyan-farm\v34-motion-0810\14-ltx-r2-plate-s20260745.mp4.
+  Judged on the PICTURE, not the flow number: the sapling upright and its thin
+  stem straight and vertical for all 65 frames, no bend, droop or fall; style,
+  palette and linework holding from the plate; no human, hand, face or invented
+  object. Frame 0 must match a cover-centre crop of 14-worth-staying-in.png
+  rather than a naive stretch of it (the MAD test in 26ece5c). A clip that moves
+  because the subject COLLAPSED is a FAIL however high it measures — that is
+  exactly what r1 did. r2's known residual is an upward framing drift that crops
+  the leaf tips by frame 56; whether this twin still does that is a finding to
+  report, not a pass/fail I may rule on.
+
+why: >-
+  One variable against its pair 14-worth-staying-in-LTX-r2.mp4: --init is a
+  prepared 704x1280 plate instead of the raw 832x1216 still. Recipe copied out of
+  that clip's own .meta.yaml.
+
+est_minutes: 5
+needs: [cuda, vram20, video-venv]
+
+payload:
+  # r2's prompt verbatim from its sidecar. The `[unused: ...]` line video_task
+  # appends inside the negative block is stripped: it is a note the sidecar
+  # writer added at render time, not part of the text that was encoded, and
+  # feeding it back would make this twin differ from its pair by a line of
+  # English — the one thing a twin must not do.
+  C:\banyan-farm\v34-plates-0810\ep1-b14-v34-plate-twin-r2-prompt.txt: |-
+    2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. the sapling stands upright and holds its position, stem straight and steady, rooted firmly in place; only its two leaves tremble very slightly, the short grass around its base ripples in a light breeze, dust motes drift in the air, warm afternoon light shifts gently across the leaves. small ambient motion only, the plant stays standing tall and centred, framing unchanged, gentle camera drift, living scene. Subject already in frame: no human, no person, no man, no woman, no boy, no girl, no hand, no face, plant focus, one slender sapling standing tall and erect, thin stem rising well above the grass to near the top of the frame, short grass, warm afternoon light.
+  # Carried verbatim for the provenance record. At guidance 1.0 the distilled
+  # schedule runs no unconditional pass (07218cb), so this text changes no pixel;
+  # it is here so the twin's inputs match its pair exactly.
+  C:\banyan-farm\v34-plates-0810\ep1-b14-v34-plate-twin-r2-negative.txt: |-
+    wilting, drooping, bending over, falling over, collapsing, stem bending, plant dying, sagging, human, person, man, woman, boy, girl, hand, arm, foot, face, photorealism, 3D render look, text, 静态, 静止, frozen frame, still image, no motion, photorealistic, photograph, live action, film still, 3D render, CGI, octane, depth of field bokeh, scene change, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  - name: plate
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - -c
+      - |
+        import sys; sys.path.insert(0, r"C:\banyan-farm\banyan-city\pipeline")
+        from plate_prep import prepare_plate
+        out, rec = prepare_plate(
+            r"C:\banyan-farm\banyan-city\genomes\sapling\nodes\001-capability-inventory\stills\14-worth-staying-in.png",
+            "704x1280", r"C:\banyan-farm\v34-plates-0810", "14")
+        print("plate", out); print(rec["plate_wxh"], rec["crop_policy"])
+  - name: encode
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\ltx_i2v.py
+      - --stage
+      - encode
+      - --embeds
+      - C:\banyan-farm\v34-plates-0810\ltx-embeds-ep1-b14-v34-plate-twin-r2.pt
+      - --prompt-file
+      - C:\banyan-farm\v34-plates-0810\ep1-b14-v34-plate-twin-r2-prompt.txt
+      - --negative-file
+      - C:\banyan-farm\v34-plates-0810\ep1-b14-v34-plate-twin-r2-negative.txt
+  - name: render
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\ltx_i2v.py
+      - --stage
+      - render
+      - --embeds
+      - C:\banyan-farm\v34-plates-0810\ltx-embeds-ep1-b14-v34-plate-twin-r2.pt
+      - --prompt-file
+      - C:\banyan-farm\v34-plates-0810\ep1-b14-v34-plate-twin-r2-prompt.txt
+      - --negative-file
+      - C:\banyan-farm\v34-plates-0810\ep1-b14-v34-plate-twin-r2-negative.txt
+      - --init
+      - C:\banyan-farm\v34-plates-0810\14-704x1280.png
+      - --out
+      - C:\banyan-farm\v34-motion-0810\14-ltx-r2-plate-s20260745.mp4
+      - --size
+      - 704x1280
+      - --frames
+      - "65"
+      - --fps
+      - "24"
+      - --steps
+      - "8"
+      - --guidance
+      - "1.0"
+      - --distilled-sigmas
+      - --two-stage
+      - --seed
+      - "20260745"
+      - --beat
+      - "14"
+      - --task
+      - ep1-b14-v34-plate-twin-r2-0810
+      - --worker
+      - rtx5090
+
+artifacts:
+  - C:\banyan-farm\v34-plates-0810\14-704x1280.png
+  - C:\banyan-farm\v34-motion-0810\14-ltx-r2-plate-s20260745.mp4

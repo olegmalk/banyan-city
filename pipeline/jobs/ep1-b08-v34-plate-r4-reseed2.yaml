@@ -1,0 +1,141 @@
+# ep1 beat 08 "sev-1" — a THIRD DRAW of the r1 wording on a prepared plate.
+#
+# Same reasoning as ep1-b08-v34-plate-r3-reseed, which should be read first: beat
+# 08 is the only beat in the v35 cut with no correctly-framed moving candidate in
+# existence, every arm of it measuring 62% frozen except the raw r1 that cannot be
+# used because it is a 24.4% vertical stretch.
+#
+# WHY A THIRD DRAW AND NOT A SECOND WORDING. The r1 wording is known to produce
+# motion on this beat (raw arm: median 1.210, 0% frozen, picture upright and
+# clean). The r2 wording is known to freeze it (879820f: the affirmative framing
+# lock took it 1.07 -> 0.10 and 0% -> 66% frozen). Changing wording again would
+# be inventing a third recipe for a beat whose recipe already works; what failed
+# was one draw of it. Two independent reseeds give the founder a real choice for
+# a beat that currently offers him none, and they cost five GPU-minutes each.
+#
+# ONE VARIABLE against ep1-b08-v34-plate-twin-r1: the seed, 20260739 -> 20260852.
+# It is also a clean second sample of the same question r3-reseed asks, so if both
+# reseeds come back frozen that is strong evidence the freeze is the conditioning
+# frame rather than the draw — which would be worth more than either clip.
+#
+# SETTLED RECIPE. Guidance 1.0, ratified cover-centre crop. Independent of the
+# g2.0 sample and not blocked on it.
+
+id: ep1-b08-v34-plate-r4-reseed2
+task: ep1-b08-v34-plate-r4-reseed2-0810
+node: 001-capability-inventory
+beat: 8
+runner: box
+needs_gpu: true
+priority: 34
+max_attempts: 1
+owner: v34-frozen-beats lane (queue depth, settled plate recipe at guidance 1.0)
+
+consumer: >-
+  the v35 provisional screening cut, for beat 08. Third of three g1.0 candidates
+  for a beat that currently has none; unranked, the pick is R4's. Also the second
+  observation in the reseed pair that tells us whether beat 08's freeze travels
+  with the seed or with the conditioning frame.
+
+success: >-
+  A 704x1280 65-frame mp4 at
+  C:\banyan-farm\v34-motion-0810\08-ltx-r4-plate-s20260852.mp4.
+  Judged on the PICTURE: broad leaves and grass carrying continuous ambient
+  motion, the plant upright and rooted with the stem straight for all 65 frames,
+  cel palette and linework holding, and no human, hand, face or invented object.
+  Frame 0 must match a cover-centre crop of 08-sev-1.png rather than a stretch.
+  A frozen result here is still informative and must be reported as such rather
+  than quietly dropped.
+
+why: >-
+  One variable against ep1-b08-v34-plate-twin-r1: seed 20260852 instead of
+  20260739. Same r1 wording, same plate, same guidance 1.0.
+
+est_minutes: 5
+needs: [cuda, vram20, video-venv]
+
+payload:
+  # Verbatim from the round's own .meta.yaml — the text that actually rendered.
+  # The `[unused: ...]` line video_task appends inside the negative block is
+  # stripped: it is a sidecar annotation, not part of what was encoded.
+  C:\banyan-farm\v34-plates-0810\ep1-b08-v34-plate-r4-reseed2-prompt.txt: |-
+    2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. the broad leaves sway gently and hold their shape, the tall grass blades ripple in a light breeze, warm low sunlight shimmers along the leaf edges. the plant stays upright and rooted, stem straight and steady. small ambient motion only, everything holds its position, framing locked, no zoom, no push-in, no camera rise, subject stays the same size and place in frame, living scene. Subject already in frame: no human, no person, no man, no woman, no boy, no girl, no hand, no face, one young plant with broad green leaves standing upright, tall grass around it, bright blue sky, low sun behind.
+  # Carried for the provenance record. At guidance 1.0 the distilled schedule
+  # runs no unconditional pass (07218cb), so this text changes no pixel.
+  C:\banyan-farm\v34-plates-0810\ep1-b08-v34-plate-r4-reseed2-negative.txt: |-
+    wilting, drooping, bending over, falling over, collapsing, sagging, plant dying, human, person, man, woman, boy, girl, extra hand, extra arm, foot, face, crowd, animal, bird, insect, new object appearing, photorealism, 3D render look, text, 静态, 静止, frozen frame, still image, no motion, photorealistic, photograph, live action, film still, 3D render, CGI, octane, scene change, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  - name: plate
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - -c
+      - |
+        import sys; sys.path.insert(0, r"C:\banyan-farm\banyan-city\pipeline")
+        from plate_prep import prepare_plate
+        out, rec = prepare_plate(
+            r"C:\banyan-farm\banyan-city\genomes\sapling\nodes\001-capability-inventory\stills\08-sev-1.png",
+            "704x1280", r"C:\banyan-farm\v34-plates-0810", "08")
+        print("plate", out); print(rec["plate_wxh"], rec["crop_policy"])
+  - name: encode
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\ltx_i2v.py
+      - --stage
+      - encode
+      - --embeds
+      - C:\banyan-farm\v34-plates-0810\ltx-embeds-ep1-b08-v34-plate-r4-reseed2.pt
+      - --prompt-file
+      - C:\banyan-farm\v34-plates-0810\ep1-b08-v34-plate-r4-reseed2-prompt.txt
+      - --negative-file
+      - C:\banyan-farm\v34-plates-0810\ep1-b08-v34-plate-r4-reseed2-negative.txt
+  - name: render
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\ltx_i2v.py
+      - --stage
+      - render
+      - --embeds
+      - C:\banyan-farm\v34-plates-0810\ltx-embeds-ep1-b08-v34-plate-r4-reseed2.pt
+      - --prompt-file
+      - C:\banyan-farm\v34-plates-0810\ep1-b08-v34-plate-r4-reseed2-prompt.txt
+      - --negative-file
+      - C:\banyan-farm\v34-plates-0810\ep1-b08-v34-plate-r4-reseed2-negative.txt
+      - --init
+      - C:\banyan-farm\v34-plates-0810\08-704x1280.png
+      - --out
+      - C:\banyan-farm\v34-motion-0810\08-ltx-r4-plate-s20260852.mp4
+      - --size
+      - 704x1280
+      - --frames
+      - "65"
+      - --fps
+      - "24"
+      - --steps
+      - "8"
+      - --guidance
+      - "1.0"
+      - --distilled-sigmas
+      - --two-stage
+      - --seed
+      - "20260852"
+      - --beat
+      - "8"
+      - --task
+      - ep1-b08-v34-plate-r4-reseed2-0810
+      - --worker
+      - rtx5090
+
+artifacts:
+  - C:\banyan-farm\v34-plates-0810\08-704x1280.png
+  - C:\banyan-farm\v34-motion-0810\08-ltx-r4-plate-s20260852.mp4
