@@ -175,3 +175,4 @@
 13:29:41Z DONE task=ep1-b08-v34-plate-r1d-reseed-1786364794 rc=0 artifacts=2
 13:30:10Z STARTED task=ep1-b10-v34-plate-r2d-reseed-1786364797 attempt=1 on box-runner
 13:34:52Z DONE task=ep1-b10-v34-plate-r2d-reseed-1786364797 rc=0 artifacts=2
+13:35:22Z STARTED task=ep1-b06-r8a2-tallgrass-below-1786368712 attempt=1 on box-runner
