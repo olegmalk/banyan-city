@@ -787,9 +787,53 @@ checklist:
     # options the steward drew is a pick sheet wearing a screen's chip.
     - n: 23
       ask: "The goblin is a different creature every beat. Two fixes, each with a cost."
-      state: open
-      chip: "SCREEN"
-      minutes: 3
+      state: answered
+      answered: 2026-08-10
+      answer: >-
+        **YOU PICKED THE GOBLIN.** Roman, 2026-08-10 ~23:50, verbatim: "alright,
+        ill take this one for the goblin." The frame is
+        `04-the-footnote-ipa-r1-w015-s6` — identified from the caption legible in
+        the crop you sent, and confirmed against your own description of it
+        (round smooth grey-green head, orange-yellow eyes, small chin fangs,
+        blush marks, dark collar). Recorded in `taste/steward-model.ledger.yaml`
+        as `ep2-goblin-founder-pick-0810`.
+
+        That answers both halves of this card at once. It names the creature,
+        which nine rounds could not, and it picks a side in the trade above: your
+        frame comes from the NARROW-WINDOW arm — the reference conditions only
+        the first 15% of the denoise and then switches off. Zero words were added
+        to the prompt to get it, so "nothing complex" is intact.
+
+        **AND ONE THING IS STILL OWED TO YOU, because it landed after you
+        picked.** The `pending:` note on this card said we could not tell whether
+        a beat-04 reference drags the wrong scene into a differently-framed shot,
+        and that proving it needed one frame of a different beat. Three such jobs
+        had already run. They were looked at against your pick before anything
+        was scaled, and **the answer is one beat out of three.**
+
+        - **Beat 20 holds him** — four seeds, same orange-yellow eyes, same round
+          head, same small chin fangs. Recognisably your goblin four more times.
+        - **Beat 15 loses him** — an elongated skull and blank grey eyes with no
+          iris colour.
+        - **Beat 02 collapses** — four different creatures in one beat, including
+          a full-body lizard on all fours.
+
+        The pattern is composition: beat 20 is a face-filling close-up like the
+        reference and it works; beat 02 is a full-body sprint, the framing
+        furthest from it, and it fails hardest. **So the wave was NOT fired.**
+        Fourteen beats rendered tonight would have handed you this exact
+        complaint back. Nothing was scaled, $0 was spent, and the next step is
+        one sample, not fourteen.
+
+        **A second correction, and it is the bigger one.** The fourteen staged
+        specs do not use this mechanism at all — they call the old tags-only
+        recipe from 12:37, the one whose four-different-creatures failure is why
+        the reference work happened. Your verdict does not release them; it
+        makes them obsolete. They must be re-cut against the frame you picked
+        before any of them is worth running, and their own safety gate blocked
+        them from firing in the meantime.
+      chip: "ANSWERED"
+      minutes: 0
       summary: >-
         Your definition released fifteen beats, and the first sample found a
         fault none of the nine rounds had shown: **the same words draw a

@@ -5773,3 +5773,284 @@
     one.
   outcome: n/a
   miss_axis: null
+
+# WRITTEN AFTER THE VERDICT, AND THERE WAS NOTHING WRITTEN BEFORE IT. This is the
+# THIRD CONSECUTIVE ROUND the founder has ruled on with no prediction under it.
+# The rolling hit-rate header at the top of this file is NOT edited by either of
+# the two records below: nothing was scored, so no class arithmetic moves.
+- id: ep2-goblin-founder-pick-0810
+  date: 2026-08-10
+  kind: founder_verdict
+  subject: "node 002b — THE GOBLIN. The founder picks a face off the w015 identity sheet, closing the identity question nine rounds failed to close"
+  steward_provisional: false
+  pick: 04-the-footnote-ipa-r1-w015-s6
+  scores: {}
+  what_he_said: >-
+    Roman, 2026-08-10 ~23:50, verbatim and complete: "alright, ill take this one
+    for the goblin." Sent as a crop of ONE TILE from
+    `review/SHEETS/GOBLIN-w015-identity.png`.
+  how_the_frame_was_identified: >-
+    FROM A CAPTION IN HIS OWN SCREENSHOT, NOT FROM A FILENAME HE TYPED AND NOT
+    FROM A GUESS. The cropped tile carries its own caption, legible in the image
+    he sent: `04-the-footnote-ipa-r1-w015-s6`. That identification was relayed to
+    this lane by the team lead, which is one hop, and it is recorded as one hop
+    rather than as something this lane saw.
+    IT WAS CORROBORATED INDEPENDENTLY BEFORE BEING WRITTEN DOWN. The named file
+    exists at `review/SHEETS/src-goblin/04-the-footnote-ipa-r1-w015-s6.png`, it
+    was opened and looked at, and it matches every attribute of his description
+    point for point: round smooth grey-green head, orange-yellow eyes, small chin
+    fangs, blush marks, dark collar. The corroboration is what makes the one hop
+    acceptable; without it this record would say the id is unverified.
+  the_frame_itself: >-
+    An extreme close-up, the head filling the frame. Smooth rounded skull with no
+    hair of any kind. Large round eyes with warm ORANGE-YELLOW slit irises. A
+    short animal muzzle with a small dark nose. Two SMALL pale fangs at the chin,
+    pointing up from the lower jaw. Soft pale blush on both cheeks. A dark collar
+    and a pale hood edge at the bottom of the frame.
+    Provenance of the recipe that drew it: IP-Adapter conditioning reference r1
+    (= the tags-only baseline frame `04-the-footnote-wave1-s1.png`), adapter on
+    for the first 15% of 40 denoise steps at scale 0.6, seed index 6, byte-
+    identical prompt to the tags-only baseline — zero prompt tokens added, so his
+    "nothing complex" is untouched by the mechanism that drew his pick.
+  scoring: not_scoreable_no_prediction_was_written
+  scoring_of_the_standing_prediction: >-
+    THERE IS NO PREDICTION TO SCORE, AND THAT IS A FINDING OF THIS RECORD.
+
+    Every record id in this file was read before this was written. The goblin
+    records run `ep2-goblin-definition-0810`, `ep2-b04-wave-sample-1`,
+    `ep2-b04-wave-sample-1-observed`, `ep2-b04-goblin-ipa-scored`,
+    `ep2-b04-goblin-ipa-observed`, `ep2-goblin-regen-directive-0810`,
+    `ep2-b04-goblin-ipa-window-predicted`, `ep2-b04-goblin-ipa-window-observed`
+    and `ep2-b04-goblin-ipa-negcolor-observed`. The last of those is the newest
+    and it predates the sheet he ruled on: the w015 eight-seed job
+    (`ep2-b04-goblin-ipa-w015-seeds8-1786362618`) rendered after it, the sheet
+    `GOBLIN-w015-identity.png` was assembled by hand at 18:34 and committed at
+    7a44602, and NOT ONE LINE was written about what he would do with it. No
+    prediction, no observation, no stub.
+
+    NO PREDICTION IS INVENTED FOR IT RETROACTIVELY.
+
+    The nearest thing that exists is an explicit refusal to predict:
+    `ep2-b04-goblin-ipa-negcolor-observed` closes with "No arm recommended, no
+    frame picked, ranked or promoted, no goblin made canonical." That is a
+    statement of what the lane would NOT do, not a prediction of what he would
+    do, and it is not scored as one.
+  this_is_the_THIRD_consecutive_unpredicted_round: >-
+    STATED AS AN ESCALATION, NOT A REPEAT, AND THE ESCALATION IS NOW ACROSS TWO
+    DIFFERENT EPISODES. Commit 015e3f5 recorded this failure for beat-6 round 7
+    and wrote the rule meant to stop it. Commit 119cd4f recorded it again one
+    verdict later for r8/r8d and named the rule as having been written and then
+    not followed. This record is the third, and it is the first on a DIFFERENT
+    node and a different lane — which kills the reading that this was one lane's
+    lapse on one beat. Three verdicts in one evening, on two episodes, none with
+    a prediction under it.
+
+    THE LARGEST SINGLE GATE IN THE TREE CLOSED, AND THE MODEL SAID NOTHING ABOUT
+    IT IN ADVANCE. Forty-eight IP-Adapter cells, four arms, two knobs swept, a
+    null result on the colour negative, and a hand-built identity sheet — and on
+    the one question all of it existed to put in front of him, this file is
+    silent. The measurements were pre-registered; the verdict never was.
+
+    THE PROPOSED FIX IS UNCHANGED AND IS STILL A GATE, NOT A REMINDER. The
+    reminder has now failed twice inside one day. The shape that would work is
+    the one this project already uses: whatever publishes a review sheet refuses
+    to publish when the round has no ledger id. That is a PROPOSAL here and is
+    NOT built by this record — it touches the review/publish path, which is
+    another lane's.
+  the_transferable_signal: >-
+    WHAT HIS THREE STATEMENTS PIN DOWN TOGETHER, and only what they pin down.
+    Across today he refused a set with "all the goblin images look like female
+    demihumans, definitely need to regenerate", answered the definition question
+    with "he is just a simple green goblin, nothing complex", and has now chosen
+    one specific face. Read together with the frame he chose:
+
+    - NOT A HUMANOID FACE. The demihuman complaint is now positively resolved and
+      not merely negated: his pick has an animal muzzle, a non-human eye, and no
+      human facial structure at all. Every frame he rejected read as a person.
+    - NO HAIR. His pick is bald and smooth. The rounds he refused kept giving the
+      creature hair — the white bob most notably — and hair is now the single
+      most reliable rejected feature in the whole set.
+    - THE FANGS ARE SMALL AND LOW. Two small nubs at the chin, from the lower
+      jaw. This is evidence AGAINST the steward's own unratified translation
+      `tusks`, which drew large protruding upper fangs; it is not evidence that
+      he wants no fangs, because his pick has two.
+    - LARGE ROUND EYES WITH WARM ORANGE-YELLOW IRISES. The most distinctive
+      single marker on the frame, and the one that most cleanly separates his
+      pick from the frames on other beats (see the crossbeat record below).
+    - A SOFT REGISTER, NOT A MENACING ONE. Blush marks, a neutral mouth, no
+      scowl. The angry-brute readings are not what he took.
+  the_uncomfortable_observation_and_it_is_recorded_because_it_is_uncomfortable: >-
+    THE FRAME HE PICKED IS NOT VERY GREEN. His pick is a desaturated grey-green
+    /teal, well toward the drained end of the range this wave spent the whole day
+    fighting. An entire investigation — arm 1's drain, the wscale sweep, the
+    colour-negative null, `green_share` on every cell — was built on recovering
+    saturated green, and the face he actually chose sits closer to the greys that
+    work was trying to escape.
+
+    WHAT THIS IS NOT. It is NOT him revising "green skin", it is NOT a licence to
+    stop caring about the colour, and it is NOT a number. He said "green" and his
+    pick is green-ish; those are compatible and he was never shown a saturation
+    scale to rule on. What it IS is a caution against the lane's assumption that
+    more green is always closer to what he wants, which no verdict of his has
+    ever stated and which one verdict of his now sits slightly against.
+  what_does_NOT_generalise: >-
+    THE BODY. His pick is a head filling the frame. It says nothing about the
+    creature's build, height, proportions, costume beyond a dark collar, or how
+    he reads it at any distance — and the crossbeat record below shows the
+    full-body framing is exactly where this mechanism falls apart.
+    ALSO NOT GENERALISED: no number for skin saturation, no ruling on any other
+    beat, nothing about motion, pacing or episode 2 as a whole. He approved a
+    face.
+  what_this_record_does_not_do: >-
+    It promotes nothing to canon, marks no beat final, writes no leaf and no
+    `stills/` sidecar, publishes nothing and spends nothing. It does not edit the
+    rolling hit-rate header, because nothing was scored. It does not touch the
+    founder's taste file. It does not license firing the fourteen staged wave
+    specs — the record below is why.
+  founder_verdict: "alright, ill take this one for the goblin."
+  founder_verdict_date: 2026-08-10
+  outcome: n/a
+  miss_axis: null
+  model_action: none_no_prediction_existed
+
+- id: ep2-goblin-crossbeat-observed-0810
+  date: 2026-08-10
+  kind: observation
+  subject: "node 002b — does the w015 recipe carry HIS goblin onto a beat that is framed nothing like beat 04? Three beats, by eye. The answer is ONE OF THREE."
+  steward_provisional: true
+  pick: null
+  scores: {}
+  address_key: >-
+    Jobs `ep2-b02-goblin-ipa-crossbeat-1786369550`,
+    `ep2-b15-goblin-ipa-crossbeat-1786369554` and
+    `ep2-b20-goblin-ipa-crossbeat-1786369556`, all rc 0, outputs published to
+    `farm-out/ep2-b{02,15,20}-goblin-ipa-crossbeat/` on the rtx5090 with .sha256
+    manifests. Recipe byte-identical to the one that drew his pick: arm
+    `window4`, 15% of 40 steps, scale 0.6, beat-04 references held fixed, only
+    the BEAT changed. Read on the r1 rows — r1 is the reference his pick came
+    from — sixteen frames pulled and compared against
+    `04-the-footnote-ipa-r1-w015-s6.png`.
+  what_was_pre_registered_and_when: >-
+    The criterion, and it was written before any of these frames existed:
+    `goblin_ipa_beat.py`'s own docstring, in the tree on the box, states the test
+    as "Is it the same creature — same face, same build, same skin — or the
+    beat-04 goblin only when the composition is beat 04's?" and states the
+    instrument as "The DINOv2 identity metric is NOT run and no number here may
+    answer the identity question... Where a number and the picture disagree, the
+    picture wins." This observation answers the question it was set, with the
+    instrument it was told to use. No prediction of the OUTCOME was written.
+  the_method_and_it_was_eyes: >-
+    NO METRIC WAS RUN AND NONE WOULD HAVE BEEN ADMISSIBLE. The identity metric is
+    disqualified in this file twice over (724b616, 93356b1) for failing to tell
+    one creature from four. The twelve r1 frames were composited beside his pick
+    on one sheet and looked at.
+  the_result_and_it_is_a_PARTIAL_FAILURE: >-
+    ONE BEAT OF THREE HOLDS HIS CREATURE.
+
+    BEAT 20 (`20-evidence`) HOLDS, and holds cleanly on all four seeds. Large
+    round eyes with the same warm ORANGE-YELLOW irises, round green head, two
+    small pale chin fangs, blush, hood and dark collar. Put s0-s3 beside his pick
+    and it is recognisably the same creature four more times.
+
+    BEAT 02 (`02-the-sprint`) FAILS, and fails in the exact way the original
+    complaint described — it is FOUR DIFFERENT CREATURES within the one beat. s0
+    is an angry face with tiny glowing eyes, pink pointed ears and large DOWNWARD
+    vampire fangs. s1 is a rotund blob-bodied thing with round white eyes and
+    orange ears. s2 is a small full-body quadrupedal lizard on the ground under a
+    huge dark shape. s3 is a chubby grinning cub with pale blue eyes. Not one of
+    the four is his goblin, and not one of the four is any of the other three.
+
+    BEAT 15 (`15-good-listener`) ALSO FAILS, though less violently: the four are
+    roughly consistent with each other but they are consistently NOT him. An
+    elongated egg-shaped skull rather than his round one, and blank grey-white
+    eyes — sleepy, lidded or fully shut — with no iris colour at all.
+
+    THE CLEANEST SINGLE DISCRIMINATOR IS THE EYE. His pick and all four beat-20
+    frames have warm orange-yellow irises. Every single frame on beats 02 and 15
+    has grey or white eyes with no iris colour. That marker splits the set
+    exactly along the beat boundary, with no exceptions in sixteen frames.
+  the_mechanism_this_points_at: >-
+    IT IS COMPOSITION, AND THE HARNESS PREDICTED THE SHAPE OF THIS BEFORE IT RAN.
+    Its docstring warned that "'One creature across seeds' measured that way is
+    partly a statement about a fixed composition", because every reference is a
+    beat-04 face filling the frame. The three results line up with that reading
+    and nothing else: beat 20 is a face-filling close-up like beat 04 and it
+    holds; beat 15 is a medium shot talking upward and it drifts; beat 02 is a
+    full-body sprint — the framing furthest from the reference — and it collapses
+    completely, including into full-body quadrupeds.
+    So the honest statement of the mechanism is: a beat-04 face reference carries
+    the creature into beats FRAMED LIKE BEAT 04, and loses it as the framing
+    diverges. That is a much narrower claim than "this gives you one goblin", and
+    it is the claim the evidence actually supports.
+  what_this_forbids: >-
+    THE FOURTEEN-BEAT WAVE IS NOT FIRED ON THIS EVIDENCE. Two of the three tested
+    beats come back as a creature he did not pick, and beat 02 comes back as four
+    of them. Rendering fourteen beats to hand him the same "different creature
+    every beat" problem he has complained about all week is the precise failure
+    the ONE SAMPLE rule exists to prevent, and one look at three already-finished
+    jobs was enough to catch it.
+  a_separate_and_larger_finding_about_the_staged_specs: >-
+    THE FOURTEEN STAGED SPECS DO NOT USE THIS MECHANISM AT ALL, AND WOULD NOT
+    HAVE DRAWN HIS GOBLIN EVEN IF THE CROSSBEAT HAD PASSED. Read
+    `pipeline/jobs/ep2-b02-goblin-wave1.yaml`: its one render step calls
+    `render_wave_sample.py --goblin-def "green skin, tusks"`. No IP-Adapter, no
+    reference image, no window, no scale. They are the TAGS-ONLY recipe, written
+    at 12:37 today — the recipe whose four-different-creatures failure is the
+    entire reason the IP-Adapter investigation happened. Firing them would have
+    re-drawn the original defect on fourteen beats.
+    Their own `gate:` key says so and blocks it: it names the beat-04 tags-only
+    sample as the thing his verdict must release, and `box_enqueue.py`
+    `gate_checks()` refuses any spec carrying that key. The gate is intact and
+    was not cleared. What he ruled on tonight is a DIFFERENT recipe from the one
+    those specs encode, so his verdict does not release them — it obsoletes them.
+  what_this_does_not_claim: >-
+    No arm is recommended, no frame is picked, ranked or promoted, no goblin is
+    made canonical beyond the one HE named, and no taste call is made anywhere in
+    this record. Beats 03, 05, 06, 07, 08, 09, 10, 11, 14, 17 and 19 were NOT
+    tested and nothing here predicts them; three beats were measured and three
+    beats are reported.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep1-ltx-16s-founder-verdict-0810
+  date: 2026-08-10
+  kind: founder_verdict
+  subject: "episode 1 — the 16-second 385-frame LTX sample. Camera move accepted, subject motion rejected. Recorded as evidence about the RECIPE, not about the goblin."
+  steward_provisional: false
+  pick: null
+  scores: {}
+  what_he_said: >-
+    Roman, 2026-08-10 ~23:50, in the same message as the goblin pick and kept
+    apart from it on purpose: "the ltx 04 clip is literally his hand repeatedly
+    moving, although the zoom out is great and its exactly the kind of thing we
+    need."
+  what_it_settles: >-
+    TWO SEPARATE THINGS, AND THEY POINT OPPOSITE WAYS.
+    ACCEPTED, and in unusually strong terms for him: the CAMERA MOVE. "the zoom
+    out is great and its exactly the kind of thing we need" is the most positive
+    sentence he has given any motion result. The long-clip format is therefore
+    viable — a 385-frame generation did not come apart, and the thing it bought
+    (a sustained camera move with room to breathe) is the thing he says he wants.
+    REJECTED: the SUBJECT motion on that beat. "literally his hand repeatedly
+    moving" is a loop complaint — one gesture cycling for the clip's duration
+    rather than an action that goes somewhere. It is the same family of complaint
+    as "literally just frozen frames" (2026-08-03, the K recipe): the picture is
+    fine and nothing happens in it.
+  what_it_does_not_settle: >-
+    It is ONE beat's subject motion, not a verdict on the 385-frame recipe, which
+    he praised in the same breath. It names no target duration, no shot list, and
+    no other beat. It says nothing about the goblin, episode 2, or the wave — it
+    is filed as its own record for exactly that reason.
+  explicitly_not_acted_on_by_this_lane: >-
+    NO EPISODE-1 RE-RENDER IS QUEUED OFF THIS VERDICT. That decision is open and
+    belongs to the team lead to bring him. This record exists so the verdict is
+    written down at the time he gave it and is not reconstructed later from
+    memory; it authorises nothing.
+  founder_verdict: "the ltx 04 clip is literally his hand repeatedly moving, although the zoom out is great and its exactly the kind of thing we need."
+  founder_verdict_date: 2026-08-10
+  outcome: n/a
+  miss_axis: null
+  model_action: none_no_prediction_existed
