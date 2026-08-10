@@ -1,0 +1,77 @@
+# Still provenance (7.2), written AT RENDER TIME by render_b06r7.py
+# on the rtx5090 (C:\banyan-farm\b06-r7\out).
+# The prompt and negative below are what the model actually saw.
+# sd_prompt's own output, BEFORE this round's named transforms, was:
+#   POS: no humans, scenery, sky, blue sky, day, cloud, sunlight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+#   NEG: photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, humans, leaf, plant, stem, foliage, tree, photorealism, cityscape, city, building, skyline, road, mountain, animal, animal focus, cat, dog, creature, vehicle, car
+# The transforms, all three of them named: `no humans` restored to
+# the HEAD of the positive and `humans` deleted from the negative
+# (r5's deviation, unchanged); `scenery` removed from the positive;
+# this arm's own substitution and negative block. sd_prompt.py is
+# NOT modified by this round and shots.md is NOT edited.
+#   NEGWARN: !! negative prompt over CLIP's 77-token budget; deduplicated: text; DROPPED: realistic skin texture
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+shot_beat: 6
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20264725
+seeds_in_batch: 4
+task: 001-b06-r7a-tallgrass-0810
+queue_entry: ep1-b06-r7a-tallgrass
+render_round: r7
+candidate_set: r7a
+arm: A
+arm_label: ground visible, TALL GRASS
+arm_is_not_a_pick: >-
+  Round 7 keeps the TWO arms because the founder gave two acceptable compositions and chose neither. A and B are alternatives, not a sweep with a winner. No arm is preferred, ranked or recommended anywhere in this round, and the steward makes no pick between them — that choice is R4's and only his.
+founder_direction_verbatim: >-
+  none of the beat 6 images will work, you either show the ground as having tall grass or dont show the ground at all and show the sky, right now its showing the ground as some flat place, or showing cities for some reason
+founder_direction_date: 2026-08-10
+why_this_arm: >-
+  HIS OPTION A, WORD FOR WORD: "show the ground as having tall grass". `tall grass` is his term and a real tag on this checkpoint's vocabulary, but a thin one — 785 posts against 89,292 for `grass` — so `grass` is sent behind it to carry the conditioning. `plant` and `foliage` come OUT of the negative for this arm and this arm only: grass is a plant, and asking for it while forbidding it is the self-cancelling prompt that gave r3 a wall of cumulus against `no big clouds`. `leaf`, `stem` and `tree` stay — those are the founder's 2026-08-07 rule about the CHARACTER, not about the ground. `mountain` is negated because r5's picked frame added a range the script never mentions. NEW IN r7: the animal and vehicle classes are NAMED. r6's arm A drew a large white animal as the subject of 2 of 4 with nothing in the prompt asking for one and nothing forbidding one — the same fault as the cities, and `tall grass` plus `no humans` is the animal-in-long-grass composition on this vocabulary. Everything else in this arm is r6's, unchanged, because r6's arm A was right about the grass 4 of 4.
+cities_diagnosis: >-
+  NOT a trimmed term — a term that was never written. Every negative this beat has sent was read back from its own sidecars (r3, r4, r5 and the fix set) and not one contains city, cityscape, building, skyline, skyscraper, industrial, town or architecture. r5's negative measured 51 of 77 on the box's real CLIP, so nothing was trimmed and there were 26 tokens spare. The positive side is the other half: r5 introduced the Danbooru tag `scenery`, the umbrella whose children include `cityscape` (62,273 posts against 19,945, qdlabs/danbooru-tags mirror read 2026-08-10; donmai.us itself timed out and is not cited). r5 is the first round on this beat to carry `scenery` and the round that drew a city through s0's ring and a skyline on s1's bottom edge. Both arms delete the tag AND negate the block.
+positive_tag_removed: scenery
+explicit_negatives_added: cityscape, city, building, skyline, road, mountain, animal, animal focus, cat, dog, creature, vehicle, car
+explicit_negatives_tier: explicit (last in fit_negative's drop order)
+occupancy_classes_named: animals, built structure, text, vehicles (negative), people (positive, `no humans`)
+occupancy_preflight: >-
+  Trap 9, new in round 7 and asserted before a weight loads. For a beat whose script says the frame is empty, every class of thing that can occupy it must be NAMED in the SENT negative — animals, built structure, vehicles, text — with people named on the POSITIVE side by `no humans`, because person nouns are barred from the negative on this beat (traps 7 and 8). A class not named is a predicted defect rather than a surprise: r5 shipped a city that way and r6 shipped a large white animal that way, both found only after somebody looked at the frames, neither one a token trim.
+token_ceiling_note: >-
+  77 per CLIP encoder, hard. diffusers truncates; the chunked negatives A1111 and ComfyUI users expect need compel with truncate_long_prompts=False and hand-passed prompt_embeds (compel #45, diffusers #4043, A1111 discussion #2378, read 2026-08-10). That is a recipe change owing its own one sample and is NOT done here — the class block is sized to what fits and measured on the box's real CLIP first.
+negative_terms_removed: plant, foliage
+negative_removal_reason: >-
+  Arm A only: grass is a plant, so `plant` and `foliage` in the negative would cancel the arm the founder asked for. `leaf`, `stem` and `tree` are kept in both arms — those are his 2026-08-07 rule about the character's own body, not about the ground.
+mechanism_held_from_r5: >-
+  `no humans` at the HEAD of the POSITIVE and NOT ONE person noun in the negative. That took this beat from a girl in 2 of 4 (r3) and 3 of 4 (r4) to zero in 4 of 4 (r5), and his 2026-08-10 verdict does not mention people. It is held fixed while the composition moves, and traps 7 and 8 refuse the run if either half of it slips.
+person_terms_in_negative: none — asserted at run time (trap 8)
+shots_md_sha256: 53c2690edcfb9a46ac5dc6b2c4df0c499fd6c825e8b32dca288d2ab678e49079
+shots_md_edited: false
+authored_source: >-
+  genomes/sapling/nodes/001-capability-inventory/shots.md beat 06, byte-for-byte and asserted before a weight loads. Every change this round makes is applied script-side, printed, and listed above.
+tokenizer: openai/clip-vit-large-patch14 (transformers, on the box)
+positive_tokens_real_clip: 35
+negative_tokens_real_clip: 68
+negative_tokens_r5_control: 51
+r5_control_reproduced: true
+controls_note: >-
+  r5 is rebuilt from this checkout in the same run on the same tokenizer and asserted byte-for-byte against its recorded sidecars, positive AND negative, so the delta is one measurement rather than two instruments.
+anchor_intact: true
+seeds_held_from: >-
+  round 5, takes/stills/06-too-blue-r5-s*.png — this beat's own k=4..7, which r3 and r4 also drew. Both arms run the same four, so A against B is a comparison of the prompt and not of the noise, and either arm can still be set beside the rejected rounds column for column.
+provisional: >-
+  PROVISIONAL. A steward-rendered CANDIDATE, not a pick and not canon. Ground truth is the founder (R4); he has ratified nothing here and this round deliberately offers him no preference between its two arms. Never takes a canon filename, is not published, not posted, and not assembled into an episode.
+approved: false
+recipe_inherited_from: >-
+  round 5, takes/stills/06-too-blue-r5-s*.png — model, size, steps, cfg and the seed series are unchanged from r5, which inherited them from node 001 takes/stills/15-something-s-coming-r3-s1.png, the ONE SAMPLE the founder passed on 2026-08-08.
+wall_seconds: 10
+cost_usd: 0
+note: |-
+  round 7, ARM A — ground visible, TALL GRASS. The founder's two acceptable compositions from 2026-08-10, verbatim: "you either show the ground as having tall grass or dont show the ground at all and show the sky, right now its showing the ground as some flat place, or showing cities for some reason". Two readings, two arms, one candidate set each, and the steward picks between them nowhere — he has chosen neither and both are alive. HIS OPTION A, WORD FOR WORD: "show the ground as having tall grass". `tall grass` is his term and a real tag on this checkpoint's vocabulary, but a thin one — 785 posts against 89,292 for `grass` — so `grass` is sent behind it to carry the conditioning. `plant` and `foliage` come OUT of the negative for this arm and this arm only: grass is a plant, and asking for it while forbidding it is the self-cancelling prompt that gave r3 a wall of cumulus against `no big clouds`. `leaf`, `stem` and `tree` stay — those are the founder's 2026-08-07 rule about the CHARACTER, not about the ground. `mountain` is negated because r5's picked frame added a range the script never mentions. NEW IN r7: the animal and vehicle classes are NAMED. r6's arm A drew a large white animal as the subject of 2 of 4 with nothing in the prompt asking for one and nothing forbidding one — the same fault as the cities, and `tall grass` plus `no humans` is the animal-in-long-grass composition on this vocabulary. Everything else in this arm is r6's, unchanged, because r6's arm A was right about the grass 4 of 4. WHAT ROUND 6 SETTLED AND IS NOT REOPENED HERE: the cities are gone 8 of 8 and people are gone 8 of 8, arm A drew tall grass with blades at the camera 4 of 4 and arm B drew sky with no ground 4 of 4. WHAT ROUND 7 CHANGES, AND IT IS ONE THING: a large white animal was the subject of r6 arm A's s1 and s3, and r6's sent negative names no animal, cat, dog, wolf or creature anywhere — an animal was never forbidden on this beat, exactly as a city never was, and at 59 of 77 tokens neither was a trim. `no humans` is why: on this vocabulary it asserts no HUMAN character, not an empty frame, which is why `animal focus` exists as a separate tag on pictures that carry both. The tag stays — it is r5's one confirmed win — and the class is shut on the negative side, where no person noun is involved. THE FIX IS A PRE-FLIGHT, NOT A TERM (trap 9): every class that can occupy a frame the script says is empty — people, animals, built structure, vehicles, text — must be named in what the model actually receives, and the run stops if one is not. Three rounds running the defect was a noun nobody had negated, found only after somebody looked. The 77 token ceiling is diffusers truncating each CLIP encoder; chunked negatives would need compel and are a recipe change with its own sample, so the class block is sized to what fits and measured before the render. Seeds are r5's own four, held again, so r7 sets beside r6 column for column. shots.md NOT edited; sd_prompt.py NOT modified. Nothing here is a pick, a promotion, a publication or a spend.
+prompt: |-
+  no humans, tall grass, grass, sky, blue sky, day, cloud, sunlight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, leaf, stem, tree, photorealism, cityscape, city, building, skyline, road, mountain, animal, animal focus, cat, dog, creature, vehicle, car
