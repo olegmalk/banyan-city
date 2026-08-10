@@ -94,6 +94,37 @@ because twenty degrees is enough to cross the boundary of the word.
 The other three arm-1 references *did* drain — r3 collapses to `sat_all`
 0.112, chroma 0.180 — so arm 1 is not one failure mode but two.
 
+## The identity number says there is no fork. The picture says there is.
+
+This was not the question I was sent to answer, but I hit it on the way and it
+would be dishonest to leave it out, because the number involved is the one the
+fork decision would rest on.
+
+`identity-agreement-content.yaml` puts **arm 2 ref0 at dino_mean 0.7968**,
+against arm 1 ref0's 0.8069 and a wave-1 baseline of 0.6967. Read straight,
+that says arm 2 keeps essentially all of arm 1's identity gain — and since arm
+2 also keeps the green, it would say the fork dissolves and arm 2 simply wins.
+
+Look at the frames and that is not what happened. Arm 1 ref0 is one creature
+four times: the same bald floppy-eared head, the same red-brown eyes, the same
+build. Arm 2 ref0 is four creatures — s0 bald with teal eyes, s1 green-haired
+with **orange** eyes, s2 green-haired with blue eyes, s3 white-haired with
+green eyes. Hair colour and eye colour change on every seed. That is the
+original `406909c` defect, unfixed.
+
+So the fork is **real**, and the identity metric cannot see it. This is the
+second time on this exact beat — `724b616` already caught it failing to tell
+one creature from four, because whole-frame embeddings on a beat with
+identical framing and background mostly score the background. The 0.7968 is
+not evidence that arm 2 holds the character and should not be quoted as if it
+were.
+
+One thing I could NOT assess from these frames: whether arm 1 also loses the
+tusks. No tusk is visible in any arm-1 frame, but all four have the mouth
+closed with cheeks puffed, which is what the prompt asks for, so the tusks are
+occluded rather than demonstrably absent. It needs a beat where the mouth is
+open before anyone claims either way.
+
 ## What I think the next lever is, and am not pulling
 
 Not stated as a recommendation to act on; the fork decision is the founder's
