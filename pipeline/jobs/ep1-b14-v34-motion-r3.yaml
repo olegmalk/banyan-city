@@ -46,6 +46,49 @@
 # the exact confound the round exists to avoid. It also means none of this
 # series is reproducible from the repo alone — recorded, not quietly swapped.
 
+# ==========================================================================
+# WITHDRAWN 2026-08-10 03:3xZ — DO NOT FIRE. The `gate:` key below makes that
+# a code refusal (box_enqueue.py:125-129), not a note someone can miss.
+#
+# It was queued, and pulled out of ready/ before it was ever claimed. TWO
+# independent reasons, both found after it was written, both measured:
+#
+# 1. THE OUTPUT WOULD HAVE BEEN GEOMETRICALLY WRONG. The stills are 832x1216
+#    (aspect 0.6842); the render targets 704x1280 (0.5500). I extracted frame 0
+#    of a landed clip and of the cut's own clip and compared each against a
+#    naive stretch and an aspect-preserving cover-crop of its still, by mean
+#    absolute pixel difference:
+#        review/v34-motion/07-…-LTX-r3.mp4      stretch 2.75   crop 11.93
+#        review/provisional-v34/clips/07-….mp4  stretch 11.68  crop  1.64
+#    Exactly inverted. Every clip in this motion series is stretched 24.4%
+#    vertically; the cut it is meant to feed is not. plate_prep.py:55 is
+#    CROP_POLICY = "cover-centre" and its docstring at :8-16 predicted this
+#    precisely — "a resize that changes the aspect ratio raises nothing and
+#    looks like a resize that does not". No plate exists anywhere in
+#    C:\banyan-farm\v34-motion-0810\ and C:\banyan-farm\v34-r2\ was never
+#    created, so the ep1-b04/b07 specs that mandate prepare_plate were never
+#    fired and the whole series went in raw.
+#
+# 2. THE RECIPE WAS OVERTAKEN WHILE THIS SAT IN THE QUEUE. Commit 879820f
+#    measured the affirmative framing lock on beat 08: rise -89 -> -38px, but
+#    median motion 1.07 -> 0.10 and frozen 0% -> 66%. Its rule is "apply the
+#    lock to beats with a MEASURED framing defect, and read it as a trade
+#    against ambient motion rather than a free win" — and nobody has measured a
+#    framing defect on beat 14. Commit 655d2c6 adds that "small ambient motion
+#    only, everything holds its position" is a CEILING that stronger verbs
+#    cannot exceed. This spec does both wrong things at once on the MOST frozen
+#    beat in the cut (88%): it applies the motion-costing lock without evidence
+#    it is needed, and it keeps the ceiling clause. By the lane's own findings
+#    it would very likely have made beat 14 more frozen, not less.
+#
+# WHAT BEAT 14 ACTUALLY NEEDS is a recipe decision that belongs to the
+# card-runner lane, which owns this series and is mid-search on it — plus a
+# plate step whichever wording wins. Re-cutting it here would be generalising a
+# beat-dependent finding across beats, which 879820f explicitly warns against.
+# Delete the `gate:` key when that lane has ruled; that deletion is a human
+# act, which is the point of the key.
+# ==========================================================================
+
 id: ep1-b14-v34-motion-r3
 task: ep1-b14-v34-motion-r3-0810
 node: 001-capability-inventory
@@ -55,7 +98,8 @@ needs_gpu: true
 priority: 21
 max_attempts: 1
 sample: true
-owner: queue-fill (box lane); recipe shape and binary follow motion-recipe's b08 r2
+gate: card-runner lane — beat-14 wording (879820f/655d2c6) + plate step, both unresolved
+owner: queue-fill (box lane); recipe shape and binary follow the card-runner lane's b08 r2
 
 consumer: >-
   the v35 screening cut. Beat 14 is tied for the most frozen beat in v34, has no

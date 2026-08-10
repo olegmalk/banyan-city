@@ -1,0 +1,171 @@
+# ep1 beat 08 — PLATE A/B. One variable: the init geometry. Nothing else.
+#
+# THIS IS NOT A RECIPE ROUND AND IT PICKS NOTHING. The prompt, the negative, the
+# seed, the size, the frames, the fps, the steps, the guidance, the sigmas, the
+# two-stage flag and the renderer binary are all byte-identical to the b08 r2
+# that box_runner drained at 03:21:59Z — copied out of that clip's own
+# meta.yaml on the box, not retyped from a spec. The ONLY difference is that
+# `--init` is fed a prepared 704x1280 plate instead of the raw 832x1216 still.
+#
+# WHY IT IS WORTH FIVE MINUTES OF CARD TIME. Every clip in this motion series is
+# vertically stretched 24.4% and the cut they are meant to replace is not. I
+# extracted frame 0 of each and compared it against two reconstructions of its
+# own still — a naive stretch, and an aspect-preserving cover-crop — by mean
+# absolute pixel difference. Lower is what the clip actually is:
+#
+#     review/v34-motion/07-…-LTX-r3.mp4       stretch  2.75   crop 11.93
+#     review/provisional-v34/clips/07-….mp4   stretch 11.68   crop  1.64
+#
+# Exactly inverted. The stills are 832x1216 (aspect 0.6842), the renders target
+# 704x1280 (0.5500), and 0.6842/0.5500 = 1.244. plate_prep.py:55 is
+# CROP_POLICY = "cover-centre" — scale to cover then centre crop, which is what
+# the cut measures as — and its docstring at :8-16 predicted this exactly: the
+# renderer does `Image.open(job["init"]).resize((w, h), LANCZOS)`, and "a resize
+# that changes the aspect ratio raises nothing and looks like a resize that does
+# not." The ep1-b04/b07 specs in this directory already mandate prepare_plate
+# for this reason and were never fired: C:\banyan-farm\v34-r2\ does not exist
+# and no *-704x1280.png plate exists in C:\banyan-farm\v34-motion-0810\.
+#
+# So roughly fifteen clips and about an hour of card time are unusable as cut
+# ingredients. Before anyone re-runs the series off plates — which is a much
+# larger spend — ONE SAMPLE should show that the plate actually fixes the
+# geometry and does not cost anything else. That is this job, and it is the
+# rule at CLAUDE.md's "ONE SAMPLE BEFORE ANY BATCH" applied to the plate rather
+# than to a wording.
+#
+# NO METRIC PICKS ANYTHING HERE, and this round is not about motion at all. The
+# flow metric is disqualified as a selection criterion on this series (131e433,
+# and beat 04 r3's best-scoring arm being the one that invents a phone at the
+# wrist). The question this answers is purely geometric and is checked by
+# measurement, not taste: does frame 0 of the output match a cover-crop of the
+# still instead of a stretch of it.
+
+id: ep1-b08-v34-plate-ab
+task: ep1-b08-v34-plate-ab-0810
+node: 001-capability-inventory       # founder-approved 2026-07-27, leaf 001-t0-d.yaml
+beat: 8
+runner: box
+needs_gpu: true
+priority: 25
+max_attempts: 1
+sample: true
+owner: queue-fill (box lane)
+
+consumer: >-
+  the decision, owned by the card-runner lane and ultimately R4, on whether to
+  re-render the v34 motion series off plates. That decision is imminent and
+  currently has no evidence under it — this supplies the single sample it needs.
+  Downstream of it, the v35 screening cut, which cannot take a stretched
+  ingredient without a visible 24% geometry jump against every beat beside it.
+
+success: >-
+  A 704x1280 65-frame mp4 at
+  C:\banyan-farm\v34-motion-0810\08-ltx-r2-plate-s20260739.mp4 whose frame 0
+  matches a cover-centre crop of 08-sev-1.png rather than a naive stretch of it,
+  by the same mean-absolute-difference test quoted above and with the same
+  margin (single digits vs low teens). Secondary, and reported not ranked: the
+  picture should otherwise look like the b08 r2 it is paired with — the plant
+  upright and rooted, no invented object. If the plate changes the CONTENT
+  rather than just the proportions, that is a finding worth having before
+  fifteen clips are re-run, and it is the reason this is one sample and not a
+  batch.
+
+why: >-
+  Fifteen clips are geometrically unusable and nobody has yet shown the fix
+  works. This is the cheapest possible answer to that.
+
+est_minutes: 5   # b08 r2 measured encode 89s + render 176s on this card
+needs: [cuda, vram20, video-venv]
+
+payload:
+  # Copied verbatim out of 08-ltx-r2-s20260739.mp4.meta.yaml on the box — the
+  # text that actually rendered, not the text a spec says rendered. Re-encoding
+  # from identical bytes gives identical embeds, so the conditioning is held
+  # fixed while the init changes.
+  C:\banyan-farm\b08plate-prompt.txt: |-
+    2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. the broad leaves sway gently and hold their shape, the tall grass blades ripple in a light breeze, warm low sunlight shimmers along the leaf edges. the plant stays upright and rooted, stem straight and steady. small ambient motion only, the camera is locked on a tripod and stays perfectly still, the young plant stays centred in frame at the same size throughout, the horizon keeps the same height in frame, the grass stays spread around the plant from first frame to last, the composition is identical in every frame, living scene. Subject already in frame: no human, no person, no man, no woman, no boy, no girl, no hand, no face, one young plant with broad green leaves standing upright, tall grass around it, bright blue sky, low sun behind.
+  C:\banyan-farm\b08plate-negative.txt: |-
+    wilting, drooping, bending over, falling over, collapsing, sagging, plant dying, human, person, man, woman, boy, girl, extra hand, extra arm, foot, face, crowd, animal, bird, insect, new object appearing, photorealism, 3D render look, text, 静态, 静止, frozen frame, still image, no motion, photorealistic, photograph, live action, film still, 3D render, CGI, octane, scene change, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  # The one new step. It writes into its own directory so nothing of the
+  # card-runner lane's is touched; only the mp4 lands in the shared output dir,
+  # under a name that exists nowhere yet.
+  - name: plate
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - -c
+      - |
+        import sys; sys.path.insert(0, r"C:\banyan-farm\banyan-city\pipeline")
+        from plate_prep import prepare_plate
+        out, rec = prepare_plate(
+            r"C:\banyan-farm\banyan-city\genomes\sapling\nodes\001-capability-inventory\stills\08-sev-1.png",
+            "704x1280", r"C:\banyan-farm\v34-plates-0810", "08")
+        print("plate", out); print(rec["plate_wxh"], rec["crop_policy"])
+  # Renderer is C:\banyan-farm\ltx_i2v.py, sha256 d49f8ecb.. — the series copy,
+  # which matches neither repo HEAD (8cdd186e.., verified on the box) nor the
+  # working tree. Using it is what keeps this comparable to b08 r2; it also
+  # means this series does not reproduce from the repo alone, which is recorded
+  # rather than quietly swapped.
+  - name: encode
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\ltx_i2v.py
+      - --stage
+      - encode
+      - --embeds
+      - C:\banyan-farm\v34-plates-0810\ltx-embeds-b08plate.pt
+      - --prompt-file
+      - C:\banyan-farm\b08plate-prompt.txt
+      - --negative-file
+      - C:\banyan-farm\b08plate-negative.txt
+  - name: render
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\ltx_i2v.py
+      - --stage
+      - render
+      - --embeds
+      - C:\banyan-farm\v34-plates-0810\ltx-embeds-b08plate.pt
+      - --prompt-file
+      - C:\banyan-farm\b08plate-prompt.txt
+      - --negative-file
+      - C:\banyan-farm\b08plate-negative.txt
+      - --init
+      - C:\banyan-farm\v34-plates-0810\08-704x1280.png
+      - --out
+      - C:\banyan-farm\v34-motion-0810\08-ltx-r2-plate-s20260739.mp4
+      - --size
+      - 704x1280
+      - --frames
+      - "65"
+      - --fps
+      - "24"
+      - --steps
+      - "8"
+      - --guidance
+      - "1.0"
+      - --distilled-sigmas
+      - --two-stage
+      - --seed
+      - "20260739"
+      - --beat
+      - "8"
+      - --task
+      - ep1-b08-v34-plate-ab-0810
+      - --worker
+      - rtx5090
+
+artifacts:
+  - C:\banyan-farm\v34-plates-0810\08-704x1280.png
+  - C:\banyan-farm\v34-motion-0810\08-ltx-r2-plate-s20260739.mp4
