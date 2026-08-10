@@ -274,3 +274,4 @@
 19:56:36Z box-runner idle ready=0 failed=1
 20:04:23Z STARTED task=ep2-b02-goblin-founderpick-sample-1786392259 attempt=1 on box-runner
 20:07:17Z DONE task=ep2-b02-goblin-founderpick-sample-1786392259 rc=0 artifacts=4
+20:07:22Z box-runner idle ready=0 failed=1
