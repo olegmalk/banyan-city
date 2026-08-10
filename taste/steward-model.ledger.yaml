@@ -5319,3 +5319,94 @@
     clean experiment. If a later round needs to know which lever did it, the
     control is one arm with `scenery` restored and the urban block kept, and it
     is not worth the card time unless something forces the question.
+
+# OBSERVATION ON RECORD `ep1-b06-r6-two-arms-sample`. The predictions above were
+# committed at dec63cb while the box was rendering somebody else's job; these
+# frames were opened after. THIS RECORD SCORES THE PREDICATES ONLY. The founder
+# has not seen the sheet, so `predicted_verdict: reject_all` is still OPEN and is
+# scored on the record above when he rules, not here. Still no pick and still no
+# preference between the arms.
+- id: ep1-b06-r6-two-arms-observed
+  date: 2026-08-10
+  subject: "node 001 beat 06 round 6 — what the eight frames actually contain, measured against predictions written blind"
+  kind: still
+  candidates: [b06-r6a-s0, b06-r6a-s1, b06-r6a-s2, b06-r6a-s3,
+               b06-r6b-s0, b06-r6b-s1, b06-r6b-s2, b06-r6b-s3]
+  address_key: "sheet CONTACT-b06-r6-AB.png; frames at C:\\banyan-farm\\b06-r6\\out\\06-too-blue-r6{a,b}-s{0..3}.png with sidecars beside them"
+  pick: null
+  no_pick_between_arms: >-
+    Held. Both arms are described here in the same terms and neither is called
+    better. Arm A has a defect arm B does not, and that is a fact about the
+    frames rather than a recommendation — his option A is still his option A,
+    and a fixable defect in one round of it is not a reason for the steward to
+    steer him to the other.
+  predicted_predicates_scored:
+    P1_armA_people_zero_of_4: {predicted: true, observed: true, correct: true}
+    P2_armA_no_urban_structure_zero_of_4: {predicted: true, observed: true, correct: true}
+    P3_armA_grass_reads_TALL_in_3_or_4_of_4: {predicted: false, observed: true, correct: false}
+    P4_armA_horizon_line_present_in_3_or_more: {predicted: true, observed: false, correct: false}
+    P5_armB_people_zero_of_4: {predicted: true, observed: true, correct: true}
+    P6_armB_no_urban_structure_zero_of_4: {predicted: true, observed: true, correct: true}
+    P7_armB_no_ground_or_horizon_in_3_or_more: {predicted: true, observed: true, correct: true}
+  observed: >-
+    5 of 7 predicates correct. THE CITIES ARE GONE, 8 of 8. Not a skyline, not a
+    building, not a road, not a rooftop in either arm on any seed — against 2 of
+    4 in r5 with a diagnosis that said the term had never been written. That is
+    the round's clean result and it is the one with a mechanism under it.
+    PEOPLE STAY GONE, 8 of 8, so r5's `no humans`-in-the-positive finding
+    survives a prompt that moved two other things.
+    ARM A DREW TALL GRASS IN 4 OF 4 — individual blades, at the camera, occupying
+    the lower third to half of the frame, with the lens down at the grass line
+    and the sky above it. There is no hard horizon in any of the four; the grass
+    tops do that job. Both of those are the opposite of what was predicted.
+    ARM B IS SKY IN 4 OF 4 — no ground, no horizon, no landmass, cumulus and
+    cirrus against blue with the sun in three of them.
+  the_finding_that_was_not_predicted: >-
+    A LARGE WHITE ANIMAL IS THE SUBJECT OF ARM A's s1 AND s3 — 2 of 4. s1 is a
+    white cat or wolf, face-on, filling three quarters of the frame, mouth open,
+    yellow eyes. s3 is the flank and haunch of a big white animal with a pink
+    ear or tongue across the upper right, blocking the sky the beat is about.
+    Neither is a person, so P1 is technically correct and the predicate was
+    simply too narrow to be useful.
+
+    IT IS THE SAME FAULT AS THE CITIES, ONE ROUND LATER, AND OUR OWN PROMPT SAYS
+    SO. Arm A's sent negative, from the sidecars, is: photorealistic, 3d render,
+    abstract, text, watermark, signature, low quality, blurry, extra limbs,
+    deformed, jpeg artifacts, realistic skin texture, leaf, stem, tree,
+    photorealism, text, cityscape, city, building, skyline, road, mountain. There
+    is no `animal`, no `cat`, no `dog`, no `wolf`, no `creature`, no `furry`
+    anywhere in it, and nothing in the positive asks for one. An animal was never
+    forbidden on this beat, exactly as a city never was, and 59 of 77 tokens
+    means it was not a trim either.
+
+    AND `no humans` IS WHY, WHICH IS THE UNCOMFORTABLE HALF. On the vocabulary
+    this checkpoint is captioned in, `no humans` asserts that no HUMAN character
+    is present. It does not assert that the picture is empty of creatures —
+    `animal focus` is a separate tag in the same vocabulary precisely because
+    such pictures exist and are tagged `no humans`. So the tag that fixed the
+    girls opened a door the girls had been holding shut, and `tall grass` walks
+    straight into the animal-in-long-grass composition that is one of the most
+    common things drawn under both tags at once. Arm B has no such problem for a
+    structural reason and not a lucky one: a frame with nothing but sky in it has
+    nowhere to put a creature.
+  model_action: new_axis
+  the_transferable_rule: >-
+    THIS IS THE THIRD TIME IN THREE ROUNDS THAT THE DEFECT WAS A NOUN NOBODY HAD
+    EVER NEGATED, and it should stop being discovered one verdict at a time.
+    r5: a city, never negated. r6: an animal, never negated. Both found only
+    after he looked, both on a beat whose whole subject is an empty sky. The rule
+    to write into v2 is a PRE-FLIGHT rather than an axis: before a non-character
+    exterior beat renders, the sent negative must be checked to name every class
+    of thing that can occupy a frame the script says is empty — people, animals,
+    built structure, vehicles, text — and any class not named is a predicted
+    defect, not a surprise. It costs nothing to check and it would have caught
+    both of these before the founder did.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  what_this_record_does_not_do: >-
+    It does not rank the arms, promote a frame, propose a round 7, or spend
+    anything. It also does not touch `predicted_verdict: reject_all` on the
+    record above — he has not seen these, and that call is scored when he rules
+    and not by the steward liking the frames.
