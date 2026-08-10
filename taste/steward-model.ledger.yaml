@@ -4566,3 +4566,92 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+# Record 44 — the IP-Adapter identity arms, PREDICTED BEFORE THE FRAMES WERE
+# OPENED. The numbers in both identity-agreement yamls were read first (they
+# are the box's own output and were already committed); no PNG had been
+# decoded when the `predicted` block below was written and committed. That
+# ordering is the whole point of the record: a metric that agrees with the
+# steward is not evidence, and a prediction written after looking is not a
+# prediction.
+- id: ep2-b04-goblin-ipa-scored
+  date: 2026-08-10
+  kind: prediction
+  subject: "node 002b beat 04 — do the IP-Adapter arms hold ONE creature across
+    four seeds where wave-1 drew four, and what does the reference cost?"
+  steward_provisional: true
+  pick: null
+  scores: {}
+  baseline_being_measured_against: >-
+    Record ep2-b04-wave-sample-1-observed, commit 406909c: green 4 of 4, tusks
+    3 of 4, character_consistency 0 of 4 — "s0 a round plush thing with long
+    drooping rabbit-like ears, s1 a bald hard-faced amphibian, s2 a cheerful
+    big-eyed gremlin, s3 a heavy-browed angry brute." Four creatures. That is
+    the defect this sample tests a mechanism against, and it is a technical
+    defect, not a taste one: a fifteen-beat wave whose goblin changes species
+    per beat is broken whatever anyone prefers.
+  numbers_already_on_the_branch_and_read_before_predicting: >-
+    Mean pairwise DINOv2 within each group of four seeds, computed on the box
+    by identity_agreement.py in the same run as the baseline. Baseline 0.6967.
+    Arm 1 (adapter on every block, scale 0.6) 0.7828 / 0.7974 / 0.8069 / 0.8345
+    across the four references. Scale sweep on ref0: 0.40 -> 0.7889, 0.60 ->
+    0.8069, 0.80 -> 0.8601. Arm 2 (adapter scoped to down block_2) 0.7155 /
+    0.7449 / 0.7604 / 0.7968. The file warns on its own face that these are
+    WHOLE-FRAME embeddings on a beat whose framing never changes, so absolute
+    values are inflated in every group and only deltas carry meaning. The eye
+    is the arbiter here, not the cosine.
+  predicted:
+    arm1_identity_by_eye: >-
+      Each row of four in arm 1 will read as recognisably ONE creature where the
+      baseline row reads as four — the same silhouette, ear shape and nose across
+      seeds, varying in expression and head angle. A real fix, not a marginal one.
+    arm1_green: >-
+      The goblin will NOT read convincingly green in arm 1. Predicting grey,
+      olive-drab or brown-flesh skin with at most a faint green cast. Stated
+      risk on my own prediction: the hue-share statistic quoted in the arm-2
+      spec (0.256 -> 0.001-0.013) is whole-frame, so it may be measuring the
+      ROOM going dark rather than the skin going grey. If the skin is still
+      green inside a dark room, the statistic overstated the loss and I will
+      say so.
+    scale_080_overrides_the_beat: >-
+      The named failure mode will be VISIBLE at scale 0.8 and will be the reason
+      not to run it: c080 has both the highest within-group agreement (0.8601)
+      and the highest agreement to the reference (0.8367), which is the signature
+      of copying a picture rather than holding a character. Predicting the four
+      c080 frames sit in the reference's pose and scene rather than beat 04's
+      action, i.e. the goblin is consistent because he is the same photograph
+      four times.
+    scale_040: >-
+      More seed-to-seed variation than 0.6, still visibly better than baseline,
+      and more of the text prompt's colour surviving than at 0.6.
+    arm2_trades_identity_back_for_colour: >-
+      Scoping to down block_2 restores substantially more green than arm 1 while
+      landing identity between baseline and arm 1. The CLIP-I means support this
+      direction before the frames do: arm 2 sits at 0.876-0.906 against the
+      baseline's 0.8931 while arm 1 sits at 0.917-0.931, i.e. arm 2's frames
+      resemble the text-driven baseline appearance more than arm 1's do.
+    tusks_will_inherit_the_reference_not_the_prompt: >-
+      The sharpest falsifiable call here. Baseline drew tusks 3 of 4, and the
+      one frame with NO tusks — a closed frown — is wave1-s0, which is the
+      reference for the r0 rows and for the entire scale sweep. If the adapter
+      is carrying the creature, the r0 rows should inherit that closed mouth and
+      show tusks in 0 or 1 of 4, i.e. the mechanism that fixes identity will have
+      made a PROMPT-LEVEL attribute worse by importing the reference's absence
+      of it. Predicting r0 rows 0-1 of 4 on tusks and the r2/r3 rows better.
+    prompt_complexity: >-
+      Unchanged by construction, and this is the point of the mechanism: the
+      prompt string is byte-identical to wave-1's, zero tokens added, so "nothing
+      complex" is not spent to buy identity. Whether that trade is actually
+      avoided depends entirely on what the pictures cost elsewhere, which is what
+      the observation record will say.
+  what_this_record_does_not_do: >-
+    No arm is recommended, no goblin is made canonical, no frame is picked or
+    promoted, and the fourteen staged wave specs stay staged. The mechanism
+    question (does a reference hold identity) is the lane's to measure; which
+    goblin, and whether the colour cost is acceptable, is R4's and is not
+    answered here.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
