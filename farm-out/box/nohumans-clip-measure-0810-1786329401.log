@@ -1,0 +1,67 @@
+#### job nohumans-clip-measure-0810-1786329401 attempt 1 start 2026-08-10T02:36:52Z
+
+==== step prepare START 2026-08-10T02:36:56Z ====
+argv: ["cmd.exe", "/c", "if not exist C:\\banyan-farm\\nohumans-measure\\out mkdir C:\\banyan-farm\\nohumans-measure\\out"]
+==== step prepare END rc=0 2026-08-10T02:36:56Z ====
+
+==== step measure START 2026-08-10T02:36:56Z ====
+argv: ["cmd.exe", "/c", "C:\\banyan-farm\\venv\\Scripts\\python.exe C:\\banyan-farm\\nohumans-measure\\pipeline\\measure_no_humans.py > C:\\banyan-farm\\nohumans-measure\\out\\nohumans-clip-measure.txt 2>&1"]
+==== step measure END rc=0 2026-08-10T02:36:59Z ====
+
+==== step echo START 2026-08-10T02:36:59Z ====
+argv: ["cmd.exe", "/c", "type C:\\banyan-farm\\nohumans-measure\\out\\nohumans-clip-measure.txt"]
+C:\banyan-farm\venv\Lib\site-packages\transformers\tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+REAL CLIP TOKENIZER: openai/clip-vit-large-patch14
+
+genomes/sapling/nodes/001-capability-inventory/shots.md — 7 fence(s) carrying 'no humans'
+==========================================================================
+BEAT 06 (line 369)
+  A today      POS 30 | NEG 53 | tag in POS: False | bare noun in NEG: True
+  B lead-form  POS 30 | NEG 53 | tag in POS: False | bare noun in NEG: True
+  C r5-fix     POS 32 | NEG 51   <- r5 post-compress transform
+==========================================================================
+BEAT 07 (line 458)
+Token indices sequence length is longer than the specified maximum sequence length for this model (79 > 77). Running this sequence through the model will result in indexing errors
+  A today      POS 74 | NEG 77 | tag in POS: False | bare noun in NEG: True
+               !! negative prompt over CLIP's 77-token budget; deduplicated: text
+  B lead-form  POS 75 | NEG 77 | tag in POS: False | bare noun in NEG: True
+               !! negative prompt over CLIP's 77-token budget; deduplicated: text
+  C r5-fix     POS 77 | NEG 75   <- r5 post-compress transform
+==========================================================================
+BEAT 08 (line 517)
+  A today      POS 63 | NEG 77 | tag in POS: False | bare noun in NEG: True
+               !! negative prompt over CLIP's 77-token budget; deduplicated: text
+  B lead-form  POS 64 | NEG 77 | tag in POS: False | bare noun in NEG: True
+               !! negative prompt over CLIP's 77-token budget; deduplicated: text
+  C r5-fix     POS 66 | NEG 75   <- r5 post-compress transform
+==========================================================================
+BEAT 09 (line 545)
+  A today      POS 72 | NEG 77 | tag in POS: False | bare noun in NEG: True
+  B lead-form  POS 73 | NEG 77 | tag in POS: False | bare noun in NEG: True
+  C r5-fix     POS 75 | NEG 75   <- r5 post-compress transform
+==========================================================================
+BEAT 10 (line 611)
+  A today      POS 58 | NEG 77 | tag in POS: False | bare noun in NEG: True
+               !! negative prompt over CLIP's 77-token budget; deduplicated: text; DROPPED: realistic skin texture, jpeg artifacts
+  B lead-form  POS 59 | NEG 77 | tag in POS: False | bare noun in NEG: True
+               !! negative prompt over CLIP's 77-token budget; deduplicated: text; DROPPED: realistic skin texture, jpeg artifacts
+  C r5-fix     POS 61 | NEG 75   <- r5 post-compress transform
+==========================================================================
+BEAT 12 (line 761)
+  A today      POS 69 | NEG 76 | tag in POS: False | bare noun in NEG: True
+               !! negative prompt over CLIP's 77-token budget; deduplicated: text
+  B lead-form  POS 70 | NEG 76 | tag in POS: False | bare noun in NEG: True
+               !! negative prompt over CLIP's 77-token budget; deduplicated: text
+  C r5-fix     POS 72 | NEG 74   <- r5 post-compress transform
+==========================================================================
+BEAT 15 (line 960)
+  A today      POS 71 | NEG 77 | tag in POS: False | bare noun in NEG: True
+  B lead-form  POS 72 | NEG 77 | tag in POS: False | bare noun in NEG: True
+  C r5-fix     POS 74 | NEG 75   <- r5 post-compress transform
+
+genomes/sapling/nodes/002b-first-citizen/shots.md — 0 fence(s) carrying 'no humans'
+==========================================================================
+7 fence(s) measured
+==== step echo END rc=0 2026-08-10T02:36:59Z ====
+#### job nohumans-clip-measure-0810-1786329401 finished rc=0 2026-08-10T02:36:59Z
