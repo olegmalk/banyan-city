@@ -1,0 +1,397 @@
+# ep2 beat 01 — THE FIG, ONE INPAINTED SAMPLE. Not a set, not a candidate frame.
+#
+# HIS WORD, 2026-08-10 ~12:20, answering cuts.yaml item 21 ("The fig on beat 01 —
+# drop it, or approve an inpaint?"): "inpaint". Recorded in cuts.yaml item 21
+# (settled) and ledger record ep2-b01-fig-route-0810 (kind: direction) BEFORE
+# this job was written. He approved a METHOD and nothing else — no size, no
+# position, no colour, no ripeness — so this job invents none of those and the
+# mask geometry is labelled as the steward's everywhere it appears.
+#
+# WHY THE PLATE IS AN EPISODE-1 FRAME, and it is the gate rather than a
+# preference. G1 says a conditioned render starts from a founder-approved image.
+# NO BEAT-01 STILL HAS EVER BEEN APPROVED — the node's only canon file for that
+# shot is stills/01-cold-open-REVOKED-too-tall.png and it is revoked. Ledger
+# record ep2-b01-r8-sample already worked this out and named the consequence:
+# b15-r3-s1 (001-capability-inventory/stills/15-something-s-coming.png) is the
+# ONLY approved sapling-in-grass frame in the tree and therefore the only legal
+# init for this beat. Round 8 used it as an img2img init; this paints the fruit
+# into it. The approved plate is NOT modified — a new file is written, and the
+# script refuses to start unless the init's sha256 is
+# f60c1404f88d45720ca295dfc753e9eaabb815446710bcfffb3c7a07b7277f54.
+#
+# WHY IT IS THE RIGHT TEST AND NOT A DETOUR. Round 8's finding was that img2img
+# at 0.35 and 0.55 cannot ADD an object the init lacks (0 of 12) — but img2img
+# demonstrably PRESERVES what the init already holds. So the recipe this sample
+# is stage one of is: paint the fruit into the approved init, then run r8's
+# existing img2img from it. If the fruit appears here, the beat-01 route follows
+# without a new mechanism. If it does not, inpainting is retired on the same
+# evidence standard the prompt and img2img were.
+#
+# METHOD, RESEARCHED OUTSIDE THIS REPO. animagine-xl-3.1 has no inpainting
+# variant, so this loads the BASE weights into StableDiffusionXLInpaintPipeline.
+# diffusers 0.29.2 supports a 4-channel UNet there and takes a latent-blend
+# branch instead of concatenating mask channels; HF's docs say the trade-off is
+# "the overall image quality may be lower, but it generally tends to preserve
+# the mask area", and preserving his plate outside the mask is exactly the
+# requirement. `padding_mask_crop` is the documented countermeasure for a SMALL
+# object in a LARGE frame — it crops the masked region, upscales it to the
+# pipeline resolution, inpaints, and pastes back — which is the resolution
+# problem the "the plant is too small to carry a fruit" hypothesis describes.
+#   https://raw.githubusercontent.com/huggingface/diffusers/v0.29.2/src/diffusers/pipelines/stable_diffusion_xl/pipeline_stable_diffusion_xl_inpaint.py
+#   https://huggingface.co/docs/diffusers/v0.29.2/en/using-diffusers/inpaint
+#   https://huggingface.co/cagliostrolab/animagine-xl-3.1
+#
+# LICENCES: NOTHING NEW IS DOWNLOADED. animagine-xl-3.1 is already local and
+# already declared in every beat-01 sidecar (CreativeML Open RAIL++-M, use
+# restrictions travel, D15). The one alternative needing a download —
+# diffusers/stable-diffusion-xl-1.0-inpainting-0.1, a true 9-channel SDXL
+# inpaint UNet, also OpenRAIL++-M — is deliberately NOT used: it is not the
+# anime checkpoint and would draw the patch in a different dialect from the
+# frame around it. No cc-by-nc weight is anywhere in this route.
+#
+# THE MASK IS THE STEWARD'S AND IS ONE NUMBER TO MOVE. Ellipse centred at
+# (462, 848) with radii (34, 36) — 8.2% of frame width, 5.9% of frame height,
+# roughly a sixth of the plant's height. The stem's own pixel path was measured,
+# not eyeballed: darkest-pixel scan puts it at x=431 at y=800, x=444 at y=850,
+# x=451 at y=900, so the ellipse straddles the stem's right edge below the
+# cotyledons and the fruit hangs to the right. A mask PNG is written beside the
+# output so the region can be looked at rather than described.
+#
+# ONE SAMPLE. One frame, one seed, one parameter set. No grid, no variants, no
+# pick, no score. Whatever comes back goes in front of him as-is.
+#
+# The driver script is inlined below rather than referenced, so the job does not
+# depend on the box's checkout being current. It is byte-identical to
+# pipeline/inpaint_fruit.py at sha256 7e7f9a1094f54e57e29e1692bfcc2cdbd33db6b72baf397c991bd1240619601a.
+
+id: ep2-b01-fig-inpaint-s1
+task: ep2-b01-fig-inpaint-s1-0810
+node: 002b-first-citizen              # founder-approved 2026-08-03, leaf 002b-t0-c.yaml
+beat: 1
+runner: box
+needs_gpu: true
+priority: 20
+max_attempts: 1
+sample: true
+owner: fig-inpaint (box lane)
+
+consumer: >-
+  the founder, directly. He answered item 21 with "inpaint" and the one-sample
+  rule says a recipe change produces ONE artefact for his eyes before anything
+  scales. Downstream of his look: the two-stage beat-01 recipe (inpaint the
+  fruit into the approved init, then r8's img2img from it), which is not written
+  and will not be written until he has seen whether a fruit can be painted at
+  all.
+
+success: >-
+  One PNG at C:\banyan-farm\fig-inpaint\b01-fig-inpaint-s1.png in which a
+  small round green fruit hangs from the seedling's stem inside the masked
+  ellipse, in the plate's own dialect and light, with everything outside the
+  ellipse unchanged from the founder's plate. Reported honestly either way:
+  whether a fruit appeared at all is the finding, and "it did not" is worth as
+  much as "it did", because it retires the last named lever and sends the
+  question back to him as drop-or-restage.
+
+why: >-
+  Twenty-four prompted frames and twelve img2img frames could not put a fruit on
+  this plant. He chose the one method neither of those tested. This is the
+  cheapest possible answer to whether it works.
+
+est_minutes: 3   # 40 steps at 832x1216 on this card, plus a cold model load
+needs: [cuda, vram20]
+
+payload:
+  C:\banyan-farm\fig-inpaint\prompt.txt: |-
+    one small round green fruit hanging from the stem, a tiny seedling's slender stem in tall grass, warm low sunlight, detailed, newest, masterpiece, best quality, very aesthetic
+  C:\banyan-farm\fig-inpaint\negative.txt: |-
+    photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, mature tree, large tree, thick trunk, full canopy, forest, bush, shrubbery, girl, boy, child, person, chibi, mascot, creature, face, branches, night sky, photorealism
+  C:\banyan-farm\fig-inpaint\inpaint_fruit.py: |-
+    #!/usr/bin/env python3
+    r"""Paint ONE object into ONE masked region of an approved plate. SDXL, $0, local.
+
+    WHY THIS EXISTS. Beat 01 asks for "one small round green fruit hanging from the
+    stem" and the prompt cannot deliver it: 0 of 24 across the wording rounds, and
+    0 of 12 in round 8's img2img -- which is the decisive one, because r8's init
+    carried no fruit at all and so was a clean test of whether img2img will ADD an
+    object the init lacks. It will not, at strength 0.35 or 0.55. The founder chose
+    `inpaint` over `drop` on 2026-08-10 (ledger `ep2-b01-fig-route-0810`), so the
+    fruit becomes its own step and this is that step.
+
+    THE METHOD, AND EVERY CHOICE IN IT IS SOURCED RATHER THAN INVENTED.
+
+      * animagine-xl-3.1 has NO inpainting variant, so this loads the BASE weights
+        into StableDiffusionXLInpaintPipeline. diffusers 0.29.2 supports that
+        explicitly -- its own check is "The unet should have either 4 or 9 input
+        channels", and at 4 (a normal SDXL checkpoint) it takes the latent-blend
+        branch instead of concatenating mask channels:
+            latents = (1 - init_mask) * init_latents_proper + init_mask * latents
+        HF's docs name the trade-off in their own words: "the overall image quality
+        may be lower, but it generally tends to preserve the mask area (that is why
+        you can see the mask outline)". Preserving the unmasked area is exactly what
+        we want here -- the plate is the founder's and must come back unchanged
+        outside the mask.
+      * `padding_mask_crop` is the countermeasure for the failure mode this beat has:
+        a SMALL object in a LARGE frame. It crops the masked region with padding,
+        upscales that crop to the pipeline resolution, inpaints there, and pastes it
+        back -- so the fruit is drawn at full model resolution instead of at the ~5%
+        of the frame it will occupy. Verified present in 0.29.2's __call__ on the box.
+      * `strength` must be high to ADD something. It is not the img2img case; the
+        unmasked region is restored every step by the blend above, so a high strength
+        costs nothing outside the mask.
+
+        diffusers 0.29.2 source: https://raw.githubusercontent.com/huggingface/diffusers/v0.29.2/src/diffusers/pipelines/stable_diffusion_xl/pipeline_stable_diffusion_xl_inpaint.py
+        inpaint docs:            https://huggingface.co/docs/diffusers/v0.29.2/en/using-diffusers/inpaint
+        model card + licence:    https://huggingface.co/cagliostrolab/animagine-xl-3.1
+        padding_mask_crop issue: https://github.com/huggingface/diffusers/issues/6345
+
+    WHAT THIS SCRIPT REFUSES TO DO. It will not run on an init whose sha256 does not
+    match the one named on the command line. G1 says a conditioned render starts from
+    a frame the founder has passed, and the only way that gate means anything is if
+    the bytes are asserted rather than the filename. It also never writes a canon
+    filename and always writes `approved: false` in the sidecar.
+
+    THE MASK IS GEOMETRY AND IT IS THE STEWARD'S, NOT HIS. He approved a method, not
+    a size or a position. The ellipse is passed in on the command line, drawn to a
+    PNG beside the output so it can be looked at, and reported in the sidecar in both
+    pixels and as a fraction of the frame, so the first correction he makes can be
+    "lower", "smaller", "other side" and it is one number.
+
+        python inpaint_fruit.py --init PLATE.png --init-sha256 <hex> \
+            --ellipse cx,cy,rx,ry --prompt-file p.txt --negative-file n.txt \
+            --out OUT.png [--steps 40] [--cfg 7.5] [--strength 0.99] \
+            [--seed N] [--pad-crop 64] [--blur 8]
+    """
+
+    from __future__ import annotations
+
+    import argparse
+    import datetime as _dt
+    import hashlib
+    import os
+    import sys
+    import time
+
+    BASE = "cagliostrolab/animagine-xl-3.1"
+    BASE_LICENCE = "CreativeML Open RAIL++-M (use restrictions travel; D15)"
+
+
+    def sha256_of(path: str) -> str:
+        h = hashlib.sha256()
+        with open(path, "rb") as fh:
+            for chunk in iter(lambda: fh.read(1 << 20), b""):
+                h.update(chunk)
+        return h.hexdigest()
+
+
+    def read_text(path: str) -> str:
+        with open(path, "r", encoding="utf-8") as fh:
+            return fh.read().strip()
+
+
+    def yaml_block(text: str, indent: str = "  ") -> str:
+        return "\n".join(indent + line for line in text.splitlines())
+
+
+    def module_version(name: str) -> str:
+        try:
+            return __import__(name).__version__
+        except Exception:
+            return "unresolved"
+
+
+    def main() -> int:
+        ap = argparse.ArgumentParser(description=__doc__,
+                                     formatter_class=argparse.RawDescriptionHelpFormatter)
+        ap.add_argument("--init", required=True)
+        ap.add_argument("--init-sha256", required=True,
+                        help="asserted before anything loads; a mismatch is a hard stop")
+        ap.add_argument("--ellipse", required=True,
+                        help="cx,cy,rx,ry in pixels of the init image")
+        ap.add_argument("--prompt-file", required=True)
+        ap.add_argument("--negative-file", required=True)
+        ap.add_argument("--out", required=True)
+        ap.add_argument("--steps", type=int, default=40)
+        ap.add_argument("--cfg", type=float, default=7.5)
+        ap.add_argument("--strength", type=float, default=0.99)
+        ap.add_argument("--seed", type=int, default=20260810)
+        ap.add_argument("--pad-crop", type=int, default=64,
+                        help="padding_mask_crop; 0 disables it")
+        ap.add_argument("--blur", type=int, default=8, help="mask blur_factor")
+        ap.add_argument("--note", default="")
+        a = ap.parse_args()
+
+        if not os.path.isfile(a.init):
+            print("!! init not found: %s" % a.init, flush=True)
+            return 2
+        have = sha256_of(a.init)
+        if have != a.init_sha256:
+            print("!! INIT SHA MISMATCH -- refusing.\n   want %s\n   have %s"
+                  % (a.init_sha256, have), flush=True)
+            return 3
+
+        try:
+            cx, cy, rx, ry = (int(v) for v in a.ellipse.split(","))
+        except Exception:
+            print("!! --ellipse wants cx,cy,rx,ry", flush=True)
+            return 2
+
+        import torch
+        from PIL import Image, ImageDraw
+        from diffusers import StableDiffusionXLInpaintPipeline
+
+        plate = Image.open(a.init).convert("RGB")
+        W, H = plate.size
+        mask = Image.new("L", (W, H), 0)
+        ImageDraw.Draw(mask).ellipse([cx - rx, cy - ry, cx + rx, cy + ry], fill=255)
+
+        prompt = read_text(a.prompt_file)
+        negative = read_text(a.negative_file)
+
+        if not torch.cuda.is_available():
+            print("!! no CUDA. This is the box's job; stopping.", flush=True)
+            return 4
+
+        t0 = time.time()
+        pipe = StableDiffusionXLInpaintPipeline.from_pretrained(
+            BASE, torch_dtype=torch.bfloat16, use_safetensors=True)
+        pipe = pipe.to("cuda")
+        pipe.set_progress_bar_config(disable=True)
+        in_ch = int(pipe.unet.config.in_channels)
+        print("MODEL_LOADED %s cuda/bfloat16 unet.in_channels=%d in %.0fs"
+              % (BASE, in_ch, time.time() - t0), flush=True)
+        if in_ch not in (4, 9):
+            print("!! unexpected unet.in_channels=%d" % in_ch, flush=True)
+            return 5
+
+        blurred = pipe.mask_processor.blur(mask, blur_factor=a.blur) if a.blur else mask
+
+        kwargs = dict(prompt=prompt, negative_prompt=negative, image=plate,
+                      mask_image=blurred, width=W, height=H,
+                      num_inference_steps=a.steps, guidance_scale=a.cfg,
+                      strength=a.strength,
+                      generator=torch.Generator("cuda").manual_seed(a.seed))
+        if a.pad_crop:
+            kwargs["padding_mask_crop"] = a.pad_crop
+
+        t1 = time.time()
+        out = pipe(**kwargs).images[0]
+        render_s = time.time() - t1
+
+        os.makedirs(os.path.dirname(os.path.abspath(a.out)) or ".", exist_ok=True)
+        out.save(a.out)
+        mask_png = os.path.splitext(a.out)[0] + "-mask.png"
+        mask.save(mask_png)
+
+        versions = {"python": sys.version.split()[0], "torch": module_version("torch"),
+                    "diffusers": module_version("diffusers")}
+        stamp = _dt.datetime.now(_dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        sidecar = a.out + ".meta.yaml"
+        with open(sidecar, "w", encoding="utf-8", newline="\n") as fh:
+            fh.write("\n".join([
+                "# Still provenance (7.2), written AT RENDER TIME by inpaint_fruit.py",
+                "# on the rtx5090. The plate outside the mask is the founder's own",
+                "# pixels; only the ellipse below was redrawn.",
+                "platform: local-gpu (rtx5090)",
+                "model: %s" % BASE,
+                "model_licence: %s" % BASE_LICENCE,
+                "pipeline: StableDiffusionXLInpaintPipeline (base weights, unet.in_channels=%d)" % in_ch,
+                "size: %dx%d" % (W, H),
+                "steps: %d" % a.steps,
+                "guidance: %s" % a.cfg,
+                "strength: %s" % a.strength,
+                "seed: %d" % a.seed,
+                "padding_mask_crop: %s" % (a.pad_crop or "null"),
+                "mask_blur_factor: %d" % a.blur,
+                "init_image: %s" % a.init.replace("\\", "/"),
+                "init_sha256: %s" % have,
+                "mask_png: %s" % os.path.basename(mask_png),
+                "mask_shape: ellipse",
+                "mask_centre_px: [%d, %d]" % (cx, cy),
+                "mask_radii_px: [%d, %d]" % (rx, ry),
+                "mask_bbox_px: [%d, %d, %d, %d]" % (cx - rx, cy - ry, cx + rx, cy + ry),
+                "mask_width_frac: %.4f" % (2 * rx / float(W)),
+                "mask_height_frac: %.4f" % (2 * ry / float(H)),
+                "mask_is_the_stewards: >-",
+                yaml_block("THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said "
+                           "`inpaint` and named no size, no position on the stem, no "
+                           "colour and no ripeness. The ellipse above is the steward's "
+                           "and is the first thing his correction should move; the "
+                           "words in the prompt are his own approved shots.md wording."),
+                "rendered_utc: %s" % stamp,
+                "render_seconds: %.1f" % render_s,
+                "wall_seconds: %.1f" % (time.time() - t0),
+                "cost_usd: 0",
+                "python_version: %s" % versions["python"],
+                "torch_version: %s" % versions["torch"],
+                "diffusers_version: %s" % versions["diffusers"],
+                "approved: false",
+                "provisional: >-",
+                yaml_block("PROVISIONAL. A steward-rendered SAMPLE, not a pick and not "
+                           "canon. Never takes a canon filename, is not published, not "
+                           "posted, and not assembled into an episode. Ground truth is "
+                           "the founder (R4)."),
+                "note: >-",
+                yaml_block(a.note or "one inpainted sample; the fruit question."),
+                "prompt: |-",
+                yaml_block(prompt),
+                "negative: |-",
+                yaml_block(negative),
+                "",
+            ]))
+
+        print("WROTE %s" % a.out, flush=True)
+        print("WROTE %s" % mask_png, flush=True)
+        print("WROTE %s" % sidecar, flush=True)
+        print("rc=0 render_s=%.1f" % render_s, flush=True)
+        return 0
+
+
+    if __name__ == "__main__":
+        raise SystemExit(main())
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  - name: inpaint
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - C:\banyan-farm\fig-inpaint\inpaint_fruit.py
+      - --init
+      - C:\banyan-farm\banyan-city\genomes\sapling\nodes\001-capability-inventory\stills\15-something-s-coming.png
+      - --init-sha256
+      - f60c1404f88d45720ca295dfc753e9eaabb815446710bcfffb3c7a07b7277f54
+      - --ellipse
+      - 462,848,34,36
+      - --prompt-file
+      - C:\banyan-farm\fig-inpaint\prompt.txt
+      - --negative-file
+      - C:\banyan-farm\fig-inpaint\negative.txt
+      - --out
+      - C:\banyan-farm\fig-inpaint\b01-fig-inpaint-s1.png
+      - --steps
+      - "40"
+      - --cfg
+      - "7.5"
+      - --strength
+      - "0.99"
+      - --seed
+      - "20260810"
+      - --pad-crop
+      - "64"
+      - --blur
+      - "8"
+      - --note
+      - "ONE SAMPLE on his 2026-08-10 word `inpaint` (cuts item 21, ledger ep2-b01-fig-route-0810). Fruit painted into b15-r3-s1, the only founder-approved sapling-in-grass frame and therefore the only G1-legal init for beat 01. Mask geometry is the steward's; his word named a method only."
+
+artifacts:
+  - C:\banyan-farm\fig-inpaint\b01-fig-inpaint-s1.png
+  - C:\banyan-farm\fig-inpaint\b01-fig-inpaint-s1-mask.png
+  - C:\banyan-farm\fig-inpaint\b01-fig-inpaint-s1.png.meta.yaml
