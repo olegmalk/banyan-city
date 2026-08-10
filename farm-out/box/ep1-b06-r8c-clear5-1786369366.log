@@ -1,0 +1,134 @@
+#### job ep1-b06-r8c-clear5-1786369366 attempt 1 start 2026-08-10T13:51:13Z
+
+==== step clear5 START 2026-08-10T13:51:16Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b06-r8\\render_b06r8.py", "--variant", "b-clear", "--step", "5", "--seeds", "20264725,20265725", "--set", "r8c-step5", "--r7-dir", "C:\\banyan-farm\\b06-r7", "--root", "C:\\banyan-farm\\banyan-city", "--task", "001-b06-r8c-clear5-0810", "--queue-entry", "ep1-b06-r8c-clear5", "--out", "C:\\banyan-farm\\b06-r8\\out-clear5"]
+== round 8, variant b-clear (arm B, set r8c-step5) — arm B with the cloud dial turned down one named step
+   seeds: 20264725, 20265725
+C:\banyan-farm\venv\Lib\site-packages\transformers\tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+Token indices sequence length is longer than the specified maximum sequence length for this model (86 > 77). Running this sequence through the model will result in indexing errors
+
+== node 001-capability-inventory beat 6 too-blue ARM B [r8c-step5] — no ground, SKY only
+   seeds:    20264725, 20265725
+   shots.md: C:\banyan-farm\banyan-city\genomes\sapling\nodes\001-capability-inventory\shots.md
+   sha256:   53c2690edcfb9a46ac5dc6b2c4df0c499fd6c825e8b32dca288d2ab678e49079  (NOT edited by this round)
+   AUTHORED (fence, shared with r5): no humans, scenery, sky, blue sky, day, cloud, sunlight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No leaf, no plant, no stem, no foliage, no tree. No photorealism, no 3D render look. 9:16 vertical, no text.
+   POS(sent):        no humans, clear sky, sunny, sky, blue sky, day, sunlight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+   POS(r5 control):  no humans, scenery, sky, blue sky, day, cloud, sunlight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+   NEG(recipe):      photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, humans, leaf, plant, stem, foliage, tree, photorealism, cityscape, city, building, skyline, road, mountain, grass, field, horizon, ground, animal, bird, aircraft, cloudy sky, overcast, cloud
+   NEG(sent):        photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, leaf, plant, stem, foliage, tree, photorealism, cityscape, city, building, skyline, road, mountain, grass, field, horizon, ground, animal, bird, aircraft, cloudy sky, overcast, cloud
+   NEG(r5 control):  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, leaf, plant, stem, foliage, tree, photorealism, text
+   positive tokens: 33 (budget 77)
+   negative tokens: r5 control 51 -> recipe 76 -> sent 74 (budget 77)
+   NEGWARN: !! negative prompt over CLIP's 77-token budget; deduplicated: text; DROPPED: realistic skin texture, jpeg artifacts
+   trap 2 OK — r5 control reproduces byte-for-byte, both halves
+   trap 5 OK — all 21 required negatives survived the trim
+   trap 6 OK — arm B positive asks for no humans, sky, blue sky, clear sky, sunny and carries none of scenery, grass, ground, field, cloud
+   trap 7+8 OK — `no humans` leads the positive, no person noun in the negative
+   trap 9 OK — occupancy classes all named: animals, built structure, text, vehicles in the negative, people by `no humans` in the positive
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:00, 15.88it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:02<00:01,  1.54it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:02<00:00,  2.51it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.83it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cuda/bfloat16 in 6s
+
+  0%|          | 0/40 [00:00<?, ?it/s]
+  2%|▎         | 1/40 [00:00<00:15,  2.44it/s]
+  5%|▌         | 2/40 [00:00<00:10,  3.46it/s]
+  8%|▊         | 3/40 [00:00<00:09,  4.01it/s]
+ 10%|█         | 4/40 [00:01<00:08,  4.09it/s]
+ 12%|█▎        | 5/40 [00:01<00:08,  4.16it/s]
+ 15%|█▌        | 6/40 [00:01<00:08,  4.23it/s]
+ 18%|█▊        | 7/40 [00:01<00:07,  4.41it/s]
+ 20%|██        | 8/40 [00:01<00:07,  4.50it/s]
+ 22%|██▎       | 9/40 [00:02<00:07,  4.38it/s]
+ 25%|██▌       | 10/40 [00:02<00:06,  4.36it/s]
+ 28%|██▊       | 11/40 [00:02<00:06,  4.46it/s]
+ 30%|███       | 12/40 [00:02<00:06,  4.60it/s]
+ 32%|███▎      | 13/40 [00:03<00:06,  4.48it/s]
+ 35%|███▌      | 14/40 [00:03<00:05,  4.41it/s]
+ 38%|███▊      | 15/40 [00:03<00:05,  4.45it/s]
+ 40%|████      | 16/40 [00:03<00:05,  4.57it/s]
+ 42%|████▎     | 17/40 [00:03<00:05,  4.58it/s]
+ 45%|████▌     | 18/40 [00:04<00:04,  4.46it/s]
+ 48%|████▊     | 19/40 [00:04<00:04,  4.51it/s]
+ 50%|█████     | 20/40 [00:04<00:04,  4.51it/s]
+ 52%|█████▎    | 21/40 [00:04<00:04,  4.50it/s]
+ 55%|█████▌    | 22/40 [00:05<00:03,  4.53it/s]
+ 57%|█████▊    | 23/40 [00:05<00:03,  4.53it/s]
+ 60%|██████    | 24/40 [00:05<00:03,  4.45it/s]
+ 62%|██████▎   | 25/40 [00:05<00:03,  4.56it/s]
+ 65%|██████▌   | 26/40 [00:05<00:03,  4.54it/s]
+ 68%|██████▊   | 27/40 [00:06<00:02,  4.48it/s]
+ 70%|███████   | 28/40 [00:06<00:02,  4.49it/s]
+ 72%|███████▎  | 29/40 [00:06<00:02,  4.52it/s]
+ 75%|███████▌  | 30/40 [00:06<00:02,  4.51it/s]
+ 78%|███████▊  | 31/40 [00:07<00:01,  4.55it/s]
+ 80%|████████  | 32/40 [00:07<00:01,  4.45it/s]
+ 82%|████████▎ | 33/40 [00:07<00:01,  4.45it/s]
+ 85%|████████▌ | 34/40 [00:07<00:01,  4.51it/s]
+ 88%|████████▊ | 35/40 [00:07<00:01,  4.51it/s]
+ 90%|█████████ | 36/40 [00:08<00:00,  4.54it/s]
+ 92%|█████████▎| 37/40 [00:08<00:00,  4.45it/s]
+ 95%|█████████▌| 38/40 [00:08<00:00,  4.56it/s]
+ 98%|█████████▊| 39/40 [00:08<00:00,  4.48it/s]
+100%|██████████| 40/40 [00:09<00:00,  4.47it/s]
+100%|██████████| 40/40 [00:09<00:00,  4.42it/s]
+   06-too-blue-r8c-step5-s0.png seed=20264725 10s  (1/4)
+
+  0%|          | 0/40 [00:00<?, ?it/s]
+  2%|▎         | 1/40 [00:00<00:07,  4.98it/s]
+  5%|▌         | 2/40 [00:00<00:07,  4.94it/s]
+  8%|▊         | 3/40 [00:00<00:07,  4.90it/s]
+ 10%|█         | 4/40 [00:00<00:07,  4.65it/s]
+ 12%|█▎        | 5/40 [00:01<00:08,  4.37it/s]
+ 15%|█▌        | 6/40 [00:01<00:07,  4.53it/s]
+ 18%|█▊        | 7/40 [00:01<00:07,  4.54it/s]
+ 20%|██        | 8/40 [00:01<00:06,  4.63it/s]
+ 22%|██▎       | 9/40 [00:01<00:07,  4.41it/s]
+ 25%|██▌       | 10/40 [00:02<00:06,  4.44it/s]
+ 28%|██▊       | 11/40 [00:02<00:06,  4.47it/s]
+ 30%|███       | 12/40 [00:02<00:06,  4.57it/s]
+ 32%|███▎      | 13/40 [00:02<00:06,  4.45it/s]
+ 35%|███▌      | 14/40 [00:03<00:05,  4.41it/s]
+ 38%|███▊      | 15/40 [00:03<00:05,  4.44it/s]
+ 40%|████      | 16/40 [00:03<00:05,  4.58it/s]
+ 42%|████▎     | 17/40 [00:03<00:05,  4.56it/s]
+ 45%|████▌     | 18/40 [00:03<00:05,  4.39it/s]
+ 48%|████▊     | 19/40 [00:04<00:04,  4.43it/s]
+ 50%|█████     | 20/40 [00:04<00:04,  4.54it/s]
+ 52%|█████▎    | 21/40 [00:04<00:04,  4.55it/s]
+ 55%|█████▌    | 22/40 [00:04<00:04,  4.44it/s]
+ 57%|█████▊    | 23/40 [00:05<00:03,  4.48it/s]
+ 60%|██████    | 24/40 [00:05<00:03,  4.49it/s]
+ 62%|██████▎   | 25/40 [00:05<00:03,  4.49it/s]
+ 65%|██████▌   | 26/40 [00:05<00:03,  4.51it/s]
+ 68%|██████▊   | 27/40 [00:05<00:02,  4.50it/s]
+ 70%|███████   | 28/40 [00:06<00:02,  4.43it/s]
+ 72%|███████▎  | 29/40 [00:06<00:02,  4.55it/s]
+ 75%|███████▌  | 30/40 [00:06<00:02,  4.47it/s]
+ 78%|███████▊  | 31/40 [00:06<00:02,  4.48it/s]
+ 80%|████████  | 32/40 [00:07<00:01,  4.49it/s]
+ 82%|████████▎ | 33/40 [00:07<00:01,  4.44it/s]
+ 85%|████████▌ | 34/40 [00:07<00:01,  4.56it/s]
+ 88%|████████▊ | 35/40 [00:07<00:01,  4.46it/s]
+ 90%|█████████ | 36/40 [00:07<00:00,  4.48it/s]
+ 92%|█████████▎| 37/40 [00:08<00:00,  4.50it/s]
+ 95%|█████████▌| 38/40 [00:08<00:00,  4.50it/s]
+ 98%|█████████▊| 39/40 [00:08<00:00,  4.44it/s]
+100%|██████████| 40/40 [00:08<00:00,  4.44it/s]
+100%|██████████| 40/40 [00:08<00:00,  4.50it/s]
+   06-too-blue-r8c-step5-s1.png seed=20265725 9s  (2/4)
+
+DONE 4 stills, arm B
+==== step clear5 END rc=0 2026-08-10T13:51:43Z ====
+
+==== step publish START 2026-08-10T13:51:43Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep1-b06-r8c-clear5\"\nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/b06-r8/out-clear5/*\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep1-b06-r8c-clear5.sha256\"), \"w\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\n# 2 stills + 2 sidecars.\nraise SystemExit(0 if len(src) == 4 else 1)\n"]
+published 4 file(s) + manifest -> C:/banyan-farm/courier-box/farm-out/ep1-b06-r8c-clear5
+==== step publish END rc=0 2026-08-10T13:51:43Z ====
+#### job ep1-b06-r8c-clear5-1786369366 finished rc=0 2026-08-10T13:51:43Z
