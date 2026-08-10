@@ -679,6 +679,41 @@ checklist:
         geometry of the mask, and that geometry is the steward's and is
         described in the note beside the frame so you can move it.
 
+        **THE SAMPLE, AND IT WORKED: THERE IS A FRUIT.** First one in
+        **thirty-six frames** across every method tried. 9.8 seconds on the
+        local card, **$0**, one frame, one seed, no variants and no pick.
+
+        **YOUR PLATE CAME BACK UNTOUCHED AND THAT IS MEASURED, NOT CLAIMED.**
+        Outside the ellipse the mean pixel difference against your frame is
+        **0.011 out of a possible 765**, and every pixel that moved by more than
+        a hair sits inside the ellipse. Nothing of yours was repainted.
+
+        **THREE THINGS ARE WRONG WITH IT AND YOU SHOULD HEAR THEM BEFORE YOU
+        LOOK.**
+
+        - **It is lit wrong.** Bright green with a cream cap, under your plate's
+          dusk amber. It reads as lit by a different sun.
+        - **It sits ON the stem, not hanging from it.** The stem goes in at the
+          top-left and out at the bottom-left, so it reads threaded. Your own
+          wording is *hanging from the stem*.
+        - **It reads more unripe tomato than fig** — two-tone, with a faint dark
+          rim at the mask edge.
+
+        **NOTHING HAS BEEN ITERATED ON THOSE FAULTS AND NOTHING WILL BE UNTIL
+        YOU LOOK.** Each one is a knob we already know how to turn — the light
+        is a prompt clause, the hang is where the ellipse sits, the shape is the
+        noun — but turning three knobs unattended is how the K recipe wasted an
+        hour. **One word each is enough:** *lower*, *smaller*, *warmer*,
+        *hang it off the side*, or *wrong fruit, start again*.
+      sheets_title: "The one sample — the whole frame, then the fruit at 3x beside your untouched plate"
+      sheets:
+        - file: review-assets/B01-FIG-INPAINT-s1.jpg
+          label: "b01-fig-inpaint-s1 — the whole frame"
+          note: "your approved b15 plate with one ellipse redrawn; not a beat-01 candidate and not canon"
+        - file: review-assets/B01-FIG-INPAINT-s1-zoom.jpg
+          label: "the same fruit at 3x, your plate on the left"
+          note: "left is your frame untouched, right is after the inpaint — the only difference in the whole picture"
+
     - n: 22
       ask: "Which GitHub account should own the repo?"
       state: open

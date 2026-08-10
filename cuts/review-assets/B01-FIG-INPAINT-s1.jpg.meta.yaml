@@ -1,0 +1,92 @@
+# Provenance for one image on the /review gallery (STEWARDSHIP §7.2).
+#
+# WHAT THIS FILE IS SERVED UNDER, because it is not what the rest of the tree is
+# served under. banyan.city publishes CC BY 4.0. The pixels inside the ellipse
+# were drawn by cagliostrolab/animagine-xl-3.1, whose CreativeML Open RAIL++-M
+# licence attaches use restrictions that travel to the output — the open
+# conflict recorded as D15. The pixels OUTSIDE the ellipse are the founder's own
+# approved plate, which animagine also drew, so the narrowing applies to the
+# whole file and not only to the patch. The offer is NARROWED for this file: it
+# carries OpenRAIL++'s Attachment A use restrictions and is not CC BY 4.0.
+#
+# The pixels here are a JPEG re-encode, not the original bytes. The source file
+# and its SHA-256 are recorded below.
+
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLInpaintPipeline (base weights, unet.in_channels=4)
+size: 832x1216
+steps: 40
+guidance: 7.5
+strength: 0.99
+seed: 20260810
+padding_mask_crop: 64
+mask_blur_factor: 8
+wall_seconds: 17
+render_seconds: 9.8
+cost_usd: 0
+episode: 2
+sheet: false
+shows: >-
+  ONE inpainted sample — the first frame of the route the founder chose on
+  2026-08-10 when he answered cuts item 21 with "inpaint". One frame, one seed,
+  one parameter set. No grid, no variants, no pick, no score.
+what: >-
+  A small round green fruit painted into a single masked ellipse on the
+  founder's approved beat-15 plate. It is NOT a beat-01 candidate frame and is
+  not offered as one; it is stage one of a two-stage recipe, and it exists to
+  answer one question — can this stack put a fruit on this plant at all, after
+  0 of 24 prompted frames and 0 of 12 img2img frames could not.
+g1_chain: >-
+  b15-r3-s1 (APPROVED, canon since d4488de, sha256
+  f60c1404f88d45720ca295dfc753e9eaabb815446710bcfffb3c7a07b7277f54) ->
+  StableDiffusionXLInpaintPipeline with the plate as `image` and a
+  steward-drawn ellipse as `mask_image`. The init's sha256 is asserted by
+  inpaint_fruit.py before any weight loads and a mismatch is a hard stop.
+  NO BEAT-01 STILL HAS EVER BEEN APPROVED — the node's only canon file for that
+  shot is 01-cold-open-REVOKED-too-tall.png and it is revoked — so b15-r3-s1 is
+  not merely the best legal init for this beat, it is the only one, which is
+  the same finding ledger record ep2-b01-r8-sample reached.
+the_plate_is_unchanged_and_that_is_measured: >-
+  Mean absolute RGB difference against the approved plate OUTSIDE the mask is
+  0.011 of a possible 765, maximum 20; every pixel that changed by more than 30
+  lies inside the box (430, 814)-(496, 881), which is inside the mask ellipse
+  (428, 812)-(496, 884). The founder's frame came back byte-for-byte everywhere
+  the mask was not, which is the behaviour a 4-channel UNet's latent-blend
+  branch is supposed to give and is checked rather than assumed.
+mask_is_the_stewards: >-
+  THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. Ellipse centred (462, 848),
+  radii (34, 36) — 8.2% of frame width, 5.9% of frame height. He named no size,
+  no position on the stem, no colour and no ripeness; the prompt's wording is
+  his own approved shots.md line. The ellipse is the first thing his correction
+  should move and it is one number.
+defects_disclosed: >-
+  THREE, AND NONE OF THEM ARE SMOOTHED OVER. (1) The fruit does not take the
+  plate's light — it is a saturated green with a cream cap under a dusk amber
+  key, and it reads as lit by a different source from everything around it.
+  (2) It sits ON the stem rather than hanging from it: the stem enters at its
+  top-left and leaves at its bottom-left, so it reads threaded rather than
+  pendant, and "hanging from the stem" is the founder's own wording. (3) It
+  reads closer to an unripe tomato or persimmon than to a fig, with a two-tone
+  green/cream split and a faint dark rim at the mask edge. What it is NOT is
+  absent, and that is the finding.
+not_scored_here: >-
+  No pick and no taste verdict. A steward-rendered sample; ground truth is the
+  founder (R4). Nothing here is promoted, published or assembled.
+neutral: >-
+  One frame, no label burned in, nothing marked as a favourite and nothing
+  offered as a pick (gate G3).
+derived_from: review/b01-fig-inpaint/b01-fig-inpaint-s1.png
+derived_from_sha256: 27dd6001a73bc21b801000c6459a125492a6d07078001f9864472751965fb1df
+sha256: 476597d97317ddad7734e4a7413a11996471137e1937595fdca198564c31b93f
+encoding: >-
+  JPEG from the source PNG with ImageMagick 7.1.2-21 — no resize, no crop, no
+  colour conversion, metadata stripped. Quality 90, 4:4:4 chroma.
+published_under: >-
+  CreativeML Open RAIL++-M use restrictions (Attachment A) — NOT the tree's CC
+  BY 4.0. Review surface only; not canon, not published elsewhere, not promoted
+  to a stills/ filename.
+surface: /review gallery (unlisted, noindex — D17)
+canon: false
+approved: false
