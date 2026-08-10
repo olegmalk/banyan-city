@@ -1,0 +1,170 @@
+# ep2 beat 01 "cold open" — r9 depth-ControlNet, STAGE 2: the conditioning-scale
+# sweep. Twelve frames, three arms, four seeds.
+#
+# THE GATE IN FRONT OF THIS FILE IS OPEN AND A HUMAN OPENED IT. B01-R9-PLAN.md
+# §7 gates stage 2 on the founder looking at the stage-1 frame, and
+# render_b01r9.py enforces it in code (`--frames > 1` without `--stage2` exits
+# 17). He opened `review/b01-r9/01-cold-open-r9-d60-s0.png` at full resolution on
+# 2026-08-10 ~12:30 local, was told the two caveats the sample record carries —
+# the macro lens the depth map appears to have brought with the geometry, and the
+# light shaft the map does not contain coming back at a new angle — and said:
+#
+#     "well.. the beat 01 frame looks good."
+#
+# That approves the APPROACH and unlocks this file. It is not a canon promotion,
+# not a pick, and not a ruling on the fig, the stem height or the palette
+# numbers. Recorded in taste/steward-model.ledger.yaml at commit 2d23477, scored
+# honestly as NOT SCOREABLE because the sample record wrote no predicted_verdict.
+#
+# WHAT THE SWEEP ASKS. Stage 1 was one point: d60, the middle arm, one seed. It
+# says nothing about whether the result survives the other three seeds, or what
+# the conditioning scale is actually buying. The diffusers card publishes 0.5 as
+# "recommended for good generalization"; the three arms bracket it at 0.40 /
+# 0.60 / 0.80. The two failures the plan pre-registered mean different things and
+# both are live at scales stage 1 never visited: palette leaking back in at high
+# scale would say depth is not the separation after all, and geometry collapsing
+# at low scale would say the control is too weak and argue for a higher-scale
+# r10 rather than a new architecture.
+#
+# THE NEGATIVE IS THE TRIMMED ONE, ON PURPOSE, AND THIS IS THE CONSISTENCY
+# DECISION STATED OUT LOUD. The written recipe is 75 CLIP tokens; the shared
+# 77-token budget trimmer drops `realistic skin texture` and `jpeg artifacts`,
+# so the string the model actually sees is 72 tokens and byte-identical to
+# r6/r7/r8's. Stage 1 ran on that trimmed string. Stage 2 keeps it. The
+# alternative — restoring byte-identity to the WRITTEN recipe — would make these
+# twelve frames incomparable to the one frame the founder has looked at, which
+# is the only frame in this round with a verdict on it. Internal consistency of
+# the round beats fidelity to a text nothing has ever been rendered with. Guard
+# C3 in render_b01r9.py enforces it: if the sent negative moves by one byte the
+# run exits 7 before a weight loads, and each sidecar now COMPUTES
+# `negative_identical_to_r7` and `negative_is_budget_trimmed` rather than
+# asserting them (9e0a0ae).
+#
+# RENDERER REVISION, RECORDED RATHER THAN GLOSSED. Stage 1 ran a LOOSE copy of
+# the script at C:\banyan-farm\sample-b01-r9\render_b01r9.py (sha256 2369dd35..)
+# against a box clone pinned at 11e5ab1 — a commit at which neither the script
+# nor the control map existed in the repo at all, which is exactly why its
+# sidecar recorded a repo-relative control_map path that could not be resolved.
+# Stage 2 runs the IN-REPO script at C:\banyan-farm\banyan-city\pipeline\
+# render_b01r9.py (sha256 db15619c.., byte-identical to repo 9e0a0ae, verified
+# both ends) against the clone pulled forward to 9e0a0ae, with the control map
+# read from inside the checkout. Sidecars therefore record
+# control_map_in_repo: true, control_map_at_repo_commit: present,
+# provenance_warning: none — the stage-1 defect does not repeat.
+# The stage-1 -> HEAD script delta was diffed line by line: 240 changed lines,
+# ALL of them provenance recording. Not one recipe constant moved — NEG, SEED,
+# W/H, STEPS, CFG, ARMS, CTRL_START/END, CONTROL_SHA, PLATE_SHA, SHOTS_SHA and
+# the token expectations are identical. So stage 2 is comparable to stage 1 on
+# the pixels and strictly better on the record.
+# `pipeline/ltx_i2v.py` is modified in the working tree; it is irrelevant here.
+# This is an SDXL + ControlNet still path and never imports it.
+#
+# WHY THREE STEPS AND NOT ONE BATCH CONFIG. One process per arm, sequential, each
+# looping its own four seeds. Batch configs are banned on this box and each arm
+# is a separate recipe point that must be able to fail alone.
+#
+# WHAT IS NOT HERE: no pick, no ranking, no promotion, no publish, no spend, and
+# nothing touching the fig — the fig is a separate approved track and a depth map
+# of a fruitless plate carries no fruit either way.
+
+id: ep2-b01-r9-stage2
+task: ep2-b01-r9-depth-controlnet-stage2
+node: 002b-first-citizen
+beat: 1
+runner: box
+needs_gpu: true
+priority: 20
+max_attempts: 1
+owner: b01-r9-stage2
+
+consumer: >-
+  the founder's stage-2 look at beat 01. He approved the approach on one frame
+  at one scale; the sweep is what tells him — and the pre-registered rubric in
+  B01-R9-PLAN.md §8 — whether that frame was the arm or the seed. The twelve
+  land as one unranked contact sheet, his verdict and not the steward's.
+
+success: >-
+  Twelve 832x1216 PNGs with sidecars in C:\banyan-farm\b01-r9-stage2\out,
+  named 01-cold-open-r9-{d40,d60,d80}-s{0..3}.png. Judged against §8's two
+  pre-registered axes and nothing else: geometry (stem height fraction against
+  the 32% ceiling, grounded-whole-plant / person / pale-slab counts, n of 4 per
+  arm) and palette (mean RGB of the top 25% clustering with the r8 t2i sunrise
+  rather than the b15 plate, plus the column-luminance shaft profile). r9
+  succeeds only if BOTH hold — geometry inside the ceiling on at least three of
+  four seeds on at least one arm AND sky clustering with t2i. d60-s0 is a free
+  determinism check: same script, same seed, same arm as stage 1, so its pixels
+  should reproduce and a divergence is itself a finding.
+
+why: >-
+  Stage 1 is a single point and the founder has now looked at it. Leaving the
+  round at n=1 would make the arm and the seed unseparable, and the plan's two
+  named failure modes both live at scales stage 1 never visited.
+
+est_minutes: 6   # measured stage 1: 43s model load + 15s/frame; 3 loads, 12 frames
+
+needs: [cuda, vram12, sdxl-venv]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  - name: d40
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\render_b01r9.py
+      - --root
+      - C:\banyan-farm\banyan-city
+      - --arm
+      - d40
+      - --frames
+      - "4"
+      - --stage2
+      - --out
+      - C:\banyan-farm\b01-r9-stage2\out
+  - name: d60
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\render_b01r9.py
+      - --root
+      - C:\banyan-farm\banyan-city
+      - --arm
+      - d60
+      - --frames
+      - "4"
+      - --stage2
+      - --out
+      - C:\banyan-farm\b01-r9-stage2\out
+  - name: d80
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\render_b01r9.py
+      - --root
+      - C:\banyan-farm\banyan-city
+      - --arm
+      - d80
+      - --frames
+      - "4"
+      - --stage2
+      - --out
+      - C:\banyan-farm\b01-r9-stage2\out
+
+artifacts:
+  - C:\banyan-farm\b01-r9-stage2\out\01-cold-open-r9-d40-s0.png
+  - C:\banyan-farm\b01-r9-stage2\out\01-cold-open-r9-d40-s1.png
+  - C:\banyan-farm\b01-r9-stage2\out\01-cold-open-r9-d40-s2.png
+  - C:\banyan-farm\b01-r9-stage2\out\01-cold-open-r9-d40-s3.png
+  - C:\banyan-farm\b01-r9-stage2\out\01-cold-open-r9-d60-s0.png
+  - C:\banyan-farm\b01-r9-stage2\out\01-cold-open-r9-d60-s1.png
+  - C:\banyan-farm\b01-r9-stage2\out\01-cold-open-r9-d60-s2.png
+  - C:\banyan-farm\b01-r9-stage2\out\01-cold-open-r9-d60-s3.png
+  - C:\banyan-farm\b01-r9-stage2\out\01-cold-open-r9-d80-s0.png
+  - C:\banyan-farm\b01-r9-stage2\out\01-cold-open-r9-d80-s1.png
+  - C:\banyan-farm\b01-r9-stage2\out\01-cold-open-r9-d80-s2.png
+  - C:\banyan-farm\b01-r9-stage2\out\01-cold-open-r9-d80-s3.png
