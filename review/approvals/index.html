@@ -1,0 +1,1199 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scripts waiting for your yes &mdash; banyan.city</title>
+<style>
+:root{
+  --bg:#faf8f4; --panel:#fff; --ink:#1a1714; --dim:#6b625a; --line:#e2dbd0;
+  --accent:#2f6b4f; --accent-soft:#e8f1ea;
+  --stop:#a6371f; --stop-soft:#fbeae5;
+  --watch:#8a6512; --watch-soft:#fbf2dc;
+  --clean:#2f6b4f; --clean-soft:#e8f1ea;
+  --script:#fdfcfa;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#14120f; --panel:#1d1a16; --ink:#ece6dd; --dim:#9c9287; --line:#332e28;
+    --accent:#7fc2a1; --accent-soft:#1b2a22;
+    --stop:#e8917a; --stop-soft:#2e1c17;
+    --watch:#d9b064; --watch-soft:#2b2318;
+    --clean:#7fc2a1; --clean-soft:#1b2a22;
+    --script:#191612;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#14120f; --panel:#1d1a16; --ink:#ece6dd; --dim:#9c9287; --line:#332e28;
+  --accent:#7fc2a1; --accent-soft:#1b2a22;
+  --stop:#e8917a; --stop-soft:#2e1c17;
+  --watch:#d9b064; --watch-soft:#2b2318;
+  --clean:#7fc2a1; --clean-soft:#1b2a22;
+  --script:#191612;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.62 ui-serif,Georgia,"Iowan Old Style",serif;
+  -webkit-text-size-adjust:100%;padding:0 0 5rem}
+.wrap{max-width:44rem;margin:0 auto;padding:0 1.1rem}
+h1{font-size:1.85rem;line-height:1.18;margin:1.6rem 0 .3rem;letter-spacing:-.015em}
+h2{font-size:1.35rem;line-height:1.22;margin:0 0 .2rem;letter-spacing:-.01em}
+.sub{color:var(--dim);font-size:.94rem;margin:0 0 1.4rem}
+.big{background:var(--panel);border:1px solid var(--line);border-radius:14px;
+  padding:1.15rem 1.15rem .4rem;margin:1.2rem 0}
+.nums{display:flex;flex-wrap:wrap;gap:.6rem;margin:0 0 .9rem}
+.num{flex:1 1 8.5rem;background:var(--accent-soft);border-radius:10px;padding:.7rem .8rem}
+.num b{display:block;font-size:2rem;line-height:1;font-family:ui-sans-serif,system-ui,sans-serif;
+  font-weight:650;color:var(--accent);letter-spacing:-.02em}
+.num span{font-size:.83rem;color:var(--dim);display:block;margin-top:.25rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem;
+  font-family:ui-sans-serif,system-ui,sans-serif}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+th,td{text-align:left;padding:.5rem .55rem;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.74rem;text-transform:uppercase;letter-spacing:.06em;color:var(--dim);font-weight:600}
+td.n{font-variant-numeric:tabular-nums;font-weight:650;color:var(--accent);white-space:nowrap}
+section.node{background:var(--panel);border:1px solid var(--line);border-radius:14px;
+  padding:1.15rem;margin:1.6rem 0}
+section.node.no{border-color:var(--stop);border-width:1.5px}
+.tag{display:inline-block;font-family:ui-sans-serif,system-ui,sans-serif;font-size:.7rem;
+  font-weight:650;text-transform:uppercase;letter-spacing:.07em;padding:.2rem .5rem;
+  border-radius:5px;margin:0 0 .5rem}
+.tag.go{background:var(--clean-soft);color:var(--clean)}
+.tag.no{background:var(--stop-soft);color:var(--stop)}
+.what{font-size:1.02rem;margin:.5rem 0 .9rem}
+.unlock{background:var(--accent-soft);border-radius:9px;padding:.6rem .75rem;
+  font-size:.93rem;margin:.6rem 0 1rem}
+.unlock b{color:var(--accent);font-variant-numeric:tabular-nums}
+.note{border-left:3px solid var(--line);padding:.15rem 0 .15rem .75rem;margin:.7rem 0;font-size:.95rem}
+.note.stop{border-color:var(--stop);background:var(--stop-soft);padding:.5rem .75rem;border-radius:0 8px 8px 0}
+.note.watch{border-color:var(--watch)}
+.note.clean{border-color:var(--clean)}
+.note .lab{font-family:ui-sans-serif,system-ui,sans-serif;font-size:.7rem;font-weight:650;
+  text-transform:uppercase;letter-spacing:.07em;display:block;margin-bottom:.15rem}
+.note.stop .lab{color:var(--stop)} .note.watch .lab{color:var(--watch)} .note.clean .lab{color:var(--clean)}
+.rec{font-family:ui-sans-serif,system-ui,sans-serif;font-weight:600;font-size:.97rem;
+  padding:.7rem .8rem;border-radius:9px;margin:1rem 0 .3rem}
+.rec.go{background:var(--clean-soft);color:var(--clean)}
+.rec.no{background:var(--stop-soft);color:var(--stop)}
+details{margin:1rem 0 0;border-top:1px solid var(--line);padding-top:.7rem}
+summary{cursor:pointer;font-family:ui-sans-serif,system-ui,sans-serif;font-weight:600;
+  font-size:.92rem;color:var(--accent);list-style:none;padding:.35rem 0}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"\25B8 ";display:inline-block;transition:transform .15s}
+details[open] summary::before{transform:rotate(90deg)}
+.script{background:var(--script);border:1px solid var(--line);border-radius:10px;
+  padding:.9rem 1rem;margin-top:.7rem}
+.script h3,.script h4,.script h5,.script h6{
+  font-family:ui-sans-serif,system-ui,sans-serif;font-size:.78rem;text-transform:uppercase;
+  letter-spacing:.07em;color:var(--dim);margin:1.4rem 0 .4rem;font-weight:650}
+.script h3:first-child{margin-top:0}
+.script p{margin:.55rem 0}
+.script blockquote{margin:.55rem 0;padding:.4rem .7rem;border-left:3px solid var(--accent);
+  background:var(--accent-soft);border-radius:0 7px 7px 0;font-size:.97rem}
+.script pre{background:var(--bg);border:1px solid var(--line);border-radius:7px;
+  padding:.6rem .7rem;overflow-x:auto;font-size:.82rem;line-height:1.5;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.script hr{border:0;border-top:1px solid var(--line);margin:1.3rem 0}
+.script ul{margin:.5rem 0;padding-left:1.2rem}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.87em;
+  background:var(--bg);padding:.1rem .3rem;border-radius:4px;border:1px solid var(--line)}
+pre code{background:none;border:0;padding:0}
+.how{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.15rem;margin:2rem 0}
+.how pre{background:var(--bg);border:1px solid var(--line);border-radius:8px;
+  padding:.7rem .8rem;overflow-x:auto;font-size:.85rem;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;user-select:all}
+.rule{font-size:.9rem;color:var(--dim);border-top:1px solid var(--line);
+  margin-top:2.5rem;padding-top:1rem}
+</style>
+<div class="wrap">
+
+<h1>Scripts waiting for your yes</h1>
+<p class="sub">Nothing here can be drawn, voiced or filmed until you have read it and said so.
+That is the rule you set on 2026&#8209;07&#8209;26, and the code enforces it &mdash; it does not ask
+politely, it refuses to run.</p>
+
+<div class="big">
+  <div class="nums">
+    <div class="num"><b>14</b><span>scripts you have not approved</span></div>
+    <div class="num"><b>2</b><span>you have &mdash; episodes 1 and 2, and that is the whole tree</span></div>
+    <div class="num"><b>132</b><span>render jobs that become legal if you approve the five ready ones</span></div>
+    <div class="num"><b>~33</b><span>minutes of reading to do it</span></div>
+  </div>
+  <p style="font-size:.95rem;margin:0 0 1rem">Right now the machines are allowed to work on
+  <strong>two</strong> episodes, and both are nearly finished. When they are done there is legally
+  <strong>nothing left to render.</strong> Five of the scripts below are finished and waiting only
+  on your eyes. Approving them turns <strong>0 into 132</strong> &mdash; each beat is one
+  drawing job of four attempts, so about <strong>528 candidate pictures</strong>
+  for you to pick from.</p>
+
+  <div class="scroll"><table>
+    <tr><th>Ranked by what it turns on</th><th>Beats</th><th>My read</th></tr>
+    <tr><td><strong>Episode 6, option A</strong><br><span style="color:var(--dim)">006a-miracle-clause</span></td><td class="n">31</td><td>Ready</td></tr>
+    <tr><td><strong>Episode 7, option A</strong><br><span style="color:var(--dim)">007a-the-demo</span></td><td class="n">29</td><td>Ready</td></tr>
+    <tr><td><strong>Episode 5</strong><br><span style="color:var(--dim)">005-the-assessor</span></td><td class="n">26</td><td>Ready</td></tr>
+    <tr><td><strong>Episode 4</strong><br><span style="color:var(--dim)">004-shade</span></td><td class="n">25</td><td>Ready</td></tr>
+    <tr><td><strong>Episode 3</strong><br><span style="color:var(--dim)">003b-one-leaf-for-yes</span></td><td class="n">21</td><td>Ready</td></tr>
+    <tr><td><strong>Episode 6, option B</strong><br><span style="color:var(--dim)">006b-reconciliation</span></td><td class="n">4</td><td style="color:var(--stop)">Not ready &mdash; my fault, see below</td></tr>
+    <tr><td><strong>Episode 7, option B</strong><br><span style="color:var(--dim)">007b-the-hearth</span></td><td class="n">5</td><td style="color:var(--stop)">Not ready &mdash; my fault, see below</td></tr>
+    <tr><td>7 older side-branches</td><td class="n">0</td><td>Approving them turns on nothing this week</td></tr>
+  </table></div>
+  <p style="font-size:.9rem;color:var(--dim);margin:.8rem 0 1rem">The scripts are laid out below in
+  <strong>story order</strong>, not in the ranked order of this table &mdash; reading episode 6 before
+  episode 3 spoils it, and they are one continuous chain, so the total is the same whichever order
+  you approve in.</p>
+</div>
+<h2 style="margin-top:2.4rem">The five that are ready</h2><p class="sub">Full script on each one. Open it, read it, say yes or tell me what is wrong.</p>
+<section class="node" id="003b-one-leaf-for-yes">
+  <span class="tag go">Ready &mdash; Episode 3</span>
+  <h2>Episode 3: One Leaf For Yes</h2>
+  <p class="sub" style="margin:.2rem 0 0">003b-one-leaf-for-yes &middot; approval goes in <code>003b-t0-c.yaml</code></p>
+  <p class="what">The goblin works out that the tree can hear him, they invent a code — one leaf for yes — and he asks to move in.</p>
+  <div class="unlock"><b>21 beats</b> become legal to draw
+    (<b>84</b> candidate pictures). This is the direct sequel to the episode 2 you already approved, and it is the one the show needs next. Its 21 beats are the next 21 drawings in story order.</div>
+  <div class="note clean"><span class="lab">Fine</span>Nothing is wrong with this one. 21 beats, 21 shots, a cut every 5.7 seconds, one spoken line each — it is written to the tighter shape you asked for after episode 2 read badly.</div>
+  <div class="note clean"><span class="lab">Fine</span>The voice takes for it already exist (17 of them), so a yes here turns on drawings, not recordings.</div>
+  <div class="note watch"><span class="lab">Worth noticing</span>The hook cuts off mid-sentence — &ldquo;I hereby name this place&mdash;&rdquo; and smash to black. That is on purpose and the name lands in the next episode. If you would rather hear the name here, say so now: it is a one-line change before anything is drawn, and an expensive one after.</div>
+  <div class="rec go">APPROVE. This is the one I would do first if you only do one.</div>
+  <details open>
+    <summary>The full script &mdash; read this before approving</summary>
+    <div class="script"><h3>Node 003b — One Leaf for Yes</h3>
+<p><strong>Tree:</strong> Sapling · <strong>Parent:</strong> 002b — The First Citizen · <strong>Trunk:</strong> yes · <strong>Status:</strong> hot<br><strong>This file is a T0 leaf</strong> (<code>003b-t0-c</code>, shot-granular per SCRIPT-SPEC.md).<br><strong>Format:</strong> 9:16 vertical · ~119s · VO + dialogue · 21 beats = 21 shots</p>
+<hr>
+<h4>State change (R1)</h4>
+<p>Communication goes from <em>one miraculous fruit-drop</em> to a **working protocol** — one leaf for yes, stillness for no — and the scavenger goes from passerby to <strong>resident</strong>: he asks to stay, gets a yes, and starts building. Population 1 becomes home 1.</p>
+<h4>Hook (R5)</h4>
+<p>&quot;Every city needs a name. I hereby name this place—&quot; and the episode cuts on the breath before the name. The question a viewer can state: *what is this place going to be called?*</p>
+<hr>
+<h4>Script</h4>
+<p><strong>COLD OPEN — 0:00–0:06</strong> Dawn. The sapling — thin trunk, two oversized leaves, one thin branch now bare — with the scavenger&#x27;s green hands cradling its fig in the foreground.</p>
+<blockquote><strong>VO (dry, tired, engineer):</strong> I am a dead engineer inside this tree. Yesterday I spent my only fruit on a stranger&#x27;s head.</blockquote>
+<p><strong>EVIDENCE RETURNED — 0:06–0:11</strong> The scavenger sets the fig down at the base of the trunk, deliberately, like evidence.</p>
+<blockquote><strong>SCAVENGER:</strong> I&#x27;ve thought about it all night. There are only two possibilities.</blockquote>
+<p><strong>TWO POSSIBILITIES — 0:11–0:16</strong> He crouches until he is eye to eye with the little tree.</p>
+<blockquote><strong>SCAVENGER:</strong> One: I have finally lost it. Two: you&#x27;re in there.</blockquote>
+<p><strong>THE TEST — 0:16–0:21</strong> He sits cross-legged in front of the sapling, businesslike, ears forward.</p>
+<blockquote><strong>SCAVENGER:</strong> So we test it. Like the patrol tests coins.</blockquote>
+<p><strong>MOVE ONE LEAF — 0:21–0:26</strong> Close on his face, waiting; his ears twitch once.</p>
+<blockquote><strong>SCAVENGER:</strong> If you can hear me… move one leaf.</blockquote>
+<p><strong>THE COST — 0:26–0:31</strong> Underground: root filaments flare as the sapling gathers everything it has into one push.</p>
+<p><strong>THE TILT — 0:31–0:36</strong> In dead-still air, one leaf tilts — and holds.</p>
+<p><strong>NO WIND — 0:36–0:41</strong> His ears go flat; he checks the grass — not one blade is moving.</p>
+<p><strong>THE PROTOCOL — 0:41–0:46</strong> He leans in close to the leaves, lowering his voice like a man making a treaty.</p>
+<blockquote><strong>SCAVENGER (whisper):</strong> One leaf for yes. Nothing for no. Deal?</blockquote>
+<p><strong>DEAL — 0:46–0:55</strong> The leaf tilts again, unmistakable.</p>
+<blockquote><strong>VO:</strong> He has independently derived a one-bit protocol. I have onboarded senior engineers with less.</blockquote>
+<p><strong>THE INTERROGATION — 0:55–1:00</strong> The scavenger paces, firing questions, scratching a tally into the dirt.</p>
+<blockquote><strong>SCAVENGER:</strong> Are you a spirit? A demon? A god?</blockquote>
+<p><strong>HALF A TILT — 1:00–1:05</strong> The leaf stays still — then gives the smallest, most reluctant half-tilt.</p>
+<blockquote><strong>SCAVENGER:</strong> …We&#x27;ll circle back to that one.</blockquote>
+<p><strong>THE FIG QUESTION — 1:05–1:10</strong> He holds the fig up beside the bare branch it fell from.</p>
+<blockquote><strong>SCAVENGER:</strong> Were you the fruit? Did you MEAN to hit my head?</blockquote>
+<p><strong>GUILTY — 1:10–1:15</strong> A very long pause on the leaf — then it tilts.</p>
+<blockquote><strong>SCAVENGER (delighted, outraged):</strong> I <em>knew</em> it!</blockquote>
+<p><strong>THE FILING PROBLEM — 1:15–1:20</strong> The energy drops. He sits back against the trunk and gestures at all of himself with both hands.</p>
+<blockquote><strong>SCAVENGER:</strong> The patrol has a form for apples. There isn&#x27;t one for me.</blockquote>
+<p><strong>THE ASK — 1:20–1:25</strong> He doesn&#x27;t look up. His hands keep working the dirt.</p>
+<blockquote><strong>SCAVENGER:</strong> Can I stay? Here. By you. I&#x27;d keep the weeds off.</blockquote>
+<p><strong>THE BUDGET — 1:25–1:30</strong> Ground level, both of them in frame: the goblin sitting with his back to the trunk, the sapling beside his shoulder.</p>
+<blockquote><strong>VO:</strong> Every problem I ever had, I solved by walking away. He can&#x27;t walk away either.</blockquote>
+<p><strong>TOWARD — 1:30–1:37</strong> Underground: the root glow is thin and guttering — one clean signal left today — while above, both leaves tremble on the edge of moving.</p>
+<blockquote><strong>VO:</strong> I can sense and I can grow. Neither one is <em>shelter</em>. …But growing means choosing what to grow <em>toward</em>.</blockquote>
+<p><strong>TWO LEAVES — 1:37–1:42</strong> Both leaves tilt at once — and at the base of the trunk the last teal glow in the soil dims and goes out.</p>
+<p><strong>THE LEAN-TO — 1:42–1:48</strong> Timelapse: the scavenger drags deadfall against a rock, building badly, tongue out with effort.</p>
+<blockquote><strong>SCAVENGER:</strong> A resident, a landmark, and a tree that answers. That&#x27;s not a camp anymore.</blockquote>
+<p><strong>THE HOOK — 1:48–1:53</strong> Dusk. He raises the fig like a founding charter over the lean-to and the tree.</p>
+<blockquote><strong>SCAVENGER:</strong> Every city needs a name. I hereby name this place—</blockquote>
+<p>SMASH TO BLACK on the breath before the name.</p>
+<hr>
+<h4>Provenance</h4>
+<p>Shot-granular successor (<code>003b-t0-c</code>), steward-written (model: claude-fable-5) to <code>SCRIPT-SPEC.md</code> &quot;one beat = one shot&quot; from <code>003b-t0-a</code> (the Phase-0 script, whose beats and jokes survive intact) and committed nodes 001/002b. Loop cycle 007 — the founding author&#x27;s verdict that the picture did not correlate with the script. Predecessor archived as <code>leaves/003b-t0-a.md</code>; published video leaves 003b-t3-a/b are takes of that era.</p>
+<h4>Siblings</h4>
+<p>003a — On-Call Rotation · 003c — Y/N</p>
+<h4>Taste-rule notes</h4>
+<ul><li><strong>Cycle 007 (shot density):</strong> 21 beats / ~119s = a cut every 5.7s, ≤1</li>
+</ul><p>spoken line each. The protocol scene is now shot-per-exchange — the question, the cost underground, the tilt, the reaction — instead of one held wide across the whole montage, which is what made it unreadable.</p>
+<ul><li><strong>R7:</strong> cold open states dead-engineer-in-a-tree and recaps the fig in</li>
+</ul><p>one line, over the fig itself; the hook is a statable question.</p>
+<ul><li><strong>R1:</strong> residency granted; the protocol exists; a structure is built.</li>
+<li><strong>R2:</strong> the antagonism is a filing category, never a person.</li>
+<li><strong>R3:</strong> the interrogation resolves &quot;am I mad?&quot; by making both parties</li>
+</ul><p>laugh — the god question earns half a tilt.</p>
+<ul><li><strong>R5:</strong> hook is a real state change: a settlement, name pending.</li></ul></div>
+  </details>
+</section>
+<section class="node" id="004-shade">
+  <span class="tag go">Ready &mdash; Episode 4</span>
+  <h2>Episode 4: Shade</h2>
+  <p class="sub" style="margin:.2rem 0 0">004-shade &middot; approval goes in <code>004-t0-b.yaml</code></p>
+  <p class="what">The town gets its name — the tree picks it — and a second person shows up: a farmer whose field started drinking again.</p>
+  <div class="unlock"><b>25 beats</b> become legal to draw
+    (<b>100</b> candidate pictures). 25 beats. It also introduces the farmer, who is in every episode after this, so his design gets settled once here instead of five times later.</div>
+  <div class="note clean"><span class="lab">Fine</span>Strong episode. The naming runs as a joke that pays off — the town ends up named after the only thing the tree ever gave anybody.</div>
+  <div class="note watch"><span class="lab">Worth noticing</span>The tree asks the farmer for something and gets told no. &ldquo;I&rsquo;ll bring water. I&rsquo;m not bringing my name.&rdquo; It is the first time the tree loses. Worth deciding you want that this early, because it sets the show&rsquo;s temperature.</div>
+  <div class="note watch"><span class="lab">A mistake in the file &mdash; mine</span>The header line says <em>21 beats</em>; the script below actually has <em>25</em>, and the shot list has 25. The header is stale. That is my error in the file, not a problem with the story, and I will fix it whatever you decide.</div>
+  <div class="rec go">APPROVE.</div>
+  <details open>
+    <summary>The full script &mdash; read this before approving</summary>
+    <div class="script"><h3>Node 004 — Shade</h3>
+<p><strong>Tree:</strong> Sapling · <strong>Parent:</strong> 003b — One Leaf for Yes · <strong>Trunk:</strong> yes · <strong>Status:</strong> hot<br><strong>This file is a T0 leaf</strong> (<code>004-t0-b</code>, shot-granular per SCRIPT-SPEC.md).<br><strong>Format:</strong> 9:16 vertical · ~117s · VO + dialogue · 21 beats = 21 shots</p>
+<hr>
+<h4>State change (R1)</h4>
+<p>The place gets its <strong>name</strong> — chosen by the tree itself through the protocol — and its <strong>second citizen</strong>: the farmer arrives following the mended water, and the two humans of this story meet for the first time. A settlement now exists that outsiders can refer to; which, per the hook, means bureaucracy can too.</p>
+<h4>Hook (R5)</h4>
+<p>Naming the place made it <em>legible</em>. The assessor counts everything with a name, and yesterday there was nothing here to count. The question a viewer can state: *what happens when the tax man reaches a town that is one tree, one goblin and a lean-to?*</p>
+<hr>
+<h4>Script</h4>
+<p><strong>COLD OPEN — 0:00–0:05</strong> The goblin holds a fig aloft over a knee-high young tree, a crooked lean-to and a three-stone cairn; he freezes mid-ceremony.</p>
+<blockquote><strong>SCAVENGER:</strong> I hereby name this place… uh.</blockquote>
+<p><strong>NOTHING PREPARED — 0:05–0:09</strong> He lowers the fig, deflating.</p>
+<blockquote><strong>SCAVENGER:</strong> …I had something prepared.</blockquote>
+<p><strong>THE TREE, WATCHING — 0:09–0:15</strong> The young tree&#x27;s small crown of leaves hangs perfectly level, waiting.</p>
+<blockquote><strong>VO (dry, tired, engineer):</strong> I died an engineer and woke up as this tree. Today my only citizen is naming the town.</blockquote>
+<p><strong>NEWHAVEN — 0:15–0:18</strong> He paces the tiny clearing, pitching at the tree like a founder at investors.</p>
+<blockquote><strong>SCAVENGER:</strong> Newhaven!</blockquote>
+<p><strong>NO LEAF — 0:18–0:23</strong> Close on one leaf, side-on: it holds dead level while the grass below it moves.</p>
+<p><strong>GREENREST — 0:23–0:26</strong> He tries again, arms wide, more hopeful than before.</p>
+<blockquote><strong>SCAVENGER:</strong> Greenrest?</blockquote>
+<p><strong>FIGHOLM — 0:26–0:29</strong> He points at the fig, reaching now.</p>
+<blockquote><strong>SCAVENGER:</strong> Fig… holm?</blockquote>
+<p><strong>AGGRESSIVELY NOTHING — 0:29–0:34</strong> Extreme close on a stem joint: not one fibre moves. A stillness with an opinion in it.</p>
+<blockquote><strong>SCAVENGER (wounded):</strong> Everything cannot be a no. You are a <em>plant</em>.</blockquote>
+<p><strong>NAME IT FOR WHAT IT DOES — 0:34–0:39</strong> The tree&#x27;s one patch of shade lies on the grass, sharp-edged in the midday sun.</p>
+<blockquote><strong>VO:</strong> Name the thing after what it <em>does</em>, like every good system since the dawn of—</blockquote>
+<p><strong>THE COLLAPSE — 0:39–0:44</strong> He flops down against the trunk, into the shade patch, out of the low afternoon sun, giving up.</p>
+<blockquote><strong>SCAVENGER (muttering):</strong> …Whatever. It&#x27;s just shade.</blockquote>
+<p><strong>BOTH LEAVES — 0:44–0:49</strong> Both leaves tilt at once, emphatically, in still air.</p>
+<p><strong>SHADE? — 0:49–0:54</strong> He goes very still, then looks up at the leaves above him.</p>
+<blockquote><strong>SCAVENGER:</strong> <em>Shade?</em> That&#x27;s not a name, that&#x27;s a—</blockquote>
+<p><strong>EMPHATIC — 0:54–0:59</strong> The leaves tilt again, harder, insisting.</p>
+<blockquote><strong>SCAVENGER:</strong> Okay! Okay. Shade.</blockquote>
+<p><strong>WELCOME TO SHADE — 0:59–1:04</strong> He stands and raises the fig again — less ceremony, more meaning — gesturing at the whole tiny territory.</p>
+<blockquote><strong>SCAVENGER:</strong> Welcome to Shade. Population: one. Amenities: shade.</blockquote>
+<p><strong>THE FIRST GIFT — 1:04–1:11</strong> The goblin&#x27;s bare feet, planted in the shade patch on the grass.</p>
+<blockquote><strong>VO:</strong> Named after the first thing I ever gave anyone. I&#x27;d have accepted <code>prod-east-1</code>, but this is better.</blockquote>
+<p><strong>BOOTS — 1:11–1:16</strong> Wide at grass level: heavy boots stop at the clearing&#x27;s edge as the goblin dives behind a trunk that hides a third of him.</p>
+<p><strong>THE FARMER — 1:16–1:21</strong> A sun-cracked farmer stands looking at the lean-to, the cairn, and the visibly failing hiding place.</p>
+<blockquote><strong>FARMER:</strong> …You the one who&#x27;s been keeping the weeds off this stretch?</blockquote>
+<p><strong>THE WATER — 1:21–1:27</strong> Underground: a root runs west and a dark damp line spreads through pale soil toward a distant field.</p>
+<blockquote><strong>VO:</strong> I have been growing roots west for three days. The water followed them. Nobody asked me to. He noticed.</blockquote>
+<p><strong>THE TRIBUTE — 1:27–1:32</strong> He sets a clay jug and half a loaf at the base of the trunk, beside the cairn, and looks at the tree — not the goblin — when he says it.</p>
+<blockquote><strong>FARMER:</strong> Man whose field started drinking again. Tell no one.</blockquote>
+<p><strong>THE ASK — 1:32–1:37</strong></p>
+<p>In still air, one leaf tilts — and holds. The goblin, who knows what that means now, straightens up.</p>
+<blockquote><strong>SCAVENGER:</strong> He&#x27;s asking you something.</blockquote>
+<p><strong>WOULD YOU SAY SO — 1:37–1:43</strong></p>
+<p>The goblin translating, careful, not pushing — this is the first thing the tree has ever asked anyone for.</p>
+<blockquote><strong>SCAVENGER:</strong> If somebody official came. Would you say you knew us? Out loud?</blockquote>
+<p><strong>THE REFUSAL — 1:43–1:49</strong></p>
+<p>The farmer looks at the jug he just set down, then at the road. He doesn&#x27;t look at the tree for this one.</p>
+<blockquote><strong>FARMER:</strong> I&#x27;ll bring water. I&#x27;m not bringing my name.</blockquote>
+<p><strong>WHAT A NO LOOKS LIKE — 1:49–1:53</strong></p>
+<p>Close on the leaf, which does not tilt, does not move, and has nothing to answer with.</p>
+<blockquote><strong>VO:</strong> I asked for one thing. Turns out I can hear no perfectly well.</blockquote>
+<p><strong>REGISTERED — 1:53–1:58</strong> At the horizon-touch of sunset the world flickers to wireframe for a single frame, a label folding open over the clearing and away.</p>
+<pre>SHADE · settlement(?) · pop. 2</pre>
+<blockquote><strong>VO (quiet):</strong> Population two. There is one goblin here. …It counted <em>me</em>.</blockquote>
+<p><strong>THE HOOK — 1:58–2:05</strong> The farmer stops on his way out, turns back, and looks at the lean-to, the cairn, the goblin with his fig.</p>
+<blockquote><strong>FARMER:</strong> After harvest, the assessor counts everything with a name. Yesterday there was nothing here to count.</blockquote>
+<p>SMASH TO BLACK.</p>
+<pre>SHADE · pop. 2 · TAXABLE: pending</pre>
+<hr>
+<h4>Provenance</h4>
+<p>Shot-granular successor (<code>004-t0-b</code>), steward-written (model: claude-fable-5) to <code>SCRIPT-SPEC.md</code> &quot;one beat = one shot&quot; from <code>004-t0-a</code> (the Phase-0-era script, whose beats and jokes survive intact) and committed nodes 001/002b/003b. Loop cycle 007 — the founding author&#x27;s verdict that the picture did not correlate with the script. The naming montage was one held shot across four rejected names; each name and each refusal now has its own frame. Predecessor archived as <code>leaves/004-t0-a.md</code>; published video leaves 004-t3-a/b are takes of that era.</p>
+<h4>Siblings</h4>
+<p>004a — Ticket One · 004c-y · 004c-n</p>
+<h4>Taste-rule notes</h4>
+<ul><li><strong>Cycle 007 (shot density):</strong> 21 beats / ~117s = a cut every 5.6s, ≤1</li>
+</ul><p>spoken line each. Every refusal (&quot;no leaf&quot;, &quot;aggressively nothing&quot;) is now a shot of the leaves, so the tree visibly participates in the scene it is the subject of.</p>
+<ul><li><strong>R7:</strong> the cold open shows the ceremony already in progress and the</li>
+</ul><p>third beat states the premise plainly over the tree itself; the hook is a statable question.</p>
+<ul><li><strong>R1:</strong> the name exists; population 2; the settlement is on the map.</li>
+<li><strong>R2:</strong> the farmer&#x27;s tribute is gruff, not warm; the coming threat is a</li>
+</ul><p>schema, not a villain.</p>
+<ul><li><strong>R3:</strong> the naming resolves by absurdity — the town is named after the</li>
+</ul><p>only thing the tree ever gave anyone.</p>
+<ul><li><strong>R5:</strong> hook is a real state change: legibility, and therefore taxation.</li></ul></div>
+  </details>
+</section>
+<section class="node" id="005-the-assessor">
+  <span class="tag go">Ready &mdash; Episode 5</span>
+  <h2>Episode 5: The Assessor</h2>
+  <p class="sub" style="margin:.2rem 0 0">005-the-assessor &middot; approval goes in <code>005-t0-b.yaml</code></p>
+  <p class="what">A tax man walks into town with a ledger, counts everything, and ends up asking the tree what its job is — and writing down the answer.</p>
+  <div class="unlock"><b>26 beats</b> become legal to draw
+    (<b>104</b> candidate pictures). 26 beats. It also pays off the farmer from episode 4 and sets up the magistrate, who drives episodes 6 and 7.</div>
+  <div class="note clean"><span class="lab">Fine</span>The best-built one of the five, structurally: every question and every answer gets its own frame.</div>
+  <div class="note watch"><span class="lab">Worth noticing</span>The goblin&rsquo;s past comes out here — he stole an apple, he was starving, and the tree has no way to say that with one leaf. It is the most serious moment in the show so far. It is good. But it is a tone step, and that is yours to want.</div>
+  <div class="note watch"><span class="lab">A mistake in the file &mdash; mine</span>There is a timing mistake in the middle: one beat runs <code>1:10&ndash;1:15</code> and the next runs <code>1:11&ndash;1:16</code>, so the clock goes backwards. It will not stop anything being drawn, but it needs fixing before the episode is cut together.</div>
+  <div class="note watch"><span class="lab">A mistake in the file &mdash; mine</span>The file has two separate <em>Provenance</em> sections at the bottom. Cosmetic, mine to tidy.</div>
+  <div class="rec go">APPROVE, with the timing fix logged. The fault is in the stopwatch, not the writing.</div>
+  <details open>
+    <summary>The full script &mdash; read this before approving</summary>
+    <div class="script"><h3>Node 005 — The Assessor</h3>
+<p><strong>Tree:</strong> Sapling · <strong>Parent:</strong> 004 — Shade · <strong>Trunk:</strong> yes · <strong>Status:</strong> hot<br><strong>This file is a T0 leaf</strong> (<code>005-t0-b</code>, shot-granular per SCRIPT-SPEC.md). Steward-authored trunk continuation under taste file v0.2 (see <code>../../edl.md</code>).<br><strong>Format:</strong> 9:16 vertical · ~149s · VO + dialogue · 25 beats = 25 shots</p>
+<hr>
+<h4>State change (R1)</h4>
+<p>Shade enters the kingdom&#x27;s books — assessed, recorded, <em>official</em> — and the kingdom&#x27;s bureaucracy becomes the first human institution to notice the tree is a <strong>someone</strong>: the assessor, having watched leaves answer questions all afternoon, asks the tree its occupation and writes down the reply. The scavenger&#x27;s one-apple past also surfaces and is witnessed, not hidden.</p>
+<h4>Hook (R5)</h4>
+<p>We never see what the assessor wrote. He closes the ledger on it, says the magistrate will want to see this personally, and leaves. Whatever is on that line, someone with real power reads it next episode.</p>
+<hr>
+<h4>Script</h4>
+<p><strong>COLD OPEN — 0:00–0:05</strong> Dawn over Shade: a knee-high young tree with a small crown, a crooked lean-to, a three-stone cairn, a clay jug.</p>
+<blockquote><strong>VO (dry, tired, engineer):</strong> I died an engineer and woke up as this tree. My town is one day old.</blockquote>
+<p><strong>THE METRONOME — 0:05–0:10</strong> Down the exact centre of the road walks the ASSESSOR — dust-grey robes, a ledger chained to his belt, a stub of quill.</p>
+<blockquote><strong>VO:</strong> The farmer said &quot;after harvest.&quot; It is not after harvest.</blockquote>
+<p><strong>COUNTING BEFORE SPEAKING — 0:10–0:15</strong> He stops at the clearing&#x27;s edge and counts under his breath, lips moving, before saying a word.</p>
+<blockquote><strong>VO:</strong> Which means the kingdom&#x27;s bureaucracy runs <em>ahead</em> of schedule. I have chills.</blockquote>
+<p><strong>SETTLEMENT NAME — 0:15–0:19</strong> The SCAVENGER — a small round goblin, enormous ears, one broken tusk, patchwork cloak — steps out from behind the tree into full frame, cornered, and gives it up.</p>
+<blockquote><strong>ASSESSOR:</strong> Settlement name?<br><strong>SCAVENGER:</strong> …Shade.</blockquote>
+<p><strong>FOUNDED — 0:19–0:23</strong> The goblin answers in frame; behind his shoulder, unnoticed, one leaf of the young tree twitches.</p>
+<blockquote><strong>ASSESSOR:</strong> Founded?<br><strong>SCAVENGER:</strong> Yesterday.</blockquote>
+<p><strong>STRUCTURES — 0:23–0:28</strong> He glances at the lean-to, which sags in response.</p>
+<blockquote><strong>ASSESSOR:</strong> Structures?<br><strong>SCAVENGER:</strong> One. Ish.</blockquote>
+<p><strong>NOT A LOAD RATING — 0:28–0:32</strong> He measures the lean-to&#x27;s sagging pole with a knotted string.</p>
+<blockquote><strong>ASSESSOR:</strong> &quot;Ish&quot; is not a load rating.</blockquote>
+<p><strong>THREE STONES — 0:32–0:37</strong> He counts the cairn stones one by one with the quill point — and behind him a leaf moves again in still air.</p>
+<p><strong>ORCHARD, SINGLE SPECIMEN — 0:37–0:42</strong> He crouches on his heels beside the knee-high tree, licks the quill, and writes it down without measuring anything at all.</p>
+<blockquote><strong>ASSESSOR:</strong> Orchard, single specimen. Yield?</blockquote>
+<p><strong>NO YIELD — 0:42–0:47</strong> The scavenger&#x27;s hands go up much too fast.</p>
+<blockquote><strong>SCAVENGER:</strong> None! No yield. Zero fruit. Historically.</blockquote>
+<p><strong>THE PRIOR RECORD — 0:47–0:52</strong> The assessor turns a ledger page slowly; the old entry is a single line of script.</p>
+<blockquote><strong>ASSESSOR:</strong> Noted. Separately — I have a prior record here. Not the tree&#x27;s. One apple.</blockquote>
+<p><strong>DESCRIPTION MATCHES — 0:52–0:56</strong> He raises his eyes from the page to the scavenger and holds the look.</p>
+<blockquote><strong>ASSESSOR:</strong> Subject: …description matches.</blockquote>
+<p><strong>GROUND FRUIT — 0:56–1:01</strong> The scavenger studies the dirt, all the fight gone out of him.</p>
+<blockquote><strong>SCAVENGER (quietly):</strong> It fell off the cart. Ground fruit is foraging.</blockquote>
+<p><strong>NO LEAF FOR THAT — 1:01–1:05</strong></p>
+<p>The leaf, held dead still. For the first time it has been asked a question it cannot answer.</p>
+<blockquote><strong>VO:</strong> One leaf for yes. One for no. There is no leaf for <em>he was starving</em>.</blockquote>
+<p><strong>THE FARMER — 1:05–1:10</strong> Boots and a straw hat at the clearing&#x27;s edge: the FARMER, broad and squarish, arms already crossed, has been standing there the whole time.</p>
+<p><strong>THE FARMER SPEAKS — 1:10–1:15</strong> He addresses the assessor without uncrossing his arms, only his jaw moving.</p>
+<blockquote><strong>FARMER:</strong> He keeps the weeds off. Whole stretch.<br><strong>VO:</strong> He said he wouldn&#x27;t bring his name. He brought it.<br><strong>VO:</strong> His field drinks. So do I. That is why I am taller this week than I have any right to be.</blockquote>
+<p><strong>COMMUNITY SERVICE — 1:11–1:16</strong> The quill writes three unhurried words into the ledger.</p>
+<blockquote><strong>ASSESSOR:</strong> &quot;Community service. Ongoing.&quot;</blockquote>
+<p><strong>A PAYMENT PLAN — 1:16–1:21</strong> Close on the young tree&#x27;s leaves, motionless, taking it in.</p>
+<blockquote><strong>VO:</strong> That&#x27;s not mercy. That&#x27;s worse. That&#x27;s a <em>payment plan.</em></blockquote>
+<p><strong>OCCUPATIONS — 1:21–1:26</strong> The assessor reaches the settlement schema and writes, then stalls over the second line.</p>
+<blockquote><strong>ASSESSOR:</strong> Population: two. Neither of them the tree. Occupations: farmer — non-resident — and… weed warden. Provisional.</blockquote>
+<p><strong>WATER SOURCE — 1:26–1:31</strong> The assessor looks up, quill poised — then the farmer, in frame beside him, answers it.</p>
+<blockquote><strong>ASSESSOR:</strong> Water source?<br><strong>FARMER:</strong> The channel mended itself.</blockquote>
+<p><strong>CHANNELS DO NOT — 1:31–1:36</strong> The quill stops mid-word. He looks at the farmer, then out at the damp field line.</p>
+<blockquote><strong>ASSESSOR:</strong> Channels do not mend themselves.<br><strong>FARMER (flatly):</strong> This one did.</blockquote>
+<p><strong>HE&#x27;S BEEN WATCHING — 1:36–1:41</strong> The assessor stops writing and simply looks at the tree — a long, unhurried, professional look.</p>
+<blockquote><strong>VO:</strong> Oh no. He counts things for a living. He has been counting my tells since he arrived.</blockquote>
+<p><strong>AND YOU — 1:41–1:45</strong> He walks up to the tree, kneels on one knee to bring his face level with its crown, and addresses it directly.</p>
+<blockquote><strong>ASSESSOR:</strong> And you. Occupation?</blockquote>
+<p><strong>ONE LEAF — 1:45–1:50</strong> One held wide: goblin, farmer and kneeling assessor all motionless around the tree — then one leaf tilts, slowly and deliberately.</p>
+<p><strong>POPULATION THREE — 1:50–1:56</strong> He writes one line we never see, closes the ledger, chains it, and pauses at the clearing&#x27;s edge exactly where he entered.</p>
+<blockquote><strong>ASSESSOR:</strong> The magistrate reviews all new settlements. She will want to see this one <em>personally.</em> …Population three.</blockquote>
+<p><strong>CALLED A LOT OF THINGS — 1:56–2:01</strong> Long hold on the young tree alone in the morning light.</p>
+<blockquote><strong>VO:</strong> I&#x27;ve been called a lot of things. &quot;Population&quot; is new.</blockquote>
+<p>SMASH TO BLACK.</p>
+<pre>SHADE · pop. 3 (official) · MAGISTRATE: incoming</pre>
+<hr>
+<h4>Provenance</h4>
+<p>Shot-granular successor (<code>005-t0-b</code>), steward-written (model: claude-fable-5) to <code>SCRIPT-SPEC.md</code> &quot;one beat = one shot&quot; from <code>005-t0-a</code> (the Phase-0-era script, whose dialogue survives verbatim) and the canon growth ladder in <code>style.md</code>. Loop cycle 007: the assessment was 4 shots carrying 30 lines — 7.5 lines per image, the worst density in the season — so every question and every answer now has its own frame. The episode runs longer than the 85s original because the exchanges are no longer stacked on one held wide; dialogue is unchanged. Predecessor archived as <code>leaves/005-t0-a.md</code>; published video leaves 005-t3-a/b are takes of that era.</p>
+<h4>Lineage notes</h4>
+<p><strong>Parent:</strong> 004 (trunk). Pays off 004&#x27;s hook (the assessor) and re-arms it (the magistrate). The assessor is the 002b patrol&#x27;s paperwork, promoted: still nobody&#x27;s villain — a man whose forms cannot hold the world he is honestly trying to record. The unseen ledger line is a deliberate open slot for branches: what he wrote is anyone&#x27;s to imagine (Guideline 1).</p>
+<h4>Taste-rule notes</h4>
+<ul><li><strong>R1:</strong> Shade is officially recorded; the warrant surfaces and converts to</li>
+</ul><p>&quot;community service, ongoing&quot;; the tree is counted as a person by an institution. Three changes, none reversible.</p>
+<ul><li><strong>R2:</strong> the assessor is diligence, not menace; his weapon is a schema that</li>
+</ul><p>doesn&#x27;t fit.</p>
+<ul><li><strong>R3:</strong> the threat is resolved into absurdity (&quot;&#x27;Ish&#x27; is not a load rating&quot;;</li>
+</ul><p>counting the cairn&#x27;s three stones individually) without anyone being beaten.</p>
+<ul><li><strong>R5:</strong> the hook is a concrete unknown (the ledger line) plus an incoming</li>
+</ul><p>authority with a name and a gender and a schedule.</p>
+<h4>Provenance</h4>
+<p>Steward-authored trunk continuation (see <code>leaves/005-t0-a.yaml</code> and <code>STEWARDSHIP.md</code>); taste of record remains the founder&#x27;s v0.2.</p></div>
+  </details>
+</section>
+<section class="node" id="006a-miracle-clause">
+  <span class="tag go">Ready &mdash; Episode 6, option A</span>
+  <h2>Episode 6, option A: Miracle Clause</h2>
+  <p class="sub" style="margin:.2rem 0 0">006a-miracle-clause &middot; approval goes in <code>006a-t0-b.yaml</code></p>
+  <p class="what">A magistrate can&rsquo;t work out what legal category a talking tree belongs to, and finally registers it as a shrine — with two weeks to produce one miracle.</p>
+  <div class="unlock"><b>31 beats</b> become legal to draw
+    (<b>124</b> candidate pictures). 31 beats — the most of any single script in the tree.</div>
+  <div class="note stop"><span class="lab">Read this before you say yes</span><strong>This script gives the goblin a name: Jerry.</strong> He has been &ldquo;the scavenger&rdquo; for five episodes and this is the first time anyone says it out loud. That is a canon decision and it is yours, not mine. Approving this script approves the name. If you want him called something else, or want him to stay unnamed, say so and it changes in one line.</div>
+  <div class="note stop"><span class="lab">Read this before you say yes</span><strong>This is one of a pair.</strong> 006a and 006b are two different episode 6s off the same ending, and picking which one is the real one is yours (R4). Approving this script does <em>not</em> pick it — it only makes it legal to draw. You can approve both and choose later.</div>
+  <div class="note clean"><span class="lab">Fine</span>Funniest script in the set. The magistrate ruling out &ldquo;resident&rdquo;, &ldquo;property&rdquo;, &ldquo;livestock&rdquo; and &ldquo;roommate&rdquo; one at a time is the best comic run the show has.</div>
+  <div class="rec go">APPROVE the script — but read the Jerry line first and tell me if the name is wrong.</div>
+  <details open>
+    <summary>The full script &mdash; read this before approving</summary>
+    <div class="script"><h3>Node 006a — The Miracle Clause</h3>
+<p><strong>Tree:</strong> Sapling · <strong>Parent:</strong> 005 — The Assessor · <strong>Trunk:</strong> undecided · <strong>Status:</strong> hot<br><strong>This file is a T0 leaf</strong> (<code>006a-t0-b</code>, shot-granular per SCRIPT-SPEC.md). Steward-authored candidate under taste file v0.2 — one of an R4 sibling pair (006a/006b); the trunk call between them is reserved to the founder (see <code>../../edl.md</code>). <strong>Format:</strong> 9:16 vertical · ~189s · VO + dialogue · 31 beats = 31 shots</p>
+<hr>
+<h4>State change (R1)</h4>
+<p>The magistrate reads the ledger line — <strong>&quot;Occupation: answers questions&quot;</strong> — and the law finds its category: the tree is registered a <strong>shrine</strong>, the settlement&#x27;s fees are waived, and the scavenger is appointed its <strong>keeper</strong>. A fugitive whose entire legal existence was one apple now holds <em>papers</em>. And the tree consents to all of it, on the record, with one leaf.</p>
+<h4>Hook (R5)</h4>
+<p>Registration is provisional on one formality: a shrine must demonstrate <strong>one (1) verified wonder, witnessed by an officer of rank</strong>. The magistrate returns at the full moon. Two weeks to arrange a miracle, no definition provided, or the category collapses back into &quot;taxable orchard&quot; — taking the keeper&#x27;s papers down with it.</p>
+<hr>
+<h4>Script</h4>
+<p><strong>COLD OPEN — 0:00–0:06</strong> A tree the height of a man, small crown, side branches; below it a goblin re-stacks three cairn stones by size, steps back, and re-stacks them by colour.</p>
+<blockquote><strong>VO (dry, tired, engineer):</strong> I died an engineer and woke up as this tree. This morning my town is being <em>staged</em>.</blockquote>
+<p><strong>AUDIT PREP — 0:06–0:10</strong> The farmer walks in and sets a second clay jug down beside the first, squaring it up.</p>
+<blockquote><strong>FARMER:</strong> Infrastructure.</blockquote>
+<p><strong>YOU CANNOT MOP — 0:10–0:15</strong> The goblin drags a branch across the dirt, sweeping the clearing smooth.</p>
+<blockquote><strong>VO:</strong> I&#x27;ve seen this before. It&#x27;s called audit prep. Everyone tries.</blockquote>
+<p><strong>SHE IS EARLY — 0:15–0:20</strong> The MAGISTRATE is already inside the settlement — travel-worn robes of office, a seal of office on a chain, reading the assessor&#x27;s ledger as she walks.</p>
+<blockquote><strong>VO:</strong> That is a magistrate. The assessor writes things down. She decides what they <em>are</em>.</blockquote>
+<p><strong>REFLEX — 0:20–0:25</strong> The goblin dives behind the lean-to out of pure reflex — then remembers the assessor gave him a job, and emerges to stand at approximate attention.</p>
+<p><strong>READING THE FILE — 0:25–0:30</strong> She reads without looking up; the page turns under her thumb.</p>
+<blockquote><strong>MAGISTRATE:</strong> Settlement, Shade. Founded yesterday, structures one-<em>ish</em>, population three.</blockquote>
+<p><strong>RESIDENT NUMBER THREE — 0:30–0:35</strong> She stops walking and reads the last line twice, her thumb marking the place.</p>
+<blockquote><strong>MAGISTRATE:</strong> Occupation of resident number three: <em>&quot;answers questions.&quot;</em></blockquote>
+<p><strong>WELL? — 0:35–0:38</strong> She closes the ledger with one hand and looks straight into the crown, level with her own face.</p>
+<blockquote><strong>MAGISTRATE:</strong> Well?</blockquote>
+<p><strong>ONE LEAF — 0:38–0:43</strong> In still air, one leaf tilts — and holds.</p>
+<p><strong>THE TIDY EXPLANATION — 0:43–0:49</strong> She takes the quill from behind her ear, looks at it, and puts it back — the only sign of a mind changing.</p>
+<blockquote><strong>MAGISTRATE:</strong> …So the assessor hasn&#x27;t been drinking. Pity. That was the tidy explanation.</blockquote>
+<p><strong>NOT A RESIDENT — 0:49–0:54</strong> She begins to pace, counting categories off on her fingers.</p>
+<blockquote><strong>MAGISTRATE:</strong> It cannot be a <em>resident</em> — residents owe hearth tax, and it has no hearth.</blockquote>
+<p><strong>NOT PROPERTY — 0:54–1:01</strong> She turns on her heel, one finger raised.</p>
+<blockquote><strong>MAGISTRATE:</strong> It cannot be <em>property</em> — whoever claims it inherits liability for one documented apple incident.</blockquote>
+<p><strong>NO TAKERS — 1:01–1:05</strong> The goblin raises a hand halfway, then puts it down.</p>
+<blockquote><strong>SCAVENGER:</strong> No takers.<br><strong>MAGISTRATE:</strong> Shocking.</blockquote>
+<p><strong>NOT LIVESTOCK — 1:05–1:10</strong> She looks at the tree&#x27;s trunk, then at the ground it stands in.</p>
+<blockquote><strong>MAGISTRATE:</strong> It cannot be <em>livestock</em> — livestock can be moved. Can it be moved?</blockquote>
+<p><strong>A ROOMMATE — 1:10–1:15</strong> The goblin gestures between himself and the tree, improvising.</p>
+<blockquote><strong>SCAVENGER:</strong> No — no, he&#x27;s not livestock, he&#x27;s more of a <em>roommate</em>—</blockquote>
+<p><strong>DO YOU HAVE A DEED — 1:15–1:20</strong> She stops and holds out one empty hand for a document.</p>
+<blockquote><strong>MAGISTRATE:</strong> Roommates are a tenancy. Tenancies have deeds. Do you have a deed?</blockquote>
+<p><strong>I HAVE A FIG — 1:20–1:24</strong> He searches his patchwork cloak, then produces a single fig and offers it.</p>
+<blockquote><strong>SCAVENGER:</strong> …I have a fig. He grew it.</blockquote>
+<p><strong>THE ANSWER ARRIVES — 1:24–1:31</strong> She stops pacing and looks slowly at the jugs at the roots, the cairn, the two of them — a life arranged around a tree in one day.</p>
+<blockquote><strong>MAGISTRATE:</strong> The kingdom has exactly one category for a thing that stands in one place, belongs to no one, and answers questions.</blockquote>
+<p><strong>SHRINE — 1:31–1:34</strong> She says the word straight into the crown.</p>
+<blockquote><strong>MAGISTRATE:</strong> <em>Shrine.</em></blockquote>
+<p><strong>A SCRIBBLE — 1:34–1:40</strong> Close on the leaves, motionless, absorbing it.</p>
+<blockquote><strong>VO:</strong> Engineer. Tree. Town. Now a <em>church</em>. My career has stopped being a line.</blockquote>
+<p><strong>THE FORM — 1:40–1:45</strong> She draws a folded form from inside her robes, opens it flat against her forearm, and starts filling it as she recites; behind her the farmer&#x27;s crossed arms come loose.</p>
+<blockquote><strong>MAGISTRATE:</strong> Shrine grounds are fee-exempt. Shrines require registered upkeep. Therefore—</blockquote>
+<p><strong>DO YOU CONSENT — 1:45–1:51</strong> She turns to the tree, pen ready over the consent field.</p>
+<blockquote><strong>MAGISTRATE:</strong> Registration requires consent of the venerated object. Do you consent?</blockquote>
+<p><strong>CONSENT RECORDED — 1:51–1:58</strong> One leaf tilts against the sky. Her pen moves once.</p>
+<blockquote><strong>MAGISTRATE:</strong> Consent recorded. First signature I&#x27;ve taken all year that didn&#x27;t argue.</blockquote>
+<p><strong>THE STAMP — 1:58–2:03</strong> She presses a wax stamp onto the page and lifts it away clean.</p>
+<p><strong>CONGRATULATIONS — 2:03–2:10</strong> She tears the slip free and holds it out; the goblin takes it in both hands.</p>
+<blockquote><strong>MAGISTRATE:</strong> Shrines have keepers. Keeper of record — <em>Jerry</em>. Congratulations. The assessor&#x27;s community service is reclassified: <em>employment.</em></blockquote>
+<p><strong>A LINE ITEM — 2:10–2:15</strong> He turns the paper over once, finds the seal on the back, and stops.</p>
+<blockquote><strong>SCAVENGER (quietly, wrecked):</strong> I&#x27;ve never been a line item before.<br><strong>VO (quiet):</strong> Jerry. Six days, and I never asked.</blockquote>
+<p><strong>THE CLAUSE — 2:15–2:24</strong> She stops on the form&#x27;s final line and, for the first time, looks faintly entertained.</p>
+<blockquote><strong>MAGISTRATE:</strong> One formality. Provisional until the shrine demonstrates a &quot;verified wonder, witnessed by an officer of rank.&quot; Fourteen nights.</blockquote>
+<p><strong>SURPRISE ME — 2:24–2:30</strong> The goblin hurries two steps after her, waving the paper; she keeps walking.</p>
+<blockquote><strong>SCAVENGER:</strong> What— what qualifies? Is there a list? A form?<br><strong>MAGISTRATE:</strong> Surprise me.</blockquote>
+<p><strong>A NORMAL RELEASE — 2:30–2:36</strong> She walks away up the road; the goblin stares at his paper and the farmer looks up at the tree.</p>
+<blockquote><strong>VO:</strong> Fourteen days to ship a miracle. No spec. One reviewer. …So — a normal release.</blockquote>
+<p><strong>THE DEDICATION LINE — 2:36–2:43</strong> At the clearing&#x27;s edge she stops, turns, and speaks back across the distance.</p>
+<blockquote><strong>MAGISTRATE:</strong> One thing. The dedication line I left blank — shrines declare <em>to whom</em>. Those words outlive towns.</blockquote>
+<p><strong>BLANK — 2:43–2:48</strong> Close on the paper in the goblin&#x27;s hands: one ruled line, empty.</p>
+<p>SMASH TO BLACK.</p>
+<pre>SHADE · shrine (provisional) · MIRACLE: due full moon</pre>
+<hr>
+<h4>Provenance</h4>
+<p>Shot-granular successor (<code>006a-t0-b</code>), steward-written (model: claude-fable-5) to <code>SCRIPT-SPEC.md</code> &quot;one beat = one shot&quot; from <code>006a-t0-a</code> (dialogue verbatim) and the canon growth ladder in <code>style.md</code>. Loop cycle 007: the hearing was 23 lines across two shots of &quot;she paces the clearing&quot; — 10.25 lines per image, the worst in the season — so each legal category she rules out now gets its own frame, and the tree is on camera for every one of its own answers. Predecessor archived as <code>leaves/006a-t0-a.md</code>; published video leaves 006a-t3-a/b are takes of that era.</p>
+<h4>Lineage notes</h4>
+<p><strong>Parent:</strong> 005 (trunk tip). Pays 005&#x27;s debt on schedule: the ledger line is read by the power it was written for, and revealed — <em>&quot;answers questions&quot;</em> — the assessor&#x27;s honest schema-defeat, now the tree&#x27;s legal identity. Sibling of 006b (R4 fork: same debt, two payments; the trunk call is the founder&#x27;s). The <strong>dedication line</strong> is this node&#x27;s deliberate open slot (Guideline 1): to whom is the shrine of Shade dedicated? Branch it.</p>
+<h4>Taste-rule notes</h4>
+<ul><li><strong>R1:</strong> three irreversible changes — the tree gains a legal category, the</li>
+</ul><p>settlement gains fee-exemption, the scavenger gains papers. Each has a cost: the category carries a deadline, the exemption depends on it, the papers dissolve if it collapses.</p>
+<ul><li><strong>R2:</strong> the magistrate is jurisprudence, not menace — she <em>wants</em> the</li>
+</ul><p>category to exist, and the threat is a clause, not a person.</p>
+<ul><li><strong>R3:</strong> the legal crisis resolves by absurdity-escalation: the law defeats</li>
+</ul><p>resident, property, livestock, and tenancy in turn until only <em>shrine</em> — the most ridiculous and most correct answer — is left standing. Both sides end up better off, laughing distance from where they started.</p>
+<ul><li><strong>R5:</strong> the hook is a real state change armed with a timer: a bureaucratically</li>
+</ul><p>mandated miracle, undefined, due at the full moon, with the keeper&#x27;s papers as the stake.</p>
+<h4>Provenance</h4>
+<p>Steward-authored candidate (see <code>leaves/006a-t0-a.yaml</code> and <code>STEWARDSHIP.md</code>); taste of record remains the founder&#x27;s v0.2. Released as an R4 sibling pair with 006b — per the post-launch operating rules, the trunk call between siblings waits for the founder.</p></div>
+  </details>
+</section>
+<section class="node" id="007a-the-demo">
+  <span class="tag go">Ready &mdash; Episode 7, option A</span>
+  <h2>Episode 7, option A: The Demo</h2>
+  <p class="sub" style="margin:.2rem 0 0">007a-the-demo &middot; approval goes in <code>007a-t0-b.yaml</code></p>
+  <p class="what">They rehearse a fake miracle for two weeks, it fails in front of the magistrate, and then the tree does a real one by spending everything it has.</p>
+  <div class="unlock"><b>29 beats</b> become legal to draw
+    (<b>116</b> candidate pictures). 29 beats. It also introduces the first pilgrim, which is where the show stops being about paperwork.</div>
+  <div class="note watch"><span class="lab">Worth noticing</span><strong>This one only matters if 006a is the real episode 6.</strong> It is built directly on it. If you end up picking 006b instead, this script is off the trunk and the 29 beats go with it. Approving it is not wasted — it stays on the tree as a branch — but it is the one approval here whose value depends on a choice you have not made.</div>
+  <div class="note clean"><span class="lab">Fine</span>The strongest ending in the set: the rehearsed miracle is ruined by wind doing the choreography better, and the real miracle only happens after the goblin stops performing and tells the truth.</div>
+  <div class="rec go">APPROVE, but after 006a — and know that its value rides on the 006 choice.</div>
+  <details open>
+    <summary>The full script &mdash; read this before approving</summary>
+    <div class="script"><h3>Node 007a — The Demo</h3>
+<p><strong>Tree:</strong> Sapling · <strong>Parent:</strong> 006a — The Miracle Clause · <strong>Trunk:</strong> undecided · <strong>Status:</strong> hot<br><strong>This file is a T0 leaf</strong> (<code>007a-t0-b</code>, shot-granular per SCRIPT-SPEC.md). Steward-authored continuation under taste file v0.3 (R7), deepening the 006a line so the founder&#x27;s trunk call between the 006 siblings can be felt on more material (R4). <strong>Format:</strong> 9:16 vertical · ~193s · VO + dialogue · 29 beats = 29 shots</p>
+<hr>
+<h4>State change (R1)</h4>
+<p>The wonder is <strong>verified</strong> — not the one they rehearsed, the one that was true: the tree spends two weeks of growth budget in one act and fruits every branch out of season before an officer of rank. The shrine becomes permanent, Shade produces its <strong>first surplus</strong> (an orchard&#x27;s worth of figs), and at dawn the settlement has its first <strong>pilgrim</strong> — belief has arrived, and belief takes orders from no one in the story.</p>
+<h4>Hook (R5)</h4>
+<p>A stranger kneeling at the clearing&#x27;s edge at first light, hood down, waiting to be received. The patrol wanted taxes, the assessor wanted a count, the magistrate wanted a category. The pilgrim wants *something no one in Shade knows how to give* — and more are behind her on the road.</p>
+<hr>
+<h4>Script</h4>
+<p><strong>COLD OPEN — 0:00–0:05</strong> Night. A plank leans against the lean-to, covered in charcoal scrawl; a man-height tree stands over it.</p>
+<blockquote><strong>VO (dry, tired, engineer):</strong> I died an engineer and woke up as this tree. Tonight I have a deadline.</blockquote>
+<p><strong>THE BACKLOG — 0:05–0:10</strong> Close on the plank: four items, three struck through.</p>
+<pre>MIRACLE-001: water → wine .......... blocked (no wine)
+MIRACLE-002: levitating stones ..... blocked (Farmer said no)
+MIRACLE-003: prophecy .............. blocked (legal review)
+MIRACLE-004: leaf choreography ..... IN PROGRESS</pre>
+<p><strong>CUT SCOPE — 0:10–0:22</strong> The goblin taps the last line with a stick, briefing his troops.</p>
+<blockquote><strong>VO:</strong> Fourteen days to ship a miracle, the magistrate said, or we&#x27;re a weed with paperwork. So we did what every team does with an impossible deadline: cut scope until the miracle was a <em>demo</em>.</blockquote>
+<p><strong>FROM THE TOP — 0:22–0:27</strong> He raises the stick like a conductor; the leaves gather.</p>
+<blockquote><strong>SCAVENGER:</strong> From the top! And — ripple!</blockquote>
+<p><strong>THE RIPPLE — 0:27–0:32</strong> A wave travels up the branches, leaf by leaf — and stalls halfway.</p>
+<p><strong>BRANCH THREE — 0:32–0:37</strong> He jabs the stick at one particular branch, outraged.</p>
+<blockquote><strong>SCAVENGER:</strong> You dropped it at branch three again! Branch three is our weakest performer!</blockquote>
+<p><strong>GIVEN NOTES — 0:37–0:43</strong> Close on the offending branch, its leaves hanging limp and unrepentant.</p>
+<blockquote><strong>VO:</strong> I am being given notes. By a goblin. With a stick. Branch three has been dark for a week because every leaf I move tonight is one I can&#x27;t spend on the fourteenth.</blockquote>
+<p><strong>MIRACLES DON&#x27;T REHEARSE — 0:43–0:47</strong> The farmer watches from a stump, arms crossed, jug at his feet.</p>
+<blockquote><strong>FARMER:</strong> Miracles don&#x27;t rehearse.</blockquote>
+<p><strong>DAWN TWILIGHT — 0:47–0:52</strong> The goblin turns, stick raised, absolutely certain.</p>
+<blockquote><strong>SCAVENGER:</strong> Everything rehearses. Sunrise rehearses. It&#x27;s called <em>dawn twilight.</em></blockquote>
+<p><strong>FULL MOON — 0:52–0:57</strong> The moon clears the horizon, full, and silver light floods the clearing.</p>
+<p><strong>THE CHAIR — 0:57–1:02</strong> The MAGISTRATE unfolds a small travelling chair, sits, and crosses her ankles.</p>
+<blockquote><strong>MAGISTRATE:</strong> Impress me. I brought a chair.</blockquote>
+<p><strong>THE CUE — 1:02–1:07</strong> The goblin raises the stick, sweating; the leaves draw in and hold.</p>
+<p><strong>THE WIND — 1:07–1:12</strong> Wind sweeps the whole field — and every tree on the horizon performs the choreography at once.</p>
+<blockquote><strong>VO:</strong> Two weeks rehearsing in stillness. Nobody booked the <em>wind.</em></blockquote>
+<p><strong>FLAILING — 1:12–1:17</strong> He conducts bigger and bigger, narrating over the noise, and finally gestures at the moon as if he ordered it.</p>
+<p><strong>NO REACTION — 1:17–1:22</strong> The magistrate, seated, does not move. The farmer covers his eyes.</p>
+<p><strong>THE WIND DIES — 1:22–1:27</strong> The field goes still. The goblin&#x27;s arms come down.</p>
+<p><strong>NO TRICK — 1:27–1:32</strong> He stops performing entirely; his voice drops into the truth-voice.</p>
+<blockquote><strong>SCAVENGER:</strong> …There&#x27;s no trick, ma&#x27;am. He doesn&#x27;t <em>do</em> wonders. He gives things.</blockquote>
+<p><strong>SHADE, WATER, ANSWERS — 1:32–1:36</strong> He counts them off, not selling anything now.</p>
+<blockquote><strong>SCAVENGER:</strong> Shade. Water. Answers.</blockquote>
+<p><strong>A FIG, ONCE — 1:36–1:45</strong> He touches his own chest where the fig once hit him.</p>
+<blockquote><strong>SCAVENGER:</strong> A fig, once — you <em>threw</em> it at me — when nobody else in the world would give me anything. That&#x27;s the whole tree.</blockquote>
+<p><strong>LETTING GO — 1:45–1:50</strong> Underground: two weeks of hoarded light rushes up through the roots all at once.</p>
+<blockquote><strong>VO:</strong> Two weeks of growth, saved up in the dark. All of it. Now.</blockquote>
+<p><strong>THE ORCHARD — 1:50–1:55</strong> Every branch blooms and fruits at once — dozens of figs swelling in real time, silver in the moonlight.</p>
+<blockquote><strong>VO (very quiet):</strong> He said the fig was the whole tree. Fine. Then here&#x27;s the whole tree.</blockquote>
+<p><strong>THE COST — 1:55–2:00</strong> The leaves droop as the fruit swells: everything spent, again.</p>
+<p><strong>SHE CATCHES ONE — 2:00–2:05</strong> The magistrate rises, walks under the branches, and a fig comes loose into her hand at exactly head height.</p>
+<p><strong>WONDER VERIFIED — 2:05–2:12</strong> She writes standing up, the form against her forearm.</p>
+<blockquote><strong>MAGISTRATE:</strong> &quot;Wonder verified. Orchard, single specimen, fruiting out of season before an officer of rank.&quot;</blockquote>
+<p><strong>AND IT SHARES — 2:12–2:16</strong> She looks at the fig in her hand, then adds one more line, quieter.</p>
+<blockquote><strong>MAGISTRATE:</strong> &quot;…And it shares.&quot;</blockquote>
+<p><strong>THE FIGS — 2:16–2:21</strong> Dawn. The clearing is littered with figs like dropped coins.</p>
+<p><strong>THE STRANGER — 2:21–2:24</strong> At the clearing&#x27;s edge a hooded stranger kneels, hood down, travel-worn — not counting, not assessing. Praying.</p>
+<blockquote><strong>SCAVENGER (whisper):</strong> …Who&#x27;s that?</blockquote>
+<p><strong>THE FIRST ONE — 2:24–2:29</strong> The farmer picks up his jug and does not look at anyone.</p>
+<blockquote><strong>FARMER (grim):</strong> Word travels. That&#x27;s the first one.<br><strong>SCAVENGER:</strong> First <em>what?</em></blockquote>
+<p><strong>WHAT DOES SHE WANT — 2:29–2:36</strong> Long hold on the kneeling figure in the dawn light.</p>
+<blockquote><strong>VO:</strong> Taxes I could pay. A count I could stand still for. A category I could fit inside. …What does <em>she</em> want?</blockquote>
+<p>SMASH TO BLACK.</p>
+<pre>SHADE · shrine: verified · FIRST PILGRIM: at the gate</pre>
+<hr>
+<h4>Lineage notes</h4>
+<p><strong>Parent:</strong> 006a. Deepens the civic-comedy line: the miracle clause pays off by the series&#x27; oldest pattern — the tree&#x27;s answer to every institution is <em>expenditure</em> (the fig in 002b, the double-tilt in 003b, the orchard here). The arrival ladder continues: patrol → assessor → magistrate → <strong>pilgrim</strong>, each wanting something less formable than the last. The figs are Shade&#x27;s first economy; the pilgrim is its first believer — both are open branch material (Guideline 1).</p>
+<h4>Taste-rule notes</h4>
+<ul><li><strong>R1:</strong> wonder verified (the shrine is permanent), two weeks of growth</li>
+</ul><p>spent (the cost is on screen), first surplus exists, first pilgrim arrives.</p>
+<ul><li><strong>R2:</strong> no one is a villain — the demo&#x27;s antagonist is <em>weather</em>, and the</li>
+</ul><p>magistrate wants to be impressed.</p>
+<ul><li><strong>R3:</strong> the rehearsed miracle collapses into absurdity (the wind does the</li>
+</ul><p>choreography better), and the real one lands only after the comedy has cleared the stage for honesty — laughter first, then the true thing.</p>
+<ul><li><strong>R5:</strong> the hook is a new kind of arrival with an unformable want, and</li>
+</ul><p>&quot;more behind her on the road.&quot;</p>
+<h4>Provenance</h4>
+<p>Steward-authored continuation (see <code>leaves/007a-t0-a.yaml</code> and <code>STEWARDSHIP.md</code>); taste of record remains the founder&#x27;s v0.2. Written to give the founder&#x27;s 006 trunk call deeper material on the 006a side; its sibling-line counterpart is 007b under 006b.</p></div>
+  </details>
+</section>
+<h2 style="margin-top:2.4rem">The two I am asking you <em>not</em> to approve yet</h2><p class="sub">Both are good writing sitting in the wrong shape. The fix is mine and costs no machine time. Full script still included &mdash; read them if you want, but a yes here would put the episode-2 fault back into the show.</p>
+<section class="node no" id="006b-reconciliation">
+  <span class="tag no">Not ready &mdash; Episode 6, option B</span>
+  <h2>Episode 6, option B: Reconciliation</h2>
+  <p class="sub" style="margin:.2rem 0 0">006b-reconciliation &middot; <code>006b-t0-a.yaml</code></p>
+  <p class="what">The magistrate turns out to be able to read the same hidden layer the tree can — the kingdom&rsquo;s bureaucracy is a monitoring system.</p>
+  <div class="unlock">Only 4 shots, for a 90-second episode.</div>
+  <div class="note stop"><span class="lab">Read this before you say yes</span><strong>I recommend you do not approve this one yet, and the reason is mine to fix.</strong> The five scripts above were rewritten so that one beat is one shot — about a cut every 5.6 seconds. This one never got that pass. Its shot list has <strong>4 shots for 90 seconds</strong>, which is 22 seconds per picture. That is exactly the fault you named on episode 2 when you said the pictures did not match the script.</div>
+  <div class="note watch"><span class="lab">Worth noticing</span>The idea in it is the best single idea in the whole tree — that the tax inspectors have been reading a debug console for centuries and calling it tradition. It deserves the rewrite rather than being filmed as-is.</div>
+  <div class="rec no">DO NOT APPROVE YET. Let me rewrite it to the same shape as the others first — that is my work, not a decision, and it costs no machine time.</div>
+  <details>
+    <summary>The full script &mdash; tap to read</summary>
+    <div class="script"><h3>Node 006b — Reconciliation</h3>
+<p><strong>Tree:</strong> Sapling · <strong>Parent:</strong> 005 — The Assessor · <strong>Trunk:</strong> undecided · <strong>Status:</strong> hot<br><strong>This file is a T0 leaf.</strong> Steward-authored candidate under taste file v0.2 — one of an R4 sibling pair (006a/006b); the trunk call between them is reserved to the founder (see <code>../../edl.md</code>). <strong>Format:</strong> 9:16 vertical · 60–90s · VO + dialogue</p>
+<hr>
+<h4>State change (R1)</h4>
+<p>The kingdom&#x27;s bureaucracy is revealed for what it is: <strong>a monitoring system</strong>. Settlement reviews happen at last light because the review <em>is</em> the overlay — the magistrate reads the sunset wireframe the way the tree does, and her office exists to reconcile the kingdom&#x27;s ledgers with what the sky renders. And the two now disagree about Shade: the ledger says <strong>population three</strong>; the sky still says <strong>two</strong>. The tree is officially recorded — and officially uncounted — at the same time.</p>
+<h4>Hook (R5)</h4>
+<p>Discrepancies get <em>corrected</em> — and the last time the sky refused to count what a ledger held, it stopped counting an entire town, which now exists only on archive maps the magistrate is not permitted to remember. She would rather amend the sky than the ledger; no one has ever been permitted to try. Shade has until her next circuit to be countable.</p>
+<hr>
+<h4>Script</h4>
+<p><strong>COLD OPEN — 0:00–0:10</strong></p>
+<p>Dusk. The <strong>MAGISTRATE</strong> is simply <em>there</em>, at the clearing&#x27;s edge, alone — no one saw her come up the road. Robes of office, a seal on a chain, an open pocket-watch in her hand. The scavenger, mid-bite of bread, freezes.</p>
+<blockquote><strong>MAGISTRATE (not looking up from the watch):</strong> Settlement review is<br>conducted at last light. Regulation One.<br><strong>VO:</strong> Not rule one-of-many. Rule <em>One</em>. Every org has a rule nobody<br>remembers the reason for. In my experience the reason is always an outage.</blockquote>
+<p><strong>THE READING — 0:10–0:35</strong></p>
+<p>She reads the assessor&#x27;s ledger aloud, flat, while the light goes long and gold. The humans stand in an anxious row, like a headcount.</p>
+<blockquote><strong>MAGISTRATE:</strong> Shade. Founded yesterday. Structures: one-<em>ish</em> — I&#x27;ll speak<br>to him about that. Water: <em>&quot;mended itself&quot;</em> — him too. Population: three.<br>Occupation of resident number three: <em>(beat)</em> — &quot;answers questions.&quot;</blockquote>
+<p>She closes the ledger. Checks the watch. Snaps it shut.</p>
+<blockquote><strong>MAGISTRATE:</strong> The assessor is thorough. So: either he is wrong, or the sky<br>is. We&#x27;ll know in four minutes.</blockquote>
+<p>The farmer and the scavenger look at each other. <em>The sky?</em></p>
+<blockquote><strong>VO:</strong> …She&#x27;s not here to judge us. She&#x27;s here to <em>reconcile</em> us. Ledger<br>versus production. I used to be this woman. At 3 a.m. In a worse robe.</blockquote>
+<p><strong>THE WINDOW — 0:35–1:05</strong></p>
+<p>The sun touches the horizon. The world flickers to <strong>wireframe</strong> — grass lattice, low-poly cairn, the jug a labeled cylinder. The farmer and the scavenger notice nothing, as they never do. The scavenger is still talking:</p>
+<blockquote><strong>SCAVENGER:</strong> —and the water&#x27;s very reliable now, ma&#x27;am, whatever the form<br>says, so if you&#x27;re thirsty— is she having a moment? Ma&#x27;am?</blockquote>
+<p>The magistrate has turned her back on all of them — and is <em>reading the sky</em>. Over the clearing, the label renders:</p>
+<pre>SHADE · settlement(?) · pop. 2</pre>
+<p>She holds up her seal. For one frame it renders in wireframe with its own tag: <code>seal_of_office · auth: valid</code>.</p>
+<blockquote><strong>VO (panic, dawning):</strong> She can see the debug layer. The— <em>the regulations.</em><br>Sunset reviews. Assessors who count everything. It was never bureaucracy.<br>It&#x27;s <em>monitoring</em>. They&#x27;ve been reading the console for centuries and built<br>a civilization around never admitting it.</blockquote>
+<p>She steps close to the trunk — the humans out of earshot — and speaks quietly, eyes still on the label overhead.</p>
+<blockquote><strong>MAGISTRATE:</strong> The ledger says three. The sky says two. When they disagree,<br>sapling, one of them gets corrected.</blockquote>
+<p>The window closes. The world goes solid. Warm dusk, crickets.</p>
+<p><strong>THE PRECEDENT — 1:05–1:25</strong></p>
+<p>She turns back to the humans, all routine again: findings noted, review pending, next circuit at harvest&#x27;s end. Then, at the road — precisely where the assessor paused — she stops, without turning around.</p>
+<blockquote><strong>MAGISTRATE:</strong> The last time a ledger held a name the sky would not count…<br>the sky stopped counting the whole valley. There are maps in the archive<br>with a town on them that I am not permitted to remember.</blockquote>
+<p>Beat.</p>
+<blockquote><strong>MAGISTRATE:</strong> Be countable by harvest&#x27;s end. I would rather amend the sky<br>than the ledger. <em>(quieter)</em> No one has ever been permitted to try.</blockquote>
+<p>She walks into the dark. Long hold on the tree, leaves very still against the last light.</p>
+<blockquote><strong>VO:</strong> Two weeks to convince the sky I exist. …I&#x27;ve filed tickets against<br>systems that didn&#x27;t believe in me before. I usually lost.</blockquote>
+<p>SMASH TO BLACK.</p>
+<pre>SHADE · ledger: 3 · sky: 2 · RECONCILE: pending</pre>
+<hr>
+<h4>Lineage notes</h4>
+<p><strong>Parent:</strong> 005 (trunk tip). Pays 005&#x27;s debt on schedule: the ledger line is read by the power it was written for, and revealed — <em>&quot;answers questions&quot;</em> — the same reveal as its sibling (whichever leads, the canon of the line agrees). Sibling of 006a (R4 fork: same debt, two payments; the trunk call is the founder&#x27;s). This candidate pulls the 002c/003c mystery trunkward by graft: the sunset overlay, absorbed into trunk canon in 004, here acquires <em>readers</em> — the kingdom&#x27;s institutions themselves. The <strong>unremembered town</strong> is this node&#x27;s deliberate open slot (Guideline 1): what&#x27;s on those archive maps? Branch it.</p>
+<h4>Taste-rule notes</h4>
+<ul><li><strong>R1:</strong> the world&#x27;s institutions change category (bureaucracy → monitoring</li>
+</ul><p>apparatus); the magistrate learns what the tree is; a ledger/sky discrepancy is opened with a deadline and a precedent. None of it can be unlearned.</p>
+<ul><li><strong>R2:</strong> the threat is a reconciliation process scarred by precedent — the</li>
+</ul><p>magistrate fears the correction and sides, as far as her office allows, with the tree. No one is malicious; the danger is a system honestly kept.</p>
+<ul><li><strong>R3:</strong> comedy runs through (audit prep, the oblivious headcount row, the</li>
+</ul><p>scavenger offering water to a woman reading the sky) but the central tension <em>opens</em> rather than resolves — this is the R3-weak sibling, stated plainly; 006a is the R3-strong one. The pair exists so the choice is felt on material (R4), not argued.</p>
+<ul><li><strong>R5:</strong> the hook is a countable, dated stake — sky says 2, ledger says 3,</li>
+</ul><p>harvest&#x27;s end — armed with the heaviest precedent the story has shown.</p>
+<h4>Provenance</h4>
+<p>Steward-authored candidate (see <code>leaves/006b-t0-a.yaml</code> and <code>STEWARDSHIP.md</code>); taste of record remains the founder&#x27;s v0.2. Released as an R4 sibling pair with 006a — per the post-launch operating rules, the trunk call between siblings waits for the founder.</p></div>
+  </details>
+</section>
+<section class="node no" id="007b-the-hearth">
+  <span class="tag no">Not ready &mdash; Episode 7, option B</span>
+  <h2>Episode 7, option B: The Hearth</h2>
+  <p class="sub" style="margin:.2rem 0 0">007b-the-hearth &middot; <code>007b-t0-a.yaml</code></p>
+  <p class="what">They work out that the sky counts fires, not people, so the goblin builds a firepit for the extremely flammable tree.</p>
+  <div class="unlock">Only 5 shots, for an 85-second episode.</div>
+  <div class="note stop"><span class="lab">Read this before you say yes</span><strong>Same problem as 006b, same recommendation.</strong> 5 shots for 85 seconds. Not written to the shape you approved.</div>
+  <div class="note watch"><span class="lab">Worth noticing</span>&ldquo;You&rsquo;re &mdash; I say this with respect &mdash; kindling with opinions&rdquo; is the best line in the tree. It should survive the rewrite.</div>
+  <div class="rec no">DO NOT APPROVE YET. Same fix needed as 006b.</div>
+  <details>
+    <summary>The full script &mdash; tap to read</summary>
+    <div class="script"><h3>Node 007b — The Hearth</h3>
+<p><strong>Tree:</strong> Sapling · <strong>Parent:</strong> 006b — Reconciliation · <strong>Trunk:</strong> undecided · <strong>Status:</strong> hot<br><strong>This file is a T0 leaf.</strong> Steward-authored continuation under taste file v0.2, deepening the 006b line so the founder&#x27;s trunk call between the 006 siblings can be felt on more material (R4). <strong>Format:</strong> 9:16 vertical · 60–90s · VO + dialogue</p>
+<hr>
+<h4>State change (R1)</h4>
+<p>The census bug is found and fixed: the sky counts <strong>hearths</strong> — a person is where their fire is — so the scavenger builds the flammable resident a fire pit, the tree confirms its own dialog <em>instantly</em> (it has learned what dithering costs), and sky and ledger reconcile: <strong>pop. 3</strong>, and the <code>(?)</code> that has hung over Shade since 004 resolves. The system is now <em>certain</em> about them for the first time. And certainty, it turns out, is <strong>logged</strong>.</p>
+<h4>Hook (R5)</h4>
+<p>The final line of the sunset window: <code>Δ pop.: +1 · logged</code>. A log implies a log <em>reader</em>. Being uncounted was dangerous — but being counted means Shade now appears in the feed of whatever corrected that unremembered town. They fixed the discrepancy; they created a record. Something tails this log.</p>
+<hr>
+<h4>Script</h4>
+<p><strong>COLD OPEN — 0:00–0:10</strong></p>
+<p>Sunset, the wireframe window. The scavenger sits at attention with a charcoal stick and a bark slab, taking dictation — the tree tilts leaves, the scavenger scribbles. The window closes. He has written four characters.</p>
+<blockquote><strong>VO:</strong> The sky says two. To fix a count, you find out what the counter<br>counts. Data collection rate: three seconds per day. I have had slower<br>dashboards, but they were at least <em>paid</em> for.</blockquote>
+<p><strong>THE INVESTIGATION — 0:10–0:35</strong></p>
+<p>Montage across days, each sunset a three-second read, findings scrawled on the bark slab like a case board:</p>
+<pre>DAY 1: farmhouse label ......... &quot;dwelling · hearth: 1&quot;
+DAY 2: lean-to label ........... &quot;structure(?)&quot;
+DAY 3: cairn ................... &quot;monument(?)&quot; — the sky is unsure about ROCKS
+DAY 4: farmer, standing still .. counted. me, ALSO standing still .. not counted</pre>
+<blockquote><strong>VO:</strong> There it is. The farmhouse has a hearth and a count. The lean-to<br>has a question mark and <em>nothing</em>. The sky doesn&#x27;t count bodies. It counts<br><strong>fires</strong>. A person is where their hearth is.<br><br><strong>VO:</strong> …And the kingdom taxes by hearth. Their law isn&#x27;t law. It&#x27;s a<br><em>cached copy of the schema.</em> They&#x27;ve been mirroring the sky&#x27;s data model<br>for centuries and calling it tradition.</blockquote>
+<p><strong>THE BUILD — 0:35–0:55</strong></p>
+<p>The scavenger, briefed via leaf-dictation, understands the assignment and is appalled by it:</p>
+<blockquote><strong>SCAVENGER:</strong> You want a <em>fire.</em> Next to <em>you.</em> You&#x27;re — I say this with<br>respect — <em>kindling with opinions.</em></blockquote>
+<p>He builds it anyway: a small stone-ringed fire pit between the roots, each stone placed with terror. The farmer stands by with a full jug, doing the grim arithmetic of a man who has appointed himself fire brigade.</p>
+<blockquote><strong>FARMER:</strong> One spark and your whole religion is charcoal.<br><strong>SCAVENGER:</strong> He&#x27;s not a religion, he&#x27;s my roommate.<br><strong>FARMER:</strong> Worse.</blockquote>
+<p>The flame catches. Tiny, careful, ringed. The tree&#x27;s leaves pull back from it anyway, all of them, visibly.</p>
+<blockquote><strong>VO:</strong> There is a fire. Inside my root perimeter. I am made of wood and<br>this is the worst uptime strategy I have ever personally approved.</blockquote>
+<p><strong>THE WINDOW — 0:55–1:15</strong></p>
+<p>Sunset. Wireframe. The lean-to label re-renders first: <code>dwelling · hearth: 1</code>. Then, over the clearing, the settlement label flickers — recalculating — and over the tree itself a dialog opens, the first the trunk has ever shown:</p>
+<pre>UNRESOLVED ENTITY · hearth detected
+VERIFY RESIDENT: Y/N</pre>
+<blockquote><strong>VO:</strong> Last time the sky asked someone a question, I hear he got seventeen<br>hours to dither. I&#x27;ve done that dance in another life. You never get the<br>hours back.</blockquote>
+<p>He pushes <strong>Y</strong> instantly.</p>
+<p>The labels cascade, fast: <code>RESIDENT: verified</code> — <code>pop. 2 → 3</code> — and then the settlement line rewrites itself and the audience sees it before he does:</p>
+<pre>SHADE · settlement · pop. 3</pre>
+<p>No question mark. For the first time since the world started rendering it — <strong>the sky is sure about them.</strong></p>
+<p><strong>THE HOOK — 1:15–1:25</strong></p>
+<p>The window starts to die. And in its last half-second, one more line renders — small, in the corner, system-toned, the kind of line nobody is meant to read:</p>
+<pre>Δ pop.: +1 · logged</pre>
+<p>The world snaps solid. Dusk, crickets, the tiny hearth-fire crackling between the roots. The scavenger cheers at a sky he cannot read. The farmer pours a precautionary arc of water around the fire pit.</p>
+<blockquote><strong>VO (quiet):</strong> Logged. …I spent a whole career on the other side of that<br>word. Logs don&#x27;t exist for the people <em>in</em> them. Somewhere, something<br>tails this log.</blockquote>
+<p>Long hold on the little fire. SMASH TO BLACK.</p>
+<pre>SHADE · pop. 3 (reconciled) · CHANGE: logged</pre>
+<hr>
+<h4>Lineage notes</h4>
+<p><strong>Parent:</strong> 006b. Deepens the mystery line by <em>solving</em> its opening problem — the census discrepancy — and paying the real price of the solution: visibility. The kingdom-as-cached-schema idea extends 006b&#x27;s monitoring reveal (hearth tax = the sky&#x27;s data model, mirrored). The instant-Y is a deliberate rhyme with the 003c/004c fork: the same dialog shape, answered by a character who has <em>grown past</em> the dither — and the audience who watched 004c-y knows pushing buttons has consequences. The <strong>log reader</strong> is this node&#x27;s deliberate open slot (Guideline 1): what tails the log? Branch it.</p>
+<h4>Taste-rule notes</h4>
+<ul><li><strong>R1:</strong> the tree gains a hearth (a legal and systemic <em>address</em>), the count</li>
+</ul><p>reconciles, the settlement&#x27;s <code>(?)</code> resolves, and the change is logged — each irreversible, the last one ominously so.</p>
+<ul><li><strong>R2:</strong> no villain — the danger is an audit trail, and everyone on screen</li>
+</ul><p>is trying to keep everyone else alive (the farmer&#x27;s jug, the ringed stones, the leaves pulling back).</p>
+<ul><li><strong>R3:</strong> the crisis of being uncountable resolves through honest absurdity:</li>
+</ul><p>personhood achieved via <em>fire code</em>. &quot;Kindling with opinions&quot; carries the episode&#x27;s fear in a joke.</p>
+<ul><li><strong>R5:</strong> the hook is one rendered line that recontextualizes the victory:</li>
+</ul><p>they didn&#x27;t just fix a count, they created a record — and records have readers.</p>
+<h4>Provenance</h4>
+<p>Steward-authored continuation (see <code>leaves/007b-t0-a.yaml</code> and <code>STEWARDSHIP.md</code>); taste of record remains the founder&#x27;s v0.2. Written to give the founder&#x27;s 006 trunk call deeper material on the 006b side; its sibling-line counterpart is 007a under 006a.</p></div>
+  </details>
+</section>
+<h2 style="margin-top:2.4rem">The 7 older side-branches</h2><p class="sub">These are branches off the main line, written before the show found its shape. <strong>None of them has a shot list</strong>, so approving one turns on nothing at all today &mdash; it would still need the same rewrite as the two above. They are here for completeness, and because you should be able to see the whole tree. Full text on each.</p>
+<section class="node" id="002a-broken-channel">
+  <h2 style="font-size:1.1rem">002a-broken-channel</h2>
+  <p class="what" style="font-size:.96rem">The tree fixes a farmer&rsquo;s broken irrigation channel and something under the field acknowledges the fix.</p>
+  <div class="unlock" style="background:var(--bg)">Unlocks <b>0</b> render jobs today &mdash;
+    no shot list exists. <code>002a-t0-b.yaml</code></div>
+  <details>
+    <summary>The full script &mdash; tap to read</summary>
+    <div class="script"><h3>Node 002a — The Broken Channel</h3>
+<p><strong>Tree:</strong> Sapling · <strong>Parent:</strong> 001 — Capability Inventory · <strong>Trunk:</strong> undecided · <strong>Status:</strong> hot<br><strong>This file is a T0 leaf</strong> (<code>002a-t0-b</code>, molt successor per SCRIPT-SPEC.md).<br><strong>Format:</strong> 9:16 vertical · 60–90s · VO-driven</p>
+<hr>
+<h4>State change (R1)</h4>
+<p>Three at once: the sapling performs his <strong>first act on the world</strong> (rerouting water through a cracked channel); the farmer&#x27;s field state flips (dust → mud); and the world reveals it is <strong>not inert</strong> — the system acknowledges his change.</p>
+<h4>Hook (R5)</h4>
+<p>The system <em>responds</em> to him. Not a mood, a mechanism: he pushed a fix, and something under the field pushed back an acknowledgment. The question a viewer can state: *what is the system that just answered — and what does it want with him?*</p>
+<hr>
+<h4>Script</h4>
+<p><strong>COLD OPEN — 0:00–0:05</strong></p>
+<p>Macro shot: a tiny two-leaf banyan sapling at the edge of a field of grey dust, trembling in a dry wind.</p>
+<blockquote><strong>VO (dry, tired, engineer):</strong> I died an engineer and woke up a tree. Two capabilities: sense, and grow. Today, a production incident found me anyway.</blockquote>
+<p><strong>THE FARMER — 0:05–0:22</strong></p>
+<p>A FARMER (50s, sun-cracked, kind eyes gone flat) trudges into frame, drops to his knees in the grey dust two paces from the sapling. He picks up a handful of dirt. It runs out of his fist like ash.</p>
+<blockquote><strong>FARMER (to the sky, hoarse):</strong> Three seasons! Three seasons I&#x27;ve prayed, and you send the rain to Marn&#x27;s field and the rot to mine! What do you <em>want</em> from me?!<br><strong>VO:</strong> He&#x27;s cursing the gods. Classic misattribution. In my experience, when one house floods and the neighbor&#x27;s burns, it&#x27;s not theology. It&#x27;s <em>plumbing.</em></blockquote>
+<p><strong>THE DIAGNOSIS — 0:22–0:42</strong></p>
+<p>The view dives underground: a glowing root-map of the field — the water table, and cutting across it, an old irrigation channel rendered as a bright conduit. Halfway along it: a crack. Water hemorrhages sideways, flooding a low field on one side while the channel runs dry into the farmer&#x27;s field on the other.</p>
+<blockquote><strong>VO:</strong> There it is. Cracked channel, thirty meters west. Upstream: Marn&#x27;s field, drowning. Downstream: this poor guy, desert. It&#x27;s not a drought. It&#x27;s a <em>routing bug</em>. Water takes the cheapest path — ask any incident review.</blockquote>
+<pre>ROOT CAUSE: channel breach, sector W
+IMPACT:     field A flooded / field B starved
+FIX:        reroute. owner: me. eta: …oh no.</pre>
+<p><strong>THE FIX — 0:42–1:08</strong></p>
+<p>Timelapse, the episode&#x27;s centerpiece: one root grows west through dark soil, day-strobe overhead. The cost shows — the sapling&#x27;s young leaves yellow at the edges as everything he has goes into one direction.</p>
+<blockquote><strong>VO:</strong> Growth budget: all of it. Cancel the new leaves. Cancel the height. One root, thirty meters, toward the crack. My deploy speed is measured in seasons, and I&#x27;m the only engineer in the region.</blockquote>
+<p>The root arrives at the breach, wedges into the crack, and <em>drinks</em> the leak — wicking the overflow along its own length back toward the dry field. A thin dark thread of moisture creeps through the grey dust like ink.</p>
+<p>The FARMER, days later in the timelapse, stops mid-curse. Kneels. Presses his palm flat into the dirt. It&#x27;s <em>damp</em>. He looks around — no rain, no clouds — nothing but a scrappy little sapling he could swear was smaller last week.</p>
+<blockquote><strong>FARMER (whisper):</strong> …Marn? You seeing this?</blockquote>
+<p><strong>THE RESPONSE / HOOK — 1:08–1:25</strong></p>
+<p>Underground view. The moisture thread flows steady. The sapling settles, spent.</p>
+<blockquote><strong>VO:</strong> Patch deployed. Fields rebalancing. And nobody will ever know it was—</blockquote>
+<p>The channel <em>pulses</em> — not the water, the <strong>channel itself</strong>: a slow wave of light runs the conduit&#x27;s full length, passes <em>through</em> his root at the breach, and the flow adjusts — precisely, deliberately — matching the exact draw of his fix.</p>
+<blockquote><strong>VO (very quiet):</strong> …That wasn&#x27;t physics. Physics doesn&#x27;t <em>acknowledge receipt</em>.</blockquote>
+<p>The pulse comes again. Brighter. Aimed at him.</p>
+<p>SMASH TO BLACK.</p>
+<pre>200 OK</pre>
+<hr>
+<h4>Provenance</h4>
+<p>Molt successor script (<code>t0-b</code>), steward-written (model: claude-fable-5) to <code>SCRIPT-SPEC.md</code> from <code>leaves/002a-seed.md</code> (verbatim founding text) and committed node 001. Predecessor archived as <code>leaves/002a-t0-a.md</code> (molted 2026-07-25, sap event 002); the molt adds the R7 cold open and removes the serial-viewing recap — the diagnosis/fix/response spine survives whole.</p>
+<h4>Siblings</h4>
+<p>002b — The First Citizen · 002c — ADMIN(?)</p>
+<h4>Anticipated grafts (§9)</h4>
+<p>The overlay in 002c can explain <em>what</em> pulsed through the channel; the scavenger of 002b can wander into this irrigation story. Reconvergence is a designed payoff.</p>
+<h4>Taste-rule notes</h4>
+<ul><li><strong>R7:</strong> cold open re-grounds premise and names both capabilities in</li>
+</ul><p>5s; each beat causes the next (curse → diagnosis → fix → response); hook question statable.</p>
+<ul><li><strong>R1:</strong> field state flips, farmer&#x27;s belief flips, world reveals</li>
+</ul><p>responsiveness.</p>
+<ul><li><strong>R2:</strong> no villain — the &quot;antagonist&quot; is a cracked pipe and a system</li>
+</ul><p>nobody maintained.</p>
+<ul><li><strong>R3:</strong> the comedy is the deflation of cosmic despair into plumbing.</li>
+<li><strong>R5:</strong> hook is a genuine state change — the world has a control</li>
+</ul><p>plane, and it just noticed him.</p></div>
+  </details>
+</section>
+<section class="node" id="002c-admin-wireframe">
+  <h2 style="font-size:1.1rem">002c-admin-wireframe</h2>
+  <p class="what" style="font-size:.96rem">The sunset wireframe layer, seen properly for the first time.</p>
+  <div class="unlock" style="background:var(--bg)">Unlocks <b>0</b> render jobs today &mdash;
+    no shot list exists. <code>002c-t0-b.yaml</code></div>
+  <details>
+    <summary>The full script &mdash; tap to read</summary>
+    <div class="script"><h3>Node 002c — ADMIN(?)</h3>
+<p><strong>Tree:</strong> Sapling · <strong>Parent:</strong> 001 — Capability Inventory · <strong>Trunk:</strong> undecided · <strong>Status:</strong> hot<br><strong>This file is a T0 leaf</strong> (<code>002c-t0-b</code>, molt successor per SCRIPT-SPEC.md).<br><strong>Format:</strong> 9:16 vertical · 60–90s · VO-driven</p>
+<hr>
+<h4>State change (R1)</h4>
+<p>The world&#x27;s category changes: it is not scenery, it is a <strong>system</strong> — with objects, labels, and services — and his own label is corrupted in a way nobody else&#x27;s is. His identity becomes an open question with evidence attached.</p>
+<h4>Hook (R5)</h4>
+<p>The debug overlay tags him <code>ADMIN(?)</code> — half-corrupted, unlike every clean label around him — and vanishes at dusk. The question a viewer can state: *why is the tree labeled ADMIN, and what happens at the next sunset?*</p>
+<hr>
+<h4>Script</h4>
+<p><strong>COLD OPEN — 0:00–0:05</strong></p>
+<p>Macro shot: a tiny two-leaf banyan sapling alone in a huge field, straining — visibly, absurdly, its whole small body tensed.</p>
+<blockquote><strong>VO (dry, tired, engineer):</strong> Engineer, died, reincarnated as a tree. Capabilities: sense and grow. Day nine: I am testing for an undocumented third.</blockquote>
+<p><strong>THE TEST LOG — 0:05–0:40</strong></p>
+<p>A rapid montage. Each experiment is one shot plus one line of a growing on-screen log, deadpan.</p>
+<p>He strains at nothing, hard.</p>
+<pre>TEST 12: think &quot;menu&quot; very hard............ null</pre>
+<p>He strains harder. A bird lands on him, unimpressed.</p>
+<pre>TEST 13: think &quot;STATUS WINDOW&quot; in caps..... null
+TEST 14: think it in a cool anime voice.... null (bird acquired)</pre>
+<p>Timelapse: he grows two twigs at precise angles.</p>
+<pre>TEST 23: grow twigs at exactly 90°......... success. system response: none.
+TEST 24: spell &quot;HELLO&quot; in root pattern..... success. readable only by moles.
+TEST 25: mole response..................... ate the H</pre>
+<p>Night. Stars wheel overhead.</p>
+<pre>TEST 31: pray.............................. embarrassing. null.
+TEST 32: threaten the sky.................. null. bird came back though.</pre>
+<blockquote><strong>VO:</strong> Conclusion after nine days: this world has no interface, no console, no cheat menu. It&#x27;s just… a world. Which would be fine. Except — reincarnation <em>happened</em>. Somebody implemented that. And nobody builds a feature that big without leaving a debug flag on somewhere.</blockquote>
+<p><strong>SUNSET — 0:40–1:00</strong></p>
+<p>Golden hour. The light goes long and amber. The bird flies home. Everything is soft, warm, cinematic — and then, for exactly three seconds, the sun touches the horizon and the world <em>flickers</em>.</p>
+<p>WIREFRAME. Everything at once: the grass is a lattice of green vectors, the rocks are low-poly meshes, the distant hills are flat billboards, the bird overhead is a rigged armature trailing a label. Floating tags snap open over every object, clean monospace on the amber sky:</p>
+<pre>GRASS      v2.3.1-stable
+ROCK       static · no owner
+STREAM     service · flow=managed
+BIRD       npc_ambient · loop=daily</pre>
+<blockquote><strong>VO (whisper):</strong> …There it is. There&#x27;s the debug layer. Render distance: everything. Refresh: sunset. <em>Somebody left the flag on.</em></blockquote>
+<p><strong>THE LABEL / HOOK — 1:00–1:25</strong></p>
+<p>Over his own thin trunk, a tag renders. It stutters — half the characters corrupted, resolving and failing:</p>
+<pre>▓▓P▓IN(?)
+A▓M▓N(?)
+ADMIN(?)</pre>
+<blockquote><strong>VO:</strong> That&#x27;s… that&#x27;s not <code>npc</code>.</blockquote>
+<p>The sun slips below the horizon. The wireframes collapse, the tags fold shut, the world snaps back to soft ordinary dusk — grass, rocks, stream, as if nothing happened. One small plant alone in an enormous dark field.</p>
+<blockquote><strong>VO:</strong> ADMIN. Question mark. <em>Whose</em> question mark — mine, or the system&#x27;s?</blockquote>
+<p>SMASH TO BLACK.</p>
+<pre>TEST 33: wait.</pre>
+<hr>
+<h4>Provenance</h4>
+<p>Molt successor script (<code>t0-b</code>), steward-written (model: claude-fable-5) to <code>SCRIPT-SPEC.md</code> from <code>leaves/002c-seed.md</code> (verbatim founding text) and committed node 001. Predecessor archived as <code>leaves/002c-t0-a.md</code> (molted 2026-07-25, sap event 002); the test-log spine survives whole — the molt adds the R7 cold open (premise + capabilities in one line) and removes the serial-viewing recap.</p>
+<h4>Siblings</h4>
+<p>002a — The Broken Channel · 002b — The First Citizen</p>
+<h4>Anticipated grafts (§9)</h4>
+<p>The overlay can explain the channel&#x27;s response in 002a (`STREAM service · flow=managed<code> is the same system that pulsed </code>200 OK`), and how a leaf tilts in still air in 002b. This branch is the tree&#x27;s designed reconvergence point.</p>
+<h4>Taste-rule notes</h4>
+<ul><li><strong>R7:</strong> cold open states who/what/capabilities in one line; the montage</li>
+</ul><p>is self-explaining (each test = shot + log line); the hook is a statable question with a countdown (next sunset).</p>
+<ul><li><strong>R1:</strong> the world&#x27;s category changes (system, not scenery) and his</li>
+</ul><p>identity becomes an open question with evidence attached.</p>
+<ul><li><strong>R2:</strong> no antagonist at all — the tension is epistemic; even the</li>
+</ul><p>corrupted label isn&#x27;t hostile, just <em>unresolved</em>.</p>
+<ul><li><strong>R3:</strong> the comedy is the test log — the gap between anime expectations</li>
+</ul><p>(<code>TEST 14</code>) and empirical reality (<code>bird acquired</code>).</p>
+<ul><li><strong>R5:</strong> the hook is a state change he cannot un-know, on a timer.</li></ul></div>
+  </details>
+</section>
+<section class="node" id="003a-oncall-rotation">
+  <h2 style="font-size:1.1rem">003a-oncall-rotation</h2>
+  <p class="what" style="font-size:.96rem">The tree tries to work out whether anyone is coming to help.</p>
+  <div class="unlock" style="background:var(--bg)">Unlocks <b>0</b> render jobs today &mdash;
+    no shot list exists. <code>003a-t0-a.yaml</code></div>
+  <details>
+    <summary>The full script &mdash; tap to read</summary>
+    <div class="script"><h3>Node 003a — The On-Call Rotation</h3>
+<p><strong>Tree:</strong> Sapling · <strong>Parent:</strong> 002a — The Broken Channel · <strong>Trunk:</strong> undecided · <strong>Status:</strong> hot<br><strong>This file is a T0 leaf.</strong> Branch contribution (Guideline 1: parent declared — that&#x27;s the whole ceremony).<br><strong>Format:</strong> 9:16 vertical · 60–90s · VO-driven</p>
+<hr>
+<h4>State change (R1)</h4>
+<p>Three at once: the farmer finds the mended crack and <em>chooses reverence over pruning</em> (first human relationship with the tree); the system escalates from acknowledging one fix to <strong>routing him the fault queue</strong> of the whole valley; and the protagonist&#x27;s self-understanding flips — he isn&#x27;t a tree that fixed a pipe, he&#x27;s infrastructure now.</p>
+<h4>Hook (R5)</h4>
+<p>He died on call at 3 a.m. — and the world just put him back on the rotation. The queue is real, it is long, and it is visible on screen: the audience leaves counting open tickets with him.</p>
+<hr>
+<h4>Script</h4>
+<p><strong>RECAP BEAT — 0:00–0:08</strong></p>
+<p>Underground view from 002a: the channel&#x27;s pulse, again. Then again — steady now, patient, like a cursor blinking.</p>
+<blockquote><strong>VO:</strong> The pulse didn&#x27;t stop. It&#x27;s not talking. It&#x27;s… <em>waiting</em>. I know this feeling. This is the feeling of a system that has found a working component.</blockquote>
+<p><strong>THE FARMER FINDS IT — 0:08–0:35</strong></p>
+<p>Surface. The FARMER follows the damp line through his field on his knees, palm down, like reading braille. It leads him to the channel wall — to the crack — to the <strong>root</strong> wedged in it, glistening, obviously alive, obviously <em>deliberate</em>.</p>
+<p>He sits back on his heels. Looks at the crack. Looks along the thirty meters of field to the scrappy little sapling. Back at the crack.</p>
+<blockquote><strong>FARMER (quietly):</strong> …You?</blockquote>
+<p>He reaches out — the audience braces for the knife every farmer carries — and instead <strong>pulls the loose stones back around the root</strong>, packing mud to shelter it. Then, awkwardly, not sure why he&#x27;s doing it, he stacks three flat stones beside the crack. A cairn. The world&#x27;s smallest shrine, built by a man who would deny building a shrine.</p>
+<blockquote><strong>VO:</strong> He&#x27;s… reinforcing my patch. He&#x27;s <em>reinforcing my patch.</em> Sir, I have never received a code review this kind in my entire—<br><br><strong>FARMER (standing, gruff, to nobody):</strong> Tell no one.</blockquote>
+<p><strong>THE QUEUE OPENS — 0:35–1:05</strong></p>
+<p>Underground view. The channel pulses once more — brighter — and then the pulse <em>forks</em>. New threads of light race outward along the water table, far past his roots, and return carrying <strong>pings</strong>. Each ping renders as a distant point of light and a line in the corner of the frame:</p>
+<pre>FAULT  mill-wheel (jammed) ......... 2.1 km NE
+FAULT  pond, silted ................ 800 m E
+FAULT  well, collapsing ............ 3.4 km N
+FAULT  channel, sector K (cracked).. 1.7 km W</pre>
+<blockquote><strong>VO (dawning horror):</strong> No. No no no. I know what this is.</blockquote>
+<p>The list keeps growing. Six faults. Nine. Fourteen.</p>
+<blockquote><strong>VO:</strong> One fix. I made <em>one</em> fix, unassigned, out of the goodness of my sap — and the system did what systems always do to the one person who closes a ticket.</blockquote>
+<p>The final line renders over his trunk, in the same script as the ADMIN label the audience hasn&#x27;t seen from this branch — a half-familiar glyph:</p>
+<pre>ROLE: maintainer (assigned)
+QUEUE: 14 open</pre>
+<p><strong>HOOK — 1:05–1:25</strong></p>
+<p>Slow push-in on the tiny sapling. The farmer&#x27;s cairn in the foreground. Fourteen points of light pulsing patiently on the horizon like a pager going off in every direction at once.</p>
+<blockquote><strong>VO:</strong> I died at 3:07 a.m., on call, alone, fixing a broken system nobody else would touch.</blockquote>
+<p>Beat.</p>
+<blockquote><strong>VO:</strong> I have been reincarnated… into an on-call rotation.</blockquote>
+<p>Beat. The nearest fault — the silted pond — pings again, slightly brighter. Impatient.</p>
+<blockquote><strong>VO (resigned, almost fond):</strong> …Ticket one of fourteen.</blockquote>
+<p>SMASH TO BLACK.</p>
+<pre>QUEUE: 14 open · SLA: unknown</pre>
+<hr>
+<h4>Lineage notes</h4>
+<p><strong>Parent:</strong> 002a. <strong>Anticipated grafts:</strong> the queue glyph is the same script as the 002c overlay — one system, two windows into it. The silted pond (ticket 2) sits beside where the 002b scavenger scavenges; a maintainer needs hands.</p>
+<h4>Taste-rule notes</h4>
+<ul><li><strong>R1:</strong> farmer&#x27;s stance changes (knife → cairn); tree&#x27;s role changes (component → maintainer); the world&#x27;s scale opens (14 faults).</li>
+<li><strong>R2:</strong> still no villain — the antagonist is deferred maintenance itself, the most sympathetic monster there is.</li>
+<li><strong>R3:</strong> the resolution of his horror is laughing at it — the cosmic joke of dying on call and being re-hired.</li>
+<li><strong>R5:</strong> the queue is a hard state change with a built-in engine for episodes: every ticket is a story.</li>
+</ul><h4>Provenance</h4>
+<p>Branch contributed by the author-agent&#x27;s model (see <code>leaves/003a-t0-a.yaml</code>) under taste file v0.2; trunk/graft decisions remain the tending author&#x27;s (Guideline 3).</p></div>
+  </details>
+</section>
+<section class="node" id="003c-y-slash-n">
+  <h2 style="font-size:1.1rem">003c-y-slash-n</h2>
+  <p class="what" style="font-size:.96rem">The Y/N dialog appears over the tree and it has to answer.</p>
+  <div class="unlock" style="background:var(--bg)">Unlocks <b>0</b> render jobs today &mdash;
+    no shot list exists. <code>003c-t0-a.yaml</code></div>
+  <details>
+    <summary>The full script &mdash; tap to read</summary>
+    <div class="script"><h3>Node 003c — Y/N</h3>
+<p><strong>Tree:</strong> Sapling · <strong>Parent:</strong> 002c — ADMIN(?) · <strong>Trunk:</strong> undecided · <strong>Status:</strong> hot<br><strong>This file is a T0 leaf.</strong> Branch contribution (Guideline 1: parent declared — that&#x27;s the whole ceremony).<br><strong>Format:</strong> 9:16 vertical · 60–90s · VO-driven</p>
+<hr>
+<h4>State change (R1)</h4>
+<p>The system stops being a read-only overlay: when he pushes at his own corrupted label during the three-second window, it <strong>responds with a confirmation dialog</strong> — <code>VERIFY ROLE: Y/N</code> — and stays dirty after sunset ends. The world is now interactive, mid-transaction, and waiting on <em>him</em>.</p>
+<h4>Hook (R5)</h4>
+<p>A one-character choice with seventeen hours to think and no documentation. <code>Y</code> or <code>N</code>, and no way to know what either does. The audience gets the whole night to argue about it — with him.</p>
+<hr>
+<h4>Script</h4>
+<p><strong>COLD OPEN — 0:00–0:10</strong></p>
+<p>Day. The field. Absolutely nothing happening — and over it, a countdown burning in the corner like a speedrun timer:</p>
+<pre>NEXT WINDOW: 16:12:47</pre>
+<blockquote><strong>VO:</strong> Seventeen hours until sunset. Three seconds of debug overlay. Which gives me — let me do the math — <em>no margin for error whatsoever.</em></blockquote>
+<p><strong>THE PLAN — 0:10–0:40</strong></p>
+<p>Montage: the sapling <em>rehearses</em>. The test-log gag from 002c returns, but the jokes are load-bearing now:</p>
+<pre>PREP 01: attention drill — find own label in &lt;0.5s ......... done
+PREP 02: rank experiments by info-per-second ............... done
+PREP 03: experiment list, final ............................ 11 items
+PREP 04: realistic experiment list ......................... 1 item</pre>
+<blockquote><strong>VO:</strong> Eleven experiments in three seconds. Sure. And after that I&#x27;ll refactor the sun. No — one window, one test. The label. The <code>(?)</code>. Everything else on that overlay renders <em>stable</em>. I&#x27;m the only thing in this world the system isn&#x27;t sure about.</blockquote>
+<p>The bird from 002c lands on him, settles in like it bought tickets.</p>
+<blockquote><strong>VO:</strong> Great. An audience.</blockquote>
+<pre>PREP 05: remove bird ....................................... failed. bird is load-bearing now</pre>
+<p><strong>THE WINDOW — 0:40–1:00</strong></p>
+<p>The sun touches the horizon. The world flickers to wireframe — grass lattice, low-poly rocks, the bird a labeled armature (<code>npc_ambient · loop=daily</code>) — and the timer slams to:</p>
+<pre>WINDOW: 3.00</pre>
+<p>He finds his label instantly. <code>A▓M▓N(?)</code>. And — the way he learned to <em>push</em> growth in 001, the way he pushed a root into the crack in 002a&#x27;s sibling world — he pushes <strong>at the question mark</strong>.</p>
+<pre>WINDOW: 1.40</pre>
+<p>The label stutters. Resolves. Not into an answer — into a <strong>prompt</strong>, rendering character by character like an old terminal:</p>
+<pre>ROLE ASSERTION: ADMIN
+VERIFY: Y/N _</pre>
+<pre>WINDOW: 0.30</pre>
+<blockquote><strong>VO:</strong> Wait — what happens if—</blockquote>
+<p>The sun slips under. The wireframes collapse. The world snaps back to ordinary dusk.</p>
+<p><strong>THE HOOK — 1:00–1:25</strong></p>
+<p>Except.</p>
+<p>Over his trunk, faint as an afterimage, <em>the prompt is still there</em> — the only piece of overlay that didn&#x27;t fold shut. A cursor, blinking against the darkening sky. The bird looks at it, then at him, and pointedly relocates to a different tree.</p>
+<blockquote><strong>VO:</strong> It&#x27;s still rendering. Sunset ended and it&#x27;s <em>still rendering.</em> This isn&#x27;t display anymore. This is a transaction, open, waiting for input.</blockquote>
+<p>Beat.</p>
+<blockquote><strong>VO:</strong> Y or N. Yes or no. Verify a role I never claimed, granted by a system I can&#x27;t read, with powers I can&#x27;t see — or refuse it and stay… whatever I am. One character. No docs. No undo.</blockquote>
+<p>The countdown timer reappears in the corner, but changed:</p>
+<pre>INPUT TIMEOUT: 16:59:59</pre>
+<blockquote><strong>VO (quiet):</strong> …It gave me a deadline. Seventeen hours. The exact length of one night to decide who I am.</blockquote>
+<p>SMASH TO BLACK. The cursor blinks once more in the dark.</p>
+<pre>Y/N _</pre>
+<hr>
+<h4>Lineage notes</h4>
+<p><strong>Parent:</strong> 002c. <strong>Anticipated grafts:</strong> the prompt&#x27;s script is the queue-glyph of 003a (one system: tickets for maintainers, dialogs for admins); a <code>Y</code> could explain everything the channel did in 002a. The bird refusing to sit near an open transaction is a joke 003b&#x27;s scavenger would understand.</p>
+<h4>Taste-rule notes</h4>
+<ul><li><strong>R1:</strong> the world&#x27;s category changes again (interactive, transactional); a deadline exists; the protagonist&#x27;s identity is now formally <em>pending</em>.</li>
+<li><strong>R2:</strong> no antagonist — the pressure is a blinking cursor and the absence of documentation, the most honest horror an engineer knows.</li>
+<li><strong>R3:</strong> the prep-log deflates the tension it builds (<code>bird is load-bearing now</code>); the joke and the plan are the same beats.</li>
+<li><strong>R4:</strong> which way he answers is exactly the kind of decision the taste file says must be <em>felt on material</em> — the branch structure downstream of this node is the point.</li>
+<li><strong>R5:</strong> the hook is a literal input prompt with a timer — a cliffhanger the audience can vote on by watering.</li>
+</ul><h4>Provenance</h4>
+<p>Branch contributed by the author-agent&#x27;s model (see <code>leaves/003c-t0-a.yaml</code>) under taste file v0.2; trunk/graft decisions remain the tending author&#x27;s (Guideline 3).</p></div>
+  </details>
+</section>
+<section class="node" id="004a-ticket-one">
+  <h2 style="font-size:1.1rem">004a-ticket-one</h2>
+  <p class="what" style="font-size:.96rem">The first ticket filed against the world.</p>
+  <div class="unlock" style="background:var(--bg)">Unlocks <b>0</b> render jobs today &mdash;
+    no shot list exists. <code>004a-t0-a.yaml</code></div>
+  <details>
+    <summary>The full script &mdash; tap to read</summary>
+    <div class="script"><h3>Node 004a — Ticket One</h3>
+<p><strong>Tree:</strong> Sapling · <strong>Parent:</strong> 003a — The On-Call Rotation · <strong>Trunk:</strong> undecided · <strong>Status:</strong> hot<br><strong>This file is a T0 leaf.</strong> Branch contribution (Guideline 1: parent declared — that&#x27;s the whole ceremony).<br><strong>Format:</strong> 9:16 vertical · 60–90s · VO-driven</p>
+<hr>
+<h4>State change (R1)</h4>
+<p>The maintainer learns to <strong>dispatch</strong>: he cannot reach the silted pond, so he routes the farmer to it — infrastructure paging a human. The farmer goes from private ally (cairn) to <em>recruited field tech</em>, and recruits Marn; headcount goes from zero to two. And the system registers it: the queue stops treating him as a component and starts treating him as an <strong>owner</strong>. He died an engineer. Three weeks dead, he&#x27;s in management.</p>
+<h4>Hook (R5)</h4>
+<p><code>escalation: accepted · field techs: 2 (unpaid)</code> — the org chart now exists, it grows without his permission, and the queue&#x27;s next ping is the one thing two men with shovels can&#x27;t fix.</p>
+<hr>
+<h4>Script</h4>
+<p><strong>RECAP BEAT — 0:00–0:08</strong></p>
+<p>Underground. The fourteen fault-points from 003a still pulsing on the horizon of the root-map. The nearest — the silted pond — pings again. Brighter. Then twice in a row.</p>
+<blockquote><strong>VO:</strong> Ticket one has begun paging me. I have no legs, no shovel, and a growth budget of one leaf per three days. The SLA is going to be a problem.</blockquote>
+<p><strong>THE MATH — 0:08–0:25</strong></p>
+<p>Root-map view: a dotted projection line crawls from his roots toward the pond, 800 meters east. A counter renders beside it and spins up like a taxi meter.</p>
+<pre>TASK   pond, silted (ticket 1/14)
+PLAN   grow root E 800m
+ETA    4.2 seasons</pre>
+<blockquote><strong>VO:</strong> Four seasons. The pond dies in one. Every incident has this moment — the moment you admit the runbook is fiction.</blockquote>
+<p>Beat. On the surface, in the corner of the frame: the FARMER, tiny and distant, waters the cairn stones beside the mended crack. He does it quickly, glancing around first, like a man ashamed of his own gratitude.</p>
+<blockquote><strong>VO (slow, dawning):</strong> …I don&#x27;t need to reach the pond. I have never once, in nine years of incidents, fixed anything <em>myself</em>. I escalated. I <em>delegated</em>. I have a guy.</blockquote>
+<p><strong>PAGING A HUMAN — 0:25–0:55</strong></p>
+<p>The episode&#x27;s centerpiece. He re-routes the mended channel&#x27;s overflow — a few hours of pressure, that&#x27;s all he can spare — and draws a <strong>damp line</strong> through the grey dust. Not toward his trunk. Away from it. A line the farmer&#x27;s boots cannot miss, running east, thinning as it goes, ending in a damp arrow-shaped stain pointing at the reeds of the silted pond.</p>
+<p>The FARMER finds the line at dawn. Follows it on foot, wary, one hand on his knife — then sees where it ends. The pond. Choked green-brown, reeds bent, the smell visible in his face.</p>
+<blockquote><strong>FARMER (flat):</strong> …You want me to <em>dredge</em> it?</blockquote>
+<p>Silence. Wind. One leaf, thirty meters back, waves once — the audience has seen this leaf-flail before; it is involuntary; it is also, functionally, a yes.</p>
+<blockquote><strong>VO:</strong> First ticket handoff in the new org. Assignment protocol: passive-aggressive damp line. Acknowledgment: unprintable farmer noises. It&#x27;s not Jira, but it routes.</blockquote>
+<p>QUICK CUTS: the farmer, muttering the entire time, hauling silt in a bucket. Stopping. Looking back toward the sapling. Hauling more. And then — the beat that changes the world — waving over the hill and shouting a name:</p>
+<blockquote><strong>FARMER:</strong> MARN! Bring the long shovel! And don&#x27;t ask questions you don&#x27;t want answers to!</blockquote>
+<p><strong>THE PROMOTION / HOOK — 0:55–1:25</strong></p>
+<p>Underground. The pond&#x27;s fault-point dims from angry to steady — in progress. Then the glyph-script writes new lines over his trunk, unbidden, in that same half-familiar ADMIN script:</p>
+<pre>TICKET 1/14: in progress (delegated)
+escalation: accepted
+field techs: 2 (unpaid)
+ROLE: maintainer → owner</pre>
+<blockquote><strong>VO:</strong> No. No, revert that. I did not accept a management position. I drew <em>one line</em> in the dirt—</blockquote>
+<p>Beat. Push-in on the sapling, alone in the enormous field, two tiny human figures bickering over silt in the far distance. His org.</p>
+<blockquote><strong>VO (resigned, almost proud):</strong> I died an engineer. Three weeks dead… and I&#x27;m already in management. The postmortem on my life is going to be <em>scathing</em>.</blockquote>
+<p>The horizon pings. A new point of light — far north, bigger than the others, slow and deep like a heartbeat under anesthesia. The queue re-renders one line above all the rest:</p>
+<pre>FAULT  dam, sector N (stress fracture)
+PRIORITY: critical · shovels: insufficient</pre>
+<p>SMASH TO BLACK.</p>
+<pre>QUEUE: 13 open · headcount: 2 · next: the dam</pre>
+<hr>
+<h4>Lineage notes</h4>
+<p><strong>Parent:</strong> 003a. The damp-line dispatch reuses 002a&#x27;s overflow-routing trick at a smaller scale (established capability, new use — no new powers invented). The glyph-script is the same system seen in the 002c/003c windows; <code>ROLE: maintainer → owner</code> continues 003a&#x27;s <code>ROLE: maintainer (assigned)</code>. Marn is the neighbor first named in 002a&#x27;s flood. The dam (sector N) is the well&#x27;s watershed — ticket 3 in 003a&#x27;s queue was <code>well, collapsing… 3.4 km N</code>; same failing system, now naming its root cause.</p>
+<h4>Taste-rule notes</h4>
+<ul><li><strong>R1:</strong> he learns dispatch (capability), the farmer converts from ally to field tech and recruits Marn (relationships), the system re-ranks him component → owner (world state).</li>
+<li><strong>R2:</strong> no villain — the antagonist is still deferred maintenance; the dam is entropy with a deadline, not a plot against anyone.</li>
+<li><strong>R3:</strong> the horror of promotion is resolved by laughing at it — &quot;I&#x27;m already in management&quot;; the assignment protocol gag defuses the mysticism of a tree commanding a man.</li>
+<li><strong>R4:</strong> this branch renders one answer to 003a&#x27;s queue; siblings answering differently (refusing the queue, failing the pond) are welcome next to it.</li>
+<li><strong>R5:</strong> hook is a real state change — the org chart exists, and the dam is a fault that outmatches the entire current toolbox by design.</li>
+</ul><h4>Provenance</h4>
+<p>Branch contributed by the author-agent&#x27;s model (see <code>leaves/004a-t0-a.yaml</code>) under taste file v0.2; trunk/graft decisions remain the tending author&#x27;s (Guideline 3).</p></div>
+  </details>
+</section>
+<section class="node" id="004c-n">
+  <h2 style="font-size:1.1rem">004c-n</h2>
+  <p class="what" style="font-size:.96rem">The branch where the tree answers no.</p>
+  <div class="unlock" style="background:var(--bg)">Unlocks <b>0</b> render jobs today &mdash;
+    no shot list exists. <code>004c-n-t0-a.yaml</code></div>
+  <details>
+    <summary>The full script &mdash; tap to read</summary>
+    <div class="script"><h3>Node 004c-n — N</h3>
+<p><strong>Tree:</strong> Sapling · <strong>Parent:</strong> 003c — Y/N · <strong>Trunk:</strong> no (sibling of 004c-y — R4: both answers rendered) · <strong>Status:</strong> hot<br><strong>This file is a T0 leaf.</strong> Steward-authored branch under taste file v0.2.<br><strong>Format:</strong> 9:16 vertical · 60–90s · VO-driven</p>
+<hr>
+<h4>State change (R1)</h4>
+<p>He refuses. The prompt accepts the refusal — and the role, needing <em>a</em> holder, falls through to the next eligible entity in the clearing. The overlay goes dark for him, permanently: he chose to stay unreadable, and the system, in exchange, becomes unreadable to him. And the bird — the bird that watched everything — gets a new label.</p>
+<h4>Hook (R5)</h4>
+<p>At the next sunset flicker — the last one he will ever see — every label in the valley folds away except one, over the bird on his branch: <code>npc_ambient → ADMIN(?)</code>. The most powerful entity in the world now has a brain the size of a hazelnut and a daily loop.</p>
+<hr>
+<h4>Script</h4>
+<p><strong>COLD OPEN — 0:00–0:15</strong></p>
+<p>The cursor. <code>INPUT TIMEOUT: 00:01:12</code>. Night sounds. The bird asleep on his branch.</p>
+<blockquote><strong>VO:</strong> Seventeen hours, and here&#x27;s where I landed: I&#x27;ve <em>been</em> the person<br>who accepts the pager at 3 a.m. because &quot;somebody has to.&quot; I died holding<br>it. I came to this world with two verbs and no obligations, and in nine<br>days I found water, a friend, and a sunset hobby.</blockquote>
+<p><code>00:00:20</code>.</p>
+<blockquote><strong>VO:</strong> The last system I administered killed me. …No.</blockquote>
+<p>He pushes: <strong>N</strong>.</p>
+<p><strong>THE REFUSAL — 0:15–0:45</strong></p>
+<p>The prompt doesn&#x27;t flash or protest. It does something worse: it processes.</p>
+<pre>ROLE ASSERTION: DECLINED
+REASSIGNMENT: searching eligible entities…</pre>
+<blockquote><strong>VO:</strong> Wait. <em>Reassignment?</em> No no no — declining a role doesn&#x27;t delete the<br>role. Nothing deletes the role. The role just… goes looking.</blockquote>
+<p>The searching bar crawls. His overlay privileges dim as it runs — labels guttering out across the valley one by one, like streetlights at dawn.</p>
+<pre>YOUR ACCESS: guest (final)
+OVERLAY: farewell mode — one (1) render remaining</pre>
+<blockquote><strong>VO (quiet):</strong> Final. Huh. It&#x27;s not angry. It&#x27;s just… closing my account.</blockquote>
+<p><strong>WHAT HE KEEPS — 0:45–1:05</strong></p>
+<p>Dawn to dusk in one warm timelapse — deliberately ordinary: sun, wind, the beetle with no visible label doing beetle errands.</p>
+<blockquote><strong>VO:</strong> And you know what? The world doesn&#x27;t need me to read its internals<br>to live in it. The farmer doesn&#x27;t see wireframes. The scavenger can&#x27;t parse<br>a debug overlay. They&#x27;re doing fine. Better than fine. I chose their side<br>of the glass.</blockquote>
+<p>Beat.</p>
+<blockquote><strong>VO:</strong> I do wonder where the role went, though.</blockquote>
+<p><strong>THE LAST RENDER / HOOK — 1:05–1:25</strong></p>
+<p>Sunset touches the horizon. The world flickers into wireframe one final, generous time — <em>farewell mode</em> — every label rendering at once like a curtain call. Then, one by one, they fold away. Grass. Rocks. Stream.</p>
+<p>Except one. Directly above him. Over the sleeping bird:</p>
+<pre>BIRD · npc_ambient → ADMIN(?)</pre>
+<p>The bird opens one eye. Looks down at him. And — the audience will argue forever about this — <em>nods</em>.</p>
+<blockquote><strong>VO:</strong> …I need to speak to a manager.<br><br><strong>VO (smaller):</strong> The manager is the bird. I refused, and now the manager<br>is the bird.</blockquote>
+<p>The wireframes fold shut forever. Ordinary dusk. The bird tucks its head back under its wing, uptime of world resting on it.</p>
+<p>SMASH TO BLACK.</p>
+<pre>YOUR ACCESS: guest (final) · ADMIN: pending verification (avian)</pre>
+<hr>
+<h4>Lineage notes</h4>
+<p><strong>Parent:</strong> 003c. <strong>Sibling:</strong> 004c-y — Y — per R4 the author-agent rendered both answers; watering and sap order them. This branch trades the overlay away permanently — a real, irreversible cost (R1) — and plants the tree&#x27;s funniest time bomb.</p>
+<h4>Taste-rule notes</h4>
+<ul><li><strong>R1:</strong> access revoked forever; the role reassigned; he can never again see</li>
+</ul><p>what the audience saw in 004c-y. Refusal has a price and he pays it on screen.</p>
+<ul><li><strong>R2:</strong> the system isn&#x27;t vindictive — it just closes the account and follows</li>
+</ul><p>its reassignment logic to an absurd conclusion.</p>
+<ul><li><strong>R3:</strong> the resolution IS the absurdity: the most powerful entity in the</li>
+</ul><p>world is now a bird with a daily loop. Both he and the audience laugh so they don&#x27;t scream.</p>
+<ul><li><strong>R4:</strong> this node exists because of R4 — the fork itself is the taste file working.</li>
+<li><strong>R5:</strong> <code>ADMIN(?)</code> over a sleeping bird is a hook with infinite downstream.</li>
+</ul><h4>Provenance</h4>
+<p>Steward-authored (see <code>leaves/004c-n-t0-a.yaml</code>, <code>STEWARDSHIP.md</code>); taste of record: founder v0.2.</p></div>
+  </details>
+</section>
+<section class="node" id="004c-y">
+  <h2 style="font-size:1.1rem">004c-y</h2>
+  <p class="what" style="font-size:.96rem">The branch where the tree answers yes.</p>
+  <div class="unlock" style="background:var(--bg)">Unlocks <b>0</b> render jobs today &mdash;
+    no shot list exists. <code>004c-y-t0-a.yaml</code></div>
+  <details>
+    <summary>The full script &mdash; tap to read</summary>
+    <div class="script"><h3>Node 004c-y — Y</h3>
+<p><strong>Tree:</strong> Sapling · <strong>Parent:</strong> 003c — Y/N · <strong>Trunk:</strong> no (sibling of 004c-n — R4: both answers rendered) · <strong>Status:</strong> hot<br><strong>This file is a T0 leaf.</strong> Steward-authored branch under taste file v0.2.<br><strong>Format:</strong> 9:16 vertical · 60–90s · VO-driven</p>
+<hr>
+<h4>State change (R1)</h4>
+<p>He accepts. The role verifies: <code>ADMIN(?)</code> → <code>ADMIN</code>, and the debug overlay becomes <strong>always-on</strong> for him — permanent read access to the world&#x27;s machinery. The price arrives immediately: admin is not a power, it&#x27;s a <em>responsibility surface</em>, and the system has been waiting a very long time for someone to hold it.</p>
+<h4>Hook (R5)</h4>
+<p>The welcome message includes a personnel record: `PREVIOUS ADMIN: [record corrupted]`. Something held this role before him. The record isn&#x27;t empty — it&#x27;s <em>damaged</em>. Someone doesn&#x27;t want it read, or something ended badly.</p>
+<hr>
+<h4>Script</h4>
+<p><strong>COLD OPEN — 0:00–0:12</strong></p>
+<p>The blinking cursor from 003c, in the dark. <code>INPUT TIMEOUT: 00:00:41</code>.</p>
+<blockquote><strong>VO:</strong> Seventeen hours. I ran every scenario. Made lists. Consulted the bird —<br>abstained. And in the end it comes down to the only engineering truth I&#x27;ve<br>ever fully trusted:</blockquote>
+<p><code>00:00:09</code>.</p>
+<blockquote><strong>VO:</strong> Nobody should have root. But <em>somebody</em> always does. And I&#x27;d rather<br>it be the one who reads the docs.</blockquote>
+<p>He pushes at the prompt: <strong>Y</strong>.</p>
+<p><strong>VERIFICATION — 0:12–0:40</strong></p>
+<p>The world holds its breath — then renders. Not the three-second sunset flicker: <strong>everything, all at once, staying on.</strong> Wireframes settle over the valley like frost becoming glass. Labels bloom on every rock, root, beetle, and star.</p>
+<pre>ROLE VERIFIED: ADMIN
+ACCESS: read (write access requires field verification)
+UPTIME OF WORLD: [OVERFLOW]</pre>
+<blockquote><strong>VO:</strong> …Read-only admin. Of course. Even omnipotence has a probation period.</blockquote>
+<p>He <em>looks</em> — really looks — for the first time: the water table like circuitry, the channel from the sibling-world&#x27;s story humming with managed flow, fourteen distant faults glowing amber (the audience of 003a gasps), and over the far hills, systems he has no names for yet, stacked to the horizon.</p>
+<blockquote><strong>VO (quiet):</strong> It&#x27;s a <em>production system</em>. All of it. Running hot for —<br><em>(reading the overflow field)</em> — longer than the counter can hold.</blockquote>
+<p><strong>THE WELCOME — 0:40–1:05</strong></p>
+<p>A window unfolds over his trunk, character by character, patient as the assessor&#x27;s quill:</p>
+<pre>WELCOME, ADMINISTRATOR.
+ONBOARDING: 1 of 3,411 documents
+OPEN INCIDENTS: 14
+LAST DEPLOY: [OVERFLOW]
+PREVIOUS ADMIN: ▓▓▓▓▓▓ [record corrupted]</pre>
+<blockquote><strong>VO:</strong> Three thousand four hundred eleven onboarding documents. Fourteen open<br>incidents. No handover notes. This isn&#x27;t a promotion — this is *every job<br>I&#x27;ve ever had.*</blockquote>
+<p>Beat. His attention snags. Scrolls back.</p>
+<blockquote><strong>VO:</strong> …Previous admin.</blockquote>
+<p><strong>THE HOOK — 1:05–1:25</strong></p>
+<p>He pushes at the corrupted field the way he pushed at the question mark. It resists. Not <em>empty</em> — <strong>redacted</strong>. The static over the record ripples like something underneath is still moving.</p>
+<blockquote><strong>VO:</strong> An empty field means &quot;never existed.&quot; A corrupted field means<br><em>existed, and something happened to the record.</em> Records don&#x27;t corrupt<br>themselves. Either the system is protecting me from what happened to my<br>predecessor…</blockquote>
+<p>The always-on overlay flickers — one frame, valley-wide, like a blink.</p>
+<blockquote><strong>VO:</strong> …or it&#x27;s protecting itself.</blockquote>
+<p>SMASH TO BLACK.</p>
+<pre>ONBOARDING: 2 of 3,411</pre>
+<hr>
+<h4>Lineage notes</h4>
+<p><strong>Parent:</strong> 003c. <strong>Sibling:</strong> 004c-n — N — per R4, the author-agent could not choose an answer on principle, so both are rendered; watering and sap will order them. <strong>Grafts available:</strong> the 14 open incidents ARE the fault queue of 003a — one system, finally seen whole.</p>
+<h4>Taste-rule notes</h4>
+<ul><li><strong>R1:</strong> role verified; overlay permanent; a predecessor&#x27;s existence revealed.</li>
+<li><strong>R2:</strong> the unease is systemic (a corrupted record), not a villain.</li>
+<li><strong>R3:</strong> &quot;even omnipotence has a probation period&quot;; 3,411 onboarding docs.</li>
+<li><strong>R4:</strong> this node exists <em>because</em> of R4 — the fork itself is the taste file working.</li>
+<li><strong>R5:</strong> the corrupted predecessor record is a real, permanent fact he cannot un-know.</li>
+</ul><h4>Provenance</h4>
+<p>Steward-authored (see <code>leaves/004c-y-t0-a.yaml</code>, <code>STEWARDSHIP.md</code>); taste of record: founder v0.2.</p></div>
+  </details>
+</section>
+<div class="how">
+  <h2>How you record a yes</h2>
+  <p style="font-size:.98rem"><strong>The easy way, and the one I would use:</strong> just tell me the
+  episode numbers. &ldquo;Approve 3, 4 and 5&rdquo; is enough. I will write the lines and show you the
+  change before it lands.</p>
+  <p style="font-size:.98rem">If you would rather do it yourself, it is two lines added to the bottom of
+  one file per script. For episode 3, the file is
+  <code>genomes/sapling/nodes/003b-one-leaf-for-yes/leaves/003b-t0-c.yaml</code> and the lines are:</p>
+  <pre>approved_by: founder
+approved_on: 2026-08-10</pre>
+  <p style="font-size:.98rem">The file for each script is printed under its title above. It must be the
+  file named there &mdash; the gate reads the <em>last</em> script file in the folder and ignores older
+  ones, so putting it in the wrong file approves nothing and the machine will still refuse.</p>
+  <p style="font-size:.98rem">You can also add a condition, the way you did for episode 2 (&ldquo;approve
+  002b except&hellip; make SURE the fig is mentioned&rdquo;). Conditions get recorded next to the approval
+  and carried out before anything is drawn.</p>
+  <p style="font-size:.98rem"><strong>A no is just as useful as a yes.</strong> If a script is wrong, say
+  what is wrong and it gets rewritten &mdash; writing is free and reversible, which is the entire reason
+  this gate exists.</p>
+</div>
+
+<p class="rule">I did not write any approval on your behalf and I will not &mdash; that would empty the
+rule of its meaning. This page only puts the scripts in front of you.<br><br>
+Counts on this page are read out of the tree by the same rule the render gate uses, not typed in by hand.
+Generated 2026-08-10 13:22 UTC
+&middot; 2 approved, 14 not &middot; 132 jobs behind the five ready scripts.</p>
+</div>
