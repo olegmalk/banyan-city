@@ -3689,3 +3689,60 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+- id: ep1-v34-motion-metric-disqualified
+  date: 2026-08-10
+  kind: method
+  subject: "The flow metric (collect_farm.measure median frame delta) is
+    DISQUALIFIED as a selection criterion on the v34 LTX motion series. It may
+    be reported. It may not pick a winner. Two independent proofs now exist that
+    it does not merely fail to detect the failure mode - it SELECTS FOR it."
+  steward_provisional: true
+  gates: {G5_provisional_labelled: pass}
+  pick: null
+  the_two_proofs: >-
+    (1) 131e433, already in the record: the motion number was highest on the
+    beat where the plant fell over - a collapse is large coherent pixel change,
+    which is exactly what a mean-or-median frame delta rewards. (2) NEW, beat
+    04 on 2026-08-10: r1/r2/r3 share seed 20260735, the same still and a
+    byte-identical negative. r3 posts the BEST framing numbers of the three
+    (pan 20px, rise 38px, implied zoom 1.000 against r2's 19/34/1.011 and r1's
+    77/122/1.139) AND the HIGHEST median (0.73 vs r2 0.68 vs r1 0.59) - and r3
+    is the arm that re-invents the phone. Verified by eye at full resolution,
+    frame 44, crop x0-420 y130-590: r1 draws a phone body with a camera bump at
+    the cuff, r2 has clean paper and sleeve there, r3 draws a rounded phone with
+    a lit magenta screen in the same place. Ranking those three arms by median,
+    or by any framing number, returns the hallucinating arm first.
+  why_this_is_worse_than_no_metric: >-
+    a metric that is merely noisy gets ignored. This one is confidently wrong in
+    a specific direction, so it LAUNDERS a bad result as a good one and hands
+    the reader a number to defend it with. The b04 r3 round would have been
+    written up as the best of the series by any automated read of this series.
+  the_mechanism_the_metric_cannot_see: >-
+    invented content is high-quality motion by construction. A hallucinated
+    object is rendered coherently, moves smoothly and is well lit, so it scores
+    like life. The failure and the reward are the same pixels.
+  what_replaces_it: >-
+    nothing automatic, and that is the honest answer. Framing drift (phase
+    correlation, pan/rise/implied zoom) is trustworthy because it measures the
+    camera, not the content, and it agreed independently across two lanes this
+    night (52->43px of 704 here, 12.90->10.78px of 176 there, the same -16/17%).
+    Content - "is there an object in frame that is not in the init still" - has
+    no tool in this repo and was answered by opening the frames. Until it has
+    one, an arm is not eligible to be preferred without a human having looked at
+    it, and that human is R4 for anything that ships.
+  applies_to: >-
+    every arm of the v34 motion series (beats 03, 04, 07, 08, 10, 14) and to
+    QA-v34-0810.md section 1, whose per-beat medians are correct arithmetic and
+    an unsafe ordering. The QA file's own warning - that a mean let a variant
+    with 38% dead frames outscore one with 3% - is the same defect one level
+    shallower; median fixed the freeze case and does not fix this one.
+  no_pick_made: >-
+    this record deliberately names no best arm on any beat. Beat 04's r2 is the
+    only arm with no invented object, which is a statement about a FAULT being
+    absent, not a taste verdict, and it is not a pick.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null

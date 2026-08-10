@@ -1,0 +1,149 @@
+# ep1 beat 08 "sev-1" — LTX motion re-render, round 2.
+#
+# THE LAST UNGATED FROZEN BEAT. QA-v34-0810.md names seven dead beats in the
+# v34 cut (03, 04, 06, 07, 08, 10, 14). Six now have motion rounds beyond r1:
+# 03 r2/r3, 04 r2/r3, 07 r2/r3, 10 r2, 14 r2. Beat 06 is EXCLUDED and stays
+# excluded — the wave excluded it on 2026-08-09 because its frame is the
+# b06-r5 PROVISIONAL pick, not founder canon, and §6 does not let a render
+# stand on an unratified still. That leaves 08, which has only its wave r1.
+#
+# ONE VARIABLE: the framing clause. r1's positive carried the negation cluster
+#   "everything holds its position, framing locked, no zoom, no push-in,
+#    no camera rise, subject stays the same size and place in frame"
+# and that cluster is measured HARMFUL, not merely inert (07218cb): at
+# guidance 1.0 the distilled schedule runs no unconditional pass, so a negation
+# earns no gradient away from what it names, and in the POSITIVE "no zoom"
+# contributes the token `zoom`. r2 restates the same constraints affirmatively,
+# naming where each object STAYS. Everything else — the ambient verbs, the
+# plant anchor, the subject tail, the negative, the seed 20260739, the still —
+# is byte-identical to r1, so the wording is the only variable.
+#
+# WHY THIS IS A METHOD FIX AND NOT A BET ON A SCORE. The affirmative rewrite is
+# the one change with a measured, reproduced effect: beat 03 r1 -> r2 cut the
+# pan from 245px to 52px of 704 (-79%) and the push-in from 1.653 to 1.000,
+# same seed and still. It is NOT justified by the flow metric, which is
+# DISQUALIFIED as a selection criterion on this series — see below.
+#
+# THE METRIC SELECTS FOR THE FAILURE. Two independent proofs now:
+#   131e433  the motion number was highest on the beat where the plant fell over
+#   b04 r3   the best-scoring arm (median 0.73, best framing numbers of the
+#            three) is the arm that re-invents the phone at the wrist
+# So median frame delta may be REPORTED here but must not pick a winner. A
+# metric that rewards hallucination launders a bad result as a good one.
+#
+# STATE THE LOCK ONCE. Beat 03 r3 escalated the affirmative lock a second time
+# and bought ~2px against r2's ~48px — the dose saturates, and the escalation
+# degraded the steam into a smear. So this spec states the lock once and spends
+# no further budget on it.
+#
+# PROVENANCE FLAG, DELIBERATE: the script below is C:\banyan-farm\ltx_i2v.py,
+# sha256 d49f8ecb.., which matches NEITHER repo HEAD (8cdd186e..) NOR the
+# working tree (ef6e8533..). It is what every clip in this series was rendered
+# with, so using it is what makes beat 08 comparable to beats 03/04/07/10. It
+# also means none of this series is reproducible from the repo alone. Recorded
+# here rather than quietly swapped, because swapping the binary mid-series
+# would change the recipe on the one beat meant to isolate a wording change.
+
+id: ep1-b08-v34-motion-r2
+task: ep1-b08-v34-motion-r2-0810
+node: 001-capability-inventory
+beat: 8
+runner: box
+needs_gpu: true
+priority: 20
+max_attempts: 1
+sample: true
+owner: motion-recipe
+
+consumer: >-
+  the v35 screening cut. Beat 08 measured 0.01 median / 88% frozen at
+  QA-v34-0810.md and is the last frozen ep1 beat with no round beyond its
+  wave r1 and no gate in front of it. The output goes in front of the founder
+  beside 03/04/07/10 as an unranked set — his verdict, not the steward's.
+
+success: >-
+  A 704x1280 65-frame mp4 at
+  C:\banyan-farm\v34-motion-0810\08-ltx-r2-s20260739.mp4.
+  Judged on FRAMING and CONTENT, not on the flow number: pan and rise under
+  ~20px of 704/1280 and implied zoom within 1.00 +/- 0.02 (r1 measured pan 21,
+  rise -89, zoomH 0.991 — the rise is the defect this round targets), the plant
+  upright and rooted for all 65 frames, and NO object or figure that is not in
+  the init still. Beat 04 is the precedent: its best-scoring arm was the one
+  that invented a phone, so an invented object fails this round outright
+  however the median reads.
+
+why: >-
+  Six of seven dead ep1 beats have a corrected round; 08 is the gap, and 06 is
+  gated on an unratified frame so it cannot be closed.
+
+est_minutes: 5   # series measured 126-127s sample + ~2min model load per beat
+needs: [cuda, vram20, video-venv]
+
+payload:
+  C:\banyan-farm\b08r2-prompt.txt: |-
+    2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. the broad leaves sway gently and hold their shape, the tall grass blades ripple in a light breeze, warm low sunlight shimmers along the leaf edges. the plant stays upright and rooted, stem straight and steady. small ambient motion only, the camera is locked on a tripod and stays perfectly still, the young plant stays centred in frame at the same size throughout, the horizon keeps the same height in frame, the grass stays spread around the plant from first frame to last, the composition is identical in every frame, living scene. Subject already in frame: no human, no person, no man, no woman, no boy, no girl, no hand, no face, one young plant with broad green leaves standing upright, tall grass around it, bright blue sky, low sun behind.
+  C:\banyan-farm\b08r2-negative.txt: |-
+    wilting, drooping, bending over, falling over, collapsing, sagging, plant dying, human, person, man, woman, boy, girl, extra hand, extra arm, foot, face, crowd, animal, bird, insect, new object appearing, photorealism, 3D render look, text, 静态, 静止, frozen frame, still image, no motion, photorealistic, photograph, live action, film still, 3D render, CGI, octane, scene change, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  - name: encode
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\ltx_i2v.py
+      - --stage
+      - encode
+      - --embeds
+      - C:\banyan-farm\v34-motion-0810\ltx-embeds-b08r2.pt
+      - --prompt-file
+      - C:\banyan-farm\b08r2-prompt.txt
+      - --negative-file
+      - C:\banyan-farm\b08r2-negative.txt
+  - name: render
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\ltx_i2v.py
+      - --stage
+      - render
+      - --embeds
+      - C:\banyan-farm\v34-motion-0810\ltx-embeds-b08r2.pt
+      - --prompt-file
+      - C:\banyan-farm\b08r2-prompt.txt
+      - --negative-file
+      - C:\banyan-farm\b08r2-negative.txt
+      - --init
+      - C:\banyan-farm\banyan-city\genomes\sapling\nodes\001-capability-inventory\stills\08-sev-1.png
+      - --out
+      - C:\banyan-farm\v34-motion-0810\08-ltx-r2-s20260739.mp4
+      - --size
+      - 704x1280
+      - --frames
+      - "65"
+      - --fps
+      - "24"
+      - --steps
+      - "8"
+      - --guidance
+      - "1.0"
+      - --distilled-sigmas
+      - --two-stage
+      - --seed
+      - "20260739"
+      - --beat
+      - "8"
+      - --task
+      - ep1-b08-v34-motion-r2-0810
+      - --worker
+      - rtx5090
+
+artifacts:
+  - C:\banyan-farm\v34-motion-0810\08-ltx-r2-s20260739.mp4
