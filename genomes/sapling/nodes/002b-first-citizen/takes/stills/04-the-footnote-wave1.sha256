@@ -1,0 +1,12 @@
+# 002b beat 04 — ONE SAMPLE on the founder's goblin definition (2026-08-10).
+# task ep2-b04-goblindef-1786350791, render_wave_sample.py, $0, 4 seeds, 37 GPU-seconds.
+# The PNGs are working takes and .gitignore:40 excludes them from the tree BY
+# DESIGN. They are NOT single-copy: they exist on the rtx5090 under
+# banyan-farm\wave-goblin-prep\out\ and in this checkout, and the hashes below
+# were verified byte-identical across both after the pull.
+# The sidecars beside this file ARE tracked and carry prompt, seed, model,
+# licence and the goblin definition as sent.
+dc2d32ccea755abebf72f4728ff9345f5b665acd6326dd908e9108a3afef30dd  04-the-footnote-wave1-s0.png
+8f2e4b2391bbb1f1325c0cf5ff049279dee633c4c243a0b0471b110ae51093d6  04-the-footnote-wave1-s1.png
+026ccb641884fd4b12ea81c2f157708cc15be7a568fbcddb0d213b1bc57bfe92  04-the-footnote-wave1-s2.png
+b828a73c5f0505d7e169cefdd913911876a10a7467e2cdd2f5ec5a97573d4c6d  04-the-footnote-wave1-s3.png

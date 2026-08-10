@@ -4112,3 +4112,210 @@
   outcome: n/a
   miss_axis: null
   model_action: require_predicted_verdict_on_stage_2
+
+# THE ONE SAMPLE ON HIS DEFINITION. Written BEFORE the frames were opened — the
+# render was still on the card when this was appended, which is the only thing
+# that makes the block below a prediction rather than a caption.
+- id: ep2-b04-wave-sample-1
+  date: 2026-08-10
+  kind: still
+  subject: "node 002b beat 04 THE FOOTNOTE — face close-up. The FIRST render
+    against the founder's own goblin definition (2026-08-10, \"he is just a
+    simple green goblin, nothing complex\"). ONE beat of the fifteen-beat wave;
+    the other fourteen wait on his verdict on this."
+  steward_provisional: true
+  candidates: [b04-wave1-s0, b04-wave1-s1, b04-wave1-s2, b04-wave1-s3]
+  address_key: "C:\\banyan-farm\\wave-goblin-prep\\out\\04-the-footnote-wave1-sN.png,
+    sidecars beside them; task ep2-b04-goblindef-1786350791"
+  gates: {G1_approved_plate: n/a, G2_script_approved: pass, G3_neutral_sheet: pass,
+          G4_resolvable_address: pass, G5_provisional_labelled: pass}
+  pick: null
+  scores: {}
+  why_beat_04_and_not_beat_07: >-
+    WAVE-PREP-0810.md's example command is `run-wave-sample.cmd 07`, and beat 07
+    is the wrong beat for this question. It is kind `guard`, and the harness
+    treats a guard beat carrying a {{GOBLIN}} slot as a FAULT (line 232) — beat
+    07 has no slot, so his definition would have had nowhere to go and the
+    render would have tested nothing about the goblin. Beat 04 is the face close
+    up, "his face filling the frame": the single most direct test of a character
+    definition, and the shot where the "female demihuman" read he rejected was
+    most visible. Record 42 also noted that a closer shot, not a word, is the
+    lever for the tusk.
+  the_translation_and_it_is_the_stewards_not_his: >-
+    HIS SENTENCE IS NOT A TAG LIST, so something had to translate it and that
+    something was the steward. Slot sent: `green skin, tusks`. `green skin` is
+    his one named attribute. `tusks` is NOT in his sentence — it is in his own
+    approved shots.md ("one broken tusk") and it is the measured lever that took
+    not-female from at-risk to 4/4 in r9, so it is read as rendering what he
+    already wrote rather than as adding complexity. `plump` WAS DROPPED from
+    r8's default pair: it appears in neither his sentence nor his script, record
+    42 read it as `overshoot` on 2 of 4, and "nothing complex" is a subtractive
+    instruction, so the one purely-steward word is the one that goes. THIS
+    TRANSLATION IS UNRATIFIED AND IS THE MOST LIKELY THING IN THIS RECORD TO BE
+    WRONG. If he says the slot should have been `green skin` alone, that is a
+    correction to the steward and not to him.
+  predicted_verdict: reject_all
+  predicted_flip_to: null
+  confidence: 0.55
+  predicted_objection: >
+    THE STYLE ANCHOR ARGUES WITH HIS DEFINITION AND THE ANCHOR IS SENT LAST.
+    The positive ends `cinematic lighting, detailed, newest, masterpiece, best
+    quality, very aesthetic` — an explicit demand for DETAIL — while his single
+    new instruction is "nothing complex". Nothing in this recipe was changed to
+    honour that, because his sentence arrived after the drafts were measured and
+    re-measuring is not re-designing. So the prediction is that he sees a goblin
+    who is green and tusked and STILL more ornate than the words "simple green
+    goblin" describe, and that the fix he is owed is a subtraction from the
+    anchor rather than another tag bought into the slot.
+    Second, lighting: the draft asks for `soft morning light` and this stack has
+    now twice drawn dusk on a prompt that said Midday (record 42). Predicting
+    the light comes back darker than asked on at least one of four.
+    Third, and it is a tension in the prompt itself rather than a model fault:
+    the positive asks for `a small goblin boy` while the negative carries
+    `child`. If the faces come back reading older or harder than a small goblin
+    should, that pair is the first place to look.
+    Fourth, the tusks will be TWO AND WHOLE, not one and broken. Record 42
+    established the break is not a prompt lever; if he wants it, it is an
+    inpaint. He may well call that out and it will not be news.
+  predicted_predicates: >-
+    written as observations to be checked against the frames, not as a gate. P2
+    is NOT reinstated by this record: it still asserts pointed ears and a cloak
+    the founder has never named, and record 32's finding was that a predicate
+    asserting unspoken attributes is exactly what returned the wrong answer.
+    green_skin 4/4 (proven twice). tusks_present 4/4 and MORE prominent than r9
+    because the face fills the frame. not_female 3/4 or 4/4 — `tusks` plus
+    `1boy` plus `female goblin` negated is the strongest anti-female stack this
+    show has sent, but "huge eyes", "cheeks puffed" and a close-up are the
+    cute-face conditions under which the earlier rounds slipped.
+    simple_not_ornate is the NEW axis and the one this sample exists to test;
+    the steward expects it to FAIL on the anchor's account.
+  reasoning: >
+    THIS IS THE FIRST RENDER IN TEN ROUNDS AIMED AT A TARGET HE HAS DESCRIBED.
+    Every previous round aimed at a goblin only he could see (record 32: "every
+    round has been aiming at a target only he can see"). That is the whole value
+    of this sample and it is worth four seeds even if all four are rejected.
+    THE CONFIDENCE IS 0.55 AND IT IS DELIBERATELY LOW. The ledger's own
+    calibration note says rejections have gone 5 for 5 while picks have gone 0
+    for 5, and the temptation is to bank another cheap `reject_all` hit. That
+    would be gaming the scoreboard: the reason to expect a rejection here is a
+    specific mechanical argument — the anchor demands detail and he asked for
+    none — not the base rate. If he passes it, the anchor argument is wrong and
+    that is worth more than the point.
+    WHAT THIS SAMPLE CANNOT SETTLE. It is one beat of fifteen and a close-up at
+    that; a face that works at this crop says nothing about the goblin at full
+    figure in beat 02's sprint or beside a guard in beat 08. It also does not
+    re-open beat 13, whose r9 lane owns it, and it scores none of r7, r8 or r9.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep2-b01-fig-route-0810
+  date: 2026-08-10
+  kind: direction
+  subject: "node 002b beat 01 — THE FIG, routed by the founder. Closes cuts.yaml
+    item 21 (`chip: ONE WORD`, open since 2026-08-10), which had asked him to
+    choose between dropping the fruit and approving an inpaint."
+  steward_provisional: false
+  founder_words_verbatim: "inpaint"
+  founder_words_context: >-
+    2026-08-10, ~12:20 local, answering the direct question "The fig on beat 01 —
+    drop it, or approve an inpaint?" put to him as `cuts/cuts.yaml` item 21. One
+    word, chosen from the two options the card offered and no others. Item 21 is
+    retired to `state: settled` in the same commit as this record.
+  this_is_not_a_prediction: >-
+    THIS RECORD SCORES NOTHING. Like ep2-goblin-definition-0810 it is his answer
+    written down, not a call written before he looked. No prediction of WHICH
+    lever he would pick exists anywhere in this file — the card deliberately
+    offered two and ranked neither — so there is nothing to score it against and
+    inventing one now would be the fraud the header forbids. The rolling hit rate
+    at the top of this file is unchanged: 11 of 37 with a verdict, 2 hit / 5
+    partial / 4 miss.
+  what_it_settles: >-
+    THE FRUIT STAYS ON BEAT 01 AND THE PROMPT IS NO LONGER THE INSTRUMENT. `drop`
+    was a live option on the card and he did not take it, so his 2026-08-03
+    condition — "we need to make SURE the fig growing on the sapling is
+    mentioned, last time we generated 002b it just.. appeared" — stands
+    unamended, and the growth beat does NOT move to beats 18-20 where the fruit
+    already draws. Every future cold-open round keeps the requirement; what
+    changes is that the requirement stops being carried by words.
+  the_evidence_under_it: >-
+    PROMPTING: 0 of 24 across the rounds that carried "one small round green
+    fruit hanging from the stem", after 0 of 8 on the two earlier wordings that
+    used the word `fig` — a word that names the LEAF in this checkpoint's
+    vocabulary. IMG2IMG: 0 of 12 in round 8, and that is the clean and decisive
+    one, because r8's init (b15-r3-s1) carries no fruit at all, making r8 the
+    first controlled test of whether img2img will ADD an object the init lacks.
+    At strength 0.35 and at 0.55 it will not. SIZE ADJECTIVES ARE THE WRONG
+    LEVER: the 2026-08-06 repaints over 01-cold-open-r3-s3.png asked for a `nub`
+    and for a `pea-sized` fruit and both came back LARGER and rounder than the
+    plate. EXISTENCE PROOF: round 3 drew a round green fruit on the stem in 2 of
+    4, so the checkpoint can render one. The mechanism proposed for the later
+    failure — grass-height framing makes the plant too small to carry a fruit at
+    832x1216 — is a HYPOTHESIS and is filed as one, not as a finding.
+  what_it_does_not_say: >-
+    NOTHING IS READ IN. One word names a METHOD and nothing else. He gave no
+    size, no position on the stem, no colour, no ripeness, no shape beyond what
+    his own approved shots.md already says, and no opinion on whether the result
+    should read as a fig specifically. Those are OPEN QUESTIONS FOR HIM, not
+    steward choices, and the sample that follows this record uses his script's
+    own wording ("one small round green fruit hanging from the stem") for
+    everything except the pixel geometry of the mask — which is the steward's,
+    is stated in the sample's sidecar, and is the first thing he can overrule.
+    He also said nothing about beats 18-20, whose fruit is unaffected.
+  the_one_reading_being_made: >-
+    STATED SO HE CAN KNOCK IT DOWN. "Inpaint" is read as approving the METHOD for
+    beat 01, not as approving any frame it produces. Nothing inpainted becomes
+    canon, gets a canon filename, is published or is assembled, and R4 is
+    untouched: the first inpainted frame is a sample for his eyes under the
+    one-sample rule, exactly as a recipe change is.
+  g1_and_the_plate: >-
+    THE GATE BITES IMMEDIATELY AND IT IS REPORTED RATHER THAN ROUTED AROUND. G1
+    requires a conditioned render to start from a founder-approved image, and
+    NO BEAT-01 STILL HAS EVER BEEN APPROVED — the node's only canon file for that
+    shot is stills/01-cold-open-REVOKED-too-tall.png, and it is revoked. Record
+    ep2-b01-r8-sample already established the consequence: b15-r3-s1
+    (genomes/sapling/nodes/001-capability-inventory/stills/15-something-s-coming.png)
+    is the only approved sapling-in-grass frame in the tree and therefore the
+    only legal init for this beat. The first inpaint is run on THAT plate, which
+    is G1-clean by the same argument r8 passed on, and it is not a beat-01
+    candidate frame — it is the first stage of a two-stage recipe (paint the
+    fruit into the approved init, then run r8's existing img2img from it, which
+    PRESERVES what the init holds even though it cannot add it). The approved
+    plate itself is not modified; a new file is written beside it.
+  method_and_sources: >-
+    RESEARCHED OUTSIDE THIS REPO BEFORE ANYTHING WAS BUILT. animagine-xl-3.1 has
+    no inpainting variant, so the route is StableDiffusionXLInpaintPipeline
+    loaded with the BASE weights. diffusers 0.29.2's own source branches on
+    unet.config.in_channels: at 9 it concatenates mask and masked-image latents,
+    at 4 — which is what a normal SDXL checkpoint has — it falls back to
+    per-step latent blending, `latents = (1 - init_mask) * init_latents_proper +
+    init_mask * latents`. The HF docs name the trade-off in their own words: "the
+    overall image quality may be lower, but it generally tends to preserve the
+    mask area (that is why you can see the mask outline)". The countermeasure for
+    a SMALL object in a LARGE frame is `padding_mask_crop`, present in 0.29.2's
+    __call__ and verified on the box: it crops the masked region with padding,
+    upscales it to the pipeline resolution, inpaints there, and pastes back —
+    which is precisely the resolution problem the grass-height hypothesis
+    describes. Mask edges are softened with mask_processor.blur.
+    Sources: https://raw.githubusercontent.com/huggingface/diffusers/v0.29.2/src/diffusers/pipelines/stable_diffusion_xl/pipeline_stable_diffusion_xl_inpaint.py
+    ; https://huggingface.co/docs/diffusers/v0.29.2/en/using-diffusers/inpaint
+    ; https://huggingface.co/cagliostrolab/animagine-xl-3.1
+    ; https://github.com/huggingface/diffusers/issues/6345
+  licences: >-
+    NOTHING NEW IS DOWNLOADED AND THAT IS THE POINT. The route runs on
+    cagliostrolab/animagine-xl-3.1, already local on the box and already declared
+    in every beat-01 sidecar — CreativeML Open RAIL++-M, whose use restrictions
+    travel to the output and are already tracked as D15. The one alternative that
+    would have needed a download, diffusers/stable-diffusion-xl-1.0-inpainting-0.1
+    (a true 9-channel SDXL inpaint UNet, also OpenRAIL++-M), is NOT used: it is
+    not the anime checkpoint, so it would draw the patch in a different dialect
+    from the frame around it. No cc-by-nc weight is anywhere in this route —
+    the Depth-Anything-V2 Base trap of 2026-08-09 was checked for deliberately.
+  cost: "$0 — local GPU (rtx5090), no provider, no spend, nothing published."
+  founder_verdict: "ROUTE CHOSEN — see founder_words_verbatim"
+  founder_verdict_date: 2026-08-10
+  outcome: n/a
+  miss_axis: null
+  model_action: none
