@@ -5112,3 +5112,75 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+- id: ep2-b04-goblin-ipa-negcolor-observed
+  date: 2026-08-10
+  kind: observation
+  subject: "node 002b beat 04 — ARM 4, the colour-anchoring negative. A clean
+    negative result: five colour words in the negative do not move the skin."
+  steward_provisional: true
+  pick: null
+  scores: {}
+  address_key: >-
+    C:\banyan-farm\goblin-ipa-0810\out4\04-the-footnote-ipa-rN-neg-sN.png on the
+    rtx5090, sidecars beside them, published to
+    farm-out/ep2-b04-goblin-ipa-negcolor/ with a .sha256 manifest. Job
+    ep2-b04-goblin-ipa-negcolor-1786360680, rc 0, sampler sha256 c6651f87 (in
+    the tree at commit 872064e).
+  what_was_pre_registered_and_when: >-
+    No sealed prediction record was written for this arm and I am not claiming
+    one. What WAS committed before any frame was read is the spec's own
+    statement of what each outcome would mean — commit 872064e, pushed while the
+    job was still rendering: "If the skin stays drained with the anchor in
+    place, that is strong evidence the drain is the adapter overriding text
+    conditioning outright rather than an absent instruction." The frames were
+    pulled and looked at after that commit.
+  the_lever: >-
+    Arm 1 unchanged in every respect — same adapter, scale 0.6, every block, all
+    four references, same seeds, same positive prompt — plus `greyscale,
+    monochrome, desaturated, grey skin, pale skin` appended to the negative.
+    Negative 50 -> 64 of 77 on the real CLIP tokenizer, positive unchanged at 69,
+    zero tokens added to the description of the goblin. The gap it closed was
+    real: the negative this wave has sent on every frame contained no colour term
+    at all.
+  the_result_and_it_is_a_null: >-
+    IT DOES ALMOST NOTHING. green_share, same instrument, arm 1 -> arm 4 per
+    reference: s0 0.0124 -> 0.0994, s1 0.0040 -> 0.0052, s2 0.0054 -> 0.0098,
+    s3 0.0012 -> 0.0029. Against a tags-only baseline of 0.3627. Mean saturation
+    is flat to three decimals on three of the four references. The s0 pair is
+    the only one that moves at all and it moves an eighth of the way.
+    By eye, and this is the read that counts: put arm 1 and arm 4 side by side
+    on the same reference and they are the same picture in the same grey. s1 and
+    s3 are indistinguishable. s0's anchored row is a shade warmer and is still
+    nowhere near the baseline's green. Nothing was rescued.
+  what_the_null_is_worth_and_it_is_not_nothing: >-
+    It discriminates between two accounts of the drain that the arm-1 data could
+    not separate. If the skin were grey because nothing was telling the model to
+    keep it green, the strongest colour negatives in this model's own tag dialect
+    would have moved it. They did not. So the adapter is not filling a vacuum in
+    the text conditioning, it is OVERRIDING it — the same thing record
+    ep2-b04-goblin-ipa-observed found for the tusks, where the reference's mouth
+    beat the `tusks` tag. Text pressure does not compete with the adapter on a
+    step where the adapter is present.
+    That is exactly why arm 3 works and this does not. Arm 3 does not argue with
+    the adapter, it removes it from the steps where colour is decided. The two
+    results agree on one mechanism, which is worth more than either alone.
+  identity_unaffected: >-
+    The anchor cost nothing on the other axis either — each arm-4 row holds one
+    creature just as its arm-1 row does. It is a null, not a regression. Also
+    visible and consistent with the earlier finding: the s3 rows carry tusks in
+    both arms, because s3 is a tusked reference, while the s0 rows carry none.
+  the_lever_is_closed: >-
+    Do not re-run a colour negative against a present adapter. If a later round
+    wants the anchor, it should ride on top of a WINDOWED adapter, where the
+    prompt actually owns the late steps and a negative has something to push on.
+    That is a combination, not this lever, and it is not queued.
+  what_this_does_not_claim: >-
+    No arm recommended, no frame picked, ranked or promoted, no goblin made
+    canonical, fourteen staged wave specs still staged. `green skin, tusks`
+    remains the steward's unratified translation.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
