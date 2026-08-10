@@ -4774,3 +4774,154 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+- id: ep2-goblin-regen-directive-0810
+  date: 2026-08-10
+  kind: founder-direction
+  subject: "the founder's verdict on the goblin work as it stood at ~15:00 —
+    a reject of the current state and an instruction to keep iterating"
+  steward_provisional: false
+  pick: null
+  scores: {}
+  verbatim: >-
+    "the goblin needs abit more regeneration."
+  said_by: founder (Roman)
+  said_at: 2026-08-10, approximately 15:00 local
+  what_it_is: >-
+    A REJECT plus a direction. He looked at where the goblin stands — the wave-1
+    baseline's four different creatures, and the IP-Adapter fork where one arm
+    holds the character and drains the green and the other keeps the green and
+    loses the character — and asked for more rounds. He did not pick an arm, did
+    not name a cost as acceptable, and did not authorise the fifteen-beat wave.
+  what_it_is_not: >-
+    NOT a taste verdict on any frame, NOT a canon promotion, NOT permission to
+    scale. Records 34, 40, 42, ep2-b04-goblin-ipa-scored and
+    ep2-b04-goblin-ipa-observed all keep founder_verdict: null and this record
+    does not fill any of them in. The fourteen staged wave specs in
+    pipeline/jobs/ stay staged. "More regeneration" is an instruction about
+    process, and reading it as approval of anything already rendered would be
+    the same error record 32 was written about.
+  the_definition_it_sits_on_top_of: >-
+    Unchanged and still the only thing he has said the goblin IS: "he is just a
+    simple green goblin, nothing complex" (cuts.yaml item 18, settled; ledger
+    ep2-goblin-definition-0810). The slot tags actually sent to the model,
+    `green skin, tusks`, remain the STEWARD'S translation of that sentence and
+    he has never ratified them. Every round since has held them fixed on
+    purpose, so that what is being measured is a mechanism and not a second,
+    confounded argument about the words.
+  standing_constraint_this_puts_on_the_lane: >-
+    Iterate on technique freely; do not decide what the goblin looks like. Any
+    lever that would require nominating one frame as THE goblin stops and goes
+    to him. Prefer levers that cost zero prompt tokens, because the one
+    constraint he added to his definition was "nothing complex" and answering it
+    by writing more words about the goblin spends it.
+  founder_verdict: recorded
+  founder_verdict_date: 2026-08-10
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep2-b04-goblin-ipa-window-predicted
+  date: 2026-08-10
+  kind: prediction
+  subject: "node 002b beat 04 — ARM 3, the denoise-step WINDOW. Does an
+    IP-Adapter that is switched off partway through the denoise keep arm 1's
+    single creature while handing the skin and the tusks back to the prompt?"
+  steward_provisional: true
+  pick: null
+  scores: {}
+  sealed: >-
+    WRITTEN WHILE THE FRAMES ARE STILL CLOSED. Job
+    ep2-b04-goblin-ipa-window-1786360023 was queued and had begun rendering
+    before this record was written; no output frame has been opened, and the
+    identity-agreement file does not exist yet. That ordering is the point of
+    the record.
+  the_lever_and_why_this_one: >-
+    Arms 1 and 2 moved STRENGTH and LOCATION. Both bought identity with colour
+    or colour with identity. The third axis had not been touched: in all forty
+    cells rendered so far the reference conditions all forty denoise steps.
+    Strength is close to exhausted downward — scale 0.40 was the floor tried and
+    green was ALREADY gone there at 0.02 while identity held, so a finer sweep
+    below 0.4 hunts a band the existing data suggests is narrow or absent. Time
+    is untried and the mechanism argument is clean: coarse structure — WHICH
+    CREATURE THIS IS — is settled in the earliest high-noise steps, surface
+    colour late. Adapter on early, off late, should buy the creature from the
+    steps that decide it and leave the skin to a text prompt that was drawing
+    green 4 of 4 before any reference existed.
+    Not invented here: this is the start_at / end_at timestep window that
+    ComfyUI_IPAdapter_plus exposes on every advanced node, documented for
+    exactly this use. diffusers has no such parameter, so it is assembled from
+    two documented pieces of the pinned 0.29.2 build — callback_on_step_end, and
+    set_ip_adapter_scale writing .scale on the IPAdapterAttnProcessor instances,
+    an attribute confirmed by inspection of THIS build to be read on every
+    forward pass. Zero prompt tokens added, as with arms 1 and 2.
+  cells: >-
+    Reference s0, scale 0.6, adapter on for the first 15% / 25% / 40% / 60% of
+    40 steps (6 / 10 / 16 / 24 steps), four seeds each, byte-identical prompt,
+    negative, seeds, steps, guidance and size. The control is an ALREADY
+    RENDERED row — arm 1 ipa-r0-c060, which is the same everything with the
+    adapter on for all forty steps. One variable.
+  why_one_reference_and_why_it_is_not_a_pick: >-
+    s0 is the reference of an existing measured row, so every cell differs from
+    rendered frames by one thing. Same shape as arm 1's own 0.4/0.8 sweep on s0.
+    Nobody has chosen a canonical goblin and this arm does not choose one; if a
+    window holds, the next round runs it across all four references, which is
+    where a mechanism claim would have to survive.
+  the_sharpest_falsifiable_call_is_the_tusks: >-
+    Record ep2-b04-goblin-ipa-observed established something better than any
+    hue statistic for this test: on arm 1, tusks stopped being a prompt-level
+    attribute and became a property of the reference. s0 is the ONE baseline
+    frame with no tusks — a closed frown — and every arm-1 row built on it is
+    0 of 4 tusked at mouth-level zoom, while the tag alone gave the baseline
+    3 of 4. So the tusks are a CLEAN READOUT of who owns the late denoise. If
+    the window works, the short windows hand the late steps back to the prompt
+    and TUSKS SHOULD RETURN toward the baseline's 3 of 4 while the creature
+    stays one creature. If tusks stay 0 of 4 at 15% and 25%, the window did not
+    hand anything back and the mechanism claim is dead regardless of what the
+    hue number says.
+  predictions:
+    identity: >-
+      Holds at 40% and 60%, degrades at 15%. I expect w060 and w040 to look like
+      arm-1 r0-c060 by eye — one creature four times — and w015 to be visibly
+      looser, closer to the baseline's four creatures than to arm 1. Stated
+      concretely so it can be wrong: at 15% I expect at least two of the four
+      seeds to read as different creatures.
+    green: >-
+      Returns progressively as the window shortens. w015 and w025 green by eye
+      at a saturation in the baseline's range; w040 partial; w060 still drained
+      or nearly so, because 24 of 40 steps is most of the way to arm 1.
+    tusks: >-
+      0 of 4 at w060, and returning at w015 and w025. This is the call I most
+      expect to be wrong in its detail and it is the one worth staking, because
+      it is the only measurement here that a static background cannot fake.
+    the_thing_i_expect_to_lose_on: >-
+      That a window exists where BOTH hold. The honest reading of arms 1 and 2
+      is that on this beat IP-Adapter couples identity and palette tightly, and
+      the most likely single result is a clean monotonic trade with no crossover
+      — green coming back at exactly the rate identity leaves, which would make
+      the window one more way to sit on the same line rather than a way off it.
+      If that is what the frames show, the finding is that IP-Adapter is the
+      wrong tool for this and the search moves off it, and that is a REPORTABLE
+      RESULT, not a failed job.
+  the_metric_is_not_the_read: >-
+    identity-agreement-window.yaml will emit DINOv2 seed agreement on the same
+    build as every prior row, for series continuity only. It is not how these
+    arms get ranked and no arm may be ranked by it. On beat 04 that metric has
+    failed twice in recorded fact — it could not separate one creature from four
+    (724b616), and it scored an arm as holding a character that four visibly
+    different faces contradict (93356b1) — because on a face close-up against a
+    constant background it is largely scoring the background. Any number quoted
+    from it in the report carries that warning attached.
+  what_this_cannot_show: >-
+    The same limit arm 1 had and it has not gone away. Every reference is itself
+    a beat-04 frame, so the reference's scene IS this beat's scene, and nothing
+    here can reveal the adapter importing a WRONG setting into a different beat.
+    Arm 1 demonstrated that failure in kind — the c080 row reproduced s0's
+    window, plank and hand — but not in place. Settling it needs one frame of a
+    DIFFERENT beat conditioned on a beat-04 reference, and that job is not
+    queued and will not be queued without a decision.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null

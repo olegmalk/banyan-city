@@ -1,0 +1,205 @@
+# 002b beat 04 — ARM 3 of the consistency sample. Same beat, same four seeds,
+# same prompt string, same reference. ONE variable against arm 1's r0-c060 row:
+# WHEN in the denoise the adapter is applied.
+#
+# THE VERDICT THIS ANSWERS TO. Roman, 2026-08-10 ~15:00, verbatim: "the goblin
+# needs abit more regeneration." That is a reject of the current state and an
+# instruction to keep iterating — not a request for a decision from him. Nothing
+# in this job picks a goblin, ranks a round or promotes a frame.
+#
+# WHERE THE PROBLEM STANDS. The wave-1 baseline (406909c) is green 4/4 and four
+# visibly different creatures. Arm 1 (whole-model IP-Adapter) holds one creature
+# and takes the skin out of the green band — green share 0.00-0.02 at every
+# scale it was tried at, including the LOWEST, 0.40. Arm 2 (adapter scoped to
+# down block_2) keeps green at 0.37-0.48 and gives the creature back up. The
+# reference itself is not the cause: it is the greenest picture in the whole
+# experiment at green_share 0.4918 on the crop the adapter receives (77e13e4),
+# and the byte-identical reference produced green in arm 2 and grey in arm 1.
+# That hypothesis is closed and is not re-tested here.
+#
+# WHY *WHEN* IS THE NEXT LEVER, AND NOT A FINER SCALE SWEEP. The two knobs tried
+# so far are strength and location, and both were swept along the wrong axis for
+# this defect. Strength is already exhausted downward: 0.40 was the floor tried
+# and green was ALREADY gone at 0.02 there while identity held, so a finer sweep
+# between 0.0 and 0.4 is searching for a band the existing data suggests is
+# narrow-to-absent — it is the cheapest lever and also the one with the least
+# left in it. The untouched axis is time: in all 40 cells rendered so far the
+# reference conditions all 40 steps. Coarse structure — which creature this is —
+# is settled in the earliest high-noise steps; surface colour is settled late.
+# An adapter that is on early and off late should therefore buy identity from
+# the steps that decide it and hand the skin back to the text prompt, which was
+# delivering green 4/4 before any reference existed.
+#
+# NOT A HOME-MADE MECHANISM. This is the timestep window that
+# ComfyUI_IPAdapter_plus exposes as start_at / end_at on every advanced node,
+# documented for exactly this purpose. diffusers has no such parameter, so it is
+# assembled from two documented pieces of the pinned 0.29.2 build:
+# callback_on_step_end (accepted by StableDiffusionXLPipeline, verified on the
+# box) and set_ip_adapter_scale, which writes .scale on the IPAdapterAttnProcessor
+# instances — an attribute read on every forward pass, also verified in this
+# build. Setting it to 0 mid-run switches the adapter off for the rest of the
+# denoise and touches no weights and no sampler state.
+#
+# ZERO PROMPT TOKENS ADDED, like arms 1 and 2. The founder said "nothing
+# complex"; no lever in this lane is allowed to answer that by writing more
+# words about the goblin.
+#
+# ONE REFERENCE, AND IT IS NOT A PICK. s0 at scale 0.6 is an already-rendered
+# control row, so each cell here differs from measured frames by one variable.
+# Same shape as arm 1's own 0.4/0.8 sweep on s0. If a window holds, the NEXT
+# round runs it across all four references — that is where a mechanism claim
+# would have to survive. Choosing the goblin is R4's and this job does not.
+#
+# LICENCES. Nothing new is introduced. animagine-xl-3.1 (CreativeML Open
+# RAIL++-M, D15 open), h94/IP-Adapter Plus SDXL weights (Apache-2.0) with the
+# ViT-H image encoder (MIT-derived), diffusers 0.29.2 (Apache-2.0). All already
+# in the box cache; nothing downloaded, nothing spent. StoryDiffusion's
+# Consistent Self-Attention was considered as an alternative mechanism and NOT
+# used: its code is Attribution-NonCommercial 4.0, which is the same trap as
+# Depth-Anything-V2-Base, and adopting it is a licence decision this lane does
+# not get to make quietly.
+
+id: ep2-b04-goblin-ipa-window
+task: ep2-b04-goblin-ipa-window-0810
+node: 002b-first-citizen
+beat: 4
+runner: box
+needs_gpu: true
+priority: 40
+max_attempts: 1
+owner: goblin-regen lane
+
+consumer: >-
+  The same open question arms 1 and 2 left: whether one goblin across fifteen
+  beats can be had without losing the one attribute the founder named. If a step
+  window holds arm 1's identity at arm 2's green, that is the mechanism to take
+  to him. If it does not, the honest finding is that IP-Adapter trades these two
+  against each other on this beat and the search moves off IP-Adapter entirely.
+
+success: >-
+  16 PNGs at C:\banyan-farm\goblin-ipa-0810\out3 (4 windows x 4 seeds) with
+  per-frame 7.2 sidecars naming the window, plus identity-agreement-window.yaml
+  measuring the wave-1 baseline, the arm-1 r0-c060 control and these four with
+  one build of one metric. A result showing the window buys nothing is a
+  success: the job produces the measurement, not a preferred answer.
+
+# The number this job emits is NOT how the arms get read. On this beat the
+# DINOv2 agreement metric failed twice (724b616, 93356b1) — it could not
+# separate one creature from four, and it scored an arm as holding a character
+# that four visibly different faces contradict; on face close-ups against a
+# constant background it is largely scoring the background. It is run anyway,
+# on the same build as every prior row, so the series stays comparable. The
+# read is by eye and says what was looked at.
+metric_warning: >-
+  DINOv2 seed agreement is unreliable on beat 04 and no arm may be ranked by it.
+
+why: >-
+  One variable against arm 1 r0-c060: the adapter is switched off after 15%,
+  25%, 40% and 60% of the 40 denoise steps instead of running for all of them.
+  Sequential, one image at a time — batch-of-4 configs are banned on this card.
+
+est_minutes: 8
+
+needs:
+- cuda
+- vram20
+- farm-venv
+
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\out
+  - --out
+  - C:\banyan-farm\goblin-ipa-0810\out3
+  - --arm
+  - window
+  - --task
+  - ep2-b04-goblin-ipa-window-0810
+
+# Baseline, the arm-1 control and the four windows measured in ONE run of ONE
+# build, so any delta cannot be an artefact of the instrument loading twice.
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\identity_agreement.py
+  - --group
+  - wave1-baseline=C:\banyan-farm\wave-goblin-prep\out\04-the-footnote-wave1-s*.png
+  - --group
+  - arm1-ref0-scale060=C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r0-c060-s*.png
+  - --group
+  - arm3-ref0-window015=C:\banyan-farm\goblin-ipa-0810\out3\04-the-footnote-ipa-r0-w015-s*.png
+  - --group
+  - arm3-ref0-window025=C:\banyan-farm\goblin-ipa-0810\out3\04-the-footnote-ipa-r0-w025-s*.png
+  - --group
+  - arm3-ref0-window040=C:\banyan-farm\goblin-ipa-0810\out3\04-the-footnote-ipa-r0-w040-s*.png
+  - --group
+  - arm3-ref0-window060=C:\banyan-farm\goblin-ipa-0810\out3\04-the-footnote-ipa-r0-w060-s*.png
+  - --ref-for
+  - arm3-ref0-window015=C:\banyan-farm\wave-goblin-prep\out\04-the-footnote-wave1-s0.png
+  - --ref-for
+  - arm3-ref0-window025=C:\banyan-farm\wave-goblin-prep\out\04-the-footnote-wave1-s0.png
+  - --ref-for
+  - arm3-ref0-window040=C:\banyan-farm\wave-goblin-prep\out\04-the-footnote-wave1-s0.png
+  - --ref-for
+  - arm3-ref0-window060=C:\banyan-farm\wave-goblin-prep\out\04-the-footnote-wave1-s0.png
+  - --out
+  - C:\banyan-farm\goblin-ipa-0810\out3\identity-agreement-window.yaml
+
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b04-goblin-ipa-window"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/goblin-ipa-0810/out3/*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b04-goblin-ipa-window.sha256"), "w") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    # 16 stills + 16 sidecars + identity-agreement-window.yaml.
+    raise SystemExit(0 if len(src) == 33 else 1)
+
+artifacts:
+- C:\banyan-farm\goblin-ipa-0810\out3\identity-agreement-window.yaml
+- C:\banyan-farm\goblin-ipa-0810\out3\04-the-footnote-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0810\out3\04-the-footnote-ipa-r0-w015-s1.png
+- C:\banyan-farm\goblin-ipa-0810\out3\04-the-footnote-ipa-r0-w015-s2.png
+- C:\banyan-farm\goblin-ipa-0810\out3\04-the-footnote-ipa-r0-w015-s3.png
+- C:\banyan-farm\goblin-ipa-0810\out3\04-the-footnote-ipa-r0-w025-s0.png
+- C:\banyan-farm\goblin-ipa-0810\out3\04-the-footnote-ipa-r0-w025-s1.png
+- C:\banyan-farm\goblin-ipa-0810\out3\04-the-footnote-ipa-r0-w025-s2.png
+- C:\banyan-farm\goblin-ipa-0810\out3\04-the-footnote-ipa-r0-w025-s3.png
+- C:\banyan-farm\goblin-ipa-0810\out3\04-the-footnote-ipa-r0-w040-s0.png
+- C:\banyan-farm\goblin-ipa-0810\out3\04-the-footnote-ipa-r0-w040-s1.png
+- C:\banyan-farm\goblin-ipa-0810\out3\04-the-footnote-ipa-r0-w040-s2.png
+- C:\banyan-farm\goblin-ipa-0810\out3\04-the-footnote-ipa-r0-w040-s3.png
+- C:\banyan-farm\goblin-ipa-0810\out3\04-the-footnote-ipa-r0-w060-s0.png
+- C:\banyan-farm\goblin-ipa-0810\out3\04-the-footnote-ipa-r0-w060-s1.png
+- C:\banyan-farm\goblin-ipa-0810\out3\04-the-footnote-ipa-r0-w060-s2.png
+- C:\banyan-farm\goblin-ipa-0810\out3\04-the-footnote-ipa-r0-w060-s3.png
