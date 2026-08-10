@@ -80,6 +80,28 @@ if it rebuilt and the primary did not, the primary is stuck). Unreachable is a
 warn, not a fail — an offline laptop must not red a local run; `--no-public`
 skips the section outright.
 
+**Correction, 2026-08-10 17:22 — both of those signals were blind, and the
+section now says so instead of printing `ok`.** Vercel sets `last-modified` to
+the instant the CDN edge filled its cache, not to the build time. Measured:
+`/city` and `/machine`, both cold (`x-vercel-cache: MISS`, `age: 0`), returned
+`last-modified` equal to their own `date` header to the second; on a later HIT
+the value froze there while `age` counted up from it. So the lag was never
+"how far production trails HEAD", it was "how long ago an edge refilled" —
+always seconds. The mirror cross-check failed the same way from the other
+direction: Pages publishes a *genuine* build time, so the mirror is always the
+older of the two and the drift is always negative. **A site frozen for a day
+would have printed a green `0s behind HEAD`** — the precise false green this
+section was added to prevent. `qa_local.is_cache_fill_clock()` now detects the
+condition (`last-modified ≈ date - age`, which holds in both cache states) and
+the section reports **BLIND** rather than passing.
+
+**This leaves the gate with no automatic staleness signal — that is honest, not
+fixed.** Until a build stamp exists, judge a deploy by building `origin/main`
+and diffing the bytes against the served page, or by `vercel ls`. The durable
+fix is for the builders to publish the commit they were built from (a
+`<meta name="build-commit">` or a `/build.json`) so the gate can compare it to
+HEAD directly; that needs `build_site.py`, and is not yet done.
+
 ## A. What happened tonight, re-framed
 
 `DEPLOY-BROKEN-0810.md` is **superseded by this file.** Its diagnosis was right;

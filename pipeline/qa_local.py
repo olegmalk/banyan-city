@@ -494,6 +494,53 @@ def head_commit_epoch():
     return int(out) if out.isdigit() else None
 
 
+# How close `last-modified` must sit to the cache-fill instant before we call it
+# a restatement of that instant rather than a build clock. Two seconds absorbs
+# clock skew and the round trip without admitting a real build timestamp.
+FILL_CLOCK_EPSILON_S = 2
+
+
+def is_cache_fill_clock(headers):
+    """Is this `last-modified` just the moment the CDN edge filled its cache?
+
+    WHY THIS EXISTS — it invalidates the check it guards. Vercel sets
+    `last-modified` on a static asset to the instant the edge fetched it from
+    origin, NOT to the time the site was built. Measured 2026-08-10 against
+    banyan.city: `/city` and `/machine`, both cold (`x-vercel-cache: MISS`,
+    `age: 0`), each returned `last-modified` equal to their own `date` header to
+    the second. On a later HIT the value froze at that fill instant while `age`
+    counted up from it.
+
+    So `head_commit_epoch() - last_modified` is not "how far production trails
+    HEAD" — it is "how long ago some edge happened to refill", which is always
+    seconds. A build frozen for a day still reports `0s behind HEAD` the moment
+    anyone loads a cold page. Both signals in check_public_freshness() read this
+    header, so both were structurally incapable of firing: the lag never went
+    positive, and the mirror drift never did either, because the mirror's
+    `last-modified` IS a real build time and so is always the *older* of the two.
+    During the 15.8-hour freeze this section was written to catch, it would have
+    printed a green `ok`.
+
+    The test does not depend on cache state, which is what makes it usable:
+    `date - age` is the fill instant in both directions, so a header that merely
+    restates it lands within epsilon whether the response was a MISS or a HIT.
+    GitHub Pages, by contrast, publishes a genuine build time — the mirror
+    measured 7m43s older than its own fill instant — so the control still reads
+    as trustworthy and the cross-check keeps its meaning on that side.
+
+    A blind signal must announce that it is blind. Returning True here buys a
+    warn, never a pass; see check_public_freshness()."""
+    lm = http_date(headers)
+    served = http_date(headers, "date")
+    if lm is None or served is None:
+        return False
+    try:
+        age = float((header(headers, "age") or "0").strip())
+    except ValueError:
+        age = 0.0
+    return abs(lm - (served - age)) <= FILL_CLOCK_EPSILON_S
+
+
 def _ago(seconds):
     if seconds < 90:
         return "%ds" % int(seconds)
@@ -554,6 +601,19 @@ def check_public_freshness():
     if pub_lm is None:
         print("  %s no last-modified header — freshness cannot be measured this way\n"
               % yellow("warn"))
+        return failures
+
+    # Both signals below read pub_lm. If it is only the edge's cache-fill
+    # instant it cannot answer either question, and saying "ok" would be the
+    # exact false green this section exists to prevent — so say blind and stop.
+    if is_cache_fill_clock(pub_headers):
+        print("  %s %-10s last-modified is the CDN cache-fill instant, not a build "
+              "time" % (yellow("warn"), "clock"))
+        print("  %s %-10s BLIND — cannot tell a current deploy from a frozen one "
+              "by header" % (yellow("warn"), "lag"))
+        print("  %s to judge this deploy: build origin/main and diff the bytes "
+              "against the\n       served page, or check `vercel ls` for a Ready "
+              "production deployment.\n" % yellow("    "))
         return failures
 
     # 1. lag behind HEAD
