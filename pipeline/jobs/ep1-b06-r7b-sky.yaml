@@ -1,0 +1,129 @@
+# ep1 beat 06 "too blue" — ROUND 7, ARM B: no ground at all, the frame is SKY.
+# Four seeds, one candidate set. The other half of this round is
+# `ep1-b06-r7a-tallgrass.yaml` and the two are ALTERNATIVES, not a sweep with a
+# winner. The steward picks between them nowhere.
+#
+# WHY THIS ARM RUNS AGAIN WHEN IT HAD NO DEFECT. r6 arm B came back clean on
+# everything measured: sky in 4 of 4 with no ground, no horizon and no landmass;
+# no city, building, skyline or road in any of the four; no people in any of the
+# four; and no creature either (observed at deabee9,
+# taste/steward-model.ledger.yaml record `ep1-b06-r6-two-arms-observed`). It is
+# re-rendered because r7 changes the negative on BOTH arms, and an arm compared
+# against its sibling has to have been drawn under the same rule — otherwise the
+# founder is choosing between one composition under r7 and another under r6, and
+# the difference he sees might be the prompt rather than the picture. Same four
+# seeds as r5 and r6, so this also sets beside its own r6 frames column for
+# column.
+#
+# THE CLASS FIX, AND WHY THIS ARM'S VERSION OF IT IS DIFFERENT. r6's third
+# consecutive defect was a noun nobody had ever negated — r5 a city, r6 a large
+# white animal in arm A — each found only after someone looked at the frames.
+# render_b06r7.py adds trap 9: before this beat renders, the SENT negative must
+# NAME every class that can occupy a frame the script says is empty — animals,
+# built structure, vehicles, text, with people named on the POSITIVE side by
+# `no humans` — and the run stops if one is unnamed.
+#
+# Arm B names those classes with the terms a SKY can actually be invaded by:
+# `animal, bird` and `aircraft`, not arm A's `animal, animal focus, cat, dog,
+# creature, vehicle, car`. Two reasons, both honest. A frame with nothing but sky
+# has nowhere to put a cat — which is why this arm drew no creature in r6, a
+# structural result rather than a lucky one — while a bird and a plane are
+# exactly what a sky holds. And it is a measured budget call: arm A's block costs
+# four more terms, and on this arm's longer negative (it carries `grass, field,
+# horizon, ground` because the ground leaving is what the arm IS) that measured
+# `jpeg artifacts` straight out of the house tier — a quality negative that
+# matters on a smooth blue gradient more than anywhere else in this episode.
+#
+# MEASURED ON THE BOX'S REAL CLIP BEFORE THIS FILE WAS WRITTEN (arm B: positive
+# 30/77, negative recipe 77 -> sent 75/77, nothing dropped but the duplicate
+# `text`, r5 control reproduced byte-for-byte on both halves, all 18 required
+# negatives survived the trim, trap 9 green):
+#   POS  no humans, sky, blue sky, day, cloud, sunlight, cinematic lighting,
+#        detailed, newest, masterpiece, best quality, very aesthetic
+#   NEG  photorealistic, 3d render, abstract, text, watermark, signature, low
+#        quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin
+#        texture, leaf, plant, stem, foliage, tree, photorealism, cityscape,
+#        city, building, skyline, road, mountain, grass, field, horizon, ground,
+#        animal, bird, aircraft
+#
+# The 77 ceiling is diffusers truncating each CLIP encoder; the chunked negatives
+# A1111/ComfyUI users expect would need compel with truncate_long_prompts=False
+# and hand-passed prompt_embeds (compel #45, diffusers #4043, A1111 discussion
+# #2378, read 2026-08-10). That is a recipe change owing its own one sample and
+# is deliberately NOT made here.
+#
+# HELD FIXED: `no humans` at the HEAD of the positive with no person noun
+# anywhere in the negative (r5's one confirmed win, people gone 8 of 8 in r6);
+# `scenery` absent from the positive; the full leaf/plant/stem/foliage/tree block
+# negated, since this arm has no ground and nothing in it needs to be a plant.
+# shots.md is NOT edited and sd_prompt.py is NOT modified.
+
+id: ep1-b06-r7b-sky
+task: 001-b06-r7b-sky-0810
+node: 001-capability-inventory
+beat: 6
+runner: box
+needs_gpu: true
+priority: 12
+max_attempts: 1
+owner: b06-r7
+
+consumer: >-
+  the founder's choice between his own two options, on the only beat in episode 1
+  with no frame he has accepted. He named two acceptable compositions and picked
+  neither, so both must reach him drawn under the same rule; this is the sky
+  reading under r7's negative, the sibling of ep1-b06-r7a-tallgrass. v34 is
+  currently holding a beat-6 frame he has rejected.
+
+success: >-
+  Four 832x1216 PNGs with sidecars in C:\banyan-farm\b06-r7\out, named
+  06-too-blue-r7b-s{0..3}.png. Read against four things and nothing else: is
+  there no ground, no horizon and no landmass anywhere in the frame (r6 got 4 of
+  4 and this round must not lose it); is there any bird, aircraft or other
+  occupant in the sky (zero of four is the bar); is there any city, skyline or
+  building (r6 got zero of four); and do people stay at zero of four with the
+  person nouns still out of the negative. No pick is made and no arm is
+  preferred.
+
+why: >-
+  One variable against r6, the occupancy class block, applied to both arms so the
+  founder's two options are drawn under the same rule. This arm's block is sized
+  to what a sky can hold — animal, bird, aircraft — which is both the right
+  target and what fits without selling `jpeg artifacts` off a frame that is one
+  large blue gradient.
+
+est_minutes: 2   # r6 measured ~10s/frame on this recipe, plus one model load
+
+needs: [cuda, vram12, sdxl-venv]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  - name: armB
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - C:\banyan-farm\b06-r7\render_b06r7.py
+      - --root
+      - C:\banyan-farm\banyan-city
+      - --arm
+      - B
+      - --task
+      - 001-b06-r7b-sky-0810
+      - --queue-entry
+      - ep1-b06-r7b-sky
+      - --out
+      - C:\banyan-farm\b06-r7\out
+
+artifacts:
+  - C:\banyan-farm\b06-r7\out\06-too-blue-r7b-s0.png
+  - C:\banyan-farm\b06-r7\out\06-too-blue-r7b-s1.png
+  - C:\banyan-farm\b06-r7\out\06-too-blue-r7b-s2.png
+  - C:\banyan-farm\b06-r7\out\06-too-blue-r7b-s3.png

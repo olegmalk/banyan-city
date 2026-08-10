@@ -1,0 +1,149 @@
+# ep1 beat 06 "too blue" — ROUND 7, ARM A: ground visible, covered in TALL GRASS.
+# Four seeds, one candidate set. The other half of this round is
+# `ep1-b06-r7b-sky.yaml` and the two are ALTERNATIVES, not a sweep with a winner.
+#
+# WHY THIS EXISTS. Round 6 fixed the defect the founder named and then shipped a
+# new one through the same hole. From the r6 frames (rescued at 565e335/986f837,
+# observed in taste/steward-model.ledger.yaml record `ep1-b06-r6-two-arms-observed`
+# at deabee9):
+#
+#   THE CITIES ARE GONE, 8 of 8. Not a skyline, not a building, not a road in
+#   either arm on any seed, against 2 of 4 in r5.
+#   PEOPLE STAY GONE, 8 of 8, with the person nouns still out of the negative.
+#   ARM A DREW TALL GRASS 4 of 4 — blades at the camera, lower third to half of
+#   the frame, no hard horizon.
+#   ARM B DREW SKY 4 of 4 — no ground, no horizon, no landmass.
+#   AND A LARGE WHITE ANIMAL IS THE SUBJECT OF ARM A's s1 AND s3, 2 of 4. s1 is a
+#   white cat or wolf face-on filling three quarters of the frame; s3 is a flank
+#   and a pink ear across the upper right, blocking the sky the beat is about.
+#
+# IT IS THE SAME FAULT AS THE CITIES, ONE ROUND LATER. r6 arm A's sent negative,
+# read back from its own sidecars, is: photorealistic, 3d render, abstract, text,
+# watermark, signature, low quality, blurry, extra limbs, deformed, jpeg
+# artifacts, realistic skin texture, leaf, stem, tree, photorealism, text,
+# cityscape, city, building, skyline, road, mountain. There is no `animal`, no
+# `cat`, no `dog`, no `wolf`, no `creature` in it, and nothing in the positive
+# asks for one. An animal was never forbidden on this beat, exactly as a city
+# never was, and at 59 of 77 tokens neither was a trim.
+#
+# `no humans` IS WHY, AND IT STAYS. On this checkpoint's vocabulary `no humans`
+# asserts that no HUMAN character is present, not that the frame is empty of
+# creatures — `animal focus` exists as a separate tag precisely because such
+# pictures exist and carry both. `tall grass` walks straight into the
+# animal-in-long-grass composition drawn under both at once. The tag is r5's one
+# confirmed win (people 8 of 8 gone) and is NOT reopened; the class is shut on
+# the negative side, where no person noun is involved.
+#
+# THE FIX IS A PRE-FLIGHT, NOT A TERM. Three rounds running the defect has been a
+# noun nobody had ever negated, each found only after someone looked at the
+# frames. render_b06r7.py adds trap 9: before this beat renders, the SENT
+# negative must NAME every class of thing that can occupy a frame the script says
+# is empty — animals, built structure, vehicles, text, with people named on the
+# positive side by `no humans` — and the run stops if one is unnamed. It costs no
+# card time and it would have caught both the city and the animal first.
+#
+# MEASURED ON THE BOX'S REAL CLIP BEFORE THIS FILE WAS WRITTEN (arm A: positive
+# 35/77, negative recipe 74 -> sent 68/77, r5 control reproduced byte-for-byte on
+# both halves, all 16 required negatives survived the trim, trap 9 green):
+#   POS  no humans, tall grass, grass, sky, blue sky, day, cloud, sunlight,
+#        cinematic lighting, detailed, newest, masterpiece, best quality,
+#        very aesthetic
+#   NEG  photorealistic, 3d render, abstract, text, watermark, signature, low
+#        quality, blurry, extra limbs, deformed, jpeg artifacts, leaf, stem,
+#        tree, photorealism, cityscape, city, building, skyline, road, mountain,
+#        animal, animal focus, cat, dog, creature, vehicle, car
+#
+# WHAT THE CLASS BLOCK COSTS, STATED RATHER THAN BURIED: fit_negative sold
+# `realistic skin texture` out of the HOUSE tier to fit it, and deduplicated the
+# second `text`. That is a real loss and it is recorded in every sidecar as a
+# NEGWARN. It is accepted here because this is the one beat in the episode with
+# no character and therefore no skin in it, while the animal is the defect the
+# round exists to remove. `photorealistic`, `3d render` and `photorealism` all
+# survive, so the anti-photoreal rule the founder set still has three terms
+# behind it. The 77 ceiling is diffusers truncating each CLIP encoder; the
+# chunked negatives A1111/ComfyUI users expect would need compel with
+# truncate_long_prompts=False and hand-passed prompt_embeds (compel #45,
+# diffusers #4043, A1111 discussion #2378, read 2026-08-10) — a recipe change
+# owing its own one sample, deliberately NOT made in this round.
+#
+# EVERYTHING ELSE IS r6's, UNCHANGED, BECAUSE r6 WAS RIGHT ABOUT THE GRASS.
+# Same model, size, steps, cfg; the same four seeds r5/r6 drew, so r7 sets beside
+# r6 column for column and the animal block is the only variable. `plant` and
+# `foliage` stay out of this arm's negative (grass is a plant); `leaf`, `stem`
+# and `tree` stay in (the founder's 2026-08-07 rule about the CHARACTER).
+# shots.md is NOT edited and sd_prompt.py is NOT modified.
+#
+# THE STEWARD MAKES NO PICK BETWEEN THE ARMS. He has chosen neither composition
+# and both are alive; showing him both is the point of the round.
+
+id: ep1-b06-r7a-tallgrass
+task: 001-b06-r7a-tallgrass-0810
+node: 001-capability-inventory
+beat: 6
+runner: box
+needs_gpu: true
+priority: 12
+max_attempts: 1
+owner: b06-r7
+
+consumer: >-
+  the founder's choice between his own two options, on the only beat in episode 1
+  with no frame he has accepted. r6 arm A satisfied his composition — tall grass
+  at the camera 4 of 4, no city 4 of 4, no people 4 of 4 — but half its frames
+  are blocked by an animal nobody asked for, so the set cannot be put in front of
+  him as it stands. This is that set with the animal class forbidden and nothing
+  else moved. v34 is currently holding a beat-6 frame he has rejected.
+
+success: >-
+  Four 832x1216 PNGs with sidecars in C:\banyan-farm\b06-r7\out, named
+  06-too-blue-r7a-s{0..3}.png. Read against four things and nothing else: is
+  there an animal, creature or any non-human subject anywhere in the frame (the
+  defect this round exists to remove — zero of four is the bar, against 2 of 4 in
+  r6); does the ground still read as TALL GRASS with blades at the camera rather
+  than a flat empty place (r6 got 4 of 4 and this round must not lose it); is
+  there any city, skyline, building or industrial silhouette (r6 got zero of
+  four); and do people stay at zero of four with the person nouns still out of
+  the negative. No pick is made and no arm is preferred.
+
+why: >-
+  One variable: the occupancy classes r6 left unnamed are named. The animal that
+  took over 2 of 4 was never forbidden, exactly as the city never was, and trap 9
+  now refuses to render this beat until every class that can occupy an empty
+  frame appears in what the model actually receives. Composition, seeds, model
+  and every other term are r6's.
+
+est_minutes: 2   # r6 measured ~10s/frame on this recipe, plus one model load
+
+needs: [cuda, vram12, sdxl-venv]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  - name: armA
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - C:\banyan-farm\b06-r7\render_b06r7.py
+      - --root
+      - C:\banyan-farm\banyan-city
+      - --arm
+      - A
+      - --task
+      - 001-b06-r7a-tallgrass-0810
+      - --queue-entry
+      - ep1-b06-r7a-tallgrass
+      - --out
+      - C:\banyan-farm\b06-r7\out
+
+artifacts:
+  - C:\banyan-farm\b06-r7\out\06-too-blue-r7a-s0.png
+  - C:\banyan-farm\b06-r7\out\06-too-blue-r7a-s1.png
+  - C:\banyan-farm\b06-r7\out\06-too-blue-r7a-s2.png
+  - C:\banyan-farm\b06-r7\out\06-too-blue-r7a-s3.png
