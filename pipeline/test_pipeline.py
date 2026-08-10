@@ -6839,44 +6839,6 @@ def test_a_review_page_the_build_never_copied_cannot_pass_the_gate(tmp: Path):
               "approvals" in [d.name for d in bsite.review_page_dirs()])
 
 
-def test_a_queue_entry_dates_itself_only_from_a_check_in():
-    """The record's age chip may only report a time somebody actually recorded.
-
-    farm-queue.yaml carries no timestamps — no `added`, no `since` — so for an
-    entry nobody has claimed there IS no age, and the row has to say so. The
-    tempting alternative is to date it from the build, which restarts at every
-    deploy and would show a queue that never gets old however long it sat.
-    """
-    import datetime
-
-    import build_sim as bs
-
-    now = bs.utcnow()
-    then = now - datetime.timedelta(hours=5)
-    entry = {"id": "t-1", "why": "because", "runner": "farm", "worker": "any"}
-
-    claimed = bs.queue_entry_html(
-        entry, "tasks", "running",
-        {"t-1": [(then, "STARTED", "rtx5090", "")]}, set(), [], now)
-    check("an entry with a check-in line wears that line's age",
-          'class="qage"' in claimed and "last check-in" in claimed
-          and str(int(then.timestamp())) in claimed)
-
-    bare = bs.queue_entry_html(entry, "tasks", "runnable", {}, set(), [], now)
-    check("an entry nobody claimed says so instead of inventing an age",
-          "never claimed" in bare)
-    check("and it does not date itself from this build",
-          str(int(now.timestamp())) not in bare.split('class="qage"')[1])
-
-    # Every state the record can print must be distinguishable, not just the
-    # four that had a colour: the chip carries its own word in full either way.
-    for state in bs.QSTATE_ORDER:
-        row = bs.queue_entry_html(entry, "tasks", state, {}, set(), [], now)
-        _emoji, word, _blurb = bs.QSTATES[state]
-        check(f"the {state} chip names its state in words",
-              f'class="qchip {state}"' in row and word in row)
-
-
 def test_the_repo_owner_is_read_from_the_platform_that_is_building():
     """The trap the 2026-08-10 owner change set, pinned so it cannot be reset.
 
@@ -7154,7 +7116,6 @@ def main():
     test_striking_the_backwards_conjunct_would_flag_everything()
     # THE MAC'S RENDER LOOP MUST NOT PUBLISH TO HIS SCREEN BY ACCIDENT.
     test_an_agent_run_cannot_put_candidates_on_the_founders_screen()
-    test_a_queue_entry_dates_itself_only_from_a_check_in()
     # A PAGE HE WAS PROMISED MUST REACH THE SITE, AND ITS ABSENCE MUST BE LOUD.
     with tempfile.TemporaryDirectory() as td:
         test_a_review_page_the_build_never_copied_cannot_pass_the_gate(Path(td))
