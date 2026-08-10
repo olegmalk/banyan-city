@@ -7206,7 +7206,7 @@ over the `TRAFFIC_TOKEN` repo secret. Nothing was rotated, created or changed.
 Roman, in session ~19:55, verbatim: **"finished means that the episode 1 video
 has been polished. promoted to canon, and ready to be published."**
 
-Recorded in full as **[D21](DECISIONS.md#d21--finished-has-a-definition-now-and-it-is-the-founders)**
+Recorded in full as **[D21](DECISIONS.md#d21--finished-has-a-definition-now-and-it-is-the-founders-resolved--roman-2026-08-10)**
 — that file, not this one, because it is a standing definition rather than dated
 status, and the next person planning episode-1 work will go looking in the
 decisions log. This line exists so that anyone reading the running log finds it.
