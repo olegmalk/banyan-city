@@ -131,7 +131,11 @@ steps:
         print("   ", os.path.basename(f), h[:16])
     # shasum -c format, so the Mac verifies byte-identity by running the
     # manifest instead of re-hashing blind against a number in a log.
-    with open(os.path.join(dst, "10-no-form-wave1.sha256"), "w") as fh:
+    # newline="\n" is load-bearing: this runs on Windows, where text mode
+    # rewrites \n to \r\n, and every filename would then carry a trailing
+    # \r that shasum -c cannot open. Measured, not guessed -- the first
+    # manifest written here failed all four files on the Mac for exactly this.
+    with open(os.path.join(dst, "10-no-form-wave1.sha256"), "w", newline="\n") as fh:
         fh.write("\n".join(lines) + "\n")
     print("published", len(src), "file(s) + manifest ->", dst)
     # 4 stills + 4 sidecars. Fewer means the render wrote less than it
