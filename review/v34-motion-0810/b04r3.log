@@ -1,0 +1,29 @@
+==== b04r3 STARTED 10/08/2026  6:34:42.84 ====
+-- begin-encode: phys 10.7/68.1GB, commit 14.5/128.2GB (load 15%)
+loading text encoder from C:\Users\artvn\.cache\huggingface\hub\models--Lightricks--gemma-3-12b-it-qat-q4_0-unquantized\snapshots\d62fe4f1995ade703b49a0f3c0d0f161237ef437
+Loading weights:   0%|          | 0/1065 [00:00<?, ?it/s]Loading weights:  43%|####3     | 458/1065 [00:00<00:00, 4142.44it/s]Loading weights: 100%|##########| 1065/1065 [00:00<00:00, 6125.93it/s]
+encoded to C:\banyan-farm\v34-motion-0810\ltx-embeds-b04r3.pt (1, 1024, 188160)
+{"peak_commit_gb": 44.6, "peak_phys_gb": 37.5, "last_stage": "begin-encode"}
+-- begin-render: phys 10.7/68.1GB, commit 14.3/128.2GB (load 15%)
+transformer  C:\Users\artvn\.cache\huggingface\hub\models--diffusers--LTX-2.3-Distilled-Diffusers\snapshots\432e0d3c2d1769aaa4d295f9243f7062bf6b47ee [subfolder=transformer, bf16]
+scheduler    C:\Users\artvn\.cache\huggingface\hub\models--diffusers--LTX-2.3-Distilled-Diffusers\snapshots\432e0d3c2d1769aaa4d295f9243f7062bf6b47ee [subfolder=scheduler, distilled]
+other parts  C:\Users\artvn\.cache\huggingface\hub\models--diffusers--LTX-2.3-Diffusers\snapshots\8eee8edcf067e838b843f926ec4d4cc9b2be1aaf
+-- load-transformer-bf16-38GB: phys 11.4/68.1GB, commit 16.2/128.2GB (load 16%)
+Loading checkpoint shards:   0%|          | 0/8 [00:00<?, ?it/s]Loading checkpoint shards:  12%|#2        | 1/8 [00:00<00:00,  9.82it/s]Loading checkpoint shards:  25%|##5       | 2/8 [00:00<00:00,  9.76it/s]Loading checkpoint shards:  50%|#####     | 4/8 [00:00<00:00,  8.85it/s]Loading checkpoint shards: 100%|##########| 8/8 [00:00<00:00, 15.25it/s]
+-- load-connectors-12.7GB-and-vae: phys 11.5/68.1GB, commit 54.5/128.2GB (load 16%)
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards: 100%|##########| 2/2 [00:00<00:00, 77.60it/s]
+-- offload-setup: phys 11.5/68.1GB, commit 64.1/128.2GB (load 16%)
+-- stage1-denoise-352x640-8steps: phys 12.4/68.1GB, commit 64.5/128.2GB (load 18%)
+  0%|          | 0/8 [00:00<?, ?it/s] 12%|#2        | 1/8 [00:35<04:09, 35.67s/it] 25%|##5       | 2/8 [00:41<01:49, 18.25s/it] 38%|###7      | 3/8 [00:47<01:02, 12.41s/it] 50%|#####     | 4/8 [00:52<00:38,  9.65s/it] 62%|######2   | 5/8 [00:58<00:24,  8.16s/it] 75%|#######5  | 6/8 [01:03<00:14,  7.24s/it] 88%|########7 | 7/8 [01:09<00:06,  6.67s/it]100%|##########| 8/8 [01:14<00:00,  6.31s/it]100%|##########| 8/8 [01:14<00:00,  9.33s/it]
+stage1 latents (1, 128, 9, 20, 11)
+-- upsample-2x-latent: phys 59.1/68.1GB, commit 66.2/128.2GB (load 86%)
+There are modules in LTX2LatentUpsamplerModel that should be kept in float32: []. Casting directly with `to()` can lead to inconsistent results; set `torch_dtype` in `from_pretrained()` instead to keep these modules in float32.
+upsampled latents (1, 128, 9, 40, 22)
+-- stage2-refine-704x1280-3steps: phys 58.4/68.1GB, commit 66.4/128.2GB (load 85%)
+  0%|          | 0/3 [00:00<?, ?it/s] 33%|###3      | 1/3 [00:11<00:22, 11.21s/it] 67%|######6   | 2/3 [00:21<00:10, 10.86s/it]100%|##########| 3/3 [00:32<00:00, 10.80s/it]100%|##########| 3/3 [00:32<00:00, 10.85s/it]
+-- decode-and-export: phys 61.4/68.1GB, commit 68.3/128.2GB (load 90%)
+[1/1] wrote C:\banyan-farm\v34-motion-0810\04-ltx-r3-s20260735.mp4 in 127s (65 frames, 704x1280, 8@352x640+3@704x1280 steps, peak torch 4.1GB, device 2.5/26GB)
+{"sample_s": 126.7, "peak_gb": 4.1, "peak_commit_gb": 70.2, "frames": 65, "size": "704x1280", "steps": "8@352x640+3@704x1280", "two_stage": true, "image_crf": 0, "offload": "sequential"}
+{"peak_commit_gb": 70.2, "peak_phys_gb": 61.8, "last_stage": "decode-and-export"}
+==== b04r3 render exited rc=0 at 10/08/2026  6:39:28.78 ====
+rc=0 
