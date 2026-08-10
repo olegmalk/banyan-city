@@ -1,0 +1,98 @@
+# Provenance for one image on the /review gallery (STEWARDSHIP §7.2).
+#
+# WHAT THIS FILE IS SERVED UNDER, because it is not what the rest of the tree is
+# served under. banyan.city publishes CC BY 4.0. This picture was drawn by
+# cagliostrolab/animagine-xl-3.1, whose CreativeML Open RAIL++-M licence attaches
+# use restrictions that travel to the output — the open conflict recorded as D15.
+# The founder authorised these frames onto the review page on 2026-08-09; he did
+# not resolve the licence question, and publishing them under a blanket CC BY
+# offer would grant what we do not hold. So the offer is NARROWED for this file
+# and said out loud on the page: it carries OpenRAIL++'s Attachment A use
+# restrictions and is not CC BY 4.0. Everything else on the site is unaffected.
+#
+# The pixels here are a JPEG re-encode, not the original bytes. The source file
+# and its SHA-256 are recorded below, so the rendition is checkable against the
+# frame it came from.
+
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_revision: 483f0c322568ed13697ed01dd0be07204746d12b
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+controlnet: diffusers/controlnet-depth-sdxl-1.0
+controlnet_revision: 17bb97973f29801224cd66f192c5ffacf82648b4
+controlnet_licence: openrail++ (D15 SAFE — same family as the base)
+controlnet_conditioning_scale: 0.6
+control_map: genomes/sapling/nodes/002b-first-citizen/control/b01-r9-depth-b15.png
+control_map_sha256: fda4bf6c8838c2da770ce79dd36c885f3c1699755fbb7ce4b0581fd1c32adc28
+depth_estimator: Intel/dpt-hybrid-midas
+depth_estimator_licence: apache-2.0 (D15 SAFE — permissive, adds nothing)
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20260720
+task: ep2-b01-r9-depth-controlnet
+render_round: r9
+arm: d60
+wall_seconds: 15
+sheet: false
+episode: 2
+shows: >-
+  002b-b01-r9-d60-s0 — ONE frame. Stage 1 of two; the remaining twelve are
+  locked in code until the founder looks at this one.
+what: >-
+  episode 2 beat 01, cold open, round 9 — THE DEPTH-CONTROLNET ROUND. The
+  founder's approved b15 plate arrives as a depth map (geometry only, colour
+  discarded before the first denoise step) instead of as an img2img init, so
+  the plate's amber dusk cannot ride in with its geometry. Everything else is
+  r8's byte for byte.
+single_variable: >-
+  The conditioning, and only the conditioning. Base, dtype, device, size,
+  steps, cfg, seed rule, sent positive and sent negative are r8's byte for
+  byte; the b15 plate arrives as a committed depth map through
+  diffusers/controlnet-depth-sdxl-1.0 instead of as an img2img init.
+  control_guidance_start/end are pinned at 0.0/1.0 so no second axis is
+  opened.
+g1_chain: >-
+  b15-r3-s1 (APPROVED, canon since d4488de, sha256
+  f60c1404f88d45720ca295dfc753e9eaabb815446710bcfffb3c7a07b7277f54) ->
+  Intel/dpt-hybrid-midas @ 11eaf7a1cf4bd70740697dbc216f98980c0aeb03, fixed
+  parameters, no sampling -> committed map (sha256
+  fda4bf6c8838c2da770ce79dd36c885f3c1699755fbb7ce4b0581fd1c32adc28) ->
+  ControlNet. Both hashes are asserted at render time. The map carries
+  strictly less than the approved still — one channel of geometry, colour
+  discarded — so it can subtract from approved content but cannot introduce
+  unapproved content. The plate itself was read for its hash only and was
+  never passed to the pipeline.
+known_defect_disclosed: >-
+  THE SENT NEGATIVE IS NOT THE RECIPE'S NEGATIVE. The recipe's negative
+  measured 75 CLIP tokens against a 77-token budget and the builder silently
+  dropped two terms to fit — `realistic skin texture` and `jpeg artifacts` —
+  logging `NEGWARN ... DROPPED` in review/b01-r9/b01r9.log. 75 recipe -> 72
+  sent. The 72 sent are byte-identical to r7's and r8's sent negative, so this
+  frame IS comparable to r8 on geometry; it is NOT the clean single-axis test
+  B01-R9-PLAN.md specified, and it is recorded as a defect rather than
+  smoothed over.
+not_scored_here: >-
+  No pick and no taste verdict. A steward-rendered candidate; ground truth is
+  the founder (R4).
+neutral: >-
+  One frame, no label burned in, nothing marked as a favourite and nothing
+  offered as a pick (gate G3).
+derived_from: review/b01-r9/01-cold-open-r9-d60-s0.png
+derived_from_sha256: 3a7686c72083f44fb9f52f4f04d68b329ba9e4bb403803a71b198462668d9e40
+sha256: bf296fdebe3c55abfcf43edb83624554235f94a5c0c2e46d26f676736ad1408b
+encoding: >-
+  JPEG from the source PNG with ImageMagick 7.1.2-21 — no resize, no crop, no
+  colour conversion, metadata stripped. Quality 90, 4:4:4 chroma so the
+  burned-in labels stay crisp.
+published_under: >-
+  CreativeML Open RAIL++-M use restrictions (Attachment A) — NOT the tree's CC
+  BY 4.0. Founder-authorised for the /review gallery only; not canon, not
+  published elsewhere, not promoted to a stills/ filename.
+authorised_by: >-
+  founder (Roman), 2026-08-09 — "put the images from my computer onto there
+  please, not like theres any reason to hide it". Visibility only: D15's
+  licence question stays open and stays his.
+surface: /review gallery (unlisted, noindex — D17)
+canon: false
+cost_usd: 0

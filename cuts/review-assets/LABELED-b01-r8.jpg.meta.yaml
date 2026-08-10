@@ -1,0 +1,116 @@
+# Provenance for one image on the /review gallery (STEWARDSHIP §7.2).
+#
+# WHAT THIS FILE IS SERVED UNDER, because it is not what the rest of the tree is
+# served under. banyan.city publishes CC BY 4.0. This picture was drawn by
+# cagliostrolab/animagine-xl-3.1, whose CreativeML Open RAIL++-M licence attaches
+# use restrictions that travel to the output — the open conflict recorded as D15.
+# The founder authorised these frames onto the review page on 2026-08-09; he did
+# not resolve the licence question, and publishing them under a blanket CC BY
+# offer would grant what we do not hold. So the offer is NARROWED for this file
+# and said out loud on the page: it carries OpenRAIL++'s Attachment A use
+# restrictions and is not CC BY 4.0. Everything else on the site is unaffected.
+#
+# The pixels here are a JPEG re-encode, not the original bytes. The source file
+# and its SHA-256 are recorded below, so the rendition is checkable against the
+# frame it came from.
+
+platform: local-gpu (rtx5090) for the frames; local ImageMagick for the sheet
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+conditioning: >-
+  three arms — img2img at strength 0.35 (i35) and 0.55 (i55) from the
+  founder's approved b15 plate, plus a text2img control arm (t2i) on the same
+  four seeds
+sheet: true
+episode: 2
+render_round: r8
+shows: >-
+  002b-b01-r8-{i35,i55,t2i}-s0..s3 — twelve frames, three arms of four seeds
+what: >-
+  episode 2 beat 01, cold open, round 8 — THE ARCHITECTURE ROUND: the height
+  instruction leaves the prompt and becomes the init image. It settled half
+  the beat and left the other half open. The init produced a grounded whole
+  plant in 8 of 8 where seven rounds of wording produced none, and all eight
+  also wear the plate's amber dusk, its light shaft and its macro bokeh where
+  the beat asks for a peach-and-gold sunrise wide shot — while r8's own t2i
+  arm drew that sky correctly on all four seeds. That split is what round 9
+  exists to attack.
+not_scored_here: >-
+  The ledger record `ep2-b01-r8-sample` carries reject_all at confidence 0.72
+  with all twelve vetoed and pick: null, written before the founder saw
+  anything. That is a steward prediction, not a verdict; R4 is his.
+neutral: >-
+  Labels, arms and seeds only, in source order. No favourite is marked,
+  nothing is ordered by preference and no tile is offered as a pick (gate G3).
+sheet_note: >-
+  A contact sheet: candidate frames composited into one picture by our own
+  labelling script, each tile carrying its address and its seed. The
+  compositing and the labels are our code and carry no model. Addresses
+  resolve through REVIEW-KEY-0808.md.
+derived_from: LABELED-b01-r8.png
+derived_from_sha256: 0ce867f8d2edfc3c2a853a673095084f3ed8100a259514a889e38d9fd87acfda
+sha256: 25d3a87e05269c44ce80634ff52c3de81311bb213d4ad23dbff23b85d171bf10
+encoding: >-
+  JPEG from the source PNG with ImageMagick 7.1.2-21 — no resize, no crop, no
+  colour conversion, metadata stripped. Quality 90, 4:4:4 chroma so the
+  burned-in labels stay crisp.
+published_under: >-
+  CreativeML Open RAIL++-M use restrictions (Attachment A) — NOT the tree's CC
+  BY 4.0. Founder-authorised for the /review gallery only; not canon, not
+  published elsewhere, not promoted to a stills/ filename.
+authorised_by: >-
+  founder (Roman), 2026-08-09 — "put the images from my computer onto there
+  please, not like theres any reason to hide it". Visibility only: D15's
+  licence question stays open and stays his.
+surface: /review gallery (unlisted, noindex — D17)
+canon: false
+cost_usd: 0
+source_frames:
+  - path: genomes/sapling/nodes/002b-first-citizen/takes/stills/01-cold-open-r8-i35-s0.png
+    address: 002b-b01-r8-i35-s0
+    seed: 20260720
+    sha256: 9288369d80bac647ec89ae1af0d1f432b1c7c3bf31b03fda1d6d091163d2e965
+  - path: genomes/sapling/nodes/002b-first-citizen/takes/stills/01-cold-open-r8-i35-s1.png
+    address: 002b-b01-r8-i35-s1
+    seed: 20261720
+    sha256: 4bf5c8d534dac91eda22abb4c2f8b347e8cfd04cdf194b726cae24e957d9d2fc
+  - path: genomes/sapling/nodes/002b-first-citizen/takes/stills/01-cold-open-r8-i35-s2.png
+    address: 002b-b01-r8-i35-s2
+    seed: 20262720
+    sha256: d792002c36b4a7cc55cf875dad4b5532d4a58d520a2f88f63c4e541991257287
+  - path: genomes/sapling/nodes/002b-first-citizen/takes/stills/01-cold-open-r8-i35-s3.png
+    address: 002b-b01-r8-i35-s3
+    seed: 20263720
+    sha256: 8953f16a9631392ea50d84dec4166c28bfac75f3b5a4977bc590b1fe1ace2b95
+  - path: genomes/sapling/nodes/002b-first-citizen/takes/stills/01-cold-open-r8-i55-s0.png
+    address: 002b-b01-r8-i55-s0
+    seed: 20260720
+    sha256: f7f2412b29013efd107b7a1a56fcbf655d0d6d815eb0f6a33c0c89901ad951e7
+  - path: genomes/sapling/nodes/002b-first-citizen/takes/stills/01-cold-open-r8-i55-s1.png
+    address: 002b-b01-r8-i55-s1
+    seed: 20261720
+    sha256: 35e035a844675d2e5f123633cd07ce6bb7ed1bccc796712bfba0458c29167330
+  - path: genomes/sapling/nodes/002b-first-citizen/takes/stills/01-cold-open-r8-i55-s2.png
+    address: 002b-b01-r8-i55-s2
+    seed: 20262720
+    sha256: c4eddbd3198cc6affc624c34a944b7acb2f8d172d19ae01ef3e9f3a62449fd24
+  - path: genomes/sapling/nodes/002b-first-citizen/takes/stills/01-cold-open-r8-i55-s3.png
+    address: 002b-b01-r8-i55-s3
+    seed: 20263720
+    sha256: ddc26be8858416c2f80caa7c7361731f3d792aae6d9cb0a75ca2d80e026cfc6b
+  - path: genomes/sapling/nodes/002b-first-citizen/takes/stills/01-cold-open-r8-t2i-s0.png
+    address: 002b-b01-r8-t2i-s0
+    seed: 20260720
+    sha256: 06d8fd3f75820094b6cb57649cd8204320e3758ade224c1c79739d514aabc1f2
+  - path: genomes/sapling/nodes/002b-first-citizen/takes/stills/01-cold-open-r8-t2i-s1.png
+    address: 002b-b01-r8-t2i-s1
+    seed: 20261720
+    sha256: f01d6061a3d30c0383f708b10b55ff2f8bc80927dab039d069566cbfa9bb41a8
+  - path: genomes/sapling/nodes/002b-first-citizen/takes/stills/01-cold-open-r8-t2i-s2.png
+    address: 002b-b01-r8-t2i-s2
+    seed: 20262720
+    sha256: 44e2b91790a10fbfdbfb26ce10cf71197c6dd5dd7a155f40c59f98cb04f77570
+  - path: genomes/sapling/nodes/002b-first-citizen/takes/stills/01-cold-open-r8-t2i-s3.png
+    address: 002b-b01-r8-t2i-s3
+    seed: 20263720
+    sha256: ec6209a8459c508ffe566d149cc5c97800af7b0b0829a4158545f32c092bcb8e
