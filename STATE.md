@@ -7200,3 +7200,20 @@ signed in as `olegmalk`, mint a fine-grained PAT on `olegmalk/banyan-city` with
 **Administration: Read-only** — the permission GitHub's REST docs name for
 `traffic/views`, `traffic/clones` and `traffic/popular/referrers` — and paste it
 over the `TRAFFIC_TOKEN` repo secret. Nothing was rotated, created or changed.
+
+## 2026-08-10 — "finished" got defined, and it is three gates not one
+
+Roman, in session ~19:55, verbatim: **"finished means that the episode 1 video
+has been polished. promoted to canon, and ready to be published."**
+
+Recorded in full as **[D21](DECISIONS.md#d21--finished-has-a-definition-now-and-it-is-the-founders)**
+— that file, not this one, because it is a standing definition rather than dated
+status, and the next person planning episode-1 work will go looking in the
+decisions log. This line exists so that anyone reading the running log finds it.
+
+The three gates are three different kinds of thing, and only one of them is
+work anybody here can do unprompted: **polished** is taste (R4, his, and there
+is no ratified written standard for it today), **promoted to canon** is a
+mechanical lint-enforced operation whose *word* is founder-reserved, **ready to
+be published** is licence + provenance + distribution clearance with publication
+itself founder-reserved. The definition authorises none of them.
