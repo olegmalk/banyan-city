@@ -9,23 +9,39 @@
 #
 # Ground truth is the founder (R4). This file never overrules him.
 #
-# Rolling hit rate, SECOND scoring, 2026-08-09 (his ~14:40Z verdict added to the
-# ~12:20Z one). Recomputed from this file by reading every `outcome:` in it, not
-# by adding to the previous paragraph — that paragraph had already gone stale
-# twice, saying "6 of 34" after record 35 was scored and three records appended.
-#   11 of 37 predictions now have a verdict. 2 hit · 5 partial · 4 miss.
-#   STRICT (hits only)                 2/11 = 18%
-#   partials counted as half         4.5/11 = 41%
-#   PICK predictions (a frame or image chosen — records 3, 5, 30, 33, 37)
-#                                      0 hit · 1 partial · 4 miss of 5
-#   REJECT predictions (reject_all — records 2, 4, 29, 32, 36)
+# Rolling hit rate, THIRD scoring, 2026-08-10 (his ~15:00 local beat-6 verdict
+# added). Recomputed from this file by reading every `outcome:` in it and
+# grouping by each record's own `predicted_verdict:`, not by adding to the
+# previous paragraph and not by the hand-kept record-number lists that paragraph
+# used — those lists had already drifted from what the fields say. That is also
+# why the class counts below do not match the previous ones term for term: the
+# old "PICK … records 3, 5, 30, 33, 37" omitted two records whose
+# `predicted_verdict` is `ratify`/`pick_holds`. Nothing was rescored; the
+# grouping was.
+#   12 of 65 records now carry a scoring verdict. 2 hit · 5 partial · 5 miss.
+#   STRICT (hits only)                 2/12 = 17%
+#   partials counted as half         4.5/12 = 38%
+#   PICK class (`predicted_verdict: ratify` or `pick_holds` — b06 r3, b14 r3,
+#   b10 r4, b13 r7, b16 drift, b14 r4, b06 r5)
+#                                      0 hit · 2 partial · 5 miss of 7
+#   REJECT class (`reject_all` — b03 r3, b10 r3, b03 r4, b13 r6, b06 r4)
 #                                      2 hit · 3 partial · 0 miss of 5
-#   MECHANICAL (kind: video, no frame chosen — record 35)   1 partial of 1
-# THE ASYMMETRY IS NOW FIVE AND FIVE AND IT HAS NOT MOVED. Every hit is a
+#   (3 records are `n/a` — verdicts he gave on questions, not on predictions —
+#    and 1 is `not_scoreable_no_prediction_was_written`. Neither counts above.)
+# THE ASYMMETRY IS NOW SEVEN AND FIVE AND IT HAS NOT MOVED. Every hit is a
 # rejection; no reject_all has ever been a miss; no pick has ever been ratified
-# outright. Record 37 is the closest a pick has come — he took the frame it named
-# in `predicted_flip_to` rather than the one it picked — and it is a partial, not
-# a hit.
+# outright, and the pick column is 0 for 7. b14 r4 is the closest a pick has come
+# — he took the frame it named in `predicted_flip_to` rather than the one it
+# picked — and it is a partial, not a hit.
+#
+# WHAT THE THIRD SCORING ADDED: a pick that DESCRIBED its own failure mode and
+# predicted `ratify` anyway (b06 r5 — "if he rejects this set it will most likely
+# be for that trade", and it was). Two proposed v2 axes come out of it, A12 built
+# structure and A13 ground state, both as VETOES rather than scored axes, and one
+# rule with wider reach than either: his wording from an earlier round is not a
+# passing grade for a new frame. The model gave b06-r5-s2 style credit for a
+# bottom edge that matched a phrase HE had written, and he called that same edge
+# "some flat place".
 #
 # CALIBRATION: THE NUMBER IS ONLY MEANINGFUL INSIDE A CLASS, AND THAT IS NEW.
 # Ranked by confidence, the five calls at >=0.72 are four rejections (all held:
@@ -2292,11 +2308,23 @@
     because the composition changed while the faults were being fixed, and beat 12
     is on the record as "follows the style well" AND rejected: fixing what he
     named has never bought forgiveness for something new.
-  founder_verdict: null
-  founder_verdict_date: null
-  outcome: null
-  miss_axis: null
-  model_action: null
+  founder_verdict: |-
+    "none of the beat 6 images will work, you either show the ground as having
+    tall grass or dont show the ground at all and show the sky, right now its
+    showing the ground as some flat place, or showing cities for some reason"
+  founder_verdict_date: 2026-08-10
+  outcome: miss
+  miss_axis: >-
+    Not the axes this record fixed. He named neither people nor clouds — both of
+    those held. The miss is on GROUND STATE and on BUILT STRUCTURE, and the model
+    had no veto for either. It scored `b06-r5-s2` UP on A5 for the very thing he
+    rejected ("s2 puts a green field, a path and hedgerows along the bottom
+    edge"), reading that as the founder's own 2026-08-07 composition device
+    arriving unasked; he calls the same bottom edge "some flat place". And it
+    priced the cities it had SEEN as per-frame demerits — s0 vetoed for "a city
+    through the gap", s1 marked down for "a distant INDUSTRIAL SKYLINE" — instead
+    of as a fault of the SET, which is what "showing cities for some reason" is.
+  model_action: new_axis
   notes: >-
     WHAT THIS RECORD IS EVIDENCE FOR BEYOND ONE BEAT. `sd_prompt._NEGATION`
     (sd_prompt.py:89) lifts `no humans` out of every positive prompt in this
@@ -2313,6 +2341,65 @@
     real CLIP tokenizer before the render: positive 32 of 77, negative 51 of 77.
     Round 4's negative sat at the 77 ceiling with five terms sacrificed by
     fit_negative. Nothing this round asked for went unsent.
+  scoring_note: >-
+    SCORED 2026-08-10 ~15:00 local. The record's own pre-registered risk was
+    right and its `predicted_verdict` was wrong, and those are two different
+    facts in the same paragraph. It wrote, before he looked: "None of the four is
+    a view straight UP … If he rejects this set it will most likely be for that
+    trade and not for people or clouds." He rejected the set, and not for people
+    or clouds. The prose named the failure; the field said `ratify`. A risk that
+    is described and then not priced into the prediction is not a hedge, it is a
+    miss with a paper trail, and the paper trail is the only thing here worth
+    keeping.
+
+    THE RULE IT QUOTED IS THE RULE IT BROKE. Its own last sentence: "beat 12 is on
+    the record as 'follows the style well' AND rejected: fixing what he named has
+    never bought forgiveness for something new." It then ratified a set on the
+    grounds that both named faults were fixed. This is now the SECOND time on this
+    beat (record 3 was the first) that the model has treated "his stated faults
+    are gone" as sufficient. Citing the rule is not applying it, and the model's
+    v2 needs the check as a GATE before a pick is allowed, not as a closing
+    caveat: if the composition moved while the faults were being fixed, the
+    default is `reject_all`, and a `ratify` has to argue against that default.
+
+    THE TWO DEFECTS HE NAMED, AND THE MODEL SAW BOTH AND MISWEIGHTED BOTH.
+    (1) CITIES. This record vetoed s0 for "a city through the gap" and marked s1
+    down for "a distant INDUSTRIAL SKYLINE" — two of four frames carrying built
+    urban structure on a beat whose script is a man lying in a field looking at
+    the sky. It treated that as an A2 environment demerit to be traded against
+    other axes on two frames. His sentence treats it as a fault of the whole set,
+    in the same breath as the ground. On the record 3 precedent — person-absence
+    became a VETO PREDICATE rather than a scored axis — this belongs at the same
+    tier. PROPOSED FOR v2, A12 (built structure): on a non-urban exterior beat,
+    any cityscape, skyline, building, road or industrial silhouette is a veto,
+    checked before scoring, not an axis.
+    (2) THE FLAT GROUND, AND THIS ONE IS WORSE, BECAUSE THE MODEL SCORED IT AS A
+    PLUS. `b06-r5-s2` was picked partly for its "green field, a path and
+    hedgerows along the bottom edge", read as the founder's own 2026-08-07
+    wording ("a soft blurred green fringe of grass along the bottom edge")
+    arriving without being asked for. He looked at that bottom edge and called it
+    "some flat place". So the model claimed style credit against his own words for
+    an element he rejects — the same shape of error as record 3, where the anchor
+    was a frame he had revoked. The lesson generalises past the anchor rule: HIS
+    WORDING FROM AN EARLIER ROUND IS NOT A PASSING GRADE FOR A NEW FRAME. A phrase
+    he wrote in a prompt note describes what he wanted; only a frame he has passed
+    says it was achieved. PROPOSED FOR v2, A13 (ground state): on an exterior
+    beat, the ground is either TEXTURED AND NAMED — his word here is tall grass —
+    or ABSENT. An untextured plane, however green, is a reject, and it is not
+    redeemed by a path or a hedgerow drawn on it.
+
+    WHAT THIS RECORD GOT RIGHT AND IS NOT SURRENDERING. `no humans` in the
+    POSITIVE held: zero people in 4 of 4, and he did not mention people, on a beat
+    that had drawn a girl in 2 of 4 and then 3 of 4 under two different negative
+    strategies. He did not mention clouds either, after naming them in both
+    previous verdicts. The Danbooru-dialect finding survives this verdict intact,
+    and the module proposal in `notes:` above still has this sheet as its
+    evidence. The set failed on two things nobody had asked about yet.
+
+    AND THE PICK COLUMN IS NOW 0 FOR 6. This is the sixth PICK prediction in the
+    file and the fifth outright miss; no pick has ever been ratified. The header's
+    standing instruction — treat every pick confidence as an upper bound until one
+    is — is not softened by this record, it is the sixth data point under it.
 
 # THIS RECORD DELIBERATELY MAKES NO PICK, AND THAT IS RECORD 32'S RULING RATHER
 # THAN modesty: "P2 is not a valid gate until he defines the goblin, and no r8

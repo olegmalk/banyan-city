@@ -839,18 +839,56 @@ checklist:
         different beat conditioned on a beat-04 reference. It is **not queued**,
         because queuing it presumes you want this mechanism at all.
     - n: 10
-      ask: "Beat 6 — round 5 clears both faults you named."
+      ask: "Beat 6 — you rejected every set. Two samples are rendering to your direction."
       state: open
       chip: "PICK"
       minutes: 5
       summary: >-
-        Zero people in 4 of 4 and the clouds are ordinary again. Our pick is
-        `b06-r5-s2` at 0.55 and it is the one frame in v34 you have never seen.
-        Episode 2's twenty beats are still open under it.
-      where: "on this card — the beat 06 round 5 sheet is first; tap it to open full size"
+        *"none of the beat 6 images will work."* Round 5's pick is withdrawn.
+        You gave two options — tall grass, or no ground at all — and one sample
+        of each is rendering now. Episode 2's twenty beats are still open under
+        this.
+      where: "nothing to answer on beat 6 yet — the two samples are not drawn. The sheets below are the sets you rejected, kept as the record"
       sheets_title: "The sheets — nineteen of them, round 5 first; tap one to open it full size"
-      how: "say `b06-r5-s2`, name another `b06-r5-sN`, or reject the set and say why"
+      how: "when the two land, say `A` (tall grass) or `B` (sky) — or say neither and why"
       body: |-
+        **BEAT 6 — YOUR VERDICT, 2026-08-10, IN FULL:**
+
+        > none of the beat 6 images will work, you either show the ground as
+        > having tall grass or dont show the ground at all and show the sky,
+        > right now its showing the ground as some flat place, or showing cities
+        > for some reason
+
+        **EVERY BEAT-6 CANDIDATE IS REJECTED** — rounds 3, 4 and 5 and the `fix`
+        set. **Our `b06-r5-s2` pick is withdrawn**, not left standing beside your
+        answer. Beat 6 is still the only beat in episode 1 without a frame of
+        yours, and v34 is now holding a frame you have rejected.
+
+        **TWO SAMPLES, ONE PER OPTION, AND WE ARE NOT CHOOSING BETWEEN THEM.**
+        **A** — ground visible, tall grass. **B** — no ground, sky only. Same
+        four seeds as every previous round of this beat, so the two are
+        comparable and neither is flattered by luck. Nothing else moves.
+
+        **WHY THE CITIES WERE THERE, AND IT IS OUR BUG, NOT BAD LUCK.** We
+        checked what was actually sent to the model. **No beat-6 prompt has ever
+        forbidden a city** — not one round's negative contains `city`,
+        `cityscape`, `building` or `skyline`. And round 5's positive asked for
+        `scenery`, which on this model's tag vocabulary is the umbrella term that
+        *includes* cityscapes: ~62k tagged pictures under `scenery`, ~20k of them
+        `cityscape`. So we asked for the family that contains skylines and never
+        once said not to draw one. Both arms fix that in the negative.
+
+        **AND THE FLAT GROUND WAS SOMETHING WE SCORED AS A PLUS.** `b06-r5-s2`
+        got its top style mark partly for "a green field and hedgerows along the
+        bottom edge" — because that matched wording *you* wrote on 2026-08-07.
+        You looked at that same edge and called it a flat place. Recorded as a
+        miss in the prediction ledger, with the rule it teaches: your words from
+        an earlier round describe what you wanted, they do not certify that a new
+        frame achieved it.
+
+        ---
+
+
         **YOUR DEFECT REPORT IS FIXED FIRST, because it was blocking the biggest
         half of this card.** *"ep2 beats dont have labels."* Correct — the
         episode-2 sheets put the beat only in the band header, so no single tile
@@ -874,9 +912,10 @@ checklist:
           we listed beside it.
         - **Episode 1 is 14 of 15.** Only beat **6** is still missing a frame.
 
-        **BEAT 6 — ROUND 5, AND BOTH FAULTS YOU NAMED ARE GONE.** It is the last
-        beat in episode 1 with no frame of yours, and v34 is holding it on our
-        guess until you say otherwise.
+        **ROUND 5, KEPT AS THE RECORD — the two faults you named on round 3 and
+        round 4 WERE fixed, and you rejected the set on two different things.**
+        You did not mention people or clouds. Both of these still stand as
+        findings and both carry forward into A and B:
 
         - **People: zero in 4 of 4.** Round 3 drew a girl in 2 of 4, round 4 in
           3 of 4. Counted at full resolution on the bottom 40% of every frame,
@@ -895,21 +934,20 @@ checklist:
         the no-people idea. Round 5 moved it to the front of the positive and
         took every person word out of the negative. That is the whole change.
 
-        **OUR PICK IS `b06-r5-s2`, CONFIDENCE 0.55, AND THE COST IS WRITTEN DOWN
-        BEFORE YOU LOOK.** None of the four looks straight *up* — they are wide
-        landscapes with a horizon, because the round bought the empty sky by
-        deleting the gaze wording, and **s2 adds a mountain range the script
-        never mentions.** `s1` is the purer sky but its bottom edge is an
-        industrial skyline. `s0` is vetoed outright: a white mechanical ring with
-        a city through the gap, which is that seed's habit and not a sky. If you
-        reject the set we expect it to be for the camera angle, and the next
-        round is then a scenery camera tag, not a return to person negatives.
+        **WHAT WE PICKED AND WHAT IT COST — WITHDRAWN, KEPT VISIBLE.** The pick
+        was `b06-r5-s2` at confidence 0.55, and the risk was written down before
+        you looked: none of the four looks straight *up*, they are wide landscapes
+        with a horizon, and **s2 adds a mountain range the script never
+        mentions**. `s1` was marked down for the industrial skyline on its bottom
+        edge and `s0` vetoed for the city through its ring — **so we had already
+        seen the cities and priced them as a demerit on two frames instead of as
+        a fault of the set.** We guessed you would reject on the camera angle if
+        you rejected at all, and then predicted you would accept. Scored a MISS.
 
-        **YOUR VERDICT HERE CHANGES THE CUT AND NOT THE GATE, and you should know
-        that before you spend the answer.** Either way one command runs and v35
-        exists in about a minute — ratify and the fifteen clips carry forward with
-        only beat 6's record changing, or name another seed and beat 6 alone is
-        re-held. **Neither outcome makes v35 publishable.** Nine of the fifteen
+        **YOUR VERDICT CHANGED THE CUT AND NOT THE GATE.** One command runs and
+        v35 exists in about a minute once beat 6 has a frame you chose; until
+        then episode 1 stays 14 of 15 and v34 holds a rejected frame on beat 6.
+        **No outcome here makes v35 publishable.** Nine of the fifteen
         beats are refused by the licence gate for one and the same reason, the
         animagine still each of them holds; beat 6 is one of the nine, and the
         other eight do not move whichever way you rule. That is **D15**, still
@@ -1213,8 +1251,8 @@ checklist:
         |---|---|---|
         | beats with a picture | 15 | 15 |
         | slates | 0 | 0 |
-        | beats holding a frame you rejected | **4** | **0** |
-        | beats holding a frame you have never seen | 2 | **1 — beat 6** |
+        | beats holding a frame you rejected | **4** | **1 — beat 6, since 2026-08-10** |
+        | beats holding a frame you have never seen | 2 | **0** |
         | length | 89.9s | 89.9s |
 
         **THE FOUR STALE BEATS ARE RE-FILMED FROM YOUR OWN PICKS** — beat 3 on
@@ -1222,9 +1260,11 @@ checklist:
         file was compared byte for byte against the take you named before it was
         used, rather than waited for.
 
-        **BEAT 6 IS OURS.** It holds `b06-r5-s2`, the round-5 pick at confidence
-        0.55, and item 10 is where you answer it. Flip it and this cut is rebuilt
-        in about a minute — nothing here is defended.
+        **BEAT 6 HOLDS A FRAME YOU HAVE NOW REJECTED.** It is still `b06-r5-s2`,
+        which was our guess and which you turned down on 2026-08-10 — *"none of
+        the beat 6 images will work"*. Two samples to your direction are
+        rendering; item 10 has them. This cut is rebuilt in about a minute once
+        you name a frame, and nothing here is defended.
 
         **BEAT 3 IS THE OTHER THING TO WATCH FOR.** You have only ever seen it
         moving; in this cut it is a held still with the camera pushing in.
