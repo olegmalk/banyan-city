@@ -1,0 +1,99 @@
+{
+  "id": "ep1-b03-v34-plate-twin-r3-1786346608",
+  "task": "ep1-b03-v34-plate-twin-r3-0810",
+  "node": "001-capability-inventory",
+  "beat": 3,
+  "worker": "box-runner",
+  "priority": 36,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "plate",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "-c",
+        "import sys; sys.path.insert(0, r\"C:\\banyan-farm\\banyan-city\\pipeline\")\nfrom plate_prep import prepare_plate\nout, rec = prepare_plate(\n    r\"C:\\banyan-farm\\banyan-city\\genomes\\sapling\\nodes\\001-capability-inventory\\stills\\03-deploy-succeeded.png\",\n    \"704x1280\", r\"C:\\banyan-farm\\v34-plates-0810\", \"03\")\nprint(\"plate\", out); print(rec[\"plate_wxh\"], rec[\"crop_policy\"])\n"
+      ]
+    },
+    {
+      "name": "encode",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ltx_i2v.py",
+        "--stage",
+        "encode",
+        "--embeds",
+        "C:\\banyan-farm\\v34-plates-0810\\ltx-embeds-ep1-b03-v34-plate-twin-r3.pt",
+        "--prompt-file",
+        "C:\\banyan-farm\\v34-plates-0810\\ep1-b03-v34-plate-twin-r3-prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\v34-plates-0810\\ep1-b03-v34-plate-twin-r3-negative.txt"
+      ]
+    },
+    {
+      "name": "render",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ltx_i2v.py",
+        "--stage",
+        "render",
+        "--embeds",
+        "C:\\banyan-farm\\v34-plates-0810\\ltx-embeds-ep1-b03-v34-plate-twin-r3.pt",
+        "--prompt-file",
+        "C:\\banyan-farm\\v34-plates-0810\\ep1-b03-v34-plate-twin-r3-prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\v34-plates-0810\\ep1-b03-v34-plate-twin-r3-negative.txt",
+        "--init",
+        "C:\\banyan-farm\\v34-plates-0810\\03-704x1280.png",
+        "--out",
+        "C:\\banyan-farm\\v34-motion-0810\\03-ltx-r3-plate-s20260734.mp4",
+        "--size",
+        "704x1280",
+        "--frames",
+        "65",
+        "--fps",
+        "24",
+        "--steps",
+        "8",
+        "--guidance",
+        "1.0",
+        "--distilled-sigmas",
+        "--two-stage",
+        "--seed",
+        "20260734",
+        "--beat",
+        "3",
+        "--task",
+        "ep1-b03-v34-plate-twin-r3-0810",
+        "--worker",
+        "rtx5090"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\v34-plates-0810\\03-704x1280.png",
+    "C:\\banyan-farm\\v34-motion-0810\\03-ltx-r3-plate-s20260734.mp4"
+  ],
+  "started_at": "2026-08-10T07:31:13Z",
+  "attempts": 1,
+  "runner_pid": 3552,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-10T07:35:17Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\v34-plates-0810\\03-704x1280.png",
+    "C:\\banyan-farm\\v34-motion-0810\\03-ltx-r3-plate-s20260734.mp4"
+  ]
+}
