@@ -1,0 +1,190 @@
+# 002b beat 04 — ARM 5 EXTENDED. The same 15% window on the same four
+# references, drawn at four MORE seeds. Nothing else changes.
+#
+# THE VERDICT THIS ANSWERS TO. Roman, 2026-08-10 ~15:00: "the goblin needs abit
+# more regeneration." Nothing here picks, ranks or promotes a frame, and nothing
+# here decides what the goblin looks like.
+#
+# THE CLAIM THIS IS TESTING IS OUR OWN. a1dcd32 reports that at a 15% window the
+# four seeds are still ONE creature where the tags-only baseline gives four
+# species. That is the whole reason the window is interesting — the green came
+# back at 0.335 against the baseline's 0.363 AND the identity held. But it rests
+# on n=4, by eye, and four is small enough that "one creature" can be luck: four
+# draws agreeing is not a rare event when the thing they agree on is a face at a
+# fixed composition. Before anyone tells the founder that this mechanism gives
+# him one goblin per beat, the claim should survive being handed twice the
+# evidence that produced it.
+#
+# ONE VARIABLE, AND IT IS THE SEED INDEX. Window fixed at 15% of 40 steps,
+# scale fixed at 0.6, all four references, prompt and negative byte-identical.
+# Seeds s4..s7 on the wave-1 arithmetic (SEED + BEAT + i*1000), so they are the
+# seeds a single run of eight would have drawn and they cannot collide with the
+# s0..s3 already on disk. This is why goblin_ipa_sample.py grew --seeds and
+# --seed-start rather than a second copy of the sampler: the defaults reproduce
+# every earlier run byte for byte.
+#
+# WHY IT IS A CHEAP QUESTION WITH AN EXPENSIVE WRONG ANSWER. Sixteen frames,
+# about eight minutes, no new recipe, no new tokens. The wrong answer — scaling
+# a consistency mechanism across fifteen beats on an n=4 impression — is exactly
+# the failure the ONE SAMPLE rule was written after.
+#
+# READ BY EYE, and the read is a COMPARISON: s0..s7 of one reference laid out
+# together. If eight seeds are one creature, the finding is a finding. If the new
+# four wander, the honest report is that the window holds colour and does not
+# hold identity, and that is a materially different sentence to give him.
+#
+# THE IDENTITY METRIC IS DELIBERATELY NOT RUN. DINOv2 seed agreement failed twice
+# on this beat (724b616: it could not tell one creature from four; 93356b1: it
+# scored arm 2 as keeping the character while four different faces said
+# otherwise). Running it here would produce a number for precisely the question
+# it is known to get wrong. green_share IS run, because it answers only the
+# colour question and its discrimination on this footage is recorded.
+#
+# CARRY THE KNOWN COST FORWARD: tusks return only partially at short windows
+# (1-2 of 4 at w015 against 3 of 4 in the baseline). Eight seeds gives a better
+# estimate of that rate than four; report it as a count out of eight per
+# reference rather than as a pass or a fail.
+#
+# ZERO PROMPT TOKENS ADDED — the founder's "nothing complex" is untouched.
+#
+# LICENCES, nothing new: animagine-xl-3.1 (CreativeML Open RAIL++-M, D15 open),
+# h94/IP-Adapter Plus SDXL (Apache-2.0), ViT-H image encoder (MIT-derived),
+# diffusers 0.29.2 (Apache-2.0). All cached on the box. $0.
+
+id: ep2-b04-goblin-ipa-w015-seeds8
+task: ep2-b04-goblin-ipa-w015-seeds8-0810
+node: 002b-first-citizen
+beat: 4
+runner: box
+needs_gpu: true
+priority: 43
+max_attempts: 1
+owner: queue-fill lane (goblin regeneration, founder directive 2026-08-10)
+
+consumer: >-
+  Whether "one creature across seeds" is a property of the 15% window or an
+  artifact of having only looked at four. This is the load-bearing half of the
+  goblin finding — the colour half is already measured — and it decides whether
+  the sentence the founder eventually gets is "this gives you one goblin" or
+  "this gives you the green back and the identity is still unreliable". It also
+  decides whether the fourteen staged wave jobs are ever worth proposing.
+
+success: >-
+  16 PNGs at C:\banyan-farm\goblin-ipa-0810\out7 named
+  04-the-footnote-ipa-r{0..3}-w015-s{4..7}.png with per-frame 7.2 sidecars, plus
+  a green_share table putting them beside the s0..s3 draws in out5 and the
+  tags-only baseline. Four wandering seeds is a success: the job produces the
+  observation that stops a bad claim.
+
+metric_warning: >-
+  No identity number is produced here and none may be quoted. The identity read
+  is by eye, comparing s0..s7 of one reference at mouth-level zoom. green_share
+  measures colour only.
+
+why: >-
+  One variable against ep2-b04-goblin-ipa-window4: the seed index. Same window
+  (0.15 of 40 steps), same scale (0.6), same four references, same prompt and
+  negative. Sequential, one image at a time — batch-of-4 configs are banned on
+  this card.
+
+est_minutes: 9
+
+needs:
+- cuda
+- vram20
+- farm-venv
+
+# goblin_ipa_sample.py and green_share.py were scp'd to the box at enqueue time
+# and verified byte-identical to the repo copies (sha256 b245ee53.. and
+# 2174b2a8..). The sampler stamps its own sha into every sidecar.
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\out
+  - --out
+  - C:\banyan-farm\goblin-ipa-0810\out7
+  - --arm
+  - window4
+  - --seed-start
+  - '4'
+  - --seeds
+  - '4'
+  - --task
+  - ep2-b04-goblin-ipa-w015-seeds8-0810
+
+# allow_fail on purpose, and doubly so here: out5 is written by
+# ep2-b04-goblin-ipa-window4, which sits ahead of this job in the queue. If that
+# job has not landed, the s0..s3 groups glob to nothing and the table is partial
+# — which must not retire sixteen rendered frames.
+- name: green
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\green_share.py
+  - baseline-tags-only|C:\banyan-farm\wave-goblin-prep\out\04-the-footnote-wave1-s*.png|sq
+  - w015-r0-seeds0to3|C:\banyan-farm\goblin-ipa-0810\out5\04-the-footnote-ipa-r0-w015-s*.png|sq
+  - w015-r1-seeds0to3|C:\banyan-farm\goblin-ipa-0810\out5\04-the-footnote-ipa-r1-w015-s*.png|sq
+  - w015-r2-seeds0to3|C:\banyan-farm\goblin-ipa-0810\out5\04-the-footnote-ipa-r2-w015-s*.png|sq
+  - w015-r3-seeds0to3|C:\banyan-farm\goblin-ipa-0810\out5\04-the-footnote-ipa-r3-w015-s*.png|sq
+  - w015-r0-seeds4to7|C:\banyan-farm\goblin-ipa-0810\out7\04-the-footnote-ipa-r0-w015-s*.png|sq
+  - w015-r1-seeds4to7|C:\banyan-farm\goblin-ipa-0810\out7\04-the-footnote-ipa-r1-w015-s*.png|sq
+  - w015-r2-seeds4to7|C:\banyan-farm\goblin-ipa-0810\out7\04-the-footnote-ipa-r2-w015-s*.png|sq
+  - w015-r3-seeds4to7|C:\banyan-farm\goblin-ipa-0810\out7\04-the-footnote-ipa-r3-w015-s*.png|sq
+
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b04-goblin-ipa-w015-seeds8"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/goblin-ipa-0810/out7/*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b04-goblin-ipa-w015-seeds8.sha256"), "w") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    # 16 stills + 16 sidecars.
+    raise SystemExit(0 if len(src) == 32 else 1)
+
+artifacts:
+- C:\banyan-farm\goblin-ipa-0810\out7\04-the-footnote-ipa-r0-w015-s4.png
+- C:\banyan-farm\goblin-ipa-0810\out7\04-the-footnote-ipa-r0-w015-s5.png
+- C:\banyan-farm\goblin-ipa-0810\out7\04-the-footnote-ipa-r0-w015-s6.png
+- C:\banyan-farm\goblin-ipa-0810\out7\04-the-footnote-ipa-r0-w015-s7.png
+- C:\banyan-farm\goblin-ipa-0810\out7\04-the-footnote-ipa-r1-w015-s4.png
+- C:\banyan-farm\goblin-ipa-0810\out7\04-the-footnote-ipa-r1-w015-s5.png
+- C:\banyan-farm\goblin-ipa-0810\out7\04-the-footnote-ipa-r1-w015-s6.png
+- C:\banyan-farm\goblin-ipa-0810\out7\04-the-footnote-ipa-r1-w015-s7.png
+- C:\banyan-farm\goblin-ipa-0810\out7\04-the-footnote-ipa-r2-w015-s4.png
+- C:\banyan-farm\goblin-ipa-0810\out7\04-the-footnote-ipa-r2-w015-s5.png
+- C:\banyan-farm\goblin-ipa-0810\out7\04-the-footnote-ipa-r2-w015-s6.png
+- C:\banyan-farm\goblin-ipa-0810\out7\04-the-footnote-ipa-r2-w015-s7.png
+- C:\banyan-farm\goblin-ipa-0810\out7\04-the-footnote-ipa-r3-w015-s4.png
+- C:\banyan-farm\goblin-ipa-0810\out7\04-the-footnote-ipa-r3-w015-s5.png
+- C:\banyan-farm\goblin-ipa-0810\out7\04-the-footnote-ipa-r3-w015-s6.png
+- C:\banyan-farm\goblin-ipa-0810\out7\04-the-footnote-ipa-r3-w015-s7.png

@@ -169,6 +169,59 @@ CELLS_NEGCOLOR = [(0, 0.6), (1, 0.6), (2, 0.6), (3, 0.6)]
 CELLS_WINDOW4 = [(0, WINDOW_SCALE, 0.15), (1, WINDOW_SCALE, 0.15),
                  (2, WINDOW_SCALE, 0.15), (3, WINDOW_SCALE, 0.15)]
 
+# ARM 6 — the two windows either side of 15%, on reference s0, and nothing else.
+#
+# WHAT IS MISSING FROM ARM 3'S CURVE. Arm 3 sampled 0.15, 0.25, 0.40 and 0.60 of
+# the denoise and green came back monotonically as the window shortened: 0.034,
+# 0.040, 0.192, 0.335 against the tags-only baseline's 0.363. 0.15 is the
+# SHORTEST window anyone has drawn, so it is the end of the measured range and
+# not a located optimum — nobody knows whether green keeps climbing below it, and
+# nobody knows whether identity survives there. At 40 steps, 0.10 is 4 steps on
+# and 0.20 is 8; 0.15 is 6. Three consecutive integers of adapter, which is as
+# fine as this knob gets.
+#
+# WHY BOTH SIDES AND NOT JUST SHORTER. Whichever way it falls it is a finding.
+# If 0.10 keeps the green and loses the creature, 0.15 is at a real edge and the
+# mechanism has a floor. If 0.10 keeps both, the floor is lower than we have
+# looked. And 0.20 is the readout that says whether the drop from 0.192 (0.25) to
+# 0.335 (0.15) is a smooth curve or a step, which the four sampled points cannot
+# distinguish.
+#
+# ONE REFERENCE, s0, deliberately — every cell then differs from an existing
+# measured arm-3 row by the window alone. Generalising across references is
+# arm 5's job and is a separate run. Zero prompt tokens added, as in every arm
+# here; nobody has picked a canonical goblin and this arm does not.
+CELLS_WINDOW_EDGE = [(0, WINDOW_SCALE, 0.10), (0, WINDOW_SCALE, 0.20)]
+
+# ARM 7 — the window's one named cost, attacked directly. Same 15% window,
+# harder adapter while it is on.
+#
+# THE DEFECT THIS EXISTS FOR. Shortening the window gives the green back, and it
+# takes the tusks with it: 3 of 4 seeds carry tusks in the tags-only baseline,
+# 1-2 of 4 at w015, 0 of 4 at w060. Tusks are a structural feature of the
+# creature, and structure is exactly what the early denoise is supposed to be
+# fixing — so losing them as the adapter's TIME shrinks says the reference is not
+# getting enough authority over those steps, not that it is getting it too late.
+#
+# THE ONE THING NEVER VARIED. Every window cell drawn so far, arms 3 and 5 alike,
+# held scale at 0.6. Time and strength are separate knobs and only one of them
+# has been swept. If the short window is short on total adapter influence rather
+# than on the right KIND of influence, pushing 0.6 to 0.8 or 1.0 for those six
+# steps buys the structure back without giving the late, colour-forming steps to
+# the reference — the late steps are unconditioned either way.
+#
+# WHICHEVER WAY IT FALLS IT IS WORTH KNOWING. If tusks come back at 1.0/w015 with
+# the green intact, the mechanism's stated cost is not a cost and the recipe is
+# (window short, scale high). If green drains as scale rises even inside a short
+# window, then colour loss tracks total adapter influence and not its timing,
+# which contradicts the structure-early/colour-late account arm 3 was read
+# through — and that account is currently doing the explaining for this whole
+# lane.
+#
+# ONE REFERENCE, s0, so each cell differs from arm 3's measured w015 row by scale
+# alone. Zero prompt tokens. No pick, and no claim about which creature is his.
+CELLS_WINDOW_SCALE = [(0, 0.8, 0.15), (0, 1.0, 0.15)]
+
 # ONE REFERENCE ON PURPOSE, and it is not a pick. Reference s0 at scale 0.6 is
 # an EXISTING measured row (arm 1, ipa-r0-c060: DINO 0.8069, green 0.00), so
 # every cell below differs from a rendered control by one variable and nothing
@@ -194,7 +247,7 @@ def square(img):
 def sidecar(png: Path, *, seed: int, row: dict, secs: float, task: str,
             harness_sha: str, drafts_sha: str, self_sha: str, wg,
             ref: Path, ref_sha: str, scale: float,
-            window: tuple = None) -> None:
+            window: tuple = None, n_seeds: int = 4) -> None:
     """§7.2 provenance, written at render time beside the frame."""
     def block(text: str) -> str:
         return "\n".join("  " + ln for ln in text.strip().splitlines())
@@ -222,7 +275,7 @@ def sidecar(png: Path, *, seed: int, row: dict, secs: float, task: str,
         f"steps: {wg.STEPS}",
         f"guidance: {wg.CFG}",
         f"seed: {seed}",
-        "seeds_in_batch: 4",
+        f"seeds_in_batch: {n_seeds}",
         f"task: {task}",
         "render_round: ipa-consistency-1",
         "candidate_set: none (mechanism test, not a pick sheet)",
@@ -301,9 +354,20 @@ def main() -> int:
                     help="dir holding 04-the-footnote-wave1-s0..3.png")
     ap.add_argument("--out", required=True)
     ap.add_argument("--task", default=None)
+    # Seeds were four, hardcoded, because every arm so far was an A/B against
+    # the four-seed wave-1 sample. "One creature across four seeds" is now the
+    # claim being made, and four is a small enough n that it can be luck — so
+    # the count and the starting index are arguments. Defaults reproduce every
+    # run made before this flag existed, byte for byte.
+    ap.add_argument("--seeds", type=int, default=4,
+                    help="how many seeds per cell (default 4)")
+    ap.add_argument("--seed-start", type=int, default=0,
+                    help="index of the first seed, so a later run can EXTEND an "
+                         "existing one (--seed-start 4 --seeds 4 draws s4..s7 "
+                         "and cannot collide with the s0..s3 already on disk)")
     ap.add_argument("--arm",
                     choices=("whole", "content", "window", "negcolor",
-                             "window4"),
+                             "window4", "wedge", "wscale"),
                     default="whole",
                     help="whole = adapter on every block at a float scale; "
                          "content = adapter scoped to down block_2 only; "
@@ -311,12 +375,20 @@ def main() -> int:
                          "the first N%% of the denoise steps; "
                          "negcolor = arm 1 unchanged, plus a colour anchor in "
                          "the negative; "
-                         "window4 = the 15%% window across all four references")
+                         "window4 = the 15%% window across all four references; "
+                         "wedge = the 10%% and 20%% windows on reference s0, "
+                         "the two steps either side of 15%%; "
+                         "wscale = the 15%% window on s0 at scale 0.8 and 1.0, "
+                         "the strength knob the window arms never varied")
     ap.add_argument("--dry", action="store_true", help="measure, draw nothing")
     a = ap.parse_args()
     cells = {"whole": CELLS_WHOLE, "content": CELLS_CONTENT,
              "window": CELLS_WINDOW, "negcolor": CELLS_NEGCOLOR,
-             "window4": CELLS_WINDOW4}[a.arm]
+             "window4": CELLS_WINDOW4, "wedge": CELLS_WINDOW_EDGE,
+             "wscale": CELLS_WINDOW_SCALE}[a.arm]
+    if a.seeds < 1 or a.seed_start < 0:
+        print("!! --seeds must be >=1 and --seed-start >=0", flush=True)
+        return 7
 
     harness = Path(a.harness).resolve()
     sys.path.insert(0, str(harness))
@@ -386,19 +458,25 @@ def main() -> int:
     drafts_sha = hashlib.sha256(drafts_path.read_bytes()).hexdigest()
     ref_sha = {r.name: hashlib.sha256(r.read_bytes()).hexdigest() for r in refs}
     task = a.task or f"ep2-b04-ipa-{int(time.time())}"
-    seeds = [wg.SEED + BEAT + i * 1000 for i in range(4)]
+    # The arithmetic is unchanged and indexed ABSOLUTELY: seed index i is the
+    # same number whether it is drawn in this run or a later one, so s4 in an
+    # extension run is the seed s4 would have been in a single run of eight.
+    idx = list(range(a.seed_start, a.seed_start + a.seeds))
+    seeds = [wg.SEED + BEAT + i * 1000 for i in idx]
+    n_frames = len(cells) * len(seeds)
 
     print(f"\nONE SAMPLE — beat {BEAT:02d} {d['slug']}, consistency mechanism, $0",
           flush=True)
     print(f"   mechanism: IP-Adapter Plus, arm={a.arm}, {len(cells)} cells "
-          f"x 4 seeds = {len(cells) * 4} frames", flush=True)
-    print(f"   seeds (identical to wave-1): {seeds}", flush=True)
+          f"x {len(seeds)} seeds = {n_frames} frames", flush=True)
+    print(f"   seed indices s{idx[0]}..s{idx[-1]} (s0..s3 are the wave-1 seeds): "
+          f"{seeds}", flush=True)
     print(f"   prompt tokens: {row['pos_tok']} (mechanism adds 0)", flush=True)
     print(f"   task: {task}", flush=True)
     print(f"   sampler sha256: {self_sha}", flush=True)
 
     if a.dry:
-        print(f"\nDRY OK — {len(cells) * 4} frames, nothing drawn", flush=True)
+        print(f"\nDRY OK — {n_frames} frames, nothing drawn", flush=True)
         return 0
 
     out = Path(a.out).resolve()
@@ -449,8 +527,16 @@ def main() -> int:
                    else f"r{ref_i}-c{int(round(scale * 100)):03d}")
         else:
             tag = f"r{ref_i}-w{int(round(end_frac * 100)):03d}"
+            # Arms 3, 5 and 6 all hold scale at WINDOW_SCALE, so the window
+            # alone identifies their cells and their filenames stay exactly as
+            # they are on disk. Arm 7 varies scale INSIDE a fixed window, where
+            # the window alone does not: without this suffix its two cells
+            # would both be r0-w015 and the second would silently overwrite the
+            # first, leaving four frames where the job promised eight.
+            if scale != WINDOW_SCALE:
+                tag += f"-c{int(round(scale * 100)):03d}"
 
-        for i, seed in enumerate(seeds):
+        for i, seed in zip(idx, seeds):
             # Re-armed for EVERY image, not once per cell: the callback below
             # zeroes the scale mid-run, and without this the second seed of a
             # windowed cell would render with the adapter already off.
@@ -482,8 +568,8 @@ def main() -> int:
                     harness_sha=harness_sha, drafts_sha=drafts_sha,
                     self_sha=self_sha, wg=wg, ref=refs[ref_i],
                     ref_sha=ref_sha[refs[ref_i].name],
-                    scale=applied, window=window)
-            print(f"   {f.name} seed={seed} {secs:.0f}s  ({n}/{len(cells) * 4})",
+                    scale=applied, window=window, n_seeds=len(seeds))
+            print(f"   {f.name} seed={seed} {secs:.0f}s  ({n}/{n_frames})",
                   flush=True)
 
     print(f"\nDONE {n} stills — ONE beat. The other fourteen wait on his verdict.",

@@ -1,0 +1,187 @@
+# 002b beat 04 — ARM 7. The 15% window at a HARDER adapter: scale 0.8 and 1.0
+# on reference s0, against arm 3's measured 0.6.
+#
+# THE VERDICT THIS ANSWERS TO. Roman, 2026-08-10 ~15:00: "the goblin needs abit
+# more regeneration." A reject and a direction to keep iterating. Nothing in this
+# job picks, ranks or promotes a frame, and nothing in it decides what the goblin
+# looks like — that is R4's and it is not delegated here.
+#
+# WHY THIS AND NOT MORE OF THE SAME. a1dcd32 established that switching the
+# IP-Adapter off partway through the denoise gets the green back without losing
+# the creature: green_share 0.335 at a 15% window against the tags-only
+# baseline's 0.363 and 0.012 when the reference owns all forty steps. The window
+# also has ONE NAMED COST, measured and not disputed: tusks. 3 of 4 seeds carry
+# them in the tags-only baseline, 1-2 of 4 at w015, 0 of 4 at w060. Tusks are
+# structure, and structure is exactly what the early denoise is supposed to be
+# fixing — so losing them as the adapter's TIME shrinks says the reference is not
+# getting enough authority over the steps it has, not that it is arriving too
+# late.
+#
+# THE ONE KNOB NEVER VARIED. Every window cell anyone has drawn — arm 3's four,
+# arm 5's four, arm 6's two — held scale at 0.6. Time and strength are separate
+# and only time has been swept. This job sweeps the other one, inside the short
+# window, where the late colour-forming steps stay unconditioned either way.
+#
+# WHICHEVER WAY IT FALLS IT IS WORTH KNOWING. If tusks come back at 1.0/w015 with
+# the green intact, the mechanism's stated cost is not a cost and the recipe to
+# describe is (window short, scale high). If green drains as scale rises even
+# inside a short window, then colour loss tracks TOTAL adapter influence rather
+# than its timing — which contradicts the structure-early / colour-late account
+# arm 3 was read through, and that account is currently doing the explaining for
+# this entire lane. A result that undermines our own story is the most valuable
+# thing this queue can produce.
+#
+# ONE REFERENCE, s0, DELIBERATELY. Each cell then differs from arm 3's measured
+# w015 row by scale alone. Whether any of this generalises across references is
+# arm 5's question and mixing the two would confound both.
+#
+# THE INSTRUMENT IS green_share.py, NOT THE IDENTITY METRIC. DINOv2 seed
+# agreement is disqualified on this beat — 724b616 and 93356b1 record it calling
+# four visibly different faces the same creature, twice, on a face close-up
+# against a constant background it is largely scoring. green_share is used
+# because its own docstring records the discrimination check on THIS footage:
+# wave-1 and arm-2 frames (green to the eye) at 0.34-0.49, arm-1 frames
+# (grey-teal to the eye) at 0.001-0.014, ordering matching a direct look at the
+# contact sheet in all three groups. It measures the colour question only. The
+# identity question — one creature or four — is read BY EYE off the frames, at
+# mouth-level zoom for the tusks, and no number in this job is allowed to answer
+# it. Where a number and the picture disagree the picture wins.
+#
+# THE READ IS A TUSK COUNT, out of four, per cell, by eye at mouth-level zoom,
+# reported next to the w015 baseline of 1-2 of 4 whichever way it goes. That
+# count is the whole point of the job and no number in it substitutes for the
+# count.
+#
+# ZERO PROMPT TOKENS. Nothing is added to the description of the goblin, so
+# nothing here spends the founder's "nothing complex".
+#
+# LICENCES, nothing new: animagine-xl-3.1 (CreativeML Open RAIL++-M, D15 open),
+# h94/IP-Adapter Plus SDXL (Apache-2.0), ViT-H image encoder (MIT-derived),
+# diffusers 0.29.2 (Apache-2.0). All cached on the box. $0.
+
+id: ep2-b04-goblin-ipa-wscale
+task: ep2-b04-goblin-ipa-wscale-0810
+node: 002b-first-citizen
+beat: 4
+runner: box
+needs_gpu: true
+priority: 41
+max_attempts: 1
+owner: queue-fill lane (goblin regeneration, founder directive 2026-08-10)
+
+consumer: >-
+  Whether the window mechanism's one measured defect — tusks going missing —
+  is recoverable without giving the late steps back to the reference. The
+  founder named green and named "nothing complex"; tusks are in the steward's
+  unratified translation of his sentence, and a mechanism that silently deletes
+  half of that translation is one nobody should describe to him as working.
+  It is also the test that can falsify the structure-early / colour-late story
+  this whole lane is currently reasoning from.
+
+success: >-
+  8 PNGs at C:\banyan-farm\goblin-ipa-0810\out8 with per-frame 7.2 sidecars, plus
+  a green_share table over the tags-only baseline, arm 3's w015 row and these two
+  higher scales on one build of one instrument. A result showing the green drains
+  as scale rises is a success: the job produces the observation that breaks the
+  account.
+
+metric_warning: >-
+  green_share answers the COLOUR question only, and only because its
+  discrimination on this exact footage is recorded in its docstring. It says
+  nothing about whether the four seeds are one creature; that is read by eye. The
+  DINOv2 identity metric is NOT run here — it failed twice on this beat
+  (724b616, 93356b1) and re-running it would only invite a ranking it cannot
+  support.
+
+why: >-
+  One variable against arm 3's w015 cell: the scale. Reference fixed at s0,
+  window fixed at 0.15 of 40 steps (6 steps), seeds fixed at the wave-1 four,
+  scales 0.8 and 1.0 against its measured 0.6. Sequential, one image at a time —
+  batch-of-4 configs are banned on this card.
+
+est_minutes: 5
+
+needs:
+- cuda
+- vram20
+- farm-venv
+
+# Both harness files were scp'd to the box at enqueue time and verified
+# byte-identical to the repo copies (sha256 b245ee53.. for goblin_ipa_sample.py,
+# 2174b2a8.. for green_share.py). The sampler records its own sha in every
+# sidecar, so a drift between the two would be visible in the provenance rather
+# than silent.
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\out
+  - --out
+  - C:\banyan-farm\goblin-ipa-0810\out8
+  - --arm
+  - wscale
+  - --task
+  - ep2-b04-goblin-ipa-wscale-0810
+
+# allow_fail on purpose: a measurement that falls over must never retire eight
+# rendered frames. The frames are the deliverable; the table is a convenience.
+- name: green
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\green_share.py
+  - baseline-tags-only|C:\banyan-farm\wave-goblin-prep\out\04-the-footnote-wave1-s*.png|sq
+  - arm1-r0-all40steps|C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r0-c060-s*.png|sq
+  - arm3-r0-w015|C:\banyan-farm\goblin-ipa-0810\out3\04-the-footnote-ipa-r0-w015-s*.png|sq
+  - arm3-r0-w025|C:\banyan-farm\goblin-ipa-0810\out3\04-the-footnote-ipa-r0-w025-s*.png|sq
+  - arm7-r0-w015-scale080|C:\banyan-farm\goblin-ipa-0810\out8\04-the-footnote-ipa-r0-w015-c080-s*.png|sq
+  - arm7-r0-w015-scale100|C:\banyan-farm\goblin-ipa-0810\out8\04-the-footnote-ipa-r0-w015-c100-s*.png|sq
+
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b04-goblin-ipa-wscale"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/goblin-ipa-0810/out8/*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b04-goblin-ipa-wscale.sha256"), "w") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    # 8 stills + 8 sidecars.
+    raise SystemExit(0 if len(src) == 16 else 1)
+
+artifacts:
+- C:\banyan-farm\goblin-ipa-0810\out8\04-the-footnote-ipa-r0-w015-c080-s0.png
+- C:\banyan-farm\goblin-ipa-0810\out8\04-the-footnote-ipa-r0-w015-c080-s1.png
+- C:\banyan-farm\goblin-ipa-0810\out8\04-the-footnote-ipa-r0-w015-c080-s2.png
+- C:\banyan-farm\goblin-ipa-0810\out8\04-the-footnote-ipa-r0-w015-c080-s3.png
+- C:\banyan-farm\goblin-ipa-0810\out8\04-the-footnote-ipa-r0-w015-c100-s0.png
+- C:\banyan-farm\goblin-ipa-0810\out8\04-the-footnote-ipa-r0-w015-c100-s1.png
+- C:\banyan-farm\goblin-ipa-0810\out8\04-the-footnote-ipa-r0-w015-c100-s2.png
+- C:\banyan-farm\goblin-ipa-0810\out8\04-the-footnote-ipa-r0-w015-c100-s3.png

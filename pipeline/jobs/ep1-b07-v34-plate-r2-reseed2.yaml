@@ -1,0 +1,184 @@
+# ep1 beat 07 "zero-0-moving-parts" — a THIRD DRAW of the r2 wording on the
+# prepared plate. One variable against ep1-b07-v34-plate-twin-r2: the seed.
+#
+# READ ep1-b07-v34-plate-r2-reseed FIRST — this is its pair, identical in every
+# respect but the seed, and the two exist together on purpose. One reseed that
+# comes back moving could be luck; one that comes back frozen could be a bad
+# draw. Two independent draws of the same wording are what turn either outcome
+# into evidence about beat 07 rather than about a number. They cost five GPU-
+# minutes each and they are the difference between "we tried another seed" and
+# "the seed is not what is holding this beat still".
+#
+# WHY BEAT 07 AND WHY NOW. Beat 07 has been drawn five times and every one of
+# them used the same seed, 20260738. Measured today on the box with
+# collect_farm.measure()'s definition (median mean-|Δ| per frame pair, and the
+# share of pairs under 0.2), all five plate twins:
+#
+#     07-ltx-plate      (r1/wave) 0.291  47% frozen
+#     07-ltx-r2-plate             1.088  39% frozen
+#     07-ltx-r3-plate             0.411  48% frozen
+#     07-ltx-r4-plate             0.627  39% frozen
+#     07-ltx-r5-g20-plate         0.617  47% frozen   <- the one in the v35 cut
+#
+# So the clip beat 07 currently ships in the v35 provisional is 47% frozen, and
+# no arm of this beat has ever got below 39%. Five rounds of rewording moved the
+# median around and never moved the frozen share. That is the signature of a
+# beat where the WORDING has been explored and the DRAW has not — five samples
+# of one seed is one sample of the seed.
+#
+# WHY THE r2 WORDING SPECIFICALLY, and not the round that is in the cut. r2 is
+# the strongest mover on this beat by a wide margin — median 1.088 against
+# 0.627 for the next best, nearly double — and it ties for the lowest frozen
+# share. Reseeding the round that is in the cut (r5-g20) would also change
+# guidance, which is two variables. Nothing here says r2 is the round the cut
+# should use: WHICH round beat 07 ships is R4's open call and this job does not
+# touch it. It makes a second draw of the best-moving wording exist, so that
+# call has something to be made between.
+#
+# WHY NOT A SIXTH WORDING. 879820f and 655d2c6 both record later rounds of a
+# beat measuring worse than earlier ones on this exact series; "reword again"
+# has been tried five times here and the frozen share never left the 39-48%
+# band. A new seed asks a question the five existing clips cannot answer:
+# whether beat 07's stubbornness lives in the text or in the draw.
+#
+# THIS IS THE SAME SHAPE AS ep1-b08-v34-plate-r3-reseed / -r4-reseed2, which the
+# frozen-beats lane queued for beat 08 on the same reasoning. Read those first.
+# Note the caution their results now carry: beat 08's reseeds have NOT rescued
+# it (r3 at seed 20260851 came back 0.172 median / 66% frozen), and beat 08's
+# raw r1 moves at 1.076/0% while its own plate twin freezes at 0.121/62% —
+# which is evidence that on THAT beat the freeze travels with the plate rather
+# than the seed. Beat 07 is not in that situation: its plate twins move (1.088
+# at r2), so the reseed hypothesis has not been falsified here. If both beat-07
+# reseeds also come back at 39-48% frozen, that is the finding, and the next
+# question stops being the seed.
+#
+# SETTLED RECIPE, NO GATE. Guidance 1.0, distilled sigmas, two-stage, and the
+# cover-centre crop the founder ratified today ("the crop -- yes"). This job
+# introduces no recipe change, so it needs no sample ahead of it.
+#
+# WHAT THIS IS NOT: no pick, no ranking, no promotion into any cut, no taste
+# verdict. A frozen result is reported as a frozen result.
+
+id: ep1-b07-v34-plate-r2-reseed2
+task: ep1-b07-v34-plate-r2-reseed2-0810
+node: 001-capability-inventory
+beat: 7
+runner: box
+needs_gpu: true
+priority: 35
+max_attempts: 1
+owner: queue-fill lane (v34 frozen beats, settled plate recipe at guidance 1.0)
+
+consumer: >-
+  the v35 provisional screening cut, for beat 07 — the beat whose current
+  ingredient is 47% frozen and whose five existing candidates all sit between 39%
+  and 48%. Second of two independent draws that give R4 a candidate not drawn from
+  seed 20260738, and the closing observation in the pair that says whether beat
+  07's frozen share travels with the seed or with the conditioning frame.
+
+success: >-
+  A 704x1280 65-frame mp4 at
+  C:\banyan-farm\v34-motion-0810\07-ltx-r2-plate-s20260855.mp4.
+  Judged on the PICTURE: the grass field rippling continuously edge to edge for
+  all 65 frames, clouds drifting and holding their shapes, the horizon and the
+  low sun fixed, cel palette and linework holding, and no human, hand, face,
+  building or invented object. Frame 0 must match a cover-centre crop of
+  07-zero-0-moving-parts.png rather than a stretch. A result that is still 40%
+  frozen is informative and must be reported as such, not quietly dropped.
+
+why: >-
+  One variable against ep1-b07-v34-plate-twin-r2: seed 20260855 instead of
+  20260738. Same r2 wording, same plate, same guidance 1.0, same steps, same
+  frames.
+
+est_minutes: 5
+needs: [cuda, vram20, video-venv]
+
+payload:
+  # Verbatim from 07-ltx-r2-plate-s20260738.mp4.meta.yaml — the text that
+  # actually rendered, read off the sidecar rather than retyped from a spec.
+  # (plate_twins.py's own docstring records two specs in this directory whose
+  # stated prompts and seeds never ran.) The `[unused: ...]` line video_task
+  # appends inside the negative block is stripped: it is a sidecar annotation,
+  # not part of what was encoded.
+  C:\banyan-farm\v34-plates-0810\ep1-b07-v34-plate-r2-reseed2-prompt.txt: |-
+    2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. a locked-off tripod shot: the camera never moves, the horizon line stays at the same height in the frame, the low sun stays in the same place on the horizon, the composition is identical in every frame. within that fixed frame the whole field is continuously in motion: the grass ripples and sways across the entire frame without ever stopping, wave after wave running through it from edge to edge, every blade moving all the time, the clouds drift steadily across the sky and keep their shapes, warm sunset light shifts and flickers over the field throughout, living scene, constant ambient motion everywhere. Subject already in frame: no human, no person, no man, no woman, no boy, no girl, no hand, no face, a wide open grass field at sunset, low sun on the horizon, a broad sky with soft clouds, no buildings.
+  # Carried for the provenance record. At guidance 1.0 the distilled schedule
+  # runs no unconditional pass (07218cb), so this text changes no pixel.
+  C:\banyan-farm\v34-plates-0810\ep1-b07-v34-plate-r2-reseed2-negative.txt: |-
+    wilting, drooping, bending over, falling over, collapsing, sagging, plant dying, human, person, man, woman, boy, girl, extra hand, extra arm, foot, face, crowd, animal, bird, insect, new object appearing, photorealism, 3D render look, text, 静态, 静止, frozen frame, still image, no motion, photorealistic, photograph, live action, film still, 3D render, CGI, octane, scene change, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  - name: plate
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - -c
+      - |
+        import sys; sys.path.insert(0, r"C:\banyan-farm\banyan-city\pipeline")
+        from plate_prep import prepare_plate
+        out, rec = prepare_plate(
+            r"C:\banyan-farm\banyan-city\genomes\sapling\nodes\001-capability-inventory\stills\07-zero-0-moving-parts.png",
+            "704x1280", r"C:\banyan-farm\v34-plates-0810", "07")
+        print("plate", out); print(rec["plate_wxh"], rec["crop_policy"])
+  - name: encode
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\ltx_i2v.py
+      - --stage
+      - encode
+      - --embeds
+      - C:\banyan-farm\v34-plates-0810\ltx-embeds-ep1-b07-v34-plate-r2-reseed2.pt
+      - --prompt-file
+      - C:\banyan-farm\v34-plates-0810\ep1-b07-v34-plate-r2-reseed2-prompt.txt
+      - --negative-file
+      - C:\banyan-farm\v34-plates-0810\ep1-b07-v34-plate-r2-reseed2-negative.txt
+  - name: render
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\ltx_i2v.py
+      - --stage
+      - render
+      - --embeds
+      - C:\banyan-farm\v34-plates-0810\ltx-embeds-ep1-b07-v34-plate-r2-reseed2.pt
+      - --prompt-file
+      - C:\banyan-farm\v34-plates-0810\ep1-b07-v34-plate-r2-reseed2-prompt.txt
+      - --negative-file
+      - C:\banyan-farm\v34-plates-0810\ep1-b07-v34-plate-r2-reseed2-negative.txt
+      - --init
+      - C:\banyan-farm\v34-plates-0810\07-704x1280.png
+      - --out
+      - C:\banyan-farm\v34-motion-0810\07-ltx-r2-plate-s20260855.mp4
+      - --size
+      - 704x1280
+      - --frames
+      - "65"
+      - --fps
+      - "24"
+      - --steps
+      - "8"
+      - --guidance
+      - "1.0"
+      - --distilled-sigmas
+      - --two-stage
+      - --seed
+      - "20260855"
+      - --beat
+      - "7"
+      - --task
+      - ep1-b07-v34-plate-r2-reseed2-0810
+      - --worker
+      - rtx5090
+
+artifacts:
+  - C:\banyan-farm\v34-plates-0810\07-704x1280.png
+  - C:\banyan-farm\v34-motion-0810\07-ltx-r2-plate-s20260855.mp4
