@@ -9,30 +9,41 @@
 #
 # Ground truth is the founder (R4). This file never overrules him.
 #
-# Rolling hit rate, THIRD scoring, 2026-08-10 (his ~15:00 local beat-6 verdict
-# added). Recomputed from this file by reading every `outcome:` in it and
-# grouping by each record's own `predicted_verdict:`, not by adding to the
-# previous paragraph and not by the hand-kept record-number lists that paragraph
-# used — those lists had already drifted from what the fields say. That is also
-# why the class counts below do not match the previous ones term for term: the
-# old "PICK … records 3, 5, 30, 33, 37" omitted two records whose
-# `predicted_verdict` is `ratify`/`pick_holds`. Nothing was rescored; the
-# grouping was.
-#   12 of 65 records now carry a scoring verdict. 2 hit · 5 partial · 5 miss.
-#   STRICT (hits only)                 2/12 = 17%
-#   partials counted as half         4.5/12 = 38%
+# Rolling hit rate, FOURTH scoring, 2026-08-10 (his ~17:32 local beat-6 verdict
+# added — `ep1-b06-r6-two-arms-sample` scored PARTIAL, see
+# `ep1-b06-r6r7-founder-verdict`). Recomputed the same way the third scoring
+# was: by reading every `outcome:` in this file and grouping by each record's
+# own `predicted_verdict:`, never by adding to the previous paragraph.
+#   13 of 70 records now carry a scoring verdict. 2 hit · 6 partial · 5 miss.
+#   STRICT (hits only)                 2/13 = 15%
+#   partials counted as half           5/13 = 38%
 #   PICK class (`predicted_verdict: ratify` or `pick_holds` — b06 r3, b14 r3,
 #   b10 r4, b13 r7, b16 drift, b14 r4, b06 r5)
 #                                      0 hit · 2 partial · 5 miss of 7
-#   REJECT class (`reject_all` — b03 r3, b10 r3, b03 r4, b13 r6, b06 r4)
-#                                      2 hit · 3 partial · 0 miss of 5
-#   (3 records are `n/a` — verdicts he gave on questions, not on predictions —
+#   REJECT class (`reject_all` — b03 r3, b10 r3, b03 r4, b13 r6, b06 r4, b06 r6)
+#                                      2 hit · 4 partial · 0 miss of 6
+#   (5 records are `n/a` — verdicts he gave on questions, not on predictions —
 #    and 1 is `not_scoreable_no_prediction_was_written`. Neither counts above.)
-# THE ASYMMETRY IS NOW SEVEN AND FIVE AND IT HAS NOT MOVED. Every hit is a
-# rejection; no reject_all has ever been a miss; no pick has ever been ratified
-# outright, and the pick column is 0 for 7. b14 r4 is the closest a pick has come
-# — he took the frame it named in `predicted_flip_to` rather than the one it
-# picked — and it is a partial, not a hit.
+# THE ASYMMETRY IS NOW SEVEN AND SIX AND IT IS ONE IDENTIFICATION FROM BREAKING.
+# Every hit is still a rejection; no reject_all has yet been scored a miss; no
+# pick has ever been ratified outright, and the pick column is 0 for 7. But the
+# newest rejection is the weakest one in the column: b06 r6 predicted he would
+# refuse a clean empty sky, he took one, and the label survives only because the
+# frame he took came from the NEXT round's four on the same sheet. If the frame
+# he pointed at was the same-seed twin `b06-r6b-s0` rather than `b06-r7b-s0`,
+# that record is a flat miss and this class goes 2 hit · 3 partial · 1 miss.
+# The reject column has been the model's whole credibility; read it knowing it
+# now rests on which of two near-identical tiles he meant.
+#
+# WHAT THE FOURTH SCORING ADDED: the first verdict where he supplied the
+# COMPOSITION and the model still missed the fault — five rounds of beat-6
+# predictions and not one of them names cloud COVERAGE, which is the thing he
+# has now complained about twice, a week apart (2026-08-08 and 2026-08-10). A
+# proposed v2 axis A14 (sky coverage, as a veto) comes out of it. It also
+# surfaced a process failure worth more than the score: round 7 was rendered,
+# published and put in front of him with NO ledger record at all, and the frame
+# he chose came from that unpredicted round. A verdict on an unpredicted round
+# lands on nothing.
 #
 # WHAT THE THIRD SCORING ADDED: a pick that DESCRIBED its own failure mode and
 # predicted `ratify` anyway (b06 r5 — "if he rejects this set it will most likely
@@ -5305,11 +5316,26 @@
     is a MISS and it is the most useful miss the file could get, because it would
     be the first evidence that the failure on this beat was ever a prompt problem
     and not a taste target we could not see. Scored honestly either way.
-  founder_verdict: null
-  founder_verdict_date: null
-  outcome: null
-  miss_axis: null
-  model_action: null
+  founder_verdict: >-
+    SCORED 2026-08-10 on his ~17:32 verdict; full record and reasoning in
+    `ep1-b06-r6r7-founder-verdict` below. He rejected no r6 frame by name and
+    took none: he pointed at one arm-B SKY frame on a joint r6+r7 sheet
+    (identified as `b06-r7b-s0`) and said *"this one ... but actually,
+    regenerate it. too many clouds. you almost got it"*. So the reject_all LABEL
+    survives on this record's eight candidates, while the record's own stated
+    miss condition — *"if a frame from either arm shows him ... a clean sky and
+    he takes it, this record is a MISS"* — is met in substance one round later
+    on the same arm and the same recipe. PARTIAL, and a flat MISS if the frame
+    he meant was the same-seed twin `b06-r6b-s0`.
+  founder_verdict_date: 2026-08-10
+  outcome: partial
+  miss_axis: >-
+    CLOUD COVERAGE — an area, on an axis this model does not have. Both of arm
+    B's predicted objections were about GROUND ("thats still the ground", a
+    surviving horizon) and both were already falsified by the observation record
+    before he ruled. His actual fault is one the prediction never mentions on
+    either arm at any confidence.
+  model_action: new_axis
   notes: >-
     WHAT THIS RECORD CANNOT SETTLE, STATED SO IT IS NOT CLAIMED LATER. It cannot
     tell A from B on taste, and it must not: that is the founder's call and the
@@ -5401,12 +5427,191 @@
     built structure, vehicles, text — and any class not named is a predicted
     defect, not a surprise. It costs nothing to check and it would have caught
     both of these before the founder did.
-  founder_verdict: null
-  founder_verdict_date: null
-  outcome: null
+  founder_verdict: >-
+    He ruled at ~17:32 on 2026-08-10 and this record made no verdict prediction
+    to score, so it takes no hit or miss. What his verdict does to it: arm B's
+    observed result — sky, no ground, 4 of 4 — is the composition he chose, and
+    the arm-A animal finding is now a defect on a deferred arm rather than on
+    the live one. Full record in `ep1-b06-r6r7-founder-verdict` below.
+  founder_verdict_date: 2026-08-10
+  outcome: n/a
   miss_axis: null
   what_this_record_does_not_do: >-
     It does not rank the arms, promote a frame, propose a round 7, or spend
     anything. It also does not touch `predicted_verdict: reject_all` on the
     record above — he has not seen these, and that call is scored when he rules
     and not by the steward liking the frames.
+
+# ---------------------------------------------------------------------------
+# HIS VERDICT ON BEAT 6, ~17:32 LOCAL 2026-08-10. This record SCORES
+# `ep1-b06-r6-two-arms-sample` (whose reserved fields are filled in place, as
+# every scoring in this file does) and records the round it was actually given
+# on. It predicts nothing and picks nothing.
+- id: ep1-b06-r6r7-founder-verdict
+  date: 2026-08-10
+  subject: "node 001 beat 06 — the founder's ~17:32 verdict on the r6+r7 sheet: he chose the SKY COMPOSITION and refused the frame that carries it"
+  kind: founder
+  scores: ep1-b06-r6-two-arms-sample
+  candidates: [b06-r6a-s0, b06-r6a-s1, b06-r6a-s2, b06-r6a-s3,
+               b06-r6b-s0, b06-r6b-s1, b06-r6b-s2, b06-r6b-s3,
+               b06-r7a-s0, b06-r7a-s1, b06-r7a-s2, b06-r7a-s3,
+               b06-r7b-s0, b06-r7b-s1, b06-r7b-s2, b06-r7b-s3]
+  address_key: >-
+    the sheet he answered on is `review-assets/SHEET-b06-r6r7.jpg`, sixteen
+    frames one row per arm, published as cuts/cuts.yaml item 10; the frames
+    themselves are review/b06-r6/ and review/b06-r7/,
+    `06-too-blue-r{6,7}{a,b}-s{0..3}.png` with sidecars beside each
+  pick: null
+  founder_verdict_verbatim:
+    earlier_today_rejecting_every_candidate: >-
+      none of the beat 6 images will work, you either show the ground as having
+      tall grass or dont show the ground at all and show the sky, right now its
+      showing the ground as some flat place, or showing cities for some reason
+    at_1732_pointing_at_one_arm_B_sky_frame: >-
+      this one, now im gonna go, bye. but actually, regenerate it. too many
+      clouds. you almost got it
+  what_is_settled: >-
+    THE COMPOSITION IS CHOSEN AND IT IS THE ONE WITH NO GROUND IN IT. He offered
+    two acceptable compositions in his own sentence this morning and has now
+    taken a frame from the second: sky, no ground, no horizon. Arm B is the
+    composition beat 6 is drawn on from here.
+
+    THE FAULT IS A QUANTITY AND HE NAMED ONLY ONE. "too many clouds" is about
+    how much of the frame cloud occupies, not about how the clouds are drawn —
+    he did not repeat the "weird cloud formations" half of his 2026-08-08 note,
+    and he did not name line, colour, angle, palette or subject.
+  what_is_NOT_settled: >-
+    THE FRAME. "regenerate it" is a refusal of the specific image, so beat 6
+    still has no frame the founder has taken and is NOT final, NOT canon and not
+    promoted anywhere. HOW FEW CLOUDS IS FEW ENOUGH is unstated and is not
+    decided here, by this record or by anyone but him.
+
+    ARM A IS NOT KILLED, PER R6. He chose from arm B; he did not say tall grass
+    was wrong, and rejection is only deferral. Arm A stands as a sibling
+    ordered behind arm B, exactly as R6 requires, and nothing in this record
+    retires it.
+  the_praise_and_its_limit: >-
+    "you almost got it" is the strongest thing he has said about any beat-6
+    frame in five rounds and it is still not an approval of the parts he did not
+    name. This repo already wrote the rule against reading it that way, in
+    STATE.md's third scoring: *SILENCE ON AN ELEMENT IS NOT APPROVAL OF IT* —
+    written after the steward gave `b06-r5-s2` a top style mark for matching a
+    phrase he had once used, and he then called that same edge "some flat
+    place". So what is ratified here is what he NAMED: the no-ground sky
+    composition. The low upward angle, the daylight palette and the framing are
+    UN-FAULTED, which is a weaker claim than approved, and they must not be
+    quoted back to him later as things he passed.
+  founder_pointed_at:
+    frame: b06-r7b-s0
+    identified_by: >-
+      THE STEWARD, FROM A VERBAL DESCRIPTION — HE NAMED NO FILENAME. The frame
+      he indicated was described as a low upward view with heavy cumulus banked
+      across top, both sides and bottom, only narrow wedges of open blue near
+      centre-left and upper-left, a faint rainbow streak and a lens-flare glow.
+      All sixteen tiles were opened and only two are close: `b06-r7b-s0` and its
+      same-seed twin `b06-r6b-s0`. r7b-s0 was taken because its rainbow is a
+      faint short arc right of the sun and its open blue is broken into narrow
+      wedges by cloud; r6b-s0's rainbow is a bold full-width diagonal and its
+      upper-left blue is one broad continuous field, neither of which the
+      description fits.
+    residual_risk: >-
+      r6 and r7 drew the SAME FOUR SEEDS (k=4..7), so every r6b tile has a
+      near-twin in r7b and this identification could be off by one round. IT
+      CHANGES NOTHING ABOUT THE DIRECTION — both frames are the same composition
+      on the same arm — but it changes the frame id, and if he or the lead names
+      the other one, correct the id here and re-read `outcome` below, which is
+      the one thing the ambiguity does move.
+  scoring_of_the_standing_prediction: >-
+    `ep1-b06-r6-two-arms-sample` called `predicted_verdict: reject_all` at
+    confidence 0.60 and it is scored PARTIAL, not a hit, and it is one
+    identification away from a flat miss.
+
+    WHY NOT A HIT. The label survives only on a technicality: no r6 frame was
+    taken, but the sheet he ruled on carried r7 beside it and the frame he took
+    is the same composition, same arm, same recipe family, one round later. The
+    record wrote its own miss condition and that condition is met in substance —
+    *"If a frame from either arm shows him tall grass or a clean sky and he
+    takes it, this record is a MISS."* Arm B r6 showed him a clean sky in 4 of 4
+    and he took a clean sky.
+
+    WHY NOT A MISS EITHER, UNDER THIS FILE'S OWN GROUPING RULE. Records are
+    scored against their own candidates, and none of these eight was picked.
+    That is the whole of the defence and it is thin.
+
+    THE REASONING WAS WRONG WHERE IT WAS SPECIFIC. `predicted_objection` for arm
+    B was *"thats still the ground — a horizon line survives in most of the
+    four"*. That was already falsified by the observation record (P7 correct, no
+    ground in 4 of 4) before he ruled, and his actual objection was cloud
+    coverage: an attribute the prediction does not mention once, on either arm,
+    at any confidence. A prediction that is right about the verdict letter and
+    silent about the reason is not a model of his taste, it is a base rate.
+
+    IF THE FRAME IS `b06-r6b-s0`, THIS RECORD IS A FLAT MISS and the REJECT
+    class takes its first one. Recorded now so the correction is arithmetic
+    rather than argument.
+  the_round_he_actually_ruled_on_was_never_PREDICTED: >-
+    STATED PLAINLY BECAUSE IT IS THE PROCESS FAILURE IN THIS ROUND AND NOT A
+    FOOTNOTE. There is no ledger record for beat 6 round 7 — not a prediction,
+    not an observation. r7 was specified, rendered, published to review/b06-r7
+    at 17:21 and put in front of him on a joint sheet with nothing written down
+    beforehand about what he would do with it, and the frame he chose came from
+    that unpredicted round. No prediction is invented for it retroactively; this
+    file's whole value is that a prediction precedes the artifact. Scored
+    `not_scoreable_no_prediction_was_written`, the same label record
+    `ep2-b01-r9-stage1-sample` carries. The rule this earns: when a round is put
+    in front of him beside an older round, the NEW round needs its own record
+    before the sheet is sent, or the verdict lands on nothing.
+  the_transferable_rule: >-
+    CLOUD COVERAGE IS A STANDING FAULT ON THIS SHOW, STATED TWICE, A WEEK APART,
+    ON TWO DIFFERENT COMPOSITIONS. 2026-08-08: *"women, too many clouds/weird
+    cloud formations"*. 2026-08-10: *"too many clouds"*. The rounds between them
+    changed the people, the cities, the animals and the ground and never once
+    changed how much of the frame is cloud — r4 negated six cloud SHAPES and
+    made it worse, which is the wrong lever, because both of his complaints are
+    about AREA. This is durable and it is not a beat-6 quirk: on any beat whose
+    script says the sky is the subject, cloud is a MINORITY of the frame and
+    open blue is the majority. That is the axis STATE.md's third scoring already
+    predicted was missing — *"a new sky-composition axis is needed — v1 has
+    nothing that scores cloud COVERAGE ... so the b06 pick could not be
+    priced"* — and his verdict is the confirmation, not the discovery.
+
+    HIS FAULTS ON THIS BEAT HAVE ALL BEEN ABOUT WHAT OCCUPIES THE FRAME. Women,
+    cities, a flat ground, cloud mass — five rounds and not one complaint about
+    line, colour, rendering or style. Combined with the pre-flight this file
+    proposed one record ago (name every class of thing that can occupy a frame
+    the script says is empty), the beat-6 corpus now says the same thing twice:
+    on an empty-exterior beat, the only variable he has ever ruled on is
+    OCCUPANCY, and coverage-by-area belongs in it alongside presence-by-class.
+
+    WHAT DOES NOT GENERALISE, AND IS NOT WRITTEN ANYWHERE AS IF IT DID: a
+    number. He gave no fraction, no "half", no "a few". Any cloud-density ladder
+    is a way of ASKING him the number, never of answering it.
+  model_action: new_axis
+  proposed_v2_axis: >-
+    A14 — SKY COVERAGE, on empty-exterior beats only, and a VETO rather than a
+    scored axis, in the shape A12/A13 were proposed in. A frame whose script
+    says the sky is the subject and whose cloud occupies most of the frame does
+    not go in front of him. It is offered as a proposal here and is NOT written
+    into `taste/steward-model.v1.md` by this record: that file amends by
+    version, on miss records, and the misses that motivate this one are now on
+    disk for whoever cuts v2. `taste/sapling.founder.v0.3.md` is the founder's
+    and is untouched, as always.
+  what_this_unblocks: >-
+    Beat 6 is the only beat in episode 1 with no frame he has accepted, and v34
+    is currently holding `b06-r5-s2` there — a frame he explicitly rejected. He
+    has now pointed at one he almost accepts. `scripts/v35-assemble.sh flip
+    <take>` (QA-v34-0810.md) can re-hold beat 6 provisionally on that frame at
+    $0 and rebuild the screening cut, which replaces a REJECTED frame with an
+    ALMOST-approved one. That is a provisional hold and not his pick, v35 stays
+    unpublishable on its other eight RAIL++ refusals either way, and the call
+    belongs to the lane that owns the cut.
+  what_this_record_does_not_do: >-
+    It promotes nothing to canon, marks no beat final, writes no leaf and no
+    `stills/` sidecar, decides no cloud count, ranks nothing, queues nothing and
+    spends nothing. It does not touch the founder's taste file. It does not
+    retire arm A. And it does not convert "you almost got it" into approval of
+    anything he did not name.
+  founder_verdict: direction_approved_frame_refused
+  founder_verdict_date: 2026-08-10
+  outcome: n/a
+  miss_axis: null
