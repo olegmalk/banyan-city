@@ -242,3 +242,4 @@
 15:58:52Z DONE task=ep2-b02-goblin-ipa-crossbeat-1786369550 rc=0 artifacts=4
 15:59:02Z STARTED task=ep2-b15-goblin-ipa-crossbeat-1786369554 attempt=1 on box-runner
 16:01:51Z DONE task=ep2-b15-goblin-ipa-crossbeat-1786369554 rc=0 artifacts=4
+16:01:59Z STARTED task=ep2-b20-goblin-ipa-crossbeat-1786369556 attempt=1 on box-runner
