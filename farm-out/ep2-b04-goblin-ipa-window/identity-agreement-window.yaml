@@ -1,0 +1,70 @@
+# Identity agreement across seeds — measured, not judged.
+# Written by identity_agreement.py. Mean cosine over all pairs within
+# each group. Whole-frame embeddings on a beat whose framing is
+# identical in every frame, so absolute values are inflated in BOTH
+# arms and only the delta between groups carries meaning.
+dino_model: facebook/dinov2-base
+dino_licence: Apache-2.0
+clip_model: openai/clip-vit-large-patch14
+clip_licence: MIT
+primary_metric: dino_mean (DreamBooth: CLIP-I cannot separate two
+  different subjects sharing one description, which is this defect)
+groups:
+- name: wave1-baseline
+  frames: 4
+  pairs: 6
+  dino_mean: 0.6967
+  dino_min: 0.6420
+  clip_mean: 0.8931
+  clip_min: 0.8667
+- name: arm1-ref0-scale060
+  frames: 4
+  pairs: 6
+  dino_mean: 0.8069
+  dino_min: 0.7496
+  clip_mean: 0.9276
+  clip_min: 0.9088
+- name: arm3-ref0-window015
+  frames: 4
+  pairs: 6
+  dino_mean: 0.7556
+  dino_min: 0.6956
+  clip_mean: 0.8837
+  clip_min: 0.8668
+  reference: 04-the-footnote-wave1-s0.png
+  to_ref_dino_mean: 0.7928
+  to_ref_note: >-
+    high here AND high within-group is the signature of copying the reference rather than holding a character.
+- name: arm3-ref0-window025
+  frames: 4
+  pairs: 6
+  dino_mean: 0.7991
+  dino_min: 0.7671
+  clip_mean: 0.8972
+  clip_min: 0.8671
+  reference: 04-the-footnote-wave1-s0.png
+  to_ref_dino_mean: 0.8151
+  to_ref_note: >-
+    high here AND high within-group is the signature of copying the reference rather than holding a character.
+- name: arm3-ref0-window040
+  frames: 4
+  pairs: 6
+  dino_mean: 0.7991
+  dino_min: 0.7099
+  clip_mean: 0.8971
+  clip_min: 0.8447
+  reference: 04-the-footnote-wave1-s0.png
+  to_ref_dino_mean: 0.8189
+  to_ref_note: >-
+    high here AND high within-group is the signature of copying the reference rather than holding a character.
+- name: arm3-ref0-window060
+  frames: 4
+  pairs: 6
+  dino_mean: 0.8028
+  dino_min: 0.7726
+  clip_mean: 0.9200
+  clip_min: 0.8928
+  reference: 04-the-footnote-wave1-s0.png
+  to_ref_dino_mean: 0.8068
+  to_ref_note: >-
+    high here AND high within-group is the signature of copying the reference rather than holding a character.
