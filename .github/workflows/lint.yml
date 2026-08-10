@@ -25,3 +25,4 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install -y fonts-dejavu-core
       - run: python pipeline/lint_genome.py
       - run: python pipeline/test_pipeline.py
+      - run: python pipeline/test_takes_backup.py

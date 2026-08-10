@@ -6998,3 +6998,63 @@ byte-identical** box-to-repo, 24 of 24. Heartbeats `STARTED`/`DONE` on
 `farm-results-hand` against the fresh id `ep2-b01-r8-i2i-1786307779`. Sheet
 `LABELED-b01-r8.png` built and **not opened**. Nothing published, posted, spent,
 made canon, or put on his screen.
+
+## 2026-08-10 — the 237 unbacked stills were 232 already on the box and 5 that existed nowhere else
+
+**The premise was 98% wrong and the remaining 2% was the interesting part.** The
+brief was that episode 2's whole candidate corpus — 237 PNGs under
+`002b-first-citizen/takes/stills/`, 286,970,393 bytes — existed only on this
+laptop, gitignored and unbacked, with every beat's r3 sheet rendered and zero
+canon picked. Hashing all 237 against every PNG on the box (`C:\banyan-farm`,
+815 files, sha256 both ends) found **232 already there byte-identical**: they
+were rendered on the 5090 and pulled down, and the per-run `...\out\` dirs still
+hold the originals under run-local names. **Five files, 6.06 MiB, existed
+nowhere but here** — `01-cold-open-i2i-r2s0-str045`, `r2s3-str035`,
+`r2s3-str055`, `r3s3-nub-str035`, `r3s3-nub2-pea-str035`, the 2026-08-06 beat-01
+img2img repaints, drawn on the Mac's MPS rather than the box. They are also the
+only five stills in the corpus **with no `.meta.yaml` sidecar**, so git held no
+trace of them at all. The risk was never the big corpus; it was the handful of
+frames drawn off the normal path, and it was invisible precisely because nothing
+in the tree named them.
+
+**What is safe was verified, not assumed.** Node 001's `takes/` is 373 files on
+disk and 373 tracked — the `!.../001-capability-inventory/takes/**` un-ignore at
+`.gitignore:48` is real and complete. 002b's 216 sidecars are tracked, because
+the ignore rule matches extensions rather than the directory, which is the whole
+reason that decision was written that way.
+
+**The fix does not touch the ignore rule.** All 453 files (237 PNG + 216
+sidecar) now sit at `C:\banyan-farm\take-archive\002b-first-citizen\stills\`
+under their repo filenames rather than scattered run-local ones — 93 s over the
+LAN, 267.9 GB free there — and `takes/MANIFEST.sha256` is tracked in git: sha256
+and path for all 453, ~40 KB of text. **The manifest is the load-bearing half.**
+Without it the box copies are duplicates nobody can map back to filenames; with
+it, any copy anywhere is checkable with one command. `pipeline/takes_backup.py`
+writes and checks it (`manifest` / `verify [--dir]`), tests in
+`pipeline/test_takes_backup.py`, wired into CI beside `test_pipeline.py`.
+
+**Rehearsed, not just written.** The full 453-file archive was pulled back off
+the box into a scratch dir and verified against the manifest at **453/453,
+`TAKES-VERIFY: PASS`**, then deleted. The box archive was independently diffed
+against the committed manifest, 453/453. `shasum -a 256 -c` on the manifest
+agrees with the tool. Restore procedure, both directions, is in
+`TAKES-DURABILITY.md`.
+
+**Said plainly: two copies on two unbacked machines is not "backed up".** This
+laptop has no Time Machine destination configured, no external volume mounted
+and 8.2 GiB free of 460; the box has no backup either. What changed is that
+losing either machine no longer loses episode 2's candidates. Off-site costs
+money and is the founder's.
+
+**Not tracked in git, and that was a decision rather than an omission.** The
+pack is already 1.79 GiB; +274 MB of incompressible PNG is ~15% growth git can
+never return, and reversing a rule whose own comment explains itself is R4-shaped,
+not a chore. Filed for him along with off-site, and with whether the five
+sidecar-less repaints should get provenance backfilled — that means asserting
+what recipe drew them, which is a claim about the work.
+
+**Still exposed, measured and deliberately left alone: `review/`** — 227 ignored
+media files, 156.3 MiB, **96 with no byte-identical copy on the box**. Same
+pattern would close it, but live lanes are writing there right now and copying
+under an active writer archives half-written files. Its own pass, once the card
+lanes settle.
