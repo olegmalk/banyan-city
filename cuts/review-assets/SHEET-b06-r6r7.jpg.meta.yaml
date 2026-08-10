@@ -1,0 +1,95 @@
+# Provenance for one image on the /review gallery (STEWARDSHIP §7.2).
+#
+# WHAT THIS FILE IS SERVED UNDER, because it is not what the rest of the tree is
+# served under. banyan.city publishes CC BY 4.0. These pictures were drawn by
+# cagliostrolab/animagine-xl-3.1, whose CreativeML Open RAIL++-M licence attaches
+# use restrictions that travel to the output — the open conflict recorded as D15.
+# The founder authorised candidate frames onto the review page on 2026-08-09; he
+# did not resolve the licence question, and publishing them under a blanket CC BY
+# offer would grant what we do not hold. So the offer is NARROWED for this file
+# and said out loud on the page: it carries OpenRAIL++'s Attachment A use
+# restrictions and is not CC BY 4.0.
+#
+# WHERE THESE SIXTEEN FRAMES CAME BACK FROM. Both rounds were rendered on the
+# rtx5090 and both were recorded in the commit log as LOST — r6 as "the lane that
+# drew it ended without saving them" and "off the box before the only copy could
+# go with it". The frames were never lost; they were never copied. They were
+# still in C:\banyan-farm\b06-r6\out and \b06-r7\out on 2026-08-10 17:21Z and were
+# pulled from there with their render-time sidecars intact. Those sidecars are the
+# source of every number below — nothing here is reconstructed.
+
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+published_under: >-
+  CreativeML Open RAIL++-M use restrictions (Attachment A) — NOT the tree's
+  CC BY 4.0. Founder-authorised for the /review gallery only; not canon,
+  not published elsewhere, not promoted to a stills/ filename.
+authorised_by: >-
+  founder (Roman), 2026-08-09 — "put the images from my computer onto there
+  please, not like theres any reason to hide it". Visibility only: D15's
+  licence question stays open and stays his.
+surface: /review gallery (unlisted, noindex — D17)
+canon: false
+sha256: b4a986c842c658c1c6b21c27bb078fc75341cf95bea04c340591b5ebacf4f07b
+encoding: >-
+  JPEG composited by our own labelling script from the sixteen source PNGs —
+  tiles downscaled to fit a phone screen, amber address badge burned on each.
+  The compositing and the badges are our code and carry no model.
+cost_usd: 0
+sheet: true
+episode: 1
+shows: >-
+  b06-r6a-s0..s3 (row 1), b06-r6b-s0..s3 (row 2),
+  b06-r7a-s0..s3 (row 3), b06-r7b-s0..s3 (row 4)
+what: >-
+  episode 1 beat 06 — both arms of round 6 and both arms of round 7, the four
+  sets drawn to the founder's 2026-08-10 direction, sixteen frames in one picture
+founder_direction_verbatim: >-
+  none of the beat 6 images will work, you either show the ground as having tall
+  grass or dont show the ground at all and show the sky, right now its showing
+  the ground as some flat place, or showing cities for some reason
+founder_direction_date: 2026-08-10
+arms:
+  r6a: "ARM A — ground visible, TALL GRASS (his option A)"
+  r6b: "ARM B — no ground, SKY ONLY (his option B)"
+  r7a: "ARM A again, with the animal and vehicle classes named in the negative"
+  r7b: "ARM B again, with the animal and vehicle classes named in the negative"
+arm_is_not_a_pick: >-
+  Four sets because the founder gave two acceptable compositions and chose
+  neither, and round 7 re-ran both after round 6 turned up a fault. A and B are
+  alternatives, not a sweep with a winner. No arm is preferred, ranked or
+  recommended anywhere on this sheet or in its card, and the steward makes no
+  pick between them — that choice is R4's and only his.
+size: 832x1216 per source frame
+steps: 40
+guidance: 7.5
+seeds: 20264725, 20265725, 20266725, 20267725
+controlled_pairs: >-
+  All four arms run round 5's own four seeds in the same column order, which r3
+  and r4 also drew. A column is one seed across all four rows, so arm against arm
+  is a comparison of the prompt and not of the noise, and any row can be set
+  beside the rejected rounds column for column.
+what_changed_r6_to_r7: >-
+  One thing. Round 6 arm A drew a large white animal as the subject of 2 of 4 with
+  nothing in the prompt asking for one and nothing forbidding one — the same shape
+  of fault as the cities, and at 59 of 77 tokens it was never a trim. Round 7 names
+  the animal and vehicle classes in the negative (animal, animal focus, cat, dog,
+  creature, vehicle, car) and changes nothing else. `no humans` stays at the head
+  of the positive with no person noun in the negative, which is round 5's one
+  confirmed win.
+neutral: >-
+  Labels and seeds only. No favourite is marked, nothing is ordered by
+  preference, no metric is printed, and no tile says "closest to" anything
+  (gate G3). Eight instruments were retired on 2026-08-10 for disagreeing with
+  the pictures they scored; this sheet carries none of them.
+source_frames: >-
+  review/b06-r6/06-too-blue-r6{a,b}-s{0..3}.png and
+  review/b06-r7/06-too-blue-r7{a,b}-s{0..3}.png in this checkout, each with its
+  render-time <name>.png.meta.yaml beside it. Pulled from the rtx5090 at
+  C:\banyan-farm\b06-r6\out and \b06-r7\out on 2026-08-10.
+provisional: >-
+  PROVISIONAL. Steward-rendered CANDIDATES, not a pick and not canon. Ground
+  truth is the founder (R4); he has ratified nothing here and this sheet
+  deliberately offers him no preference between its four rows.
+approved: false

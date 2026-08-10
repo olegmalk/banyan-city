@@ -1,0 +1,96 @@
+# Provenance for one image on the /review gallery (STEWARDSHIP §7.2).
+#
+# WHAT THIS FILE IS SERVED UNDER. banyan.city publishes CC BY 4.0. These pictures
+# were drawn by cagliostrolab/animagine-xl-3.1, whose CreativeML Open RAIL++-M
+# licence attaches use restrictions that travel to the output — D15, still open.
+# The offer is NARROWED for this file and said out loud on the page: it carries
+# OpenRAIL++'s Attachment A use restrictions and is not CC BY 4.0.
+#
+# WHY THERE IS A SECOND GOBLIN SHEET. SHEET-002b-b04-ipa-identity.jpg was built at
+# 14:09 on 2026-08-10 and shows the wave-1 baseline and ten IP-Adapter arms. Three
+# more arms finished on the box AFTER it — 16:07, 16:09 and 16:12 — and are not on
+# it. This sheet is those three and nothing else, so the first sheet stays true to
+# what it says it shows and neither one is silently rewritten under him.
+
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+consistency_mechanism: IP-Adapter Plus (SDXL, ViT-H image encoder)
+ip_adapter_repo: h94/IP-Adapter
+ip_adapter_weight: sdxl_models/ip-adapter-plus_sdxl_vit-h.safetensors
+ip_adapter_licence: >-
+  Apache-2.0 (h94/IP-Adapter); image encoder weights derive from
+  laion/CLIP-ViT-H-14-laion2B-s32B-b79K, MIT
+published_under: >-
+  CreativeML Open RAIL++-M use restrictions (Attachment A) — NOT the tree's
+  CC BY 4.0. Founder-authorised for the /review gallery only; not canon,
+  not published elsewhere, not promoted to a stills/ filename.
+authorised_by: >-
+  founder (Roman), 2026-08-09 — "put the images from my computer onto there
+  please, not like theres any reason to hide it". Visibility only: D15's
+  licence question stays open and stays his.
+surface: /review gallery (unlisted, noindex — D17)
+canon: false
+sha256: 109edc46d7c8bb884f6d22f8b1bf1282da660536ba147172324f66fb155e6f79
+encoding: >-
+  JPEG composited by our own labelling script from the thirty-two source PNGs,
+  amber address badge burned on each tile. The compositing and the badges are our
+  code and carry no model.
+cost_usd: 0
+sheet: true
+episode: 2
+shot_beat: 4
+beat_slug: the-footnote
+what: >-
+  episode 2 beat 04 — the three IP-Adapter arms that landed after the identity
+  sheet was built: a step-window wedge at 10% and 20%, a scale wedge at 0.80 and
+  1.00 held at window 15%, and window 15% extended to four more seeds on each of
+  the four references
+shows: >-
+  b04-ipa-r0-w010-s0..s3 (row 1), b04-ipa-r0-w020-s0..s3 (row 2),
+  b04-ipa-r0-w015-c080-s0..s3 (row 3), b04-ipa-r0-w015-c100-s0..s3 (row 4),
+  b04-ipa-r{0,1,2,3}-w015-s4..s7 (rows 5-8)
+size: 832x1216 per source frame
+steps: 40
+guidance: 7.5
+prompt_tokens_added_by_mechanism: 0
+prompt_note: >-
+  The prompt string is byte-identical to the one that drew the four different
+  creatures in the wave-1 baseline. Zero tokens added. Whatever the reference
+  picture costs, it does not cost the founder's "nothing complex".
+prompt: >-
+  1boy, a small goblin boy, green skin, tusks, solo, his face filling the frame,
+  holding his breath with cheeks puffed and huge eyes darting, enormous ears
+  twitching. Slow push-in, close-up, soft morning light, cinematic lighting,
+  detailed, newest, masterpiece, best quality, very aesthetic
+negative_prompt: >-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality,
+  blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, girl,
+  child, photorealism, text, female goblin, elf
+goblin_definition_source: >-
+  the founder, 2026-08-10, verbatim: "he is just a simple green goblin, nothing
+  complex". Recorded in cuts/cuts.yaml item 18 (settled) and
+  taste/steward-model.ledger.yaml record ep2-goblin-definition-0810.
+goblin_definition_as_sent: >-
+  green skin, tusks — the steward's translation of his sentence into slot tags,
+  which he has NOT ratified. Held fixed across every arm on purpose, so this is an
+  A/B of the mechanism rather than a second, confounded question about the words.
+reference_note: >-
+  Every reference is one of the four wave-1 frames, used because all four are used
+  in turn. None of them is a canonical goblin and nobody has picked one. Choosing
+  the goblin is R4's call and this run does not make it.
+neutral: >-
+  Labels and seeds only. No favourite is marked, no arm is recommended, nothing is
+  ordered by preference, and NO AGREEMENT SCORE IS PRINTED ON THIS SHEET. The
+  automatic identity metric is deliberately absent: on 2026-08-10 it could not
+  tell one creature from four, because on this beat it is mostly scoring a
+  background that never changes. His eyes are the instrument (gate G3).
+source_frames: >-
+  farm-out/ep2-b04-goblin-ipa-wedge/, farm-out/ep2-b04-goblin-ipa-wscale/ and
+  farm-out/ep2-b04-goblin-ipa-w015-seeds8/ on branch farm-results-rtx5090, each
+  PNG with its render-time <stem>.yaml beside it. Those thirty-two PNGs are ~26 MB
+  and stay on the results branch; this sheet is the published rendition.
+provisional: >-
+  PROVISIONAL. A steward-rendered MECHANISM TEST, not a pick sheet and not canon.
+  No frame here is a candidate for promotion and no goblin is made canonical.
+approved: false

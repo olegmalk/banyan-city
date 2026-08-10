@@ -124,11 +124,13 @@ checklist:
   # build_site.py. Keep it to a sentence or two: he reads this page on a phone in
   # five-minute passes, and a lede he has to scroll is not a lede.
   lede: |-
-    **The four cheapest wins, if you only have two minutes:** [18](#item-18)
-    defines the goblin and releases fifteen waiting beats; [06](#item-06)
-    releases twelve frames that are already drawn-and-locked; [21](#item-21) and
-    [22](#item-22) are one word each. The argument behind every item is one fold
-    down.
+    **NEW SINCE YOU LAST LOOKED, and it is all pictures:** [10](#item-10) —
+    **beat 6 is drawn both ways you asked for, sixteen frames**, and no flat
+    ground or city in any of them; [23](#item-23) has thirty-two more goblins;
+    [06](#item-06) now shows all twelve of round 9 instead of one. **The three
+    cheapest wins:** [20](#item-20) is one word and unlocks two whole cuts
+    ([19](#item-19) and [24](#item-24)); [21](#item-21) and [22](#item-22) are
+    one word each. The argument behind every item is one fold down.
   intro: |-
     **Items 01 to 09 are a record, not a list of questions.** You answered every
     one of them on 2026-08-08; they are kept so you can catch us hearing
@@ -774,8 +776,8 @@ checklist:
         creature, four seeds, and **not one word added to the prompt.** But the
         arm that holds him best **drains the green out of him**, and the arm that
         keeps him green **loses the character again.**
-      where: "`review-assets/SHEET-002b-b04-ipa-identity.jpg` on this page — 44 frames, the baseline on top and ten arms under it"
-      how: "look down the sheet and say which cost is acceptable, or say neither and we keep looking"
+      where: "two sheets on this page — `SHEET-002b-b04-ipa-identity.jpg` (44 frames, the baseline and ten arms) and, NEW since you last looked, `SHEET-002b-b04-ipa-late.jpg` (32 frames, three arms that finished after it)"
+      how: "look down both sheets and say which cost is acceptable, or say neither and we keep looking"
       body: |-
         **THE FAULT, and it is technical rather than a matter of taste.** Beat 04
         was rendered on four seeds with your definition. It came back **green 4 of
@@ -811,6 +813,24 @@ checklist:
         same plank, same mouth. That is not one character, that is one
         photograph four times. It would carry beat 04's room into beat 09.
 
+        **NEW SINCE THAT SHEET WAS BUILT — thirty-two more frames, and they bear
+        directly on the trade above.** Three arms finished on the box at 16:07,
+        16:09 and 16:12 and are on the second sheet. They all turn the reference
+        DOWN rather than up: it conditions only the first 10-20% of the denoise
+        and then switches off, so the late steps are text-conditioned alone.
+        **Described, not scored: those thirty-two frames are green in 32 of 32.**
+        The green survives at a narrow window, which is the thing arm 1 was
+        losing. Whether the creature still holds together well enough for you is
+        the part a number cannot answer and we are not going to pretend it can —
+        the rows are grouped by reference so you can read one reference across
+        four seeds and judge it directly.
+
+        **AND THAT IS WHY THIS CARD DOES NOT SAY "SOLVED".** A narrow window
+        keeping the colour is not the same claim as a narrow window keeping the
+        character, and we have been wrong about exactly this distinction once
+        today already. Your eyes on the second sheet are the only instrument
+        that settles it.
+
         **THIS HAS HAPPENED ONCE BEFORE AND YOU ALREADY SAW IT.** Round 7 on beat
         13 is the only earlier round that ever held one character across seeds,
         and it did it the same way, with a reference — and it also came back with
@@ -831,6 +851,9 @@ checklist:
         - file: review-assets/SHEET-002b-b04-ipa-identity.jpg
           label: "ep2 beat 04 — the wave-1 baseline and ten IP-Adapter arms, four seeds each"
           note: "read across a row. Baseline is four creatures; arm 1 is one creature and no green; arm 2 is green and four creatures. No pick, no score, no arm recommended."
+        - file: review-assets/SHEET-002b-b04-ipa-late.jpg
+          label: "NEW — ep2 beat 04, the three arms that finished AFTER the sheet above"
+          note: "a step-window wedge (10%, 20%), a scale wedge (0.80, 1.00) and window 15% on four more seeds per reference. Thirty-two frames. No pick, no score, no arm recommended."
       pending: >-
         **One thing this sample genuinely cannot tell you.** Every reference used
         is itself a beat-04 picture, so there was no way to catch the reference
@@ -839,18 +862,19 @@ checklist:
         different beat conditioned on a beat-04 reference. It is **not queued**,
         because queuing it presumes you want this mechanism at all.
     - n: 10
-      ask: "Beat 6 — you rejected every set. Two samples are rendering to your direction."
+      ask: "Beat 6 — both your options are drawn, four sets, sixteen frames. Pick one."
       state: open
       chip: "PICK"
       minutes: 5
       summary: >-
         *"none of the beat 6 images will work."* Round 5's pick is withdrawn.
-        You gave two options — tall grass, or no ground at all — and one sample
-        of each is rendering now. Episode 2's twenty beats are still open under
-        this.
-      where: "both samples are DRAWN as of 2026-08-10 11:35Z and are not on this page yet — `CONTACT-b06-r6-AB.png` on this machine, eight frames, option A on top and option B under it. The sheets below are the sets you rejected, kept as the record"
-      sheets_title: "The sheets — nineteen of them, round 5 first; tap one to open it full size"
-      how: "when the two land, say `A` (tall grass) or `B` (sky) — or say neither and why"
+        You gave two options — tall grass, or no ground at all — and **both are
+        now drawn twice over: sixteen frames on the first sheet below.** No flat
+        ground and no city in any of the sixteen. Episode 2's twenty beats are
+        still open under this.
+      where: "the FIRST sheet below, `SHEET-b06-r6r7.jpg` — sixteen frames, one row per arm. The sheets under it are the sets you rejected, kept as the record"
+      sheets_title: "The sheets — round 6 and 7 first, then the record; tap one to open it full size"
+      how: "name one frame — `b06-r7b-s2` — or name an arm, or say neither and why"
       body: |-
         **BEAT 6 — YOUR VERDICT, 2026-08-10, IN FULL:**
 
@@ -864,10 +888,46 @@ checklist:
         answer. Beat 6 is still the only beat in episode 1 without a frame of
         yours, and v34 is now holding a frame you have rejected.
 
-        **TWO SAMPLES, ONE PER OPTION, AND WE ARE NOT CHOOSING BETWEEN THEM.**
-        **A** — ground visible, tall grass. **B** — no ground, sky only. Same
-        four seeds as every previous round of this beat, so the two are
+        **BOTH OPTIONS ARE DRAWN, TWICE OVER, AND WE ARE NOT CHOOSING BETWEEN
+        THEM.** **A** — ground visible, tall grass. **B** — no ground, sky only.
+        Same four seeds as every previous round of this beat, so the two are
         comparable and neither is flattered by luck. Nothing else moves.
+
+        **WHAT THE SIXTEEN FRAMES SHOW — described, not scored.** Read the sheet
+        and overrule any of this; it is what we see, not a verdict.
+
+        - **The two faults you named are gone in 16 of 16.** No flat ground
+          anywhere, and not one city, skyline or building in any of the four
+          sets.
+        - **Arm A drew your tall grass every time** — blades at the camera in
+          all eight of its frames, across both rounds.
+        - **Arm A also drew a creature nobody asked for, in 2 of 4, twice.**
+          Round 6 put a large white animal in the middle of `s1` and a white
+          limb across `s3`. Round 7 shut the animal class in the negative and
+          it came back **still 2 of 4** — a horned humanoid in `s1`, a coiled
+          white shape in `s3`. Same two seeds both times.
+        - **Arm B is clean 8 of 8.** Sky and cloud, no ground, nothing living
+          in the frame, in both rounds.
+
+        **SO THE HONEST SHAPE OF THE CHOICE:** the arm that gives you the grass
+        is the arm that keeps inventing an animal on two of its four seeds, and
+        naming the animal in the negative did not stop it. The arm that never
+        had a ground to fill has nothing to invent into. **We are not telling
+        you B is better** — you may want the grass and be happy to draw more
+        seeds until four are clean, and that is a real answer.
+
+        **ROUND 7 CHANGED EXACTLY ONE THING,** so the comparison is clean: the
+        animal and vehicle classes are named in the negative (`animal`, `animal
+        focus`, `cat`, `dog`, `creature`, `vehicle`, `car`). `no humans` stays at
+        the head of the positive with no person noun in the negative — round 5's
+        one confirmed win — and the seeds are round 5's own four again.
+
+        **THESE SIXTEEN WERE WRITTEN DOWN AS LOST AND THEY WERE NOT.** The commit
+        log records round 6 as *"the lane that drew it ended without saving
+        them"* and *"off the box before the only copy could go with it."* Nothing
+        was lost; nothing was ever copied. All sixteen were still sitting in
+        `C:\banyan-farm\b06-r6\out` and `\b06-r7\out` with their render-time
+        provenance intact, and were pulled from there at 17:21Z today.
 
         **WHY THE CITIES WERE THERE, AND IT IS OUR BUG, NOT BAD LUCK.** We
         checked what was actually sent to the model. **No beat-6 prompt has ever
@@ -1077,6 +1137,9 @@ checklist:
         (**D16**) — that sign-off is a separate question you have not answered.
 
       sheets:
+        - file: review-assets/SHEET-b06-r6r7.jpg
+          label: "NEW — ep1 beat 06, BOTH ARMS OF ROUND 6 AND ROUND 7, sixteen frames"
+          note: "the four sets drawn to your direction. Row 1 tall grass, row 2 sky only, rows 3 and 4 the same two with the animal class shut. A column is one seed across all four rows. No pick, no score, no arm recommended."
         - file: review-assets/LABELED-beat06-r5.jpg
           label: "ep1 beat 06 ROUND 5 — round 4 on top, round 5 under it, same seeds"
           note: "zero people in 4 of 4, clouds ordinary; our pick b06-r5-s2, 0.55 — this is the frame in v34"
@@ -1230,6 +1293,78 @@ checklist:
     # count to eleven. Writing one is R4's call (D15), not this lane's.
     #
     # Beats 01, 02, 11 and 13 pass on their own records.
+    # ITEM 24 SITS ABOVE 19 BECAUSE IT SUPERSEDES IT AS A CUT, and under 10
+    # because beat 6 gates whether either cut is finished. It is deliberately
+    # NOT a media card: the licence gate refuses v35 and refuses all sixteen
+    # reseeds, so naming their paths is the honest maximum. Putting a player
+    # here that renders as "withheld" sixteen times would be a wall of refusals
+    # dressed as a screening surface. The ask this card really carries is
+    # item 20's, and it says so.
+    - n: 24
+      ask: "v35 is cut, and today's sixteen re-draws cannot be shown to you. Item 20 is why."
+      state: open
+      chip: "ON US"
+      minutes: 2
+      summary: >-
+        **A whole new cut of episode 1 exists** — 89.2 seconds, fifteen beats,
+        no slates — and **sixteen more clips were drawn today** on the beats it
+        is weakest on. **You cannot watch any of it on this page.** Every one of
+        them is LTX footage and the licence gate refuses LTX until you answer
+        item 20. This card is here so the work is not invisible while it waits.
+      where: "`review/provisional-v35/ep1-v35-PROVISIONAL.mp4` and `review/v34-plate-reseeds/` on this machine — and `review/provisional-v35/README.md`, which names the defect in every one of the five swapped beats"
+      how: "nothing here, unless you want it prioritised. The unblocking answer is item 20"
+      body: |-
+        **WHAT v35 IS.** v34 with five beats swapped for *plate twins* — the same
+        renders with the conditioning image prepared properly instead of
+        vertically stretched by 24.4%. Sixteen measured pairs inverted with no
+        exception, and the twin lands on the same side as the clip the cut
+        already uses. **The twin is not a new framing; it is the framing the cut
+        already had.** The raw version was the odd one out.
+
+        **AND IT IS NOT BEING OFFERED AS GOOD.** The twins fix geometry and
+        nothing else, so each one inherits its round's own defects. Named, not
+        buried:
+
+        - **Beat 08 is a known motion regression and the selection rule walked
+          straight into it.** The round that went in froze the one beat that was
+          already moving — four frames across the clip are near-identical to the
+          eye. **r1 moves and is the alternative.** This is the substitution most
+          worth overriding.
+        - **Beat 14 deliberately has no twin** and shows you the v34 held still.
+          Its re-cut was blocked in code because the spec would have applied beat
+          08's freezing lock to the most frozen beat in the cut. Biggest
+          remaining hole.
+        - **Beat 03's picture slides** across the shot, cropping the monitor edge.
+        - **Beat 04 reads tighter** — the correct crop, but the one beat where you
+          will notice the crop itself. The invented wrist phone the earlier rounds
+          drew is gone.
+        - **Beat 06 is unchanged and is still the frame you rejected** — item 10
+          is where that gets fixed.
+
+        **WHICH ROUND WENT IN, AND HOW THAT WAS DECIDED.** Mechanically: highest
+        round number available, nothing more. **That is not a taste call and it
+        is not a good rule** — the record twice notes a later round being worse
+        than an earlier one, and beat 08 above is exactly that happening again.
+        It was chosen because it makes no judgement, not because it makes a right
+        one. Every round of every beat is twinned and sitting in
+        `review/v34-motion/`; **any of the five is yours to override.**
+
+        **TODAY'S SIXTEEN RE-DRAWS, and what they are for.** The rtx5090 spent the
+        afternoon giving the weakest beats more seeds to choose from — **beat 03
+        four more, beat 04 three, beat 07 five, beat 08 three, beat 14 one.** Same
+        recipes, new seeds. They are candidates for a v36, not a cut yet, and
+        nobody has picked among them. $0, local GPU, no money rail touched.
+
+        **WHY THIS CARD ASKS YOU FOR NOTHING.** All seventeen files are LTX-2.3
+        output, and LTX's licence keeps its output off anything we publish —
+        **D16, open, yours, and it is item 20.** One word there turns this card
+        and item 19 into things you can actually watch. Until then they are
+        paths on a laptop and this page will not pretend otherwise.
+      pending: >-
+        **Nothing on this card can be shown here and that is the licence gate
+        working, not a missing render.** v35 and all sixteen re-draws exist, are
+        complete, and are refused. Item 20 is the only thing between them and
+        this page.
     - n: 19
       ask: "Episode 1, v34 — all fifteen beats, no slates."
       state: open
@@ -1837,7 +1972,7 @@ checklist:
           tall"*), so episode 2's opening picture is open again. Nothing built on
           it cannot be redrawn: the words of all 21 shots stand, and so does the
           voice.
-      ask: "Episode 2's opening shot — round 9 is drawn, and twelve frames wait on your look."
+      ask: "Episode 2's opening shot — round 9's full sweep is drawn. Twelve frames, three settings."
       state: open
       chip: "YES / NO"
       minutes: 2
@@ -1845,10 +1980,10 @@ checklist:
         Round 8 stopped arguing with the model and handed it **your approved b15
         plate as a starting image**: a grounded whole plant in **8 of 8** where
         seven rounds of wording drew none — and the plate's amber dusk came with
-        it. Round 9 sends that same plate as **geometry only**. **One frame is
-        drawn and the render script refuses the other twelve until you have seen
-        it.**
-      where: "the round-9 frame is first on this card, then round 8's twelve, then rounds 7 and 5"
+        it. Round 9 sends that same plate as **geometry only**. The one sample
+        you were owed came first; **the other twelve are now drawn too**, as a
+        sweep of how hard the plate should push.
+      where: "the round-9 SWEEP is first on this card — twelve frames, one row per setting — then the single frame it was unlocked by, then round 8's twelve, then rounds 7 and 5"
       sheets_title: "Round 9's single frame first, then the three rounds behind it"
       how: "one word — `go` and the other twelve render immediately, or say what is wrong with this one"
       body: |-
@@ -1972,12 +2107,18 @@ checklist:
         `review/b01-r9/b01r9.log` and recorded as a fault rather than tidied
         away.
 
-        **WHY YOUR ONE WORD IS THE GATE.** `render_b01r9.py` refuses to draw
-        more than one frame without an explicit unlock — one sample before any
-        set, in code rather than in a note. The remaining twelve are about three
-        minutes of GPU, so this is not an expensive answer; it is a *blocking*
-        one. Nothing else on this beat — no r10, no motion test, no episode-2
-        opening — can start behind it.
+        **THE ONE-SAMPLE GATE DID ITS JOB AND THEN OPENED.** `render_b01r9.py`
+        refuses to draw more than one frame without an explicit unlock — one
+        sample before any set, in code rather than in a note. The single frame
+        came first, it held up, and the remaining twelve were drawn behind it as
+        a sweep of the one knob that was still a guess: **how hard the plate
+        should push, at 0.40, 0.60 and 0.80.** Three minutes of GPU, $0.
+
+        **WHAT THE SWEEP SHOWS — described, not scored.** The plate's geometry
+        gets stronger down the sheet and the picture gets softer with it: the
+        0.80 row is noticeably hazier and lower in contrast than the 0.40 row,
+        and the sprout reads smallest against the grass at 0.80. Which of those
+        is the frame is yours; we are naming what changes, not ranking it.
 
         **The Wan film of the withdrawn frame is below**, as the record of what you
         were asked and refused. **The LTX film of it exists and this page still may
@@ -1988,9 +2129,12 @@ checklist:
         **207 seconds against Wan's 539** — 2.6x faster at a third of peak memory.
         Over twenty-one beats that is real, and it still does not pick a look.
       sheets:
+        - file: review-assets/SHEET-002b-b01-r9-stage2.jpg
+          label: "NEW — the cold open, ROUND 9 SWEEP — twelve frames, depth 0.40 / 0.60 / 0.80"
+          note: "your plate as geometry only, at three strengths. Rows are the strength, columns are the four seeds in the same order, so a column is one seed and the strength is the only thing changing down it. No pick, no score, no favourite marked."
         - file: review-assets/B01-R9-d60-s0.jpg
-          label: "the cold open, ROUND 9 — ONE frame, 002b-b01-r9-d60-s0"
-          note: "your plate as geometry only. Both pre-written tests passed; the macro lens and a light shaft came through anyway. The other twelve are locked until you look."
+          label: "the cold open, ROUND 9 — the ONE frame the sweep was unlocked by, 002b-b01-r9-d60-s0"
+          note: "your plate as geometry only. Both pre-written tests passed; the macro lens and a light shaft came through anyway. It is on the sweep above as b01-r9-d60-s0, unmarked."
         - file: review-assets/LABELED-b01-r8.jpg
           label: "the cold open, ROUND 8 — twelve frames, three arms of four seeds"
           note: "init at 0.35 and 0.55 plus a text-only control: grounded plant 8 of 8, and the plate's amber dusk on all eight. No pick; steward reject-all at 0.72."

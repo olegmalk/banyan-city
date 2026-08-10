@@ -1,0 +1,92 @@
+# Provenance for one image on the /review gallery (STEWARDSHIP §7.2).
+#
+# WHAT THIS FILE IS SERVED UNDER. banyan.city publishes CC BY 4.0. These pictures
+# were drawn by cagliostrolab/animagine-xl-3.1, whose CreativeML Open RAIL++-M
+# licence attaches use restrictions that travel to the output — D15, still open.
+# The offer is NARROWED for this file and said out loud on the page: it carries
+# OpenRAIL++'s Attachment A use restrictions and is not CC BY 4.0.
+#
+# THE TWO HELPERS ARE LICENCE-CLEAN AND THAT IS NOT AN ACCIDENT. The depth
+# ControlNet is openrail++, the same family as the base and so adding nothing new,
+# and the depth estimator is apache-2.0. Neither widens D15. The base checkpoint is
+# still the whole of the debt.
+#
+# WHY THIS SHEET EXISTS. Item 6 on the review page has been saying that round 9 is
+# drawn and twelve frames wait on his look, while showing him exactly ONE of them
+# (B01-R9-d60-s0.jpg). The other eleven finished at 12:44 on 2026-08-10 and were on
+# this machine, unpublished. A card that names a number and shows one frame is
+# asking him to take our word for the other eleven.
+
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_revision: 483f0c322568ed13697ed01dd0be07204746d12b
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+controlnet: diffusers/controlnet-depth-sdxl-1.0
+controlnet_revision: 17bb97973f29801224cd66f192c5ffacf82648b4
+controlnet_licence: openrail++ (D15 SAFE — same family as the base)
+depth_estimator: Intel/dpt-hybrid-midas
+depth_estimator_revision: 11eaf7a1cf4bd70740697dbc216f98980c0aeb03
+depth_estimator_licence: apache-2.0 (D15 SAFE — permissive, adds nothing)
+control_map: genomes/sapling/nodes/002b-first-citizen/control/b01-r9-depth-b15.png
+pipeline: StableDiffusionXLControlNetPipeline (text2img + depth control)
+published_under: >-
+  CreativeML Open RAIL++-M use restrictions (Attachment A) — NOT the tree's
+  CC BY 4.0. Founder-authorised for the /review gallery only; not canon,
+  not published elsewhere, not promoted to a stills/ filename.
+authorised_by: >-
+  founder (Roman), 2026-08-09 — "put the images from my computer onto there
+  please, not like theres any reason to hide it". Visibility only: D15's
+  licence question stays open and stays his.
+surface: /review gallery (unlisted, noindex — D17)
+canon: false
+sha256: 1ef377ab7517ee7c6a084e07de5591a94c26616cbae75f977ab80ea0a9d92150
+encoding: >-
+  JPEG composited by our own labelling script from the twelve source PNGs, amber
+  address badge burned on each tile. The compositing and the badges are our code
+  and carry no model.
+cost_usd: 0
+sheet: true
+episode: 2
+shot_beat: 1
+what: >-
+  episode 2's opening shot, round 9 — the depth-ControlNet conditioning-scale
+  sweep, all twelve frames. Rows are the conditioning scale (0.40, 0.60, 0.80);
+  columns are the four seeds in the same order on every row, so a column is one
+  seed and the scale is the only thing that changed down it.
+shows: >-
+  b01-r9-d40-s0..s3 (row 1), b01-r9-d60-s0..s3 (row 2), b01-r9-d80-s0..s3 (row 3)
+size: 832x1216 per source frame
+steps: 40
+guidance: 7.5
+seeds: 20260720, 20260721, 20260722, 20260723
+seed_rule: SEED(20260719) + BEAT(1) + i*1000
+controlnet_conditioning_scale_swept: 0.4, 0.6, 0.8
+render_round: r9
+task: ep2-b01-r9-depth-controlnet
+controlled_pairs: >-
+  One control map, one prompt, one seed series. The only variable across the three
+  rows is controlnet_conditioning_scale, so the sheet answers how hard the depth
+  map should push and nothing else.
+prompt: >-
+  A tiny 40cm seedling standing in short grass, its sturdy curved stem, two
+  oversized cotyledon leaves, one small round green fruit hanging from the stem,
+  whole plant in frame, wide shot, peach and gold sunrise sky, cinematic lighting,
+  detailed, newest, masterpiece, best quality, very aesthetic
+negative: >-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality,
+  blurry, extra limbs, deformed, mature tree, large tree, thick trunk, full canopy,
+  forest, bush, shrubbery, girl, boy, child, person, chibi, mascot, creature, face,
+  branches, night sky, photorealism
+neutral: >-
+  Labels and seeds only. No favourite is marked, nothing is ordered by preference,
+  no metric is printed, and no tile says "closest to" anything (gate G3). The one
+  frame this page showed before today, B01-R9-d60-s0.jpg, is on this sheet as
+  b01-r9-d60-s0 with no mark distinguishing it from the other eleven.
+source_frames: >-
+  review/b01-r9-stage2/01-cold-open-r9-d{40,60,80}-s{0..3}.png in this checkout,
+  each with its render-time <name>.png.meta.yaml beside it.
+provisional: >-
+  PROVISIONAL. Steward-rendered CANDIDATES, not a pick and not canon. Ground truth
+  is the founder (R4). Episode 2's opening picture has been open since he took
+  r3-s3 back on 2026-08-08.
+approved: false
