@@ -3444,3 +3444,248 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+- id: ep1-b03-v34-motion-r2-sample
+  date: 2026-08-10
+  kind: clip
+  subject: "node 001 beat 03 DEPLOY SUCCEEDED. The v34 motion wave rendered this
+    beat at 21:57Z 2026-08-09 (03-ltx-s20260734.mp4) and it is the beat with the
+    HIGHEST motion number in the wave - median 3.16, 0% frozen, against 0.05/57%
+    for the held still it replaced. Eyes-on says the number is a lie of exactly
+    the b14 kind: the CAMERA pans laterally about 35% of the frame width across
+    65 frames (monitor bezel and desk walk out of frame, mug travels right,
+    potted plant swells into the upper-left; phase-correlation dx -61px of 176,
+    monotonic ~1px/frame, peak 0.568). The scene's own ambient motion - the steam
+    plume - is fine. r2 re-runs the same beat from the same canon still with ONE
+    change, described below."
+  steward_provisional: true
+  gates: {G1_approved_plate: pass, G2_script_approved: pass,
+          G5_provisional_labelled: pass}
+  pick: null
+  no_taste_verdict_offered: >-
+    R4 is the founder's. This record holds a measured defect, a mechanical cause
+    and a fix. Nothing published, spent or promoted; LTX clips are withheld by
+    D16 regardless.
+  the_change: >-
+    THE PROMPT ONLY. r1's positive prompt already contained "framing locked, no
+    zoom, no push-in, no camera rise, subject stays the same size and place in
+    frame" and the camera panned anyway. The b14 record already establishes why
+    this cannot work: at guidance 1.0 the distilled schedule runs no
+    unconditional pass, so a negation earns no gradient away from the thing it
+    names - and these particular negations were sitting in the POSITIVE prompt,
+    where "no zoom" contributes the token `zoom`. r2 replaces that whole cluster
+    with affirmative anchors naming where each object STAYS - camera locked on a
+    tripod, monitor centred at the same size throughout, mug keeping its place,
+    plant at the left edge from first frame to last, desk edge holding along the
+    bottom, composition identical in every frame. Seed 20260734 held, still
+    held, negative file byte-copied from r1, recipe otherwise byte-identical, so
+    the prompt is the only variable.
+  predictions_written_before_output_seen: true
+  predictions:
+    camera_pan_gone: "yes - cumulative phase-corr dx under 10px of 176 (r1: -61),
+      confidence 0.60. This is the whole question the sample asks."
+    motion_median_band: "0.4 - 1.6, point estimate 0.9, confidence 0.55. It
+      should FALL from r1's 3.16, because most of 3.16 was the pan. A number
+      that stays near 3.16 means the pan survived; a number that clears 3.16 is
+      a worse defect, not a better clip."
+    frozen_share: "under 25%, confidence 0.55 - the steam and screen-glow carry
+      it even with the camera nailed down"
+    steam_and_glow_survive: "yes, confidence 0.70 - they were never the problem"
+    invents_humans: "no, confidence 0.75"
+    invents_other_objects: "possible, confidence 0.35 - beat 04 grew a phone in
+      hand on this same wave, so the failure mode is live in this recipe"
+    overall: "camera holds AND ambient motion survives, confidence 0.45 - the
+      honest number, because affirmative framing anchors are unproven on a beat
+      whose subject is a static room rather than a plant"
+  falsifier_written_before_output_seen: >-
+    A HIGH MOTION NUMBER DOES NOT PASS THIS SAMPLE. Recorded before looking so
+    it cannot be rationalised after: this beat is the second instance of the
+    finding in ep1-b14-v34-motion-sample - mean-|delta| cannot tell "alive" from
+    "the whole frame is sliding", and on beat 03 it scored the pan 3.16, higher
+    than every genuinely-alive beat in the episode. r2 is accepted only if the
+    phase-correlation drift collapses AND four sampled frames show the monitor,
+    mug and plant in the same places. If the drift stays and the median stays
+    high, r2 is a REJECT at 3.16 exactly as r1 was.
+  r2:
+    clip: "03-deploy-succeeded-LTX-r2.mp4 sha f52adf304f3d4b6190b70ae1e6cf6236e6432f685a9e3b46850ad4ab86ed118c"
+    changed: "the positive prompt ONLY - the negation cluster became affirmative
+      hold-position anchors. Seed 20260734 held, still held, negative
+      byte-copied, recipe otherwise byte-identical. Sidecar diff confirms the
+      positive prompt is the only recipe field that differs."
+    measured: {motion_median: 0.83, frozen: "0%", wall_s: 288, rc: 0,
+               drift_dx_px_of_176: 12.9, drift_dx_pct_width: 7.3,
+               drift_dy_px: 0.1, implied_zoom: 0.998, corr_peak: 0.878}
+    verdict_mechanical: REJECT
+    why: >-
+      by the letter of the falsifier written above before the output existed.
+      Its first conjunct is satisfied - the drift collapsed 61px -> 13px of 176,
+      4.7x - but its second is not: the four sampled frames do NOT show the
+      monitor, mug and plant in the same places. Everything slides together by a
+      uniform ~51px of 704 (7.3% of width), which crops the monitor's right
+      bezel off the frame edge by frame 64. Mechanism right, dose short.
+    what_the_change_bought: >-
+      more than the residual it left. Against r1 the affirmative anchors killed
+      the push-in outright (implied zoom 1.31 -> 0.998), killed the vertical
+      wander outright, killed an object invention (r1 grows printed sheets of
+      paper on the desk that are not in frame 0; r2 invents nothing in 17
+      sampled frames), and cut the lateral pan 4.7x - while the ambient motion
+      SURVIVED rather than freezing, which was the plausible cost: 0% frozen,
+      steam born at f04 and re-forming into a full plume by f52, screen glow
+      pulsing, leaves stirring, motes visible. The motion number fell 3.16 ->
+      0.83 and that FALL is the improvement, because most of 3.16 was the pan.
+  prediction_scorecard:
+    hits: "motion_median_band (0.83 against a 0.9 point estimate), frozen_share,
+      steam_and_glow_survive, invents_humans; and the 0.35 invents_other_objects
+      leg resolved NO on a beat where r1 DID invent"
+    misses: >-
+      camera_pan_gone (predicted under 10px of 176 at confidence 0.60; got 12.9
+      direct / 9.5 accumulated - marginal, straddling the line) and the overall
+      conjunction. Both misses are the same fact: the dose, not the mechanism.
+      The direction of the miss is again the finding - a 4.7x collapse from one
+      prompt edit says the lever is real and under-applied, which is a dose
+      question and directly specifies r3.
+  the_finding_worth_keeping: >-
+    SECOND INDEPENDENT CONFIRMATION of the b14 negation finding, and the
+    strongest evidence for it so far. r1's positive prompt already contained
+    "framing locked, no zoom, no push-in, no camera rise, subject stays the same
+    size and place in frame" and the camera panned 35% of frame width anyway.
+    Two things were wrong with it at once: at guidance 1.0 the distilled schedule
+    runs no unconditional pass, so a negation earns no gradient away from what it
+    names - and these negations were sitting in the POSITIVE prompt, where "no
+    zoom" contributes the token `zoom`. Restating the same constraints
+    affirmatively, changing nothing else, moved every framing axis at once. The
+    rule this yields is general and cheap to apply: on this path, name where
+    things STAY, never what they must not do.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep1-b04-v34-motion-r2-sample
+  date: 2026-08-10
+  kind: clip
+  subject: "node 001 beat 04 THE FALL. r1 (04-ltx-s20260735.mp4) had no camera
+    problem at all - cumulative drift 1px - and still failed: a phone
+    MATERIALISES against the wrist between frames 21 and 43, absent at f0/f21,
+    drawn and lit at f43/f64. The floor phone stays in its corner throughout, so
+    this is a SECOND phone invented from nothing, not the scene's phone
+    migrating. `new object appearing` is in this clip's own negative, which at
+    guidance 1.0 draws no pixel."
+  steward_provisional: true
+  gates: {G1_approved_plate: pass, G2_script_approved: pass,
+          G5_provisional_labelled: pass}
+  pick: null
+  the_change: >-
+    THREE edits at once, and that is a stated weakness of this record: (1) the
+    negation cluster became affirmative anchors; (2) "the fingers twitch once"
+    became "the fingers rest still and tremble faintly" - a COUNTED action is
+    the b14 trap, since a 65-frame distilled i2v has no mechanism to perform an
+    action once and stop, so it reads the verb as a whole-clip trajectory; (3)
+    the phone's position was anchored explicitly. Seed 20260735 held, still held,
+    negative byte-copied.
+  measured: {motion_median: 0.68, frozen: "0%", wall_s: 285, rc: 0,
+             drift_dx_px: 0, drift_dy_px: 0, r1_motion_median: 0.59}
+  verdict_mechanical: "PASS on the tested defect, REJECT as a finished beat"
+  the_tested_defect_is_fixed: >-
+    the invented wrist phone is GONE. The floor phone is present and separate
+    from the hands in all 65 frames, drifting 15-20px and never travelling
+    toward them; max frame-to-frame delta in the floor region is 1.00 across all
+    64 pairs. No face, no second person, no extra arm. The hands also steadied
+    measurably: f34->f64 travel fell from r1's +67,+102 px with a degenerate fit
+    to -9,-16 px with a clean one. Ambient motion survived the anchoring and in
+    fact RISES through the clip (per-frame median 0.83 -> 0.96 -> 1.17 across
+    thirds), so the plausible cost of over-anchoring did not materialise here.
+  what_still_fails: >-
+    the clip is not usable. The sleeve/arm identity morphs wholesale between f14
+    and f30 - a pale pleated cuff is replaced by a dark-sleeved forearm that
+    swings in from the top of frame - so the prompt's own promise that "the
+    composition is identical in every frame" is not met. r1 also has a defect
+    not in the original QA note: an extra hand enters bottom-right at f64.
+  attribution_honestly_stated: >-
+    THREE THINGS CHANGED IN ONE PROMPT, so this run cannot separate them, and
+    the record must not pretend otherwise. The phone result is CONSISTENT with
+    the position anchor (edit 3 is the only one addressing object position) but
+    is not proven by it, because edits 1 and 2 rewrote the sentence that clause
+    sits in and this path is sensitive to whole-prompt phrasing. Whether
+    removing the counted verb "once" is what steadied the hands is UNRESOLVED:
+    the second half is calmer exactly as the b14-trap hypothesis predicts, but
+    the first half gained a large arm swing r1 did not have, and the steadiness
+    only appears after that swing settles. Isolating "once" needs a run that
+    changes only edit 2 against r1. Filed as the next question, not as a finding.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep2-b01-r9-stage1-sample
+  date: 2026-08-10
+  kind: still
+  subject: "beat 01 cold open, B01-R9-PLAN Stage 1: ONE frame, arm d60,
+    controlnet_conditioning_scale 0.60, seed 20260720, 832x1216, 40 steps, cfg
+    7.5, animagine-xl-3.1 + diffusers/controlnet-depth-sdxl-1.0, conditioned on
+    the depth map committed in aef79ac. The question r9 asks is whether depth
+    control can separate the b15 plate's GEOMETRY from its amber-dusk PALETTE -
+    r5-r8 could get one or the other, never both."
+  steward_provisional: true
+  gates: {G1_approved_plate: pass, G2_script_approved: pass,
+          G5_provisional_labelled: pass, one_sample_gate: "enforced in code -
+          render_b01r9.py refuses --frames > 1 without --stage2, exit 17"}
+  pick: null
+  token_control_arm: >-
+    measured on the BOX's real CLIP tokenizer, never the Mac's: positive 65,
+    negative 72, byte-identical to r8's and r7's sent strings, delta 0 tokens on
+    both. So the prompt is a true control arm and any difference from r8 is the
+    depth conditioning, not wording.
+  measured:
+    gate_a_geometry: "PASS - same-method trace puts the stem 9px SHORTER than
+      r8-i35, the standing best, and 1px shorter than the plate; rescaled onto
+      r8's reported ~30% that is ~29.4%, inside the 32% ceiling. Whole plant in
+      frame, apex 48% down, grounded in the grass. Zero persons, zero pale slabs,
+      zero mature-tree leak."
+    gate_b_palette: "PASS - mean RGB of the top 25% clusters with the r8 t2i
+      sunrise (L2 52.19) and NOT with the b15 amber-dusk plate (L2 91.45);
+      saturation 0.111 against the plate's 0.564, a 5x separation. The 25-50%
+      band is t2i's peach at lower value."
+    gate_shaft: "PASS - the plate's central column-luminance peak at x=333 is
+      gone: +1.60 above mean where the plate sits +42.21, indistinguishable from
+      t2i's +1.25."
+    wall: "15s render, 43s model load, rc=0, cost_usd 0"
+  verdict_mechanical: "Stage 1 gate PASS - neither pre-declared failure branch applies"
+  two_flags_not_gated_on:
+    lens_came_with_the_geometry: >-
+      the frame is the b15 plate recomposed shot-for-shot and repainted in
+      sunrise colours - same seedling pose, same two-leaf silhouette, same
+      tendril curl, same crossing blades, same camera height. The depth map
+      carried the plate's MACRO LENS and foreground bokeh along with its
+      geometry, and beat 01's own text asks for a wide shot. The plan named this
+      possibility in its own section 9 before the render.
+    the_shaft_came_back_elsewhere: >-
+      a hard white diagonal light ray runs from the top edge down-right. It is
+      NOT from the control map, which is flat at x=333 - the model re-invented it
+      at a new angle, presumably out of `cinematic lighting` plus the macro
+      composition the map imposed. Worth keeping: removing a feature from the
+      depth map does not remove it from the output when it was never riding in
+      the geometry.
+  provenance_defect_found_and_fixed: >-
+    the Stage 1 sidecar recorded `repo_commit: 11e5ab1` beside `control_map:
+    genomes/.../b01-r9-depth-b15.png`, and that path does not exist at that
+    commit - the map landed in aef79ac, and the box clone is behind it, so the
+    render read a loose copy outside the checkout. The bytes are right (the sha
+    is asserted before any weight loads) but the pair is not reproducible as
+    written. render_b01r9.py's control_rel fallback was silently substituting the
+    default constant. Fixed before Stage 2 could write twelve more: the recorded
+    path is now always the path actually opened, with control_map_in_repo,
+    control_map_at_repo_commit and a loud provenance_warning field.
+  stage_2_not_fired: >-
+    the plan gates the remaining twelve frames on a HUMAN looking at this frame,
+    and the script enforces it. The steward's measurements say both gates pass;
+    that is not the same thing as the look, and whether a sunrise wide shot reads
+    "small" to the founder is R4 and unanswerable by measurement - the plan says
+    so itself. The frame is the deliverable that asks him.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
