@@ -87,3 +87,4 @@
 08:50:15Z STARTED task=ep1-b04-v34-motion-r2-1786351803 attempt=1 on box-runner
 08:54:38Z DONE task=ep1-b04-v34-motion-r2-1786351803 rc=0 artifacts=1
 08:54:45Z STARTED task=ep1-b07-v34-motion-r2-1786351807 attempt=1 on box-runner
+08:58:59Z DONE task=ep1-b07-v34-motion-r2-1786351807 rc=0 artifacts=1
