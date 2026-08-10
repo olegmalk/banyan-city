@@ -3746,3 +3746,126 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+- id: ep1-b07-v34-motion-2x2
+  date: 2026-08-10
+  kind: clip-series
+  subject: "node 001 beat 07 ZERO 0 MOVING PARTS. QA-v34-0810.md filed this beat
+    as median 0.01 with 77% frozen and the founder-facing note said it 'moves in
+    bursts with dead stretches between'. A complete 2x2 was run on one seed
+    (20260738) and one conditioning still, varying two prompt clauses: (a) remove
+    the global freeze instruction `everything holds its position` plus the
+    amplitude cap `small ambient motion only` (they travel together) and add an
+    affirmative camera lock; (b) un-damp the motion verbs. r1 = neither, r2 =
+    a+b, r3 = a alone, r4 = b alone."
+  steward_provisional: true
+  gates: {G1_approved_plate: pass, G2_script_approved: pass,
+          G5_provisional_labelled: pass}
+  pick: null
+  the_premise_was_wrong: >-
+    THERE ARE NO DEAD STRETCHES AND THERE NEVER WERE. The longest run of
+    consecutive frozen frame-pairs is exactly 1 in all four cells. Beat 07 is
+    animation ON TWOS - 32 distinct motion steps across 65 frames, an effective
+    12fps, each state held ~83ms. The QA note's "dead stretches" was a precise
+    description of a stepped cadence read as a fault. The frozen-share metric
+    cannot see this: 0.2 is an arbitrary line the held phase happens to sit on,
+    so pairs cross it in both directions while the actual cadence does not move.
+  cells:
+    r1_neither: {median: 0.40, frozen: "41%", moving: 0.972, held: 0.162, ratio: 6.0, field: 1.90}
+    r2_a_plus_b: {median: 0.68, frozen: "33%", moving: 2.056, held: 0.191, ratio: 10.7, field: 4.47}
+    r3_a_alone: {median: 0.30, frozen: "48%", moving: 1.008, held: 0.106, ratio: 9.5, field: 1.97}
+    r4_b_alone: {median: 0.65, frozen: "34%", moving: 1.185, held: 0.241, ratio: 4.9, field: 2.45}
+  the_finding_worth_keeping: >-
+    THE TWO CLAUSES ARE STRONGLY NON-ADDITIVE, AND EACH SINGLE-CELL READING WAS
+    WRONG UNTIL THE FOURTH CELL LANDED. 76% of the amplitude gain from r1 to r2
+    (1.95 of 2.57) is pure interaction. After r3 the record said "(b) buys ALL
+    the amplitude"; r4 falsifies that - (b) alone buys about a fifth. The
+    mechanism is obvious only in hindsight: `small ambient motion only,
+    everything holds its position` is a CEILING, and un-damped verbs cannot
+    exceed a ceiling that is still in the prompt. The ratio is super-additive
+    too (10.7 actual vs 8.4 additive), so (a)'s cadence cost cannot be dodged by
+    taking (b) alone. Only the held phase is additive (0.185 predicted, 0.191
+    actual). Two intermediate conclusions were published in heartbeats before
+    the 2x2 closed and both were wrong in a way a fourth render corrected -
+    which is the argument for completing a factorial rather than reasoning from
+    two cells.
+  is_the_cadence_promptable: >-
+    PARTLY, and the boundary is sharp. Wording moved the DEPTH of the held phase
+    2.3x (0.106 to 0.241) and frozen share from 48% to 33%. It never moved the
+    NUMBER of held frames: longest run stayed pinned at 1 in every cell and the
+    floor sat near 33%. 32 motion steps over 65 frames is set by the sampler,
+    not the text. So the wording space is exhausted for cadence and the
+    remaining levers are mechanical.
+  the_inert_half_of_every_prompt: >-
+    RECORDED SO IT IS NOT RE-DISCOVERED, and it invalidates a whole class of
+    planned work: at guidance 1.0 the distilled schedule runs no unconditional
+    pass, so the NEGATIVE PROMPT CHANGED NO PIXEL IN ANY RENDER OF THIS SERIES.
+    That negative contains `frozen frame`, `still image` and `no motion` - three
+    tokens aimed at precisely the defect being chased, sitting inert through
+    every round. Half the prompt surface has been doing nothing. The cheapest
+    untested mechanism is therefore to raise guidance off 1.0, which makes the
+    negative live; it is being run as one sample (r5) with the prompt held
+    byte-identical to r4, and it may degrade the image because the model is
+    distilled for CFG 1.0 - which is why it is a sample and not a wave.
+  verdict_mechanical: >-
+    r4 is the mechanical pick on cadence - ratio 4.9, better than the
+    no-change baseline's 6.0, highest held phase of the four, zero drift,
+    horizon fixed, nothing invented, style held, and the motion reads as WIND
+    not texture churn (difference maps show coherent blade arcs with black
+    between; churn would be uniform speckle). r2 wins amplitude at 4.47 field,
+    1.8x r4, and is the only cell with even motion from the first frame. They
+    trade off THROUGH the interaction, so the cell with both is not reachable by
+    any combination of these two clauses.
+  no_taste_verdict_offered: >-
+    the choice between r2's "alive but strobey" and r4's "smooth but half as
+    alive" is exactly an R4 taste call and is not the steward's. Both are
+    mechanically shippable. D16 withholds LTX clips from publication regardless.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep1-b10-v34-motion-r2-sample
+  date: 2026-08-10
+  kind: clip
+  subject: "node 001 beat 10 SENSE. r1's subject was good - sprout upright and
+    rooted, leaves trembling, motes drifting, nothing wilting - but the sprout
+    head CLIMBED from the upper third to near the top of frame under a prompt
+    whose only framing instruction was the negation `no camera rise`. r2 applies
+    the rule proven on the beat-03 series: state the framing lock ONCE,
+    affirmatively, naming objects and their positions - here with an explicit
+    vertical anchor naming the leaf-tip level and the grass-horizon height."
+  steward_provisional: true
+  gates: {G1_approved_plate: pass, G2_script_approved: pass,
+          G5_provisional_labelled: pass}
+  pick: null
+  measured: {motion_median: 1.58, frozen: "0%", r1_median: 1.49, ratio: 1.00,
+             drift_dy_px: -57, drift_dy_pct_height: 17.8, r1_drift_dy_px: -49,
+             apex_rise_px: 181, apex_rise_pct: 14.1, r1_apex_rise_px: 181}
+  verdict_mechanical: REJECT
+  why: >-
+    A CLEAN NO-OP ON THE THING IT WAS BUILT TO FIX. Because the phase-correlation
+    peak is weak on this beat (0.045), the deciding measure is a landmark: the
+    sprout apex's topmost row. It rises 181 px - 14.1% of frame height - in BOTH
+    r1 and r2, identical to the pixel at f0 and f64 and monotone in both. The
+    affirmative vertical anchor cost nothing and bought nothing.
+  the_finding_worth_keeping: >-
+    THE BEAT-03 RULE HAS A LIMIT AND THIS IS WHERE IT STOPS. Affirmative
+    positional anchors bind LATERAL camera drift (beat 03: 61px -> 13px) and they
+    do not bind this beat's vertical drift at all. The plausible reason is that
+    the two are not the same phenomenon - beat 03's was a rigid whole-frame
+    translation, while beat 10's apex climb happens with a near-degenerate global
+    correlation, i.e. it is the SUBJECT growing upward within a still frame
+    rather than the camera rising. A phrase that names where the subject stays
+    cannot bind a subject that is being drawn taller each frame. The next attempt
+    on beat 10 needs a different mechanism, not a re-worded anchor.
+  ambient_motion_survived: >-
+    the overshoot risk did not materialise: median rose 1.49 -> 1.58, frozen 0%,
+    cadence ratio 1.00, leaves still tremble, motes drift, grass sways, sprout
+    upright and rooted with a straight stem, nothing invented, style holds.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
