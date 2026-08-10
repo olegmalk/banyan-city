@@ -3684,11 +3684,16 @@
     that is not the same thing as the look, and whether a sunrise wide shot reads
     "small" to the founder is R4 and unanswerable by measurement - the plan says
     so itself. The frame is the deliverable that asks him.
-  founder_verdict: null
-  founder_verdict_date: null
-  outcome: null
+  founder_verdict: "well.. the beat 01 frame looks good."
+  founder_verdict_date: 2026-08-10
+  outcome: not_scoreable_no_prediction_was_written
   miss_axis: null
-  model_action: null
+  model_action: unlock_stage_2
+  scoring_note: >-
+    SEE THE RECORD BELOW. This record wrote no `predicted_verdict` and no
+    `confidence`, so it cannot be scored hit or miss and the rolling hit rate at
+    the top of this file does NOT move. That absence is itself the finding and it
+    is written up separately rather than repaired here.
 
 - id: ep1-v34-motion-metric-disqualified
   date: 2026-08-10
@@ -4023,3 +4028,87 @@
   outcome: n/a
   miss_axis: null
   model_action: rewrite_gate
+
+# THE SCORING OF THE b01 r9 STAGE-1 VERDICT. Filed as its own record because the
+# honest answer is uncomfortable: THERE WAS NOTHING TO SCORE. This is not a
+# prediction and is not counted in the rolling rate.
+- id: ep2-b01-r9-stage1-scoring
+  date: 2026-08-10
+  kind: scoring
+  subject: "Scores record `ep2-b01-r9-stage1-sample` against the founder's
+    2026-08-10 ~12:30 local verdict on review/b01-r9/01-cold-open-r9-d60-s0.png
+    (832x1216, arm d60, scale 0.60, seed 20260720), opened at full resolution."
+  steward_provisional: false
+  founder_words_verbatim: "well.. the beat 01 frame looks good."
+  founder_words_context: >-
+    Said after opening the full-resolution frame AND after being told the two
+    caveats the steward had already written into the sample record: that the
+    depth map appeared to have carried the b15 plate's MACRO LENS and foreground
+    bokeh along with its geometry, and that a hard diagonal light shaft the
+    control map does not contain came back anyway at a new angle. He was shown
+    the objections and approved past them.
+  the_honest_score: >-
+    NOT SCOREABLE, AND THE REASON IS A DEFECT IN THE PREDICTION, NOT IN HIM.
+    Record `ep2-b01-r9-stage1-sample` carries no `predicted_verdict` field, no
+    `predicted_flip_to` and no `confidence`. Every scoreable record in this file
+    has all three. It wrote `verdict_mechanical: Stage 1 gate PASS` — a statement
+    about two numeric gates the steward defined and then measured itself — and a
+    section (`stage_2_not_fired`) saying the look was R4 and unanswerable. So
+    there is no founder-verdict claim on the table to grade. A hit cannot be
+    claimed and a miss cannot be assigned, and inventing either now, after his
+    words are known, is the exact fraud this file's header forbids.
+  therefore_the_rate_is_unchanged: >-
+    11 of 37 predictions have a verdict. 2 hit / 5 partial / 4 miss. STRICT
+    2/11 = 18%. Neither numerator nor denominator moves, because this record and
+    the sample record it scores were never predictions. Restated in full so the
+    next reader does not have to recompute it or wonder whether it slipped.
+  what_can_be_said_without_inventing_a_prediction: >-
+    (1) THE MECHANICAL READ DID NOT MISLEAD. Gate A (geometry, stem 1px shorter
+    than the plate, ~29.4% against the 32% ceiling) and Gate B (palette, sky
+    clustering with the t2i sunrise at L2 52.19 and not with the plate at 91.45)
+    both passed, and he liked the frame. The gates and his eye agreed on one
+    frame — that is one point of evidence for these two gates, not a validated
+    rubric, and n=1.
+    (2) THE TWO FLAGS WERE WEIGHTED HEAVIER BY THE STEWARD THAN BY HIM. He was
+    told about the macro lens and the re-invented shaft and said the frame looks
+    good. Neither observation is retracted — both are measured facts about the
+    image — but their TASTE WEIGHT is now known to be lower than the write-up
+    implied. Flag things; do not let flagging them read as a reservation he has
+    not expressed.
+    (3) THE PLAN'S NAMED RISK DID NOT FIRE, AND ALSO WAS NOT TESTED.
+    B01-R9-PLAN.md §1 warned that if the macro LOOK rather than the size
+    relationship was what made the sapling read small, a sunrise wide shot of the
+    same geometry might not read small either. He did not say "small" and he did
+    not say "not small". The risk is unrefuted, not resolved.
+  the_directional_lean_and_why_it_is_not_a_free_pass: >-
+    THE MODEL GETS NO CREDIT FOR DECLINING TO PREDICT. Read as prose rather than
+    as fields, the sample record leans cautious — two flags, an explicit "the
+    measurements are not the look", an unresolved risk from the plan — and the
+    outcome was plain approval. That is the SAME DIRECTION as this file's
+    standing asymmetry read backwards: the model's rejections have always held
+    and its picks have always missed, and here a hedge sat where a call belonged.
+    A record with no `predicted_verdict` cannot be wrong, which is precisely why
+    it is worth less than one that can. The corrective is procedural and is
+    stated as an obligation on the next round: STAGE 2's RECORD MUST CARRY A
+    `predicted_verdict` AND A `confidence` BEFORE ANY FRAME IS OPENED.
+  what_this_verdict_does_not_decide: >-
+    IT APPROVES THE APPROACH AND UNLOCKS STAGE 2. THAT IS ALL. It is NOT a canon
+    promotion, NOT a pick, and NOT a ranking. `01-cold-open-r9-d60-s0.png` takes
+    no canon filename, is not published, is not assembled and stays
+    `approved: false` in its own sidecar. It does not settle B01-R9-PLAN.md §8's
+    pre-registered rubric — he quoted no number and the rubric requires three of
+    four seeds on at least one arm, which one frame cannot supply. It says
+    nothing about the fig (0 of 12 in r8, observed and ungated, a separate
+    approved track), nothing about the stem height, and nothing about the palette
+    measurements beyond not contradicting them. d60 is not thereby the winning
+    arm: it is the only arm that has been rendered.
+  what_it_does_unlock: >-
+    Stage 2, and only Stage 2 — the remaining grid of the same four seeds
+    (20260720, 20261720, 20262720, 20263720; SEED 20260719 + BEAT 1 + i*1000)
+    across arms d40/d60/d80. `render_b01r9.py` gates `--frames > 1` behind
+    `--stage2` with exit 17 specifically so a human looked first, and one has.
+  founder_verdict: "APPROVES THE APPROACH — see founder_words_verbatim"
+  founder_verdict_date: 2026-08-10
+  outcome: n/a
+  miss_axis: null
+  model_action: require_predicted_verdict_on_stage_2
