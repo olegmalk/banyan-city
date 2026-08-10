@@ -239,3 +239,4 @@
 15:51:12Z STARTED task=ep1-b05-v36-motion-r1a-g10-1786373077 attempt=1 on box-runner
 15:55:49Z DONE task=ep1-b05-v36-motion-r1a-g10-1786373077 rc=0 artifacts=2
 15:55:57Z STARTED task=ep2-b02-goblin-ipa-crossbeat-1786369550 attempt=1 on box-runner
+15:58:52Z DONE task=ep2-b02-goblin-ipa-crossbeat-1786369550 rc=0 artifacts=4
