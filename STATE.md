@@ -7160,3 +7160,43 @@ of what was measured at the time; it was corrected only where it was an
 *instruction* — §C4's mirror check, §C5's `gh api` call, and §E's DNS fallback,
 which told a future reader to CNAME `www` at an account that no longer hosts the
 site.
+
+### 2026-08-10 — transfer closeout: the channel survived, `TRAFFIC_TOKEN` did not
+
+Three leftovers from the move, checked rather than assumed.
+
+**The standing hazard now lives in `DECISIONS.md` (D20), not only `OPERATOR.md`.**
+`OPERATOR.md`'s version is the better *mechanics* writeup and stays as the
+reference, but that file is the steward↔operator handoff channel and says so in
+its own rule 4 — the founder has no reason to open it. `DECISIONS.md` is one of
+the four files `CLAUDE.md` tells every session to read, so D20 states the rule
+and the plain-language reason there and points at `OPERATOR.md` for the surface
+list. Mirror URLs re-measured while writing it: `https://olegmalk.github.io/banyan-city/`
+**200** and serving the site, `https://olegmlkvorg.github.io/banyan-city/` **404**.
+
+**Issue #31, the founder's phone answer channel, round-trips at the new owner.**
+Nothing needed changing: `poll_decisions.py` never hardcoded an owner — it takes
+`--repo` or lets `gh` infer from the checkout's remote, and `origin` is already
+`olegmalk/banyan-city`. Proven, not assumed: `gh issue view 31` with no `--repo`
+resolves from origin and returns the comment list; `poll_decisions.py --issue 31
+--dry-run` exits 0 against the live issue; and a synthetic comment pushed through
+`build_records()` yields all three intents (`note`, `go`, `pick_frame`). The
+issue currently has **zero comments**, so the one link never exercised is a real
+founder comment travelling the whole way — posting one would mean posting as the
+founder, which is reserved. No page links to #31 yet.
+
+**`TRAFFIC_TOKEN` is dead and the workflow is green anyway.** Same-day before and
+after, from the run logs: 2026-08-10 **05:42Z** (pre-transfer) wrote
+`reach: ledger/reach.csv`; **13:02Z** (post-transfer) printed `reach: traffic API
+returned 403 — skipped (token needs push access)`. The secret transferred with
+the repo — it is still listed — but it is a fine-grained PAT minted against
+`olegmlkvorg`'s resources, so it no longer covers a repo owned by `olegmalk`,
+exactly as `REPO-MOVE.md` line 308 predicted. `harvest_reach()` catches the 403
+and returns `False` rather than failing, so `harvest-sap` keeps reporting
+**success** while `ledger/reach.csv` quietly stops growing — the last row is
+2026-08-08. Only reach is affected; reactions and comments ride `GITHUB_TOKEN`
+and still harvest. **Blocked on Roman** (credential work is founder-reserved):
+signed in as `olegmalk`, mint a fine-grained PAT on `olegmalk/banyan-city` with
+**Administration: Read-only** — the permission GitHub's REST docs name for
+`traffic/views`, `traffic/clones` and `traffic/popular/referrers` — and paste it
+over the `TRAFFIC_TOKEN` repo secret. Nothing was rotated, created or changed.
