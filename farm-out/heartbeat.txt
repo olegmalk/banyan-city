@@ -119,3 +119,4 @@
 11:26:45Z STARTED task=ep1-b08-v34-plate-g20-sample-1786360816 attempt=1 on box-runner
 11:32:08Z DONE task=ep1-b08-v34-plate-g20-sample-1786360816 rc=0 artifacts=2
 11:32:29Z STARTED task=ep1-b06-r6a-tallgrass-1786361271 attempt=1 on box-runner
+11:33:36Z DONE task=ep1-b06-r6a-tallgrass-1786361271 rc=0 artifacts=4
