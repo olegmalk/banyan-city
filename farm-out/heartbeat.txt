@@ -11,3 +11,4 @@
 02:02:28Z box-runner idle ready=0
 02:12:31Z box-runner idle ready=0
 02:12:46Z STARTED task=box-preflight-0810-1786327962 attempt=1 on box-runner
+02:12:51Z DONE task=box-preflight-0810-1786327962 rc=0 artifacts=1

@@ -1,0 +1,36 @@
+#### job box-preflight-0810-1786327962 attempt 1 start 2026-08-10T02:12:46Z
+
+==== step preflight START 2026-08-10T02:12:49Z ====
+argv: ["C:\\banyan-video\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\box_preflight.py", "--repo", "C:\\banyan-farm\\banyan-city", "--node", "001-capability-inventory", "--node", "002b-first-citizen", "--out", "C:\\banyan-queue\\preflight.yaml"]
+generated_at: "2026-08-10T02:12:49Z"
+host: MSI
+python: 3.12.10
+platform: Windows-11-10.0.26200-SP0
+repo: "C:\\banyan-farm\\banyan-city"
+repo_present: true
+gpu:
+  torch: 2.11.0+cu128
+  cuda: true
+  device: NVIDIA GeForce RTX 5090 Laptop GPU
+  vram_free_gib: 22.6
+  vram_total_gib: 23.9
+node_approval:
+  001-capability-inventory:
+    leaf: 001-t0-d.yaml
+    approved_by: founder
+    approved_on: null
+    approved: true
+    why: ""
+  002b-first-citizen:
+    leaf: 002b-t0-c.yaml
+    approved_by: founder
+    approved_on: 2026-08-03
+    approved: true
+    why: ""
+plates: {}
+problems: []
+verdict: READY
+
+wrote C:\banyan-queue\preflight.yaml
+==== step preflight END rc=0 2026-08-10T02:12:51Z ====
+#### job box-preflight-0810-1786327962 finished rc=0 2026-08-10T02:12:51Z

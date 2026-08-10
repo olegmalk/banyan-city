@@ -1,0 +1,46 @@
+{
+  "id": "box-preflight-0810-1786327962",
+  "task": "box-preflight-0810",
+  "node": null,
+  "beat": null,
+  "worker": "box-runner",
+  "priority": 1,
+  "needs_gpu": false,
+  "max_attempts": 2,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1"
+  },
+  "steps": [
+    {
+      "name": "preflight",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\box_preflight.py",
+        "--repo",
+        "C:\\banyan-farm\\banyan-city",
+        "--node",
+        "001-capability-inventory",
+        "--node",
+        "002b-first-citizen",
+        "--out",
+        "C:\\banyan-queue\\preflight.yaml"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-queue\\preflight.yaml"
+  ],
+  "started_at": "2026-08-10T02:12:46Z",
+  "attempts": 1,
+  "runner_pid": 12516,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-10T02:12:51Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-queue\\preflight.yaml"
+  ]
+}
