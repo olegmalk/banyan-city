@@ -3869,3 +3869,71 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+- id: ep1-b08-v34-motion-r2-sample
+  date: 2026-08-10
+  kind: clip
+  subject: "node 001 beat 08 SEV-1. The affirmative framing rewrite, applied to
+    a beat that did not have a framing problem, cost almost all of the motion.
+    r1 was one of the few LTX renders in this series that genuinely moved
+    (median 1.07, 0% frozen); r2 re-froze it to 0.10 / 66%. Rendered unattended
+    by box_runner, rc=0, 03:17:30Z-03:21:59Z."
+  steward_provisional: true
+  gates: {G1_approved_plate: pass, G2_script_approved: pass,
+          G5_provisional_labelled: pass}
+  pick: null
+  the_change: >-
+    ONE variable, genuinely one this time. r1's negation cluster ("everything
+    holds its position, framing locked, no zoom, no push-in, no camera rise,
+    subject stays the same size and place in frame") became affirmative anchors
+    naming where each object stays, stated ONCE per beat 03 r3's dose-saturation
+    finding. Seed 20260739, still 08-sev-1.png (e886758c.., asserted
+    byte-identical box-to-repo before enqueue), ambient verbs and negative held
+    byte-identical. r1's verbs were ALREADY continuous, so unlike beat 04 the
+    counted-action trap is not in play and the framing clause is the only change.
+  measured: {motion_median: 0.10, frozen: "66%", pan_x_px: 14, rise_y_px: -38,
+             zoom_h: 0.935, zoom_v: 0.975, wall_s: 269, rc: 0,
+             r1_motion_median: 1.07, r1_frozen: "0%", r1_pan_x_px: 21,
+             r1_rise_y_px: -89, r1_zoom_h: 0.991}
+  verdict_mechanical: "REJECT — regression on the defect the series exists to fix"
+  predictions_written_before_looking: >-
+    three, filed at 03:26Z before the clip was measured or opened. (1) the rise
+    shrinks below ~30px — CORRECT, -89 -> -38, and the pan improved 21 -> 14.
+    (2) PRE-REGISTERED RISK that the affirmative lock may simply not bind here,
+    because beat 07 r2 carried an explicit "the horizon line stays at the same
+    height" and grew a 7.1% push-in anyway — LANDED: zoomH moved AWAY from 1.000
+    to 0.935, a 6.5% pull-out that r1 did not have. (3) the plant stays upright,
+    checked rather than inferred because this beat's whole negative against
+    wilting and collapse is inert at guidance 1.0 — CORRECT, upright and rooted
+    in all four sampled frames of both rounds, no droop, no collapse, and no
+    object or figure that is not in the init still, in either round.
+  the_finding_that_was_not_predicted: >-
+    with the ambient verbs held BYTE-IDENTICAL, the affirmative hold-position
+    language itself suppressed the motion: median 1.07 -> 0.10, frozen 0% ->
+    66%. Nothing about the verbs changed, so the stasis cannot be blamed on
+    damping the way beat 07 r3's could. Eyes-on confirms the number: across
+    frames 1/22/44/65 the r1 plant visibly changes leaf position and the grass
+    moves, while the r2 frames are near-identical to each other.
+  this_contradicts_beat_03_and_that_is_the_point: >-
+    on beat 03 the same rewrite cost NOTHING in motion — that lane measured
+    steam 0.94x, plant 0.92x, screen 1.38x of r2 at the higher dose. So the
+    affirmative lock is BEAT-DEPENDENT, not a general recipe. Beat 03 needed it
+    (r1 panned 245px of 704 and pushed in 1.653). Beat 08 did not: r1's framing
+    was already pan 21px (3.0%) and zoom 0.991, and the only marginal axis was a
+    7.0% rise. The round bought 4 points of rise and paid nearly all the motion.
+  transferable_rule_proposed: >-
+    apply the affirmative framing lock only to beats with a MEASURED framing
+    defect, and treat it as a trade against ambient motion rather than a free
+    improvement. On this evidence the untried r3 for beat 08 is not a stronger
+    lock but a WEAKER one — r1's wording with only the rise addressed — and the
+    honest alternative is to keep r1 and accept a 7% rise.
+  metric_note: >-
+    this is also a case where the metric would have been read correctly, and it
+    still does not get to select: median fell, which happens to match the
+    verdict. It matched by luck of direction, not by measuring the thing that
+    matters. See ep1-v34-motion-metric-disqualified.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
