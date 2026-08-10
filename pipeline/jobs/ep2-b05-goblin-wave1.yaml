@@ -115,15 +115,25 @@ steps:
   - C:\banyan-farm\venv\Scripts\python.exe
   - -c
   - |
-    import glob, os, shutil
+    import glob, hashlib, os, shutil
     dst = "C:/banyan-farm/courier-box/farm-out/ep2-goblin-wave1"
     os.makedirs(dst, exist_ok=True)
     src = sorted(glob.glob("C:/banyan-farm/wave-goblin-prep/out/05-the-patrol-wave1-s*.*"))
+    lines = []
     for f in src:
         shutil.copy2(f, dst)
-    print("published", len(src), "file(s) ->", dst)
-    for f in src:
-        print("   ", os.path.basename(f))
+        # Hash the COPY, not the original: what this records has to be the
+        # bytes that get committed, or the manifest attests to the wrong file.
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+        print("   ", os.path.basename(f), h[:16])
+    # shasum -c format, so the Mac verifies byte-identity by running the
+    # manifest instead of re-hashing blind against a number in a log.
+    with open(os.path.join(dst, "05-the-patrol-wave1.sha256"), "w") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
     # 4 stills + 4 sidecars. Fewer means the render wrote less than it
     # promised, and allow_fail keeps that a loud log line, not a failed job.
     raise SystemExit(0 if len(src) == 8 else 1)
