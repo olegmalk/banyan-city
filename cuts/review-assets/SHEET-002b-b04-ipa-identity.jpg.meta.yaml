@@ -1,0 +1,136 @@
+# Provenance for one image on the /review gallery (STEWARDSHIP §7.2).
+#
+# WHAT THIS FILE IS SERVED UNDER. Same narrowing as the other sheets in this
+# directory: every one of the 44 frames in it was drawn by
+# cagliostrolab/animagine-xl-3.1, whose CreativeML Open RAIL++-M licence
+# attaches use restrictions that travel to the output — the conflict recorded
+# as D15 and still open. The founder authorised animagine frames onto the
+# review page on 2026-08-09; he did not resolve the licence question. So the
+# offer is NARROWED for this file and said out loud on the page.
+#
+# THE TWO MEASURING MODELS DREW NOTHING. DINOv2 (Apache-2.0) and CLIP
+# (MIT) scored the frames on the box; neither produced a pixel in this
+# picture, so neither is a model_licence question. They are named under
+# `measured_by` and kept out of `model` on purpose.
+#
+# THE COMPOSITING SCRIPT IS NOT IN THE TREE — the same defect commit f7de075
+# named, and this file does not fix it. The mitigation is that the EXACT
+# script is recorded below and every source frame is named with its SHA-256,
+# so anyone can rebuild these bytes from the tree and the farm branch.
+
+platform: local-gpu (rtx5090) for the frames; local ImageMagick for the sheet
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+published_under: >-
+  CreativeML Open RAIL++-M use restrictions (Attachment A) — NOT the tree's
+  CC BY 4.0. Founder-authorised for the /review gallery only; not canon,
+  not published elsewhere, not promoted to a stills/ filename.
+authorised_by: >-
+  founder (Roman), 2026-08-09 — "put the images from my computer onto there
+  please, not like theres any reason to hide it". Visibility only: D15's
+  licence question stays open and stays his.
+surface: /review gallery (unlisted, noindex — D17)
+canon: false
+sha256: 90f1bb5958b83c0b460801f9ad8450c00a8c082c967fc66470006063d4f8d07d
+derived_from: SHEET-002b-b04-ipa-identity.png (kept on the machine; 1400x6189, sha256
+  fcad6486193e1d7f3b0cc1e189b1877798550504a7d1a78a2e91a7d23f298438)
+measured_by: >-
+  facebook/dinov2-base (Apache-2.0) and openai/clip-vit-large-patch14 (MIT),
+  run on the box by identity_agreement.py in the same process as the
+  baseline. The green share printed on each row is a plain hue histogram
+  computed locally with PIL over the middle 60% x 58% of each frame — no
+  model involved, and deliberately NOT the flow or pan metrics, both of
+  which are disqualified on this project.
+cost_usd: 0
+sheet: true
+episode: 2
+shows: >-
+  44 frames — the four wave-1 baseline seeds on top, then ten IP-Adapter arms
+  of four seeds each. Arm 1 applies the adapter to every block (reference s0
+  at scale 0.40/0.60/0.80, then references s1/s2/s3 at 0.60); arm 2 scopes it
+  to down block_2 with all four references.
+what: >-
+  episode 2 beat 04 — the IP-Adapter consistency sample, rendered on the
+  rtx5090 under queue entries ep2-b04-goblin-ipa-1786353822 and
+  ep2-b04-goblin-ipa-content-1786355115. Source frames live on
+  origin/farm-results-rtx5090 under farm-out/, each with its own render-time
+  sidecar; all 40 arm frames were verified against the box's own .sha256
+  manifests before this sheet was composited.
+source_frames_manifest: >-
+  farm-out/ep2-b04-goblin-ipa/ep2-b04-goblin-ipa.sha256 and
+  farm-out/ep2-b04-goblin-ipa-content/ep2-b04-goblin-ipa-content.sha256 on
+  origin/farm-results-rtx5090, plus
+  genomes/sapling/nodes/002b-first-citizen/takes/stills/04-the-footnote-wave1.sha256
+  on main for the four baseline frames.
+composited_by: >-
+  ImageMagick 7.1.2-21. Per tile `-resize 350x511!` (832x1216 scales to
+  350x511.5, so this is the native aspect to within half a pixel); four tiles
+  `+append`; a 1400x38 header canvas per row carrying the arm name west and
+  the measured numbers east; a 1400x150 title canvas; all `-append`. Then
+  `-depth 8`. No crop, no colour conversion. The script exactly as run is
+  embedded below rather than added under pipeline/, because item 19 of
+  cuts.yaml records a deliberate decision that a general sheet builder in
+  pipeline/ is a design call no single lane should make alone. A one-off
+  recorded verbatim keeps the sheet reproducible without pre-empting it.
+encoding: >-
+  JPEG from the composited PNG with ImageMagick 7.1.2-21 — no resize, no
+  crop, no colour conversion, metadata stripped. Quality 90, 4:4:4 chroma so
+  the burned-in arm labels and numbers stay crisp.
+neutral: >-
+  Arms in a fixed order — baseline first, then arm 1 by reference and scale,
+  then arm 2 by reference. No arm is marked, nothing is ordered by preference
+  and no tile is offered as a pick (gate G3). The numbers burned into each
+  row are measurements, not scores, and the sheet says so on its face.
+not_scored_here: >-
+  No taste verdict, no pick, no canonical goblin and no recommended arm. The
+  lane that built this measured a MECHANISM; which goblin, and whether the
+  colour cost of arm 1 or the identity cost of arm 2 is the acceptable one,
+  is R4's and is deliberately left open. The fourteen staged wave specs in
+  pipeline/jobs/ stay staged.
+composited_by_script: |
+  #!/bin/zsh
+  # Builds SHEET-002b-b04-ipa-identity.png -- 11 arms x 4 seeds, one row per arm,
+  # the wave-1 baseline on top. Deterministic; no crop, no colour conversion.
+  # Header strips are composed as their own canvases rather than spliced-then-
+  # annotated, because annotating a spliced image collided the two labels.
+  set -e
+  F=$1; OUT=$2
+  FONT='/System/Library/Fonts/Supplemental/Arial Bold.ttf'
+  BG='#111111'; W=1400; TW=350; TH=511
+  T=$(mktemp -d)
+  row() {  # $1 pattern  $2 left label  $3 right label  $4 colour
+    local i=0
+    for s in 0 1 2 3; do
+      magick "$F/04-the-footnote-$1-s${s}.png" -resize ${TW}x${TH}! "$T/t$i.png"; i=$((i+1))
+    done
+    magick -size ${W}x38 xc:"$BG" -font "$FONT" \
+      -pointsize 20 -fill "$4" -gravity west -annotate +12+0 "$2" \
+      -pointsize 16 -fill '#9a9a9a' -gravity east -annotate +12+0 "$3" "$T/h.png"
+    magick "$T/t0.png" "$T/t1.png" "$T/t2.png" "$T/t3.png" +append "$T/r.png"
+    magick "$T/h.png" "$T/r.png" -append "$T/row-$1.png"
+  }
+  row wave1          "BASELINE  -  no reference, tags only"  "DINO 0.6967   green 0.46   -   FOUR DIFFERENT CREATURES"  '#ff6b6b'
+  row ipa-r0-c040    "ARM 1   ref s0   scale 0.40"           "DINO 0.7889   green 0.02"                        '#ffbf3f'
+  row ipa-r0-c060    "ARM 1   ref s0   scale 0.60"           "DINO 0.8069   green 0.00"                        '#ffbf3f'
+  row ipa-r0-c080    "ARM 1   ref s0   scale 0.80"           "DINO 0.8601   green 0.01   to-reference 0.8367"  '#ffbf3f'
+  row ipa-r1-c060    "ARM 1   ref s1   scale 0.60"           "DINO 0.7974   green 0.00"                        '#ffbf3f'
+  row ipa-r2-c060    "ARM 1   ref s2   scale 0.60"           "DINO 0.8345   green 0.67 but saturation 0.09"    '#ffbf3f'
+  row ipa-r3-c060    "ARM 1   ref s3   scale 0.60"           "DINO 0.7828   green 0.01"                        '#ffbf3f'
+  row ipa-r0-content "ARM 2   ref s0   down-block_2 only"    "DINO 0.7968   green 0.40"                        '#5fd3f3'
+  row ipa-r1-content "ARM 2   ref s1   down-block_2 only"    "DINO 0.7449   green 0.37"                        '#5fd3f3'
+  row ipa-r2-content "ARM 2   ref s2   down-block_2 only"    "DINO 0.7155   green 0.48"                        '#5fd3f3'
+  row ipa-r3-content "ARM 2   ref s3   down-block_2 only"    "DINO 0.7604   green 0.43"                        '#5fd3f3'
+
+  magick -size ${W}x150 xc:"$BG" -font "$FONT" -gravity northwest \
+    -pointsize 28 -fill '#ffffff' -annotate +14+12 'episode 2, beat 04  -  does a reference image hold ONE goblin across four seeds?' \
+    -pointsize 17 -fill '#c8c8c8' -annotate +14+52 'Same beat, same four seeds (20260723 / 20261723 / 20262723 / 20263723), same prompt string - byte-identical to the baseline,' \
+    -pointsize 17 -fill '#c8c8c8' -annotate +14+74 'ZERO tokens added. The only thing that changed is that the model was also shown a reference picture.' \
+    -pointsize 16 -fill '#8a8a8a' -annotate +14+100 'READ ACROSS EACH ROW. DINO = mean pairwise DINOv2 agreement across the four seeds, measured on the box. green = share of skin pixels at' \
+    -pointsize 16 -fill '#8a8a8a' -annotate +14+120 'hue 80-160 deg. Neither number is a verdict, and nothing on this sheet is picked, ranked, promoted or recommended.' \
+    "$T/title.png"
+
+  magick "$T/title.png" "$T/row-wave1.png" "$T/row-ipa-r0-c040.png" "$T/row-ipa-r0-c060.png" "$T/row-ipa-r0-c080.png" \
+         "$T/row-ipa-r1-c060.png" "$T/row-ipa-r2-c060.png" "$T/row-ipa-r3-c060.png" \
+         "$T/row-ipa-r0-content.png" "$T/row-ipa-r1-content.png" "$T/row-ipa-r2-content.png" "$T/row-ipa-r3-content.png" \
+         -append "$OUT"
+  rm -rf "$T"
