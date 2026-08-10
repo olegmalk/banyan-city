@@ -1,0 +1,17 @@
+# Shot provenance (7.2) — written by video_task at render time
+platform: local-gpu (rtx5090)
+model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+model_licence: LTX-2 Community License Agreement
+shot_beat: 14
+size: 704x1280
+seconds: 2.708
+steps: 8@352x640+3@704x1280
+guidance: 1.0
+seed: 20260887
+task: ep1-b14-v34-plate-r2d-reseed-0810
+cost_usd: 0
+prompt: |-
+  2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. the sapling stands upright and holds its position, stem straight and steady, rooted firmly in place; only its two leaves tremble very slightly, the short grass around its base ripples in a light breeze, dust motes drift in the air, warm afternoon light shifts gently across the leaves. small ambient motion only, the plant stays standing tall and centred, framing unchanged, gentle camera drift, living scene. Subject already in frame: no human, no person, no man, no woman, no boy, no girl, no hand, no face, plant focus, one slender sapling standing tall and erect, thin stem rising well above the grass to near the top of the frame, short grass, warm afternoon light.
+negative: |-
+  wilting, drooping, bending over, falling over, collapsing, stem bending, plant dying, sagging, human, person, man, woman, boy, girl, hand, arm, foot, face, photorealism, 3D render look, text, 静态, 静止, frozen frame, still image, no motion, photorealistic, photograph, live action, film still, 3D render, CGI, octane, depth of field bokeh, scene change, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+  [unused: guidance 1.0 on the distilled path runs no uncond pass, so this changed no pixel]

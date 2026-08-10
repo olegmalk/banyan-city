@@ -1,0 +1,17 @@
+# Shot provenance (7.2) — written by video_task at render time
+platform: local-gpu (rtx5090)
+model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+model_licence: LTX-2 Community License Agreement
+shot_beat: 10
+size: 704x1280
+seconds: 2.708
+steps: 8@352x640+3@704x1280
+guidance: 1.0
+seed: 20260865
+task: ep1-b10-v34-plate-r2b-reseed-0810
+cost_usd: 0
+prompt: |-
+  2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. a locked-off tripod shot: the camera never moves, the sprout stays at exactly the same height in the frame with its leaf tips at the same level from the first frame to the last, the horizon of grass stays at the same height, the sprout stays the same size and in the same place, the composition is identical in every frame. within that fixed frame the sprout stands upright and rooted, stem straight and steady, and only these things move: its two small leaves tremble very slightly, the tall grass around it sways in a light breeze, dust motes drift through the warm hazy air, soft light shifts across the stem, living scene. Subject already in frame: no human, no person, no man, no woman, no boy, no girl, no hand, no face, one small sprout with two leaves on a thin upright stem, tall grass around it, warm hazy amber light.
+negative: |-
+  wilting, drooping, bending over, falling over, collapsing, sagging, plant dying, human, person, man, woman, boy, girl, extra hand, extra arm, foot, face, crowd, animal, bird, insect, new object appearing, photorealism, 3D render look, text, 静态, 静止, frozen frame, still image, no motion, photorealistic, photograph, live action, film still, 3D render, CGI, octane, scene change, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+  [unused: guidance 1.0 on the distilled path runs no uncond pass, so this changed no pixel]
