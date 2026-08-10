@@ -1,0 +1,29 @@
+# ===================================================================
+# PROVISIONAL — v33 clip set. Nothing here is canon, nothing here is
+# approved, and no file in this directory may be promoted to a canon
+# name or published. Taste is the founder's (R4).
+# ===================================================================
+# COPIED verbatim from review/beat-11-grow.mp4 — the render record
+# below is the original's, reproduced unedited. No model ran for
+# this cut; only the filename changed, so render_t3 can match the
+# beat by slug.
+# Shot provenance (7.2) — written by video_task at render time
+platform: local-gpu (rtx5090)
+model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+model_licence: Apache-2.0
+shot_beat: 11
+size: 704x1280
+seconds: 2.5
+steps: 14
+guidance: 5.0
+seed: 20260816
+task: f15-b11-1785804000
+cost_usd: 0
+prompt: |-
+  2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. the new leaf unfurls in a fast sweep and springs upright, dew drops shaking loose and running off, the light swinging across it
+negative: |-
+  new subjects, scene change, people, hands, girl, light trails, tree, photorealism, 3D render look, text, 静态, 静止, 静止不动的画面, frozen frame, still image, no motion, photorealistic, photograph, live action, film still, 3D render, CGI, octane, realistic skin texture, depth of field bokeh, motion blur, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+clip_sha256: 8b78252fe9658a317badfb910ed308a79744254815f1ae8d7ce8eff104200ca7
+provisional: true
+provisional_reason: |-
+  the take the founder ordered kept (2026-08-07 revert of the "mitosis" fix); byte-identical to farm-out/f15-b11-* at 0e8c298

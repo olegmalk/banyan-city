@@ -1,0 +1,17 @@
+# Shot provenance (7.2) — written by hold_still at build time
+platform: local-deterministic (pipeline/hold_still.py, ffmpeg)
+model: none
+model_licence: n/a — inherits the still's licence, see stills/README.md
+note: held still + code push-in, no video model ran
+shot_beat: 14
+size: 704x1280
+seconds: 12.99
+framing: "cover-centre (render_t3 policy: scale to cover, then centre crop): 832x1216, cropped 163px of width (81 left, 82 right) = 19.6%, kept 669x1216, LANCZOS to 704x1280; the push-in then cuts each frame from inside that window, in the native still, one resample per frame"
+zoom: push-in 12.0% over 12.99s, 0.92%/s, linear, centred, monotonic (never reverses)
+source_still: 14-worth-staying-in.png
+source_still_path: genomes/sapling/nodes/001-capability-inventory/stills/14-worth-staying-in.png
+source_still_sha256: ab1ecdc901cd3cd488ad5817d2f74d70c04cc0664a033f9d5b1bc5f61d112ad9
+cost_usd: 0
+prompt: |-
+  (none — the chosen still is held; nothing was generated)
+negative: ''

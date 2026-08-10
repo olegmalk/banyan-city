@@ -1,0 +1,28 @@
+# ===================================================================
+# PROVISIONAL — the frame under this clip is a STEWARD PICK the
+# founder has not seen. Nothing here is canon, nothing here is
+# approved, and no file made from it may be promoted to a canon
+# name or published. Taste is the founder's (R4).
+# ===================================================================
+# Shot provenance (7.2) — written by hold_still at build time
+platform: local-deterministic (pipeline/hold_still.py, ffmpeg)
+model: none
+model_licence: n/a — inherits the still's licence, see stills/README.md
+note: held still + code push-in, no video model ran
+shot_beat: 6
+size: 704x1280
+seconds: 4.87
+framing: "cover-centre (render_t3 policy: scale to cover, then centre crop): 832x1216, cropped 163px of width (81 left, 82 right) = 19.6%, kept 669x1216, LANCZOS to 704x1280; the push-in then cuts each frame from inside that window, in the native still, one resample per frame"
+zoom: push-in 12.0% over 4.87s, 2.46%/s, linear, centred, monotonic (never reverses)
+source_still: 06-too-blue-r5-s2.png
+source_still_path: genomes/sapling/nodes/001-capability-inventory/takes/stills/06-too-blue-r5-s2.png
+source_still_sha256: 96b21abb6cd45c14de7f84eb0e641e2e40d8e2a749229f81c1fb777e8c96bef4
+cost_usd: 0
+prompt: |-
+  (none — the chosen still is held; nothing was generated)
+negative: ''
+provisional: true
+provisional_reason: |-
+  PROVISIONAL PICK b06-r5-s2 (steward-model.v1, taste ledger record ep1-b06-r5-provisional, confidence 0.55, predicted verdict: ratify) — NOT canon.
+  Beat 06 is the only beat in episode 1 with no approved frame: he refused r3 ("women, too many clouds/weird cloud formations") and r4 ("its getting worse"). Round 5 drew ZERO PEOPLE in 4 of 4 and the steward picked s2; the founder has ratified nothing here and this clip exists so that v34 shows him a beat 6 instead of a slate.
+  Authority: steward prediction under PROVISIONAL MODE (2026-08-09). Taste is the founder's (R4).

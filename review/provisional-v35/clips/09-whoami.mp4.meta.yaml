@@ -1,0 +1,26 @@
+# ===================================================================
+# PROVISIONAL — v33 clip set. Nothing here is canon, nothing here is
+# approved, and no file in this directory may be promoted to a canon
+# name or published. Taste is the founder's (R4).
+# ===================================================================
+# Shot provenance (7.2) — written by hold_still at build time
+platform: local-deterministic (pipeline/hold_still.py, ffmpeg)
+model: none
+model_licence: n/a — inherits the still's licence, see stills/README.md
+note: held still + code push-in, no video model ran
+shot_beat: 9
+size: 704x1280
+seconds: 2.5417
+framing: "cover-centre (render_t3 policy: scale to cover, then centre crop): 832x1216, cropped 163px of width (81 left, 82 right) = 19.6%, kept 669x1216, LANCZOS to 704x1280; the push-in then cuts each frame from inside that window, in the native still, one resample per frame"
+zoom: push-in 12.0% over 2.5417s, 4.72%/s, linear, centred, monotonic (never reverses)
+source_still: 09-whoami.png
+cost_usd: 0
+prompt: |-
+  (none — the approved still is held; nothing was generated)
+negative: ''
+source_still_path: genomes/sapling/nodes/001-capability-inventory/stills/09-whoami.png
+source_still_sha256: 16ec0b49e04e540681b857d75b5db466f15f0cdeb30705707bb1a5afa50f5f66
+provisional: true
+provisional_reason: |-
+  canon replaced 2026-08-08; old footage is the superseded picture
+provisional_authority: steward prediction under PROVISIONAL MODE (2026-08-09); the founder has ratified nothing here
