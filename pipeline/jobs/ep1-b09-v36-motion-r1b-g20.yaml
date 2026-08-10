@@ -1,0 +1,152 @@
+# ep1 beat 09 — WHOAMI — THE FIRST VIDEO JOB THIS BEAT HAS EVER HAD.
+#
+# WHY THIS BEAT. Every one of the 75 existing ep1 job specs names beat 03, 04,
+# 06, 07, 08, 10 or 14. Beats 05, 09, 12 and 15 have never been rendered at all:
+# in the v35 provisional cut they play a held still with a 12% code push-in and
+# their sidecars say so in as many words — `model: none`, `note: held still +
+# code push-in, no video model ran`. Four of the ten v34 fallbacks in that cut
+# are these beats. They are the only unworked renderable gap left in episode 1.
+#
+# THE PLATE IS FOUNDER-APPROVED CANON and is not being redrawn. `prepare_plate`
+# crops `stills/09-whoami.png` — no image model runs, so no
+# still is generated, replaced or promoted. G5 holds: output goes to a v36-*
+# scratch path and overwrites no canon still and no tracked clip.
+#
+# WHY THIS IS ONE SAMPLE AND NOT A SET. The LTX recipe is the ratified one
+# (704x1280 cover-centre plate, 65 frames, 24fps, 8 steps, distilled sigmas,
+# two-stage) but the WORDING is new — this beat has no prior motion round to
+# copy it out of, unlike the b14 reseeds which read theirs from the clip's own
+# .meta.yaml. New wording is a recipe change, so this beat gets exactly ONE job
+# per arm and no seed is scaled. If the picture holds, scaling is a decision for
+# after someone has looked at it.
+#
+# NO METRIC RANKS THESE AND NO PICK IS OFFERED. On beat 14 the flow metric scored
+# HIGHEST on the round where the plant fell over (131e433). Every clip goes to R4
+# unranked.
+#
+# ARM B of a two-arm pair. Guidance 2.0 — IDENTICAL to arm A in every other
+# respect, same seed included, so the only variable is whether the negative is
+# evaluated at all. This answers a question the v35 README raised and left open:
+# "at guidance 1.0 the distilled model runs no unconditional pass, so half the
+# prompt was inert all night". Beat 07's r5-g20 twin is the precedent — it is in
+# the v35 cut, and the pre-registered risk that off-spec guidance would break the
+# picture did not happen. These four beats are the cheapest place in the tree to
+# settle it, because they are the only ep1 beats with no incumbent clip to risk.
+#
+# THE DECISION IT FEEDS: if B is no worse than A on the picture, the remaining
+# rounds stop paying for a prompt half of which does nothing. If B is worse, the
+# question is closed and nobody reopens it. Either way it is one job per beat.
+#
+id: ep1-b09-v36-motion-r1b-g20
+task: ep1-b09-v36-motion-r1b-g20-0810
+node: 001-capability-inventory
+beat: 9
+runner: box
+needs_gpu: true
+priority: 48
+max_attempts: 1
+owner: queue-depth lane (ep1 beats never rendered)
+consumer: 'the next ep1 screening cut, beat 9. Today this beat is one of the ten v34 fallbacks in review/provisional-v35/ and one of the four that is a held still no model has ever touched. This gives R4 a moving candidate to hold against that push-in; the pick between them is his.'
+success: 'A 704x1280 65-frame mp4 at C:\banyan-farm\v36-motion-0810\09-ltx-r1b-g20-s20260909.mp4. Judged on the PICTURE: the sprout stays put and keeps its two leaves. This is the frame post types the whoami overlay over, so DRIFT IS THE DEFECT THAT MATTERS -- if the framing slides the overlay will not sit. The script says dead calm air, so very little motion is correct here and a lively clip is wrong. Style, palette and linework hold from the plate, no human, hand, face or invented object anywhere in the 65 frames, and frame 0 matches the cover-centre crop of the canon still rather than a stretch. Whether the framing drifts is a finding to report, not a verdict.'
+why: 'First motion round for beat 9. Arm B of a matched pair: guidance 2.0, seed 20260909. Arm a and arm b share the seed, the plate, the positive and the negative byte for byte and differ only in --guidance.'
+est_minutes: 9
+needs:
+- cuda
+- vram20
+- video-venv
+payload:
+  C:\banyan-farm\v36-newbeats-0810\ep1-b09-v36-motion-r1b-g20-prompt.txt: '2D anime, hand-drawn cel animation,
+    flat cel shading, clean ink linework, anime key art. the dew drop on the leaf edge swells and trembles,
+    the two leaves breathe with the faintest rise and fall, the soft grass behind sways almost imperceptibly,
+    dead calm air, the sprout holds its exact position and shape. small ambient motion only, framing unchanged,
+    gentle camera drift, living scene. Subject already in frame: no human, no person, no man, no woman,
+    no boy, no girl, no hand, no face, no figure, no creature, plant focus, one tiny two-leaf sprout,
+    its two leaves and thin stem filling the upper frame, short green grass and damp brown soil soft behind,
+    pale blue morning sky, soft warm morning light.'
+  C:\banyan-farm\v36-newbeats-0810\ep1-b09-v36-motion-r1b-g20-negative.txt: many leaves, leaf cluster,
+    grey sky, overcast, strong wind, stem bending, sprout growing taller, human, person, man, woman, boy,
+    girl, hand, arm, foot, face, creature, animal, monster, mechanical object, machine, photorealism,
+    3D render look, text, 静态, 静止, frozen frame, still image, no motion, photorealistic, photograph, live
+    action, film still, 3D render, CGI, octane, depth of field bokeh, scene change, shot change, cut to
+    another angle, second scene, new camera angle, different location, split screen, montage
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: plate
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - -c
+  - "import sys; sys.path.insert(0, r\"C:\\banyan-farm\\banyan-city\\pipeline\")\nfrom plate_prep import\
+    \ prepare_plate\nout, rec = prepare_plate(\n    r\"C:\\banyan-farm\\banyan-city\\genomes\\sapling\\\
+    nodes\\001-capability-inventory\\stills\\09-whoami.png\",\n    \"704x1280\", r\"C:\\banyan-farm\\\
+    v36-newbeats-0810\", \"09\")\nprint(\"plate\", out); print(rec[\"plate_wxh\"], rec[\"crop_policy\"\
+    ])\n"
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\ltx_i2v.py
+  - --stage
+  - encode
+  - --embeds
+  - C:\banyan-farm\v36-newbeats-0810\ltx-embeds-ep1-b09-v36-motion-r1b-g20.pt
+  - --prompt-file
+  - C:\banyan-farm\v36-newbeats-0810\ep1-b09-v36-motion-r1b-g20-prompt.txt
+  - --negative-file
+  - C:\banyan-farm\v36-newbeats-0810\ep1-b09-v36-motion-r1b-g20-negative.txt
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\ltx_i2v.py
+  - --stage
+  - render
+  - --embeds
+  - C:\banyan-farm\v36-newbeats-0810\ltx-embeds-ep1-b09-v36-motion-r1b-g20.pt
+  - --prompt-file
+  - C:\banyan-farm\v36-newbeats-0810\ep1-b09-v36-motion-r1b-g20-prompt.txt
+  - --negative-file
+  - C:\banyan-farm\v36-newbeats-0810\ep1-b09-v36-motion-r1b-g20-negative.txt
+  - --init
+  - C:\banyan-farm\v36-newbeats-0810\09-704x1280.png
+  - --out
+  - C:\banyan-farm\v36-motion-0810\09-ltx-r1b-g20-s20260909.mp4
+  - --size
+  - 704x1280
+  - --frames
+  - '65'
+  - --fps
+  - '24'
+  - --steps
+  - '8'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --seed
+  - '20260909'
+  - --beat
+  - 09
+  - --task
+  - ep1-b09-v36-motion-r1b-g20-0810
+  - --worker
+  - rtx5090
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - -c
+  - "import glob, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep1-b09-v36-motion-r1b-g20\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/v36-motion-0810/09-ltx-r1b-g20-s20260909.*\"\
+    ))\nfor f in src:\n    shutil.copy2(f, dst)\nprint(\"published\", len(src), \"file(s) ->\", dst)\n\
+    for f in src:\n    print(\"   \", os.path.basename(f), os.path.getsize(f), \"bytes\")\n# The mp4 alone\
+    \ is worth publishing; a missing sidecar is a\n# finding, not a reason to lose the clip.\nraise SystemExit(0\
+    \ if any(f.endswith(\".mp4\") for f in src) else 1)\n"
+artifacts:
+- C:\banyan-farm\v36-newbeats-0810\09-704x1280.png
+- C:\banyan-farm\v36-motion-0810\09-ltx-r1b-g20-s20260909.mp4
