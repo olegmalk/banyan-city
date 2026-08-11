@@ -387,6 +387,21 @@ beats:
       child, no grabbing, no pulling, no uprooting, no dark, no night, no dusk,
       no sunset, no dim lighting, no moody lighting, no low key, no shadows
       dominant. No photorealism, no 3D render look. 9:16 vertical, no text.
+    # -- `_r2` 2026-08-12 ~02:1x: identical staging intent, seven tokens leaner
+    # ("from front" and "shoulders hunched" paid) so the FROZEN identity def
+    # ("green skin, bald head, patchwork cloak", +7 tokens vs "green skin")
+    # fits without dropping the style tail. Cower, hands-to-chest and the
+    # peeking face - his three asks - all survive.
+    authored_staged_med_occl_hide_r2: >-
+      A small goblin boy, {{GOBLIN}}, solo, cowers behind a tiny sapling in an
+      open field, its thin stem in front of him, hands to his chest, his face
+      peeking around it. Medium shot, morning light, cinematic lighting,
+      detailed, newest, masterpiece, best quality, very aesthetic No girl, no
+      child, no grabbing, no pulling, no uprooting, no dark, no night, no
+      dusk, no sunset, no dim lighting, no moody lighting, no low key, no
+      shadows dominant. No photorealism, no 3D render look. 9:16 vertical, no
+      text.
+
 
   3:
     slug: bad-cover
