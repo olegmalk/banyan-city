@@ -1030,7 +1030,7 @@ and if it ever does move it moves with a test.
 
 ---
 
-## THE 2026-08-08 REDRAW WAVE — beat 15 IS DONE, beats 3, 6, 10, 14 REMAIN
+## THE 2026-08-08 REDRAW WAVE — SETTLED EXCEPT BEAT 06 (heading corrected 2026-08-11; the 08-08 snapshot below is kept as history, read the correction under it)
 
 The founder screened all forty candidate frames on 2026-08-08 and the wave produced
 **one pick and five rejections**: `b12-r2-s1` is canon (beat 12 above), and beats 3,
@@ -1045,16 +1045,40 @@ refused and four do not** — 3, 6, 10 and 14 still have their old PNGs on disk,
 unrevoked because a revocation needs a replacement to point at and their candidates
 were all rejected, but each is a frame he turned down in v32.
 
-**THE PARAGRAPH ABOVE IS STALE FOR BEAT 14 AND IT HAS COST FOUR LANES A TRIP
-(correction added 2026-08-11).** Beat 14 has been canon since 2026-08-09: he
-named `b14-r4-s3`, it is promoted byte-for-byte to `stills/14-worth-staying-in.png`
-(sha256 `ab1ecdc9…12ad9`, verified on disk 2026-08-11) and its own section above
-reads **"THIS BEAT IS CANON AND NOTHING RE-RENDERS ON IT."** The two `14-…-REVOKED-…`
-PNGs beside it are the v32 frames this paragraph thinks are still standing. Beats
-06 and 03 have likewise moved on in their own sections since this was written.
-**Each beat's own section is authoritative; this wave summary is a snapshot of
-2026-08-08 and is not maintained.** Do not open a round off this paragraph —
-read the beat's section and the stills directory first.
+**THE PARAGRAPH ABOVE IS AN 08-08 SNAPSHOT AND THREE OF ITS FOUR BEATS HAVE
+SINCE SETTLED. IT HAS COST FIVE LANES A TRIP; HERE IS WHAT IS ACTUALLY TRUE
+(correction rewritten 2026-08-11, superseding the beat-14-only note that stood
+here before).** He ruled on 3, 10 and 14 on **2026-08-09**, all three in the same
+run of messages, and all three are promoted byte-for-byte with their old frames
+renamed `-REVOKED-`. Verified on disk 2026-08-11:
+
+| beat | pick | canon still | sha256 | date |
+|---|---|---|---|---|
+| 03 | `b03-r4-s3` (after he withdrew `b03-r3-s1` in the same message) | `stills/03-deploy-succeeded.png` | `f38faecb…4a954a` | 2026-08-09 |
+| 10 | `b10-r1-s3` — round ONE, outside the r4 set | `stills/10-sense.png` | `f05fe426…b474583` | 2026-08-09 |
+| 14 | `b14-r4-s3` | `stills/14-worth-staying-in.png` | `ab1ecdc9…12ad9` | 2026-08-09 |
+
+Each of those three sections now reads **"THIS BEAT IS CANON AND NOTHING
+RE-RENDERS ON IT."** **Beat 10 is no longer in this list either** — the earlier
+version of this correction said only that 06 and 03 "have moved on", which left
+10 looking outstanding when it had been settled on the same day as the other two.
+It is not outstanding. Do not open a plate round on 3, 10 or 14.
+
+**BEAT 06 IS THE ONE THAT IS GENUINELY STILL OPEN, and it is the only one.** It
+has **no founder pick**: the furthest it has got is the **PROVISIONAL
+`b06-r5-s2`, confidence 0.55** from round 5 on 2026-08-09 (see its section above),
+explicitly recorded there as "Nothing here is approved, published or made canon."
+`stills/` bears this out — `06-too-blue-REVOKED-leaf.png` is on disk with **no
+un-revoked `06-too-blue.png` beside it**, the only beat of the fifteen in that
+state. So the true count is **fourteen of episode 1's fifteen shots hold a frame
+he has not refused, and one does not.** Anything downstream that treats beat 06's
+provisional as canon is violating §6, which is why the ep1-b14-v34-motion-r3 spec
+excluded 06 from its corrected-recipe pass and said so.
+
+**Each beat's own section and the `stills/` directory are authoritative; this
+wave summary is history plus this correction, and the table above is only as
+fresh as its date.** Do not open a round off the snapshot paragraph — read the
+beat's section and `ls stills/` first.
 
 **IT WAS GATED AND THEN IT WAS NOT, AND BOTH HALVES BELONG HERE.** Character
 consistency was the founder's dominant objection across this wave — he named it on 14

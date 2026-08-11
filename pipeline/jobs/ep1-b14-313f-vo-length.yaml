@@ -1,0 +1,233 @@
+# ep1 beat 14 "worth-staying-in" — VO-LENGTH CLIP ON THE CANON PLATE, with the
+# two inert negation blocks stripped out of the POSITIVE prompt.
+#
+# THE PLATE IS SETTLED AND NOTHING RE-DRAWS IT. `b14-r4-s3` is founder canon
+# since 2026-08-09 (shots.md "Beat 14", PICKED line), promoted byte-for-byte to
+#   genomes/sapling/nodes/001-capability-inventory/stills/14-worth-staying-in.png
+#   sha256 ab1ecdc901cd3cd488ad5817d2f74d70c04cc0664a033f9d5b1bc5f61d112ad9
+# (re-hashed on disk 2026-08-11, matches the sha in the beat's own section and
+# in review/provisional-v35/clips/14-worth-staying-in.mp4.meta.yaml). The two
+# `14-worth-staying-in-REVOKED-*.png` beside it are the v32 frames it replaced;
+# both renames are already on disk, so nothing is renamed by this round. This
+# job renders MOTION on that plate. It does not touch the plate.
+#
+# ------------------------------------------------------------------ LENGTH --
+# Beat 14 does NOT currently loop, and the reason is worth stating precisely
+# because a neighbouring spec (ep1-b08-313f-vo-length) records it as "0.97, does
+# not loop" and that is true of the wrong clip. What sits in the cut today is
+# review/provisional-v35/clips/14-worth-staying-in.mp4 — 13.000s, and its own
+# .meta.yaml says `platform: local-deterministic (pipeline/hold_still.py)`,
+# `model: none`, "held still + code push-in, no video model ran". Beat 14 has no
+# accepted LTX clip at all. Every LTX draw it has (r2, r2b..r2f) is 65 frames =
+# 2.708s against a 12.592s line — 4.65x, which is worse than beat 08, the beat
+# the looping fix was opened on. So the length requirement is real; it just
+# applies to the replacement, not to the held still.
+#
+# THE ARITHMETIC, and it is not vo x fps. render_t3.fit_duration (render_t3.py:312)
+# sizes the slot as
+#     max(min(cdur, vdur + 2.0), vdur + 0.4)
+# so the clip must reach vdur + 0.4 or the tail repeats, and must stay under
+# vdur + 2.0 or the slot clips it.
+#     vdur   = 12.592s   (clips/14-vo.mp3.meta.yaml `seconds:`; ffprobe 12.592458)
+#     floor  = 12.592 + 0.4 = 12.992s   -> 12.992 * 24 = 311.81 frames
+#     ceil   = 12.592 + 2.0 = 14.592s   -> 350.2 frames
+#     frames must be 8n+1 (ltx_i2v validates at :292)
+#     305 = 8*38+1 -> 12.708s  BELOW the floor, still loops. Rejected.
+#     313 = 8*39+1 -> 13.0417s in [12.992, 14.592].  <- this job
+# At 313 the slot is max(min(13.0417, 14.592), 12.992) = 13.0417 = cdur exactly:
+# the clip plays once, whole, nothing repeats and nothing is trimmed. 313 is the
+# length Roman approved today and is below the 385 already proven on this card.
+#
+# ----------------------------------------------------------------- FRAMING --
+# BASE ROUND IS r2f, AND WHAT r2f CONTRIBUTES IS ITS SEED, NOT ITS WORDING. All
+# six b14 plate draws (twin-r2, r2b..r2f) carry a byte-identical positive prompt
+# — md5 3c47d2cd across the six job files — so "prefer r2f's wording" resolves to
+# the same text every other draw used. The one thing that separates r2f is seed
+# 20260898, and the recorded finding on this set is that framing drifts up and
+# leaf tips crop at frame 56 in five of six while r2f holds its framing. So the
+# seed is carried and the wording is the thing this round changes.
+#
+# BLOCK 1 — THE FIGURE BAN, STRIPPED. r2f's positive contains
+#     "Subject already in frame: no human, no person, no man, no woman, no boy,
+#      no girl, no hand, no face, "
+# At guidance 1.0 on the distilled schedule the sampler never runs the
+# unconditional pass (ltx_i2v.py ~1001-1008), so the negative earns no gradient
+# and a ban written into the POSITIVE contributes the tokens it means to forbid.
+# It is deleted, not relocated — the negative already carries human/person/man/
+# woman/boy/girl/hand/arm/foot/face and is unchanged below. The clause after it,
+# "plant focus, one slender sapling standing tall and erect, ...", is r2f verbatim.
+#
+# BLOCK 2 — THE FRAMING CLAUSE, REPLACED WITH AN AFFIRMATIVE. Beat 14 does NOT
+# carry the shared "framing locked, no zoom, no push-in, no camera rise" string;
+# checked, it is not in any of the six. It carries the older and worse variant:
+#     "small ambient motion only, the plant stays standing tall and centred,
+#      framing unchanged, gentle camera drift, living scene."
+# — a negation-shaped lock ("framing unchanged") four tokens from an explicit
+# REQUEST for camera movement ("gentle camera drift"). That is the same shape the
+# ledger blames for beat 10's 181px apex climb, where the only framing
+# instruction was the negation "no camera rise", and the fix that worked on this
+# beat's own r2/r3 was affirmative verbs rather than more bans. Replaced with:
+#     "small ambient motion only, the camera is locked on a tripod and stays
+#      perfectly still, the sapling stays centred in frame at the same size
+#      throughout, the horizon keeps the same height in frame, the grass stays
+#      spread around the sapling from first frame to last, the composition is
+#      identical in every frame, living scene."
+# This is not a new invention: it is the affirmative lock already rendered on
+# this series in beat 08 r2, with "young plant" -> "sapling", and it is the exact
+# clause the withdrawn ep1-b14-v34-motion-r3 spec had cut for this beat.
+#
+# THE ONE ARGUMENT AGAINST IT, RECORDED RATHER THAN SUPPRESSED. 879820f measured
+# this lock on beat 08: apex rise -89 -> -38px but median motion 1.07 -> 0.10 and
+# frozen 0% -> 66%, and its rule is to apply it only to beats with a MEASURED
+# framing defect and to read it as a trade. Beat 14 now HAS that measurement —
+# drift and leaf-tip crop at frame 56 in five of six draws — which is the
+# condition 879820f names, and it did not exist when motion-r3 was withdrawn on
+# the grounds that "nobody has measured a framing defect on beat 14". The
+# "small ambient motion only" ceiling that 655d2c6 warns about is KEPT, because
+# it is r2f's own wording and removing it would be a fourth variable on a
+# one-sample round; if this comes back frozen, that clause is the next thing to
+# cut, not evidence against the lock.
+#
+# ------------------------------------------------------ EVERYTHING ELSE HELD --
+# Source spec: ep1-b14-v34-plate-r2f-reseed.yaml, task
+# ep1-b14-v34-plate-r2f-reseed-0810, which RAN — its output landed as
+# review/v34-plate-reseeds/14-ltx-r2f-plate-s20260898.mp4. Held identical:
+#   init    C:\banyan-farm\v34-plates-0810\14-704x1280.png — the ratified
+#           cover-centre plate of the canon still, already on the box
+#           (1,199,521 bytes, 2026-08-10 19:46), verified by dir before writing
+#           this. Its recipe is the crop Roman approved ("the crop -- yes").
+#   seed 20260898, size 704x1280, fps 24, steps 8, guidance 1.0,
+#   --distilled-sigmas, --two-stage, renderer C:\banyan-farm\ltx_i2v.py
+#     (sha256 d49f8ecb.., the series copy, which matches neither repo HEAD nor
+#      the box checkout — recorded, exactly as every spec in this series records
+#      it, because swapping the binary would confound the wording change)
+#   negative — byte-identical to r2f, including the 静态/静止 terms, and inert
+#     at guidance 1.0. Carried for provenance, not for effect.
+# Changed: --frames 65 -> 313, the two positive-prompt blocks above, the embeds
+# path and the output name.
+#
+# NO PLATE STEP: the plate artifact already exists on the box unchanged and
+# prepare_plate is deterministic. THE ENCODE STEP IS KEPT, unlike the b08 313f
+# job — that job skipped encode because its prompt was untouched; this one
+# rewrites the positive, so the embeds must be rebuilt or the render would run
+# r2f's text.
+#
+# NOTHING HERE IS RANKED. collect_farm.measure is disqualified on this series
+# (131e433: it scored highest on the beat where the plant fell over) and beat 14
+# is precisely a beat whose subject must stay standing. No metric is run, no
+# metric picks, and this is ONE sample — nothing scales off it until Roman has
+# looked at it.
+
+id: ep1-b14-313f-vo-length-0811
+task: ep1-b14-313f-vo-length-0811
+node: 001-capability-inventory   # founder-approved 2026-07-27 — leaf
+                                 # leaves/001-t0-d.yaml:17 `approved_by: founder`
+beat: 14
+runner: box
+needs_gpu: true
+priority: 18
+max_attempts: 1
+sample: true
+owner: beat-14 vo-length lane, 2026-08-11
+
+consumer: >-
+  the episode-1 v35 cut, beat 14 — second-to-last shot, currently a code
+  push-in on a held still with no video model behind it. If this comes back
+  intact it is the first real motion beat 14 has had, at a length that covers
+  its 12.6-second line without repeating; if it drifts or the stem bends it is
+  reported as such and the held still stays. Roman's verdict, unranked, beside
+  the other vo-length clips.
+
+success: >-
+  A 704x1280 mp4 with 313 decoded frames (13.042s at 24fps) at
+  C:\banyan-farm\v34-motion-0810\14-ltx-r2f-313f-affirm-s20260898.mp4.
+  Judged by eye on the PICTURE, no metric: the thin stem straight and vertical
+  and the plant rooted for all 313 frames — a clip where it bends, droops or
+  falls is a FAIL however much it moves; the leaf tips at the same height in the
+  last frame as the first, no drift and no push-in, and specifically no crop of
+  the leaf tips at frame 56 where five of six earlier draws lost them; no human,
+  hand, face or invented object; style, palette and linework holding from the
+  plate. A clip that holds for 65 frames and degrades at 200 is a REPORTABLE
+  result for the remaining long beats, not a wasted run.
+
+why: >-
+  Beat 14 has no LTX clip in the cut at all, and every draw it has is 2.7s under
+  a 12.6s line. This is the vo-length fix Roman asked for, on the canon plate,
+  with the two positive-prompt negation blocks removed on the way past.
+
+est_minutes: 15   # r2f measured ~2min model load + encode + 65f render; frames
+                  # x4.8 and attention is superlinear (beat 04: 6m47s at 385f).
+                  # Encode is re-run here. A 13-minute run is not a stall.
+needs: [cuda, vram20, video-venv]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+payload:
+  # r2f's positive with the figure ban deleted and the framing negation replaced
+  # by the beat-08-r2 affirmative lock. Everything else is r2f byte-for-byte.
+  C:\banyan-farm\v34-plates-0810\ep1-b14-313f-vo-length-prompt.txt: |-
+    2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. the sapling stands upright and holds its position, stem straight and steady, rooted firmly in place; only its two leaves tremble very slightly, the short grass around its base ripples in a light breeze, dust motes drift in the air, warm afternoon light shifts gently across the leaves. small ambient motion only, the camera is locked on a tripod and stays perfectly still, the sapling stays centred in frame at the same size throughout, the horizon keeps the same height in frame, the grass stays spread around the sapling from first frame to last, the composition is identical in every frame, living scene. plant focus, one slender sapling standing tall and erect, thin stem rising well above the grass to near the top of the frame, short grass, warm afternoon light.
+  # r2f's negative verbatim. Inert at guidance 1.0; carried for the record.
+  C:\banyan-farm\v34-plates-0810\ep1-b14-313f-vo-length-negative.txt: |-
+    wilting, drooping, bending over, falling over, collapsing, stem bending, plant dying, sagging, human, person, man, woman, boy, girl, hand, arm, foot, face, photorealism, 3D render look, text, 静态, 静止, frozen frame, still image, no motion, photorealistic, photograph, live action, film still, 3D render, CGI, octane, depth of field bokeh, scene change, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+
+steps:
+  - name: encode
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\ltx_i2v.py
+      - --stage
+      - encode
+      - --embeds
+      - C:\banyan-farm\v34-plates-0810\ltx-embeds-b14-313f-affirm.pt
+      - --prompt-file
+      - C:\banyan-farm\v34-plates-0810\ep1-b14-313f-vo-length-prompt.txt
+      - --negative-file
+      - C:\banyan-farm\v34-plates-0810\ep1-b14-313f-vo-length-negative.txt
+  - name: render
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\ltx_i2v.py
+      - --stage
+      - render
+      - --embeds
+      - C:\banyan-farm\v34-plates-0810\ltx-embeds-b14-313f-affirm.pt
+      - --prompt-file
+      - C:\banyan-farm\v34-plates-0810\ep1-b14-313f-vo-length-prompt.txt
+      - --negative-file
+      - C:\banyan-farm\v34-plates-0810\ep1-b14-313f-vo-length-negative.txt
+      - --init
+      - C:\banyan-farm\v34-plates-0810\14-704x1280.png
+      - --out
+      - C:\banyan-farm\v34-motion-0810\14-ltx-r2f-313f-affirm-s20260898.mp4
+      - --size
+      - 704x1280
+      - --frames
+      - "313"
+      - --fps
+      - "24"
+      - --steps
+      - "8"
+      - --guidance
+      - "1.0"
+      - --distilled-sigmas
+      - --two-stage
+      - --seed
+      - "20260898"
+      - --beat
+      - "14"
+      - --task
+      - ep1-b14-313f-vo-length-0811
+      - --worker
+      - rtx5090
+
+artifacts:
+  - C:\banyan-farm\v34-motion-0810\14-ltx-r2f-313f-affirm-s20260898.mp4
