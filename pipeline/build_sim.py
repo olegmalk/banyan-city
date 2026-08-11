@@ -2894,9 +2894,11 @@ def render_bandwidth_html(rb: dict) -> str:
 #
 # The number itself was never the surprise — that it fell 19 -> 9.6 GiB in two
 # hours with nobody watching was. A machine number that lives only in `df` is a
-# number nobody looks at until it is an emergency, so it goes on the page beside
-# the other two, and it gets the same honesty contract they have: a file, a
-# date, and "unavailable" instead of a zero.
+# number nobody looks at until it is an emergency, so it goes on the page — in
+# its own section, NOT in the summary strip, where its tile read as clutter to
+# anyone who is not the person who owns the laptop (Roman, 2026-08-11) — and it
+# gets the same honesty contract its neighbours have: a file, a date, and
+# "unavailable" instead of a zero.
 #
 # Same reason as its neighbour for being a file rather than a live read, with
 # one extra: the deploy server HAS a disk, so a build-time reading would return
@@ -2939,18 +2941,6 @@ def _disk_low(ld: dict) -> bool:
         return int(ld["free_bytes"]) < int(ld.get("warn_below_bytes") or 0)
     except (KeyError, TypeError, ValueError):
         return False
-
-
-def disk_tile(ld: dict) -> str:
-    """The strip tile. Goes red on the same threshold the tool warns at, so
-    the page and the command line cannot disagree about what "low" means."""
-    if not ld.get("ok"):
-        return ('<a class="sx" href="#disk"><span class="sn none">unavailable'
-                '</span><span class="sl">laptop disk free</span></a>')
-    cls = ' class="bad"' if _disk_low(ld) else ""
-    return (f'<a class="sx" href="#disk">'
-            f'<span class="sn"{cls}>{_e(bytes_words(int(ld["free_bytes"])))}</span>'
-            f'<span class="sl">laptop disk free · measured</span></a>')
 
 
 def local_disk_html(ld: dict) -> str:
@@ -3115,12 +3105,14 @@ def summary_strip(counts: dict, running_t: list, fin: list, by_id: dict,
         # house sends and receives. Their labels carry the distinction, because
         # adjacent numbers in the same units read as comparable unless told
         # otherwise.
-        + render_bw_tile(render_bandwidth())
-        # Third in the same row and deliberately so: what visitors pull down,
-        # what the box pushes around the house, and how much room is left to
-        # put any of it. The first two were on the page before the third, which
-        # is how a disk fell 19 -> 9.6 GiB in two hours unnoticed (2026-08-11).
-        + disk_tile(local_disk()))
+        # A third figure — the laptop's free disk — briefly sat here too and
+        # came off on Roman's verdict (2026-08-11): "isnt this a bit much?
+        # people looking at this other than me will be confused, and it doesnt
+        # really need to be there." A tile is the glance, and a housekeeping
+        # number about one machine in the house is not what a visitor came to
+        # glance at. The reading is still taken and still printed in full under
+        # #disk, where someone who wants it can find it.
+        + render_bw_tile(render_bandwidth()))
 
     lines = ""
     if running_t:

@@ -13,6 +13,7 @@ Run as its own step and read the exit code. No network, no build, no _site.
 """
 import sys
 import tempfile
+from datetime import datetime, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -160,6 +161,22 @@ check_true("the site tile still says estimate",
            "estimate" in S.bandwidth_tile(pay_ok))
 check_true("the box tile says measured, and they are not the same label",
            S.bandwidth_tile(pay_ok) != S.render_bw_tile(rb))
+
+# ---- what the strip must NOT carry --------------------------------------------
+# The laptop's free disk had a tile here for a few hours on 2026-08-11 and Roman
+# took it off: "isnt this a bit much? people looking at this other than me will
+# be confused, and it doesnt really need to be there." The measurement was never
+# the problem, so this asserts the absence at glance level AND that the reading
+# is still collected and still printed in full below — removing the tile is not
+# licence to stop measuring.
+print("\nthe strip is a visitor's glance, not the laptop's housekeeping")
+strip = S.summary_strip({k: 0 for k in S.QSTATES}, [], [], {}, [], pay_ok,
+                        datetime.now(timezone.utc))
+check_true("no laptop-disk tile in the strip", "laptop disk free" not in strip)
+check_true("and no link down to the disk section from it", '#disk"' not in strip)
+check_true("the reading is still taken", isinstance(S.local_disk(), dict))
+check_true("and still has its own section on the page",
+           "id=\"disk\"" in S.local_disk_html(S.local_disk()))
 
 print()
 if FAILS:
