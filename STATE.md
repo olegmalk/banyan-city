@@ -7217,3 +7217,5 @@ is no ratified written standard for it today), **promoted to canon** is a
 mechanical lint-enforced operation whose *word* is founder-reserved, **ready to
 be published** is licence + provenance + distribution clearance with publication
 itself founder-reserved. The definition authorises none of them.
+
+- 2026-08-11: Vercel git integration reconnected (olegmalk/banyan-city, production branch main, no card). Docs-only verification push — the ignore guard should CANCEL this build, and the deployment event appearing at all is the proof the webhook works.
