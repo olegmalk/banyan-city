@@ -363,3 +363,4 @@
 07:36:38Z box-runner idle ready=0 failed=1
 07:44:35Z STARTED task=ep1-b03-89f-vo-length-1786434263 attempt=1 on box-runner
 07:49:26Z DONE task=ep1-b03-89f-vo-length-1786434263 rc=0 artifacts=1
+07:49:30Z box-runner idle ready=0 failed=1
