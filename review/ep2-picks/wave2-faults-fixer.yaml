@@ -175,3 +175,47 @@ beats:
     `no architecture` retires and `no house`, `no building`, `no interior` and
     `no indoors` -- the ones carrying his named fault -- all stay.
   r2: authored_b04_idfix_r2  (spec ep2-b04-idfix-r2-0812, out-b04-idfix-r2)
+
+- beat: 5
+  slug: the-patrol
+  variant_rendered: authored_b05_idfix
+  positive_tokens: 73
+  verdict: faulty
+  his_guard_ruling_held: >-
+    NO ARMOR in any frame, 4/4 — the thing he rejected outright is gone. Bare
+    heads 4/4, plain brown tunics 4/4 (s0 s1 s2), clipboard present 4/4. The
+    identity half of this beat is DONE and must not be disturbed.
+  faults:
+  - name: the camera is directly overhead
+    count: 3/4
+    detail: >-
+      The sentence asks for two guards who "stand side by side facing camera",
+      Medium shot. s0 and s2 are extreme bird's-eye looking down on their scalps;
+      s3 is an over-the-shoulder from behind. Only s1 is a front-facing view. The
+      overhead prior is what "two boys in a field" gives this checkpoint when no
+      camera height is stated, and `Medium shot` alone is not binding it.
+  - name: one guard is not a person
+    count: 1/4 (s3)
+    detail: >-
+      s3 draws a brown blob with round animal ears where the second guard should
+      be — no face, no tunic, not human — and turns the real guard away from
+      camera so his face is hidden. "Both faces clearly visible" fails here. This
+      is downstream of the same framing failure: from behind, the model stops
+      drawing people.
+  - name: body type swings seed to seed
+    count: 2/4 off-model
+    detail: >-
+      "Silly harmless bureaucrats with round soft bodies" gets tall, muscular
+      adult men in s1 and near-chibi infants with enormous heads in s2. Neither is
+      the round soft bureaucrat. Recorded, NOT fixed this round — it is a taste
+      axis and the camera fault is both larger and cleanly attributable.
+  lever: >-
+    Unwanted framing -> negative ban, plus the cheap affirmative counterpart in the
+    same channel, since this is ONE fault: `no high angle, no from above` in the
+    negative and `eye-level` in the positive beside `Medium shot`. Paid for out of
+    this beat's WINTER tier, which is guarding nothing measurable: all four frames
+    are a warm green field, and `no frost`, `no ice` and `no pine forest` are
+    near-duplicates of `no snow` and `no winter`, both of which STAY. The armor
+    ban, the helmet ban and the knight ban are untouched — his ruling is not
+    something to spend budget from.
+  r2: authored_b05_idfix_r2  (spec ep2-b05-idfix-r2-0812, out-b05-idfix-r2)
