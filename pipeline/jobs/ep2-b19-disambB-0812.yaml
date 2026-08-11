@@ -1,0 +1,140 @@
+# 2026-08-12. THE ONE DIVERGENCE MY OWN HYPOTHESIS DOES NOT COVER.
+#
+# Beat 19 names its plant AND its light and its two seeds still disagreed: one warm field
+# with a single sapling, one TEAL grade with a ROW of saplings. That breaks "unspecified
+# properties float", because both were specified.
+#
+# THE LEAD PROPOSED A COROLLARY — polysemous nouns are unspecified content, each seed picks
+# a reading — and pointed at "seed-headed grass" and "haze" in this prompt. I CHECKED AND
+# THOSE WORDS ARE NOT IN IT. They belong to the beat-17 near-field paragraph; beat 19 never
+# inherited it. So the specific evidence is wrong. The CLASS of hypothesis survives, and this
+# job tests it against a word that IS in the prompt.
+#
+# THE REAL AMBIGUITY IS "MORNING LIGHT". It has two honest readings a painter would accept —
+# cool blue dawn, or warm golden morning — and the two seeds took one each. That is exactly
+# polysemy, on the property that actually diverged (the grade), and it is fixable by saying
+# which morning: warm and yellow-gold, explicitly not blue, not teal, not cold.
+#
+# THE PART I CANNOT EXPLAIN AND AM NOT PRETENDING TO: the ROW OF SAPLINGS. The prompt says
+# "A SMALL SAPLING", singular, and "one slender stem" — that is about as unambiguous as
+# language gets, and it multiplied anyway. Polysemy does not cover it. So the negative gains
+# row of saplings / many saplings / orchard / planted rows as a DIRECT ban, which is a
+# different mechanism (naming the defect) and is labelled as such rather than folded into
+# the hypothesis.
+#
+# TWO SEPARATE PREDICTIONS, deliberately not bundled: the TEAL should collapse (polysemy
+# fixed by disambiguation), and the ROW should collapse (defect named in the negative). If
+# the teal goes and the row stays, the corollary is right and singular count is simply not
+# bindable by words — which is the more important finding of the two.
+id: ep2-b19-disambB-0812
+task: ep2-b19-disambB-0812
+node: 002b-first-citizen
+beat: 19
+runner: box
+priority: 19
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: ep2 motion lane, 2026-08-12
+consumer: 'review/ep2-picks/motion-0812.html — whether stating an object''s POSITION controls where it lands, the last unproven half of the contents rule.'
+success: 'A 704x1280 mp4 of beat 19 in warm golden morning light with ONE sapling, matching its twin at the other seed. Two things are being watched separately: the teal grade collapsing (which would confirm that an ambiguous word behaves like an unspecified one) and the row of saplings collapsing (which is a defect named in the negative, a different mechanism). The failure worth reporting is the ROW surviving an explicit singular AND an explicit ban — that would mean count is not controllable by language at all.'
+why: It is the only beat whose divergence my own hypothesis fails to explain, and the lead''s proposed explanation cites words that are not in the prompt.
+est_minutes: 6
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b19-disambB-0812\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"--out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw, nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b19-disambB-0812\b19-motion-prompt.txt: '2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: a small goblin standing in an open meadow of plain grass under WARM GOLDEN MORNING SUNLIGHT — the light is warm and yellow-gold, NOT blue, NOT teal and NOT cold — pale yellow-green skin, a bald domed head, long pointed ears, red eyes, a patched hooded coat. A SMALL SAPLING IS ROOTED IN THE GRASS TO HIS LEFT, a clear step away from him — one slender stem with two big leaves, standing in the ground beside him and NOT touching him, with nothing growing out of his head or his body. HE IS STANDING DIRECTLY UNDERNEATH THE SAPLING''S BRANCH — he has placed himself under it, the fig directly over the crown of his skull and no gap sideways between them, so that anything falling from that branch must land on his head. The TRUNK is rooted in the grass a step to his left and does not touch him. A single dark fig hangs from the branch immediately above him. THE STEM LETS GO AND THE FIG FALLS: it drops, strikes the top of his bald head, bounces away and lands in the grass at his feet. He flinches at the knock and looks down after it. Both he and the sapling stay in frame the whole time. He stays in the same place in frame and the camera does not move. Soft morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.'
+  C:\banyan-farm\ep2-b19-disambB-0812\b19-negative.txt: blue cast, teal tint, cold colour grade, row of saplings, many saplings, orchard, planted rows, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, sprout growing from head, plant growing out of head, leaves on his head, branch touching his head, tripod, camera, camera equipment, film equipment, stool, stake, plant support, face morphing, distorted face, warped face, changing facial features, extra eyes, extra ears, hair, walking out of frame, leaving the frame, drifting sideways, moving to a different spot, second character, duplicate character, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text
+  C:\banyan-farm\ep2-b19-disambB-0812\b19-jobs-encode.json: "[{\"beat\": 19,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b19-disambB-0812\\\\b19-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\\ep2-b19-disambB-0812\\\\b19-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b19-disambB-0812\\\\b19-negative.txt\"}]"
+  C:\banyan-farm\ep2-b19-disambB-0812\b19-jobs-render.json: "[{\"beat\": 19,\n  \"seed\": 20260813,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b19-disambB-0812\\\\b19-embeds.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\\ep2-b19-disambB-0812\\\\b19-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b19-disambB-0812\\\\19-the-drop-LTX-disambB-0812.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b19-disambB-0812\cover_crop.py
+  - --src
+  - C:\banyan-farm\goblin-ipa-0812\out-b19-frozen\19-the-drop-ipa-r0-w015-s1.png
+  - --sha256
+  - 8afd9dec164a3c4fc3cd328a66de7788388ec232e6f3efd321d42864dcf6c1fe
+  - --out
+  - C:\banyan-farm\ep2-b19-disambB-0812\b19-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b19-disambB-0812\b19-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b19-disambB-0812\b19-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b19-disambB-0812
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b19-disambB-0812\bench-b19-disambB.jsonl
+  - --bench-label
+  - ep2-b19-disambB-0812
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b19-disambB"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/ep2-b19-disambB-0812/19-the-drop-LTX-disambB-0812.mp4*")
+                 + glob.glob("C:/banyan-farm/ep2-b19-disambB-0812/b19-init-704x1280.png")
+                 + glob.glob("C:/banyan-farm/ep2-b19-disambB-0812/bench-b19-disambB.jsonl"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b19-disambB-0812.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 2 else 1)
+artifacts:
+- C:\banyan-farm\ep2-b19-disambB-0812\19-the-drop-LTX-disambB-0812.mp4
+- C:\banyan-farm\ep2-b19-disambB-0812\b19-init-704x1280.png

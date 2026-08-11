@@ -907,6 +907,24 @@
   </div>
 </section>
 
+<section id="prompt-hygiene">
+  <h2 class="t">Two rules for anyone writing these prompts, learned the hard way tonight</h2>
+  <p class="lede">Both came out of near-misses in the last hour, and the lane converting episode 3 should
+  have them now rather than rediscover them tomorrow.</p>
+  <ol style="max-width:80ch;line-height:1.75">
+    <li><strong>Never edit a prompt by substring — use whole words.</strong> I stripped the word "noon" from
+    a prompt that had three times of day in it, and turned <em>afternoon</em> into <em>after</em>. It would
+    have rendered. I caught it by re-reading the finished prompt rather than trusting my own edit, which is
+    the only reason it is a footnote and not a wasted round.</li>
+    <li><strong>Re-read the whole prompt after layering anything onto it.</strong> Beat 17 ended up asking for
+    morning, afternoon <em>and</em> noon simultaneously because I added an environment paragraph to an older
+    prompt and never read the result end to end. The model had been choosing a time of day for me on every
+    run. Layering is how these prompts get built, so this will happen again to whoever builds the next one.</li>
+  </ol>
+  <p class="muted">Both are the same failure at different scales: trusting what I meant to write instead of
+  reading what I wrote.</p>
+</section>
+
 <section id="solved-or-lucky">
   <h2 class="t">The second seeds came back — and half these beats were luck</h2>
   <p class="lede">Nine beats got a second take with one number changed and nothing else. The point was to

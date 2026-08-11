@@ -14291,3 +14291,50 @@
     Eight jobs — four stability fixes, each WITH ITS OWN SEED TWIN, because a fix that only
     works at one seed has fixed nothing.
   outcome: null
+
+- id: ep2-b19-polysemy-corollary-0812
+  kind: prediction
+  date: 2026-08-12
+  written: before enqueue, after checking the lead's evidence rather than accepting it.
+  the_proposal_and_what_was_wrong_with_it: >-
+    The lead proposed a corollary to the contents law — POLYSEMOUS NOUNS ARE UNSPECIFIED
+    CONTENT, each seed picks a reading — and cited "seed-headed grass" and "haze on the far
+    grass" in beat 19's prompt as the cause of its row-of-saplings and teal grade. I GREPPED
+    THE PROMPT: neither phrase is in it, nor any seed-, shoot- or sprout- morpheme. Those
+    words belong to the beat-17 near-field paragraph, which beat 19 never inherited. The
+    specific evidence is wrong.
+  why_the_class_of_hypothesis_survives_anyway: >-
+    There IS a polysemous term in beat 19's actual prompt and it sits exactly on the property
+    that diverged: "MORNING LIGHT" has two honest readings — cool blue dawn or warm golden
+    morning — and the two seeds took one each. That is the corollary's own mechanism, on the
+    right property, using a word that is really there.
+  the_part_i_cannot_explain_and_am_not_pretending_to: >-
+    The ROW OF SAPLINGS. The prompt says "A SMALL SAPLING", singular, and "one slender stem".
+    That is about as unambiguous as language gets and it multiplied anyway. Polysemy does not
+    cover it, so I have NOT stretched the hypothesis over it — the negative simply names the
+    defect directly (row of saplings / many saplings / orchard / planted rows), which is a
+    different and already-proven mechanism, and it is labelled as such.
+  two_predicates_deliberately_unbundled: >-
+    (1) the teal collapses, confirming an ambiguous word behaves like an unspecified one;
+    (2) the row collapses, from the direct ban. THE INTERESTING OUTCOME IS THE SPLIT: teal
+    gone and row surviving would mean singular COUNT is not bindable by language at all,
+    which matters more than either fix and would be the first hard limit found tonight.
+  queued: ep2-b19-disamb-0812 and its seed twin, one variable class each, both DRY OK.
+
+- id: law-read-what-you-wrote-0812
+  kind: law
+  date: 2026-08-12
+  two_near_misses_one_hour_apart: >-
+    (1) Stripping "noon" from a prompt by blind substring turned "afternoon" into "after".
+    (2) Beat 17 came to ask for morning, afternoon AND noon at once, because an environment
+    paragraph was layered onto an older prompt and the result was never read end to end.
+  the_rules: >-
+    Never edit a prompt by substring; use whole-word boundaries. And re-read the WHOLE prompt
+    after layering anything onto it — layering is how these are built, so this recurs.
+  the_common_root: >-
+    Both are trusting what I meant to write instead of reading what I wrote. Same family as
+    open-the-init and check-reachability: the artifact is the truth, not the intention.
+  propagated: >-
+    On his page as its own section so the episode-3 conversion lane inherits it tonight rather
+    than rediscovering it.
+  outcome: null
