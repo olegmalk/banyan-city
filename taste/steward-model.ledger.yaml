@@ -6150,3 +6150,104 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+- id: ep1-motion-founder-verdicts-0811
+  date: 2026-08-11
+  kind: founder_verdict
+  subject: "episode 1 motion — four verdicts Roman gave in one message at ~11:13
+    on 2026-08-11, covering beats 08, 07, 06 and 10. Written down here at the
+    time he gave them. Three of the four artifacts have NO prior prediction in
+    this file, which is stated per beat rather than papered over by attaching
+    his words to the nearest record that happens to name the same beat."
+  steward_provisional: false
+  pick: null
+  scores: {}
+  what_he_said_verbatim: >-
+    "beat 8 looks good"
+    "for beat 07, the control has some people in the background which we dont
+    want, and the pull-back is nice but the clouds are too low"
+    "beat 6 is not what we're looking for, try the same slow zoom out like with
+    beat 4, no need for animation"
+    "for beat 10 in both of the clips the saplings are wobbling too much"
+  beat_08: >-
+    APPROVED — "beat 8 looks good". The artifact is the 313-frame VO-length clip,
+    `C:\banyan-farm\v34-motion-0810\08-ltx-r2-plate-313f-s20260739.mp4`, from
+    job ep1-b08-313f-vo-length-0811: the first sample of "render the number of
+    frames the voice line needs" instead of 65 frames and looping.
+    NO PREDICTION EXISTS FOR THIS ARTIFACT and none is invented for it here. The
+    only beat-08 clip record in this file, `ep1-b08-v34-motion-r2-sample`
+    (2026-08-10), is a different render — the 65-frame v34 motion r2, which that
+    record rejected mechanically for re-freezing r1's motion. His verdict is not
+    scored against it and that record's `founder_verdict` stays null.
+    WHAT IT SETTLES: a 313-frame generation holds together on this box and on
+    this recipe, by eye, and it settles it in the direction the recipe was
+    betting on. Combined with 2026-08-10's "the zoom out is great" on the
+    385-frame beat-04 clip, long clips now have two positive readings and one
+    subject-motion rejection, none of them about length.
+    WHAT IT DOES NOT SETTLE: it is one beat, and it names no other beat's
+    content. It is a verdict on a length and a look, not a licence to batch.
+  beat_07: >-
+    BOTH VARIANTS FAULTED, EACH ON A DIFFERENT AXIS — "the control has some
+    people in the background which we dont want, and the pull-back is nice but
+    the clouds are too low". The two artifacts are the 385-frame control and the
+    385-frame pull-back (jobs ep1-b07-385f-control / ep1-b07-385f-zoomout).
+    NO PREDICTION EXISTS FOR EITHER. `ep1-b07-v34-motion-2x2` (2026-08-10) is a
+    different, shorter render and is not scored against these words.
+    The camera move is accepted a second time ("the pull-back is nice", after
+    "the zoom out is great" on beat 04); what is refused is CONTENT in the frame
+    — invented figures in one, cloud height in the other. Both are the video
+    model adding or placing objects, not a length or a motion fault.
+    Beat 07 belongs to another lane. Nothing about it is queued from this record.
+  beat_06: >-
+    REJECTED WITH A DIRECTION — "beat 6 is not what we're looking for, try the
+    same slow zoom out like with beat 4, no need for animation". Two things in
+    one sentence: the clip he saw is refused, and the replacement he names is a
+    CAMERA move over a still, explicitly not subject animation. That is the third
+    time in two days he has asked for the beat-04 camera move by name.
+    NO PREDICTION EXISTS FOR A BEAT-06 MOTION CLIP in this file. The beat-06
+    records here are frame picks and sheet predictions (r3 through r8d); the last
+    of them, `ep1-b06-r8d-founder-pick`, is his approval of a STILL. His verdict
+    is not scored against any of them.
+    It also bears on waiting-page item 7 ("does beat 6 stay a still?"), which
+    this lane is not answering — that page item and the beat itself belong to
+    other lanes.
+  beat_10: >-
+    BOTH CLIPS REJECTED ON AN AXIS NO RECORD NAMED — "in both of the clips the
+    saplings are wobbling too much".
+    A PRIOR RECORD FOR THIS BEAT EXISTS AND IT IS THE HONEST HALF-CASE OF THE
+    FOUR. `ep1-b10-v34-motion-r2-sample` (2026-08-10) is written about a PAIR of
+    beat-10 clips, r1 and r2, and rejects r2 mechanically. If those are the two
+    clips he watched — which this lane cannot confirm, because the record of what
+    was put in front of him lives with the lane that showed it — then the
+    prediction existed and named the WRONG AXIS: every measurement and every
+    sentence in it is about vertical drift and apex climb (181 px, 14.1% of frame
+    height, identical in both rounds), and it closes by saying the ambient motion
+    "survived" with leaves trembling and the sprout upright. He did not object to
+    drift. He objected to the trembling itself being too much. The record
+    measured the axis it had a number for and called the other one a success.
+    Not scored, and `ep1-b10-v34-motion-r2-sample` is left with `founder_verdict:
+    null`, because scoring it requires knowing the artifacts were the same two
+    and guessing that is exactly what this file is not for. Recorded here so the
+    axis miss is on paper either way.
+    Beat 10 belongs to another lane.
+  what_this_record_authorises: >-
+    ONE THING, and only for beat 13. The staged spec
+    `pipeline/jobs/ep1-b13-217f-vo-length.yaml` carried `gate: founder` whose
+    single named condition was that the 313-frame beat-08 clip be looked at and
+    accepted. "beat 8 looks good" is that human act. An ungated RUN COPY —
+    `pipeline/jobs/ep1-b13-217f-vo-length-run.yaml`, id
+    ep1-b13-217f-vo-length-run — was written and enqueued to the box on the
+    strength of it, at 217 frames, under the 313 he approved. The gated original
+    keeps its gate keys untouched and box_enqueue.py still refuses it.
+    Nothing else is queued from this record. Beats 07, 06 and 10 are named above
+    only so his words exist in writing; their fixes are other lanes' work and
+    their specs were not touched by this one.
+  founder_verdict: "beat 8 looks good / for beat 07, the control has some people in the background which we dont want, and the pull-back is nice but the clouds are too low / beat 6 is not what we're looking for, try the same slow zoom out like with beat 4, no need for animation / for beat 10 in both of the clips the saplings are wobbling too much"
+  founder_verdict_date: 2026-08-11
+  outcome: n/a
+  miss_axis: >-
+    beat 10 only, and unscored: the sole prior record that may cover the clips he
+    judged measured vertical drift and reported the subject motion as a success,
+    while his complaint is that the subject motion is too strong. Named here,
+    not counted in the rolling rate.
+  model_action: none_no_prediction_existed_for_three_of_four
