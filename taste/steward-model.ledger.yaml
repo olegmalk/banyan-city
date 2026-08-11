@@ -13773,3 +13773,63 @@
     mechanism I do not have — the first thing all day that the contents rule failed to reach.
   consumer: review/ep2-picks/motion-0812.html
   outcome: null
+
+- id: ep2-corpus-evaluation-0812
+  kind: evaluation
+  date: 2026-08-12
+  mandate: >-
+    Founder, verbatim: "also do a lot of your own evaluation, especially for episode 1 and
+    2." Extends the standing delegation from scoring tonight's render to auditing the
+    existing corpus. Episode 1 is being inventoried separately because this lane has no
+    evidence on it and guessing would be worse than delegating.
+  method: >-
+    Every beat scored against the three mechanical checks earned today (denominator first;
+    open the init before blaming the stage; list what never changed) and the laws
+    (contents 9/9; prompt archaeology before diagnosis; framing rides described contents).
+    Beats this lane never animated are marked as such rather than assessed from the stills
+    alone — an unrendered beat has no motion verdict and saying otherwise would be
+    inventing one.
+  shippable_now_4: >-
+    13 THE SHADE — sapling, real cast shade, full fold, in one take. The strongest clip in
+    the project. 17 GOODBYE — whole beat in order (brushes off, turns to go); its
+    near-world variant also has the best background. 03 BAD COVER — the size-mismatch joke
+    reads and the crouch holds, after the crouch was promoted to the dominant clause.
+    14 THE DEFENSE — crouched at the soil, hands in the dirt, red eyes, after the init swap.
+    All four provisional and subject to his eye; none has a founder verdict yet.
+  fixable_with_a_known_lever_4: >-
+    19 THE DROP — the whole causal chain works (fig hangs, falls, strikes head, lands); the
+    sapling partly copied onto his skull, and the placement fix is rendering now.
+    20 EVIDENCE — pick-up and chest-height hold both fixed; the bare branch arced over his
+    head, same placement fix rendering. 15 GOOD LISTENER — action and sapling both proven
+    in separate clips; needs one run combining them, which no one has spent yet.
+    04 THE FOOTNOTE — background fixed and the face is stable at 73 frames, but the cranium
+    balloons; NO hypothesis that discriminates, so it is fixable-in-principle and blocked
+    in practice until a second ballooned close-up gives me a pair.
+  blocked_and_on_whom_13: >-
+    01 COLD OPEN — the fig is not ON the plant in either round; recommended route is his
+    own earlier word, inpaint the fig into frame 1. HIS CALL.
+    02 THE SPRINT — identity fails in the STILL (fangs, dog-shaped creature, duplicate
+    goblins); no motion prompt can fix a frame that is not him. STILLS LANE, in progress.
+    05/06/07 THE PATROL, THE CLIPBOARD, CONFISCATE — guards drawn as hard muscular men
+    against a ratified "silly harmless bureaucrat", and beat 05 sends those exact words and
+    still fails, so wording is known not to bind. Needs his words or a guard sheet. R4,
+    HIS CALL.
+    08 INSIDE HIM — a single-character reference suppresses the second character, so no
+    prompt puts the guard in; the beat's joke is a guard pointing at a belly and nobody
+    points in any frame. MODEL LIMIT, needs a tool change.
+    09/10/11/12/18/21 — NEVER ANIMATED by this lane and no motion verdict exists. 09 and 10
+    carry a known stills fault (sphere-heads and floating heads from "round bald"); 11 is
+    recorded clean; 12, 18, 21 have no recorded fault and no clip.
+    16 WHY — out of this lane's scope by standing instruction, untouched.
+  what_the_corpus_says_as_a_whole: >-
+    Nine of twenty-one beats have a motion clip at all. Four look shippable, four have a
+    named lever, and thirteen are blocked — but only THREE of those thirteen are blocked on
+    anything technical (02's still, 08's second character, 04's balloon). The rest wait on
+    taste rulings that are his by right (the guards, the cold open) or have simply never
+    been attempted (09-12, 18, 21). The bottleneck for episode 2 is not the pipeline.
+  the_honest_headline: >-
+    Every technique this episode needs now exists and is demonstrated: the character holds,
+    the action happens, objects appear when named, placement follows when stated, the world
+    fills when described, and framing follows the world. What is missing is coverage —
+    six beats have never been rendered once — and four founder decisions.
+  outcome: null

@@ -19,9 +19,9 @@
   verdict_hint: accept solemn-but-consistent, or chase silly via pose and expression staging
   resolved:
     date: '2026-08-12'
-    verdict: chase silly via pose and expression staging. (Answered as the second option. The
-      adjective route is closed - body-type and tone words stay out of the prompt; the register
-      is staged. First sample is beat 05, ep2-b05-register-pose-0812.)
+    verdict: chase silly via pose and expression staging. (Answered as the second option. The adjective
+      route is closed - body-type and tone words stay out of the prompt; the register is staged. First
+      sample is beat 05, ep2-b05-register-pose-0812.)
 - what: Guards haired casting (A = r5 s1, B = r5 s2) — confirm as the frozen reference
   url: /review/ep2-picks/consistency-0812
   since: 2026-08-12
@@ -99,9 +99,9 @@
   verdict_hint: re-run the beat 02 still / cut the beat / re-write it around a frame we have
   resolved:
     date: '2026-08-12'
-    verdict: 'rerun. (Done - and it turned out the rerun had ALREADY rendered when this was written; it
+    verdict: rerun. (Done - and it turned out the rerun had ALREADY rendered when this was written; it
       was never linked from a page. Fangs, the dog-shaped creature and the duplicated goblins are 0 of
-      16 in it. Link now points at those frames. Picking the init frame is a separate open item.)'
+      16 in it. Link now points at those frames. Picking the init frame is a separate open item.)
 - what: Blank backgrounds - the fix may be a sentence or may be a plate. Every prompt already said 'field'
     and got a flat one; a sample naming depth, wildflowers, a treeline, haze and raking light is rendering
     on beat 17. If wording does not fill the frame, the answer is a painted background plate, which is
@@ -148,16 +148,29 @@
   since: '2026-08-12'
   kind: decision
   verdict_hint: no action needed / tell me which beats to re-cut once placement is controlled
-- what: "Episodes 3, 4, 5, 6A and 7A are approved under the delegation you gave today, and each now has a one-minute digest on the approvals page - premise, state change, hook, who is in it, flags. Two things want your eye: 006a names the goblin *Jerry* for the first time in six episodes, and the 132 shot prompts behind these five are all in the 'low detail' style you killed on 2026-07-27 and describe a tusked goblin, so nothing is ready to render off them yet"
+- what: 'Episodes 3, 4, 5, 6A and 7A are approved under the delegation you gave today, and each now has
+    a one-minute digest on the approvals page - premise, state change, hook, who is in it, flags. Two
+    things want your eye: 006a names the goblin *Jerry* for the first time in six episodes, and the 132
+    shot prompts behind these five are all in the ''low detail'' style you killed on 2026-07-27 and describe
+    a tusked goblin, so nothing is ready to render off them yet'
   url: /review/approvals
   since: 2026-08-12
   kind: decision
-  verdict_hint: "countersign D22 / take any of the five back / keep or kill the name Jerry"
-- what: 'Guards register, staged version: the pose you asked for never reached the picture - all 16
-    frames are one man standing still in the REFERENCE''s pose. The blocker is the conditioning, not your
-    direction. This also explains why nine of ten beats came back as standing portraits'
+  verdict_hint: countersign D22 / take any of the five back / keep or kill the name Jerry
+- what: 'Guards register, staged version: the pose you asked for never reached the picture - all 16 frames
+    are one man standing still in the REFERENCE''s pose. The blocker is the conditioning, not your direction.
+    This also explains why nine of ten beats came back as standing portraits'
   url: /review/ep2-picks/b05-register-0812
   since: '2026-08-12'
   kind: decision
   verdict_hint: stage the register in the CLIP (one motion job, recommended) / rebuild the guard references
     around an action instead of a turnaround (bigger, and it reopens the references you accepted)
+- what: 'EPISODE 2 AUDIT - all 21 beats ranked (your ''do a lot of your own evaluation''). 4 look shippable
+    (13, 17, 03, 14), 4 have a known fix, 13 are blocked - but only 3 of those on anything technical.
+    FOUR DECISIONS ARE YOURS: the guards (unblocks 05/06/07 at once), the cold-open fig, whether beat
+    13 is cuttable, and whether the six never-rendered beats (09/10/11/12/18/21) should be attempted now
+    the recipe works'
+  url: /review/ep2-picks/motion-0812#where-ep2-stands
+  since: '2026-08-12'
+  kind: decision
+  verdict_hint: answer the four / tell me which to chase first
