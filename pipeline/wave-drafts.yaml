@@ -1017,6 +1017,18 @@ beats:
     # verdict: "none of them.. should probably setup a character for the
     # guards" -- the character is now ratified (~20:27) and this round carries
     # it. Staging kept verbatim (clipboard lower third, finger tracing, brow).
+    # -- `_idfix` 2026-08-12 ~02:4x: frozen guards identity - the tunic
+    # replaces the armor he rejected. Staging (clipboard lower third, finger
+    # tracing, brow) untouched.
+    authored_b06_idfix: >-
+      A round bald guard man in a plain brown tunic turns over a bark
+      clipboard that fills the lower third of the frame, tracing a line on it
+      with one finger as he reads, brow furrowed. Slow drift in, medium
+      close-up, bright morning light, cinematic lighting, detailed, newest,
+      masterpiece, best quality, very aesthetic No girl, no child, no armor,
+      no helmet, no knight, no dark fantasy, no dark, no night, no dusk, no
+      sunset, no dim lighting, no moody lighting, no low key, no shadows
+      dominant. No photorealism, no 3D render look. 9:16 vertical, no text.
     authored_b06_refresh: >-
       A round bare-headed guard man in dull dented mismatched armor turns over
       a bark clipboard that fills the lower third of the frame, tracing a line
@@ -1059,6 +1071,18 @@ beats:
     # appear once" (register now ratified, carried here) and, on the ep1
     # sibling shot, "the control has some people in the background which we
     # dont want" -- so background people are banned in the channel that binds.
+    # -- `_idfix` 2026-08-12 ~02:4x: frozen guards identity; his crowd ban
+    # kept. Staging (arm thrust, partner shoulder at edge) untouched.
+    authored_b07_idfix: >-
+      A round bald guard man in a plain brown tunic thrusts one arm out,
+      pointing off-frame with the confidence of a man who has solved the
+      problem, his partner's shoulder just visible at frame edge. Static
+      camera, morning field, bright morning light, cinematic lighting,
+      detailed, newest, masterpiece, best quality, very aesthetic No girl, no
+      child, no crowd, no people in background, no armor, no helmet, no
+      knight, no dark, no night, no dusk, no sunset, no dim lighting, no
+      moody lighting, no low key, no shadows dominant. No photorealism, no 3D
+      render look. 9:16 vertical, no text.
     authored_b07_refresh: >-
       A round bare-headed guard man in dull dented mismatched armor thrusts
       one arm out, pointing off-frame with the confidence of a man who has
