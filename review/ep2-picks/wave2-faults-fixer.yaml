@@ -365,3 +365,35 @@ beats:
     belly staging are RECORDED AND LEFT — with one r2 and one token of headroom,
     spending it on the camera is the honest bet, and the rest goes to the founder.
   r2: authored_b08_idfix_r2  (spec ep2-b08-idfix-r2-0812, out-b08-idfix-r2)
+
+- beat: 9
+  slug: the-pause
+  variant_rendered: authored_b09_idfix
+  positive_tokens: 72
+  verdict: faulty
+  severity: WORST BEAT IN THE WAVE
+  faults:
+  - name: disembodied heads lying in the grass
+    count: 3/4
+    detail: >-
+      s1 is THREE bald heads in the grass with no bodies at all. s3 has the guard
+      plus a severed head below him with closed eyes. s2 has his head plus a
+      featureless brown sphere behind it. The count tag is `1boy` and it is
+      holding for BOYS — the extra heads are not read as people, so the tag never
+      constrained them.
+  - name: the head is a bloated sphere
+    count: 4/4
+    detail: >-
+      Every frame inflates the skull far past a person's: s0 fills the frame with
+      a distended head and swollen cheeks. Grotesque rather than comic.
+  lever: >-
+    THE ADJACENCY, plus a ban. The positive says "a round bald guard man" — `round`
+    sits directly against `bald`, and this checkpoint applies the word next to
+    `bald head` TO THE SKULL. That is the same mechanism the beat 02/03/04 vs beat
+    08 comparison exposes for `patchwork cloak`: whatever is adjacent to `bald
+    head` lands on the head. So `round` MOVES off the skull and onto the body,
+    where his ratified character puts it anyway — "a silly harmless bureaucrat with
+    a round soft body" — and `bald guard man` stands alone. His word is kept, its
+    target is corrected. Plus `no extra heads, no disembodied head` in a negative
+    that has six tokens spare, so nothing is evicted to pay for them.
+  r2: authored_b09_idfix_r2  (spec ep2-b09-idfix-r2-0812, out-b09-idfix-r2)
