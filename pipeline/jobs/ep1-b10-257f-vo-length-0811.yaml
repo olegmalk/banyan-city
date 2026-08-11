@@ -1,0 +1,161 @@
+# ep1 beat 10 at VO length. The affirmative-still recipe of ep1-b10-affirm-still-0811
+# (committed 84c7d3e, rendered clean), extended from 65 frames to 257 so the shot
+# covers the line instead of looping under it.
+#
+# WHY THIS EXISTS. Beat 10's slot in the v35 cut holds a 2.7s clip under a 10.124s
+# line, which render_t3 loops about 3.9 times. Roman ruled out looping. A clip long
+# enough to play once is the only thing that fills the slot.
+#
+# THE ARITHMETIC, measured rather than assumed. clips/10-vo.mp3 is 10.124s by
+# ffprobe; the node copy (genomes/sapling/nodes/001-capability-inventory/clips/)
+# and the cut copy (review/provisional-v35/clips/) are the same file, md5
+# 133c37abe1799c3c13f12a2c065dc0cd.
+#
+#   floor   = vo + 0.4 = 10.524s -> 10.524 * 24fps = 252.576 -> 253 frames minimum
+#   LTX     = 8n+1 frame counts only. 249 (n=31) is 10.375s and lands UNDER the
+#             floor; 257 (n=32) is 10.708s and clears it. 257 is the smallest fit.
+#   ceiling = vo + 2.0 = 12.124s. 10.708s is inside it, so render_t3 trims nothing.
+#
+# ONE VARIABLE. Frames, 65 -> 257. Everything else is held: the same plate prepared
+# from 10-sense.png, seed 20260897, guidance 1.0, 8 steps, distilled sigmas,
+# two-stage. The positive and negative prompt files are byte-identical copies of
+# ep1-b10-affirm-still-0811's, its zero-negation positive included — that wording is
+# what 84c7d3e was written to test, and changing a word of it here would fold two
+# questions into one clip.
+#
+# WHAT LENGTH RISKS, named. 257 frames is nearly four times the length this wording
+# has been seen at, and drift a 2.7s clip hides has 10.7s to accumulate. The stem can
+# wander off the held posture late, or the take can read dead across ten seconds the
+# way the 2026-08-03 K recipe did. Either outcome is a finding about length.
+#
+# NO METRIC RANKS THIS. On beat 14 the flow metric scored highest on the round where
+# the sapling falls over (131e433). One clip, watched under the line it has to cover.
+#
+# ONE SAMPLE. One beat, one length change, one seed. Sequential; no batch
+# (CLAUDE.md 2026-08-03).
+
+id: ep1-b10-257f-vo-length-0811
+task: ep1-b10-257f-vo-length-0811
+node: 001-capability-inventory
+beat: 10
+runner: box
+needs_gpu: true
+priority: 30
+max_attempts: 1
+owner: beat-10 vo-length lane (affirmative-still recipe at 257 frames)
+control_clips:
+- C:\banyan-farm\v34-motion-0810\10-ltx-r2g-plate-s20260897.mp4
+- C:\banyan-farm\v34-motion-0810\10-ltx-g20-plate-s20260897.mp4
+- C:\banyan-farm\v34-motion-0810\10-ltx-still-plate-s20260897.mp4
+source_spec: pipeline/jobs/ep1-b10-affirm-still-0811.yaml
+approval: 'genomes/sapling/nodes/001-capability-inventory/leaves/001-t0-d.yaml:17 — approved_by: founder
+  # 2026-07-27, read and approved: "episode 1 looks good, you can do it"'
+consumer: 'beat 10''s slot in the v35 cut. It currently holds a 2.7s clip under a 10.124s line, which
+  render_t3 loops about 3.9 times; Roman ruled out looping. This is the clip that fills the slot in one
+  pass.'
+success: 'A 704x1280 257-frame mp4 (10.708s at 24fps) at C:\banyan-farm\v34-motion-0810\10-ltx-affirm-257f-s20260897.mp4
+  that drops into beat 10''s v35 slot and plays once under the whole line — no loop, and no trim, since
+  10.708s sits under the vo+2.0 = 12.124s ceiling. Answered by looking: does the stem hold its posture
+  for the full 10.7s? Both ways of failing are findings about LENGTH, not about the wording — the stem
+  holds for the first 2.7s and drifts after, which says the affirmative prompt decays past the length it
+  was proved at; or the shot reads dead across ten seconds the way the 2026-08-03 K recipe did, which
+  says the dust-mote and light clause has to carry more over a longer take.'
+why: 'One variable against ep1-b10-affirm-still-0811 (84c7d3e, rendered clean): frames 65 -> 257. Same
+  plate from 10-sense.png, same seed 20260897, same guidance 1.0, same 8 steps, same distilled sigmas,
+  same two-stage. The positive and negative prompts are byte-identical copies of that job''s, zero-negation
+  positive included — that wording is the thing 84c7d3e was written to test and this job must not disturb
+  it. 257 is not a preference: it is the smallest 8n+1 frame count that clears the vo+0.4 = 10.524s floor
+  (249 frames is 10.375s and lands under it).'
+est_minutes: 20
+needs:
+- cuda
+- vram20
+- video-venv
+payload:
+  C:\banyan-farm\v34-plates-0810\ep1-b10-257f-vo-length-0811-prompt.txt: '2D anime, hand-drawn cel animation,
+    flat cel shading, clean ink linework, anime key art. the camera is locked on a tripod at ground level
+    and holds that one position for the whole shot: the sprout stays centred at exactly the same height
+    in frame and at the same size from the first frame to the last, its leaf tips at the same level
+    throughout, the horizon of grass keeps the same height in frame, the composition is identical in
+    every frame. the air is calm and settled, heavy and hushed, the whole atmosphere at rest. the sprout
+    rests with it: its thin stem is rigid and straight, rooted firmly in place, holding one fixed upright
+    position for the entire shot, and its two small leaves are held perfectly still, drawn in the same
+    position in every frame. the tall grass stands still as well, each blade keeping its shape. small
+    ambient motion only: a few dust motes drift slowly through the warm hazy air, and soft light shifts
+    gently across the stem. one small sprout with two leaves on a thin upright stem, tall grass around
+    it, warm hazy amber light.'
+  C:\banyan-farm\v34-plates-0810\ep1-b10-257f-vo-length-0811-negative.txt: wilting, drooping, bending
+    over, falling over, collapsing, sagging, plant dying, human, person, man, woman, boy, girl, extra
+    hand, extra arm, foot, face, crowd, animal, bird, insect, new object appearing, photorealism, 3D render
+    look, text, photorealistic, photograph, live action, film still, 3D render, CGI, octane, scene change,
+    shot change, cut to another angle, second scene, new camera angle, different location, split screen,
+    montage
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: plate
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - -c
+  - "import sys; sys.path.insert(0, r\"C:\\banyan-farm\\banyan-city\\pipeline\")\nfrom plate_prep import\
+    \ prepare_plate\nout, rec = prepare_plate(\n    r\"C:\\banyan-farm\\banyan-city\\genomes\\sapling\\\
+    nodes\\001-capability-inventory\\stills\\10-sense.png\",\n    \"704x1280\", r\"C:\\banyan-farm\\v34-plates-0810\"\
+    , \"10\")\nprint(\"plate\", out); print(rec[\"plate_wxh\"], rec[\"crop_policy\"])\n"
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\ltx_i2v.py
+  - --stage
+  - encode
+  - --embeds
+  - C:\banyan-farm\v34-plates-0810\ltx-embeds-ep1-b10-257f-vo-length-0811.pt
+  - --prompt-file
+  - C:\banyan-farm\v34-plates-0810\ep1-b10-257f-vo-length-0811-prompt.txt
+  - --negative-file
+  - C:\banyan-farm\v34-plates-0810\ep1-b10-257f-vo-length-0811-negative.txt
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\ltx_i2v.py
+  - --stage
+  - render
+  - --embeds
+  - C:\banyan-farm\v34-plates-0810\ltx-embeds-ep1-b10-257f-vo-length-0811.pt
+  - --prompt-file
+  - C:\banyan-farm\v34-plates-0810\ep1-b10-257f-vo-length-0811-prompt.txt
+  - --negative-file
+  - C:\banyan-farm\v34-plates-0810\ep1-b10-257f-vo-length-0811-negative.txt
+  - --init
+  - C:\banyan-farm\v34-plates-0810\10-704x1280.png
+  - --out
+  - C:\banyan-farm\v34-motion-0810\10-ltx-affirm-257f-s20260897.mp4
+  - --size
+  - 704x1280
+  - --frames
+  - '257'
+  - --fps
+  - '24'
+  - --steps
+  - '8'
+  - --guidance
+  - '1.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --seed
+  - '20260897'
+  - --beat
+  - '10'
+  - --task
+  - ep1-b10-257f-vo-length-0811
+  - --worker
+  - rtx5090
+artifacts:
+- C:\banyan-farm\v34-plates-0810\10-704x1280.png
+- C:\banyan-farm\v34-motion-0810\10-ltx-affirm-257f-s20260897.mp4
