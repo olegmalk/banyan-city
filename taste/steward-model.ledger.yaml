@@ -13202,3 +13202,57 @@
     pair gives me a variable. Until then this is one observation, and one observation is
     where I have gone wrong four times today.
   outcome: null
+
+- id: ep2-founder-verdict-blank-backgrounds-0812
+  kind: founder_verdict
+  date: 2026-08-12
+  founder_verdict_verbatim: >-
+    "they're not bad. its just that pretty much all the beats you made have a blank
+    background."
+  archaeology_before_fixing: >-
+    The lead's prediction was that the environment word is missing, the same shape as the
+    sapling. IT IS NOT. I grepped every goblin motion prompt this lane has written: 19 of 21
+    say "field", several add grass, dirt or soil; the only two without are the beat-04
+    extreme close-ups. The environment has been named in essentially every prompt, so this
+    is not the sapling twice.
+  the_actual_diagnosis: >-
+    IT IS THE FIG, NOT THE SAPLING. Asking for "one small ROUND green fig" produced a
+    sphere, because that is what the words said. Asking for "a field" produced a field:
+    flat grass, flat sky, nothing in it. The model has been giving exactly what was
+    specified and what was specified was one generic noun. Everything named appeared;
+    depth, midground, wildflowers, a treeline, haze and raking light were never named and
+    never came. His "blank" is not an EMPTY background, it is an UNDESCRIBED one.
+  a_claim_of_mine_this_also_corrects: >-
+    I wrote earlier that the motion stage "painted a background nobody asked for". Wrong
+    again, same family: b15's prompt says "standing in a field", so the field WAS asked for
+    — it was simply absent from the init. The accurate statement, and it is the same law as
+    the sapling: THE MOTION STAGE SUPPLIES WHAT THE PROMPT NAMES EVEN WHEN THE INIT LACKS
+    IT. Only b15's horizon treeline was a genuine unasked-for bonus. That is the fifth time
+    today I have stated something one size larger than the evidence, and the third that a
+    single grep of my own input would have caught.
+  outcome: null
+
+- id: ep2-b17-world-0812
+  kind: prediction
+  written: 2026-08-12, before enqueue. One variable class — how richly the world is described.
+  predicates: [the background gains readable DEPTH — grass running back from him rather
+    than a flat band, plus at least two of wildflowers / treeline / haze / long shadows;
+    he still brushes himself off and turns to go as the passing version did; identity holds;
+    camera locked]
+  basis: >-
+    Named things have appeared 4 of 4 in this lane and unnamed things have not appeared at
+    all. "Field" was named and a bare field arrived. So the test is whether the specificity
+    scales the same way the nouns did — and beat 17's own fence already asks for "afternoon
+    light warming toward amber" and "the tiny sapling standing tall toward the open field",
+    so nothing in the new clause is invented.
+  falsifiable_by: >-
+    The environment words changing nothing. That would mean the emptiness is a property of
+    the stage rather than of my wording, and the fix is a background PLATE rather than a
+    sentence — which is a different lane's work and a different conversation with him.
+  declared_second_change: >-
+    The tripod phrase is out. Strictly a second variable against the passing b17, but not an
+    uncontrolled one: it has its own evidence (3-of-5 with, 0-of-6 without) and is the
+    standing recipe on every job now. I would rather not hand him another tripod.
+  consumer: review/ep2-picks/motion-0812.html — decides whether an environment sentence
+    joins the recipe for every subsequent job.
+  outcome: null

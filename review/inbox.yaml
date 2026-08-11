@@ -63,6 +63,12 @@
   since: '2026-08-12'
   kind: clip
   verdict_hint: which of these are cuttable as-is / what to fix first
+  resolved:
+    date: '2026-08-12'
+    verdict: they're not bad. its just that pretty much all the beats you made have a blank background.
+      (Recorded verbatim. Archaeology says the environment WAS named in 19 of 21 prompts - as one generic
+      word, 'field' - so the background is undescribed rather than absent. One sample testing a richly
+      described world is rendering on beat 17.)
 - what: Episode 1 scene 6 - the one shot in the PUBLISHED episode that is not yours. You refused that
     round flat ("none of the beat 6 images will work") and named two ways out, tall grass or no ground;
     both are now drawn, sixteen frames on one sheet
@@ -86,3 +92,11 @@
   since: '2026-08-12'
   kind: decision
   verdict_hint: re-run the beat 02 still / cut the beat / re-write it around a frame we have
+- what: Blank backgrounds - the fix may be a sentence or may be a plate. Every prompt already said 'field'
+    and got a flat one; a sample naming depth, wildflowers, a treeline, haze and raking light is rendering
+    on beat 17. If wording does not fill the frame, the answer is a painted background plate, which is
+    a different lane's job and your call
+  url: /review/ep2-picks/motion-0812
+  since: '2026-08-12'
+  kind: decision
+  verdict_hint: wait for the sample / commission background plates now / accept the plain field

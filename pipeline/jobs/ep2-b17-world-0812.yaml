@@ -1,0 +1,141 @@
+# 2026-08-12. HIS NOTE ON THE SET: "they're not bad. its just that pretty much all the
+# beats you made have a blank background."
+#
+# ARCHAEOLOGY FIRST, AND IT DID NOT SAY WHAT I EXPECTED. The sapling was missing because
+# the WORD was missing, so the obvious guess was that the environment word is missing too.
+# It is not. I grepped every goblin motion prompt this lane has written: 19 of 21 say
+# "field", several add grass, dirt or soil. The only two without are the beat-04 extreme
+# close-ups. The environment has been named in essentially every prompt.
+#
+# SO THE DIAGNOSIS IS THE FIG, NOT THE SAPLING. When I asked for "one small ROUND green
+# fig" I got a sphere, because that is what the words said. When I asked for "a field" I
+# got a field: flat grass, flat sky, nothing in it. The model has been giving me exactly
+# what I specified, and what I specified was one generic noun. Everything I named appeared;
+# everything I never named -- depth, midground, wildflowers, a treeline, haze, raking light
+# -- never did. His "blank" is not an empty background, it is an UNDESCRIBED one.
+#
+# THE SAMPLE: beat 17, because it already PASSES on action (brushes off, turns to go) so
+# nothing about the performance is in question and only the world changes. The positive
+# swaps one clause -- "standing in a field under morning light" -- for the world the script
+# actually describes: deep summer meadow, seed-headed grass running back into distance,
+# wildflowers, treeline on the horizon, haze on the far grass, one sapling near him, low
+# amber afternoon light raking across and throwing long shadows. Beat 17's own fence in
+# shots.md asks for "afternoon light warming toward amber" and "the tiny sapling standing
+# tall toward the open field", so none of this is invented.
+#
+# ONE DECLARED SECOND CHANGE: the tripod phrase is out. Strictly that is a second variable
+# against the passing b17, but it is not an UNCONTROLLED one -- it has its own evidence
+# (3-of-5 drew a tripod with it, 0-of-6 without) and it is now the standing recipe on every
+# job. I would rather not hand him another tripod to look at.
+id: ep2-b17-world-0812
+task: ep2-b17-world-0812
+node: 002b-first-citizen
+beat: 17
+runner: box
+priority: 19
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: ep2 motion lane, 2026-08-12
+consumer: 'review/ep2-picks/motion-0812.html and his blank-background note — decides whether the environment sentence joins the recipe for every subsequent job.'
+success: 'A 704x1280 mp4, 121 frames, whose background is a described WORLD rather than a flat plane — grass with depth running back from him, wildflowers, a treeline on the horizon, haze, raking light and long shadows — while he still brushes himself off and turns to go as the passing version did. The failure worth reporting is the environment words changing nothing, which would mean the emptiness is a property of the stage and not of my wording, and the fix is a plate rather than a sentence.'
+why: He says the backgrounds are blank; the archaeology says they were named but named thinly, which is a wording fix and testable in one clip.
+est_minutes: 6
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b17-world-0812\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"--out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw, nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b17-world-0812\b17-motion-prompt.txt: '2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: a small goblin standing in a deep summer meadow in the late afternoon — tall seed-headed grass all around him and running back into the distance, scattered white and pink wildflowers, a dark treeline along the horizon behind him, soft haze over the far grass, and one small sapling standing near him. Low warm amber light rakes across the field and throws long shadows through the grass — pale yellow-green skin, a bald domed head, long pointed ears, red eyes, a patched hooded coat. HE BRUSHES HIMSELF OFF AND TURNS TO GO: both hands sweep down the front of his coat, knocking the dust off his chest and his thighs, and then he turns his body away from us to leave, his shoulders rotating and his head coming round with them. He stays in the same place in frame and the camera does not move. Soft morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.'
+  C:\banyan-farm\ep2-b17-world-0812\b17-negative.txt: camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, stool, stake, face morphing, distorted face, warped face, changing facial features, extra eyes, extra ears, hair, walking out of frame, leaving the frame, drifting sideways, second character, duplicate character, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text
+  C:\banyan-farm\ep2-b17-world-0812\b17-jobs-encode.json: "[{\"beat\": 17,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b17-world-0812\\\\b17-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\\ep2-b17-world-0812\\\\b17-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b17-world-0812\\\\b17-negative.txt\"}]"
+  C:\banyan-farm\ep2-b17-world-0812\b17-jobs-render.json: "[{\"beat\": 17,\n  \"seed\": 20260806,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b17-world-0812\\\\b17-embeds.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\\ep2-b17-world-0812\\\\b17-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b17-world-0812\\\\17-goodbye-LTX-world-0812.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b17-world-0812\cover_crop.py
+  - --src
+  - C:\banyan-farm\goblin-ipa-0812\out-b17-crossbeat\17-goodbye-ipa-r0-w015-s1.png
+  - --sha256
+  - f6d516a5b4ac869038aecfc1b80fc7e37da464a85e595a17d9472196f5ae4aa2
+  - --out
+  - C:\banyan-farm\ep2-b17-world-0812\b17-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b17-world-0812\b17-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b17-world-0812\b17-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b17-world-0812
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b17-world-0812\bench-b17-world.jsonl
+  - --bench-label
+  - ep2-b17-world-0812
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b17-world"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/ep2-b17-world-0812/17-goodbye-LTX-world-0812.mp4*")
+                 + glob.glob("C:/banyan-farm/ep2-b17-world-0812/b17-init-704x1280.png")
+                 + glob.glob("C:/banyan-farm/ep2-b17-world-0812/bench-b17-world.jsonl"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b17-world-0812.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 2 else 1)
+artifacts:
+- C:\banyan-farm\ep2-b17-world-0812\17-goodbye-LTX-world-0812.mp4
+- C:\banyan-farm\ep2-b17-world-0812\b17-init-704x1280.png
