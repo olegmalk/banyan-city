@@ -1,0 +1,196 @@
+# EPISODE 2, BEAT 18 — THE DECISION. Two measured mechanical defects, one render.
+# UNGATED. No taste question is asked or answered here.
+#
+# DEFECT 1 — THE CLIP LOOPS 1.81x UNDER ITS OWN LINE.
+# fit_duration (render_t3.py:312) sizes a voiced beat
+#   round(max(min(cdur, vdur + VOICELESS_TAIL_MAX), vdur + 0.4), 2)
+# and loops footage shorter than that (palindrome since loop cycle 005,
+# render_t3.py:583).
+#   clips/18-vo.json                              total_s 10.546
+#   review/ep2-prov-0809/ltx-002b-b18-prov.mp4     6.042s (ffprobe, 145f @ 24fps)
+#   slot = max(min(6.042, 12.546), 10.946)       = 10.95s
+#   10.946 / 6.042 = the picture plays 1.81 times under one line.
+# This is the same defect class Roman named on episode 1 today ("looping, it looks
+# bad") and the same fix: make the clip long enough that nothing loops.
+#
+# THE FRAME COUNT IS ARITHMETIC, not a choice.
+#   F/24 >= 10.946 -> F >= 262.72; LTX wants 8n+1.
+#   8*32+1 = 257 -> 10.708s, still short. 8*33+1 = 265 -> 11.042s.
+#   11.042 >= 10.946 (nothing loops) and 11.042 <= vdur+2.0 = 12.546 (nothing trimmed).
+# 265 is well under the 385-frame ceiling this box has actually run (at 385f:
+# host_peak_phys 59.8/68.1GB, commit 89.2/128.2GB, peak_torch 17.8/25.7GB). HOST
+# RAM binds at these lengths, not VRAM, and 265 sits between two measured points
+# rather than beyond them. The recipe itself is proven and APPROVED: Roman looked
+# at ep1 beat 8 at 313 frames on 2026-08-11 and said "beat 8 looks good". 265 is
+# under that, so this is not a recipe change and needs no fresh sample.
+#
+# DEFECT 2 — THE MODEL NEVER SAW HALF THE SHOT. video_task.py:626 reads
+#     anchor = " ".join(words[:22]) + ("…" if len(words) > 22 else "")
+# a hard 22-WORD CAP on the anchor. Beat 18's anchor is longer, so the prompt that
+# actually rendered — verified by reading the file the box rendered from,
+# C:\banyan-farm\ep2-prov-0809\18-prompt.txt, not from a report — ends:
+#     "...its stem flexing under the weight, rimmed by…."
+# Everything from word 23 was dropped before the text encoder ever ran. What was
+# lost is the whole second half of the direction, including the beat's ONLY
+# statement of progression: "The trembling grows; the stem bends further." The
+# model was asked for a trembling fig and never told the trembling goes anywhere.
+# That matters much more at 265 frames than at 145 — an undirected micro-motion
+# over eleven seconds is exactly the cycling failure ep1 beat 04 produced.
+#
+# This job does NOT touch video_task.py. The 22-word cap is the `token-truncation`
+# lane's to fix in the builder; here the full anchor is written straight into a
+# prompt_file, which is how every episode-1 long-clip job already works
+# (pipeline/jobs/ep1-b13-217f-vo-length-run.yaml). No shared file is edited.
+#
+# NEGATION: NOTHING BANNED IS IN THE POSITIVE. Verified at source in the box's own
+# venv (C:\banyan-video\venv, diffusers 0.39.0, pipelines/ltx2/pipeline_ltx2.py):
+# do_classifier_free_guidance is (guidance_scale > 1.0) or (audio_guidance_scale >
+# 1.0); we pass guidance 1.0 and no audio value, so there is no unconditional pass
+# and THE NEGATIVE IS NEVER READ. A ban left in the positive would therefore be
+# strictly worse than useless — it would feed the model the noun it forbids
+# (DIAG-negation-in-positive.md, e4fbb65). shots.md's tail carries "no cut", "No
+# photorealism, no 3D render look" and "no text" in the positive; the builder
+# already moves those to the negative, and this file keeps them there. The
+# negative below is byte-identical to 18-negative.txt on the box. Carried for
+# provenance (§7.2), not for effect.
+#
+# ONE VARIABLE PAIR, DELIBERATELY. Same plate (byte-identical — the 704x1280 file
+# the prov clip itself was conditioned on, still on the box), same seed, same
+# guidance, same sigmas, same negative, same generic motion clause. Only the frame
+# count and the truncated half of the anchor change, because those are the two
+# measured defects. The motion clause is left alone on purpose: fixing it too
+# would make a bad result unattributable.
+#
+# NO METRIC RANKS ANYTHING (131e433). Read by eye, beside the 6.042s clip.
+# LICENCES: nothing new. LTX-2.3 distilled (LTX-2 Community License), already on
+# the box. $0.
+
+id: ep2-b18-265f-fullanchor-0811
+task: ep2-b18-265f-fullanchor-0811
+node: 002b-first-citizen
+beat: 18
+runner: box
+needs_gpu: true
+priority: 21          # lower runs first — the measured loop is the worst of the three
+max_attempts: 1
+owner: ep2-fill lane, 2026-08-11
+
+consumer: >-
+  Episode 2's beat 18. It is the emotional turn of the episode — the tree
+  deciding to spend the only thing it owns — and today its picture plays 1.81
+  times under the line that carries that decision. Roman's directive on
+  2026-08-11 was "finish episode 1, then move on to episode 2"; beat 18 is one of
+  only five episode-2 beats that is not waiting on his goblin definition, so it
+  is real forward movement on episode 2 rather than a deeper pile on a gated one.
+  His verdict on this clip answers two things: whether beat 18 stops looping, and
+  whether the restored progression ("the trembling grows") reads over 11 seconds.
+
+success: >-
+  A 704x1280 mp4 at C:\banyan-farm\ep2-fix-0811\18-the-decision-LTX-265f.mp4 with
+  265 decoded frames (11.042s), conditioned on the same plate as the 6s clip, in
+  which the fig's trembling BUILDS across the whole shot and the stem bends
+  progressively further rather than vibrating in place, the macro framing stays on
+  the same fig against the same sky, and no second scene, figure or object
+  appears. The specific thing to look for at this length is whether the trembling
+  stays progressive or settles into a repeating cycle — a cycle is the same defect
+  at a smaller scale and is worth reporting as such. A clip that reads static is a
+  real result too and should be reported, not re-run. By eye, beside
+  review/ep2-prov-0809/ltx-002b-b18-prov.mp4. No metric is run.
+
+why: >-
+  The clip is 4.9 seconds shorter than the line it plays under, and the half of
+  the direction that says the motion goes somewhere was cut by a 22-word cap
+  before the text encoder ran.
+
+est_minutes: 9    # encode ~2min (Gemma load dominates); render ~5.4min from this
+                  # box's own measurements (145f = 214s, 385f = 436s -> ~80s +
+                  # 0.925s/frame -> ~325s at 265 frames). No plate step: reused.
+
+needs: [cuda, vram20, video-venv]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+payload:
+  # STYLE prefix and motion clause are the prov clip's, verbatim. Everything from
+  # "Subject already in frame:" is shots.md's beat-18 direction IN FULL — the text
+  # the 22-word cap removed — with the positive-side bans left out because at
+  # guidance 1.0 they can only do harm (see the negation note above).
+  C:\banyan-farm\ep2-fix-0811\b18-prompt.txt: |-
+    2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. Extreme close-up: the one fig on the thinnest branch, stem trembling. subtle continuous motion, gentle camera drift, living scene. Subject already in frame: One small round green fruit trembles on the thinnest branch of a tiny sapling, its stem flexing under the weight, rimmed by warm amber afternoon light against a soft wash sky. The trembling grows continuously and the stem bends steadily further under the weight for the whole shot. Held macro, extreme close-up, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+
+  # Byte-identical to C:\banyan-farm\ep2-prov-0809\18-negative.txt. Inert at
+  # guidance 1.0; recorded for provenance (§7.2).
+  C:\banyan-farm\ep2-fix-0811\b18-negative.txt: |-
+    cut, photorealism, 3D render look, text, 静态, 静止, 静止不动的画面, frozen frame, still image, no motion, photorealistic, photograph, live action, film still, 3D render, CGI, octane, realistic skin texture, depth of field bokeh, motion blur, scene change, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+
+  C:\banyan-farm\ep2-fix-0811\b18-jobs-encode.json: |-
+    [{"beat": 18,
+      "embeds": "C:\\banyan-farm\\ep2-fix-0811\\b18-embeds.pt",
+      "prompt_file": "C:\\banyan-farm\\ep2-fix-0811\\b18-prompt.txt",
+      "negative_file": "C:\\banyan-farm\\ep2-fix-0811\\b18-negative.txt"}]
+
+  # init is the EXACT 704x1280 plate the 6.042s prov clip was conditioned on, still
+  # on the box from the ep2-prov-0809 run. Reusing it rather than re-preparing from
+  # the take guarantees the conditioning frame is byte-identical, so the frame count
+  # and the anchor are the only things that moved. (The take PNGs are gitignored and
+  # are NOT in the box checkout — only their .meta.yaml sidecars are — so a plate
+  # step reading from the repo would fail here. Verified by dir on the box.)
+  C:\banyan-farm\ep2-fix-0811\b18-jobs-render-265.json: |-
+    [{"beat": 18,
+      "seed": 20260806,
+      "embeds": "C:\\banyan-farm\\ep2-fix-0811\\b18-embeds.pt",
+      "init": "C:\\banyan-farm\\ep2-prov-0809\\18-704x1280.png",
+      "out": "C:\\banyan-farm\\ep2-fix-0811\\18-the-decision-LTX-265f.mp4"}]
+
+steps:
+  - name: encode
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+      - --stage
+      - encode
+      - --jobs
+      - C:\banyan-farm\ep2-fix-0811\b18-jobs-encode.json
+  - name: render
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+      - --stage
+      - render
+      - --jobs
+      - C:\banyan-farm\ep2-fix-0811\b18-jobs-render-265.json
+      - --size
+      - 704x1280
+      - --frames
+      - "265"
+      - --fps
+      - "24"
+      - --guidance
+      - "1.0"
+      - --distilled-sigmas
+      - --two-stage
+      - --image-crf
+      - "33"
+      - --offload
+      - sequential
+      - --mode
+      - production
+      - --task
+      - ep2-b18-265f-fullanchor-0811
+      - --worker
+      - rtx5090
+      - --bench-jsonl
+      - C:\banyan-farm\ep2-fix-0811\bench-b18-265f.jsonl
+      - --bench-label
+      - ep2-b18-265f-fullanchor
+
+artifacts:
+  - C:\banyan-farm\ep2-fix-0811\18-the-decision-LTX-265f.mp4

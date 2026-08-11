@@ -1,0 +1,206 @@
+# EPISODE 2, BEAT 21 — THE ANSWER. The show's signature gesture, and the prompt
+# that rendered it asked for the opposite of it three separate ways.
+# UNGATED — beat 21 names no character at all (STATE.md 2026-08-09: beats 01, 18
+# and 21 "name nobody and were clean for all six seconds"), so nothing here goes
+# near the goblin definition Roman still owes a sentence on.
+#
+# THIS IS THE ONE SAMPLE of a recipe change (CLAUDE.md, founder 2026-08-03). The
+# change is the motion clause. Beat 12 has the identical contradiction and is
+# NOT queued behind this — it waits until Roman has looked at this clip. Beat 12's
+# own job in this batch is the truncation fix ONLY, with its motion clause held
+# byte-identical, precisely so this stays the single cell of the new clause.
+#
+# WHAT THE MODEL WAS ACTUALLY GIVEN. Read off the file the box rendered from,
+# C:\banyan-farm\ep2-prov-0809\21-prompt.txt, not off a report:
+#
+#   "...The sapling's leaf, in absolutely still air, tilts — slowly, deliberately,
+#    the first thing he has ever moved on purpose — and holds. SPEAK . slow.
+#    POPULATION: 1. subtle continuous motion, gentle camera drift, living scene.
+#    Subject already in frame: In dead-still air with the grass frozen, one
+#    oversized leaf of a tiny sapling tilts slowly and deliberately to one side —…."
+#
+# THREE MECHANICAL FAULTS IN ONE STRING, none of them a matter of taste.
+#
+#  1. THE ANCHOR IS CUT MID-SENTENCE. video_task.py:626 is a hard 22-word cap:
+#         anchor = " ".join(words[:22]) + ("…" if len(words) > 22 else "")
+#     Beat 21's anchor ends at word 22, "to one side —", so the text encoder never
+#     received "an unmistakably intentional gesture from a plant — then holds,
+#     motionless." THE ENTIRE SECOND HALF OF THE ACTION — the hold, which is what
+#     makes the tilt read as deliberate rather than as wind — was deleted before
+#     the model ran. This is the single biggest thing wrong with the clip.
+#
+#  2. THE GENERIC MOTION CLAUSE CONTRADICTS THE BEAT. "subtle continuous motion,
+#     gentle camera drift, living scene" is a DEFAULT (video_task.py:1540,
+#     `task.get("motion") or ...`), applied to every beat that does not override
+#     it. Beat 21 is the one beat in the episode whose entire specification is
+#     stillness — "in absolutely still air", "with the grass frozen", "no wind
+#     anywhere in frame" — and it was handed a request for continuous motion and
+#     camera drift. And the prediction is visible in the render: sampling frames
+#     0 / 72 / 144 of the existing clip, the grass sways, the leaf swings through
+#     a large arc and the composition drifts. There is no dead-still air and no
+#     discrete hold. The fix is one key: `motion` is stated affirmatively.
+#
+#  3. TWO JUNK TOKENS. "SPEAK ." is an empty speaker field emitted for a beat that
+#     has no dialogue (beat 21 is wordless by design — shots.md gives it no line),
+#     and "POPULATION: 1." is the storyboard's ON-SCREEN TEXT OVERLAY
+#     (002b-t1-a.html frame 21: <div class="overlay">POPULATION: 1</div>) leaking
+#     out of the caption layer and into the image conditioning. Neither belongs in
+#     a prompt. NOTE, so this is not overclaimed: no rendered text is visible in
+#     the frames I sampled, so the leak is not currently drawing words on screen —
+#     it is junk conditioning, not a visible artifact. It comes out anyway.
+#
+# NEGATION IS HANDLED THE RIGHT WAY ROUND, AND IT MATTERS MOST HERE. At guidance
+# 1.0 on the distilled path there is no unconditional pass, so THE NEGATIVE IS
+# NEVER READ (verified at source in the box's venv: diffusers 0.39.0,
+# pipelines/ltx2/pipeline_ltx2.py — do_classifier_free_guidance is
+# (guidance_scale > 1.0) or (audio_guidance_scale > 1.0), and both are 1.0). The
+# existing 21-negative.txt opens with "wind anywhere in frame" — correctly moved
+# out of shots.md's positive tail by the builder, and completely inert. So the ban
+# that matters most to this beat is currently doing NOTHING, and moving it back
+# into the positive would be worse than nothing: it would feed the model the word
+# "wind" (DIAG-negation-in-positive.md, e4fbb65). The only thing that can work is
+# an AFFIRMATIVE statement of stillness in the positive, which is what the new
+# motion clause is. The negative below is kept byte-identical for provenance
+# (§7.2) and is expected to change no pixel.
+#
+# LENGTH IS CORRECT ALREADY — 145 frames stays. Beat 21 is silent, so
+# fit_duration (render_t3.py:299) returns min(cdur, script_s): the script gives it
+# 1:42–1:47 = 5s and the clip is 6.042s, so it is TRIMMED to 5s, never looped.
+# There is no loop defect here and the frame count is deliberately not touched —
+# it would be a second variable for no reason.
+#
+# ONE VARIABLE PAIR. Same plate (byte-identical — the 704x1280 file the prov clip
+# was conditioned on, still on the box), same seed 20260806, same guidance,
+# sigmas, size, frames and negative. Only the positive changes, and every change
+# to it is one of the three faults above.
+#
+# NO METRIC RANKS ANYTHING (131e433). Read by eye, beside the existing clip.
+# LICENCES: nothing new. LTX-2.3 distilled (LTX-2 Community License), on the box. $0.
+
+id: ep2-b21-stillair-fullanchor-0811
+task: ep2-b21-stillair-fullanchor-0811
+node: 002b-first-citizen
+beat: 21
+runner: box
+needs_gpu: true
+priority: 22
+max_attempts: 1
+sample: true      # the one sample of the affirmative-stillness motion clause
+owner: ep2-fill lane, 2026-08-11
+
+consumer: >-
+  Episode 2's closing beat and the series' signature gesture — the tree answering.
+  The whole episode lands on whether this tilt reads as INTENTIONAL, and it cannot
+  read as intentional while every blade of grass is moving too. It is also the
+  sample that decides whether an affirmative stillness clause is the right tool
+  for the two still-air beats; if Roman likes it, beat 12 gets the same clause
+  next and nothing else in the episode needs it.
+
+success: >-
+  A 704x1280 mp4 at C:\banyan-farm\ep2-fix-0811\21-the-answer-LTX-stillair.mp4,
+  145 frames (6.042s), same plate as the existing clip, in which the air is dead
+  still — the grass does not sway, the camera does not drift, the composition is
+  the same in every frame — and the ONLY motion in the shot is one leaf tilting
+  slowly to one side and then holding there, motionless, to the end. A clip where
+  the leaf tilts and then keeps moving, or where the grass moves at all, is a
+  failure of this fix and should be reported as one. A clip that is completely
+  frozen with no tilt at all is the opposite failure and is also a real result —
+  report it, do not re-run it. By eye, beside
+  review/ep2-prov-0809/ltx-002b-b21-prov.mp4. No metric is run.
+
+why: >-
+  The beat whose whole point is stillness was rendered from a prompt that asked
+  for continuous motion and camera drift, with the words "then holds, motionless"
+  cut off by a 22-word cap before the encoder saw them.
+
+est_minutes: 6    # encode ~2min; render ~3.6min (this box: 145f = 214s). No plate step.
+
+needs: [cuda, vram20, video-venv]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+payload:
+  # STYLE prefix verbatim. "SPEAK . slow. POPULATION: 1." removed. The generic
+  # motion clause replaced by an affirmative statement of stillness that names the
+  # one thing allowed to move — a positive description, never a ban, because a ban
+  # here is unread at best and counterproductive at worst. The anti-drift framing
+  # terms ("framing locked, no zoom, no push-in") are KEPT in the wording proven on
+  # ep1 beat 13 (pipeline/jobs/ep1-b13-217f-vo-length-run.yaml), which is the same
+  # form that was in force when Roman praised beat 04's camera; changing their
+  # wording would be an extra variable. Everything from "Subject already in frame:"
+  # is shots.md's beat-21 direction IN FULL, including the hold the cap removed.
+  C:\banyan-farm\ep2-fix-0811\b21-prompt.txt: |-
+    2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. The sapling's leaf, in absolutely still air, tilts — slowly, deliberately, the first thing he has ever moved on purpose — and holds. the air is completely still and the grass stands motionless throughout, the sky is static, the camera is locked off and does not move, framing locked, no zoom, no push-in, no camera rise, the composition is identical in every frame, and the single moving thing in the entire shot is one leaf turning slowly and smoothly to one side and then coming to rest and staying at rest. Subject already in frame: In dead-still air with the grass frozen, one oversized leaf of a tiny sapling tilts slowly and deliberately to one side — an unmistakably intentional gesture from a plant — then holds, motionless. Low amber light, quiet awe, close-up, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+
+  # Byte-identical to C:\banyan-farm\ep2-prov-0809\21-negative.txt. Inert at
+  # guidance 1.0 — including its "wind anywhere in frame", which is exactly why
+  # the stillness had to be stated affirmatively above. Provenance (§7.2).
+  C:\banyan-farm\ep2-fix-0811\b21-negative.txt: |-
+    wind anywhere in frame, photorealism, 3D render look, text, camera shake, handheld camera, jitter, wobble, unstable camera, vibrating, trembling camera, rolling shutter, photorealistic, photograph, live action, film still, 3D render, CGI, octane, realistic skin texture, depth of field bokeh, motion blur, scene change, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+
+  C:\banyan-farm\ep2-fix-0811\b21-jobs-encode.json: |-
+    [{"beat": 21,
+      "embeds": "C:\\banyan-farm\\ep2-fix-0811\\b21-embeds.pt",
+      "prompt_file": "C:\\banyan-farm\\ep2-fix-0811\\b21-prompt.txt",
+      "negative_file": "C:\\banyan-farm\\ep2-fix-0811\\b21-negative.txt"}]
+
+  # Same plate file the existing prov clip used, so the positive is the only change.
+  C:\banyan-farm\ep2-fix-0811\b21-jobs-render.json: |-
+    [{"beat": 21,
+      "seed": 20260806,
+      "embeds": "C:\\banyan-farm\\ep2-fix-0811\\b21-embeds.pt",
+      "init": "C:\\banyan-farm\\ep2-prov-0809\\21-704x1280.png",
+      "out": "C:\\banyan-farm\\ep2-fix-0811\\21-the-answer-LTX-stillair.mp4"}]
+
+steps:
+  - name: encode
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+      - --stage
+      - encode
+      - --jobs
+      - C:\banyan-farm\ep2-fix-0811\b21-jobs-encode.json
+  - name: render
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+      - --stage
+      - render
+      - --jobs
+      - C:\banyan-farm\ep2-fix-0811\b21-jobs-render.json
+      - --size
+      - 704x1280
+      - --frames
+      - "145"
+      - --fps
+      - "24"
+      - --guidance
+      - "1.0"
+      - --distilled-sigmas
+      - --two-stage
+      - --image-crf
+      - "33"
+      - --offload
+      - sequential
+      - --mode
+      - production
+      - --task
+      - ep2-b21-stillair-fullanchor-0811
+      - --worker
+      - rtx5090
+      - --bench-jsonl
+      - C:\banyan-farm\ep2-fix-0811\bench-b21-stillair.jsonl
+      - --bench-label
+      - ep2-b21-stillair-fullanchor
+
+artifacts:
+  - C:\banyan-farm\ep2-fix-0811\21-the-answer-LTX-stillair.mp4

@@ -1,0 +1,178 @@
+# EPISODE 2, BEAT 12 — RELATED. The 22-word cap fix, and NOTHING else.
+# UNGATED, and explicitly so: STATE.md 2026-08-09 records the founder resolving
+# beat 12 himself — "BEAT 12 — PROMPT-ONLY, UNGATED, RUNNABLE NOW", the still
+# stands at b12-r4-s2, no founder gate on this half. Beat 16, the other half of
+# that same ruling, IS gated (it needs the goblin drawn into the plate) and is
+# therefore NOT in this batch.
+#
+# THE DEFECT. video_task.py:626 caps the anchor at 22 words:
+#     anchor = " ".join(words[:22]) + ("…" if len(words) > 22 else "")
+# Beat 12's anchor is longer, so the prompt the box actually rendered from —
+# C:\banyan-farm\b12-promptfix-0809\12-prompt.txt, and the sidecar on the clip
+# itself — ends:
+#     "...utterly still, peach and gold morning sky…."
+# Word 23 onward never reached the text encoder. What was lost:
+#     "and drifting blurred clouds behind them, very slow push-in, cinematic
+#      lighting, detailed, newest, masterpiece, best quality, very aesthetic"
+# So the beat lost its background motion (the drifting clouds — the only thing in
+# this shot that is SUPPOSED to move, since the leaves are meant to be dead still),
+# its camera direction (the very slow push-in), and its entire quality-tag tail.
+# Restoring them is mechanical: it is the direction the beat already owns.
+#
+# WHY THIS JOB IS DELIBERATELY NARROW. Beat 12's current clip is the output of a
+# fix the FOUNDER resolved, and that fix was explicitly one variable: the character
+# clause came out of the positive, "with the negative held byte-identical, so
+# 'perfectly still' survives and the stillness classification is unchanged". Beat
+# 12 also carries the same generic-motion-clause contradiction as beat 21 —
+# "subtle continuous motion, gentle camera drift" against an anchor that says
+# "utterly still" — and it is NOT being fixed here on purpose. That clause change
+# is a recipe change; ONE SAMPLE (CLAUDE.md, founder 2026-08-03) says it gets one
+# beat first, and that beat is 21, queued alongside this. If Roman likes beat 21,
+# beat 12 gets the same clause next. Queueing both now would be scaling an
+# unapproved result — the exact mistake the K recipe made across fifteen beats.
+# So: motion clause byte-identical, negative byte-identical, plate byte-identical,
+# seed byte-identical, frame count byte-identical. Only the truncated words return.
+#
+# LENGTH IS ALREADY CORRECT — 145 frames stays. clips/12-vo.json total_s 2.681
+# against a 6.042s clip: fit_duration (render_t3.py:312) gives
+# max(min(6.042, 4.681), 3.081) = 4.68s, so the clip is trimmed, never looped.
+# There is no loop defect on this beat and the frame count is not touched.
+#
+# NEGATION. shots.md's beat-12 direction carries a long positive-side ban list
+# ("no trunk, no ground, no fruit, no chibi, no mascot, no creature, no face, no
+# other character, no city, no buildings"). Those are ALREADY correctly living in
+# the negative — 12-negative.txt opens "trunk, ground, fruit, chibi, mascot,
+# creature, face, other character, city, buildings, ..." — and they stay there.
+# They are inert at guidance 1.0 (no unconditional pass on the distilled path;
+# verified at source in the box venv, diffusers 0.39.0 pipelines/ltx2/
+# pipeline_ltx2.py), but inert is strictly better than the alternative: put back
+# in the positive they would feed the model "fruit", "face", "city" — and round 3
+# of this very beat was rejected 4/4 for making a large pink ripe fruit the
+# subject, with a face on it in s0 and a city skyline in s2. This beat is the
+# repo's own best evidence for why bans do not go in the positive
+# (DIAG-negation-in-positive.md, e4fbb65). The restored anchor text below contains
+# no bans at all.
+#
+# NO METRIC RANKS ANYTHING (131e433). Read by eye, beside the existing clip.
+# LICENCES: nothing new. LTX-2.3 distilled (LTX-2 Community License), on the box. $0.
+
+id: ep2-b12-fullanchor-0811
+task: ep2-b12-fullanchor-0811
+node: 002b-first-citizen
+beat: 12
+runner: box
+priority: 23          # lowest of the three — the mildest of the three defects
+needs_gpu: true
+max_attempts: 1
+owner: ep2-fill lane, 2026-08-11
+
+consumer: >-
+  Episode 2's beat 12. Its clip currently has no background motion at all, because
+  the clouds it was supposed to have were in the half of the direction a 22-word
+  cap deleted. Roman's standing complaint on this series is frozen-looking footage
+  ("literally just frozen frames"), and this beat's leaves are meant to be still —
+  which makes the drifting clouds the ONLY thing that keeps the shot alive. This
+  render is the cheapest available answer to whether beat 12 reads as a living
+  still shot or a frozen one, and it changes nothing the founder already settled.
+
+success: >-
+  A 704x1280 mp4 at C:\banyan-farm\ep2-fix-0811\12-related-LTX-fullanchor.mp4,
+  145 frames (6.042s), same plate as the existing clip, in which the two cotyledon
+  leaves stay essentially still while the blurred clouds behind them drift and the
+  camera pushes in very slowly. No trunk, no ground, no fruit, no face and no
+  figure appears at any point — round 3 of this beat was rejected 4/4 for exactly
+  those, so their absence is the thing to check first. By eye, beside
+  review/ep2-prov-0809/ltx-002b-b12-prov-v2.mp4: the question is whether the
+  restored clouds and push-in make it read as alive. No metric is run.
+
+why: >-
+  A 22-word cap deleted this beat's clouds, its camera move and its whole quality
+  tail before the text encoder ran; restoring them is one variable and $0.
+
+est_minutes: 6    # encode ~2min; render ~3.6min (this box: 145f = 214s). No plate step.
+
+needs: [cuda, vram20, video-venv]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+payload:
+  # Everything up to "Subject already in frame:" is the founder-resolved promptfix
+  # positive VERBATIM, including its generic motion clause — see the narrowness
+  # note above for why that clause is deliberately left wrong here. Everything
+  # after it is shots.md's beat-12 round-4 direction IN FULL, with the ban list
+  # left out because it already lives in the negative.
+  C:\banyan-farm\ep2-fix-0811\b12-prompt.txt: |-
+    2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. Tight on the sapling's two leaves, perfectly still. subtle continuous motion, gentle camera drift, living scene. Subject already in frame: Extreme close-up of two oversized green cotyledon leaves of a tiny seedling filling the frame, utterly still, peach and gold morning sky and drifting blurred clouds behind them, very slow push-in, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+
+  # Byte-identical to the negative on the founder-resolved promptfix clip. Inert at
+  # guidance 1.0; recorded for provenance (§7.2).
+  C:\banyan-farm\ep2-fix-0811\b12-negative.txt: |-
+    trunk, ground, fruit, chibi, mascot, creature, face, other character, city, buildings, photorealism, 3D render look, text, camera shake, handheld camera, jitter, wobble, unstable camera, vibrating, trembling camera, rolling shutter, photorealistic, photograph, live action, film still, 3D render, CGI, octane, realistic skin texture, depth of field bokeh, motion blur, scene change, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+
+  C:\banyan-farm\ep2-fix-0811\b12-jobs-encode.json: |-
+    [{"beat": 12,
+      "embeds": "C:\\banyan-farm\\ep2-fix-0811\\b12-embeds.pt",
+      "prompt_file": "C:\\banyan-farm\\ep2-fix-0811\\b12-prompt.txt",
+      "negative_file": "C:\\banyan-farm\\ep2-fix-0811\\b12-negative.txt"}]
+
+  # The exact plate the founder-resolved promptfix clip was conditioned on
+  # (12-related-r4-s2.png, cover-centre cropped to 704x1280), still on the box.
+  C:\banyan-farm\ep2-fix-0811\b12-jobs-render.json: |-
+    [{"beat": 12,
+      "seed": 20260806,
+      "embeds": "C:\\banyan-farm\\ep2-fix-0811\\b12-embeds.pt",
+      "init": "C:\\banyan-farm\\b12-promptfix-0809\\12-704x1280.png",
+      "out": "C:\\banyan-farm\\ep2-fix-0811\\12-related-LTX-fullanchor.mp4"}]
+
+steps:
+  - name: encode
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+      - --stage
+      - encode
+      - --jobs
+      - C:\banyan-farm\ep2-fix-0811\b12-jobs-encode.json
+  - name: render
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+      - --stage
+      - render
+      - --jobs
+      - C:\banyan-farm\ep2-fix-0811\b12-jobs-render.json
+      - --size
+      - 704x1280
+      - --frames
+      - "145"
+      - --fps
+      - "24"
+      - --guidance
+      - "1.0"
+      - --distilled-sigmas
+      - --two-stage
+      - --image-crf
+      - "33"
+      - --offload
+      - sequential
+      - --mode
+      - production
+      - --task
+      - ep2-b12-fullanchor-0811
+      - --worker
+      - rtx5090
+      - --bench-jsonl
+      - C:\banyan-farm\ep2-fix-0811\bench-b12-fullanchor.jsonl
+      - --bench-label
+      - ep2-b12-fullanchor
+
+artifacts:
+  - C:\banyan-farm\ep2-fix-0811\12-related-LTX-fullanchor.mp4
