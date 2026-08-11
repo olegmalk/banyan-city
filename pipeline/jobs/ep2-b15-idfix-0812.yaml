@@ -1,0 +1,272 @@
+# idfix wave 2026-08-12 ~03:1x: frozen identity; the variant paid its mood
+# and motion words (stills harness) to fit. Dry 73/77 anchor intact.
+# Beat 15 GOOD LISTENER refresh, derived by sed from ep2-b11-refresh-0811.yaml at
+# 2026-08-11 ~23:5x by the beats 14-20 lane. Nothing below describes beat 10 or
+# 11: carrying a disclaimer forward is not the same as telling the truth, so the
+# whole header was rewritten for this beat.
+#
+# HIS MANDATE, verbatim and covering this beat with no words of its own: "i
+# looked at all the beats and you have to change pretty much all of them, do
+# some regeneration, and do some evaluating of your own. train the system."
+#
+# -- WHAT THE WAVE-1 FRAMES ACTUALLY SHOW, READ BEFORE THE FIX WAS WRITTEN -----
+# NOT in `wave-0811`: this beat's wave-1 round was `ep2-b15-goblin-simple-0811`
+# and its four stills are `review/tonight/15-good-listener-wave1-s0..s3.png`. All
+# four opened and looked at:
+#   * THREE OF FOUR ARE THE BACK OF HIS HEAD (s0, s1, s2). Only s3 shows a face,
+#     and that in profile. This beat is a conversation; three of four play it
+#     with the camera behind the speaker.
+#   * FOUR OF FOUR ARE INDOORS. An orange wall with a hanging pendant chain and a
+#     houseplant shadow cast across it (s0); a curtain and window frame (s1); a
+#     bare cream wall and a floor line in an empty room (s2); a flat wall behind
+#     a huge disc (s3). The steward's round-3 note for this beat, 2026-08-09, was
+#     "that is a boy in a room with a houseplant, not a goblin talking to the
+#     sapling". It came back word for word.
+#   * FOUR OF FOUR HAVE NO SAPLING. Glossy monstera houseplant leaves in s0 and
+#     s1; NOTHING AT ALL in s2 but two dead leaves on the floor; and in s3 the
+#     plant is a small round leaf-creature standing on legs at the end of a stem
+#     he holds like a leash. The beat sheet says "he looks up at the sapling and
+#     both of them are in the frame -- the conversation is the subject". In three
+#     of four there is nobody to have it with.
+#   * NONE OF THE FOUR IS DARK. They are warm, hazy and amber, two of them
+#     reading as sunset glow. That matters below, because it decides which bans
+#     this beat can afford.
+#
+# -- WHAT IS RATIFIED AND IS THEREFORE FROZEN ---------------------------------
+# He looked at these four frames on 2026-08-11 ~15:45 and said "yeah, that looks
+# like the right goblin" (ledger `ep2-b15-goblin-simple-founder-verdict-0811`).
+# That was read then, and is read here, as ratifying the CHARACTER and not the
+# shot -- the ep2 picking page says so in those words. So `green skin`, the
+# {{GOBLIN}} slot, the ears and the cloak carry through untouched, and every
+# change in this round is to the camera, the setting and the plant.
+#
+# -- THE FIX -------------------------------------------------------------------
+# Staging kept VERBATIM from `authored`: same head tipped back, same talking up
+# at a tiny sapling standing tall beside him, same two oversized leaves hanging
+# above, same `Warm midday light, lonely tone, slow push-in`.
+#  1. WALLS. `in a sunny grassy field` in the third clause -- the early-affirmative
+#     placement `authored_b04_fieldban` proved -- plus beat 04's five-term block
+#     `house, building, interior, indoors, architecture` sent whole. Four of four
+#     frames were indoors; this is the beat that block was made for.
+#  2. THE HOUSEPLANT. `no houseplant`, one verdict-specific ban for the pot plant
+#     that has now arrived in two separate rounds where a sapling was asked for.
+#  3. THE BACK OF HIS HEAD. `his face visible`, the affirmative beat 10's refresh
+#     spends as `both faces visible`, for the identical fault.
+#  4. NO `bright morning light`. This beat's own staging says `Warm midday light`
+#     and staging is kept verbatim; the affirmative light term the other
+#     refreshes add would contradict the words above it.
+#
+# -- THE DARK BLOCK IS SENT AT TWO TERMS OF EIGHT, MEASURED AND NOT PREFERRED ---
+# First dry run, all eight lighting terms: positive 75/77 fine, but the negative
+# came back recipe 76 -> sent 76 with the NEGWARN dropping `mature tree, large
+# tree, tall tree, thick trunk, full canopy, forest, bush, shrubbery` -- the
+# ENTIRE plant-scale guard -- on the one beat whose worst observed fault is that
+# the sapling rendered as a monstera houseplant in 4 of 4. That is a load-bearing
+# ban being spent on a fix this beat does not need: none of these four frames is
+# dark. So `no dusk, no sunset` stay, because the amber-sunset glow in s0 and s3
+# IS the observed drift and `Warm midday light` excludes both, and `no dark, no
+# night, no dim lighting, no moody lighting, no low key, no shadows dominant` come
+# out. This is the call beat 11 made when it kept its long shadows, made here on
+# the frames rather than on the staging.
+# SECOND DRY RUN, the one this job runs: positive 75/77 with STYLE ANCHOR PRESENT
+# True, count tag `1boy` deriving and matching the draft, `text` negated True,
+# negative recipe 75 -> sent 72, DRY OK. `mature tree`, `large tree`, `thick
+# trunk` and `photorealism` are back in the sent list. STILL DROPPED and named
+# rather than buried: `shrubbery, bush, forest, full canopy` and the quality
+# boilerplate (realistic skin texture, jpeg artifacts, deformed, extra limbs,
+# blurry, low quality, signature, watermark, abstract, 3d render, photorealistic).
+# `bush` leaving is the risk worth stating on a beat that keeps drawing the wrong
+# plant; the three strongest anti-big-tree terms survive and the two-leaf sapling
+# is stated affirmatively, so this is a stated risk and not a known regression.
+# TWO TOKENS OF POSITIVE HEADROOM: anything a later round adds here drops the
+# style sentence unless it names what it pays with (beat 08 r1, 89/77, rc=1).
+#
+# -- ON THE DRAFTS FILE'S SHA -------------------------------------------------
+# The sha attested below is the box copy as of THIS job's enqueue. This lane
+# stages beats 17, 19 and 20 after it and each scp appends a new variant key, so
+# a later whole-file sha does not mean this beat's prompt moved: every edit is
+# additive, `authored_b15_idfix` is byte-identical to the text measured above,
+# and the harness reads the variant BY KEY and refuses outright when it is
+# missing. The positive string it will send is quoted verbatim in `why` below,
+# and the render sidecar records the prompt actually used.
+#
+# WHY THIS IS ONE SAMPLE AND NOT A BATCH. CLAUDE.md, founder 2026-08-03: one
+# sample per recipe change. This is one recipe change on one beat, four seeds, $0.
+#
+# SEPARATE OUT DIRECTORY, DELIBERATELY. The harness names files from the beat
+# slug; this writes to `out-b15-idfix` and overwrites no earlier evidence --
+# `review/tonight/15-good-listener-wave1-s*.png` is the set it is read against.
+
+id: ep2-b15-idfix-0812
+task: ep2-b15-idfix-0812
+node: 002b-first-citizen
+beat: 15
+runner: box
+needs_gpu: true
+
+# 47. box_runner.py sorts priority ASCENDING and takes ONE job at a time
+# regardless -- sequential is the rule (CLAUDE.md, founder 2026-08-03) and
+# batch-of-4 is banned. Tonight's beat 06-11 refreshes went at 41-45 and have all
+# left the queue; beat 14 went at 46 minutes ago and 17, 19 and 20 follow at
+# 48-50, so this lane lands in beat order if any of them stack. The running queue
+# was EMPTY and the ready queue held only this lane's own beat 14 when this was
+# staged (`box_enqueue.py --list`, checked, not assumed).
+priority: 47
+max_attempts: 1
+owner: beats 14-20 regeneration lane, 2026-08-11 (his wholesale-reject mandate)
+
+# NO `gate:` KEY. One sample on a beat he has rejected wholesale, applying a
+# register he has ratified and blocks already proven on other beats against
+# identical seeds. It clears NOBODY's gate: the fourteen
+# `ep2-b*-goblin-wave1.yaml` specs and the staged siblings keep theirs.
+
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03` (read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml:17-18, the leaf the
+  render gate itself reads, not copied from a sibling spec). His `approved_quote`
+  verbatim: "approve 002b except.. we need to make SURE the fig growing on the sapling
+  is mentioned, last time we generated 002b it just.. appeared. also, the sapling was
+  able to flail a leaf in episode 1? why couldnt it do that in 002b?" Both
+  `approval_conditions` are about beat 01''s fig and beat 16''s leaf; neither touches
+  beat 15''s setting, framing or staging. Beat 15 is GOOD LISTENER, the shot in which
+  the scavenger tips his head back and talks up at the sapling.'
+
+consumer: >-
+  The founder's morning review page, as the regenerated beat 15 against
+  `review/tonight/15-good-listener-wave1-s0..s3.png` -- the four indoor frames
+  described in the header, three of them the back of his head and none of them
+  containing the sapling. Same beat, same four seeds, so the comparison is
+  airtight. This job ranks nothing and picks nothing; which frames are good is
+  R4's call, and the character in them is already ratified.
+
+success: >-
+  Four PNGs at C:\banyan-farm\wave-goblin-prep\out-b15-idfix\15-good-listener-wave1-s0..3.png
+  with their .yaml provenance sidecars written at render time (7.2), all eight
+  declared as artifacts so a missing one fails rc=92 instead of passing quietly.
+  Whether the frames are good is R4's call, not this job's and not a metric's.
+
+why: >-
+  Beat 15's wave-1 frames came back indoors in 4 of 4, backs-to-camera in 3 of 4,
+  and without the sapling in 4 of 4 -- a houseplant in two, nothing in one, and a
+  leaf-creature on a leash in the last. This round states the field early with beat
+  04's five-term walls block, bans the houseplant by name, asks for his face, and
+  keeps the staging and the ratified character word for word. Measured before
+  enqueue, the positive it will send: `1boy, a small goblin boy, green skin, solo,
+  in a sunny grassy field, tips his head back talking up at a tiny sapling standing
+  tall beside him, its two oversized leaves hanging above him, his face visible.
+  Warm midday light, lonely tone, slow push-in, cinematic lighting, detailed,
+  newest, masterpiece, best quality, very aesthetic` -- 75/77, style anchor intact,
+  `1boy` deriving, negative recipe 75 -> sent 72, DRY OK.
+
+goblin_def: green skin
+goblin_def_source: >-
+  The founder, verbatim: "he is just a simple green goblin, nothing complex"
+  (2026-08-10 ~12:15), and this is the beat his ratification was spoken on -- "yeah,
+  that looks like the right goblin", 2026-08-11 ~15:45, on the four
+  `ep2-b15-goblin-simple-0811` frames this round is read against (ledger
+  `ep2-b15-goblin-simple-founder-verdict-0811`). `green skin` is the ONE attribute
+  he named and the slot is frozen; this round changes the shot, not the character.
+
+est_minutes: 2
+needs:
+- cuda
+- vram20
+- farm-venv
+
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+# The box's wave-drafts.yaml was scp'd from this repo and verified sha256-IDENTICAL
+# (543b4181644a0573504e2d55eda778bdd8eaf88cbba449504eb659d4d9144a4d) after the edit
+# and before this job was queued -- the box printed that sha itself on the dry run
+# quoted in the header, and it matches `shasum -a 256 pipeline/wave-drafts.yaml` in
+# this repo. See the note on this sha in the header: later beats in this lane append
+# additive keys and move the whole-file sha without touching this variant. This is
+# not a formality either way: `ep2-b08-refresh-0811` FAILED at its measure step
+# (rc=1, 7 seconds, queue/failed/) because the box's copy at run time was not the
+# copy its spec attested to. The harness REFUSES rather than falling back when a
+# variant key is missing, so a stale copy fails for $0 instead of quietly
+# re-rendering the old prompt under a new job id.
+steps:
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '15'
+  - --goblin-def
+  - green skin, bald head, patchwork cloak
+  - --variant
+  - authored_b15_idfix
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '15'
+  - --goblin-def
+  - green skin, bald head, patchwork cloak
+  - --variant
+  - authored_b15_idfix
+  - --out
+  - C:\banyan-farm\wave-goblin-prep\out-b15-idfix
+  - --task
+  - ep2-b15-idfix-0812
+
+# DURABILITY: every still this farm makes lands single-copy on a box nothing backs
+# up. The courier runs `git add -A -- farm-out` and pushes on job_done, and
+# farm-out is NOT gitignored, so publishing is a COPY and the runner stays
+# byte-identical. allow_fail: a failed copy must never mark a good render failed.
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b15-idfix"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/wave-goblin-prep/out-b15-idfix/15-good-listener-wave1-s*.*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        # Hash the COPY, not the original: what this records has to be the bytes
+        # that get committed, or the manifest attests to the wrong file.
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+        print("   ", os.path.basename(f), h[:16])
+    # newline="\n" is load-bearing: Windows text mode rewrites \n to \r\n and
+    # every filename then carries a trailing \r that shasum -c cannot open.
+    with open(os.path.join(dst, "15-good-listener-refresh.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    # 4 stills + 4 sidecars. Fewer means the render wrote less than it promised.
+    raise SystemExit(0 if len(src) == 8 else 1)
+
+artifacts:
+- C:\banyan-farm\wave-goblin-prep\out-b15-idfix\15-good-listener-wave1-s0.png
+- C:\banyan-farm\wave-goblin-prep\out-b15-idfix\15-good-listener-wave1-s1.png
+- C:\banyan-farm\wave-goblin-prep\out-b15-idfix\15-good-listener-wave1-s2.png
+- C:\banyan-farm\wave-goblin-prep\out-b15-idfix\15-good-listener-wave1-s3.png
+- C:\banyan-farm\wave-goblin-prep\out-b15-idfix\15-good-listener-wave1-s0.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b15-idfix\15-good-listener-wave1-s1.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b15-idfix\15-good-listener-wave1-s2.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b15-idfix\15-good-listener-wave1-s3.yaml

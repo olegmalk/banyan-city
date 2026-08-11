@@ -1825,6 +1825,16 @@ beats:
     # proved), beat 04's five-term walls ban, `no houseplant` for the pot plant
     # three rounds have now drawn, and `his face visible` -- the same affirmative
     # beat 10's refresh spends as `both faces visible`, for the same fault.
+    # -- `_idfix` 2026-08-12 ~03:1x: pays "lonely tone, slow push-in" (mood and
+    # motion words in a stills harness) so the frozen identity fits.
+    authored_b15_idfix: >-
+      A small goblin boy, {{GOBLIN}}, solo, in a sunny grassy field, tips his
+      head back talking up at a tiny sapling standing tall beside him, its two
+      oversized leaves hanging above him, his face visible. Warm midday
+      light, cinematic lighting, detailed, newest, masterpiece, best quality,
+      very aesthetic No girl, no child, no house, no indoors, no houseplant,
+      no dark, no night, no dim lighting, no moody lighting. No photorealism,
+      no 3D render look. 9:16 vertical, no text.
     authored_b15_refresh: >-
       A small goblin boy, {{GOBLIN}}, solo, in a sunny grassy field, tips his
       head back talking up at a tiny sapling standing tall beside him, its two
@@ -2058,6 +2068,17 @@ beats:
     # tokens. Re-measured at 74/77, anchor present, negative recipe 74 -> sent 71
     # dropping only quality boilerplate plus `shrubbery`; the whole anti-big-tree
     # tier and the whole plant-fusion tier survive. Three tokens of headroom.
+    # -- `_idfix` 2026-08-12 ~03:1x: pays "stops mid-step" and "Static camera"
+    # (motion words in a stills harness) so the frozen identity fits; the
+    # fig-off-the-head gag survives whole.
+    authored_b19_idfix: >-
+      A small goblin boy, {{GOBLIN}}, solo, in a sunny grassy field, as a
+      ripe fig drops from a tiny sapling standing tall, rooted beside him,
+      bounces off his head, and lands in the grass. Amber afternoon,
+      cinematic lighting, detailed, newest, masterpiece, best quality, very
+      aesthetic No girl, no child, no cartoon, no speech bubble, no white
+      fruit, no pale fruit, no dark, no night, no dim lighting, no moody
+      lighting. No photorealism, no 3D render look. 9:16 vertical, no text.
     authored_b19_refresh: >-
       A small goblin boy, {{GOBLIN}}, solo, in a sunny grassy field, stops
       mid-step as a ripe fig drops from a tiny sapling standing tall, rooted

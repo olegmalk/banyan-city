@@ -9953,3 +9953,17 @@
   predicates: [bald 4/4, cloak >=3/4, one goblin 4/4, no glowing eyes 4/4, ripe fig >=2/4]
   consumer: morning page, identity-frozen wave.
   outcome: null
+
+- id: ep2-b15-idfix-0812
+  kind: prediction
+  written: 2026-08-12 ~03:1x before enqueue, terse. Dry 73/77 anchor intact.
+  predicates: [bald 4/4, cloak >=3/4, one goblin 4/4, sapling beside him (not houseplant, not indoors) >=3/4]
+  consumer: morning page, identity-frozen wave.
+  outcome: null
+
+- id: ep2-b19-idfix-0812
+  kind: prediction
+  written: 2026-08-12 ~03:1x before enqueue, terse. Dry 73/77 anchor intact.
+  predicates: [bald 4/4, cloak >=3/4, one goblin 4/4, fig present >=2/4, no speech bubble 4/4]
+  consumer: morning page, identity-frozen wave.
+  outcome: null
