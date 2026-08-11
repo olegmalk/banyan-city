@@ -1,101 +1,110 @@
-# Beat 10 NO FORM refresh, derived from the b08 r2 skeleton at 2026-08-11 ~22:5x
-# by the lead (the 09-12 lane went quiet; it keeps beats 11-12). Staging kept
-# verbatim (blank bark clipboard, one shake); added the ratified register and
-# the dark-ban; house triplet trimmed to spare the negative budget. Dry-run
-# measured 76/77 positive on the box, style anchor intact; the five dropped
-# negative tail terms match the founder-approved guards-silly round's profile.
-# two-subject deadpan two-shot (tag 2boys); the variant keeps the staging and
-# applies the ratified guard register + field-early + the proven bans. His
-# mandate for this round is the wholesale reject: "you have to change pretty
-# much all of them, do some regeneration."
-# EPISODE 2, BEAT 02 THE SPRINT — THE OCCLUSION ROUND, RE-RUN WITH THE PROVEN
-# LIGHTING BLOCK. One sample, four seeds, $0. 2026-08-11 ~19:4x.
+# EPISODE 2, BEAT 10 NO FORM — THE WHOLESALE-REJECT REGENERATION.
+# One sample, four seeds, $0. 2026-08-11 ~23:1x, the beats 09-12 lane.
 #
-# WHY THIS IS A PROPAGATION AND NOT A NEW GUESS. `ep2-b04-goblin-fieldbright-0811`
-# (commit cbcc716) ran eight lighting terms in the SDXL negative against
-# `ep2-b04-goblin-field-0811` on IDENTICAL SEEDS and an identical positive, and
-# the frames came back a bright morning field where the round before them had
-# come back dark and undefined. The prediction written before that render — "a
-# bright morning-lit field in 3 of 4 seeds" — was read against the frames and it
-# hit. So the dark drift is a model prior, and the negative is the channel that
-# reaches it. That is a one-variable result verified against the same seeds; this
-# job carries it to the beat that showed the same fault in the same hour.
+# DERIVED BY SED from `ep2-b09-refresh-0811.yaml` for its STRUCTURE only (which
+# in turn took its skeleton from `ep2-b08-refresh-0811.yaml`). Every prose field
+# below is this beat's own: the b08 file inherited a b02 skeleton and said so in
+# its own header, and carrying a disclaimer forward is not the same as telling
+# the truth, so nothing here describes beat 02, 08 or 09.
 #
-# WHAT BEAT 02 KEEPS. `ep2-b02-goblin-occl-0811` did two things at once and only
-# one of them failed. The staging fix WORKED — the occlusion sentence put the
-# stem across the body, which is what his ~18:40 sentence asked for — and the
-# frames drifted dusk-dark against a positive that says `morning light` in those
-# words. So the occlusion clause is unchanged here, word for word, and the only
-# edit is the eight-term block. `--variant authored_b10_refresh` is
-# `authored_staged_med_occl` with `no dark, no night, no dusk, no sunset, no dim
-# lighting, no moody lighting, no low key, no shadows dominant` appended to the
-# `no ...` chain it already carries. Same `medium shot`, same `from front`, same
-# `green skin` slot, same seeds (`render_wave_sample` derives them as
-# `wg.SEED + beat + i*1000` and never reads the variant), same steps (40),
-# guidance (7.5), size and harness (sha256 7efd0b96, unchanged).
+# HIS MANDATE, verbatim and covering this beat with no words of its own: "i looked
+# at all the beats and you have to change pretty much all of them, do some
+# regeneration, and do some evaluating of your own. train the system. now begin
+# the long queue, the 5090 has slept for too long."
 #
-# THE POSITIVE IS UNCHANGED AND IT WAS MEASURED, NOT ASSUMED. Both variants
-# dry-run at 73/77 positive tokens with the SAME compressed POSITIVE string:
-#   1boy, a small goblin boy, green skin, solo, from front, crouches in an open
-#   field behind a tiny sapling, its thin stem in front of him, half hidden
-#   behind the stem, his face peeking around it. Static camera, medium shot,
-#   morning light, cinematic lighting, detailed, newest, masterpiece, best
-#   quality, very aesthetic
-# `sd_prompt._NEGATION` lifts the eight `no ...` terms out of the positive and
-# `beat_negative` sends them as BEAT-SPECIFIC terms, which `fit_negative`
-# protects ahead of the global house defaults. STYLE ANCHOR PRESENT in both,
-# count tag `1boy` derives in both.
+# ── WHAT THE WAVE-1 FRAMES ACTUALLY SHOW, READ BEFORE THE FIX WAS WRITTEN ─────
+# `review/ep2-picks/wave-0811/b10-s0..s3.jpg`, all four opened and looked at.
+# THIS IS THE WORST-DRIFTED BEAT OF THE FOUR IN THIS LANE:
+#   * FOUR OF FOUR ARE SHOT FROM BEHIND. There is not one readable face in the
+#     set. s2 is two armoured backs filling the frame; s0 and s1 put a small
+#     figure's back in the foreground; s3 is a helmeted back.
+#   * TWO OF FOUR BREAK SCALE ENTIRELY. s0 and s1 are a titanic armoured colossus
+#     towering over a tiny human, shot from a low hero angle. "Two round guard
+#     men" came back as a giant and a doll.
+#   * FOUR OF FOUR draw heroic muscular bodies, not round soft ones.
+#   * THREE OF FOUR CONTAIN ARCHITECTURE — an industrial city (s0), pillars (s2),
+#     an interior with beams and a heavy vignette (s3). Of the beats in this lane
+#     this is the one whose observed fault is literally interiors.
+#   * THREE OF FOUR are helmeted or masked WITH GLOWING EYES; four of four are
+#     dim, desaturated or outright night.
+#   * THE JOKE IS ABSENT. This beat exists so that the blank board reads — the
+#     slug is `no-form` and the gag is that the clipboard is empty — and the board
+#     is a small dark slab at the frame edge in s2, ambiguous in s0, and simply
+#     not there in s1 and s3.
+# Roman's beat-05 veto named this register in his own words: "it is a dark forest
+# and they look dangerous; they are supposed to be round and harmless in a morning
+# field". Beat 10 arrived at it unprompted and added a colossus.
 #
-# ── WHERE BEAT 02 IS NOT BEAT 04, MEASURED ON THE BOX BEFORE QUEUEING ─────────
-# Beat 04 had ONE token of negative headroom left after the block. This beat's
-# `full` fusion tier was ALREADY over CLIP's 77-token budget before it — the
-# NEGWARN and its dropped quality terms are pre-existing and are recorded in
-# `ep2-b02-goblin-occl-0811` — and beat-specific terms are protected AHEAD of the
-# house defaults, so eight new terms push house terms out. Both variants were
-# dry-run on the box's real CLIP tokenizer, this beat, this slot, and diffed:
+# ── THE FIX IS PROVEN BLOCKS, NOT NEW GUESSES ─────────────────────────────────
+# Built on `authored_staged`, which IS this beat's staging as the file holds it;
+# its two additions (`from the front`, `medium two-shot`) were already aimed at
+# the fault the frames show. No business is reworded.
+#  1. BACKS. `both faces visible` — the affirmative carrying his ratified "with
+#     visible faces" (~20:27). `from the front` is NOT also sent: same claim,
+#     weaker words, and this beat cannot afford to say anything twice.
+#  2. SCALE. `round soft bodies` alongside the `Two round guard men` already in
+#     the head clause. `authored_guards_silly` states round twice deliberately and
+#     records why — once was demonstrably not enough — and on this beat the second
+#     statement is the only term aimed at the colossus.
+#  3. WALLS. Beat 04's five-term block sent whole, plus `in a sunny grassy field`
+#     in the third clause, the early-affirmative placement `authored_b04_fieldban`
+#     proved. Three of four frames drew architecture; this is the beat the block
+#     was made for.
+#  4. REGISTER. `silly bureaucrats` + `bare heads` affirmatively, and the ratified
+#     ban block from `authored_guards_silly`: `no helmet, no knight, no full
+#     plate, no dark fantasy, no glowing visor, no weapon, no hood`.
+#  5. THE BOARD. `no screen` is sent HERE and was deliberately not sent on beat
+#     09. The reason is specific rather than tidy: `authored_guards_ref` bought
+#     that term for a board that "reads as a lit screen", Roman's own earlier
+#     stop, and this is the beat whose SUBJECT is a board held up to camera. If a
+#     blank slab renders as a glowing tablet anywhere, it is here.
+#  6. LIGHT. The eight-term dark ban `ep2-b04-goblin-fieldbright-0811` (commit
+#     cbcc716) proved against IDENTICAL SEEDS on beat 04, plus `bright morning
+#     light` affirmatively.
 #
-#   baseline `authored_staged_med_occl`: negative recipe 76 -> sent 73
-#     SENT: photorealistic, 3d render, text, mature tree, large tree, thick
-#           trunk, full canopy, forest, bush, shrubbery, girl, child,
-#           photorealism, leaf on head, plant girl, alraune, monster girl,
-#           flower on head, head wreath, hair ornament, leaf hair ornament,
-#           plant hair, female goblin, elf
-#     DROPPED: realistic skin texture, jpeg artifacts, deformed, extra limbs,
-#           blurry, low quality, signature, watermark, abstract
+# ── MEASURED ON THE BOX'S REAL CLIP TOKENIZER, THREE TIMES, TWO REFUSALS ──────
+# This is a run, not a claim, and the failures are the part worth keeping:
+#   draft 1 — 83 tokens against CLIP's 77. `compress()` drops from the least
+#     important end and the end is the STYLE SENTENCE, so `Medium two-shot`, `the
+#     blank board dominating the frame`, `bright morning light` and the whole
+#     style anchor went in ONE go. check() faulted STYLE ANCHOR MISSING, rc=1,
+#     nothing drawn. Every fix this round exists to make lives in that sentence.
+#   draft 2 — 78. One token over, identical fault, identical total loss: 78 costs
+#     the same nine words 83 does. There is no partial credit.
+#   draft 3 — 76/77, STYLE ANCHOR PRESENT True, count tag `2boys` derives and
+#     matches the draft, `text` negated True, DRY OK. ONE token of headroom.
+# FOUR TERMS WERE PAID to get from 83 to 76, under the rule that nothing of
+# Roman's is spent: `harmless` (his words are "silly round bureaucrats with
+# visible faces" — silly, round, bureaucrats and the visible faces all survive;
+# harmless was the steward's own addition), `clearly` (`both faces visible` says
+# it), `toward the other` (the second guard is established by `Two round guard
+# men` and by `both faces visible`), and `bark` (the material word — `no screen`
+# does the anti-tablet work in the channel that binds, which is why that term is
+# sent on this beat). Also paid, and all of it motion in a harness that makes
+# single frames: `and shaking it once for emphasis`, `Static camera`, and the
+# duplicated `completely`.
 #
-#   this round `authored_b10_refresh`: negative recipe 75 -> sent 72
-#     SENT: text, mature tree, large tree, girl, child, dark, night, dusk,
-#           sunset, dim lighting, moody lighting, low key, shadows dominant,
-#           photorealism, leaf on head, plant girl, alraune, monster girl,
-#           flower on head, head wreath, hair ornament, leaf hair ornament,
-#           plant hair, female goblin, elf
-#     DROPPED: the nine above PLUS 3d render, photorealistic, shrubbery, bush,
-#           forest, full canopy, thick trunk
+# THE NEGATIVE AS SENT, recipe 76 -> sent 76, all 31 terms reaching the model:
+#   photorealistic, 3d render, abstract, text, watermark, signature, low quality,
+#   girl, child, helmet, knight, full plate, dark fantasy, glowing visor, weapon,
+#   hood, screen, house, building, interior, indoors, architecture, dark, night,
+#   dusk, sunset, dim lighting, moody lighting, low key, shadows dominant,
+#   photorealism
+# NEGWARN, recorded rather than buried: five house-tier terms are dropped to make
+# room — realistic skin texture, jpeg artifacts, deformed, extra limbs, blurry.
+# A warning, not a fault, and the same trade the beat-08 and beat-09 refreshes
+# made. On a two-hander with a held prop, `extra limbs` is the loss worth naming;
+# if hands or arms come back broken that is the first term to buy back and the
+# `no screen`/`no weapon` pair is what would pay.
 #
-# READ THAT DIFF BEFORE READING THE FRAMES. All eight lighting terms reach the
-# model verbatim. Everything the previous round's spec verified as load-bearing
-# SURVIVES: `female goblin`, `girl`, `child`, `text`, `photorealism`, `mature
-# tree`, `large tree` and the whole plant-girl/alraune tier. What is sacrificed
-# is seven house terms, and two of them are worth naming as risks rather than
-# burying:
-#   * `photorealistic` and `3d render` leave the house tier. The style guard is
-#     not gone — the beat-specific `photorealism` still goes, lifted from the
-#     positive's "No photorealism, no 3D render look" — but it is thinner.
-#   * `thick trunk, full canopy, forest, bush, shrubbery` leave. On a beat whose
-#     subject is a TINY SAPLING that is the most real risk in this job: the
-#     sapling could come back as a bush, or the open field as a treeline. The two
-#     strongest anti-big-tree terms (`mature tree`, `large tree`) survive, and
-#     this beat has never come back with a mature tree, so this is a stated risk
-#     and not a known regression.
-# THE BLOCK IS SENT WHOLE ON PURPOSE. Narrowing it to fit would have bought those
-# terms back and made this a DIFFERENT block from the one beat 04 proved, which
-# breaks the only thing that makes this a propagation rather than a new guess. If
-# a bush shows up, the answer is a narrower block on this beat, and that reading
-# is written down here before the frames exist.
+# ONE TOKEN OF HEADROOM IS THIS BEAT'S STANDING WARNING: anything a later round
+# adds here drops the style sentence again unless it names what it pays with.
 #
-# SEPARATE OUT DIRECTORY, DELIBERATELY. `out-b02-occl` holds the four frames this
-# is read against and the harness names files from the beat slug. This writes to
-# `out-b10-refresh` so that evidence is not overwritten.
+# WHY THIS IS ONE SAMPLE AND NOT A BATCH. CLAUDE.md, founder 2026-08-03: one
+# sample per recipe change. This is one recipe change on one beat, four seeds.
+#
+# SEPARATE OUT DIRECTORY, DELIBERATELY. The harness names files from the beat
+# slug; this writes to `out-b10-refresh` and overwrites no earlier evidence.
 
 id: ep2-b10-refresh-0811
 task: ep2-b10-refresh-0811
@@ -104,19 +113,21 @@ beat: 10
 runner: box
 needs_gpu: true
 
-# 44, the same lane number the occlusion round used. box_runner.py:444 sorts
-# priority ASCENDING and takes ONE job at a time regardless — sequential is the
-# rule (CLAUDE.md, founder 2026-08-03) and batch-of-4 is banned. The ready queue
-# was EMPTY and nothing was running when this was staged (`box_enqueue.py
-# --list`, checked, not assumed).
-priority: 44
+# 45. box_runner.py sorts priority ASCENDING and takes ONE job at a time
+# regardless — sequential is the rule (CLAUDE.md, founder 2026-08-03) and
+# batch-of-4 is banned. Beat 09 went at 44 and has already finished clean (rc 0,
+# 8 of 8 artifacts present); beat 11 follows at 46, so the lane lands in beat
+# order if any of them stack. The ready and running queues were both EMPTY when
+# this was staged (`box_enqueue.py --list`, checked, not assumed) — the card was
+# idle, which is the condition his mandate names.
+priority: 45
 max_attempts: 1
-owner: beat-02 lighting lane, 2026-08-11 (propagating the beat-04 lighting proof)
+owner: beats 09-12 regeneration lane, 2026-08-11 (his wholesale-reject mandate)
 
-# NO `gate:` KEY. One sample varying one channel on a recipe he has ratified,
-# using a fix already verified against identical seeds on another beat. It clears
-# NOBODY's gate: the fourteen `ep2-b*-goblin-wave1.yaml` specs and the staged
-# siblings keep theirs.
+# NO `gate:` KEY. One sample on a beat he has rejected wholesale, applying a
+# register he has ratified and blocks already proven on other beats against
+# identical seeds. It clears NOBODY's gate: the fourteen
+# `ep2-b*-goblin-wave1.yaml` specs and the staged siblings keep theirs.
 
 script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
   `approved_by: founder`, `approved_on: 2026-08-03` (read from
@@ -126,14 +137,15 @@ script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
   is mentioned, last time we generated 002b it just.. appeared. also, the sapling was
   able to flail a leaf in episode 1? why couldnt it do that in 002b?" Both
   `approval_conditions` are about beat 01''s fig and beat 16''s leaf; neither touches
-  beat 02''s lighting, framing or staging. Beat 02 is THE SPRINT, the sprint/dive to
-  cover behind the sapling.'
+  beat 10''s register, lighting, framing or staging. Beat 10 is NO FORM, the two-shot
+  in which one guard holds up the blank back of his clipboard to the other.'
 
 consumer: >-
-  Roman's next look at beat 02, as a PAIR against the `out-b02-occl` frames — same
-  four seeds, one channel apart, so the comparison is airtight. His ~18:40 sentence
-  asked for the hide to read; the occlusion round bought that and lost the light.
-  This round is the same staging in daylight. It ranks nothing and picks nothing.
+  The founder's morning review page, as the regenerated beat 10 against
+  `review/ep2-picks/wave-0811/b10-s0..s3.jpg` — the four backs-to-camera frames
+  described in the header, two of them a colossus over a doll. Same beat, same
+  four seeds, so the comparison is airtight. This job ranks nothing and picks
+  nothing; which frames are good is R4's call.
 
 success: >-
   Four PNGs at C:\banyan-farm\wave-goblin-prep\out-b10-refresh\10-no-form-wave1-s0..3.png
@@ -142,21 +154,26 @@ success: >-
   Whether the frames are good is R4's call, not this job's and not a metric's.
 
 why: >-
-  One variable against `ep2-b02-goblin-occl-0811`: the eight-term lighting block
-  in the SDXL negative, the same block `ep2-b04-goblin-fieldbright-0811` proved
-  on identical seeds. Identical positive (dry-run measured at 73/77 in both),
-  identical seeds, steps, guidance, harness, drafts lineage, `green skin` slot,
-  `medium shot` and occlusion clause. Any difference in these frames is that
-  block.
+  Beat 10's wave-1 frames came back shot from behind with no readable face in 4
+  of 4, a titanic colossus over a tiny human in 2 of 4, architecture in 3 of 4,
+  and the blank board — the beat's entire gag — absent or illegible in all four.
+  This round sends the ratified silly-bureaucrat register, `round soft bodies`
+  against the scale break, `both faces visible` against the backs, the field
+  stated early with beat 04's five-term walls block, `no screen` for the board,
+  and beat 04's eight-term dark block. All proven elsewhere, none new here.
+  Measured on the box's real tokenizer before enqueue after two refusals:
+  positive 76/77 with the style anchor intact, `2boys` deriving, DRY OK.
 
 goblin_def: green skin
 goblin_def_source: >-
-  The founder, verbatim: "he is just a simple green goblin, nothing complex"
-  (2026-08-10 ~12:15, re-stated 2026-08-11), plus his verdict on the frames drawn
-  from it: "yeah, that looks like the right goblin" (2026-08-11 ~15:45, on
-  `ep2-b15-goblin-simple-0811`; ledger `ep2-b15-goblin-simple-founder-verdict-0811`).
-  `green skin` is the ONE attribute he named, and this round changes nothing about
-  the character.
+  NO GOBLIN IS IN THIS BEAT. Beat 10 is `kind: guard` and its draft carries no
+  {{GOBLIN}} slot, so this value fills nothing and changes no pixel;
+  render_wave_sample.py makes --goblin-def mandatory on every call rather than
+  letting a default stand in, and render_wave_goblin.check() excludes guard beats
+  from the slot requirement for exactly this case. The value passed is the
+  founder's own definition — "he is just a simple green goblin, nothing complex"
+  (2026-08-10 ~12:15) — so that the provenance sidecar records the same string as
+  every other job in this wave rather than a placeholder.
 
 est_minutes: 2
 needs:
@@ -174,11 +191,15 @@ env:
   HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
   PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
 
-# The box's wave-drafts.yaml was scp'd from this repo and verified
-# sha256-identical (30d0907e8171dc410d3f388f976eadc9894a368e348bda68903a300b16874f6e)
-# after the edit and before this job was queued. The harness REFUSES rather than
-# falling back when a variant key is missing, so a stale copy fails for $0 instead
-# of quietly re-rendering the old lighting under a new job id.
+# The box's wave-drafts.yaml was scp'd from this repo and verified sha256-IDENTICAL
+# (bae3be3e0b2794d60691bbf60714d6574b67684b826996a123aecb3a5e752584) after the edit
+# and before this job was queued — the box printed that sha itself on the dry run
+# quoted in the header, and it matches `shasum -a 256 pipeline/wave-drafts.yaml`
+# in this repo. This is not a formality: `ep2-b08-refresh-0811` FAILED at its
+# measure step (rc=1, 7 seconds, queue/failed/) because the box's copy at run time
+# was not the copy its spec attested to. The harness REFUSES rather than falling
+# back when a variant key is missing, so a stale copy fails for $0 instead of
+# quietly re-rendering the old prompt under a new job id.
 steps:
 - name: measure
   argv:
@@ -240,7 +261,7 @@ steps:
         print("   ", os.path.basename(f), h[:16])
     # newline="\n" is load-bearing: Windows text mode rewrites \n to \r\n and
     # every filename then carries a trailing \r that shasum -c cannot open.
-    with open(os.path.join(dst, "10-no-form-occlbright.sha256"), "w", newline="\n") as fh:
+    with open(os.path.join(dst, "10-no-form-refresh.sha256"), "w", newline="\n") as fh:
         fh.write("\n".join(lines) + "\n")
     print("published", len(src), "file(s) + manifest ->", dst)
     # 4 stills + 4 sidecars. Fewer means the render wrote less than it promised.

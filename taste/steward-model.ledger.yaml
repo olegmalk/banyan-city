@@ -8854,3 +8854,43 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+- id: ep2-b10-refresh-0811
+  kind: prediction
+  written: 2026-08-11 ~23:1x, before enqueue; no frame of this round existed or
+    had been fetched when these predicates were fixed. The wave-1 frames this is
+    read against WERE looked at first (review/ep2-picks/wave-0811/b10-s0..s3.jpg)
+    and what they show is written into the spec header. The render may start
+    within the minute of the enqueue that follows this write.
+  round: ep2-b10-refresh-0811, beat 10 NO FORM, variant authored_b10_refresh,
+    4 stills, SDXL animagine-xl-3.1, node 002b-first-citizen.
+  what_changed: staging kept from the wave-1 authored_staged draft (two guards,
+    one holding up the blank back of his clipboard) with no business reworded.
+    Added only - the ratified guard register (founder ~20:27, "two silly round
+    bureaucrats with visible faces", with the helmet/knight/plate/dark-fantasy/
+    glowing-visor/weapon/hood bans as they stand in authored_guards_silly),
+    `round soft bodies` against the observed scale break, `both faces visible`
+    against 4/4 shot from behind, the open field stated early with beat 04's
+    five-term walls block, `no screen` for the board, and the eight-term dark
+    ban. Paid - `and shaking it once for emphasis` and `Static camera` (motion
+    instructions in a still harness), `completely`, `from the front`, `harmless`,
+    `clearly`, `toward the other`, `bark`. Two drafts were REFUSED by the harness
+    dry step at 83 and 78 tokens before the third measured 76/77 with the style
+    anchor intact; nothing of the founder's wording was spent.
+  predicates:
+    - two guard figures of the SAME scale, no colossus-and-doll, in >=3/4 frames
+    - at least one readable face rather than backs to camera, in >=3/4
+    - both faces visible, in >=2/4
+    - round soft bodies rather than heroic muscular ones, in >=3/4
+    - bare-headed and helmetless, in >=3/4
+    - no glowing eye slit or visor, in >=3/4
+    - a daylit outdoor field, no house or interior or city, in >=3/4
+    - bright morning palette in 4/4
+    - the staging still reads - a guard holding up a blank board - in >=2/4
+    - the board reads as a blank board and not as a lit screen, in >=2/4
+  consumer: the founder's morning review page.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
