@@ -512,3 +512,37 @@ one thing:
 Which of those the number should say, and whether the ratchet moves, is D15 and
 it is the founder's — the same answer the four sections above give, now with the
 arithmetic attached. Nothing here was backfilled on a steward's reading of it.
+
+## The convention has teeth now, and the backfill is measured (2026-08-11)
+
+**A promotion is no longer a `cp`.** `pipeline/promote_still.py` copies the
+frame AND writes the record above, and refuses the three shapes that used to
+publish silently — a take with no record, a record naming no model, and a record
+that points (`model: see the take's sidecar`) instead of naming the weights. It
+also refuses a canon copy that comes out MORE publishable than its take, which
+is the way a partial sidecar launders a licence. So the gap this section
+describes is closed going forward; what follows is about the frames promoted
+before the tool existed.
+
+**EIGHT OF THE FOURTEEN CANON BEAT FRAMES CAN BE RECONNECTED TO THEIR TAKE BY
+BYTES, AND SIX CANNOT.** A promotion is byte-for-byte, so the proof is sha256
+over the pixels and never the filename. Beats **3, 7, 8, 9, 10, 12, 14 and 15**
+each match exactly one take that carries a real `.meta.yaml`. The other six do
+not, and nothing was written for them: `11-grow.png` matches
+`takes/stills/11-grow.png` byte-for-byte but **that take has no sidecar either**,
+and beats **1, 2, 4, 5 and 13** match no take in the directory at all. An
+inferred provenance record on a canon frame is worse than none.
+
+**WRITING THE EIGHT COSTS EIGHT DEBT LINES AND BUYS NOTHING ON THE PAGE — both
+halves measured on a scratch copy of the tree, not predicted.** Licence debt goes
+**25 → 33** against a ratchet of 25, exactly the +1 per animagine sidecar this
+file already predicted, so CI goes red. And `build_site.py` prints the SAME
+output line for line with the eight records as without: the same 63 posters, the
+same "23 published file(s) hold pixels from 12 unprovenanced frame(s)" — because
+`recorded_twin()` already reaches these eight through their bytes and answers for
+them. The records make the frames legible to `sidecar_for()`, which is what a
+fail-closed gate reads; they change nothing a visitor sees. **Eight debt lines
+for zero published files is the whole trade, and it is D15.** The eight records
+are therefore not written here, on the instruction that this ratchet is the
+founder's to move — the same answer the section above gives, now with both sides
+of the arithmetic measured rather than one.
