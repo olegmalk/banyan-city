@@ -13473,3 +13473,38 @@
     sides like antlers rather than standing beside him as a tree. Named objects appear; WHERE
     they appear is not yet under control, which is the same shape as b19's head-sprout.
   outcome: null
+
+- id: ep2-shot-scale-rides-the-init-SELF-CATCH-0812
+  kind: correction
+  date: 2026-08-12
+  status: not a wrong claim this time — a RIGHT one I could have made eighteen clips ago.
+  what_i_missed: >-
+    Every clip this lane has produced inherited its SHOT SCALE from its starting frame, and I
+    did not notice until a size-pinning clause failed and forced me to ask why. b04's init is
+    a face close-up and all four b04 clips are close-ups. b17's init is a full-length figure
+    and all four b17 clips are wides. b14's medium init gives medium clips. Eighteen clips, no
+    exception, and the pattern was visible on my own page the whole time.
+  why_i_missed_it: >-
+    Because framing was never the thing I was looking at. I judged each clip against its
+    beat's ACTION and its CONTENTS, so shot size was the water it all swam in — constant, and
+    therefore invisible. It only became a question when I asked the prompt to change it and
+    the prompt could not. A constant across every sample is exactly the variable an
+    experimenter never tests, and I had eighteen samples of it.
+  the_family_this_belongs_to: >-
+    Sixth entry today in one shape, and the shape has now shown itself in both directions.
+    FIVE TIMES I stated something larger than the evidence (instrumentation, the duration law,
+    background painting, the tripod rate, the pink-eye "drift"). ONCE — here — I failed to
+    state something the evidence had supported all along. Both are the same failure to
+    actually LOOK at the whole set: the first five looked at the cases that agreed, this one
+    looked at what varied and never at what did not.
+  the_check_that_would_have_caught_it: >-
+    Alongside "write the denominator first" and "open the init before calling anything a
+    drift", a third: ONCE A LANE HAS A SET OF RESULTS, LIST WHAT HAS NEVER CHANGED ACROSS
+    THEM. A property constant in every sample is either controlled by something upstream of
+    the prompt or has never been varied — and either way it is the cheapest untested lever
+    available. That is now three mechanical checks, all cheap, all born from being wrong.
+  what_it_predicts_beyond_scale: >-
+    If framing rides the init, OBJECT PLACEMENT may too — which would re-read b19's
+    head-sprout and b20's antler-branch for free rather than needing their own wording fix.
+    That is why no placement sample is queued ahead of the init-crop answer.
+  outcome: null
