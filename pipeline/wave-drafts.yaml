@@ -1645,6 +1645,44 @@ beats:
       child, no armor, no helmet, no knight, no dark, no night, no dusk, no
       sunset, no dim lighting, no moody lighting, no low key, no shadows
       dominant. No photorealism, no 3D render look. 9:16 vertical, no text.
+    # -- `authored_b09_idfix_r2` -- 2026-08-12, the fixer lane. THE WORST BEAT IN
+    # THE WAVE, AND THE ONE THAT EXPLAINS THE OTHERS.
+    #
+    # WHAT THE FRAMES SHOW. s1 is THREE BALD HEADS LYING IN THE GRASS with no
+    # bodies. s3 puts a severed head with closed eyes below the guard. s2 sets a
+    # featureless brown sphere behind his skull. And all four inflate the head far
+    # past a person's -- s0 fills the frame with a distended skull and swollen
+    # cheeks. Grotesque, not comic.
+    # THE COUNT TAG WAS NEVER GOING TO CATCH THIS: `1boy` holds for BOYS, and the
+    # model does not read a loose head as a boy.
+    #
+    # THE ADJACENCY IS THE CAUSE, AND THE WAVE ALREADY PROVED IT ONCE TONIGHT. The
+    # positive says "a round bald guard man": `round` sits directly against
+    # `bald`. This checkpoint applies whatever is adjacent to `bald head` TO THE
+    # SKULL -- which is exactly what the beat 02/03/04 versus beat 08 comparison
+    # shows for `patchwork cloak` (the three beats carrying it in the identity slot
+    # sew the scalp; beat 08, the only one that omits it, has clean heads 4/4).
+    # `round bald` produces a round bald HEAD, and at close-up range a sphere.
+    #
+    # SO THE WORD MOVES, IT IS NOT REMOVED. `round` is the founder's own word for
+    # these guards and it stays in the sentence -- but on the BODY, where his
+    # ratified character puts it: "a silly harmless bureaucrat with a round soft
+    # body". `bald guard man` then stands alone with nothing to donate to the
+    # skull. His word is kept; only its target is corrected.
+    #
+    # PLUS A BAN, AND IT COSTS NOTHING TO ADD. `no extra heads, no disembodied
+    # head` go in a negative that sends 71 of 77 with six tokens spare, so nothing
+    # is evicted to pay for them and no existing guard is disturbed.
+    authored_b09_idfix_r2: >-
+      Close-up on a bald guard man in a plain brown tunic, in a sunny grassy
+      field, a silly harmless bureaucrat with a round soft body, his face
+      clearly visible and working slowly through an idea, eyes drifting and
+      mouth opening slightly. Bright morning light, cinematic lighting,
+      detailed, newest, masterpiece, best quality, very aesthetic No girl, no
+      child, no extra heads, no disembodied head, no armor, no helmet, no
+      knight, no dark, no night, no dusk, no sunset, no dim lighting, no moody
+      lighting, no low key, no shadows dominant. No photorealism, no 3D render
+      look. 9:16 vertical, no text.
     authored_b09_refresh: >-
       Close-up on a round guard man in mismatched armor, in a sunny grassy
       field, a silly harmless bureaucrat with a bare head, his
