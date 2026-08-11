@@ -116,11 +116,18 @@ against the box’s own sha256 manifest before scoring.</figcaption>
   <tr><td>Clean enough to hand to the motion stage</td><td>0</td><td class="n ok">10 of 16</td></tr>
 </table>
 
-<p><strong>Why 16 cells are only 8 pictures.</strong> The references directory held four slots but
-only two distinct images, so each render happened twice. The sheet labels every twin. Counting
-distinct pictures instead: 8 rendered, 5 clean, 1 unusable, 2 with blobby hands at the sides.
-This is a known defect in the round axis and it is reported, not hidden — it means roughly half
-this job’s GPU time drew duplicates.</p>
+<p><strong>Why 16 cells are only 8 pictures, and why that is on purpose.</strong> The references
+directory holds four slots but two distinct images, because this round deliberately tests two
+crops of the approved reference: <strong>refA is a coat-hem crop, refB is the whole figure</strong>,
+each filling two slots. Same reference bytes in two slots produce the same picture, so r0 = r1 and
+r2 = r3 by construction. The sheet labels every twin rather than counting it twice. Distinct
+pictures: 8 rendered, 5 clean, 1 unusable, 2 with blobby hands at the sides.</p>
+
+<p>The crop is the interesting variable, not an accident: the crop chooses the shot size, so refA’s
+tighter framing is what a medium shot of this beat looks like and refB’s is what a full standing
+figure looks like. Beat 02 is written wide, which is the case for refB; the staged wording that
+drew these asks for a medium shot, which is the case for refA. Both are on the sheet so the choice
+is visible rather than assumed.</p>
 
 <h2>What is still not in these frames, and why that is now fine</h2>
 
@@ -140,7 +147,9 @@ sapling are things to <em>name in the clip prompt</em>, not things to keep re-re
 suggestion is <strong>refB · seed s1</strong> (<code>02-the-sprint-ipa-r2-w015-s1.png</code>,
 sha <code>404f5356…</code>) — hands already to his chest, clean face, red eyes, and a sapling
 sprig in frame to build on. <strong>refB · seed s0</strong> (sha <code>74f8d8e8…</code>) is the
-same pose without the sprig. That is a taste call and it is yours; the counting above is not.</p>
+same pose without the sprig. Both are whole-figure, which suits a beat written wide; if you would
+rather the clip start closer on him, the refA cells are the same character at medium size. That is
+a taste call and it is yours; the counting above is not.</p>
 
 <div class="callout">
   <p><strong>The process fault, written down rather than quietly fixed.</strong> A render that
