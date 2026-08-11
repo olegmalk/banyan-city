@@ -1,0 +1,29 @@
+# ===================================================================
+# PROVISIONAL — v33 clip set. Nothing here is canon, nothing here is
+# approved, and no file in this directory may be promoted to a canon
+# name or published. Taste is the founder's (R4).
+# ===================================================================
+# COPIED verbatim from review/beat-01-the-keyboard.mp4 — the render record
+# below is the original's, reproduced unedited. No model ran for
+# this cut; only the filename changed, so render_t3 can match the
+# beat by slug.
+# Shot provenance (7.2) — written by video_task at render time
+platform: local-gpu (rtx5090)
+model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+model_licence: Apache-2.0
+shot_beat: 1
+size: 704x1280
+seconds: 2.5
+steps: 14
+guidance: 5.0
+seed: 20260806
+task: f15-b01-1785804000
+cost_usd: 0
+prompt: |-
+  2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. his hands hammer the mechanical keyboard, fingers flying across the keys in large rapid strokes, wrists moving visibly, the monitor glow pulsing over them
+negative: |-
+  new subjects, scene change, photorealism, 3D render look, text, 静态, 静止, 静止不动的画面, frozen frame, still image, no motion, photorealistic, photograph, live action, film still, 3D render, CGI, octane, realistic skin texture, depth of field bokeh, motion blur, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+clip_sha256: e164626a5e681c3720f7e984eec8230f17ac9023b23b52b253d2efb90dc7bd6c
+provisional: true
+provisional_reason: |-
+  f15 take, canon unchanged; byte-identical to farm-out/f15-b01-1785804000-01-the-keyboard.mp4 at 0e8c298
