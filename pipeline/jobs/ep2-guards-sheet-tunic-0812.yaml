@@ -1,0 +1,201 @@
+# ── GUARDS CHARACTER SHEET, CANDIDATE 1 — PLAIN BROWN TUNICS, 2026-08-12 ────────────────────────
+# HIS ASK, verbatim, ~23:45 local 2026-08-11: "i think we need proper character
+# consistency sheets for both the goblin and the guards for me to review."
+# Recorded in taste/steward-model.ledger.yaml as
+# `ep2-night-rounds-founder-verdict-0811`. He asked for the guards half twice in
+# one day — the first time at ~16:15, "should probably setup a character for the
+# guards, take your time doing that" — and this is the second asking answered.
+#
+# WHAT A SHEET IS HERE, STATED PLAINLY BECAUSE THE MACHINERY CONSTRAINS IT.
+# `render_wave_sample.py` draws ONE prompt at FOUR fixed seeds (wg.SEED + beat +
+# i*1000) and has no seed flag and no multi-pose mode. So a candidate is not a
+# turnaround — it is one identity drawn four times at four seeds, which is
+# exactly the cross-seed consistency his "bad character consistency" complaint is
+# about. Three armour-free guard candidates x 4 seeds = 12 frames, beside tonight's four armoured frames as the control. The review page sets the candidates side by side so he can
+# point at one.
+#
+# ONE SAMPLE BEFORE ANY BATCH (CLAUDE.md, founder 2026-08-03) IS SATISFIED AND
+# HERE IS THE ARGUMENT. The rule bans scaling an unapproved result across the
+# wave; it does not ban the artifact he explicitly asked for. Nothing here
+# renders a beat for the episode: these are identity candidates on one beat, at
+# $0, and NOTHING may be carried to another beat until he points at one.
+#
+# NO PICK, NO RANK, NO PROMOTION. The steward has no opinion on the page and
+# writes none. R4 is his.
+#
+# WHAT MOVED IN THE RATIFIED REGISTER, AND IT IS ONE CLAUSE. His ~20:27 approval
+# was "two silly round bureaucrats with visible faces" — those words stand and
+# all of them survive in this prompt. The armour was never his: "dull dented
+# mismatched armor" is the STEWARD's phrasing, it sits on six lines of
+# pipeline/wave-drafts.yaml across beats 05, 06, 07, 10 and 11, and it rode into
+# the ratification inside a question he answered yes to. Tonight: "the guards are
+# still wearing armor and just, none of these are really right."
+#
+# THIS PROMPT IS `authored_b05_warmfield` WITH ONE CLAUSE SWAPPED, THE GARMENT.
+# The snow fix is kept whole because it is the one thing that provably worked
+# tonight — `no snow, no winter, no forest` plus `warm green` returned no snow in
+# 4 of 4 and green grass in 4 of 4 (`ep2-b05-warmfield-0811`, scored) — and he
+# said of the setting "otherwise its actually not bad".
+#
+# `no armor` IS NEW AND IT CAN ONLY BIND NOW. b05-r5's lesson was that negating
+# armour while the positive still ASKED for armour failed 4 of 4, because CLIP
+# does not compose a negation against an affirmative it is also given. With the
+# armour out of the positive for the first time, `no armor` has nothing
+# contradicting it and the register bans already present (`no knight, no full
+# plate, no helmet`) start binding too.
+#
+# THE ARMOURED CONTROL IS NOT RE-RENDERED. `authored_b05_warmfield`'s four frames
+# were drawn tonight and are the frames he rejected; they go on the sheet as the
+# armour column. Spending GPU minutes to redraw what he just refused would be
+# waste, and one armoured column is the most the sheet should carry.
+#
+# THE GARMENTS ARE OFFERED, NOT PICKED. He said what they are NOT wearing and has
+# not said what they are.
+#
+# ── MEASURED ON THE BOX'S REAL CLIP TOKENIZER BEFORE ENQUEUE, NOT ESTIMATED ───
+# Positive 73/77 with the style anchor present, `2boys` deriving and matching the draft, negative recipe 76 -> sent 76 with `armor` reaching the model. DRY OK. NEGWARN, recorded rather than buried: four house-tier terms drop — realistic skin texture, jpeg artifacts, deformed, extra limbs. On a two-hander with a held prop `extra limbs` is the loss worth naming, and it is the same trade `authored_b05_warmfield` made tonight.
+# The box's wave-drafts.yaml was scp'd from this repo and verified sha256
+# IDENTICAL before this job was written: da4f0697635d17a863d5dd7201d03ea7a92bc55960b7d7e520146b2e301690be
+# (`ep2-b08-refresh-0811` failed rc=1 at its measure step because the box's copy
+# was not the copy its spec attested to; the harness refuses rather than falling
+# back, so a stale copy costs $0.) The spec re-runs `--dry` as step 1 anyway.
+
+id: ep2-guards-sheet-tunic-0812
+task: ep2-guards-sheet-tunic-0812
+node: 002b-first-citizen
+beat: 5
+runner: box
+needs_gpu: true
+
+# box_runner.py sorts priority ASCENDING and takes ONE job at a time regardless;
+# sequential is the rule (CLAUDE.md, founder 2026-08-03) and batch-of-4 is banned.
+# The ready and running queues were both EMPTY and the card at 0% utilization when
+# this lane staged (`box_enqueue.py --list` and `nvidia-smi`, checked not assumed),
+# which is the condition CLAUDE.md's no-idle-GPU directive names.
+priority: 34
+max_attempts: 1
+owner: verdict-and-sheets lane, 2026-08-12 (his ~23:45 character-sheet ask)
+
+# NO `gate:` KEY. A character sheet clears nobody's gate — the fourteen
+# `ep2-b*-goblin-wave1.yaml` specs and every staged sibling keep theirs. It
+# publishes nothing to the site and spends nothing.
+
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03`, read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the render
+  gate itself reads. Both `approval_conditions` are about beat 01''s fig and beat
+  16''s leaf; neither touches beat 05 THE PATROL. This job draws a character
+  candidate, not a beat for the episode, and nothing it makes may be carried to
+  another beat before the founder points at one.'
+
+consumer: >-
+  review/SHEETS/char-sheets-0812.html — the character sheet page built for his
+  review, as the first armour-free column of the guards row. He asked for the sheet in
+  words; this is the artifact. Nothing on the page is ranked and no candidate is
+  recommended.
+
+success: >-
+  Four PNGs at C:\banyan-farm\wave-goblin-prep\out-sheet-grd-tunic\05-the-patrol-wave1-s0..3.png
+  with their .yaml provenance sidecars written at render time (7.2), all eight
+  declared as artifacts so a missing one fails rc=92 instead of passing quietly.
+  Whether the candidate is right is R4's call, not this job's and not a metric's.
+
+why: >-
+  The plainest garment on offer. One clause differs from the warmfield prompt whose snow fix worked 4 of 4 tonight; everything he ratified and everything that was proven is untouched.
+
+goblin_def: green skin
+goblin_def_source: >-
+  The founder's own definition is the base and is quoted in every sidecar: "he is just a simple green goblin, nothing complex" (2026-08-10 ~12:15, ledger `ep2-goblin-definition-0810`). NO GOBLIN IS IN THIS BEAT. Beat 05 is `kind: guard` and its draft carries no {{GOBLIN}} slot, so this value fills nothing and changes no pixel; render_wave_sample.py makes --goblin-def mandatory on every call rather than letting a default stand in. The founder's own definition is passed so the sidecar records the same string as every other job in this wave.
+
+est_minutes: 3
+needs:
+- cuda
+- vram20
+- farm-venv
+
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '5'
+  - --goblin-def
+  - green skin
+  - --variant
+  - authored_b05_sheet_tunic
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '5'
+  - --goblin-def
+  - green skin
+  - --variant
+  - authored_b05_sheet_tunic
+  - --out
+  - C:\banyan-farm\wave-goblin-prep\out-sheet-grd-tunic
+  - --task
+  - ep2-guards-sheet-tunic-0812
+
+# DURABILITY: every still this farm makes lands single-copy on a box nothing backs
+# up. The courier runs `git add -A -- farm-out` and pushes on job_done, and
+# farm-out is NOT gitignored, so publishing is a COPY and the runner stays
+# byte-identical. allow_fail: a failed copy must never mark a good render failed.
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-guards-sheet-tunic-0812"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/wave-goblin-prep/out-sheet-grd-tunic/05-the-patrol-wave1-s*.*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        # Hash the COPY, not the original: what this records has to be the bytes
+        # that get committed, or the manifest attests to the wrong file.
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+        print("   ", os.path.basename(f), h[:16])
+    # newline="\n" is load-bearing: Windows text mode rewrites \n to \r\n and
+    # every filename then carries a trailing \r that shasum -c cannot open.
+    with open(os.path.join(dst, "ep2-guards-sheet-tunic-0812.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    # 4 stills + 4 sidecars. Fewer means the render wrote less than it promised.
+    raise SystemExit(0 if len(src) == 8 else 1)
+
+artifacts:
+- C:\banyan-farm\wave-goblin-prep\out-sheet-grd-tunic\05-the-patrol-wave1-s0.png
+- C:\banyan-farm\wave-goblin-prep\out-sheet-grd-tunic\05-the-patrol-wave1-s1.png
+- C:\banyan-farm\wave-goblin-prep\out-sheet-grd-tunic\05-the-patrol-wave1-s2.png
+- C:\banyan-farm\wave-goblin-prep\out-sheet-grd-tunic\05-the-patrol-wave1-s3.png
+- C:\banyan-farm\wave-goblin-prep\out-sheet-grd-tunic\05-the-patrol-wave1-s0.yaml
+- C:\banyan-farm\wave-goblin-prep\out-sheet-grd-tunic\05-the-patrol-wave1-s1.yaml
+- C:\banyan-farm\wave-goblin-prep\out-sheet-grd-tunic\05-the-patrol-wave1-s2.yaml
+- C:\banyan-farm\wave-goblin-prep\out-sheet-grd-tunic\05-the-patrol-wave1-s3.yaml

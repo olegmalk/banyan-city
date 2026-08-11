@@ -631,6 +631,47 @@ beats:
       interior, no indoors, no architecture, no dark, no night, no dusk, no
       sunset, no dim lighting, no moody lighting, no low key, no shadows
       dominant. No photorealism, no 3D render look. 9:16 vertical, no text.
+    # ── `authored_b04_sheet` — THE GOBLIN CHARACTER SHEET, 2026-08-12 ──────────
+    # Roman, ~23:45 on 2026-08-11, verbatim: "i think we need proper character
+    # consistency sheets for both the goblin and the guards for me to review."
+    # The same night he rejected beat 02 with "the goblin looks female again and
+    # is too overcomplicated" and beat 03 with "not having the correct style as a
+    # goblin". This is the beat-04 half of that ask.
+    #
+    # THIS VARIANT IS DELIBERATELY THE THINNEST IN THE FILE, AND THAT IS THE
+    # DESIGN. It carries no action, no prop, no plant and no business — a plain
+    # standing figure in a plain field — so that the ONLY thing separating one
+    # candidate from another is the {{GOBLIN}} slot each job fills. Four jobs
+    # render this one string with four different `--goblin-def` values at the same
+    # four seeds, which makes the sheet a controlled comparison of the frozen slot
+    # rather than four different pictures. The slot is where tonight's fault
+    # actually lives: `green skin` under-specifies a character on a checkpoint with
+    # a strong goblin prior, and the prior supplies a soft female face and a
+    # five-piece costume for free (ledger `ep2-b02-goblin-hide-0811`, scored).
+    #
+    # NO SAPLING, ON PURPOSE. A sheet is identity, not staging, and `_SMALL` must
+    # not fire: with `sapling` or `tiny` in the positive the eight-term SCALE block
+    # is sent and eats the budget this beat needs for the slot. Beats 02 and 03
+    # both failed tonight to draw a sapling at all; that is a staging problem and
+    # it is not this artifact's problem.
+    #
+    # THE THREE NEGATIVES THAT ARE NEW HERE, each answering a word he said:
+    #   `no armor, no jewelry, no ornament` — "too overcomplicated". The frames he
+    #     rejected layer a collared vest, an underlayer, a belt, a pendant and a
+    #     sash on a character his own definition fixes as "he is just a simple
+    #     green goblin, nothing complex" (2026-08-10). None of that was prompted.
+    #   `no long eyelashes, no lipstick` — "looks female again". The species tier
+    #     already sends `female goblin, elf`; these two name the specific tells the
+    #     rejected frames actually drew, which the species tags did not stop.
+    # `1boy` still derives: `A small goblin boy` heads the first comma-clause.
+    authored_b04_sheet: >-
+      A small goblin boy, {{GOBLIN}}, solo, standing in a plain sunlit grassy
+      field, full body facing camera, arms at his sides. Medium full shot,
+      bright morning light, cinematic lighting, detailed, newest, masterpiece,
+      best quality, very aesthetic No girl, no child, no armor, no jewelry, no
+      ornament, no long eyelashes, no lipstick, no dark, no night, no dim
+      lighting, no moody lighting, no low key. No photorealism, no 3D render
+      look. 9:16 vertical, no text.
 
   5:
     slug: the-patrol
@@ -826,6 +867,74 @@ beats:
       weapon, no hood, no screen, no dark, no dusk, no sunset, no dim lighting,
       no moody lighting, no low key, no shadows dominant. No photorealism, no
       3D render look. 9:16 vertical, no text.
+    # ── THE GUARDS CHARACTER SHEET, three variants, 2026-08-12 ────────────────
+    # Roman, ~23:45 on 2026-08-11, verbatim: "for beat 05, the guards are still
+    # wearing armor and just, none of these are really right" and "i think we need
+    # proper character consistency sheets for both the goblin and the guards for
+    # me to review."
+    #
+    # WHAT MOVED IN THE RATIFIED REGISTER, AND IT IS ONE CLAUSE. His ~20:27
+    # approval was "two silly round bureaucrats with visible faces" — those words
+    # stand and every one of them is still in these three strings. The armour was
+    # never his: "dull dented mismatched armor" is the STEWARD's phrasing, it sits
+    # on six lines of this file across beats 05, 06, 07, 10 and 11, and it rode
+    # into the ratification inside a question he answered yes to. Tonight he named
+    # it. It is out of the three candidates below and stays word for word in
+    # `authored_b05_warmfield` above, which is the armoured control for the sheet
+    # and needs no new render — its four frames were drawn tonight.
+    #
+    # EACH OF THESE IS `authored_b05_warmfield` WITH EXACTLY ONE CLAUSE SWAPPED,
+    # the garment. That is not tidiness, it is what makes the sheet readable: the
+    # snow fix is the one thing that provably worked tonight (`no snow, no winter,
+    # no forest` plus `warm green`, no snow in 4 of 4, green grass in 4 of 4), the
+    # register bans are b05-r5's proven eight, and he said of the setting
+    # "otherwise its actually not bad". None of that is disturbed.
+    #
+    # `no armor` IS NEW AND IT CAN ONLY WORK NOW. b05-r5's lesson was that
+    # negating `armor plate` while the positive still said `mismatched ill-fitting
+    # armor` failed 4 of 4, because CLIP does not compose a negation against an
+    # affirmative it is also given. With the armour gone from the positive for the
+    # first time, the ban has nothing to contradict it and the register negatives
+    # already there (`no knight, no full plate, no helmet`) start binding too.
+    #
+    # THE GARMENTS ARE OFFERED, NOT PICKED. He said what the guards are NOT
+    # wearing and has not said what they are, so three plain options go to him and
+    # the steward ranks none of them. All three are shorter than the armour phrase
+    # they replace, so the positive shrinks and no proven term is paid for.
+    # `2boys` still derives on all three: `Two round guard men` is untouched.
+    authored_b05_sheet_tunic: >-
+      Two round guard men in plain brown tunics stand side by side facing
+      camera in a warm green grassy morning field, silly harmless bureaucrats
+      with round soft bodies and bare heads, both faces clearly visible, one
+      holding a bark clipboard. Medium shot, bright morning light, cinematic
+      lighting, detailed, newest, masterpiece, best quality, very aesthetic No
+      girl, no child, no armor, no snow, no winter, no forest, no helmet, no
+      knight, no full plate, no dark fantasy, no night, no glowing visor, no
+      weapon, no hood, no screen, no dark, no dusk, no sunset, no dim lighting,
+      no moody lighting, no low key, no shadows dominant. No photorealism, no
+      3D render look. 9:16 vertical, no text.
+    authored_b05_sheet_robe: >-
+      Two round guard men in simple grey robes and cloth sashes stand side by
+      side facing camera in a warm green grassy morning field, silly harmless
+      bureaucrats with round soft bodies and bare heads, both faces clearly
+      visible, one holding a bark clipboard. Medium shot, bright morning light,
+      cinematic lighting, detailed, newest, masterpiece, best quality, very
+      aesthetic No girl, no child, no armor, no snow, no winter, no forest, no
+      helmet, no knight, no full plate, no dark fantasy, no night, no glowing
+      visor, no weapon, no hood, no screen, no dark, no dusk, no sunset, no dim
+      lighting, no moody lighting, no low key, no shadows dominant. No
+      photorealism, no 3D render look. 9:16 vertical, no text.
+    authored_b05_sheet_vest: >-
+      Two round guard men in plain padded vests over long shirts stand side by
+      side facing camera in a warm green grassy morning field, silly harmless
+      bureaucrats with round soft bodies and bare heads, both faces clearly
+      visible, one holding a bark clipboard. Medium shot, bright morning light,
+      cinematic lighting, detailed, newest, masterpiece, best quality, very
+      aesthetic No girl, no child, no armor, no snow, no winter, no forest, no
+      helmet, no knight, no full plate, no dark fantasy, no night, no glowing
+      visor, no weapon, no hood, no screen, no dark, no dusk, no sunset, no dim
+      lighting, no moody lighting, no low key, no shadows dominant. No
+      photorealism, no 3D render look. 9:16 vertical, no text.
 
   6:
     slug: the-clipboard

@@ -9635,3 +9635,147 @@
     side, so he can point at one. Until he does, the frozen `green skin` slot and
     the six armour lines in `pipeline/wave-drafts.yaml` stay exactly as they are and
     are not "fixed" by a steward guess.
+
+- id: ep2-goblin-sheet-0812
+  date: 2026-08-12
+  kind: prediction
+  written: >-
+    2026-08-12 ~00:0x, BEFORE ENQUEUE and before any frame of this sheet existed.
+    The four dry runs had passed on the box's real CLIP tokenizer (they draw
+    nothing) and no candidate had been rendered when these predicates were fixed.
+  subject: "node 002b beat 04 — THE GOBLIN CHARACTER CONSISTENCY SHEET he asked
+    for in words: four candidate identities x 4 seeds = 16 stills, $0, SDXL
+    animagine-xl-3.1. Jobs `ep2-goblin-sheet-{a,b,c,d}-0812`, variant
+    `authored_b04_sheet`, priorities 30-33."
+  steward_provisional: true
+  pick: null
+  scores: {}
+  his_words: >-
+    "i think we need proper character consistency sheets for both the goblin and
+    the guards for me to review" (~23:45, 2026-08-11); "the goblin looks female
+    again and is too overcomplicated" (same message, beat 02); "not having the
+    correct style as a goblin" (same message, beat 03); "he is just a simple green
+    goblin, nothing complex" (2026-08-10, the frozen definition); "if its not too
+    much of a hassle then yes" (~20:27 2026-08-11, the cloak).
+  the_one_variable: >-
+    THE SLOT, and nothing else. All four jobs render the same string
+    `authored_b04_sheet` at the same four seeds and differ only in `--goblin-def`:
+    A `green skin` (control, today's frozen slot) · B `+ one broken tusk` · C `+
+    plain brown tunic` · D `+ faded green patchwork cloak`. The staging is
+    deliberately the thinnest in wave-drafts.yaml — a standing figure in a plain
+    field, no action, no prop, no plant — so a verdict is attributable to the slot.
+  predicted_verdict: reject_all
+  and_why_that_call_is_almost_free_stated_so_a_scorer_can_discount_it: >-
+    The seventh scoring's headline is that this model has never once predicted what
+    he would take and has never missed a rejection across nineteen of them, so
+    `reject_all` is the cheap call and writing it here earns little. It is written
+    anyway because the rule this same scoring imposed — every prediction record
+    carries a `predicted_verdict:` or says why it cannot — applies to the lane that
+    wrote the rule first. The real content is in the predicates.
+  predicted: >-
+    (1) THE GOBLIN READS MALE IN AT LEAST 3 OF THE 4 CANDIDATES' SETS, judged as
+    "3 or 4 of that candidate's own 4 seeds read male". Candidate A is the one
+    expected to fail: it is the slot that produced "looks female again" tonight,
+    unchanged. If A reads male too, then tonight's female read came from beat 02's
+    staging rather than the slot and this sheet has falsified its own diagnosis.
+    (2) THE TUSK CANDIDATES (B, C, D) READ MALE IN 4 OF 4 SEEDS EACH. r9 measured
+    exactly this at 4 of 4 and this is the re-test of the only lever ever measured
+    against the fault.
+    (3) COSTUME COMPLEXITY DROPS WHERE CLOTHING IS STATED: candidate C shows THREE
+    OR FEWER garment elements in at least 3 of 4 seeds, against candidate A at the
+    same seeds. Counting rule fixed in advance so it cannot be argued after: one
+    element = one of {tunic/shirt, trousers, vest/overlayer, belt, sash, cloak,
+    pendant/necklace, pouch, boots}. The rejected beat-02 frames scored five.
+    (4) THE CLOAK IS VISIBLY PRESENT IN AT LEAST 3 OF 4 SEEDS OF CANDIDATE D — the
+    first evidence that the change he authorised on 2026-08-11 renders at all.
+    (5) NO SAPLING IN ANY FRAME OF THE SHEET, 16 OF 16, AND THAT IS A PASS. A sheet
+    is identity, not staging. Written down because two beats failed on a missing
+    sapling tonight and a later reader must not score its absence here as the same
+    fault.
+  what_a_miss_means: >-
+    If predicate 2 misses — the tusk candidates still read female — then the female
+    read is not a slot property, no wording available to this checkpoint fixes it,
+    and the next lever is a reference image or an IP-Adapter, which is a different
+    and more expensive class of work. If predicate 3 misses, an unspecified costume
+    is NOT what the prior is filling in and "too overcomplicated" needs a different
+    mechanism than affirmative clothing.
+  what_this_does_not_do: >-
+    Picks nothing, ranks nothing, recommends nothing, promotes nothing to canon,
+    spends nothing, carries no `gate:` key and clears nobody's. Nothing on this
+    sheet may be carried to another beat before he points at a candidate. The
+    frozen slot stays `green skin` in all 22 ep2 specs until he rules.
+  consumer: review/SHEETS/char-sheets-0812.html, for his review.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep2-guards-sheet-0812
+  date: 2026-08-12
+  kind: prediction
+  written: >-
+    2026-08-12 ~00:0x, BEFORE ENQUEUE, no frame of any candidate rendered. The
+    three dry runs had passed on the box's real tokenizer and draw nothing.
+  subject: "node 002b beat 05 — THE GUARDS CHARACTER CONSISTENCY SHEET: three
+    armour-free candidates x 4 seeds = 12 stills, $0, beside tonight's four
+    armoured `out-b05-warm` frames as the control column. Jobs
+    `ep2-guards-sheet-{tunic,robe,vest}-0812`, priorities 34-36."
+  steward_provisional: true
+  pick: null
+  scores: {}
+  his_words: >-
+    "the guards are still wearing armor and just, none of these are really right"
+    (~23:45, 2026-08-11); "two silly round bureaucrats with visible faces" (~20:27,
+    the ratified register, unchanged); "should probably setup a character for the
+    guards, take your time doing that" (~16:15).
+  the_one_variable: >-
+    THE GARMENT CLAUSE. Each candidate is `authored_b05_warmfield` with one clause
+    swapped — plain brown tunics · simple grey robes and cloth sashes · plain
+    padded vests over long shirts — plus `no armor` in the negative, which can only
+    bind now that the positive has stopped asking for armour (b05-r5's lesson:
+    negating armour while the positive said armour failed 4 of 4). The snow fix,
+    the register bans, the round bodies, the bare heads, the clipboard and the
+    lighting block carry over word for word.
+  predicted_verdict: reject_all
+  the_same_discount_applies: >-
+    As on the goblin sheet: `reject_all` is the class this model has never missed
+    and it is nearly free. The predicates are the content, and one of them is
+    written to be embarrassing if it fails.
+  predicted: >-
+    (1) NO ARMOUR IN ANY FRAME OF THE THREE ARMOUR-FREE CANDIDATES, 12 OF 12 — no
+    plate, no pauldrons, no gauntlets, no vambraces, no chain. This is the
+    embarrassing one: with armour gone from the positive AND `no armor` sent, a
+    single breastplate means the checkpoint's guard prior overrides both channels
+    and prompt-level costume control on this beat is finished.
+    (2) TWO FIGURES IN 4 OF 4 ON EVERY CANDIDATE, 12 OF 12 — `2boys` derives and
+    tonight's guards round already hit this at 4 of 4.
+    (3) BOTH FACES VISIBLE AND UNMASKED IN AT LEAST 3 OF 4 PER CANDIDATE. Called at
+    3, not 4: tonight's guards-silly returned a blank masked oval on one seed of
+    four even with the register bans sent, so a repeat of that is the expected
+    failure shape rather than a surprise.
+    (4) ROUND SOFT BODIES RATHER THAN MUSCULAR ONES IN AT LEAST 2 OF 4 PER
+    CANDIDATE. Called LOW on purpose and it is the weak predicate of this sheet:
+    the same words returned 2 of 4 tonight, and nothing in these three candidates
+    is aimed at the muscle — removing armour may even make the bodies read leaner.
+    (5) NO SNOW IN 12 OF 12 — the one thing that provably worked tonight, carried
+    unchanged, and a regression here would mean the garment swap broke it.
+  what_a_miss_means: >-
+    If predicate 1 misses, a reference image is the only route left for the guards
+    and that is the conclusion he was already pointing at in his ~16:15
+    instruction. If predicate 4 misses across all three candidates, `round` in the
+    positive is spent on this checkpoint and the round bodies need either a
+    different word or a reference.
+  what_this_does_not_do: >-
+    Picks nothing, ranks nothing, recommends no garment, spends nothing, clears no
+    gate. It does not itself create the guard character — that exists when he
+    points at a frame and says that is them, which is R4 and his alone. The six
+    armour lines in `pipeline/wave-drafts.yaml` (beats 05, 06, 07, 10, 11) are NOT
+    edited by this work and stay exactly as they are until he chooses a
+    replacement.
+  consumer: review/SHEETS/char-sheets-0812.html, for his review.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
