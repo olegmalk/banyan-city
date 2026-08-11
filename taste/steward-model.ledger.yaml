@@ -9049,3 +9049,34 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+- id: ep2-b19-refresh-0811
+  kind: prediction
+  written: 2026-08-12 ~00:3x, before enqueue; predicates fixed before any frame of
+    this round existed. Two dry runs on the box first - the first REFUSED at STYLE
+    ANCHOR MISSING, the second clean at positive 74/77 - and the dry step draws
+    nothing.
+  round: ep2-b19-refresh-0811, beat 19 THE DROP, variant authored_b19_refresh,
+    4 stills, SDXL animagine-xl-3.1, node 002b-first-citizen.
+  what_changed: staging kept from the wave-1 authored draft with one additive
+    placement (`rooted beside him` after `a tiny sapling standing tall`, because
+    s2 grew the sapling out of the top of his head - the round-3 rejection for
+    this beat returning); added `in a sunny grassy field` early for the 4 of 4
+    with no field and 2 of 4 with no ground at all, and `no chibi` and `no speech
+    bubble` for the flat cartoon in 4 of 4 and the readable "Fig~" bubble in s1.
+    NO `bright morning light` - the staging says amber afternoon. Dark ban cut to
+    `no dusk, no sunset` so the plant-fusion and anti-big-tree tiers survive.
+  predicates:
+    - a ripe fig visible in frame, falling, bouncing or in the grass, in >=2/4 -
+      it was 0/4 last round and this is the predicate the beat exists for
+    - the sapling rooted in the ground beside him and NOT growing out of his head
+      or any part of his body, in 4/4
+    - grass or a field under him rather than bare dirt or an empty gradient, in >=3/4
+    - detailed cinematic anime rather than flat chibi cartoon, in >=2/4
+    - no speech bubble, panel border or readable text anywhere in frame, in 4/4
+  consumer: the founder's morning review page.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null

@@ -1,0 +1,264 @@
+# Beat 19 THE DROP refresh, derived by sed from ep2-b11-refresh-0811.yaml at
+# 2026-08-12 ~00:2x by the beats 14-20 lane. Nothing below describes beat 10 or
+# 11: carrying a disclaimer forward is not the same as telling the truth, so the
+# whole header was rewritten for this beat.
+#
+# HIS MANDATE, verbatim and covering this beat with no words of its own: "i
+# looked at all the beats and you have to change pretty much all of them, do
+# some regeneration, and do some evaluating of your own. train the system."
+#
+# -- WHAT THE WAVE-1 FRAMES ACTUALLY SHOW, READ BEFORE THE FIX WAS WRITTEN -----
+# `review/ep2-picks/wave-0811/b19-s0..s3.jpg`, all four opened and looked at.
+# THIS IS THE WORST-DRIFTED BEAT OF THE FIVE IN THIS LANE:
+#   * THERE IS NO FIG IN ANY OF THE FOUR. The beat sheet: "the stem lets go, the
+#     fig falls, bounces off his head and lands in the grass at his feet". The
+#     fig is the whole physical event of the beat and it is 0 for 4.
+#   * FOUR OF FOUR ARE FLAT CHIBI CARTOON. Uniform thick outlines, flat fills, a
+#     giant round head on a toy body, and a red sweater with sneakers where the
+#     patchwork cloak should be. This is the register the founder killed on
+#     2026-07-27 and the note beat 02 r3 was turned down on: "a flat cartoon, not
+#     our show".
+#   * S2 GROWS THE SAPLING OUT OF THE TOP OF HIS HEAD. That is verbatim the
+#     round-3 rejection for this beat on 2026-08-09 -- "the sapling is growing
+#     out of his head in all four" -- returning after the `full` fusion tier
+#     (`leaf on head`, `plant hair`, `flower on head`) was already being sent.
+#     The tier did not hold on its own.
+#   * TWO OF FOUR HAVE NO GROUND AT ALL. s2 and s3 float on a pastel gradient.
+#     The other two stand on bare brown dirt. NOT ONE of the four has a grass
+#     field, on the beat the sheet calls "wide, with the tree and the scavenger
+#     in one frame".
+#   * S1 IS DRAWN AS A COMIC PANEL: black panel borders inside the frame, manga
+#     sparkle effects, and a SPEECH BUBBLE containing readable text, "Fig~". The
+#     draft ends in `no text` and `text` was in the negative as sent, so the
+#     generic term did not carry the bubble.
+#
+# -- THE FIX -------------------------------------------------------------------
+# Staging kept from `authored` with one additive placement, named rather than
+# slipped in. Every clause of the event survives word for word: stops mid-step,
+# a ripe fig drops from a tiny sapling standing tall, bounces off his head, lands
+# in the grass.
+#  1. GROUND. `in a sunny grassy field` in the fourth clause -- the
+#     early-affirmative placement `authored_b04_fieldban` proved. Four of four
+#     frames had no field and half had no ground whatsoever. NO WALLS BAN: the
+#     failure here is emptiness, not architecture, and no frame drew a wall.
+#  2. WHERE THE SAPLING IS. `rooted beside him` after `standing tall` -- additive,
+#     not a rewording. A sapling with no stated place ended up growing out of his
+#     skull, and the fusion tier alone had already failed to stop that.
+#  3. THE CARTOON AND THE BUBBLE. `no chibi` and `no speech bubble`, the two
+#     verdict-specific bans, both real booru tags this model was trained on,
+#     both for faults counted above rather than guessed at.
+#  4. NO `bright morning light`. The staging says `amber afternoon` in its own
+#     words and staging is kept.
+#  5. THE DARK BLOCK CUT TO `no dusk, no sunset`, the same call the beat 15
+#     refresh made an hour ago and for the same measured reason: not one of these
+#     four frames is dark -- they are pastel and bright -- while s0 and s3 do sit
+#     on sunset gradients. The eight-term block would have cost this beat its
+#     scale and fusion guard, which is precisely the tier a sapling growing out
+#     of a head is about.
+#
+# -- MEASURED ON THE BOX'S REAL CLIP TOKENIZER, AND THE REFUSAL IS THE USEFUL --
+# -- PART ----------------------------------------------------------------------
+# DRAFT 1 was REFUSED. `rooted in the ground beside him` put the positive over 77
+# and `compress()` drops from the least important end, which is the STYLE
+# SENTENCE: `Static camera, amber afternoon, cinematic lighting, detailed,
+# newest, masterpiece, best quality, very aesthetic` went in one go, check()
+# faulted STYLE ANCHOR MISSING, rc=1, nothing drawn. Same death `ep2-b08-refresh-
+# 0811` had at 89/77.
+# WHAT PAID FOR THE FIX WAS MINE AND NOT THE BEAT'S: `in the ground` came out of
+# my own added clause, leaving `rooted beside him`, which places the sapling in
+# the same words minus four tokens. Nothing of the staging and nothing of the
+# style tail was touched.
+# DRAFT 2, the one this job runs: positive 74/77 with STYLE ANCHOR PRESENT True,
+# count tag `1boy` deriving and matching the draft, `text` negated True, DRY OK.
+# Negative recipe 74 -> sent 71. NEGWARN drops the quality boilerplate (realistic
+# skin texture, jpeg artifacts, deformed, extra limbs, blurry, low quality,
+# signature, watermark, abstract, 3d render, photorealistic) plus `shrubbery`, and
+# NOTHING ELSE: `mature tree, large tree, thick trunk, full canopy, forest, bush`
+# and the entire plant-fusion tier all reach the model. On this beat that tier is
+# the load-bearing one and it is intact.
+# THREE TOKENS OF POSITIVE HEADROOM: anything a later round adds here kills the
+# style sentence again unless it names what it pays with.
+#
+# -- ON THE DRAFTS FILE'S SHA -------------------------------------------------
+# The sha attested below is the box copy as of THIS job's enqueue. This lane
+# stages beat 20 after it and that scp appends one more variant key, so a later
+# whole-file sha does not mean this beat's prompt moved: the edit is additive,
+# `authored_b19_refresh` is byte-identical to the text measured above, and the
+# harness reads the variant BY KEY and refuses outright when it is missing.
+#
+# WHY THIS IS ONE SAMPLE AND NOT A BATCH. CLAUDE.md, founder 2026-08-03: one
+# sample per recipe change. This is one recipe change on one beat, four seeds, $0.
+#
+# SEPARATE OUT DIRECTORY, DELIBERATELY. The harness names files from the beat
+# slug; this writes to `out-b19-refresh` and overwrites no earlier evidence.
+
+id: ep2-b19-refresh-0811
+task: ep2-b19-refresh-0811
+node: 002b-first-citizen
+beat: 19
+runner: box
+needs_gpu: true
+
+# 49. box_runner.py sorts priority ASCENDING and takes ONE job at a time
+# regardless -- sequential is the rule (CLAUDE.md, founder 2026-08-03) and
+# batch-of-4 is banned. This lane's beats 14 and 15 went at 46 and 47 and have
+# finished, 17 went at 48, and 20 follows at 50, so the lane lands in beat order
+# if any of them stack. Queue state was read with `box_enqueue.py --list` at
+# staging time, not assumed.
+priority: 49
+max_attempts: 1
+owner: beats 14-20 regeneration lane, 2026-08-11 (his wholesale-reject mandate)
+
+# NO `gate:` KEY. One sample on a beat he has rejected wholesale, applying a
+# register he has ratified and blocks already proven on other beats against
+# identical seeds. It clears NOBODY's gate: the fourteen
+# `ep2-b*-goblin-wave1.yaml` specs and the staged siblings keep theirs.
+
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03` (read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml:17-18, the leaf the
+  render gate itself reads, not copied from a sibling spec). His `approved_quote`
+  verbatim: "approve 002b except.. we need to make SURE the fig growing on the sapling
+  is mentioned, last time we generated 002b it just.. appeared. also, the sapling was
+  able to flail a leaf in episode 1? why couldnt it do that in 002b?" Both
+  `approval_conditions` are about beat 01''s fig and beat 16''s leaf; neither touches
+  beat 19''s lighting, framing or staging. Beat 19 is THE DROP, the wide in which the
+  sapling lets go of its one fig and it bounces off the scavenger''s head. His fig
+  condition is about beat 01 showing the fig GROW; this beat spends it, and the fig
+  is named in the positive here as it is in the draft.'
+
+consumer: >-
+  The founder's morning review page, as the regenerated beat 19 against
+  `review/ep2-picks/wave-0811/b19-s0..s3.jpg` -- the four frames described in the
+  header: no fig in any of them, flat chibi cartoon in all four, a sapling growing
+  out of his head in one and a speech bubble in another. Same beat, same four
+  seeds, so the comparison is airtight. This job ranks nothing and picks nothing;
+  which frames are good is R4's call.
+
+success: >-
+  Four PNGs at C:\banyan-farm\wave-goblin-prep\out-b19-refresh\19-the-drop-wave1-s0..3.png
+  with their .yaml provenance sidecars written at render time (7.2), all eight
+  declared as artifacts so a missing one fails rc=92 instead of passing quietly.
+  Whether the frames are good is R4's call, not this job's and not a metric's.
+
+why: >-
+  Beat 19's wave-1 frames had no fig at all in 4 of 4, flat chibi cartoon in 4 of
+  4, no grass field in 4 of 4 with two floating on a bare gradient, the sapling
+  growing out of his head in one, and a comic panel with a readable "Fig~" speech
+  bubble in another. This round states the field early, roots the sapling beside
+  him, and bans `chibi` and `speech bubble` by their booru names; the dark block is
+  cut to the two terms these frames earned so the plant-fusion and scale tiers stay
+  intact. Staging is otherwise verbatim. Measured before enqueue after one refusal
+  at STYLE ANCHOR MISSING: positive 74/77, anchor intact, `1boy` deriving, negative
+  recipe 74 -> sent 71 dropping only boilerplate and `shrubbery`, DRY OK.
+
+goblin_def: green skin
+goblin_def_source: >-
+  The founder, verbatim: "he is just a simple green goblin, nothing complex"
+  (2026-08-10 ~12:15, re-stated 2026-08-11), plus his verdict on the frames drawn
+  from it: "yeah, that looks like the right goblin" (2026-08-11 ~15:45, on
+  `ep2-b15-goblin-simple-0811`; ledger `ep2-b15-goblin-simple-founder-verdict-0811`).
+  `green skin` is the ONE attribute he named, and this round changes nothing about
+  the character.
+
+est_minutes: 2
+needs:
+- cuda
+- vram20
+- farm-venv
+
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+# The box's wave-drafts.yaml was scp'd from this repo and verified sha256-IDENTICAL
+# (68b05f0d0c6a5075dc7b0e989e3ba2f5f852712b96b72000407a1da073784259) after the edit
+# and before this job was queued -- the box printed that sha itself on the dry run
+# quoted in the header, and it matches `shasum -a 256 pipeline/wave-drafts.yaml` in
+# this repo. This is not a formality: `ep2-b08-refresh-0811` FAILED at its measure
+# step (rc=1, 7 seconds, queue/failed/) because the box's copy at run time was not
+# the copy its spec attested to. The harness REFUSES rather than falling back when a
+# variant key is missing, so a stale copy fails for $0 instead of quietly
+# re-rendering the old prompt under a new job id.
+steps:
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '19'
+  - --goblin-def
+  - green skin
+  - --variant
+  - authored_b19_refresh
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '19'
+  - --goblin-def
+  - green skin
+  - --variant
+  - authored_b19_refresh
+  - --out
+  - C:\banyan-farm\wave-goblin-prep\out-b19-refresh
+  - --task
+  - ep2-b19-refresh-0811
+
+# DURABILITY: every still this farm makes lands single-copy on a box nothing backs
+# up. The courier runs `git add -A -- farm-out` and pushes on job_done, and
+# farm-out is NOT gitignored, so publishing is a COPY and the runner stays
+# byte-identical. allow_fail: a failed copy must never mark a good render failed.
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b19-refresh"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/wave-goblin-prep/out-b19-refresh/19-the-drop-wave1-s*.*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        # Hash the COPY, not the original: what this records has to be the bytes
+        # that get committed, or the manifest attests to the wrong file.
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+        print("   ", os.path.basename(f), h[:16])
+    # newline="\n" is load-bearing: Windows text mode rewrites \n to \r\n and
+    # every filename then carries a trailing \r that shasum -c cannot open.
+    with open(os.path.join(dst, "19-the-drop-refresh.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    # 4 stills + 4 sidecars. Fewer means the render wrote less than it promised.
+    raise SystemExit(0 if len(src) == 8 else 1)
+
+artifacts:
+- C:\banyan-farm\wave-goblin-prep\out-b19-refresh\19-the-drop-wave1-s0.png
+- C:\banyan-farm\wave-goblin-prep\out-b19-refresh\19-the-drop-wave1-s1.png
+- C:\banyan-farm\wave-goblin-prep\out-b19-refresh\19-the-drop-wave1-s2.png
+- C:\banyan-farm\wave-goblin-prep\out-b19-refresh\19-the-drop-wave1-s3.png
+- C:\banyan-farm\wave-goblin-prep\out-b19-refresh\19-the-drop-wave1-s0.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b19-refresh\19-the-drop-wave1-s1.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b19-refresh\19-the-drop-wave1-s2.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b19-refresh\19-the-drop-wave1-s3.yaml

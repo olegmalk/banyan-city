@@ -1556,6 +1556,56 @@ beats:
     tag: 1boy
     extra_neg: full
     gist: fig drop
+    # -- `authored_b19_refresh` -- 2026-08-12 ~00:2x, the beats 14-20 lane. This
+    # is the worst-drifted beat of the five. `review/ep2-picks/wave-0811/
+    # b19-s0..s3.jpg`, all four opened before the fix was written:
+    #  * NO FIG IN ANY OF THE FOUR. The beat IS the fig falling. 0/4.
+    #  * FOUR OF FOUR ARE FLAT CHIBI CARTOON -- uniform thick outlines, flat
+    #    fills, a giant round head on a toy body, a red sweater and sneakers
+    #    instead of the patchwork cloak. This is the look the founder killed on
+    #    2026-07-27 and the same note beat 02 r3 was turned down on ("a flat
+    #    cartoon, not our show").
+    #  * S2 GROWS THE SAPLING OUT OF THE TOP OF HIS HEAD. That is verbatim the
+    #    round-3 rejection for this beat, 2026-08-09: "the sapling is growing out
+    #    of his head in all four". The `full` fusion tier (`leaf on head`, `plant
+    #    hair`) was already being sent and did not hold.
+    #  * TWO OF FOUR HAVE NO GROUND AT ALL (s2 and s3 float on a pastel
+    #    gradient); the other two stand on bare dirt. NOT ONE has a grass field.
+    #  * S1 IS DRAWN AS A COMIC PANEL with black borders, sparkle effects and a
+    #    SPEECH BUBBLE reading "Fig~" -- readable text on a beat whose draft ends
+    #    in `no text`, so `text` alone in the negative did not carry it.
+    # ADDED: `in a sunny grassy field` early, the placement `authored_b04_fieldban`
+    # proved, for the beat with no ground in half its frames; `rooted in the
+    # ground beside him` after `standing tall` -- additive, not a rewording, and
+    # bought because a sapling with no stated place went onto his skull; `no
+    # chibi` and `no speech bubble`, both real booru tags this model knows, for
+    # the two faults above. NO `bright morning light`: the staging says `amber
+    # afternoon` in its own words.
+    # THE DARK BLOCK IS AGAIN CUT TO `no dusk, no sunset`, for beat 15's reason
+    # measured on beat 15's frames and true here too: none of these four is dark
+    # -- they are pastel and bright -- while s0 and s3 do sit on sunset gradients.
+    # The room that buys keeps this beat's scale and fusion guard, which is the
+    # tier that a sapling growing out of a head is exactly about.
+    # THE FIRST DRAFT OF THIS VARIANT WAS REFUSED AND THE REFUSAL IS THE USEFUL
+    # PART. `rooted in the ground beside him` put the positive over 77, and
+    # `compress()` drops from the least important end, which is the STYLE
+    # SENTENCE: `Static camera, amber afternoon, cinematic lighting, detailed,
+    # newest, masterpiece, best quality, very aesthetic` all went in one go and
+    # check() faulted STYLE ANCHOR MISSING, rc=1, nothing drawn -- the same death
+    # beat 08 r1 had at 89/77. What was paid to fix it was MINE and not the
+    # beat's: `in the ground` came out of my own added clause, leaving `rooted
+    # beside him`, which places the sapling in exactly the same words minus four
+    # tokens. Re-measured at 74/77, anchor present, negative recipe 74 -> sent 71
+    # dropping only quality boilerplate plus `shrubbery`; the whole anti-big-tree
+    # tier and the whole plant-fusion tier survive. Three tokens of headroom.
+    authored_b19_refresh: >-
+      A small goblin boy, {{GOBLIN}}, solo, in a sunny grassy field, stops
+      mid-step as a ripe fig drops from a tiny sapling standing tall, rooted
+      beside him, bounces off his head, and lands in the grass. Static
+      camera, amber afternoon, cinematic lighting, detailed, newest,
+      masterpiece, best quality, very aesthetic No girl, no child, no chibi, no
+      speech bubble, no dusk, no sunset. No photorealism, no 3D render look.
+      9:16 vertical, no text.
     authored: >-
       A small goblin boy, {{GOBLIN}}, solo, stops mid-step as a ripe fig drops
       from a tiny sapling standing tall, bounces off his head, and lands in the
