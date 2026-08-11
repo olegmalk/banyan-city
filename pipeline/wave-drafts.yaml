@@ -592,43 +592,22 @@ beats:
       dark, no night, no dusk, no sunset, no dim lighting, no moody lighting,
       no low key, no shadows dominant. No photorealism, no 3D render look.
       9:16 vertical, no text.
-    # -- `authored_b03_idfix_r2` -- 2026-08-12, the fixer lane, reading the four
-    # `_idfix` frames. His three beat-03 faults are ANSWERED in them -- one goblin
-    # 4/4, no house 4/4, the face green 4/4 -- and two new ones are visible.
-    #
-    # 1. THE CRANIUM PALES WHILE THE FACE STAYS GREEN (s0 tan crown, s3 a
-    #    cream-white skull over a green face with blank pupil-less eyes). This is
-    #    his "making the goblin compeltely white" fault in a localised form.
-    #    THE BAN IS NOT THE ANSWER, BECAUSE THE BAN WAS ALREADY SENT: the sidecar
-    #    shows `pale skin` in the sent negative at 76/77. It reached the model and
-    #    did not bind. Sending a failed term harder is not a fix, so the channel
-    #    changes to an AFFIRMATIVE that names the part that pales: `his bare scalp
-    #    green`, early, right after the identity clause. The frozen def is NOT
-    #    touched -- this is beat text, not a definition change.
-    # 2. STITCHED SCALP AND CHEEK SCARS (s0, s1, s3), the same drift beat 02 shows
-    #    4/4. `no scars, no stitched skin` names SKIN and never the bare word
-    #    `stitches`, which would negate the `patchwork cloak` the positive asserts.
-    #
-    # PAID FOR, NOT ADDED. This beat's negative already sends 76 of 77, so new
-    # terms would evict the tail -- `female goblin` and `elf`. `no indoors` retires
-    # to fund them and `no house`, the term that carries his named fault, STAYS:
-    # the two are near-duplicates and all four frames were outdoors. `Medium shot`
-    # funds the scalp clause in the positive. His `no pale skin`, `no multiple
-    # boys` and `no house` all survive unchanged.
-    # MULTI-FAULT IS DEFENSIBLE HERE BY HIS OWN PRECEDENT: each fault has a
-    # separately visible predicate, which is exactly the argument
-    # `authored_b03_field_solo` made for answering his three at once.
-    # The absent sapling gets its ONE r2 here too; if the stem is still missing,
-    # beat 03 goes to `wave2-needs-founder.md` with beat 02.
-    authored_b03_idfix_r2: >-
-      A small goblin boy, {{GOBLIN}}, solo, his bare scalp green, crouches in
-      an open grassy field behind the pencil-thin stem of a tiny sapling that
-      hides none of him, his face visible beside it. Bright morning light,
-      cinematic lighting, detailed, newest, masterpiece, best quality, very
-      aesthetic No girl, no child, no house, no scars, no stitched skin, no
-      pale skin, no multiple boys, no dark, no night, no dusk, no sunset, no
-      dim lighting, no moody lighting, no low key, no shadows dominant. No
-      photorealism, no 3D render look. 9:16 vertical, no text.
+    # -- A SECOND `authored_b03_idfix_r2` WAS WRITTEN HERE BY THE FIXER LANE AND
+    # HAS BEEN REMOVED, 2026-08-12. Two lanes answered the fixer's committed
+    # beat-03 diagnosis (0fa4da58) within minutes of each other and both named the
+    # key `authored_b03_idfix_r2`. A duplicate mapping key is silently resolved by
+    # PyYAML to the LAST one, so the file would have rendered whichever block
+    # happened to sit lower -- exactly the kind of thing that makes a round
+    # unattributable. The lead's block above is the one kept: it had already been
+    # scp'd and RENDERED by the time the collision was found, so keeping it is what
+    # makes this file agree with the frames on disk.
+    # WHAT THE REMOVED BLOCK CARRIED THAT THE KEPT ONE DOES NOT: `no scars, no
+    # stitched skin` for the sutured scalp and cheek scars visible in s0/s1/s3.
+    # That fault is NOT answered on beat 03 yet. It is not re-staged here on
+    # spec, because beat 02's r2 is already testing exactly that ban tonight --
+    # so the two beats now separate the two channels cleanly: beat 03 tests the
+    # `green scalp` affirmative, beat 02 tests the skin ban. Read them together.
+    # The gap is recorded in review/ep2-picks/wave2-faults-fixer.yaml.
 
 
   4:
