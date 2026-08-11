@@ -1,0 +1,89 @@
+{
+  "id": "ep1-b03-89f-vo-length-1786434263",
+  "task": "ep1-b03-89f-vo-length-0811",
+  "node": "001-capability-inventory",
+  "beat": 3,
+  "worker": "box-runner",
+  "priority": 24,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "plate",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "-c",
+        "import sys; sys.path.insert(0, r\"C:\\banyan-farm\\banyan-city\\pipeline\")\nfrom plate_prep import prepare_plate\nout, rec = prepare_plate(\n    r\"C:\\banyan-farm\\banyan-city\\genomes\\sapling\\nodes\\001-capability-inventory\\stills\\03-deploy-succeeded.png\",\n    \"704x1280\", r\"C:\\banyan-farm\\v34-r2\", \"03\")\nprint(\"plate\", out); print(rec[\"plate_wxh\"], rec[\"crop_policy\"])\nprint(\"source_sha256\", rec[\"sha256\"])\n"
+      ]
+    },
+    {
+      "name": "encode",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "encode",
+        "--jobs",
+        "C:\\banyan-farm\\v34-r2\\b03-jobs-encode.json"
+      ]
+    },
+    {
+      "name": "render",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "render",
+        "--jobs",
+        "C:\\banyan-farm\\v34-r2\\b03-jobs-render-89.json",
+        "--size",
+        "704x1280",
+        "--frames",
+        "89",
+        "--fps",
+        "24",
+        "--guidance",
+        "1.0",
+        "--distilled-sigmas",
+        "--two-stage",
+        "--image-crf",
+        "33",
+        "--offload",
+        "sequential",
+        "--mode",
+        "production",
+        "--task",
+        "ep1-b03-89f-vo-length-0811",
+        "--worker",
+        "rtx5090",
+        "--bench-jsonl",
+        "C:\\banyan-farm\\v34-r2\\bench-b03-89f.jsonl",
+        "--bench-label",
+        "b03-89f-vo-length"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\v34-r2\\03-deploy-succeeded-LTX-89f.mp4"
+  ],
+  "started_at": "2026-08-11T07:44:35Z",
+  "attempts": 1,
+  "runner_pid": 9388,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-11T07:49:26Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\v34-r2\\03-deploy-succeeded-LTX-89f.mp4"
+  ]
+}
