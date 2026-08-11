@@ -547,3 +547,4 @@
 19:03:20Z box-runner idle ready=0 failed=2
 19:13:24Z box-runner idle ready=0 failed=2
 19:17:10Z STARTED task=ep2-b13-refresh-0811-1786475823 attempt=1 on box-runner
+19:18:02Z DONE task=ep2-b13-refresh-0811-1786475823 rc=0 artifacts=8
