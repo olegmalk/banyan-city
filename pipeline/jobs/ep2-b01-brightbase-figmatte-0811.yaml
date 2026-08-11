@@ -1,0 +1,380 @@
+# EPISODE 2, BEAT 01 — THE ORDER, FIXED. Bright base FIRST, then the two masks.
+# One round, four seeds, three chained passes, $0. 2026-08-11 ~20:2x.
+#
+# ── THE BUG THIS FIXES IS AN ORDERING BUG, NOT A PROMPT BUG.
+# `ep2-b01-figmatte-0811` put the matte-green fig where it belongs and killed the
+# glowing orb, and it did both ON THE FOUNDER'S DUSK PLATE — so the frames came
+# out dark, and the lighting ban that landed tonight on beats 04 and 02 never got
+# a channel that reached the pixels. That job's own comments say why it could not
+# get one: the two ellipses total under 1% of the frame and the mask blend
+# restores the other 99% every step, so no negative reaches them. Under a mask
+# the ban is structurally inert. The only way to give it a channel is to relight
+# the BASE before either mask runs. That is the whole change: order.
+#
+# ── WHAT THE BRIEF ASKED FOR THAT DOES NOT EXIST, SAID PLAINLY, BECAUSE THE
+# ── SUBSTITUTE IS BETTER AND SHOULD NOT BE MISTAKEN FOR THE ORIGINAL.
+# The brief said "the leafcount wording that fixed the leaves (keep it)". THERE
+# IS NO LEAFCOUNT WORDING. The leaf count was never fixed by words and cannot be:
+# shots.md's beat-01 section, written 2026-08-06 after four such rounds were drawn
+# and counted — `a single pair of oversized leaves` (4-6 leaves, 8 of 8),
+# `exactly two oversized cotyledon leaves` (4-6 leaves, 4 of 4), `sprout with only
+# two oversized leaves` (3 at best, 1 of 4) — ends "Do not spend a fifth round on
+# synonyms for 'two'". What fixed the count was GEOMETRY: one ellipse over the
+# third blade, filled with the grass around it, so the model is never asked to
+# count. That mask is carried here unchanged, and the fence this round renders
+# still contains `two oversized cotyledon leaves` exactly as r7/r8 sent it — the
+# words are kept, they are simply not what does the work.
+#
+# ── AND THE BASE RENDER HAS A MEASURED PREDECESSOR, WHICH IS WHY THIS IS ONE
+# ── VARIABLE AND NOT A NEW IDEA. Ledger record `ep2-b01-r8-sample` already ran
+# this exact init through img2img at strength 0.35 AND 0.55 with beat 01's own
+# fence, which says `peach and gold sunrise sky` in those words:
+#   "at 0.35 the palette has not moved, and at 0.55 — the top of the range the
+#    2026-08-06 repaints ever measured — it has STILL not moved"
+#   "Retired: that a low strength can carry a foreign palette — it cannot,
+#    measured at two strengths."
+# and in the same record: "The t2i control renders that sky correctly on all four
+# seeds, so the prompt is not the problem; the init is overriding it." So a third
+# strength is not the lever — 0.55 also grew the stem back toward the 32% hairline
+# the founder revoked, because on this plate the palette IS the composition. THE
+# ONE CHANNEL r8 NEVER TRIED IS THE NEGATIVE, and tonight's beat-04 result is the
+# evidence that it is worth two GPU-minutes: positive lighting words did not bind
+# on this checkpoint and the negative did.
+#
+# ── THE ONE VARIABLE IS EIGHT TERMS AND IT IS PROVED, NOT ASSERTED. The block is
+# beat 04's verbatim — `dark, night, dusk, sunset, dim lighting, moody lighting,
+# low key, shadows dominant` — inserted into the AUTHORED fence as `no ...`
+# clauses after `no night sky,`. That is beat 04's own mechanism: the negation
+# lifter pulls each one OUT of the positive and `extra_negative_parts` sends them
+# as BEAT-tier terms, which `fit_negative` protects ahead of the house defaults.
+# The consequence is checkable, and `render_b01_bright.py` refuses to draw unless
+# it holds: THE SENT POSITIVE COMES OUT BYTE-IDENTICAL TO r8's. Verified on this
+# Mac before queueing (estimator) and re-measured on the box's real tokenizer by
+# this job's first step. Everything else is r8's, IMPORTED from `render_b01r8.py`
+# rather than copied — same init and sha assertion, same 832x1216, 40 steps, cfg
+# 7.5, strength 0.35, and the same four seeds (20260720/20261720/20262720/
+# 20263720) computed by r8's own rule. A copy can drift; an import cannot.
+#
+# ── THE COST, NAMED BEFORE IT IS PAID. The negative is already near CLIP's 77 and
+# the beat tier outranks the house tier, so eight lighting terms SELL eight house
+# terms off the end. On the Mac's estimator: `photorealistic, 3d render, abstract,
+# watermark, signature, low quality, blurry, shrubbery`. The estimator over-counts
+# this shape by ~3 near the boundary, so the real figure is measured by the `dry`
+# step below and written into every sidecar. `photorealism` (beat tier) survives
+# and covers most of what `photorealistic` and `3d render` were doing; the person
+# terms and the style anchor are asserted present and the job fails for $0 if
+# either goes. STATED RISK, the same one beat 04 named: `dark` is blunt in an SDXL
+# negative and can pull contrast out of the whole frame. Bright-but-flat is a real
+# possible outcome, and the answer to it is a NARROWER block, not more terms.
+#
+# ── THE MASKS RIDE ON THE 0.35 MEASUREMENT AND WOULD NOT SURVIVE A HIGHER ONE.
+# Both ellipses were measured on the 832x1216 founder plate: the leaf at
+# 378,655,48,54 and the fig at 462,848,34,36, non-overlapping (y[601,709] against
+# y[812,884]). r8 measured that 0.35 leaves the layout untouched and that 0.55
+# visibly redraws the subject — so 0.35 is not a timid choice, it is the only
+# strength at which the two masks still land where they were measured. If the
+# relit base moves the plant, that is a geometry miss and the fix is the ellipse
+# numbers, not the method.
+#
+# ── THE PROMPTS FOR THE TWO MASKS ARE THE CORRECTED r2 FILES AND THEIR BYTES ARE
+# ── ON THE RECORD (the shared-mutable-box-state hazard, 85716cf). Committed at
+# 3c51dba, mirrored on the box, re-hashed on both sides in this pass — identical:
+#   pipeline/b01-leaf/prompt-r2.txt    1562bf0a1cc34ba9886bd62e41624ac218579a7716962382425a35e6ab081c45
+#   pipeline/b01-leaf/negative-r2.txt  035b9da9d5d819a14ca1972782d95e03e600b54369d9abc1eaeddc6f9c1761d2
+#   pipeline/b01-fig/prompt-r2.txt     db4a2502927884a3ed06570916872ae2365ecd497ae12417a1525ba596879297
+#   pipeline/b01-fig/negative-r2.txt   475a305aac126bd4d88226de238b1a41bf602bdef2064aa022ee8e902eb8466b
+# The renderer is new and its bytes are on the record too: repo
+# pipeline/render_b01_bright.py and the box copy at
+# C:\banyan-farm\b01-bright\render_b01_bright.py are both
+# 3c6f47cf578461411470d67ff9dd8b7ad8a6151a649d656e06cc609895f7cc37, scp'd and
+# re-hashed on the box in this pass. `inpaint_fruit.py` and `render_b01r8.py` are
+# untouched; the box's `render_b01r8.py`, `sd_prompt.py` and `generate_shots.py`
+# were hashed against the local copies and all three match.
+#
+# ── CHAINING. `inpaint_fruit.py` requires `--init-sha256`. Pass 1's init is a file
+# this same job wrote minutes earlier, so its hash is MEASURED at run time by the
+# wrapper and handed to the script unmodified; on an intermediate the check can
+# only be a self-check and pretending otherwise would be theatre. The base render
+# asserts the founder's plate (f60c1404...7277f54), which is the assertion that
+# matters and is intact.
+#
+# ── WHAT THIS CANNOT SETTLE. If four seeds come back dusk with `dark, night,
+# dusk, sunset` provably sent, then beat 01's light is a property of the PLATE
+# that no prompt channel reaches, and the honest next step is the question already
+# queued for R4 in `ep2-b01-pickpage-founder-verdict-0811` — is a fixed dusk cold
+# open acceptable, or does beat 01 need a plate he approves first? — or the
+# depth-ControlNet route shots.md named. Either way the question is retired for
+# about eight GPU-minutes, and that is worth more than another frame.
+#
+# SEPARATE OUT DIRECTORY: `C:\banyan-farm\b01-bright\out`. Nothing in
+# `out-figmatte` or `out-leafcount` is touched.
+
+id: ep2-b01-brightbase-figmatte-0811
+task: ep2-b01-brightbase-figmatte-0811
+node: 002b-first-citizen
+beat: 1
+runner: box
+needs_gpu: true
+
+# 45, the beat-01 lane's convention. box_runner.py:444 sorts priority ASCENDING
+# and takes ONE job at a time regardless — sequential is the rule (CLAUDE.md,
+# founder 2026-08-03) and batch-of-4 is banned. The ready queue was EMPTY and
+# nothing was running when this was staged (`box_enqueue.py --list`).
+priority: 45
+max_attempts: 1
+owner: beat-01 verdict lane, 2026-08-11 (the ordering fix, third pass)
+
+# NO `gate:` KEY. One round changing one channel on a recipe that has already
+# rendered. It clears nobody's gate.
+
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03` (read in this pass from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml:17-18, the leaf the
+  render gate itself reads). His `approved_quote` verbatim: "approve 002b except.. we
+  need to make SURE the fig growing on the sapling is mentioned, last time we generated
+  002b it just.. appeared. also, the sapling was able to flail a leaf in episode 1? why
+  couldnt it do that in 002b?" His FIRST `approval_condition` is beat 01''s: "The fig
+  must GROW on screen, not already hang." So the fig is a condition of the script, not
+  a decoration. A still cannot show the growing — that is a T2/T3 question and nothing
+  here claims it.'
+
+consumer: >-
+  Roman's next look at beat 01, and the r8 i35 frames are the pair to read it
+  against — same init, same seeds, same strength, one channel apart. His ~16:15
+  sentence ("none of them have figs and all of them have too many leafs") is
+  answered by the two masks; the dark-versus-sunrise gap that has sat under every
+  beat-01 round since r8 is what the base render is for.
+
+success: >-
+  Four PNGs at C:\banyan-farm\b01-bright\out\b01-bright-s0..3.png — relit base,
+  leaf mask, fig mask, in that order — with their `.png.meta.yaml` provenance
+  sidecars written at render time (7.2), plus the four relit bases and the four
+  leaf-only intermediates kept and published so the three fixes can be read apart.
+  Whether any of it reads is a human's call at the frames; no metric decides it and
+  this job ranks nothing.
+
+why: >-
+  One variable on the base against ledger record `ep2-b01-r8-sample`'s i35 arm:
+  eight lighting terms in the SDXL negative, with the sent positive asserted
+  byte-identical to r8's. Two masks carried over unchanged from
+  `ep2-b01-figmatte-0811`, whose prompts are correct and whose only fault was that
+  they ran on a dusk base. If the negative binds where r8's positive did not, beat
+  01 gets the b15 SCALE in the b01 LIGHT — the exact next round the r8 record
+  named — with the fig and the leaf count already on it.
+
+est_minutes: 9
+needs:
+- cuda
+- vram20
+- farm-venv
+
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+# Measures on the box's real CLIP tokenizer, asserts the fence is r7's, asserts
+# the sent positive is byte-identical to r8's, asserts all eight lighting terms
+# reach the sent negative and that the person terms and style anchor survive, and
+# prints exactly which house terms were sold. Imports no torch and draws nothing:
+# every way this round can be wrong costs $0 here instead of a render.
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\b01-bright\render_b01_bright.py
+  - --root
+  - C:\banyan-farm\banyan-city
+  - --strength
+  - "0.35"
+  - --dry
+
+- name: base
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\b01-bright\render_b01_bright.py
+  - --root
+  - C:\banyan-farm\banyan-city
+  - --strength
+  - "0.35"
+  - --out
+  - C:\banyan-farm\b01-bright\out
+
+- name: s0-masks
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import hashlib, subprocess, sys
+    PY = r"C:\banyan-farm\venv\Scripts\python.exe"
+    SC = r"C:\banyan-farm\fig-inpaint\inpaint_fruit.py"
+    D  = r"C:\banyan-farm\b01-bright\out"
+    def run(src, ellipse, prompt, negative, out, note):
+        h = hashlib.sha256(open(src, "rb").read()).hexdigest()
+        print("chained init %s sha256 %s" % (src, h), flush=True)
+        rc = subprocess.call([PY, SC, "--init", src, "--init-sha256", h,
+                              "--ellipse", ellipse,
+                              "--prompt-file", prompt, "--negative-file", negative,
+                              "--out", out, "--steps", "40", "--cfg", "7.5",
+                              "--strength", "0.99", "--seed", "20260720",
+                              "--pad-crop", "64", "--blur", "8", "--note", note])
+        if rc:
+            sys.exit(rc)
+    run(D + r"\01-cold-open-bright-i35b-s0.png", "378,655,48,54",
+        r"C:\banyan-farm\fig-inpaint\leaf-prompt-r2.txt",
+        r"C:\banyan-farm\fig-inpaint\leaf-negative-r2.txt",
+        D + r"\b01-bright-s0-leaf.png",
+        "Pass 2 of 3, seed 20260720. THE LEAF FILL, on the RELIT base rather than the founder's dusk plate -- that ordering is the whole point of this job. Ellipse 378,655,48,54 and every parameter carried over unchanged from ep2-b01-figmatte-0811; the prompts are its corrected r2 files (leaf prompt 1562bf0a, leaf negative 035b9da9), with `warm low sunlight` out of the fill and eleven glow terms in the negative. The count comes from geometry, not from a counting word. PROVISIONAL: not a pick, not canon, not published, not assembled.")
+    run(D + r"\b01-bright-s0-leaf.png", "462,848,34,36",
+        r"C:\banyan-farm\fig-inpaint\prompt-r2.txt",
+        r"C:\banyan-farm\fig-inpaint\negative-r2.txt",
+        D + r"\b01-bright-s0.png",
+        "Pass 3 of 3, seed 20260720. THE FIG, MATTE, on the relit and leaf-fixed frame. Ellipse 462,848,34,36, the same mask the 2026-08-10 fig inpaint used; prompts are the corrected r2 files (fig prompt db4a2502, fig negative 475a305a) -- `matte green skin` in the positive and the specular/glow terms in the negative, which is the load-bearing half. Non-overlapping with the leaf ellipse, so all three fixes read independently in one frame. PROVISIONAL: not a pick, not canon, not published.")
+
+- name: s1-masks
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import hashlib, subprocess, sys
+    PY = r"C:\banyan-farm\venv\Scripts\python.exe"
+    SC = r"C:\banyan-farm\fig-inpaint\inpaint_fruit.py"
+    D  = r"C:\banyan-farm\b01-bright\out"
+    def run(src, ellipse, prompt, negative, out, note):
+        h = hashlib.sha256(open(src, "rb").read()).hexdigest()
+        print("chained init %s sha256 %s" % (src, h), flush=True)
+        rc = subprocess.call([PY, SC, "--init", src, "--init-sha256", h,
+                              "--ellipse", ellipse,
+                              "--prompt-file", prompt, "--negative-file", negative,
+                              "--out", out, "--steps", "40", "--cfg", "7.5",
+                              "--strength", "0.99", "--seed", "20261720",
+                              "--pad-crop", "64", "--blur", "8", "--note", note])
+        if rc:
+            sys.exit(rc)
+    run(D + r"\01-cold-open-bright-i35b-s1.png", "378,655,48,54",
+        r"C:\banyan-farm\fig-inpaint\leaf-prompt-r2.txt",
+        r"C:\banyan-farm\fig-inpaint\leaf-negative-r2.txt",
+        D + r"\b01-bright-s1-leaf.png",
+        "Pass 2 of 3, seed 20261720. THE LEAF FILL, on the RELIT base rather than the founder's dusk plate -- that ordering is the whole point of this job. Ellipse 378,655,48,54 and every parameter carried over unchanged from ep2-b01-figmatte-0811; the prompts are its corrected r2 files (leaf prompt 1562bf0a, leaf negative 035b9da9), with `warm low sunlight` out of the fill and eleven glow terms in the negative. The count comes from geometry, not from a counting word. PROVISIONAL: not a pick, not canon, not published, not assembled.")
+    run(D + r"\b01-bright-s1-leaf.png", "462,848,34,36",
+        r"C:\banyan-farm\fig-inpaint\prompt-r2.txt",
+        r"C:\banyan-farm\fig-inpaint\negative-r2.txt",
+        D + r"\b01-bright-s1.png",
+        "Pass 3 of 3, seed 20261720. THE FIG, MATTE, on the relit and leaf-fixed frame. Ellipse 462,848,34,36, the same mask the 2026-08-10 fig inpaint used; prompts are the corrected r2 files (fig prompt db4a2502, fig negative 475a305a) -- `matte green skin` in the positive and the specular/glow terms in the negative, which is the load-bearing half. Non-overlapping with the leaf ellipse, so all three fixes read independently in one frame. PROVISIONAL: not a pick, not canon, not published.")
+
+- name: s2-masks
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import hashlib, subprocess, sys
+    PY = r"C:\banyan-farm\venv\Scripts\python.exe"
+    SC = r"C:\banyan-farm\fig-inpaint\inpaint_fruit.py"
+    D  = r"C:\banyan-farm\b01-bright\out"
+    def run(src, ellipse, prompt, negative, out, note):
+        h = hashlib.sha256(open(src, "rb").read()).hexdigest()
+        print("chained init %s sha256 %s" % (src, h), flush=True)
+        rc = subprocess.call([PY, SC, "--init", src, "--init-sha256", h,
+                              "--ellipse", ellipse,
+                              "--prompt-file", prompt, "--negative-file", negative,
+                              "--out", out, "--steps", "40", "--cfg", "7.5",
+                              "--strength", "0.99", "--seed", "20262720",
+                              "--pad-crop", "64", "--blur", "8", "--note", note])
+        if rc:
+            sys.exit(rc)
+    run(D + r"\01-cold-open-bright-i35b-s2.png", "378,655,48,54",
+        r"C:\banyan-farm\fig-inpaint\leaf-prompt-r2.txt",
+        r"C:\banyan-farm\fig-inpaint\leaf-negative-r2.txt",
+        D + r"\b01-bright-s2-leaf.png",
+        "Pass 2 of 3, seed 20262720. THE LEAF FILL, on the RELIT base rather than the founder's dusk plate -- that ordering is the whole point of this job. Ellipse 378,655,48,54 and every parameter carried over unchanged from ep2-b01-figmatte-0811; the prompts are its corrected r2 files (leaf prompt 1562bf0a, leaf negative 035b9da9), with `warm low sunlight` out of the fill and eleven glow terms in the negative. The count comes from geometry, not from a counting word. PROVISIONAL: not a pick, not canon, not published, not assembled.")
+    run(D + r"\b01-bright-s2-leaf.png", "462,848,34,36",
+        r"C:\banyan-farm\fig-inpaint\prompt-r2.txt",
+        r"C:\banyan-farm\fig-inpaint\negative-r2.txt",
+        D + r"\b01-bright-s2.png",
+        "Pass 3 of 3, seed 20262720. THE FIG, MATTE, on the relit and leaf-fixed frame. Ellipse 462,848,34,36, the same mask the 2026-08-10 fig inpaint used; prompts are the corrected r2 files (fig prompt db4a2502, fig negative 475a305a) -- `matte green skin` in the positive and the specular/glow terms in the negative, which is the load-bearing half. Non-overlapping with the leaf ellipse, so all three fixes read independently in one frame. PROVISIONAL: not a pick, not canon, not published.")
+
+- name: s3-masks
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import hashlib, subprocess, sys
+    PY = r"C:\banyan-farm\venv\Scripts\python.exe"
+    SC = r"C:\banyan-farm\fig-inpaint\inpaint_fruit.py"
+    D  = r"C:\banyan-farm\b01-bright\out"
+    def run(src, ellipse, prompt, negative, out, note):
+        h = hashlib.sha256(open(src, "rb").read()).hexdigest()
+        print("chained init %s sha256 %s" % (src, h), flush=True)
+        rc = subprocess.call([PY, SC, "--init", src, "--init-sha256", h,
+                              "--ellipse", ellipse,
+                              "--prompt-file", prompt, "--negative-file", negative,
+                              "--out", out, "--steps", "40", "--cfg", "7.5",
+                              "--strength", "0.99", "--seed", "20263720",
+                              "--pad-crop", "64", "--blur", "8", "--note", note])
+        if rc:
+            sys.exit(rc)
+    run(D + r"\01-cold-open-bright-i35b-s3.png", "378,655,48,54",
+        r"C:\banyan-farm\fig-inpaint\leaf-prompt-r2.txt",
+        r"C:\banyan-farm\fig-inpaint\leaf-negative-r2.txt",
+        D + r"\b01-bright-s3-leaf.png",
+        "Pass 2 of 3, seed 20263720. THE LEAF FILL, on the RELIT base rather than the founder's dusk plate -- that ordering is the whole point of this job. Ellipse 378,655,48,54 and every parameter carried over unchanged from ep2-b01-figmatte-0811; the prompts are its corrected r2 files (leaf prompt 1562bf0a, leaf negative 035b9da9), with `warm low sunlight` out of the fill and eleven glow terms in the negative. The count comes from geometry, not from a counting word. PROVISIONAL: not a pick, not canon, not published, not assembled.")
+    run(D + r"\b01-bright-s3-leaf.png", "462,848,34,36",
+        r"C:\banyan-farm\fig-inpaint\prompt-r2.txt",
+        r"C:\banyan-farm\fig-inpaint\negative-r2.txt",
+        D + r"\b01-bright-s3.png",
+        "Pass 3 of 3, seed 20263720. THE FIG, MATTE, on the relit and leaf-fixed frame. Ellipse 462,848,34,36, the same mask the 2026-08-10 fig inpaint used; prompts are the corrected r2 files (fig prompt db4a2502, fig negative 475a305a) -- `matte green skin` in the positive and the specular/glow terms in the negative, which is the load-bearing half. Non-overlapping with the leaf ellipse, so all three fixes read independently in one frame. PROVISIONAL: not a pick, not canon, not published.")
+
+# DURABILITY: the box is the only copy until the courier pushes farm-out, which is
+# not gitignored. allow_fail so a failed copy never marks a good render failed.
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b01-brightbase-figmatte"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/b01-bright/out/01-cold-open-bright-*")
+                 + glob.glob("C:/banyan-farm/b01-bright/out/b01-bright-s*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        # Hash the COPY: what this records has to be the bytes that get committed.
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+        print("   ", os.path.basename(f), h[:16])
+    # newline="\n" is load-bearing: Windows text mode would leave a trailing \r on
+    # every filename and shasum -c could not open them.
+    with open(os.path.join(dst, "ep2-b01-brightbase-figmatte.sha256"), "w",
+              newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    # 4 bases x (png + sidecar) = 8, plus 4 seeds x 2 mask passes x (png + mask
+    # png + sidecar) = 24. Fewer means the round wrote less than it promised.
+    raise SystemExit(0 if len(src) == 32 else 1)
+
+artifacts:
+- C:\banyan-farm\b01-bright\out\01-cold-open-bright-i35b-s0.png
+- C:\banyan-farm\b01-bright\out\01-cold-open-bright-i35b-s1.png
+- C:\banyan-farm\b01-bright\out\01-cold-open-bright-i35b-s2.png
+- C:\banyan-farm\b01-bright\out\01-cold-open-bright-i35b-s3.png
+- C:\banyan-farm\b01-bright\out\01-cold-open-bright-i35b-s0.png.meta.yaml
+- C:\banyan-farm\b01-bright\out\01-cold-open-bright-i35b-s1.png.meta.yaml
+- C:\banyan-farm\b01-bright\out\01-cold-open-bright-i35b-s2.png.meta.yaml
+- C:\banyan-farm\b01-bright\out\01-cold-open-bright-i35b-s3.png.meta.yaml
+- C:\banyan-farm\b01-bright\out\b01-bright-s0.png
+- C:\banyan-farm\b01-bright\out\b01-bright-s1.png
+- C:\banyan-farm\b01-bright\out\b01-bright-s2.png
+- C:\banyan-farm\b01-bright\out\b01-bright-s3.png
+- C:\banyan-farm\b01-bright\out\b01-bright-s0.png.meta.yaml
+- C:\banyan-farm\b01-bright\out\b01-bright-s1.png.meta.yaml
+- C:\banyan-farm\b01-bright\out\b01-bright-s2.png.meta.yaml
+- C:\banyan-farm\b01-bright\out\b01-bright-s3.png.meta.yaml
