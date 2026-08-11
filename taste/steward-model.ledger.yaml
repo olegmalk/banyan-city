@@ -13344,3 +13344,37 @@
     The sapling is thinner than the previous round and its stem crosses his face on some
     frames; the squat is wide-legged rather than a neat hide.
   outcome: null
+
+- id: ep2-b17-world-0812-scored
+  kind: scoring
+  date: 2026-08-12
+  scores: ep2-b17-world-0812
+  verdict: HIT ON EVERY PREDICATE. The blank background was a wording problem.
+  predicates_observed: >-
+    readable DEPTH HIT — three clear planes where there was one: big daisies in sharp
+    foreground, meadow with scattered wildflowers running back, dark treeline on the
+    horizon; wildflowers HIT; treeline HIT; haze HIT — a visible mist band over the far
+    grass; long shadows HIT — raking amber light throwing dark diagonals across the grass;
+    he still brushes himself off and turns to go HIT, back to camera by frame 90; identity
+    holds; camera locked.
+  what_it_answers: >-
+    His note was "pretty much all the beats you made have a blank background". The
+    archaeology said the environment WAS named — as one generic word, "field" — and this
+    confirms the diagnosis: the model was drawing exactly what it was told, and it was told
+    almost nothing. One paragraph of specific description turned the same beat, same init,
+    same seed into a composed place. The emptiness was mine, not the stage's.
+  therefore: >-
+    An environment paragraph joins the recipe for every subsequent job. No background plate
+    is needed, which was the expensive alternative already in his inbox as a decision — that
+    entry can be closed by this result rather than by a purchase.
+  the_cost_worth_naming: >-
+    HE IS SMALLER IN FRAME. A described world pushes the character back; his face detail is
+    lost at this scale, and beat 17's own note says "camera on him standing to leave". So
+    the environment sentence needs a companion clause fixing his size in frame, and that is
+    the next thing to test rather than something to accept quietly.
+  the_tally: >-
+    Named things have now appeared 7 of 7 — sapling twice, two figs, b03's tree, b13's
+    sapling-and-shade, and now an entire described landscape. Every single thing this lane
+    has asked for by name has been drawn, and everything it assumed would arrive on its own
+    has not.
+  outcome: null
