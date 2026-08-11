@@ -525,6 +525,19 @@ beats:
       pale skin, no multiple boys, no dark, no night, no dusk, no sunset, no dim
       lighting, no moody lighting, no low key, no shadows dominant. No
       photorealism, no 3D render look. 9:16 vertical, no text.
+    # -- `_r2` 2026-08-12 ~02:2x: eight tokens leaner ("from front" and
+    # "Deadpan comedic staging" paid - the joke lives in the crouch itself) so
+    # the frozen identity fits. His three beat-03 bans all survive unchanged.
+    authored_b03_field_solo_r2: >-
+      A small goblin boy, {{GOBLIN}}, solo, crouches in an open grassy field
+      behind the pencil-thin stem of a tiny sapling that hides none of him,
+      his face visible beside it. Medium shot, bright morning light, cinematic
+      lighting, detailed, newest, masterpiece, best quality, very aesthetic No
+      girl, no child, no house, no indoors, no pale skin, no multiple boys, no
+      dark, no night, no dusk, no sunset, no dim lighting, no moody lighting,
+      no low key, no shadows dominant. No photorealism, no 3D render look.
+      9:16 vertical, no text.
+
 
   4:
     slug: the-footnote

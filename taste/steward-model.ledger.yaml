@@ -9861,3 +9861,10 @@
   predicates: [bald 4/4, cloak >=3/4, one goblin 4/4, cowering not grabbing >=2/4, bright field 4/4]
   consumer: morning page, identity-frozen wave.
   outcome: null
+
+- id: ep2-b03-idfix-0812
+  kind: prediction
+  written: 2026-08-12 ~02:2x before enqueue, terse. Dry 72/77 anchor intact.
+  predicates: [bald 4/4, cloak >=3/4, one goblin 4/4, outdoor no-house >=3/4, sapling stem present >=2/4]
+  consumer: morning page, identity-frozen wave.
+  outcome: null
