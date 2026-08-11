@@ -1,0 +1,167 @@
+# EPISODE 2, BEAT 05 — THE REGISTER, MOVED TO THE STAGE THAT CAN ACTUALLY CARRY IT. $0.
+# 2026-08-12, stills lane handing off to motion, on his "chase silly via pose and
+# expression staging."
+#
+# ── WHY THIS EXISTS. The still version of this exact test ran an hour ago
+# (ep2-b05-register-pose-0812) and the staging never reached the picture: sixteen frames,
+# sixteen men standing still in the REFERENCE's own pose, the skid absent 16 of 16 and the
+# `no standing at attention` ban doing nothing. The cause is not his direction and not the
+# wording — the IP-Adapter runs on steps 0-5 of 40, which is where pose, framing and figure
+# count are decided, so the reference settles all three before the sentence gets a vote.
+# Proof inside that sample: whole-figure references produced whole standing figures and
+# HEAD-CROP references produced busts and floating head studies, on identical text.
+#
+# ── SO THE SAME TEST, ONE STAGE LATER, WHERE THE BLOCKER IS NOT PRESENT. A motion clip has
+# no IP-Adapter overwriting the composition, and this lane already proved a pose can be
+# recovered here: beat 03's crouch came back from exactly this technique — the pose as the
+# dominant clause plus a ban on the pose it loses to (ep2-b03-crouch-0812-scored). His own
+# ruling makes the standing still the legitimate starting point rather than a defect.
+#
+# ── WHAT IS DELIBERATELY NOT BEING ASKED FOR. The second guard. Beat 05 is written as a
+# pair and this init has one man in it; asking a clip to invent a second character is a
+# different question with a much worse failure mode, and `duplicate character` is in the
+# negative to keep the still's floating-head artefacts from animating. This clip answers
+# ONE question: does behaviour sell harmless-bureaucrat when the body will not?
+#
+# ── HOW THE REGISTER IS STAGED. Entirely in what he does and what his face does: he reads,
+# his eyebrows climb, he startles and clutches the board to his chest, his shoulders come up
+# around his ears, he peers off the wrong way and goes back to the board. No word in the
+# prompt describes his build or names a tone.
+#
+# ── TWO STANDING RECIPE ITEMS CARRIED IN, BOTH HIS. The environment paragraph, because
+# "pretty much all the beats you made have a blank background" and one descriptive paragraph
+# fixed that on beat 17. And a clause pinning his SIZE in frame, which is the cost beat 17
+# measured when the world got described — the register cannot be read off a face six pixels
+# tall.
+#
+# ── INIT. `05-the-patrol-ipa-r2-w015-s2.png` from the still round, sha asserted at crop
+# time so a wrong file cannot silently become the clip. Chosen mechanically: the one
+# whole-figure cell with a readable face, a clipboard that reads as a board rather than a
+# slate, grass under the feet and no floating-head artefact.
+#
+# ── PROVISIONAL. His veto stands. $0, local GPU, nothing published, shots.md untouched.
+id: ep2-b05-register-clip-0812
+task: ep2-b05-register-clip-0812
+node: 002b-first-citizen
+beat: 5
+runner: box
+priority: 19
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: stills lane, 2026-08-12 (his register direction, moved to the motion stage)
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03`, read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the render gate
+  itself reads. `approval_condition` is None, so nothing in it touches beat 05. A register
+  test on an approved node, not an episode assembly.'
+consumer: >-
+  review/ep2-picks/b05-register-0812 — the page already carries the still result and the
+  diagnosis; this clip is the answer to the question that page puts to him.
+success: >-
+  A 704x1280 mp4, 121 frames, in which the man BEHAVES — eyebrows up, board clutched,
+  shoulders climbing, a look the wrong way — rather than standing still holding a clipboard.
+  Success is a readable clip, NOT that the register moved. "He does all of it and still
+  reads as a soldier" is a successful run and the more decisive answer of the two.
+why: >-
+  Five rounds of adjectives could not move the register and the still stage physically
+  cannot, because its own conditioning holds the pose. This is the only untested channel
+  left that does not reopen the references he accepted.
+est_minutes: 6
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b05-register-clip-0812\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"--out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw, nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b05-register-clip-0812\b05-motion-prompt.txt: '2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: a guard man standing in a summer meadow — short brown hair, a plain brown tunic over dark trousers and boots, holding a bark clipboard in both hands. HE READS THE CLIPBOARD AND COMES APART OVER IT: his eyebrows climb up his forehead, his eyes go wide, he startles and pulls the board in against his chest with both hands, his shoulders ride up around his ears and stay there, he leans forward and peers off to one side at nothing, then drops his eyes back down to the board. His hands keep fidgeting on the edges of it. He stays standing in the same spot and the camera does not move. HE STAYS LARGE IN FRAME — head and shoulders across the upper third, near enough that his eyebrows and mouth read clearly; the meadow does not push him small. Behind him the meadow runs back: big daisies in the near grass, scattered wildflowers through the middle distance, a dark treeline along the horizon, a band of soft haze over the far grass, long raking morning shadows across the ground. Warm morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.'
+  C:\banyan-farm\ep2-b05-register-clip-0812\b05-negative.txt: camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, standing at attention, standing straight, military bearing, marching, saluting, motionless, frozen, still frame, no movement, face morphing, distorted face, warped face, changing facial features, extra eyes, extra ears, bald, walking out of frame, leaving the frame, drifting sideways, second character, duplicate character, floating head, disembodied head, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text
+  C:\banyan-farm\ep2-b05-register-clip-0812\b05-jobs-encode.json: "[{\"beat\": 5,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b05-register-clip-0812\\\\b05-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\\ep2-b05-register-clip-0812\\\\b05-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b05-register-clip-0812\\\\b05-negative.txt\"}]"
+  C:\banyan-farm\ep2-b05-register-clip-0812\b05-jobs-render.json: "[{\"beat\": 5,\n  \"seed\": 20260806,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b05-register-clip-0812\\\\b05-embeds.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\\ep2-b05-register-clip-0812\\\\b05-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b05-register-clip-0812\\\\05-the-patrol-LTX-register-0812.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b05-register-clip-0812\cover_crop.py
+  - --src
+  - C:\banyan-farm\goblin-ipa-0812\out-b05-register-pose\05-the-patrol-ipa-r2-w015-s2.png
+  - --sha256
+  - 85f84a201eac433c582b5f60a7a9eee8a1a472f1da61ac145360fa5bcde722de
+  - --out
+  - C:\banyan-farm\ep2-b05-register-clip-0812\b05-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b05-register-clip-0812\b05-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b05-register-clip-0812\b05-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b05-register-clip-0812
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b05-register-clip-0812\bench-b05-register.jsonl
+  - --bench-label
+  - ep2-b05-register-clip-0812
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b05-register-clip-0812"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/ep2-b05-register-clip-0812/05-the-patrol-LTX-register-0812.mp4*")
+                 + glob.glob("C:/banyan-farm/ep2-b05-register-clip-0812/b05-init-704x1280.png")
+                 + glob.glob("C:/banyan-farm/ep2-b05-register-clip-0812/bench-b05-register.jsonl"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b05-register-clip-0812.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 2 else 1)
+artifacts:
+- C:\banyan-farm\ep2-b05-register-clip-0812\05-the-patrol-LTX-register-0812.mp4

@@ -13687,3 +13687,43 @@
     his accepted references back in play, so it is his call and not a lane's.
   consumer: review/ep2-picks/b05-register-0812
   outcome: null
+
+- id: ep2-b05-register-clip-0812
+  kind: prediction
+  written: 2026-08-12, before enqueue. The same register test as the still round, moved one
+    stage later to the only place the blocker is absent.
+  predicates: [the man BEHAVES rather than standing still holding a board — eyebrows up,
+    board pulled to the chest, shoulders climbing, a look off to one side — visible in the
+    clip at all, which the still could not produce in 16 of 16; the camera does not move; the
+    described meadow arrives (daisies, wildflowers, treeline, haze, raking shadows), on the
+    7-of-7 record for named things at this stage; he stays LARGE enough in frame that the
+    eyebrows read, which is the cost beat 17 measured when the world got described; identity
+    holds — short hair, brown tunic, the same face as the init; NO second character and no
+    animated floating head]
+  the_question_it_actually_answers: >-
+    Does BEHAVIOUR sell harmless-bureaucrat when the BODY will not? The men this checkpoint
+    draws are lean and stern-featured and this clip does not fight that. The bet is that a
+    stern-looking official coming apart over a clipboard reads as hapless, and that the tone
+    was never in the body.
+  what_is_deliberately_not_asked_for: >-
+    THE SECOND GUARD. Beat 05 is written as a pair and this init holds one man. Asking a clip
+    to invent a second character is a different question with a much worse failure mode, and
+    `duplicate character` is in the negative to stop the still's floating-head artefacts
+    animating. A one-man answer still answers the register.
+  basis: >-
+    Beat 03's crouch came back at this stage from exactly this technique — pose as the
+    dominant clause plus a ban on the pose it loses to — with no IP-Adapter present to hold
+    the composition. And the still round an hour ago established that the blocker is the
+    reference, not the words: identical text produced whole standing figures from
+    whole-figure references and busts from head crops.
+  falsifiable_by: >-
+    The staged behaviour failing to arrive HERE TOO. That would be the first evidence that
+    pose is genuinely not nameable in this pipeline at any stage, and it would move the
+    register from a wording question to a casting question — which is his, not a lane's.
+  deviation_declared: >-
+    Beat 05's script is a WIDE two-guard shot and this is a closer one-man shot. Deliberate:
+    a register cannot be read off a face six pixels tall, and the pair is out of scope for
+    the reason above. Not a candidate for the cut — it is an instrument.
+  consumer: review/ep2-picks/b05-register-0812, as the answer to the question that page puts
+    to him.
+  outcome: null
