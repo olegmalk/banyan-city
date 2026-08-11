@@ -8357,3 +8357,155 @@
 # disk when the first run executed — the reverted prose is recoverable from that
 # commit if anyone wants it. Trust the sidecar and this ledger over those two spec
 # headers.
+
+- id: ep1-b08-v34-plate-g20-sample-scored
+  date: 2026-08-11
+  kind: observation
+  subject: "ep1 beat 08 'sev-1' — the ONE SAMPLE for guidance 2.0, scored against
+    the prediction pre-registered at lines 51-57 of its own job yaml. Does raising
+    guidance to 2.0, which makes the anti-freeze negative evaluated for the first
+    time, unfreeze a beat that is measurably frozen at 1.0?"
+  steward_provisional: true
+  pick: null
+  scores: {}
+  address_key: >-
+    Clip `review/v34-plate-reseeds/08-ltx-g20-plate-s20260739.mp4` (committed
+    0e9098f) with its §7.2 sidecar: guidance 2.0, seed 20260739, 704x1280, 65
+    frames, 8@352x640+3@704x1280, task `ep1-b08-v34-plate-g20-sample-0810`.
+    Control `review/v34-motion/08-sev-1-LTX-plate.mp4`, sidecar task
+    `ep1-b08-v34-plate-twin-r1-0810`, guidance 1.0, SAME seed, byte-identical
+    prompt and negative. Spec `pipeline/jobs/ep1-b08-v34-plate-g20-sample.yaml`.
+  the_prediction_was_genuinely_pre_registered_and_this_is_checkable: >-
+    The spec was committed at 6d8e747, 2026-08-10 11:21:31Z, and `git log` shows
+    NO later commit touching it and `git status` shows no uncommitted edit. The
+    render finished 2026-08-10 11:32Z, eleven minutes after the prediction was
+    frozen into the repo. The scoring below was done 2026-08-11 ~22:00 local, a
+    day and a half later, by a lane that read the spec before it read a frame.
+    The clip sat unread for that day and a half; that delay is a real cost and is
+    recorded here rather than smoothed over.
+  the_method_and_the_one_caveat_that_matters: >-
+    `pipeline/measure_framing.py` FLOW, unmodified: ffmpeg `scale=200:-2,gray`,
+    mean absolute difference of each consecutive frame pair, dead-pair threshold
+    FROZEN = 0.2, 64 pairs on a 65-frame clip. That is the code that reproduces
+    `collect_farm.measure()`, and it is what the 62% figure names.
+    THE CAVEAT: this machine's decode does not reproduce the spec table's numbers
+    exactly. Re-measuring all four clips in that table gives medians 1.0708 /
+    0.1164 / 0.0951 / 0.1352 against the recorded 1.210 / 0.131 / 0.106 / 0.148 —
+    a consistent ratio near 0.89, so an ffmpeg/swscale version difference rather
+    than a different metric. Frozen shares come out 0% / 64.1% / 65.6% / 62.5%
+    against the recorded 0% / 62% / 62% / 62%: because the deltas read low, the
+    threshold count reads two to three points HIGH here. So the comparison below
+    is MINE AGAINST MINE — the control re-measured with the same code on the same
+    machine in the same pass — and NOT against the recorded 62%. Quoting 67.2%
+    against 62% would have overstated the gap by about three points.
+  measured:
+    g20_frozen_pairs: "43/64 = 67.2%"
+    g10_control_frozen_pairs_remeasured_here: "41/64 = 64.1% (recorded as 62%)"
+    medians: "g2.0 0.0931 against control 0.1164"
+    total_motion_extent: >-
+      mean per-pixel max-minus-min over the clip, 352-wide gray: 13.45 for g2.0
+      against 14.95 for the control. LESS total motion, not more — the opposite
+      sign from beat 07's +10%.
+    on_twos_ratio: "1.3 for g2.0, 1.4 for the control — and see below, the
+      detector cannot see this defect."
+  what_the_frames_show_and_it_outranks_every_number_above: >-
+    THE CLIP DOES NOT CARRY CONTINUOUS AMBIENT MOTION. It steps on THREES. The
+    per-pair delta series is one live pair followed by two dead ones, repeating
+    the whole way: 0.45 0.15 [3.32] 0.13 0.27 [2.57] 0.17 0.12 [2.36] 0.11 0.11
+    [1.59] ... and the step SHRINKS monotonically toward stillness, 3.32 at the
+    front down to 0.20 at the tail. The control does the same thing. A
+    consecutive-difference strip over frames 28-40, amplified 20x, shows it
+    plainly: every third panel lights up the whole sapling outline and the two
+    panels between it are black. The per-pixel motion-extent map puts what
+    movement there is on the EDGES of the sapling and the grass blades — sky,
+    leaf interiors and the horizon are dead. So the sapling and grass do not
+    ripple; they jump, once every three frames, by less each time.
+    AND IT IS NOT A CAMERA MOVE, WHICH WAS THE OBVIOUS ALTERNATIVE READING.
+    Aligning each frame to its predecessor by FFT phase correlation before
+    differencing changes the frozen count by at most one pair (43 -> 43 on g2.0,
+    41 -> 40 on the control): only 3 of 64 pairs carry any integer global shift
+    at all and the cumulative drift is 4px at width 200. The stutter is real
+    content change, sparsely spaced.
+  a_limitation_of_our_own_tooling_that_this_sample_exposed: >-
+    The ON-TWOS detector in `measure_framing.py` reports 1.3 and 1.4 here, which
+    reads as clean, because it splits the pairs into even and odd groups. A
+    cadence on THREES puts a spike into both groups and averages away. The beat-07
+    defect the detector was built for is a twos defect; beat 08's is a threes
+    defect, and the tool is blind to it by construction. Nothing was changed —
+    this lane touched no pipeline code — but the next lane that quotes a low twos
+    ratio as evidence of healthy cadence should know it does not cover this case.
+  the_picture_holds_so_the_experiment_is_a_success_by_its_own_success_clause: >-
+    The spec says the clip is a FAILURE only if the picture breaks. It did not.
+    Frame 0 mean luma 148.80 against the control's 148.62; chroma 38.58 against
+    38.39; chroma retention f64/f0 0.989 against 0.984; clipped-white 0.33%
+    against 0.31%, clipped-black 0.00% in both. On the frames the cel palette,
+    the ink linework, the horizon and the cloud forms all hold, the plant is
+    upright and rooted through all 65 frames, and there is no human, hand, face
+    or invented object in either arm. The beat-07 colour evidence predicted
+    exactly this and was right.
+  scored_against_the_prediction: >-
+    MISS on the load-bearing hypothesis; the pre-registered fallback fired
+    instead, and it fired on both of its clauses at once. The spec said: if the
+    inert negative was ever load-bearing, the frozen-pair share should fall well
+    below 62% AND the sapling and grass should carry continuous ambient motion.
+    Neither happened. The share did not fall below its control — it ROSE, 64.1%
+    to 67.2% measured identically — and the frames carry a decaying one-in-three
+    stutter rather than continuous ambient motion. The spec's other branch said:
+    if it lands near 62% anyway, the freeze is the sampler and the conditioning
+    frame, the negative prompt was never the lever, and g2.0 should be abandoned
+    for this series rather than tried on more beats. That is the branch the data
+    picked, and it did not land near 62% in the merciful direction — it landed
+    slightly worse.
+  the_honest_consequence: >-
+    THE NEGATIVE WAS NEVER THE LEVER FOR FREEZE. Turning CFG on and letting five
+    anti-stillness terms be evaluated for the first time, on the beat chosen
+    precisely because it is genuinely frozen, moved the frozen share the wrong way
+    by three points and left the cadence defect exactly where it was. g2.0's only
+    demonstrated effects on this series remain its costs — the wall-clock and VRAM
+    it adds, and a cadence no better than the control — and beat 08 still has no
+    correctly-framed moving candidate. Beat 08 needs a different lever (sampler,
+    sigmas, conditioning strength, frame count), not more guidance, and no further
+    beat should be spent on g2.0 for the freeze problem. This is the outcome the
+    spec called a real answer that retires the idea, so the sample did its job.
+  a_provenance_defect_found_while_scoring_and_not_fixed_by_this_lane: >-
+    `08-ltx-g20-plate-s20260739.mp4.meta.yaml` reads `guidance: 2.0` and then ends
+    its negative block with the hardcoded annotation `[unused: guidance 1.0 on the
+    distilled path runs no uncond pass, so this changed no pixel]`. The one clip in
+    the whole set where the negative WAS evaluated is labelled as one where it was
+    not. The sidecar writer emits that line unconditionally. Renders are unaffected
+    and the recipe is the intended one; it is the annotation that lies. Not touched
+    here — this lane was scoped to scoring and edited no pipeline code — and
+    flagged so the next reader trusts `guidance:` over that sentence.
+  what_this_record_does_not_claim: >-
+    It does not score `ltx-gprobe-guidance-0811`. That record is a different beat
+    (10), a different defect (the 181px apex climb, not freeze), and a different
+    negative (nine climb terms added, the five anti-stillness terms deliberately
+    REMOVED). What this result does bear on is that record's own
+    `what_a_miss_means` clause — on beat 08, CFG demonstrably activated the
+    negative and naming the defect in it still did not remove the defect. That is
+    one beat of evidence for the reading, not a scoring of it, and the gprobe
+    should be scored on its own frames when they exist.
+    Nothing is picked, promoted or made canonical; no cut changes; no clip
+    publishes; the founder is not asked to rule on this. Like
+    `ep2-b15-goblin-simple-0811-observed`, this is the steward scoring its own
+    pre-registered predicates with no founder input, so it is NOT part of the
+    rolling hit rate and should be left out of the next recount.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: miss
+  miss_axis: >-
+    THE MECHANISM, NOT THE PICTURE. The prediction's picture half was right —
+    colour, linework and subject all survived 2.0 exactly as the beat-07 evidence
+    said they would. What was wrong was the hypothesis that the negative prompt
+    was a suppressed lever waiting for CFG to switch it on. It was evaluated, and
+    the defect did not move. Wanting a term to be load-bearing because it has been
+    sitting in the prompt unread is not evidence that it is.
+  model_action: >-
+    Stop proposing guidance as the freeze fix on the LTX distilled path for this
+    series. Beat 08's next attempt should change the sampler, the sigma schedule
+    or the conditioning strength — the things the spec named as the surviving
+    suspects — and it should be ONE sample again, scored against a written
+    prediction, before any batch. When a cadence claim is made on this series,
+    report the delta SERIES or a consecutive-difference strip, not just the frozen
+    share: 67.2% and 64.1% are nearly the same number and hide that both clips
+    move in decaying steps of three.
