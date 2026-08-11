@@ -1,0 +1,227 @@
+# BEAT 03 JOINS THE VO-LENGTH WAVE, AND IT WAS EXCLUDED FROM IT BY A STALE LINE.
+# The sibling spec `ep1-b02-121f-vo-length-run.yaml` names beat 03 in its
+# exclusion list and cites shots.md:1041-1046 — "3, 6, 10 and 14 still have their
+# old PNGs on disk, unrevoked ... each is a frame he turned down in v32". That
+# passage is dated 2026-08-08 and beat 03 outran it the next day. The beat's own
+# section overrides it (shots.md:137): "PICKED 2026-08-09 (founder, R4):
+# `b03-r4-s3`. THIS BEAT IS CANON AND NOTHING RE-RENDERS ON IT", and the
+# revocation was done on disk — the refused v32 frame is parked as
+# `stills/03-deploy-succeeded-REVOKED-terminal-lab.png`.
+#
+# CHECKED, NOT ASSUMED. `shasum -a 256 stills/03-deploy-succeeded.png` =
+# f38faecb350421154afcdd3ca0757496c82b4bb9d3bdbfa48fc59019c44a954a, which is the
+# sha shots.md:139 records for the promoted pick, byte for byte. So the
+# disqualifier the b02 spec applied to this beat does not hold, and nothing here
+# re-renders the plate: this job conditions on it.
+#
+# THE DEFECT, MEASURED. render_t3.fit_duration (render_t3.py:312) sizes a voiced
+# beat's slot to max(min(cdur, vdur + 2.0), vdur + 0.4), and footage shorter than
+# its slot is looped as a palindrome. Read off this beat's own files:
+#   clips/03-vo.json                                     total_s 3.13
+#   review/provisional-v35/clips/03-deploy-succeeded.mp4 2.708s (ffprobe)
+#   slot = max(min(2.708, 5.13), 3.53) = 3.53s
+#   3.53 / 2.708 = the picture plays 1.30 times under one sentence.
+# Milder than beat 02's 1.91x and it is the same artefact Roman named: "i'd
+# rather not have any looping, it looks bad." Every one of the ten beat-03
+# candidates on the review page is 65 frames / 2.708s, so this is not an
+# eleventh candidate competing with ten — it is the first one that can go in the
+# cut without repeating.
+#
+# THE FRAME COUNT IS ARITHMETIC, AND 81 WOULD NOT HAVE BEEN ENOUGH. The
+# no-loop condition is F/24 >= vdur + 0.4 = 3.53, not F/24 >= vdur.
+#   F >= 84.72. LTX wants 8n+1. Smallest 8n+1 >= 84.72 is 89 (8*11+1).
+#   89 / 24 = 3.708s. 3.708 >= 3.53 (nothing loops) and 3.708 <= vdur + 2.0 =
+#   5.13 (nothing is trimmed, so the whole clip plays).
+# 81 frames is 3.375s, which is over the 3.13s line but UNDER the 3.53s slot, so
+# it would still have looped — at 1.05x, a barely-visible repeat that would have
+# read as a pass. 89 is the smallest count that actually fixes it. Far below the
+# 385f host-RAM ceiling this box has measured, and below the 121f that rendered
+# clean here on 2026-08-11.
+#
+# WHICH RECIPE THIS COPIES, AND WHY THAT ONE. `ep1-b03-v34-plate-twin-r3-0810`
+# (clip `review/v34-motion/03-deploy-succeeded-LTX-r3-plate.mp4`), seed 20260734.
+# Two reasons, neither of them a taste call: r3's wording is the one this repo
+# has already banked as working on an interior — the b02 spec adopted it by name
+# ("the beat-03 r3 prompt on this box proved that phrasing on an interior: a
+# locked-off tripod shot with every object keeping its position") — and r3 is the
+# most-exercised of the three, since all seven `v34-plate-reseeds/03-ltx-r3b..r3h`
+# runs are its prompt at other seeds. Which of the ten Roman prefers is still his
+# open call and this does not pre-empt it; it changes the length, on the recipe
+# the pipeline already leans on elsewhere.
+#
+# THE ONE PROMPT CHANGE: THE NEGATION CLAUSE IS DELETED FROM THE POSITIVE.
+# r3's positive ended:
+#   "... Subject already in frame: no human, no person, no man, no woman, no boy,
+#    no girl, no hand, no face, a dark room at night, one glowing monitor ..."
+# At guidance 1.0 the sampler runs no unconditional pass (ltx_i2v.py ~1001-1008,
+# confirmed against diffusers 0.39.0 in C:\banyan-video\venv), so the positive is
+# the only channel the model reads — and negation does not subtract in it. That
+# clause was feeding the model the tokens `boy`, `girl`, `hand`, `face` in the one
+# place they bind. Same shape as beat 10, where the wobble turned out to be the
+# literal word "sways" sitting in its positive (550705e).
+#   DELETED, exactly: "no human, no person, no man, no woman, no boy, no girl,
+#   no hand, no face, "
+# It is deleted, not relocated. What remains of the tail is the positive
+# description of what IS in frame, and I checked every noun of it against the
+# canon plate by eye: the pink-magenta screen, the white mug, the potted plant at
+# frame left, the night room. Nothing was added to compensate — inventing new
+# wording here would be a second variable.
+#
+# THE NEGATIVE IS CARRIED VERBATIM AND IS INERT. Same guidance-1.0 finding: it is
+# never read and changes no pixel. Unlike beat 02 (which has a person in it by
+# design and had its human terms stripped so the record was not self-
+# contradictory), beat 03 is an unpeopled close-up, so r3's negative is an honest
+# record of what was asked and stays as it was.
+#
+# EXECUTION FLAGS COME FROM THE PROVEN LONG-CLIP SPEC, not from the 65f twin:
+# `--offload sequential --mode production --image-crf 33`, as in the b02 121f run
+# that completed on this box on 2026-08-11. `--steps` is omitted, which is the
+# default 8 (ltx_i2v.py:1295) and therefore the same 8@352x640+3@704x1280
+# two-stage schedule the r3 twin's own meta records. Guidance, seed, size and fps
+# are r3's unchanged.
+#
+# ONE VARIABLE THIS DOES NOT REPEAT: the plate step runs, so the init is a
+# cover-centre 704x1280 crop (plate_prep.py CROP_POLICY = "cover-centre") rather
+# than the raw 832x1216 still. The whole v34-motion-0810 series went in raw and is
+# stretched 24.4% vertically; the `-plate` twins corrected it and this follows them.
+#
+# NO METRIC PICKS ANYTHING. The flow metric is disqualified on this series
+# (131e433 — it scored highest on the beat where the plant fell over). Read by eye.
+
+id: ep1-b03-89f-vo-length
+task: ep1-b03-89f-vo-length-0811
+node: 001-capability-inventory
+beat: 3
+runner: box
+needs_gpu: true
+priority: 24
+max_attempts: 1
+sample: true           # first render of this recipe change (clause deleted, 89f).
+                       # Nothing scales off it until Roman has looked at it.
+owner: beat-03 lane, 2026-08-11
+
+consumer: >-
+  the episode-1 cut he is being asked to pass — `v6-verdict` in
+  pipeline/pending-founder.yaml, the only item that unblocks posting anywhere.
+  Beat 03's picture currently plays 1.30 times under its own line. Every existing
+  candidate for this beat has the same length and would do the same, so the
+  beat has no shippable ingredient at all until one of them is rendered long
+  enough. This is that ingredient.
+
+success: >-
+  A 704x1280 mp4 at C:\banyan-farm\v34-r2\03-deploy-succeeded-LTX-89f.mp4 with 89
+  decoded frames (3.708s), conditioned on the canon plate, in which the room is
+  the same room for the whole clip: the monitor stays centred and the same size,
+  the mug and the potted plant hold their places, and no person, no second
+  object and no scene change appears. The figure check is the one that matters
+  here — the previous prompt asked for people by naming them, and this one does
+  not name them at all, so a clip with a hand or a face in it is the finding.
+  Whether the ambient motion is interesting enough is the OBSERVATION and his
+  call, not the pass condition; a completed clip that reads static is a real
+  result and gets reported as one. Judged by eye beside the 2.708s r3 clip. No
+  metric.
+
+why: >-
+  Beat 03's clip is shorter than the sentence spoken over it, so the cut loops
+  it; the fix is a frame count, plus deleting a clause that was asking for the
+  people the shot forbids.
+
+est_minutes: 6   # plate <1min; encode ~2min (Gemma load dominates); render ~2.7min
+                 # by interpolation on this box's own measurements — 145f took
+                 # 214s and 385f took 436s, so ~80s + 0.925s/frame gives ~162s
+                 # at 89 frames.
+needs: [cuda, vram20, video-venv]
+
+payload:
+  # r3's positive verbatim apart from the deleted negation clause — see header.
+  C:\banyan-farm\v34-r2\b03-prompt.txt: |-
+    2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. a completely static locked-off tripod shot of a fixed room, the camera never moves and the frame never changes; the monitor stays exactly centred with both of its bezels inside the frame, the white mug stays on the same spot of the desk, the potted plant stays at the left edge, the desk edge stays along the bottom, every object keeps the same position and the same size in every single frame from the first to the last, the background is fixed and identical throughout. within that fixed frame there is only small ambient motion: the monitor glow pulses very faintly across the desk, a thin wisp of steam curls up from the white mug, the potted plant leaves stir slightly, dust motes drift slowly through the screen light, living scene. Subject already in frame: a dark room at night, one glowing monitor on a desk, a white mug in front of it, a potted plant at the left edge, cool magenta screen light.
+
+  # r3's negative, unchanged. At guidance 1.0 none of it is read; it is the
+  # provenance record of what was asked (§7.2).
+  C:\banyan-farm\v34-r2\b03-negative.txt: |-
+    wilting, drooping, bending over, falling over, collapsing, sagging, plant dying, human, person, man, woman, boy, girl, extra hand, extra arm, foot, face, crowd, animal, bird, insect, new object appearing, photorealism, 3D render look, text, 静态, 静止, frozen frame, still image, no motion, photorealistic, photograph, live action, film still, 3D render, CGI, octane, scene change, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+
+  C:\banyan-farm\v34-r2\b03-jobs-encode.json: |-
+    [{"beat": 3,
+      "embeds": "C:\\banyan-farm\\v34-r2\\b03-embeds.pt",
+      "prompt_file": "C:\\banyan-farm\\v34-r2\\b03-prompt.txt",
+      "negative_file": "C:\\banyan-farm\\v34-r2\\b03-negative.txt"}]
+
+  C:\banyan-farm\v34-r2\b03-jobs-render-89.json: |-
+    [{"beat": 3,
+      "seed": 20260734,
+      "embeds": "C:\\banyan-farm\\v34-r2\\b03-embeds.pt",
+      "init": "C:\\banyan-farm\\v34-r2\\03-704x1280.png",
+      "out": "C:\\banyan-farm\\v34-r2\\03-deploy-succeeded-LTX-89f.mp4"}]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  # v34-r2 holds plates for 02, 04, 06, 07 but not 03, so the plate step runs.
+  # Source is the canon still in the box checkout — the same file whose sha is
+  # quoted in the header. prepare_plate prints source_sha256, which is how the
+  # log proves after the fact which drawing this was conditioned on.
+  - name: plate
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - -c
+      - |
+        import sys; sys.path.insert(0, r"C:\banyan-farm\banyan-city\pipeline")
+        from plate_prep import prepare_plate
+        out, rec = prepare_plate(
+            r"C:\banyan-farm\banyan-city\genomes\sapling\nodes\001-capability-inventory\stills\03-deploy-succeeded.png",
+            "704x1280", r"C:\banyan-farm\v34-r2", "03")
+        print("plate", out); print(rec["plate_wxh"], rec["crop_policy"])
+        print("source_sha256", rec["sha256"])
+  - name: encode
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+      - --stage
+      - encode
+      - --jobs
+      - C:\banyan-farm\v34-r2\b03-jobs-encode.json
+  - name: render
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+      - --stage
+      - render
+      - --jobs
+      - C:\banyan-farm\v34-r2\b03-jobs-render-89.json
+      - --size
+      - 704x1280
+      - --frames
+      - "89"
+      - --fps
+      - "24"
+      - --guidance
+      - "1.0"
+      - --distilled-sigmas
+      - --two-stage
+      - --image-crf
+      - "33"
+      - --offload
+      - sequential
+      - --mode
+      - production
+      - --task
+      - ep1-b03-89f-vo-length-0811
+      - --worker
+      - rtx5090
+      - --bench-jsonl
+      - C:\banyan-farm\v34-r2\bench-b03-89f.jsonl
+      - --bench-label
+      - b03-89f-vo-length
+
+artifacts:
+  - C:\banyan-farm\v34-r2\03-deploy-succeeded-LTX-89f.mp4
