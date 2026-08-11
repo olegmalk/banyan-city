@@ -8917,3 +8917,44 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+- id: ep2-b06-refresh-0811
+  kind: prediction
+  written: 2026-08-11 ~23:1x, before enqueue; predicates fixed before any frame
+    existed. Dry-run passed on the box (76/77, anchor intact); dry draws nothing.
+  round: ep2-b06-refresh-0811, beat 06 THE CLIPBOARD, variant
+    authored_b06_refresh, 4 stills, SDXL animagine-xl-3.1, node 002b-first-citizen.
+  what_changed: staging verbatim; added ratified register (bare-headed, dull
+    dented mismatched armor), bright morning, the 8-term dark-ban.
+  predicates:
+    - one guard figure in 4/4, no second person
+    - bare-headed comic register, not helmeted dark fantasy, in >=3/4
+    - the bark clipboard filling the lower third readable in >=2/4
+    - bright morning palette in 4/4
+  consumer: the founder's morning review page.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep2-b07-refresh-0811
+  kind: prediction
+  written: 2026-08-11 ~23:1x, before enqueue; predicates fixed before any frame
+    existed. Dry-run passed on the box (74/77, anchor intact); dry draws nothing.
+  round: ep2-b07-refresh-0811, beat 07 CONFISCATE, variant authored_b07_refresh,
+    4 stills, SDXL animagine-xl-3.1, node 002b-first-citizen.
+  what_changed: staging verbatim; added ratified register, bright morning,
+    dark-ban, and `no crowd, no people in background` per his ep1-sibling
+    verdict on background people.
+  predicates:
+    - one guard pointing off-frame in >=3/4 (partner shoulder allowed)
+    - no background people or crowd in 4/4
+    - bare-headed comic register in >=3/4
+    - bright morning palette in 4/4
+  consumer: the founder's morning review page.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null

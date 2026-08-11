@@ -833,6 +833,19 @@ beats:
     tag: 1boy
     extra_neg: guard
     gist: clipboard
+    # -- `authored_b06_refresh` -- 2026-08-11 ~23:1x, the lead. His beat-06
+    # verdict: "none of them.. should probably setup a character for the
+    # guards" -- the character is now ratified (~20:27) and this round carries
+    # it. Staging kept verbatim (clipboard lower third, finger tracing, brow).
+    authored_b06_refresh: >-
+      A round bare-headed guard man in dull dented mismatched armor turns over
+      a bark clipboard that fills the lower third of the frame, tracing a line
+      on it with one finger as he reads, brow furrowed. Slow drift in, medium
+      close-up, bright morning light, cinematic lighting, detailed, newest,
+      masterpiece, best quality, very aesthetic No girl, no child, no helmet,
+      no knight, no dark fantasy, no dark, no night, no dusk, no sunset, no
+      dim lighting, no moody lighting, no low key, no shadows dominant. No
+      photorealism, no 3D render look. 9:16 vertical, no text.
     authored: >-
       A round guard man in mismatched armor turns over a bark clipboard that
       fills the lower third of the frame, tracing a line on it with one finger
@@ -861,6 +874,21 @@ beats:
     tag: 1boy
     extra_neg: guard
     gist: confiscate
+    # -- `authored_b07_refresh` -- 2026-08-11 ~23:1x, the lead. His beat-07
+    # verdicts: "we need to setup character consistency even if they only
+    # appear once" (register now ratified, carried here) and, on the ep1
+    # sibling shot, "the control has some people in the background which we
+    # dont want" -- so background people are banned in the channel that binds.
+    authored_b07_refresh: >-
+      A round bare-headed guard man in dull dented mismatched armor thrusts
+      one arm out, pointing off-frame with the confidence of a man who has
+      solved the problem, his partner's shoulder just visible at frame edge.
+      Static camera, morning field, bright morning light, cinematic lighting,
+      detailed, newest, masterpiece, best quality, very aesthetic No girl, no
+      child, no crowd, no people in background, no helmet, no knight, no dark
+      fantasy, no dark, no night, no dusk, no sunset, no dim lighting, no
+      moody lighting, no low key, no shadows dominant. No photorealism, no 3D
+      render look. 9:16 vertical, no text.
     authored: >-
       A round guard man in mismatched armor thrusts one arm out, pointing
       off-frame with the confidence of a man who has solved the problem, his
