@@ -1,0 +1,653 @@
+# EPISODE 2, BEAT 01 — THE STYLE PROBE. Three strengths, one init, six frames, $0.
+# 2026-08-12 ~03:2x. The card finished the identity wave and went idle; this is the
+# last reject-with-direction of the night.
+#
+# ── THE QUESTION, IN HIS WORDS. Roman, ~23:45 on beat 01: "for beat 1, s2 is really
+# good but.. how come you changed the style so much?" Two facts sit under that
+# sentence and they are both on the record:
+#   * The plate rounds (r8, and `ep2-b01-brightbase-figmatte-0811` after it) were
+#     img2img over his approved ep1 still. They carried the style he recognises and
+#     they OVERRODE the fig and leaf-count words — `ep2-b01-r8-sample` measured the
+#     init beating the positive palette at 0.35 AND at 0.55, and the fig had to be
+#     inpainted through a mask because no prompt reached it.
+#   * Tonight's t2i round (`ep2-b01-t2i-fig-0811`) finally obeyed those words — the
+#     fig and the two leaves are drawn, not masked in — and lost the plate's look.
+# `s2 is really good` makes ONE frame the composition reference. This job asks the
+# only question that follows: does a LOW-STRENGTH img2img starting from s2 — not
+# from the old plate — move the style back toward the plate family while s2's
+# composition and its fig survive?
+#
+# ── THE HONEST PRIOR, WRITTEN BEFORE THE FRAMES AND NOT BURIED. The plate's style
+# was never in the words. It was in the plate's PIXELS, which is exactly why r8's
+# positive could not move the palette off it. The plate is nowhere in this job, so
+# the only style channel here is text — the same channel measured to lose that
+# fight. This probe can therefore come back "no middle exists", and that is a
+# result, not a failure: it retires the middle-ground hypothesis for about eight
+# GPU-minutes and leaves his morning pick a clean two-way (t2i style with the fig,
+# or plate style with a masked fig). What would make it a WASTE is running it
+# without saying this first, so it is said first.
+#
+# ── ONE VARIABLE: INIT STRENGTH. 0.25 / 0.40 / 0.55. Same init, same two seeds,
+# same positive, same negative, same steps, guidance, size, dtype and harness in
+# all three arms. 0.55 is the top of the range the 2026-08-06 repaints ever
+# measured and the number r8 used for its high arm, so this sweep does not invent a
+# range — it reuses one.
+#
+# ── THE INIT IS ALREADY ON THE BOX, SO NOTHING IS SHIPPED. The s2 frame lives at
+# C:\banyan-farm\wave-goblin-prep\out-b01-t2i\01-cold-open-wave1-s2.png, written by
+# `ep2-b01-t2i-fig-0811`, sha256 874d36f566cf251753a6835144eed76fbbef558df65a30f3ef
+# a913c75d942454 (measured on the box in this pass, not copied from a sidecar). It
+# is also committed on farm-results-rtx5090 at farm-out/ep2-b01-t2i-fig/, so the
+# init this round starts from is reviewable without the box. No `payload:` is used:
+# that mechanism writes utf-8 text and cannot carry a PNG.
+#
+# ── THE HARNESS EXISTS AND IS NOT MODIFIED. `pipeline/runpod_render.py` is the only
+# script in this repo that does SDXL img2img from an ARBITRARY init: it reads INIT
+# (image path), STRENGTH, BEATS, SEEDS and NODE from the environment, builds the
+# positive with the same `parse_shots` + `compress` the whole project uses and the
+# negative with the same `beat_negative`, runs on CUDA in bfloat16, and enforces the
+# §6 approval gate itself. The box copy at
+# C:\banyan-farm\banyan-city\pipeline\runpod_render.py is byte-identical to the repo
+# copy — both dd834f57f987a090fcb6cebd8cbd5ff5fdcf306125bbef43739f71f1517ebd9c,
+# hashed on both sides in this pass. NOTHING under pipeline/ is edited by this job;
+# a harness change is a morning decision and this is not one.
+# The three harnesses that DO hardcode their init were checked and ruled out rather
+# than assumed: `render_b01r8.py` and `render_b01_bright.py` read `r8.INIT_REL` and
+# refuse on `r8.INIT_SHA` mismatch (no --init flag exists); `render_b01r9.py` is
+# text2img + depth ControlNet and writes `init_image: none` by construction;
+# `render_wave_sample.py` — the harness that drew s2 — has no init path at all;
+# `inpaint_fruit.py` takes an arbitrary --init but is a MASKED ellipse inpaint, not
+# a full-frame repaint. `still_local.py` has exactly the flags this needs and
+# refuses anything but Apple MPS, so it cannot run here, and running it on the Mac
+# would draw the comparison frames in fp32 against six bf16 rounds — on a question
+# whose whole subject is fine rendering detail, that dtype gap is the confound you
+# least want.
+#
+# ── WHAT THE POSITIVE IS, MEASURED ON THE BOX BEFORE QUEUEING, NOT ASSUMED. The
+# box clone's beat-01 fence parses and compresses to:
+#   A tiny 40cm seedling standing in short grass, its sturdy curved stem no taller
+#   than the grass around it, two oversized cotyledon leaves, one small round green
+#   fruit hanging from the stem, whole plant in frame, wide shot, peach and gold
+#   sunrise sky, cinematic lighting, detailed, newest, masterpiece, best quality,
+#   very aesthetic
+# with NOTHING dropped for budget. So the brief's two requirements arrive for free
+# and are asserted rather than hoped for: the fig term (`one small round green fruit
+# hanging from the stem`) and the leaf term (`two oversized cotyledon leaves`) are
+# both in the positive, and so is the detailed-cinematic-anime tail the plate rounds
+# sent (`cinematic lighting, detailed, newest, masterpiece, best quality, very
+# aesthetic`). The negative comes out at 28 terms, budget-trimmed of `realistic skin
+# texture` and `jpeg artifacts` with `text` deduplicated — the same trim r7 and r8
+# ran under.
+#
+# ── THE ONE IMPURITY, NAMED LOUDLY BECAUSE IT IS A KNOWN-BAD CLAUSE. r8 does not
+# send this fence verbatim: it DELETES ` no taller than the grass around it`
+# script-side, and its header says why in a measurement, not an opinion — r7 proved
+# CLIP read that clause as *taller* than the grass and the one seed inside the
+# founder's ~20% stem ceiling went to 39%. `runpod_render.py` has no such deletion
+# and cannot get one without editing pipeline code, so this round SENDS the clause.
+# The `dry` step asserts the delta is EXACTLY that and nothing else, by importing
+# `R8_POS_SENT` from `render_b01r9.py` in the same clone rather than copying the
+# string — a copy can drift, an import cannot. Read the consequence this way: at
+# 0.25 and 0.40 the init owns the composition and the clause should be inert; the
+# 0.55 arm is where it can bite, and an inflated stem there is the predicate, NOT
+# evidence about style. That reading is written down before the frames exist so it
+# cannot be invented afterwards.
+#
+# ── WHAT ELSE IS NOT IDENTICAL TO ANY EARLIER ROUND, SAID PLAINLY. s2 itself was
+# drawn with the eight-term lighting block in its negative (variant
+# `authored_b01_t2i_fig`); this round's negative is r8's family and carries no
+# lighting block. The light in these six frames therefore arrives from the init, not
+# from a ban, which is the correct arrangement for a probe about style but means
+# these frames are NOT the lighting comparison and must not be read as one.
+#
+# ── SHARED BOX STATE, LEFT AS IT WAS FOUND. `runpod_render.py` writes into
+# `<clone>/runpod-out`, and that clone is shared with every other b01 lane. Each arm
+# therefore MOVES its two frames straight out into C:\banyan-farm\out-b01-styleprobe
+# under arm-tagged names and removes `runpod-out` again, so the round leaves no
+# untracked directory inside a checkout other jobs assert against. Nothing in
+# `out-b01-t2i`, `b01-bright\out` or `out-figmatte` is read for writing or touched.
+#
+# ── PROVENANCE, AND THE ONE PLACE IT IS WEAKER THAN HOUSE STANDARD. Unlike
+# `render_b01_bright.py` and `render_wave_sample.py`, `runpod_render.py` writes no
+# sidecar and never prints the strings it sent. Each arm step therefore writes a
+# `.png.meta.yaml` itself, and the positive and negative in it are RECOMPUTED — by
+# importing `runpod_render` and calling its own `beat_negative` with its own `NEG`
+# constant against the same shots.md in the same process — not captured from the
+# render. Every sidecar says so in a `positive_recomputed_not_captured: true` field
+# rather than passing a recomputation off as a capture.
+#
+# ── PER-STEP `env:`. Each arm needs its own STRENGTH, so each arm step carries an
+# `env:` block. No spec in pipeline/jobs has used per-step env before; the runner
+# has supported it all along (`box_runner.py:713-720` layers os.environ, then the
+# job's `env`, then the step's) and `box_enqueue.to_job` copies `steps` through
+# verbatim. Because that is a first use, the $0 `dry` step below carries a
+# per-step env of its own and ASSERTS it arrived — so if the mechanism is not what
+# the runner's code says, this job dies before it loads a model.
+
+id: ep2-b01-styleprobe-0812
+task: ep2-b01-styleprobe-0812
+node: 002b-first-citizen
+beat: 1
+runner: box
+needs_gpu: true
+
+# 45, the beat-01 lane's number (`ep2-b01-brightbase-figmatte-0811` used it).
+# box_runner.py:444 sorts priority ASCENDING and takes ONE job at a time regardless
+# — sequential is the rule (CLAUDE.md, founder 2026-08-03). The ready queue was
+# EMPTY and nothing was running when this was staged (`box_enqueue.py --list`,
+# checked twice, not assumed).
+priority: 45
+max_attempts: 1
+owner: beat-01 style-restore probe, 2026-08-12
+
+# NO `gate:` KEY. A three-arm probe on one axis, drawing nothing that could be
+# published. It clears nobody's gate.
+
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03` (read in this pass from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml:17-18, the leaf the
+  render gate itself reads, and the leaf `runpod_render.py` re-reads for itself at
+  run time). His `approved_quote` verbatim: "approve 002b except.. we need to make
+  SURE the fig growing on the sapling is mentioned, last time we generated 002b it
+  just.. appeared. also, the sapling was able to flail a leaf in episode 1? why
+  couldnt it do that in 002b?" His FIRST `approval_condition` is beat 01''s: "The fig
+  must GROW on screen, not already hang." A still cannot show the growing — that is a
+  T2/T3 question and nothing here claims it. What this round owes that condition is
+  narrower and checkable: the fig must still BE there after the repaint.'
+
+consumer: >-
+  Roman's morning pick on beat 01, as a three-way against frames that already exist:
+  farm-out/ep2-b01-t2i-fig/01-cold-open-wave1-s2.png (the t2i style he called "really
+  good", and this round's init) and farm-out/ep2-b01-brightbase-figmatte/ (the plate
+  style with the masked fig). These six frames are the only candidates for a middle
+  between them. They rank nothing and pick nothing; the verdict is R4's.
+
+success: >-
+  Six PNGs at C:\banyan-farm\out-b01-styleprobe\b01-styleprobe-{i25,i40,i55}-s{0,1}.png
+  with their .png.meta.yaml provenance sidecars, all twelve declared as artifacts so
+  a missing one fails rc=92 instead of passing quietly. Success is that the three
+  arms are comparable and readable — NOT that a middle was found. "No middle exists"
+  is a successful run of this job.
+
+why: >-
+  One axis, init strength, over an init the founder named good. It answers whether
+  the plate-family style can be reached from s2's composition instead of from the
+  plate, which is the only route that could keep the drawn fig and the two leaves
+  AND the look he recognises. Every other variable is pinned: same init, same seeds
+  (20260720, 20261720), same positive, same negative, same 40 steps, 7.5 guidance,
+  832x1216, bfloat16, same harness.
+
+est_minutes: 8
+needs:
+- cuda
+- vram20
+- farm-venv
+
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+# Imports no torch and draws nothing. Asserts, in order: that per-step env arrives;
+# that the box clone's beat-01 fence is the exact string measured before queueing
+# (a stale or edited checkout cannot start); that the compressed positive differs
+# from r8's SENT positive by exactly the height predicate and nothing else; that the
+# fig term, the leaf term and the style tail are all in the positive; that the init
+# file is present with the expected sha256. Every way this round can be wrong costs
+# $0 here instead of a render.
+- name: dry
+  env:
+    STRENGTH: '0.00'
+    INIT: C:\banyan-farm\wave-goblin-prep\out-b01-t2i\01-cold-open-wave1-s2.png
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import hashlib, os, sys
+    from pathlib import Path
+    CLONE = r"C:\banyan-farm\banyan-city"
+    sys.path.insert(0, CLONE + r"\pipeline")
+
+    fails = []
+    def check(ok, label):
+        print(("  ok   " if ok else "  FAIL ") + label, flush=True)
+        if not ok:
+            fails.append(label)
+
+    # 1. per-step env. First use of box_runner.py:720 from a spec, so prove it.
+    check(os.environ.get("STRENGTH") == "0.00",
+          "per-step env arrives (STRENGTH=%r)" % os.environ.get("STRENGTH"))
+    init = os.environ.get("INIT", "")
+    check(bool(init), "per-step env carries INIT (%s)" % init)
+
+    # 2. the init is the frame he called good, by hash and not by filename.
+    INIT_SHA = "874d36f566cf251753a6835144eed76fbbef558df65a30f3efa913c75d942454"
+    if init and os.path.isfile(init):
+        h = hashlib.sha256(open(init, "rb").read()).hexdigest()
+        print("  init sha256 %s" % h, flush=True)
+        check(h == INIT_SHA, "init is ep2-b01-t2i-fig-0811 s2 (expected %s)" % INIT_SHA[:16])
+    else:
+        check(False, "init file exists at %s" % init)
+
+    # 3. the harness is the reviewed bytes.
+    SC = CLONE + r"\pipeline\runpod_render.py"
+    HARNESS_SHA = "dd834f57f987a090fcb6cebd8cbd5ff5fdcf306125bbef43739f71f1517ebd9c"
+    hh = hashlib.sha256(open(SC, "rb").read()).hexdigest()
+    print("  harness sha256 %s" % hh, flush=True)
+    check(hh == HARNESS_SHA, "runpod_render.py is the reviewed copy")
+
+    # 4. the fence on disk. A stale checkout must not start.
+    import runpod_render as rr
+    from generate_shots import parse_shots
+    shots = Path(CLONE) / "genomes/sapling/nodes/002b-first-citizen/shots.md"
+    raw = [s for s in parse_shots(shots.read_text(encoding="utf-8")) if s["num"] == 1]
+    check(len(raw) == 1, "exactly one beat 1 in shots.md")
+    s = raw[0]
+    FENCE = ("A tiny 40cm seedling standing in short grass, its sturdy curved stem "
+             "no taller than the grass around it, two oversized cotyledon leaves, "
+             "one small round green fruit hanging from the stem, whole plant in "
+             "frame, wide shot, peach and gold sunrise sky, no girl, no boy, no "
+             "child, no person, no chibi, no mascot, no creature, no face, no "
+             "branches, no night sky, cinematic lighting, detailed, newest, "
+             "masterpiece, best quality, very aesthetic No photorealism, no 3D "
+             "render look. 9:16 vertical, no text.")
+    check(s["prompt"] == FENCE, "beat-01 fence is byte-for-byte the measured one")
+    check(s["slug"] == "cold-open", "slug is cold-open (output filenames depend on it)")
+
+    # 5. the sent strings, through the harness's OWN constant and functions.
+    pos, dropped = rr.compress(s["prompt"])
+    neg = rr.beat_negative(rr.NEG, s["prompt"])
+    print("\n  POS: %s\n\n  NEG: %s\n" % (pos, neg), flush=True)
+    check(not dropped, "nothing dropped from the positive for budget (%r)" % (dropped,))
+    check("one small round green fruit hanging from the stem" in pos, "FIG term in the positive")
+    check("two oversized cotyledon leaves" in pos, "LEAF term in the positive")
+    check("cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic"
+          in pos, "detailed-cinematic-anime tail in the positive")
+
+    # 6. the delta against r8's SENT positive is the height predicate, exactly.
+    # Imported, not copied: a copy of this string can drift out of step with r8.
+    from render_b01r9 import R8_POS_SENT
+    PREDICATE = " no taller than the grass around it"
+    check(pos != R8_POS_SENT, "this round is NOT sending r8's positive (it cannot)")
+    check(pos.replace(PREDICATE, "", 1) == R8_POS_SENT,
+          "the ONLY delta vs r8's sent positive is %r" % PREDICATE)
+    check(pos.count(PREDICATE) == 1, "the predicate appears exactly once")
+
+    # 7. seeds, stated so the sidecars can be read against r8's.
+    print("  seeds: %s" % [rr.SEED + 1 + k * 1000 for k in range(2)], flush=True)
+    check(rr.SEED + 1 == 20260720, "seed rule matches the b01 family (SEED+beat)")
+
+    print("\nDRY: %d check(s) failed" % len(fails), flush=True)
+    raise SystemExit(1 if fails else 0)
+
+# ARM 1 of 3 — strength 0.25. Prediction: composition and fig survive, style barely
+# moves. Each arm renders two seeds, moves them out of the shared clone under
+# arm-tagged names, writes a sidecar per frame, and removes runpod-out again.
+- name: i25
+  env:
+    BEATS: '1'
+    SEEDS: '2'
+    NODE: 002b-first-citizen
+    INIT: C:\banyan-farm\wave-goblin-prep\out-b01-t2i\01-cold-open-wave1-s2.png
+    STRENGTH: '0.25'
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import hashlib, json, os, shutil, subprocess, sys
+    from pathlib import Path
+    ARM   = "i25"
+    CLONE = r"C:\banyan-farm\banyan-city"
+    SC    = CLONE + r"\pipeline\runpod_render.py"
+    RAW   = os.path.join(CLONE, "runpod-out")
+    OUT   = r"C:\banyan-farm\out-b01-styleprobe"
+    sys.path.insert(0, CLONE + r"\pipeline")
+
+    strength = os.environ["STRENGTH"]
+    init     = os.environ["INIT"]
+    init_sha = hashlib.sha256(open(init, "rb").read()).hexdigest()
+    print("arm %s strength %s init %s sha256 %s" % (ARM, strength, init, init_sha), flush=True)
+
+    # Render. Env is already set by the step's own env block; the harness reads it.
+    rc = subprocess.call([sys.executable, SC])
+    if rc:
+        sys.exit(rc)
+
+    # Recompute what was sent, with the harness's own constant and functions, in
+    # this process against the same shots.md. RECOMPUTED, NOT CAPTURED -- the
+    # harness prints neither string, and the sidecars say which of the two this is.
+    import runpod_render as rr
+    from generate_shots import parse_shots
+    shots = Path(CLONE) / "genomes/sapling/nodes/002b-first-citizen/shots.md"
+    s = [x for x in parse_shots(shots.read_text(encoding="utf-8")) if x["num"] == 1][0]
+    pos, _ = rr.compress(s["prompt"])
+    neg = rr.beat_negative(rr.NEG, s["prompt"])
+    shots_sha = hashlib.sha256(shots.read_bytes()).hexdigest()
+    harness_sha = hashlib.sha256(open(SC, "rb").read()).hexdigest()
+    try:
+        commit = subprocess.run(["git", "-C", CLONE, "rev-parse", "HEAD"],
+                                capture_output=True, text=True).stdout.strip() or "unknown"
+    except OSError:
+        commit = "unknown"
+
+    os.makedirs(OUT, exist_ok=True)
+    moved = 0
+    for k in range(2):
+        src = os.path.join(RAW, "01-%s-s%d.png" % (s["slug"], k))
+        if not os.path.isfile(src):
+            print("   !! missing %s" % src, flush=True)
+            continue
+        dst = os.path.join(OUT, "b01-styleprobe-%s-s%d.png" % (ARM, k))
+        shutil.move(src, dst)
+        moved += 1
+        sha = hashlib.sha256(open(dst, "rb").read()).hexdigest()
+        seed = rr.SEED + 1 + k * 1000
+        with open(dst + ".meta.yaml", "w", encoding="utf-8", newline="\n") as fh:
+            fh.write("\n".join([
+                "task: ep2-b01-styleprobe-0812",
+                "node: 002b-first-citizen",
+                "beat: 1",
+                "arm: " + ARM,
+                "strength: " + strength,
+                "model: " + rr.BASE,
+                "dtype: bfloat16",
+                "pipeline: StableDiffusionXLImg2ImgPipeline",
+                "harness: pipeline/runpod_render.py",
+                "harness_sha256: " + harness_sha,
+                "harness_modified_for_this_round: false",
+                "init_image: " + json.dumps(init),
+                "init_sha256: " + init_sha,
+                "init_provenance: >-",
+                "  ep2-b01-t2i-fig-0811 seed s2, the frame the founder called \"really",
+                "  good\" at ~23:45 on 2026-08-11. Also committed on farm-results-rtx5090",
+                "  at farm-out/ep2-b01-t2i-fig/01-cold-open-wave1-s2.png.",
+                "size: 832x1216",
+                "steps: 40",
+                "guidance: 7.5",
+                "seed: %d" % seed,
+                "seed_rule: SEED(%d) + BEAT(1) + k*1000" % rr.SEED,
+                "prompt_source: genomes/sapling/nodes/002b-first-citizen/shots.md beat 1",
+                "prompt_source_sha256: " + shots_sha,
+                "positive: " + json.dumps(pos),
+                "negative: " + json.dumps(neg),
+                "positive_recomputed_not_captured: true",
+                "positive_delta_vs_r8_sent: >-",
+                "  this positive is r8's SENT positive plus the height predicate",
+                "  ` no taller than the grass around it`, which runpod_render.py cannot",
+                "  strip and r8 deletes script-side. Asserted exact by the dry step.",
+                "negative_carries_lighting_block: false",
+                "repo_commit: " + commit,
+                "cost_usd: 0",
+                "sha256: " + sha,
+                "provisional: >-",
+                "  Not a pick, not canon, not published, not assembled. A three-arm",
+                "  strength probe; the verdict on it is R4's.",
+                "",
+            ]))
+        print("   %s  %s" % (os.path.basename(dst), sha[:16]), flush=True)
+    # Leave the shared clone as it was found.
+    shutil.rmtree(RAW, ignore_errors=True)
+    print("arm %s wrote %d frame(s)" % (ARM, moved), flush=True)
+    raise SystemExit(0 if moved == 2 else 1)
+
+# ARM 2 of 3 — strength 0.40. The middle the whole probe is looking for.
+- name: i40
+  env:
+    BEATS: '1'
+    SEEDS: '2'
+    NODE: 002b-first-citizen
+    INIT: C:\banyan-farm\wave-goblin-prep\out-b01-t2i\01-cold-open-wave1-s2.png
+    STRENGTH: '0.40'
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import hashlib, json, os, shutil, subprocess, sys
+    from pathlib import Path
+    ARM   = "i40"
+    CLONE = r"C:\banyan-farm\banyan-city"
+    SC    = CLONE + r"\pipeline\runpod_render.py"
+    RAW   = os.path.join(CLONE, "runpod-out")
+    OUT   = r"C:\banyan-farm\out-b01-styleprobe"
+    sys.path.insert(0, CLONE + r"\pipeline")
+
+    strength = os.environ["STRENGTH"]
+    init     = os.environ["INIT"]
+    init_sha = hashlib.sha256(open(init, "rb").read()).hexdigest()
+    print("arm %s strength %s init %s sha256 %s" % (ARM, strength, init, init_sha), flush=True)
+
+    rc = subprocess.call([sys.executable, SC])
+    if rc:
+        sys.exit(rc)
+
+    import runpod_render as rr
+    from generate_shots import parse_shots
+    shots = Path(CLONE) / "genomes/sapling/nodes/002b-first-citizen/shots.md"
+    s = [x for x in parse_shots(shots.read_text(encoding="utf-8")) if x["num"] == 1][0]
+    pos, _ = rr.compress(s["prompt"])
+    neg = rr.beat_negative(rr.NEG, s["prompt"])
+    shots_sha = hashlib.sha256(shots.read_bytes()).hexdigest()
+    harness_sha = hashlib.sha256(open(SC, "rb").read()).hexdigest()
+    try:
+        commit = subprocess.run(["git", "-C", CLONE, "rev-parse", "HEAD"],
+                                capture_output=True, text=True).stdout.strip() or "unknown"
+    except OSError:
+        commit = "unknown"
+
+    os.makedirs(OUT, exist_ok=True)
+    moved = 0
+    for k in range(2):
+        src = os.path.join(RAW, "01-%s-s%d.png" % (s["slug"], k))
+        if not os.path.isfile(src):
+            print("   !! missing %s" % src, flush=True)
+            continue
+        dst = os.path.join(OUT, "b01-styleprobe-%s-s%d.png" % (ARM, k))
+        shutil.move(src, dst)
+        moved += 1
+        sha = hashlib.sha256(open(dst, "rb").read()).hexdigest()
+        seed = rr.SEED + 1 + k * 1000
+        with open(dst + ".meta.yaml", "w", encoding="utf-8", newline="\n") as fh:
+            fh.write("\n".join([
+                "task: ep2-b01-styleprobe-0812",
+                "node: 002b-first-citizen",
+                "beat: 1",
+                "arm: " + ARM,
+                "strength: " + strength,
+                "model: " + rr.BASE,
+                "dtype: bfloat16",
+                "pipeline: StableDiffusionXLImg2ImgPipeline",
+                "harness: pipeline/runpod_render.py",
+                "harness_sha256: " + harness_sha,
+                "harness_modified_for_this_round: false",
+                "init_image: " + json.dumps(init),
+                "init_sha256: " + init_sha,
+                "init_provenance: >-",
+                "  ep2-b01-t2i-fig-0811 seed s2, the frame the founder called \"really",
+                "  good\" at ~23:45 on 2026-08-11. Also committed on farm-results-rtx5090",
+                "  at farm-out/ep2-b01-t2i-fig/01-cold-open-wave1-s2.png.",
+                "size: 832x1216",
+                "steps: 40",
+                "guidance: 7.5",
+                "seed: %d" % seed,
+                "seed_rule: SEED(%d) + BEAT(1) + k*1000" % rr.SEED,
+                "prompt_source: genomes/sapling/nodes/002b-first-citizen/shots.md beat 1",
+                "prompt_source_sha256: " + shots_sha,
+                "positive: " + json.dumps(pos),
+                "negative: " + json.dumps(neg),
+                "positive_recomputed_not_captured: true",
+                "positive_delta_vs_r8_sent: >-",
+                "  this positive is r8's SENT positive plus the height predicate",
+                "  ` no taller than the grass around it`, which runpod_render.py cannot",
+                "  strip and r8 deletes script-side. Asserted exact by the dry step.",
+                "negative_carries_lighting_block: false",
+                "repo_commit: " + commit,
+                "cost_usd: 0",
+                "sha256: " + sha,
+                "provisional: >-",
+                "  Not a pick, not canon, not published, not assembled. A three-arm",
+                "  strength probe; the verdict on it is R4's.",
+                "",
+            ]))
+        print("   %s  %s" % (os.path.basename(dst), sha[:16]), flush=True)
+    shutil.rmtree(RAW, ignore_errors=True)
+    print("arm %s wrote %d frame(s)" % (ARM, moved), flush=True)
+    raise SystemExit(0 if moved == 2 else 1)
+
+# ARM 3 of 3 — strength 0.55, the top of the range the 2026-08-06 repaints ever
+# measured and r8's own high arm. This is where the fig is most likely to go, and
+# also where the height predicate can bite; the sidecars record both so the two
+# failure modes are not confused with each other.
+- name: i55
+  env:
+    BEATS: '1'
+    SEEDS: '2'
+    NODE: 002b-first-citizen
+    INIT: C:\banyan-farm\wave-goblin-prep\out-b01-t2i\01-cold-open-wave1-s2.png
+    STRENGTH: '0.55'
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import hashlib, json, os, shutil, subprocess, sys
+    from pathlib import Path
+    ARM   = "i55"
+    CLONE = r"C:\banyan-farm\banyan-city"
+    SC    = CLONE + r"\pipeline\runpod_render.py"
+    RAW   = os.path.join(CLONE, "runpod-out")
+    OUT   = r"C:\banyan-farm\out-b01-styleprobe"
+    sys.path.insert(0, CLONE + r"\pipeline")
+
+    strength = os.environ["STRENGTH"]
+    init     = os.environ["INIT"]
+    init_sha = hashlib.sha256(open(init, "rb").read()).hexdigest()
+    print("arm %s strength %s init %s sha256 %s" % (ARM, strength, init, init_sha), flush=True)
+
+    rc = subprocess.call([sys.executable, SC])
+    if rc:
+        sys.exit(rc)
+
+    import runpod_render as rr
+    from generate_shots import parse_shots
+    shots = Path(CLONE) / "genomes/sapling/nodes/002b-first-citizen/shots.md"
+    s = [x for x in parse_shots(shots.read_text(encoding="utf-8")) if x["num"] == 1][0]
+    pos, _ = rr.compress(s["prompt"])
+    neg = rr.beat_negative(rr.NEG, s["prompt"])
+    shots_sha = hashlib.sha256(shots.read_bytes()).hexdigest()
+    harness_sha = hashlib.sha256(open(SC, "rb").read()).hexdigest()
+    try:
+        commit = subprocess.run(["git", "-C", CLONE, "rev-parse", "HEAD"],
+                                capture_output=True, text=True).stdout.strip() or "unknown"
+    except OSError:
+        commit = "unknown"
+
+    os.makedirs(OUT, exist_ok=True)
+    moved = 0
+    for k in range(2):
+        src = os.path.join(RAW, "01-%s-s%d.png" % (s["slug"], k))
+        if not os.path.isfile(src):
+            print("   !! missing %s" % src, flush=True)
+            continue
+        dst = os.path.join(OUT, "b01-styleprobe-%s-s%d.png" % (ARM, k))
+        shutil.move(src, dst)
+        moved += 1
+        sha = hashlib.sha256(open(dst, "rb").read()).hexdigest()
+        seed = rr.SEED + 1 + k * 1000
+        with open(dst + ".meta.yaml", "w", encoding="utf-8", newline="\n") as fh:
+            fh.write("\n".join([
+                "task: ep2-b01-styleprobe-0812",
+                "node: 002b-first-citizen",
+                "beat: 1",
+                "arm: " + ARM,
+                "strength: " + strength,
+                "model: " + rr.BASE,
+                "dtype: bfloat16",
+                "pipeline: StableDiffusionXLImg2ImgPipeline",
+                "harness: pipeline/runpod_render.py",
+                "harness_sha256: " + harness_sha,
+                "harness_modified_for_this_round: false",
+                "init_image: " + json.dumps(init),
+                "init_sha256: " + init_sha,
+                "init_provenance: >-",
+                "  ep2-b01-t2i-fig-0811 seed s2, the frame the founder called \"really",
+                "  good\" at ~23:45 on 2026-08-11. Also committed on farm-results-rtx5090",
+                "  at farm-out/ep2-b01-t2i-fig/01-cold-open-wave1-s2.png.",
+                "size: 832x1216",
+                "steps: 40",
+                "guidance: 7.5",
+                "seed: %d" % seed,
+                "seed_rule: SEED(%d) + BEAT(1) + k*1000" % rr.SEED,
+                "prompt_source: genomes/sapling/nodes/002b-first-citizen/shots.md beat 1",
+                "prompt_source_sha256: " + shots_sha,
+                "positive: " + json.dumps(pos),
+                "negative: " + json.dumps(neg),
+                "positive_recomputed_not_captured: true",
+                "positive_delta_vs_r8_sent: >-",
+                "  this positive is r8's SENT positive plus the height predicate",
+                "  ` no taller than the grass around it`, which runpod_render.py cannot",
+                "  strip and r8 deletes script-side. Asserted exact by the dry step.",
+                "negative_carries_lighting_block: false",
+                "repo_commit: " + commit,
+                "cost_usd: 0",
+                "sha256: " + sha,
+                "provisional: >-",
+                "  Not a pick, not canon, not published, not assembled. A three-arm",
+                "  strength probe; the verdict on it is R4's.",
+                "",
+            ]))
+        print("   %s  %s" % (os.path.basename(dst), sha[:16]), flush=True)
+    shutil.rmtree(RAW, ignore_errors=True)
+    print("arm %s wrote %d frame(s)" % (ARM, moved), flush=True)
+    raise SystemExit(0 if moved == 2 else 1)
+
+# DURABILITY: the box is the only copy until the courier pushes farm-out, which is
+# NOT gitignored — the runner does `git add -A -- farm-out` and pushes on job_done,
+# so publishing is a COPY and the runner stays byte-identical. allow_fail so a
+# failed copy never marks a good render failed.
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b01-styleprobe"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/out-b01-styleprobe/b01-styleprobe-*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        # Hash the COPY: what this records has to be the bytes that get committed,
+        # or the manifest attests to a file nobody will ever read.
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+        print("   ", os.path.basename(f), h[:16])
+    # newline="\n" is load-bearing: Windows text mode rewrites \n to \r\n and every
+    # filename then carries a trailing \r that shasum -c cannot open.
+    with open(os.path.join(dst, "ep2-b01-styleprobe.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    # 3 arms x 2 seeds x (png + sidecar) = 12. Fewer means the round wrote less
+    # than it promised.
+    raise SystemExit(0 if len(src) == 12 else 1)
+
+artifacts:
+- C:\banyan-farm\out-b01-styleprobe\b01-styleprobe-i25-s0.png
+- C:\banyan-farm\out-b01-styleprobe\b01-styleprobe-i25-s1.png
+- C:\banyan-farm\out-b01-styleprobe\b01-styleprobe-i40-s0.png
+- C:\banyan-farm\out-b01-styleprobe\b01-styleprobe-i40-s1.png
+- C:\banyan-farm\out-b01-styleprobe\b01-styleprobe-i55-s0.png
+- C:\banyan-farm\out-b01-styleprobe\b01-styleprobe-i55-s1.png
+- C:\banyan-farm\out-b01-styleprobe\b01-styleprobe-i25-s0.png.meta.yaml
+- C:\banyan-farm\out-b01-styleprobe\b01-styleprobe-i25-s1.png.meta.yaml
+- C:\banyan-farm\out-b01-styleprobe\b01-styleprobe-i40-s0.png.meta.yaml
+- C:\banyan-farm\out-b01-styleprobe\b01-styleprobe-i40-s1.png.meta.yaml
+- C:\banyan-farm\out-b01-styleprobe\b01-styleprobe-i55-s0.png.meta.yaml
+- C:\banyan-farm\out-b01-styleprobe\b01-styleprobe-i55-s1.png.meta.yaml

@@ -1,0 +1,54 @@
+# Prediction for `ep2-b01-styleprobe-0812`, written BEFORE enqueue and before any
+# frame of that round exists. Kept here as well as in taste/steward-model.ledger.yaml
+# for one reason, stated plainly rather than left to be discovered:
+#
+# The ledger was CLEAN when this lane checked it (`git status --porcelain --
+# taste/steward-model.ledger.yaml`, empty), so the record was appended there as the
+# brief asked. Between that check and the next read, the wave-scorer lane appended
+# sixteen `*-idfix-0812-observed` records of its own to the same file. The record
+# below is therefore sitting in the ledger at position 146 of 162, intact and
+# verified by parse, but the FILE is now carrying another lane's uncommitted batch —
+# so this lane does not commit it. `git commit -- taste/steward-model.ledger.yaml`
+# from here would sweep wave-scorer's half-finished work into a commit with this
+# round's message on it. That file gets committed by the lane that owns it.
+#
+# This copy is the durable one: it is committed with the spec, so the prediction is
+# on the record with a sha and a timestamp that both precede the render, which is
+# the only property that makes a prediction worth anything. If the ledger copy
+# survives wave-scorer's batch — it should, the file is append-only — the two are
+# byte-identical below the `record:` key and the ledger's is the one the scorer
+# reads. If it does not survive, this file is the record.
+
+for_job: ep2-b01-styleprobe-0812
+also_appended_to: taste/steward-model.ledger.yaml
+ledger_copy_committed_by_this_lane: false
+
+record:
+  id: ep2-b01-styleprobe-0812
+  kind: prediction
+  written: >-
+    2026-08-12 ~03:3x, before enqueue and before any frame exists. The dry step ran
+    green on the box first — 15 of 15 — so the positive here is measured rather than
+    assumed. It is r8's SENT positive plus the height predicate ` no taller than the
+    grass around it`, asserted to be the ONLY delta by importing R8_POS_SENT rather
+    than copying it; nothing dropped for budget; fig and leaf terms both present.
+  predicted_verdict: reject_all
+  basis: >-
+    The plate's style was never carried by words — `ep2-b01-r8-sample` measured the
+    init beating the positive palette at 0.35 AND 0.55, twice. This round starts
+    from s2 (t2i style) and the plate is nowhere in it, so the only channel that
+    could move style toward the plate family is the same text channel already
+    measured to lose. I therefore expect a clean sweep of "still not the plate look"
+    and no middle. Naming it before the render is the point: if a middle DOES appear
+    this record is a miss and the model learns that style is text-reachable from a
+    non-plate init, which is a bigger result than the frames.
+  predicates: [fig present at i25 2/2, composition still reads as s2 at i25 2/2,
+    style unmoved from s2 at i25 2/2, fig present at i40 >=1/2, style still reads
+    t2i not plate at i40 2/2, fig lost or degraded at i55 >=1/2, composition visibly
+    redrawn at i55 >=1/2, none of the six reads as plate-family style 6/6, any stem
+    inflation is confined to i55 (the height predicate biting, not a style finding)]
+  consumer: >-
+    Roman's morning pick on beat 01, three-way against
+    farm-out/ep2-b01-t2i-fig/01-cold-open-wave1-s2.png (this round's init, "really
+    good") and farm-out/ep2-b01-brightbase-figmatte/ (plate style, masked fig).
+  outcome: null
