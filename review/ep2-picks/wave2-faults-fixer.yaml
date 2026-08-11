@@ -467,3 +467,63 @@ beats:
     If he wants 4/4 on the leaving action rather than 2/4, the lever is the
     positive ("walk away from camera" competing with "gesturing at each other",
     which pulls them face to face). Not attempted — the beat is usable as it is.
+
+- beat: 13
+  slug: the-shade
+  variant_rendered: authored_b13_refresh
+  positive_tokens: 68
+  verdict: faulty
+  faults:
+  - name: pale cranium
+    count: 3/4
+    detail: >-
+      s1 is the worst in the wave for this — nearly the whole skull is cream-white
+      above a green face. s2 carries a large pale dome, s0 a moderate one. s3 is
+      mostly green. Same fault the beat-02 r2 already cleared with the skin ban.
+  - name: murky light on a beat that asks for bright midday sun
+    count: 3/4
+    detail: >-
+      s0, s1 and s2 sit in flat dim green. NOTE THE RECIPE: this beat's negative
+      carries only `night` and `dusk` — it has NO `dark`, `dim lighting`, `moody
+      lighting`, `low key` or `shadows dominant`, the eight-term block every other
+      beat sends. RECORDED, NOT FIXED: the beat's own subject is "the small patch
+      of shade", so some of this is intended, and there are only four spare tokens
+      — which the proven skin ban has a better claim on. If the skulls come back
+      clean and the frames are still murky, the dark block is the next purchase
+      and this is where it was named.
+  - name: the two-leaf seedling is absent
+    count: 1/4 (s3 only)
+    detail: The sapling-adjacency limit again. Logged, not chased.
+  lever: >-
+    The PROVEN ban and nothing else: `no scars, no stitched skin`, propagated
+    verbatim from the beat-02 r2 that came back with unbroken green crowns 4/4.
+    It costs exactly the four tokens this beat has spare, so nothing is evicted —
+    the whole anti-big-tree tier, the plant-fusion tier, `female goblin` and `elf`
+    all survive untouched. Positive is BYTE-IDENTICAL, so the round is one variable.
+  r2: authored_b13_idfix_r2  (spec ep2-b13-idfix-r2-0812, out-b13-idfix-r2)
+
+- beat: 14
+  slug: the-defense
+  variant_rendered: authored_b14_refresh
+  positive_tokens: 73
+  verdict: faulty
+  what_the_previous_lane_already_fixed: >-
+    Worth stating plainly: the beats 14-20 lane's own diagnosis of the wave-1
+    frames — four of four dim, three of four with glowing pink-red eyes, s1 in
+    tears — IS FIXED. These frames are bright green daylight, the eyes are normal,
+    nobody is crying. `no glowing eyes` and the eight-term dark block both worked.
+  faults:
+  - name: stitched and patched skull
+    count: 4/4
+    detail: >-
+      s0 runs a suture line down the right of the crown with a vertical stitch and
+      puts stitch marks on both cheeks. s2 is the clearest case in the whole wave:
+      a distinct BROWN OVAL GRAFT on the crown plus X-stitches across the skull
+      and X marks on the cheeks. The clawed fingers, the embarrassed face and the
+      light are all right; the head is a sewn doll's.
+  lever: >-
+    The PROVEN ban and nothing else: `no scars, no stitched skin`. Four tokens,
+    four spare in the negative, nothing evicted, positive byte-identical. This is
+    the cleanest propagation in the wave — every other fault on this beat has
+    already been fixed by the lane before it, so the round tests exactly one thing.
+  r2: authored_b14_idfix_r2  (spec ep2-b14-idfix-r2-0812, out-b14-idfix-r2)
