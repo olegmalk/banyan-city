@@ -13727,3 +13727,49 @@
   consumer: review/ep2-picks/b05-register-0812, as the answer to the question that page puts
     to him.
   outcome: null
+
+- id: ep2-b17-nearworld-0812-scored
+  kind: scoring
+  date: 2026-08-12
+  scores: ep2-b17-nearworld-0812
+  verdict: CONFIRMED, directionally. The camera follows the contents.
+  predicates_observed: >-
+    visibly larger than the three previous world-paragraph takes HIT — he goes from a dot to
+    roughly a third of frame height; background still rich HIT — grass, seed-heads, daisies,
+    blades crossing the lens; no horizon or treeline HIT, grass fills everything behind him;
+    still turns to go HIT.
+  what_the_four_clip_chain_proves: >-
+    A size clause did nothing. A medium-cropped init did nothing. REMOVING THE HORIZON AND
+    CROWDING THE WORLD IN CLOSE moved him. Framing is not addressable as a camera
+    instruction and does not ride the init — it is decided by whether the things you name are
+    near or far. Which makes it the contents law again, ninth time, rather than a separate
+    mechanism.
+  honest_limits: >-
+    He is larger but still not a medium shot, so proximity is a dial I have moved one notch
+    rather than a switch I have thrown. His coat drifts grey again — that fault has now
+    appeared on three beat-17 takes with no pattern I can attribute, and I am NOT theorising
+    about it. And several sapling stems appear where the prompt names one, which is the
+    placement problem below.
+  what_it_re_reads_for_free: >-
+    b19's head-sprout and b20's antler-branch are not separate defects. In both I named the
+    object and left its POSITION to the model — b19 said the fig hangs "above his head",
+    b20 named a bare branch with no location at all. Position is contents too, and contents
+    is the one lever that has never failed. Both re-queued with the object's position stated
+    in the same concrete near-field language: rooted in the grass, which side, a clear step
+    away, explicitly not on or over him.
+
+- id: ep2-b19-place-0812-and-b20-place-0812
+  kind: prediction
+  written: 2026-08-12, before enqueue. One variable — the object's stated POSITION.
+  predicates: [the sapling stands rooted in the ground beside him and clearly separate from
+    his body, nothing grows out of his head, no branch arches over him, and each beat's
+    action still happens as it already did]
+  basis: >-
+    Nine for nine on named contents; zero for one on camera instructions; and the two
+    placement faults are both beats where I named a thing and never said where it goes. If
+    position behaves like every other content property, saying it should fix it.
+  falsifiable_by: >-
+    The object still landing on him. That would mean placement is NOT contents and needs a
+    mechanism I do not have — the first thing all day that the contents rule failed to reach.
+  consumer: review/ep2-picks/motion-0812.html
+  outcome: null
