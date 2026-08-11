@@ -2900,6 +2900,25 @@ beats:
       aesthetic No second fruit, no apple, no red fruit, no white fruit, no pale
       fruit, no face, no girl, no child, no sketch lines, no dashed outline, no
       thick branch. No photorealism, no 3D render look. 9:16 vertical, no text.
+    # PLANT-ONLY NEGATIVE BLOCK, 2026-08-12. The refresh round put a FACE on the
+    # fruit in s0, drew TWO fruits in s1 and none at all in s2 — 1 of 4 usable.
+    # Beat 12 already solved the face: its r4 note records that `no chibi, no
+    # mascot, no creature, no face` is safe on the plant-only beats (01, 12, 16,
+    # 18, 21) and unsafe anywhere a character belongs, and it took the mascot
+    # composition apart when negating single nouns had not. Beat 18 is on that
+    # list and never got the block; this spends it, exactly as that note said to.
+    # `round` also goes: it is what makes the fig read as an apple, and the beat
+    # says fig. Singularity is stated twice (`one single`, `only one fruit`)
+    # because s1 drew two.
+    authored_b18_plantneg: >-
+      One single small green fig hanging from the thinnest branch of a tiny
+      seedling, only one fruit in the whole frame, its slender stem bending
+      under the weight, warm amber afternoon light against a soft wash sky.
+      Held macro, extreme close-up, cinematic lighting, detailed, newest,
+      masterpiece, best quality, very aesthetic No second fruit, no two fruit,
+      no apple, no red fruit, no pale fruit, no chibi, no mascot, no creature,
+      no face, no eyes, no mouth, no girl, no child, no thick branch. No
+      photorealism, no 3D render look. 9:16 vertical, no text.
     authored_b18_refresh: >-
       A single small round green fig on the thinnest branch of a tiny sapling,
       the only fruit in frame, its stem flexing under the weight, warm amber
@@ -3221,6 +3240,26 @@ beats:
       Close-up, low amber light, quiet awe, cinematic lighting, detailed,
       newest, masterpiece, best quality, very aesthetic No hands, no fingers, no
       face, no girl, no child, no glowing orb, no night, no dark. No
+      photorealism, no 3D render look. 9:16 vertical, no text.
+    # THE LEAF WAS NEVER ATTACHED TO ANYTHING, 2026-08-12. The refresh round is
+    # 0 of 4 against this beat: s0 and s1 are a FALLEN leaf lying on the ground,
+    # s2 and s3 are fields of grass with no single leaf subject at all. Read the
+    # draft that drew them — "One oversized leaf of a tiny sapling ... the plant
+    # alone in frame with the grass frozen around it" — and both faults are in
+    # the words. Nothing says the leaf is JOINED to the plant, so the model drew
+    # a detached one; and `grass` is a named noun, so it arrived and took the
+    # frame (named things have landed 7 of 7 in this repo — the law cuts both
+    # ways). The fix anchors the leaf to a visible stem, makes the seedling the
+    # subject, drops `grass` from the positive and bans the fallen reading and
+    # the wind that contradicts "dead-still air".
+    authored_b21_stemanchor: >-
+      One oversized green leaf still joined to the upright stem of a tiny
+      seedling, the leaf tilted over to one side and held there, the seedling
+      alone and sharp in the centre of the frame, air completely still, low
+      amber light. Close-up, cinematic lighting, detailed, newest, masterpiece,
+      best quality, very aesthetic No fallen leaf, no leaf on the ground, no
+      detached leaf, no wind, no blowing, no meadow, no chibi, no mascot, no
+      creature, no face, no hands, no girl, no child, no night, no dark. No
       photorealism, no 3D render look. 9:16 vertical, no text.
     authored_b21_refresh: >-
       One oversized leaf of a tiny sapling tilted slowly to one side in

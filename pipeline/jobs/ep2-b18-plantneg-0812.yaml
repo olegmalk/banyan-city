@@ -1,0 +1,118 @@
+# EPISODE 2, BEAT 18 — A PLATE BEAT WITH NO CHARACTER IN IT. $0.
+# 2026-08-12, stills lane. One sample, prompt-archaeology fix, nothing scaled.
+#
+# ── WHY. The refresh round is 1 of 4 on this beat: s0 put a FACE on the fruit, s1 drew TWO fruits, s2 drew none. The face is the fault beat 12 already solved and wrote down as transferable to exactly this beat.
+#
+# ── WHAT CHANGES, AND ONLY THIS. `no chibi, no mascot, no creature, no face, no eyes, no mouth` — beat 12's plant-only block, which its r4 note lists as safe on beats 01/12/16/18/21 and unsafe anywhere a character belongs. Plus `round` dropped (it is what makes the fig read apple) and the singular stated twice, because s1 drew two.
+#
+# ── NO CONSISTENCY MECHANISM. This beat has no character, so no IP-Adapter and no
+# reference: it is a pure text2img plate off the beat's own fence. `--goblin-def` is
+# passed because the harness makes it mandatory; this draft has no goblin slot, so
+# the value is recorded in the sidecar and used nowhere.
+#
+# ── MEASURED, NOT GUESSED: dry-run on the box before this file was written —
+# DRY OK, style anchor present, scale negatives firing. The NEGWARN drops generic
+# quality terms only; every fault-specific ban above survives into the sent negative.
+#
+# ── PROVISIONAL. His veto stands. $0, local GPU, nothing published, shots.md untouched.
+id: ep2-b18-plantneg-0812
+task: ep2-b18-plantneg-0812
+node: 002b-first-citizen
+beat: 18
+runner: box
+needs_gpu: true
+priority: 42
+max_attempts: 1
+owner: stills lane, 2026-08-12 (three plate beats, one sample each)
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03`, read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the render
+  gate itself reads. `approval_condition` is None. A plate sample on an approved node.'
+consumer: >-
+  review/ep2-picks/plates-0812 — and the motion lane, which gets a near-free beat the
+  moment a plate passes, because these three have no character to keep consistent.
+success: >-
+  Four PNGs at C:\banyan-farm\plates-0812\out-b18\18-the-decision-wave1-s{0..3}.png with
+  sidecars written at render time (7.2). Success is readable comparable cells — NOT that
+  the fix worked. "one green fig, no face, no second fruit still not there" is a successful run and the answer that decides
+  whether this beat needs a different lever.
+why: >-
+  The refresh round is 1 of 4 on this beat: s0 put a FACE on the fruit, s1 drew TWO fruits, s2 drew none. The face is the fault beat 12 already solved and wrote down as transferable to exactly this beat.
+goblin_def: green skin, bald head
+goblin_def_source: >-
+  the founder's frozen definition. UNUSED on this beat — the draft has no goblin slot;
+  the harness requires the flag, so it is passed explicitly rather than defaulted to the
+  steward's pair.
+est_minutes: 5
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '18'
+  - --variant
+  - authored_b18_plantneg
+  - --goblin-def
+  - green skin, bald head
+  - --out
+  - C:\banyan-farm\plates-0812\out-b18
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '18'
+  - --variant
+  - authored_b18_plantneg
+  - --goblin-def
+  - green skin, bald head
+  - --out
+  - C:\banyan-farm\plates-0812\out-b18
+  - --task
+  - ep2-b18-plantneg-0812
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b18-plantneg-0812"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/plates-0812/out-b18/*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b18-plantneg-0812.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 8 else 1)
+artifacts:
+- C:\banyan-farm\plates-0812\out-b18\18-the-decision-wave1-s0.png
