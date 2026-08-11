@@ -14045,3 +14045,44 @@
     becomes his call, not mine. Recording the rule before the render so I cannot quietly
     move it afterwards.
   outcome: null
+
+- id: ep2-plant-beats-first-motion-0812
+  kind: prediction
+  written: 2026-08-12, before enqueue. First motion ever on beats 12, 18 and 21.
+  handoff: >-
+    The stills lane delivered three plates with shas and two warnings. I verified all three
+    myself before authoring: hashes match their claims exactly, and I simulated the 704x1280
+    cover crop on each — none loses its subject. Their warnings both checked out and are kept.
+  predicates: [each plant performs its own named motion — beat 12's leaves stir and settle,
+    beat 18's thin stem trembles with the fig swaying on it, beat 21's single leaf tilts
+    deliberately and HOLDS; no creature or person enters any of the three; the fig stays ONE
+    round fruit and does not drift leafward; beat 21's other leaves and stem stay still so the
+    tilt reads as deliberate rather than as wind]
+  the_deliberate_departure: >-
+    NO ENVIRONMENT PARAGRAPH ON ANY OF THE THREE, which reverses tonight's recipe on purpose.
+    The paragraph that fixed the blank backgrounds describes a horizon, distance and a
+    treeline — and my own beat-17 chain proved that pulls the camera BACK. All three of these
+    are CLOSE-UPS whose background is sky or soft light, so a meadow would fight the shot. The
+    near content is described instead. That is the same law applied correctly rather than the
+    same paragraph applied blindly, and it is the first time I have used the law to decide
+    NOT to do something.
+  their_fig_warning_vs_my_cold_open: >-
+    They warned that dropping `round` made their fig render as a leaf; my cold open found that
+    `round` produced an apple. Both are true and they do not conflict: in the cold open the
+    model had to INVENT a fruit from words, so `round` described the whole thing; here the
+    plate already holds a fig, so `round` only resists drift over 121 frames. Named round, and
+    `leaf/leaves/midrib/apple` banned.
+  one_thing_i_had_to_fix_before_it_could_run: >-
+    Beat 12's plate is NOT tracked in git (takes/ is gitignored) and was NOT on the box — it
+    existed on one local disk. Checking the path before trusting it caught that; I copied the
+    file over, verified the sha ON THE BOX after transfer against the local one (identical),
+    and the crop step asserts it again before writing. Had I not checked, the job would have
+    failed at the crop with a missing source.
+  length_note: >-
+    121 frames on all three, which trims beat 18 from seven seconds. The measured length result
+    is FACE-specific and says nothing about plants, so rather than assume either way on a first
+    sample all three run at the best-evidenced count and length becomes a second question.
+  falsifiable_by: >-
+    The plate simply sitting still. That would mean plant beats need a different push from
+    character beats, which nothing so far predicts.
+  outcome: null

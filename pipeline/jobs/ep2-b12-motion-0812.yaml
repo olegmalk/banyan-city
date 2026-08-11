@@ -1,0 +1,145 @@
+# 2026-08-12. FIRST MOTION on a beat that has never been rendered. Three of these.
+#
+# Handed over by the stills lane with the plate, its sha, and two warnings I checked and
+# kept. I verified all three plates myself before authoring: hashes match their claims
+# exactly, and I simulated the 704x1280 cover crop on each — none loses its subject.
+#
+# NO CHARACTER IN THIS BEAT AT ALL. No goblin, no guards, so no IP-Adapter, no reference and
+# no identity risk. The negative bans creatures outright so none wanders in.
+#
+# NO ENVIRONMENT PARAGRAPH, DELIBERATELY, and this is a change from the character beats. The
+# paragraph that fixed the blank backgrounds describes a horizon, distance and a treeline —
+# and my own beat-17 chain proved that pulls the camera BACK. All three of these beats are
+# CLOSE-UPS whose background is sky or soft light. Describing a meadow would fight the shot.
+# So the near content is described instead, which is the same law applied correctly.
+#
+# THEIR TWO WARNINGS, both kept: the fig must be named ROUND or it drifts leafward over 121
+# frames (their s0/s2 came back as leaves when `round` was dropped) — note this does NOT
+# contradict the cold open, where `round` produced an apple, because there the model had to
+# INVENT the fruit from words and here the plate already holds a fig, so the word only
+# resists drift. And beat 21''s tilt is deliberately absent from the plate because a tilt is
+# an ACTION and this stage owns actions.
+#
+# LENGTH: 121 frames on all three, which trims beat 18 from its 7 seconds. The measured
+# length result is FACE-specific (clean at 73, destroyed at 145 on a close-up face) and says
+# nothing about plants — so rather than assume either way on a first sample, all three run at
+# the count with the most evidence behind it and length becomes a second question once the
+# motion is known to work.#
+# ONE EXTRA STEP FOR THIS BEAT ONLY: its plate is NOT tracked in git (takes/ is gitignored)
+# and was NOT on the box -- it existed on one local disk. I checked the path before trusting
+# it, found it missing, and copied the file to C:\banyan-farm\plates-local\, then verified
+# the sha ON THE BOX after transfer against the local one: cc6bd5f0...c074, identical. The
+# crop step asserts that same sha again before it writes anything, so a bad copy cannot reach
+# the render.
+id: ep2-b12-motion-0812
+task: ep2-b12-motion-0812
+node: 002b-first-citizen
+beat: 12
+runner: box
+priority: 19
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: ep2 motion lane, 2026-08-12
+consumer: 'review/ep2-picks/motion-0812.html — first motion on beat 12, one of three beats with no character in them and the cheapest coverage left in the episode.'
+success: 'A 704x1280 mp4, 121 frames, in which the beat-12 plant performs its own motion and NOTHING else enters the frame — no creature, no person. The failure worth reporting is the plate simply sitting still, which would mean plant beats need a different push from character beats.'
+why: Never rendered once; no character, so no identity risk; the stills lane has handed over a verified plate.
+est_minutes: 6
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b12-motion-0812\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"--out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw, nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b12-motion-0812\b13-motion-prompt.txt: '2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: a tight close-up of a young sapling''s broad leaves seen from below against an open sky with soft clouds behind them. No creature and no person is in this shot. THE LEAVES STIR GENTLY IN A LIGHT BREEZE — they lift and settle and turn a little on their stalks, the whole plant breathing rather than thrashing, while the clouds behind them drift very slowly. Nothing else moves and the plant stays exactly where it is in frame. Bright clear daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.'
+  C:\banyan-farm\ep2-b12-motion-0812\b13-negative.txt: creature, goblin, person, face, hands, animal, dark, dusk, dim lighting, low key, night, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, stool, stake, plant support, face morphing, distorted face, warped face, changing facial features, extra eyes, extra ears, hair, walking out of frame, leaving the frame, drifting sideways, moving to a different spot, second character, duplicate character, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text
+  C:\banyan-farm\ep2-b12-motion-0812\b13-jobs-encode.json: "[{\"beat\": 12,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b12-motion-0812\\\\b13-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\\ep2-b12-motion-0812\\\\b13-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b12-motion-0812\\\\b13-negative.txt\"}]"
+  C:\banyan-farm\ep2-b12-motion-0812\b13-jobs-render.json: "[{\"beat\": 12,\n  \"seed\": 20260806,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b12-motion-0812\\\\b13-embeds.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\\ep2-b12-motion-0812\\\\b13-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b12-motion-0812\\\\12-related-LTX-motion-0812.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b12-motion-0812\cover_crop.py
+  - --src
+  - C:\banyan-farm\plates-local\12-related-r4-s2.png
+  - --sha256
+  - cc6bd5f0c0cc116d3cb6530a9bae81ac5b5593a683e4e80e20d6319e0cc0c074
+  - --out
+  - C:\banyan-farm\ep2-b12-motion-0812\b13-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b12-motion-0812\b13-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b12-motion-0812\b13-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b12-motion-0812
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b12-motion-0812\bench-b12-motion.jsonl
+  - --bench-label
+  - ep2-b12-motion-0812
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b12-motion"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/ep2-b12-motion-0812/12-related-LTX-motion-0812.mp4*")
+                 + glob.glob("C:/banyan-farm/ep2-b12-motion-0812/b13-init-704x1280.png")
+                 + glob.glob("C:/banyan-farm/ep2-b12-motion-0812/bench-b12-motion.jsonl"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b12-motion-0812.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 2 else 1)
+artifacts:
+- C:\banyan-farm\ep2-b12-motion-0812\12-related-LTX-motion-0812.mp4
+- C:\banyan-farm\ep2-b12-motion-0812\b13-init-704x1280.png
