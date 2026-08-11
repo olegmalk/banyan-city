@@ -466,19 +466,54 @@ checklist:
     # 02's louder failure is on a lever the founderpick sample closed last night.
     # Pre-registered in the ledger as `ep2-b15-goblin-simple-0811` before a frame
     # existed. All fourteen gated wave specs keep their `gate:` keys.
+    #
+    # ANSWERED 2026-08-10, CONFIRMED ON A LOOKED-AT SAMPLE 2026-08-11. He saw the
+    # four beat-15 frames and said *"yeah, that looks like the right goblin"*
+    # (~15:45). The definition is no longer only stated: it is drawn and ruled on.
+    # THE CONFIRMED SLOT STRING IS `green skin` — his sentence with nothing added,
+    # NOT the steward's `green skin, tusks`, a string he has never said and never
+    # approved, and which all fourteen staged wave specs still encode. Scored in
+    # `taste/steward-model.ledger.yaml` on `ep2-b15-goblin-simple-0811` (PARTIAL),
+    # with his words in `ep2-b15-goblin-simple-founder-verdict-0811`.
+    #
+    # HIS VERDICT IS ON THE CHARACTER ONLY. The same four frames failed on
+    # STAGING — face-away in 3 of 4, the sapling wrong in 4 of 4 — and he was not
+    # asked about that and did not address it. That fix is a separate lane. The
+    # fourteen specs stay gated for it.
     - n: 18
-      ask: "Define the goblin — ANSWERED. Simple, green, nothing complex."
+      ask: "Define the goblin — ANSWERED, and now CONFIRMED on a sample you looked at."
       state: settled
       chip: "CONFIRM"
       minutes: 1
       summary: >-
         Nine rounds of the model adding complexity, and the answer was to stop
-        adding it. Fifteen beats are released; no round is scored and no frame is
-        picked.
-      where: "one sample only fires next — beat 15 — and nothing publishes"
+        adding it. Confirmed 2026-08-11 on the beat-15 sample — *"that looks like
+        the right goblin"* — so the slot string is **`green skin`** and nothing
+        else. No round is scored and no frame is picked; the shot those frames
+        sit in is a separate, still-broken thing.
+      where: "the one sample fired, you ruled on it — the goblin is confirmed, the staging is not, and nothing publishes"
       how: "nothing needed; say so if we heard it wrong"
       sheets_title: "The rounds this answers over — round 9 first"
       body: |-
+        **CONFIRMED ON A SAMPLE YOU LOOKED AT — 2026-08-11, ~15:45.**
+        *"yeah, that looks like the right goblin."* You said it over four frames,
+        job `ep2-b15-goblin-simple-0811` (node 002b, beat 15), which is your
+        2026-08-10 sentence applied by SUBTRACTION: the goblin slot carries
+        **`green skin` and nothing else**, with `tusks` — our word, never yours —
+        taken back out. So the definition is no longer only stated. It is drawn,
+        you have looked at it, and **`green skin` is the confirmed slot string.**
+        The fourteen staged wave specs still encode `green skin, tusks`; that is
+        now wrong on the record and not merely unratified, and it gets corrected.
+
+        **WHAT THAT LINE DOES NOT COVER, and it is on the same four frames.** You
+        ruled on the CHARACTER. The SHOT failed: three of the four draw him from
+        BEHIND with no face visible, and the sapling — the other half of a
+        two-shot whose whole subject is the conversation — is a large indoor
+        houseplant in two frames, absent in a third, and a small walking creature
+        with its own face in the fourth. None of that is being read as approved.
+        It is being fixed separately, the fourteen beats stay gated until it is,
+        and nothing publishes or is canon.
+
         **YOUR LINE, 2026-08-10:** *"he is just a simple green goblin, nothing
         complex."*
 

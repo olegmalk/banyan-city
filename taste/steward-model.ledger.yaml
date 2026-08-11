@@ -9,21 +9,30 @@
 #
 # Ground truth is the founder (R4). This file never overrules him.
 #
-# Rolling hit rate, FOURTH scoring, 2026-08-10 (his ~17:32 local beat-6 verdict
-# added — `ep1-b06-r6-two-arms-sample` scored PARTIAL, see
-# `ep1-b06-r6r7-founder-verdict`). Recomputed the same way the third scoring
-# was: by reading every `outcome:` in this file and grouping by each record's
-# own `predicted_verdict:`, never by adding to the previous paragraph.
-#   13 of 70 records now carry a scoring verdict. 2 hit · 6 partial · 5 miss.
-#   STRICT (hits only)                 2/13 = 15%
-#   partials counted as half           5/13 = 38%
+# Rolling hit rate, FIFTH scoring, 2026-08-11 (his ~15:45 local goblin verdict
+# added — `ep2-b15-goblin-simple-0811` scored PARTIAL, see
+# `ep2-b15-goblin-simple-founder-verdict-0811`). Recomputed the same way the
+# third and fourth scorings were: by reading every `outcome:` in this file and
+# grouping by each record's own `predicted_verdict:`, never by adding to the
+# previous paragraph.
+#   14 of 82 records now carry a scoring verdict. 2 hit · 7 partial · 5 miss.
+#   STRICT (hits only)                 2/14 = 14%
+#   partials counted as half           5.5/14 = 39%
 #   PICK class (`predicted_verdict: ratify` or `pick_holds` — b06 r3, b14 r3,
 #   b10 r4, b13 r7, b16 drift, b14 r4, b06 r5)
-#                                      0 hit · 2 partial · 5 miss of 7
+#                                      0 hit · 2 partial · 5 miss of 7 — UNCHANGED
 #   REJECT class (`reject_all` — b03 r3, b10 r3, b03 r4, b13 r6, b06 r4, b06 r6)
-#                                      2 hit · 4 partial · 0 miss of 6
-#   (5 records are `n/a` — verdicts he gave on questions, not on predictions —
-#    and 1 is `not_scoreable_no_prediction_was_written`. Neither counts above.)
+#                                      2 hit · 4 partial · 0 miss of 6 — UNCHANGED
+#   NO CLASS, AND IT IS NEW (`ep2-b15-goblin-simple-0811` writes five PREDICATES
+#   and no `predicted_verdict:` line at all, so it joins neither column and the
+#   two class totals above are untouched by this scoring)
+#                                      0 hit · 1 partial · 0 miss of 1
+#   (13 records are `n/a` — verdicts he gave on questions, not on predictions —
+#    and 1 is `not_scoreable_no_prediction_was_written`. Neither counts above.
+#    One further non-counting `partial` sits on the OBSERVATION record
+#    `ep2-b15-goblin-simple-0811-observed`: that is the steward scoring its own
+#    predicates with no founder input, it has never been in this rate, and it is
+#    named here so nobody later finds it and reads it as a score I hid.)
 # THE ASYMMETRY IS NOW SEVEN AND SIX AND IT IS ONE IDENTIFICATION FROM BREAKING.
 # Every hit is still a rejection; no reject_all has yet been scored a miss; no
 # pick has ever been ratified outright, and the pick column is 0 for 7. But the
@@ -34,6 +43,21 @@
 # that record is a flat miss and this class goes 2 hit · 3 partial · 1 miss.
 # The reject column has been the model's whole credibility; read it knowing it
 # now rests on which of two near-identical tiles he meant.
+#
+# WHAT THE FIFTH SCORING ADDED: the first GOBLIN round in this file with a
+# prediction written under it before he looked — three consecutive goblin
+# verdicts had none (`ep2-goblin-founder-pick-0810`) — and the model still could
+# not price its own recipe in either direction. It predicted the character would
+# come back as four different creatures and he called it the right goblin; it
+# staked the whole round on a FACIAL property on a beat whose staging does not
+# guarantee a face, and three of four frames show the back of his head. Both
+# errors point the same way: this model reasons about the SLOT STRING and does
+# not reason about what the SHOT will contain. No new scored axis comes out of
+# it, because the fix is not an axis — it is a pre-flight: before predicting an
+# attribute, check that the beat's own drafts line guarantees the attribute is
+# visible. The same round is also the file's first evidence that SUBTRACTION is a
+# lever: taking one unratified word out gained species consistency the additive
+# rounds never bought.
 #
 # WHAT THE FOURTH SCORING ADDED: the first verdict where he supplied the
 # COMPOSITION and the model still missed the fault — five rounds of beat-6
@@ -6444,11 +6468,48 @@
     their `gate:` keys, verified present in all fourteen after this job was
     queued. It picks nothing, ranks nothing, scores no earlier round, publishes
     nothing and spends nothing. It is one beat, and it stops.
-  founder_verdict: null
-  founder_verdict_date: null
-  outcome: null
-  miss_axis: null
-  model_action: null
+  founder_verdict: >-
+    SCORED 2026-08-11 on his ~15:45 verdict — Roman, verbatim and complete:
+    *"yeah, that looks like the right goblin."* Full record and reasoning in
+    `ep2-b15-goblin-simple-founder-verdict-0811` below. He ratified the
+    CHARACTER these four frames drew and ruled on nothing else. PARTIAL.
+
+    WHY NOT A HIT. This record never predicted a VERDICT — it has no
+    `predicted_verdict:` line, only five predicates — so it cannot claim to have
+    called his approval, and inventing that claim now is the fraud the header
+    forbids. Of the five predicates: (2) green, (3) simple-not-ornate and (5)
+    light-darker-than-midday are HITS and his sentence is consistent with all
+    three; (4) predicted character consistency would FAIL 0 of 4 and it did not
+    fail — one creature came back in four wardrobes, and he then called that
+    creature right, so the file's most confident prediction in this round was
+    wrong in the direction that mattered most; (1) not-female, the predicate the
+    sample was built for and the one carrying its stated risk, has NO RESULT and
+    still has none — he ruled on a set in which three of four frames show no
+    face, so his verdict does not supply the missing test either.
+
+    WHY NOT A MISS. The recipe change under test — his sentence applied by
+    SUBTRACTION, `green skin` with `tusks` removed — is the thing he approved,
+    and this record is the only place it was called before it ran.
+  founder_verdict_date: 2026-08-11
+  outcome: partial
+  miss_axis: >-
+    TWO AXES AND NEITHER IS THE GOBLIN. (a) STAGING — the model predicted a
+    FACIAL property on a beat whose drafts line does not guarantee a face, and
+    75% of the sample came back face-away, so the headline predicate was never
+    testable and his verdict could not settle it either. (b) THE PRICE OF
+    SUBTRACTION — the model predicted that removing a word buys nothing on
+    sameness (0 of 4, "predicting a pass here would be hope") and removing it
+    bought exactly that. v1 has no axis for what a prompt STOPS saying; every
+    axis it has scores what a prompt adds.
+  model_action: >-
+    pre_flight_not_a_new_axis. Before any predicate about a character's FACE is
+    written, read the beat's own drafts line and confirm the framing guarantees
+    a face; if it does not, predict what the shot can actually show or change
+    the beat. Standing consequence carried over unchanged from the observation
+    record: the next lever on these beats is the STAGING line, not another word
+    in the goblin slot, and beat 15 is not to be re-run with a different goblin
+    string. `green skin` is settled by his verdict and is not a variable any
+    more.
 
 # THE FRAMES, OPENED AFTER THE PREDICTION WAS COMMITTED (edc98e6). The job
 # started 11:20:46Z and the prediction commit landed while it was still
@@ -6616,3 +6677,118 @@
     none_no_prediction_existed. Standing consequence: do not answer "the VO is
     longer than the clip" by rendering more frames of the same action. Reach for
     the loop, a second action, or a cut first, and put the length question to R4.
+
+# THE CHARACTER IS RATIFIED AND THE SHOT IS NOT, AND THE TWO ARE NOT LET TO BLUR.
+# This is the FIRST goblin verdict in this file with a prediction written under it
+# before he looked: `ep2-b15-goblin-simple-0811` was committed at edc98e6,
+# 15:22:20, while the job was still rendering, and he ruled at ~15:45. The three
+# goblin verdicts before it had nothing under them at all
+# (`ep2-goblin-founder-pick-0810` records that escalation). THE SCORING LANDS ON
+# THE PREDICTION RECORD ABOVE, which is now PARTIAL; this record carries his words
+# and what they authorise, and is itself `n/a`.
+- id: ep2-b15-goblin-simple-founder-verdict-0811
+  date: 2026-08-11
+  kind: founder_verdict
+  scores: ep2-b15-goblin-simple-0811
+  subject: "node 002b beat 15 good-listener — the founder ratifies the GOBLIN
+    drawn by his own definition applied SUBTRACTIVELY (`green skin`, with the
+    steward's `tusks` removed) and rules on nothing else. The same four frames
+    carry a separate staging failure he was not asked about and did not address."
+  steward_provisional: false
+  pick: null
+  candidates: [15-good-listener-wave1-s0, 15-good-listener-wave1-s1,
+               15-good-listener-wave1-s2, 15-good-listener-wave1-s3]
+  address_key: >-
+    The four frames of job `ep2-b15-goblin-simple-0811-1786447234`, spec
+    `pipeline/jobs/ep2-b15-goblin-simple-0811.yaml`, at
+    `farm-out/ep2-b15-goblin-simple/15-good-listener-wave1-s0..3.png` with
+    per-frame sidecars and an `ep2-b15-goblin-simple.sha256` manifest. Described
+    frame by frame in `ep2-b15-goblin-simple-0811-observed` above.
+  what_he_said_verbatim: >-
+    Roman, 2026-08-11 ~15:45 local: "yeah, that looks like the right goblin."
+    Complete and unedited. Nothing else was said about these frames, no frame was
+    named, and no fault was named.
+  what_this_ratifies: >-
+    THE GOBLIN DEFINITION, AS A SLOT STRING, AND THAT IS THE WHOLE OF IT. The
+    confirmed string is `green skin` — his 2026-08-10 sentence ("he is just a
+    simple green goblin, nothing complex") applied by SUBTRACTION, with NOTHING
+    ADDED. It is NOT `green skin, tusks`. `tusks` is the steward's word, he has
+    never said it, he did not strike it when it sat unmentioned in the headline
+    of a question (`ep2-goblin-definition-0810`), and silence inside a question
+    was already ruled not a verdict. He has now looked at a goblin drawn WITHOUT
+    it and called that one right, so the string that was merely unratified
+    yesterday is positively superseded today.
+
+    THE ROUTE IS ALSO RATIFIED BY IMPLICATION, AND ONLY THIS FAR: these frames
+    were drawn TAGS-ONLY — no IP-Adapter, no reference image, no conditioning on
+    any frame he had not ruled on. A words-only recipe has now produced a goblin
+    he accepts, which the additive rounds r6-r9 never did.
+  what_this_does_NOT_ratify_and_it_failed_on_the_same_four_frames: >-
+    THE STAGING. He was shown a character and he answered about the character;
+    the SHOT those frames contain is broken and his sentence does not touch it.
+    Recorded here so this file can never be read as an approval of the frames
+    wholesale:
+
+    - FACE-AWAY IN 3 OF 4. s0, s1 and s2 draw the back or rear quarter of the
+      head with no face visible at all. He ratified a goblin of whom, in three
+      quarters of the sample, he could see no face.
+    - THE SAPLING IS WRONG IN 4 OF 4. s0 and s1 put a large indoor
+      monstera-type houseplant in frame instead of a 40cm sapling; s2 has no
+      sapling at all, only two fallen leaves; s3 draws it as a tiny walking
+      creature with its own face and legs. This beat is a two-shot whose subject
+      is the conversation — his line is "You're a good listener." — so one of
+      the two characters is wrong or missing in every frame.
+    - THE SETTING IS WRONG IN 3 OF 4. A wall or interior doorway with rim light,
+      on a beat that is outdoors beside a sapling in a field, and not one frame
+      is midday.
+
+    SILENCE ON AN ELEMENT IS NOT APPROVAL OF IT — this repo's own rule, written
+    after the steward read a phrase of his back as a passing grade for
+    `b06-r5-s2` and he called that same edge "some flat place". He named the
+    goblin. He named nothing else.
+  how_this_sits_with_his_2026-08-10_pick: >-
+    TWO GOBLINS HE HAS NOW ACCEPTED, DRAWN BY TWO DIFFERENT ROUTES, AND NEITHER
+    IS CANON. On 2026-08-10 ~23:50 he took `04-the-footnote-ipa-r1-w015-s6` off
+    the w015 identity sheet — an IP-Adapter close-up, grey-green, animal muzzle,
+    small chin fangs, orange-yellow eyes (`ep2-goblin-founder-pick-0810`). Today
+    he ratifies a tags-only medium shot: round bald green head, large pointed
+    ears, plain clothes. They agree on bald, round-headed, green, plain and
+    non-human-ornamented, which is the durable read. They are NOT asserted here
+    to be the same face, this record does not rank them, and it does NOT
+    overwrite that pick or promote either to canon. If the two ever have to be
+    reconciled as one design, that is a question for him and not an inference
+    for this file.
+  what_this_authorises: >-
+    ONE THING: the goblin slot string is settled at `green skin` and the fourteen
+    staged `ep2-b*-goblin-wave1.yaml` specs are now WRONG on the record, not
+    merely unratified, because every one of them encodes `green skin, tusks`.
+    Correcting that string is sanctioned.
+
+    IT DOES NOT FIRE THE WAVE. All fourteen keep their `gate:` keys and they stay
+    gated for the second, independent reason the observation record gives: the
+    beat-15 drafts line produced a rear view and a houseplant, and the other
+    thirteen were written the same way in the same sitting. Firing them now buys
+    fourteen beats of correct goblin in wrong shots. The staging fix is a
+    separate lane and its own sample.
+  what_this_record_does_not_do: >-
+    It picks no frame, ranks nothing, promotes nothing to canon, marks no beat
+    final, writes no leaf and no `stills/` sidecar, voices nothing, renders
+    nothing, publishes nothing and spends nothing. It does not touch
+    `taste/sapling.founder.v0.3.md`, which is his. It edits the rolling hit-rate
+    header only because a REAL prior prediction was scored by it, and it says in
+    that header exactly which column moved and which did not.
+  founder_verdict: "yeah, that looks like the right goblin."
+  founder_verdict_date: 2026-08-11
+  outcome: n/a
+  miss_axis: >-
+    Not counted in the rolling rate — this record carries his words and the
+    scoring lands on `ep2-b15-goblin-simple-0811`, which is scored PARTIAL there
+    rather than twice here. Named anyway, because it is the process finding: the
+    steward put a sample in front of him to test a FACE and 3 of 4 frames had no
+    face in them, so his one sentence had to do the work of a test the sample
+    could not run.
+  model_action: >-
+    scoring_recorded_on_the_prediction_record. Standing consequence: the goblin
+    slot is CLOSED at `green skin` and is not a variable to sweep again; the next
+    goblin-adjacent sample must vary the STAGING line, and it must guarantee the
+    face and the sapling before it is put in front of him.
