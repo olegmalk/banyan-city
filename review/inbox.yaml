@@ -138,3 +138,8 @@
   since: '2026-08-12'
   kind: decision
   verdict_hint: no action needed / tell me which beats to re-cut once placement is controlled
+- what: "Episodes 3, 4, 5, 6A and 7A are approved under the delegation you gave today, and each now has a one-minute digest on the approvals page - premise, state change, hook, who is in it, flags. Two things want your eye: 006a names the goblin *Jerry* for the first time in six episodes, and the 132 shot prompts behind these five are all in the 'low detail' style you killed on 2026-07-27 and describe a tusked goblin, so nothing is ready to render off them yet"
+  url: /review/approvals
+  since: 2026-08-12
+  kind: decision
+  verdict_hint: "countersign D22 / take any of the five back / keep or kill the name Jerry"
