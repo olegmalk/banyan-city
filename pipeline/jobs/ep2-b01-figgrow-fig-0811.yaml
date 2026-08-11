@@ -1,0 +1,222 @@
+# EPISODE 2, BEAT 01 — THE COLD OPEN, ARM B: the same shot from a frame that
+# ALREADY has the fig. Second arm of one question, not a second round.
+#
+# WHAT THE PAIR ASKS, AND WHY IT IS ONE QUESTION AND NOT TWO ROUNDS. Arm A
+# (`ep2-b01-figgrow-plate-0811`, priority 18) starts from the founder-approved
+# plate, which has no fig, and asks whether LTX will GROW one. There is a
+# specific reason to doubt it: r8 established that SDXL img2img cannot ADD an
+# object its init lacks — 0 of 12 at strength 0.35 and 0.55, from this very same
+# init — and i2v conditions on a first frame in much the same spirit. If arm A
+# comes back fig-less, the beat still needs an answer, and this arm is it: the
+# fig is present in frame 1 and the model only has to keep it and let it darken
+# and settle. Two arms, one variable (the init), everything else byte-identical:
+# same 233 frames, same seed 20260806, same negative, same style prefix, same
+# two-stage 704x1280 recipe. That is the shake-A/B shape CLAUDE.md names as a
+# legitimate sample, not the K-recipe mistake of scaling one unapproved result
+# across fifteen beats.
+#
+# THE INIT IS THE STEWARD'S INPAINT AND THIS ARM CAN NEVER BE CANON. SAY IT
+# PLAINLY. C:\banyan-farm\fig-inpaint\b01-fig-inpaint-s1.png is the output of
+# `ep2-b01-fig-inpaint-s1` — the founder's own 2026-08-10 word on cuts item 21
+# was "inpaint", so the METHOD is his, but the geometry is the steward's (an
+# ellipse at 462,848 r34,36) and its sidecar says `approved: false`. The frame
+# outside that ellipse is his approved plate byte-for-byte; inside it is not.
+# So: arm A's output is a legal beat-01 candidate under G1 and arm B's is not.
+# Arm B is EVIDENCE and a fallback the founder can look at and rule on, and it
+# takes no canon filename, is not published and is not assembled.
+#
+# THE SAMPLE THIS ARM DEPENDS ON CAME BACK AND THE FRUIT IS THERE. That was the
+# precondition the inpaint job pre-registered in writing — "If the fruit appears
+# here, the beat-01 route follows without a new mechanism" — and it is satisfied
+# on a factual reading of the PNG, not on a taste verdict: a small round green
+# fruit sits on the stem below the cotyledons, in the plate's own dialect and
+# light, with everything outside the ellipse unchanged. The founder has still not
+# looked at it. That is why this arm is queued BEHIND arm A and why nothing is
+# built on top of either until he has.
+#
+# WHY THE PROMPT DIFFERS FROM ARM A, AND IT IS THE SAME FINDING THAT SETS BOTH.
+# Anchor the prompt to the picture, not the stage direction (ep1 beat 02, twice,
+# 2ba427b). Arm A's picture has a bare stem, so arm A says a nub swells on a bare
+# stem. This picture already has the fig on the stem, so telling it a nub appears
+# would be describing a frame that does not exist and inviting a second fruit.
+# The change here is what the fig does next: darkens, rounds and settles heavier
+# on the stem. Everything else in the sentence is arm A's, word for word.
+#
+# THE REST OF THE RECIPE IS ARM A'S AND ITS REASONING IS NOT REPEATED HERE:
+# 233 frames because clips/01-vo.json total_s is 9.072 and fit_duration loops
+# anything under 9.472s, making 233 the shortest 8n+1 that never wraps (frame
+# count is not free — the ep1 "so slow" rejection); the negative is byte-identical
+# to the prior beat-01 LTX run's, carried for provenance and inert at guidance
+# 1.0, which is exactly why no ban is moved into the positive; nothing derives
+# and so the 22-word anchor cap at video_task.py:626 cannot bite.
+#
+# NO METRIC RANKS ANYTHING (131e433). LICENCES: nothing new — LTX-2.3 distilled
+# (LTX-2 Community License) on the box. $0.
+
+id: ep2-b01-figgrow-fig-0811
+task: ep2-b01-figgrow-fig-0811
+node: 002b-first-citizen   # founder-approved 2026-08-03, leaf 002b-t0-c, "approve 002b except.."
+beat: 1
+runner: box
+priority: 19          # behind arm A on purpose: arm A is the one that can be canon
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: ep2-b01 motion lane, 2026-08-11
+
+consumer: >-
+  The founder's eye, beside arm A, on the fig he personally required. Downstream
+  of his look: whether beat 01's route is "grow it in the clip" (arm A) or
+  "inpaint the fig into an approved plate first, then move it" (arm B, which
+  would make the inpaint mask geometry the next thing he corrects). Without this
+  arm, an empty arm A leaves the cold open with no route at all and costs a whole
+  cycle to learn what six idle minutes answer now.
+
+success: >-
+  A 704x1280 mp4 at
+  C:\banyan-farm\ep2-b01-figgrow-0811\01-cold-open-LTX-figgrow-fig.mp4, 233
+  frames (9.708s), in which the green fig already on the stem stays a single
+  fig — one fruit, in one place, not multiplying, not drifting off the stem and
+  not morphing — while it darkens and settles and the grass and leaves hold
+  still. The failure worth reporting is fruit instability: LTX losing or
+  duplicating the object the inpaint put there would say the two-stage route is
+  not viable either. Read by eye beside arm A. No metric is run.
+
+why: >-
+  r8 proved img2img cannot ADD an object to this init. If i2v cannot either, the
+  cold open needs the fig to be in frame 1, and this is the only test of that.
+
+est_minutes: 12   # crop <1min; encode ~2min; render ~5.7min (this box: 145f = 214s, scaled)
+
+needs: [cuda, vram20, video-venv]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+payload:
+  # Same cover-crop script arm A inlines, byte-identical, so this job stands on
+  # its own if arm A never runs. No sha is asserted on this source: it is a
+  # steward-rendered sample, not an approved plate, and asserting a hash would
+  # dress it as one. Its provenance is its own sidecar, which says approved: false.
+  C:\banyan-farm\ep2-b01-figgrow-0811\cover_crop.py: |-
+    #!/usr/bin/env python3
+    """Cover-crop an asserted source image to an exact WxH. No model, no network."""
+    import argparse, hashlib, os, sys
+    from PIL import Image
+
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--src", required=True)
+    ap.add_argument("--sha256", default="", help="asserted before anything is written")
+    ap.add_argument("--out", required=True)
+    ap.add_argument("--size", default="704x1280")
+    a = ap.parse_args()
+
+    if not os.path.isfile(a.src):
+        sys.exit("!! src not found: %s" % a.src)
+    h = hashlib.sha256()
+    with open(a.src, "rb") as fh:
+        for chunk in iter(lambda: fh.read(1 << 20), b""):
+            h.update(chunk)
+    have = h.hexdigest()
+    if a.sha256 and have != a.sha256:
+        sys.exit("!! SRC SHA MISMATCH -- refusing.\n   want %s\n   have %s" % (a.sha256, have))
+
+    W, H = (int(v) for v in a.size.split("x"))
+    im = Image.open(a.src).convert("RGB")
+    sw, sh = im.size
+    scale = max(W / float(sw), H / float(sh))
+    nw, nh = int(round(sw * scale)), int(round(sh * scale))
+    im = im.resize((nw, nh), Image.LANCZOS)
+    left, top = (nw - W) // 2, (nh - H) // 2
+    im = im.crop((left, top, left + W, top + H))
+    os.makedirs(os.path.dirname(os.path.abspath(a.out)) or ".", exist_ok=True)
+    im.save(a.out)
+    print("src %dx%d sha %s" % (sw, sh, have), flush=True)
+    print("cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)" % (scale, nw, nh, left, top), flush=True)
+    print("WROTE %s" % a.out, flush=True)
+
+  # Arm A's sentence with one clause changed: the picture already has the fig, so
+  # the prompt says what the fig does rather than that one appears.
+  C:\banyan-farm\ep2-b01-figgrow-0811\b01-fig-prompt.txt: |-
+    2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. Subject already in frame: a tiny seedling with two oversized cotyledon leaves on one slender stem, standing in tall grass under low warm amber light, a few slow drifting motes of light in the air behind it. One small round green fig hangs from the stem below the leaves and slowly darkens, rounds and settles heavier, the only thing in frame that moves. Static camera, the grass and the leaves holding still, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+
+  # Byte-identical to arm A's and to the negative recorded on
+  # review/ep2-b01/ltx-b01-v2.mp4. Inert at guidance 1.0; provenance only (§7.2).
+  C:\banyan-farm\ep2-b01-figgrow-0811\b01-negative.txt: |-
+    humans, chibi, mascot, creature, face, extra leaves, branches, night sky, photorealism, 3D render look, text, frozen frame, still image, no motion, face morphing, changing facial features, distorted face, warped face, facial expression change, head turning, photorealistic, photograph, live action, film still, 3D render, CGI, octane, realistic skin texture, depth of field bokeh, motion blur, scene change, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+
+  C:\banyan-farm\ep2-b01-figgrow-0811\b01-fig-jobs-encode.json: |-
+    [{"beat": 1,
+      "embeds": "C:\\banyan-farm\\ep2-b01-figgrow-0811\\b01-fig-embeds.pt",
+      "prompt_file": "C:\\banyan-farm\\ep2-b01-figgrow-0811\\b01-fig-prompt.txt",
+      "negative_file": "C:\\banyan-farm\\ep2-b01-figgrow-0811\\b01-negative.txt"}]
+
+  C:\banyan-farm\ep2-b01-figgrow-0811\b01-fig-jobs-render.json: |-
+    [{"beat": 1,
+      "seed": 20260806,
+      "embeds": "C:\\banyan-farm\\ep2-b01-figgrow-0811\\b01-fig-embeds.pt",
+      "init": "C:\\banyan-farm\\ep2-b01-figgrow-0811\\b01-fig-704x1280.png",
+      "out": "C:\\banyan-farm\\ep2-b01-figgrow-0811\\01-cold-open-LTX-figgrow-fig.mp4"}]
+
+steps:
+  - name: crop
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - C:\banyan-farm\ep2-b01-figgrow-0811\cover_crop.py
+      - --src
+      - C:\banyan-farm\fig-inpaint\b01-fig-inpaint-s1.png
+      - --out
+      - C:\banyan-farm\ep2-b01-figgrow-0811\b01-fig-704x1280.png
+      - --size
+      - 704x1280
+  - name: encode
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+      - --stage
+      - encode
+      - --jobs
+      - C:\banyan-farm\ep2-b01-figgrow-0811\b01-fig-jobs-encode.json
+  - name: render
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+      - --stage
+      - render
+      - --jobs
+      - C:\banyan-farm\ep2-b01-figgrow-0811\b01-fig-jobs-render.json
+      - --size
+      - 704x1280
+      - --frames
+      - "233"
+      - --fps
+      - "24"
+      - --guidance
+      - "1.0"
+      - --distilled-sigmas
+      - --two-stage
+      - --image-crf
+      - "33"
+      - --offload
+      - sequential
+      - --mode
+      - production
+      - --task
+      - ep2-b01-figgrow-fig-0811
+      - --worker
+      - rtx5090
+      - --bench-jsonl
+      - C:\banyan-farm\ep2-b01-figgrow-0811\bench-b01-figgrow.jsonl
+      - --bench-label
+      - ep2-b01-figgrow-fig
+
+artifacts:
+  - C:\banyan-farm\ep2-b01-figgrow-0811\01-cold-open-LTX-figgrow-fig.mp4
+  - C:\banyan-farm\ep2-b01-figgrow-0811\b01-fig-704x1280.png
