@@ -219,3 +219,48 @@ beats:
     ban, the helmet ban and the knight ban are untouched — his ruling is not
     something to spend budget from.
   r2: authored_b05_idfix_r2  (spec ep2-b05-idfix-r2-0812, out-b05-idfix-r2)
+
+- beat: 6
+  slug: the-clipboard
+  variant_rendered: authored_b06_idfix
+  positive_tokens: 73
+  verdict: faulty
+  identity: bald 4/4, no armor 4/4, brown tunic 3/4, clipboard 3/4
+  faults:
+  - name: the whole beat is indoors
+    count: 4/4
+    detail: >-
+      Windows and interior walls in every frame — s0 a window upper left, s2 clear
+      window panes, s3 a blown-out window behind his profile, s1 a brown interior
+      wall. Episode 2 happens in a morning field. THE CAUSE IS AN OMISSION AND IT
+      IS VISIBLE IN THE PROMPT: this beat's sentence names NO SETTING at all, and
+      this beat's negative carries NO walls ban — no `house`, no `interior`, no
+      `indoors`. Beat 04's diagnosis said exactly this, that a beat naming no
+      background lets an anime prior fill it with interior walls. Beat 06 is that
+      diagnosis reproduced.
+  - name: sepia palette, no morning
+    count: 4/4
+    detail: >-
+      Desaturated beige and brown throughout against a positive that says "bright
+      morning light". Treated as a SYMPTOM of the interior, not a separate fault —
+      the eight-term dark ban is already sent and the frames are not dark, they
+      are indoors.
+  - name: the guard is a hard angular man, not a silly bureaucrat
+    count: 4/4
+    detail: >-
+      Sharp cheekbones, harsh scowls, bared teeth in s1, muscular adult build. His
+      ratified guard is a "silly harmless bureaucrat" with a round soft body. The
+      positive here says only "A round bald guard man" and never the bureaucrat
+      words. Recorded, NOT fixed this round — same call as beat 05, and for the
+      same reason: beat 05 shows those words already fail to bind on their own, so
+      spending this round on them would buy an unattributable result instead of a
+      setting.
+  lever: >-
+    Omission -> early affirmative, in the placement `authored_b04_fieldban` proved
+    against this exact drift: `in a sunny grassy field` goes in the first clause,
+    ahead of the action. PAID THE PROVEN WAY: `Slow drift in` is a MOTION phrase in
+    a stills harness and buys nothing, which is the same payment commit 91b5dfa
+    used on beats 15 and 19. Plus the walls ban this beat has never had — `no
+    house, no interior, no indoors` — funded by retiring `no dark fantasy`, which
+    is guarding nothing the eight-term dark ban does not already cover.
+  r2: authored_b06_idfix_r2  (spec ep2-b06-idfix-r2-0812, out-b06-idfix-r2)
