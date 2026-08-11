@@ -580,3 +580,4 @@
 21:12:09Z STARTED task=ep2-goblin-sheet-a2-bald2-bald-0812-1786482715 attempt=1 on box-runner
 21:13:00Z DONE task=ep2-goblin-sheet-a2-bald2-bald-0812-1786482715 rc=0 artifacts=8
 21:22:05Z box-runner idle ready=0 failed=2
+21:30:11Z STARTED task=ep2-goblin-sheet-d2-baldcloak-0812-1786483806 attempt=1 on box-runner
