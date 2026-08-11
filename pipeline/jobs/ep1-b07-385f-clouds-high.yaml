@@ -1,0 +1,225 @@
+# ep1 beat 07 "zero-0-moving-parts" — KEEP THE PULL-BACK, LIFT THE CLOUDS.
+# ONE SAMPLE, ONE VARIABLE, against ep1-b07-385f-zoomout-0811 as its baseline.
+#
+# ROMAN, 2026-08-11, on last night's pair: "for beat 07, the control has some
+# people in the background which we dont want, and the pull-back is nice but the
+# clouds are too low."
+#
+# ---- WHAT WAS LOOKED AT BEFORE THIS FILE WAS WRITTEN ------------------------
+#
+# THE PEOPLE ARE NOT IN THE PLATE, and they are already gone from the arm he
+# likes. review/v34-plates/07-704x1280.png has a clean horizon; so does frame 0
+# of the CONTROL clip. By frame 120 the control has drawn a walking figure —
+# dark hair, pale shirt, dark trousers — with a second small shape beside it,
+# and by frame 300 that figure is bigger and still walking. The nucleation site
+# is a ~3px dark speck on the plate's horizon just right of the sun, which the
+# control resolves into a person and the zoomout does not. The ZOOMOUT clip's
+# horizon, read at full resolution at frames 120/240/300/380, is empty. Same
+# plate, same seed, same negative — the two arms differ only in the positive
+# prompt, and the arm that pulls back never blooms the speck.
+#
+# So the people need no fix of their own: they are a defect of the arm being
+# discarded. This job carries the zoomout prompt's human-negation tail forward
+# byte-for-byte so nothing invites them back, and the clip gets read at the
+# horizon again before it is offered.
+#
+# NOT A NEGATIVE PROMPT, AND THIS IS WHY. At guidance 1.0 the distilled sampler
+# never evaluates the negative — `do_classifier_free_guidance = (guidance_scale
+# > 1.0) or (audio_guidance_scale > 1.0)` in the box's diffusers 0.39.0, and the
+# same condition at pipeline/ltx_i2v.py:1001-1008. Every word in b07-negative.txt
+# is inert at this guidance. The POSITIVE PROMPT is the only channel that reaches
+# the sampler, so it is the only channel this job touches. Raising guidance to
+# reactivate the negative would change the recipe Roman just praised and is not
+# on the table for a fix he asked for inside it.
+#
+# THE LOW CLOUDS ARE BOTH — PLATE COMPOSITION, MADE WORSE BY THE REVEAL. The
+# plate already puts its clouds in a band hugging the horizon with an empty blue
+# upper two-thirds. Then the pull-back scales the image toward frame centre: the
+# horizon sits just above centre, so everything above it travels DOWNWARD as the
+# view widens, and the opened sky at the top fills with bare blue. Read across
+# the zoomout clip you can watch it happen — a large cumulus arrives high around
+# frame 250 and has sunk to the horizon band by frame 300.
+#
+# WHY THE PROMPT AND NOT A NEW PLATE. A plate re-render is the honest fix when
+# the model cannot reach the defect, and here it demonstrably can: the zoomout
+# clip INVENTS clouds in the sky the pull-back opens, high in the frame, without
+# being asked. The prompt already has cloud authority in the revealed region;
+# this job aims it. A new plate would also throw away the bytes both of last
+# night's clips were rendered from, which is the only thing keeping this a
+# one-variable comparison, and Roman did not complain about the plate.
+#
+# ---- THE ONE VARIABLE -------------------------------------------------------
+#
+# Against ep1-b07-385f-zoomout.yaml: same beat, same plate (07-704x1280.png),
+# same seed 20260838, same negative file (b07-negative.txt, untouched and not
+# restated), same 385 frames, fps, guidance 1.0, distilled sigmas, two-stage,
+# image-crf, sequential offload and script. The POSITIVE PROMPT is the only
+# difference, so a separate embeds file is written and the encode stage runs
+# first.
+#
+# THE EDIT, confined to the cloud clause:
+#   was:  "the clouds drift very slowly and keep their shapes,"
+#   now:  "tall banks of cloud stand high in the upper sky and fill it, holding
+#          their height near the top of the frame as the view widens, drifting
+#          very slowly and keeping their shapes,"
+# Stated as what the clouds DO, not as what they must not do — a negation in the
+# positive prompt is the one place a text encoder reliably drops the "not".
+#
+# THE PULL-BACK SURVIVES, AND HERE IS THE LIMIT OF THAT PROMISE. The camera
+# clause — "the camera pulls steadily back in one slow continuous zoom out
+# across the whole shot, revealing more of the field and sky as it goes, no
+# push-in, no camera rise, no pan, no cut" — is carried word for word, and the
+# seed is the same. But the clause does not act alone: adding words anywhere
+# changes the whole text embedding, so the move can come out stronger or weaker
+# than last night's even though its own words did not change. Same seed and an
+# untouched camera clause is the strongest guarantee available short of not
+# editing the prompt at all, and there is no channel that lifts the clouds
+# without editing the prompt. If the move is gone or diminished, that is the
+# finding and it gets reported as one — not retried with louder wording.
+#
+# NO METRIC. The flow metric is disqualified on this series (131e433 — it scored
+# highest on the beat where the plant fell over), and eight instruments failed on
+# this material yesterday. Read by eye, beside 07-...-385f-zoomout.mp4.
+
+id: ep1-b07-385f-cloudshigh-0811
+task: ep1-b07-385f-cloudshigh-0811
+node: 001-capability-inventory
+beat: 7
+runner: box
+needs_gpu: true
+priority: 22
+max_attempts: 1
+sample: true
+owner: beat-07 lane, 2026-08-11
+
+consumer: >-
+  Roman's next look at beat 07. He has named the pull-back as the thing he
+  wants and named one defect left in it; this is the clip that either clears
+  that defect or shows the prompt cannot. Beat 07 still has no live candidate
+  on the six-beat motion pick list at /review/waiting, and this is the third
+  candidate for that slot.
+
+success: >-
+  A 704x1280 mp4 at
+  C:\banyan-farm\v34-r2\07-zero-0-moving-parts-LTX-385f-cloudshigh.mp4, 385
+  decoded frames, played beside 07-zero-0-moving-parts-LTX-385f-zoomout.mp4.
+  TWO OBSERVATIONS, both by eye: whether cloud sits high in the frame through
+  the shot instead of sinking to the horizon band, and whether the camera still
+  pulls back. Losing the pull-back while fixing the clouds is a failure of this
+  job even if the sky looks better.
+
+why: >-
+  The one motion result the founder has praised has one named defect, and the
+  positive prompt is the only channel that reaches the sampler at guidance 1.0.
+
+est_minutes: 12   # encode ~2min (Gemma load dominates), render ~7min at 385
+                  # frames — the same shape as the zoomout run last night.
+needs: [cuda, vram20, video-venv]
+
+payload:
+  # The only changed bytes against b07-zoomout-prompt.txt: the cloud clause.
+  # Everything before it and everything from "warm sunset light" onward — the
+  # camera clause and the "Subject already in frame" human-negation tail
+  # included — is identical.
+  C:\banyan-farm\v34-r2\b07-cloudshigh-prompt.txt: |-
+    2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. the field of grass ripples in slow waves across the whole frame, tall banks of cloud stand high in the upper sky and fill it, holding their height near the top of the frame as the view widens, drifting very slowly and keeping their shapes, warm sunset light shifts gently over the field. small ambient motion only, the scene keeps its shape and nothing in it changes, the camera pulls steadily back in one slow continuous zoom out across the whole shot, revealing more of the field and sky as it goes, no push-in, no camera rise, no pan, no cut, living scene. Subject already in frame: no human, no person, no man, no woman, no boy, no girl, no hand, no face, a wide open grass field at sunset, low sun on the horizon, a broad sky with soft clouds, no buildings.
+
+  # negative_file points at the UNCHANGED b07-negative.txt already on the box —
+  # not restated, so the "静态, 静止" bytes are never round-tripped through scp
+  # and a cp1252 console. It is inert at guidance 1.0 either way; it stays
+  # named so this job and the zoomout differ in exactly one input.
+  C:\banyan-farm\v34-r2\b07-cloudshigh-jobs-encode.json: |-
+    [{"beat": 7,
+      "embeds": "C:\\banyan-farm\\v34-r2\\b07-cloudshigh-embeds.pt",
+      "prompt_file": "C:\\banyan-farm\\v34-r2\\b07-cloudshigh-prompt.txt",
+      "negative_file": "C:\\banyan-farm\\v34-r2\\b07-negative.txt"}]
+
+  C:\banyan-farm\v34-r2\b07-cloudshigh-jobs-render-385.json: |-
+    [{"beat": 7,
+      "seed": 20260838,
+      "embeds": "C:\\banyan-farm\\v34-r2\\b07-cloudshigh-embeds.pt",
+      "init": "C:\\banyan-farm\\v34-r2\\07-704x1280.png",
+      "out": "C:\\banyan-farm\\v34-r2\\07-zero-0-moving-parts-LTX-385f-cloudshigh.mp4"}]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  - name: encode
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+      - --stage
+      - encode
+      - --jobs
+      - C:\banyan-farm\v34-r2\b07-cloudshigh-jobs-encode.json
+  - name: render
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+      - --stage
+      - render
+      - --jobs
+      - C:\banyan-farm\v34-r2\b07-cloudshigh-jobs-render-385.json
+      - --size
+      - 704x1280
+      - --frames
+      - "385"
+      - --fps
+      - "24"
+      - --guidance
+      - "1.0"
+      - --distilled-sigmas
+      - --two-stage
+      - --image-crf
+      - "33"
+      - --offload
+      - sequential
+      - --mode
+      - production
+      - --task
+      - ep1-b07-385f-cloudshigh-0811
+      - --worker
+      - rtx5090
+      - --bench-jsonl
+      - C:\banyan-farm\v34-r2\bench-b07-385f-cloudshigh.jsonl
+      - --bench-label
+      - b07-385f-cloudshigh
+
+  # allow_fail on purpose: a copy that falls over must never retire a rendered
+  # clip. Last night's pair came back only because a person fetched them by
+  # hand and wrote their sidecars from the job spec; farm-out is the path that
+  # does not need that person.
+  - name: publish
+    allow_fail: true
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - -c
+      - |
+        import glob, hashlib, os, shutil
+        dst = "C:/banyan-farm/courier-box/farm-out/ep1-b07-385f-cloudshigh"
+        os.makedirs(dst, exist_ok=True)
+        src = sorted(glob.glob("C:/banyan-farm/v34-r2/07-zero-0-moving-parts-LTX-385f-cloudshigh.mp4")
+                     + glob.glob("C:/banyan-farm/v34-r2/bench-b07-385f-cloudshigh.jsonl"))
+        lines = []
+        for f in src:
+            shutil.copy2(f, dst)
+            c = os.path.join(dst, os.path.basename(f))
+            with open(c, "rb") as fh:
+                h = hashlib.sha256(fh.read()).hexdigest()
+            lines.append(h + "  " + os.path.basename(f))
+        with open(os.path.join(dst, "ep1-b07-385f-cloudshigh.sha256"), "w") as fh:
+            fh.write("\n".join(lines) + "\n")
+        print("published", len(src), "file(s) + manifest ->", dst)
+        # the mp4 is the deliverable; the bench line is a bonus.
+        raise SystemExit(0 if len(src) >= 1 else 1)
+
+artifacts:
+  - C:\banyan-farm\v34-r2\07-zero-0-moving-parts-LTX-385f-cloudshigh.mp4
