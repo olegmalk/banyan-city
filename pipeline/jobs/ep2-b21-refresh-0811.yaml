@@ -1,0 +1,270 @@
+# Beat 21 THE ANSWER refresh, derived from the b11 skeleton at 2026-08-12 ~02:1x.
+# The 0811 date in the id is the lane's, not the clock's; the sibling refresh ids
+# all carry it. Last of the three beats that had no block in wave-drafts.yaml.
+#
+# NOT TO BE CONFUSED WITH `pipeline/jobs/ep2-b21-stillair-fullanchor-0811.yaml`,
+# which is a different job on the same beat and is not touched by this one. That
+# is an LTX-2.3 video job — it re-renders the 6-second clip off an existing plate
+# with an affirmative stillness clause, because the old prompt asked for
+# "continuous motion, gentle camera drift" on the one beat whose whole subject is
+# stillness. This is a four-seed SDXL STILL round in the wave harness, against the
+# eight still candidates on the picking page. Different renderer, different
+# output directory, different question — and the two do not interact, because the
+# video job conditions on a plate that already exists and this one draws new
+# frames from text.
+#
+# ── NO FOUNDER WORDS ON THIS BEAT, AND THAT IS SAID PLAINLY ───────────────────
+# Beat 21's only recorded verdict is the steward's: "Provisional pick r3-s3, the
+# steward's guess, logged 2026-08-09 at 0.50 confidence — the highest of the
+# three, which still means it is a guess. Waiting on you." He has spoken on beats
+# 01, 13, 15 and 16 and not on this one. Nothing below is his.
+#
+# ── WHAT THE EIGHT FRAMES ON DISK SHOW, READ BEFORE THE FIX WAS WRITTEN ───────
+# `review/ep2-picks/sheets/b21.jpg` opened and looked at, r1 and r3, all eight:
+#   * A HUMAN HAND IS IN FOUR OF EIGHT, AND IT COSTS THE WHOLE BEAT. r1-s1 reaches
+#     an open hand in from the right with every finger drawn; r3-s0 cups the
+#     sprout in a palm; r3-s1 holds the stem at its base; r1-s0 puts a large pale
+#     limb behind it. This beat is the series' signature gesture — "the first
+#     thing he has ever moved on purpose" — and a hand in the frame says something
+#     else moved it. There is no version of this shot that survives a hand.
+#   * A BIG GLASSY TEAL ORB sits at the base of the leaf in r1-s2 and r3-s2. Same
+#     fault beat 20 was fixed for tonight ("a ritual orb where the fig should
+#     be"), arriving here on a beat that has no fruit in it at all.
+#   * THE SKY IS DEEP PURPLE-BLACK NIGHT IN FOUR OF EIGHT — r1-s0, r1-s3, r3-s0,
+#     r3-s3, each with a thin sunset rim. `Low amber light` came back as after
+#     dark.
+#
+# ── THE FIX, AND WHAT EACH TERM IS AIMED AT ───────────────────────────────────
+#  1. THE HANDS. `the plant alone in frame` affirmatively, `no hands, no fingers`
+#     in the negative. Both halves, because "anime sprout cupped in a palm" is a
+#     very strong checkpoint prior and the guard beats taught that an affirmative
+#     alone does not hold against one. `no face, no girl, no child` ride with
+#     them. NOT `no boy` and NOT `no person`: check() faults on those
+#     unconditionally ("peopled beat negates its own subject"), a rule written for
+#     the fifteen goblin beats, so this beat renders with a weaker people-defence
+#     than a plant-only plate would normally use — a real and stated cost of
+#     borrowing this harness, the same one beat 01 and beat 18 pay.
+#  2. THE ORB. `no glowing orb`, the term beat 20's refresh used tonight for the
+#     identical object.
+#  3. THE NIGHT SKY. `no night, no dark` — AND NOTHING ELSE FROM THE EIGHT-TERM
+#     BLOCK, for the opposite reason to beat 18's. `Low amber light` IS
+#     golden-hour light, so `no dusk, no sunset` would forbid the staging itself.
+#     Only the two terms the four purple-black frames earned are sent. Beat 15's
+#     precedent, not beat 17's.
+#
+# `no many leaves` IS DELIBERATELY NOT SENT even though several frames give the
+# plant four or five leaves and beat 01 carries that term. Beat 21 asks for ONE
+# leaf to TILT; it does not ask for a plant with one leaf, and the sapling this
+# show has established has two cotyledons. The affirmative `one oversized leaf`
+# states what has to read, and banning the plural would fight the plant's shape.
+#
+# THE STILL CANNOT SHOW A TILT AS MOTION AND THAT IS NOT PRETENDED. What four
+# frames can show is a leaf ALREADY tilted to one side with nothing touching it,
+# which is the composition the video beat then has to animate. If a frame comes
+# back with a perfectly upright leaf that is a miss and should be reported as one.
+#
+# `kind: guard` IS A HARNESS TOKEN AND NOT A CLAIM ABOUT THE PICTURE. There are no
+# guards in beat 21 and no goblin either — STATE.md 2026-08-09 lists this beat
+# with 01 and 18 as the ones that "name nobody". `guard` is the only kind
+# render_wave_sample.py:193 accepts without a {{GOBLIN}} marker, and its
+# `extra_neg: guard` tier sends neither the fusion tags nor the species tags,
+# which is right for a frame with no character in it.
+#
+# ── MEASURED ON THE BOX'S REAL CLIP TOKENIZER, FIRST DRAFT, NO REFUSALS ───────
+# `--dry` on the box, quoted rather than summarised:
+#   positive tokens (real CLIP): 59/77   STYLE ANCHOR PRESENT: True
+#   count tag: '' (draft declares '')            'text' negated: True
+#   negative: recipe 75 -> sent 72       DRY OK, no faults
+# THE LEANEST NEGATIVE OF THE THREE BEATS IN THIS LANE: NEGWARN drops exactly ONE
+# house term, `realistic skin texture`. `extra limbs` and `deformed` both survive,
+# which is worth naming on the one beat of the three whose main fault is a drawn
+# human hand — the two terms that fight malformed anatomy are still in the string.
+#
+# WHY THIS IS ONE SAMPLE AND NOT A BATCH. CLAUDE.md, founder 2026-08-03: one
+# sample per recipe change. One recipe change, one beat, four seeds.
+#
+# SEPARATE OUT DIRECTORY: the harness names files from the beat slug, so this
+# writes to `out-b21-refresh` and overwrites neither r1 nor r3.
+
+id: ep2-b21-refresh-0811
+task: ep2-b21-refresh-0811
+node: 002b-first-citizen
+beat: 21
+runner: box
+needs_gpu: true
+
+# 53. box_runner.py sorts priority ASCENDING and takes ONE job at a time
+# regardless — sequential is the rule (CLAUDE.md, founder 2026-08-03). Tonight's
+# refresh lane ran 44 through 50; 13, 18 and 21 take 51, 52 and 53 in the order
+# they were staged, because they were written one at a time and each dry run had
+# to pass before the next block was touched. Beats 13 and 18 are already queued at
+# 51 and 52; the ready queue held only those two when this was staged
+# (`box_enqueue.py --list`, checked, not assumed).
+priority: 53
+max_attempts: 1
+owner: beats 13/18/21 block-and-refresh lane, 2026-08-12 (the three episode-2
+  beats that had no draft block)
+
+# NO `gate:` KEY. One sample on a beat carrying no founder verdict at all,
+# sending terms aimed at faults visible in its own eight frames. It clears
+# NOBODY's gate: the fourteen `ep2-b*-goblin-wave1.yaml` specs and the staged
+# siblings keep theirs, and beat 16 stays gated on the plate.
+
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03` (read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml:17-18, the leaf the
+  render gate itself reads, not copied from a sibling spec). His `approved_quote`
+  verbatim: "approve 002b except.. we need to make SURE the fig growing on the sapling
+  is mentioned, last time we generated 002b it just.. appeared. also, the sapling was
+  able to flail a leaf in episode 1? why couldnt it do that in 002b?" The SECOND
+  `approval_condition` is the one that touches this beat — he asked why the sapling
+  could flail a leaf in episode 1 and not in 002b, and beat 21 IS the leaf moving. The
+  condition asks for the gesture to exist, which the script already gives it; it says
+  nothing about this beat''s lighting, framing or what else may be in the frame, and
+  the round below does not treat it as if it did.'
+
+consumer: >-
+  The founder's morning review page, as a third round of beat 21 against the eight
+  candidates already on the picking page — the four with a human hand in them, the
+  two with a glowing teal orb, and the four with a night sky. This job ranks
+  nothing and picks nothing; the provisional r3-s3 pick stays the steward's guess
+  at 0.50 and whether any of these four beats it is R4's call.
+
+success: >-
+  Four PNGs at C:\banyan-farm\wave-goblin-prep\out-b21-refresh\21-the-answer-wave1-s0..3.png
+  with their .yaml provenance sidecars written at render time (7.2), all eight
+  declared as artifacts so a missing one fails rc=92 instead of passing quietly.
+  What to look at, in plain terms rather than a metric's: NOTHING touching the
+  plant and no hand anywhere in the frame, one oversized leaf clearly tilted to
+  one side, warm low light rather than a night sky, and no glowing orb. A frame
+  with a perfectly upright leaf is a miss of a different kind and should be
+  reported, not re-run.
+
+why: >-
+  Four of beat 21's eight candidates put a human hand in the frame, on the one
+  beat whose entire point is that the plant moved by itself — "the first thing he
+  has ever moved on purpose". Two draw a glowing teal orb at the base of the leaf,
+  the same object beat 20 was fixed for tonight, and four came back with a
+  purple-black night sky against a staging that says low amber light. This round
+  states the plant is alone in frame, bans hands and fingers, bans the orb, and
+  narrows the dark block to the two terms those four frames earned rather than
+  sending eight that would forbid golden hour. Measured on the box's real
+  tokenizer before enqueue: positive 59/77 with the style anchor intact, count tag
+  '' deriving as declared, no faults, DRY OK.
+
+goblin_def: green skin
+goblin_def_source: >-
+  NO GOBLIN IS IN THIS BEAT AND NO CHARACTER OF ANY KIND — STATE.md 2026-08-09
+  lists beat 21 with 01 and 18 as the beats that "name nobody". Beat 21 is
+  `kind: guard`, a harness token rather than a claim about the picture, and its
+  draft carries no {{GOBLIN}} slot, so this value fills nothing and changes no
+  pixel; render_wave_sample.py makes --goblin-def mandatory on every call rather
+  than letting a default stand in, and render_wave_goblin.check() excludes guard
+  beats from the slot requirement for exactly this case. The value passed is the
+  founder's own definition — "he is just a simple green goblin, nothing complex"
+  (2026-08-10 ~12:15) — so that the provenance sidecar records the same string as
+  every other job in this wave rather than a placeholder.
+
+est_minutes: 2
+needs:
+- cuda
+- vram20
+- farm-venv
+
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+# The box's wave-drafts.yaml was scp'd from this repo and verified sha256-IDENTICAL
+# — c302352f8a691e791044eb631e0a5466c02cf3c1d642f250e8a90e69ba7d3eb0, printed by
+# the box itself on the dry run quoted in the header and matching
+# `shasum -a 256 pipeline/wave-drafts.yaml` here. This is the LAST edit this lane
+# makes to that file, so unlike the beat-13 and beat-18 specs — which honestly
+# attest a digest their own siblings then superseded — this one is expected to
+# still hold at run time. It is not what guards the job either way: the `measure`
+# step below re-runs the same `--dry` against whatever the box holds AT RUN TIME
+# and fails rc=1 for $0 if the variant key is missing or the prompt no longer
+# fits. `ep2-b08-refresh-0811` failed exactly there (rc=1, 7 seconds,
+# queue/failed/) rather than quietly re-rendering an old prompt under a new id.
+steps:
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '21'
+  - --goblin-def
+  - green skin
+  - --variant
+  - authored_b21_refresh
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '21'
+  - --goblin-def
+  - green skin
+  - --variant
+  - authored_b21_refresh
+  - --out
+  - C:\banyan-farm\wave-goblin-prep\out-b21-refresh
+  - --task
+  - ep2-b21-refresh-0811
+
+# DURABILITY: every still this farm makes lands single-copy on a box nothing backs
+# up. The courier runs `git add -A -- farm-out` and pushes on job_done, and
+# farm-out is NOT gitignored, so publishing is a COPY and the runner stays
+# byte-identical. allow_fail: a failed copy must never mark a good render failed.
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b21-refresh"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/wave-goblin-prep/out-b21-refresh/21-the-answer-wave1-s*.*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        # Hash the COPY, not the original: what this records has to be the bytes
+        # that get committed, or the manifest attests to the wrong file.
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+        print("   ", os.path.basename(f), h[:16])
+    # newline="\n" is load-bearing: Windows text mode rewrites \n to \r\n and
+    # every filename then carries a trailing \r that shasum -c cannot open.
+    with open(os.path.join(dst, "21-the-answer-refresh.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    # 4 stills + 4 sidecars. Fewer means the render wrote less than it promised.
+    raise SystemExit(0 if len(src) == 8 else 1)
+
+artifacts:
+- C:\banyan-farm\wave-goblin-prep\out-b21-refresh\21-the-answer-wave1-s0.png
+- C:\banyan-farm\wave-goblin-prep\out-b21-refresh\21-the-answer-wave1-s1.png
+- C:\banyan-farm\wave-goblin-prep\out-b21-refresh\21-the-answer-wave1-s2.png
+- C:\banyan-farm\wave-goblin-prep\out-b21-refresh\21-the-answer-wave1-s3.png
+- C:\banyan-farm\wave-goblin-prep\out-b21-refresh\21-the-answer-wave1-s0.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b21-refresh\21-the-answer-wave1-s1.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b21-refresh\21-the-answer-wave1-s2.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b21-refresh\21-the-answer-wave1-s3.yaml

@@ -9215,3 +9215,50 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+- id: ep2-b21-refresh-0811
+  kind: prediction
+  written: 2026-08-12 ~02:2x, before enqueue; predicates fixed before any frame of
+    this round existed. The dry run passed on the box first (positive 59/77,
+    STYLE ANCHOR PRESENT True, count tag '' deriving as declared, negative recipe
+    75 -> sent 72, one house term dropped, no faults) and the dry step draws
+    nothing.
+  round: ep2-b21-refresh-0811, beat 21 THE ANSWER, variant authored_b21_refresh,
+    4 stills, SDXL animagine-xl-3.1, node 002b-first-citizen. Beat 21 had NO block
+    in pipeline/wave-drafts.yaml before this round; the block was added here on
+    beat 01's plant-only mechanism (kind guard, empty count tag, no goblin slot),
+    with `authored` and `authored_b21_refresh` byte-identical. Not to be confused
+    with ep2-b21-stillair-fullanchor-0811, the LTX video job on the same beat.
+  his_words: >-
+    NONE. He has spoken on beats 01, 13, 15 and 16 and not on this one. Beat 21's
+    only recorded verdict is the steward's provisional pick r3-s3 at 0.50
+    confidence, logged 2026-08-09 and explicitly not a decision. Nothing in this
+    round is his or is presented as his.
+  what_changed: shots.md's staging kept word for word (one oversized leaf of a
+    tiny sapling tilted slowly to one side, dead-still air, grass frozen, low
+    amber light, quiet awe, close-up). One clause added - `the plant alone in
+    frame` - with `no hands, no fingers` beside it, because four of eight
+    candidates put a drawn human hand in the frame on the one beat whose whole
+    point is that the plant moved by itself. Added `no glowing orb` for the teal
+    orb two frames drew at the base of the leaf, the same object beat 20 was fixed
+    for tonight, and `no face, no girl, no child`. The dark block is NARROWED to
+    `no night, no dark` - the two terms the four purple-black skies earned -
+    because `low amber light` IS golden-hour light and `no dusk, no sunset` would
+    forbid the staging. `no many leaves` deliberately not sent, since the beat
+    asks for one leaf to TILT rather than for a plant with one leaf.
+  predicates:
+    - no hand, finger or human body part anywhere in the frame, in 4/4 - the
+      round's main claim and the fault that costs the beat its meaning
+    - nothing touching or holding the plant, in 4/4
+    - one leaf visibly tilted to one side rather than upright, in >=2/4 - stated
+      as the predicate most likely to miss in the OTHER direction, because a still
+      cannot show a tilt as motion and an upright leaf is a real result worth
+      reporting rather than re-running
+    - no glowing orb or sphere at the base of the plant, in >=3/4
+    - warm low light rather than a night sky, in >=3/4
+  consumer: the founder's morning review page.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null

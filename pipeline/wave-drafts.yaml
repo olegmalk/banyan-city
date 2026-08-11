@@ -1911,3 +1911,88 @@ beats:
       very aesthetic No
       girl, no child. No photorealism, no 3D render look. 9:16 vertical, no
       text.
+
+  21:
+    slug: the-answer
+    kind: guard
+    tag: ''
+    extra_neg: guard
+    gist: the answer / one leaf tilted, plant alone
+    # -- BEAT 21 IS IN THIS FILE AS OF 2026-08-12 ~02:0x, and it was not before.
+    # Last of the three beats tonight's twenty refresh rounds could not touch
+    # because they had no block here. Beat 16 stays out on purpose — it waits on
+    # the goblin being drawn into the plate, which is his call.
+    #
+    # `kind: guard` IS A HARNESS TOKEN AND NOT A CLAIM ABOUT THE PICTURE, exactly
+    # as beat 01's and beat 18's headers say. There are no guards in beat 21 and
+    # no goblin either; STATE.md 2026-08-09 lists this beat with 01 and 18 as the
+    # ones that "name nobody". `guard` is the only kind render_wave_sample.py:193
+    # accepts without a {{GOBLIN}} marker, and its `extra_neg: guard` tier sends
+    # neither the fusion tags nor the species tags — right, since a collision
+    # needs two bodies and this frame is meant to have none. `tag: ''` because
+    # `_tag_from_clause` finds no person noun in the first clause and check()
+    # faults if the declared tag and the derived one disagree.
+    #
+    # WHAT THE EIGHT FRAMES ON DISK SHOW. `review/ep2-picks/sheets/b21.jpg`
+    # opened and looked at, r1 and r3, all eight:
+    #   * A HUMAN HAND IS IN FOUR OF EIGHT. r1-s1 reaches an open hand in from the
+    #     right with every finger drawn; r3-s0 cups the sprout in a palm; r3-s1
+    #     holds the stem at its base; r1-s0 puts a large pale limb behind it. THIS
+    #     IS THE WHOLE BEAT LOST. The gesture is "the first thing he has ever
+    #     moved on purpose" — a hand in the frame says something else moved it.
+    #   * A BIG GLASSY TEAL ORB sits at the base of the leaf in r1-s2 and r3-s2.
+    #     That is the same fault beat 20 was fixed for tonight, "a ritual orb
+    #     where the fig should be", arriving on a beat that has no fruit in it at
+    #     all.
+    #   * THE SKY IS DEEP PURPLE-BLACK NIGHT in four of eight (r1-s0, r1-s3,
+    #     r3-s0, r3-s3), with a thin sunset rim. `Low amber light` came back as
+    #     after dark.
+    #
+    # THE DARK BAN IS NOT SENT WHOLE, AND FOR THE OPPOSITE REASON TO BEAT 18's.
+    # `Low amber light` IS golden-hour light, so `no dusk, no sunset` would forbid
+    # the staging itself. Only `no night, no dark` go — the two terms the four
+    # purple-black frames earned. Beat 15's precedent (the ban shrinking to what
+    # its own frames earned), not beat 17's.
+    #
+    # `no many leaves` IS DELIBERATELY NOT SENT even though several frames give
+    # the plant four or five leaves and beat 01 carries that term. Beat 21 asks
+    # for ONE leaf to TILT; it does not ask for a plant with one leaf, and the
+    # sapling the show has established has two cotyledons. The affirmative `one
+    # oversized leaf` states what has to read, and banning the plural would fight
+    # the plant's own shape.
+    #
+    # WHAT IS INHERITED FROM shots.md's OWN FENCE, word for word: `one oversized
+    # leaf of a tiny sapling`, `tilts slowly ... to one side`, `in dead-still air`
+    # with `the grass frozen`, `low amber light`, `quiet awe`, `close-up`. `the
+    # plant alone in frame` is the one clause added, and it is the affirmative
+    # half of the hands fix; `no hands, no fingers` is the other half, because the
+    # guard beats taught that an affirmative alone does not hold against a strong
+    # prior, and "anime sprout in a palm" is a very strong prior. THE STILL CANNOT
+    # SHOW A TILT AS MOTION and that is not pretended: what four frames can show
+    # is a leaf ALREADY tilted to one side with nothing touching it, which is the
+    # composition the video beat then has to animate.
+    #
+    # THE PEOPLE BANS ARE THE PLANT-ONLY SET MINUS THE TWO THAT FAULT: `no face,
+    # no girl, no child` go; `no boy` and `no person` cannot, because check()
+    # faults on them unconditionally. Weaker than a plant-only plate would
+    # normally use, and the same stated cost beat 01 and beat 18 pay.
+    #
+    # TWO KEYS, BYTE-IDENTICAL, for the reason beat 01's header documents:
+    # render_wave_goblin.py's whole-wave path reads `d["authored"]` by name for
+    # every beat in this file, so a block carrying only a variant key would
+    # KeyError every sibling lane's `--dry`. `authored_b21_refresh` is what the
+    # job renders and what the sidecar records. If you edit one, edit both.
+    authored: >-
+      One oversized leaf of a tiny sapling tilted slowly to one side in
+      dead-still air, the plant alone in frame with the grass frozen around it.
+      Close-up, low amber light, quiet awe, cinematic lighting, detailed,
+      newest, masterpiece, best quality, very aesthetic No hands, no fingers, no
+      face, no girl, no child, no glowing orb, no night, no dark. No
+      photorealism, no 3D render look. 9:16 vertical, no text.
+    authored_b21_refresh: >-
+      One oversized leaf of a tiny sapling tilted slowly to one side in
+      dead-still air, the plant alone in frame with the grass frozen around it.
+      Close-up, low amber light, quiet awe, cinematic lighting, detailed,
+      newest, masterpiece, best quality, very aesthetic No hands, no fingers, no
+      face, no girl, no child, no glowing orb, no night, no dark. No
+      photorealism, no 3D render look. 9:16 vertical, no text.
