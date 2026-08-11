@@ -1,0 +1,292 @@
+# EPISODE 2, BEAT 01 — THE LEAF COUNT, BY MASK INSTEAD OF BY WORDS. One round,
+# four seeds, $0, 2026-08-11.
+#
+# HIS VERDICT, VERBATIM (~16:15 today, on the whole beat-01 picking sheet):
+# "none of them have figs and all of them have too many leafs". Two faults and
+# both are COUNTS. This job attacks the second one; the first is already solved
+# and the record below says how.
+#
+# WHY THIS IS NOT THE PROMPT ROUND THE BRIEF ASKED FOR, AND THE REPO SAID SO
+# FIRST. The obvious move is a fifth wording that states TWO LEAVES and ONE FIG
+# affirmatively and counts them. shots.md's beat-01 section rules that out in its
+# own words, written 2026-08-06 after four such wordings were drawn and measured:
+#   | `a single pair of oversized leaves`      | rounds 1-2 | 4-6 leaves, 8 of 8 |
+#   | `exactly two oversized cotyledon leaves` | round 3    | 4-6 leaves, 4 of 4 |
+#   | `sprout with only two oversized leaves`  | round 4    | 3 at best, 1 of 4, and 3 of 4 lost the composition |
+# followed by: "Do not spend a fifth round on synonyms for 'two': treat the
+# two-leaf character as something this model will not draw on request... The
+# levers that are left are all outside the prompt." Rounds 5 through 9 then spent
+# img2img, a control arm and a three-arm depth-ControlNet sweep on it and the
+# count never came down. A fifth wording is the one experiment this beat has
+# already run four times.
+#
+# THE FIG IS ALREADY SOLVED AND WAS NEVER APPLIED. `review/b01-fig-inpaint/
+# b01-fig-inpaint-s1.png` (2026-08-10, `approved: false`, one sample on HIS OWN
+# word `inpaint`) carries one small round green fruit on the stem, legible, in
+# the right place — the thing four prompt rounds could not produce in 0 of 12
+# frames. It has never been used as anything but that sample: no leaf, no
+# `stills/` sidecar, no later round takes it as an init. The mechanism is what
+# worked: a mask FORCES a location, so the model never has to be asked for a
+# count or a placement it will not honour.
+#
+# SO THIS ROUND ASKS THE SAME MECHANISM FOR THE SAME KIND OF WIN, AND ASKS THE
+# MODEL TO COUNT NOTHING. The founder-approved plate has THREE leaves — measured,
+# not eyeballed: bright-edge blobs at x[445,496] y[658,672] (the right blade),
+# x[299,366] y[708,726] (the left blade) and a fainter run from (365,628) to
+# (395,656) (the upper-middle blade), found by thresholding luminance at the 99th
+# percentile inside the plant region of the 832x1216 plate. The script wants two.
+# One ellipse over the UPPER-MIDDLE blade, filled with the blurred tall grass
+# that surrounds it, leaves a two-blade sprout — and the count then comes from
+# geometry, not from a counting word. The left and right blades are an opposed
+# pair and read as the script's two leaves; that pairing is the one aesthetic
+# judgement in this job and it is the steward's, named as such below.
+#
+# THE MASK GEOMETRY IS THE STEWARD'S AND IS THE FIRST THING HIS CORRECTION SHOULD
+# MOVE — the same sentence the fig inpaint's own sidecar carries, for the same
+# reason: he approved a METHOD ("inpaint") and named no size, no position and no
+# leaf. `378,655,48,54` was chosen to clear both blades it must not touch: at
+# y=665 the ellipse spans x[332,424] and the right blade starts at x=445 (22px
+# clear); its bottom edge stops at y=707 and the left blade's bright edge begins
+# at y=708. If a blade tip survives at the upper-left it is a geometry miss, not
+# a method failure, and the fix is one number.
+#
+# FOUR SEEDS, ONE VARIABLE. Same init, same ellipse, same strength, steps,
+# guidance, padding and blur as the fig inpaint that worked; only the seed moves.
+# The question this answers is whether the fill is reliable or lucky. `blurry` is
+# deliberately ABSENT from the negative — this fill is supposed to be soft blurred
+# grass, and the fig negative's `blurry` would fight the thing being asked for.
+#
+# WHAT THIS ROUND DOES NOT SETTLE, STATED SO THE RESULT CANNOT BE OVERSOLD. The
+# only G1-legal init for beat 01 is 001's `15-something-s-coming.png` — a DUSK
+# close-up in tall grass with a light shaft, because it is the sole
+# founder-approved sapling-in-grass frame in the tree. Beat 01's script is a
+# SUNRISE field with the whole 40cm plant in frame. Even a perfect two-leaf,
+# one-fig result here is a fixed dusk plate, not the cold open as written, and
+# whether that is acceptable is R4's call and nobody else's. That question goes
+# to him with these four frames; it is not assumed by this job.
+
+id: ep2-b01-leafcount-inpaint-0811
+task: ep2-b01-leafcount-inpaint-0811
+node: 002b-first-citizen
+beat: 1
+runner: box
+needs_gpu: true
+priority: 45
+max_attempts: 1
+owner: beat-01 verdict lane, 2026-08-11 (his ~16:15 beat-01 sentence)
+
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03` (read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml). His
+  `approved_quote` verbatim: "approve 002b except.. we need to make SURE the fig growing
+  on the sapling is mentioned, last time we generated 002b it just.. appeared. also, the
+  sapling was able to flail a leaf in episode 1? why couldnt it do that in 002b?" His
+  first `approval_condition` is beat 01''s: "The fig must GROW on screen, not already
+  hang." So the fig is a condition of the script and not a decoration — which is why a
+  beat-01 frame without one does not satisfy him however well it is drawn, and why the
+  leaf count is the only fault left once the mask supplies the fruit. node.md beat 01:
+  "On the thinnest branch a green nub swells, darkens and rounds into a single fig — the
+  only thing in frame that moves."'
+
+consumer: >-
+  Roman's next look at beat 01, and one question for him. His sentence named two
+  counts; the fig half is answered by a mask he already authorised, and these four
+  frames test whether the same mask mechanism answers the leaf half. If it does,
+  the two ellipses compose into a beat-01 plate that satisfies both halves of his
+  verdict, and the open question — a dusk close-up standing in for a sunrise field
+  — is his to rule on. If it does not, the leaf count has no route left inside
+  this checkpoint and that is a finding worth having for $0.
+
+success: >-
+  Four PNGs at C:\banyan-farm\fig-inpaint\out-leafcount\b01-leafcount-s0..3.png
+  with their `.png.meta.yaml` provenance sidecars written at render time (7.2),
+  all eight declared as artifacts so a missing one fails rc=92 instead of passing
+  quietly. Whether the leaf count reads as two is a human's call at the frames;
+  no metric decides it and this job ranks nothing.
+
+why: >-
+  One variable against the fig inpaint that worked: the ellipse moves from the
+  fruit to the third leaf. Same init, same strength, same steps and guidance. The
+  model is asked to draw grass, not to count leaves — which is the whole point,
+  because counting is the one thing four wordings proved it will not do.
+
+est_minutes: 3
+needs:
+- cuda
+- vram20
+- farm-venv
+
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+# `--init-sha256` is asserted on every step: "inpaint over the plate he passed"
+# is the whole claim of this round and a different file would silently make it a
+# different claim. The box's repo checkout was verified at this hash before the
+# job was queued.
+steps:
+- name: s0
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\fig-inpaint\inpaint_fruit.py
+  - --init
+  - C:\banyan-farm\banyan-city\genomes\sapling\nodes\001-capability-inventory\stills\15-something-s-coming.png
+  - --init-sha256
+  - f60c1404f88d45720ca295dfc753e9eaabb815446710bcfffb3c7a07b7277f54
+  - --ellipse
+  - 378,655,48,54
+  - --prompt-file
+  - C:\banyan-farm\fig-inpaint\leaf-prompt.txt
+  - --negative-file
+  - C:\banyan-farm\fig-inpaint\leaf-negative.txt
+  - --out
+  - C:\banyan-farm\fig-inpaint\out-leafcount\b01-leafcount-s0.png
+  - --steps
+  - '40'
+  - --cfg
+  - '7.5'
+  - --strength
+  - '0.99'
+  - --seed
+  - '20260811'
+  - --pad-crop
+  - '64'
+  - --blur
+  - '8'
+  - --note
+  - "ONE ROUND, 4 seeds, on his 2026-08-11 ~16:15 sentence: 'none of them have figs and all of them have too many leafs'. The ellipse sits on the THIRD leaf of the founder-approved plate (measured: 3 blades), filled with the grass around it, so the count comes from geometry and the model is never asked to count. The fig half is already solved by the 2026-08-10 inpaint on the same plate and composes on top. MASK GEOMETRY IS THE STEWARD'S — he approved a method, not a position. PROVISIONAL: not a pick, not canon, not published, not assembled."
+- name: s1
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\fig-inpaint\inpaint_fruit.py
+  - --init
+  - C:\banyan-farm\banyan-city\genomes\sapling\nodes\001-capability-inventory\stills\15-something-s-coming.png
+  - --init-sha256
+  - f60c1404f88d45720ca295dfc753e9eaabb815446710bcfffb3c7a07b7277f54
+  - --ellipse
+  - 378,655,48,54
+  - --prompt-file
+  - C:\banyan-farm\fig-inpaint\leaf-prompt.txt
+  - --negative-file
+  - C:\banyan-farm\fig-inpaint\leaf-negative.txt
+  - --out
+  - C:\banyan-farm\fig-inpaint\out-leafcount\b01-leafcount-s1.png
+  - --steps
+  - '40'
+  - --cfg
+  - '7.5'
+  - --strength
+  - '0.99'
+  - --seed
+  - '20261811'
+  - --pad-crop
+  - '64'
+  - --blur
+  - '8'
+  - --note
+  - "Seed 2 of 4. Same init, same ellipse, same strength — only the seed moves. See s0's note for what this round is."
+- name: s2
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\fig-inpaint\inpaint_fruit.py
+  - --init
+  - C:\banyan-farm\banyan-city\genomes\sapling\nodes\001-capability-inventory\stills\15-something-s-coming.png
+  - --init-sha256
+  - f60c1404f88d45720ca295dfc753e9eaabb815446710bcfffb3c7a07b7277f54
+  - --ellipse
+  - 378,655,48,54
+  - --prompt-file
+  - C:\banyan-farm\fig-inpaint\leaf-prompt.txt
+  - --negative-file
+  - C:\banyan-farm\fig-inpaint\leaf-negative.txt
+  - --out
+  - C:\banyan-farm\fig-inpaint\out-leafcount\b01-leafcount-s2.png
+  - --steps
+  - '40'
+  - --cfg
+  - '7.5'
+  - --strength
+  - '0.99'
+  - --seed
+  - '20262811'
+  - --pad-crop
+  - '64'
+  - --blur
+  - '8'
+  - --note
+  - "Seed 3 of 4. Same init, same ellipse, same strength — only the seed moves. See s0's note for what this round is."
+- name: s3
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\fig-inpaint\inpaint_fruit.py
+  - --init
+  - C:\banyan-farm\banyan-city\genomes\sapling\nodes\001-capability-inventory\stills\15-something-s-coming.png
+  - --init-sha256
+  - f60c1404f88d45720ca295dfc753e9eaabb815446710bcfffb3c7a07b7277f54
+  - --ellipse
+  - 378,655,48,54
+  - --prompt-file
+  - C:\banyan-farm\fig-inpaint\leaf-prompt.txt
+  - --negative-file
+  - C:\banyan-farm\fig-inpaint\leaf-negative.txt
+  - --out
+  - C:\banyan-farm\fig-inpaint\out-leafcount\b01-leafcount-s3.png
+  - --steps
+  - '40'
+  - --cfg
+  - '7.5'
+  - --strength
+  - '0.99'
+  - --seed
+  - '20263811'
+  - --pad-crop
+  - '64'
+  - --blur
+  - '8'
+  - --note
+  - "Seed 4 of 4. Same init, same ellipse, same strength — only the seed moves. See s0's note for what this round is."
+
+# DURABILITY: the box is the only copy until the courier pushes farm-out, which
+# is not gitignored. allow_fail so a failed copy never marks a good render failed.
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b01-leafcount"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/fig-inpaint/out-leafcount/b01-leafcount-s*.*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        # Hash the COPY: what this records has to be the bytes that get committed.
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+        print("   ", os.path.basename(f), h[:16])
+    # newline="\n" is load-bearing: Windows text mode would leave a trailing \r
+    # on every filename and shasum -c could not open them.
+    with open(os.path.join(dst, "ep2-b01-leafcount.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    # 4 stills + 4 sidecars. Fewer means the round wrote less than it promised.
+    raise SystemExit(0 if len(src) == 8 else 1)
+
+artifacts:
+- C:\banyan-farm\fig-inpaint\out-leafcount\b01-leafcount-s0.png
+- C:\banyan-farm\fig-inpaint\out-leafcount\b01-leafcount-s1.png
+- C:\banyan-farm\fig-inpaint\out-leafcount\b01-leafcount-s2.png
+- C:\banyan-farm\fig-inpaint\out-leafcount\b01-leafcount-s3.png
+- C:\banyan-farm\fig-inpaint\out-leafcount\b01-leafcount-s0.png.meta.yaml
+- C:\banyan-farm\fig-inpaint\out-leafcount\b01-leafcount-s1.png.meta.yaml
+- C:\banyan-farm\fig-inpaint\out-leafcount\b01-leafcount-s2.png.meta.yaml
+- C:\banyan-farm\fig-inpaint\out-leafcount\b01-leafcount-s3.png.meta.yaml

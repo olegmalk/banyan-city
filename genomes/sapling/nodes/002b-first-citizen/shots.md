@@ -1122,3 +1122,72 @@ verified defect): the same goblin must survive twenty generations. Wan
 1.3B on Kaggle has no reference-image conditioning, so expect drift and
 judge on material — if it breaks the episode, reference conditioning
 becomes the next blocking task rather than a backlog item.
+
+---
+
+## Founder verdicts — 2026-08-11 ~16:15 local, the whole episode-2 picking page
+
+Roman walked the picking page beat by beat and ruled on seven beats plus the
+episode. His words are recorded verbatim below and scored in
+`taste/steward-model.ledger.yaml` (SIXTH scoring; the per-beat verdict records
+are `ep2-b01`..`b05-pickpage-founder-verdict-0811` and
+`ep2-pickpage-founder-directive-0811`). Nothing here deletes or edits anything
+above it — the prompts above are the record of what was sent, and this section is
+the record of what he said about the results.
+
+**Beat 01 — COLD OPEN.** *"none of them have figs and all of them have too many
+leafs"* — rounds 5 through 9 and the fig frames, rejected together. Two faults,
+both COUNTS, and both had already been drawn wrong and written down above: the
+fig appeared in none of the candidates and the leaf count ran 4-6 where the
+script has a two-leaf sapling. His 2026-08-03 approval of this node made the fig
+a condition of the script (*"we need to make SURE the fig growing on the sapling
+is mentioned"*), so a beat-01 frame without one does not satisfy him however well
+it is drawn. The next round states TWO LEAVES and ONE FIG affirmatively and
+counts them, and holds everything else minimal.
+
+**Beat 02 — THE SPRINT.** *"none of them, are you sure you are using the right ai
+image generator? this look quite bad"* — his second question about the ENGINE
+rather than the prompt. It goes back to him as a question: the engine is
+animagine-xl-3.1 on the box, $0, and it is the same engine that drew the goblin
+he ratified three hours earlier.
+
+**Beat 03 — BAD COVER.** *"ai is going too crazy, making the goblin in a house,
+making the goblin compeltely white, making 2 goblins, and other weird stuff"* —
+one setting fault and two that are properties of the SET, not of any frame: the
+four candidates disagree with each other about what the goblin is and how many of
+him there are.
+
+**Beat 04 — THE FOOTNOTE.** *"these close ups are not really good, but they are
+the old versions after all.. basically, bad character consistency, makign the
+goblin look too complicated and ending up making t bad"* — a verdict on the
+RECIPE. Those frames were the IP-Adapter set and the `green skin, tusks` tags-only
+set, both from 2026-08-10. At ~15:45 the same afternoon he ratified the opposite
+recipe on beat 15 — tags only, `green skin`, nothing else. Beat 04's prompt above
+is unchanged and needs no staging fix: it states its shot size twice (*his face
+filling the frame*, *close-up*) and is where the 2026-08-11 `medium shot` fix on
+seven other beats was copied FROM. Re-run as `ep2-b04-goblin-close-0811`, one
+variable — `tusks` removed.
+
+**Beat 05 — THE PATROL.** *"almost all look like they are in some snowy forest,
+otherwise its actually not bad"* — the only warm clause in the whole walk, and it
+names ONE fault, the environment. It is not an approval of the guards: silence on
+an element is not approval of it, and eleven lines later he says the guards have
+no character yet.
+
+**Beat 06 — THE CLIPBOARD.** *"none of them.. should probably setup a character
+for the guards, take your time doing that"* — a PRESCRIPTION, not a fault. The
+guards have never had a character reference of any kind, and six beats of this
+episode are guard beats (05, 06, 07, 09, 10, 11). *"take your time"* is a licence
+to spend time, which is the opposite of the usual constraint.
+
+**Beat 07 — THE POINTING.** *"mot of them look good but as i said in beat 06, we
+need to setup character consistency even if they only appear once. i mean, maybe
+dont waste too much time on it but it will be needed so we dont have confusion"* —
+he opened warm and still said no, and bounded the ask in the same breath: a cheap
+reference per recurring body, not an identity programme.
+
+**The episode.** *"i looked at all the beats and you have to change pretty much
+all of them, do some regeneration, and do some evaluating of your own. train the
+system."* Read with ONE SAMPLE BEFORE ANY BATCH: one sample per recipe change,
+sequentially — not fifteen beats fired because he said "all". No guard-beat round
+fires until a guard character reference exists and he has seen it.

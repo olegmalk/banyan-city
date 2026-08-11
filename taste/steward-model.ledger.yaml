@@ -9,55 +9,74 @@
 #
 # Ground truth is the founder (R4). This file never overrules him.
 #
-# Rolling hit rate, FIFTH scoring, 2026-08-11 (his ~15:45 local goblin verdict
-# added — `ep2-b15-goblin-simple-0811` scored PARTIAL, see
-# `ep2-b15-goblin-simple-founder-verdict-0811`). Recomputed the same way the
-# third and fourth scorings were: by reading every `outcome:` in this file and
-# grouping by each record's own `predicted_verdict:`, never by adding to the
-# previous paragraph.
-#   14 of 82 records now carry a scoring verdict. 2 hit · 7 partial · 5 miss.
-#   STRICT (hits only)                 2/14 = 14%
-#   partials counted as half           5.5/14 = 39%
+# Rolling hit rate, SIXTH scoring, 2026-08-11 (his ~16:15 local walk through the
+# whole episode-2 picking page — seven beat sentences and one instruction to the
+# steward, recorded as `ep2-b01`..`b05-pickpage-founder-verdict-0811` and
+# `ep2-pickpage-founder-directive-0811`). This is the largest single scoring the
+# file has ever taken: FOURTEEN records went from null to an outcome in one
+# sitting, doubling the scored set. Recomputed the same way the third, fourth and
+# fifth scorings were: by reading every `outcome:` in this file and grouping by
+# each record's own `predicted_verdict:`, never by adding to the previous
+# paragraph.
+#   28 of 88 records now carry a scoring verdict. 8 hit · 14 partial · 6 miss.
+#   STRICT (hits only)                 8/28 = 29%
+#   partials counted as half           15/28 = 54%
 #   PICK class (`predicted_verdict: ratify` or `pick_holds` — b06 r3, b14 r3,
-#   b10 r4, b13 r7, b16 drift, b14 r4, b06 r5)
-#                                      0 hit · 2 partial · 5 miss of 7 — UNCHANGED
-#   REJECT class (`reject_all` — b03 r3, b10 r3, b03 r4, b13 r6, b06 r4, b06 r6)
-#                                      2 hit · 4 partial · 0 miss of 6 — UNCHANGED
-#   NO CLASS, AND IT IS NEW (`ep2-b15-goblin-simple-0811` writes five PREDICATES
-#   and no `predicted_verdict:` line at all, so it joins neither column and the
-#   two class totals above are untouched by this scoring)
-#                                      0 hit · 1 partial · 0 miss of 1
-#   (13 records are `n/a` — verdicts he gave on questions, not on predictions —
-#    and 1 is `not_scoreable_no_prediction_was_written`. Neither counts above.
+#   b10 r4, b13 r7, b16 drift, b14 r4, b06 r5, and NEW: ep2 b01 r9-stage2)
+#                                      0 hit · 2 partial · 6 miss of 8
+#   REJECT class (`reject_all` — ep1 b03 r3, b10 r3, b03 r4, b06 r4, b06 r6,
+#   ep2 b13 r6, and NEW: ep2 b01 r5, b02 r3, b03 r3, b04 r3, b05 r3, b06 r3,
+#   b07 r3, b01 r6, b01 r7, b01 r8, b05 r4, b05 r5, b04-wave-sample-1)
+#                                      8 hit · 11 partial · 0 miss of 19
+#   NO CLASS (`ep2-b15-goblin-simple-0811` writes five PREDICATES and no
+#   `predicted_verdict:` line at all, so it joins neither column)
+#                                      0 hit · 1 partial · 0 miss of 1 — UNCHANGED
+#   (19 records are `n/a` — verdicts he gave on questions, not on predictions,
+#    six of them added by this scoring — and 1 is
+#    `not_scoreable_no_prediction_was_written`. Neither counts above.
 #    One further non-counting `partial` sits on the OBSERVATION record
 #    `ep2-b15-goblin-simple-0811-observed`: that is the steward scoring its own
 #    predicates with no founder input, it has never been in this rate, and it is
 #    named here so nobody later finds it and reads it as a score I hid.)
-# THE ASYMMETRY IS NOW SEVEN AND SIX AND IT IS ONE IDENTIFICATION FROM BREAKING.
-# Every hit is still a rejection; no reject_all has yet been scored a miss; no
-# pick has ever been ratified outright, and the pick column is 0 for 7. But the
-# newest rejection is the weakest one in the column: b06 r6 predicted he would
-# refuse a clean empty sky, he took one, and the label survives only because the
-# frame he took came from the NEXT round's four on the same sheet. If the frame
-# he pointed at was the same-seed twin `b06-r6b-s0` rather than `b06-r7b-s0`,
-# that record is a flat miss and this class goes 2 hit · 3 partial · 1 miss.
-# The reject column has been the model's whole credibility; read it knowing it
-# now rests on which of two near-identical tiles he meant.
+# THE ASYMMETRY DID NOT BREAK — IT WIDENED, AND IT IS NOW THE FILE'S LOUDEST FACT.
+# Every one of the eight hits is a rejection. No `reject_all` has ever been scored
+# a miss, now across nineteen of them. No pick has ever been ratified outright and
+# the pick column is 0 for 8. Thirteen of the fourteen new scorings are rejections
+# that held; the fourteenth is a `pick_holds` that did not. Read plainly: this
+# model can tell when he will refuse a set and has never once told us what he
+# would take. Its useful output is a veto, not a recommendation — which is exactly
+# the shape R4 reserves to him, so the asymmetry is not only a weakness.
+#   The caveat from the fifth scoring still stands and is now a smaller share of
+#   the column: b06 r6's hit label rests on which of two near-identical tiles he
+#   meant (`b06-r6b-s0` vs `b06-r7b-s0`). If it flips, the reject class goes
+#   8 hit · 10 partial · 1 miss of 19 and the "no reject has ever missed"
+#   sentence above is retired.
 #
-# WHAT THE FIFTH SCORING ADDED: the first GOBLIN round in this file with a
-# prediction written under it before he looked — three consecutive goblin
-# verdicts had none (`ep2-goblin-founder-pick-0810`) — and the model still could
-# not price its own recipe in either direction. It predicted the character would
-# come back as four different creatures and he called it the right goblin; it
-# staked the whole round on a FACIAL property on a beat whose staging does not
-# guarantee a face, and three of four frames show the back of his head. Both
-# errors point the same way: this model reasons about the SLOT STRING and does
-# not reason about what the SHOT will contain. No new scored axis comes out of
-# it, because the fix is not an axis — it is a pre-flight: before predicting an
-# attribute, check that the beat's own drafts line guarantees the attribute is
-# visible. The same round is also the file's first evidence that SUBTRACTION is a
-# lever: taking one unratified word out gained species consistency the additive
-# rounds never bought.
+# WHAT THE SIXTH SCORING ADDED, AND IT IS ONE FINDING IN THREE PLACES: THE FAULTS
+# HE NAMES ARE PROPERTIES OF A SET, AND EVERY AXIS IN THIS MODEL SCORES ONE FRAME.
+# The rejection class held 13 for 13 and the OBJECTION text was right in only 6 of
+# them. What the misses have in common is not an axis but a shape:
+#   * "making 2 goblins", "making the goblin compeltely white", "bad character
+#     consistency" (beats 03, 04) — cross-FRAME identity. Four frames can each be
+#     a defensible goblin and the sheet still fail because they are four goblins.
+#     No axis A1-A7 can see this; it is visible only across a set.
+#   * "should probably setup a character for the guards, take your time doing
+#     that" and "we need to setup character consistency even if they only appear
+#     once" (beats 06, 07) — a PRESCRIPTION, not a fault. Beat 07 he even opened
+#     with "mot of them look good", so the predicted objection was wrong and the
+#     verdict was still no. He is not asking for a better round; he is asking for
+#     a reference to exist first. `ep2-pickpage-founder-directive-0811` carries it.
+#   * "all of them have too many leafs" (beat 01) — a COUNT that had been drawn
+#     wrong and written down four wordings deep in shots.md, and never entered a
+#     single beat-01 prediction across r5, r6, r7, r8 and r9. The model reasons
+#     from the round's own new variable and does not read the beat's standing
+#     defect list. That is why the one pick_holds in this batch is a miss.
+# The fifth scoring's pre-flight rule (before predicting an attribute, check the
+# beat's drafts line guarantees it is visible) is unchanged and joined by a second:
+# before predicting a SET, name the faults the beat already has on the record — a
+# prediction that prices only this round's variable will keep scoring partial while
+# he rejects on something we wrote down last week. His own instruction closes it:
+# "do some evaluating of your own. train the system."
 #
 # WHAT THE FOURTH SCORING ADDED: the first verdict where he supplied the
 # COMPOSITION and the model still missed the fault — five rounds of beat-6
@@ -133,11 +152,21 @@
     own measurements — hairline stem, apex 25% from the top, ~36% of frame
     height, taller in frame than the 32% he threw out. Round 5's only lever was
     the word `sturdy`, and the drawing did not move.
-  founder_verdict: null
-  founder_verdict_date: null
-  outcome: null
-  miss_axis: null
-  model_action: null
+  founder_verdict: |-
+    "none of them have figs and all of them have too many leafs"
+  founder_verdict_date: 2026-08-11
+  outcome: partial
+  miss_axis: >-
+    The verdict class held — no r5 frame was taken — but neither predicted
+    fault (A7 height, A3 person-in-field) is a fault he named. Both faults
+    he DID name (fig in 0 of 4, leaf count 4-6) were documented in shots.md
+    before this record was written and neither entered the prediction.
+  model_action: none_here_see_ep2-b01-pickpage-founder-verdict-0811
+  notes: >-
+    His sentence of 2026-08-11 ~16:15 rules on the whole beat-01 picking
+    sheet (rounds 5-9 plus the fig-inpaint frames) at once, not on this set
+    alone; scored partial because the rejection held while the named
+    objection did not.
 
 - id: ep1-b03-r3-provisional
   date: 2026-08-09
@@ -515,11 +544,16 @@
   predicted_objection: "A1/A5 — no sapling in any of them, and it is a flat cartoon, not our show"
   confidence: 0.90
   reasoning: "Closest of the four is s3 (the dive reads). No sapling anywhere in the set."
-  founder_verdict: null
-  founder_verdict_date: null
-  outcome: null
+  founder_verdict: |-
+    "none of them, are you sure you are using the right ai image generator? this look quite bad"
+  founder_verdict_date: 2026-08-11
+  outcome: hit
   miss_axis: null
-  model_action: null
+  model_action: none_here_see_ep2-b02-pickpage-founder-verdict-0811
+  notes: >-
+    Scored hit: reject_all at 0.90 held and his "this look quite bad" /
+    wrong-generator question is the predicted "a flat cartoon, not our show"
+    in his words. He did not mention the missing sapling.
 
 - id: ep2-b03-r3-provisional
   date: 2026-08-09
@@ -542,11 +576,17 @@
   predicted_objection: "A2 — they are indoors with computer monitors behind them, and there is no tree to hide behind"
   confidence: 0.92
   reasoning: "Closest of the four is s1. The size-mismatch gag needs the sapling and a morning field; the set has neither."
-  founder_verdict: null
-  founder_verdict_date: null
-  outcome: null
+  founder_verdict: |-
+    "ai is going too crazy, making the goblin in a house, making the goblin compeltely white, making 2 goblins, and other weird stuff"
+  founder_verdict_date: 2026-08-11
+  outcome: hit
   miss_axis: null
-  model_action: null
+  model_action: none_here_see_ep2-b03-pickpage-founder-verdict-0811
+  notes: >-
+    Scored hit: reject_all at 0.92 held and "making the goblin in a house"
+    is the predicted indoors fault. His other two faults — a completely
+    white goblin, TWO goblins — are cross-frame character-consistency faults
+    no axis in this model covers; they are the sixth scoring's finding.
 
 - id: ep2-b04-r3-provisional
   date: 2026-08-09
@@ -574,11 +614,17 @@
     human boy and s2 a blue elephant, so the set is the "twenty different shows"
     complaint in miniature. The model predicts he rejects rather than picks out
     of it. If he takes one, it is s3; that is the flip recorded here.
-  founder_verdict: null
-  founder_verdict_date: null
-  outcome: null
+  founder_verdict: |-
+    "these close ups are not really good, but they are the old versions after all.. basically, bad character consistency, makign the goblin look too complicated and ending up making t bad"
+  founder_verdict_date: 2026-08-11
+  outcome: hit
   miss_axis: null
-  model_action: null
+  model_action: none_here_see_ep2-b04-pickpage-founder-verdict-0811
+  notes: >-
+    Scored hit: reject_all held and his "bad character consistency" is this
+    record's "four different creatures across four seeds" in his words. He
+    waved the age of the set ("they are the old versions after all") without
+    excusing it.
 
 - id: ep2-b05-r3-provisional
   date: 2026-08-09
@@ -601,11 +647,15 @@
   predicted_objection: "A2/A5 — it is a dark forest and they look dangerous; they are supposed to be round and harmless in a morning field"
   confidence: 0.90
   reasoning: "Closest of the four is s3 (two figures, arriving). Every frame is a dark-fantasy soldier in trees."
-  founder_verdict: null
-  founder_verdict_date: null
-  outcome: null
-  miss_axis: null
-  model_action: null
+  founder_verdict: |-
+    "almost all look like they are in some snowy forest, otherwise its actually not bad"
+  founder_verdict_date: 2026-08-11
+  outcome: partial
+  miss_axis: >-
+    Rejection held (nothing taken) but the environment he named is a SNOWY
+    forest, not the predicted dark-and-dangerous one, and "otherwise its
+    actually not bad" is a softness a 0.90 flat rejection did not price.
+  model_action: none_here_see_ep2-b05-pickpage-founder-verdict-0811
 
 - id: ep2-b06-r3-provisional
   date: 2026-08-09
@@ -628,11 +678,16 @@
   predicted_objection: "A5 — serious armoured men at night; the clipboard is the joke and nothing here is funny"
   confidence: 0.88
   reasoning: "Closest of the four is s3 — the bark board and the tracing finger both read. Wrong genre, wrong time of day."
-  founder_verdict: null
-  founder_verdict_date: null
-  outcome: null
-  miss_axis: null
-  model_action: null
+  founder_verdict: |-
+    "none of them.. should probably setup a character for the guards, take your time doing that"
+  founder_verdict_date: 2026-08-11
+  outcome: partial
+  miss_axis: >-
+    Rejection held ("none of them") but the operative content of his verdict
+    is a prescription no prediction contains: the guards need a set-up
+    CHARACTER before another round — and they have never had a character
+    reference at all. The predicted genre/night objection went unconfirmed.
+  model_action: guard_character_reference_before_any_regeneration_his_instruction_see_ep2-pickpage-founder-directive-0811
 
 - id: ep2-b07-r3-provisional
   date: 2026-08-09
@@ -659,11 +714,19 @@
     light, the pointing gesture legible in all four. It still fails because the
     guard is a heroic bishonen knight in polished plate, which inverts the joke
     and matches none of its neighbours. Closest is s1.
-  founder_verdict: null
-  founder_verdict_date: null
-  outcome: null
-  miss_axis: null
-  model_action: null
+  founder_verdict: |-
+    "mot of them look good but as i said in beat 06, we need to setup character consistency even if they only appear once. i mean, maybe dont waste too much time on it but it will be needed so we dont have confusion"
+  founder_verdict_date: 2026-08-11
+  outcome: partial
+  miss_axis: >-
+    The record predicted rejection FOR THE GUARD'S REGISTER ("a hero from
+    another show") and he instead opened with "mot of them look good" — the
+    named fault did not land. No frame was taken and the blanket "change
+    pretty much all of them" covers the beat, which is the only sense in
+    which reject_all held. What he asked for — character consistency across
+    frames "even if they only appear once" — is a cross-FRAME property;
+    every axis this model has scores frames one at a time.
+  model_action: guard_character_reference_before_any_regeneration_see_ep2-pickpage-founder-directive-0811
 
 - id: ep2-b08-r3-provisional
   date: 2026-08-09
@@ -1195,11 +1258,18 @@
     tall as the grass around it — which is a different claim from `rising well
     above the grass`, the clause this round took from b15. That clause is
     probably the thing making it tall.
-  founder_verdict: null
-  founder_verdict_date: null
-  outcome: null
+  founder_verdict: |-
+    "none of them have figs and all of them have too many leafs"
+  founder_verdict_date: 2026-08-11
+  outcome: hit
   miss_axis: null
-  model_action: null
+  model_action: none_here_see_ep2-b01-pickpage-founder-verdict-0811
+  notes: >-
+    Scored hit: reject_all held and half his sentence — the missing fig — is
+    this record's own predicted objection verbatim ("the fig is still not
+    there"). The other half, the leaf count, was in NO b01 prediction, only
+    in shots.md's four-wording table; that gap is the sixth scoring's
+    finding, not this record's.
 
 - id: ep1-b03-r4-sample
   date: 2026-08-09
@@ -2695,11 +2765,14 @@
     line. It is not higher than 0.88 only because s3 is a competent drawing and
     he has occasionally answered a rejected set with a narrower instruction
     instead of a refusal, which would be the useful outcome.
-  founder_verdict: null
-  founder_verdict_date: null
-  outcome: null
-  miss_axis: null
-  model_action: null
+  founder_verdict: |-
+    "none of them have figs and all of them have too many leafs"
+  founder_verdict_date: 2026-08-11
+  outcome: partial
+  miss_axis: >-
+    Rejection held; objection missed. Predicted height/person/white-column,
+    he named figs and leaf count.
+  model_action: none_here_see_ep2-b01-pickpage-founder-verdict-0811
   notes: >-
     NEGATIVE HELD BYTE-IDENTICAL TO r6 AS A PRECONDITION, which is what makes
     this a one-variable round rather than a claim to be one. `render_b01r7.py`
@@ -3081,11 +3154,15 @@
     and seeds only — no favourite, no ordering, no "closest to". No pick is
     offered: every candidate is vetoed on at least two axes. Nothing was
     published, posted or spent, and nothing has gone on his screen.
-  founder_verdict: null
-  founder_verdict_date: null
-  outcome: null
-  miss_axis: null
-  model_action: null
+  founder_verdict: |-
+    "almost all look like they are in some snowy forest, otherwise its actually not bad"
+  founder_verdict_date: 2026-08-11
+  outcome: partial
+  miss_axis: >-
+    Rejection held; the predicted night-knights/glowing-visor objection went
+    unconfirmed — his one sentence on the beat-5 sheet names snow and
+    nothing else.
+  model_action: none_here_see_ep2-b05-pickpage-founder-verdict-0811
 - id: ep2-b01-r8-sample
   date: 2026-08-10
   subject: "node 002b beat 01 — cold open, round 8, THE ARCHITECTURE ROUND: the height instruction leaves the prompt and becomes the init image (img2img from the founder's b15 plate), with a text2img control arm on the same seeds"
@@ -3198,11 +3275,12 @@
     checkpoint. A third option this round creates: img2img from a beat-01
     sunrise frame instead, which is currently inadmissible because G1 requires
     an approved init and no beat-01 frame is approved.
-  founder_verdict: null
-  founder_verdict_date: null
-  outcome: null
+  founder_verdict: |-
+    "none of them have figs and all of them have too many leafs"
+  founder_verdict_date: 2026-08-11
+  outcome: hit
   miss_axis: null
-  model_action: null
+  model_action: none_here_see_ep2-b01-pickpage-founder-verdict-0811
   notes: >-
     THE MEASUREMENT COULD NOT HAVE BEEN MADE ON THE MAC, AND THAT IS A FINDING
     THE NEXT LANE NEEDS. This round was briefed to run Mac-side on the grounds
@@ -3254,6 +3332,9 @@
     favourite, no ordering by preference, and its footer says the rows are the
     parameter axis. Nothing fires off this beat, nothing is published, and
     nothing was put on the founder's screen.
+  notes_2026_08_11: >-
+    Scored hit: reject_all held and "still no fig" was predicted here. His
+    leaf-count half was not.
 
 - id: ep2-b05-r5-sample
   date: 2026-08-09
@@ -3405,11 +3486,15 @@
     pick is offered: every candidate is vetoed on at least three axes. 37 GPU
     seconds plus 5s load, $0. Nothing was published, posted or spent, and
     nothing has gone on his screen.
-  founder_verdict: null
-  founder_verdict_date: null
-  outcome: null
-  miss_axis: null
-  model_action: null
+  founder_verdict: |-
+    "almost all look like they are in some snowy forest, otherwise its actually not bad"
+  founder_verdict_date: 2026-08-11
+  outcome: partial
+  miss_axis: >-
+    Rejection held; his sentence on the combined sheet ("almost all... snowy
+    forest, otherwise its actually not bad") neither confirms nor denies
+    this record's shoes-and-suitcase objection.
+  model_action: none_here_see_ep2-b05-pickpage-founder-verdict-0811
 - id: ep1-b10-r5-provisional
   date: 2026-08-09
   subject: "node 001 beat 10 - sense, round 5, the person-binding negatives
@@ -4327,11 +4412,18 @@
     that; a face that works at this crop says nothing about the goblin at full
     figure in beat 02's sprint or beside a guard in beat 08. It also does not
     re-open beat 13, whose r9 lane owns it, and it scores none of r7, r8 or r9.
-  founder_verdict: null
-  founder_verdict_date: null
-  outcome: null
+  founder_verdict: |-
+    "these close ups are not really good, but they are the old versions after all.. basically, bad character consistency, makign the goblin look too complicated and ending up making t bad"
+  founder_verdict_date: 2026-08-11
+  outcome: hit
   miss_axis: null
-  model_action: null
+  model_action: none_here_see_ep2-b04-pickpage-founder-verdict-0811
+  notes: >-
+    Scored hit: reject_all held and his "makign the goblin look too
+    complicated and ending up making t bad" is this record's predicted
+    objection — the detail-demanding style anchor arguing with his "nothing
+    complex" — in his words. The steward had already turned these down
+    2026-08-10; his sentence confirms rather than creates the rejection.
 
 - id: ep2-b01-fig-route-0810
   date: 2026-08-10
@@ -4522,11 +4614,20 @@
     entirely. If he rejects the whole sweep including d60-s0, then the Stage 1
     approval was of a single image and not of the approach, and depth-conditioning
     is not settled by this round at all.
-  founder_verdict: null
-  founder_verdict_date: null
-  outcome: null
-  miss_axis: null
-  model_action: null
+  founder_verdict: |-
+    "none of them have figs and all of them have too many leafs"
+  founder_verdict_date: 2026-08-11
+  outcome: miss
+  miss_axis: >-
+    pick_holds did not hold. The record bet his 2026-08-10 "well.. the beat
+    01 frame looks good" would survive as a standing pick and priced only
+    the sweep's NEW variable (a washed-out d80 arm, the s3 light shaft). The
+    two faults he rejected the whole beat on — fig in 0 of 12, recorded in
+    this file, and the leaf count, four wordings deep in shots.md — were
+    both on the record before the prediction and it weighed neither. Same
+    shape as the b15 goblin finding: scoring the recipe's variable and not
+    the shot's standing defects.
+  model_action: no_more_parameter_sweeps_on_b01_until_the_two_standing_defects_are_addressed_see_ep2-pickpage-founder-directive-0811
 
 # WRITTEN AFTER OPENING ALL TWELVE. Axis A of B01-R9-PLAN §8, which is a content
 # question and has no tool in this repo. Facts about images, not a pick and not a
@@ -6792,3 +6893,267 @@
     slot is CLOSED at `green skin` and is not a variable to sweep again; the next
     goblin-adjacent sample must vary the STAGING line, and it must guarantee the
     face and the sapling before it is put in front of him.
+
+- id: ep2-b02-pickpage-founder-verdict-0811
+  date: 2026-08-11
+  subject: "node 002b beat 02 the-sprint — the founder's verdict on the beat-02 picking sheet, ~16:15 local"
+  founder_verdict: |-
+    "none of them, are you sure you are using the right ai image generator? this look quite bad"
+  founder_verdict_date: 2026-08-11
+  outcome: n/a
+  miss_axis: >-
+    Not counted in the rolling rate — this record carries his words; the scoring
+    lands on `ep2-b02-r3-provisional`, which is scored HIT there rather than
+    twice here.
+  what_this_rules_on: >-
+    The beat-02 rows of the episode-2 picking page as it stood at ~16:15, which
+    is the r3 sheet. It does NOT rule on `ep2-b02-goblin-staged-0811` (four
+    frames, drawn ~16:2x, no goblin in s0/s3 and a stick figure in s2) and it
+    does NOT rule on `ep2-b02-goblin-medium-0811`, which was still queued when
+    he spoke. Neither had been put in front of him.
+  what_it_authorises: >-
+    A regeneration of beat 02, which his overall sentence asks for
+    (`ep2-pickpage-founder-directive-0811`). Nothing else. It picks no frame,
+    promotes nothing, and does not clear the twelve gated staged specs — their
+    gate names a human look at the beat-02 medium sample, and that look has not
+    happened.
+  the_question_in_it_is_a_real_question_and_it_is_not_answered_here: >-
+    "are you sure you are using the right ai image generator" is the second time
+    he has questioned the engine rather than the prompt. The engine is
+    cagliostrolab/animagine-xl-3.1 on the box, $0, and it is the same engine that
+    drew the goblin he ratified at ~15:45 the same afternoon — so the answer
+    cannot be a flat yes or a flat no and is not the steward's to give alone. It
+    goes back to him as a question, with the two sheets side by side.
+  model_action: >-
+    scoring_recorded_on_ep2-b02-r3-provisional. No axis change: the predicted
+    objection ("a flat cartoon, not our show") is his "this look quite bad" in
+    different words, and the axes already carry it.
+
+- id: ep2-b03-pickpage-founder-verdict-0811
+  date: 2026-08-11
+  subject: "node 002b beat 03 bad-cover — the founder's verdict on the beat-03 picking sheet, ~16:15 local"
+  founder_verdict: |-
+    "ai is going too crazy, making the goblin in a house, making the goblin compeltely white, making 2 goblins, and other weird stuff"
+  founder_verdict_date: 2026-08-11
+  outcome: n/a
+  miss_axis: >-
+    Not counted in the rolling rate — the scoring lands on
+    `ep2-b03-r3-provisional`, HIT there.
+  what_this_rules_on: >-
+    The beat-03 r3 rows of the picking page. `ep2-b03-goblin-staged-0811` is
+    staged and gated and was not in front of him.
+  three_faults_and_only_one_of_them_has_an_axis: >-
+    - "in a house" is A2, setting, and was predicted verbatim ("they are indoors
+      with computer monitors behind them").
+    - "compeltely white" and "2 goblins" are not axis faults at all. They are
+      cross-FRAME identity and COUNT failures: each frame can be an arguable
+      goblin and the sheet still fails because the four disagree with each other.
+      Every axis A1-A7 scores a single frame.
+    This is the sixth scoring's finding and it is recorded here rather than
+    invented into a new axis, because the fix is a reference and a count check,
+    not a scoring column.
+  what_it_authorises: >-
+    Regeneration of beat 03 under his overall instruction. It does not clear the
+    beat-03 staged spec's gate and does not pick anything.
+  model_action: >-
+    scoring_recorded_on_ep2-b03-r3-provisional. Standing consequence: a beat-03
+    round is not worth firing until the goblin has ONE settled look across seeds
+    — which is what his beat-04 sentence and the guard directive both ask for.
+
+- id: ep2-b04-pickpage-founder-verdict-0811
+  date: 2026-08-11
+  subject: "node 002b beat 04 the-footnote — the founder's verdict on the beat-04 close-up sheet, ~16:15 local"
+  founder_verdict: |-
+    "these close ups are not really good, but they are the old versions after all.. basically, bad character consistency, makign the goblin look too complicated and ending up making t bad"
+  founder_verdict_date: 2026-08-11
+  outcome: n/a
+  miss_axis: >-
+    Not counted in the rolling rate — the scoring lands on
+    `ep2-b04-r3-provisional` and `ep2-b04-wave-sample-1`, HIT on both.
+  what_this_rules_on: >-
+    The beat-04 rows of the picking page: the eight-spec IP-Adapter set of
+    2026-08-10 (`ep2-b04-goblin-ipa*`) and the 2026-08-10 tags-only frames drawn
+    with `--goblin-def "green skin, tusks"`. He said so himself — "they are the
+    old versions after all" — and he did not excuse them on that ground.
+  he_named_the_route_as_the_fault_not_the_beat: >-
+    "bad character consistency" plus "too complicated" is a verdict on the
+    RECIPE. Three hours earlier, on the same afternoon, he ratified the opposite
+    recipe on beat 15: tags only, slot at `green skin`, one goblin held four for
+    four ("yeah, that looks like the right goblin",
+    `ep2-b15-goblin-simple-founder-verdict-0811`). The two sentences read
+    together are one instruction: stop conditioning on adapters and references,
+    and stop adding attributes.
+  what_it_authorises_and_what_ran_on_it: >-
+    Regeneration of beat 04 on the ratified recipe. One sample was queued the
+    same hour — `ep2-b04-goblin-close-0811`, four seeds, $0, tags only, slot
+    `green skin`, beat 04's own `authored` draft unchanged (it already states
+    `his face filling the frame` and `close-up`, which is where today's
+    shot-size fix was copied FROM, so nothing was added to the prompt). The one
+    variable against the 2026-08-10 render is the removal of `tusks`. It picks
+    nothing, publishes nothing and clears no gate.
+  model_action: >-
+    scoring_recorded_on_both_b04_records. Standing consequence: the IP-Adapter
+    route on beat 04 is closed by a founder sentence, not merely unratified —
+    eight specs on this beat used it and he has now called its output bad twice.
+
+- id: ep2-b05-pickpage-founder-verdict-0811
+  date: 2026-08-11
+  subject: "node 002b beat 05 the-patrol — the founder's verdict on the beat-05 picking sheet, ~16:15 local"
+  founder_verdict: |-
+    "almost all look like they are in some snowy forest, otherwise its actually not bad"
+  founder_verdict_date: 2026-08-11
+  outcome: n/a
+  miss_axis: >-
+    Not counted in the rolling rate — the scoring lands on
+    `ep2-b05-r3-provisional`, `ep2-b05-r4-sample` and `ep2-b05-r5-sample`,
+    PARTIAL on all three.
+  what_this_rules_on: >-
+    The beat-05 rows of the picking page — r3, r4 and r5 together.
+  it_is_the_softest_verdict_of_the_seven_and_that_is_the_information: >-
+    "otherwise its actually not bad" is the only warm clause in the whole walk
+    through the episode, and it sits on a beat three separate rounds had rejected
+    on three separate axes (dark-fantasy soldiers, night, shoes and a suitcase).
+    Read narrowly: he names ONE fault, the environment, and declines to name
+    others. Read as this file must read it — silence on an element is not
+    approval of it (the rule written after `b06-r5-s2`) — the guards' design is
+    NOT ratified here, and his own beat-06 sentence eleven lines later says
+    outright that the guards have no character yet.
+  what_it_authorises: >-
+    Nothing to fire. A beat-05 round is now downstream of the guard reference his
+    beat-06 sentence asks for (`ep2-pickpage-founder-directive-0811`); firing one
+    before that reference exists spends a round on the same undefined guards in a
+    different climate. The environment fault is a one-term fix and it is not
+    worth a round on its own.
+  model_action: >-
+    scoring_recorded_on_the_three_b05_records. Axis note: `snowy forest` is not
+    dark, not night and not dangerous — the three predictions each priced a
+    menace the frames apparently did not have. The model over-reads menace in
+    armour.
+
+- id: ep2-pickpage-founder-directive-0811
+  date: 2026-08-11
+  subject: "the founder's instruction at the end of the episode-2 picking walk, ~16:15 local — the guards need a character, and the steward is told to evaluate and train"
+  founder_verdict: |-
+    beat 06: "none of them.. should probably setup a character for the guards, take your time doing that"
+    beat 07: "mot of them look good but as i said in beat 06, we need to setup character consistency even if they only appear once. i mean, maybe dont waste too much time on it but it will be needed so we dont have confusion"
+    overall: "i looked at all the beats and you have to change pretty much all of them, do some regeneration, and do some evaluating of your own. train the system."
+  founder_verdict_date: 2026-08-11
+  outcome: n/a
+  miss_axis: >-
+    Not counted in the rolling rate — the beat scorings live on
+    `ep2-b06-r3-provisional` and `ep2-b07-r3-provisional` (PARTIAL on both) and
+    on the eleven other records this walk scored.
+  what_he_asked_for_in_order: >-
+    1. A GUARD CHARACTER, set up before the next guard round. "take your time
+       doing that" is a licence to spend time, which is the opposite of the usual
+       constraint and should be read as one. The guards have never had a
+       reference of any kind; six beats of this wave (05, 06, 07, 09, 10, 11) are
+       guard beats.
+    2. CHARACTER CONSISTENCY GENERALLY, "even if they only appear once", bounded
+       in the same breath — "maybe dont waste too much time on it". So: a cheap
+       reference per recurring body, not an identity programme.
+    3. REGENERATION OF PRETTY MUCH EVERY BEAT. Seven beats were shown; his word
+       is "all".
+    4. EVALUATION BY THE STEWARD, and "train the system". This is an instruction
+       to this file and to `taste/steward-model.v1.md`: score, find the pattern,
+       and change how the next prediction is made. The sixth scoring is that,
+       and its finding is written in this file's header.
+  what_this_does_NOT_authorise: >-
+    It is not a batch licence. "change pretty much all of them" plus ONE SAMPLE
+    BEFORE ANY BATCH (CLAUDE.md, founder 2026-08-03) means one sample per recipe
+    change, sequentially — not fifteen beats fired because he said "all". It
+    picks no frame, ratifies no design, promotes nothing to canon, writes no leaf,
+    voices nothing and spends nothing. It does not clear the fourteen
+    `ep2-b*-goblin-wave1` gates or the twelve staged gates: those wait on a human
+    look, and he was walking a picking page, not clearing gates.
+  what_ran_on_it_the_same_hour: >-
+    Two samples, sequentially, both $0 and both on beats whose verdict names a
+    fixable cause: `ep2-b04-goblin-close-0811` (the ratified goblin recipe on the
+    close-up beat) and the beat-01 round below. The guard reference is a separate
+    lane and is deliberately NOT a render: it is a character definition, and
+    definitions are cheap and reversible where rounds are not.
+  model_action: >-
+    Standing consequences, all four testable: (a) no guard-beat round fires until
+    a guard character reference exists and he has seen it; (b) every future
+    prediction on a beat must list that beat's STANDING defects from shots.md and
+    this file before it prices the round's new variable — the leaf-count miss on
+    beat 01 is what this fixes; (c) cross-frame identity and count are recorded
+    as SET properties no A-axis can score, and a sheet is checked for them by eye
+    before it goes to him; (d) the model's output is a veto and not a
+    recommendation, which the 0-for-8 pick column now says plainly.
+
+- id: ep2-b01-pickpage-founder-verdict-0811
+  date: 2026-08-11
+  subject: "node 002b beat 01 cold-open — the founder's verdict on the beat-01 picking sheet, ~16:15 local, and what the two counts in it are actually made of"
+  founder_verdict: |-
+    "none of them have figs and all of them have too many leafs"
+  founder_verdict_date: 2026-08-11
+  outcome: n/a
+  miss_axis: >-
+    Not counted in the rolling rate — this record carries his words. The scoring
+    lands on five beat-01 records: `ep2-b01-r5-provisional` (PARTIAL),
+    `ep2-b01-r6-sample` (HIT), `ep2-b01-r7-sample` (PARTIAL),
+    `ep2-b01-r8-sample` (HIT) and `ep2-b01-r9-stage2-sample` (MISS).
+  what_this_rules_on: >-
+    The whole beat-01 section of the picking page as it stood at ~16:15 — rounds
+    5 through 9 and the fig frames together — not one round. It also reverses his
+    own 2026-08-10 sentence on the r9 frame, "well.. the beat 01 frame looks
+    good", which is what makes `ep2-b01-r9-stage2-sample` a `pick_holds` miss.
+  both_faults_were_on_the_record_before_the_predictions_were_written: >-
+    This is the sixth scoring's sharpest finding and it belongs on this beat.
+    Neither fault is new information:
+    - THE FIG was in 0 of 8 after round 3 and 0 of 12 after round 9, and
+      `ep2-b01-r6-sample` predicted "the fig is still not there" in those words.
+    - THE LEAF COUNT is documented FOUR WORDINGS DEEP in shots.md, in a table
+      written 2026-08-06: `a single pair of oversized leaves` drew 4-6 leaves in
+      8 of 8; `exactly two oversized cotyledon leaves` drew 4-6 in 4 of 4;
+      `sprout with only two oversized leaves` got 3 at best in 1 of 4 and lost
+      the composition in 3 of 4. That section then says outright: "Do not spend a
+      fifth round on synonyms for 'two': treat the two-leaf character as
+      something this model will not draw on request... The levers that are left
+      are all outside the prompt."
+    Five consecutive predictions on this beat priced each round's new variable —
+    height, an init image, a strength, a depth scale — and not one of them listed
+    the two standing defects. He rejected on the standing defects.
+  the_fig_inpaint_status_checked_before_spending_a_round: >-
+    ASKED AND ANSWERED, because a round should not be spent on a solved fault.
+    `review/b01-fig-inpaint/b01-fig-inpaint-s1.png` (2026-08-10, sidecar
+    `approved: false`, `provisional`) was ONE SAMPLE on his own word `inpaint`
+    (`ep2-b01-fig-route-0810`), and it has never been applied to anything since:
+    no later beat-01 round takes it as an init, no `stills/` file adopts it, no
+    leaf cites it. Looked at by eye rather than inferred: it carries ONE small
+    round green fruit on the stem, legible and correctly placed — which is the
+    thing twelve prompt-drawn candidates could not produce. So the FIG half of
+    his sentence has a working mechanism and it is his own; what it does not have
+    is application.
+    IT DOES NOT SOLVE THE LEAF HALF, AND THE REASON IS THE PLATE. The only
+    G1-legal init for beat 01 is 001's `15-something-s-coming.png`, the sole
+    founder-approved sapling-in-grass frame in the tree, and that plate has THREE
+    leaves — measured on the 832x1216 file by thresholding luminance in the plant
+    region: bright blade edges at x[445,496] y[658,672], x[299,366] y[708,726],
+    and a fainter run from (365,628) to (395,656). The script wants two. So the
+    inpaint route inherits his leaf fault from the approved plate itself, and
+    "all of them have too many leafs" is true of the plate every legal route
+    starts from.
+  what_ran_on_it: >-
+    `ep2-b01-leafcount-inpaint-0811`, queued the same hour: one round, four seeds,
+    $0, the same inpaint mechanism with the ellipse moved from the fruit to the
+    third leaf and filled with the grass around it. The model is asked to draw
+    grass and to count nothing — which is the point, because counting is the one
+    thing four wordings proved it will not do, and a mask is what made the fruit
+    work. NOT the fifth wording round: that experiment has been run four times
+    and shots.md forbids a fifth in its own words.
+  the_open_question_that_is_his_and_not_the_stewards: >-
+    Even a perfect two-leaf, one-fig composite is 001's DUSK close-up in tall
+    grass with a light shaft. Beat 01 as written is a SUNRISE field with the whole
+    40cm plant in frame. No beat-01 still has ever been approved, so there is no
+    legal sunrise init and this is not a thing another round can fix. Two frames
+    go to him with one question — is a fixed dusk plate acceptable for the cold
+    open, or does beat 01 need a plate he approves first? Asked, not assumed, and
+    not answered here.
+  model_action: >-
+    scoring_recorded_on_the_five_b01_records. Standing consequence, and it is the
+    header's second pre-flight rule: no beat-01 prediction may be written again
+    without listing that beat's standing defects — the fig and the leaf count —
+    before it prices the round's variable. The general form is in
+    `ep2-pickpage-founder-directive-0811`.
