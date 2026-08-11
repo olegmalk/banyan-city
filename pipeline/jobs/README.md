@@ -62,6 +62,29 @@ requires a taste verdict to *run*. Jobs whose *inputs* are a taste verdict carry
 `gate: founder` and sit here as prepared work, not as runnable work. Provisional
 picks are labelled `steward-provisional` wherever they appear.
 
+## How a gate gets cleared, exactly
+
+`pipeline/gate_sentinel.py` watches this directory and enqueues a spec the moment
+its gate is cleared, so the card does not sit idle between a decision and someone
+noticing it. It reads one fact and infers nothing: **a committed change deleted the
+top-level `gate:`/`gate_ref:` key from a spec that previously carried it, at the
+same path.** It never concludes that a gate is *satisfied* — that is a taste call
+and it belongs to the founder.
+
+Which makes the clearing act a specific edit:
+
+- **Delete the key, in place, and commit.** That is the whole trigger.
+- Commenting it out (`# gate: founder`) does NOT clear it. yaml stops seeing the
+  key, so `box_enqueue.py` would take the job, but nothing was deleted — the
+  sentinel refuses loudly rather than fire on an ambiguous edit.
+- Emptying it (`gate:` with no value) does not clear it either, for the same
+  reason: `box_enqueue` reads it as falsy, the key is still in the file.
+- **A copy at a new path never fires**, however ungated. A spec with no history
+  cannot have had anything cleared, which is what keeps a freshly staged job from
+  enqueueing itself. This is what the `-run.yaml` pattern does, and it is why that
+  pattern still needs a human to enqueue: to hand a job to the sentinel, clear the
+  original in place instead of copying it.
+
 ## Fire order
 
 `index.yaml` lists every job id in dependency order with its blocker, if it has one.
