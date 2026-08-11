@@ -614,6 +614,85 @@ def br_farm_attempts(text):
     return farm_worker.heartbeat_attempts(text)
 
 
+def test_the_sidecar_travels_with_the_clip():
+    """A render's provenance record is an artifact, whether the spec says so or not.
+
+    THE REAL ONE (2026-08-10). ltx_i2v writes `<clip>.mp4.meta.yaml` beside every
+    clip it exports, and the job specs name only the mp4 -- 116 of the 117 in
+    pipeline/jobs/. So "collect the artifacts" collected the clip alone, five LTX
+    clips reached the tree carrying no provenance, and they were force-added.
+    build_site.publishable() read the silence as permission and would have put
+    them on banyan.city. Both ends are fixed; this is the end that stops the
+    record being left behind at all.
+    """
+    with TempRoot() as root:
+        clip = os.path.join(root, "07-beat.mp4")
+        side = clip + ".meta.yaml"
+        enqueue(root, job("j-side", [
+            py_step("render", "open(%r,'w').write('mp4'); open(%r,'w').write('model: x')"
+                    % (clip, side)),
+        ], artifacts=[clip]))
+        drain(root)
+        with open(os.path.join(root, "done", "j-side.json"), encoding="utf-8") as fh:
+            rec = json.load(fh)
+        check(side in rec["artifacts_present"],
+              "sidecar: the record beside the clip is collected with it")
+        eq(rec["unprovenanced"], [], "sidecar: nothing reported missing")
+
+    # the stem-named convention (render_t3, intake_take) counts as much
+    with TempRoot() as root:
+        clip = os.path.join(root, "08-beat.mp4")
+        side = os.path.join(root, "08-beat.meta.yaml")
+        enqueue(root, job("j-stem", [
+            py_step("render", "open(%r,'w').write('mp4'); open(%r,'w').write('model: x')"
+                    % (clip, side)),
+        ], artifacts=[clip]))
+        drain(root)
+        with open(os.path.join(root, "done", "j-stem.json"), encoding="utf-8") as fh:
+            rec = json.load(fh)
+        check(side in rec["artifacts_present"], "sidecar: stem-named record also travels")
+
+    # and the case that started it: a clip with no record at all
+    with TempRoot() as root:
+        clip = os.path.join(root, "09-beat.mp4")
+        enqueue(root, job("j-bare", [
+            py_step("render", "open(%r,'w').write('mp4')" % clip),
+        ], artifacts=[clip]))
+        drain(root)
+        with open(os.path.join(root, "done", "j-bare.json"), encoding="utf-8") as fh:
+            rec = json.load(fh)
+        eq(rec["rc"], 0, "sidecar: a finished render is not failed over a missing yaml")
+        eq(rec["unprovenanced"], [clip], "sidecar: the absence is recorded, by name")
+        beat = [b for b in beats(root) if b["event"] == "job_done"][0]
+        eq(beat["unprovenanced"], [clip],
+           "sidecar: and it leaves the box on the heartbeat, not only in the log")
+        with open(os.path.join(root, "done", "j-bare.log"), encoding="utf-8") as fh:
+            log = fh.read()
+        check("NO PROVENANCE RECORD" in log, "sidecar: the log says so out loud")
+
+
+def test_the_done_heartbeat_names_a_clip_that_arrived_with_no_record():
+    """Off-box visibility: a lane reading the branch must see it without the log."""
+    seen = []
+
+    class FakeCourier(br.Courier):
+        def __init__(self):
+            pass
+
+        def mark(self, line, message, files=None):
+            seen.append(line)
+
+    c = FakeCourier()
+    c.emit({"event": "job_done", "job": "j1", "artifacts": ["a.mp4"],
+            "unprovenanced": [r"C:\banyan-farm\v34-r2\07-beat.mp4"]})
+    c.emit({"event": "job_done", "job": "j2", "artifacts": ["a.mp4", "a.mp4.meta.yaml"]})
+    check("NO-SIDECAR=1" in seen[0] and "07-beat.mp4" in seen[0],
+          "heartbeat: names the clip that has no record")
+    check("NO-SIDECAR" not in seen[1], "heartbeat: silent when every clip has one")
+    _done, attempts = br_farm_attempts("\n".join(seen))
+    eq(attempts, {}, "heartbeat: the note is not parsed as another task's mark")
+
+
 def test_queue_creates_its_layout():
     with TempRoot() as root:
         sub = os.path.join(root, "fresh")

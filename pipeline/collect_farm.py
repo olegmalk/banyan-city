@@ -60,6 +60,7 @@ def collect(prefixes, branch, out: Path):
         stale.unlink()
     files = branch_files(branch)
     taken = {}
+    unprovenanced = []
     # prefixes in command-line order: later wins, so preference is explicit
     for pref in prefixes:
         for f in files:
@@ -75,12 +76,33 @@ def collect(prefixes, branch, out: Path):
             raw = subprocess.run(["git", "show", f"{branch}:{f}"], cwd=REPO,
                                  capture_output=True, check=True).stdout
             (out / dest).write_bytes(raw)
-            side = f"{f}.meta.yaml"
-            if side in files:
-                s = subprocess.run(["git", "show", f"{branch}:{side}"], cwd=REPO,
-                                   capture_output=True, check=True).stdout
-                (out / f"{dest}.meta.yaml").write_bytes(s)
+            # BOTH SIDECAR SHAPES, and the absence of either is said out loud.
+            # This looked only for `<file>.mp4.meta.yaml`, so a record written
+            # under the stem name was invisible — the reader bug licence_gate's
+            # META_EXT comment documents, and the reason a clip can arrive here
+            # unprovenanced while its record sits on the branch. A silent skip
+            # then made the two cases identical to whoever ran this — and the
+            # difference is the whole question, because a clip whose licence
+            # nothing states is a clip nobody can decide about. Said here, at the
+            # moment it is cheap to go and fetch the record.
+            for cand, name in ((f"{f}.meta.yaml", f"{dest}.meta.yaml"),
+                               (f"{f[:-4]}.meta.yaml", f"{dest[:-4]}.meta.yaml")):
+                if cand in files:
+                    s = subprocess.run(["git", "show", f"{branch}:{cand}"], cwd=REPO,
+                                       capture_output=True, check=True).stdout
+                    (out / name).write_bytes(s)
+                    break
+            else:
+                unprovenanced.append(dest)
+                print(f"  !! {dest} has NO provenance record on {branch} — it "
+                      f"cannot be published until one exists (§7.2)")
             taken[dest] = m.group("task")
+    if unprovenanced:
+        print(f"\n  !! {len(unprovenanced)} of {len(taken)} clip(s) arrived with no "
+              f"provenance record: {' '.join(sorted(unprovenanced))}\n"
+              f"     Copy the `.meta.yaml` the renderer wrote beside each one off "
+              f"the box, or re-render. Nothing states what made these, so nobody "
+              f"can say whether they may ship.\n")
     return taken
 
 

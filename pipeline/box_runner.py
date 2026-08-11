@@ -665,8 +665,12 @@ class Courier:
             self.mark("STARTED task=%s attempt=%s on box-runner"
                       % (jid, record.get("attempt", 1)), "hb: STARTED %s" % jid)
         elif event == "job_done":
+            bare = record.get("unprovenanced") or []
             self.mark("DONE task=%s rc=0 artifacts=%d"
-                      % (jid, len(record.get("artifacts") or [])),
+                      % (jid, len(record.get("artifacts") or []))
+                      + (" NO-SIDECAR=%d (%s)"
+                         % (len(bare), ", ".join(os.path.basename(b) for b in bare))
+                         if bare else ""),
                       "hb: DONE %s" % jid, files=record.get("files"))
         elif event == "job_failed":
             self.mark("FAIL task=%s rc=%s step=%s"
@@ -739,6 +743,63 @@ def run_step(step: dict, log_fh, job_env: dict) -> int:
     return rc
 
 
+# Media a §7.2 sidecar is written beside, and the two names the pipeline writes
+# it under (licence_gate.META_EXT -- kept as literals because this file runs on
+# the box against a python that must import nothing from the site build).
+SIDECAR_MEDIA_EXT = (".mp4", ".webm", ".mov", ".mkv", ".m4v", ".gif",
+                     ".png", ".jpg", ".jpeg",
+                     ".mp3", ".wav", ".m4a", ".aac", ".ogg", ".flac")
+SIDECAR_EXT = (".meta.yaml", ".meta.yml")
+
+
+def sidecar_beside(path: str):
+    """The provenance record written next to one artifact, or None.
+
+    Both naming conventions, because the pipeline writes both: `07-x.mp4.meta.yaml`
+    (video_task.write_sidecar, hold_still) and `07-x.meta.yaml` (render_t3,
+    intake_take). Same rule as licence_gate.sidecar_for, spelled out here rather
+    than imported: this module is the one the render box runs, and it must not
+    grow a dependency on the site builder's stack.
+    """
+    stem = os.path.splitext(path)[0]
+    for ext in SIDECAR_EXT:
+        for cand in (path + ext, stem + ext):
+            if os.path.exists(cand):
+                return cand
+    return None
+
+
+def with_sidecars(artifacts) -> tuple:
+    """(artifacts + the records beside them, media whose record is missing).
+
+    THE ASYMMETRY THIS CLOSES (2026-08-10). ltx_i2v writes a sidecar beside every
+    clip it exports, but a job's `artifacts:` list names the mp4 and nothing else
+    -- 116 of the 117 specs in pipeline/jobs/ do -- so "collect the artifacts"
+    means "collect the mp4", and the record stays on the box. Five LTX clips
+    reached the tree that way with no provenance at all and were force-added, and
+    the publish gate read the silence as "not the build's problem". A record that
+    does not travel with its clip may as well not have been written.
+
+    The absence is REPORTED, never fatal: the clip exists, the GPU time is spent,
+    and failing a finished render over a missing yaml would burn four minutes of
+    card time to re-render pixels that are already correct. Whether such a clip
+    may be PUBLISHED is build_site.publishable()'s question; this is the line
+    that stops the record being left behind in the first place, and that names
+    the clip out loud when it was.
+    """
+    out, missing = [], []
+    for a in artifacts:
+        out.append(a)
+        if not a.lower().endswith(SIDECAR_MEDIA_EXT):
+            continue
+        side = sidecar_beside(a)
+        if side is None:
+            missing.append(a)
+        elif side not in out:
+            out.append(side)
+    return out, missing
+
+
 def execute(job: dict, job_path: str, queue: Queue) -> tuple:
     """Run every step. Returns (outcome, rc, log_path)."""
     jid = job.get("id") or os.path.basename(job_path)[:-5]
@@ -784,12 +845,23 @@ def execute(job: dict, job_path: str, queue: Queue) -> tuple:
             log_fh.write("!! declared artifacts missing: %s\n" % json.dumps(missing))
             rc = 92
             failed_step = "artifact-check"
+        present = [a for a in job.get("artifacts", []) if os.path.exists(a)]
+        present, unprovenanced = with_sidecars(present)
+        if unprovenanced:
+            log_fh.write("!! NO PROVENANCE RECORD beside: %s\n"
+                         "   the clip is on disk and the job stands, but nothing "
+                         "says what made it, so nobody downstream can say whether "
+                         "it may ship — write the sidecar (§7.2)\n"
+                         % json.dumps(unprovenanced))
         log_fh.write("#### job %s finished rc=%d %s\n" % (jid, rc, utcnow()))
 
     job["finished_at"] = utcnow()
     job["rc"] = rc
     job["failed_step"] = failed_step
-    job["artifacts_present"] = [a for a in job.get("artifacts", []) if os.path.exists(a)]
+    job["unprovenanced"] = unprovenanced
+    # The sidecar rides in the artifact list, so whoever couriers "the artifacts"
+    # takes the record with the clip rather than the clip alone (with_sidecars).
+    job["artifacts_present"] = present
     write_json(job_path, job)
 
     outcome = "done" if rc == 0 else "failed"
@@ -804,6 +876,9 @@ def execute(job: dict, job_path: str, queue: Queue) -> tuple:
         "worker": job.get("worker"), "beat": job.get("beat"), "rc": rc,
         "failed_step": failed_step, "claimed_by": "box-runner",
         "artifacts": job["artifacts_present"], "log": final_log,
+        # Named on the branch, not only in a log on the box: a record nobody
+        # off this machine can see is the same silence this field exists to end.
+        "unprovenanced": unprovenanced,
         "started_at": started, "finished_at": job["finished_at"],
         # The job record and the tail of its log ride along to the branch. A
         # DONE line says a job finished; these say what it actually did, and
