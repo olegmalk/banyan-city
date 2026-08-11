@@ -8831,3 +8831,26 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+- id: ep2-b10-refresh-0811
+  kind: prediction
+  written: 2026-08-11 ~22:5x, before enqueue; predicates fixed before any frame
+    of this round existed. Dry-run token check passed on the box (76/77, anchor
+    intact) before this record was written; no image was drawn by the dry step.
+  round: ep2-b10-refresh-0811, beat 10 NO FORM, variant authored_b10_refresh,
+    4 stills, SDXL animagine-xl-3.1, node 002b-first-citizen.
+  what_changed: staging kept verbatim (blank bark clipboard held up, one
+    shake, blank board dominating frame); added ratified guard register
+    (bare-headed, dull dented mismatched armor), grassy field early, 8-term
+    dark-ban. House triplet deliberately omitted for negative budget.
+  predicates:
+    - two guard figures in 4/4 frames
+    - both bare-headed round comic register, not helmeted dark fantasy, in >=3/4
+    - the blank board readable as the frame subject in >=2/4
+    - bright morning palette in 4/4
+  consumer: the founder's morning review page.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null

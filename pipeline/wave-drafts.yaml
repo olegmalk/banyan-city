@@ -1122,6 +1122,19 @@ beats:
     tag: 2boys
     extra_neg: guard
     gist: no form
+    # -- `authored_b10_refresh` -- 2026-08-11 ~22:5x, the lead. Wholesale-reject
+    # mandate; staging (blank bark clipboard held up, one shake) kept verbatim.
+    # Added: ratified register (bare heads, dull dented armor), field early,
+    # dark-ban. Lean on purpose: b08 r1 died at 89/77 tokens.
+    authored_b10_refresh: >-
+      Two round bare-headed guard men in dull dented mismatched armor in a
+      grassy field, one holding up the completely blank back of his bark
+      clipboard toward the other and shaking it once. Static camera, the blank
+      board dominating the frame, bright morning light, cinematic lighting,
+      detailed, newest, masterpiece, best quality, very aesthetic No girl, no
+      child, no helmet, no knight, no dark fantasy, no dark, no night, no dusk,
+      no sunset, no dim lighting, no moody lighting, no low key, no shadows
+      dominant. No photorealism, no 3D render look. 9:16 vertical, no text.
     authored: >-
       Two round guard men in mismatched armor, one holding up the completely
       blank back of his bark clipboard toward the other and shaking it once for
@@ -1140,6 +1153,111 @@ beats:
       dominating the frame, cinematic lighting, detailed, newest, masterpiece,
       best quality, very aesthetic No girl, no child. No photorealism, no 3D
       render look. 9:16 vertical, no text.
+    # ── `authored_b10_refresh` — 2026-08-11 ~23:0x. His wholesale-reject mandate
+    # covers this beat with no words of its own ("change pretty much all of them,
+    # do some regeneration, and do some evaluating of your own"), so the direction
+    # is the rejection plus what the wave-1 frames show, read off all four before
+    # a word of the fix was written: `review/ep2-picks/wave-0811/b10-s0..s3.jpg`.
+    # THIS IS THE WORST-DRIFTED BEAT OF THE FOUR IN THIS LANE:
+    #   * FOUR OF FOUR are shot FROM BEHIND. There is not one readable face in
+    #     the set — s2 is two armoured backs filling the frame, s0/s1 put a small
+    #     figure's back in the foreground, s3 is a helmeted back.
+    #   * TWO OF FOUR (s0, s1) BREAK SCALE ENTIRELY: a titanic armoured colossus
+    #     towering over a tiny human, shot from a low hero angle. "Two round guard
+    #     men" came back as a giant and a doll.
+    #   * FOUR OF FOUR draw heroic muscular bodies, not round soft ones.
+    #   * THREE OF FOUR have ARCHITECTURE — an industrial city (s0), pillars (s2),
+    #     an interior with beams and a vignette (s3). This is the beat that most
+    #     needs beat 04's walls block and the only one in this lane whose observed
+    #     fault is literally interiors.
+    #   * THREE OF FOUR are helmeted/masked with GLOWING eyes; four of four are
+    #     dim, desaturated or outright night.
+    #   * THE JOKE IS ABSENT. This beat exists so the blank board reads — it is
+    #     `no-form`, the gag is that the clipboard is empty — and the board is a
+    #     small dark slab at the frame edge in s2, ambiguous in s0, and gone in
+    #     s1 and s3.
+    #
+    # BUILT ON `authored_staged`, NOT `authored`, AND THAT IS THE STAGING KEPT
+    # VERBATIM: the staged key IS this beat's staging as the file currently holds
+    # it, and its two additions (`from the front`, `medium two-shot`) are aimed at
+    # exactly the fault the frames show. Nothing of the business is reworded.
+    #
+    # THE CHANNELS, EACH FOR AN OBSERVED FAULT:
+    #  1. BACKS. `both faces clearly visible` — the affirmative that carries the
+    #     founder's ratified "with visible faces" (~20:27). `from the front` is
+    #     NOT also sent: it is the same claim in weaker words and this beat has no
+    #     tokens to say things twice (see the measurement below).
+    #  2. SCALE. `round soft bodies` alongside the `Two round guard men` the head
+    #     clause already carries. `authored_guards_silly` states round twice for
+    #     this reason and records why: once was demonstrably not enough. On this
+    #     beat the second statement is the only thing aimed at the colossus.
+    #  3. WALLS. Beat 04's five-term block sent whole, plus `in a sunny grassy
+    #     field` in the third clause — the early-affirmative placement
+    #     `authored_b04_fieldban` proved. Three of four frames drew architecture,
+    #     so this is the beat the block was made for.
+    #  4. THE REGISTER. `silly harmless bureaucrats` + `bare heads` affirmatively,
+    #     and the ratified ban block `no helmet, no knight, no full plate, no dark
+    #     fantasy, no glowing visor, no weapon, no hood` from
+    #     `authored_guards_silly`.
+    #  5. THE BOARD. `no screen` is sent HERE and was not sent on beat 09, and the
+    #     reason is specific rather than tidy: `authored_guards_ref` bought that
+    #     term for a board that "reads as a lit screen" — Roman's own earlier stop
+    #     — and this is the beat whose SUBJECT is a board held up to camera. If a
+    #     blank slab is going to render as a glowing tablet anywhere, it is here.
+    #  6. LIGHT. The eight-term block proven on beat 04 against identical seeds,
+    #     plus `bright morning light` affirmatively.
+    #
+    # WHAT IS PAID, ALL OF IT MOTION OR DUPLICATION, NONE OF IT HIS:
+    #   `and shaking it once for emphasis` — a MOTION instruction in a harness
+    #      that makes single frames, the same cut the beat-08 refresh and beat 03's
+    #      field variant each made at a cost of nothing.
+    #   `Static camera` — same reason; there is no camera to hold still.
+    #   `completely` — `blank` already says it, twice in the same sentence.
+    #   `from the front` — see channel 1.
+    # `the blank board dominating the frame` IS KEPT. It is the beat's whole
+    # composition and the gag; it was the first thing budget pressure wanted and
+    # the last thing this beat can afford to lose.
+    #
+    # ── MEASURED ON THE BOX'S REAL CLIP TOKENIZER, THREE TIMES, AND THE FIRST
+    # TWO WERE REFUSED. This is a run, not a claim, and the record is kept
+    # because the failures are the interesting part:
+    #   draft 1 — 83 tokens. `compress()` drops from the least important end and
+    #     the end is the STYLE SENTENCE, so `Medium two-shot`, `the blank board
+    #     dominating the frame`, `bright morning light` AND the whole style anchor
+    #     went in one go; check() faulted STYLE ANCHOR MISSING, rc=1, nothing
+    #     drawn. Every one of this round's own fixes lives in that sentence.
+    #   draft 2 — 78. One token over, same fault, same total loss. There is no
+    #     partial credit here: 78 costs the identical nine words that 83 does.
+    #   draft 3 — 76/77, STYLE ANCHOR PRESENT True, count tag `2boys` derives,
+    #     `text` negated, DRY OK. ONE token of headroom.
+    # FOUR MORE TERMS WERE PAID to get from 83 to 76, and the rule applied was
+    # that nothing of Roman's is spent. What went: `harmless` (his ~20:27 words
+    # are "silly round bureaucrats with visible faces" — `silly`, `round`,
+    # `bureaucrats` and the visible faces all survive; `harmless` was the
+    # steward's own addition), `clearly` (`both faces visible` says it), `toward
+    # the other` (the second guard is established by `Two round guard men` and by
+    # `both faces visible`), and `bark` (the material word; `no screen` is doing
+    # the anti-tablet work in the channel that binds, and it is sent on this beat
+    # for exactly that reason).
+    # ONE TOKEN OF HEADROOM IS THE STANDING WARNING FOR THIS BEAT: anything a
+    # later round wants to add here drops the style sentence again unless it names
+    # what it is paying with first.
+    #
+    # `2boys` still derives — `Two round guard men in mismatched armor` is
+    # untouched at the head of the first comma-clause, which is all
+    # `_tag_from_clause` reads.
+    authored_b10_refresh: >-
+      Two round guard men in mismatched armor, in a sunny grassy field, silly
+      bureaucrats with round soft bodies and bare heads, both faces
+      visible, one holding up the blank back of his clipboard. Medium
+      two-shot, the blank board dominating the frame,
+      bright morning light, cinematic lighting, detailed, newest, masterpiece,
+      best quality, very aesthetic No girl, no child, no helmet, no knight, no
+      full plate, no dark fantasy, no glowing visor, no weapon, no hood, no
+      screen, no house, no building, no interior, no indoors, no architecture,
+      no dark, no night, no dusk, no sunset, no dim lighting, no moody lighting,
+      no low key, no shadows dominant. No photorealism, no 3D render look. 9:16
+      vertical, no text.
 
   11:
     slug: they-leave
