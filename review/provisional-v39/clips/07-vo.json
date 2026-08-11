@@ -1,0 +1,47 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "VO",
+   "text": "Scream. \u2014 No mouth. Run. \u2014 No legs. Flail?? \u2014 \u2026I appear to have zero (0) moving parts.",
+   "start": 0.0,
+   "end": 5.937,
+   "chunks": [
+    {
+     "text": "Scream.",
+     "start": 0.0,
+     "end": 0.602
+    },
+    {
+     "text": "\u2014 No mouth.",
+     "start": 0.602,
+     "end": 1.507
+    },
+    {
+     "text": "Run.",
+     "start": 1.507,
+     "end": 2.172
+    },
+    {
+     "text": "\u2014 No legs.",
+     "start": 2.172,
+     "end": 3.095
+    },
+    {
+     "text": "Flail??",
+     "start": 3.095,
+     "end": 3.807
+    },
+    {
+     "text": "\u2014 \u2026I appear to have zero (0) moving parts.",
+     "start": 3.807,
+     "end": 5.937
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 6.237
+}

@@ -1,0 +1,47 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "VO",
+   "text": "Right. Sev-1. You know the drill. Nobody panics on my incidents, including me. Step one: stop screaming \u2014 done, involuntarily. Step two: what do we actually know?",
+   "start": 0.0,
+   "end": 12.208,
+   "chunks": [
+    {
+     "text": "Right.",
+     "start": 0.0,
+     "end": 0.8
+    },
+    {
+     "text": "Sev-1.",
+     "start": 0.8,
+     "end": 1.82
+    },
+    {
+     "text": "You know the drill.",
+     "start": 1.82,
+     "end": 3.013
+    },
+    {
+     "text": "Nobody panics on my incidents, including me.",
+     "start": 3.013,
+     "end": 6.052
+    },
+    {
+     "text": "Step one: stop screaming \u2014 done, involuntarily.",
+     "start": 6.052,
+     "end": 9.621
+    },
+    {
+     "text": "Step two: what do we actually know?",
+     "start": 9.621,
+     "end": 12.208
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 12.508
+}
