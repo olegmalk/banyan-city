@@ -513,3 +513,4 @@
 17:53:12Z STARTED task=ltx-gprobe-g25-0811-1786470166 attempt=1 on box-runner
 17:58:21Z DONE task=ltx-gprobe-g25-0811-1786470166 rc=0 artifacts=2
 17:58:25Z box-runner idle ready=0 failed=1
+18:07:52Z STARTED task=ep2-b08-refresh-0811-1786471665 attempt=1 on box-runner
