@@ -1,0 +1,174 @@
+# EPISODE 2, BEAT 10 NO FORM - r2 OF THE IDENTITY-FROZEN ROUND. One sample,
+# four seeds, $0. 2026-08-12, the fixer lane.
+#
+# WHAT THE `_idfix` FRAMES SHOW. s0 is a SHIRTLESS BODYBUILDER - bare chest, no
+# tunic at all - grinning over a clipboard. s1 dresses him in cream and floats a
+# giant disembodied bald head where the second guard's body should be. s2 puts
+# the second guard on the clipboard AS A DRAWING of a bald man. s3 finally
+# manages two men and then shoots the nearer one from behind, losing his face.
+# Not one frame delivers the plain brown tunic; not one delivers two guards.
+#
+# 1. THE ADJACENCY, AND ON THIS BEAT IT IS FREE. "two round bald guard men" puts
+#    `round` directly against `bald` - the same construction beat 09 is being
+#    tested on tonight - and beat 10 grows the same artefact, s1's floating
+#    sphere-head. `round` is DELETED from that clause, because the sentence
+#    already says "silly bureaucrats with round soft bodies" four words later.
+#    His word is not lost: the duplicate goes and the surviving copy is already
+#    attached to the BODY, which is where it belongs. This is the one beat where
+#    the adjacency correction hands a token BACK instead of costing one.
+# 2. THE TOPLESS BODYBUILDER -> BAN. `no bare chest, no muscular`. Neither
+#    negates anything the positive asserts - the positive asks for a plain brown
+#    tunic and a round soft body, so these reinforce the sentence instead of
+#    fighting it, which is the wording discipline the beat-07 recipe got wrong in
+#    the other direction. The negative had four tokens spare, so nothing is
+#    evicted to make room.
+#
+# NOT ATTEMPTED, AND SAID PLAINLY: getting the second guard drawn as a person.
+# `2boys` is already the count tag and it is not binding; a stronger positive
+# would cost tokens this beat does not have and would confound the two changes
+# above. It is recorded in wave2-faults-fixer.yaml instead of half-attempted.
+#
+# BOX DRY-RUN, THE SHIPPED RECIPE:
+#   positive 74/77 (down from 75 - the deleted duplicate)   count tag '2boys'
+#   STYLE ANCHOR PRESENT: True   'text' negated: True
+#   negative recipe 76 -> sent 76 (budget 77); `bare chest` and `muscular` both
+#   sent; `armor`, `helmet`, `knight` and `screen` all intact.
+#
+# SEPARATE OUT DIRECTORY. Writes to `out-b10-idfix-r2`; overwrites no evidence.
+
+id: ep2-b10-idfix-r2-0812
+task: ep2-b10-idfix-r2-0812
+node: 002b-first-citizen
+beat: 10
+runner: box
+needs_gpu: true
+
+priority: 44
+max_attempts: 1
+owner: overnight fixer lane, 2026-08-12 (reading the identity-frozen wave and firing one r2 per faulty beat)
+
+# NO `gate:` KEY. One sample moving one channel on a recipe he has ratified.
+
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03` (read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml:17-18, the leaf the
+  render gate itself reads). His `approved_quote` verbatim: "approve 002b except.. we
+  need to make SURE the fig growing on the sapling is mentioned, last time we generated
+  002b it just.. appeared. also, the sapling was able to flail a leaf in episode 1? why
+  couldnt it do that in 002b?" Both `approval_conditions` are about beat 01''s fig and
+  beat 16''s leaf; neither touches beat 10.'
+
+consumer: >-
+  Roman's next look at beat 10, as a PAIR against the `out-b10-idfix` frames - same four seeds. It ranks nothing and picks nothing; the taste call stays R4's.
+
+success: >-
+  Four PNGs at C:\banyan-farm\wave-goblin-prep\out-b10-idfix-r2\10-no-form-wave1-s0..3.png with their
+  .yaml provenance sidecars written at render time (7.2), all eight declared as
+  artifacts so a missing one fails rc=92 instead of passing quietly. Whether the
+  frames are good is R4's call, not this job's and not a metric's.
+
+why: >-
+  Two edits against `ep2-b10-idfix-0812`, each separately visible: `round` de-duplicated off its adjacency with `bald`, and a ban on the bare chest that replaced the tunic in s0. Seeds, steps (40), guidance (7.5), size, harness and the setting are unchanged.
+
+goblin_def: green skin, bald head, patchwork cloak
+goblin_def_source: >-
+  Passed byte-identical to the `_idfix` round this answers. NO GOBLIN APPEARS IN BEAT 10 - the positive names only the two guards - so the definition is inert here and is passed unchanged purely so the two rounds differ where this job says they differ.
+
+est_minutes: 2
+needs:
+- cuda
+- vram20
+- farm-venv
+
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+# The box's wave-drafts.yaml was scp'd from this repo and `findstr`-verified to
+# carry `authored_b10_idfix_r2` before this job was queued, and the recipe below was
+# dry-run on the box's real CLIP tokenizer. THE CHECK IS THE KEY, NOT THE
+# WHOLE-FILE SHA: sibling lanes append their own variants tonight and every append
+# moves the file sha without touching this variant. The harness REFUSES rather than
+# falling back when a key is missing, so a stale copy fails for $0.
+steps:
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '10'
+  - --goblin-def
+  - green skin, bald head, patchwork cloak
+  - --variant
+  - authored_b10_idfix_r2
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '10'
+  - --goblin-def
+  - green skin, bald head, patchwork cloak
+  - --variant
+  - authored_b10_idfix_r2
+  - --out
+  - C:\banyan-farm\wave-goblin-prep\out-b10-idfix-r2
+  - --task
+  - ep2-b10-idfix-r2-0812
+
+# DURABILITY: every still this farm makes lands single-copy on a box nothing backs
+# up. The courier runs `git add -A -- farm-out` and pushes on job_done, and
+# farm-out is NOT gitignored, so publishing is a COPY and the runner stays
+# byte-identical. allow_fail: a failed copy must never mark a good render failed.
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b10-idfix-r2"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/wave-goblin-prep/out-b10-idfix-r2/10-no-form-wave1-s*.*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        # Hash the COPY, not the original: what this records has to be the bytes
+        # that get committed, or the manifest attests to the wrong file.
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+        print("   ", os.path.basename(f), h[:16])
+    # newline="\n" is load-bearing: Windows text mode rewrites \n to \r\n and every
+    # filename then carries a trailing \r that shasum -c cannot open.
+    with open(os.path.join(dst, "10-no-form-idfix-r2.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    # 4 stills + 4 sidecars. Fewer means the render wrote less than it promised.
+    raise SystemExit(0 if len(src) == 8 else 1)
+
+artifacts:
+- C:\banyan-farm\wave-goblin-prep\out-b10-idfix-r2\10-no-form-wave1-s0.png
+- C:\banyan-farm\wave-goblin-prep\out-b10-idfix-r2\10-no-form-wave1-s1.png
+- C:\banyan-farm\wave-goblin-prep\out-b10-idfix-r2\10-no-form-wave1-s2.png
+- C:\banyan-farm\wave-goblin-prep\out-b10-idfix-r2\10-no-form-wave1-s3.png
+- C:\banyan-farm\wave-goblin-prep\out-b10-idfix-r2\10-no-form-wave1-s0.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b10-idfix-r2\10-no-form-wave1-s1.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b10-idfix-r2\10-no-form-wave1-s2.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b10-idfix-r2\10-no-form-wave1-s3.yaml

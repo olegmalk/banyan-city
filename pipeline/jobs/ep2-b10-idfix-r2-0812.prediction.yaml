@@ -1,0 +1,26 @@
+# Prediction for ep2-b10-idfix-r2-0812, written BEFORE enqueue, terse.
+# Not in taste/steward-model.ledger.yaml: `git status` showed the ledger DIRTY
+# (` M`) — a sibling lane is mid-write, and appending would race its edit.
+
+- id: ep2-b10-idfix-r2-0812
+  kind: prediction
+  written: 2026-08-12, the fixer lane, before enqueue. Box dry 74/77 positive, anchor intact, negative 76 -> sent 76.
+  answers: >-
+    A shirtless bodybuilder in place of the brown tunic (s0), a floating
+    disembodied head where the second guard belongs (s1), and the second guard
+    drawn onto the clipboard instead of standing there (s2).
+  predicates:
+  - every visible figure is clothed, no bare chest, 4/4
+  - the tunic reads brown >=2/4 (honest number: the ban removes the topless failure mode, it does not by itself paint the tunic brown)
+  - no floating or disembodied head 4/4 -- this is the SECOND test of the `round`/`bald` adjacency, independent of beat 09, and the two should agree
+  - soft rather than bodybuilder build >=3/4
+  - no armor, no helmet 4/4; sunny field 4/4; a clipboard present 4/4
+  falsifiable_by: >-
+    A floating head surviving here while beat 09 clears would say the adjacency fix
+    is beat-shaped, not lexical. A bare chest surviving an explicit ban would say
+    the topless prior is stronger than the negative can reach on this checkpoint.
+  not_under_test: >-
+    Getting two guards drawn as two people. `2boys` is already sent and already
+    failing; that is logged for the founder rather than quietly attempted here.
+  consumer: morning page, identity-frozen wave.
+  outcome: null

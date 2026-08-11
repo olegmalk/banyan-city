@@ -1847,6 +1847,42 @@ beats:
       no night, no dusk, no sunset, no dim lighting, no moody lighting, no
       low key, no shadows dominant. No photorealism, no 3D render look. 9:16
       vertical, no text.
+    # -- `authored_b10_idfix_r2` -- 2026-08-12, the fixer lane.
+    #
+    # WHAT THE FRAMES SHOW. s0 is a SHIRTLESS BODYBUILDER with a bare chest and no
+    # tunic at all. s1 dresses him in cream and floats a giant disembodied bald
+    # head where the second guard's body should be. s2 puts the second guard on
+    # the clipboard AS A DRAWING. s3 finally manages two men and then shoots the
+    # nearer one from behind, losing his face. Not one frame delivers the plain
+    # brown tunic, and not one delivers two proper guards.
+    #
+    # 1. THE ADJACENCY, AND HERE IT IS FREE. "two round bald guard men" puts
+    #    `round` against `bald`, the same construction beat 09 is being tested on
+    #    tonight -- and beat 10 grows the same artefact, s1's floating sphere-head.
+    #    `round` is simply DELETED from that clause, because the sentence already
+    #    says "silly bureaucrats with round soft bodies" four words later. His word
+    #    is not lost; the duplicate is removed and the surviving copy is already
+    #    attached to the BODY. This is the one beat where the adjacency fix gives a
+    #    token back instead of costing one.
+    # 2. THE TOPLESS BODYBUILDER -> BAN. `no bare chest, no muscular`. Neither
+    #    negates anything the positive asserts -- the positive asks for a brown
+    #    tunic and a round soft body, so these reinforce it rather than fight it.
+    #    The negative had four tokens spare, so nothing is evicted to pay for them.
+    #
+    # NOT ATTEMPTED: getting the second guard drawn as a person. `2boys` is already
+    # the count tag and it is not binding; a stronger positive would cost tokens
+    # this beat does not have and would confound the two changes above. Recorded in
+    # wave2-faults-fixer.yaml instead.
+    authored_b10_idfix_r2: >-
+      Two bald guard men in plain brown tunics, in a sunny grassy field,
+      silly bureaucrats with round soft bodies, both faces visible, one
+      holding up the blank back of his clipboard. Medium two-shot, the blank
+      board dominating the frame, bright morning light, cinematic lighting,
+      detailed, newest, masterpiece, best quality, very aesthetic No girl, no
+      child, no bare chest, no muscular, no armor, no helmet, no knight, no
+      screen, no dark, no night, no dusk, no sunset, no dim lighting, no
+      moody lighting, no low key, no shadows dominant. No photorealism, no 3D
+      render look. 9:16 vertical, no text.
     authored_b10_refresh: >-
       Two round guard men in mismatched armor, in a sunny grassy field, silly
       bureaucrats with round soft bodies and bare heads, both faces
