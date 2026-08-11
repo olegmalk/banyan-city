@@ -8988,3 +8988,34 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+- id: ep2-b15-refresh-0811
+  kind: prediction
+  written: 2026-08-11 ~23:5x, before enqueue; predicates fixed before any frame of
+    this round existed. Two dry runs passed on the box first (the second at
+    positive 75/77, anchor intact, negative recipe 75 -> sent 72) and the dry step
+    draws nothing.
+  round: ep2-b15-refresh-0811, beat 15 GOOD LISTENER, variant authored_b15_refresh,
+    4 stills, SDXL animagine-xl-3.1, node 002b-first-citizen.
+  what_changed: staging kept verbatim from the wave-1 authored draft (head tipped
+    back, talking up at a tiny sapling standing tall beside him, two oversized
+    leaves above, warm midday light, lonely tone, slow push-in) and the ratified
+    character untouched; added `in a sunny grassy field` early, beat 04's
+    five-term walls ban, `no houseplant`, and `his face visible`. NO `bright
+    morning light` - this beat's own staging says midday. The eight-term dark ban
+    was cut to `no dusk, no sunset` after the first dry run showed the full block
+    dropping the entire anti-big-tree guard on the beat whose sapling keeps coming
+    back as a houseplant; none of the four wave-1 frames was dark.
+  predicates:
+    - outdoors in a field or open grass, no wall, floor line or interior, in >=3/4
+    - a tiny two-leaf sapling in frame beside him rather than a houseplant,
+      nothing, or a walking leaf-creature, in >=3/4
+    - his face visible rather than the back of his head, in >=3/4
+    - one small green goblin boy, the ratified character, in 4/4
+    - warm daylight rather than amber sunset glow, in >=2/4
+  consumer: the founder's morning review page.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null

@@ -1414,6 +1414,59 @@ beats:
     tag: 1boy
     extra_neg: full
     gist: good listener
+    # -- `authored_b15_refresh` -- 2026-08-11 ~23:5x, the beats 14-20 lane.
+    # ADDITIVE: `authored` is untouched, and so is the character he ratified.
+    # THE FRAMES THIS IS DRAWN AGAINST are not in `wave-0811` -- this beat's
+    # wave-1 round was `ep2-b15-goblin-simple-0811` and its four stills live at
+    # `review/tonight/15-good-listener-wave1-s0..s3.png`. All four opened:
+    # THREE OF FOUR ARE THE BACK OF HIS HEAD (s0, s1, s2); only s3 shows a face,
+    # in profile. FOUR OF FOUR ARE INDOORS -- an orange wall with a hanging
+    # pendant chain (s0), a curtain and window frame (s1), a bare cream wall and
+    # floor line in an empty room (s2), a flat wall behind a huge disc (s3). The
+    # steward's round-3 line for this beat was "that is a boy in a room with a
+    # houseplant, not a goblin talking to the sapling", and it came back word for
+    # word. FOUR OF FOUR HAVE NO SAPLING: glossy monstera houseplant leaves in
+    # s0 and s1, NOTHING AT ALL in s2 (two dead leaves on the floor), and in s3
+    # the plant is a little round leaf-creature walking on legs at the end of a
+    # stem he holds like a leash. The conversation is the subject of this beat
+    # and in three of four there is nobody to have it with.
+    # WHAT IS RATIFIED AND THEREFORE FROZEN: on these very frames he said "yeah,
+    # that looks like the right goblin" (2026-08-11 ~15:45). That was the
+    # CHARACTER, and the {{GOBLIN}} slot, the ears, the cloak and `green skin`
+    # are carried through untouched. The shot is what this round changes.
+    # NO `bright morning light` HERE, deliberately: this beat's own staging says
+    # `Warm midday light` and staging is kept verbatim, so the affirmative light
+    # term the other refreshes add would contradict it.
+    # THE DARK BLOCK IS SENT AT TWO TERMS OF EIGHT, AND THAT WAS MEASURED, NOT
+    # PREFERRED. With all eight, this beat dry-ran at negative recipe 76 -> sent
+    # 76 and the NEGWARN dropped `mature tree, large tree, tall tree, thick
+    # trunk, full canopy, forest, bush, shrubbery` -- the ENTIRE plant-scale
+    # guard -- on the beat whose worst observed fault is that the sapling came
+    # back as a monstera houseplant in 4/4. That is a load-bearing ban paying for
+    # a fix this beat does not need: none of these four frames is dark. They are
+    # warm and hazy. So `no dusk, no sunset` stay, because the amber-sunset glow
+    # in s0 and s3 IS the observed drift and midday excludes both, and `no dark,
+    # no night, no dim lighting, no moody lighting, no low key, no shadows
+    # dominant` are dropped to buy the tree terms back. Same call beat 11 made
+    # for `no shadows dominant`, made here on evidence rather than on staging.
+    # RE-MEASURED AFTER THE TRIM: recipe 75 -> sent 72, and `mature tree, large
+    # tree, thick trunk` and `photorealism` are back in the sent list. Still
+    # dropped and named rather than buried: `shrubbery, bush, forest, full
+    # canopy` plus the quality boilerplate. The three strongest anti-big-tree
+    # terms survive, which is what this beat needed the room for.
+    # ADDED: `in a sunny grassy field` early (the placement `authored_b04_fieldban`
+    # proved), beat 04's five-term walls ban, `no houseplant` for the pot plant
+    # three rounds have now drawn, and `his face visible` -- the same affirmative
+    # beat 10's refresh spends as `both faces visible`, for the same fault.
+    authored_b15_refresh: >-
+      A small goblin boy, {{GOBLIN}}, solo, in a sunny grassy field, tips his
+      head back talking up at a tiny sapling standing tall beside him, its two
+      oversized leaves hanging above him, his face visible. Warm midday light,
+      lonely tone, slow push-in, cinematic lighting, detailed, newest,
+      masterpiece, best quality, very aesthetic No girl, no child, no house, no
+      building, no interior, no indoors, no architecture, no houseplant, no
+      dusk, no sunset. No photorealism, no 3D render look. 9:16 vertical, no
+      text.
     authored: >-
       A small goblin boy, {{GOBLIN}}, solo, tips his head back talking up at a
       tiny sapling standing tall beside him, its two oversized leaves hanging
