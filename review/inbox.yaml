@@ -167,12 +167,18 @@
   kind: clip
   verdict_hint: push it broader (one more job, then the same recipe to beats 06 and 07) / it still reads
     wrong, which makes it a casting question and yours
-- what: 'EPISODE 2 AUDIT - all 21 beats ranked (your ''do a lot of your own evaluation''). 4 look shippable
-    (13, 17, 03, 14), 4 have a known fix, 13 are blocked - but only 3 of those on anything technical.
-    FOUR DECISIONS ARE YOURS: the guards (unblocks 05/06/07 at once), the cold-open fig, whether beat
-    13 is cuttable, and whether the six never-rendered beats (09/10/11/12/18/21) should be attempted now
-    the recipe works'
+- what: EPISODE 2 AUDIT - all 21 beats ranked (your 'do a lot of your own evaluation'). 5 look shippable
+    (13, 17, 03, 14, 15), 3 have a known fix, and THE GUARD RULING UNBLOCKS SIX BEATS at once (05/06/07
+    plus 09/10/11, which are also guard beats) - more than a quarter of the episode on one decision. Beats
+    12/18/21 have no character in them at all and just need starting frames
   url: /review/ep2-picks/motion-0812#where-ep2-stands
   since: '2026-08-12'
   kind: decision
-  verdict_hint: answer the four / tell me which to chase first
+  verdict_hint: rule on the guards first / then the cold-open fig / is beat 13 cuttable
+- what: Stills needed for the three plant beats - 12 (two leaves against the sky), 18 (the fig, stem trembling)
+    and 21 (the leaf tilting on purpose). No character in any of them, so no consistency problem; beat
+    12 has no plate at all and 18/21 have only old unvetted ones. Cheapest remaining work in the episode
+  url: /review/ep2-picks/motion-0812#where-ep2-stands
+  since: '2026-08-12'
+  kind: decision
+  verdict_hint: have the stills lane make these three / leave them

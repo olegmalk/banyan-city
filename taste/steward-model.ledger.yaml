@@ -13878,3 +13878,42 @@
     exists to stop. The next round is one job, and whether it fires is his call on the page.
   consumer: review/ep2-picks/b05-register-0812
   outcome: null
+
+- id: ep2-corpus-evaluation-0812-CORRECTED
+  kind: correction
+  date: 2026-08-12
+  corrects: ep2-corpus-evaluation-0812 — two errors, both found by checking inputs before
+    acting on the lead's instruction to queue work off my own table.
+  error_1_beat_15_was_already_done: >-
+    I wrote "15 GOOD LISTENER — action and sapling both proven in SEPARATE clips; needs one
+    run combining them, which no one has spent yet", and the lead reasonably told me to queue
+    that combine. I opened the prompt first. ep2-b15-sapling-r2 ALREADY CONTAINS BOTH: the
+    sapling sentence AND the full action text (tips his head back, looks up at that sapling,
+    talks to it) — and it passed, with a clean unsupported sapling. Beat 15 was never split;
+    I mis-shelved a finished beat as pending. It moves to SHIPPABLE, making that column five
+    and the fixable column three. The render I was about to queue would have duplicated a
+    clip that already exists and already works.
+  error_2_the_six_are_not_one_group: >-
+    I listed 09/10/11/12/18/21 as "never rendered, technically unblocked". Checking what is
+    actually IN them splits the group in half and changes what they are waiting on.
+    09, 10 and 11 ARE GUARD BEATS — Guard 1's face, Guard 2's clipboard, the two guards
+    walking away. They are blocked on the SAME R4 ruling as 05/06/07, not on effort. So the
+    guard decision unblocks SIX beats, not three: it is by a wide margin the highest-value
+    thing on his list and I undersold it.
+    12, 18 and 21 CONTAIN NO CHARACTER AT ALL — two leaves against the sky, an extreme
+    close-up of the fig with its stem trembling, and the leaf tilting on purpose. No goblin,
+    no guards, so no character-consistency problem to solve. Given this lane has a proven
+    plant recipe, these are the three easiest beats in the episode.
+  what_they_actually_need: >-
+    INITS. Beat 12 has NO still of any kind on the results branch; 18 and 21 have only
+    `refresh` plates, which predate the consistency pass and carry no verdict. None of the
+    six has ever been through the ipa walk. Authoring motion off an unvetted plate is the
+    beat-02 mistake — animating a frame nobody approved — so I am NOT doing it. That is a
+    three-item stills-lane list (12, 18, 21) and it is now on the page as one.
+  the_habit_that_caught_both: >-
+    Same check, third save today: open the input before acting. Once it stopped me spending a
+    render (b14's pink eyes), once it found the sapling was never in a prompt, and now it has
+    stopped me duplicating a finished beat AND corrected the value of the single biggest
+    decision in front of him. The instruction to queue was reasonable and came from my own
+    bad table; the table was the thing to check.
+  outcome: null
