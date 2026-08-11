@@ -516,3 +516,4 @@
 18:07:52Z STARTED task=ep2-b08-refresh-0811-1786471665 attempt=1 on box-runner
 18:07:59Z FAIL task=ep2-b08-refresh-0811-1786471665 rc=1 step=measure
 18:09:02Z box-runner idle ready=0 failed=2
+18:12:49Z STARTED task=ep2-b08-refresh-r2-0811-1786471961 attempt=1 on box-runner
