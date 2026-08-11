@@ -197,37 +197,6 @@ beats:
       sunset, no dim lighting, no moody lighting, no low key, no shadows
       dominant. No photorealism, no 3D render look. 9:16 vertical, no text.
 
-    # -- `authored_ep3_003b_b01_dialect` -- 2026-08-12, the ep3 lane. THE ONE
-    #    SAMPLE that decides the dialect for the other 131 ep3 prompts.
-    #    NOT a 002b beat: this key lives under beat 1 only because --beat picks
-    #    filename and seed naming, which is cosmetic. The content is node
-    #    003b-one-leaf-for-yes beat 01, its cold open, and it is a verbatim copy
-    #    of that beat's prompt fence in genomes/sapling/nodes/003b-one-leaf-for-yes/shots.md
-    #    so the shot list and the rendered frame can never disagree.
-    #
-    #    WHY IT IS WORDED THIS TIGHTLY. The first draft of this conversion read
-    #    well and rendered nothing: measured through sd_prompt.compress it lost
-    #    FOUR of its five sentences to the 77-token budget, including the whole
-    #    sapling and the entire style tail, so it would have drawn a goblin with
-    #    no tree in no style. Measured before queueing, 0 sentences dropped, and
-    #    every load-bearing term asserted present (goblin, fig, sapling, two
-    #    oversized leaves, bare side-branch, bald, red eyes, masterpiece).
-    #
-    #    NEGATIVES ARE NOT BEAT 1's. Beat 1 of 002b bans `no creature, no face,
-    #    no mascot` because it is a tree-alone shot; this beat's subject IS the
-    #    creature, so copying that family would have banned the protagonist.
-    #    Singular person nouns per the measured ep2 finding that `no humans`
-    #    does not bind. `no tusk` and `no hair` carry his 2026-08-12 rulings.
-    authored_ep3_003b_b01_dialect: >-
-      A small green bald goblin with long pointed ears, red eyes and a
-      patchwork cloak cradles a ripe fig in both clawed hands beside a 55cm
-      sapling with two oversized leaves and one bare side-branch, dawn field.
-      Static camera, cinematic lighting, detailed, newest, masterpiece, best
-      quality, very aesthetic No tusk, no fang, no hair, no man, no woman, no
-      girl, no boy, no mature tree, no thick trunk, no many leaves, no lush
-      foliage, no dark, no night, no dusk. No photorealism, no 3D render look.
-      9:16 vertical, no text.
-
   2:
     slug: the-sprint
     kind: goblin
@@ -640,6 +609,36 @@ beats:
     # `green scalp` affirmative, beat 02 tests the skin ban. Read them together.
     # The gap is recorded in review/ep2-picks/wave2-faults-fixer.yaml.
 
+
+    # -- `authored_ep3_003b_b01_dialect` -- 2026-08-12, the ep3 lane. THE ONE
+    #    SAMPLE that decides the dialect for the other 131 ep3 prompts.
+    #    Content is node 003b-one-leaf-for-yes BEAT 01, its cold open. It lives
+    #    under beat 3 and not beat 1 for a reason the dry step taught me: the
+    #    count tag is DERIVED from the first comma-clause and must match the
+    #    BEAT BLOCK's declared `tag`. Beat 1 is 002b's plant-only plate and
+    #    declares '', so a peopled prompt can never pass there; beat 3 declares
+    #    `1boy` and is itself a goblin-beside-a-small-sapling shot, which is the
+    #    closest staging in the file. --beat only picks filename and seed
+    #    naming, so the frames come out named for beat 03.
+    #
+    #    r1 FAILED THE DRY STEP AND DREW NOTHING, which is the dry step working.
+    #    Two faults, both mine: (a) `1other` derived against beat 1's declared
+    #    '' -- `goblin` alone returns the indeterminate-humanoid tag that the r8
+    #    note blames for three rounds at 0/4, and only a literal boy/man/he/his
+    #    in the first clause reaches `1boy`; (b) "peopled beat negates its own
+    #    subject: ['boy', 'man']" -- I had carried the person-singular block over
+    #    from the measured ep2 `no humans` finding without noticing that finding
+    #    was about PLANT-ONLY plates. On a beat whose subject is the goblin it
+    #    bans the protagonist. Both gone: the head is now r8's species assertion
+    #    verbatim (`A small goblin boy, {{GOBLIN}}, solo`) and the tail carries
+    #    the authored peopled-beat negative `No girl, no child.` instead.
+    authored_ep3_003b_b01_dialect: >-
+      A small goblin boy, {{GOBLIN}}, solo, cradles a ripe fig in both clawed
+      hands beside a 55cm sapling with two oversized leaves and one bare
+      side-branch, dawn field. Deadpan quiet staging, static camera, cinematic
+      lighting, detailed, newest, masterpiece, best quality, very aesthetic No
+      girl, no child, no tusk, no mature tree, no thick trunk, no many leaves.
+      No photorealism, no 3D render look. 9:16 vertical, no text.
 
   4:
     slug: the-footnote

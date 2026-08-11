@@ -41,11 +41,16 @@ style tail last), the approved goblin identity (green skin, bald, long pointed e
 patchwork cloak — NO tusk, per his 2026-08-12 reference), and 003b's `style.md` ladder row.
 Content is unchanged from the v2 prompt: same hands, same fig, same sapling behind. ONE sample
 decides the recipe for the other 20; nothing else in this file is converted until it is looked at.
+Head clause is r8's species assertion (`A small goblin boy` + definition + `solo`) because the
+harness DERIVES its count tag from the first comma-clause and `goblin` alone returns `1other`,
+the indeterminate-humanoid tag blamed for three rounds at 0/4. The box copy of this prompt is
+`authored_ep3_003b_b01_dialect` in pipeline/wave-drafts.yaml, identical but for a {{GOBLIN}}
+placeholder the harness fills from --goblin-def.
 
 Line: premise + fig recap. Camera on the fig in the GOBLIN's hands with the tree's bare branch visible behind — the gate misread the hands as the tree's.
 
 ```
-A small green bald goblin with long pointed ears, red eyes and a patchwork cloak cradles a ripe fig in both clawed hands beside a 55cm sapling with two oversized leaves and one bare side-branch, dawn field. Static camera, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+A small goblin boy, green skin, bald head, solo, cradles a ripe fig in both clawed hands beside a 55cm sapling with two oversized leaves and one bare side-branch, dawn field. Deadpan quiet staging, static camera, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No girl, no child, no tusk, no mature tree, no thick trunk, no many leaves. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 ## Beat 02 — EVIDENCE RETURNED (0:06–0:11) ⬜ needs footage
