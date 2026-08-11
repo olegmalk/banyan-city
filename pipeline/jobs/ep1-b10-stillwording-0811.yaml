@@ -1,0 +1,192 @@
+# ep1 beat 10 — THE WORD "SWAYS" IS IN THE POSITIVE PROMPT. One sample that removes it.
+#
+# THE VERDICT. Roman, 2026-08-11, verbatim: "for beat 10 in both of the clips the
+# saplings are wobbling too much." Both clips = 10-ltx-r2g-plate-s20260897.mp4
+# (guidance 1.0) and 10-ltx-g20-plate-s20260897.mp4 (guidance 2.0). Same plate,
+# same seed, same wording; only the scale differed. Guidance 2.0 is therefore
+# ANSWERED AND REJECTED as a fix for this and is not repeated here.
+#
+# WHAT THE WOBBLE IS, AND IT IS NOT THE DEFECT ON RECORD. review/SHEETS records
+# beat 10 as "the sprout apex climbs 181px in every round" — a monotonic rise, and
+# the taste ledger's r1 measurement agrees (apex_rise_px: 181, 14.1% of frame).
+# That is not what these two clips do. Tracking the leaf apex across all 65 frames
+# of every beat-10 round on record, the current plate-conditioned rounds have a
+# SMALL net rise and a LARGE oscillation: r2g nets 92px but ranges 292px with 12
+# direction reversals; g20 nets 44px, ranges 248px, 11 reversals. In the frame
+# strips the whole stem leans left, comes back, leans right, and the head bobs
+# with it. The 181px climb was one-way drift; this is a back-and-forth. Roman is
+# naming a different motion, and the plate conditioning is what changed it.
+#
+# IS IT SEED-SPECIFIC? NO — checked before spending the slot on a reseed. All six
+# seeds on record (r2b s20260865, r2c s20260866, r2d s20260883, r2e s20260884,
+# r2f s20260885, r2g s20260897) wobble. Amplitude varies — r2e and r2f are the
+# calmest of the six — but looking at their strips, r2e's plant still translates
+# steadily rightward across the shot and r2f's head changes its lean twice. There
+# is no clean seed to pick. A reseed would spend the sample on a lottery ticket
+# for a defect that is present in 6 of 6, so this job does not reseed: seed 20260897
+# is held FIXED, the same seed as both clips he judged, so the pair is comparable.
+#
+# THE ONE CHANGE: the positive prompt's motion clause. Justification in one line —
+# at guidance 1.0 the positive prompt is the ONLY channel that reaches the sampler
+# (ltx_i2v.py:1001-1008, verified in the file today: do_classifier_free_guidance is
+# guidance_scale > 1.0, so no uncond pass runs and the negative embeddings are
+# never read), and the current positive prompt literally commissions the defect —
+# "the tall grass around it sways in a light breeze" and "its two small leaves
+# tremble very slightly". "Sways", "breeze" and "tremble" are scene-wide motion
+# cues; nothing in the wording confines the wind to the grass, and the model is
+# applying it to the stem. Every earlier round tried to stop the motion in the
+# negative, which on this path was inert, while the positive kept asking for it.
+# So: strike the breeze, the sway and the tremble; say the air is still and the
+# sprout is motionless; leave the only moving things as dust motes and a shift of
+# light, neither of which can move the plant. Nothing else changes — same plate,
+# same seed, same 65 frames, same 8+3 two-stage, same distilled sigmas, guidance
+# back to 1.0.
+#
+# THE NEGATIVE, and this is worth stating whatever the outcome. Beat 10's negative
+# currently negates "frozen frame, still image, no motion" plus 静态/静止 (Chinese
+# for "static"/"still"). Under LIVE guidance that pushes the model AWAY from
+# stillness — precisely the wrong direction for a wobble, and it is what the g20
+# arm was carrying when it failed to fix this. Those five terms are removed here.
+# At guidance 1.0 this changes no pixel and so is not a second variable in the
+# experiment; it is removed so the file is honest and so this text is safe to
+# reuse if guidance is ever raised on this beat.
+#
+# THE RISK, named up front: the 2026-08-03 K recipe was rejected as "literally
+# just frozen frames". Asking for stillness can overshoot into that. Dust motes and
+# drifting light are kept explicitly so there is still visible life in the shot,
+# and the answer is a look, not a number.
+#
+# NO METRIC RANKS THIS. The apex track above is used only to say WHAT the defect is
+# and whether it is seed-specific — it chose nothing. On beat 14 the flow metric
+# scored highest on the round where the sapling falls over (131e433), and the
+# beat-04 arm it liked best hallucinated a phone. If a number and the picture
+# disagree, the picture wins. This job produces one clip for Roman to look at,
+# next to the two he has already judged.
+#
+# ONE SAMPLE. One beat, one wording change, one seed. Not a sweep, not a second
+# beat, no batch (CLAUDE.md 2026-08-03 — the rule written after fifteen beats were
+# rendered on an unapproved recipe).
+
+id: ep1-b10-stillwording-0811
+task: ep1-b10-stillwording-0811
+node: 001-capability-inventory
+beat: 10
+runner: box
+needs_gpu: true
+priority: 30
+max_attempts: 1
+owner: beat-10 wobble lane (positive-prompt stillness test)
+control_clips:
+- C:\banyan-farm\v34-motion-0810\10-ltx-r2g-plate-s20260897.mp4
+- C:\banyan-farm\v34-motion-0810\10-ltx-g20-plate-s20260897.mp4
+source_spec: pipeline/jobs/ep1-b10-v34-plate-r2g-reseed.yaml
+approval: 'genomes/sapling/nodes/001-capability-inventory/leaves/001-t0-d.yaml:17 — approved_by: founder
+  # 2026-07-27, read and approved: "episode 1 looks good, you can do it"'
+consumer: Roman''s beat-10 verdict of 2026-08-11 ("the saplings are wobbling too much"), which is
+  holding beat 10's entry in the six-beat motion pick list (/review/waiting item 3). The clip goes to
+  him next to the two he rejected, unranked.
+success: 'A 704x1280 65-frame mp4 at C:\banyan-farm\v34-motion-0810\10-ltx-still-plate-s20260897.mp4,
+  viewable next to BOTH clips he judged — same plate, same seed 20260897, same frames, guidance 1.0
+  as the r2g control, positive prompt rewritten so nothing in it asks for wind. Answered by looking:
+  does the stem hold still? Two ways to fail and both are findings — the stem still leans and returns,
+  in which case the wobble is not coming from the wording and the next question is the plate or the
+  conditioning strength; or the whole shot goes dead like the K recipe, in which case the stillness
+  language is too strong and the dust-mote clause needs to carry more of the motion.'
+why: 'One variable against ep1-b10-v34-plate-r2g-reseed: the positive prompt no longer contains "sways
+  in a light breeze", "tremble" or "living scene", and says the air is still and the sprout motionless.
+  Same plate, same seed 20260897, same 65 frames, same guidance 1.0, same distilled sigmas, same
+  two-stage, same steps. The negative loses its five anti-stillness terms, which at guidance 1.0 is a
+  no-op (ltx_i2v.py:1001-1008) and is not a second variable.'
+est_minutes: 5
+needs:
+- cuda
+- vram20
+- video-venv
+payload:
+  C:\banyan-farm\v34-plates-0810\ep1-b10-stillwording-0811-prompt.txt: '2D anime, hand-drawn cel animation,
+    flat cel shading, clean ink linework, anime key art. a locked-off tripod shot: the camera never moves,
+    the sprout stays at exactly the same height in the frame with its leaf tips at the same level from
+    the first frame to the last, the horizon of grass stays at the same height, the sprout stays the same
+    size and in the same place, the composition is identical in every frame. the air is completely still:
+    there is no wind, no breeze, no gust, nothing is blowing. the sprout is motionless — its thin stem is
+    rigid and upright and does not bend, lean, tilt, sway, nod, bob or wobble at any point, and its two
+    small leaves are held perfectly still and drawn in the same position in every frame. the tall grass
+    stands still too, its blades unmoving. the only things that move in the entire shot are a few dust
+    motes drifting slowly through the warm hazy air and a soft shift of light across the stem. Subject
+    already in frame: no human, no person, no man, no woman, no boy, no girl, no hand, no face, one small
+    sprout with two leaves on a thin upright stem, tall grass around it, warm hazy amber light.'
+  C:\banyan-farm\v34-plates-0810\ep1-b10-stillwording-0811-negative.txt: wilting, drooping, bending
+    over, falling over, collapsing, sagging, plant dying, human, person, man, woman, boy, girl, extra
+    hand, extra arm, foot, face, crowd, animal, bird, insect, new object appearing, photorealism, 3D render
+    look, text, photorealistic, photograph, live action, film still, 3D render, CGI, octane, scene change,
+    shot change, cut to another angle, second scene, new camera angle, different location, split screen,
+    montage
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: plate
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - -c
+  - "import sys; sys.path.insert(0, r\"C:\\banyan-farm\\banyan-city\\pipeline\")\nfrom plate_prep import\
+    \ prepare_plate\nout, rec = prepare_plate(\n    r\"C:\\banyan-farm\\banyan-city\\genomes\\sapling\\\
+    nodes\\001-capability-inventory\\stills\\10-sense.png\",\n    \"704x1280\", r\"C:\\banyan-farm\\v34-plates-0810\"\
+    , \"10\")\nprint(\"plate\", out); print(rec[\"plate_wxh\"], rec[\"crop_policy\"])\n"
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\ltx_i2v.py
+  - --stage
+  - encode
+  - --embeds
+  - C:\banyan-farm\v34-plates-0810\ltx-embeds-ep1-b10-stillwording-0811.pt
+  - --prompt-file
+  - C:\banyan-farm\v34-plates-0810\ep1-b10-stillwording-0811-prompt.txt
+  - --negative-file
+  - C:\banyan-farm\v34-plates-0810\ep1-b10-stillwording-0811-negative.txt
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\ltx_i2v.py
+  - --stage
+  - render
+  - --embeds
+  - C:\banyan-farm\v34-plates-0810\ltx-embeds-ep1-b10-stillwording-0811.pt
+  - --prompt-file
+  - C:\banyan-farm\v34-plates-0810\ep1-b10-stillwording-0811-prompt.txt
+  - --negative-file
+  - C:\banyan-farm\v34-plates-0810\ep1-b10-stillwording-0811-negative.txt
+  - --init
+  - C:\banyan-farm\v34-plates-0810\10-704x1280.png
+  - --out
+  - C:\banyan-farm\v34-motion-0810\10-ltx-still-plate-s20260897.mp4
+  - --size
+  - 704x1280
+  - --frames
+  - '65'
+  - --fps
+  - '24'
+  - --steps
+  - '8'
+  - --guidance
+  - '1.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --seed
+  - '20260897'
+  - --beat
+  - '10'
+  - --task
+  - ep1-b10-stillwording-0811
+  - --worker
+  - rtx5090
+artifacts:
+- C:\banyan-farm\v34-plates-0810\10-704x1280.png
+- C:\banyan-farm\v34-motion-0810\10-ltx-still-plate-s20260897.mp4
