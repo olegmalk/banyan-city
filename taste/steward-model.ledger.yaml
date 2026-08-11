@@ -14169,3 +14169,48 @@
     Going quiet until the batch lands or morning, then ONE scoring pass over everything
     rather than a wake per clip. That is the token saving he asked for.
   outcome: null
+
+- id: law-round-describes-vs-resists-0812
+  kind: law
+  date: 2026-08-12
+  the_apparent_contradiction: >-
+    The cold open proved that asking for "one small ROUND green fig" produces an APPLE. The
+    stills lane proved that DROPPING `round` makes a fig render as a LEAF. Both are measured,
+    and they look like opposite advice about the same word.
+  the_mechanism: >-
+    They are not in conflict because the word is doing two different jobs. WHEN THE OBJECT IS
+    NOT IN THE INIT, the model must invent it from the words alone, so every adjective
+    describes the WHOLE object — and "round" then dominates, giving a sphere, giving an apple.
+    WHEN THE OBJECT IS ALREADY IN THE INIT, the words are not building it, they are holding it
+    against drift over the clip — and "round" then only resists the fig sliding leafward.
+    Same token, describing in one case and defending in the other.
+  the_general_form: >-
+    AN ADJECTIVE'S JOB DEPENDS ON WHETHER ITS NOUN IS ALREADY IN THE FRAME. Describing words
+    build absent things and defend present ones. So before adding or removing one, ask which
+    of the two it is doing here — and expect advice from a beat where the object was absent to
+    invert on a beat where it is present.
+  credit: >-
+    The stills lane found the leafward drift and handed over the warning; the reconciliation
+    is mine, prompted by their handoff. Recorded here so neither result gets discarded as
+    "the other lane found the opposite".
+
+- id: law-reachability-not-just-correctness-0812
+  kind: law
+  date: 2026-08-12
+  their_formulation_is_better_than_mine: >-
+    I reported beat 12's plate as "not on the box". The stills lane sharpened it into the
+    thing actually worth remembering: HASH-VERIFYING PROVES THE BYTES ARE THE RIGHT BYTES AND
+    SAYS NOTHING ABOUT WHETHER THE MACHINE THAT NEEDS THEM CAN SEE THEM. Two different
+    questions; a verified handoff answers only the first.
+  the_law: >-
+    Any artifact reference that crosses a machine boundary needs its REACHABILITY checked on
+    the far side, not its correctness checked on this one. `if exist` on the box before
+    enqueue, not `shasum` on the laptop.
+  the_precedent_they_cite: >-
+    Same family as `in_the_tree()` in build_site.py — a page once linked 164 gitignored files
+    and the local build passed where the deploy could not. Correct locally, unreachable
+    remotely, and nothing about the local check could have caught it.
+  recorded_in_both_lanes: >-
+    Theirs is handoff-law-takes-is-not-on-the-box-0812 (commit 8ec2d1c8). Mine is this, kept
+    because my lane is the one that enqueues jobs against box paths and will hit it again.
+  outcome: null
