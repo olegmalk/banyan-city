@@ -9876,3 +9876,10 @@
   note: cloak may be out of frame on a close-up - scored only if shoulders visible.
   consumer: morning page, identity-frozen wave.
   outcome: null
+
+- id: ep2-b05-idfix-0812
+  kind: prediction
+  written: 2026-08-12 ~02:4x before enqueue, terse. Dry 73/77 anchor intact.
+  predicates: [no armor 4/4, tunics >=3/4, two figures 4/4, faces visible >=3/4, no snow 4/4]
+  consumer: morning page, identity-frozen wave.
+  outcome: null

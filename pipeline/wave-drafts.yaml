@@ -991,6 +991,21 @@ beats:
       visor, no weapon, no hood, no screen, no dark, no dusk, no sunset, no dim
       lighting, no moody lighting, no low key, no shadows dominant. No
       photorealism, no 3D render look. 9:16 vertical, no text.
+    # -- `_idfix` 2026-08-12 ~02:3x: the ONE change is the frozen guards
+    # identity (ledger ep2-frozen-identities-0812) - plain brown tunics
+    # replace the armor he rejected ("the guards are still wearing armor and
+    # just, none of these are really right"). Staging and palette fix intact.
+    authored_b05_idfix: >-
+      Two round guard men in plain brown tunics stand side by side facing
+      camera in a warm green grassy morning field, silly harmless bureaucrats
+      with round soft bodies and bare heads, both faces clearly visible, one
+      holding a bark clipboard. Medium shot, bright morning light, cinematic
+      lighting, detailed, newest, masterpiece, best quality, very aesthetic
+      No girl, no child, no armor, no helmet, no knight, no snow, no winter,
+      no frost, no ice, no pine forest, no dark, no night, no dusk, no
+      sunset, no dim lighting, no moody lighting, no low key, no shadows
+      dominant. No photorealism, no 3D render look. 9:16 vertical, no text.
+
 
   6:
     slug: the-clipboard
