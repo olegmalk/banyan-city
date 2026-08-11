@@ -23,9 +23,21 @@ implies the second is the first.
 EVERY CHART IS INLINE SVG BUILT HERE. No library, no canvas, no client-side
 drawing: the graphs are in the HTML, so they render with JavaScript off, in a
 feed reader, and in the screenshot Oleg will actually look at on his phone.
-The only script on the page is the live tail, which adds a sentence about now
-and never redraws a chart — a chart that changes shape after load is a chart
-you cannot cite.
+
+THE TIME-WINDOW SELECTOR KEEPS THAT PROMISE (Roman, 2026-08-10: "status page UX
+is not production grade. in partucular there is no time window selection").
+Every offered window is drawn HERE, at build time, by this same engine, and the
+selector only decides which of the finished panels is on screen. No second chart
+engine in JavaScript, so there is nothing that can drift from what the tests
+check; with JavaScript off the default window is still a real chart and the
+selector hides itself rather than sitting there dead. A chart that changes shape
+after load is a chart you cannot cite — so every panel is stamped with the span
+it draws, and the caption says how much of that span was actually measured.
+
+ONE SELECTOR FOR THE WHOLE PAGE, not one per chart. The page's argument is that
+you can read straight down a moment across the queue and the machine; charts on
+different windows would not be stacked on one clock any more, which is the one
+thing this layout exists to guarantee.
 
 ONE SERIES PER CHART, inherited from build_sim's telemetry section and for the
 same measured reason: leaf green and sap amber are 4.5 ΔE apart under
@@ -52,12 +64,47 @@ CACHE = REPO / "pipeline" / "pulse-series.json"
 # +04 and says so; the cache underneath is unix seconds and stays that way.
 TZ = datetime.timezone(datetime.timedelta(hours=4))
 TZ_LABEL = "+04"
+# Spelled out for the hover readout, which formats its own clock face: the
+# browser's own month names would be the READER's locale, and every other stamp
+# on this page is +04 in English. One page, one clock.
+MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+          "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
 # 48 hours: two nights, so "it idled overnight" and "it idles every night" are
-# different pictures rather than the same one. The cache keeps seven days and
-# the backlog chart below spends them.
+# different pictures rather than the same one. That stays the DEFAULT — the view
+# with no choice made, and the one a reader with JavaScript off gets — and the
+# selector offers the rest.
 WINDOW_HOURS = 48
 LONG_WINDOW_HOURS = 24 * 7
+
+# (hours, button label, the words the page uses for it, the bare span). The short
+# end is there because "what is it doing right now" is a different question from
+# "did it work last night", and answering the first on a 48-hour axis means
+# reading a machine from two pixels.
+WINDOWS = [
+    (1, "1h", "the last hour", "1 hour"),
+    (6, "6h", "the last 6 hours", "6 hours"),
+    (24, "24h", "the last 24 hours", "24 hours"),
+    (48, "48h", "the last 48 hours", "48 hours"),
+    (24 * 7, "7d", "the last 7 days", "7 days"),
+]
+
+# A window is OFFERED only when the cache reaches back across at least this much
+# of it. The alternative — offering every window always — hands the reader a
+# seven-day frame holding nothing at all, and a blank stretch on this page means
+# "the machine was not reporting". It must not also mean "you picked a window
+# older than the cache". Nine tenths rather than the whole span so that a cache
+# 6.6 days deep still offers 7d — a full picture with a sliver missing.
+#
+# THE TEST IS ACROSS THE WHOLE CACHE, NOT PER SERIES, and the two do not agree:
+# the queue is sampled per commit and reaches back a week, while the box's
+# vitals are a rolling day. Greying 7d because the GPU grid is one day deep
+# would hide a week of backlog history that genuinely exists. So the button
+# offers what SOME chart can draw, and each panel that personally has no cache
+# for part of its span HATCHES that part — see uncached_band. Greying is the
+# page's answer to "there is nothing here"; hatching is its answer to "this
+# chart's share of it starts later".
+COVERAGE = 0.9
 
 GH = repo_slug.GH_REPO            # pipeline/repo_slug.py — never hardcode the owner
 RAW = repo_slug.RAW_URL
@@ -74,6 +121,19 @@ PLOT_W = W - PAD_L - PAD_R
 PLOT_H = H - PAD_T - PAD_B
 
 
+# The hatch the CSS has always pointed at. One definition for the page: an SVG
+# pattern is addressable by url(#id) from any other SVG in the same document, so
+# twenty panels share one. var(--faint) rather than currentColor — currentColor
+# inside a detached <defs> resolves against the defs' own context, not the chart
+# that uses it, and would come out the wrong colour in one of the two themes.
+HATCH_DEFS = (
+    '<svg width="0" height="0" aria-hidden="true" focusable="false" '
+    'style="position:absolute">'
+    '<defs><pattern id="pulse-hatch" width="7" height="7" '
+    'patternUnits="userSpaceOnUse" patternTransform="rotate(45)">'
+    '<line x1="0" y1="0" x2="0" y2="7" stroke="var(--faint)" stroke-width="1.4" '
+    'opacity=".45"/></pattern></defs></svg>')
+
 CSS = """
 .pulse-grid { display: grid; gap: 1.5rem; margin: 1.2rem 0 0; }
 .pchart { margin: 0; }
@@ -84,9 +144,71 @@ CSS = """
   letter-spacing: 0; color: var(--faint); }
 .pchart svg { width: 100%; height: auto; display: block; margin: .35rem 0 .1rem;
   background: linear-gradient(180deg, var(--panel-2), var(--panel));
-  border: 1px solid var(--line); border-radius: 12px; }
-.pchart .why { font: 500 .78rem/1.65 var(--mono); color: var(--faint);
-  margin: .15rem 0 0; }
+  border: 1px solid var(--line); border-radius: 12px; touch-action: pan-y; }
+/* ---- the reasoning, one fold down -------------------------------------------
+   Every chart on this page carries a paragraph explaining how to read it, and
+   those paragraphs are the reason the page can be trusted. They are also six
+   lines each on a phone, which pushed the queue chart a full screen below the
+   GPU chart — and reading one against the other AT THE SAME MOMENT is the only
+   thing this page is for. Folded, not cut: every word is still here, one tap
+   away, and the coverage caption that says what the chart does not know stays
+   in the open where it has to be. ---- */
+.pchart .why { margin: .15rem 0 0; }
+.pchart .why > summary { cursor: pointer; list-style: none;
+  font: 500 .72rem/1.6 var(--mono); color: var(--faint); }
+.pchart .why > summary::-webkit-details-marker { display: none; }
+.pchart .why > summary::before { content: "▸"; display: inline-block;
+  margin-right: .4rem; transition: transform .15s ease; }
+.pchart .why[open] > summary::before { transform: rotate(90deg); }
+.pchart .why > summary:hover { color: var(--ink); }
+.pchart .why p { font: 500 .78rem/1.65 var(--mono); color: var(--faint);
+  margin: .3rem 0 0; }
+
+/* PHONE AXIS TEXT. The SVG is drawn at a fixed 760-unit width and scaled to the
+   column, so a 10px label renders at 6px on a 460px phone — measured, and not
+   readable. The label has to grow in the chart's own units as the chart shrinks
+   in the reader's. */
+@media (max-width: 640px) {
+  .pchart .axis { font-size: 16px; }
+  .pchart .nodata { font-size: 15px; }
+}
+
+/* ---- the time-window selector ------------------------------------------------
+   Emitted hidden and unhidden by the script: with JavaScript off the buttons
+   could not switch anything, and a control that does nothing is worse than no
+   control. A window the cache cannot cover is DISABLED and says why on hover,
+   rather than being left out — "7d is greyed out because the cache is one day
+   deep" is a fact about the farm worth reading, and a selector whose buttons
+   come and go between deploys cannot be learned. ---- */
+.winbar { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem .8rem;
+  margin: 1.2rem 0 .2rem; padding: .7rem .85rem; border: 1px solid var(--line);
+  border-radius: 12px; background: linear-gradient(180deg, var(--panel-2), var(--panel)); }
+.winbar > .lbl { font: 700 .68rem/1.6 var(--mono); letter-spacing: .08em;
+  text-transform: uppercase; color: var(--faint); }
+.winbtns { display: flex; flex-wrap: wrap; gap: .3rem; }
+.winbtns button { font: 700 .74rem/1 var(--mono); letter-spacing: .04em;
+  color: var(--muted); background: var(--code-bg); border: 1px solid var(--line);
+  border-radius: 999px; padding: .42rem .68rem; cursor: pointer;
+  min-height: 32px; min-width: 44px; }
+.winbtns button:hover:not([disabled]) { color: var(--ink); border-color: var(--leaf-deep); }
+.winbtns button:focus-visible { outline: 2px solid var(--sap); outline-offset: 2px; }
+.winbtns button[aria-pressed="true"] { color: var(--sap-ink); background: var(--sap);
+  border-color: var(--sap); }
+.winbtns button[disabled] { opacity: .38; cursor: not-allowed;
+  border-style: dashed; }
+.winbar .winnote { flex: 1 1 100%; margin: 0; font: 500 .76rem/1.6 var(--mono);
+  color: var(--faint); }
+.pwin[hidden] { display: none; }
+.pwin .pcap { font: 500 .72rem/1.6 var(--mono); color: var(--faint);
+  margin: .3rem 0 0; }
+
+/* the hover readout: one line under each chart that holds the value at the
+   pointer, and the window's own headline number when the pointer is away. It is
+   always present so the chart never needs to be read off its own pixels. */
+.pchart .rdout { font: 500 .76rem/1.7 var(--mono); color: var(--faint);
+  min-height: 1.7em; font-variant-numeric: tabular-nums; margin: .1rem 0 0; }
+.pchart .rdout b { color: var(--ink); }
+.pchart .cross { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 2 3; }
 .pchart .grid { stroke: var(--line-soft); stroke-width: 1; }
 .pchart .axis { fill: var(--faint); font: 500 10px var(--mono); }
 .pchart .ln { fill: none; stroke: currentColor; stroke-width: 2;
@@ -235,17 +357,49 @@ def _path(run: list, t0: int, t1: int, vmax: float, step: bool) -> str:
     return " ".join(d)
 
 
-def chart(title: str, cap: str, klass: str, points: list, vmax: float,
-          unit: str, ylabels: list, t0: int, t1: int, why: str = "",
-          envelope: list = None, step: bool = False, ticks: list = None,
-          empty_note: str = "") -> str:
-    """One quantity, one hue, one chart. `points` is [(unix, value|None)].
+def uncached_band(t0: int, t1: int, cached_from: int | None) -> str:
+    """Hatch the stretch of this window that predates the series entirely.
+
+    THE WHOLE POINT OF THIS PAGE is that an empty chart means the machine was
+    not working. The time-window selector broke that: pick seven days and the
+    GPU chart's left-hand six are blank because the cache is a rolling day, not
+    because the card sat still for six days. Words under the chart were not
+    enough — the shape is what gets screenshotted. So the span with no cache
+    behind it is struck out inside the plot, and the reader can see at a glance
+    where the record starts.
+
+    Only for the leading edge. A hole in the MIDDLE of a series is a real
+    measurement gap and must keep looking like one.
+    """
+    if not cached_from or cached_from <= t0:
+        return ""
+    x = min(_x(cached_from, t0, t1), W - PAD_R)
+    if x <= PAD_L + 1:
+        return ""
+    label = ""
+    if x - PAD_L > 90:
+        label = (f'<text class="nodata" x="{(PAD_L + x) / 2:.1f}" '
+                 f'y="{PAD_T + PLOT_H / 2:.1f}" text-anchor="middle">'
+                 f'not cached — the record starts here →</text>')
+    return (f'<rect class="hatch" x="{PAD_L}" y="{PAD_T}" width="{x - PAD_L:.1f}" '
+            f'height="{PLOT_H}"/>{label}')
+
+
+def panel_svg(title: str, points: list, vmax: float, unit: str, ylabels: list,
+              t0: int, t1: int, envelope: list = None, step: bool = False,
+              ticks: list = None, empty_note: str = "",
+              cached_from: int | None = None) -> str:
+    """ONE WINDOW of one quantity, as a finished `<svg>`.
 
     `envelope` is an optional second array of the SAME quantity (peak against
     mean) drawn as a filled band under the line. `ticks` are discrete moments
     marked on the baseline — job completions under the queue.
+
+    The window is stamped onto the element as data-t0/data-t1 so the hover
+    script can turn a pointer position back into a time without knowing
+    anything about how the path was drawn.
     """
-    body = [_frame(t0, t1, vmax, unit, ylabels)]
+    body = [uncached_band(t0, t1, cached_from), _frame(t0, t1, vmax, unit, ylabels)]
     runs = _runs(points)
 
     if envelope:
@@ -280,13 +434,50 @@ def chart(title: str, cap: str, klass: str, points: list, vmax: float,
         body.append(f'<text class="nodata" x="{W / 2}" y="{PAD_T + PLOT_H / 2}" '
                     f'text-anchor="middle">{html.escape(empty_note)}</text>')
 
-    why_html = f'<p class="why">{why}</p>' if why else ""
-    return (f'<figure class="pchart {klass}">'
-            f'<figcaption><span>{html.escape(title)}</span>'
-            f'<span class="cap">{html.escape(cap)}</span></figcaption>'
-            f'<svg viewBox="0 0 {W} {H}" role="img" '
-            f'aria-label="{html.escape(title)} — {html.escape(cap)}">'
-            f'{"".join(body)}</svg>{why_html}</figure>')
+    # The crosshair is drawn hidden and moved by the hover script. It is part of
+    # the built SVG rather than injected later so that the chart geometry has
+    # exactly one definition — the script never computes a y, only an x.
+    body.append(f'<line class="cross" x1="0" y1="{PAD_T}" x2="0" '
+                f'y2="{PAD_T + PLOT_H}" style="display:none"/>')
+    body.append(f'<rect x="{PAD_L}" y="{PAD_T}" width="{PLOT_W}" height="{PLOT_H}" '
+                f'fill="transparent"/>')
+
+    span = f"{stamp(t0)} to {stamp(t1)}"
+    return (f'<svg viewBox="0 0 {W} {H}" role="img" data-t0="{t0}" data-t1="{t1}" '
+            f'aria-label="{html.escape(title)}, {html.escape(span)}">'
+            f'{"".join(body)}</svg>')
+
+
+def chart(title: str, klass: str, panels: list, why: str = "",
+          points_json: str = "", dec: int = 0, unit: str = "",
+          step: bool = False, hint: str = "") -> str:
+    """One quantity, one hue, one figure — with a finished panel per window.
+
+    `panels` is [(hours, is_default, caption, svg)]. Every one of them is a real
+    chart built above; the selector only decides which is displayed, so a reader
+    switching windows is never shown a shape this file did not draw.
+
+    `points_json` is the series ONCE, for the hover readout to name a value at
+    the pointer. Once and not per panel: the panels are five views of the same
+    numbers, and five copies of them is five times the page for no new fact.
+    `hint` is what the readout says while nothing is under the pointer — the line
+    holds its height either way, so the chart below it does not jump on hover.
+    """
+    wins = ""
+    for hours, is_default, cap, svg in panels:
+        wins += (f'<div class="pwin" data-h="{hours}"{"" if is_default else " hidden"}>'
+                 f'{svg}<p class="pcap">{cap}</p></div>')
+    why_html = (f'<details class="why"><summary>how to read this chart</summary>'
+                f'<p>{why}</p></details>') if why else ""
+    pts_attr = ""
+    if points_json:
+        pts_attr = (f' data-pts="{html.escape(points_json, quote=True)}"'
+                    f' data-dec="{dec}" data-unit="{html.escape(unit, quote=True)}"'
+                    f' data-dflt="{html.escape(hint, quote=True)}"'
+                    + (' data-step="1"' if step else ""))
+    return (f'<figure class="pchart {klass}"{pts_attr}>'
+            f'<figcaption><span>{html.escape(title)}</span></figcaption>'
+            f'{wins}<div class="rdout">{html.escape(hint)}</div>{why_html}</figure>')
 
 
 # ---- turning the cache into points ---------------------------------------------
@@ -359,6 +550,57 @@ def axis_top(samples: list, idx: int, floor: int) -> int:
     has never been deeper than that."""
     vals = [s[idx] for s in (samples or []) if s[idx] is not None]
     return max(floor, max(vals, default=floor))
+
+
+def extent(data: dict) -> tuple[int | None, int | None]:
+    """The oldest and newest moment ANY series in the cache carries a reading at.
+
+    This is what decides which windows the selector offers, so it deliberately
+    takes the union rather than the GPU grid alone: the queue is sampled per
+    commit and reaches back days further than the five-minute vitals do, and a
+    seven-day window that is real for the backlog chart should not be greyed out
+    because the card's history is one day deep.
+    """
+    lo, hi = [], []
+    gpu = data.get("gpu") or {}
+    t0, bucket = gpu.get("t0"), int(gpu.get("bucket_seconds") or 300)
+    n = max((len(gpu.get(k) or []) for k in ("u", "up", "v")), default=0)
+    if t0 is not None and n:
+        lo.append(t0)
+        hi.append(t0 + (n - 1) * bucket)
+    for s in (data.get("queue") or {}).get("samples") or []:
+        lo.append(s[0])
+        hi.append(s[0])
+    for e in (data.get("jobs") or {}).get("events") or []:
+        lo.append(e[0])
+        hi.append(e[0])
+    return (min(lo) if lo else None, max(hi) if hi else None)
+
+
+def window_menu(earliest: int | None, latest: int | None, now: int) -> list:
+    """[(hours, label, words, span, enabled, why_disabled)] — the selector's state.
+
+    A window is enabled when the cache reaches back across COVERAGE of it AND
+    holds something recent enough to land inside it. The second test is not
+    redundant: a cache that stopped extending yesterday spans a week and still
+    has nothing at all to say about the last hour, and offering "1h" there would
+    hand the reader an empty frame with no explanation on it.
+    """
+    out = []
+    for hours, label, words, span in WINDOWS:
+        if earliest is None or latest is None:
+            why = "there is nothing in the cache to draw"
+        elif earliest > now - COVERAGE * hours * 3600:
+            why = (f"the cache only reaches back to {stamp(earliest)}, which is "
+                   f"less than {span}")
+        elif latest < now - hours * 3600:
+            why = (f"nothing has been cached since {stamp(latest)}, so {span} "
+                   f"holds no reading at all")
+        else:
+            out.append((hours, label, words, span, True, ""))
+            continue
+        out.append((hours, label, words, span, False, why))
+    return out
 
 
 def busy_minutes(gpu: dict, t0: int, t1: int) -> tuple[float, int, int]:
@@ -476,6 +718,210 @@ LIVE_JS = """
 """
 
 
+WIN_JS = """
+/* ---- the time-window selector ------------------------------------------------
+   Every panel on this page was drawn by the builder. This switches which one is
+   shown and nothing else: no path is computed here, no axis is scaled here, and
+   there is no second chart engine to drift from the one the tests cover. The bar
+   is emitted hidden and unhidden below, so a reader with JavaScript off sees the
+   default window and no dead buttons.
+
+   The hover readout is the other half. It maps a pointer position back to a time
+   through the panel's own data-t0/data-t1 — the same two numbers the builder
+   scaled the path with — then names the nearest reading. It never draws a value;
+   it reads one out. */
+(function () {
+  var bar = document.getElementById("winbar");
+  if (!bar) return;
+  var note = document.getElementById("winnote");
+  var btns = bar.querySelectorAll("button[data-h]");
+  var figs = document.querySelectorAll(".pchart");
+  var tiles = document.querySelectorAll(".pstat[data-h]");
+  bar.hidden = false;
+
+  function show(h) {
+    var i, j, panels;
+    for (i = 0; i < figs.length; i++) {
+      panels = figs[i].querySelectorAll(".pwin");
+      for (j = 0; j < panels.length; j++) {
+        panels[j].hidden = panels[j].getAttribute("data-h") !== h;
+      }
+    }
+    for (i = 0; i < tiles.length; i++) {
+      tiles[i].hidden = tiles[i].getAttribute("data-h") !== h;
+    }
+    for (i = 0; i < btns.length; i++) {
+      var on = btns[i].getAttribute("data-h") === h;
+      btns[i].setAttribute("aria-pressed", on ? "true" : "false");
+      if (on && note) { note.textContent = btns[i].getAttribute("data-words"); }
+    }
+    for (i = 0; i < figs.length; i++) { reset(figs[i]); }
+  }
+
+  for (var k = 0; k < btns.length; k++) {
+    (function (b) {
+      if (b.disabled) return;
+      b.addEventListener("click", function () { show(b.getAttribute("data-h")); });
+    })(btns[k]);
+  }
+
+  /* ---- hover: the value under the pointer, in words --------------------- */
+  var PAD_L = WIN_PAD_L, PLOT_W = WIN_PLOT_W, VW = WIN_W;
+
+  function fmt(v, dec, unit) {
+    return v === null || v === undefined ? "\\u2014" : v.toFixed(dec) + unit;
+  }
+  function hhmm(sec) {
+    var d = new Date((sec + WIN_TZ_OFFSET) * 1000);
+    return ("0" + d.getUTCHours()).slice(-2) + ":" + ("0" + d.getUTCMinutes()).slice(-2);
+  }
+  function dayhhmm(sec) {
+    var d = new Date((sec + WIN_TZ_OFFSET) * 1000);
+    return d.getUTCDate() + " " + WIN_MONTHS[d.getUTCMonth()] + " " + hhmm(sec);
+  }
+  function reset(fig) {
+    var out = fig.querySelector(".rdout");
+    if (out) { out.textContent = fig.getAttribute("data-dflt") || ""; }
+    var lines = fig.querySelectorAll(".cross");
+    for (var i = 0; i < lines.length; i++) { lines[i].style.display = "none"; }
+  }
+
+  for (var f = 0; f < figs.length; f++) {
+    (function (fig) {
+      var raw = fig.getAttribute("data-pts");
+      if (!raw) return;
+      var pts;
+      try { pts = JSON.parse(raw); } catch (e) { return; }
+      var dec = +(fig.getAttribute("data-dec") || 0);
+      var unit = fig.getAttribute("data-unit") || "";
+      var step = fig.getAttribute("data-step") === "1";
+      var out = fig.querySelector(".rdout");
+      var svgs = fig.querySelectorAll("svg");
+
+      for (var s = 0; s < svgs.length; s++) {
+        (function (svg) {
+          var t0 = +svg.getAttribute("data-t0"), t1 = +svg.getAttribute("data-t1");
+          var cross = svg.querySelector(".cross");
+          svg.addEventListener("pointermove", function (e) {
+            var r = svg.getBoundingClientRect();
+            /* viewBox units, not pixels: the SVG is scaled to the column width
+               and the geometry below is the builder's, in its own coordinates. */
+            var vx = (e.clientX - r.left) / r.width * VW;
+            var frac = Math.max(0, Math.min(1, (vx - PAD_L) / PLOT_W));
+            var want = t0 + frac * (t1 - t0), best = -1, i, d;
+            if (step) {
+              /* A STEP SERIES HOLDS ITS VALUE BETWEEN SAMPLES, so the reading at
+                 the pointer is the last one written down at or before it — not
+                 the nearest one. Nearest would report a queue depth from a
+                 commit that had not happened yet, which is the one thing the
+                 step drawing exists to avoid. */
+              for (i = 0; i < pts.length; i++) {
+                if (pts[i][0] <= want && pts[i][1] !== null) { best = i; }
+              }
+            } else {
+              var bd = Infinity;
+              for (i = 0; i < pts.length; i++) {
+                if (pts[i][0] < t0 || pts[i][0] > t1 || pts[i][1] === null) continue;
+                d = Math.abs(pts[i][0] - want);
+                if (d < bd) { bd = d; best = i; }
+              }
+              /* Nothing within a twentieth of the window is nothing to report —
+                 without this the readout names a point off the edge of a gap and
+                 makes an unmeasured stretch look measured. */
+              if (best >= 0 && bd > (t1 - t0) / 20) { best = -1; }
+            }
+            if (best < 0) { reset(fig); return; }
+            var px = PAD_L + (Math.max(t0, Math.min(t1, want)) - t0) / (t1 - t0) * PLOT_W;
+            cross.setAttribute("x1", px.toFixed(1));
+            cross.setAttribute("x2", px.toFixed(1));
+            cross.style.display = "";
+            if (out) {
+              out.innerHTML = dayhhmm(step ? want : pts[best][0]) + " " + WIN_TZ +
+                " \\u00b7 <b>" + fmt(pts[best][1], dec, unit) + "</b>" +
+                (step ? " <span>(set " + dayhhmm(pts[best][0]) + ")</span>" : "");
+            }
+          });
+          svg.addEventListener("pointerleave", function () { reset(fig); });
+        })(svgs[s]);
+      }
+      reset(fig);
+    })(figs[f]);
+  }
+})();
+"""
+
+
+def coverage_note(gpu: dict, t0: int, t1: int) -> str:
+    """How much of this window the five-minute cache actually holds.
+
+    Printed under every GPU/memory panel, because the same blank left-hand side
+    means two opposite things — a young cache and a machine that was not
+    reporting — and only this sentence can tell them apart.
+    """
+    bucket = int(gpu.get("bucket_seconds") or 300)
+    total = max(1, (t1 - t0) // bucket)
+    measured = sum(1 for _, v in gpu_points(gpu, "u", t0, t1) if v is not None)
+    grid_t0 = gpu.get("t0")
+    txt = f"{measured} of {total} five-minute slots measured"
+    if grid_t0 and grid_t0 > t0 + bucket:
+        txt += (f" · nothing is cached before {stamp(grid_t0)} — the blank on the "
+                f"left is this cache's age, not the machine's")
+    return txt
+
+
+def queue_note(samples: list, t0: int, t1: int) -> str:
+    """How many times the queue file was written inside this window."""
+    n = sum(1 for s in samples if t0 <= s[0] <= t1)
+    if not n:
+        return ("no commit to the queue file inside this window — the line is the "
+                "depth carried in from before it")
+    return f"{n} commit{'' if n == 1 else 's'} to the queue file in this window"
+
+
+def words_line(words: str, ok: bool, why: str) -> str:
+    """The sentence under the selector for one window."""
+    if not ok:
+        return f"{words} is not available — {why}."
+    return f"Showing {words}, to {TZ_LABEL} clocks."
+
+
+def stat_tiles(gpu: dict, qsamples: list, done: list, span: str,
+               t0: int, t1: int, now: int) -> str:
+    """The headline numbers FOR ONE WINDOW.
+
+    They move with the selector because they have to: "68 min of GPU work" is
+    not a fact about the farm, it is a fact about a span, and leaving a 48-hour
+    total sitting over a one-hour chart would make the page contradict itself on
+    the reader's first click. The two queue depths are the exception — they are
+    the newest reading there is, at every span.
+    """
+    mins, measured, _total = busy_minutes(gpu, t0, t1)
+    idle_h, idle_from = idle_stretch(gpu, t0, t1)
+    bucket_min = int(gpu.get("bucket_seconds") or 300) / 60
+    measured_min = measured * bucket_min
+    # DENOMINATED BY WHAT WAS MEASURED, never by the width of the chart. The
+    # window can be wider than the cache, and dividing by the window would
+    # quietly report a busy machine as a lazy one — the first draft of this tile
+    # said 2.4% when the measured answer was 4.7%. Unmeasured time is not idle
+    # time and cannot be a denominator.
+    pct = (mins / measured_min * 100) if measured_min else 0
+    measured_h = measured_min / 60
+
+    stats = [
+        (f"{mins:.0f} min", f"of GPU work in the {measured_h:.1f} h measured "
+                            f"· {pct:.1f}% of the card"),
+        (f"{idle_h:.1f} h", "longest unbroken idle stretch"
+                            + (f" (from {clock(idle_from)})" if idle_from else "")),
+        (str(last_known(qsamples, 1)) if last_known(qsamples, 1) is not None else "—",
+         "runnable when last written down"),
+        (str(last_known(qsamples, 2)) if last_known(qsamples, 2) is not None else "—",
+         "planned (backlog)"),
+        (str(sum(1 for t in done if t0 <= t <= t1)), f"jobs finished in {span}"),
+    ]
+    return "".join(f"<li><b>{html.escape(a)}</b><span>{html.escape(b)}</span></li>"
+                   for a, b in stats)
+
+
 def render(data: dict | None, now: int = None) -> str:
     """The page body. Returns HTML; every unavailable series says so in words."""
     now = now or int(datetime.datetime.now(datetime.timezone.utc).timestamp())
@@ -499,108 +945,138 @@ def render(data: dict | None, now: int = None) -> str:
     events = (data.get("jobs") or {}).get("events") or []
     cached_at = int(data.get("generated") or 0)
 
-    t1 = now
-    t0 = t1 - WINDOW_HOURS * 3600
-    lt0 = t1 - LONG_WINDOW_HOURS * 3600
-
     vram_total = float(gpu.get("vram_total_gb") or 24)
     vmax_gb = max(4.0, round(vram_total))
-
-    u_pts = gpu_points(gpu, "u", t0, t1)
-    up_pts = gpu_points(gpu, "up", t0, t1)
-    v_pts = gpu_points(gpu, "v", t0, t1)
-
     done = sorted(e[0] for e in events if len(e) > 1 and e[1] == "done")
-    done_win = [t for t in done if t0 <= t <= t1]
 
-    mins, measured, total_b = busy_minutes(gpu, t0, t1)
-    idle_h, idle_from = idle_stretch(gpu, t0, t1)
-    # DENOMINATED BY WHAT WAS MEASURED, never by the width of the chart. The
-    # window is 48 hours and the cache currently holds 24, so dividing by the
-    # window would have quietly halved the figure and reported a busier machine
-    # as a lazier one — the first draft of this tile said 2.4% when the measured
-    # answer was 4.7%. Unmeasured time is not idle time and cannot be a
-    # denominator.
-    bucket_min = int(gpu.get("bucket_seconds") or 300) / 60
-    measured_min = measured * bucket_min
-    measured_h = measured_min / 60
-    pct = (mins / measured_min * 100) if measured_min else 0
+    # ---- which windows this cache can honestly draw ----------------------------
+    earliest, latest = extent(data)
+    menu = window_menu(earliest, latest, now)
+    offered = [m for m in menu if m[4]]
+    # The default is 48 h when the cache can cover it — two nights, the picture
+    # this page was built to show — and otherwise the widest window it can.
+    default_h = WINDOW_HOURS if any(m[0] == WINDOW_HOURS for m in offered) else (
+        max((m[0] for m in offered), default=WINDOW_HOURS))
 
-    runnable_now = last_known(qsamples, 1)
-    planned_now = last_known(qsamples, 2)
-
-    # The left edge of a young cache is not machine downtime, and the caption
-    # has to say which it is before the reader decides for himself.
-    grid_t0 = gpu.get("t0")
-    short = ""
-    if grid_t0 and grid_t0 > t0 + 3600:
-        short = (f" · nothing is cached before {stamp(grid_t0)} — this cache was "
-                 f"started then, and the blank left-hand side is its age, not the "
-                 f"machine's")
-
-    stats = [
-        (f"{mins:.0f} min", f"of GPU work in the {measured_h:.0f} h measured "
-                            f"· {pct:.1f}% of the card"),
-        (f"{idle_h:.1f} h", "longest unbroken idle stretch"
-                            + (f" (from {clock(idle_from)})" if idle_from else "")),
-        (str(runnable_now) if runnable_now is not None else "—", "runnable when last written down"),
-        (str(planned_now) if planned_now is not None else "—", "planned (backlog)"),
-        (str(len(done_win)), f"jobs finished in {WINDOW_HOURS} h"),
-    ]
-    stat_html = "".join(f"<li><b>{html.escape(a)}</b><span>{html.escape(b)}</span></li>"
-                        for a, b in stats)
+    # Y-AXIS CEILINGS ARE FIXED ACROSS EVERY WINDOW, computed from the whole
+    # cache rather than from the window on screen. A queue axis that rescaled on
+    # each pick would redraw a quiet hour as a busy one at 1h and a busy day as a
+    # quiet one at 7d, and the reader would be comparing two different rulers
+    # without being told. The GPU axis is a percentage and was never free to move.
+    run_top = axis_top(qsamples, 1, 6)
+    plan_top = axis_top(qsamples, 2, 4)
+    first_queue = next((s[0] for s in qsamples if s[1] is not None), None)
+    first_backlog = next((s[0] for s in qsamples if s[2] is not None), None)
 
     gpu_name = html.escape(str(gpu.get("gpu_name") or "the render box"))
-    measured_cap = (f"{measured} of {total_b} five-minute slots measured"
-                    if total_b else "no slots measured")
+
+    # ---- the panels: every offered window, drawn here --------------------------
+    gpu_panels, mem_panels, run_panels, plan_panels, tiles = [], [], [], [], []
+    for hours, label, words, span, ok, _why in menu:
+        if not ok:
+            continue
+        t0, t1 = now - hours * 3600, now
+        is_def = hours == default_h
+        cov = coverage_note(gpu, t0, t1)
+        qn = queue_note(qsamples, t0, t1)
+
+        gpu_panels.append((hours, is_def, html.escape(f"{gpu_name} · {cov}"),
+                           panel_svg("GPU utilisation", gpu_points(gpu, "u", t0, t1),
+                                     100, "%", [0, 50, 100], t0, t1,
+                                     envelope=gpu_points(gpu, "up", t0, t1),
+                                     cached_from=gpu.get("t0"),
+                                     empty_note="no GPU samples cached for this window")))
+        mem_panels.append((hours, is_def,
+                           html.escape(f"of {vram_total:g} GB on the card · {cov}"),
+                           panel_svg("Video memory in use", gpu_points(gpu, "v", t0, t1),
+                                     vmax_gb, " GB", [0, vmax_gb / 2, vmax_gb], t0, t1,
+                                     cached_from=gpu.get("t0"),
+                                     empty_note="no memory samples cached for this window")))
+        run_panels.append((hours, is_def, html.escape(qn),
+                           panel_svg("Work queue — runnable now",
+                                     queue_points(qsamples, 1, t0, t1, now),
+                                     run_top, "", [0, run_top], t0, t1, step=True,
+                                     ticks=[t for t in done if t0 <= t <= t1],
+                                     cached_from=first_queue,
+                                     empty_note="no queue commits in this window")))
+        plan_panels.append((hours, is_def, html.escape(qn),
+                            panel_svg("Planned work (backlog)",
+                                      queue_points(qsamples, 2, t0, t1, now),
+                                      plan_top, "", [0, plan_top / 2, plan_top], t0, t1,
+                                      step=True, cached_from=first_backlog,
+                                      empty_note="no queue commits cached")))
+        tiles.append((hours, is_def, stat_tiles(gpu, qsamples, done, span, t0, t1, now)))
+
+    # ---- the selector ----------------------------------------------------------
+    buttons = ""
+    for hours, label, words, _span, ok, why in menu:
+        pressed = "true" if (ok and hours == default_h) else "false"
+        dis = "" if ok else f' disabled title="{html.escape(why, quote=True)}"'
+        buttons += (f'<button type="button" data-h="{hours}" '
+                    f'data-words="{html.escape(words_line(words, ok, why), quote=True)}" '
+                    f'aria-pressed="{pressed}"{dis}>{html.escape(label)}</button>')
+    default_words = next((words_line(w, True, "") for h, _l, w, _s, ok, _y in menu
+                          if ok and h == default_h), "")
+    greyed = [m[1] for m in menu if not m[4]]
+    grey_line = ""
+    if greyed:
+        grey_line = (" Greyed out: " + ", ".join(greyed) +
+                     " — the cache does not reach back that far yet; hover one to "
+                     "see how far it does reach.")
+    winbar = (f'<div class="winbar" id="winbar" role="group" '
+              f'aria-label="Time window" hidden>'
+              f'<span class="lbl">Time window</span>'
+              f'<div class="winbtns">{buttons}</div>'
+              f'<p class="winnote" id="winnote">{html.escape(default_words)}'
+              f'{html.escape(grey_line)}</p></div>')
+
+    stat_html = "".join(
+        f'<ul class="pstat" data-h="{hours}"{"" if is_def else " hidden"}>{body}</ul>'
+        for hours, is_def, body in tiles)
 
     charts = [
-        chart(
-            "GPU utilisation", f"{gpu_name} · {measured_cap}{short}", "p-gpu",
-            u_pts, 100, "%", [0, 50, 100], t0, t1,
-            envelope=up_pts,
-            empty_note="no GPU samples cached for this window",
-            why="The line is each five minutes' average; the band behind it is the "
-                "highest single reading in the same five minutes. They separate when "
-                "the card works in bursts — a tall band over a low line is a short "
-                "render, not a busy afternoon. A break in the line is a stretch the "
-                "box did not report, which is not the same as a stretch it spent idle."),
-        chart(
-            "Video memory in use", f"of {vram_total:g} GB on the card", "p-mem",
-            v_pts, vmax_gb, " GB", [0, vmax_gb / 2, vmax_gb], t0, t1,
-            empty_note="no memory samples cached for this window",
-            why="Weights stay resident between beats, so this stays high while a "
-                "model is loaded and drops when the process exits — it reads as "
-                "'a pipeline is up', where the chart above reads as 'it is computing'."),
-        chart(
-            "Work queue — runnable now", "entries under tasks: · marks below are finished jobs",
-            "p-run",
-            queue_points(qsamples, 1, t0, t1, now), axis_top(qsamples, 1, 6),
-            "", [0, axis_top(qsamples, 1, 6)], t0, t1,
-            step=True, ticks=done_win,
-            empty_note="no queue commits in this window",
-            why="A step, because the queue is only written down when someone commits "
-                "the file — it held the last value through the flat parts rather than "
-                "being unmeasured there. Every worker reads this list and nothing else, "
-                "so a raised line here is work the farm was free to start. Each tick on "
-                "the floor is a job a machine logged as finished."),
+        chart("GPU utilisation", "p-gpu", gpu_panels,
+              hint="point anywhere on the chart to read the card's load at that minute",
+              points_json=json.dumps(gpu_points(gpu, "u", 0, now), separators=(",", ":")),
+              dec=0, unit="%",
+              why="The line is each five minutes' average; the band behind it is the "
+                  "highest single reading in the same five minutes. They separate when "
+                  "the card works in bursts — a tall band over a low line is a short "
+                  "render, not a busy afternoon. A break in the line is a stretch the "
+                  "box did not report, which is not the same as a stretch it spent idle."),
+        chart("Video memory in use", "p-mem", mem_panels,
+              hint="point anywhere on the chart to read the memory in use at that minute",
+              points_json=json.dumps(gpu_points(gpu, "v", 0, now), separators=(",", ":")),
+              dec=1, unit=" GB",
+              why="Weights stay resident between beats, so this stays high while a "
+                  "model is loaded and drops when the process exits — it reads as "
+                  "'a pipeline is up', where the chart above reads as 'it is computing'."),
+        chart("Work queue — runnable now", "p-run", run_panels, step=True,
+              hint="point anywhere on the chart to read the depth in force at that moment",
+              points_json=json.dumps([[s[0], s[1]] for s in qsamples],
+                                     separators=(",", ":")),
+              dec=0, unit=" runnable",
+              why="A step, because the queue is only written down when someone commits "
+                  "the file — it held the last value through the flat parts rather than "
+                  "being unmeasured there. Every worker reads this list and nothing else, "
+                  "so a raised line here is work the farm was free to start. Each tick on "
+                  "the floor is a job a machine logged as finished."),
     ]
 
-    long_q = queue_points(qsamples, 2, lt0, t1, now)
-    qmax = axis_top(qsamples, 2, 4)
-    first_backlog = next((s[0] for s in qsamples if s[2] is not None), None)
     backlog_why = ("The backlog is invisible to every worker by design — it is where "
                    "work waits with its blocker written down. Growing while the chart "
                    "above stays flat means the planning is outrunning the machine.")
-    if first_backlog and first_backlog > lt0 + 3600:
+    if first_backlog and qsamples and first_backlog > qsamples[0][0] + 3600:
         backlog_why += (f" The line starts at {stamp(first_backlog)} because the file "
                         f"had no <code>backlog:</code> list before then — the days to "
                         f"its left are unrecorded, not empty.")
-    charts.append(chart(
-        "Planned work (backlog) — seven days", "entries under backlog:", "p-plan",
-        long_q, qmax, "", [0, qmax / 2, qmax], lt0, t1, step=True,
-        empty_note="no queue commits cached",
-        why=backlog_why))
+    charts.append(chart("Planned work (backlog)", "p-plan", plan_panels, step=True,
+                        hint="point anywhere on the chart to read the depth in force "
+                             "at that moment",
+                        points_json=json.dumps([[s[0], s[2]] for s in qsamples],
+                                               separators=(",", ":")),
+                        dec=0, unit=" planned",
+                        why=backlog_why))
 
     src = data.get("jobs", {}).get("branches") or []
     return f"""<style>{CSS}</style>
@@ -608,18 +1084,26 @@ def render(data: dict | None, now: int = None) -> str:
 <p class="lede">What the farm had to do, and what the render box was actually doing
 while it had to do it. Both graphs share one clock, so you can read straight down
 a moment and see whether the machine was on the work.</p>
-<ul class="pstat">{stat_html}</ul>
+{HATCH_DEFS}
+{winbar}
+{stat_html}
 {live}
 <div class="pulse-grid">{"".join(charts)}</div>
 <h2>What this page can and cannot know</h2>
 <p class="pnote">
 <b>Clocks are {TZ_LABEL}.</b> The cache underneath is UTC; every face on this page
 is converted once, here.<br>
+<b>Every window on the selector is a chart built when the site built.</b> Switching
+window swaps in another finished panel — nothing on this page is redrawn in your
+browser, so the shape you are looking at is the shape that was published. A window
+the cache cannot reach across is greyed out rather than drawn half-empty.<br>
+<b>The y axis does not move when the window does.</b> Each chart's ceiling is set
+from the whole cache, so a quiet hour looks quiet at every span instead of being
+rescaled into a busy one.<br>
 <b>The graphs are as old as the cache: extended {stamp(cached_at)}
 ({ago(cached_at, now)}).</b> They are drawn into the HTML when the site builds, from
-<code>pipeline/pulse-series.json</code>. Nothing on this page redraws itself — the one
-live line is the sentence above the charts, which your browser fetches straight from
-the machine and the queue file.<br>
+<code>pipeline/pulse-series.json</code>. The one live line is the sentence above the
+charts, which your browser fetches straight from the machine and the queue file.<br>
 <b>Where each series comes from.</b> GPU and memory: the box samples itself every ten
 seconds and publishes a rolling 24-hour summary to its courier branch, which
 <code>pulse_series.py</code> folds into a five-minute grid — that folding is the only
@@ -641,12 +1125,24 @@ one.</p>
 
 
 def build(out_dir: Path):
+    # page() carries the build-commit stamp (see build_commit.py), so this
+    # builder is stamped by using it and needs no second mechanism — pulse.html
+    # is the only file it writes, and it writes it through page().
     from build_site import page   # late import: build_site calls us
     data = load()
     body = render(data)
-    tail = ("<script>" +
+    # The selector script is handed the SAME geometry and the SAME clock the
+    # panels were drawn with, rather than repeating either as a literal. A
+    # crosshair placed by a second copy of PAD_L would sit next to the line it is
+    # supposed to be on, and a readout on a second copy of the timezone would
+    # name a different hour than the axis under it.
+    consts = (f"var WIN_W={W},WIN_PAD_L={PAD_L},WIN_PLOT_W={PLOT_W},"
+              f"WIN_TZ={json.dumps(TZ_LABEL)},"
+              f"WIN_TZ_OFFSET={int(TZ.utcoffset(None).total_seconds())},"
+              f"WIN_MONTHS={json.dumps(MONTHS)};")
+    tail = ("<script>" + consts +
             LIVE_JS.replace("__TEL__", TELEMETRY_URL).replace("__Q__", QUEUE_URL) +
-            "</script>")
+            WIN_JS + "</script>")
     out = Path(out_dir) / "pulse.html"
     out.write_text(page(
         "The pulse — queue and machine over time",

@@ -290,6 +290,154 @@ def test_the_page_never_divides_by_the_window():
           any(abs(h - 6.0) < 1e-9 for h in measured))
 
 
+# ---- the time-window selector ---------------------------------------------------
+# Roman, 2026-08-10: "status page UX is not production grade. in partucular there
+# is no time window selection." What these guard is the honesty of the control
+# rather than the control itself: a selector that offers a window the cache
+# cannot fill turns "the machine was idle" and "we have no record" into the same
+# blank rectangle, which is the one confusion this whole page exists to prevent.
+
+def test_a_window_wider_than_the_cache_is_not_offered():
+    now = 1786300000
+    day = now - 24 * 3600            # a cache exactly one day deep, current
+    menu = {h: (ok, why) for h, _l, _w, _s, ok, why in bp.window_menu(day, now, now)}
+
+    check("an hour inside a one-day cache is offered", menu[1][0])
+    check("the full day the cache holds is offered", menu[24][0])
+    check("two days against a one-day cache is greyed out", not menu[48][0])
+    check("a week against a one-day cache is greyed out", not menu[24 * 7][0])
+    check("a greyed window says how far back the cache does reach",
+          "only reaches back to" in menu[48][1])
+
+
+def test_a_window_the_cache_nearly_covers_is_still_offered():
+    """COVERAGE, not the whole span: 6.6 days of history should not lose the
+    seven-day view over a missing sliver — it is a full picture, and the panel
+    hatches the sliver."""
+    now = 1786300000
+    nearly = now - int(6.6 * 86400)
+    menu = {h: ok for h, _l, _w, _s, ok, _y in bp.window_menu(nearly, now, now)}
+    check("6.6 days of cache still offers the 7-day window", menu[24 * 7])
+
+    thin = now - int(4 * 86400)
+    menu2 = {h: ok for h, _l, _w, _s, ok, _y in bp.window_menu(thin, now, now)}
+    check("4 days of cache does not offer the 7-day window", not menu2[24 * 7])
+
+
+def test_a_stale_cache_does_not_offer_the_recent_windows():
+    """A cache that stopped extending yesterday spans a week and still has
+    nothing whatever to say about the last hour."""
+    now = 1786300000
+    menu = {h: (ok, why) for h, _l, _w, _s, ok, why
+            in bp.window_menu(now - 8 * 86400, now - 20 * 3600, now)}
+    check("the last hour is greyed out when nothing was cached in it", not menu[1][0])
+    check("and it says the cache stopped rather than that it is shallow",
+          "nothing has been cached since" in menu[1][1])
+    check("the week, which the cache does cover, stays offered", menu[24 * 7][0])
+
+
+def test_an_empty_cache_offers_no_window_at_all():
+    now = 1786300000
+    menu = bp.window_menu(None, None, now)
+    check("no window is offered when there is nothing to draw",
+          not any(ok for _h, _l, _w, _s, ok, _y in menu))
+    check("and every button says so", all("nothing in the cache" in why
+                                          for _h, _l, _w, _s, _ok, why in menu))
+
+
+def test_the_span_with_no_cache_behind_it_is_struck_out():
+    """The blank left-hand side of a wide window must not read as an idle
+    machine. It is hatched, and the hatch is inside the plot where the shape is."""
+    t0, t1 = 0, 10000
+    band = bp.uncached_band(t0, t1, 5000)
+    check("a record starting mid-window hatches the span before it",
+          'class="hatch"' in band)
+    check("and says in the plot that this is missing record, not missing work",
+          "not cached" in band)
+
+    check("a record older than the window hatches nothing",
+          bp.uncached_band(t0, t1, -500) == "")
+    check("a window with no known start hatches nothing",
+          bp.uncached_band(t0, t1, None) == "")
+    # A hole in the MIDDLE is a real measurement gap and keeps looking like one:
+    # the band only ever covers the leading edge.
+    band2 = bp.uncached_band(t0, t1, 9900)
+    check("the hatch never reaches past the point the record starts",
+          'class="hatch"' in band2 and 'width="0' not in band2)
+
+
+def test_every_offered_window_is_drawn_into_the_page():
+    """The selector may only offer panels that exist — it swaps finished charts
+    and cannot draw one, so an offered window with no panel is a blank page."""
+    now = 1786300000
+    n = 24 * 12                       # 24 h of five-minute buckets
+    data = {
+        "generated": now,
+        "gpu": {"t0": now - n * 300, "bucket_seconds": 300,
+                "u": [50] * n, "up": [70] * n, "v": [8] * n,
+                "vram_total_gb": 24, "gpu_name": "test card"},
+        "queue": {"samples": [[now - 86400, 3, 5], [now - 3600, 4, 6]]},
+        "jobs": {"events": [], "branches": []},
+    }
+    out = bp.render(data, now=now)
+    offered = [h for h, _l, _w, _s, ok, _y
+               in bp.window_menu(*bp.extent(data), now) if ok]
+    check("a one-day cache offers the 1h, 6h and 24h windows",
+          offered == [1, 6, 24])
+    for h in offered:
+        # four charts, so four panels per window
+        check(f"the {h}h window is drawn on every chart",
+              out.count(f'class="pwin" data-h="{h}"') == 4)
+        check(f"the {h}h window has its own stat tiles",
+              f'class="pstat" data-h="{h}"' in out)
+    check("no panel is emitted for a window the selector greys out",
+          'data-h="168"' not in out.split('class="pulse-grid"')[1])
+    check("exactly one window is visible before anything is clicked",
+          out.count('class="pwin" data-h="24"') == 4
+          and out.count('class="pwin" data-h="24" hidden') == 0)
+
+
+def test_the_selector_hides_itself_when_javascript_is_off():
+    """A control that cannot work must not be on the page looking like it can.
+    The bar ships hidden and the script unhides it."""
+    now = 1786300000
+    n = 300
+    data = {
+        "generated": now,
+        "gpu": {"t0": now - n * 300, "bucket_seconds": 300,
+                "u": [10] * n, "up": [20] * n, "v": [2] * n,
+                "vram_total_gb": 24, "gpu_name": "test card"},
+        "queue": {"samples": [[now - 3600, 1, 1]]},
+        "jobs": {"events": [], "branches": []},
+    }
+    out = bp.render(data, now=now)
+    bar = out[out.index('id="winbar"'):]
+    check("the window bar is emitted hidden", bar[:bar.index(">")].endswith("hidden"))
+    check("and a default chart is on the page regardless",
+          '<svg' in out and 'class="pwin"' in out)
+    check("the y axis is fixed across windows, not rescaled per pick",
+          "does not move when the window does" in out)
+
+
+def test_the_axis_ceiling_does_not_move_between_windows():
+    """A queue axis rescaled per window would redraw a quiet hour as a busy one.
+    Every panel of a chart must share one ceiling."""
+    now = 1786300000
+    samples = [[now - 6 * 86400, 20, 30], [now - 1800, 2, 3]]
+    data = {
+        "generated": now,
+        "gpu": {},
+        "queue": {"samples": samples},
+        "jobs": {"events": [], "branches": []},
+    }
+    out = bp.render(data, now=now)
+    # 20 is the deepest runnable reading ever taken, so it is the ceiling on
+    # every window — including the recent ones where the queue never passed 2.
+    tops = re.findall(r'text-anchor="end">(\d+)</text>', out)
+    check("the deepest reading in the cache sets the ceiling",
+          "20" in tops and "30" in tops)
+
+
 def main():
     test_absent_list_is_not_an_empty_one()
     test_a_top_level_key_closes_the_list()
@@ -307,6 +455,14 @@ def main():
     test_no_cache_says_so_and_draws_nothing()
     test_the_page_survives_a_hole_in_every_series()
     test_the_page_never_divides_by_the_window()
+    test_a_window_wider_than_the_cache_is_not_offered()
+    test_a_window_the_cache_nearly_covers_is_still_offered()
+    test_a_stale_cache_does_not_offer_the_recent_windows()
+    test_an_empty_cache_offers_no_window_at_all()
+    test_the_span_with_no_cache_behind_it_is_struck_out()
+    test_every_offered_window_is_drawn_into_the_page()
+    test_the_selector_hides_itself_when_javascript_is_off()
+    test_the_axis_ceiling_does_not_move_between_windows()
 
     print()
     if FAILURES:

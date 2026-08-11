@@ -73,6 +73,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "pipeline"))
+import build_commit  # noqa: E402  one source for "which commit built this"
 import repo_slug  # noqa: E402  one source for "which repo is this"
 from site_theme import THEME_CSS  # noqa: E402  the one visual language
 
@@ -1354,9 +1355,22 @@ def queue_entry_html(e: dict, listname: str, state: str, claims: dict,
     # world scenery", which on this page would be a falsehood with an id on it.
     what = task_story(e)[0] if any(e.get(k) for k in ("beats", "seeds", "video")) else ""
 
+    # THE AGE IS THE NEWEST CHECK-IN LINE FOR THIS ID, and nothing else. The
+    # queue file carries no timestamps at all — no `added`, no `since` — so
+    # "how long has this been waiting" is a question the record genuinely
+    # cannot answer for an entry nobody has touched. It says that instead of
+    # dating the entry off the build, which would restart every deploy and read
+    # as a queue that never gets old.
+    lines = claims.get(tid, [])
+    if lines:
+        age = f'last check-in {age_el(lines[0][0], now)}'
+    else:
+        age = '<span class="qnever">never claimed</span>'
+
     bits = [f'<div class="qtop"><span class="qchip {state}">{emoji} {_e(word)}</span>'
             f'<code class="qid">{_e(tid) or "(no id)"}</code>'
-            f'<span class="qlist">{_e(listname)}:</span></div>']
+            f'<span class="qlist">{_e(listname)}:</span>'
+            f'<span class="qage">{age}</span></div>']
     if faults:
         bits.append('<div class="qfault"><b>this entry cannot be read as queued '
                     'work</b><ul>'
@@ -1396,7 +1410,6 @@ def queue_entry_html(e: dict, listname: str, state: str, claims: dict,
     if fields:
         bits.append(f'<dl class="qfields">{fields}</dl>')
 
-    lines = claims.get(tid, [])
     if lines:
         rows = "".join(
             f'<li><b>{_e(mark or "?")}</b> · {_e(who)} · {age_el(when, now)}'
@@ -1441,11 +1454,27 @@ def queue_record_html(tasks: list, backlog: list, records: list, dropped: list,
            f'planned (<code>backlog:</code>). Every one of them is below, '
            'unmerged, with the fields exactly as the file writes them.</p>']
 
+    # The contents page. Built from the groups that exist, in the same order
+    # they are printed below, so the index and the document cannot disagree.
+    index = ""
+    if dropped or bad:
+        n = len(dropped) + len(bad)
+        index += (f'<li><a href="#q-malformed">🚨 MALFORMED <b>{n}</b></a></li>')
+    for state in QSTATE_ORDER:
+        rows = groups.get(state)
+        if not rows:
+            continue
+        emoji, word, _blurb = QSTATES[state]
+        index += (f'<li><a href="#qg-{state}">{emoji} {_e(word)} '
+                  f'<b>{len(rows)}</b></a></li>')
+    if index:
+        out.append(f'<ul class="qindex">{index}</ul>')
+
     # A dropped entry never became a dict, so it has no id to print and no state
     # to be in — it is reported as the parse fault it is, with its position.
     if dropped:
         out.append(
-            f'<div class="qbad"><h3>🚨 MALFORMED — {len(dropped)} entr'
+            f'<div class="qbad" id="q-malformed"><h3>🚨 MALFORMED — {len(dropped)} entr'
             f'{"y" if len(dropped) == 1 else "ies"} in the file are not entries</h3>'
             '<p class="mono">These are not shaped like queue entries at all, so '
             'no reader in this repo can act on them. They are listed by position '
@@ -1455,7 +1484,8 @@ def queue_record_html(tasks: list, backlog: list, records: list, dropped: list,
             + "</ul></div>")
     if bad:
         out.append(
-            f'<div class="qbad"><h3>🚨 MALFORMED — {len(bad)} entr'
+            f'<div class="qbad"{"" if dropped else " id=\"q-malformed\""}>'
+            f'<h3>🚨 MALFORMED — {len(bad)} entr'
             f'{"y" if len(bad) == 1 else "ies"} missing a required field</h3>'
             '<p class="mono">Shown in full rather than skipped. Each names what '
             'it is missing, against the entry shape the queue file\'s own header '
@@ -1467,7 +1497,7 @@ def queue_record_html(tasks: list, backlog: list, records: list, dropped: list,
         if not rows:
             continue
         emoji, word, blurb = QSTATES[state]
-        out.append(f'<div class="qgroup"><h3>{emoji} {_e(word)} '
+        out.append(f'<div class="qgroup" id="qg-{state}"><h3>{emoji} {_e(word)} '
                    f'<span class="count">{len(rows)}</span></h3>'
                    f'<p class="mono">{_e(blurb)}</p>'
                    f'<ol class="qlist-ol">{"".join(rows)}</ol></div>')
@@ -1579,6 +1609,20 @@ QUEUE_URL = f"{RAW}/main/pipeline/farm-queue.yaml"
 # file — it was declared twice, and two constants of the same name is one edit
 # away from a page whose chart and whose machine list disagree about "stale".
 
+# The windows the reader may pick, and the words the page uses for each. Same
+# list and same rule as build_pulse.WINDOWS — the two pages are read one after
+# the other and a reader who learns "6h" on one must find it on the other. They
+# are separate constants because the two pages draw from different files with
+# different depths, and neither should be able to break the other's selector.
+TEL_WINDOWS = [(1, "1h", "the last hour"), (6, "6h", "the last 6 hours"),
+               (24, "24h", "the last 24 hours"), (48, "48h", "the last 48 hours"),
+               (24 * 7, "7d", "the last 7 days")]
+# A window is offered only if the published file reaches back across this much
+# of it. telemetry.json is a rolling 24 hours, so 48h and 7d are greyed out here
+# and always will be — the long history lives on /pulse, and the disabled button
+# says so rather than leaving the reader to wonder where it went.
+TEL_COVERAGE = 0.9
+
 TEL_CSS = """
 /* ---- the render box: three single-axis charts, one series each.
    ONE SERIES PER CHART is not a layout accident. GPU% and GB cannot share a y
@@ -1596,9 +1640,13 @@ TEL_CSS = """
 .tchart svg { width: 100%; height: auto; display: block; margin: .35rem 0 .15rem;
   background: linear-gradient(180deg, var(--panel-2), var(--panel));
   border: 1px solid var(--line); border-radius: 12px; touch-action: pan-y; }
+/* the readout holds its height whether or not a pointer is on the chart, so the
+   page does not jump under the reader's cursor as they sweep across it */
 .tchart .rdout { font: 500 .74rem/1.6 var(--mono); color: var(--faint);
-  min-height: 1.6em; font-variant-numeric: tabular-nums; }
+  min-height: 3.2em; font-variant-numeric: tabular-nums; }
 .tchart .rdout b { color: var(--ink); }
+.tchart .rdout .now { display: block; color: var(--muted); }
+.tchart .rdout .now b { font-size: 1.05em; }
 .tchart .grid { stroke: var(--line-soft); stroke-width: 1; }
 .tchart .axis { fill: var(--faint); font: 500 10px var(--mono); }
 .tchart .ln { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
@@ -1606,8 +1654,44 @@ TEL_CSS = """
 .tchart .pk { fill: var(--ink); font: 600 10px var(--mono); }
 .tchart .dot { stroke: var(--panel); stroke-width: 2; }
 .tchart .cross { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 2 3; }
+.tchart .nodata { fill: var(--faint); font: 500 10px var(--mono); opacity: .85; }
 .tel-gpu { color: var(--sap); }        /* the series wears currentColor */
 .tel-mem { color: var(--leaf); }
+
+/* ---- the time-window selector (Roman, 2026-08-10: "there is no time window
+   selection"). Built by the script, because the charts it drives are: this page
+   holds no telemetry at build time and must not print a control for data it has
+   not got. A window the published file cannot reach across is DISABLED with the
+   reason on it, never hidden — "48h is greyed out because the box publishes a
+   rolling day" is the answer to the question the missing button would raise. */
+.winbar { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem .8rem;
+  margin: .9rem 0 .2rem; padding: .7rem .85rem; border: 1px solid var(--line);
+  border-radius: 12px; background: linear-gradient(180deg, var(--panel-2), var(--panel)); }
+.winbar > .lbl { font: 700 .68rem/1.6 var(--mono); letter-spacing: .08em;
+  text-transform: uppercase; color: var(--faint); }
+.winbtns { display: flex; flex-wrap: wrap; gap: .3rem; }
+.winbtns button { font: 700 .74rem/1 var(--mono); letter-spacing: .04em;
+  color: var(--muted); background: var(--code-bg); border: 1px solid var(--line);
+  border-radius: 999px; padding: .42rem .68rem; cursor: pointer;
+  min-height: 32px; min-width: 44px; }
+.winbtns button:hover:not([disabled]) { color: var(--ink); border-color: var(--leaf-deep); }
+.winbtns button:focus-visible { outline: 2px solid var(--sap); outline-offset: 2px; }
+.winbtns button[aria-pressed="true"] { color: var(--sap-ink); background: var(--sap);
+  border-color: var(--sap); }
+.winbtns button[disabled] { opacity: .38; cursor: not-allowed; border-style: dashed; }
+.winbar .winnote { flex: 1 1 100%; margin: 0; font: 500 .76rem/1.6 var(--mono);
+  color: var(--faint); }
+
+@media (max-width: 640px) {
+  /* PHONE AXIS TEXT. The SVG is drawn at a fixed 720-unit width and scaled down
+     to the column, so a 10px label lands at about 6px on a 460px phone —
+     measured, and not readable. The label grows in the chart's own units by
+     exactly as much as the chart shrinks in the reader's. */
+  .tchart .axis { font-size: 15px; }
+  .tchart .pk, .tchart .nodata { font-size: 14px; }
+  /* four vitals across a phone is three and an orphan; two by two is a block */
+  .vitals { grid-template-columns: repeat(2, 1fr); }
+}
 """
 
 # Plain string, not an f-string: JavaScript, full of braces. INFRA_* are emitted
@@ -1663,16 +1747,33 @@ INFRA_JS = """
 """
 
 # Plain string, not an f-string: this is JavaScript and it is full of braces.
-# TEL_URL / TEL_STALE are emitted next to it by build().
+# TEL_URL / TEL_STALE / TEL_WINS / TEL_COVER are emitted next to it by build().
 TEL_JS = """
 /* The render box's charts. No library, no external code — one fetch of our own
-   JSON off the courier branch, three inline SVGs, ~150 lines. If any of it fails
-   the page says so in words instead of drawing a dead chart. */
+   JSON off the courier branch, three inline SVGs, and a time-window selector.
+   If any of it fails the page says so in words instead of drawing a dead chart.
+
+   WHY THE WINDOW IS DONE HERE AND NOT AT BUILD TIME, which is the opposite of
+   /pulse. This page has no telemetry when it is built — the file is fetched by
+   the reader — so there is nothing to pre-draw and the panels have to be
+   computed where the data lands. The window only ever SLICES the fetched
+   series; no value is interpolated, resampled or invented to fill one, so a
+   narrow window is the same numbers with fewer of them. */
 (function () {
   var note = document.getElementById("tel-note"), body = document.getElementById("tel-body");
   if (!note || !body || !window.fetch) return;          /* no JS, no claim */
-  var W = 720, H = 150, PL = 40, PR = 12, PT = 12, PB = 20, BASE = H - PB;
+  var W = 720, H = 150, PL = 46, PR = 12, PT = 12, PB = 20, BASE = H - PB;
   var charts = [];
+  var DATA = null, WIN = null;
+
+  /* The reader's own offset, named once and printed on every axis. Every clock
+     face below is the browser's local time — the existing and correct choice for
+     a public page — but an unlabelled clock face is not a timestamp, and a
+     reader comparing this page with /pulse (which is always +04) has to be able
+     to see which one he is looking at. */
+  var TZMIN = -new Date().getTimezoneOffset();
+  var TZLBL = "UTC" + (TZMIN < 0 ? "-" : "+") +
+    Math.floor(Math.abs(TZMIN) / 60) + (Math.abs(TZMIN) % 60 ? ":" + Math.abs(TZMIN) % 60 : "");
 
   function hhmm(sec) {   /* the VIEWER's clock, never ours */
     return new Date(sec * 1000).toLocaleTimeString([], {hour: "2-digit", minute: "2-digit"});
@@ -1697,11 +1798,34 @@ TEL_JS = """
     for (var i = 0; i < a.length; i++) if (a[i] != null && (bv === null || a[i] > bv)) { bv = a[i]; bi = i; }
     return bi;
   }
+  function mean(a) {
+    var s = 0, n = 0;
+    for (var i = 0; i < a.length; i++) if (a[i] != null) { s += a[i]; n++; }
+    return n ? s / n : null;
+  }
+
+  /* ---- the window --------------------------------------------------------
+     A slice of the fetched arrays, never a resampling of them. `span` is what
+     the file actually holds, and it decides which buttons are offered. */
+  function slice(d, hours) {
+    var cut = (d.t[d.t.length - 1]) - hours * 3600;
+    var i0 = 0;
+    while (i0 < d.t.length && d.t[i0] < cut) i0++;
+    /* one point of lead-in, so a line entering the window from the left starts
+       at the edge instead of floating a minute inside it */
+    if (i0 > 0) i0--;
+    var out = {}, keys = ["t", "u", "up", "v", "r", "c"], k;
+    for (var j = 0; j < keys.length; j++) {
+      k = keys[j];
+      out[k] = (d[k] || []).slice(i0);
+    }
+    return out;
+  }
 
   function chart(d, key, o) {
     var t = d.t, v = d[key], n = t.length, id = "tc-" + key;
     var t0 = t[0], span = Math.max(60, t[n - 1] - t0);
-    var gap = (d.bucket_seconds || 60) * 3;
+    var gap = (DATA.bucket_seconds || 60) * 3;
     function x(i) { return PL + (t[i] - t0) / span * (W - PL - PR); }
     function y(val) { return BASE - Math.max(0, Math.min(1, val / o.max)) * (BASE - PT); }
     /* segments: a hole in the data is a HOLE. Joining across one would draw
@@ -1712,7 +1836,6 @@ TEL_JS = """
       if (v[i] != null) cur.push(i);
     }
     if (cur.length) segs.push(cur);
-    if (!segs.length) return "";
     var line = "", fill = "";
     segs.forEach(function (s) {
       var p = s.map(function (j, k) { return (k ? "L" : "M") + x(j).toFixed(1) + " " + y(v[j]).toFixed(1); }).join(" ");
@@ -1723,11 +1846,16 @@ TEL_JS = """
       }
     });
     var g = "";
+    /* Y LABELS CARRY THEIR UNIT. "100" under a chart headed "GPU utilisation"
+       is readable; "100" under one headed "VRAM in use" is 100 of what, and the
+       answer differs per chart. The axis says it so the reader never has to
+       carry it down from the title. */
     [0, 0.5, 1].forEach(function (f) {
       var yy = BASE - f * (BASE - PT);
       g += '<line class="grid" x1="' + PL + '" y1="' + yy.toFixed(1) + '" x2="' + (W - PR) +
            '" y2="' + yy.toFixed(1) + '"/><text class="axis" x="' + (PL - 6) + '" y="' +
-           (yy + 3.5).toFixed(1) + '" text-anchor="end">' + (o.max * f).toFixed(o.tick) + '</text>';
+           (yy + 3.5).toFixed(1) + '" text-anchor="end">' +
+           (o.max * f).toFixed(o.tick) + o.unit.trim() + '</text>';
     });
     [0, 1 / 3, 2 / 3, 1].forEach(function (f, k) {
       var xx = PL + f * (W - PL - PR);
@@ -1735,47 +1863,87 @@ TEL_JS = """
            (k === 0 ? "start" : k === 3 ? "end" : "middle") + '">' +
            (k === 0 ? stamp(t0) : hhmm(t0 + f * span)) + '</text>';
     });
+    /* the axis names its clock, once, at the right-hand end */
+    g += '<text class="axis" x="' + (W - PR) + '" y="' + (PT + 9) +
+         '" text-anchor="end" opacity=".8">' + TZLBL + '</text>';
+
+    if (!segs.length) {
+      g += '<text class="nodata" x="' + (W / 2) + '" y="' + ((PT + BASE) / 2) +
+           '" text-anchor="middle">no reading in this window</text>';
+    }
     var pi = peak(v), pm = "";
-    if (pi >= 0) {
+    if (pi >= 0 && segs.length) {
       var px = x(pi), py = y(v[pi]), rightish = px > (W + PL) / 2;
       pm = '<circle class="dot" cx="' + px.toFixed(1) + '" cy="' + py.toFixed(1) +
            '" r="3" fill="currentColor"/><text class="pk" x="' + (px + (rightish ? -7 : 7)).toFixed(1) +
            '" y="' + Math.max(PT + 8, py - 6).toFixed(1) + '" text-anchor="' +
            (rightish ? "end" : "start") + '">peak ' + fmt(v[pi], o.dec, o.unit) + '</text>';
     }
+    /* THE RESTING READOUT IS THE CURRENT VALUE, not a hint. A chart whose
+       numbers can only be got at by hovering is unreadable on a phone and
+       unreadable in a screenshot, which are the two ways this page is actually
+       looked at. Latest, and the window's own peak and mean beside it. */
+    var mv = mean(v);
+    var dflt = '<span class="now">now <b>' + fmt(last(v), o.dec, o.unit) + '</b>' +
+      ' \\u00b7 ' + WIN.words + ': peak ' + fmt(pi >= 0 ? v[pi] : null, o.dec, o.unit) +
+      ', average ' + fmt(mv, o.dec, o.unit) + '</span>' +
+      (segs.length ? "point at the chart for any minute" : "");
     charts.push({id: id, t: t, v: v, t0: t0, span: span, dec: o.dec, unit: o.unit,
-                 dflt: (pi >= 0 ? "peak " + fmt(v[pi], o.dec, o.unit) + " at " + hhmm(t[pi]) +
-                        " \\u00b7 point at the chart for any minute" : "")});
+                 dflt: dflt});
     return '<figure class="tchart ' + o.cls + '" id="' + id + '">' +
       '<figcaption><span>' + o.title + '</span><span class="cap">' + o.cap + '</span></figcaption>' +
-      '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + o.title +
-        ', ' + stamp(t0) + ' to ' + stamp(t[n - 1]) + ': latest ' + fmt(last(v), o.dec, o.unit) +
+      '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" data-span="' + span +
+        '" aria-label="' + o.title +
+        ', ' + stamp(t0) + ' to ' + stamp(t[n - 1]) + ' ' + TZLBL + ': latest ' +
+        fmt(last(v), o.dec, o.unit) +
         ', peak ' + fmt(pi >= 0 ? v[pi] : null, o.dec, o.unit) + '">' + g +
       '<path class="fill" fill="currentColor" d="' + fill + '"/>' +
       '<path class="ln" stroke="currentColor" d="' + line + '"/>' + pm +
       '<line class="cross" x1="0" y1="' + PT + '" x2="0" y2="' + BASE + '" style="display:none"/>' +
       '<rect x="' + PL + '" y="' + PT + '" width="' + (W - PL - PR) + '" height="' + (BASE - PT) +
         '" fill="transparent"/></svg>' +
-      '<div class="rdout">' + (charts[charts.length - 1].dflt) + '</div></figure>';
+      '<div class="rdout">' + dflt + '</div></figure>';
   }
 
   function tile(big, cap) {
     return '<div class="vital"><b>' + big + '</b><small>' + cap + '</small></div>';
   }
 
-  function render(d) {
-    var n = (d.t || []).length;
-    var win = d.window_hours || 24;
-    if (!n || !d.last_sample) {
-      note.textContent = "no recent telemetry \\u2014 the render box has published a file " +
-        "but it holds no samples from the last " + win + " hours.";
-      return;
+  /* ---- the selector ------------------------------------------------------ */
+  function winbar(span) {
+    var b = "";
+    for (var i = 0; i < TEL_WINS.length; i++) {
+      var h = TEL_WINS[i][0], lbl = TEL_WINS[i][1], words = TEL_WINS[i][2];
+      var ok = span >= TEL_COVER * h * 3600;
+      var why = ok ? "" : "the render box publishes a rolling " +
+        (Math.round(span / 3600)) + "-hour file, which does not reach across " +
+        words.replace("the last ", "") + " \\u2014 the long history is on the pulse page";
+      b += '<button type="button" data-h="' + h + '" data-words="' + words + '"' +
+        (ok ? "" : ' disabled title="' + why + '"') +
+        ' aria-pressed="' + (WIN && WIN.h === h ? "true" : "false") + '">' + lbl + '</button>';
     }
-    var stale = (Date.now() / 1000 - d.last_sample) > TEL_STALE * 60;
-    var vmax = d.vram_total_gb || Math.max.apply(null, d.v.filter(function (x) { return x != null; })) * 1.1;
-    var rmax = d.ram_total_gb || Math.max.apply(null, d.r.filter(function (x) { return x != null; })) * 1.1;
-    var html = "";
+    return '<div class="winbar" id="tel-win" role="group" aria-label="Time window">' +
+      '<span class="lbl">Time window</span><div class="winbtns">' + b + '</div>' +
+      '<p class="winnote" id="tel-winnote"></p></div>';
+  }
+
+  function widest(span) {
+    /* the default: the largest offered window, which for a rolling 24-hour file
+       is the whole of it — the view this page has always opened on. */
+    var best = TEL_WINS[0];
+    for (var i = 0; i < TEL_WINS.length; i++) {
+      if (span >= TEL_COVER * TEL_WINS[i][0] * 3600) best = TEL_WINS[i];
+    }
+    return {h: best[0], words: best[2]};
+  }
+
+  function paint() {
+    var d = slice(DATA, WIN.h);
+    charts = [];
+    var vmax = DATA.vram_total_gb || Math.max.apply(null, d.v.filter(function (x) { return x != null; })) * 1.1;
+    var rmax = DATA.ram_total_gb || Math.max.apply(null, d.r.filter(function (x) { return x != null; })) * 1.1;
     var pu = peak(d.up), pv = peak(d.v), pr = peak(d.r), pc = peak(d.c);
+    var html = "";
     html += '<div class="vitals">' +
       /* "peak sample", not "peak": this is the busiest single 10s reading, while
          the chart's peak marker is the busiest minute-AVERAGE. Two different true
@@ -1789,48 +1957,37 @@ TEL_JS = """
       tile(fmt(last(d.v), 1, " GB"), "vram latest \\u00b7 peak " + fmt(pv >= 0 ? d.v[pv] : null, 1, " GB")) +
       tile(fmt(last(d.r), 1, " GB"), "ram latest \\u00b7 peak " + fmt(pr >= 0 ? d.r[pr] : null, 1, " GB")) +
       tile(fmt(pc >= 0 ? d.c[pc] : null, 1, " GB"), "commit peak \\u00b7 limit " +
-           fmt(d.commit_limit_gb, 0, " GB")) +
+           fmt(DATA.commit_limit_gb, 0, " GB")) +
       '</div>';
+    /* the tiles are peaks OVER THE CHOSEN WINDOW, so they must say which one —
+       otherwise switching to 1h silently changes what "peak" meant. */
+    html += '<p class="whyfoot">latest reading, and the peak within ' + WIN.words +
+      '. Switch the window above and these move with it.</p>';
     html += chart(d, "u", {title: "GPU utilisation", cap: "% of the card, per minute",
                            max: 100, tick: 0, dec: 0, unit: "%", cls: "tel-gpu"});
-    html += chart(d, "v", {title: "VRAM in use", cap: "GB of " + fmt(d.vram_total_gb, 1, " GB") + " on the card",
+    html += chart(d, "v", {title: "VRAM in use", cap: "GB of " + fmt(DATA.vram_total_gb, 1, " GB") + " on the card",
                            max: vmax, tick: 0, dec: 1, unit: " GB", cls: "tel-mem"});
-    html += chart(d, "r", {title: "Host RAM in use", cap: "GB of " + fmt(d.ram_total_gb, 1, " GB") + " installed",
+    html += chart(d, "r", {title: "Host RAM in use", cap: "GB of " + fmt(DATA.ram_total_gb, 1, " GB") + " installed",
                            max: rmax, tick: 0, dec: 1, unit: " GB", cls: "tel-mem"});
     /* href set in JS, not concatenated into the markup: build_site.py's link
        checker reads every href in the output, and a spliced-together one reads to
        it as a broken local path (it caught exactly that, 2026-08-04). */
     var src = '<p class="whyfoot">straight from the machine: <a class="telsrc" href="#">telemetry.json</a>' +
       ' \\u2014 GPU by <code>nvidia-smi</code>, memory by <code>GlobalMemoryStatusEx</code>, sampled every ' +
-      (d.sample_seconds || 10) + 's and averaged to one point a minute. Gaps are gaps: the line breaks ' +
-      'wherever the box was not sampling.</p>';
+      (DATA.sample_seconds || 10) + 's and averaged to one point a minute. Gaps are gaps: the line breaks ' +
+      'wherever the box was not sampling. Clocks are ' + TZLBL + ', your own.</p>';
+    return html + src;
+  }
 
-    if (stale) {
-      /* SITE.md: the site must not claim things it cannot know. A chart of
-         yesterday under a heading about the render box reads as "now", so the
-         plain sentence is the answer and the history is one click away, labelled
-         with the hour it actually ends. */
-      note.textContent = "no recent telemetry \\u2014 the newest sample from the render box is " +
-        ago(d.last_sample) + " old (" + hhmm(d.last_sample) + " your time). The box may be off, " +
-        "asleep, or unable to push; nothing here is claimed about it right now.";
-      body.innerHTML = '<details class="drawer"><summary>show the ' + win +
-        ' hours ending ' + stamp(d.last_sample) + '</summary><div class="drawer-body">' +
-        html + src + '</div></details>';
-    } else {
-      note.textContent = (d.gpu_name || "the render box") + " \\u2014 newest sample " +
-        hhmm(d.last_sample) + " your time (" + ago(d.last_sample) + " ago), " + win +
-        "-hour window at one point a minute.";
-      body.innerHTML = html + src;
-    }
-    body.hidden = false;
-    var sa = body.querySelector(".telsrc");
+  function wire(root) {
+    var sa = root.querySelector(".telsrc");
     if (sa) sa.href = TEL_URL;
     charts.forEach(function (c) {
       var fig = document.getElementById(c.id);
       if (!fig) return;
       var svg = fig.querySelector("svg"), cross = fig.querySelector(".cross"),
           out = fig.querySelector(".rdout");
-      function clear() { cross.style.display = "none"; out.textContent = c.dflt; }
+      function clear() { cross.style.display = "none"; out.innerHTML = c.dflt; }
       svg.addEventListener("pointermove", function (e) {
         var r = svg.getBoundingClientRect();
         var f = ((e.clientX - r.left) / r.width * W - PL) / (W - PL - PR);
@@ -1844,10 +2001,74 @@ TEL_JS = """
         cross.setAttribute("x1", px.toFixed(1));
         cross.setAttribute("x2", px.toFixed(1));
         cross.style.display = "";
-        out.innerHTML = hhmm(c.t[bi]) + " \\u00b7 <b>" + fmt(c.v[bi], c.dec, c.unit) + "</b>";
+        out.innerHTML = '<span class="now">' + stamp(c.t[bi]) + " " + TZLBL +
+          " \\u00b7 <b>" + fmt(c.v[bi], c.dec, c.unit) + "</b></span>";
       });
       svg.addEventListener("pointerleave", clear);
     });
+  }
+
+  function show(h, words) {
+    WIN = {h: h, words: words};
+    var host = document.getElementById("tel-charts");
+    if (!host) return;
+    host.innerHTML = paint();
+    var btns = document.querySelectorAll("#tel-win button[data-h]");
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].setAttribute("aria-pressed",
+        +btns[i].getAttribute("data-h") === h ? "true" : "false");
+    }
+    var n = document.getElementById("tel-winnote");
+    if (n) {
+      n.textContent = "Showing " + words + " of the render box's own readings, " +
+        "one point a minute, in " + TZLBL + ".";
+    }
+    wire(host);
+  }
+
+  function render(d) {
+    var n = (d.t || []).length;
+    var win = d.window_hours || 24;
+    if (!n || !d.last_sample) {
+      note.textContent = "no recent telemetry \\u2014 the render box has published a file " +
+        "but it holds no samples from the last " + win + " hours.";
+      return;
+    }
+    DATA = d;
+    var stale = (Date.now() / 1000 - d.last_sample) > TEL_STALE * 60;
+    var span = d.t[n - 1] - d.t[0];
+    WIN = widest(span);
+    var shell = winbar(span) + '<div id="tel-charts"></div>';
+
+    if (stale) {
+      /* SITE.md: the site must not claim things it cannot know. A chart of
+         yesterday under a heading about the render box reads as "now", so the
+         plain sentence is the answer and the history is one click away, labelled
+         with the hour it actually ends. */
+      note.textContent = "no recent telemetry \\u2014 the newest sample from the render box is " +
+        ago(d.last_sample) + " old (" + hhmm(d.last_sample) + " your time). The box may be off, " +
+        "asleep, or unable to push; nothing here is claimed about it right now.";
+      body.innerHTML = '<details class="drawer"><summary>show the ' + win +
+        ' hours ending ' + stamp(d.last_sample) + '</summary><div class="drawer-body">' +
+        shell + '</div></details>';
+    } else {
+      note.textContent = (d.gpu_name || "the render box") + " \\u2014 newest sample " +
+        hhmm(d.last_sample) + " your time (" + ago(d.last_sample) + " ago), " +
+        "one point a minute.";
+      body.innerHTML = shell;
+    }
+    body.hidden = false;
+
+    var btns = document.querySelectorAll("#tel-win button[data-h]");
+    for (var i = 0; i < btns.length; i++) {
+      (function (b) {
+        if (b.disabled) return;
+        b.addEventListener("click", function () {
+          show(+b.getAttribute("data-h"), b.getAttribute("data-words"));
+        });
+      })(btns[i]);
+    }
+    show(WIN.h, WIN.words);
   }
 
   /* per-minute cache key: raw.githubusercontent sits behind a CDN, and a status
@@ -2190,6 +2411,9 @@ body.away .walker, body.away .walker * { animation: none !important; }
    at a glance which words are counting and which are fixed. The tabular figures
    stop the list twitching as the browser rewrites them each 20 s. ---- */
 .age { font-variant-numeric: tabular-nums; white-space: nowrap; }
+/* the same slot when there is no duration to put in it — free to wrap, because
+   what goes here is a sentence explaining why there is no number */
+.noage { color: var(--faint); }
 .machlist li { padding: .6rem 0; }
 .machlist .chip { margin-left: .35rem; vertical-align: .05em; }
 .machlist .mstate { margin: .25rem 0 .1rem; }
@@ -2235,14 +2459,43 @@ h3 .count, .bgroup .count { display: inline-block; font: 700 .68rem/1 var(--mono
 .qchip { display: inline-block; font: 700 .64rem/1 var(--mono);
   letter-spacing: .09em; border: 1px solid var(--line); border-radius: 999px;
   padding: .28rem .5rem; color: var(--faint); white-space: nowrap; }
+/* EVERY STATE GETS ITS OWN BADGE, not just the four that had one. waiting,
+   blocked and planned all fell through to the same faint grey, so three
+   different answers to "why is this not moving" looked identical in a list
+   thirty entries long — which is the list where telling them apart matters
+   most. Colour is never the only carrier: each chip also holds its own emoji
+   and its word in full. */
 .qchip.running { color: var(--sap); border-color: var(--sap-deep); }
 .qchip.runnable { color: var(--leaf); border-color: var(--leaf-deep); }
 .qchip.done { color: var(--leaf); border-color: var(--leaf-deep); opacity: .75; }
 .qchip.failed { color: var(--alarm); border-color: var(--alarm); }
+.qchip.blocked { color: var(--alarm); border-color: var(--alarm); border-style: dashed; }
+.qchip.waiting { color: var(--sap); border-color: var(--sap-deep); border-style: dashed; }
+.qchip.planned { color: var(--muted); border-style: dashed; }
 .qid { font: 600 .74rem/1.5 var(--mono); color: var(--muted);
   background: var(--code-bg); border-radius: 6px; padding: .12rem .35rem;
   overflow-wrap: anywhere; user-select: all; }
 .qlist { font: 500 .68rem/1.5 var(--mono); color: var(--faint); }
+/* the age sits at the far end of the header row on a wide screen and wraps
+   under it on a narrow one — never in a column that could scroll off */
+.qage { margin-left: auto; font: 500 .7rem/1.5 var(--mono); color: var(--faint); }
+.qage .qnever { color: var(--faint); opacity: .85; }
+
+/* ---- the index: thirty entries is a document, and a document needs contents.
+   The record cannot be shortened — it exists to be diffed against the file —
+   so it is made navigable instead. Each link is a group that actually has
+   entries; a state with none is not listed, because a zero here would read as
+   a claim about the farm rather than the absence of one. ---- */
+.qindex { display: flex; flex-wrap: wrap; gap: .4rem; margin: .8rem 0 .2rem;
+  padding: 0; list-style: none; }
+.qindex a { display: inline-flex; align-items: baseline; gap: .35rem;
+  font: 700 .68rem/1 var(--mono); letter-spacing: .06em; text-decoration: none;
+  color: var(--muted); background: var(--code-bg); border: 1px solid var(--line);
+  border-radius: 999px; padding: .4rem .6rem; min-height: 30px; }
+.qindex a:hover { color: var(--ink); border-color: var(--leaf-deep);
+  text-decoration: none; }
+.qindex a b { font: 700 .74rem/1 var(--mono); color: var(--ink);
+  font-variant-numeric: tabular-nums; }
 .qwhat { font-weight: 600; margin: .4rem 0 .1rem; }
 .qwhy { color: var(--muted); font-size: .86rem; }
 .qgate { margin-top: .35rem; font-size: .84rem; color: var(--ink); }
@@ -2413,8 +2666,14 @@ def build(out_dir: Path):
                   f'<span class="btag">{_e(m["name"])}</span></div>')
         # Every claim on this line carries the age of the thing it describes,
         # and the ages tick in the reader's own browser (see LIVE_JS).
+        # NOT .age when there is no age. `.age` is nowrap, because a duration
+        # that breaks across two lines twitches every time the browser rewrites
+        # it — but this branch is the fallback SENTENCE for a machine whose date
+        # could not be read, and nowrap made that sentence a 747px line that
+        # pushed /status into a horizontal scroll at phone width (measured at a
+        # 500px viewport, 2026-08-10). A sentence is not a number.
         bits = [f'last check-in {age_el(m["last_seen"], now)}'] if m["last_seen"] else \
-            [f'<span class="age">{_e(st["seen"])}</span>']
+            [f'<span class="noage">{_e(st["seen"])}</span>']
         if m["telemetry"]:
             bits.append('vitals published <span data-role="vitals">'
                         f'{age_el(m["telemetry"]["at"], now)}</span>')
@@ -2668,7 +2927,7 @@ def build(out_dir: Path):
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">{build_commit.meta_tags()}
 <meta name="description" content="{_e(DESC)}">
 <link rel="canonical" href="{CANONICAL}/{PAGE}">
 <link rel="alternate" type="application/rss+xml" title="new nodes" href="{CANONICAL}/feed.xml">
@@ -2793,6 +3052,7 @@ document.addEventListener("visibilitychange", function () {{
   document.body.classList.toggle("away", document.hidden);
 }});
 var TEL_URL = {json.dumps(TELEMETRY_URL)}, TEL_STALE = {TELEMETRY_STALE_MINUTES};
+var TEL_WINS = {json.dumps(TEL_WINDOWS)}, TEL_COVER = {TEL_COVERAGE};
 var RAW_BASE = {json.dumps(RAW)}, QUEUE_URL = {json.dumps(QUEUE_URL)};
 var BUILT_AT = {int(now.timestamp())};
 var BUILT_QUEUE = {json.dumps({"tasks": [str(t.get("id")) for t in queue],
