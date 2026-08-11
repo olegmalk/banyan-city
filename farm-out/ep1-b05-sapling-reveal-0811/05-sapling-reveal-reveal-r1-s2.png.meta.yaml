@@ -1,0 +1,67 @@
+# Still provenance (7.2), written AT RENDER TIME by render_b05reveal.py
+# on the rtx5090 (C:\banyan-farm\b05-reveal-0811\out).
+# The prompt and negative below are what the model actually saw. They
+# are sd_prompt's own output with NO script-side transform: the
+# positive is compress(AUTHORED) and the negative is
+# beat_negative(house, AUTHORED) — the same code path, unmodified,
+# that drew the founder-picked beat 12 frame this recipe is copied
+# from. The recipe's negative before fitting was:
+#   NEG(recipe): photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, mature tree, large tree, tall tree, thick trunk, full canopy, forest, bush, shrubbery, humans, bent stem, drooping, wilting, flower, photorealism
+#   NEGWARN: !! negative prompt over CLIP's 77-token budget; deduplicated: mature tree, forest, text
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+shot_beat: 5
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20270724
+seeds_in_batch: 4
+task: ep1-b05-sapling-reveal-0811
+queue_entry: ep1-b05-sapling-reveal-0811
+candidate_set: reveal-r1
+founder_direction_verbatim: >-
+  we should show that he became a sapling earlier in the video just to make it less confusing
+founder_rejection_verbatim: >-
+  dont show beat 12's picture twice
+founder_direction_date: 2026-08-11
+what_this_frame_is: >-
+  The reveal the draft leaf 001-t0-e-draft.yaml names under `what_would_close_it`: one picture of the sapling that belongs to beat 05 rather than being borrowed from a later beat. It plays in beat 05's unused 1.42s at roughly 0:22, two seconds before beat 06's morning sky, which is why the light here is early morning.
+how_it_differs_from_beat_12: >-
+  Opposite posture, different camera height, different light. Beat 12 is a sprout bent low into a taut curve, arched over almost horizontal, leaf tips pulled down, in a flat sunlit field. This is the same plant standing straight and upright, seen from low at ground level with open pale morning sky behind it. `bent stem`, `drooping` and `wilting` are negated here precisely so it cannot come back as beat 12's shape.
+recipe_copied_from: >-
+  takes/stills/12-undefined-r2-s1.png (seed 20261731, round 2), the founder's pick of 2026-08-08, promoted to stills/12-undefined.png. Model, size, steps, guidance and the seed series are that frame's, read out of its own sidecar. Beat 12's sent positive AND negative are rebuilt from this checkout in this run and asserted byte-for-byte against that sidecar, so the shared recipe is a measurement and not a claim.
+recipe_control_reproduced: true
+count_tag: none
+count_tag_reason: >-
+  _tag_from_clause reads the first comma-clause, which is `plant focus`; it matches no person pattern, so the derived tag is empty and none is prepended. That is beat 12's behaviour and beat 12 drew no people. There is no figure in this frame to tag — the `1other` failure is a bare humanoid noun resolving to the indeterminate tag, and no humanoid noun appears. Asserted at run time (trap 4).
+prohibitions_channel: negative only
+prohibitions_note: >-
+  The authored `No …` sentence is stripped from the positive by compress()'s _NEGATION and imported into the negative's beat tier by beat_negative(). The sent positive carries no `no ` ban of any kind and this is asserted (trap 5). On SDXL the negative binds — restoring `text` to beat 03's negative killed the gibberish glyphs 4 of 4 on 2026-08-11 — so a prohibition belongs there and nowhere else.
+required_negatives: bent stem, drooping, wilting, mature tree, forest, flower, humans
+required_negatives_survived_trim: true
+shots_md_sha256: 53c2690edcfb9a46ac5dc6b2c4df0c499fd6c825e8b32dca288d2ab678e49079
+shots_md_edited: false
+script_changed: false
+authored_source: >-
+  NOT shots.md. This prompt is injected script-side and is not canon: the founder has not read it, and writing an unapproved picture into shots.md would change the string every other renderer sends for beat 05. shots.md beat 05's own fence — the ceramic shards — is asserted byte-for-byte before a weight loads and is left exactly as it is.
+tokenizer: openai/clip-vit-large-patch14 (transformers, on the box)
+positive_tokens_real_clip: 70
+negative_tokens_real_clip: 76
+negative_tokens_beat12_control: 76
+anchor_intact: true
+seeds_note: >-
+  This beat's own series, 20260719 + beat + k*1000, at k=8..11. k=0..3 are spent on takes/stills/05-huh-green-s{0..3}.png, so nothing here overwrites or duplicates a frame already on disk; checked against the directory at run time, not assumed from the arithmetic.
+unranked: >-
+  Four candidates, in seed order, with no preference expressed anywhere. No pick is made and no metric is consulted: on beat 14 the flow metric scored highest on the round where the plant falls over. The choice is R4's and only his.
+provisional: >-
+  PROVISIONAL. A steward-rendered CANDIDATE, not a pick and not canon. Never takes a canon filename, is not published, not posted, and not assembled into an episode.
+approved: false
+wall_seconds: 9
+cost_usd: 0
+note: |-
+  THE SAPLING REVEAL — a NEW picture for beat 05, drawn because the founder asked to see that he had become a sapling earlier ("we should show that he became a sapling earlier in the video just to make it less confusing", 2026-08-11) and then rejected the only answer available without a render ("dont show beat 12's picture twice", same day). It is beat 12's plant in the opposite posture: standing straight, seen from low at ground level against open morning sky, where beat 12 is bent almost horizontal in flat sunlight. Recipe COPIED from the founder-picked 12-undefined-r2-s1 (model, 832x1216, 40 steps, cfg 7.5) and asserted against its sidecar in the same run; only the prompt, the seeds and the output names differ. shots.md NOT edited and no beat added — beat 05's unused 1.42s holds this with no timing change. Four seeds, UNRANKED, no pick made, no metric consulted. Not canon, not published, not assembled.
+prompt: |-
+  plant focus, one small two-leaf sapling standing straight and upright, its thin green stem rising clear of the grass, seen from low at ground level, dew on the leaves, short green grass, damp brown soil, pale blue morning sky, early morning sunlight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, mature tree, large tree, tall tree, thick trunk, full canopy, forest, bush, shrubbery, humans, bent stem, drooping, wilting, flower, photorealism
