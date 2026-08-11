@@ -13130,3 +13130,75 @@
     this lane has asked for by name has been drawn, and every object it assumed the still
     would provide was absent.
   outcome: null
+
+- id: ep2-b14-pink-eyes-MISATTRIBUTED-0812
+  kind: correction
+  date: 2026-08-12
+  corrects: ep2-motion-wave-0812-scored and ep2-tripod-phrase-test-0812, both of which
+    record b14's eyes as DRIFTING from red to pink across the clip.
+  status: WRONG BOTH TIMES. The init already has hot pink eyes.
+  what_i_recorded: >-
+    "his eyes drift from red to pink across the clip", filed as a motion-stage colour fault
+    and carried into the page, into two lane reports and into a queued fix item.
+  what_is_true: >-
+    I opened the init at full size before spending a render on it. 14-the-defense-ipa-r0-
+    w015-s1 HAS HOT PINK EYES. The clip was reproducing its starting frame faithfully. There
+    was no drift, there was nothing at this stage to fix, and a prompt sample would have
+    measured nothing at all.
+  the_pattern_this_completes: >-
+    Twice today I have attributed to the motion stage a property that was sitting in the
+    frame I handed it — the missing sapling, which was missing from my prompts, and now the
+    pink eyes, which were in the init. Both times the check was one look at my own input and
+    both times I skipped it because the OUTPUT was in front of me and the input was not. The
+    rule, and it is cheap: before calling anything a drift, open the init.
+  what_the_fix_actually_is: >-
+    The init, not the prompt. Of the eight distinct b14 frames, r0-s2 and r0-s3 have plainly
+    RED eyes; s3 also carries the worried brow, blush and sweat-drop that fit "embarrassed",
+    which is the beat. I simulated the 86px-per-side cover crop on it first — both ears
+    survive. Queued as ep2-b14-redeye-0812, single variable against b14-r2: the init only,
+    crouch action untouched because r2 already proved it.
+  outcome: null
+
+- id: ep2-b20-chest-0812
+  kind: prediction
+  written: 2026-08-12, before enqueue. One variable class — where the arms are allowed to go.
+  predicates: [the fig is held at chest height for the whole clip with the hands never
+    rising above his shoulders, his chin and eyes still go up to the branch, the fig still
+    appears in his empty hands as it did in r1, the camera stays locked]
+  basis: >-
+    r1's pick-up was correct and only its ending was wrong, and the ending is wrong because
+    two of my own phrases pointed the same way — "lifting his cupped hands UP" and "tips his
+    head back to look UP" — against "holding it out" as the only counterweight, which is a
+    weak instruction next to two ups. So the positive now gives the arms an explicit CEILING
+    and assigns the looking-up to the eyes and chin alone, and the negative gains arms
+    raised overhead / hands above head / cheering / celebrating / surrender pose. Naming the
+    defect in the negative at guidance 2.0 is the lever with the most measured wins here.
+  falsifiable_by: >-
+    The arms going up regardless. That would mean a positive-prompt ceiling cannot beat the
+    model's own reading of a gesture, and the beat needs re-writing rather than re-prompting.
+  consumer: review/ep2-picks/motion-0812.html
+  outcome: null
+
+- id: ep2-b04-head-balloon-NO-HYPOTHESIS-0812
+  kind: blocked
+  date: 2026-08-12
+  what: >-
+    Beat 04's cranium inflates into a balloon between frames 0 and 9 and the ears flatten.
+    Real, repeatable, and NOT being queued, because I do not have a hypothesis worth a
+    render.
+  why_my_only_candidate_fails: >-
+    I suspected my own words "a bald DOMED head" amplified at close-up scale. It does not
+    discriminate: that exact phrase is in the b15, b03, b13, b19 and b20 prompts and none of
+    them ballooned. So the word is not sufficient, and I cannot separate "the word" from
+    "the extreme close-up" with one sample — the only thing unique to b04 is the shot size,
+    and changing the shot size changes the beat.
+  why_i_am_saying_so_instead_of_queueing: >-
+    The buffer rule asks for a deep queue; the standing rule says a sample without a
+    prediction is padding. Firing a "remove the word and see" job would let me report three
+    fixes instead of two, and it would measure nothing I could attribute. Two honest samples
+    are queued and this one is named as blocked.
+  what_would_unblock_it: >-
+    A second BALLOONED case to compare against — if any future close-up beat inflates, the
+    pair gives me a variable. Until then this is one observation, and one observation is
+    where I have gone wrong four times today.
+  outcome: null

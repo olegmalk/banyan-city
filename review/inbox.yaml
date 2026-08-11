@@ -78,3 +78,11 @@
   kind: decision
   verdict_hint: a consistent character standing still is an acceptable BASE, movement added after / the
     drawing itself has to carry the staging
+- what: Beat 02 needs a new still before motion can touch it - it is the one beat whose CHARACTER fails
+    in the frame itself (fangs, a dog-shaped creature, two-to-four duplicated goblins), so naming scenery
+    cannot rescue it. Every other blocked beat is now unblocked at the motion stage; this one is waiting
+    on a usable starting frame
+  url: /review/ep2-picks/motion-0812
+  since: '2026-08-12'
+  kind: decision
+  verdict_hint: re-run the beat 02 still / cut the beat / re-write it around a frame we have

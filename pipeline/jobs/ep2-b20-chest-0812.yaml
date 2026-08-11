@@ -1,0 +1,130 @@
+# 2026-08-12. r1 picked the fig up correctly and then kept going.
+#
+# r1's verdict: his hands are empty at frame 0, a dark fig IS in them by frame 18, and he
+# lifts it -- chest, then face, then STRAIGHT OVER HIS HEAD by frame 54, which reads as
+# celebration or surrender rather than holding something out as evidence. The pick-up is
+# right; the gesture overshoots its own ending.
+#
+# THE CAUSE IS TWO PHRASES OF MINE PULLING THE SAME DIRECTION: "lifting his cupped hands
+# UP", and "tips his head back to look UP at that empty branch" -- with "holding it out"
+# as the only counterweight, and that is a weak instruction next to two ups. The model
+# raised everything.
+#
+# THE FIX, one variable class: the arms are given a CEILING in the positive (chest height,
+# stay there, elbows tucked, never past the shoulders, never above the head) and the
+# looking-up is explicitly assigned to the eyes and chin alone. The negative gains arms
+# raised overhead / hands above head / raising arms / cheering / celebrating / surrender
+# pose, since naming a defect in the negative at guidance 2.0 is the lever with the most
+# measured wins in this lane. Same init, same seed, same 73 frames, sapling sentence kept.
+id: ep2-b20-chest-0812
+task: ep2-b20-chest-0812
+node: 002b-first-citizen
+beat: 20
+runner: box
+priority: 19
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: ep2 motion lane, 2026-08-12
+consumer: 'review/ep2-picks/motion-0812.html -- beat 20 re-run with its own object named, on the route two samples proved. Screened as a set.'
+success: 'A 704x1280 mp4, 73 frames, in which the fig is held at CHEST HEIGHT for the whole clip -- hands never rising above his shoulders -- while his chin lifts and his eyes go up to a bare branch on the sapling beside him. The failure worth reporting is the arms going up anyway, which would mean a positive-prompt ceiling cannot beat the model''s own reading of a gesture and the beat needs re-writing rather than re-prompting.'
+why: The pick-up already works; only the end of the gesture is wrong, and it is wrong because two of my own phrases said UP.
+est_minutes: 6
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b20-chest-0812\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"--out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw, nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b20-chest-0812\b20-motion-prompt.txt: '2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: a small goblin standing in a field under morning light — pale yellow-green skin, a bald domed head, long pointed ears, red eyes, a patched hooded coat. A SMALL SAPLING STANDS BESIDE HIM — one slender stem with two big leaves and ONE BARE BRANCH with nothing hanging from it. HE HOLDS A SMALL DARK FIG IN BOTH CUPPED HANDS AT CHEST HEIGHT AND KEEPS THEM THERE — his hands come up only as far as his chest and STAY at his chest, elbows bent and tucked in at his sides, never rising past his shoulders and never going above his head. Only his EYES and his chin move: he tips his head back to look up at that empty branch while the fig stays held at his chest. He stays in the same place in frame and the camera does not move. Soft morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.'
+  C:\banyan-farm\ep2-b20-chest-0812\b20-negative.txt: camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, stool, stake, plant support, arms raised overhead, hands above head, raising arms, cheering, celebrating, surrender pose, face morphing, distorted face, warped face, changing facial features, extra eyes, extra ears, hair, walking out of frame, leaving the frame, drifting sideways, moving to a different spot, second character, duplicate character, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text
+  C:\banyan-farm\ep2-b20-chest-0812\b20-jobs-encode.json: "[{\"beat\": 20,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b20-chest-0812\\\\b20-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\\ep2-b20-chest-0812\\\\b20-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b20-chest-0812\\\\b20-negative.txt\"}]"
+  C:\banyan-farm\ep2-b20-chest-0812\b20-jobs-render.json: "[{\"beat\": 20,\n  \"seed\": 20260806,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b20-chest-0812\\\\b20-embeds.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\\ep2-b20-chest-0812\\\\b20-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b20-chest-0812\\\\20-evidence-LTX-chest-0812.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b20-chest-0812\cover_crop.py
+  - --src
+  - C:\banyan-farm\goblin-ipa-0812\out-b20-frozen\20-evidence-ipa-r0-w015-s1.png
+  - --sha256
+  - 9e29f0faa823a2cc140655f8a4f8449751074a548a71208a48d304d27083acc8
+  - --out
+  - C:\banyan-farm\ep2-b20-chest-0812\b20-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b20-chest-0812\b20-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b20-chest-0812\b20-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '73'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b20-chest-0812
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b20-chest-0812\bench-b20-chest.jsonl
+  - --bench-label
+  - ep2-b20-chest-0812
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b20-chest"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/ep2-b20-chest-0812/20-evidence-LTX-chest-0812.mp4*")
+                 + glob.glob("C:/banyan-farm/ep2-b20-chest-0812/b20-init-704x1280.png")
+                 + glob.glob("C:/banyan-farm/ep2-b20-chest-0812/bench-b20-chest.jsonl"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b20-chest-0812.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 2 else 1)
+artifacts:
+- C:\banyan-farm\ep2-b20-chest-0812\20-evidence-LTX-chest-0812.mp4
+- C:\banyan-farm\ep2-b20-chest-0812\b20-init-704x1280.png
