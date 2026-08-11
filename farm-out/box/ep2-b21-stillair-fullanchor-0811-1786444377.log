@@ -1,0 +1,70 @@
+#### job ep2-b21-stillair-fullanchor-0811-1786444377 attempt 1 start 2026-08-11T10:41:34Z
+
+==== step encode START 2026-08-11T10:41:37Z ====
+argv: ["C:\\banyan-video\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py", "--stage", "encode", "--jobs", "C:\\banyan-farm\\ep2-fix-0811\\b21-jobs-encode.json"]
+-- begin-encode: phys 11.4/68.1GB, commit 14.6/128.2GB (load 16%)
+loading text encoder from C:\Users\artvn\.cache\huggingface\hub\models--Lightricks--gemma-3-12b-it-qat-q4_0-unquantized\snapshots\d62fe4f1995ade703b49a0f3c0d0f161237ef437
+
+Loading weights:   0%|          | 0/1065 [00:00<?, ?it/s]
+Loading weights:  27%|██▋       | 287/1065 [00:00<00:00, 2596.99it/s]
+Loading weights:  55%|█████▌    | 591/1065 [00:00<00:00, 2693.86it/s]
+Loading weights:  85%|████████▍ | 900/1065 [00:00<00:00, 2742.22it/s]
+Loading weights: 100%|██████████| 1065/1065 [00:00<00:00, 2815.82it/s]
+-- encode-beat-21: phys 12.6/68.1GB, commit 41.4/128.2GB (load 18%)
+[1/1] encoded beat 21 to C:\banyan-farm\ep2-fix-0811\b21-embeds.pt (1, 1024, 188160)
+{"peak_commit_gb": 43.9, "peak_phys_gb": 38.5, "last_stage": "encode-beat-21"}
+==== step encode END rc=0 2026-08-11T10:43:11Z ====
+
+==== step render START 2026-08-11T10:43:11Z ====
+argv: ["C:\\banyan-video\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py", "--stage", "render", "--jobs", "C:\\banyan-farm\\ep2-fix-0811\\b21-jobs-render.json", "--size", "704x1280", "--frames", "145", "--fps", "24", "--guidance", "1.0", "--distilled-sigmas", "--two-stage", "--image-crf", "33", "--offload", "sequential", "--mode", "production", "--task", "ep2-b21-stillair-fullanchor-0811", "--worker", "rtx5090", "--bench-jsonl", "C:\\banyan-farm\\ep2-fix-0811\\bench-b21-stillair.jsonl", "--bench-label", "ep2-b21-stillair-fullanchor"]
+recipe: offload=sequential quantisation=none (bf16)
+-- begin-render: phys 11.5/68.1GB, commit 14.6/128.2GB (load 16%)
+transformer  C:\Users\artvn\.cache\huggingface\hub\models--diffusers--LTX-2.3-Distilled-Diffusers\snapshots\432e0d3c2d1769aaa4d295f9243f7062bf6b47ee [subfolder=transformer, bf16]
+scheduler    C:\Users\artvn\.cache\huggingface\hub\models--diffusers--LTX-2.3-Distilled-Diffusers\snapshots\432e0d3c2d1769aaa4d295f9243f7062bf6b47ee [subfolder=scheduler, distilled]
+other parts  C:\Users\artvn\.cache\huggingface\hub\models--diffusers--LTX-2.3-Diffusers\snapshots\8eee8edcf067e838b843f926ec4d4cc9b2be1aaf
+-- load-transformer-bf16-38GB: phys 12.2/68.1GB, commit 16.5/128.2GB (load 17%)
+
+Loading checkpoint shards:   0%|          | 0/8 [00:00<?, ?it/s]
+Loading checkpoint shards:  12%|█▎        | 1/8 [00:00<00:00,  8.50it/s]
+Loading checkpoint shards:  25%|██▌       | 2/8 [00:00<00:00,  9.11it/s]
+Loading checkpoint shards:  50%|█████     | 4/8 [00:00<00:00,  7.80it/s]
+Loading checkpoint shards: 100%|██████████| 8/8 [00:00<00:00, 13.40it/s]
+-- load-connectors-12.7GB-and-vae: phys 12.2/68.1GB, commit 54.8/128.2GB (load 17%)
+
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]
+Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 217.94it/s]
+-- offload-setup-sequential: phys 12.2/68.1GB, commit 64.4/128.2GB (load 17%)
+C:\banyan-video\venv\Lib\site-packages\accelerate\utils\modeling.py:345: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  new_value = old_value.to(device, non_blocking=non_blocking)
+conditioning still round-tripped through libx264 crf=33 -> C:\banyan-farm\ep2-fix-0811\cond-crf-21.png
+-- stage1-denoise-352x640-8steps: phys 13.1/68.1GB, commit 64.8/128.2GB (load 19%)
+
+  0%|          | 0/8 [00:00<?, ?it/s]
+ 12%|█▎        | 1/8 [01:07<07:55, 67.95s/it]
+ 25%|██▌       | 2/8 [01:18<03:26, 34.42s/it]
+ 38%|███▊      | 3/8 [01:26<01:51, 22.29s/it]
+ 50%|█████     | 4/8 [01:34<01:06, 16.58s/it]
+ 62%|██████▎   | 5/8 [01:42<00:40, 13.64s/it]
+ 75%|███████▌  | 6/8 [01:50<00:23, 11.71s/it]
+ 88%|████████▊ | 7/8 [01:59<00:10, 10.54s/it]
+100%|██████████| 8/8 [02:06<00:00,  9.60s/it]
+100%|██████████| 8/8 [02:06<00:00, 15.83s/it]
+stage1 latents (1, 128, 19, 20, 11)
+-- upsample-2x-latent: phys 59.9/68.1GB, commit 67.0/128.2GB (load 87%)
+There are modules in LTX2LatentUpsamplerModel that should be kept in float32: []. Casting directly with `to()` can lead to inconsistent results; set `torch_dtype` in `from_pretrained()` instead to keep these modules in float32.
+upsampled latents (1, 128, 19, 40, 22)
+-- stage2-refine-704x1280-3steps: phys 62.1/68.1GB, commit 70.5/128.2GB (load 91%)
+
+  0%|          | 0/3 [00:00<?, ?it/s]
+ 33%|███▎      | 1/3 [00:20<00:41, 20.79s/it]
+ 67%|██████▋   | 2/3 [00:41<00:20, 20.95s/it]
+100%|██████████| 3/3 [01:04<00:00, 21.69s/it]
+100%|██████████| 3/3 [01:04<00:00, 21.47s/it]
+-- decode-and-export: phys 64.2/68.1GB, commit 72.2/128.2GB (load 94%)
+[1/1] wrote C:\banyan-farm\ep2-fix-0811\21-the-answer-LTX-stillair.mp4 in 213s (145 frames, 704x1280, 8@352x640+3@704x1280 steps, peak torch 7.5GB, device 2.6/26GB)
+THROUGHPUT 0.0283 s(video)/s(wall) (1 x 6.042s of video in 213s)
+bench row -> C:\banyan-farm\ep2-fix-0811\bench-b21-stillair.jsonl
+{"sample_s": 213.3, "peak_gb": 7.5, "peak_commit_gb": 76.7, "frames": 145, "size": "704x1280", "steps": "8@352x640+3@704x1280", "batch": 1, "mode": "production", "throughput_s_per_s": 0.0283, "two_stage": true, "image_crf": 33, "offload": "sequential", "quantisation": null}
+{"peak_commit_gb": 76.7, "peak_phys_gb": 64.5, "last_stage": "decode-and-export"}
+==== step render END rc=0 2026-08-11T10:47:00Z ====
+#### job ep2-b21-stillair-fullanchor-0811-1786444377 finished rc=0 2026-08-11T10:47:00Z

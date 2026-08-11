@@ -1,0 +1,81 @@
+{
+  "id": "ep2-b21-stillair-fullanchor-0811-1786444377",
+  "task": "ep2-b21-stillair-fullanchor-0811",
+  "node": "002b-first-citizen",
+  "beat": 21,
+  "worker": "box-runner",
+  "priority": 22,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "encode",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "encode",
+        "--jobs",
+        "C:\\banyan-farm\\ep2-fix-0811\\b21-jobs-encode.json"
+      ]
+    },
+    {
+      "name": "render",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "render",
+        "--jobs",
+        "C:\\banyan-farm\\ep2-fix-0811\\b21-jobs-render.json",
+        "--size",
+        "704x1280",
+        "--frames",
+        "145",
+        "--fps",
+        "24",
+        "--guidance",
+        "1.0",
+        "--distilled-sigmas",
+        "--two-stage",
+        "--image-crf",
+        "33",
+        "--offload",
+        "sequential",
+        "--mode",
+        "production",
+        "--task",
+        "ep2-b21-stillair-fullanchor-0811",
+        "--worker",
+        "rtx5090",
+        "--bench-jsonl",
+        "C:\\banyan-farm\\ep2-fix-0811\\bench-b21-stillair.jsonl",
+        "--bench-label",
+        "ep2-b21-stillair-fullanchor"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\ep2-fix-0811\\21-the-answer-LTX-stillair.mp4"
+  ],
+  "started_at": "2026-08-11T10:41:34Z",
+  "attempts": 1,
+  "runner_pid": 9388,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-11T10:47:00Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\ep2-fix-0811\\21-the-answer-LTX-stillair.mp4"
+  ]
+}
