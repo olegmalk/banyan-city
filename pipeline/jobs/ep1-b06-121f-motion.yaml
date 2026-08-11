@@ -1,0 +1,213 @@
+# ep1 beat 06 "too-blue" — THE FIRST MOTION CANDIDATE THIS BEAT HAS EVER HAD.
+# ONE SAMPLE. One beat. Nothing scales off it.
+#
+# WHY THIS BEAT, AND WHY IT IS NOT A RE-RENDER OF A REJECTED THING. Beat 06 in
+# v35 is a HELD STILL with a 12% code push-in and it measures median 0.01 /
+# 69% frozen frames (QA-v34-0810.md §1; carried as item 7 on /review/waiting).
+# Roman settled beats 05/09/12/15 as held stills with "yeah keep em still" —
+# BEAT 06 WAS NOT IN THAT GROUP and no ruling covers it. He has since said
+# "i'd rather not have any looping, it looks bad." So this is a candidate he
+# has never been shown, not a second try at something he judged.
+#
+# THE PLATE IS HIS, AND IT IS NOT REGENERATED HERE. On 2026-08-10 ~19:58, on
+# the beat-6 cloud ladder, verbatim: "now you're adding some wolf and some
+# weird metal robot thing.. anyways this one is good enough lets not overthink
+# it, use that." That pick is 06-too-blue-r8d-step3-s0.png — the repaired step
+# 3, the corrected rung after r8c steps 3-5 drew a robot and two wolf heads.
+# Three independent records name that exact file and no other:
+#   - review/provisional-v35/clips/06-too-blue.mp4.meta.yaml
+#     source_still_sha256: 6e44d328f8d8d57502018ebe4f2639c47035f428aa4059c489de22af9a84c3a2
+#     founder_verdict: approved_as_the_beat_6_frame, 2026-08-10
+#   - pipeline/jobs/cancelled-by-founder/README.md:22 — "The pick is
+#     review/b06-r8d-fix/06-too-blue-r8d-step3-s0.png"
+#   - commit 119cd4f, "he took the repaired step 3"
+# The repo copy, the review/b06-r8d-fix copy and the copy now sitting on the
+# box all hash to 6e44d328f8d8d57502018ebe4f2639c47035f428aa4059c489de22af9a84c3a2.
+# The other frame of that round, ...-step3-s1.png, is NOT his pick and is not
+# used. Beat 06 has no canon still (001's stills/ holds only
+# 06-too-blue-REVOKED-leaf.png, revoked 2026-08-07), so the plate is held from
+# the take, exactly as the v35 clip does.
+#
+# HOW THE STILL GOT TO THE BOX. It is tracked in git at commit 119cd4f but the
+# box checkout (9e0a0ae) does not have the file, so it was scp'd to
+# C:\banyan-farm\v34-r2\06-too-blue-r8d-step3-s0.png and hash-verified there
+# before this job was written. The plate step reads that copy, not the repo
+# path, and prepare_plate does the same cover-centre crop (832x1216 ->
+# 704x1280) that produced 04-704x1280.png and 07-704x1280.png.
+#
+# HIS CONTENT DIRECTION, WHICH THIS CLIP MUST NOT VIOLATE: "either show the
+# ground as having tall grass or dont show the ground at all and show the sky."
+# The plate is the sky half of that instruction — its own negative carried
+# cityscape, city, building, skyline, road, mountain, grass, field, horizon,
+# ground. Those terms are appended to the motion negative below so the video
+# model cannot introduce what the image model was forbidden.
+#
+# FRAME COUNT — SIZED TO THE VOICE, AND ONE RUNG ABOVE THE LITERAL MATCH ON
+# PURPOSE. From genomes/.../clips/06-vo.json: chunks span 0.000 -> 4.173s,
+# total_s 4.473s. fps is 24, read off the proven spec's --fps, not assumed.
+#   chunks:  4.173 x 24 = 100.15  -> smallest 8n+1 >= that is 105 (8*13+1)
+#   total_s: 4.473 x 24 = 107.35  -> smallest 8n+1 >= that is 113 (8*14+1)
+# Neither is enough. render_t3.fit_duration (render_t3.py:312) sizes a voiced
+# beat to max(min(cdur, vdur+2.0), vdur+0.4) with vdur = total_s, so the slot
+# is AT LEAST 4.873s, and footage shorter than its slot is looped — "looping
+# footage restarts as a hard jump-cut mid-shot" (render_t3.py:583). That is the
+# exact defect he named. So the requirement is cdur >= 4.873s:
+#   4.873 x 24 = 116.95 -> smallest 8n+1 >= that is 121 (8*15+1)
+#   121 frames / 24fps = 5.042s, which is >= 4.873 and <= vdur+2.0 = 6.473
+# => the whole clip plays, nothing loops, nothing is trimmed. 121 << 385, so
+# the host-RAM ceiling measured at 385f (host_peak_phys 59.8/68.1GB, commit
+# 89.2/128.2GB) is nowhere near.
+#
+# WHAT WAS COPIED AND WHAT CHANGED. The recipe is ep1-b07-385f-control.yaml —
+# same two-stage distilled LTX i2v, guidance 1.0, --distilled-sigmas,
+# --image-crf 33, sequential offload, 704x1280, fps 24, same script, same
+# mode. Changed: the plate, the frame count (385 -> 121), the beat, the seed,
+# the output name, the bench label and the id. ADDED: a plate step and an
+# ENCODE step, because beat 06 has no embeds on the box — the encode shape is
+# copied from ep1-b04-385f-hands-still.yaml and the plate shape from
+# ep1-b07-v34-motion-r2.yaml, both of which landed rc=0.
+#
+# THE PROMPT IS NEW BECAUSE IT HAS TO BE — there is no beat-06 motion prompt to
+# inherit. Its skeleton is b07-prompt.txt verbatim (the same cel-anime opener,
+# the same "small ambient motion only ... framing locked" clause block, the
+# same "Subject already in frame:" tail) with the field-at-sunset content
+# swapped for sky. The anti-zoom terms are KEPT, not removed: they were in
+# force on beat 04 when the camera move Roman praised appeared, so removing
+# them would change a second thing. The clouds are asked to drift CONTINUOUSLY
+# in one direction rather than to do something once — beat 04's rejected clip
+# ("literally his hand repeatedly moving") traces to a "twitch once" clause the
+# model cycled, and a one-shot instruction is how you get a loop.
+#
+# NO METRIC IS RUN. The flow metric is disqualified on this series (131e433 —
+# it scored highest on the beat where the plant fell over). Read by eye.
+# Whether this ships, and whether beat 06 gets motion at all, is R4's.
+
+id: ep1-b06-121f-motion-0811
+task: ep1-b06-121f-motion-0811
+node: 001-capability-inventory
+beat: 6
+runner: box
+needs_gpu: true
+priority: 22       # lower runs first; sits behind the two ready b07 385f jobs
+max_attempts: 1
+sample: true
+owner: top-up lane, 2026-08-11
+
+consumer: >-
+  item 7 on /review/waiting — beat 06, the held still that reads static. Beat 06
+  has no motion candidate of any kind, so this is the first thing Roman can
+  actually rule on for it: either the sky moves and beat 06 stops being a frozen
+  frame, or it does not and the honest answer is that his plate wants the held
+  still and the ruling that covers 05/09/12/15 should be extended to cover it.
+
+success: >-
+  A 704x1280 mp4 at C:\banyan-farm\v34-r2\06-too-blue-LTX-121f.mp4, 121 decoded
+  frames (5.04s), conditioned on his plate, in which the clouds drift and
+  nothing else happens: no ground, no horizon line, no buildings, no figure,
+  no second scene. Whether the drift is enough motion to carry the beat is the
+  OBSERVATION and his call, not the pass condition — a completed clip that
+  still reads static is a real result and gets reported as one. An OOM would
+  also be a result, though 121 frames is well under the 385 proven on this box.
+
+why: >-
+  Beat 06 is one of the beats that read static and it is the only one of them
+  with a founder-picked plate and no motion candidate at all.
+
+est_minutes: 7   # encode ~2min (Gemma load dominates); 145 frames measured
+                 # 3m53s wall on 2026-08-10 including model load, and this is
+                 # 121. A 7-minute run is not a stall.
+needs: [cuda, vram20, video-venv]
+
+payload:
+  # Skeleton is b07-prompt.txt; the content clause is sky instead of field.
+  C:\banyan-farm\v34-r2\b06-prompt.txt: |-
+    2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. the clouds drift slowly and continuously across the sky in one steady direction and keep their shapes, sunlight shifts gently through them, the blue deepens and lightens softly. small ambient motion only, everything holds its position, framing locked, no zoom, no push-in, no camera rise, subject stays the same size and place in frame, living scene. Subject already in frame: no human, no person, no man, no woman, no boy, no girl, no hand, no face, only open blue sky with soft white clouds seen from below, nothing but sky, no ground, no horizon, no buildings.
+
+  # b07-negative.txt verbatim, plus the ground/city terms the plate's OWN
+  # negative carried. Those are not a free addition: they are what enforces
+  # "dont show the ground at all and show the sky" against the video model.
+  C:\banyan-farm\v34-r2\b06-negative.txt: |-
+    wilting, drooping, bending over, falling over, collapsing, sagging, plant dying, human, person, man, woman, boy, girl, extra hand, extra arm, foot, face, crowd, animal, bird, insect, new object appearing, photorealism, 3D render look, text, 静态, 静止, frozen frame, still image, no motion, photorealistic, photograph, live action, film still, 3D render, CGI, octane, scene change, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage, cityscape, city, building, skyline, road, mountain, grass, field, horizon, ground, leaf, plant, stem, foliage, tree, aircraft
+
+  C:\banyan-farm\v34-r2\b06-jobs-encode.json: |-
+    [{"beat": 6,
+      "embeds": "C:\\banyan-farm\\v34-r2\\b06-embeds.pt",
+      "prompt_file": "C:\\banyan-farm\\v34-r2\\b06-prompt.txt",
+      "negative_file": "C:\\banyan-farm\\v34-r2\\b06-negative.txt"}]
+
+  C:\banyan-farm\v34-r2\b06-jobs-render-121.json: |-
+    [{"beat": 6,
+      "seed": 20260836,
+      "embeds": "C:\\banyan-farm\\v34-r2\\b06-embeds.pt",
+      "init": "C:\\banyan-farm\\v34-r2\\06-704x1280.png",
+      "out": "C:\\banyan-farm\\v34-r2\\06-too-blue-LTX-121f.mp4"}]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  # The source named here is the scp'd copy of his pick, hash-verified on the
+  # box at 6e44d328f8d8d57502018ebe4f2639c47035f428aa4059c489de22af9a84c3a2
+  # against the repo file. prepare_plate writes 06-704x1280.png beside it.
+  - name: plate
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - -c
+      - |
+        import sys; sys.path.insert(0, r"C:\banyan-farm\banyan-city\pipeline")
+        from plate_prep import prepare_plate
+        out, rec = prepare_plate(
+            r"C:\banyan-farm\v34-r2\06-too-blue-r8d-step3-s0.png",
+            "704x1280", r"C:\banyan-farm\v34-r2", "06")
+        print("plate", out); print(rec["plate_wxh"], rec["crop_policy"])
+        print("source_sha256", rec["sha256"])
+  - name: encode
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+      - --stage
+      - encode
+      - --jobs
+      - C:\banyan-farm\v34-r2\b06-jobs-encode.json
+  - name: render
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+      - --stage
+      - render
+      - --jobs
+      - C:\banyan-farm\v34-r2\b06-jobs-render-121.json
+      - --size
+      - 704x1280
+      - --frames
+      - "121"
+      - --fps
+      - "24"
+      - --guidance
+      - "1.0"
+      - --distilled-sigmas
+      - --two-stage
+      - --image-crf
+      - "33"
+      - --offload
+      - sequential
+      - --mode
+      - production
+      - --task
+      - ep1-b06-121f-motion-0811
+      - --worker
+      - rtx5090
+      - --bench-jsonl
+      - C:\banyan-farm\v34-r2\bench-b06-121f.jsonl
+      - --bench-label
+      - b06-121f-motion
+
+artifacts:
+  - C:\banyan-farm\v34-r2\06-too-blue-LTX-121f.mp4
