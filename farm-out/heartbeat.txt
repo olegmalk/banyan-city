@@ -493,3 +493,4 @@
 17:07:34Z box-runner idle ready=0 failed=1
 17:17:38Z box-runner idle ready=0 failed=1
 17:23:25Z STARTED task=ep2-b03-field-solo-0811-1786468995 attempt=1 on box-runner
+17:24:16Z DONE task=ep2-b03-field-solo-0811-1786468995 rc=0 artifacts=8
