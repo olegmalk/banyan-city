@@ -2,7 +2,7 @@
 
 **Tree:** Sapling · **Parent:** [004 — Shade](../004-shade/node.md) · **Trunk:** yes · **Status:** hot
 **This file is a T0 leaf** (`005-t0-b`, shot-granular per SCRIPT-SPEC.md). Steward-authored trunk continuation under taste file v0.2 (see `../../edl.md`).
-**Format:** 9:16 vertical · ~149s · VO + dialogue · 26 beats = 26 shots
+**Format:** 9:16 vertical · ~125s · VO + dialogue · 26 beats = 26 shots
 
 ---
 
@@ -108,52 +108,52 @@ He addresses the assessor without uncrossing his arms, only his jaw moving.
 
 > **VO:** His field drinks. So do I. That is why I am taller this week than I have any right to be.
 
-**COMMUNITY SERVICE — 1:11–1:16**
+**COMMUNITY SERVICE — 1:15–1:20**
 The quill writes three unhurried words into the ledger.
 
 > **ASSESSOR:** "Community service. Ongoing."
 
-**A PAYMENT PLAN — 1:16–1:21**
+**A PAYMENT PLAN — 1:20–1:25**
 Close on the young tree's leaves, motionless, taking it in.
 
 > **VO:** That's not mercy. That's worse. That's a *payment plan.*
 
-**OCCUPATIONS — 1:21–1:26**
+**OCCUPATIONS — 1:25–1:30**
 The assessor reaches the settlement schema and writes, then stalls over the second line.
 
 > **ASSESSOR:** Population: two. Neither of them the tree. Occupations: farmer — non-resident — and… weed warden. Provisional.
 
-**WATER SOURCE — 1:26–1:31**
+**WATER SOURCE — 1:30–1:35**
 The assessor looks up, quill poised — then the farmer, in frame beside him, answers it.
 
 > **ASSESSOR:** Water source?
 > **FARMER:** The channel mended itself.
 
-**CHANNELS DO NOT — 1:31–1:36**
+**CHANNELS DO NOT — 1:35–1:40**
 The quill stops mid-word. He looks at the farmer, then out at the damp field line.
 
 > **ASSESSOR:** Channels do not mend themselves.
 > **FARMER (flatly):** This one did.
 
-**HE'S BEEN WATCHING — 1:36–1:41**
+**HE'S BEEN WATCHING — 1:40–1:45**
 The assessor stops writing and simply looks at the tree — a long, unhurried, professional look.
 
 > **VO:** Oh no. He counts things for a living. He has been counting my tells since he arrived.
 
-**AND YOU — 1:41–1:45**
+**AND YOU — 1:45–1:49**
 He walks up to the tree, kneels on one knee to bring his face level with its crown, and addresses it directly.
 
 > **ASSESSOR:** And you. Occupation?
 
-**ONE LEAF — 1:45–1:50**
+**ONE LEAF — 1:49–1:54**
 One held wide: goblin, farmer and kneeling assessor all motionless around the tree — then one leaf tilts, slowly and deliberately.
 
-**POPULATION THREE — 1:50–1:56**
+**POPULATION THREE — 1:54–2:00**
 He writes one line we never see, closes the ledger, chains it, and pauses at the clearing's edge exactly where he entered.
 
 > **ASSESSOR:** The magistrate reviews all new settlements. She will want to see this one *personally.* …Population three.
 
-**CALLED A LOT OF THINGS — 1:56–2:01**
+**CALLED A LOT OF THINGS — 2:00–2:05**
 Long hold on the young tree alone in the morning light.
 
 > **VO:** I've been called a lot of things. "Population" is new.

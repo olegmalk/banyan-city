@@ -2582,3 +2582,51 @@ backlog:
 # one at a time and to overwrite the file with CLAIMED before touching the GPU.
 # Claimed on the check-in log as the ruling requires: STARTED 15:29:00Z, DONE
 # 15:38:35Z on `farm-results-hand`.
+- id: ep3-003b-b01-dialect-sample-1786471405
+  runner: manual
+  worker: hand
+  needs: [cuda, vram20]
+  window: any
+  est_minutes: 12
+  blocked_on: >-
+    A VERIFIED INVOCATION FOR THE PLAIN STILLS PATH ON THE BOX. Everything else for
+    this sample is done and committed: the prompt is converted and in the tree, and
+    the node passes the §6 gate (003b-t0-c, approved_by founder-delegated-to-steward,
+    D22). The schema farm_worker.render_task wants is small and known — node, beats,
+    seeds, width/height, steps, seed_base — and it reads the prompt out of shots.md
+    through generate_shots.parse_shots. What is NOT verified from this side is how
+    that path is invoked ON THE BOX. Every committed spec in pipeline/jobs/ drives
+    the wave/IPA harness (goblin_ipa_beat.py, render_wave_sample.py), whose drafts
+    and beat constant are hard-wired to 002b — pipeline/goblin_ipa_sample.py:60 is
+    `BEAT = 4` and its docstring says "002b goblin". There is no argv precedent for
+    a plain parse_shots render of another node, and the entries already in `tasks:`
+    are runner=manual prose orders carrying no `node` key, so that schema is not
+    what this file's task list actually feeds. A §6-shaped mistake here does not
+    fail the job, it SystemExits the daemon (farm_worker.py:564) — so this waits for
+    whoever owns the box instead of being guessed at minutes before an unattended
+    night. Unblocking it is one answer, not one hour.
+  cmd: >-
+    ONE SAMPLE. Node 003b-one-leaf-for-yes, beat 1, 4 seeds, $0 local GPU. Renders
+    the converted beat-01 prompt now in
+    genomes/sapling/nodes/003b-one-leaf-for-yes/shots.md — the ONLY converted prompt
+    in that file, deliberately, so this is a single-variable test of the dialect and
+    of nothing else. Defaults are fine (832x1216, 40 steps, animagine-xl-3.1,
+    seed_base 20260719). PREDICTION, written before the frames: the dialect converts
+    cleanly and the risk is not style but SCALE — the v2 prompt earned a readable
+    macro of hands because "macro shot" sat in its camera clause, and the converted
+    prompt drops camera-hardware language per the ep2 law, so the likely failure is
+    the goblin arriving as a whole standing figure with the fig too small to read.
+    If that is what comes back the fix is a framing sentence inside the action
+    clause, not a return to v2. The other 20 beats stay in the killed dialect until
+    this one has been looked at.
+  why: >-
+    All 132 shot prompts on the ep3 path are in the v2 "low detail" dialect the
+    founder killed on 2026-07-27, and converting them is the one thing standing
+    between five approved scripts and a night of rendering. Converting all 132 on an
+    unproven recipe is the exact failure CLAUDE.md names: the K recipe went to
+    fifteen beats on the steward's own metric and came back "literally just frozen
+    frames". One beat, one look, then 131.
+  consumer: >-
+    The founder's morning review page, and the recipe decision for the remaining 131
+    prompts. Its own success is readable candidates of the beat the script describes
+    — not that the beat is good, which is R4's.

@@ -12,10 +12,18 @@ action (motion grammar, `style.md`).
 
 **Character continuity (anime model sheet, `style.md`):** the scavenger is
 a small round goblin — enormous ears that act like a second face, huge expressive eyes, patchwork cloak in faded greens and
-browns. The sapling is a tiny mascot-simple tree, ~40cm — thin curved trunk, TWO
+browns. The sapling is a tiny mascot-simple tree, ~55cm — thin curved trunk, TWO
 oversized expressive leaves, no face, and ONE thin bare side-branch (the
 fig grew there and fell in 002b). Every beat must show the same object:
 two leaves, one bare branch. All its acting is leaf angle and timing.
+
+**Height is the ladder's, leaf count is the script's — and they disagree.**
+`style.md`'s canonical growth ladder gives 003b **~55 cm** (taken here, and the
+reason this block no longer says 40 cm) but also says *three* leaves. The script
+cannot carry three: the whole protocol is "one leaf for yes", beat 19 is TWO
+LEAVES tilting at once, and the cold open names "two oversized leaves". Two it
+stays until someone with the authority says otherwise — flagged, not silently
+reconciled, because both files are canon and only one of them can be right.
 
 **Assembly:** `python3 pipeline/render_t3.py sapling 003b --clips <dir> --out ep.mp4`
 **Free render:** `python3 pipeline/kaggle/run_remote.py push 003b`
@@ -26,10 +34,18 @@ Status legend: ✅ generated · ⬜ needs footage
 
 ## Beat 01 — COLD OPEN (0:00–0:06) ⬜ needs footage
 
+**DIALECT SAMPLE — this is the only converted prompt in this file.** Beats 02-21 are still
+in the v2 "low detail" dialect the founder killed on 2026-07-27. This one was rewritten to the
+current detailed-cinematic dialect using 002b's converted prompts as the template (action first,
+style tail last), the approved goblin identity (green skin, bald, long pointed ears, red eyes,
+patchwork cloak — NO tusk, per his 2026-08-12 reference), and 003b's `style.md` ladder row.
+Content is unchanged from the v2 prompt: same hands, same fig, same sapling behind. ONE sample
+decides the recipe for the other 20; nothing else in this file is converted until it is looked at.
+
 Line: premise + fig recap. Camera on the fig in the GOBLIN's hands with the tree's bare branch visible behind — the gate misread the hands as the tree's.
 
 ```
-Vertical 9:16 macro shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin's two green clawed hands cradle a single ripe fig, turning it slowly in dawn light; behind them stands a tiny mascot-simple banyan sapling with two oversized leaves and one thin bare side-branch. Cool dawn blues warming into peach. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+A small green goblin's two clawed hands cradle a single ripe fig and turn it slowly, close in the foreground — he is bald, with long pointed ears and red eyes, in a patchwork cloak of faded greens and browns, kneeling in dew-wet grass. Behind his hands, in an open field at dawn, stands a 55cm mascot-simple banyan sapling in bare earth: a thin curved trunk, two oversized leaves, and one thin bare side-branch where the fig grew and fell. The sapling is small enough that the cradled fig reads as large as one of its leaves. Low dawn light across the field, cool blues warming into peach, long soft shadows. Deadpan quiet staging, static camera, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 ## Beat 02 — EVIDENCE RETURNED (0:06–0:11) ⬜ needs footage
