@@ -1,0 +1,125 @@
+# 2026-08-12, SEED VARIANT B. Authored in bulk under his directive: "can you just create a
+# queue that will work without you? ... it''ll save a hell lot of tokens."
+#
+# This is the SAME recipe as the take that already works for this beat, with ONE thing
+# different: the seed. Nothing else moves — same init, same sha, same prompt, same negative,
+# same frame count. It exists so that the morning screening is a CHOICE between two takes
+# rather than a yes/no on one, which is the pattern that worked for the 34 rival frames.
+#
+# WHAT A DIFFERENCE HERE WOULD MEAN: if the two seeds disagree about anything that matters —
+# the action landing, the object''s placement, the character holding — then this beat is
+# seed-luck rather than solved, and the recipe needs another look before it is trusted. If
+# they agree, the recipe is stable and he simply picks the better performance. Either answer
+# is worth the render; that is why this is a variant and not padding.
+id: ep2-b14-seedB-0812
+task: ep2-b14-seedB-0812
+node: 002b-first-citizen
+beat: 14
+runner: box
+priority: 19
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: ep2 motion lane, 2026-08-12
+consumer: 'His morning screening — the second of two takes of beat 14, so the pick is a choice rather than a verdict on one clip.'
+success: 'A 704x1280 mp4 of beat 14 at seed 20260813, to be read BESIDE the existing take. Success is the two agreeing on everything that matters — the action, the placement, the character. The failure worth reporting is them disagreeing, which would mean this beat is seed-luck and not solved.'
+why: Bulk-authored so the queue runs without me overnight; a second seed turns a yes/no into a pick and tests whether the beat is solved or merely lucky.
+est_minutes: 6
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b14-seedB-0812\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"--out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw, nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b14-seedB-0812\b14-motion-prompt.txt: '2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: a small goblin standing in a field under morning light — pale yellow-green skin, a bald domed head, long pointed ears, red eyes, a patched hooded coat. HE IS CROUCHED DOWN AT THE GROUND AND HIS HANDS PICK AT THE DIRT: he squats low on his heels with his knees bent up, both hands down in the soil in front of his feet, fingers plucking and worrying at the loose earth and crumbling it, embarrassed, while his eyes glance away to one side and then the other. The hands carry the whole performance and they are IN the dirt; he stays crouched in the same spot. He stays in the same place in frame and the camera does not move. Soft morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.'
+  C:\banyan-farm\ep2-b14-seedB-0812\b14-negative.txt: camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, stool, face morphing, distorted face, warped face, changing facial features, extra eyes, extra ears, hair, walking out of frame, leaving the frame, drifting sideways, moving to a different spot, second character, duplicate character, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text
+  C:\banyan-farm\ep2-b14-seedB-0812\b14-jobs-encode.json: "[{\"beat\": 14,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b14-seedB-0812\\\\b14-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\\ep2-b14-seedB-0812\\\\b14-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b14-seedB-0812\\\\b14-negative.txt\"}]"
+  C:\banyan-farm\ep2-b14-seedB-0812\b14-jobs-render.json: "[{\"beat\": 14,\n  \"seed\": 20260813,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b14-seedB-0812\\\\b14-embeds.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\\ep2-b14-seedB-0812\\\\b14-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b14-seedB-0812\\\\14-the-defense-LTX-seedB-0812.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b14-seedB-0812\cover_crop.py
+  - --src
+  - C:\banyan-farm\goblin-ipa-0812\out-b14-frozen\14-the-defense-ipa-r0-w015-s3.png
+  - --sha256
+  - c95bdcd218e12bcee1a2f12cb431f7d37e730b3c470419a6b3d260c35468cadc
+  - --out
+  - C:\banyan-farm\ep2-b14-seedB-0812\b14-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b14-seedB-0812\b14-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b14-seedB-0812\b14-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b14-seedB-0812
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b14-seedB-0812\bench-b14-seedB.jsonl
+  - --bench-label
+  - ep2-b14-seedB-0812
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b14-seedB"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/ep2-b14-seedB-0812/14-the-defense-LTX-seedB-0812.mp4*")
+                 + glob.glob("C:/banyan-farm/ep2-b14-seedB-0812/b14-init-704x1280.png")
+                 + glob.glob("C:/banyan-farm/ep2-b14-seedB-0812/bench-b14-seedB.jsonl"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b14-seedB-0812.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 2 else 1)
+artifacts:
+- C:\banyan-farm\ep2-b14-seedB-0812\14-the-defense-LTX-seedB-0812.mp4
+- C:\banyan-farm\ep2-b14-seedB-0812\b14-init-704x1280.png

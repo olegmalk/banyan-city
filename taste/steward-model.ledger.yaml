@@ -14118,3 +14118,54 @@
     that job's crop step with a missing-file error, costing a queue round-trip. Recorded because
     the next lane to hand a plate over should not have to rediscover it.
   outcome: null
+
+- id: ep2-b19-under-0812-scored
+  kind: scoring
+  date: 2026-08-12
+  scores: ep2-b19-under-0812
+  verdict: HIT. THE BOUNCE LANDS. Beat 19 is done and the stopping rule did not fire.
+  observed: >-
+    The fig hangs from the branch, falls, and SITS ON TOP OF HIS SKULL — and he squeezes his
+    eyes shut while it is there, which is a flinch nobody asked for and exactly what the beat
+    wants. Then it bounces off and lands in the grass at his feet. The trunk stays rooted
+    apart, nothing grows out of his head, both he and the tree are in frame, identity holds.
+    "The stem lets go, the fig falls, bounces off his head and lands in the grass at his
+    feet" — the whole sentence, on screen.
+  the_lesson_it_proves: >-
+    POSITIONS BEAT RELATIONS. Two rounds describing where the TREE sits relative to HIM both
+    missed; one round describing where HE stands — "standing directly underneath the branch,
+    no sideways gap, so that anything falling from that branch must land on his head" — hit
+    on the first try. A relation leaves both ends free and the model satisfies it loosely.
+    Stating the subject's own position pins it. That goes into every placement clause from
+    here.
+  what_it_changes_in_the_queue: >-
+    Beat 19 needs no further fix round, so nothing was queued against it. It moves to
+    shippable, making six beats that look cuttable to me: 03, 13, 14, 15, 17, 19.
+
+- id: ep2-bulk-queue-0812
+  kind: process
+  date: 2026-08-12
+  directive_verbatim: >-
+    "can you just create a queue that will work without you? and for the ai included stuff
+    like evaluation you can do when you need to? it'll save a hell lot of tokens."
+  what_i_queued: >-
+    Nine seed-variant jobs in one authoring pass — a second seed for every beat that now has
+    a working take (03, 12, 13, 14, 15, 17, 18, 19, 21). Same init, same sha, same prompt,
+    same negative, same frame count; seed 20260806 to 20260813 and nothing else. Queue depth
+    fifteen with the three plate first-motions and another lane's ep3 work already on it.
+  why_a_seed_variant_is_not_padding: >-
+    It answers a question I cannot currently answer about any of these beats: whether the
+    recipe is SOLVED or merely LUCKY. If the two seeds agree on the action, the placement and
+    the character, the recipe is stable and he simply picks the better performance. If they
+    disagree, that beat is seed-luck and needs another look before anyone trusts it. Either
+    result is worth the render, and it turns his morning from a yes/no on one clip into a
+    pick between two — the pattern that worked for the 34 rival frames.
+  the_discipline_that_still_applies: >-
+    Bulk authoring does not mean unexamined authoring. Every job carries its own success
+    sentence and its own named failure, written at authoring time; all nine dry-ran clean
+    before enqueue; and the one job whose plate was not on the box was caught and carried
+    across by hand rather than left to fail at the crop step.
+  now_dormant: >-
+    Going quiet until the batch lands or morning, then ONE scoring pass over everything
+    rather than a wake per clip. That is the token saving he asked for.
+  outcome: null
