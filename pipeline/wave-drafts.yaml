@@ -826,6 +826,38 @@ beats:
     # -- the four that carry his named fault -- all stay. Positive is untouched at
     # 66 tokens, so the staging, the darting eyes and the twitching ears are
     # word-for-word the round this answers.
+    # -- `authored_b04_idfix_r3` -- 2026-08-12, the fixer lane. AN r3 BECAUSE THE
+    # r2 MEASURABLY FAILED, NOT BECAUSE THE LANE WANTED ANOTHER GUESS.
+    #
+    # WHAT THE r2 DID AND DID NOT DO. `ep2-b04-idfix-r2-0812` sent `no scars, no
+    # stitched skin` -- CONFIRMED in its render sidecar, both terms present in the
+    # negative that reached the model -- and its frames STILL carry the cream dome over the upper skull, with X marks on the cheeks. The sutures are reduced; THE
+    # PALE SCALP IS NOT.
+    #
+    # THE CORRECTION THIS LANE OWES. After the beat-02 r2 came back clean, this
+    # lane wrote that the dome and the sutures were ONE fault because the ban
+    # removed both together, and propagated the ban alone to six beats. That was
+    # wrong, and the wave now says why: beat 02 is a MEDIUM shot. Beat 04 is an
+    # extreme close-up and beat 14 an intimate one, and at that size the negative
+    # reaches the stitches but cannot hold the scalp's COLOUR. Beat 11, a wide,
+    # never had the fault at all. It was one shot size, not one fault.
+    #
+    # THE OTHER HALF IS ALREADY MEASURED. The lead's `authored_b03_idfix_r2` sent
+    # `green scalp` as an AFFIRMATIVE with NO skin ban at all, and its skull came
+    # back FULLY GREEN with no dome. So the affirmative holds the colour the ban
+    # cannot. This round sends BOTH, which is the first recipe on this beat that
+    # has a measured result behind each half.
+    #
+    # PAID FOR: `no architecture` stayed retired from the r2, and `green scalp` costs three tokens against 66 in the positive -- there is room without touching the staging, so the close-up, the darting eyes and the twitching ears are unchanged.
+    authored_b04_idfix_r3: >-
+      A small goblin boy, {{GOBLIN}}, solo, green scalp, in a blurred open
+      grassy field, his face filling the frame, huge eyes darting, enormous
+      ears twitching. Close-up, soft morning light, cinematic lighting,
+      detailed, newest, masterpiece, best quality, very aesthetic No girl, no
+      child, no scars, no stitched skin, no house, no building, no interior,
+      no indoors, no dark, no night, no dusk, no sunset, no dim lighting, no
+      moody lighting, no low key, no shadows dominant. No photorealism, no 3D
+      render look. 9:16 vertical, no text.
     authored_b04_idfix_r2: >-
       A small goblin boy, {{GOBLIN}}, solo, in a blurred open grassy field,
       his face filling the frame, huge eyes darting, enormous ears twitching.
@@ -2147,6 +2179,38 @@ beats:
     # tonight and returned unbroken green crowns 4/4 with the patchwork cloak
     # intact 4/4. Four tokens; this beat sends 73 of 77 and four were spare, so
     # `female goblin`, `elf` and the species tier are all untouched.
+    # -- `authored_b14_idfix_r3` -- 2026-08-12, the fixer lane. AN r3 BECAUSE THE
+    # r2 MEASURABLY FAILED, NOT BECAUSE THE LANE WANTED ANOTHER GUESS.
+    #
+    # WHAT THE r2 DID AND DID NOT DO. `ep2-b14-idfix-r2-0812` sent `no scars, no
+    # stitched skin` -- CONFIRMED in its render sidecar, both terms present in the
+    # negative that reached the model -- and its frames STILL carry the BROWN OVAL GRAFT on the crown with X-stitches beside it. The sutures are reduced; THE
+    # PALE SCALP IS NOT.
+    #
+    # THE CORRECTION THIS LANE OWES. After the beat-02 r2 came back clean, this
+    # lane wrote that the dome and the sutures were ONE fault because the ban
+    # removed both together, and propagated the ban alone to six beats. That was
+    # wrong, and the wave now says why: beat 02 is a MEDIUM shot. Beat 04 is an
+    # extreme close-up and beat 14 an intimate one, and at that size the negative
+    # reaches the stitches but cannot hold the scalp's COLOUR. Beat 11, a wide,
+    # never had the fault at all. It was one shot size, not one fault.
+    #
+    # THE OTHER HALF IS ALREADY MEASURED. The lead's `authored_b03_idfix_r2` sent
+    # `green scalp` as an AFFIRMATIVE with NO skin ban at all, and its skull came
+    # back FULLY GREEN with no dome. So the affirmative holds the colour the ban
+    # cannot. This round sends BOTH, which is the first recipe on this beat that
+    # has a measured result behind each half.
+    #
+    # PAID FOR: `green scalp` is three tokens against 73 in the positive, which fits without touching the staging -- the clawed fingers, the loose dirt and the embarrassed face are all unchanged, as is the light the previous lane fixed.
+    authored_b14_idfix_r3: >-
+      A small goblin boy, {{GOBLIN}}, solo, green scalp, his clawed fingers
+      picking at loose dirt and flicking pebbles aside, his face glancing away
+      embarrassed above them. Intimate low close-up, shallow green grass
+      background, bright morning light, cinematic lighting, detailed, newest,
+      masterpiece, best quality, very aesthetic No girl, no child, no scars,
+      no stitched skin, no glowing eyes, no dark, no night, no dusk, no
+      sunset, no dim lighting, no moody lighting, no low key, no shadows
+      dominant. No photorealism, no 3D render look. 9:16 vertical, no text.
     authored_b14_idfix_r2: >-
       A small goblin boy, {{GOBLIN}}, solo, his clawed fingers picking at
       loose dirt and flicking pebbles aside, his face glancing away embarrassed

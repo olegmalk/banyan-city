@@ -1,0 +1,28 @@
+# Prediction for ep2-b14-idfix-r3-0812, written BEFORE enqueue, terse.
+# Not in taste/steward-model.ledger.yaml: the ledger was DIRTY (` M`) all night —
+# a sibling lane is mid-write, and appending would race its edit.
+
+- id: ep2-b14-idfix-r3-0812
+  kind: prediction
+  written: 2026-08-12, the fixer lane, before enqueue, AFTER reading the r2 frames that falsified this lane's previous prediction.
+  answers: >-
+    A pale scalp that survived the skin ban on this beat. The r2's sidecar confirms
+    `scars` and `stitched skin` were both delivered to the model, so this is a
+    measured insufficiency of the lever, not a delivery failure.
+  the_claim: >-
+    That the AFFIRMATIVE holds what the NEGATIVE could not. `green scalp` cleared
+    the dome on beat 03 with no skin ban at all; the ban cleared the sutures on
+    beat 02 with no affirmative. This round sends both and expects both gone.
+  predicates:
+  - the scalp is GREEN, no cream or tan dome, 4/4
+  - no sutures, seams or grafts on the crown 4/4
+  - no X marks on the cheeks >=3/4
+  - patchwork cloak still reads as patchwork >=3/4
+  - the staging is unchanged from the r2 (the positive gains two words and loses none)
+  falsifiable_by: >-
+    A pale scalp surviving BOTH levers together would mean this beat's shot size
+    defeats prompt-level fixes altogether, and the answer moves to the frozen
+    definition itself — already the founder-facing recommendation in
+    wave2-needs-founder.md, and strongly reinforced by that outcome.
+  consumer: morning page, identity-frozen wave.
+  outcome: null
