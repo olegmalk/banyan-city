@@ -443,3 +443,4 @@
 13:00:47Z STARTED task=ep2-b20-goblin-staged-0811-1786452769 attempt=1 on box-runner
 13:01:41Z DONE task=ep2-b20-goblin-staged-0811-1786452769 rc=0 artifacts=8
 13:01:46Z box-runner idle ready=0 failed=1
+13:11:49Z box-runner idle ready=0 failed=1
