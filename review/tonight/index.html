@@ -1,0 +1,89 @@
+<title>Tonight's clips</title>
+
+<style>
+  body { max-width: 52rem; margin: 0 auto; padding: 2rem 1.25rem 6rem;
+         font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+         color: #1a1a1a; background: #fff; }
+  h1 { font-size: 1.6rem; margin: 0 0 .3rem; }
+  .sub { color: #666; margin: 0 0 2.5rem; }
+  .item { border-top: 1px solid #e3e3e3; padding: 1.6rem 0 .6rem; }
+  .item:last-of-type { border-bottom: 1px solid #e3e3e3; }
+  h2 { font-size: 1.15rem; font-weight: 600; margin: 0 0 .4rem; }
+  p.note { margin: 0 0 1rem; color: #333; }
+  video { width: 100%; height: auto; max-height: 78vh; display: block;
+          background: #000; border: 1px solid #ddd; border-radius: 4px; }
+  .one { max-width: 20rem; }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;
+          max-width: 40rem; }
+  @media (max-width: 38rem) { .pair { grid-template-columns: 1fr; max-width: 20rem; } }
+  .cap { margin: .4rem 0 0; font-size: .9rem; color: #666; }
+  .pending { color: #888; }
+  footer { margin-top: 3rem; color: #666; font-size: .9rem; }
+  @media (prefers-color-scheme: dark) {
+    body { background: #141416; color: #e8e8e8; }
+    .item { border-color: #2c2c30; }
+    video { border-color: #2c2c30; }
+    .sub, .cap, .pending, footer { color: #8a8a8a; }
+    p.note { color: #ccc; }
+  }
+</style>
+
+<h1>Tonight's clips</h1>
+<p class="sub">Six questions, one clip or pair each. Nothing here is ranked and nothing is picked — these are samples, and no second beat gets rendered on any of these recipes until you've said. — 2026&#8209;08&#8209;11, morning</p>
+
+<div class="item">
+  <h2>Beat 04 — is the hand fixed, and does the zoom-out survive?</h2>
+  <p class="note">You said of the last one: "the ltx 04 clip is literally his hand repeatedly moving, although the zoom out is great and its exactly the kind of thing we need." Exactly one clause changed in the prompt — "the fingers twitch once" became hands stay still. Everything else is the same. 16 seconds.</p>
+  <div class="one">
+    <video controls preload="metadata" playsinline src="/review/tonight/04-the-fall-LTX-385f-handsstill.mp4"></video>
+  </div>
+</div>
+
+<div class="item">
+  <h2>Beat 07 — does either of these move, and which looks better?</h2>
+  <p class="note">The pull-back you liked on beat 04 happened even though that prompt said "framing locked, no zoom, no push-in, no camera rise" — so we don't know whether the long frame count alone produces the move, or whether the camera can be told what to do. The control changes only the frame count, 145 to 385. The other one also asks for the camera move in words. 16 seconds each.</p>
+  <div class="pair">
+    <div>
+      <video controls preload="metadata" playsinline src="/review/tonight/07-zero-0-moving-parts-LTX-385f.mp4"></video>
+      <p class="cap">The control — frame count only, no camera wording</p>
+    </div>
+    <div>
+      <video controls preload="metadata" playsinline src="/review/tonight/07-zero-0-moving-parts-LTX-385f-zoomout.mp4"></video>
+      <p class="cap">Same, plus the pull-back asked for in words</p>
+    </div>
+  </div>
+</div>
+
+<div class="item">
+  <h2>Beat 08 — at thirteen seconds, does it stay alive or does it drift?</h2>
+  <p class="note">Beat 08's picture currently repeats 4.6 times under a 12.5-second line, which is the looping you said looks bad. 313 frames is where the repetition stops — one clip covering the whole line. 13 seconds.</p>
+  <div class="one">
+    <video controls preload="metadata" playsinline src="/review/tonight/08-ltx-r2-plate-313f-s20260739.mp4"></video>
+  </div>
+</div>
+
+<div class="item">
+  <h2>Beat 06 — does it stay a still, or is this better?</h2>
+  <p class="note">Beat 06 has never had a motion candidate; it is a held still in the cut. This one moves the exact frame you picked. 5 seconds.</p>
+  <div class="one">
+    <video controls preload="metadata" playsinline src="/review/tonight/06-too-blue-LTX-121f.mp4"></video>
+  </div>
+</div>
+
+<div class="item">
+  <h2>Beat 10 — is the climb reduced, and did the picture survive it?</h2>
+  <p class="note">The sprout climbs 181px in every round, and no wording has ever fixed it. Now we know why: at guidance 1.0 the sampler never reads the negative prompt at all, so every negative we wrote on this path did nothing. This is the first clip with the negative actually live, at guidance 2.0 — the thing to watch for besides the climb is whether the contrast burnt or the picture smeared.</p>
+  <div class="pair">
+    <div>
+      <video controls preload="metadata" playsinline src="/review/v34-plate-reseeds/10-ltx-r2g-plate-s20260897.mp4"></video>
+      <p class="cap">The control — guidance 1.0, the negative inert</p>
+    </div>
+    <div>
+      <p class="pending">Still rendering. It started at 08:48 and will appear here when it lands.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>What each clip was rendered from is written down in <code>pipeline/jobs/</code>, one spec per clip.</p>
+</footer>
