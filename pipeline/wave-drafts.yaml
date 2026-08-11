@@ -182,6 +182,40 @@ beats:
       cinematic lighting, detailed, newest, masterpiece, best quality, very
       aesthetic No girl, no child. No photorealism, no 3D render look. 9:16
       vertical, no text.
+    # ----------------------------------------------------------------------
+    # OCCLUSION, 2026-08-11 ~18:40. `authored_staged_med` was drawn as
+    # `ep2-b02-goblin-medium-0811` and the founder ruled on it, verbatim: "goblin
+    # is slowly getting better character consistency but in beat 2 it looks more
+    # like he grabs the sapling or is just next to the sapling, not hiding behind
+    # it. character consistency needs more improvement as well." The shot-size
+    # fix WORKED — he could see the character well enough to judge it, which no
+    # earlier beat-02 sheet allowed — and the SPATIAL RELATION failed.
+    #
+    # WHY THE WORDS LET IT HAPPEN. `dives behind a tiny sapling` and `his face
+    # visible past its thin stem` both name the relation as an ACTION or an
+    # ABSTRACTION. A still cannot show a dive, and "behind" in an action clause
+    # is a direction of travel, not a depth order — so the model drew the two
+    # bodies ADJACENT and, reading `dives behind ... sapling` as contact,
+    # sometimes had him hold it. Nothing in the sentence says which body is in
+    # FRONT of which in the picture.
+    #
+    # THE FIX IS TO DESCRIBE THE FRAME, NOT THE EVENT: the stem crosses in front
+    # of him, his body is partly hidden behind it, his face peeks around it. Every
+    # clause is a positive statement about what is visible and what is occluded,
+    # in depth order. `crouches` replaces `dives` because a crouch is a pose a
+    # still can hold and a dive is not — this trades the sprint's motion for a
+    # readable hide, deliberately, since the joke he is judging is the COVER.
+    # The field is anchored affirmatively in the same clause (`open grassy
+    # field`) rather than by a negative: his beat-02 sentence names no setting
+    # fault, so this beat spends no negative budget on one.
+    # First comma-clause untouched, so the tag still derives 1boy.
+    authored_staged_med_occl: >-
+      A small goblin boy, {{GOBLIN}}, solo, from front, crouches in an open
+      field behind a tiny sapling, its thin stem in front of him, half hidden
+      behind the stem, his face peeking around it. Static camera, medium shot,
+      morning light, cinematic lighting,
+      detailed, newest, masterpiece, best quality, very aesthetic No girl, no
+      child. No photorealism, no 3D render look. 9:16 vertical, no text.
 
   3:
     slug: bad-cover
@@ -241,6 +275,40 @@ beats:
       twitching. Slow push-in, close-up, soft morning light, cinematic lighting,
       detailed, newest, masterpiece, best quality, very aesthetic No girl, no
       child. No photorealism, no 3D render look. 9:16 vertical, no text.
+    # ── `authored_field` — THE BACKGROUND, 2026-08-11 ~18:40. ───────────────────
+    # `authored` was drawn as `ep2-b04-goblin-close-0811` and the founder ruled,
+    # verbatim: "for beat 4 its also not too bad but character consistency, and
+    # the background is a house." The framing and the goblin recipe are the part
+    # he did not object to; the SETTING is the fault, and it is the same drift he
+    # named on beat 03 an hour earlier ("making the goblin in a house").
+    #
+    # WHY THE WORDS LET IT HAPPEN — OMISSION, not a wrong term. `authored` names
+    # no background at all. It says `his face filling the frame` and then only
+    # light (`soft morning light`), so every pixel behind the face is the model's
+    # invention, and an anime close-up prior fills that space with interior walls
+    # and windows. This beat is the only goblin beat in the wave with NO setting
+    # clause; beat 02 says `in the grass` and has never come back indoors.
+    #
+    # TWO HALVES, BOTH NEEDED, AND THE NEGATIVE IS WHERE THE PROHIBITION LIVES.
+    # Affirmative: `blurred open field behind him` — a close-up background is
+    # out-of-focus by optics, so naming the blur asks for depth of field rather
+    # than a competing subject. Negative: `no house, no building, no indoors`,
+    # appended to the existing `No girl, no child` comma-chain so `_NEGATION`
+    # lifts all five into the SDXL negative in one clause — the guards-ref draft
+    # on beat 05 uses the same chain form. `indoors` is the Danbooru tag for what
+    # he is seeing, which is what binds on an animagine checkpoint.
+    #
+    # NOTHING ELSE MOVES. Same `green skin` slot, same `his face filling the
+    # frame` and `close-up` he part-approved, same held-breath action word for
+    # word. His character-consistency complaint is drift ACROSS seeds and no
+    # added adjective fixes that, so none was added.
+    authored_field: >-
+      A small goblin boy, {{GOBLIN}}, solo, his face filling the frame,
+      holding his breath with cheeks puffed and huge eyes darting, enormous ears
+      twitching, blurred open field behind him. Slow push-in, close-up, soft
+      morning light, cinematic lighting, detailed, newest, masterpiece, best
+      quality, very aesthetic No girl, no child, no house, no building, no
+      indoors. No photorealism, no 3D render look. 9:16 vertical, no text.
 
   5:
     slug: the-patrol
@@ -265,6 +333,54 @@ beats:
       clipboard. Wide static camera, long soft shadows, cinematic lighting,
       detailed, newest, masterpiece, best quality, very aesthetic No girl, no
       child. No photorealism, no 3D render look. 9:16 vertical, no text.
+    # ── `authored_guards_ref` — THE GUARD CHARACTER REFERENCE, 2026-08-11. ──────
+    # Roman, verbatim: "should probably setup a character for the guards, take your
+    # time doing that" / "we need to setup character consistency even if they only
+    # appear once ... so we dont have confusion." Beat 05 carries it because it is
+    # the guards' entrance and the only beat with BOTH of them facing the audience;
+    # nothing else in the wave can show two readable faces at once.
+    #
+    # FOUR CHANGES, EVERY ONE OF THEM DRAWN EVIDENCE, NOT A NEW IDEA:
+    #  1. SHOT SIZE, `Wide static camera` -> `Medium shot`. Today's finding, twice:
+    #     beat 04 is the only beat of this wave whose frames were ever readable and
+    #     it states a size; `ep2-b02-goblin-medium-0811` was queued on exactly this
+    #     one-token swap after wide-shot distance drew a head a few pixels across.
+    #     A reference frame whose faces are unreadable references nothing.
+    #  2. THE STAGING PROSE GOES, THE CHARACTER STAYS. `jog into frame and halt,
+    #     scanning` is an action beat; a reference is a standing pose. `stand side
+    #     by side facing camera` + `both faces clearly visible` answers the count
+    #     failure too — out-staged/05-the-patrol-wave1-s0/s1 came back with ONE
+    #     armoured figure, not two, and s1 drew it INSIDE a held picture frame.
+    #  3. THE REGISTER NEGATIVES, LIFTED FROM THE ROUND THAT PROVED THEM. b05-r5
+    #     (ledger record, scores b05-r5-s0..s3) sent eight prescribed negatives and
+    #     its own predicates show `not_dark_fantasy`, `daylight`,
+    #     `no_glowing_eyes_visor`, `no_weapon`, `no_hood` passing 4 of 4 — the first
+    #     round in five to clear the founder's veto, "it is a dark forest and they
+    #     look dangerous; they are supposed to be round and harmless in a morning
+    #     field". Those five come here verbatim. `no screen` is the sixth, and it is
+    #     the s1 frame above plus his own earlier stop on a board that "reads as a
+    #     lit screen". Prohibitions live in the negative only; `sd_prompt._NEGATION`
+    #     lifts each comma-terminated `no …` out of the positive.
+    #  4. `armor plate` IS DELIBERATELY NOT AMONG THEM, and that is the whole of
+    #     b05-r5's lesson: it was negated while the positive still said `mismatched
+    #     ill-fitting armor`, CLIP does not compose negations, and `armor_present`
+    #     failed 4 of 4. The same record names the other half — with `men` also
+    #     removed there was "very little left telling the model what a guard
+    #     positively IS" — so `men`, `round`, and his own `mismatched ill-fitting
+    #     armor` are kept word for word and nothing was added to describe them.
+    #     `person` and `hand` are NOT negated either: check() faults on a peopled
+    #     beat negating its own subject, and one guard has to hold the clipboard.
+    #
+    # `2boys` still derives — `Two round guard men` is untouched at the head of the
+    # first comma-clause, which is all `_tag_from_clause` reads.
+    authored_guards_ref: >-
+      Two round guard men in mismatched ill-fitting armor stand side by side
+      facing camera in a grassy morning field, harmless and bureaucratic, both
+      faces clearly visible, one holding a bark clipboard. Medium shot, bright
+      morning light, long soft shadows, cinematic lighting, detailed, newest,
+      masterpiece, best quality, very aesthetic No girl, no child, no dark
+      fantasy, no night, no glowing visor, no weapon, no hood, no screen. No
+      photorealism, no 3D render look. 9:16 vertical, no text.
 
   6:
     slug: the-clipboard
