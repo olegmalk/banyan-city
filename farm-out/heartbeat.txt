@@ -537,3 +537,4 @@
 18:45:53Z DONE task=ep2-b14-refresh-0811-1786473895 rc=0 artifacts=8
 18:49:52Z STARTED task=ep2-b15-refresh-0811-1786474187 attempt=1 on box-runner
 18:50:43Z DONE task=ep2-b15-refresh-0811-1786474187 rc=0 artifacts=8
+18:52:48Z box-runner idle ready=0 failed=2
