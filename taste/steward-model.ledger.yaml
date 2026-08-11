@@ -9801,3 +9801,32 @@
     - green skin in 4/4
   consumer: his next look, minutes from this write - he is awake and reviewing.
   outcome: null
+
+- id: ep2-identity-freeze-0812
+  kind: founder_verdict
+  written: 2026-08-12 ~01:5x, immediately on receipt.
+  founder_verdict_verbatim: "goblin - bald, clothing - whatever, guards -
+    whatever. because honestly, the clothes aren't really a problem no matter
+    which of those options you choose. just follow the script and things that
+    aren't in the script you can decide, and try to do some of your own
+    evaluation, with an agent though. dont stop. caffinate."
+  founder_verdict_date: 2026-08-12
+  what_it_rules: BALD is a founder identity fact (his second hair ruling
+    tonight). Clothing and the guards row are DELEGATED to the steward within
+    the rendered options, under two standing conditions - the script governs
+    wherever it speaks, and the steward's evaluation runs in an agent, not by
+    feel. The bald r2 sample's prediction (no hair 4/4) scored HIT on the two
+    frames the steward inspected; full 4/4 scoring delegated to the evaluation
+    agent.
+  steward_decisions_taken_under_this_grant:
+    - goblin clothing = patchwork cloak, because the script itself dresses him
+      in one (beats 02/08 staging both say "in a patchwork cloak") and the
+      founder separately approved the cloak earlier tonight ("if its not too
+      much of a hassle then yes") - so this is the script-first choice, not a
+      taste call.
+    - guards row = chosen by the evaluation agent on cross-seed consistency of
+      the three rendered armour-less rows; script names no guard clothing
+      (the "mismatched armor" wording was the steward's borrowing, rejected
+      tonight).
+  consumer: the identity-frozen character-beat wave, overnight.
+  outcome: null
