@@ -1,0 +1,204 @@
+# d2: the frozen-identity candidate under his 01:5x delegation. BALD is his
+# ruling; the patchwork cloak is the script's own clothing (beats 02/08 both
+# stage him 'in a patchwork cloak'), so this is script-first, not taste. One
+# sample; the evaluation agent scores it against the r1 rows before the wave.
+# ── GOBLIN CHARACTER SHEET, CANDIDATE D — THE APPROVED CLOAK, AT LAST, 2026-08-12 ────────────────────────
+# HIS ASK, verbatim, ~23:45 local 2026-08-11: "i think we need proper character
+# consistency sheets for both the goblin and the guards for me to review."
+# Recorded in taste/steward-model.ledger.yaml as
+# `ep2-night-rounds-founder-verdict-0811`. He asked for the guards half twice in
+# one day — the first time at ~16:15, "should probably setup a character for the
+# guards, take your time doing that" — and this is the second asking answered.
+#
+# WHAT A SHEET IS HERE, STATED PLAINLY BECAUSE THE MACHINERY CONSTRAINS IT.
+# `render_wave_sample.py` draws ONE prompt at FOUR fixed seeds (wg.SEED + beat +
+# i*1000) and has no seed flag and no multi-pose mode. So a candidate is not a
+# turnaround — it is one identity drawn four times at four seeds, which is
+# exactly the cross-seed consistency his "bad character consistency" complaint is
+# about. Four goblin candidates x 4 seeds = 16 frames. The review page sets the candidates side by side so he can
+# point at one.
+#
+# ONE SAMPLE BEFORE ANY BATCH (CLAUDE.md, founder 2026-08-03) IS SATISFIED AND
+# HERE IS THE ARGUMENT. The rule bans scaling an unapproved result across the
+# wave; it does not ban the artifact he explicitly asked for. Nothing here
+# renders a beat for the episode: these are identity candidates on one beat, at
+# $0, and NOTHING may be carried to another beat until he points at one.
+#
+# NO PICK, NO RANK, NO PROMOTION. The steward has no opinion on the page and
+# writes none. R4 is his.
+#
+# THE VARIANT IS `authored_b04_sheet_r2` FOR ALL FOUR GOBLIN JOBS AND THE ONLY THING
+# THAT DIFFERS IS `--goblin-def`. That makes the sheet a controlled comparison of
+# the frozen slot rather than four different pictures, and the slot is where
+# tonight's fault lives: `ep2-b02-goblin-hide-0811` (scored) shows all three of
+# its predicates true and the beat rejected anyway on a soft female face and a
+# five-piece costume, neither of which was prompted. `green skin` under-specifies
+# a character on a checkpoint with a strong goblin prior and the prior fills in
+# the rest.
+#
+# HIS CONSTRAINTS, EVERY ONE A QUOTE:
+#   "he is just a simple green goblin, nothing complex" (2026-08-10, the frozen
+#     definition, ledger `ep2-goblin-definition-0810`)
+#   "too overcomplicated" and "looks female again" (tonight, on beat 02)
+#   "not having the correct style as a goblin" (tonight, on beat 03)
+#   "if its not too much of a hassle then yes" (2026-08-11 ~20:27, authorising the
+#     faded green patchwork cloak into the slot — approved and never once
+#     rendered by anybody until candidate D below)
+#
+# THE LADDER, one variable added per candidate so a verdict is attributable:
+#   A  green skin                                            (control, today's slot)
+#   B  green skin, one broken tusk                           (+ the tusk)
+#   C  green skin, one broken tusk, plain brown tunic        (+ stated simple clothes)
+#   D  green skin, one broken tusk, faded green patchwork cloak (+ his approved cloak)
+# THE TUSK IS HIS, NOT THE STEWARD'S: "one broken tusk" is his own approved
+# shots.md wording on beat 13, and r9 measured it as the lever that took
+# not-female to 4 of 4. It is still unratified as a slot tag and is labelled that
+# way in the sidecar, exactly as `green skin` is.
+#
+# ── MEASURED ON THE BOX'S REAL CLIP TOKENIZER BEFORE ENQUEUE, NOT ESTIMATED ───
+# Positive 66/77 with the style anchor present, 11 tokens of headroom, `1boy` deriving, negative recipe 74 -> sent 74 with nothing dropped. DRY OK.
+# The box's wave-drafts.yaml was scp'd from this repo and verified sha256
+# IDENTICAL before this job was written: da4f0697635d17a863d5dd7201d03ea7a92bc55960b7d7e520146b2e301690be
+# (`ep2-b08-refresh-0811` failed rc=1 at its measure step because the box's copy
+# was not the copy its spec attested to; the harness refuses rather than falling
+# back, so a stale copy costs $0.) The spec re-runs `--dry` as step 1 anyway.
+
+id: ep2-goblin-sheet-d2-baldcloak-0812
+task: ep2-goblin-sheet-d2-baldcloak-0812
+node: 002b-first-citizen
+beat: 4
+runner: box
+needs_gpu: true
+
+# box_runner.py sorts priority ASCENDING and takes ONE job at a time regardless;
+# sequential is the rule (CLAUDE.md, founder 2026-08-03) and batch-of-4 is banned.
+# The ready and running queues were both EMPTY and the card at 0% utilization when
+# this lane staged (`box_enqueue.py --list` and `nvidia-smi`, checked not assumed),
+# which is the condition CLAUDE.md's no-idle-GPU directive names.
+priority: 33
+max_attempts: 1
+owner: verdict-and-sheets lane, 2026-08-12 (his ~23:45 character-sheet ask)
+
+# NO `gate:` KEY. A character sheet clears nobody's gate — the fourteen
+# `ep2-b*-goblin-wave1.yaml` specs and every staged sibling keep theirs. It
+# publishes nothing to the site and spends nothing.
+
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03`, read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the render
+  gate itself reads. Both `approval_conditions` are about beat 01''s fig and beat
+  16''s leaf; neither touches beat 04 THE FOOTNOTE. This job draws a character
+  candidate, not a beat for the episode, and nothing it makes may be carried to
+  another beat before the founder points at one.'
+
+consumer: >-
+  review/SHEETS/char-sheets-0812.html — the character sheet page built for his
+  review, as the fourth column of the goblin row. He asked for the sheet in
+  words; this is the artifact. Nothing on the page is ranked and no candidate is
+  recommended.
+
+success: >-
+  Four PNGs at C:\banyan-farm\wave-goblin-prep\out-sheet-gob-d2\04-the-footnote-wave1-s0..3.png
+  with their .yaml provenance sidecars written at render time (7.2), all eight
+  declared as artifacts so a missing one fails rc=92 instead of passing quietly.
+  Whether the candidate is right is R4's call, not this job's and not a metric's.
+
+why: >-
+  THIS IS THE FIRST RENDER OF A CHANGE HE APPROVED YESTERDAY. Asked whether the faded green patchwork cloak goes into the frozen goblin slot he answered "if its not too much of a hassle then yes" (~20:27, 2026-08-11). Every one of the 22 ep2 specs on disk still carries `goblin_def: green skin`, and the ledger records the cloak as an OPEN OWED SAMPLE that nobody has taken — a comment in wave-drafts.yaml claimed it was in the slot and no spec ever implemented it. A sheet he asked for is the right place to pay it: one candidate, no hassle, $0.
+
+goblin_def: green skin, one broken tusk, faded green patchwork cloak
+goblin_def_source: >-
+  The founder's own definition is the base and is quoted in every sidecar: "he is just a simple green goblin, nothing complex" (2026-08-10 ~12:15, ledger `ep2-goblin-definition-0810`). The cloak is HIS, authorised 2026-08-11 ~20:27 with a cost condition ("if its not too much of a hassle"), which one $0 candidate in a sheet he requested satisfies. This is the first frame of it ever rendered.
+
+est_minutes: 3
+needs:
+- cuda
+- vram20
+- farm-venv
+
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '4'
+  - --goblin-def
+  - green skin, bald head, patchwork cloak
+  - --variant
+  - authored_b04_sheet_r2
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '4'
+  - --goblin-def
+  - green skin, bald head, patchwork cloak
+  - --variant
+  - authored_b04_sheet_r2
+  - --out
+  - C:\banyan-farm\wave-goblin-prep\out-sheet-gob-d2
+  - --task
+  - ep2-goblin-sheet-d2-baldcloak-0812
+
+# DURABILITY: every still this farm makes lands single-copy on a box nothing backs
+# up. The courier runs `git add -A -- farm-out` and pushes on job_done, and
+# farm-out is NOT gitignored, so publishing is a COPY and the runner stays
+# byte-identical. allow_fail: a failed copy must never mark a good render failed.
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-goblin-sheet-d2-baldcloak"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/wave-goblin-prep/out-sheet-gob-d2/04-the-footnote-wave1-s*.*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        # Hash the COPY, not the original: what this records has to be the bytes
+        # that get committed, or the manifest attests to the wrong file.
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+        print("   ", os.path.basename(f), h[:16])
+    # newline="\n" is load-bearing: Windows text mode rewrites \n to \r\n and
+    # every filename then carries a trailing \r that shasum -c cannot open.
+    with open(os.path.join(dst, "ep2-goblin-sheet-d2-baldcloak-0812.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    # 4 stills + 4 sidecars. Fewer means the render wrote less than it promised.
+    raise SystemExit(0 if len(src) == 8 else 1)
+
+artifacts:
+- C:\banyan-farm\wave-goblin-prep\out-sheet-gob-d2\04-the-footnote-wave1-s0.png
+- C:\banyan-farm\wave-goblin-prep\out-sheet-gob-d2\04-the-footnote-wave1-s1.png
+- C:\banyan-farm\wave-goblin-prep\out-sheet-gob-d2\04-the-footnote-wave1-s2.png
+- C:\banyan-farm\wave-goblin-prep\out-sheet-gob-d2\04-the-footnote-wave1-s3.png
+- C:\banyan-farm\wave-goblin-prep\out-sheet-gob-d2\04-the-footnote-wave1-s0.yaml
+- C:\banyan-farm\wave-goblin-prep\out-sheet-gob-d2\04-the-footnote-wave1-s1.yaml
+- C:\banyan-farm\wave-goblin-prep\out-sheet-gob-d2\04-the-footnote-wave1-s2.yaml
+- C:\banyan-farm\wave-goblin-prep\out-sheet-gob-d2\04-the-footnote-wave1-s3.yaml
