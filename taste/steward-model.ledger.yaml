@@ -9897,3 +9897,24 @@
   predicates: [no armor 4/4, tunic >=3/4, no background crowd 4/4, pointing pose >=3/4, bright 4/4]
   consumer: morning page, identity-frozen wave.
   outcome: null
+
+- id: ep2-b09-idfix-0812
+  kind: prediction
+  written: 2026-08-12 ~02:5x before enqueue, terse. Dry 72/77 anchor intact.
+  predicates: [no armor 4/4, tunic >=3/4, one guard close-up 4/4, thinking face >=2/4]
+  consumer: morning page, identity-frozen wave.
+  outcome: null
+
+- id: ep2-b10-idfix-0812
+  kind: prediction
+  written: 2026-08-12 ~02:5x before enqueue, terse. Dry 75/77 anchor intact.
+  predicates: [no armor 4/4, tunics >=3/4, two figures 4/4, blank board dominant >=2/4]
+  consumer: morning page, identity-frozen wave.
+  outcome: null
+
+- id: ep2-b11-idfix-0812
+  kind: prediction
+  written: 2026-08-12 ~02:5x before enqueue, terse. Dry 66/77 anchor intact.
+  predicates: [no armor 4/4, tunics >=3/4, walking away wide >=3/4, long shadows >=2/4]
+  consumer: morning page, identity-frozen wave.
+  outcome: null

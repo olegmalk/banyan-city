@@ -1336,6 +1336,16 @@ beats:
     # why the term was authored in the first place. `1boy` still derives — the
     # first comma-clause still opens `Close-up on a round guard man`, and `man` in
     # that clause is the whole of what `_tag_from_clause` reads.
+    # -- `_idfix` 2026-08-12 ~02:5x: tunic for the rejected armor, staging kept.
+    authored_b09_idfix: >-
+      Close-up on a round bald guard man in a plain brown tunic, in a sunny
+      grassy field, a silly harmless bureaucrat, his face clearly visible and
+      working slowly through an idea, eyes drifting and mouth opening
+      slightly. Deadpan timing, bright morning light, cinematic lighting,
+      detailed, newest, masterpiece, best quality, very aesthetic No girl, no
+      child, no armor, no helmet, no knight, no dark, no night, no dusk, no
+      sunset, no dim lighting, no moody lighting, no low key, no shadows
+      dominant. No photorealism, no 3D render look. 9:16 vertical, no text.
     authored_b09_refresh: >-
       Close-up on a round guard man in mismatched armor, in a sunny grassy
       field, a silly harmless bureaucrat with a bare head, his
@@ -1489,6 +1499,17 @@ beats:
     # `2boys` still derives — `Two round guard men in mismatched armor` is
     # untouched at the head of the first comma-clause, which is all
     # `_tag_from_clause` reads.
+    # -- `_idfix` 2026-08-12 ~02:5x: tunics for the rejected armor, board kept.
+    authored_b10_idfix: >-
+      Two round bald guard men in plain brown tunics, in a sunny grassy
+      field, silly bureaucrats with round soft bodies, both faces visible,
+      one holding up the blank back of his clipboard. Medium two-shot, the
+      blank board dominating the frame, bright morning light, cinematic
+      lighting, detailed, newest, masterpiece, best quality, very aesthetic
+      No girl, no child, no armor, no helmet, no knight, no screen, no dark,
+      no night, no dusk, no sunset, no dim lighting, no moody lighting, no
+      low key, no shadows dominant. No photorealism, no 3D render look. 9:16
+      vertical, no text.
     authored_b10_refresh: >-
       Two round guard men in mismatched armor, in a sunny grassy field, silly
       bureaucrats with round soft bodies and bare heads, both faces
@@ -1513,6 +1534,17 @@ beats:
     # morning shadows). Register added. Dark-ban carried MINUS `no shadows
     # dominant` -- this beat's own staging asks for long shadows, and beat 09
     # taught that a positive cannot assert what the negative bans.
+    # -- `_idfix` 2026-08-12 ~02:5x: tunics for the rejected armor; long
+    # shadows kept, shadow ban still omitted (beat 09 lesson).
+    authored_b11_idfix: >-
+      Two round bald guard men in plain brown tunics walk away from camera
+      across an empty grassy field, gesturing at each other, growing smaller
+      as they go. Static wide camera, wide shot, long morning shadows, bright
+      morning light, cinematic lighting, detailed, newest, masterpiece, best
+      quality, very aesthetic No girl, no child, no armor, no helmet, no
+      knight, no dark fantasy, no dark, no night, no dusk, no sunset, no dim
+      lighting, no moody lighting, no low key. No photorealism, no 3D render
+      look. 9:16 vertical, no text.
     authored_b11_refresh: >-
       Two round bare-headed guard men in dull dented mismatched armor walk
       away from camera across an empty grassy field, gesturing at each other,
