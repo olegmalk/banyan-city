@@ -487,3 +487,4 @@
 16:46:45Z box-runner idle ready=0 failed=1
 16:53:32Z STARTED task=ep2-b05-guards-silly-0811-1786467205 attempt=1 on box-runner
 16:54:24Z DONE task=ep2-b05-guards-silly-0811-1786467205 rc=0 artifacts=8
+16:54:35Z STARTED task=ep2-b02-goblin-hide-0811-1786467204 attempt=1 on box-runner
