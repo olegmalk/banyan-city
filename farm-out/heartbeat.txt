@@ -461,3 +461,4 @@
 14:55:43Z STARTED task=ep2-b01-leafcount-inpaint-0811-1786460130 attempt=1 on box-runner
 14:57:02Z DONE task=ep2-b01-leafcount-inpaint-0811-1786460130 rc=0 artifacts=8
 15:01:13Z STARTED task=ep2-b02-goblin-occl-0811-1786460460 attempt=1 on box-runner
+15:02:05Z DONE task=ep2-b02-goblin-occl-0811-1786460460 rc=0 artifacts=8
