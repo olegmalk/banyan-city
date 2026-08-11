@@ -157,14 +157,16 @@
   since: 2026-08-12
   kind: decision
   verdict_hint: countersign D22 / take any of the five back / keep or kill the name Jerry
-- what: 'Guards register, staged version: the pose you asked for never reached the picture - all 16 frames
-    are one man standing still in the REFERENCE''s pose. The blocker is the conditioning, not your direction.
-    This also explains why nine of ten beats came back as standing portraits'
+- what: 'Guards register - YOUR DIRECTION WORKS, and the channel is the clip, not the still. In the still
+    the staged pose never arrived (16 of 16 stuck in the reference''s own pose - the conditioning holds
+    it, which also explains why nine of ten beats came back as standing portraits). In the clip, first
+    try, he reads the board and looks up the wrong way. Not funny YET: the acting is too small and my
+    prompt let the palette go dusk. There is a clip on the page to watch'
   url: /review/ep2-picks/b05-register-0812
   since: '2026-08-12'
-  kind: decision
-  verdict_hint: stage the register in the CLIP (one motion job, recommended) / rebuild the guard references
-    around an action instead of a turnaround (bigger, and it reopens the references you accepted)
+  kind: clip
+  verdict_hint: push it broader (one more job, then the same recipe to beats 06 and 07) / it still reads
+    wrong, which makes it a casting question and yours
 - what: 'EPISODE 2 AUDIT - all 21 beats ranked (your ''do a lot of your own evaluation''). 4 look shippable
     (13, 17, 03, 14), 4 have a known fix, 13 are blocked - but only 3 of those on anything technical.
     FOUR DECISIONS ARE YOURS: the guards (unblocks 05/06/07 at once), the cold-open fig, whether beat

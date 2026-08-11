@@ -13833,3 +13833,48 @@
     fills when described, and framing follows the world. What is missing is coverage —
     six beats have never been rendered once — and four founder decisions.
   outcome: null
+
+- id: ep2-b05-register-clip-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b05-register-clip-0812
+  verdict: >-
+    PARTIAL, and the partial half is the one that matters: THE STAGING ARRIVED. For the first time in
+    six rounds of chasing this register the character DOES something. The register itself is not sold
+    yet, and both reasons are mine and cheap to fix.
+  predicates_observed: >-
+    he behaves rather than standing still HIT; described meadow arrives HIT — daisies in the near grass,
+    wildflowers running back, dark treeline, haze band, long raking shadows; camera locked HIT; identity
+    holds from the init HIT; no second character and no animated floating head HIT; eyebrows climbing /
+    shoulders riding up / startle MISS — the acting is entirely in the head, none of it in the face or
+    shoulders; he stays large in frame PARTIAL — smaller than intended, and the face is being asked for
+    fine detail at that size; register reads as harmless bureaucrat NOT YET.
+  what_actually_happens: >-
+    He looks up, drops his head right down over the clipboard to read it, holds there for roughly thirty
+    frames, then comes back up looking off to one side — away from where the thing he is looking for
+    would be. That is a man consulting his paperwork and then searching the wrong horizon, which is the
+    joke beat 05 is built on, and no word in the prompt described his body to get it.
+  what_it_settles: >-
+    THE DIAGNOSIS HOLDS AND HIS DIRECTION HAS A CHANNEL. Identical staging technique, identical
+    character, one stage apart: at the still stage 0 of 16, at the motion stage it arrives on the first
+    try. The variable is the IP-Adapter holding the composition in the early window, exactly as the
+    still round's reference/crop correlation predicted. This is now a two-point result rather than an
+    inference from one.
+  two_faults_and_both_are_mine: >-
+    THE ACTING IS TOO SMALL — "reads and looks up" is a real beat but not yet comedy at this scale, and
+    it needs broader physical acting. AND THE PALETTE WENT DUSK: a clean bright morning init became
+    heavy amber with the tunic browned down. Cause named rather than guessed — my motion prompt asked
+    for "warm morning light" and "long raking morning shadows" and OMITTED the brightness bans (no dark,
+    no dusk, no dim lighting, no low key, no shadows dominant) that every still draft on this beat
+    carries. Beat 17's amber is the same effect. One line in the negative, not a new mechanism.
+  the_cost_of_the_environment_paragraph_is_now_two_things_not_one: >-
+    Beat 17 measured that a described world pushes the character SMALLER. This adds a second: as
+    written, the paragraph also pulls the PALETTE toward dusk, because raking light and long shadows are
+    evening words. Any beat taking the environment paragraph needs the brightness bans travelling with
+    it. Worth folding into the standing recipe rather than rediscovering per beat.
+  no_wave_authored: >-
+    The b06/b07 register wave is NOT queued behind this. It is one round short — broader acting and the
+    brightness fix — and scaling a recipe on a partial is the exact move ONE SAMPLE BEFORE ANY BATCH
+    exists to stop. The next round is one job, and whether it fires is his call on the page.
+  consumer: review/ep2-picks/b05-register-0812
+  outcome: null
