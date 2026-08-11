@@ -1,0 +1,191 @@
+# ep1 beat 10 — the anti-wobble prompt, written WITHOUT negation. Supersedes
+# ep1-b10-stillwording-0811, which commanded the defect it was written to remove.
+#
+# WHY THIS EXISTS. Roman, 2026-08-11: "for beat 10 in both of the clips the
+# saplings are wobbling too much." The stillwording job was the fix for that. Its
+# rendered sidecar (C:\banyan-farm\v34-motion-0810\10-ltx-still-plate-s20260897.mp4.meta.yaml,
+# byte-identical to the repo text) shows what the model was actually handed:
+#
+#   "there is no wind, no breeze, no gust, nothing is blowing"
+#   "does not bend, lean, tilt, sway, nod, bob or wobble at any point"
+#
+# At guidance 1.0 the positive prompt is the ONLY channel the sampler reads
+# (ltx_i2v.py:1001-1008 — do_classifier_free_guidance is guidance_scale > 1.0, so
+# no uncond pass runs). Diffusion conditioning does not subtract on negation: those
+# two clauses put wind, breeze, gust, blowing, bend, lean, tilt, SWAY, nod, bob and
+# WOBBLE into the binding channel. The anti-wobble prompt contains the word wobble.
+# It is at best inert and at worst a stronger commission of the defect than the
+# r2g control, whose only offending words were "sways" and "tremble".
+#
+# THE PRECEDENT THIS FOLLOWS, not an invention. Beat 14 r1's positive said "its
+# thin stem bending and springing back"; the ledger record ep1-b14-v34-motion-sample
+# reads "LTX honoured `bending` and never `springing back`" and the sapling was
+# near-horizontal by frame 64. r2/r3 fixed it by replacing the directional verbs
+# with AMBIENT AFFIRMATIVE ones — b14 r3's "the sapling stands upright and holds
+# its position, stem straight and steady, rooted firmly in place" and "the camera
+# is locked on a tripod and stays perfectly still". Same shape, same fix, applied
+# here: say what the scene IS.
+#
+# THE RULE THIS PROMPT OBEYS: zero negation words of any kind in the positive. No
+# "no", no "not", no "never", no "nothing", no "without", no un-/-less forms. Every
+# clause is a positive description of a still scene. Stillness is carried by calm,
+# settled, hushed, at rest, rigid, straight, rooted, fixed, held, identical, same.
+#
+# THREE BLOCKS STRIPPED, each replaced by an affirmative, none merely relocated:
+#
+#  1. FRAMING. r2g/stillwording said "a locked-off tripod shot: the camera never
+#     moves". "never moves" is the same defect one notch quieter, and this beat has
+#     already been burned by it: the ledger blames beat 10's 181px apex climb on r1,
+#     "a prompt whose only framing instruction was the negation `no camera rise`".
+#     Replaced by where the camera IS and that it holds — "locked on a tripod at
+#     ground level and holds that one position for the whole shot" — plus the
+#     positive frame anchors (same height, same size, same horizon, identical
+#     composition) that the b04/b07 r2 sidecars already proved out.
+#  2. FIGURE BAN. "Subject already in frame: no human, no person, no man, no woman,
+#     no boy, no girl, no hand, no face" — eight forbidden nouns in the binding
+#     channel. The audit ties exactly this string to Roman's 2026-08-11 beat-07
+#     complaint, "the control has some people in the background which we dont
+#     want". Stripped entirely; its affirmative half (what IS in frame) is kept as
+#     the closing subject clause. The nouns stay in the negative, where they belong.
+#  3. THE ANTI-WIND AND ANTI-WOBBLE CLAUSES. Replaced by still air described as
+#     air — calm, settled, heavy, hushed — and a plant described by its posture.
+#
+# THE RISK, named. The 2026-08-03 K recipe was rejected as "literally just frozen
+# frames". The dust motes and the light shift are kept as the shot's living motion
+# so there is something alive to look at. If this comes back dead, the finding is
+# that the ambient clause needs to carry more, not that stillness was wrong.
+#
+# NO METRIC RANKS THIS. On beat 14 the flow metric scored highest on the round
+# where the sapling falls over (131e433). One clip, for Roman to look at next to
+# the two he judged. If a number and the picture disagree, the picture wins.
+#
+# ONE SAMPLE. One beat, one wording change, one seed. Sequential; no batch
+# (CLAUDE.md 2026-08-03).
+
+id: ep1-b10-affirm-still-0811
+task: ep1-b10-affirm-still-0811
+node: 001-capability-inventory
+beat: 10
+runner: box
+needs_gpu: true
+priority: 30
+max_attempts: 1
+owner: beat-10 wobble lane (affirmative-only stillness wording)
+control_clips:
+- C:\banyan-farm\v34-motion-0810\10-ltx-r2g-plate-s20260897.mp4
+- C:\banyan-farm\v34-motion-0810\10-ltx-g20-plate-s20260897.mp4
+- C:\banyan-farm\v34-motion-0810\10-ltx-still-plate-s20260897.mp4
+source_spec: pipeline/jobs/ep1-b10-stillwording-0811.yaml
+supersedes: ep1-b10-stillwording-0811
+approval: 'genomes/sapling/nodes/001-capability-inventory/leaves/001-t0-d.yaml:17 — approved_by: founder
+  # 2026-07-27, read and approved: "episode 1 looks good, you can do it"'
+consumer: Roman''s beat-10 verdict of 2026-08-11 ("the saplings are wobbling too much"), which is
+  holding beat 10's entry in the six-beat motion pick list (/review/waiting item 3). The clip goes to
+  him next to the ones he rejected, unranked.
+success: 'A 704x1280 65-frame mp4 at C:\banyan-farm\v34-motion-0810\10-ltx-affirm-plate-s20260897.mp4,
+  viewable next to the clips he judged — same plate, same seed 20260897, same 65 frames, same 8+3
+  two-stage, guidance 1.0 as the r2g control, positive prompt carrying zero negation words. Answered
+  by looking: does the stem hold still? Both ways of failing are findings — the stem still leans and
+  returns, in which case the wording was never the cause and the next question is the plate or the
+  conditioning strength; or the shot goes dead like the K recipe, in which case the dust-mote and
+  light clause has to carry more of the life.'
+why: 'One variable against ep1-b10-stillwording-0811: the positive prompt no longer states anything by
+  negation. "no wind, no breeze, no gust, nothing is blowing" and "does not bend, lean, tilt, sway,
+  nod, bob or wobble" are gone; still air and a held posture are described affirmatively. The framing
+  negation ("the camera never moves") and the eight-noun figure ban are stripped, each replaced by an
+  affirmative statement rather than by silence. Same plate, same seed 20260897, same 65 frames, same
+  guidance 1.0, same distilled sigmas, same two-stage, same steps. The negative is stillwording''s
+  verbatim, which at guidance 1.0 is a no-op (ltx_i2v.py:1001-1008) and so is not a second variable.'
+est_minutes: 5
+needs:
+- cuda
+- vram20
+- video-venv
+payload:
+  C:\banyan-farm\v34-plates-0810\ep1-b10-affirm-still-0811-prompt.txt: '2D anime, hand-drawn cel animation,
+    flat cel shading, clean ink linework, anime key art. the camera is locked on a tripod at ground level
+    and holds that one position for the whole shot: the sprout stays centred at exactly the same height
+    in frame and at the same size from the first frame to the last, its leaf tips at the same level
+    throughout, the horizon of grass keeps the same height in frame, the composition is identical in
+    every frame. the air is calm and settled, heavy and hushed, the whole atmosphere at rest. the sprout
+    rests with it: its thin stem is rigid and straight, rooted firmly in place, holding one fixed upright
+    position for the entire shot, and its two small leaves are held perfectly still, drawn in the same
+    position in every frame. the tall grass stands still as well, each blade keeping its shape. small
+    ambient motion only: a few dust motes drift slowly through the warm hazy air, and soft light shifts
+    gently across the stem. one small sprout with two leaves on a thin upright stem, tall grass around
+    it, warm hazy amber light.'
+  C:\banyan-farm\v34-plates-0810\ep1-b10-affirm-still-0811-negative.txt: wilting, drooping, bending
+    over, falling over, collapsing, sagging, plant dying, human, person, man, woman, boy, girl, extra
+    hand, extra arm, foot, face, crowd, animal, bird, insect, new object appearing, photorealism, 3D render
+    look, text, photorealistic, photograph, live action, film still, 3D render, CGI, octane, scene change,
+    shot change, cut to another angle, second scene, new camera angle, different location, split screen,
+    montage
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: plate
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - -c
+  - "import sys; sys.path.insert(0, r\"C:\\banyan-farm\\banyan-city\\pipeline\")\nfrom plate_prep import\
+    \ prepare_plate\nout, rec = prepare_plate(\n    r\"C:\\banyan-farm\\banyan-city\\genomes\\sapling\\\
+    nodes\\001-capability-inventory\\stills\\10-sense.png\",\n    \"704x1280\", r\"C:\\banyan-farm\\v34-plates-0810\"\
+    , \"10\")\nprint(\"plate\", out); print(rec[\"plate_wxh\"], rec[\"crop_policy\"])\n"
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\ltx_i2v.py
+  - --stage
+  - encode
+  - --embeds
+  - C:\banyan-farm\v34-plates-0810\ltx-embeds-ep1-b10-affirm-still-0811.pt
+  - --prompt-file
+  - C:\banyan-farm\v34-plates-0810\ep1-b10-affirm-still-0811-prompt.txt
+  - --negative-file
+  - C:\banyan-farm\v34-plates-0810\ep1-b10-affirm-still-0811-negative.txt
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\ltx_i2v.py
+  - --stage
+  - render
+  - --embeds
+  - C:\banyan-farm\v34-plates-0810\ltx-embeds-ep1-b10-affirm-still-0811.pt
+  - --prompt-file
+  - C:\banyan-farm\v34-plates-0810\ep1-b10-affirm-still-0811-prompt.txt
+  - --negative-file
+  - C:\banyan-farm\v34-plates-0810\ep1-b10-affirm-still-0811-negative.txt
+  - --init
+  - C:\banyan-farm\v34-plates-0810\10-704x1280.png
+  - --out
+  - C:\banyan-farm\v34-motion-0810\10-ltx-affirm-plate-s20260897.mp4
+  - --size
+  - 704x1280
+  - --frames
+  - '65'
+  - --fps
+  - '24'
+  - --steps
+  - '8'
+  - --guidance
+  - '1.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --seed
+  - '20260897'
+  - --beat
+  - '10'
+  - --task
+  - ep1-b10-affirm-still-0811
+  - --worker
+  - rtx5090
+artifacts:
+- C:\banyan-farm\v34-plates-0810\10-704x1280.png
+- C:\banyan-farm\v34-motion-0810\10-ltx-affirm-plate-s20260897.mp4
