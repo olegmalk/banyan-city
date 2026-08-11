@@ -1,0 +1,89 @@
+{
+  "id": "ep1-b14-313f-vo-length-0811-1786435230",
+  "task": "ep1-b14-313f-vo-length-0811",
+  "node": "001-capability-inventory",
+  "beat": 14,
+  "worker": "box-runner",
+  "priority": 18,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "encode",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ltx_i2v.py",
+        "--stage",
+        "encode",
+        "--embeds",
+        "C:\\banyan-farm\\v34-plates-0810\\ltx-embeds-b14-313f-affirm.pt",
+        "--prompt-file",
+        "C:\\banyan-farm\\v34-plates-0810\\ep1-b14-313f-vo-length-prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\v34-plates-0810\\ep1-b14-313f-vo-length-negative.txt"
+      ]
+    },
+    {
+      "name": "render",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ltx_i2v.py",
+        "--stage",
+        "render",
+        "--embeds",
+        "C:\\banyan-farm\\v34-plates-0810\\ltx-embeds-b14-313f-affirm.pt",
+        "--prompt-file",
+        "C:\\banyan-farm\\v34-plates-0810\\ep1-b14-313f-vo-length-prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\v34-plates-0810\\ep1-b14-313f-vo-length-negative.txt",
+        "--init",
+        "C:\\banyan-farm\\v34-plates-0810\\14-704x1280.png",
+        "--out",
+        "C:\\banyan-farm\\v34-motion-0810\\14-ltx-r2f-313f-affirm-s20260898.mp4",
+        "--size",
+        "704x1280",
+        "--frames",
+        "313",
+        "--fps",
+        "24",
+        "--steps",
+        "8",
+        "--guidance",
+        "1.0",
+        "--distilled-sigmas",
+        "--two-stage",
+        "--seed",
+        "20260898",
+        "--beat",
+        "14",
+        "--task",
+        "ep1-b14-313f-vo-length-0811",
+        "--worker",
+        "rtx5090"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\v34-motion-0810\\14-ltx-r2f-313f-affirm-s20260898.mp4"
+  ],
+  "started_at": "2026-08-11T08:02:45Z",
+  "attempts": 1,
+  "runner_pid": 9388,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-11T08:10:30Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\v34-motion-0810\\14-ltx-r2f-313f-affirm-s20260898.mp4"
+  ]
+}
