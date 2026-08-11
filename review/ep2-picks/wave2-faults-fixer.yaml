@@ -397,3 +397,43 @@ beats:
     target is corrected. Plus `no extra heads, no disembodied head` in a negative
     that has six tokens spare, so nothing is evicted to pay for them.
   r2: authored_b09_idfix_r2  (spec ep2-b09-idfix-r2-0812, out-b09-idfix-r2)
+
+- beat: 10
+  slug: no-form
+  variant_rendered: authored_b10_idfix
+  positive_tokens: 75
+  verdict: faulty
+  faults:
+  - name: the guard is topless, or not in a brown tunic
+    count: 4/4
+    detail: >-
+      s0 is a SHIRTLESS bodybuilder — bare chest, no tunic at all — grinning over
+      a clipboard. s1 wears cream, s2 a dark brown t-shirt, s3 a white robe. The
+      ratified costume is a PLAIN BROWN TUNIC and not one frame delivers it.
+  - name: there are not two guards
+    count: 4/4
+    detail: >-
+      The tag is `2boys` and the sentence says "two round bald guard men". s0 has
+      ONE man. s1 has one man plus a giant disembodied bald head floating where
+      the second body belongs. s2 has one man and puts the second as a DRAWING OF
+      A BALD MAN on the clipboard face. s3 finally has two, but shoots the nearer
+      one from behind so his face is gone.
+  - name: the same `round bald` adjacency as beat 09
+    count: corroborating
+    detail: >-
+      "two round bald guard men" puts `round` against `bald` exactly as beat 09
+      does, and beat 10 grows the same artefact — s1's floating sphere-head. Two
+      beats, same adjacency, same failure shape.
+  - name: bodybuilder physique
+    count: 4/4
+    detail: Same guard-character drift as beats 05, 06 and 07; s0 is the extreme case.
+  lever: >-
+    (1) The adjacency, and it costs NOTHING here: `round` is deleted from "two
+    round bald guard men" because the sentence ALREADY says "silly bureaucrats
+    with round soft bodies" four words later. His word is not lost, it is
+    de-duplicated onto the body — the same correction beat 09 is testing, and this
+    beat can make it while getting a token BACK. (2) The topless bodybuilder ->
+    ban: `no bare chest, no muscular`. Neither negates the positive, which asserts
+    a brown tunic and a round soft body; they reinforce it. Four tokens were spare
+    in the negative, so nothing is evicted.
+  r2: authored_b10_idfix_r2  (spec ep2-b10-idfix-r2-0812, out-b10-idfix-r2)
