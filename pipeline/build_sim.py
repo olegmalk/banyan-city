@@ -2699,7 +2699,8 @@ def bandwidth_html(pay: dict) -> str:
                 f'published video files ({_e(pay.get("why", "reason not recorded"))}), '
                 'so it prints no number. It will not print a zero it did not '
                 'measure.</p>' + _bandwidth_caveat()
-                + render_bandwidth_html(render_bandwidth()))
+                + render_bandwidth_html(render_bandwidth())
+                + local_disk_html(local_disk()))
     per = pay["bytes"]
     watches = int((HOBBY_TRANSFER_GB * 1024 ** 3) // per) if per else 0
     return (
@@ -2718,7 +2719,8 @@ def bandwidth_html(pay: dict) -> str:
         f'</a>, so the whole video library fits down the pipe about '
         f'<b>{watches:,}</b> times before that allowance is gone.</p></div>'
         + _bandwidth_caveat()
-        + render_bandwidth_html(render_bandwidth()))
+        + render_bandwidth_html(render_bandwidth())
+        + local_disk_html(local_disk()))
 
 
 def _bandwidth_caveat() -> str:
@@ -2886,6 +2888,129 @@ def render_bandwidth_html(rb: dict) -> str:
         f'{RENDER_BW_FILE}">{RENDER_BW_FILE}</a>.</p>')
 
 
+# ---------------------------------------------------------------------------
+# Roman, 2026-08-11, after finding the laptop at 9.6 GiB free while the render
+# box sat on 217 GB: "fix the rendering storage issue in the background."
+#
+# The number itself was never the surprise — that it fell 19 -> 9.6 GiB in two
+# hours with nobody watching was. A machine number that lives only in `df` is a
+# number nobody looks at until it is an emergency, so it goes on the page beside
+# the other two, and it gets the same honesty contract they have: a file, a
+# date, and "unavailable" instead of a zero.
+#
+# Same reason as its neighbour for being a file rather than a live read, with
+# one extra: the deploy server HAS a disk, so a build-time reading would return
+# a confident, real, completely meaningless figure about a machine nobody cares
+# about. Written by `python3 pipeline/box_cache.py disk` on the laptop it
+# describes.
+LOCAL_DISK_FILE = "pipeline/measured/local-disk.yaml"
+_DISK_CACHE = {}
+
+
+def local_disk(path=None) -> dict:
+    """The laptop's free-space reading. Fails SOFT — never raises."""
+    key = str(path or LOCAL_DISK_FILE)
+    if key in _DISK_CACHE:
+        return _DISK_CACHE[key]
+    import yaml as _yaml
+    out = None
+    try:
+        doc = _yaml.safe_load((REPO / key).read_text())
+    except Exception as e:
+        out = {"ok": False, "why": _reason(e)}
+    if out is None:
+        if not isinstance(doc, dict):
+            out = {"ok": False, "why": f"{key} did not parse as a mapping"}
+        else:
+            need = ("free_bytes", "total_bytes", "measured_on")
+            missing = [k for k in need if doc.get(k) in (None, "")]
+            if missing:
+                out = {"ok": False,
+                       "why": f"{key} is missing {', '.join(missing)}"}
+            else:
+                out = dict(doc)
+                out["ok"] = True
+    _DISK_CACHE[key] = out
+    return out
+
+
+def _disk_low(ld: dict) -> bool:
+    try:
+        return int(ld["free_bytes"]) < int(ld.get("warn_below_bytes") or 0)
+    except (KeyError, TypeError, ValueError):
+        return False
+
+
+def disk_tile(ld: dict) -> str:
+    """The strip tile. Goes red on the same threshold the tool warns at, so
+    the page and the command line cannot disagree about what "low" means."""
+    if not ld.get("ok"):
+        return ('<a class="sx" href="#disk"><span class="sn none">unavailable'
+                '</span><span class="sl">laptop disk free</span></a>')
+    cls = ' class="bad"' if _disk_low(ld) else ""
+    return (f'<a class="sx" href="#disk">'
+            f'<span class="sn"{cls}>{_e(bytes_words(int(ld["free_bytes"])))}</span>'
+            f'<span class="sl">laptop disk free · measured</span></a>')
+
+
+def local_disk_html(ld: dict) -> str:
+    """Where the render bytes actually sit, and how much room is left."""
+    head = '<h3 id="disk">💽 And how much room is left to put them</h3>'
+    if not ld.get("ok"):
+        return (head + '<p class="notice">The laptop disk reading could not be '
+                f'read ({_e(ld.get("why", "reason not recorded"))}), so this build '
+                'prints no number for it rather than a stale or invented one.</p>')
+    free = int(ld["free_bytes"])
+    total = int(ld["total_bytes"])
+    cached = int(ld.get("cached_media_bytes") or 0)
+    recl = int(ld.get("reclaimable_bytes") or 0)
+    box = ld.get("box_free_bytes")
+
+    def row(what, num, like):
+        return (f'<tr><td>{what}</td><td class="rbn">{_e(num)}</td>'
+                f'<td class="rbl">{like}</td></tr>')
+
+    rows = (
+        row("Free on the laptop that reviews the renders", bytes_words(free),
+            f'<b>{free / total * 100:.0f}%</b> of the disk'
+            + (' — <b>below the line where this starts to bite</b>'
+               if _disk_low(ld) else ''))
+        + (row("Free on the render box, which makes all of it",
+               bytes_words(int(box)),
+               f'about {int(box) / free:.0f}× the room, on the machine the '
+               'files came from') if box else "")
+        + row("Render media cached on the laptop", bytes_words(cached),
+              "clips and candidates pulled back for a look")
+        + (row("Of that, proven to also be on the box", bytes_words(recl),
+               "removable here without losing a frame — matched by sha256, "
+               "not by name") if box else "")
+    )
+    # The free-space figure is cheap and refreshed constantly; the two box
+    # figures cost an ssh round trip and are carried forward between checks.
+    # They therefore wear different dates, and the page says so rather than
+    # letting one timestamp vouch for measurements taken hours apart.
+    box_when = ld.get("box_checked_on") or ld.get("measured_on")
+    return (
+        head +
+        '<p class="verdict">Nothing is rendered on this laptop. Every clip and '
+        'candidate under review was made on the box and copied here, and then '
+        'kept here — which is how the smallest disk in the house ended up '
+        'holding the archive. <b>The laptop is a cache, not a second copy of '
+        'the farm.</b></p>'
+        f'<div class="scroll"><table class="rbw"><tbody>{rows}</tbody></table></div>'
+        f'<p class="whyfoot">Free space measured on '
+        f'{_e(str(ld.get("measured_on", "a date not recorded")))}'
+        + (f'; the two box figures on {_e(str(box_when))}, because those cost a '
+           'round trip to the box and are taken less often' if box else '')
+        + ', by '
+        f'<a href="https://github.com/{GH}/blob/main/pipeline/box_cache.py">'
+        'box_cache.py</a>, which is also what clears the copies back down — it '
+        'removes a local file only when the same bytes are found on the box by '
+        'sha256, never by filename, and never at all if the box cannot be '
+        f'reached. Raw numbers: <a href="https://github.com/{GH}/blob/main/'
+        f'{LOCAL_DISK_FILE}">{LOCAL_DISK_FILE}</a>.</p>')
+
+
 STRIP_CSS = """
 /* ---- the summary strip -------------------------------------------------
    Roman, 2026-08-10: "the dashboard is a bit too long and complex ... can you
@@ -2990,7 +3115,12 @@ def summary_strip(counts: dict, running_t: list, fin: list, by_id: dict,
         # house sends and receives. Their labels carry the distinction, because
         # adjacent numbers in the same units read as comparable unless told
         # otherwise.
-        + render_bw_tile(render_bandwidth()))
+        + render_bw_tile(render_bandwidth())
+        # Third in the same row and deliberately so: what visitors pull down,
+        # what the box pushes around the house, and how much room is left to
+        # put any of it. The first two were on the page before the third, which
+        # is how a disk fell 19 -> 9.6 GiB in two hours unnoticed (2026-08-11).
+        + disk_tile(local_disk()))
 
     lines = ""
     if running_t:

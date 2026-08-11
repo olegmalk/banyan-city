@@ -186,6 +186,22 @@ def run_builders():
             % (", ".join(missing), REPO)
         )
 
+    # Refresh the laptop's free-space reading before the builders run, so the
+    # /status disk tile is current in whatever gets screened. It is a `df` and a
+    # directory tally — no ssh, no hashing, well under a second — and it is
+    # wrapped because a disk reading must never be able to fail the gate. The
+    # tile exists because on 2026-08-11 this disk fell 19 -> 9.6 GiB in two
+    # hours and the only thing that noticed was a supervisor tick; a tile that
+    # only refreshes when someone remembers to refresh it would repeat that.
+    try:
+        subprocess.run(
+            [sys.executable, os.path.join("pipeline", "box_cache.py"), "disk"],
+            cwd=REPO, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+            timeout=60,
+        )
+    except Exception:
+        pass
+
     print(bold("Building (%d generators)" % len(BUILDERS)))
     for b in BUILDERS:
         proc = subprocess.run(

@@ -26,6 +26,11 @@ jobs:
       - run: python pipeline/lint_genome.py
       - run: python pipeline/test_pipeline.py
       - run: python pipeline/test_takes_backup.py
+      # box_cache.py is the only tool in the repo whose normal, successful
+      # outcome is deleting render media. Its guards are pure functions with no
+      # box and no filesystem precisely so this can run here, on every push,
+      # rather than only on the laptop that would be the one to lose the files.
+      - run: python pipeline/test_box_cache.py
       # The founder's phone channel: the mirror's subpath rewrite, and the
       # answer poller's standing guarantee that it records without acting.
       - run: python pipeline/test_founder_channel.py
