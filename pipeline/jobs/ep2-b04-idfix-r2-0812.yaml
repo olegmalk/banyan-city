@@ -1,0 +1,190 @@
+# EPISODE 2, BEAT 04 THE FOOTNOTE — r2 OF THE IDENTITY-FROZEN ROUND. One sample,
+# four seeds, $0. 2026-08-12, the fixer lane.
+#
+# HIS BEAT-04 SENTENCE HAD TWO HALVES AND ONLY ONE IS DONE. Verbatim: "for beat 4
+# its also not too bad but character consistency, and the background is a house."
+#   THE WALLS HALF IS FIXED, 4/4. Every `_idfix` frame is an open grassy field
+#   with blurred trees at most. The five-term walls ban is NOT under test here and
+#   four of its five terms ship unchanged.
+#   THE CONSISTENCY HALF IS NOT FIXED, and this beat is a CLOSE-UP, so the fault
+#   that reads as a small patch on other beats fills the frame here: a cream dome
+#   over the upper skull in 4/4 (a full baseball-seam suture down the side in s1),
+#   X-stitches across the crown in 4/4, X marks on the cheeks in 4/4. At this size
+#   he reads as a sewn doll rather than as the goblin.
+#
+# ── THE LEVER IS PROVEN, ON THIS CHECKPOINT, TONIGHT ─────────────────────────
+# This is a PROPAGATION of a measured one-variable result, not a new guess.
+# `ep2-b02-idfix-r2-0812` ran two hours after the round this answers, adding
+# `no scars, no stitched skin` and nothing else in that channel. Its four frames
+# (farm-out/ep2-b02-idfix-r2/, read frame by frame) came back with:
+#   * unbroken GREEN crowns 4/4 — no graft, no suture line, no seam;
+#   * the pale cream dome gone 4/4. IT WENT WITH THE STITCHES, which means the tan
+#     patch and the sutures were ONE fault — fabric on the skull — and not two;
+#   * the patchwork cloak intact 4/4, s2 still showing stitched seams ON THE CLOAK.
+#     So naming SKIN provably does not negate what the positive asserts.
+# That is why this job moves the same two words and nothing else.
+#
+# THE SCALP AFFIRMATIVE IS DELIBERATELY NOT STACKED ON. `green scalp` is under
+# test separately on beat 03 this hour. Beat 02 showed the ban ALONE clears the
+# dome, so adding the affirmative here would spend a round making the result
+# unattributable for no expected gain.
+#
+# PAID FOR, NOT ADDED. This beat sends 74 of 77 with three tokens spare and
+# carries FIVE near-duplicate walls terms. `no architecture` retires to fund the
+# two new bans; `no house`, `no building`, `no interior` and `no indoors` all
+# stay. The POSITIVE IS BYTE-IDENTICAL at 66 tokens — same staging, same
+# close-up, same darting eyes and twitching ears — so any difference in these
+# frames is the two banned terms.
+#
+# BOX DRY-RUN, THE SHIPPED RECIPE, on the box's real CLIP tokenizer:
+#   positive 66/77   STYLE ANCHOR PRESENT: True   count tag '1boy'
+#   'text' negated: True   negative recipe 77 -> sent 77 (budget 77)
+#   `scars` and `stitched skin` both sent; `female goblin` and `elf` intact;
+#   the only casualty is `realistic skin texture`.
+#
+# SEPARATE OUT DIRECTORY. Writes to `out-b04-idfix-r2`; overwrites no evidence.
+
+id: ep2-b04-idfix-r2-0812
+task: ep2-b04-idfix-r2-0812
+node: 002b-first-citizen
+beat: 4
+runner: box
+needs_gpu: true
+
+priority: 44
+max_attempts: 1
+owner: overnight fixer lane, 2026-08-12 (reading the identity-frozen wave and firing one r2 per faulty beat)
+
+# NO `gate:` KEY. One sample moving one channel on a recipe he has ratified.
+
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03` (read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml:17-18, the leaf the
+  render gate itself reads). His `approved_quote` verbatim: "approve 002b except.. we
+  need to make SURE the fig growing on the sapling is mentioned, last time we generated
+  002b it just.. appeared. also, the sapling was able to flail a leaf in episode 1? why
+  couldnt it do that in 002b?" Both `approval_conditions` are about beat 01''s fig and
+  beat 16''s leaf; neither touches beat 04. Beat 04 is THE FOOTNOTE, the close-up.'
+
+consumer: >-
+  Roman's next look at beat 04, as a PAIR against the `out-b04-idfix` frames — same
+  four seeds, one channel apart. It ranks nothing and picks nothing; the taste call
+  stays R4's.
+
+success: >-
+  Four PNGs at C:\banyan-farm\wave-goblin-prep\out-b04-idfix-r2\04-the-footnote-wave1-s0..3.png
+  with their .yaml provenance sidecars written at render time (7.2), all eight
+  declared as artifacts so a missing one fails rc=92 instead of passing quietly.
+  Whether the frames are good is R4's call, not this job's and not a metric's.
+
+why: >-
+  One variable against `ep2-b04-idfix-0812`: `no scars, no stitched skin` in the
+  SDXL negative, the exact two terms `ep2-b02-idfix-r2-0812` proved on identical
+  seeds two hours earlier. Identical positive (66/77 in both), identical seeds,
+  steps (40), guidance (7.5), size and harness. Any difference is those two terms.
+
+goblin_def: green skin, bald head, patchwork cloak
+goblin_def_source: >-
+  The frozen identity, ledger `ep2-frozen-identities-0812`, passed byte-identical to
+  the `_idfix` round this answers. `green skin` is the one attribute the founder
+  named; BALD is his ruling; the patchwork cloak is the script''s. NOT touched here —
+  the fault is the model spreading `patchwork` onto skin, and the fix is in the
+  beat''s negative, not in the definition.
+
+est_minutes: 2
+needs:
+- cuda
+- vram20
+- farm-venv
+
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+# The box's wave-drafts.yaml was scp'd from this repo and `findstr`-verified to
+# carry `authored_b04_idfix_r2` before this job was queued. THE CHECK IS THE KEY,
+# NOT THE WHOLE-FILE SHA: sibling lanes append their own variants tonight and every
+# append moves the file sha without touching this variant. The harness REFUSES
+# rather than falling back when a key is missing, so a stale copy fails for $0.
+steps:
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '4'
+  - --goblin-def
+  - green skin, bald head, patchwork cloak
+  - --variant
+  - authored_b04_idfix_r2
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '4'
+  - --goblin-def
+  - green skin, bald head, patchwork cloak
+  - --variant
+  - authored_b04_idfix_r2
+  - --out
+  - C:\banyan-farm\wave-goblin-prep\out-b04-idfix-r2
+  - --task
+  - ep2-b04-idfix-r2-0812
+
+# DURABILITY: every still this farm makes lands single-copy on a box nothing backs
+# up. The courier runs `git add -A -- farm-out` and pushes on job_done, and
+# farm-out is NOT gitignored, so publishing is a COPY and the runner stays
+# byte-identical. allow_fail: a failed copy must never mark a good render failed.
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b04-idfix-r2"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/wave-goblin-prep/out-b04-idfix-r2/04-the-footnote-wave1-s*.*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        # Hash the COPY, not the original: what this records has to be the bytes
+        # that get committed, or the manifest attests to the wrong file.
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+        print("   ", os.path.basename(f), h[:16])
+    # newline="\n" is load-bearing: Windows text mode rewrites \n to \r\n and
+    # every filename then carries a trailing \r that shasum -c cannot open.
+    with open(os.path.join(dst, "04-the-footnote-idfix-r2.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    # 4 stills + 4 sidecars. Fewer means the render wrote less than it promised.
+    raise SystemExit(0 if len(src) == 8 else 1)
+
+artifacts:
+- C:\banyan-farm\wave-goblin-prep\out-b04-idfix-r2\04-the-footnote-wave1-s0.png
+- C:\banyan-farm\wave-goblin-prep\out-b04-idfix-r2\04-the-footnote-wave1-s1.png
+- C:\banyan-farm\wave-goblin-prep\out-b04-idfix-r2\04-the-footnote-wave1-s2.png
+- C:\banyan-farm\wave-goblin-prep\out-b04-idfix-r2\04-the-footnote-wave1-s3.png
+- C:\banyan-farm\wave-goblin-prep\out-b04-idfix-r2\04-the-footnote-wave1-s0.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b04-idfix-r2\04-the-footnote-wave1-s1.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b04-idfix-r2\04-the-footnote-wave1-s2.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b04-idfix-r2\04-the-footnote-wave1-s3.yaml
