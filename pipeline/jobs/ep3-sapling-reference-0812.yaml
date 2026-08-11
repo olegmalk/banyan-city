@@ -1,0 +1,208 @@
+# EPISODE 3, BEAT 01 — THE ONE SAMPLE THAT DECIDES 131 OTHER PROMPTS.
+#
+# ROUND 3 — see the r2 block below for the history; this header records what
+# r3 changes and why.
+#
+# ROUND 2. r1 (ep3-003b-b01-dialect-0812-1786472293) FAILED ITS DRY STEP AND
+# DREW NOTHING, in 2 seconds, for $0 — which is the dry step doing exactly the
+# job it exists for. Its two faults, both mine and both real:
+#
+#   !! COUNT TAG is '1other', draft declares ''
+#   !! peopled beat negates its own subject: ['boy', 'man'] — the
+#      person-singulars block belongs on plant-only plates only
+#
+# (a) The count tag is DERIVED from the first comma-clause and checked against
+#     the BEAT BLOCK's declared `tag`. `goblin` alone returns `1other`, the
+#     indeterminate-humanoid tag the r8 note blames for three rounds at 0/4;
+#     only a literal boy/man/he/his gets to `1boy`. And beat 1 is 002b's
+#     plant-only plate, declaring '' — no peopled prompt can ever pass there.
+#     So the variant moved to beat 3, which declares `1boy` and is itself a
+#     goblin-beside-a-small-sapling shot, and the head clause is now r8's
+#     species assertion verbatim: `A small goblin boy, {{GOBLIN}}, solo`.
+#     --beat is still cosmetic; it now names the frames `03-bad-cover-*`.
+# (b) I had carried the person-singular negatives over from the measured ep2
+#     finding that `no humans` does not bind, without noticing that finding was
+#     about PLANT-ONLY plates. On a beat whose subject IS the goblin, `no man,
+#     no boy` bans the protagonist. Replaced with the authored peopled-beat
+#     tail `No girl, no child.` that beat 3's own draft carries.
+#
+# r1 measured 69/77 positive with 8 tokens of headroom for the goblin
+# definition and STYLE ANCHOR PRESENT: True, so the dialect itself was never in
+# question — only the two structural faults above. The box's drafts copy was
+# re-synced and re-hashed for this round: 9083f5c1a30aca77afcbfe7e565cc883e8e1b55880b8963d2c89879aee99d2b3
+# on both sides.
+#
+# WHAT IS BEING TESTED, AND IT IS NOT THIS BEAT. All 132 shot prompts on the
+# ep3 path (003b 21, 004 25, 005 26, 007a 29, 006a 31) are written in the v2
+# "low detail" dialect the founder killed on 2026-07-27, and every one of them
+# described a goblin with a broken tusk — the character he overruled on
+# 2026-08-12. The tusk is already out of all five shot lists. The dialect is
+# not, because rewriting 132 prompts is writing rather than tidying. This job
+# converts exactly ONE of them and stops. Whether the recipe is right is what
+# the frames answer; the other 131 wait on that answer. Skipping to all of them
+# on a recipe nobody has seen is the failure CLAUDE.md names by name — the K
+# recipe went to fifteen beats on the steward's own metric and came back
+# "literally just frozen frames".
+#
+# SCRIPT AUTHORITY, and it is a new kind. Node 003b-one-leaf-for-yes, live
+# script `003b-t0-c`, `approved_by: founder-delegated-to-steward`,
+# `approved_on: 2026-08-12`, read from
+# genomes/sapling/nodes/003b-one-leaf-for-yes/leaves/003b-t0-c.yaml — the leaf
+# the render gate itself reads. That value is NOT `founder` and the difference
+# is the point: the founder delegated §6's read on the AI-authored trunk path
+# rather than performing it ("but this is the original sapling path, made by
+# ai. so ill let it be decided by ai. the episode 3 script is fine.",
+# 2026-08-12, recorded as DECISIONS.md D22, awaiting his countersignature).
+# The gates test `startswith("founder")`, so this opens them while the leaf
+# still says what actually happened. This job is the first render ever
+# authorised by that delegation. It is also, on his own words, the one script
+# of the five he pronounced on directly.
+#
+# THE PROMPT WAS MEASURED BEFORE IT WAS QUEUED, and the first draft failed.
+# Run through the real path, `sd_prompt.compress` dropped FOUR of the first
+# conversion's five sentences against the 77-token budget — the whole sapling,
+# the size-pinning clause, the lighting and the entire style tail. It would
+# have drawn a goblin holding a fig with no tree in frame and no style anchor,
+# and would have "answered" the dialect question with a frame carrying no
+# dialect. Rewritten to one sentence plus tail: 0 dropped, and goblin / fig /
+# sapling / two oversized leaves / bare side-branch / bald / red eyes /
+# masterpiece all asserted present in the compressed output. The `--dry` step
+# below re-runs that measurement ON THE BOX so a stale drafts file fails for $0
+# instead of drawing the wrong text.
+#
+# THE BOX'S DRAFTS COPY WAS SYNCED AND HASH-VERIFIED FIRST, not assumed.
+# render_wave_sample.py reads `<harness>\wave-drafts.yaml`, which is a copy and
+# does not follow the repo (the script's own comment at :173 says so and
+# refuses to fall back). Before queueing: the box's copy hashed
+# ed2ff73f... — byte-identical to the repo at HEAD, so it carried no
+# uncommitted local edits and overwriting it destroyed nothing. Backed up to
+# `wave-drafts.yaml.bak-pre-ep3`, replaced, and re-hashed on the box to
+# 2215a1f0cc9851ff8670778e94060f673bb723d35bbf89d6ea6b77c1c99a1bd5, matching
+# the committed file exactly.
+#
+# ITS OWN OUT DIR. `out-ep3-sapling-reference` has never been written by another job; on
+# 2026-08-12 a shared out dir let one job's publish pick up another job's bytes
+# (commit c123d1bd).
+#
+# --beat 1 IS COSMETIC HERE. It picks filename and seed naming only; the prompt
+# comes from the variant key. The frames will be named `01-cold-open-*` and
+# 003b's beat 01 is also a cold open, so nothing is misleading.
+#
+# $0 — local GPU on the rtx5090, no provider, nothing published, nothing
+# assembled, nothing promoted (D15 is still open: rendering is fine,
+# promotion is not, and no step here promotes).
+id: ep3-sapling-reference-0812
+task: ep3-sapling-reference-0812
+node: 003b-one-leaf-for-yes
+beat: 1
+runner: box
+needs_gpu: true
+priority: 40
+max_attempts: 1
+sample: true
+owner: ep3 lane, 2026-08-12 (first render under D22; r2 after r1's dry step caught two faults)
+consumer: >-
+  The founder's morning page, and the recipe decision for the remaining 131 ep3
+  prompts. Four seeds side by side, nothing ranked and nothing recommended.
+success: >-
+  Four PNGs at C:\banyan-farm\wave-goblin-prep\out-ep3-sapling-reference with their .yaml
+  provenance sidecars written at render time (7.2), all eight declared as
+  artifacts so a missing one fails rc=92 instead of passing quietly. Success is
+  four readable, comparable frames of the beat the script describes — a green
+  bald goblin cradling a fig beside a 55cm two-leaf sapling at dawn, in the
+  current detailed-cinematic dialect. Whether it is GOOD is R4's and not this
+  job's.
+why: >-
+  Five scripts are approved and none of them can be drawn, because every prompt
+  behind them is in a style the founder rejected two weeks ago. This is the one
+  frame that says whether the conversion works.
+prediction: >-
+  A plant alone, with no competing subject to be absorbed into, should render
+  as a plant. That is the whole bet, and if it fails the finding is much bigger
+  than one beat: it would mean this checkpoint cannot draw the show's
+  protagonist on its own, and the sapling would need a drawn or photographic
+  reference from outside the model. Expected failure modes, in order: too many
+  leaves (the model's prior for `sapling` is a leafy nursery plant, and 003b
+  needs exactly two), a pot or nursery tray appearing under it, and scale --
+  `knee high` has no person in frame to be knee-high against.
+est_minutes: 4
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '1'
+  - --goblin-def
+  - green skin, bald head
+  - --variant
+  - authored_ep3_sapling_reference
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '1'
+  - --goblin-def
+  - green skin, bald head
+  - --variant
+  - authored_ep3_sapling_reference
+  - --out
+  - C:\banyan-farm\wave-goblin-prep\out-ep3-sapling-reference
+  - --task
+  - ep3-sapling-reference-0812
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep3-sapling-reference-0812"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/wave-goblin-prep/out-ep3-sapling-reference/01-cold-open-wave1-s*.*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        # Hash the COPY, not the original: what this records has to be the bytes
+        # that get committed, or the manifest attests to the wrong file.
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+        print("   ", os.path.basename(f), h[:16])
+    with open(os.path.join(dst, "ep3-sapling-reference-0812.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) == 8 else 1)
+artifacts:
+- C:\banyan-farm\wave-goblin-prep\out-ep3-sapling-reference\01-cold-open-wave1-s0.png
+- C:\banyan-farm\wave-goblin-prep\out-ep3-sapling-reference\01-cold-open-wave1-s1.png
+- C:\banyan-farm\wave-goblin-prep\out-ep3-sapling-reference\01-cold-open-wave1-s2.png
+- C:\banyan-farm\wave-goblin-prep\out-ep3-sapling-reference\01-cold-open-wave1-s3.png
+- C:\banyan-farm\wave-goblin-prep\out-ep3-sapling-reference\01-cold-open-wave1-s0.yaml
+- C:\banyan-farm\wave-goblin-prep\out-ep3-sapling-reference\01-cold-open-wave1-s1.yaml
+- C:\banyan-farm\wave-goblin-prep\out-ep3-sapling-reference\01-cold-open-wave1-s2.yaml
+- C:\banyan-farm\wave-goblin-prep\out-ep3-sapling-reference\01-cold-open-wave1-s3.yaml

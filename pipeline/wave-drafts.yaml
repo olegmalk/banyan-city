@@ -197,6 +197,28 @@ beats:
       sunset, no dim lighting, no moody lighting, no low key, no shadows
       dominant. No photorealism, no 3D render look. 9:16 vertical, no text.
 
+    # -- `authored_ep3_sapling_reference` -- 2026-08-12. THE PLANT GETS ITS OWN
+    #    REFERENCE, because four rounds of wording did not make it stand up.
+    #    r2 0/4, r3 0/4, r4 1/4 clean and 1/4 partial: in three of r4's four
+    #    frames the sapling was still in the goblin's HAND rather than rooted
+    #    beside him, after being given its own sentence and its own verb. That
+    #    was the pre-registered stopping condition written into r4's spec before
+    #    the frames existed, so text iteration stops here.
+    #    This is the same move that worked for the goblin: words fix attributes
+    #    and a reference fixes identity (STATE.md, "a reference picture is the
+    #    channel the words cannot reach"). A plant ALONE has no competing
+    #    subject to be absorbed into, which is exactly why it should render, and
+    #    it becomes the thing later beats are conditioned on.
+    #    Beat 1 is 002b's plant-only plate: tag '' so no person is expected, and
+    #    kind guard so the goblin-slot check does not fire.
+    authored_ep3_sapling_reference: >-
+      A single slender sapling grows alone from bare earth in a green morning
+      field, one thin curved stem, two big leaves, one bare side twig, knee
+      high, whole plant in frame, no people. Medium shot, bright morning light,
+      cinematic lighting, detailed, newest, masterpiece, best quality, very
+      aesthetic No man, no boy, no girl, no child, no mature tree, no forest. No
+      photorealism, no 3D render look. 9:16 vertical, no text.
+
   2:
     slug: the-sprint
     kind: goblin
@@ -1816,6 +1838,23 @@ beats:
       detailed, newest, masterpiece, best quality, very aesthetic No girl, no
       child, no armor, no helmet, no weapon, no dark, no night, no dusk. No
       photorealism, no 3D render look. 9:16 vertical, no text.
+
+    # -- r3. r2 FAILED THE DRY STEP: 79 tokens on the first sentence alone, so
+    #    compress dropped the whole style tail and the harness refused with
+    #    "STYLE ANCHOR MISSING (`very aesthetic` not in positive)". Shortened.
+    #    THE LESSON IS ABOUT MY OWN MEASUREMENT: I check prompts locally with
+    #    sd_prompt.compress, but this machine has no CLIP tokenizer, so those
+    #    counts are estimates and the box's dry step is the only authority. The
+    #    dialect prompts I measured locally passed; these three I wrote from the
+    #    guard-sheet template without measuring at all, and this is the one that
+    #    was over. Shortened generously rather than tuned to the line.
+    authored_ep3_charref_assessor_r3: >-
+      A thin tall man in dust-grey robes stands facing camera in a green morning
+      field, a heavy ledger chained at his belt, a stub of quill in one hand, a
+      humourless face clearly visible. Medium shot, bright morning light,
+      cinematic lighting, detailed, newest, masterpiece, best quality, very
+      aesthetic No girl, no child, no armor. No photorealism, no 3D render look.
+      9:16 vertical, no text.
 
   8:
     slug: inside-him
