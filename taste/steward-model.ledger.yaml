@@ -13588,3 +13588,46 @@
     no horizon and no distance. Same init uncropped, same seed, no size clause. If he comes
     out large, framing is chosen by describing near things instead of far ones.
   outcome: null
+
+- id: ep2-b05-register-pose-0812
+  kind: prediction
+  written: 2026-08-12, before enqueue. Dry measured on the box — positive 72/77, style
+    anchor present, DRY OK.
+  predicates: [the two men are STAGED as written — one caught overshooting the stop and
+    the other reading the clipboard rather than the field — in >=2 of 4 cells on the best
+    reference; the faces carry an expression a viewer could name (not neutral) in >=2 of
+    4; the standing-at-attention pose that all five earlier rounds produced is ABSENT in
+    >=3 of 4; the frozen cast facts survive the new wording 4/4 each — short hair, plain
+    brown tunic, bark clipboard, visible faces; TWO men in frame 4/4; the register reads
+    as harmless-bureaucratic to my eye in at least ONE cell, which is one more than
+    adjectives have ever produced]
+  the_prediction_I_am_least_sure_of_and_it_is_the_whole_point: >-
+    That posture can carry a register the body refuses. The men will still be lean and
+    stern-featured — that is the model's prior and this sample does not fight it. The bet
+    is that a lean stern man caught mid-overshoot with his shoulders up reads as a
+    hapless official, and that the tone was never in the body at all. If the frames come
+    back correctly staged AND still solemn, the bet is lost cleanly and the register is
+    not a prompt problem in either channel.
+  the_second_risk_named_before_it_is_found: >-
+    ONE REFERENCE, TWO MEN. Each cell is conditioned on a single guard crop while the
+    prompt asks for a pair, so the two men may come back as twins. That is a known
+    property of this mechanism and NOT a register failure — it is scored on its own line
+    so a twinning result cannot be read as the staging having failed.
+  basis: >-
+    Two pieces of evidence, both this lane's own. Beat 03 recovered a crouch that a
+    passing verb had lost, by promoting the pose to the dominant clause and banning the
+    standing pose — dominant clause plus ban, and both halves are in this draft. And
+    every object this lane has NAMED has arrived, 7 of 7; a pose is a thing you can name.
+    What has never worked is naming a QUALITY.
+  falsifiable_by: >-
+    The staged pose not arriving at all — two men standing side by side at attention
+    despite the skid, the overshoot and the ban. That would mean pose is not nameable the
+    way objects are, and the direction he gave has no channel to run in, which is a
+    finding worth more than another round.
+  deviation_declared: >-
+    `round` is out of the positive prompt. His word, removed deliberately under his own
+    direction; reasoning in ep2-guards-register-verdict-0812. One flag, one re-render if
+    he wants it back.
+  consumer: a page for his morning read, and the go/no-go for the five remaining guard
+    beats.
+  outcome: null

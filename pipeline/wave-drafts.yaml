@@ -1344,6 +1344,36 @@ beats:
       weapon, no hood, no comic, no comic panels, no speech bubble, no different
       characters, no different outfits, no dynamic pose. No photorealism, no 3D
       render look. 9:16 vertical, no text.
+    # THE REGISTER AS STAGING, 2026-08-12, on his "chase silly via pose and
+    # expression staging." Every earlier key on this beat asserts the tone in
+    # adjectives — `silly harmless bureaucrats`, `round soft bodies` — and every
+    # one drew solemn men 0 of 4. Those words are GONE from this key, `round`
+    # included, and the tokens they cost are spent on what the two men are DOING
+    # and what their faces are doing while they do it. Nothing here describes a
+    # body. The cast facts he accepted (short hair, plain brown tunic, bark
+    # clipboard, visible faces) are untouched.
+    #
+    # The staging is the beat's own: they "jog into an empty morning field and
+    # stop to scan it". The comedy is put in the STOP — one overshoots, the other
+    # never looks up from the clipboard — which is beat 05 played straight, not a
+    # gag invented for it. `no standing at attention` is the one negative added,
+    # and it has precedent: on beat 03 the crouch came back only when the pose was
+    # promoted to the dominant clause AND the standing pose was banned.
+    # Measured on the box, not guessed: the first wording ran 83/77 and compress()
+    # dropped the whole trailing sentence — camera, light and the style anchor —
+    # so the dry gate refused it. `knees bent`, `a step too far` and `held up to
+    # his face` are the three the trim spent; the skid verb already implies the
+    # knees, and `at his nose` buys the same joke for two tokens less.
+    authored_b05_register_pose: >-
+      Two guard men in plain brown tunics, short hair, faces visible, skid to a
+      halt in a grassy field, one overshooting, shoulders hunched, eyebrows
+      high, the other reading a bark clipboard at his nose. Wide shot, bright
+      morning light, cinematic lighting, detailed, newest, masterpiece, best
+      quality, very aesthetic No
+      girl, no child, no armor, no helmet, no knight, no weapon, no standing at
+      attention, no dark, no night, no dusk, no sunset, no dim lighting, no
+      moody lighting, no low key, no shadows dominant. No photorealism, no 3D
+      render look. 9:16 vertical, no text.
   6:
     slug: the-clipboard
     kind: guard

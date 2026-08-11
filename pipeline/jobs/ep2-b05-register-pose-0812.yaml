@@ -1,0 +1,161 @@
+# EPISODE 2, BEAT 05 — THE REGISTER, STAGED INSTEAD OF ASSERTED. $0.
+# 2026-08-12, stills lane, on his direction: "chase silly via pose and expression
+# staging."
+#
+# ── WHAT HE CLOSED. Five rounds put the register in the positive prompt as adjectives
+# — `silly harmless bureaucrats`, `round soft bodies`, `harmless and bureaucratic` —
+# and five rounds drew solemn men, 0 of 4 every time, bald and haired alike
+# (ep2-b05-guards-silly-0811, ep2-guards-sheet-0812, charref-guards r3/r4/r5,
+# ep2-b06-ipa-guardcast-0812-observed). The prior-confirmation law says a reference can
+# confirm this model's prior for a `guard man` and cannot overturn it; five rounds now
+# say an adjective cannot either. So the words stop arguing.
+#
+# ── WHAT THIS SPENDS THE TOKENS ON INSTEAD. What the two men are DOING, and what their
+# faces are doing while they do it. Nothing in the positive describes a body. The cast
+# facts from the references he accepted are untouched: short hair, plain brown tunic,
+# bark clipboard, visible faces.
+#
+# ── `round` LEAVES THE PROMPT, AND THAT IS DECLARED. It is HIS word ("two silly round
+# bureaucrats with visible faces", 2026-08-11 ~20:27). Removing a founder's own word is
+# the move that must never happen quietly, so: it is not a rejection of the register,
+# it is the direction's content — the tone stops being asserted and starts being
+# staged. Ledger `ep2-guards-register-verdict-0812` carries the full reasoning and what
+# a failure here would mean (the choice becomes his: accept the men this model draws,
+# or change the checkpoint).
+#
+# ── WHY BEAT 05 AND NOT 06. Beat 06 is one man and a clipboard close-up. Beat 05 is the
+# only guard beat whose script stages BOTH men in motion — "two guards jog into an empty
+# morning field and stop to scan it" — and a pair is where a register lives: the comedy
+# is one man's posture against the other's. The staging is the beat played straight, not
+# a gag invented for it. The joke is put in the STOP: one overshoots, the other never
+# looks up from the clipboard.
+#
+# ── THE ONE NEGATIVE ADDED, WITH ITS PRECEDENT. `no standing at attention`. The failure
+# mode across all five rounds is literally two men standing side by side at attention.
+# On beat 03 the crouch came back only when the pose was promoted to the dominant clause
+# AND the standing pose was banned (ep2-b03-crouch-0812-scored) — dominant clause plus
+# ban is the proven pair, so both halves are here.
+#
+# ── FRAMING. The beat is wide and the references are full-body turnarounds, so the crop
+# and the shot agree for once; no crop ladder is needed to find out.
+#
+# ── MEASURED, NOT GUESSED. The first wording ran 83/77 on the box and compress() dropped
+# the entire trailing sentence — camera, light and style anchor — and the dry gate
+# refused it. Trimmed and re-measured: positive 72/77, style anchor present, count tag
+# 2boys, DRY OK, no faults.
+#
+# ── THE REFERENCES ARE ACCEPTED; THESE FRAMES ARE NOT. $0, local GPU, nothing published,
+# shots.md untouched. Provisional — his veto stands.
+id: ep2-b05-register-pose-0812
+task: ep2-b05-register-pose-0812
+node: 002b-first-citizen
+beat: 5
+runner: box
+needs_gpu: true
+priority: 49
+max_attempts: 1
+owner: stills lane, 2026-08-12 (his "chase silly via pose and expression staging")
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03`, read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the render
+  gate itself reads. `approval_condition` is None, so nothing in it touches beat 05.
+  This is a register test on an approved node, not an episode assembly.'
+consumer: >-
+  A page for his morning read, and the go/no-go for the five remaining guard beats.
+  If staged pose and expression move the register where five rounds of adjectives did
+  not, the b05/06/07 wave is authored behind this one; if they do not, the register
+  stops being a wording problem and becomes his choice between the men this model
+  draws and a different checkpoint.
+success: >-
+  Sixteen PNGs at C:\banyan-farm\goblin-ipa-0812\out-b05-register-pose\05-the-patrol-ipa-r{0,1,2,3}-w015-s{0,1,2,3}.png
+  with provenance sidecars written at render time (7.2). Success is readable comparable
+  cells — NOT that the register moved. "They are still solemn" is a successful run of
+  this job and the answer that decides the most.
+why: >-
+  Six guard beats are blocked on a register that five rounds of adjectives could not
+  move, and he has now named the channel to try instead. Nothing has been drawn under
+  that direction yet.
+est_minutes: 14
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '5'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-charref-guards-r5-0812
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b05-register-pose
+  - --draft-key
+  - authored_b05_register_pose
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '5'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-charref-guards-r5-0812
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b05-register-pose
+  - --draft-key
+  - authored_b05_register_pose
+  - --arm
+  - window4
+  - --task
+  - ep2-b05-register-pose-0812
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b05-register-pose-0812"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/goblin-ipa-0812/out-b05-register-pose/*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b05-register-pose-0812.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 16 else 1)
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b05-register-pose\05-the-patrol-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b05-register-pose\05-the-patrol-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b05-register-pose\05-the-patrol-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b05-register-pose\05-the-patrol-ipa-r3-w015-s0.png
