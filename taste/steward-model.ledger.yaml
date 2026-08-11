@@ -8894,3 +8894,26 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+- id: ep2-b11-refresh-0811
+  kind: prediction
+  written: 2026-08-11 ~23:0x, before enqueue; predicates fixed before any frame
+    existed. Dry-run passed on the box (69/77, anchor intact, no negative
+    drops) before this record was written; the dry step draws nothing.
+  round: ep2-b11-refresh-0811, beat 11 THEY LEAVE, variant authored_b11_refresh,
+    4 stills, SDXL animagine-xl-3.1, node 002b-first-citizen.
+  what_changed: staging kept verbatim (two guards walk away wide, growing
+    smaller, long morning shadows); added ratified register (bare-headed, dull
+    dented mismatched armor), grassy field, and the dark-ban minus `no shadows
+    dominant` which would fight the staging's own long shadows.
+  predicates:
+    - two guard figures walking away from camera in >=3/4
+    - both bare-headed comic register, not helmeted dark fantasy, in >=3/4
+    - bright morning palette with visible long shadows in >=2/4
+    - open field, no structures, in >=3/4
+  consumer: the founder's morning review page.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
