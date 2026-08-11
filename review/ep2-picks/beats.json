@@ -1,0 +1,135 @@
+[
+{"n":"01","title":"COLD OPEN  ·  0:00–0:06",
+ "shows":"A two-leaf sapling alone in a green field, and on the thinnest branch a green nub swells and rounds into a single fig — the fig growing on screen is the only thing in frame that moves.",
+ "line":"VO (flat): “I used to be an engineer. Now I'm a tree. …Well. A sapling. Took three days to grow that. Total assets: two leaves and one fig.”",
+ "recorded":[
+  "<b>You have spoken on this one.</b> On the r9 frame, 2026-08-10, your words: <q>well.. the beat 01 frame looks good.</q> On how to get the fig in, the same day, your word: <q>inpaint</q>. The <code>r9-d40/d60/d80</code> and <code>b01-fig-inpaint</code> frames below are that route.",
+  "Rounds 5, 6, 7 and 8 were turned down before that — steward's calls on 2026-08-09/10, not yours. r5: the word <code>sturdy</code> did not change the drawing. r6: no plate came out of it."]},
+
+{"n":"02","title":"THE SPRINT  ·  0:06–0:11",
+ "shows":"The scavenger sprints in, skids in the grass and dives behind the sapling — wide enough that the dive reads, and the sapling has to actually be in the frame.",
+ "line":"No dialogue. Pure action.",
+ "recorded":[
+  "Round 3 turned down 2026-08-09 — <b>steward's call, not yours</b>: no sapling in any of them, and it is a flat cartoon, not our show."]},
+
+{"n":"03","title":"BAD COVER  ·  0:11–0:16",
+ "shows":"He is crouched behind a trunk that hides about a sixth of him — the joke is the size mismatch, so we need to see both him and how little tree there is.",
+ "line":"VO: “A creature is using me as cover. I am forty centimeters tall.”",
+ "recorded":[
+  "Round 3 turned down 2026-08-09 — <b>steward's call, not yours</b>: they are indoors with computer monitors behind them, and there is no tree to hide behind."]},
+
+{"n":"04","title":"THE FOOTNOTE  ·  0:16–0:22",
+ "shows":"Close on his face holding his breath — cheeks puffed, eyes darting, ears twitching at every sound.",
+ "line":"VO: “Worst stealth plan I have ever seen — and I once watched an architect hide an outage in a footnote.”",
+ "recorded":[
+  "Round 3 turned down 2026-08-09 — <b>steward's call, not yours</b>: four different creatures, and a window behind a beat that is outdoors.",
+  "The <code>wave1</code> frames were turned down 2026-08-10, also the steward's call. The <code>ipa-r0…r3</code> frames are the first ones drawn against the goblin you described (<q>he is just a simple green goblin, nothing complex</q>, 2026-08-10) and carry no verdict at all."]},
+
+{"n":"05","title":"THE PATROL  ·  0:22–0:27",
+ "shows":"Two guards jog into an empty morning field and stop to scan it — round, harmless shapes in mismatched armour that does not fit, one carrying a clipboard made of bark.",
+ "line":"GUARD 1: “He went this way. I saw him. Apple thief.”",
+ "recorded":[
+  "Round 3 turned down 2026-08-09 — <b>steward's call, not yours</b>: it is a dark forest and they look dangerous; they are supposed to be round and harmless in a morning field.",
+  "Round 4 turned down the same day, same caller: dark or heroic fantasy in 4 of 4, the morning field in 1 of 4, round and harmless in 0 of 4. Round 5 was rendered and carries no recorded verdict."]},
+
+{"n":"06","title":"THE CLIPBOARD  ·  0:27–0:34",
+ "shows":"Guard 2 turns the bark clipboard over and reads off it — the clipboard is the joke, so the camera is on the board.",
+ "line":"GUARD 2: “Technically not theft. He ate it on the spot. That reclassifies it as unlicensed consumption.”",
+ "recorded":[
+  "Round 3 turned down 2026-08-09 — <b>steward's call, not yours</b>: serious armoured men at night; the clipboard is the joke and nothing here is funny."]},
+
+{"n":"07","title":"CONFISCATE  ·  0:34–0:37",
+ "shows":"Guard 1 points at the scavenger, decisive, having arrived at completely the wrong conclusion.",
+ "line":"GUARD 1: “So we confiscate the apple.”",
+ "recorded":[
+  "Round 3 turned down 2026-08-09 — <b>steward's call, not yours</b>: the field is right and the guard is a hero from another show."]},
+
+{"n":"08","title":"INSIDE HIM  ·  0:37–0:42",
+ "shows":"Guard 2 lowers the clipboard and points at the scavenger's belly — the camera follows the finger to where the apple actually went.",
+ "line":"GUARD 2: “The apple is inside him, Dren.”",
+ "recorded":[
+  "Round 3 turned down 2026-08-09 — <b>steward's call, not yours</b>: a hooded figure with a blade standing over him at night — it plays as a murder."]},
+
+{"n":"09","title":"THE PAUSE  ·  0:42–0:45",
+ "shows":"Close on Guard 1's face working slowly through what that means, in daylight.",
+ "line":"GUARD 1: “…We confiscate the goblin?”",
+ "recorded":[
+  "Round 3 turned down 2026-08-09 — <b>steward's call, not yours</b>: glowing eyes in a black helmet; the beat is a slow dumb thought in daylight."]},
+
+{"n":"10","title":"NO FORM  ·  0:45–0:50",
+ "shows":"Guard 2 flips the clipboard around to show the back of it, and the back is blank.",
+ "line":"GUARD 2: “There's no form for that. There's barely a form for the apple.”",
+ "recorded":[
+  "Round 3 turned down 2026-08-09 — <b>steward's call, not yours</b>: he is indoors with his back to us and the blank board reads as a lit screen."]},
+
+{"n":"11","title":"THEY LEAVE  ·  0:50–0:55",
+ "shows":"The two guards walk away arguing, backs to camera, still genuinely trying to do their jobs.",
+ "line":"VO: “Nobody in this scene is evil. Everybody in this scene is trapped in a workflow.”",
+ "recorded":[
+  "Round 3 turned down 2026-08-09 — <b>steward's call, not yours</b>: the two of them are specks at dusk, or standing in a different place entirely."]},
+
+{"n":"12","title":"RELATED  ·  0:55–1:00",
+ "shows":"Tight on the sapling's two leaves against the sky — tight because the scavenger is still crouched behind the trunk below frame, and going wide would read as him having left. No fruit in this one.",
+ "line":"VO: “I have never related to a fantasy world more.”",
+ "recorded":[
+  "Round 3 turned down 2026-08-09 — <b>steward's call, not yours</b>: all four drew the ripe fruit, and this beat is the two leaves and the sky with no fruit at all.",
+  "Round 4 removed the fruit in 4 of 4 and the steward logged it as holding. Still his call and not a decision."]},
+
+{"n":"13","title":"THE SHADE  ·  1:00–1:04",
+ "shows":"The scavenger slides down the trunk and folds into the sapling's very small patch of shade, knees up around his ears.",
+ "line":"SCAVENGER: “…Thanks for the shade.”",
+ "recorded":[
+  "<b>You have spoken on this one.</b> On rounds 6 and 7, 2026-08-09, your words: <q>all the goblin images look like female demihumans, definitely need to regenerate.</q>",
+  "Round 3 turned down 2026-08-09 — steward's call: the sapling is a giant round creature in every one of them. Rounds 4, 5, 8 and 9 were also turned down by the steward. Round 9 is the first in nine rounds where every frame has tusks."]},
+
+{"n":"14","title":"THE DEFENSE  ·  1:04–1:10",
+ "shows":"His hands picking at the dirt, embarrassed, glancing around — the excuse lives in the hands, not the face.",
+ "line":"SCAVENGER: “It was one apple. It fell off the cart. On the ground, that's — that's foraging.”",
+ "recorded":[
+  "Round 3 turned down 2026-08-09 — <b>steward's call, not yours</b>: those are human hands, and the anatomy is broken in three of them.",
+  "The <code>ipa-r0</code> frames are drawn against the goblin you described on 2026-08-10 and carry no verdict."]},
+
+{"n":"15","title":"GOOD LISTENER  ·  1:10–1:15",
+ "shows":"He looks up at the sapling and both of them are in the frame — the conversation is the subject.",
+ "line":"SCAVENGER: “You're a good listener. The last three people I talked to filed a report.”",
+ "recorded":[
+  "<b>You spoke on this one today</b> (2026-08-11, about the four <code>wave1</code> frames): <q>yeah, that looks like the right goblin.</q> That was read as ratifying the <em>character</em>; the shot itself is still yours to call.",
+  "Round 3 turned down 2026-08-09 — steward's call: that is a boy in a room with a houseplant, not a goblin talking to the sapling."]},
+
+{"n":"16","title":"WHY  ·  1:15–1:22",
+ "shows":"Close on one leaf with the scavenger blurred behind it, for the tree's longest thought.",
+ "line":"VO: “He talks to me because I'm the only thing here that won't file a report. Buddy, I wish I could. I can't even wave.”",
+ "recorded":[
+  "<b>Provisional pick: <code>r3-s2</code>.</b> The steward's guess, logged 2026-08-09 at 0.40 confidence — the lowest of the three. It is waiting on you and it is not a decision.",
+  "You were asked about the goblin drifting into this frame and said: <q>if he was there on purpose then fine, it wont ruin anything right?</q>"]},
+
+{"n":"17","title":"GOODBYE  ·  1:22–1:27",
+ "shows":"He stands, brushes himself off and turns to go.",
+ "line":"SCAVENGER: “If anyone asks — you didn't see me. Which is true. You're a plant.”",
+ "recorded":[
+  "Round 3 turned down 2026-08-09 — <b>steward's call, not yours</b>: a hero walking off into a sunset, one of them in a desert, and where is the tree."]},
+
+{"n":"18","title":"THE DECISION  ·  1:27–1:34",
+ "shows":"Extreme close-up on the one fig on the thinnest branch, stem trembling — the thing that is about to be spent.",
+ "line":"VO: “Wait. Growth includes release. One fruit — everything I own. He said ground fruit is foraging. If they take him, I am alone in a field again.”",
+ "recorded":[
+  "<b>Provisional pick: <code>r3-s0</code>.</b> The steward's guess, logged 2026-08-09 at 0.45 confidence. Waiting on you; not a decision."]},
+
+{"n":"19","title":"THE DROP  ·  1:34–1:39",
+ "shows":"Wide, with the tree and the scavenger in one frame: the stem lets go, the fig falls, bounces off his head and lands in the grass at his feet.",
+ "line":"No dialogue. The physical event, deliberately wide so cause and effect read in one take.",
+ "recorded":[
+  "Round 3 turned down 2026-08-09 — <b>steward's call, not yours</b>: the sapling is growing out of his head in all four."]},
+
+{"n":"20","title":"EVIDENCE  ·  1:39–1:42",
+ "shows":"He picks the fig up in both hands and looks up at the now-bare branch, holding it like evidence.",
+ "line":"SCAVENGER (whisper): “…Did you just answer me?”",
+ "recorded":[
+  "Round 3 turned down 2026-08-09 — <b>steward's call, not yours</b>: he never picks the fig up, and there is a human finger in it."]},
+
+{"n":"21","title":"THE ANSWER  ·  1:42–1:47",
+ "shows":"The leaf, in dead-still air, tilts slowly and deliberately and holds — the first thing he has ever moved on purpose.",
+ "line":"No dialogue. The card reads: SPEAK ✓ 1 bit. slow.  /  POPULATION: 1",
+ "recorded":[
+  "<b>Provisional pick: <code>r3-s3</code>.</b> The steward's guess, logged 2026-08-09 at 0.50 confidence — the highest of the three, which still means it is a guess. Waiting on you."]}
+]
