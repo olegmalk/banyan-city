@@ -699,6 +699,56 @@
   alternative sitting in your inbox. That decision can be closed by this clip rather than by a purchase.</p>
 </section>
 
+<section>
+  <h2 class="t">Overnight batch — and one thing we can now say about how this works</h2>
+  <p class="lede">Three more clips, all hash-checked. The most useful of them is a failure.</p>
+
+  <figure>
+    <img src="/review/ep2-picks/motion-0812/scale-b17.jpg" alt="Beat 17 with a size-pinning clause: the goblin is still small in the meadow and walks away from camera.">
+  </figure>
+  <video controls preload="metadata" playsinline src="/review/ep2-picks/motion-0812/17-goodbye-LTX-scale-0812.mp4"></video>
+  <p class="muted" style="margin-top:10px">I told the prompt this was a medium shot with the camera on him,
+  that he fills the middle third, that the meadow is behind him — and banned wide shots outright.
+  <strong>He came out exactly as small, and walked away.</strong> The world survived intact, so the two did
+  not fight each other; the instruction simply did nothing. His coat also came out near-black, which I have
+  noted and not chased.</p>
+
+  <div class="callout">
+    <h2>Which tells us where the line is</h2>
+    <p>Naming <em>what is in the frame</em> has worked seven times out of seven — a fig, a sapling, a tree, a
+    patch of shade, an entire landscape. Naming <em>where the camera stands</em> did nothing at all.</p>
+    <p>And there is a simpler explanation sitting in every clip on this page: <strong>the shot size has
+    always come from the starting frame.</strong> Beat 04's still is a face close-up and every beat 04 clip
+    is a close-up. Beat 17's still is a full-length figure and every beat 17 clip is wide. Eighteen clips in,
+    no prompt has ever changed the framing it inherited — and I never tested it, because I never varied the
+    crop. That test is running now: same prompt exactly, with the starting frame cropped to a medium shot
+    before it goes in.</p>
+  </div>
+
+  <figure>
+    <img src="/review/ep2-picks/motion-0812/obj-b19.jpg" alt="Beat 19: a fig hangs from the sapling, falls through the air, strikes the goblin's head and lands in the grass.">
+  </figure>
+  <video controls preload="metadata" playsinline src="/review/ep2-picks/motion-0812/19-the-drop-LTX-object-0812.mp4"></video>
+  <p class="muted" style="margin-top:10px"><strong>Beat 19 now has the whole chain on screen.</strong> A fig
+  hangs from the sapling, lets go, falls, hits his head, lands. The earlier version had the fall but no tree
+  for it to fall from, so the cause was off-camera. New oddity: a sprout grows out of the top of his head for
+  the first third of the clip — the sapling appears to have partly copied itself onto him.</p>
+
+  <figure>
+    <img src="/review/ep2-picks/motion-0812/chest-b20.jpg" alt="Beat 20: the goblin holds a fig in both hands at chest height throughout, with a bare branch arcing over his head.">
+  </figure>
+  <video controls preload="metadata" playsinline src="/review/ep2-picks/motion-0812/20-evidence-LTX-chest-0812.mp4"></video>
+  <p class="muted" style="margin-top:10px"><strong>Beat 20's arms stay down now.</strong> The fig is held at
+  chest height for the whole clip and never goes overhead, which was the fault last time. The named bare
+  branch arrived too — but it arcs over his head like antlers rather than standing beside him. So: naming a
+  thing reliably produces it; <em>where</em> it lands is not yet under control, which is the same problem as
+  the sprout on his head.</p>
+
+  <p>Worth putting those two side by side: pinning where his <em>hands</em> may go worked. Pinning where the
+  <em>camera</em> sits did not. The model takes direction about what is in the shot and about what he does
+  with his body — not about the shot itself.</p>
+</section>
+
 <section style="border-bottom:none">
   <h2 class="t">Provenance</h2>
   <p class="lede">

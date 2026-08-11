@@ -1,0 +1,139 @@
+# 2026-08-12. THE SIZE CLAUSE FAILED. The hypothesis it leaves behind is better.
+#
+# ep2-b17-scale added a size-pinning sentence -- medium shot, camera is on him, fills the
+# middle third, meadow behind him -- plus wide-shot bans in the negative. HE DID NOT GET
+# BIGGER. He came out the same size or smaller and walked off into the meadow. The world
+# survived intact, so the named failure mode (scale and environment trading off) did NOT
+# happen: the clause simply did nothing.
+#
+# WHICH SPLITS THE LEVER IN TWO, and this is the finding. Naming the CONTENTS of a frame
+# works, 7 for 7 -- objects, plants, an entire landscape. Naming the CAMERA''S RELATIONSHIP
+# to those contents does not. And there is a simpler explanation sitting in every clip this
+# lane has made: SHOT SCALE HAS ALWAYS TRACKED THE INIT. b04''s init is a face close-up and
+# every b04 clip is a close-up. b17''s init is a full-length standing figure and every b17
+# clip is a wide. b14''s medium init gives medium clips. Not once has a prompt changed the
+# scale it inherited.
+#
+# SO THE TEST IS THE CROP, NOT THE SENTENCE. The failed size clause is REMOVED and this
+# reverts to the exact b17-world prompt that produced the good background. The only change
+# is that the init is pre-cropped to a medium framing before the usual cover-crop: box
+# 156,0,676,945 out of the 832x1216 plate, which is head-to-waist at the 0.55 aspect the
+# render wants, so the cover-crop then takes nothing off the sides. I simulated it locally
+# first -- both ears survive at this box and are clipped at anything tighter.
+#
+# The pre-crop is done by THIS JOB''S OWN payload copy of cover_crop.py, which gains a
+# --src-box argument. No pipeline code is touched.
+id: ep2-b17-initcrop-0812
+task: ep2-b17-initcrop-0812
+node: 002b-first-citizen
+beat: 17
+runner: box
+priority: 19
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: ep2 motion lane, 2026-08-12
+consumer: 'review/ep2-picks/motion-0812.html — whether shot scale is chosen by cropping the init rather than by writing a clause.'
+success: 'A 704x1280 mp4, 121 frames, in which he is visibly LARGER in frame than either previous beat-17 take -- head and torso filling much of the height, face readable -- with the described world still behind him. The failure worth reporting is him coming out small AGAIN from a medium-framed init, which would mean scale is set by neither the prompt nor the init and this lane does not yet know what sets it.'
+why: The size clause did nothing, and every clip this lane has made inherited its shot scale from its starting frame. That is the cheaper and better-supported explanation and it has never been tested.
+est_minutes: 6
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b17-initcrop-0812\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"--out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\nap.add_argument(\"--src-box\", default=\"\", help=\"left,top,right,bottom in SOURCE pixels, applied before the cover crop\")\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nif a.src_box:\n    l, t, r, b = (int(v) for v in a.src_box.split(\",\"))\n    im = im.crop((l, t, r, b))\n    print(\"pre-crop to (%d,%d,%d,%d) -> %dx%d\" % (l, t, r, b, im.width, im.height), flush=True)\nsw, sh = im.size\nscale = max(W / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw, nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b17-initcrop-0812\b17-motion-prompt.txt: '2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: a small goblin standing in a deep summer meadow in the late afternoon — tall seed-headed grass all around him and running back into the distance, scattered white and pink wildflowers, a dark treeline along the horizon behind him, soft haze over the far grass, and one small sapling standing near him. Low warm amber light rakes across the field and throws long shadows through the grass — pale yellow-green skin, a bald domed head, long pointed ears, red eyes, a patched hooded coat. HE BRUSHES HIMSELF OFF AND TURNS TO GO: both hands sweep down the front of his coat, knocking the dust off his chest and his thighs, and then he turns his body away from us to leave, his shoulders rotating and his head coming round with them. He stays in the same place in frame and the camera does not move. Soft morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.'
+  C:\banyan-farm\ep2-b17-initcrop-0812\b17-negative.txt: camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, stool, stake, face morphing, distorted face, warped face, changing facial features, extra eyes, extra ears, hair, walking out of frame, leaving the frame, drifting sideways, second character, duplicate character, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text
+  C:\banyan-farm\ep2-b17-initcrop-0812\b17-jobs-encode.json: "[{\"beat\": 17,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b17-initcrop-0812\\\\b17-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\\ep2-b17-initcrop-0812\\\\b17-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b17-initcrop-0812\\\\b17-negative.txt\"}]"
+  C:\banyan-farm\ep2-b17-initcrop-0812\b17-jobs-render.json: "[{\"beat\": 17,\n  \"seed\": 20260806,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b17-initcrop-0812\\\\b17-embeds.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\\ep2-b17-initcrop-0812\\\\b17-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b17-initcrop-0812\\\\17-goodbye-LTX-initcrop-0812.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b17-initcrop-0812\cover_crop.py
+  - --src
+  - C:\banyan-farm\goblin-ipa-0812\out-b17-crossbeat\17-goodbye-ipa-r0-w015-s1.png
+  - --sha256
+  - f6d516a5b4ac869038aecfc1b80fc7e37da464a85e595a17d9472196f5ae4aa2
+  - --out
+  - C:\banyan-farm\ep2-b17-initcrop-0812\b17-init-704x1280.png
+  - --size
+  - 704x1280
+  - --src-box
+  - 156,0,676,945
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b17-initcrop-0812\b17-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b17-initcrop-0812\b17-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b17-initcrop-0812
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b17-initcrop-0812\bench-b17-initcrop.jsonl
+  - --bench-label
+  - ep2-b17-initcrop-0812
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b17-initcrop"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/ep2-b17-initcrop-0812/17-goodbye-LTX-initcrop-0812.mp4*")
+                 + glob.glob("C:/banyan-farm/ep2-b17-initcrop-0812/b17-init-704x1280.png")
+                 + glob.glob("C:/banyan-farm/ep2-b17-initcrop-0812/bench-b17-initcrop.jsonl"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b17-initcrop-0812.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 2 else 1)
+artifacts:
+- C:\banyan-farm\ep2-b17-initcrop-0812\17-goodbye-LTX-initcrop-0812.mp4
+- C:\banyan-farm\ep2-b17-initcrop-0812\b17-init-704x1280.png

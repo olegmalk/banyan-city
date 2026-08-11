@@ -13403,3 +13403,73 @@
   consumer: review/ep2-picks/motion-0812.html and whether the environment paragraph needs a
     scale clause beside it in every subsequent prompt.
   outcome: null
+
+- id: ep2-b17-scale-0812-scored
+  kind: scoring
+  date: 2026-08-12
+  scores: ep2-b17-scale-0812
+  verdict: MISS on the predicate that mattered, and the miss is more useful than a hit.
+  predicates_observed: >-
+    he is visibly larger in frame MISS — he is the same size or smaller, and walks off into
+    the meadow getting smaller; the described world SURVIVES HIT, fully intact; still brushes
+    off and turns to go PARTIAL — it reads as walking away; camera locked HIT.
+  the_named_failure_did_not_happen: >-
+    I predicted the risk was scale and environment TRADING OFF — the world flattening as he
+    grew. It did not. The world stayed and he did not grow. So the clause was not outcompeted,
+    it was simply INERT.
+  what_this_splits: >-
+    NAMING THE CONTENTS OF A FRAME WORKS, 7 FOR 7 — objects, plants, a whole landscape.
+    NAMING THE CAMERA'S RELATIONSHIP TO THOSE CONTENTS DOES NOT. Worth noting the one place a
+    camera instruction HAS worked is the NEGATIVE (banning pan/tilt stopped camera motion),
+    so this is not "the model ignores camera words", it is that a positive framing clause
+    does not move scale.
+  the_better_explanation_sitting_in_my_own_results: >-
+    SHOT SCALE HAS ALWAYS TRACKED THE INIT. b04's init is a face close-up and every b04 clip
+    is a close-up. b17's init is a full-length figure and every b17 clip is wide. b14's medium
+    init gives medium clips. Across eighteen clips no prompt has ever changed the scale it
+    inherited. That is a cheaper hypothesis than anything about wording and it had never been
+    tested because I had never varied the crop.
+  acted_on: >-
+    ep2-b17-initcrop-0812 queued: failed size clause REMOVED, reverting to the exact b17-world
+    prompt, with the init pre-cropped to a medium box (156,0,676,945 of the 832x1216 plate —
+    0.55 aspect so the cover-crop takes nothing off the sides). Simulated locally first: both
+    ears survive at that box and clip at anything tighter. The pre-crop is done by this job's
+    OWN payload copy of cover_crop.py via a new --src-box argument; no pipeline code touched.
+  new_fault_noted_not_chased: >-
+    His coat came out near-black rather than cream, and his face is underlit. One observation,
+    no hypothesis, not queued.
+
+- id: ep2-b19-object-0812-scored
+  kind: scoring
+  date: 2026-08-12
+  scores: ep2-b19-object-0812
+  verdict: The causal chain is on screen for the first time.
+  observed: >-
+    A sapling stands beside him WITH A FIG HANGING FROM IT, and then the fig is airborne, then
+    it strikes his head, then it is on the ground. "The stem lets go, the fig falls, bounces
+    off his head and lands in the grass at his feet" — the whole sentence, including the stem
+    it lets go FROM, which the earlier version had to imply because there was no tree in shot.
+  new_artifact: >-
+    A SPROUT GROWS OUT OF THE TOP OF HIS HEAD for roughly the first third — a stem with leaves
+    emerging from his skull, shrinking to a single leaf by mid-clip. The named sapling appears
+    to have partly duplicated onto him. Reported, not chased: one observation.
+
+- id: ep2-b20-chest-0812-scored
+  kind: scoring
+  date: 2026-08-12
+  scores: ep2-b20-chest-0812
+  verdict: HIT on the over-raise. The ceiling clause worked where the scale clause did not.
+  predicates_observed: >-
+    fig held at CHEST HEIGHT for the whole clip HIT — hands never rise past his shoulders,
+    elbows tucked, no overhead pose anywhere; the fig still appears in his empty hands HIT;
+    camera locked HIT; chin and eyes go up to the branch PARTIAL — his gaze stays roughly level.
+  worth_putting_beside_the_scale_result: >-
+    Both were positive-prompt constraints on the BODY versus the CAMERA. Pinning where his
+    HANDS may go worked; pinning where the CAMERA sits did not. That is consistent with the
+    split above — the model takes direction about what is in the frame and about what the
+    subject does, and not about the frame itself.
+  the_branch_arrived_oddly: >-
+    The named bare branch is there with dark figs on it, but it ARCS OVER HIS HEAD from both
+    sides like antlers rather than standing beside him as a tree. Named objects appear; WHERE
+    they appear is not yet under control, which is the same shape as b19's head-sprout.
+  outcome: null
