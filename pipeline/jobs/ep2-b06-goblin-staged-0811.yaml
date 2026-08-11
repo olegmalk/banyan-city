@@ -1,0 +1,144 @@
+# 002b goblin wave, RUN COPY, UNGATED, 2026-08-11 -- beat 06 the-clipboard.
+# The staged original `pipeline/jobs/ep2-b06-goblin-wave1.yaml` keeps its
+# `gate:` key and is left exactly as it is; box_enqueue.py gate_checks() still
+# refuses that file, by design.
+#
+# THE GATE WAS CLEARED BY ROMAN, NOT BY THE STEWARD. The gate named one
+# condition: the founder had to rule on the ONE SAMPLE drawn against his goblin
+# definition. On 2026-08-11 at ~15:45 he looked at the four frames of
+# `ep2-b15-goblin-simple-0811` and said, verbatim: "yeah, that looks like the
+# right goblin." That is the human act the gate was waiting for, and it is his.
+# Recorded the same day in taste/steward-model.ledger.yaml and cuts/cuts.yaml
+# item 18.
+#
+# TWO THINGS CHANGED FROM THE STAGED ORIGINAL, AND BOTH ARE HIS WORDS RATHER
+# THAN THE STEWARD'S.
+#
+#   1. `goblin_def` IS `green skin`, NOT `green skin, tusks`. The fourteen
+#      staged specs were all written encoding `green skin, tusks`. He never
+#      said `tusks` -- it is a word the steward bought for three tokens in r9,
+#      and the sample he approved is the one that had it REMOVED. Firing the
+#      staged string would render a recipe he has never seen, under a verdict
+#      given on a different one. His sentence is "he is just a simple green
+#      goblin, nothing complex"; `green skin` is his one named attribute and
+#      nothing else.
+#
+#   2. `--variant authored_staged`. His approval covers the GOBLIN. The same
+#      four frames failed on STAGING, and he was not ruling on that: three of
+#      the four seeds drew him FROM BEHIND so there was no face to judge, and
+#      the sapling came back a houseplant twice, absent once, and a walking
+#      creature with its own face in the fourth. `authored_staged` is the
+#      2026-08-11 staging fix in wave-drafts.yaml -- `from front` / an explicit
+#      face clause, `rooted in the ground`, and the REMOVAL of `40cm`,
+#      `mascot-simple` and `standing tall`. `authored` is byte-identical to
+#      what it was, so the three ungated goblin_ipa_* crossbeat jobs that read
+#      it are untouched.
+#
+# MEASURED, NOT GUESSED: this beat was dry-run on the box's real CLIP
+# tokenizer at 2026-08-11 on this exact variant and slot string and returned
+# DRY OK with no faults. The harness refuses rather than falling back if the
+# box's wave-drafts.yaml lacks the key, so a stale copy fails for $0 instead of
+# quietly rendering the old staging under a new job id.
+
+id: ep2-b06-goblin-staged-0811
+task: ep2-b06-goblin-staged-0811
+node: 002b-first-citizen
+beat: 6
+runner: box
+needs_gpu: true
+priority: 45
+max_attempts: 1
+owner: goblin-wave lane, 2026-08-11 (run copy, after Roman's goblin verdict)
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`,
+  `approved_on: 2026-08-03`. His approval verbatim: "approve 002b except.. we need to make
+  SURE the fig growing on the sapling is mentioned, last time we generated 002b it just..
+  appeared. also, the sapling was able to flail a leaf in episode 1? why couldnt it do that
+  in 002b?" Neither condition touches this beat''s staging.'
+consumer: The founder's pick sheet for episode 2. Beat 06 the-clipboard has no candidate frame
+  drawn against his goblin definition -- every existing candidate for it predates 2026-08-10
+  and was scored against a goblin he had not defined, which is what taste ledger record 32
+  suspended P2 over. This job draws the four he picks one of. No pick, no still for the beat,
+  no episode 2.
+success: Four PNGs at C:\banyan-farm\wave-goblin-prep\out-staged\06-the-clipboard-wave1-s0..3.png
+  with their .yaml provenance sidecars written at render time (7.2), all eight declared as
+  artifacts so a missing one fails rc=92 instead of passing quietly. Whether the goblin in
+  them is right is R4's call and not this job's.
+why: 'One variable against the approved staging sample: the beat. Same harness, same drafts
+  file, same `green skin` slot, same seeds, same steps and guidance, same `authored_staged`
+  variant. Roman approved the character on beat 15; this draws the same character on this
+  beat with the staging corrected.'
+goblin_def: green skin
+goblin_def_source: 'The founder, verbatim: "he is just a simple green goblin, nothing complex"
+  (2026-08-10 ~12:15, re-stated 2026-08-11), and his approval of the frames drawn from it:
+  "yeah, that looks like the right goblin" (2026-08-11 ~15:45, on `ep2-b15-goblin-simple-0811`).
+  `green skin` is the ONE attribute he named. This is his sentence with nothing added to it.'
+est_minutes: 2
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '6'
+  - --goblin-def
+  - green skin
+  - --variant
+  - authored_staged
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '6'
+  - --goblin-def
+  - green skin
+  - --variant
+  - authored_staged
+  - --out
+  - C:\banyan-farm\wave-goblin-prep\out-staged
+  - --task
+  - ep2-b06-goblin-staged-0811
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-goblin-staged\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/wave-goblin-prep/out-staged/06-the-clipboard-wave1-s*.*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\n    print(\"   \", os.path.basename(f),\
+    \ h[:16])\nwith open(os.path.join(dst, \"06-the-clipboard-staged.sha256\"), \"w\", newline=\"\
+    \\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src),\
+    \ \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) == 8 else 1)\n"
+artifacts:
+- C:\banyan-farm\wave-goblin-prep\out-staged\06-the-clipboard-wave1-s0.png
+- C:\banyan-farm\wave-goblin-prep\out-staged\06-the-clipboard-wave1-s1.png
+- C:\banyan-farm\wave-goblin-prep\out-staged\06-the-clipboard-wave1-s2.png
+- C:\banyan-farm\wave-goblin-prep\out-staged\06-the-clipboard-wave1-s3.png
+- C:\banyan-farm\wave-goblin-prep\out-staged\06-the-clipboard-wave1-s0.yaml
+- C:\banyan-farm\wave-goblin-prep\out-staged\06-the-clipboard-wave1-s1.yaml
+- C:\banyan-farm\wave-goblin-prep\out-staged\06-the-clipboard-wave1-s2.yaml
+- C:\banyan-farm\wave-goblin-prep\out-staged\06-the-clipboard-wave1-s3.yaml
