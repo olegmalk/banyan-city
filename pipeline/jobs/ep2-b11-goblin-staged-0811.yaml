@@ -40,24 +40,7 @@
 # box's wave-drafts.yaml lacks the key, so a stale copy fails for $0 instead of
 # quietly rendering the old staging under a new job id.
 
-gate: >-
-  THE STAGING SAMPLE FAILED. 2026-08-11: `ep2-b02-goblin-staged-0811` ran this
-  exact recipe -- `green skin` + `--variant authored_staged` -- on beat 02 and
-  came back rc=0 with four unusable frames. Roman's goblin approval still
-  stands and is NOT in question; what failed is the staging fix these specs
-  depend on. The fix corrected the ANGLE (`from front`) and left the DISTANCE:
-  `wide shot` survives in every staged draft, so the subject renders as a
-  distant speck and `his face visible past its thin stem` cannot be honoured --
-  no readable face in any of the four seeds, a blank featureless green head in
-  the best one (s1), no goblin at all in s0 or s3, and in s2 the sapling reads
-  as a picked flower in his hand rather than a rooted plant. Contact sheet and
-  2x zoom were looked at, not scored by a metric.
-  WHAT WOULD CLEAR THIS: a shot-size term, not another angle term. Beat 04 --
-  the one beat in this wave whose frames ever came back readable -- says "his
-  face filling the frame". The staged drafts copied the angle half of that and
-  not the size half. Fix `authored_staged` to state shot size, draw ONE sample
-  again, look at it, then clear this key.
-  Frames: C:\banyan-farm\wave-goblin-prep\out-staged\02-the-sprint-wave1-s*.png
+# gate cleared 2026-08-11 16:52: the shot-size sample (ep2-b02-goblin-medium-0811) came back with the face readable in the seeds a human looked at — the exact condition this gate named. Wrinkles carried to review: eye colour varies across seeds, sapling presence still inconsistent.
 
 id: ep2-b11-goblin-staged-0811
 task: ep2-b11-goblin-staged-0811
