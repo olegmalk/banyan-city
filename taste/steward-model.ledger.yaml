@@ -7157,3 +7157,236 @@
     without listing that beat's standing defects — the fig and the leaf count —
     before it prices the round's variable. The general form is in
     `ep2-pickpage-founder-directive-0811`.
+
+# ── HIS ~18:40 SENTENCES ON THE TWO ~17:0x SAMPLES, AND WHAT COULD NOT BE
+# SCORED WITH THEM. Both jobs ran and both drew four frames; NEITHER has a
+# prediction record in this file. Grepped for `^- id: ep2-b02-goblin-medium-0811`
+# and `^- id: ep2-b04-goblin-close-0811` before writing these: no match, and the
+# only mentions of either id anywhere in the file are inside the ~16:15
+# pickpage records that AUTHORISED them (`ep2-b02-pickpage-founder-verdict-0811`
+# says of the medium sample "which was still queued when he spoke";
+# `ep2-b04-pickpage-founder-verdict-0811` describes the close-up sample under
+# `what_it_authorises_and_what_ran_on_it`). Those are authorisations, not
+# predictions — they name no predicate and call no outcome. So these two records
+# carry his words and score NOTHING. The header's first line is why no
+# prediction is being written for them now: "a record added or edited after his
+# verdict is not a prediction and is worthless."
+- id: ep2-b02-goblin-medium-founder-verdict-0811
+  date: 2026-08-11
+  subject: "node 002b beat 02 the-sprint — the founder's verdict on
+    `ep2-b02-goblin-medium-0811` (four seeds, medium shot, slot `green skin`,
+    drawn ~17:0x local), given ~18:40"
+  founder_verdict: |-
+    "goblin is slowly getting better character consistency but in beat 2 it looks more like he grabs the sapling or is just next to the sapling, not hiding behind it. character consistency needs more improvement as well."
+  founder_verdict_date: 2026-08-11
+  outcome: not_scoreable_no_prediction_was_written
+  miss_axis: >-
+    NONE, and that is the finding rather than an excuse. No predicate was on
+    record for this job, so nothing here can be counted a hit or a miss and this
+    record does not enter the rolling rate. The one-token shot-size change
+    (`wide shot` -> `medium shot`) was queued at ~16:4x off the back of his
+    ~16:15 instruction and rendered without anyone writing down what it was
+    expected to buy — which is precisely the omission the file exists to prevent,
+    and it cost the strongest evidence this round could have produced: his
+    "slowly getting better" is the FIRST positive word recorded on this goblin at
+    any framing, and there is no committed prediction to test it against.
+  what_his_sentence_concedes_before_what_it_refuses: >-
+    THE SHOT SIZE WORKED. The previous beat-02 set
+    (`ep2-b02-goblin-staged-0811`) had no goblin in two frames and a head a few
+    pixels across in the one front-on frame — he could not have judged a
+    character in it. One token later he is judging the character. The size term
+    is settled and stays.
+  what_failed_is_the_spatial_relation_and_it_is_a_prompt_fault: >-
+    `authored_staged_med` said `dives behind a tiny sapling` with `his face
+    visible past its thin stem`. Neither clause says which body is in FRONT of
+    which: a still cannot show a dive, `behind` inside a verb phrase is a
+    direction of travel rather than a depth order, and `dives behind <object>` is
+    a contact reading — which is where "he grabs the sapling" comes from. He is
+    describing what the words asked for.
+  the_second_clause_is_a_set_property_and_v1_has_no_axis_for_it: >-
+    "character consistency needs more improvement as well" is drift in FEATURES
+    ACROSS SEEDS. This file's sixth scoring already recorded the finding (see
+    `ep2-b03-pickpage-founder-verdict-0811` and
+    `ep2-b15-goblin-simple-0811`): every axis A1-A7 scores ONE frame, and
+    cross-frame identity is a property of a SET. No adjective in the slot fixes
+    it, and the only route that ever held identity across seeds is the
+    IP-Adapter route he has now turned down twice.
+  model_action: >-
+    no_scoring_possible_prediction_missing. Standing consequence, and it is the
+    only thing this record earns: a sample queued off a founder instruction gets
+    its prediction WRITTEN AND COMMITTED BEFORE THE JOB IS ENQUEUED, not after
+    the frames land and never after he rules. The two rounds queued on this
+    sentence (`ep2-b02-goblin-occl-0811`,
+    `ep2-b04-goblin-field-0811`) carry predicates committed ahead of their
+    enqueue for that reason.
+
+- id: ep2-b04-goblin-close-founder-verdict-0811
+  date: 2026-08-11
+  subject: "node 002b beat 04 the-footnote — the founder's verdict on
+    `ep2-b04-goblin-close-0811` (four seeds, close-up, tags only, slot
+    `green skin`, drawn ~17:0x local), given ~18:40"
+  founder_verdict: |-
+    "for beat 4 its also not too bad but character consistency, and the background is a house."
+  founder_verdict_date: 2026-08-11
+  outcome: not_scoreable_no_prediction_was_written
+  miss_axis: >-
+    NONE — no predicate was on record for this job either, and it does not enter
+    the rolling rate. Same omission as the beat-02 record above and the same
+    cost: "not too bad" on a beat he called "not really good" three hours
+    earlier is a measurable improvement bought by SUBTRACTION (the IP-Adapter,
+    then `tusks`), and nothing was written down beforehand to be scored by it.
+  what_it_concedes: >-
+    The framing and the recipe are the part he did not object to. `close-up` +
+    `his face filling the frame` + tags-only + slot `green skin` all stay
+    untouched.
+  the_fault_is_an_omission_not_a_wrong_term: >-
+    Beat 04's `authored` draft names NO BACKGROUND AT ALL — `his face filling the
+    frame`, the held breath, then only light (`soft morning light`). Every pixel
+    behind the face is therefore the model's invention, and an anime close-up
+    prior fills that space with interior walls and windows. It is the only goblin
+    beat in the wave with no setting clause, and this is the THIRD time he has
+    named a house (beat 03 at ~16:15, "making the goblin in a house", and now
+    twice on this beat's family).
+  model_action: >-
+    no_scoring_possible_prediction_missing. Same standing consequence as the
+    beat-02 record: predictions are committed before the enqueue.
+
+# ── THE TWO ROUNDS HIS ~18:40 SENTENCES BUY. Both predictions below were written
+# and committed BEFORE either job was enqueued — the box's `ready` and `running`
+# were both EMPTY when these records were written (checked over ssh), no PNG for
+# either round exists, and the commit carrying these records is the one that
+# precedes the two `box_enqueue.py` calls. Both specs were authored by an earlier
+# lane on this task that died before enqueueing or recording anything; they are
+# REUSED here unmodified, not rewritten, and their drafts variants
+# (`authored_staged_med_occl`, `authored_field`) were already committed in
+# `pipeline/wave-drafts.yaml`. The character slot is FROZEN at the b15 recipe he
+# ratified — `green skin`, corrected count tag, nothing more — so the single
+# variable in both rounds is the STAGING, which is exactly the standing
+# consequence `ep2-b15-goblin-simple-0811` filed.
+- id: ep2-b02-goblin-occl-0811
+  date: 2026-08-11
+  kind: prediction
+  subject: "node 002b beat 02 the-sprint — ONE SAMPLE, four seeds, $0. The
+    staging line rewritten from an ACTION (`dives behind`) to an OCCLUSION IN
+    DEPTH ORDER: the thin stem in FRONT of him, his body half hidden behind it,
+    his face peeking around it. Answers his ~18:40 beat-02 sentence."
+  steward_provisional: true
+  pick: null
+  scores: {}
+  address_key: >-
+    Spec `pipeline/jobs/ep2-b02-goblin-occl-0811.yaml`, variant
+    `authored_staged_med_occl`, slot `green skin`, priority 44 (drains before
+    beat 04's 45; `box_runner.py` sorts priority ascending and takes one job at a
+    time — sequential, batch-of-4 banned). Four seeds, ~2 minutes, $0, local on
+    the rtx5090. Outputs to
+    `out-b02-occl\02-the-sprint-wave1-s0..3.png` with per-frame sidecars,
+    published to `farm-out/ep2-b02-goblin-occl/`.
+  the_one_variable: >-
+    The staging clause, and nothing else. Same beat, same four seeds, same steps
+    and guidance, same harness, same drafts file, same `medium shot`, same `from
+    front`, same style anchor, same `green skin` slot. `crouches` replaces
+    `dives` INSIDE that one variable and is stated plainly because it has a
+    cost: it trades the sprint's motion for a pose a still can hold. The joke he
+    is judging is the COVER, not the run. The field is anchored AFFIRMATIVELY in
+    the same clause (`in an open field`, replacing `rooted in the grass`) and
+    spends no negative budget — his beat-02 sentence names no setting fault and
+    this beat has never come back indoors.
+  predicted: >-
+    (1) OCCLUSION READS ON AT LEAST 2 OF 4 — the stem visibly crossing in front
+    of his body, part of him hidden behind it, not beside it and not gripping it.
+    Called at two rather than four on purpose: SDXL has no depth-order
+    supervision, a 40cm sapling stem is a few pixels wide, and the two previous
+    beat-02 rounds put the bodies side by side in every frame that had a body at
+    all. This is the predicate the round exists to test.
+    (2) THE FIELD HOLDS 4 OF 4 — an outdoor grassy field behind him in every
+    frame, no interior. Called at four because beat 02 has never once come back
+    indoors even while naming its setting only as `in the grass`, and this round
+    states it more strongly.
+    (3) THE b15-CONSISTENT GOBLIN, 4 OF 4 — the same creature he ratified at
+    ~15:45 ("yeah, that looks like the right goblin"), one goblin per frame,
+    green, simple rather than ornate, not female. Stated as the lane's third
+    predicate and flagged here as THE RISK OF THIS ROUND, because this file's own
+    sixth scoring says cross-seed identity is a property of a SET that no
+    single-frame axis measures, and his ~18:40 sentence says consistency "needs
+    more improvement" on the very recipe this round freezes. If it comes back at
+    2 or 3 of 4, the honest reading is that the frozen slot did not regress —
+    not that the prediction was cautious.
+  what_this_does_not_do: >-
+    It picks nothing, ranks nothing, promotes nothing, publishes nothing to the
+    site and spends nothing. It has NO `gate:` key and it clears nobody else's:
+    the fourteen `ep2-b*-goblin-wave1.yaml` specs and the twelve staged siblings
+    keep theirs. It writes to `out-b02-occl` so the frames his ~18:40 verdict
+    cites by path are not overwritten.
+  script_authority: >-
+    Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`,
+    `approved_on: 2026-08-03`, read from the leaf the render gate reads. Both
+    `approval_conditions` in his `approved_quote` are about beat 01's fig and
+    beat 16's leaf; neither touches beat 02's staging.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep2-b04-goblin-field-0811
+  date: 2026-08-11
+  kind: prediction
+  subject: "node 002b beat 04 the-footnote — ONE SAMPLE, four seeds, $0. The
+    background anchored where it can bind: `blurred open field behind him` in the
+    positive and `no house, no building, no indoors` lifted into the SDXL
+    negative. Answers his ~18:40 beat-04 sentence."
+  steward_provisional: true
+  pick: null
+  scores: {}
+  address_key: >-
+    Spec `pipeline/jobs/ep2-b04-goblin-field-0811.yaml`, variant
+    `authored_field`, slot `green skin`, priority 45 (follows beat 02's 44). Four
+    seeds, ~2 minutes, $0, local on the rtx5090. Outputs to
+    `out-b04-field\04-the-footnote-wave1-s0..3.png` with per-frame sidecars,
+    published to `farm-out/ep2-b04-goblin-field/`.
+  the_one_variable: >-
+    The background, in two halves because one half cannot work alone.
+    AFFIRMATIVE: `blurred open field behind him` — a close-up background is
+    out-of-focus by optics, so naming the blur asks for depth of field rather
+    than a second subject competing with his face. PROHIBITIVE: `no house, no
+    building, no indoors` appended to the draft's existing `No girl, no child`
+    comma-chain, which `sd_prompt._NEGATION` lifts into the SDXL negative as
+    beat-specific terms that `fit_negative` keeps ahead of the global defaults —
+    the only place a "no" binds on this checkpoint. `indoors` is the Danbooru tag
+    for what he is seeing. Nothing else moves: same close-up, same `his face
+    filling the frame`, same held-breath action word for word, same seeds, steps,
+    guidance and `green skin` slot. No IP-Adapter, no reference image.
+  predicted: >-
+    (1) THE FIELD BACKGROUND HOLDS 4 OF 4 — an outdoor field behind the face in
+    every frame, no walls, no window, no interior. Called at four because the
+    negative binds on SDXL where it did not on LTX at guidance 1.0, and because
+    the box's dry-run confirmed all three terms reach the sent negative verbatim
+    (`... girl, child, house, building, indoors, photorealism, ...`) with the
+    negative at 56/77 and no overflow at all, so nothing gets dropped under
+    budget pressure.
+    (2) THE FACE FILLS THE FRAME 4 OF 4 — this is the framing he part-approved
+    and it is unchanged, and it is written as a predicate here specifically
+    because of the standing pre-flight rule from `ep2-b15-goblin-simple-0811`: no
+    predicate about a FACE may be written without confirming the beat's own
+    drafts line guarantees one. Beat 04's does, twice (`his face filling the
+    frame`, `close-up`), and both survived the dry-run at 72/77.
+    (3) THE b15-CONSISTENT GOBLIN, 4 OF 4 — the ratified creature, one per frame,
+    green, simple, not female. Same predicate and the same stated risk as the
+    beat-02 round: his ~18:40 sentence names consistency as still wanting on this
+    exact frozen recipe, and no axis in v1 measures sameness across a set. This
+    is the predicate most likely to be scored a miss, and it is written at 4 of 4
+    rather than hedged because the round changes nothing about the character.
+  what_this_does_not_do: >-
+    Picks nothing, ranks nothing, publishes nothing, spends nothing, no `gate:`
+    key, clears no other spec's gate. Writes to `out-b04-field` so the
+    `out-b04-close` frames his verdict cites are not overwritten.
+  script_authority: >-
+    Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`,
+    `approved_on: 2026-08-03`, read from the leaf the render gate reads. Neither
+    `approval_condition` touches beat 04; node.md's direction for it is "Camera
+    close on the held breath."
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null

@@ -1,0 +1,225 @@
+# EPISODE 2, BEAT 02 THE SPRINT — THE OCCLUSION FIX. One sample, four seeds, $0.
+# 2026-08-11 ~18:40.
+#
+# WHY THIS ROUND EXISTS. Roman ruled on `ep2-b02-goblin-medium-0811` (the
+# medium-shot sample, four seeds, drawn ~17:0x today), verbatim: "goblin is
+# slowly getting better character consistency but in beat 2 it looks more like
+# he grabs the sapling or is just next to the sapling, not hiding behind it.
+# character consistency needs more improvement as well."
+#
+# READ WHAT THAT SENTENCE CONCEDES BEFORE READING WHAT IT REFUSES. The shot-size
+# fix WORKED. `ep2-b02-goblin-staged-0811` came back with no goblin in two frames
+# and a head a few pixels across in the one front-on frame — he could not have
+# judged a character in it. One token later (`wide shot` -> `medium shot`) he is
+# judging the character, and "slowly getting better" is the first positive word
+# recorded on this goblin at any framing. The size term is settled; it stays.
+#
+# WHAT FAILED IS THE SPATIAL RELATION, AND IT IS A PROMPT FAULT, NOT A MODEL ONE.
+# `authored_staged_med` said `dives behind a tiny sapling` and `his face visible
+# past its thin stem`. Both name the relation as an ACTION or an ABSTRACTION,
+# and neither says which body is in FRONT of which in the picture:
+#   * a still cannot show a dive, so `dives` gives the model a pose it must
+#     invent — and the poses it invents put the two bodies side by side;
+#   * `behind` inside a verb phrase is a direction of TRAVEL, not a depth order;
+#   * `dives behind <object>` is a contact reading, which is where "he grabs the
+#     sapling" comes from. He is describing exactly what the words asked for.
+#
+# THE ONE VARIABLE IS THE STAGING LINE. `--variant authored_staged_med_occl` is
+# `authored_staged_med` with the action clause rewritten as OCCLUSION IN DEPTH
+# ORDER — `crouches in an open field behind a tiny sapling, its thin stem in
+# front of him, half hidden behind the stem, his face peeking around it` — and
+# NOTHING else: same beat, same four seeds, same steps and guidance, same
+# harness, same `green skin` slot, same `medium shot`, same `from front`, same
+# style anchor. `crouches` for `dives` is inside that one variable and is stated
+# plainly because it has a cost: it trades the sprint's motion for a pose a still
+# can hold. The joke he is judging is the COVER, not the run.
+#
+# THE FIELD IS ANCHORED AFFIRMATIVELY AND SPENDS NO NEGATIVE BUDGET. `in an open
+# field` replaces `rooted in the grass`. His beat-02 sentence names no setting
+# fault — the house drift he flagged is on beats 03 and 04 — so this beat buys no
+# `no house` terms it does not need, and beat 02 has never come back indoors.
+#
+# CHARACTER CONSISTENCY IS NOT ADDRESSED HERE AND THAT IS DELIBERATE. His second
+# clause ("needs more improvement as well") is about drift in FEATURES ACROSS
+# SEEDS. No adjective fixes sameness — the ledger's own scoring says every axis
+# it has scores ONE frame — and the only route that ever held identity across
+# seeds is the IP-Adapter route he has now turned down twice. The slot stays at
+# `green skin`, the string he ratified at ~15:45 today, unchanged. One variable
+# per round, and this round's variable is the staging.
+#
+# MEASURED ON THE BOX, NOT GUESSED — AND THE FIRST DRAFT OF THIS PROMPT FAILED
+# THE MEASUREMENT. A longer occlusion sentence (`its thin stem crossing in front
+# of his chest, his shoulders hidden behind the stem, ...`) measured 79 tokens
+# and `compress()` DROPPED THE WHOLE STYLE SENTENCE to fit — `medium shot`, the
+# one term his part-approval rests on, plus the style anchor. The harness faulted
+# and drew nothing, for $0. The clause was shortened and re-measured. Final
+# dry-run on the box's real CLIP tokenizer, this exact beat, variant and slot:
+# DRY OK, 73/77 positive (4 headroom), STYLE ANCHOR PRESENT, `medium shot`
+# present, count tag `1boy` derives, `female goblin` survives the negative
+# budget, no faults. The negative's over-budget NEGWARN and its dropped quality
+# terms are byte-identical to `authored_staged_med`'s — pre-existing on this
+# beat's `full` fusion tier, not introduced here; verified by measuring both.
+# The box's wave-drafts.yaml was verified sha256-identical to the repo's
+# (47f9ace5b7815d58afde70bacfe0bd360156c20783b00fe144eb6d65e677990a) after the
+# edit and before this job was queued, and the harness REFUSES rather than
+# falling back if the key is missing, so a stale copy fails for $0 instead of
+# quietly re-rendering the old staging under a new job id.
+#
+# SEPARATE OUT DIRECTORY, DELIBERATELY. `out-staged` and `out-medium` hold the
+# frames other gates and this verdict cite by path, and the harness names files
+# from the beat slug. This writes to `out-b02-occl` so no evidence is overwritten.
+
+id: ep2-b02-goblin-occl-0811
+task: ep2-b02-goblin-occl-0811
+node: 002b-first-citizen
+beat: 2
+runner: box
+needs_gpu: true
+
+# 44 against beat 04's 45: box_runner.py:444 sorts priority ASCENDING (lower
+# first), so this pair drains in a defined order rather than by filename luck.
+# Sequential is the rule (CLAUDE.md, founder 2026-08-03); a batch of four is not
+# on the table and the runner takes one job at a time regardless.
+priority: 44
+max_attempts: 1
+owner: beat-02 occlusion lane, 2026-08-11 (his ~18:40 beat-02 sentence)
+
+# NO `gate:` KEY. One sample on a recipe he has ratified, varying the staging he
+# just named as the fault — which is what the one-sample rule permits without him
+# present. It clears NOBODY's gate: the fourteen `ep2-b*-goblin-wave1.yaml` specs
+# and the twelve staged siblings keep theirs.
+
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03` (read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, not copied from a
+  sibling spec). His `approved_quote` verbatim: "approve 002b except.. we need to make
+  SURE the fig growing on the sapling is mentioned, last time we generated 002b it just..
+  appeared. also, the sapling was able to flail a leaf in episode 1? why couldnt it do
+  that in 002b?" Both `approval_conditions` are about beat 01''s fig and beat 16''s leaf;
+  neither touches beat 02''s framing or staging. Beat 02 is THE SPRINT, the sprint/dive
+  to cover behind the sapling.'
+
+consumer: >-
+  Roman's next look, on the beat he ruled on at ~18:40 today. He asked to keep
+  going ("keep going, and try to train your own reavaluation") and named one
+  fixable cause: the goblin reads as next-to or grabbing the sapling rather than
+  hidden behind it. These four frames are the first beat-02 set whose prompt
+  states the depth order affirmatively. Whether they are good is R4's call; this
+  job produces candidates and ranks nothing.
+
+success: >-
+  Four PNGs at C:\banyan-farm\wave-goblin-prep\out-b02-occl\02-the-sprint-wave1-s0..3.png
+  with their .yaml provenance sidecars written at render time (7.2), all eight
+  declared as artifacts so a missing one fails rc=92 instead of passing quietly.
+  Whether the occlusion reads is the human's call at the contact sheet, not this
+  job's and not a metric's.
+
+why: >-
+  One variable against `ep2-b02-goblin-medium-0811`: the staging line, rewritten
+  from an action ("dives behind") to an occlusion in depth order ("its thin stem
+  in front of him, half hidden behind the stem, his face peeking around it").
+  Same beat, same seeds, same steps, same guidance, same drafts file, same
+  `green skin` slot, same `medium shot`. Any difference in these frames is that
+  clause.
+
+goblin_def: green skin
+goblin_def_source: >-
+  The founder, verbatim: "he is just a simple green goblin, nothing complex"
+  (2026-08-10 ~12:15, re-stated 2026-08-11), plus his verdict on the frames drawn
+  from it: "yeah, that looks like the right goblin" (2026-08-11 ~15:45, on
+  `ep2-b15-goblin-simple-0811`; ledger `ep2-b15-goblin-simple-founder-verdict-0811`).
+  `green skin` is the ONE attribute he named, and his ~18:40 beat-02 sentence
+  ("slowly getting better") does not reopen it. Unchanged here on purpose.
+
+est_minutes: 2
+needs:
+- cuda
+- vram20
+- farm-venv
+
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '2'
+  - --goblin-def
+  - green skin
+  - --variant
+  - authored_staged_med_occl
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '2'
+  - --goblin-def
+  - green skin
+  - --variant
+  - authored_staged_med_occl
+  - --out
+  - C:\banyan-farm\wave-goblin-prep\out-b02-occl
+  - --task
+  - ep2-b02-goblin-occl-0811
+
+# DURABILITY: every still this farm makes lands single-copy on a box nothing
+# backs up. The courier runs `git add -A -- farm-out` and pushes on job_done, and
+# farm-out is NOT gitignored, so publishing is a COPY and the runner stays
+# byte-identical. allow_fail: a failed copy must never mark a good render failed.
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b02-goblin-occl"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/wave-goblin-prep/out-b02-occl/02-the-sprint-wave1-s*.*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        # Hash the COPY, not the original: what this records has to be the bytes
+        # that get committed, or the manifest attests to the wrong file.
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+        print("   ", os.path.basename(f), h[:16])
+    # newline="\n" is load-bearing: Windows text mode rewrites \n to \r\n and
+    # every filename then carries a trailing \r that shasum -c cannot open.
+    with open(os.path.join(dst, "02-the-sprint-occl.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    # 4 stills + 4 sidecars. Fewer means the render wrote less than it promised.
+    raise SystemExit(0 if len(src) == 8 else 1)
+
+artifacts:
+- C:\banyan-farm\wave-goblin-prep\out-b02-occl\02-the-sprint-wave1-s0.png
+- C:\banyan-farm\wave-goblin-prep\out-b02-occl\02-the-sprint-wave1-s1.png
+- C:\banyan-farm\wave-goblin-prep\out-b02-occl\02-the-sprint-wave1-s2.png
+- C:\banyan-farm\wave-goblin-prep\out-b02-occl\02-the-sprint-wave1-s3.png
+- C:\banyan-farm\wave-goblin-prep\out-b02-occl\02-the-sprint-wave1-s0.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b02-occl\02-the-sprint-wave1-s1.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b02-occl\02-the-sprint-wave1-s2.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b02-occl\02-the-sprint-wave1-s3.yaml

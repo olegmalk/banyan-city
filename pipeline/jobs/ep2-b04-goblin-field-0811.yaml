@@ -1,0 +1,211 @@
+# EPISODE 2, BEAT 04 THE FOOTNOTE — THE BACKGROUND FIX. One sample, four seeds,
+# $0. 2026-08-11 ~18:40.
+#
+# WHY THIS ROUND EXISTS. Roman ruled on `ep2-b04-goblin-close-0811` (the ratified
+# tags-only recipe on the close-up beat, four seeds, drawn ~17:0x today),
+# verbatim: "for beat 4 its also not too bad but character consistency, and the
+# background is a house."
+#
+# READ WHAT IT CONCEDES FIRST. "not too bad" on a beat whose previous sheet he
+# called "not really good ... bad character consistency, makign the goblin look
+# too complicated" three hours earlier is a move in the right direction, and it
+# came from REMOVING things (the IP-Adapter, then `tusks`). The framing and the
+# recipe are the part he did not object to. Both stay, untouched.
+#
+# THE FAULT IS THE SETTING, AND IT IS AN OMISSION RATHER THAN A WRONG TERM. The
+# `authored` draft names NO BACKGROUND AT ALL: `his face filling the frame`, the
+# held breath, then only light (`soft morning light`). Every pixel behind the face
+# is therefore the model's invention, and an anime close-up prior fills that space
+# with interior walls and windows. This is the ONLY goblin beat in the wave with
+# no setting clause — beat 02 says `in the grass` and has never come back indoors
+# — and it is the same drift he flagged on beat 03 an hour earlier ("making the
+# goblin in a house"), which is the third time he has named a house.
+#
+# THE ONE VARIABLE IS THE BACKGROUND, IN TWO HALVES BECAUSE ONE HALF CANNOT WORK
+# ALONE. `--variant authored_field` is `authored` plus:
+#   * AFFIRMATIVE, in the positive: `blurred open field behind him`. A close-up
+#     background is out of focus by optics, so naming the blur asks for depth of
+#     field rather than for a second subject competing with his face.
+#   * PROHIBITIVE, in the negative, which is the only place a "no" means anything
+#     to SDXL: `no house, no building, no indoors`, appended to the draft's
+#     existing `No girl, no child` comma-chain. `sd_prompt._NEGATION` lifts each
+#     comma-terminated `no ...` out of the positive and `beat_negative` sends it
+#     as a BEAT-SPECIFIC term, which `fit_negative` keeps ahead of the global
+#     defaults when the budget tightens. `indoors` is the Danbooru tag for what he
+#     is seeing, which is what binds on an animagine checkpoint. Same chain form
+#     the beat-05 guards-ref draft uses.
+# Nothing else moves: same `green skin` slot, same `his face filling the frame`
+# and `close-up`, same held-breath action word for word, same seeds, steps,
+# guidance, harness and style anchor. No IP-Adapter, no reference image.
+#
+# CHARACTER CONSISTENCY IS NOT ADDRESSED HERE AND THAT IS DELIBERATE. His other
+# clause is drift in FEATURES ACROSS SEEDS. No adjective fixes sameness — the
+# ledger's own sixth-scoring finding is that cross-frame identity is a property of
+# a SET and every axis in the model scores one frame — and the only route that
+# ever held identity is the adapter he has turned down twice. One variable per
+# round, and this round's variable is the staging.
+#
+# MEASURED ON THE BOX, NOT GUESSED. Dry-run on the box's real CLIP tokenizer,
+# this exact beat, variant and slot string: DRY OK, 72/77 positive (5 headroom),
+# negative 56/77 with NO overflow at all, STYLE ANCHOR PRESENT, `close-up` and
+# `his face filling the frame` both present, count tag `1boy` derives from the
+# first comma-clause as the draft declares, `female goblin` survives, and — the
+# thing actually worth verifying — all three new terms reach the sent negative
+# verbatim: `... girl, child, house, building, indoors, photorealism, ...`. The
+# box's wave-drafts.yaml was verified sha256-identical to the repo's
+# (47f9ace5b7815d58afde70bacfe0bd360156c20783b00fe144eb6d65e677990a) after the
+# edit and before this job was queued, and the harness refuses rather than falling
+# back if the key is missing.
+#
+# SEPARATE OUT DIRECTORY, DELIBERATELY. `out-b04-close` holds the four frames
+# this verdict cites by path, and the harness names files from the beat slug.
+# This writes to `out-b04-field` so his evidence is not overwritten.
+
+id: ep2-b04-goblin-field-0811
+task: ep2-b04-goblin-field-0811
+node: 002b-first-citizen
+beat: 4
+runner: box
+needs_gpu: true
+
+# 45 against beat 02's 44: box_runner.py:444 sorts priority ASCENDING (lower
+# first), so beat 02 draws first and this follows it. Sequential is the rule
+# (CLAUDE.md, founder 2026-08-03); the runner takes one job at a time anyway.
+priority: 45
+max_attempts: 1
+owner: beat-04 background lane, 2026-08-11 (his ~18:40 beat-04 sentence)
+
+# NO `gate:` KEY. One sample on a recipe he has ratified, varying the staging he
+# just named as the fault. It clears NOBODY's gate: the fourteen
+# `ep2-b*-goblin-wave1.yaml` specs and the twelve staged siblings keep theirs.
+
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03` (read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, not copied from a
+  sibling spec). His `approved_quote` verbatim: "approve 002b except.. we need to make
+  SURE the fig growing on the sapling is mentioned, last time we generated 002b it just..
+  appeared. also, the sapling was able to flail a leaf in episode 1? why couldnt it do
+  that in 002b?" Both `approval_conditions` are about beat 01''s fig and beat 16''s leaf;
+  neither touches beat 04. Beat 04 is THE FOOTNOTE (0:16-0:22), the architect/footnote
+  joke, and node.md''s direction for it is "Camera close on the held breath."'
+
+consumer: >-
+  Roman's next look, on the beat he ruled on at ~18:40 today. He asked to keep
+  going ("keep going, and try to train your own reavaluation") and named one
+  fixable cause in four words: the background is a house. These four frames are
+  the first beat-04 set whose prompt states a setting at all. Whether they are
+  good is R4's call; this job produces candidates and ranks nothing.
+
+success: >-
+  Four PNGs at C:\banyan-farm\wave-goblin-prep\out-b04-field\04-the-footnote-wave1-s0..3.png
+  with their .yaml provenance sidecars written at render time (7.2), all eight
+  declared as artifacts so a missing one fails rc=92 instead of passing quietly.
+
+why: >-
+  One variable against `ep2-b04-goblin-close-0811`: the background, added in the
+  two places it can bind — `blurred open field behind him` in the positive and
+  `no house, no building, no indoors` lifted into the SDXL negative. Same beat,
+  same seeds, same steps, same guidance, same drafts file, same `green skin`
+  slot, same close-up framing. Any difference in these frames is that clause.
+
+goblin_def: green skin
+goblin_def_source: >-
+  The founder, verbatim: "he is just a simple green goblin, nothing complex"
+  (2026-08-10 ~12:15, re-stated 2026-08-11), plus his verdict on the frames drawn
+  from it: "yeah, that looks like the right goblin" (2026-08-11 ~15:45, on
+  `ep2-b15-goblin-simple-0811`; ledger `ep2-b15-goblin-simple-founder-verdict-0811`).
+  `green skin` is the ONE attribute he named. His ~18:40 beat-04 sentence asks for
+  better consistency, not a different goblin, so the slot is unchanged here.
+
+est_minutes: 2
+needs:
+- cuda
+- vram20
+- farm-venv
+
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '4'
+  - --goblin-def
+  - green skin
+  - --variant
+  - authored_field
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '4'
+  - --goblin-def
+  - green skin
+  - --variant
+  - authored_field
+  - --out
+  - C:\banyan-farm\wave-goblin-prep\out-b04-field
+  - --task
+  - ep2-b04-goblin-field-0811
+
+# DURABILITY: every still this farm makes lands single-copy on a box nothing
+# backs up. The courier runs `git add -A -- farm-out` and pushes on job_done, and
+# farm-out is NOT gitignored, so publishing is a COPY and the runner stays
+# byte-identical. allow_fail: a failed copy must never mark a good render failed.
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b04-goblin-field"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/wave-goblin-prep/out-b04-field/04-the-footnote-wave1-s*.*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        # Hash the COPY, not the original: what this records has to be the bytes
+        # that get committed, or the manifest attests to the wrong file.
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+        print("   ", os.path.basename(f), h[:16])
+    # newline="\n" is load-bearing: Windows text mode rewrites \n to \r\n and
+    # every filename then carries a trailing \r that shasum -c cannot open.
+    with open(os.path.join(dst, "04-the-footnote-field.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    # 4 stills + 4 sidecars. Fewer means the render wrote less than it promised.
+    raise SystemExit(0 if len(src) == 8 else 1)
+
+artifacts:
+- C:\banyan-farm\wave-goblin-prep\out-b04-field\04-the-footnote-wave1-s0.png
+- C:\banyan-farm\wave-goblin-prep\out-b04-field\04-the-footnote-wave1-s1.png
+- C:\banyan-farm\wave-goblin-prep\out-b04-field\04-the-footnote-wave1-s2.png
+- C:\banyan-farm\wave-goblin-prep\out-b04-field\04-the-footnote-wave1-s3.png
+- C:\banyan-farm\wave-goblin-prep\out-b04-field\04-the-footnote-wave1-s0.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b04-field\04-the-footnote-wave1-s1.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b04-field\04-the-footnote-wave1-s2.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b04-field\04-the-footnote-wave1-s3.yaml
