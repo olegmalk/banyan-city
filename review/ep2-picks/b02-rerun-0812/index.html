@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beat 02 — the rerun you asked for, and why you had not seen it</title>
+<style>
+  :root {
+    --bg: #17181a; --panel: #1f2124; --line: #33363b;
+    --ink: #eceef1; --muted: #9aa0a8; --accent: #c8b273;
+    --pass: #7fd68b; --fail: #e08b8b;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+         padding: 0 24px 96px; }
+  .wrap { max-width: 1020px; margin: 0 auto; }
+  header.top { padding: 40px 0 20px; border-bottom: 1px solid var(--line); }
+  header.top h1 { margin: 0 0 6px; font-size: 27px; letter-spacing: -0.01em; font-weight: 650; }
+  header.top .sub { color: var(--muted); font-size: 14.5px; margin: 0; max-width: 78ch; }
+  h2 { font-size: 18px; margin: 40px 0 6px; font-weight: 650; }
+  p { max-width: 78ch; }
+  .callout { margin: 22px 0 0; padding: 16px 20px; background: var(--panel);
+             border: 1px solid var(--line); border-left: 3px solid var(--accent);
+             border-radius: 5px; }
+  .callout p { margin: 0 0 10px; }
+  .callout p:last-child { margin-bottom: 0; }
+  blockquote { margin: 0 0 16px; padding: 6px 0 6px 16px;
+               border-left: 3px solid var(--line); color: #cdd2d8; }
+  img { width: 100%; height: auto; border: 1px solid var(--line); border-radius: 5px;
+        display: block; margin: 10px 0 6px; }
+  figcaption { color: var(--muted); font-size: 13.5px; margin: 0 0 8px; }
+  table { border-collapse: collapse; width: 100%; margin: 10px 0 18px; font-size: 14.5px; }
+  th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--line);
+           vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; }
+  td.n { white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .ok { color: var(--pass); } .bad { color: var(--fail); }
+  code { font-size: 13px; background: #232629; padding: 1px 5px; border-radius: 3px; }
+  .meta { color: var(--muted); font-size: 13px; margin-top: 34px;
+          border-top: 1px solid var(--line); padding-top: 14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>Beat 02 — the rerun already ran, and it fixed all three faults</h1>
+  <p class="sub">12 August 2026 · the character-consistency lane · $0, local GPU, nothing spent.
+  Frames hash-verified against the box manifest before anything below was written.</p>
+</header>
+
+<div class="callout">
+  <p><strong>The short version.</strong> You said beat 02 needs a new still before motion can
+  touch it — fangs, a dog-shaped creature, two-to-four duplicated goblins. The rerun that fixes
+  exactly those three things <em>had already rendered</em> when you wrote that. It finished at
+  16:49 and its contact sheet was baked and committed at 17:04. Nobody ever put it on a page.</p>
+  <p>So the beat-02 “After” you have been looking at on the consistency page is still the
+  <em>old</em> failing round. The frames below are the new ones. <strong>No GPU was spent to
+  produce this page</strong> — the render existed; the link did not.</p>
+</div>
+
+<h2>What you were looking at</h2>
+
+<blockquote>“Beat 02 needs a new still before motion can touch it — it is the one beat whose
+CHARACTER fails in the frame itself (fangs, a dog-shaped creature, two-to-four duplicated
+goblins), so naming scenery cannot rescue it.”</blockquote>
+
+<p>You are right about that sheet, and the reason is in the words it was drawn from. The old
+round sent this prompt:</p>
+
+<p><code>1boy, a small goblin boy, green skin, tusks, solo, sprints in panic and dives behind a
+tiny 40cm mascot-simple sapling standing tall, dust kicking up from the grass. Static camera,
+wide shot, …</code></p>
+
+<p>Every fault you named has its own word in there. <strong>The fangs were asked for</strong> —
+the goblin slot literally said <code>tusks</code>. <strong>The dog shape was asked for</strong> —
+“sprints … and dives … dust kicking up from the grass” describes a low four-limbed lunge, and
+“wide shot” shrinks the figure until the model resolves that lunge as an animal. <strong>The
+duplication was asked for</strong> twice over: two sequential verbs in one still (“sprints
+<em>and</em> dives”) is a standing instruction to draw the subject twice, and the reference crops
+that round used still had neighbouring heads in their corners, which came back as extra
+creatures. The model drew what the sentence said.</p>
+
+<h2>What the rerun changed</h2>
+
+<p>Three things, together, on purpose — this round re-establishes the baseline rather than
+testing one hypothesis:</p>
+
+<table>
+  <tr><th>Was</th><th>Now</th></tr>
+  <tr><td><code>green skin, tusks</code></td><td><code>green skin, bald head</code> — your frozen definition. The tusk contest is simply not in the prompt.</td></tr>
+  <tr><td>“sprints in panic and dives … wide shot”</td><td>one action, one posture: cowering behind the stem, hands to his chest, face peeking around it</td></tr>
+  <tr><td>raw sheet crops with neighbours in frame</td><td>the approved reference, cut by connectivity so nothing but the one figure is in the picture</td></tr>
+</table>
+
+<h2>The frames</h2>
+
+<img src="/review/ep2-picks/sheets/b02-rerun-0812.jpg"
+     alt="Beat 02 rerun, eight distinct frames: one bald green goblin per frame, no fangs, upright, in a green patched coat">
+<figcaption>Job <code>ep2-b02-train-r1-0812</code>. All 32 files (16 PNGs + 16 sidecars) verified
+against the box’s own sha256 manifest before scoring.</figcaption>
+
+<h2>Scored against what you named — full denominators</h2>
+
+<table>
+  <tr><th>What you named</th><th>Old round</th><th class="n">This round</th></tr>
+  <tr><td>Fangs / tusks</td><td>in most frames</td><td class="n ok">0 of 16 — none anywhere</td></tr>
+  <tr><td>A dog-shaped creature</td><td>present</td><td class="n ok">0 of 16 — every frame is upright and bipedal</td></tr>
+  <tr><td>Two-to-four duplicated goblins</td><td>up to four in one frame</td><td class="n ok">0 of 16 — exactly one figure per frame</td></tr>
+  <tr><td>Green skin</td><td>varies</td><td class="n ok">16 of 16</td></tr>
+  <tr><td>Bald</td><td>varies</td><td class="n ok">16 of 16</td></tr>
+  <tr><td>The patched coat</td><td>hoodie, shirt, tunic, jacket</td><td class="n ok">16 of 16, and it is recognisably one costume</td></tr>
+  <tr><td>Eyes readable</td><td>—</td><td class="n bad">14 of 16 — one frame and its twin render the eyes as black voids</td></tr>
+  <tr><td>Clean enough to hand to the motion stage</td><td>0</td><td class="n ok">10 of 16</td></tr>
+</table>
+
+<p><strong>Why 16 cells are only 8 pictures.</strong> The references directory held four slots but
+only two distinct images, so each render happened twice. The sheet labels every twin. Counting
+distinct pictures instead: 8 rendered, 5 clean, 1 unusable, 2 with blobby hands at the sides.
+This is a known defect in the round axis and it is reported, not hidden — it means roughly half
+this job’s GPU time drew duplicates.</p>
+
+<h2>What is still not in these frames, and why that is now fine</h2>
+
+<p>There is no sprint, no dive, no sapling and no field — these are standing portraits on a plain
+ground. That was the wall this beat sat behind until you took it down yourself on 12 August:</p>
+
+<blockquote>“my answer to ‘is a consistent goblin standing still a usable base?’ is yes.”</blockquote>
+
+<p>The motion stage owns the action, and on this week’s evidence it owns the scenery too: every
+object named in a motion prompt has arrived, 7 for 7 — a sapling twice, two figs, beat 03’s tree,
+beat 13’s sapling-and-shade, and a whole described landscape on beat 17. Beat 02’s sprint and its
+sapling are things to <em>name in the clip prompt</em>, not things to keep re-rendering stills for.</p>
+
+<h2>The one thing waiting on you</h2>
+
+<p>Which frame becomes the init. The mechanical read says five are defect-free and the steward’s
+suggestion is <strong>refB · seed s1</strong> (<code>02-the-sprint-ipa-r2-w015-s1.png</code>,
+sha <code>404f5356…</code>) — hands already to his chest, clean face, red eyes, and a sapling
+sprig in frame to build on. <strong>refB · seed s0</strong> (sha <code>74f8d8e8…</code>) is the
+same pose without the sprig. That is a taste call and it is yours; the counting above is not.</p>
+
+<div class="callout">
+  <p><strong>The process fault, written down rather than quietly fixed.</strong> A render that
+  answers a founder’s complaint is not delivered when it lands on a branch, and not when its
+  contact sheet is committed. It is delivered when it is on a page he opens. This one passed both
+  earlier bars and failed the last one, and the cost was a verdict of “rerun” against work that
+  had already been done.</p>
+</div>
+
+<p class="meta">Job <code>ep2-b02-train-r1-0812</code>, rc 0, 2026-08-12T12:46–12:49Z, rtx5090.
+Model <code>cagliostrolab/animagine-xl-3.1</code>, IP-Adapter Plus (SDXL, ViT-H), scale 0.6,
+15% timestep window, 40 steps, guidance 7.5, 832×1216, seeds 20260721 + n·1000.
+Prompts from <code>pipeline/wave-drafts.yaml</code> key
+<code>authored_staged_med_occl_hide_r2</code>; <code>shots.md</code> untouched.
+$0 — local GPU, no provider. These frames carry no verdict.</p>
+
+</div>
+</body>
+</html>

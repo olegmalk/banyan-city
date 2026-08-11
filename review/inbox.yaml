@@ -121,3 +121,12 @@
   since: '2026-08-12'
   kind: decision
   verdict_hint: fine / keep him larger in frame even if the world shrinks
+- what: 'Beat 02 - the rerun you asked for had ALREADY RENDERED when you called it broken; it was never
+    put on a page. Fangs, the dog-shaped creature and the duplicated goblins are all gone (0 of 16 each),
+    and the old prompt turns out to have literally asked for each of them. Pick the frame that becomes
+    the init'
+  url: /review/ep2-picks/b02-rerun-0812
+  since: '2026-08-12'
+  kind: sheet
+  verdict_hint: 'refB s1 (sprig in frame) / refB s0 (same pose, no sprig) / another cell / none of them
+    because X'
