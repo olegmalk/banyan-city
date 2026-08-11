@@ -14252,3 +14252,42 @@
     sidecars, and writing the true ones costs 8 licence violations" — which is a decision for him and
     not a task for a lane.
   outcome: null
+
+- id: ep2-seed-pair-batch-0812-scored
+  kind: scoring
+  date: 2026-08-12
+  scores: nine seed-B variants plus the b12/b18/b21 first motions. 12 clips, all hash-verified
+    against the box before any was watched.
+  the_headline: >-
+    THE SEED TEST EARNED ITS RENDERS. Four beats AGREED across seeds (12, 13, 14, 15) — those
+    recipes are stable. FIVE DIVERGED (03, 17, 18, 19, 21) — those were never solved, they
+    were one good roll each, and nobody would have known from a single take. That is exactly
+    the question the variants were queued to answer and the answer is uncomfortable.
+  what_diverged_beat_by_beat: >-
+    b03 — the sapling becomes a bare pole and the palette goes grey-green. b17 — a warm
+    daylight meadow becomes a dark dusk with bare twigs. b18 — the fig darkens and spots in
+    one seed, stays bright in the other. b19 — one sapling becomes a ROW of saplings and the
+    grade goes teal. b21 — the leaf tilts cleanly in one seed and goes near-black with barely
+    a tilt in the other.
+  the_pattern_with_its_denominator_and_its_counterexample: >-
+    Three of the four STABLE beats name the plant in the prompt; the fourth (b14) has no plant
+    in it at all. Four of the five DIVERGENT beats never name it — and the PLANT is precisely
+    what changes between their seeds. Unspecified properties float: the contents law again.
+    THE COUNTEREXAMPLE IS BEAT 19, which names both plant and time and diverged anyway. So
+    this is a suggestive pattern, NOT a law, and b19 is deliberately excluded from the fix
+    round rather than bundled in to make the story tidy.
+  one_divergence_was_not_a_hypothesis_at_all: >-
+    Beat 17's prompt contains FOUR CONFLICTING TIME WORDS AT ONCE — morning, afternoon, noon
+    and amber. I built it by layering an environment paragraph onto a base prompt and never
+    re-read the result, so the model has been picking a time of day for me every run and with
+    a new seed it picked differently. Not model instability; an incoherent instruction that
+    resolved pleasantly the first time. Fixed to the one time its own fence asks for.
+  and_i_nearly_shipped_a_broken_fix: >-
+    While stripping the extra time words I ran a blind substring replace of "noon" and turned
+    "afternoon" into "after". Caught it by re-reading the generated prompt instead of trusting
+    my own script. Word-boundary checks now, and the same lesson as everything else today:
+    read the artifact, not the intention.
+  queued: >-
+    Eight jobs — four stability fixes, each WITH ITS OWN SEED TWIN, because a fix that only
+    works at one seed has fixed nothing.
+  outcome: null

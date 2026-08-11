@@ -167,10 +167,10 @@
   kind: clip
   verdict_hint: push it broader (one more job, then the same recipe to beats 06 and 07) / it still reads
     wrong, which makes it a casting question and yours
-- what: EPISODE 2 AUDIT - all 21 beats ranked (your 'do a lot of your own evaluation'). 5 look shippable
-    (13, 17, 03, 14, 15), 3 have a known fix, and THE GUARD RULING UNBLOCKS SIX BEATS at once (05/06/07
-    plus 09/10/11, which are also guard beats) - more than a quarter of the episode on one decision. Beats
-    12/18/21 have no character in them at all and just need starting frames
+- what: EPISODE 2 AUDIT + SEED TEST - all 21 beats ranked, and half the good-looking beats turned out
+    to be LUCK. Second seeds show 12/13/14/15 stable but 03/17/18/19/21 diverge (the plant or the light
+    changes). Fixes rendering. THE GUARD RULING STILL UNBLOCKS SIX BEATS at once and is the biggest thing
+    waiting on you
   url: /review/ep2-picks/motion-0812#where-ep2-stands
   since: '2026-08-12'
   kind: decision
@@ -183,34 +183,34 @@
   kind: decision
   verdict_hint: have the stills lane make these three / leave them
 - what: 'EPISODE 1 AUDIT + a rebuilt cut (v42). Two things were wrong with every cut you have screened:
-    the title card said BANYAN CITY (your Sapling ruling landed a day after the last build) and your
-    beat-06 zoom-out was rendered but never wired in - the cut still carried the push-in you refused.
-    Both fixed. Looping is down from three beats to one (beat 02, your own pick). Beats 01, 11 and 13
-    have never had a verdict of any kind'
+    the title card said BANYAN CITY (your Sapling ruling landed a day after the last build) and your beat-06
+    zoom-out was rendered but never wired in - the cut still carried the push-in you refused. Both fixed.
+    Looping is down from three beats to one (beat 02, your own pick). Beats 01, 11 and 13 have never had
+    a verdict of any kind'
   url: /review/ep1-audit-0812
   since: '2026-08-12'
   kind: clip
-  verdict_hint: watch v42 (repo file review/tonight/EP1-PROVISIONAL-v42-bench.mp4 - the licence gate
-    will not let it onto the site yet) - beat 06 in context, and 01/11/13 which have never been judged;
-    then the four questions on the page (beat 02's loop, beat 05's sapling reveal, beat 07's trim)
+  verdict_hint: watch v42 (repo file review/tonight/EP1-PROVISIONAL-v42-bench.mp4 - the licence gate will
+    not let it onto the site yet) - beat 06 in context, and 01/11/13 which have never been judged; then
+    the four questions on the page (beat 02's loop, beat 05's sapling reveal, beat 07's trim)
 - what: 'Episode 1 cannot be PUBLISHED yet regardless of taste, and it is not about the edit: the stills
     under beats 06, 09, 12 and 15 are refused by the licence gate (CreativeML Open RAIL++-M never cleared
-    for redistribution - the standing D15 debt). Separately, 0 of 29 approved stills carry provenance any
-    tool can read; it exists only as prose in a README'
+    for redistribution - the standing D15 debt). Separately, 0 of 29 approved stills carry provenance
+    any tool can read; it exists only as prose in a README'
   url: /review/ep1-audit-0812
   since: '2026-08-12'
   kind: decision
   verdict_hint: clear D15 by narrowing what we offer reusers / replace the four stills / accept episode
     1 stays screening-only for now
-  note_added_2026-08-12: 'These two are ONE decision, not two. I tried to fix the provenance and the
-    build went red: attaching the 8 truthful sidecars that CAN be attached raised measured licence debt
-    from 25 to 33, because those stills were only passing the gate while nothing could read what drew
-    them. Settle the licence first and the provenance repair is one scripted pass; do it the other way
-    round and CI stops the site.'
+  note_added_2026-08-12: 'These two are ONE decision, not two. I tried to fix the provenance and the build
+    went red: attaching the 8 truthful sidecars that CAN be attached raised measured licence debt from
+    25 to 33, because those stills were only passing the gate while nothing could read what drew them.
+    Settle the licence first and the provenance repair is one scripted pass; do it the other way round
+    and CI stops the site.'
 - what: 'Beat 12 (two leaves against the sky) has a PASSING plate you have never been shown - b12-r4-s2.
     Its round-4 fix worked: the pink ripe fruit that got round 3 rejected is gone in 4 of 4, so is the
-    face on it and the city skyline. What it does not do is show TWO leaves, and the leaves are long
-    and pointed where our sapling has broad round ones. Beats 18 and 21 failed and are re-rendering'
+    face on it and the city skyline. What it does not do is show TWO leaves, and the leaves are long and
+    pointed where our sapling has broad round ones. Beats 18 and 21 failed and are re-rendering'
   url: /review/ep2-picks/sheets/plates-round2-0812.jpg
   since: '2026-08-12'
   kind: sheet
@@ -219,9 +219,8 @@
 - what: 'The other two plate beats are fixed and handed to motion. Beat 21 went from 0 of 4 to 4 of 4
     (the leaf is attached to a stem now - nothing had ever said it was). Beat 18''s fruit no longer has
     a FACE and is no longer doubled, 4 of 4, though two seeds now draw a leaf instead of a fig because
-    I over-corrected one word. Picks: b18 s3, b21 s0. One shared question underneath all three: our
-    sapling''s LEAF SHAPE is pinned nowhere, so every plant beat draws pointed leaves where ours are
-    broad and round'
+    I over-corrected one word. Picks: b18 s3, b21 s0. One shared question underneath all three: our sapling''s
+    LEAF SHAPE is pinned nowhere, so every plant beat draws pointed leaves where ours are broad and round'
   url: /review/ep2-picks/sheets/plates-round2-0812.jpg
   since: '2026-08-12'
   kind: sheet
