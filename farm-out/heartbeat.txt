@@ -466,3 +466,4 @@
 15:03:10Z DONE task=ep2-b04-goblin-field-0811-1786460465 rc=0 artifacts=8
 15:04:16Z box-runner idle ready=0 failed=1
 15:14:19Z box-runner idle ready=0 failed=1
+15:18:17Z STARTED task=ep2-b04-goblin-fieldbright-0811-1786461487 attempt=1 on box-runner
