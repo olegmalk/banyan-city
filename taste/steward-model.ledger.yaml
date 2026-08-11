@@ -13917,3 +13917,32 @@
     decision in front of him. The instruction to queue was reasonable and came from my own
     bad table; the table was the thing to check.
   outcome: null
+
+- id: ep2-placement-pair-0812-scored
+  kind: scoring
+  date: 2026-08-12
+  scores: ep2-b19-place-0812 and ep2-b20-place-0812
+  verdict: BOTH HIT. Stating an object's position controls where it lands.
+  observed: >-
+    b19 — the sapling is rooted in the grass beside him, clearly separate from his body, and
+    THE SPROUT GROWING OUT OF HIS HEAD IS ENTIRELY GONE. b20 — the antler-branch arching over
+    his head is GONE; the sapling stands upright and rooted to his right, and the chest-height
+    hold from the previous round survived untouched. Neither needed a new mechanism: both were
+    fixed by saying, in the same concrete near-field language, which side the thing is on,
+    that it is rooted in the ground, and that it is not on him.
+  what_it_closes: >-
+    Position was the last untested property of the contents law and it behaves like all the
+    others. The count is now ELEVEN for eleven on named contents — objects, plants, a
+    landscape, and now placement — against zero for one on instructions aimed at the camera
+    rather than at the frame. The two "odd artefacts" were never artefacts; they were two
+    beats where I named a thing and never said where it goes.
+  and_i_over_corrected_on_b19: >-
+    I wrote that the fig hangs "out over the grass to his left" and it obeyed exactly: the fig
+    now falls to his LEFT AND MISSES HIM. Beat 19 is "the fig falls, BOUNCES OFF HIS HEAD" —
+    the bounce is the beat, and the previous round had it. Not a defect in the lever, a bad
+    aim with it: I said "away from him" where the beat needs "trunk away, branch above".
+    ep2-b19-overhead-0812 queued, one clause: trunk still rooted to his left and not touching
+    him, one branch reaching sideways to extend DIRECTLY ABOVE HIS HEAD with the fig at its
+    end. Falsifier named — the head sprout returning the moment anything is placed above him
+    would mean above-him and on-him are not separable.
+  outcome: null
