@@ -1638,6 +1638,52 @@ beats:
     tag: 1boy
     extra_neg: full
     gist: evidence
+    # -- `authored_b20_refresh` -- 2026-08-12 ~00:4x, the beats 14-20 lane.
+    # `review/ep2-picks/wave-0811/b20-s0..s3.jpg`, all four opened before the fix
+    # was written:
+    #  * FOUR OF FOUR HAVE GLOWING ORANGE-RED EYES. Not one exception. This is
+    #    the cleanest single observation in the whole lane.
+    #  * FOUR OF FOUR ARE DARK. s0 and s1 are dusk skies with red cloud and bare
+    #    dead branches; s2 is a near-black void lit from below; s3 is dark behind
+    #    a burning disc.
+    #  * THE FIG IS NOT A FIG IN ANY OF THEM. It is a glowing dark orb cupped in
+    #    both hands (s2), a glowing orange orb (s3), a stack of green blobs with
+    #    an eye on top (s1), and a small dark lump held to his chin (s0). Between
+    #    the underlight, the cupped hands and the orb, three of four read as a
+    #    ritual, which is the opposite of the beat: the line is a whisper, "...Did
+    #    you just answer me?", over a piece of fruit.
+    # NOTED AND DELIBERATELY NOT ACTED ON: three of four give him a full head of
+    # hair (white, brown, black) where the ratified character is bald. The
+    # {{GOBLIN}} slot is frozen at `green skin` -- the one attribute he named --
+    # and this lane does not touch it. Recorded here so the next round that is
+    # allowed to change the character knows it was seen.
+    # NO SAPLING CLAUSE, DELIBERATELY: `authored_staged` exists for exactly that
+    # (it names the sapling this draft leaves as "a bare branch above") and its
+    # own note records the cost -- `tiny`/`sapling` trip _SMALL and pull in the
+    # eight-term scale block. This round changes light, eyes and the fig, which
+    # are the three faults the frames actually show, so the two can be read apart.
+    # NO `bright morning light`: staging says `Warm amber afternoon light`. The
+    # dark block rides WHOLE and this is its best-evidenced use in the lane --
+    # 4/4 dark -- and `no dusk, no sunset` sharpen the afternoon the positive
+    # already affirms rather than fighting it.
+    # MEASURED: positive 67/77, anchor present, `1boy` derives, negative recipe
+    # 75 -> sent 75 with every added term reaching the model and NOTHING dropped
+    # but quality boilerplate (realistic skin texture, jpeg artifacts, deformed,
+    # extra limbs, blurry, low quality, signature, watermark, abstract, 3d
+    # render). No scale block on this beat, because `authored` never says `tiny`
+    # or `sapling`, which is why there is room here that beats 15 and 19 did not
+    # have. THE LOSS WORTH NAMING is `extra limbs` on a shot whose subject is two
+    # hands holding one small object: if the hands come back broken, that is the
+    # first term to buy back and `no glowing orb` is what would pay for it.
+    authored_b20_refresh: >-
+      A small goblin boy, {{GOBLIN}}, solo, in a sunny grassy field, raises a
+      ripe fig in both hands in front of him like evidence, huge eyes widening
+      as he looks up at a bare branch above. Warm amber afternoon light,
+      cinematic lighting, detailed, newest, masterpiece, best quality, very
+      aesthetic No girl, no child, no glowing eyes, no glowing orb, no dark, no
+      night, no dusk, no sunset, no dim lighting, no moody lighting, no low
+      key, no shadows dominant. No photorealism, no 3D render look. 9:16
+      vertical, no text.
     authored: >-
       A small goblin boy, {{GOBLIN}}, solo, raises a fig in both hands in
       front of him like evidence, huge eyes widening as he looks up at a bare

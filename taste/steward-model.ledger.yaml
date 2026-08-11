@@ -9080,3 +9080,36 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+- id: ep2-b20-refresh-0811
+  kind: prediction
+  written: 2026-08-12 ~00:5x, before enqueue; predicates fixed before any frame of
+    this round existed. The dry run passed on the box first (positive 67/77,
+    anchor intact, negative recipe 75 -> sent 75 with no beat term dropped) and
+    the dry step draws nothing.
+  round: ep2-b20-refresh-0811, beat 20 EVIDENCE, variant authored_b20_refresh,
+    4 stills, SDXL animagine-xl-3.1, node 002b-first-citizen.
+  what_changed: staging kept verbatim from the wave-1 authored draft (raises the
+    fig in both hands like evidence, huge eyes widening, looking up at a bare
+    branch above, warm amber afternoon light); added `no glowing eyes` for the
+    fault that was 4 of 4, `no glowing orb` plus `a ripe fig` for the ritual orb
+    three frames drew instead of fruit, beat 04's eight-term dark ban whole for
+    the darkness in 4 of 4, and `in a sunny grassy field` early for the two frames
+    with no setting. NO `bright morning light` - the staging says amber afternoon.
+    No sapling clause - that variable lives in `authored_staged` and sending both
+    at once would make these frames unreadable as evidence. The frozen goblin slot
+    was not touched, including the observed hair drift in 3 of 4.
+  predicates:
+    - no glowing eyes, in 4/4 - the fault was 4/4 and this is the round's main claim
+    - the held object reading as a piece of fruit rather than a glowing orb or a
+      blob, in >=2/4
+    - daylight rather than dusk, night or a black void, in >=3/4
+    - a field, grass or sky setting rather than an empty void, in >=3/4
+    - two hands, correctly formed, holding one object, in >=3/4 - `extra limbs`
+      was dropped from the negative to make room and this is the exposure
+  consumer: the founder's morning review page.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
