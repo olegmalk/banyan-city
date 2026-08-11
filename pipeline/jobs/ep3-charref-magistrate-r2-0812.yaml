@@ -1,0 +1,163 @@
+# CHARACTER REFERENCE — MAGISTRATE. ONE SAMPLE, four seeds, $0.
+#
+# WHY THIS EXISTS BEFORE ANY OF ITS BEATS. The founder's standing consistency
+# mandate is "we need to setup character consistency even if they only appear
+# once", and his own precedent on the guards was that no guard beat fires until
+# a guard reference exists and he has seen it. The magistrate has never been
+# drawn. So this is a reference sheet for his eye, not a beat, and no beat that
+# needs this character may be queued until he points at a frame.
+#
+# THE WORDING IS THE SCRIPT'S OWN. Substance is lifted from the node's own
+# continuity block rather than invented, because character appearance is
+# R4-adjacent and D22 delegated the SCRIPT read, not character design. What is
+# on offer here is four candidates; which one is the character is his.
+#
+# SHAPE IS THE GUARD SHEET'S, which held 4/4 — a single figure facing camera in
+# a lit field, face clearly visible, medium shot. Not `multiple views`: the
+# research found `reference sheet, multiple views, turnaround` are the tokens
+# with weight, but the guards fork then measured that asking for ONE figure
+# deliberately was what actually held.
+#
+# --beat 16 is cosmetic (filename and seed naming) EXCEPT for its count tag,
+# which is checked against the beat block's declaration: this draft declares
+# `1girl`.
+#
+#
+# ROUND 2 — r1 FAILED CLEAN AT THE DRY STEP, rc=4, zero GPU. The harness
+# refused: "carries no {{GOBLIN}} marker, so the founder's definition would
+# have nowhere to go and this render would test nothing about the goblin."
+# That check is right and I had routed around its intent: a character sheet for
+# someone who is NOT the goblin has no goblin slot by design. The harness
+# already exempts beats whose `kind` is `guard`, which is exactly how the
+# authored_b05_sheet_* guard sheets rendered two arbitrary bureaucrats. So this
+# variant moved to beat 16 (kind=guard), and the frames come out named
+# 16-charref-magistrate-*.
+#
+# $0 — local GPU, no provider, nothing published, nothing promoted (D15).
+#
+# THIS ONE ALSO TESTS A NEW COUNT TAG. She is `she` in 006a and every existing
+# beat block declares '', '1boy' or '2boys', so there was nowhere for a female
+# subject to live. Block 16 was created to carry `tag: 1girl`. If the checker
+# does not accept that value the DRY step fails for $0 and nothing is drawn,
+# which is the cheapest possible way to learn it — and the answer is worth
+# having on its own, because every future female character hits the same wall.
+id: ep3-charref-magistrate-r2-0812
+task: ep3-charref-magistrate-r2-0812
+node: 006a-miracle-clause
+beat: 1
+runner: box
+needs_gpu: true
+priority: 40
+max_attempts: 1
+sample: true
+owner: ep3 lane, 2026-08-12 (first render under D22; r2 after r1's dry step caught two faults)
+consumer: >-
+  The founder's morning page, and the recipe decision for the remaining 131 ep3
+  prompts. Four seeds side by side, nothing ranked and nothing recommended.
+success: >-
+  Four PNGs at C:\banyan-farm\wave-goblin-prep\out-ep3-charref-magistrate-r2 with their .yaml
+  provenance sidecars written at render time (7.2), all eight declared as
+  artifacts so a missing one fails rc=92 instead of passing quietly. Success is
+  four readable, comparable frames of the beat the script describes — a green
+  bald goblin cradling a fig beside a 55cm two-leaf sapling at dawn, in the
+  current detailed-cinematic dialect. Whether it is GOOD is R4's and not this
+  job's.
+why: >-
+  Five scripts are approved and none of them can be drawn, because every prompt
+  behind them is in a style the founder rejected two weeks ago. This is the one
+  frame that says whether the conversion works.
+prediction: >-
+  Written before any frame exists, and unlike r2's this one is aimed at the
+  failure that actually happened. r2 drew NO PLANT in 4 of 4 and NO WORLD in 4
+  of 4; r3 makes the sapling its own subject clause growing from the earth and
+  gives the world its own sentence. What should come back: a rooted plant with
+  a visible stem beside a kneeling goblin in a lit meadow. The remaining risks,
+  in order — (1) the fig, absent in 3 of 4 of r2, is still only two words and
+  may not read; (2) `purple fig` may fight the model's prior for a fig's
+  colour; (3) with the character adjectives cut to buy tokens, the patchwork
+  cloak is now entirely absent from the prompt, so the costume will be whatever
+  the checkpoint defaults to — r2 gave a dark buttoned jacket every time. If
+  the plant and the world come back and only the fig and costume are wrong,
+  that is a PASS on the dialect question and the costume moves to the reference
+  where it belongs.
+est_minutes: 4
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '16'
+  - --goblin-def
+  - green skin, bald head
+  - --variant
+  - authored_ep3_charref_magistrate
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '16'
+  - --goblin-def
+  - green skin, bald head
+  - --variant
+  - authored_ep3_charref_magistrate
+  - --out
+  - C:\banyan-farm\wave-goblin-prep\out-ep3-charref-magistrate-r2
+  - --task
+  - ep3-charref-magistrate-r2-0812
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep3-charref-magistrate-r2-0812"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/wave-goblin-prep/out-ep3-charref-magistrate-r2/16-charref-magistrate-wave1-s*.*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        # Hash the COPY, not the original: what this records has to be the bytes
+        # that get committed, or the manifest attests to the wrong file.
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+        print("   ", os.path.basename(f), h[:16])
+    with open(os.path.join(dst, "ep3-charref-magistrate-r2-0812.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) == 8 else 1)
+artifacts:
+- C:\banyan-farm\wave-goblin-prep\out-ep3-charref-magistrate-r2\16-charref-magistrate-wave1-s0.png
+- C:\banyan-farm\wave-goblin-prep\out-ep3-charref-magistrate-r2\16-charref-magistrate-wave1-s1.png
+- C:\banyan-farm\wave-goblin-prep\out-ep3-charref-magistrate-r2\16-charref-magistrate-wave1-s2.png
+- C:\banyan-farm\wave-goblin-prep\out-ep3-charref-magistrate-r2\16-charref-magistrate-wave1-s3.png
+- C:\banyan-farm\wave-goblin-prep\out-ep3-charref-magistrate-r2\16-charref-magistrate-wave1-s0.yaml
+- C:\banyan-farm\wave-goblin-prep\out-ep3-charref-magistrate-r2\16-charref-magistrate-wave1-s1.yaml
+- C:\banyan-farm\wave-goblin-prep\out-ep3-charref-magistrate-r2\16-charref-magistrate-wave1-s2.yaml
+- C:\banyan-farm\wave-goblin-prep\out-ep3-charref-magistrate-r2\16-charref-magistrate-wave1-s3.yaml
