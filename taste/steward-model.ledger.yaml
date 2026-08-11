@@ -13291,3 +13291,31 @@
     Named objects have now appeared 6 of 6 — sapling ×2 on beat 15, b19's fig, b20's fig,
     b03's tree, b13's sapling-and-shade. Six, written as six.
   outcome: null
+
+- id: ep2-b14-redeye-0812-scored
+  kind: scoring
+  date: 2026-08-12
+  scores: ep2-b14-redeye-0812
+  verdict: HIT, cleanly. The eyes are RED for all 121 frames.
+  observed: >-
+    Swapping the init from the pink-eyed r0-s1 to the red-eyed r0-s3 — and changing nothing
+    else, not one word of the prompt — produced red eyes end to end. The crouch survived
+    untouched: he is down at the ground with both hands in the soil, and the hand positions
+    shift between frames, so there is real picking motion rather than a held pose. No
+    tripod, background present, identity holds.
+  what_it_confirms: >-
+    THERE IS NO MOTION-SIDE HUE DRIFT ON THIS BEAT. The pink was 100% inherited from the
+    frame I chose. My original claim — recorded twice, published on his page, sent to the
+    lead in two reports — described a defect that did not exist.
+  the_rules_first_confirmed_save: >-
+    "Before calling anything a drift, open the init" was written after I caught this by
+    inspection; this is the render that confirms it. The rule has now paid for itself once
+    in avoided work (a prompt sample that would have measured nothing) and once in a real
+    fix (the init swap, which was the whole answer).
+  remaining_and_minor: >-
+    The soil reads stony rather than loose, and the picking is gentle. Neither is worth a
+    render against the beat as written.
+  no_followup_earned: >-
+    Beat 14 passes. I am not queueing anything for it. The queue runs down after the current
+    five and what refills it is his verdicts, not my guesses.
+  outcome: null
