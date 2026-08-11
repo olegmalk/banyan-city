@@ -9,6 +9,57 @@
 #
 # Ground truth is the founder (R4). This file never overrules him.
 #
+# Rolling hit rate, SEVENTH scoring, 2026-08-11 ~23:45 (his walk through tonight's
+# four ep2 rounds — beats 02, 05, 03, 01 — recorded verbatim once as
+# `ep2-night-rounds-founder-verdict-0811`). Five prediction records went from null
+# to an outcome. Recomputed the same way every scoring before it was: by reading
+# every `outcome:` in this file and grouping by each record's own
+# `predicted_verdict:`, never by adding to the paragraph below.
+#   35 of 124 records now carry a scoring verdict. 8 hit · 20 partial · 7 miss.
+#   STRICT (hits only)                 8/35 = 23%
+#   partials counted as half           18/35 = 51%
+#   PICK class (`ratify` or `pick_holds`)
+#                                      0 hit · 2 partial · 6 miss of 8 — UNCHANGED
+#   REJECT class (`reject_all`)        8 hit · 11 partial · 0 miss of 19 — UNCHANGED
+#   NO CLASS (no `predicted_verdict:` line at all) 7 partial · 1 miss of 8 — this
+#   is where all five of tonight's scorings landed, and it grew from 2 to 8.
+#   (24 records are `n/a`, 3 are `not_scoreable_no_prediction_was_written`, and the
+#    non-counting OBSERVATION record `ep2-b15-goblin-simple-0811-observed` is still
+#    inside the 35 above and still named rather than hidden. Two of tonight's five
+#    — `ep2-b02-goblin-hide-0811` and `ep2-b05-guards-silly-0811` — exclude
+#    THEMSELVES from the rate in their own text, because their frames existed when
+#    they were written; they are scored, they are counted in the 35, and a strict
+#    reader should subtract them and read 33.)
+# BOTH ASYMMETRY COLUMNS ARE FROZEN, AND NOT BECAUSE THE MODEL IMPROVED. Neither
+# the pick column nor the reject column moved a single record tonight. The reason
+# is measurable and is the seventh scoring's whole finding: OF THE 28 PREDICTION
+# RECORDS DATED 0811, ZERO CARRY A `predicted_verdict:` LINE. The file's headline
+# fact — this model can veto and has never once told us what he would take — can no
+# longer be extended in either direction, because we stopped making the call that
+# populates it. Predicates got sharper and more numerous while the one field that
+# scores the model's judgement quietly went missing from an entire week's work.
+# Every future prediction record writes `predicted_verdict:` or says in the record
+# why it cannot.
+# WHAT TONIGHT ADDS ON TOP OF THAT, AND IT IS THE SAME FINDING AS THE SIXTH FROM
+# THE OTHER SIDE: the sixth scoring said the faults he names are properties of a
+# SET while every axis scores one frame. Tonight, FIFTEEN OF SIXTEEN PREDICATES
+# ACROSS THE FOUR ROUNDS CAME BACK TRUE IN THE PIXELS and he refused all four beats.
+# `ep2-b05-warmfield-0811` is the cleanest case in the file: 3 of 3 predicates held
+# and the round was still a rejection. So the problem is no longer accuracy, it is
+# COVERAGE — every predicate priced the round's one new variable and none priced the
+# inherited half of the prompt, which is where all three of tonight's faults lived
+# (a female-reading face and a five-piece costume from the frozen `green skin` slot,
+# armour the steward wrote into the guards' positive, and a sapling that the
+# dropped scale block left too small to draw). Two rules follow and are recorded on
+# the records themselves: a round must carry at least one predicate on the standing
+# description it INHERITS, and a beat whose subject is small must predicate that the
+# subject is drawn at all before predicating anything about it.
+# THE VACUOUS PASS IS NAMED SO NOBODY LATER COUNTS IT AS A WIN: beat 02's hardest
+# predicate, "hands not touching the plant, 4 of 4", is true in all four frames
+# because no plant was drawn in any of them. He caught that in one sentence — "it
+# doesnt even look like the sapling is there" — after four prediction records had
+# walked past it.
+#
 # Rolling hit rate, SIXTH scoring, 2026-08-11 (his ~16:15 local walk through the
 # whole episode-2 picking page — seven beat sentences and one instruction to the
 # steward, recorded as `ep2-b01`..`b05-pickpage-founder-verdict-0811` and
@@ -7797,11 +7848,61 @@
     not another term.
   what_this_does_not_do: >-
     Picks nothing, ranks nothing, clears no gate. R4 is his.
-  founder_verdict: null
-  founder_verdict_date: null
-  outcome: null
-  miss_axis: null
-  model_action: null
+  founder_verdict: |-
+    "yeah so for beat 02, the goblin looks female again and is too overcomplicated.."
+  founder_verdict_date: 2026-08-11
+  outcome: partial
+  miss_axis: >-
+    IDENTITY (gender read) and COSTUME COMPLEXITY. Neither is an axis in v1, neither
+    was predicted here, and every one of the three predicates that WAS written came
+    back true. This is `34c6b9a`'s lesson arriving for the third night running — he
+    rejected on things never predicted — with one difference that makes it worse
+    rather than the same: the sixth scoring's finding was that his faults are
+    properties of a SET while every axis scores one frame, and these two faults are
+    properties of a SINGLE frame. A female-reading face and a five-layer costume are
+    both visible in s0 alone. The model does not miss them because they are
+    cross-frame; it misses them because it has no axis for either.
+  scored_against_the_frames_2026-08-12: >-
+    Frames read for this scoring:
+    `review/ep2-picks/wave-0811-night/b02-goblin-hide/02-the-sprint-wave1-s{0..3}.png`.
+    (1) COWERING POSTURE IN >=2 OF 4 — HIT, 4 of 4: shoulders up, body lowered,
+    hands drawn in to the chest in every frame.
+    (2) HANDS NOT TOUCHING THE PLANT, 4 OF 4 — TRUE IN ALL FOUR AND WORTH NOTHING,
+    and it is recorded this way on purpose. There is no plant in any of the four
+    frames. The predicate with "a hard edge", the one the round was built around,
+    passed because the object it protects was never drawn. A predicate that a
+    render failure satisfies is not evidence and must not be counted as a win in a
+    later scoring.
+    (3) BRIGHT FIELD, 4 OF 4 — HIT. The eight-term lighting block holds at a third
+    beat.
+    Not predicted and present in all four: NO CLOAK, as `the_cloak_predicate_was_
+    asked_for_and_is_not_predictable` said. The slot ran `green skin`. His approved
+    cloak has still never been rendered by anybody.
+  what_he_saw_that_no_axis_scores: >-
+    Read plainly off the pixels, because "female" and "overcomplicated" are the two
+    words and both are legible. FEMALE: soft rounded jaw, large lash-heavy eyes,
+    small mouth, delicate neck and shoulders — s2 goes furthest with wide blue
+    anime eyes. His word is "again", and the "again" points at r9, where `tusks`
+    was the measured lever that took not-female to 4 of 4. This round dropped the
+    lever and kept the slot at bare `green skin`, so the regression is a direct
+    consequence of the frozen slot's own wording and not a seed accident.
+    OVERCOMPLICATED: every frame layers a collared dark vest, an underlayer with
+    sleeves, a belt with a buckle, a hanging pendant or cord, and a sash or strap —
+    five garment elements on a character his own definition fixes as "he is just a
+    simple green goblin, nothing complex" (his words, 2026-08-10, record
+    `ep2-goblin-definition-0810`, quoted in this round's own sidecar). None of that
+    clothing is in the prompt. It is the checkpoint's goblin prior filling an
+    unspecified costume, which means the fix is affirmative wording in the slot, not
+    a negative term.
+  model_action: >-
+    THE FROZEN SLOT IS THE DEFECT, not this round's staging, and the slot is where
+    the next work goes: `green skin` under-specifies a character on a checkpoint
+    with a strong opinion, so the model gets a female-reading face and a five-piece
+    costume for free every time. Two axes are owed to v2 — GENDER READ and COSTUME
+    COUNT — and both are countable per frame, which makes them cheap. The concrete
+    next artifact is the goblin consistency sheet he asked for in this same message,
+    queued tonight, which is exactly the instrument for a fault the model cannot see
+    one frame at a time.
 
 - id: ep2-b05-guards-silly-0811
   date: 2026-08-11
@@ -7849,11 +7950,65 @@
     Picks nothing, ranks nothing, clears no gate, and does not itself create the
     guard character — a reference exists when he points at a frame and says that
     is them.
-  founder_verdict: null
-  founder_verdict_date: null
-  outcome: null
-  miss_axis: null
-  model_action: null
+  founder_verdict: |-
+    "for beat 05, the guards are still wearing armor and just, none of these are really right."
+  founder_verdict_date: 2026-08-11
+  outcome: partial
+  miss_axis: >-
+    ARMOUR — and it is not an axis the model failed to score, it is a term the
+    STEWARD PUT IN THE POSITIVE PROMPT. This is a different and worse failure than
+    "rejected on something never predicted": the round did not miss a fault, it
+    authored one, out of a ratification it over-read. The register predicate also
+    missed in the pixels at its own threshold, which is recorded below.
+  scored_against_the_frames_2026-08-12: >-
+    Frames read for this scoring:
+    `review/ep2-picks/wave-0811-night/b05-guards-silly/05-the-patrol-wave1-s{0..3}.png`.
+    (1) TWO FIGURES IN FRAME, 4 OF 4 — HIT, and it is the one clean win of the
+    round: the recorded failure was one knight in 3 of 4, `2boys` derived, and every
+    frame now has two. Prompt-level count control is NOT exhausted on this beat and
+    `what_a_miss_means` does not fire.
+    (2) BOTH FACES VISIBLE, 4 OF 4 — 3 of 4. s0, s1 and s2 show faces. In s3 the
+    larger figure's head is a blank pale oval with two dots and no mouth, which is
+    the visored-helmet failure surviving in a different disguise.
+    (3) ROUND, COMIC, BUREAUCRATIC REGISTER IN >=3 OF 4 — MISSED at 2 of 4. s0 (two
+    small round bald men with a clipboard) and s2 (two blobs, one holding a slate)
+    are the register; s1 is two tall muscular knights in red-and-white plate and s3
+    is two grim armoured bruisers. The record called this predicate at 3 "because
+    register is the axis this beat has failed five times". It has now failed six.
+    ARMOUR IN 4 OF 4, unpredicted and unavoidable, because it was asked for.
+  the_register_is_updated_by_this_verdict_and_here_is_exactly_what_moved: >-
+    HIS RATIFIED WORDS, UNCHANGED AND STILL IN FORCE: "two silly round bureaucrats
+    with visible faces" (~20:27, record `ep2-bedtime-founder-answers-0811`). That
+    sentence is the whole of what he approved.
+    WHAT THE PROMPT SAID: "Two round guard men in dull dented mismatched armor
+    pieces stand side by side facing camera..." — `pipeline/wave-drafts.yaml`, and
+    the armour phrase is not one line, it is SIX, on FIVE BEATS: lines 780 and 819
+    (beat 05, both variants), 841 (beat 06), 883 (beat 07), 1158 (beat 10) and 1302
+    (beat 11). Every guard in episode 2 inherits it.
+    WHERE IT CAME FROM: "dull dented mismatched armor" appears in nothing he has
+    ever said, in this ledger or in `cuts/cuts.yaml`. It is the steward's phrasing.
+    It was carried into the register question, he answered "yes" to the part he
+    quoted back in his own words, and the armour rode in on the yes. Tonight he
+    named it and it is out.
+    THE REGISTER AS IT NOW STANDS: two silly round bureaucrats, visible faces, round
+    soft bodies, bare heads, bark clipboard — ARMOUR REMOVED, no replacement
+    garment ratified. What they wear instead is an open question for him, which is
+    why the guards sheet queued tonight offers variety rather than a steward pick.
+  the_lesson_and_it_is_a_new_one_for_this_file: >-
+    WHEN HE RATIFIES A REGISTER, ONLY HIS WORDS ARE RATIFIED. The steward's
+    elaboration of them is not covered by the yes, and it must be recorded as the
+    steward's, not folded into the approved sentence where a later lane reads it as
+    his. That is the same failure mode as `goblin_definition_as_sent` on the goblin
+    slot, which the sidecars already flag honestly ("the steward's translation of
+    his sentence into slot tags, NOT his words as tags"). The guards had no such
+    flag anywhere, and six draft lines quietly carried the steward's costume as if
+    it were the founder's.
+  model_action: >-
+    Every variant that dresses a character must carry a provenance line separating
+    HIS words from the steward's elaboration, the way the goblin slot already does.
+    The six armour lines are a live defect on five beats and the guards sheet queued
+    tonight is the instrument for replacing them — armour-free by default, at most
+    one armoured candidate kept for comparison, and no steward pick attached.
 
 - id: ep2-bedtime-founder-answers-0811
   date: 2026-08-11
@@ -7966,11 +8121,66 @@
     It also does not claim the founder's approved plate is retired — his plate is
     still the only approved beat-01 image and this round produces candidates, not
     canon.
-  founder_verdict: null
-  founder_verdict_date: null
-  outcome: null
-  miss_axis: null
-  model_action: null
+  founder_verdict: |-
+    "and for beat 1, s2 is really good but.. how come you changed the style so much?"
+  founder_verdict_date: 2026-08-11
+  outcome: partial
+  miss_axis: >-
+    STYLE — an axis this record never priced, on the one round whose stated
+    variable was the thing that carries style. The record named what removing the
+    founder's plate BUYS (a promptable fig, a leaf count) and never once asked what
+    it COSTS, and his whole reaction to the frames is that cost.
+  scored_against_the_frames_2026-08-12: >-
+    The four frames were opened and read for this scoring —
+    `review/ep2-picks/wave-0811-night/b01-t2i-fig/01-cold-open-wave1-s{0..3}.png`
+    — so the predicate marks below are pixels, not inference, and the record they
+    are marked on was written blind before enqueue.
+    (1) EXACTLY ONE FIG IN >=2 OF 4 — MISSED, and the shape of the miss is not the
+    one the record braced for. It is not 0 of 4: s1 grows round green fruit on a
+    stem. It grows TWO of them, high and unattached-looking, so no frame satisfies
+    "exactly one fig" and the answer to `what_a_miss_means` splits — the words DO
+    bind on a clean canvas, which 0 of 12 from the plate never showed, but they do
+    not bind to a COUNT. That is the same defect as "too many leafs", one object
+    over.
+    (2) FIVE LEAVES OR FEWER IN >=2 OF 4 — HIT, and stronger than called: 4 of 4,
+    with s2 at two leaves and s0 at three. This is the first time the standing
+    beat-01 count fault the sixth scoring flagged has been named in a prediction
+    AND fixed in the frames, and it is very likely why s2 is the frame he liked.
+    (3) BRIGHT MORNING PALETTE, 4 OF 4 — HIT, blown-out bright in all four.
+  his_question_has_a_measured_answer_and_it_is_in_this_record_already: >-
+    "how come you changed the style so much" is answerable from the round's own
+    provenance, without guessing, and TWO mechanisms did it — both written down
+    before he asked.
+    FIRST, THE CANVAS: `the_one_variable` above removed the founder-approved plate
+    from beat 01 for the first time in this repo. `ep2-b01-r8-sample` had already
+    measured that the init overrides both channels; what nobody wrote is the
+    converse, that the init was therefore also the thing HOLDING the approved look.
+    Take the plate away to win the prompt and you lose the plate's style with it.
+    SECOND, AND THIS IS THE PART THAT IS FIXABLE TONIGHT: the negative overflowed
+    and dropped the three terms whose absence these frames show. Every sidecar
+    carries it verbatim — `NEGWARN: !! negative prompt over CLIP's 77-token budget
+    ... DROPPED: realistic skin texture, jpeg artifacts, deformed, extra limbs,
+    blurry, low quality, signature, watermark, abstract, 3d render`. The frames are
+    soft-focus, painterly and read as a soft 3D render. `blurry`, `abstract` and
+    `3d render` were all in the recipe and none of them reached the model. The
+    record listed those ten drops as "a real loss" and then predicted nothing about
+    them; the loss arrived exactly where it was listed.
+  what_this_scoring_does_not_do: >-
+    s2 IS NOT PROMOTED AND IS NOT A PICK. "really good" is a compliment on one
+    frame, not the sentence that makes canon, and this record still picks nothing.
+    His approved plate remains the only approved beat-01 image. Recorded because it
+    is the first positive thing he said about any frame all night and the file
+    should not quietly convert that into an approval it is not.
+  model_action: >-
+    Two additions, both concrete. (a) A round whose one variable is the INIT must
+    predict a style outcome, because style is what an init carries — the pre-flight
+    rule from the fifth scoring ("check the drafts line guarantees the attribute is
+    visible") gains a sibling: check what the variable you are REMOVING was holding
+    up. (b) A NEGWARN drop list in a sidecar is a prediction input, not a footnote:
+    when `blurry`, `abstract` or `3d render` are dropped, the round should predict
+    the defect they were there to stop. The cheap next sample is this same variant
+    with the positive shortened until those three survive, which tests whether the
+    look comes back without the plate — one beat, one variable, $0.
 
 - id: ep2-b03-field-solo-0811
   date: 2026-08-11
@@ -8037,11 +8247,71 @@
     gate — the fourteen `ep2-b*-goblin-wave1` specs keep theirs. It does not
     touch the character: same `green skin` slot, no cloak, nothing added to the
     goblin.
-  founder_verdict: null
-  founder_verdict_date: null
-  outcome: null
-  miss_axis: null
-  model_action: null
+  founder_verdict: |-
+    "for beat 03.. it.. doesnt even look like the sapling is there? he's just.. putting his hands on the ground? and not having the correct style as a goblin?"
+  founder_verdict_date: 2026-08-11
+  outcome: partial
+  miss_axis: >-
+    THE SAPLING'S LEGIBILITY — an object every predicate assumed and none scored —
+    plus goblin style, the same unscored identity axis as beat 02. Four predicates
+    were written, all four came back true, and three of them retired three of the
+    four faults he named on this beat last time. He rejected it anyway, on the one
+    thing in the frame nobody thought to check was in the frame.
+  scored_against_the_frames_2026-08-12: >-
+    Frames read for this scoring:
+    `review/ep2-picks/wave-0811-night/b03-field-solo/03-bad-cover-wave1-s{0..3}.png`.
+    (1) EXACTLY ONE GOBLIN, 4 OF 4 — HIT. `solo` + `1boy` + `multiple boys` in the
+    negative held, and this is a real result: "making 2 goblins" was one of his
+    four beat-03 faults and prompt-level count control DID fix it. The pessimistic
+    branch in `what_a_miss_means` (a reference image is the only route left) is
+    withdrawn for the goblin; it still stands for the guards, where the same lever
+    was tried on beat 05 and the register failed for other reasons.
+    (2) OUTDOOR FIELD, NO HOUSE OR INTERIOR, IN >=3 OF 4 — HIT at 4 of 4. Open
+    grass, sky and distant treeline in every frame, no structure anywhere.
+    (3) GREEN SKIN, NOT WHITE OR PALE, 4 OF 4 — HELD, WITH ONE MARGINAL. Bodies are
+    green in all four; in s3 the crown of the head is bleached to near-cream by the
+    sunbeam overlay. Called held rather than missed because the pallor is a
+    lighting blowout and not the flat white skin he complained of, and flagged
+    because it is the closest "making the goblin compeltely white" has come to
+    returning.
+    (4) BRIGHT MORNING FIELD, 4 OF 4 — HIT.
+    THE STATED RISK DID NOT LAND: no mature tree behind him in any frame, despite
+    the whole scale block being dropped at this tier. The scale block's absence cost
+    something else instead, and that is the finding below.
+  the_pattern_this_completes_sdxl_will_not_draw_the_tiny_sapling: >-
+    NAMED HERE BECAUSE IT IS NOW TWO BEATS IN ONE NIGHT AND IT IS THE SAME FAILURE,
+    not two coincidences. Beat 02's hide round: no plant in any of the four, so the
+    goblin has nothing to hide behind and the round's hardest predicate passed
+    vacuously. Beat 03: no readable sapling in 4 of 4 — s1 carries a two-leaf sprig
+    beside his ear that reads as growing out of his head, which is the identical
+    defect commit `a02d271` fixed on beat 19, and s0, s2 and s3 have nothing at all.
+    His sentence is the correct description of both: "it doesnt even look like the
+    sapling is there? he's just.. putting his hands on the ground?" The action reads
+    as nothing because the object of the action is missing.
+    THE MECHANISM IS MEASURED, NOT GUESSED, and it is in this record's own
+    `measured_before_queueing`: the entire scale block was dropped at this tier, so
+    the only thing defending the plant's presence is the positive's `a tiny sapling`
+    and `pencil-thin stem` — two clauses asking a checkpoint to draw a few pixels of
+    stem beside a figure that fills the frame. A subject small enough to satisfy
+    "tiny" at medium shot is small enough for the model to drop entirely.
+  what_this_says_the_next_move_is: >-
+    STAGING, NOT WORDING — which is the conclusion beat 02's `what_a_miss_means`
+    reached in advance for a different reason ("him lower, the stem nearer camera")
+    and which two beats now independently point at. Put the sapling in the near
+    foreground where it occupies real area, or compose it against the sky rather
+    than against grass, or render the plant and the figure at a scale where a stem
+    is more than four pixels wide. Adding another sapling adjective to a positive
+    that already says `tiny` and `pencil-thin` is asking harder for the thing that
+    causes the problem.
+  model_action: >-
+    A round on a beat whose subject is SMALL must carry a presence predicate for the
+    small subject — "the sapling is unambiguously visible in N of 4" — before it
+    carries any predicate about what a character does relative to it. This is the
+    second pre-flight rule extended: the fifth scoring said check the drafts line
+    guarantees the attribute is visible; tonight adds check that the OBJECT is
+    guaranteed to be drawn at all. Also owed to v2: a goblin-style axis, the same
+    one beat 02 owes, which the character sheets queued tonight exist to give him a
+    ruling on.
 
 # ── THE LAST TWO OF TONIGHT'S FOUR, 2026-08-11 ~21:4x. Both records are written
 # AFTER their jobs were queued and that is stated in each rather than smoothed
@@ -8216,11 +8486,49 @@
     `approved_on: 2026-08-03`, read from the leaf the render gate reads. Neither
     `approval_condition` touches beat 05 — both are beat 01's fig and beat 16's
     leaf. Beat 05 is THE PATROL, the guards' entrance.
-  founder_verdict: null
-  founder_verdict_date: null
-  outcome: null
-  miss_axis: null
-  model_action: null
+  founder_verdict: |-
+    "for beat 05, the guards are still wearing armor and just, none of these are really right."
+  founder_verdict_date: 2026-08-11
+  outcome: partial
+  miss_axis: >-
+    ARMOUR, the same steward-authored term that sinks `ep2-b05-guards-silly-0811`
+    above — where the verbatim quote, the register update and the six draft lines
+    are recorded once rather than twice. What this record adds is the sharper case,
+    because here ALL THREE PREDICATES HELD IN THE PIXELS and he rejected the beat
+    anyway. A round can be completely right about everything it chose to measure and
+    still be a rejection, when the fault is in the half of the prompt nobody was
+    testing.
+  scored_against_the_frames_2026-08-12: >-
+    Frames read for this scoring:
+    `review/ep2-picks/wave-0811-night/b05-warmfield/05-the-patrol-wave1-s{0..3}.png`.
+    (1) NO SNOW ANYWHERE, 4 OF 4 — HIT, cleanly. Green field, green treeline, no
+    white ground and no frost in any frame. The three-term ban worked on the channel
+    that binds, and `the_finding_this_round_rests_on` — that beat 05 never sends the
+    scale block, so nothing had ever forbidden a forest here — is confirmed as the
+    right diagnosis. This is the strongest result of the four rounds tonight and it
+    is worth keeping when the armour comes out.
+    (2) GREEN GRASS READS AS GREEN IN >=3 OF 4 — HIT at 4 of 4. The stated risk that
+    `no dark` and `no low key` would flatten saturation did not land.
+    (3) THE STAGING STILL READS IN >=2 OF 4 — HIT at exactly 2: s0 (two small round
+    bald guards, both faces, a tablet) and s3 (two round guards, bare heads, faces
+    visible, one clipboard). s1 gives two bulky armoured men rather than round ones
+    and s2 gives two Kirby-shaped blobs with dot eyes. At threshold, and the
+    threshold was the right place to put it.
+  what_this_round_keeps_and_what_it_loses: >-
+    KEEPS: the snow fix, whole. `no snow, no winter, no forest` plus `warm green`
+    is proven at four of four seeds and should be inherited by every guard beat, and
+    by the guards sheet queued tonight.
+    LOSES: the costume, and with it the round's claim on his "otherwise its actually
+    not bad". That sentence was said about the SETTING before he had looked hard at
+    the clothes; tonight's "none of these are really right" supersedes it and the
+    file should not keep quoting the friendlier half.
+  model_action: >-
+    Recorded as the cleanest instance in this file of a round scoring 3 of 3 and
+    still being refused, and the reason is structural rather than bad luck: every
+    predicate priced the ONE VARIABLE, and the variable was not what was wrong. A
+    round that changes one term should still carry one predicate on the standing
+    description of the character or setting it inherits — otherwise the inherited
+    half is never on the record and cannot be scored when he rules against it.
 - id: ltx-gprobe-guidance-0811
   date: 2026-08-11
   kind: prediction
@@ -9262,3 +9570,68 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+- id: ep2-night-rounds-founder-verdict-0811
+  date: 2026-08-11
+  kind: founder_verdict
+  subject: "the founder's walk through tonight's four ep2 rounds at ~23:45 local,
+    2026-08-11 — beats 02, 05, 03 and 01 in the order he said them, plus one
+    instruction to the steward. Recorded verbatim here ONCE; the per-round scoring
+    lives on the four prediction records it rules on."
+  founder_verdict: |-
+    "yeah so for beat 02, the goblin looks female again and is too overcomplicated.. for beat 05, the guards are still wearing armor and just, none of these are really right. for beat 03.. it.. doesnt even look like the sapling is there? he's just.. putting his hands on the ground? and not having the correct style as a goblin? i think we need proper character consistency sheets for both the goblin and the guards for me to review. and for beat 1, s2 is really good but.. how come you changed the style so much?"
+  founder_verdict_date: 2026-08-11
+  outcome: n/a
+  miss_axis: >-
+    Not counted in the rolling rate. This is the verbatim record of what he said;
+    the scoring it drives is on `ep2-b02-goblin-hide-0811`,
+    `ep2-b05-guards-silly-0811`, `ep2-b05-warmfield-0811`,
+    `ep2-b03-field-solo-0811` and `ep2-b01-t2i-fig-0811`, each of which carries the
+    clause that rules on it.
+  which_record_each_clause_scores: >-
+    BEAT 02 → `ep2-b02-goblin-hide-0811`. Axes: female read, costume complexity.
+    Neither predicted; all three predicates it did write came back true.
+    BEAT 05 → `ep2-b05-guards-silly-0811` and `ep2-b05-warmfield-0811`, one sentence
+    ruling on both rounds. Axis: armour, which the steward wrote into the positive
+    prompt. Warmfield's three predicates all held and it was refused anyway.
+    BEAT 03 → `ep2-b03-field-solo-0811`. Axes: the sapling is not legible, the
+    goblin's style is wrong. All four predicates held; three of his four earlier
+    beat-03 faults were fixed by them.
+    BEAT 01 → `ep2-b01-t2i-fig-0811`. First positive sentence of the night, on
+    composition, plus a question about style drift that the round's own provenance
+    answers.
+    THE SHEETS SENTENCE → an instruction, ruled on below.
+  the_instruction_and_it_is_the_load_bearing_part: >-
+    "i think we need proper character consistency sheets for both the goblin and the
+    guards for me to review." This is a PRESCRIPTION, not a fault — the same class
+    as his ~16:15 "should probably setup a character for the guards, take your time
+    doing that", carried in `ep2-pickpage-founder-directive-0811`, which the sixth
+    scoring already identified as a shape no axis can score. He has now asked for
+    the same thing twice in one day, the second time for the goblin as well, and the
+    second asking is what makes it the night's actual assignment. Note what it does
+    to the queue: no further beat round on beats 02, 03 or 05 is worth firing until
+    he has ruled on an identity, because every one of them will re-roll the
+    character it is supposed to hold fixed.
+  what_this_verdict_does_not_do: >-
+    PROMOTES NOTHING. "s2 is really good" is a compliment on one frame and not the
+    sentence that makes canon; no `pick:` field anywhere in this file changes
+    tonight, no leaf gains an `approved_by`, and beat 01's approved plate is still
+    the only approved beat-01 image. Two of his three critiques also arrive with no
+    replacement stated — what the guards wear instead of armour, and what "the
+    correct style as a goblin" is — and those blanks are his to fill, which is
+    exactly what the sheets are for.
+  the_one_thing_he_said_that_is_new_information_about_the_pipeline: >-
+    "it doesnt even look like the sapling is there" is not a taste verdict at all.
+    It is an accurate report of a RENDER FAILURE that had already happened twice
+    tonight and that the steward's own predicates were structured not to notice —
+    beat 02's hardest predicate ("hands not touching the plant") passed in 4 of 4
+    because there was no plant to touch. He caught in one sentence a defect four
+    prediction records had walked straight past. That is worth more to the model
+    than any of the axis scoring above.
+  model_action: >-
+    Two artifacts, both queued the night he asked: a GOBLIN identity sheet and a
+    GUARDS identity sheet, stills only, $0 on the card, no pick attached to either.
+    Both are built to be ruled on rather than admired — one page, candidates side by
+    side, so he can point at one. Until he does, the frozen `green skin` slot and
+    the six armour lines in `pipeline/wave-drafts.yaml` stay exactly as they are and
+    are not "fixed" by a steward guess.
