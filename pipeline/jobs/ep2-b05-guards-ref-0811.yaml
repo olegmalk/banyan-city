@@ -100,6 +100,16 @@
 # falling back, so the job fails for $0 instead of quietly drawing beat 05's old
 # staging under this id. The sidecars record whichever drafts sha256 actually drew.
 #
+# AND ONE DID, WITHIN THE MINUTE: the four sidecars in out-guards-ref cite
+# drafts_sha256 47f9ace5b7815d58afde70bacfe0bd360156c20783b00fe144eb6d65e677990a,
+# not the 3e583cea measured above — a third lane re-synced the shared box copy
+# between the scp and the claim. The render is still exactly what was measured:
+# `authored_guards_ref` is byte-identical in both files and the sidecars agree term
+# for term with the --dry (draft_variant authored_guards_ref, count_tag 2boys,
+# positive_tokens 70). Written down rather than left as a mismatch for a later
+# reader to trip over, and it is the reason the paragraph above cites the sidecar
+# and not this file as the authority on what drew.
+#
 # SEPARATE OUT DIRECTORY, DELIBERATELY. render_wave_sample.py names files from the
 # beat slug, so this would land on `out-staged/05-the-patrol-wave1-s{0..3}.png` —
 # the four frames described above, which are this round's control and the evidence
