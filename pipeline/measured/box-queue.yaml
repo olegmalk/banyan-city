@@ -57,7 +57,7 @@
 measured_at: 2026-08-11 22:19Z
 ready: 7
 running: 1
-done_today: 9
+done_today: 22
 source: ssh rtx5090 dir C:\banyan-queue (supervisor tick)
 queued_kinds:
   ltx: 6
