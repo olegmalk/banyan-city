@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ep2 stills — morning review, 12 Aug 2026</title>
+<style>
+  :root {
+    --bg: #17181a;
+    --panel: #1f2124;
+    --line: #33363b;
+    --ink: #eceef1;
+    --muted: #9aa0a8;
+    --accent: #c8b273;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    padding: 0 24px 96px;
+  }
+  .wrap { max-width: 1020px; margin: 0 auto; }
+
+  header.top { padding: 40px 0 20px; border-bottom: 1px solid var(--line); }
+  header.top h1 { margin: 0 0 6px; font-size: 27px; letter-spacing: -0.01em; font-weight: 650; }
+  header.top .sub { color: var(--muted); font-size: 14.5px; margin: 0; }
+
+  .pending {
+    margin: 22px 0 0;
+    padding: 14px 18px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    border-radius: 5px;
+  }
+  .pending h2 {
+    margin: 0 0 8px; font-size: 12px; letter-spacing: 0.09em;
+    text-transform: uppercase; color: var(--accent); font-weight: 650;
+  }
+  .pending ul { margin: 0; padding-left: 19px; color: var(--muted); font-size: 14.5px; }
+  .pending li { margin: 3px 0; }
+  .pending li b { color: var(--ink); font-weight: 600; }
+
+  section.round { padding: 46px 0 8px; border-bottom: 1px solid var(--line); }
+  section.round:last-of-type { border-bottom: 0; }
+
+  .beatline { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .beatno {
+    font-variant-numeric: tabular-nums; font-size: 12.5px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted); font-weight: 650;
+  }
+  .beatline h2 { margin: 0; font-size: 23px; font-weight: 650; letter-spacing: -0.01em; }
+
+  .should { margin: 14px 0 0; font-size: 17px; line-height: 1.5; max-width: 74ch; }
+  .should .lbl {
+    display: block; font-size: 11.5px; letter-spacing: 0.09em; text-transform: uppercase;
+    color: var(--muted); font-weight: 650; margin-bottom: 4px;
+  }
+
+  blockquote {
+    margin: 18px 0 0; padding: 12px 0 12px 18px;
+    border-left: 3px solid var(--line);
+    color: var(--muted); font-size: 15.5px; font-style: italic; max-width: 74ch;
+  }
+  blockquote .who {
+    display: block; font-style: normal; font-size: 11.5px; letter-spacing: 0.09em;
+    text-transform: uppercase; color: #6f757d; font-weight: 650; margin-bottom: 6px;
+  }
+
+  .novrd {
+    margin: 18px 0 0; padding: 12px 0 12px 18px;
+    border-left: 3px dashed var(--line);
+    color: var(--muted); font-size: 15px; max-width: 74ch;
+  }
+  .novrd .who {
+    display: block; font-size: 11.5px; letter-spacing: 0.09em;
+    text-transform: uppercase; color: #6f757d; font-weight: 650; margin-bottom: 6px;
+  }
+
+  .grid {
+    margin: 26px 0 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+  figure { margin: 0; }
+  figure a { display: block; line-height: 0; border-radius: 4px; overflow: hidden; background: #000; }
+  figure img { width: 100%; height: auto; display: block; }
+  figcaption {
+    margin-top: 7px; font-size: 12.5px; color: var(--muted);
+    font-variant-numeric: tabular-nums; letter-spacing: 0.04em;
+  }
+
+  .obs {
+    margin: 26px 0 0; padding: 13px 16px;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 5px;
+    font-size: 15px; line-height: 1.55; max-width: 82ch;
+  }
+  .obs .lbl {
+    display: block; font-size: 11.5px; letter-spacing: 0.09em; text-transform: uppercase;
+    color: var(--muted); font-weight: 650; margin-bottom: 5px;
+  }
+
+  .prov { margin: 14px 0 0; font-size: 12.5px; color: #6f757d; line-height: 1.5; }
+
+  footer.foot { padding: 40px 0 0; color: #6f757d; font-size: 13px; line-height: 1.6; }
+
+  @media (max-width: 620px) {
+    .grid { grid-template-columns: minmax(0, 1fr); }
+    body { padding: 0 16px 64px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>Episode 2 stills — morning review</h1>
+  <p class="sub">Six rounds rendered overnight on the rtx5090, 11 Aug. Four seeds each, checksums verified. Click any frame to open it full size.</p>
+</header>
+
+<div class="pending">
+  <h2>Before you start</h2>
+  <ul>
+    <li><b>Nothing is pending.</b> b04-fieldban and b05-warmfield landed at 17:31Z and 17:32Z, while this page was being built, so both are included below rather than listed as missing.</li>
+    <li>The box runner is <b>idle with an empty queue</b> — these six rounds are the whole night's output.</li>
+    <li>Two of the six carry <b>no verdict of yours yet</b> (beat 4, and the warm-field retry of beat 5); those sections say so instead of quoting you.</li>
+    <li>No scores, no rankings, no marked picks anywhere on this page — those are yours.</li>
+  </ul>
+</div>
+
+<!-- ============================ BEAT 02 ============================ -->
+<section class="round">
+  <div class="beatline">
+    <span class="beatno">Beat 02</span>
+    <h2>The Sprint</h2>
+  </div>
+
+  <p class="should">
+    <span class="lbl">What the shot should show</span>
+    The goblin cowering <em>behind</em> the sapling — hands to his chest, plainly hiding, with the plant standing upright in front of him and no suggestion he is grabbing or pulling it.
+  </p>
+
+  <blockquote>
+    <span class="who">Your verdict on the last round</span>
+    “it looks like he's not even trying to hide, or it looks like he's ripping the sapling out”
+  </blockquote>
+
+  <div class="grid">
+    <figure><a href="wave-0811-night/b02-goblin-hide/02-the-sprint-wave1-s0.png" target="_blank" rel="noopener"><img src="wave-0811-night/b02-goblin-hide/02-the-sprint-wave1-s0.png" alt="Beat 02, seed s0"></a><figcaption>s0</figcaption></figure>
+    <figure><a href="wave-0811-night/b02-goblin-hide/02-the-sprint-wave1-s1.png" target="_blank" rel="noopener"><img src="wave-0811-night/b02-goblin-hide/02-the-sprint-wave1-s1.png" alt="Beat 02, seed s1"></a><figcaption>s1</figcaption></figure>
+    <figure><a href="wave-0811-night/b02-goblin-hide/02-the-sprint-wave1-s2.png" target="_blank" rel="noopener"><img src="wave-0811-night/b02-goblin-hide/02-the-sprint-wave1-s2.png" alt="Beat 02, seed s2"></a><figcaption>s2</figcaption></figure>
+    <figure><a href="wave-0811-night/b02-goblin-hide/02-the-sprint-wave1-s3.png" target="_blank" rel="noopener"><img src="wave-0811-night/b02-goblin-hide/02-the-sprint-wave1-s3.png" alt="Beat 02, seed s3"></a><figcaption>s3</figcaption></figure>
+  </div>
+
+  <p class="obs">
+    <span class="lbl">Observed</span>
+    Nobody is grabbing or pulling anything in any of the four, and all four have his hands drawn up to his chest — but no sapling stem stands in front of him in any frame either: s0, s1 and s3 put him in tall grass, and s2 has a small leafy plant beside him at frame left rather than between him and the camera. All four are framed tighter than a medium shot, head-and-shoulders. His eyes are red in s0, s1 and s3 and blue in s2.
+  </p>
+
+  <p class="prov">animagine-xl-3.1 · 832×1216 · 40 steps · guidance 7.5 · seeds 20260721 / 20261721 / 20262721 / 20263721 · $0.00 · full prompt and provenance in the .yaml beside each PNG</p>
+</section>
+
+<!-- ============================ BEAT 05 ============================ -->
+<section class="round">
+  <div class="beatline">
+    <span class="beatno">Beat 05</span>
+    <h2>The Patrol</h2>
+  </div>
+
+  <p class="should">
+    <span class="lbl">What the shot should show</span>
+    Two silly round bureaucrats — soft round bodies, no helmets — standing in the field with both of their faces clearly visible to camera.
+  </p>
+
+  <blockquote>
+    <span class="who">Your direction for this round</span>
+    “yes, ‘two silly round bureaucrats with visible faces’”
+  </blockquote>
+
+  <div class="grid">
+    <figure><a href="wave-0811-night/b05-guards-silly/05-the-patrol-wave1-s0.png" target="_blank" rel="noopener"><img src="wave-0811-night/b05-guards-silly/05-the-patrol-wave1-s0.png" alt="Beat 05, seed s0"></a><figcaption>s0</figcaption></figure>
+    <figure><a href="wave-0811-night/b05-guards-silly/05-the-patrol-wave1-s1.png" target="_blank" rel="noopener"><img src="wave-0811-night/b05-guards-silly/05-the-patrol-wave1-s1.png" alt="Beat 05, seed s1"></a><figcaption>s1</figcaption></figure>
+    <figure><a href="wave-0811-night/b05-guards-silly/05-the-patrol-wave1-s2.png" target="_blank" rel="noopener"><img src="wave-0811-night/b05-guards-silly/05-the-patrol-wave1-s2.png" alt="Beat 05, seed s2"></a><figcaption>s2</figcaption></figure>
+    <figure><a href="wave-0811-night/b05-guards-silly/05-the-patrol-wave1-s3.png" target="_blank" rel="noopener"><img src="wave-0811-night/b05-guards-silly/05-the-patrol-wave1-s3.png" alt="Beat 05, seed s3"></a><figcaption>s3</figcaption></figure>
+  </div>
+
+  <p class="obs">
+    <span class="lbl">Observed</span>
+    All four are outdoors, two figures each, bare-headed, no weapons, and a clipboard appears in all four. Bodies are round only in s0 and s2; s1 and s3 are tall and heavily muscled. Two of the four have a face that did not resolve — s2's are featureless ovals with dot eyes, and the rear figure in s3 has two dots and an open mouth and nothing else. s0 and s2 are shot from steeply overhead looking down.
+  </p>
+
+  <p class="prov">animagine-xl-3.1 · 832×1216 · 40 steps · guidance 7.5 · seeds 20260724 / 20261724 / 20262724 / 20263724 · $0.00 · full prompt and provenance in the .yaml beside each PNG</p>
+</section>
+
+<!-- ==================== BEAT 05, WARM FIELD RETRY ==================== -->
+<section class="round">
+  <div class="beatline">
+    <span class="beatno">Beat 05 · warm-field retry</span>
+    <h2>The Patrol</h2>
+  </div>
+
+  <p class="should">
+    <span class="lbl">What the shot should show</span>
+    The same two silly round bureaucrats with visible faces, but standing in a warm green field — this round is the one above with “snow” and “winter” banned and the field described as warm.
+  </p>
+
+  <blockquote>
+    <span class="who">Your direction, same as the round above</span>
+    “yes, ‘two silly round bureaucrats with visible faces’”
+  </blockquote>
+
+  <div class="grid">
+    <figure><a href="wave-0811-night/b05-warmfield/05-the-patrol-wave1-s0.png" target="_blank" rel="noopener"><img src="wave-0811-night/b05-warmfield/05-the-patrol-wave1-s0.png" alt="Beat 05 warm field, seed s0"></a><figcaption>s0</figcaption></figure>
+    <figure><a href="wave-0811-night/b05-warmfield/05-the-patrol-wave1-s1.png" target="_blank" rel="noopener"><img src="wave-0811-night/b05-warmfield/05-the-patrol-wave1-s1.png" alt="Beat 05 warm field, seed s1"></a><figcaption>s1</figcaption></figure>
+    <figure><a href="wave-0811-night/b05-warmfield/05-the-patrol-wave1-s2.png" target="_blank" rel="noopener"><img src="wave-0811-night/b05-warmfield/05-the-patrol-wave1-s2.png" alt="Beat 05 warm field, seed s2"></a><figcaption>s2</figcaption></figure>
+    <figure><a href="wave-0811-night/b05-warmfield/05-the-patrol-wave1-s3.png" target="_blank" rel="noopener"><img src="wave-0811-night/b05-warmfield/05-the-patrol-wave1-s3.png" alt="Beat 05 warm field, seed s3"></a><figcaption>s3</figcaption></figure>
+  </div>
+
+  <p class="obs">
+    <span class="lbl">Observed</span>
+    The field is green and sunlit in all four and nothing reads as snow. Bodies are round in three of the four — s0, s2 and s3 — against two of four in the round above; s1 is again tall and muscled. Faces resolved into features in s0 and s3; s1's two figures have blank pale faces with no mouth, and s2's pair read as plush toys with slit eyes rather than guards in armor. s0 and s2 are again shot from steeply overhead, s3 is a full-body view from eye level.
+  </p>
+
+  <p class="prov">animagine-xl-3.1 · 832×1216 · 40 steps · guidance 7.5 · seeds 20260724 / 20261724 / 20262724 / 20263724 · $0.00 · full prompt and provenance in the .yaml beside each PNG</p>
+</section>
+
+<!-- ============================ BEAT 03 ============================ -->
+<section class="round">
+  <div class="beatline">
+    <span class="beatno">Beat 03</span>
+    <h2>Bad Cover</h2>
+  </div>
+
+  <p class="should">
+    <span class="lbl">What the shot should show</span>
+    One goblin only, green rather than white, out in the open field and not inside a house, crouched behind a sapling far too thin to hide him.
+  </p>
+
+  <blockquote>
+    <span class="who">Your faults with the last round</span>
+    “making the goblin in a house, making the goblin compeltely white, making 2 goblins”
+  </blockquote>
+
+  <div class="grid">
+    <figure><a href="wave-0811-night/b03-field-solo/03-bad-cover-wave1-s0.png" target="_blank" rel="noopener"><img src="wave-0811-night/b03-field-solo/03-bad-cover-wave1-s0.png" alt="Beat 03, seed s0"></a><figcaption>s0</figcaption></figure>
+    <figure><a href="wave-0811-night/b03-field-solo/03-bad-cover-wave1-s1.png" target="_blank" rel="noopener"><img src="wave-0811-night/b03-field-solo/03-bad-cover-wave1-s1.png" alt="Beat 03, seed s1"></a><figcaption>s1</figcaption></figure>
+    <figure><a href="wave-0811-night/b03-field-solo/03-bad-cover-wave1-s2.png" target="_blank" rel="noopener"><img src="wave-0811-night/b03-field-solo/03-bad-cover-wave1-s2.png" alt="Beat 03, seed s2"></a><figcaption>s2</figcaption></figure>
+    <figure><a href="wave-0811-night/b03-field-solo/03-bad-cover-wave1-s3.png" target="_blank" rel="noopener"><img src="wave-0811-night/b03-field-solo/03-bad-cover-wave1-s3.png" alt="Beat 03, seed s3"></a><figcaption>s3</figcaption></figure>
+  </div>
+
+  <p class="obs">
+    <span class="lbl">Observed</span>
+    All three of the faults are absent: every frame has exactly one goblin, green-skinned, outdoors in grass with no interior anywhere. What is also absent is the sapling — none of the four has a plant in front of him. The only plant in the set is the two-leaf sprout tucked behind his ear in s1. In s2 and s3 he is crouched face-down with his eyes shut, so the face does not read; s3 gives him a white cap-like crown on top of the head.
+  </p>
+
+  <p class="prov">animagine-xl-3.1 · 832×1216 · 40 steps · guidance 7.5 · seeds 20260722 / 20261722 / 20262722 / 20263722 · $0.00 · full prompt and provenance in the .yaml beside each PNG</p>
+</section>
+
+<!-- ============================ BEAT 04 ============================ -->
+<section class="round">
+  <div class="beatline">
+    <span class="beatno">Beat 04</span>
+    <h2>The Footnote</h2>
+  </div>
+
+  <p class="should">
+    <span class="lbl">What the shot should show</span>
+    The goblin's face filling the frame out in the open field, holding his breath with his cheeks puffed — and no walls, no building, no interior anywhere in shot.
+  </p>
+
+  <div class="novrd">
+    <span class="who">No verdict of yours on record for this beat</span>
+    This round was authored and fired overnight; the walls it bans are the pipeline's own reading of the beat-3 fault, not a sentence you said about beat 4. Treat it as a first look.
+  </div>
+
+  <div class="grid">
+    <figure><a href="wave-0811-night/b04-fieldban/04-the-footnote-wave1-s0.png" target="_blank" rel="noopener"><img src="wave-0811-night/b04-fieldban/04-the-footnote-wave1-s0.png" alt="Beat 04, seed s0"></a><figcaption>s0</figcaption></figure>
+    <figure><a href="wave-0811-night/b04-fieldban/04-the-footnote-wave1-s1.png" target="_blank" rel="noopener"><img src="wave-0811-night/b04-fieldban/04-the-footnote-wave1-s1.png" alt="Beat 04, seed s1"></a><figcaption>s1</figcaption></figure>
+    <figure><a href="wave-0811-night/b04-fieldban/04-the-footnote-wave1-s2.png" target="_blank" rel="noopener"><img src="wave-0811-night/b04-fieldban/04-the-footnote-wave1-s2.png" alt="Beat 04, seed s2"></a><figcaption>s2</figcaption></figure>
+    <figure><a href="wave-0811-night/b04-fieldban/04-the-footnote-wave1-s3.png" target="_blank" rel="noopener"><img src="wave-0811-night/b04-fieldban/04-the-footnote-wave1-s3.png" alt="Beat 04, seed s3"></a><figcaption>s3</figcaption></figure>
+  </div>
+
+  <p class="obs">
+    <span class="lbl">Observed</span>
+    No walls, buildings or interiors in any of the four; all are outdoors in grass, all are tight on the face. Cheeks are puffed with visible breath in s0 and s2 only. The goblin does not match the one in beats 2 and 3 across this set: s0 and s1 give him pale hair where the other beats are bald, the skin is a greyer green than the bright green there, and the eyes are red on blue in s0, red-brown in s1, large teal in s2 and dark in s3. s3 sits in shade against dark trees rather than the morning light of the other three.
+  </p>
+
+  <p class="prov">animagine-xl-3.1 · 832×1216 · 40 steps · guidance 7.5 · seeds 20260723 / 20261723 / 20262723 / 20263723 · $0.00 · full prompt and provenance in the .yaml beside each PNG</p>
+</section>
+
+<!-- ============================ BEAT 01 ============================ -->
+<section class="round">
+  <div class="beatline">
+    <span class="beatno">Beat 01</span>
+    <h2>Cold Open</h2>
+  </div>
+
+  <p class="should">
+    <span class="lbl">What the shot should show</span>
+    The seedling with a small round fig actually growing on it, and only three or four leaves — not a bushy plant.
+  </p>
+
+  <blockquote>
+    <span class="who">Your faults with the last round</span>
+    “none of them have figs and all of them have too many leafs”
+  </blockquote>
+
+  <div class="grid">
+    <figure><a href="wave-0811-night/b01-t2i-fig/01-cold-open-wave1-s0.png" target="_blank" rel="noopener"><img src="wave-0811-night/b01-t2i-fig/01-cold-open-wave1-s0.png" alt="Beat 01, seed s0"></a><figcaption>s0</figcaption></figure>
+    <figure><a href="wave-0811-night/b01-t2i-fig/01-cold-open-wave1-s1.png" target="_blank" rel="noopener"><img src="wave-0811-night/b01-t2i-fig/01-cold-open-wave1-s1.png" alt="Beat 01, seed s1"></a><figcaption>s1</figcaption></figure>
+    <figure><a href="wave-0811-night/b01-t2i-fig/01-cold-open-wave1-s2.png" target="_blank" rel="noopener"><img src="wave-0811-night/b01-t2i-fig/01-cold-open-wave1-s2.png" alt="Beat 01, seed s2"></a><figcaption>s2</figcaption></figure>
+    <figure><a href="wave-0811-night/b01-t2i-fig/01-cold-open-wave1-s3.png" target="_blank" rel="noopener"><img src="wave-0811-night/b01-t2i-fig/01-cold-open-wave1-s3.png" alt="Beat 01, seed s3"></a><figcaption>s3</figcaption></figure>
+  </div>
+
+  <p class="obs">
+    <span class="lbl">Observed</span>
+    Leaf counts came down to three, two, two and five. No round fig sits on the plant in s0, s2 or s3; s1 is the only frame with round green fruit in it, two of them, and they are on a separate blurred stem in the background rather than on the seedling in focus. In s0 the topmost shape is a broad heart-shaped leaf rather than a fig. The stem runs out of the bottom edge in all four, so the whole plant is never in frame, and s1 is a macro tight enough that the plant reads as leaves only.
+  </p>
+
+  <p class="prov">animagine-xl-3.1 · 832×1216 · 40 steps · guidance 7.5 · seeds 20260720 / 20261720 / 20262720 / 20263720 · $0.00 · full prompt and provenance in the .yaml beside each PNG</p>
+</section>
+
+<footer class="foot">
+  Frames copied from the <code>farm-results-rtx5090</code> branch and checked against each round's .sha256 manifest — 48 of 48 files matched.
+  Sources: <code>ep2-b02-goblin-hide</code>, <code>ep2-guards-silly</code> (the b05 job), <code>ep2-b05-warmfield</code>, <code>ep2-b03-field-solo</code>, <code>ep2-b04-fieldban</code>, <code>ep2-b01-t2i-fig</code>.
+  Local copies live in <code>review/ep2-picks/wave-0811-night/</code>.
+</footer>
+
+</div>
+</body>
+</html>
