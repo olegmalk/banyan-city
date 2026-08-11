@@ -12,6 +12,58 @@
 # TRAILING sentences and the style anchor is always last -- an overrun does not
 # come back truncated, it comes back unstyled, silently.
 
+# ===========================================================================
+# STAGING RE-CUT, 2026-08-11 — WHY THIS SPEC CHANGED WHILE STILL GATED.
+#
+# THE EVIDENCE. `ep2-b15-goblin-simple-0811` was the ONE SAMPLE against the
+# founder's definition ("he is just a simple green goblin, nothing complex"),
+# with the slot cut back to `green skin`. It SETTLED THE CHARACTER: one plain
+# green round-headed creature with pointed ears, consistent across all four
+# seeds — the first time the words-only route has held species. It FAILED ON
+# STAGING, and the lane scored it `partial`, miss_axis STAGING: THREE OF THE
+# FOUR SEEDS DREW HIM FROM BEHIND, so there was no face to judge, and the
+# sapling came back a houseplant in two frames, absent in one, and a walking
+# creature with its own face in the fourth. Sidecars, with the exact string the
+# model saw: review/tonight/15-good-listener-wave1-s{0..3}.yaml.
+#
+# WHY THAT LANDS ON THIS FILE. All fourteen `ep2-b*-goblin-wave1` specs were
+# written in one sitting on 2026-08-10 against the same drafts, so the beat this
+# spec draws carries the same two holes beat 15 did: nothing in its words says
+# where the camera is relative to the goblin's face, and nothing says the
+# sapling is in the ground. Cleared as written, it inherits the same defect. So
+# the staging is fixed NOW, while the gate still holds, and the founder's
+# approval is the only thing left between this spec and a usable frame.
+#
+# WHAT ACTUALLY CHANGED HERE — three lines, and no new ornament:
+#   1. `--variant authored_staged`. The corrected staging lives in a NEW key
+#      beside the old one in wave-drafts.yaml; `authored` is byte-identical to
+#      what it was, because the ungated goblin_ipa_* crossbeat jobs read it for
+#      beats 2, 15 and 20 and a lane is verifying beat 02 right now. The
+#      per-beat wording change, and why, is in the comment above that beat's
+#      `authored_staged` block. The fix is affirmative and mostly SUBTRACTION —
+#      `from front` / an explicit face clause, `rooted in the grass`, paid for
+#      by deleting `40cm`, `mascot-simple` and `standing tall`. Nothing was
+#      added to the negative: it is ALREADY over CLIP's 77 and dropping nine
+#      house terms, so a prohibition bought there is a quality term sold.
+#   2. `goblin_def: green skin`, down from `green skin, tusks`. This is a
+#      REMOVAL, and it is the whole finding of 2026-08-11: every round that
+#      bought a tag with leftover tokens lost, and the round that took one out
+#      won. `tusks` is a word the founder never said. Leaving it here would mean
+#      he approves a sample drawn with `green skin` and thirteen beats then
+#      render a recipe he never saw — which is exactly the mismatch the b15
+#      spec's own consumer note warned about.
+#   3. A `preflight` step: the same command with `--dry`, which measures on the
+#      box's real CLIP tokenizer and draws nothing. It exists because this Mac
+#      has NO tokenizer (sd_prompt._clip_tokenizer() returns None), so the token
+#      budgets behind the rewrite above are reasoned, not measured. It also
+#      fails loudly if the box's wave-drafts.yaml is older than this job and has
+#      no `authored_staged` key — a silent fallback to `authored` would render
+#      the OLD staging under the NEW job id and nobody would see it in the
+#      frames. It costs seconds and no GPU.
+#
+# THE GATE BELOW IS UNTOUCHED AND STAYS SHUT. Clearing it is the founder's act.
+# ===========================================================================
+
 id: ep2-b03-goblin-wave1
 task: ep2-b03-goblin-wave1-0810
 node: 002b-first-citizen
@@ -52,15 +104,21 @@ why: >-
   comes back different in kind from beat 04's sample, the difference is the
   beat's own staging and not the recipe.
 
-goblin_def: green skin, tusks
+goblin_def: green skin
 goblin_def_source: >-
-  The founder, 2026-08-10 ~12:15, verbatim: "he is just a simple green goblin,
-  nothing complex" (cuts/cuts.yaml item 18, settled; commit d33fb09). The string
-  above is the STEWARD'S TRANSLATION of that sentence into slot tags and is NOT
-  his words -- `green skin` is his one named attribute, `tusks` is not a word he
-  said. It is pinned here only because it is the exact string the ONE SAMPLE was
-  drawn with; changing it here without redrawing the sample would mean these
-  fourteen render a recipe he never saw.
+  The founder, verbatim: "he is just a simple green goblin, nothing complex"
+  (2026-08-10 ~12:15, re-stated 2026-08-11; cuts/cuts.yaml item 18, settled;
+  taste ledger `ep2-goblin-definition-0810`). `green skin` is the ONE attribute
+  he named and the only one both spoken and proven (4/4 in records 40 and 42).
+  This was `green skin, tusks` until 2026-08-11. `tusks` is not his word -- it
+  was bought for three tokens in r9 on the steward's own metric, and the ledger
+  says so itself: "the correct next move on this sentence is to REMOVE terms,
+  not to buy another tag with the remaining token headroom." It is removed here
+  so that this spec renders the SAME recipe as the one sample he is being shown
+  (`ep2-b15-goblin-simple-0811`, goblin_def `green skin`). Pinning it to
+  anything else would mean his verdict releases thirteen beats drawn with a
+  string he never saw. If he rules that the sample needs tusks back, this line
+  is where that goes -- and it goes back as his call, not the steward's.
 
 est_minutes: 2
 needs:
@@ -79,6 +137,30 @@ env:
   PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
 
 steps:
+# Measure the staged draft on the box's real CLIP tokenizer and draw
+# NOTHING. --dry returns 0 after check() runs every dialect assertion,
+# 1 on a fault (style anchor dropped, count tag wrong, `female goblin`
+# squeezed out of the negative), 4 if this box's wave-drafts.yaml has no
+# `authored_staged` key for the beat, and 9 if the tokenizer is missing.
+# Deliberately NOT allow_fail: a staging fix that cannot be measured is
+# not a staging fix, and failing here costs seconds and zero GPU.
+- name: preflight
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '3'
+  - --goblin-def
+  - green skin
+  - --variant
+  - authored_staged
+  - --task
+  - ep2-b03-goblin-wave1-0810
+  - --dry
 - name: sample
   argv:
   - C:\banyan-farm\venv\Scripts\python.exe
@@ -90,7 +172,9 @@ steps:
   - --beat
   - '3'
   - --goblin-def
-  - green skin, tusks
+  - green skin
+  - --variant
+  - authored_staged
   - --task
   - ep2-b03-goblin-wave1-0810
 

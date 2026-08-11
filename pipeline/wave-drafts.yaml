@@ -38,6 +38,86 @@
 #   species species only — a goblin, no plant in frame; the nine fusion tags would
 #           spend ~20 tokens suppressing a collision that cannot happen
 #   guard   neither — no goblin in frame
+#
+# ---------------------------------------------------------------------------
+# `authored_staged` — THE STAGING FIX, 2026-08-11, AND WHY IT IS A SECOND KEY
+# RATHER THAN AN EDIT TO `authored`.
+#
+# WHAT THE EVIDENCE IS. The one sample `ep2-b15-goblin-simple-0811` ran beat 15
+# through this file's `authored` with the slot at `green skin`. It settled the
+# CHARACTER — one plain green round-headed creature with pointed ears, holding
+# across four seeds, the first time the words-only route has held species. It
+# failed on STAGING, and the lane scored it `partial`, miss_axis STAGING:
+# THREE OF FOUR SEEDS DREW HIM FROM BEHIND, so there was no face to judge, and
+# the sapling came back a houseplant in two frames, absent in one, and a walking
+# creature with its own face in the fourth. Sidecars: review/tonight/
+# 15-good-listener-wave1-s{0..3}.yaml.
+#
+# WHY THE WORDS LET IT HAPPEN. Read what beat 15 actually sent (s0 sidecar,
+# `prompt:`): "...tips his head back talking up at a tiny sapling standing tall
+# beside him, its two oversized leaves hanging above him. Warm midday light,
+# lonely tone, slow push-in, ...". Two holes, both of omission:
+#   1. NOTHING IN IT SAYS WHERE THE CAMERA IS RELATIVE TO HIS FACE. "slow
+#      push-in" is a MOVE, not an angle; "tips his head back talking up at" is a
+#      pose whose most common depiction is over-the-shoulder. The one beat in
+#      this file that does state it — beat 04, "his face filling the frame" — is
+#      the one beat whose frames came back readable. So the fix is the thing
+#      beat 04 already has and the rest never got, not a new idea.
+#   2. NOTHING IN IT SAYS THE SAPLING IS IN THE GROUND. "a tiny sapling standing
+#      tall" is satisfied by a potted plant on a table. The negative fights only
+#      BIGNESS (`mature tree, large tree, thick trunk, full canopy, forest,
+#      bush, shrubbery`) — nothing there excludes a pot, and nothing affirms
+#      soil.
+#
+# THE FIX IS AFFIRMATIVE AND IT IS MOSTLY SUBTRACTION. Two short additions per
+# beat: `from front` / an explicit face clause, and `rooted in the grass` /
+# `rooted in the ground`. Paid for by REMOVING dead weight — `40cm` (does not
+# bind), `mascot-simple` (the anthropomorphism vector that most plausibly drew
+# the sapling as a walking creature), `standing tall` (a size cue replaced by a
+# better one). NOTHING WAS ADDED TO THE GOBLIN SLOT and nothing was added to the
+# negative: the negative is ALREADY over CLIP's 77 and dropping nine house terms
+# (see the s0 sidecar's NEGWARN), so a prohibition bought there is a quality
+# term sold. This is the same lesson as the rest of 2026-08-11 — every round
+# that bought a new tag lost, and the round that removed one won.
+#
+# WHY NOT EDIT `authored` IN PLACE. `authored` is read by three other things,
+# and two of them are UNGATED and can fire at any moment:
+# `ep2-b02-goblin-ipa-crossbeat`, `ep2-b15-goblin-ipa-crossbeat` and
+# `ep2-b20-goblin-ipa-crossbeat` all call goblin_ipa_beat.py, which pulls
+# `d["authored"]` for beats 2, 15 and 20 — and a lane is verifying beat 02 right
+# now. Rewriting `authored` would change a live experiment's prompt underneath
+# it, which is the one-variable violation this whole wave exists to avoid. So
+# `authored` is BYTE-IDENTICAL to what it was; `authored_staged` sits beside it
+# and only `--variant authored_staged` reaches it. render_wave_goblin.py reads
+# `authored` and `authored_untagged` by name and is inert to the new key.
+#
+# NOT EVERY BEAT CHANGED, AND THAT IS DELIBERATE:
+#   beat 11 they-leave — `authored_staged` is byte-identical to `authored`.
+#     "walk away from camera ... growing smaller" IS the beat. Forcing a face
+#     into it would break the shot to satisfy a rule that does not apply: no
+#     goblin, no sapling, and the backs are the content.
+#   beats 04 and 15 have NO `authored_staged` at all. 04 belongs to the
+#     IP-adapter lane and already states its face; 15 is the sample that was
+#     drawn, and its record has to stay reproducible.
+#   the count tag was NOT touched on any beat. `_tag_from_clause` reads the
+#     FIRST comma-clause of the first sentence, so every insertion here was
+#     placed AFTER that clause and every declared `tag` still derives.
+#
+# ONE COST, NAMED. Beat 20 gains the word `sapling`, which trips `_SMALL` and
+# adds the eight-term SCALE_NEGATIVES block it did not carry before. That pushes
+# more house terms off the end of the negative. It is the right trade: without
+# the word, "a bare branch above" on Animagine reads as a mature tree's branch,
+# and NEG_DROP_ORDER protects `explicit` last, so `female goblin` and the fusion
+# tags — the two things check() faults on — survive it.
+#
+# EVERY ONE OF THESE IS UNMEASURED FOR TOKENS AND THAT IS SAFE. This Mac has no
+# CLIP tokenizer (sd_prompt._clip_tokenizer() returns None here), so the counts
+# above are reasoned, not measured. An overrun cannot reach a frame: check()
+# faults on STYLE ANCHOR MISSING / POSITIVE DROPPED and render_wave_sample.py
+# returns 1 BEFORE it imports torch. Each spec therefore runs the same command
+# with --dry as a first step, which measures on the box's real tokenizer and
+# fails the job for $0 if any of this is too long.
+# ---------------------------------------------------------------------------
 
 beats:
 
@@ -54,6 +134,18 @@ beats:
       lighting, detailed, newest, masterpiece, best quality, very aesthetic No
       girl, no child. No photorealism, no 3D render look. 9:16 vertical, no
       text.
+    # STAGED: +`from front`, +`rooted in the grass`, +`his face visible past its
+    # thin stem`. -`40cm` (does not bind), -`mascot-simple` (the word most
+    # likely to have drawn a sapling with a face), -`standing tall`. "dives
+    # behind" is the joke and stays — the camera moves to the front, he does
+    # not. First clause untouched, so the tag still derives 1boy.
+    authored_staged: >-
+      A small goblin boy, {{GOBLIN}}, solo, from front, sprints in panic and
+      dives behind a tiny sapling rooted in the grass, his face visible past its
+      thin stem, dust kicking up. Static camera, wide shot, morning light,
+      cinematic lighting, detailed, newest, masterpiece, best quality, very
+      aesthetic No girl, no child. No photorealism, no 3D render look. 9:16
+      vertical, no text.
 
   3:
     slug: bad-cover
@@ -67,6 +159,18 @@ beats:
       Deadpan comedic staging, static camera, cinematic lighting, detailed,
       newest, masterpiece, best quality, very aesthetic No girl, no child. No
       photorealism, no 3D render look. 9:16 vertical, no text.
+    # STAGED: +`from front`, +`rooted in the grass`, +`his face visible beside
+    # it`. -`40cm`, -`low`, -`almost`; `trunk` -> `stem`, which is what a 40cm
+    # sapling has and is one fewer thing pulling toward a mature tree. The face
+    # clause also serves the joke: the cover is bad BECAUSE we can see all of
+    # him, and `hides none of him` says that harder than `almost none`.
+    authored_staged: >-
+      A small goblin boy, {{GOBLIN}}, solo, from front, crouches behind the
+      pencil-thin stem of a tiny sapling rooted in the grass that hides none of
+      him, his face visible beside it. Deadpan comedic staging, static camera,
+      cinematic lighting, detailed, newest, masterpiece, best quality, very
+      aesthetic No girl, no child. No photorealism, no 3D render look. 9:16
+      vertical, no text.
 
   4:
     slug: the-footnote
@@ -93,6 +197,17 @@ beats:
       static camera, long soft shadows, cinematic lighting, detailed, newest,
       masterpiece, best quality, very aesthetic No girl, no child. No
       photorealism, no 3D render look. 9:16 vertical, no text.
+    # STAGED, face axis only: `halt,` -> `halt facing camera,`. No goblin and no
+    # sapling in this beat, so neither of the two guarantees applies to it — but
+    # "jog into frame and halt" is the same open camera relation that put three
+    # of four b15 seeds behind the subject, and a patrol whose faces we never
+    # see is not a shot. Three tokens, no other change, `2boys` still derives.
+    authored_staged: >-
+      Two round guard men in mismatched ill-fitting armor jog into frame and
+      halt facing camera, scanning an empty morning field, one carrying a bark
+      clipboard. Wide static camera, long soft shadows, cinematic lighting,
+      detailed, newest, masterpiece, best quality, very aesthetic No girl, no
+      child. No photorealism, no 3D render look. 9:16 vertical, no text.
 
   6:
     slug: the-clipboard
@@ -104,6 +219,20 @@ beats:
       A round guard man in mismatched armor turns over a bark clipboard that
       fills the lower third of the frame, tracing a line on it with one finger
       as he reads, brow furrowed. Slow drift in, medium close-up, cinematic
+      lighting, detailed, newest, masterpiece, best quality, very aesthetic No
+      girl, no child. No photorealism, no 3D render look. 9:16 vertical, no
+      text.
+    # STAGED, face axis only, AS A NET-ZERO SWAP. A clipboard that "fills the
+    # lower third" is exactly the composition an over-the-shoulder answers, and
+    # `brow furrowed` does not put the brow in frame. But this beat has almost
+    # no slack — the original clears the budget by a hair — so `from front` is
+    # PAID FOR by `with one finger`, a detail no medium close-up resolves
+    # anyway. Nothing else changed; the comma after `armor` shortens the first
+    # clause but `man` is still inside it, so `1boy` still derives.
+    authored_staged: >-
+      A round guard man in mismatched armor, from front, turns over a bark
+      clipboard that fills the lower third of the frame, tracing a line on it as
+      he reads, brow furrowed. Slow drift in, medium close-up, cinematic
       lighting, detailed, newest, masterpiece, best quality, very aesthetic No
       girl, no child. No photorealism, no 3D render look. 9:16 vertical, no
       text.
@@ -121,6 +250,17 @@ beats:
       field, cinematic lighting, detailed, newest, masterpiece, best quality,
       very aesthetic No girl, no child. No photorealism, no 3D render look. 9:16
       vertical, no text.
+    # STAGED, face axis only: +`from front`. Three tokens and nothing else —
+    # "pointing off-frame" already pulls the camera round behind the arm, and
+    # the tag that is the direct antonym of the observed failure (`from behind`)
+    # is the cheapest thing that answers it. `1boy` still derives from `man`.
+    authored_staged: >-
+      A round guard man in mismatched armor, from front, thrusts one arm out,
+      pointing off-frame with the confidence of a man who has solved the
+      problem, his partner's shoulder just visible at frame edge. Static camera,
+      morning field, cinematic lighting, detailed, newest, masterpiece, best
+      quality, very aesthetic No girl, no child. No photorealism, no 3D render
+      look. 9:16 vertical, no text.
 
   8:
     slug: inside-him
@@ -135,6 +275,25 @@ beats:
       cinematic lighting, detailed, newest, masterpiece, best quality, very
       aesthetic No girl, no child. No photorealism, no 3D render look. 9:16
       vertical, no text.
+    # STAGED, face axis only, AND THE TIGHTEST BEAT IN THE WAVE — 9 tokens of
+    # headroom with `green skin, tusks`, ~11 with the slot at `green skin`. So
+    # this gets the smallest possible fix: +`from front`, and `who looks down at
+    # himself` -> `who looks down, his face visible`. That is ~5 tokens, not the
+    # ~8 a "both faces visible" would have cost; the guard's face is a bonus,
+    # the GOBLIN's face is the requirement. No sapling here (extra_neg species,
+    # no plant in frame), so no sapling clause. PAID FOR by `flatly` (the
+    # deadpan is already in "Deadpan two-shot") and by `mismatched` on the
+    # guard's armor — which survives on beats 05, 06, 07, 10 and 11, whereas the
+    # goblin's `patchwork cloak` appears on only one other beat and is the
+    # costume of the character actually under scrutiny, so it stays. `2boys`
+    # still derives from the untouched first clause `Two round boys`.
+    authored_staged: >-
+      Two round boys, from front, a guard man in armor pointing at the belly of
+      a small goblin boy, {{GOBLIN}}, in a patchwork cloak who looks down, face
+      visible. Deadpan two-shot, no movement but the pointing arm, cinematic
+      lighting, detailed, newest, masterpiece, best quality, very aesthetic No
+      girl, no child. No photorealism, no 3D render look. 9:16 vertical, no
+      text.
 
   9:
     slug: the-pause
@@ -148,6 +307,18 @@ beats:
       Minimal motion, deadpan timing, cinematic lighting, detailed, newest,
       masterpiece, best quality, very aesthetic No split panels, no girl, no
       child. No photorealism, no 3D render look. 9:16 vertical, no text.
+    # STAGED, face axis only: +`from front`. This beat already states the face
+    # affirmatively ("Close-up on a round guard man, his face working slowly")
+    # and is the closest thing in the file to beat 04's working formula, so it
+    # needs almost nothing — but a close-up can still be drawn from behind, and
+    # three tokens closes that. No other word changed.
+    authored_staged: >-
+      Close-up on a round guard man, from front, his face working slowly through
+      an idea, eyes drifting and mouth opening slightly as his helmet slips a
+      fraction. Minimal motion, deadpan timing, cinematic lighting, detailed,
+      newest, masterpiece, best quality, very aesthetic No split panels, no
+      girl, no child. No photorealism, no 3D render look. 9:16 vertical, no
+      text.
 
   10:
     slug: no-form
@@ -162,6 +333,17 @@ beats:
       lighting, detailed, newest, masterpiece, best quality, very aesthetic No
       girl, no child. No photorealism, no 3D render look. 9:16 vertical, no
       text.
+    # STAGED, face axis only: +`from the front`. The guard "holding up the
+    # completely blank back of his bark clipboard toward the other" is a pose
+    # the model draws over his shoulder by default, which is how a two-hander
+    # becomes one back and one blur. `2boys` still derives.
+    authored_staged: >-
+      Two round guard men in mismatched armor from the front, one holding up the
+      completely blank back of his bark clipboard toward the other and shaking
+      it once for emphasis. Static camera, the blank board dominating the frame,
+      cinematic lighting, detailed, newest, masterpiece, best quality, very
+      aesthetic No girl, no child. No photorealism, no 3D render look. 9:16
+      vertical, no text.
 
   11:
     slug: they-leave
@@ -170,6 +352,20 @@ beats:
     extra_neg: guard
     gist: they leave
     authored: >-
+      Two round guard men in mismatched armor walk away from camera across an
+      empty field, gesturing at each other, growing smaller as they go. Static
+      wide camera, wide shot, long morning shadows, cinematic lighting,
+      detailed, newest, masterpiece, best quality, very aesthetic No girl, no
+      child. No photorealism, no 3D render look. 9:16 vertical, no text.
+    # NOT STAGED — BYTE-IDENTICAL TO `authored`, ON PURPOSE. This is the one
+    # beat in the wave where from-behind is the shot: "walk away from camera
+    # across an empty field ... growing smaller as they go" is the departure the
+    # beat exists to show. There is no goblin in it and no sapling, so neither
+    # guarantee applies, and adding a face here would break a working shot to
+    # satisfy a rule written for a different failure. The key exists so all
+    # thirteen specs can pass the same `--variant authored_staged` and so a
+    # missing key stays a loud error rather than a silent fallback.
+    authored_staged: >-
       Two round guard men in mismatched armor walk away from camera across an
       empty field, gesturing at each other, growing smaller as they go. Static
       wide camera, wide shot, long morning shadows, cinematic lighting,
@@ -206,6 +402,23 @@ beats:
       back down. Intimate low close-up, shallow green grass background, cinematic
       lighting, detailed, newest, masterpiece, best quality, very aesthetic No
       girl, no child. No photorealism, no 3D render look. 9:16 vertical, no text.
+    # STAGED, face axis only: +`from front`, and `his face glancing away
+    # embarrassed above them` -> `his whole face in frame above them, eyes
+    # glancing away embarrassed`. THE EMBARRASSMENT IS THE BEAT AND IT IS KEPT —
+    # what moves is the EYES, not the head, so the face stays in frame while
+    # still reading as looking away. On a hands close-up "his face ... above
+    # them" was the only thing holding the head in shot, and it was losing.
+    # No sapling in this beat, so no sapling clause.
+    # `authored_untagged` above is DELIBERATELY NOT STAGED: it is the contested
+    # count-tag variant the file says "somebody who is not me picks", and
+    # re-cutting an unresolved A/B would destroy the comparison.
+    authored_staged: >-
+      A small goblin boy, {{GOBLIN}}, solo, from front, his clawed fingers
+      picking at loose dirt and flicking pebbles aside, his whole face in frame
+      above them, eyes glancing away embarrassed. Intimate low close-up, shallow
+      green grass background, cinematic lighting, detailed, newest, masterpiece,
+      best quality, very aesthetic No girl, no child. No photorealism, no 3D
+      render look. 9:16 vertical, no text.
 
   15:
     slug: good-listener
@@ -234,6 +447,21 @@ beats:
       amber, cinematic lighting, detailed, newest, masterpiece, best quality,
       very aesthetic No girl, no child. No photorealism, no 3D render look. 9:16
       vertical, no text.
+    # STAGED, both axes: `turns away from a tiny sapling toward the open field`
+    # -> `turns from a tiny sapling rooted in the grass to face camera, the open
+    # field behind him`. THE STORY IS UNCHANGED — he still turns away from the
+    # sapling and the field is still where he is headed; the camera is simply on
+    # the side he turns toward, which is the only way a goodbye reads. Paid for
+    # by `afternoon light warming toward amber` -> `amber afternoon light`,
+    # which is the same light in three fewer tokens, and `pushes himself up to
+    # standing` -> `stands up`, which is the same action in four fewer.
+    authored_staged: >-
+      A small goblin boy, {{GOBLIN}}, solo, stands up, brushes dust off his
+      patchwork cloak, and turns from a tiny sapling rooted in the grass to face
+      camera, the open field behind him. Static camera, amber afternoon light,
+      cinematic lighting, detailed, newest, masterpiece, best quality, very
+      aesthetic No girl, no child. No photorealism, no 3D render look. 9:16
+      vertical, no text.
 
   19:
     slug: the-drop
@@ -247,6 +475,24 @@ beats:
       grass. Static camera, amber afternoon, cinematic lighting, detailed,
       newest, masterpiece, best quality, very aesthetic No girl, no child. No
       photorealism, no 3D render look. 9:16 vertical, no text.
+    # STAGED, both axes: `stops mid-step as` -> `stops mid-step with a surprised
+    # face toward camera as`, and `a tiny sapling standing tall` -> `a tiny
+    # sapling rooted in the ground`. The surprise is the whole gag and it is
+    # worth nothing if it lands on the back of his head. `rooted in the ground`
+    # rather than `in the grass` because the fig already lands in the grass one
+    # clause later and the repeat would spend tokens saying it twice.
+    # PAID FOR by `and lands in the grass`, and that removal is measured, not
+    # preferred: with it kept, the whole style sentence drops and the anchor
+    # goes with it. It costs nothing real here — this renders a STILL, and the
+    # still is the bounce, not the landing. The motion beat keeps the full
+    # clause in `authored`, which is untouched.
+    authored_staged: >-
+      A small goblin boy, {{GOBLIN}}, solo, stops mid-step, surprised face
+      toward camera, as a ripe fig drops from a tiny sapling rooted in the
+      ground and bounces off his head. Static camera, amber afternoon, cinematic
+      lighting, detailed, newest, masterpiece, best quality, very aesthetic No
+      girl, no child. No photorealism, no 3D render look. 9:16 vertical, no
+      text.
 
   20:
     slug: evidence
@@ -260,3 +506,23 @@ beats:
       branch above. Warm amber afternoon light, cinematic lighting, detailed,
       newest, masterpiece, best quality, very aesthetic No girl, no child. No
       photorealism, no 3D render look. 9:16 vertical, no text.
+    # STAGED, both axes, AND THIS IS THE BEAT WHERE THE SAPLING WAS SIMPLY NOT
+    # NAMED. `extra_neg: full` declares a goblin AND a plant share this frame,
+    # yet the word `sapling` appears nowhere in it — the plant is only "a bare
+    # branch above", which on Animagine is a mature tree's branch as readily as
+    # a seedling's. So: `a bare branch above` -> `the bare branch of a tiny
+    # sapling above him`, and +`his face toward camera`, paid for by `raises a
+    # fig in both hands in front of him` -> `holds a fig up in both hands`.
+    # NAMED COST: `tiny`/`sapling` trip _SMALL, so this beat now carries the
+    # eight-term SCALE_NEGATIVES block it did not carry before, and more house
+    # terms will drop off the end of the negative. That is the right trade —
+    # NEG_DROP_ORDER drops `explicit` LAST, so `female goblin` and the fusion
+    # tags, the two things check() faults on, survive it, and the --dry step in
+    # the spec proves that on the box before a frame is drawn.
+    authored_staged: >-
+      A small goblin boy, {{GOBLIN}}, solo, holds a fig up in both hands like
+      evidence, his face toward camera, eyes wide as he looks up at the bare
+      branch of a tiny sapling above him. Warm amber afternoon light, cinematic
+      lighting, detailed, newest, masterpiece, best quality, very aesthetic No
+      girl, no child. No photorealism, no 3D render look. 9:16 vertical, no
+      text.

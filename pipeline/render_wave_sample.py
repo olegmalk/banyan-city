@@ -91,6 +91,7 @@ def sidecar(png: Path, *, seed: int, row: dict, secs: float, task: str,
               "sentence nor his script, and record 42 read it as overshoot on "
               "2 of 4. He has not ratified this translation."),
         "prompts_from: wave-drafts.yaml (NOT shots.md — shots.md is untouched)",
+        f"draft_variant: {row.get('variant', 'authored')}",
         f"harness_sha256: {harness_sha}",
         f"drafts_sha256: {drafts_sha}",
         "tokenizer: openai/clip-vit-large-patch14 (transformers, on the box)",
@@ -122,6 +123,16 @@ def main() -> int:
     ap.add_argument("--task", default=None, help="queue/heartbeat id for provenance")
     ap.add_argument("--out", default=None)
     ap.add_argument("--dry", action="store_true", help="measure, draw nothing")
+    # WHICH DRAFT TEXT TO SEND. Defaults to `authored`, so every caller written
+    # before 2026-08-11 sends exactly the bytes it always did — including the
+    # ungated goblin_ipa_* crossbeat jobs, which read `authored` for beats 2, 15
+    # and 20 and must not have their prompt changed underneath them.
+    # `authored_staged` is the 2026-08-11 staging fix (see wave-drafts.yaml's
+    # header): the b15 sample proved the CHARACTER and failed on STAGING, three
+    # of four seeds from behind with the sapling drifting to a houseplant.
+    ap.add_argument("--variant", default="authored",
+                    help="draft key to render: `authored` (default) or "
+                         "`authored_staged`. Never falls back.")
     a = ap.parse_args()
 
     if a.beat is None:
@@ -159,8 +170,27 @@ def main() -> int:
         return 4
 
     d = drafts[a.beat]
-    authored = d["authored"]
-    if wg.GOBLIN_SLOT not in authored:
+    # NO FALLBACK TO `authored`, DELIBERATELY. If the box's drafts file is stale
+    # and lacks the requested key, silently sending the old text would render the
+    # OLD staging under the NEW job id — the failure would be invisible in the
+    # frames and would only surface as another round of "why is he facing away".
+    if a.variant not in d:
+        print(f"!! beat {a.beat:02d} ({d['slug']}) has no `{a.variant}` key in "
+              f"{drafts_path.name}. Keys present: "
+              f"{sorted(k for k in d if k.startswith('authored'))}. This box's "
+              "copy of wave-drafts.yaml is older than the job that was queued "
+              "against it — copy the repo's pipeline/wave-drafts.yaml over and "
+              "re-run. Refusing rather than falling back.", flush=True)
+        return 4
+    authored = d[a.variant]
+    # THE GOBLIN-SLOT REFUSAL IS FOR BEATS THAT ARE SUPPOSED TO HAVE A GOBLIN.
+    # It used to fire on ANY beat without the marker, which made the six guard
+    # beats of this wave (05, 06, 07, 09, 10, 11) unrenderable by this file —
+    # every one of them would have returned 4 the moment its spec was cleared,
+    # and their specs were written and staged that way. A guard beat legitimately
+    # has no goblin in it; render_wave_goblin.py's own equivalent check has
+    # always excluded `kind == "guard"` for exactly this reason. Mirror it.
+    if wg.GOBLIN_SLOT not in authored and d["kind"] != "guard":
         print(f"!! beat {a.beat:02d} ({d['slug']}, kind={d['kind']}) carries no "
               f"{wg.GOBLIN_SLOT} marker, so the founder's definition would have "
               "nowhere to go and this render would test nothing about the "
@@ -169,6 +199,7 @@ def main() -> int:
         return 4
 
     row = wg.check(a.beat, d, authored.replace(wg.GOBLIN_SLOT, a.goblin_def), sd)
+    row["variant"] = a.variant
     row["extra_neg_tier"] = d["extra_neg"]
     if row["faults"]:
         print("\n!! FAULTS — nothing drawn: " + "; ".join(row["faults"]),
@@ -181,6 +212,7 @@ def main() -> int:
     task = a.task or f"ep2-b{a.beat:02d}-wave-sample-{int(time.time())}"
 
     print(f"\nONE SAMPLE — beat {a.beat:02d} {d['slug']}, 4 seeds, $0", flush=True)
+    print(f"   draft variant: {a.variant}", flush=True)
     print(f"   goblin definition: {a.goblin_def!r}", flush=True)
     print(f"   task: {task}", flush=True)
     print(f"   harness sha256: {harness_sha}", flush=True)
