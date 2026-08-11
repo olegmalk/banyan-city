@@ -8723,3 +8723,57 @@
   outcome: null
   miss_axis: null
   model_action: null
+- id: ltx-gprobe-guidance-0811-method-check
+  date: 2026-08-11
+  kind: observation
+  subject: "Addendum to `ltx-gprobe-guidance-0811-scored`: the apex reconstruction
+    was run against the very clip the published 181px figure names, which puts a
+    number on its error bar and CORRECTS what the scored record guessed about
+    where the gap came from. The probe's conclusion is unchanged and is now shown
+    to hold under two different readings of 'rise'."
+  steward_provisional: true
+  pick: null
+  scores: {}
+  why_this_is_a_separate_record: >-
+    `ltx-gprobe-guidance-0811-scored` is committed at 5f77124 and stays as
+    written; this file is append-only. It said the 181px gap was down to "not the
+    same clip ... and the methods differ too" and left the split between those two
+    causes unstated. That was a guess and it is now measured, so the correction
+    goes here where it can be read next to the thing it corrects.
+  the_reconstruction_measured_against_its_own_baseline: >-
+    Ledger 655d2c6 defines the landmark as "the sprout apex's topmost row ...
+    rises 181 px - 14.1% of frame height" on beat 10 TWIN r2, seed 20260741. No
+    code for it was ever committed — 655d2c6 touched the ledger and nothing else —
+    so this lane's measure is a reconstruction of the same landmark and not the
+    same code. Run against that exact clip, `10-ltx-r2-plate-s20260741.mp4`, the
+    reconstruction reads 140px where the published figure says 181px: a ratio of
+    0.77, the same shape of discrepancy `ep1-b08-v34-plate-g20-sample-scored`
+    reported when its FLOW numbers came in at a consistent 0.89 of the recorded
+    ones. THE GAP THEREFORE DECOMPOSES, and the scored record's guess was only
+    half right: 181 -> 140 is the METHOD, and 140 -> 82 is the SEED, r2 at
+    20260741 against this probe's r2g at 20260897. Absolute numbers here must not
+    be quoted against the sheet's 181px.
+  the_conclusion_survives_both_readings_of_rise: >-
+    "Rises over the shot" can mean the last frame or the highest point reached.
+    Measured both ways, one pass, same classifier:
+    LAST FRAME  — g1.0 82px, g2.0 -6px, g2.5 2px, OLD-neg g2.0 40px.
+    HIGHEST POINT — g1.0 126px, g2.0 22px, g2.5 40px, OLD-neg g2.0 62px.
+    The ordering is identical under both, and so is the attribution: the control
+    climbs most, the two arms whose negative NAMES the climb are far below it, and
+    the arm at the same guidance whose negative does NOT name the climb sits
+    between them. The conclusion does not depend on which reading is used.
+    ONE THING THE PEAK READING ADDS that the last-frame reading hides: at g2.0 and
+    g2.5 the apex does still rise transiently (22px and 40px) and then SETTLES
+    BACK to where it started. So the negative does not prevent the model from
+    starting to draw the plant taller; it prevents the shot from ENDING taller.
+    For a beat that has to cut cleanly that is the property that matters, but it
+    is a weaker claim than "the model never draws the climb" and the scored
+    record should be read with it.
+  what_did_not_change: >-
+    Predicates (1), (2) and (3) still hold and (4) is still a miss, for the
+    reasons already recorded at 5f77124. The picture-cost numbers are untouched.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null

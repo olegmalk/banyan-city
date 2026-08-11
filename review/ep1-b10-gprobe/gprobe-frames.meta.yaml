@@ -1,0 +1,88 @@
+# Provenance (§7.2) for the two LTX guidance-probe contact sheets in this dir.
+# These are STEWARD-MADE COMPARISON SHEETS, not renders and not candidates: no
+# clip here takes a canon filename, nothing is picked and nothing is published.
+# The probe they read is `ltx-gprobe-guidance-0811` (ledger), specs
+# pipeline/jobs/ltx-gprobe-g{10,20,25}-0811.yaml, commit 6871f93.
+
+task: ltx-gprobe-guidance-0811
+beat: 10
+node: 001-capability-inventory
+date: 2026-08-11
+cost_usd: 0
+model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+model_licence: LTX-2 Community License Agreement
+
+source_clips:
+  # All three verified byte-exact against their farm-out sha256 manifests
+  # before a frame was extracted.
+  - path: farm-out/ltx-gprobe-g10-0811/10-ltx-gprobe-g10-0811-s20260897.mp4
+    guidance: 1.0
+    sha256: 45ceda8964b9a349dadd6ae35a54b8edc553a91c3c3dff6a9313770f71093c24
+  - path: farm-out/ltx-gprobe-g20-0811/10-ltx-gprobe-g20-0811-s20260897.mp4
+    guidance: 2.0
+    sha256: 365e0d729b7f8f9db76993d5d37d4d9bccf9a212cfbcca9cea0cb7242f1a99ef
+  - path: farm-out/ltx-gprobe-g25-0811/10-ltx-gprobe-g25-0811-s20260897.mp4
+    guidance: 2.5
+    sha256: 50f4f075530fe9c3ce38bbb1c08fe777aa6883bf204ef8f6292d28c006c3288d
+  - path: C:\banyan-farm\v34-motion-0810\10-ltx-g20-plate-s20260897.mp4
+    guidance: 2.0
+    note: >-
+      The OLD negative — no climb terms. Already on disk from
+      ep1-b10-guidance20-0811; no GPU was spent to obtain it. This is the clip
+      that lets the reduction be attributed to the climb terms rather than to CFG
+      driving the positive prompt harder, and it is why the four-way sheet has
+      four panels instead of three.
+
+sheets:
+  gprobe-first-vs-last.png: >-
+    Six panels, each scaled to 300x546 from native 704x1280. TOP ROW is frame 0
+    of g1.0, g2.0, g2.5 left to right; BOTTOM ROW is frame 64 of the same three
+    in the same order. The white rule across the middle separates the rows. The
+    red and yellow rules sit at matched heights within each row (y=170 and y=250
+    in the top row, y=716 and y=796 in the bottom), so the apex in a bottom panel
+    can be read against the same line in the panel above it.
+  gprobe-lastframes-4way.png: >-
+    Four panels, LAST FRAME only, left to right: g1.0 new negative, g2.0 new
+    negative, g2.5 new negative, g2.0 OLD negative. Red and yellow rules at y=170
+    and y=250 are common to all four. This is the sheet the attribution rests on:
+    the rightmost panel is at the same guidance as the second and its apex is
+    high, so the climb terms and not the guidance are what flattened panels two
+    and three.
+
+how_the_frames_were_made: >-
+  ffmpeg `select=eq(n,0)` and `select=eq(n,64)` on each clip, then `scale` and
+  `hstack`/`vstack` with `drawbox` rules. No colour correction, no crop, no
+  resampling other than the single downscale to 300x546 for the sheet. The
+  panels are the model's own pixels.
+
+the_two_png_sheets_are_NOT_in_git_and_that_is_the_repo_s_choice: >-
+  `.gitignore:60` excludes `review/**/*.png`, so the sheets described above sit
+  beside this file on the steward's disk and in no commit. They were NOT
+  force-added: an ignore rule that broad is a policy about what review/ is for,
+  not an accident to route around. Nothing is lost, because the durable half is
+  committed elsewhere — the three clips and their §7.2 sidecars are published to
+  `farm-out/ltx-gprobe-g{10,20,25}-0811/` with sha256 manifests, and this file
+  records the exact ffmpeg recipe, panel order and rule positions. Anyone can
+  rebuild both sheets from the manifested clips and get the same pixels.
+
+apex_measurement_is_a_RECONSTRUCTION_and_here_is_its_error_bar: >-
+  The published baseline is "the sprout apex's topmost row ... rises 181 px —
+  14.1% of frame height" (ledger 655d2c6, quoted on review/SHEETS/index.html:45
+  and review/provisional-v35/README.md:73). No script for it was ever committed —
+  655d2c6 touched only the ledger — so the measurement here is a reconstruction
+  of the same landmark, not the same code: topmost image row carrying >=12
+  green-dominant bright pixels (G > B+45, G >= R-10, G > 120) at native
+  704x1280. Run against the very clip the 181px figure names
+  (10-ltx-r2-plate-s20260741.mp4) this reconstruction reads 140px, a ratio of
+  0.77. So absolute figures here are NOT comparable to the sheet's 181px, in the
+  same way `ep1-b08-v34-plate-g20-sample-scored` found its FLOW numbers off by a
+  consistent 0.89; the four-clip comparison is mine against mine, one method, one
+  pass. The gap decomposes: 181 -> 140 is the method, 140 -> 82 is the seed
+  (20260741 against this probe's 20260897).
+
+read_by_eye_first: >-
+  NO METRIC RANKS ANYTHING (131e433). The numbers in the ledger record are
+  landmarks to make the frames arguable, not a score. What the sheets show
+  directly is that the bottom-left panel's sprout is taller than the panel above
+  it and the two beside it are not, and that white specks fill the sky in every
+  panel rendered above guidance 1.0.
