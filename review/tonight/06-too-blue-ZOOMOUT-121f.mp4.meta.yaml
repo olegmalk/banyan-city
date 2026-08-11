@@ -1,0 +1,90 @@
+# ===================================================================
+# PROVISIONAL — a screening candidate. The FRAME under this clip is the
+# founder's own pick (2026-08-10); the MOVE over it is not ratified.
+# Nothing here is canon, nothing here is approved, and no file made
+# from it may be promoted to a canon name or published. Taste is the
+# founder's (R4).
+# ===================================================================
+# Shot provenance (7.2) — written by hand beside a scratch build of
+# hold_still's geometry; see `note` and `zoom` for exactly what ran.
+platform: local-deterministic (pipeline/hold_still.py geometry, ffmpeg)
+# BARE ON PURPOSE. No video model ran, and three tools read this exact
+# string: licence_gate matches the whole value, and render_t3.held_still
+# plus check_invention substring-match "model: none". Miss it and
+# render_t3 treats this as footage and PALINDROMES it — the zoom run
+# backwards, which is the ping-pong the founder ruled out 2026-08-07.
+model: none
+model_licence: n/a — inherits the still's licence, see stills/README.md
+note: held still + code zoom-out, no video model ran
+shot_beat: 6
+size: 704x1280
+seconds: 5.04
+fps: 24
+frames: 121
+framing: "cover-centre (render_t3 policy: scale to cover, then centre crop): 832x1216, cropped 163px of width (81 left, 82 right) = 19.6%, kept 669x1216, LANCZOS to 704x1280; the zoom-out then cuts each frame from inside that window, in the native still, one resample per frame"
+zoom: "zoom-OUT 27.5% over 5.04s, 4.93%/s geometric, centred, monotonic (never reverses); the window opens from 524.7px to 668.8px of the 832px still, so the last frame is the full conditioning plate and the first is 27.5% tighter"
+zoom_direction: out
+zoom_rate_pct_per_s: 4.93
+zoom_curve: geometric (constant multiplicative rate)
+motion_kind: synthetic camera move — NOT generative. Every pixel comes from
+  the one still named below; nothing was drawn, interpolated or invented, and
+  no video model was loaded. The only thing that changes frame to frame is the
+  framing.
+zoom_rate_provenance: >-
+  MEASURED off beat 4's praised clip, review/tonight/04-the-fall-LTX-385f-handsstill.mp4,
+  because the founder asked for "the same slow zoom out like with beat 4"
+  (2026-08-11). Method: scale+translation registration of each sampled frame
+  against frame 0, validated first against a synthetic zoom-out of known rate
+  which it recovers to within 13%. Five of fifteen sample points register at
+  ncc 0.87-0.94 and their per-second scale factors cluster tightly — 0.9618,
+  0.9583, 0.9515, 0.9542, 0.9523 at t = 2, 3, 5, 7 and 13s — so beat 4 is a
+  near-constant geometric zoom-out widening 4.93%/s. The clip here was then
+  re-measured with the same rig and reads back 4.94%/s at ncc 1.000 with the
+  zoom origin fixed at frame centre in every sample.
+  NOT hold_still's ZOOM_TOTAL. That 12% is the founder's confirmed amount for
+  the standard held-beat push-in (2026-08-08) and over this 5.04s slot it is
+  2.38%/s, half of beat 4's speed. His 2026-08-11 instruction is later and
+  names this beat, so it governs here; the 12% constant and every other held
+  beat are untouched, and hold_still itself was not modified.
+judder: >-
+  Sub-pixel by construction. hold_still's zoom_windows returns INTEGER crop
+  boxes for Image.crop, and _same_parity snaps each width to an even offset
+  from the plate width; on this move that yields only 37 distinct widths over
+  121 frames, so the window holds for two to four frames and then jumps 2px —
+  about seven visible 0.33% steps a second. This build keeps that geometry
+  (same cover-centre window, same fixed origin, one LANCZOS pass per frame off
+  the native grid) but passes FLOAT boxes to Image.resize(box=...), so the
+  scale is exactly continuous: every frame advances 1.06-1.35px and none
+  advances zero. Verified on the encoded file, not just the plan.
+slot_fit: >-
+  The beat is voice-led. clips/06-vo.json gives total_s 4.473 (06-vo.mp3
+  measures 4.4725), so render_t3.fit_duration returns
+  max(min(cdur, vdur+2.0), vdur+0.4) and any clip length in [4.873, 6.473] is
+  a fixed point. 121 frames at 24fps is 5.0417s, which lands inside that band
+  and rounds to a 5.04s slot — so the clip neither loops nor is trimmed. It is
+  also the exact length of the LTX candidate it sits beside, so the two are
+  directly comparable.
+source_still: 06-too-blue-r8d-step3-s0.png
+source_still_path: genomes/sapling/nodes/001-capability-inventory/takes/stills/06-too-blue-r8d-step3-s0.png
+source_still_sha256: 6e44d328f8d8d57502018ebe4f2639c47035f428aa4059c489de22af9a84c3a2
+cost_usd: 0
+prompt: |-
+  (none — the chosen still is held; nothing was generated)
+negative: ''
+why: >-
+  Roman, 2026-08-11, verbatim: "beat 6 is not what we're looking for, try the
+  same slow zoom out like with beat 4, no need for animation" and "for beat 6
+  just start zoomed in and slowly zoom out, im sure you can find a good smooth
+  speed, but no need to animate beat 6." That rejects the generative candidate
+  06-too-blue-LTX-121f.mp4 and asks for a camera move over the same plate
+  instead. This is that clip.
+provisional: true
+provisional_reason: |-
+  THE FRAME IS HIS, THE MOVE IS NOT YET. The still is 06-too-blue-r8d-step3-s0,
+  picked 2026-08-10 ~19:58, verbatim: "now you're adding some wolf and some weird
+  metal robot thing.. anyways this one is good enough lets not overthink it, use
+  that." He approved the FRAME only — see review/provisional-v35/clips/06-too-blue.mp4.meta.yaml,
+  founder_verdict_scope. Held from a TAKE because beat 6 has no canon still:
+  001's stills/ holds only 06-too-blue-REVOKED-leaf.png, revoked 2026-08-07.
+  He asked for a zoom-out at beat 4's speed and has not yet seen the result, so
+  this is a screening candidate: not canon, not promoted, not published (R4, D15 open).
