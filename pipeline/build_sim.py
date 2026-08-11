@@ -61,6 +61,33 @@ browser re-reads the queue, each machine's check-in log and each machine's
 vitals for itself, so an open tab keeps up with the farm between deploys. The
 build-time values stay in the HTML as the no-JavaScript answer, each labelled
 with the age of the thing it describes.
+
+2026-08-11 — THE REVAMP. Roman: "it has too much unnecessary stuff, its hard
+to understand whats going on from a glance, i dont know what im supposed to
+look at, the page isnt organised either." Two audits (source + stranger-eyes)
+agreed on the shape, and this build is it:
+
+  * The page reads in a visitor's question order: is it alive → what got made
+    → the show → who is waiting on what → what it costs. A three-cell strip at
+    the top answers the first three, with an honest as-of stamp — a snapshot,
+    never a claim of "live".
+  * THE WHOLE LOG, NOT THE COMMIT SUBJECTS. The counters used to read 30
+    commit subjects per branch; box_runner's subjects drop the `task=` token
+    and 30 commits reach back hours, so a night when the render box finished
+    ten jobs printed "Rendering: nothing" over "runnable: 4" — four hand jobs
+    that had in fact carried DONE lines since the day before. branch_log()
+    now reads the raw heartbeat file (which carries everything) and dates its
+    lines off one anchor commit, so finished work is finished, the box's own
+    `idle ready=N` line gives the only queue depth this page can honestly
+    know, and a STARTED older than JOB_FRESH_MINUTES is no longer "now".
+  * Task ids never reach the page; tid_words() translates the id families
+    into a stranger's words instead of printing the runner's own narration.
+  * Died, per the audits: the queue record (a file dump styled as a page —
+    the file itself is one link), the animated lot, the vitals row, the
+    steps-and-costs table (stale since July), the laptop-disk section (the
+    founder's own ruling on the tile, extended), the in-page telemetry charts
+    (the history lives on /pulse), and the essay footer. The bandwidth
+    accounting and the build meter live compactly under one footprint heading.
 """
 import datetime
 import html
@@ -102,20 +129,14 @@ MACHINES = {
 # exist. It gets no building, no tile and no vitals.
 #
 # IT STILL HAS TO COUNT. "read_machines() drops these; nothing else about them
-# changes" was the intent and was not the code: finished_today(), task_ids_done()
-# and task_running() all walked the machine list, so a job a person ran and
+# changes" was the intent and was not the code: finished_recent(), task_ids_done()
+# and live_now() all walked the machine list, so a job a person ran and
 # claimed could never appear as finished, and its queue entry kept publishing
 # itself as open after the work shipped. The work-list counters read the ledgers
 # below alongside the machines and attribute them by name; queue_promoter has
 # always read their DONE lines exactly as it reads a worker's.
 LEDGERS = {"hand": "run by hand"}
 NOT_A_MACHINE = set(LEDGERS)   # the keys alone, for readers that only ask "is this a box"
-STATE_WORDS = {  # css state → the legend under the town
-    "working": "glowing = rendering right now",
-    "idle": "dim = switched on, not rendering",
-    "asleep": "faded = not heard from",
-}
-
 # How fresh a signal has to be before it is allowed to mean anything.
 TELEMETRY_STALE_MINUTES = 15    # vitals are published every 5 min; 3 misses = stale
 JOB_FRESH_MINUTES = 45          # a "STARTED" line older than this is not "now"
@@ -273,11 +294,15 @@ def farm_branches():
     return sorted(f"farm-results-{k}" for k in list(MACHINES) + list(LEDGERS))
 
 
-def branch_heartbeat(branch):
-    """The newest line of a machine's own log — the STAGE it is at. This file
-    carries a clock time and no date; `heartbeat_history` supplies the date."""
-    txt = _get(f"{RAW}/{branch}/farm-out/heartbeat.txt", f"the check-in log for {branch}")
-    return txt.strip().splitlines()[-1] if txt.strip() else ""
+def clock_of(line: str):
+    """The `HH:MM:SSZ` a runner stamped at the head of a line, or None."""
+    m = re.match(r"^(\d{2}):(\d{2}):(\d{2})Z(?:\s|$)", line or "")
+    if not m:
+        return None
+    h, mi, s = (int(x) for x in m.groups())
+    if h > 23 or mi > 59 or s > 59:
+        return None
+    return (h, mi, s)
 
 
 def line_time(line: str, commit_when):
@@ -335,6 +360,10 @@ def logs_unread() -> list:
             name = "the branch list"
         elif lab.startswith("the check-in dates for "):
             name = lab.split("the check-in dates for ")[-1]
+        elif lab.startswith("the check-in log for "):
+            # branch_log reads the raw file AND the dating commit; a failure
+            # of either means the counters do not know what that branch did.
+            name = lab.split("the check-in log for ")[-1]
         else:
             continue
         if name not in out:   # the branch list is asked for once per reader
@@ -342,32 +371,55 @@ def logs_unread() -> list:
     return out
 
 
-def heartbeat_history(branch, n=30, absent_ok=False):
-    """[(when, line)] newest first — the check-in log WITH real dates.
+def branch_log(branch, absent_ok=False):
+    """[(when, line)] newest first — a machine's WHOLE log, dated.
 
-    THIS IS THE FIX FOR THE OLDEST LIE ON THE PAGE. heartbeat.txt records
-    `02:59:53Z DONE task=…` and no day, and the old reader compared that clock
-    to today's, wrapping at 24 h: a box last heard from eight days ago read
-    "12 h ago". The worker commits each line separately with the line as the
-    commit message, so the history of that one path is the same log with the
-    date attached — one request per machine, exact, no reconstruction.
+    THE FILE, NOT THE COMMIT SUBJECTS. The counters used to read the newest 30
+    commit subjects per branch, and both halves of that lied at once on
+    2026-08-11: box_runner's subjects drop the `task=` token the raw file
+    carries (`hb: DONE ep2-b05-…` against `17:41:55Z DONE task=ep2-b05-… rc=0
+    artifacts=8`), so a night of ten finished box jobs matched nothing — and
+    30 commits reached back only hours, so four hand jobs whose DONE lines had
+    sat in the file since the day before were re-published as "runnable". The
+    raw file has every line, every token and every idle report; it is one
+    fetch, and this page was already making it.
 
-    The commit supplies the DATE; where the line carries its own clock the line
-    supplies the TIME (see line_time), so an entry is aged from when it was
-    written and not from when it reached us. Re-sorted on that reading, because
-    every caller below walks this list newest-first.
+    DATING. The file carries a clock per line and no dates. One request buys
+    the newest commit that touched the file — the anchor — and line_time dates
+    the last line off it exactly as before. From there the file is walked
+    BACKWARDS: each time a line's clock is later than the line after it, a
+    midnight was crossed, so the day steps back by one. Appended logs are
+    chronological, so this is reconstruction from order, not a guess. A line
+    with no clock inherits its successor's time — never fresher than provable.
+    If the anchor cannot be read the whole branch answers [], and the failure
+    is already on FETCH_ERRORS for logs_unread() to report: an undated log
+    must read as "we could not find out", never as an empty day.
     """
-    data = _api(f"/commits?sha={branch}&path=farm-out/heartbeat.txt&per_page={n}",
+    raw, status = _fetch(f"{RAW}/{branch}/farm-out/heartbeat.txt",
+                         f"the check-in log for {branch}", absent_ok=absent_ok)
+    lines = [ln.rstrip() for ln in raw.splitlines() if ln.strip()]
+    if status != "ok" or not lines:
+        return []
+    data = _api(f"/commits?sha={branch}&path=farm-out/heartbeat.txt&per_page=1",
                 log_label(branch), absent_ok=absent_ok)
+    anchor = None
+    if isinstance(data, list) and data:
+        anchor = _iso((data[0].get("commit") or {}).get("committer", {}).get("date"))
+    if anchor is None:
+        return []
     out = []
-    for c in data or []:
-        when = _iso((c.get("commit") or {}).get("committer", {}).get("date"))
-        if when is None:
-            continue
-        msg = str((c.get("commit") or {}).get("message", "")).splitlines()[0]
-        line = msg[4:].strip() if msg.startswith("hb: ") else msg.strip()
-        out.append((line_time(line, when), line))
-    return sorted(out, key=lambda r: r[0], reverse=True)
+    when = line_time(lines[-1], anchor) or anchor
+    out.append((when, lines[-1]))
+    for ln in reversed(lines[:-1]):
+        c = clock_of(ln)
+        if c is not None:
+            cand = when.replace(hour=c[0], minute=c[1], second=c[2],
+                                microsecond=0)
+            if cand > when:                 # walking back, later clock = day before
+                cand -= datetime.timedelta(days=1)
+            when = cand
+        out.append((when, ln))
+    return out
 
 
 def telemetry_head(branch):
@@ -463,6 +515,18 @@ def first_sentence(s: str, limit: int = 190) -> str:
     if len(first) > limit:
         first = first[:limit].rsplit(" ", 1)[0] + "…"
     return first
+
+
+def visitor_sentence(s: str, limit: int = 170) -> str:
+    """One sentence, minus its parentheticals and backticks.
+
+    The queue's asides are ledger record numbers, seed codes and filenames —
+    written for the person clearing the gate, and exactly what the founder
+    screenshotted as unreadable (2026-08-11). The sentence stays checkable;
+    the clerical aside stays in the file.
+    """
+    s = re.sub(r"\s*\([^()]*\)", "", str(s or "")).replace("`", "")
+    return first_sentence(s, limit)
 
 
 def gate_note(entry: dict, limit: int = 190) -> str:
@@ -831,8 +895,8 @@ def read_machines(queue: list, backlog: list = None, now=None) -> list:
         if key in NOT_A_MACHINE:
             continue
         nice, emoji = MACHINES.get(key, (key, "🏠"))
-        tail = branch_heartbeat(branch)
-        hist = heartbeat_history(branch)
+        hist = branch_log(branch)
+        tail = hist[0][1] if hist else ""
         telem = telemetry_head(branch)
         last_seen = hist[0][0] if hist else None
         out.append({"key": key, "branch": branch, "name": nice, "emoji": emoji,
@@ -868,7 +932,7 @@ def read_ledgers(now=None) -> list:
             continue
         out.append({"key": key, "branch": branch, "name": LEDGERS[key],
                     "ledger": True,
-                    "history": heartbeat_history(branch, absent_ok=True)})
+                    "history": branch_log(branch, absent_ok=True)})
     return out
 
 
@@ -905,56 +969,83 @@ def hb_note(line: str) -> str:
     return " ".join(rest.split())
 
 
-def finished_today(records: list, now=None) -> list:
-    """[(when, who, task id, note)] for every job that finished since midnight —
-    read off the dated commit log, so 'today' is a fact and not an inference
-    from a clock time with no day attached.
+def finished_recent(records: list, now=None, hours: int = 24) -> list:
+    """[(when, who, task id, note)] for every job that finished in the last
+    `hours` — read off the machine's own dated log, so the window is a fact
+    and not an inference from a clock time with no day attached.
 
-    `records` is the machines PLUS the ledgers (read_ledgers), so "who" is
-    either a machine's name or "run by hand". A job a person finished is a job
-    finished, and it is the one kind this counter used to be unable to see.
-
-    The line's own note rides along, because for the rows most likely to need it
-    the queue has already forgotten the id (finished_line_story).
+    A ROLLING DAY, NOT "SINCE MIDNIGHT". The strip's question is "is this
+    thing alive and what did it make", and a page read at 00:30 that answers
+    "nothing today" about a night of work is technically true and completely
+    misleading. `records` is the machines PLUS the ledgers (read_ledgers), so
+    "who" is either a machine's name or "run by hand".
     """
     now = now or utcnow()
-    start = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    span = datetime.timedelta(hours=hours)
     out = []
     for m in records:
         for when, line in m["history"]:
-            if when < start or hb_mark(line) != "DONE":
+            if now - when >= span or hb_mark(line) != "DONE":
                 continue
             tid = re.search(r"task=([\w.-]+)", line)
             out.append((when, m["name"], tid.group(1) if tid else "", hb_note(line)))
-    return sorted(out, reverse=True)
+    # ONE ROW PER JOB, newest run wins. A retried id writes a DONE line per run
+    # (scene 10 ran twice on 2026-08-11, to byte-identical frames) and a count
+    # of lines would inflate "what got made" — the visitor's question is jobs,
+    # not attempts. Lines with no id at all are kept as they come.
+    seen, dedup = set(), []
+    for row in sorted(out, reverse=True):
+        if row[2] and row[2] in seen:
+            continue
+        seen.add(row[2])
+        dedup.append(row)
+    return dedup
 
 
-def finished_line_story(task: dict, note: str) -> str:
-    """What a "Finished today" row calls the job it reports.
+def tid_words(tid: str) -> str:
+    """A task id, translated into a visitor's words.
 
-    The queue entry is the better answer and usually there is one. When there is
-    not, the row used to read "a job the queue no longer lists" — and that is
-    not a rare case, it is the NORMAL end state: the promoter retires an entry
-    the moment its DONE line lands, so the ids most certain to miss the lookup
-    are the ones whose work most certainly shipped. Five such rows published the
-    same eleven words on 2026-08-09, indistinguishable and uncheckable.
+    Task ids are log tokens and never reach the page (stranger-eyes,
+    2026-07-30) — but they are the ONE thing every check-in line reliably
+    carries, and the ids most certain to have no queue entry left are the ones
+    whose work most certainly shipped (the promoter retires on DONE). The old
+    fallbacks printed either the raw id or the runner's own narration, and the
+    narration is exactly what the founder screenshotted as unreadable. So the
+    id families this studio actually mints are translated here, and anything
+    unrecognised stays a generic sentence rather than leaking a token.
+    """
+    t = str(tid or "")
+    if re.search(r"scoring|enqueue|cleanup|classify", t):
+        return "bookkeeping on the render queue"
+    m = re.match(r"(?:ep(\d+)|(\d{3})[a-z]?)-b(\d{1,2})\b", t)
+    if m:
+        ep = int(m.group(1) or m.group(2))
+        kind = ("a moving take" if re.search(r"video|motion|i2v|ltx|clip|anim", t)
+                else "a fresh frame")
+        return f"{kind} for episode {ep}, scene {int(m.group(3)):02d}"
+    if "probe" in t:
+        return "a test clip for the motion recipe"
+    if "sweep" in t:
+        return "a prompt experiment"
+    if "sample" in t:
+        return "a one-off sample render"
+    return "a studio job"
 
-    The line is not silent about itself. A claim carries the claimer's note,
-    which names the commit the work landed in — more specific than the queue's
-    own wording and checkable against the repo, which the generic sentence never
-    was. It only falls back when the runner really did write nothing.
 
-    AND THE QUEUE ENTRY ONLY WINS WHEN IT DESCRIBES A RENDER. This was the third
-    unguarded call to task_story and the only one that reached the live page: the
-    GPU-claim cleanup finished at 15:38Z, its entry was still in `backlog:` for
-    the lookup to find, and the row published "4 frames for world scenery" about
-    a job that released a lock. The claim's own note is the better answer for
-    everything that is not a render, which is what the paragraph above already
-    argues — it just could not get there while any entry at all outranked it.
+def done_story(task: dict, tid: str) -> str:
+    """What a finished row calls the job it reports.
+
+    The queue entry's own story wins when the file still holds a render-shaped
+    entry — and ONLY then: task_story calls everything it does not recognise
+    "frames for world scenery", which would be a falsehood about a job that
+    released a lock. Everything else is the id translated. Never the runner's
+    note: a claim note is written for the person clearing the gate, and rows
+    built from notes are how record numbers and REVOKED filenames reached the
+    public page.
     """
     if task and any(task.get(k) for k in ("beats", "seeds", "video")):
         return task_story(task)[0]
-    return note or "a job the queue no longer lists"
+    return tid_words(tid)
 
 
 def task_ids_done(records: list) -> set:
@@ -977,47 +1068,61 @@ def task_ids_done(records: list) -> set:
     return out
 
 
-def task_running(tid: str, records: list) -> dict:
-    """The machine or hand-run with a fresh STARTED for this id and no DONE
-    after it, or None. This is the difference between QUEUED and RENDERING — a
-    heading that called the whole queue "in production" was the third lie."""
+def live_now(records: list, now=None) -> list:
+    """[(when, who, task id)] — work in flight WHEN LAST HEARD, newest first.
+
+    A job is live only when a runner's own log holds a fresh STARTED for its
+    id with no DONE or FAIL after it. Two guards, each one a lie this page has
+    actually told: the end-marks are checked per id (a heading that called the
+    whole queue "in production" was the third lie of 2026-08-07), and a
+    STARTED older than JOB_FRESH_MINUTES is not "now" — without the cutoff a
+    runner that died mid-job reads as rendering forever.
+    """
+    now = now or utcnow()
+    out = []
     for m in records:
+        ended, listed = set(), set()
         for when, line in m["history"]:            # newest first
-            if f"task={tid}" not in line:
+            tid = re.search(r"task=([\w.-]+)", line)
+            if not tid:
                 continue
-            mark = hb_mark(line)
+            t, mark = tid.group(1), hb_mark(line)
             if mark in ("DONE", "FAIL"):
-                return None
-            return {"runner": m, "since": when} if mark == "STARTED" else None
-    return None
+                ended.add(t)
+            elif (mark == "STARTED" and t not in ended and t not in listed
+                    and (now - when).total_seconds() < JOB_FRESH_MINUTES * 60):
+                listed.add(t)
+                out.append((when, m["name"], t))
+    return sorted(out, reverse=True)
 
 
-# ---- the queue, entry by entry -----------------------------------------------
-# "status should show exactly the queue of work with all details" (founder,
-# 2026-08-09). The work list above is the READABLE account of the queue and stays
-# that way: it merges identical rows into one sentence, keeps task ids out as log
-# tokens, and answers "what is the studio doing" for someone who has never read
-# this repo. That section is not this one and neither replaces the other.
-#
-# This is the RECORD. Every entry in farm-queue.yaml appears exactly once, under
-# its own id, with every field it carries — including fields this file has never
-# heard of, which are printed as themselves rather than ignored. Nothing is
-# merged, nothing is truncated, and the house dialect does not run over it: the
-# point of the record is that a reader can diff it against the file. That is the
-# same trade SITE.md already makes ("if a design choice trades away legibility of
-# how it was made, that is the wrong trade").
-#
-# An entry that cannot be read gets printed LOUDLY instead of skipped. A queue
-# page that silently shows 23 of 24 rows is worse than no queue page, because it
-# is the one failure the page exists to catch.
+IDLE_RE = re.compile(r"\bidle ready=(\d+) failed=(\d+)")
 
-# The fields the file's own header declares (farm-queue.yaml:23-89) and every
-# reader downstream assumes. test_pipeline.py already asserts three of these four
-# over the live file; this prints the fault instead of failing the build, because
-# a status page that refuses to render is not a status page.
-QUEUE_REQUIRED = ("id", "why", "runner", "worker")
-QUEUE_RUNNERS = ("farm", "manual")
-QUEUE_GATES = ("founder", "code", "hardware")
+
+def box_queue_depth(records: list):
+    """(when, ready, failed, who) off the newest `idle ready=N failed=N` line,
+    or None. The render box runs its OWN on-disk queue that this build cannot
+    see — the box_runner reports its depth in every idle check-in, and that
+    dated line is the one thing this page can honestly say about it. No line,
+    no claim."""
+    best = None
+    for m in records:
+        for when, line in m["history"]:            # newest first per record
+            g = IDLE_RE.search(line)
+            if not g:
+                continue
+            if best is None or when > best[0]:
+                best = (when, int(g.group(1)), int(g.group(2)), m["name"])
+            break
+    return best
+
+
+# ---- the queue's states ------------------------------------------------------
+# The entry-by-entry record LEFT this page in the 2026-08-11 revamp: it was a
+# file dump styled as a page, and its one honest job — "diff me against the
+# file" — is done better by the one link to the file itself. What stays is the
+# classifier, because the work-list counters and the queue-file footer line are
+# built on it and must never disagree with each other.
 
 # state → (emoji, word, what the word is claiming). Every one of these is read
 # off a file: the list an entry sits in, its `gate`/`after` keys, or a check-in
@@ -1043,16 +1148,14 @@ QSTATES = {
                  "a check-in log holds DONE for this id; the entry is still in the "
                  "file until the promoter's next run retires it"),
 }
-QSTATE_ORDER = ("running", "failed", "runnable", "waiting", "blocked",
-                "planned", "done")
 
 
 def claim_lines(records: list) -> dict:
     """task id → [(when, mark, who, note)], newest first, off every check-in log.
 
-    task_running() and task_ids_done() each walk the same histories for one
-    question apiece; the record needs all of it — when a job started, when it
-    ended, which runner, and whatever the runner typed. Same `records` list
+    live_now() and task_ids_done() each walk the same histories for one
+    question apiece; the classifier needs all of it — when a job started, when
+    it ended, which runner, and whatever the runner typed. Same `records` list
     (machines PLUS the hand ledger), so a job a person claimed is a job claimed.
     """
     out = {}
@@ -1066,31 +1169,6 @@ def claim_lines(records: list) -> dict:
     for v in out.values():
         v.sort(key=lambda r: r[0], reverse=True)
     return out
-
-
-def entry_faults(e: dict) -> list:
-    """Everything wrong with one entry, in the words of the file's own header.
-
-    Only structural faults — a missing field, or a value outside the small set
-    the header defines. Not taste, not staleness: this list is the difference
-    between "the page can describe this entry" and "the page cannot", and a
-    non-empty one sends the entry to the MALFORMED heading.
-    """
-    faults = []
-    for k in QUEUE_REQUIRED:
-        if not str(e.get(k) if e.get(k) is not None else "").strip():
-            faults.append(f"no `{k}` — the file's header lists it as required")
-    runner = str(e.get("runner") or "").strip()
-    if runner and runner not in QUEUE_RUNNERS:
-        faults.append(f"`runner: {runner}` is neither `farm` nor `manual`, so "
-                      "neither the promoter nor a person knows if it is theirs")
-    gate = str(e.get("gate") or "").strip()
-    if gate and gate not in QUEUE_GATES:
-        faults.append(f"`gate: {gate}` is not one of founder/code/hardware")
-    if gate and not str(e.get("gate_ref") or "").strip():
-        faults.append("a `gate` with no `gate_ref` — blocked, without saying by "
-                      "what, which is the one thing a gate has to say")
-    return faults
 
 
 def queue_entry_state(e: dict, listname: str, claims: dict, done_ids: set) -> str:
@@ -1121,41 +1199,6 @@ def queue_entry_state(e: dict, listname: str, claims: dict, done_ids: set) -> st
     return "runnable"
 
 
-# Field → the label the record prints for it. `id`, `why`, `cmd`, `gate_ref` and
-# `after` are laid out on their own and deliberately absent here. Any key NOT in
-# this map still prints — see queue_entry_html — flagged as one the page does not
-# know, because a field invented tomorrow must not vanish from the record today.
-QFIELD_WORDS = {
-    "worker": "worker", "runner": "runner", "needs": "needs", "window": "window",
-    "est_minutes": "estimate", "gate": "gate", "node": "node", "beats": "beats",
-    "seeds": "seeds", "seed_base": "seed base", "steps": "steps",
-    "seconds": "seconds", "size": "size", "width": "width", "height": "height",
-    "video": "video", "video_model": "model", "prefetch": "prefetch",
-    "slug": "slug",
-}
-
-
-def qvalue(key: str, val) -> str:
-    """One field value as the record prints it: the file's own value first, and a
-    gloss only where the raw value is a token the reader cannot resolve."""
-    if isinstance(val, bool):
-        return "yes" if val else "no"
-    if isinstance(val, (list, tuple)):
-        return ", ".join(str(v) for v in val) or "—"
-    s = str(val)
-    if key == "worker":
-        nice = MACHINES.get(s, (None,))[0]
-        if nice:
-            return f"{s} ({nice})"
-        return f"{s} (any machine that matches `needs`)" if s == "any" else s
-    if key == "est_minutes":
-        try:
-            return f"{int(val)} min (an estimate, not a measurement)"
-        except (TypeError, ValueError):
-            return s
-    if key == "window":
-        return f"{s} — advisory only; the promoter never delays on it"
-    return s
 
 
 # ------------------------------------------------------------------- pieces ---
@@ -1196,13 +1239,6 @@ def scene_list_html(rows: list) -> str:
             + (f'<div class="mono">{_e(meta)}{ask}</div>' if meta or ask else "")
             + "</li>")
     return f'<ol class="scenes">{"".join(items)}</ol>'
-
-
-def steps_table_html(steps: list) -> str:
-    """Named columns, and a heading that admits most values are durations."""
-    body = "".join(f"<tr><td>{_e(a)}</td><td class='mono'>{_e(b)}</td></tr>" for a, b in steps)
-    return ('<div class="scroll"><table><tr><th>Step</th><th>Time &amp; cost</th></tr>'
-            f"{body}</table></div>")
 
 
 def _since_dt(v):
@@ -1298,14 +1334,18 @@ def waiting_html(inbox: list, backlog: list, now=None) -> str:
         mins = sum(h["est"] or 0 for h in held)
         tail = ""
         if held:
-            jobs = "; ".join(first_sentence(h["why"], 150) for h in held if h["why"])
+            jobs = "; ".join(visitor_sentence(h["why"], 150) for h in held if h["why"])
             tail = (f'<div class="held"><b>{len(held)} job'
                     f'{"s" if len(held) != 1 else ""} parked behind this call</b>'
                     + (f' · {_e(hours_words(mins))} of machine time' if mins else "")
                     + (f'<br>{_e(jobs)}' if jobs else "") + "</div>")
+        # The first sentence of the detail, not the whole paragraph: each
+        # `detail` is written for the author and runs to 150 words, and the
+        # 2026-08-11 audits both named these paragraphs as what buries the page.
         out.append(f'<li><span class="waited">{_e(waiting_words(q.get("since"), now))}'
                    f'</span> <b>{_e(q.get("title", ""))}</b>{a}'
-                   f'<div class="mono">{_e(q.get("detail", ""))}</div>{tail}</li>')
+                   f'<div class="mono">{_e(first_sentence(str(q.get("detail") or ""), 180))}'
+                   f'</div>{tail}</li>')
     return f'<ol class="quests">{"".join(out)}</ol>'
 
 
@@ -1325,9 +1365,13 @@ def backlog_html(backlog: list) -> str:
                 "a person runs this by hand" if r["runner"] == "manual" else "",
                 "runs while nobody needs the machine" if r["window"] == "overnight" else "",
             ) if b]
+            # One sentence per line, per the 2026-08-11 audits: `why` and the
+            # gate note are written for whoever clears the gate, and the whole
+            # paragraph on the public page is what the founder screenshotted.
             items += ('<li>'
                       + (f'<b>{_e(r["what"])}</b><br>' if r["what"] else "")
-                      + (f'<span class="why">{_e(r["why"])}</span>' if r["why"] else "")
+                      + (f'<span class="why">{_e(visitor_sentence(r["why"], 170))}</span>'
+                         if r["why"] else "")
                       + (f'<div class="mono">blocked by: {_e(r["note"])}</div>'
                          if r["note"] else "")
                       + (f'<div class="mono">{_e(" · ".join(meta))}</div>' if meta else "")
@@ -1339,200 +1383,6 @@ def backlog_html(backlog: list) -> str:
                       + "</p>")
                    + f'<ol class="blist">{items}</ol></div>')
     return "".join(out)
-
-
-def queue_entry_html(e: dict, listname: str, state: str, claims: dict,
-                     done_ids: set, faults: list, now=None) -> str:
-    """One queue entry, whole. Every key the entry carries reaches the page."""
-    now = now or utcnow()
-    tid = str(e.get("id") or "")
-    emoji, word, _blurb = QSTATES.get(state, ("•", state.upper(), ""))
-    anchor = re.sub(r"[^\w.-]", "-", tid) or "unnamed"
-
-    # The one-line summary the readable section would print, when the entry is
-    # shaped like a render. Guarded exactly as backlog_entry_view guards it —
-    # task_story answers for render work and calls everything else "frames for
-    # world scenery", which on this page would be a falsehood with an id on it.
-    what = task_story(e)[0] if any(e.get(k) for k in ("beats", "seeds", "video")) else ""
-
-    # THE AGE IS THE NEWEST CHECK-IN LINE FOR THIS ID, and nothing else. The
-    # queue file carries no timestamps at all — no `added`, no `since` — so
-    # "how long has this been waiting" is a question the record genuinely
-    # cannot answer for an entry nobody has touched. It says that instead of
-    # dating the entry off the build, which would restart every deploy and read
-    # as a queue that never gets old.
-    lines = claims.get(tid, [])
-    if lines:
-        age = f'last check-in {age_el(lines[0][0], now)}'
-    else:
-        age = '<span class="qnever">never claimed</span>'
-
-    bits = [f'<div class="qtop"><span class="qchip {state}">{emoji} {_e(word)}</span>'
-            f'<code class="qid">{_e(tid) or "(no id)"}</code>'
-            f'<span class="qlist">{_e(listname)}:</span>'
-            f'<span class="qage">{age}</span></div>']
-    if faults:
-        bits.append('<div class="qfault"><b>this entry cannot be read as queued '
-                    'work</b><ul>'
-                    + "".join(f"<li>{_e(f)}</li>" for f in faults) + "</ul></div>")
-    if what:
-        bits.append(f'<div class="qwhat">{_e(what)}</div>')
-    if e.get("why"):
-        bits.append(f'<div class="qwhy">{_e(str(e["why"]).strip())}</div>')
-    if e.get("gate_ref"):
-        bits.append('<div class="qgate"><b>blocked by</b> '
-                    f'{_e(str(e["gate_ref"]).strip())}</div>')
-
-    # `after:` is a real gate with a checkable answer, so it says which of the
-    # ids it names has landed rather than only that it is waiting.
-    after = e.get("after") or []
-    if isinstance(after, str):
-        after = [after]
-    if after:
-        deps = ", ".join(
-            f'<code>{_e(str(a))}</code> {"✅ done" if str(a) in done_ids else "⏳ not yet"}'
-            for a in after)
-        bits.append(f'<div class="qdeps"><b>after</b> {deps}</div>')
-
-    # EVERY REMAINING KEY, known or not. `id`/`why`/`cmd`/`gate_ref`/`after` are
-    # already laid out above; anything else lands here, and a key this file has
-    # never heard of is labelled as such instead of dropped.
-    laid_out = {"id", "why", "cmd", "gate_ref", "after"}
-    fields = ""
-    for k in sorted(e.keys(), key=lambda k: (k not in QFIELD_WORDS, str(k))):
-        if k in laid_out:
-            continue
-        known = k in QFIELD_WORDS
-        label = QFIELD_WORDS.get(k, str(k))
-        note = "" if known else ' <span class="qunknown">field not known to this page</span>'
-        fields += (f'<div><dt>{_e(label)}</dt>'
-                   f'<dd>{_e(qvalue(str(k), e.get(k)))}{note}</dd></div>')
-    if fields:
-        bits.append(f'<dl class="qfields">{fields}</dl>')
-
-    if lines:
-        rows = "".join(
-            f'<li><b>{_e(mark or "?")}</b> · {_e(who)} · {age_el(when, now)}'
-            + (f'<br><span class="qnote">{_e(note)}</span>' if note else "")
-            + "</li>"
-            for when, mark, who, note in lines)
-        bits.append(f'<div class="qclaims"><b>check-in lines for this id</b>'
-                    f'<ul>{rows}</ul></div>')
-    elif state in ("runnable", "waiting"):
-        bits.append('<div class="qclaims mono">no check-in line for this id — '
-                    'nobody has claimed it</div>')
-
-    if e.get("cmd"):
-        bits.append(f'<pre class="qcmd">{_e(str(e["cmd"]).strip())}</pre>')
-    return f'<li class="qrow" id="q-{_e(anchor)}">{"".join(bits)}</li>'
-
-
-def queue_record_html(tasks: list, backlog: list, records: list, dropped: list,
-                      now=None) -> str:
-    """The whole queue, entry by entry, grouped by state — malformed first.
-
-    Malformed goes FIRST and not last on purpose. It is the only group whose
-    contents mean the page itself is unreliable, and a fault printed under
-    twenty-four healthy rows is a fault nobody scrolls to.
-    """
-    now = now or utcnow()
-    claims = claim_lines(records)
-    done_ids = task_ids_done(records)
-
-    groups, bad = {}, []
-    for listname, entries in (("tasks", tasks), ("backlog", backlog)):
-        for e in entries:
-            faults = entry_faults(e)
-            state = queue_entry_state(e, listname, claims, done_ids)
-            row = queue_entry_html(e, listname, state, claims, done_ids, faults, now)
-            (bad if faults else groups.setdefault(state, [])).append(row)
-
-    total = len(tasks) + len(backlog)
-    out = [f'<p class="mono">{total} entr{"y" if total == 1 else "ies"} in '
-           '<code>pipeline/farm-queue.yaml</code> at build time — '
-           f'{len(tasks)} runnable-now (<code>tasks:</code>) and {len(backlog)} '
-           f'planned (<code>backlog:</code>). Every one of them is below, '
-           'unmerged, with the fields exactly as the file writes them.</p>']
-
-    # The contents page. Built from the groups that exist, in the same order
-    # they are printed below, so the index and the document cannot disagree.
-    index = ""
-    if dropped or bad:
-        n = len(dropped) + len(bad)
-        index += (f'<li><a href="#q-malformed">🚨 MALFORMED <b>{n}</b></a></li>')
-    for state in QSTATE_ORDER:
-        rows = groups.get(state)
-        if not rows:
-            continue
-        emoji, word, _blurb = QSTATES[state]
-        index += (f'<li><a href="#qg-{state}">{emoji} {_e(word)} '
-                  f'<b>{len(rows)}</b></a></li>')
-    if index:
-        out.append(f'<ul class="qindex">{index}</ul>')
-
-    # A dropped entry never became a dict, so it has no id to print and no state
-    # to be in — it is reported as the parse fault it is, with its position.
-    if dropped:
-        out.append(
-            f'<div class="qbad" id="q-malformed"><h3>🚨 MALFORMED — {len(dropped)} entr'
-            f'{"y" if len(dropped) == 1 else "ies"} in the file are not entries</h3>'
-            '<p class="mono">These are not shaped like queue entries at all, so '
-            'no reader in this repo can act on them. They are listed by position '
-            'because they have no id to be listed by.</p><ul class="qraw">'
-            + "".join(f'<li><code>{_e(name)}:[{i}]</code> → <code>{_e(raw)}</code></li>'
-                      for name, i, raw in dropped)
-            + "</ul></div>")
-    if bad:
-        out.append(
-            f'<div class="qbad"{"" if dropped else " id=\"q-malformed\""}>'
-            f'<h3>🚨 MALFORMED — {len(bad)} entr'
-            f'{"y" if len(bad) == 1 else "ies"} missing a required field</h3>'
-            '<p class="mono">Shown in full rather than skipped. Each names what '
-            'it is missing, against the entry shape the queue file\'s own header '
-            'defines. Silent truncation is the failure this section exists to '
-            f'prevent.</p><ol class="qlist-ol">{"".join(bad)}</ol></div>')
-
-    for state in QSTATE_ORDER:
-        rows = groups.get(state)
-        if not rows:
-            continue
-        emoji, word, blurb = QSTATES[state]
-        out.append(f'<div class="qgroup" id="qg-{state}"><h3>{emoji} {_e(word)} '
-                   f'<span class="count">{len(rows)}</span></h3>'
-                   f'<p class="mono">{_e(blurb)}</p>'
-                   f'<ol class="qlist-ol">{"".join(rows)}</ol></div>')
-    return "".join(out)
-
-
-def walkers_html(comments: list, any_working: bool) -> str:
-    """The crew, walking the lot. Every sprite is somebody real: the three
-    people/agents who actually run the studio, up to two citizens straight off
-    the reactions thread (their own usernames), and a courier only while a
-    machine is truly rendering. Decoration is allowed to be charming; it is
-    not allowed to invent staff."""
-    folk = [("🧑‍💻", "the author"),
-            ("🧑‍🔧", "the author's dad"),
-            ("🤖", "the steward — an AI")]
-    seen = set()
-    for who, _said, _url in comments:
-        if who in seen:
-            continue                     # one commenter = one villager
-        seen.add(who)
-        folk.append((("🧑‍🌾", "🧙")[len(seen) % 2], who))
-        if len(seen) == 2:
-            break
-    if any_working:
-        folk.append(("🛻", "hauling fresh frames"))
-    out = ""
-    for i, (spr, tag) in enumerate(folk):
-        dur = 22 + i * 7                 # seconds one way — everyone ambles
-        lo = 5 + i * 8                   # starting spot, % — also the resting
-        out += (                         # spot when animations are off
-            f'<div class="walker" aria-hidden="true" '
-            f'style="--d:{dur}s; --lo:{lo}%; --delay:-{i * 9}s">'
-            f'<span class="spr"><i>{spr}</i></span>'
-            f'<span class="wtag">{_e(tag)}</span></div>')
-    return out
 
 
 def quest_board_html(rows: list) -> str:
@@ -1577,122 +1427,14 @@ def quest_board_html(rows: list) -> str:
     return f'{note}<div class="qboard">{"".join(cards)}</div>'
 
 
-def badges_html(milestones: list) -> str:
-    """(emoji, name, unlocked, detail) → the milestone strip. Every unlocked
-    badge is a checkable repo fact; a locked one names exactly what is
-    missing, so the strip doubles as the episode's to-do list."""
-    out = []
-    for emoji, name, unlocked, detail in milestones:
-        cls = "" if unlocked else " locked"
-        out.append(f'<div class="badge{cls}"><div class="ico">{emoji}</div>'
-                   f'<div class="nm">{_e(name)}</div>'
-                   f'<div class="cap">{_e(detail)}</div></div>')
-    return f'<div class="badges">{"".join(out)}</div>'
-
-
-# ---- the render box's own telemetry -------------------------------------------
-# Oleg asked for GPU utilisation and RAM over time (2026-08-04), the day the 5090
-# bluescreened mid-render and we had no idea what the machine was doing when it
-# went. The box samples itself every 10s and publishes a 24-hour, 1-minute summary
-# to its courier branch; the browser fetches THAT, so the numbers are as fresh as
-# the box's last push instead of as fresh as the last deploy.
-#
-# This is the only live thing on this page, and the honesty rule (SITE.md) applies
-# hardest here: a chart is drawn ONLY when the newest sample is younger than
-# TELEMETRY_STALE_MINUTES. Otherwise the page says "no recent telemetry" and means
-# it. Same repo constant as every other raw fetch on this page — the deploy server
-# has no git refs to read a remote from.
-TELEMETRY_BRANCH = "farm-results-rtx5090"
-TELEMETRY_URL = f"{RAW}/{TELEMETRY_BRANCH}/telemetry.json"
+# ---- files the reader's browser re-reads ------------------------------------
+# The render box's minute-by-minute charts LEFT this page in the 2026-08-11
+# revamp — the long history lives on /pulse, and telemetry_head() still reads
+# the box's newest sample for the machine list's "is it on" signal. What
+# stays is the queue file LIVE_JS re-reads, and the staleness rule the
+# vitals re-read keys on (TELEMETRY_STALE_MINUTES, at the top of the file).
 QUEUE_URL = f"{RAW}/main/pipeline/farm-queue.yaml"
-# TELEMETRY_STALE_MINUTES lives with the other freshness rules at the top of the
-# file — it was declared twice, and two constants of the same name is one edit
-# away from a page whose chart and whose machine list disagree about "stale".
 
-# The windows the reader may pick, and the words the page uses for each. Same
-# list and same rule as build_pulse.WINDOWS — the two pages are read one after
-# the other and a reader who learns "6h" on one must find it on the other. They
-# are separate constants because the two pages draw from different files with
-# different depths, and neither should be able to break the other's selector.
-TEL_WINDOWS = [(1, "1h", "the last hour"), (6, "6h", "the last 6 hours"),
-               (24, "24h", "the last 24 hours"), (48, "48h", "the last 48 hours"),
-               (24 * 7, "7d", "the last 7 days")]
-# A window is offered only if the published file reaches back across this much
-# of it. telemetry.json is a rolling 24 hours, so 48h and 7d are greyed out here
-# and always will be — the long history lives on /pulse, and the disabled button
-# says so rather than leaving the reader to wonder where it went.
-TEL_COVERAGE = 0.9
-
-TEL_CSS = """
-/* ---- the render box: three single-axis charts, one series each.
-   ONE SERIES PER CHART is not a layout accident. GPU% and GB cannot share a y
-   axis without lying about scale, and the two colours this site owns — leaf green
-   and sap amber — are 4.5 ΔE apart under protanopia (measured), so a two-series
-   chart would encode identity in a difference some readers cannot see. A title
-   per chart carries the identity instead, and no legend is needed. ---- */
-.telnote { font: 500 .82rem/1.7 var(--mono); color: var(--faint); }
-.tchart { margin: 1.1rem 0 0; }
-.tchart figcaption { font: 700 .72rem/1.5 var(--mono); letter-spacing: .06em;
-  text-transform: uppercase; color: var(--muted); display: flex; flex-wrap: wrap;
-  justify-content: space-between; gap: .2rem .8rem; }
-.tchart figcaption .cap { font-weight: 500; text-transform: none; letter-spacing: 0;
-  color: var(--faint); }
-.tchart svg { width: 100%; height: auto; display: block; margin: .35rem 0 .15rem;
-  background: linear-gradient(180deg, var(--panel-2), var(--panel));
-  border: 1px solid var(--line); border-radius: 12px; touch-action: pan-y; }
-/* the readout holds its height whether or not a pointer is on the chart, so the
-   page does not jump under the reader's cursor as they sweep across it */
-.tchart .rdout { font: 500 .74rem/1.6 var(--mono); color: var(--faint);
-  min-height: 3.2em; font-variant-numeric: tabular-nums; }
-.tchart .rdout b { color: var(--ink); }
-.tchart .rdout .now { display: block; color: var(--muted); }
-.tchart .rdout .now b { font-size: 1.05em; }
-.tchart .grid { stroke: var(--line-soft); stroke-width: 1; }
-.tchart .axis { fill: var(--faint); font: 500 10px var(--mono); }
-.tchart .ln { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
-.tchart .fill { stroke: none; opacity: .13; }
-.tchart .pk { fill: var(--ink); font: 600 10px var(--mono); }
-.tchart .dot { stroke: var(--panel); stroke-width: 2; }
-.tchart .cross { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 2 3; }
-.tchart .nodata { fill: var(--faint); font: 500 10px var(--mono); opacity: .85; }
-.tel-gpu { color: var(--sap); }        /* the series wears currentColor */
-.tel-mem { color: var(--leaf); }
-
-/* ---- the time-window selector (Roman, 2026-08-10: "there is no time window
-   selection"). Built by the script, because the charts it drives are: this page
-   holds no telemetry at build time and must not print a control for data it has
-   not got. A window the published file cannot reach across is DISABLED with the
-   reason on it, never hidden — "48h is greyed out because the box publishes a
-   rolling day" is the answer to the question the missing button would raise. */
-.winbar { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem .8rem;
-  margin: .9rem 0 .2rem; padding: .7rem .85rem; border: 1px solid var(--line);
-  border-radius: 12px; background: linear-gradient(180deg, var(--panel-2), var(--panel)); }
-.winbar > .lbl { font: 700 .68rem/1.6 var(--mono); letter-spacing: .08em;
-  text-transform: uppercase; color: var(--faint); }
-.winbtns { display: flex; flex-wrap: wrap; gap: .3rem; }
-.winbtns button { font: 700 .74rem/1 var(--mono); letter-spacing: .04em;
-  color: var(--muted); background: var(--code-bg); border: 1px solid var(--line);
-  border-radius: 999px; padding: .42rem .68rem; cursor: pointer;
-  min-height: 32px; min-width: 44px; }
-.winbtns button:hover:not([disabled]) { color: var(--ink); border-color: var(--leaf-deep); }
-.winbtns button:focus-visible { outline: 2px solid var(--sap); outline-offset: 2px; }
-.winbtns button[aria-pressed="true"] { color: var(--sap-ink); background: var(--sap);
-  border-color: var(--sap); }
-.winbtns button[disabled] { opacity: .38; cursor: not-allowed; border-style: dashed; }
-.winbar .winnote { flex: 1 1 100%; margin: 0; font: 500 .76rem/1.6 var(--mono);
-  color: var(--faint); }
-
-@media (max-width: 640px) {
-  /* PHONE AXIS TEXT. The SVG is drawn at a fixed 720-unit width and scaled down
-     to the column, so a 10px label lands at about 6px on a 460px phone —
-     measured, and not readable. The label grows in the chart's own units by
-     exactly as much as the chart shrinks in the reader's. */
-  .tchart .axis { font-size: 15px; }
-  .tchart .pk, .tchart .nodata { font-size: 14px; }
-  /* four vitals across a phone is three and an orphan; two by two is a block */
-  .vitals { grid-template-columns: repeat(2, 1fr); }
-}
-"""
 
 # Plain string, not an f-string: JavaScript, full of braces. INFRA_* are emitted
 # beside it by build().
@@ -1746,343 +1488,6 @@ INFRA_JS = """
 })();
 """
 
-# Plain string, not an f-string: this is JavaScript and it is full of braces.
-# TEL_URL / TEL_STALE / TEL_WINS / TEL_COVER are emitted next to it by build().
-TEL_JS = """
-/* The render box's charts. No library, no external code — one fetch of our own
-   JSON off the courier branch, three inline SVGs, and a time-window selector.
-   If any of it fails the page says so in words instead of drawing a dead chart.
-
-   WHY THE WINDOW IS DONE HERE AND NOT AT BUILD TIME, which is the opposite of
-   /pulse. This page has no telemetry when it is built — the file is fetched by
-   the reader — so there is nothing to pre-draw and the panels have to be
-   computed where the data lands. The window only ever SLICES the fetched
-   series; no value is interpolated, resampled or invented to fill one, so a
-   narrow window is the same numbers with fewer of them. */
-(function () {
-  var note = document.getElementById("tel-note"), body = document.getElementById("tel-body");
-  if (!note || !body || !window.fetch) return;          /* no JS, no claim */
-  var W = 720, H = 150, PL = 46, PR = 12, PT = 12, PB = 20, BASE = H - PB;
-  var charts = [];
-  var DATA = null, WIN = null;
-
-  /* The reader's own offset, named once and printed on every axis. Every clock
-     face below is the browser's local time — the existing and correct choice for
-     a public page — but an unlabelled clock face is not a timestamp, and a
-     reader comparing this page with /pulse (which is always +04) has to be able
-     to see which one he is looking at. */
-  var TZMIN = -new Date().getTimezoneOffset();
-  var TZLBL = "UTC" + (TZMIN < 0 ? "-" : "+") +
-    Math.floor(Math.abs(TZMIN) / 60) + (Math.abs(TZMIN) % 60 ? ":" + Math.abs(TZMIN) % 60 : "");
-
-  function hhmm(sec) {   /* the VIEWER's clock, never ours */
-    return new Date(sec * 1000).toLocaleTimeString([], {hour: "2-digit", minute: "2-digit"});
-  }
-  /* a 24-hour window crosses midnight, and four bare clock labels cannot say
-     which side of it a point is on — so the left-hand tick and every summary
-     carry the date too. */
-  function stamp(sec) {
-    return new Date(sec * 1000).toLocaleString([], {month: "short", day: "numeric",
-                                                    hour: "2-digit", minute: "2-digit"});
-  }
-  function ago(sec) {
-    var m = Math.round(Date.now() / 1000 / 60 - sec / 60);
-    if (m < 1) return "less than a minute";
-    if (m < 60) return m + " min";
-    return Math.floor(m / 60) + "h " + (m % 60) + "m";
-  }
-  function fmt(v, dec, unit) { return v == null ? "\\u2014" : v.toFixed(dec) + unit; }
-  function last(a) { for (var i = a.length - 1; i >= 0; i--) if (a[i] != null) return a[i]; return null; }
-  function peak(a) {
-    var bi = -1, bv = null;
-    for (var i = 0; i < a.length; i++) if (a[i] != null && (bv === null || a[i] > bv)) { bv = a[i]; bi = i; }
-    return bi;
-  }
-  function mean(a) {
-    var s = 0, n = 0;
-    for (var i = 0; i < a.length; i++) if (a[i] != null) { s += a[i]; n++; }
-    return n ? s / n : null;
-  }
-
-  /* ---- the window --------------------------------------------------------
-     A slice of the fetched arrays, never a resampling of them. `span` is what
-     the file actually holds, and it decides which buttons are offered. */
-  function slice(d, hours) {
-    var cut = (d.t[d.t.length - 1]) - hours * 3600;
-    var i0 = 0;
-    while (i0 < d.t.length && d.t[i0] < cut) i0++;
-    /* one point of lead-in, so a line entering the window from the left starts
-       at the edge instead of floating a minute inside it */
-    if (i0 > 0) i0--;
-    var out = {}, keys = ["t", "u", "up", "v", "r", "c"], k;
-    for (var j = 0; j < keys.length; j++) {
-      k = keys[j];
-      out[k] = (d[k] || []).slice(i0);
-    }
-    return out;
-  }
-
-  function chart(d, key, o) {
-    var t = d.t, v = d[key], n = t.length, id = "tc-" + key;
-    var t0 = t[0], span = Math.max(60, t[n - 1] - t0);
-    var gap = (DATA.bucket_seconds || 60) * 3;
-    function x(i) { return PL + (t[i] - t0) / span * (W - PL - PR); }
-    function y(val) { return BASE - Math.max(0, Math.min(1, val / o.max)) * (BASE - PT); }
-    /* segments: a hole in the data is a HOLE. Joining across one would draw
-       utilisation for minutes the box was off. */
-    var segs = [], cur = [], i;
-    for (i = 0; i < n; i++) {
-      if (v[i] == null || (i && t[i] - t[i - 1] > gap)) { if (cur.length) segs.push(cur); cur = []; }
-      if (v[i] != null) cur.push(i);
-    }
-    if (cur.length) segs.push(cur);
-    var line = "", fill = "";
-    segs.forEach(function (s) {
-      var p = s.map(function (j, k) { return (k ? "L" : "M") + x(j).toFixed(1) + " " + y(v[j]).toFixed(1); }).join(" ");
-      line += p + " ";
-      if (s.length > 1) {
-        fill += "M" + x(s[0]).toFixed(1) + " " + BASE + " " + p.slice(1) +
-                " L" + x(s[s.length - 1]).toFixed(1) + " " + BASE + " Z ";
-      }
-    });
-    var g = "";
-    /* Y LABELS CARRY THEIR UNIT. "100" under a chart headed "GPU utilisation"
-       is readable; "100" under one headed "VRAM in use" is 100 of what, and the
-       answer differs per chart. The axis says it so the reader never has to
-       carry it down from the title. */
-    [0, 0.5, 1].forEach(function (f) {
-      var yy = BASE - f * (BASE - PT);
-      g += '<line class="grid" x1="' + PL + '" y1="' + yy.toFixed(1) + '" x2="' + (W - PR) +
-           '" y2="' + yy.toFixed(1) + '"/><text class="axis" x="' + (PL - 6) + '" y="' +
-           (yy + 3.5).toFixed(1) + '" text-anchor="end">' +
-           (o.max * f).toFixed(o.tick) + o.unit.trim() + '</text>';
-    });
-    [0, 1 / 3, 2 / 3, 1].forEach(function (f, k) {
-      var xx = PL + f * (W - PL - PR);
-      g += '<text class="axis" x="' + xx.toFixed(1) + '" y="' + (H - 6) + '" text-anchor="' +
-           (k === 0 ? "start" : k === 3 ? "end" : "middle") + '">' +
-           (k === 0 ? stamp(t0) : hhmm(t0 + f * span)) + '</text>';
-    });
-    /* the axis names its clock, once, at the right-hand end */
-    g += '<text class="axis" x="' + (W - PR) + '" y="' + (PT + 9) +
-         '" text-anchor="end" opacity=".8">' + TZLBL + '</text>';
-
-    if (!segs.length) {
-      g += '<text class="nodata" x="' + (W / 2) + '" y="' + ((PT + BASE) / 2) +
-           '" text-anchor="middle">no reading in this window</text>';
-    }
-    var pi = peak(v), pm = "";
-    if (pi >= 0 && segs.length) {
-      var px = x(pi), py = y(v[pi]), rightish = px > (W + PL) / 2;
-      pm = '<circle class="dot" cx="' + px.toFixed(1) + '" cy="' + py.toFixed(1) +
-           '" r="3" fill="currentColor"/><text class="pk" x="' + (px + (rightish ? -7 : 7)).toFixed(1) +
-           '" y="' + Math.max(PT + 8, py - 6).toFixed(1) + '" text-anchor="' +
-           (rightish ? "end" : "start") + '">peak ' + fmt(v[pi], o.dec, o.unit) + '</text>';
-    }
-    /* THE RESTING READOUT IS THE CURRENT VALUE, not a hint. A chart whose
-       numbers can only be got at by hovering is unreadable on a phone and
-       unreadable in a screenshot, which are the two ways this page is actually
-       looked at. Latest, and the window's own peak and mean beside it. */
-    var mv = mean(v);
-    var dflt = '<span class="now">now <b>' + fmt(last(v), o.dec, o.unit) + '</b>' +
-      ' \\u00b7 ' + WIN.words + ': peak ' + fmt(pi >= 0 ? v[pi] : null, o.dec, o.unit) +
-      ', average ' + fmt(mv, o.dec, o.unit) + '</span>' +
-      (segs.length ? "point at the chart for any minute" : "");
-    charts.push({id: id, t: t, v: v, t0: t0, span: span, dec: o.dec, unit: o.unit,
-                 dflt: dflt});
-    return '<figure class="tchart ' + o.cls + '" id="' + id + '">' +
-      '<figcaption><span>' + o.title + '</span><span class="cap">' + o.cap + '</span></figcaption>' +
-      '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" data-span="' + span +
-        '" aria-label="' + o.title +
-        ', ' + stamp(t0) + ' to ' + stamp(t[n - 1]) + ' ' + TZLBL + ': latest ' +
-        fmt(last(v), o.dec, o.unit) +
-        ', peak ' + fmt(pi >= 0 ? v[pi] : null, o.dec, o.unit) + '">' + g +
-      '<path class="fill" fill="currentColor" d="' + fill + '"/>' +
-      '<path class="ln" stroke="currentColor" d="' + line + '"/>' + pm +
-      '<line class="cross" x1="0" y1="' + PT + '" x2="0" y2="' + BASE + '" style="display:none"/>' +
-      '<rect x="' + PL + '" y="' + PT + '" width="' + (W - PL - PR) + '" height="' + (BASE - PT) +
-        '" fill="transparent"/></svg>' +
-      '<div class="rdout">' + dflt + '</div></figure>';
-  }
-
-  function tile(big, cap) {
-    return '<div class="vital"><b>' + big + '</b><small>' + cap + '</small></div>';
-  }
-
-  /* ---- the selector ------------------------------------------------------ */
-  function winbar(span) {
-    var b = "";
-    for (var i = 0; i < TEL_WINS.length; i++) {
-      var h = TEL_WINS[i][0], lbl = TEL_WINS[i][1], words = TEL_WINS[i][2];
-      var ok = span >= TEL_COVER * h * 3600;
-      var why = ok ? "" : "the render box publishes a rolling " +
-        (Math.round(span / 3600)) + "-hour file, which does not reach across " +
-        words.replace("the last ", "") + " \\u2014 the long history is on the pulse page";
-      b += '<button type="button" data-h="' + h + '" data-words="' + words + '"' +
-        (ok ? "" : ' disabled title="' + why + '"') +
-        ' aria-pressed="' + (WIN && WIN.h === h ? "true" : "false") + '">' + lbl + '</button>';
-    }
-    return '<div class="winbar" id="tel-win" role="group" aria-label="Time window">' +
-      '<span class="lbl">Time window</span><div class="winbtns">' + b + '</div>' +
-      '<p class="winnote" id="tel-winnote"></p></div>';
-  }
-
-  function widest(span) {
-    /* the default: the largest offered window, which for a rolling 24-hour file
-       is the whole of it — the view this page has always opened on. */
-    var best = TEL_WINS[0];
-    for (var i = 0; i < TEL_WINS.length; i++) {
-      if (span >= TEL_COVER * TEL_WINS[i][0] * 3600) best = TEL_WINS[i];
-    }
-    return {h: best[0], words: best[2]};
-  }
-
-  function paint() {
-    var d = slice(DATA, WIN.h);
-    charts = [];
-    var vmax = DATA.vram_total_gb || Math.max.apply(null, d.v.filter(function (x) { return x != null; })) * 1.1;
-    var rmax = DATA.ram_total_gb || Math.max.apply(null, d.r.filter(function (x) { return x != null; })) * 1.1;
-    var pu = peak(d.up), pv = peak(d.v), pr = peak(d.r), pc = peak(d.c);
-    var html = "";
-    html += '<div class="vitals">' +
-      /* "peak sample", not "peak": this is the busiest single 10s reading, while
-         the chart's peak marker is the busiest minute-AVERAGE. Two different true
-         numbers; if both are called "peak" the page looks like it contradicts
-         itself (it printed 100% here and 97% on the chart). */
-      /* captions kept to four words: uppercase mono at this size wraps, and a
-         caption that breaks mid-phrase ("VRAM IN USE · PEAK / 21.9 OF 23.9") reads
-         as two half-labels. Each chart below states its own capacity anyway. */
-      tile(fmt(last(d.u), 0, "%"), "gpu latest \\u00b7 peak sample " +
-           fmt(pu >= 0 ? d.up[pu] : null, 0, "%")) +
-      tile(fmt(last(d.v), 1, " GB"), "vram latest \\u00b7 peak " + fmt(pv >= 0 ? d.v[pv] : null, 1, " GB")) +
-      tile(fmt(last(d.r), 1, " GB"), "ram latest \\u00b7 peak " + fmt(pr >= 0 ? d.r[pr] : null, 1, " GB")) +
-      tile(fmt(pc >= 0 ? d.c[pc] : null, 1, " GB"), "commit peak \\u00b7 limit " +
-           fmt(DATA.commit_limit_gb, 0, " GB")) +
-      '</div>';
-    /* the tiles are peaks OVER THE CHOSEN WINDOW, so they must say which one —
-       otherwise switching to 1h silently changes what "peak" meant. */
-    html += '<p class="whyfoot">latest reading, and the peak within ' + WIN.words +
-      '. Switch the window above and these move with it.</p>';
-    html += chart(d, "u", {title: "GPU utilisation", cap: "% of the card, per minute",
-                           max: 100, tick: 0, dec: 0, unit: "%", cls: "tel-gpu"});
-    html += chart(d, "v", {title: "VRAM in use", cap: "GB of " + fmt(DATA.vram_total_gb, 1, " GB") + " on the card",
-                           max: vmax, tick: 0, dec: 1, unit: " GB", cls: "tel-mem"});
-    html += chart(d, "r", {title: "Host RAM in use", cap: "GB of " + fmt(DATA.ram_total_gb, 1, " GB") + " installed",
-                           max: rmax, tick: 0, dec: 1, unit: " GB", cls: "tel-mem"});
-    /* href set in JS, not concatenated into the markup: build_site.py's link
-       checker reads every href in the output, and a spliced-together one reads to
-       it as a broken local path (it caught exactly that, 2026-08-04). */
-    var src = '<p class="whyfoot">straight from the machine: <a class="telsrc" href="#">telemetry.json</a>' +
-      ' \\u2014 GPU by <code>nvidia-smi</code>, memory by <code>GlobalMemoryStatusEx</code>, sampled every ' +
-      (DATA.sample_seconds || 10) + 's and averaged to one point a minute. Gaps are gaps: the line breaks ' +
-      'wherever the box was not sampling. Clocks are ' + TZLBL + ', your own.</p>';
-    return html + src;
-  }
-
-  function wire(root) {
-    var sa = root.querySelector(".telsrc");
-    if (sa) sa.href = TEL_URL;
-    charts.forEach(function (c) {
-      var fig = document.getElementById(c.id);
-      if (!fig) return;
-      var svg = fig.querySelector("svg"), cross = fig.querySelector(".cross"),
-          out = fig.querySelector(".rdout");
-      function clear() { cross.style.display = "none"; out.innerHTML = c.dflt; }
-      svg.addEventListener("pointermove", function (e) {
-        var r = svg.getBoundingClientRect();
-        var f = ((e.clientX - r.left) / r.width * W - PL) / (W - PL - PR);
-        var want = c.t0 + Math.max(0, Math.min(1, f)) * c.span, bi = -1, bd = Infinity;
-        for (var i = 0; i < c.t.length; i++) {
-          var dist = Math.abs(c.t[i] - want);
-          if (dist < bd) { bd = dist; bi = i; }
-        }
-        if (bi < 0 || c.v[bi] == null) return clear();
-        var px = PL + (c.t[bi] - c.t0) / c.span * (W - PL - PR);
-        cross.setAttribute("x1", px.toFixed(1));
-        cross.setAttribute("x2", px.toFixed(1));
-        cross.style.display = "";
-        out.innerHTML = '<span class="now">' + stamp(c.t[bi]) + " " + TZLBL +
-          " \\u00b7 <b>" + fmt(c.v[bi], c.dec, c.unit) + "</b></span>";
-      });
-      svg.addEventListener("pointerleave", clear);
-    });
-  }
-
-  function show(h, words) {
-    WIN = {h: h, words: words};
-    var host = document.getElementById("tel-charts");
-    if (!host) return;
-    host.innerHTML = paint();
-    var btns = document.querySelectorAll("#tel-win button[data-h]");
-    for (var i = 0; i < btns.length; i++) {
-      btns[i].setAttribute("aria-pressed",
-        +btns[i].getAttribute("data-h") === h ? "true" : "false");
-    }
-    var n = document.getElementById("tel-winnote");
-    if (n) {
-      n.textContent = "Showing " + words + " of the render box's own readings, " +
-        "one point a minute, in " + TZLBL + ".";
-    }
-    wire(host);
-  }
-
-  function render(d) {
-    var n = (d.t || []).length;
-    var win = d.window_hours || 24;
-    if (!n || !d.last_sample) {
-      note.textContent = "no recent telemetry \\u2014 the render box has published a file " +
-        "but it holds no samples from the last " + win + " hours.";
-      return;
-    }
-    DATA = d;
-    var stale = (Date.now() / 1000 - d.last_sample) > TEL_STALE * 60;
-    var span = d.t[n - 1] - d.t[0];
-    WIN = widest(span);
-    var shell = winbar(span) + '<div id="tel-charts"></div>';
-
-    if (stale) {
-      /* SITE.md: the site must not claim things it cannot know. A chart of
-         yesterday under a heading about the render box reads as "now", so the
-         plain sentence is the answer and the history is one click away, labelled
-         with the hour it actually ends. */
-      note.textContent = "no recent telemetry \\u2014 the newest sample from the render box is " +
-        ago(d.last_sample) + " old (" + hhmm(d.last_sample) + " your time). The box may be off, " +
-        "asleep, or unable to push; nothing here is claimed about it right now.";
-      body.innerHTML = '<details class="drawer"><summary>show the ' + win +
-        ' hours ending ' + stamp(d.last_sample) + '</summary><div class="drawer-body">' +
-        shell + '</div></details>';
-    } else {
-      note.textContent = (d.gpu_name || "the render box") + " \\u2014 newest sample " +
-        hhmm(d.last_sample) + " your time (" + ago(d.last_sample) + " ago), " +
-        "one point a minute.";
-      body.innerHTML = shell;
-    }
-    body.hidden = false;
-
-    var btns = document.querySelectorAll("#tel-win button[data-h]");
-    for (var i = 0; i < btns.length; i++) {
-      (function (b) {
-        if (b.disabled) return;
-        b.addEventListener("click", function () {
-          show(+b.getAttribute("data-h"), b.getAttribute("data-words"));
-        });
-      })(btns[i]);
-    }
-    show(WIN.h, WIN.words);
-  }
-
-  /* per-minute cache key: raw.githubusercontent sits behind a CDN, and a status
-     page that shows a five-minute-old copy of a five-minute-old file is stale
-     twice over. */
-  fetch(TEL_URL + "?_=" + Math.floor(Date.now() / 60000), {cache: "no-store"})
-    .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
-    .then(render)
-    .catch(function (e) {
-      note.textContent = "no recent telemetry \\u2014 the render box's published file could not " +
-        "be read (" + e.message + "), so nothing is being claimed about the machine.";
-    });
-})();
-"""
 
 
 # Plain string, not an f-string: JavaScript, full of braces. RAW_BASE, QUEUE_URL,
@@ -2306,76 +1711,32 @@ LIVE_JS = """
 
 
 SIM_CSS = """
-/* ---- the lot: one living scene — sky, street, crew (tokens from the theme).
-   All motion is transform-only on a handful of small elements, paused when the
-   tab is hidden (body.away) and killed entirely under prefers-reduced-motion —
-   the 2026-07-31 GPU lesson applies to every new animation on this page. ---- */
-.lot { position: relative; height: 230px; overflow: hidden; border-radius: 18px;
-  border: 1px solid var(--line-soft); margin: .5rem 0 .4rem;
-  background:
-    radial-gradient(460px 150px at 72% 0%, var(--bg-glow), transparent 70%),
-    linear-gradient(180deg, transparent 73%, var(--panel-2) 73%); }
-.lot .stars { position: absolute; top: 12px; left: 28%; letter-spacing: 4vw;
-  color: var(--leaf-dim); font-size: .8rem; }
-.lot .sun { position: absolute; top: 12px; left: 5%; text-align: center;
-  font-size: 1.5rem; line-height: 1; }
-.lot .cloud { position: absolute; top: 12px; right: 5%; text-align: center;
-  font-size: 1.7rem; line-height: 1;
-  animation: drift 48s ease-in-out infinite alternate; }
-.lot .sun small, .lot .cloud small { display: block; font: 600 .58rem/1.5 var(--mono);
-  color: var(--faint); }
-@keyframes drift { from { transform: translateX(0) } to { transform: translateX(-64px) } }
-.street { position: absolute; left: 0; right: 0; bottom: 27%; display: flex;
-  justify-content: space-evenly; align-items: flex-end; }
-.lot-bld { position: relative; text-align: center; }
-.lot-bld .ico { display: block; font-size: clamp(1.7rem, 6vw, 2.4rem);
-  line-height: 1.15; text-decoration: none; }
-.lot-bld .btag { display: block; font: 600 .58rem/1.4 var(--mono); color: var(--faint); }
-.lot-bld.working .ico { filter: drop-shadow(0 0 10px rgba(255,199,106,.8)); }
-.lot-bld.working .btag { color: var(--sap); }
-.lot-bld.idle { opacity: .85; }
-.lot-bld.asleep { opacity: .45; filter: grayscale(.8); }
-.lot-bld .smoke { position: absolute; top: -1.1rem; left: 0; right: 0; }
-.lot-tree .ico { font-size: clamp(2.4rem, 8vw, 3.1rem); }
-.walker { position: absolute; bottom: 8px; left: var(--lo); z-index: 3; text-align: center;
-  animation: cross var(--d) linear var(--delay) infinite alternate; }
-@keyframes cross { from { transform: translateX(0) } to { transform: translateX(min(58vw, 400px)) } }
-.walker .spr { display: block; font-size: 1.35rem; line-height: 1.2;
-  /* most emoji people face left, so the rightward leg wears the flip */
-  animation: face calc(var(--d) * 2) steps(1) var(--delay) infinite; }
-@keyframes face { 0%, 100% { transform: scaleX(-1) } 50% { transform: scaleX(1) } }
-.walker .spr i { display: inline-block; font-style: normal;
-  animation: bob .55s ease-in-out infinite alternate; }
-@keyframes bob { from { transform: translateY(0) } to { transform: translateY(-3px) } }
-.walker .wtag { display: block; font: 600 .58rem/1.4 var(--mono); color: var(--faint);
-  background: var(--panel); border: 1px solid var(--line-soft); border-radius: 999px;
-  padding: .06rem .4rem; white-space: nowrap; }
+/* ---- the studio page (tokens from the theme). The animated lot, the walkers
+   and the record's clerical styles died in the 2026-08-11 revamp — what is
+   left is the machine list, the grove, and the work rows. ---- */
 .machlist { list-style: none; padding: 0; margin: .5rem 0 0; }
-.machlist li { padding: .45rem 0; border-bottom: 1px solid var(--line-soft);
+.machlist li { padding: .6rem 0; border-bottom: 1px solid var(--line-soft);
   font-size: .92rem; }
 .machlist li:last-child { border-bottom: 0; }
 .machlist .mico { margin-right: .3rem; }
+.machlist .chip { margin-left: .35rem; vertical-align: .05em; }
+.machlist .mstate { margin: .25rem 0 .1rem; }
+.machlist .why { color: var(--muted); font-size: .84rem; }
 .grove { text-align: center; margin: 0 0 1.2rem; }
 .canopy { display: grid; grid-template-columns: repeat(5, 2.1rem); gap: .1rem;
   justify-content: center; }
 .leaf { font-size: 1.45rem; text-decoration: none; }
 .leaf.bud { filter: grayscale(1) brightness(.5); }
+/* leaf tiers — the tooltip carries the words, the tint is only a hint */
+.leaf.pick { filter: none; text-decoration: none;
+  text-shadow: 0 0 10px rgba(255,199,106,.9); }
+.leaf.still { filter: saturate(.6); }
 .trunky { font-size: 4.4rem; line-height: 1; }
 .grove .label { font: 600 .8rem/1.6 var(--mono); color: var(--muted); }
-.smoke { height: 1.1rem; animation: puff 2.4s linear infinite; }
-/* an infinite animation keeps the compositor running FOREVER, in every
-   open tab — this page is meant to be left open, so it must go quiet
-   when nobody is looking (founder's Mac, 2026-07-31: a Chrome GPU
-   process at 100% of a core for 13 hours). */
-body.away .smoke, body.away .lot .cloud,
-body.away .walker, body.away .walker * { animation: none !important; }
-@keyframes puff { 0% { opacity: .9; transform: translateY(0) } 100% { opacity: 0; transform: translateY(-11px) } }
 .spend { font: 600 .8rem/1.6 var(--mono); color: var(--faint); text-align: center; }
 .spend b { color: var(--sap); }
-/* ---- the infra meter. Deliberately NOT one of the .vital tiles: those are
-   four numbers a reader can check against the repo, and this one is fetched
-   live from GitHub and can be absent. Mixing them would quietly weaken the
-   promise the vitals row makes. ---- */
+/* ---- the infra meter. Fetched live by the reader and can be absent, so it
+   must never dress as a repo-checkable number. ---- */
 .infra { margin: 1rem auto 0; max-width: 44rem; text-align: center;
   background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px;
   padding: .8rem .9rem; }
@@ -2391,13 +1752,6 @@ body.away .walker, body.away .walker * { animation: none !important; }
 .scenes li:last-child, .quests li:last-child { border-bottom: 0; }
 .mono { font: 500 .76rem/1.6 var(--mono); color: var(--faint); }
 .scroll { overflow-x: auto; }
-.citizens { display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center; }
-.citizen { flex: 1 1 45%; max-width: 210px; text-align: center; }
-.citizen .bubble { display: block; background: var(--panel-2); border: 1px solid var(--line);
-  color: var(--ink); border-radius: 12px; padding: .45rem .6rem; font-size: .78rem;
-  text-align: left; }
-.citizen .spr { font-size: 1.7rem; line-height: 1.4; }
-.citizen small { font: 600 .7rem/1.4 var(--mono); color: var(--faint); display: block; }
 .summary { font: 600 .84rem/1.7 var(--mono); color: var(--muted); }
 .summary b { color: var(--leaf); }
 .prod-row { background: linear-gradient(180deg, var(--panel-2), var(--panel));
@@ -2414,10 +1768,6 @@ body.away .walker, body.away .walker * { animation: none !important; }
 /* the same slot when there is no duration to put in it — free to wrap, because
    what goes here is a sentence explaining why there is no number */
 .noage { color: var(--faint); }
-.machlist li { padding: .6rem 0; }
-.machlist .chip { margin-left: .35rem; vertical-align: .05em; }
-.machlist .mstate { margin: .25rem 0 .1rem; }
-.machlist .why { color: var(--muted); font-size: .84rem; }
 .livemark { font: 500 .76rem/1.6 var(--mono); color: var(--faint); }
 h3 .count, .bgroup .count { display: inline-block; font: 700 .68rem/1 var(--mono);
   color: var(--faint); border: 1px solid var(--line); border-radius: 999px;
@@ -2436,114 +1786,6 @@ h3 .count, .bgroup .count { display: inline-block; font: 700 .68rem/1 var(--mono
   background: var(--panel-2); border: 1px solid var(--line-soft);
   font: 500 .76rem/1.6 var(--mono); color: var(--faint); }
 .quests .held b { color: var(--ink); }
-
-/* ---- the queue record: every entry, every field --------------------------
-   Deliberately denser and more clerical than the work list above it. That
-   section is prose for a stranger; this one is a file rendered legibly, so it
-   leans on the mono face, keeps the ids selectable, and lets long values wrap
-   rather than truncating anything. --alarm is local: the theme has a green and
-   an amber and no red, and MALFORMED must not read as merely warm. ---- */
-.qrec { --alarm: #e2564d; }
-@media (prefers-color-scheme: light) { .qrec { --alarm: #b3261e; } }
-.qgroup, .qbad { margin: 1.1rem 0 .2rem; }
-.qgroup h3, .qbad h3 { margin-bottom: .1rem; }
-.qbad { border: 1px solid var(--alarm); border-radius: 14px;
-  padding: .2rem .8rem .7rem; margin-bottom: 1.2rem; }
-.qbad h3 { color: var(--alarm); }
-.qlist-ol, .qraw { list-style: none; padding: 0; margin: .4rem 0 0; }
-.qraw li { font: 500 .76rem/1.7 var(--mono); overflow-wrap: anywhere; }
-.qrow { background: linear-gradient(180deg, var(--panel-2), var(--panel));
-  border: 1px solid var(--line); border-radius: 14px; padding: .7rem .95rem;
-  margin: .6rem 0; }
-.qtop { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; }
-.qchip { display: inline-block; font: 700 .64rem/1 var(--mono);
-  letter-spacing: .09em; border: 1px solid var(--line); border-radius: 999px;
-  padding: .28rem .5rem; color: var(--faint); white-space: nowrap; }
-/* EVERY STATE GETS ITS OWN BADGE, not just the four that had one. waiting,
-   blocked and planned all fell through to the same faint grey, so three
-   different answers to "why is this not moving" looked identical in a list
-   thirty entries long — which is the list where telling them apart matters
-   most. Colour is never the only carrier: each chip also holds its own emoji
-   and its word in full. */
-.qchip.running { color: var(--sap); border-color: var(--sap-deep); }
-.qchip.runnable { color: var(--leaf); border-color: var(--leaf-deep); }
-.qchip.done { color: var(--leaf); border-color: var(--leaf-deep); opacity: .75; }
-.qchip.failed { color: var(--alarm); border-color: var(--alarm); }
-.qchip.blocked { color: var(--alarm); border-color: var(--alarm); border-style: dashed; }
-.qchip.waiting { color: var(--sap); border-color: var(--sap-deep); border-style: dashed; }
-.qchip.planned { color: var(--muted); border-style: dashed; }
-.qid { font: 600 .74rem/1.5 var(--mono); color: var(--muted);
-  background: var(--code-bg); border-radius: 6px; padding: .12rem .35rem;
-  overflow-wrap: anywhere; user-select: all; }
-.qlist { font: 500 .68rem/1.5 var(--mono); color: var(--faint); }
-/* the age sits at the far end of the header row on a wide screen and wraps
-   under it on a narrow one — never in a column that could scroll off */
-.qage { margin-left: auto; font: 500 .7rem/1.5 var(--mono); color: var(--faint); }
-.qage .qnever { color: var(--faint); opacity: .85; }
-
-/* ---- the index: thirty entries is a document, and a document needs contents.
-   The record cannot be shortened — it exists to be diffed against the file —
-   so it is made navigable instead. Each link is a group that actually has
-   entries; a state with none is not listed, because a zero here would read as
-   a claim about the farm rather than the absence of one. ---- */
-.qindex { display: flex; flex-wrap: wrap; gap: .4rem; margin: .8rem 0 .2rem;
-  padding: 0; list-style: none; }
-.qindex a { display: inline-flex; align-items: baseline; gap: .35rem;
-  font: 700 .68rem/1 var(--mono); letter-spacing: .06em; text-decoration: none;
-  color: var(--muted); background: var(--code-bg); border: 1px solid var(--line);
-  border-radius: 999px; padding: .4rem .6rem; min-height: 30px; }
-.qindex a:hover { color: var(--ink); border-color: var(--leaf-deep);
-  text-decoration: none; }
-.qindex a b { font: 700 .74rem/1 var(--mono); color: var(--ink);
-  font-variant-numeric: tabular-nums; }
-.qwhat { font-weight: 600; margin: .4rem 0 .1rem; }
-.qwhy { color: var(--muted); font-size: .86rem; }
-.qgate { margin-top: .35rem; font-size: .84rem; color: var(--ink); }
-.qgate b, .qdeps b, .qclaims b { color: var(--sap); font: 700 .68rem/1.6 var(--mono);
-  letter-spacing: .06em; text-transform: uppercase; margin-right: .3rem; }
-.qdeps { margin-top: .3rem; font: 500 .78rem/1.7 var(--mono); }
-.qfields { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: .1rem .8rem; margin: .5rem 0 0; padding: .5rem 0 0;
-  border-top: 1px solid var(--line-soft); }
-.qfields dt { font: 700 .66rem/1.6 var(--mono); letter-spacing: .06em;
-  text-transform: uppercase; color: var(--faint); }
-.qfields dd { margin: 0 0 .3rem; font: 500 .78rem/1.6 var(--mono);
-  color: var(--ink); overflow-wrap: anywhere; }
-.qunknown { color: var(--alarm); font-size: .72rem; }
-.qfault { margin: .45rem 0 .2rem; padding: .45rem .6rem; border-radius: 10px;
-  border: 1px solid var(--alarm); font-size: .82rem; }
-.qfault b { color: var(--alarm); }
-.qfault ul { margin: .25rem 0 0; padding-left: 1.1rem;
-  font: 500 .76rem/1.7 var(--mono); }
-.qclaims { margin-top: .45rem; padding-top: .4rem;
-  border-top: 1px solid var(--line-soft); }
-.qclaims ul { list-style: none; padding: 0; margin: .2rem 0 0;
-  font: 500 .76rem/1.7 var(--mono); }
-.qclaims .qnote { color: var(--faint); }
-.qcmd { margin: .5rem 0 0; padding: .5rem .6rem; background: var(--code-bg);
-  border: 1px solid var(--line-soft); border-radius: 10px;
-  font: 500 .74rem/1.6 var(--mono); color: var(--muted);
-  white-space: pre-wrap; overflow-wrap: anywhere; }
-
-/* ---- vitals: the four numbers a visitor can check against the repo ---- */
-.vitals { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: .6rem; margin: .9rem 0 .4rem; }
-.vital { text-align: center; padding: .75rem .5rem .6rem; border: 1px solid var(--line);
-  border-radius: 14px; background: linear-gradient(180deg, var(--panel-2), var(--panel)); }
-.vital b { display: block; font: 600 1.6rem/1.15 var(--display); color: var(--ink);
-  font-variant-numeric: tabular-nums; }
-.vital small { font: 600 .68rem/1.5 var(--mono); color: var(--faint);
-  letter-spacing: .05em; text-transform: uppercase; }
-
-/* ---- the growth meter: two file-existence facts per scene, nothing else ---- */
-.growbar { height: 12px; max-width: 420px; margin: .7rem auto .35rem; overflow: hidden;
-  border: 1px solid var(--line); border-radius: 999px; background: var(--code-bg); }
-.growbar i { display: block; height: 100%; background: var(--sap); border-radius: 999px; }
-
-/* leaf tiers — the tooltip carries the words, the tint is only a hint */
-.leaf.pick { filter: none; text-decoration: none;
-  text-shadow: 0 0 10px rgba(255,199,106,.9); }
-.leaf.still { filter: saturate(.6); }
 
 /* ---- the quest board: real open requests, real reward, no points ---- */
 .qboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
@@ -2564,17 +1806,10 @@ h3 .count, .bgroup .count { display: inline-block; font: 700 .68rem/1 var(--mono
   padding-top: .4rem; margin-top: .5rem; font: 500 .72rem/1.5 var(--mono);
   color: var(--faint); }
 
-/* ---- milestones: unlocked = a repo fact; locked = the honest gap ---- */
-.badges { display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center;
-  margin: .8rem 0 .3rem; }
-.badge { flex: 1 1 45%; max-width: 168px; text-align: center; padding: .7rem .55rem .6rem;
-  border: 1px solid var(--line); border-radius: 14px;
-  background: linear-gradient(180deg, var(--panel-2), var(--panel)); }
-.badge .ico { font-size: 1.9rem; line-height: 1.2; }
-.badge .nm { font: 700 .74rem/1.35 var(--mono); margin: .15rem 0 .1rem; }
-.badge .cap { font: 500 .68rem/1.5 var(--mono); color: var(--faint); }
-.badge.locked { opacity: .5; filter: grayscale(1); border-style: dashed; }
-.badge.locked .nm::after { content: " · locked"; color: var(--faint); font-weight: 500; }
+/* ---- the growth meter: two file-existence facts per scene, nothing else ---- */
+.growbar { height: 12px; max-width: 420px; margin: .7rem auto .35rem; overflow: hidden;
+  border: 1px solid var(--line); border-radius: 999px; background: var(--code-bg); }
+.growbar i { display: block; height: 100%; background: var(--sap); border-radius: 999px; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; } }
 """
 
@@ -2681,16 +1916,6 @@ def video_payload(out_dir) -> dict:
             "biggest": biggest[0], "biggest_bytes": biggest[1]}
 
 
-def bandwidth_tile(pay: dict) -> str:
-    """The one-glance figure for the top strip. Says "estimate" in the tile."""
-    if not pay.get("ok"):
-        return ('<a class="sx" href="#bandwidth"><span class="sn none">unavailable'
-                '</span><span class="sl">video bandwidth</span></a>')
-    return (f'<a class="sx" href="#bandwidth">'
-            f'<span class="sn">{_e(bytes_words(pay["bytes"]))}</span>'
-            f'<span class="sl">video per full watch · estimate</span></a>')
-
-
 def bandwidth_html(pay: dict) -> str:
     """The section the tile links down to, caveats and all."""
     head = ('<h2 id="bandwidth">📡 What the videos cost the internet</h2>')
@@ -2699,8 +1924,7 @@ def bandwidth_html(pay: dict) -> str:
                 f'published video files ({_e(pay.get("why", "reason not recorded"))}), '
                 'so it prints no number. It will not print a zero it did not '
                 'measure.</p>' + _bandwidth_caveat()
-                + render_bandwidth_html(render_bandwidth())
-                + local_disk_html(local_disk()))
+                + render_bandwidth_html(render_bandwidth()))
     per = pay["bytes"]
     watches = int((HOBBY_TRANSFER_GB * 1024 ** 3) // per) if per else 0
     return (
@@ -2719,8 +1943,7 @@ def bandwidth_html(pay: dict) -> str:
         f'</a>, so the whole video library fits down the pipe about '
         f'<b>{watches:,}</b> times before that allowance is gone.</p></div>'
         + _bandwidth_caveat()
-        + render_bandwidth_html(render_bandwidth())
-        + local_disk_html(local_disk()))
+        + render_bandwidth_html(render_bandwidth()))
 
 
 def _bandwidth_caveat() -> str:
@@ -2809,16 +2032,6 @@ def rate_words(bps: float) -> str:
 def _rbw_render_bps(rb: dict) -> int:
     r = rb["while_rendering"]
     return int(r.get("recv_bytes_per_sec", 0)) + int(r.get("sent_bytes_per_sec", 0))
-
-
-def render_bw_tile(rb: dict) -> str:
-    """The strip tile. Says "measured" where its neighbour says "estimate"."""
-    if not rb.get("ok"):
-        return ('<a class="sx" href="#renderbw"><span class="sn none">unavailable'
-                '</span><span class="sl">render box network</span></a>')
-    return (f'<a class="sx" href="#renderbw">'
-            f'<span class="sn">{_e(rate_words(_rbw_render_bps(rb)))}</span>'
-            f'<span class="sl">render box, mid-render · measured</span></a>')
 
 
 def render_bandwidth_html(rb: dict) -> str:
@@ -2936,71 +2149,6 @@ def local_disk(path=None) -> dict:
     return out
 
 
-def _disk_low(ld: dict) -> bool:
-    try:
-        return int(ld["free_bytes"]) < int(ld.get("warn_below_bytes") or 0)
-    except (KeyError, TypeError, ValueError):
-        return False
-
-
-def local_disk_html(ld: dict) -> str:
-    """Where the render bytes actually sit, and how much room is left."""
-    head = '<h3 id="disk">💽 And how much room is left to put them</h3>'
-    if not ld.get("ok"):
-        return (head + '<p class="notice">The laptop disk reading could not be '
-                f'read ({_e(ld.get("why", "reason not recorded"))}), so this build '
-                'prints no number for it rather than a stale or invented one.</p>')
-    free = int(ld["free_bytes"])
-    total = int(ld["total_bytes"])
-    cached = int(ld.get("cached_media_bytes") or 0)
-    recl = int(ld.get("reclaimable_bytes") or 0)
-    box = ld.get("box_free_bytes")
-
-    def row(what, num, like):
-        return (f'<tr><td>{what}</td><td class="rbn">{_e(num)}</td>'
-                f'<td class="rbl">{like}</td></tr>')
-
-    rows = (
-        row("Free on the laptop that reviews the renders", bytes_words(free),
-            f'<b>{free / total * 100:.0f}%</b> of the disk'
-            + (' — <b>below the line where this starts to bite</b>'
-               if _disk_low(ld) else ''))
-        + (row("Free on the render box, which makes all of it",
-               bytes_words(int(box)),
-               f'about {int(box) / free:.0f}× the room, on the machine the '
-               'files came from') if box else "")
-        + row("Render media cached on the laptop", bytes_words(cached),
-              "clips and candidates pulled back for a look")
-        + (row("Of that, proven to also be on the box", bytes_words(recl),
-               "removable here without losing a frame — matched by sha256, "
-               "not by name") if box else "")
-    )
-    # The free-space figure is cheap and refreshed constantly; the two box
-    # figures cost an ssh round trip and are carried forward between checks.
-    # They therefore wear different dates, and the page says so rather than
-    # letting one timestamp vouch for measurements taken hours apart.
-    box_when = ld.get("box_checked_on") or ld.get("measured_on")
-    return (
-        head +
-        '<p class="verdict">Nothing is rendered on this laptop. Every clip and '
-        'candidate under review was made on the box and copied here, and then '
-        'kept here — which is how the smallest disk in the house ended up '
-        'holding the archive. <b>The laptop is a cache, not a second copy of '
-        'the farm.</b></p>'
-        f'<div class="scroll"><table class="rbw"><tbody>{rows}</tbody></table></div>'
-        f'<p class="whyfoot">Free space measured on '
-        f'{_e(str(ld.get("measured_on", "a date not recorded")))}'
-        + (f'; the two box figures on {_e(str(box_when))}, because those cost a '
-           'round trip to the box and are taken less often' if box else '')
-        + ', by '
-        f'<a href="https://github.com/{GH}/blob/main/pipeline/box_cache.py">'
-        'box_cache.py</a>, which is also what clears the copies back down — it '
-        'removes a local file only when the same bytes are found on the box by '
-        'sha256, never by filename, and never at all if the box cannot be '
-        f'reached. Raw numbers: <a href="https://github.com/{GH}/blob/main/'
-        f'{LOCAL_DISK_FILE}">{LOCAL_DISK_FILE}</a>.</p>')
-
-
 STRIP_CSS = """
 /* ---- the summary strip -------------------------------------------------
    Roman, 2026-08-10: "the dashboard is a bit too long and complex ... can you
@@ -3016,7 +2164,7 @@ STRIP_CSS = """
 .strip .sh { font: 700 .62rem/1 var(--mono); letter-spacing: .09em;
   text-transform: uppercase; color: var(--faint); margin: 0 0 .7rem; }
 .strip .sgrid { display: grid; gap: .55rem;
-  grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr)); }
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); }
 .strip .sx { display: block; text-decoration: none; color: inherit;
   border: 1px solid var(--line); border-radius: 10px; padding: .5rem .6rem;
   background: var(--bg); }
@@ -3025,6 +2173,7 @@ STRIP_CSS = """
 .strip .sn.none { font-size: .8rem; font-weight: 600; color: var(--faint);
   line-height: 1.7; }
 .strip .sn.zero { color: var(--faint); }
+.strip .sn.ok { color: var(--leaf); }
 .strip .sn.bad { color: var(--alarm, #e2564d); }
 .strip .sl { display: block; font: 500 .68rem/1.45 var(--mono); color: var(--muted);
   margin-top: .15rem; }
@@ -3075,80 +2224,94 @@ def strip_counts(queue: list, backlog: list, records: list) -> dict:
     return counts
 
 
-def summary_strip(counts: dict, running_t: list, fin: list, by_id: dict,
-                  inbox: list, pay: dict, now) -> str:
-    """The one-glance view, above everything. Every tile anchors to its detail."""
-    def tile(n, label, href, cls=""):
-        k = cls or ("zero" if n == 0 else "")
-        return (f'<a class="sx" href="{href}"><span class="sn {k}">{n}</span>'
-                f'<span class="sl">{_e(label)}</span></a>')
+def summary_strip(view: dict, now) -> str:
+    """The three questions a visitor actually brings, answered in one row.
 
-    # Finished today is the one count that can legitimately be unknown: if a
-    # check-in log could not be read, the sections below print "—" rather than a
-    # zero, and the strip has to tell the same story or it undoes them.
-    unread = logs_unread()
-    done_tile = (
-        '<a class="sx" href="#worklist"><span class="sn none">not read</span>'
-        '<span class="sl">finished today</span></a>' if unread and not fin
-        else tile(len(fin), "finished today", "#worklist"))
+    REBUILT 2026-08-11. The old strip led with seven tiles whose two loudest
+    numbers were wrong the night the founder looked ("rendering now: 0" over a
+    box that finished ten jobs; "runnable: 4" over jobs done the day before) —
+    both counted off the dead task list instead of the machines' own logs. The
+    strip now answers, in order: is production alive, what got made in the
+    last day, and where the show is. Bandwidth and disk trivia came off it —
+    the founder's own ruling on the disk tile, extended by both audits.
 
-    tiles = (
-        tile(len(running_t), "rendering now", "#worklist")
-        + tile(counts["runnable"], "runnable", "#worklist")
-        + tile(counts["failed"], "failed", "#queue",
-               cls="bad" if counts["failed"] else "zero")
-        + done_tile
-        + tile(len(inbox), "waiting on the author", "#waiting")
-        + bandwidth_tile(pay)
-        # Two bandwidth tiles side by side, and they answer DIFFERENT questions:
-        # what visitors pull down from the site, and what the render box in the
-        # house sends and receives. Their labels carry the distinction, because
-        # adjacent numbers in the same units read as comparable unless told
-        # otherwise.
-        # A third figure — the laptop's free disk — briefly sat here too and
-        # came off on Roman's verdict (2026-08-11): "isnt this a bit much?
-        # people looking at this other than me will be confused, and it doesnt
-        # really need to be there." A tile is the glance, and a housekeeping
-        # number about one machine in the house is not what a visitor came to
-        # glance at. The reading is still taken and still printed in full under
-        # #disk, where someone who wants it can find it.
-        + render_bw_tile(render_bandwidth()))
+    Honesty rule unchanged: this is a snapshot with its instant printed on it,
+    never a claim of "live". `view` carries only log-derived facts:
+      last_activity  newest dated line across every machine and ledger log
+      fin            finished_recent() — DONE lines from the last 24 h
+      live           live_now() — fresh STARTED lines with no end mark
+      unread         logs_unread() — branches whose logs this build could not read
+      by_id          queue entries by id, for done_story()
+      hero/tot       the episode player facts (build_status)
+      ep2            the next episode's counts, or None
+      inbox          the author's decision queue
+    """
+    fin, live, unread = view["fin"], view["live"], view["unread"]
+    last, inbox = view["last_activity"], view["inbox"]
+    hero, tot, ep2 = view["hero"], view["tot"], view.get("ep2")
 
-    lines = ""
-    if running_t:
-        what, _why = queue_row_story(running_t[0])
-        more = (f" (+{len(running_t) - 1} more)" if len(running_t) > 1 else "")
-        lines += f'<p class="sline">🔴 Rendering: <b>{_e(what)}</b>{_e(more)}</p>'
+    # --- cell 1: is production alive? Keyed to LAST ACTIVITY, not to
+    # this-second job state — "nothing this minute" over a working night is the
+    # exact misread the founder screenshotted.
+    if unread and last is None:
+        word, cls = "unknown", "none"
+        sub = ("the machines\u2019 check-in logs could not be read this build, "
+               "so nothing is claimed either way")
+    elif last is None:
+        word, cls = "quiet", "zero"
+        sub = "no machine has ever checked in"
+    elif (now - last).total_seconds() < 6 * 3600:
+        word, cls = "active", "ok"
+        sub = f"last activity {age_words(last, now)}"
     else:
-        lines += ('<p class="sline">🔴 Rendering: <b>nothing this minute</b> — no '
-                  'machine has an unfinished job in its check-in log.</p>')
+        word, cls = "quiet", "zero"
+        sub = f"nothing heard from the studio since {age_words(last, now)}"
+    if live:
+        sub += " \u00b7 a job was mid-flight at the last check-in"
+    alive_cell = (f'<a class="sx" href="#worklist"><span class="sn {cls}">'
+                  f'\u25cf {word}</span>'
+                  f'<span class="sl">the studio \u00b7 {_e(sub)}</span></a>')
+
+    # --- cell 2: what got made in the last 24 hours, newest first.
     if fin:
-        when, who, tid, note = fin[0]
-        lines += (f'<p class="sline">✅ Last finished: '
-                  f'<b>{_e(finished_line_story(by_id.get(tid), note))}</b> · '
-                  f'{_e(who)}, {age_el(when, now)}</p>')
+        when, who, tid, _note = fin[0]
+        newest = (f'newest: {_e(done_story(view["by_id"].get(tid), tid))} \u00b7 '
+                  f'{age_words(when, now)}')
+        made_cell = (f'<a class="sx" href="#worklist"><span class="sn">{len(fin)}'
+                     f'</span><span class="sl">finished in the last 24 h \u00b7 '
+                     f'{newest}</span></a>')
+    elif unread:
+        made_cell = ('<a class="sx" href="#worklist"><span class="sn none">not '
+                     'read</span><span class="sl">finished in the last 24 h — a '
+                     'check-in log could not be read, and a zero nobody measured '
+                     'is not a number</span></a>')
+    else:
+        made_cell = ('<a class="sx" href="#worklist"><span class="sn zero">0'
+                     '</span><span class="sl">renders finished in the last 24 h '
+                     '— writing and code work does not check in here</span></a>')
+
+    # --- cell 3: the show itself — the thing a visitor actually came for.
+    ep_bits = f'episode {hero["number"]} is live \u00b7 {tot["final"]} of {tot["total"]} scene frames approved'
+    if ep2:
+        ep_bits += (f' \u00b7 episode {ep2["number"]}: takes in for '
+                    f'{ep2["started"]} of {ep2["total"]} scenes')
     if inbox:
-        # Oldest by its own `since`, not by position — the inbox file is written
-        # in whatever order a person added to it, and "oldest" is the only thing
-        # that makes a single-item summary of a list worth printing.
-        dated = [q for q in inbox if _iso(q.get("since"))]
-        oldest = (min(dated, key=lambda q: _iso(q.get("since")))
-                  if dated else inbox[0])
-        waited = (f'{_e(waiting_words(oldest.get("since"), now))} · '
-                  if oldest.get("since") else "")
-        lines += (f'<p class="sline">🕰 Longest wait on the author: {waited}'
-                  f'<b>{_e(first_sentence(str(oldest.get("title") or "—"), 90))}</b></p>')
+        ep_bits += (f' \u00b7 {len(inbox)} call{"s" if len(inbox) != 1 else ""} '
+                    'waiting on the author')
+    show_cell = (f'<a class="sx" href="{_e(hero["watch"])}">'
+                 f'<span class="sn ok">\u25b6 watch</span>'
+                 f'<span class="sl">{ep_bits}</span></a>')
 
     return (
         '<div class="strip rise">'
         '<p class="sh">At a glance</p>'
-        f'<div class="sgrid">{tiles}</div>'
-        f'{lines}'
-        '<p class="sfoot">The short version. Every tile is a link down to the full '
-        'account of itself — nothing here replaces what is below it, and every '
-        'number is computed by the same code that writes the detail.</p>'
+        f'<div class="sgrid">{alive_cell}{made_cell}{show_cell}</div>'
+        f'<p class="sfoot">A snapshot as of <b>{now.strftime("%H:%M")} UTC, '
+        f'{now.strftime("%d %b")}</b> — the moment this page was built and the '
+        'machines\u2019 own logs were last read. Nothing here claims to be '
+        'live: ages keep counting in your browser, and the detail below says '
+        'where every number comes from.</p>'
         '</div>')
-
 
 # only build once per output directory: build_site.py calls build_status.build()
 # (which delegates here) and then build_sim.build(), and each pass would hit the
@@ -3166,8 +2329,6 @@ def build(out_dir: Path):
     hero = data.hero()
     spend, inbox = data.spend(), data.inbox()
     grow = data.growth(rows)
-    takes = data.takes_tally()
-    open_quests = sum(1 for r in rows if r["request"]) + 2  # + the standing two
 
     # --- the infra meter (D18): rendered EMPTY and filled in by the reader's
     # browser. The server-side copy states no number at all — not zero, not the
@@ -3184,8 +2345,33 @@ def build(out_dir: Path):
         f'<p class="note">{_e(meter["note"])}</p>'
         f'</div>')
 
+    # --- ONE READ OF THE FARM, used by every section below. branch_log() reads
+    # each machine's WHOLE check-in file and dates it off one anchor commit, so
+    # the counters here see everything the runners ever wrote — the 30-commit
+    # window that hid a night of finished work is gone with the window.
+    now = utcnow()
+    qdoc = queue_doc()
+    queue, backlog = qdoc["tasks"], qdoc["backlog"]
+    machines = read_machines(queue, backlog, now)
+    # The machine list is the MACHINES; the work-list counters are the machines
+    # AND the hand ledger. That split is the whole of NOT_A_MACHINE: no tile for
+    # a thing that is not a box, no blindness about work it finished.
+    records = machines + read_ledgers(now)
+    by_id = {str(t.get("id")): t for t in list(queue) + list(backlog)}
+    done_ids = task_ids_done(records)
+    live = live_now(records, now)
+    fin = finished_recent(records, now)
+    depth = box_queue_depth(records)
+    last_activity = max((m["history"][0][0] for m in records if m["history"]),
+                        default=None)
+
+    # --- the simple view: alive? → made? → the show. Above everything else.
+    strip = summary_strip({
+        "fin": fin, "live": live, "unread": logs_unread(),
+        "last_activity": last_activity, "by_id": by_id, "hero": hero,
+        "tot": tot, "ep2": data.next_episode(), "inbox": inbox}, now)
+
     # --- the grove: 15 leaves, each one an actual scene you can go look at.
-    # Four tiers a glance can tell apart; the tooltip carries the exact words.
     leaves = ""
     for r in rows:
         if r["final"] and r["animations"]:
@@ -3211,38 +2397,36 @@ def build(out_dir: Path):
                f'<div class="label"><b>{pct}% grown</b> — {grow["done"]} of {grow["total"]} '
                'growth steps. A scene grows twice: its frame is approved, then it is animated.</div>')
 
-    # --- the lot: our machines as buildings on one street, crew walking it ---
-    # ONE READ OF THE FARM, used by every section below. read_machines() dates
-    # each check-in off the commit that pushed it, so the ages here are real:
-    # the old arithmetic wrapped at 24 h and published a box last heard from on
-    # 29 July as "12 h ago".
-    now = utcnow()
-    qdoc = queue_doc()
-    queue, backlog = qdoc["tasks"], qdoc["backlog"]
-    machines = read_machines(queue, backlog, now)
-    # The street and the tiles below are the MACHINES; the work-list counters
-    # further down are the machines AND the hand ledger. That split is the whole
-    # of NOT_A_MACHINE: no building for a thing that is not a box, no blindness
-    # about work it finished.
-    records = machines + read_ledgers(now)
-    bldgs, machlist, seen_states = "", "", []
+    # --- milestones, in one line. The six-badge strip said the same facts in
+    # thirty; every clause below is still a checkable repo fact.
+    vo = data.vo_scenes()
+    passed = data.cut_passed()
+    moving = sum(1 for r in rows if r["animations"])
+    mile_bits = [
+        f'{tot["total"]} scenes scripted',
+        ("every frame approved" if done
+         else f'{tot["final"]} of {tot["total"]} frames approved'),
+        (f'{vo} scenes voiced' if vo else "no voice lines yet"),
+        ("every scene moves" if moving == tot["total"]
+         else f'{moving} of {tot["total"]} scenes move'),
+        ("a full cut is playing above" if hero["video"] else "no full cut yet"),
+        ("the author passed the cut" if passed
+         else "awaiting the author's pass — the last gate"),
+    ]
+    milestones_line = ('<p class="summary" style="text-align:center">'
+                       + _e(" · ".join(mile_bits)) + '</p>')
+
+    # --- the machines, one line each. The animated lot died in the 2026-08-11
+    # revamp: three of four buildings rendered permanently faded, and the sky
+    # was decoration a visitor had to read past to find the one fact.
+    machlist = ""
     for m in machines:
         st = m["state"]
-        seen_states.append(st["css"])
-        title = f'{m["name"]} — {st["head"]} · {st["seen"]}'
-        smoke = '<div class="smoke">💨</div>' if st["css"] == "working" else ""
-        bldgs += (f'<div class="lot-bld {st["css"]}" data-mach="{_e(m["key"])}" '
-                  f'title="{_e(title)}">{smoke}'
-                  f'<span class="ico">{m["emoji"]}</span>'
-                  f'<span class="btag">{_e(m["name"])}</span></div>')
         # Every claim on this line carries the age of the thing it describes,
         # and the ages tick in the reader's own browser (see LIVE_JS).
-        # NOT .age when there is no age. `.age` is nowrap, because a duration
-        # that breaks across two lines twitches every time the browser rewrites
-        # it — but this branch is the fallback SENTENCE for a machine whose date
-        # could not be read, and nowrap made that sentence a 747px line that
-        # pushed /status into a horizontal scroll at phone width (measured at a
-        # 500px viewport, 2026-08-10). A sentence is not a number.
+        # NOT .age when there is no age: this branch is the fallback SENTENCE
+        # for a machine whose date could not be read, and nowrap made that
+        # sentence a 747px line at phone width (measured, 2026-08-10).
         bits = [f'last check-in {age_el(m["last_seen"], now)}'] if m["last_seen"] else \
             [f'<span class="noage">{_e(st["seen"])}</span>']
         if m["telemetry"]:
@@ -3258,82 +2442,63 @@ def build(out_dir: Path):
             f'<div class="mstate" data-role="head">{_e(st["head"])}</div>'
             + (f'<div class="why">{_e(st["why"])}</div>' if st["why"] else "")
             + f'<div class="mono" data-role="seen">{" · ".join(bits)}</div></li>')
-    bldgs += (f'<div class="lot-bld lot-tree"><a class="ico" href="{_e(hero["page"])}" '
-              f'title="Episode {hero["number"]} — {pct}% grown">🌳</a>'
-              f'<span class="btag">episode {hero["number"]} · {pct}%</span></div>')
-    day = data.day_count()
-    sun = (f'<div class="sun">☀️<small>day {day} of production</small></div>'
-           if day else "")
-    comments = latest_thread_comments()
-    lot = (f'<div class="lot">{sun}'
-           '<div class="stars" aria-hidden="true">✦ ✧ ✦ ✧ ✦</div>'
-           '<div class="cloud">☁️<small>cloud GPU — standing by (unused)</small></div>'
-           f'<div class="street">{bldgs}</div>'
-           f'{walkers_html(comments, "working" in seen_states)}</div>')
 
-    # --- what is being rendered, what is merely queued, and what is blocked ---
-    # QUEUED IS NOT IN PRODUCTION. The old heading printed the whole `tasks:`
-    # list under "In production" — so a job nobody had started, and a job that
-    # finished four days ago and had not been retired out of the file, both read
-    # as work happening now. A task is RENDERING only when a machine's own log
-    # holds a fresh STARTED for its id and no DONE after it.
-    done_ids = task_ids_done(records)
-    running = {}
+    # --- the work list: in flight, finished, queued, planned — off the logs.
+    live_ids = {t for _w, _who, t in live}
+    hand_q, machine_q = [], []
     for t in queue:
-        r = task_running(str(t.get("id")), records)
-        if r:
-            running[str(t.get("id"))] = r
-    running_t = [t for t in queue if str(t.get("id")) in running]
-    queued_t = [t for t in queue
-                if str(t.get("id")) not in running and str(t.get("id")) not in done_ids]
+        tid = str(t.get("id"))
+        if tid in done_ids or tid in live_ids:
+            continue
+        # A `runner: manual` entry is a job for a PERSON. Publishing one as
+        # "queued and runnable" is how four dead hand jobs from 2026-08-09 sat
+        # on the page narrating taste-ledger clauses at strangers. They stay in
+        # the file for the person they are addressed to; the page counts them
+        # in one line and prints none of them.
+        if str(t.get("runner") or "") == "manual" or str(t.get("worker") or "") in LEDGERS:
+            hand_q.append(t)
+        else:
+            machine_q.append(t)
 
-    def _rows(tasks, stamp=None):
-        html_rows = ""
-        for t in merge_queue(tasks):
-            what, why = queue_row_story(t)
-            wkey = str(t.get("worker", "any"))
-            wnice = MACHINES.get(wkey, (wkey, "🏠"))[0] if wkey != "any" else "any machine"
-            extra = ""
-            r = running.get(str(t.get("id")))
-            if r:
-                # Who is ACTUALLY running it beats who the queue asked for. For a
-                # machine picking up its own task these are the same string; for a
-                # hand-run, `worker:` names a box that is not doing the work.
-                wnice = r["runner"]["name"]
-            if stamp and r:
-                extra = f'<br><span class="mono">started {age_el(r["since"], now)}</span>'
-            html_rows += (f'<div class="prod-row"><b>{_e(wnice)}</b> · {_e(what)}{extra}'
-                          f'<br><span class="why">{_e(why)}</span></div>')
-        return html_rows
-
-    if running_t:
-        rendering = ('<h3>🔴 Rendering right now</h3>' + _rows(running_t, stamp=True))
+    if live:
+        live_rows = "".join(
+            f'<div class="prod-row"><b>{_e(done_story(by_id.get(t), t))}</b> · '
+            f'{_e(who)} · started {age_el(when, now)}</div>'
+            for when, who, t in live)
+        onmach = ('<h3>⚙️ On the machines — as of the last check-in</h3>'
+                  + live_rows)
     else:
-        rendering = ('<h3>🔴 Rendering right now</h3><p class="notice">Nothing is '
-                     'rendering this minute — no machine, and nobody by hand, has an '
-                     'unfinished job in the check-in log.</p>')
-    if queued_t:
-        queued_html = (f'<h3>⏭ Queued and runnable <span class="count">{len(queued_t)}'
-                       '</span></h3><p class="mono">Claimed by whichever named machine '
-                       'polls the queue next; nothing here is waiting on a person.</p>'
-                       + _rows(queued_t))
-    else:
-        queued_html = ('<h3>⏭ Queued and runnable <span class="count">0</span></h3>'
-                       '<p class="notice">The runnable queue is empty. That is a '
-                       'statement, not an oversight: it means no planned job is both '
-                       'unblocked and shaped for a machine to pick up by itself.</p>')
+        seen_note = (f' The newest check-in this build could read is '
+                     f'{age_words(last_activity, now)}.' if last_activity else "")
+        onmach = ('<h3>⚙️ On the machines — as of the last check-in</h3>'
+                  '<p class="notice">No job was mid-flight at the last check-in '
+                  'this build could read.' + _e(seen_note) + ' Short jobs start '
+                  'and finish between check-ins, so what actually shipped is the '
+                  'list below.</p>')
+    if depth:
+        dwhen, dready, dfailed, dwho = depth
+        onmach += (f'<p class="mono">{_e(dwho)} reported its own on-disk queue at '
+                   f'its last idle check-in: <b>{dready}</b> '
+                   f'job{"s" if dready != 1 else ""} ready'
+                   + (f', {dfailed} failed' if dfailed else "")
+                   + f' · {age_el(dwhen, now)}</p>')
 
-    # --- finished today: DONE lines with real dates on them ---
-    by_id = {str(t.get("id")): t for t in list(queue) + list(backlog)}
-    fin = finished_today(records, now)
     if fin:
-        fin_rows = ""
-        for when, who, tid, note in fin:
-            what = finished_line_story(by_id.get(tid), note)
-            fin_rows += (f'<div class="prod-row"><b>{_e(who)}</b> · {_e(what)}'
-                         f'<br><span class="mono">finished {age_el(when, now)}</span></div>')
-        done_html = (f'<h3>✅ Finished today <span class="count">{len(fin)}</span></h3>'
-                     + fin_rows)
+        def _fin_row(when, who, tid):
+            return (f'<div class="prod-row"><b>{_e(done_story(by_id.get(tid), tid))}'
+                    f'</b> · {_e(who)} · finished {age_el(when, now)}</div>')
+        # Ten rows at the surface, the rest one click down: on a heavy night the
+        # farm finishes seventy jobs, and seventy rows is a wall where the
+        # founder asked for a glance. Nothing is dropped — the drawer holds the
+        # whole day, newest first, same one-line shape.
+        fin_rows = "".join(_fin_row(w, who, t) for w, who, t, _n in fin[:10])
+        if len(fin) > 10:
+            rest = "".join(_fin_row(w, who, t) for w, who, t, _n in fin[10:])
+            fin_rows += (f'<details class="drawer"><summary>and {len(fin) - 10} '
+                         'more from the same 24 hours</summary>'
+                         f'<div class="drawer-body">{rest}</div></details>')
+        done_html = (f'<h3>✅ Finished in the last 24 hours '
+                     f'<span class="count">{len(fin)}</span></h3>' + fin_rows)
     elif logs_unread():
         # NO NUMBER AT ALL — the infra meter's contract, for the same reason. A
         # zero printed off a read that failed is this page inventing the most
@@ -3341,119 +2506,128 @@ def build(out_dir: Path):
         unread = logs_unread()
         named = (_and_list(unread) if len(unread) <= 3
                  else f"{len(unread)} of the check-in logs")
-        done_html = ('<h3>✅ Finished today <span class="count">—</span></h3>'
+        done_html = ('<h3>✅ Finished in the last 24 hours '
+                     '<span class="count">—</span></h3>'
                      f'<p class="notice">This build could not read {_e(named)}, so '
-                     'it does not know what finished today and will not print a zero '
-                     'it did not measure. The reason is listed with the other fetch '
-                     'failures above.</p>')
+                     'it does not know what finished and will not print a zero '
+                     'it did not measure.</p>')
     else:
-        # WHAT THE ZERO ACTUALLY MEANS, in the words it can defend. "No job has
-        # finished" is false in plain English on a day when plenty of work
-        # shipped — the check-in log only ever records what a RENDER runner ran.
-        # A code or writing task finishes by having its queue entry retired and
-        # never writes a check-in line at all (pipeline/farm-queue.yaml:65-67,
-        # the rule `after:` is built on), so a full day of it still reads 0 here.
-        # Written after five such jobs were given heartbeat lines they were not
-        # entitled to, purely to move this number off 0, and retracted (4924a29).
-        done_html = ('<h3>✅ Finished today <span class="count">0</span></h3>'
-                     '<p class="notice">No render job has finished since midnight '
-                     'UTC. This counts work a render machine ran and logged; a code '
-                     'or writing task finishes by its queue entry being retired and '
-                     'never writes a check-in line, so a day of that work still '
-                     'reads 0 here. Today is read off the dated check-in log, not '
-                     'guessed from a clock time with no day attached.</p>')
+        # WHAT THE ZERO ACTUALLY MEANS, in the words it can defend. The check-in
+        # log only ever records what a RENDER runner ran; a code or writing task
+        # finishes by having its queue entry retired and never writes a line.
+        done_html = ('<h3>✅ Finished in the last 24 hours '
+                     '<span class="count">0</span></h3>'
+                     '<p class="notice">No render job has finished in the last '
+                     '24 hours. This counts work a render machine ran and '
+                     'logged; writing and code work never checks in here, so a '
+                     'day of that still reads 0.</p>')
 
+    if machine_q:
+        q_rows = ""
+        for t in merge_queue(machine_q):
+            what, why = queue_row_story(t)
+            wkey = str(t.get("worker", "any"))
+            wnice = MACHINES.get(wkey, (wkey, ""))[0] if wkey != "any" else "any machine"
+            q_rows += (f'<div class="prod-row"><b>{_e(what)}</b> · waits for {_e(wnice)}'
+                       + (f'<br><span class="why">{_e(visitor_sentence(why, 170))}</span>'
+                          if why else "")
+                       + '</div>')
+        queued_html = (f'<h3>⏭ Queued for a machine <span class="count">'
+                       f'{len(machine_q)}</span></h3>'
+                       '<p class="mono">Claimed by whichever named machine polls '
+                       'the queue next; nothing here waits on a person.</p>' + q_rows)
+    else:
+        box_note = (' The render box also keeps its own on-disk queue between '
+                    'pushes — its last idle report above is the only honest '
+                    'reading of that.' if depth else "")
+        queued_html = ('<h3>⏭ Queued for a machine <span class="count">0</span></h3>'
+                       '<p class="notice">Nothing in the shared queue file is '
+                       'waiting for a machine.' + box_note + '</p>')
+    if hand_q:
+        queued_html += (
+            f'<p class="mono">{len(hand_q)} more '
+            f'entr{"y is" if len(hand_q) == 1 else "ies are"} addressed to a '
+            'person, to run by hand — machine-facing detail this page leaves to '
+            f'<a href="https://github.com/{GH}/blob/main/pipeline/farm-queue.yaml">'
+            'the queue file itself</a>.</p>')
+
+    counts = strip_counts(queue, backlog, records)
     blocked_total = sum(v["est"] or 0 for v in map(backlog_entry_view, backlog))
+    groups = backlog_groups(backlog)
+    gate_line = " · ".join(f"{len(g_rows)} {head}"
+                           for _g, _emo, head, _b, g_rows, _m in groups)
+    if backlog:
+        planned_html = (
+            f'<h3>🧱 Planned, and what each one is waiting for '
+            f'<span class="count">{len(backlog)}</span></h3>'
+            f'<p class="mono">{_e(gate_line)}'
+            # hours_words says "about" itself past 90 min — no prefix, or the
+            # line reads "about about 13.2 h" (caught on the built page).
+            + (f' · {_e(hours_words(blocked_total))} of machine time parked'
+               if blocked_total else "") + '</p>'
+            '<details class="drawer"><summary>Open the planned list — one line '
+            'per job, with its blocker</summary>'
+            f'<div class="drawer-body">{backlog_html(backlog)}</div></details>')
+    else:
+        planned_html = ('<h3>🧱 Planned, and what each one is waiting for '
+                        '<span class="count">0</span></h3>'
+                        '<p class="notice">The backlog is empty — every planned '
+                        'job has either run or been dropped.</p>')
+
+    total_entries = len(queue) + len(backlog)
+    state_bits = ", ".join(
+        f"{counts[k]} {QSTATES[k][1].lower()}"
+        for k in ("runnable", "running", "done", "failed", "waiting", "blocked",
+                  "planned") if counts[k])
     production = (
         '<h2 id="worklist">🏭 The work list</h2>'
-        '<p style="margin:.2rem 0 .6rem;color:var(--muted)">Everything the studio '
-        'has agreed to make, in the order reality allows: what a machine is '
-        'actually running, what it can pick up next, what finished today, and '
-        'what is planned but held — each held job with the blocker written down.</p>'
-        '<p class="livemark" id="q-live">This is the work queue as this copy of the '
-        'page was built. With JavaScript on, your browser re-reads the queue file '
-        'itself and says here whether it has changed since.</p>'
-        f'{rendering}{queued_html}{done_html}'
-        f'<h3>🧱 Planned, and what each one is waiting for '
-        f'<span class="count">{len(backlog)}</span></h3>'
-        + ('<p class="mono">' + _e(hours_words(blocked_total))
-           + ' of work sits here. A blocker is a fact about the world, not a '
-             'priority call — nothing below can start until the named thing '
-             'changes.</p>' if blocked_total else "")
-        + backlog_html(backlog)
-        + '<p class="whyfoot">Finished frames land on each machine\'s courier branch, '
-          'get checked, and show up as choices on the '
-          '<a href="sapling/001-capability-inventory-shots.html">shot board</a> — '
-          'the author (and anyone watching) picks what survives.</p>')
+        '<p style="margin:.2rem 0 .6rem;color:var(--muted)">What the machines '
+        'were on when last heard, what shipped in the last day, and what is '
+        'queued or held. Every line comes from a machine\'s own dated check-in '
+        'log or from the shared queue file — never a guess, and never a claim '
+        'about this exact minute.</p>'
+        '<p class="livemark" id="q-live">This is the work queue as this copy of '
+        'the page was built. With JavaScript on, your browser re-reads the queue '
+        'file itself and says here whether it has changed since.</p>'
+        f'{onmach}{done_html}{queued_html}{planned_html}'
+        f'<p class="whyfoot">The shared queue file holds {total_entries} '
+        f'entr{"y" if total_entries == 1 else "ies"} at build time'
+        + (f' ({_e(state_bits)})' if state_bits else "") + '. The file is the '
+        'intent and the check-in logs are what happened; where the two disagree '
+        'the logs win. Read it yourself: '
+        f'<a href="https://github.com/{GH}/blob/main/pipeline/farm-queue.yaml">'
+        'pipeline/farm-queue.yaml</a>.</p>'
+        '<p class="whyfoot">Finished frames land on each machine\'s courier '
+        'branch, get checked, and show up as choices on the '
+        f'<a href="{_e(hero["board"])}">shot board</a> — the author (and anyone '
+        'watching) picks what survives.</p>')
 
-    # --- the same queue again, entry by entry: the record, not the account ---
-    # Work that finished today is listed here BY ID, including ids the queue file
-    # no longer holds. The promoter retires an entry the moment its DONE line
-    # lands, so a record built only from the file would lose each job at exactly
-    # the moment it succeeded — the same trap finished_line_story documents.
-    if fin:
-        fin_rows_rec = ""
-        for when, who, tid, note in fin:
-            entry = by_id.get(tid)
-            gone = ("" if entry else ' <span class="qlist">· entry already retired '
-                    'from the queue file</span>')
-            fin_rows_rec += (
-                '<li class="qrow"><div class="qtop">'
-                '<span class="qchip done">✅ FINISHED TODAY</span>'
-                f'<code class="qid">{_e(tid) or "(the line carries no id)"}</code>'
-                '</div>'
-                f'<div class="qwhat">{_e(finished_line_story(entry, note))}</div>'
-                f'<div class="qwhy">{_e(who)} · finished {age_el(when, now)}{gone}</div>'
-                '</li>')
-        fin_record = (f'<div class="qgroup"><h3>✅ Finished today '
-                      f'<span class="count">{len(fin)}</span></h3>'
-                      '<p class="mono">Every DONE check-in line since midnight UTC, '
-                      'by id. Read off the dated commit log, so "today" is a fact '
-                      'and not an inference from a clock with no day attached.</p>'
-                      f'<ol class="qlist-ol">{fin_rows_rec}</ol></div>')
-    else:
-        fin_record = ('<div class="qgroup"><h3>✅ Finished today '
-                      '<span class="count">0</span></h3><p class="mono">No DONE '
-                      'check-in line has landed since midnight UTC. A code or '
-                      'writing task finishes by having its entry retired and never '
-                      'writes a check-in line, so a day of that work still reads 0 '
-                      'here.</p></div>')
-    queue_record = (
-        '<h2 id="queue">📋 The work queue, entry by entry</h2>'
-        '<p style="margin:.2rem 0 .6rem;color:var(--muted)">The work list above is '
-        'the readable account of this queue, and it merges repeats and leaves out '
-        'the machine-facing detail on purpose. This is the record. Every entry in '
-        '<code>pipeline/farm-queue.yaml</code> appears here exactly once under its '
-        'own id, with every field it carries — including fields this page does not '
-        'recognise — and every check-in line that claims it. Nothing is merged and '
-        'nothing is summarised away, so you can read it against the file.</p>'
-        f'<section class="qrec">'
-        + queue_record_html(queue, backlog, records,
-                            qdoc.get("dropped") or [], now)
-        + fin_record
-        + '</section>'
-        + '<p class="whyfoot">The queue file is what the studio intends; the '
-          'check-in lines are what happened. Where the two disagree the lines win, '
-          'which is why an entry can sit in the file reading <b>DONE</b> — the '
-          'promoter has not retired it yet. Read the file yourself: '
-          f'<a href="https://github.com/{GH}/blob/main/pipeline/farm-queue.yaml">'
-          'pipeline/farm-queue.yaml</a>.</p>')
-
-    # --- the simple view, above everything else ---
+    # --- the footprint: money, bandwidth, builds — one line, detail in a drawer.
     pay = video_payload(out_dir)
-    strip = summary_strip(strip_counts(queue, backlog, records), running_t, fin,
-                          by_id, inbox, pay, now)
-    bandwidth = bandwidth_html(pay)
+    payline = (f'one full watch of everything published moves '
+               f'{bytes_words(pay["bytes"])}' if pay.get("ok")
+               else "this build could not measure its own video payload")
+    footprint = (
+        '<h2 id="footprint">📦 The footprint — money, bandwidth, builds</h2>'
+        f'<p class="summary"><b>${spend:.2f}</b> spent on renders, lifetime — '
+        'everything else runs on the family\'s own machines · '
+        f'{_e(payline)} · measured on the box: rendering itself moves less '
+        'than a phone checking mail.</p>'
+        '<details class="drawer"><summary>Open the full accounting — every '
+        'number with its date and its caveat</summary><div class="drawer-body">'
+        f'{bandwidth_html(pay)}{infra_html}</div></details>')
 
-    town_legend = " · ".join(STATE_WORDS[s] for s in STATE_WORDS if s in seen_states) \
-        or "no machine has checked in yet"
-
-    citizens = "".join(
-        f'<div class="citizen"><a class="bubble" href="{_e(url)}">{_e(said)}</a>'
-        f'<div class="spr">{"🧑‍🌾" if i % 2 else "🧙"}</div><small>{_e(who)}</small></div>'
-        for i, (who, said, url) in enumerate(comments))
-    if not citizens:
-        citizens = '<p class="notice">The reactions thread is quiet right now.</p>'
+    # --- the reactions thread, in one line. The bubble grid died with the lot.
+    comments = latest_thread_comments(1)
+    if comments:
+        who, said, url = comments[-1]
+        thread_line = (f'<p class="summary">💬 Newest on the reactions thread: '
+                       f'“{_e(said)}” — {_e(who)} · '
+                       f'<a href="{_e(url)}">join the thread &rarr;</a></p>')
+    else:
+        thread_line = ('<p class="summary">💬 The reactions thread is quiet — '
+                       f'<a href="https://github.com/{GH}/issues/1">be the '
+                       'first &rarr;</a></p>')
 
     player = (f'<figure class="phone"><video controls playsinline preload="metadata" '
               f'poster="{_e(hero["poster"])}" src="{_e(hero["video"])}"></video>'
@@ -3465,40 +2639,6 @@ def build(out_dir: Path):
 
     waiting = (f'{tot["awaiting_render"]} waiting on a render · '
                f'{tot["awaiting_pick"]} waiting on the author to pick')
-
-    # --- vitals: four numbers, each one checkable against the repo ---
-    vitals = (
-        f'<div class="vitals">'
-        f'<div class="vital"><b>{pct}%</b><small>episode grown</small></div>'
-        f'<div class="vital"><b>{takes["stills"] + takes["clips"]}</b>'
-        f'<small>takes handed in</small></div>'
-        f'<div class="vital"><b>{open_quests}</b><small>open quests</small></div>'
-        f'<div class="vital"><b>${spend:.2f}</b><small>spent, lifetime</small></div>'
-        f'</div>')
-
-    # --- milestones: unlocked = a repo fact, locked = the honest gap ---
-    all_moving = all(r["animations"] for r in rows)
-    vo = data.vo_scenes()
-    passed = data.cut_passed()
-    picking = next((r for r in rows if not r["final"]), None)
-    milestones = [
-        ("🌱", "Scripted", bool(rows),
-         f'{tot["total"]} scenes written; the script approved by the author'),
-        ("🖼", "Every frame approved", done,
-         f'all {tot["total"]} scene frames carry the author\'s pick' if done else
-         (f'{tot["final"]} of {tot["total"]} — scene {picking["num"]:02d} still choosing'
-          if picking else f'{tot["final"]} of {tot["total"]}')),
-        ("🔊", "Narration recorded", vo > 0,
-         f"{vo} scenes carry recorded voice-over" if vo else "no voice lines recorded yet"),
-        ("🎞", "Every scene moves", all_moving,
-         "a moving take exists for all scenes" if all_moving else
-         f'{sum(1 for r in rows if r["animations"])} of {tot["total"]} scenes have one'),
-        ("🎬", "A full cut assembled", bool(hero["video"]),
-         "playing at the top of this page" if hero["video"] else "no full cut yet"),
-        ("🏆", "The author passes the cut", passed,
-         "the cut is canon" if passed else
-         "the last gate — only the author can open it"),
-    ]
 
     out = f"""<!doctype html>
 <html lang="en">
@@ -3519,7 +2659,7 @@ def build(out_dir: Path):
 <meta name="twitter:description" content="{_e(DESC)}">
 <meta name="twitter:image" content="{CANONICAL}/og.png">
 <title>Banyan City — {PAGE_NAME}</title>
-<style>{THEME_CSS}{SIM_CSS}{TEL_CSS}{STRIP_CSS}</style>
+<style>{THEME_CSS}{SIM_CSS}{STRIP_CSS}</style>
 </head>
 <body>
 <main>
@@ -3527,13 +2667,13 @@ def build(out_dir: Path):
  · <a href="city.html">the city</a> · <a href="machine.html">⚙️ how it works</a>
  · <b>🏗 {PAGE_NAME}</b> · <a href="https://github.com/{GH}">source</a></nav>
 
-{strip}
-
 <div class="rise">
 <p class="eyebrow">Banyan City · {PAGE_NAME}</p>
 <h1>{PAGE_NAME.title()}</h1>
 <p class="lede">{data.PITCH}</p>
 </div>
+
+{strip}
 
 <div class="rise">
 {player}
@@ -3543,8 +2683,6 @@ def build(out_dir: Path):
 </p>
 <p class="spend">total spent on renders so far: <b>${spend:.2f}</b> —
 everything else runs on the family's own machines for free</p>
-{infra_html}
-{vitals}
 </div>
 
 <h2 class="rise">The episode, growing</h2>
@@ -3554,35 +2692,26 @@ everything else runs on the family's own machines for free</p>
   {growbar}
   <div class="label">{grove_caption}</div>
 </div>
+{milestones_line}
+<p class="summary" style="text-align:center"><b>{tot["final"]} of {tot["total"]} scene frames approved</b> · {waiting}</p>
+<details class="drawer"><summary>Every scene, and what it is waiting for</summary>
+<div class="drawer-body">{scene_list_html(rows)}</div></details>
 
-<h2>Milestones</h2>
-{badges_html(milestones)}
-<p class="legend">an unlocked milestone is a fact you can check in the repo ·
-a locked one is exactly what remains</p>
-
-<h2>The lot — the studio at work</h2>
-{lot}
-<ul class="machlist" id="machlist">{machlist}</ul>
-<p class="legend">{town_legend}</p>
-<p class="whyfoot">Two different files answer two different questions. A machine writes to
-its check-in log only while a job is running, so silence there means “no job”, never “no
-machine”; the render box also publishes its own temperature and memory every five minutes,
-which is the only thing that can say a box is switched on. Where a machine can be seen but
-cannot work, the reason below is the one its own queue entry records.</p>
 {production}
 
-{queue_record}
+<h2 id="waiting">🕰 Waiting on the author</h2>
+<p style="margin:.2rem 0 .4rem;color:var(--muted)">These are calls only the author can make —
+taste, and what gets published. The rest of the city keeps moving while they wait, but the
+jobs listed under each one cannot start until it is made, and the number in front of each is
+how long it has been sitting there.</p>
+{waiting_html(inbox, backlog, now)}
 
-<h2>🏟 The render box, minute by minute</h2>
-<section id="tel">
-<p class="telnote" id="tel-note">no recent telemetry — these charts are drawn in your browser
-from a file the render box publishes about itself every five minutes. If this line is still
-here, that file has not been read yet (or JavaScript is off, in which case this page will not
-guess what the machine is doing).</p>
-<div id="tel-body" hidden></div>
-</section>
-
-{bandwidth}
+<h2>The machines</h2>
+<ul class="machlist" id="machlist">{machlist}</ul>
+<p class="whyfoot">A machine writes its check-in log only while a job runs, so silence there
+means “no job”, never “no machine”; the render box also publishes its own vitals when its
+reporter is up, and their minute-by-minute history lives on
+<a href="pulse.html">the pulse page</a>.</p>
 
 <h2>🗺 Open quests — anyone can take one</h2>
 <p style="margin:.2rem 0 .4rem;color:var(--muted)">Nothing here is play-pretend: every art
@@ -3592,48 +2721,21 @@ show's public record.</p>
 <p class="whyfoot">every quest lands on the
 <a href="{_e(hero["board"])}">scene-by-scene shot board</a> — the whole workshop is public</p>
 
-<h2>Every scene, and what it is waiting for</h2>
-<p class="summary"><b>{tot["final"]} of {tot["total"]} scene frames approved</b> —
-the assembled episode is a working cut until the author passes it · {waiting}</p>
-<details class="drawer"><summary>Open the scene-by-scene list</summary>
-<div class="drawer-body">{scene_list_html(rows)}</div></details>
+{footprint}
 
-<h2>How long each step takes (and what it costs)</h2>
-{steps_table_html(data.STEPS)}
-
-<h2 id="waiting">🕰 Waiting on the author</h2>
-<p style="margin:.2rem 0 .4rem;color:var(--muted)">These are calls only the author can make —
-taste, and what gets published. The rest of the city keeps moving while they wait, but the
-jobs listed under each one cannot start until it is made, and the number in front of each is
-how long it has been sitting there.</p>
-{waiting_html(inbox, backlog, now)}
-
-<h2>People on the reactions thread</h2>
-<div class="citizens">{citizens}</div>
-<p style="text-align:center"><a href="https://github.com/{GH}/issues/1">join them &rarr;</a></p>
+{thread_line}
 
 <p class="legend">{data.LEGEND}</p>
-<footer>This copy was built {now.strftime('%Y-%m-%d %H:%M')}Z ({age_el(now, now)}).
-Nothing on this page is dated by that build: every age above counts from the moment its own
-datum was recorded. This copy is rebuilt when something the page is built from changes — a
-scene, a take, the work queue, the author's list, the spend. A push that only touches the
-repo's own notes and logs does not rebuild it, on purpose: rebuilding on every push billed
-over $100 of build time in a month and published nothing. So a build stamp older than the
-newest commit is that rule working, not this page failing. The mirror copy also rebuilds
-every half hour, so two copies of this page can differ — which is why the ages are
-per-datum and not one snapshot stamp. Your browser re-reads the machines' check-in logs, the
-render box's vitals and the work queue for itself, and keeps the ages counting while the tab
-is open. The whole repo IS the show —
+<footer>This copy was built {now.strftime('%Y-%m-%d %H:%M')}Z. No claim on this page is dated
+by that stamp: every age counts from the moment its own datum was recorded, and your browser
+re-reads the machines' check-in logs and the work queue for itself while the tab is open.
+The page rebuilds when something it reads changes; a build stamp older than the newest commit
+is the spend guard working, not the page failing. The whole repo IS the show —
 <a href="index.html">the city</a> · <a href="lab/index.html">the lab</a> ·
 <a href="machine.html">how it works</a></footer>
 </main>
 <script>
-/* pause every animation while the tab is hidden. */
-document.addEventListener("visibilitychange", function () {{
-  document.body.classList.toggle("away", document.hidden);
-}});
-var TEL_URL = {json.dumps(TELEMETRY_URL)}, TEL_STALE = {TELEMETRY_STALE_MINUTES};
-var TEL_WINS = {json.dumps(TEL_WINDOWS)}, TEL_COVER = {TEL_COVERAGE};
+var TEL_STALE = {TELEMETRY_STALE_MINUTES};
 var RAW_BASE = {json.dumps(RAW)}, QUEUE_URL = {json.dumps(QUEUE_URL)};
 var BUILT_AT = {int(now.timestamp())};
 var BUILT_QUEUE = {json.dumps({"tasks": [str(t.get("id")) for t in queue],
@@ -3645,7 +2747,6 @@ var INFRA_API = {json.dumps(meter["api"])},
     INFRA_UNIT_ONE = {json.dumps(meter["unit_one"])},
     INFRA_UNIT_MANY = {json.dumps(meter["unit_many"])};
 {LIVE_JS}
-{TEL_JS}
 {INFRA_JS}
 </script>
 </body>
@@ -3661,7 +2762,7 @@ var INFRA_API = {json.dumps(meter["api"])},
         '</body></html>')
     _BUILT.add(str(out_dir.resolve()))
     print(f"✓ status.html (the studio) — {tot['final']}/{tot['total']} scenes final, "
-          f"{len(seen_states)} machines")
+          f"{len(machines)} machines, {len(fin)} finished in the last 24h")
 
 
 if __name__ == "__main__":

@@ -5432,11 +5432,13 @@ def test_the_infra_meter_never_prints_a_number_the_page_did_not_measure():
     check("the script is wired into the page it is written for",
           "{INFRA_JS}" in src and 'id="infra-n"' in src and 'id="infra-u"' in src)
 
-    # NOT A VITAL. The vitals row promises four numbers a reader can check
-    # against the repo; this one is fetched live and can be absent, and quietly
-    # sitting it beside them would weaken the promise the row makes.
-    check("the meter is its own tile, not a fifth repo-checkable vital",
-          'class="infra rise"' in src and '<div class="vital"><b>{pct}%' in src)
+    # NOT A VITAL. The meter is fetched live and can be absent, so it must
+    # never dress as a repo-checkable number. The four-tile vitals row it once
+    # sat beside died in the 2026-08-11 revamp (its numbers moved into the
+    # grove and the glance strip), so the assertion is now the row's absence:
+    # if a vitals row ever comes back, this test asks the question again.
+    check("the meter is its own tile, and no vitals row exists to absorb it",
+          'class="infra rise"' in src and '<div class="vital">' not in src)
 
 
 # ====================================================================== #
@@ -5638,10 +5640,11 @@ def test_a_job_run_by_hand_reaches_the_status_counters():
 
     NOT_A_MACHINE was only ever meant to be about the TILE — its own comment
     said "read_machines() drops these; nothing else about them changes" — but
-    finished_today(), task_ids_done() and task_running() each walked the machine
-    list, so a job a person ran and claimed could not appear in "Finished
-    today", could not stop its own queue entry from publishing as runnable, and
-    could not read as rendering while it ran. Both halves are pinned here.
+    the finished/done/in-flight counters (today finished_recent(),
+    task_ids_done() and live_now()) each walked the machine list, so a job a
+    person ran and claimed could not appear as finished, could not stop its own
+    queue entry from publishing as runnable, and could not read as in flight
+    while it ran. Both halves are pinned here.
     """
     import datetime
     import build_sim as bs
@@ -5666,36 +5669,41 @@ def test_a_job_run_by_hand_reaches_the_status_counters():
     box = {"key": "rtx5090", "name": "the big render house", "history":
            [(now - datetime.timedelta(hours=3), "DONE task=a-box-task-1786000001")]}
 
-    fin = bs.finished_today([box, hand], now)
-    check("a job finished by hand is in Finished today",
+    fin = bs.finished_recent([box, hand], now)
+    check("a job finished by hand is in the last day's finished list",
           [who for _w, who, t, _n in fin if t == tid] == ["run by hand"])
     check("...beside the machine's, not instead of it", len(fin) == 2)
     check("...and its queue entry stops publishing itself as runnable",
           tid in bs.task_ids_done([box, hand]))
 
     open_hand = {**hand, "history": hand["history"][1:]}   # STARTED, no DONE yet
-    r = bs.task_running(tid, [box, open_hand])
-    check("a hand-run in progress reads as rendering, not as queued",
-          r is not None and r["runner"]["name"] == "run by hand")
-    check("...and stops reading as rendering the moment its DONE lands",
-          bs.task_running(tid, [box, hand]) is None)
-    check("yesterday's hand work is not today's",
-          bs.finished_today([{**hand, "history":
-                              [(now - datetime.timedelta(days=1), done)]}], now) == [])
+    r = bs.live_now([box, open_hand], now)
+    check("a hand-run in progress reads as in flight, not as queued",
+          [(who, t) for _w, who, t in r] == [(bs.LEDGERS["hand"], tid)])
+    check("...and stops reading as in flight the moment its DONE lands",
+          bs.live_now([box, hand], now) == [])
+    stale = {**open_hand, "history":
+             [(now - datetime.timedelta(hours=2), started)]}
+    check("...and a STARTED older than the freshness cutoff is not 'now'",
+          bs.live_now([stale], now) == [])
+    check("yesterday's hand work has left the rolling day",
+          bs.finished_recent([{**hand, "history":
+                               [(now - datetime.timedelta(days=1), done)]}], now) == [])
     check("and the ledger still gets no building on the street",
           "hand" in bs.NOT_A_MACHINE and "hand" not in bs.MACHINES)
 
 
 def test_a_retired_id_still_says_what_the_job_was():
-    """"Finished today" reads the LINE when the queue has forgotten the entry.
+    """A finished row names the job in a stranger's words — never a log token.
 
-    The fallback wording, "a job the queue no longer lists", was written for a
-    rare case and lands on the common one: the promoter retires an entry the
-    instant its DONE line appears, so the ids most sure to miss the lookup are
-    the ones whose work most surely shipped. On 2026-08-09 five rows printed
-    those same eleven words — five finished jobs, nothing to tell them apart,
-    nothing a reader could check. The claim line itself names its evidence
-    commit, and that sentence is what the row should be saying.
+    The promoter retires an entry the instant its DONE line appears, so the ids
+    most sure to have no queue entry left are the ones whose work most surely
+    shipped. The old fallbacks printed either the raw id or the runner's own
+    note — and the note is written for the person clearing the gate, which is
+    how taste-ledger record numbers and REVOKED filenames reached the public
+    page (the founder's screenshot, 2026-08-11). done_story() now takes the id
+    and translates it; the note still rides the counter for any reader that
+    needs the evidence trail, but no display path prints it.
     """
     import claim_task as ct
     import build_sim as bs
@@ -5712,22 +5720,36 @@ def test_a_retired_id_still_says_what_the_job_was():
     check("...and neither reading disturbs the mark or the id",
           bs.hb_mark(line) == "DONE" and f"task={tid}" in line)
 
-    check("a retired id reports the claim's own words, not the generic sentence",
-          bs.finished_line_story(None, bs.hb_note(line)) == note)
-    check("...and a runner that wrote nothing still gets the honest fallback",
-          bs.finished_line_story(None, "") == "a job the queue no longer lists")
-    # A live queue entry is the better answer and keeps winning: the note is the
-    # fallback's fallback, never an override of what the queue says it asked for.
+    # The id families the studio actually mints, translated — and the epoch
+    # token never survives into any of them.
+    check("a scene id translates into the scene it was for",
+          bs.tid_words("ep2-b05-warmfield-0811-1786470001")
+          == "a fresh frame for episode 2, scene 05")
+    check("...and the 00Nx node spelling reads as the same episode",
+          bs.tid_words("002b-b12-promptfix-0809")
+          == "a fresh frame for episode 2, scene 12")
+    check("a motion id reads as a moving take, not a frame",
+          bs.tid_words("001-b06-i2v-ltx-1786000001")
+          == "a moving take for episode 1, scene 06")
+    check("an id nobody can translate stays a generic sentence, not a token",
+          bs.tid_words(tid) == "a studio job")
+
+    check("a retired id is translated, never printed raw",
+          bs.done_story(None, tid) == bs.tid_words(tid))
+    # A render-shaped queue entry is the better answer and keeps winning.
     task = {"id": tid, "video": True, "video_model": "ti2v-5b", "seconds": 3.0}
     check("a queue entry that still exists is still what the row reports",
-          bs.finished_line_story(task, note) == bs.task_story(task)[0] != note)
+          bs.done_story(task, tid) == bs.task_story(task)[0])
+    check("...but a non-render entry does not — task_story would call a lock "
+          "release 'frames for world scenery'",
+          bs.done_story({"id": tid, "runner": "manual"}, tid) == bs.tid_words(tid))
 
     import datetime
     now = datetime.datetime(2026, 8, 9, 16, 30, tzinfo=datetime.timezone.utc)
     hand = {"name": bs.LEDGERS["hand"],
             "history": [(now - datetime.timedelta(hours=4), line)]}
-    check("and the note travels out of the counter, not just off the line",
-          [n for _w, _who, _t, n in bs.finished_today([hand], now)] == [note])
+    check("and the note still travels out of the counter for whoever needs it",
+          [n for _w, _who, _t, n in bs.finished_recent([hand], now)] == [note])
 
 
 def test_an_age_counts_from_the_line_not_from_the_push():
@@ -5766,14 +5788,18 @@ def test_an_age_counts_from_the_line_not_from_the_push():
     check("...while a second of clock skew is skew, not a whole day back",
           bs.line_time("00:10:01Z DONE task=x by-hand", after_midnight).day == 9)
 
-    # And the consequence that matters: a job whose line was written yesterday
-    # and pushed today is yesterday's work, however today the commit looks.
+    # And the consequence that matters: the rolling day is measured from the
+    # line's OWN clock, so a job pushed late ages from when it was written —
+    # and leaves the window when its own stamp is a day old, not its commit's.
     now = datetime.datetime(2026, 8, 9, 6, 0, tzinfo=datetime.timezone.utc)
     line = "23:50:00Z DONE task=x by-hand"
     hand = {"name": bs.LEDGERS["hand"],
             "history": [(bs.line_time(line, after_midnight), line)]}
-    check("yesterday's line does not become today's by being pushed today",
-          bs.finished_today([hand], now) == [])
+    check("a line pushed late is aged from when it was written",
+          [w for w, *_ in bs.finished_recent([hand], now)]
+          == [datetime.datetime(2026, 8, 8, 23, 50, tzinfo=datetime.timezone.utc)])
+    check("...and it leaves the rolling day on its own clock, not the push's",
+          bs.finished_recent([hand], now + datetime.timedelta(hours=18)) == [])
 
 
 def test_a_rate_limited_build_can_still_see_hand_work():
@@ -5855,7 +5881,7 @@ def test_a_log_it_could_not_read_is_not_a_day_with_no_work():
             raise urllib.error.HTTPError("u", 404, "Not Found", {}, None)
         bs.urllib.request.urlopen = gone
         check("a ledger branch that does not exist reads as empty, not as broken",
-              bs.heartbeat_history("farm-results-hand", absent_ok=True) == [])
+              bs.branch_log("farm-results-hand", absent_ok=True) == [])
         check("...and posts no fault about a branch nobody promised was there",
               bs.FETCH_ERRORS == [] and bs.logs_unread() == [])
 
@@ -5863,7 +5889,7 @@ def test_a_log_it_could_not_read_is_not_a_day_with_no_work():
             raise urllib.error.HTTPError("u", 429, "Too Many Requests", {}, None)
         bs.urllib.request.urlopen = limited
         check("a rate limit is still a fault even where absence is tolerated",
-              bs.heartbeat_history("farm-results-hand", absent_ok=True) == []
+              bs.branch_log("farm-results-hand", absent_ok=True) == []
               and bs.logs_unread() == ["farm-results-hand"])
     finally:
         bs.urllib.request.urlopen = real_fetch

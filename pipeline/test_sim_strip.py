@@ -13,7 +13,7 @@ Run as its own step and read the exit code. No network, no build, no _site.
 """
 import sys
 import tempfile
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -76,16 +76,14 @@ check_true("a directory that is not there does not raise", isinstance(missing, d
 check("and reports itself as unmeasured", missing.get("ok"), False)
 check_true("with a reason in words", bool(missing.get("why")))
 
-print("\nthe tile says which of the two it is showing")
-good = S.bandwidth_tile({"ok": True, "bytes": 322_352_698, "count": 32,
-                         "biggest": "x.mp4", "biggest_bytes": 1})
-check_true("a measured tile prints the size", "307 MB" in good)
-check_true("and calls itself an estimate on its face", "estimate" in good)
-check_true("and links down to the caveat", 'href="#bandwidth"' in good)
-bad = S.bandwidth_tile({"ok": False, "why": "boom"})
-check_true("an unmeasured tile says unavailable", "unavailable" in bad)
-check_true("and prints no digits at all", not any(c.isdigit() for c in
-                                                  bad.replace("bandwidth", "")))
+print("\nthe glance strip carries no bandwidth tiles — the 2026-08-11 revamp")
+# The two bandwidth figures sat in the summary strip as tiles and both audits
+# called them trivia at glance level ("318 MB video per full watch · estimate
+# 5 kB/s render box, mid-render" was the stranger's single most confusing
+# line). The tiles are gone; the SECTIONS below keep every caveat.
+check_true("the site-payload tile function is gone with the tile",
+           not hasattr(S, "bandwidth_tile"))
+check_true("and so is the render-box one", not hasattr(S, "render_bw_tile"))
 
 print("\nthe section always carries the caveat, measured or not")
 for label, pay in (("measured", {"ok": True, "bytes": 1024 ** 3, "count": 1,
@@ -131,15 +129,6 @@ gone = S.render_bandwidth("pipeline/measured/no-such-file-for-this-test.yaml")
 check("a missing file is not ok", gone.get("ok"), False)
 check_true("and says why", bool(gone.get("why")))
 
-print("\nrender_bw_tile — never invents a number it did not measure")
-good = S.render_bw_tile(rb)
-check_true("prints the measured rate", "kB/s" in good or "MB/s" in good)
-check_true("labels itself measured, not estimated", "measured" in good)
-check_true("and links down to its own section", 'href="#renderbw"' in good)
-bad = S.render_bw_tile({"ok": False, "why": "boom"})
-check_true("an unreadable measurement reads unavailable", "unavailable" in bad)
-check_true("and prints no digits at all", not any(c.isdigit() for c in bad))
-
 print("\nrender_bandwidth_html — the finding leads, the workings follow")
 sec = S.render_bandwidth_html(rb)
 check_true("states the verdict in words", "not</b> what slows the internet" in sec)
@@ -152,31 +141,58 @@ check_true("an unreadable measurement prints no rate", "kB/s" not in sec_bad)
 check_true("and says so instead", "could not be" in sec_bad)
 
 # The two bandwidth figures answer different questions — visitors' downloads vs
-# the render box's own traffic — and sit next to each other in the same units.
-# If their labels ever collapse into each other the strip starts implying the
-# site and the box are comparable, which is the misreading Roman already had.
+# the render box's own traffic — and their sections still may not blur into
+# each other now that both live under one footprint heading.
 pay_ok = {"ok": True, "bytes": 322_352_698, "count": 32,
           "biggest": "ep1.mp4", "biggest_bytes": 40_000_000}
-check_true("the site tile still says estimate",
-           "estimate" in S.bandwidth_tile(pay_ok))
-check_true("the box tile says measured, and they are not the same label",
-           S.bandwidth_tile(pay_ok) != S.render_bw_tile(rb))
+check_true("the site figure still calls itself an estimate",
+           "estimate" in S.bandwidth_html(pay_ok))
+check_true("and the box section still calls its numbers measured",
+           "real samples" in S.render_bandwidth_html(rb))
 
 # ---- what the strip must NOT carry --------------------------------------------
 # The laptop's free disk had a tile here for a few hours on 2026-08-11 and Roman
 # took it off: "isnt this a bit much? people looking at this other than me will
-# be confused, and it doesnt really need to be there." The measurement was never
-# the problem, so this asserts the absence at glance level AND that the reading
-# is still collected and still printed in full below — removing the tile is not
-# licence to stop measuring.
-print("\nthe strip is a visitor's glance, not the laptop's housekeeping")
-strip = S.summary_strip({k: 0 for k in S.QSTATES}, [], [], {}, [], pay_ok,
-                        datetime.now(timezone.utc))
+# be confused, and it doesnt really need to be there." The 2026-08-11 revamp
+# extended that ruling to the whole disk section — the same objection applies
+# verbatim — and rebuilt the strip around the three questions a visitor brings:
+# is it alive, what got made, where is the show. The measurement itself is
+# still collected (box_cache.py disk) — dropping a tile is not licence to stop
+# measuring.
+print("\nthe strip is a visitor's glance, not the operator's housekeeping")
+now = datetime.now(timezone.utc)
+view = {"fin": [], "live": [], "unread": [], "last_activity": None,
+        "by_id": {}, "inbox": [],
+        "hero": {"number": 1, "watch": "watch.html"},
+        "tot": {"final": 14, "total": 15}, "ep2": None}
+strip = S.summary_strip(view, now)
 check_true("no laptop-disk tile in the strip", "laptop disk free" not in strip)
-check_true("and no link down to the disk section from it", '#disk"' not in strip)
-check_true("the reading is still taken", isinstance(S.local_disk(), dict))
-check_true("and still has its own section on the page",
-           "id=\"disk\"" in S.local_disk_html(S.local_disk()))
+check_true("and no link down to a disk section from it", '#disk"' not in strip)
+check_true("no bandwidth trivia at glance level either",
+           "kB/s" not in strip and "per full watch" not in strip)
+check_true("it states the instant of the snapshot", "snapshot as of" in strip)
+check_true("and never claims to be live", "claims to be live" in strip)
+check_true("a studio with no readable activity reads quiet, not dead-certain",
+           "quiet" in strip)
+check_true("the disk reading is still collected", isinstance(S.local_disk(), dict))
+check_true("...but its section left the public page with the tile",
+           not hasattr(S, "local_disk_html"))
+
+print("\nthe strip is keyed to last activity, never to this-exact-minute")
+fresh = dict(view)
+fresh["fin"] = [(now - timedelta(minutes=19), "the big render house",
+                 "ep2-b05-warmfield-0811-1786470001", "")]
+fresh["last_activity"] = now - timedelta(minutes=19)
+strip2 = S.summary_strip(fresh, now)
+check_true("fresh activity reads active off the log's own clock",
+           "active" in strip2)
+check_true("the newest job is translated into a stranger's words",
+           "a fresh frame for episode 2, scene 05" in strip2)
+check_true("...and its id never reaches the page",
+           "ep2-b05-warmfield" not in strip2)
+check_true("a log that could not be read never prints a zero",
+           "not read" in S.summary_strip(dict(view, unread=["farm-results-hand"]),
+                                         now))
 
 print()
 if FAILS:

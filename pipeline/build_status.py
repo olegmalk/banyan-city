@@ -197,6 +197,40 @@ def hero(d: Path = None) -> dict:
     }
 
 
+# The next episode's node — 002b "The First Citizen", the branch the studio is
+# actually filming (the ep2-* / 002b-* render jobs of 2026-08-10/11). Hardcoded
+# the same way EPISODE is above; when the trunk call lands on a different
+# branch, this is the one line to move.
+NEXT_EPISODE = REPO / "genomes/sapling/nodes/002b-first-citizen"
+
+
+def next_episode(d: Path = None) -> dict | None:
+    """Episode 2's counts for the glance strip — file-existence facts only.
+
+    `started` = scenes with at least one candidate frame handed in (or an
+    approved still); `approved` = scenes whose frame carries the author's pick.
+    Returns None when the node cannot be read, so the strip simply says
+    nothing about a next episode rather than guessing at one.
+    """
+    d = d or NEXT_EPISODE
+    try:
+        shots = parse_shots((d / "shots.md").read_text())
+    except Exception:
+        return None
+    if not shots:
+        return None
+    tdir, sdir = d / "takes" / "stills", d / "stills"
+    takes = ({p.name[:2] for p in tdir.glob("[0-9][0-9]-*.png")}
+             if tdir.is_dir() else set())
+    approved = ({p.name[:2] for p in sdir.glob("[0-9][0-9]-*.png")
+                 if "REVOKED" not in p.name} if sdir.is_dir() else set())
+    nums = {f"{s['num']:02d}" for s in shots}
+    return {"number": 2, "total": len(shots),
+            "started": len(nums & (takes | approved)),
+            "approved": len(nums & approved),
+            "board": f"{GENOME}/{d.name}-shots.html"}
+
+
 def summary(rows: list) -> dict:
     """The one line that replaces fifteen near-identical table rows."""
     return {
