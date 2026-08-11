@@ -1,0 +1,127 @@
+# 2026-08-12. PALETTE, properly this time — the b19 treatment applied where it worked.
+#
+# THE FIX WAVE SPLIT CLEANLY AND THIS IS THE HALF THAT TAUGHT SOMETHING. Beat 19 got a
+# POSITIVE colour statement plus explicit bans ("warm golden... NOT blue, NOT teal, NOT
+# cold") and ITS TEAL COLLAPSED — both seeds came back warm. Beat 17 got only its
+# contradiction removed, left saying "late afternoon" with no colour temperature, AND IT
+# STILL DIVERGED. So naming ONE TIME OF DAY IS NOT ENOUGH. A time of day is not a colour;
+# "afternoon" is as free to be grey as to be gold.
+#
+# THE RULE THAT FALLS OUT: pin the COLOUR TEMPERATURE positively and ban its opposites.
+# That is the same shape as every other fix that has worked tonight — say the thing you
+# want in the frame, and name the defect in the negative.
+#
+# One variable class: light. Nothing else moves, and the seed twin runs alongside because a
+# palette fix that only holds at one seed has not fixed the palette.
+id: ep2-b03-warmB-0812
+task: ep2-b03-warmB-0812
+node: 002b-first-citizen
+beat: 3
+runner: box
+priority: 19
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: ep2 motion lane, 2026-08-12
+consumer: 'His morning screening, and the answer to whether beat 3 is solved or seed-luck.'
+success: 'A 704x1280 mp4 whose light is unmistakably warm and golden, MATCHING ITS SEED TWIN — that match is the whole test. The failure worth reporting is the two seeds still disagreeing on colour after an explicit temperature and explicit bans, which would put palette in the same not-bindable-by-language box as count.'
+why: Naming one time of day did not hold; naming a colour temperature and banning its opposites did, on beat 19.
+est_minutes: 6
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b03-warmB-0812\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"--out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw, nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b03-warmB-0812\b03-motion-prompt.txt: '2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: The sapling is a HEALTHY YOUNG PLANT: a green upright stem with two broad green leaves, alive and leafy, not a bare stick, not a dried stalk and not a withered twig. a small goblin standing in a field under morning light — pale yellow-green skin, a bald domed head, long pointed ears, red eyes, a patched hooded coat. A SMALL SAPLING STANDS IN FRONT OF HIM — one slender trunk no thicker than his arm with a few leaves at the top, far too narrow to hide anybody. HE DROPS INTO A LOW CROUCH BEHIND THAT SAPLING: he bends his knees deeply and sinks until he is squatting down close to the ground, head lowered to the height of the little tree''s lowest leaves, shoulders pulled in narrow, and from down there he leans his head out to one side to peer past the stem and pulls it back in. He is DOWN LOW, not standing. Both he and the little tree stay fully in frame so the size mismatch reads. He stays in the same place in frame and the camera does not move. Soft morning light, cinematic lighting, detailed, newest, masterpiece, best quality, The light is WARM GOLDEN SUNLIGHT — warm, yellow-gold and bright, NOT blue, NOT teal, NOT grey and NOT a cold or dusky grade. very aesthetic.'
+  C:\banyan-farm\ep2-b03-warmB-0812\b03-negative.txt: blue cast, teal tint, cold colour grade, grey palette, dusk, gloom, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, stool, stake, plant support, standing upright, standing straight, full height, face morphing, distorted face, warped face, changing facial features, extra eyes, extra ears, hair, walking out of frame, leaving the frame, drifting sideways, moving to a different spot, second character, duplicate character, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text
+  C:\banyan-farm\ep2-b03-warmB-0812\b03-jobs-encode.json: "[{\"beat\": 4,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b03-warmB-0812\\\\b03-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\\ep2-b03-warmB-0812\\\\b03-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b03-warmB-0812\\\\b03-negative.txt\"}]"
+  C:\banyan-farm\ep2-b03-warmB-0812\b03-jobs-render.json: "[{\"beat\": 4,\n  \"seed\": 20260813,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b03-warmB-0812\\\\b03-embeds.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\\ep2-b03-warmB-0812\\\\b03-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b03-warmB-0812\\\\03-bad-cover-LTX-warmB-0812.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b03-warmB-0812\cover_crop.py
+  - --src
+  - C:\banyan-farm\goblin-ipa-0812\out-b03-frozen\03-bad-cover-ipa-r0-w015-s1.png
+  - --sha256
+  - 2139ee6b4f89a8e68b13ef39735025b028bc1209258e22912cfbc404df432ef2
+  - --out
+  - C:\banyan-farm\ep2-b03-warmB-0812\b03-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b03-warmB-0812\b03-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b03-warmB-0812\b03-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b03-warmB-0812
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b03-warmB-0812\bench-b03-warmB.jsonl
+  - --bench-label
+  - ep2-b03-warmB-0812
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b03-warmB"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/ep2-b03-warmB-0812/03-bad-cover-LTX-warmB-0812.mp4*")
+                 + glob.glob("C:/banyan-farm/ep2-b03-warmB-0812/b03-init-704x1280.png")
+                 + glob.glob("C:/banyan-farm/ep2-b03-warmB-0812/bench-b03-warmB.jsonl"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b03-warmB-0812.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 2 else 1)
+artifacts:
+- C:\banyan-farm\ep2-b03-warmB-0812\03-bad-cover-LTX-warmB-0812.mp4
+- C:\banyan-farm\ep2-b03-warmB-0812\b03-init-704x1280.png

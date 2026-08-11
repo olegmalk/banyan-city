@@ -226,3 +226,11 @@
   kind: sheet
   verdict_hint: the picks are fine, animate them / fix the leaf shape across all plant beats first (one
     vocabulary change, then re-plate 12, 18, 21 together)
+- what: 'A real limit found: WE CANNOT TELL IT HOW MANY OF SOMETHING TO DRAW. Beat 19 says ''a small sapling'',
+    singular, and bans ''row of saplings'' in the negative, and still draws several. Colour we CAN now
+    control. Number we cannot - if the last workaround (describing a frame too tight to hold two) also
+    fails, count needs a tool rather than a prompt and that is your call'
+  url: /review/ep2-picks/motion-0812#hard-limit
+  since: '2026-08-12'
+  kind: decision
+  verdict_hint: accept some beats having the wrong count / spend on a tool that controls it

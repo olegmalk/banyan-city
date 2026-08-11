@@ -14338,3 +14338,40 @@
     On his page as its own section so the episode-3 conversion lane inherits it tonight rather
     than rediscovering it.
   outcome: null
+
+- id: ep2-fix-wave-0812-scored
+  kind: scoring
+  date: 2026-08-12
+  scores: b03/b17/b18/b21 stability fixes with twins, plus the b19 disambiguation pair.
+    10 clips, all hash-verified before scoring.
+  the_headline_and_it_is_a_hard_limit: >-
+    COUNT IS NOT BINDABLE BY LANGUAGE. Beat 19's teal COLLAPSED — both seeds came back warm,
+    confirming the polysemy corollary on the property it was aimed at. Its MULTIPLICITY DID
+    NOT: the prompt says "A SMALL SAPLING", singular, and "one slender stem", and the
+    negative bans row of saplings / many saplings / orchard / planted rows, and it still drew
+    several. Explicit singular plus explicit ban, both ignored. That is the split I
+    pre-registered as the interesting outcome and it is the first hard limit found in two
+    days: colour is addressable, number is not.
+  what_the_palette_half_actually_taught: >-
+    Beat 19 got a POSITIVE colour statement plus bans and stabilised. Beat 17 got only its
+    contradiction removed — left saying "late afternoon" with no temperature — AND STILL
+    DIVERGED. So NAMING ONE TIME OF DAY IS NOT ENOUGH; a time of day is not a colour, and
+    "afternoon" is as free to be grey as gold. Pin the colour TEMPERATURE positively and ban
+    its opposites. Same shape as every fix that has worked: say the thing, name the defect.
+  where_my_generic_fix_backfired: >-
+    I added one "healthy young plant, two broad green leaves" clause to three beats at once.
+    On b03 it WORKED — the bare pole became a leafy sapling in both seeds. ON B18 IT MADE
+    THINGS WORSE: b18 is an extreme close-up of ONE fig and I told it to draw a plant, so it
+    drew a branch with leaves and several figs. My error, and a specific one — I applied a fix
+    BY CATEGORY without checking it against the beat it was going into. b21 was unmoved by it
+    and still diverges on colour and on whether the leaf tilts at all.
+  the_retry_that_uses_a_different_mechanism: >-
+    For b18 I am NOT re-banning plurality, because b19 has already proven that fails. Instead
+    the proven FRAMING lever: describe a frame so tight that only one fig fits — filling edge
+    to edge, lens too close for a branch or a second fruit to be in shot. Count enforced by
+    geometry rather than by counting words. If a second fig appears even there, count needs a
+    tool and not a prompt, and that becomes a founder decision.
+  queued: >-
+    Eight jobs, every one with its seed twin: warm-temperature fixes for b03, b17 and b21,
+    and the tight-frame retry for b18.
+  outcome: null
