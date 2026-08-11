@@ -1114,6 +1114,45 @@ beats:
       no frost, no ice, no pine forest, no dark, no night, no dusk, no
       sunset, no dim lighting, no moody lighting, no low key, no shadows
       dominant. No photorealism, no 3D render look. 9:16 vertical, no text.
+    # -- `authored_b05_idfix_r2` -- 2026-08-12, the fixer lane. ONE FAULT, ONE
+    # CHANNEL, AND HIS RULING IS NOT TOUCHED.
+    #
+    # WHAT THE `_idfix` FRAMES GOT RIGHT AND MUST KEEP: no armor 4/4 — the thing
+    # he rejected outright is gone — plus bare heads 4/4, plain brown tunics and
+    # the clipboard. `no armor`, `no helmet` and `no knight` are therefore NOT
+    # available as budget, however tempting; his ruling does not fund other fixes.
+    #
+    # THE FAULT IS THE CAMERA, 3/4. The sentence asks for two guards who "stand
+    # side by side facing camera", Medium shot. s0 and s2 look straight down on
+    # their scalps from a bird's-eye, and s3 shoots over a shoulder from behind —
+    # which is also WHY s3 loses the second guard to a faceless brown blob with
+    # animal ears and hides the first guard's face. "Both faces clearly visible"
+    # cannot survive a camera that is behind them. One fault, and the blob and the
+    # hidden face are its symptoms rather than separate problems.
+    # CHANNEL: unwanted framing -> ban, plus its affirmative counterpart, because
+    # this is one fault and not two: `no high angle, no from above` in the
+    # negative, `eye-level` beside `Medium shot` in the positive. `Medium shot`
+    # alone has now failed to bind the height three frames out of four.
+    #
+    # PAID FOR OUT OF THE WINTER TIER, WHICH IS GUARDING NOTHING MEASURABLE. All
+    # four frames are a warm green field; `no frost`, `no ice` and `no pine
+    # forest` are near-duplicates of `no snow` and `no winter`, and BOTH OF THOSE
+    # STAY, so the drift they were added for still has a guard.
+    #
+    # NOT FIXED HERE, ON PURPOSE: the body type swings from tall muscular men (s1)
+    # to near-chibi infants (s2) instead of "round soft bodies". That is a taste
+    # axis, it is R4's, and stacking it on would make the camera result
+    # unattributable. It is recorded in wave2-faults-fixer.yaml for the founder.
+    authored_b05_idfix_r2: >-
+      Two round guard men in plain brown tunics stand side by side facing
+      camera in a warm green grassy morning field, silly harmless bureaucrats
+      with round soft bodies and bare heads, both faces clearly visible, one
+      holding a bark clipboard. Medium eye-level shot, bright morning light,
+      cinematic lighting, detailed, newest, masterpiece, best quality, very
+      aesthetic No girl, no child, no armor, no helmet, no knight, no high
+      angle, no from above, no snow, no winter, no dark, no night, no dusk, no
+      sunset, no dim lighting, no moody lighting, no low key, no shadows
+      dominant. No photorealism, no 3D render look. 9:16 vertical, no text.
 
 
   6:
