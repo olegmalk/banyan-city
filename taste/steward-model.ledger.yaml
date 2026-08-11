@@ -9918,3 +9918,10 @@
   predicates: [no armor 4/4, tunics >=3/4, walking away wide >=3/4, long shadows >=2/4]
   consumer: morning page, identity-frozen wave.
   outcome: null
+
+- id: ep2-b08-idfix-0812
+  kind: prediction
+  written: 2026-08-12 ~03:0x before enqueue, terse. Dry 76/77 anchor intact.
+  predicates: [no armor 4/4, tunic guard >=3/4, bald goblin 4/4, cloak >=3/4, two figures 4/4, pointing-at-belly reads >=2/4]
+  consumer: morning page, identity-frozen wave.
+  outcome: null

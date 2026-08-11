@@ -1,0 +1,262 @@
+# idfix wave 2026-08-12 ~03:0x: two-subject beat - tunic guard + frozen
+# goblin; def sends 'green skin, bald head' only, the cloak already lives in
+# the positive. Dry 76/77 anchor intact, 2boys derives.
+# r2 2026-08-11 ~22:2x: r1 failed rc=1 in the dry step, never drew — the lead's
+# first variant ran 89 CLIP tokens and the harness dropped the whole style tail
+# (STYLE ANCHOR MISSING). The variant is rewritten leaner in wave-drafts.yaml
+# (75/77 measured on the box, tail intact); same staging, same bans that fit.
+# DERIVED BY SED from ep2-b03-field-solo-0811.yaml (which ran clean at 21:24) at
+# 2026-08-11 ~22:2x by the lead; the beats 08-12 authoring lane went silent, so
+# beat 08 flows now and 09-12 stay with the lane. Prose comments below descend
+# from the b02 skeleton and are NOT this beat's. Beat 08 is INSIDE HIM, a
+# two-subject deadpan two-shot (tag 2boys); the variant keeps the staging and
+# applies the ratified guard register + field-early + the proven bans. His
+# mandate for this round is the wholesale reject: "you have to change pretty
+# much all of them, do some regeneration."
+# EPISODE 2, BEAT 02 THE SPRINT — THE OCCLUSION ROUND, RE-RUN WITH THE PROVEN
+# LIGHTING BLOCK. One sample, four seeds, $0. 2026-08-11 ~19:4x.
+#
+# WHY THIS IS A PROPAGATION AND NOT A NEW GUESS. `ep2-b04-goblin-fieldbright-0811`
+# (commit cbcc716) ran eight lighting terms in the SDXL negative against
+# `ep2-b04-goblin-field-0811` on IDENTICAL SEEDS and an identical positive, and
+# the frames came back a bright morning field where the round before them had
+# come back dark and undefined. The prediction written before that render — "a
+# bright morning-lit field in 3 of 4 seeds" — was read against the frames and it
+# hit. So the dark drift is a model prior, and the negative is the channel that
+# reaches it. That is a one-variable result verified against the same seeds; this
+# job carries it to the beat that showed the same fault in the same hour.
+#
+# WHAT BEAT 02 KEEPS. `ep2-b02-goblin-occl-0811` did two things at once and only
+# one of them failed. The staging fix WORKED — the occlusion sentence put the
+# stem across the body, which is what his ~18:40 sentence asked for — and the
+# frames drifted dusk-dark against a positive that says `morning light` in those
+# words. So the occlusion clause is unchanged here, word for word, and the only
+# edit is the eight-term block. `--variant authored_b08_idfix` is
+# `authored_staged_med_occl` with `no dark, no night, no dusk, no sunset, no dim
+# lighting, no moody lighting, no low key, no shadows dominant` appended to the
+# `no ...` chain it already carries. Same `medium shot`, same `from front`, same
+# `green skin` slot, same seeds (`render_wave_sample` derives them as
+# `wg.SEED + beat + i*1000` and never reads the variant), same steps (40),
+# guidance (7.5), size and harness (sha256 7efd0b96, unchanged).
+#
+# THE POSITIVE IS UNCHANGED AND IT WAS MEASURED, NOT ASSUMED. Both variants
+# dry-run at 73/77 positive tokens with the SAME compressed POSITIVE string:
+#   1boy, a small goblin boy, green skin, solo, from front, crouches in an open
+#   field behind a tiny sapling, its thin stem in front of him, half hidden
+#   behind the stem, his face peeking around it. Static camera, medium shot,
+#   morning light, cinematic lighting, detailed, newest, masterpiece, best
+#   quality, very aesthetic
+# `sd_prompt._NEGATION` lifts the eight `no ...` terms out of the positive and
+# `beat_negative` sends them as BEAT-SPECIFIC terms, which `fit_negative`
+# protects ahead of the global house defaults. STYLE ANCHOR PRESENT in both,
+# count tag `1boy` derives in both.
+#
+# ── WHERE BEAT 02 IS NOT BEAT 04, MEASURED ON THE BOX BEFORE QUEUEING ─────────
+# Beat 04 had ONE token of negative headroom left after the block. This beat's
+# `full` fusion tier was ALREADY over CLIP's 77-token budget before it — the
+# NEGWARN and its dropped quality terms are pre-existing and are recorded in
+# `ep2-b02-goblin-occl-0811` — and beat-specific terms are protected AHEAD of the
+# house defaults, so eight new terms push house terms out. Both variants were
+# dry-run on the box's real CLIP tokenizer, this beat, this slot, and diffed:
+#
+#   baseline `authored_staged_med_occl`: negative recipe 76 -> sent 73
+#     SENT: photorealistic, 3d render, text, mature tree, large tree, thick
+#           trunk, full canopy, forest, bush, shrubbery, girl, child,
+#           photorealism, leaf on head, plant girl, alraune, monster girl,
+#           flower on head, head wreath, hair ornament, leaf hair ornament,
+#           plant hair, female goblin, elf
+#     DROPPED: realistic skin texture, jpeg artifacts, deformed, extra limbs,
+#           blurry, low quality, signature, watermark, abstract
+#
+#   this round `authored_b08_idfix`: negative recipe 75 -> sent 72
+#     SENT: text, mature tree, large tree, girl, child, dark, night, dusk,
+#           sunset, dim lighting, moody lighting, low key, shadows dominant,
+#           photorealism, leaf on head, plant girl, alraune, monster girl,
+#           flower on head, head wreath, hair ornament, leaf hair ornament,
+#           plant hair, female goblin, elf
+#     DROPPED: the nine above PLUS 3d render, photorealistic, shrubbery, bush,
+#           forest, full canopy, thick trunk
+#
+# READ THAT DIFF BEFORE READING THE FRAMES. All eight lighting terms reach the
+# model verbatim. Everything the previous round's spec verified as load-bearing
+# SURVIVES: `female goblin`, `girl`, `child`, `text`, `photorealism`, `mature
+# tree`, `large tree` and the whole plant-girl/alraune tier. What is sacrificed
+# is seven house terms, and two of them are worth naming as risks rather than
+# burying:
+#   * `photorealistic` and `3d render` leave the house tier. The style guard is
+#     not gone — the beat-specific `photorealism` still goes, lifted from the
+#     positive's "No photorealism, no 3D render look" — but it is thinner.
+#   * `thick trunk, full canopy, forest, bush, shrubbery` leave. On a beat whose
+#     subject is a TINY SAPLING that is the most real risk in this job: the
+#     sapling could come back as a bush, or the open field as a treeline. The two
+#     strongest anti-big-tree terms (`mature tree`, `large tree`) survive, and
+#     this beat has never come back with a mature tree, so this is a stated risk
+#     and not a known regression.
+# THE BLOCK IS SENT WHOLE ON PURPOSE. Narrowing it to fit would have bought those
+# terms back and made this a DIFFERENT block from the one beat 04 proved, which
+# breaks the only thing that makes this a propagation rather than a new guess. If
+# a bush shows up, the answer is a narrower block on this beat, and that reading
+# is written down here before the frames exist.
+#
+# SEPARATE OUT DIRECTORY, DELIBERATELY. `out-b02-occl` holds the four frames this
+# is read against and the harness names files from the beat slug. This writes to
+# `out-b08-idfix` so that evidence is not overwritten.
+
+id: ep2-b08-idfix-0812
+task: ep2-b08-idfix-0812
+node: 002b-first-citizen
+beat: 8
+runner: box
+needs_gpu: true
+
+# 44, the same lane number the occlusion round used. box_runner.py:444 sorts
+# priority ASCENDING and takes ONE job at a time regardless — sequential is the
+# rule (CLAUDE.md, founder 2026-08-03) and batch-of-4 is banned. The ready queue
+# was EMPTY and nothing was running when this was staged (`box_enqueue.py
+# --list`, checked, not assumed).
+priority: 44
+max_attempts: 1
+owner: beat-02 lighting lane, 2026-08-11 (propagating the beat-04 lighting proof)
+
+# NO `gate:` KEY. One sample varying one channel on a recipe he has ratified,
+# using a fix already verified against identical seeds on another beat. It clears
+# NOBODY's gate: the fourteen `ep2-b*-goblin-wave1.yaml` specs and the staged
+# siblings keep theirs.
+
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03` (read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml:17-18, the leaf the
+  render gate itself reads, not copied from a sibling spec). His `approved_quote`
+  verbatim: "approve 002b except.. we need to make SURE the fig growing on the sapling
+  is mentioned, last time we generated 002b it just.. appeared. also, the sapling was
+  able to flail a leaf in episode 1? why couldnt it do that in 002b?" Both
+  `approval_conditions` are about beat 01''s fig and beat 16''s leaf; neither touches
+  beat 02''s lighting, framing or staging. Beat 02 is THE SPRINT, the sprint/dive to
+  cover behind the sapling.'
+
+consumer: >-
+  Roman's next look at beat 02, as a PAIR against the `out-b02-occl` frames — same
+  four seeds, one channel apart, so the comparison is airtight. His ~18:40 sentence
+  asked for the hide to read; the occlusion round bought that and lost the light.
+  This round is the same staging in daylight. It ranks nothing and picks nothing.
+
+success: >-
+  Four PNGs at C:\banyan-farm\wave-goblin-prep\out-b08-idfix\08-inside-him-wave1-s0..3.png
+  with their .yaml provenance sidecars written at render time (7.2), all eight
+  declared as artifacts so a missing one fails rc=92 instead of passing quietly.
+  Whether the frames are good is R4's call, not this job's and not a metric's.
+
+why: >-
+  One variable against `ep2-b02-goblin-occl-0811`: the eight-term lighting block
+  in the SDXL negative, the same block `ep2-b04-goblin-fieldbright-0811` proved
+  on identical seeds. Identical positive (dry-run measured at 73/77 in both),
+  identical seeds, steps, guidance, harness, drafts lineage, `green skin` slot,
+  `medium shot` and occlusion clause. Any difference in these frames is that
+  block.
+
+goblin_def: green skin
+goblin_def_source: >-
+  The founder, verbatim: "he is just a simple green goblin, nothing complex"
+  (2026-08-10 ~12:15, re-stated 2026-08-11), plus his verdict on the frames drawn
+  from it: "yeah, that looks like the right goblin" (2026-08-11 ~15:45, on
+  `ep2-b15-goblin-simple-0811`; ledger `ep2-b15-goblin-simple-founder-verdict-0811`).
+  `green skin` is the ONE attribute he named, and this round changes nothing about
+  the character.
+
+est_minutes: 2
+needs:
+- cuda
+- vram20
+- farm-venv
+
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+# The box's wave-drafts.yaml was scp'd from this repo and verified
+# sha256-identical (30d0907e8171dc410d3f388f976eadc9894a368e348bda68903a300b16874f6e)
+# after the edit and before this job was queued. The harness REFUSES rather than
+# falling back when a variant key is missing, so a stale copy fails for $0 instead
+# of quietly re-rendering the old lighting under a new job id.
+steps:
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '8'
+  - --goblin-def
+  - green skin, bald head
+  - --variant
+  - authored_b08_idfix
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '8'
+  - --goblin-def
+  - green skin, bald head
+  - --variant
+  - authored_b08_idfix
+  - --out
+  - C:\banyan-farm\wave-goblin-prep\out-b08-idfix
+  - --task
+  - ep2-b08-idfix-0812
+
+# DURABILITY: every still this farm makes lands single-copy on a box nothing backs
+# up. The courier runs `git add -A -- farm-out` and pushes on job_done, and
+# farm-out is NOT gitignored, so publishing is a COPY and the runner stays
+# byte-identical. allow_fail: a failed copy must never mark a good render failed.
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b08-idfix"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/wave-goblin-prep/out-b08-idfix/08-inside-him-wave1-s*.*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        # Hash the COPY, not the original: what this records has to be the bytes
+        # that get committed, or the manifest attests to the wrong file.
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+        print("   ", os.path.basename(f), h[:16])
+    # newline="\n" is load-bearing: Windows text mode rewrites \n to \r\n and
+    # every filename then carries a trailing \r that shasum -c cannot open.
+    with open(os.path.join(dst, "08-inside-him-occlbright.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    # 4 stills + 4 sidecars. Fewer means the render wrote less than it promised.
+    raise SystemExit(0 if len(src) == 8 else 1)
+
+artifacts:
+- C:\banyan-farm\wave-goblin-prep\out-b08-idfix\08-inside-him-wave1-s0.png
+- C:\banyan-farm\wave-goblin-prep\out-b08-idfix\08-inside-him-wave1-s1.png
+- C:\banyan-farm\wave-goblin-prep\out-b08-idfix\08-inside-him-wave1-s2.png
+- C:\banyan-farm\wave-goblin-prep\out-b08-idfix\08-inside-him-wave1-s3.png
+- C:\banyan-farm\wave-goblin-prep\out-b08-idfix\08-inside-him-wave1-s0.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b08-idfix\08-inside-him-wave1-s1.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b08-idfix\08-inside-him-wave1-s2.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b08-idfix\08-inside-him-wave1-s3.yaml
