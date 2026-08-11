@@ -1,0 +1,201 @@
+# EPISODE 2, BEAT 04 THE FOOTNOTE — THE APPROVED GOBLIN RECIPE ON THE CLOSE-UP
+# BEAT. One sample, four seeds, $0. 2026-08-11.
+#
+# WHY THIS BEAT AND WHY NOW. Roman ruled on the beat-04 picking sheet at ~16:15
+# today, verbatim: "these close ups are not really good, but they are the old
+# versions after all.. basically, bad character consistency, makign the goblin
+# look too complicated and ending up making t bad". Two faults named, and this
+# job answers both with things he has already approved rather than with a new
+# idea:
+#   * "bad character consistency" / "too complicated" — the sheet he was looking
+#     at is the IP-Adapter set (`ep2-b04-goblin-ipa*`, eight specs, 2026-08-10),
+#     which drew four different creatures across four seeds. The words-only
+#     route with the slot at `green skin` held ONE goblin four-for-four on beat
+#     15 and he called that one right at ~15:45 today ("yeah, that looks like the
+#     right goblin", ledger `ep2-b15-goblin-simple-founder-verdict-0811`). So the
+#     recipe changes from the one he rejected to the one he ratified.
+#   * "the old versions after all" — the beat-04 frames on that sheet were drawn
+#     2026-08-10 with `--goblin-def "green skin, tusks"`, a string he has never
+#     said; `tusks` is the steward's. It is gone here.
+#
+# THE ONE VARIABLE IS THE GOBLIN SLOT, AND IT IS THE ONLY ONE. Against the
+# 2026-08-10 tags-only beat-04 render this changes `green skin, tusks` ->
+# `green skin` and nothing else: same beat, same harness, same drafts file, same
+# `authored` draft text, same four seeds, same steps and guidance, same size.
+# That makes it the cleaner of the two tests the b15 sample opened — b15 had to
+# change the beat as well, and said so.
+#
+# THE FRAMING IS NOT A NEW VARIANT AND NOT A STEWARD CHOICE. Beat 04 needs no
+# `authored_staged` key and has none: its `authored` draft already states the
+# shot size twice — `his face filling the frame` and `close-up` — and those are
+# the beat's own words, in shots.md since it was written, echoing node.md's
+# "Camera close on the held breath". Today's shot-size finding
+# (`ep2-b02-goblin-medium-0811`, wave-drafts.yaml beat 02 comment) is that beat
+# 04 is the ONE beat of this wave whose frames ever came back readable and that
+# its advantage is the size term. Beat 04 does not need the fix; it is where the
+# fix was copied FROM. Nothing is added to its prompt here.
+#
+# NO ORNAMENT ADDED, AND THE PROMPT IS ANCHORED TO WHAT THE PICTURE SHOULD BE.
+# The draft describes the held breath and nothing else: cheeks puffed, huge eyes
+# darting, enormous ears twitching, soft morning light. No IP-Adapter, no
+# reference image, no wedge/window/wscale conditioning — the eight `ipa` specs
+# on this beat are what "too complicated" was aimed at, and four beats of
+# evidence say the adapter transfers COMPOSITION and not identity. Tags only.
+#
+# MEASURED ON THE BOX, NOT GUESSED. Dry-run on the box's real CLIP tokenizer at
+# 2026-08-11 ~16:5x, this exact beat, variant and slot string: DRY OK, 66/77
+# positive tokens (11 headroom), negative 50/77, count tag `1boy` derives from
+# the first comma-clause as the draft declares, STYLE ANCHOR PRESENT, `text`
+# negated, no faults. The box's `wave-drafts.yaml` was verified sha256-identical
+# to the repo's (91d45003a7879a3083d280ef715c972df3c4599d00bdbad54a3295819544bde6)
+# before this spec was written, so the harness cannot silently send older text —
+# and it refuses rather than falling back if the key is missing.
+#
+# SEPARATE OUT DIRECTORY, DELIBERATELY. `out-staged` and `out-medium` hold the
+# frames other gates cite by path, and the harness names files from the beat
+# slug. This writes to `out-b04-close` so nothing is overwritten.
+
+id: ep2-b04-goblin-close-0811
+task: ep2-b04-goblin-close-0811
+node: 002b-first-citizen
+beat: 4
+runner: box
+needs_gpu: true
+priority: 45
+max_attempts: 1
+owner: beat-04 verdict lane, 2026-08-11 (his ~16:15 beat-04 sentence)
+
+# NO `gate:` KEY. This is a sample on a recipe he has ratified, which is exactly
+# what CLAUDE.md's one-sample rule permits without him present. It clears
+# nobody's gate: the fourteen `ep2-b*-goblin-wave1.yaml` specs and the twelve
+# staged siblings keep theirs.
+
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03` (read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, not copied from a
+  sibling spec). His `approved_quote` verbatim: "approve 002b except.. we need to make
+  SURE the fig growing on the sapling is mentioned, last time we generated 002b it just..
+  appeared. also, the sapling was able to flail a leaf in episode 1? why couldnt it do
+  that in 002b?" Both `approval_conditions` are about beat 01''s fig and beat 16''s leaf;
+  neither touches beat 04. Beat 04 is THE FOOTNOTE (0:16-0:22), the architect/footnote
+  joke, and node.md''s direction for it is "Camera close on the held breath."'
+
+consumer: >-
+  Roman's next look, on the beat he ruled on at ~16:15 today. His sentence asked
+  for regeneration ("you have to change pretty much all of them, do some
+  regeneration") and named the fault as character consistency plus complication.
+  These four frames are the first beat-04 set drawn with the goblin recipe he
+  ratified three hours earlier instead of the adapter route he has now turned
+  down twice. Whether they are good is R4's call; this job produces candidates.
+
+success: >-
+  Four PNGs at C:\banyan-farm\wave-goblin-prep\out-b04-close\04-the-footnote-wave1-s0..3.png
+  with their .yaml provenance sidecars written at render time (7.2), all eight
+  declared as artifacts so a missing one fails rc=92 instead of passing quietly.
+
+why: >-
+  One variable against the 2026-08-10 beat-04 tags-only render: the goblin slot
+  string, `green skin, tusks` -> `green skin`. Any difference in these frames is
+  that removal, on the beat whose framing already works.
+
+goblin_def: green skin
+goblin_def_source: >-
+  The founder, verbatim: "he is just a simple green goblin, nothing complex"
+  (2026-08-10 ~12:15, re-stated 2026-08-11), plus his verdict on the frames drawn
+  from it: "yeah, that looks like the right goblin" (2026-08-11 ~15:45, on
+  `ep2-b15-goblin-simple-0811`; ledger `ep2-b15-goblin-simple-founder-verdict-0811`).
+  `green skin` is the ONE attribute he named, and it is now positively ratified
+  rather than merely unopposed. This is his sentence with nothing added to it.
+
+est_minutes: 2
+needs:
+- cuda
+- vram20
+- farm-venv
+
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '4'
+  - --goblin-def
+  - green skin
+  - --variant
+  - authored
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '4'
+  - --goblin-def
+  - green skin
+  - --variant
+  - authored
+  - --out
+  - C:\banyan-farm\wave-goblin-prep\out-b04-close
+  - --task
+  - ep2-b04-goblin-close-0811
+
+# DURABILITY: every still this farm makes lands single-copy on a box nothing
+# backs up. The courier runs `git add -A -- farm-out` and pushes on job_done,
+# and farm-out is NOT gitignored, so publishing is a COPY and the runner stays
+# byte-identical. allow_fail: a failed copy must never mark a good render failed.
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b04-goblin-close"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/wave-goblin-prep/out-b04-close/04-the-footnote-wave1-s*.*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        # Hash the COPY, not the original: what this records has to be the bytes
+        # that get committed, or the manifest attests to the wrong file.
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+        print("   ", os.path.basename(f), h[:16])
+    # newline="\n" is load-bearing: Windows text mode rewrites \n to \r\n and
+    # every filename then carries a trailing \r that shasum -c cannot open.
+    with open(os.path.join(dst, "04-the-footnote-close.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    # 4 stills + 4 sidecars. Fewer means the render wrote less than it promised.
+    raise SystemExit(0 if len(src) == 8 else 1)
+
+artifacts:
+- C:\banyan-farm\wave-goblin-prep\out-b04-close\04-the-footnote-wave1-s0.png
+- C:\banyan-farm\wave-goblin-prep\out-b04-close\04-the-footnote-wave1-s1.png
+- C:\banyan-farm\wave-goblin-prep\out-b04-close\04-the-footnote-wave1-s2.png
+- C:\banyan-farm\wave-goblin-prep\out-b04-close\04-the-footnote-wave1-s3.png
+- C:\banyan-farm\wave-goblin-prep\out-b04-close\04-the-footnote-wave1-s0.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b04-close\04-the-footnote-wave1-s1.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b04-close\04-the-footnote-wave1-s2.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b04-close\04-the-footnote-wave1-s3.yaml
