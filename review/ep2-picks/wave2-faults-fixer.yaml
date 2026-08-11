@@ -264,3 +264,52 @@ beats:
     house, no interior, no indoors` — funded by retiring `no dark fantasy`, which
     is guarding nothing the eight-term dark ban does not already cover.
   r2: authored_b06_idfix_r2  (spec ep2-b06-idfix-r2-0812, out-b06-idfix-r2)
+
+- beat: 7
+  slug: confiscate
+  variant_rendered: authored_b07_idfix
+  positive_tokens: 71
+  verdict: faulty
+  setting_is_good: >-
+    Open sunny field 4/4, bright 4/4, no armor 4/4, bald 4/4. Worth stating
+    because it CONFIRMS the beat-06 diagnosis from the other direction: beat 07's
+    sentence says "morning field" and beat 07 got a morning field in every frame.
+    A beat that names its setting keeps it.
+  faults:
+  - name: the recipe contradicts itself, so the partner can never arrive
+    count: 4/4
+    detail: >-
+      The positive asks for "his partner's shoulder just visible at frame edge".
+      The negative sends `people in background`. The ban negates the thing the
+      prompt asserts, so no frame has a partner and no frame ever could. This is a
+      RECIPE BUG, not a model failure -- the exact wording discipline the fixer
+      applied on beat 02 (name SKIN, never `stitches`, so the cloak survives),
+      violated here in the other direction.
+  - name: he points at the camera, not off-frame
+    count: 4/4
+    detail: >-
+      The sentence says "pointing off-frame". All four point straight down the
+      lens at the viewer -- s2 with a closed FIST rather than a finger. The beat
+      needs him pointing AWAY, at the goblin off-screen; pointing at the audience
+      reads as a different shot entirely.
+  - name: the plain brown tunic is not brown
+    count: 4/4 weak, 2/4 outright wrong
+    detail: >-
+      s0 and s1 are off-white/light grey; s2 and s3 are washed tan. His ratified
+      guard wears a PLAIN BROWN TUNIC and the positive says so in those words.
+  - name: hard muscular adult man again
+    count: 4/4
+    detail: >-
+      Same as beats 05 and 06 -- scowls, bared teeth, athletic build, not the
+      "silly harmless bureaucrat" with a round soft body. Third beat in a row.
+      This is now a WAVE-LEVEL note for the founder, not a per-beat fault, and it
+      is still not fixed inside a round for the reason beat 05 gives.
+  lever: >-
+    (1) Delete the contradiction: `no people in background` retires. `no crowd`
+    STAYS, so the thing the ban was actually for still has a guard, and the
+    partner the positive asks for stops being banned. (2) Wrong direction ->
+    affirmative plus its ban in one channel: `pointing away off-frame to his left`
+    in the positive, `no pointing at viewer` in the negative. (3) Colour ->
+    `no white shirt`, which cannot negate the positive because the positive
+    asserts BROWN. Funded by the retired contradiction; measured, not assumed.
+  r2: authored_b07_idfix_r2  (spec ep2-b07-idfix-r2-0812, out-b07-idfix-r2)
