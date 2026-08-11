@@ -5,8 +5,16 @@ The false positive is the whole risk. A watchdog that fires wrongly restarts a
 healthy runner; a SENTINEL that fires wrongly renders something the founder has
 not approved, which is the exact thing the gate exists to prevent. There is no
 cheap failure on that side. So most of these cases are about NOT firing, and
-the two that do fire are the narrowest cases that can be described: a real gate
-key, deleted, in a committed change, on a spec with nothing else wrong.
+the ones that do fire are the narrowest cases that can be described: a real
+gate key, deleted, in a committed change that changed NOTHING ELSE, on a spec
+with nothing else wrong.
+
+"nothing else" is the third question here and it took a test to find it. The
+first version of this file asked only "was the key deleted" and "is the spec
+sound", and a commit that deleted `gate: founder` while moving --frames 121 to
+217 answered yes to both. DIFF_CASES pins the missing rule down: the commit may
+disturb comments and blank lines — it has to, the gate wears a DO NOT ENQUEUE
+banner that goes with it — and may disturb nothing else.
 """
 
 import os
@@ -14,7 +22,8 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from gate_sentinel import (  # noqa: E402
-    decide, gate_cleared, gate_key_present, commented_gate_present)
+    decide, diff_problems, gate_cleared, gate_key_present,
+    commented_gate_present)
 
 SHA = "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0"
 
@@ -95,6 +104,138 @@ DECIDE_CASES = [
     ("second real fire: a different clearing commit, nothing else changed — "
      "the rule depends on the fact, not on which commit carried it",
      obs(cleared_in="0f0e0d0c0b0a09080706050403020100ffeeddcc"), True),
+
+    ("a RIDER: the same commit that deleted the gate also retimed the render. "
+     "This arrives as a problem like any other, and it is the reason the "
+     "problems list is checked at all — an approval is for the recipe that was "
+     "approved, not for whatever the commit also carried",
+     obs(problems=["this commit ADDS a non-comment line, so it is not only a "
+                   "gate clearing: - --frames 217"]), False),
+]
+
+
+def hunk(*lines):
+    """A one-file unified diff. The header matters: everything before the first
+    `@@` is git's own preamble, and a removed yaml line reading `-- foo` would
+    look exactly like the `--- a/path` header to anything matching on prefix."""
+    return "\n".join(
+        ["diff --git a/pipeline/jobs/j.yaml b/pipeline/jobs/j.yaml",
+         "index 1111111..2222222 100644",
+         "--- a/pipeline/jobs/j.yaml",
+         "+++ b/pipeline/jobs/j.yaml",
+         "@@ -80,12 +80,4 @@ env:"] + list(lines)) + "\n"
+
+
+# The shape of the CLEARING COMMIT, which is a separate question from "was the
+# key deleted". It was deleted in every case below; the question is what else
+# rode along. Each entry lists substrings the refusal must contain — an empty
+# list means the commit is a clean clearing and fires. Naming the offending
+# line is half the point: a refusal that says "something else changed" sends a
+# human back to `git show`, and this tool exists to save exactly that trip.
+DIFF_CASES = [
+    ("the gate key alone, one line, nothing else in the commit",
+     hunk(" id: ep1-b13",
+          "-gate: founder",
+          " consumer: the v35 assembly"), []),
+
+    ("the real clearing this repo will make: the key, its `gate_ref:` block "
+     "scalar, and the DO NOT ENQUEUE banner above them. The banner is comments "
+     "and MUST be exempt — a human clearing a gate deletes the sign that says "
+     "do not clear it, every single time, and a rule that refused this would "
+     "refuse every clearing that will ever happen",
+     hunk(" # STAGED, GATED.",
+          "-#",
+          "-# ============ DO NOT ENQUEUE. THE GATE BELOW IS CODE. ============",
+          "-# `gate:`/`gate_ref:` make box_enqueue.py:123-132 refuse this file.",
+          "-# WHAT MUST HAPPEN FIRST: Roman watches the 13s sample.",
+          "-# =================================================================",
+          "-gate: founder",
+          "-gate_ref: >-",
+          "-  ep1-b08-313f-vo-length-0811 must be screened and accepted first.",
+          "-  Delete these two keys only after he has seen it.",
+          "-",
+          " consumer: the v35 assembly"), []),
+
+    ("THE DANGEROUS ONE. Gate deleted and --frames moved 121 -> 217 in the same "
+     "commit: a recipe the founder never approved, entering the queue under "
+     "cover of an approval he did give. This is the 2026-07-25 failure with a "
+     "commit as the vehicle",
+     hunk("-gate: founder",
+          " steps:",
+          "-      - --frames 121",
+          "+      - --frames 217"), ["--frames 217", "--frames 121"]),
+
+    ("gate deleted and the seed changed. A reseed is a different render — the "
+     "sample he approved was one draw and this is another",
+     hunk("-gate: founder",
+          " steps:",
+          "-      - --seed 20260739",
+          "+      - --seed 20260811"), ["--seed 20260811"]),
+
+    ("gate deleted and a line ADDED. Nothing about an approval implies consent "
+     "to a new argument, however harmless it looks",
+     hunk("-gate: founder",
+          " env:",
+          "+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True"),
+     ["PYTORCH_CUDA_ALLOC_CONF"]),
+
+    ("gate deleted and a line REMOVED elsewhere. Deleting a step is as much a "
+     "recipe change as adding one — the plate step is what stops the 24.4% "
+     "vertical stretch",
+     hunk("-gate: founder",
+          " steps:",
+          "-  - name: plate"), ["- name: plate"]),
+
+    ("gate deleted plus a whitespace-only change: the editor stripped trailing "
+     "blanks on save. The line is the same line, so this fires",
+     hunk("-gate: founder",
+          "-consumer: the v35 assembly   ",
+          "+consumer: the v35 assembly"), []),
+
+    ("...but a RE-INDENT is not whitespace noise. Moving `gate:` under another "
+     "key hides it from box_enqueue exactly as commenting it out would, and "
+     "leading space is semantics in yaml",
+     hunk("-gate: founder",
+          " meta:",
+          "+  gate: founder"), ["gate: founder"]),
+
+    ("blank lines removed where the gate block used to be: formatting, not a "
+     "recipe",
+     hunk("-",
+          "-gate: founder",
+          "-"), []),
+
+    ("a comment ADDED by the person clearing — `# cleared 2026-08-11, he said "
+     "go` is the natural thing to write and must not block the fire",
+     hunk("-gate: founder",
+          "+# cleared 2026-08-11 — he watched the 313f sample and said go"), []),
+
+    ("a removed yaml line that begins with two dashes. Read by prefix it is "
+     "indistinguishable from git's own `--- a/path` header, which is why the "
+     "reader waits for the first `@@` before believing anything",
+     hunk("-gate: founder",
+          "-- --frames 121"), ["--frames 121"]),
+
+    ("a second hunk far from the gate, touching the prompt. Hunks are separate "
+     "but the commit is one thing, and it is the commit that gets trusted",
+     hunk("-gate: founder",
+          " consumer: the v35 assembly",
+          "@@ -300,3 +292,3 @@ steps:",
+          "-        prompt: a thin green stem, still air",
+          "+        prompt: a thin green stem, wind moving through it"),
+     ["wind moving through it"]),
+
+    ("an indented line removed AFTER the gate run was broken by a context "
+     "line is not a `gate_ref:` continuation — the continuation only counts "
+     "while it is still attached to the key it belongs to",
+     hunk("-gate_ref: >-",
+          "-  he must watch the 13s sample first",
+          " steps:",
+          "-  - name: render"), ["- name: render"]),
+
+    ("an empty diff. Cannot happen from a real clearing, but the reader must "
+     "not invent a problem out of nothing",
+     "", []),
 ]
 
 # The two halves of the git fact, tested on text because that is what git hands
@@ -171,6 +312,22 @@ def main():
             print("ok    %s" % name)
 
     print()
+    for name, diff, wanted in DIFF_CASES:
+        got = diff_problems(diff)
+        joined = " | ".join(got)
+        if bool(got) != bool(wanted):
+            bad += 1
+            print("FAIL  %s\n      expected %s got %s"
+                  % (name, "a refusal" if wanted else "no problems",
+                     joined or "no problems"))
+        elif [s for s in wanted if s not in joined]:
+            bad += 1
+            print("FAIL  %s\n      refusal does not name %s: %s"
+                  % (name, [s for s in wanted if s not in joined], joined))
+        else:
+            print("ok    %s" % name)
+
+    print()
     for name, text, want in COMMENT_CASES:
         got = commented_gate_present(text)
         if got != want:
@@ -201,7 +358,8 @@ def main():
         bad += 1
         print("FAIL  no spec in pipeline/jobs/ carries a gate — the reader is broken")
 
-    total = len(DECIDE_CASES) + len(CLEARED_CASES) + len(COMMENT_CASES)
+    total = (len(DECIDE_CASES) + len(CLEARED_CASES) + len(COMMENT_CASES)
+             + len(DIFF_CASES))
     print()
     if bad:
         print("✗ %d gate-sentinel case(s) failed" % bad)

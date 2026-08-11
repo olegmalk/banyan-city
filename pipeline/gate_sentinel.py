@@ -38,6 +38,17 @@ The guards that keep it from firing on an accident:
                     it. The key is still there, so this refuses.
   re-gated          Removed in an old commit and put back: the key is in HEAD,
                     so nothing fires.
+  rider             The clearing commit must delete the gate AND NOTHING ELSE.
+                    A commit that deletes `gate: founder` and in the same breath
+                    moves --frames 121 to 217, or reseeds, is a recipe change
+                    riding into the queue under cover of an approval — the
+                    2026-07-25 failure with a commit as the vehicle. Refused
+                    loudly, naming the line. Comments and blank lines are
+                    exempt, and they have to be: the human who deletes the key
+                    also deletes the "DO NOT ENQUEUE. THE GATE BELOW IS CODE."
+                    banner sitting above it, so a literal "nothing else changed"
+                    rule would refuse every realistic clearing and the tool
+                    would never fire at all.
   dirty worktree    If the file differs from HEAD, a lane is mid-edit and the
                     committed fact is not the current one. Wait.
   window            Only clearings committed in the last --since-hours (24 by
@@ -90,6 +101,9 @@ GATE_KEY = re.compile(r"^(gate|gate_ref)[ \t]*:", re.M)
 # staged spec carries ("# `gate:`/`gate_ref:` make box_enqueue.py refuse") does
 # not match: a backtick sits where the key would have to start.
 COMMENTED_GATE = re.compile(r"^[ \t]*#[ \t]*(gate|gate_ref)[ \t]*:[ \t]*\S", re.M)
+# A whole-line yaml comment, and a line with nothing on it. These are the only
+# things the clearing commit may touch besides the gate key itself.
+NOISE_LINE = re.compile(r"^[ \t]*(#|$)")
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import box_enqueue  # noqa: E402
@@ -116,6 +130,86 @@ def gate_cleared(before: str, after: str) -> bool:
     as a clearing.
     """
     return gate_key_present(before) and not gate_key_present(after)
+
+
+def _noise(body: str) -> bool:
+    """A comment or an empty line — the only content a clearing may disturb."""
+    return bool(NOISE_LINE.match(body))
+
+
+def diff_problems(diff_text: str) -> list:
+    """What this commit touched besides the gate key. Empty list = a clean clear.
+
+    The trigger's whole claim is "a human deleted the gate key". A commit that
+    deletes the key AND retimes the render is not that claim — it is a recipe
+    change wearing an approval, and the founder's rule exists because fifteen
+    beats once went out on a recipe nobody had approved. So: zero added
+    non-comment lines, and every removed non-comment line must be the `gate:`/
+    `gate_ref:` key or an indented continuation of one.
+
+    Comments and blank lines are exempt BY DESIGN, not by oversight. The banner
+    that sits above every staged gate says DO NOT ENQUEUE; the human who deletes
+    the key deletes that banner in the same commit, every time. A rule that
+    demanded a literally empty diff would refuse every real clearing this repo
+    will ever make, and a guard that never passes is a guard nobody keeps.
+
+    Trailing whitespace is not a change: a removed line and an added line that
+    match once trailing blanks are stripped cancel out. Leading whitespace is
+    NOT forgiven — indentation is semantics in yaml, and re-indenting `gate:`
+    under another key would hide it from box_enqueue exactly as commenting it
+    out would.
+    """
+    added, removed = [], []
+    in_hunk = False
+    in_gate = False               # inside a run of removed gate-key lines
+    for line in (diff_text or "").splitlines():
+        if not in_hunk:
+            # `diff --git`, `index`, `--- a/x`, `+++ b/x`: everything before the
+            # first hunk is header, and testing for it by prefix would eat a
+            # removed yaml line that happens to read `-- foo`.
+            in_hunk = line.startswith("@@")
+            continue
+        if line.startswith("@@"):
+            in_gate = False
+            continue
+        if line.startswith("\\"):          # \ No newline at end of file
+            continue
+        tag, body = (line[0], line[1:]) if line else (" ", "")
+        if tag == "-":
+            if _noise(body):
+                continue                   # does not break a gate continuation
+            if GATE_KEY.match(body):
+                in_gate = True
+                continue
+            if in_gate and body[:1] in (" ", "\t"):
+                continue                   # the block scalar under `gate_ref:`
+            in_gate = False
+            removed.append(body.rstrip())
+        elif tag == "+":
+            if _noise(body):
+                continue
+            in_gate = False
+            added.append(body.rstrip())
+        else:
+            if not _noise(body):
+                in_gate = False            # context line ends the gate run
+
+    pool = list(added)
+    survivors = []
+    for line in removed:
+        if line in pool:                   # same line back, trailing space aside
+            pool.remove(line)
+        else:
+            survivors.append(line)
+
+    problems = []
+    for line in pool:
+        problems.append("this commit ADDS a non-comment line, so it is not only "
+                        "a gate clearing: %s" % line.strip())
+    for line in survivors:
+        problems.append("this commit removes a non-comment line that is not part "
+                        "of the gate key: %s" % line.strip())
+    return problems
 
 
 def decide(obs: dict) -> tuple:
@@ -158,6 +252,16 @@ def show(rev_path: str):
     """File content at a rev, or None when it did not exist there."""
     r = git("show", rev_path, ok_fail=True)
     return None if r.returncode else r.stdout
+
+
+def commit_diff(sha: str, path: str) -> str:
+    """The unified diff this commit made to this one file, no context needed
+    beyond what git gives by default — diff_problems only reads +/- lines."""
+    r = git("diff", "%s~1" % sha, sha, "--", path, ok_fail=True)
+    if r.returncode:
+        raise RuntimeError("cannot diff %s in %s: %s" % (path, sha[:8],
+                                                         r.stderr.strip()))
+    return r.stdout
 
 
 def clearings(hours: int) -> dict:
@@ -307,6 +411,13 @@ def main(argv=None) -> int:
         detail = ""
         if fire:
             problems, detail = spec_problems(path)
+            # Shape of the clearing commit itself, ahead of the spec's own
+            # faults: a rider is the dangerous case and should be the first
+            # thing the refusal names.
+            try:
+                problems = diff_problems(commit_diff(sha, path)) + problems
+            except RuntimeError as e:
+                problems = ["cannot read the clearing diff: %s" % e] + problems
             spec_id = None
             try:
                 spec_id = box_enqueue.load_spec(os.path.join(REPO, path)).get("id")
