@@ -1,0 +1,194 @@
+# ep1 beat 05 — THE SAPLING REVEAL. One NEW frame, four seeds, unranked.
+#
+# WHY THIS EXISTS. Roman, 2026-08-11, verbatim and NOT withdrawn:
+#
+#   "we should show that he became a sapling earlier in the video just to make
+#    it less confusing."
+#
+# The first answer reused beat 12's own push-in in the tail of beat 05 at 0:22.
+# He rejected it, same day, also verbatim: "dont show beat 12's picture twice."
+# So the reveal is currently OUT of the cut with nothing in its place (commit
+# dc77bc8) and the confusion he named is back — knowingly, because the only fix
+# available without a render was the one he refused. The draft leaf
+# genomes/sapling/nodes/001-capability-inventory/leaves/drafts/001-t0-e-draft.yaml
+# names what closes it under `what_would_close_it`, and this job is that:
+#
+#   "A NEW PLATE — one picture of the sapling that belongs to beat 05, not
+#    borrowed from a later beat. Roughly: the two-leaf sapling in grass, morning
+#    light to match beat 06's sky, framed wider or from a different angle than
+#    beat 12's push-in so it cannot read as a repeat."
+#
+# NO SCRIPT CHANGE AND NO NEW BEAT. node.md and 001-t0-d.yaml describe fifteen
+# beats and still do. Beat 05 has 1.42s unused inside its authored 4.00s slot,
+# which holds the insert with no timing change anywhere after it. shots.md is
+# NOT edited: the prompt is injected script-side, the way render_b06r6/r7/r8
+# inject theirs, because writing an unread picture into shots.md would change
+# the string every other renderer sends for beat 05. The driver asserts beat
+# 05's own fence — the ceramic shards — byte-for-byte before a weight loads.
+#
+# THE RECIPE IS COPIED, MEASURED, NOT INVENTED. Source: the founder's own pick
+# of the 2026-08-08 wave, takes/stills/12-undefined-r2-s1.png (seed 20261731),
+# promoted to stills/12-undefined.png — animagine-xl-3.1, 832x1216, 40 steps,
+# cfg 7.5, bfloat16 on cuda, prompt through the unmodified compress() +
+# beat_negative() path with no script-side transform of any kind. Trap 2
+# rebuilds beat 12's sent positive AND negative from the box's checkout and
+# asserts both against that sidecar, so "the same recipe" is a measurement. The
+# only differences are the prompt, the seeds and the output names.
+#
+# THE PROMPT DESCRIBES THE PICTURE, NOT A CAMERA MOVE. Beat 02 broke today
+# because its prompt described shots.md's stage direction while the plate held a
+# different framing and the model travelled to the words. There is no plate here
+# to contradict, and the prompt still names no move, no push-in and no cut —
+# only the image: an upright two-leaf sapling seen from low at ground level with
+# pale morning sky, the light that cuts into beat 06's sky two seconds later.
+#
+# COUNT TAG: NONE, AND THAT IS THE RIGHT TAG. _tag_from_clause reads the first
+# comma-clause, `plant focus`, which matches no person pattern, so the derived
+# tag is empty and none is prepended — beat 12's exact behaviour, and beat 12
+# drew no people. `1other` is what a BARE HUMANOID NOUN resolves to; there is no
+# figure in this frame at all, so there is nothing to tag. Trap 4 refuses the run
+# if a count tag appears at the head of the sent positive.
+#
+# PROHIBITIONS ARE IN THE NEGATIVE ONLY. The authored `No …` sentence is stripped
+# out of the positive by compress()'s _NEGATION and imported into the negative's
+# beat tier. Trap 5 asserts the sent positive carries no `no ` ban of any kind.
+# That is the SDXL side of today's beat-03 finding — restoring `text` to the
+# negative killed the gibberish glyphs 4 of 4 — and the opposite of the LTX habit
+# of relocating bans into the positive, which is how `wobble` ended up in beat
+# 10's binding channel.
+#
+# MEASURED ON THE BOX BEFORE THIS FILE WAS WRITTEN, --dry, real CLIP:
+#   positive 70/77 tokens, style anchor `very aesthetic` intact
+#   negative 76/77 tokens (beat 12 control: 76), all 7 required terms surviving
+#   traps 1-7 green
+# The first wording measured 78 and compress() paid for it by dropping the style
+# anchor; trap 6 caught that and refused to draw. Two clauses were sold to buy
+# the anchor back — `both leaves open wide` (said already by `two-leaf`) and
+# `behind it` (done by `seen from low at ground level` beside the sky clause).
+# The driver on the box is byte-identical to the repo copy,
+# sha256 2abf28b15df3edd44d32374d44cdab0ff2fed30a40b5563a84f519e4df5616c2.
+#
+# FOUR SEEDS IS A ROUND, NOT A RECIPE CHANGE (CLAUDE.md, founder 2026-08-03).
+# This beat's own series, 20260719 + beat + k*1000, at k=8..11. k=0..3 are spent
+# on takes/stills/05-huh-green-s{0..3}.png; trap 7 reads the directory rather
+# than trusting the arithmetic. Sequential, one config, no batch-of-4 render
+# config.
+#
+# NOTHING HERE RANKS, PICKS, PROMOTES, PUBLISHES OR SPENDS. All four go to Roman
+# in seed order with no preference expressed, and no metric chooses between them:
+# on beat 14 the flow metric scored highest on the round where the plant falls
+# over (131e433). The pick is R4's.
+#
+# D15: these are takes/ candidates, which licence_gate explicitly does not count
+# against the debt ratchet ("a takes/ candidate, so it is not counted against the
+# debt ratchet"). They add 0 to the 33-against-25 animagine pile today. If Roman
+# picks one and it is promoted into stills/ and assembled, that promotion adds
+# lines — the direction of travel is up, and it is his call whether to spend it.
+
+id: ep1-b05-sapling-reveal-0811
+task: ep1-b05-sapling-reveal-0811
+node: 001-capability-inventory
+beat: 5
+runner: box
+needs_gpu: true
+priority: 15
+max_attempts: 1
+owner: sapling-reveal lane (founder direction 2026-08-11, beat 05 insert)
+
+approval: >-
+  genomes/sapling/nodes/001-capability-inventory/leaves/001-t0-d.yaml:17 —
+  `approved_by: founder       # 2026-07-27, read and approved: "episode 1 looks
+  good, you can do it"`. leaves/ holds 001-t0-{a,b,c,d}.yaml and nothing else
+  matching *-t0-*.yaml; sorted()[-1] is 001-t0-d.yaml, which is the approved
+  leaf. The 001-t0-e draft is in leaves/drafts/, where the gate's non-recursive
+  glob cannot see it — it sorted after 001-t0-d and its `approved_by: none`
+  refused all media for node 001 during the two minutes it sat one level up.
+
+source_still: >-
+  genomes/sapling/nodes/001-capability-inventory/takes/stills/12-undefined-r2-s1.png
+  (seed 20261731) — the founder's 2026-08-08 pick, promoted to
+  stills/12-undefined.png. Recipe source only; its PICTURE is not reused.
+
+consumer: >-
+  Roman's standing direction of 2026-08-11 to show the sapling earlier, which is
+  currently unanswered: the reveal is out of the cut (dc77bc8) and episode 1
+  again shows no exterior sapling until beat 11/12 at 1:03. These four
+  candidates are what he chooses the beat-05 insert from. They go to him
+  unranked; nothing is cut in until he names one.
+
+success: >-
+  Four 832x1216 PNGs with §7.2 sidecars in C:\banyan-farm\b05-reveal-0811\out,
+  named 05-sapling-reveal-reveal-r1-s{0..3}.png, published to
+  C:\banyan-farm\courier-box\farm-out\ep1-b05-sapling-reveal-0811. Answered by
+  LOOKING, on three things and nothing else: (1) is it legibly a small sapling
+  standing upright — the reveal fails if the plant is bent, drooping or ambiguous;
+  (2) could it be mistaken for beat 12's frame — different posture, different
+  camera height, different light, or it is the repeat he rejected; (3) does the
+  morning light sit beside beat 06's sky at 0:24. Style, palette and linework
+  holding from the rest of the episode is assumed, not scored. No pick is made.
+
+why: >-
+  One variable against the founder-picked beat 12 still: the prompt. Same model,
+  same 832x1216, same 40 steps, same cfg 7.5, same unmodified sd_prompt path,
+  and beat 12's own sent positive and negative are rebuilt and asserted
+  byte-for-byte in the same run. Seeds are fresh on this beat's own series
+  because a new picture has no prior draw to hold noise against.
+
+est_minutes: 6   # ~40s/frame on this recipe (beat 12 sidecar: 39s), plus one model load
+
+needs: [cuda, vram12, sdxl-venv]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  - name: reveal
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - C:\banyan-farm\b05-reveal-0811\render_b05reveal.py
+      - --root
+      - C:\banyan-farm\banyan-city
+      - --task
+      - ep1-b05-sapling-reveal-0811
+      - --queue-entry
+      - ep1-b05-sapling-reveal-0811
+      - --out
+      - C:\banyan-farm\b05-reveal-0811\out
+
+  # allow_fail on purpose: a copy that falls over must never retire four
+  # rendered frames. The frames are the deliverable.
+  - name: publish
+    allow_fail: true
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - -c
+      - |
+        import glob, hashlib, os, shutil
+        dst = "C:/banyan-farm/courier-box/farm-out/ep1-b05-sapling-reveal-0811"
+        os.makedirs(dst, exist_ok=True)
+        src = sorted(glob.glob("C:/banyan-farm/b05-reveal-0811/out/*"))
+        lines = []
+        for f in src:
+            shutil.copy2(f, dst)
+            c = os.path.join(dst, os.path.basename(f))
+            with open(c, "rb") as fh:
+                h = hashlib.sha256(fh.read()).hexdigest()
+            lines.append(h + "  " + os.path.basename(f))
+        with open(os.path.join(dst, "ep1-b05-sapling-reveal-0811.sha256"), "w") as fh:
+            fh.write("\n".join(lines) + "\n")
+        print("published", len(src), "file(s) + manifest ->", dst)
+        # 4 stills + 4 sidecars.
+        raise SystemExit(0 if len(src) == 8 else 1)
+
+artifacts:
+  - C:\banyan-farm\b05-reveal-0811\out\05-sapling-reveal-reveal-r1-s0.png
+  - C:\banyan-farm\b05-reveal-0811\out\05-sapling-reveal-reveal-r1-s1.png
+  - C:\banyan-farm\b05-reveal-0811\out\05-sapling-reveal-reveal-r1-s2.png
+  - C:\banyan-farm\b05-reveal-0811\out\05-sapling-reveal-reveal-r1-s3.png
