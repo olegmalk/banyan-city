@@ -1,0 +1,26 @@
+# Prediction for ep2-b07-idfix-r2-0812, written BEFORE enqueue, terse.
+# Not in taste/steward-model.ledger.yaml: `git status` showed the ledger DIRTY
+# (` M`) — a sibling lane is mid-write, and appending would race its edit.
+
+- id: ep2-b07-idfix-r2-0812
+  kind: prediction
+  written: 2026-08-12, the fixer lane, before enqueue. Box dry 75/77 positive, anchor intact, negative 74 -> sent 74.
+  answers: >-
+    A partner the recipe was itself banning, an arm pointing down the lens in 4/4,
+    and an off-white tunic on a guard whose ratified costume is plain brown.
+  predicates:
+  - a second figure's shoulder or arm at the frame edge >=2/4 (this is the honest number — retiring the ban REMOVES the impossibility, it does not guarantee the model draws the partner; anything above 0/4 falsifies the ban as the sole cause)
+  - the pointing arm goes AWAY off-frame, not at the camera, >=3/4
+  - a pointing finger rather than a closed fist >=3/4
+  - the tunic reads brown, not white or grey, >=3/4
+  - no crowd 4/4 -- `no crowd` was kept when `no people in background` retired, and this is the test that keeping it was enough
+  - open sunny field 4/4, no armor 4/4, bald 4/4 (must not regress; none of these were touched)
+  falsifiable_by: >-
+    A partner still absent in 4/4 says the ban was not what was suppressing him and
+    the clause itself is too weak — a real result, and cheaper to learn than to
+    assume. A crowd appearing says `no people in background` was load-bearing after
+    all and the contradiction should have been resolved in the positive instead.
+  not_under_test: >-
+    The guard's hard muscular build, deliberately, for the third beat running.
+  consumer: morning page, identity-frozen wave.
+  outcome: null

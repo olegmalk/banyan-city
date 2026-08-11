@@ -1277,6 +1277,46 @@ beats:
       knight, no dark, no night, no dusk, no sunset, no dim lighting, no
       moody lighting, no low key, no shadows dominant. No photorealism, no 3D
       render look. 9:16 vertical, no text.
+    # -- `authored_b07_idfix_r2` -- 2026-08-12, the fixer lane. THE FIRST FAULT
+    # HERE IS A RECIPE BUG, NOT A MODEL FAILURE.
+    #
+    # THE SETTING IS FINE AND IS EVIDENCE. Open sunny field 4/4, bright 4/4, no
+    # armor 4/4. Beat 07 NAMES its setting ("morning field") and beat 07 KEEPS its
+    # setting in every frame -- which is the beat-06 diagnosis confirmed from the
+    # other direction on the same night. Nothing about the setting is touched.
+    #
+    # 1. THE RECIPE CONTRADICTS ITSELF. The positive asks for "his partner's
+    #    shoulder just visible at frame edge" and the negative sends `people in
+    #    background`. The ban negates the thing the prompt asserts, so the partner
+    #    is absent in 4/4 and could never have been anything else. This is the
+    #    exact wording discipline the beat-02 r2 got right -- name SKIN, never
+    #    `stitches`, so the patchwork cloak survives -- violated in the other
+    #    direction. `no people in background` RETIRES; `no crowd` STAYS, so the
+    #    drift the ban was actually for keeps a guard on it.
+    # 2. HE POINTS AT THE CAMERA, NOT OFF-FRAME, 4/4 -- s2 with a closed fist
+    #    rather than a finger. The beat needs him pointing AWAY at the goblin
+    #    off-screen; pointing down the lens is a different shot. One fault, so one
+    #    channel gets both halves: `pointing away off-frame to his left` in the
+    #    positive and `no pointing at viewer` in the negative.
+    # 3. THE PLAIN BROWN TUNIC IS NOT BROWN -- off-white in s0 and s1, washed tan
+    #    in s2 and s3. `no white shirt` cannot negate the positive, because the
+    #    positive asserts BROWN. Paid for by the retired contradiction.
+    #
+    # NOT FIXED HERE, ON PURPOSE, FOR THE THIRD BEAT RUNNING: the guard is a hard
+    # muscular adult man rather than the "silly harmless bureaucrat" he ratified.
+    # Beats 05, 06 and 07 all show it and beat 05 SENDS the bureaucrat words and
+    # still misses, so this is now a wave-level note for the founder rather than
+    # something a single round should quietly chase.
+    authored_b07_idfix_r2: >-
+      A round bald guard man in a plain brown tunic thrusts one arm out,
+      pointing away off-frame to his left with the confidence of a man who has
+      solved the problem, his partner's shoulder just visible at frame edge.
+      Static camera, morning field, bright morning light, cinematic lighting,
+      detailed, newest, masterpiece, best quality, very aesthetic No girl, no
+      child, no crowd, no pointing at viewer, no white shirt, no armor, no
+      helmet, no knight, no dark, no night, no dusk, no sunset, no dim
+      lighting, no moody lighting, no low key, no shadows dominant. No
+      photorealism, no 3D render look. 9:16 vertical, no text.
     authored_b07_refresh: >-
       A round bare-headed guard man in dull dented mismatched armor thrusts
       one arm out, pointing off-frame with the confidence of a man who has
