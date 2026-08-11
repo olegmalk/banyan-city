@@ -1,0 +1,160 @@
+# ep1 beat 08 "sev-1" — VO-LENGTH CLIP. ONE FIELD CHANGED: --frames 65 -> 313.
+#
+# THE ORDER THIS ANSWERS. Roman, 2026-08-10, verbatim: "lets do a looping fix
+# for all them, i'd rather not have any looping, it looks bad." Seven ep1 beats
+# currently repeat their picture because render_t3.fit_duration() loops a short
+# clip to cover a longer voice line. The fix per beat is footage as long as its
+# VO. This is that fix for ONE beat — the worst one still available.
+#
+# WHY BEAT 08 AND NOT ANOTHER. Measured over review/provisional-v35/clips,
+# VO length (manifest total_s) over clip length (ffprobe):
+#     beat 08   12.508s VO / 2.708s clip = 4.62x   <- this job
+#     beat 10   10.124s VO / 2.708s clip = 3.74x   (runner-up)
+#     beat 13    8.356s / 2.542s = 3.29x
+#     beat 01    7.323s / 2.542s = 2.88x
+#     beat 11    4.970s / 2.542s = 1.96x
+#     beat 02    4.451s / 2.542s = 1.75x
+#     beat 03    3.130s / 2.708s = 1.16x
+# Beats 04 (5.79x) and 07 (2.30x) are already in the queue as 385f jobs and are
+# excluded. Beats 05/09/12/15 are excluded because Roman ruled they stay held
+# stills. Beats 06 and 14 do not loop at all (VO/clip 0.92 and 0.97).
+#
+# THE FRAME COUNT, AND WHY IT IS 313 AND NOT 305. fps is 24, read from the
+# proven b08 spec's --fps, not assumed. The naive "cover the VO" number is
+# 12.508 * 24 = 300.2 -> next 8n+1 = 305 (12.708s). That still loops, because
+# fit_duration (render_t3.py:287) sizes the slot as
+#     max(min(cdur, vdur + 2.0), vdur + 0.4)
+# so with cdur 12.708 the slot is 12.908 and five frames of the clip repeat.
+# The no-loop condition is cdur >= vdur + 0.4 = 12.908s -> 309.8 frames ->
+# smallest 8n+1 at or above that is 8*39+1 = 313 (13.042s). At 313 the slot is
+# min(13.042, 14.508) = 13.042 = cdur exactly: the clip plays once, whole, and
+# nothing repeats. 305 would have shipped the defect this job exists to remove.
+#
+# HOST RAM. 313 is BELOW the 385 that is already proven on this card (beat 04,
+# 2026-08-10: host_peak_phys 59.8/68.1GB, commit 89.2/128.2GB, peak_torch
+# 17.8/25.7GB), and this job is behind three 385f jobs in a sequential queue,
+# so it never runs beside them. The renderer below hard-codes
+# enable_sequential_cpu_offload (C:\banyan-farm\ltx_i2v.py:388) — the same
+# streaming strategy the 385f runs use — and validates 8n+1 at :292.
+#
+# THE SPEC THIS COPIES, AND THE ONE FIELD THAT DIFFERS. Source is
+# ep1-b08-v34-plate-ab.yaml, task ep1-b08-v34-plate-ab-0810, which RAN and
+# whose output 08-ltx-r2-plate-s20260739.mp4 is the clip sitting in the v35 cut
+# right now as 08-sev-1.mp4 (see that file's .meta.yaml). Held identical:
+#   plate       C:\banyan-farm\v34-plates-0810\08-704x1280.png  (on disk, 07:18)
+#   embeds      C:\banyan-farm\v34-plates-0810\ltx-embeds-b08plate.pt (07:38)
+#   prompt/neg  C:\banyan-farm\b08plate-prompt.txt / -negative.txt (07:36)
+#   seed 20260739, size 704x1280, fps 24, steps 8, guidance 1.0,
+#   --distilled-sigmas, --two-stage, renderer C:\banyan-farm\ltx_i2v.py
+#     (sha256 d49f8ecb.., the series copy — matches neither repo HEAD nor the
+#      working tree, recorded here rather than quietly swapped, exactly as the
+#      source spec recorded it, because swapping the binary would change the
+#      recipe on the one render meant to isolate a frame-count change)
+# Changed: --frames 65 -> 313, and the output name, because a longer clip is a
+# different artifact and must not overwrite the one the v35 cut is using.
+#
+# NO PLATE STEP AND NO ENCODE STEP, on purpose. Both artifacts already exist on
+# the box from the source run and are byte-unchanged; text embeddings do not
+# depend on frame count, so re-encoding would reload 24.4GB of Gemma to write an
+# identical tensor. Same reasoning as ep1-b07-385f-control-0811. Nothing is
+# re-shipped through scp either — in particular the negative file, which carries
+# the "静态, 静止" bytes and must not be round-tripped.
+#
+# WHAT THIS DOES NOT DECIDE. Whether the clip ships is R4's. This beat's motion
+# is the plate-corrected r2, which the record is explicit is a GEOMETRY fix and
+# not a taste verdict — it inherits r2's motion defects. This job does not fix
+# those and does not claim to; it removes the loop, which is the defect Roman
+# named. Nothing scales off this result: no other beat is re-rendered from it,
+# and the flow metric is not run — it is disqualified on this series (131e433:
+# it scored highest on the beat where the plant fell over). Judged by eye.
+
+id: ep1-b08-313f-vo-length-0811
+task: ep1-b08-313f-vo-length-0811
+node: 001-capability-inventory   # founder-approved 2026-07-27 — leaf
+                                 # 001-t0-d.yaml line 17, `approved_by: founder`
+beat: 8
+runner: box
+needs_gpu: true
+priority: 18
+max_attempts: 1
+sample: true
+owner: top-up lane, 2026-08-11
+
+consumer: >-
+  the episode-1 v35 cut, beat 08. That beat's picture currently repeats itself
+  roughly four and a half times under a 12.5-second line, which is the single
+  worst instance of the defect Roman named in his own words. If this comes back
+  intact, it replaces 08-sev-1.mp4 in the cut and beat 08 stops looping; if the
+  picture falls apart past ~65 frames, that is the fact the remaining looping
+  beats (10, 13, 01, 11, 02, 03) need before any of them is queued long.
+
+success: >-
+  A 704x1280 mp4 at
+  C:\banyan-farm\v34-motion-0810\08-ltx-r2-plate-313f-s20260739.mp4 with 313
+  decoded frames (13.042s at 24fps), in which the plant stays upright and rooted
+  for the whole run, the composition does not drift, and no object or figure
+  appears that is not in the plate. Read by eye on a frame strip against the
+  65-frame 08-ltx-r2-plate-s20260739.mp4 beside it. No metric is run. A clip
+  that survives 65 frames and degrades at 200 is a REPORTABLE result, not a
+  wasted run — it is the answer for the other six beats.
+
+why: >-
+  Beat 08 is the worst looping beat left after 04 and 07 were queued, and the
+  loop is a defect the founder named directly.
+
+est_minutes: 14   # source run measured encode 89s + render 176s at 65 frames;
+                  # this skips the encode and multiplies frames by 4.8, and
+                  # attention is superlinear (beat 04: 6m47s at 385f). Model
+                  # load is ~2min on top. A 12-minute run is not a stall.
+needs: [cuda, vram20, video-venv]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  - name: render
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\ltx_i2v.py
+      - --stage
+      - render
+      - --embeds
+      - C:\banyan-farm\v34-plates-0810\ltx-embeds-b08plate.pt
+      - --prompt-file
+      - C:\banyan-farm\b08plate-prompt.txt
+      - --negative-file
+      - C:\banyan-farm\b08plate-negative.txt
+      - --init
+      - C:\banyan-farm\v34-plates-0810\08-704x1280.png
+      - --out
+      - C:\banyan-farm\v34-motion-0810\08-ltx-r2-plate-313f-s20260739.mp4
+      - --size
+      - 704x1280
+      - --frames
+      - "313"
+      - --fps
+      - "24"
+      - --steps
+      - "8"
+      - --guidance
+      - "1.0"
+      - --distilled-sigmas
+      - --two-stage
+      - --seed
+      - "20260739"
+      - --beat
+      - "8"
+      - --task
+      - ep1-b08-313f-vo-length-0811
+      - --worker
+      - rtx5090
+
+artifacts:
+  - C:\banyan-farm\v34-motion-0810\08-ltx-r2-plate-313f-s20260739.mp4
