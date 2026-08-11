@@ -1,0 +1,229 @@
+# Beat 02, 121 frames, FRAMING HELD. Roman 2026-08-11: "rerender beat 02 without
+# doing a crazy perspective change."
+#
+# WHAT ACTUALLY MOVED — measured on the two clips, not inferred. The brief this
+# job answers assumed the rejected 121f clip and his 2.542s pick were the same
+# plate and seed at different lengths, so that length alone must have moved the
+# camera. That is false, and the correction matters because it changes the fix:
+#
+#   his pick   review/provisional-v35/clips/02-three-oh-seven.mp4
+#              Wan-AI/Wan2.2-TI2V-5B, seed 20260807, guidance 5.0, 14 steps, 61f
+#   rejected   review/tonight/02-three-oh-seven-LTX-121f.mp4
+#              LTX-2.3-Distilled, seed 20260902, guidance 1.0, 8@352x640+3@704x1280, 121f
+#
+# Different engine, different seed, different guidance, different prompt. Length
+# is the one thing that did NOT cause the perspective change, and this is not the
+# beat-07 unprompted-pull-back effect either.
+#
+# THE DIVERGENCE IS FRAMES 1-4, AND IT IS A COMPOSITION BREAK, NOT A DRIFT.
+# Frame 0 of the rejected clip is the plate: the engineer close, front-right,
+# face lit pink by the monitor, glasses catching the glow. By frame 2 the camera
+# is already behind him; by frame 4 it has settled into a wide over-the-shoulder
+# back-of-head silhouette with the whole monitor and a cool green window visible.
+# Frames 4-120 then hold that new composition rock-steady. So the camera lock
+# WORKED — it locked onto the wrong shot. The model spent four frames travelling
+# to a composition the prompt told it to make, then held it.
+#
+# WHY IT TRAVELLED THERE: the prompt's subject tail described a different shot
+# than the plate. It read "one seated figure seen from BEHIND as a dark
+# silhouette against the screen" — which is beat 02's shots.md direction
+# (shots.md:31-37, "over the shoulder"), not the picture being conditioned on.
+# The plate, genomes/.../stills/02-three-oh-seven.png, is the close front-right
+# view with his face visible. Asked for a from-behind wide while handed a
+# close-up, LTX obeyed the words and moved the camera. Nothing else needed to go
+# wrong.
+#
+# AND THE LOCK CLAUSE ITSELF CARRIED NEGATIONS, on the only channel that is read.
+# At guidance 1.0 the negative is never sampled (ltx_i2v.py:1001-1008; verified at
+# source in the box's diffusers 0.39.0 in ep1-b13-217f-vo-length-run.yaml:61-70:
+# do_classifier_free_guidance = (guidance_scale > 1.0) or (audio_guidance_scale >
+# 1.0), audio defaults to the video scale, we send 1.0). So the positive is the
+# whole prompt, and "the camera NEVER MOVES and the frame NEVER CHANGES" delivers
+# `camera moves` and `frame changes` — the confirmed defect in
+# DIAG-negation-in-positive.md (e4fbb65), which counts 26 of 38 LTX positives
+# carrying one. Both faults are fixed below; the subject tail is the bigger one.
+#
+# THE PROMPT DIFF, VERBATIM.
+#   REMOVED (negation, and a room-level lock that never named the shot):
+#     "a completely static locked-off tripod shot of a fixed dark room, the
+#      camera never moves and the frame never changes"
+#   REMOVED (the composition break — described the shot the plate is NOT):
+#     "one seated figure seen from behind as a dark silhouette against the
+#      screen, glasses, messy hair"
+#   ADDED: the affirmative lock in the wording that worked on beat 14
+#     (ep1-b14-v34-motion-r3.yaml:132 — "the camera is locked on a tripod and
+#     stays perfectly still, ... stays centred in frame at the same size
+#     throughout, ... the composition is identical in every frame"), retargeted
+#     to this beat's subject, plus a subject tail that describes the PLATE.
+#   NOT COPIED: beat 14's figure-ban tail ("no human, no person, no man..."). This
+#     is the one beat in node 001 with a person in it on purpose, and those are
+#     negations in the positive besides.
+#
+# THE FRAME COUNT IS ARITHMETIC. No loop needs the clip to cover its slot:
+# render_t3.fit_duration (render_t3.py:312) returns
+# round(max(min(cdur, vdur+2.0), vdur+0.4), 2). Beat 02's VO is 4.451s
+# (review/provisional-v35/clips/02-vo.json total_s), so the floor is 4.851s and
+# the ceiling 6.451s. LTX wants 8n+1:
+#     113 -> 4.708333s   BELOW the 4.851 floor. Rejected.
+#     121 -> 5.041667s   clears the floor; round(5.041667, 2) = 5.04 <= 5.041667,
+#                        so `dur` rounds DOWN. Nothing wraps. CHOSEN.
+#     129 -> 5.375s      clears the floor too, and is REJECTED on the rounding
+#                        trap: round(5.375, 2) = 5.38 > 5.375. render_beat feeds
+#                        `-stream_loop -1` into `trim=duration=5.38`
+#                        (render_t3.py:627-631) against a 5.375s source, so 0.005s
+#                        — one frame — of frame 0 wraps onto the end. That is the
+#                        1-frame flash video_duration() documents at :264-271.
+#   121 is also far under the 385f host-RAM ceiling measured on this box.
+#
+# ONE VARIABLE, AND WHICH SPEC WAS COPIED. Everything below is
+# ep1-b02-121f-vo-length-run.yaml verbatim — same plate step, same cover-centre
+# crop, same 121 frames, same seed 20260902, same steps, same guidance 1.0, same
+# two-stage distilled schedule — except the positive prompt and the output name.
+# The prompt is the single variable against the clip he rejected.
+#
+# ON "SAME SEED AS HIS PICK", which this job cannot honour and should not fake:
+# his pick's seed is 20260807 on Wan2.2-TI2V-5B. A seed does not carry across
+# models — 20260807 on LTX is an unrelated draw — and his pick's guidance 5.0 is
+# incompatible with the distilled 1.0 path. Holding the rejected run's seed is
+# what makes this a one-variable test of the prompt fix; matching the Wan seed
+# would change the engine, the schedule and the length all at once and prove
+# nothing. Flagged rather than silently resolved.
+#
+# NO METRIC PICKS ANYTHING. The flow metric is disqualified on this series
+# (131e433 — it scored highest on the beat where the plant fell over). By eye.
+
+id: ep1-b02-121f-framing-hold-0811
+task: ep1-b02-121f-framing-hold-0811
+node: 001-capability-inventory
+beat: 2
+runner: box
+needs_gpu: true
+priority: 24
+max_attempts: 1
+sample: true           # one clip, one recipe change, before anything scales
+owner: beat02-framing lane, 2026-08-11
+
+consumer: >-
+  Roman's beat-02 verdict directly, and through it the episode-1 cut he is being
+  asked to pass (`v6-verdict` in pipeline/pending-founder.yaml). His 2.542s pick
+  plays 1.91 times under its own 4.451s line and he has ruled out looping; the
+  121f clip that would have fixed that broke the framing in frames 1-4. This is
+  the version that runs the full line without moving the camera off his picture.
+
+success: >-
+  A 704x1280 mp4 at C:\banyan-farm\v34-r2\02-three-oh-seven-LTX-121f-hold.mp4
+  with 121 decoded frames (5.042s), in which the composition of frame 120 is the
+  composition of frame 0: the engineer stays the same size at the same height in
+  frame, seen from the same close front-right angle with his face visible, the
+  monitor stays the same size in the same place behind him, and the desk,
+  keyboard and mug hold their positions. Specifically, the frames 1-4 pull-back
+  to a from-behind wide does NOT recur — check those four frames first, they are
+  where the rejected clip broke. Whether the ambient motion is interesting enough
+  is his call, not the pass condition: a clip that reads static is a real result
+  and gets reported as one. Judged by eye beside both the 2.542s pick and the
+  rejected 121f. No metric.
+
+why: >-
+  The camera lock in the rejected clip locked onto the wrong shot, because the
+  prompt described a from-behind wide while the plate is a close front-right.
+
+est_minutes: 6   # identical recipe to the 121f run, which is measured, not guessed
+needs: [cuda, vram20, video-venv]
+
+payload:
+  # Affirmative throughout. No "never", no "no <noun>", no figure ban. The lock
+  # names THIS shot — the angle, his size in frame, his head height — instead of
+  # locking a "fixed dark room" that the subject tail then contradicted. The
+  # "Subject already in frame:" tail now describes the plate as it actually is.
+  C:\banyan-farm\v34-r2\b02-hold-prompt.txt: |-
+    2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. the seated engineer holds his pose at the desk, his shoulders steady, his head kept at the same angle toward the monitor; only his fingers move lightly on the mechanical keyboard. small ambient motion only, the camera is locked on a tripod and stays perfectly still, the engineer stays at the same size in the same place in frame with his head at the same height throughout, the shot stays a close view from the front and right with his face visible, the monitor keeps the same size and the same position behind his shoulder, the desk, the keyboard and the mug keep their places from first frame to last, the composition is identical in every frame. within that fixed frame the monitor glow pulses very faintly across his face and glasses and across the desk, a thin wisp of steam curls up from the mug, dust motes drift slowly through the screen light, living scene. Subject already in frame: one seated young man in a black hoodie at close range from the front and right, his face lit pink by the monitor, glasses, messy dark hair, a large glowing monitor behind his shoulder, a mechanical keyboard, a mug, a dark apartment at three in the morning.
+
+  # Human terms deliberately absent — this beat has a person in it by design.
+  # Unchanged from the run spec. At guidance 1.0 none of it is read; it is the
+  # provenance record of what was asked (§7.2).
+  C:\banyan-farm\v34-r2\b02-hold-negative.txt: |-
+    second person, crowd, extra hand, extra arm, extra face, animal, bird, insect, new object appearing, photorealism, 3D render look, text, 静态, 静止, frozen frame, still image, no motion, photorealistic, photograph, live action, film still, 3D render, CGI, octane, scene change, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+
+  C:\banyan-farm\v34-r2\b02-hold-jobs-encode.json: |-
+    [{"beat": 2,
+      "embeds": "C:\\banyan-farm\\v34-r2\\b02-hold-embeds.pt",
+      "prompt_file": "C:\\banyan-farm\\v34-r2\\b02-hold-prompt.txt",
+      "negative_file": "C:\\banyan-farm\\v34-r2\\b02-hold-negative.txt"}]
+
+  C:\banyan-farm\v34-r2\b02-hold-jobs-render-121.json: |-
+    [{"beat": 2,
+      "seed": 20260902,
+      "embeds": "C:\\banyan-farm\\v34-r2\\b02-hold-embeds.pt",
+      "init": "C:\\banyan-farm\\v34-r2\\02-704x1280.png",
+      "out": "C:\\banyan-farm\\v34-r2\\02-three-oh-seven-LTX-121f-hold.mp4"}]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  # Same plate step as the run spec, and it must stay: prepare_plate does the
+  # cover-centre crop 832x1216 -> 704x1280 (plate_prep.py:55 CROP_POLICY =
+  # "cover-centre"). The v34-motion-0810 series went in RAW and is stretched
+  # 24.4% vertically; this job does not repeat that.
+  - name: plate
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - -c
+      - |
+        import sys; sys.path.insert(0, r"C:\banyan-farm\banyan-city\pipeline")
+        from plate_prep import prepare_plate
+        out, rec = prepare_plate(
+            r"C:\banyan-farm\banyan-city\genomes\sapling\nodes\001-capability-inventory\stills\02-three-oh-seven.png",
+            "704x1280", r"C:\banyan-farm\v34-r2", "02")
+        print("plate", out); print(rec["plate_wxh"], rec["crop_policy"])
+        print("source_sha256", rec["sha256"])
+  - name: encode
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+      - --stage
+      - encode
+      - --jobs
+      - C:\banyan-farm\v34-r2\b02-hold-jobs-encode.json
+  - name: render
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+      - --stage
+      - render
+      - --jobs
+      - C:\banyan-farm\v34-r2\b02-hold-jobs-render-121.json
+      - --size
+      - 704x1280
+      - --frames
+      - "121"
+      - --fps
+      - "24"
+      - --guidance
+      - "1.0"
+      - --distilled-sigmas
+      - --two-stage
+      - --image-crf
+      - "33"
+      - --offload
+      - sequential
+      - --mode
+      - production
+      - --task
+      - ep1-b02-121f-framing-hold-0811
+      - --worker
+      - rtx5090
+      - --bench-jsonl
+      - C:\banyan-farm\v34-r2\bench-b02-121f-hold.jsonl
+      - --bench-label
+      - b02-121f-framing-hold
+
+artifacts:
+  - C:\banyan-farm\v34-r2\02-three-oh-seven-LTX-121f-hold.mp4
