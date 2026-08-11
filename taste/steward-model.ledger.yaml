@@ -9967,3 +9967,337 @@
   predicates: [bald 4/4, cloak >=3/4, one goblin 4/4, fig present >=2/4, no speech bubble 4/4]
   consumer: morning page, identity-frozen wave.
   outcome: null
+
+- id: ep2-b01-styleprobe-0812
+  kind: prediction
+  written: >-
+    2026-08-12 ~03:3x, before enqueue and before any frame exists. The dry step ran
+    green on the box first — 15 of 15 — so the positive here is measured rather than
+    assumed. It is r8's SENT positive plus the height predicate ` no taller than the
+    grass around it`, asserted to be the ONLY delta by importing R8_POS_SENT rather
+    than copying it; nothing dropped for budget; fig and leaf terms both present.
+  predicted_verdict: reject_all
+  basis: >-
+    The plate's style was never carried by words — `ep2-b01-r8-sample` measured the
+    init beating the positive palette at 0.35 AND 0.55, twice. This round starts
+    from s2 (t2i style) and the plate is nowhere in it, so the only channel that
+    could move style toward the plate family is the same text channel already
+    measured to lose. I therefore expect a clean sweep of "still not the plate look"
+    and no middle. Naming it before the render is the point: if a middle DOES appear
+    this record is a miss and the model learns that style is text-reachable from a
+    non-plate init, which is a bigger result than the frames.
+  predicates: [fig present at i25 2/2, composition still reads as s2 at i25 2/2,
+    style unmoved from s2 at i25 2/2, fig present at i40 >=1/2, style still reads
+    t2i not plate at i40 2/2, fig lost or degraded at i55 >=1/2, composition visibly
+    redrawn at i55 >=1/2, none of the six reads as plate-family style 6/6, any stem
+    inflation is confined to i55 (the height predicate biting, not a style finding)]
+  consumer: >-
+    Roman's morning pick on beat 01, three-way against
+    farm-out/ep2-b01-t2i-fig/01-cold-open-wave1-s2.png (this round's init, "really
+    good") and farm-out/ep2-b01-brightbase-figmatte/ (plate style, masked fig).
+  outcome: null
+
+# ============================================================================
+# IDENTITY-FROZEN WAVE, SCORED AGAINST THE PIXELS — 2026-08-12 ~03:2x-04:5x.
+# Sixteen observation records, one per `ep2-bNN-idfix-0812` prediction. Every
+# frame was opened and looked at (64 PNGs, 4 per round); the sheets on the
+# morning page are built from these same files. THESE ARE NOT VERDICTS. Each
+# prediction's `outcome:` stays null because the founder has not ruled — an
+# observation says only whether the predicate is true in the image, which is
+# the one thing a steward can check without him. Rankings and picks are R4's
+# and appear nowhere here or on the page.
+#
+# The wave's one-line finding: THE GOBLIN FREEZE HELD AND THE GUARD FREEZE DID
+# NOT. `bald` came back 4/4 in all ten goblin rounds and `cloak >=3/4` in all
+# ten; six rounds (02, 04, 14, 17, 19, 20) hit every predicate they carried.
+# The guards lost their armour exactly as intended — `no armor 4/4` in all six
+# guard rounds — but the tunic wording supplied no CHARACTER, and what filled
+# the vacuum was a grim adult man: beat 06 moved indoors for all four seeds,
+# beat 09 drew disembodied heads in three, beat 10 drew a topless bodybuilder.
+# That is his 2026-08-11 instruction — "should probably setup a character for
+# the guards, take your time doing that" — still unexecuted, now with evidence.
+# ============================================================================
+
+- id: ep2-b02-idfix-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b02-idfix-0812
+  predicates_observed:
+    bald 4/4: HIT — bald in all four.
+    cloak >=3/4: HIT — 4/4 wear it; s1 and s3 show the checkered patch panels plainly.
+    one goblin 4/4: HIT — exactly one creature in each.
+    cowering not grabbing >=2/4: HIT — 4/4, nobody touches a plant; hands are clasped at the chest in all four and s3 is crouched low in the grass.
+    bright field 4/4: HIT — daylight in all four.
+  observed: >-
+    Every predicate came back true and the beat still does not stage. No sapling
+    stem stands between him and the camera in any of the four, so "cowers behind
+    a tiny sapling" is scored on an absent plant — the same vacuous pass the
+    seventh scoring named on 2026-08-11. Three of four have him standing upright
+    at bust height; only s3 reads as hiding. Separately, the patchwork has
+    started climbing onto the skull: s0 carries a large beige graft over the
+    crown, s1 and s3 a stitched seam, which is a Frankenstein note nobody asked for.
+  outcome: null
+
+- id: ep2-b03-idfix-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b03-idfix-0812
+  predicates_observed:
+    bald 4/4: HIT — bald in all four.
+    cloak >=3/4: HIT — 4/4 patchwork cloaks.
+    one goblin 4/4: HIT — one creature each; the "2 goblins" fault he named on 08-11 is gone.
+    outdoor no-house >=3/4: HIT — 4/4 outdoors, no interior anywhere; s3 is woodland floor rather than open field.
+    sapling stem present >=2/4: MISS — 1/4, and it is the wrong kind of one.
+  observed: >-
+    All three faults he named on beat 03 — indoors, a completely white goblin,
+    two goblins — are absent. The plant is the miss: the only stem in the set is
+    the two-leaf sprig clenched in his fist in s0, which reads as picked rather
+    than hidden behind, and s3's greenery is background tufts. s1 and s2 have no
+    plant at all. One colour note against the white-goblin fault: s3's crown is
+    drawn tan-cream rather than green and its eyes are blank white with no pupils.
+  outcome: null
+
+- id: ep2-b04-idfix-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b04-idfix-0812
+  predicates_observed:
+    bald 4/4: HIT — bald in all four.
+    one goblin 4/4: HIT.
+    outdoor no-structures >=3/4: HIT — 4/4 in grass under sky; no window, wall or building.
+    face-filling close >=3/4: HIT — 4/4 are head-and-shoulders with the skull filling most of the frame.
+    cloak (conditional, shoulders visible): 3/4 — s1 wears a brown plaid collared jacket, not a cloak.
+  observed: >-
+    Every predicate held, and the window he objected to in the old round is gone.
+    What the predicates did not price is a colour break present in all four: the
+    skull is drawn two-tone, an ivory cap over a green face, so the bald head
+    reads as a pale cap rather than as his skin. Three of the four also give him
+    huge white sclera with pinprick pupils; that was meant as darting eyes and
+    lands closer to startled.
+  outcome: null
+
+- id: ep2-b05-idfix-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b05-idfix-0812
+  predicates_observed:
+    no armor 4/4: HIT — no armour, no helmets, no weapons anywhere.
+    tunics >=3/4: HIT — brown tunics on the human figures in all four.
+    two figures 4/4: MISS — two bodies in all four, but s3's second is a brown blob creature with round ear-buns, not a guard.
+    faces visible >=3/4: MISS — 3/4 only if s2's chibi dot-faces count; s3's second figure is turned fully away.
+    no snow 4/4: HIT — green summer field in all four; the snowy forest he named is gone.
+  observed: >-
+    The armour swap worked and the snow is gone, which were the two named faults.
+    The register did not survive: only s0 draws the round soft bureaucrats he
+    ratified. s1 makes them tall and heavily muscled, s2 collapses them into
+    giant-headed chibis, and s3 pairs one tunicked man seen from behind with a
+    brown plush blob. Four seeds, four different body plans.
+  outcome: null
+
+- id: ep2-b06-idfix-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b06-idfix-0812
+  predicates_observed:
+    no armor 4/4: HIT.
+    tunic >=3/4: MARGINAL — brown tunic-ish garments in s0, s2, s3, but the crop is so tight the costume barely reads; s1 shows a pale sleeve only.
+    one guard 4/4: HIT — one figure each.
+    clipboard lower third >=2/4: HIT — a board or sheet sits in the lower third of s0, s2 and s3.
+    bright 4/4: MISS — and the miss is bigger than brightness.
+  observed: >-
+    This is the round that broke. All four seeds are INDOORS — window frames in
+    s0 and s2, a wooden wall in s1, lit blinds in s3 — so the morning field is
+    gone from a beat that has no interior in it. The men are grim realistic
+    adults in hard dramatic close-up, closer to a One Punch Man register than to
+    a silly harmless bureaucrat, and s1 is dark enough to fail brightness on its
+    own. Nothing here is funny, which is the joke's whole job on this beat.
+  outcome: null
+
+- id: ep2-b07-idfix-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b07-idfix-0812
+  predicates_observed:
+    no armor 4/4: HIT.
+    tunic >=3/4: HIT — 4/4 loose pale or brown tunic-shirts.
+    no background crowd 4/4: HIT — empty field behind all four; the crowd ban held.
+    pointing pose >=3/4: MISS — only s1 points a finger; s0 is an ambiguous raised hand, s2 a closed fist thrust at camera, s3 an open grabbing palm.
+    bright 4/4: HIT — bright daylight field in all four.
+  observed: >-
+    Outdoors and crowd-free, unlike beat 06, but the same character problem: four
+    lean, angry adult men with hard faces, one snarling with bared teeth, one
+    grinning menacingly, one reaching for the camera. They read as a threat
+    rather than as a bureaucrat doing paperwork, and no clipboard appears in any
+    frame.
+  outcome: null
+
+- id: ep2-b08-idfix-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b08-idfix-0812
+  predicates_observed:
+    no armor 4/4: HIT.
+    tunic guard >=3/4: MISS — the guard wears a cloak or dark poncho in all four; the tunic wording did not reach him.
+    bald goblin 4/4: MISS — 3/4; s1 renders the goblin as a large green sphere with two dot eyes and a mouth.
+    cloak >=3/4: HIT — the goblin's brown cloak is there in s0, s2 and s3.
+    two figures 4/4: HIT — two bodies in each, plus the sphere in s1.
+    pointing-at-belly reads >=2/4: MISS — only s3 has a pointing finger and it lands on the face; s0 is a reach, s2 a raised fist.
+  observed: >-
+    Both identities were sent on this beat and they crossed: the goblin kept his
+    cloak and the guard took one too, so the frame shows two cloaked figures
+    instead of a tunicked official and a cloaked scavenger. Size reads as an
+    adult and a small child throughout, and the two of them look grim rather
+    than comic in s0 and s2. s1 is a hard failure.
+  outcome: null
+
+- id: ep2-b09-idfix-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b09-idfix-0812
+  predicates_observed:
+    no armor 4/4: HIT.
+    tunic >=3/4: MISS — 2/4; s0 a brown collar, s3 a brown tunic with a green scarf, s2 a white collar shirt, s1 no bodies at all.
+    one guard close-up 4/4: MISS — 1/4; only s0 holds a single whole figure.
+    thinking face >=2/4: MISS — 0/4; s0 gasps, s1's heads are slack, s2 scowls, s3 chews a leaf.
+  observed: >-
+    The worst round of the wave on anatomy. s1 is three disembodied bald heads
+    lying in the grass with no bodies under them, s3 puts a fourth severed-looking
+    head in the foreground below a man biting a leaf, and s2 pairs a face with a
+    featureless brown sphere the size of a head. Three of four frames are
+    unusable for reasons that have nothing to do with costume.
+  outcome: null
+
+- id: ep2-b10-idfix-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b10-idfix-0812
+  predicates_observed:
+    no armor 4/4: HIT — though s0 wears nothing at all above the waist.
+    tunics >=3/4: HIT — 3/4; s1 a cream shirt, s2 a brown tee, s3 a white robe and a brown tunic. s0 is bare-chested.
+    two figures 4/4: MISS — s0 has one figure, s1's second is a floating disembodied head, s2's second is a drawing on the board.
+    blank board dominant >=2/4: MISS — 1/4; s0's board is blank and large, s2's board is dominant but has a man drawn on it, s1 and s3 hold small dark boards.
+  observed: >-
+    s0 is a hugely muscled topless bodybuilder holding a blank clipboard in a
+    sunlit field — the furthest any frame in this wave travels from a round soft
+    harmless bureaucrat. s2 is the interesting failure: the model drew the blank
+    board and then filled it with a portrait of another bald man in a tunic, so
+    the empty form the beat is about is not empty.
+  outcome: null
+
+- id: ep2-b11-idfix-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b11-idfix-0812
+  predicates_observed:
+    no armor 4/4: HIT.
+    tunics >=3/4: HIT — 4/4 brown tunics and long coats.
+    walking away wide >=3/4: MISS — 2/4 clean; s1 and s2 have the pair leaving, s0 shows one from behind and one facing camera, s3 has them standing face to face.
+    long shadows >=2/4: HIT — s1 and s2 cast clear long shadows, s0 a broad shadow band.
+  observed: >-
+    The best-looking round of the sixteen. The figures are small in a large
+    field, which is the one framing in this wave where the guards' faces and
+    body plans cannot break, and s2 in particular is a clean wide departure shot
+    with two long shadows. The armoured intruder and the modern clothes that
+    spoiled the 08-11 round are both gone.
+  outcome: null
+
+- id: ep2-b13-idfix-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b13-idfix-0812
+  predicates_observed:
+    bald 4/4: HIT.
+    cloak >=3/4: HIT — 4/4, and the quilted patch panels are the most legible in the wave.
+    one goblin 4/4: HIT.
+    seedling in shade reads >=2/4: MISS — 1/4; only s3 puts a two-leaf sprout beside him. s0, s1 and s2 have grass and scattered leaves but no plant that reads as the seedling.
+  observed: >-
+    Identity and mood both land — four seated goblins in genuine dappled shade,
+    with the best cloth in the wave. The beat's subject is what is missing. Two
+    smaller notes: s1's crown is drawn cream rather than green, and s3's
+    background is a flat grey plane that reads as a wall rather than a field.
+  outcome: null
+
+- id: ep2-b14-idfix-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b14-idfix-0812
+  predicates_observed:
+    bald 4/4: HIT.
+    cloak >=3/4: HIT — 4/4.
+    one goblin 4/4: HIT.
+    bright not dark 4/4: HIT — daylight green field behind all four.
+  observed: >-
+    A clean sweep: every predicate true in every frame, and the four seeds agree
+    with each other on who this creature is more closely than any other goblin
+    round in the wave. The unpriced note is the hands — s1 and s2 give him long
+    talon-like claws, one set metal-tipped, which reads more predatory than the
+    frightened defence the beat is playing.
+  outcome: null
+
+- id: ep2-b15-idfix-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b15-idfix-0812
+  predicates_observed:
+    bald 4/4: HIT.
+    cloak >=3/4: HIT — 4/4, stitches clearly drawn.
+    one goblin 4/4: HIT.
+    sapling beside him (not houseplant, not indoors) >=3/4: MISS — 0/4. Nothing indoors and no houseplant, but no rooted sapling either.
+  observed: >-
+    The sapling turned into weather. All four frames hang giant disembodied
+    leaves in the air around him, each roughly the size of his head, with no stem
+    or root anywhere — the plant became floating debris rather than a plant. s2
+    is shot from directly behind, so his face never appears.
+  outcome: null
+
+- id: ep2-b17-idfix-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b17-idfix-0812
+  predicates_observed:
+    bald 4/4: HIT.
+    cloak >=3/4: HIT — 4/4 patchwork.
+    one goblin 4/4: HIT.
+    no uprooting 4/4: HIT — nobody pulls a plant out of the ground in any frame.
+  observed: >-
+    A clean sweep on the predicates. What they did not cover is props: three of
+    four hand him a cut leafy sprig or a staff with leaves lashed to it, and s3
+    has him sweeping the grass with a broom while a green lollipop-shaped object
+    floats at frame right. The beat is a goodbye and he is carrying tools.
+  outcome: null
+
+- id: ep2-b19-idfix-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b19-idfix-0812
+  predicates_observed:
+    bald 4/4: HIT.
+    cloak >=3/4: HIT on the letter — a cloak in all four — but see below.
+    one goblin 4/4: HIT.
+    fig present >=2/4: HIT — 2/4; a small red-orange fruit on the sprig in s1 and a red berry behind his shoulder in s3.
+    no speech bubble 4/4: HIT — no text or bubble anywhere.
+  observed: >-
+    Every predicate passed and the costume still drifted: the cloak went RED in
+    three of four and the patchwork reads as patchwork in s1 alone, so the frozen
+    identity is present as a garment and thin as a description. The fruit that
+    counted is a small red berry, not a fig. s2 grows an entire miniature tree
+    out of the top of his skull — the plant-on-head fault the negative prompt was
+    written to ban — and s3's eyes are blank white with no pupils.
+  outcome: null
+
+- id: ep2-b20-idfix-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b20-idfix-0812
+  predicates_observed:
+    bald 4/4: HIT.
+    cloak >=3/4: HIT — 4/4.
+    one goblin 4/4: HIT.
+    no glowing eyes 4/4: HIT — plain brown or amber eyes throughout.
+    ripe fig >=2/4: HIT — 3/4; s0, s2 and s3 each cradle a plump purple-red fig in both hands.
+  observed: >-
+    The second clean sweep of the wave and the only round where the fig is drawn
+    as a fig — ripe, purple, correctly sized in his two hands, and read as the
+    subject of the shot. s1 is the odd seed out: hands clasped and empty, looking
+    up at nothing.
+  outcome: null
