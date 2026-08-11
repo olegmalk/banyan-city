@@ -8697,3 +8697,29 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+- id: ep2-b08-refresh-0811
+  kind: prediction
+  written: 2026-08-11 ~22:2x, before enqueue; no frame of this round existed or
+    had been fetched when these predicates were fixed. The render may start
+    within the minute of the enqueue that follows this write.
+  round: ep2-b08-refresh-0811, beat 08 INSIDE HIM, variant authored_b08_refresh,
+    4 stills, SDXL animagine-xl-3.1, node 002b-first-citizen.
+  what_changed: staging kept verbatim from the wave-1 authored draft (guard
+    points at goblin belly, deadpan two-shot); added only the ratified guard
+    register (founder ~20:27, "two silly round bureaucrats with visible faces",
+    applied to the one guard), the open-field setting stated early, and the
+    proven bans in the binding negative (helmet/knight/plate, house/interior
+    five-term, the eight-term dark ban).
+  predicates:
+    - two figures, one guard and one goblin, in 4/4 frames
+    - the guard bare-headed and round rather than helmeted dark-fantasy, in >=3/4
+    - outdoor open field, no house or interior, in >=3/4
+    - bright morning palette in 4/4
+    - the pointing-at-belly staging still reads in >=2/4
+  consumer: the founder's morning review page.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null

@@ -887,6 +887,22 @@ beats:
     tag: 2boys
     extra_neg: species
     gist: inside-him
+    # -- `authored_b08_refresh` -- 2026-08-11 ~22:2x, the lead. Wholesale-reject
+    # mandate ("change pretty much all of them"). Staging kept verbatim from
+    # `authored`; changes are only the ratified guard register ("two silly round
+    # bureaucrats with visible faces", founder ~20:27, here applied to the one
+    # guard), the field stated early, and the proven bans in the binding negative.
+    authored_b08_refresh: >-
+      Two round boys in an open grassy morning field, a round soft-bodied
+      bare-headed guard man in dull dented mismatched armor pieces pointing
+      flatly at the belly of a small goblin boy, {{GOBLIN}}, in a patchwork
+      cloak who looks down at himself. Deadpan two-shot, no movement but the
+      pointing arm, bright morning light, cinematic lighting, detailed, newest,
+      masterpiece, best quality, very aesthetic No girl, no child, no helmet,
+      no knight, no full plate, no dark fantasy, no house, no building, no
+      interior, no indoors, no architecture, no dark, no night, no dusk, no
+      sunset, no dim lighting, no moody lighting, no low key, no shadows
+      dominant. No photorealism, no 3D render look. 9:16 vertical, no text.
     authored: >-
       Two round boys, a guard man in mismatched armor pointing flatly at the
       belly of a small goblin boy, {{GOBLIN}}, in a patchwork cloak who looks
@@ -912,6 +928,63 @@ beats:
       visible. Deadpan medium two-shot, no movement but the pointing arm, cinematic
       lighting, detailed, newest, masterpiece, best quality, very aesthetic No
       girl, no child. No photorealism, no 3D render look. 9:16 vertical, no
+      text.
+    # ── `authored_b08_refresh` — 2026-08-11 ~22:0x. His episode sentence covers
+    # this beat with no words of its own: "i looked at all the beats and you have
+    # to change pretty much all of them, do some regeneration, and do some
+    # evaluating of your own. train the system." So the direction here is the
+    # wholesale rejection plus what the wave-1 frames actually show, and what they
+    # show is written down before the fix, not after:
+    # `review/ep2-picks/wave-0811/b08-s0..s3.jpg` — FOUR OF FOUR are night
+    # interiors, stone arches and pillars behind the pair; the guard is drawn as a
+    # BLACK-HOODED CLOAKED FIGURE looming over the goblin in s2 and s3, which is
+    # the same read the round-3 set was stopped for ("a hooded figure with a blade
+    # standing over him at night — it plays as a murder"); the goblin is a heavy
+    # bare-bellied ADULT rather than a small boy; and in three of four the second
+    # body is a head at the bottom edge, so the two-shot does not read at all.
+    #
+    # FOUR CHANNELS, EACH FOR A FAULT THAT WAS OBSERVED AND NOT GUESSED:
+    #  1. WALLS. `in a sunny grassy field` moves into the third clause — the same
+    #     early-affirmative placement `authored_b04_fieldban` uses, for the same
+    #     diagnosis: this beat names no background at all, so an anime prior fills
+    #     it with interiors. The five-term walls ban (`house, building, interior,
+    #     indoors, architecture`) is beat 04's block sent whole, not narrowed.
+    #  2. LIGHT. The eight-term block proven on beat 04 against identical seeds,
+    #     plus `bright morning light` affirmatively.
+    #  3. THE HOOD. `no hood, no helmet` — `hood` is the observed garment and
+    #     `helmet` is the register term Roman's ~20:27 answer bought on beat 05
+    #     ("two silly round bureaucrats with visible faces"). The guard becomes
+    #     `a round bare-headed guard`, which is the affirmative half of the same
+    #     pair; `bare heads` + `no helmet` is exactly the form `authored_guards_
+    #     silly` uses, because the affirmative alone left them helmeted there.
+    #  4. NOTHING FOR THE ADULT BODY, DELIBERATELY. `no muscular` would have been
+    #     the obvious fifth term and it is NOT sent: this beat is the tightest in
+    #     the file and the walls block is only whole because that token went
+    #     elsewhere. The counter is affirmative and already present — `Two round
+    #     boys` and `a small goblin boy`. If the frames come back with an adult
+    #     again, that is the term to buy, and this note is where it was named.
+    #
+    # PAID FOR BY `no movement but the pointing arm`, which is a MOTION
+    # instruction in a harness that makes single frames — the same cut beat 03's
+    # field variant made to `static camera`, for the same reason and at the same
+    # cost of nothing. `flatly` was already spent by `authored_staged`.
+    #
+    # THE FROZEN SLOT IS UNTOUCHED and so is the joke: same `{{GOBLIN}}`, same
+    # pointing arm, same `who looks down, face visible`, same patchwork cloak.
+    # `2boys` still derives — `Two round boys` is untouched at the head of the
+    # first comma-clause, which is all `_tag_from_clause` reads. NOT given the
+    # `A small goblin boy, {{GOBLIN}}, solo` head the goblin beats get: this beat
+    # is `kind: two-subject` and `solo` would contradict the second body the shot
+    # is about.
+    authored_b08_refresh: >-
+      Two round boys, from front, in a sunny grassy field, a round bare-headed
+      guard in armor pointing at the belly of a small goblin boy, {{GOBLIN}}, in
+      a patchwork cloak who looks down, face visible. Deadpan medium two-shot,
+      bright morning light, cinematic lighting, detailed, newest, masterpiece,
+      best quality, very aesthetic No girl, no child, no hood, no helmet, no
+      house, no building, no interior, no indoors, no architecture, no dark, no
+      night, no dusk, no sunset, no dim lighting, no moody lighting, no low key,
+      no shadows dominant. No photorealism, no 3D render look. 9:16 vertical, no
       text.
 
   9:
