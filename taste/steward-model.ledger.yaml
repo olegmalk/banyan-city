@@ -7497,3 +7497,232 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+# ── PROPAGATING THE ONE THING TONIGHT PROVED, 2026-08-11 ~19:4x. The lighting
+# block was written blind on beat 04 (`ep2-b04-goblin-fieldbright-0811`, above),
+# rendered against identical seeds, and the frames were then LOOKED AT: predicate
+# 1 — "a bright morning-lit field in 3 of 4 seeds" — hit, where the byte-identical
+# positive had drawn dark an hour earlier. That is a verified one-variable result,
+# which is what makes the two records below propagations rather than a recipe
+# being scaled on a metric. Both are written BEFORE their renders exist.
+- id: ep2-b02-goblin-occlbright-0811
+  date: 2026-08-11
+  kind: prediction
+  subject: "node 002b beat 02 the-sprint — ONE SAMPLE, four seeds, $0. The
+    occlusion round re-run with the proven beat-04 lighting block in the SDXL
+    negative and NOTHING else changed. Read against `ep2-b02-goblin-occl-0811`
+    at the same four seeds: that round bought the staging his ~18:40 sentence
+    asked for and lost the light."
+  steward_provisional: true
+  pick: null
+  scores: {}
+  address_key: >-
+    Spec `pipeline/jobs/ep2-b02-goblin-occlbright-0811.yaml`, variant
+    `authored_staged_med_occl_bright`, slot `green skin`, priority 44. Four
+    seeds, ~2 minutes, $0, local on the rtx5090. Outputs to
+    `out-b02-occlbright\02-the-sprint-wave1-s0..3.png` with per-frame sidecars,
+    published to `farm-out/ep2-b02-goblin-occlbright/`. The round it is read
+    against is `out-b02-occl`.
+  the_one_variable: >-
+    Eight terms appended to the `no ...` chain: `no dark, no night, no dusk, no
+    sunset, no dim lighting, no moody lighting, no low key, no shadows
+    dominant`. The occlusion clause his sentence asked for is unchanged word for
+    word, as are `medium shot`, `from front`, the `green skin` slot, the seeds
+    (`wg.SEED + beat + i*1000`, which does not read the variant), steps (40),
+    guidance (7.5), size and harness (sha256 7efd0b96). Both variants dry-run at
+    73/77 POSITIVE with the same compressed positive string, so the positive is
+    not a difference.
+  measured_before_queueing_and_this_beat_is_not_beat_04: >-
+    Beat 04 had one token of negative headroom after the block. Beat 02's `full`
+    tier was ALREADY over budget before it, and `fit_negative` protects
+    beat-specific terms ahead of the house defaults, so eight new terms push
+    house terms out. Both variants were dry-run on the box's real CLIP tokenizer
+    and diffed rather than reasoned about:
+    baseline recipe 76 -> sent 73, DROPPED realistic skin texture, jpeg
+    artifacts, deformed, extra limbs, blurry, low quality, signature, watermark,
+    abstract.
+    this round recipe 75 -> sent 72, DROPPED those nine PLUS 3d render,
+    photorealistic, shrubbery, bush, forest, full canopy, thick trunk.
+    All eight lighting terms reach the model verbatim, and everything the
+    occlusion round's spec verified as load-bearing survives: `female goblin`,
+    `girl`, `child`, `text`, `photorealism`, `mature tree`, `large tree` and the
+    whole plant-girl/alraune tier. The block was sent WHOLE rather than narrowed
+    to fit, because a narrowed block is a different block from the one beat 04
+    proved and this would stop being a propagation.
+  predicted: >-
+    (1) THE PRIMARY PREDICATE — A BRIGHT MORNING FIELD IN 3 OF 4 SEEDS, judged
+    frame by frame against the identical-seed `out-b02-occl` frames. Bright means
+    the key reads as daylight: field visibly lit, no dusk-orange or night-blue
+    cast, shadows not the dominant value. 3 rather than 4 for the same reason as
+    beat 04: the negative removes a register without supplying one, so one seed
+    landing merely neutral-grey is the expected shape of a partial win.
+    (2) THE OCCLUSION STILL HOLDS, 3 OF 4 — the stem crosses in front of the
+    goblin's body and his face is beside or past it, not him standing next to the
+    sapling and not him gripping it. This is the predicate that matters most to
+    scoring: it is INHERITED, not bought, and the occlusion round is what bought
+    it. Called at 3 of 4 and not 4 because the occlusion round's own hold rate
+    across four seeds has never been counted in this file, so 4 of 4 would be a
+    number invented to look confident.
+    (3) THE SAPLING IS STILL A TINY SAPLING, 4 OF 4 — no bush, no shrub, no
+    treeline behind the field. THIS IS THE STATED RISK AND IT IS THE ONE TO WATCH:
+    `thick trunk, full canopy, forest, bush, shrubbery` were pushed out of the
+    negative by the block, on a beat whose entire joke is a plant too small to
+    hide behind. `mature tree` and `large tree` survive and this beat has never
+    come back with a mature tree, which is why the call is 4 and not lower — but a
+    miss here is the budget, not the taste, and the answer would be a narrower
+    block on this beat.
+    (4) THE b15-CONSISTENT GOBLIN, 4 OF 4 — the ratified creature, green, simple,
+    one per frame, not female. Same predicate and same standing caveat as the two
+    rounds before it: his ~18:40 sentence names cross-seed consistency as still
+    wanting, no axis in v1 measures sameness across a set, and nothing here
+    touches the character.
+    SECOND STATED RISK, carried over from beat 04 because it is the cost of the
+    lever: `dark` is blunt in an SDXL negative and can pull contrast and
+    saturation out of the whole frame, the goblin's green included. Bright but
+    FLAT is a real outcome and the answer to it is a narrower block, not more
+    terms. `photorealistic` and `3d render` also left the house tier here, so a
+    photoreal drift is possible even though the beat-specific `photorealism`
+    still goes.
+  what_a_miss_means: >-
+    If predicate 1 holds on a second beat, the block is a wave-wide fix and every
+    episode-2 beat can inherit it as one line. If beat 02 comes back dark while
+    beat 04 came back bright on the same block, the difference is the seven house
+    terms this beat had to sacrifice and the finding is about the budget, not the
+    lighting. Either reading is written down before the frames exist.
+  what_this_does_not_do: >-
+    Picks nothing, ranks nothing, publishes nothing, spends nothing, no `gate:`
+    key, clears no other spec's gate. Writes to `out-b02-occlbright` so the
+    `out-b02-occl` frames are not overwritten. R4 is his.
+  script_authority: >-
+    Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`,
+    `approved_on: 2026-08-03`, read from the leaf the render gate reads
+    (genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml:17-18).
+    Neither `approval_condition` touches beat 02 — both are about beat 01's fig
+    and beat 16's leaf.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep2-b01-figmatte-0811
+  date: 2026-08-11
+  kind: prediction
+  subject: "node 002b beat 01 cold-open — ONE ROUND, four seeds, two chained
+    masks, $0. The first beat-01 frames that carry BOTH halves of his ~16:15
+    sentence: the leaf count held at two by geometry, and a fig on the stem. Also
+    the round that fixes the white orb — which is NOT the fig."
+  steward_provisional: true
+  pick: null
+  scores: {}
+  address_key: >-
+    Spec `pipeline/jobs/ep2-b01-figmatte-0811.yaml`, priority 45, ~7 minutes, $0,
+    local on the rtx5090. Four seeds (20260811/20261811/20262811/20263811 — the
+    same four `ep2-b01-leafcount-inpaint-0811` used), each two chained inpaints
+    over the founder-approved plate. Outputs to
+    `out-figmatte\b01-figmatte-s0..3.png` plus the four leaf-only intermediates,
+    published to `farm-out/ep2-b01-figmatte/`.
+  the_correction_this_record_is_built_on: >-
+    THE FRAMES WERE OPENED BEFORE THIS WAS WRITTEN and they do not say what they
+    were reported to say. In `ep2-b01-leafcount-inpaint-0811`'s s0: the third
+    blade IS gone and the plant reads as an opposed pair — the leaf mask worked —
+    and the glowing white orb in that frame is NOT a fig. There is no fig in those
+    frames at all; the round inpainted the raw plate and the 2026-08-10 fig has
+    never been composited onto anything. The blob sits at roughly x[320,435]
+    y[600,700] and the leaf ellipse is x[330,426] y[601,709]: THE ORB IS THE LEAF
+    FILL. The fill prompt asked for `soft blurred tall grass, warm low sunlight`
+    and inside a 96x108 crop the model drew the light SOURCE. Fixing only the fig
+    term would have left the orb exactly where it is.
+  the_two_variables_and_why_that_is_still_one_each: >-
+    The ellipses do not overlap — leaf at y[601,709], fig at y[812,884] — so each
+    fix is read in its own region against its own prior round. LEAF: `warm low
+    sunlight` out of the fill prompt, eleven glow terms into the fill negative;
+    same init, ellipse, strength, steps, cfg, padding, blur and seeds as the
+    leafcount round. FIG: `matte green skin` into the positive and the
+    specular/glow terms into the negative, same ellipse 462,848,34,36 and
+    parameters as the 2026-08-10 fig inpaint, run on this seed's leaf-fixed frame
+    instead of the raw plate. The 2026-08-10 fruit is round, placed and green at
+    the bottom, wearing a blown-out white cap over its top ~40% — looked at.
+  measured_before_queueing_and_it_found_a_standing_defect: >-
+    `inpaint_fruit.py` hands the negative straight to the SDXL pipeline, which
+    truncates at 77 tokens with no budget logic (that lives in `sd_prompt`, which
+    this route does not use). Measured on the box's real CLIP tokenizer: THE LEAF
+    NEGATIVE THAT RAN TONIGHT IS 93 TOKENS, 16 OVER, so `chibi, mascot, creature,
+    face, branches, night sky, photorealism` NEVER REACHED THE MODEL. Anything
+    appended to the end of these files is decoration. So the new terms go at the
+    FRONT and both files were cut to fit: leaf prompt 27/77, leaf negative 74/77,
+    fig prompt 43/77, fig negative 75/77 — nothing truncated in any of the four.
+    The old fig negative measured 72/77 and was NOT being truncated, so the terms
+    cut from it were cut deliberately and they are the ones that cannot be drawn
+    inside a 68x72 ellipse on a stem.
+  the_lighting_negative_is_deliberately_absent_here: >-
+    The beat-04 block went to beat 02 and NOT to this job, and that is the honest
+    answer rather than an omission. Beat 01's only G1-legal init is 001's
+    `15-something-s-coming.png`, a DUSK close-up with a light shaft, and this
+    route inpaints two ellipses totalling under 1% of the frame — 99% of the
+    pixels are the approved plate, restored every step by the mask blend, and no
+    negative reaches them. `no dark, no dusk, no sunset` here would be inert at
+    best and at worst push the two patches BRIGHTER than the plate around them,
+    which is the pasted-in look the fig mask has so far avoided. The dark-sunset
+    versus sunrise-script problem is not a prompt fault and no round fixes it: it
+    is the standing question already queued for R4 in
+    `ep2-b01-pickpage-founder-verdict-0811`.
+  predicted: >-
+    STANDING DEFECTS FIRST, as `ep2-b01-pickpage-founder-verdict-0811` requires of
+    every beat-01 prediction from now on — he rejected this beat on the two things
+    that were on the record and never predicted. THE FIG and THE LEAF COUNT are
+    what this round is for, and they are predicates 1 and 2, not afterthoughts.
+    (1) TWO LEAVES, 4 OF 4 — the opposed pair, no third blade. Called at 4 because
+    the leafcount round already achieved it at these exact seeds and this round
+    changes only what fills the hole, not whether it is cut.
+    (2) ONE ROUND GREEN FRUIT ON THE STEM, 3 OF 4 — present, single, legible,
+    hanging at the mask. 3 rather than 4 because the fig mask has exactly ONE
+    sample behind it and a one-sample success rate is not a rate.
+    (3) NO GLOWING WHITE ORB IN THE LEAF REGION, 3 OF 4 — this is the primary
+    predicate of the round and the one that would be easiest to fudge later, so it
+    is stated sharply: the patch at x[330,426] y[601,709] reads as out-of-focus
+    grass continuous with the grass beside it, with no bright disc, no pale bulb
+    and no light source in it. 3 of 4 because the failure it replaces appeared in
+    the frame that was looked at and the rate across the other three seeds was not
+    counted.
+    (4) THE FRUIT IS MATTE, NOT A LIT SPHERE, 3 OF 4 — green across its whole
+    visible face, no blown-out white cap. STATED RISK: tonight's beat-04 finding
+    is that positive colour and lighting words do NOT bind on this checkpoint and
+    the negative does, so `matte green skin` is the weaker half of this fix and
+    the eleven glow terms are the load-bearing half. If the cap survives, the next
+    move is a lower strength on the fig pass, not more adjectives.
+    (5) EVERYTHING OUTSIDE THE TWO ELLIPSES IS THE FOUNDER'S PLATE, 4 OF 4 — no
+    global colour shift, no seam, no second sun. Mechanically this should be free
+    (the blend restores unmasked pixels every step) and it is written down so that
+    a regression is visible rather than explained away.
+    (6) IT IS STILL A DUSK PLATE, 4 OF 4, AND THAT IS NOT A DEFECT OF THIS ROUND —
+    predicted so nobody can later read a warm frame as a lighting failure. The
+    script says sunrise. That gap is R4's question and it goes to him with these
+    frames.
+  what_a_miss_means: >-
+    If predicates 3 and 4 hold, the inpaint route produces the first beat-01 frame
+    that answers both halves of his sentence and the only thing left on the beat is
+    the dusk-versus-sunrise question, which is his. If the orb survives eleven
+    explicit glow bans that were measured as reaching the model, then a 96x108
+    crop at strength 0.99 is too free regardless of wording and the lever is
+    strength or mask size, not language.
+  what_this_does_not_do: >-
+    Picks nothing, ranks nothing, publishes nothing, spends nothing, promotes
+    nothing into `stills/`, no `gate:` key. Writes to `out-figmatte` so
+    `out-leafcount` is not overwritten. The mask geometry is the steward's — he
+    approved a METHOD (`inpaint`) and named no size and no position — and both
+    ellipses are carried over unchanged so this round changes prompts and nothing
+    else.
+  script_authority: >-
+    Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`,
+    `approved_on: 2026-08-03`, read from the leaf the render gate reads
+    (genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml:17-18). His
+    FIRST `approval_condition` is beat 01's: "The fig must GROW on screen, not
+    already hang." A still cannot show the growing — that is a T2/T3 question and
+    nothing here claims it; what this round can do is put the fruit in the frame
+    at all, which twelve prompt-drawn candidates could not.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null

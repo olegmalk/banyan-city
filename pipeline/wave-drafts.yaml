@@ -216,6 +216,42 @@ beats:
       morning light, cinematic lighting,
       detailed, newest, masterpiece, best quality, very aesthetic No girl, no
       child. No photorealism, no 3D render look. 9:16 vertical, no text.
+    # ── `authored_staged_med_occl_bright` — THE LIGHTING BLOCK, PROPAGATED,
+    # 2026-08-11 ~19:3x. ONE VARIABLE against `authored_staged_med_occl`: the
+    # same eight lighting terms `authored_field_bright` carries on beat 04,
+    # appended to this beat's `no ...` chain. Nothing else moves — the occlusion
+    # clause his ~18:40 sentence asked for is word-for-word unchanged, same
+    # `medium shot`, same `green skin` slot, same seeds.
+    #
+    # THIS IS NOT A GUESS BEING SCALED. `ep2-b04-goblin-fieldbright-0811` ran
+    # this exact block on beat 04 against IDENTICAL SEEDS and the frames came
+    # back a bright morning field where `authored_field` — same positive, byte
+    # for byte, `soft morning light` in it — had come back dark and undefined.
+    # The dark drift is a model prior and the negative reaches it. Beat 02's
+    # occlusion round drifted dusk-dark in the same hour, on a positive that
+    # says `morning light`, so it is the same fault and this is the fix that
+    # answered it.
+    #
+    # BEAT 02 IS NOT BEAT 04 IN ONE RESPECT AND IT IS MEASURED, NOT ASSUMED.
+    # Beat 04 had one token of negative headroom left after the block; this
+    # beat's `full` fusion tier was ALREADY over budget before it (the NEGWARN
+    # and the dropped quality terms recorded in `ep2-b02-goblin-occl-0811` are
+    # pre-existing), and `fit_negative` protects beat-specific terms AHEAD of
+    # the house defaults — so eight new terms push eight house terms out. What
+    # is actually dropped was read off the box's own dry-run before this was
+    # queued and is written into the job spec. If the terms that matter
+    # (`female goblin`, `girl`, `child`, `photorealism`, `text`) had been the
+    # ones sacrificed, the block would have been NARROWED here rather than
+    # sent whole.
+    authored_staged_med_occl_bright: >-
+      A small goblin boy, {{GOBLIN}}, solo, from front, crouches in an open
+      field behind a tiny sapling, its thin stem in front of him, half hidden
+      behind the stem, his face peeking around it. Static camera, medium shot,
+      morning light, cinematic lighting,
+      detailed, newest, masterpiece, best quality, very aesthetic No girl, no
+      child, no dark, no night, no dusk, no sunset, no dim lighting, no moody
+      lighting, no low key, no shadows dominant. No photorealism, no 3D render
+      look. 9:16 vertical, no text.
 
   3:
     slug: bad-cover
@@ -416,6 +452,38 @@ beats:
       masterpiece, best quality, very aesthetic No girl, no child, no dark
       fantasy, no night, no glowing visor, no weapon, no hood, no screen. No
       photorealism, no 3D render look. 9:16 vertical, no text.
+    # ── `authored_guards_ref_bright` — STAGED, NOT QUEUED, 2026-08-11 ~19:4x.
+    # The beat-04 lighting block (`ep2-b04-goblin-fieldbright-0811`, commit
+    # cbcc716, proven against identical seeds) carried onto the guard reference
+    # for ITS NEXT ROUND. NOTHING IS ENQUEUED ON THIS KEY: Roman has not answered
+    # the register question the guard reference was built to ask, and a second
+    # guard round before his answer would be the steward choosing for him.
+    #
+    # SIX TERMS, NOT EIGHT, AND THAT IS NOT A NARROWING. `authored_guards_ref`
+    # already carries `no night` and `no dark fantasy`; the block adds the six it
+    # does not have — `no dark, no dusk, no sunset, no dim lighting, no moody
+    # lighting, no low key` — plus `no shadows dominant`. The sent negative is
+    # therefore a SUPERSET of beat 04's proven block, which is the point.
+    #
+    # ONE TENSION, NAMED RATHER THAN BURIED: the positive asks for `long soft
+    # shadows` and the block bans `shadows dominant`. Those are different claims
+    # (soft raking light vs. shadow as the dominant value) and both survive the
+    # budget, but if the next round comes back with the shadows flattened out of
+    # the field, `shadows dominant` is the term to drop first on this beat.
+    #
+    # MEASURED, NOT ASSUMED — dry-run on the box's real CLIP tokenizer, beat 5,
+    # this variant: results are in `pipeline/jobs/ep2-b05-guards-ref-0811.yaml`
+    # under THE NEXT ROUND'S LIGHTING.
+    authored_guards_ref_bright: >-
+      Two round guard men in mismatched ill-fitting armor stand side by side
+      facing camera in a grassy morning field, harmless and bureaucratic, both
+      faces clearly visible, one holding a bark clipboard. Medium shot, bright
+      morning light, long soft shadows, cinematic lighting, detailed, newest,
+      masterpiece, best quality, very aesthetic No girl, no child, no dark
+      fantasy, no night, no glowing visor, no weapon, no hood, no screen, no
+      dark, no dusk, no sunset, no dim lighting, no moody lighting, no low key,
+      no shadows dominant. No photorealism, no 3D render look. 9:16 vertical,
+      no text.
 
   6:
     slug: the-clipboard

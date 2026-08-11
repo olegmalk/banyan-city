@@ -1,0 +1,417 @@
+# EPISODE 2, BEAT 01 — THE WHITE ORB, AND THE FIG THAT WAS NEVER ON THE LEAF-FIXED
+# PLATE. One round, four seeds, two chained masks, $0. 2026-08-11 ~19:4x.
+#
+# ── THE CORRECTION THIS JOB IS BUILT ON, BECAUSE THE BRIEF HAD IT ON THE WRONG
+# ── HALF. The frames from `ep2-b01-leafcount-inpaint-0811` were opened and looked
+# at (s0, pulled off the box) before a line of this was written, and they do not
+# say what they were reported to say:
+#   * THE LEAF COUNT WORKED. The third blade is gone; the plant reads as an
+#     opposed pair. The mask mechanism did its job.
+#   * THE GLOWING WHITE ORB IS NOT THE FIG. There is no fig in those frames at
+#     all — the round inpainted the RAW founder plate, and the 2026-08-10 fig has
+#     never been composited onto anything. The white blob sits at roughly
+#     x[320,435] y[600,700], and the leaf ellipse is 378,655,48,54, i.e. x[330,426]
+#     y[601,709]. The orb IS THE LEAF FILL. The fill prompt asked for
+#     `soft blurred tall grass, warm low sunlight` and, inside a 96x108 crop, the
+#     model drew the light SOURCE — a small sun — with a pale bulb over it.
+#   So fixing only the fig term would have left the orb exactly where it is. Both
+#   halves are fixed here, in the two channels that own them.
+#   * THE FIG'S OWN FAULT IS REAL AND SEPARATE. `review/b01-fig-inpaint/
+#     b01-fig-inpaint-s1.png`, looked at in the same pass: the fruit is round,
+#     correctly placed and green at the bottom, wearing a blown-out white specular
+#     cap over its top ~40%. Green is partly binding; the highlight dominates.
+#
+# ── THE LIGHTING NEGATIVE IS NOT IN THIS JOB, AND THAT IS THE HONEST ANSWER, NOT
+# ── AN OMISSION. The beat-04 block was propagated to beat 02 (see
+# `ep2-b02-goblin-occlbright-0811`). It cannot do anything here. Beat 01's only
+# G1-legal init is 001's `15-something-s-coming.png`, the sole founder-approved
+# sapling-in-grass frame in the tree, and it is a DUSK close-up with a light
+# shaft. This route inpaints two ellipses totalling under 1% of the frame; 99% of
+# the pixels are the approved plate and are restored every step by the mask blend.
+# No negative reaches them. Adding `no dark, no dusk, no sunset` here would at
+# best be inert and at worst push the two patches BRIGHTER than the plate around
+# them — a visible pasted-in look, which is the one thing the fig mask has so far
+# avoided. The beat-01 dark-vs-sunrise question is not a prompt fault and no round
+# fixes it: it is the standing question already queued for R4 in
+# `ep2-b01-pickpage-founder-verdict-0811` — is a fixed dusk plate acceptable for
+# the cold open, or does beat 01 need a plate he approves first? Asked, not
+# assumed, and not answered by this job.
+#
+# ── WHAT CHANGES, MEASURED ON THE BOX'S REAL CLIP TOKENIZER BEFORE QUEUEING.
+# A finding fell out of measuring, and it explains part of the failure: THE LEAF
+# NEGATIVE HAS BEEN SILENTLY TRUNCATED ALL ALONG. `inpaint_fruit.py` hands the
+# negative straight to the SDXL pipeline, which cuts at 77 tokens with no budget
+# logic of its own (that lives in `sd_prompt`, which this route does not use). The
+# leaf negative that ran tonight measures 93 tokens — 16 over — so
+# `chibi, mascot, creature, face, branches, night sky, photorealism` NEVER REACHED
+# THE MODEL. Anything appended to the end of these files is decoration. So the new
+# terms go at the FRONT and both files were cut to fit:
+#
+#   pipeline/b01-leaf/prompt-r2.txt    27/77 tokens
+#     soft blurred tall grass, out of focus grass blades, empty background, ...
+#     (`warm low sunlight` removed — it is what invited the sun into the patch;
+#      `out of focus grass blades` names the texture instead of the light.)
+#   pipeline/b01-leaf/negative-r2.txt  74/77 tokens, NOTHING TRUNCATED
+#     glow, glowing, orb, sphere, bulb, white blob, bright spot, sun, lens flare,
+#     light source, lamp, + the plant-part bans the old file opened with, + a
+#     short style tail. Dropped as unreachable in a 96x108 grass patch:
+#     girl/boy/child/person/chibi/mascot/creature/face/night sky/branches — the
+#     terms that were already being truncated away anyway.
+#   pipeline/b01-fig/prompt-r2.txt     43/77 tokens
+#     one small round green fruit, MATTE GREEN SKIN, hanging from the stem, ...
+#   pipeline/b01-fig/negative-r2.txt   75/77 tokens, NOTHING TRUNCATED
+#     glowing, glow, white sphere, orb, specular highlight, glossy, shiny, bright
+#     highlight, lamp, light source, lens flare, sun, white fruit, pale fruit, +
+#     the old style tail. The old fig negative measured 72/77 and was NOT being
+#     truncated, so the terms cut to make room were cut deliberately, and they are
+#     the ones that cannot be drawn inside a 68x72 ellipse on a stem:
+#     girl/boy/child/person/chibi/mascot/creature/face/extra limbs/night sky/
+#     thick trunk/full canopy/forest.
+# THE NEGATIVE IS THE LOAD-BEARING HALF OF THE FIG FIX, not `matte`. Tonight's
+# beat-04 result is the evidence: positive lighting words did not bind and the
+# negative did.
+#
+# ── THE FIG PROMPT HAD NO IN-REPO COPY AND NOW DOES. Grepped before writing: no
+# `.txt` under `pipeline/` carried the fruit string; the only in-repo trace was a
+# quotation inside `pipeline/jobs/ep2-b01-fig-inpaint-s1.yaml`'s comments. The box
+# copies are now mirrored byte-for-byte at `pipeline/b01-fig/{prompt,negative}.txt`
+# with `pipeline/b01-fig/README.md` saying where they came from, alongside the r2
+# revisions. The leaf half already had `pipeline/b01-leaf/`. All four r2 files were
+# scp'd to the box and re-hashed there against the local files — identical.
+#
+# ── TWO MASKS IN ONE FRAME, AND WHY THAT IS STILL ONE VARIABLE EACH. The ellipses
+# do not overlap: the leaf is at y[601,709] and the fig at y[812,884]. Pass 1's
+# output is pass 2's init, so each frame carries both fixes and each is judged in
+# its own region — the leaf fill against `out-leafcount`'s same-seed frame, the
+# fruit against `b01-fig-inpaint-s1.png`. This is also the first time the two
+# halves of his ~16:15 sentence ("none of them have figs and all of them have too
+# many leafs") have ever existed in the SAME picture; the record says the fig
+# inpaint "has never been used as anything but that sample".
+#
+# ── THE MASK GEOMETRY IS STILL THE STEWARD'S AND IS THE FIRST THING HIS
+# ── CORRECTION SHOULD MOVE. He approved a METHOD (`inpaint`) and named no size and
+# no position. Both ellipses are carried over unchanged from the rounds that drew
+# them so that this round changes prompts and nothing else.
+#
+# ── CHAINING AND THE SHA ASSERTION, STATED PLAINLY. `inpaint_fruit.py` requires
+# `--init-sha256`. Pass 1 asserts the founder's plate
+# (f60c1404...7277f54) — that is the assertion that matters and it is intact. Pass
+# 2's init is a file this same job wrote three minutes earlier, so its hash is
+# MEASURED at run time by a four-line wrapper and handed to the same script
+# unmodified; on an intermediate the check can only be a self-check, and pretending
+# otherwise would be theatre. The driver stays byte-identical (box copy
+# 48fc5815571a57144e1f0fbbd8fd7a00ba4aa770638435b087a034e025dd4701; the repo copy
+# at 7e7f9a10... differs only in line endings, same argparse at the same line
+# numbers, checked).
+#
+# SEPARATE OUT DIRECTORY: `out-leafcount` holds the frames this is read against.
+# This writes to `out-figmatte`.
+
+id: ep2-b01-figmatte-0811
+task: ep2-b01-figmatte-0811
+node: 002b-first-citizen
+beat: 1
+runner: box
+needs_gpu: true
+
+# 45 against beat 02's 44: box_runner.py:444 sorts priority ASCENDING, so the pair
+# drains beat 02 first and then this, one at a time. Sequential is the rule
+# (CLAUDE.md, founder 2026-08-03); batch-of-4 is banned. Ready queue was EMPTY and
+# nothing was running when this was staged (`box_enqueue.py --list`).
+priority: 45
+max_attempts: 1
+owner: beat-01 verdict lane, 2026-08-11 (his ~16:15 beat-01 sentence, second pass)
+
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03` (read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml:17-18, the leaf the
+  render gate itself reads). His `approved_quote` verbatim: "approve 002b except.. we
+  need to make SURE the fig growing on the sapling is mentioned, last time we generated
+  002b it just.. appeared. also, the sapling was able to flail a leaf in episode 1? why
+  couldnt it do that in 002b?" His FIRST `approval_condition` is beat 01''s: "The fig
+  must GROW on screen, not already hang." So the fig is a condition of the script, not a
+  decoration — which is why a beat-01 frame without one cannot satisfy him however well
+  it is drawn. node.md beat 01: "On the thinnest branch a green nub swells, darkens and
+  rounds into a single fig — the only thing in frame that moves." A still cannot show
+  the growing; that is a T2/T3 question and it is not claimed here.'
+
+consumer: >-
+  Roman's next look at beat 01. His ~16:15 sentence named two counts and both are
+  answered in one frame for the first time: the leaf mask holds the count at two
+  and the fig mask supplies the fruit. What goes with the frames is the question
+  that no round can settle — the plate is dusk and the script says sunrise.
+
+success: >-
+  Four PNGs at C:\banyan-farm\fig-inpaint\out-figmatte\b01-figmatte-s0..3.png with
+  their `.png.meta.yaml` provenance sidecars written at render time (7.2), all
+  eight declared as artifacts so a missing one fails rc=92 instead of passing
+  quietly. The four intermediate leaf-only frames are kept and published too, so
+  the two fixes can be read apart. Whether either reads is a human's call at the
+  frames; no metric decides it and this job ranks nothing.
+
+why: >-
+  Two one-variable fixes in two non-overlapping mask regions, against two rounds
+  that ran on the same masks with the same geometry and parameters. LEAF: the fill
+  prompt loses `warm low sunlight` and the negative gains eleven glow terms,
+  against `ep2-b01-leafcount-inpaint-0811` at the same four seeds — that round
+  removed the blade and filled the hole with a small sun. FIG: `matte green skin`
+  in the positive and the specular/glow terms in the negative, against the
+  2026-08-10 `b01-fig-inpaint-s1.png`, whose fruit wears a blown-out white cap.
+
+est_minutes: 7
+needs:
+- cuda
+- vram20
+- farm-venv
+
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+- name: s0-leaf
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\fig-inpaint\inpaint_fruit.py
+  - --init
+  - C:\banyan-farm\banyan-city\genomes\sapling\nodes\001-capability-inventory\stills\15-something-s-coming.png
+  - --init-sha256
+  - f60c1404f88d45720ca295dfc753e9eaabb815446710bcfffb3c7a07b7277f54
+  - --ellipse
+  - 378,655,48,54
+  - --prompt-file
+  - C:\banyan-farm\fig-inpaint\leaf-prompt-r2.txt
+  - --negative-file
+  - C:\banyan-farm\fig-inpaint\leaf-negative-r2.txt
+  - --out
+  - C:\banyan-farm\fig-inpaint\out-figmatte\b01-figmatte-s0-leaf.png
+  - --steps
+  - "40"
+  - --cfg
+  - "7.5"
+  - --strength
+  - "0.99"
+  - --seed
+  - "20260811"
+  - --pad-crop
+  - "64"
+  - --blur
+  - "8"
+  - --note
+  - "Pass 1 of 2, seed 20260811. THE LEAF FILL, RE-RUN WITH THE GLOW BANNED. Same init, same ellipse 378,655,48,54, same strength/steps/cfg/pad/blur and the same four seeds as ep2-b01-leafcount-inpaint-0811; ONLY the two prompt files change. That round removed the third blade correctly and filled the hole with a pale bulb and a small bright disc instead of grass -- looked at, not inferred. `warm low sunlight` is out of the fill prompt (in a 96x108 crop the model drew the light SOURCE) and eleven glow terms are in the negative. PROVISIONAL: not a pick, not canon, not published, not assembled."
+- name: s0-fig
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import hashlib, subprocess, sys
+    src = r"C:\banyan-farm\fig-inpaint\out-figmatte\b01-figmatte-s0-leaf.png"
+    h = hashlib.sha256(open(src, "rb").read()).hexdigest()
+    print("chained init %s sha256 %s" % (src, h), flush=True)
+    sys.exit(subprocess.call([
+        r"C:\banyan-farm\venv\Scripts\python.exe", r"C:\banyan-farm\fig-inpaint\inpaint_fruit.py",
+        "--init", src, "--init-sha256", h,
+        "--ellipse", "462,848,34,36",
+        "--prompt-file", r"C:\banyan-farm\fig-inpaint\prompt-r2.txt",
+        "--negative-file", r"C:\banyan-farm\fig-inpaint\negative-r2.txt",
+        "--out", r"C:\banyan-farm\fig-inpaint\out-figmatte\b01-figmatte-s0.png",
+        "--steps", "40", "--cfg", "7.5", "--strength", "0.99",
+        "--seed", "20260811", "--pad-crop", "64", "--blur", "8",
+        "--note", "Pass 2 of 2, seed 20260811. THE FIG, MATTE. Ellipse 462,848,34,36 -- the same mask the 2026-08-10 fig inpaint used, on this seed's leaf-fixed frame instead of the raw plate. `matte green skin` in the positive and the glow/specular terms in the negative, because the 2026-08-10 frame's fruit is a green sphere wearing a blown-out white cap. Non-overlapping with pass 1's ellipse, so the two fixes read independently in one frame. PROVISIONAL: not a pick, not canon, not published.",
+    ]))
+- name: s1-leaf
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\fig-inpaint\inpaint_fruit.py
+  - --init
+  - C:\banyan-farm\banyan-city\genomes\sapling\nodes\001-capability-inventory\stills\15-something-s-coming.png
+  - --init-sha256
+  - f60c1404f88d45720ca295dfc753e9eaabb815446710bcfffb3c7a07b7277f54
+  - --ellipse
+  - 378,655,48,54
+  - --prompt-file
+  - C:\banyan-farm\fig-inpaint\leaf-prompt-r2.txt
+  - --negative-file
+  - C:\banyan-farm\fig-inpaint\leaf-negative-r2.txt
+  - --out
+  - C:\banyan-farm\fig-inpaint\out-figmatte\b01-figmatte-s1-leaf.png
+  - --steps
+  - "40"
+  - --cfg
+  - "7.5"
+  - --strength
+  - "0.99"
+  - --seed
+  - "20261811"
+  - --pad-crop
+  - "64"
+  - --blur
+  - "8"
+  - --note
+  - "Pass 1 of 2, seed 20261811. THE LEAF FILL, RE-RUN WITH THE GLOW BANNED. Same init, same ellipse 378,655,48,54, same strength/steps/cfg/pad/blur and the same four seeds as ep2-b01-leafcount-inpaint-0811; ONLY the two prompt files change. That round removed the third blade correctly and filled the hole with a pale bulb and a small bright disc instead of grass -- looked at, not inferred. `warm low sunlight` is out of the fill prompt (in a 96x108 crop the model drew the light SOURCE) and eleven glow terms are in the negative. PROVISIONAL: not a pick, not canon, not published, not assembled."
+- name: s1-fig
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import hashlib, subprocess, sys
+    src = r"C:\banyan-farm\fig-inpaint\out-figmatte\b01-figmatte-s1-leaf.png"
+    h = hashlib.sha256(open(src, "rb").read()).hexdigest()
+    print("chained init %s sha256 %s" % (src, h), flush=True)
+    sys.exit(subprocess.call([
+        r"C:\banyan-farm\venv\Scripts\python.exe", r"C:\banyan-farm\fig-inpaint\inpaint_fruit.py",
+        "--init", src, "--init-sha256", h,
+        "--ellipse", "462,848,34,36",
+        "--prompt-file", r"C:\banyan-farm\fig-inpaint\prompt-r2.txt",
+        "--negative-file", r"C:\banyan-farm\fig-inpaint\negative-r2.txt",
+        "--out", r"C:\banyan-farm\fig-inpaint\out-figmatte\b01-figmatte-s1.png",
+        "--steps", "40", "--cfg", "7.5", "--strength", "0.99",
+        "--seed", "20261811", "--pad-crop", "64", "--blur", "8",
+        "--note", "Pass 2 of 2, seed 20261811. THE FIG, MATTE. Ellipse 462,848,34,36 -- the same mask the 2026-08-10 fig inpaint used, on this seed's leaf-fixed frame instead of the raw plate. `matte green skin` in the positive and the glow/specular terms in the negative, because the 2026-08-10 frame's fruit is a green sphere wearing a blown-out white cap. Non-overlapping with pass 1's ellipse, so the two fixes read independently in one frame. PROVISIONAL: not a pick, not canon, not published.",
+    ]))
+- name: s2-leaf
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\fig-inpaint\inpaint_fruit.py
+  - --init
+  - C:\banyan-farm\banyan-city\genomes\sapling\nodes\001-capability-inventory\stills\15-something-s-coming.png
+  - --init-sha256
+  - f60c1404f88d45720ca295dfc753e9eaabb815446710bcfffb3c7a07b7277f54
+  - --ellipse
+  - 378,655,48,54
+  - --prompt-file
+  - C:\banyan-farm\fig-inpaint\leaf-prompt-r2.txt
+  - --negative-file
+  - C:\banyan-farm\fig-inpaint\leaf-negative-r2.txt
+  - --out
+  - C:\banyan-farm\fig-inpaint\out-figmatte\b01-figmatte-s2-leaf.png
+  - --steps
+  - "40"
+  - --cfg
+  - "7.5"
+  - --strength
+  - "0.99"
+  - --seed
+  - "20262811"
+  - --pad-crop
+  - "64"
+  - --blur
+  - "8"
+  - --note
+  - "Pass 1 of 2, seed 20262811. THE LEAF FILL, RE-RUN WITH THE GLOW BANNED. Same init, same ellipse 378,655,48,54, same strength/steps/cfg/pad/blur and the same four seeds as ep2-b01-leafcount-inpaint-0811; ONLY the two prompt files change. That round removed the third blade correctly and filled the hole with a pale bulb and a small bright disc instead of grass -- looked at, not inferred. `warm low sunlight` is out of the fill prompt (in a 96x108 crop the model drew the light SOURCE) and eleven glow terms are in the negative. PROVISIONAL: not a pick, not canon, not published, not assembled."
+- name: s2-fig
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import hashlib, subprocess, sys
+    src = r"C:\banyan-farm\fig-inpaint\out-figmatte\b01-figmatte-s2-leaf.png"
+    h = hashlib.sha256(open(src, "rb").read()).hexdigest()
+    print("chained init %s sha256 %s" % (src, h), flush=True)
+    sys.exit(subprocess.call([
+        r"C:\banyan-farm\venv\Scripts\python.exe", r"C:\banyan-farm\fig-inpaint\inpaint_fruit.py",
+        "--init", src, "--init-sha256", h,
+        "--ellipse", "462,848,34,36",
+        "--prompt-file", r"C:\banyan-farm\fig-inpaint\prompt-r2.txt",
+        "--negative-file", r"C:\banyan-farm\fig-inpaint\negative-r2.txt",
+        "--out", r"C:\banyan-farm\fig-inpaint\out-figmatte\b01-figmatte-s2.png",
+        "--steps", "40", "--cfg", "7.5", "--strength", "0.99",
+        "--seed", "20262811", "--pad-crop", "64", "--blur", "8",
+        "--note", "Pass 2 of 2, seed 20262811. THE FIG, MATTE. Ellipse 462,848,34,36 -- the same mask the 2026-08-10 fig inpaint used, on this seed's leaf-fixed frame instead of the raw plate. `matte green skin` in the positive and the glow/specular terms in the negative, because the 2026-08-10 frame's fruit is a green sphere wearing a blown-out white cap. Non-overlapping with pass 1's ellipse, so the two fixes read independently in one frame. PROVISIONAL: not a pick, not canon, not published.",
+    ]))
+- name: s3-leaf
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\fig-inpaint\inpaint_fruit.py
+  - --init
+  - C:\banyan-farm\banyan-city\genomes\sapling\nodes\001-capability-inventory\stills\15-something-s-coming.png
+  - --init-sha256
+  - f60c1404f88d45720ca295dfc753e9eaabb815446710bcfffb3c7a07b7277f54
+  - --ellipse
+  - 378,655,48,54
+  - --prompt-file
+  - C:\banyan-farm\fig-inpaint\leaf-prompt-r2.txt
+  - --negative-file
+  - C:\banyan-farm\fig-inpaint\leaf-negative-r2.txt
+  - --out
+  - C:\banyan-farm\fig-inpaint\out-figmatte\b01-figmatte-s3-leaf.png
+  - --steps
+  - "40"
+  - --cfg
+  - "7.5"
+  - --strength
+  - "0.99"
+  - --seed
+  - "20263811"
+  - --pad-crop
+  - "64"
+  - --blur
+  - "8"
+  - --note
+  - "Pass 1 of 2, seed 20263811. THE LEAF FILL, RE-RUN WITH THE GLOW BANNED. Same init, same ellipse 378,655,48,54, same strength/steps/cfg/pad/blur and the same four seeds as ep2-b01-leafcount-inpaint-0811; ONLY the two prompt files change. That round removed the third blade correctly and filled the hole with a pale bulb and a small bright disc instead of grass -- looked at, not inferred. `warm low sunlight` is out of the fill prompt (in a 96x108 crop the model drew the light SOURCE) and eleven glow terms are in the negative. PROVISIONAL: not a pick, not canon, not published, not assembled."
+- name: s3-fig
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import hashlib, subprocess, sys
+    src = r"C:\banyan-farm\fig-inpaint\out-figmatte\b01-figmatte-s3-leaf.png"
+    h = hashlib.sha256(open(src, "rb").read()).hexdigest()
+    print("chained init %s sha256 %s" % (src, h), flush=True)
+    sys.exit(subprocess.call([
+        r"C:\banyan-farm\venv\Scripts\python.exe", r"C:\banyan-farm\fig-inpaint\inpaint_fruit.py",
+        "--init", src, "--init-sha256", h,
+        "--ellipse", "462,848,34,36",
+        "--prompt-file", r"C:\banyan-farm\fig-inpaint\prompt-r2.txt",
+        "--negative-file", r"C:\banyan-farm\fig-inpaint\negative-r2.txt",
+        "--out", r"C:\banyan-farm\fig-inpaint\out-figmatte\b01-figmatte-s3.png",
+        "--steps", "40", "--cfg", "7.5", "--strength", "0.99",
+        "--seed", "20263811", "--pad-crop", "64", "--blur", "8",
+        "--note", "Pass 2 of 2, seed 20263811. THE FIG, MATTE. Ellipse 462,848,34,36 -- the same mask the 2026-08-10 fig inpaint used, on this seed's leaf-fixed frame instead of the raw plate. `matte green skin` in the positive and the glow/specular terms in the negative, because the 2026-08-10 frame's fruit is a green sphere wearing a blown-out white cap. Non-overlapping with pass 1's ellipse, so the two fixes read independently in one frame. PROVISIONAL: not a pick, not canon, not published.",
+    ]))
+
+# DURABILITY: the box is the only copy until the courier pushes farm-out, which is
+# not gitignored. allow_fail so a failed copy never marks a good render failed.
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b01-figmatte"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/fig-inpaint/out-figmatte/b01-figmatte-s*.*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        # Hash the COPY: what this records has to be the bytes that get committed.
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+        print("   ", os.path.basename(f), h[:16])
+    # newline="\n" is load-bearing: Windows text mode would leave a trailing \r on
+    # every filename and shasum -c could not open them.
+    with open(os.path.join(dst, "ep2-b01-figmatte.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    # 4 seeds x 2 passes x (png + mask png + sidecar) = 24. Fewer means the round
+    # wrote less than it promised.
+    raise SystemExit(0 if len(src) == 24 else 1)
+
+artifacts:
+- C:\banyan-farm\fig-inpaint\out-figmatte\b01-figmatte-s0.png
+- C:\banyan-farm\fig-inpaint\out-figmatte\b01-figmatte-s1.png
+- C:\banyan-farm\fig-inpaint\out-figmatte\b01-figmatte-s2.png
+- C:\banyan-farm\fig-inpaint\out-figmatte\b01-figmatte-s3.png
+- C:\banyan-farm\fig-inpaint\out-figmatte\b01-figmatte-s0.png.meta.yaml
+- C:\banyan-farm\fig-inpaint\out-figmatte\b01-figmatte-s1.png.meta.yaml
+- C:\banyan-farm\fig-inpaint\out-figmatte\b01-figmatte-s2.png.meta.yaml
+- C:\banyan-farm\fig-inpaint\out-figmatte\b01-figmatte-s3.png.meta.yaml

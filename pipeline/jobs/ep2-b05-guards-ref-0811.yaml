@@ -133,6 +133,44 @@
 # D15: takes/ candidates, which licence_gate does not count against the debt
 # ratchet. They add 0 to the animagine pile. A promotion into stills/ would add
 # lines, and that is his call, not this lane's.
+#
+# ── THE NEXT ROUND'S LIGHTING — STAGED 2026-08-11 ~19:4x, DELIBERATELY NOT
+# ── ENQUEUED. THIS SPEC IS UNCHANGED BELOW THIS LINE; it is the record of the
+# round that already ran into `out-guards-ref` and its steps must keep saying what
+# they said. What follows is the variant the NEXT guard round should use, staged
+# so it is ready the moment there is a reason to fire it.
+#
+# WHY IT IS NOT FIRED NOW. This reference exists to ask Roman a question about the
+# guards' register, and he has not answered it. A second guard round before his
+# answer would be the steward answering it. `no gate:` key is needed for a job
+# that is not queued.
+#
+# THE VARIANT: `authored_guards_ref_bright` in `pipeline/wave-drafts.yaml` —
+# `authored_guards_ref` plus the lighting block that
+# `ep2-b04-goblin-fieldbright-0811` (commit cbcc716) proved on beat 04 against
+# identical seeds, where the same positive had drawn dark and the block drew a
+# bright morning field. Seven terms are added rather than eight because this
+# variant already carries `no night`; the sent negative is a SUPERSET of the
+# proven block.
+#
+# MEASURED ON THE BOX'S REAL CLIP TOKENIZER BEFORE BEING WRITTEN DOWN, beat 5,
+# this variant, `--dry`, nothing drawn:
+#   positive 70/77 (7 headroom), STYLE ANCHOR PRESENT, count tag `2boys` derives
+#   negative recipe 77 -> sent 77 (budget 77): NO NEGWARN, NOTHING DROPPED
+#   SENT: photorealistic, 3d render, abstract, text, watermark, signature, low
+#         quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin
+#         texture, girl, child, dark fantasy, night, glowing visor, weapon, hood,
+#         screen, dark, dusk, sunset, dim lighting, moody lighting, low key,
+#         shadows dominant, photorealism
+# This beat is the opposite of beat 02's case: every existing term survives AND
+# all seven new ones land. It is also EXACTLY at budget with ZERO headroom — the
+# next term added to beat 5 will start dropping others, and `fit_negative`
+# sacrifices the house tier first. Recorded because it is a real constraint on
+# whoever writes the next round.
+#
+# ONE TENSION, NAMED: the positive asks for `long soft shadows` and the block
+# bans `shadows dominant`. Different claims, both sent; if the next round comes
+# back with the light flattened, that is the term to drop first.
 
 id: ep2-b05-guards-ref-0811
 task: ep2-b05-guards-ref-0811
