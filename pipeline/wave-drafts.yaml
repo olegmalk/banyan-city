@@ -121,6 +121,82 @@
 
 beats:
 
+  # ---------------------------------------------------------------------------
+  # BEAT 01 IS IN THIS FILE AS OF 2026-08-11 ~21:2x, AND THE HEADER ABOVE SAYS IT
+  # SHOULD NOT BE. That line ("BEATS 01/12/18/21 are plant-only, already handled")
+  # was true while beat 01 was handled by img2img off the founder's approved
+  # plate. It stopped being true tonight: `ep2-b01-r8-sample` measured the plate
+  # overriding the prompt's palette at BOTH strengths ("at 0.35 the palette has
+  # not moved, and at 0.55 ... it has STILL not moved"), and the same record notes
+  # "the t2i control renders that sky correctly on all four seeds, so the prompt
+  # is not the problem; the init is overriding it". An init image overrides the
+  # positive AND the negative, so the two faults the founder named on this beat —
+  # "none of them have figs and all of them have too many leafs" (2026-08-10
+  # picking page) — cannot be answered from that plate. They are prompt faults and
+  # they need a canvas the prompt owns. That is a text2img round, and this file is
+  # where a draft prompt lives before shots.md is touched.
+  #
+  # WHY NOT EDIT shots.md's BEAT 01 FENCE INSTEAD. Same reason the goblin wave
+  # exists: shots.md is the string every other renderer sends for this beat, and
+  # three beat-01 jobs are live on it right now (figmatte, brightbase-figmatte,
+  # the two figgrow LTX arms). Changing it would change their prompt underneath
+  # them. Nothing in shots.md moves.
+  #
+  # `kind: guard` IS A HARNESS TOKEN, NOT A CLAIM ABOUT THE PICTURE. There are no
+  # guards in beat 01 and no goblin either. `guard` is the only `kind` that
+  # render_wave_sample.py:193 accepts without a {{GOBLIN}} marker, and its
+  # `extra_neg: guard` tier sends neither the fusion tags nor the species tags —
+  # which is right here, since a collision needs two bodies and this frame has
+  # none. `tag: ''` because `_tag_from_clause` finds no person noun in the first
+  # clause and check() faults if the declared tag and the derived one disagree.
+  #
+  # TWO KEYS, BYTE-IDENTICAL, AND THAT IS DELIBERATE. render_wave_goblin.py's
+  # whole-wave path reads `d["authored"]` by name for every beat in this file, so
+  # a beat block without that key would KeyError every sibling lane's `--dry`.
+  # `authored_b01_t2i_fig` is what the job renders and what the sidecar records.
+  # Beat 11 already carries a byte-identical pair for its own reason. If you edit
+  # one, edit both — or delete this whole block once beat 01 is settled.
+  #
+  # THE CANONICAL SUNRISE IS DROPPED HERE ON PURPOSE. shots.md asks for `peach and
+  # gold sunrise sky` and the record says beat 01 "came back dark-sunset" against
+  # those words. Sunrise and sunset are the same picture to this checkpoint, so
+  # this draft asks for the unambiguous thing (`bright morning light`) and bans
+  # the other one — the eight-term block proven on beat 04 tonight against
+  # identical seeds. A round that keeps the ambiguous ask cannot use the block.
+  #
+  # WHAT IS INHERITED FROM shots.md's OWN FENCE, word for word: `one small round
+  # green fig`, the stem, `whole plant in frame`, and the people bans it has
+  # always carried MINUS `no boy` and `no person` — check() faults unconditionally
+  # on those two (`peopled beat negates its own subject`), a rule written for the
+  # fifteen goblin beats. So this beat renders with a weaker people-defence than
+  # its own fence uses, which is a real and stated cost of borrowing this harness.
+  # `no white fruit, no pale fruit` come from the b01 inpaint lane's r2 negative,
+  # where the fig kept arriving as a white orb.
+  1:
+    slug: cold-open
+    kind: guard
+    tag: ''
+    extra_neg: guard
+    gist: cold open / one fig, few leaves
+    authored: >-
+      A tiny seedling in an open grassy field, one small round green fig
+      growing on its thin stem, only three or four leaves, whole plant in
+      frame. Static camera, medium shot, bright morning light, cinematic
+      lighting, detailed, newest, masterpiece, best quality, very aesthetic No
+      girl, no child, no mascot, no creature, no face, no many leaves, no lush
+      foliage, no white fruit, no pale fruit, no dark, no night, no dusk, no
+      sunset, no dim lighting, no moody lighting, no low key, no shadows
+      dominant. No photorealism, no 3D render look. 9:16 vertical, no text.
+    authored_b01_t2i_fig: >-
+      A tiny seedling in an open grassy field, one small round green fig
+      growing on its thin stem, only three or four leaves, whole plant in
+      frame. Static camera, medium shot, bright morning light, cinematic
+      lighting, detailed, newest, masterpiece, best quality, very aesthetic No
+      girl, no child, no mascot, no creature, no face, no many leaves, no lush
+      foliage, no white fruit, no pale fruit, no dark, no night, no dusk, no
+      sunset, no dim lighting, no moody lighting, no low key, no shadows
+      dominant. No photorealism, no 3D render look. 9:16 vertical, no text.
+
   2:
     slug: the-sprint
     kind: goblin
@@ -357,6 +433,83 @@ beats:
       quality, very
       aesthetic No girl, no child. No photorealism, no 3D render look. 9:16
       vertical, no text.
+    # ── `authored_b03_field_solo` — HIS THREE BEAT-03 FAULTS, 2026-08-11 ~21:2x.
+    # The founder on the episode-2 picking page, verbatim: "ai is going too crazy,
+    # making the goblin in a house, making the goblin compeltely white, making 2
+    # goblins, and other weird stuff". Three named faults on one beat. This
+    # variant answers each in the channel that binds on this checkpoint, and says
+    # up front that it is therefore NOT a one-variable round.
+    #
+    # WHY THREE AT ONCE IS DEFENSIBLE HERE AND USUALLY IS NOT. Each fault has its
+    # own visible predicate — a house behind him, white skin, a second goblin —
+    # so a reader can attribute each outcome separately by looking. That is not
+    # true of a taste axis, and it is why the wave's other rounds move one term.
+    # The fourth change, the eight-term lighting block, is not under test at all:
+    # `ep2-b04-goblin-fieldbright-0811` ran it against IDENTICAL SEEDS tonight and
+    # its bright-field predicate hit where the byte-identical positive had drawn
+    # dark an hour before. It rides along as a proven propagation.
+    #
+    # SETTING, AFFIRMATIVE AND EARLY. `in an open grassy field` goes in the first
+    # sentence ahead of the action, because beat 04's house drift was diagnosed as
+    # an OMISSION — a beat that names no background lets an anime prior fill it
+    # with interior walls — and beat 02, which says `in the grass`, has never come
+    # back indoors. `rooted in the grass` is dropped in the same move: the field
+    # clause already says the sapling is outdoors and in the ground, and paying
+    # for the new words by deleting a redundant one is the only reason the
+    # positive still fits. The prohibition (`no house, no building, no indoors`)
+    # lives in the negative only — `indoors` is the Danbooru tag for what he saw.
+    #
+    # SKIN AND COUNT, THE TWO GENUINELY NEW TERMS. `no pale skin, no white skin`
+    # for "compeltely white"; `pale skin` is the real Danbooru tag and `white
+    # skin` is the plain description of the frames, so both go rather than
+    # guessing which one the checkpoint knows. `no multiple boys` for "2 goblins"
+    # — the Danbooru counter-tag to `solo`, which the positive already carries.
+    # `2boys` is NOT sent: `_NEGATION` only lifts a clause starting with a letter,
+    # so a digit-leading tag would silently stay in the positive and ASK for what
+    # it means to forbid. Three tags bought in total, which is three more than
+    # tonight's winning rounds bought — the risk is stated in the job spec.
+    #
+    # NOTHING TOUCHES THE CHARACTER. Same `{{GOBLIN}}` slot, same `from front`,
+    # same `medium shot`, same crouch-behind-the-stem staging and the same joke
+    # (`hides none of him`). His cross-seed consistency complaint is not addressed
+    # by this round and no adjective was added pretending to.
+    # TWO CUTS MADE BY THE BOX'S DRY RUN AND NOT BY TASTE, both recorded because
+    # they are differences from `authored_staged` that nobody chose:
+    #   1. `static camera` is GONE from the positive. The first version measured
+    #      78 tokens — ONE over — and `compress()` drops whole trailing SENTENCES,
+    #      so the entire style tail (`... masterpiece, best quality, very
+    #      aesthetic`) went and check() faulted STYLE ANCHOR MISSING. Nothing
+    #      would have drawn. `static camera` is the cheapest thing in the sentence
+    #      that cannot change a STILL: it is a motion instruction, and this
+    #      harness makes single frames. The same trade, for the same reason, is
+    #      recorded on beat 02's hide variant, which paid with a pose clause.
+    #   2. `no white skin` and `no building` are GONE from the negative. With them
+    #      in, the sent negative also dropped `photorealism` and — worst —
+    #      `shadows dominant`, one of the eight lighting terms this round exists
+    #      to propagate, and a seven-eighths block is no longer the block beat 04
+    #      proved. Cutting the two bought both of those back: measured 76/77 sent,
+    #      all eight lighting terms present. `pale skin` is the real Danbooru tag
+    #      and carries the white-goblin fault on its own; `house` and `indoors`
+    #      carry the interior without `building`.
+    #      WHAT THE CUTS DID NOT BUY BACK, stated because the earlier draft of
+    #      this note wrongly claimed they did: the whole SCALE tier is still
+    #      dropped — `mature tree, large tree, thick trunk, full canopy, forest,
+    #      bush, shrubbery`, every one of them, on the beat whose joke is a
+    #      pencil-thin sapling. `fit_negative` sacrifices house then scale before
+    #      it touches a beat term, and this beat's `full` fusion tier was over
+    #      budget before this round added anything. The only scale defence left is
+    #      the positive's own `a tiny sapling` and `pencil-thin stem`. If a seed
+    #      comes back with a mature tree in it, that is the term budget and the
+    #      fix is fewer beat terms, not more.
+    authored_b03_field_solo: >-
+      A small goblin boy, {{GOBLIN}}, solo, from front, crouches in an open
+      grassy field behind the pencil-thin stem of a tiny sapling that hides none
+      of him, his face visible beside it. Deadpan comedic staging, medium shot,
+      bright morning light, cinematic lighting, detailed, newest, masterpiece,
+      best quality, very aesthetic No girl, no child, no house, no indoors, no
+      pale skin, no multiple boys, no dark, no night, no dusk, no sunset, no dim
+      lighting, no moody lighting, no low key, no shadows dominant. No
+      photorealism, no 3D render look. 9:16 vertical, no text.
 
   4:
     slug: the-footnote
@@ -439,6 +592,45 @@ beats:
       indoors, no dark, no night, no dusk, no sunset, no dim lighting, no moody
       lighting, no low key, no shadows dominant. No photorealism, no 3D render
       look. 9:16 vertical, no text.
+    # ── `authored_b04_fieldban` — THE WALLS, BANNED HARDER, 2026-08-11 ~21:3x.
+    # ONE VARIABLE against `authored_field_bright`, which is the round the founder
+    # has NOT yet ruled on but whose lighting predicate hit. His beat-04 sentence
+    # is the reason this exists: "for beat 4 its also not too bad but character
+    # consistency, and the background is a house."
+    #
+    # TWO CHANGES, BOTH AIMED AT THE WALLS AND NOTHING ELSE:
+    #  1. THE SETTING MOVES TO THE FRONT OF THE POSITIVE. `authored_field_bright`
+    #     states the field SEVENTH, after the face, the breath, the eyes and the
+    #     ears — by which point an anime close-up prior has already committed the
+    #     background. `in a blurred open grassy field` now sits in the third
+    #     clause, before the face. This is a MOVE, not an addition: the words
+    #     `behind him` are dropped and `grassy` added, so the clause is a token
+    #     shorter than the one it replaces and the positive does not grow.
+    #  2. `no interior` and `no architecture` join the negative chain. The other
+    #     three walls terms (`house`, `building`, `indoors`) were already there
+    #     and are untouched.
+    #
+    # THE COUNT TAG IS UNTOUCHED AND THAT IS CHECKED, NOT ASSUMED: every insertion
+    # is after the first comma-clause, `A small goblin boy` still heads the
+    # sentence, and `_tag_from_clause` still derives `1boy`.
+    #
+    # MEASURED BEFORE STAGING, on this Mac's pessimistic estimator, which the
+    # parent round proved reads the NEGATIVE exactly (it reproduces the box's
+    # `sent 76` for `authored_field_bright` to the token). This variant sends 77
+    # of 77 with EVERY authored `no ...` term arriving, and the only casualties
+    # are two house-tier quality tags, `realistic skin texture` and `jpeg
+    # artifacts`. `text`, `female goblin` and `elf` all survive, which are the
+    # three the fault checks care about. The spec still runs `--dry` first so the
+    # box's real tokenizer gets the last word for $0.
+    authored_b04_fieldban: >-
+      A small goblin boy, {{GOBLIN}}, solo, in a blurred open grassy field, his
+      face filling the frame, holding his breath with cheeks puffed and huge
+      eyes darting, enormous ears twitching. Slow push-in, close-up, soft
+      morning light, cinematic lighting, detailed, newest, masterpiece, best
+      quality, very aesthetic No girl, no child, no house, no building, no
+      interior, no indoors, no architecture, no dark, no night, no dusk, no
+      sunset, no dim lighting, no moody lighting, no low key, no shadows
+      dominant. No photorealism, no 3D render look. 9:16 vertical, no text.
 
   5:
     slug: the-patrol
@@ -594,6 +786,46 @@ beats:
       night, no glowing visor, no weapon, no hood, no screen, no dark, no dusk,
       no sunset, no dim lighting, no moody lighting, no low key, no shadows
       dominant. No photorealism, no 3D render look. 9:16 vertical, no text.
+    # ── `authored_b05_warmfield` — THE SNOW, 2026-08-11 ~21:3x. ONE VARIABLE
+    # against `authored_guards_silly`, the round drawn from his ~20:27 answer.
+    # His beat-05 verdict is the whole brief: "almost all look like they are in
+    # some snowy forest, otherwise its actually not bad". The second half of that
+    # sentence is an instruction not to touch anything else, and nothing else is
+    # touched — the silly-bureaucrat register, the bare heads, the armour terms
+    # and the whole eight-term lighting block carry over word for word.
+    #
+    # TWO CHANNELS FOR ONE FAULT, WHICH IS TWO FAULTS:
+    #   SNOWY  — `no snow, no winter` in the negative, and `warm green` on the
+    #            field in the positive. Affirmative colour is cheap here and the
+    #            beat had none: `grassy morning field` never said what colour the
+    #            grass was, and a white field satisfies it.
+    #   FOREST — `no forest`, bare. Beat 05 has no `sapling` and no `tiny` in its
+    #            positive, so `_SMALL` never fires and the eight-term SCALE block
+    #            — which is where `forest` normally comes from — is NOT sent on
+    #            this beat at all. That is why a patrol kept turning up among
+    #            trees while the sapling beats never did: on beat 05 nothing has
+    #            ever forbidden a forest. This is the fix for the half of his
+    #            sentence that the palette does not reach.
+    #
+    # WHY THREE TERMS AND NOT `frost, ice, pine forest` TOO. Measured, not
+    # preferred: the five-term form costs NINE house-tier quality tags to the
+    # budget and the three-term form costs SIX, and the three-term form is the
+    # one that bans bare `forest` — `pine forest` leaves every other kind of tree
+    # standing. Fewer terms, broader ban, three more quality tags kept.
+    #
+    # `2boys` still derives; `Two round guard men` is untouched at the head of the
+    # first comma-clause, which is all `_tag_from_clause` reads.
+    authored_b05_warmfield: >-
+      Two round guard men in dull dented mismatched armor pieces stand side by
+      side facing camera in a warm green grassy morning field, silly harmless
+      bureaucrats with round soft bodies and bare heads, both faces clearly
+      visible, one holding a bark clipboard. Medium shot, bright morning light,
+      cinematic lighting, detailed, newest, masterpiece, best quality, very
+      aesthetic No girl, no child, no snow, no winter, no forest, no helmet, no
+      knight, no full plate, no dark fantasy, no night, no glowing visor, no
+      weapon, no hood, no screen, no dark, no dusk, no sunset, no dim lighting,
+      no moody lighting, no low key, no shadows dominant. No photorealism, no
+      3D render look. 9:16 vertical, no text.
 
   6:
     slug: the-clipboard

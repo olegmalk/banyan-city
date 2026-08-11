@@ -7726,3 +7726,498 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+# ── FIVE RECORDS FROM THE NIGHT REFILL LANE, 2026-08-11 21:2x-21:3x. The first
+# two are PREDICTIONS WRITTEN AFTER THEIR RENDERS HAD ALREADY FINISHED, and they
+# say so in their own first field rather than in a footnote. Both rounds were
+# enqueued at 20:53:2x (queue ids `...-1786467204` and `...-1786467205`) and both
+# were already sitting in the box queue's `done\` directory when this lane listed
+# it at 21:08. They are therefore NOT blind predictions and NOT part of the
+# rolling hit rate.
+#
+# WHY THEY ARE WORTH WRITING ANYWAY, which is the only defence they have: the
+# ledger's own rule is "written BEFORE the founder sees the artifact", and he has
+# not. He gave the three bedtime answers below at ~20:27 and stopped for the
+# night. This lane has not fetched, opened or looked at a single frame from either
+# round — no scp, no sheet, no contact print — and the predicates were handed to
+# it by the orchestrating lane, which states it fixed them in-session before the
+# two jobs were enqueued. This lane cannot verify that claim and does not make it.
+# What it attests is narrower and checkable: these words were written against
+# pictures nobody in the loop has looked at.
+- id: ep2-b02-goblin-hide-0811
+  date: 2026-08-11
+  kind: prediction
+  written_after_the_render_and_what_that_costs: >-
+    Enqueued 20:53:24, finished before 21:08, record written ~21:25. The frames
+    existed when this was written. Excluded from the rolling hit rate for that
+    reason — a scoring on it measures the predicates against HIS verdict only,
+    never against the pixels, because the pixels were available to a lane that
+    chose not to look. If a later reader wants a blind record of this round,
+    there is none and this is not it.
+  subject: "node 002b beat 02 the-sprint — the HIDE round. Variant
+    `authored_staged_med_occl_hide`, slot `green skin`, four seeds, $0. Answers
+    his ~18:40 sentence that the goblin 'looks more like he grabs the sapling or
+    is just next to the sapling, not hiding behind it'."
+  steward_provisional: true
+  pick: null
+  scores: {}
+  address_key: >-
+    Spec `pipeline/jobs/ep2-b02-goblin-hide-0811.yaml`, queue id
+    `ep2-b02-goblin-hide-0811-1786467204`, outputs
+    `out-b02-hide\02-the-sprint-wave1-s0..3.png` with sidecars. Read against the
+    identical-seed `out-b02-occlbright` frames.
+  predicted: >-
+    (1) COWERING POSTURE IN AT LEAST 2 OF 4 — shoulders hunched, body lowered,
+    reading as someone trying to be small rather than someone standing beside a
+    plant.
+    (2) HANDS NOT TOUCHING THE PLANT, 4 OF 4. This is the half of his sentence
+    with a hard edge: "it looks like he's ripping the sapling out". `no grabbing,
+    no pulling, no uprooting` are in the sent negative and `hands to his chest` is
+    in the positive, so a single frame with a hand on the stem is a clean miss.
+    (3) BRIGHT FIELD, 4 OF 4 — the eight-term lighting block rides along, proven
+    on beat 04 at identical seeds.
+  the_cloak_predicate_was_asked_for_and_is_not_predictable: >-
+    The briefing for this lane listed a fourth predicate, "cloak present 4/4". It
+    is NOT recorded as a prediction, because the round cannot satisfy it. The job
+    that ran is on the box in `done\ep2-b02-goblin-hide-0811-1786467204.json` and
+    its argv reads `--goblin-def green skin` — no cloak, in either step. The spec
+    on disk says `goblin_def: green skin`, and every one of tonight's 22 ep2 specs
+    says the same. The only cloak in the picture is a COMMENT in wave-drafts.yaml
+    above this variant ("The slot this variant renders with now carries the
+    patchwork cloak; that is a job-spec change and its authority is quoted
+    there") which no spec ever implemented. So the honest predicate is the
+    opposite one: NO CLOAK IN ANY OF THE 4, because nothing asked for one. If a
+    cloak appears it is invention, not compliance. His verdict 3 tonight
+    authorises the cloak; it has not been rendered yet by anybody.
+  what_a_miss_means: >-
+    If the hands are on the plant with three explicit prohibitions in the sent
+    negative, the failure is not the wording — it is that "crouching behind a
+    thin stem" and "not touching it" are near-impossible to compose at medium
+    shot, and the answer is a staging change (him lower, the stem nearer camera),
+    not another term.
+  what_this_does_not_do: >-
+    Picks nothing, ranks nothing, clears no gate. R4 is his.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep2-b05-guards-silly-0811
+  date: 2026-08-11
+  kind: prediction
+  written_after_the_render_and_what_that_costs: >-
+    Enqueued 20:53:25, finished before 21:08, record written ~21:25. Same
+    exclusion and same reason as the record above: not blind, not in the rolling
+    rate, no frame looked at by this lane.
+  subject: "node 002b beat 05 the-patrol — the GUARD CHARACTER REFERENCE, silly
+    register. Variant `authored_guards_silly`, four seeds, $0. His instruction
+    was 'should probably setup a character for the guards, take your time doing
+    that'; his ~20:27 answer ratified the register in words before this drew."
+  steward_provisional: true
+  pick: null
+  scores: {}
+  address_key: >-
+    Spec `pipeline/jobs/ep2-b05-guards-silly-0811.yaml`, queue id
+    `ep2-b05-guards-silly-0811-1786467205`, outputs
+    `out-guards-silly\05-the-patrol-wave1-s0..3.png` with sidecars. Control:
+    `out-staged/05-the-patrol-wave1-s{0..3}.png`, the frames that came back as
+    one armoured knight with a glowing visor.
+  predicted: >-
+    (1) TWO FIGURES IN FRAME, 4 OF 4. The count tag derives `2boys` and the
+    positive opens `Two round guard men`; the recorded failure was one knight in
+    3 of 4, so this is the predicate the round exists for.
+    (2) BOTH FACES VISIBLE, 4 OF 4 — `stand side by side facing camera` plus
+    `both faces clearly visible`, at medium shot rather than the wide framing
+    that made a head a few pixels across.
+    (3) ROUND, COMIC, BUREAUCRATIC REGISTER IN AT LEAST 3 OF 4 — harmless shapes
+    in mismatched ill-fitting armour, not dark-fantasy knights. Called at 3
+    because register is the axis this beat has failed five times.
+  the_prediction_this_round_does_not_make: >-
+    Nothing is predicted about the SETTING. His standing beat-05 complaint is
+    "almost all look like they are in some snowy forest" and this variant has no
+    snow ban and no affirmative palette beyond `daylight`. That gap is what
+    `ep2-b05-warmfield-0811` was written for, an hour later, and it is named here
+    so a snowy frame in this sheet reads as an unaddressed known fault rather
+    than as a surprise.
+  what_a_miss_means: >-
+    If the count fails again with `2boys` deriving and `Two round guard men` at
+    the head of the sentence, prompt-level count control is exhausted on this
+    beat and the next move is a reference image, which is what he asked for in
+    the first place.
+  what_this_does_not_do: >-
+    Picks nothing, ranks nothing, clears no gate, and does not itself create the
+    guard character — a reference exists when he points at a frame and says that
+    is them.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep2-bedtime-founder-answers-0811
+  date: 2026-08-11
+  kind: founder_verdict
+  subject: "three answers from the founder at ~20:27 local, 2026-08-11, to three
+    questions put to him before he stopped for the night: the guard register, the
+    beat-02 hide round, and whether the patchwork cloak goes into the frozen
+    goblin slot"
+  founder_verdict: |-
+    "1. yes, 'two silly round bureaucrats with visible faces' 2. i understand, but it looks like he's not even trying to hide, or it looks like he's ripping the sapling out. 3. if its not too much of a hassle then yes"
+  founder_verdict_date: 2026-08-11
+  outcome: n/a
+  miss_axis: >-
+    Not counted in the rolling rate. These are answers to questions, not verdicts
+    on predictions — the same class as `ep2-pickpage-founder-directive-0811`.
+  what_each_one_rules_on: >-
+    1. THE GUARD REGISTER, APPROVED IN HIS OWN WORDS: "two silly round
+    bureaucrats with visible faces". That is a recipe direction, not a verdict on
+    frames — `ep2-b05-guards-silly-0811` was written from it and drew at 20:53,
+    and he has not seen its four frames.
+    2. THE BEAT-02 CRITIQUE, and it is two distinct faults in one sentence: "not
+    even trying to hide" (posture) and "ripping the sapling out" (contact). Both
+    are answered by `ep2-b02-goblin-hide-0811`, drawn at 20:53 and also unseen by
+    him. Note he said "i understand" first — he accepted the explanation and
+    rejected the picture anyway, which is the shape most of his verdicts take.
+    3. THE CLOAK, APPROVED WITH A COST CONDITION: "if its not too much of a
+    hassle then yes". This authorises adding the faded green patchwork cloak to
+    the frozen goblin slot — the em-dash character list dropped at r8. It is an
+    R4 act and it is his.
+  the_state_of_the_cloak_as_of_this_record: >-
+    NOT IMPLEMENTED ANYWHERE, and written down because a comment in
+    wave-drafts.yaml claims otherwise. Every ep2 spec on disk carries
+    `goblin_def: green skin` (22 of 22), and the two rounds that drew after his
+    answer — hide and guards-silly, both enqueued at 20:53:2x — ran
+    `--goblin-def green skin` per their own job json on the box. So no frame yet
+    exists of the goblin he approved a cloak for. The four jobs this lane queued
+    tonight also use `green skin` UNCHANGED: the cloak is a change to the frozen
+    slot, one sample is owed to it on its own, and a lane refilling a queue is
+    not the right place to slip a character change in beside four other
+    variables. It is the obvious next sample and nobody has taken it.
+  model_action: >-
+    Predicates for answers 1 and 2 are recorded in the two prediction records
+    above. Answer 3 is an OPEN OWED SAMPLE — one beat, slot `green skin, faded
+    green patchwork cloak`, nothing else moved.
+
+- id: ep2-b01-t2i-fig-0811
+  date: 2026-08-11
+  kind: prediction
+  subject: "node 002b beat 01 cold-open — a CLEAN-CANVAS text2img round, four
+    seeds, $0. The first beat-01 round in this repo that is not conditioned on an
+    init image. Answers the two faults he named on the picking page: 'none of
+    them have figs and all of them have too many leafs'."
+  steward_provisional: true
+  pick: null
+  scores: {}
+  address_key: >-
+    Spec `pipeline/jobs/ep2-b01-t2i-fig-0811.yaml`, variant
+    `authored_b01_t2i_fig` (a beat-01 block added to wave-drafts.yaml tonight —
+    beat 01 has never been in that file), slot unused, priority 44. Outputs to
+    `out-b01-t2i\01-cold-open-wave1-s0..3.png` with sidecars, published to
+    `farm-out/ep2-b01-t2i-fig/`.
+  the_one_variable: >-
+    THE CANVAS. Every beat-01 round on the record — r8's two strengths, the fig
+    inpaint, the fig matte, the brightbase relight — starts from the founder's
+    approved plate. `ep2-b01-r8-sample` measured what that costs: "at 0.35 the
+    palette has not moved, and at 0.55 ... it has STILL not moved", and "the t2i
+    control renders that sky correctly on all four seeds, so the prompt is not
+    the problem; the init is overriding it". An init overrides the positive AND
+    the negative, so a leaf count and a fig — both prompt facts — cannot be
+    fixed from that plate. This round gives the prompt the whole frame.
+  measured_before_queueing: >-
+    Dry-run on the box's real CLIP tokenizer at drafts sha256 f4501b7b, harness
+    sha256 7efd0b96. DRY OK, no faults. Positive 58/77 with 19 tokens of
+    headroom; STYLE ANCHOR PRESENT; count tag '' derives and the draft declares
+    '' (no person in the frame). Negative recipe 74 -> sent 71. Every
+    beat-specific term reaches the model: `girl, child, mascot, creature, face,
+    many leaves, lush foliage, white fruit, pale fruit` plus all eight lighting
+    terms, plus the whole scale block (`mature tree, large tree, thick trunk,
+    full canopy, forest, bush, shrubbery`) and `photorealistic`, `photorealism`,
+    `text`. DROPPED, and named because they are a real loss: ten house quality
+    terms — realistic skin texture, jpeg artifacts, deformed, extra limbs,
+    blurry, low quality, signature, watermark, abstract, 3d render.
+  predicted: >-
+    (1) EXACTLY ONE FIG VISIBLE IN AT LEAST 2 OF 4. Low on purpose. `one small
+    round green fig growing on its thin stem` is in the sent positive at token
+    ~12, but no beat-01 round has ever produced a fig from a prompt — r8 was 0
+    of 12 — and the only figs in this repo were painted in by an inpaint mask.
+    2 of 4 would be the first evidence that the t2i canvas can draw it at all.
+    (2) FIVE LEAVES OR FEWER IN AT LEAST 2 OF 4. `only three or four leaves`
+    affirmative, `many leaves` and `lush foliage` in the negative, and the scale
+    block intact. His words were "all of them have too many leafs", which the
+    sixth scoring flagged as a standing defect no beat-01 prediction had ever
+    named. This one names it.
+    (3) BRIGHT MORNING PALETTE, 4 OF 4. The strongest of the three, because two
+    independent mechanisms back it: no init image can leak dusk into the frame,
+    and the eight-term lighting block is in the sent negative — the one thing
+    tonight proved at identical seeds. A dark frame here would mean the model
+    prior beats both, which would be a much bigger finding than this round.
+  what_a_miss_means: >-
+    If the fig misses at 0 of 4 on a clean canvas with the words at the front of
+    the prompt, then the fig is not promptable on this checkpoint at this scale
+    and the inpaint route the sibling lane is running is the ONLY route to the
+    founder's approval condition — which settles a question two lanes are
+    currently splitting effort on. If the leaves miss, the count words do not
+    bind and the next lever is a much shorter positive, not more adjectives.
+  what_this_does_not_do: >-
+    Picks nothing, ranks nothing, publishes nothing to the site, spends nothing,
+    carries no `gate:` key and clears nobody's. It does not touch shots.md: the
+    beat-01 fence is unchanged and the three live beat-01 jobs keep their prompt.
+    It also does not claim the founder's approved plate is retired — his plate is
+    still the only approved beat-01 image and this round produces candidates, not
+    canon.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep2-b03-field-solo-0811
+  date: 2026-08-11
+  kind: prediction
+  subject: "node 002b beat 03 bad-cover — four seeds, $0, against the three
+    faults he named on this exact beat: 'ai is going too crazy, making the goblin
+    in a house, making the goblin compeltely white, making 2 goblins, and other
+    weird stuff'."
+  steward_provisional: true
+  pick: null
+  scores: {}
+  address_key: >-
+    Spec `pipeline/jobs/ep2-b03-field-solo-0811.yaml`, variant
+    `authored_b03_field_solo`, slot `green skin`, priority 44. Outputs to
+    `out-b03-field\03-bad-cover-wave1-s0..3.png` with sidecars, published to
+    `farm-out/ep2-b03-field-solo/`. Read against `out-staged`'s beat-03 frames.
+  this_is_not_a_one_variable_round_and_that_is_stated_first: >-
+    Three of his faults are answered at once — setting, skin, count — plus the
+    proven lighting block riding along. The defence is that each fault has its
+    own VISIBLE predicate (a house behind him, white skin, a second goblin), so a
+    reader attributes each outcome by looking, which is not true of a taste axis.
+    The cost is that if the sheet fails as a whole, the round cannot say which
+    term failed, and the answer then is three cheap one-variable rounds, not a
+    fourth combined one.
+  measured_before_queueing: >-
+    Dry-run on the box's real CLIP tokenizer at drafts sha256 f4501b7b, harness
+    sha256 7efd0b96. DRY OK, no faults. Positive 74/77, STYLE ANCHOR PRESENT,
+    count tag `1boy` derives. Negative recipe 76 -> sent 76. All eight lighting
+    terms reach the model, as do `house, indoors, pale skin, multiple boys,
+    girl, child, photorealism, text` and the entire fusion tier plus `female
+    goblin, elf`. TWO TERMS WERE CUT BY THE MEASUREMENT, not by taste: `static
+    camera` left the positive (at 78 tokens `compress()` dropped the whole style
+    sentence and the harness faulted STYLE ANCHOR MISSING — nothing would have
+    drawn, and a motion word cannot change a still), and `no white skin` and `no
+    building` left the negative because with them in, `photorealism` and
+    `shadows dominant` — one of the eight lighting terms — were being dropped.
+    STILL DROPPED AND NOT RECOVERABLE AT THIS TIER: the whole scale block,
+    `mature tree, large tree, thick trunk, full canopy, forest, bush,
+    shrubbery`, on the beat whose joke is a pencil-thin sapling. The only scale
+    defence left is the positive's own `a tiny sapling` and `pencil-thin stem`.
+  predicted: >-
+    (1) EXACTLY ONE GOBLIN, 4 OF 4. `1boy` derives, `solo` is in the positive,
+    `multiple boys` is in the sent negative. The old sheet's second goblin came
+    from a prompt that already had `solo`, so the negative term is the new lever
+    and this predicate is the test of it.
+    (2) OUTDOOR FIELD, NO HOUSE OR INTERIOR, IN AT LEAST 3 OF 4. `in an open
+    grassy field` is affirmative and early; `house` and `indoors` are in the
+    sent negative. 3 rather than 4 because beat 04's same fix is drawn but
+    unruled, so the mechanism is one round old.
+    (3) GREEN SKIN, NOT WHITE OR PALE, 4 OF 4. The slot says `green skin` and
+    `pale skin` is negated.
+    (4) BRIGHT MORNING FIELD, 4 OF 4 — the proven block, whole, all eight terms
+    sent.
+    STATED RISK: with the scale block gone, a mature tree behind him is the
+    likeliest new failure, and it would be caused by this round's own term
+    budget rather than by the model.
+  what_a_miss_means: >-
+    A second goblin surviving `solo` + `1boy` + `multiple boys` would retire
+    prompt-level count control on this checkpoint and make a reference image the
+    only remaining route — the same conclusion the guards beat is heading
+    toward, which would make it a wave-level finding rather than a beat one.
+  what_this_does_not_do: >-
+    Picks nothing, ranks nothing, spends nothing, no `gate:` key, clears nobody's
+    gate — the fourteen `ep2-b*-goblin-wave1` specs keep theirs. It does not
+    touch the character: same `green skin` slot, no cloak, nothing added to the
+    goblin.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+# ── THE LAST TWO OF TONIGHT'S FOUR, 2026-08-11 ~21:4x. Both records are written
+# AFTER their jobs were queued and that is stated in each rather than smoothed
+# over: the card was idle, the specs validated, and holding a validated job back
+# to finish prose would have idled the GPU for nothing (CLAUDE.md, Oleg
+# 2026-08-05). What matters for a prediction is intact — NO FRAME FROM EITHER
+# ROUND HAS BEEN FETCHED, OPENED OR DESCRIBED by the lane writing this, and the
+# predicates below are the ones its spec header committed to before enqueue.
+# Anyone scoring these should weigh them one notch below a record written before
+# the queue, and the honest reason they are not is written on the line above.
+- id: ep2-b04-fieldban-0811
+  date: 2026-08-11
+  kind: prediction
+  subject: "node 002b beat 04 the-footnote — ONE SAMPLE, four seeds, $0. THE WALLS,
+    banned harder. The setting clause moves to the front of the positive and two
+    walls terms join the negative, against `ep2-b04-goblin-fieldbright-0811` at
+    identical seeds. Answers the one beat-04 fault he stated in words."
+  steward_provisional: true
+  pick: null
+  scores: {}
+  address_key: >-
+    Spec `pipeline/jobs/ep2-b04-fieldban-0811.yaml`, variant
+    `authored_b04_fieldban`, slot `green skin`. Queue ids
+    `ep2-b04-fieldban-0811-1786469447` (the lead's, ~21:30) and
+    `-1786470002` (this lane's, ~21:40) — the SAME spec queued twice by two lanes
+    inside ten minutes. Recorded because it is a real fact about tonight and not
+    a footnote: same variant, same seeds, so the second render is byte-equivalent
+    to the first and the duplication cost about two GPU-minutes, not evidence.
+    Outputs `out-b04-fieldban\04-the-footnote-wave1-s0..3.png` with sidecars,
+    published to `farm-out/ep2-b04-fieldban/`. Read against `out-b04-fieldbright`.
+  the_one_variable: >-
+    The walls, in both channels. POSITIVE: `in a blurred open grassy field` moves
+    from seventh clause to third, ahead of the face — a MOVE, not an addition,
+    since `behind him` is dropped and `grassy` added, so the clause is a token
+    shorter than the one it replaces. NEGATIVE: `no interior` and `no
+    architecture` join a chain that already carried `no house, no building, no
+    indoors`. Everything else is byte-identical to `authored_field_bright`,
+    including the whole eight-term lighting block, the `green skin` slot, the
+    close-up and the held-breath action. Seeds cannot differ: `render_wave_sample`
+    derives them as `wg.SEED + beat + i*1000` and never reads the variant.
+  why_this_round_exists: >-
+    His sentence, verbatim: "for beat 4 its also not too bad but character
+    consistency, and the background is a house." Two rounds have now aimed at
+    that background and the second one moved the light but was never ruled on.
+    The untested half is WHERE the setting sits in the sentence: an anime close-up
+    prior commits the pixels behind a head early, and this beat named its field
+    seventh, after four clauses of face.
+  measured_before_queueing: >-
+    On this Mac, not the box, and the distinction is the caveat. There is no CLIP
+    tokenizer here so `compress()` POSITIVE counts are estimates. The NEGATIVE
+    estimator is not an estimate on this beat — it reproduced the box's `sent 76`
+    for `authored_field_bright` to the token. On it this variant sends 77 of 77
+    with EVERY authored `no ...` term arriving, none dropped, none deduplicated;
+    the only casualties are two house quality tags, `realistic skin texture` and
+    `jpeg artifacts`. `text`, `female goblin` and `elf` survive — the three the
+    fault checks fail on — and `1boy` derives. The spec's `--dry` step re-measures
+    on the box's real tokenizer and returns nonzero before torch loads, so a wrong
+    estimate costs $0.
+  predicted: >-
+    (1) NO STRUCTURE IN AT LEAST 3 OF 4 — no wall, window, door, roofline or
+    interior anywhere in frame, judged against the identical-seed
+    `out-b04-fieldbright` frames. Called at 3 rather than 4 because the negative
+    now carries five walls terms with zero headroom left, and the failure shape
+    if it fails is one seed keeping an architectural edge in the blur.
+    (2) EXACTLY ONE GOBLIN, 4 OF 4 — `solo` in the positive and `1boy` enforced by
+    check(). His "making 2 goblins" was a beat-03 sentence, not a beat-04 one, and
+    this predicate is written to catch a regression rather than to fix a fault.
+    (3) A BRIGHT MORNING FRAME, 4 OF 4 — the eight-term block is inherited whole
+    from the round whose bright predicate hit at identical seeds, so anything less
+    than 4 here means the block stopped working when the positive was reordered.
+    STATED RISK: the negative is FULL at 77/77. `dark` is blunt in an SDXL
+    negative and can pull saturation out of the frame, the goblin's green
+    included; bright-but-flat is a real outcome and its answer is a narrower
+    block, not more terms.
+  what_a_miss_means: >-
+    If predicate 1 misses with five walls terms provably sent, prompt-level
+    setting control is exhausted on this beat and the next lever is a reference or
+    a control image, not another word. If it hits, the fix is one line every
+    close-up beat in episode 2 inherits — state the setting before the face.
+  what_this_does_not_do: >-
+    Picks nothing, ranks nothing, publishes nothing, spends nothing, no `gate:`
+    key, clears no other spec's gate. It does not touch his character-consistency
+    complaint, which is cross-seed drift that no axis in v1 can see and no
+    adjective fixes. R4 is his. Writes to `out-b04-fieldban` so the fieldbright
+    frames are not overwritten.
+  script_authority: >-
+    Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`,
+    `approved_on: 2026-08-03`, read from the leaf the render gate reads
+    (genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml:17-18). Neither
+    `approval_condition` touches beat 04 — both are beat 01's fig and beat 16's
+    leaf. node.md's direction for beat 04 is "Camera close on the held breath."
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
+
+- id: ep2-b05-warmfield-0811
+  date: 2026-08-11
+  kind: prediction
+  subject: "node 002b beat 05 the-patrol — ONE SAMPLE, four seeds, $0. THE SNOWY
+    FOREST, answered in two channels. `authored_guards_silly` plus `no snow, no
+    winter, no forest` and `warm green` on the field, at identical seeds. This is
+    the gap `ep2-b05-guards-silly-0811` named and deliberately left open."
+  steward_provisional: true
+  pick: null
+  scores: {}
+  address_key: >-
+    Spec `pipeline/jobs/ep2-b05-warmfield-0811.yaml`, variant
+    `authored_b05_warmfield`. Queue ids `ep2-b05-warmfield-0811-1786469448` (the
+    lead's, ~21:30) and `-1786470001` (this lane's, ~21:40) — the same spec queued
+    twice by two lanes, same variant and same seeds, so the second render repeats
+    the first rather than adding evidence. Outputs
+    `out-b05-warm\05-the-patrol-wave1-s0..3.png` with sidecars, published to
+    `farm-out/ep2-b05-warmfield/`. Read against `out-guards-silly`.
+  the_one_variable: >-
+    Three negative terms and two positive words. NEGATIVE: `no snow, no winter, no
+    forest`. POSITIVE: `grassy morning field` becomes `warm green grassy morning
+    field`. The silly-bureaucrat register he ratified at ~20:27, the bare heads,
+    the armour terms and the entire eight-term lighting block carry over word for
+    word. Seeds are the same four integers — `render_wave_sample` derives them
+    from beat and index and never reads the variant.
+  why_this_round_exists: >-
+    His sentence, verbatim: "almost all look like they are in some snowy forest,
+    otherwise its actually not bad". The second clause is an instruction not to
+    disturb anything else, and nothing else is disturbed.
+  the_finding_this_round_rests_on: >-
+    SNOWY and FOREST are two faults, not one, and only one of them is a palette.
+    Beat 05's positive contains no `sapling` and no `tiny`, so `_SMALL` never
+    fires and the eight-term SCALE block — which is where `forest`, `bush` and
+    `shrubbery` come from on every plant beat — IS NOT SENT ON THIS BEAT AT ALL.
+    Nothing has ever forbidden a forest here. That is why a patrol keeps turning
+    up among trees while the sapling beats do not, and it is a hole in the recipe
+    rather than a taste call.
+  measured_before_queueing: >-
+    Same caveat as the beat-04 record: measured here, not on the box, with the
+    negative estimator that was proven exact on beat 04. This variant sends 77 of
+    77 with every authored `no ...` term arriving, all three new ones and the
+    whole lighting block; the casualties are six house-tier quality tags. `text`
+    survives, which is the fault check that applies to a guard beat — `female
+    goblin` and `plant hair` do not apply and are not sent (`extra_neg: guard`).
+    `2boys` derives, which is not decoration: the staged frames drew ONE figure
+    twice. WHY THREE TERMS AND NOT FIVE, measured rather than preferred: adding
+    `frost, ice, pine forest` costs NINE house tags instead of six, and the
+    three-term form is the one that bans bare `forest`, where `pine forest` leaves
+    every other kind of tree standing.
+  predicted: >-
+    (1) NO SNOW ANYWHERE, 4 OF 4 — no white ground, no frosted grass, no falling
+    flakes. Called at 4 because two channels now carry it and the negative is the
+    channel proven to bind on this checkpoint.
+    (2) GREEN GRASS READS AS GREEN IN AT LEAST 3 OF 4 — the affirmative half.
+    Called at 3, not 4, because `no dark` and `no low key` are in the same
+    negative and can flatten saturation, which is the stated risk of the lighting
+    block wherever it goes.
+    (3) THE STAGING STILL READS IN AT LEAST 2 OF 4 — two round bare-headed guards,
+    both faces visible, one clipboard. This is the predicate that protects his
+    "otherwise its actually not bad": if the setting fix costs the register he
+    just ratified, the round is a loss even with a green field.
+  what_a_miss_means: >-
+    If snow survives an explicit `no snow, no winter` on the channel that binds,
+    then the snowy read is coming from something in the positive nobody has
+    identified — `armor`, `patrol` and `dented` all carry cold-weather company on
+    an anime checkpoint — and the next step is subtracting one of those, not
+    adding a fourth ban. If predicate 3 misses while 1 and 2 hit, the answer is to
+    split them: keep the palette fix and drop the affirmative colour words.
+  what_this_does_not_do: >-
+    Picks nothing, ranks nothing, clears no gate, spends nothing. It does not
+    create the guard character reference he asked for — that exists when he points
+    at a frame and says so, which is R4 and his alone.
+  script_authority: >-
+    Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`,
+    `approved_on: 2026-08-03`, read from the leaf the render gate reads. Neither
+    `approval_condition` touches beat 05 — both are beat 01's fig and beat 16's
+    leaf. Beat 05 is THE PATROL, the guards' entrance.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
