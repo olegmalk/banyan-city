@@ -1,0 +1,18 @@
+# Shot provenance (7.2) — written by hand from the committed job spec,
+# because the box wrote these clips without sidecars.
+platform: local-gpu (rtx5090)
+model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+model_licence: LTX-2 Community License Agreement
+cost_usd: 0
+shot_beat: 8
+size: 704x1280
+frames: 313
+seconds: 13.042
+fps: 24
+steps: 8@352x640+3@704x1280
+guidance: 1.0
+seed: 20260739
+task: ep1-b08-313f-vo-length-0811
+job_spec: pipeline/jobs/ep1-b08-313f-vo-length.yaml
+prompt_and_negative: recorded in pipeline/jobs/ep1-b08-313f-vo-length.yaml
+why: 313 frames is where beat 08 stops looping its picture under a 12.5s line

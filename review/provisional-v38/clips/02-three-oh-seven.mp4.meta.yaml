@@ -1,0 +1,58 @@
+# ===================================================================
+# PROVISIONAL — v38 clip set. Nothing here is canon, nothing here is
+# approved, and no file in this directory may be promoted to a canon
+# name or published. Taste is the founder's (R4).
+# ===================================================================
+# v38 is v37 with beat 02 replaced and nothing else touched. This clip
+# is the re-render from job ep1-b02-121f-framing-hold-0811 (box task
+# ep1-b02-121f-framing-hold-0811-1786444132, rc 0), renamed from
+# 02-three-oh-seven-LTX-121f-hold.mp4 so render_t3 matches it by slug.
+# It replaces the founder's 2.542s face-B pick, which played 1.91x
+# under its own 4.451s line — he has ruled out looping.
+#
+# THE FRAMING WAS CHECKED BEFORE THIS CLIP WAS WIRED. The previous
+# 121f attempt (review/tonight/02-three-oh-seven-LTX-121f.mp4) started
+# on the plate and by frame 4 had travelled behind the subject into a
+# wide over-the-shoulder silhouette, because the prompt's subject tail
+# described shots.md's stage direction instead of the plate. This
+# render rewrote that tail to describe the plate. Frames 0, 1, 2, 4, 8,
+# 30, 60, 90, 100, 105, 110, 115, 118 and 120 were extracted and read
+# by eye: the close front-right view with his face lit pink holds in
+# every one. The engineer keeps his size and his head height, the
+# monitor stays behind his shoulder, the keyboard and mug hold their
+# places. What moves is his head tilting a fraction, his hand lowering
+# from his glasses, and a wisp of steam off the mug. No metric picked
+# this; the flow metric is disqualified on this series (131e433).
+# Whether the ambient motion is interesting enough is R4, not settled
+# here.
+# Shot provenance (7.2) — from the box render record
+platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+model: diffusers/LTX-2.3-Distilled-Diffusers
+model_licence: LTX-2 Community Licence Agreement
+shot_beat: 2
+size: 704x1280
+seconds: 5.042
+frames: 121
+fps: 24
+steps: 8@352x640+3@704x1280
+guidance: 1.0
+shift: 1.0
+seed: 20260902
+task: ep1-b02-121f-framing-hold-0811-1786444132
+cost_usd: 0
+plate: genomes/sapling/nodes/001-capability-inventory/stills/02-three-oh-seven.png
+plate_prep: cover-centre crop 832x1216 -> 704x1280 (plate_prep.py CROP_POLICY)
+prompt: |-
+  2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. the seated engineer holds his pose at the desk, his shoulders steady, his head kept at the same angle toward the monitor; only his fingers move lightly on the mechanical keyboard. small ambient motion only, the camera is locked on a tripod and stays perfectly still, the engineer stays at the same size in the same place in frame with his head at the same height throughout, the shot stays a close view from the front and right with his face visible, the monitor keeps the same size and the same position behind his shoulder, the desk, the keyboard and the mug keep their places from first frame to last, the composition is identical in every frame. within that fixed frame the monitor glow pulses very faintly across his face and glasses and across the desk, a thin wisp of steam curls up from the mug, dust motes drift slowly through the screen light, living scene. Subject already in frame: one seated young man in a black hoodie at close range from the front and right, his face lit pink by the monitor, glasses, messy dark hair, a large glowing monitor behind his shoulder, a mechanical keyboard, a mug, a dark apartment at three in the morning.
+# Recorded for §7.2 completeness, NOT read at render time: at guidance
+# 1.0 classifier-free guidance is off, so the negative is never sampled
+# (ltx_i2v.py do_classifier_free_guidance gate).
+negative: |-
+  second person, crowd, extra hand, extra arm, extra face, animal, bird, insect, new object appearing, photorealism, 3D render look, text, 静态, 静止, frozen frame, still image, no motion, photorealistic, photograph, live action, film still, 3D render, CGI, octane, scene change, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+clip_sha256: ce5dca249bd7e28f9410d19b276f5ddc542d0fd14d80955a7950f44953ff61d9
+provisional: true
+provisional_reason: |-
+  a bench re-render wired into a bench cut; the founder has not seen it and
+  has passed no verdict on it. It displaces his own face-B pick, which is a
+  taste call (R4) he has not made — the reason for the swap is length, not
+  preference.
