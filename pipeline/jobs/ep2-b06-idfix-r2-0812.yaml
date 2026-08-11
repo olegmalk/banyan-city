@@ -1,0 +1,182 @@
+# EPISODE 2, BEAT 06 THE CLIPBOARD - r2 OF THE IDENTITY-FROZEN ROUND. One sample,
+# four seeds, $0. 2026-08-12, the fixer lane.
+#
+# BEAT 04'S DIAGNOSIS, REPRODUCED EXACTLY, AND GIVEN BEAT 04'S FIX.
+#
+# ALL FOUR `_idfix` FRAMES ARE INDOORS: a window upper left in s0, clear window
+# panes in s2, a blown-out window behind the profile in s3, a brown interior wall
+# in s1. Episode 2 happens in a morning field.
+#
+# THE CAUSE IS AN OMISSION AND IT IS READABLE IN THE RECIPE, NOT GUESSED AT. This
+# beat's sentence names NO SETTING anywhere, and this beat's negative carries NO
+# walls ban at all - no `house`, no `interior`, no `indoors` (read out of the
+# render sidecar, not assumed). Beat 04's comment already wrote the rule: a beat
+# that names no background lets an anime prior fill it with interior walls. Beat
+# 06 is that rule reproduced, so this is not a new theory.
+#
+# THE FIX IS BEAT 04'S, IN BEAT 04'S PLACEMENT. `in a sunny grassy field` goes in
+# the FIRST clause, ahead of the action - the position `authored_b04_fieldban`
+# proved and that beats 08, 09 and 10 already carry. The walls ban `no house, no
+# interior, no indoors` joins the negative.
+#
+# PAID THE PROVEN WAY, TWICE OVER. `Slow drift in` is a MOTION phrase in a STILLS
+# harness and buys nothing at all here, so retiring it funds the setting clause -
+# the same payment commit 91b5dfa made on beats 15 and 19. In the negative, `no
+# dark fantasy` retires: the eight-term dark ban already covers what it reached
+# for, and these frames are not dark, they are indoors.
+#
+# THE SEPIA PALETTE IS NOT TREATED AS A SEPARATE FAULT. The frames are
+# desaturated because they are in a brown room. If daylight does not return with
+# the field, that is worth knowing and the next round can chase it.
+#
+# NOT FIXED HERE, ON PURPOSE: the guard is drawn as a hard angular muscular man,
+# sharp cheekbones and bared teeth in s1, rather than the "silly harmless
+# bureaucrat" he ratified. Beat 05 SENDS those exact bureaucrat words and still
+# drew a muscular man in one frame of four, so they are known not to bind alone.
+# Spending this round on them would buy an unattributable result instead of a
+# setting. Logged for the founder in review/ep2-picks/wave2-faults-fixer.yaml.
+#
+# BOX DRY-RUN, THE SHIPPED RECIPE, on the box's real CLIP tokenizer:
+#   positive 76/77   STYLE ANCHOR PRESENT: True   count tag '1boy'
+#   'text' negated: True   negative recipe 77 -> sent 77, NO NEGWARN.
+#   `house`, `interior` and `indoors` all sent; `armor`, `helmet` and `knight`
+#   intact - his ruling is not spent to pay for anything.
+#
+# SEPARATE OUT DIRECTORY. Writes to `out-b06-idfix-r2`; overwrites no evidence.
+
+id: ep2-b06-idfix-r2-0812
+task: ep2-b06-idfix-r2-0812
+node: 002b-first-citizen
+beat: 6
+runner: box
+needs_gpu: true
+
+priority: 44
+max_attempts: 1
+owner: overnight fixer lane, 2026-08-12 (reading the identity-frozen wave and firing one r2 per faulty beat)
+
+# NO `gate:` KEY. One sample moving one channel on a recipe he has ratified.
+
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03` (read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml:17-18, the leaf the
+  render gate itself reads). His `approved_quote` verbatim: "approve 002b except.. we
+  need to make SURE the fig growing on the sapling is mentioned, last time we generated
+  002b it just.. appeared. also, the sapling was able to flail a leaf in episode 1? why
+  couldnt it do that in 002b?" Both `approval_conditions` are about beat 01''s fig and
+  beat 16''s leaf; neither touches beat 6.'
+
+consumer: >-
+  Roman's next look at beat 06, as a PAIR against the `out-b06-idfix` frames - same four seeds, one channel apart. It ranks nothing and picks nothing; the taste call stays R4's.
+
+success: >-
+  Four PNGs at C:\banyan-farm\wave-goblin-prep\out-b06-idfix-r2\06-the-clipboard-wave1-s0..3.png with their
+  .yaml provenance sidecars written at render time (7.2), all eight declared as
+  artifacts so a missing one fails rc=92 instead of passing quietly. Whether the
+  frames are good is R4's call, not this job's and not a metric's.
+
+why: >-
+  One channel against `ep2-b06-idfix-0812`: the setting, stated affirmatively in the first clause and backed by the walls ban this beat has never carried. Seeds, steps (40), guidance (7.5), size, harness and the whole guard identity are unchanged, so any difference in these frames is the field.
+
+goblin_def: green skin, bald head, patchwork cloak
+goblin_def_source: >-
+  Passed byte-identical to the `_idfix` round this answers. NO GOBLIN APPEARS IN BEAT 06 - the positive names only the one guard - so the definition is inert here and is passed unchanged purely so the two rounds differ in one channel.
+
+est_minutes: 2
+needs:
+- cuda
+- vram20
+- farm-venv
+
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+# The box's wave-drafts.yaml was scp'd from this repo and `findstr`-verified to
+# carry `authored_b06_idfix_r2` before this job was queued, and the recipe below was
+# dry-run on the box's real CLIP tokenizer. THE CHECK IS THE KEY, NOT THE
+# WHOLE-FILE SHA: sibling lanes append their own variants tonight and every append
+# moves the file sha without touching this variant. The harness REFUSES rather than
+# falling back when a key is missing, so a stale copy fails for $0.
+steps:
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '6'
+  - --goblin-def
+  - green skin, bald head, patchwork cloak
+  - --variant
+  - authored_b06_idfix_r2
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '6'
+  - --goblin-def
+  - green skin, bald head, patchwork cloak
+  - --variant
+  - authored_b06_idfix_r2
+  - --out
+  - C:\banyan-farm\wave-goblin-prep\out-b06-idfix-r2
+  - --task
+  - ep2-b06-idfix-r2-0812
+
+# DURABILITY: every still this farm makes lands single-copy on a box nothing backs
+# up. The courier runs `git add -A -- farm-out` and pushes on job_done, and
+# farm-out is NOT gitignored, so publishing is a COPY and the runner stays
+# byte-identical. allow_fail: a failed copy must never mark a good render failed.
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b06-idfix-r2"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/wave-goblin-prep/out-b06-idfix-r2/06-the-clipboard-wave1-s*.*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        # Hash the COPY, not the original: what this records has to be the bytes
+        # that get committed, or the manifest attests to the wrong file.
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+        print("   ", os.path.basename(f), h[:16])
+    # newline="\n" is load-bearing: Windows text mode rewrites \n to \r\n and every
+    # filename then carries a trailing \r that shasum -c cannot open.
+    with open(os.path.join(dst, "06-the-clipboard-idfix-r2.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    # 4 stills + 4 sidecars. Fewer means the render wrote less than it promised.
+    raise SystemExit(0 if len(src) == 8 else 1)
+
+artifacts:
+- C:\banyan-farm\wave-goblin-prep\out-b06-idfix-r2\06-the-clipboard-wave1-s0.png
+- C:\banyan-farm\wave-goblin-prep\out-b06-idfix-r2\06-the-clipboard-wave1-s1.png
+- C:\banyan-farm\wave-goblin-prep\out-b06-idfix-r2\06-the-clipboard-wave1-s2.png
+- C:\banyan-farm\wave-goblin-prep\out-b06-idfix-r2\06-the-clipboard-wave1-s3.png
+- C:\banyan-farm\wave-goblin-prep\out-b06-idfix-r2\06-the-clipboard-wave1-s0.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b06-idfix-r2\06-the-clipboard-wave1-s1.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b06-idfix-r2\06-the-clipboard-wave1-s2.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b06-idfix-r2\06-the-clipboard-wave1-s3.yaml

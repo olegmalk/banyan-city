@@ -1177,6 +1177,52 @@ beats:
       no helmet, no knight, no dark fantasy, no dark, no night, no dusk, no
       sunset, no dim lighting, no moody lighting, no low key, no shadows
       dominant. No photorealism, no 3D render look. 9:16 vertical, no text.
+    # -- `authored_b06_idfix_r2` -- 2026-08-12, the fixer lane. BEAT 04'S
+    # DIAGNOSIS, REPRODUCED EXACTLY, AND GIVEN BEAT 04'S FIX.
+    #
+    # ALL FOUR `_idfix` FRAMES ARE INDOORS: a window upper left in s0, clear
+    # window panes in s2, a blown-out window behind the profile in s3, a brown
+    # interior wall in s1. Episode 2 happens in a morning field.
+    # THE CAUSE IS AN OMISSION AND IT IS READABLE IN THE RECIPE, NOT GUESSED AT.
+    # This beat's sentence names NO SETTING anywhere, and this beat's negative
+    # carries NO walls ban at all -- no `house`, no `interior`, no `indoors`
+    # (checked in the render sidecar, not assumed). Beat 04's comment already
+    # wrote the rule: a beat that names no background lets an anime prior fill it
+    # with interior walls. So this is not a new theory, it is the same one.
+    #
+    # THE FIX IS BEAT 04'S, IN BEAT 04'S PLACEMENT. `in a sunny grassy field` goes
+    # in the FIRST clause, ahead of the action, which is the position
+    # `authored_b04_fieldban` proved and which beats 08, 09 and 10 already carry.
+    # The walls ban `no house, no interior, no indoors` joins the negative.
+    #
+    # PAID THE PROVEN WAY, TWICE OVER. `Slow drift in` is a MOTION phrase in a
+    # STILLS harness -- it buys nothing at all here -- and retiring it funds the
+    # setting clause. That is the same payment commit 91b5dfa made on beats 15 and
+    # 19. In the negative, `no dark fantasy` retires: the eight-term dark ban
+    # already covers everything it was reaching for, and the frames are not dark,
+    # they are indoors.
+    #
+    # THE SEPIA PALETTE IS NOT A SEPARATE FAULT and is not separately treated. The
+    # frames are desaturated because they are in a brown room; the dark ban is
+    # already sent and already holding. If daylight does not come back with the
+    # field, that is worth knowing and the next round can chase it.
+    #
+    # NOT FIXED HERE, ON PURPOSE: the guard is drawn as a hard angular muscular man
+    # -- sharp cheekbones, bared teeth in s1 -- rather than the "silly harmless
+    # bureaucrat" he ratified. Beat 05 sends those exact bureaucrat words and STILL
+    # drew a muscular man in one frame of four, so they are known not to bind on
+    # their own; spending this round on them would buy an unattributable result
+    # instead of a setting. Logged for the founder in wave2-faults-fixer.yaml.
+    authored_b06_idfix_r2: >-
+      A round bald guard man in a plain brown tunic, in a sunny grassy field,
+      turns over a bark clipboard that fills the lower third of the frame,
+      tracing a line on it with one finger as he reads, brow furrowed. Medium
+      close-up, bright morning light, cinematic lighting, detailed, newest,
+      masterpiece, best quality, very aesthetic No girl, no child, no armor,
+      no helmet, no knight, no house, no interior, no indoors, no dark, no
+      night, no dusk, no sunset, no dim lighting, no moody lighting, no low
+      key, no shadows dominant. No photorealism, no 3D render look. 9:16
+      vertical, no text.
     authored_b06_refresh: >-
       A round bare-headed guard man in dull dented mismatched armor turns over
       a bark clipboard that fills the lower third of the frame, tracing a line

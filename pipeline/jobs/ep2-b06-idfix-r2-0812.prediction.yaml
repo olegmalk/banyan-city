@@ -1,0 +1,26 @@
+# Prediction for ep2-b06-idfix-r2-0812, written BEFORE enqueue, terse.
+# Not in taste/steward-model.ledger.yaml: `git status` showed the ledger DIRTY
+# (` M`) — a sibling lane is mid-write, and appending would race its edit.
+
+- id: ep2-b06-idfix-r2-0812
+  kind: prediction
+  written: 2026-08-12, the fixer lane, before enqueue. Box dry 76/77 positive, anchor intact, negative 77 -> sent 77, no NEGWARN.
+  answers: >-
+    An interior in 4/4 — windows in s0, s2 and s3, a brown wall in s1 — against a
+    beat whose sentence named no setting and whose negative had no walls ban.
+  predicates:
+  - outdoors in a grassy field 4/4
+  - no window, no wall, no interior architecture 4/4
+  - daylight rather than the sepia room >=3/4 (this is the SYMPTOM test — the palette is not separately treated, so if the field arrives and the frames stay sepia, the palette is its own fault and the next round owns it)
+  - the clipboard still fills the lower third >=3/4 (the staging must survive the setting clause)
+  - bald 4/4, plain brown tunic >=3/4, no armor and no helmet 4/4
+  falsifiable_by: >-
+    Any indoor frame falsifies the early-affirmative-plus-walls-ban lever on this
+    beat. Losing the clipboard framing would say the setting clause was bought at
+    the staging's expense, which is the cost this payment was chosen to avoid.
+  not_under_test: >-
+    The guard's hard angular face. His ratified "silly harmless bureaucrat" wording
+    is deliberately NOT added here — beat 05 sends it and still drew a muscular man
+    — so it stays a founder-facing note, not a silent second variable.
+  consumer: morning page, identity-frozen wave.
+  outcome: null
