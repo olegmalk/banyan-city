@@ -313,3 +313,55 @@ beats:
     `no white shirt`, which cannot negate the positive because the positive
     asserts BROWN. Funded by the retired contradiction; measured, not assumed.
   r2: authored_b07_idfix_r2  (spec ep2-b07-idfix-r2-0812, out-b07-idfix-r2)
+
+- beat: 8
+  slug: inside-him
+  variant_rendered: authored_b08_idfix
+  positive_tokens: 76
+  verdict: faulty
+  THE_NATURAL_EXPERIMENT: >-
+    BEAT 08 IS THE ONLY BEAT WHOSE GOBLIN DEFINITION OMITS `patchwork cloak` — it
+    sends `green skin, bald head` and nothing else (read from the sidecar's
+    `goblin_definition_as_sent`, not assumed). IT IS ALSO THE ONLY GOBLIN BEAT IN
+    THE WAVE WHOSE SKULLS ARE CLEAN: green, unbroken, no cream dome and no sutures
+    in 4/4, while beats 02, 03 and 04 — all of which carry `patchwork cloak` in
+    the DEFINITION — show the pale stitched skull in 4/4, 3/4 and 4/4. Nobody
+    designed this comparison; the wave happens to contain it. It is strong
+    evidence that the fault is the word `patchwork` sitting in the IDENTITY SLOT,
+    adjacent to `bald head`, and bleeding fabric onto the scalp. THE DEFINITIONS
+    ARE FROZEN AND ARE NOT THE FIXER'S TO CHANGE, so this goes to the founder in
+    wave2-needs-founder.md rather than into a round. The beat-level ban
+    (`no scars, no stitched skin`) is the workaround and it is proven to work; the
+    definition is the actual cause.
+  faults:
+  - name: the guard's tunic is black, not plain brown
+    count: 3/4 (s0, s2, s3)
+    detail: A dark, near-black robe on the guard against a positive that says "plain brown tunic".
+  - name: nobody points at a belly
+    count: 0/4
+    detail: >-
+      s0 reaches toward the goblin's face, s2 has no pointing at all, s3 points at
+      his head. The beat's whole joke — the guard indicting the goblin's stomach —
+      does not happen.
+  - name: s1 draws the goblin as a giant green sphere with a face on it
+    count: 1/4
+    detail: >-
+      Not a character: a waist-high green egg wrapped in white, with two eyes and
+      a mouth, flanked by two bald humans. This is the worst single frame in the
+      wave. It is also an OVERHEAD frame, and "the belly of a small goblin"
+      read from directly above is plausibly how a belly becomes the whole body.
+  - name: camera overhead again
+    count: 2/4 (s0, s1)
+    detail: Same bird's-eye prior as beat 05, and it owns both of this beat's worst frames.
+  lever: >-
+    The camera, and only the camera — `no high angle, no from above` plus
+    `Deadpan eye-level two-shot` in place of `Deadpan medium two-shot`. Chosen
+    because it is the one change that plausibly reaches BOTH bad frames at once
+    (s0 and s1 are the two overhead ones, and s1's sphere is a belly seen from
+    above), and because this beat has almost no budget: 76/77 positive and 76/77
+    negative, the tightest in the wave, and it already blew its budget once
+    (commit 6d177f4). Funded by retiring `no building` and `no interior`; `no
+    house` stays and the frames are outdoors 4/4 anyway. The tunic colour and the
+    belly staging are RECORDED AND LEFT — with one r2 and one token of headroom,
+    spending it on the camera is the honest bet, and the rest goes to the founder.
+  r2: authored_b08_idfix_r2  (spec ep2-b08-idfix-r2-0812, out-b08-idfix-r2)
