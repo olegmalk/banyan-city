@@ -168,6 +168,19 @@ def lint_genome(genome_dir: Path) -> None:
         if leaves_dir.is_dir():
             declared = set(n.get("leaves") or [])
             for f in leaves_dir.glob("*.yaml"):
+                # A provenance sidecar is not a leaf. render_t3 writes
+                # "<leaf>.mp4.meta.yaml" beside the media it assembles, and its
+                # stem ("001-t3-e.mp4.meta") can never appear in lineage — the
+                # first canon promotion to carry one tripped this check and read
+                # as an orphan leaf. Judge it by the media it describes instead:
+                # a sidecar for a declared leaf is correct, one for nothing is
+                # still worth catching.
+                if f.name.endswith(".meta.yaml"):
+                    described = f.name[: -len(".meta.yaml")]
+                    if Path(described).stem not in declared:
+                        err(f"{where}: leaves/{f.name} describes "
+                            f"'{described}', which is not listed in lineage.yaml")
+                    continue
                 if f.stem not in declared:
                     err(f"{where}: leaves/{f.name} exists but is not listed in lineage.yaml")
 
