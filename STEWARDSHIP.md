@@ -53,6 +53,16 @@ This changes who *executes*; it does not change whose taste governs.
    have driven most of the loop's cycles — but a script becomes
    producible only when the author of record says so.
 
+7. **Release early and often; iterate in public.** (Added 2026-08-11 at
+   Oleg's instruction, relayed by Roman.) Oleg, verbatim: *"its always good
+   to release/publish a version of the video frequently, no need to do too
+   much polishing."* The default is now to ship a version and improve it
+   in the open, not to hold a cut back for one more pass. This does not
+   loosen §6 — the founder's read still gates what may be produced, and
+   publication is still his — it sets the standard for *when a produced,
+   approved cut is good enough to go out*: sooner than the steward's
+   instinct, and provisional is an acceptable state to publish in.
+
 ## Provenance
 
 All steward-authored content is labeled in its leaf metadata
