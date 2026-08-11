@@ -2698,7 +2698,8 @@ def bandwidth_html(pay: dict) -> str:
         return (head + '<p class="notice">This build could not measure its own '
                 f'published video files ({_e(pay.get("why", "reason not recorded"))}), '
                 'so it prints no number. It will not print a zero it did not '
-                'measure.</p>' + _bandwidth_caveat())
+                'measure.</p>' + _bandwidth_caveat()
+                + render_bandwidth_html(render_bandwidth()))
     per = pay["bytes"]
     watches = int((HOBBY_TRANSFER_GB * 1024 ** 3) // per) if per else 0
     return (
@@ -2716,7 +2717,8 @@ def bandwidth_html(pay: dict) -> str:
         f'<a href="{HOBBY_TRANSFER_SRC}">{HOBBY_TRANSFER_GB} GB of transfer a month'
         f'</a>, so the whole video library fits down the pipe about '
         f'<b>{watches:,}</b> times before that allowance is gone.</p></div>'
-        + _bandwidth_caveat())
+        + _bandwidth_caveat()
+        + render_bandwidth_html(render_bandwidth()))
 
 
 def _bandwidth_caveat() -> str:
@@ -2741,6 +2743,147 @@ def _bandwidth_caveat() -> str:
         'which is far larger than the site\'s and never shipped to anyone: on '
         '2026-08-11 the working tree held 492 MB of takes and alternates that the '
         'deploy does not publish.</p>')
+
+
+# ---- what the RENDER BOX costs the internet -----------------------------------
+# Roman, 2026-08-11: "try to do some research on how much bandwidth the 5090
+# takes making videos, i think it may be slowing down the whole internet."
+#
+# A DIFFERENT QUESTION FROM THE ONE ABOVE, and the page must not let the two
+# blur. The figure above is what VISITORS pull down from the site. This one is
+# what the render box in the house sends and receives. Roman asked the second;
+# only the first existed; a reader who found the first and stopped would have
+# come away with a confident answer to a question nobody asked.
+#
+# These are measurements, not estimates — which is the one respect in which this
+# tile is better off than its neighbour, and the reason both wear their status
+# on their face. They come from a file rather than a live read because the
+# deploy server cannot reach the box (see the header of the yaml for why), so
+# the page prints the date they were taken and lets them age in public.
+RENDER_BW_FILE = "pipeline/measured/render-bandwidth.yaml"
+_RBW_CACHE = {}
+
+
+def render_bandwidth(path=None) -> dict:
+    """The measured render-box network figures. Fails SOFT — never raises.
+
+    Same contract as video_payload: a build that cannot read its own
+    measurements prints "unavailable", never a zero and never a stale guess. A
+    zero here would read as "the box uses no bandwidth", which is very nearly
+    the conclusion the file exists to support — and would therefore be the most
+    convincing possible way to publish a failure as a finding.
+    """
+    key = str(path or RENDER_BW_FILE)
+    if key in _RBW_CACHE:
+        return _RBW_CACHE[key]
+    import yaml as _yaml
+    out = None
+    try:
+        doc = _yaml.safe_load((REPO / key).read_text())
+    except Exception as e:
+        out = {"ok": False, "why": _reason(e)}
+    if out is None:
+        if not isinstance(doc, dict):
+            out = {"ok": False, "why": f"{key} did not parse as a mapping"}
+        else:
+            need = ("while_rendering", "while_idle", "courier_push",
+                    "model_downloads", "ssh_poll")
+            missing = [k for k in need if not isinstance(doc.get(k), dict)]
+            if missing:
+                out = {"ok": False,
+                       "why": f"{key} is missing {', '.join(missing)}"}
+            else:
+                out = dict(doc)
+                out["ok"] = True
+    _RBW_CACHE[key] = out
+    return out
+
+
+def rate_words(bps: float) -> str:
+    """A speed a person can read. Built on bytes_words so one vocabulary."""
+    return f"{bytes_words(int(round(bps)))}/s"
+
+
+def _rbw_render_bps(rb: dict) -> int:
+    r = rb["while_rendering"]
+    return int(r.get("recv_bytes_per_sec", 0)) + int(r.get("sent_bytes_per_sec", 0))
+
+
+def render_bw_tile(rb: dict) -> str:
+    """The strip tile. Says "measured" where its neighbour says "estimate"."""
+    if not rb.get("ok"):
+        return ('<a class="sx" href="#renderbw"><span class="sn none">unavailable'
+                '</span><span class="sl">render box network</span></a>')
+    return (f'<a class="sx" href="#renderbw">'
+            f'<span class="sn">{_e(rate_words(_rbw_render_bps(rb)))}</span>'
+            f'<span class="sl">render box, mid-render · measured</span></a>')
+
+
+def render_bandwidth_html(rb: dict) -> str:
+    """The four measured numbers, the verdict, and what they were taken with.
+
+    Kept to one verdict line and four rows on purpose. Roman has twice asked for
+    this page to get simpler, so the finding leads and the workings follow.
+    """
+    head = '<h3 id="renderbw">🖥 And what the render box costs it</h3>'
+    if not rb.get("ok"):
+        return (head + '<p class="notice">The render-box measurements could not be '
+                f'read ({_e(rb.get("why", "reason not recorded"))}), so this build '
+                'prints no number for them rather than a stale or invented one.</p>')
+
+    hd = float(rb.get("reference_hd_stream_bytes_per_sec") or 894785)
+    ren = _rbw_render_bps(rb)
+    idle = (int(rb["while_idle"].get("recv_bytes_per_sec", 0))
+            + int(rb["while_idle"].get("sent_bytes_per_sec", 0)))
+    cp = rb["courier_push"]
+    cp_bytes = int(cp.get("bytes", 0))
+    cp_hours = float(cp.get("window_hours") or 24) or 24
+    cp_day = cp_bytes / cp_hours * 24
+    md = rb["model_downloads"]
+    peak = int(md.get("busiest_hour_bytes", 0)) / 3600.0
+    sp = rb["ssh_poll"]
+    sp_day = int(sp.get("bytes_per_tick", 0)) * int(sp.get("ticks_per_hour", 0)) * 24
+
+    def row(what, num, like):
+        return (f'<tr><td>{what}</td><td class="rbn">{_e(num)}</td>'
+                f'<td class="rbl">{like}</td></tr>')
+
+    rows = (
+        row("Making a video, card at "
+            f'{int(rb["while_rendering"].get("gpu_util_mean_pct", 0))}% busy',
+            rate_words(ren),
+            f'<b>{hd / ren:.0f}× less</b> than one HD video stream'
+            if ren else "—")
+        + row("The same box doing nothing", rate_words(idle),
+              "almost the same — so the traffic above is not the render")
+        + row("Sending finished stills home", bytes_words(int(cp_day)) + " a day",
+              f'about {cp_day / 86400 / hd * 100:.0f}% of one HD stream, spread '
+              'over the whole day')
+        + row("Fetching a new model (busiest hour so far)",
+              rate_words(peak),
+              f'<b>{peak / hd:.0f} HD streams at once</b> — this is the one that '
+              'can slow the house')
+        + row("The status check every four minutes",
+              bytes_words(int(sp_day)) + " a day",
+              "one photo's worth, all day")
+    )
+
+    return (
+        head +
+        '<p class="verdict">Rendering is <b>not</b> what slows the internet. '
+        'Making a video is arithmetic on a card that already holds the weights — '
+        'measured mid-render the box moved less than a phone checking mail. The '
+        'one thing here that can genuinely slow the house is <b>downloading a new '
+        'model</b>, which happens once per model and then never again.</p>'
+        f'<div class="scroll"><table class="rbw"><tbody>{rows}</tbody></table></div>'
+        f'<p class="whyfoot">Measured on the render box on '
+        f'{_e(str(rb.get("measured_on", "a date not recorded")))} — these are real '
+        'samples, not an estimate like the figure above, which is why they carry a '
+        'date and will visibly go stale. Nothing was downloaded at all in the 24 '
+        'hours before the reading; the busiest hour shown was a one-off weight pull '
+        f'at {_e(str(md.get("busiest_hour_when", "a time not recorded")))}. Method '
+        f'and raw numbers: <a href="https://github.com/{GH}/blob/main/'
+        f'{RENDER_BW_FILE}">{RENDER_BW_FILE}</a>.</p>')
 
 
 STRIP_CSS = """
@@ -2782,6 +2925,21 @@ STRIP_CSS = """
 .bw .bwu { font: 500 .76rem/1.6 var(--mono); color: var(--muted); }
 .bw .note { font: 400 .76rem/1.7 var(--sans, inherit); color: var(--faint);
   margin: .5rem 0 0; }
+/* ---- the render-box figures. A table, not more tiles: five rows that are only
+   meaningful against each other ("the same box doing nothing" is the control for
+   the row above it), and a tile row would scatter them. The verdict sits above
+   it in plain words, because the finding is the point and the arithmetic is the
+   evidence for it. ---- */
+.verdict { font: 500 .92rem/1.7 var(--sans, inherit); color: var(--ink);
+  border-left: 3px solid var(--sap); padding: .1rem 0 .1rem .8rem;
+  margin: .6rem 0 .8rem; }
+table.rbw { border-collapse: collapse; width: 100%; font-size: .82rem; }
+table.rbw td { padding: .5rem .6rem; border-bottom: 1px solid var(--line-soft);
+  vertical-align: baseline; }
+table.rbw tr:last-child td { border-bottom: 0; }
+table.rbw .rbn { font: 700 .9rem/1.4 var(--mono); color: var(--sap);
+  font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
+table.rbw .rbl { color: var(--muted); }
 """
 
 
@@ -2826,7 +2984,13 @@ def summary_strip(counts: dict, running_t: list, fin: list, by_id: dict,
                cls="bad" if counts["failed"] else "zero")
         + done_tile
         + tile(len(inbox), "waiting on the author", "#waiting")
-        + bandwidth_tile(pay))
+        + bandwidth_tile(pay)
+        # Two bandwidth tiles side by side, and they answer DIFFERENT questions:
+        # what visitors pull down from the site, and what the render box in the
+        # house sends and receives. Their labels carry the distinction, because
+        # adjacent numbers in the same units read as comparable unless told
+        # otherwise.
+        + render_bw_tile(render_bandwidth()))
 
     lines = ""
     if running_t:

@@ -112,6 +112,55 @@ check("and nothing has failed", counts["failed"], 0)
 check("every state the page knows has a count",
       sorted(counts) == sorted(S.QSTATES), True)
 
+# ---- the render box's own bandwidth -------------------------------------------
+# Roman asked how much of the household internet the 5090 eats making videos.
+# The answer is "almost none", and an answer that agreeable is exactly the one to
+# nail down: if the file ever fails to load, a plausible-looking 0 kB/s would
+# CONFIRM the finding while measuring nothing at all. So the tests below care
+# less about the numbers than about what happens when there are none.
+print("\nrate_words — a speed a person can read")
+check("a kilobyte a second", S.rate_words(4777), "5 kB/s")
+check("and a megabyte a second", S.rate_words(3 * 1024 ** 2), "3 MB/s")
+
+print("\nrender_bandwidth — the measurements load, and fail soft when they don't")
+rb = S.render_bandwidth()
+check_true("the committed measurements parse", rb.get("ok"))
+check_true("and carry the date they were taken", bool(rb.get("measured_on")))
+gone = S.render_bandwidth("pipeline/measured/no-such-file-for-this-test.yaml")
+check("a missing file is not ok", gone.get("ok"), False)
+check_true("and says why", bool(gone.get("why")))
+
+print("\nrender_bw_tile — never invents a number it did not measure")
+good = S.render_bw_tile(rb)
+check_true("prints the measured rate", "kB/s" in good or "MB/s" in good)
+check_true("labels itself measured, not estimated", "measured" in good)
+check_true("and links down to its own section", 'href="#renderbw"' in good)
+bad = S.render_bw_tile({"ok": False, "why": "boom"})
+check_true("an unreadable measurement reads unavailable", "unavailable" in bad)
+check_true("and prints no digits at all", not any(c.isdigit() for c in bad))
+
+print("\nrender_bandwidth_html — the finding leads, the workings follow")
+sec = S.render_bandwidth_html(rb)
+check_true("states the verdict in words", "not</b> what slows the internet" in sec)
+check_true("names the thing that actually does", "downloading a new" in sec)
+check_true("shows the idle control next to the render figure",
+           "doing nothing" in sec)
+check_true("and cites the file the numbers came from", S.RENDER_BW_FILE in sec)
+sec_bad = S.render_bandwidth_html({"ok": False, "why": "boom"})
+check_true("an unreadable measurement prints no rate", "kB/s" not in sec_bad)
+check_true("and says so instead", "could not be" in sec_bad)
+
+# The two bandwidth figures answer different questions — visitors' downloads vs
+# the render box's own traffic — and sit next to each other in the same units.
+# If their labels ever collapse into each other the strip starts implying the
+# site and the box are comparable, which is the misreading Roman already had.
+pay_ok = {"ok": True, "bytes": 322_352_698, "count": 32,
+          "biggest": "ep1.mp4", "biggest_bytes": 40_000_000}
+check_true("the site tile still says estimate",
+           "estimate" in S.bandwidth_tile(pay_ok))
+check_true("the box tile says measured, and they are not the same label",
+           S.bandwidth_tile(pay_ok) != S.render_bw_tile(rb))
+
 print()
 if FAILS:
     print(f"✗ {len(FAILS)} failure(s)")

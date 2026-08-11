@@ -1,0 +1,76 @@
+# What the render box costs the household internet — MEASURED, not estimated.
+#
+# Roman, 2026-08-11: "try to do some research on how much bandwidth the 5090
+# takes making videos, i think it may be slowing down the whole internet."
+#
+# The premise turned out to be wrong, and that is the useful finding. Making a
+# video is arithmetic on a card that is already holding the weights; nothing
+# about it crosses the wire. Measured mid-render, with the GPU averaging 56% and
+# peaking at 98%, the box moved under 5 kB/s in both directions put together —
+# about the same as it moves sitting idle, because what little there is IS the
+# idle traffic (the heartbeat commit and the lead's ssh poll), not the render.
+#
+# What DOES move real bytes is model weights. Those are pulled once per model
+# and cached forever after, and they are enormous: 189 GB landed on 2026-08-04,
+# and 12 GB inside a single hour on 2026-08-10. THAT is what can make the house
+# feel slow, and it is a download, not a render.
+#
+# WHY THIS IS A FILE AND NOT A LIVE READ. The deploy server cannot ssh to the
+# box and has no farm-results refs of its own (the invisible-buildings bug,
+# 2026-07-30), so a build-time measurement would be "unavailable" in production
+# every single time. These are real samples taken on the date below; the page
+# prints that date next to them and lets them visibly go stale rather than
+# implying they are current. Re-measure by repeating `method` below.
+measured_on: 2026-08-11
+box: rtx5090
+method: >-
+  Get-NetAdapterStatistics on the box's Wi-Fi adapter, read twice with a timed
+  gap and divided by the elapsed seconds; nvidia-smi sampled alongside in the
+  same window so the render figure is provably a render. Courier volume is the
+  farm-results-rtx5090 branch's own git objects. Downloads are Hugging Face
+  cache blob creation times, grouped by day — directory mtimes were checked
+  first and proved to lie (they move when a model is loaded, not downloaded).
+
+# The headline. GPU genuinely busy — this is a render, not an idle box.
+while_rendering:
+  seconds: 90.8
+  gpu_util_mean_pct: 56
+  gpu_util_peak_pct: 98
+  vram_peak_mib: 6156
+  recv_bytes_per_sec: 2462
+  sent_bytes_per_sec: 2315
+
+# The control. Same box, card at 0%, nothing rendering. Note how little the
+# render above adds to it: the traffic is the heartbeat, not the video.
+while_idle:
+  seconds: 60.1
+  gpu_util_pct: 0
+  recv_bytes_per_sec: 1651
+  sent_bytes_per_sec: 1701
+
+# The real upload: finished stills and logs pushed to the courier branch. Every
+# object on the branch, which began life 23.25 h before the reading, so this is
+# very nearly a clean 24-hour figure.
+courier_push:
+  window_hours: 23.25
+  bytes: 1089624715
+  media_files: 604
+
+# The real download, and the actual answer to the question. Nothing in the last
+# day; the spikes are one-off weight pulls that are cached forever after.
+model_downloads:
+  last_24h_bytes: 0
+  busiest_hour_when: 2026-08-10T02:00
+  busiest_hour_bytes: 12970799431
+  last_8_days_bytes: 277203283968
+  cache_total_bytes: 453766815744
+
+# The lead's status poll, one ssh round trip every four minutes all day. Counted
+# honestly rather than waved away, from ssh's own "Transferred:" line.
+ssh_poll:
+  bytes_per_tick: 5136
+  ticks_per_hour: 15
+
+# For scale only, so the numbers above mean something to a reader with no feel
+# for kB/s: one HD (1080p) video stream is about 3 GB an hour.
+reference_hd_stream_bytes_per_sec: 894785
