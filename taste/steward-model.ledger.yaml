@@ -13508,3 +13508,41 @@
     head-sprout and b20's antler-branch for free rather than needing their own wording fix.
     That is why no placement sample is queued ahead of the init-crop answer.
   outcome: null
+
+- id: ep2-guards-register-verdict-0812
+  kind: founder_verdict
+  date: 2026-08-12
+  founder_verdict_verbatim: "chase silly via pose and expression staging."
+  founder_verdict_date: 2026-08-12
+  what_it_answers: >-
+    The inbox entry `Guards register` offered him two options — accept solemn-but-consistent,
+    or chase silly via pose and expression staging — and he took the second verbatim. This is
+    a direction, not a verdict on frames; nothing has been drawn under it yet.
+  what_it_closes: >-
+    THE ADJECTIVE ROUTE. Five rounds have asserted the register in words — `silly harmless
+    bureaucrats`, `round soft bodies`, `harmless and bureaucratic` — and drawn solemn men 0 of
+    4 every time, bald and haired alike (ep2-b05-guards-silly-0811, ep2-guards-sheet-0812,
+    charref-guards r3/r4/r5, ep2-b06-ipa-guardcast-0812-observed). The prior-confirmation law
+    already explained why: a reference can confirm this model's prior for a `guard man` and
+    cannot overturn it, and neither can an adjective. Five rounds of evidence say the same
+    thing the law does, so the words stop arguing.
+  what_it_opens: >-
+    The register becomes STAGING. It is carried by what the men are DOING and what their faces
+    are doing while they do it — not by any word describing their bodies or their tone. A lean
+    solemn-featured man doing something ridiculous is available to us; a round man is not, and
+    has not been for five rounds.
+  the_word_i_am_taking_out_of_the_prompt_and_why_it_is_declared: >-
+    `round` is HIS word, from "two silly round bureaucrats with visible faces" (2026-08-11
+    ~20:27), and it leaves the prompt under this direction. That needs saying out loud because
+    removing a founder's own word is exactly the move that should not happen quietly. It is not
+    a rejection of the register — the register is the TARGET this sample is aimed at. It is the
+    direction's own content: the tone stops being asserted in adjectives and starts being
+    staged. `round` has been in the positive prompt for five rounds and bought nothing. If the
+    staged route also fails, the honest reading is that this model will not give us round men
+    and the choice becomes his: accept the men it draws, or change the checkpoint.
+  what_stays_frozen: >-
+    The cast facts from the references he accepted, untouched: short hair, plain brown tunic,
+    bark clipboard, visible faces, two distinguishable men. Only the tone words leave.
+  first_sample_under_it: ep2-b05-register-pose-0812 — beat 05, the only guard beat whose script
+    stages BOTH men in motion.
+  outcome: null
