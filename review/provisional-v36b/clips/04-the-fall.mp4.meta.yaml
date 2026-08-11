@@ -1,0 +1,36 @@
+# =====================================================================
+# v35 SUBSTITUTION — STEWARD-PROVISIONAL, NOT CANON, NOT PUBLISHED.
+# This beat's clip in v35 is the PLATE TWIN 04-the-fall-LTX-r4-plate.mp4
+# (round r4), copied byte-identical out of review/v34-motion/ and
+# renamed to this beat's filename so render_t3 finds it. The v34 clip
+# it replaces is a HELD STILL and is untouched on disk in
+# review/provisional-v34/clips/.
+#
+# WHY: the twin fixes GEOMETRY ONLY. The raw-init motion series was a
+# 24.4% vertical stretch; the twin is the cover-centre crop the cut
+# already uses (QA-plate-twins-0810.md, 0d88a44). It is NOT a claim
+# that this is a good clip — every twin inherits its raw round's
+# motion defects, and no taste verdict is offered (R4).
+#
+# ROUND CHOSEN BY MECHANICAL RULE: highest round number available.
+# 4 rounds twinned (r1, r2, r3, r4). The record warns "latest" is not "best"
+# (879820f, 655d2c6) — this rule avoids a taste call, it does not
+# make one. Any of it is the founder's to override.
+# =====================================================================
+# Shot provenance (7.2) — written by video_task at render time
+platform: local-gpu (rtx5090)
+model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+model_licence: LTX-2 Community License Agreement
+shot_beat: 4
+size: 704x1280
+seconds: 2.708
+steps: 8@352x640+3@704x1280
+guidance: 1.0
+seed: 20260735
+task: ep1-b04-v34-plate-twin-r4-0810
+cost_usd: 0
+prompt: |-
+  2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. the edges of the scattered sheets lift and settle very slightly where they lie, the fallen phone glows and flickers faintly on the floor, the fingers rest still and tremble faintly against the paper, dim light shifts slowly across the floor. small ambient motion only, the camera is locked on a tripod and stays perfectly still, the hands stay resting flat on the papers in the same spot the whole time, the papers stay spread on the floor where they fell, the composition is identical in every frame, living scene. Subject already in frame: no second person, no crowd, no face, one pair of hands on scattered papers on a dark floor, a phone lying screen-up nearby, deep blue night light.
+negative: |-
+  wilting, drooping, bending over, falling over, collapsing, sagging, plant dying, human, person, man, woman, boy, girl, extra hand, extra arm, foot, face, crowd, animal, bird, insect, new object appearing, photorealism, 3D render look, text, 静态, 静止, frozen frame, still image, no motion, photorealistic, photograph, live action, film still, 3D render, CGI, octane, scene change, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+  [unused: guidance 1.0 on the distilled path runs no uncond pass, so this changed no pixel]

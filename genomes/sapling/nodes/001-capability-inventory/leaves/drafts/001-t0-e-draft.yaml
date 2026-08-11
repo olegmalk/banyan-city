@@ -1,0 +1,100 @@
+# ===================================================================
+# DRAFT — NOT CANON, NOT APPROVED, NOT RENDERED FROM.
+#
+# IT LIVES IN `leaves/drafts/` AND NOT IN `leaves/` FOR A MECHANICAL
+# REASON, recorded so nobody "tidies" it back up one level.
+# `render_local.approved()` — the single §6 gate that render_t3,
+# generate_shots, synth_vo, still_local, post_motion and run_remote all
+# call — reads `sorted(leaves/*-t0-*.yaml)[-1]`, the LAST filename, as
+# "the node's script". `001-t0-e-draft.yaml` sorts after
+# `001-t0-d.yaml`, so while this file sat in `leaves/` it WAS the
+# script as far as every one of those tools was concerned, and its
+# `approved_by: none` refused all media for node 001 — not just this
+# lane's, every lane's. It was there for about two minutes on
+# 2026-08-11 and the refusal is what a correct fail-closed gate should
+# do; the misfiling was the steward's. The glob is not recursive, so a
+# subdirectory keeps the draft next to the leaves for a human to find
+# while leaving `001-t0-d.yaml` as what it still is: the newest actual
+# leaf and the approved script this cut was assembled from. That is
+# not an evasion of the gate — the script did not change (see
+# `what_changed_in_the_script` below), so `001-t0-d.yaml` genuinely
+# governs. If a future draft DOES change the script, it must go back
+# into `leaves/` and block exactly as this one did.
+#
+# Drafted 2026-08-11 by the steward from the founder's direction that
+# day, verbatim: "also we should show that he became a sapling earlier
+# in the video just to make it less confusing." It awaits his read.
+# `001-t0-d.yaml` is untouched and remains the live script; nothing in
+# the pipeline reads this file. It exists because the bench cut
+# `review/tonight/EP1-PROVISIONAL-v36b-bench.mp4` now shows a picture
+# the approved script does not describe, and that must be on paper
+# before he watches it, not after.
+# ===================================================================
+leaf: 001-t0-e-draft
+node: "001"
+tier: T0
+form: text-script
+content: ../node.md          # UNCHANGED — this draft adds no beat and moves none
+author: founder's direction 2026-08-11, implemented by the steward
+model: claude-fable-5
+prompt: >-
+  founder 2026-08-11 — "also we should show that he became a sapling earlier in
+  the video just to make it less confusing."
+seed: none
+cost_usd: 0.00
+status: draft
+platform_urls: []
+approved_by: none          # awaiting the founder's read (R4)
+
+where_the_reveal_was: >-
+  MEASURED FROM THE CUT HE JUDGED, not from the script's intent. Through the
+  first half of the episode the viewer is never shown what he has become. Beat
+  06 (0:24) is open sky with no plant in it — by his own 2026-08-07 ruling, a
+  first-person POV cannot contain its own body. Beat 07 (0:29) is a grass field
+  and horizon. The first plant image of any kind is beat 09's leaf macro at
+  0:48, which is also where the words say it outright:
+
+      $ whoami
+      sapling (ficus. probably.)
+
+  The first EXTERIOR view — a small two-leaf sapling standing in ground, seen
+  from outside — does not arrive until beat 11/12 at 1:03-1:12. So for the
+  twenty-four seconds between the fall and `whoami` the audience hears a man
+  narrating his own inventory with no picture of the thing doing the
+  narrating. That is the confusion he named.
+
+where_the_reveal_is_now: >-
+  At 0:22, in the tail of beat 05 — the silent beat between the fall and the
+  first sky POV. The dark apartment floor and the broken mug play as before,
+  then the picture cuts, for 1.42s, to the sapling in grass. Beat 06's sky
+  then reads as HIS view of it. The explicit `whoami` reveal at 0:48 is
+  untouched and now lands as confirmation rather than as the first news.
+
+what_changed_in_the_script: >-
+  NOTHING. No beat was added, removed, renumbered or reordered, and no line of
+  dialogue moved. This is the reason to prefer this reading of his instruction
+  over a reorder: beat 05's authored slot is 0:20-0:24 (4.00s) and its footage
+  is 2.583s, so 1.417s of the slot the author already wrote was playing as
+  nothing at all. render_t3 sequences multiple `NN-*.mp4` per beat in stem
+  order, so the insert fills room that already existed. The alternative —
+  moving beat 09 (`whoami`) earlier — was rejected because beat 08 ends on
+  "step two: what do we actually know?" and beat 09 is its answer; pulling 09
+  in front of 08 breaks the one causal join in the middle of the episode.
+
+what_the_insert_is: >-
+  1.42s on screen, cut from `12-undefined.mp4` — beat 12's own held-still
+  push-in over the current non-revoked beat-12 still. No model ran; nothing was
+  generated, voiced or synthesised for this change. Full provenance in
+  `review/provisional-v36b/clips/05-sapling-reveal.mp4.meta.yaml`.
+
+the_cost_he_should_weigh: >-
+  THE INSERT IS A PICTURE THE EPISODE SHOWS TWICE. It is beat 12's frame and
+  beat 12 plays it again at 1:09. Beat 15's sapling was the other candidate
+  and is worse for this: it is the closing image and it is dusk, so it would
+  spend the ending early and cut badly into beat 06's morning sky. If he wants
+  the reveal on a frame of its own, that is a new plate and a render — which
+  is his call, not the steward's, and is not what this bench cut assumes.
+
+  Second thing to look at: 1.42s is the whole of the unused slot, so the reveal
+  is a flash. If he wants to hold on it, beat 05's slot has to grow, and that
+  IS a script change to `node.md` and to the beat timings after it.

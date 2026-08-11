@@ -1,0 +1,36 @@
+# =====================================================================
+# v35 SUBSTITUTION — STEWARD-PROVISIONAL, NOT CANON, NOT PUBLISHED.
+# This beat's clip in v35 is the PLATE TWIN 07-zero-0-moving-parts-LTX-r5-g20-plate.mp4
+# (round r5-g20), copied byte-identical out of review/v34-motion/ and
+# renamed to this beat's filename so render_t3 finds it. The v34 clip
+# it replaces is a HELD STILL and is untouched on disk in
+# review/provisional-v34/clips/.
+#
+# WHY: the twin fixes GEOMETRY ONLY. The raw-init motion series was a
+# 24.4% vertical stretch; the twin is the cover-centre crop the cut
+# already uses (QA-plate-twins-0810.md, 0d88a44). It is NOT a claim
+# that this is a good clip — every twin inherits its raw round's
+# motion defects, and no taste verdict is offered (R4).
+#
+# ROUND CHOSEN BY MECHANICAL RULE: highest round number available.
+# 5 rounds twinned (r1, r2, r3, r4, r5-g20). The record warns "latest" is not "best"
+# (879820f, 655d2c6) — this rule avoids a taste call, it does not
+# make one. Any of it is the founder's to override.
+# =====================================================================
+# Shot provenance (7.2) — written by video_task at render time
+platform: local-gpu (rtx5090)
+model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+model_licence: LTX-2 Community License Agreement
+shot_beat: 7
+size: 704x1280
+seconds: 2.708
+steps: 8@352x640+3@704x1280
+guidance: 2.0
+seed: 20260738
+task: ep1-b07-v34-plate-twin-r5-g20-0810
+cost_usd: 0
+prompt: |-
+  2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. the whole field is continuously in motion: the grass ripples and sways across the entire frame without ever stopping, wave after wave running through it from edge to edge, every blade moving all the time, the clouds drift steadily across the sky and keep their shapes, warm sunset light shifts and flickers over the field throughout. small ambient motion only, everything holds its position, framing locked, no zoom, no push-in, no camera rise, subject stays the same size and place in frame, living scene. Subject already in frame: no human, no person, no man, no woman, no boy, no girl, no hand, no face, a wide open grass field at sunset, low sun on the horizon, a broad sky with soft clouds, no buildings.
+negative: |-
+  wilting, drooping, bending over, falling over, collapsing, sagging, plant dying, human, person, man, woman, boy, girl, extra hand, extra arm, foot, face, crowd, animal, bird, insect, new object appearing, photorealism, 3D render look, text, 静态, 静止, frozen frame, still image, no motion, photorealistic, photograph, live action, film still, 3D render, CGI, octane, scene change, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+  [unused: guidance 1.0 on the distilled path runs no uncond pass, so this changed no pixel]

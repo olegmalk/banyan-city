@@ -1,0 +1,29 @@
+# ===================================================================
+# PROVISIONAL — v33 clip set. Nothing here is canon, nothing here is
+# approved, and no file in this directory may be promoted to a canon
+# name or published. Taste is the founder's (R4).
+# ===================================================================
+# COPIED verbatim from review/beat-02-face-B.mp4 — the render record
+# below is the original's, reproduced unedited. No model ran for
+# this cut; only the filename changed, so render_t3 can match the
+# beat by slug.
+# Shot provenance (7.2) — written by video_task at render time
+platform: local-gpu (rtx5090)
+model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+model_licence: Apache-2.0
+shot_beat: 2
+size: 704x1280
+seconds: 2.5
+steps: 14
+guidance: 5.0
+seed: 20260807
+task: face-B-b02-1785816000
+cost_usd: 0
+prompt: |-
+  2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. his hands drive hard across the keyboard, fingers striking the keys, the spinner sweeping on the monitor
+negative: |-
+  new subjects, scene change, face morphing, changing facial features, distorted face, warped face, head turning, facial expression change, photorealism, 3D render look, text, 静态, 静止, 静止不动的画面, frozen frame, still image, no motion, photorealistic, photograph, live action, film still, 3D render, CGI, octane, realistic skin texture, depth of field bokeh, motion blur, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+clip_sha256: 9f73daa315f3cde6eedc99c8d16a88eb89facee8281c2a86388e5243b908e3a9
+provisional: true
+provisional_reason: |-
+  the founder's face-B pick (2026-08-03 "face B is the best out of the 2"); byte-identical to farm-out/face-B-b02-1785816000-* at 3629e58
