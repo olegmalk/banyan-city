@@ -1,63 +1,73 @@
-# 002b goblin wave, RUN COPY, UNGATED, 2026-08-11 -- beat 14 the-defense.
-# The staged original `pipeline/jobs/ep2-b14-goblin-wave1.yaml` keeps its
-# `gate:` key and is left exactly as it is; box_enqueue.py gate_checks() still
-# refuses that file, by design.
+# 002b beat 14 the-defense — staging-fix sample on a goblin close-up, after his
+# applied SUBTRACTIVELY. Ungated on purpose; the fourteen `ep2-b*-goblin-wave1`
+# specs keep their `gate:` keys and are untouched by this file.
 #
-# THE GATE WAS CLEARED BY ROMAN, NOT BY THE STEWARD. The gate named one
-# condition: the founder had to rule on the ONE SAMPLE drawn against his goblin
-# definition. On 2026-08-11 at ~15:45 he looked at the four frames of
-# `ep2-b15-goblin-simple-0811` and said, verbatim: "yeah, that looks like the
-# right goblin." That is the human act the gate was waiting for, and it is his.
-# Recorded the same day in taste/steward-model.ledger.yaml and cuts/cuts.yaml
-# item 18.
+# WHY THIS EXISTS AT ALL, given a sample already ran. Beat 04 was drawn tags-only
+# at 12:37 on 2026-08-10 with `--goblin-def "green skin, tusks"` and he has never
+# ruled on it. That string is not his. His sentence, 2026-08-10 ~12:15 and
+# repeated 2026-08-11, is "he is just a simple green goblin, nothing complex";
+# `green skin` is the one attribute he named and `tusks` is a word the steward
+# bought for three tokens in r9. The taste ledger says so in its own words
+# (`ep2-goblin-definition-0810`): "silence inside a question is not a verdict —
+# `tusks_present` 4/4 in record 42 remains a RENDER FACT and not an approval",
+# and "the correct next move on this sentence is to REMOVE terms, not to buy
+# another tag with the remaining token headroom." Nobody has removed one yet.
+# This job is that removal, on one beat, and it stops.
 #
-# TWO THINGS CHANGED FROM THE STAGED ORIGINAL, AND BOTH ARE HIS WORDS RATHER
-# THAN THE STEWARD'S.
+# THE ONE VARIABLE IS THE GOBLIN SLOT — and the beat, and that second difference
+# is stated rather than hidden. Against the b04 sample this changes two things:
+# the beat (04 -> 15) and the slot (`green skin, tusks` -> `green skin`). Two
+# variables is a real weakness of this test and it is deliberate: re-running beat
+# 04 would spend the sample re-confirming a beat whose frames already came back
+# "plainly simple" on the steward's eye, while beat 15 is one of the two beats
+# with a RECORDED goblin-look failure. Attribution is still readable because the
+# failure mode being tested is a look, not a score: if beat 15 comes back a plain
+# green goblin, the words route works on a medium shot; if it comes back the
+# elongated grey-eyed skull again, the beat's own staging is implicated and the
+# slot string is not the lever.
 #
-#   1. `goblin_def` IS `green skin`, NOT `green skin, tusks`. The fourteen
-#      staged specs were all written encoding `green skin, tusks`. He never
-#      said `tusks` -- it is a word the steward bought for three tokens in r9,
-#      and the sample he approved is the one that had it REMOVED. Firing the
-#      staged string would render a recipe he has never seen, under a verdict
-#      given on a different one. His sentence is "he is just a simple green
-#      goblin, nothing complex"; `green skin` is his one named attribute and
-#      nothing else.
+# WHY BEAT 15 AND NOT BEAT 02, WHICH IS THE LOUDER FAILURE. Beat 02's failure is
+# real ("four different creatures... s2 is a small full-body quadrupedal lizard")
+# but its lever is CLOSED, and closed by evidence from last night rather than by
+# opinion. `ep2-b02-goblin-founderpick-observed-0810` conditioned beat 02 on the
+# exact frame he picked and it came back WORSE — glowing red eyes, a colossal
+# looming dome over a miniature landscape — and that record's own ruling is "DO
+# NOT RE-RUN A REFERENCE SWAP AGAINST A DIFFERENTLY-FRAMED BEAT... Another
+# reference will not fix beat 02." Beat 02 also has live lanes on it right now.
+# Beat 15's recorded failure is squarely a goblin-look failure — "an elongated
+# egg-shaped skull rather than his round one, and blank grey-white eyes... with
+# no iris colour at all" — and it came from the IP-Adapter crossbeat, a mechanism
+# this job does not use. The tags-only route has never been run on beat 15.
 #
-#   2. `--variant authored_staged`. His approval covers the GOBLIN. The same
-#      four frames failed on STAGING, and he was not ruling on that: three of
-#      the four seeds drew him FROM BEHIND so there was no face to judge, and
-#      the sapling came back a houseplant twice, absent once, and a walking
-#      creature with its own face in the fourth. `authored_staged` is the
-#      2026-08-11 staging fix in wave-drafts.yaml -- `from front` / an explicit
-#      face clause, `rooted in the ground`, and the REMOVAL of `40cm`,
-#      `mascot-simple` and `standing tall`. `authored` is byte-identical to
-#      what it was, so the three ungated goblin_ipa_* crossbeat jobs that read
-#      it are untouched.
+# NO IP-ADAPTER, NO REFERENCE IMAGE, AND THAT IS THE POINT. His pick
+# (`review/SHEETS/src-goblin/04-the-footnote-ipa-r1-w015-s6.png`, sha256
+# 48d02b11bb96d872db32c090fba8a2ff748ff74bfc240c89ae30863564d433d4) is
+# deliberately NOT used here. Four beats of evidence (04, 20, 15, 02) say the
+# adapter transfers COMPOSITION and not identity, and beat 15 is a medium
+# two-shot — the framing band where it provably drifts. Feeding a face-filling
+# reference into a medium shot is the experiment that already failed twice.
 #
-# MEASURED, NOT GUESSED: this beat was dry-run on the box's real CLIP
-# tokenizer at 2026-08-11 on this exact variant and slot string and returned
-# DRY OK with no faults. The harness refuses rather than falling back if the
-# box's wave-drafts.yaml lacks the key, so a stale copy fails for $0 instead of
-# quietly rendering the old staging under a new job id.
-
-gate: >-
-  THE STAGING SAMPLE FAILED. 2026-08-11: `ep2-b02-goblin-staged-0811` ran this
-  exact recipe -- `green skin` + `--variant authored_staged` -- on beat 02 and
-  came back rc=0 with four unusable frames. Roman's goblin approval still
-  stands and is NOT in question; what failed is the staging fix these specs
-  depend on. The fix corrected the ANGLE (`from front`) and left the DISTANCE:
-  `wide shot` survives in every staged draft, so the subject renders as a
-  distant speck and `his face visible past its thin stem` cannot be honoured --
-  no readable face in any of the four seeds, a blank featureless green head in
-  the best one (s1), no goblin at all in s0 or s3, and in s2 the sapling reads
-  as a picked flower in his hand rather than a rooted plant. Contact sheet and
-  2x zoom were looked at, not scored by a metric.
-  WHAT WOULD CLEAR THIS: a shot-size term, not another angle term. Beat 04 --
-  the one beat in this wave whose frames ever came back readable -- says "his
-  face filling the frame". The staged drafts copied the angle half of that and
-  not the size half. Fix `authored_staged` to state shot size, draw ONE sample
-  again, look at it, then clear this key.
-  Frames: C:\banyan-farm\wave-goblin-prep\out-staged\02-the-sprint-wave1-s*.png
+# THE COUNT TAG IS THE CORRECTED ONE AND IT IS NOT BEING RE-DERIVED HERE. The
+# drafts file supplies `A small goblin boy, {{GOBLIN}}, solo` at the head of the
+# sentence with `No girl, no child.` on the negative tail — the r8 form, verified
+# by calling `_tag_from_clause` on every draft, expected value `1boy`. A bare
+# `goblin` resolves to `1other`, the indeterminate-humanoid tag blamed for three
+# rounds at 0/4. Confirmed byte-present in the box's own copy of
+# `wave-drafts.yaml` (beat 15 block, line 210) before this spec was written.
+#
+# THE RISK THIS SAMPLE IS ACTUALLY BUYING, named up front so the result cannot be
+# spun. Dropping `tusks` gives back the female skew it was bought to fight:
+# `tusks` co-occurs male-to-female 1.92:1 and on `goblin` pictures takes the skew
+# from 3.14 down to 1.59. The question this job answers in three minutes is
+# whether the count-tag fix (`a small goblin boy` + `solo` + `No girl, no child.`
+# on the SDXL negative, where the negative binds) carries not-female on its own,
+# without spending tokens on an attribute he never asked for. If it does not,
+# that is a finding and the tusks argument comes back to him as a real question
+# instead of an assumption.
+#
+# TOKENS. This beat measured 65/77 positive with the slot at `green skin`, 12
+# tokens of headroom, 73 negative. Removing `tusks` only widens that, so the
+# style anchor — which compress() drops FIRST and silently — is not at risk.
 
 id: ep2-b14-goblin-staged-0811
 task: ep2-b14-goblin-staged-0811
@@ -67,35 +77,61 @@ runner: box
 needs_gpu: true
 priority: 45
 max_attempts: 1
-owner: goblin-wave lane, 2026-08-11 (run copy, after Roman's goblin verdict)
-script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`,
-  `approved_on: 2026-08-03`. His approval verbatim: "approve 002b except.. we need to make
-  SURE the fig growing on the sapling is mentioned, last time we generated 002b it just..
-  appeared. also, the sapling was able to flail a leaf in episode 1? why couldnt it do that
-  in 002b?" Neither condition touches this beat''s staging.'
-consumer: The founder's pick sheet for episode 2. Beat 14 the-defense has no candidate frame
-  drawn against his goblin definition -- every existing candidate for it predates 2026-08-10
-  and was scored against a goblin he had not defined, which is what taste ledger record 32
-  suspended P2 over. This job draws the four he picks one of. No pick, no still for the beat,
-  no episode 2.
-success: Four PNGs at C:\banyan-farm\wave-goblin-prep\out-staged\14-the-defense-wave1-s0..3.png
-  with their .yaml provenance sidecars written at render time (7.2), all eight declared as
-  artifacts so a missing one fails rc=92 instead of passing quietly. Whether the goblin in
-  them is right is R4's call and not this job's.
-why: 'One variable against the approved staging sample: the beat. Same harness, same drafts
-  file, same `green skin` slot, same seeds, same steps and guidance, same `authored_staged`
-  variant. Roman approved the character on beat 15; this draws the same character on this
-  beat with the staging corrected.'
+owner: goblin-definition lane (2026-08-11)
+
+# NO `gate:` KEY, AND THAT IS A DELIBERATE READING OF WHAT HE AUTHORISED.
+# He authorised the DEFINITION, not the batch. One sample per recipe change is
+# exactly what CLAUDE.md permits without him present, and the fourteen gated
+# specs stay gated — clearing those keys is a human act after he looks at this.
+# `box_enqueue.py gate_checks()` refuses anything carrying `gate:`; this file
+# carries none because it IS the sample the gate is waiting for, not a member of
+# the wave the gate holds.
+
+consumer: >-
+  The founder's next look. Four frames of a plain green goblin on the beat where
+  the last attempt drew an elongated grey-eyed skull. His verdict on these four
+  is what releases — or re-cuts — the fourteen gated wave specs, all of which
+  currently encode `green skin, tusks`, a string he never said.
+
+script_authority: >-
+  Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`,
+  `approved_on: 2026-08-03`. His approval verbatim: "approve 002b except.. we
+  need to make SURE the fig growing on the sapling is mentioned, last time we
+  generated 002b it just.. appeared. also, the sapling was able to flail a leaf
+  in episode 1? why couldnt it do that in 002b?" Beat 15 is GOOD LISTENER
+  (1:10-1:15), his line "You're a good listener.", and shots.md holds the camera
+  on BOTH of them because the conversation is the subject. Neither of his two
+  approval conditions touches this beat.
+
+success: >-
+  Four PNGs at C:\banyan-farm\wave-goblin-prep\out-b14-staged\14-the-defense-wave1-s0..3.png
+  with their .yaml provenance sidecars written at render time (7.2), all eight
+  declared as artifacts so a missing one fails rc=92 instead of passing quietly.
+  Whether the goblin in them is right is R4's call and not this job's — the job
+  succeeds by producing candidates, not by them being good.
+
+why: >-
+  Apply his definition literally by taking a word out, on the beat whose recorded
+  failure is the goblin's face, using the route the adapter evidence has not
+  closed. One beat. Nothing publishes, nothing is scored, nothing is picked.
+
 goblin_def: green skin
-goblin_def_source: 'The founder, verbatim: "he is just a simple green goblin, nothing complex"
-  (2026-08-10 ~12:15, re-stated 2026-08-11), and his approval of the frames drawn from it:
-  "yeah, that looks like the right goblin" (2026-08-11 ~15:45, on `ep2-b15-goblin-simple-0811`).
-  `green skin` is the ONE attribute he named. This is his sentence with nothing added to it.'
+goblin_def_source: >-
+  The founder, verbatim: "he is just a simple green goblin, nothing complex"
+  (2026-08-10 ~12:15, re-stated 2026-08-11; cuts/cuts.yaml item 18, settled;
+  taste ledger `ep2-goblin-definition-0810`). `green skin` is the ONE attribute
+  he named and the only one that is both spoken and proven (4/4 in records 40 and
+  42). Everything else the slot could hold is the steward's. This string is
+  therefore his sentence with nothing added to it, which is what "nothing
+  complex" asks for — it is not a translation with extra terms smuggled in, and
+  that is the entire difference between this job and the fourteen gated ones.
+
 est_minutes: 2
 needs:
 - cuda
 - vram20
 - farm-venv
+
 env:
   PYTHONUTF8: '1'
   PYTHONIOENCODING: utf-8
@@ -105,22 +141,8 @@ env:
   HF_HUB_DOWNLOAD_TIMEOUT: '60'
   HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
   PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
 steps:
-- name: measure
-  argv:
-  - C:\banyan-farm\venv\Scripts\python.exe
-  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
-  - --harness
-  - C:\banyan-farm\wave-goblin-prep
-  - --root
-  - C:\banyan-farm\wave-goblin-prep\repo
-  - --beat
-  - '14'
-  - --goblin-def
-  - green skin
-  - --variant
-  - authored_staged
-  - --dry
 - name: sample
   argv:
   - C:\banyan-farm\venv\Scripts\python.exe
@@ -133,31 +155,54 @@ steps:
   - '14'
   - --goblin-def
   - green skin
-  - --variant
-  - authored_staged
   - --out
-  - C:\banyan-farm\wave-goblin-prep\out-staged
+  - C:\banyan-farm\wave-goblin-prep\out-b14-staged
   - --task
   - ep2-b14-goblin-staged-0811
+
+# DURABILITY, same mechanism the wave specs use and for the same reason: every
+# still this farm makes lands single-copy on a box nothing backs up. The courier
+# already runs `git add -A -- farm-out` and force-pushes on every job_done, and
+# farm-out is NOT gitignored — so publishing is a COPY, not a git command, and
+# the runner stays byte-identical. A distinct destination directory keeps these
+# four away from the gated wave's output namespace.
+#
+# allow_fail: a failed copy must never mark a good render failed.
 - name: publish
   allow_fail: true
   argv:
   - C:\banyan-farm\venv\Scripts\python.exe
   - -c
-  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-goblin-staged\"\
-    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/wave-goblin-prep/out-staged/14-the-defense-wave1-s*.*\"\
-    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
-    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
-    \    lines.append(h + \"  \" + os.path.basename(f))\n    print(\"   \", os.path.basename(f),\
-    \ h[:16])\nwith open(os.path.join(dst, \"14-the-defense-staged.sha256\"), \"w\", newline=\"\
-    \\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src),\
-    \ \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) == 8 else 1)\n"
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b14-goblin-staged"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/wave-goblin-prep/out-b14-staged/14-the-defense-wave1-s*.*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        # Hash the COPY, not the original: what this records has to be the
+        # bytes that get committed, or the manifest attests to the wrong file.
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+        print("   ", os.path.basename(f), h[:16])
+    # shasum -c format, and newline="\n" is load-bearing: Windows text mode
+    # rewrites \n to \r\n and every filename then carries a trailing \r that
+    # shasum -c cannot open. Measured on this farm, not guessed.
+    with open(os.path.join(dst, "ep2-b14-goblin-staged.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    # 4 stills + 4 sidecars. Fewer means the render wrote less than it promised.
+    raise SystemExit(0 if len(src) == 8 else 1)
+
 artifacts:
-- C:\banyan-farm\wave-goblin-prep\out-staged\14-the-defense-wave1-s0.png
-- C:\banyan-farm\wave-goblin-prep\out-staged\14-the-defense-wave1-s1.png
-- C:\banyan-farm\wave-goblin-prep\out-staged\14-the-defense-wave1-s2.png
-- C:\banyan-farm\wave-goblin-prep\out-staged\14-the-defense-wave1-s3.png
-- C:\banyan-farm\wave-goblin-prep\out-staged\14-the-defense-wave1-s0.yaml
-- C:\banyan-farm\wave-goblin-prep\out-staged\14-the-defense-wave1-s1.yaml
-- C:\banyan-farm\wave-goblin-prep\out-staged\14-the-defense-wave1-s2.yaml
-- C:\banyan-farm\wave-goblin-prep\out-staged\14-the-defense-wave1-s3.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b14-staged\14-the-defense-wave1-s0.png
+- C:\banyan-farm\wave-goblin-prep\out-b14-staged\14-the-defense-wave1-s1.png
+- C:\banyan-farm\wave-goblin-prep\out-b14-staged\14-the-defense-wave1-s2.png
+- C:\banyan-farm\wave-goblin-prep\out-b14-staged\14-the-defense-wave1-s3.png
+- C:\banyan-farm\wave-goblin-prep\out-b14-staged\14-the-defense-wave1-s0.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b14-staged\14-the-defense-wave1-s1.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b14-staged\14-the-defense-wave1-s2.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b14-staged\14-the-defense-wave1-s3.yaml
