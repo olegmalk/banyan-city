@@ -568,6 +568,24 @@ def head_commit_epoch():
     return int(out) if out.isdigit() else None
 
 
+def head_short_sha():
+    return _run(["git", "-C", REPO, "rev-parse", "--short=7", "HEAD"]).strip()
+
+
+def commits_behind(sha):
+    """How many commits HEAD has that the deployed commit does not.
+
+    None when this checkout has never heard of `sha` — which is a real and
+    different answer from "zero": the deploy may be from a branch we do not
+    have, or from a push we have not fetched. Calling that "current" is the
+    class of mistake this whole section exists to stop, so it stays None and
+    the verdict says so out loud."""
+    if not sha:
+        return None
+    out = _run(["git", "-C", REPO, "rev-list", "--count", "%s..HEAD" % sha]).strip()
+    return int(out) if out.isdigit() else None
+
+
 # How close `last-modified` must sit to the cache-fill instant before we call it
 # a restatement of that instant rather than a build clock. Two seconds absorbs
 # clock skew and the round trip without admitting a real build timestamp.
@@ -616,9 +634,108 @@ def is_cache_fill_clock(headers):
 
 
 BUILT_RE = re.compile(r'data-built="(\d{9,11})"')
+COMMIT_RE = re.compile(r'<meta[^>]+name="build-commit"[^>]+content="([^"]*)"', re.I)
+COMMIT_TIME_RE = re.compile(r'<meta[^>]+name="build-commit-time"[^>]+content="([^"]*)"', re.I)
+STAMP_SHA_RE = re.compile(r"^([0-9a-f]{7,40})(-dirty)?$")
 
 
-def build_stamp(base, probe):
+def probe_body(base, probe):
+    """The HTML of a probe page, or None if it could not be read as a 200.
+
+    One GET, because two facts now come out of the same bytes — the
+    `data-built` clock and the `build-commit` stamp — and fetching twice could
+    land on two different edges holding two different builds, which would make
+    the two signals describe different pages while looking like they agreed."""
+    try:
+        status, body, _, _ = fetch(base, probe)
+    except Exception:
+        return None
+    return body if status == 200 else None
+
+
+def parse_commit_stamp(body):
+    """Which commit the deployed page says it was built from.
+
+    -> {"state", "sha", "dirty", "commit_time"}. `state` is the whole point:
+
+      unreadable — the page could not be fetched. We know nothing.
+      absent     — no `build-commit` meta at all. This deploy PREDATES the
+                   stamp (see build_commit.py), which is exactly the shape of
+                   the 2026-08-10 freeze. It is not evidence of anything.
+      unknown    — the builder wrote `unknown`: it ran, but could not see git.
+                   Kept separate from `absent` because they have different
+                   causes and different fixes — one is an old deploy, the other
+                   is a build environment that cannot read its own checkout.
+      malformed  — a value that is neither. Something is writing this tag
+                   wrongly, and pretending to parse it would be worse.
+      present    — a real sha, possibly `-dirty`.
+
+    NONE OF THE FIRST FOUR MAY READ AS "CURRENT". That is the entire reason
+    this returns a state rather than an optional sha: an optional sha invites
+    `if sha and sha != head`, and every one of these cases falls through such a
+    test into silence — which is how a blind check becomes a falsely green one,
+    a strictly worse thing than the blind check it replaced."""
+    if body is None:
+        return {"state": "unreadable", "sha": "", "dirty": False, "commit_time": None}
+    m = COMMIT_RE.search(body)
+    if not m:
+        return {"state": "absent", "sha": "", "dirty": False, "commit_time": None}
+    raw = m.group(1).strip().lower()
+    if raw == "unknown":
+        return {"state": "unknown", "sha": "", "dirty": False, "commit_time": None}
+    sm = STAMP_SHA_RE.match(raw)
+    if not sm:
+        return {"state": "malformed", "sha": raw, "dirty": False, "commit_time": None}
+    tm = COMMIT_TIME_RE.search(body)
+    ct = tm.group(1).strip() if tm else ""
+    return {
+        "state": "present",
+        "sha": sm.group(1),
+        "dirty": bool(sm.group(2)),
+        "commit_time": int(ct) if ct.isdigit() else None,
+    }
+
+
+def commit_verdict(stamp, head_sha, behind=None):
+    """-> ("ok"|"warn", one line saying WHICH of current / stale / unknown).
+
+    Never returns a failure level, deliberately. Being a few commits behind is
+    normal here — a docs-only push is CANCELED on purpose — so the failing
+    judgement stays with the lag check below, which owns one threshold and one
+    failure between them. This line's job is to say which state we are in and
+    to make "unknown" unmistakable, not to add a second red for one fact."""
+    if stamp["state"] == "unreadable":
+        return "warn", ("UNKNOWN — could not read the deployed page to look for a "
+                        "build-commit stamp")
+    if stamp["state"] == "absent":
+        return "warn", ("UNKNOWN — the page carries NO build-commit stamp, so it "
+                        "predates the stamp (or was built by something that does not "
+                        "write one). This is not evidence that it is current.")
+    if stamp["state"] == "unknown":
+        return "warn", ("UNKNOWN — the build stamped `unknown`: it ran but could not "
+                        "read its own commit. Not the same as current.")
+    if stamp["state"] == "malformed":
+        return "warn", ("UNKNOWN — malformed build-commit %r. Something is writing "
+                        "the stamp wrongly; fix build_commit.py rather than trusting "
+                        "this." % stamp["sha"])
+    if stamp["dirty"]:
+        return "warn", ("built from an UNCOMMITTED tree at %s-dirty — its bytes were "
+                        "never in git, so it matches no commit and cannot be called "
+                        "current." % stamp["sha"])
+    if head_sha and (stamp["sha"].startswith(head_sha) or head_sha.startswith(stamp["sha"])):
+        return "ok", "CURRENT — built from HEAD %s" % stamp["sha"]
+    if behind is None:
+        return "warn", ("UNKNOWN — built from %s, a commit this checkout does not "
+                        "have. Fetch, or it is a deploy of another branch." % stamp["sha"])
+    if behind == 0:
+        return "warn", ("built from %s, which is AHEAD of this checkout's HEAD %s — "
+                        "someone pushed and this tree has not caught up."
+                        % (stamp["sha"], head_sha))
+    return "warn", ("STALE — built from %s, %d commit%s behind HEAD %s"
+                    % (stamp["sha"], behind, "" if behind == 1 else "s", head_sha))
+
+
+def build_stamp(body):
     """The page's own build time from its HTML, or None if it carries none.
 
     THIS IS THE CLOCK THE HEADER COULD NOT BE. `last-modified` on Vercel is the
@@ -638,13 +755,7 @@ def build_stamp(base, probe):
     forward, so max() is the build that produced this page. Returning None is
     the honest answer when the page has no stamp, and the caller falls back to
     announcing that it is blind rather than passing."""
-    try:
-        status, body, _, _ = fetch(base, probe)
-    except Exception:
-        return None
-    if status != 200:
-        return None
-    stamps = [int(s) for s in BUILT_RE.findall(body)]
+    stamps = [int(s) for s in BUILT_RE.findall(body or "")]
     return max(stamps) if stamps else None
 
 
@@ -666,8 +777,13 @@ def check_public_freshness():
     keeps serving a correct page from the past. `200 OK` is evidence the CDN
     is up, and evidence of nothing else.
 
-    Two independent signals, because either alone can lie:
+    Three independent signals, because any one alone can lie:
 
+      0. WHICH COMMIT — the deployed page states the commit it was built from
+         (`<meta name="build-commit">`, see build_commit.py). This is the only
+         exact one: current, stale-by-N-commits, or UNKNOWN, and unknown is
+         printed as unknown. It carries no threshold and cannot be moved by a
+         cache, because it is a fact in the bytes rather than a clock.
       1. LAG vs HEAD — the deployed page's `last-modified` against the newest
          commit. Generous threshold: a docs-only push is deliberately CANCELED
          (see pipeline/vercel-ignore-build.sh), so a small lag is correct
@@ -705,19 +821,43 @@ def check_public_freshness():
     print("  %s %-10s HTTP 200  last-modified=%s"
           % (green(" ok "), "primary", header(pub_headers, "last-modified") or "(none)"))
 
+    # Both in-page facts come out of one GET each; see probe_body.
+    pub_body = probe_body(PUBLIC_BASE, PUBLIC_PROBE)
+    mir_body = probe_body(MIRROR_BASE, MIRROR_PROBE) if mir_status == 200 else None
+    pub_built = build_stamp(pub_body)
+    mir_built = build_stamp(mir_body)
+
+    # WHICH COMMIT IS DEPLOYED — asked first, and asked before any clock,
+    # because it is the only question here with an exact answer. A clock says
+    # "about this old"; a sha says "this build, or not this build". It also
+    # answers when nothing else can: this runs above the last-modified guard on
+    # purpose, since a deploy with no usable header still states its own commit.
+    pub_commit = parse_commit_stamp(pub_body)
+    head_sha = head_short_sha()
+    behind = commits_behind(pub_commit["sha"]) if pub_commit["state"] == "present" else None
+    level, verdict = commit_verdict(pub_commit, head_sha, behind)
+    print("  %s %-10s %s"
+          % (green(" ok ") if level == "ok" else yellow("warn"), "commit", verdict))
+
     if pub_lm is None:
         print("  %s no last-modified header — freshness cannot be measured this way\n"
               % yellow("warn"))
         return failures
 
-    # Which clock are we allowed to believe? The page's own data-built stamp is
-    # a build time; last-modified is only usable when it is NOT the edge's fill
-    # instant. If neither holds, say blind — a false green here is the exact
-    # failure this section exists to prevent.
-    pub_built = build_stamp(PUBLIC_BASE, PUBLIC_PROBE)
-    mir_built = build_stamp(MIRROR_BASE, MIRROR_PROBE) if mir_status == 200 else None
-
-    if pub_built is not None:
+    # Which clock are we allowed to believe? A clean build-commit stamp is the
+    # best of them: lag against it is zero exactly when the deploy is HEAD,
+    # with no build-latency drift to absorb. data-built is a real build time
+    # too; last-modified is only usable when it is NOT the edge's fill instant.
+    # If none holds, say blind — a false green here is the exact failure this
+    # section exists to prevent.
+    if pub_commit["state"] == "present" and not pub_commit["dirty"] \
+            and pub_commit["commit_time"]:
+        pub_time, clock = pub_commit["commit_time"], "build-commit"
+        print("  %s %-10s build-commit=%s committed %s (a fact in the bytes, "
+              "immune to CDN caching)"
+              % (green(" ok "), "clock", pub_commit["sha"],
+                 time.strftime("%H:%M:%SZ", time.gmtime(pub_time))))
+    elif pub_built is not None:
         pub_time, clock = pub_built, "data-built"
         print("  %s %-10s data-built=%s (build time, immune to CDN caching)"
               % (green(" ok "), "clock", time.strftime("%H:%M:%SZ", time.gmtime(pub_built))))
@@ -738,11 +878,20 @@ def check_public_freshness():
     if head_ct:
         lag = head_ct - pub_time
         if lag > PUBLIC_STALE_FAIL_S:
+            # Named by commit when we have one — "3 commits behind at 15ee724"
+            # is something a reader can act on; "old per some clock" is not.
+            origin = (
+                "built from commit %s, committed %s"
+                % (pub_commit["sha"], time.strftime("%H:%M:%SZ", time.gmtime(pub_time)))
+                if clock == "build-commit"
+                else "built %s per %s"
+                % (time.strftime("%H:%M:%SZ", time.gmtime(pub_time)), clock)
+            )
             failures.append(
-                "banyan.city is %s BEHIND HEAD (built %s per %s, HEAD committed %s). "
+                "banyan.city is %s BEHIND HEAD (%s, HEAD committed %s). "
                 "The deploy is not firing — pushing again will not fix it; "
                 "publish with REPO-MOVE.md A0."
-                % (_ago(lag), time.strftime("%H:%M:%SZ", time.gmtime(pub_time)), clock,
+                % (_ago(lag), origin,
                    time.strftime("%H:%M:%SZ", time.gmtime(head_ct)))
             )
             print("  %s %-10s %s behind HEAD" % (red("FAIL"), "lag", _ago(lag)))
@@ -757,6 +906,16 @@ def check_public_freshness():
     # permanently negative before; mixing them silently is worse than skipping.
     if mir_status != 200:
         mir_time = None
+    elif clock == "build-commit":
+        # The mirror must answer on the SAME clock. Until it has also deployed
+        # a stamped build the cross-check is skipped rather than fudged onto
+        # data-built, which would compare a commit time against a build time
+        # and reintroduce exactly the sign error this section already fixed
+        # once. A skipped cross-check prints a warn and says so.
+        mir_commit = parse_commit_stamp(mir_body)
+        mir_time = (mir_commit["commit_time"]
+                    if mir_commit["state"] == "present" and not mir_commit["dirty"]
+                    else None)
     elif clock == "data-built":
         mir_time = mir_built
     else:

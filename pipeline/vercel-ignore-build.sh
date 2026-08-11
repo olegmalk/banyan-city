@@ -152,6 +152,12 @@ SITE_INPUTS=(
   # the slug this resolves. It is a build input in the strictest sense: change
   # it and every one of those hrefs changes, with no other file touched.
   pipeline/repo_slug.py
+  # the `<meta name="build-commit">` every page carries, so the deploy can state
+  # which commit it is. Listed for the same reason as repo_slug.py above: change
+  # it and every page's bytes change with no other file touched — and a guard
+  # that skipped that push would leave banyan.city stamped with a stale commit,
+  # which is the exact lie the stamp exists to prevent.
+  pipeline/build_commit.py
   pipeline/generate_shots.py
   pipeline/sd_prompt.py
   # read at build time for the founder's inbox on the status page.

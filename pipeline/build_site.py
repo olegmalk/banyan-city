@@ -34,6 +34,7 @@ from pathlib import Path
 import markdown
 import yaml
 
+import build_commit
 import licence_gate as lg
 import repo_slug
 from site_theme import THEME_CSS
@@ -378,6 +379,11 @@ def page(title: str, body: str, depth: int = 0, path: str = "", desc: str = "",
     esc_t, esc_d = html.escape(title), html.escape(desc)
     cls = f' class="{body_class}"' if body_class else ""
     robots_meta = f'\n<meta name="robots" content="{html.escape(robots)}">' if robots else ""
+    # Which commit these bytes were built from, stated in the bytes themselves.
+    # A CDN can hold a page for a day; it cannot change what the page says about
+    # its own origin, which is why this and not an HTTP header — see
+    # build_commit.py, and qa_local.check_public_freshness which reads it back.
+    build_meta = build_commit.meta_tags()
     # Viewer-facing chrome: the two pages a stranger wants (watch, write) are in
     # the nav on every page; the build dashboard moved to the footer.
     nav = (f'<nav class="crumbs"><a href="{root}index.html">🌳 {REPO_NAME}</a> · '
@@ -391,7 +397,7 @@ def page(title: str, body: str, depth: int = 0, path: str = "", desc: str = "",
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">{robots_meta}
+<meta name="viewport" content="width=device-width, initial-scale=1">{robots_meta}{build_meta}
 <meta name="description" content="{esc_d}">
 <link rel="canonical" href="{url}">
 <link rel="alternate" type="application/rss+xml" title="new nodes" href="{CANONICAL}/feed.xml">
