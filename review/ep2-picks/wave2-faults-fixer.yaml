@@ -1,0 +1,57 @@
+# wave2-faults-fixer.yaml -- the FIXER lane's own verdicts on the 16
+# identity-frozen rounds rendered 2026-08-12 (`farm-out/ep2-bNN-idfix/`).
+#
+# WHOSE EYE THIS IS. These are the STEWARD's readings, not the founder's. He has
+# ruled on beats 02/03/04/05 only; everything here is judged against the three
+# things he did fix -- the frozen goblin (green skin, BALD, patchwork cloak), the
+# guards (plain brown tunics, round, bare heads, faces visible, NO armor -- he
+# rejected armor outright), and each beat's own staging sentence as SENT (read
+# from the render sidecar, not from the draft, so a stale draft cannot lie here).
+# A taste verdict is R4 and stays his: `faulty` below means a stated predicate is
+# measurably absent or a banned object is measurably present, never "I dislike it".
+#
+# One record per beat, appended and COMMITTED as each beat is read, so a lane
+# death costs at most the beat in hand.
+
+lane: fixer (third spawn, 2026-08-12)
+source_rounds: farm-out/ep2-bNN-idfix/  (4 frames each, seeds s0..s3)
+
+beats:
+
+- beat: 2
+  slug: the-sprint
+  variant_rendered: authored_staged_med_occl_hide_r2
+  positive_tokens: 72
+  verdict: faulty
+  identity: green skin 4/4, bald 4/4, patchwork cloak 4/4, one goblin 4/4, not pale 4/4
+  faults:
+  - name: stitched scalp and stitched face
+    count: 4/4
+    detail: >-
+      Every frame sews the cloak's patchwork INTO THE CHARACTER. s0 carries a
+      tan oval graft stitched across the crown, s1 a pale crown with X-stitches,
+      s3 a vertical sutured seam down the middle of the skull; s0, s2 and s3 add
+      red stitch scars on the cheeks. The bald head he ruled for is present, but
+      it arrives as Frankenstein surgery. `patchwork` is a CLOAK word that has
+      migrated to skin -- his beat-04 sentence for the same class of drift was
+      "character consistency".
+  - name: the sapling he cowers behind is absent
+    count: 0/4
+    detail: >-
+      The sentence sent asks for a tiny sapling with "its thin stem in front of
+      him" and "his face peeking around it". No frame puts a stem between the
+      camera and the goblin: s0 and s2 replace the one sapling with a whole bed
+      of generic seedlings, s1 parks a stem at the right frame edge well clear
+      of him, s3 sits him in tall grass with a seedling low in the foreground.
+      This is the known sapling-next-to-figure limit (commit bdcb1a2a read it as
+      absent from all eight goblin frames) -- ONE r2, then it goes to the founder.
+  lever: >-
+    Two channels. (1) Unwanted object -> negative ban, worded so it cannot negate
+    what the positive asserts: the positive says `patchwork cloak`, so the ban
+    must name SKIN and HEAD, never the bare word `stitches` -- `no scars, no
+    stitched skin, no sutures, no bandage` leaves the cloak's patchwork intact.
+    (2) Missing object -> early affirmative, paid for out of mood words: `Medium
+    shot, morning light` funds putting the sapling stem in the FIRST clause,
+    ahead of the goblin, the placement `authored_b04_fieldban` proved for the
+    same omission class.
+  r2: authored_b02_idfix_r2  (spec ep2-b02-idfix-r2-0812, out-b02-idfix-r2)
