@@ -1082,6 +1082,47 @@ META_EXT = (".meta.yaml", ".meta.yml")
 # reader that accepted it would one day adopt an unrelated export sitting in the
 # same directory as a clip's recipe, so those callers pass META_EXT explicitly.
 RECORD_SIDECAR_EXT = META_EXT + (".json",)
+# The BARE shape: `04-the-footnote-wave1-s0.yaml` beside the .png, with no
+# `.meta` infix. It is what the box's older still harnesses wrote, and a record
+# written at render time on the machine that did the rendering is the best
+# provenance we have — so a lookup that cannot see it turns a real receipt into
+# an absence, which the fail-closed gate then reads as "no record" and
+# withholds. Checked LAST, so an explicit `.meta.yaml` still wins where both
+# exist, and only ever when the caller asked for the yaml family at all.
+BARE_EXT = (".yaml", ".yml")
+
+
+def is_record_shaped(path: Path) -> bool:
+    """Does this yaml look like an asset's render-time record, not a document?
+
+    THE COLLISION THIS EXISTS TO PREVENT. `<stem>.yaml` is a name anything can
+    have, and in this repo something already does: all 82 node leaves sit in
+    `leaves/` beside the very mp4 they describe, so `001-t3-a.yaml` is one
+    stem-match away from being adopted as `001-t3-a.mp4`'s sidecar. A leaf is
+    not a sidecar — it is a first-class document the gate already walks on its
+    own, and letting it in through this door would silently re-tier 32
+    published clips on a lookup change that was only meant to find four stills.
+    So the test is on CONTENT, never on directory:
+
+      * it must carry a PROVENANCE key — a yaml that does not say what made the
+        file cannot answer the gate's question anyway, so adopting it would buy
+        the asset nothing while costing us the "no record" finding; and
+      * it must NOT carry `leaf:` or `tier:`, which every leaf has and no
+        render-time sidecar in the tree has (checked across all 443 of them).
+
+    Anything unparseable, or not a mapping, is not a record. Absence of proof
+    stays absence here: the caller reads False as "no sidecar", which is the
+    conservative answer the fail-closed gate wants.
+    """
+    try:
+        data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    except Exception:                                        # noqa: BLE001
+        return False
+    if not isinstance(data, dict):
+        return False
+    if "leaf" in data or "tier" in data:
+        return False
+    return any(k.lower() in PROVENANCE_KEYS for k in data if isinstance(k, str))
 
 
 def sidecar_for(asset: Path, exts=RECORD_SIDECAR_EXT) -> Path | None:
@@ -1093,11 +1134,25 @@ def sidecar_for(asset: Path, exts=RECORD_SIDECAR_EXT) -> Path | None:
     candidates are built from this asset's own name, so renaming a take away
     from its sidecar still loses its provenance rather than borrowing the
     next take's.
+
+    Then the bare `<stem>.yaml` shape (BARE_EXT), which the older box harnesses
+    wrote and which nothing here could see until 2026-08-11 — but only when it
+    reads as a record rather than as a document that merely shares the stem
+    (is_record_shaped). The bare candidates are derived from `exts` rather than
+    bolted on, so a caller asking only for `.json` still gets no yaml, and the
+    picture-only callers passing META_EXT get the yaml family they asked for.
     """
     for ext in exts:
         for cand in (asset.with_name(asset.name + ext),    # 09-x.mp4.meta.yaml
                      asset.with_name(asset.stem + ext)):   # 09-x.meta.yaml
             if cand.exists():
+                return cand
+    for ext in (e for e in BARE_EXT if any(x.endswith(e) for x in exts)):
+        for cand in (asset.with_name(asset.name + ext),    # 09-x.mp4.yaml
+                     asset.with_name(asset.stem + ext)):   # 09-x.yaml
+            # `cand == asset` when the asset IS a yaml: a file is not its own
+            # record, and returning it would make every record self-provenanced.
+            if cand != asset and cand.exists() and is_record_shaped(cand):
                 return cand
     return None
 

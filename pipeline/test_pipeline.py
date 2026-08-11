@@ -1080,6 +1080,49 @@ def test_held_sidecar_is_readable_by_every_tool_that_reads_it(tmp: Path):
     check("a picture reader scoped to META_EXT does not",
           lg.sidecar_for(tmp / "06-vo.mp3", lg.META_EXT) is None)
 
+    # THE BARE SHAPE, third naming convention and the one that cost us four
+    # stills (2026-08-11). The box's older still harnesses wrote their §7.2
+    # record as `<stem>.yaml` with no `.meta` infix — a real render-time
+    # receipt that the reader could not see, so a file with perfectly good
+    # provenance read as having none and the fail-closed gate would withhold
+    # it. Picture callers scoped to META_EXT must see it too: it is a still's
+    # record, and they are the ones who read stills.
+    bare = tmp / "07-the-footnote-s0.png"
+    bare.write_bytes(b"p")
+    (tmp / "07-the-footnote-s0.yaml").write_text(
+        "platform: local-gpu (rtx5090)\nmodel: cagliostrolab/animagine-xl-3.1\n",
+        encoding="utf-8")
+    check("the bare stem shape is found", lg.sidecar_for(bare) is not None)
+    check("and by a picture reader scoped to META_EXT",
+          lg.sidecar_for(bare, lg.META_EXT) is not None)
+    check("a json-only caller still gets no yaml",
+          lg.sidecar_for(bare, (".json",)) is None)
+
+    # AND THE COLLISION THAT SHAPE OPENS. `<stem>.yaml` is a name anything can
+    # have, and every one of the 82 node leaves already has it beside the mp4
+    # it describes. A leaf is a document the gate walks on its own, not a
+    # sidecar; adopting one here would have re-tiered 32 published clips on a
+    # lookup change meant to find four stills. Same for any neighbour yaml that
+    # never says what made the file — it cannot answer the gate, so letting it
+    # in would only cost us the honest "no record" finding.
+    leafish = tmp / "08-t3-a.mp4"
+    leafish.write_bytes(b"v")
+    (tmp / "08-t3-a.yaml").write_text(
+        "leaf: 08-t3-a\ntier: T3\ncontent: 08-t3-a.mp4\nmodel: per-beat\n",
+        encoding="utf-8")
+    check("a leaf sitting beside its own mp4 is not adopted as its sidecar",
+          lg.sidecar_for(leafish) is None)
+    silent = tmp / "09-notes.png"
+    silent.write_bytes(b"p")
+    (tmp / "09-notes.yaml").write_text("title: crop notes\nby: steward\n",
+                                       encoding="utf-8")
+    check("a same-stem yaml naming no engine is not a record",
+          lg.sidecar_for(silent) is None)
+    # Most specific still wins, exactly as it does between the two .meta shapes.
+    (tmp / "09-notes.meta.yaml").write_text("model: none\n", encoding="utf-8")
+    check("an explicit .meta.yaml outranks a bare neighbour",
+          lg.sidecar_for(silent) == tmp / "09-notes.meta.yaml")
+
     # END TO END, through the real gate, in a root it actually walks: the clip
     # is only clean if the record classifies AND the reader can find it.
     root = tmp / "repo"
