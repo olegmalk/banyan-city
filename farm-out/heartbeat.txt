@@ -407,3 +407,4 @@
 11:27:28Z box-runner idle ready=0 failed=1
 11:37:31Z box-runner idle ready=0 failed=1
 11:47:34Z box-runner idle ready=0 failed=1
+11:50:21Z STARTED task=ep2-b02-goblin-staged-0811-1786449011 attempt=1 on box-runner
