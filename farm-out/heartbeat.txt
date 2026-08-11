@@ -409,3 +409,4 @@
 11:47:34Z box-runner idle ready=0 failed=1
 11:50:21Z STARTED task=ep2-b02-goblin-staged-0811-1786449011 attempt=1 on box-runner
 11:51:19Z DONE task=ep2-b02-goblin-staged-0811-1786449011 rc=0 artifacts=8
+11:53:49Z STARTED task=ep2-b01-figgrow-plate-0811-1786449211 attempt=1 on box-runner
