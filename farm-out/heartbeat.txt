@@ -399,3 +399,4 @@
 11:03:02Z box-runner idle ready=0 failed=1
 11:13:06Z box-runner idle ready=0 failed=1
 11:15:03Z STARTED task=ep1-b02-121f-typing-0811-1786446886 attempt=1 on box-runner
+11:20:09Z DONE task=ep1-b02-121f-typing-0811-1786446886 rc=0 artifacts=1
