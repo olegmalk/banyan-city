@@ -1,0 +1,71 @@
+# ===================================================================
+# PROVISIONAL — v36b clip set. Nothing here is canon, nothing here is
+# approved, and no file in this directory may be promoted to a canon
+# name or published. Taste is the founder's (R4).
+# ===================================================================
+# NO MODEL RAN FOR THIS FILE. It is a 1.625s head-cut of an already
+# rendered clip in this same set, re-encoded only so the concat is
+# frame-clean. Nothing was generated, voiced or synthesised.
+#
+# WHY IT EXISTS. Founder, 2026-08-11: "also we should show that he
+# became a sapling earlier in the video just to make it less
+# confusing." Beat 05 is silent and its authored slot is 0:20-0:24
+# (4.00s) while its footage runs 2.583s, so 1.417s of the slot the
+# author already wrote was playing as nothing. render_t3 sequences
+# multiple `05-*.mp4` in stem order, so this file plays as the TAIL of
+# beat 05 — the cut from the dark apartment floor to what he is now —
+# and no script beat was added, moved or renumbered to make room.
+#
+# THE `-alt1-` IN THE FILENAME IS A LIE THE GUARD FORCES, AND THIS IS
+# WHERE IT IS CORRECTED. This file is NOT an alternate take of the fan
+# spin-down; it is a SECOND, DIFFERENT SHOT sequenced after it inside
+# beat 05. It was first named `05-sapling-reveal.mp4` and
+# `render_t3.footage_matches_beat` silently dropped it from the cut:
+# that guard slug-matches a clip's filename against its beat's slug so
+# that stale footage from a renumbered script cannot play over the
+# wrong line, and "saplingreveal" does not match "fanspinningdown". The
+# guard was right on its own terms — it cannot tell a deliberate insert
+# from a stale orphan. `find_clips` documents `NN-slug-alt1.mp4` as the
+# convention for a beat's second clip and splits on `-alt` before
+# matching, so the name has to start with the beat's own slug. The
+# filename says "alt"; the shot is a cut to somewhere else.
+platform: local-deterministic (ffmpeg -t, no model)
+model: none
+model_licence: n/a — inherits the source clip's licence
+shot_beat: 5
+role: >-
+  tail insert — the SECOND clip of beat 05, sequenced after
+  05-fan-spinning-down.mp4, not an alternate take of it
+size: 704x1280
+seconds: 1.625
+fps: 24
+cost_usd: 0
+prompt: |-
+  (none — an existing clip was cut; nothing was generated)
+negative: ''
+source_clip: 12-undefined.mp4
+source_clip_sha256: 38c794d96430db8afc5001feb8b2fb3303d8a368487f832499e3642e760ed8c3
+source_clip_segment: first 1.625s of 2.5417s
+source_still: 12-undefined.png
+source_still_path: genomes/sapling/nodes/001-capability-inventory/stills/12-undefined.png
+source_lineage: >-
+  12-undefined.mp4 is itself a held-still push-in (pipeline/hold_still.py) over
+  the current non-revoked beat-12 still. No video model is anywhere in this
+  file's ancestry.
+why_this_plate: >-
+  It is the earliest DAYLIGHT exterior in the approved set that reads
+  unmistakably as a small two-leaf sapling standing in ground, and its light
+  matches beat 06's blue-sky POV that follows it. Beat 15's sapling was the
+  other candidate and was refused for this use: it is the episode's closing
+  image and it is dusk, so it would both spend the ending early and cut wrong
+  into a morning sky.
+repeats_a_later_frame: >-
+  YES, and it is stated rather than hidden — this plate is beat 12's own
+  picture and returns at 1:09. That repeat is the cost of doing this with
+  existing approved material instead of rendering something new, and the
+  founder should judge whether he will pay it.
+provisional: true
+provisional_reason: |-
+  drafted from the founder's 2026-08-11 direction and shown to him as a bench
+  preview; he has ratified nothing about this insert
+provisional_authority: steward assembly under the founder's direction; not his pick
