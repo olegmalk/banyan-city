@@ -1657,6 +1657,99 @@ beats:
       aesthetic No girl, no child. No photorealism, no 3D render look. 9:16
       vertical, no text.
 
+  18:
+    slug: the-decision
+    kind: guard
+    tag: ''
+    extra_neg: guard
+    gist: the decision / one fig on the thinnest branch
+    # -- BEAT 18 IS IN THIS FILE AS OF 2026-08-12 ~01:3x, and it was not before.
+    # Same reason as beat 13 and beat 21: tonight's refresh rounds covered every
+    # beat that HAD a block, and these three had none. Beat 16 stays out on
+    # purpose — it waits on the goblin being drawn into the plate, which is his
+    # call and not this lane's.
+    #
+    # `kind: guard` IS A HARNESS TOKEN AND NOT A CLAIM ABOUT THE PICTURE, exactly
+    # as beat 01's header says. There are no guards in beat 18 and no goblin
+    # either; there is no character at all. `guard` is the only `kind`
+    # render_wave_sample.py:193 accepts without a {{GOBLIN}} marker, and its
+    # `extra_neg: guard` tier sends neither the fusion tags nor the species tags —
+    # right here, because a plant/humanoid collision needs a humanoid and this
+    # frame has none. `tag: ''` because `_tag_from_clause` finds no person noun in
+    # the first clause and check() faults if the declared tag and the derived one
+    # disagree. The saving is real and it is spent on the fruit—colour bans below.
+    #
+    # WHAT THE EIGHT FRAMES ON DISK SHOW. `review/ep2-picks/sheets/b18.jpg`
+    # opened and looked at, r1 and r3, all eight:
+    #   * TWO FRUITS IN THREE OF EIGHT — r1-s2 is a matched pair of dark red
+    #     spheres, r3-s1 hangs a second fruit below the first, r3-s2 puts a big one
+    #     and a small one in the same frame. The line this beat plays under is "One
+    #     fruit — everything I own." A second fruit does not weaken the shot, it
+    #     deletes the story.
+    #   * r1-s1 HAS A GIRL IN IT — a white-haired anime face, blushing, filling the
+    #     top half of a beat whose entire subject is a piece of fruit.
+    #   * r3-s1 DRAWS TWO EYES ON THE FRUIT ITSELF. The fig became a character.
+    #   * THE FRUIT IS AN APPLE IN SIX OF EIGHT — big, glossy, hard-shouldered,
+    #     orange-red in r1 and green in r3 — hanging off a THICK DARK WOODY LIMB
+    #     that belongs to a mature tree. This beat is the thinnest branch of a
+    #     tiny sapling.
+    #   * r3-s3 is a pale yellow-white fruit, which is the `no white fruit, no pale
+    #     fruit` case the b01 inpaint lane's r2 negative was written for.
+    #   * FAINT WHITE DASHED SKETCH MARKS rim the fruit in four of eight. That is
+    #     not a new observation: shots.md already records it for this beat as "a
+    #     flourish this wave added that nothing else in the show has", and it is
+    #     the reason the picker marked 18 down on style. It has never been sent a
+    #     term.
+    #
+    # NO DARK BAN, AND THIS IS THE `unless the beat stages otherwise` CASE. The
+    # staging is `warm amber afternoon light against a soft wash sky` and every
+    # one of the eight frames came back warm and bright. There is no darkness
+    # fault here to answer, and `no dusk, no sunset` would fight amber afternoon
+    # light rather than sharpen it — the opposite of beat 17, where afternoon is
+    # affirmed against frames that actually arrived at twilight.
+    #
+    # WHAT IS INHERITED FROM shots.md's OWN FENCE, word for word: `small round
+    # green` fruit, `the thinnest branch of a tiny sapling`, `its stem flexing
+    # under the weight`, and `warm amber afternoon light against a soft wash sky`.
+    # `the only fruit in frame` is the one clause added to the staging, and it is
+    # additive rather than a rewording — the fig is still on the thinnest branch
+    # and the stem still flexes. `no second fruit` rides with it because the guard
+    # beats taught that an affirmative alone does not hold against a strong prior,
+    # and an apple tree branch with two apples on it is about as strong as priors
+    # get. `tiny` and `sapling` both fire `sd_prompt._SMALL`, so the scale
+    # negatives — `mature tree, large tree, thick trunk, full canopy` — append on
+    # their own; `no thick branch` is added because the limb, not the tree, is
+    # what six of eight frames drew wrong.
+    #
+    # THE PEOPLE BANS ARE THE PLANT-ONLY SET MINUS THE TWO THAT FAULT. `no girl,
+    # no child, no face` go; `no boy` and `no person` cannot, because check()
+    # faults on them unconditionally (`peopled beat negates its own subject`), a
+    # rule written for the fifteen goblin beats. So this beat renders with a weaker
+    # people-defence than a plant-only plate would normally use, which is a real
+    # and stated cost of borrowing this harness — the same cost beat 01 pays.
+    #
+    # TWO KEYS, BYTE-IDENTICAL, for the reason beat 01's header documents:
+    # render_wave_goblin.py's whole-wave path reads `d["authored"]` by name for
+    # every beat in this file, so a block carrying only a variant key would
+    # KeyError every sibling lane's `--dry`. `authored_b18_refresh` is what the
+    # job renders and what the sidecar records. If you edit one, edit both.
+    authored: >-
+      A single small round green fig on the thinnest branch of a tiny sapling,
+      the only fruit in frame, its stem flexing under the weight, warm amber
+      afternoon light against a soft wash sky. Held macro, extreme close-up,
+      cinematic lighting, detailed, newest, masterpiece, best quality, very
+      aesthetic No second fruit, no apple, no red fruit, no white fruit, no pale
+      fruit, no face, no girl, no child, no sketch lines, no dashed outline, no
+      thick branch. No photorealism, no 3D render look. 9:16 vertical, no text.
+    authored_b18_refresh: >-
+      A single small round green fig on the thinnest branch of a tiny sapling,
+      the only fruit in frame, its stem flexing under the weight, warm amber
+      afternoon light against a soft wash sky. Held macro, extreme close-up,
+      cinematic lighting, detailed, newest, masterpiece, best quality, very
+      aesthetic No second fruit, no apple, no red fruit, no white fruit, no pale
+      fruit, no face, no girl, no child, no sketch lines, no dashed outline, no
+      thick branch. No photorealism, no 3D render look. 9:16 vertical, no text.
+
   19:
     slug: the-drop
     kind: goblin

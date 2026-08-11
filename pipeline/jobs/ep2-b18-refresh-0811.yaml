@@ -1,0 +1,276 @@
+# Beat 18 THE DECISION refresh, derived from the b11 skeleton at 2026-08-12 ~01:4x.
+# The 0811 date in the id is the lane's, not the clock's; the sibling refresh ids
+# all carry it.
+#
+# NOT TO BE CONFUSED WITH `pipeline/jobs/ep2-b18-265f-fullanchor-0811.yaml`, which
+# is a different job on the same beat and is not touched by this one. That is an
+# LTX-2.3 video job — it re-renders the 6-second clip at 265 frames off an
+# existing plate to stop it looping under its line. This is a four-seed SDXL STILL
+# round in the wave harness, against the eight still candidates on the picking
+# page. Different renderer, different output directory, different question.
+#
+# BEAT 18 HAD NO BLOCK IN wave-drafts.yaml UNTIL THIS JOB WAS WRITTEN — the same
+# reason beats 13 and 21 were skipped by tonight's twenty refresh rounds, which
+# covered every beat that had one. Beat 16 stays out on purpose; it waits on the
+# goblin being drawn into the plate, which is his call.
+#
+# ── NO FOUNDER WORDS ON THIS BEAT, AND THAT IS SAID PLAINLY ───────────────────
+# Beat 18's only recorded verdict is the steward's: "Provisional pick r3-s0, the
+# steward's guess, logged 2026-08-09 at 0.45 confidence. Waiting on you; not a
+# decision." He has spoken on beats 01, 13, 15 and 16 and not on this one. Nothing
+# below is his and nothing below is presented as his.
+#
+# ── WHAT THE EIGHT FRAMES ON DISK SHOW, READ BEFORE THE FIX WAS WRITTEN ───────
+# `review/ep2-picks/sheets/b18.jpg` opened and looked at, r1 and r3, all eight:
+#   * TWO FRUITS IN THREE OF EIGHT. r1-s2 is a matched pair of dark red spheres,
+#     r3-s1 hangs a second fruit below the first, r3-s2 puts a big one and a small
+#     one in the same frame. The line this beat plays under is "One fruit —
+#     everything I own." A second fruit does not weaken the shot, it deletes the
+#     story.
+#   * r1-s1 HAS A GIRL IN IT — a white-haired anime face, blushing, filling the
+#     top half of a beat whose entire subject is a piece of fruit.
+#   * r3-s1 DRAWS TWO EYES ON THE FRUIT. The fig became a character.
+#   * THE FRUIT IS AN APPLE IN SIX OF EIGHT — big, glossy, hard-shouldered,
+#     orange-red in r1 and green in r3 — hanging off a THICK DARK WOODY LIMB that
+#     belongs to a mature tree. This beat is the thinnest branch of a tiny sapling.
+#   * r3-s3 is a pale yellow-white fruit: the `no white fruit, no pale fruit` case
+#     the b01 inpaint lane's r2 negative was written for.
+#   * FAINT WHITE DASHED SKETCH MARKS rim the fruit in four of eight. That is not
+#     a new observation — shots.md already records it for this beat as "a flourish
+#     this wave added that nothing else in the show has", and it is why the picker
+#     marked 18 down on style. It has never been sent a term until now.
+#
+# ── THE FIX, AND WHAT EACH TERM IS AIMED AT ───────────────────────────────────
+#  1. THE SECOND FRUIT. `the only fruit in frame` affirmatively plus `no second
+#     fruit`. The affirmative alone is not trusted here: an apple-tree branch with
+#     two apples on it is about as strong as a checkpoint prior gets, and the guard
+#     beats taught that a strong prior needs both channels.
+#  2. THE APPLE. `no apple, no red fruit` beside shots.md's own `small round green`
+#     fig, plus the two terms the fig beats always carry, `no white fruit, no pale
+#     fruit`.
+#  3. THE BRANCH. `no thick branch`. The scale negatives already append on their
+#     own — `tiny` and `sapling` fire `sd_prompt._SMALL`, which sends `mature tree,
+#     large tree, thick trunk, full canopy` — but the limb, not the tree, is what
+#     six of eight frames drew wrong, and none of those four terms names it.
+#  4. THE PEOPLE. `no face, no girl, no child`. NOT `no boy` and NOT `no person`:
+#     check() faults on those unconditionally ("peopled beat negates its own
+#     subject"), a rule written for the fifteen goblin beats. So this beat renders
+#     with a weaker people-defence than a plant-only plate would normally use, and
+#     that is a real and stated cost of borrowing this harness — the same cost beat
+#     01 pays. `no face` also answers the eyes on the fruit.
+#  5. THE SKETCH MARKS. `no sketch lines, no dashed outline`. Small stated risk:
+#     these are the only two terms in this round aimed at a STYLE artifact rather
+#     than at content, and if the linework comes back soft or unfinished they are
+#     the first two to drop.
+#
+# NO DARK BAN, AND THIS IS THE `unless the beat stages otherwise` CASE. The
+# staging is `warm amber afternoon light against a soft wash sky` and all eight
+# frames came back warm and bright. There is no darkness fault to answer, and `no
+# dusk, no sunset` would fight amber afternoon light rather than sharpen it — the
+# opposite of beat 17, where afternoon is affirmed against frames that actually
+# arrived at twilight.
+#
+# `kind: guard` IS A HARNESS TOKEN AND NOT A CLAIM ABOUT THE PICTURE, exactly as
+# beat 01's block says. There are no guards in beat 18 and no goblin either; there
+# is no character at all. `guard` is the only kind render_wave_sample.py:193
+# accepts without a {{GOBLIN}} marker, and its `extra_neg: guard` tier sends
+# neither the fusion tags nor the species tags — right here, since a collision
+# needs two bodies and this frame has none. That saving is what pays for the six
+# fruit-and-style terms above.
+#
+# ── MEASURED ON THE BOX'S REAL CLIP TOKENIZER, FIRST DRAFT, NO REFUSALS ───────
+# `--dry` on the box, quoted rather than summarised:
+#   positive tokens (real CLIP): 64/77   STYLE ANCHOR PRESENT: True
+#   count tag: '' (draft declares '')            'text' negated: True
+#   negative: recipe 76 -> sent 73       DRY OK, no faults
+# NEGWARN, recorded rather than buried: five house terms are dropped to make room
+# — realistic skin texture, jpeg artifacts, deformed, extra limbs, blurry. Exactly
+# the trade the beat-08, beat-09 and beat-11 refreshes made. On a macro frame with
+# no anatomy in it, `extra limbs` and `deformed` are the cheapest five this file
+# has ever given up.
+#
+# WHY THIS IS ONE SAMPLE AND NOT A BATCH. CLAUDE.md, founder 2026-08-03: one
+# sample per recipe change. One recipe change, one beat, four seeds.
+#
+# SEPARATE OUT DIRECTORY: the harness names files from the beat slug, so this
+# writes to `out-b18-refresh` and overwrites neither r1 nor r3.
+
+id: ep2-b18-refresh-0811
+task: ep2-b18-refresh-0811
+node: 002b-first-citizen
+beat: 18
+runner: box
+needs_gpu: true
+
+# 52. box_runner.py sorts priority ASCENDING and takes ONE job at a time
+# regardless — sequential is the rule (CLAUDE.md, founder 2026-08-03). Tonight's
+# refresh lane ran 44 through 50; 13, 18 and 21 take 51, 52 and 53 in the order
+# they are staged, because they are written one at a time and each dry run has to
+# pass before the next block is touched. Beat 13 was queued at 51 a few minutes
+# ago and the ready queue was otherwise EMPTY when this was staged
+# (`box_enqueue.py --list`, checked, not assumed).
+priority: 52
+max_attempts: 1
+owner: beats 13/18/21 block-and-refresh lane, 2026-08-12 (the three episode-2
+  beats that had no draft block)
+
+# NO `gate:` KEY. One sample on a beat carrying no founder verdict at all,
+# sending terms aimed at faults visible in its own eight frames. It clears
+# NOBODY's gate: the fourteen `ep2-b*-goblin-wave1.yaml` specs and the staged
+# siblings keep theirs, and beat 16 stays gated on the plate.
+
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03` (read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml:17-18, the leaf the
+  render gate itself reads, not copied from a sibling spec). His `approved_quote`
+  verbatim: "approve 002b except.. we need to make SURE the fig growing on the sapling
+  is mentioned, last time we generated 002b it just.. appeared. also, the sapling was
+  able to flail a leaf in episode 1? why couldnt it do that in 002b?" The first
+  `approval_condition` is about beat 01''s fig APPEARING out of nowhere, and this beat
+  is the other end of that same fig''s life — the decision to spend it. Nothing in the
+  condition speaks to beat 18''s framing, lighting or fruit count, and the round below
+  does not treat it as if it did.'
+
+consumer: >-
+  The founder's morning review page, as a third round of beat 18 against the eight
+  candidates already on the picking page — the three with two fruits, the one with
+  a girl's face in it, the one with eyes on the fruit, and the four rimmed with
+  white dashed sketch marks. This job ranks nothing and picks nothing; the
+  provisional r3-s0 pick stays the steward's guess at 0.45 and whether any of
+  these four beats it is R4's call.
+
+success: >-
+  Four PNGs at C:\banyan-farm\wave-goblin-prep\out-b18-refresh\18-the-decision-wave1-s0..3.png
+  with their .yaml provenance sidecars written at render time (7.2), all eight
+  declared as artifacts so a missing one fails rc=92 instead of passing quietly.
+  What to look at, in plain terms rather than a metric's: exactly ONE fruit in the
+  frame, green and small rather than a glossy red apple, on a thin stem rather
+  than a heavy woody limb, with nobody in the shot and no dashed sketch marks
+  around it. A round that fixes the fruit count and keeps the apple is a real
+  result and should be reported as one, not re-run.
+
+why: >-
+  Three of beat 18's eight candidates draw TWO fruits under a line that says "One
+  fruit — everything I own", six of eight draw an apple on a mature tree's limb
+  instead of a fig on a sapling's thinnest branch, one has an anime girl's face in
+  it, one draws eyes on the fruit, and four carry the white dashed sketch marks
+  the picker already marked this beat down for. Every one of those is a content
+  fault with a term aimed at it here, and none of them is a matter of taste.
+  Measured on the box's real tokenizer before enqueue: positive 64/77 with the
+  style anchor intact, count tag '' deriving as declared, no faults, DRY OK.
+
+goblin_def: green skin
+goblin_def_source: >-
+  NO GOBLIN IS IN THIS BEAT AND NO CHARACTER OF ANY KIND. Beat 18 is `kind: guard`
+  — a harness token, not a claim about the picture — and its draft carries no
+  {{GOBLIN}} slot, so this value fills nothing and changes no pixel;
+  render_wave_sample.py makes --goblin-def mandatory on every call rather than
+  letting a default stand in, and render_wave_goblin.check() excludes guard beats
+  from the slot requirement for exactly this case. The value passed is the
+  founder's own definition — "he is just a simple green goblin, nothing complex"
+  (2026-08-10 ~12:15) — so that the provenance sidecar records the same string as
+  every other job in this wave rather than a placeholder.
+
+est_minutes: 2
+needs:
+- cuda
+- vram20
+- farm-venv
+
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+# THE SHA ATTESTED HERE IS THE SHA AT STAGING TIME AND IT WILL NOT SURVIVE THE
+# NIGHT. The box's wave-drafts.yaml was scp'd from this repo and verified
+# sha256-IDENTICAL — 449f7e95e5cf1b7f7a3af6efbb431212395628b4f9c95ff997bac3cdba9a576a,
+# printed by the box itself on the dry run quoted in the header. Beat 21 gets its
+# own block in the same file within the hour, so that digest changes and this job
+# may well run against a different one. Stated rather than papered over: what
+# actually guards this job is the `measure` step below, which re-runs the same
+# `--dry` against whatever the box holds AT RUN TIME and fails rc=1 for $0 if the
+# variant key is missing or the prompt no longer fits. `ep2-b08-refresh-0811`
+# failed exactly there (rc=1, 7 seconds, queue/failed/) rather than quietly
+# re-rendering an old prompt under a new job id.
+steps:
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '18'
+  - --goblin-def
+  - green skin
+  - --variant
+  - authored_b18_refresh
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '18'
+  - --goblin-def
+  - green skin
+  - --variant
+  - authored_b18_refresh
+  - --out
+  - C:\banyan-farm\wave-goblin-prep\out-b18-refresh
+  - --task
+  - ep2-b18-refresh-0811
+
+# DURABILITY: every still this farm makes lands single-copy on a box nothing backs
+# up. The courier runs `git add -A -- farm-out` and pushes on job_done, and
+# farm-out is NOT gitignored, so publishing is a COPY and the runner stays
+# byte-identical. allow_fail: a failed copy must never mark a good render failed.
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b18-refresh"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/wave-goblin-prep/out-b18-refresh/18-the-decision-wave1-s*.*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        # Hash the COPY, not the original: what this records has to be the bytes
+        # that get committed, or the manifest attests to the wrong file.
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+        print("   ", os.path.basename(f), h[:16])
+    # newline="\n" is load-bearing: Windows text mode rewrites \n to \r\n and
+    # every filename then carries a trailing \r that shasum -c cannot open.
+    with open(os.path.join(dst, "18-the-decision-refresh.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    # 4 stills + 4 sidecars. Fewer means the render wrote less than it promised.
+    raise SystemExit(0 if len(src) == 8 else 1)
+
+artifacts:
+- C:\banyan-farm\wave-goblin-prep\out-b18-refresh\18-the-decision-wave1-s0.png
+- C:\banyan-farm\wave-goblin-prep\out-b18-refresh\18-the-decision-wave1-s1.png
+- C:\banyan-farm\wave-goblin-prep\out-b18-refresh\18-the-decision-wave1-s2.png
+- C:\banyan-farm\wave-goblin-prep\out-b18-refresh\18-the-decision-wave1-s3.png
+- C:\banyan-farm\wave-goblin-prep\out-b18-refresh\18-the-decision-wave1-s0.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b18-refresh\18-the-decision-wave1-s1.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b18-refresh\18-the-decision-wave1-s2.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b18-refresh\18-the-decision-wave1-s3.yaml
