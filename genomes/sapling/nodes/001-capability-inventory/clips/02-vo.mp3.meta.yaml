@@ -1,0 +1,29 @@
+# Voice provenance (7.2) — BACKFILLED 2026-08-11 from records already in
+# the tree, not from memory. Every value here is quoted from one of:
+#   clips/02-vo.json      — engine, cast, direction, the line, total_s, chunk count
+#   pipeline/licence_gate.py:179 — chatterbox -> MIT
+#   leaves/001-t0-d.yaml   — the approved script this node's VO was cut from
+#   git log -1 clips/02-vo.mp3 — the date and commit below
+# The take itself was recorded before this file existed, so this is a record
+# OF the render, not one written BY it. Nothing not on that list is stated:
+# there is no seed and no sampler setting here because none was ever written down.
+platform: local-mps (pipeline/synth_vo.py, synth_vo v3)
+model: chatterbox-0.5B
+model_licence: MIT
+cast: voices.yaml
+shot_beat: 2
+seconds: 4.451
+source_script: node.md via leaves/001-t0-d.yaml (approved_by founder, 2026-07-27)
+recorded: 2026-07-31 (fa49a1b)
+cost_usd: 0
+measured_chunks: 3
+note: |-
+  One of the eleven spoken lines of 001 — leaves/001-t0-d.yaml records the
+  node as "15 beats, 11 spoken lines", and these eleven mp3s are them.
+  Landed in fa49a1b (2026-07-31): the re-voiced beat 2 take (says 'two forty-one', not the raw digits)
+  The measured chunk timings live beside this file in the manifest and are what
+  render_t3 prefers for caption sync; earlier takes are kept in clips/vo-archive/ (R6).
+line: |-
+  Production went down at 2:41. It's the retry loop. It's always the retry loop.
+line_note: |-
+  The text above is the SCRIPT line as node.md writes it. Commit fa49a1b re-voiced this beat so the audio speaks "two forty-one" rather than the raw digits; node.md still reads 2:41, so the manifest text is the script line and not a transcript of the take.
