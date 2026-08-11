@@ -114,3 +114,64 @@ beats:
     across two beats, and it bans the stitches WITHOUT the scalp affirmative. It
     is left alone rather than raced against the runner: it now reads as the clean
     test of whether the pale dome is a separate channel from the sutures.
+
+# ── RESULT OF THE FIRST r2, READ OFF THE FRAMES ───────────────────────────────
+# This closes the loop the prediction opened. It is the reason every goblin beat
+# after this one gets the same two words.
+
+- round: ep2-b02-idfix-r2-0812
+  read_from: origin/farm-results-rtx5090 farm-out/ep2-b02-idfix-r2/ (4 frames)
+  shipped_recipe_confirmed: positive 69/77, negative sent 77/77 with `scars` and `stitched skin` both present
+  verdict: the ban WORKED, and it worked without collateral
+  measured:
+  - stitched scalp GONE 4/4 -- every crown is unbroken green; no graft, no suture line, no seam
+  - the pale cream dome GONE 4/4 -- the crown is green, not tan. IT WENT WITH THE STITCHES, so the pale patch and the sutures were ONE fault (fabric on the skull), not two
+  - patchwork cloak SURVIVED 4/4 -- s2 still shows stitched seams ON THE CLOAK. The wording discipline held: naming SKIN did not negate what the positive asserts
+  - cheek stitch-scars reduced from 4/4 to about 2/4, and much fainter (s0 one line, s3 one mark)
+  - the sapling READ as a distinct stem with leaves beside him in s1 and s2 (2/4, the predicted `>=2/4` -- HIT); s0 and s3 fall back to a seedling bed
+  - hands at chest, nothing grabbed or uprooted 4/4 -- retiring the whole grab tier to pay for the new bans cost nothing, as predicted
+  - green skin, bald, one goblin, bright daylight all 4/4
+  consequence: >-
+    `no scars, no stitched skin`, paid for out of the authored chain rather than
+    added on top of a full negative, is now a PROVEN one-variable lever on this
+    checkpoint and is propagated to the remaining goblin beats. The scalp
+    AFFIRMATIVE that beat 03 is testing separately is NOT needed for this fault --
+    the ban alone cleared the pale dome — so it is not stacked on top of it.
+  sapling_note: >-
+    2/4 is real improvement but not a fix. Beat 02 has now had its one r2 on the
+    adjacency limit; the remaining shortfall goes to the founder rather than to a
+    third round.
+
+- beat: 4
+  slug: the-footnote
+  variant_rendered: authored_b04_fieldban_r2
+  positive_tokens: 66
+  verdict: faulty
+  identity: green FACE 4/4, bald 4/4, one goblin 4/4
+  his_named_fault_is_fixed: >-
+    "the background is a house" -- gone, 4/4. All four frames are an open grassy
+    field with blurred trees at most. The five-term walls ban did its job.
+  faults:
+  - name: pale cranium over a green face
+    count: 4/4
+    detail: >-
+      This beat is a CLOSE-UP, so the fault that reads as a small patch elsewhere
+      fills the frame here: s0, s2 and s3 put a large cream dome over the upper
+      skull, s1 runs it down the right side. This is the other half of his beat-04
+      sentence -- "character consistency".
+  - name: stitched skull and stitched face
+    count: 4/4
+    detail: >-
+      X-stitches and dashes across the crown in all four, plus a full baseball-seam
+      suture down the side of the skull in s1, and X marks on the cheeks in 4/4.
+      At close-up size he reads as a sewn doll rather than a goblin.
+  lever: >-
+    The PROVEN ban, propagated verbatim from the beat-02 r2 that just came back
+    clean: `no scars, no stitched skin`. Nothing else changes -- the staging, the
+    close-up, the darting eyes and the twitching ears are untouched, and the scalp
+    affirmative is deliberately NOT stacked on, because beat 02 showed the ban
+    alone also clears the pale dome. Paid for out of this beat's own walls tier:
+    it sends 74/77 with three tokens spare and FIVE near-duplicate walls terms, so
+    `no architecture` retires and `no house`, `no building`, `no interior` and
+    `no indoors` -- the ones carrying his named fault -- all stay.
+  r2: authored_b04_idfix_r2  (spec ep2-b04-idfix-r2-0812, out-b04-idfix-r2)
