@@ -456,6 +456,16 @@ checklist:
     # CHARACTER, he did not rank r7, r8 or r9. Those three rounds keep
     # `founder_verdict: null` in `taste/steward-model.ledger.yaml` and no frame
     # from them is picked, scored or promoted by this answer.
+    #
+    # `where:` SAID BEAT 07 UNTIL 2026-08-11 AND NO BEAT-07 SAMPLE WAS EVER CUT.
+    # The one sample that actually fires is BEAT 15 good-listener, job
+    # `ep2-b15-goblin-simple-0811` — his sentence applied by SUBTRACTION, with
+    # `tusks` taken out of the slot so the prompt carries only `green skin`, the
+    # one attribute he named. Beat 15 because its recorded failure is the goblin's
+    # own face ("elongated egg-shaped skull... blank grey-white eyes"), and beat
+    # 02's louder failure is on a lever the founderpick sample closed last night.
+    # Pre-registered in the ledger as `ep2-b15-goblin-simple-0811` before a frame
+    # existed. All fourteen gated wave specs keep their `gate:` keys.
     - n: 18
       ask: "Define the goblin — ANSWERED. Simple, green, nothing complex."
       state: settled
@@ -465,7 +475,7 @@ checklist:
         Nine rounds of the model adding complexity, and the answer was to stop
         adding it. Fifteen beats are released; no round is scored and no frame is
         picked.
-      where: "one sample only fires next — beat 07 — and nothing publishes"
+      where: "one sample only fires next — beat 15 — and nothing publishes"
       how: "nothing needed; say so if we heard it wrong"
       sheets_title: "The rounds this answers over — round 9 first"
       body: |-

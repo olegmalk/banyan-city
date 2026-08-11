@@ -6377,3 +6377,75 @@
     ASKING, not taste — a decision that only he can make is not progressed by
     the steward re-reading the licence a fourth time.
   model_action: none_no_prediction_existed
+
+# THE DEFINITION APPLIED BY SUBTRACTION, PRE-REGISTERED WITH THE JOB STILL
+# RENDERING. `ep2-goblin-definition-0810` ended with an instruction to the
+# steward — "the correct next move on this sentence is to REMOVE terms, not to
+# buy another tag" — and for a day nobody removed one. Every render since went
+# to the IP-Adapter, and the fourteen staged wave specs still carry
+# `green skin, tusks`. This record is written before any frame of the job exists.
+- id: ep2-b15-goblin-simple-0811
+  date: 2026-08-11
+  kind: prediction
+  subject: "node 002b beat 15 good-listener — ONE SAMPLE, tags-only, with `tusks`
+    REMOVED from the goblin slot so the prompt carries only the attribute he
+    named. Tests whether the count-tag fix holds not-female on its own."
+  steward_provisional: true
+  pick: null
+  scores: {}
+  address_key: >-
+    Job `ep2-b15-goblin-simple-0811-1786447234`, spec
+    `pipeline/jobs/ep2-b15-goblin-simple-0811.yaml`, queued 2026-08-11 on the
+    rtx5090 behind one running and one ready job. Four seeds, ~2 minutes, $0,
+    local. Outputs to `out-b15-simple\15-good-listener-wave1-s0..3.png` with
+    per-frame sidecars, published to `farm-out/ep2-b15-goblin-simple/`.
+  what_changed_and_it_is_two_things_not_one: >-
+    STATED PLAINLY BECAUSE IT WEAKENS THE TEST. Against the beat-04 tags-only
+    sample this changes the BEAT (04 -> 15) and the SLOT (`green skin, tusks` ->
+    `green skin`). Re-running beat 04 would have been the clean single-variable
+    test, and it was rejected because beat 04's frames already read "plainly
+    simple" and beat 15 is one of only two beats with a RECORDED goblin-look
+    failure. Everything else is byte-identical: same harness, same drafts file,
+    same seed arithmetic, same steps, same guidance, no IP-Adapter, no reference.
+  why_not_beat_02: >-
+    Beat 02 is the louder failure — "four different creatures", one of them a
+    full-body quadrupedal lizard — and its lever is CLOSED.
+    `ep2-b02-goblin-founderpick-observed-0810` conditioned it on the frame he
+    himself picked and it came back worse, and that record's ruling stands: "DO
+    NOT RE-RUN A REFERENCE SWAP AGAINST A DIFFERENTLY-FRAMED BEAT." Beat 15's
+    failure — "an elongated egg-shaped skull rather than his round one, and blank
+    grey-white eyes... with no iris colour" — came from that same adapter route,
+    which this job does not use. Tags-only has never run on beat 15.
+  predicted: >-
+    (1) NOT-FEMALE HOLDS, 3 of 4 or better, on the count tag alone. `a small
+    goblin boy` + `solo` at the head of the sentence with `No girl, no child.` on
+    the SDXL negative — where the negative BINDS, unlike LTX at guidance 1.0 — is
+    the r8 mechanism, and r8 reached male on s0 alone WITHOUT it. This is the
+    prediction most likely to be wrong: `tusks` was bought precisely because it
+    takes the goblin female skew from 3.14 to 1.59, and dropping it gives that
+    back. If this misses, the tusks question goes to him as a real ask.
+    (2) GREEN 4 of 4. Proven twice at 4/4 and it is the one word left in the slot.
+    (3) SIMPLE, NOT ORNATE, 4 of 4 — and this is a re-test of a prediction that
+    already MISSED. `ep2-b04-wave-sample-1` argued the style anchor's `detailed,
+    masterpiece, best quality` would fight "nothing complex"; it did not, and the
+    anchor is deliberately left in here rather than trimmed on a dead argument.
+    (4) CHARACTER CONSISTENCY FAILS AGAIN, 0 of 4 as four different creatures.
+    Removing a word does nothing about sameness across seeds, the b04 sample went
+    0/4 on it, and the only route that ever achieved it is the adapter route the
+    evidence just closed for medium shots. Predicting a pass here would be hope.
+    (5) THE LIGHT COMES BACK DARKER THAN `warm midday light` on at least 2 of 4.
+    Called at "at least one of four" on beat 04 and it was four of four.
+  what_would_falsify_the_whole_move: >-
+    If the four come back as the elongated grey-eyed skull again, the slot string
+    is not the lever and the beat's own staging is implicated — the fourteen
+    specs then need re-cutting for a reason that has nothing to do with `tusks`.
+  what_this_does_not_do: >-
+    IT DOES NOT CLEAR A GATE. All fourteen `ep2-b*-goblin-wave1.yaml` specs keep
+    their `gate:` keys, verified present in all fourteen after this job was
+    queued. It picks nothing, ranks nothing, scores no earlier round, publishes
+    nothing and spends nothing. It is one beat, and it stops.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
