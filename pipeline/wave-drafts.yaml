@@ -309,6 +309,41 @@ beats:
       morning light, cinematic lighting, detailed, newest, masterpiece, best
       quality, very aesthetic No girl, no child, no house, no building, no
       indoors. No photorealism, no 3D render look. 9:16 vertical, no text.
+    # ── `authored_field_bright` — THE LIGHTING, 2026-08-11 ~19:1x. ──────────────
+    # ONE VARIABLE against `authored_field`, which drew as
+    # `ep2-b04-goblin-field-0811` at 19:02-19:03 box time: eight lighting terms
+    # appended to the same `no ...` chain. NOTHING else differs — same positive
+    # word for word including `blurred open field behind him`, same `green skin`
+    # slot, same close-up, same seeds (`wg.SEED + beat + i*1000`, which does not
+    # read the variant), same steps, guidance and harness.
+    #
+    # WHAT IT IS TESTING. Every round tonight drifted toward moody dark no matter
+    # what the positive asked: beat 01 came back dark-sunset against "peach and
+    # gold sunrise", beat 02's occlusion round drifted dusk-dark, and THIS beat's
+    # field round rendered a dark undefined background against a positive that
+    # says `soft morning light` in so many words. The wave-level record already
+    # named "register swinging toward moody dark-fantasy" as repeatable. So the
+    # positive lighting terms are demonstrably NOT binding, and the negative is
+    # the channel that does bind on this checkpoint — proven on beat 03, where
+    # the `text` term is the difference between clean frames and gibberish glyphs.
+    # Same reasoning that put `no house, no building, no indoors` here an hour
+    # ago, applied to the light instead of the walls.
+    #
+    # WHY THIS IS WORTH A RENDER EITHER WAY. If the negative kills the drift,
+    # every episode-2 beat inherits the fix in one line. If four seeds still come
+    # back dark with `dark, night, dusk, sunset` explicitly forbidden, the drift
+    # is a model prior and no prompt edit reaches it — the honest next step is a
+    # different checkpoint or a LoRA, which is a much bigger conversation and
+    # should not be started on a guess.
+    authored_field_bright: >-
+      A small goblin boy, {{GOBLIN}}, solo, his face filling the frame,
+      holding his breath with cheeks puffed and huge eyes darting, enormous ears
+      twitching, blurred open field behind him. Slow push-in, close-up, soft
+      morning light, cinematic lighting, detailed, newest, masterpiece, best
+      quality, very aesthetic No girl, no child, no house, no building, no
+      indoors, no dark, no night, no dusk, no sunset, no dim lighting, no moody
+      lighting, no low key, no shadows dominant. No photorealism, no 3D render
+      look. 9:16 vertical, no text.
 
   5:
     slug: the-patrol

@@ -7390,3 +7390,110 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+- id: ep2-b04-goblin-fieldbright-0811
+  date: 2026-08-11
+  kind: prediction
+  subject: "node 002b beat 04 the-footnote — ONE SAMPLE, four seeds, $0. THE
+    LIGHTING TEST. Eight lighting terms added to the SDXL negative and nothing
+    else, against the identical-seed round `ep2-b04-goblin-field-0811` that drew
+    an hour earlier. Answers the wave's #1 open technical question: everything
+    drifts toward moody dark no matter what the positive says."
+  steward_provisional: true
+  pick: null
+  scores: {}
+  address_key: >-
+    Spec `pipeline/jobs/ep2-b04-goblin-fieldbright-0811.yaml`, variant
+    `authored_field_bright`, slot `green skin`, priority 45. Four seeds, ~2
+    minutes, $0, local on the rtx5090. Outputs to
+    `out-b04-fieldbright\04-the-footnote-wave1-s0..3.png` with per-frame
+    sidecars, published to `farm-out/ep2-b04-goblin-fieldbright/`. The round it
+    is read against is `out-b04-field`, drawn 19:02-19:03 box time tonight.
+  the_one_variable: >-
+    Eight terms in the negative, in the `no ...` chain the draft already uses:
+    `no dark, no night, no dusk, no sunset, no dim lighting, no moody lighting,
+    no low key, no shadows dominant`. `sd_prompt._NEGATION` lifts each out of
+    the positive and `beat_negative` sends them as BEAT-SPECIFIC terms, which
+    `fit_negative` protects ahead of the global house defaults. NOTHING ELSE
+    MOVES, and this was proven mechanically rather than asserted: the compressed
+    POSITIVE strings of `authored_field` and `authored_field_bright` compare
+    BYTE-IDENTICAL under `sd_prompt.compress()`, and the seeds cannot differ
+    because `render_wave_sample` derives them as `wg.SEED + beat + i*1000` and
+    never reads the variant. Same steps (40), same guidance (7.5), same size,
+    same harness (sha256 7efd0b96, unchanged from the round it is compared to),
+    same `green skin` slot, same close-up, same `blurred open field behind him`.
+    No IP-Adapter, no reference image.
+  why_this_round_exists: >-
+    Positive lighting terms are demonstrably not binding. Three scored rounds
+    tonight drifted the same way: beat 01 came back dark-sunset against "peach
+    and gold sunrise", beat 02's occlusion round drifted dusk-dark, and beat
+    04's field round rendered a dark undefined background — against a positive
+    that says `soft morning light` in those words. The wave-level record already
+    named "register swinging toward moody dark-fantasy" as a repeatable fault.
+    The negative is the channel that binds on this checkpoint; beat 03's `text`
+    term is the standing proof. This is the same move that put `no house, no
+    building, no indoors` on this beat an hour ago, applied to the light.
+  measured_before_queueing: >-
+    Dry-run on the box's real CLIP tokenizer, this exact beat, variant and slot.
+    DRY OK. Positive 72/77 — UNCHANGED from the compared round, which is the
+    check that matters most here. Negative `recipe 76 -> sent 76 (budget 77)`:
+    no overflow, no dedup, NOTHING DROPPED, so every term the author wrote
+    reaches the model. All eight land verbatim and in order between `indoors`
+    and `photorealism`: `... girl, child, house, building, indoors, dark, night,
+    dusk, sunset, dim lighting, moody lighting, low key, shadows dominant,
+    photorealism, text, female goblin, elf`. STYLE ANCHOR PRESENT, `close-up`
+    and `his face filling the frame` both survive, count tag `1boy` derives.
+    ONE TOKEN OF HEADROOM IS LEFT — recorded because it is a real constraint on
+    what comes next: the ninth term added to this beat will start dropping
+    others, and `fit_negative` sacrifices the house tier first.
+  predicted: >-
+    (1) THE PRIMARY PREDICATE — A BRIGHT MORNING-LIT FIELD IN 3 OF 4 SEEDS,
+    judged against the identical-seed `out-b04-field` frames, frame by frame at
+    the same seed. Bright means the key reads as daylight: field visibly lit,
+    no dusk-orange or night-blue cast, shadows not the dominant value. Called at
+    3 rather than 4 because the negative removes a register without supplying
+    one, and one seed landing merely neutral-grey rather than morning-bright is
+    the expected shape of a partial win.
+    (2) THE FIELD BACKGROUND STILL HOLDS 4 OF 4 — outdoors behind the face in
+    every frame, no walls, no window, no interior. Inherited unchanged from the
+    round being compared, and written down so a regression here is visible: it
+    is the term-budget failure mode, and at 76/77 with nothing dropped there is
+    no mechanism for it, so a miss on this predicate means the prediction of the
+    mechanism is wrong, not just the taste call.
+    (3) THE b15-CONSISTENT GOBLIN, 4 OF 4 — the ratified creature, green,
+    simple, one per frame, not female. Same predicate and same stated risk as
+    the two rounds before it: his ~18:40 sentence names cross-seed consistency
+    as still wanting on this frozen recipe, no axis in v1 measures sameness
+    across a set, and nothing in this round touches the character.
+    STATED RISK, because it is the cost of the lever and not a hedge on the
+    call: `dark` is a blunt term in an SDXL negative and it can pull contrast
+    and saturation out of the whole frame, including the goblin's green. If the
+    frames come back bright but FLAT or washed, that is the negative overshooting
+    and the answer is a narrower block, not more terms.
+  what_a_miss_means: >-
+    This is why the round is worth firing either way, and the reading is written
+    down BEFORE the frames exist so it cannot be fitted to them. If predicate 1
+    holds, the drift is promptable and every episode-2 beat inherits the fix as
+    one line in the shared negative. If four seeds still come back dark with
+    `dark, night, dusk, sunset` explicitly forbidden and provably sent, then the
+    drift is a MODEL PRIOR that no prompt edit reaches, and the honest next step
+    is a different checkpoint or a LoRA — a much bigger conversation, and one
+    that should not be opened on a guess. Either answer retires the wave's #1
+    open technical question for the cost of two GPU-minutes.
+  what_this_does_not_do: >-
+    Picks nothing, ranks nothing, publishes nothing, spends nothing, no `gate:`
+    key, clears no other spec's gate. The pair is for the founder's eyes; R4 is
+    his. Writes to `out-b04-fieldbright` so the `out-b04-field` frames he is
+    reviewing right now are not overwritten.
+  script_authority: >-
+    Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`,
+    `approved_on: 2026-08-03`, read from the leaf the render gate reads
+    (genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml:17-18).
+    Neither `approval_condition` touches beat 04 — both are about beat 01's fig
+    and beat 16's leaf. node.md's direction for beat 04 is "Camera close on the
+    held breath."
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
