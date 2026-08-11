@@ -111,6 +111,31 @@ not_queued:
       pick — which is the G1 failure already recorded against beat 12
       (taste/steward-model.ledger.yaml:2117).
 
+  - what: ep1 beats 02, 11 and 13 re-rendered at their own VO length
+    gate: founder
+    gate_ref: >-
+      ep1-b08-313f-vo-length-0811 — its clip
+      C:\banyan-farm\v34-motion-0810\08-ltx-r2-plate-313f-s20260739.mp4 is the
+      first sample of "size the clip to the voice line" and has not been looked
+      at. The three specs carry `gate:`/`gate_ref:` so box_enqueue refuses them.
+    detail: >-
+      Files: ep1-b02-121f-vo-length.yaml, ep1-b11-129f-vo-length.yaml,
+      ep1-b13-217f-vo-length.yaml. Measured defect, not a guess: fit_duration
+      (render_t3.py:312) gives a voiced beat max(min(cdur, vdur+2.0), vdur+0.4)
+      and loops anything shorter, so beat 02 plays its picture 1.91x, beat 11
+      2.11x and beat 13 3.44x under their own lines. Frame counts are the
+      smallest 8n+1 covering each slot — 121, 129, 217, all well under the 385
+      this box has run. Seven ep1 beats loop; the other four are excluded on
+      purpose. 08 is the sample these wait on and 07 is covered by the two 385f
+      jobs already queued. 03, 10 and 14 are excluded because they still hold
+      frames the founder REFUSED (shots.md:1041-1046 — "eleven of episode 1's
+      fifteen shots now hold a frame he has not refused and four do not — 3, 6,
+      10 and 14 ... each is a frame he turned down in v32"); the missing
+      -REVOKED- suffix means only that no replacement exists to point at yet, so
+      motion rendered on them could not ship whatever it looked like. ~20 minutes
+      of GPU for all three, and they unlock on one screening rather than on any
+      further rendering.
+
   - what: the v34 QA re-check over review/v34-motion/
     gate: null
     detail: >-

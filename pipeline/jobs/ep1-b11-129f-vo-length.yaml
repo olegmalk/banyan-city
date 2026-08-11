@@ -1,0 +1,216 @@
+# ep1 beat 11 "grow" — CLIP SIZED TO ITS OWN VOICE LINE. STAGED, GATED.
+#
+# ================== DO NOT ENQUEUE. THE GATE BELOW IS CODE. ==================
+# `gate:`/`gate_ref:` make box_enqueue.py:123-132 refuse this file outright.
+# Clearing it is a human deleting the key in a commit.
+#
+# WHAT MUST HAPPEN FIRST: ep1-b08-313f-vo-length-0811 must have been LOOKED AT by
+# Roman and accepted. Artifact:
+#   C:\banyan-farm\v34-motion-0810\08-ltx-r2-plate-313f-s20260739.mp4
+# That is the FIRST SAMPLE of "render the number of frames the voice line needs".
+# This is a second beat on the same recipe, which the one-sample rule forbids
+# until the first has been seen.
+# =============================================================================
+#
+# THE DEFECT, MEASURED. fit_duration (render_t3.py:312) gives a voiced beat
+# max(min(cdur, vdur + 2.0), vdur + 0.4) and loops footage shorter than that.
+#   clips/11-vo.json          total_s 4.970  ('Latency: three days. Throughput: one leaf.')
+#   review/provisional-v35/clips/11-grow.mp4   2.542s (ffprobe)
+#   slot = max(min(2.542, 6.970), 5.370) = 5.370s
+#   5.370 / 2.542 = the picture plays 2.11 times under the line.
+# The loop is a palindrome since loop cycle 005 (render_t3.py:583), so the seam is
+# continuous and the fault is the repetition, not a cut — see the b02 spec's
+# header for the full correction to how this has been described.
+#
+# BEAT 11 ALREADY HAS AN ANIMATED CLIP AND THIS IS NOT A REJECTION OF IT.
+# review/11-grow-antisplit.mp4 is a real motion clip and it is the 2.542s one now
+# in the cut; it is not a held still and Roman never ruled it one. He settled
+# 05/09/12/15 as held stills ("yeah keep em still") and beat 11 was NOT in that
+# group. So the only thing wrong with beat 11 is that its footage is shorter than
+# its sentence. One variable: the frame count.
+#
+# THE FRAME COUNT IS ARITHMETIC. F/24 >= 5.370 -> F >= 128.88; LTX wants 8n+1.
+#   smallest 8n+1 >= 128.88 is 129 (8*16+1) -> 129/24 = 5.375s
+#   5.375 >= 5.370 (nothing loops) and 5.375 <= vdur+2.0 = 6.970 (nothing trimmed).
+# The margin over the slot is 0.005s. That is deliberate and it is safe here:
+# fit_duration rounds to 2dp (5.37) and the held-still branch's no-epsilon warning
+# at render_t3.py:589 is about a HELD STILL falling short, not about footage that
+# covers the slot. The next rung, 137 frames, would be 5.708s — also inside the
+# +2.0 ceiling — so if the 129 clip is seen to wrap even one frame, re-cut at 137
+# and nothing else changes.
+# 129 frames is far under the 385 host-RAM ceiling measured on this box.
+#
+# THE PLATE IS A FRAME HE HAS NOT REFUSED. shots.md:1041-1046: after the
+# 2026-08-08 redraw wave, "eleven of episode 1's fifteen shots now hold a frame he
+# has not refused and four do not — 3, 6, 10 and 14". Beat 11 is not in that four;
+# 11-grow.png is canon and has no REVOKED variant. Beats 03/10/14 also loop and
+# are EXCLUDED from this staged set for exactly that reason — motion on a drawing
+# he turned down cannot ship, and their replacement pick is his (checklist item
+# 10, `ep1-frame-picks`).
+#
+# WHAT THE MOTION MUST *NOT* BE, and this is the trap on this beat. The shot
+# direction reads "Timelapse on the one new leaf" — and asking a 5.4-second clip
+# to grow a leaf is a CONTENT change on a frame that is already canon, on the beat
+# whose subject is the plant, in the same week the founder said "just make it tall
+# in each clip of it, and thats pretty much it. dont overthink the leafs on it."
+# So this asks for AMBIENT motion only, exactly as every other clip in the series
+# does. The leaf trembles; it does not unfurl. If Roman wants the timelapse read,
+# that is a new direction from him and a different job.
+#
+# THE NEGATIVE IS INERT AND IS CARRIED ANYWAY. Verified at source in the venv the
+# box renders with (C:\banyan-video\venv, diffusers 0.39.0, ltx2/pipeline_ltx2.py):
+#     do_classifier_free_guidance = (self._guidance_scale > 1.0)
+#                                or (self._audio_guidance_scale > 1.0)
+#     audio_guidance_scale = audio_guidance_scale or guidance_scale
+# At guidance 1.0 both are 1.0, so there is no unconditional pass and the negative
+# embeddings are never read. It is recorded for provenance (§7.2), not for effect.
+#
+# NO METRIC PICKS ANYTHING (131e433 — the flow metric scored highest on the beat
+# where the plant fell over). Read by eye.
+
+id: ep1-b11-129f-vo-length
+task: ep1-b11-129f-vo-length-0811
+node: 001-capability-inventory
+beat: 11
+runner: box
+needs_gpu: true
+priority: 25
+max_attempts: 1
+sample: false          # second beat on the 313f recipe — hence the gate
+owner: queue-depth lane, 2026-08-11
+
+gate: founder
+gate_ref: >-
+  ep1-b08-313f-vo-length-0811 must be screened and accepted first. Its clip is
+  C:\banyan-farm\v34-motion-0810\08-ltx-r2-plate-313f-s20260739.mp4 — the first
+  sample of "size the clip to the voice line". Delete these two keys only after
+  he has seen that clip.
+
+consumer: >-
+  the episode-1 cut he is being asked to pass — `v6-verdict` in
+  pipeline/pending-founder.yaml. Beat 11's picture plays 2.11 times under its own
+  line. This produces the version that does not repeat, so his yes/no lands on
+  the cut rather than on an artefact of the assembler.
+
+success: >-
+  A 704x1280 mp4 at C:\banyan-farm\v34-r2\11-grow-LTX-129f.mp4 with 129 decoded
+  frames (5.375s), conditioned on the canon still, in which the sprout is the
+  SAME sprout for the whole clip: the leaf trembles and the dew catches the light
+  and the morning light shifts, but the plant does not grow, unfurl, sprout a new
+  leaf, wilt, bend or fall, the framing does not drift or push in, and no second
+  scene appears. A clip where the plant droops or collapses is a FAIL however much
+  motion it has — that is the confusion 131e433 recorded. A completed clip that
+  reads static is a real result and gets reported as one. By eye, beside the
+  2.542s clip it replaces. No metric.
+
+why: >-
+  The footage is shorter than the sentence spoken over it, and the fix is a frame
+  count on a frame he has already accepted.
+
+est_minutes: 6   # plate <1min; encode ~2min (Gemma load dominates); render ~3.3min
+                 # from this box's own numbers (145f = 214s, 385f = 436s, so
+                 # ~80s + 0.925s/frame -> ~199s at 129 frames).
+needs: [cuda, vram20, video-venv]
+
+payload:
+  # Skeleton is b07-prompt.txt verbatim in shape — same cel-anime opener, same
+  # "small ambient motion only ... framing locked" clause block, same "Subject
+  # already in frame:" tail. Content is beat 11's macro sprout. The anti-zoom
+  # terms are KEPT: they were in force on beat 04 when the camera move Roman
+  # praised appeared, so removing them here would change a second thing.
+  # The verbs are CONTINUOUS ("trembles slowly and continuously") rather than
+  # one-shot: beat 04's rejected clip traced to a "twitch once" clause the model
+  # cycled, and a one-shot instruction is how you get a loop inside the clip.
+  C:\banyan-farm\v34-r2\b11-prompt.txt: |-
+    2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. the single small leaf trembles slowly and continuously in a light breeze and keeps its shape and its size, the dew drops on it catch and release the light as it moves, soft golden morning light shifts gently across the sprout, the pale sky behind it brightens very slightly. small ambient motion only, the plant stays exactly the same size and shape, no growing, no unfurling, no new leaf, everything holds its position, framing locked, no zoom, no push-in, no camera rise, subject stays the same size and place in frame, living scene. Subject already in frame: no human, no person, no man, no woman, no boy, no girl, no hand, no face, one tiny green sprout in macro close-up with one bright new leaf at its tip, morning dew drops, soft golden morning light, gentle pale sky.
+
+  # Series negative, plus this beat's own terms against the growth reading. At
+  # guidance 1.0 none of it is read; carried for the provenance record (§7.2).
+  C:\banyan-farm\v34-r2\b11-negative.txt: |-
+    wilting, drooping, bending over, falling over, collapsing, sagging, plant dying, growing, sprouting, unfurling, timelapse, second leaf, new leaf appearing, human, person, man, woman, boy, girl, hand, arm, foot, face, crowd, animal, bird, insect, new object appearing, light trails, mature tree, large tree, photorealism, 3D render look, text, 静态, 静止, frozen frame, still image, no motion, photorealistic, photograph, live action, film still, 3D render, CGI, octane, scene change, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+
+  C:\banyan-farm\v34-r2\b11-jobs-encode.json: |-
+    [{"beat": 11,
+      "embeds": "C:\\banyan-farm\\v34-r2\\b11-embeds.pt",
+      "prompt_file": "C:\\banyan-farm\\v34-r2\\b11-prompt.txt",
+      "negative_file": "C:\\banyan-farm\\v34-r2\\b11-negative.txt"}]
+
+  C:\banyan-farm\v34-r2\b11-jobs-render-129.json: |-
+    [{"beat": 11,
+      "seed": 20260903,
+      "embeds": "C:\\banyan-farm\\v34-r2\\b11-embeds.pt",
+      "init": "C:\\banyan-farm\\v34-r2\\11-704x1280.png",
+      "out": "C:\\banyan-farm\\v34-r2\\11-grow-LTX-129f.mp4"}]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  # No 704x1280 plate exists for beat 11 (v34-r2 holds only 04, 06, 07), so the
+  # plate step runs. Source verified present in the box checkout at
+  # ...\001-capability-inventory\stills\11-grow.png. prepare_plate does the
+  # cover-centre crop (plate_prep.py:55) — the v34-motion-0810 series went in RAW
+  # and is stretched 24.4% vertically, the confound recorded in
+  # ep1-b14-v34-motion-r3.yaml. This job does not repeat it.
+  - name: plate
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - -c
+      - |
+        import sys; sys.path.insert(0, r"C:\banyan-farm\banyan-city\pipeline")
+        from plate_prep import prepare_plate
+        out, rec = prepare_plate(
+            r"C:\banyan-farm\banyan-city\genomes\sapling\nodes\001-capability-inventory\stills\11-grow.png",
+            "704x1280", r"C:\banyan-farm\v34-r2", "11")
+        print("plate", out); print(rec["plate_wxh"], rec["crop_policy"])
+        print("source_sha256", rec["sha256"])
+  - name: encode
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+      - --stage
+      - encode
+      - --jobs
+      - C:\banyan-farm\v34-r2\b11-jobs-encode.json
+  - name: render
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+      - --stage
+      - render
+      - --jobs
+      - C:\banyan-farm\v34-r2\b11-jobs-render-129.json
+      - --size
+      - 704x1280
+      - --frames
+      - "129"
+      - --fps
+      - "24"
+      - --guidance
+      - "1.0"
+      - --distilled-sigmas
+      - --two-stage
+      - --image-crf
+      - "33"
+      - --offload
+      - sequential
+      - --mode
+      - production
+      - --task
+      - ep1-b11-129f-vo-length-0811
+      - --worker
+      - rtx5090
+      - --bench-jsonl
+      - C:\banyan-farm\v34-r2\bench-b11-129f.jsonl
+      - --bench-label
+      - b11-129f-vo-length
+
+artifacts:
+  - C:\banyan-farm\v34-r2\11-grow-LTX-129f.mp4
