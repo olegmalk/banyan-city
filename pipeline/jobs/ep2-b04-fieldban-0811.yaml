@@ -1,79 +1,96 @@
-# EPISODE 2, BEAT 04 THE FOOTNOTE — THE WALLS, BANNED HARDER. One sample, four
-# seeds, $0. 2026-08-11 ~21:5x.
+# DERIVED BY SED from ep2-b02-goblin-hide-0811.yaml at 2026-08-11 ~21:55 by the
+# lead (card idle, authoring lane on the ledger). Only beat, variant, slugs and
+# out dirs changed; prose comments below describe the b02 parent, not this beat.
+# Beat 04 rides the fieldbright recipe plus a five-term wall ban; his verdict:
+# "the background is a house." Slot inherited untouched.
+# EPISODE 2, BEAT 02 THE SPRINT — THE OCCLUSION ROUND, RE-RUN WITH THE PROVEN
+# LIGHTING BLOCK. One sample, four seeds, $0. 2026-08-11 ~19:4x.
 #
-# THIS HEADER WAS REWRITTEN AT ~22:0x AND WHY IS PART OF THE RECORD. The file was
-# first derived by sed from `ep2-b02-goblin-hide-0811.yaml` with only beat,
-# variant, slugs and out dirs changed, and it said so at the top — but everything
-# below that line still described BEAT 02, including a "measured on the box"
-# negative table. That table listed `plant hair`, `alraune` and `monster girl` as
-# terms this round sends. Beat 04 is `extra_neg: species`, not `full`: it CANNOT
-# send the fusion tier, and those numbers were beat 02's. A provenance block that
-# attests to a different beat is the exact silent divergence §7.2 exists to stop,
-# so the prose is replaced with this beat's own facts. NOT ONE EXECUTABLE VALUE
-# WAS TOUCHED — the steps, argv, artifacts, priority and env are byte-identical to
-# what was queued as `ep2-b04-fieldban-0811-1786470002.json`.
+# WHY THIS IS A PROPAGATION AND NOT A NEW GUESS. `ep2-b04-goblin-fieldbright-0811`
+# (commit cbcc716) ran eight lighting terms in the SDXL negative against
+# `ep2-b04-goblin-field-0811` on IDENTICAL SEEDS and an identical positive, and
+# the frames came back a bright morning field where the round before them had
+# come back dark and undefined. The prediction written before that render — "a
+# bright morning-lit field in 3 of 4 seeds" — was read against the frames and it
+# hit. So the dark drift is a model prior, and the negative is the channel that
+# reaches it. That is a one-variable result verified against the same seeds; this
+# job carries it to the beat that showed the same fault in the same hour.
 #
-# THE FAULT THIS ANSWERS IS HIS, VERBATIM: "for beat 4 its also not too bad but
-# character consistency, and the background is a house" (founder, ep2 picking
-# page, 2026-08-10). The framing and the goblin he did not object to; the SETTING
-# is the fault. `authored_field` answered it once with `no house, no building, no
-# indoors` plus `blurred open field behind him`, and `authored_field_bright` then
-# added the eight-term lighting block on top — a block whose predicate was read
-# against identical seeds and HIT. This round pushes the same lever one notch and
-# changes nothing else.
+# WHAT BEAT 02 KEEPS. `ep2-b02-goblin-occl-0811` did two things at once and only
+# one of them failed. The staging fix WORKED — the occlusion sentence put the
+# stem across the body, which is what his ~18:40 sentence asked for — and the
+# frames drifted dusk-dark against a positive that says `morning light` in those
+# words. So the occlusion clause is unchanged here, word for word, and the only
+# edit is the eight-term block. `--variant authored_b04_fieldban` is
+# `authored_staged_med_occl` with `no dark, no night, no dusk, no sunset, no dim
+# lighting, no moody lighting, no low key, no shadows dominant` appended to the
+# `no ...` chain it already carries. Same `medium shot`, same `from front`, same
+# `green skin` slot, same seeds (`render_wave_sample` derives them as
+# `wg.SEED + beat + i*1000` and never reads the variant), same steps (40),
+# guidance (7.5), size and harness (sha256 7efd0b96, unchanged).
 #
-# THE ONE VARIABLE IS THE WALLS, IN BOTH CHANNELS:
-#  1. THE SETTING MOVES TO THE FRONT OF THE POSITIVE. `authored_field_bright`
-#     states the field SEVENTH, after the face, the breath, the eyes and the ears
-#     — by which point an anime close-up prior has already committed the pixels
-#     behind the head. `in a blurred open grassy field` now sits in the THIRD
-#     clause, ahead of the face. This is a MOVE, not an addition: `behind him` is
-#     dropped and `grassy` added, so the clause is a token shorter than the one it
-#     replaces and the positive does not grow.
-#  2. `no interior` and `no architecture` join the negative chain. The other three
-#     walls terms (`house`, `building`, `indoors`) were already there, untouched.
+# THE POSITIVE IS UNCHANGED AND IT WAS MEASURED, NOT ASSUMED. Both variants
+# dry-run at 73/77 positive tokens with the SAME compressed POSITIVE string:
+#   1boy, a small goblin boy, green skin, solo, from front, crouches in an open
+#   field behind a tiny sapling, its thin stem in front of him, half hidden
+#   behind the stem, his face peeking around it. Static camera, medium shot,
+#   morning light, cinematic lighting, detailed, newest, masterpiece, best
+#   quality, very aesthetic
+# `sd_prompt._NEGATION` lifts the eight `no ...` terms out of the positive and
+# `beat_negative` sends them as BEAT-SPECIFIC terms, which `fit_negative`
+# protects ahead of the global house defaults. STYLE ANCHOR PRESENT in both,
+# count tag `1boy` derives in both.
 #
-# NOTHING ELSE MOVES. Same `green skin` slot, same `his face filling the frame`
-# and `close-up` he part-approved, same held-breath action word for word, same
-# eight-term lighting block, same steps (40), guidance (7.5) and size. The seeds
-# cannot drift: `render_wave_sample` derives them as `wg.SEED + beat + i*1000` and
-# never reads the variant, so s0..s3 are the same four integers as every prior
-# beat-04 round and the comparison is frame-to-frame at equal seed.
+# ── WHERE BEAT 02 IS NOT BEAT 04, MEASURED ON THE BOX BEFORE QUEUEING ─────────
+# Beat 04 had ONE token of negative headroom left after the block. This beat's
+# `full` fusion tier was ALREADY over CLIP's 77-token budget before it — the
+# NEGWARN and its dropped quality terms are pre-existing and are recorded in
+# `ep2-b02-goblin-occl-0811` — and beat-specific terms are protected AHEAD of the
+# house defaults, so eight new terms push house terms out. Both variants were
+# dry-run on the box's real CLIP tokenizer, this beat, this slot, and diffed:
 #
-# HIS CHARACTER-CONSISTENCY COMPLAINT IS DELIBERATELY NOT ANSWERED HERE, and
-# saying so is the point: consistency is drift ACROSS seeds, no added adjective
-# fixes it, and the taste ledger's sixth scoring already found that no axis in the
-# model can even see it. Adding a term for it would be the steward guessing.
+#   baseline `authored_staged_med_occl`: negative recipe 76 -> sent 73
+#     SENT: photorealistic, 3d render, text, mature tree, large tree, thick
+#           trunk, full canopy, forest, bush, shrubbery, girl, child,
+#           photorealism, leaf on head, plant girl, alraune, monster girl,
+#           flower on head, head wreath, hair ornament, leaf hair ornament,
+#           plant hair, female goblin, elf
+#     DROPPED: realistic skin texture, jpeg artifacts, deformed, extra limbs,
+#           blurry, low quality, signature, watermark, abstract
 #
-# MEASURED, WITH AN HONEST CAVEAT ABOUT WHERE. These numbers are from this Mac,
-# not the box: there is no CLIP tokenizer here, so `compress()` POSITIVE counts
-# are estimates. The NEGATIVE estimator is not an estimate on this beat — it was
-# proven exact when it reproduced the box's `sent 76` for `authored_field_bright`
-# to the token. On it, this variant sends 77 of 77 with EVERY authored `no ...`
-# term arriving, none dropped and none deduplicated away:
-#   photorealistic, 3d render, abstract, text, watermark, signature, low quality,
-#   blurry, extra limbs, deformed, girl, child, house, building, interior,
-#   indoors, architecture, dark, night, dusk, sunset, dim lighting, moody
-#   lighting, low key, shadows dominant, photorealism, female goblin, elf
-# The only casualties are two house-tier quality tags, `realistic skin texture`
-# and `jpeg artifacts`. `text`, `female goblin` and `elf` survive — the three the
-# fault checks fail on — and the count tag `1boy` derives.
+#   this round `authored_b04_fieldban`: negative recipe 75 -> sent 72
+#     SENT: text, mature tree, large tree, girl, child, dark, night, dusk,
+#           sunset, dim lighting, moody lighting, low key, shadows dominant,
+#           photorealism, leaf on head, plant girl, alraune, monster girl,
+#           flower on head, head wreath, hair ornament, leaf hair ornament,
+#           plant hair, female goblin, elf
+#     DROPPED: the nine above PLUS 3d render, photorealistic, shrubbery, bush,
+#           forest, full canopy, thick trunk
 #
-# THE `--dry` STEP IS THE REAL GATE AND IT RUNS FIRST. It measures on the box's
-# actual CLIP tokenizer and `render_wave_sample.py` returns nonzero BEFORE it
-# imports torch, so if any of the above is wrong the job costs $0 and no GPU
-# seconds. It also refuses outright if the box's `wave-drafts.yaml` lacks the
-# variant key — the stale-copy failure this file would otherwise hit silently.
+# READ THAT DIFF BEFORE READING THE FRAMES. All eight lighting terms reach the
+# model verbatim. Everything the previous round's spec verified as load-bearing
+# SURVIVES: `female goblin`, `girl`, `child`, `text`, `photorealism`, `mature
+# tree`, `large tree` and the whole plant-girl/alraune tier. What is sacrificed
+# is seven house terms, and two of them are worth naming as risks rather than
+# burying:
+#   * `photorealistic` and `3d render` leave the house tier. The style guard is
+#     not gone — the beat-specific `photorealism` still goes, lifted from the
+#     positive's "No photorealism, no 3D render look" — but it is thinner.
+#   * `thick trunk, full canopy, forest, bush, shrubbery` leave. On a beat whose
+#     subject is a TINY SAPLING that is the most real risk in this job: the
+#     sapling could come back as a bush, or the open field as a treeline. The two
+#     strongest anti-big-tree terms (`mature tree`, `large tree`) survive, and
+#     this beat has never come back with a mature tree, so this is a stated risk
+#     and not a known regression.
+# THE BLOCK IS SENT WHOLE ON PURPOSE. Narrowing it to fit would have bought those
+# terms back and made this a DIFFERENT block from the one beat 04 proved, which
+# breaks the only thing that makes this a propagation rather than a new guess. If
+# a bush shows up, the answer is a narrower block on this beat, and that reading
+# is written down here before the frames exist.
 #
-# STATED RISK, because it is the cost of the lever. The negative is now FULL at
-# 77/77 and this beat has no headroom left: the next term added to beat 04 starts
-# costing terms that matter, and `fit_negative` sacrifices the house tier first.
-# If these frames come back clean, beat 04's negative is done and any further fix
-# has to buy its space by removing something.
-#
-# SEPARATE OUT DIRECTORY, DELIBERATELY. `out-b04-fieldbright` holds the frames
-# this is read against and the harness names files from the beat slug, so this
-# writes to `out-b04-fieldban` and that evidence is not overwritten.
+# SEPARATE OUT DIRECTORY, DELIBERATELY. `out-b02-occl` holds the four frames this
+# is read against and the harness names files from the beat slug. This writes to
+# `out-b04-fieldban` so that evidence is not overwritten.
 
 id: ep2-b04-fieldban-0811
 task: ep2-b04-fieldban-0811
@@ -89,7 +106,7 @@ needs_gpu: true
 # --list`, checked, not assumed).
 priority: 44
 max_attempts: 1
-owner: beat-04 setting lane, 2026-08-11 (his "the background is a house")
+owner: beat-02 lighting lane, 2026-08-11 (propagating the beat-04 lighting proof)
 
 # NO `gate:` KEY. One sample varying one channel on a recipe he has ratified,
 # using a fix already verified against identical seeds on another beat. It clears
