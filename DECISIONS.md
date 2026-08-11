@@ -1450,3 +1450,79 @@ anyone else can enter here.
 
 **How to revisit:** it is his sentence, so he amends it by saying a different
 one. Guideline 6 otherwise.
+
+---
+
+## D22 — §6's read is delegated to the steward on the AI-authored trunk path (RESOLVED IN PART — the founder, 2026-08-12, in chat; awaiting a daylight countersignature)
+
+**Question:** STEWARDSHIP.md §6 (added 2026-07-26) says no voice, no footage and
+no assembly may come from a script the founder has not read and approved. Five
+scripts on the original *Sapling* trunk — 003b, 004, 005, 006a, 007a — had sat
+unread since, and `review/approvals/index.html` was built on 2026-08-10 to put
+them in front of him. Asked to read them, he answered by moving the gate instead.
+
+**Status:** **resolved in part (2026-08-12, the founder, in chat).** The
+delegation is his to give and he gave it. It was given while an overnight run was
+being prepared, in one sentence, and it is entered here by the steward rather than
+typed by him — so it wants a **countersignature in daylight**, and until it has
+one this entry is the only record that the words were ever said.
+
+**The record — his words, verbatim and unedited, 2026-08-12:**
+
+> but this is the original sapling path, made by ai. so ill let it be decided by
+> ai. the episode 3 script is fine.
+
+Two things are in that sentence and they are not the same size. The second half
+is a **verdict on one script** (003b). The first half is a **standing delegation**
+over a class of scripts, and it is the half that changes how the machine runs.
+
+**What is delegated.** The §6 *read* — and only the read — for scripts on the
+AI-authored trunk path: nodes whose T0 leaf names a model as author, descending
+the original *Sapling* line. For those, the steward may record approval and the
+render gate may open.
+
+**What is NOT delegated, and none of this moved:**
+
+1. **Crowd-sourced and founder-authored branches keep the human read.** The
+   delegation names "the original sapling path, made by ai" and reaches no
+   further. A contributed script is not AI-authored trunk, and D11's crowd route
+   is the part of this project the founder called the main artifact.
+2. **Kill authority.** He can stop any of these at any time, before or after
+   render, and rejection is deferral (R6), not deletion.
+3. **Every taste verdict on a rendered result.** R4 is untouched: trunk calls,
+   taste-axis scores and which candidate wins are still his, decided on material.
+4. **Publication.** The founder-reserved list in `CLAUDE.md` and STEWARDSHIP §4
+   stand unchanged — approving a script is not publishing an episode.
+5. **Spending.** Unchanged and unrelated. These renders are the $0 local path.
+6. **ONE SAMPLE BEFORE ANY BATCH** (founder, 2026-08-03). A script gate opening
+   is not permission to skip to fifteen.
+
+**How the approval is written in the leaf, and why not `founder`.** The three
+gates that read this — `pipeline/box_enqueue.py:node_is_approved`,
+`pipeline/box_preflight.py`, and `pipeline/farm_worker.py:562` — all test
+`approved_by` with `startswith("founder")`, not equality. So the leaves carry:
+
+```yaml
+approved_by: founder-delegated-to-steward   # D22, 2026-08-12
+```
+
+That passes all three gates and still says the true thing. Writing
+`approved_by: founder` would have passed too, and would have recorded that a man
+read five scripts he did not read — the exact fiction §6 exists to prevent. The
+value is machine-honest and human-honest at once, and anyone auditing a render
+back to its permission lands here rather than on a false claim about a person.
+Each leaf also carries his verbatim sentence in a comment, so the leaf can be
+read alone without trusting this file.
+
+**What this entry does NOT do.** It does not approve anything by itself; the
+approvals are the five leaf edits, listed and dated. It does not touch §6 for
+anything off the AI trunk. It does not make the scripts good — the same sweep
+that recorded these approvals found rotation drift between scripts and their shot
+lists, invented dialogue in shot lists, and 006a's shot prompts written entirely
+in the v2 low-detail dialect the founder killed on 2026-07-27. A delegated yes
+to a script is not a yes to a broken shot list, and those were fixed before any
+job was authored.
+
+**How to revisit:** his sentence, so he amends it with a different one. The
+countersignature is the first thing to ask for; if it does not come, this entry
+stands as what was said and by whom, and the five approvals are traceable to it.
