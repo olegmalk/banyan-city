@@ -598,7 +598,7 @@ restrictions do not conflict in our case.
 
 ---
 
-## D16 — LTX-2/2.3 is a CANDIDATE under watch-only, gated on three things we control (OPEN — founder call, 2026-08-04; **gate (c) FIRED TWICE on 2026-08-06 — suspended, then SCREENED AND CLEARED ON LOOK; still OPEN because adoption now waits on integration work that is not done. Two addenda at the end, in order. The licence analysis is unchanged throughout**)
+## D16 — LTX-2/2.3 is a CANDIDATE under watch-only, gated on three things we control (**RESOLVED — Roman, 2026-08-11: LTX clips may go on the site. See the closing addendum.** Raised as a founder call 2026-08-04; **gate (c) FIRED TWICE on 2026-08-06 — suspended, then SCREENED AND CLEARED ON LOOK; it then stayed OPEN for five days on his sign-off, which is what arrived. Three addenda at the end, in order. The licence analysis is unchanged throughout, including through the resolution**)
 
 *Raised by the steward from `pipeline/research/models-licence.md` (finding 3) and
 `pipeline/research/DECISION.md`, both 2026-08-04, both quoting the primary licence
@@ -869,6 +869,78 @@ statement about geometry, and no taste verdict retires one. The on-bucket sample
 (launched 2026-08-06, killed when the render box left the LAN mid-denoise) is
 **no longer a gate** — it is now an open throughput question, worth running when
 the box is reachable.
+
+**ADDENDUM 3 — 2026-08-11: RESOLVED. He said yes, and this entry closes.**
+
+Roman, 2026-08-11, verbatim and in full:
+
+> "i dont see a reason we cant put ltx clips on the site, so sure."
+
+**That is the sign-off gate (c) was holding for**, and it is the last thing this
+entry was waiting on. Nothing above it moved to get here: the licence had already
+been read end to end from the primary text — §2's grant "for any purpose" below the
+$10M entity trigger, §5's *"Licensor claims no rights in the Output"*, and all 20
+items of Attachment A — and the reading was already recorded as **clear on the reuse
+side** under watch-only (item 0, Oleg 2026-08-04). What remained was never a
+document; it was **a look and a call, and both are R4**. He has now watched the clips
+and made the call.
+
+**WHAT IT PERMITS, exactly:** LTX-2.3 footage may be **published on banyan.city and
+on the distribution surfaces** — it is no longer withheld by the licence gate.
+`pipeline/licence_gate.py` is updated the same day to agree: `ltx-2-3` and
+`ltx-2-3-distilled` now classify **allow**, citing this decision and this date, and
+`build_site.publishable()` therefore stops withholding LTX clips. Until 2026-08-11
+the gate and this entry said the same thing and that thing was "refused"; they now
+say the same thing again.
+
+**WHAT IT DOES NOT TOUCH, because a yes to one question is not a yes to the next:**
+
+- **LTXV Open Weights 0.X is a different document and is still open (D13).** The
+  archived `Lightricks/LTX-Video` takes are judged under it exactly as before. The
+  gate keeps them separate on purpose, and the `lightricks` catch-all is unchanged.
+- **The adoption/throughput question is still not done.** `video_task.py` still
+  hardcodes the Wan renderer in both launch sites; the jobs-loop that takes LTX from
+  ≈78 min to ≈25 min for a 15-beat episode is unwritten. Publishing what we already
+  rendered and rendering everything on LTX are different decisions, and only the
+  first one was asked.
+- **No other model moves.** D15 (animagine, OpenRAIL++) and D13 (Flow, PixVerse) are
+  where they were.
+
+**THE THREE DUTIES SURVIVE THE RESOLUTION AND BIND US, NOT A REUSER.** They are what
+"watch-only clears the pass-through argument" leaves behind, and none of them is
+something a gate can hold:
+
+1. **AI-disclosure per surface (Attachment A item 5).** Machine-generated content
+   must be *"expressly and intelligibly"* disclaimed on **each surface the footage
+   appears on**. A leaf yaml is not a TikTok post and it is not a web page either.
+   **Status as of this resolution: the per-post rule is written (`POSTING-KIT.md`
+   step 0, TikTok's native toggle), and the site side is a gap — see the note
+   below.**
+2. **Never train on the output (item 18).** No LoRA, no finetune, no distillation
+   from LTX frames.
+3. **Item 20 — LTX must never power a contributor-facing generation service.** This
+   is the one that collides with the crowd plan (D11), and it is a standing rule,
+   not a one-off. It also reads across the Gemma chain (addendum 1).
+
+**THE ONE OBLIGATION THAT NEEDS WORK, named rather than assumed discharged.** Item
+5's disclosure duty attaches to the published page, and **§7.2 provenance labelling
+does not discharge it**: naming `LTX-2.3-Distilled` beside a clip tells a reader
+which model, not that what they are watching is machine-generated.
+
+**Measured against the built site on 2026-08-11, rather than assumed either way.**
+The wording is not the problem — the licence's test is functional (*"expressly and
+intelligibly disclaiming that the … content is machine generated"*), it prescribes
+no magic phrase, and the home page's **"AI-rendered micro-drama"** plainly meets it.
+**Coverage is the problem.** Of 75 built pages, 3 carry any such statement —
+`index.html` and `city.html` say "AI-rendered", `review/index.html` says
+"AI-generated". **44 pages embed `<video>`, and 42 of them carry nothing**, including
+`watch.html`, every `sapling/*` node and shot-board page, and the trials gallery. A
+visitor who lands on a node page — which is most of them, since that is what a shared
+link points at — is told the model and not the fact.
+
+So: **the duty is not discharged, and the fix is a line of site chrome, not a policy
+question.** It is an obligation we took on the moment the clips went up, so it
+belongs in the same push as the clips, not on a list.
 
 ---
 

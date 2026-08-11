@@ -2954,8 +2954,22 @@ def test_the_review_gallery_clears_on_three_conditions_and_nothing_less(tmp: Pat
     ok, errs = case("cuts/checklist", dict(good))
     check("right record, wrong directory: refused, and counted", not ok and errs == 1)
 
+    # D16 RESOLVED 2026-08-11 (Roman: "i dont see a reason we cant put ltx clips on
+    # the site, so sure"), so this case flipped — and the way it flipped is the
+    # thing worth pinning. LTX-2.3 does not join FOUNDER_NARROWED and does not use
+    # this exemption at all: it is an ALLOW in MODEL_LICENCES, so it publishes on
+    # its own licence, with or without a `published_under:` line. The narrowing
+    # stayed exactly as narrow as it was; one model stopped needing it.
     ok, errs = case("cuts/review-assets", dict(good, model="Lightricks/LTX-2.3-Distilled"))
-    check("D16's LTX is still refused inside the gallery", not ok and errs == 1)
+    check("D16's LTX publishes in the gallery, on its own licence", ok and errs == 0)
+    ok, errs = case("cuts/review-assets",
+                    {k: v for k, v in dict(good, model="Lightricks/LTX-2.3-Distilled").items()
+                     if k != "published_under"})
+    check("...and it does not need the narrowing to do it", ok and errs == 0)
+    # the vendor's OTHER document did not move with it — D13 is still open
+    ok, errs = case("cuts/review-assets", dict(good, model="Lightricks/LTX-Video"))
+    check("LTXV Open Weights 0.X is still refused inside the gallery",
+          not ok and errs == 1)
 
     ok, errs = case("cuts/review-assets", dict(good, model="someone/never-heard-of-it-v9"))
     check("an unclassified model is still refused inside the gallery",
@@ -2964,9 +2978,13 @@ def test_the_review_gallery_clears_on_three_conditions_and_nothing_less(tmp: Pat
     # The compound string is the one that has bitten before: judging a value by
     # its softest ingredient is hole 1, and an exemption re-opens it if the
     # publish path stops at the first licence it can excuse.
+    # (Was written with LTX-2.3 as the unexcused half; D16 cleared that model on
+    # 2026-08-11, so the property is re-pinned with LTXV Open Weights 0.X, which is
+    # still open under D13. The property under test never changed — only which
+    # licence is the one that must not be excused away.)
     ok, errs = case("cuts/review-assets", dict(
-        good, model="still: cagliostrolab/animagine-xl-3.1 | motion: Lightricks/LTX-2.3"))
-    check("animagine beside LTX in one value loses on the LTX clause",
+        good, model="still: cagliostrolab/animagine-xl-3.1 | motion: Lightricks/LTX-Video"))
+    check("animagine beside LTXV 0.X in one value loses on the 0.X clause",
           not ok and errs == 1)
 
     check("the authorised list names only the D15 model",
@@ -4194,9 +4212,15 @@ def test_licence_gate(tmp: Path):
     # reword of its value into an explanation could have flipped a watch-only
     # candidate to publishable in silence, which is the precise failure the
     # comment above describes.
+    # IT LEFT THIS LIST ON 2026-08-11, because D16 is resolved and the flip is now
+    # a founder decision rather than an accident: Roman, "i dont see a reason we
+    # cant put ltx clips on the site, so sure." The tripwire does not disappear
+    # with it — it turns over, below — because an allow value has the same defect
+    # in mirror image: a reworded explanation could make it stop matching, or make
+    # it match on a pattern that was never about this document.
     RESTRICTED = ("pixverse", "kling", "vidu", "stable-video-diffusion",
                   "f5-tts", "openaudio", "fish", "google-flow", "veo",
-                  "ltx-video", "lightricks", "ltx-2-3")
+                  "ltx-video", "lightricks")
     for name in RESTRICTED:
         verdict = lg.classify(lg.MODEL_LICENCES[name])[0]
         check(f"{name} is not publishable ({verdict})", verdict != "allow")
@@ -4204,6 +4228,21 @@ def test_licence_gate(tmp: Path):
     # accident — it has to actually be in the table
     check("every restricted name is in MODEL_LICENCES",
           all(n in lg.MODEL_LICENCES for n in RESTRICTED))
+    # THE OTHER HALF OF THE SAME TRIPWIRE, for the entry that moved. D16's
+    # allowance has to come from the LTX-2 document being NAMED, not from some
+    # other identifier drifting into the value: the founder cleared LTX-2.3, and a
+    # value that cleared because it happened to contain "MIT" or "CC BY" would be
+    # the google-flow failure running forwards instead of backwards.
+    for name in ("ltx-2-3", "ltx-2-3-distilled"):
+        value = lg.MODEL_LICENCES[name]
+        check(f"{name} is publishable — D16 resolved 2026-08-11",
+              lg.classify(value)[0] == "allow")
+        check(f"...and {name} clears on the LTX-2 document, not another licence",
+              lg.classify(value)[1] == "LTX-2 Community License Agreement")
+    # the allowance is about the document, so it must not reach the vendor: LTXV
+    # Open Weights 0.X is D13's question and is still the founder's.
+    check("the LTX-2 allow pattern does not clear the LTXV 0.X catch-all",
+          lg.classify(lg.MODEL_LICENCES["lightricks"])[0] != "allow")
 
     def genome(name, leaf=None, sources=None, vo=None, archive_vo=None):
         """A minimal one-node genome under tmp/name, then scan it."""
@@ -4478,17 +4517,39 @@ def test_licence_gate(tmp: Path):
     # collide inside a REAL provenance value.
     LTX23 = "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)"
     check("a real LTX-2.3 sidecar string resolves to the version, not the vendor",
-          [n for n, _ in lg.model_licences(LTX23)] == ["ltx-2-3"])
-    check("...so the document cited is the LTX-2 Community Licence (D16)",
-          "LTX-2 Community Licence" in (lg.engine_licence(LTX23) or ""))
+          "lightricks" not in [n for n, _ in lg.model_licences(LTX23)])
+    check("...so the document cited is the LTX-2 Community License (D16)",
+          "LTX-2 Community License" in (lg.engine_licence(LTX23) or ""))
     check("...and not the LTXV Open Weights 0.X the catch-all names",
           "0.X" not in (lg.engine_licence(LTX23) or ""))
-    check("...while the refusal itself is unchanged — it was never the defect",
-          lg.classify(lg.engine_licence(LTX23))[0] != "allow")
+    # WHICH DOCUMENT IT IS was always the point of this block; the verdict on that
+    # document was a separate question and it has now been answered. D16 RESOLVED
+    # 2026-08-11 — Roman: "i dont see a reason we cant put ltx clips on the site,
+    # so sure." So the line that used to read "the refusal itself is unchanged"
+    # asserts the founder's answer instead, and it asserts it here, against the
+    # real sidecar string, rather than only against the table entry.
+    check("...and that document is now an allow — D16, founder 2026-08-11",
+          lg.classify(lg.engine_licence(LTX23))[0] == "allow")
     errors, _ = tree("ltx23-document", {f"{N}/clips/01-a.meta.yaml":
                                         f"platform: local-gpu (rtx5090)\nmodel: {LTX23}\n"})
-    check("the gate reports that sidecar once, under D16",
-          len(errors) == 1 and "D16" in errors[0] and "0.X" not in errors[0])
+    check("a real LTX-2.3 sidecar is no longer debt", errors == [])
+    # THE SPELLING MUST NOT DECIDE IT. The same render whose value omits the bare
+    # `LTX-2.3` identifier — what video_task writes when it names only the
+    # checkpoint — grades as a variant of `ltx-2-3` and was demoted to UNINHERITED,
+    # i.e. refused on a spelling while its twin published. `ltx-2-3-distilled` is
+    # in the table for this, and it is the read-the-version rule, not an inheritance.
+    BARE = "diffusers/LTX-2.3-Distilled-Diffusers"
+    check("the distilled checkpoint named alone clears on the same document",
+          lg.classify(lg.engine_licence(BARE))[0] == "allow"
+          and "LTX-2 Community License" in lg.engine_licence(BARE))
+    # and the fail-closed direction is untouched: an LTX-2.3 SOMETHING nobody read
+    # is a variant, is demoted, and is refused — the allowance covers checkpoints,
+    # never the version number.
+    UNREAD_23 = "Lightricks/LTX-2.3-Turbo-Unread"
+    check("an unread LTX-2.3 variant is still refused",
+          lg.classify(lg.engine_licence(UNREAD_23))[0] != "allow")
+    check("...and it says which reading it is not",
+          lg.UNINHERITED_MARK in (lg.engine_licence(UNREAD_23) or ""))
     # THE OTHER DIRECTION, and the reason the catch-all is dropped only for a
     # version we have READ rather than for anything else that matched. "Defer to
     # whatever else is in the string" would clear an unlisted Lightricks model the

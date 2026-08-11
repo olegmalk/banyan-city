@@ -161,6 +161,23 @@ ALLOW = [
     # which is the only qualification this list has ever had.
     (r"openrail", "CreativeML OpenRAIL-M"),
     (r"\bfaipl\b", "Fair AI Public License 1.0-SD"),
+    # LTX-2 Community License Agreement — the same shape as the two above, and it
+    # is here for the same one qualification: someone read it end to end (D16, the
+    # full Attachment A extracted from Lightricks/LTX-2 LICENSE, 20 items), and the
+    # person whose call it is then said yes. Roman, 2026-08-11, verbatim: "i dont
+    # see a reason we cant put ltx clips on the site, so sure." §2 grants use
+    # "for any purpose" below the $10M entity trigger and §5 claims no rights in
+    # the Output; what survives binds US, not a reuser, and watch-only (Oleg,
+    # 2026-08-04) means there is no reuse grant on media for it to pass through.
+    # The three surviving duties are ours to keep, not conditions on this string:
+    # AI-disclosure per publishing surface (item 5), never train on the output
+    # (item 18), and item 20 — LTX must never power a contributor-facing
+    # generation service. See DECISIONS.md D16 and MODEL_NOTES below.
+    # Matched on the DOCUMENT'S OWN NAME, so it can only ever answer for a value
+    # that names this licence: it is not a vendor pattern and it reaches no other
+    # Lightricks model. LTXV Open Weights 0.X is a different document and stays
+    # off this list (D13, still the founder's).
+    (r"ltx-2-community-licen[cs]e", "LTX-2 Community License Agreement"),
     # A hosted service's terms, not a weights licence: the provider assigns the
     # customer commercial rights in the output. Every entry that uses this token
     # must say in its comment WHERE that grant is recorded — the token is a
@@ -316,7 +333,33 @@ MODEL_LICENCES = {
     # prevent went on happening for three days underneath the fix for it.
     # Which key wins is DECLARED now, in SUPERSEDES_CATCH_ALL below, and no longer
     # inferred from how many letters a vendor's name happens to have.
-    "ltx-2-3": "LTX-2 Community Licence Agreement (D16; watch-only, sign-off pending)",
+    #
+    # ALLOWED 2026-08-11 (D16 RESOLVED). The sign-off this value spent a week
+    # waiting for arrived — Roman, verbatim: "i dont see a reason we cant put ltx
+    # clips on the site, so sure." Nothing in the licence reading moved; the
+    # reading was always clear on the reuse side and the only open item was his
+    # call on a screened sample, which he has now watched. The value below names
+    # the DOCUMENT and nothing else, which is what makes it classify: the ALLOW
+    # entry added for it matches "LTX-2 Community License" and no vendor pattern,
+    # so this allowance reaches this document and no other Lightricks model.
+    # WHAT THIS DOES NOT DO, because a gate cannot hold these and a reader will
+    # assume it does: the three duties in Attachment A bind US at publish time,
+    # not this string. Disclosure per surface (item 5) is POSTING-KIT.md step 0
+    # and the site's own AI-generated statement; no training on LTX output (item
+    # 18); and item 20 — LTX must never power a contributor-facing generation
+    # service, which is the one that collides with the crowd plan (D11/D16 item 5).
+    "ltx-2-3": "LTX-2 Community License Agreement (D16 resolved; founder Roman, 2026-08-11)",
+    # The distilled checkpoint spelled as its own key, for the reason the voxcpm2
+    # entry gives — a version is added explicitly, never inherited. It is the same
+    # document (our own sidecars record `model_licence: LTX-2 Community License
+    # Agreement` beside it) and it is the checkpoint video_task actually renders
+    # with. Without this key, `diffusers/LTX-2.3-Distilled-Diffusers` standing
+    # ALONE — no bare `LTX-2.3` identifier anywhere in the value — grades as a
+    # variant of `ltx-2-3` and is demoted to UNINHERITED, i.e. refused on a
+    # spelling while the identical render whose value happens to spell the version
+    # out is published. That is "the right refusal for the wrong reason" one more
+    # time, and it fails in the direction that hides a founder decision.
+    "ltx-2-3-distilled": "LTX-2 Community License Agreement (D16 resolved; founder Roman, 2026-08-11)",
     "lightricks": "LTXV Open Weights Licence 0.X (read; founder sign-off pending)",
     "dreamshaper": "CreativeML-OpenRAIL-M",      # SD1.5 derivative; outputs unrestricted
     # animagine: THE RECORD WAS STALE, AND IT WAS CLEARING EVERY STILL WE SHIP.
@@ -456,6 +499,7 @@ MODEL_LICENCES = {
 SUPERSEDES_CATCH_ALL = {
     "ltx-video": "lightricks",
     "ltx-2-3": "lightricks",
+    "ltx-2-3-distilled": "lightricks",
 }
 CATCH_ALLS = frozenset(SUPERSEDES_CATCH_ALL.values())
 
@@ -581,13 +625,21 @@ MODEL_NOTES = {
                   "not list, that version is what you are looking at and 0.X may "
                   "not be its document: read ITS licence, add it beside 'ltx-2-3', "
                   "and register the supersession in SUPERSEDES_CATCH_ALL",
-    "ltx-2-3": " — LTX-2 Community License read end to end (D16): commercial use "
-               "free below $10M revenue and no rights claimed in output, so the "
-               "reuse side is clear under watch-only. What binds US: AI-disclosure "
-               "per surface, never train on the output, and item 20 — LTX must "
-               "never power a contributor-facing generation service. Awaiting "
-               "founder sign-off on the screened sample before this becomes an "
-               "allow",
+    # ALLOWED since 2026-08-11, so this note no longer prints for a plain LTX-2.3
+    # value. It survives for the one case that still reaches it: a string naming an
+    # LTX-2.3 SOMETHING this table has not read (`ltx-2-3-turbo`, a finetune), which
+    # grades as a variant, is demoted to UNINHERITED and refused. The remedy is the
+    # same one the whole file asks for, so it says so.
+    "ltx-2-3": " — LTX-2.3 itself is ALLOWED (D16 resolved, founder Roman "
+               "2026-08-11: \"i dont see a reason we cant put ltx clips on the "
+               "site, so sure\"). If you are reading this, the value names an "
+               "LTX-2.3 variant that is NOT one of the checkpoints anyone read — "
+               "read ITS card, add it beside 'ltx-2-3-distilled', and register the "
+               "supersession in SUPERSEDES_CATCH_ALL. The three duties D16 leaves "
+               "on US are unchanged and are not this gate's to enforce: "
+               "AI-disclosure on every surface the footage appears on, never train "
+               "on LTX output, and LTX must never power a contributor-facing "
+               "generation service (item 20)",
 }
 
 # Values that DECLARE no third-party model, matched on the WHOLE value (never
@@ -950,10 +1002,16 @@ def is_candidate(path: Path, root: Path = REPO) -> bool:
 #      right directory would be the cheapest route past the gate, which is hole
 #      2 ("absence is never safer than presence") wearing a new hat. The
 #      exemption has to be WRITTEN, per file, or it does not exist.
-#   3. THE MODEL IS ONE HE AUTHORISED. Only the D15 model. An LTX clip in this
-#      directory is still refused — D16's sign-off is a separate open question
-#      and is still his — and a model in no table is still refused, because an
-#      unread licence cannot be narrowed to terms nobody has read.
+#   3. THE MODEL IS ONE HE AUTHORISED. Only the D15 model. A model in no table is
+#      still refused, because an unread licence cannot be narrowed to terms nobody
+#      has read.
+#      This condition used to read "an LTX clip in this directory is still refused
+#      — D16's sign-off is a separate open question and is still his." It is, and
+#      it was answered on 2026-08-11: LTX-2.3 is now an ALLOW in MODEL_LICENCES, so
+#      an LTX clip here publishes on its OWN licence and never touches this
+#      narrowing at all. The list below is unchanged and still names only the D15
+#      model — that is the point. D16 did not widen the narrowing; it removed a
+#      file from the set of things that need one.
 #
 # Anything that fails any of the three is canon debt in this directory exactly
 # as it would be anywhere else. build_site.publishable() asks the same three
