@@ -45,7 +45,7 @@ decides the recipe for the other 20; nothing else in this file is converted unti
 Line: premise + fig recap. Camera on the fig in the GOBLIN's hands with the tree's bare branch visible behind — the gate misread the hands as the tree's.
 
 ```
-A small green goblin's two clawed hands cradle a single ripe fig and turn it slowly, close in the foreground — he is bald, with long pointed ears and red eyes, in a patchwork cloak of faded greens and browns, kneeling in dew-wet grass. Behind his hands, in an open field at dawn, stands a 55cm mascot-simple banyan sapling in bare earth: a thin curved trunk, two oversized leaves, and one thin bare side-branch where the fig grew and fell. The sapling is small enough that the cradled fig reads as large as one of its leaves. Low dawn light across the field, cool blues warming into peach, long soft shadows. Deadpan quiet staging, static camera, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
+A small green bald goblin with long pointed ears, red eyes and a patchwork cloak cradles a ripe fig in both clawed hands beside a 55cm sapling with two oversized leaves and one bare side-branch, dawn field. Static camera, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 ## Beat 02 — EVIDENCE RETURNED (0:06–0:11) ⬜ needs footage

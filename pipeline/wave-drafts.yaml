@@ -197,6 +197,37 @@ beats:
       sunset, no dim lighting, no moody lighting, no low key, no shadows
       dominant. No photorealism, no 3D render look. 9:16 vertical, no text.
 
+    # -- `authored_ep3_003b_b01_dialect` -- 2026-08-12, the ep3 lane. THE ONE
+    #    SAMPLE that decides the dialect for the other 131 ep3 prompts.
+    #    NOT a 002b beat: this key lives under beat 1 only because --beat picks
+    #    filename and seed naming, which is cosmetic. The content is node
+    #    003b-one-leaf-for-yes beat 01, its cold open, and it is a verbatim copy
+    #    of that beat's prompt fence in genomes/sapling/nodes/003b-one-leaf-for-yes/shots.md
+    #    so the shot list and the rendered frame can never disagree.
+    #
+    #    WHY IT IS WORDED THIS TIGHTLY. The first draft of this conversion read
+    #    well and rendered nothing: measured through sd_prompt.compress it lost
+    #    FOUR of its five sentences to the 77-token budget, including the whole
+    #    sapling and the entire style tail, so it would have drawn a goblin with
+    #    no tree in no style. Measured before queueing, 0 sentences dropped, and
+    #    every load-bearing term asserted present (goblin, fig, sapling, two
+    #    oversized leaves, bare side-branch, bald, red eyes, masterpiece).
+    #
+    #    NEGATIVES ARE NOT BEAT 1's. Beat 1 of 002b bans `no creature, no face,
+    #    no mascot` because it is a tree-alone shot; this beat's subject IS the
+    #    creature, so copying that family would have banned the protagonist.
+    #    Singular person nouns per the measured ep2 finding that `no humans`
+    #    does not bind. `no tusk` and `no hair` carry his 2026-08-12 rulings.
+    authored_ep3_003b_b01_dialect: >-
+      A small green bald goblin with long pointed ears, red eyes and a
+      patchwork cloak cradles a ripe fig in both clawed hands beside a 55cm
+      sapling with two oversized leaves and one bare side-branch, dawn field.
+      Static camera, cinematic lighting, detailed, newest, masterpiece, best
+      quality, very aesthetic No tusk, no fang, no hair, no man, no woman, no
+      girl, no boy, no mature tree, no thick trunk, no many leaves, no lush
+      foliage, no dark, no night, no dusk. No photorealism, no 3D render look.
+      9:16 vertical, no text.
+
   2:
     slug: the-sprint
     kind: goblin
