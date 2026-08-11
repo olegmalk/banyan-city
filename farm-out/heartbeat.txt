@@ -500,3 +500,4 @@
 17:30:51Z STARTED task=ep2-b04-fieldban-0811-1786469447 attempt=1 on box-runner
 17:31:43Z DONE task=ep2-b04-fieldban-0811-1786469447 rc=0 artifacts=8
 17:31:54Z STARTED task=ep2-b05-warmfield-0811-1786469448 attempt=1 on box-runner
+17:32:45Z DONE task=ep2-b05-warmfield-0811-1786469448 rc=0 artifacts=8
