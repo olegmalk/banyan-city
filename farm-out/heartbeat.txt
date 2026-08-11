@@ -452,3 +452,4 @@
 14:12:10Z box-runner idle ready=0 failed=1
 14:22:13Z box-runner idle ready=0 failed=1
 14:32:18Z box-runner idle ready=0 failed=1
+14:33:05Z STARTED task=ep2-b04-goblin-close-0811-1786458772 attempt=1 on box-runner
