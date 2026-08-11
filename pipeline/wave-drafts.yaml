@@ -2047,6 +2047,38 @@ beats:
       newest, masterpiece, best quality, very aesthetic No girl, no child, no
       white hair, no night, no dusk. No photorealism, no 3D render look. 9:16
       vertical, no text.
+    # -- `authored_b13_idfix_r2` -- 2026-08-12, the fixer lane. A PROPAGATION OF A
+    # MEASURED RESULT, ONE VARIABLE, POSITIVE BYTE-IDENTICAL.
+    #
+    # THE FAULT: the cranium pales while the face stays green -- s1 is the worst
+    # case in the whole wave, nearly the entire skull cream-white above a green
+    # face; s2 carries a large pale dome and s0 a moderate one.
+    #
+    # THE LEVER IS PROVEN ON THIS CHECKPOINT TONIGHT. `ep2-b02-idfix-r2-0812` added
+    # `no scars, no stitched skin` and came back with unbroken GREEN crowns 4/4 --
+    # and the pale dome went WITH the sutures, so the tan patch and the stitching
+    # are one fault (fabric on the skull), not two. Its patchwork cloak survived
+    # 4/4, so naming SKIN provably does not negate what the positive asserts.
+    #
+    # IT COSTS EXACTLY WHAT IS SPARE. This beat sends 73 of 77; the two terms are
+    # four tokens and four were free, so NOTHING is evicted -- the whole
+    # anti-big-tree tier, the whole plant-fusion tier, `female goblin` and `elf`
+    # all survive. Verified on the box, not assumed.
+    #
+    # RECORDED AND DELIBERATELY NOT FIXED: three of four frames are murky, and
+    # this beat's negative carries only `night` and `dusk` -- it has none of the
+    # eight-term dark block every other beat sends. But the beat's own subject is
+    # "the small patch of shade", so some of that dimness is the script, and the
+    # four spare tokens have a better claim from the proven ban. If the skulls come
+    # back clean and the frames are still murky, the dark block is the next
+    # purchase and this comment is where it was named.
+    authored_b13_idfix_r2: >-
+      A small goblin boy, {{GOBLIN}}, solo, sits hugging his knees in the small
+      patch of shade beside a tiny two-leaf seedling rooted in the grass. Static
+      camera, medium shot, bright midday sunlight, cinematic lighting, detailed,
+      newest, masterpiece, best quality, very aesthetic No girl, no child, no
+      scars, no stitched skin, no white hair, no night, no dusk. No
+      photorealism, no 3D render look. 9:16 vertical, no text.
     authored_b13_refresh: >-
       A small goblin boy, {{GOBLIN}}, solo, sits hugging his knees in the small
       patch of shade beside a tiny two-leaf seedling rooted in the grass. Static
@@ -2095,6 +2127,35 @@ beats:
     # beat's own staging and staging is kept verbatim; if the hands are still
     # lost when the light is fixed, the framing word is the next thing to buy
     # and this note is where it was named.
+    # -- `authored_b14_idfix_r2` -- 2026-08-12, the fixer lane. THE CLEANEST
+    # PROPAGATION IN THE WAVE: one variable, positive byte-identical, and every
+    # OTHER fault on this beat was already fixed by the lane before it.
+    #
+    # WHAT IS ALREADY FIXED AND IS NOT TOUCHED. The beats 14-20 lane wrote its
+    # diagnosis of the wave-1 frames down before its fix: four of four dim, three
+    # of four with glowing pink-red eyes, s1 in tears. All of that is GONE in the
+    # `_idfix` frames -- bright green daylight, normal eyes, nobody crying. `no
+    # glowing eyes` and the eight-term dark block both worked and both stay.
+    #
+    # WHAT IS LEFT IS THE SKULL, 4/4. s0 runs a suture line down the right of the
+    # crown and puts stitch marks on both cheeks. s2 is the clearest case in the
+    # entire wave: a distinct BROWN OVAL GRAFT on the crown, X-stitches across the
+    # skull, X marks on the cheeks. The clawed fingers, the embarrassed face and
+    # the light are all correct; only the head is a sewn doll's.
+    #
+    # THE LEVER IS PROVEN. `ep2-b02-idfix-r2-0812` ran `no scars, no stitched skin`
+    # tonight and returned unbroken green crowns 4/4 with the patchwork cloak
+    # intact 4/4. Four tokens; this beat sends 73 of 77 and four were spare, so
+    # `female goblin`, `elf` and the species tier are all untouched.
+    authored_b14_idfix_r2: >-
+      A small goblin boy, {{GOBLIN}}, solo, his clawed fingers picking at
+      loose dirt and flicking pebbles aside, his face glancing away embarrassed
+      above them. Intimate low close-up, shallow green grass background, bright
+      morning light, cinematic lighting, detailed, newest, masterpiece, best
+      quality, very aesthetic No girl, no child, no scars, no stitched skin, no
+      glowing eyes, no dark, no night, no dusk, no sunset, no dim lighting, no
+      moody lighting, no low key, no shadows dominant. No photorealism, no 3D
+      render look. 9:16 vertical, no text.
     authored_b14_refresh: >-
       A small goblin boy, {{GOBLIN}}, solo, his clawed fingers picking at
       loose dirt and flicking pebbles aside, his face glancing away embarrassed
