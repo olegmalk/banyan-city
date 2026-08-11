@@ -1,0 +1,173 @@
+# ep1 beat 10 — DOES THE NEGATIVE PROMPT BIND AT ALL? One sample at guidance 2.0.
+#
+# THE QUESTION. review/SHEETS/index.html records beat 10 as: "The sprout apex
+# climbs 181px in every round; no wording binds it." Round after round of prompt
+# wording has failed to stop one defect. The sheet reads that as a wording
+# problem. It may not be one.
+#
+# WHAT THE CODE SAYS (pipeline/ltx_i2v.py:1001-1008, verbatim):
+#     # THE NEGATIVE PROMPT IS DEAD WEIGHT ON THIS PATH and that is upstream's design,
+#     # not an oversight of ours: do_classifier_free_guidance is
+#     # (guidance_scale > 1.0) or (audio_guidance_scale > 1.0), audio defaults to the
+#     # video scale, so at guidance 1.0 there is no uncond pass and the negative
+#     # embeddings are never read. Upstream's distilled arg parser does not even
+#     # register --negative-prompt. It is still passed and still recorded in the
+#     # sidecar, because what we ASKED for is provenance, but it changes no pixel.
+#     common = dict(guidance_scale=a.guidance, output_type="np", return_dict=False, **e)
+# Every beat-10 round has run --guidance 1.0. So every negative we have written,
+# on this beat and on every other beat of the distilled recipe, has been inert.
+# "No wording binds it" is not evidence that wording cannot bind it; it is
+# evidence that half our wording was never read by the sampler.
+#
+# WHY A RENDER AND NOT A CODE FIX. Turning CFG on is a RECIPE CHANGE to a
+# distilled 8-step model. Distilled checkpoints are trained with guidance baked
+# in, and raising guidance_scale on one is a known way to get burnt contrast,
+# saturation clipping and motion artefacts. We do not know whether this recipe
+# survives guidance 2.0 at all. That is the question this one clip answers, and
+# it must be answered before anyone spends a beat rewriting negatives on top of
+# it. The encode stage already stores negative embeddings unconditionally
+# (ltx_i2v.py:512-519, do_classifier_free_guidance=True), so the .pt carries what
+# the render needs; only the render-side scale has ever been the gate.
+#
+# WHAT THE BEAT-10 NEGATIVE ACTUALLY SAYS, and why this arm is deliberately not a
+# wording test. Its text is copied here verbatim from the source spec. It covers
+# wilting, drooping, bending, falling, humans, photorealism and scene changes —
+# it says NOTHING about a climbing apex, a rising subject, upward drift or a
+# tracking camera. Worse for beat 10 specifically, it negates "frozen frame,
+# still image, no motion", which under live CFG pushes the model AWAY from
+# stillness on a beat whose defect is unwanted upward movement. So a plausible
+# outcome is that guidance 2.0 makes beat 10 WORSE. That is still worth knowing,
+# and it is why this arm changes the scale and NOT the text: mixing a recipe
+# change with a wording change gives a result no one can attribute. If the
+# picture holds together at 2.0, the next job rewrites the negative to name the
+# climb ("the sprout rises out of frame, subject drifting upward, camera tilting
+# up, plant growing taller") and drops the anti-stillness terms. If the picture
+# falls apart at 2.0, we stop rewriting negatives on the distilled path entirely
+# and treat the positive prompt as the only channel that has ever worked.
+#
+# ONE SAMPLE. One beat, one guidance value, against an existing control. Not a
+# sweep, not a second beat. The founder's rule (CLAUDE.md, 2026-08-03) was
+# written after a recipe was scaled to fifteen beats unsampled.
+#
+# NO METRIC RANKS THIS. On beat 14 the flow metric scored highest on the round
+# where the sapling falls over (131e433). This job produces a picture for a human
+# to look at, next to its control.
+
+id: ep1-b10-guidance20-0811
+task: ep1-b10-guidance20-0811
+node: 001-capability-inventory
+beat: 10
+runner: box
+needs_gpu: true
+priority: 30
+max_attempts: 1
+owner: motion-guidance top-up lane (negative-prompt binding test)
+control_clip: C:\banyan-farm\v34-motion-0810\10-ltx-r2g-plate-s20260897.mp4
+source_spec: pipeline/jobs/ep1-b10-v34-plate-r2g-reseed.yaml
+approval: 'genomes/sapling/nodes/001-capability-inventory/leaves/001-t0-d.yaml:17 — approved_by: founder
+  # 2026-07-27, read and approved: "episode 1 looks good, you can do it"'
+consumer: beat 10's entry in the six-beat motion pick list (/review/waiting item 3) — and, if the
+  negative turns out to have been inert all along, every beat where we have been rewriting negatives
+  that the sampler never read. The pair goes to the founder unranked.
+success: 'A 704x1280 65-frame mp4 at C:\banyan-farm\v34-motion-0810\10-ltx-g20-plate-s20260897.mp4,
+  viewable SIDE BY SIDE with its control 10-ltx-r2g-plate-s20260897.mp4 — same plate, same seed, same
+  frames, same wording, guidance 2.0 instead of 1.0. Two questions, both answered by looking: (1) does
+  the picture survive CFG on a distilled 8-step model, or does it come back burnt, oversaturated,
+  smeared or artefacted — if it is wrecked, the answer is that negatives cannot be switched on for this
+  recipe and that is the finding; (2) if it survives, does the apex still climb? Any difference at all
+  between the two clips proves the negative embeddings are now being read.'
+why: 'One variable against ep1-b10-v34-plate-r2g-reseed: --guidance 2.0 instead of 1.0. Same plate,
+  same seed 20260897, same 65 frames, same prompt text, same negative text, same distilled sigmas, same
+  two-stage. Below guidance 1.0 the negative prompt is never evaluated (ltx_i2v.py:1001-1007), so this
+  is the first beat-10 render in which the negative file exists as anything but provenance.'
+est_minutes: 5
+needs:
+- cuda
+- vram20
+- video-venv
+payload:
+  C:\banyan-farm\v34-plates-0810\ep1-b10-guidance20-0811-prompt.txt: '2D anime, hand-drawn cel animation,
+    flat cel shading, clean ink linework, anime key art. a locked-off tripod shot: the camera never moves,
+    the sprout stays at exactly the same height in the frame with its leaf tips at the same level from
+    the first frame to the last, the horizon of grass stays at the same height, the sprout stays the same
+    size and in the same place, the composition is identical in every frame. within that fixed frame the
+    sprout stands upright and rooted, stem straight and steady, and only these things move: its two small
+    leaves tremble very slightly, the tall grass around it sways in a light breeze, dust motes drift through
+    the warm hazy air, soft light shifts across the stem, living scene. Subject already in frame: no human,
+    no person, no man, no woman, no boy, no girl, no hand, no face, one small sprout with two leaves on
+    a thin upright stem, tall grass around it, warm hazy amber light.'
+  C:\banyan-farm\v34-plates-0810\ep1-b10-guidance20-0811-negative.txt: wilting, drooping, bending
+    over, falling over, collapsing, sagging, plant dying, human, person, man, woman, boy, girl, extra
+    hand, extra arm, foot, face, crowd, animal, bird, insect, new object appearing, photorealism, 3D render
+    look, text, 静态, 静止, frozen frame, still image, no motion, photorealistic, photograph, live action,
+    film still, 3D render, CGI, octane, scene change, shot change, cut to another angle, second scene,
+    new camera angle, different location, split screen, montage
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: plate
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - -c
+  - "import sys; sys.path.insert(0, r\"C:\\banyan-farm\\banyan-city\\pipeline\")\nfrom plate_prep import\
+    \ prepare_plate\nout, rec = prepare_plate(\n    r\"C:\\banyan-farm\\banyan-city\\genomes\\sapling\\\
+    nodes\\001-capability-inventory\\stills\\10-sense.png\",\n    \"704x1280\", r\"C:\\banyan-farm\\v34-plates-0810\"\
+    , \"10\")\nprint(\"plate\", out); print(rec[\"plate_wxh\"], rec[\"crop_policy\"])\n"
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\ltx_i2v.py
+  - --stage
+  - encode
+  - --embeds
+  - C:\banyan-farm\v34-plates-0810\ltx-embeds-ep1-b10-guidance20-0811.pt
+  - --prompt-file
+  - C:\banyan-farm\v34-plates-0810\ep1-b10-guidance20-0811-prompt.txt
+  - --negative-file
+  - C:\banyan-farm\v34-plates-0810\ep1-b10-guidance20-0811-negative.txt
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\ltx_i2v.py
+  - --stage
+  - render
+  - --embeds
+  - C:\banyan-farm\v34-plates-0810\ltx-embeds-ep1-b10-guidance20-0811.pt
+  - --prompt-file
+  - C:\banyan-farm\v34-plates-0810\ep1-b10-guidance20-0811-prompt.txt
+  - --negative-file
+  - C:\banyan-farm\v34-plates-0810\ep1-b10-guidance20-0811-negative.txt
+  - --init
+  - C:\banyan-farm\v34-plates-0810\10-704x1280.png
+  - --out
+  - C:\banyan-farm\v34-motion-0810\10-ltx-g20-plate-s20260897.mp4
+  - --size
+  - 704x1280
+  - --frames
+  - '65'
+  - --fps
+  - '24'
+  - --steps
+  - '8'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --seed
+  - '20260897'
+  - --beat
+  - '10'
+  - --task
+  - ep1-b10-guidance20-0811
+  - --worker
+  - rtx5090
+artifacts:
+- C:\banyan-farm\v34-plates-0810\10-704x1280.png
+- C:\banyan-farm\v34-motion-0810\10-ltx-g20-plate-s20260897.mp4
