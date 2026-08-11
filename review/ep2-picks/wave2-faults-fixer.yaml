@@ -648,3 +648,57 @@ beats:
     pale dome that arrives WITHOUT sutures. If it does, "one fault, not two" is
     confirmed from the other direction.
   r2: authored_b20_idfix_r2  (spec ep2-b20-idfix-r2-0812, out-b20-idfix-r2)
+
+# ══ RESULTS, READ OFF THE r2 FRAMES — AND A CORRECTION TO THIS LANE'S OWN CALL ══
+
+- round: WAVE RESULT — the skin ban is NOT recipe-general, and this lane said it was
+  read_from: origin/farm-results-rtx5090, r2 frames, verified against their sidecars
+  THE_CORRECTION: >-
+    After the beat-02 r2 came back clean this lane wrote that the pale dome and
+    the sutures were ONE fault, because the ban removed both together. THAT
+    INFERENCE WAS WRONG, and the beats it was propagated to are the evidence.
+  measured:
+  - beat 02 (MEDIUM shot), ban sent - crown clean 4/4. The result that started it.
+  - beat 04 (EXTREME close-up), ban sent and CONFIRMED in the sidecar (`scars` and `stitched skin` both present) - the sutures are much reduced but THE PALE CREAM DOME REMAINS, plus X marks on the cheeks. FAILED.
+  - beat 14 (INTIMATE close-up), ban sent and confirmed in the sidecar - the BROWN OVAL GRAFT is still on the crown with X-stitches beside it. FAILED.
+  - beat 03 (medium), the LEAD's variant, `green scalp` AFFIRMATIVE and NO skin ban - the skull is FULLY GREEN in both frames read, no dome at all. WORKED.
+  - beat 11 (WIDE), no fix at all, same `round bald` wording - never had the fault.
+  the_reading: >-
+    Shot size is the moderating variable, and the two faults are separable. The
+    NEGATIVE reaches the sutures but cannot hold the scalp's COLOUR once the skull
+    is large in frame; the AFFIRMATIVE holds the colour. On beat 02's medium shot
+    both cleared together, which is why one round looked like proof of one fault.
+    It was proof of one shot size. This is the same close-up sensitivity beat 11
+    shows from the other end for the `round bald` adjacency: wide shots are fine,
+    close shots decorate the skull.
+  THE_CORRECTED_RECIPE: >-
+    Goblin beats need BOTH — `green scalp` in the positive AND `no scars, no
+    stitched skin` in the negative. Neither alone is sufficient at close range.
+  what_this_lane_shipped_and_what_it_costs: >-
+    Beats 04, 13, 14, 15, 19 and 20 were all fired with the BAN ONLY, because they
+    were staged before beat 03's affirmative result existed. Two of them (04, 14)
+    have now measurably failed; the other four are the same lever on beats of
+    varying shot size and should be expected to clear only where the framing is
+    loose. Beats 04 and 14 get an r3 with the combined recipe, because their
+    failure is MEASURED rather than guessed. The rest are left for the founder or
+    the next lane to propagate deliberately rather than spending GPU on a recipe
+    that is only half-confirmed.
+
+- hazard: THE BEAT-03 r2 JOB OVERWROTE THE EVIDENCE IT WAS MEANT TO BE COMPARED AGAINST
+  severity: data loss, still recoverable at the time of writing
+  detail: >-
+    `ep2-b03-idfix-r2-0812` (the LEAD's spec, not this lane's) globs its stills
+    from `out-b03-idfix-r2` but publishes them to
+    `courier-box/farm-out/ep2-b03-idfix` — the ORIGINAL round's directory. On
+    branch `farm-results-rtx5090`, `farm-out/ep2-b03-idfix/` now contains the R2
+    frames (sidecar `draft_variant: authored_b03_idfix_r2`), not the baseline.
+  still_recoverable: >-
+    `main` still holds the ORIGINAL beat-03 idfix frames (local sidecar reads
+    `draft_variant: authored_b03_field_solo_r2`, task `ep2-b03-idfix-0812`). If
+    the results branch is merged into main as-is, the baseline for beat 03 is
+    gone and the pair the round exists to be compared against cannot be rebuilt.
+  fix: >-
+    Before merging, move the r2 frames on the results branch into
+    `farm-out/ep2-b03-idfix-r2/`. Every spec this lane wrote publishes to its own
+    `ep2-bNN-idfix-r2` directory, so the same collision cannot happen again from
+    the fixer's jobs.
