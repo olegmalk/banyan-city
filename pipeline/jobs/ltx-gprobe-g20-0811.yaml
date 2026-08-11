@@ -1,0 +1,240 @@
+# LTX GUIDANCE PROBE — ARM 2 OF 3, GUIDANCE 2.0. Does a negative that NAMES
+# the defect actually bind once CFG is on, and what does the distilled picture
+# pay as guidance rises? Three arms, one variable, generated from one template.
+#
+# WHAT IS ALREADY SETTLED AND IS THEREFORE NOT RE-ASKED HERE. At guidance 1.0
+# the distilled LTX path never evaluates the negative prompt: diffusers sets
+# do_classifier_free_guidance = (guidance_scale > 1.0) or (audio_guidance_scale
+# > 1.0), so there is no unconditional pass and the negative embeddings are
+# never read (pipeline/ltx_i2v.py:1001-1008). Commit e4fbb65 audited 26 of 38
+# LTX prompt negations as dead weight on exactly that basis. Settled. Not the
+# question.
+#
+# TWO MORE THINGS ARE ALREADY ON DISK, AND THIS PROBE BUILDS ON THEM RATHER
+# THAN REPEATING THEM.
+#   * ep1-b10-guidance20-0811 ran clean on 2026-08-11 (rc 0, box `done`) and
+#     wrote 10-ltx-g20-plate-s20260897.mp4 from the same plate, seed, frame
+#     count, steps and WORDING as its guidance-1.0 control
+#     10-ltx-r2g-plate-s20260897.mp4 — the two specs differ in `--guidance` and
+#     in nothing else that reaches a pixel. On the box the files are 146,127 and
+#     162,733 bytes. One changed argument, a different render: at guidance 2.0
+#     the negative embeddings are demonstrably BEING READ.
+#   * review/provisional-v35/README.md:70 records beat 07's r5-g20 round as
+#     "the only round where the negative prompt did anything at all", and says
+#     the pre-registered risk that off-spec guidance breaks the image was
+#     "checked on the frames, it did not — clean cel palette, horizon holds, no
+#     invented object". That round is the one carried into the v35 cut.
+#
+# SO THE OPEN QUESTION IS NARROWER THAN "DOES CFG WORK", and stating it narrowly
+# is the point: "the bytes changed" is not "the banned thing went away", and one
+# beat surviving 2.0 is not a quality curve. What is unknown is whether a
+# negative written AT a defect REDUCES that defect, and how much picture we pay
+# for it as guidance climbs. That is what the ep2 motion phase needs before it
+# writes negatives on twenty beats.
+#
+# THE DISCRIMINATOR IS BEAT 10'S APEX CLIMB, AND IT IS CHOSEN BECAUSE IT IS THE
+# ONLY LTX FAILURE IN THIS REPO THAT CARRIES A MEASUREMENT. review/SHEETS/
+# index.html:45 — "The sprout apex climbs 181px in every round; no wording binds
+# it." review/provisional-v35/README.md:73 adds the mechanism and it is the part
+# that makes this the right test: "its apex rises 181px over the shot, identical
+# in both rounds — and no framing wording can bind it, because it is the subject
+# being *drawn taller* inside a fixed frame, not a camera move (655d2c6).
+# Visible on the frames: the stem grows through the shot."
+# Read that against the positive prompt below, which already says "stays at
+# exactly the same height", "the same size and in the same place", "the
+# composition is identical in every frame" — the POSITIVE channel has asked for
+# the fix in four different sentences and been refused every round. A defect
+# that survives every positive rewrite is precisely the defect worth pointing a
+# negative at, and it is visible by eye rather than by a metric.
+# The dark-drift alternative was considered and dropped: the bright-lighting
+# work on this repo's goblin beats is SDXL still generation, where CFG has
+# always been live and negatives have always worked, and no LTX clip here
+# carries a measured brightness drift. Choosing it would have meant inventing
+# the failure the probe is supposed to detect.
+#
+# NEGATION STAYS OUT OF THE POSITIVE, WHICH IS WHY THE POSITIVE IS UNTOUCHED.
+# The positive below is byte-identical to the control's and contains none of the
+# banned climb nouns; it asks for the framing affirmatively. (It does carry the
+# parent's "no human, no person..." construction. That is the known
+# negation-in-positive trap, it is NOT this probe's discriminator, and it is
+# left exactly as the control has it — fixing it here would put a second
+# variable in a three-arm sweep.)
+#
+# WHAT THE NEGATIVE CHANGES, AND WHY BOTH EDITS ARE CONSTANT ACROSS ALL THREE
+# ARMS. Nine climb terms are added at the front; five anti-stillness terms
+# (`静态, 静止, frozen frame, still image, no motion`) are removed, because once
+# CFG is live they push AWAY from stillness on the one beat whose defect is
+# unwanted movement, and a negative arguing with itself yields a result nobody
+# can attribute. Both edits sit in every arm, so BETWEEN the arms guidance is
+# still the only thing that moves. The already-rendered g2.0 clip on the old
+# wording is a free fourth reference point: old-negative-at-2.0 against
+# new-negative-at-2.0 isolates the wording change at live CFG, at no GPU cost.
+#
+# THE GUIDANCE-1.0 ARM IS A REAL CONTROL AND ALSO A FALSIFICATION TEST. It is
+# the identical recipe to 10-ltx-r2g-plate-s20260897.mp4 except for negative
+# TEXT — and the negative is supposed to be inert at 1.0. So this arm should
+# come back visually indistinguishable from that existing control. If it does
+# not, the inertness claim that commit e4fbb65 rests on is wrong and that is a
+# bigger finding than the probe's own.
+#
+# CFG DOUBLES PER-STEP COMPUTE. Accepted for a probe: the 2.0 arm measured
+# 5m13s end to end on this box. The card is idle and the queue is empty.
+#
+# NO METRIC RANKS ANYTHING (131e433 — on beat 14 the flow metric scored highest
+# on the round where the sapling falls over). Three clips, read by eye, side by
+# side. THE FOUNDER IS NOT ASKED TO LOOK AT THIS: it is a technical probe of a
+# sampler argument, it picks nothing, publishes nothing and clears no gate.
+#
+# LICENCES: nothing new — LTX-2.3 distilled (LTX-2 Community License), already
+# on the box. $0.
+
+id: ltx-gprobe-g20-0811
+task: ltx-gprobe-g20-0811
+node: 001-capability-inventory   # newest t0 leaf 001-t0-d.yaml:17 — approved_by: founder, 2026-07-27, "episode 1 looks good, you can do it"
+beat: 10
+runner: box
+priority: 21          # arms run in ascending guidance order: 1.0, then 2.0, then 2.5
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: ltx guidance probe lane, 2026-08-11
+
+control_clip: C:\banyan-farm\v34-motion-0810\10-ltx-r2g-plate-s20260897.mp4
+source_spec: pipeline/jobs/ep1-b10-guidance20-0811.yaml
+
+consumer: >-
+  the ep2 motion-phase recipe decision: whether negatives bind at g>1 and at what quality cost — steward compares the three arms side by side, founder is NOT asked to review a technical probe.
+
+success: >-
+    A 704x1280 65-frame mp4 at C:\banyan-farm\ltx-gprobe-0811\g20\10-ltx-gprobe-g20-0811-s20260897.mp4, from the founder-approved beat-10 plate at
+    seed 20260897, rendered at guidance 2.0 with the climb-naming negative. It is
+    read beside the other two arms and beside the two clips already on the box
+    (10-ltx-r2g-plate-s20260897.mp4 at guidance 1.0 and
+    10-ltx-g20-plate-s20260897.mp4 at guidance 2.0, both on the OLD negative).
+    Two things to look for, both by eye on the frames: (1) DOES THE APEX STILL
+    CLIMB — does the stem visibly grow taller through the shot, as it has in every
+    round so far; (2) IS THE PICTURE INTACT — cel palette clean, no burnt contrast
+    or clipped saturation, no smearing or artefacting, horizon steady, nothing
+    invented, and the wanted motion (leaves trembling, grass swaying, motes
+    drifting) still present rather than frozen. This is the arm the decision turns on. Less climb than the 1.0 arm, with the picture intact, is the only result that makes negatives usable in the ep2 motion phase.
+why: >-
+    One variable against ep1-b10-guidance20-0811 and its control: guidance 2.0.
+    Same plate, same seed 20260897, same 65 frames, same 8 steps, same distilled
+    sigmas, same two-stage, same positive text, and the same climb-naming negative
+    in all three arms. Beat 10's apex climb is the only LTX defect here with a
+    measurement (181px, every round) and it has refused every positive rewrite, so
+    it is the one place a negative can be shown to bind or shown not to.
+est_minutes: 8   # the guidance-2.0 arm of this recipe measured 5m13s end to end on this box; CFG doubles per-step compute
+
+needs: [cuda, vram20, video-venv]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+payload:
+  # Byte-identical in all three arms. Written per-arm so each job stands alone.
+  C:\banyan-farm\ltx-gprobe-0811\g20\gprobe-prompt.txt: |-
+    2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. a locked-off tripod shot: the camera never moves, the sprout stays at exactly the same height in the frame with its leaf tips at the same level from the first frame to the last, the horizon of grass stays at the same height, the sprout stays the same size and in the same place, the composition is identical in every frame. within that fixed frame the sprout stands upright and rooted, stem straight and steady, and only these things move: its two small leaves tremble very slightly, the tall grass around it sways in a light breeze, dust motes drift through the warm hazy air, soft light shifts across the stem, living scene. Subject already in frame: no human, no person, no man, no woman, no boy, no girl, no hand, no face, one small sprout with two leaves on a thin upright stem, tall grass around it, warm hazy amber light.
+
+  C:\banyan-farm\ltx-gprobe-0811\g20\gprobe-negative.txt: |-
+    plant growing taller, stem lengthening, stem getting longer, sprout rising, seedling growing, subject drifting upward, plant getting bigger, time-lapse plant growth, leaf tips rising, wilting, drooping, bending over, falling over, collapsing, sagging, plant dying, human, person, man, woman, boy, girl, extra hand, extra arm, foot, face, crowd, animal, bird, insect, new object appearing, photorealism, 3D render look, text, photorealistic, photograph, live action, film still, 3D render, CGI, octane, scene change, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+
+steps:
+  - name: plate
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - -c
+      - |
+        import sys; sys.path.insert(0, r"C:\banyan-farm\banyan-city\pipeline")
+        from plate_prep import prepare_plate
+        out, rec = prepare_plate(
+            r"C:\banyan-farm\banyan-city\genomes\sapling\nodes\001-capability-inventory\stills\10-sense.png",
+            "704x1280", r"C:\banyan-farm\ltx-gprobe-0811\g20", "10")
+        print("plate", out); print(rec["plate_wxh"], rec["crop_policy"])
+  - name: encode
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\ltx_i2v.py
+      - --stage
+      - encode
+      - --embeds
+      - C:\banyan-farm\ltx-gprobe-0811\g20\gprobe-embeds.pt
+      - --prompt-file
+      - C:\banyan-farm\ltx-gprobe-0811\g20\gprobe-prompt.txt
+      - --negative-file
+      - C:\banyan-farm\ltx-gprobe-0811\g20\gprobe-negative.txt
+  - name: render
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\ltx_i2v.py
+      - --stage
+      - render
+      - --embeds
+      - C:\banyan-farm\ltx-gprobe-0811\g20\gprobe-embeds.pt
+      - --prompt-file
+      - C:\banyan-farm\ltx-gprobe-0811\g20\gprobe-prompt.txt
+      - --negative-file
+      - C:\banyan-farm\ltx-gprobe-0811\g20\gprobe-negative.txt
+      - --init
+      - C:\banyan-farm\ltx-gprobe-0811\g20\10-704x1280.png
+      - --out
+      - C:\banyan-farm\ltx-gprobe-0811\g20\10-ltx-gprobe-g20-0811-s20260897.mp4
+      - --size
+      - 704x1280
+      - --frames
+      - "65"
+      - --fps
+      - "24"
+      - --steps
+      - "8"
+      - --guidance
+      - "2.0"
+      - --distilled-sigmas
+      - --two-stage
+      - --seed
+      - "20260897"
+      - --beat
+      - "10"
+      - --task
+      - ltx-gprobe-g20-0811
+      - --worker
+      - rtx5090
+  - name: publish
+    allow_fail: true
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - -c
+      - |
+        import glob, hashlib, os, shutil
+        dst = "C:/banyan-farm/courier-box/farm-out/ltx-gprobe-g20-0811"
+        os.makedirs(dst, exist_ok=True)
+        src = sorted(glob.glob("C:/banyan-farm/ltx-gprobe-0811/g20/10-ltx-gprobe-g20-0811-s20260897.mp4*"))
+        lines = []
+        for f in src:
+            shutil.copy2(f, dst)
+            # Hash the COPY, not the original: what this records has to be the
+            # bytes that get committed, or the manifest attests to the wrong file.
+            c = os.path.join(dst, os.path.basename(f))
+            with open(c, "rb") as fh:
+                h = hashlib.sha256(fh.read()).hexdigest()
+            lines.append(h + "  " + os.path.basename(f))
+            print("   ", os.path.basename(f), h[:16])
+        # newline="\n" is load-bearing: Windows text mode rewrites \n to \r\n and
+        # every filename then carries a trailing \r that shasum -c cannot open.
+        with open(os.path.join(dst, "ltx-gprobe-g20-0811.sha256"), "w", newline="\n") as fh:
+            fh.write("\n".join(lines) + "\n")
+        print("published", len(src), "file(s) + manifest ->", dst)
+        # The clip and its §7.2 sidecar. Fewer means the render wrote less than
+        # it promised and the arm cannot be read against the other two.
+        raise SystemExit(0 if len(src) == 2 else 1)
+
+artifacts:
+  - C:\banyan-farm\ltx-gprobe-0811\g20\10-ltx-gprobe-g20-0811-s20260897.mp4
+  - C:\banyan-farm\ltx-gprobe-0811\g20\10-704x1280.png

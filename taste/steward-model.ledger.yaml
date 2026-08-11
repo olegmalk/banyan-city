@@ -8221,3 +8221,114 @@
   outcome: null
   miss_axis: null
   model_action: null
+- id: ltx-gprobe-guidance-0811
+  date: 2026-08-11
+  kind: prediction
+  subject: "LTX guidance probe, three arms on ep1 beat 10 — does a negative that
+    NAMES a defect bind once CFG is live (g2.0, g2.5), and what does the distilled
+    picture pay for it? A technical probe of a sampler argument, not a pick."
+  steward_provisional: true
+  pick: null
+  scores: {}
+  address_key: >-
+    Specs `pipeline/jobs/ltx-gprobe-g10-0811.yaml`, `-g20-`, `-g25-`, priorities
+    20/21/22, node 001-capability-inventory, beat 10, seed 20260897, 65 frames,
+    704x1280, 8 steps, distilled sigmas, two-stage. Outputs to
+    `C:\banyan-farm\ltx-gprobe-0811\g10|g20|g25\10-ltx-gprobe-*-s20260897.mp4`
+    with §7.2 sidecars, published to `farm-out/ltx-gprobe-g10|g20|g25/`. Read
+    against each other and against the two beat-10 clips already on the box,
+    `10-ltx-r2g-plate-s20260897.mp4` (g1.0) and `10-ltx-g20-plate-s20260897.mp4`
+    (g2.0, OLD negative).
+  no_predicted_verdict_line_on_purpose: >-
+    This record carries PREDICATES and no `predicted_verdict:`, the same shape as
+    `ep2-b15-goblin-simple-0811`, so it joins neither the PICK column nor the
+    REJECT column of the rolling hit rate. That is deliberate and is not an
+    omission: the founder is never asked to rule on this, so there is no founder
+    verdict for it to be scored against. Whoever scores next should leave it out
+    of the rate rather than hunt for a class to file it under.
+  what_was_already_true_before_queueing: >-
+    Two of the three things people assume are open here are already answered, and
+    the probe is deliberately built on top of them rather than repeating them.
+    (a) At guidance 1.0 the distilled path never evaluates the negative —
+    do_classifier_free_guidance = (guidance_scale > 1.0) or (audio_guidance_scale
+    > 1.0), ltx_i2v.py:1001-1008; commit e4fbb65 audited 26 of 38 LTX negations as
+    dead weight on that basis. (b) At guidance 2.0 the negative embeddings are
+    demonstrably READ: `ep1-b10-guidance20-0811` ran rc 0 on 2026-08-11 from the
+    same plate, seed, frames, steps and WORDING as its g1.0 control, differing in
+    `--guidance` and nothing else that reaches a pixel, and the two files on the
+    box are 146,127 and 162,733 bytes — one changed argument, a different render.
+    (c) Quality at 2.0 survived once already: review/provisional-v35/README.md:70
+    calls beat 07's r5-g20 "the only round where the negative prompt did anything
+    at all" and reports the picture "checked on the frames, it did not [break] —
+    clean cel palette, horizon holds, no invented object". So the open question is
+    narrower than "does CFG work": the bytes changing is not the banned thing
+    going away, and one beat surviving 2.0 is not a quality curve.
+  why_beat_10_is_the_discriminator: >-
+    It is the only LTX failure in this repo carrying a measurement.
+    review/SHEETS/index.html:45 — "The sprout apex climbs 181px in every round; no
+    wording binds it." review/provisional-v35/README.md:73 gives the mechanism
+    that makes it the right test: "its apex rises 181px over the shot, identical
+    in both rounds — and no framing wording can bind it, because it is the subject
+    being *drawn taller* inside a fixed frame, not a camera move (655d2c6)." The
+    POSITIVE channel has asked for the fix in four separate sentences of the same
+    prompt and been refused every round, which is exactly what makes it worth
+    pointing a NEGATIVE at. The dark-drift alternative was considered and dropped:
+    the bright-lighting work on this repo's goblin beats is SDXL still generation,
+    where CFG has always been live and negatives have always worked, and no LTX
+    clip here carries a measured brightness drift — choosing it would have meant
+    inventing the failure the probe is supposed to detect.
+  one_variable_and_it_was_verified_not_asserted: >-
+    The three specs are emitted from one template and then diffed after parsing:
+    the render argv lists are equal element-for-element except `--guidance`
+    (1.0/2.0/2.5) and the id-derived paths, and the positive and negative payload
+    files are byte-identical across all three arms. The negative carries two edits
+    from the parent's, both held constant in every arm: nine climb terms added at
+    the front, and five anti-stillness terms (`静态, 静止, frozen frame, still
+    image, no motion`) removed, because once CFG is live those push AWAY from
+    stillness on the one beat whose defect is unwanted movement. The positive is
+    untouched and contains none of the banned climb nouns.
+  predicted: >-
+    (1) THE 1.0 ARM SHOWS THE CLIMB. The apex rises visibly through the shot, as
+    it has in every prior beat-10 round. Falsified if the stem holds its height at
+    guidance 1.0.
+    (2) THE 1.0 ARM IS INDISTINGUISHABLE FROM THE EXISTING CONTROL
+    `10-ltx-r2g-plate-s20260897.mp4`. Its recipe differs from that clip in
+    negative TEXT ONLY, and the negative is supposed to be inert at 1.0. A visible
+    frame-level difference would falsify the inertness finding that e4fbb65's
+    audit of 26 negations rests on — and that would be a bigger result than
+    anything else these three arms produce.
+    (3) THE 2.0 ARM SHOWS LESS CLIMB THAN THE 1.0 ARM — reduced, not necessarily
+    eliminated: the apex travels visibly less far by the last frame. This is the
+    predicate the ep2 motion-phase decision turns on.
+    (4) THE 2.5 ARM SHOWS VISIBLE QUALITY DEGRADATION AGAINST THE 1.0 ARM — burnt
+    contrast, clipped saturation, smearing or artefacting — and the 2.0 ARM DOES
+    NOT. Split that way on purpose: beat 07 already came through 2.0 clean, so 2.0
+    is expected to hold and 2.5 is where I expect the recipe to start paying.
+    STATED RISK: dropping the five anti-stillness terms could take the 2.0 and 2.5
+    arms all the way to a frozen frame — the exact defect that killed the K recipe
+    ("literally just frozen frames"). That outcome is the negative binding too
+    hard rather than not at all, and the answer to it is a round that keeps the
+    climb terms and puts the anti-stillness terms back, not a retreat to g1.0.
+  what_a_miss_means: >-
+    If (3) fails — the climb is unchanged at both 2.0 and 2.5 while the picture
+    stays intact — then CFG activates the negative and naming a defect in it still
+    does not remove that defect, and the ep2 motion phase should stop writing
+    negatives on the LTX path altogether and treat the positive as the only
+    channel that has ever worked on this checkpoint. If (4) fails the other way
+    and 2.5 comes back clean, the usable guidance range is wider than assumed and
+    a later round can sweep higher. Either way the probe answers the question it
+    was queued for; there is no outcome here that costs a cycle.
+  what_this_does_not_do: >-
+    Picks nothing, ranks nothing, spends nothing ($0, idle box GPU, LTX-2.3
+    distilled under the LTX-2 Community License already local — no new licence).
+    No `gate:` key, clears nobody's gate, takes no canon filename, publishes
+    nothing to the site and touches no episode assembly; beat 10's entry in every
+    existing cut stays exactly what it already is. NO METRIC RANKS ANYTHING
+    (131e433) — three clips read by eye, side by side. The founder is not asked to
+    look at this: it is a probe of a sampler argument, and screening his eye on it
+    would spend the scarcest thing in the loop on a question a steward can read.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
