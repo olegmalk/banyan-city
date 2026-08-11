@@ -50,14 +50,19 @@
   since: '2026-08-12'
   kind: decision
   verdict_hint: inpaint the sapling in deliberately / composition LoRA / accept 2-of-4 seeds and pick
-- what: 'Episode 2 motion - the goblin moving, and THE SAPLING PROBLEM MAY BE SOLVED. Naming the sapling
-    in the motion prompt put one there (nobody had ever asked). Beat 19''s fig falls and bounces off his
-    head; beat 13 folds up exactly as written; beat 17 does its whole beat. Open: beat 04''s head balloons,
-    beat 14''s eyes are pink. Beat 20 is the last render'
+  resolved:
+    date: '2026-08-12'
+    verdict: 'my answer to "is a consistent goblin standing still a usable base?" is yes. (Recorded verbatim.
+      Consequence: standing stills are the approved base and the motion stage owns the action — and, on
+      today''s evidence, the scenery too: naming the sapling in the motion prompt put one there.)'
+- what: 'Episode 2 motion - THE COMPLETE SET, 12 clips. The sapling problem is solved at this stage: naming
+    it in the motion prompt puts one there (nobody had ever written the word). Beat 19''s fig falls and
+    bounces off his head, beat 13 folds up exactly as written, beat 17 does its whole beat. Open faults:
+    beat 04''s head balloons, beat 14''s eyes go pink, beat 20 raises its arms too far'
   url: /review/ep2-picks/motion-0812
   since: '2026-08-12'
   kind: clip
-  verdict_hint: is a goblin who acts but has no sapling worth cutting / hold until the staging is solved
+  verdict_hint: which of these are cuttable as-is / what to fix first
 - what: Episode 1 scene 6 - the one shot in the PUBLISHED episode that is not yours. You refused that
     round flat ("none of the beat 6 images will work") and named two ways out, tall grass or no ground;
     both are now drawn, sixteen frames on one sheet

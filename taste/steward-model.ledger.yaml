@@ -13066,3 +13066,67 @@
     And the trees are a background treeline rather than the sapling the fig fell from, so
     the causal link between stem and fig is not on screen.
   outcome: null
+
+- id: ep2-founder-verdict-standing-base-0812
+  kind: founder_verdict
+  date: 2026-08-12
+  founder_verdict_verbatim: >-
+    'my answer to "is a consistent goblin standing still a usable base?" is yes.'
+  what_it_rules: >-
+    The standing character-sheet stills ARE the approved base. The stills lane's wall —
+    needs-founder §5, "as configured this makes a consistent character and a portrait of
+    him, it does not make a beat" — is resolved not by fixing the stills but by accepting
+    them and moving the blocking to this stage. Motion owns the action, and on today's
+    evidence it owns the scenery too.
+  scored_against_my_own_position: >-
+    I argued for the opposite at the start of the day. My Phase-1 rule was "identity AND
+    staging", I failed nine of ten beats on it, and I refused to animate them. The lead
+    overrode that rule and was right: the correct response to a still that will not stage
+    the beat was to ask the NEXT stage to stage it, not to stop. Had my rule stood, none of
+    today's clips would exist.
+  what_i_got_right_inside_being_wrong: >-
+    Refusing to animate nine beats blind, and running the b15 probe as ONE sample before a
+    wave. The probe is what turned his open question into a rendered answer.
+  consequence: >-
+    The named-object re-runs of the sapling-blocked beats are ungated. Four queued.
+  outcome: resolved — recorded and acted on the same hour.
+
+- id: ep2-b15-sapling-r2-0812-scored
+  kind: scoring
+  date: 2026-08-12
+  scores: ep2-b15-sapling-r2-0812
+  verdict: HIT. The sapling is a plant, not scaffolding with leaves on it.
+  predicates_observed: >-
+    one clean sapling beside him with no tripod, no stake, no three-legged stand HIT — a
+    slender bare stem running down into the ground with a leafy top; he tips his head back,
+    looks up and talks HIT; same goblin HIT; camera locked HIT. The named failure mode —
+    "if removing the tripod also removes the sapling, then r1 drew scaffolding with leaves"
+    — DID NOT OCCUR.
+  what_it_settles: >-
+    The five sapling-blocked beats are NOT waiting on the founder's still-side tool choice.
+    The stills cannot place a sapling next to him under a single-figure IP-adapter; this
+    stage will, for the price of naming it. Combined with his ruling that the standing base
+    is acceptable, the re-runs are ungated and four are queued.
+  remaining_refinements_not_faults: >-
+    The sapling is sparse — a thin stalk with a few leaves rather than the show's two big
+    cotyledon leaves — and it stands at his shoulder rather than over him. Both are wording,
+    not limits.
+
+- id: ep2-b20-motion-0812-scored
+  kind: scoring
+  date: 2026-08-12
+  scores: ep2-b20-motion-0812
+  verdict: PARTIAL — the action arrives and then overshoots.
+  observed: >-
+    A DARK FIG APPEARS IN HIS CUPPED HANDS at frame 18 out of empty hands at frame 0, and he
+    raises it: chest height by 27, to his face by 36, over his head by 54. "He picks the fig
+    up in both hands" is there. What is wrong is the end of the gesture — by frames 54-63 his
+    arms are straight overhead, which reads as surrender or celebration rather than holding
+    something out as evidence, and the face distorts behind the raised arms. No bare branch
+    to look up at, which is expected: nothing named one.
+  the_tally_it_extends: >-
+    NAMED OBJECTS HAVE NOW APPEARED 4 OF 4 — the sapling twice, beat 19's falling fig, and
+    this fig. Four is still a small denominator and I am writing it as four. But every object
+    this lane has asked for by name has been drawn, and every object it assumed the still
+    would provide was absent.
+  outcome: null

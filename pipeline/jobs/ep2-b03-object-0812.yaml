@@ -1,0 +1,138 @@
+# NAMED-OBJECT RE-RUN, 2026-08-12. The sapling is put in the SENTENCE this time.
+#
+# WHY THIS EXISTS: five beats of this episode are about the sapling and no clip had ever
+# contained one. I had been reporting that as a model limit. Then I grepped my own prompts
+# and the word `sapling` appeared in NONE of the thirteen I had written -- I had filed the
+# sapling under the stills lane's job and only ever described the goblin's movement. The
+# absence was mine.
+#
+# TWO SAMPLES SETTLED IT. Naming the sapling on beat 15 produced ONE readable sapling, not
+# the bed of generic seedlings that was the pre-registered failure mode; the r2 with the
+# tripod wording removed kept the plant and lost the scaffolding, so it is a plant and not
+# a prop with leaves on it. Named objects have now appeared 3 of 3 -- that sapling twice
+# and beat 19's falling fig, which travelled a whole trajectory.
+#
+# AND THE FOUNDER HAS RULED THE BASE ACCEPTABLE: "my answer to 'is a consistent goblin
+# standing still a usable base?' is yes." So standing stills are the approved base and the
+# action -- and now the scenery -- belong to this stage.
+#
+# THE RECIPE IS THE PROVEN ONE, unchanged: static locked framing with no camera hardware
+# named, tripod/camera/equipment/stool/stake/plant-support banned (3-of-5 drew a tripod
+# when the phrase was present, 0-of-6 without it), guidance 2.0, 121 frames or the beat's
+# own shorter length, publish path correctly named for once.
+#
+# NOT IN THIS SET: beat 02. Its identity fails at the STILL -- fangs, a dog-shaped
+# creature, duplicated goblins -- and naming a sapling cannot fix a frame that is not him.
+# It needs a new init from the stills lane before motion is worth spending on it.
+id: ep2-b03-object-0812
+task: ep2-b03-object-0812
+node: 002b-first-citizen
+beat: 3
+runner: box
+priority: 19
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: ep2 motion lane, 2026-08-12
+consumer: 'review/ep2-picks/motion-0812.html -- beat 3 re-run with its own object named, on the route two samples proved. Screened as a set.'
+success: 'A 704x1280 mp4 in which ONE readable sapling stands in frame with him -- a single plant, not a bed of seedlings and not a prop on a stand -- while he performs beat 3''s action and stays the same goblin with the camera locked. The failure worth reporting is the sapling appearing but the ACTION collapsing, which would mean the prompt can hold a character or a scene but not both at once.'
+why: The sapling was missing because nobody wrote the word; two samples proved naming it works, and the founder has approved the standing base this builds on.
+est_minutes: 6
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b03-object-0812\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"--out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw, nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b03-object-0812\b03-motion-prompt.txt: '2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: a small goblin standing in a field under morning light — pale yellow-green skin, a bald domed head, long pointed ears, red eyes, a patched hooded coat. A SMALL SAPLING STANDS IN FRONT OF HIM — one slender trunk no thicker than his arm with a few leaves at the top, far too narrow to hide anybody. HE CROUCHES DOWN BEHIND THAT SAPLING and shrinks himself narrow to hide behind it, leaning his head out to one side to peer past it and then pulling it back in. Both he and the little tree stay fully in frame so the size mismatch reads. He stays in the same place in frame and the camera does not move. Soft morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.'
+  C:\banyan-farm\ep2-b03-object-0812\b03-negative.txt: camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, stool, stake, plant support, face morphing, distorted face, warped face, changing facial features, extra eyes, extra ears, hair, walking out of frame, leaving the frame, drifting sideways, moving to a different spot, second character, duplicate character, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text
+  C:\banyan-farm\ep2-b03-object-0812\b03-jobs-encode.json: "[{\"beat\": 4,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b03-object-0812\\\\b03-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\\ep2-b03-object-0812\\\\b03-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b03-object-0812\\\\b03-negative.txt\"}]"
+  C:\banyan-farm\ep2-b03-object-0812\b03-jobs-render.json: "[{\"beat\": 4,\n  \"seed\": 20260806,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b03-object-0812\\\\b03-embeds.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\\ep2-b03-object-0812\\\\b03-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b03-object-0812\\\\03-bad-cover-LTX-object-0812.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b03-object-0812\cover_crop.py
+  - --src
+  - C:\banyan-farm\goblin-ipa-0812\out-b03-frozen\03-bad-cover-ipa-r0-w015-s1.png
+  - --sha256
+  - 2139ee6b4f89a8e68b13ef39735025b028bc1209258e22912cfbc404df432ef2
+  - --out
+  - C:\banyan-farm\ep2-b03-object-0812\b03-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b03-object-0812\b03-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b03-object-0812\b03-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b03-object-0812
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b03-object-0812\bench-b03-object.jsonl
+  - --bench-label
+  - ep2-b03-object-0812
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b03-object"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/ep2-b03-object-0812/03-bad-cover-LTX-object-0812.mp4*")
+                 + glob.glob("C:/banyan-farm/ep2-b03-object-0812/b03-init-704x1280.png")
+                 + glob.glob("C:/banyan-farm/ep2-b03-object-0812/bench-b03-object.jsonl"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b03-object-0812.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 2 else 1)
+artifacts:
+- C:\banyan-farm\ep2-b03-object-0812\03-bad-cover-LTX-object-0812.mp4
+- C:\banyan-farm\ep2-b03-object-0812\b03-init-704x1280.png
