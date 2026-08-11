@@ -404,3 +404,4 @@
 11:21:42Z DONE task=ep2-b15-goblin-simple-0811-1786447234 rc=0 artifacts=8
 11:22:12Z STARTED task=ep1-b02-121f-typing-0811-1786447324 attempt=1 on box-runner
 11:27:25Z DONE task=ep1-b02-121f-typing-0811-1786447324 rc=0 artifacts=1
+11:27:28Z box-runner idle ready=0 failed=1
