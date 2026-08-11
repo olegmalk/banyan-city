@@ -507,3 +507,4 @@
 17:41:04Z STARTED task=ep2-b05-warmfield-0811-1786470001 attempt=1 on box-runner
 17:41:55Z DONE task=ep2-b05-warmfield-0811-1786470001 rc=0 artifacts=8
 17:42:52Z STARTED task=ltx-gprobe-g10-0811-1786470159 attempt=1 on box-runner
+17:47:38Z DONE task=ltx-gprobe-g10-0811-1786470159 rc=0 artifacts=2
