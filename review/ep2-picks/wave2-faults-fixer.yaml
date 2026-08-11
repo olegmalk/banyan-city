@@ -437,3 +437,33 @@ beats:
     a brown tunic and a round soft body; they reinforce it. Four tokens were spare
     in the negative, so nothing is evicted.
   r2: authored_b10_idfix_r2  (spec ep2-b10-idfix-r2-0812, out-b10-idfix-r2)
+
+- beat: 11
+  slug: they-leave
+  variant_rendered: authored_b11_idfix
+  positive_tokens: 66
+  verdict: clean
+  detail: >-
+    THE BEST BEAT IN THE WAVE AND IT GETS NO r2. Two bald men in brown 4/4, no
+    armor 4/4, an empty sunlit field 4/4, wide static shot 4/4, long morning
+    shadows 4/4. s1 and s2 deliver the beat exactly as written — both guards
+    walking away from camera across the field, one gesturing, growing small. s0
+    turns the far figure back toward camera and s3 has them facing each other
+    instead of leaving, so the ACTION lands in 2 of 4.
+  why_not_faulty: >-
+    Two of four frames are the shot. The founder picks from four; a beat that
+    hands him two usable frames has not failed, it has given him a choice. Firing
+    an r2 here would be manufacturing work on the wave's healthiest beat while
+    beats 09 and 10 are drawing severed heads, and it would spend GPU time that
+    the broken beats have a better claim on.
+  corroborates_the_adjacency: >-
+    Beat 11's positive ALSO says "two round bald guard men", the same `round`
+    against `bald` that beats 09 and 10 fail on — and beat 11's heads are FINE.
+    The difference is shot size: beat 11 is a wide, beats 09 and 10 are close. So
+    the adjacency does its damage when the skull is large in frame. That sharpens
+    the mechanism rather than contradicting it, and it is why beat 11 needs no fix
+    even though it carries the same wording.
+  for_the_founder: >-
+    If he wants 4/4 on the leaving action rather than 2/4, the lever is the
+    positive ("walk away from camera" competing with "gesturing at each other",
+    which pulls them face to face). Not attempted — the beat is usable as it is.
