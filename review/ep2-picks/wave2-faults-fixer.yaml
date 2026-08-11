@@ -527,3 +527,124 @@ beats:
     the cleanest propagation in the wave — every other fault on this beat has
     already been fixed by the lane before it, so the round tests exactly one thing.
   r2: authored_b14_idfix_r2  (spec ep2-b14-idfix-r2-0812, out-b14-idfix-r2)
+
+- beat: 15
+  slug: good-listener
+  variant_rendered: authored_b15_idfix
+  frames_read: all four
+  verdict: faulty
+  faults:
+  - name: pale and stitched crown
+    count: 4/4
+    detail: Cream dome with X-stitch marks on the crown or forehead in every frame; s3 carries two red stitch marks.
+  - name: the sapling is a swarm of floating leaves
+    count: 4/4
+    detail: >-
+      The sentence asks for "a tiny sapling standing tall beside him, its two
+      oversized leaves hanging above him". Every frame deletes the STEM and leaves
+      giant leaves floating free in the sky, unattached to anything. Not two
+      leaves either — s0 and s3 have four or more drifting through frame.
+  - name: his face is turned away
+    count: 1/4 (s2)
+    detail: s2 shoots him from directly behind against a positive that says "his face visible".
+  - name: he never tips his head back to talk up at it
+    count: 0/4
+    detail: The beat's action. Nobody is talking to a plant in any frame.
+  lever: >-
+    The PROVEN ban only: `no scars, no stitched skin`. The floating leaves are the
+    sapling-adjacency limit in a new costume and go to the founder rather than to
+    a second guess — this beat has never had an r2 on it, but the lane has now
+    spent its two attempts (beats 02 and 03) on that exact limit and neither fixed
+    it, so a third would be spending GPU to re-learn a known answer.
+  r2: authored_b15_idfix_r2  (spec ep2-b15-idfix-r2-0812, out-b15-idfix-r2)
+
+- beat: 17
+  slug: goodbye
+  variant_rendered: authored_b17_refresh
+  frames_read: all four
+  verdict: faulty
+  faults:
+  - name: pale and stitched crown
+    count: 4/4
+    detail: >-
+      s1 is the clearest — a full vertical baseball-seam suture down the crown
+      plus X stitch marks on both cheeks. s0, s2 and s3 carry the cream dome with
+      smaller X marks.
+  - name: THE VERB BECAME A PROP
+    count: 3/4
+    detail: >-
+      The sentence says he "brushes dust off his patchwork cloak". The model reads
+      `brushes` AS A NOUN and hands him one: s0 gives him a long brush-tipped pole,
+      s3 an actual BROOM which he is sweeping the grass with, plus a green
+      magnifying lens. s2 adds a camera lens to his belt. This is a clean lexical
+      fault with a clean lexical fix and it has nothing to do with the model's
+      competence — the prompt is ambiguous English.
+  - name: the sapling is uprooted and carried
+    count: 3/4
+    detail: >-
+      "turns away from a tiny sapling ROOTED IN THE GRASS" — s1 and s2 have him
+      holding a cut sprig on a stick, s0 a sprig on the pole. Note the negative
+      ALREADY sends `uprooted plant` and it did not bind.
+  lever: >-
+    Two, each separately visible. (1) The PROVEN skin ban. (2) The verb: `brushes
+    dust off` becomes `wipes dust off`, which cannot be read as a noun. That is a
+    one-word swap, so the sentence does not grow.
+  r2: authored_b17_idfix_r2  (spec ep2-b17-idfix-r2-0812, out-b17-idfix-r2)
+
+- beat: 19
+  slug: the-drop
+  variant_rendered: authored_b19_idfix
+  frames_read: s0 and s2 only (recorded honestly — the counts below are out of the two read, not out of four)
+  verdict: faulty
+  faults:
+  - name: pale and stitched crown
+    count: 2/2 read
+    detail: s0 has a full vertical suture seam down the middle of the skull; s2 a large pale dome.
+  - name: no fig
+    count: 0/2 read
+    detail: >-
+      The beat IS the fig dropping and bouncing off his head. Neither frame read
+      contains a fig at all. This is the founder's own approval condition on the
+      node — "we need to make SURE the fig growing on the sapling is mentioned" —
+      so its absence matters more here than a normal staging miss.
+  - name: a tree growing out of his skull
+    count: 1/2 read (s2)
+    detail: >-
+      s2 sprouts a small leafy TREE from the top of his head. The plant-fusion
+      tier is SENT on this beat and did not stop it — `leaf on head`, `flower on
+      head`, `head wreath`, `plant hair`, `alraune` are all in the sent negative.
+      Another instance of things landing on the skull, and another ban that did
+      not bind there.
+  lever: >-
+    The PROVEN skin ban only. The missing fig is founder-facing (it touches his
+    approval condition) and the tree-on-head is the same skull-magnet behaviour the
+    whole wave is documenting; neither is worth guessing at in the same round that
+    carries a measured fix.
+  r2: authored_b19_idfix_r2  (spec ep2-b19-idfix-r2-0812, out-b19-idfix-r2)
+
+- beat: 20
+  slug: evidence
+  variant_rendered: authored_b20_refresh
+  frames_read: s0 and s2 only (counts are out of the two read)
+  verdict: faulty
+  what_lands: >-
+    THE BEST GOBLIN BEAT OF THE WAVE ON CONTENT. Both frames read give him a ripe
+    fig held in both hands in front of him, which is exactly the beat; s0 also puts
+    a BARE BRANCH above him, which is the other half of the shot. Green skin, bald,
+    patchwork cloak, sunny field all present.
+  faults:
+  - name: pale cream dome over the skull
+    count: 2/2 read
+    detail: >-
+      Large pale crown over a green face in both. No sutures visible here, which is
+      itself informative — this beat shows the pale half of the fault without the
+      stitched half.
+  - name: the head is inflated toward chibi
+    count: 2/2 read
+    detail: s2's skull takes up most of the frame. Recorded, not fixed.
+  lever: >-
+    The PROVEN skin ban. Beat 02 showed the ban removes the pale dome AND the
+    sutures together; beat 20 is the cleanest test of whether it also removes a
+    pale dome that arrives WITHOUT sutures. If it does, "one fault, not two" is
+    confirmed from the other direction.
+  r2: authored_b20_idfix_r2  (spec ep2-b20-idfix-r2-0812, out-b20-idfix-r2)
