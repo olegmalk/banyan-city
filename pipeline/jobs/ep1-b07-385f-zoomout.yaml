@@ -1,0 +1,163 @@
+# ep1 beat 07 "zero-0-moving-parts" — ASKING FOR THE CAMERA MOVE IN WORDS.
+# ONE SAMPLE. The VARIABLE half of a two-cell pair; ep1-b07-385f-control.yaml is
+# the control and differs from this file in exactly one thing: the prompt.
+#
+# THE QUESTION. Roman, 2026-08-10 ~23:50: "the zoom out is great and its exactly
+# the kind of thing we need." That move arrived UNCOMMANDED — b04-prompt.txt, the
+# file its embeds came from, says "framing locked, no zoom, no push-in, no camera
+# rise" and the model overrode all three at 385 frames. A move we cannot ask for
+# is a move we cannot put on the other fourteen beats. So: can this recipe be
+# TOLD to pull back, or does it only drift?
+#
+# THE ONE VARIABLE, against ep1-b07-385f-control-0811. Same beat, same plate
+# (07-704x1280.png), same seed 20260838, same negative file byte-for-byte
+# (b07-negative.txt — untouched, and it carries no camera terms to argue with),
+# same 385 frames, same fps, guidance, distilled sigmas, two-stage, image-crf,
+# sequential offload and script. The POSITIVE PROMPT is the only difference, so a
+# separate embeds file is written and the encode stage runs first.
+#
+# THE EDIT, and it is confined to the camera clause of b07-prompt.txt:
+#   was:  "small ambient motion only, everything holds its position, framing
+#          locked, no zoom, no push-in, no camera rise, subject stays the same
+#          size and place in frame, living scene."
+#   now:  "small ambient motion only, the scene keeps its shape and nothing in it
+#          changes, the camera pulls steadily back in one slow continuous zoom out
+#          across the whole shot, revealing more of the field and sky as it goes,
+#          no push-in, no camera rise, no pan, no cut, living scene."
+# The ambient-motion sentence and the "Subject already in frame" tail are
+# untouched — this beat's content is not being reopened, only how the frame moves.
+#
+# WHY BEAT 07 AND NOT BEAT 04 FOR THIS TEST. Beat 07 is the beat that NEEDS it.
+# It is documented as having zero moving parts, every candidate on the motion
+# sheet is effectively static, and it has no live candidate on the pick list. A
+# camera move is the only motion available to a shot with nothing in it that can
+# act. Beat 04 already has its move and its own separate job tonight
+# (ep1-b04-385f-hands-still) fixing the defect he actually named there.
+#
+# WHY BOTH CELLS AND NOT JUST THIS ONE. Rendering only the commanded version and
+# seeing a pull-back would prove nothing: the control is what separates "the words
+# worked" from "385 frames does this to any plate". Two cells, one beat, one
+# sample each, two distinct questions — not a sweep. Nothing scales off either.
+#
+# SAME LENGTH CAVEAT AS THE CONTROL. Beat 07's voice line is 5.73s and
+# render_t3.fit_duration trims a longer clip to the slot, so a 16.04s pull-back
+# would reach the episode only as its first ~6 seconds. This job establishes
+# whether the move is commandable. Re-cutting it to 153 frames afterwards is
+# cheap and is deliberately not pre-committed here.
+#
+# NO METRIC. The flow metric is disqualified on this series (131e433 — it scored
+# highest on the beat where the plant fell over). Read by eye, against the control
+# clip rendered from the same seed and plate.
+
+id: ep1-b07-385f-zoomout-0811
+task: ep1-b07-385f-zoomout-0811
+node: 001-capability-inventory
+beat: 7
+runner: box
+needs_gpu: true
+priority: 22
+max_attempts: 1
+sample: true
+owner: refill lane, 2026-08-11
+
+consumer: >-
+  item 3 on /review/waiting — the six-beat motion pick list, where beat 07 has no
+  live candidate. This is the second candidate for that slot and the one that
+  decides whether the camera move Roman blessed is a tool the lane can aim or an
+  accident it can only wait for. If the words work, every static beat in the
+  episode has a motion answer that costs one clause of prompt.
+
+success: >-
+  A 704x1280 mp4 at
+  C:\banyan-farm\v34-r2\07-zero-0-moving-parts-LTX-385f-zoomout.mp4, 385 decoded
+  frames, played beside the control clip from the same seed. The OBSERVATION is
+  whether the framing widens over the clip and whether it does so more than the
+  control does. A clip identical to the control is a real finding — it means the
+  prompt has no camera authority in this recipe — and gets reported as one rather
+  than retried with stronger wording.
+
+why: >-
+  The only motion result the founder has ever praised was uncommanded, and a move
+  that cannot be requested cannot be used on any other beat.
+
+est_minutes: 12   # encode ~2min (Gemma load dominates), render ~7min at 385
+                  # frames by the beat-04 measurement. Not a stall under 12.
+needs: [cuda, vram20, video-venv]
+
+payload:
+  # The only changed bytes in this job: the camera clause. Everything before
+  # "small ambient motion only" and everything from "Subject already in frame"
+  # onward is identical to b07-prompt.txt.
+  C:\banyan-farm\v34-r2\b07-zoomout-prompt.txt: |-
+    2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. the field of grass ripples in slow waves across the whole frame, the clouds drift very slowly and keep their shapes, warm sunset light shifts gently over the field. small ambient motion only, the scene keeps its shape and nothing in it changes, the camera pulls steadily back in one slow continuous zoom out across the whole shot, revealing more of the field and sky as it goes, no push-in, no camera rise, no pan, no cut, living scene. Subject already in frame: no human, no person, no man, no woman, no boy, no girl, no hand, no face, a wide open grass field at sunset, low sun on the horizon, a broad sky with soft clouds, no buildings.
+
+  # negative_file points at the UNCHANGED b07-negative.txt already on the box —
+  # not restated, so the "静态, 静止" bytes are never round-tripped through scp
+  # and a cp1252 console.
+  C:\banyan-farm\v34-r2\b07-zoomout-jobs-encode.json: |-
+    [{"beat": 7,
+      "embeds": "C:\\banyan-farm\\v34-r2\\b07-zoomout-embeds.pt",
+      "prompt_file": "C:\\banyan-farm\\v34-r2\\b07-zoomout-prompt.txt",
+      "negative_file": "C:\\banyan-farm\\v34-r2\\b07-negative.txt"}]
+
+  C:\banyan-farm\v34-r2\b07-zoomout-jobs-render-385.json: |-
+    [{"beat": 7,
+      "seed": 20260838,
+      "embeds": "C:\\banyan-farm\\v34-r2\\b07-zoomout-embeds.pt",
+      "init": "C:\\banyan-farm\\v34-r2\\07-704x1280.png",
+      "out": "C:\\banyan-farm\\v34-r2\\07-zero-0-moving-parts-LTX-385f-zoomout.mp4"}]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  - name: encode
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+      - --stage
+      - encode
+      - --jobs
+      - C:\banyan-farm\v34-r2\b07-zoomout-jobs-encode.json
+  - name: render
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+      - --stage
+      - render
+      - --jobs
+      - C:\banyan-farm\v34-r2\b07-zoomout-jobs-render-385.json
+      - --size
+      - 704x1280
+      - --frames
+      - "385"
+      - --fps
+      - "24"
+      - --guidance
+      - "1.0"
+      - --distilled-sigmas
+      - --two-stage
+      - --image-crf
+      - "33"
+      - --offload
+      - sequential
+      - --mode
+      - production
+      - --task
+      - ep1-b07-385f-zoomout-0811
+      - --worker
+      - rtx5090
+      - --bench-jsonl
+      - C:\banyan-farm\v34-r2\bench-b07-385f-zoomout.jsonl
+      - --bench-label
+      - b07-385f-zoomout
+
+artifacts:
+  - C:\banyan-farm\v34-r2\07-zero-0-moving-parts-LTX-385f-zoomout.mp4

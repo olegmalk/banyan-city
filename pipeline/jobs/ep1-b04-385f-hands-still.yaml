@@ -1,0 +1,163 @@
+# ep1 beat 04 "the-fall" — 385 FRAMES AGAIN, ONE WORD-LEVEL CHANGE. ONE SAMPLE.
+#
+# THE VERDICT THIS ANSWERS. Roman, 2026-08-10 ~23:50, verbatim (recorded in
+# taste/steward-model.ledger.yaml, record `ep1-ltx-16s-founder-verdict-0810`):
+# "the ltx 04 clip is literally his hand repeatedly moving, although the zoom out
+# is great and its exactly the kind of thing we need."
+# Two halves pointing opposite ways. The CAMERA MOVE is accepted in the strongest
+# terms he has given any motion result. The SUBJECT MOTION is rejected as a loop —
+# one gesture cycling for sixteen seconds.
+#
+# WHAT THE PROMPT ACTUALLY SAID, because this is where the plan has to be honest.
+# `b04-prompt.txt` (the file the praised clip's embeds were encoded from) contains
+# BOTH of these clauses:
+#     "the fingers twitch once"
+#     "framing locked, no zoom, no push-in, no camera rise"
+# So the loop he rejected traces to a real instruction — a single twitch, which
+# the model cycled over 385 frames — and THE ZOOM-OUT HE PRAISED WAS NEVER ASKED
+# FOR. It appeared in defiance of three anti-camera-move terms. There is no
+# "camera instruction that produced the zoom-out" to preserve; the only thing that
+# distinguishes the praised clip from the earlier 65-frame render of the same
+# plate, same seed and same embeds (04-the-fall-LTX-r2.mp4) is --frames.
+#
+# THEREFORE, ONE VARIABLE AND IT IS THE FINGER CLAUSE. Everything else is held at
+# the values of the clip he ruled on, INCLUDING the anti-zoom terms, precisely
+# because they were in force when the move he liked appeared. Changing them here
+# would confound the loop fix with the camera question, which is what the two
+# beat-07 jobs queued beside this one exist to ask separately.
+#
+#   b04-prompt.txt  : "..., the fingers twitch once, dim light shifts..."
+#   this job        : "..., the hands stay completely still and do not move, dim
+#                      light shifts..."
+#
+# Same plate (04-704x1280.png), same seed 20260835, same negative file byte-for-
+# byte (b04-negative.txt, untouched — it already carries "hand picking up phone"),
+# same 385 frames, same two-stage distilled recipe, same sequential offload, same
+# script. The positive prompt is the only thing that differs, so a new embeds file
+# is required and the encode stage runs first — Gemma is ~88s of load and the
+# render that follows measured 6m47s wall at this frame count on 2026-08-10.
+#
+# WHY NOT ALSO ADD NEGATIVE TERMS. "fingers twitching, repeated gesture, looping
+# motion" is the obvious second move and it is deliberately NOT made. Two changes
+# in one render means a result that cannot be attributed. If a positive assertion
+# of stillness is not enough, the negative is the next single variable.
+#
+# WHAT THIS DOES NOT DECIDE. Whether the clip ships is R4's. Nothing scales off
+# this: no other beat is re-rendered off this result, and the flow metric is not
+# run — it is disqualified on this series (131e433: it scored highest on the beat
+# where the plant fell over). Judged by eye on a frame strip.
+
+id: ep1-b04-385f-hands-still-0811
+task: ep1-b04-385f-hands-still-0811
+node: 001-capability-inventory
+beat: 4
+runner: box
+needs_gpu: true
+priority: 18
+max_attempts: 1
+sample: true
+owner: refill lane, 2026-08-11
+
+consumer: >-
+  the episode-1 v35 cut, beat 04. Roman wants that beat finished and has named
+  exactly one defect in the current 385-frame clip: the hand cycling. If the
+  ambient-only motion holds and the pull-back survives without the twitch clause,
+  this file replaces 04-the-fall-LTX-385f.mp4 as the beat-04 candidate. If the
+  clip goes dead instead, that is the answer that the twitch was carrying the
+  whole shot and the beat needs a different motion source — either way it is a
+  fact he gets in the morning rather than a guess.
+
+success: >-
+  A 704x1280 mp4 at C:\banyan-farm\v34-r2\04-the-fall-LTX-385f-handsstill.mp4,
+  385 decoded frames, in which the hands do NOT cycle a gesture. Whether the
+  zoom-out survives the edit is the second thing to look at and is NOT a failure
+  condition — the camera move was never prompted, so it may or may not recur.
+  Read by eye on a frame strip against 04-the-fall-LTX-385f.mp4 sitting beside
+  it. No metric is run.
+
+why: >-
+  One clause, changed for a reason he stated in his own words, on the only beat
+  he has given a positive motion verdict to.
+
+est_minutes: 12   # encode ~2min (Gemma load dominates), render 6m47s measured at
+                  # 385 frames on 2026-08-10. A 12-minute run is not a stall.
+needs: [cuda, vram20, video-venv]
+
+payload:
+  # The ONLY changed bytes in this whole job. Diff against b04-prompt.txt is the
+  # one clause named in the header.
+  C:\banyan-farm\v34-r2\b04-handsstill-prompt.txt: |-
+    2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. the scattered sheets of paper settle and their edges lift very slightly, the fallen phone's screen glows and flickers faintly, the hands stay completely still and do not move, dim light shifts across the floor. small ambient motion only, everything holds its position, framing locked, no zoom, no push-in, no camera rise, subject stays the same size and place in frame, living scene. Subject already in frame: no second person, no crowd, no face, one pair of hands on scattered papers on a dark floor, a phone lying screen-up nearby, deep blue night light.
+
+  # negative_file points at the UNCHANGED b04-negative.txt already on the box.
+  # It is not restated here: re-shipping it through scp would risk the "静态,
+  # 静止" bytes and change something nobody asked to change.
+  C:\banyan-farm\v34-r2\b04-handsstill-jobs-encode.json: |-
+    [{"beat": 4,
+      "embeds": "C:\\banyan-farm\\v34-r2\\b04-handsstill-embeds.pt",
+      "prompt_file": "C:\\banyan-farm\\v34-r2\\b04-handsstill-prompt.txt",
+      "negative_file": "C:\\banyan-farm\\v34-r2\\b04-negative.txt"}]
+
+  C:\banyan-farm\v34-r2\b04-handsstill-jobs-render-385.json: |-
+    [{"beat": 4,
+      "seed": 20260835,
+      "embeds": "C:\\banyan-farm\\v34-r2\\b04-handsstill-embeds.pt",
+      "init": "C:\\banyan-farm\\v34-r2\\04-704x1280.png",
+      "out": "C:\\banyan-farm\\v34-r2\\04-the-fall-LTX-385f-handsstill.mp4"}]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  # No plate step: 04-704x1280.png was written by prepare_plate in the r2 round
+  # and is the same file the praised clip conditioned on.
+  - name: encode
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+      - --stage
+      - encode
+      - --jobs
+      - C:\banyan-farm\v34-r2\b04-handsstill-jobs-encode.json
+  - name: render
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+      - --stage
+      - render
+      - --jobs
+      - C:\banyan-farm\v34-r2\b04-handsstill-jobs-render-385.json
+      - --size
+      - 704x1280
+      - --frames
+      - "385"
+      - --fps
+      - "24"
+      - --guidance
+      - "1.0"
+      - --distilled-sigmas
+      - --two-stage
+      - --image-crf
+      - "33"
+      - --offload
+      - sequential
+      - --mode
+      - production
+      - --task
+      - ep1-b04-385f-hands-still-0811
+      - --worker
+      - rtx5090
+      - --bench-jsonl
+      - C:\banyan-farm\v34-r2\bench-b04-385f-handsstill.jsonl
+      - --bench-label
+      - b04-385f-hands-still
+
+artifacts:
+  - C:\banyan-farm\v34-r2\04-the-fall-LTX-385f-handsstill.mp4

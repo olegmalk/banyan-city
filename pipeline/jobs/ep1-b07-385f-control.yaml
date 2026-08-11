@@ -1,0 +1,139 @@
+# ep1 beat 07 "zero-0-moving-parts" — 385 FRAMES ON THE FROZEN BEAT. ONE SAMPLE.
+# THE CONTROL HALF of a two-cell pair; ep1-b07-385f-zoomout.yaml is the variable.
+#
+# THE PROBLEM. Beat 07 is the beat with nothing in it. review/SHEETS/MOTION-beat07
+# and the retest set have it as effectively static in every candidate — a grass
+# field and a sky, no figure, no prop, nothing that can act. It has no live
+# candidate on the motion pick list for that reason.
+#
+# THE OPENING. Roman, 2026-08-10 ~23:50, on the 385-frame beat-04 clip: "the zoom
+# out is great and its exactly the kind of thing we need." A camera move is the
+# one kind of motion a beat with no moving parts can carry.
+#
+# WHAT ACTUALLY PRODUCED THAT MOVE, stated before it is copied. NOTHING IN THE
+# PROMPT DID. b04-prompt.txt contains "framing locked, no zoom, no push-in, no
+# camera rise" and the model pulled back anyway. The 65-frame render of the same
+# beat, same plate, same seed and the same embeds (04-the-fall-LTX-r2.mp4) has no
+# such move. The single thing that differs between the clip he praised and the one
+# he did not is --frames: 385 against 65. So the honest lever to test first is the
+# FRAME COUNT, not a phrase, and this job is that test.
+#
+# ONE VARIABLE, AND IT IS --frames. Byte-identical to
+# ep1-b07-longclip-145f-sample.yaml (which landed rc=0 in 3m53s on 2026-08-10)
+# except for the frame count, the output name and the bench label. Same plate
+# (07-704x1280.png), same EXISTING embeds b07-embeds.pt — the prompt is untouched
+# here on purpose, anti-zoom clauses and all, because that is the exact condition
+# under which the move appeared on beat 04. Re-encoding would change a second
+# thing. Same seed 20260838, same two-stage distilled recipe, same sequential
+# offload, same script.
+#
+# WHY IT IS WORTH A RENDER EVEN IF NOTHING MOVES. A null result here is what
+# licenses the other cell: if 385 frames does NOT produce a camera move on this
+# plate, the move is not a property of long renders and asking for it in words
+# (the zoomout job) becomes the only remaining route. If it DOES, the move is
+# reproducible for free on every beat and no prompt work is needed anywhere.
+#
+# HONEST CAVEAT ON THE LENGTH, so nobody plans a cut off it. Beat 07's voice line
+# is 5.73s; render_t3.fit_duration sizes the beat to the voice, so a 16.04s clip
+# is TRIMMED and only its first ~6 seconds would reach the episode. This job is
+# evidence about whether the camera move exists and how it is caused. Turning a
+# working move into a shippable 153-frame beat-07 clip is a second, cheap job that
+# should not be pre-committed here.
+#
+# NOTHING SCALES OFF THIS. No other beat is re-rendered off the result; that is
+# Roman's call. No metric is run — the flow metric is disqualified on this series
+# (131e433). Read by eye on a frame strip beside 07-...-LTX-145f.mp4.
+
+id: ep1-b07-385f-control-0811
+task: ep1-b07-385f-control-0811
+node: 001-capability-inventory
+beat: 7
+runner: box
+needs_gpu: true
+priority: 20
+max_attempts: 1
+sample: true
+owner: refill lane, 2026-08-11
+
+consumer: >-
+  item 3 on /review/waiting — the six-beat motion pick list, where beat 07 has no
+  live candidate at all. This is the first candidate for it, and it is also the
+  control that tells the lane WHY the camera move Roman praised happens: if a
+  frozen plate pulls back at 385 frames with anti-zoom text in force, the move is
+  a frame-count effect and every other beat can have one for free.
+
+success: >-
+  A 704x1280 mp4 at C:\banyan-farm\v34-r2\07-zero-0-moving-parts-LTX-385f.mp4,
+  385 decoded frames, that plays through without the scene changing. Whether the
+  camera pulls back is the OBSERVATION, not the pass condition — a completed
+  static 16 seconds is a real and useful negative result and gets reported as
+  one. An OOM is likewise a result: 385 frames is proven on this box at this size
+  (beat 04, 2026-08-10, peak torch well inside the card) but this plate has not
+  been run at that length.
+
+why: >-
+  Beat 07 has no motion candidate, and the only motion Roman has ever praised may
+  be a free consequence of a number this job changes.
+
+est_minutes: 12   # 145f measured 3m53s wall including model load; 385f is 2.66x
+                  # the frames and attention is superlinear. Beat 04 at 385f took
+                  # 6m47s. Do not read a 10-minute run as a stall.
+needs: [cuda, vram20, video-venv]
+
+payload:
+  # embeds is the EXISTING b07-embeds.pt. Text embeddings do not depend on frame
+  # count, so no encode stage: re-encoding would reload 24.4GB of Gemma to write
+  # the identical tensor.
+  C:\banyan-farm\v34-r2\b07-jobs-render-385.json: |-
+    [{"beat": 7,
+      "seed": 20260838,
+      "embeds": "C:\\banyan-farm\\v34-r2\\b07-embeds.pt",
+      "init": "C:\\banyan-farm\\v34-r2\\07-704x1280.png",
+      "out": "C:\\banyan-farm\\v34-r2\\07-zero-0-moving-parts-LTX-385f.mp4"}]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  - name: render
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+      - --stage
+      - render
+      - --jobs
+      - C:\banyan-farm\v34-r2\b07-jobs-render-385.json
+      - --size
+      - 704x1280
+      - --frames
+      - "385"
+      - --fps
+      - "24"
+      - --guidance
+      - "1.0"
+      - --distilled-sigmas
+      - --two-stage
+      - --image-crf
+      - "33"
+      - --offload
+      - sequential
+      - --mode
+      - production
+      - --task
+      - ep1-b07-385f-control-0811
+      - --worker
+      - rtx5090
+      - --bench-jsonl
+      - C:\banyan-farm\v34-r2\bench-b07-385f.jsonl
+      - --bench-label
+      - b07-385f-control
+
+artifacts:
+  - C:\banyan-farm\v34-r2\07-zero-0-moving-parts-LTX-385f.mp4
