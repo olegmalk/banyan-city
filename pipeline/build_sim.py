@@ -2579,6 +2579,291 @@ h3 .count, .bgroup .count { display: inline-block; font: 700 .68rem/1 var(--mono
 """
 
 
+# ---- what the videos cost the internet ---------------------------------------
+# Roman, 2026-08-10: "we need to add a bandwith stat to the dashboard so we know
+# how much of the internet bandwidth is these videos taking."
+#
+# The true answer is Vercel's own transfer meter, and THIS ACCOUNT CANNOT READ
+# IT. Checked 2026-08-11 against the live Hobby account that serves banyan.city:
+# `vercel usage` returns "Costs not found (404)", and the endpoint underneath it,
+# GET /v1/usage?from=&to= (ISO-8601 with milliseconds, both bounds), answers
+#
+#     This API endpoint is only available to Teams on the Pro or Enterprise plan.
+#
+# So there is no measurement to publish, and this page does not invent one. What
+# it publishes instead is the one quantity it can actually measure — the bytes of
+# video this build puts on the deploy — and it says on its face that this is a
+# proxy. The distinction is the whole point: bytes published is what ONE visitor
+# downloads watching everything once; bytes transferred is that multiplied by an
+# audience nobody here can see. Never let the tile read as the second.
+#
+# The GitHub Pages mirror publishes no transfer figures through any API at all,
+# so traffic that lands there is outside both numbers — said on the page too,
+# because the mirror is where a share link can quietly send everyone.
+VIDEO_EXT = (".mp4", ".webm", ".mov", ".m4v")
+
+# Hobby's included Fast Data Transfer, for scale only. A cap this page prints
+# next to a proxy must not read as "you have used X of Y" — it is there so a
+# number in gigabytes means something to a reader who has no feel for gigabytes.
+# Read off the docs table ("Usage summary") on 2026-08-11: Hobby 100 GB, Pro 1 TB.
+HOBBY_TRANSFER_GB = 100
+HOBBY_TRANSFER_SRC = "https://vercel.com/docs/limits"
+
+
+def bytes_words(n: int) -> str:
+    """Bytes in the largest unit that keeps the number readable."""
+    if n >= 1024 ** 3:
+        return f"{n / 1024 ** 3:.2f} GB"
+    if n >= 1024 ** 2:
+        return f"{n / 1024 ** 2:.0f} MB"
+    if n >= 1024:
+        return f"{n / 1024:.0f} kB"
+    return f"{n} bytes"
+
+
+def video_payload(out_dir) -> dict:
+    """Bytes of published episode/animatic video. Fails SOFT — never raises.
+
+    SCOPE, and why it is drawn exactly here. Only files in a genome's `leaves/`
+    directory are counted — the episodes and animatics the players on the public
+    pages point at. Two boundaries had to be respected at once:
+
+    * Not the repo's video. `genomes/` alone carries ~695 MB of takes, alternates
+      and provisional cuts that are NEVER copied to the deploy; measured
+      2026-08-11, the repo holds 492 MB of video the site does not publish. A
+      figure built from sources would have overstated egress by more than double.
+    * Not a walk of the whole output either. build_site.main() copies the leaf
+      media BEFORE it calls build_sim.build(), but the unlisted review area, the
+      trial clips and the takes/clips galleries all land AFTER (build_site.py
+      :3198-3309). Walking out_dir would therefore give one number during a full
+      `build_site.py` run and a bigger one during a standalone `build_sim.py`
+      against an already-populated tree. A stat that changes with which command
+      produced it is not a stat. `leaves/` is the one set that is complete and
+      identical either way.
+
+    So the number means "what a visitor downloads watching the published show",
+    which is the honest reading of the question, and the caveat below the tile
+    names the unlisted areas this leaves out rather than quietly absorbing them.
+
+    A build that cannot stat its own output must still produce a page, so every
+    failure comes back as {"ok": False} and prints "unavailable" rather than a
+    zero. A zero here would be the most reassuring possible answer to exactly the
+    failure this exists to surface — the same contract the infra meter and the
+    check-in logs above already hold themselves to.
+    """
+    out = Path(out_dir)
+    # rglob over a directory that is not there yields nothing and raises
+    # nothing, so the obvious spelling of this function returns a confident
+    # 0 bytes on exactly the failure it exists to catch. Caught by
+    # test_sim_strip.py before this ever reached the page. Both this and the
+    # empty-walk case below are "unmeasured", not "zero".
+    if not out.is_dir():
+        return {"ok": False, "why": f"{out} is not a directory"}
+    try:
+        total, count, biggest = 0, 0, ("", 0)
+        for p in out.rglob("*"):
+            if (p.suffix.lower() not in VIDEO_EXT or p.parent.name != "leaves"
+                    or not p.is_file()):
+                continue
+            size = p.stat().st_size
+            total += size
+            count += 1
+            if size > biggest[1]:
+                biggest = (p.name, size)
+    except OSError as e:
+        return {"ok": False, "why": _reason(e)}
+    if not count:
+        # The site has published video since its first episode. A walk that
+        # finds none has failed to look in the right place — it has not
+        # discovered that the show is silent.
+        return {"ok": False, "why": "no published video found in the build output"}
+    return {"ok": True, "bytes": total, "count": count,
+            "biggest": biggest[0], "biggest_bytes": biggest[1]}
+
+
+def bandwidth_tile(pay: dict) -> str:
+    """The one-glance figure for the top strip. Says "estimate" in the tile."""
+    if not pay.get("ok"):
+        return ('<a class="sx" href="#bandwidth"><span class="sn none">unavailable'
+                '</span><span class="sl">video bandwidth</span></a>')
+    return (f'<a class="sx" href="#bandwidth">'
+            f'<span class="sn">{_e(bytes_words(pay["bytes"]))}</span>'
+            f'<span class="sl">video per full watch · estimate</span></a>')
+
+
+def bandwidth_html(pay: dict) -> str:
+    """The section the tile links down to, caveats and all."""
+    head = ('<h2 id="bandwidth">📡 What the videos cost the internet</h2>')
+    if not pay.get("ok"):
+        return (head + '<p class="notice">This build could not measure its own '
+                f'published video files ({_e(pay.get("why", "reason not recorded"))}), '
+                'so it prints no number. It will not print a zero it did not '
+                'measure.</p>' + _bandwidth_caveat())
+    per = pay["bytes"]
+    watches = int((HOBBY_TRANSFER_GB * 1024 ** 3) // per) if per else 0
+    return (
+        head +
+        '<p style="margin:.2rem 0 .6rem;color:var(--muted)">Every video this site '
+        'publishes on its public pages, added up. One visitor who watched the '
+        'whole show once — every episode and every animatic — would pull this '
+        'much down.</p>'
+        f'<div class="bw">'
+        f'<div class="bwn">{_e(bytes_words(per))}</div>'
+        f'<div class="bwu">across {pay["count"]} video files · '
+        f'largest is {_e(pay["biggest"])} at {_e(bytes_words(pay["biggest_bytes"]))}'
+        f'</div>'
+        f'<p class="note">For scale: the free Hobby plan this site runs on includes '
+        f'<a href="{HOBBY_TRANSFER_SRC}">{HOBBY_TRANSFER_GB} GB of transfer a month'
+        f'</a>, so the whole video library fits down the pipe about '
+        f'<b>{watches:,}</b> times before that allowance is gone.</p></div>'
+        + _bandwidth_caveat())
+
+
+def _bandwidth_caveat() -> str:
+    """The paragraph that keeps the number above honest. Always printed."""
+    return (
+        '<p class="whyfoot"><b>This is an estimate, not a measurement.</b> It is '
+        'the size of the files on disk, not the bytes anyone actually downloaded — '
+        'real transfer is this figure multiplied by however many people watched, '
+        'and browsers that stop a video early, re-watch it, or load it from cache '
+        'all move the true number away from this one. The real figure lives in the '
+        'Vercel dashboard under Usage. This page cannot read it: the account '
+        'serving banyan.city is on the free Hobby plan, and Vercel\'s usage API '
+        'answers <code>only available to Teams on the Pro or Enterprise plan</code>, '
+        'so there is nothing to fetch. The site is also mirrored on GitHub Pages, '
+        'which publishes no transfer figures through any API — traffic that lands '
+        'on the mirror is counted by neither number.</p>'
+        '<p class="whyfoot">What the figure covers: the episode and animatic files '
+        'the public pages play. It leaves out the unlisted working-cut area and the '
+        'trial clips, which are linked from nothing and are copied to the deploy '
+        'after this page is built — counting them would make the number depend on '
+        'which build command produced it. It also leaves out the repo\'s own video, '
+        'which is far larger than the site\'s and never shipped to anyone: on '
+        '2026-08-11 the working tree held 492 MB of takes and alternates that the '
+        'deploy does not publish.</p>')
+
+
+STRIP_CSS = """
+/* ---- the summary strip -------------------------------------------------
+   Roman, 2026-08-10: "the dashboard is a bit too long and complex ... can you
+   atleast have at the top of the page the simple view that lets you see the
+   most important stuff like queue and whatnot". Nothing below was removed —
+   he said he does not mind the detail existing — so this is a lead, not a
+   replacement, and every tile is an anchor down to the full account of
+   itself. No new markup vocabulary and no JavaScript: the strip is built from
+   the same numbers the sections below print, by the same functions, so the
+   two cannot disagree. */
+.strip { border: 1px solid var(--line); border-radius: 14px; padding: .85rem .95rem;
+  margin: 0 0 1.4rem; background: var(--code-bg); }
+.strip .sh { font: 700 .62rem/1 var(--mono); letter-spacing: .09em;
+  text-transform: uppercase; color: var(--faint); margin: 0 0 .7rem; }
+.strip .sgrid { display: grid; gap: .55rem;
+  grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr)); }
+.strip .sx { display: block; text-decoration: none; color: inherit;
+  border: 1px solid var(--line); border-radius: 10px; padding: .5rem .6rem;
+  background: var(--bg); }
+.strip .sx:hover { border-color: var(--sap-deep); }
+.strip .sn { display: block; font: 700 1.35rem/1.15 var(--mono); color: var(--sap); }
+.strip .sn.none { font-size: .8rem; font-weight: 600; color: var(--faint);
+  line-height: 1.7; }
+.strip .sn.zero { color: var(--faint); }
+.strip .sn.bad { color: var(--alarm, #e2564d); }
+.strip .sl { display: block; font: 500 .68rem/1.45 var(--mono); color: var(--muted);
+  margin-top: .15rem; }
+.strip .sline { margin: .7rem 0 0; font: 500 .78rem/1.6 var(--mono);
+  color: var(--muted); }
+.strip .sline b { color: var(--ink); font-weight: 700; }
+.strip .sline + .sline { margin-top: .3rem; }
+.strip .sfoot { margin: .75rem 0 0; font: 400 .7rem/1.6 var(--sans, inherit);
+  color: var(--faint); }
+.bw { border: 1px solid var(--line); border-radius: 14px; padding: .9rem 1rem;
+  margin: .6rem 0 .5rem; text-align: center; }
+.bw .bwn { font: 700 1.7rem/1.2 var(--mono); color: var(--sap); }
+.bw .bwu { font: 500 .76rem/1.6 var(--mono); color: var(--muted); }
+.bw .note { font: 400 .76rem/1.7 var(--sans, inherit); color: var(--faint);
+  margin: .5rem 0 0; }
+"""
+
+
+def strip_counts(queue: list, backlog: list, records: list) -> dict:
+    """The strip's numbers, from the SAME function the record below prints.
+
+    queue_entry_state is the page's one answer to "what state is this entry in",
+    so calling it here rather than re-deriving anything is what stops the glance
+    at the top from contradicting the record at the bottom. A summary that can
+    disagree with its own detail is worse than no summary.
+    """
+    claims, done_ids = claim_lines(records), task_ids_done(records)
+    counts = {k: 0 for k in QSTATES}
+    for e in queue:
+        counts[queue_entry_state(e, "tasks", claims, done_ids)] += 1
+    for e in backlog:
+        counts[queue_entry_state(e, "backlog", claims, done_ids)] += 1
+    return counts
+
+
+def summary_strip(counts: dict, running_t: list, fin: list, by_id: dict,
+                  inbox: list, pay: dict, now) -> str:
+    """The one-glance view, above everything. Every tile anchors to its detail."""
+    def tile(n, label, href, cls=""):
+        k = cls or ("zero" if n == 0 else "")
+        return (f'<a class="sx" href="{href}"><span class="sn {k}">{n}</span>'
+                f'<span class="sl">{_e(label)}</span></a>')
+
+    # Finished today is the one count that can legitimately be unknown: if a
+    # check-in log could not be read, the sections below print "—" rather than a
+    # zero, and the strip has to tell the same story or it undoes them.
+    unread = logs_unread()
+    done_tile = (
+        '<a class="sx" href="#worklist"><span class="sn none">not read</span>'
+        '<span class="sl">finished today</span></a>' if unread and not fin
+        else tile(len(fin), "finished today", "#worklist"))
+
+    tiles = (
+        tile(len(running_t), "rendering now", "#worklist")
+        + tile(counts["runnable"], "runnable", "#worklist")
+        + tile(counts["failed"], "failed", "#queue",
+               cls="bad" if counts["failed"] else "zero")
+        + done_tile
+        + tile(len(inbox), "waiting on the author", "#waiting")
+        + bandwidth_tile(pay))
+
+    lines = ""
+    if running_t:
+        what, _why = queue_row_story(running_t[0])
+        more = (f" (+{len(running_t) - 1} more)" if len(running_t) > 1 else "")
+        lines += f'<p class="sline">🔴 Rendering: <b>{_e(what)}</b>{_e(more)}</p>'
+    else:
+        lines += ('<p class="sline">🔴 Rendering: <b>nothing this minute</b> — no '
+                  'machine has an unfinished job in its check-in log.</p>')
+    if fin:
+        when, who, tid, note = fin[0]
+        lines += (f'<p class="sline">✅ Last finished: '
+                  f'<b>{_e(finished_line_story(by_id.get(tid), note))}</b> · '
+                  f'{_e(who)}, {age_el(when, now)}</p>')
+    if inbox:
+        # Oldest by its own `since`, not by position — the inbox file is written
+        # in whatever order a person added to it, and "oldest" is the only thing
+        # that makes a single-item summary of a list worth printing.
+        dated = [q for q in inbox if _iso(q.get("since"))]
+        oldest = (min(dated, key=lambda q: _iso(q.get("since")))
+                  if dated else inbox[0])
+        waited = (f'{_e(waiting_words(oldest.get("since"), now))} · '
+                  if oldest.get("since") else "")
+        lines += (f'<p class="sline">🕰 Longest wait on the author: {waited}'
+                  f'<b>{_e(first_sentence(str(oldest.get("title") or "—"), 90))}</b></p>')
+
+    return (
+        '<div class="strip rise">'
+        '<p class="sh">At a glance</p>'
+        f'<div class="sgrid">{tiles}</div>'
+        f'{lines}'
+        '<p class="sfoot">The short version. Every tile is a link down to the full '
+        'account of itself — nothing here replaces what is below it, and every '
+        'number is computed by the same code that writes the detail.</p>'
+        '</div>')
+
+
 # only build once per output directory: build_site.py calls build_status.build()
 # (which delegates here) and then build_sim.build(), and each pass would hit the
 # GitHub API again for the same snapshot.
@@ -2794,7 +3079,7 @@ def build(out_dir: Path):
 
     blocked_total = sum(v["est"] or 0 for v in map(backlog_entry_view, backlog))
     production = (
-        '<h2>🏭 The work list</h2>'
+        '<h2 id="worklist">🏭 The work list</h2>'
         '<p style="margin:.2rem 0 .6rem;color:var(--muted)">Everything the studio '
         'has agreed to make, in the order reality allows: what a machine is '
         'actually running, what it can pick up next, what finished today, and '
@@ -2867,6 +3152,12 @@ def build(out_dir: Path):
           'promoter has not retired it yet. Read the file yourself: '
           f'<a href="https://github.com/{GH}/blob/main/pipeline/farm-queue.yaml">'
           'pipeline/farm-queue.yaml</a>.</p>')
+
+    # --- the simple view, above everything else ---
+    pay = video_payload(out_dir)
+    strip = summary_strip(strip_counts(queue, backlog, records), running_t, fin,
+                          by_id, inbox, pay, now)
+    bandwidth = bandwidth_html(pay)
 
     town_legend = " · ".join(STATE_WORDS[s] for s in STATE_WORDS if s in seen_states) \
         or "no machine has checked in yet"
@@ -2942,13 +3233,15 @@ def build(out_dir: Path):
 <meta name="twitter:description" content="{_e(DESC)}">
 <meta name="twitter:image" content="{CANONICAL}/og.png">
 <title>Banyan City — {PAGE_NAME}</title>
-<style>{THEME_CSS}{SIM_CSS}{TEL_CSS}</style>
+<style>{THEME_CSS}{SIM_CSS}{TEL_CSS}{STRIP_CSS}</style>
 </head>
 <body>
 <main>
 <nav class="crumbs"><a href="index.html">🌳 banyan-city</a> · <a href="watch.html">▶ watch</a>
  · <a href="city.html">the city</a> · <a href="machine.html">⚙️ how it works</a>
  · <b>🏗 {PAGE_NAME}</b> · <a href="https://github.com/{GH}">source</a></nav>
+
+{strip}
 
 <div class="rise">
 <p class="eyebrow">Banyan City · {PAGE_NAME}</p>
@@ -3003,6 +3296,8 @@ guess what the machine is doing).</p>
 <div id="tel-body" hidden></div>
 </section>
 
+{bandwidth}
+
 <h2>🗺 Open quests — anyone can take one</h2>
 <p style="margin:.2rem 0 .4rem;color:var(--muted)">Nothing here is play-pretend: every art
 quest is a real open request from the author, and every take handed in becomes part of the
@@ -3020,7 +3315,7 @@ the assembled episode is a working cut until the author passes it · {waiting}</
 <h2>How long each step takes (and what it costs)</h2>
 {steps_table_html(data.STEPS)}
 
-<h2>🕰 Waiting on the author</h2>
+<h2 id="waiting">🕰 Waiting on the author</h2>
 <p style="margin:.2rem 0 .4rem;color:var(--muted)">These are calls only the author can make —
 taste, and what gets published. The rest of the city keeps moving while they wait, but the
 jobs listed under each one cannot start until it is made, and the number in front of each is
