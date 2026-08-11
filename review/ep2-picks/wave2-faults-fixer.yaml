@@ -55,3 +55,62 @@ beats:
     ahead of the goblin, the placement `authored_b04_fieldban` proved for the
     same omission class.
   r2: authored_b02_idfix_r2  (spec ep2-b02-idfix-r2-0812, out-b02-idfix-r2)
+
+- beat: 3
+  slug: bad-cover
+  variant_rendered: authored_b03_field_solo_r2
+  positive_tokens: 72
+  verdict: faulty
+  identity: green skin 4/4 on the FACE, bald 4/4, patchwork cloak 4/4, one goblin 4/4
+  faults:
+  - name: the bald crown renders pale cream, not green
+    count: 2/4 (s0, s3 -- s3 severe)
+    detail: >-
+      s3 draws the whole skull dome cream-white above a green face, with blank
+      pupil-less white eyes; s0 puts a tan crown on a green face. This is HIS
+      NAMED BEAT-03 FAULT -- "making the goblin compeltely white" -- returning in
+      a localised form. READ THE NEGATIVE BEFORE BLAMING THE BAN: `pale skin` WAS
+      SENT (sidecar negative, 76/77, only `tall tree` removed). The ban reached
+      the model and did not bind, because the model keeps the FACE green and pales
+      only the CRANIUM. A term that already failed is not worth sending harder;
+      this needs an affirmative that names the scalp.
+  - name: stitched scalp and stitched face
+    count: 3/4 (s0, s1, s3)
+    detail: >-
+      The same fault beat 02 shows 4/4: a vertical sutured seam down the crown
+      (s1, s3), a bordered tan graft (s0), red stitch-scars on the cheeks (s0).
+      `patchwork` is a CLOAK word migrating to skin. Two beats now share this, so
+      it is a recipe-level drift and not one beat's bad seed.
+  - name: forest in an open-field beat
+    count: 2/4 (s3 clear mature trunks, s0 blurred trees)
+    detail: >-
+      The positive says "an open grassy field"; s3 draws woodland with mature
+      trunks. The anti-big-tree tier that would have caught this (`forest`,
+      `thick trunk`, `bush`, `shrubbery`) is DROPPED from this beat's sent
+      negative -- only `tall tree` is recorded as removed, but the sent list
+      shows the whole tier is absent.
+  - name: the sapling he crouches behind is absent
+    count: 0/4
+    detail: >-
+      The sentence asks him to crouch "behind the pencil-thin stem of a tiny
+      sapling that hides none of him". s1 and s2 have no sapling at all; s0 has
+      him HOLDING a sprout in his fist instead of hiding behind it; s3 scatters
+      seedlings nearby. Same sapling-next-to-figure limit as beat 02 -- ONE r2,
+      then the founder.
+  lever: >-
+    (1) Pale crown -> AFFIRMATIVE, because the negative already failed: `his bare
+    scalp green` goes in early, right after the identity clause. The def itself is
+    FROZEN and is not touched. (2) Stitched skin -> the same skin-and-head ban
+    beat 02 is testing tonight, `no scars, no stitched skin`, worded so it cannot
+    negate the `patchwork cloak` the positive asserts. (3) Both are paid for out
+    of the authored chain, not added on top of a full negative: `no indoors`
+    retires and `no house` -- the term that carries his named fault -- stays.
+    Multi-fault is defensible on THIS beat by his own precedent: each fault has a
+    separately visible predicate, which is the argument `authored_b03_field_solo`
+    already made for answering his three at once.
+  r2: authored_b03_idfix_r2  (spec ep2-b03-idfix-r2-0812, out-b03-idfix-r2)
+  note_for_b02: >-
+    Beat 02's r2 was already queued when this pale-crown pattern became legible
+    across two beats, and it bans the stitches WITHOUT the scalp affirmative. It
+    is left alone rather than raced against the runner: it now reads as the clean
+    test of whether the pale dome is a separate channel from the sutures.
