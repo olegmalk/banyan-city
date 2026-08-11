@@ -1010,6 +1010,111 @@ beats:
       newest, masterpiece, best quality, very aesthetic No split panels, no
       girl, no child. No photorealism, no 3D render look. 9:16 vertical, no
       text.
+    # ── `authored_b09_refresh` — 2026-08-11 ~22:4x. His episode sentence covers
+    # this beat with no words of its own: "i looked at all the beats and you have
+    # to change pretty much all of them, do some regeneration, and do some
+    # evaluating of your own. train the system." So the direction is the wholesale
+    # rejection plus what the wave-1 frames actually show, and what they show was
+    # read off the four frames before any word of the fix was written:
+    # `review/ep2-picks/wave-0811/b09-s0..s3.jpg` — FOUR OF FOUR are a helmeted
+    # dark-fantasy warrior in heavy black plate, shot as a menacing hero close-up.
+    # THERE IS NO FACE in s0, s1 or s3 (full masks, no opening); s2 shows a face
+    # under a visor and it is SNARLING with bared teeth. THREE OF FOUR have a
+    # GLOWING EYE SLIT, red or pink. FOUR OF FOUR are dark — black void, night sky
+    # with embers, red rim light — and NONE of the four contains a field, or any
+    # readable location at all. This is the exact register his beat-05 veto named:
+    # "it is a dark forest and they look dangerous; they are supposed to be round
+    # and harmless in a morning field".
+    #
+    # FOUR CHANNELS, EACH FOR A FAULT THAT WAS OBSERVED AND NOT GUESSED:
+    #  1. THE HELMET, AND IT COSTS THIS BEAT A CLAUSE — SEE BELOW. `no helmet`
+    #     plus `a bare head` and `his face clearly visible`, which is the exact
+    #     affirmative+ban pair `authored_guards_silly` needed on beat 05 when the
+    #     affirmative alone left them helmeted. `no knight, no full plate, no dark
+    #     fantasy` come with it: the ratified register block, sent whole.
+    #  2. THE GLOWING SLIT. `no glowing visor`, plus `no weapon` and `no hood`
+    #     from the same ratified block. `glowing visor` is not a new guess — it is
+    #     one of the five b05-r5 predicates that passed 4 of 4 and it is in
+    #     `authored_guards_silly` verbatim; it is here because the fault it names
+    #     is in three of these four frames.
+    #  3. THE VOID. `in a sunny grassy field` in the third clause — the same
+    #     early-affirmative placement `authored_b04_fieldban` and the beat-08
+    #     refresh use. This beat named NO location, which is what let an anime
+    #     prior fill the background with black. The five-term walls ban is sent
+    #     whole even though these frames drew voids rather than interiors: it is
+    #     beat 04's proven block and narrowing it would make it a different block.
+    #  4. THE DARK. The eight-term block proven on beat 04 against identical
+    #     seeds, plus `bright morning light` affirmatively.
+    #
+    # THE ONE PLACE THIS IS NOT THE STAGING VERBATIM, STATED PLAINLY. The draft's
+    # own words are "as his helmet slips a fraction" — this beat's staging PUTS A
+    # HELMET ON HIM. That cannot survive the register Roman ratified ("two silly
+    # round bureaucrats with visible faces", ~20:27), and sending `no helmet`
+    # while the positive asserts a helmet is precisely the b05-r5 failure this
+    # file already paid for once: `armor plate` was negated while the positive
+    # said `mismatched ill-fitting armor`, CLIP did not compose the negation, and
+    # `armor_present` failed 4 of 4. So the helmet-slip clause is CUT, and it is
+    # the only staging this variant does not keep word for word. What the beat is
+    # actually about is untouched — the face working slowly through an idea, the
+    # eyes drifting, the mouth opening — and that business is the reason the cut
+    # is the right way round: the helmet was the garnish and the face is the shot,
+    # and in three of four frames the helmet ate the shot. IF ROMAN WANTS THE
+    # HELMET SLIP BACK it is his call and the answer is not to re-add the words on
+    # top of this: it is to drop `no helmet` on this beat alone, because the two
+    # cannot both be sent.
+    #
+    # PAID FOR BY `Minimal motion`, a MOTION instruction in a harness that makes
+    # single frames — the same cut beat 03's field variant and the beat-08 refresh
+    # each made, for the same reason and at the same cost of nothing. `deadpan
+    # timing` carries the register that clause was really there for.
+    #
+    # ── MEASURED ON THE BOX'S REAL CLIP TOKENIZER, AND THE FIRST DRAFT FAILED ──
+    # The version of this variant that carried `from front` and `dull dented` was
+    # dry-run on the box and REFUSED, rc=1: positive 80 tokens against a budget of
+    # 77, so `compress()` dropped from the least important end and the end is the
+    # STYLE SENTENCE — "Deadpan timing, bright morning light, cinematic lighting,
+    # detailed, newest, masterpiece, best quality, very aesthetic" went whole, and
+    # check() faulted STYLE ANCHOR MISSING. That is the same failure shots.md
+    # records on beats 02/03/15, and it is worth naming because the two things the
+    # fix exists to add — `bright morning light` and the deadpan register — were
+    # both inside the sentence that got dropped. An unmeasured version of this
+    # round would have rendered the dark frames again under a new job id.
+    # SO TWO TERMS WERE PAID, both duplicated elsewhere and neither his:
+    #   `from front`   — its whole job is "do not draw him from behind", and this
+    #                    variant now says `his face clearly visible` in the same
+    #                    sentence, which asserts the same thing more directly.
+    #   `dull dented`  — `mismatched armor` is the load-bearing word from shots.md
+    #                    and it stays; the dents were the decoration. The b05-r5
+    #                    lesson is still honoured, which is the thing that matters:
+    #                    what is negated (`full plate`) shares no token with what
+    #                    the positive asserts (`mismatched armor`).
+    # RE-MEASURED AFTER THE TRIM: positive 74/77 WITH the style sentence intact
+    # (the 56 above was what survived the drop, not the whole prompt), count tag
+    # `1boy` derives, STYLE ANCHOR PRESENT True, `text` negated, DRY OK. Three
+    # tokens of headroom — this beat is full, and anything a later round wants to
+    # add here has to name what it is paying with.
+    # The negative runs 77/77 and drops five house-tier quality terms (realistic
+    # skin texture, jpeg artifacts, deformed, extra limbs, blurry) — a NEGWARN,
+    # not a fault, and the same trade the beat-08 refresh made. Everything this
+    # round is about survives to the model: all eight lighting terms, all five
+    # walls terms, the whole register block, `text`, `photorealism`.
+    #
+    # `No split panels` IS KEPT AND IS NOT DECORATION: shots.md records this exact
+    # beat drawing SPLIT PANELS in all four seeds of an earlier round, which is
+    # why the term was authored in the first place. `1boy` still derives — the
+    # first comma-clause still opens `Close-up on a round guard man`, and `man` in
+    # that clause is the whole of what `_tag_from_clause` reads.
+    authored_b09_refresh: >-
+      Close-up on a round guard man in mismatched armor, in a sunny grassy
+      field, a silly harmless bureaucrat with a bare head, his
+      face clearly visible and working slowly through an idea, eyes drifting and
+      mouth opening slightly. Deadpan timing, bright morning light, cinematic
+      lighting, detailed, newest, masterpiece, best quality, very aesthetic No
+      split panels, no girl, no child, no helmet, no knight, no full plate, no
+      dark fantasy, no glowing visor, no weapon, no hood, no house, no building,
+      no interior, no indoors, no architecture, no dark, no night, no dusk, no
+      sunset, no dim lighting, no moody lighting, no low key, no shadows
+      dominant. No photorealism, no 3D render look. 9:16 vertical, no text.
 
   10:
     slug: no-form

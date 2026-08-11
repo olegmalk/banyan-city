@@ -8794,3 +8794,40 @@
     remaining refresh beat.
   founder_verdict: null
   outcome: null
+
+- id: ep2-b09-refresh-0811
+  kind: prediction
+  written: 2026-08-11 ~22:5x, before enqueue; no frame of this round existed or
+    had been fetched when these predicates were fixed. The wave-1 frames this is
+    read against WERE looked at first (review/ep2-picks/wave-0811/b09-s0..s3.jpg)
+    and what they show is written into the spec header. The render may start
+    within the minute of the enqueue that follows this write.
+  round: ep2-b09-refresh-0811, beat 09 THE PAUSE, variant authored_b09_refresh,
+    4 stills, SDXL animagine-xl-3.1, node 002b-first-citizen.
+  what_changed: staging kept from the wave-1 authored draft (close-up on one
+    guard, his face working slowly through an idea, eyes drifting, mouth opening)
+    with ONE documented exception - the draft's own "as his helmet slips a
+    fraction" is CUT, because a positive that asserts a helmet cannot be sent
+    alongside the `no helmet` the ratified register requires (the b05-r5 lesson,
+    where negating a token the positive asserts made the armour vanish 4 of 4).
+    Added only - the ratified guard register (founder ~20:27, "two silly round
+    bureaucrats with visible faces", plus the helmet/knight/plate/dark-fantasy/
+    glowing-visor/weapon/hood bans as they stand in authored_guards_silly), the
+    open field stated early, beat 04's five-term walls block, and the eight-term
+    dark ban. `Minimal motion` and `from front` and `dull dented` were paid to
+    the token budget; measured 74/77 on the box, style anchor intact, DRY OK.
+  predicates:
+    - one guard figure, bare-headed and helmetless, in 4/4 frames
+    - his face visible and readable rather than masked, in >=3/4
+    - no glowing eye slit or visor, in >=3/4
+    - round and silly-bureaucratic rather than menacing dark-fantasy, in >=3/4
+    - a daylit outdoor background rather than a black void or interior, in >=3/4
+    - bright morning palette in 4/4
+    - the staging still reads - a face working through an idea, eyes drifting or
+      mouth opening - in >=2/4
+  consumer: the founder's morning review page.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
