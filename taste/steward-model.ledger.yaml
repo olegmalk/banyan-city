@@ -13976,3 +13976,72 @@
     would have shown. The check is cheap enough that it should precede every enqueue and
     every scoring pass, not just the suspicious ones.
   outcome: null
+
+- id: ep2-plates-round2-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b18-plantneg-0812 and ep2-b21-stemanchor-0812
+  verdict: >-
+    BOTH FIXES WORKED ON THE FAULT THEY TARGETED. Beat 21 went 0 of 4 to 4 of 4 on its structural
+    fault; beat 18 went 1 of 4 to 2 of 4 usable and cleared both defects it was aimed at. Beat 18
+    also grew a NEW fault that is mine and is one word.
+  b18_observed: >-
+    The FACE on the fruit and the DOUBLED fruit are gone 4 of 4 — beat 12's plant-only negative block
+    did exactly what its own r4 note predicted it would do on this beat, three weeks after that note
+    said to spend it. The new fault: s0 and s2 draw a LEAF rather than a fruit, with a midrib and a
+    pointed tip. Cause is named and it is mine — I dropped `round` because it was making the fig read
+    as an apple, and without it there is nothing in the sentence holding the shape to a fruit at all.
+    Over-corrected. Usable as a fig: s1 and s3.
+  b21_observed: >-
+    Every frame is now a leaf JOINED to an upright stem with the seedling as the subject — no fallen
+    leaf, no field of grass, in any of the four, against 0 of 4 before. Both halves of the archaeology
+    held: the leaf was detached because nothing said it was attached, and the grass took the frame
+    because `grass` was a named noun. What is NOT in these frames is the tilt, and it should not be —
+    a tilt is an action, motion owns actions, and asking a still for one is the mistake this lane
+    already made on the guards today.
+  the_gap_that_is_not_a_defect: >-
+    Beat 21's frames are multi-leaf seedlings rather than the show's two-leaf sapling, and beat 12's
+    leaves are pointed where ours are broad and round. Same axis on both, and it is the one the b12
+    r4 note flagged as A1: our sapling's leaf SHAPE is not pinned anywhere in the vocabulary. Worth a
+    shared fix across every plant beat rather than four separate rounds — named here, not attempted.
+  handoff: >-
+    Three plates go to the motion lane: b12-r4-s2 (cc6bd5f0), b18 s3 (ef48879d) with s1 (8856cb65) as
+    the alternate, b21 s0 (63ed4d74). All hash-verified against their box manifests. These are the
+    cheapest beats in the episode — no character to keep consistent, so no conditioning and no
+    identity risk.
+  no_third_round_queued: >-
+    Beat 18 could take `round` back for one more sample and probably should, but that is a one-word
+    round on a beat that already has two usable frames, and the motion handoff does not wait on it.
+    Queued nothing; said so.
+  consumer: review/ep2-picks/sheets/plates-round2-0812.jpg and the motion lane.
+  outcome: null
+
+- id: ep2-b19-overhead-0812-scored
+  kind: scoring
+  date: 2026-08-12
+  scores: ep2-b19-overhead-0812 (attempt 2; attempt 1 was killed mid-render by a faulty
+    watchdog, not by any fault of the job)
+  verdict: PARTIAL — and the half that landed is the half that was actually being tested.
+  the_falsifier_did_not_fire: >-
+    I wrote: "the head sprout returning the instant anything is placed above him would mean
+    above-him and on-him are not separable." A branch now reaches over him AND THE SPROUT
+    STAYED GONE. So they ARE separable — you can put a thing over the character without it
+    becoming part of him. That was the question; it is answered.
+  what_still_misses: >-
+    The fig does not strike him. The branch arcs over but its tip sits beside his skull
+    rather than on it, so the fig falls past him again — as it did in the placement round,
+    for a different reason.
+  my_error_is_the_same_both_times: >-
+    I have twice described the TREE'S position relative to HIM. Every placement that has
+    worked today stated a thing's OWN concrete position — which side, rooted in the grass, a
+    step away. "A branch above his head" leaves his head free to be anywhere, and the model
+    satisfied it loosely and was not wrong to. Relations are weaker than positions.
+  last_aim_and_a_stopping_rule_written_before_it: >-
+    ep2-b19-under-0812 states HIS position instead: standing directly underneath the branch,
+    no sideways gap, the fig over the crown of his skull, "so that anything falling from that
+    branch must land on his head". This is beat 19's FOURTH motion round and the founder has
+    seen none of them. IF THE FIG MISSES AGAIN I STOP: the beat already has its tree, its
+    separation, its fall and its landing, and whether the bounce is worth further rounds
+    becomes his call, not mine. Recording the rule before the render so I cannot quietly
+    move it afterwards.
+  outcome: null
