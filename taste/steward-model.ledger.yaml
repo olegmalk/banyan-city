@@ -13546,3 +13546,45 @@
   first_sample_under_it: ep2-b05-register-pose-0812 — beat 05, the only guard beat whose script
     stages BOTH men in motion.
   outcome: null
+
+- id: ep2-b17-initcrop-0812-scored-AND-LAW-CORRECTED
+  kind: correction
+  date: 2026-08-12
+  scores: ep2-b17-initcrop-0812
+  corrects: ep2-b17-scale-0812-scored and the "you cannot tell it where the camera stands"
+    callout I promoted onto his page one hour earlier.
+  the_render: >-
+    MISS, and I named this failure in advance: "him coming out small AGAIN from a
+    medium-framed init would mean scale is set by neither the prompt nor the init." The init
+    WAS a head-and-torso medium crop and the clip pulled straight back out to a wide. So
+    framing does not ride the init.
+  the_table_that_settles_it: >-
+    Four beat-17 clips, one predictor. No world paragraph -> he is LARGE. World paragraph ->
+    small. World paragraph + size clause -> small. World paragraph + medium-cropped init ->
+    small. 3 of 3 with it small, 1 of 1 without it large.
+  what_was_actually_happening: >-
+    THE CONTENTS LAW, FOR THE EIGHTH TIME. I asked for a treeline on the horizon, grass
+    running back into the distance and haze on the far grass — none of which is visible from
+    a medium shot. That paragraph IS a wide shot, written as a list of objects. The model
+    drew what I described; then my "medium shot, camera on him" clause asked it to contradict
+    its own contents, and the concrete list beat the abstract word. Nothing about cameras was
+    ever inert.
+  so_the_law_i_published_was_wrong: >-
+    "You cannot tell it where the camera stands" is false and it was on his page for an hour.
+    The true form is better and simpler: THE CAMERA FOLLOWS THE CONTENTS. You move it by
+    changing what you say is in the frame. Corrected on the page ABOVE the original text
+    rather than replacing it, with the four-clip table as the evidence and the old reasoning
+    left visible underneath.
+  the_lesson_that_is_actually_new: >-
+    Five of today's errors were over-claiming and one was under-claiming. This one is a third
+    kind: I generalised from a SINGLE failed intervention ("the clause did nothing") into a
+    statement about a whole class ("camera instructions are inert") without asking what else
+    in the prompt was already deciding that property. The check to add: WHEN AN INSTRUCTION
+    APPEARS INERT, LOOK FOR ANOTHER PART OF THE SAME PROMPT ALREADY DETERMINING IT. Inert and
+    outvoted look identical from the output.
+  queued: >-
+    ep2-b17-nearworld-0812 — world kept just as rich but entirely NEAR: seed-heads and flowers
+    at his knees and shoulders, blades past the lens, sapling within arm's reach, explicitly
+    no horizon and no distance. Same init uncropped, same seed, no size clause. If he comes
+    out large, framing is chosen by describing near things instead of far ones.
+  outcome: null
