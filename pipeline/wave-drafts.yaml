@@ -252,6 +252,65 @@ beats:
       child, no dark, no night, no dusk, no sunset, no dim lighting, no moody
       lighting, no low key, no shadows dominant. No photorealism, no 3D render
       look. 9:16 vertical, no text.
+    # ── `authored_staged_med_occl_hide` — THE HIDE, AND THE HANDS, 2026-08-11
+    # ~20:27. Roman on the occlusion frames, verbatim: "i understand, but it
+    # looks like he's not even trying to hide, or it looks like he's ripping the
+    # sapling out."
+    #
+    # TWO FAULTS IN ONE SENTENCE AND THEY NEED DIFFERENT CHANNELS.
+    #  1. NOT TRYING TO HIDE is an omission of BODY LANGUAGE, not of geometry.
+    #     `crouches ... half hidden behind the stem` states which body is in
+    #     front and says nothing about intent — a crouch with a straight back and
+    #     open arms satisfies every word of it. The depth-order clause therefore
+    #     stays word for word (it is the half of the occlusion round he did NOT
+    #     complain about) and the pose is stated affirmatively instead:
+    #     `cowers` and `shoulders hunched`. Shown, not labelled — `hiding` as an
+    #     abstraction is what the last two rounds already sent, and it is the
+    #     abstraction he read as "not even trying".
+    #  2. RIPPING THE SAPLING OUT is a CONTACT reading and this is its SECOND
+    #     appearance: his ~18:40 sentence said "it looks more like he grabs the
+    #     sapling". Twice on the record buys both channels. Affirmative: `hands
+    #     to his chest` says where the hands are. Negative: `no grabbing, no
+    #     pulling, no uprooting`, which is the channel beat 04 measured as the
+    #     one that binds on this checkpoint. `hand` itself is NOT negated —
+    #     check() faults on a peopled beat negating its own subject, and the
+    #     goblin has to keep his hands.
+    #
+    # PAID FOR BY SUBTRACTION, WHICH IS THIS WAVE'S ONE REPEATED LESSON. Dropped:
+    # `half hidden behind the stem` (an abstraction the two new pose clauses say
+    # concretely) and `Static camera` (a MOVE instruction on a still, which is
+    # the cheapest dead token in the string). `open field` stays — the field
+    # anchor is his.
+    #
+    # A THIRD POSE CLAUSE WAS WRITTEN AND THEN CUT, BY MEASUREMENT AND NOT BY
+    # TASTE. `pressed close to the stem` was in this string until the box's dry
+    # run rejected it: with the cloak in the slot, `sd_prompt.compress` dropped
+    # the WHOLE trailing style sentence — `Medium shot, morning light, ...,
+    # very aesthetic` — and the harness faulted on STYLE ANCHOR MISSING, so
+    # nothing would have drawn. The drop loop measures with `_token_estimate`,
+    # which reads ~5% high, so a positive the real CLIP counts at 76/77 can still
+    # lose its tail. `Medium shot` is the settled finding of the day and the style
+    # anchor is not optional, so the pose clause is what pays. What it said is
+    # already carried: `cowers` is a posture and `its thin stem in front of him`
+    # is the distance. Measured, not assumed — 76/77 real CLIP, STYLE ANCHOR
+    # PRESENT, `1boy` derives, DRY OK.
+    #
+    # THE LIGHTING CHANNEL IS NOT TOUCHED IN THIS ROUND: the
+    # eight-term block stays whole and the positive's `morning light` stays with
+    # it, both word for word off `authored_staged_med_occl_bright`. That round is
+    # still unread by him, so changing the pose channel and the light channel in
+    # the same variant would make his next sentence unattributable. The slot this
+    # variant renders with now carries the patchwork cloak; that is a job-spec
+    # change and its authority is quoted there.
+    authored_staged_med_occl_hide: >-
+      A small goblin boy, {{GOBLIN}}, solo, from front, cowers behind a tiny
+      sapling in an open field, its thin stem in front of him, shoulders
+      hunched, hands to his chest, his face peeking
+      around it. Medium shot, morning light, cinematic lighting,
+      detailed, newest, masterpiece, best quality, very aesthetic No girl, no
+      child, no grabbing, no pulling, no uprooting, no dark, no night, no dusk,
+      no sunset, no dim lighting, no moody lighting, no low key, no shadows
+      dominant. No photorealism, no 3D render look. 9:16 vertical, no text.
 
   3:
     slug: bad-cover
@@ -484,6 +543,57 @@ beats:
       dark, no dusk, no sunset, no dim lighting, no moody lighting, no low key,
       no shadows dominant. No photorealism, no 3D render look. 9:16 vertical,
       no text.
+    # ── `authored_guards_silly` — THE REGISTER, ANSWERED, 2026-08-11 ~20:27.
+    # The guard reference was built to ask Roman ONE question and he answered it,
+    # verbatim: yes, "two silly round bureaucrats with visible faces". This
+    # variant is `authored_guards_ref_bright` with his sentence written into the
+    # positive and the knight register banned in the negative. The whole eight-
+    # term lighting block he never had to ask for is carried unchanged.
+    #
+    # HIS FOUR WORDS, EACH GIVEN A CHANNEL:
+    #   TWO      — `Two round guard men` untouched at the head of the first
+    #              comma-clause, which is all `_tag_from_clause` reads; `2boys`
+    #              still derives and check() faults if it does not. The staged
+    #              frames drew ONE figure twice, so the count is not decoration.
+    #   SILLY    — `silly harmless bureaucrats`, replacing `harmless and
+    #              bureaucratic`. One word added, one connective removed.
+    #   ROUND    — stated TWICE now, on the men and on the bodies (`round soft
+    #              bodies`). It was already on the men in every losing round, so
+    #              once was demonstrably not enough.
+    #   VISIBLE  — `bare heads` in the positive plus `no helmet` in the negative.
+    #    FACES     `both faces clearly visible` was already there and the staged
+    #              frames still came back helmeted, which is why this one needs
+    #              the affirmative AND the ban.
+    #
+    # THE ARMOUR TERMS ARE CHOSEN TO AVOID A KNOWN FAILURE, NOT GUESSED. b05-r5
+    # negated `armor plate` while its positive said `mismatched ill-fitting
+    # armor`, CLIP did not compose the negation, and `armor_present` failed 4 of
+    # 4 — the armour vanished. So `plate armor` and `full armor` are NOT sent:
+    # both repeat a token the positive asserts. What is sent is `no helmet`, `no
+    # knight` and `no full plate` — the first two are the strongest Danbooru
+    # bindings for the register he is refusing and share no token with the
+    # armour clause, and `full plate` names the suit without repeating `armor`.
+    # STATED RISK: `full plate` is the weakest of the three on an anime
+    # checkpoint. If the frames come back armourless anyway, the lesson is
+    # b05-r5's again and the answer is to drop it, not to add more.
+    #
+    # WHAT IS PAID FOR HIS WORDS. `ill-fitting` goes and `dull dented` comes in:
+    # ill fit is a relation the model cannot see, dents are a thing it can draw,
+    # and `mismatched` — the load-bearing word from shots.md — is untouched.
+    # `long soft shadows` goes, which the parent spec already named as the first
+    # term to drop on this beat: it contradicts the block's `no shadows
+    # dominant`, and removing it settles that tension in the round that asks
+    # him a different question.
+    authored_guards_silly: >-
+      Two round guard men in dull dented mismatched armor pieces stand side by
+      side facing camera in a grassy morning field, silly harmless bureaucrats
+      with round soft bodies and bare heads, both faces clearly visible, one
+      holding a bark clipboard. Medium shot, bright morning light, cinematic
+      lighting, detailed, newest, masterpiece, best quality, very aesthetic No
+      girl, no child, no helmet, no knight, no full plate, no dark fantasy, no
+      night, no glowing visor, no weapon, no hood, no screen, no dark, no dusk,
+      no sunset, no dim lighting, no moody lighting, no low key, no shadows
+      dominant. No photorealism, no 3D render look. 9:16 vertical, no text.
 
   6:
     slug: the-clipboard

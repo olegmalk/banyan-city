@@ -1,0 +1,316 @@
+# 002b guard wave — THE GUARD CHARACTER REFERENCE. Beat 05 the-patrol, 4 seeds,
+# unranked, 2026-08-11.
+#
+# WHY THIS EXISTS. Roman, 2026-08-11, verbatim, both sentences:
+#
+#   "should probably setup a character for the guards, take your time doing that"
+#   "we need to setup character consistency even if they only appear once. i mean,
+#    maybe dont waste too much time on it but it will be needed so we dont have
+#    confusion."
+#
+# Read together that is ONE good round, not five, and not a gold-plated character
+# bible. So this is a single 4-seed round on the one beat that can carry a
+# reference — beat 05 is the guards' entrance and the only beat in the episode
+# with BOTH of them able to face the audience. Beats 06, 07, 09 and 10 are
+# single-guard shots and beat 11 is their backs by design.
+#
+# WHAT THE RECORD SAYS THEY ARE, and every word of the prompt comes from it:
+# node.md, "Two PATROL GUARDS jog in and halt, scanning the field. Their armor
+# doesn't match", then GUARD 2 reading "a clipboard made of bark" and reclassifying
+# the theft as "unlicensed consumption", and the VO closing the scene with "Nobody
+# in this scene is evil. Everybody in this scene is trapped in a workflow."
+# shots.md beat 05 draws them "as round harmless shapes in mismatched ill-fitting
+# armor ... an empty morning field ... one carries a clipboard made of tree bark".
+# Round harmless bureaucrats in a morning field. The founder's own r3 verdict says
+# the same thing as a rejection: "it is a dark forest and they look dangerous; they
+# are supposed to be round and harmless in a morning field."
+#
+# WHAT EVERY PREVIOUS ROUND DREW INSTEAD, looked at rather than recalled. The
+# wave's own staged frames for this beat are on the box,
+# out-staged/05-the-patrol-wave1-s{0..3}.png (rendered 2026-08-11 ~16:5x): s0 is
+# ONE full-plate dark-fantasy knight with a glowing green visor and a sword on his
+# back, shot from overhead; s1 is the same knight drawn INSIDE a held picture frame
+# — the bark clipboard became a screen with a figure in it. Not two guards, not
+# round, not bureaucratic, no readable face. And the separate b05-r5 lane's ledger
+# record (scores b05-r5-s0..s3, all four vetoed, totals -24/-24/-20/-20) recorded
+# `armor_present` failing 4 of 4 and `two_guards_in_frame` failing 3 of 4.
+#
+# THE RECIPE IS COPIED, NOT INVENTED. Source: `ep2-b02-goblin-medium-0811`, the
+# shot-size sample of the same wave — same harness (render_wave_sample.py), same
+# animagine-xl-3.1 at 832x1216, 40 steps, cfg 7.5, bfloat16 on cuda, same
+# unmodified compress() + beat_negative() path, same `--goblin-def "green skin"`
+# slot, same two-step measure-then-draw shape. Changed: the draft variant (the
+# prompt), the beat, the out directory and the publish destination. Nothing else.
+#
+# FOUR CHANGES IN THE PROMPT, EACH ONE DRAWN EVIDENCE. The full reasoning sits in
+# wave-drafts.yaml above `authored_guards_silly`; in short:
+#   1. `Wide static camera` -> `Medium shot`. Today's lesson twice over — beat 04
+#      is the only beat of this wave that was ever readable and it states a size,
+#      and `ep2-b02-goblin-medium-0811` exists because wide-shot distance drew a
+#      head a few pixels across. A reference whose faces are unreadable references
+#      nothing.
+#   2. The action prose (`jog into frame and halt, scanning`) becomes a standing
+#      pose, `stand side by side facing camera` + `both faces clearly visible`.
+#      That is also the answer to the count failure above.
+#   3. Six prohibitions, IN THE NEGATIVE ONLY (sd_prompt._NEGATION lifts each
+#      comma-terminated `no …` out of the positive): five of them are b05-r5's
+#      prescribed terms whose own predicates passed 4 of 4 — `not_dark_fantasy`,
+#      `daylight`, `no_glowing_eyes_visor`, `no_weapon`, `no_hood` — the first
+#      round in five to clear his veto. The sixth, `no screen`, is s1 above plus
+#      his earlier stop on a board that "reads as a lit screen".
+#   4. `armor plate` is NOT among them, deliberately, and that is the whole of
+#      b05-r5's lesson: it was negated while the positive still said `mismatched
+#      ill-fitting armor`, CLIP does not compose negations, and armour vanished
+#      from all four frames. The same record names the other half of that failure
+#      — with `men` also removed there was "very little left telling the model what
+#      a guard positively IS" — so `men`, `round` and his own `mismatched
+#      ill-fitting armor` are kept word for word and NOTHING was added to describe
+#      them. His standing complaint is detail creep, and today's rounds say the
+#      same: every round that bought a new tag lost, the round that removed one won.
+#      `person` and `hand` stay out of the negative too: check() faults on a peopled
+#      beat negating its own subject, and one guard has to hold the clipboard.
+#
+# COUNT TAG `2boys`, DERIVED AND ASSERTED. `_tag_from_clause` reads only the first
+# comma-clause of the first sentence; `Two round guard men` is untouched at the head
+# of it, so `men` reaches _MALE and _PLURAL and `two` reaches _NUMBER. A bare
+# `guards` would resolve to `2others` via _OTHER, and a bare humanoid noun to
+# `1other` — the indeterminate tag this wave's r8 note blames for three rounds at
+# 0/4. check() faults if the derived tag is not the draft's declared `2boys`.
+#
+# MEASURED ON THE BOX BEFORE THIS FILE WAS WRITTEN, --dry, real CLIP:
+#   positive 70/77 tokens, STYLE ANCHOR PRESENT, count tag '2boys' derives
+#   negative 59/77 (recipe 59 -> sent 59, no house term dropped, no NEGWARN)
+#   all six new negatives present: dark fantasy, night, glowing visor, weapon,
+#   hood, screen — plus girl and child, which the draft already had
+#   no faults; nothing drawn
+# Harness sha256 7efd0b96bfa14b4a3f2411f3646f6e5fa22723c149e2ea0d628520446485d1e8,
+# which is the repo's render_wave_goblin.py unchanged.
+#
+# THE DRAFTS FILE IS SHARED AND IT MOVED TWICE WHILE THIS WAS BEING MEASURED, SO
+# ITS HASH IS CITED AS OF THE MEASUREMENT AND NOT AS A GUARANTEE. Two sibling
+# lanes added their own keys to pipeline/wave-drafts.yaml in the same minutes —
+# `authored_staged_med_occl` on beat 02 and `authored_field` on beat 04, both from
+# Roman's ~18:40 verdicts — so the file went 987b0e56 -> f5646eda -> 3e583cea while
+# this variant sat in it unchanged. The box was re-synced to the current superset
+# and re-measured on it: repo and box both
+# sha256 3e583ceac6cc8d22a44aaa1ce6c06b607dfb5249f52b39c7824d3b6edc20279d at the
+# --dry above, same 70/77, same tag, no faults. Every one of those edits is ADDITIVE
+# and separately keyed, so any of the three versions draws this variant identically
+# — and if a lane ships a copy that predates it, the harness REFUSES rather than
+# falling back, so the job fails for $0 instead of quietly drawing beat 05's old
+# staging under this id. The sidecars record whichever drafts sha256 actually drew.
+#
+# AND ONE DID, WITHIN THE MINUTE: the four sidecars in out-guards-silly cite
+# drafts_sha256 47f9ace5b7815d58afde70bacfe0bd360156c20783b00fe144eb6d65e677990a,
+# not the 3e583cea measured above — a third lane re-synced the shared box copy
+# between the scp and the claim. The render is still exactly what was measured:
+# `authored_guards_silly` is byte-identical in both files and the sidecars agree term
+# for term with the --dry (draft_variant authored_guards_silly, count_tag 2boys,
+# positive_tokens 70). Written down rather than left as a mismatch for a later
+# reader to trip over, and it is the reason the paragraph above cites the sidecar
+# and not this file as the authority on what drew.
+#
+# SEPARATE OUT DIRECTORY, DELIBERATELY. render_wave_sample.py names files from the
+# beat slug, so this would land on `out-staged/05-the-patrol-wave1-s{0..3}.png` —
+# the four frames described above, which are this round's control and the evidence
+# the wave's staged verdict cites. It writes to `out-guards-silly` instead.
+#
+# THE SEEDS ARE THE SAME FOUR AND THAT IS THE POINT. The harness derives
+# SEED + beat + i*1000 = 20260724, 20261724, 20262724, 20263724 — the exact seeds
+# out-staged drew this beat on. Same noise, same model, same steps, same guidance:
+# any difference in these frames is the words. Fresh seeds would have made it two
+# variables.
+#
+# ONE SAMPLE, SEQUENTIAL. Four seeds is a round, not a batch (CLAUDE.md, founder
+# 2026-08-03); the harness loops one image at a time on one pipe and there is no
+# batch-of-4 config anywhere in it. $0 — local GPU, no provider.
+#
+# NOTHING HERE RANKS, PICKS, PROMOTES, PUBLISHES OR SPENDS. Four frames go to Roman
+# in seed order with no preference expressed and no metric between them — on beat 14
+# the flow metric scored highest on the round where the plant fell over (131e433).
+# The pick is R4's, and picking one is what makes it the reference.
+#
+# D15: takes/ candidates, which licence_gate does not count against the debt
+# ratchet. They add 0 to the animagine pile. A promotion into stills/ would add
+# lines, and that is his call, not this lane's.
+#
+# ── THE NEXT ROUND'S LIGHTING — STAGED 2026-08-11 ~19:4x, DELIBERATELY NOT
+# ── ENQUEUED. THIS SPEC IS UNCHANGED BELOW THIS LINE; it is the record of the
+# round that already ran into `out-guards-silly` and its steps must keep saying what
+# they said. What follows is the variant the NEXT guard round should use, staged
+# so it is ready the moment there is a reason to fire it.
+#
+# WHY IT IS NOT FIRED NOW. This reference exists to ask Roman a question about the
+# guards' register, and he has not answered it. A second guard round before his
+# answer would be the steward answering it. `no gate:` key is needed for a job
+# that is not queued.
+#
+# THE VARIANT: `authored_guards_silly_bright` in `pipeline/wave-drafts.yaml` —
+# `authored_guards_silly` plus the lighting block that
+# `ep2-b04-goblin-fieldbright-0811` (commit cbcc716) proved on beat 04 against
+# identical seeds, where the same positive had drawn dark and the block drew a
+# bright morning field. Seven terms are added rather than eight because this
+# variant already carries `no night`; the sent negative is a SUPERSET of the
+# proven block.
+#
+# MEASURED ON THE BOX'S REAL CLIP TOKENIZER BEFORE BEING WRITTEN DOWN, beat 5,
+# this variant, `--dry`, nothing drawn:
+#   positive 70/77 (7 headroom), STYLE ANCHOR PRESENT, count tag `2boys` derives
+#   negative recipe 77 -> sent 77 (budget 77): NO NEGWARN, NOTHING DROPPED
+#   SENT: photorealistic, 3d render, abstract, text, watermark, signature, low
+#         quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin
+#         texture, girl, child, dark fantasy, night, glowing visor, weapon, hood,
+#         screen, dark, dusk, sunset, dim lighting, moody lighting, low key,
+#         shadows dominant, photorealism
+# This beat is the opposite of beat 02's case: every existing term survives AND
+# all seven new ones land. It is also EXACTLY at budget with ZERO headroom — the
+# next term added to beat 5 will start dropping others, and `fit_negative`
+# sacrifices the house tier first. Recorded because it is a real constraint on
+# whoever writes the next round.
+#
+# ONE TENSION, NAMED: the positive asks for `long soft shadows` and the block
+# bans `shadows dominant`. Different claims, both sent; if the next round comes
+# back with the light flattened, that is the term to drop first.
+
+id: ep2-b05-guards-silly-0811
+task: ep2-b05-guards-silly-0811
+node: 002b-first-citizen
+beat: 5
+runner: box
+needs_gpu: true
+priority: 40
+max_attempts: 1
+owner: guard character lane, 2026-08-11 (Roman's "setup a character for the guards")
+
+script_authority: >-
+  Node 002b-first-citizen, live script leaf `002b-t0-c`, read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml and not copied from
+  a sibling spec. The two lines the gate reads, verbatim from that file:
+  `approved_by: founder` and `approved_on: 2026-08-03`. His `approved_quote`, also
+  verbatim: "approve 002b except.. we need to make SURE the fig growing on the
+  sapling is mentioned, last time we generated 002b it just.. appeared. also, the
+  sapling was able to flail a leaf in episode 1? why couldnt it do that in 002b?"
+  Both approval_conditions concern beat 01's fig and the sapling's leaf; neither
+  touches the guards, their look or beat 05's framing. `approval_scope` reserves the
+  SHOT PROMPTS from that approval and its media freeze is recorded STALE in the same
+  file (`approval_scope_superseded`) — outrun by his own conduct, the b02-21 redraw
+  wave he directed on 2026-08-08. This is a takes/ candidate either way: nothing is
+  published, cut in or promoted by this job.
+
+consumer: >-
+  Roman picks one of the four and that pick becomes the guards' reference. It
+  unblocks beats 06 and 07, where his verdict on the staged wave was "none of them",
+  and re-grounds beats 05, 08, 09, 10 and 11 — nine tenths of the guard footage in
+  episode 2 is currently drawn with no agreed character behind it, which is the
+  confusion he named. No pick is made here.
+
+success: >-
+  Four 832x1216 PNGs with their §7.2 provenance sidecars written at render time, at
+  C:\banyan-farm\wave-goblin-prep\out-guards-silly\05-the-patrol-wave1-s{0..3}.png,
+  all eight declared as artifacts so a missing one fails rc=92 instead of passing
+  quietly, published to C:\banyan-farm\courier-box\farm-out\ep2-guards-silly with a
+  sha256 manifest. Answered by LOOKING, at four things: (1) are there TWO guards in
+  the frame; (2) are both faces readable at this distance; (3) do they read round,
+  harmless and bureaucratic rather than as dark-fantasy soldiers; (4) is the
+  mismatched ill-fitting armour actually on them. Whether any of the four is the
+  character is his call, not this job's and not a metric's.
+
+why: >-
+  Four variables move together against out-staged, and that is honest here rather
+  than sloppy: the shot size, the standing pose, the six register negatives and the
+  removal of the action prose are ONE change — "draw the guards the record
+  describes, at a distance where a face exists". A one-variable sweep would be four
+  more rounds on a beat he has already rejected five times, and he asked for a
+  character, not a study. What is held constant is everything else: the same four
+  seeds this beat drew on, the same model, size, steps, guidance, harness and
+  sd_prompt path, and his own words for the guards untouched.
+
+goblin_def: green skin
+goblin_def_source: >-
+  There is NO goblin in beat 05 and the slot is inert here — the draft carries no
+  {{GOBLIN}} marker and the harness excludes `kind: guard` from its slot refusal for
+  exactly that reason, so the string is a no-op replace. It is passed because
+  --goblin-def is mandatory (the harness default is the steward's own pair and
+  rendering that unlabelled is a recorded error), and its value is the founder's one
+  named attribute, verbatim: "he is just a simple green goblin, nothing complex"
+  (2026-08-10 ~12:15). It reaches no pixel of this beat.
+
+est_minutes: 5
+
+needs:
+- cuda
+- vram20
+- farm-venv
+
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+# The measure step re-runs on the box's real CLIP at render time. It is not
+# ceremony: it is what fails this job for $0 if the box's drafts file is stale or
+# the prompt overruns and compress() would drop the style anchor.
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '5'
+  - --goblin-def
+  - green skin
+  - --variant
+  - authored_guards_silly
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '5'
+  - --goblin-def
+  - green skin
+  - --variant
+  - authored_guards_silly
+  - --out
+  - C:\banyan-farm\wave-goblin-prep\out-guards-silly
+  - --task
+  - ep2-b05-guards-silly-0811
+# allow_fail on purpose: a copy that falls over must never retire four rendered
+# frames. The frames are the deliverable.
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-guards-silly\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/wave-goblin-prep/out-guards-silly/05-the-patrol-wave1-s*.*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\n    print(\"   \", os.path.basename(f),\
+    \ h[:16])\nwith open(os.path.join(dst, \"05-the-patrol-guards-silly.sha256\"), \"w\", newline=\"\
+    \\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src),\
+    \ \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) == 8 else 1)\n"
+
+artifacts:
+- C:\banyan-farm\wave-goblin-prep\out-guards-silly\05-the-patrol-wave1-s0.png
+- C:\banyan-farm\wave-goblin-prep\out-guards-silly\05-the-patrol-wave1-s1.png
+- C:\banyan-farm\wave-goblin-prep\out-guards-silly\05-the-patrol-wave1-s2.png
+- C:\banyan-farm\wave-goblin-prep\out-guards-silly\05-the-patrol-wave1-s3.png
+- C:\banyan-farm\wave-goblin-prep\out-guards-silly\05-the-patrol-wave1-s0.yaml
+- C:\banyan-farm\wave-goblin-prep\out-guards-silly\05-the-patrol-wave1-s1.yaml
+- C:\banyan-farm\wave-goblin-prep\out-guards-silly\05-the-patrol-wave1-s2.yaml
+- C:\banyan-farm\wave-goblin-prep\out-guards-silly\05-the-patrol-wave1-s3.yaml
