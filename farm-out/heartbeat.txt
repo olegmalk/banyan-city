@@ -335,3 +335,4 @@
 04:38:45Z STARTED task=ep1-b07-385f-zoomout-0811-1786421480 attempt=1 on box-runner
 04:47:57Z DONE task=ep1-b07-385f-zoomout-0811-1786421480 rc=0 artifacts=1
 04:48:04Z STARTED task=ep1-b10-guidance20-0811-1786422758 attempt=1 on box-runner
+04:53:17Z DONE task=ep1-b10-guidance20-0811-1786422758 rc=0 artifacts=2
