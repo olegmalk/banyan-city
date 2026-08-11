@@ -1,0 +1,131 @@
+{
+  "id": "ep2-b01-brightbase-figmatte-0811-1786465273",
+  "task": "ep2-b01-brightbase-figmatte-0811",
+  "node": "002b-first-citizen",
+  "beat": 1,
+  "worker": "box-runner",
+  "priority": 45,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "dry",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b01-bright\\render_b01_bright.py",
+        "--root",
+        "C:\\banyan-farm\\banyan-city",
+        "--strength",
+        "0.35",
+        "--dry"
+      ]
+    },
+    {
+      "name": "base",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b01-bright\\render_b01_bright.py",
+        "--root",
+        "C:\\banyan-farm\\banyan-city",
+        "--strength",
+        "0.35",
+        "--out",
+        "C:\\banyan-farm\\b01-bright\\out"
+      ]
+    },
+    {
+      "name": "s0-masks",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "import hashlib, subprocess, sys\nPY = r\"C:\\banyan-farm\\venv\\Scripts\\python.exe\"\nSC = r\"C:\\banyan-farm\\fig-inpaint\\inpaint_fruit.py\"\nD  = r\"C:\\banyan-farm\\b01-bright\\out\"\ndef run(src, ellipse, prompt, negative, out, note):\n    h = hashlib.sha256(open(src, \"rb\").read()).hexdigest()\n    print(\"chained init %s sha256 %s\" % (src, h), flush=True)\n    rc = subprocess.call([PY, SC, \"--init\", src, \"--init-sha256\", h,\n                          \"--ellipse\", ellipse,\n                          \"--prompt-file\", prompt, \"--negative-file\", negative,\n                          \"--out\", out, \"--steps\", \"40\", \"--cfg\", \"7.5\",\n                          \"--strength\", \"0.99\", \"--seed\", \"20260720\",\n                          \"--pad-crop\", \"64\", \"--blur\", \"8\", \"--note\", note])\n    if rc:\n        sys.exit(rc)\nrun(D + r\"\\01-cold-open-bright-i35b-s0.png\", \"378,655,48,54\",\n    r\"C:\\banyan-farm\\fig-inpaint\\leaf-prompt-r2.txt\",\n    r\"C:\\banyan-farm\\fig-inpaint\\leaf-negative-r2.txt\",\n    D + r\"\\b01-bright-s0-leaf.png\",\n    \"Pass 2 of 3, seed 20260720. THE LEAF FILL, on the RELIT base rather than the founder's dusk plate -- that ordering is the whole point of this job. Ellipse 378,655,48,54 and every parameter carried over unchanged from ep2-b01-figmatte-0811; the prompts are its corrected r2 files (leaf prompt 1562bf0a, leaf negative 035b9da9), with `warm low sunlight` out of the fill and eleven glow terms in the negative. The count comes from geometry, not from a counting word. PROVISIONAL: not a pick, not canon, not published, not assembled.\")\nrun(D + r\"\\b01-bright-s0-leaf.png\", \"462,848,34,36\",\n    r\"C:\\banyan-farm\\fig-inpaint\\prompt-r2.txt\",\n    r\"C:\\banyan-farm\\fig-inpaint\\negative-r2.txt\",\n    D + r\"\\b01-bright-s0.png\",\n    \"Pass 3 of 3, seed 20260720. THE FIG, MATTE, on the relit and leaf-fixed frame. Ellipse 462,848,34,36, the same mask the 2026-08-10 fig inpaint used; prompts are the corrected r2 files (fig prompt db4a2502, fig negative 475a305a) -- `matte green skin` in the positive and the specular/glow terms in the negative, which is the load-bearing half. Non-overlapping with the leaf ellipse, so all three fixes read independently in one frame. PROVISIONAL: not a pick, not canon, not published.\")\n"
+      ]
+    },
+    {
+      "name": "s1-masks",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "import hashlib, subprocess, sys\nPY = r\"C:\\banyan-farm\\venv\\Scripts\\python.exe\"\nSC = r\"C:\\banyan-farm\\fig-inpaint\\inpaint_fruit.py\"\nD  = r\"C:\\banyan-farm\\b01-bright\\out\"\ndef run(src, ellipse, prompt, negative, out, note):\n    h = hashlib.sha256(open(src, \"rb\").read()).hexdigest()\n    print(\"chained init %s sha256 %s\" % (src, h), flush=True)\n    rc = subprocess.call([PY, SC, \"--init\", src, \"--init-sha256\", h,\n                          \"--ellipse\", ellipse,\n                          \"--prompt-file\", prompt, \"--negative-file\", negative,\n                          \"--out\", out, \"--steps\", \"40\", \"--cfg\", \"7.5\",\n                          \"--strength\", \"0.99\", \"--seed\", \"20261720\",\n                          \"--pad-crop\", \"64\", \"--blur\", \"8\", \"--note\", note])\n    if rc:\n        sys.exit(rc)\nrun(D + r\"\\01-cold-open-bright-i35b-s1.png\", \"378,655,48,54\",\n    r\"C:\\banyan-farm\\fig-inpaint\\leaf-prompt-r2.txt\",\n    r\"C:\\banyan-farm\\fig-inpaint\\leaf-negative-r2.txt\",\n    D + r\"\\b01-bright-s1-leaf.png\",\n    \"Pass 2 of 3, seed 20261720. THE LEAF FILL, on the RELIT base rather than the founder's dusk plate -- that ordering is the whole point of this job. Ellipse 378,655,48,54 and every parameter carried over unchanged from ep2-b01-figmatte-0811; the prompts are its corrected r2 files (leaf prompt 1562bf0a, leaf negative 035b9da9), with `warm low sunlight` out of the fill and eleven glow terms in the negative. The count comes from geometry, not from a counting word. PROVISIONAL: not a pick, not canon, not published, not assembled.\")\nrun(D + r\"\\b01-bright-s1-leaf.png\", \"462,848,34,36\",\n    r\"C:\\banyan-farm\\fig-inpaint\\prompt-r2.txt\",\n    r\"C:\\banyan-farm\\fig-inpaint\\negative-r2.txt\",\n    D + r\"\\b01-bright-s1.png\",\n    \"Pass 3 of 3, seed 20261720. THE FIG, MATTE, on the relit and leaf-fixed frame. Ellipse 462,848,34,36, the same mask the 2026-08-10 fig inpaint used; prompts are the corrected r2 files (fig prompt db4a2502, fig negative 475a305a) -- `matte green skin` in the positive and the specular/glow terms in the negative, which is the load-bearing half. Non-overlapping with the leaf ellipse, so all three fixes read independently in one frame. PROVISIONAL: not a pick, not canon, not published.\")\n"
+      ]
+    },
+    {
+      "name": "s2-masks",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "import hashlib, subprocess, sys\nPY = r\"C:\\banyan-farm\\venv\\Scripts\\python.exe\"\nSC = r\"C:\\banyan-farm\\fig-inpaint\\inpaint_fruit.py\"\nD  = r\"C:\\banyan-farm\\b01-bright\\out\"\ndef run(src, ellipse, prompt, negative, out, note):\n    h = hashlib.sha256(open(src, \"rb\").read()).hexdigest()\n    print(\"chained init %s sha256 %s\" % (src, h), flush=True)\n    rc = subprocess.call([PY, SC, \"--init\", src, \"--init-sha256\", h,\n                          \"--ellipse\", ellipse,\n                          \"--prompt-file\", prompt, \"--negative-file\", negative,\n                          \"--out\", out, \"--steps\", \"40\", \"--cfg\", \"7.5\",\n                          \"--strength\", \"0.99\", \"--seed\", \"20262720\",\n                          \"--pad-crop\", \"64\", \"--blur\", \"8\", \"--note\", note])\n    if rc:\n        sys.exit(rc)\nrun(D + r\"\\01-cold-open-bright-i35b-s2.png\", \"378,655,48,54\",\n    r\"C:\\banyan-farm\\fig-inpaint\\leaf-prompt-r2.txt\",\n    r\"C:\\banyan-farm\\fig-inpaint\\leaf-negative-r2.txt\",\n    D + r\"\\b01-bright-s2-leaf.png\",\n    \"Pass 2 of 3, seed 20262720. THE LEAF FILL, on the RELIT base rather than the founder's dusk plate -- that ordering is the whole point of this job. Ellipse 378,655,48,54 and every parameter carried over unchanged from ep2-b01-figmatte-0811; the prompts are its corrected r2 files (leaf prompt 1562bf0a, leaf negative 035b9da9), with `warm low sunlight` out of the fill and eleven glow terms in the negative. The count comes from geometry, not from a counting word. PROVISIONAL: not a pick, not canon, not published, not assembled.\")\nrun(D + r\"\\b01-bright-s2-leaf.png\", \"462,848,34,36\",\n    r\"C:\\banyan-farm\\fig-inpaint\\prompt-r2.txt\",\n    r\"C:\\banyan-farm\\fig-inpaint\\negative-r2.txt\",\n    D + r\"\\b01-bright-s2.png\",\n    \"Pass 3 of 3, seed 20262720. THE FIG, MATTE, on the relit and leaf-fixed frame. Ellipse 462,848,34,36, the same mask the 2026-08-10 fig inpaint used; prompts are the corrected r2 files (fig prompt db4a2502, fig negative 475a305a) -- `matte green skin` in the positive and the specular/glow terms in the negative, which is the load-bearing half. Non-overlapping with the leaf ellipse, so all three fixes read independently in one frame. PROVISIONAL: not a pick, not canon, not published.\")\n"
+      ]
+    },
+    {
+      "name": "s3-masks",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "import hashlib, subprocess, sys\nPY = r\"C:\\banyan-farm\\venv\\Scripts\\python.exe\"\nSC = r\"C:\\banyan-farm\\fig-inpaint\\inpaint_fruit.py\"\nD  = r\"C:\\banyan-farm\\b01-bright\\out\"\ndef run(src, ellipse, prompt, negative, out, note):\n    h = hashlib.sha256(open(src, \"rb\").read()).hexdigest()\n    print(\"chained init %s sha256 %s\" % (src, h), flush=True)\n    rc = subprocess.call([PY, SC, \"--init\", src, \"--init-sha256\", h,\n                          \"--ellipse\", ellipse,\n                          \"--prompt-file\", prompt, \"--negative-file\", negative,\n                          \"--out\", out, \"--steps\", \"40\", \"--cfg\", \"7.5\",\n                          \"--strength\", \"0.99\", \"--seed\", \"20263720\",\n                          \"--pad-crop\", \"64\", \"--blur\", \"8\", \"--note\", note])\n    if rc:\n        sys.exit(rc)\nrun(D + r\"\\01-cold-open-bright-i35b-s3.png\", \"378,655,48,54\",\n    r\"C:\\banyan-farm\\fig-inpaint\\leaf-prompt-r2.txt\",\n    r\"C:\\banyan-farm\\fig-inpaint\\leaf-negative-r2.txt\",\n    D + r\"\\b01-bright-s3-leaf.png\",\n    \"Pass 2 of 3, seed 20263720. THE LEAF FILL, on the RELIT base rather than the founder's dusk plate -- that ordering is the whole point of this job. Ellipse 378,655,48,54 and every parameter carried over unchanged from ep2-b01-figmatte-0811; the prompts are its corrected r2 files (leaf prompt 1562bf0a, leaf negative 035b9da9), with `warm low sunlight` out of the fill and eleven glow terms in the negative. The count comes from geometry, not from a counting word. PROVISIONAL: not a pick, not canon, not published, not assembled.\")\nrun(D + r\"\\b01-bright-s3-leaf.png\", \"462,848,34,36\",\n    r\"C:\\banyan-farm\\fig-inpaint\\prompt-r2.txt\",\n    r\"C:\\banyan-farm\\fig-inpaint\\negative-r2.txt\",\n    D + r\"\\b01-bright-s3.png\",\n    \"Pass 3 of 3, seed 20263720. THE FIG, MATTE, on the relit and leaf-fixed frame. Ellipse 462,848,34,36, the same mask the 2026-08-10 fig inpaint used; prompts are the corrected r2 files (fig prompt db4a2502, fig negative 475a305a) -- `matte green skin` in the positive and the specular/glow terms in the negative, which is the load-bearing half. Non-overlapping with the leaf ellipse, so all three fixes read independently in one frame. PROVISIONAL: not a pick, not canon, not published.\")\n"
+      ]
+    },
+    {
+      "name": "publish",
+      "allow_fail": true,
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b01-brightbase-figmatte\"\nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/b01-bright/out/01-cold-open-bright-*\")\n             + glob.glob(\"C:/banyan-farm/b01-bright/out/b01-bright-s*\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    # Hash the COPY: what this records has to be the bytes that get committed.\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n    print(\"   \", os.path.basename(f), h[:16])\n# newline=\"\\n\" is load-bearing: Windows text mode would leave a trailing \\r on\n# every filename and shasum -c could not open them.\nwith open(os.path.join(dst, \"ep2-b01-brightbase-figmatte.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\n# 4 bases x (png + sidecar) = 8, plus 4 seeds x 2 mask passes x (png + mask\n# png + sidecar) = 24. Fewer means the round wrote less than it promised.\nraise SystemExit(0 if len(src) == 32 else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\b01-bright\\out\\01-cold-open-bright-i35b-s0.png",
+    "C:\\banyan-farm\\b01-bright\\out\\01-cold-open-bright-i35b-s1.png",
+    "C:\\banyan-farm\\b01-bright\\out\\01-cold-open-bright-i35b-s2.png",
+    "C:\\banyan-farm\\b01-bright\\out\\01-cold-open-bright-i35b-s3.png",
+    "C:\\banyan-farm\\b01-bright\\out\\01-cold-open-bright-i35b-s0.png.meta.yaml",
+    "C:\\banyan-farm\\b01-bright\\out\\01-cold-open-bright-i35b-s1.png.meta.yaml",
+    "C:\\banyan-farm\\b01-bright\\out\\01-cold-open-bright-i35b-s2.png.meta.yaml",
+    "C:\\banyan-farm\\b01-bright\\out\\01-cold-open-bright-i35b-s3.png.meta.yaml",
+    "C:\\banyan-farm\\b01-bright\\out\\b01-bright-s0.png",
+    "C:\\banyan-farm\\b01-bright\\out\\b01-bright-s1.png",
+    "C:\\banyan-farm\\b01-bright\\out\\b01-bright-s2.png",
+    "C:\\banyan-farm\\b01-bright\\out\\b01-bright-s3.png",
+    "C:\\banyan-farm\\b01-bright\\out\\b01-bright-s0.png.meta.yaml",
+    "C:\\banyan-farm\\b01-bright\\out\\b01-bright-s1.png.meta.yaml",
+    "C:\\banyan-farm\\b01-bright\\out\\b01-bright-s2.png.meta.yaml",
+    "C:\\banyan-farm\\b01-bright\\out\\b01-bright-s3.png.meta.yaml"
+  ],
+  "started_at": "2026-08-11T16:21:24Z",
+  "attempts": 1,
+  "runner_pid": 9388,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-11T16:24:28Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\b01-bright\\out\\01-cold-open-bright-i35b-s0.png",
+    "C:\\banyan-farm\\b01-bright\\out\\01-cold-open-bright-i35b-s1.png",
+    "C:\\banyan-farm\\b01-bright\\out\\01-cold-open-bright-i35b-s2.png",
+    "C:\\banyan-farm\\b01-bright\\out\\01-cold-open-bright-i35b-s3.png",
+    "C:\\banyan-farm\\b01-bright\\out\\01-cold-open-bright-i35b-s0.png.meta.yaml",
+    "C:\\banyan-farm\\b01-bright\\out\\01-cold-open-bright-i35b-s1.png.meta.yaml",
+    "C:\\banyan-farm\\b01-bright\\out\\01-cold-open-bright-i35b-s2.png.meta.yaml",
+    "C:\\banyan-farm\\b01-bright\\out\\01-cold-open-bright-i35b-s3.png.meta.yaml",
+    "C:\\banyan-farm\\b01-bright\\out\\b01-bright-s0.png",
+    "C:\\banyan-farm\\b01-bright\\out\\b01-bright-s1.png",
+    "C:\\banyan-farm\\b01-bright\\out\\b01-bright-s2.png",
+    "C:\\banyan-farm\\b01-bright\\out\\b01-bright-s3.png",
+    "C:\\banyan-farm\\b01-bright\\out\\b01-bright-s0.png.meta.yaml",
+    "C:\\banyan-farm\\b01-bright\\out\\b01-bright-s1.png.meta.yaml",
+    "C:\\banyan-farm\\b01-bright\\out\\b01-bright-s2.png.meta.yaml",
+    "C:\\banyan-farm\\b01-bright\\out\\b01-bright-s3.png.meta.yaml"
+  ]
+}

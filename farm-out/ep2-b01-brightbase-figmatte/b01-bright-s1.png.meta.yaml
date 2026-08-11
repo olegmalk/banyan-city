@@ -1,0 +1,41 @@
+# Still provenance (7.2), written AT RENDER TIME by inpaint_fruit.py
+# on the rtx5090. The plate outside the mask is the founder's own
+# pixels; only the ellipse below was redrawn.
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLInpaintPipeline (base weights, unet.in_channels=4)
+size: 832x1216
+steps: 40
+guidance: 7.5
+strength: 0.99
+seed: 20261720
+padding_mask_crop: 64
+mask_blur_factor: 8
+init_image: C:/banyan-farm/b01-bright/out/b01-bright-s1-leaf.png
+init_sha256: 7fcbfb56215d138803c448b648e224738ce17f7d4cd05d04a5cb2bff55a7140e
+mask_png: b01-bright-s1-mask.png
+mask_shape: ellipse
+mask_centre_px: [462, 848]
+mask_radii_px: [34, 36]
+mask_bbox_px: [428, 812, 496, 884]
+mask_width_frac: 0.0817
+mask_height_frac: 0.0592
+mask_is_the_stewards: >-
+  THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said `inpaint` and named no size, no position on the stem, no colour and no ripeness. The ellipse above is the steward's and is the first thing his correction should move; the words in the prompt are his own approved shots.md wording.
+rendered_utc: 2026-08-11T16:23:11Z
+render_seconds: 9.7
+wall_seconds: 15.7
+cost_usd: 0
+python_version: 3.12.10
+torch_version: 2.11.0+cu128
+diffusers_version: 0.29.2
+approved: false
+provisional: >-
+  PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon. Never takes a canon filename, is not published, not posted, and not assembled into an episode. Ground truth is the founder (R4).
+note: >-
+  Pass 3 of 3, seed 20261720. THE FIG, MATTE, on the relit and leaf-fixed frame. Ellipse 462,848,34,36, the same mask the 2026-08-10 fig inpaint used; prompts are the corrected r2 files (fig prompt db4a2502, fig negative 475a305a) -- `matte green skin` in the positive and the specular/glow terms in the negative, which is the load-bearing half. Non-overlapping with the leaf ellipse, so all three fixes read independently in one frame. PROVISIONAL: not a pick, not canon, not published.
+prompt: |-
+  one small round green fruit, matte green skin, hanging from the stem, a tiny seedling's slender stem in tall grass, warm low sunlight, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  glowing, glow, white sphere, orb, specular highlight, glossy, shiny, bright highlight, lamp, light source, lens flare, sun, white fruit, pale fruit, photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, deformed, mature tree, large tree, bush, shrubbery, flower

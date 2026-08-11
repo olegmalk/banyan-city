@@ -1,0 +1,200 @@
+ 43%|████▎     | 6/14 [00:01<00:01,  4.52it/s]
+ 50%|█████     | 7/14 [00:01<00:01,  4.63it/s]
+ 57%|█████▋    | 8/14 [00:01<00:01,  4.48it/s]
+ 64%|██████▍   | 9/14 [00:01<00:01,  4.49it/s]
+ 71%|███████▏  | 10/14 [00:02<00:00,  4.46it/s]
+ 79%|███████▊  | 11/14 [00:02<00:00,  4.56it/s]
+ 86%|████████▌ | 12/14 [00:02<00:00,  4.62it/s]
+ 93%|█████████▎| 13/14 [00:02<00:00,  4.44it/s]
+100%|██████████| 14/14 [00:03<00:00,  4.51it/s]
+100%|██████████| 14/14 [00:03<00:00,  4.56it/s]
+   01-cold-open-bright-i35b-s2.png seed=20262720 4s  (3/4)
+
+  0%|          | 0/14 [00:00<?, ?it/s]
+  7%|▋         | 1/14 [00:00<00:02,  5.01it/s]
+ 14%|█▍        | 2/14 [00:00<00:02,  4.93it/s]
+ 21%|██▏       | 3/14 [00:00<00:02,  4.74it/s]
+ 29%|██▊       | 4/14 [00:00<00:02,  4.39it/s]
+ 36%|███▌      | 5/14 [00:01<00:01,  4.55it/s]
+ 43%|████▎     | 6/14 [00:01<00:01,  4.54it/s]
+ 50%|█████     | 7/14 [00:01<00:01,  4.59it/s]
+ 57%|█████▋    | 8/14 [00:01<00:01,  4.51it/s]
+ 64%|██████▍   | 9/14 [00:01<00:01,  4.41it/s]
+ 71%|███████▏  | 10/14 [00:02<00:00,  4.51it/s]
+ 79%|███████▊  | 11/14 [00:02<00:00,  4.66it/s]
+ 86%|████████▌ | 12/14 [00:02<00:00,  4.62it/s]
+ 93%|█████████▎| 13/14 [00:02<00:00,  4.42it/s]
+100%|██████████| 14/14 [00:03<00:00,  4.46it/s]
+100%|██████████| 14/14 [00:03<00:00,  4.54it/s]
+   01-cold-open-bright-i35b-s3.png seed=20263720 4s  (4/4)
+
+DONE 4 stills
+==== step base END rc=0 2026-08-11T16:21:55Z ====
+
+==== step s0-masks START 2026-08-11T16:21:55Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "import hashlib, subprocess, sys\nPY = r\"C:\\banyan-farm\\venv\\Scripts\\python.exe\"\nSC = r\"C:\\banyan-farm\\fig-inpaint\\inpaint_fruit.py\"\nD  = r\"C:\\banyan-farm\\b01-bright\\out\"\ndef run(src, ellipse, prompt, negative, out, note):\n    h = hashlib.sha256(open(src, \"rb\").read()).hexdigest()\n    print(\"chained init %s sha256 %s\" % (src, h), flush=True)\n    rc = subprocess.call([PY, SC, \"--init\", src, \"--init-sha256\", h,\n                          \"--ellipse\", ellipse,\n                          \"--prompt-file\", prompt, \"--negative-file\", negative,\n                          \"--out\", out, \"--steps\", \"40\", \"--cfg\", \"7.5\",\n                          \"--strength\", \"0.99\", \"--seed\", \"20260720\",\n                          \"--pad-crop\", \"64\", \"--blur\", \"8\", \"--note\", note])\n    if rc:\n        sys.exit(rc)\nrun(D + r\"\\01-cold-open-bright-i35b-s0.png\", \"378,655,48,54\",\n    r\"C:\\banyan-farm\\fig-inpaint\\leaf-prompt-r2.txt\",\n    r\"C:\\banyan-farm\\fig-inpaint\\leaf-negative-r2.txt\",\n    D + r\"\\b01-bright-s0-leaf.png\",\n    \"Pass 2 of 3, seed 20260720. THE LEAF FILL, on the RELIT base rather than the founder's dusk plate -- that ordering is the whole point of this job. Ellipse 378,655,48,54 and every parameter carried over unchanged from ep2-b01-figmatte-0811; the prompts are its corrected r2 files (leaf prompt 1562bf0a, leaf negative 035b9da9), with `warm low sunlight` out of the fill and eleven glow terms in the negative. The count comes from geometry, not from a counting word. PROVISIONAL: not a pick, not canon, not published, not assembled.\")\nrun(D + r\"\\b01-bright-s0-leaf.png\", \"462,848,34,36\",\n    r\"C:\\banyan-farm\\fig-inpaint\\prompt-r2.txt\",\n    r\"C:\\banyan-farm\\fig-inpaint\\negative-r2.txt\",\n    D + r\"\\b01-bright-s0.png\",\n    \"Pass 3 of 3, seed 20260720. THE FIG, MATTE, on the relit and leaf-fixed frame. Ellipse 462,848,34,36, the same mask the 2026-08-10 fig inpaint used; prompts are the corrected r2 files (fig prompt db4a2502, fig negative 475a305a) -- `matte green skin` in the positive and the specular/glow terms in the negative, which is the load-bearing half. Non-overlapping with the leaf ellipse, so all three fixes read independently in one frame. PROVISIONAL: not a pick, not canon, not published.\")\n"]
+chained init C:\banyan-farm\b01-bright\out\01-cold-open-bright-i35b-s0.png sha256 d6050e5b8ccd1e274285bdc42a25cbe151153876cd4b9b404c50c5946115adc9
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:01<00:10,  1.69s/it]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:01<00:01,  2.55it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  3.46it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.74it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\b01-bright\out\b01-bright-s0-leaf.png
+WROTE C:\banyan-farm\b01-bright\out\b01-bright-s0-leaf-mask.png
+WROTE C:\banyan-farm\b01-bright\out\b01-bright-s0-leaf.png.meta.yaml
+rc=0 render_s=9.7
+chained init C:\banyan-farm\b01-bright\out\b01-bright-s0-leaf.png sha256 043ebb598a3ec1f037ab6683f21facf0c7b89b8b7e4dc6705dc1b83d36d064e7
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:01<00:10,  1.68s/it]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:01<00:00,  3.29it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  3.38it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.80it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\b01-bright\out\b01-bright-s0.png
+WROTE C:\banyan-farm\b01-bright\out\b01-bright-s0-mask.png
+WROTE C:\banyan-farm\b01-bright\out\b01-bright-s0.png.meta.yaml
+rc=0 render_s=9.7
+==== step s0-masks END rc=0 2026-08-11T16:22:34Z ====
+
+==== step s1-masks START 2026-08-11T16:22:34Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "import hashlib, subprocess, sys\nPY = r\"C:\\banyan-farm\\venv\\Scripts\\python.exe\"\nSC = r\"C:\\banyan-farm\\fig-inpaint\\inpaint_fruit.py\"\nD  = r\"C:\\banyan-farm\\b01-bright\\out\"\ndef run(src, ellipse, prompt, negative, out, note):\n    h = hashlib.sha256(open(src, \"rb\").read()).hexdigest()\n    print(\"chained init %s sha256 %s\" % (src, h), flush=True)\n    rc = subprocess.call([PY, SC, \"--init\", src, \"--init-sha256\", h,\n                          \"--ellipse\", ellipse,\n                          \"--prompt-file\", prompt, \"--negative-file\", negative,\n                          \"--out\", out, \"--steps\", \"40\", \"--cfg\", \"7.5\",\n                          \"--strength\", \"0.99\", \"--seed\", \"20261720\",\n                          \"--pad-crop\", \"64\", \"--blur\", \"8\", \"--note\", note])\n    if rc:\n        sys.exit(rc)\nrun(D + r\"\\01-cold-open-bright-i35b-s1.png\", \"378,655,48,54\",\n    r\"C:\\banyan-farm\\fig-inpaint\\leaf-prompt-r2.txt\",\n    r\"C:\\banyan-farm\\fig-inpaint\\leaf-negative-r2.txt\",\n    D + r\"\\b01-bright-s1-leaf.png\",\n    \"Pass 2 of 3, seed 20261720. THE LEAF FILL, on the RELIT base rather than the founder's dusk plate -- that ordering is the whole point of this job. Ellipse 378,655,48,54 and every parameter carried over unchanged from ep2-b01-figmatte-0811; the prompts are its corrected r2 files (leaf prompt 1562bf0a, leaf negative 035b9da9), with `warm low sunlight` out of the fill and eleven glow terms in the negative. The count comes from geometry, not from a counting word. PROVISIONAL: not a pick, not canon, not published, not assembled.\")\nrun(D + r\"\\b01-bright-s1-leaf.png\", \"462,848,34,36\",\n    r\"C:\\banyan-farm\\fig-inpaint\\prompt-r2.txt\",\n    r\"C:\\banyan-farm\\fig-inpaint\\negative-r2.txt\",\n    D + r\"\\b01-bright-s1.png\",\n    \"Pass 3 of 3, seed 20261720. THE FIG, MATTE, on the relit and leaf-fixed frame. Ellipse 462,848,34,36, the same mask the 2026-08-10 fig inpaint used; prompts are the corrected r2 files (fig prompt db4a2502, fig negative 475a305a) -- `matte green skin` in the positive and the specular/glow terms in the negative, which is the load-bearing half. Non-overlapping with the leaf ellipse, so all three fixes read independently in one frame. PROVISIONAL: not a pick, not canon, not published.\")\n"]
+chained init C:\banyan-farm\b01-bright\out\01-cold-open-bright-i35b-s1.png sha256 ac754458872d58ee81f316adf89d7a85f3a9090dcf868f404082aff60d9a0372
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:00, 11.65it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:02<00:01,  1.56it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:02<00:00,  2.66it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.93it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\b01-bright\out\b01-bright-s1-leaf.png
+WROTE C:\banyan-farm\b01-bright\out\b01-bright-s1-leaf-mask.png
+WROTE C:\banyan-farm\b01-bright\out\b01-bright-s1-leaf.png.meta.yaml
+rc=0 render_s=9.7
+chained init C:\banyan-farm\b01-bright\out\b01-bright-s1-leaf.png sha256 7fcbfb56215d138803c448b648e224738ce17f7d4cd05d04a5cb2bff55a7140e
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:00<00:03,  1.98it/s]
+Loading pipeline components...:  43%|████▎     | 3/7 [00:00<00:00,  5.67it/s]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:02<00:01,  1.98it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:02<00:00,  2.37it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.85it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\b01-bright\out\b01-bright-s1.png
+WROTE C:\banyan-farm\b01-bright\out\b01-bright-s1-mask.png
+WROTE C:\banyan-farm\b01-bright\out\b01-bright-s1.png.meta.yaml
+rc=0 render_s=9.7
+==== step s1-masks END rc=0 2026-08-11T16:23:12Z ====
+
+==== step s2-masks START 2026-08-11T16:23:12Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "import hashlib, subprocess, sys\nPY = r\"C:\\banyan-farm\\venv\\Scripts\\python.exe\"\nSC = r\"C:\\banyan-farm\\fig-inpaint\\inpaint_fruit.py\"\nD  = r\"C:\\banyan-farm\\b01-bright\\out\"\ndef run(src, ellipse, prompt, negative, out, note):\n    h = hashlib.sha256(open(src, \"rb\").read()).hexdigest()\n    print(\"chained init %s sha256 %s\" % (src, h), flush=True)\n    rc = subprocess.call([PY, SC, \"--init\", src, \"--init-sha256\", h,\n                          \"--ellipse\", ellipse,\n                          \"--prompt-file\", prompt, \"--negative-file\", negative,\n                          \"--out\", out, \"--steps\", \"40\", \"--cfg\", \"7.5\",\n                          \"--strength\", \"0.99\", \"--seed\", \"20262720\",\n                          \"--pad-crop\", \"64\", \"--blur\", \"8\", \"--note\", note])\n    if rc:\n        sys.exit(rc)\nrun(D + r\"\\01-cold-open-bright-i35b-s2.png\", \"378,655,48,54\",\n    r\"C:\\banyan-farm\\fig-inpaint\\leaf-prompt-r2.txt\",\n    r\"C:\\banyan-farm\\fig-inpaint\\leaf-negative-r2.txt\",\n    D + r\"\\b01-bright-s2-leaf.png\",\n    \"Pass 2 of 3, seed 20262720. THE LEAF FILL, on the RELIT base rather than the founder's dusk plate -- that ordering is the whole point of this job. Ellipse 378,655,48,54 and every parameter carried over unchanged from ep2-b01-figmatte-0811; the prompts are its corrected r2 files (leaf prompt 1562bf0a, leaf negative 035b9da9), with `warm low sunlight` out of the fill and eleven glow terms in the negative. The count comes from geometry, not from a counting word. PROVISIONAL: not a pick, not canon, not published, not assembled.\")\nrun(D + r\"\\b01-bright-s2-leaf.png\", \"462,848,34,36\",\n    r\"C:\\banyan-farm\\fig-inpaint\\prompt-r2.txt\",\n    r\"C:\\banyan-farm\\fig-inpaint\\negative-r2.txt\",\n    D + r\"\\b01-bright-s2.png\",\n    \"Pass 3 of 3, seed 20262720. THE FIG, MATTE, on the relit and leaf-fixed frame. Ellipse 462,848,34,36, the same mask the 2026-08-10 fig inpaint used; prompts are the corrected r2 files (fig prompt db4a2502, fig negative 475a305a) -- `matte green skin` in the positive and the specular/glow terms in the negative, which is the load-bearing half. Non-overlapping with the leaf ellipse, so all three fixes read independently in one frame. PROVISIONAL: not a pick, not canon, not published.\")\n"]
+chained init C:\banyan-farm\b01-bright\out\01-cold-open-bright-i35b-s2.png sha256 97148820d7d4fa20398a2e18bfb6a3c8819b14770bb1c41f331c1b70667f886f
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:00, 14.00it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:00<00:00,  5.87it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:00<00:00,  7.20it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.07it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.96it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\b01-bright\out\b01-bright-s2-leaf.png
+WROTE C:\banyan-farm\b01-bright\out\b01-bright-s2-leaf-mask.png
+WROTE C:\banyan-farm\b01-bright\out\b01-bright-s2-leaf.png.meta.yaml
+rc=0 render_s=9.8
+chained init C:\banyan-farm\b01-bright\out\b01-bright-s2-leaf.png sha256 c5b8fc9479c963cd2083800e26be1b2cc7f0a6d13d519e491c4a45674130d121
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:00<00:03,  1.92it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:02<00:01,  1.86it/s]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:02<00:00,  2.28it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  3.73it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.87it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\b01-bright\out\b01-bright-s2.png
+WROTE C:\banyan-farm\b01-bright\out\b01-bright-s2-mask.png
+WROTE C:\banyan-farm\b01-bright\out\b01-bright-s2.png.meta.yaml
+rc=0 render_s=9.8
+==== step s2-masks END rc=0 2026-08-11T16:23:50Z ====
+
+==== step s3-masks START 2026-08-11T16:23:50Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "import hashlib, subprocess, sys\nPY = r\"C:\\banyan-farm\\venv\\Scripts\\python.exe\"\nSC = r\"C:\\banyan-farm\\fig-inpaint\\inpaint_fruit.py\"\nD  = r\"C:\\banyan-farm\\b01-bright\\out\"\ndef run(src, ellipse, prompt, negative, out, note):\n    h = hashlib.sha256(open(src, \"rb\").read()).hexdigest()\n    print(\"chained init %s sha256 %s\" % (src, h), flush=True)\n    rc = subprocess.call([PY, SC, \"--init\", src, \"--init-sha256\", h,\n                          \"--ellipse\", ellipse,\n                          \"--prompt-file\", prompt, \"--negative-file\", negative,\n                          \"--out\", out, \"--steps\", \"40\", \"--cfg\", \"7.5\",\n                          \"--strength\", \"0.99\", \"--seed\", \"20263720\",\n                          \"--pad-crop\", \"64\", \"--blur\", \"8\", \"--note\", note])\n    if rc:\n        sys.exit(rc)\nrun(D + r\"\\01-cold-open-bright-i35b-s3.png\", \"378,655,48,54\",\n    r\"C:\\banyan-farm\\fig-inpaint\\leaf-prompt-r2.txt\",\n    r\"C:\\banyan-farm\\fig-inpaint\\leaf-negative-r2.txt\",\n    D + r\"\\b01-bright-s3-leaf.png\",\n    \"Pass 2 of 3, seed 20263720. THE LEAF FILL, on the RELIT base rather than the founder's dusk plate -- that ordering is the whole point of this job. Ellipse 378,655,48,54 and every parameter carried over unchanged from ep2-b01-figmatte-0811; the prompts are its corrected r2 files (leaf prompt 1562bf0a, leaf negative 035b9da9), with `warm low sunlight` out of the fill and eleven glow terms in the negative. The count comes from geometry, not from a counting word. PROVISIONAL: not a pick, not canon, not published, not assembled.\")\nrun(D + r\"\\b01-bright-s3-leaf.png\", \"462,848,34,36\",\n    r\"C:\\banyan-farm\\fig-inpaint\\prompt-r2.txt\",\n    r\"C:\\banyan-farm\\fig-inpaint\\negative-r2.txt\",\n    D + r\"\\b01-bright-s3.png\",\n    \"Pass 3 of 3, seed 20263720. THE FIG, MATTE, on the relit and leaf-fixed frame. Ellipse 462,848,34,36, the same mask the 2026-08-10 fig inpaint used; prompts are the corrected r2 files (fig prompt db4a2502, fig negative 475a305a) -- `matte green skin` in the positive and the specular/glow terms in the negative, which is the load-bearing half. Non-overlapping with the leaf ellipse, so all three fixes read independently in one frame. PROVISIONAL: not a pick, not canon, not published.\")\n"]
+chained init C:\banyan-farm\b01-bright\out\01-cold-open-bright-i35b-s3.png sha256 4dcc1bcb10a77c0c61078781a1bf8e4b2750cd10b3f707fc0dfc4a7f18372833
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:01,  3.84it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:00<00:00,  6.90it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:00<00:00,  7.96it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.92it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 5s
+WROTE C:\banyan-farm\b01-bright\out\b01-bright-s3-leaf.png
+WROTE C:\banyan-farm\b01-bright\out\b01-bright-s3-leaf-mask.png
+WROTE C:\banyan-farm\b01-bright\out\b01-bright-s3-leaf.png.meta.yaml
+rc=0 render_s=9.8
+chained init C:\banyan-farm\b01-bright\out\b01-bright-s3-leaf.png sha256 b9f7de7054eea100c1753513882147240e9e8cd6bf4cde25d4f1228df7772d74
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  43%|████▎     | 3/7 [00:00<00:00, 23.12it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:00<00:00,  6.53it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.84it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\b01-bright\out\b01-bright-s3.png
+WROTE C:\banyan-farm\b01-bright\out\b01-bright-s3-mask.png
+WROTE C:\banyan-farm\b01-bright\out\b01-bright-s3.png.meta.yaml
+rc=0 render_s=9.8
+==== step s3-masks END rc=0 2026-08-11T16:24:28Z ====
+
+==== step publish START 2026-08-11T16:24:28Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b01-brightbase-figmatte\"\nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/b01-bright/out/01-cold-open-bright-*\")\n             + glob.glob(\"C:/banyan-farm/b01-bright/out/b01-bright-s*\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    # Hash the COPY: what this records has to be the bytes that get committed.\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n    print(\"   \", os.path.basename(f), h[:16])\n# newline=\"\\n\" is load-bearing: Windows text mode would leave a trailing \\r on\n# every filename and shasum -c could not open them.\nwith open(os.path.join(dst, \"ep2-b01-brightbase-figmatte.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\n# 4 bases x (png + sidecar) = 8, plus 4 seeds x 2 mask passes x (png + mask\n# png + sidecar) = 24. Fewer means the round wrote less than it promised.\nraise SystemExit(0 if len(src) == 32 else 1)\n"]
+    01-cold-open-bright-i35b-s0.png d6050e5b8ccd1e27
+    01-cold-open-bright-i35b-s0.png.meta.yaml dfc22f6f39af7d50
+    01-cold-open-bright-i35b-s1.png ac754458872d58ee
+    01-cold-open-bright-i35b-s1.png.meta.yaml 3b578afff937a709
+    01-cold-open-bright-i35b-s2.png 97148820d7d4fa20
+    01-cold-open-bright-i35b-s2.png.meta.yaml f096180779ca6b8b
+    01-cold-open-bright-i35b-s3.png 4dcc1bcb10a77c0c
+    01-cold-open-bright-i35b-s3.png.meta.yaml fd2d23250ba26acd
+    b01-bright-s0-leaf-mask.png 334ada5ae341c82a
+    b01-bright-s0-leaf.png 043ebb598a3ec1f0
+    b01-bright-s0-leaf.png.meta.yaml 9e4bfb2ba92ec325
+    b01-bright-s0-mask.png 21606e4aedf5904b
+    b01-bright-s0.png d3d159032291ac88
+    b01-bright-s0.png.meta.yaml ade33b0a97450b7f
+    b01-bright-s1-leaf-mask.png 334ada5ae341c82a
+    b01-bright-s1-leaf.png 7fcbfb56215d1388
+    b01-bright-s1-leaf.png.meta.yaml 40351b6d97c22e2a
+    b01-bright-s1-mask.png 21606e4aedf5904b
+    b01-bright-s1.png fa645a1b91ab21cf
+    b01-bright-s1.png.meta.yaml e464efa02aa4c5bc
+    b01-bright-s2-leaf-mask.png 334ada5ae341c82a
+    b01-bright-s2-leaf.png c5b8fc9479c963cd
+    b01-bright-s2-leaf.png.meta.yaml 7b673b09f98c4f89
+    b01-bright-s2-mask.png 21606e4aedf5904b
+    b01-bright-s2.png 0ee0a2959d30a0fb
+    b01-bright-s2.png.meta.yaml b16d55795b821f7c
+    b01-bright-s3-leaf-mask.png 334ada5ae341c82a
+    b01-bright-s3-leaf.png b9f7de7054eea100
+    b01-bright-s3-leaf.png.meta.yaml cf89456201110fc1
+    b01-bright-s3-mask.png 21606e4aedf5904b
+    b01-bright-s3.png 757919d163e576b9
+    b01-bright-s3.png.meta.yaml 211e860ba488a276
+published 32 file(s) + manifest -> C:/banyan-farm/courier-box/farm-out/ep2-b01-brightbase-figmatte
+==== step publish END rc=0 2026-08-11T16:24:28Z ====
+#### job ep2-b01-brightbase-figmatte-0811-1786465273 finished rc=0 2026-08-11T16:24:28Z

@@ -1,0 +1,46 @@
+# Still provenance (7.2), written AT RENDER TIME by
+# render_b01_bright.py on the rtx5090.
+# The negative below is what the model actually saw. Before this
+# round's one deliberate insertion it was:
+#   photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, mature tree, large tree, thick trunk, full canopy, forest, bush, shrubbery, girl, boy, child, person, chibi, mascot, creature, face, branches, night sky, photorealism
+# The recipe negative before the `tall tree` removal r8 also made:
+#   photorealistic, 3d render, text, mature tree, large tree, tall tree, thick trunk, full canopy, forest, bush, shrubbery, girl, boy, child, person, chibi, mascot, creature, face, branches, night sky, dark, night, dusk, sunset, dim lighting, moody lighting, low key, shadows dominant, photorealism
+#   NEGWARN: !! negative prompt over CLIP's 77-token budget; deduplicated: text; DROPPED: realistic skin texture, jpeg artifacts, deformed, extra limbs, blurry, low quality, signature, watermark, abstract
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+shot_beat: 1
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20260720
+seeds_in_batch: 4
+arm: i35b
+pipeline: img2img
+init_image: genomes/sapling/nodes/001-capability-inventory/stills/15-something-s-coming.png
+init_sha256: f60c1404f88d45720ca295dfc753e9eaabb815446710bcfffb3c7a07b7277f54
+strength: 0.35
+task: ep2-b01-brightbase-0811
+render_round: bright
+candidate_set: bright-i35b
+prompt_source_sha256: 445b8c682a5f94954d98a2a0be5209876c0c558c666c085ba126b35614e491c9
+positive_clip_tokens: 65
+negative_clip_tokens: 74
+tokenizer: openai/clip-vit-large-patch14 (transformers, on the box)
+positive_identical_to_r8: true
+lighting_terms_added: dark, night, dusk, sunset, dim lighting, moody lighting, low key, shadows dominant
+house_terms_sold_to_pay_for_them: abstract, watermark, signature, low quality, blurry, extra limbs, deformed
+shots_md_edited: false
+single_variable: >-
+  Eight lighting terms in the SDXL negative, against ledger record ep2-b01-r8-sample's i35 arm at the same four seeds, the same init and the same strength. The SENT POSITIVE is byte-identical to r8's — asserted at render time, not claimed — because the terms are authored as `no ...` clauses and the negation lifter removes them from the positive before the model sees it. Anything different in these frames is those eight terms and the budget they cost.
+compare_against: >-
+  genomes/sapling/nodes/002b-first-citizen/takes/stills/01-cold-open-r8-i35-s*.png (ledger ep2-b01-r8-sample), whose finding was `right size, wrong light`: the plate's dusk palette survived both 0.35 and 0.55 while the t2i control rendered the sunrise correctly on 4 of 4.
+provisional: >-
+  PROVISIONAL. A steward-rendered CANDIDATE, not a pick and not canon. Ground truth is the founder (R4); he has ratified nothing here. Never takes a canon filename, is not published, not posted, and not assembled into an episode.
+approved: false
+wall_seconds: 4
+cost_usd: 0
+prompt: |-
+  A tiny 40cm seedling standing in short grass, its sturdy curved stem, two oversized cotyledon leaves, one small round green fruit hanging from the stem, whole plant in frame, wide shot, peach and gold sunrise sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+negative: |-
+  photorealistic, 3d render, text, mature tree, large tree, thick trunk, full canopy, forest, bush, shrubbery, girl, boy, child, person, chibi, mascot, creature, face, branches, night sky, dark, night, dusk, sunset, dim lighting, moody lighting, low key, shadows dominant, photorealism
