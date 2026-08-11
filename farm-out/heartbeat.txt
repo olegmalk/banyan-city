@@ -456,3 +456,4 @@
 14:33:59Z DONE task=ep2-b04-goblin-close-0811-1786458772 rc=0 artifacts=8
 14:43:05Z box-runner idle ready=0 failed=1
 14:47:20Z STARTED task=ep2-b05-guards-ref-0811-1786459631 attempt=1 on box-runner
+14:48:11Z DONE task=ep2-b05-guards-ref-0811-1786459631 rc=0 artifacts=8
