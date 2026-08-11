@@ -100,7 +100,22 @@ waiting on is his word plus the licence answer.**
   intact and no re-read of the script is mechanically required.
 - `lint_genome.py` exits **0** right now. Promotion does not fail it on structure.
 
-**So nothing structural blocks promotion.** What blocks it is the next item.
+> ### ⚠ PROMOTION PUBLISHES WITH NO LICENCE CHECK. This is the single most important line on this page.
+>
+> `build_site.py:3161` copies every leaf's `.mp4` into `_site/` with a bare
+> `shutil.copy` and **never calls `publishable()`**. The licence gate guards the
+> review surface; **the canon leaf path is not guarded at all.** That is why
+> `001-t3-d.mp4` — PixVerse plus animagine — is live on banyan.city today.
+>
+> So promotion is not a step that happens to be blocked by D15/D16. **Promoting
+> v36b would silently publish the nine LTX clips and the four OpenRAIL++ held
+> stills while both decisions are still open** — the licence answer must come
+> *before* the promotion, not after, because nothing downstream will stop it.
+> The ratchet that would catch it (25 → 36) only gates the **Pages mirror**, and
+> banyan.city ships via **Vercel**, which never runs it.
+
+**So nothing structural blocks promotion — and that is the problem, not the
+good news.**
 
 ### 2. The licence gate — the single biggest thing between here and published
 
@@ -187,7 +202,7 @@ The only note on any of them is beat 03's, and it is deliberate: *"cut mid-word:
 the line is interrupted by his death, not finished."* If "polished" is to include
 the voice, that is a question he has to be asked; nothing on disk answers it.
 
-### 5. Provenance — no gaps
+### 5. Provenance — the cut is clean, the canon stills are not
 
 Checked with the real `licence_gate.sidecar_for()` (`pipeline/licence_gate.py:1128`),
 not a glob. **All 16 clips and all 11 VO mp3s in the cut resolve a sidecar: zero
@@ -196,6 +211,16 @@ third shape, `NN-vo.json` beside `NN-vo.mp3`, which is why a naive
 `*.mp3.meta.yaml` glob reports 11 false misses here. Every sidecar parses and
 carries `platform`, `model` and `cost_usd`; the held stills additionally carry
 `source_still`, `source_still_sha256` and `still_model_licence`.
+
+**But every canon still has no record at all.** Run against
+`genomes/sapling/nodes/001-capability-inventory/stills/`, `sidecar_for()`
+returns `None` for **all 15** non-revoked PNGs — `01-the-keyboard.png` through
+`15-something-s-coming.png`, plus `ALT-07-zero-s0-lowcontrast.png`. Promotion
+copied the PNG and left the record behind in `takes/`. A sibling lane is
+repairing it now by hash-matching each still back to its take, so this row
+should be re-checked rather than acted on. It does not block the *cut* — the
+clips carry the stills' provenance forward in their own sidecars — but it does
+mean the stills on their own currently assert nothing about what drew them.
 
 ---
 
