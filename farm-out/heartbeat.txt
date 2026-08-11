@@ -569,3 +569,4 @@
 19:59:50Z DONE task=ep2-guards-sheet-robe-0812-1786478034 rc=0 artifacts=8
 19:59:59Z STARTED task=ep2-guards-sheet-vest-0812-1786478035 attempt=1 on box-runner
 20:00:53Z DONE task=ep2-guards-sheet-vest-0812-1786478035 rc=0 artifacts=8
+20:00:58Z box-runner idle ready=0 failed=2
