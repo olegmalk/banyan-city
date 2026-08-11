@@ -1045,6 +1045,17 @@ refused and four do not** — 3, 6, 10 and 14 still have their old PNGs on disk,
 unrevoked because a revocation needs a replacement to point at and their candidates
 were all rejected, but each is a frame he turned down in v32.
 
+**THE PARAGRAPH ABOVE IS STALE FOR BEAT 14 AND IT HAS COST FOUR LANES A TRIP
+(correction added 2026-08-11).** Beat 14 has been canon since 2026-08-09: he
+named `b14-r4-s3`, it is promoted byte-for-byte to `stills/14-worth-staying-in.png`
+(sha256 `ab1ecdc9…12ad9`, verified on disk 2026-08-11) and its own section above
+reads **"THIS BEAT IS CANON AND NOTHING RE-RENDERS ON IT."** The two `14-…-REVOKED-…`
+PNGs beside it are the v32 frames this paragraph thinks are still standing. Beats
+06 and 03 have likewise moved on in their own sections since this was written.
+**Each beat's own section is authoritative; this wave summary is a snapshot of
+2026-08-08 and is not maintained.** Do not open a round off this paragraph —
+read the beat's section and the stills directory first.
+
 **IT WAS GATED AND THEN IT WAS NOT, AND BOTH HALVES BELONG HERE.** Character
 consistency was the founder's dominant objection across this wave — he named it on 14
 and 15 as the fault and on 10 as the one virtue that nearly saved a frame — and no
