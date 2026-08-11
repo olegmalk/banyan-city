@@ -672,6 +672,20 @@ beats:
       ornament, no long eyelashes, no lipstick, no dark, no night, no dim
       lighting, no moody lighting, no low key. No photorealism, no 3D render
       look. 9:16 vertical, no text.
+    # -- `authored_b04_sheet_r2` -- 2026-08-12 ~01:1x. His verdict on the r1
+    # sheets, verbatim: "you're giving the goblin hair which isnt right". The
+    # r1 variant never mentioned hair; the prior added it. r2 bans it in the
+    # channel that binds; `bald head` rides in the definition, not here, so the
+    # slot stays the identity and the variant stays the staging.
+    authored_b04_sheet_r2: >-
+      A small goblin boy, {{GOBLIN}}, solo, standing in a plain sunlit grassy
+      field, full body facing camera, arms at his sides. Medium full shot,
+      bright morning light, cinematic lighting, detailed, newest, masterpiece,
+      best quality, very aesthetic No girl, no child, no hair, no wig, no
+      armor, no jewelry, no ornament, no long eyelashes, no lipstick, no dark,
+      no night, no dim lighting, no moody lighting, no low key. No
+      photorealism, no 3D render look. 9:16 vertical, no text.
+
 
   5:
     slug: the-patrol
@@ -1024,21 +1038,21 @@ beats:
     tag: 2boys
     extra_neg: species
     gist: inside-him
-    # -- `authored_b08_refresh` -- 2026-08-11 ~22:2x, the lead. Wholesale-reject
-    # mandate ("change pretty much all of them"). Staging kept verbatim from
-    # `authored`; changes are only the ratified guard register ("two silly round
-    # bureaucrats with visible faces", founder ~20:27, here applied to the one
-    # guard), the field stated early, and the proven bans in the binding negative.
-    authored_b08_refresh: >-
-      Two round boys in a grassy field, a bare-headed guard man in dented
-      mismatched armor pointing flatly at the belly of a small goblin boy,
-      {{GOBLIN}}, in a patchwork cloak who looks down at himself. Deadpan
-      two-shot, bright morning light, cinematic lighting, detailed, newest,
-      masterpiece, best quality, very aesthetic No girl, no child, no helmet,
-      no knight, no dark fantasy, no house, no building, no interior, no dark,
-      no night, no dusk, no sunset, no dim lighting, no moody lighting, no low
-      key, no shadows dominant. No photorealism, no 3D render look. 9:16
-      vertical, no text.
+    # ── A SECOND `authored_b08_refresh` USED TO SIT HERE AND IT NEVER RENDERED A
+    # PIXEL EITHER. Removed 2026-08-12, the same edit and the same reason as the
+    # duplicate on beat 10 — see the long note there for the mechanism. Written
+    # at ~22:2x, shadowed by the definition further down this beat, and dropped
+    # silently by `yaml.safe_load`, which keeps the last key of a repeated name.
+    # This one was NOT in the hazard report that sent me looking; it turned up
+    # when the whole file was scanned for repeated keys after beat 10's was
+    # found, which is the argument for scanning rather than fixing the instance
+    # you were handed.
+    #
+    # THE TWO WORDINGS DIFFER IN SUBSTANCE, so this is not a harmless copy: the
+    # shadowed text said `dented mismatched armor` and `pointing flatly`, and the
+    # live one says `in armor`, `from front` and `face visible` and adds the walls
+    # block. Anything written about beat 08's prompt on 2026-08-11 should be read
+    # against the LIVE text below, not this one.
     authored: >-
       Two round boys, a guard man in mismatched armor pointing flatly at the
       belly of a small goblin boy, {{GOBLIN}}, in a patchwork cloak who looks
@@ -1259,19 +1273,30 @@ beats:
     tag: 2boys
     extra_neg: guard
     gist: no form
-    # -- `authored_b10_refresh` -- 2026-08-11 ~22:5x, the lead. Wholesale-reject
-    # mandate; staging (blank bark clipboard held up, one shake) kept verbatim.
-    # Added: ratified register (bare heads, dull dented armor), field early,
-    # dark-ban. Lean on purpose: b08 r1 died at 89/77 tokens.
-    authored_b10_refresh: >-
-      Two round bare-headed guard men in dull dented mismatched armor in a
-      grassy field, one holding up the completely blank back of his bark
-      clipboard toward the other and shaking it once. Static camera, the blank
-      board dominating the frame, bright morning light, cinematic lighting,
-      detailed, newest, masterpiece, best quality, very aesthetic No girl, no
-      child, no helmet, no knight, no dark fantasy, no dark, no night, no dusk,
-      no sunset, no dim lighting, no moody lighting, no low key, no shadows
-      dominant. No photorealism, no 3D render look. 9:16 vertical, no text.
+    # ── A SECOND `authored_b10_refresh` USED TO SIT HERE AND IT NEVER RENDERED A
+    # PIXEL. Removed 2026-08-12. Two lanes wrote a key of that name into beat 10
+    # within ten minutes on 2026-08-11 — this one at ~22:5x (lean, `dull dented
+    # mismatched armor`, bare heads, no walls block) and the one further down at
+    # ~23:0x. A YAML mapping cannot hold the same key twice: `yaml.safe_load`
+    # keeps the LAST definition and drops this one silently, with no warning from
+    # the loader and no fault from `render_wave_goblin.check()`, which never sees
+    # it. So every beat-10 job that has ever run — including the one whose frames
+    # are on the picking page — ran the ~23:0x version below, and this text was
+    # dead the moment it was written.
+    #
+    # IT IS DELETED RATHER THAN RENAMED, and the difference matters: renaming it
+    # to a live second variant would put a prompt nobody has measured into the
+    # file, and the honest state is that this wording was never chosen over the
+    # other, it was merely written first. What it wanted — bare heads and the
+    # ratified register — survives in the version below, which says both.
+    # Deleting a key that `safe_load` already discards cannot change any resolved
+    # value, so no past render's provenance moves and no queued job's prompt
+    # changes; that was verified by diffing the fully resolved drafts mapping
+    # before and after this edit, not assumed.
+    #
+    # THE GENERAL HAZARD, WRITTEN DOWN BECAUSE IT WILL RECUR: this file is edited
+    # by several lanes at once and a duplicate key is invisible to every check we
+    # have. A lane that adds a variant should grep for its own key name first.
     authored: >-
       Two round guard men in mismatched armor, one holding up the completely
       blank back of his bark clipboard toward the other and shaking it once for

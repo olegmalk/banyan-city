@@ -9779,3 +9779,25 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+- id: ep2-goblin-sheet-a2-bald-0812
+  kind: founder_verdict_and_rerun
+  written: 2026-08-12 ~01:2x, while he reviews live.
+  founder_verdict_verbatim: "you're giving the goblin hair which isnt right"
+  founder_verdict_date: 2026-08-12
+  what_it_rules: the r1 sheet rows all drew hair; no prompt asked for it (the
+    variant never mentions hair) - the model prior added it. His sentence makes
+    baldness an identity fact, not a style choice.
+  action: one sample against row A's control - definition gains `bald head`,
+    negative gains `no hair, no wig` (the channel that binds). Job id got
+    mangled by a sloppy sed chain (ep2-goblin-sheet-a2-bald2-bald-0812) and its
+    --out inherited row A's directory, overwriting the box working copies of
+    r1 row A; the durable copies were already in git (farm-out commit + the
+    composited sheet), so no evidence was lost. The steward's error either way,
+    recorded as such.
+  prediction:
+    - no visible hair in 4/4
+    - still male-reading in >=3/4
+    - green skin in 4/4
+  consumer: his next look, minutes from this write - he is awake and reviewing.
+  outcome: null
