@@ -13256,3 +13256,38 @@
   consumer: review/ep2-picks/motion-0812.html — decides whether an environment sentence
     joins the recipe for every subsequent job.
   outcome: null
+
+- id: ep2-named-object-rerun-0812-scored
+  kind: scoring
+  date: 2026-08-12
+  scores: ep2-b03-object-0812 and ep2-b13-object-0812, the first two named-object re-runs
+  b13_the_best_clip_this_lane_has_made: >-
+    OBJECT AND ACTION IN THE SAME CLIP. The two-leaf sapling is there — the show's own
+    sapling, not a generic seedling — it CASTS A VISIBLE SHADE across the ground, and he
+    sinks into that shade: knees drawn up, arms wrapped round them, head settled down. That
+    is beat 13 entire: "slides down and folds into the sapling's very small patch of shade,
+    knees up around his ears." Identity holds, red eyes, no tripod, field and treeline
+    behind. I am calling this the first finished shot of episode 2, provisionally and
+    subject to his eye.
+  b03_the_joke_reads_and_the_crouch_left: >-
+    The object landed beautifully — a sapling far too thin to hide anybody stands directly
+    in front of him with both of them fully in frame, and the size-mismatch joke the beat is
+    built on READS for the first time. The cost: HE STANDS for the whole clip. The bush
+    version before it had him bent over; adding the tree clause pushed the crouch out.
+  my_predicted_failure_mode_half_happened: >-
+    I wrote before the run: "the failure worth reporting is the sapling appearing but the
+    ACTION collapsing, which would mean the prompt can hold a character or a scene but not
+    both at once." It half happened — on b03 only. b13 got its sapling AND its full fold in
+    one clip, which FALSIFIES the general form of that worry: the prompt can hold both. On
+    b03 the crouch was simply the weaker of two instructions and lost, which is a wording
+    weight problem, not a limit.
+  acted_on: >-
+    ep2-b03-crouch-0812 queued: the crouch promoted from a passing verb to the dominant
+    clause (bends deeply, sinks, squatting close to the ground, head at the height of the
+    lowest leaves, "He is DOWN LOW, not standing") plus standing upright / standing straight
+    / full height in the negative. Sapling clause untouched, same init, same seed, same 121
+    frames.
+  the_running_tally: >-
+    Named objects have now appeared 6 of 6 — sapling ×2 on beat 15, b19's fig, b20's fig,
+    b03's tree, b13's sapling-and-shade. Six, written as six.
+  outcome: null
