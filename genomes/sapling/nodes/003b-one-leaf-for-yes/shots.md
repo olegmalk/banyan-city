@@ -50,7 +50,7 @@ placeholder the harness fills from --goblin-def.
 Line: premise + fig recap. Camera on the fig in the GOBLIN's hands with the tree's bare branch visible behind — the gate misread the hands as the tree's.
 
 ```
-A small goblin boy, green skin, bald head, solo, cradles a ripe fig in both clawed hands beside a 55cm sapling with two oversized leaves and one bare side-branch, dawn field. Deadpan quiet staging, static camera, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No girl, no child, no tusk, no mature tree, no thick trunk, no many leaves. No photorealism, no 3D render look. 9:16 vertical, no text.
+A small goblin boy, green skin, bald head, solo, kneels in sunlit grass holding a purple fig, one slender sapling with two big leaves growing from the earth beside him. Wide morning meadow, blue sky. Static camera, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No girl, no child. No photorealism, no 3D render look. 9:16 vertical, no text.
 ```
 
 ## Beat 02 — EVIDENCE RETURNED (0:06–0:11) ⬜ needs footage

@@ -640,6 +640,76 @@ beats:
       girl, no child, no tusk, no mature tree, no thick trunk, no many leaves.
       No photorealism, no 3D render look. 9:16 vertical, no text.
 
+    # -- `authored_ep3_003b_b01_dialect_r3` -- 2026-08-12. r2 RENDERED AND MISSED
+    #    0/4, and the miss was not the one predicted. Evidence:
+    #    farm-out/ep3-003b-b01-dialect-r2-0812 on farm-results-rtx5090, four
+    #    frames hash-verified against the box manifest.
+    #
+    #    WHAT ALL FOUR GOT WRONG. (1) NO SAPLING existed as an object in any
+    #    frame -- free-floating leaves in s0/s3, a black thorn in s1, a cut leaf
+    #    held like a parasol in s2. Never a plant rooted in ground. (2) NO
+    #    WORLD: all four came back dark blue dusk or void, despite `no dark, no
+    #    night, no dusk` in the negatives. (3) No fig in 3 of 4.
+    #
+    #    THE DIAGNOSIS IS A LESSON THIS PROJECT ALREADY PAID FOR. r2 said
+    #    "beside a 55cm sapling with two oversized leaves..." -- a modifier
+    #    chain hanging off the goblin, which the model read as decoration. The
+    #    ep2 sapling probe learned the fix and STATE.md records it: naming the
+    #    plant as its own subject PRODUCED a plant. Same for the world: "dawn
+    #    field" is exactly the one-noun background the blank-background fix
+    #    exists to replace.
+    #
+    #    THE BUDGET IS WHY THIS IS A RESTRUCTURE AND NOT AN ADDITION. SDXL's
+    #    text encoder is a hard 77 tokens; r2 measured 69/77. There is no room
+    #    to bolt an environment paragraph onto what was already there, so the
+    #    character description was cut to buy the tokens -- identity comes from
+    #    --goblin-def and the approved reference, not from adjectives. Measured
+    #    at 0 sentences dropped with the style tail intact; a longer variant
+    #    carrying `whole plant in frame` was rejected because it pushed the
+    #    style tail off the end.
+    #
+    #    NEGATIVES CUT TO THE AUTHORED PAIR. r2's sidecar shows its beat-tier
+    #    negatives went over budget and EVICTED the base quality block --
+    #    photorealistic, 3d render, blurry, low quality, signature, watermark,
+    #    abstract were all DROPPED. Worse, they were mostly duplicates: the
+    #    harness already appends its own scale block (mature tree, large tree,
+    #    thick trunk, full canopy, forest, bush, shrubbery). So r3 adds only the
+    #    authored peopled-beat pair and lets the base block survive.
+    authored_ep3_003b_b01_dialect_r3: >-
+      A small goblin boy, {{GOBLIN}}, solo, kneels in sunlit grass holding a
+      purple fig, one slender sapling with two big leaves growing from the
+      earth beside him. Wide morning meadow, blue sky. Static camera, cinematic
+      lighting, detailed, newest, masterpiece, best quality, very aesthetic No
+      girl, no child. No photorealism, no 3D render look. 9:16 vertical, no
+      text.
+
+    # -- `authored_ep3_charref_farmer` -- 2026-08-12, the ep3 lane. CHARACTER REFERENCE, not a beat. The farmer is 004's second citizen and recurs in
+    #    005/006a/007a; he has never been drawn. Wording is the scripts' own continuity
+    #    block verbatim in substance ('a broad squarish silhouette in a straw hat, three
+    #    lines for his whole face, permanently unimpressed'), on the guard-sheet shape
+    #    that held 4/4. `farmer man` in the first comma-clause so the tag derives 1boy.
+    authored_ep3_charref_farmer: >-
+      A sun-cracked farmer man stands facing camera in a warm green grassy
+      morning field, broad squarish build, a wide straw hat, plain work clothes,
+      arms crossed, a permanently unimpressed face clearly visible. Medium shot,
+      bright morning light, cinematic lighting, detailed, newest, masterpiece,
+      best quality, very aesthetic No girl, no child, no armor, no helmet, no
+      weapon, no dark, no night, no dusk. No photorealism, no 3D render look.
+      9:16 vertical, no text.
+
+    # -- `authored_ep3_charref_assessor` -- 2026-08-12, the ep3 lane. CHARACTER REFERENCE, not a beat. 005's assessor, in 15+ of its 26 beats and never
+    #    drawn. Substance from 005's own continuity block: 'a thin vertical line of a man
+    #    in dust-grey robes, ruler-straight edges, a heavy ledger chained to his belt, a
+    #    quill worn to a stub'.
+    authored_ep3_charref_assessor: >-
+      A thin tall man in dust-grey robes stands facing camera in a warm green
+      grassy morning field, ruler-straight silhouette, a heavy ledger chained at
+      his belt, a worn stub of quill in one hand, a precise humourless face
+      clearly visible. Medium shot, bright morning light, cinematic lighting,
+      detailed, newest, masterpiece, best quality, very aesthetic No girl, no
+      child, no armor, no helmet, no weapon, no dark, no night, no dusk. No
+      photorealism, no 3D render look. 9:16 vertical, no text.
+
   4:
     slug: the-footnote
     kind: goblin
@@ -2705,6 +2775,28 @@ beats:
       above him. Warm midday light, lonely tone, slow push-in, cinematic
       lighting, detailed, newest, masterpiece, best quality, very aesthetic No
       girl, no child. No photorealism, no 3D render look. 9:16 vertical, no
+      text.
+
+  16:
+    # BEAT 16 EXISTS AS A BLOCK ONLY TO CARRY A FEMALE COUNT TAG. Every other
+    # block in this file declares '', '1boy' or '2boys', and the tag is checked
+    # against the block's declaration — so the magistrate, who is `she` in 006a,
+    # could not pass anywhere. 002b beat 16 has a real shot behind it (slug
+    # `why`) so the filename derives normally, and no other variant lives here.
+    # If `1girl` is not a value the checker accepts, the DRY step says so for $0
+    # and nothing is drawn — which is the cheapest way to find out.
+    tag: 1girl
+    # -- `authored_ep3_charref_magistrate` -- 2026-08-12, the ep3 lane. CHARACTER REFERENCE, not a beat. 006a's magistrate, in 21 of its 31 beats and never
+    #    drawn. Substance from 006a's own continuity block: 'tall in travel-worn robes of
+    #    office with a heavy seal on a chain — she never hurries'. `No girl` is dropped
+    #    from the tail here for the reason r2 taught: it would negate the subject.
+    authored_ep3_charref_magistrate: >-
+      A tall woman in dark travel-worn robes of office stands facing camera in a
+      warm green grassy morning field, a heavy seal on a chain at her breast,
+      one eyebrow raised, an unhurried face clearly visible. Medium shot, bright
+      morning light, cinematic lighting, detailed, newest, masterpiece, best
+      quality, very aesthetic No child, no armor, no helmet, no weapon, no dark,
+      no night, no dusk. No photorealism, no 3D render look. 9:16 vertical, no
       text.
 
   17:
