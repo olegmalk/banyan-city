@@ -401,6 +401,47 @@ beats:
       dusk, no sunset, no dim lighting, no moody lighting, no low key, no
       shadows dominant. No photorealism, no 3D render look. 9:16 vertical, no
       text.
+    # -- `authored_b02_idfix_r2` -- 2026-08-12, the fixer lane. TWO FAULTS READ
+    # OFF THE FOUR `_idfix` FRAMES, each answered in the channel that binds.
+    #
+    # 1. THE PATCHWORK CLIMBED ONTO HIS HEAD. All four frames stitch the cloak
+    #    into the character: a tan graft sutured across the crown (s0), X-stitches
+    #    on a pale skull (s1), a vertical seam down the middle of the head (s3),
+    #    red stitch-scars on the cheeks (s0, s2, s3). The ban therefore names SKIN
+    #    and never the bare word `stitches`, which would negate the `patchwork
+    #    cloak` the positive asserts: `no scars, no stitched skin`.
+    #    PAID FOR, NOT ADDED: the `_idfix` negative already sent 77 of 77, so two
+    #    new terms would evict the TAIL -- and the tail here is `female goblin,
+    #    elf` plus the whole plant-fusion tier. The grab tier retires instead:
+    #    `no grabbing`, `no pulling` and `no uprooting` are one gesture, and the
+    #    positive now pins the hands affirmatively ("cowers with both hands to his
+    #    chest"), which all four `_idfix` frames already drew 4/4 unaided.
+    #    MEASURED, THREE DRY RUNS, $0 EACH -- and the first two were worse, which
+    #    is why they were not sent. Retiring only grabbing+pulling silently lost
+    #    `mature tree`; buying that back lost `photorealism`. Retiring the whole
+    #    grab tier fits the recipe EXACTLY (77 -> sent 77, no NEGWARN at all) and
+    #    ships strictly more guard than the round it replaces: `mature tree` AND
+    #    `large tree` AND `photorealism` all survive alongside the two new bans,
+    #    and the plant-fusion tier, `female goblin` and `elf` are untouched.
+    # 2. THE SAPLING HE HIDES BEHIND IS IN NO FRAME (0/4). Two frames grow a whole
+    #    seedling bed instead of one sapling, one parks a stem at the far edge,
+    #    one buries him in grass. Treated as an OMISSION: the stem moves into the
+    #    third clause, ahead of the action, the placement `authored_b04_fieldban`
+    #    proved for the house drift. `Medium shot` pays for it.
+    #    THE COUNT TAG IS CHECKED, NOT ASSUMED: `A small goblin boy` still heads
+    #    the sentence and the insert lands after the first comma-clause, so
+    #    `_tag_from_clause` still derives `1boy`.
+    # This is the ONE r2 the sapling-adjacency limit gets. If the stem is still
+    # absent, beat 02 goes to `wave2-needs-founder.md` and the lane moves on.
+    authored_b02_idfix_r2: >-
+      A small goblin boy, {{GOBLIN}}, solo, behind the thin upright stem of a
+      tiny sapling in an open field, cowers with both hands to his chest, his
+      face peeking around the stem. Morning light, cinematic lighting,
+      detailed, newest, masterpiece, best quality, very aesthetic No girl, no
+      child, no scars, no stitched skin, no mature tree, no dark, no night, no
+      dusk, no sunset, no dim lighting, no moody lighting, no low key, no
+      shadows dominant. No photorealism, no 3D render look. 9:16 vertical, no
+      text.
 
 
   3:
