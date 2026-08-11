@@ -50,8 +50,14 @@ est_minutes: 4   # r1 measured 199s wall for 145 frames; this is 65 frames
 needs: [cuda, vram20, video-venv]
 
 payload:
+  # Prompt synced 2026-08-11 to the sidecar of the render that actually shipped:
+  # review/v34-motion/04-the-fall-LTX-r2.mp4.meta.yaml, same task id. That render
+  # had already replaced "everything holds its position, framing locked, no zoom,
+  # no push-in, no camera rise" with affirmative anchors; the spec still carried
+  # the negation block, and on this path (guidance 1.0, no uncond pass) the
+  # positive is the only channel the model reads, so "no zoom" delivers zoom.
   C:\banyan-farm\v34-r2\b04-prompt.txt: |-
-    2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. the scattered sheets of paper settle and their edges lift very slightly, the fallen phone's screen glows and flickers faintly, the fingers twitch once, dim light shifts across the floor. small ambient motion only, everything holds its position, framing locked, no zoom, no push-in, no camera rise, subject stays the same size and place in frame, living scene. Subject already in frame: no second person, no crowd, no face, one pair of hands on scattered papers on a dark floor, a phone lying screen-up nearby, deep blue night light.
+    2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. the edges of the scattered sheets lift and settle very slightly where they lie, the fallen phone glows and flickers faintly on the floor, the fingers rest still and tremble faintly against the paper, dim light shifts slowly across the floor. small ambient motion only, the camera is locked on a tripod and stays perfectly still, the hands stay resting flat on the papers in the same spot the whole time, the phone stays lying screen-up on the floor apart from the hands, at the same distance from them from first frame to last, the papers stay spread on the floor where they fell, the composition is identical in every frame, living scene. Subject already in frame: no second person, no crowd, no face, one pair of hands on scattered papers on a dark floor, a phone lying screen-up nearby, deep blue night light.
   # The three leading terms are the whole delta from r1: they name the r1 defect
   # directly. Everything after them is the wave negative, unchanged.
   C:\banyan-farm\v34-r2\b04-negative.txt: |-
