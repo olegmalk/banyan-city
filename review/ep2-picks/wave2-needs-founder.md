@@ -29,14 +29,35 @@ the same time, showing they were one fault — the reading is that `patchwork` s
 next to `bald head` in the identity slot and the model applies the fabric to the
 skull.
 
-- **The workaround is proven and is already shipping**: the beat-level ban `no
-  scars, no stitched skin` cleared it 4/4 on beat 02 without harming the cloak,
-  and it is propagated to the other goblin beats tonight.
-- **The cause is the definition**, and changing a frozen definition is not the
+**The workaround takes TWO words, not one, and it took a failed round to learn
+that.** Corrected after reading the r2 frames:
+
+| lever | where measured | result |
+|---|---|---|
+| `no scars, no stitched skin` (negative) | beat 02, **medium** shot | crown clean 4/4 |
+| same ban, delivery confirmed in sidecar | beat 04, **extreme close-up** | sutures reduced, **pale dome remains** |
+| same ban, delivery confirmed in sidecar | beat 14, **intimate close-up** | **brown graft still on the crown** |
+| `green scalp` (positive, no ban at all) | beat 03, medium | **skull fully green, no dome** |
+| nothing | beat 11, **wide** | never had the fault |
+
+So the negative reaches the *stitches* and the affirmative holds the *colour*,
+and **shot size decides whether you need both**. This lane initially read beat
+02's clean result as proof the two were one fault and propagated the ban alone to
+six beats; beats 04 and 14 then failed and are re-running with both. The
+recipe that has a measured result behind each half is **`green scalp` in the
+positive AND `no scars, no stitched skin` in the negative**.
+
+- **The cause is still the definition**, and changing a frozen definition is not the
   fixer's call. Options for the founder: reorder so `patchwork cloak` is not
   adjacent to `bald head`; move the cloak out of the identity slot into each
   beat's own sentence (which is where beat 08 already has it); or leave the
-  definition alone and keep paying two negative tokens per goblin beat forever.
+  definition alone and keep paying a positive clause *and* two negative tokens on
+  every goblin beat forever.
+- **A second word behaves the same way**, which is why this reads as a mechanism
+  rather than a quirk of `patchwork`: beats 09 and 10 say "a **round bald** guard
+  man", and both grew sphere-heads and loose floating heads. Beat 11 uses the same
+  wording in a **wide** shot and is fine. Whatever sits next to `bald head` lands
+  on the skull, and the closer the camera, the harder it lands.
 
 ## 2. The sapling will not stand next to the goblin
 
