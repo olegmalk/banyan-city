@@ -1481,6 +1481,51 @@ beats:
     tag: 1boy
     extra_neg: full
     gist: goodbye
+    # -- `authored_b17_refresh` -- 2026-08-12 ~00:0x, the beats 14-20 lane.
+    # `review/ep2-picks/wave-0811/b17-s0..s3.jpg`, all four opened before the fix
+    # was written: THREE OF FOUR HAVE THE SAPLING UPROOTED AND IN HIS HAND -- a
+    # tall leafy staff he leans on (s0), a plucked two-leaf sprig held up (s1),
+    # a cutting carried like a torch at dusk (s2). This beat is the goodbye; the
+    # sapling is the narrator of the episode and it is rooted in a field. In
+    # three of four he is walking off with it. FOUR OF FOUR DO NOT PERFORM THE
+    # BEAT: he stands still facing camera in all of them, nobody stands up, and
+    # no dust is brushed off anything. S2 IS TWILIGHT (blue sky, fireflies) and
+    # s0 is a dry sunset-yellow plain -- the steward's round-3 note for this beat
+    # was "a hero walking off into a sunset, one of them in a desert, and where
+    # is the tree", and both halves came back. S3 has GLOWING RED EYES and red
+    # markings running down one cheek that read as blood.
+    # ALREADY RIGHT AND NOT TOUCHED: outdoors in a grass field in 4/4, so no
+    # walls ban and no second field clause -- the draft already ends on `toward
+    # the open field` and this beat has never come back indoors.
+    # NO `bright morning light`: staging says `afternoon light warming toward
+    # amber` and staging is kept. The dark-ban rides WHOLE anyway, and `no dusk,
+    # no sunset` are the two terms it is here for -- afternoon is affirmed in the
+    # positive, so banning dusk and sunset sharpens that line rather than
+    # fighting it, which is the opposite of the beat-11 case.
+    # `rooted in the grass` IS AN ADDITION INSIDE THE STAGING SENTENCE, the only
+    # one in this lane, and it is additive rather than a rewording: `turns away
+    # from a tiny sapling` still turns away from a tiny sapling. It is here
+    # because three of four frames carried the narrator off in his fist, and
+    # because `authored_staged` already reached for the same words on the same
+    # fault. `no uprooted plant` rides with it -- the guard beats taught that the
+    # affirmative alone does not hold when the model has a strong prior.
+    # MEASURED: positive 68/77, anchor present, `1boy` derives, negative recipe
+    # 77 -> sent 77 with every added term reaching the model. NEGWARN drops the
+    # quality boilerplate plus `shrubbery, bush, forest, full canopy, thick
+    # trunk, tall tree, large tree`; `mature tree` survives. Unlike beat 15 the
+    # dark block is NOT narrowed to buy those back, because this beat's plant
+    # fault is position and not scale -- where the sapling appears at all it is
+    # correctly tiny, and the round-3 note was "where is the tree", not "the tree
+    # is too big". Stated as a risk, not a known regression.
+    authored_b17_refresh: >-
+      A small goblin boy, {{GOBLIN}}, solo, pushes himself up to standing,
+      brushes dust off his patchwork cloak, and turns away from a tiny sapling
+      rooted in the grass toward the open field. Static camera, afternoon light
+      warming toward amber, cinematic lighting, detailed, newest, masterpiece,
+      best quality, very aesthetic No girl, no child, no uprooted plant, no
+      glowing eyes, no dark, no night, no dusk, no sunset, no dim lighting, no
+      moody lighting, no low key, no shadows dominant. No photorealism, no 3D
+      render look. 9:16 vertical, no text.
     authored: >-
       A small goblin boy, {{GOBLIN}}, solo, pushes himself up to standing,
       brushes dust off his patchwork cloak, and turns away from a tiny sapling

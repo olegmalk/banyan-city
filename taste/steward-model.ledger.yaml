@@ -9019,3 +9019,33 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+- id: ep2-b17-refresh-0811
+  kind: prediction
+  written: 2026-08-12 ~00:1x, before enqueue; predicates fixed before any frame of
+    this round existed. The dry run passed on the box first (positive 68/77,
+    anchor intact, negative recipe 77 -> sent 77) and the dry step draws nothing.
+  round: ep2-b17-refresh-0811, beat 17 GOODBYE, variant authored_b17_refresh,
+    4 stills, SDXL animagine-xl-3.1, node 002b-first-citizen.
+  what_changed: staging kept from the wave-1 authored draft with one addition
+    inside the staging sentence - `a tiny sapling` became `a tiny sapling rooted
+    in the grass`, because 3 of 4 wave-1 frames had the sapling pulled out of the
+    ground and carried in his hand. Added with it `no uprooted plant`, `no glowing
+    eyes` for the s3 register, and beat 04's eight-term dark ban whole for the
+    twilight in s2 and the sunset plain in s0. NO `bright morning light` and no
+    walls ban - the staging says afternoon in its own words and 4 of 4 were
+    already outdoors.
+  predicates:
+    - the sapling rooted in the ground rather than held, carried or absent, in >=3/4
+    - one small green goblin boy, no second figure, in 4/4
+    - afternoon daylight rather than dusk, twilight or sunset, in >=3/4
+    - no glowing eyes and no blood-red facial markings, in 4/4
+    - him turning or facing away from the sapling toward open field, in >=2/4 -
+      this is the predicate most likely to miss, because nothing new was sent
+      against the frozen standing pose and the action words were already there
+  consumer: the founder's morning review page.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
