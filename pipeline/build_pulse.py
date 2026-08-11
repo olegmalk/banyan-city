@@ -108,7 +108,14 @@ COVERAGE = 0.9
 
 GH = repo_slug.GH_REPO            # pipeline/repo_slug.py — never hardcode the owner
 RAW = repo_slug.RAW_URL
-TELEMETRY_URL = f"{RAW}/farm-results-rtx5090/telemetry.json"
+# The render box publishes its vitals to a branch of its own (pipeline/telemetry.py,
+# "one branch per writer", 2026-08-11). It used to share the courier branch, where
+# every heartbeat force-push deleted the file. LEGACY is that old location: the box's
+# scheduled task is re-enabled by hand after a deploy, so for a while the freshest
+# sample can still be only in the old place, and the live tail tries it second rather
+# than telling a reader the machine has gone quiet when it has not.
+TELEMETRY_URL = f"{RAW}/farm-telemetry-rtx5090/telemetry.json"
+TELEMETRY_URL_LEGACY = f"{RAW}/farm-results-rtx5090/telemetry.json"
 QUEUE_URL = f"{RAW}/main/pipeline/farm-queue.yaml"
 
 # Geometry shared by every chart on the page, so that stacking two of them
@@ -653,7 +660,7 @@ LIVE_JS = """
    CDN, hence the per-minute cache-buster: without it a reader who reloads gets
    the same edge copy back and reads it as a frozen machine. */
 (function () {
-  var TEL = "__TEL__", Q = "__Q__";
+  var TEL = "__TEL__", TEL_OLD = "__TEL_OLD__", Q = "__Q__";
   var el = document.getElementById("pulse-live");
   if (!el) return;
   function bust() { return Math.floor(Date.now() / 60000); }
@@ -676,7 +683,11 @@ LIVE_JS = """
     }
     return { tasks: saw.tasks ? n.tasks : null, backlog: saw.backlog ? n.backlog : null };
   }
-  Promise.all([grab(TEL).catch(function () { return null; }),
+  /* The box's vitals moved to their own branch; the old URL is tried only when
+     the new one is not there yet, so a half-finished deploy reads as old news
+     rather than as a machine that stopped reporting. */
+  Promise.all([grab(TEL).catch(function () { return grab(TEL_OLD); })
+                        .catch(function () { return null; }),
                grab(Q).catch(function () { return null; })])
     .then(function (r) {
       var bits = [];
@@ -1141,7 +1152,9 @@ def build(out_dir: Path):
               f"WIN_TZ_OFFSET={int(TZ.utcoffset(None).total_seconds())},"
               f"WIN_MONTHS={json.dumps(MONTHS)};")
     tail = ("<script>" + consts +
-            LIVE_JS.replace("__TEL__", TELEMETRY_URL).replace("__Q__", QUEUE_URL) +
+            LIVE_JS.replace("__TEL__", TELEMETRY_URL)
+                   .replace("__TEL_OLD__", TELEMETRY_URL_LEGACY)
+                   .replace("__Q__", QUEUE_URL) +
             WIN_JS + "</script>")
     out = Path(out_dir) / "pulse.html"
     out.write_text(page(

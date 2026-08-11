@@ -7138,6 +7138,85 @@ def test_the_repo_owner_is_read_from_the_platform_that_is_building():
               "import repo_slug" in src)
 
 
+def test_the_courier_and_the_telemetry_daemon_own_different_branches():
+    """The push war, pinned shut.
+
+    Until 2026-08-11 `pipeline/telemetry.py` and the courier in `box_runner.py`
+    both wrote `farm-results-rtx5090`. The courier force-pushes from a tree with
+    no telemetry.json, so every heartbeat deleted the vitals; the daemon watched
+    the tip and re-published within the minute; each republish was another chance
+    for the courier's next push to lose the race. On the night of 2026-08-10 the
+    courier lost about ten in a row and render claims stalled some twenty minutes.
+
+    Nothing about that is fixable by retry tuning, so the fix was to give each
+    writer a branch. This test exists so nobody can quietly point them back at one.
+    """
+    import re
+
+    import telemetry
+
+    courier_src = (REPO / "pipeline" / "box_runner.py").read_text(encoding="utf-8")
+    m = re.search(r'^COURIER_BRANCH\s*=\s*"([^"]+)"', courier_src, re.M)
+    check("the courier still declares the branch it owns", m is not None)
+    if m:
+        check("the telemetry daemon does not publish to the courier's branch",
+              telemetry.BRANCH != m.group(1))
+        check("the branch telemetry left behind is the one the courier kept",
+              telemetry.LEGACY_BRANCH == m.group(1))
+    check("telemetry publishes to a branch named for what it carries",
+          telemetry.BRANCH == "farm-telemetry-rtx5090")
+
+
+def test_every_reader_falls_back_to_where_the_vitals_used_to_be():
+    """A reader pointed at the new branch alone would go blind on the old data.
+
+    The box's scheduled task is re-enabled by hand, so between deploying this and
+    someone restarting the daemon the freshest sample is still only in the old
+    place. A page that answered "not heard from" through that window would be
+    reporting our own deploy sequence as a dead machine, which is exactly the
+    class of claim the status page is not allowed to make.
+    """
+    import build_pulse
+    import build_sim
+    import pulse_series
+    import telemetry
+
+    check("build_sim maps a machine's courier branch to its vitals branch",
+          build_sim.telemetry_branch("farm-results-rtx5090") == telemetry.BRANCH)
+    check("that mapping is per-machine, not a special case for the 5090",
+          build_sim.telemetry_branch("farm-results-msi") == "farm-telemetry-msi")
+    check("the pulse cache reads the new branch first",
+          pulse_series.TELEMETRY_BRANCH == telemetry.BRANCH)
+    check("the pulse cache still knows the old one",
+          pulse_series.TELEMETRY_BRANCH_LEGACY == telemetry.LEGACY_BRANCH)
+    check("the pulse page's live tail asks the new branch",
+          telemetry.BRANCH in build_pulse.TELEMETRY_URL)
+    check("the pulse page's live tail keeps the old URL as its fallback",
+          telemetry.LEGACY_BRANCH in build_pulse.TELEMETRY_URL_LEGACY)
+
+
+def test_a_rev_parse_that_failed_is_not_a_sha():
+    """Handed a name it cannot resolve, `git rev-parse` echoes the NAME to stdout
+    and reports the failure only in its exit code.
+
+    This is not a hypothetical. `publish()` walks back over its own commits to
+    find what to rebuild on, and on a branch only it writes that walk asks for the
+    parent of the root commit every single cycle. Reading stdout alone took the
+    literal string "<sha>^" for a parent — a perfectly truthy value — and every
+    publish after the very first one died in ls-tree. Caught 2026-08-11 by running
+    the thing four times against a scratch remote instead of once.
+    """
+    import types
+
+    import telemetry
+
+    failed = types.SimpleNamespace(returncode=128, stdout="deadbeef^\n", stderr="fatal:")
+    check("a failed rev-parse yields no sha, whatever it printed",
+          telemetry.rev(failed) == "")
+    ok = types.SimpleNamespace(returncode=0, stdout="deadbeef\n", stderr="")
+    check("a successful one yields the sha", telemetry.rev(ok) == "deadbeef")
+
+
 def main():
     import tempfile
     test_beat_duration_from_timecode()
@@ -7336,6 +7415,10 @@ def main():
         test_a_review_page_the_build_never_copied_cannot_pass_the_gate(Path(td))
     # THE MIRROR AND PRODUCTION MUST NAME THE SAME OWNER.
     test_the_repo_owner_is_read_from_the_platform_that_is_building()
+    # TWO WRITERS MUST NEVER SHARE ONE BRANCH AGAIN.
+    test_the_courier_and_the_telemetry_daemon_own_different_branches()
+    test_every_reader_falls_back_to_where_the_vitals_used_to_be()
+    test_a_rev_parse_that_failed_is_not_a_sha()
     print()
     if FAILURES:
         print(f"✗ {len(FAILURES)} failure(s): {', '.join(FAILURES)}")

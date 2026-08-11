@@ -6,13 +6,12 @@ resource use *over time*. Two of the three series that answers need already
 exist somewhere, and none of them can be read by the thing that builds the
 page:
 
-  * GPU / VRAM / RAM        the box publishes `telemetry.json` to its courier
-                            branch every five minutes. That file is a rolling
-                            24-hour window and **it is the only copy** — the
-                            courier force-pushes, so the branch carries one
-                            commit for it and yesterday is gone the moment
-                            today is written. Nothing accumulates unless we
-                            accumulate it.
+  * GPU / VRAM / RAM        the box publishes `telemetry.json` to its own
+                            telemetry branch every five minutes. That file is a
+                            rolling 24-hour window and **it is the only copy** —
+                            each publish replaces the last, so yesterday is gone
+                            the moment today is written. Nothing accumulates
+                            unless we accumulate it.
   * queue depth             `pipeline/farm-queue.yaml`'s git history on main is
                             a real time series (151 commits, 12 days), but the
                             deploy server checks out one commit with no refs
@@ -61,7 +60,15 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent
 CACHE = REPO / "pipeline" / "pulse-series.json"
 
-TELEMETRY_BRANCH = "farm-results-rtx5090"
+# Telemetry has its own branch as of 2026-08-11 (pipeline/telemetry.py, "one
+# branch per writer"): the courier and the telemetry daemon used to force-push the
+# same ref and starve each other. LEGACY is where telemetry used to land, and is
+# read only when the new branch is not there — the box's scheduled task is
+# re-enabled by hand, so there is a window in which the last good sample is still
+# only in the old place, and a status page that went blank through it would be
+# reporting our deploy sequence as a dead machine.
+TELEMETRY_BRANCH = "farm-telemetry-rtx5090"
+TELEMETRY_BRANCH_LEGACY = "farm-results-rtx5090"
 QUEUE_PATH = "pipeline/farm-queue.yaml"
 HEARTBEAT_PATH = "farm-out/heartbeat.txt"
 
@@ -95,7 +102,13 @@ def git(*args: str, ref_ok: bool = True) -> str:
 
 
 def fetch_branches() -> list[str]:
-    """Update the courier branches we read, and report which ones we have.
+    """Update the branches we read, and report which COURIER ones we have.
+
+    Both families are fetched — the couriers carry the heartbeats, the telemetry
+    branch carries the vitals — but only the courier branches are returned: the
+    list feeds collect_jobs() and the `jobs.branches` provenance line, and a
+    telemetry branch listed there would advertise a machine whose heartbeat log
+    does not exist.
 
     Best-effort on purpose. Running this offline should extend the cache with
     whatever the local clone already knows rather than failing outright, which
@@ -103,7 +116,8 @@ def fetch_branches() -> list[str]:
     from the refs afterwards.
     """
     subprocess.run(["git", "fetch", "--quiet", "origin",
-                    "+refs/heads/farm-results-*:refs/remotes/origin/farm-results-*"],
+                    "+refs/heads/farm-results-*:refs/remotes/origin/farm-results-*",
+                    "+refs/heads/farm-telemetry-*:refs/remotes/origin/farm-telemetry-*"],
                    cwd=REPO, capture_output=True, text=True,
                    encoding="utf-8", errors="replace")
     out = git("for-each-ref", "--format=%(refname:short)", "refs/remotes/origin/farm-results-*")
@@ -117,7 +131,7 @@ def bucket_of(ts: int) -> int:
 
 
 def read_telemetry(ref: str) -> dict | None:
-    """The box's own 24-hour summary, straight off the courier branch."""
+    """The box's own 24-hour summary, straight off one branch."""
     raw = git("show", f"{ref}:telemetry.json")
     if not raw.strip():
         return None
@@ -125,6 +139,22 @@ def read_telemetry(ref: str) -> dict | None:
         return json.loads(raw)
     except json.JSONDecodeError:
         return None
+
+
+def read_telemetry_anywhere() -> tuple[dict | None, str]:
+    """(summary, the ref it came from) — new branch first, old branch as a fallback.
+
+    Returns the ref so the caller can record WHICH copy it read. During the
+    branch split the two can both exist and disagree, and the older one being
+    quietly averaged into the cache as though it were fresh is exactly the kind
+    of silent staleness the rest of this file works to prevent.
+    """
+    for branch in (TELEMETRY_BRANCH, TELEMETRY_BRANCH_LEGACY):
+        ref = f"origin/{branch}"
+        tel = read_telemetry(ref)
+        if tel:
+            return tel, ref
+    return None, f"origin/{TELEMETRY_BRANCH}"
 
 
 def downsample(tel: dict) -> dict[int, dict]:
@@ -338,8 +368,7 @@ def build(dry_run: bool = False) -> dict:
         old = {}
 
     branches = fetch_branches()
-    tel_ref = f"origin/{TELEMETRY_BRANCH}"
-    tel = read_telemetry(tel_ref)
+    tel, tel_ref = read_telemetry_anywhere()
 
     gpu = dict(old.get("gpu") or {})
     if tel:
@@ -350,6 +379,7 @@ def build(dry_run: bool = False) -> dict:
             "ram_total_gb": tel.get("ram_total_gb"),
             "last_sample": tel.get("last_sample"),
             "source_generated": tel.get("generated"),
+            "source_ref": tel_ref,
         })
         gpu.update(merge_grid(gpu, downsample(tel), now))
         gpu["read_ok"] = True
@@ -388,7 +418,8 @@ def main(argv: list[str]) -> int:
     n = len(g.get("u") or [])
     filled = sum(1 for x in (g.get("u") or []) if x is not None)
     print(f"gpu    : {filled}/{n} buckets carry a sample "
-          f"({BUCKET}s grid, read_ok={g.get('read_ok')})")
+          f"({BUCKET}s grid, read_ok={g.get('read_ok')}, "
+          f"from {g.get('source_ref') or 'nowhere'})")
     print(f"queue  : {len(out['queue']['samples'])} samples")
     print(f"jobs   : {len(out['jobs']['events'])} events "
           f"from {', '.join(out['jobs']['branches']) or 'no branches'}")

@@ -18,22 +18,34 @@ Runs ON the box, detached, as scheduled task `banyan-telemetry`
 - **not in either venv.** It runs on the box's system python and imports nothing
   that is not in the stdlib (psutil is used only if it happens to be importable).
   A venv reinstall mid-render must not be able to blind the telemetry.
-- **its own git repo**, `C:\banyan-farm\telemetry-git`: a blobless, depth-1
-  partial clone that never checks anything out. The farm worker owns the working
-  tree of `C:\banyan-farm\banyan-city` and switches ITS branch to
-  farm-results-rtx5090 as it heartbeats — a second process doing git work in that
-  tree is the 2026-07-31 two-workers bug with a different hat. So we build the
-  commit with plumbing (ls-tree → mktree --missing → commit-tree) on top of
-  whatever the remote tip is, and push only that one commit. Nothing is ever
-  checked out and no blob is ever read: the branch tip is ~960 MB of episode
-  media and this file is 40 KB.
+- **its own git repo**, `C:\banyan-farm\telemetry-git`: a blobless partial clone
+  that never checks anything out. The farm worker owns the working tree of
+  `C:\banyan-farm\banyan-city` and switches ITS branch as it heartbeats — a
+  second process doing git work in that tree is the 2026-07-31 two-workers bug
+  with a different hat. So we build the commit with plumbing (ls-tree → mktree
+  --missing → commit-tree) and push only that one commit. Nothing is ever
+  checked out and no blob is ever read.
 
-  Consequence worth knowing: `Courier.mark()` in farm_worker.py pushes with
-  `-f`, from a tree that has no telemetry.json — so a heartbeat DROPS the file
-  from the branch. That is why `--daemon` also polls `git ls-remote` every
-  minute: whenever the branch tip moves under us we re-publish immediately, so
-  the blink is ~a minute rather than a full publish interval. The status page
-  treats a missing or stale file as "no recent telemetry" and says so.
+- **ONE BRANCH PER WRITER.** This publishes to `farm-telemetry-rtx5090`, and
+  nothing else on earth writes there. Until 2026-08-11 it shared
+  `farm-results-rtx5090` with the courier, and the two fought over it:
+  `Courier.mark()` in farm_worker.py force-pushes from a tree that has no
+  telemetry.json, so every heartbeat DROPPED this file off the branch, and this
+  daemon watched the tip and re-published within the minute — each republish a
+  chance for the courier's next push to lose the race. On the night of
+  2026-08-10 the courier lost ~10 force-push races in a row that way and render
+  claims stalled ~20 minutes. Splitting the branches removes the contention at
+  its source rather than tuning the retry: the courier keeps
+  farm-results-rtx5090 exclusively, telemetry owns farm-telemetry-rtx5090
+  exclusively, and neither can clobber the other. The tip of this branch moves
+  only when this script moves it, so there is no tip-watching loop any more —
+  just the five-minute pulse. The branch also stays at exactly two commits: a
+  root commit and one current one, replaced in place (see `publish`).
+
+  Readers (`build_sim.py`, `build_pulse.py`, `pulse_series.py`) read the new
+  branch and fall back to the old location when it is absent, so the status page
+  survives the transition. A missing or stale file still reads as "no recent
+  telemetry" and the page says so.
 
 Operating it on the box (the three files that make it a service):
 
@@ -58,7 +70,7 @@ Modes:
 
     telemetry.py --sample-once   one sample to stdout; touches no file, no network
     telemetry.py --distil        rebuild telemetry.json from the CSV; no network
-    telemetry.py --publish-once  distil, then push to the courier branch, and exit
+    telemetry.py --publish-once  distil, then push to the telemetry branch, exit
     telemetry.py --daemon        the real thing: sample 10s, publish 5 min, forever
 """
 
@@ -89,16 +101,20 @@ DEPLOY_KEY = FARM / "farm_deploy_key"
 # resolves the remote instead of remembering it. On a fork's box this correctly
 # pushes to the fork.
 REMOTE = repo_slug.SSH_REMOTE
-BRANCH = "farm-results-rtx5090"
+# TELEMETRY'S OWN BRANCH — see the "one branch per writer" note in the module
+# docstring. Anything that reads this must also know the name; the readers are
+# build_sim.telemetry_branch(), build_pulse.TELEMETRY_URL and
+# pulse_series.TELEMETRY_BRANCH, each with a fallback to the old shared branch.
+BRANCH = "farm-telemetry-rtx5090"
+LEGACY_BRANCH = "farm-results-rtx5090"   # where this used to publish; readers fall back
 PUBLISH_PATH = "telemetry.json"      # path inside BRANCH → the raw URL the page fetches
 HOST = "rtx5090"
 # How publish() recognises its own commits, so each one replaces the last instead
-# of piling up on a branch that exists to carry render results.
+# of piling up at 288 commits a day.
 COMMIT_PREFIX = "telemetry: "
 
 SAMPLE_SECONDS = 10
 PUBLISH_SECONDS = 300                # 5 minutes, per the ask
-REMOTE_CHECK_SECONDS = 60            # see the `-f` note in the module docstring
 PRUNE_SECONDS = 1800
 KEEP_HOURS = 48                      # the rolling CSV on the box
 WINDOW_HOURS = 24                    # what the published summary covers
@@ -405,11 +421,28 @@ def git(*args, timeout=300, stdin_text=None):
                stdin_text=stdin_text, env=env)
 
 
+def rev(r) -> str:
+    """A sha from `git rev-parse`, or "" if there wasn't one.
+
+    Never read rev-parse's stdout without this. Handed a name it cannot resolve,
+    rev-parse ECHOES THE NAME BACK on stdout and reports the failure only in the
+    exit code — so `rev-parse <sha>^` on a root commit yields the literal string
+    "<sha>^", which is falsy in no way at all and sails on into the next command.
+    That is exactly what happened the first time this file published to a branch
+    of its own: the walk-back below asks for the parent of the root commit every
+    single cycle, took "<sha>^" for an answer, and every publish after the first
+    died in ls-tree. `--verify -q` prints nothing and returns nonzero instead.
+    """
+    return r.stdout.strip() if r.returncode == 0 else ""
+
+
 def ensure_repo() -> bool:
-    """A blobless, never-checked-out repo whose only job is to add one file to the
-    courier branch's tip tree. ~1 MB of trees instead of the ~960 MB the branch
-    actually holds — the box is downloading two model sets right now and telemetry
-    must not compete with them for the wire."""
+    """A blobless, never-checked-out repo whose only job is to put one file on the
+    telemetry branch. Blobless is belt-and-braces now that the branch carries
+    nothing but telemetry.json, but the remote is still the full repo and a
+    careless plumbing slip could ask it for ~960 MB of episode media — the box is
+    often mid-download of a model set and telemetry must not compete for the wire.
+    The same reason GIT_NO_LAZY_FETCH is pinned in git()."""
     if (TEL_GIT / ".git").exists():
         return True
     if not shutil.which("git"):
@@ -433,75 +466,103 @@ def ensure_repo() -> bool:
     return True
 
 
-def remote_tip() -> str:
+def remote_tip():
+    """Sha of BRANCH on the remote; "" if the branch is not there yet; None if the
+    question could not be asked at all.
+
+    Three answers, not two, because "the branch does not exist" is the normal
+    first-run state that publish() bootstraps from, and "the network is down" must
+    NOT be mistaken for it — a bootstrap builds a parentless commit, and building
+    one against a remote we simply failed to reach would throw away the history
+    the moment the link came back.
+    """
     r = git("ls-remote", "origin", f"refs/heads/{BRANCH}", timeout=120)
-    if r.returncode or not r.stdout.strip():
-        return ""
-    return r.stdout.split()[0]
+    if r.returncode:
+        return None
+    out = r.stdout.strip()
+    return out.split()[0] if out else ""
 
 
 def publish(obj: dict = None) -> str:
-    """Put telemetry.json on BRANCH at the current tip. Returns the pushed commit
-    sha, or "" if it did not land — a failed publish is logged and retried on the
-    next cycle, never fatal. Never force-pushes: if the worker moved the branch
-    between our fetch and our push, git rejects us and the next cycle rebuilds on
-    the new tip."""
+    """Put telemetry.json on BRANCH. Returns the pushed commit sha, or "" if it did
+    not land — a failed publish is logged and retried on the next cycle, never
+    fatal.
+
+    BRANCH belongs to this script alone, so the tip is whatever we last pushed and
+    the branch settles at exactly two commits: a root, and one current commit that
+    is replaced in place every cycle. The first run has no branch to build on and
+    bootstraps a parentless commit carrying only telemetry.json.
+    """
     if obj is None:
         obj = distil(read_rows(), gpu=gpu_name())
     write_json(obj)
     if not ensure_repo():
         return ""
-    # depth 6, not 1: enough to walk back over our OWN previous telemetry commits
-    # and rebuild on the last commit the worker actually made. Still blobless, and
-    # after the first cycle these trees are already local, so the fetch is bytes.
-    r = git("fetch", "--filter=blob:none", "--depth=6", "origin", BRANCH)
-    if r.returncode:
-        log(f"fetch failed: {(r.stderr or r.stdout).strip()[-300:]}")
+    tip = remote_tip()
+    if tip is None:
+        log("could not reach the remote to read the branch tip — retrying next cycle")
         return ""
-    tip = git("rev-parse", "FETCH_HEAD").stdout.strip()
+    base, lease = "", ""
     if not tip:
-        log("no FETCH_HEAD after fetch")
-        return ""
-    # REPLACE our last publish, do not stack on it. At one publish per five
-    # minutes, stacking is 288 commits a day on a branch whose whole point is to
-    # carry render results — a year of "telemetry:" commits burying them. So walk
-    # back over consecutive commits of our own and build on the worker's tip.
-    #
-    # The lease is what makes the force safe: --force-with-lease against the sha we
-    # just fetched can only ever overwrite THAT, and we only force at all when that
-    # sha is a commit this script wrote. A worker heartbeat landing mid-cycle fails
-    # the lease and we retry on the next one — the worker is never overwritten.
-    base, lease, hops = tip, "", 0
-    while hops < 5:
-        subj = git("log", "-1", "--format=%s", base).stdout.strip()
-        if not subj.startswith(COMMIT_PREFIX):
-            break
-        parent = git("rev-parse", f"{base}^").stdout.strip()
-        if not parent:
-            break                       # shallow boundary: stack this once, fine
-        lease, base, hops = tip, parent, hops + 1
+        log(f"{BRANCH} does not exist on the remote yet — creating it")
+    else:
+        # depth 6, not 1: enough to walk back over our OWN previous commits to the
+        # root. Still blobless, and after the first cycle these trees are already
+        # local, so the fetch is bytes.
+        r = git("fetch", "--filter=blob:none", "--depth=6", "origin", BRANCH)
+        if r.returncode:
+            log(f"fetch failed: {(r.stderr or r.stdout).strip()[-300:]}")
+            return ""
+        tip = rev(git("rev-parse", "--verify", "-q", "FETCH_HEAD"))
+        if not tip:
+            log("no FETCH_HEAD after fetch")
+            return ""
+        # REPLACE our last publish, do not stack on it: at one publish per five
+        # minutes, stacking is 288 commits a day. Walk back over consecutive
+        # commits of our own; on a branch only we write, that walk ends at the root
+        # commit, which becomes the permanent base every later publish sits on.
+        #
+        # The lease is what still makes the force safe even now that we are the
+        # only writer: --force-with-lease against the sha we just read can only
+        # ever overwrite THAT. Anything else on the tip — a human, a mistake, a
+        # second daemon — fails the lease and is left alone, and we retry.
+        base, hops = tip, 0
+        while hops < 5:
+            subj = git("log", "-1", "--format=%s", base).stdout.strip()
+            if not subj.startswith(COMMIT_PREFIX):
+                break
+            parent = rev(git("rev-parse", "--verify", "-q", f"{base}^"))
+            if not parent:
+                break                   # the root commit: build on it, never past it
+            lease, base, hops = tip, parent, hops + 1
     blob = git("hash-object", "-w", "--path", PUBLISH_PATH, str(JSON_PATH)).stdout.strip()
     if not blob:
         log("hash-object failed")
         return ""
-    # The whole tree, built without reading a single blob: list the tip's ROOT
-    # entries (subtrees stay untouched, by sha), swap in our own telemetry.json,
-    # and hand the listing to `mktree --missing` — the one plumbing command that
-    # is explicitly allowed to reference objects this repo does not have. No
-    # index, no write-tree, no promisor fetch. See git() for what that cost once.
-    r = git("ls-tree", base)
-    if r.returncode:
-        log(f"ls-tree failed: {(r.stderr or '').strip()[-200:]}")
-        return ""
-    # -z, AND NUL separators on the way in. Not a style choice: subprocess in text
-    # mode writes the child's stdin through a TextIOWrapper, which on Windows
-    # translates every "\n" to "\r\n" — so a newline-separated listing reached
-    # mktree with a trailing CR on every entry and it dutifully built a tree in
-    # which each of the 38 root entries was named "CLAUDE.md\r", "genomes\r",
-    # "telemetry.json\r". That commit was pushed and then rewound off the branch
-    # (2026-08-04). NUL is not a newline, so nothing can translate it.
-    lines = [ln.rstrip("\r") for ln in r.stdout.splitlines()
-             if ln.strip() and not ln.rstrip("\r").endswith(f"\t{PUBLISH_PATH}")]
+    # The tree, built without reading a single blob: list the base's ROOT entries
+    # (any subtree stays untouched, by sha), swap in our own telemetry.json, and
+    # hand the listing to `mktree --missing` — the one plumbing command that is
+    # explicitly allowed to reference objects this repo does not have. No index,
+    # no write-tree, no promisor fetch. See git() for what that cost once.
+    #
+    # `base` is empty only on the bootstrap, where there is no tree to carry
+    # forward and the branch starts as this one file.
+    lines = []
+    if base:
+        r = git("ls-tree", base)
+        if r.returncode:
+            log(f"ls-tree failed: {(r.stderr or '').strip()[-200:]}")
+            return ""
+        # -z, AND NUL separators on the way in. Not a style choice: subprocess in
+        # text mode writes the child's stdin through a TextIOWrapper, which on
+        # Windows translates every "\n" to "\r\n" — so a newline-separated listing
+        # reached mktree with a trailing CR on every entry and it dutifully built a
+        # tree in which each of the 38 root entries was named "CLAUDE.md\r",
+        # "genomes\r", "telemetry.json\r". That commit was pushed and then rewound
+        # off the branch (2026-08-04). NUL is not a newline, so nothing can
+        # translate it.
+        lines = [ln.rstrip("\r") for ln in r.stdout.splitlines()
+                 if ln.strip() and not ln.rstrip("\r").endswith(f"\t{PUBLISH_PATH}")]
     lines.append(f"100644 blob {blob}\t{PUBLISH_PATH}")
     tree = git("mktree", "-z", "--missing",
                stdin_text="".join(ln + "\0" for ln in lines)).stdout.strip()
@@ -509,7 +570,8 @@ def publish(obj: dict = None) -> str:
         log("mktree failed")
         return ""
     stamp = time.strftime("%H:%M:%SZ", time.gmtime())
-    commit = git("commit-tree", tree, "-p", base, "-m",
+    parent = ["-p", base] if base else []
+    commit = git("commit-tree", tree, *parent, "-m",
                  f"{COMMIT_PREFIX}{HOST} {stamp} ({len(obj.get('t', []))} min)").stdout.strip()
     if not commit:
         log("commit-tree failed")
@@ -569,9 +631,14 @@ def daemon() -> int:
     log(f"telemetry daemon up — pid {os.getpid()}, gpu '{gpu or 'unknown'}', "
         f"sample {SAMPLE_SECONDS}s, publish {PUBLISH_SECONDS}s, csv {CSV_PATH}")
     now = time.time()
+    # Publish on a plain interval and nothing else. There used to be a second
+    # trigger here — an `ls-remote` every minute that re-published the instant the
+    # branch tip moved — because the courier shared this branch and its force-push
+    # deleted telemetry.json on every heartbeat. On a branch only this daemon
+    # writes, the tip moves only when we move it, so that trigger could fire only
+    # on our own push. It is gone with the shared branch.
     next_sample, next_publish = now, now + SAMPLE_SECONDS
-    next_remote, next_prune = now + PUBLISH_SECONDS, now + PRUNE_SECONDS
-    pushed = ""
+    next_prune = now + PRUNE_SECONDS
     while True:
         now = time.time()
         if now >= next_sample:
@@ -582,17 +649,13 @@ def daemon() -> int:
             # absolute schedule, so a slow nvidia-smi does not drift the series;
             # a long stall (sleep/hibernate) resets rather than firing a burst
             next_sample = max(now + 1, next_sample + SAMPLE_SECONDS)
-        if now >= next_publish or (now >= next_remote and remote_tip() not in ("", pushed)):
+        if now >= next_publish:
             try:
                 got = publish(distil(read_rows(), now=now, gpu=gpu))
-                pushed = got or pushed
                 log(f"published {'ok ' + got[:8] if got else 'FAILED (will retry)'}")
             except Exception as e:                  # noqa: BLE001
                 log(f"publish failed: {e}")
             next_publish = now + PUBLISH_SECONDS
-            next_remote = now + REMOTE_CHECK_SECONDS
-        elif now >= next_remote:
-            next_remote = now + REMOTE_CHECK_SECONDS
         if now >= next_prune:
             try:
                 dropped = prune(now=now)
@@ -601,8 +664,7 @@ def daemon() -> int:
             except Exception as e:                  # noqa: BLE001
                 log(f"prune failed: {e}")
             next_prune = now + PRUNE_SECONDS
-        time.sleep(max(0.5, min(next_sample, next_publish, next_remote, next_prune)
-                       - time.time()))
+        time.sleep(max(0.5, min(next_sample, next_publish, next_prune) - time.time()))
 
 
 def main() -> int:

@@ -422,6 +422,17 @@ def branch_log(branch, absent_ok=False):
     return out
 
 
+def telemetry_branch(branch: str) -> str:
+    """`farm-results-rtx5090` → `farm-telemetry-rtx5090`.
+
+    Vitals and render results are two writers, and since 2026-08-11 they have two
+    branches (pipeline/telemetry.py). They shared one until the courier's
+    force-push and the telemetry daemon's republish started starving each other —
+    a night of lost courier pushes and ~20 minutes of stalled render claims.
+    """
+    return "farm-telemetry-" + branch.split("farm-results-")[-1]
+
+
 def telemetry_head(branch):
     """{'at': when, 'gpu': name} — a machine's own five-minute pulse, or None.
 
@@ -429,15 +440,23 @@ def telemetry_head(branch):
     point: it answers "is the box on", a question the heartbeat cannot answer
     because the heartbeat is only written while a task runs. Absence is normal
     (only the render box publishes one), so it is not reported as a failure.
+
+    Two places are tried: the machine's telemetry branch, then its courier branch,
+    which is where vitals used to live. The fallback is what carries the page
+    across the split — the box's scheduled task is restarted by hand, so the last
+    real sample sits in the old spot until someone re-enables it, and reading only
+    the new branch would print "not heard from" about a machine that is fine.
     """
-    txt = _get(f"{RAW}/{branch}/telemetry.json", None)
-    try:
-        d = json.loads(txt)
-        return {"at": datetime.datetime.fromtimestamp(float(d["last_sample"]),
-                                                      datetime.timezone.utc),
-                "gpu": str(d.get("gpu_name") or "")}
-    except Exception:
-        return None
+    for ref in (telemetry_branch(branch), branch):
+        txt = _get(f"{RAW}/{ref}/telemetry.json", None)
+        try:
+            d = json.loads(txt)
+            return {"at": datetime.datetime.fromtimestamp(float(d["last_sample"]),
+                                                          datetime.timezone.utc),
+                    "gpu": str(d.get("gpu_name") or "")}
+        except Exception:
+            continue
+    return None
 
 
 def queue_doc() -> dict:
@@ -1784,8 +1803,18 @@ LIVE_JS = """
 
   function readVitals(li) {
     var branch = li.getAttribute("data-branch"), key = li.getAttribute("data-mach");
-    fetch(RAW_BASE + "/" + branch + "/telemetry.json?_=" + bust(), {cache: "no-store"})
-      .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+    var tel = li.getAttribute("data-telbranch") || branch;
+    function grabTel(b) {
+      return fetch(RAW_BASE + "/" + b + "/telemetry.json?_=" + bust(), {cache: "no-store"})
+        .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); });
+    }
+    /* The vitals branch first, then the courier branch it used to share — the
+       same fallback the build-time read does, for the same reason: during the
+       split the freshest sample can still be in the old place, and a 404 there
+       must not be reported as a box that stopped publishing. */
+    var got = grabTel(tel);
+    if (tel !== branch) got = got.catch(function () { return grabTel(branch); });
+    got
       .then(function (d) {
         var at = +d.last_sample;
         if (!at) throw new Error("no sample in the file");
@@ -2676,6 +2705,7 @@ def build(out_dir: Path):
                         f'{age_el(m["telemetry"]["at"], now)}</span>')
         machlist += (
             f'<li data-mach="{_e(m["key"])}" data-branch="{_e(m["branch"])}" '
+            f'data-telbranch="{_e(telemetry_branch(m["branch"]))}" '
             f'data-tail="{_e(st["raw"])}" data-built="{int(now.timestamp())}" '
             f'data-tel="{"1" if m["telemetry"] else ""}">'
             f'<span class="mico">{m["emoji"]}</span> <b>{_e(m["name"])}</b> '
