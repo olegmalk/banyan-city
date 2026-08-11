@@ -159,6 +159,27 @@ working <code>takes/</code> folder next door has 113 sidecars, so this is specif
 canonical set: the files that matter most are the ones with the least machine-readable history.
 <em>The repair I was told to check for has not landed.</em></p>
 
+<div class="callout">
+  <p><strong>Then I tried to fix it, and the fix is the real finding.</strong> Of the 14 live canon
+  stills, 8 are byte-identical to a take that already has a proper sidecar, so their provenance can be
+  attached by copying — nothing asserted, nothing re-derived, same bytes means the same generation.
+  I made those 8 copies.</p>
+  <p><strong>The build went red.</strong> Measured licence debt rose from 25 to 33 and the test suite
+  failed on "the live tree adds nothing unpublishable". Attaching truthful provenance to eight frames
+  made eight more assets <em>visible</em> to the licence gate, and every one is CreativeML Open
+  RAIL++-M — not on the publish-safe list. <strong>Those stills were never passing the gate on merit.
+  They were passing because nothing could read what drew them.</strong></p>
+  <p>So this is not an admin chore anyone can pick up. <strong>The provenance repair is blocked on the
+  licence decision below</strong>, and whoever does it first without settling that will turn CI red and
+  be tempted to raise the debt ceiling, which the gate's own error text forbids. The order is: settle
+  the licence, then attach the provenance — it is one scripted pass once you have. I reverted my 8
+  copies rather than ship a red build; lint runs before the site build in the deploy, so a red lint
+  stops the site, not just a badge.</p>
+  <p>The other 6 of 14 cannot be repaired by copying at all: five match a take that has no sidecar
+  either, and <code>05-fan-spinning-down</code> matches nothing anywhere. Those would need provenance
+  reconstructed from the README's formula, which I did not do and would not do without you saying so.</p>
+</div>
+
 <h3>2. The cut is currently unpublishable, and it is not about this cut</h3>
 <p>Assembling v42 ran 26 ingredients through the licence gate and <strong>4 were refused</strong> —
 the stills under beats 06, 09, 12 and 15, all on the same ground: their model licence

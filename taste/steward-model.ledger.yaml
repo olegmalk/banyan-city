@@ -14214,3 +14214,41 @@
     Theirs is handoff-law-takes-is-not-on-the-box-0812 (commit 8ec2d1c8). Mine is this, kept
     because my lane is the one that enqueues jobs against box paths and will hit it again.
   outcome: null
+
+- id: ep1-canon-provenance-repair-0812
+  kind: observation
+  date: 2026-08-12
+  subject: "the missing provenance on episode 1's canon stills is not an admin gap — it is the only
+    reason the licence gate currently passes"
+  what_I_set_out_to_do: >-
+    Repair the finding from the ep1 audit: `licence_gate.sidecar_for()` returns None for all 29 files
+    in the approved stills directory, so no tool can check what drew the episode's own frames.
+  what_is_mechanically_repairable_and_it_is_partial: >-
+    Of the 14 LIVE canon stills (excluding REVOKED and ALT), 8 are byte-identical to a take that has a
+    real sidecar, so their provenance can be attached by copying with nothing asserted or re-derived —
+    same bytes, same generation, same provenance. 5 match a take that has NO sidecar of its own
+    (01, 02, 04, 11, 13). 1 matches nothing anywhere in takes/ (05-fan-spinning-down). So the honest
+    ceiling on a copy-based repair is 8 of 14, and the other 6 would require reconstructing provenance
+    from the README's formula — which this repo has already learned to distrust, and which I did not do.
+  THE ACTUAL FINDING, and it is much bigger than the gap: >-
+    I made the 8 clean copies and THE LINT GATE WENT RED. Measured licence debt rose from 25 to 33 and
+    `test_pipeline.py` failed on "the live tree adds nothing unpublishable". Attaching truthful
+    provenance to eight frames made eight more assets VISIBLE to the licence gate, and every one of them
+    is CreativeML Open RAIL++-M, which is not on the publish-safe allowlist. The stills were never
+    passing the gate on merit. They were passing because nothing could read what drew them.
+  therefore: >-
+    THE PROVENANCE REPAIR IS BLOCKED ON THE D15 LICENCE DECISION, not on someone finding time to write
+    sidecars. Anyone who "fixes the provenance" without settling D15 first will turn CI red and be
+    tempted to raise the ratchet, which lint_genome.py explicitly forbids in its own error text
+    ("Never raise LICENCE_DEBT to make this pass"). The order is: settle the licence, then attach the
+    provenance.
+  what_I_did_with_the_repair: >-
+    REVERTED it. Eight correct sidecars that turn CI red are not shippable tonight, and lint runs before
+    build_site in the deploy, so a red lint stops the site rather than just a badge. The tree is back to
+    0 of 29 with both gates green, and the repair is one scripted pass whenever D15 is answered.
+  the_shape_of_this_mistake_stated_plainly: >-
+    I treated "provenance is missing" as an admin chore and went to fix it. It was load-bearing. The
+    honest version of the audit line is not "0 of 29 sidecars, someone should write them" but "0 of 29
+    sidecars, and writing the true ones costs 8 licence violations" — which is a decision for him and
+    not a task for a lane.
+  outcome: null

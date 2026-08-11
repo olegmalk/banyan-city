@@ -202,6 +202,11 @@
   kind: decision
   verdict_hint: clear D15 by narrowing what we offer reusers / replace the four stills / accept episode
     1 stays screening-only for now
+  note_added_2026-08-12: 'These two are ONE decision, not two. I tried to fix the provenance and the
+    build went red: attaching the 8 truthful sidecars that CAN be attached raised measured licence debt
+    from 25 to 33, because those stills were only passing the gate while nothing could read what drew
+    them. Settle the licence first and the provenance repair is one scripted pass; do it the other way
+    round and CI stops the site.'
 - what: 'Beat 12 (two leaves against the sky) has a PASSING plate you have never been shown - b12-r4-s2.
     Its round-4 fix worked: the pink ripe fruit that got round 3 rejected is gone in 4 of 4, so is the
     face on it and the city skyline. What it does not do is show TWO leaves, and the leaves are long
