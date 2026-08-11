@@ -1,0 +1,43 @@
+# Still provenance (7.2), written AT RENDER TIME by render_wave_sample.py
+# on the rtx5090. ONE SAMPLE against the founder's goblin definition —
+# not a wave. The other fourteen beats wait on his verdict on this one.
+# The negative below is what the model actually saw; the recipe's own
+# negative, before the one deliberate removal, was:
+#   text, mature tree, girl, child, uprooted plant, glowing eyes, dark, night, dusk, sunset, dim lighting, moody lighting, low key, shadows dominant, photorealism, leaf on head, plant girl, alraune, monster girl, flower on head, head wreath, hair ornament, leaf hair ornament, plant hair, female goblin, elf
+#   NEGWARN: !! negative prompt over CLIP's 77-token budget; deduplicated: text; DROPPED: realistic skin texture, jpeg artifacts, deformed, extra limbs, blurry, low quality, signature, watermark, abstract, 3d render, photorealistic, shrubbery, bush, forest, full canopy, thick trunk, tall tree, large tree
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+cost_usd: 0.00
+shot_beat: 17
+beat_slug: goodbye
+beat_kind: goblin
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20261736
+seeds_in_batch: 4
+task: ep2-b17-idfix-0812
+render_round: wave-sample-1
+candidate_set: wave1
+count_tag: 1boy
+negative_terms_removed: tall tree
+goblin_definition_source: >-
+  the founder, 2026-08-10, verbatim: "he is just a simple green goblin, nothing complex". Recorded in cuts/cuts.yaml item 18 (settled) and taste/steward-model.ledger.yaml record ep2-goblin-definition-0810.
+goblin_definition_as_sent: >-
+  green skin, bald head, patchwork cloak — the steward's translation of his sentence into slot tags, NOT his words as tags. `green skin` is his one named attribute; `tusks` is his own shots.md ('one broken tusk') and the measured lever that took not-female to 4/4 in r9. `plump` was dropped: it is the steward's word, it is in neither his sentence nor his script, and record 42 read it as overshoot on 2 of 4. He has not ratified this translation.
+prompts_from: wave-drafts.yaml (NOT shots.md — shots.md is untouched)
+draft_variant: authored_b17_refresh
+harness_sha256: 7efd0b96bfa14b4a3f2411f3646f6e5fa22723c149e2ea0d628520446485d1e8
+drafts_sha256: ad91edfaac52070e30ed699ed8da4c5dafb0b8b049021620628e9c52f0db2776
+tokenizer: openai/clip-vit-large-patch14 (transformers, on the box)
+positive_tokens: 74
+negative_tokens_sent: 77
+extra_negative_tier: full
+prompt: >-
+  1boy, a small goblin boy, green skin, bald head, patchwork cloak, solo, pushes himself up to standing, brushes dust off his patchwork cloak, and turns away from a tiny sapling rooted in the grass toward the open field. Static camera, afternoon light warming toward amber, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+negative_prompt: >-
+  text, mature tree, girl, child, uprooted plant, glowing eyes, dark, night, dusk, sunset, dim lighting, moody lighting, low key, shadows dominant, photorealism, leaf on head, plant girl, alraune, monster girl, flower on head, head wreath, hair ornament, leaf hair ornament, plant hair, female goblin, elf
+render_seconds: 9.3
+founder_verdict: null
+scored: false
