@@ -8509,3 +8509,88 @@
     report the delta SERIES or a consecutive-difference strip, not just the frozen
     share: 67.2% and 64.1% are nearly the same number and hide that both clips
     move in decaying steps of three.
+- id: ltx-gprobe-guidance-0811-observed
+  date: 2026-08-11
+  kind: observation
+  subject: "First returns and corrected priors for `ltx-gprobe-guidance-0811`.
+    Predicate (2) resolved exactly; a sidecar falsehood is now confirmed on a
+    rendered artifact rather than predicted; and `ep1-b08-v34-plate-g20-sample-
+    scored`, committed while these arms were on the card, is a strong prior
+    AGAINST this probe's central predicate and is recorded as such."
+  steward_provisional: true
+  pick: null
+  scores: {}
+  this_is_an_append_not_an_edit: >-
+    The prediction record `ltx-gprobe-guidance-0811` is left exactly as committed
+    in 6871f93. This file's header says "Append only; never rewrite a record", and
+    the only thing that makes that record a prediction is that it was written
+    before any arm returned. Everything below arrived AFTER the three arms were
+    queued and after the g1.0 arm had rendered, so folding it back into the
+    prediction would have dressed hindsight as foresight.
+  predicate_2_resolved_and_it_is_the_strongest_result_so_far: >-
+    PREDICATE (2) HELD, exactly and measurably. The g1.0 arm
+    `10-ltx-gprobe-g10-0811-s20260897.mp4` came back BYTE-IDENTICAL to the
+    2026-08-10 control `10-ltx-r2g-plate-s20260897.mp4` — same sha256
+    45ceda8964b9a349dadd6ae35a54b8edc553a91c3c3dff6a9313770f71093c24, same 162,733
+    bytes — despite a materially different negative prompt (nine climb terms
+    added, five anti-stillness terms removed). Two things follow, and the second
+    matters more than this probe. FIRST: at guidance 1.0 the negative is inert
+    BIT-FOR-BIT, not merely inert by code reading, which upgrades commit e4fbb65's
+    audit of 26 of 38 LTX negations from an inference about diffusers source to a
+    measured fact. SECOND: the box render path is deterministic and behaviourally
+    unchanged since 2026-08-10 — the offload commit b9dac23 landed in the repo but
+    not in the box's standalone harness — so any difference the 2.0 and 2.5 arms
+    show is attributable to guidance alone. That is a stronger experimental
+    control than the probe was designed to have.
+  the_sidecar_lie_is_now_confirmed_on_an_artifact_not_predicted: >-
+    The §7.2 sidecar appends "[unused: guidance 1.0 on the distilled path runs no
+    uncond pass, so this changed no pixel]" on a condition that tests only whether
+    a negative EXISTS — `... if a.negative else a.negative` — and never what
+    guidance actually was. Verified in BOTH copies that matter: the box harness
+    `C:\banyan-farm\ltx_i2v.py` line 512 and the repo's `pipeline/ltx_i2v.py` line
+    1130. It is no longer a prediction: the rendered g2.0 sidecar
+    `10-ltx-gprobe-g20-0811-s20260897.mp4.meta.yaml` carries `guidance: 2.0` and,
+    below it, that same "[unused: guidance 1.0 ...]" line. The file contradicts
+    itself on its face, and that self-contradiction is the ONLY tell a later
+    reader gets. The g2.5 sidecar will carry it too.
+    NOT FIXED, DELIBERATELY: the box harness is what runs, editing it mid-probe
+    would void the byte-identity control established above, and a harness change
+    is a bigger decision than a probe. Recorded so the falsehood is on the record
+    BEFORE anyone reads those sidecars and concludes the arms were inert.
+  the_negative_is_live_at_2_0_on_this_beat_too: >-
+    g1.0 162,733 bytes, g2.0 189,394 bytes, same plate, same seed, same wording,
+    one changed argument. The negative is being evaluated. That is all a file size
+    can say — whether it binds USEFULLY is a question for eyes on the frames, and
+    no number below or above should be read as answering it.
+  the_prior_that_cuts_against_this_probe_and_it_is_named_first: >-
+    `ep1-b08-v34-plate-g20-sample-scored` (commit 0a1a45f) landed while these arms
+    were on the card, and it is the closest thing to a direct test of this probe's
+    central predicate that exists. On beat 08 the negative ALREADY named that
+    beat's defect — five anti-stillness terms against a beat measurably frozen —
+    and at guidance 2.0 they became live for the first time and moved the frozen
+    share the WRONG WAY, 64.1% to 67.2% measured identically, leaving a
+    one-in-three cadence stutter untouched. Its conclusion: "THE NEGATIVE WAS
+    NEVER THE LEVER FOR FREEZE ... no further beat should be spent on g2.0 for the
+    freeze problem." HONEST READING FOR THIS PROBE: that makes predicate (3) — the
+    2.0 arm showing less climb — materially LESS likely than it looked when it was
+    written, and if (3) misses, that record predicted it first and should get the
+    credit. WHAT IT DOES NOT DO is retire this probe, and the distinction is
+    narrow enough to state precisely: its scope is freeze, its terms had been
+    sitting in the negative all along, and its own recommendation is scoped to
+    "the freeze problem". The climb is a different defect, the nine climb terms
+    have never appeared in any LTX negative, and the 2.5 arm is untested at any
+    guidance. If (3) misses here as well, the two records together retire negative
+    prompting on the distilled LTX path generally rather than for freeze alone —
+    which is a broader and more useful finding than either alone.
+  what_is_still_open: >-
+    Predicates (1), (3) and (4): whether the climb is visible at 1.0 (it should
+    be — this arm bit-reproduces a clip whose apex was measured rising 181px),
+    whether naming the defect REDUCES it at 2.0, and whether 2.5 costs visible
+    picture. Read by eye off the three clips, side by side. NO METRIC RANKS THEM
+    (131e433) — and beat 08 just demonstrated the cost of trusting one, where the
+    on-twos detector read 1.3 "clean" on a clip stepping on threes.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
