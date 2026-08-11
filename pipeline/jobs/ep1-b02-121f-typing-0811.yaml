@@ -1,0 +1,218 @@
+# Beat 02, 121 frames, FRAMING HELD *AND HE TYPES*. Roman 2026-08-11 ~15:07:
+# "redo beat 2, make him actually type".
+#
+# WHERE THIS SITS. Two beat-02 attempts precede it and each fixed the previous
+# one's fault without reaching his:
+#
+#   attempt 1  ep1-b02-121f-vo-length      REJECTED — camera walked behind him by
+#              frame 4. Cause: the prompt's subject tail described beat 02's
+#              shots.md STAGE DIRECTION ("seen from behind as a dark silhouette")
+#              instead of the plate, so LTX moved the camera to make that shot.
+#   attempt 2  ep1-b02-121f-framing-hold-0811   FRAMING FIXED, in the cut now.
+#              Verified frame by frame: composition of frame 120 == frame 0. But
+#              the only motion in it is a head tilt, a hand coming off his
+#              glasses, and steam off the mug. HIS HANDS DO NOT TYPE. That is
+#              what this job answers, and it is the only thing that changes.
+#
+# THIS IS A ONE-VARIABLE JOB. Everything below is
+# ep1-b02-121f-framing-hold-0811.yaml verbatim — same plate and same cover-centre
+# crop, same seed 20260902, same 121 frames, same two-stage distilled schedule,
+# same guidance 1.0, same negative, same steps — except the ACTION wording in the
+# positive prompt and the output name. The camera-lock clause is copied character
+# for character, on purpose: it is the thing that stopped the walk and changing it
+# risks re-opening attempt 1's defect.
+#
+# WHAT THE PLATE ACTUALLY SHOWS, because attempt 1 died of not checking.
+# genomes/.../stills/02-three-oh-seven.png: close, front-and-right, his face lit
+# pink by the monitor, glasses catching the glow. ONE HAND IS RAISED AT HIS
+# GLASSES holding a dark object; the other rests on the desk beside the mug. The
+# big mechanical keyboard is at the bottom of frame, lit pink. NEITHER HAND IS ON
+# THE KEYS. That is precisely why attempt 2 animated the glasses hand — it moved
+# the only hand the plate had in motion range. So "make him type" is not a matter
+# of asking harder for finger motion: the raised hand has to be brought DOWN to
+# the keyboard first, and the prompt now says so explicitly. Left implicit, the
+# model's cheapest way to put hands on keys is to grow a new pair.
+#
+# THE ACTION DIFF, VERBATIM.
+#   REMOVED (the stillness framing — this is what suppressed the typing; every
+#   clause in it is a cap on how much the hands may move):
+#     "the seated engineer holds his pose at the desk, his shoulders steady, his
+#      head kept at the same angle toward the monitor; only his fingers move
+#      lightly on the mechanical keyboard. small ambient motion only,"
+#   ADDED (typing stated positively, specifically, and as the shot's main action —
+#   named as a motion, which beat 10 proved LTX honours when it appears in the
+#   positive; the hand-descent named so the hands are moved, not duplicated):
+#     "the seated engineer is typing at the desk. he brings his raised hand down
+#      from his glasses onto the mechanical keyboard, and from there both of his
+#      hands work the keys together, his fingers striking key after key, his
+#      fingers running across the rows, his wrists shifting as his hands travel
+#      over the keyboard, the typing going on without a pause for the whole
+#      shot,"
+#   ALSO ADDED, inside the "within that fixed frame" tail, so the ambient list
+#   does not read as the full inventory of motion:
+#     "his fingers keep working the keys, "     (leading the ambient clause)
+#   UNCHANGED: the entire camera-lock clause, the ambient tail (glow pulse, mug
+#   steam, dust motes, "living scene"), and the "Subject already in frame:" tail.
+#
+# THE SUBJECT TAIL IS NOT TOUCHED, and that is deliberate. It describes the plate
+# as the plate is. It would be easy to "help" by writing "his hands on the
+# keyboard" into it, and that would be attempt 1's exact mistake in the opposite
+# direction: telling the model the conditioning image contains something it does
+# not, which is what makes LTX travel the camera to reconcile the two. The
+# hand-on-keys state is asked for as an ACTION that happens during the shot, and
+# only there.
+#
+# NO NEGATIONS ANYWHERE IN THE POSITIVE. At guidance 1.0 the uncond pass is
+# skipped entirely (ltx_i2v.py:1001-1008), so the positive is the whole prompt and
+# "no", "never", "without" deliver their nouns. Note "the typing going on without
+# a pause" — "without a pause" is the one construction here that reads like a
+# negation; it survives review because its noun is `pause`, and a stray `pause`
+# token biases toward exactly the stillness we want less of. Rewriting it as
+# "continuous" was considered and rejected as vaguer.
+#
+# FRAME COUNT UNCHANGED AND STILL ARITHMETIC. Beat 02's VO is 4.451s, so
+# render_t3.fit_duration (render_t3.py:312) floors at 4.851s and caps at 6.451s.
+# LTX wants 8n+1: 113 -> 4.708s is under the floor; 129 -> 5.375s clears it but
+# round(5.375, 2) = 5.38 > 5.375, so trim=duration=5.38 against a 5.375s source
+# wraps one frame of frame 0 onto the end (render_t3.py:627-631) — rejected today
+# for exactly that. 121 -> 5.041667s, and round(5.041667, 2) = 5.04 <= 5.041667,
+# so it rounds DOWN and nothing wraps. 121 stands.
+#
+# NO METRIC PICKS ANYTHING. The flow metric is disqualified on this series
+# (131e433 — it scored highest on the beat where the plant fell over). By eye:
+# do the hands move across the keys, and does the frame hold. Both, or it is not
+# wired into the cut.
+
+id: ep1-b02-121f-typing-0811
+task: ep1-b02-121f-typing-0811
+node: 001-capability-inventory
+beat: 2
+runner: box
+needs_gpu: true
+priority: 24
+max_attempts: 1
+sample: true           # one clip, one recipe change, before anything scales
+owner: beat02-type lane, 2026-08-11
+
+consumer: >-
+  Roman's beat-02 verdict directly, and through it the episode-1 cut he is about
+  to publish. He has now passed on this beat twice: once for the camera walk,
+  once — 2026-08-11 ~15:07 — for a clip where the framing holds but the engineer
+  never touches the keyboard. This is the last episode-1 beat outstanding.
+
+success: >-
+  A 704x1280 mp4 at C:\banyan-farm\v34-r2\02-three-oh-seven-LTX-121f-typing.mp4
+  with 121 decoded frames (5.042s) that passes BOTH conditions, judged by eye:
+  (1) HANDS — his hands are on the mechanical keyboard and moving across it for
+  the bulk of the clip, fingers working the keys, not a single twitch and not a
+  hand parked on the keys unmoving. Sample frames 0/10/30/60/90/120 and say what
+  the hands are doing in each. (2) FRAMING — the composition of frame 120 is the
+  composition of frame 0: same close front-right angle with his face visible, him
+  the same size at the same height, the monitor the same size behind his
+  shoulder, desk and keyboard and mug in their places. Check frames 1, 2 and 4
+  first; that is where attempt 1 broke, and a hand-descent is a bigger motion
+  than anything attempt 2 asked for, so the lock is under more load here than it
+  has been. Failing EITHER condition, the clip is not wired into the cut and the
+  failure is reported as one. A duplicated or third hand is a fail.
+
+why: >-
+  Attempt 2 held the frame but left his hands off the keys, because every clause
+  describing him capped his motion. The typing is now the stated action.
+
+est_minutes: 6   # identical recipe to the two 121f runs, both measured
+needs: [cuda, vram20, video-venv]
+
+payload:
+  # Affirmative throughout. No figure ban. The camera-lock clause is byte-identical
+  # to ep1-b02-121f-framing-hold-0811; the action clause around it is the variable.
+  C:\banyan-farm\v34-r2\b02-type-prompt.txt: |-
+    2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. the seated engineer is typing at the desk. he brings his raised hand down from his glasses onto the mechanical keyboard, and from there both of his hands work the keys together, his fingers striking key after key, his fingers running across the rows, his wrists shifting as his hands travel over the keyboard, the typing going on without a pause for the whole shot, the camera is locked on a tripod and stays perfectly still, the engineer stays at the same size in the same place in frame with his head at the same height throughout, the shot stays a close view from the front and right with his face visible, the monitor keeps the same size and the same position behind his shoulder, the desk, the keyboard and the mug keep their places from first frame to last, the composition is identical in every frame. within that fixed frame his fingers keep working the keys, the monitor glow pulses very faintly across his face and glasses and across the desk, a thin wisp of steam curls up from the mug, dust motes drift slowly through the screen light, living scene. Subject already in frame: one seated young man in a black hoodie at close range from the front and right, his face lit pink by the monitor, glasses, messy dark hair, a large glowing monitor behind his shoulder, a mechanical keyboard, a mug, a dark apartment at three in the morning.
+
+  # Byte-identical to the framing-hold job. At guidance 1.0 none of it is read;
+  # it is the provenance record of what was asked (§7.2).
+  C:\banyan-farm\v34-r2\b02-type-negative.txt: |-
+    second person, crowd, extra hand, extra arm, extra face, animal, bird, insect, new object appearing, photorealism, 3D render look, text, 静态, 静止, frozen frame, still image, no motion, photorealistic, photograph, live action, film still, 3D render, CGI, octane, scene change, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+
+  C:\banyan-farm\v34-r2\b02-type-jobs-encode.json: |-
+    [{"beat": 2,
+      "embeds": "C:\\banyan-farm\\v34-r2\\b02-type-embeds.pt",
+      "prompt_file": "C:\\banyan-farm\\v34-r2\\b02-type-prompt.txt",
+      "negative_file": "C:\\banyan-farm\\v34-r2\\b02-type-negative.txt"}]
+
+  C:\banyan-farm\v34-r2\b02-type-jobs-render-121.json: |-
+    [{"beat": 2,
+      "seed": 20260902,
+      "embeds": "C:\\banyan-farm\\v34-r2\\b02-type-embeds.pt",
+      "init": "C:\\banyan-farm\\v34-r2\\02-704x1280.png",
+      "out": "C:\\banyan-farm\\v34-r2\\02-three-oh-seven-LTX-121f-typing.mp4"}]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  # Same plate step as both prior 121f runs, and it must stay: prepare_plate does
+  # the cover-centre crop 832x1216 -> 704x1280 (plate_prep.py:55 CROP_POLICY =
+  # "cover-centre"). The v34-motion-0810 series went in RAW and is stretched
+  # 24.4% vertically; this job does not repeat that.
+  - name: plate
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - -c
+      - |
+        import sys; sys.path.insert(0, r"C:\banyan-farm\banyan-city\pipeline")
+        from plate_prep import prepare_plate
+        out, rec = prepare_plate(
+            r"C:\banyan-farm\banyan-city\genomes\sapling\nodes\001-capability-inventory\stills\02-three-oh-seven.png",
+            "704x1280", r"C:\banyan-farm\v34-r2", "02")
+        print("plate", out); print(rec["plate_wxh"], rec["crop_policy"])
+        print("source_sha256", rec["sha256"])
+  - name: encode
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+      - --stage
+      - encode
+      - --jobs
+      - C:\banyan-farm\v34-r2\b02-type-jobs-encode.json
+  - name: render
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+      - --stage
+      - render
+      - --jobs
+      - C:\banyan-farm\v34-r2\b02-type-jobs-render-121.json
+      - --size
+      - 704x1280
+      - --frames
+      - "121"
+      - --fps
+      - "24"
+      - --guidance
+      - "1.0"
+      - --distilled-sigmas
+      - --two-stage
+      - --image-crf
+      - "33"
+      - --offload
+      - sequential
+      - --mode
+      - production
+      - --task
+      - ep1-b02-121f-typing-0811
+      - --worker
+      - rtx5090
+      - --bench-jsonl
+      - C:\banyan-farm\v34-r2\bench-b02-121f-typing.jsonl
+      - --bench-label
+      - b02-121f-typing
+
+artifacts:
+  - C:\banyan-farm\v34-r2\02-three-oh-seven-LTX-121f-typing.mp4

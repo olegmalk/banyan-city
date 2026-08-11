@@ -1,0 +1,204 @@
+# Beat 02 typing, VARIANT A — the spec that is ON THE CARD RIGHT NOW, recorded
+# because the running job's recipe was otherwise going to exist nowhere but in a
+# queue json. Roman 2026-08-11 ~15:06: "redo beat 2, make him actually type."
+#
+# READ THIS FIRST — TWO LANES WROTE THE SAME JOB. This lane and another both
+# answered the same verdict within thirteen seconds of each other. Both enqueued
+# under the SAME task id `ep1-b02-121f-typing-0811` (queue files ...-1786446886
+# = this one, ...-1786446899 = the other) and both name the SAME output,
+# 02-three-oh-seven-LTX-121f-typing.mp4. The other lane's spec overwrote this
+# one at pipeline/jobs/ep1-b02-121f-typing-0811.yaml while this one's job was
+# already running. Nothing is reverted: the peer's spec is the better one (see
+# below) and keeps the canonical path and the canonical output name. This file
+# preserves what variant A actually asked for, so the clip that is rendering can
+# be attributed to a prompt instead of guessed at.
+#
+# WHERE THE TWO VARIANTS DIFFER, and why B is the better ask. Both delete the
+# same three suppressors from the framing-hold prompt — "holds his pose", "only
+# his fingers move lightly", "small ambient motion only" — which is the actual
+# cause of the no-typing clip, and both carry the camera lock verbatim. They part
+# on the plate:
+#   A (this file)  asks for "both hands down on the mechanical keyboard" as a
+#                  STATE the shot opens in.
+#   B (the peer)   checked stills/02-three-oh-seven.png and found that in the
+#                  plate ONE HAND IS RAISED AT HIS GLASSES and the other rests on
+#                  the desk — NEITHER hand is on the keys. So B asks for the
+#                  descent as an action: he brings the raised hand down from his
+#                  glasses onto the keyboard, and from there both hands work the
+#                  keys.
+# That difference matters and A got it wrong. Telling LTX that hands are already
+# on the keyboard, while conditioning it on a frame where they are not, is the
+# same category of prompt/plate mismatch that made attempt 1 walk the camera —
+# and the model's cheapest way to satisfy it is to grow a second pair of hands.
+# A may still produce usable typing; it is likelier than B to produce a duplicated
+# hand, and that is the thing to check first in the A clip.
+#
+# BOTH CLIPS SURVIVE. Because A and B write the same filename, A's mp4 is copied
+# to 02-three-oh-seven-LTX-121f-typing-A-handsdown.mp4 as soon as it lands, before
+# B's render reaches its write. B keeps the canonical name. Judge by eye, side by
+# side: does he type, does the frame hold, and does he still have exactly two hands.
+#
+# THE CLAUSE A CHANGED, verbatim, against ep1-b02-121f-framing-hold-0811:
+#   BEFORE:
+#     "the seated engineer holds his pose at the desk, his shoulders steady, his
+#      head kept at the same angle toward the monitor; only his fingers move
+#      lightly on the mechanical keyboard. small ambient motion only,"
+#   AFTER:
+#     "the seated engineer is typing at the desk, both hands down on the
+#      mechanical keyboard, his fingers striking the keys one after another in a
+#      steady unbroken rhythm that runs from the first frame to the last, his
+#      wrists and forearms shifting a little along the keys as he works, his
+#      shoulders steady and his head kept at the same angle toward the monitor,"
+#   The shoulders-and-head half is kept on purpose: it supports the camera lock
+#   (a steady head is what holds his face at the same height) rather than
+#   suppressing his hands. Continuous wording, no countable unit — beat 04's
+#   "twitch once" looped and beat 10's "sways" wobbled, so nothing here names a
+#   keystroke, a count or a single gesture.
+#
+# CARRIED BYTE-FOR-BYTE from ep1-b02-121f-framing-hold-0811 and verified by diff,
+# not by eye: the style head, the whole camera-lock clause ("the camera is locked
+# on a tripod and stays perfectly still ... the composition is identical in every
+# frame."), the ambient tail (glow pulse, mug steam, dust motes, "living scene")
+# and the "Subject already in frame:" tail describing the plate. Everything from
+# the lock to the end of the prompt is identical between the two files. Same
+# plate, same cover-centre crop, same seed 20260902, same 121 frames, same steps,
+# same guidance 1.0, same two-stage distilled schedule, same negative.
+#
+# NO NEGATIONS IN THE POSITIVE. At guidance 1.0 the uncond branch is never built
+# (ltx_i2v.py:1001-1008), so the positive is the whole prompt and any "no"/"never"
+# delivers its noun. The changed clause contains none.
+#
+# 121 FRAMES IS ARITHMETIC, unchanged: VO 4.451s -> fit_duration floor 4.851s,
+# ceiling 6.451s (render_t3.py:312). 113 -> 4.708s is under the floor. 129 ->
+# 5.375s rounds UP to 5.38 and wraps one frame of frame 0 onto the end
+# (render_t3.py:627-631). 121 -> 5.041667s rounds DOWN to 5.04. 121 stands.
+#
+# NO METRIC. The flow number is disqualified on this series (131e433) and could
+# not tell fingers from steam anyway. By eye.
+
+id: ep1-b02-121f-typing-0811
+task: ep1-b02-121f-typing-0811
+node: 001-capability-inventory
+beat: 2
+runner: box
+needs_gpu: true
+priority: 24
+max_attempts: 1
+sample: true           # one clip, one recipe change
+owner: beat02-typing lane, 2026-08-11 (variant A; superseded on disk by variant B)
+
+consumer: >-
+  Roman's beat-02 verdict, as the A side of an unplanned A/B against the peer
+  lane's variant B. Both were queued before either lane knew the other existed;
+  A is kept rather than cancelled because it was already rendering, and a second
+  reading of "make him actually type" costs six idle-card minutes.
+
+success: >-
+  A 704x1280 mp4, 121 decoded frames (5.042s), snapshotted to
+  C:\banyan-farm\v34-r2\02-three-oh-seven-LTX-121f-typing-A-handsdown.mp4, in
+  which all three hold: (1) HE TYPES — hands on the keyboard, fingers moving over
+  the keys through the shot, not one gesture on a loop; (2) TWO HANDS, no
+  duplicated or third hand — this is A's specific risk, since the prompt asserts
+  a hand position the plate does not contain; (3) THE FRAMING STILL HOLDS —
+  composition of frame 120 equals frame 0, same close front-right angle, same
+  size and head height, monitor same size behind his shoulder. Check frames 1-4
+  first. Judged by eye beside variant B and the current hold clip. No metric.
+
+why: >-
+  The hold prompt capped the shot at "small ambient motion only" and told him to
+  hold his pose, so the one phrase asking for fingers never had a chance.
+
+est_minutes: 6
+needs: [cuda, vram20, video-venv]
+
+payload:
+  C:\banyan-farm\v34-r2\b02-typing-prompt.txt: |-
+    2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. the seated engineer is typing at the desk, both hands down on the mechanical keyboard, his fingers striking the keys one after another in a steady unbroken rhythm that runs from the first frame to the last, his wrists and forearms shifting a little along the keys as he works, his shoulders steady and his head kept at the same angle toward the monitor, the camera is locked on a tripod and stays perfectly still, the engineer stays at the same size in the same place in frame with his head at the same height throughout, the shot stays a close view from the front and right with his face visible, the monitor keeps the same size and the same position behind his shoulder, the desk, the keyboard and the mug keep their places from first frame to last, the composition is identical in every frame. within that fixed frame the monitor glow pulses very faintly across his face and glasses and across the desk, a thin wisp of steam curls up from the mug, dust motes drift slowly through the screen light, living scene. Subject already in frame: one seated young man in a black hoodie at close range from the front and right, his face lit pink by the monitor, glasses, messy dark hair, a large glowing monitor behind his shoulder, a mechanical keyboard, a mug, a dark apartment at three in the morning.
+
+  # Unchanged from the hold spec. At guidance 1.0 none of it is read; it is the
+  # provenance record of what was asked (§7.2).
+  C:\banyan-farm\v34-r2\b02-typing-negative.txt: |-
+    second person, crowd, extra hand, extra arm, extra face, animal, bird, insect, new object appearing, photorealism, 3D render look, text, 静态, 静止, frozen frame, still image, no motion, photorealistic, photograph, live action, film still, 3D render, CGI, octane, scene change, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+
+  C:\banyan-farm\v34-r2\b02-typing-jobs-encode.json: |-
+    [{"beat": 2,
+      "embeds": "C:\\banyan-farm\\v34-r2\\b02-typing-embeds.pt",
+      "prompt_file": "C:\\banyan-farm\\v34-r2\\b02-typing-prompt.txt",
+      "negative_file": "C:\\banyan-farm\\v34-r2\\b02-typing-negative.txt"}]
+
+  C:\banyan-farm\v34-r2\b02-typing-jobs-render-121.json: |-
+    [{"beat": 2,
+      "seed": 20260902,
+      "embeds": "C:\\banyan-farm\\v34-r2\\b02-typing-embeds.pt",
+      "init": "C:\\banyan-farm\\v34-r2\\02-704x1280.png",
+      "out": "C:\\banyan-farm\\v34-r2\\02-three-oh-seven-LTX-121f-typing.mp4"}]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  # prepare_plate does the cover-centre crop 832x1216 -> 704x1280 (plate_prep.py:55
+  # CROP_POLICY = "cover-centre"). The v34-motion-0810 series went in RAW and is
+  # stretched 24.4% vertically; this job does not repeat that.
+  - name: plate
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - -c
+      - |
+        import sys; sys.path.insert(0, r"C:\banyan-farm\banyan-city\pipeline")
+        from plate_prep import prepare_plate
+        out, rec = prepare_plate(
+            r"C:\banyan-farm\banyan-city\genomes\sapling\nodes\001-capability-inventory\stills\02-three-oh-seven.png",
+            "704x1280", r"C:\banyan-farm\v34-r2", "02")
+        print("plate", out); print(rec["plate_wxh"], rec["crop_policy"])
+        print("source_sha256", rec["sha256"])
+  - name: encode
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+      - --stage
+      - encode
+      - --jobs
+      - C:\banyan-farm\v34-r2\b02-typing-jobs-encode.json
+  - name: render
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+      - --stage
+      - render
+      - --jobs
+      - C:\banyan-farm\v34-r2\b02-typing-jobs-render-121.json
+      - --size
+      - 704x1280
+      - --frames
+      - "121"
+      - --fps
+      - "24"
+      - --guidance
+      - "1.0"
+      - --distilled-sigmas
+      - --two-stage
+      - --image-crf
+      - "33"
+      - --offload
+      - sequential
+      - --mode
+      - production
+      - --task
+      - ep1-b02-121f-typing-0811
+      - --worker
+      - rtx5090
+      - --bench-jsonl
+      - C:\banyan-farm\v34-r2\bench-b02-121f-typing.jsonl
+      - --bench-label
+      - b02-121f-typing
+
+artifacts:
+  - C:\banyan-farm\v34-r2\02-three-oh-seven-LTX-121f-typing-A-handsdown.mp4
