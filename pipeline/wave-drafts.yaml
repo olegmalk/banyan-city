@@ -1454,6 +1454,58 @@ beats:
       night, no dusk, no sunset, no dim lighting, no moody lighting, no low
       key, no shadows dominant. No photorealism, no 3D render look. 9:16
       vertical, no text.
+    # -- `authored_b08_idfix_r2` -- 2026-08-12, the fixer lane. THE CAMERA, AND
+    # ONLY THE CAMERA, BECAUSE THIS BEAT HAS NO BUDGET LEFT TO SPEND ON ANYTHING
+    # ELSE: 76/77 positive and 76/77 negative, the tightest pair in the wave, on
+    # the one beat that has already overrun its budget once (commit 6d177f4).
+    #
+    # WHY THE CAMERA AND NOT THE LOUDER FAULTS. Both of this beat's worst frames
+    # are the OVERHEAD ones. s0 shoots down on the pair and the guard reaches for
+    # the goblin's face instead of his belly; s1 shoots down and draws the goblin
+    # as a waist-high GREEN EGG with a face on it, flanked by two bald humans --
+    # the worst single frame in the wave. "The belly of a small goblin boy" read
+    # from directly above is a plausible route from a belly to a sphere. One
+    # change that plausibly reaches both bad frames beats three changes that each
+    # reach one, when there is one r2 and one token of headroom.
+    #
+    # RECORDED AND DELIBERATELY LEFT: the guard's tunic is near-black rather than
+    # "plain brown" (3/4), and NOBODY POINTS AT A BELLY in any frame (0/4), which
+    # is the beat's joke. Both are in wave2-needs-founder.md. Claiming to fix them
+    # here would mean pretending there were tokens to do it with.
+    #
+    # PAID FOR: `no building` and `no interior` retire; `no house` stays and every
+    # frame is outdoors 4/4 already, so the walls tier keeps a guard. In the
+    # positive, `Deadpan medium two-shot` becomes `Eye level two-shot` -- a
+    # TOKEN-NEUTRAL swap, two words for two words, so the sentence does not grow.
+    #
+    # TWO DRY RUNS WERE REJECTED BEFORE THIS ONE, AND THE REASON IS WORTH KEEPING.
+    # `Deadpan eye-level two-shot` FAILED the gate outright: positive 50/77, STYLE
+    # ANCHOR MISSING, and `POSITIVE DROPPED: Deadpan eye-level two-shot ... very
+    # aesthetic`. Un-hyphenating to `Deadpan eye level two-shot` failed IDENTICALLY.
+    # The cause is that this beat sits at 76/77 with ONE token spare (the baseline
+    # dry-run was re-run as a control to establish that), so a positive that lands
+    # on 77 does not squeak in -- the compressor drops whole trailing segments and
+    # takes the entire style tail, anchor and all, down to 50. Two lessons for the
+    # next lane: a hyphenated word like `eye-level` costs THREE CLIP tokens, not
+    # one; and on this beat the usable ceiling is 76, not 77. Paying `Deadpan` --
+    # a performance word a STILLS harness cannot spend anyway -- makes the swap
+    # neutral and the recipe lands at 75/77 with the anchor intact.
+    #
+    # THIS BEAT'S DEFINITION IS THE WAVE'S CONTROL AND IS NOT TOUCHED. Beat 08
+    # sends `green skin, bald head` with NO `patchwork cloak`, and it is the only
+    # goblin beat whose skulls are clean in 4/4. That comparison is the evidence
+    # pointing the scalp fault at the definition (see wave2-needs-founder.md), and
+    # it only stays evidence if this beat keeps sending exactly what it sent.
+    authored_b08_idfix_r2: >-
+      Two round boys, in a sunny grassy field, a round bald guard in a plain
+      brown tunic pointing at the belly of a small goblin boy, {{GOBLIN}}, in
+      a patchwork cloak who looks down, face visible. Eye level two-shot,
+      bright morning light, cinematic lighting, detailed, newest,
+      masterpiece, best quality, very aesthetic No girl, no child, no armor,
+      no helmet, no knight, no high angle, no from above, no house, no dark,
+      no night, no dusk, no sunset, no dim lighting, no moody lighting, no low
+      key, no shadows dominant. No photorealism, no 3D render look. 9:16
+      vertical, no text.
     authored_b08_refresh: >-
       Two round boys, from front, in a sunny grassy field, a round bare-headed
       guard in armor pointing at the belly of a small goblin boy, {{GOBLIN}}, in
