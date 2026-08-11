@@ -13631,3 +13631,59 @@
   consumer: a page for his morning read, and the go/no-go for the five remaining guard
     beats.
   outcome: null
+
+- id: ep2-b05-register-pose-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b05-register-pose-0812
+  verdict: >-
+    MISS on every staged predicate, and the miss is not the one I predicted. All sixteen frames came
+    back as ONE MAN STANDING STILL in the reference's own pose. Not a solemn version of the staged
+    pose — the staged pose is absent 16 of 16.
+  predicates_observed: >-
+    staged skid and overshoot 0 of 16; shoulders hunched / eyebrows high 0 of 16; two men staged as a
+    pair 0 of 16 (one frame carries an unstaged man in the far background); the banned standing pose
+    PRESENT in 8 of 8 whole-figure cells, so `no standing at attention` did nothing; a nameable
+    expression about 3 of 16 and none comic; short hair 16 of 16; plain brown garment 16 of 16, several
+    reading floor-length robe rather than tunic; visible face 16 of 16; a clipboard about 9 of 16 and
+    none of them bark — dark slates; register unmoved.
+  the_actual_finding_and_it_is_bigger_than_the_guards: >-
+    THE COMPOSITION TRACKS THE REFERENCE CROP, NOT THE BEAT, and this sample is a clean controlled
+    demonstration of it because all sixteen cells got the SAME sentence and differ only in which
+    reference they saw. The two whole-figure references produced whole standing figures (r0, r2). The
+    two HEAD CROPS produced busts, floating heads and stacked head studies with no scene at all (r1,
+    r3) — on a beat about two men arriving in a field. Sixteen distinct frames from four distinct
+    reference shas, so nothing here is a duplicate artefact.
+  the_mechanism_stated_plainly: >-
+    The adapter is on for steps 0-5 of 40 — chosen because that is where structure forms and holding it
+    there is what preserves the character's colour. Structure is also where POSE, FRAMING and FIGURE
+    COUNT are decided. So a reference settles all three before the sentence describing a skid gets a
+    vote. A reference of a man standing still will keep producing a man standing still, whatever the
+    words say and whatever the negative bans. The window that buys identity is the same window that
+    overwrites staging.
+  what_this_retro_explains: >-
+    THE STAGING WALL. Nine of ten beats in the walk came back as standing character portraits instead of
+    beats, and that was read as a wording problem for days (wave2-needs-founder.md §5, and my own
+    prompt-archaeology on beat 02). It was not wording. The references are standing portraits and the
+    conditioning copies the pose along with the face. Beat 04 passed both axes precisely because its
+    beat IS a portrait — the one case where the reference's composition and the beat's agree.
+  scored_against_my_own_prediction: >-
+    I wrote that failure would mean "pose is not nameable the way objects are, and the direction he gave
+    has no channel to run in". THAT READING IS WRONG and this lane already holds the counter-example:
+    beat 03's crouch came back from exactly this technique — dominant clause plus banning the pose it
+    loses to — at the MOTION stage, where no reference image overwrites the composition. Pose is
+    nameable. It is not nameable against a pose-bearing reference in the early window. I had both facts
+    before the run and did not connect them, which is the third time this week I have written a
+    falsification clause one size larger than the evidence would support.
+  his_direction_is_not_falsified: >-
+    Stated for the record because a MISS this total invites the opposite reading: "chase silly via pose
+    and expression staging" HAS NOT BEEN TESTED. Nothing in this sample let it run. Do not count it
+    against the direction.
+  recommendation: >-
+    Stage the register in the CLIP, not the still. It costs one motion job, it rides two results that
+    already hold (beat 03's crouch recovery, and his own ruling that a consistent character standing
+    still is a usable base), and it needs no change to the references he accepted. The alternative —
+    rebuilding the guard references around an action instead of a turnaround — is a bigger job and puts
+    his accepted references back in play, so it is his call and not a lane's.
+  consumer: review/ep2-picks/b05-register-0812
+  outcome: null

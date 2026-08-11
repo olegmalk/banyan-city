@@ -93,10 +93,15 @@
     in the frame itself (fangs, a dog-shaped creature, two-to-four duplicated goblins), so naming scenery
     cannot rescue it. Every other blocked beat is now unblocked at the motion stage; this one is waiting
     on a usable starting frame
-  url: /review/ep2-picks/motion-0812
+  url: /review/ep2-picks/b02-rerun-0812
   since: '2026-08-12'
   kind: decision
   verdict_hint: re-run the beat 02 still / cut the beat / re-write it around a frame we have
+  resolved:
+    date: '2026-08-12'
+    verdict: 'rerun. (Done - and it turned out the rerun had ALREADY rendered when this was written; it
+      was never linked from a page. Fangs, the dog-shaped creature and the duplicated goblins are 0 of
+      16 in it. Link now points at those frames. Picking the init frame is a separate open item.)'
 - what: Blank backgrounds - the fix may be a sentence or may be a plate. Every prompt already said 'field'
     and got a flat one; a sample naming depth, wildflowers, a treeline, haze and raking light is rendering
     on beat 17. If wording does not fill the frame, the answer is a painted background plate, which is
@@ -148,3 +153,11 @@
   since: 2026-08-12
   kind: decision
   verdict_hint: "countersign D22 / take any of the five back / keep or kill the name Jerry"
+- what: 'Guards register, staged version: the pose you asked for never reached the picture - all 16
+    frames are one man standing still in the REFERENCE''s pose. The blocker is the conditioning, not your
+    direction. This also explains why nine of ten beats came back as standing portraits'
+  url: /review/ep2-picks/b05-register-0812
+  since: '2026-08-12'
+  kind: decision
+  verdict_hint: stage the register in the CLIP (one motion job, recommended) / rebuild the guard references
+    around an action instead of a turnaround (bigger, and it reopens the references you accepted)

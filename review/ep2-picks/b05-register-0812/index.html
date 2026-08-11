@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guards register — the staged version, and what actually stopped it</title>
+<style>
+  :root {
+    --bg: #17181a; --panel: #1f2124; --line: #33363b;
+    --ink: #eceef1; --muted: #9aa0a8; --accent: #c8b273;
+    --pass: #7fd68b; --fail: #e08b8b;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+         padding: 0 24px 96px; }
+  .wrap { max-width: 1020px; margin: 0 auto; }
+  header.top { padding: 40px 0 20px; border-bottom: 1px solid var(--line); }
+  header.top h1 { margin: 0 0 6px; font-size: 27px; letter-spacing: -0.01em; font-weight: 650; }
+  header.top .sub { color: var(--muted); font-size: 14.5px; margin: 0; max-width: 78ch; }
+  h2 { font-size: 18px; margin: 40px 0 6px; font-weight: 650; }
+  p { max-width: 78ch; }
+  .callout { margin: 22px 0 0; padding: 16px 20px; background: var(--panel);
+             border: 1px solid var(--line); border-left: 3px solid var(--accent);
+             border-radius: 5px; }
+  .callout p { margin: 0 0 10px; } .callout p:last-child { margin-bottom: 0; }
+  blockquote { margin: 0 0 16px; padding: 6px 0 6px 16px;
+               border-left: 3px solid var(--line); color: #cdd2d8; }
+  img { width: 100%; height: auto; border: 1px solid var(--line); border-radius: 5px;
+        display: block; margin: 10px 0 6px; }
+  figcaption { color: var(--muted); font-size: 13.5px; margin: 0 0 8px; }
+  table { border-collapse: collapse; width: 100%; margin: 10px 0 18px; font-size: 14.5px; }
+  th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--line);
+           vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; }
+  td.n { white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .ok { color: var(--pass); } .bad { color: var(--fail); }
+  code { font-size: 13px; background: #232629; padding: 1px 5px; border-radius: 3px; }
+  .meta { color: var(--muted); font-size: 13px; margin-top: 34px;
+          border-top: 1px solid var(--line); padding-top: 14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>The guards, staged instead of described — and the thing that was really in the way</h1>
+  <p class="sub">12 August 2026 · stills lane · $0, local GPU, 3 minutes of card time. Sixteen frames,
+  hash-verified against the box manifest before scoring. Provisional — your veto stands.</p>
+</header>
+
+<div class="callout">
+  <p><strong>The short version.</strong> You said to chase silly through pose and expression instead of
+  adjectives. I staged it and <strong>the staging never reached the picture</strong>: all sixteen frames
+  came back as one man standing still in the reference's own pose. Not a solemn version of the pose I
+  asked for — <em>the pose I did not ask for at all.</em></p>
+  <p>The cause is not your direction and not the wording. <strong>It is the reference.</strong> Your
+  direction has not been tested yet, because nothing has let it run.</p>
+</div>
+
+<h2>What was asked for</h2>
+
+<p>Beat 05 is the only guard beat whose script puts both men in motion, so the register had somewhere
+to live — one man's posture against the other's. The tone words came out entirely; nothing in the
+prompt described a body. What went in was what the two men are <em>doing</em>:</p>
+
+<p><code>…skid to a halt in a grassy field, one overshooting, shoulders hunched, eyebrows high, the
+other reading a bark clipboard at his nose.</code></p>
+
+<h2>What came back</h2>
+
+<img src="/review/ep2-picks/sheets/b05-register-pose-0812.jpg"
+     alt="Beat 05 register sample: four reference images above sixteen frames, each frame reproducing its reference's composition">
+<figcaption>Top row is the four reference images the frames were conditioned on. Below them, the sixteen
+frames — four seeds against each reference.</figcaption>
+
+<table>
+  <tr><th>Predicate I wrote before the run</th><th class="n">Result</th></tr>
+  <tr><td>The staged skid and overshoot arrive</td><td class="n bad">0 of 16</td></tr>
+  <tr><td>Shoulders hunched, eyebrows high</td><td class="n bad">0 of 16</td></tr>
+  <tr><td>Two men in frame</td><td class="n bad">0 of 16 staged as a pair — one frame has a stray man in the far background</td></tr>
+  <tr><td>The standing pose is <em>absent</em> (it was banned in the negative)</td><td class="n bad">present in 8 of 8 whole-figure cells; the ban did nothing</td></tr>
+  <tr><td>A face carrying an expression a viewer could name</td><td class="n bad">about 3 of 16, and none of them comic</td></tr>
+  <tr><td>Short hair</td><td class="n ok">16 of 16</td></tr>
+  <tr><td>Plain brown garment</td><td class="n ok">16 of 16 — though several read floor-length robe rather than tunic</td></tr>
+  <tr><td>Visible face</td><td class="n ok">16 of 16</td></tr>
+  <tr><td>A clipboard</td><td class="n">about 9 of 16, and none of them reads as bark — they are dark slates</td></tr>
+  <tr><td>The register moved</td><td class="n bad">no</td></tr>
+</table>
+
+<h2>The finding, and it is bigger than the guards</h2>
+
+<p>Look at the top row against the grid underneath it. <strong>Each frame reproduces the composition of
+the reference it was given, not the composition the beat asked for.</strong> The two references that are
+whole figures produced whole standing figures. The two that are head crops produced busts, floating
+heads and stacked head studies — no scene at all, on a beat about two men arriving in a field. Every one
+of the sixteen was given the same sentence.</p>
+
+<p>The mechanism explains itself once you see it. The reference is fed to the image only during
+<strong>the first 6 of 40 denoising steps</strong> — deliberately, because that is where a picture's
+structure is decided and holding it there is what keeps the character's colour. But structure is also
+where <em>pose, framing and how many people are in the shot</em> are decided. So the reference settles
+those three before the sentence describing a skid ever gets a vote. A reference of a man standing still
+will keep producing a man standing still, whatever the words say and whatever the negative bans.</p>
+
+<div class="callout">
+  <p><strong>This also explains the wall the whole episode has been stuck behind.</strong> Nine of ten
+  beats came back as standing character portraits instead of beats, and that was read as a wording
+  problem for days. It was not. The references are standing portraits, and the conditioning copies the
+  pose along with the face.</p>
+</div>
+
+<h2>So your direction has not failed — it has not been tried</h2>
+
+<p>I predicted, before the run, that a failure could mean pose is simply not nameable the way objects
+are. That reading is wrong, and this lane already has the counter-example: on beat 03 a crouch that had
+been lost came back cleanly, from exactly this technique — make the pose the dominant clause and ban the
+pose it loses to. That worked at the <strong>motion</strong> stage, where there is no reference image
+overwriting the composition.</p>
+
+<p>So the register is stageable. It is just not stageable <em>here</em>, in a still conditioned on a
+portrait. The cheap move is to stage it one stage later, in the clip, which is also where you already
+ruled the standing still is a usable base and where every object named in a prompt has arrived, 7 for 7.</p>
+
+<h2>What I would like from you</h2>
+
+<p>Nothing on these frames — they are evidence, not candidates. The question is only whether to spend
+the guards' register in the <strong>clip</strong> (my recommendation: it costs one motion job and rides
+two results that already hold) or to keep trying to buy it in the still, which would mean rebuilding the
+guard references around an action rather than a turnaround — a bigger job, and one that puts your
+accepted references back in play.</p>
+
+<p class="meta">Job <code>ep2-b05-register-pose-0812</code>, rc 0, 2026-08-12T18:18–18:21Z, rtx5090,
+3 minutes. Sixteen distinct frames from four distinct references, all 32 files verified against the box
+sha256 manifest. Draft key <code>authored_b05_register_pose</code>, positive 72/77 with the style anchor
+intact. Model <code>cagliostrolab/animagine-xl-3.1</code>, IP-Adapter Plus scale 0.6, 15% window.
+<code>round</code> was deliberately out of this prompt — your word, removed under your own direction;
+the reasoning is in ledger <code>ep2-guards-register-verdict-0812</code> and it is one flag to put back.
+$0, nothing published, <code>shots.md</code> untouched.</p>
+
+</div>
+</body>
+</html>
