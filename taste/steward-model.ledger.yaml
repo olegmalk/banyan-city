@@ -13319,3 +13319,28 @@
     Beat 14 passes. I am not queueing anything for it. The queue runs down after the current
     five and what refills it is his verdicts, not my guesses.
   outcome: null
+
+- id: ep2-b03-crouch-0812-scored
+  kind: scoring
+  date: 2026-08-12
+  scores: ep2-b03-crouch-0812
+  verdict: HIT. The crouch returned and the tree stayed standing.
+  observed: >-
+    He drops into a low squat behind the sapling from about frame 30 and holds it, head down
+    around the height of the little tree's lower leaves, peering out to one side and back.
+    The sapling is still there, both of them still fully in frame, and the size-mismatch joke
+    still reads. Identity holds, red eyes, no tripod, sky and treeline behind.
+  attributable_by_construction: >-
+    Same init, same sha, same seed, same 121 frames, sapling clause untouched. The ONLY
+    change was promoting the crouch from a passing verb to the dominant clause and banning
+    standing upright. So the recovered crouch is attributable to that and nothing else.
+  what_it_settles: >-
+    b03's failure was never "the prompt cannot hold a scene and an action at once" — b13 had
+    already falsified that by holding both. It was ordinary wording weight: two instructions,
+    the weaker one loses. Rewriting the weaker one as the dominant clause is enough. That is
+    a cheap, repeatable lever for any future beat where the object arrives and the action
+    thins out.
+  minor_and_not_worth_a_render: >-
+    The sapling is thinner than the previous round and its stem crosses his face on some
+    frames; the squat is wide-legged rather than a neat hide.
+  outcome: null
