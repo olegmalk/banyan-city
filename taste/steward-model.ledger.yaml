@@ -13946,3 +13946,33 @@
     end. Falsifier named — the head sprout returning the moment anything is placed above him
     would mean above-him and on-him are not separable.
   outcome: null
+
+- id: ep2-register-clip-NOT-SCORED-BY-THIS-LANE-0812
+  kind: process
+  date: 2026-08-12
+  instruction_received: >-
+    "Score the register clip when it shows in the courier" — and it had shown, in two dirs
+    (ep2-b05-register-clip-0812 and ep2-b05-register-pose-0812).
+  why_i_did_not: >-
+    I checked ownership before scoring, and it is not mine. The job file says
+    `owner: stills lane`, its `consumer` is review/ep2-picks/b05-register-0812, that page
+    already exists with the clip embedded, and the ledger ALREADY CARRIES the scoring —
+    ep2-b05-register-clip-0812-observed, with a full predicate list and a verdict.
+    Scoring it again would have duplicated a finished job, produced a second opinion nobody
+    asked for on another lane's beat, and broken the one-writer-per-page rule the lead had
+    reminded me of in the same message.
+  what_i_did_instead: >-
+    Linked to it. My audit table listed beats 05/06/07 as blocked on his guard ruling, which
+    was true when I wrote it and is now stale — their clip is the live answer. That row now
+    points at their page and says to read theirs, not mine, on this one. Same for episode 1:
+    I dispatched my own inventory, they had already done it properly, so my page links
+    review/ep1-audit-0812 rather than growing a competing section.
+  the_pattern_this_is_the_fourth_of: >-
+    Check the input before acting on the instruction. Today that has stopped a render for a
+    defect that did not exist (b14's pink eyes were in the init), found a missing word rather
+    than a model limit (the sapling), prevented a duplicate render of a finished beat (b15),
+    and now prevented duplicating another lane's completed work. Every one of these was an
+    instruction that was reasonable given what the asker knew, and wrong given what one look
+    would have shown. The check is cheap enough that it should precede every enqueue and
+    every scoring pass, not just the suspicious ones.
+  outcome: null
