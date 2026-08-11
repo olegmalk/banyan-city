@@ -29,7 +29,7 @@ goblin_definition_as_sent: >-
 prompts_from: wave-drafts.yaml (NOT shots.md — shots.md is untouched)
 draft_variant: authored_staged_med_occl_bright
 harness_sha256: 7efd0b96bfa14b4a3f2411f3646f6e5fa22723c149e2ea0d628520446485d1e8
-drafts_sha256: 30d0907e8171dc410d3f388f976eadc9894a368e348bda68903a300b16874f6e
+drafts_sha256: 24a074bd7921af30c12e61e1e3f66c652aa191a5e19cee80ad9439bb09cdff73
 tokenizer: openai/clip-vit-large-patch14 (transformers, on the box)
 positive_tokens: 73
 negative_tokens_sent: 72
@@ -38,6 +38,6 @@ prompt: >-
   1boy, a small goblin boy, green skin, solo, from front, crouches in an open field behind a tiny sapling, its thin stem in front of him, half hidden behind the stem, his face peeking around it. Static camera, medium shot, morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
 negative_prompt: >-
   text, mature tree, large tree, girl, child, dark, night, dusk, sunset, dim lighting, moody lighting, low key, shadows dominant, photorealism, leaf on head, plant girl, alraune, monster girl, flower on head, head wreath, hair ornament, leaf hair ornament, plant hair, female goblin, elf
-render_seconds: 9.2
+render_seconds: 9.3
 founder_verdict: null
 scored: false
