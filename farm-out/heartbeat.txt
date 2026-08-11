@@ -630,3 +630,4 @@
 22:37:44Z DONE task=ep2-b04-idfix-r2-0812-1786487807 rc=0 artifacts=8
 22:37:49Z box-runner idle ready=0 failed=2
 22:40:15Z STARTED task=ep2-b05-idfix-r2-0812-1786488000 attempt=1 on box-runner
+22:41:07Z DONE task=ep2-b05-idfix-r2-0812-1786488000 rc=0 artifacts=8
