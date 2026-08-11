@@ -13378,3 +13378,28 @@
     has asked for by name has been drawn, and everything it assumed would arrive on its own
     has not.
   outcome: null
+
+- id: ep2-b17-scale-0812
+  kind: prediction
+  written: 2026-08-12, before enqueue. One variable — a clause pinning shot scale.
+  predicates: [he is visibly larger in frame than the b17-world take, roughly head-to-foot
+    across the middle third with his face readable; the described world SURVIVES behind him
+    — depth, flowers and treeline still there; he still brushes off and turns to go; camera
+    locked]
+  basis: >-
+    Seven named things in seven attempts have been drawn. Shot scale is a different KIND of
+    instruction from an object or a place — it is about the camera's relationship to the
+    subject rather than about the contents of the frame — so it is genuinely untested
+    whether the same lever reaches it. That is the question.
+  falsifiable_by: >-
+    The world flattening back to a plain band as he grows. That would mean scale and
+    environment trade off against each other and every beat has to pick one, which is a much
+    worse position than needing two clauses.
+  not_a_taste_call: >-
+    Beat 17's own approved fence says "Camera on him standing to leave", so a figure reading
+    as a dot in a meadow contradicts the shot AS WRITTEN. I am testing whether a clause can
+    pin scale AT ALL. How large he should be stays his, and if the clause works the dial is
+    his to set.
+  consumer: review/ep2-picks/motion-0812.html and whether the environment paragraph needs a
+    scale clause beside it in every subsequent prompt.
+  outcome: null
