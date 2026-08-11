@@ -1,0 +1,239 @@
+# idfix wave 2026-08-12 ~03:0x: same refresh staging, frozen identity in
+# the def. Dry 73/77 anchor intact - this beat had headroom, no lean needed.
+# Beat 14 THE DEFENSE refresh, derived by sed from ep2-b11-refresh-0811.yaml at
+# 2026-08-11 ~23:4x by the beats 14-20 lane. Nothing below describes beat 10 or
+# 11: carrying a disclaimer forward is not the same as telling the truth, so the
+# whole header was rewritten for this beat.
+#
+# HIS MANDATE, verbatim and covering this beat with no words of its own: "i
+# looked at all the beats and you have to change pretty much all of them, do
+# some regeneration, and do some evaluating of your own. train the system."
+#
+# -- WHAT THE WAVE-1 FRAMES ACTUALLY SHOW, READ BEFORE THE FIX WAS WRITTEN -----
+# `review/ep2-picks/wave-0811/b14-s0..s3.jpg`, all four opened and looked at:
+#   * FOUR OF FOUR ARE DIM. s1 and s3 are night -- black-green backgrounds, rim
+#     light and floating motes; s0 and s2 are murky undefined green.
+#   * THREE OF FOUR HAVE GLOWING PINK-RED EYES over a flat scowl (s0, s1, s3).
+#     That is the register his beat-05 veto threw out in his own words -- "it is
+#     a dark forest and they look dangerous; they are supposed to be round and
+#     harmless in a morning field" -- arriving unprompted on a beat whose whole
+#     content is a sheepish excuse.
+#   * S1 IS CRYING. Two tear tracks down the cheeks. The line under this beat is
+#     "It was one apple. It fell off the cart. On the ground, that's -- that's
+#     foraging." Nobody in that sentence is weeping.
+#   * THE HANDS, WHICH ARE THE SUBJECT, ARE LOST IN ALL FOUR. The beat sheet says
+#     it plainly: "the excuse lives in the hands, not the face". The face fills
+#     the frame in 4/4, the hands sit at the bottom edge in shadow, and no loose
+#     dirt and no flicked pebbles read anywhere.
+#   * WHAT IS ALREADY RIGHT AND IS THEREFORE NOT TOUCHED: grass is in the
+#     background of all four, the green skin and the ears read, the count is one.
+#
+# -- THE FIX, AND WHAT IT DELIBERATELY DOES NOT DO ----------------------------
+# Staging kept VERBATIM from `authored`: same clawed fingers picking at loose
+# dirt, same flicked pebbles, same embarrassed face above them, same intimate low
+# close-up, same shallow green grass background. Three channels:
+#  1. LIGHT. `bright morning light` affirmatively, plus the eight-term dark block
+#     `ep2-b04-goblin-fieldbright-0811` (commit cbcc716) proved on beat 04
+#     against IDENTICAL SEEDS, where a positive already saying `morning light`
+#     had not been enough by itself. Sent whole. Nothing in this beat's staging
+#     asks for shadow, which is why `no shadows dominant` stays in here and was
+#     the one term beat 11 had to drop.
+#  2. THE EYES. `no glowing eyes` -- the one verdict-specific ban, and the same
+#     term the ratified guard register spends as `no glowing visor`. Three of
+#     four frames drew it; it is not a guess.
+#  3. NO FIELD CLAUSE AND NO WALLS BAN, deliberately. Beats 08, 10 and 11 each
+#     bought `in a sunny grassy field` and the five-term interior block because
+#     their frames came back indoors. These did not: grass is there in 4/4 and
+#     the draft already says `shallow green grass background`. Paying tokens to
+#     say the setting twice is how a style tail dies -- beat 08 r1, 89 tokens
+#     against 77, STYLE ANCHOR MISSING, rc=1, nothing drawn.
+# NOTHING IS SENT AGAINST THE FRAMING, and that is the honest limit of this
+# round. The extreme close-up that loses the hands is the worst fault in the set,
+# but `Intimate low close-up` is this beat's own staging and staging is kept
+# verbatim, so this round moves light and register only and the next round can
+# read the two apart. If the hands are still lost in good light, the framing word
+# is the thing to buy, and this note is where it was named before the frames
+# existed.
+#
+# -- MEASURED ON THE BOX'S REAL CLIP TOKENIZER BEFORE ENQUEUE -----------------
+# Positive 67/77 with STYLE ANCHOR PRESENT True, count tag `1boy` deriving and
+# matching the draft, `text` negated True, DRY OK. The negative is the rare clean
+# one: recipe 73 -> sent 73, NO NEGWARN and no dropped house terms, because this
+# beat runs `extra_neg: species` rather than `full` and all eight lighting terms
+# plus `glowing eyes` fit beside the whole house tier. Ten tokens of positive
+# headroom remain, which is what makes the framing term affordable later.
+#
+# WHY THIS IS ONE SAMPLE AND NOT A BATCH. CLAUDE.md, founder 2026-08-03: one
+# sample per recipe change. This is one recipe change on one beat, four seeds, $0.
+#
+# SEPARATE OUT DIRECTORY, DELIBERATELY. The harness names files from the beat
+# slug; this writes to `out-b14-idfix` and overwrites no earlier evidence.
+
+id: ep2-b14-idfix-0812
+task: ep2-b14-idfix-0812
+node: 002b-first-citizen
+beat: 14
+runner: box
+needs_gpu: true
+
+# 46. box_runner.py sorts priority ASCENDING and takes ONE job at a time
+# regardless -- sequential is the rule (CLAUDE.md, founder 2026-08-03) and
+# batch-of-4 is banned. Tonight's beat 06-11 refreshes went at 41-45 and have all
+# left the queue; beats 14, 15, 17, 19 and 20 follow at 46-50 so this lane lands
+# in beat order if any of them stack. The ready AND running queues were both
+# EMPTY when this was staged (`box_enqueue.py --list`, checked, not assumed) --
+# the card is idle, which is the condition his mandate names.
+priority: 46
+max_attempts: 1
+owner: beats 14-20 regeneration lane, 2026-08-11 (his wholesale-reject mandate)
+
+# NO `gate:` KEY. One sample on a beat he has rejected wholesale, applying a
+# register he has ratified and blocks already proven on other beats against
+# identical seeds. It clears NOBODY's gate: the fourteen
+# `ep2-b*-goblin-wave1.yaml` specs and the staged siblings keep theirs.
+
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03` (read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml:17-18, the leaf the
+  render gate itself reads, not copied from a sibling spec). His `approved_quote`
+  verbatim: "approve 002b except.. we need to make SURE the fig growing on the sapling
+  is mentioned, last time we generated 002b it just.. appeared. also, the sapling was
+  able to flail a leaf in episode 1? why couldnt it do that in 002b?" Both
+  `approval_conditions` are about beat 01''s fig and beat 16''s leaf; neither touches
+  beat 14''s lighting, framing or staging. Beat 14 is THE DEFENSE, the close-up in
+  which the scavenger picks at the dirt while making his excuse.'
+
+consumer: >-
+  The founder's morning review page, as the regenerated beat 14 against
+  `review/ep2-picks/wave-0811/b14-s0..s3.jpg` -- the four dim close-ups described
+  in the header, three of them glowing-eyed and one crying. Same beat, same four
+  seeds, so the comparison is airtight. This job ranks nothing and picks nothing;
+  which frames are good is R4's call.
+
+success: >-
+  Four PNGs at C:\banyan-farm\wave-goblin-prep\out-b14-idfix\14-the-defense-wave1-s0..3.png
+  with their .yaml provenance sidecars written at render time (7.2), all eight
+  declared as artifacts so a missing one fails rc=92 instead of passing quietly.
+  Whether the frames are good is R4's call, not this job's and not a metric's.
+
+why: >-
+  Beat 14's wave-1 frames came back dim in 4 of 4 with two of them outright night,
+  glowing pink-red eyes over a scowl in 3 of 4, and tear tracks down both cheeks in
+  one -- a dark-fantasy creature where the beat is a caught kid making an excuse.
+  This round sends `bright morning light` with beat 04's eight-term dark block,
+  proven there against identical seeds, plus `no glowing eyes` for the fault three
+  frames showed. Staging, framing and the grass background are untouched, so any
+  difference in these frames is light and register. Measured before enqueue:
+  positive 67/77, style anchor intact, `1boy` deriving, negative recipe 73 -> sent
+  73 with nothing dropped, DRY OK.
+
+goblin_def: green skin
+goblin_def_source: >-
+  The founder, verbatim: "he is just a simple green goblin, nothing complex"
+  (2026-08-10 ~12:15, re-stated 2026-08-11), plus his verdict on the frames drawn
+  from it: "yeah, that looks like the right goblin" (2026-08-11 ~15:45, on
+  `ep2-b15-goblin-simple-0811`; ledger `ep2-b15-goblin-simple-founder-verdict-0811`).
+  `green skin` is the ONE attribute he named, and this round changes nothing about
+  the character.
+
+est_minutes: 2
+needs:
+- cuda
+- vram20
+- farm-venv
+
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+# The box's wave-drafts.yaml was scp'd from this repo and verified sha256-IDENTICAL
+# (7d931e7348901eece39c232229a0e5b94f329c7f8b1085a00eecbc49c5dfec6d) after the edit
+# and before this job was queued -- the box printed that sha itself on the dry run
+# quoted in the header, and it matches `shasum -a 256 pipeline/wave-drafts.yaml` in
+# this repo. This is not a formality: `ep2-b08-refresh-0811` FAILED at its measure
+# step (rc=1, 7 seconds, queue/failed/) because the box's copy at run time was not
+# the copy its spec attested to. The harness REFUSES rather than falling back when a
+# variant key is missing, so a stale copy fails for $0 instead of quietly
+# re-rendering the old prompt under a new job id.
+steps:
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '14'
+  - --goblin-def
+  - green skin, bald head, patchwork cloak
+  - --variant
+  - authored_b14_refresh
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '14'
+  - --goblin-def
+  - green skin, bald head, patchwork cloak
+  - --variant
+  - authored_b14_refresh
+  - --out
+  - C:\banyan-farm\wave-goblin-prep\out-b14-idfix
+  - --task
+  - ep2-b14-idfix-0812
+
+# DURABILITY: every still this farm makes lands single-copy on a box nothing backs
+# up. The courier runs `git add -A -- farm-out` and pushes on job_done, and
+# farm-out is NOT gitignored, so publishing is a COPY and the runner stays
+# byte-identical. allow_fail: a failed copy must never mark a good render failed.
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b14-idfix"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/wave-goblin-prep/out-b14-idfix/14-the-defense-wave1-s*.*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        # Hash the COPY, not the original: what this records has to be the bytes
+        # that get committed, or the manifest attests to the wrong file.
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+        print("   ", os.path.basename(f), h[:16])
+    # newline="\n" is load-bearing: Windows text mode rewrites \n to \r\n and
+    # every filename then carries a trailing \r that shasum -c cannot open.
+    with open(os.path.join(dst, "14-the-defense-refresh.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    # 4 stills + 4 sidecars. Fewer means the render wrote less than it promised.
+    raise SystemExit(0 if len(src) == 8 else 1)
+
+artifacts:
+- C:\banyan-farm\wave-goblin-prep\out-b14-idfix\14-the-defense-wave1-s0.png
+- C:\banyan-farm\wave-goblin-prep\out-b14-idfix\14-the-defense-wave1-s1.png
+- C:\banyan-farm\wave-goblin-prep\out-b14-idfix\14-the-defense-wave1-s2.png
+- C:\banyan-farm\wave-goblin-prep\out-b14-idfix\14-the-defense-wave1-s3.png
+- C:\banyan-farm\wave-goblin-prep\out-b14-idfix\14-the-defense-wave1-s0.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b14-idfix\14-the-defense-wave1-s1.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b14-idfix\14-the-defense-wave1-s2.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b14-idfix\14-the-defense-wave1-s3.yaml

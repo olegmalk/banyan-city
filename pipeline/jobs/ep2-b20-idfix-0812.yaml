@@ -1,0 +1,249 @@
+# idfix wave 2026-08-12 ~03:0x: same refresh staging, frozen identity in
+# the def. Dry 73/77 anchor intact - this beat had headroom, no lean needed.
+# Beat 20 EVIDENCE refresh, derived by sed from ep2-b11-refresh-0811.yaml at
+# 2026-08-12 ~00:4x by the beats 14-20 lane, the last of five. Nothing below
+# describes beat 10 or 11: carrying a disclaimer forward is not the same as
+# telling the truth, so the whole header was rewritten for this beat.
+#
+# HIS MANDATE, verbatim and covering this beat with no words of its own: "i
+# looked at all the beats and you have to change pretty much all of them, do
+# some regeneration, and do some evaluating of your own. train the system."
+#
+# -- WHAT THE WAVE-1 FRAMES ACTUALLY SHOW, READ BEFORE THE FIX WAS WRITTEN -----
+# `review/ep2-picks/wave-0811/b20-s0..s3.jpg`, all four opened and looked at:
+#   * FOUR OF FOUR HAVE GLOWING ORANGE-RED EYES, with no exception. That is the
+#     cleanest single observation in this five-beat lane, and it is the same
+#     dark-fantasy register his beat-05 veto threw out: "they look dangerous;
+#     they are supposed to be round and harmless in a morning field".
+#   * FOUR OF FOUR ARE DARK. s0 and s1 are dusk skies, red cloud, bare dead
+#     branches across the corners; s2 is a near-black void with the face lit from
+#     below; s3 is dark behind a burning disc.
+#   * THE FIG IS NOT A FIG IN ANY OF THEM. A glowing dark orb cupped in both
+#     hands (s2), a glowing orange orb (s3), a stack of green blobs with an eye
+#     on top (s1), a small dark lump held to the chin (s0). Underlight plus
+#     cupped hands plus orb means three of four read as a RITUAL. The beat is the
+#     opposite of that: the line is a whisper, "...Did you just answer me?", and
+#     the object is a piece of fruit.
+#   * NOTED AND DELIBERATELY NOT ACTED ON: three of four give him a full head of
+#     hair -- white, brown, black -- where the character he ratified is bald. The
+#     {{GOBLIN}} slot is FROZEN at `green skin`, the one attribute he named, and
+#     this lane does not touch the character. It is written down here so the
+#     round that is allowed to change it knows the drift was seen and counted.
+#
+# -- THE FIX -------------------------------------------------------------------
+# Staging kept VERBATIM from `authored` -- same raise of the fig in both hands in
+# front of him like evidence, same huge eyes widening, same look up at a bare
+# branch above, same `Warm amber afternoon light`. Four changes:
+#  1. THE EYES. `no glowing eyes`, for the one fault that is 4 of 4.
+#  2. THE ORB. `no glowing orb` in the negative and `a ripe fig` rather than `a
+#     fig` in the positive -- one added word, pushing toward fruit and away from
+#     the artifact three frames drew. `ripe` is the word beat 19's own draft
+#     uses for the same object, so it is this episode's vocabulary, not a new
+#     invention.
+#  3. LIGHT. `ep2-b04-goblin-fieldbright-0811`'s eight-term dark block WHOLE.
+#     This is the best-evidenced use of it in the lane at 4 of 4 dark, and it
+#     does not fight the staging: the positive affirms amber afternoon, so
+#     banning dusk and sunset sharpens that line rather than contradicting it.
+#  4. GROUND. `in a sunny grassy field` early, the `authored_b04_fieldban`
+#     placement, because two of the four have no setting at all -- s2 and s3 are
+#     voids. No walls ban: nothing here drew a wall, and the fault is emptiness.
+# NO SAPLING CLAUSE, DELIBERATELY. This is the beat whose draft never names the
+# plant -- it says only "a bare branch above" -- and `authored_staged` already
+# exists to fix exactly that, with its own note recording the price: `tiny` and
+# `sapling` trip _SMALL and pull in the eight-term scale block. Sending both
+# changes in one round would make the frames unreadable as evidence. This round
+# is light, eyes and the fig; the sapling naming is a separate variable and stays
+# where it already lives.
+#
+# -- MEASURED ON THE BOX'S REAL CLIP TOKENIZER BEFORE ENQUEUE ------------------
+# Positive 67/77 with STYLE ANCHOR PRESENT True, count tag `1boy` deriving and
+# matching the draft, `text` negated True, DRY OK. Negative recipe 75 -> sent 75,
+# every added term reaching the model: glowing eyes, glowing orb and all eight
+# lighting terms, with `photorealistic` and the whole plant-fusion tier surviving
+# beside them. NEGWARN drops quality boilerplate only -- realistic skin texture,
+# jpeg artifacts, deformed, extra limbs, blurry, low quality, signature,
+# watermark, abstract, 3d render -- and no beat term at all. There is room here
+# that beats 15 and 19 did not have precisely because this draft never says
+# `tiny` or `sapling` and so carries no scale block.
+# THE LOSS WORTH NAMING is `extra limbs`, on a shot whose subject is two hands
+# holding one small object. If the hands come back broken, that is the first term
+# to buy back and `no glowing orb` is what would pay for it. Named before the
+# frames exist, not after.
+#
+# WHY THIS IS ONE SAMPLE AND NOT A BATCH. CLAUDE.md, founder 2026-08-03: one
+# sample per recipe change. This is one recipe change on one beat, four seeds, $0.
+#
+# SEPARATE OUT DIRECTORY, DELIBERATELY. The harness names files from the beat
+# slug; this writes to `out-b20-idfix` and overwrites no earlier evidence.
+
+id: ep2-b20-idfix-0812
+task: ep2-b20-idfix-0812
+node: 002b-first-citizen
+beat: 20
+runner: box
+needs_gpu: true
+
+# 50. box_runner.py sorts priority ASCENDING and takes ONE job at a time
+# regardless -- sequential is the rule (CLAUDE.md, founder 2026-08-03) and
+# batch-of-4 is banned. This lane went 14, 15, 17, 19 at 46-49 and all four have
+# already finished; this is the last of the five. The ready AND running queues
+# were both EMPTY when this was staged (`box_enqueue.py --list`, checked, not
+# assumed) -- the card was idle again, which is the condition his mandate names.
+priority: 50
+max_attempts: 1
+owner: beats 14-20 regeneration lane, 2026-08-11 (his wholesale-reject mandate)
+
+# NO `gate:` KEY. One sample on a beat he has rejected wholesale, applying a
+# register he has ratified and blocks already proven on other beats against
+# identical seeds. It clears NOBODY's gate: the fourteen
+# `ep2-b*-goblin-wave1.yaml` specs and the staged siblings keep theirs.
+
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03` (read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml:17-18, the leaf the
+  render gate itself reads, not copied from a sibling spec). His `approved_quote`
+  verbatim: "approve 002b except.. we need to make SURE the fig growing on the sapling
+  is mentioned, last time we generated 002b it just.. appeared. also, the sapling was
+  able to flail a leaf in episode 1? why couldnt it do that in 002b?" Both
+  `approval_conditions` are about beat 01''s fig and beat 16''s leaf; neither touches
+  beat 20''s lighting, framing or staging. Beat 20 is EVIDENCE, the shot in which the
+  scavenger picks the fallen fig up in both hands and looks at the now-bare branch.
+  His fig condition asks that beat 01 show the fig GROW rather than appear; this beat
+  holds the same fig after it has fallen, and the draft names it in the positive.'
+
+consumer: >-
+  The founder's morning review page, as the regenerated beat 20 against
+  `review/ep2-picks/wave-0811/b20-s0..s3.jpg` -- the four frames described in the
+  header, glowing-eyed in all four and holding a ritual orb in three. Same beat,
+  same four seeds, so the comparison is airtight. This job ranks nothing and picks
+  nothing; which frames are good is R4's call.
+
+success: >-
+  Four PNGs at C:\banyan-farm\wave-goblin-prep\out-b20-idfix\20-evidence-wave1-s0..3.png
+  with their .yaml provenance sidecars written at render time (7.2), all eight
+  declared as artifacts so a missing one fails rc=92 instead of passing quietly.
+  Whether the frames are good is R4's call, not this job's and not a metric's.
+
+why: >-
+  Beat 20's wave-1 frames had glowing orange-red eyes in 4 of 4, darkness in 4 of
+  4, and the fig rendered as a glowing orb or an eyed blob in 4 of 4 -- three of
+  them reading as a ritual rather than a boy holding fruit. This round bans the
+  glowing eyes and the glowing orb, says `a ripe fig` instead of `a fig`, sends
+  beat 04's eight-term dark block whole, and states the field early for the two
+  frames that had no setting at all. Staging is otherwise verbatim, the frozen
+  character is untouched, and the sapling naming is left to `authored_staged` so
+  this round stays readable as one variable. Measured before enqueue: positive
+  67/77, anchor intact, `1boy` deriving, negative recipe 75 -> sent 75 with no beat
+  term dropped, DRY OK.
+
+goblin_def: green skin
+goblin_def_source: >-
+  The founder, verbatim: "he is just a simple green goblin, nothing complex"
+  (2026-08-10 ~12:15, re-stated 2026-08-11), plus his verdict on the frames drawn
+  from it: "yeah, that looks like the right goblin" (2026-08-11 ~15:45, on
+  `ep2-b15-goblin-simple-0811`; ledger `ep2-b15-goblin-simple-founder-verdict-0811`).
+  `green skin` is the ONE attribute he named, and this round changes nothing about
+  the character -- including the hair drift its own header records as observed.
+
+est_minutes: 2
+needs:
+- cuda
+- vram20
+- farm-venv
+
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+# The box's wave-drafts.yaml was scp'd from this repo and verified sha256-IDENTICAL
+# (b7386d511cc6b85d8570822503c257a64c0fa08926d5066add43962cbf585f62) after the edit
+# and before this job was queued -- the box printed that sha itself on the dry run
+# quoted in the header, and it matches `shasum -a 256 pipeline/wave-drafts.yaml` in
+# this repo. This is the last beat in the lane, so this sha is also the lane's final
+# state. This is not a formality: `ep2-b08-refresh-0811` FAILED at its measure step
+# (rc=1, 7 seconds, queue/failed/) because the box's copy at run time was not the
+# copy its spec attested to. The harness REFUSES rather than falling back when a
+# variant key is missing, so a stale copy fails for $0 instead of quietly
+# re-rendering the old prompt under a new job id.
+steps:
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '20'
+  - --goblin-def
+  - green skin, bald head, patchwork cloak
+  - --variant
+  - authored_b20_refresh
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '20'
+  - --goblin-def
+  - green skin, bald head, patchwork cloak
+  - --variant
+  - authored_b20_refresh
+  - --out
+  - C:\banyan-farm\wave-goblin-prep\out-b20-idfix
+  - --task
+  - ep2-b20-idfix-0812
+
+# DURABILITY: every still this farm makes lands single-copy on a box nothing backs
+# up. The courier runs `git add -A -- farm-out` and pushes on job_done, and
+# farm-out is NOT gitignored, so publishing is a COPY and the runner stays
+# byte-identical. allow_fail: a failed copy must never mark a good render failed.
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b20-idfix"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/wave-goblin-prep/out-b20-idfix/20-evidence-wave1-s*.*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        # Hash the COPY, not the original: what this records has to be the bytes
+        # that get committed, or the manifest attests to the wrong file.
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+        print("   ", os.path.basename(f), h[:16])
+    # newline="\n" is load-bearing: Windows text mode rewrites \n to \r\n and
+    # every filename then carries a trailing \r that shasum -c cannot open.
+    with open(os.path.join(dst, "20-evidence-refresh.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    # 4 stills + 4 sidecars. Fewer means the render wrote less than it promised.
+    raise SystemExit(0 if len(src) == 8 else 1)
+
+artifacts:
+- C:\banyan-farm\wave-goblin-prep\out-b20-idfix\20-evidence-wave1-s0.png
+- C:\banyan-farm\wave-goblin-prep\out-b20-idfix\20-evidence-wave1-s1.png
+- C:\banyan-farm\wave-goblin-prep\out-b20-idfix\20-evidence-wave1-s2.png
+- C:\banyan-farm\wave-goblin-prep\out-b20-idfix\20-evidence-wave1-s3.png
+- C:\banyan-farm\wave-goblin-prep\out-b20-idfix\20-evidence-wave1-s0.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b20-idfix\20-evidence-wave1-s1.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b20-idfix\20-evidence-wave1-s2.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b20-idfix\20-evidence-wave1-s3.yaml

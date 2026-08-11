@@ -9925,3 +9925,31 @@
   predicates: [no armor 4/4, tunic guard >=3/4, bald goblin 4/4, cloak >=3/4, two figures 4/4, pointing-at-belly reads >=2/4]
   consumer: morning page, identity-frozen wave.
   outcome: null
+
+- id: ep2-b13-idfix-0812
+  kind: prediction
+  written: 2026-08-12 ~03:0x before enqueue, terse. Dry 68/77 anchor intact.
+  predicates: [bald 4/4, cloak >=3/4, one goblin 4/4, seedling in shade reads >=2/4]
+  consumer: morning page, identity-frozen wave.
+  outcome: null
+
+- id: ep2-b14-idfix-0812
+  kind: prediction
+  written: 2026-08-12 ~03:0x before enqueue, terse. Dry 73/77 anchor intact.
+  predicates: [bald 4/4, cloak >=3/4, one goblin 4/4, bright not dark 4/4]
+  consumer: morning page, identity-frozen wave.
+  outcome: null
+
+- id: ep2-b17-idfix-0812
+  kind: prediction
+  written: 2026-08-12 ~03:0x before enqueue, terse. Dry 74/77 anchor intact.
+  predicates: [bald 4/4, cloak >=3/4, one goblin 4/4, no uprooting 4/4]
+  consumer: morning page, identity-frozen wave.
+  outcome: null
+
+- id: ep2-b20-idfix-0812
+  kind: prediction
+  written: 2026-08-12 ~03:0x before enqueue, terse. Dry 73/77 anchor intact.
+  predicates: [bald 4/4, cloak >=3/4, one goblin 4/4, no glowing eyes 4/4, ripe fig >=2/4]
+  consumer: morning page, identity-frozen wave.
+  outcome: null

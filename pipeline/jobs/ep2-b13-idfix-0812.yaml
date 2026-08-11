@@ -1,0 +1,298 @@
+# idfix wave 2026-08-12 ~03:0x: same refresh staging, frozen identity in
+# the def. Dry 68/77 anchor intact - this beat had headroom, no lean needed.
+# Beat 13 THE SHADE refresh, derived from the b11 skeleton at 2026-08-12 ~01:1x.
+# The 0811 date in the id is the lane's, not the clock's: this is the last leg of
+# tonight's refresh run and the sibling ids all carry it.
+#
+# BEAT 13 HAD NO BLOCK IN wave-drafts.yaml UNTIL THIS JOB WAS WRITTEN. Tonight's
+# twenty refresh rounds covered every beat that had one; 13, 18 and 21 were left
+# out for that reason alone, and beat 16 stays out on purpose (it waits on the
+# goblin being drawn into the plate — his call). The block was added the way beat
+# 01's was added earlier tonight, with `authored` and `authored_b13_refresh`
+# byte-identical because render_wave_goblin.py's whole-wave path reads
+# `d["authored"]` by name for every beat in the file and a block without it would
+# KeyError every sibling lane's `--dry`.
+#
+# ── HIS WORDS ARE ON THIS BEAT, AND NOTHING ELSE IN THIS FILE OUTRANKS THEM ────
+# Rounds 6 and 7, 2026-08-09, verbatim (review/ep2-picks/index.html:150, built
+# from review/ep2-picks/beats.json entry 13):
+#
+#     "all the goblin images look like female demihumans, definitely need to
+#      regenerate."
+#
+# Rounds 3, 4, 5, 8 and 9 were turned down by the STEWARD. That sentence is the
+# only founder verdict beat 13 carries, and this round exists to answer it.
+#
+# ── WHAT THE NINE ROUNDS ON DISK SHOW, READ BEFORE THE FIX WAS WRITTEN ────────
+# `review/ep2-picks/sheets/b13.jpg` opened and looked at, all 28 frames:
+#   * r1 IS INDOORS — a shed or garage with a doorway and a concrete floor — and
+#     the sapling is a GIANT ROUND BLOB CREATURE with a sprout on top, a
+#     doll-sized goblin at its foot.
+#   * r3 is that same blob in 4 of 4, one of them with red eyes and a face. His
+#     round-3 note, "the sapling is a giant round creature in every one of them",
+#     is the plant/humanoid collision the `full` negative tier exists for.
+#   * r5 draws leaf-HATTED chibis — the plant fused onto the character's head,
+#     literally `leaf on head` — and s2 has no character in it at all.
+#   * r6 AND r7 ARE THE EIGHT FRAMES HE NAMED. White-silver bobbed hair, pale
+#     pink-white skin, delicate faces, long pointed ears, knees up. Eight of
+#     eight, and no green skin anywhere in either round.
+#   * r8 turns them green under white caps; r9 is green with tusks in 4 of 4,
+#     which is the species question answered.
+#   * AND IN r8 AND r9 THE SEEDLING IS GONE — across those eight frames there is
+#     no readable two-leaf plant beside him, only loose grass and a stray sprig.
+#     The beat is called THE SHADE and the shade is cast by the sapling. The
+#     species fix arrived and took the co-star with it.
+#
+# ── WHY THE ELF RISK IS LIVE AGAIN EVEN THOUGH r9 CLOSED IT ───────────────────
+# r9 bought its 4/4 not-female result with two tags the slot no longer carries:
+# `plump`, which ledger record 42 read as overshoot on 2 of 4 and which is the
+# steward's word rather than his, and `tusks`. What fills {{GOBLIN}} here is HIS
+# definition — "he is just a simple green goblin, nothing complex" (2026-08-10) —
+# and it is one attribute. So the species defence has to come from the negative,
+# where `female goblin, elf` already ride in the explicit tier (kind: goblin ->
+# `full`), plus exactly one new term: `no white hair`. That is the drawn feature
+# of the eight frames he rejected, named as an attribute rather than as a species.
+# `elf` is not sent twice, and NOTHING is aimed at the ears on purpose — shots.md's
+# own note for this beat warns that negating `elf` may cost the pointy ears a
+# goblin needs, and the ears are not what he objected to.
+#
+# ── THE OTHER ADDITION IS THE SEEDLING, IN shots.md's OWN WORDS ───────────────
+# `a tiny two-leaf seedling rooted in the grass`. shots.md's r5 rewrite for this
+# beat is explicit that `seedling with two oversized cotyledon leaves` is "beat
+# 01's proven botanical binding and is what stops the plant being drawn as a
+# second round creature beside the goblin"; it is shortened to `two-leaf` for the
+# budget, and `two-leaf`, `tiny` and `seedling` all still fire `sd_prompt._SMALL`
+# so the scale negatives append exactly as before.
+#
+# BEAT 01'S `no mascot, no creature, no face` IS NOT PORTED AND MUST NOT BE. That
+# is shots.md's rule, not a preference: "This beat's subject IS a creature with a
+# face and enormous ears." Same for `no boy` and `no person`, which
+# render_wave_goblin.check() faults on unconditionally for a peopled beat.
+#
+# ── THE DARK BAN IS NOT SENT WHOLE, AND THIS IS THE CLEAREST CASE FOR THAT ────
+# The subject of this beat is a patch of SHADE. `no shadows dominant`, `no dim
+# lighting`, `no low key` and `no dark` would each fight the thing being filmed,
+# so only `no night, no dusk` go — the two terms the murky r6/r7/r9 frames earned
+# — with `bright midday sunlight` stated affirmatively, because a small patch of
+# shade only reads when there is hard sun making it. Beat 15's precedent (the ban
+# shrinking to what its own frames earned), not beat 17's (the ban riding whole).
+#
+# NO WALLS BAN AND NO SECOND FIELD CLAUSE. The garage is r1 and only r1; every
+# frame from r3 forward is outdoors on grass, 24 of 24. Nothing is spent on a
+# fault that stopped happening three rounds before he ever looked.
+#
+# ── MEASURED ON THE BOX'S REAL CLIP TOKENIZER, FIRST DRAFT, NO REFUSALS ───────
+# `--dry` on the box, quoted rather than summarised:
+#   positive tokens (real CLIP): 62/77   STYLE ANCHOR PRESENT: True
+#   count tag: '1boy' (draft declares '1boy')     'text' negated: True
+#   negative: recipe 76 -> sent 73        DRY OK, no faults
+# Fifteen tokens of headroom, and it is deliberately left unspent: the harness
+# calls that number "headroom for the goblin definition", and if he lengthens his
+# one sentence it is the budget that absorbs it.
+#
+# THE NEGATIVE COSTS ELEVEN HOUSE TERMS AND THAT IS NAMED, NOT BURIED. NEGWARN
+# drops realistic skin texture, jpeg artifacts, deformed, extra limbs, blurry, low
+# quality, signature, watermark, abstract, 3d render and photorealistic — the
+# whole house tier except `text`, which survives only because the draft's own
+# boilerplate `no text` re-requests it at beat rank. Photoreal defence is not
+# lost: the draft's own `no photorealism` sits in the beat tier and is sent. The
+# real loss to watch is `extra limbs` and `deformed` on a figure hugging its own
+# knees; if hands or legs come back broken, those are the first two to buy back
+# and `no night, no dusk` is what would pay for them. The 11-term explicit tier is
+# what crowds them out, and it is the tier this beat cannot give up — `plant hair`
+# and `female goblin` are the two things r3 and r6/r7 respectively got wrong.
+#
+# WHY THIS IS ONE SAMPLE AND NOT A BATCH. CLAUDE.md, founder 2026-08-03: one
+# sample per recipe change. One recipe change, one beat, four seeds.
+#
+# SEPARATE OUT DIRECTORY: the harness names files from the beat slug, so this
+# writes to `out-b13-idfix` and overwrites none of the nine rounds already on
+# disk.
+
+id: ep2-b13-idfix-0812
+task: ep2-b13-idfix-0812
+node: 002b-first-citizen
+beat: 13
+runner: box
+needs_gpu: true
+
+# 51. box_runner.py sorts priority ASCENDING and takes ONE job at a time
+# regardless — sequential is the rule (CLAUDE.md, founder 2026-08-03). Tonight's
+# refresh lane ran 44 through 50; 13, 18 and 21 take 51, 52 and 53 in the order
+# they are staged rather than in beat order, because they are being written one
+# at a time and each one's dry run has to pass before the next is touched. The
+# ready and running queues were both EMPTY when this was staged
+# (`box_enqueue.py --list`, checked, not assumed) — the card is idle, which is
+# the condition the no-idle-GPU rule names, so priority is only a tiebreaker
+# against whatever a peer lane enqueues in the gap.
+priority: 51
+max_attempts: 1
+owner: beats 13/18/21 block-and-refresh lane, 2026-08-12 (the three episode-2
+  beats that had no draft block)
+
+# NO `gate:` KEY. One sample on the one beat of this episode where the founder
+# himself named the fault, sending a term aimed at that fault and a plant clause
+# lifted from the beat's own shots.md. It clears NOBODY's gate: the fourteen
+# `ep2-b*-goblin-wave1.yaml` specs and the staged siblings keep theirs, and beat
+# 16 stays gated on the plate.
+
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03` (read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml:17-18, the leaf the
+  render gate itself reads, not copied from a sibling spec). His `approved_quote`
+  verbatim: "approve 002b except.. we need to make SURE the fig growing on the sapling
+  is mentioned, last time we generated 002b it just.. appeared. also, the sapling was
+  able to flail a leaf in episode 1? why couldnt it do that in 002b?" Both
+  `approval_conditions` are about beat 01''s fig and beat 16''s leaf; neither touches
+  beat 13. Beat 13 is THE SHADE, the scavenger folding into the sapling''s very small
+  patch of shade — no fig in it and no leaf gesture.'
+
+consumer: >-
+  The founder's morning review page, as the tenth round of beat 13 against the
+  nine already on the picking page — specifically against `r6` and `r7`, the
+  eight white-haired frames he called female demihumans, and against `r9`, which
+  fixed the species and lost the sapling. Same harness, same four-seed ladder, so
+  the comparison to r8/r9 is like for like. This job ranks nothing and picks
+  nothing; which frames are good is R4's call.
+
+success: >-
+  Four PNGs at C:\banyan-farm\wave-goblin-prep\out-b13-idfix\13-the-shade-wave1-s0..3.png
+  with their .yaml provenance sidecars written at render time (7.2), all eight
+  declared as artifacts so a missing one fails rc=92 instead of passing quietly.
+  What to look at, in his terms and not a metric's: whether the figure reads as a
+  green goblin boy rather than a pale white-haired demihuman, and whether the
+  two-leaf seedling is actually in the frame casting the shade he is sitting in.
+  A round that fixes the species and again loses the plant is a real result and
+  should be reported as one, not re-run.
+
+why: >-
+  Beat 13 is the only episode-2 beat the founder rejected in his own words — "all
+  the goblin images look like female demihumans" — and the round that answered
+  him, r9, bought its green goblin with two tags (`plump`, `tusks`) that his own
+  one-line definition does not carry, then lost the seedling out of all four
+  frames of a beat named THE SHADE. This round sends his definition alone in the
+  slot, `no white hair` against the feature he rejected, and shots.md's own
+  botanical binding to put the plant back. Measured on the box's real tokenizer
+  before enqueue: positive 62/77 with the style anchor intact, `1boy` deriving,
+  no faults, DRY OK.
+
+goblin_def: green skin
+goblin_def_source: >-
+  The founder's own definition, verbatim — "he is just a simple green goblin,
+  nothing complex" (2026-08-10 ~12:15, cuts/cuts.yaml item 18, settled;
+  taste/steward-model.ledger.yaml record ep2-goblin-definition-0810). Beat 13 IS a
+  goblin beat, so unlike the guard-beat siblings this string reaches the model:
+  it fills the {{GOBLIN}} slot in the species position right behind the count tag.
+  `plump` and `tusks` are deliberately NOT sent even though r9 measured them as
+  the levers that took not-female to 4 of 4 — `plump` is the steward's word and
+  record 42 read it as overshoot, `tusks` is shots.md's and not his sentence, and
+  sending either would put the steward's goblin under the founder's name. That is
+  the exact error record 33 was graded a miss for. The cost of that honesty is
+  that the species defence rests on the negative, which is why `no white hair` is
+  in the draft.
+
+est_minutes: 2
+needs:
+- cuda
+- vram20
+- farm-venv
+
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+# THE SHA ATTESTED HERE IS THE SHA AT STAGING TIME AND IT WILL NOT SURVIVE THE
+# NIGHT. The box's wave-drafts.yaml was scp'd from this repo and verified
+# sha256-IDENTICAL — b3d8f3fdb9b875989f6440fa52d7e9fa6791ec4c93e5a6072d006469e141f45a,
+# printed by the box itself on the dry run quoted in the header and matching
+# `shasum -a 256 pipeline/wave-drafts.yaml` here. Beats 18 and 21 get their own
+# blocks in the same file within the hour, so that digest changes and this job
+# may well run against a different one. That is fine and it is stated rather than
+# papered over: what actually guards this job is the `measure` step below, which
+# re-runs the same `--dry` against whatever the box holds AT RUN TIME and fails
+# rc=1 for $0 if the variant key is missing or the prompt no longer fits.
+# `ep2-b08-refresh-0811` failed exactly there (rc=1, 7 seconds, queue/failed/)
+# rather than quietly re-rendering an old prompt under a new job id, which is the
+# behaviour worth having.
+steps:
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '13'
+  - --goblin-def
+  - green skin, bald head, patchwork cloak
+  - --variant
+  - authored_b13_refresh
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '13'
+  - --goblin-def
+  - green skin, bald head, patchwork cloak
+  - --variant
+  - authored_b13_refresh
+  - --out
+  - C:\banyan-farm\wave-goblin-prep\out-b13-idfix
+  - --task
+  - ep2-b13-idfix-0812
+
+# DURABILITY: every still this farm makes lands single-copy on a box nothing backs
+# up. The courier runs `git add -A -- farm-out` and pushes on job_done, and
+# farm-out is NOT gitignored, so publishing is a COPY and the runner stays
+# byte-identical. allow_fail: a failed copy must never mark a good render failed.
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b13-idfix"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/wave-goblin-prep/out-b13-idfix/13-the-shade-wave1-s*.*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        # Hash the COPY, not the original: what this records has to be the bytes
+        # that get committed, or the manifest attests to the wrong file.
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+        print("   ", os.path.basename(f), h[:16])
+    # newline="\n" is load-bearing: Windows text mode rewrites \n to \r\n and
+    # every filename then carries a trailing \r that shasum -c cannot open.
+    with open(os.path.join(dst, "13-the-shade-refresh.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    # 4 stills + 4 sidecars. Fewer means the render wrote less than it promised.
+    raise SystemExit(0 if len(src) == 8 else 1)
+
+artifacts:
+- C:\banyan-farm\wave-goblin-prep\out-b13-idfix\13-the-shade-wave1-s0.png
+- C:\banyan-farm\wave-goblin-prep\out-b13-idfix\13-the-shade-wave1-s1.png
+- C:\banyan-farm\wave-goblin-prep\out-b13-idfix\13-the-shade-wave1-s2.png
+- C:\banyan-farm\wave-goblin-prep\out-b13-idfix\13-the-shade-wave1-s3.png
+- C:\banyan-farm\wave-goblin-prep\out-b13-idfix\13-the-shade-wave1-s0.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b13-idfix\13-the-shade-wave1-s1.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b13-idfix\13-the-shade-wave1-s2.yaml
+- C:\banyan-farm\wave-goblin-prep\out-b13-idfix\13-the-shade-wave1-s3.yaml
