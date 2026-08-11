@@ -1,0 +1,148 @@
+# 002b goblin wave -- THE SHOT-SIZE SAMPLE, beat 02 the-sprint, 2026-08-11.
+# UNGATED ON PURPOSE: this is the ONE SAMPLE the twelve gated sibling specs are
+# waiting on. It draws nothing new about the character -- Roman ruled on that
+# ("yeah, that looks like the right goblin", 2026-08-11 ~15:45, on
+# `ep2-b15-goblin-simple-0811`) -- and it does not clear anybody's gate. It
+# exists so a human has something to look at.
+#
+# WHAT FAILED AND WHAT CHANGED. `ep2-b02-goblin-staged-0811` ran this same beat
+# with `--variant authored_staged` and came back rc=0 with four unusable
+# frames: no goblin at all in s0 and s3, a stick-sized figure in s2, and in s1 --
+# the one front-on frame -- a head a few pixels across with no readable face.
+# The 2026-08-11 staging fix had corrected the ANGLE (`from front`) and left the
+# DISTANCE: `wide shot` survived in the same sentence, and at wide-shot distance
+# in a 9:16 frame `his face visible past its thin stem` is not something the
+# model can honour. Beat 04 is the only beat of this wave whose frames ever came
+# back readable and it states a shot SIZE twice (`his face filling the frame`,
+# `close-up`); the staged drafts had copied the angle half and not the size half.
+#
+# ONE TOKEN IS THE WHOLE DIFFERENCE. `--variant authored_staged_med` is
+# `authored_staged` with `wide shot` -> `medium shot` and nothing else -- same
+# beat, same seeds, same steps and guidance, same harness, same `green skin`
+# slot. So a comparison against the failed sheet reads cleanly: if the face is
+# legible now, the size term was the cause.
+#
+# WHY MEDIUM AND NOT BEAT 04's `close-up`. Beat 04 can fill the frame with a
+# face because it has nothing else in it. This beat is a sprint AND a dive AND a
+# sapling he dives behind -- the joke is the cover, and a close-up crops the
+# thing being hidden behind. `authored_staged_close` sits beside it in
+# wave-drafts.yaml, unrendered, for whoever looks at these four and wants tighter.
+# Not a ranking and not a metric's pick: nobody has seen either yet.
+#
+# SEPARATE OUT DIRECTORY, DELIBERATELY. `out-staged` still holds the four failed
+# frames the gate on the sibling specs cites by path. This writes to
+# `out-medium`, because the harness names files from the beat slug and firing
+# into `out-staged` would overwrite the evidence the gate is built on.
+#
+# MEASURED, NOT GUESSED: dry-run on the box's real CLIP tokenizer at 2026-08-11
+# ~16:5x on this exact variant and slot string -- DRY OK, 68/77 positive tokens,
+# STYLE ANCHOR PRESENT, count tag `1boy` derives, no faults. The harness refuses
+# rather than falling back if the box's wave-drafts.yaml lacks the key, so a
+# stale copy fails for $0 instead of quietly rendering the old staging under a
+# new job id; the box copy was verified sha256-identical to the repo's
+# (91d45003a7879a3083d280ef715c972df3c4599d00bdbad54a3295819544bde6) after the
+# edit and before this job was queued.
+
+id: ep2-b02-goblin-medium-0811
+task: ep2-b02-goblin-medium-0811
+node: 002b-first-citizen
+beat: 2
+runner: box
+needs_gpu: true
+priority: 45
+max_attempts: 1
+owner: goblin shot-size lane, 2026-08-11 (the sample the wave gates name)
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03` (read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, not copied from a
+  sibling spec). His `approved_quote` verbatim: "approve 002b except.. we need to make
+  SURE the fig growing on the sapling is mentioned, last time we generated 002b it just..
+  appeared. also, the sapling was able to flail a leaf in episode 1? why couldnt it do
+  that in 002b?" Both conditions are about beat 01''s fig and the sapling''s leaf; neither
+  touches this beat''s framing.'
+consumer: The human look the twelve gated sibling specs are blocked on. Their gate says a
+  shot-size term is what would clear it and that a person -- Roman or the lead, not this
+  lane -- has to see one sample drawn with it first. These four frames are that sample.
+  Until they are looked at, no staged beat of this wave can fire.
+success: Four PNGs at C:\banyan-farm\wave-goblin-prep\out-medium\02-the-sprint-wave1-s0..3.png
+  with their .yaml provenance sidecars written at render time (7.2), all eight declared as
+  artifacts so a missing one fails rc=92 instead of passing quietly. Whether the face is
+  readable is the human's call at the contact sheet, not this job's, and not a metric's.
+why: 'One variable against the failed sample: the shot-size term. `medium shot` for
+  `wide shot`, same beat, same four seeds, same steps, same guidance, same drafts file,
+  same `green skin` slot. Any difference in these frames is that one token.'
+goblin_def: green skin
+goblin_def_source: 'The founder, verbatim: "he is just a simple green goblin, nothing complex"
+  (2026-08-10 ~12:15, re-stated 2026-08-11), and his approval of the frames drawn from it:
+  "yeah, that looks like the right goblin" (2026-08-11 ~15:45, on `ep2-b15-goblin-simple-0811`).
+  `green skin` is the ONE attribute he named. This is his sentence with nothing added to it.'
+est_minutes: 2
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '2'
+  - --goblin-def
+  - green skin
+  - --variant
+  - authored_staged_med
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '2'
+  - --goblin-def
+  - green skin
+  - --variant
+  - authored_staged_med
+  - --out
+  - C:\banyan-farm\wave-goblin-prep\out-medium
+  - --task
+  - ep2-b02-goblin-medium-0811
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-goblin-medium\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/wave-goblin-prep/out-medium/02-the-sprint-wave1-s*.*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\n    print(\"   \", os.path.basename(f),\
+    \ h[:16])\nwith open(os.path.join(dst, \"02-the-sprint-medium.sha256\"), \"w\", newline=\"\
+    \\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src),\
+    \ \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) == 8 else 1)\n"
+artifacts:
+- C:\banyan-farm\wave-goblin-prep\out-medium\02-the-sprint-wave1-s0.png
+- C:\banyan-farm\wave-goblin-prep\out-medium\02-the-sprint-wave1-s1.png
+- C:\banyan-farm\wave-goblin-prep\out-medium\02-the-sprint-wave1-s2.png
+- C:\banyan-farm\wave-goblin-prep\out-medium\02-the-sprint-wave1-s3.png
+- C:\banyan-farm\wave-goblin-prep\out-medium\02-the-sprint-wave1-s0.yaml
+- C:\banyan-farm\wave-goblin-prep\out-medium\02-the-sprint-wave1-s1.yaml
+- C:\banyan-farm\wave-goblin-prep\out-medium\02-the-sprint-wave1-s2.yaml
+- C:\banyan-farm\wave-goblin-prep\out-medium\02-the-sprint-wave1-s3.yaml

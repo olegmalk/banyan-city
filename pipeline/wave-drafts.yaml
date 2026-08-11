@@ -146,6 +146,42 @@ beats:
       cinematic lighting, detailed, newest, masterpiece, best quality, very
       aesthetic No girl, no child. No photorealism, no 3D render look. 9:16
       vertical, no text.
+    # ----------------------------------------------------------------------
+    # SHOT SIZE, 2026-08-11 16:0x. `authored_staged` was drawn as
+    # `ep2-b02-goblin-staged-0811` and FAILED: s0 and s3 have no goblin in
+    # them, s2 is a stick-sized figure, and s1 -- the one front-on frame --
+    # gives him a head a few pixels across with no readable face. Sheet:
+    # scratchpad CONTACT-b02-staged.jpg, looked at, not inferred.
+    #
+    # The cause is that `authored_staged` bought the ANGLE half of beat 04's
+    # advantage (`from front`) and left `wide shot` in the same sentence. At
+    # wide-shot distance in a 9:16 frame a face is a few pixels, so
+    # `his face visible past its thin stem` is not something the model can
+    # honour. Beat 04 is the ONE beat of this wave whose frames ever came back
+    # readable, and it carries a shot SIZE twice: `his face filling the frame`
+    # and `close-up`.
+    #
+    # These two keys change ONE TOKEN each against `authored_staged` -- the
+    # shot-size term, nothing else -- because which size this beat wants is a
+    # question about a sprint-and-dive, and nobody has looked at either yet.
+    # `close` copies beat 04's proven term outright; `med` is the one that
+    # keeps the dive legible if the close-up eats the action. Both are
+    # candidates for a human, NOT a ranking: no metric picks between them.
+    # `authored` and `authored_staged` are byte-identical above.
+    authored_staged_med: >-
+      A small goblin boy, {{GOBLIN}}, solo, from front, sprints in panic and
+      dives behind a tiny sapling rooted in the grass, his face visible past its
+      thin stem, dust kicking up. Static camera, medium shot, morning light,
+      cinematic lighting, detailed, newest, masterpiece, best quality, very
+      aesthetic No girl, no child. No photorealism, no 3D render look. 9:16
+      vertical, no text.
+    authored_staged_close: >-
+      A small goblin boy, {{GOBLIN}}, solo, from front, sprints in panic and
+      dives behind a tiny sapling rooted in the grass, his face visible past its
+      thin stem, dust kicking up. Static camera, close-up, morning light,
+      cinematic lighting, detailed, newest, masterpiece, best quality, very
+      aesthetic No girl, no child. No photorealism, no 3D render look. 9:16
+      vertical, no text.
 
   3:
     slug: bad-cover
@@ -164,11 +200,32 @@ beats:
     # sapling has and is one fewer thing pulling toward a mature tree. The face
     # clause also serves the joke: the cover is bad BECAUSE we can see all of
     # him, and `hides none of him` says that harder than `almost none`.
+    # SHOT SIZE, 2026-08-11 16:4x — THE SAME ONE-TOKEN FIX AS BEAT 02's, AND
+    # WHY IT IS THE SAME TOKEN ON SEVEN BEATS. `ep2-b02-goblin-staged-0811`
+    # failed because `authored_staged` bought the ANGLE half of beat 04's
+    # advantage and not the SIZE half, and beat 04 — the one beat of this wave
+    # whose frames ever came back readable — carries a size twice (`his face
+    # filling the frame`, `close-up`). Every beat below stated a camera and no
+    # distance at all, which on Animagine defaults toward the same wide framing
+    # that made s1's head a few pixels across. So each gains `medium shot` and
+    # NOTHING else: one term, the same term, because the whole point of the
+    # beat-02 sample is that its answer transfers. BEATS 03, 07, 17, 19 and 20
+    # gain the words `medium shot`; beats 08 and 10 are two-handers and gain
+    # `medium two-shot` instead, which on 08 is the single word `medium` added
+    # to a `two-shot` that was already there — 08 is the tightest beat in the
+    # wave and could not afford three. Not `close-up` — these beats
+    # all have a body action or a prop the gag needs (a stem that hides none of
+    # him, a fig, a pointing arm), and beat 04 can fill the frame with a face
+    # precisely because it has none. UNLOOKED-AT, AND THE GATES STAY SHUT: the
+    # 12 sibling specs still refuse to run until a human sees the beat-02
+    # frames. If that look says medium is still too far, this is one token to
+    # move on seven lines. Measured on the box's CLIP tokenizer, not guessed.
     authored_staged: >-
       A small goblin boy, {{GOBLIN}}, solo, from front, crouches behind the
       pencil-thin stem of a tiny sapling rooted in the grass that hides none of
       him, his face visible beside it. Deadpan comedic staging, static camera,
-      cinematic lighting, detailed, newest, masterpiece, best quality, very
+      medium shot, cinematic lighting, detailed, newest, masterpiece, best
+      quality, very
       aesthetic No girl, no child. No photorealism, no 3D render look. 9:16
       vertical, no text.
 
@@ -258,7 +315,8 @@ beats:
       A round guard man in mismatched armor, from front, thrusts one arm out,
       pointing off-frame with the confidence of a man who has solved the
       problem, his partner's shoulder just visible at frame edge. Static camera,
-      morning field, cinematic lighting, detailed, newest, masterpiece, best
+      medium shot, morning field, cinematic lighting, detailed, newest,
+      masterpiece, best
       quality, very aesthetic No girl, no child. No photorealism, no 3D render
       look. 9:16 vertical, no text.
 
@@ -290,7 +348,7 @@ beats:
     authored_staged: >-
       Two round boys, from front, a guard man in armor pointing at the belly of
       a small goblin boy, {{GOBLIN}}, in a patchwork cloak who looks down, face
-      visible. Deadpan two-shot, no movement but the pointing arm, cinematic
+      visible. Deadpan medium two-shot, no movement but the pointing arm, cinematic
       lighting, detailed, newest, masterpiece, best quality, very aesthetic No
       girl, no child. No photorealism, no 3D render look. 9:16 vertical, no
       text.
@@ -340,10 +398,10 @@ beats:
     authored_staged: >-
       Two round guard men in mismatched armor from the front, one holding up the
       completely blank back of his bark clipboard toward the other and shaking
-      it once for emphasis. Static camera, the blank board dominating the frame,
-      cinematic lighting, detailed, newest, masterpiece, best quality, very
-      aesthetic No girl, no child. No photorealism, no 3D render look. 9:16
-      vertical, no text.
+      it once for emphasis. Static camera, medium two-shot, the blank board
+      dominating the frame, cinematic lighting, detailed, newest, masterpiece,
+      best quality, very aesthetic No girl, no child. No photorealism, no 3D
+      render look. 9:16 vertical, no text.
 
   11:
     slug: they-leave
@@ -458,8 +516,9 @@ beats:
     authored_staged: >-
       A small goblin boy, {{GOBLIN}}, solo, stands up, brushes dust off his
       patchwork cloak, and turns from a tiny sapling rooted in the grass to face
-      camera, the open field behind him. Static camera, amber afternoon light,
-      cinematic lighting, detailed, newest, masterpiece, best quality, very
+      camera, the open field behind him. Static camera, medium shot, amber
+      afternoon light, cinematic lighting, detailed, newest, masterpiece, best
+      quality, very
       aesthetic No girl, no child. No photorealism, no 3D render look. 9:16
       vertical, no text.
 
@@ -489,8 +548,9 @@ beats:
     authored_staged: >-
       A small goblin boy, {{GOBLIN}}, solo, stops mid-step, surprised face
       toward camera, as a ripe fig drops from a tiny sapling rooted in the
-      ground and bounces off his head. Static camera, amber afternoon, cinematic
-      lighting, detailed, newest, masterpiece, best quality, very aesthetic No
+      ground and bounces off his head. Static camera, medium shot, amber
+      afternoon, cinematic lighting, detailed, newest, masterpiece, best
+      quality, very aesthetic No
       girl, no child. No photorealism, no 3D render look. 9:16 vertical, no
       text.
 
@@ -522,7 +582,8 @@ beats:
     authored_staged: >-
       A small goblin boy, {{GOBLIN}}, solo, holds a fig up in both hands like
       evidence, his face toward camera, eyes wide as he looks up at the bare
-      branch of a tiny sapling above him. Warm amber afternoon light, cinematic
-      lighting, detailed, newest, masterpiece, best quality, very aesthetic No
+      branch of a tiny sapling above him. Medium shot, warm amber afternoon
+      light, cinematic lighting, detailed, newest, masterpiece, best quality,
+      very aesthetic No
       girl, no child. No photorealism, no 3D render look. 9:16 vertical, no
       text.
