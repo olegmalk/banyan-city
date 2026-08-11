@@ -1,4 +1,4 @@
-# Node 006a — shot list (29 shots, 1:1 with the script's beats)
+# Node 006a — shot list (31 shots, 1:1 with the script's beats)
 
 Rebuilt 2026-07-25 for loop cycle 007 alongside `006a-t0-b`. **One shot per
 beat, 5–8s, camera on the referent of that beat's line** (SCRIPT-SPEC.md
@@ -14,7 +14,7 @@ the primary action (motion grammar, `style.md`).
 **Character continuity (anime model sheet, `style.md`):** the MAGISTRATE is
 tall in travel-worn robes of office with a heavy seal on a chain — she never
 hurries and never pauses at a threshold. The SCAVENGER is a small round
-goblin: enormous ears, one broken tusk, huge eyes, patchwork cloak in faded
+goblin: enormous ears, huge eyes, patchwork cloak in faded
 greens and browns. The FARMER is broad and squarish in a straw hat, three
 lines for his whole face. The TREE at this node is **~1.6 m — a man's
 height, full small crown, side branches, fig-bearing** (growth ladder,

@@ -1,4 +1,4 @@
-# Node 005 — shot list (25 shots, 1:1 with the script's beats)
+# Node 005 — shot list (26 shots, 1:1 with the script's beats)
 
 Rebuilt 2026-07-25 for loop cycle 007 alongside `005-t0-b`. **One shot per
 beat, 4–7s, camera on the referent of that beat's line** (SCRIPT-SPEC.md
@@ -15,7 +15,7 @@ action (motion grammar, `style.md`).
 thin vertical line of a man in dust-grey robes, ruler-straight edges, a
 heavy ledger chained to his belt, a quill worn to a stub; he moves like a
 metronome. The SCAVENGER is a small round goblin — enormous ears that act
-like a second face, one broken tusk, huge eyes, patchwork cloak in faded
+like a second face, huge eyes, patchwork cloak in faded
 greens and browns. The FARMER is a broad squarish silhouette in a straw
 hat, three lines for his whole face, permanently unimpressed. The TREE at
 this node is **~1.2 m with a small crown and its first woody bark** (growth
@@ -58,7 +58,7 @@ Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded c
 Line: "Settlement name?" / "…Shade." Camera on the goblin stepping INTO frame — the gate flagged that he answered from off-screen before we ever saw him.
 
 ```
-Vertical 9:16 medium shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small round goblin — enormous ears, one broken tusk, patchwork cloak in faded greens and browns — steps out from behind a young tree's trunk into full frame, shoulders rising, and answers with visible reluctance, ears folding down. Morning light, the grey robe's edge just in frame. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 medium shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small round goblin — enormous ears, patchwork cloak in faded greens and browns — steps out from behind a young tree's trunk into full frame, shoulders rising, and answers with visible reluctance, ears folding down. Morning light, the grey robe's edge just in frame. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 05 — FOUNDED (0:19–0:23) ⬜ needs footage
@@ -111,7 +111,7 @@ Vertical 9:16 medium close-up, hand-drawn 2D anime style, low detail: flat cel-s
 
 ## Beat 11 — THE PRIOR RECORD (0:47–0:52) ⬜ needs footage
 
-Line: "a prior record. One apple. Unlicensed consumption." Camera on the page turning.
+Line: "Noted. Separately — I have a prior record here. Not the tree's. One apple." Camera on the page turning.
 
 ```
 Vertical 9:16 extreme close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, gentle pastel palette. A thick ledger page turns over slowly under a grey sleeve to reveal a single old line of abstract cel-shaded script waiting on the sheet, a thumb pinning the corner. Ominous administrative calm. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
@@ -119,26 +119,26 @@ Vertical 9:16 extreme close-up, hand-drawn 2D anime style, low detail: flat cel-
 
 ## Beat 12 — DESCRIPTION MATCHES (0:52–0:56) ⬜ needs footage
 
-Line/beat: the tree's want failing out loud — "there is no leaf for *he was starving*." Camera tight on the motionless leaf; the answer it cannot give is the shot.
-
-```
-Vertical 9:16 extreme close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A single leaf on a waist-high young tree holds absolutely still in bright afternoon air while, far behind it and thrown out of focus, two small figures face each other. Nothing in the frame moves at all — the stillness is the point, not a pause before motion. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
-```
-
-## Beat 13 — GROUND FRUIT (0:56–1:01) ⬜ needs footage
-
 Line: "Subject: …description matches." Camera on the assessor's eyes lifting to the goblin.
 
 ```
 Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, gentle pastel palette. A thin man's eyes lift slowly from a ledger page and settle directly on someone off-frame, holding the look without expression while nothing else moves. Terrible patience. Tight on the upper face. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
-## Beat 14 — NO LEAF FOR THAT (1:01–1:05) ⬜ needs footage
+## Beat 13 — GROUND FRUIT (0:56–1:01) ⬜ needs footage
 
 Line: "It fell off the cart. Ground fruit is foraging." Camera down on the goblin studying the dirt.
 
 ```
 Vertical 9:16 shot from above, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. Looking down on a small goblin who stares at the ground and drags one clawed toe through the dust, all his energy gone, ears flat against his skull. Overhead angle, small in frame. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+```
+
+## Beat 14 — NO LEAF FOR THAT (1:01–1:05) ⬜ needs footage
+
+Line/beat: the tree's want failing out loud — "there is no leaf for *he was starving*." Camera tight on the motionless leaf; the answer it cannot give is the shot.
+
+```
+Vertical 9:16 extreme close-up, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A single leaf on a waist-high young tree holds absolutely still in bright afternoon air while, far behind it and thrown out of focus, two small figures face each other. Nothing in the frame moves at all — the stillness is the point, not a pause before motion. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 15 — THE FARMER (1:05–1:10) ⬜ needs footage

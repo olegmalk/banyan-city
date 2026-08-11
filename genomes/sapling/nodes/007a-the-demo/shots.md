@@ -14,7 +14,7 @@ backlog list, the status card, and VO. 9:16 vertical. Every prompt's FIRST
 sentence carries the primary action (motion grammar, `style.md`).
 
 **Character continuity (anime model sheet, `style.md`):** the SCAVENGER is a
-small round goblin — enormous ears, one broken tusk, patchwork cloak. The
+small round goblin — enormous ears, patchwork cloak. The
 FARMER is broad and squarish in a straw hat. The MAGISTRATE is tall in
 travel-worn robes with a seal on a chain. The PILGRIM is new: travel-worn,
 hood down, kneeling, face not clearly seen. The TREE at this node is

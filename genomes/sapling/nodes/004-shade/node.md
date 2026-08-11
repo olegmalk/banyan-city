@@ -2,7 +2,7 @@
 
 **Tree:** Sapling · **Parent:** [003b — One Leaf for Yes](../003b-one-leaf-for-yes/node.md) · **Trunk:** yes · **Status:** hot
 **This file is a T0 leaf** (`004-t0-b`, shot-granular per SCRIPT-SPEC.md).
-**Format:** 9:16 vertical · ~117s · VO + dialogue · 21 beats = 21 shots
+**Format:** 9:16 vertical · ~117s · VO + dialogue · 25 beats = 25 shots
 
 ---
 
@@ -10,7 +10,7 @@
 
 The place gets its **name** — chosen by the tree itself through the
 protocol — and its **second citizen**: the farmer arrives following the
-mended water, and the two humans of this story meet for the first time. A
+mended water, and the goblin and the farmer meet for the first time. A
 settlement now exists that outsiders can refer to; which, per the hook,
 means bureaucracy can too.
 
@@ -178,7 +178,7 @@ era.
 
 ## Taste-rule notes
 
-- **Cycle 007 (shot density):** 21 beats / ~117s = a cut every 5.6s, ≤1
+- **Cycle 007 (shot density):** 25 beats / ~117s = a cut every 4.7s, ≤1
   spoken line each. Every refusal ("no leaf", "aggressively nothing") is
   now a shot of the leaves, so the tree visibly participates in the scene
   it is the subject of.

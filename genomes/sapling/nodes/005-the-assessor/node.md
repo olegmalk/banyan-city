@@ -2,7 +2,7 @@
 
 **Tree:** Sapling · **Parent:** [004 — Shade](../004-shade/node.md) · **Trunk:** yes · **Status:** hot
 **This file is a T0 leaf** (`005-t0-b`, shot-granular per SCRIPT-SPEC.md). Steward-authored trunk continuation under taste file v0.2 (see `../../edl.md`).
-**Format:** 9:16 vertical · ~149s · VO + dialogue · 25 beats = 25 shots
+**Format:** 9:16 vertical · ~149s · VO + dialogue · 26 beats = 26 shots
 
 ---
 
@@ -25,7 +25,7 @@ line, someone with real power reads it next episode.
 ## Script
 
 **COLD OPEN — 0:00–0:05**
-Dawn over Shade: a knee-high young tree with a small crown, a crooked lean-to, a three-stone cairn, a clay jug.
+Dawn over Shade: a waist-high young tree with a small crown, a crooked lean-to, a three-stone cairn, a clay jug.
 
 > **VO (dry, tired, engineer):** I died an engineer and woke up as this tree. My town is one day old.
 
@@ -40,7 +40,7 @@ He stops at the clearing's edge and counts under his breath, lips moving, before
 > **VO:** Which means the kingdom's bureaucracy runs *ahead* of schedule. I have chills.
 
 **SETTLEMENT NAME — 0:15–0:19**
-The SCAVENGER — a small round goblin, enormous ears, one broken tusk, patchwork cloak — steps out from behind the tree into full frame, cornered, and gives it up.
+The SCAVENGER — a small round goblin, enormous ears, patchwork cloak — steps out from behind the tree into full frame, cornered, and gives it up.
 
 > **ASSESSOR:** Settlement name?
 > **SCAVENGER:** …Shade.
@@ -66,7 +66,7 @@ He measures the lean-to's sagging pole with a knotted string.
 He counts the cairn stones one by one with the quill point — and behind him a leaf moves again in still air.
 
 **ORCHARD, SINGLE SPECIMEN — 0:37–0:42**
-He crouches on his heels beside the knee-high tree, licks the quill, and writes it down without measuring anything at all.
+He crouches on his heels beside the waist-high tree, licks the quill, and writes it down without measuring anything at all.
 
 > **ASSESSOR:** Orchard, single specimen. Yield?
 
@@ -176,7 +176,7 @@ so every question and every answer now has its own frame. The episode runs
 longer than the 85s original because the exchanges are no longer stacked on
 one held wide; dialogue is unchanged. Predecessor archived as
 `leaves/005-t0-a.md`; published video leaves 005-t3-a/b are takes of that
-era.
+era. Taste of record remains the founder's v0.2.
 
 ## Lineage notes
 
@@ -197,8 +197,3 @@ branches: what he wrote is anyone's to imagine (Guideline 1).
   counting the cairn's three stones individually) without anyone being beaten.
 - **R5:** the hook is a concrete unknown (the ledger line) plus an incoming
   authority with a name and a gender and a schedule.
-
-## Provenance
-
-Steward-authored trunk continuation (see `leaves/005-t0-a.yaml` and
-`STEWARDSHIP.md`); taste of record remains the founder's v0.2.

@@ -1,4 +1,4 @@
-# Node 003b — shot list (20 shots, 1:1 with the script's beats)
+# Node 003b — shot list (21 shots, 1:1 with the script's beats)
 
 Rebuilt 2026-07-25 for loop cycle 007 alongside `003b-t0-c`. **One shot
 per beat, 4–7s, camera on the referent of that beat's line**
@@ -11,8 +11,7 @@ VO. 9:16 vertical. Every prompt's FIRST sentence carries the primary
 action (motion grammar, `style.md`).
 
 **Character continuity (anime model sheet, `style.md`):** the scavenger is
-a small round goblin — enormous ears that act like a second face, one
-broken tusk, huge expressive eyes, patchwork cloak in faded greens and
+a small round goblin — enormous ears that act like a second face, huge expressive eyes, patchwork cloak in faded greens and
 browns. The sapling is a tiny mascot-simple tree, ~40cm — thin curved trunk, TWO
 oversized expressive leaves, no face, and ONE thin bare side-branch (the
 fig grew there and fell in 002b). Every beat must show the same object:
@@ -38,7 +37,7 @@ Vertical 9:16 macro shot, hand-drawn 2D anime style, low detail: flat cel-shaded
 Line: "only two possibilities." Camera on the fig being set down at the trunk.
 
 ```
-Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small round goblin — enormous ears, one broken tusk, patchwork cloak — crouches and sets a ripe fig down carefully at the base of a tiny sapling's trunk, then adjusts its position twice, like evidence being logged. Dawn field, low warm light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
+Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small round goblin — enormous ears, patchwork cloak — crouches and sets a ripe fig down carefully at the base of a tiny sapling's trunk, then adjusts its position twice, like evidence being logged. Dawn field, low warm light. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
 ```
 
 ## Beat 03 — TWO POSSIBILITIES (0:11–0:16) ⬜ needs footage
@@ -83,7 +82,7 @@ Vertical 9:16 close-up, hand-drawn 2D anime style, low detail: flat cel-shaded c
 
 ## Beat 08 — NO WIND (0:36–0:41) ⬜ needs footage
 
-Line: "One leaf for yes. Nothing for no. Deal?" Camera on him checking a windless world.
+Line/beat: no dialogue — "His ears go flat; he checks the grass — not one blade is moving." Camera on him checking a windless world.
 
 ```
 Vertical 9:16 shot, hand-drawn 2D anime style, low detail: flat cel-shaded colors, bold clean linework, single shadow tone, simplified shapes, soft watercolor-wash background, gentle pastel palette. A small goblin's enormous ears flatten back against his head as he turns to scan an utterly still field — not one blade of grass moving, no birds — then turns slowly back toward the tiny sapling. Dawn light, uncanny stillness everywhere. No photorealism, no 3D render look, no heavy texture. 9:16 vertical, no text.
