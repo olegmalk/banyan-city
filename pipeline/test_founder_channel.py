@@ -116,6 +116,20 @@ def test_the_short_forms_he_was_given_all_parse():
           and recs[0]["text"] == "olegmalk")
 
 
+def test_a_bare_frame_address_needs_no_card_number():
+    # Episode 2's twenty-one canon picks belong to no single card, so the
+    # address has to be answer enough on its own.
+    recs = pd.parse_comment("002b-b02-r3-s0\n002b-b07-r3-s2\nb14-r4-s3")
+    check("three bare addresses, three picks",
+          [r["intent"] for r in recs] == ["pick_frame"] * 3)
+    check("no card is invented for them", all(r["card"] is None for r in recs))
+    check("the address is decomposed",
+          recs[1]["node"] == "002b" and recs[1]["beat"] == 7
+          and recs[1]["round"] == 3 and recs[1]["seed"] == 2)
+    check("an episode-1 address parses with no node",
+          recs[2]["node"] is None and recs[2]["frame"] == "b14-r4-s3")
+
+
 def test_a_number_answers_the_card_that_number_is_printed_on():
     # cuts.yaml's `n:` is what he sees; the list position is not. Confusing the
     # two would file his answer against a different question entirely.
@@ -237,6 +251,7 @@ def main():
 
     print("\npoll_decisions — the grammar")
     test_the_short_forms_he_was_given_all_parse()
+    test_a_bare_frame_address_needs_no_card_number()
     test_a_number_answers_the_card_that_number_is_printed_on()
     test_several_answers_in_one_comment_are_all_recorded()
     test_a_quoted_question_is_not_read_as_its_own_answer()

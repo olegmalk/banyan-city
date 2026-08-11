@@ -50,6 +50,11 @@ REPO = Path(__file__).resolve().parent.parent
 ANSWERS = REPO / "pipeline" / "founder-answers.jsonl"
 STATE = REPO / "pipeline" / ".decisions-state.json"
 
+# The one answer channel, opened 2026-08-10 when the founder left with a phone
+# and no laptop. One issue on purpose: eight of them would be eight places to
+# forget to look, and he answers in whatever order he likes anyway.
+DEFAULT_ISSUE = 31
+
 # ---------------------------------------------------------------------------
 # The grammar. Deliberately small.
 # ---------------------------------------------------------------------------
@@ -112,6 +117,17 @@ def resolve_key(key: str):
     return SLUGS.get(k)
 
 
+def _frame_fields(m, text: str):
+    """The four numbers in a frame address, off an already-matched FRAME_RE."""
+    return {
+        "frame": text.strip().lower(),
+        "node": (m.group("node") or "").lower() or None,
+        "beat": int(m.group("beat")),
+        "round": int(m.group("round")),
+        "seed": int(m.group("seed")),
+    }
+
+
 def parse_answer(value: str):
     """One answer string → (intent, extra fields). Never raises, never guesses."""
     v = value.strip().rstrip(".").strip()
@@ -124,13 +140,7 @@ def parse_answer(value: str):
         return "go", {}
     m = FRAME_RE.match(v)
     if m:
-        return "pick_frame", {
-            "frame": v.lower(),
-            "node": (m.group("node") or "").lower() or None,
-            "beat": int(m.group("beat")),
-            "round": int(m.group("round")),
-            "seed": int(m.group("seed")),
-        }
+        return "pick_frame", _frame_fields(m, v)
     return "note", {"text": v}
 
 
@@ -149,6 +159,20 @@ def parse_comment(body: str):
             continue
         line = re.sub(r"^[-*+]\s+", "", line)          # bullet
         line = re.sub(r"^\d+[.)]\s+", "", line)         # "1. " numbered list
+
+        # A bare frame address, no key. Episode 2 has twenty-one canon picks
+        # spread over four contact sheets and they belong to no single card
+        # number, so requiring one would mean inventing a key for him to get
+        # wrong. The address is self-identifying — node, beat, round, seed — so
+        # `card` stays null and whatever reads this log resolves it from the
+        # frame itself rather than from a number he had to remember.
+        bare = FRAME_RE.match(line)
+        if bare:
+            rec = {"intent": "pick_frame", "card": None, "raw_line": line}
+            rec.update(_frame_fields(bare, line))
+            out.append(rec)
+            continue
+
         m = LINE_RE.match(line)
         if not m:
             out.append({"intent": "unparsed", "raw_line": raw.strip()})
@@ -238,7 +262,8 @@ def build_records(comments, seen, issue):
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("--issue", type=int, required=True, help="the answer-channel issue number")
+    ap.add_argument("--issue", type=int, default=DEFAULT_ISSUE,
+                    help=f"the answer-channel issue number (default: {DEFAULT_ISSUE})")
     ap.add_argument("--repo", default=None, help="owner/name (default: the checkout's remote)")
     ap.add_argument("--answers", default=str(ANSWERS), help="append-only answer log")
     ap.add_argument("--state", default=str(STATE), help="last-looked timestamp (not authoritative)")

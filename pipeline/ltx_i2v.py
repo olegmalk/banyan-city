@@ -71,6 +71,13 @@ the transformer fits, so `--offload model` can keep it resident for the whole
 denoise loop. That is the mechanism being tested. It is a KNIFE EDGE — ~19.8GiB of
 weights plus ~4GB of activations against 23.89GiB — which is why it is a flag with a
 sample behind it and not a new default.
+AND THE KNIFE FELL, on one side only. Measured 2026-08-04/05 with --fp8-layerwise
+--offload model: stage 1 at 352x640 gets FASTER with work (2.2 s/step at batch 2
+against 1.3 at batch 1 — the card being fed), while stage 2 at 704x1280 pins it at
+98.6% and spills, and that spill is the WDDM signature that bugchecked the host. One
+flag cannot be right for both halves of a two-stage recipe, so `--offload split` is
+the two of them in sequence: resident through stage 1 and the upsampler, streamed
+through stage 2, switched in-process at the boundary (_switch_to_sequential).
 
 Licence: LTX-2 Community License Agreement, D16 — CANDIDATE under watch-only, and
 the sidecar says so via video_task.MODEL_LICENCE["ltx23-distilled"] (the fp8 key is
@@ -623,6 +630,98 @@ def _fp8_transformer_is_unsupported() -> int:
     return 2
 
 
+def _switch_to_sequential(pipe, upsampler) -> str:
+    """--offload split: drop the resident recipe at the stage seam and stream stage 2.
+
+    Called once, between the 2x latent upsample and the stage-2 refine. Returns the
+    string that then goes in the sidecar and the closing json, so the record is
+    written BY the code that did the thing rather than by a flag that only asked.
+
+    ALL FOUR MECHANISMS ARE READ OUT OF THE INSTALLED 0.39.0 SOURCE, not out of
+    docs, and the paths are the box's own venv copy:
+
+    1. THE ACCELERATE HOOKS COME OFF CLEANLY. enable_sequential_cpu_offload calls
+       remove_all_hooks() itself as its second act (pipeline_utils.py:1329) — the
+       same call enable_model_cpu_offload makes at :1223 — and remove_all_hooks
+       (:1181-1188) only ever does accelerate.hooks.remove_hook_from_module(model,
+       recurse=True) on components that have an `_hf_hook`. Nothing in the sequential
+       path examines or forbids a prior model offload: its only raising guards are
+       group-offload-is-active (:1323 -> :2228-2244, and we are not group-offloaded
+       because that branch is an if/elif) and a dict device_map (:1331-1336, ours is
+       None). So the switch is not a trick; it is two supported calls in a row.
+
+    2. THE fp8 LAYERWISE CAST SURVIVES IT — now checked in both directions instead
+       of assumed once. accelerate's remove_hook_from_module (accelerate/hooks.py:
+       218-234) deletes `_hf_hook`, restores `module.forward = module._old_forward`,
+       and pops exactly _accelerate_added_attributes = ["to","cuda","npu","xpu",
+       "mlu","sdaa","musa"] (:55) from __dict__. It never touches `_diffusers_hook`,
+       which is where the layerwise cast lives (diffusers/hooks/hooks.py:264-265).
+       And `_old_forward` is whatever `module.forward` was when the accelerate hook
+       went on (:176-181) — i.e. the HookRegistry-rewritten forward installed at
+       hooks/hooks.py:207-209, because ltx_i2v casts BEFORE assembling the pipeline.
+       Removal therefore restores the cast wrapper, by construction.
+       They are not even on the same modules under `model`: cpu_offload_with_hook
+       hooks the top-level transformer, while layerwise casting hooks leaf
+       Linear/Conv modules (layerwise_casting.py:184-187).
+       Under `sequential` they DO land on the same leaves, and the nesting is the
+       right way round: accelerate's pre_forward materialises the leaf's params from
+       weights_map, then calls _old_forward, which is the layerwise wrapper, which
+       upcasts fp8->bf16 for the duration of the real forward (:65-72) and puts it
+       back after. LayerwiseCastingHook is `_is_stateful = False` and holds no tensor
+       references — it re-reads `module` every call — so accelerate handing it
+       freshly materialised parameters each step is fine.
+       ONE CONSEQUENCE WORTH EXPECTING RATHER THAN DISCOVERING: what streams in
+       stage 2 is now fp8 storage, ~19.8GiB per full pass instead of ~38GB, so the
+       PCIe bill per step is about half what plain `--offload sequential` pays — but
+       every leaf now also does two casts it did not do before. Which of those wins
+       is a measurement, and the sample is what takes it.
+
+    3. THE VRAM IS NOT RETURNED UNLESS WE RETURN IT, and this is the line that makes
+       the difference between a working switch and the same 98.6% spill wearing a new
+       flag. enable_sequential_cpu_offload moves the pipeline to CPU and empties the
+       device cache only inside `if self.device.type != "cpu"` (:1358-1361), and
+       `self.device` (:588-600) is the device of the FIRST nn.Module in
+       sorted(_get_signature_keys(...)) (:1837-1849) — for LTX2ImageToVideoPipeline
+       that is `audio_vae`, which under model offload never left the CPU. The guard
+       reads False, both the move and the empty_cache are skipped, and then
+       accelerate's cpu_offload builds its host copy with
+       `state_dict = {n: p.to("cpu") for n, p in model.state_dict().items()}`
+       (accelerate/big_modeling.py:210) off a transformer that is still on the card:
+       a second ~19.8GiB of host RAM, with the CUDA blocks merely handed back to the
+       caching allocator and never released. So we do the move ourselves, first, and
+       then the library's copy is a no-op on tensors already on CPU.
+
+    4. THE UPSAMPLER IS NOT A PIPELINE COMPONENT. It was moved to the card by hand
+       (up.latent_upsampler.to(stage1.device)) and pipe.to("cpu") cannot reach it,
+       because LTX2LatentUpsamplePipeline is a separate object. Left alone it would
+       hold its weights on the card through all of stage 2 for no reason.
+
+    The printed before/after is the honest check: if the card does not drop to
+    roughly the CUDA context plus the upsampled latents, the tear-down did not
+    return what it was supposed to and stage 2 is about to spill anyway.
+    """
+    import torch
+    mark("offload-switch-model-to-sequential")
+    if torch.cuda.is_available():
+        free, total = torch.cuda.mem_get_info()
+        before = (total - free) / 1e9
+    else:
+        before = total = 0.0
+    if upsampler is not None:
+        upsampler.to("cpu")
+    pipe.remove_all_hooks()
+    pipe.to("cpu")
+    gc.collect()
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+        free, total = torch.cuda.mem_get_info()
+        print(f"switch model->sequential: card {before:.1f} -> "
+              f"{(total - free) / 1e9:.1f} / {total / 1e9:.1f}GB in use, torch "
+              f"reserved {torch.cuda.memory_reserved() / 1e9:.1f}GB", flush=True)
+    pipe.enable_sequential_cpu_offload(device="cuda")
+    return "split(model->sequential)"
+
+
 def _render_with(a, transformer, parts, dist, w, h) -> int:
     """The half that is identical whichever transformer was loaded."""
     import torch
@@ -723,6 +822,19 @@ def _build_pipe(a, transformer, parts, dist):
     #               only evicts it when the vae runs). This is the point of the fp8
     #               cast, and it is a knife edge: ~19.8GiB of weights plus ~4GB of
     #               activations on a 23.89GiB card. It OOMs without --fp8-layerwise.
+    #   split       model offload through stage 1 and the upsampler, then a switch to
+    #               sequential for stage 2. THE MEASUREMENT THAT ASKED FOR IT, taken
+    #               2026-08-04/05 with --fp8-layerwise --offload model: stage 1
+    #               (352x640, 8 steps) runs 2.2 s/step at batch 2 against batch 1's
+    #               1.3 — real work per second, a resident card being fed — while
+    #               stage 2 (704x1280, 3 steps) pins the same card at 98.6% and
+    #               spills, which is the WDDM signature that bugchecked the host.
+    #               `sequential` fits stage 2 but streams stage 1 too, and pays for
+    #               it. So the fast mode is right for one stage and wrong for the
+    #               other, and the resolution is not a compromise between them but a
+    #               switch at the boundary. Requires --two-stage (that boundary is
+    #               the only place the switch can happen) and wants --fp8-layerwise
+    #               for the same reason `model` does. See _switch_to_sequential.
     #   group       enable_group_offload(block_level, num_blocks_per_group=1,
     #               use_stream=True, record_stream=True) — the documented middle
     #               ground: whole transformer blocks move instead of leaves, and the
@@ -755,7 +867,9 @@ def _build_pipe(a, transformer, parts, dist):
     # so pipe.enable_vae_tiling does not exist here and the vae's own enable_tiling
     # is what runs — the loop tries both because that is not worth depending on.
     mark(f"offload-setup-{a.offload}")
-    if a.offload == "model":
+    if a.offload in ("model", "split"):
+        # `split` STARTS as `model` and stops being it at the stage seam. Nothing
+        # here needs to know which one it is; _switch_to_sequential does the rest.
         pipe.enable_model_cpu_offload(device="cuda")
     elif a.offload == "group":
         pipe.enable_group_offload(onload_device=torch.device("cuda"),
@@ -893,6 +1007,11 @@ def _render_one(a, pipe, w, h) -> int:
     # sidecar, because what we ASKED for is provenance, but it changes no pixel.
     common = dict(guidance_scale=a.guidance, output_type="np", return_dict=False, **e)
 
+    # WHAT THE RECORD WILL SAY. Every mode but `split` names itself, and `split` is
+    # only allowed to name itself once the switch has actually executed — hence the
+    # assignment from _switch_to_sequential's return rather than from a.offload.
+    offload_ran = a.offload
+
     if a.two_stage:
         # THE FAITHFUL RECIPE. Upstream's "8 steps" is 8 steps at HALF resolution,
         # then a 2x latent upsample, then 3 more steps at full resolution as a
@@ -940,6 +1059,14 @@ def _render_one(a, pipe, w, h) -> int:
                     output_type="latent", return_dict=False)[0]
         print(f"upsampled latents {tuple(up_lat.shape)}", flush=True)
         del stage1
+
+        # THE SEAM. Everything resident up to here — stage 1 and the upsampler are
+        # what the fast mode is fast at — and everything streamed from here, because
+        # 704x1280 with 19.8GiB of weights on the card is the combination that
+        # spilled. up_lat stays where it is: it is the one thing that has to cross
+        # the switch, and at 704x1280x65 it is ~20MB per slot of latents, not weights.
+        if a.offload == "split":
+            offload_ran = _switch_to_sequential(pipe, up.latent_upsampler)
 
         # noise_scale = the first stage-2 sigma, as upstream does. prepare_latents
         # has an explicit branch for this ("conditioning_mask needs to the same
@@ -1048,7 +1175,7 @@ def _render_one(a, pipe, w, h) -> int:
             # path — write_sidecar drops None values, and an absent field reads as
             # "not quantised", which is exactly true.
             extra={"mode": a.mode, "batch": batch, "batch_slot": s,
-                   "offload": a.offload,
+                   "offload": offload_ran,
                    "quantisation": ("fp8-layerwise storage / bf16 compute"
                                     if a.fp8_layerwise else None),
                    "throughput_s_video_per_s_wall":
@@ -1120,15 +1247,17 @@ def _render_one(a, pipe, w, h) -> int:
     # "offload" WAS THE STRING "sequential" until 2026-08-05, written when there was
     # only one path through the code above. The moment a second one existed that
     # literal became a line that says what the file used to do — so it reads the
-    # flag the branch actually took. Same for quantisation, which is null on the
-    # bf16 path rather than absent, because this line is a fixed-shape record.
+    # strategy the branch actually took, which for `split` is the composite name the
+    # switch itself returned and not the word on the command line. Same for
+    # quantisation, which is null on the bf16 path rather than absent, because this
+    # line is a fixed-shape record.
     print(json.dumps({"sample_s": round(sample_s, 1), "peak_gb": round(peak, 1),
                       "peak_commit_gb": round(PEAK["commit_gb"], 1),
                       "frames": a.frames, "size": a.size, "steps": steps_note,
                       "batch": batch, "mode": a.mode,
                       "throughput_s_per_s": round(batch * clip_s / sample_s, 4),
                       "two_stage": bool(a.two_stage), "image_crf": a.image_crf,
-                      "offload": a.offload,
+                      "offload": offload_ran,
                       "quantisation": ("fp8-layerwise storage / bf16 compute"
                                        if a.fp8_layerwise else None)}),
           flush=True)
@@ -1181,13 +1310,15 @@ def main() -> int:
     ap.add_argument("--fp8-layerwise", action="store_true",
                     help="cast the loaded transformer to fp8 storage / bf16 compute "
                          "(~38GB -> ~19.8GiB), which is what lets --offload model fit")
-    ap.add_argument("--offload", choices=["sequential", "model", "group"],
+    ap.add_argument("--offload", choices=["sequential", "model", "split", "group"],
                     default="sequential",
                     help="sequential (default, unchanged behaviour): leaf-level "
                          "streaming, fits the un-cast bf16 transformer. model: "
                          "transformer resident for the whole denoise loop, needs "
-                         "--fp8-layerwise. group: block_level with a prefetch "
-                         "stream, the middle ground.")
+                         "--fp8-layerwise. split: model through stage 1 and the "
+                         "upsampler, sequential for the 704x1280 stage 2 that "
+                         "spills under model; needs --two-stage. group: block_level "
+                         "with a prefetch stream, BROKEN on this pipeline.")
     # Upstream's actual distilled recipe. Off by default so the flag has to be asked
     # for, but it is the ON-RECIPE path: without it an 8-step render runs at double
     # the resolution stage 1 was meant for.
@@ -1254,10 +1385,24 @@ def main() -> int:
     # loading before the first denoise step raises. It is not refused, because the
     # OOM itself is a legitimate thing to go and measure on a bigger card; it is
     # announced, because reading it in a traceback teaches nothing.
-    if a.stage == "render" and a.offload == "model" and not a.fp8_layerwise:
-        print("!! --offload model without --fp8-layerwise: the bf16 transformer is "
-              "~38GB and the card is 23.89GiB, so this is expected to OOM at the "
-              "first denoise step. Continuing because you asked.", flush=True)
+    if a.stage == "render" and a.offload in ("model", "split") and not a.fp8_layerwise:
+        print(f"!! --offload {a.offload} without --fp8-layerwise: the bf16 "
+              "transformer is ~38GB and the card is 23.89GiB, so this is expected "
+              "to OOM at the first denoise step. Continuing because you asked.",
+              flush=True)
+    # REFUSED, not warned, and the difference is what the wrong answer costs. `model`
+    # without the cast is an OOM: a traceback, ninety seconds in, that teaches the
+    # thing it says. `split` without --two-stage has no stage boundary to switch at,
+    # so it would silently render the ENTIRE single-stage 704x1280 denoise resident —
+    # which is precisely the configuration measured at 98.6% and a host bugcheck on
+    # 2026-08-05. A flag whose failure mode is "takes the machine down while doing
+    # exactly what you told it not to" is one to refuse at parse time.
+    if a.stage == "render" and a.offload == "split" and not a.two_stage:
+        print("!! --offload split needs --two-stage: the switch happens AT the "
+              "stage-1/stage-2 boundary, and a single-stage run has none. Without "
+              "it this would render all of 704x1280 resident, which is the "
+              "configuration that spilled and bugchecked the host.", flush=True)
+        return 2
     if a.stage == "render":
         print(f"recipe: offload={a.offload} "
               f"quantisation={'fp8-layerwise' if a.fp8_layerwise else 'none (bf16)'}",
