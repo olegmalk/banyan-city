@@ -2588,23 +2588,18 @@ backlog:
   needs: [cuda, vram20]
   window: any
   est_minutes: 12
-  blocked_on: >-
-    A VERIFIED INVOCATION FOR THE PLAIN STILLS PATH ON THE BOX. Everything else for
-    this sample is done and committed: the prompt is converted and in the tree, and
-    the node passes the §6 gate (003b-t0-c, approved_by founder-delegated-to-steward,
-    D22). The schema farm_worker.render_task wants is small and known — node, beats,
-    seeds, width/height, steps, seed_base — and it reads the prompt out of shots.md
-    through generate_shots.parse_shots. What is NOT verified from this side is how
-    that path is invoked ON THE BOX. Every committed spec in pipeline/jobs/ drives
-    the wave/IPA harness (goblin_ipa_beat.py, render_wave_sample.py), whose drafts
-    and beat constant are hard-wired to 002b — pipeline/goblin_ipa_sample.py:60 is
-    `BEAT = 4` and its docstring says "002b goblin". There is no argv precedent for
-    a plain parse_shots render of another node, and the entries already in `tasks:`
-    are runner=manual prose orders carrying no `node` key, so that schema is not
-    what this file's task list actually feeds. A §6-shaped mistake here does not
-    fail the job, it SystemExits the daemon (farm_worker.py:564) — so this waits for
-    whoever owns the box instead of being guessed at minutes before an unattended
-    night. Unblocking it is one answer, not one hour.
+  fired_as: >-
+    RESOLVED AND FIRED — box job `ep3-003b-b01-dialect-0812`, queued
+    2026-08-12 as ep3-003b-b01-dialect-0812-1786472293. DO NOT HAND-RUN THIS.
+    The blocker was that no argv precedent was known for rendering an arbitrary
+    prompt on the box without the 002b-hardwired beat drafts; the answer is
+    render_wave_sample.py driven by a VARIANT KEY, which the guard-sheet and
+    charref jobs have been using all along. The prompt is
+    `authored_ep3_003b_b01_dialect` in pipeline/wave-drafts.yaml, byte-identical
+    to the beat's fence in the shot list, and the box's drafts copy was hashed
+    before and after the sync (ed2ff73f -> 2215a1f0, backup at
+    wave-drafts.yaml.bak-pre-ep3) so nothing local was destroyed. Spec and full
+    reasoning: pipeline/jobs/ep3-003b-b01-dialect-0812.yaml.
   cmd: >-
     ONE SAMPLE. Node 003b-one-leaf-for-yes, beat 1, 4 seeds, $0 local GPU. Renders
     the converted beat-01 prompt now in
