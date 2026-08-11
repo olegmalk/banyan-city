@@ -6449,3 +6449,99 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+# THE FRAMES, OPENED AFTER THE PREDICTION WAS COMMITTED (edc98e6). The job
+# started 11:20:46Z and the prediction commit landed while it was still
+# rendering — the same ordering `ep2-b04-goblin-ipa-negcolor-observed` describes
+# for itself. No PNG had been decoded when the `predicted` block was written.
+- id: ep2-b15-goblin-simple-0811-observed
+  date: 2026-08-11
+  kind: observation
+  subject: "node 002b beat 15 — what four frames of a `green skin` goblin with
+    `tusks` removed actually contain. The character came back the plainest and
+    most consistent it has ever been on words alone, and the BEAT came back wrong."
+  steward_provisional: true
+  pick: null
+  scores: {}
+  address_key: >-
+    Job `ep2-b15-goblin-simple-0811-1786447234`, rc 0, failed_step null, all 8
+    artifacts written. Frames at
+    `farm-out/ep2-b15-goblin-simple/15-good-listener-wave1-s0..3.png` with
+    per-frame sidecars and an `ep2-b15-goblin-simple.sha256` manifest, copied off
+    the box so they are not single-copy. Read by eye, no metric run — the
+    identity metric is disqualified in this file twice over.
+  the_headline: >-
+    TAKING A WORD OUT WORKED ON THE CHARACTER AND DID NOT TOUCH THE BEAT. All
+    four are a round bald GREEN head with large pointed ears and plain clothes.
+    No ornament, no dark-fantasy detail, no knightly trim, no white bob, no coat
+    — nothing from the family of failures he has rejected for nine rounds. This
+    is the plainest this character has ever drawn, and it is the first time the
+    WORDS route has returned the same species and the same head shape on four
+    seeds running. Beat 04's tags-only sample went 0 of 4 on that.
+  scored_against_the_prediction:
+    p1_not_female_holds: >-
+      NO RESULT, AND THE MISS IS THE STEWARD'S. Three of four are drawn FROM
+      BEHIND — s0, s1 and s2 show the back or rear-quarter of the head and no
+      face at all. Gender cannot be read off the back of a head, so the single
+      thing this sample was built to test was not testable on 75% of it. Nothing
+      in any of the four reads female (no long hair, no feminine silhouette, all
+      four are bald and child-shaped) and s3, the only face, is a lidded amber
+      eye in a plain green profile that is plainly not a female demihuman. But
+      "nothing reads female" on three faceless frames is not the pass that was
+      predicted. Predicting a FACIAL property on a beat whose staging does not
+      guarantee a face is the error, and it is worth more than the frames cost.
+    p2_green_4_of_4: "HIT. Green in all four, unambiguous."
+    p3_simple_not_ornate_4_of_4: "HIT, and it re-tests a prediction that already
+      missed once. The style anchor `detailed, masterpiece, best quality` again
+      did NOT fight 'nothing complex'. That argument is now dead twice and should
+      not be raised a third time."
+    p4_consistency_fails_0_of_4: >-
+      PARTIAL, AND WRONG IN THE GOOD DIRECTION. Predicted four different
+      creatures. Got ONE creature and FOUR WARDROBES: the head, ears, build and
+      skin are consistent across all four, while the clothing is a dark cloak
+      (s0), a pale top with a dark scarf (s1), a tan pullover (s2) and a dark
+      hooded tee with tan shorts and boots (s3). Species consistency on words
+      alone had never happened before; it happened when a word came out.
+    p5_light_darker_than_midday: >-
+      HIT, AND UNDERSTATED FOR THE SECOND TIME. Not one of the four is outdoor
+      midday. The larger error the prediction did not name is SETTING: three of
+      four put him against a WALL or interior doorway with a rim light, on a beat
+      that is a goblin outdoors beside a sapling in a field.
+  the_failure_that_matters_most_and_no_prediction_named_it: >-
+    THE SAPLING IS WRONG IN ALL FOUR AND THE CAMERA IS BEHIND HIM IN THREE.
+    shots.md holds this beat on BOTH of them because the conversation is the
+    subject — his line is "You're a good listener." What came back: s0 and s1
+    put a large indoor monstera-type houseplant in frame instead of a 40cm
+    sapling; s2 has no sapling at all, only two fallen leaves on the floor; s3
+    draws the sapling as a tiny walking creature with its own face and legs
+    standing on the ground beside him. A two-shot where one of the two is a
+    houseplant, absent, or a second character is not this beat.
+    So the beat's own staging is implicated exactly as the spec said it would be
+    if this happened — and it is implicated INDEPENDENTLY of the goblin, which is
+    the part the fourteen gated specs share.
+  what_this_means_for_the_fourteen: >-
+    THEY STILL SHOULD NOT FIRE, AND NOW FOR A SECOND, DIFFERENT REASON. The first
+    reason stands: all fourteen encode `green skin, tusks`, a string he never
+    said, and this sample is evidence that dropping `tusks` costs nothing on the
+    look and gains species consistency. The new reason is that beat 15's drafts
+    line produced a rear view and a houseplant, and the other thirteen were
+    written the same way in the same sitting — the staging, not the goblin slot,
+    is the next thing to fix. Firing fourteen now buys fourteen beats of correct
+    goblin in wrong shots. All fourteen `gate:` keys are intact and untouched.
+  what_this_does_not_claim: >-
+    No frame is picked, ranked, promoted or made canonical. No earlier round is
+    scored. The goblin here is not "his goblin" — he has named green and
+    simplicity and nothing else, and three of these four do not show a face for
+    him to rule on. One beat, four seeds, and nothing publishes.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: partial
+  miss_axis: >-
+    STAGING, NOT THE CHARACTER. The recipe change under test succeeded on every
+    axis it could be read on; the sample was largely wasted because the beat's
+    prompt does not guarantee the face the test needed, and the steward did not
+    check that before predicting a facial property.
+  model_action: >-
+    Next lever is the drafts line for these beats — guarantee the face and the
+    sapling — NOT another word in the goblin slot. Do not re-run beat 15 with a
+    different goblin string.
