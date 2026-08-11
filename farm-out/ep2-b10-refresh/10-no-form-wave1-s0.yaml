@@ -29,7 +29,7 @@ goblin_definition_as_sent: >-
 prompts_from: wave-drafts.yaml (NOT shots.md — shots.md is untouched)
 draft_variant: authored_b10_refresh
 harness_sha256: 7efd0b96bfa14b4a3f2411f3646f6e5fa22723c149e2ea0d628520446485d1e8
-drafts_sha256: 7a8d4e3cab811ffc179c3ba5786bb54f50a215ade0b379d9000577e5d515a704
+drafts_sha256: 7bf149ec9be1ee66143239aee1aaddd05b146a6441b57cb096059ecf8dd1d79e
 tokenizer: openai/clip-vit-large-patch14 (transformers, on the box)
 positive_tokens: 76
 negative_tokens_sent: 76
@@ -38,6 +38,6 @@ prompt: >-
   2boys, two round guard men in mismatched armor, in a sunny grassy field, silly bureaucrats with round soft bodies and bare heads, both faces visible, one holding up the blank back of his clipboard. Medium two-shot, the blank board dominating the frame, bright morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
 negative_prompt: >-
   photorealistic, 3d render, abstract, text, watermark, signature, low quality, girl, child, helmet, knight, full plate, dark fantasy, glowing visor, weapon, hood, screen, house, building, interior, indoors, architecture, dark, night, dusk, sunset, dim lighting, moody lighting, low key, shadows dominant, photorealism
-render_seconds: 9.7
+render_seconds: 9.6
 founder_verdict: null
 scored: false
