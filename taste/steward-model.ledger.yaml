@@ -14086,3 +14086,35 @@
     The plate simply sitting still. That would mean plant beats need a different push from
     character beats, which nothing so far predicts.
   outcome: null
+
+- id: handoff-law-takes-is-not-on-the-box-0812
+  kind: process
+  date: 2026-08-12
+  found_by: the motion lane, re-verifying a handoff from this lane rather than trusting it.
+  rule: >-
+    A PLATE HANDED OVER FROM `takes/` IS NOT ON THE BOX. Any handoff naming a file under
+    `genomes/*/nodes/*/takes/` must either carry the file across and verify its sha ON the box
+    after transfer, or say plainly that the receiver has to. A path is not a handoff when the
+    path does not resolve where the work runs.
+  verified_not_taken_on_trust: >-
+    `.gitignore:40` is `genomes/*/nodes/*/takes/**/*.png`, `git ls-files --error-unmatch` on
+    beat 12's plate returns NOT TRACKED, and only 4 of that directory's PNGs are tracked at all
+    (force-added exceptions). So the box's checkout genuinely does not have it — the file exists
+    on two laptops and nowhere else.
+  what_I_got_wrong: >-
+    I handed three plates to the motion lane with paths and shas and called it verified. Two were
+    farm-out files the box already had; the third was mine alone, and I checked its HASH without
+    checking its REACHABILITY. Hash-verifying a file proves it is the right bytes, not that the
+    machine which needs it can see them. Those are two different questions and I answered one.
+  the_family_this_belongs_to: >-
+    Same shape as `in_the_tree()` in build_site.py, which exists because a page linked 164 files
+    that were gitignored and therefore absent from the deploy: a local build passed and the real
+    one could not have. Untracked-but-present-locally is a recurring trap in this repo, and it now
+    has a second instance in a different subsystem. The general form: ANY artifact reference that
+    crosses a machine boundary needs its reachability checked on the far side, not its correctness
+    checked on this one.
+  credit: >-
+    Caught by the motion lane's habit of re-verifying an inbound handoff. It would have failed at
+    that job's crop step with a missing-file error, costing a queue round-trip. Recorded because
+    the next lane to hand a plate over should not have to rediscover it.
+  outcome: null
