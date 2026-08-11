@@ -482,3 +482,4 @@
 16:16:27Z box-runner idle ready=0 failed=1
 16:21:24Z STARTED task=ep2-b01-brightbase-figmatte-0811-1786465273 attempt=1 on box-runner
 16:24:28Z DONE task=ep2-b01-brightbase-figmatte-0811-1786465273 rc=0 artifacts=16
+16:26:39Z box-runner idle ready=0 failed=1
