@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Episode 1 — audit, and a cut with your beat-06 note actually in it</title>
+<style>
+  :root {
+    --bg: #17181a; --panel: #1f2124; --line: #33363b;
+    --ink: #eceef1; --muted: #9aa0a8; --accent: #c8b273;
+    --pass: #7fd68b; --fail: #e08b8b; --warn: #d8b46a;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+         padding: 0 24px 96px; }
+  .wrap { max-width: 1020px; margin: 0 auto; }
+  header.top { padding: 40px 0 20px; border-bottom: 1px solid var(--line); }
+  header.top h1 { margin: 0 0 6px; font-size: 27px; letter-spacing: -0.01em; font-weight: 650; }
+  header.top .sub { color: var(--muted); font-size: 14.5px; margin: 0; max-width: 78ch; }
+  h2 { font-size: 18px; margin: 40px 0 6px; font-weight: 650; }
+  h3 { font-size: 15px; margin: 24px 0 4px; font-weight: 650; color: var(--accent); }
+  p { max-width: 78ch; }
+  .callout { margin: 22px 0 0; padding: 16px 20px; background: var(--panel);
+             border: 1px solid var(--line); border-left: 3px solid var(--accent);
+             border-radius: 5px; }
+  .callout p { margin: 0 0 10px; } .callout p:last-child { margin-bottom: 0; }
+  blockquote { margin: 0 0 16px; padding: 6px 0 6px 16px;
+               border-left: 3px solid var(--line); color: #cdd2d8; }
+  img, video { width: 100%; height: auto; border: 1px solid var(--line); border-radius: 5px;
+               display: block; margin: 10px 0 6px; }
+  figcaption { color: var(--muted); font-size: 13.5px; margin: 0 0 8px; }
+  .scroll { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; margin: 10px 0 18px; font-size: 14px; }
+  th, td { text-align: left; padding: 6px 9px; border-bottom: 1px solid var(--line);
+           vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; white-space: nowrap; }
+  td.n { white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .ok { color: var(--pass); } .bad { color: var(--fail); } .warn { color: var(--warn); }
+  code { font-size: 12.5px; background: #232629; padding: 1px 5px; border-radius: 3px; }
+  .meta { color: var(--muted); font-size: 13px; margin-top: 34px;
+          border-top: 1px solid var(--line); padding-top: 14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>Episode 1, audited end to end — plus a cut that finally has your beat-06 note in it</h1>
+  <p class="sub">12 August 2026 · mechanical audit under your "do a lot of your own evaluation".
+  Every number below was measured, not carried over from an older document. No taste verdicts —
+  the taste questions are collected at the bottom and left for you.</p>
+</header>
+
+<div class="callout">
+  <p><strong>Three things you should know before anything else.</strong></p>
+  <p><strong>1. Every cut you have ever screened has the wrong show name on it.</strong> The title
+  card said <code>BANYAN CITY</code>. Your ruling that the show is called Sapling landed in the code
+  on 12 August at 13:08; the last bench was built on 11 August at 15:41, so no cut had ever picked it
+  up. The rebuild below does.</p>
+  <p><strong>2. Your beat-06 note was never wired in.</strong> You asked for a slow zoom-out and said
+  no animation. That clip was rendered on 11 August and sat unused — the cut still carried the
+  push-in you refused. It is in now.</p>
+  <p><strong>3. The cut you have not seen is not the one you last discussed.</strong> v41 was built
+  two minutes after your last verdict and has never been screened by anyone.</p>
+</div>
+
+<h2>The rebuild: v42</h2>
+
+<div class="callout">
+  <p><strong>The cut cannot be embedded on this page, and that is the licence gate working, not a
+  bug.</strong> I tried; the build refused it. v42 is assembled from four stills whose model licence
+  has never been cleared for redistribution, so publishing the video here would hand out material we
+  have not earned the right to hand out. It is the same reason the episode itself is not publishable
+  yet — see the licence section below.</p>
+  <p><strong>To watch it:</strong> <code>review/tonight/EP1-PROVISIONAL-v42-bench.mp4</code> in the
+  repo, or run <code>python3 pipeline/serve_local.py</code> and screen it locally. It is committed
+  alongside the twenty-six earlier benches.</p>
+</div>
+
+<p>94.3s · 15 beats · 15 footage, 0 slates · $0. A bench cut: no leaf, not canon, nothing promoted.</p>
+
+<p>Two changes from v41, both of them yours and neither of them a judgement call: your zoom-out
+replaces the refused push-in on beat 06, and the title card picks up the show's name because the
+rebuild ran after the fix landed. Nothing else was touched.</p>
+
+<h3>The title card, before and after</h3>
+<img src="/review/ep1-audit-0812/titlecard-v41-v42.jpg" alt="v41 title card reads BANYAN CITY, v42 reads SAPLING">
+<figcaption>The end card is unchanged and still carries <code>banyan.city</code> — the platform
+address belongs there; the show's name belongs on the title.</figcaption>
+
+<h3>Beat 06, the move you refused against the move you asked for</h3>
+<img src="/review/ep1-audit-0812/beat06-pushin-vs-zoomout.jpg" alt="Top row pushes in on the clouds, bottom row pulls back">
+<figcaption>Three sample frames across the same beat. Top: v41, the frame tightening. Bottom: v42,
+the frame opening out. Same frame underneath — the one you picked — and the captions land at
+identical timestamps in both.</figcaption>
+
+<h2>Cut-level findings, all measured on v42</h2>
+
+<div class="scroll">
+<table>
+  <tr><th>#</th><th>clip</th><th class="n">clip</th><th class="n">slot</th><th>fit</th></tr>
+  <tr><td>01</td><td>01-the-keyboard</td><td class="n">2.54s</td><td class="n">2.54s</td><td class="ok">covers</td></tr>
+  <tr><td>02</td><td>02-three-oh-seven</td><td class="n">2.54s</td><td class="n">4.88s</td><td class="bad">LOOPS 1.92×</td></tr>
+  <tr><td>03</td><td>03-deploy-succeeded-LTX-89f</td><td class="n">3.71s</td><td class="n">3.75s</td><td class="ok">covers</td></tr>
+  <tr><td>04</td><td>04-the-fall</td><td class="n">5.04s</td><td class="n">5.00s</td><td class="ok">covers</td></tr>
+  <tr><td>05</td><td>05-fan-spinning-down</td><td class="n">2.58s</td><td class="n">2.58s</td><td class="ok">covers</td></tr>
+  <tr><td>06</td><td>06-too-blue-ZOOMOUT-121f</td><td class="n">5.04s</td><td class="n">5.04s</td><td class="ok">covers — newly wired</td></tr>
+  <tr><td>07</td><td>07-zero-0-moving-parts-385f-cloudshigh</td><td class="n">16.04s</td><td class="n">8.25s</td><td class="warn">trimmed by 7.79s</td></tr>
+  <tr><td>08</td><td>08-sev-1-ltx-r2-plate-313f</td><td class="n">13.04s</td><td class="n">13.04s</td><td class="ok">covers</td></tr>
+  <tr><td>09</td><td>09-whoami</td><td class="n">2.58s</td><td class="n">2.58s</td><td class="ok">covers</td></tr>
+  <tr><td>10</td><td>10-sense-ltx-affirm-265f</td><td class="n">11.04s</td><td class="n">11.04s</td><td class="ok">covers</td></tr>
+  <tr><td>11</td><td>11-grow-LTX-129f</td><td class="n">5.38s</td><td class="n">5.38s</td><td class="ok">covers</td></tr>
+  <tr><td>12</td><td>12-undefined</td><td class="n">2.58s</td><td class="n">2.58s</td><td class="ok">covers</td></tr>
+  <tr><td>13</td><td>13-i-always-left-LTX-217f</td><td class="n">9.04s</td><td class="n">9.04s</td><td class="ok">covers</td></tr>
+  <tr><td>14</td><td>14-worth-staying-in-ltx-r2f-313f</td><td class="n">13.04s</td><td class="n">13.04s</td><td class="ok">covers</td></tr>
+  <tr><td>15</td><td>15-something-s-coming</td><td class="n">2.58s</td><td class="n">2.58s</td><td class="ok">covers</td></tr>
+</table>
+</div>
+
+<p><strong>Looping is down to one beat.</strong> You said "I'd rather not have any looping, it looks
+bad", and the audit document written yesterday found three looping beats. Two of them — 07 and 10 —
+stopped looping when their fix clips got wired in. <strong>Beat 02 still loops 1.92×</strong>, and it
+is the one I cannot fix for you: the clip is your own pick ("face B is the best out of the 2") and it
+is 2.54s under a 4.45s line. Lengthening it means either a new clip you have not chosen or a shorter
+line.</p>
+
+<p><strong>Beat 07 throws away half its footage.</strong> The 16.04s clip is trimmed to 8.25s. Nothing
+is broken — the beat covers and does not loop — but two-thirds of a render is being discarded, and if
+the part you liked is in the back half, you are not seeing it. Flagging, not fixing.</p>
+
+<h2>Where each beat stands on your word</h2>
+
+<p>This is the part worth your morning. It separates what you have actually ruled on from what a
+steward decided on your behalf.</p>
+
+<div class="scroll">
+<table>
+  <tr><th>#</th><th>state</th><th>what that means</th></tr>
+  <tr><td>08</td><td class="ok">DONE on your word</td><td>"beat 8 looks good" — the only beat in the episode with a positive verdict on its motion</td></tr>
+  <tr><td>06</td><td class="warn">fix now wired, unjudged</td><td>your zoom-out is in the cut for the first time; you have not seen it in context</td></tr>
+  <tr><td>04, 07, 10</td><td class="warn">fixes wired, unjudged</td><td>each answers a note you gave; none has been screened since</td></tr>
+  <tr><td>05</td><td class="bad">your ask is still open</td><td>the sapling-reveal you asked for has <strong>no candidate frame in the node at all</strong> — this needs either a new still or you releasing the ask</td></tr>
+  <tr><td>02</td><td class="warn">your pick, loops</td><td>untouched by request; the loop is the open question</td></tr>
+  <tr><td>01, 11, 13</td><td class="bad">never judged, ever</td><td>no verdict has ever been recorded on these three</td></tr>
+  <tr><td>03, 14</td><td class="warn">still is canon, motion unjudged</td><td>the frame is settled; the movement over it is not</td></tr>
+  <tr><td>09, 12, 15</td><td class="ok">held still under "yeah keep em still"</td><td>done bar the licence gate</td></tr>
+</table>
+</div>
+
+<h2>Provenance and licence — the two things that block publishing, regardless of taste</h2>
+
+<h3>1. The canon stills carry no machine-readable provenance</h3>
+<p>I ran the licence gate's own resolver over the approved stills directory: <strong>0 of 29 files
+have a sidecar it can find.</strong> Their provenance exists — it is written in prose in that folder's
+README, and it is in git history — but no tool can read it, which means no tool can check it. The
+working <code>takes/</code> folder next door has 113 sidecars, so this is specific to the promoted,
+canonical set: the files that matter most are the ones with the least machine-readable history.
+<em>The repair I was told to check for has not landed.</em></p>
+
+<h3>2. The cut is currently unpublishable, and it is not about this cut</h3>
+<p>Assembling v42 ran 26 ingredients through the licence gate and <strong>4 were refused</strong> —
+the stills under beats 06, 09, 12 and 15, all on the same ground: their model licence
+(CreativeML Open RAIL++-M) has never been cleared for redistribution under our own CC BY offer. This
+is the standing D15 debt, not a new fault, and it is the same for every version of this episode. It
+does not affect screening. It does mean that "ready to be published", the third of your three gates
+for finished, is not currently satisfied by anything.</p>
+
+<h2>Questions for you — these are taste and they are yours</h2>
+
+<div class="callout">
+  <p><strong>1. Beat 02's loop.</strong> Your picked clip runs 2.54s under a 4.45s line and repeats
+  almost twice. Shorten the line, accept the loop, or pick differently?</p>
+  <p><strong>2. Beat 05's sapling reveal.</strong> You asked for it; nothing has ever been drawn for
+  it. Should I draw one, or is the ask withdrawn?</p>
+  <p><strong>3. Beats 01, 11 and 13</strong> have never had a verdict of any kind. They are in the
+  cut. Watch those three specifically.</p>
+  <p><strong>4. Beat 07's trim.</strong> Half the clip is discarded. Worth re-cutting the beat around
+  the part you want, or leave it?</p>
+</div>
+
+<p class="meta">v42 built with <code>render_t3.py sapling 001 --clips review/provisional-v42/clips
+--out …</code> — bench mode, no leaf written, nothing promoted, $0. Clips directory is v41's with one
+file swapped. Per-beat durations measured with ffprobe against the assembled timeline, not copied from
+the earlier audit. Title card verified by frame extraction from both cuts. Sidecar count produced by
+calling <code>licence_gate.sidecar_for()</code> directly on all 29 approved stills. VO was not
+re-voiced and no leaf was written (STEWARDSHIP §6); VO status remains unmarked-not-final.
+Beat 02 was left alone by request.</p>
+
+</div>
+</body>
+</html>

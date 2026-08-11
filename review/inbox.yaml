@@ -182,3 +182,23 @@
   since: '2026-08-12'
   kind: decision
   verdict_hint: have the stills lane make these three / leave them
+- what: 'EPISODE 1 AUDIT + a rebuilt cut (v42). Two things were wrong with every cut you have screened:
+    the title card said BANYAN CITY (your Sapling ruling landed a day after the last build) and your
+    beat-06 zoom-out was rendered but never wired in - the cut still carried the push-in you refused.
+    Both fixed. Looping is down from three beats to one (beat 02, your own pick). Beats 01, 11 and 13
+    have never had a verdict of any kind'
+  url: /review/ep1-audit-0812
+  since: '2026-08-12'
+  kind: clip
+  verdict_hint: watch v42 (repo file review/tonight/EP1-PROVISIONAL-v42-bench.mp4 - the licence gate
+    will not let it onto the site yet) - beat 06 in context, and 01/11/13 which have never been judged;
+    then the four questions on the page (beat 02's loop, beat 05's sapling reveal, beat 07's trim)
+- what: 'Episode 1 cannot be PUBLISHED yet regardless of taste, and it is not about the edit: the stills
+    under beats 06, 09, 12 and 15 are refused by the licence gate (CreativeML Open RAIL++-M never cleared
+    for redistribution - the standing D15 debt). Separately, 0 of 29 approved stills carry provenance any
+    tool can read; it exists only as prose in a README'
+  url: /review/ep1-audit-0812
+  since: '2026-08-12'
+  kind: decision
+  verdict_hint: clear D15 by narrowing what we offer reusers / replace the four stills / accept episode
+    1 stays screening-only for now

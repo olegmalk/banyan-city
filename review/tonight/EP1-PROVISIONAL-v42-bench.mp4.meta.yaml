@@ -1,0 +1,314 @@
+# Assembly provenance (§7.2) — written by pipeline/render_t3.py at
+# assembly time. `ingredients:` is the list build_site.publishable()
+# walks: one row per file muxed into this cut, its bytes as muxed, and
+# the verdict it carried then. A row that no longer resolves, no longer
+# hashes the same, or no longer passes is a REFUSAL for this whole cut —
+# a concatenation must not launder what went into it. `provisional:` on
+# a row is copied from that ingredient's OWN record and means only that
+# it marks itself provisional — read its `provisional_reason` for what
+# that means there, because the phrase is not used consistently across
+# this tree. It is a separate question from `publishable:`, which is the
+# licence gate's word and says nothing about taste either way.
+platform: local-deterministic (pipeline/hold_still.py, render_t3.py, ffmpeg)
+model: Wan-AI/Wan2.2-TI2V-5B-Diffusers+diffusers/LTX-2.3-Distilled-Diffusers (Lightricks
+  LTX-2.3 distilled, bf16)+none
+cost_usd: 0.0
+node: '001'
+leaf: bench (--out) — no leaf, not canon
+provisional: true
+provisional_beats:
+- 1
+- 2
+- 4
+- 5
+- 6
+- 9
+- 12
+- 15
+beats: 15
+footage_beats:
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+- 8
+- 9
+- 10
+- 11
+- 12
+- 13
+- 14
+- 15
+slate_beats: []
+duration_s: 94.24
+size: 720x1280
+source_platforms: local-gpu (rtx5090)+local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU
+  @ rtx5090)+local-deterministic (pipeline/hold_still.py geometry, ffmpeg)+local-deterministic
+  (pipeline/hold_still.py, ffmpeg)
+ingredients:
+- beat: 1
+  kind: clip
+  path: review/provisional-v42/clips/01-the-keyboard.mp4
+  sha256: e164626a5e681c3720f7e984eec8230f17ac9023b23b52b253d2efb90dc7bd6c
+  publishable: true
+  provisional: true
+- beat: 2
+  kind: clip
+  path: review/provisional-v42/clips/02-three-oh-seven.mp4
+  sha256: 9f73daa315f3cde6eedc99c8d16a88eb89facee8281c2a86388e5243b908e3a9
+  publishable: true
+  provisional: true
+- beat: 2
+  kind: audio
+  path: review/provisional-v42/clips/02-vo.mp3
+  sha256: 3619994da2d494acb0d6afe7cb5d3b360dd40b02691ad3b58e2c44288ffda39e
+  publishable: true
+- beat: 3
+  kind: clip
+  path: review/provisional-v42/clips/03-deploy-succeeded-LTX-89f.mp4
+  sha256: 530031e96088d1e6b10d776bff1ad46aa1d9242fb8f2285aba6086aaa6605511
+  publishable: true
+- beat: 3
+  kind: audio
+  path: review/provisional-v42/clips/03-vo.mp3
+  sha256: c62c14cb4f518fdd818eb4684be07e2ac536add567cc7a7c1e7d6145f7b2284b
+  publishable: true
+- beat: 4
+  kind: clip
+  path: review/provisional-v42/clips/04-the-fall.mp4
+  sha256: df81cf6b1cc55111e6ed47223ce3df5b7bf2189c16f272ebcfe9632676d88880
+  publishable: true
+  provisional: true
+- beat: 5
+  kind: clip
+  path: review/provisional-v42/clips/05-fan-spinning-down.mp4
+  sha256: 740d7c090581a5a8f39e8106c9bf75895cf9f6bf5a0a9961f9554e6da0c2d58c
+  publishable: true
+  provisional: true
+- beat: 6
+  kind: clip
+  path: review/provisional-v42/clips/06-too-blue-ZOOMOUT-121f.mp4
+  sha256: ce8f058b1e8c6f90c2bda79547ffe98455ef9e2d8ca1008835b812ca50e7a93d
+  publishable: false
+  why: 'the picture it holds comes from a frame this site cannot publish — 06-too-blue-r8d-step3-s0.png:
+    its licence has not been cleared for redistribution yet (CreativeML Open RAIL++-M)'
+  provisional: true
+- beat: 6
+  kind: audio
+  path: review/provisional-v42/clips/06-vo.mp3
+  sha256: a76309834b57b9e36b3201124efcbba372088c1940898606cd6eebe499f71fe3
+  publishable: true
+- beat: 7
+  kind: clip
+  path: review/provisional-v42/clips/07-zero-0-moving-parts-LTX-385f-cloudshigh.mp4
+  sha256: 1f9ed950e793469df38d71c64f2a9eab5f023cc37a9dde881d32d20ddfaa3130
+  publishable: true
+- beat: 7
+  kind: audio
+  path: review/provisional-v42/clips/07-vo.mp3
+  sha256: a067c17aa1cc6e7e35e53bc07f9c1bf3ec9b4aab48f75276697206110aa3de1c
+  publishable: true
+- beat: 8
+  kind: clip
+  path: review/provisional-v42/clips/08-sev-1-ltx-r2-plate-313f-s20260739.mp4
+  sha256: 2a6d550983318eab6063585c4281fdbea83153035486b36d4e00c18866d08f2f
+  publishable: true
+- beat: 8
+  kind: audio
+  path: review/provisional-v42/clips/08-vo.mp3
+  sha256: a5a53b15d3b202235b95cb3c2f4869caf0c1d30936e361f6f1a0bcb0c7298111
+  publishable: true
+- beat: 9
+  kind: clip
+  path: review/provisional-v42/clips/09-whoami.mp4
+  sha256: 111c8467655aae421ae02df85e149f7bc15649783eb62f83d1aa6647847d98ed
+  publishable: false
+  why: 'the picture it holds comes from a frame this site cannot publish — 09-whoami-prog-s2.png:
+    its licence has not been cleared for redistribution yet (CreativeML Open RAIL++-M)'
+  provisional: true
+- beat: 10
+  kind: clip
+  path: review/provisional-v42/clips/10-sense-ltx-affirm-265f-s20260897.mp4
+  sha256: bd553d8dc78f0c82cac1fb8a22521c0457b378006ac7edba6b34adeb8a95f92b
+  publishable: true
+- beat: 10
+  kind: audio
+  path: review/provisional-v42/clips/10-vo.mp3
+  sha256: e6311beac7da1d1bd41902f5d1af1629b3c907071b4d8ce99030bb48cbbb312c
+  publishable: true
+- beat: 11
+  kind: clip
+  path: review/provisional-v42/clips/11-grow-LTX-129f.mp4
+  sha256: 1332982bf5fe4ad94482dac04d71e5ba61ba439fadccfc19f26d0fe63342344d
+  publishable: true
+- beat: 11
+  kind: audio
+  path: review/provisional-v42/clips/11-vo.mp3
+  sha256: 0fc5bb345dcea1b6a2e24609a2e692d44c8aacebab5b39c364fa482ac8fd5e7b
+  publishable: true
+- beat: 12
+  kind: clip
+  path: review/provisional-v42/clips/12-undefined.mp4
+  sha256: 38c794d96430db8afc5001feb8b2fb3303d8a368487f832499e3642e760ed8c3
+  publishable: false
+  why: 'the picture it holds comes from a frame this site cannot publish — 12-undefined-r2-s1.png:
+    its licence has not been cleared for redistribution yet (CreativeML Open RAIL++-M)'
+  provisional: true
+- beat: 12
+  kind: audio
+  path: review/provisional-v42/clips/12-vo.mp3
+  sha256: 28ac546ecfc0fbf4f19c90a22aedb42f59fbc927099b2ea82d55520de377b588
+  publishable: true
+- beat: 13
+  kind: clip
+  path: review/provisional-v42/clips/13-i-always-left-LTX-217f.mp4
+  sha256: 27287e166bd068a74495f212e061de91ccc7334620861feed5aa17a4577a780c
+  publishable: true
+- beat: 13
+  kind: audio
+  path: review/provisional-v42/clips/13-vo.mp3
+  sha256: 0b54bad963ec6f39cd9b259638c0348b50a79ce2f6bc39f5633023d275b70f61
+  publishable: true
+- beat: 14
+  kind: clip
+  path: review/provisional-v42/clips/14-worth-staying-in-ltx-r2f-313f-affirm-s20260898.mp4
+  sha256: 820976a9364694ba0761f69b040fba05c59c77d4648a94d02b2746fd5504c6c0
+  publishable: true
+- beat: 14
+  kind: audio
+  path: review/provisional-v42/clips/14-vo.mp3
+  sha256: 7e709030d4047ddb565bfbe8cedcae2111a51e2d9ebdb2a3d4b74eaef4181ec5
+  publishable: true
+- beat: 15
+  kind: clip
+  path: review/provisional-v42/clips/15-something-s-coming.mp4
+  sha256: a7819e88cacecacb7bfb19e9591822a75662563f48a75e89408a71ac0e6ae4f9
+  publishable: false
+  why: 'the picture it holds comes from a frame this site cannot publish — 15-something-s-coming-r3-s1.png:
+    its licence has not been cleared for redistribution yet (CreativeML Open RAIL++-M)'
+  provisional: true
+- beat: 15
+  kind: audio
+  path: review/provisional-v42/clips/15-vo.mp3
+  sha256: c2c66afd0d5bf94af064c3c2957df2bb203bc745d13ff0b93405c16c9ee7ef52
+  publishable: true
+sources:
+- beat: 1
+  slug: THE KEYBOARD — 0:00–0:05
+  clip: 01-the-keyboard.mp4
+  audio: none
+  platform: local-gpu (rtx5090)
+  model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+  cost_usd: 0.0
+- beat: 2
+  slug: THREE OH SEVEN — 0:05–0:10
+  clip: 02-three-oh-seven.mp4
+  audio: 02-vo.mp3
+  voice_engine: chatterbox-0.5B
+  platform: local-gpu (rtx5090)
+  model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+  cost_usd: 0.0
+- beat: 3
+  slug: DEPLOY SUCCEEDED — 0:10–0:15
+  clip: 03-deploy-succeeded-LTX-89f.mp4
+  audio: 03-vo.mp3
+  voice_engine: chatterbox-0.5B
+  platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+  model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+  cost_usd: 0.0
+- beat: 4
+  slug: THE FALL — 0:15–0:20
+  clip: 04-the-fall.mp4
+  audio: none
+  platform: local-deterministic (pipeline/hold_still.py geometry, ffmpeg)
+  model: none
+  cost_usd: 0.0
+- beat: 5
+  slug: FAN SPINNING DOWN — 0:20–0:24
+  clip: 05-fan-spinning-down.mp4
+  audio: none
+  platform: local-deterministic (pipeline/hold_still.py, ffmpeg)
+  model: none
+  cost_usd: 0.0
+- beat: 6
+  slug: TOO BLUE — 0:24–0:29
+  clip: 06-too-blue-ZOOMOUT-121f.mp4
+  audio: 06-vo.mp3
+  voice_engine: chatterbox-0.5B
+  platform: local-deterministic (pipeline/hold_still.py geometry, ffmpeg)
+  model: none
+  cost_usd: 0.0
+- beat: 7
+  slug: ZERO (0) MOVING PARTS — 0:29–0:35
+  clip: 07-zero-0-moving-parts-LTX-385f-cloudshigh.mp4
+  audio: 07-vo.mp3
+  voice_engine: chatterbox-0.5B
+  platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+  model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+  cost_usd: 0.0
+- beat: 8
+  slug: SEV-1 — 0:35–0:48
+  clip: 08-sev-1-ltx-r2-plate-313f-s20260739.mp4
+  audio: 08-vo.mp3
+  voice_engine: chatterbox-0.5B
+  platform: local-gpu (rtx5090)
+  model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+  cost_usd: 0.0
+- beat: 9
+  slug: WHOAMI — 0:48–0:53
+  clip: 09-whoami.mp4
+  audio: none
+  platform: local-deterministic (pipeline/hold_still.py, ffmpeg)
+  model: none
+  cost_usd: 0.0
+- beat: 10
+  slug: SENSE — 0:53–1:03
+  clip: 10-sense-ltx-affirm-265f-s20260897.mp4
+  audio: 10-vo.mp3
+  voice_engine: chatterbox-0.5B
+  platform: local-gpu (rtx5090)
+  model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+  cost_usd: 0.0
+- beat: 11
+  slug: GROW — 1:03–1:09
+  clip: 11-grow-LTX-129f.mp4
+  audio: 11-vo.mp3
+  voice_engine: chatterbox-0.5B
+  platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+  model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+  cost_usd: 0.0
+- beat: 12
+  slug: UNDEFINED — 1:09–1:12
+  clip: 12-undefined.mp4
+  audio: 12-vo.mp3
+  voice_engine: chatterbox-0.5B
+  platform: local-deterministic (pipeline/hold_still.py, ffmpeg)
+  model: none
+  cost_usd: 0.0
+- beat: 13
+  slug: I ALWAYS LEFT — 1:12–1:21
+  clip: 13-i-always-left-LTX-217f.mp4
+  audio: 13-vo.mp3
+  voice_engine: chatterbox-0.5B
+  platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+  model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+  cost_usd: 0.0
+- beat: 14
+  slug: WORTH STAYING IN — 1:21–1:34
+  clip: 14-worth-staying-in-ltx-r2f-313f-affirm-s20260898.mp4
+  audio: 14-vo.mp3
+  voice_engine: chatterbox-0.5B
+  platform: local-gpu (rtx5090)
+  model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+  cost_usd: 0.0
+- beat: 15
+  slug: SOMETHING'S COMING — 1:34–1:37
+  clip: 15-something-s-coming.mp4
+  audio: 15-vo.mp3
+  voice_engine: chatterbox-0.5B
+  platform: local-deterministic (pipeline/hold_still.py, ffmpeg)
+  model: none
+  cost_usd: 0.0
