@@ -1328,6 +1328,113 @@ beats:
       detailed, newest, masterpiece, best quality, very aesthetic No girl, no
       child. No photorealism, no 3D render look. 9:16 vertical, no text.
 
+  13:
+    slug: the-shade
+    kind: goblin
+    tag: 1boy
+    extra_neg: full
+    gist: shade / goblin folded in beside the seedling
+    # -- BEAT 13 IS IN THIS FILE AS OF 2026-08-12 ~01:0x, and it was not before.
+    # Tonight's twenty refresh rounds covered every beat that HAD a block here;
+    # 13, 18 and 21 had none, which is the only reason they were skipped. This
+    # block is written the way beat 01's was written earlier tonight, and for the
+    # same mechanical reasons.
+    #
+    # HIS WORDS ARE ON THIS BEAT, AND THEY ARE THE WHOLE REASON FOR THE ROUND.
+    # On rounds 6 and 7, 2026-08-09, verbatim (review/ep2-picks/index.html:150,
+    # and `review/ep2-picks/beats.json` entry 13, which is what the page is built
+    # from):
+    #     "all the goblin images look like female demihumans, definitely need to
+    #      regenerate."
+    # Rounds 3, 4, 5, 8 and 9 were turned down by the STEWARD, not by him. This
+    # sentence is the only founder verdict this beat carries and it is what the
+    # round below encodes.
+    #
+    # WHAT THE NINE ROUNDS ON DISK ACTUALLY SHOW. `review/ep2-picks/sheets/b13.jpg`
+    # opened and read by eye before a word of the fix was written -- all 28 frames,
+    # r1/r3/r5/r6/r7/r8/r9:
+    #   * r1 is INDOORS -- a garage or shed with a doorway and a concrete floor --
+    #     and the sapling is drawn as a GIANT ROUND BLOB CREATURE with a sprout on
+    #     top, with a doll-sized goblin at its foot.
+    #   * r3 is the same blob in 4 of 4, one of them with red eyes and a face. That
+    #     is his round-3 rejection ("the sapling is a giant round creature in every
+    #     one of them") and it is the plant/humanoid collision the `full` tier
+    #     exists for.
+    #   * r5 draws leaf-HATTED chibis -- the plant fused onto the character's head,
+    #     literally `leaf on head` -- and s2 has no character in it at all, just a
+    #     melon in grass.
+    #   * r6 AND r7 ARE THE EIGHT FRAMES HE NAMED. White-silver bobbed hair, pale
+    #     pink-white skin, delicate faces, long pointed ears, knees up. Eight of
+    #     eight. There is no green skin anywhere in either round.
+    #   * r8 turns them green under white caps; r9 is green with tusks in 4 of 4,
+    #     which is the species fixed.
+    #   * AND IN r8 AND r9 THE SEEDLING IS GONE. Across those eight frames there is
+    #     no readable two-leaf plant beside him -- some loose grass and one or two
+    #     stray sprigs. This beat is called THE SHADE and the shade is cast by the
+    #     sapling; the species fix arrived and took the co-star with it.
+    #
+    # WHY THE ELF RISK IS LIVE AGAIN EVEN THOUGH r9 FIXED IT. r9's 4/4 not-female
+    # result was bought by TWO tags the slot no longer carries: `plump`, which
+    # ledger record 42 read as overshoot on 2 of 4 and which is the steward's word
+    # and not his, and `tusks`. The definition this job fills {{GOBLIN}} with is
+    # his -- "he is just a simple green goblin, nothing complex" (2026-08-10) --
+    # and it is one attribute. So the species defence has to come from the
+    # negative, where `female goblin, elf` already ride in the explicit tier
+    # (kind: goblin -> `full`), plus ONE new term: `no white hair`. That is the
+    # drawn feature of the eight frames he rejected, named as a Danbooru attribute
+    # rather than as a species. `elf` is NOT sent twice, and nothing is aimed at
+    # the EARS on purpose -- shots.md's own note for this beat warns that negating
+    # `elf` may cost the pointy ears a goblin needs, and the ears are not what he
+    # objected to.
+    #
+    # THE SEEDLING IS THE OTHER ADDITION AND IT IS shots.md's OWN WORDING, not a
+    # new invention: `a tiny two-leaf seedling rooted in the grass`. This beat's
+    # r5 rewrite in shots.md is explicit that `seedling with two oversized
+    # cotyledon leaves` is "beat 01's proven botanical binding and is what stops
+    # the plant being drawn as a second round creature beside the goblin". It is
+    # shortened to `two-leaf` for the token budget; `two-leaf`, `tiny` and
+    # `seedling` all still fire `sd_prompt._SMALL`, so the scale negatives append
+    # exactly as before.
+    #
+    # BEAT 01'S `no mascot, no creature, no face` IS NOT PORTED HERE AND MUST NOT
+    # BE, and that is shots.md's rule rather than a preference: "This beat's
+    # subject IS a creature with a face and enormous ears." Banning them would
+    # forbid the subject. Same for `no boy` and `no person`, which
+    # render_wave_goblin.check() faults on unconditionally for a peopled beat.
+    #
+    # THE DARK BAN IS DELIBERATELY NOT SENT WHOLE, AND THIS BEAT IS THE CLEAREST
+    # CASE IN THE EPISODE. Its subject is a patch of SHADE. `no shadows dominant`,
+    # `no dim lighting`, `no low key` and `no dark` would each fight the thing
+    # being filmed, so only `no night, no dusk` go -- the two terms the murky
+    # r6/r7/r9 frames earned -- with `bright midday sunlight` stated affirmatively,
+    # because a small patch of shade only reads when there is hard sun making it.
+    # This is beat 15's precedent (the ban shrinking to the terms its own frames
+    # earned), not beat 17's (the ban riding whole).
+    #
+    # NO WALLS BAN AND NO SECOND FIELD CLAUSE. The garage is r1 and only r1; every
+    # frame from r3 forward is outdoors on grass, 24 of 24. Nothing is spent on a
+    # fault that stopped happening three rounds before he ever looked.
+    #
+    # TWO KEYS, BYTE-IDENTICAL, DELIBERATELY -- the requirement beat 01's header
+    # documents. render_wave_goblin.py's whole-wave path reads `d["authored"]` by
+    # name for every beat in this file, so a block carrying only a variant key
+    # would KeyError every sibling lane's `--dry`. `authored_b13_refresh` is what
+    # the job renders and what the sidecar records. If you edit one, edit both.
+    authored: >-
+      A small goblin boy, {{GOBLIN}}, solo, sits hugging his knees in the small
+      patch of shade beside a tiny two-leaf seedling rooted in the grass. Static
+      camera, medium shot, bright midday sunlight, cinematic lighting, detailed,
+      newest, masterpiece, best quality, very aesthetic No girl, no child, no
+      white hair, no night, no dusk. No photorealism, no 3D render look. 9:16
+      vertical, no text.
+    authored_b13_refresh: >-
+      A small goblin boy, {{GOBLIN}}, solo, sits hugging his knees in the small
+      patch of shade beside a tiny two-leaf seedling rooted in the grass. Static
+      camera, medium shot, bright midday sunlight, cinematic lighting, detailed,
+      newest, masterpiece, best quality, very aesthetic No girl, no child, no
+      white hair, no night, no dusk. No photorealism, no 3D render look. 9:16
+      vertical, no text.
+
   14:
     slug: the-defense
     kind: goblin

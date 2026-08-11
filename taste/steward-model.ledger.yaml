@@ -9113,3 +9113,55 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+- id: ep2-b13-refresh-0811
+  kind: prediction
+  written: 2026-08-12 ~01:2x, before enqueue; predicates fixed before any frame of
+    this round existed. The dry run passed on the box first (positive 62/77,
+    STYLE ANCHOR PRESENT True, count tag `1boy` deriving, negative recipe 76 ->
+    sent 73, no faults) and the dry step draws nothing.
+  round: ep2-b13-refresh-0811, beat 13 THE SHADE, variant authored_b13_refresh,
+    4 stills, SDXL animagine-xl-3.1, node 002b-first-citizen. Beat 13 had NO block
+    in pipeline/wave-drafts.yaml before this round; the block was added here the
+    way beat 01's was added earlier tonight, with `authored` and
+    `authored_b13_refresh` byte-identical.
+  his_words: >-
+    THE ONLY FOUNDER VERDICT THIS BEAT CARRIES, verbatim, on rounds 6 and 7,
+    2026-08-09 (review/ep2-picks/index.html:150, from beats.json entry 13): "all
+    the goblin images look like female demihumans, definitely need to regenerate."
+    Rounds 3, 4, 5, 8 and 9 were the steward's rejections, not his.
+  what_changed: the beat's own shots.md staging kept (he sits folded into the
+    sapling's small patch of shade, knees up); `no white hair` added as the one new
+    term, aimed at the drawn feature of the eight frames he named - white-silver
+    bobs, pale skin, delicate faces in r6 and r7, 8 of 8, no green skin in either
+    round. shots.md's own botanical binding `a tiny two-leaf seedling rooted in the
+    grass` put back, because r8 and r9 fixed the species and lost the plant out of
+    all eight frames of a beat named THE SHADE. `bright midday sunlight` stated
+    affirmatively. The dark ban is NOT sent whole - only `no night, no dusk`,
+    because this beat's subject IS a shadow and `no shadows dominant`, `no dim
+    lighting`, `no low key` and `no dark` would each fight it. No walls ban - the
+    garage was r1 only and every frame from r3 forward is outdoors on grass. The
+    {{GOBLIN}} slot carries his one-line definition alone; `plump` and `tusks`,
+    the two tags r9 measured as the levers to 4/4 not-female, are deliberately not
+    sent because neither is his (record 42 on `plump`, record 33 on the general
+    error of rendering the steward's theory under his name).
+  predicates:
+    - a green-skinned goblin boy rather than a pale white-haired demihuman, in
+      4/4 - this is the round's whole claim and the one he can grade himself
+    - no white or silver hair, in 4/4
+    - a small two-leaf seedling readable as a plant beside him, in >=2/4 - the
+      predicate most likely to miss, because r8 and r9 lost it at 0 of 8 and the
+      only thing sent against that is one clause
+    - the seedling drawn as a plant and not as a second round creature with a
+      face, in >=3/4 - r3's fault, and the `full` fusion tier is what guards it
+    - bright sunlit ground with a readable patch of shade he is sitting in, in
+      >=2/4
+    - hands and legs correctly formed, in >=3/4 - stated as an exposure rather
+      than a claim, because `extra limbs` and `deformed` are both dropped from
+      the negative by the budget on a figure hugging its own knees
+  consumer: the founder's morning review page.
+  founder_verdict: null
+  founder_verdict_date: null
+  outcome: null
+  miss_axis: null
+  model_action: null
