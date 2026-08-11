@@ -8777,3 +8777,20 @@
   outcome: null
   miss_axis: null
   model_action: null
+
+- id: ep2-b08-refresh-r2-0811
+  kind: correction_and_rerun
+  written: 2026-08-11 ~22:2x. r1 (ep2-b08-refresh-0811) failed rc=1 in the
+    harness dry step and drew nothing; the fault was the steward's, not the
+    model's. The first refresh variant measured 89 real CLIP tokens against the
+    77 budget and render_wave_sample.py dropped the entire tail from "Deadpan
+    two-shot" through the style anchor, then correctly refused. The variant is
+    rewritten leaner (measured 75/77 on the box, tail intact, anchor present)
+    with the same staging; the bans kept are the ones that fit. The r1
+    prediction record above carries over to r2 unchanged - same predicates, no
+    frame of either round seen when they were fixed.
+  lesson: adding register + setting + bans to an already-long two-subject beat
+    must be paid for in tokens; measure the dry step BEFORE enqueue on every
+    remaining refresh beat.
+  founder_verdict: null
+  outcome: null
