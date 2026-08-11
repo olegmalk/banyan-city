@@ -387,3 +387,4 @@
 10:21:19Z box-runner idle ready=0 failed=1
 10:29:06Z STARTED task=ep1-b02-121f-framing-hold-0811-1786444132 attempt=1 on box-runner
 10:34:22Z DONE task=ep1-b02-121f-framing-hold-0811-1786444132 rc=0 artifacts=1
+10:34:29Z STARTED task=ep2-b18-265f-fullanchor-0811-1786444372 attempt=1 on box-runner
