@@ -1,0 +1,19 @@
+# Shot provenance (7.2) — written by hand from the committed job spec,
+# because the box wrote these clips without sidecars.
+platform: local-gpu (rtx5090)
+model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+model_licence: LTX-2 Community License Agreement
+cost_usd: 0
+shot_beat: 4
+size: 704x1280
+frames: 385
+seconds: 16.042
+fps: 24
+steps: 8@352x640+3@704x1280
+guidance: 1.0
+seed: see the job spec's jobs-file
+task: ep1-b04-385f-hands-still-0811
+job_spec: pipeline/jobs/ep1-b04-385f-hands-still.yaml
+prompt_and_negative: recorded in pipeline/jobs/ep1-b04-385f-hands-still.yaml
+why: "one clause changed against the previous 385f take \u2014 \"the fingers twitch once\"\
+  \ became \"the hands stay still\""
