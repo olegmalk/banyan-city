@@ -1,0 +1,27 @@
+# Prediction for ep2-b19-idfix-r2-0812, written BEFORE enqueue, terse.
+# Not in taste/steward-model.ledger.yaml: `git status` showed the ledger DIRTY
+# (` M`) — a sibling lane is mid-write, and appending would race its edit.
+
+- id: ep2-b19-idfix-r2-0812
+  kind: prediction
+  written: 2026-08-12, the fixer lane, before enqueue. Box dry-run passed; the recipe is in the job spec.
+  kind_of_claim: >-
+    A PROPAGATION prediction, and therefore a stronger claim than the beat-02
+    result it rests on: that ban already returned 4/4 on this checkpoint tonight.
+    If this beat does not clear, the lever is beat-shaped rather than
+    recipe-shaped — which is worth knowing, and is why every one of these rounds
+    keeps its positive byte-identical.
+  predicates:
+  - unbroken green crown, no graft, no suture line, no seam, 4/4
+  - no cream or tan dome over the skull 4/4
+  - no X marks or stitch scars on the cheeks >=3/4
+  - the patchwork cloak still reads as patchwork >=3/4 -- the ban names SKIN, and a cloak that goes plain falsifies the wording discipline
+  - bald 4/4, green skin 4/4, one goblin 4/4
+  - a fig is present >=1/4 (NOT under test and not expected to change — recorded because its absence touches the founder's approval condition on this node)
+  - nothing growing out of his head 4/4 (the plant-fusion tier is sent and did not bind in s2; if the skin ban incidentally fixes it, that is worth knowing)
+  falsifiable_by: >-
+    Any frame that still sews or patches the crown falsifies the propagation on
+    this beat. A cloak losing its patchwork falsifies the claim that naming skin
+    spares what the positive asserts.
+  consumer: morning page, identity-frozen wave.
+  outcome: null

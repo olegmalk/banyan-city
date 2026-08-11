@@ -2256,6 +2256,35 @@ beats:
       very aesthetic No girl, no child, no house, no indoors, no houseplant,
       no dark, no night, no dim lighting, no moody lighting. No photorealism,
       no 3D render look. 9:16 vertical, no text.
+    # -- `authored_b15_idfix_r2` -- 2026-08-12, the fixer lane. ONE VARIABLE,
+    # POSITIVE BYTE-IDENTICAL.
+    #
+    # THE FAULT: a cream dome with X-stitch marks on the crown or forehead in 4/4;
+    # s3 carries two red stitch marks on the skull.
+    # THE LEVER IS PROVEN ON THIS CHECKPOINT TONIGHT, and this is a propagation.
+    # `ep2-b02-idfix-r2-0812` added `no scars, no stitched skin` and came back with
+    # unbroken GREEN crowns 4/4 -- and the pale cream dome went WITH the sutures,
+    # so the tan patch and the stitching are ONE fault, fabric on the skull, not
+    # two. Its patchwork cloak survived 4/4, so naming SKIN provably does not
+    # negate what the positive asserts.
+    #
+    # RECORDED AND DELIBERATELY NOT CHASED: every frame deletes the sapling's STEM
+    # and leaves giant leaves floating free in the sky, unattached to anything --
+    # and four or more of them, not the two the sentence asks for. s2 also turns
+    # him away from camera against a positive that says "his face visible", and
+    # nobody tips their head back to talk up at a plant in any frame. That is the
+    # sapling-adjacency limit wearing a new costume. The lane has already spent its
+    # two attempts at that limit on beats 02 and 03 and neither fixed it, so a
+    # third would be spending GPU to re-learn a known answer. It goes to the
+    # founder in wave2-needs-founder.md instead.
+    authored_b15_idfix_r2: >-
+      A small goblin boy, {{GOBLIN}}, solo, in a sunny grassy field, tips his
+      head back talking up at a tiny sapling standing tall beside him, its two
+      oversized leaves hanging above him, his face visible. Warm midday
+      light, cinematic lighting, detailed, newest, masterpiece, best quality,
+      very aesthetic No girl, no child, no scars, no stitched skin, no house,
+      no indoors, no houseplant, no dark, no night, no dim lighting, no moody
+      lighting. No photorealism, no 3D render look. 9:16 vertical, no text.
     authored_b15_refresh: >-
       A small goblin boy, {{GOBLIN}}, solo, in a sunny grassy field, tips his
       head back talking up at a tiny sapling standing tall beside him, its two
@@ -2315,6 +2344,40 @@ beats:
     # fault is position and not scale -- where the sapling appears at all it is
     # correctly tiny, and the round-3 note was "where is the tree", not "the tree
     # is too big". Stated as a risk, not a known regression.
+    # -- `authored_b17_idfix_r2` -- 2026-08-12, the fixer lane. TWO EDITS, EACH
+    # WITH ITS OWN SEPARATELY VISIBLE PREDICATE.
+    #
+    # 1. THE SKULL, 4/4. s1 is the clearest: a full vertical baseball-seam suture
+    #    down the crown plus X stitch marks on both cheeks. s0, s2 and s3 carry the
+    #    cream dome with smaller X marks.
+    # THE LEVER IS PROVEN ON THIS CHECKPOINT TONIGHT, and this is a propagation.
+    # `ep2-b02-idfix-r2-0812` added `no scars, no stitched skin` and came back with
+    # unbroken GREEN crowns 4/4 -- and the pale cream dome went WITH the sutures,
+    # so the tan patch and the stitching are ONE fault, fabric on the skull, not
+    # two. Its patchwork cloak survived 4/4, so naming SKIN provably does not
+    # negate what the positive asserts.
+    #
+    # 2. THE VERB BECAME A PROP, 3/4. The sentence says he "brushes dust off his
+    #    patchwork cloak". THE MODEL READS `brushes` AS A NOUN AND HANDS HIM ONE:
+    #    s0 gives him a long brush-tipped pole, s3 an actual BROOM which he is
+    #    sweeping the grass with, and s2 hangs a camera lens on his belt. This is
+    #    not a competence failure, it is an ambiguous English sentence, and it has
+    #    a one-word fix: `brushes dust off` becomes `wipes dust off`, which cannot
+    #    be read as a noun. A SWAP, not an addition, so the positive does not grow.
+    #
+    # RECORDED, NOT FIXED: the sapling is uprooted and carried as a cut sprig in
+    # 3/4 against "rooted in the grass" -- and note this beat's negative ALREADY
+    # sends `uprooted plant`, which did not bind. Founder-facing.
+    authored_b17_idfix_r2: >-
+      A small goblin boy, {{GOBLIN}}, solo, pushes himself up to standing,
+      wipes dust off his patchwork cloak, and turns away from a tiny sapling
+      rooted in the grass toward the open field. Static camera, afternoon
+      light warming toward amber, cinematic lighting, detailed, newest,
+      masterpiece, best quality, very aesthetic No girl, no child, no scars,
+      no stitched skin, no mature tree, no uprooted plant, no glowing eyes, no
+      dark, no night, no dusk, no sunset, no dim lighting, no moody lighting,
+      no low key, no shadows dominant. No photorealism, no 3D render look.
+      9:16 vertical, no text.
     authored_b17_refresh: >-
       A small goblin boy, {{GOBLIN}}, solo, pushes himself up to standing,
       brushes dust off his patchwork cloak, and turns away from a tiny sapling
@@ -2500,6 +2563,37 @@ beats:
       aesthetic No girl, no child, no cartoon, no speech bubble, no white
       fruit, no pale fruit, no dark, no night, no dim lighting, no moody
       lighting. No photorealism, no 3D render look. 9:16 vertical, no text.
+    # -- `authored_b19_idfix_r2` -- 2026-08-12, the fixer lane. ONE VARIABLE,
+    # POSITIVE BYTE-IDENTICAL.
+    #
+    # THE FAULT (s0 and s2 read): s0 runs a full vertical suture seam down the
+    # middle of the skull; s2 carries a large pale dome.
+    # THE LEVER IS PROVEN ON THIS CHECKPOINT TONIGHT, and this is a propagation.
+    # `ep2-b02-idfix-r2-0812` added `no scars, no stitched skin` and came back with
+    # unbroken GREEN crowns 4/4 -- and the pale cream dome went WITH the sutures,
+    # so the tan patch and the stitching are ONE fault, fabric on the skull, not
+    # two. Its patchwork cloak survived 4/4, so naming SKIN provably does not
+    # negate what the positive asserts.
+    #
+    # RECORDED AND NOT CHASED HERE, BOTH FOUNDER-FACING:
+    #  * NO FIG in either frame read. The beat IS the fig dropping and bouncing off
+    #    his head, and the founder's own approval condition on this node is "we
+    #    need to make SURE the fig growing on the sapling is mentioned" -- so this
+    #    absence is his business, not a staging tweak to guess at.
+    #  * s2 SPROUTS A SMALL TREE FROM THE TOP OF HIS HEAD, past a plant-fusion tier
+    #    that IS sent: `leaf on head`, `flower on head`, `head wreath`, `plant
+    #    hair` and `alraune` are all in the sent negative and none of them bound.
+    #    One more thing landing on the skull, and one more ban that did not reach
+    #    it -- which is the pattern this whole wave is documenting.
+    authored_b19_idfix_r2: >-
+      A small goblin boy, {{GOBLIN}}, solo, in a sunny grassy field, as a
+      ripe fig drops from a tiny sapling standing tall, rooted beside him,
+      bounces off his head, and lands in the grass. Amber afternoon,
+      cinematic lighting, detailed, newest, masterpiece, best quality, very
+      aesthetic No girl, no child, no scars, no stitched skin, no cartoon, no
+      speech bubble, no white fruit, no pale fruit, no dark, no night, no dim
+      lighting, no moody lighting. No photorealism, no 3D render look. 9:16
+      vertical, no text.
     authored_b19_refresh: >-
       A small goblin boy, {{GOBLIN}}, solo, in a sunny grassy field, stops
       mid-step as a ripe fig drops from a tiny sapling standing tall, rooted
@@ -2577,6 +2671,38 @@ beats:
     # have. THE LOSS WORTH NAMING is `extra limbs` on a shot whose subject is two
     # hands holding one small object: if the hands come back broken, that is the
     # first term to buy back and `no glowing orb` is what would pay for it.
+    # -- `authored_b20_idfix_r2` -- 2026-08-12, the fixer lane. ONE VARIABLE,
+    # POSITIVE BYTE-IDENTICAL, AND THE CLEANEST TEST OF THE MECHANISM.
+    #
+    # WHAT ALREADY LANDS AND MUST NOT REGRESS: this is the best goblin beat of the
+    # wave on content. Both frames read give him a ripe fig held in both hands in
+    # front of him -- exactly the beat -- and s0 puts the BARE BRANCH above him,
+    # which is the other half of the shot. Green skin, bald, patchwork cloak and
+    # the sunny field are all present. The positive is therefore not touched at all.
+    #
+    # THE FAULT: a large pale cream dome over a green face in both frames read --
+    # but NO SUTURES. That makes beat 20 the clean test of the other direction:
+    # beat 02 showed the ban removes dome and stitches TOGETHER, and this beat has
+    # the dome WITHOUT the stitches. If the ban clears it here, "one fault, not
+    # two" is confirmed from both sides. If it does not, the dome is its own fault
+    # and the wave needs the `green scalp` affirmative beat 03 is testing.
+    # THE LEVER IS PROVEN ON THIS CHECKPOINT TONIGHT, and this is a propagation.
+    # `ep2-b02-idfix-r2-0812` added `no scars, no stitched skin` and came back with
+    # unbroken GREEN crowns 4/4 -- and the pale cream dome went WITH the sutures,
+    # so the tan patch and the stitching are ONE fault, fabric on the skull, not
+    # two. Its patchwork cloak survived 4/4, so naming SKIN provably does not
+    # negate what the positive asserts.
+    #
+    # RECORDED, NOT FIXED: the skull is inflated toward chibi, s2 worst.
+    authored_b20_idfix_r2: >-
+      A small goblin boy, {{GOBLIN}}, solo, in a sunny grassy field, raises a
+      ripe fig in both hands in front of him like evidence, huge eyes widening
+      as he looks up at a bare branch above. Warm amber afternoon light,
+      cinematic lighting, detailed, newest, masterpiece, best quality, very
+      aesthetic No girl, no child, no scars, no stitched skin, no glowing
+      eyes, no glowing orb, no dark, no night, no dusk, no sunset, no dim
+      lighting, no moody lighting, no low key, no shadows dominant. No
+      photorealism, no 3D render look. 9:16 vertical, no text.
     authored_b20_refresh: >-
       A small goblin boy, {{GOBLIN}}, solo, in a sunny grassy field, raises a
       ripe fig in both hands in front of him like evidence, huge eyes widening
