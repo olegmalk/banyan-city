@@ -332,3 +332,4 @@
 04:33:20Z DONE task=ep1-b07-385f-control-0811-1786421478 rc=0 artifacts=1
 04:33:25Z STARTED task=ep1-b06-121f-motion-0811-1786422400 attempt=1 on box-runner
 04:38:39Z DONE task=ep1-b06-121f-motion-0811-1786422400 rc=0 artifacts=1
+04:38:45Z STARTED task=ep1-b07-385f-zoomout-0811-1786421480 attempt=1 on box-runner
