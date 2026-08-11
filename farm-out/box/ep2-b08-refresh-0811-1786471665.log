@@ -1,0 +1,26 @@
+#### job ep2-b08-refresh-0811-1786471665 attempt 1 start 2026-08-11T18:07:52Z
+
+==== step measure START 2026-08-11T18:07:56Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\wave-goblin-prep\\render_wave_sample.py", "--harness", "C:\\banyan-farm\\wave-goblin-prep", "--root", "C:\\banyan-farm\\wave-goblin-prep\\repo", "--beat", "8", "--goblin-def", "green skin", "--variant", "authored_b08_refresh", "--dry"]
+C:\banyan-farm\venv\Lib\site-packages\transformers\tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+Token indices sequence length is longer than the specified maximum sequence length for this model (89 > 77). Running this sequence through the model will result in indexing errors
+
+== beat 08 inside-him [two-subject] — inside-him
+   AUTHORED: Two round boys in an open grassy morning field, a round soft-bodied bare-headed guard man in dull dented mismatched armor pieces pointing flatly at the belly of a small goblin boy, green skin, in a patchwork cloak who looks down at himself. Deadpan two-shot, no movement but the pointing arm, bright morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No girl, no child, no helmet, no knight, no full plate, no dark fantasy, no house, no building, no interior, no indoors, no architecture, no dark, no night, no dusk, no sunset, no dim lighting, no moody lighting, no low key, no shadows dominant. No photorealism, no 3D render look. 9:16 vertical, no text.
+   POS: 2boys, two round boys in an open grassy morning field, a round soft-bodied bare-headed guard man in dull dented mismatched armor pieces pointing flatly at the belly of a small goblin boy, green skin, in a patchwork cloak who looks down at himself
+   NEG(sent): photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, girl, child, helmet, knight, full plate, dark fantasy, house, building, interior, indoors, architecture, dark, night, dusk, sunset, dim lighting, moody lighting, low key, shadows dominant, photorealism, female goblin, elf
+   positive tokens (real CLIP): 56/77   headroom for the goblin definition: 21
+   negative tokens: recipe 77 -> sent 77 (budget 77)
+   count tag: '2boys' (draft declares '2boys')
+   STYLE ANCHOR PRESENT: False
+   'text' negated: True
+   scale negatives: False   'tall tree' removed: 0
+   person singulars in negative: ['girl', 'child']
+   NEGWARN: !! negative prompt over CLIP's 77-token budget; deduplicated: text; DROPPED: realistic skin texture, jpeg artifacts, deformed
+   !! STYLE ANCHOR MISSING (`very aesthetic` not in positive)
+   !! POSITIVE DROPPED: Deadpan two-shot, no movement but the pointing arm, bright morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+
+!! FAULTS — nothing drawn: STYLE ANCHOR MISSING (`very aesthetic` not in positive); POSITIVE DROPPED: Deadpan two-shot, no movement but the pointing arm, bright morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+==== step measure END rc=1 2026-08-11T18:07:59Z ====
+#### job ep2-b08-refresh-0811-1786471665 finished rc=1 2026-08-11T18:07:59Z
