@@ -1,0 +1,33 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "VO",
+   "text": "There. Fixed. Now I'm going to sleep for a\u2014",
+   "start": 0.0,
+   "end": 3.13,
+   "chunks": [
+    {
+     "text": "There.",
+     "start": 0.0,
+     "end": 0.432
+    },
+    {
+     "text": "Fixed.",
+     "start": 0.432,
+     "end": 1.262
+    },
+    {
+     "text": "Now I'm going to sleep for a\u2014",
+     "start": 1.262,
+     "end": 3.13
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 3.13,
+ "note": "cut mid-word: the line is interrupted by his death, not finished"
+}

@@ -1,0 +1,47 @@
+{
+ "cast": "voices.yaml",
+ "engine": "chatterbox-0.5B",
+ "directed": "synth_vo v3",
+ "lines": [
+  {
+   "who": "VO",
+   "text": "Huh. Blue. \u2014 Okay. Ceiling's gone. That's fine. Open-plan hospital.",
+   "start": 0.0,
+   "end": 4.173,
+   "chunks": [
+    {
+     "text": "Huh.",
+     "start": 0.0,
+     "end": 0.375
+    },
+    {
+     "text": "Blue.",
+     "start": 0.375,
+     "end": 0.953
+    },
+    {
+     "text": "\u2014 Okay.",
+     "start": 0.953,
+     "end": 1.329
+    },
+    {
+     "text": "Ceiling's gone.",
+     "start": 1.329,
+     "end": 2.236
+    },
+    {
+     "text": "That's fine.",
+     "start": 2.236,
+     "end": 2.991
+    },
+    {
+     "text": "Open-plan hospital.",
+     "start": 2.991,
+     "end": 4.173
+    }
+   ]
+  }
+ ],
+ "actions": [],
+ "total_s": 4.473
+}

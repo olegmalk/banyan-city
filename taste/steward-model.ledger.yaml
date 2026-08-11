@@ -6545,3 +6545,74 @@
     Next lever is the drafts line for these beats — guarantee the face and the
     sapling — NOT another word in the goblin slot. Do not re-run beat 15 with a
     different goblin string.
+
+- id: ep1-b02-121f-typing-founder-reject-0811
+  date: 2026-08-11
+  kind: founder_verdict
+  subject: "beat 02 in the provisional cut, SECOND rejection of a 121-frame LTX
+    beat-02 clip in one day — Roman watched
+    `review/tonight/EP1-PROVISIONAL-v40-bench.mp4` (commit d579d31) at ~15:39 on
+    2026-08-11 and turned down the LTX typing clip it carried, choosing his own
+    original in its place and accepting its loop. Written down at the time he
+    said it. NO PREDICTION EXISTS IN THIS FILE for the artifact he refused —
+    variant B of `ep1-b02-121f-typing-0811` was rendered and wired without ever
+    being scored here, so nothing is back-filled and nothing is claimed as a hit
+    or a miss."
+  steward_provisional: false
+  pick: null
+  scores: {}
+  what_he_said_verbatim: >-
+    "beat 2 is so slow.. which model originally generated it? and also, i think
+    lets just leave the old clip and let it loop."
+  artifact_rejected: >-
+    `review/provisional-v40/clips/02-three-oh-seven.mp4`, sha256
+    10361a7e052d95cee8ec91c325ef16ceb65984a3b22723829042533423ef48ef, md5
+    8e6621d14b5e56b893d5492e90cde024, 653,950 bytes — 121 frames, 5.042s,
+    LTX-2.3-Distilled, seed 20260902, task ep1-b02-121f-typing-0811-1786447324
+    (variant B). It fixed the defect he named at ~15:07 — in v39's framing-hold
+    clip his hands never touched the keys — and his verdict on the fix is that
+    it is slow.
+  artifact_chosen: >-
+    `review/provisional-v35/clips/02-three-oh-seven.mp4`, sha256
+    9f73daa315f3cde6eedc99c8d16a88eb89facee8281c2a86388e5243b908e3a9, md5
+    7da445e03a7f1bd1ed09fbee26f46434, 601,870 bytes — 61 frames, 2.542s,
+    Wan2.2-TI2V-5B-Diffusers, guidance 5.0, 14 steps, seed 20260807, task
+    face-B-b02-1785816000. That is the answer to his question: Wan2.2-TI2V-5B
+    generated the original. Wired byte-identical into
+    `review/tonight/EP1-PROVISIONAL-v41-bench.mp4`, which differs from v40 in
+    exactly one ingredient row (beat 2 clip); the other 25 rows hash the same.
+  the_loop_is_his_call_not_a_defect: >-
+    2.542s of picture under 4.88s of voice, so the clip plays through and starts
+    again — a 1.91x loop, visible, on the beat that opens the episode. "let it
+    loop" is R4 accepting it. This OVERRIDES the general no-looping preference
+    FOR BEAT 02 ONLY and is not to be "fixed" in a later cut. It does not
+    licence looping anywhere else.
+  the_reusable_finding: >-
+    FRAME COUNT IS NOT FREE — A LONGER CLIP OF THE SAME ACTION LOOKS SLOWER. The
+    LTX clip was asked for 121 frames where the Wan clip fills 61. Both cover the
+    same beat and the same action, so at a fixed 24fps the identical gesture is
+    spread over twice the running time and reads as slow motion. Nothing about
+    the render was wrong on its own terms; the length was the fault. Two separate
+    121-frame LTX beat-02 clips have now been rejected in one day (the
+    vo-length one at ~13:58, see ep1-b02-121f-founder-reject-0811, and this
+    typing one at ~15:39), and both were reached for to COVER THE VO LENGTH.
+    Covering a long VO by asking the model for more frames of the same action
+    buys duration and spends pace. A short clip that loops was the acceptable
+    trade here and he said so himself.
+  what_this_record_authorises: >-
+    ONE THING: rebuilding the BENCH cut with his original beat-02 clip for him to
+    look at. No canon leaf was written, no render ran on any GPU, and nothing is
+    published. Both rejected LTX clips are kept on disk with their sidecars — they
+    are the record of what he judged.
+  founder_verdict: "beat 2 is so slow.. which model originally generated it? and also, i think lets just leave the old clip and let it loop."
+  founder_verdict_date: 2026-08-11
+  outcome: n/a
+  miss_axis: >-
+    Not counted in the rolling rate — no prediction existed for the rejected
+    artifact. Named anyway: the steward chose the beat's LENGTH from the VO and
+    let the model stretch one action across it, twice, and lost the beat on PACE
+    both times. Length is a cutting decision, not a prompt parameter.
+  model_action: >-
+    none_no_prediction_existed. Standing consequence: do not answer "the VO is
+    longer than the clip" by rendering more frames of the same action. Reach for
+    the loop, a second action, or a cut first, and put the length question to R4.
