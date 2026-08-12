@@ -14525,3 +14525,32 @@
     FileNotFoundError on two different node pages was the same thing and I nearly treated it
     as a content bug.
   outcome: null
+
+- id: ep2-pool-round-0812-scored
+  kind: scoring
+  date: 2026-08-12
+  scores: b03/b17/b21 pools C and D, and ep2-b19-geo + twin. 8 clips, 8/8 hash-verified.
+  b19_geometry_confirmed_a_second_time: >-
+    Seed A came back with ONE sapling in warm gold and the fig falling. Seed B has a single
+    wide branching plant rather than the clear ROW OF SEPARATE SAPLINGS it produced before.
+    So describing a frame with room for exactly two things did most of the work in a two-shot,
+    not only in b18's extreme close-up. Weaker than b18's clean result and I am scoring it as
+    a real but partial confirmation: geometry constrains count, and it constrains it harder
+    the tighter the frame.
+  the_pools_close_the_wording_avenue: >-
+    Four takes now exist of each of b03, b17 and b21 and NO TWO ARE ALIKE. b03 puts him
+    behind the tree in one and sprouting it from his head in another; b17 is dusk-with-bare-
+    twigs in one and a warm grass field in the next; b21's leaf barely moves in either new
+    take. Three rounds of wording plus two extra seeds have not made any of these repeatable.
+  therefore_i_am_queueing_nothing: >-
+    The honest position is that wording has stopped buying anything on these three, and the
+    remaining variance is composition and whether the action fires — neither of which another
+    adjective reaches. There is no sample I can name a prediction for, so the card stays
+    empty rather than being filled to look busy. His pick from the pool is the next step, and
+    it is his, not mine.
+  what_the_night_leaves_settled: >-
+    Named contents appear; unnamed ones float; ambiguous ones float too. Position is
+    controllable, colour is controllable with a temperature plus bans, framing follows the
+    described contents, and COUNT is controllable only by geometry and only approximately.
+    Everything else is seed variance and wants a human pick.
+  outcome: null
