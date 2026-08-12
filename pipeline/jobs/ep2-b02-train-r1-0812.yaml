@@ -1,0 +1,143 @@
+# EPISODE 2, BEAT 02 — HIS TRAINING TARGET. ROUND 1 OF 3. $0.
+# 2026-08-12, character-consistency lane, on "beat 2 after still ends up hallucinating
+# alot and not being consistent, train that."
+#
+# ── WHAT HE IS LOOKING AT WHEN HE SAYS THAT. The beat-02 "after" on his page is the
+# FIRST conditioning test ever run here (`ep2-b02-ipa-charref-0812`), and by today's
+# standards it is built out of three things we have since replaced: raw head-and-body
+# crops taken straight off a sheet, so the neighbouring head views were still in the
+# corners and rendered as extra creatures; the wave-1 `authored` draft rather than the
+# staged wording; and a prompt that demanded TUSKS the reference did not have. He is
+# right that it hallucinates. It is also the oldest frame on the page.
+#
+# ── SO ROUND 1 IS NOT A NEW IDEA, IT IS BEAT 02 BROUGHT UP TO DATE. Three things
+# change together, and that is deliberate — this round establishes the modern baseline
+# rather than testing a hypothesis, and rounds 2 and 3 move ONE variable each from here.
+#   * the APPROVED reference (`refs-goblin-frozen-0812`, his "the goblin looks good"),
+#     cut by connectivity so nothing but the one figure is in the picture — the fix that
+#     took stray goblins from 3 of 8 cells to none across ten beats;
+#   * `--draft-key authored_staged_med_occl_hide_r2`, the staged wording, which frames
+#     the beat as a MEDIUM shot of him cowering behind the stem with his face peeking
+#     around it, instead of wave-1's sprint-and-dive;
+#   * `green skin, bald head` — his frozen definition, so the tusk contest that the old
+#     round lost 13 times out of 16 is simply not in this one.
+#
+# ── WHY THE REFS DIR HOLDS TWO CROPS. r0/r1 are the coat-hem crop and r2/r3 the whole
+# figure. The staged draft asks for a MEDIUM shot, and the framing rule says the crop
+# chooses the shot, so the coat-hem rows are the ones expected to match the beat. Having
+# both in one job means the round says which was right rather than assuming it.
+#
+# ── WHAT I AM NOT SPENDING ROUNDS ON. The sapling. Ten beats have now failed to draw a
+# 40cm two-leaf seedling, and that is a model limit and a compositing question for him,
+# not a conditioning knob. This round is judged on the goblin: his consistency, and the
+# hallucinated extras.
+#
+# ── THE REFERENCE IS APPROVED; THESE FRAMES ARE NOT. $0, local GPU, nothing published.
+id: ep2-b02-train-r1-0812
+task: ep2-b02-train-r1-0812
+node: 002b-first-citizen
+beat: 2
+runner: box
+needs_gpu: true
+priority: 49
+max_attempts: 1
+owner: character-consistency lane, 2026-08-12 (his "train that", beat-02 round 1 of 3)
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03`, read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the render
+  gate itself reads. Neither `approval_condition` touches beat 02. This is a
+  mechanism test on an approved node, not an episode assembly.'
+consumer: >-
+  review/ep2-picks/consistency-0812.html, and the go/no-go for the remaining goblin
+  beats. The same creature in two beats from one reference releases the beat-by-beat
+  pass; a different creature says the mechanism holds a beat and not a character,
+  which is the more important thing to find out early.
+success: >-
+  Sixteen PNGs at C:\banyan-farm\goblin-ipa-0812\out-b02-train-r1\02-the-sprint-ipa-r{0,1,2,3}-w015-s{0,1,2,3}.png
+  with their provenance sidecars written at render time (7.2). Success is readable
+  comparable cells — NOT that identity held. "He is a different goblin in beat 17"
+  is a successful run of this job and the more valuable of the two answers.
+why: >-
+  He cannot approve beats because the characters change between them. Every
+  measurement so far has been within one beat, which is the one thing he did not
+  complain about.
+est_minutes: 14
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '2'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-frozen-0812
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b02-train-r1
+  - --draft-key
+  - authored_staged_med_occl_hide_r2
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '2'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-frozen-0812
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b02-train-r1
+  - --draft-key
+  - authored_staged_med_occl_hide_r2
+  - --arm
+  - window4
+  - --task
+  - ep2-b02-train-r1-0812
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b02-train-r1-0812"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/goblin-ipa-0812/out-b02-train-r1/*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b02-train-r1-0812.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 16 else 1)
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b02-train-r1\02-the-sprint-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b02-train-r1\02-the-sprint-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b02-train-r1\02-the-sprint-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b02-train-r1\02-the-sprint-ipa-r3-w015-s0.png

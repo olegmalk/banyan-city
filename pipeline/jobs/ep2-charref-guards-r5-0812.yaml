@@ -1,0 +1,150 @@
+# ROUND 5 — THE OTHER HALF OF HIS SENTENCE. One sample, four seeds, $0.
+# 2026-08-12, character-consistency lane.
+#
+# ── WHAT r4 BOUGHT AND WHAT IT COST. His ruling was "the guards beign bald is a bit
+# strange", and what he ratified originally was "two silly round bureaucrats WITH
+# VISIBLE FACES". r4 got the hair — 4 of 4, no bald man anywhere — and kept r3's count
+# fix (one man per frame, 4/4) and the plain brown tunic. Then it lost the face: s0 came
+# back with a blank white oval, s2's eyes are under its fringe, and s3's head studies are
+# shadowed to nothing. Hair arrived and took the face with it, which is a fault the bald
+# rounds could not have shown.
+#
+# ── ONE CHANGE, PAID FOR OUT OF A MEASUREMENT. The positive already says `visible face`
+# and it was not enough, so the defence moves where it binds: `no bangs, no hair over
+# eyes, no blank face`. That negative was full at 75/77, so three terms are SOLD to buy
+# three — `no comic, no comic panels, no speech bubble`. This is not a guess about what
+# is expendable: the ledger recorded on the r2 round that the comic ban cost six terms
+# and prevented a failure that never occurred without it, and four guard rounds have now
+# produced zero comic panels both with the ban and without. If panels come back, that is
+# the round that re-buys it, and this spec is where that gets checked.
+#
+# ── EVERYTHING ELSE IS r4 EXACTLY. Same solo turnaround, same order, same beat-06
+# block, same seeds. A failure here is a failure of the face and of nothing else.
+#
+# ── MEASURED BEFORE QUEUED, on the box, with the real CLIP tokenizer: positive 74/77,
+# negative 76/77, count tag `1boy` matching the draft, nothing dropped, no faults, and
+# `bangs`, `hair over eyes` and `blank face` all verified present in the sent negative.
+#
+# ── PROVISIONAL. His veto stands.
+#
+# $0 — local GPU on the rtx5090, no provider, nothing published, nothing assembled.
+id: ep2-charref-guards-r5-0812
+task: ep2-charref-guards-r5-0812
+node: 002b-first-citizen
+beat: 6
+runner: box
+needs_gpu: true
+priority: 48
+max_attempts: 1
+owner: character-consistency lane, 2026-08-12 (his bald ruling, guards round 5 — the face)
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03`, read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the render
+  gate itself reads. Neither `approval_condition` touches beat 06 — the first is
+  beat 01''s grow-on-screen continuity fix, the second is a beat-18 line he decided
+  stays. This job draws a CHARACTER REFERENCE, not a beat for the episode: it
+  borrows beat 06''s block for its mechanics (kind guard, count tag 1boy, guard
+  negative tier) and its artifacts are named for that slug. Nothing it makes may be
+  carried into any beat before he points at a frame.'
+consumer: >-
+  review/ep2-picks/consistency-0812.html — the page he reviews once, guards row,
+  against r1 and r2 as the control columns. Downstream: the two crops that become
+  refs-charref-guards-0812 on the box, which is what the first guard-beat
+  conditioning test (beat 06) has to have before it can run at all.
+success: >-
+  Four PNGs at C:\banyan-farm\wave-goblin-prep\out-charref-guards-r5\06-the-clipboard-wave1-s0..3.png
+  with their .yaml provenance sidecars written at render time (7.2), all eight
+  declared as artifacts so a missing one fails rc=92 instead of passing quietly.
+  Success is that the frames are readable and comparable — NOT that the count held.
+  "Even solo, the guard is a faceless monk" is a successful run of this job.
+why: >-
+  Two rounds of asking one image to be both a turnaround and a pair produced zero
+  usable guard references, and every guard beat in the episode is blocked behind
+  one. The mechanism needs a single conditionable character; this is the cheapest
+  ask that can produce one.
+goblin_def: green skin, bald head, patchwork cloak
+goblin_def_source: >-
+  Passed for consistency with every other guard-beat job in this wave and
+  substituted nowhere: beat 06 is `kind: guard` and this draft carries no {{GOBLIN}}
+  slot, so this string reaches no prompt. `--goblin-def` is mandatory at the harness
+  (it refuses its own default), and it is recorded here so the sidecar's definition
+  field is not silently different from the guard beats it will be compared against.
+est_minutes: 4
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '6'
+  - --goblin-def
+  - green skin, bald head, patchwork cloak
+  - --variant
+  - authored_charref_guards_r5
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '6'
+  - --goblin-def
+  - green skin, bald head, patchwork cloak
+  - --variant
+  - authored_charref_guards_r5
+  - --out
+  - C:\banyan-farm\wave-goblin-prep\out-charref-guards-r5
+  - --task
+  - ep2-charref-guards-r5-0812
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-charref-guards-r5-0812"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/wave-goblin-prep/out-charref-guards-r5/06-the-clipboard-wave1-s*.*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+        print("   ", os.path.basename(f), h[:16])
+    with open(os.path.join(dst, "ep2-charref-guards-r5-0812.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) == 8 else 1)
+artifacts:
+- C:\banyan-farm\wave-goblin-prep\out-charref-guards-r5\06-the-clipboard-wave1-s0.png
+- C:\banyan-farm\wave-goblin-prep\out-charref-guards-r5\06-the-clipboard-wave1-s1.png
+- C:\banyan-farm\wave-goblin-prep\out-charref-guards-r5\06-the-clipboard-wave1-s2.png
+- C:\banyan-farm\wave-goblin-prep\out-charref-guards-r5\06-the-clipboard-wave1-s3.png
+- C:\banyan-farm\wave-goblin-prep\out-charref-guards-r5\06-the-clipboard-wave1-s0.yaml
+- C:\banyan-farm\wave-goblin-prep\out-charref-guards-r5\06-the-clipboard-wave1-s1.yaml
+- C:\banyan-farm\wave-goblin-prep\out-charref-guards-r5\06-the-clipboard-wave1-s2.yaml
+- C:\banyan-farm\wave-goblin-prep\out-charref-guards-r5\06-the-clipboard-wave1-s3.yaml

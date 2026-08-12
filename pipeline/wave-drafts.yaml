@@ -1471,6 +1471,29 @@ beats:
     # is a casting call in the same way r3's was: two seeds become guard A and guard B,
     # and letting the seeds vary is how they come out as two DIFFERENT men rather than
     # one man twice.
+    # -- `authored_charref_guards_r5` -- 2026-08-12. THE FACE, WHICH IS HIS WORD.
+    # r4 got the hair (4/4) and kept r3's count (4/4) and the brown tunic, and then
+    # lost the other half of his sentence: "two silly round bureaucrats WITH VISIBLE
+    # FACES". s0 came back with a blank white face, s2's eyes are under its fringe and
+    # s3's head studies are shadowed to nothing. Hair arrived and took the face with it.
+    #
+    # ONE CHANGE, AND IT IS PAID FOR HONESTLY. The positive already says `visible face`
+    # and that was not enough, so the defence moves to the negative — `no bangs, no hair
+    # over eyes, no blank face`. That budget was full at 75/77, so three terms are SOLD
+    # to buy three: `no comic, no comic panels, no speech bubble`. The ledger already
+    # says those have not earned their keep (`ep2-charref-r2-0812-observed`: the ban
+    # cost six terms and prevented a failure that never occurred in the round without
+    # it), and four guard rounds have now produced zero comic panels with and without
+    # them. If panels come back, that is the round that re-buys the ban.
+    authored_charref_guards_r5: >-
+      A round guard man in a plain brown tunic, short hair, visible face, reference
+      sheet, multiple views, turnaround, front view, side view, standing, silly
+      harmless bureaucrat, a bark clipboard, simple background, white background. Full
+      body, flat even lighting, cinematic lighting, detailed, newest, masterpiece,
+      best quality, very aesthetic No girl, no child, no armor, no helmet, no scars,
+      no weapon, no hood, no bangs, no hair over eyes, no blank face, no different
+      characters, no different outfits, no dynamic pose, no multiple boys. No
+      photorealism, no 3D render look. 9:16 vertical, no text.
     authored_charref_guards_r4: >-
       A round guard man in a plain brown tunic, short hair, visible face, reference
       sheet, multiple views, turnaround, front view, side view, standing, silly

@@ -11978,3 +11978,46 @@
   consumer: the guards re-cast, then the beat-06 fair rerun with a draft that no longer
     says bald.
   outcome: null
+
+- id: ep2-charref-guards-r4-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-charref-guards-r4-0812
+  predicates_observed: >-
+    short hair 4/4 and no bald man anywhere HIT; exactly one man per frame 4/4 HIT — r3's
+    count fix survived the head change, which was the thing I said would falsify it;
+    plain brown tunic HIT 4/4, above the ankle over dark trousers; two visibly different
+    men to cast from MARGINAL — s0 is dark-haired and the rest are brown; register MISS
+    again, formal and solemn men, so haired does not read sillier than bald.
+  observed: >-
+    HE GOT HIS HAIR AND I LOST HIS FACE. "Two silly round bureaucrats with VISIBLE FACES"
+    is one sentence and this round bought the first half by giving up the second: s0 came
+    back as a blank white oval, s2's eyes are under its fringe, s3's head studies are
+    shadowed to nothing. Only s1 has a face a viewer could describe. The blank faces of
+    r2 were blamed on eight tiny figures crowding a frame; they are back at solo scale
+    with hair, so that explanation was incomplete — hair over the eyes is its own failure
+    and the bald rounds simply could not exhibit it.
+  outcome: null
+
+- id: ep2-b02-train-r1-0812
+  kind: prediction
+  written: 2026-08-12, before enqueue. Round 1 of the 3 he authorised on "train that".
+  predicates: [NO hallucinated extra creatures in any of the 16 cells (the old round he
+    is looking at had them; the connectivity cut took them to zero across ten beats),
+    identity holds 4/4 on both crops, the coat-hem rows read as a MEDIUM shot and match
+    the staged draft better than the whole-figure rows, the sapling is still absent —
+    not scored as a conditioning failure, it is the known model limit and his
+    compositing question, the cowering/peeking pose is NOT recovered because nothing has
+    yet beaten the reference's standing posture]
+  basis: >-
+    The frame he is judging is the oldest on the page: raw sheet crops with neighbouring
+    heads still in the corners, the wave-1 draft, and a prompt demanding tusks the
+    reference never had. Round 1 replaces all three at once on purpose — it establishes
+    the modern baseline rather than testing a hypothesis, and rounds 2 and 3 move one
+    variable each from there.
+  falsifiable_by: >-
+    Extra creatures surviving the connectivity-cut reference. That would mean the
+    hallucination he named is coming from the beat rather than from the reference, and
+    round 2 goes to the beat's own text instead of the conditioning.
+  consumer: his page, and the answer to "train that".
+  outcome: null
