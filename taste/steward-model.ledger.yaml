@@ -11048,3 +11048,11 @@
     per-beat observations above; neither changes any prediction's text.
   consumer: review/ep2-picks/morning-0812-wave2.html, section "Needs a human call".
   outcome: null
+
+- id: ep2-b01-final055-0812
+  kind: prediction
+  written: 2026-08-12 ~11:5x before enqueue. Scales his approved 0.55 sample
+    ("strength 0.55 looks good") to 4 seeds, same init and mechanics.
+  predicates: [plate-family style holds 4/4, fig present >=3/4, s2 composition recognisable >=3/4]
+  consumer: his beat-01 pick.
+  outcome: null
