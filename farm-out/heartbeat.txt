@@ -796,3 +796,4 @@
 13:03:47Z STARTED task=ep2-b06-ipa-guardcast-0812-1786538795 attempt=1 on box-runner
 13:03:53Z FAIL task=ep2-b06-ipa-guardcast-0812-1786538795 rc=1 step=dry
 13:03:56Z box-runner idle ready=0 failed=4
+13:07:50Z STARTED task=ep2-b06-ipa-guardcast-0812-1786540066 attempt=1 on box-runner
