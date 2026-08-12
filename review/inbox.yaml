@@ -50,10 +50,10 @@
   since: '2026-08-12'
   kind: decision
   verdict_hint: inpaint the sapling in deliberately / composition LoRA / accept 2-of-4 seeds and pick
-- what: 'Episode 2 motion wave - first clips of the goblin actually moving. 4 of 7 back: beat 04 re-clipped
-    (your background note fixed, but his head balloons), beat 13 (best acting in the wave, sitting on
-    a tripod), beats 03 and 14 (a camera tripod is in the shot - my prompt put it there). Retries queued;
-    beats 17, 19, 20 still rendering'
+- what: Episode 2 motion wave - the goblin moving, 5 of 7 back. Beat 17 does its WHOLE beat (brushes off,
+    turns to go) and is the best clip yet; beat 13 folds correctly but sits on a tripod; beats 03 and
+    14 have a tripod I put in the prompt; beat 04 re-clipped with your background fixed but his head balloons.
+    Retries queued for 03/13/14
   url: /review/ep2-picks/motion-0812
   since: '2026-08-12'
   kind: clip

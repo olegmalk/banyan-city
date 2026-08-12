@@ -12886,3 +12886,35 @@
     need the same retry once the queue drains. b04 r2's head-balloon is a separate fault and
     gets its own sample, not a bundled fix.
   outcome: null
+
+- id: ep2-b17-motion-0812-scored
+  kind: scoring
+  date: 2026-08-12
+  scores: ep2-b17-motion-0812
+  verdict: PASS — the strongest clip this lane has produced, and it corrects my last claim.
+  observed: >-
+    THE WHOLE BEAT HAPPENS, IN ORDER. He brushes his coat down with both hands with visible
+    dust coming off it around frames 45-60, and then he TURNS, and by frame 105 his back is
+    to camera and he is going. Beat 17 is "he stands, brushes himself off and turns to go" —
+    that is the shot, start to finish, from a standing character-sheet still. Background
+    painted itself in again. No tripod. Faults are small: the coat drifts cream toward brown
+    and a stick-like object appears at his side.
+  what_it_corrects: >-
+    MY TRIPOD TALLY WAS WRONG AND I PUBLISHED IT. I wrote "three of three clips carrying the
+    tripod phrase drew a tripod, zero without it" — counting only the clips that FAILED. b15
+    and b17 both carry the identical phrase and drew nothing, and b15 was already on the same
+    page two sections above. The true rate is 3 OF 5 with the phrase and 0 of 1 without, which
+    makes the phrase a real risk factor and not a switch, and makes my 0/1 "proof" of the fix
+    almost worthless as evidence. Caught by my own new data this time rather than by the lead,
+    which is the only improvement I can claim.
+  what_this_does_not_change: >-
+    Removing the phrase still costs nothing and still removes a word that can become a prop,
+    so the retries keep it out. But it is a PRECAUTION, not a demonstrated cure, and b03 r2 —
+    same init, same seed, same everything, phrase removed — is the actual test.
+  the_pattern_now_undeniable: >-
+    Four over-claims in one day: the instrumentation defect, the duration law, the background
+    painting, and now the tripod rate. Every one of them the same operation — take a real
+    observation and state it one size larger, counting the cases that agree. The correction
+    that keeps working is mechanical, so it becomes the rule: before writing a rate, ENUMERATE
+    EVERY CASE I HAVE, including the ones that came out fine, and write the denominator first.
+  outcome: null
