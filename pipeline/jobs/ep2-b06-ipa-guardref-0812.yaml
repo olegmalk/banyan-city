@@ -1,0 +1,147 @@
+# EPISODE 2, BEAT 06 — THE FIRST GUARD BEAT EVER CONDITIONED ON A GUARD. $0.
+# 2026-08-12, character-consistency lane, under his consistency mandate
+# (`ep2-consistency-mandate-0812`).
+#
+# ── WHY THIS COULD NOT RUN AN HOUR AGO. `goblin_ipa_beat.py` refused every beat
+# outside GOBLIN_BEATS, so no guard beat could be conditioned at all whatever refs
+# it was handed. Commit 472909d0 taught the gate that guards are characters too
+# (`--character guard`, GUARD_BEATS). The references were already cut and staged
+# against that moment; this is the first job through the new door.
+#
+# ── THE REFERENCES ARE THE TWO CAST GUARDS (`ep2-charref-guards-pick-0812`), cut
+# from the r3 solo turnaround: r0 guard A whole figure, r1 guard A head, r2 guard B
+# whole figure, r3 guard B head. Front views only — a back view carries no face. The
+# rows are four independent arms, so this asks two questions at once without
+# confounding either: does the mechanism carry a guard, and does whole-figure beat
+# head, which is the same question the goblin's crop ladder is answering in parallel.
+#
+# ── THE CONTEST IS NAMED BEFORE THE RENDER, AND IT IS SHARPER THAN THE TUSKS ONE.
+# The sampler sends the beat's `authored` draft and beat 06's `authored` says
+# "A round guard man in MISMATCHED ARMOR". The references wear the frozen plain brown
+# tunic. So the prompt and the picture disagree about the single most visible thing
+# in the frame, and the tusk round already showed which way that goes — the prompt
+# won 13 of 16. GARMENT IS THEREFORE EXPECTED TO MISS. What this job is actually
+# measuring is the FACE: whether the man who comes out is the man in the reference
+# when his clothes are being argued about. That is his complaint, not the costume.
+#
+# ── SO THESE FRAMES ARE NOT BEAT-06 CANDIDATES. Armour is a look he rejected; a
+# frame drawn from a draft that asks for it cannot be offered to him as a beat. This
+# is a mechanism measurement and the page says so.
+#
+# ── WHAT WOULD FIX THE CONTEST, NAMED NOT DONE. The sampler reads `d["authored"]`
+# with no variant flag (goblin_ipa_sample.py:417), so the tunic wording that already
+# exists as `authored_b06_idfix_r2` cannot be reached from here. Adding a variant
+# flag is a pipeline edit and not this lane's to make.
+#
+# ── ITS OWN OUT DIR (`out-b06-guardref`), never written by another job.
+#
+# ── NOT A PICK, NOT CANON. Provisional under his delegated evaluation grant.
+#
+# $0 — local GPU on the rtx5090, no provider, nothing published, nothing assembled.
+id: ep2-b06-ipa-guardref-0812
+task: ep2-b06-ipa-guardref-0812
+node: 002b-first-citizen
+beat: 6
+runner: box
+needs_gpu: true
+priority: 49
+max_attempts: 1
+owner: character-consistency lane, 2026-08-12 (consistency mandate, first guard conditioning)
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03`, read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the render
+  gate itself reads. Neither `approval_condition` touches beat 06. A mechanism test
+  on an approved node, not an episode assembly, and explicitly not a beat candidate.'
+consumer: >-
+  review/ep2-picks/consistency-0812.html, guards row, and the go/no-go for the six
+  guard beats. A face that holds while the garment is contested releases them once
+  the wording is settled; a face that does not says the guard references need
+  rebuilding rather than re-prompting.
+success: >-
+  Sixteen PNGs at C:\banyan-farm\goblin-ipa-0812\out-b06-guardref\06-the-clipboard-ipa-r{0,1,2,3}-w015-s{0,1,2,3}.png
+  with sidecars written at render time (7.2). Success is comparable readable cells —
+  NOT that identity held, and NOT that the tunic survived.
+why: >-
+  Six guard beats are blocked behind a reference nobody has ever conditioned on. The
+  references now exist and the gate now opens; until one beat is drawn from them,
+  the guards half of his mandate has produced sheets and no mechanism.
+est_minutes: 14
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '6'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-charref-guards-0812
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b06-guardref
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '6'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-charref-guards-0812
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b06-guardref
+  - --arm
+  - window4
+  - --task
+  - ep2-b06-ipa-guardref-0812
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b06-ipa-guardref-0812"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/goblin-ipa-0812/out-b06-guardref/*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b06-ipa-guardref-0812.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 16 else 1)
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b06-guardref\06-the-clipboard-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b06-guardref\06-the-clipboard-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b06-guardref\06-the-clipboard-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b06-guardref\06-the-clipboard-ipa-r3-w015-s0.png

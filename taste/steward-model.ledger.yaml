@@ -11487,3 +11487,25 @@
     tone. If the tone is what matters more, the pick is wrong and the phrase is not
     the channel to fix it.
   outcome: null
+
+- id: ep2-b06-ipa-guardref-0812
+  kind: prediction
+  written: 2026-08-12, before enqueue. First guard beat ever conditioned on a guard.
+  predicates: [GARMENT MISS — armour in >=3/4 of the best row, because the draft says
+    mismatched armor and the references wear the frozen tunic; the FACE reads as one
+    of the two cast guards >=2/4 on the best row; bare head 4/4; whole-figure rows
+    (r0/r2) carry more of the reference than the head rows (r1/r3), the same curve
+    the goblin ladder is drawing in parallel; guard A cells and guard B cells are
+    distinguishable from each other]
+  basis: >-
+    The tusk round settled which way a prompt-versus-reference contest goes: the
+    prompt won 13 of 16. Beat 06's `authored` asks for armour and the sampler has no
+    variant flag, so the garment is being argued about in every cell. That makes this
+    a face test, which is the axis his complaint is actually on.
+  falsifiable_by: >-
+    The face failing too. If neither cast guard is recognisable in any row, the
+    references are not conditionable — a solo turnaround on a plain ground is the
+    friendliest input the mechanism will ever get — and the guards fork stops for his
+    verdict rather than iterating.
+  consumer: review/ep2-picks/consistency-0812.html and the go/no-go for six guard beats.
+  outcome: null
