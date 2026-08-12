@@ -299,22 +299,83 @@
 </section>
 
 <section>
-  <h2 class="t">Rendering now — two clips on your two notes</h2>
-  <p class="lede">Both are one-samples, both queued off your last message, neither scales anything.</p>
-  <p><strong><code>ep2-b01-figgrow-055-r3-0812</code> — the cold-open fig.</strong> You said it reads as a
-  green apple, and the prompt is why: r2's own text asked for a sphere twice (<q>one small <em>round</em>
-  green fig</q> that <q><em>rounds</em> and settles heavier</q>) and its negative said nothing about fruit
-  at all. A green sphere on a stem is an apple; the model drew what the words said. r3 describes the
-  silhouette a fig actually has — teardrop, heavy and wide low, tapering to a narrow neck at the stem —
-  with <q>round</q> deleted, and puts apple, green apple, round fruit, spherical fruit, cherry and berry in
-  the negative. Same init, same seed, same 233 frames, same camera ban. One variable class. It also gets
-  the publish step r2 lacked, which is why that clip stranded on the box and reached you late.</p>
-  <p><strong><code>ep2-b15-action-probe-0812</code> — can motion put the blocking in?</strong> This is the
-  open question above, turned into a render instead of an argument. The stills cannot stage the beats; the
-  question is whether the motion model can. Beat 15's still is him standing square with his head level, and
-  beat 15 is him looking up at the sapling and talking — so the gap is one nameable action. If his head
-  tips back and his mouth moves, the other beats get clips with their actions written into their prompts.
-  If he just stands there breathing, the goblin wave stops and the question stands as you asked it.</p>
+  <h2 class="t">The probe worked — motion puts the action in, and the background too</h2>
+  <p class="lede">The open question above was whether a goblin who will only stand still in a <em>still</em>
+  can be made to act by the <em>motion</em> model. Beat 15 was the test: its frame is him square to camera
+  with his head level, its beat is him looking up at the sapling and talking. One nameable action, so one
+  look decides it.</p>
+
+  <figure>
+    <img src="/review/ep2-picks/motion-0812/b15-probe-strip.jpg" alt="The still on the left, then seven frames in which the goblin's head tips back, his eyes go up and his mouth opens as he talks, against a field with a treeline and dawn sky.">
+    <figcaption>The still is the leftmost frame. Everything after it is the clip.</figcaption>
+  </figure>
+
+  <video controls preload="metadata" playsinline src="/review/ep2-picks/motion-0812/15-good-listener-LTX-probe-0812.mp4"></video>
+  <p class="muted" style="margin-top:10px"><code>ep2-b15-action-probe-0812</code> — 121 frames, 5.04s, $0.
+  Manifest-verified.</p>
+
+  <p><strong>Every predicate I wrote down came in.</strong> His chin lifts, his eyes go up, his mouth opens
+  and works as if he is talking upward, he stays the same goblin the whole way, he stays planted on his
+  mark, and the camera does not move.</p>
+
+  <div class="callout">
+    <h2>And it did something I did not ask about — it painted the background</h2>
+    <p>The still is a character sheet on blank white. By frame 17 there is a field: a treeline on the
+    horizon, dried golden grass, a dawn sky with clouds. <strong>That is the exact fault you named on the
+    other clip.</strong> Which raises a genuinely useful possibility — the blank background may be
+    something motion fixes on its own, rather than something the stills have to be re-done for. I have
+    passed that to the stills lane before they spend a pass solving it the expensive way.</p>
+  </div>
+
+  <p><strong>Two things I am not going to oversell.</strong> The style flattens — heavier outline, more
+  graphic, the colour muted against the init's soft cel look — so this is not the show's look yet. And
+  <em>there is no sapling</em>: beat 15 is him and the tree in one frame, and he is looking up at nothing.
+  The question this answered was whether the action happens. It does. Staging the whole shot is a further
+  step and this clip is not it.</p>
+
+  <p class="muted">On that result, six more are rendering — beats 03, 13, 14, 17, 19 and 20, each with its
+  own action written into its prompt the way this one was. Not beat 02 (the character itself fails there),
+  not beat 06 (that guard is bald and you have ruled on bald), not beat 08 (a one-character reference
+  suppresses the second character, so no wording puts the guard in), and not beat 04 until it has a still
+  with a background. I capped them all at five seconds — see the length finding above; a six-second beat
+  rendered at a length I have already measured to fail would just reproduce the fault.</p>
+</section>
+
+<section>
+  <h2 class="t">The cold-open fig — the apple is gone, but I found the real fault</h2>
+  <p class="lede">You said it reads as a green apple. It did, and the prompt was why: r2's own text asked
+  for a sphere twice — <q>one small <em>round</em> green fig</q> that <q><em>rounds</em> and settles
+  heavier</q> — while its negative said nothing about fruit at all. A green sphere on a stem is an apple.
+  The model drew what the words said.</p>
+
+  <figure>
+    <img src="/review/ep2-picks/motion-0812/coldopen-r2-vs-r3.jpg" alt="Top row r2 showing a spherical green fruit, bottom row r3 showing a teardrop-shaped fruit with a narrow neck, at matched frames.">
+    <figcaption>r2 on top, r3 below, at the same frame numbers so the difference is attributable to the one
+    thing I changed. <strong>The sphere is gone</strong> — r3's fruit is a teardrop with a narrow neck. It
+    also overshot: it is much bigger than r2's and reads closer to a gourd than a fig.</figcaption>
+  </figure>
+
+  <video controls preload="metadata" playsinline src="/review/ep2-picks/motion-0812/01-cold-open-LTX-figgrow-055-r3.mp4"></video>
+  <p class="muted" style="margin-top:10px"><code>ep2-b01-figgrow-055-r3-0812</code> — 233 frames, 9.71s, $0.
+  Manifest-verified. Same init, same seed, same camera ban; the only change was fruit-shape wording.</p>
+
+  <div class="callout">
+    <h2>The fault underneath the one you named</h2>
+    <p><strong>The fig is not on the sapling.</strong> In r3 and in r2 alike, it grows on its own separate
+    stalk low in the foreground, detached from the two-leaf seedling — while the seedling's own bud at the
+    top of frame never turns into anything. The beat is <q>on the thinnest branch a green nub swells and
+    rounds into a single fig.</q> Neither round has ever put a fig on the plant. You saw the shape and said
+    apple; this is the thing sitting under it, and it was there before I touched anything.</p>
+    <p><strong>So I have not fired r4.</strong> The shape lever moved and I can see how far it goes;
+    attachment is a different problem and I do not think another adjective solves it. My recommendation is
+    the route you already named once — <q>inpaint</q> — put the fig in frame 1 and let the clip darken and
+    settle it, rather than asking the motion model to grow one onto a stem. That is your call to make.</p>
+  </div>
+
+  <p class="muted">One more thing this clip confirms, and it is now three lengths in a row: both cold-open
+  rounds abandon the init's soft green field for amber dried grass by about frame 99. At 233 frames the
+  whole <em>scene</em> re-paints, not just a face. Clean at 73, a face destroyed at 145, a field replaced
+  at 233 — the drift scales with the length you ask for, and what drifts is whatever the frame is made of.</p>
 </section>
 
 <section style="border-bottom:none">

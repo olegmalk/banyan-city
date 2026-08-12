@@ -12487,3 +12487,77 @@
     becomes a compositing question like the sapling.
   consumer: the motion init for beat 04's re-clip — the pipeline-critical still right now.
   outcome: null
+
+- id: ep2-b15-action-probe-0812-scored
+  kind: scoring
+  date: 2026-08-12
+  scores: ep2-b15-action-probe-0812
+  predicates_observed: >-
+    head tips back and gaze goes up HIT; mouth moves as if speaking HIT — it opens and
+    changes shape across the clip; stays the same goblin HIT; stays put in frame HIT, feet
+    planted, no wandering; camera locked HIT. Five for five. Hash-verified against the box
+    manifest before it was watched.
+  observed: >-
+    MOTION SUPPLIES BLOCKING THE STILL NEVER HAD. From a front-facing character-sheet
+    portrait the goblin performs the beat — chin raises, eyes go up, mouth works as if
+    talking upward — without leaving his mark and without becoming someone else. That is
+    the answer to needs-founder §5 and it is an answer by render rather than by argument.
+  the_unpredicted_finding: >-
+    THE MOTION MODEL PAINTED A BACKGROUND. By frame 17 the still's blank white has become
+    a field with a treeline horizon, dried golden grass and a dawn sky. Nobody asked the
+    question this answers and it is the founder's own complaint on the b04 clip — "the
+    background is blank". If motion reliably fills a blank field then the blank-background
+    fault may not need a new still at all, which is worth the consistency lane knowing
+    before it spends a pass on background-bearing plates.
+  what_i_will_not_oversell: >-
+    Two real caveats. The style FLATTENS — heavier outline, more graphic and comic-like,
+    the palette muted against the init's soft cel look — so this is not yet the show's
+    look. And THERE IS NO SAPLING: beat 15 is "he looks up at the sapling and both of them
+    are in the frame", and he is looking up at nothing. The probe asked whether the ACTION
+    happens. It does. Full staging is a further step and I am not claiming it.
+  consequence: >-
+    The wave fires: b03, b13, b14, b17, b19, b20, each with its own action written into the
+    positive in this clip's voice. Out: b02 (identity fails), b06 (bald guard, vetoed
+    today), b08 (single-character reference suppresses the second character — stays on the
+    needs-founder list), b04 (his order: no re-motion until a background-bearing still).
+  length_cap_declared: >-
+    121 frames maximum across the wave, which is MY call against the beat sheet and is
+    measured, not cautious: b04 was clean at 73 and had both eyes destroyed at 145, and the
+    cold open re-painted its entire field at 233. Rendering a six-second beat at a length
+    already measured to fail is spending the card to reproduce a known defect. Beat 14 is
+    written as six seconds and is capped, which makes it a trim or a two-shot at edit time.
+  outcome: null
+
+- id: ep2-b01-figgrow-055-r3-0812-scored
+  kind: scoring
+  date: 2026-08-12
+  scores: ep2-b01-figgrow-055-r3-0812
+  predicates_observed: >-
+    fruit reads as a fig and not an apple PARTIAL — the apple is gone and that was the
+    complaint, but what replaced it reads as a gourd or an avocado rather than a fig, and
+    it is much larger than r2's; camera locked HIT; single fruit in one place HIT.
+  observed: >-
+    THE VARIABLE WORKED AND IT IS ATTRIBUTABLE, because I pulled r2 and compared the two at
+    matched frames instead of judging r3 alone. r2's fruit is a near-perfect dark green
+    SPHERE on a curved stalk — precisely the green apple he named. r3's is a teardrop,
+    heavy and wide low, tapering to a narrow neck. The shape lever moved exactly the thing
+    it was aimed at. It also overshot: the fig grew far bigger than r2's and reads gourd.
+  the_bigger_defect_neither_of_us_named: >-
+    THE FRUIT IS NOT ON THE SAPLING. In r2 AND in r3 it grows on its own separate stalk low
+    in the foreground, detached from the two-leaf seedling, while the seedling's own bud at
+    the top of frame never becomes anything. The beat is "on the thinnest branch a green nub
+    swells and rounds into a single fig". Neither round put a fig on the plant. He saw the
+    fruit's SHAPE and said apple; the attachment is the fault under it and it predates my
+    change entirely.
+  third_confirmation_of_the_length_rule: >-
+    Both clips abandon the init's soft green field for amber dried grass by about frame 99.
+    At 233 frames the whole SCENE re-paints, not just a face. That is the same finding as
+    b04's face melt at 145 and its survival at 73, now seen at a third length and on
+    non-character content: LTX i2v drift scales with the length requested, and what drifts
+    is whatever the frame is made of.
+  why_i_did_not_fire_r4: >-
+    The shape lever is spent — it moved and I can see how far. Attachment is a different
+    recipe change and the honest recommendation is not another adjective: put the fig in
+    frame 1 (the r8 inpaint route) rather than asking i2v to grow one onto a stem. That is
+    his call, and firing a guess at it would be turning a fourth knob without him.
+  outcome: null
