@@ -12978,3 +12978,40 @@
     tool choice, and the answer cost one sentence.
   consumer: review/ep2-picks/motion-0812.html and needs-founder §2.
   outcome: null
+
+- id: ep2-tripod-phrase-test-0812
+  kind: scoring
+  date: 2026-08-12
+  scores: ep2-b03-motion-r2-0812 as the controlled test, plus b13-r2 and b14-r2
+  the_rate_with_the_full_denominator: >-
+    WITH the phrase "locked-off static camera on a fixed tripod" in the positive: 3 of 5
+    clips drew a tripod — b03-r1 (stands in the field), b13-r1 (he sits on it), b14-r1
+    (stands beside him); b15-probe and b17 carried the identical line and drew none.
+    WITHOUT the phrase: 0 of 4 — b04-r2, b03-r2, b13-r2, b14-r2. Nine clips, 3/5 against
+    0/4. Denominator written first this time, and it includes every clip I have rather
+    than only the ones that failed.
+  b03_r2_the_controlled_test: >-
+    PASS on the thing it tested, and it did something better than expected. Same init,
+    same sha, same seed, same 121 frames, phrase removed — THE TRIPOD IS GONE. And the
+    model gave him A BUSH to hide behind instead: he bends and peers around a dark shrub
+    from frame 30 on. Not the trunk the beat asks for, and the size-mismatch joke is not
+    clean, but it is vegetation cover in the right place doing the right job, which is far
+    closer to the beat than r1 ever was.
+  b13_r2: >-
+    THE BEST STAGING RESULT OF THE RETRIES. No tripod — he is on the grass. The fold is
+    exact: he sinks, draws his knees up to his chest, wraps his arms round them and peers
+    over the top. That is "folds into the shade, knees up around his ears" as written.
+    Background painted, identity holds with red eyes intact. The only thing missing is the
+    sapling and the shade it should be casting.
+  b14_r2: >-
+    THE CROUCH FIX WORKED. No tripod, and he is down at the ground with both hands in the
+    soil, which is what r1's standing pose made impossible — the hands now have dirt within
+    reach. Two faults remain: the finger action is subtle at best across the eight frames,
+    so "picking" is generous, and HIS EYES ARE STILL PINK rather than red. The eye drift
+    was named in the r2 header as fault 3 and deliberately not chased; it survived, so it
+    is now its own open item rather than a footnote.
+  what_this_settles: >-
+    Two of my three retries fixed what they aimed at, and the third fixed its staging and
+    kept its colour fault. More usefully: the phrase removal is now supported by nine
+    clips rather than by the one I originally waved at.
+  outcome: null
