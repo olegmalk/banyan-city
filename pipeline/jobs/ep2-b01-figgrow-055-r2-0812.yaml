@@ -1,0 +1,94 @@
+# r2 2026-08-12 ~15:0x. His verdict on r1, verbatim: "its just.. making the
+# camera go down in the clip". Camera-down is a nameable content defect, and
+# the gprobe proved naming the defect in the negative at guidance 2.0 removes
+# it (82px climb -> 0). So r2: guidance 2.0, camera-motion terms in the
+# negative, locked-off camera stated in the positive, anti-stillness terms
+# REMOVED (they push away from stillness once CFG is live - the b10 lesson).
+# Same init (his approved frame), same seed, same everything else.
+id: ep2-b01-figgrow-055-r2-0812
+task: ep2-b01-figgrow-055-r2-0812
+node: 002b-first-citizen
+beat: 1
+runner: box
+priority: 19
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: ep2-b01 motion lane, 2026-08-11
+consumer: 'The episode-2 cold open: first motion sample from the beat-01 frame carrying his two approvals (s2 composition, 0.55 style). One sample; his look decides scale.'
+success: 'A 704x1280 mp4 at C:\banyan-farm\ep2-b01-figgrow-055-r2\01-cold-open-LTX-figgrow-055-r2.mp4, 233 frames (9.708s), in which the green fig already on the stem stays a single fig — one fruit, in one place, not multiplying, not drifting off the stem and not morphing — while it darkens and settles and the grass and leaves hold still. The failure worth reporting is fruit instability: LTX losing or duplicating the object the inpaint put there would say the two-stage route is not viable either. Read by eye beside arm A. No metric is run.'
+why: r8 proved img2img cannot ADD an object to this init. If i2v cannot either, the cold open needs the fig to be in frame 1, and this is the only test of that.
+est_minutes: 12
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b01-figgrow-055-r2\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"--out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw, nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b01-figgrow-055-r2\b01-fig-prompt.txt: '2D anime, hand-drawn cel animation, locked-off static camera on a fixed tripod, the framing never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: a tiny seedling with two oversized cotyledon leaves on one slender stem, standing in tall grass under low warm amber light, a few slow drifting motes of light in the air behind it. One small round green fig hangs from the stem below the leaves and slowly darkens, rounds and settles heavier, the only thing in frame that moves. Static camera, the grass and the leaves holding still, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.'
+  C:\banyan-farm\ep2-b01-figgrow-055-r2\b01-negative.txt: camera pan, camera tilt, tilting down, panning down, camera movement, dolly, zoom, humans, chibi, mascot, creature, face, extra leaves, branches, night sky, photorealism, 3D render look, text, face morphing, changing facial features, distorted face, warped face, facial expression change, head turning, photorealistic, photograph, live action, film still, 3D render, CGI, octane, realistic skin texture, depth of field bokeh, motion blur, scene change, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+  C:\banyan-farm\ep2-b01-figgrow-055-r2\b01-fig-jobs-encode.json: "[{\"beat\": 1,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b01-figgrow-055-r2\\\\b01-fig-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\\ep2-b01-figgrow-055-r2\\\\b01-fig-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b01-figgrow-055-r2\\\\b01-negative.txt\"}]"
+  C:\banyan-farm\ep2-b01-figgrow-055-r2\b01-fig-jobs-render.json: "[{\"beat\": 1,\n  \"seed\": 20260806,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b01-figgrow-055-r2\\\\b01-fig-embeds.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\\ep2-b01-figgrow-055-r2\\\\b01-fig-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b01-figgrow-055-r2\\\\01-cold-open-LTX-figgrow-055-r2.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b01-figgrow-055-r2\cover_crop.py
+  - --src
+  - C:\banyan-farm\out-b01-final055r3\b01-final055-i55-s0.png
+  - --out
+  - C:\banyan-farm\ep2-b01-figgrow-055-r2\b01-fig-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b01-figgrow-055-r2\b01-fig-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b01-figgrow-055-r2\b01-fig-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '233'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b01-figgrow-055-r2-0811
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b01-figgrow-055-r2\bench-b01-figgrow.jsonl
+  - --bench-label
+  - ep2-b01-figgrow-055-r2
+artifacts:
+- C:\banyan-farm\ep2-b01-figgrow-055-r2\01-cold-open-LTX-figgrow-055-r2.mp4
+- C:\banyan-farm\ep2-b01-figgrow-055-r2\b01-fig-704x1280.png

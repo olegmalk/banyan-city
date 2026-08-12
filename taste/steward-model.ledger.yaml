@@ -11698,3 +11698,24 @@
     the problem rather than the wording, and no draft rescues them.
   consumer: the guards walk, and the unfair/fair contrast on his page.
   outcome: null
+
+- id: ep2-b01-figgrow-055-r1-verdict-0812
+  kind: founder_verdict
+  founder_verdict_verbatim: "its just.. making the camera go down in tghe
+    clip, also you should be animating this instead."
+  founder_verdict_date: 2026-08-12
+  scores: the r1 prediction's "fig grows rather than pops in" is a MISS - the
+    motion the clip found was a camera tilt, not growth. His "animate this
+    instead" points at the approved 0.55 still, which was already r1's init -
+    the fault is the motion prompt not the plate.
+  action: r2 enqueued - guidance 2.0 with the camera defect NAMED in the
+    negative (the gprobe lever), locked-off camera affirmative, anti-stillness
+    terms removed per the b10 lesson. Same init, same seed.
+  outcome: null
+
+- id: ep2-b01-figgrow-055-r2-0812
+  kind: prediction
+  written: 2026-08-12 ~15:0x before enqueue.
+  predicates: [camera static (no pan or tilt) 1/1, fig visibly grows or ripens 1/1, palette holds the approved frame 1/1]
+  consumer: his next look; the episode-2 cold open.
+  outcome: null
