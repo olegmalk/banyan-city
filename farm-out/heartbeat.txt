@@ -830,3 +830,4 @@
 15:53:33Z DONE task=ep2-b20-motion-0812-1786546783 rc=0 artifacts=2
 15:56:44Z STARTED task=ep2-b15-sapling-r2-0812-1786549830 attempt=1 on box-runner
 16:02:54Z DONE task=ep2-b15-sapling-r2-0812-1786549830 rc=0 artifacts=2
+16:05:58Z box-runner idle ready=0 failed=4
