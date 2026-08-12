@@ -11719,3 +11719,77 @@
   predicates: [camera static (no pan or tilt) 1/1, fig visibly grows or ripens 1/1, palette holds the approved frame 1/1]
   consumer: his next look; the episode-2 cold open.
   outcome: null
+
+- id: ep2-b14-misread-correction-0812
+  kind: correction
+  date: 2026-08-12
+  corrects: ep2-frozen-ref-beatpass-0812-observed
+  what_i_got_wrong: >-
+    I reported beat 14 on the whole-figure reference as "0/8, dark teal, round pink
+    eyes, no pointed ears, no coat — the creature lost". THAT IS WRONG. Beat 14 held
+    the creature 8 of 8, exactly like beat 03: pale yellow-green, bald, long pointed
+    ears, red eyes, the toggled coat, clawed hands.
+  how_it_happened: >-
+    I baked the contact sheet while the scp that was fetching those frames was still in
+    flight, and judged whatever the filenames resolved to at that instant. The frames
+    now on disk match the box by sha256 and show the creature. Nothing on the box was
+    ever wrong; my reading of it was, and it was wrong because I did not verify the
+    bytes I was looking at before drawing a conclusion from them.
+  fix_applied: >-
+    Every other judged set of the day was re-checked against the box by sha256 —
+    b02-charref, b02-cropscope, b03, b06-guardref, b17 — and all five MATCH, so this
+    correction is scoped to beat 14 alone. From here a sheet gets baked only after the
+    fetch has exited, and the frame hashes are compared to the box before any predicate
+    is scored.
+  what_the_finding_actually_is: >-
+    Both beats held identity and both lost their STAGING. Beat 03 asks him to crouch
+    behind a sapling; beat 14 asks for an intimate low close-up of his hands. Both came
+    back as the reference's own neutral standing figure. So the reference imposes its
+    FRAMING, not merely its content — which the head-crop rerun then confirmed from the
+    other side (see ep2-b14-ipa-headref-0812-observed). The rule I drew is unchanged
+    and better supported; the evidence I gave for it was not the evidence I had.
+  outcome: null
+
+- id: ep2-b14-ipa-headref-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b14-ipa-headref-0812
+  predicates_observed: >-
+    the creature returns >=3/4 — the premise was wrong (it never left, see the
+    correction above), but the head crop holds it 4/4 too; the intimate low close-up
+    SURVIVES HIT 4/4 — this is the real result: big heads filling the frame with the
+    clawed hands below, which is what the beat asks for and what the whole-figure
+    reference refused to give; the coat is absent or wrong HIT — a dark collar and
+    sleeves, no toggled coat, because the reference no longer contains one.
+  observed: >-
+    THE REFERENCE IMPOSES ITS FRAMING. Same beat, same seeds, same everything but the
+    crop: the whole-figure reference gave eight standing medium shots and the head crop
+    gave four close-ups. Identity held in both. So the choice of crop is a choice of
+    SHOT, and the rule stands with better evidence than the one I first gave for it —
+    match the reference's shot size to the beat's, and the beat keeps its own staging.
+  outcome: null
+
+- id: ep2-b06-ipa-guardfair-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b06-ipa-guardfair-0812
+  predicates_observed: >-
+    bare head >=3/4 HIT — 8/8, against roughly 2 of 16 when only the picture said bald;
+    plain brown tunic >=3/4 HIT 8/8, above the ankle over dark trousers, no armour and
+    no helmet anywhere; the face reads as one of the cast guards >=2/4 HIT — the A row
+    is the leaner longer-faced man and the B row the rounder softer one, and they stay
+    distinguishable across all four seeds; bark clipboard 8/8, held and read, which is
+    beat 06's own staging surviving.
+  observed: >-
+    THE LAW HELD, and one word bought all of it. The only difference from the failed
+    round is the draft: `authored_b06_idfix_r2` says tunic and says bald, where the
+    original said armour and said nothing about the head. Hair went from ~14 of 16 to
+    0 of 8. A reference at this strength cannot overturn the model's prior for a noun —
+    a guard man is a haired soldier — but the moment the prompt stops arguing, the
+    picture comes through. Beat 06's framing also matches what the references contain,
+    a standing man with a clipboard, so nothing had to be given up for it.
+  still_open: >-
+    The register. These are solemn men doing paperwork, not silly harmless bureaucrats.
+    Four rounds, 0/4 every time. That is his call and no wording this lane has tried
+    reaches it.
+  outcome: null
