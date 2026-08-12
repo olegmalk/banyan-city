@@ -11558,3 +11558,39 @@
     a CHARACTER, and the beat-by-beat pass would be worthless however good beat 02 looks.
   consumer: review/ep2-picks/consistency-0812.html and the go/no-go for the goblin beats.
   outcome: null
+
+- id: ep2-b06-ipa-guardref-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b06-ipa-guardref-0812
+  predicates_observed: >-
+    the FACE reads as one of the two cast guards >=2/4 on the best row MISS — 0/16, no
+    row produces either cast man; bare head 4/4 MISS badly — HAIR, pale and swept, in
+    roughly 14 of 16, against two references that are bald; garment MISS as predicted,
+    though not as armour — the plain brown tunic drifted to cream and red military
+    tunics with shoulder plates; whole-figure rows carry more than head rows HIT (r0
+    and r2 give full figures with the tunic silhouette and a clipboard, r1 and r3 give
+    extreme close-ups); A cells distinguishable from B cells WEAK — the palettes differ,
+    the man does not.
+  observed: >-
+    THE GUARD REFERENCE DID NOT CARRY, and set beside the goblin it says something
+    neither round could say alone. The goblin's baldness held 16 of 16 in beat 02 with
+    NO `bald` anywhere in that prompt — it came from the reference. Here two bald
+    references lost to hair in 14 of 16. Same mechanism, same scale, same window. The
+    difference is the model's prior for the subject noun: a `goblin boy` is hairless
+    before anyone asks, a `guard man` is a haired soldier, and at this strength the
+    adapter can confirm a prior but not overturn one.
+  confound_named: >-
+    The test was not fair to the reference and this was stated before it ran. The
+    sampler sends `d["authored"]`, and beat 06's authored asks for MISMATCHED ARMOUR
+    and never says bald — so the draft fought the picture on the garment and gave it
+    no help on the scalp. The fair rerun is the same job against
+    `authored_b06_idfix_r2`, which says tunic and bald, and it cannot be run: the
+    sampler has no variant flag (goblin_ipa_sample.py:417) and adding one is a
+    pipeline edit this lane may not make. Editing beat 06's `authored` in place would
+    change what every other job sends and is not an option.
+  decision: >-
+    STOPPING THE GUARDS FORK HERE, on the rule written before the render: no
+    conditioning knobs get turned, because knobs are not what this is about. It goes
+    to him with the confound named, not with a fourth round attached.
+  outcome: null
