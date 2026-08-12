@@ -723,3 +723,4 @@
 08:42:31Z STARTED task=ep2-b01-final-055-0812-1786524140 attempt=1 on box-runner
 08:43:28Z DONE task=ep2-b01-final-055-0812-1786524140 rc=0 artifacts=8
 08:48:08Z STARTED task=ep2-b01-final055-r2-0812-1786524481 attempt=1 on box-runner
+08:50:57Z FAIL task=ep2-b01-final055-r2-0812-1786524481 rc=92 step=artifact-check
