@@ -219,6 +219,27 @@ beats:
       aesthetic No man, no boy, no girl, no child, no mature tree, no forest. No
       photorealism, no 3D render look. 9:16 vertical, no text.
 
+    # -- r2. r1 FAILED THE MEASURE GATE, rc=1, nothing drawn:
+    #    "peopled beat negates its own subject: ['boy', 'man']".
+    #    THE SURPRISE IS THAT A PLANT PLATE COUNTS AS A PEOPLED BEAT. The gate
+    #    decides that from the beat's `kind`, not its `tag` — and beat 01, the
+    #    plant-only cold-open plate, is kind=guard with tag ''. So `no man, no
+    #    boy, no girl, no child` reads to the gate as a beat negating its own
+    #    subject, even though there is no person in this picture by design and
+    #    keeping people out is the entire point of a reference plate.
+    #    Those four are gone. `no people` survives in the tail and the gate
+    #    accepts it (it lands in the negative as `people` and is not one of the
+    #    singulars the check tests), and the positive still says the plant grows
+    #    ALONE. Dropping them also clears the NEGWARN — the negative recipe was
+    #    72 tokens and being deduplicated to fit.
+    authored_ep3_sapling_reference_r2: >-
+      A single slender sapling grows alone from bare earth in a green morning
+      field, one thin curved stem, two big leaves, one bare side twig, knee
+      high, whole plant in frame, no people. Medium shot, bright morning light,
+      cinematic lighting, detailed, newest, masterpiece, best quality, very
+      aesthetic No mature tree, no forest. No photorealism, no 3D render look.
+      9:16 vertical, no text.
+
   2:
     slug: the-sprint
     kind: goblin
