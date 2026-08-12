@@ -11919,3 +11919,62 @@
     in review/ep2-picks/wave2-needs-founder.md and on the consistency page rather than
     softened into "identity held".
   outcome: null
+
+- id: ep2-consistency-verdicts-0812
+  kind: founder_verdict
+  written: 2026-08-12, on receipt, before any work was done under it.
+  founder_verdict_verbatim: "yeah the goblin looks good, but the guards beign bald is a
+    bit strange.. why are you making everyone bald..? also beat 2 after still ends up
+    hallucinating alot and not being consistent, train that."
+  founder_verdict_date: 2026-08-12
+  what_it_rules: >-
+    Three things. (1) THE GOBLIN REFERENCE IS APPROVED — "the goblin looks good" ends its
+    provisional status, so the ten-beat walk was run on what is now a founder-blessed
+    reference. (2) BALD IS REJECTED FOR THE GUARDS. (3) Beat 02 is the training target;
+    he still sees hallucination and drift there.
+  scored_against_my_predictions: >-
+    The goblin pick was mine under his delegation and he kept it. The guards' bald was
+    ALSO mine and he threw it out — and my own records show I never had it from him: his
+    ratification was "two silly round bureaucrats with visible faces", `bare heads` was
+    my translation of an anti-helmet intent, and it then carried his separate GOBLIN bald
+    ruling onto men it was never about. Three guard rounds inherited that and my
+    predicate lists kept scoring `bare heads` as a HIT, which is the failure mode worth
+    naming: a frozen fact that nobody froze, checked against itself for three rounds.
+  outcome: null
+
+- id: ep2-goblin-reference-approved-0812
+  kind: promotion
+  date: 2026-08-12
+  promotes: ep2-charref-pick-0812
+  what_changed: >-
+    The goblin reference is no longer PROVISIONAL. `ep2-charref-goblin-0812` seed s0,
+    cut by connectivity into the coat-hem and whole-figure crops staged as
+    refs-goblin-frozen-0812, is approved on his words "the goblin looks good".
+  scope_of_the_approval, stated_narrowly: >-
+    He approved the CHARACTER, not the frames. The ten-beat walk drawn from it still
+    fails on staging — he stands still in nearly every frame — and that is unchanged by
+    this promotion and still in needs-founder as an open direction.
+  outcome: null
+
+- id: ep2-charref-guards-r4-0812
+  kind: prediction
+  written: >-
+    2026-08-12, after enqueue and before any frame landed — the card was idle and his
+    ruling was minutes old, so the job went first and this says nothing the spec had not
+    already committed to.
+  predicates: [short hair present 4/4 and no bald man in any frame, exactly one man per
+    frame 4/4 (r3's count fix must survive the head change), plain brown tunic 3/4 as in
+    r3, the four seeds give at least two visibly different men to cast from, register —
+    ONE honest look, whether haired rounder men read less solemn than the bald ones that
+    scored 0/4 three times]
+  basis: >-
+    Only the head changed from r3. Hair should be the easiest thing this round asks for:
+    the beat-06 conditioning test measured this model's prior for a `guard man` as a
+    haired soldier, which is why it put hair on two BALD references in ~14 of 16 frames.
+    That failure is this round's tailwind.
+  falsifiable_by: >-
+    The count breaking. If solo turnarounds stop working when the head changes, then r3's
+    4/4 was luckier than it looked and the count fix is not as solid as I recorded it.
+  consumer: the guards re-cast, then the beat-06 fair rerun with a draft that no longer
+    says bald.
+  outcome: null

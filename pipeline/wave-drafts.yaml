@@ -1447,6 +1447,39 @@ beats:
     # plain brown tunic, bare head, silly harmless bureaucrat register, bark
     # clipboard. Singular where the frozen text is plural -- that is the count fix
     # and nothing else.
+    # -- `authored_charref_guards_r4` -- 2026-08-12, the consistency lane, ON HIS
+    # RULING. "the guards beign bald is a bit strange.. why are you making everyone
+    # bald..?" -- and he is right that nobody asked for it. BALD WAS NEVER HIS WORD
+    # FOR THE GUARDS. What he ratified was "two silly round bureaucrats with visible
+    # faces"; `bare heads` was the steward's translation of an ANTI-HELMET intent, and
+    # it then over-propagated his separate bald ruling for the GOBLIN onto men it was
+    # never about. So `bald` comes out and `short hair` goes in, with `visible face`
+    # taken from his own sentence.
+    #
+    # ONE CHANGE FROM r3 AND NOTHING ELSE. r3's solo turnaround is what fixed the
+    # count (4/4 one man, after 0/8 across two rounds) and it is kept exactly: same
+    # tags, same order, same negative, same beat-06 block. Only the head changes.
+    #
+    # NO `no bald` IN THE NEGATIVE, deliberately. That negative already sits at 75/77
+    # and the beat-06 conditioning round proved the model's prior for a `guard man` is
+    # a HAIRED soldier -- it put hair on two bald references in ~14 of 16 frames when
+    # nobody asked. Hair is the thing this model wants to draw here, so paying two
+    # tokens to forbid its opposite is buying what we already have. If a bald guard
+    # comes back anyway, that is the round that earns the ban.
+    #
+    # HAIR COLOUR IS LEFT UNSAID on purpose. Four seeds of an unspecified `short hair`
+    # is a casting call in the same way r3's was: two seeds become guard A and guard B,
+    # and letting the seeds vary is how they come out as two DIFFERENT men rather than
+    # one man twice.
+    authored_charref_guards_r4: >-
+      A round guard man in a plain brown tunic, short hair, visible face, reference
+      sheet, multiple views, turnaround, front view, side view, standing, silly
+      harmless bureaucrat, a bark clipboard, simple background, white background. Full
+      body, flat even lighting, cinematic lighting, detailed, newest, masterpiece,
+      best quality, very aesthetic No girl, no child, no armor, no helmet, no scars,
+      no weapon, no hood, no comic, no comic panels, no speech bubble, no different
+      characters, no different outfits, no dynamic pose, no multiple boys. No
+      photorealism, no 3D render look. 9:16 vertical, no text.
     authored_charref_guards_r3: >-
       A round bald guard man in a plain brown tunic, reference sheet, multiple
       views, turnaround, front view, side view, standing, silly harmless
