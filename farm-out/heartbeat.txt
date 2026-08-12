@@ -721,3 +721,4 @@
 08:39:28Z DONE task=ep2-b01-final055-0812-1786523921 rc=0 artifacts=4
 08:40:33Z box-runner idle ready=0 failed=2
 08:42:31Z STARTED task=ep2-b01-final-055-0812-1786524140 attempt=1 on box-runner
+08:43:28Z DONE task=ep2-b01-final-055-0812-1786524140 rc=0 artifacts=8

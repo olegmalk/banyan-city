@@ -1,0 +1,179 @@
+#### job ep2-b01-final-055-0812-1786524140 attempt 1 start 2026-08-12T08:42:31Z
+
+==== step dry START 2026-08-12T08:42:39Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "import hashlib, os, sys\nfrom pathlib import Path\nCLONE = r\"C:\\banyan-farm\\banyan-city\"\nsys.path.insert(0, CLONE + r\"\\pipeline\")\nfails = []\ndef check(ok, label):\n    print((\"  ok   \" if ok else \"  FAIL \") + label, flush=True)\n    if not ok:\n        fails.append(label)\ncheck(os.environ.get(\"STRENGTH\") == \"0.55\",\n      \"per-step env arrives (STRENGTH=%r)\" % os.environ.get(\"STRENGTH\"))\ninit = os.environ.get(\"INIT\", \"\")\nINIT_SHA = \"874d36f566cf251753a6835144eed76fbbef558df65a30f3efa913c75d942454\"\nif init and os.path.isfile(init):\n    h = hashlib.sha256(open(init, \"rb\").read()).hexdigest()\n    print(\"  init sha256 %s\" % h, flush=True)\n    check(h == INIT_SHA, \"init is the s2 frame he called really good (%s)\" % INIT_SHA[:16])\nelse:\n    check(False, \"init file exists at %s\" % init)\nSC = CLONE + r\"\\pipeline\\runpod_render.py\"\nHARNESS_SHA = \"dd834f57f987a090fcb6cebd8cbd5ff5fdcf306125bbef43739f71f1517ebd9c\"\nhh = hashlib.sha256(open(SC, \"rb\").read()).hexdigest()\nprint(\"  harness sha256 %s\" % hh, flush=True)\ncheck(hh == HARNESS_SHA, \"runpod_render.py is the copy the approved arm ran\")\nimport runpod_render as rr\nfrom generate_shots import parse_shots\nshots = Path(CLONE) / \"genomes/sapling/nodes/002b-first-citizen/shots.md\"\nprint(\"  shots.md sha256 %s\" % hashlib.sha256(shots.read_bytes()).hexdigest(), flush=True)\nraw = [s for s in parse_shots(shots.read_text(encoding=\"utf-8\")) if s[\"num\"] == 1]\ncheck(len(raw) == 1, \"exactly one beat 1 in shots.md\")\ns = raw[0]\nFENCE = (\"A tiny 40cm seedling standing in short grass, its sturdy curved stem \"\n         \"no taller than the grass around it, two oversized cotyledon leaves, \"\n         \"one small round green fruit hanging from the stem, whole plant in \"\n         \"frame, wide shot, peach and gold sunrise sky, no girl, no boy, no \"\n         \"child, no person, no chibi, no mascot, no creature, no face, no \"\n         \"branches, no night sky, cinematic lighting, detailed, newest, \"\n         \"masterpiece, best quality, very aesthetic No photorealism, no 3D \"\n         \"render look. 9:16 vertical, no text.\")\ncheck(s[\"prompt\"] == FENCE, \"beat-01 fence is byte-for-byte the one the approved arm sent\")\ncheck(s[\"slug\"] == \"cold-open\", \"slug is cold-open (output filenames depend on it)\")\npos, dropped = rr.compress(s[\"prompt\"])\nneg = rr.beat_negative(rr.NEG, s[\"prompt\"])\nprint(\"\\n  POS: %s\\n\\n  NEG: %s\\n\" % (pos, neg), flush=True)\ncheck(not dropped, \"nothing dropped from the positive for budget (%r)\" % (dropped,))\ncheck(\"one small round green fruit hanging from the stem\" in pos, \"FIG term in the positive\")\ncheck(\"two oversized cotyledon leaves\" in pos, \"LEAF term in the positive\")\ncheck(\"cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic\"\n      in pos, \"detailed-cinematic-anime tail in the positive\")\nseeds = [rr.SEED + 1 + k * 1000 for k in range(4)]\nprint(\"  seeds: %s\" % seeds, flush=True)\ncheck(seeds[:2] == [20260720, 20261720], \"s0/s1 are the two seeds he approved\")\nprint(\"\\nDRY: %d check(s) failed\" % len(fails), flush=True)\nraise SystemExit(1 if fails else 0)\n"]
+  ok   per-step env arrives (STRENGTH='0.55')
+  init sha256 874d36f566cf251753a6835144eed76fbbef558df65a30f3efa913c75d942454
+  ok   init is the s2 frame he called really good (874d36f566cf2517)
+  harness sha256 dd834f57f987a090fcb6cebd8cbd5ff5fdcf306125bbef43739f71f1517ebd9c
+  ok   runpod_render.py is the copy the approved arm ran
+  shots.md sha256 445b8c682a5f94954d98a2a0be5209876c0c558c666c085ba126b35614e491c9
+  ok   exactly one beat 1 in shots.md
+  ok   beat-01 fence is byte-for-byte the one the approved arm sent
+  ok   slug is cold-open (output filenames depend on it)
+C:\banyan-farm\venv\Lib\site-packages\transformers\tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+Token indices sequence length is longer than the specified maximum sequence length for this model (85 > 77). Running this sequence through the model will result in indexing errors
+!! negative prompt over CLIP's 77-token budget; deduplicated: text; DROPPED: realistic skin texture, jpeg artifacts
+
+  POS: A tiny 40cm seedling standing in short grass, its sturdy curved stem no taller than the grass around it, two oversized cotyledon leaves, one small round green fruit hanging from the stem, whole plant in frame, wide shot, peach and gold sunrise sky, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+
+  NEG: photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, mature tree, large tree, tall tree, thick trunk, full canopy, forest, bush, shrubbery, girl, boy, child, person, chibi, mascot, creature, face, branches, night sky, photorealism
+
+  ok   nothing dropped from the positive for budget ([])
+  ok   FIG term in the positive
+  ok   LEAF term in the positive
+  ok   detailed-cinematic-anime tail in the positive
+  seeds: [20260720, 20261720, 20262720, 20263720]
+  ok   s0/s1 are the two seeds he approved
+
+DRY: 0 check(s) failed
+==== step dry END rc=0 2026-08-12T08:42:43Z ====
+
+==== step render START 2026-08-12T08:42:43Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "import hashlib, json, os, shutil, subprocess, sys\nfrom pathlib import Path\nCLONE = r\"C:\\banyan-farm\\banyan-city\"\nSC    = CLONE + r\"\\pipeline\\runpod_render.py\"\nRAW   = os.path.join(CLONE, \"runpod-out\")\nOUT   = r\"C:\\banyan-farm\\out-b01-final\"\nsys.path.insert(0, CLONE + r\"\\pipeline\")\nstrength = os.environ[\"STRENGTH\"]\ninit     = os.environ[\"INIT\"]\ninit_sha = hashlib.sha256(open(init, \"rb\").read()).hexdigest()\nprint(\"strength %s init %s sha256 %s\" % (strength, init, init_sha), flush=True)\nrc = subprocess.call([sys.executable, SC])\nif rc:\n    sys.exit(rc)\nimport runpod_render as rr\nfrom generate_shots import parse_shots\nshots = Path(CLONE) / \"genomes/sapling/nodes/002b-first-citizen/shots.md\"\ns = [x for x in parse_shots(shots.read_text(encoding=\"utf-8\")) if x[\"num\"] == 1][0]\npos, _ = rr.compress(s[\"prompt\"])\nneg = rr.beat_negative(rr.NEG, s[\"prompt\"])\nshots_sha = hashlib.sha256(shots.read_bytes()).hexdigest()\nharness_sha = hashlib.sha256(open(SC, \"rb\").read()).hexdigest()\ntry:\n    commit = subprocess.run([\"git\", \"-C\", CLONE, \"rev-parse\", \"HEAD\"],\n                            capture_output=True, text=True).stdout.strip() or \"unknown\"\nexcept OSError:\n    commit = \"unknown\"\nAPPROVED = {0: \"61f311b8b971002b39043d73e4a9d319655b00db7e866a636a9e09c4c0fe9a90\",\n            1: \"8caad7862dc62351e654f97b553f7de3fa28b602f7372b1d0a16c25f76ce8a99\"}\nos.makedirs(OUT, exist_ok=True)\nmoved = 0\nfor k in range(4):\n    src = os.path.join(RAW, \"01-%s-s%d.png\" % (s[\"slug\"], k))\n    if not os.path.isfile(src):\n        print(\"   !! missing %s\" % src, flush=True)\n        continue\n    dst = os.path.join(OUT, \"b01-final-055-s%d.png\" % k)\n    shutil.move(src, dst)\n    moved += 1\n    sha = hashlib.sha256(open(dst, \"rb\").read()).hexdigest()\n    seed = rr.SEED + 1 + k * 1000\n    repro = \"\"\n    if k in APPROVED:\n        same = sha == APPROVED[k]\n        repro = \"identical\" if same else \"DIFFERENT\"\n        print(\"   reproduction check s%d vs approved i55: %s\" % (k, repro), flush=True)\n        if not same:\n            print(\"   !! s%d does not reproduce the approved frame. The recipe is \"\n                  \"pinned, so something underneath moved \u2014 read the metas before \"\n                  \"showing these.\" % k, flush=True)\n    with open(dst + \".meta.yaml\", \"w\", encoding=\"utf-8\", newline=\"\\n\") as fh:\n        fh.write(\"\\n\".join([\n            \"task: ep2-b01-final-055-0812\",\n            \"node: 002b-first-citizen\",\n            \"beat: 1\",\n            \"strength: \" + strength,\n            \"recipe_status: >-\",\n            \"  the arm the founder approved on 2026-08-12 (\\\"strength 0.55 looks\",\n            \"  good\\\"), scaled from 2 seeds to 4. No other parameter moved.\",\n            \"model: \" + rr.BASE,\n            \"dtype: bfloat16\",\n            \"pipeline: StableDiffusionXLImg2ImgPipeline\",\n            \"harness: pipeline/runpod_render.py\",\n            \"harness_sha256: \" + harness_sha,\n            \"harness_modified_for_this_round: false\",\n            \"init_image: \" + json.dumps(init),\n            \"init_sha256: \" + init_sha,\n            \"init_provenance: >-\",\n            \"  ep2-b01-t2i-fig-0811 seed s2, the frame he called \\\"really good\\\" at\",\n            \"  ~23:45 on 2026-08-11; also on farm-results-rtx5090 at\",\n            \"  farm-out/ep2-b01-t2i-fig/01-cold-open-wave1-s2.png.\",\n            \"size: 832x1216\",\n            \"steps: 40\",\n            \"guidance: 7.5\",\n            \"seed: %d\" % seed,\n            \"seed_rule: SEED(%d) + BEAT(1) + k*1000\" % rr.SEED,\n            \"reproduces_approved_frame: \" + (json.dumps(repro) if repro else \"n/a \u2014 new seed\"),\n            \"prompt_source: genomes/sapling/nodes/002b-first-citizen/shots.md beat 1\",\n            \"prompt_source_sha256: \" + shots_sha,\n            \"positive: \" + json.dumps(pos),\n            \"negative: \" + json.dumps(neg),\n            \"fig_term_note: >-\",\n            \"  the fig words are in the positive and stayed there; the object they\",\n            \"  actually draw read as a veined leaf in the probe\",\n            \"  (ep2-b01-styleprobe-0812-observed). Open question for R4, not fixed here.\",\n            \"repo_commit: \" + commit,\n            \"cost_usd: 0\",\n            \"sha256: \" + sha,\n            \"provisional: >-\",\n            \"  Not canon, not published, not assembled. Candidate frames at an\",\n            \"  approved recipe; the pick is R4's.\",\n            \"\",\n        ]))\n    print(\"   %s  %s  seed=%d\" % (os.path.basename(dst), sha[:16], seed), flush=True)\nshutil.rmtree(RAW, ignore_errors=True)\nprint(\"wrote %d frame(s)\" % moved, flush=True)\nraise SystemExit(0 if moved == 4 else 1)\n"]
+strength 0.55 init C:\banyan-farm\wave-goblin-prep\out-b01-t2i\01-cold-open-wave1-s2.png sha256 874d36f566cf251753a6835144eed76fbbef558df65a30f3efa913c75d942454
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:00, 12.07it/s]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:00<00:00,  6.77it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.74it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  3.34it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+pipeline ready (torch.bfloat16)
+C:\banyan-farm\venv\Lib\site-packages\transformers\tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+Token indices sequence length is longer than the specified maximum sequence length for this model (85 > 77). Running this sequence through the model will result in indexing errors
+!! negative prompt over CLIP's 77-token budget; deduplicated: text; DROPPED: realistic skin texture, jpeg artifacts
+
+  0%|          | 0/22 [00:00<?, ?it/s]
+  5%|▍         | 1/22 [00:00<00:04,  4.53it/s]
+  9%|▉         | 2/22 [00:00<00:04,  4.72it/s]
+ 14%|█▎        | 3/22 [00:00<00:03,  4.79it/s]
+ 18%|█▊        | 4/22 [00:00<00:03,  4.54it/s]
+ 23%|██▎       | 5/22 [00:01<00:03,  4.42it/s]
+ 27%|██▋       | 6/22 [00:01<00:03,  4.57it/s]
+ 32%|███▏      | 7/22 [00:01<00:03,  4.55it/s]
+ 36%|███▋      | 8/22 [00:01<00:03,  4.55it/s]
+ 41%|████      | 9/22 [00:01<00:02,  4.41it/s]
+ 45%|████▌     | 10/22 [00:02<00:02,  4.47it/s]
+ 50%|█████     | 11/22 [00:02<00:02,  4.58it/s]
+ 55%|█████▍    | 12/22 [00:02<00:02,  4.57it/s]
+ 59%|█████▉    | 13/22 [00:02<00:01,  4.56it/s]
+ 64%|██████▎   | 14/22 [00:03<00:01,  4.45it/s]
+ 68%|██████▊   | 15/22 [00:03<00:01,  4.58it/s]
+ 73%|███████▎  | 16/22 [00:03<00:01,  4.56it/s]
+ 77%|███████▋  | 17/22 [00:03<00:01,  4.55it/s]
+ 82%|████████▏ | 18/22 [00:03<00:00,  4.54it/s]
+ 86%|████████▋ | 19/22 [00:04<00:00,  4.54it/s]
+ 91%|█████████ | 20/22 [00:04<00:00,  4.53it/s]
+ 95%|█████████▌| 21/22 [00:04<00:00,  4.52it/s]
+100%|██████████| 22/22 [00:04<00:00,  4.52it/s]
+100%|██████████| 22/22 [00:04<00:00,  4.54it/s]
+  01-cold-open-s0.png in 6s
+
+  0%|          | 0/22 [00:00<?, ?it/s]
+  5%|▍         | 1/22 [00:00<00:04,  5.01it/s]
+  9%|▉         | 2/22 [00:00<00:04,  4.93it/s]
+ 14%|█▎        | 3/22 [00:00<00:03,  4.91it/s]
+ 18%|█▊        | 4/22 [00:00<00:04,  4.36it/s]
+ 23%|██▎       | 5/22 [00:01<00:03,  4.42it/s]
+ 27%|██▋       | 6/22 [00:01<00:03,  4.56it/s]
+ 32%|███▏      | 7/22 [00:01<00:03,  4.60it/s]
+ 36%|███▋      | 8/22 [00:01<00:03,  4.46it/s]
+ 41%|████      | 9/22 [00:01<00:02,  4.40it/s]
+ 45%|████▌     | 10/22 [00:02<00:02,  4.49it/s]
+ 50%|█████     | 11/22 [00:02<00:02,  4.60it/s]
+ 55%|█████▍    | 12/22 [00:02<00:02,  4.57it/s]
+ 59%|█████▉    | 13/22 [00:02<00:02,  4.44it/s]
+ 64%|██████▎   | 14/22 [00:03<00:01,  4.45it/s]
+ 68%|██████▊   | 15/22 [00:03<00:01,  4.53it/s]
+ 73%|███████▎  | 16/22 [00:03<00:01,  4.60it/s]
+ 77%|███████▋  | 17/22 [00:03<00:01,  4.49it/s]
+ 82%|████████▏ | 18/22 [00:03<00:00,  4.45it/s]
+ 86%|████████▋ | 19/22 [00:04<00:00,  4.50it/s]
+ 91%|█████████ | 20/22 [00:04<00:00,  4.63it/s]
+ 95%|█████████▌| 21/22 [00:04<00:00,  4.60it/s]
+100%|██████████| 22/22 [00:04<00:00,  4.45it/s]
+100%|██████████| 22/22 [00:04<00:00,  4.53it/s]
+  01-cold-open-s1.png in 5s
+
+  0%|          | 0/22 [00:00<?, ?it/s]
+  5%|▍         | 1/22 [00:00<00:04,  4.97it/s]
+  9%|▉         | 2/22 [00:00<00:04,  4.91it/s]
+ 14%|█▎        | 3/22 [00:00<00:03,  4.89it/s]
+ 18%|█▊        | 4/22 [00:00<00:04,  4.36it/s]
+ 23%|██▎       | 5/22 [00:01<00:03,  4.42it/s]
+ 27%|██▋       | 6/22 [00:01<00:03,  4.56it/s]
+ 32%|███▏      | 7/22 [00:01<00:03,  4.66it/s]
+ 36%|███▋      | 8/22 [00:01<00:03,  4.51it/s]
+ 41%|████      | 9/22 [00:01<00:02,  4.42it/s]
+ 45%|████▌     | 10/22 [00:02<00:02,  4.45it/s]
+ 50%|█████     | 11/22 [00:02<00:02,  4.57it/s]
+ 55%|█████▍    | 12/22 [00:02<00:02,  4.56it/s]
+ 59%|█████▉    | 13/22 [00:02<00:02,  4.45it/s]
+ 64%|██████▎   | 14/22 [00:03<00:01,  4.47it/s]
+ 68%|██████▊   | 15/22 [00:03<00:01,  4.49it/s]
+ 73%|███████▎  | 16/22 [00:03<00:01,  4.60it/s]
+ 77%|███████▋  | 17/22 [00:03<00:01,  4.48it/s]
+ 82%|████████▏ | 18/22 [00:03<00:00,  4.40it/s]
+ 86%|████████▋ | 19/22 [00:04<00:00,  4.53it/s]
+ 91%|█████████ | 20/22 [00:04<00:00,  4.53it/s]
+ 95%|█████████▌| 21/22 [00:04<00:00,  4.53it/s]
+100%|██████████| 22/22 [00:04<00:00,  4.44it/s]
+100%|██████████| 22/22 [00:04<00:00,  4.52it/s]
+  01-cold-open-s2.png in 5s
+
+  0%|          | 0/22 [00:00<?, ?it/s]
+  5%|▍         | 1/22 [00:00<00:04,  5.20it/s]
+  9%|▉         | 2/22 [00:00<00:04,  4.78it/s]
+ 14%|█▎        | 3/22 [00:00<00:03,  4.82it/s]
+ 18%|█▊        | 4/22 [00:00<00:04,  4.32it/s]
+ 23%|██▎       | 5/22 [00:01<00:03,  4.40it/s]
+ 27%|██▋       | 6/22 [00:01<00:03,  4.55it/s]
+ 32%|███▏      | 7/22 [00:01<00:03,  4.65it/s]
+ 36%|███▋      | 8/22 [00:01<00:03,  4.51it/s]
+ 41%|████      | 9/22 [00:01<00:02,  4.42it/s]
+ 45%|████▌     | 10/22 [00:02<00:02,  4.45it/s]
+ 50%|█████     | 11/22 [00:02<00:02,  4.58it/s]
+ 55%|█████▍    | 12/22 [00:02<00:02,  4.56it/s]
+ 59%|█████▉    | 13/22 [00:02<00:02,  4.45it/s]
+ 64%|██████▎   | 14/22 [00:03<00:01,  4.47it/s]
+ 68%|██████▊   | 15/22 [00:03<00:01,  4.49it/s]
+ 73%|███████▎  | 16/22 [00:03<00:01,  4.49it/s]
+ 77%|███████▋  | 17/22 [00:03<00:01,  4.50it/s]
+ 82%|████████▏ | 18/22 [00:03<00:00,  4.41it/s]
+ 86%|████████▋ | 19/22 [00:04<00:00,  4.45it/s]
+ 91%|█████████ | 20/22 [00:04<00:00,  4.57it/s]
+ 95%|█████████▌| 21/22 [00:04<00:00,  4.55it/s]
+100%|██████████| 22/22 [00:04<00:00,  4.45it/s]
+100%|██████████| 22/22 [00:04<00:00,  4.51it/s]
+  01-cold-open-s3.png in 5s
+RENDER_COMPLETE
+C:\banyan-farm\venv\Lib\site-packages\transformers\tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+Token indices sequence length is longer than the specified maximum sequence length for this model (85 > 77). Running this sequence through the model will result in indexing errors
+!! negative prompt over CLIP's 77-token budget; deduplicated: text; DROPPED: realistic skin texture, jpeg artifacts
+   reproduction check s0 vs approved i55: identical
+   b01-final-055-s0.png  61f311b8b971002b  seed=20260720
+   reproduction check s1 vs approved i55: identical
+   b01-final-055-s1.png  8caad7862dc62351  seed=20261720
+   b01-final-055-s2.png  90c09465d8437058  seed=20262720
+   b01-final-055-s3.png  9993725c6e12442d  seed=20263720
+wrote 4 frame(s)
+==== step render END rc=0 2026-08-12T08:43:28Z ====
+
+==== step publish START 2026-08-12T08:43:28Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b01-final-055-0812\"\nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/out-b01-final/b01-final-055-s*.*\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n    print(\"   \", os.path.basename(f), h[:16])\nwith open(os.path.join(dst, \"ep2-b01-final-055-0812.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) == 8 else 1)\n"]
+    b01-final-055-s0.png 61f311b8b971002b
+    b01-final-055-s0.png.meta.yaml 287f878eba26ff2f
+    b01-final-055-s1.png 8caad7862dc62351
+    b01-final-055-s1.png.meta.yaml 596d414d4df87246
+    b01-final-055-s2.png 90c09465d8437058
+    b01-final-055-s2.png.meta.yaml 0e0cb8b8d12b9bb4
+    b01-final-055-s3.png 9993725c6e12442d
+    b01-final-055-s3.png.meta.yaml 0d49f77345792779
+published 8 file(s) + manifest -> C:/banyan-farm/courier-box/farm-out/ep2-b01-final-055-0812
+==== step publish END rc=0 2026-08-12T08:43:28Z ====
+#### job ep2-b01-final-055-0812-1786524140 finished rc=0 2026-08-12T08:43:28Z
