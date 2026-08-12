@@ -1,0 +1,127 @@
+# EPISODE 2, BEAT 19 — GIVE THE POSE BACK BY SHOWING THE REFERENCE FOR LESS TIME. $0.
+# 2026-08-12, character-consistency lane. ONE SAMPLE of the lever the pass named.
+#
+# ── WHAT THE PASS ESTABLISHED. Ten beats now hold the character and almost none hold
+# their own staging: he stands still, arms at his sides, facing camera, on whatever
+# beat the frozen reference is pointed at. Beat 19 is one of the clearest losses — its
+# draft has him stop MID-STEP as a fig drops and bounces off his head, and all four
+# frames are a standing portrait with no fig in them.
+#
+# ── WHY TIME AND NOT SIZE. Scope was measured and it is one axis with two ends: more
+# body in the reference buys identity and costs pose. Both ends are now known, so the
+# remaining axis is WHEN the reference is present. A diffusion sampler fixes coarse
+# structure — which creature this is — in the earliest, highest-noise steps and spends
+# the late ones on surface. The adapter currently runs for the first 15% of the
+# denoise. If the creature is already decided by 10%, the last 5% is buying nothing but
+# the reference's posture.
+#
+# ── THE ARM ALREADY EXISTS AND IS UNCHANGED. `wedge` is the sampler's own edge sweep:
+# two cells, the window at 10% and at 20%, scale held at 0.6, four seeds each. 15% —
+# every frame in the pass — sits between them, so this brackets what we have rather
+# than wandering off it. Same beat, same refs, same seeds, same prompt.
+#
+# ── ONE SAMPLE, NOT A BATCH, deliberately. The other nine beats stay as they are until
+# this says whether the trade is real. A metric agreeing with me is not a sample.
+#
+# ── NOT A PICK, NOT CANON. Provisional under his delegated evaluation grant.
+#
+# $0 — local GPU on the rtx5090, no provider, nothing published, nothing assembled.
+id: ep2-b19-ipa-wedge-0812
+task: ep2-b19-ipa-wedge-0812
+node: 002b-first-citizen
+beat: 19
+runner: box
+needs_gpu: true
+priority: 49
+max_attempts: 1
+owner: character-consistency lane, 2026-08-12 (consistency mandate, beat-by-beat pass)
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03`, read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the render
+  gate itself reads. Neither `approval_condition` touches beat 19. This is a
+  mechanism test on an approved node, not an episode assembly.'
+consumer: >-
+  review/ep2-picks/consistency-0812.html, the per-beat rows. Provisional candidates
+  for beat 19 under the frozen reference, for his one review pass.
+success: >-
+  Sixteen PNGs at C:\banyan-farm\goblin-ipa-0812\out-b19-wedge with sidecars written
+  at render time (7.2). Success is readable comparable cells — NOT that this beat
+  is good. A beat where the frozen reference fails is the most useful cell here.
+why: >-
+  Almost every beat of this episode has the goblin in it and he could not approve any
+  of them because the goblin changed between them. Two beats now hold from one
+  reference; beat 19 is the next one that has to.
+est_minutes: 14
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '19'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-frozen-0812
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b19-wedge
+  - --arm
+  - wedge
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '19'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-frozen-0812
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b19-wedge
+  - --arm
+  - wedge
+  - --task
+  - ep2-b19-ipa-wedge-0812
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b19-ipa-wedge-0812"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/goblin-ipa-0812/out-b19-wedge/*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b19-ipa-wedge-0812.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 8 else 1)
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b19-wedge\19-the-drop-ipa-r0-w010-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b19-wedge\19-the-drop-ipa-r0-w020-s0.png
