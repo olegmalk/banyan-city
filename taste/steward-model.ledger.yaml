@@ -11793,3 +11793,31 @@
     Four rounds, 0/4 every time. That is his call and no wording this lane has tried
     reaches it.
   outcome: null
+
+- id: ep2-frozen-ref-beatpass-resumed-0812
+  kind: prediction
+  written: >-
+    2026-08-12, before enqueueing the last six. The pass resumes because the thing that
+    paused it is now decided rather than unknown.
+  what_changed_since_the_pause: >-
+    The pause was for one question — which crop each beat gets — and the head-crop rerun
+    of beat 14 answered it: the reference imposes its framing, so the crop is chosen by
+    the shot the beat asks for. Applied here: beat 04 puts his face FILLING THE FRAME
+    and gets the head crop; 8, 13, 15, 19 and 20 are medium-to-wide with his body in
+    them and get the frozen coat-hem/whole pair. That classification is mine, it is
+    mechanical rather than taste, and it is on the page as such.
+  predicates: [identity holds >=3/4 in every one of the six, beat 04 on the head crop
+    keeps its face-filling framing, the five body beats keep their own staging better
+    than beat 03 did because their drafts already want a standing figure, beat 08 draws
+    its GUARD as a stranger since only the goblin is conditioned]
+  basis: >-
+    Five beats have now been drawn on this recipe (02 twice, 03, 14 twice, 17) and
+    identity held in every one. Each remaining beat is a new sample of a settled recipe
+    with one proven choice made per beat, and they are batched so he reviews once
+    instead of six times.
+  falsifiable_by: >-
+    Identity failing on any of the six, which would mean five beats were not enough to
+    call the recipe settled and the rule needs a third crop rather than two.
+  consumer: review/ep2-picks/consistency-0812.html — the complete episode-2 goblin pass,
+    for his one review.
+  outcome: null

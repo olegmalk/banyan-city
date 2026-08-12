@@ -66,7 +66,7 @@ steps:
   - --root
   - C:\banyan-farm\wave-goblin-prep\repo
   - --refs
-  - C:\banyan-farm\wave-goblin-prep\refs-goblin-frozen-0812
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-head-0812
   - --out
   - C:\banyan-farm\goblin-ipa-0812\out-b04-frozen
   - --arm
@@ -83,7 +83,7 @@ steps:
   - --root
   - C:\banyan-farm\wave-goblin-prep\repo
   - --refs
-  - C:\banyan-farm\wave-goblin-prep\refs-goblin-frozen-0812
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-head-0812
   - --out
   - C:\banyan-farm\goblin-ipa-0812\out-b04-frozen
   - --arm
