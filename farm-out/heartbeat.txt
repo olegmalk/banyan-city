@@ -927,3 +927,4 @@
 22:10:00Z DONE task=ep2-b03-stable-0812-1786485417 rc=0 artifacts=2
 22:10:04Z STARTED task=ep2-b03-stableB-0812-1786485422 attempt=1 on box-runner
 22:16:21Z DONE task=ep2-b03-stableB-0812-1786485422 rc=0 artifacts=2
+22:16:26Z STARTED task=ep2-b17-stable-0812-1786485428 attempt=1 on box-runner
