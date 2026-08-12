@@ -12805,3 +12805,35 @@
     — and the model does not know which is which. Anything phrased as a physical object can
     be drawn as one. Fourth thing today inherited unexamined from a working recipe.
   outcome: null
+
+- id: ep2-motion-background-painting-SCOPED-0812
+  kind: correction
+  date: 2026-08-12
+  corrects: ep2-b15-action-probe-0812-scored, key `the_unpredicted_finding`
+  status: NARROWED by the consistency lane's counter-finding, and they are right.
+  what_i_claimed: >-
+    "The motion model painted a background" — stated flat, as a property of the mechanism,
+    on one observation.
+  the_counter_evidence: >-
+    b04 did NOT paint one. Its clip kept the still's blank white for all 145 frames, which
+    is the whole reason the founder's note was "the background is blank". So one clip
+    painting and one not means it is conditional, and I generalised from the sample that
+    agreed with me while a counter-example was already in my own hand — on the page, two
+    sections above.
+  what_is_actually_supported: >-
+    Two of two FULL-BODY / MEDIUM shots painted a field: b15 (treeline, dawn sky, grass)
+    and b03 (cloud bank, field). The one EXTREME CLOSE-UP did not. The obvious candidate
+    reason is that a face filling the frame leaves no background area to paint, but I have
+    not tested that and it stays a hypothesis, not a mechanism — I have already been wrong
+    twice today by promoting a plausible reason to a stated cause.
+  the_operative_form: >-
+    "Motion has filled a blank background in both wide shots tried so far and did not in the
+    one close-up." That is what the page says now. The b04 r2 will be a third data point on
+    it, since it is a close-up with a background already IN the still — a different
+    question again (does motion KEEP a background) and not evidence about painting one.
+  the_habit: >-
+    Three corrections today and all three are the same shape: I find a real observation and
+    state it one size larger than the evidence. The counter-example for this one was not
+    hidden, not expensive to check, and already written down by me. Before generalising:
+    look for the case in my OWN results that would contradict it.
+  outcome: null
