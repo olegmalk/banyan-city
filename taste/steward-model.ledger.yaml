@@ -11821,3 +11821,38 @@
   consumer: review/ep2-picks/consistency-0812.html — the complete episode-2 goblin pass,
     for his one review.
   outcome: null
+
+- id: ep2-frozen-ref-beatpass-resumed-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-frozen-ref-beatpass-resumed-0812
+  predicates_observed: >-
+    identity holds >=3/4 in every one of the six HIT — bald, pale yellow-green, long
+    pointed ears, red or amber eyes and the toggled coat in essentially every frame of
+    04, 08, 13, 15, 19 and 20; beat 04 on the head crop keeps its face-filling framing
+    HIT 4/4 (with eye colour drifting red to amber); the five body beats keep their own
+    staging better than beat 03 MISS — they are worse; beat 08 draws its guard as a
+    stranger MISS AND WORSE — it draws no guard at all.
+  observed: >-
+    IDENTITY IS SOLVED AND STAGING IS BROKEN, and saying only the first would be the
+    dishonest half. Across the whole pass the creature is the same creature. He is also
+    standing still, arms at his sides, facing camera, in almost every frame of it. Beat
+    15 does not tip his head back at a sapling, beat 19 has no falling fig and no
+    mid-step, beat 20 raises no fig, beat 13 sits in only 2 of 4, and beat 08 — which
+    needs a guard pointing at his belly — draws ONE figure. A single-character
+    reference does not only fail to add a second character, it suppresses the one the
+    prompt asks for.
+  the_curve_this_completes: >-
+    Scope is one axis with two ends. The more of the body a reference shows, the harder
+    it locks identity and costume AND the harder it dictates the pose: head crops left
+    beat 02 and beat 14 their own framing, coat-hem and whole-figure crops give the
+    strongest identity in the pass and hand every beat the reference's own standing
+    A-pose.
+  therefore: >-
+    These are not episode frames and must not be offered as any. What this recipe makes
+    is a consistent character portrait. The untried lever is TIME, not size — the
+    adapter is currently on for the first 15% of the denoise and the sampler already
+    exposes shorter windows and lower scales; coarse structure is fixed early, so a
+    briefer or weaker window should keep the creature and give the pose back. That is
+    one sample, not a batch, and it is the next thing this lane should run.
+  outcome: null
