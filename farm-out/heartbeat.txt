@@ -754,3 +754,4 @@
 10:24:46Z box-runner idle ready=0 failed=3
 10:27:50Z STARTED task=ep2-b17-ipa-crossbeat-0812-1786530467 attempt=1 on box-runner
 10:33:51Z DONE task=ep2-b17-ipa-crossbeat-0812-1786530467 rc=0 artifacts=4
+10:36:45Z STARTED task=ep2-b03-ipa-frozen-0812-1786530935 attempt=1 on box-runner
