@@ -732,3 +732,4 @@
 09:04:05Z STARTED task=ep2-b01-figgrow-055-0812-1786525295 attempt=1 on box-runner
 09:10:53Z DONE task=ep2-b01-figgrow-055-0812-1786525295 rc=0 artifacts=2
 09:13:26Z STARTED task=ep2-charref-guards-0812-1786525096 attempt=1 on box-runner
+09:14:32Z DONE task=ep2-charref-guards-0812-1786525096 rc=0 artifacts=8
