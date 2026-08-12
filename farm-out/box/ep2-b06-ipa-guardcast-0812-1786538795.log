@@ -1,0 +1,26 @@
+#### job ep2-b06-ipa-guardcast-0812-1786538795 attempt 1 start 2026-08-12T13:03:47Z
+
+==== step dry START 2026-08-12T13:03:51Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\wave-goblin-prep\\goblin_ipa_beat.py", "--beat", "6", "--character", "guard", "--harness", "C:\\banyan-farm\\wave-goblin-prep", "--root", "C:\\banyan-farm\\wave-goblin-prep\\repo", "--refs", "C:\\banyan-farm\\wave-goblin-prep\\refs-charref-guards-r5-0812", "--out", "C:\\banyan-farm\\goblin-ipa-0812\\out-b06-guardcast", "--draft-key", "authored_b06_idfix_r3", "--arm", "window4", "--dry"]
+== goblin window mechanism on BEAT 06, references held at beat 04. Recipe unchanged; the beat is the variable.
+C:\banyan-farm\venv\Lib\site-packages\transformers\tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+Token indices sequence length is longer than the specified maximum sequence length for this model (79 > 77). Running this sequence through the model will result in indexing errors
+
+== beat 06 the-clipboard [guard] — clipboard
+   AUTHORED: A round short-haired guard man in a plain brown tunic, in a sunny grassy field, turns over a bark clipboard that fills the lower third of the frame, tracing a line on it with one finger as he reads, brow furrowed. Medium close-up, bright morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No girl, no child, no armor, no helmet, no knight, no house, no interior, no indoors, no dark, no night, no dusk, no sunset, no dim lighting, no moody lighting, no low key, no shadows dominant. No photorealism, no 3D render look. 9:16 vertical, no text.
+   POS: 1boy, a round short-haired guard man in a plain brown tunic, in a sunny grassy field, turns over a bark clipboard that fills the lower third of the frame, tracing a line on it with one finger as he reads, brow furrowed
+   NEG(sent): photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, girl, child, armor, helmet, knight, house, interior, indoors, dark, night, dusk, sunset, dim lighting, moody lighting, low key, shadows dominant, photorealism, text
+   positive tokens (real CLIP): 54/77   headroom for the goblin definition: 23
+   negative tokens: recipe 77 -> sent 77 (budget 77)
+   count tag: '1boy' (draft declares '1boy')
+   STYLE ANCHOR PRESENT: False
+   'text' negated: True
+   scale negatives: False   'tall tree' removed: 0
+   person singulars in negative: ['girl', 'child']
+   !! STYLE ANCHOR MISSING (`very aesthetic` not in positive)
+   !! POSITIVE DROPPED: Medium close-up, bright morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+
+!! FAULTS — nothing drawn: STYLE ANCHOR MISSING (`very aesthetic` not in positive); POSITIVE DROPPED: Medium close-up, bright morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+==== step dry END rc=1 2026-08-12T13:03:53Z ====
+#### job ep2-b06-ipa-guardcast-0812-1786538795 finished rc=1 2026-08-12T13:03:53Z
