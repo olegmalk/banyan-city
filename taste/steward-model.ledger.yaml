@@ -9995,7 +9995,16 @@
     Roman's morning pick on beat 01, three-way against
     farm-out/ep2-b01-t2i-fig/01-cold-open-wave1-s2.png (this round's init, "really
     good") and farm-out/ep2-b01-brightbase-figmatte/ (plate style, masked fig).
-  outcome: null
+  outcome: >-
+    MISS on the verdict, HIT on the mechanism. Predicted `reject_all` on the reasoning
+    that only the plate look could satisfy him; he approved an arm — "strength 0.55
+    looks good" (2026-08-12, on the i55 frames) — and that arm is now the beat-01
+    recipe. The mechanism half stands: no arm reached plate-family style, so text still
+    cannot fetch a style back, and the observation record says so. What the prediction
+    got wrong is what he was asking for: "how come you changed the style so much" was a
+    question about DRIFT, not a demand for the plate, and a 0.55 repaint of his own good
+    frame answered it. Standing correction: never convert "he named a frame good" into
+    "only its predecessor's look will pass".
 
 # ============================================================================
 # IDENTITY-FROZEN WAVE, SCORED AGAINST THE PIXELS — 2026-08-12 ~03:2x-04:5x.
@@ -11055,4 +11064,74 @@
     ("strength 0.55 looks good") to 4 seeds, same init and mechanics.
   predicates: [plate-family style holds 4/4, fig present >=3/4, s2 composition recognisable >=3/4]
   consumer: his beat-01 pick.
+  outcome: null
+
+- id: ep2-charref-order-0812
+  kind: founder_verdict
+  written: 2026-08-12, on receipt, before any job was written against it.
+  founder_verdict_verbatim: "strength 0.55 looks good. for beat 02 none of them
+    look quite right, they look overcomplicated with scars and the eye colors.. im
+    not saying its bad to have these kinda details but.. character consistency? have
+    you even made a character reference for the goblin and for the guards? make, and
+    let me review. because these characters change too much through beats otherwise."
+  founder_verdict_date: 2026-08-12
+  what_it_rules: >-
+    Three rulings. (1) APPROVED: img2img at strength 0.55 off his good b01 s2 frame is
+    the beat-01 look — the sample is passed, so the remaining seeds may scale.
+    (2) REJECTED: the beat-02 wave2 generation, on two named axes — OVERCOMPLICATION
+    (scars, varying eye colours; he says the details are not bad in themselves) and
+    CROSS-BEAT INCONSISTENCY. (3) ORDERED: build character REFERENCE sheets for the
+    goblin and the guards and show him. The reference, once he picks one, is the
+    identity anchor every later beat conditions on — his reason is "these characters
+    change too much through beats otherwise", which makes drift the fault being fixed,
+    not any single frame.
+  supersedes_in_practice: >-
+    Not the frozen identities (ep2-frozen-identities-0812) — those were WORDS. This
+    orders a PICTURE to sit under them, which is the channel the word-freeze could not
+    reach: `no scars, no stitched skin` was measured a real lever on stitching and no
+    lever at all on colour (ep2-idfix-wave2-r2-wave-reading-0812).
+  consumer: >-
+    JOB 2 (ep2-b01-final-055-0812) and JOB 3 (the charref sheets) of the
+    character-reference lane, both written under this record.
+  outcome: null
+
+- id: ep2-b01-final-055-0812
+  kind: prediction
+  written: 2026-08-12, before enqueue, by the character-reference lane. Not a new
+    recipe — the scale-up of the arm he approved ("strength 0.55 looks good"),
+    2 seeds to 4, every other parameter pinned.
+  predicted_verdict: approve_at_least_one
+  basis: >-
+    He has already passed two of these four frames at this exact recipe, so the
+    prediction is close to arithmetic; the only real question is whether the two NEW
+    seeds hold the look the two approved ones set. Where this can still be wrong is
+    seed variance in the init-dominated regime — 0.55 leaves the model enough room to
+    reorganise, and the probe's own s1 grew a new background hill at this strength.
+  predicates: [s0 reproduces the approved i55-s0 sha byte-identical, s1 reproduces
+    the approved i55-s1 sha byte-identical, 4 of 4 frames written with sidecars,
+    the fig-shaped object reads as a veined leaf >=3/4 (the probe's open question,
+    unrepaired here on purpose), no human figure in any frame 4/4]
+  falsifiable_by: >-
+    A sha mismatch on s0 or s1 falsifies "the recipe is pinned" and means something
+    under the clone moved; that is a finding about the farm, not about beat 01, and it
+    must be read before these frames are shown to him.
+  consumer: his beat-01 pick.
+  outcome: null
+
+- id: ep2-b01-final-055-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b01-final-055-0812
+  predicates_observed: >-
+    s0 reproduces the approved i55-s0 sha byte-identical HIT (61f311b8...); s1
+    reproduces i55-s1 byte-identical HIT (8caad786...); 4 of 4 frames written with
+    sidecars HIT (8 artifacts + manifest durable on farm-results-rtx5090 at
+    farm-out/ep2-b01-final-055-0812/). The two pixel predicates — the veined-leaf
+    reading and no-human-figure — are NOT scored here: this lane read hashes and
+    sidecars, not the frames, and saying so is cheaper than a guess.
+  observed: >-
+    The reproduction check is the finding. Two frames he approved came back
+    bit-for-bit from a separate job run hours later, which proves the beat-01 recipe
+    is genuinely pinned end to end — clone, harness, init, shots.md, seeds, sampler.
+    The two new seeds are 90c09465... and 9993725c....
   outcome: null

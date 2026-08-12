@@ -1,0 +1,281 @@
+# EPISODE 2, BEAT 01 — THE APPROVED RECIPE, ALL FOUR SEEDS. $0.
+# 2026-08-12, character-reference lane.
+#
+# ── WHY THIS IS NOT A NEW SAMPLE. Roman, 2026-08-12, verbatim: "strength 0.55 looks
+# good." That sentence is the sample approval the one-sample rule asks for — the i55
+# arm of `ep2-b01-styleprobe-0812` (two frames, seeds 20260720 and 20261720) IS the
+# sample, and he looked at it and passed it. This job scales that approved result to
+# the four seeds the beat needs. Nothing about the recipe moves: same init, same
+# positive, same negative, same 40 steps, 7.5 guidance, 832x1216, bfloat16, same
+# harness sha, same seed rule. The ONLY delta against the approved arm is SEEDS 2 -> 4.
+#
+# ── THE FIRST TWO FRAMES ARE A SELF-CHECK, AND THAT IS DELIBERATE. Seeds are
+# SEED+beat+k*1000, so s0 and s1 here are the same two seeds he already approved.
+# Everything else being pinned, they must come back byte-identical to
+#   b01-styleprobe-i55-s0  61f311b8b971002b39043d73e4a9d319655b00db7e866a636a9e09c4c0fe9a90
+#   b01-styleprobe-i55-s1  8caad7862dc62351e654f97b553f7de3fa28b602f7372b1d0a16c25f76ce8a99
+# The render step prints both comparisons. A MISMATCH IS NOT A FAILURE OF THIS JOB —
+# it is the discovery that something under us moved (the clone pulled a different
+# shots.md, a different diffusers, a different init), and it is far better to learn
+# that from two hashes than from him noticing beat 01 drifted again. The step reports
+# it loudly and still exits 0 on the frames it wrote; the dry step is what refuses.
+#
+# ── WHAT THE FIG WORDS ARE DOING HERE. The positive keeps the fig and leaf terms
+# because his standing approval_condition on beat 01 is the fig, and because the
+# approved arm carried them — this job may not quietly drop a term he approved
+# frames with. The honest note, already on the record
+# (`ep2-b01-styleprobe-0812-observed`): the object those words actually draw on the
+# stem reads as a veined LEAF in all six probe frames and in the init they came from.
+# That is an open question for him, not something this job silently repairs.
+#
+# $0 — local GPU on the rtx5090, no provider, nothing published, nothing assembled.
+id: ep2-b01-final-055-0812
+task: ep2-b01-final-055-0812
+node: 002b-first-citizen
+beat: 1
+runner: box
+needs_gpu: true
+priority: 46
+max_attempts: 1
+owner: character-reference lane, 2026-08-12 (his "strength 0.55 looks good")
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03`, read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml — the leaf the render
+  gate itself reads and the leaf `runpod_render.py` re-reads for itself at run time.
+  His `approved_quote` verbatim: "approve 002b except.. we need to make SURE the fig
+  growing on the sapling is mentioned, last time we generated 002b it just.. appeared.
+  also, the sapling was able to flail a leaf in episode 1? why couldnt it do that in
+  002b?" His FIRST approval_condition is beat 01''s: "The fig must GROW on screen, not
+  already hang." A still cannot show growing — that is a T2/T3 question and nothing
+  here claims it. What this round owes that condition is narrower and checkable: the
+  fig term stays in the positive and the object stays in frame.'
+consumer: >-
+  Roman's beat-01 pick, four frames at the strength he approved. The two he has
+  already seen are re-rendered on purpose so the set he chooses from is one set at one
+  recipe rather than two frames from a probe plus two strangers. Nothing here is
+  ranked, promoted, or carried to another beat.
+success: >-
+  Four PNGs at C:\banyan-farm\out-b01-final\b01-final-055-s{0,1,2,3}.png with their
+  .png.meta.yaml provenance sidecars (7.2), all eight declared as artifacts so a
+  missing one fails rc=92 instead of passing quietly. Whether the frames are right is
+  R4's call, not this job's and not a metric's.
+why: >-
+  His approval of the 0.55 arm releases the remaining seeds. This is the scale-up of
+  an approved sample, which is exactly what the one-sample rule permits and the only
+  thing it permits without a fresh look.
+est_minutes: 7
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  env:
+    STRENGTH: '0.55'
+    INIT: C:\banyan-farm\wave-goblin-prep\out-b01-t2i\01-cold-open-wave1-s2.png
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import hashlib, os, sys
+    from pathlib import Path
+    CLONE = r"C:\banyan-farm\banyan-city"
+    sys.path.insert(0, CLONE + r"\pipeline")
+    fails = []
+    def check(ok, label):
+        print(("  ok   " if ok else "  FAIL ") + label, flush=True)
+        if not ok:
+            fails.append(label)
+    check(os.environ.get("STRENGTH") == "0.55",
+          "per-step env arrives (STRENGTH=%r)" % os.environ.get("STRENGTH"))
+    init = os.environ.get("INIT", "")
+    INIT_SHA = "874d36f566cf251753a6835144eed76fbbef558df65a30f3efa913c75d942454"
+    if init and os.path.isfile(init):
+        h = hashlib.sha256(open(init, "rb").read()).hexdigest()
+        print("  init sha256 %s" % h, flush=True)
+        check(h == INIT_SHA, "init is the s2 frame he called really good (%s)" % INIT_SHA[:16])
+    else:
+        check(False, "init file exists at %s" % init)
+    SC = CLONE + r"\pipeline\runpod_render.py"
+    HARNESS_SHA = "dd834f57f987a090fcb6cebd8cbd5ff5fdcf306125bbef43739f71f1517ebd9c"
+    hh = hashlib.sha256(open(SC, "rb").read()).hexdigest()
+    print("  harness sha256 %s" % hh, flush=True)
+    check(hh == HARNESS_SHA, "runpod_render.py is the copy the approved arm ran")
+    import runpod_render as rr
+    from generate_shots import parse_shots
+    shots = Path(CLONE) / "genomes/sapling/nodes/002b-first-citizen/shots.md"
+    print("  shots.md sha256 %s" % hashlib.sha256(shots.read_bytes()).hexdigest(), flush=True)
+    raw = [s for s in parse_shots(shots.read_text(encoding="utf-8")) if s["num"] == 1]
+    check(len(raw) == 1, "exactly one beat 1 in shots.md")
+    s = raw[0]
+    FENCE = ("A tiny 40cm seedling standing in short grass, its sturdy curved stem "
+             "no taller than the grass around it, two oversized cotyledon leaves, "
+             "one small round green fruit hanging from the stem, whole plant in "
+             "frame, wide shot, peach and gold sunrise sky, no girl, no boy, no "
+             "child, no person, no chibi, no mascot, no creature, no face, no "
+             "branches, no night sky, cinematic lighting, detailed, newest, "
+             "masterpiece, best quality, very aesthetic No photorealism, no 3D "
+             "render look. 9:16 vertical, no text.")
+    check(s["prompt"] == FENCE, "beat-01 fence is byte-for-byte the one the approved arm sent")
+    check(s["slug"] == "cold-open", "slug is cold-open (output filenames depend on it)")
+    pos, dropped = rr.compress(s["prompt"])
+    neg = rr.beat_negative(rr.NEG, s["prompt"])
+    print("\n  POS: %s\n\n  NEG: %s\n" % (pos, neg), flush=True)
+    check(not dropped, "nothing dropped from the positive for budget (%r)" % (dropped,))
+    check("one small round green fruit hanging from the stem" in pos, "FIG term in the positive")
+    check("two oversized cotyledon leaves" in pos, "LEAF term in the positive")
+    check("cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic"
+          in pos, "detailed-cinematic-anime tail in the positive")
+    seeds = [rr.SEED + 1 + k * 1000 for k in range(4)]
+    print("  seeds: %s" % seeds, flush=True)
+    check(seeds[:2] == [20260720, 20261720], "s0/s1 are the two seeds he approved")
+    print("\nDRY: %d check(s) failed" % len(fails), flush=True)
+    raise SystemExit(1 if fails else 0)
+- name: render
+  env:
+    BEATS: '1'
+    SEEDS: '4'
+    NODE: 002b-first-citizen
+    INIT: C:\banyan-farm\wave-goblin-prep\out-b01-t2i\01-cold-open-wave1-s2.png
+    STRENGTH: '0.55'
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import hashlib, json, os, shutil, subprocess, sys
+    from pathlib import Path
+    CLONE = r"C:\banyan-farm\banyan-city"
+    SC    = CLONE + r"\pipeline\runpod_render.py"
+    RAW   = os.path.join(CLONE, "runpod-out")
+    OUT   = r"C:\banyan-farm\out-b01-final"
+    sys.path.insert(0, CLONE + r"\pipeline")
+    strength = os.environ["STRENGTH"]
+    init     = os.environ["INIT"]
+    init_sha = hashlib.sha256(open(init, "rb").read()).hexdigest()
+    print("strength %s init %s sha256 %s" % (strength, init, init_sha), flush=True)
+    rc = subprocess.call([sys.executable, SC])
+    if rc:
+        sys.exit(rc)
+    import runpod_render as rr
+    from generate_shots import parse_shots
+    shots = Path(CLONE) / "genomes/sapling/nodes/002b-first-citizen/shots.md"
+    s = [x for x in parse_shots(shots.read_text(encoding="utf-8")) if x["num"] == 1][0]
+    pos, _ = rr.compress(s["prompt"])
+    neg = rr.beat_negative(rr.NEG, s["prompt"])
+    shots_sha = hashlib.sha256(shots.read_bytes()).hexdigest()
+    harness_sha = hashlib.sha256(open(SC, "rb").read()).hexdigest()
+    try:
+        commit = subprocess.run(["git", "-C", CLONE, "rev-parse", "HEAD"],
+                                capture_output=True, text=True).stdout.strip() or "unknown"
+    except OSError:
+        commit = "unknown"
+    APPROVED = {0: "61f311b8b971002b39043d73e4a9d319655b00db7e866a636a9e09c4c0fe9a90",
+                1: "8caad7862dc62351e654f97b553f7de3fa28b602f7372b1d0a16c25f76ce8a99"}
+    os.makedirs(OUT, exist_ok=True)
+    moved = 0
+    for k in range(4):
+        src = os.path.join(RAW, "01-%s-s%d.png" % (s["slug"], k))
+        if not os.path.isfile(src):
+            print("   !! missing %s" % src, flush=True)
+            continue
+        dst = os.path.join(OUT, "b01-final-055-s%d.png" % k)
+        shutil.move(src, dst)
+        moved += 1
+        sha = hashlib.sha256(open(dst, "rb").read()).hexdigest()
+        seed = rr.SEED + 1 + k * 1000
+        repro = ""
+        if k in APPROVED:
+            same = sha == APPROVED[k]
+            repro = "identical" if same else "DIFFERENT"
+            print("   reproduction check s%d vs approved i55: %s" % (k, repro), flush=True)
+            if not same:
+                print("   !! s%d does not reproduce the approved frame. The recipe is "
+                      "pinned, so something underneath moved — read the metas before "
+                      "showing these." % k, flush=True)
+        with open(dst + ".meta.yaml", "w", encoding="utf-8", newline="\n") as fh:
+            fh.write("\n".join([
+                "task: ep2-b01-final-055-0812",
+                "node: 002b-first-citizen",
+                "beat: 1",
+                "strength: " + strength,
+                "recipe_status: >-",
+                "  the arm the founder approved on 2026-08-12 (\"strength 0.55 looks",
+                "  good\"), scaled from 2 seeds to 4. No other parameter moved.",
+                "model: " + rr.BASE,
+                "dtype: bfloat16",
+                "pipeline: StableDiffusionXLImg2ImgPipeline",
+                "harness: pipeline/runpod_render.py",
+                "harness_sha256: " + harness_sha,
+                "harness_modified_for_this_round: false",
+                "init_image: " + json.dumps(init),
+                "init_sha256: " + init_sha,
+                "init_provenance: >-",
+                "  ep2-b01-t2i-fig-0811 seed s2, the frame he called \"really good\" at",
+                "  ~23:45 on 2026-08-11; also on farm-results-rtx5090 at",
+                "  farm-out/ep2-b01-t2i-fig/01-cold-open-wave1-s2.png.",
+                "size: 832x1216",
+                "steps: 40",
+                "guidance: 7.5",
+                "seed: %d" % seed,
+                "seed_rule: SEED(%d) + BEAT(1) + k*1000" % rr.SEED,
+                "reproduces_approved_frame: " + (json.dumps(repro) if repro else "n/a — new seed"),
+                "prompt_source: genomes/sapling/nodes/002b-first-citizen/shots.md beat 1",
+                "prompt_source_sha256: " + shots_sha,
+                "positive: " + json.dumps(pos),
+                "negative: " + json.dumps(neg),
+                "fig_term_note: >-",
+                "  the fig words are in the positive and stayed there; the object they",
+                "  actually draw read as a veined leaf in the probe",
+                "  (ep2-b01-styleprobe-0812-observed). Open question for R4, not fixed here.",
+                "repo_commit: " + commit,
+                "cost_usd: 0",
+                "sha256: " + sha,
+                "provisional: >-",
+                "  Not canon, not published, not assembled. Candidate frames at an",
+                "  approved recipe; the pick is R4's.",
+                "",
+            ]))
+        print("   %s  %s  seed=%d" % (os.path.basename(dst), sha[:16], seed), flush=True)
+    shutil.rmtree(RAW, ignore_errors=True)
+    print("wrote %d frame(s)" % moved, flush=True)
+    raise SystemExit(0 if moved == 4 else 1)
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b01-final-055-0812"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/out-b01-final/b01-final-055-s*.*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+        print("   ", os.path.basename(f), h[:16])
+    with open(os.path.join(dst, "ep2-b01-final-055-0812.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) == 8 else 1)
+artifacts:
+- C:\banyan-farm\out-b01-final\b01-final-055-s0.png
+- C:\banyan-farm\out-b01-final\b01-final-055-s1.png
+- C:\banyan-farm\out-b01-final\b01-final-055-s2.png
+- C:\banyan-farm\out-b01-final\b01-final-055-s3.png
+- C:\banyan-farm\out-b01-final\b01-final-055-s0.png.meta.yaml
+- C:\banyan-farm\out-b01-final\b01-final-055-s1.png.meta.yaml
+- C:\banyan-farm\out-b01-final\b01-final-055-s2.png.meta.yaml
+- C:\banyan-farm\out-b01-final\b01-final-055-s3.png.meta.yaml
