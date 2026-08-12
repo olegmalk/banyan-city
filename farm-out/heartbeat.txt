@@ -836,3 +836,4 @@
 16:30:43Z DONE task=ep2-b03-object-0812-1786464910 rc=0 artifacts=2
 16:33:33Z STARTED task=ep2-b13-object-0812-1786464914 attempt=1 on box-runner
 16:39:17Z DONE task=ep2-b13-object-0812-1786464914 rc=0 artifacts=2
+16:42:13Z STARTED task=ep2-b14-redeye-0812-1786465524 attempt=1 on box-runner
