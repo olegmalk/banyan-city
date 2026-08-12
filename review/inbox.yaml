@@ -266,3 +266,8 @@
   since: '2026-08-12'
   kind: clip
   verdict_hint: pick a take per beat / tell me to keep chasing repeatability
+- what: "DECISION NEEDED - episode 3 cannot be drawn and it is not a prompt problem any more. The cold open needs one picture: the goblin beside his little tree. Seven rounds say this checkpoint will not draw that tree. FOUR rounds of rewording put the plant in his hand instead of in the ground (best result 1 frame in 4). THREE rounds of giving the tree its own reference plate, with no goblin in it at all, came back with a PERSON in the picture anyway - a girl in a dress, a green-haired child, a plant-headed humanoid - even after 'no people, no girl, no child' were all negated. The pipeline also forbids negating 'man' and 'boy' on that kind of plate, so the two likeliest intruders cannot be banned at all. Options as I see them: (a) condition the tree on a real reference image the way the goblin was solved - drawn, photographed or sourced, not generated; (b) try a different checkpoint for plant plates; (c) accept roughly 1 usable frame in 4 and cherry-pick, which is ~84 renders for 21 beats; (d) something you see that I do not. The 21-still wave is NOT queued and will not be until you pick"
+  url: /review/ep3-cast-0813
+  since: 2026-08-13
+  kind: decision
+  verdict_hint: "which route for the tree: a real reference image / a different model / cherry-pick at 1-in-4 / your own answer"
