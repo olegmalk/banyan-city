@@ -859,3 +859,4 @@
 18:24:10Z box-runner idle ready=0 failed=4
 18:27:25Z STARTED task=ep3-003b-b01-dialect-0812-1786472293 attempt=1 on box-runner
 18:27:30Z FAIL task=ep3-003b-b01-dialect-0812-1786472293 rc=1 step=measure
+18:34:33Z box-runner idle ready=0 failed=5
