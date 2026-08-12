@@ -495,7 +495,7 @@ def title_overlay_png(node: dict, prev: str | None, path: Path) -> Path:
     composited over the opening seconds of live footage. The old full-screen
     leading card spent the entire scroll-decision window on 2.5s of silent
     black (loop cycle 001, defects 1-3); footage and VO now start at t=0."""
-    specs = [("BANYAN CITY", 24, (147, 166, 152, 255)),
+    specs = [("SAPLING", 24, (147, 166, 152, 255)),
              (f"{node['id']} — {node['title']}", 34, GREEN),
              ("a story that branches", 18, (147, 166, 152, 255))]
     if prev:
