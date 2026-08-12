@@ -12658,3 +12658,39 @@
     An optional --note line for the verdict, so a judged sheet says what the shot is for AND
     what this take did about it, in the same image.
   outcome: null
+
+- id: ep2-motion-payload-beat-provenance-0812
+  kind: defect
+  date: 2026-08-12
+  what: >-
+    Every job in this lane's motion family published the WRONG BEAT NUMBER in its
+    provenance sidecar. The payload's jobs json carries its own "beat" field and it was
+    still 4, inherited from the ep2-b04 job the whole recipe descends from. The YAML key
+    `beat:` and the JSON key `\"beat\":` are not the same string, so the renames that
+    retargeted each job never touched it.
+  blast_radius: >-
+    Confirmed wrong on the shipped b15 probe: its sidecar reads `shot_beat: 4` on a beat-15
+    clip. b03 was already mid-render when I found it and carries the same wrong field.
+    Fixed before render on b13, b14, b17, b19 and b20, which were pulled from ready
+    unclaimed and re-queued.
+  pixels_unaffected: >-
+    The prompt, init, seed, frame count and output filename are per-beat and correct in
+    every case. This is a metadata defect only — but provenance is a stated
+    non-negotiable (CLAUDE.md 7.2, "every render publishes model, prompt, cost in its leaf
+    yaml"), so a sidecar that misattributes the shot is a defect and not a cosmetic.
+  how_it_was_caught: >-
+    By reading a RUNNING job's log rather than waiting for its output: the b03 log
+    announced "encode-beat-04" on a beat-3 job. Nothing in the yaml parse, the dry-run or my
+    own review would ever have caught it, because all three check the outer document and
+    this field lives inside a JSON string embedded in it.
+  the_habit: >-
+    Derived jobs need their EMBEDDED payloads diffed, not just their YAML keys. When a
+    recipe is inherited, grep the payload strings for the parent's identifiers — beat
+    numbers, ids, paths — because string-replacing the outer document leaves the inner
+    documents pointing at the parent. Third time today that copying a working thing forward
+    carried something untested with it.
+  to_correct_on_arrival: >-
+    b15's and b03's courier'd sidecars. The mp4s are good; the shot_beat line is wrong and
+    will be corrected in the repo copies with the discrepancy stated rather than silently
+    overwritten.
+  outcome: null
