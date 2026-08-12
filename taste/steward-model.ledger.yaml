@@ -14554,3 +14554,34 @@
     described contents, and COUNT is controllable only by geometry and only approximately.
     Everything else is seed variance and wants a human pick.
   outcome: null
+
+- id: ep1-b05-sapling-reveal-already-rendered-0812
+  kind: observation
+  date: 2026-08-12
+  verdict: >-
+    ZERO JOBS QUEUED, and that is the finding. I was asked to author a 16-frame sample for his open
+    sapling-reveal ask because "no candidate frame exists in the node". Four candidates exist. Job
+    `ep1-b05-sapling-reveal-0811` ran on 2026-08-11 and its four frames have sat on the results branch
+    since, never scored, never promoted into the node, never shown to him. Fourth time tonight an open
+    founder ask turned out to have a rendered answer nobody paged (beat 02's rerun, beat 06's zoom-out,
+    beat 12's r4 plate, now this).
+  scored: >-
+    All four are a seedling standing in grass against sky — clean, consistent, no characters, no text,
+    no defects I can name. s0 and s3 carry the clearest single silhouette; s2 is thin and washed out.
+    Whether any of them reads as HIM becoming the sapling is comprehension and taste, so it goes to him
+    rather than getting a verdict from me.
+  the_audit_line_this_corrects: >-
+    My own ep1 audit said beat 05's reveal ask "has NO candidate frame in the node at all". True of the
+    node, false of the repo. `takes/` and the node are not the whole tree — the results branch is where
+    box output lands and it is not searched by looking in the node. I will say "no candidate in the
+    node" or "no candidate anywhere" and mean the difference.
+  a_second_defect_found_on_the_way: >-
+    That job's manifest is unusable as written: its publish step opened the .sha256 without
+    `newline="\n"`, so Windows appended CR to every filename and `shasum -c` could not open one of the
+    eight. The newer publish steps carry that fix with a comment explaining it. I verified by stripping
+    CR rather than skipping the check — ALL 8 OK — but any lane that hits this and shrugs is scoring
+    unverified bytes.
+  what_the_pass_produced_instead_of_renders: >-
+    A captioned sheet and an inbox entry. Nothing queued, no GPU spent, and the ask is now answerable
+    by him in one look.
+  outcome: null

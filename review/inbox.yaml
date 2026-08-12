@@ -271,3 +271,13 @@
   since: 2026-08-13
   kind: decision
   verdict_hint: "which route for the tree: a real reference image / a different model / cherry-pick at 1-in-4 / your own answer"
+- what: 'Your sapling-reveal ask ("we should show that he became a sapling earlier") HAS FOUR CANDIDATE
+    FRAMES and you have never seen them - they rendered on 11 August and were never scored or paged.
+    All four are a seedling standing in grass against sky, clean, no defects; s0 and s3 are the
+    strongest. The audit line saying no candidate existed was true of the node and false of the repo:
+    they sit on the results branch, never promoted'
+  url: /review/ep2-picks/sheets/ep1-b05-sapling-reveal-0812.jpg
+  since: '2026-08-12'
+  kind: sheet
+  verdict_hint: pick one and I will cut it in as the reveal / none of these read as HIM becoming the
+    sapling, so the shot needs re-thinking / the ask is withdrawn
