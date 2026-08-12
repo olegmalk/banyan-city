@@ -1,0 +1,71 @@
+<meta charset="utf-8">
+<title>Character references — the goblin and the guards</title>
+
+<style>
+  body { max-width: 72rem; margin: 0 auto; padding: 2rem 1rem 6rem;
+         font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+         color: #1a1a1a; background: #fff; }
+  h1 { font-size: 1.5rem; margin: 0 0 .3rem; }
+  .sub { color: #666; margin: 0 0 1.6rem; }
+  h2 { font-size: 1.1rem; margin: 2.6rem 0 .2rem; }
+  p.note { margin: 0 0 .8rem; color: #444; }
+  img { width: 100%; height: auto; border: 1px solid #ddd; border-radius: 4px; }
+  blockquote { margin: 0 0 1.6rem; padding: .6rem 0 .6rem 1rem;
+               border-left: 3px solid #ddd; color: #333; }
+  .box { background: #f7f7f5; border: 1px solid #e6e6e2; border-radius: 6px;
+         padding: 1rem 1.1rem; margin: 0 0 1.8rem; }
+  .box h3 { font-size: .95rem; margin: 0 0 .4rem; }
+  .box p { margin: 0 0 .6rem; color: #444; }
+  .box p:last-child { margin-bottom: 0; }
+  .meta { font-size: .85rem; color: #777; margin: .4rem 0 0; }
+  @media (prefers-color-scheme: dark) {
+    body { background: #141416; color: #e8e8e8; }
+    .sub, p.note, .meta { color: #9a9a9a; }
+    img { border-color: #2c2c30; }
+    blockquote { border-left-color: #333; color: #ccc; }
+    .box { background: #1b1b1e; border-color: #2c2c30; }
+    .box p { color: #bbb; }
+  }
+</style>
+
+<h1>Character references — the goblin and the guards</h1>
+<p class="sub">Four sheets, eight seeds, $0. Nothing here is ranked and nothing is recommended — the pick is yours.</p>
+
+<blockquote>“character consistency? have you even made a character reference for the goblin and for the guards? make, and let me review. because these characters change too much through beats otherwise.”</blockquote>
+
+<div class="box">
+  <h3>What you are looking at, and why it is not the sheets from last night</h3>
+  <p>Last night's sheets drew the goblin <em>standing in a field</em>, one candidate per costume. You saw those and still asked whether a reference exists, which was the right question: a single pose in a location is a candidate for a shot. A reference is the same character from several angles on a blank ground, where the identity is the subject rather than a by-product of the shot. This is the first time this repo has asked for one.</p>
+  <p><strong>Two rounds per character, and the difference is only wording.</strong> Round 1 is the prompt this project would have written out of its own habits. Round 2 uses tags found by reading the Danbooru tag pages and the model card instead: <code>character sheet</code> turns out to be a dead token with no training behind it, while <code>reference sheet</code>, <code>multiple views</code> and <code>turnaround</code> are the ones that carry weight, and a multi-view request on an anime model degrades into comic panels unless the negative forbids them. Both rounds are here because that is the only way to see what the change bought. Neither round is “the good one” — that is your call.</p>
+  <p><strong>What to say back:</strong> for the goblin, point at one frame or say none — whichever frame you point at stops being a candidate and becomes the anchor, and later beats get conditioned on that image instead of on adjectives. For the guards, the sheets failed in a specific way and the question there is a different one; it is written above their rows.</p>
+</div>
+
+<div class="box">
+  <h3>The honest limit, before you look</h3>
+  <p>A picture fixes what words could not. The word-level freeze held <code>bald</code> in every one of ten beats and you still said the characters change too much — because words pin attributes, and a face is not an attribute.</p>
+  <p>What a text-prompted sheet can and cannot do: within a single image the model is fairly good at keeping one character the same across its views, and across separate renders it is not. So these sheets are worth judging on <em>face and silhouette</em>, and the clothing differences between seeds are noise — the goblin's costume was deliberately left out of the prompt so the body could be judged without it. A turnaround with a genuinely locked face needs machinery we have not staged. The practical path is the one this page asks for: you pick a face, and it becomes the reference every beat is conditioned on.</p>
+</div>
+
+<h2>The goblin — round 1</h2>
+<p class="note">Four seeds at the pre-research wording. Bald, green, red eyes, no scars, plain ground in all four. What came back is mostly heads and busts: each sheet gives three or four views of one face, and only two of the four stand him up full length.</p>
+<img src="/review/SHEETS/CHARREF-goblin-r1-0812.jpg" alt="goblin character reference sheet, round 1, four seeds">
+
+<h2>The goblin — round 2</h2>
+<p class="note">Same four seeds, researched tags: <code>reference sheet, multiple views, turnaround, standing</code>, plus a negative forbidding comic panels, speech bubbles and a second goblin wandering in. The visible effect of those words is full-length turnarounds — front, back and side of one standing figure — rather than floating heads. His costume still changes from seed to seed, because the prompt deliberately names no clothing.</p>
+<img src="/review/SHEETS/CHARREF-goblin-r2-0812.jpg" alt="goblin character reference sheet, round 2, four seeds">
+
+<div class="box">
+  <h3>The guards did not come out, and here is exactly how</h3>
+  <p>Both guard rounds asked for <strong>two</strong> men and drew <strong>one</strong>, in all eight frames. The sheet composition and the pair are fighting each other: the tag that makes a turnaround is about one character seen from several angles, so it turned “two guards” into one guard seen twice. Several frames also came back with blank or featureless faces — a mannequin, not a bureaucrat — and the tunic reads as a long monkish robe rather than the round, silly, harmless clerk in the script.</p>
+  <p>So the guard sheets below are honest evidence of a failure, not a menu with a right answer on it. They are worth your eye for one thing only — silhouette and garment — and the register is plainly wrong. Two ways forward, and this one is a genuine question for you: either they get <em>two separate</em> single-character references, one per guard, which is what the model can actually draw; or the guards stay a pair and we accept them being defined by a beat frame you approve rather than by a sheet. Say which and it gets built that way.</p>
+</div>
+
+<h2>The guards — round 1</h2>
+<p class="note">The frozen guard identity untouched — plain brown tunics, bare heads, the bark clipboard, silly harmless bureaucrats — asked for as a sheet rather than as a shot. No armour and no helmets in any frame, which is the one thing the earlier wording did buy.</p>
+<img src="/review/SHEETS/CHARREF-guards-r1-0812.jpg" alt="guards character reference sheet, round 1, four seeds">
+
+<h2>The guards — round 2</h2>
+<p class="note">Same identity, researched tags. The turnaround tags tightened the layout and made the blank faces more obvious rather than less; the second guard did not arrive here either.</p>
+<img src="/review/SHEETS/CHARREF-guards-r2-0812.jpg" alt="guards character reference sheet, round 2, four seeds">
+
+<p class="meta">Animagine XL 3.1 on the rtx5090, 832×1216, 40 steps, guidance 7.5, $0 — no provider was billed. Every frame carries a provenance sidecar written at render time; the originals and their checksums are on the <code>farm-results-rtx5090</code> branch under <code>farm-out/ep2-charref-*</code>. The sheets above are baked contact strips of those frames, in seed order, with nothing filtered out.</p>

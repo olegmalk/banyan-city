@@ -11249,3 +11249,51 @@
     judged — so it is reported, not scored. Two frames also carry a stray extra head
     in a corner, and s3 gives no front view at all.
   outcome: null
+
+- id: ep2-charref-guards-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-charref-guards-0812
+  predicates_observed: >-
+    no armor and no helmet 4/4 HIT; bare-headed >=3/4 HIT (4/4); front and side views
+    both present >=3/4 HIT (3/4, s0 gives front and back only); one bark clipboard
+    visible >=2/4 HIT (4/4, though s2's reads as a dark slab); EXACTLY TWO MEN PER
+    VIEW >=3/4 MISS — 0/4, every frame draws ONE guard; "the two men in the side view
+    are the same two" UNSCORABLE for the same reason; silly harmless register >=2/4
+    MISS — austere monkish adult men in long robes, no round soft bodies anywhere.
+  observed: >-
+    The sheet composition and the pair are in direct conflict. `multiple views` means
+    one character seen from several angles, so it read "two guard men" as one man
+    drawn twice and the count tag `2boys` did not save it. The garment drifted with
+    it: a `plain brown tunic` on a lone turnaround came back as a floor-length robe.
+    What the round does confirm is that the armour ban still holds without armour
+    creeping back, which was the fear.
+  outcome: null
+
+- id: ep2-charref-r2-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-charref-r2-0812
+  predicates_observed: >-
+    r2 shows two or more clean views >=3/4 on the goblin HIT (4/4, and they are FULL
+    LENGTH front/back/side rather than r1's busts); no comic panels or speech bubbles
+    4/4 HIT on both characters — and r1 had none either, so the new ban is unfalsified
+    rather than proven; outfit consistent across views within a frame >=3/4 HIT (4/4);
+    FACE consistent across views within a frame <=2/4 MISS — it holds in 4/4 on the
+    goblin, the same miss as r1; guards keep the bureaucrat register >=2/4 MISS (0/4);
+    r2 reads as more of a reference sheet than r1 on the goblin HIT — the researched
+    tags visibly bought standing full-body turnarounds.
+  observed: >-
+    The research paid on the goblin and could not rescue the guards. `turnaround,
+    standing, full body` is what moved r1's floating heads into a usable turnaround;
+    that is the one clean causal reading available from this pair. The guards' r2 was
+    worse in one specific way — several faces came back blank or featureless, a
+    mannequin rather than a person — so the tighter sheet layout exposed the empty
+    character slot instead of filling it. The comic-panel ban cost six terms on the
+    goblin's negative and prevented a failure that never occurred in r1; on this
+    evidence it is not yet earning its budget.
+  next_question_for_r4: >-
+    Whether the guards become TWO single-character references (which is the thing the
+    model demonstrably can draw) or stay a pair defined by an approved beat frame.
+    Asked on the page; not decided here.
+  outcome: null
