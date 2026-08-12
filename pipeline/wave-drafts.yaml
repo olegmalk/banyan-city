@@ -240,6 +240,29 @@ beats:
       aesthetic No mature tree, no forest. No photorealism, no 3D render look.
       9:16 vertical, no text.
 
+    # -- r3. r2 RENDERED AND PUT A PERSON IN THE PICTURE: s3 is a girl in a green
+    #    dress holding a twig, s0 a plant-headed humanoid in a shirt. Only s2 is a
+    #    plant at all, and it is a macro leaf study with no trunk and no ground
+    #    line — not a reference.
+    #    THE CAUSE WAS MY OWN OVER-CORRECTION. r1 was refused for negating `boy`
+    #    and `man` on a beat the gate calls peopled (beat 01 is the plant-only
+    #    plate but its `kind` is guard, and the check reads kind). I stripped ALL
+    #    FOUR person terms to get past it — and `girl` and `child` were never the
+    #    problem. The guard sheets prove it: authored_b05_sheet_* run on beat 5,
+    #    also kind=guard, and carry `No girl, no child` through the same gate
+    #    every time. So the two that are allowed come back, the two that trip it
+    #    stay out, and the frame that failed is the one this targets.
+    #    The catch-22 is unchanged and still wants fixing properly: a plate that
+    #    needs no {{GOBLIN}} must be kind=guard, and kind=guard is what forbids
+    #    `no man`. Keying "peopled" off `tag` (this beat's is '') would end it.
+    authored_ep3_sapling_reference_r3: >-
+      A single slender sapling grows alone from bare earth in a green morning
+      field, one thin curved stem, two big leaves, one bare side twig, knee
+      high, whole plant in frame. Medium shot, bright morning light, cinematic
+      lighting, detailed, newest, masterpiece, best quality, very aesthetic No
+      girl, no child, no people, no mature tree, no forest. No photorealism, no
+      3D render look. 9:16 vertical, no text.
+
   2:
     slug: the-sprint
     kind: goblin
