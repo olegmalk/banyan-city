@@ -945,3 +945,4 @@
 23:07:46Z DONE task=ep2-b21-stableB-0812-1786485452 rc=0 artifacts=2
 23:07:52Z STARTED task=ep3-charref-magistrate-r2-0812-1786485295 attempt=1 on box-runner
 23:08:49Z DONE task=ep3-charref-magistrate-r2-0812-1786485295 rc=0 artifacts=8
+23:08:53Z box-runner idle ready=0 failed=9
