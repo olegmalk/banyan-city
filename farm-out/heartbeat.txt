@@ -792,3 +792,4 @@
 12:46:10Z STARTED task=ep2-b02-train-r1-0812-1786537812 attempt=1 on box-runner
 12:49:05Z DONE task=ep2-b02-train-r1-0812-1786537812 rc=0 artifacts=4
 12:52:00Z STARTED task=ep2-b04-motion-short-0812-1786538920 attempt=1 on box-runner
+13:00:28Z DONE task=ep2-b04-motion-short-0812-1786538920 rc=0 artifacts=2
