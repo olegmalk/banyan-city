@@ -7271,3 +7271,28 @@ itself founder-reserved. The definition authorises none of them.
   other judged sets were re-verified against the box by sha256 and match. Sheets are
   now baked only after a fetch exits and hashed against the box before scoring
   (`ep2-b14-misread-correction-0812`).
+  **His verdicts on all of it, 2026-08-12** (`ep2-consistency-verdicts-0812`): "yeah the
+  goblin looks good, but the guards beign bald is a bit strange.. why are you making
+  everyone bald..? also beat 2 after still ends up hallucinating alot and not being
+  consistent, train that." Three consequences, all landed the same day.
+  (a) **THE GOBLIN REFERENCE IS APPROVED** and no longer provisional
+  (`ep2-goblin-reference-approved-0812`) — narrowly: he approved the CHARACTER, not the
+  frames, and the staging wall above is untouched by it.
+  (b) **BALD IS REJECTED FOR THE GUARDS, and it was never his word.** His ratification
+  was "two silly round bureaucrats with visible faces"; `bare heads` was the STEWARD'S
+  translation of an anti-helmet intent, which then carried his separate GOBLIN bald
+  ruling onto men it was never about — and three rounds of steward predicates scored
+  `bare heads` as a HIT the whole time. A frozen fact nobody froze. Guards re-drawn with
+  hair (r4: hair 4/4, count held, faces lost) and the faces defended (r5: 2/4, the misses
+  being a dark shadow BAND across the eyes rather than a fringe). Cast: guard A = r5 s1,
+  guard B = r5 s2, told apart more by costume than by face. Beat-06 re-proof runs on
+  `authored_b06_idfix_r3` — idfix_r2 with `bald`→`short-haired`, nothing else.
+  (c) **BEAT 02 RETRAINED and both named faults are gone** — hallucinated extras 0 in 16
+  (was a creature on the ground plus a console-like slab), one consistent creature with
+  no tusks (the definition is his now). Cause was diagnosable: the frame he judged was
+  the oldest on the page — raw sheet crops with neighbouring head views still in the
+  corners, the wave-1 draft, and a prompt demanding tusks the reference never had. Two of
+  the three training rounds he authorised are deliberately UNSPENT: what is left in beat
+  02 is the pose, and the only untried lever for it is the one whose answer is his.
+  Also settled in passing: the comic-panel ban is dead weight — five guard rounds, zero
+  panels, including the round that sold the ban to pay for the face terms.
