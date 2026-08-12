@@ -799,3 +799,4 @@
 13:07:50Z STARTED task=ep2-b06-ipa-guardcast-0812-1786540066 attempt=1 on box-runner
 13:13:51Z DONE task=ep2-b06-ipa-guardcast-0812-1786540066 rc=0 artifacts=4
 13:17:16Z STARTED task=ep2-b01-figgrow-055-r3-0812-1786540229 attempt=1 on box-runner
+13:29:36Z DONE task=ep2-b01-figgrow-055-r3-0812-1786540229 rc=0 artifacts=2
