@@ -7219,3 +7219,37 @@ be published** is licence + provenance + distribution clearance with publication
 itself founder-reserved. The definition authorises none of them.
 
 - 2026-08-11: Vercel git integration reconnected (olegmalk/banyan-city, production branch main, no card). Docs-only verification push — the ignore guard should CANCEL this build, and the deployment event appearing at all is the proof the webhook works.
+
+- 2026-08-12: **Character consistency became a mechanism.** Under his mandate
+  ("you need to create proper character consistency ... do some evaluation ... so i
+  dont need to keep reviewing so much") the conditioning path was measured rather
+  than argued, and three things are now known rather than believed.
+  **(1) A reference transfers what it contains.** Head crops lock the face and let
+  the costume roam; a crop reaching the coat hem carries face AND costume; the whole
+  figure adds trousers and shrinks the face. The adapter strength knob was never
+  needed — a whole coat came through at scale 0.6. The frozen goblin reference is
+  therefore a coat-hem and a whole-figure crop of `ep2-charref-goblin-0812` s0, cut
+  by CONNECTIVITY (keep the one connected blob of ink containing the figure) because
+  the source is a sheet and any rectangle wide enough for the coat also catches
+  fragments of neighbouring views — which rendered as extra goblins in 3 of 8 cells.
+  Staged as `refs-goblin-frozen-0812` on the box.
+  **(2) It carries a CHARACTER, not just a beat.** Beats 02 and 17 — nothing alike
+  compositionally — gave back the same creature from the same reference bytes, 16/16
+  each. That is the specific thing he said blocked approval.
+  **(3) A reference can confirm the model's prior for a noun and cannot overturn it.**
+  The goblin's baldness held 16/16 with `bald` nowhere in the prompt; two bald guard
+  references lost to hair in ~14/16 on beat 06, because a `guard man` is a haired
+  soldier before anyone asks. Related: prompt and reference fight only over
+  incompatible things (tusks vs no tusks — the prompt won 13/16); over compatible
+  ones they merge (beat 17's `patchwork cloak` plus the reference's toggled coat came
+  back as a toggled coat with patches).
+  Guards: rounds 1-2 drew ONE man in 8/8 because `reference sheet, multiple views,
+  turnaround` is the grammar for one character from several angles; r3 asked for one
+  man deliberately and held 4/4, and guard A/B are cast provisionally from its s0 and
+  s2. The guards fork then STOPPED on a pre-registered rule rather than iterating
+  knobs, because the only available beat draft asks for the rejected armour and never
+  says bald. Its fair rerun needs a variant flag on `goblin_ipa_sample.py` (it reads
+  `d["authored"]` at :417) — a pipeline change, named and handed over. Everything is
+  PROVISIONAL under his delegated evaluation grant; nothing is canon. Page:
+  `review/ep2-picks/consistency-0812/`; ledger ids `ep2-charref-guards-r3-0812*`,
+  `ep2-b02-ipa-*`, `ep2-b06-ipa-guardref-0812-observed`, `ep2-b17-ipa-crossbeat-0812*`.
