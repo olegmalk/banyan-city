@@ -93,11 +93,11 @@
     "C:\\banyan-farm\\ep2-b03-motion-0812\\03-bad-cover-LTX-motion-0812.mp4",
     "C:\\banyan-farm\\ep2-b03-motion-0812\\b03-init-704x1280.png"
   ],
-  "started_at": "2026-08-12T13:55:37Z",
-  "attempts": 1,
+  "started_at": "2026-08-12T14:08:56Z",
+  "attempts": 2,
   "runner_pid": 10188,
   "runner_host": "MSI",
-  "finished_at": "2026-08-12T14:04:51Z",
+  "finished_at": "2026-08-12T14:15:10Z",
   "rc": 0,
   "failed_step": null,
   "artifacts_present": [
