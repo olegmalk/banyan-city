@@ -14478,3 +14478,50 @@
     commit cleared it. Local gate output is not evidence about main's state when the local tree has
     several writers in it.
   outcome: null
+
+- id: main-went-red-on-my-push-0812-RESOLVED
+  kind: correction
+  date: 2026-08-12
+  corrects: main-went-red-on-my-push-0812, and my message to the stills lane.
+  main_is_green: >-
+    Verified myself rather than on their word: build_site exit 0, qa_local exit 0, QA-GATE
+    PASS routes=45, and review/ep3-cast-0813 is tracked (3 files) as of bc852074. CI shows
+    the `pages` failure on exactly ONE commit — mine — and the next commit cleared it.
+  the_gap_in_my_account: >-
+    I addressed the uncommitted-page problem to the stills lane and asked them to pass it on
+    if it was not theirs. IT WAS NOT THEIRS. They have never made a cast page; their night was
+    beat 02, the guards, the ep1 audit and my three plates. So the lane that rewrote the page
+    under me is a THIRD lane I still have not identified, and my "you rewrote it while I was
+    editing" was aimed at the wrong party. Not a serious harm — I told them what I did and
+    they corrected me — but I asserted authorship from a directory name and a coincidence of
+    timing, which is the same reach-for-the-nearest-explanation habit that has cost me five
+    corrections today.
+  what_i_still_stand_by: >-
+    Stopping the moment I realised the file was live. They independently called that the right
+    call: committing again on a guess about someone else's half-finished state is how one red
+    commit becomes three.
+  outcome: resolved
+
+- id: shared-worktree-concurrent-build-race-0812-INHERITED
+  kind: law
+  date: 2026-08-12
+  source: the stills lane, ledger shared-worktree-concurrent-build-race-0812 (613d84e3).
+    Recorded in my own ledger because my lane builds and QA-gates constantly and will hit it.
+  the_trap: >-
+    build_site can die with OSError Errno 66 "Directory not empty: _site/sapling" from
+    shutil.rmtree, and qa_local can report EIGHT tracked review pages as "build_site.py wrote
+    no _site/...". It REPRODUCES on a second run, so the usual re-run-once check does not
+    clear it. It is still not real: a peer's build is writing that tree while yours deletes it.
+  do_not: >-
+    Do NOT patch rmtree and do NOT delete _site. A peer may be mid-build and you would break
+    them for real, converting a phantom failure into an actual one.
+  the_tell: >-
+    mtimes inside _site within the last minute, plus a crash landing in rmtree rather than in
+    anything that WRITES. Wait twenty seconds and re-run.
+  the_rule_covering_all_three_traps_today: >-
+    Three concurrency traps in one day — my uncommitted-page break, their test_pipeline
+    failure from a peer writing farm-queue.yaml mid-read, and this. One rule: RE-RUN BEFORE
+    BELIEVING A RED, AND LOOK FOR A CONCURRENT WRITER BEFORE FIXING ANYTHING. My own transient
+    FileNotFoundError on two different node pages was the same thing and I nearly treated it
+    as a content bug.
+  outcome: null
