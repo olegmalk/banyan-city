@@ -1,0 +1,144 @@
+# EPISODE 2, BEAT 17 — IS HE THE SAME GOBLIN IN A BEAT HE WAS NOT TUNED ON? $0.
+# 2026-08-12, character-consistency lane, under his consistency mandate
+# (`ep2-consistency-mandate-0812`).
+#
+# ── THIS IS HIS ACTUAL COMPLAINT. Everything so far measured ONE beat across four
+# seeds. He did not say the goblin changes between seeds, he said "these characters
+# change too much through beats". Sixteen cells of beat 02 cannot answer that. A
+# second beat, drawn from the same reference bytes, can.
+#
+# ── WHAT THE LADDER SETTLED, AND WHAT IS FROZEN BECAUSE OF IT. A reference transfers
+# what it contains: head crops held his face and let his clothes change every seed;
+# crops reaching the coat hem put the same coat on him in 4 of 4 AND kept the face
+# at a readable size; the whole figure added trousers and boots. The two rungs that
+# worked are both here — r0/r1 the coat hem, r2/r3 the whole figure — because the
+# rows are independent arms, so this asks the cross-beat question of both at once
+# and costs nothing extra to do it.
+#
+# ── THE CROP FAULT THE LADDER EXPOSED IS FIXED IN THESE REFS. The wider rungs drew
+# EXTRA small goblins in 3 of 8 cells: the source is a sheet, so a crop wide enough
+# to hold the coat also held fragments of the neighbouring head views in its corners.
+# Painted rectangles kept missing ear tips, so the reference is now cut by
+# CONNECTIVITY — the one connected blob of ink containing the standing figure is
+# kept and every other mark on the page is whited out. Nothing of him can be lost
+# that way: head, sleeves and boots are one drawing.
+#
+# ── TWO THINGS CHANGED SINCE THE LAST GOBLIN ROUND AND BOTH ARE NAMED. The beat is
+# new (that is the question), and the harness now sends his frozen definition
+# `green skin, bald head` instead of `green skin, tusks` (commit 472909d0, his
+# ruling, not mine). So the tusk contest that the reference lost 13 times out of 16
+# is not in this round at all — the prompt and the reference finally agree, and if
+# tusks still appear they came from the model rather than from us.
+#
+# ── HONEST PRIOR. Costume should hold, because it held 4/4 on a beat this reference
+# had never seen either. Where I expect trouble is beat 17's own staging pulling the
+# framing away from a standing figure, and the face at whole-figure scale: the
+# encoder sees 224 pixels, and a full body spends most of them on a coat.
+#
+# ── NOT A PICK, NOT CANON. Provisional under his delegated evaluation grant.
+#
+# $0 — local GPU on the rtx5090, no provider, nothing published, nothing assembled.
+id: ep2-b17-ipa-crossbeat-0812
+task: ep2-b17-ipa-crossbeat-0812
+node: 002b-first-citizen
+beat: 17
+runner: box
+needs_gpu: true
+priority: 49
+max_attempts: 1
+owner: character-consistency lane, 2026-08-12 (consistency mandate, first cross-beat proof)
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03`, read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the render
+  gate itself reads. Neither `approval_condition` touches beat 17. This is a
+  mechanism test on an approved node, not an episode assembly.'
+consumer: >-
+  review/ep2-picks/consistency-0812.html, and the go/no-go for the remaining goblin
+  beats. The same creature in two beats from one reference releases the beat-by-beat
+  pass; a different creature says the mechanism holds a beat and not a character,
+  which is the more important thing to find out early.
+success: >-
+  Sixteen PNGs at C:\banyan-farm\goblin-ipa-0812\out-b17-crossbeat\17-goodbye-ipa-r{0,1,2,3}-w015-s{0,1,2,3}.png
+  with their provenance sidecars written at render time (7.2). Success is readable
+  comparable cells — NOT that identity held. "He is a different goblin in beat 17"
+  is a successful run of this job and the more valuable of the two answers.
+why: >-
+  He cannot approve beats because the characters change between them. Every
+  measurement so far has been within one beat, which is the one thing he did not
+  complain about.
+est_minutes: 14
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '17'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-frozen-0812
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b17-crossbeat
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '17'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-frozen-0812
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b17-crossbeat
+  - --arm
+  - window4
+  - --task
+  - ep2-b17-ipa-crossbeat-0812
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b17-ipa-crossbeat-0812"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/goblin-ipa-0812/out-b17-crossbeat/*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b17-ipa-crossbeat-0812.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 16 else 1)
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b17-crossbeat\17-goodbye-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b17-crossbeat\17-goodbye-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b17-crossbeat\17-goodbye-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b17-crossbeat\17-goodbye-ipa-r3-w015-s0.png

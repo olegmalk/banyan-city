@@ -11509,3 +11509,52 @@
     verdict rather than iterating.
   consumer: review/ep2-picks/consistency-0812.html and the go/no-go for six guard beats.
   outcome: null
+
+- id: ep2-b02-ipa-cropscope-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b02-ipa-cropscope-0812
+  predicates_observed: >-
+    r0 the byte-identical control reproduces round 1 HIT — the four control cells came
+    back IDENTICAL to round 1's r0 row, which is what makes the rest readable;
+    whole-figure ref holds BOTH face and costume >=3/4 HIT (~3/4); costume identical
+    across the whole-figure row >=3/4 HIT 4/4 against the head row's 0/4; tusks still
+    present HIT.
+  observed: >-
+    SCOPE IS THE KNOB, and the curve is monotonic. Head and head+shoulders behave like
+    round 1 — big faithful face, costume free to roam. The crop reaching the coat hem
+    puts the reference's pale toggled coat on him in 4 of 4 AND keeps the face large
+    enough to read, which is the rung that holds both. The whole figure adds trousers
+    and boots and shrinks the face. Nothing needed the scale knob.
+  fault_i_introduced: >-
+    Both wide rungs drew EXTRA small goblins in 3 of 8 cells. The source frame is a
+    SHEET, so a crop wide enough to hold the coat also holds fragments of the
+    neighbouring head views in its top corners, and my painted rectangles kept missing
+    ear tips. The reference is now cut by CONNECTIVITY — keep the one connected blob
+    of ink containing the standing figure, white out every other mark — which cannot
+    lose any part of him because he is one drawing.
+  outcome: null
+
+- id: ep2-b17-ipa-crossbeat-0812
+  kind: prediction
+  written: 2026-08-12, before enqueue. The first test of the thing he complained about.
+  predicates: [the beat-17 creature is recognisably the beat-02 creature >=3/4 on the
+    best rung, coat-hem rung (r0/r1) beats whole figure (r2/r3) on face fidelity,
+    costume holds >=3/4 despite beat 17's own text asking for a PATCHWORK CLOAK while
+    the reference wears a toggled duffle coat, no extra goblins in any cell now that
+    the refs are cut by connectivity]
+  basis: >-
+    Everything measured so far lives inside one beat, which is the one thing he did
+    not complain about. Beat 17 was chosen because its composition is nothing like
+    beat 02's and it has never been conditioned. The garment contest is real again and
+    named: cloak in the prompt, coat in the picture, and the tusk round says the prompt
+    wins that.
+  also_changed: >-
+    The harness now sends his frozen `green skin, bald head` instead of `green skin,
+    tusks` (472909d0, his ruling). So the tusk contest is simply gone from this round —
+    any tusk that appears now came from the model, not from us.
+  falsifiable_by: >-
+    A different creature in beat 17. That would mean the mechanism holds a BEAT and not
+    a CHARACTER, and the beat-by-beat pass would be worthless however good beat 02 looks.
+  consumer: review/ep2-picks/consistency-0812.html and the go/no-go for the goblin beats.
+  outcome: null
