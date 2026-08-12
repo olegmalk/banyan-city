@@ -783,3 +783,4 @@
 12:13:38Z DONE task=ep2-b19-ipa-wedge-0812-1786536545 rc=0 artifacts=2
 12:17:32Z box-runner idle ready=0 failed=3
 12:23:53Z STARTED task=ep2-charref-guards-r4-0812-1786537425 attempt=1 on box-runner
+12:27:27Z DONE task=ep2-charref-guards-r4-0812-1786537425 rc=0 artifacts=8
