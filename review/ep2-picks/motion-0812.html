@@ -206,16 +206,50 @@
   </div>
 
   <p>By my own written falsification clause this is bigger than beat 04: <q>the face re-drawing itself
-  mid-clip would mean i2v cannot carry a close-up at all.</q> Before I hand you that as a conclusion I am
-  testing the one part of it that does not need your direction — the melt is <em>progressive</em>, so a
-  73-frame (3.04s) version of the identical clip is rendering now with duration as the only variable. If
-  the face is intact at 73, close-ups survive by being cut short and that is a production lever. If it is
-  already smeared, close-ups need a different engine.</p>
+  mid-clip would mean i2v cannot carry a close-up at all.</q> Rather than hand you that as a conclusion I
+  tested the one part of it that needed no direction from you — and the answer is good news.</p>
+</section>
+
+<section>
+  <h2 class="t">It is the length, and three seconds holds</h2>
+  <p class="lede">Same init, same seed, same prompt, same negative, same guidance. The only thing I
+  changed was <code>--frames</code>: 73 instead of 145. That is one variable, so the answer is
+  attributable.</p>
+
+  <figure>
+    <img src="/review/ep2-picks/motion-0812/length-verdict.jpg" alt="Three faces side by side: the clean init, the 73-frame clip's last frame which is still clean, and the 145-frame clip's last frame where both eyes are brown smears.">
+    <figcaption>The starting frame, then where each clip <em>ends up</em>. The short clip's final frame is
+    still him — eyes with irises, pupils and highlights, a clean forehead. The long clip's final frame has
+    lost both eyes. His lids have drooped a little in the short one, which for a beat about holding your
+    breath is arguably the shot working.</figcaption>
+  </figure>
+
+  <figure>
+    <img src="/review/ep2-picks/motion-0812/length-matched-frames.jpg" alt="Both clips compared at the identical frame numbers 0, 36 and 72; the long clip has heavy stipple by frame 36 while the short clip stays clean.">
+    <figcaption>The same comparison at <em>matched frame numbers</em>, which is the part that surprised
+    me. At frame 36 and frame 72 the two clips should look alike if the damage accrued per frame. They do
+    not: the long one is already stippled at 36 and the short one is clean at 72. The damage scales with
+    how long you <em>asked</em> for, not with how far in you are.</figcaption>
+  </figure>
+
+  <video controls preload="metadata" playsinline src="/review/ep2-picks/motion-0812/04-the-footnote-LTX-motion-short-0812.mp4"></video>
+  <p class="muted" style="margin-top:10px"><code>ep2-b04-motion-short-0812</code> — 704x1280, 73 frames,
+  3.04s, $0. Manifest-verified.</p>
+
+  <div class="callout">
+    <h2>What this buys, in production terms</h2>
+    <p><strong>Close-up beats are viable at about three seconds and not at six.</strong> Beat 04 is written
+    as a six-second beat, so it does not fit as one shot — it needs to be two shots, or trimmed, or its VO
+    re-timed. That is a writing and editing decision and it is yours, which is why I stopped here instead
+    of picking one.</p>
+    <p>What I am <em>not</em> claiming: that this fixes the other nine beats. Their problem is staging, not
+    duration, and no frame count puts a sapling in beat 15.</p>
+  </div>
 
   <div class="verdict">
     <h3>Your verdict</h3>
-    <p>Worth saying plainly: this is one sample and it is a negative result, so nothing was scaled off it.
-    The clip above is the whole output of phase 2.</p>
+    <p>Two samples, one negative and one that found the limit. Nothing was scaled off either — these two
+    clips are the whole output of phase 2.</p>
     <span class="line"></span>
     <p>&nbsp;</p>
   </div>

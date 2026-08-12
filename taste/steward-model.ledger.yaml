@@ -12215,3 +12215,32 @@
     burning rounds on a question already in front of him would be answering it for him.
     One real defect at 1 of 16 (whole-s3's eyes come back black) is not worth a round.
   outcome: null
+
+- id: ep2-b04-motion-short-0812-scored
+  kind: scoring
+  date: 2026-08-12
+  scores: ep2-b04-motion-short-0812
+  predicates_observed: >-
+    eyes still drawn as eyes at frame 72 HIT — irises, pupils and highlights all intact
+    where the long clip's frame 144 has two brown smears; forehead stipple lighter than
+    the long clip HIT and then some, it is essentially ABSENT rather than merely lighter;
+    camera still does not move HIT.
+  observed: >-
+    THE DAMAGE SCALES WITH THE REQUESTED LENGTH, NOT WITH ELAPSED FRAMES, and that is the
+    part I did not predict. Compared at MATCHED frame numbers the two clips should look
+    alike if the error accrued per step: they do not. The 145-frame clip is already
+    heavily stippled at frame 36; the 73-frame clip is clean at frame 72. So asking for
+    six seconds degrades frame 36 itself — the whole trajectory is worse, not just its
+    tail. My "accumulation" wording in the basis was the right prediction for the wrong
+    mechanism, and the distinction matters: you cannot rescue a long clip by trimming it
+    afterwards, you have to ASK for the shorter clip.
+  what_this_settles: >-
+    Close-up beats are viable at ~3s and not at 6s on this recipe. Beat 04 is written as a
+    six-second beat, so it needs to be two shots, or trimmed, or its VO re-timed — a
+    writing and editing call, his, not taken here. This does NOT touch the other nine
+    beats: their fault is staging and no frame count puts a sapling in beat 15.
+  also_true: >-
+    The camera lock held in both clips. Naming the defect in the negative at guidance 2.0
+    solves camera motion and does nothing for subject integrity; they were being treated
+    as one problem and they are two.
+  outcome: null
