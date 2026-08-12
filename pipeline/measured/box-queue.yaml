@@ -1,5 +1,5 @@
-measured_at: 2026-08-12 11:52Z
-ready: 2
+measured_at: 2026-08-12 12:42Z
+ready: 1
 running: 1
-done_today: 24
+done_today: 44
 source: ssh rtx5090 dir C:\banyan-queue (supervisor tick)
