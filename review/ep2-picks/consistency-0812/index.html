@@ -54,15 +54,19 @@ overnight, so i dont need to keep reviewing so much.”</blockquote>
   and got a clean full-length turnaround in four of four — so the pair now comes from
   casting two of those four seeds as two different men, rather than from asking one
   picture to contain a pair.</p>
-  <p><strong>The goblin is half fixed, and the half that is missing is a specific
-  one.</strong> Conditioning beat 02 on a reference works: the creature that comes
-  out is the creature in the reference, bald in sixteen frames of sixteen, red-eyed
-  in all of them. But a reference only transfers <em>what is inside it</em>. Head
-  crops locked his face and let his clothes change every seed; the body crop put the
-  same coat on him four times out of four and let his face go harsh. Nothing yet has
-  held both at once, and a round testing exactly that is on the card now.</p>
-  <p><strong>One thing needs you, and it is not a picture.</strong> See “the register”
-  at the bottom.</p>
+  <p><strong>The goblin works, and we now know which part of the picture does the
+  work.</strong> Conditioning beat 02 on a reference gives back the creature in the
+  reference — bald in sixteen frames of sixteen, red-eyed in all of them. A reference
+  transfers <em>what is inside it</em>: head crops locked his face and let his clothes
+  change every seed, and a crop reaching the coat hem put his own coat on him four
+  times out of four while keeping the face readable. That crop is the reference now.</p>
+  <p><strong>The guards' pictures came out and then did not carry.</strong> Beat 06
+  drawn from the two cast guards produced neither of them, and lost their bald heads
+  to hair in about fourteen frames of sixteen. Beside the goblin that is informative
+  rather than merely bad, and it is written out below.</p>
+  <p><strong>Two things need you, and neither is a picture.</strong> The guards'
+  register, and one small change to our own code that the fair version of the guard
+  test cannot happen without.</p>
 </div>
 
 <h2>1 · The references — provisional</h2>
@@ -141,19 +145,69 @@ the columns.</p>
   because a crop tight enough to lose them also loses the character's hands.</p>
 </div>
 
-<h2>3 · What is blocked, and by what</h2>
-<div class="box flag">
-  <h3>No guard beat can be conditioned yet, and it is our code stopping it</h3>
-  <p>The guard references above are cut, staged on the card and one command from
-  running. The command refuses: the beat launcher accepts only the eight beats whose
-  scripts carry the goblin, and returns an error for everything else. That gate was
-  written when every reference was the goblin's and it is correct for that; it simply
-  has no idea a guard reference could exist. It also puts beats 8, 11 and 13 out of
-  reach. Changing it is a pipeline edit, which is not this lane's to make, so it is
-  named here and handed over rather than worked around.</p>
+<h3>The ladder came back, and it drew a clean curve</h3>
+<p class="note">The four control cells returned <em>identical</em> to the round above —
+same reference bytes, same frames — which is the only reason the other twelve mean
+anything. On that footing: head and head-and-shoulders behave exactly as before, a
+faithful face over clothes that change every seed. The crop reaching the coat hem puts
+his own toggled coat on him in four of four <em>and</em> keeps the face big enough to
+read. The whole figure adds the trousers and boots and shrinks the face. The strength
+knob was never touched and never needed to be.</p>
+<img src="/review/ep2-picks/sheets/consistency-b02-cropscope.jpg" alt="beat 02 crop-scope ladder, sixteen frames">
+<p class="note"><strong>A fault I put there, and how it is fixed.</strong> Both wide
+rungs drew extra small goblins in three of eight cells. That is the crop, not the
+model: the source frame is a <em>sheet</em>, so a crop wide enough to hold the coat
+also holds fragments of the neighbouring head views in its corners, and painted-out
+rectangles kept missing ear tips. The reference is now cut by connectivity — keep the
+one connected blob of ink containing the standing figure, remove every other mark on
+the page. He is one drawing, so nothing of him can be lost that way. This is what the
+goblin beats are conditioned on from here:</p>
+<img src="/review/ep2-picks/sheets/consistency-refs-frozen.jpg" alt="the cleaned goblin reference, coat-hem and whole-figure crops">
+
+<h2>3 · The guards, conditioned — and it did not carry</h2>
+<p class="note">Sixteen frames of beat 06 drawn from the two cast guards: guard A whole
+figure and head in the first two rows, guard B in the last two. Neither man is in any
+of them, and the bald heads are gone — pale swept hair in roughly fourteen of sixteen.
+These are a measurement, not beat candidates; the draft they were drawn from asks for
+the armour you rejected.</p>
+<img src="/review/ep2-picks/sheets/consistency-b06-guardref.jpg" alt="beat 06 conditioned on the two cast guards, sixteen frames">
+<div class="box">
+  <h3>Why this is a finding and not just a failure</h3>
+  <p>The goblin's baldness held sixteen of sixteen in beat 02 with the word “bald”
+  <em>nowhere in that prompt</em> — it came from the picture. Here two bald references
+  lost to hair. Same mechanism, same strength, same settings, opposite result. What
+  differs is what the model already believes about the noun: a goblin boy is hairless
+  before anyone asks, a guard man is a haired soldier. At this strength a reference can
+  <em>confirm</em> what the model already leans towards and cannot <em>overturn</em> it.</p>
+  <p><strong>And the test was not fair to the reference, which was written down before
+  it ran.</strong> The code sends each beat's original draft, and beat 06's asks for
+  mismatched armour and never says bald — so the words fought the picture over the
+  clothes and gave it no help at all on the head. The fair rerun is the same job
+  against the tunic-and-bald wording that already exists in the drafts file. It is
+  blocked; see below.</p>
+  <p>No conditioning knobs were turned after this result, deliberately. The rule was
+  written before the render: if neither guard is recognisable, the fork stops and comes
+  to you, because a knob hunt on an unfair test is how a week disappears.</p>
 </div>
 
-<h2>4 · The one thing that needs you</h2>
+<h2>4 · What is blocked, and by what</h2>
+<div class="box flag">
+  <h3>One line of our own code stands between us and the fair guard test</h3>
+  <p>Earlier today no guard beat could be conditioned at all — the launcher accepted
+  only beats carrying the goblin. That was fixed within the hour and the guard round
+  above is the first job through the new door. What remains is smaller and more
+  annoying: the sampler always sends a beat's <em>original</em> draft and has no way to
+  ask for a different wording, so the tunic-and-bald version of beat 06 — which is
+  already written and sitting in the drafts file — cannot reach it. Rewriting the
+  original in place would silently change what every other job sends, so that is not a
+  workaround, it is a trap. The change needed is a variant flag on the sampler; it is a
+  pipeline edit and it is handed over rather than made here.</p>
+  <p>Until it exists, the honest status of the guards is: the reference sheets work,
+  the two men are cast, and whether they can be <em>carried into a beat</em> is
+  untested rather than disproved.</p>
+</div>
+
+<h2>5 · The one thing that needs you</h2>
 <div class="box flag">
   <h3>The register</h3>
   <p>Three rounds have asked for <em>silly harmless bureaucrats</em> and drawn solemn,
