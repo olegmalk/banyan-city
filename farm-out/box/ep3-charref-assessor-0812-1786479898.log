@@ -1,0 +1,9 @@
+#### job ep3-charref-assessor-0812-1786479898 attempt 1 start 2026-08-12T21:46:33Z
+
+==== step measure START 2026-08-12T21:46:37Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\wave-goblin-prep\\render_wave_sample.py", "--harness", "C:\\banyan-farm\\wave-goblin-prep", "--root", "C:\\banyan-farm\\wave-goblin-prep\\repo", "--beat", "3", "--goblin-def", "green skin, bald head", "--variant", "authored_ep3_charref_assessor", "--dry"]
+C:\banyan-farm\venv\Lib\site-packages\transformers\tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+!! beat 03 (bad-cover, kind=goblin) carries no {{GOBLIN}} marker, so the founder's definition would have nowhere to go and this render would test nothing about the goblin. Pick a beat whose kind is goblin or two-subject.
+==== step measure END rc=4 2026-08-12T21:46:39Z ====
+#### job ep3-charref-assessor-0812-1786479898 finished rc=4 2026-08-12T21:46:39Z
