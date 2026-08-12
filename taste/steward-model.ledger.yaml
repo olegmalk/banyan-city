@@ -12918,3 +12918,63 @@
     that keeps working is mechanical, so it becomes the rule: before writing a rate, ENUMERATE
     EVERY CASE I HAVE, including the ones that came out fine, and write the denominator first.
   outcome: null
+
+- id: ep2-sapling-ownership-diagnosis-0812
+  kind: diagnosis
+  date: 2026-08-12
+  question_from_lead: >-
+    Do the approved stills these clips animated from contain a sapling at all? If empty,
+    it is a still-side fault; if the stills hold one and motion erases it, that is a new
+    motion law.
+  answer: NEITHER BRANCH, and the reason is a lever nobody has pulled.
+  the_stills_are_empty_and_that_is_already_settled: >-
+    Confirmed, and not by my eye alone — the consistency lane logged it as needs-founder
+    §2, "The sapling will not stand next to the goblin", across beats 02, 03, 13, 15, 17,
+    19 and 20, with commit bdcb1a2a recording it absent from all eight goblin frames. Their
+    best result was 2 of 4 readable saplings after moving the stem into an early clause,
+    and they have spent their allotted rounds on it. So the still side owns the current
+    absence and it is ALREADY in front of him as a tool choice, not a wording problem.
+  but_the_motion_side_has_never_been_ASKED: >-
+    I grepped all thirteen motion prompts this lane has written. `sapling` appears in NONE
+    of them. Neither does `tree` or `trunk`. Not once. I wrote around it every time — beat
+    15 says he looks up "at something tall above him", beat 19 says a fig falls "from over
+    him" — because I was thinking of the sapling as the still's job and describing only the
+    goblin's movement. So my own standing finding, "five clips in and no sapling has
+    appeared", is not evidence that motion cannot supply one. It is evidence that I never
+    asked.
+  and_motion_demonstrably_draws_vegetation: >-
+    Unprompted. b15 painted a TREELINE on the horizon; b03, b13, b14 and b17 all painted
+    fields, grass and hedgerow. The model reaches for plants readily when it fills a blank
+    background. That is the opposite of a model that refuses to draw a plant.
+  therefore_the_probe_is_mine_and_cheap: >-
+    One sample, one beat, one sentence. Beat 15 is the right beat — its whole subject is
+    "he looks up at the sapling and both of them are in the frame", and its clip already
+    PASSED on action, so if the sapling arrives that beat is close to done. Single variable
+    against the existing b15 probe: name the sapling in the positive and change NOTHING
+    else, tripod phrase included, because b15 already ran with that phrase and drew no
+    tripod. Anything else moved would make the read unattributable.
+  outcome: null
+
+- id: ep2-b15-sapling-probe-0812
+  kind: prediction
+  written: 2026-08-12, before enqueue. One sentence added to a clip that already passed.
+  predicates: [a single readable sapling appears in frame with him in >=1 of 1, he still
+    tips his head back and speaks as the first probe did, he stays the same goblin, the
+    camera stays locked, the sapling does NOT multiply into the bed of generic seedlings
+    the stills lane kept getting]
+  basis: >-
+    Motion already paints vegetation into blank space unasked — a treeline in this very
+    beat's first clip. The stills fail at the sapling under an IP-adapter that is
+    conditioning hard on a single-figure reference, which is the mechanism the consistency
+    lane showed suppresses second subjects; the i2v pass has no such reference and is
+    demonstrably willing to add scenery. Different mechanism, so the still-side limit does
+    not automatically transfer.
+  falsifiable_by: >-
+    No sapling, or the bed-of-seedlings failure the stills kept producing. Either would mean
+    the limit is not the adapter but something both stages share, and the honest next move
+    is the tool choice already in front of him (inpaint or composite), not more wording.
+  what_it_would_be_worth: >-
+    If it lands, the five beats blocked on the sapling stop being blocked on a still-side
+    tool choice, and the answer cost one sentence.
+  consumer: review/ep2-picks/motion-0812.html and needs-founder §2.
+  outcome: null
