@@ -758,3 +758,4 @@
 10:42:04Z DONE task=ep2-b03-ipa-frozen-0812-1786530935 rc=0 artifacts=4
 10:44:45Z STARTED task=ep2-b14-ipa-frozen-0812-1786530939 attempt=1 on box-runner
 10:47:33Z DONE task=ep2-b14-ipa-frozen-0812-1786530939 rc=0 artifacts=4
+10:50:42Z box-runner idle ready=0 failed=3
