@@ -96,3 +96,47 @@ so its one r2 spends everything on the camera — the two overhead frames are al
 the two worst, and a belly seen from directly above is a plausible route to a
 sphere. **Not fixed and not attempted**: the black-not-brown tunic (3/4) and the
 fact that nobody in any frame points at a belly (0/4), which is the beat's joke.
+
+## 5. Character consistency works, and it costs the staging — this one is a decision, not a bug
+
+**Added 2026-08-12 by the consistency lane, under his mandate ("you need to create
+proper character consistency ... do some evaluation ... so i dont need to keep
+reviewing so much"). Everything here is provisional; his veto stands.**
+
+The mechanism works. Conditioning a beat on a picture of the goblin — rather than on
+adjectives about him — gives back the same creature every time: ten beats now, bald,
+pale yellow-green, long pointed ears, red eyes, his coat. Beat 02's before-and-after is
+the clearest single view of it (`review/ep2-picks/consistency-0812/`), and the same
+reference bytes hold him across beats that look nothing like each other.
+
+**And it hands almost every beat the reference's own pose.** He stands still, arms at
+his sides, facing camera. Beat 15 never tips his head back at the sapling; beat 19 has
+no falling fig and no mid-step; beat 20 raises no fig; beat 08 needs a guard pointing at
+his belly and draws no guard at all — a single-character reference suppresses the second
+character rather than merely failing to add it.
+
+Three levers were measured and the limit of three was set before any of them ran:
+
+1. **How much of him the reference shows.** Head crop → face holds, costume roams, the
+   beat keeps its own framing. Coat-hem and whole-figure → identity and costume lock
+   hard, and the beat gets the reference's standing pose. One axis, two ends.
+2. **What the reference contains.** Cutting it by connectivity (one figure, everything
+   else on the page removed) fixed stray duplicate goblins. It did not touch the pose.
+3. **How long the reference is shown.** 10%, 15% and 20% of the drawing process are
+   indistinguishable — same portrait, same creature. Timing does not separate pose from
+   identity in the range available.
+
+**The wall, stated plainly: as configured this makes a consistent character and a
+portrait of him. It does not make a beat.** Untried, and deliberately not tried without
+you: adapter strength below the 0.6 every frame used. That is a fourth knob and the
+budget was three.
+
+**What is actually needed from you** is a direction, not a verdict on a frame:
+
+- Is a consistent goblin standing still an acceptable *base*, with the action added by a
+  later step (an image-to-video pass, or an inpaint of the prop), or does the still
+  itself have to carry the blocking?
+- The guards: bald, tunic, clipboard and two distinguishable men all land now
+  (`ep2-b06-ipa-guardfair-0812`), but they are solemn men doing paperwork. `silly
+  harmless bureaucrats` has scored 0/4 in four rounds. If the tone matters more than the
+  facts, the casting is wrong and a fifth sheet will not fix it.

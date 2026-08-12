@@ -11879,3 +11879,43 @@
   consumer: review/ep2-picks/consistency-0812.html, and whether the other nine beats
     get re-rendered at a different window.
   outcome: null
+
+- id: founder-order-0812-evaluate-then-motion
+  kind: order
+  written: 2026-08-12, on receipt, before any fetch.
+  verbatim: >-
+    "do your on evaluation, character consistency, then generate video clips."
+  reading: >-
+    Three steps in his order, not two: I evaluate the conditioned walk with my own eyes,
+    I confirm the character holds, and only then does motion get generated. It sits on
+    his earlier standing delegation ("do some evaluation ... so i dont need to keep
+    reviewing so much") — I decide provisionally so he reviews less, and every call
+    stays his to overturn. Nothing here becomes canon.
+  consumer: this lane's Phase 1 scoring and the ep2-bNN-motion-0812 job set.
+  outcome: null
+
+- id: ep2-b19-ipa-wedge-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b19-ipa-wedge-0812
+  predicates_observed: >-
+    staging returns at the 10% window >=2/4 MISS — 0/4, and the three windows are barely
+    distinguishable from each other; identity still holds at 10% HIT 4/4; the 20% window
+    is no better staged than 15% HIT (nor worse); the coat survives at 10% HIT.
+  observed: >-
+    TIMING IS NOT THE LEVER, at least not in the band this sampler exposes. Ten, fifteen
+    and twenty percent produce the same standing portrait with the same creature in it —
+    no fig, no mid-step, at any of them. The pose is being decided in the same earliest
+    steps as the creature and rides the same signal there, so shortening the exposure
+    subtracts nothing but does not give the beat its blocking back either.
+  what_this_closes: >-
+    Three conditioning iterations have now been spent — crop scope, crop content, and
+    exposure time — which is the limit set before any of them ran. Scope moved identity
+    and costume; nothing has moved staging. Untried and NOT being tried by this lane:
+    adapter strength below 0.6. Stopping on the rule instead of turning a fourth knob.
+  the_honest_wall: >-
+    As configured, this mechanism makes a consistent character and a portrait of him. It
+    does not make a beat. That is the sentence to put in front of the founder, and it is
+    in review/ep2-picks/wave2-needs-founder.md and on the consistency page rather than
+    softened into "identity held".
+  outcome: null
