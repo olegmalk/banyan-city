@@ -11362,3 +11362,76 @@
     round to the scale knob, one variable, not to a new reference.
   consumer: review/ep2-picks/consistency-0812.html, and the go/no-go for the rest.
   outcome: null
+
+- id: ep2-b02-ipa-charref-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b02-ipa-charref-0812
+  predicates_observed: >-
+    bald 4/4 HIT (16/16); green skin 4/4 HIT (16/16, and it is the reference's PALE
+    yellow-green, not the saturated green of the unconditioned wave); reads as the
+    reference creature >=2/4 on the best ref cell HIT (r2, the three-quarter-right
+    head, ~3/4); TUSKS ABSENT >=2/4 MISS — tusks are present in roughly 13 of 16, so
+    the prompt's hardcoded `tusks` beat the tuskless reference; face refs carry
+    identity better than the body ref HIT, but not as predicted (see below); staging
+    still fails HIT — no sapling stem, no sprint, conditioning is not a stager.
+  observed: >-
+    A REFERENCE TRANSFERS WHAT IT CONTAINS, and that is the finding. The three head
+    crops (r0/r1/r2) locked the face — round skull, red eyes, long ears — and let the
+    costume roam across all four seeds (hoodie, black shirt, tunic, jacket). The body
+    crop (r3) did the exact opposite: it reproduced the reference's yellow-green
+    toggled duffle coat in 4 of 4, the single strongest transfer in the round, while
+    its faces went harsh and adult. Nothing here says influence was too weak — a coat
+    came through intact at scale 0.6 — so the next knob is what the reference SHOWS,
+    not how hard it pushes.
+  not_scored: >-
+    Cross-beat consistency, which is his actual complaint. This round measures one
+    beat across four seeds; it cannot say the creature will match in beat 07.
+  outcome: null
+
+- id: ep2-b02-ipa-cropscope-0812
+  kind: prediction
+  written: >-
+    2026-08-12, before enqueue. Iteration 1 of the allowed 3, one knob — what the
+    reference contains. Same beat, same arm, same window, same scale 0.6, same source
+    frame; only the four crops change.
+  predicates: [whole-figure ref holds BOTH face and costume >=3/4, costume identical
+    across the whole-figure row >=3/4 (the head-only row scored 0/4 on this), r0 the
+    head-only control reproduces the previous round's behaviour — face holds, costume
+    roams, tusks still present >=3/4 (the prompt does not stop winning because the
+    crop grew)]
+  basis: >-
+    r3 put a coat in 4 of 4 from a crop containing a coat; r0/r1/r2 put a face in
+    ~3/4 from crops containing a face. A crop containing the whole standing character
+    is the smallest change that could deliver both, and the round is built as a
+    scope ladder — head, head+shoulders, upper body, whole figure — so the answer is
+    a curve rather than a verdict.
+  falsifiable_by: >-
+    The whole-figure row holding neither well. Shrinking the character inside the ref
+    would then be costing detail faster than scope buys identity, and iteration 2 goes
+    to scale with the best crop from this ladder rather than to more crops.
+  consumer: the go/no-go for the remaining character beats, and review/ep2-picks/consistency-0812.html.
+  outcome: null
+
+- id: ep2-charref-guards-r3-0812
+  kind: prediction
+  written: 2026-08-12, before enqueue. The count fix, and only the count.
+  predicates: [EXACTLY ONE man per frame 4/4 (r1 and r2 each scored 0/4 on two men),
+    a usable turnaround — two or more full-length views of one man >=3/4, a face with
+    features rather than a blank mannequin >=3/4, plain brown TUNIC rather than a
+    floor-length robe >=2/4, silly harmless bureaucrat register >=2/4 (predicted MISS,
+    0/4 twice already and the count fix does not address it)]
+  basis: >-
+    Eight frames asked for two men and drew one, because `reference sheet, multiple
+    views, turnaround` means one character from several angles and r2 additionally
+    negated `no different characters` beside a two-character ask. This is the goblin's
+    r2 recipe — 4/4 full-length turnarounds — with the guard's frozen facts and a solo
+    count, run under beat 06 because `check()` faults a 1boy draft against beat 05's
+    declared 2boys. Two of the four seeds then become guard A and guard B.
+  falsifiable_by: >-
+    Blank faces surviving at solo scale. That would mean the mannequins were never the
+    pair ask crowding eight tiny figures into a frame, and the next single knob is a
+    facial-feature tag rather than another layout.
+  consumer: refs-charref-guards-0812 on the box, without which no guard beat can be
+    conditioned at all.
+  outcome: null

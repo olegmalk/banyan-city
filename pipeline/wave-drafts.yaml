@@ -1406,6 +1406,56 @@ beats:
       lighting, detailed, newest, masterpiece, best quality, very aesthetic No
       girl, no child. No photorealism, no 3D render look. 9:16 vertical, no
       text.
+    # -- `authored_charref_guards_r3` -- 2026-08-12, the consistency lane. THE
+    # GUARD REFERENCE, ROUND 3, AND IT LIVES ON BEAT 06 ON PURPOSE.
+    #
+    # WHAT THE FIRST TWO ROUNDS MEASURED. Eight frames across r1 and r2 asked for
+    # two men and drew ONE, 0/4 and 0/4. That is not a weak prompt, it is a
+    # grammar collision: `reference sheet, multiple views, turnaround` MEANS one
+    # character seen from several angles, so `Two round guard men` was read as one
+    # man drawn twice and `2boys` did not save it. r2 then negated `no different
+    # characters` beside a two-character ask -- the sheet was forbidding the very
+    # thing it was requesting. r2 also drew several faces blank.
+    #
+    # THE FIX IS TO STOP ASKING ONE IMAGE TO BE BOTH. This is the goblin's r2
+    # recipe -- the one that demonstrably produced full-length standing
+    # turnarounds in 4 of 4 -- with the guard's frozen facts and a SOLO count, so
+    # every tag in the string now agrees: `turnaround` wants one character, `1boy`
+    # declares one, `no multiple boys` and `no different characters` defend one.
+    #
+    # WHY BEAT 06 AND NOT BEAT 05. `check()` derives the count tag from the draft
+    # and faults when it disagrees with the beat's declaration, so a solo draft
+    # cannot run under beat 05's `2boys`. Beat 06 is `kind: guard`, `tag: 1boy`,
+    # `extra_neg: guard` -- the same guard negative tier, the block a solo guard
+    # sheet needs -- and it is borrowed for its MECHANICS exactly as r1 and r2
+    # borrowed beat 05's. This draws a reference, not beat 06.
+    #
+    # TWO GUARDS OUT OF ONE ROUND. The pair does not have to live inside the
+    # frame. Four seeds of a solo turnaround is a casting call: two of them become
+    # guard A and guard B, each with its own conditionable sheet, which is also
+    # the shape IP-Adapter wants -- a reference is cropped to ONE character no
+    # matter how many were drawn. The pair-ness belongs to the beat prompt, which
+    # already says two.
+    #
+    # ONE VARIABLE. The count is the change. NO face tag was added even though r2
+    # drew blank faces: the goblin's identical structure came back with faces in
+    # 4/4, so the mannequins are more likely the eight-tiny-figures crowding of a
+    # pair ask than a missing tag. If faces are still empty at solo scale, THAT is
+    # the next single knob, and this round is what makes it readable.
+    #
+    # Frozen guards identity passed through untouched (`ep2-frozen-identities-0812`):
+    # plain brown tunic, bare head, silly harmless bureaucrat register, bark
+    # clipboard. Singular where the frozen text is plural -- that is the count fix
+    # and nothing else.
+    authored_charref_guards_r3: >-
+      A round bald guard man in a plain brown tunic, reference sheet, multiple
+      views, turnaround, front view, side view, standing, silly harmless
+      bureaucrat, a bark clipboard, simple background, white background. Full
+      body, flat even lighting, cinematic lighting, detailed, newest,
+      masterpiece, best quality, very aesthetic No girl, no child, no armor, no
+      helmet, no scars, no weapon, no hood, no comic, no comic panels, no speech
+      bubble, no different characters, no different outfits, no dynamic pose, no
+      multiple boys. No photorealism, no 3D render look. 9:16 vertical, no text.
 
   7:
     slug: confiscate

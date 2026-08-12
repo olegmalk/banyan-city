@@ -1,0 +1,184 @@
+# ROUND 3 — THE GUARD REFERENCE, SOLO. One sample, four seeds, $0.
+# 2026-08-12, character-consistency lane, under his consistency mandate
+# (`ep2-consistency-mandate-0812`: "almost every beat includes the goblin or the
+# guards so i cant approve them, you need to create proper character consistency
+# ... do some evaluation ... so i dont need to keep reviewing so much").
+#
+# ── WHAT TWO ROUNDS MEASURED. Eight guard frames asked for TWO men and drew ONE:
+# 0/4 in r1, 0/4 in r2. The goblin's sheets, drawn from the same recipe on the same
+# box in the same hour, came back as clean full-length turnarounds 4/4. The
+# difference is not prompt quality, it is a grammar collision — `reference sheet,
+# multiple views, turnaround` MEANS one character seen from several angles, so
+# `Two round guard men` read as one man drawn twice and the `2boys` count tag did
+# not save it. r2 made it worse in a way worth naming: it negated `no different
+# characters` beside a two-character ask, so the sheet was banning the thing it was
+# requesting. Several r2 faces also came back blank.
+#
+# ── THE FIX IS THE COUNT, AND ONLY THE COUNT. This is the goblin's r2 recipe — the
+# one that demonstrably produced standing full-body turnarounds in 4 of 4 — carrying
+# the guard's frozen facts with a SOLO subject, so every tag in the string finally
+# agrees with every other: `turnaround` wants one character, `1boy` declares one,
+# `no multiple boys` and `no different characters` defend one.
+#
+# ── WHY THIS JOB SAYS `--beat 6`. `check()` derives the count tag from the draft
+# text and FAULTS when it disagrees with the beat's declaration (render_wave_goblin
+# .py:131), so a solo draft cannot run under beat 05's `2boys` — it would draw
+# nothing and return 1. Beat 06 is `kind: guard`, `tag: 1boy`, `extra_neg: guard`:
+# the same guard negative tier, and the only block in the drafts file that a solo
+# guard sheet can legally run under. It is borrowed for its MECHANICS exactly as r1
+# and r2 borrowed beat 05's, and its artifacts are named for that slug. THIS DOES
+# NOT DRAW BEAT 06 — beat 06's own staging (clipboard filling the lower third,
+# finger tracing, brow furrowed) is nowhere in this draft.
+#
+# ── TWO GUARDS OUT OF ONE ROUND. The pair does not have to live inside the frame.
+# Four seeds of a solo turnaround is a casting call: two of them become guard A and
+# guard B, each with its own conditionable sheet. That is also the shape the
+# mechanism wants — an IP-Adapter reference is cropped to ONE character however many
+# were drawn, so a pair sheet was never going to be conditioned on as a pair. The
+# pair-ness belongs to the beat prompt, which already says two.
+#
+# ── ONE VARIABLE, AND WHAT I DELIBERATELY DID NOT ADD. No face tag, despite r2's
+# blank faces. The goblin's identical structure came back with faces in 4/4, so the
+# mannequins are more likely the eight-tiny-figures crowding of a pair ask than a
+# missing tag. If faces are still empty at solo scale, THAT is the next single knob
+# and this round is what makes it readable. Adding both fixes at once would have
+# made neither answer legible.
+#
+# ── THE GARMENT AND THE REGISTER ARE NOT RE-OPENED. `plain brown tunic`, `silly
+# harmless bureaucrat`, bare head and the bark clipboard are the frozen guards
+# identity (`ep2-frozen-identities-0812`) passed through untouched, singular where
+# the frozen text is plural. That singular IS the count fix; nothing else moved.
+#
+# ── HONEST PRIOR, WRITTEN BEFORE THE RENDER. The count predicate should now hit
+# near 4/4 — it is the model's native sheet grammar rather than a fight with it. The
+# register (`silly harmless bureaucrats`) has scored 0/4 twice and I do not expect
+# the count fix to buy it; if r3 comes back as four solemn monks who are at least
+# ONE solemn monk each, the count is solved and the register is the open axis.
+#
+# ── ITS OWN OUT DIR (`out-charref-guards-r3`), never written by another job — the
+# fix for the shared-directory publish poisoning of commit c123d1bd.
+#
+# ── NOT A PICK, NOT CANON. Provisional under his delegated evaluation grant; his
+# morning veto stands over all of it.
+#
+# $0 — local GPU on the rtx5090, no provider, nothing published, nothing assembled.
+id: ep2-charref-guards-r3-0812
+task: ep2-charref-guards-r3-0812
+node: 002b-first-citizen
+beat: 6
+runner: box
+needs_gpu: true
+priority: 48
+max_attempts: 1
+owner: character-consistency lane, 2026-08-12 (consistency mandate, guards round 3)
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03`, read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the render
+  gate itself reads. Neither `approval_condition` touches beat 06 — the first is
+  beat 01''s grow-on-screen continuity fix, the second is a beat-18 line he decided
+  stays. This job draws a CHARACTER REFERENCE, not a beat for the episode: it
+  borrows beat 06''s block for its mechanics (kind guard, count tag 1boy, guard
+  negative tier) and its artifacts are named for that slug. Nothing it makes may be
+  carried into any beat before he points at a frame.'
+consumer: >-
+  review/ep2-picks/consistency-0812.html — the page he reviews once, guards row,
+  against r1 and r2 as the control columns. Downstream: the two crops that become
+  refs-charref-guards-0812 on the box, which is what the first guard-beat
+  conditioning test (beat 06) has to have before it can run at all.
+success: >-
+  Four PNGs at C:\banyan-farm\wave-goblin-prep\out-charref-guards-r3\06-the-clipboard-wave1-s0..3.png
+  with their .yaml provenance sidecars written at render time (7.2), all eight
+  declared as artifacts so a missing one fails rc=92 instead of passing quietly.
+  Success is that the frames are readable and comparable — NOT that the count held.
+  "Even solo, the guard is a faceless monk" is a successful run of this job.
+why: >-
+  Two rounds of asking one image to be both a turnaround and a pair produced zero
+  usable guard references, and every guard beat in the episode is blocked behind
+  one. The mechanism needs a single conditionable character; this is the cheapest
+  ask that can produce one.
+goblin_def: green skin, bald head, patchwork cloak
+goblin_def_source: >-
+  Passed for consistency with every other guard-beat job in this wave and
+  substituted nowhere: beat 06 is `kind: guard` and this draft carries no {{GOBLIN}}
+  slot, so this string reaches no prompt. `--goblin-def` is mandatory at the harness
+  (it refuses its own default), and it is recorded here so the sidecar's definition
+  field is not silently different from the guard beats it will be compared against.
+est_minutes: 4
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '6'
+  - --goblin-def
+  - green skin, bald head, patchwork cloak
+  - --variant
+  - authored_charref_guards_r3
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '6'
+  - --goblin-def
+  - green skin, bald head, patchwork cloak
+  - --variant
+  - authored_charref_guards_r3
+  - --out
+  - C:\banyan-farm\wave-goblin-prep\out-charref-guards-r3
+  - --task
+  - ep2-charref-guards-r3-0812
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-charref-guards-r3-0812"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/wave-goblin-prep/out-charref-guards-r3/06-the-clipboard-wave1-s*.*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+        print("   ", os.path.basename(f), h[:16])
+    with open(os.path.join(dst, "ep2-charref-guards-r3-0812.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) == 8 else 1)
+artifacts:
+- C:\banyan-farm\wave-goblin-prep\out-charref-guards-r3\06-the-clipboard-wave1-s0.png
+- C:\banyan-farm\wave-goblin-prep\out-charref-guards-r3\06-the-clipboard-wave1-s1.png
+- C:\banyan-farm\wave-goblin-prep\out-charref-guards-r3\06-the-clipboard-wave1-s2.png
+- C:\banyan-farm\wave-goblin-prep\out-charref-guards-r3\06-the-clipboard-wave1-s3.png
+- C:\banyan-farm\wave-goblin-prep\out-charref-guards-r3\06-the-clipboard-wave1-s0.yaml
+- C:\banyan-farm\wave-goblin-prep\out-charref-guards-r3\06-the-clipboard-wave1-s1.yaml
+- C:\banyan-farm\wave-goblin-prep\out-charref-guards-r3\06-the-clipboard-wave1-s2.yaml
+- C:\banyan-farm\wave-goblin-prep\out-charref-guards-r3\06-the-clipboard-wave1-s3.yaml
