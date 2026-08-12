@@ -11216,3 +11216,36 @@
     than r1 on the goblin (a comparison, scored on the pair, not a ranking of taste)]
   consumer: review/SHEETS/char-refs-0812.html — r1 and r2 both on the page, labelled.
   outcome: null
+
+- id: ep2-charref-goblin-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-charref-goblin-0812
+  predicates_observed: >-
+    three or more views in frame >=3/4 HIT (s0 four, s1 four, s2 five, s3 only two);
+    bald 4/4 HIT; green skin 4/4 HIT; no scars or stitches >=3/4 HIT (4/4, every
+    scalp and cheek clean); one single eye colour within each frame 4/4 HIT (red
+    throughout); plain white or simple background >=3/4 HIT (4/4); no girl reading
+    4/4 HIT; the views within a frame read as the SAME individual <=2/4 MISS — it
+    holds in 4 of 4, which is the opposite of what was predicted.
+  observed: >-
+    The prediction's headline was wrong in the direction that matters. I predicted a
+    plain SDXL path could not keep one individual across the views of a turnaround
+    and would draw cousins; every seed came back internally consistent — the front,
+    side and three-quarter heads in each frame are recognisably one creature. The
+    external research had it right and my architectural pessimism did not: identity
+    holds WITHIN one image, and it is ACROSS renders that it fails. This also means
+    the beat-to-beat drift he is complaining about was never evidence that the model
+    cannot hold a face; it is evidence that nothing was carrying the face from one
+    render to the next.
+  what_this_corrects: >-
+    The basis line of `ep2-charref-goblin-0812` reasoned from "no ControlNet, no
+    IP-Adapter, therefore no identity constraint". That inference is retired: the
+    constraint inside a single image is the image itself, and a turnaround is
+    therefore a legitimate way to MAKE a reference, not merely to ask for one.
+  not_scored: >-
+    Costume varies seed to seed (duffle coat, plain shirt, olive shirt, white shirt).
+    That is by design — the cloak was left out of the slot so the body could be
+    judged — so it is reported, not scored. Two frames also carry a stray extra head
+    in a corner, and s3 gives no front view at all.
+  outcome: null
