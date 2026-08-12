@@ -5896,6 +5896,90 @@ def test_a_log_it_could_not_read_is_not_a_day_with_no_work():
         bs.FETCH_ERRORS[:] = saved
 
 
+def test_the_queue_is_reported_in_time_and_never_guessed():
+    """"i should be able to see how long the queue is in time as well" — Roman,
+    2026-08-12.
+
+    Two things have to stay true of that number. It is DERIVED at build time
+    from the counts the supervisor measured, so a tick that rewrites
+    ready/running and leaves the median alone still moves the estimate instead
+    of printing a total nobody recomputed — the reason the estimate is not a
+    stored field beside the counts. And it is never invented: with no snapshot,
+    or a snapshot carrying no measured median, the page says which of the two
+    is missing rather than showing a plausible figure. That second half is the
+    infra meter's contract, arriving at its third place on this page.
+    """
+    import datetime
+    import build_sim as bs
+
+    snap = {"measured_at": "2026-08-12 12:42Z", "ready": 3, "running": 1,
+            "queued_kinds": {"ltx": 3, "still": 1},
+            "kind_medians": {"ltx": 5.0, "still": 1.0},
+            "kind_median_fallback": 3.0,
+            "median_from": "the 248 jobs the box finished"}
+    eta = bs.box_queue_eta(snap)
+    check("three motion takes and a stills batch is sixteen minutes of work",
+          eta["jobs"] == 4 and eta["est_minutes"] == 16
+          and eta["basis"] == "kinds")
+
+    # WHY PER KIND AT ALL: the same four jobs the other way round is a
+    # different afternoon, and one pooled median cannot tell them apart.
+    flipped = bs.box_queue_eta({**snap, "queued_kinds": {"ltx": 1, "still": 3}})
+    check("...and the same four jobs of the other kinds is not the same wait",
+          flipped["est_minutes"] == 8)
+
+    # THE STALENESS THE SHAPE EXISTS TO PREVENT: the tick moves the counts and
+    # nothing else, and the time moves with them.
+    ticked = bs.box_queue_eta({**snap, "ready": 8, "queued_kinds": None,
+                               "measured_at": "2026-08-12 13:10Z"})
+    check("a tick that only moves the counts moves the estimate with them",
+          ticked["est_minutes"] == 27 and ticked["basis"] == "rough")
+    check("...and a fallback estimate is labelled as the rough thing it is",
+          "rough" in bs.queue_time_basis(ticked))
+
+    # A MIX THAT DOES NOT ACCOUNT FOR EVERY JOB is a reading of a queue that
+    # has moved since. Falling back beats reporting a total for three of four.
+    partial = bs.box_queue_eta({**snap, "queued_kinds": {"ltx": 3}})
+    check("a kind mix that does not add up to the count is not trusted",
+          partial["basis"] == "rough" and partial["est_minutes"] == 12)
+
+    check("no medians measured at all, no time claimed",
+          bs.box_queue_eta({**snap, "kind_medians": None,
+                            "kind_median_fallback": None})["est_minutes"] is None)
+    check("...and its words are empty, so no caller can print a bare number",
+          bs.queue_time_words(bs.box_queue_eta(
+              {**snap, "kind_medians": {}, "kind_median_fallback": 0})) == "")
+    check("an unreadable snapshot is not a queue of length zero",
+          bs.box_queue_eta({}) is None and bs.box_queue_eta(None) is None)
+    check("an empty queue is a real zero and is allowed to say so",
+          bs.queue_time_words(bs.box_queue_eta({**snap, "ready": 0, "running": 0,
+                                                "queued_kinds": {}}))
+          == "nothing queued")
+
+    # The shipped snapshot must satisfy the reader it was written for.
+    live = bs.box_queue_eta(bs.read_box_queue())
+    check("the snapshot in the repo parses into an estimate or an honest gap",
+          live is None or live["est_minutes"] is None
+          or live["est_minutes"] >= 0)
+
+    now = datetime.datetime(2026, 8, 12, 13, 0, tzinfo=datetime.timezone.utc)
+    view = {"fin": [], "live": [], "unread": [], "last_activity": None,
+            "by_id": {}, "hero": {"number": 1, "watch": "/watch"},
+            "tot": {"final": 15, "total": 15}, "ep2": None, "inbox": [],
+            "boxq": eta}
+    check("the glance at the top answers it in time, not only in jobs",
+          "~16 min" in bs.summary_strip(view, now))
+    blind = bs.summary_strip({**view, "boxq": None}, now)
+    check("...and with no snapshot to read it says so and prints no time",
+          "not read" in blind and "of work queued" not in blind)
+    timeless = bs.summary_strip(
+        {**view, "boxq": bs.box_queue_eta({**snap, "kind_medians": {},
+                                           "kind_median_fallback": 0})}, now)
+    check("...and with counts but nothing measured it still shows the counts",
+          "no job times have been measured" in timeless
+          and "of work queued" not in timeless)
+
+
 # ====================================================================== #
 # A CONCATENATION MUST NOT LAUNDER WHAT WENT INTO IT
 # — composite-provenance-manifest-1786218000
@@ -7201,6 +7285,7 @@ def main():
     test_an_age_counts_from_the_line_not_from_the_push()
     test_a_rate_limited_build_can_still_see_hand_work()
     test_a_log_it_could_not_read_is_not_a_day_with_no_work()
+    test_the_queue_is_reported_in_time_and_never_guessed()
     # A CONCATENATION MUST NOT LAUNDER ITS INPUTS — own temp dir each: these
     # rewrite and delete source clips under a manifest that names them.
     with tempfile.TemporaryDirectory() as td:

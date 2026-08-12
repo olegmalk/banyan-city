@@ -1,5 +1,70 @@
+# The render box's own on-disk queue, as last measured by a supervisor tick.
+# Read by build_sim.py (read_box_queue / box_queue_eta) for the status page's
+# "Queued for a machine" section and the queue cell in the glance at the top.
+#
+# WHAT A TICK REWRITES, and it is only these:
+#   measured_at   UTC stamp of the reading. NO STAMP, NO CLAIM — the page says
+#                 "not read" rather than print a zero it did not measure.
+#   ready         jobs sitting in the box's queue directory, unclaimed
+#   running       jobs the box is rendering right now
+#   done_today    finished since local midnight, for the tick's own reporting
+#   source        how the reading was taken, in one line
+#   queued_kinds  OPTIONAL, and the difference between a good estimate and a
+#                 rough one. A map of kind → how many of that kind are queued,
+#                 counting ready AND running. The kinds are the ones
+#                 box_job_minutes.py names, read the same way: off the scripts
+#                 a job's steps actually run, not off its id —
+#                   ltx      a step runs ltx_i2v.py            (a motion take)
+#                   still    render_wave_sample.py / runpod_render.py
+#                   charref  goblin_ipa_beat.py                (character refs)
+#                   inpaint  inpaint_fruit.py
+#                   other    anything else
+#                 The counts must add up to ready + running. If they do not,
+#                 build_sim ignores the whole mix and falls back — a mix that
+#                 does not account for every job is a reading of a queue that
+#                 has since moved. Leave the key out entirely when the tick
+#                 cannot tell; the fallback is honest and says it is rough.
+#
+# WHAT A TICK MUST LEAVE ALONE unless it has actually re-measured it:
+#   kind_medians          median wall-clock minutes per kind
+#   kind_median_fallback  the pooled median, for a queue of unknown kinds
+#   median_from           plain-English provenance, printed on the page
+#   median_measured_at    when those medians were last computed
+#
+# There is deliberately NO est_queue_minutes field. The estimate is the kind
+# mix multiplied by the medians (or, failing that, the job count times the
+# fallback) and build_sim derives it at BUILD time, so a tick that moves the
+# counts and leaves the medians alone still moves the estimate. A stored total
+# would keep printing last night's depth against this morning's counts — the
+# stale-meter failure the infra tile exists to prevent, one file over. Delete
+# the medians and the page says it cannot time the queue; it never guesses.
+#
+# Known bias, stated because the page rounds and a reader cannot see it: a
+# RUNNING job is counted whole, so the estimate is long by however much of it
+# has already rendered — at most one job. It is an upper bound on the wait,
+# which is the direction to be wrong in.
+#
+# HOW THE MEDIANS WERE MEASURED (2026-08-12, `python3 pipeline/box_job_minutes.py`):
+# from the per-job sidecars farm-out/box/<id>.json on origin/farm-results-rtx5090,
+# which carry `started_at` and `finished_at` written by the runner — 248 of 248
+# jobs have both. NOT from the step logs: the courier tail-truncates those at
+# 200 lines and 135 of 252 have lost the start line they open with, and the
+# jobs that overflow 200 lines are the long chatty ones, so a median off what
+# survives is biased fast. Pooled, "the median job" is not a real quantity — it
+# moves between ~1 and ~5 min on window choice alone. Per kind it is steady,
+# which is why the page multiplies per kind: ltx n=95 (3.9–9.2), still n=99,
+# charref n=23, inpaint n=4, other n=27.
 measured_at: 2026-08-12 12:42Z
 ready: 1
 running: 1
 done_today: 44
 source: ssh rtx5090 dir C:\banyan-queue (supervisor tick)
+kind_medians:
+  charref: 2.9
+  inpaint: 2.0
+  ltx: 4.7
+  other: 0.9
+  still: 0.9
+kind_median_fallback: 2.8
+median_from: the 248 jobs the box finished 10-12 Aug
+median_measured_at: 2026-08-12

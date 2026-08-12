@@ -163,6 +163,12 @@ SITE_INPUTS=(
   # read at build time for the founder's inbox on the status page.
   # build_status.py:227.
   pipeline/pending-founder.yaml
+  # the dated measurements the status page's footprint section prints
+  # (render-bandwidth.yaml, local-disk.yaml — build_sim.render_bandwidth() /
+  # local_disk()). Found missing by the 2026-08-11 status audit: a push that
+  # only refreshed these never rebuilt the live page, so "measurements with
+  # dates" aged invisibly in production while claiming freshness.
+  pipeline/measured
   # the render queue the status page reports. build_sim.py:282.
   pipeline/farm-queue.yaml
   # the only history the /pulse graphs have. build_pulse.py:CACHE.

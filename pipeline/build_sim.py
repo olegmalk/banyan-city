@@ -1117,6 +1117,125 @@ def box_queue_depth(records: list):
     return best
 
 
+def read_box_queue() -> dict:
+    """The supervisor's snapshot of the render box's own on-disk queue, or {}.
+
+    Unreadable, absent or unparseable all come back the same way — empty — and
+    every caller below treats empty as "say nothing", never as zero.
+    """
+    try:
+        import yaml as _yaml
+        with open(REPO / "pipeline/measured/box-queue.yaml", encoding="utf-8") as fh:
+            doc = _yaml.safe_load(fh) or {}
+        return doc if isinstance(doc, dict) else {}
+    except Exception:
+        return {}
+
+
+def box_queue_eta(bq: dict):
+    """The queue's depth in TIME, worked out at BUILD time and never stored.
+
+    Roman, 2026-08-12: "on the banyan.city/status website i should be able to
+    see how long the queue is in time as well."
+
+    WHY THE ARITHMETIC IS HERE AND NOT IN THE FILE. A supervisor tick rewrites
+    `ready`, `running` and `measured_at` every few minutes and does not
+    re-measure anything else, so a total stored beside them would keep printing
+    an old depth against fresh counts — the stale-meter failure the infra tile
+    exists to prevent, moved one file over. Derived here, a tick that only
+    moves the counts still moves the estimate.
+
+    WHY IT IS PER KIND. Pooled over everything the box runs, "the median job"
+    is not a quantity: it swings between roughly one minute and five on nothing
+    but which window you take it over, because a motion take and a publish step
+    are both "a job". Per kind the same measurements are steady — LTX takes sat
+    at 4.7 min across 95 of them, stills at 0.9 across 99 — so when the
+    snapshot says WHAT is queued this multiplies each kind by its own median.
+    The kind counts have to account for every queued job before they are
+    trusted; a mix that does not add up to ready+running is a snapshot written
+    against a queue that has since moved, and it falls back rather than
+    reporting a total for jobs it cannot see.
+
+    WHAT IT REFUSES. No medians in the file, no estimate: `est_minutes` comes
+    back None with `basis` None and the caller says so in words. `basis` is
+    "kinds" for the per-kind sum and "rough" for the fallback, and the page
+    must say which — an estimate that hides how coarse it is invites being read
+    as a measurement.
+    """
+    if not isinstance(bq, dict) or not bq.get("measured_at"):
+        return None
+
+    def _num(v):
+        try:
+            f = float(v)
+            return f if f > 0 else 0.0
+        except (TypeError, ValueError):
+            return 0.0
+
+    def _int(key):
+        try:
+            return max(0, int(bq.get(key) or 0))
+        except (TypeError, ValueError):
+            return 0
+
+    ready, running = _int("ready"), _int("running")
+    jobs = ready + running
+    med = bq.get("kind_medians")
+    med = {str(k): _num(v) for k, v in med.items()} if isinstance(med, dict) else {}
+    fallback = _num(bq.get("kind_median_fallback"))
+    kinds = bq.get("queued_kinds")
+    kinds = ({str(k): max(0, int(v)) for k, v in kinds.items()
+              if str(v).lstrip("-").isdigit()} if isinstance(kinds, dict) else {})
+
+    est, basis = None, None
+    if jobs and kinds and sum(kinds.values()) == jobs and (med or fallback):
+        total = sum(n * (med.get(k) or fallback) for k, n in kinds.items())
+        if total > 0:
+            est, basis = round(total), "kinds"
+    if est is None and jobs and fallback:
+        est, basis = round(jobs * fallback), "rough"
+    return {
+        "ready": ready, "running": running, "jobs": jobs,
+        "kinds": kinds, "medians": med, "fallback": fallback or None,
+        "est_minutes": est if jobs else (0 if (med or fallback) else None),
+        "basis": basis,
+        "sample": str(bq.get("median_from") or "").strip(),
+        "measured_at": str(bq.get("measured_at")),
+    }
+
+
+def queue_time_words(eta: dict) -> str:
+    """'about 1.2 h of work queued' · '' when the page may not put a time on it.
+
+    Empty string is a real answer here and the caller must print something else
+    in its place — never a bare number and never a zero standing in for a
+    missing measurement.
+    """
+    if not eta or eta.get("est_minutes") is None:
+        return ""
+    if eta["jobs"] == 0:
+        return "nothing queued"
+    return f"{hours_words(max(1, eta['est_minutes']))} of work queued"
+
+
+def queue_time_basis(eta: dict) -> str:
+    """The one clause that says how good the number above it is.
+
+    Every estimate on this page carries its own provenance in the same
+    sentence, because the reader cannot go and check the box.
+    """
+    if not eta or not eta.get("basis"):
+        return ""
+    if eta["basis"] == "kinds":
+        mix = ", ".join(f"{n} {k}" for k, n in sorted(eta["kinds"].items()))
+        base = f"each queued job timed against others of its kind ({mix})"
+    else:
+        base = ("a rough one: the snapshot does not say what kind of jobs these "
+                f"are, so it is {hours_words(max(1, round(eta['fallback'])))} "
+                "a job across everything the box runs")
+    return base + (f", from {eta['sample']}" if eta["sample"] else "")
+
+
 # ---- the queue's states ------------------------------------------------------
 # The entry-by-entry record LEFT this page in the 2026-08-11 revamp: it was a
 # file dump styled as a page, and its one honest job — "diff me against the
@@ -2245,6 +2364,8 @@ def summary_strip(view: dict, now) -> str:
       hero/tot       the episode player facts (build_status)
       ep2            the next episode's counts, or None
       inbox          the author's decision queue
+      boxq           box_queue_eta() — the render box's queue depth in jobs and
+                     in time, or None when its snapshot could not be read
     """
     fin, live, unread = view["fin"], view["live"], view["unread"]
     last, inbox = view["last_activity"], view["inbox"]
@@ -2302,10 +2423,43 @@ def summary_strip(view: dict, now) -> str:
                  f'<span class="sn ok">\u25b6 watch</span>'
                  f'<span class="sl">{ep_bits}</span></a>')
 
+    # --- cell 4: how long the queue is IN TIME, which is what the founder
+    # asked the strip for (2026-08-12) and what a count alone cannot answer \u2014
+    # "2 queued" is a minute or an hour depending on what the two are. The
+    # count keeps top billing because it is measured; the time is derived from
+    # it and says so. No snapshot, or no median to multiply it by, and the cell
+    # states which of the two is missing rather than printing a plausible
+    # number.
+    eta = view.get("boxq")
+    if eta and eta["est_minutes"] and eta["jobs"]:
+        queue_cell = (f'<a class="sx" href="#worklist"><span class="sn">~'
+                      f'{_e(hours_words(max(1, eta["est_minutes"])))}</span>'
+                      f'<span class="sl">of work queued on the render box \u00b7 '
+                      f'{eta["running"]} rendering, {eta["ready"]} waiting \u00b7 '
+                      + ('an estimate, and a rough one: a median job times '
+                         'the count' if eta["basis"] == "rough" else
+                         'an estimate, each job timed against past jobs of '
+                         'its kind')
+                      + '</span></a>')
+    elif eta and eta["jobs"]:
+        queue_cell = (f'<a class="sx" href="#worklist"><span class="sn">'
+                      f'{eta["jobs"]}</span><span class="sl">jobs on the '
+                      'render box \u00b7 no job times have been measured, so this '
+                      'page will not say how long that is</span></a>')
+    elif eta:
+        queue_cell = ('<a class="sx" href="#worklist"><span class="sn zero">0'
+                      '</span><span class="sl">nothing queued on the render '
+                      'box as of its last measured snapshot</span></a>')
+    else:
+        queue_cell = ('<a class="sx" href="#worklist"><span class="sn none">not '
+                      'read</span><span class="sl">the render box\u2019s queue '
+                      'snapshot could not be read this build, so its depth is '
+                      'not claimed either way</span></a>')
+
     return (
         '<div class="strip rise">'
         '<p class="sh">At a glance</p>'
-        f'<div class="sgrid">{alive_cell}{made_cell}{show_cell}</div>'
+        f'<div class="sgrid">{alive_cell}{made_cell}{queue_cell}{show_cell}</div>'
         f'<p class="sfoot">A snapshot as of <b>{now.strftime("%H:%M")} UTC, '
         f'{now.strftime("%d %b")}</b> — the moment this page was built and the '
         'machines\u2019 own logs were last read. Nothing here claims to be '
@@ -2362,6 +2516,11 @@ def build(out_dir: Path):
     live = live_now(records, now)
     fin = finished_recent(records, now)
     depth = box_queue_depth(records)
+    # ONE read of the box snapshot, shared by the glance at the top and the
+    # work list below it — the strip's standing rule is that it cannot
+    # contradict the section it links to, and two reads of one file eventually
+    # do.
+    boxq = box_queue_eta(read_box_queue())
     last_activity = max((m["history"][0][0] for m in records if m["history"]),
                         default=None)
 
@@ -2369,7 +2528,8 @@ def build(out_dir: Path):
     strip = summary_strip({
         "fin": fin, "live": live, "unread": logs_unread(),
         "last_activity": last_activity, "by_id": by_id, "hero": hero,
-        "tot": tot, "ep2": data.next_episode(), "inbox": inbox}, now)
+        "tot": tot, "ep2": data.next_episode(), "inbox": inbox,
+        "boxq": boxq}, now)
 
     # --- the grove: 15 leaves, each one an actual scene you can go look at.
     leaves = ""
@@ -2541,22 +2701,28 @@ def build(out_dir: Path):
         # production queue (2026-08-10); a supervisor writes a measured
         # snapshot of it. Prefer that with its own timestamp — a zero from the
         # shared file alone reads as "idle" during a fully-loaded night.
-        bq = {}
-        try:
-            import yaml as _yaml
-            with open("pipeline/measured/box-queue.yaml", encoding="utf-8") as fh:
-                bq = _yaml.safe_load(fh) or {}
-        except Exception:
-            bq = {}
-        if bq.get("measured_at"):
-            n_ready = int(bq.get("ready", 0))
-            n_running = int(bq.get("running", 0))
+        if boxq:
+            # HOW LONG THAT IS, in time (Roman, 2026-08-12). The estimate says
+            # what it is made of in the same breath it is given: a count the
+            # supervisor measured times a median off the box's own finished
+            # jobs. Where the median is missing the sentence says the page
+            # cannot time the queue — it never falls back to a guess.
+            words = queue_time_words(boxq)
+            if words and boxq["jobs"]:
+                timing = (f' · an estimated ~{_e(words)}, '
+                          f'{_e(queue_time_basis(boxq))}')
+            elif boxq["jobs"]:
+                timing = (' · how long that is in time is not estimated here: '
+                          'no median job time has been measured off the box’s '
+                          'own finished jobs')
+            else:
+                timing = ""
             queued_html = (f'<h3>⏭ Queued for a machine <span class="count">'
-                           f'{n_ready + n_running}</span></h3>'
+                           f'{boxq["jobs"]}</span></h3>'
                            f'<p class="notice">The render box’s own queue: '
-                           f'{n_running} rendering, {n_ready} waiting · '
-                           f'measured {_e(str(bq["measured_at"]))}. The shared '
-                           f'queue file has nothing runnable.</p>')
+                           f'{boxq["running"]} rendering, {boxq["ready"]} waiting'
+                           f'{timing} · measured {_e(boxq["measured_at"])}. The '
+                           f'shared queue file has nothing runnable.</p>')
         else:
             box_note = (' The render box also keeps its own on-disk queue between '
                         'pushes — its last idle report above is the only honest '

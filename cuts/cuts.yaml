@@ -1414,18 +1414,20 @@ checklist:
     # dressed as a screening surface. The ask this card really carries is
     # item 20's, and it says so.
     - n: 24
-      ask: "v35 is cut, and today's sixteen re-draws cannot be shown to you. Item 20 is why."
-      state: open
-      chip: "ON US"
+      ask: "v35 was the cut before the one you published. Kept as the record."
+      state: gap
+      chip: "RECORD"
       minutes: 2
       summary: >-
-        **A whole new cut of episode 1 exists** — 89.2 seconds, fifteen beats,
-        no slates — and **sixteen more clips were drawn today** on the beats it
-        is weakest on. **You cannot watch any of it on this page.** Every one of
-        them is LTX footage and the licence gate refuses LTX until you answer
-        item 20. This card is here so the work is not invisible while it waits.
+        **A whole new cut of episode 1 existed** — 89.2 seconds, fifteen beats,
+        no slates — with sixteen more clips drawn on its weakest beats. When this
+        card was written you could not watch any of it: the licence gate refused
+        LTX footage until you ruled. **You ruled yes on 2026-08-11 and then
+        published episode 1**, so the block is gone and this cut is no longer the
+        newest — the canon episode on the watch page is. It stays here for the
+        beat-by-beat faults named below, which is why it was written.
       where: "`review/provisional-v35/ep1-v35-PROVISIONAL.mp4` and `review/v34-plate-reseeds/` on this machine — and `review/provisional-v35/README.md`, which names the defect in every one of the five swapped beats"
-      how: "nothing here, unless you want it prioritised. The unblocking answer is item 20"
+      how: "nothing needed — the published episode has overtaken it. Beat 6 on item 10 is the live one"
       body: |-
         **WHAT v35 IS.** v34 with five beats swapped for *plate twins* — the same
         renders with the conditioning image prepared properly instead of
@@ -1468,29 +1470,29 @@ checklist:
         recipes, new seeds. They are candidates for a v36, not a cut yet, and
         nobody has picked among them. $0, local GPU, no money rail touched.
 
-        **WHY THIS CARD ASKS YOU FOR NOTHING.** All seventeen files are LTX-2.3
-        output, and LTX's licence keeps its output off anything we publish —
-        **D16, open, yours, and it is item 20.** One word there turns this card
-        and item 19 into things you can actually watch. Until then they are
-        paths on a laptop and this page will not pretend otherwise.
-      pending: >-
-        **Nothing on this card can be shown here and that is the licence gate
-        working, not a missing render.** v35 and all sixteen re-draws exist, are
-        complete, and are refused. Item 20 is the only thing between them and
-        this page.
+        **WHY THIS CARD ASKED YOU FOR NOTHING, and what changed.** All seventeen
+        files are LTX-2.3 output, and when this was written LTX's licence kept
+        its output off anything we publish — D16, open, yours, and it was item
+        20. **You answered it on 2026-08-11 and then published episode 1 on that
+        very footage**, so the gate is no longer what is holding these back.
+        Nothing is: they were candidates for a v36 that the published cut has
+        since overtaken, and they stay on the laptop because nobody picked among
+        them, not because they are refused.
     - n: 19
-      ask: "Episode 1, v34 — all fifteen beats, no slates."
-      state: open
-      chip: "SCREEN"
-      minutes: 2
+      ask: "Episode 1, v34 — SCREENED AND PUBLISHED. This is the record of it."
+      state: settled
+      chip: "PUBLISHED"
+      minutes: 1
       summary: >-
-        Ninety seconds, every beat on a real picture. Fourteen of the fifteen are
-        frames you chose. Seven of the fifteen barely move, so we started
-        re-animating them overnight — and **the motion score came back HIGHEST on
-        the beat where the plant falls over**, which is why no wave was chained
-        behind it.
-      where: "`review/provisional-v34/ep1-v34-PROVISIONAL.mp4` on this machine — the cut and the adjacency strip are both refused by the licence gate, and why is on the card"
-      how: "watch it and say what is wrong, or answer beat 6 on item 10 and we rebuild"
+        Ninety seconds, every beat on a real picture, fourteen of the fifteen on
+        frames you chose. **You watched this line of cuts on 2026-08-11 and said
+        publish**, and episode 1 went canon the same hour — ninety-four seconds,
+        fifteen beats — where anyone can watch it. What stays true and unfixed:
+        scene 6 is still the frame you refused (item 10), and the overnight
+        re-animation scored HIGHEST on the beat where the plant falls over, which
+        is why no wave was ever chained behind it.
+      where: "the published episode on the watch page — the provisional v34 file stays on the machine as the record"
+      how: "nothing needed. Beat 6 on item 10 is the one thing in it still not yours"
       body: |-
         **2026-08-09:** *"no notes for v33, i'll wait for the version with all the
         fixed images."* **This is that version.**
@@ -1682,17 +1684,28 @@ checklist:
     # card is DECISIONS.md D16, read end to end three times against the primary
     # text with nothing changed by any of the three readings.
     - n: 20
-      ask: "LTX clips on the site — one yes or no."
-      state: open
-      chip: "YES / NO"
-      minutes: 1
+      ask: "LTX clips on the site — ANSWERED. Yes, and episode 1 shipped on it."
+      state: answered
+      answered: 2026-08-11
+      answer: >-
+        YES. You cleared it on the morning of 2026-08-11 (D16 resolved — the
+        licence registry records the LTX-2 Community License against your name
+        and that date), and the same afternoon you watched the assembled cut and
+        said publish. Episode 1 went canon that hour on LTX footage: ninety-four
+        seconds, fifteen beats, and it is the film playing on the public watch
+        page right now. The three duties below are ours and are being kept.
+      chip: "ANSWERED"
+      minutes: 0
       summary: >-
-        This has been buried inside two other cards and you have passed it twice.
-        It is on its own now because one word from you moves real footage onto
-        this page.
-      where: "nothing to watch — this card IS the question"
-      how: "yes, or no, or name what you want checked first"
+        Answered yes on 2026-08-11 and the footage moved the same day — episode 1
+        is published on LTX clips. This card stays as the record of what a yes
+        committed us to.
+      where: "the published episode itself, on the watch page — that is the yes in effect"
+      how: "nothing needed; the three duties below are ours to keep, not yours"
       body: |-
+        **ANSWERED YES, 2026-08-11.** What follows is the case as it was put to
+        you, kept because the three duties a yes puts on us are still live.
+
         **ONE PARAGRAPH, then what it costs.** LTX-2.3 is the model that drew the
         motion you called *"just amazing"*. Its licence lets us use it **for any
         purpose**, worldwide, commercially, free until this project earns

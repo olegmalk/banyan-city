@@ -53,6 +53,21 @@ every push to main). Read `PROMISE.md` first — it is canonical. Then
   while hand-rolling diffusers memory management the community had already
   fixed. Dispatch research subagents at papers, repos and issue threads and wait
   for them; reasoning about our own codebase is not research.
+- **MACHINE WORK IS SCHEDULED BY DEPENDENCIES, NOT HUMAN HOURS — the GPU is
+  never idle while a runnable job exists** (Oleg — dad, 2026-08-05): "wtf, why
+  overnight again. get to work already." On 2026-08-04 the GPU measured 0%
+  utilization while a download trickled and two zero-dependency jobs — a LoRA
+  sample and a bake off already-local weights — sat unfired; the same week a test
+  matrix was filed under "tomorrow" with the card free that night (Oleg caught
+  it, the tests ran immediately and passed) and an already-approved fp8 bake was
+  deferred to "tomorrow's first task" until he re-ordered it. Founder screening
+  gates PUBLICATION and taste verdicts; it does not gate rendering, measuring or
+  staging that needs no human present. Chain queued work on sentinels — when X
+  lands, Y fires — never on "when someone's awake"; batch finished results for
+  one review pass instead of pausing the machine to wait for a look; "tomorrow"
+  and "overnight" are valid only when a physical dependency (download, delivery,
+  another job on the device) sets the time. If a job can start now it starts now,
+  and the report says so.
 - **Spend guards are code:** `pipeline/budget.yaml` caps ($/run and lifetime);
   `generate_shots.py` refuses without explicit `--yes` and logs to
   `ledger/render-spend.csv`. A FAL key may exist in gitignored `.env` — its
@@ -72,6 +87,8 @@ every push to main). Read `PROMISE.md` first — it is canonical. Then
 | `python3 pipeline/lint_genome.py` | structural honesty gate (CI runs it too) |
 | `python3 pipeline/test_pipeline.py` | 28 pure-logic tests (CI) |
 | `python3 pipeline/build_site.py` | genomes → `_site/` (deployed on push). **Site work: read `SITE.md` first** |
+| `python3 pipeline/serve_local.py [root=_site] [port=8787]` | screening server; resolves paths as production does (cleanUrls). Use this one — a stock `http.server` 404s every clean URL, and a hand-rolled one served `/watch` as a file listing |
+| `python3 pipeline/qa_local.py [--no-build] [--base URL]` | **screening gate — run before handing anyone a local URL.** Runs all 3 builders, then sweeps every route `_site/` exposes (clean, `.html` and `dir/` forms) and content-checks the load-bearing pages. Exit 0 + `QA-GATE: PASS routes=N`, else nonzero |
 | `python3 pipeline/render_t1.py sapling <id>` | script → storyboard leaf |
 | `python3 pipeline/render_t2.py sapling <id>` | storyboard → silent animatic (needs playwright chromium; portable path fallback) |
 | `python3 pipeline/render_t3.py sapling <id> --clips <dir> [--out x.mp4]` | per-beat clips → captioned 9:16 episode w/ title+end cards; slate for missing beats; muxes `NN-vo.mp3` audio in sync; `--out` = bench, no leaf |
