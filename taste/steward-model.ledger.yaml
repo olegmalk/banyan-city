@@ -10688,3 +10688,173 @@
     adjacency was moved away from harm rather than redirected to use. s3 has him
     biting a green gourd.
   outcome: null
+
+- id: ep2-b10-idfix-r2-0812
+  kind: prediction
+  folded_from: pipeline/jobs/ep2-b10-idfix-r2-0812.prediction.yaml (verbatim)
+  written: 2026-08-12, the fixer lane, before enqueue. Box dry 74/77 positive, anchor intact, negative 76 -> sent 76.
+  answers: >-
+    A shirtless bodybuilder in place of the brown tunic (s0), a floating
+    disembodied head where the second guard belongs (s1), and the second guard
+    drawn onto the clipboard instead of standing there (s2).
+  predicates:
+  - every visible figure is clothed, no bare chest, 4/4
+  - the tunic reads brown >=2/4 (honest number: the ban removes the topless failure mode, it does not by itself paint the tunic brown)
+  - no floating or disembodied head 4/4 -- this is the SECOND test of the `round`/`bald` adjacency, independent of beat 09, and the two should agree
+  - soft rather than bodybuilder build >=3/4
+  - no armor, no helmet 4/4; sunny field 4/4; a clipboard present 4/4
+  falsifiable_by: >-
+    A floating head surviving here while beat 09 clears would say the adjacency fix
+    is beat-shaped, not lexical. A bare chest surviving an explicit ban would say
+    the topless prior is stronger than the negative can reach on this checkpoint.
+  not_under_test: >-
+    Getting two guards drawn as two people. `2boys` is already sent and already
+    failing; that is logged for the founder rather than quietly attempted here.
+  consumer: morning page, identity-frozen wave.
+  outcome: null
+
+- id: ep2-b10-idfix-r2-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b10-idfix-r2-0812
+  predicates_observed: >-
+    every visible figure clothed, no bare chest, 4/4 HIT; tunic reads brown >=2/4 HIT
+    (4/4); no floating or disembodied head 4/4 MISS — s1 keeps the floating bald head
+    and s3 puts a giant pale sphere with a face where the far guard belongs; soft
+    rather than bodybuilder build >=3/4 MISS — s0 and s2 are still heavy adult
+    builds; no armor 4/4 HIT; sunny field 4/4 HIT; clipboard 4/4 HIT.
+  observed: >-
+    The prediction's own falsifier fires and it fires informatively: the floating
+    head survived here while beat 09's cleared, so the adjacency fix is beat-shaped
+    rather than lexical, and the two independent tests DISAGREE. The bare-chest ban
+    worked outright and cost nothing the positive was asserting.
+  outcome: null
+
+- id: ep2-b11-idfix-0812-no-r2
+  kind: observation
+  date: 2026-08-12
+  scores: none — this record exists so the page and the ledger agree about a beat that was deliberately not re-rendered
+  observed: >-
+    No r2 was fired on beat 11 and none should have been: nothing was named faulty.
+    Read off the four first-generation frames, the leaving action lands in 2/4 (s1
+    and s2 walk away from camera; s0 turns the far man back to the lens, s3 has them
+    facing each other), with two bald men in brown, no armor, an empty sunlit field
+    and long shadows in 4/4. It is also the wave's control on the `round bald`
+    adjacency — same wording as beats 09 and 10, wide shot, and no swollen or loose
+    heads — which is what makes shot size the candidate variable rather than wording.
+  outcome: null
+
+- id: ep2-b13-idfix-r2-0812
+  kind: prediction
+  folded_from: pipeline/jobs/ep2-b13-idfix-r2-0812.prediction.yaml (verbatim)
+  written: 2026-08-12, the fixer lane, before enqueue. Positive byte-identical to the round it answers; only the two banned terms differ.
+  kind_of_claim: >-
+    A PROPAGATION prediction, and therefore a stronger claim than the beat-02 one
+    it rests on: that ban already returned 4/4 on this checkpoint tonight. If this
+    beat does not clear, the lever is beat-shaped rather than recipe-shaped, which
+    is itself worth knowing before it is carried to the remaining goblin beats.
+  predicates:
+  - unbroken green crown, no graft, no suture line, no seam, 4/4
+  - no cream or tan dome over the skull 4/4
+  - no X marks or stitch scars on the cheeks >=3/4
+  - the patchwork cloak still reads as patchwork >=3/4 -- the ban names SKIN, and if the cloak goes plain the wording discipline failed
+  - bald 4/4, green skin 4/4, one goblin 4/4
+  - the beat's own staging survives untouched (the positive was not edited at all)
+  falsifiable_by: >-
+    Any frame that still sews or patches the crown falsifies the propagation. A
+    cloak that loses its patchwork falsifies the claim that naming skin spares what
+    the positive asserts.
+  consumer: morning page, identity-frozen wave.
+  outcome: null
+
+- id: ep2-b13-idfix-r2-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b13-idfix-r2-0812
+  predicates_observed: >-
+    unbroken green crown, no graft, no suture, no seam, 4/4 HIT — but see below, the
+    first generation had none either. no cream or tan dome 4/4 MISS — the pale dome
+    is on s0, s1 and s2 in BOTH generations and the two rounds are near-identical at
+    the scalp. no X marks on the cheeks >=3/4 HIT; patchwork cloak >=3/4 HIT; bald,
+    green skin, one goblin 4/4 HIT; staging untouched HIT.
+  observed: >-
+    The suture predicate passes vacuously — this beat never had sutures — so the only
+    informative predicate is the dome, and it did not move. That makes beat 13 a
+    second reading, alongside beat 04, that the pale scalp and the stitching are two
+    faults and the skin ban only reaches one of them.
+  outcome: null
+
+- id: ep2-b14-idfix-r2-0812
+  kind: prediction
+  folded_from: pipeline/jobs/ep2-b14-idfix-r2-0812.prediction.yaml (verbatim)
+  written: 2026-08-12, the fixer lane, before enqueue. Positive byte-identical to the round it answers; only the two banned terms differ.
+  kind_of_claim: >-
+    A PROPAGATION prediction, and therefore a stronger claim than the beat-02 one
+    it rests on: that ban already returned 4/4 on this checkpoint tonight. If this
+    beat does not clear, the lever is beat-shaped rather than recipe-shaped, which
+    is itself worth knowing before it is carried to the remaining goblin beats.
+  predicates:
+  - unbroken green crown, no graft, no suture line, no seam, 4/4
+  - no cream or tan dome over the skull 4/4
+  - no X marks or stitch scars on the cheeks >=3/4
+  - the patchwork cloak still reads as patchwork >=3/4 -- the ban names SKIN, and if the cloak goes plain the wording discipline failed
+  - bald 4/4, green skin 4/4, one goblin 4/4
+  - the beat's own staging survives untouched (the positive was not edited at all)
+  falsifiable_by: >-
+    Any frame that still sews or patches the crown falsifies the propagation. A
+    cloak that loses its patchwork falsifies the claim that naming skin spares what
+    the positive asserts.
+  consumer: morning page, identity-frozen wave.
+  outcome: null
+
+- id: ep2-b14-idfix-r2-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b14-idfix-r2-0812
+  predicates_observed: >-
+    unbroken green crown, no graft, no suture, no seam, 4/4 MISS — the brown oval
+    graft is still on s2's crown with X-stitches beside it, s0 keeps a crown stitch
+    and s1 two marks; 1/4 clean. no cream or tan dome 4/4 HIT — the crown is green in
+    both generations on this beat. no X marks on the cheeks >=3/4 MISS — s0 and s3
+    still carry them. patchwork cloak >=3/4 HIT; bald, green skin, one goblin 4/4
+    HIT; staging untouched HIT.
+  observed: >-
+    The clearest single-variable test in the wave and it falsifies the propagation:
+    the marks are fewer and finer than the first generation but survive in 3/4,
+    including the graft the diagnosis called the wave's clearest case. Beat 14 also
+    isolates the two faults from the other side — green crown throughout, stitching
+    that the ban only dented.
+  outcome: null
+
+- id: ep2-b14-idfix-r3-0812
+  kind: prediction
+  folded_from: pipeline/jobs/ep2-b14-idfix-r3-0812.prediction.yaml (verbatim)
+  written: 2026-08-12, the fixer lane, before enqueue, AFTER reading the r2 frames that falsified this lane's previous prediction.
+  answers: >-
+    A pale scalp that survived the skin ban on this beat. The r2's sidecar confirms
+    `scars` and `stitched skin` were both delivered to the model, so this is a
+    measured insufficiency of the lever, not a delivery failure.
+  the_claim: >-
+    That the AFFIRMATIVE holds what the NEGATIVE could not. `green scalp` cleared
+    the dome on beat 03 with no skin ban at all; the ban cleared the sutures on
+    beat 02 with no affirmative. This round sends both and expects both gone.
+  predicates:
+  - the scalp is GREEN, no cream or tan dome, 4/4
+  - no sutures, seams or grafts on the crown 4/4
+  - no X marks on the cheeks >=3/4
+  - patchwork cloak still reads as patchwork >=3/4
+  - the staging is unchanged from the r2 (the positive gains two words and loses none)
+  falsifiable_by: >-
+    A pale scalp surviving BOTH levers together would mean this beat's shot size
+    defeats prompt-level fixes altogether, and the answer moves to the frozen
+    definition itself — already the founder-facing recommendation in
+    wave2-needs-founder.md, and strongly reinforced by that outcome.
+  consumer: morning page, identity-frozen wave.
+  not_rendered: >-
+    NO r3 FRAMES EXIST. `origin/farm-results-rtx5090` carries no
+    farm-out/ep2-b14-idfix-r3/ directory as of 2026-08-12 morning, so this
+    prediction is unscored. Its premise needs re-reading before it is fired: it
+    assumes `green scalp` held the colour on beat 03, and the beat-03 observation
+    measures that at 1/4. On beat 14 specifically the scalp was never pale, so the
+    round would be testing the affirmative against a fault this beat does not have.
+  outcome: null
