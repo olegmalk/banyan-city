@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ep2 motion — the walk evaluated, and the one beat that earned a clip, 12 Aug 2026</title>
+<style>
+  :root {
+    --bg: #17181a;
+    --panel: #1f2124;
+    --line: #33363b;
+    --ink: #eceef1;
+    --muted: #9aa0a8;
+    --accent: #c8b273;
+    --pass: #7fd68b;
+    --fail: #e08b8b;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    padding: 0 24px 96px;
+  }
+  .wrap { max-width: 1020px; margin: 0 auto; }
+  header.top { padding: 40px 0 20px; border-bottom: 1px solid var(--line); }
+  header.top h1 { margin: 0 0 6px; font-size: 27px; letter-spacing: -0.01em; font-weight: 650; }
+  header.top .sub { color: var(--muted); font-size: 14.5px; margin: 0; max-width: 78ch; }
+
+  .callout {
+    margin: 22px 0 0; padding: 16px 20px;
+    background: var(--panel); border: 1px solid var(--line);
+    border-left: 3px solid var(--accent); border-radius: 5px;
+  }
+  .callout h2 {
+    margin: 0 0 8px; font-size: 12px; letter-spacing: 0.09em;
+    text-transform: uppercase; color: var(--accent);
+  }
+  .callout p { margin: 0 0 10px; max-width: 80ch; }
+  .callout p:last-child { margin-bottom: 0; }
+
+  section { padding: 34px 0 10px; border-bottom: 1px solid var(--line); }
+  section h2.t { margin: 0 0 4px; font-size: 20px; font-weight: 620; }
+  section .lede { color: var(--muted); font-size: 14.5px; margin: 0 0 18px; max-width: 80ch; }
+
+  figure { margin: 0 0 18px; }
+  figure img { width: 100%; height: auto; display: block; border: 1px solid var(--line); border-radius: 4px; }
+  figcaption { color: var(--muted); font-size: 13.5px; margin-top: 8px; max-width: 82ch; }
+
+  .scroller { overflow-x: auto; }
+  .scroller img { max-width: none; width: 1980px; }
+
+  table { border-collapse: collapse; width: 100%; font-size: 14.5px; margin: 4px 0 18px; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: 12.5px; letter-spacing: 0.05em; text-transform: uppercase; }
+  td.v { white-space: nowrap; font-weight: 600; }
+  .ok { color: var(--pass); }
+  .no { color: var(--fail); }
+
+  video { width: 100%; max-width: 420px; display: block; border: 1px solid var(--line); border-radius: 4px; background: #000; }
+
+  .verdict {
+    margin: 16px 0 26px; padding: 14px 18px;
+    background: #101113; border: 1px dashed var(--line); border-radius: 5px;
+  }
+  .verdict h3 {
+    margin: 0 0 8px; font-size: 12px; letter-spacing: 0.09em;
+    text-transform: uppercase; color: var(--accent);
+  }
+  .verdict p { margin: 0; color: var(--muted); font-size: 14px; }
+  .verdict .line { display: block; height: 1px; background: var(--line); margin: 14px 0; }
+
+  code { background: #101113; border: 1px solid var(--line); border-radius: 3px; padding: 1px 5px; font-size: 13px; }
+  .muted { color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>The walk holds the goblin and loses the beat</h1>
+  <p class="sub">Your order was evaluate, confirm the character, then generate. I did the first two and they
+  changed the third: ten conditioned beats went in, one came out with a shot worth animating. Everything
+  below is provisional and yours to overturn.</p>
+</header>
+
+<div class="callout">
+  <h2>The one sentence</h2>
+  <p><strong>The character is solved. The staging is not.</strong> In nine of ten beats the goblin is
+  recognisably the one you approved this morning — pale yellow-green, bald, long ears, red eyes, patched
+  coat, the same creature beat to beat. In eight of those ten he is standing dead centre facing camera on
+  blank white, in a pose no beat asked for. The mechanism has learned to draw <em>him</em>. It has not
+  learned to draw <em>a scene he is in</em>.</p>
+  <p>So instead of ten clips I queued <strong>one</strong>, for beat 04 — the only beat whose own shot is a
+  face close-up, which is the one thing this mechanism reliably produces. Animating the other nine would
+  mean rendering a character sheet and calling it an episode.</p>
+</div>
+
+<section>
+  <h2 class="t">All eleven beats, one frame each</h2>
+  <p class="lede">Representative frame per beat, with what it costs the beat. I hash-verified all 416 files
+  against the box's own manifests before scoring a single one — no mismatches.</p>
+  <figure>
+    <img src="/review/ep2-picks/motion-0812/walk-verdict-strip.jpg" alt="One representative frame from each of the eleven conditioned beats, each labelled with its staging verdict.">
+    <figcaption>Beat 04 (top row, third) is the only green label on the sheet.</figcaption>
+  </figure>
+
+  <table>
+    <tr><th>Beat</th><th>What the shot asks for</th><th>Identity</th><th>Staging</th></tr>
+    <tr><td>02 the sprint</td><td>sprints in, skids, dives behind the sapling</td><td class="v no">FAIL</td><td class="v no">FAIL</td></tr>
+    <tr><td>03 bad cover</td><td>crouched behind a trunk that hides a sixth of him</td><td class="v ok">holds</td><td class="v no">no trunk, standing</td></tr>
+    <tr><td><strong>04 the footnote</strong></td><td>close on his face holding his breath</td><td class="v ok">holds</td><td class="v ok">HOLDS</td></tr>
+    <tr><td>06 the clipboard</td><td>guard turns the bark clipboard over and reads</td><td class="v no">bald human</td><td class="v no">board not the subject</td></tr>
+    <tr><td>08 inside him</td><td>guard points at the scavenger's belly</td><td class="v ok">holds</td><td class="v no">one character, needs two</td></tr>
+    <tr><td>13 the shade</td><td>slides down the trunk, folds into the shade</td><td class="v ok">holds</td><td class="v no">folded, but no tree</td></tr>
+    <tr><td>14 the defense</td><td>hands picking at the dirt, embarrassed</td><td class="v ok">holds</td><td class="v no">hands up, not in dirt</td></tr>
+    <tr><td>15 good listener</td><td>looks up at the sapling, both in frame</td><td class="v ok">holds</td><td class="v no">no sapling at all</td></tr>
+    <tr><td>17 goodbye</td><td>stands, brushes off, turns to go</td><td class="v ok">holds</td><td class="v no">stands only; no brush, no turn</td></tr>
+    <tr><td>19 the drop</td><td>wide; the fig falls and bounces off his head</td><td class="v ok">holds</td><td class="v no">no tree, no fig</td></tr>
+    <tr><td>20 evidence</td><td>picks the fig up, looks at the bare branch</td><td class="v ok">holds</td><td class="v no">empty hands, no branch</td></tr>
+  </table>
+
+  <div class="verdict">
+    <h3>Your call — is a consistent goblin standing still a usable base?</h3>
+    <p>If yes, these become reference plates and the beats get their staging some other way. If no, the
+    conditioning recipe is the thing to change, and that is a direction I need from you rather than a
+    fourth knob I turn on my own.</p>
+    <span class="line"></span>
+    <p>&nbsp;</p>
+  </div>
+</section>
+
+<section>
+  <h2 class="t">Beat 02 — you were right, and here is the shape of it</h2>
+  <p class="lede">Your words this morning: <q>beat 2 after still ends up hallucinating alot and not being
+  consistent, train that.</q> Beat 02 is the only beat in the pass where identity fails outright, and it
+  fails in every direction at once.</p>
+  <figure class="scroller">
+    <img src="/review/ep2-picks/motion-0812/beat02-drift.jpg" alt="Six beat 02 frames showing fangs, a dog-shaped creature, duplicated goblins and swings between flat cartoon and cel style.">
+    <figcaption>Six of the thirty-two. Fangs and tusks he does not have; a head that reads as a baby's;
+    one frame where he is a four-legged animal; frames with two to four goblins in them; and the style
+    swinging between flat cartoon and our cel look. Beat 02 also produced sixteen <em>distinct</em>
+    results where most beats produced eight or four — the reference has the least grip here of anywhere
+    in the pass, which is consistent with what you saw.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <h2 class="t">Beat 04 — the one that earned a clip</h2>
+  <p class="lede">Not luck. The beat's own shot is <q>close on his face holding his breath</q>, so the
+  portrait this mechanism insists on drawing and the framing the beat wants are the same picture. This is
+  the frame I picked as the motion init.</p>
+  <figure>
+    <img src="/review/ep2-picks/motion-0812/b04-init.jpg" alt="Extreme close-up of the goblin's face, one cheek puffed with a visible breath puff, eyes wide, ears out." style="max-width:420px">
+    <figcaption><code>04-the-footnote-ipa-r0-w015-s1.png</code> — puffed cheek with a visible breath puff,
+    the eyes doing the darting, ears out where they read. I passed over s3 (a tan graft on the crown) and
+    s2 (broken composition).</figcaption>
+  </figure>
+
+  <div id="clip">
+    <p class="muted"><strong>The clip is rendering now</strong> — <code>ep2-b04-motion-0812</code>, 145
+    frames at 24fps (6.04s), guidance 2.0, camera defects named in the negative. It will appear here when
+    it lands off the box.</p>
+  </div>
+
+  <div class="verdict">
+    <h3>Your verdict on the clip</h3>
+    <p>What I am watching for: whether the face stays the same goblin for all 145 frames. An extreme
+    close-up gives LTX the most surface to drift on and gives you the least room to miss it. If the face
+    re-draws itself mid-clip, that is not a beat 04 problem — it means i2v cannot carry a close-up at all
+    and every close-up in the episode needs a different plan.</p>
+    <span class="line"></span>
+    <p>&nbsp;</p>
+  </div>
+
+  <div class="callout">
+    <h2>One deviation I am declaring, not hiding</h2>
+    <p><code>shots.md</code> asks for a <q>slow push-in</q> on this beat and I held the camera locked
+    instead. Two reasons: his face already fills the frame, so a push-in has nowhere to go but into his
+    ears — the feature carrying most of the identity — and your last motion verdict today was a camera
+    move you rejected (<q>its just.. making the camera go down in the clip</q>). Locked-off at guidance 2.0
+    is the recipe with a measured result behind it. If you want the push-in it is one flag and one
+    re-render.</p>
+  </div>
+</section>
+
+<section>
+  <h2 class="t">A defect in the pass itself, for the record</h2>
+  <p class="lede">Not something you need to decide — something the next lane needs to know before it trusts
+  this pass's numbers.</p>
+  <p>The four <q>rounds</q> per beat are four different reference images. In ten of the thirteen output
+  directories the results are <strong>byte-identical across different references</strong>: r0 equals r1 and
+  r2 equals r3, so sixteen frames are really eight; in two directories all four rounds are one image, so
+  sixteen are really four. Four references collapse to two outcomes, or to one. On top of that, every
+  sidecar in all thirteen directories records the <em>same</em> four reference filenames at the same scale
+  and the same window — including the directories named <code>cropscope</code>, <code>charref</code>,
+  <code>headref</code> and <code>crossbeat</code>, which are supposed to differ in exactly that.</p>
+  <p>This does not change the verdicts above; identical images stage identically. It does mean roughly half
+  this pass's GPU time rendered duplicates, and that any earlier conclusion phrased as <q>0 out of 4 at
+  each round</q> was reading the same file two or four times. Pipeline code is not this lane's to change,
+  so this is reported and left.</p>
+</section>
+
+<section style="border-bottom:none">
+  <h2 class="t">Provenance</h2>
+  <p class="lede">
+  Frames: <code>farm-out/ep2-b*-ipa-*-0812/</code> on <code>origin/farm-results-rtx5090</code>, all 416
+  files sha256-verified against the box's own manifests before scoring. Model: SDXL + IP-Adapter Plus
+  (Apache-2.0, h94/IP-Adapter), scale 0.6, adapter on for the first 15% of a 40-step denoise. Clip: LTX-2.3
+  distilled, 704x1280, seed 20260806, two-stage, guidance 2.0 — under D16, resolved 2026-08-11.
+  Evaluation and prediction are ledgered at <code>taste/steward-model.ledger.yaml</code> under
+  <code>ep2-walk-evaluation-0812</code> and <code>ep2-b04-motion-0812</code>, both written before the
+  render was queued.
+  </p>
+</section>
+
+</div>
+</body>
+</html>
