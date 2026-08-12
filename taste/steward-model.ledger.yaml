@@ -12632,3 +12632,29 @@
     calling an observed change a DEFECT, grep the prompt for it. The model doing what the
     text said is the first hypothesis, not the last.
   outcome: null
+
+- id: ep2-sheet-intent-rule-0812-adopted
+  kind: process
+  date: 2026-08-12
+  rule_from: the founder, via the consistency lane — "for the other beats it doesnt say
+    what they're supposed to show.."
+  adopted_as: >-
+    review/ep2-picks/bake_clip_sheet.py. Every clip sheet this lane bakes from now on
+    carries, BURNT INTO THE JPG, the beat number, its title, and one plain sentence of what
+    the shot is supposed to show — because he opens sheets off disk, where a page caption
+    does not reach him.
+  the_part_that_matters: >-
+    THE SENTENCE IS NEVER RETYPED. It is read from review/ep2-picks/beats.json `shows`
+    keyed by `n`, which is the single place it exists, so a sheet and the page cannot drift
+    apart. A beat whose `shows` is missing or empty EXITS NONZERO rather than baking a
+    sheet that cannot say what it is for.
+  two_things_the_first_bake_got_wrong: >-
+    PIL's default bitmap font renders at ~11px and cannot draw an em-dash or a middle dot,
+    so the first sheet read "GOOD LISTENERB SHOULD SHOW" in text too small to read off
+    disk. Fixed: a real TrueType face at 23px for the intent and 17px for the note, with
+    typographic characters folded to ASCII. A rule about making intent legible is worth
+    nothing if the intent is illegible.
+  also_carries: >-
+    An optional --note line for the verdict, so a judged sheet says what the shot is for AND
+    what this take did about it, in the same image.
+  outcome: null
