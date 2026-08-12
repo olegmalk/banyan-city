@@ -916,3 +916,4 @@
 21:46:53Z STARTED task=ep3-charref-magistrate-0812-1786479900 attempt=1 on box-runner
 21:46:58Z FAIL task=ep3-charref-magistrate-0812-1786479900 rc=1 step=measure
 21:47:01Z box-runner idle ready=0 failed=8
+21:57:04Z box-runner idle ready=0 failed=8
