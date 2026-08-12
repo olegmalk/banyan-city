@@ -359,6 +359,11 @@ def main() -> int:
                     help="filename prefix of the four reference frames in "
                          "--refs; default keeps the historic beat-04 names so "
                          "every existing job is byte-identical")
+    ap.add_argument("--draft-key", default="authored",
+                    help="which key of the beat's wave-drafts block supplies "
+                         "the prompt; default keeps every existing job "
+                         "byte-identical. Missing key refuses (rc 4), never "
+                         "falls back.")
     ap.add_argument("--out", required=True)
     ap.add_argument("--task", default=None)
     # Seeds were four, hardcoded, because every arm so far was an A/B against
@@ -414,7 +419,13 @@ def main() -> int:
     drafts_path = harness / "wave-drafts.yaml"
     drafts = wg.load_drafts(drafts_path)
     d = drafts[BEAT]
-    row = wg.check(BEAT, d, d["authored"].replace(wg.GOBLIN_SLOT, GOBLIN_DEF), sd)
+    if a.draft_key not in d:
+        print(f"!! draft key {a.draft_key!r} not in beat {BEAT}'s block "
+              f"(has: {[k for k in d if k.startswith('authored')]}) — "
+              "refusing rather than falling back to a different prompt.",
+              flush=True)
+        return 4
+    row = wg.check(BEAT, d, d[a.draft_key].replace(wg.GOBLIN_SLOT, GOBLIN_DEF), sd)
     row["extra_neg_tier"] = d["extra_neg"]
     if row["faults"]:
         print("\n!! FAULTS — nothing drawn: " + "; ".join(row["faults"]), flush=True)
