@@ -827,3 +827,4 @@
 15:38:54Z STARTED task=ep2-b19-motion-0812-1786546771 attempt=1 on box-runner
 15:45:10Z DONE task=ep2-b19-motion-0812-1786546771 rc=0 artifacts=2
 15:48:09Z STARTED task=ep2-b20-motion-0812-1786546783 attempt=1 on box-runner
+15:53:33Z DONE task=ep2-b20-motion-0812-1786546783 rc=0 artifacts=2
