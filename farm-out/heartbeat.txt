@@ -877,3 +877,4 @@
 20:03:58Z DONE task=ep3-003b-b01-dialect-r2-0812-1786474330 rc=0 artifacts=8
 20:07:09Z STARTED task=ep2-b18-plantneg-0812-1786475814 attempt=1 on box-runner
 20:08:01Z DONE task=ep2-b18-plantneg-0812-1786475814 rc=0 artifacts=1
+20:11:12Z STARTED task=ep2-b21-stemanchor-0812-1786475815 attempt=1 on box-runner
