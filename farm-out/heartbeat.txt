@@ -734,3 +734,4 @@
 09:13:26Z STARTED task=ep2-charref-guards-0812-1786525096 attempt=1 on box-runner
 09:14:32Z DONE task=ep2-charref-guards-0812-1786525096 rc=0 artifacts=8
 09:16:52Z STARTED task=ep2-charref-goblin-r2-0812-1786525482 attempt=1 on box-runner
+09:17:43Z DONE task=ep2-charref-goblin-r2-0812-1786525482 rc=0 artifacts=8
