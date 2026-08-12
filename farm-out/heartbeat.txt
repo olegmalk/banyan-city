@@ -740,3 +740,4 @@
 09:23:33Z box-runner idle ready=0 failed=3
 09:33:37Z box-runner idle ready=0 failed=3
 09:36:50Z STARTED task=ep2-b02-ipa-charref-0812-1786527400 attempt=1 on box-runner
+09:41:58Z DONE task=ep2-b02-ipa-charref-0812-1786527400 rc=0 artifacts=4
