@@ -918,3 +918,4 @@
 21:47:01Z box-runner idle ready=0 failed=8
 21:57:04Z box-runner idle ready=0 failed=8
 22:01:29Z STARTED task=ep3-003b-b01-dialect-r4-0812-1786485291 attempt=1 on box-runner
+22:02:21Z DONE task=ep3-003b-b01-dialect-r4-0812-1786485291 rc=0 artifacts=8
