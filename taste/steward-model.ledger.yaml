@@ -12561,3 +12561,38 @@
     frame 1 (the r8 inpaint route) rather than asking i2v to grow one onto a stem. That is
     his call, and firing a guess at it would be turning a fourth knob without him.
   outcome: null
+
+- id: ep2-motion-wave-0812-negative-caught-before-render
+  kind: near_miss
+  date: 2026-08-12
+  what_happened: >-
+    The six-beat wave was authored, validated, committed, queued — and then caught and
+    pulled from the queue before a single frame rendered, because I re-read my own
+    negative prompt and it forbade the thing each beat exists to do.
+  the_error: >-
+    The wave inherited b15's negative wholesale, and that negative bans "changing
+    position". b15 passed with it because b15 only ever moved a HEAD and a MOUTH, so the
+    probe never tested that term against a POSE change. Four of the six beats are nothing
+    but a pose change: 03 crouches down, 13 folds up small, 17 turns to go, 19 needs a fig
+    to fall through the frame. Beat 17 was the worst — its action is "he turns his body
+    away to leave" and I had banned "walking away" in the same file.
+  why_it_nearly_shipped: >-
+    Because a passed probe makes its whole recipe look validated, and it does not. The
+    probe validated the parts it exercised. Copying it forward carried a term that had
+    never been under test into six beats where it was actively hostile, and every gate I
+    ran — yaml parse, dry-run, my own review — checks that a job is WELL FORMED, not that
+    it is asking for something coherent.
+  the_fix: >-
+    The ban now names what it actually meant — walking out of frame, leaving the frame,
+    drifting sideways, moving to a different spot — which keeps him on his mark and says
+    nothing about pose. Beat 17 additionally loses the walking ban, because walking away
+    IS the beat.
+  the_habit: >-
+    This is the b10 lesson at one remove: do not ask for a motion and forbid it in the
+    same prompt. Concretely — when a recipe is copied from a passed sample onto new
+    content, diff the NEGATIVE against each new beat's ACTION before enqueueing, because
+    the negative is the half that was never tested by the sample that justified the copy.
+  cost: >-
+    Zero. Six jobs pulled from ready unclaimed, no attempts spent, no GPU time. Caught
+    because the wave sat behind a peer's job long enough for me to look again.
+  outcome: null
