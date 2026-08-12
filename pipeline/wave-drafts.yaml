@@ -1493,8 +1493,16 @@ beats:
     # wrong thing. One word changes: `bald` becomes `short-haired`. The field, the
     # clipboard filling the lower third, the finger tracing the line, the brow, the
     # whole lighting tier and the entire negative are r2's, untouched.
+    #
+    # -- AND THEN IT DID NOT FIT. `short-haired` is three CLIP tokens where `bald` is
+    # one, and this beat clears the budget by a hair: the total hit 79/77, compress()
+    # dropped the TRAILING sentence, and the trailing sentence is the entire style
+    # anchor. The job faulted and drew nothing, which is the gate doing its job.
+    # `with one finger` is sold to pay for the hair -- the same three tokens
+    # `authored_staged` sold on this very beat, for the same stated reason: a detail no
+    # medium close-up resolves anyway. Nothing else moved.
     authored_b06_idfix_r3: >-
-      A round short-haired guard man in a plain brown tunic, in a sunny grassy field, turns over a bark clipboard that fills the lower third of the frame, tracing a line on it with one finger as he reads, brow furrowed. Medium close-up, bright morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No girl, no child, no armor, no helmet, no knight, no house, no interior, no indoors, no dark, no night, no dusk, no sunset, no dim lighting, no moody lighting, no low key, no shadows dominant. No photorealism, no 3D render look. 9:16 vertical, no text.
+      A round short-haired guard man in a plain brown tunic, in a sunny grassy field, turns over a bark clipboard that fills the lower third of the frame, tracing a line on it as he reads, brow furrowed. Medium close-up, bright morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No girl, no child, no armor, no helmet, no knight, no house, no interior, no indoors, no dark, no night, no dusk, no sunset, no dim lighting, no moody lighting, no low key, no shadows dominant. No photorealism, no 3D render look. 9:16 vertical, no text.
     authored_charref_guards_r5: >-
       A round guard man in a plain brown tunic, short hair, visible face, reference
       sheet, multiple views, turnaround, front view, side view, standing, silly

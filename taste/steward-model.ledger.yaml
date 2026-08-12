@@ -12244,3 +12244,25 @@
     solves camera motion and does nothing for subject integrity; they were being treated
     as one problem and they are two.
   outcome: null
+
+- id: ep2-b06-guardcast-token-fault-0812
+  kind: correction
+  date: 2026-08-12
+  corrects: my enqueue check, not a prediction.
+  what_happened: >-
+    The guard re-proof faulted rc=1 and drew nothing. `short-haired` is three CLIP tokens
+    where `bald` is one, beat 06 clears its budget by a hair, the total hit 79/77, and
+    compress() drops TRAILING sentences — so the sentence it dropped was the entire style
+    anchor. The gate caught it exactly as designed and nothing was rendered.
+  the_real_error_was_mine_and_it_was_the_check: >-
+    I dry-ran that exact command before enqueueing and grepped its output for
+    `POS:|DRY OK|Refus`. The POS line matched, `DRY OK` did not appear, and I read the
+    match as success. Absence of a failure string I thought to look for is not success —
+    the run had already printed `!! FAULTS — nothing drawn` and I never asked for it.
+  fix_applied: >-
+    Two. The draft sells `with one finger` to pay for the hair — the same three tokens
+    `authored_staged` sold on this very beat for the same stated reason, a detail no
+    medium close-up resolves. And the enqueue check now ASSERTS the presence of `DRY OK`
+    and refuses to enqueue without it, instead of scanning for failures I happened to
+    predict. Re-measured: positive 75/77, style anchor present, no faults.
+  outcome: null
