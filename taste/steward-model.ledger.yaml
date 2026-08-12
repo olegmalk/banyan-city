@@ -12266,3 +12266,125 @@
     and refuses to enqueue without it, instead of scanning for failures I happened to
     predict. Re-measured: positive 75/77, style anchor present, no faults.
   outcome: null
+
+- id: ep2-walk-evaluation-0812-instrumentation-claim-RETRACTED
+  kind: correction
+  date: 2026-08-12
+  corrects: ep2-walk-evaluation-0812, key `defect_found_in_the_pass`
+  status: RETRACTED — the claim was WRONG and it was on his page for two hours.
+  what_i_claimed: >-
+    That the round axis was partly inert instrumentation: that ten of thirteen dirs
+    produced byte-identical output "across different references", that every sidecar
+    recorded the SAME four references at the same scale and window including the dirs
+    named cropscope/charref/headref/crossbeat, and therefore that half the pass rendered
+    duplicates and the prior lane's three-lever findings rested on sidecars that could
+    not tell the three apart.
+  what_is_actually_true: >-
+    I audited the wrong key. I read `ip_adapter_reference`, which records a FILENAME, and
+    the pass reuses s0..s3 as slot labels — so of course it looked constant. The key that
+    records identity is `ip_adapter_reference_sha256`, and it exists in every sidecar. Re-run
+    against it, the shas explain every duplicate I found with nothing left over: the
+    frozen dirs carry TWO distinct shas duplicated into four slots (74e7ad ×2, 1dc3d7 ×2),
+    which is exactly why r0==r1 and r2==r3 byte-for-byte — BY CONSTRUCTION, not by defect;
+    b04-frozen and b14-headref carry ONE sha in all four slots, so four identical outputs
+    are the expected result of a deliberately single-crop round; cropscope, charref and
+    guardfair carry FOUR distinct shas and produced sixteen distinct frames. The
+    correlation with my own distinct-output counts is perfect. There is no defect, no
+    wasted GPU time, and the consistency lane's three-lever findings and the staging wall
+    STAND.
+  how_i_got_it_wrong: >-
+    I found a real pattern — the duplicate counts are correct and worth noticing — and
+    then reached for the most dramatic explanation available instead of the cheapest one.
+    A grep that returns a constant is evidence the field is not the discriminator at
+    least as much as it is evidence the runs were identical, and I never checked which.
+    Declaring another lane's instrumentation broken is exactly the claim that should have
+    cost me one more grep before I published it.
+  the_habit: >-
+    Same family as hash-before-scoring, one level up: read a sidecar's ACTUAL KEYS before
+    declaring what it fails to record. `grep -o '^\s*\w*:' <sidecar> | sort -u` is three
+    seconds and would have shown me `ip_adapter_reference_sha256` sitting right there.
+  what_survives: >-
+    Nothing else in that entry changes. The eye-scoring is untouched and remains
+    operative: 9/10 beats hold identity, staging is lost in eight, beat 02 fails identity
+    outright, beat 04 passes both.
+  outcome: null
+
+- id: ep2-motion-verdicts-0812
+  kind: founder_verdict
+  date: 2026-08-12
+  written: on receipt, before any work was done under it.
+  founder_verdict_verbatim: "goblin video looks not bad! but the background is blank. ...
+    in the cold-open r2 clip, that looks more like a green apple, reiterate."
+  what_it_rules: >-
+    (1) THE B04 CLIP IS A NEAR-PASS — the first character motion clip to be received
+    positively at all. Named fault: the blank background. (2) The cold-open fig reads as a
+    green apple and gets another round.
+  scored_against_my_predictions: >-
+    MIXED, and the miss is instructive. I predicted the risk was FACE INSTABILITY and I
+    was right that it happens — the eyes do dissolve by frame 144 — but he did not lead
+    with it; he led with the BACKGROUND. I had the blank white in front of me in every
+    sheet, wrote "blank white" eleven times in my own beat table as a STAGING fault, and
+    then failed to carry it forward as a fault of the CLIP when the clip inherited it. I
+    was scoring the character and he was watching the shot. That is the same axis error
+    twice in one day: I graded the thing I had been staring at instead of the thing the
+    frame is for.
+  what_i_got_right: >-
+    Refusing to animate the nine staging-lost beats. His first note on the one beat whose
+    still WAS its own shot is still "the background is blank" — nine clips of a character
+    sheet would have earned that note nine times over.
+  consequence: >-
+    Do NOT re-motion b04 until a background-bearing still exists; that still is the
+    consistency lane's, not mine. The cold-open re-render is mine and is queued.
+  outcome: null
+
+- id: ep2-b01-figgrow-055-r3-0812
+  kind: prediction
+  written: 2026-08-12, before enqueue. One variable class — fruit shape.
+  predicates: [the fruit reads as a fig and not an apple 1/1, the camera is still locked
+    1/1, the fruit stays a single fruit in one place as it did in r2]
+  basis: >-
+    r2's own positive prompt asked for a sphere twice — "one small ROUND green fig" that
+    "ROUNDS and settles heavier" — and its negative said nothing about fruit at all. A
+    green sphere on a stem IS an apple; the model drew what the words said. So the fix is
+    words, not weights: the silhouette a fig actually has (teardrop, heavy and wide low,
+    tapering to a narrow neck at the stem) in the positive with "round" deleted from it,
+    and apple/green apple/round fruit/spherical fruit/cherry/berry in the negative placed
+    right after the camera block so truncation cannot reach them. Naming the defect in the
+    negative at guidance 2.0 is the lever with two measured wins behind it now (the camera
+    pan, and the camera lock holding in both b04 clips).
+  falsifiable_by: >-
+    Still an apple. That would mean the token "fig" carries a round prior this model will
+    not give up to description, and the honest next move is a shape the init already has
+    rather than a longer sentence.
+  also_fixed_but_not_the_variable: >-
+    The init is sha-asserted before the crop (r2 asserted nothing) and there is a PUBLISH
+    STEP. r2 rendered and then stranded on the box for want of one, which is why he saw it
+    late. Both are defect fixes, not recipe choices.
+  consumer: his screening, and the cold open is the first six seconds of the episode.
+  outcome: null
+
+- id: ep2-b15-action-probe-0812
+  kind: prediction
+  written: 2026-08-12, before enqueue. ONE SAMPLE answering an open founder question.
+  predicates: [his head visibly tips back and his gaze goes up during the clip, his mouth
+    moves as if speaking, he stays the same goblin while doing it, he stays put in frame
+    rather than walking out of it, the camera stays locked]
+  basis: >-
+    The stills side is settled: the reference imposes its standing pose because pose rides
+    the same early-step signal identity does, and three levers failed at pre-registered
+    limits. So the only untested route to blocking is the motion model, and beat 15 is the
+    sharpest case in the wave — its still is him square to camera with his head level, its
+    beat is him looking up at the sapling and talking, and the gap between those two is a
+    single nameable body action I can see in one look.
+  falsifiable_by: >-
+    A portrait that only breathes, blinks and sways. That means motion cannot supply
+    blocking the still never had, the goblin wave stops, and his question stands as
+    written instead of being closed by evidence.
+  negative_deliberately_differs: >-
+    b04's negative banned head turning and mouth opening because b04 is a held breath.
+    Banning them here would forbid the exact thing being probed. Kept the whole
+    camera-motion block; added walking/running/stepping/changing position so he acts
+    without wandering out of his own frame.
+  consumer: needs-founder §5 — whether the nine staging-lost beats get motion clips with
+    their actions written into their prompts, or the goblin wave stops here.
+  outcome: null

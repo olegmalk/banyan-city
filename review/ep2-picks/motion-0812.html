@@ -246,12 +246,19 @@
     duration, and no frame count puts a sapling in beat 15.</p>
   </div>
 
-  <div class="verdict">
-    <h3>Your verdict</h3>
-    <p>Two samples, one negative and one that found the limit. Nothing was scaled off either — these two
-    clips are the whole output of phase 2.</p>
-    <span class="line"></span>
-    <p>&nbsp;</p>
+  <div class="callout">
+    <h2>Your verdict, in — and what it cost me to miss</h2>
+    <p>Your words: <q>goblin video looks not bad! but the background is blank.</q> Recorded as a near-pass
+    with a named fault, and it is the first character clip here to land positively at all.</p>
+    <p>Worth me saying where I was looking instead. I predicted the risk on this clip was the face coming
+    apart, and it did — but you led with the <em>background</em>. I wrote <q>blank white</q> eleven times in
+    my own beat table above, as a staging fault, and then did not carry it forward as a fault of the clip
+    when the clip inherited it. I was grading the character; you were watching the shot. Same axis error
+    twice in one day.</p>
+    <p>So: <strong>no more motion on beat 04 until a still with an actual background exists</strong>, which
+    is the stills lane's to make, not mine. What it does vindicate is refusing to animate the other nine —
+    your first note on the one beat whose still <em>was</em> its own shot is still that the background is
+    blank, and nine clips of a character sheet would have earned that note nine times.</p>
   </div>
 
   <div class="callout">
@@ -266,20 +273,48 @@
 </section>
 
 <section>
-  <h2 class="t">A defect in the pass itself, for the record</h2>
-  <p class="lede">Not something you need to decide — something the next lane needs to know before it trusts
-  this pass's numbers.</p>
-  <p>The four <q>rounds</q> per beat are four different reference images. In ten of the thirteen output
-  directories the results are <strong>byte-identical across different references</strong>: r0 equals r1 and
-  r2 equals r3, so sixteen frames are really eight; in two directories all four rounds are one image, so
-  sixteen are really four. Four references collapse to two outcomes, or to one. On top of that, every
-  sidecar in all thirteen directories records the <em>same</em> four reference filenames at the same scale
-  and the same window — including the directories named <code>cropscope</code>, <code>charref</code>,
-  <code>headref</code> and <code>crossbeat</code>, which are supposed to differ in exactly that.</p>
-  <p>This does not change the verdicts above; identical images stage identically. It does mean roughly half
-  this pass's GPU time rendered duplicates, and that any earlier conclusion phrased as <q>0 out of 4 at
-  each round</q> was reading the same file two or four times. Pipeline code is not this lane's to change,
-  so this is reported and left.</p>
+  <h2 class="t">A correction — I claimed a defect here and I was wrong</h2>
+  <p class="lede">This section said, for about two hours, that the pass's instrumentation was broken and
+  that half its GPU time rendered duplicates. That was my error. The retraction stays on the page rather
+  than getting quietly deleted, because the wrong version is what you would have read.</p>
+  <p><strong>What I claimed:</strong> that ten of thirteen output directories produced byte-identical
+  frames <em>across different reference images</em>, and that every sidecar recorded the same four
+  references — so the conditioning experiments could not have varied what they claimed to vary.</p>
+  <p><strong>What is actually true:</strong> I audited the wrong field. I read
+  <code>ip_adapter_reference</code>, which stores a <em>filename</em>, and the pass reuses
+  <code>s0…s3</code> as slot labels — so naturally it looked constant. The field that records which image
+  was actually used is <code>ip_adapter_reference_sha256</code>, and it is present in every sidecar. Read
+  against it, the duplicate counts I found are fully explained with nothing left over: the frozen
+  directories carry two distinct references duplicated into four slots, which is exactly why r0 equals r1
+  and r2 equals r3 — by construction, not by fault. Two directories carry one reference in all four slots.
+  The directories that were supposed to differ carry four distinct references and produced sixteen distinct
+  frames. <strong>There is no defect and no wasted GPU time</strong>, and the earlier lane's findings stand.</p>
+  <p><strong>How I got it wrong,</strong> since that is the more useful part: I found a real pattern — the
+  duplicate counts are correct and were worth noticing — and then reached for the most dramatic explanation
+  instead of the cheapest one. A field that comes back constant is evidence it is not the discriminator at
+  least as much as evidence the runs were identical, and I never checked which. Listing the sidecar's own
+  keys would have taken three seconds and shown me the right one sitting there.</p>
+  <p class="muted">Nothing else on this page depends on that claim. The beat-by-beat scoring above was done
+  by eye on the frames themselves and is unaffected.</p>
+</section>
+
+<section>
+  <h2 class="t">Rendering now — two clips on your two notes</h2>
+  <p class="lede">Both are one-samples, both queued off your last message, neither scales anything.</p>
+  <p><strong><code>ep2-b01-figgrow-055-r3-0812</code> — the cold-open fig.</strong> You said it reads as a
+  green apple, and the prompt is why: r2's own text asked for a sphere twice (<q>one small <em>round</em>
+  green fig</q> that <q><em>rounds</em> and settles heavier</q>) and its negative said nothing about fruit
+  at all. A green sphere on a stem is an apple; the model drew what the words said. r3 describes the
+  silhouette a fig actually has — teardrop, heavy and wide low, tapering to a narrow neck at the stem —
+  with <q>round</q> deleted, and puts apple, green apple, round fruit, spherical fruit, cherry and berry in
+  the negative. Same init, same seed, same 233 frames, same camera ban. One variable class. It also gets
+  the publish step r2 lacked, which is why that clip stranded on the box and reached you late.</p>
+  <p><strong><code>ep2-b15-action-probe-0812</code> — can motion put the blocking in?</strong> This is the
+  open question above, turned into a render instead of an argument. The stills cannot stage the beats; the
+  question is whether the motion model can. Beat 15's still is him standing square with his head level, and
+  beat 15 is him looking up at the sapling and talking — so the gap is one nameable action. If his head
+  tips back and his mouth moves, the other beats get clips with their actions written into their prompts.
+  If he just stands there breathing, the goblin wave stops and the question stands as you asked it.</p>
 </section>
 
 <section style="border-bottom:none">
