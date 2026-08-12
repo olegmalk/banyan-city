@@ -1,0 +1,41 @@
+# THE REVIEW INBOX — data behind /review/inbox. CONTRACT (SITE.md): any lane
+# landing a founder-facing artifact appends an entry here IN THE SAME COMMIT
+# as the artifact, then regenerates review/inbox/index.html to match. The
+# steward marks entries resolved with the founder's verdict verbatim. Open
+# entries newest-first on the page; resolved fold below as history.
+- what: The goblin motion wave — six clips, one per beat, each sheet says what it should show
+  url: /review/ep2-picks/motion-0812
+  since: 2026-08-12
+  kind: clip
+  verdict_hint: per clip — good / redo because X
+  note: landing — clips appear as rendered; b03 already carries the tripod finding
+
+- what: Cold open fig route — the fig grows detached from the sapling in both rounds
+  url: /review/ep2-picks/motion-0812
+  since: 2026-08-12
+  kind: decision
+  verdict_hint: "option 1 (tiny fig frame 1, grows larger), 2 (keep trying attached growth), or 3 (fig full-size frame 1)"
+
+- what: Episode 3 — two drafted continuations await your read; approval opens the ep3 wave
+  url: "local: genomes/sapling/nodes/003a-oncall-rotation/leaves/003a-t2-a.mp4 and 003b-one-leaf-for-yes/leaves/003b-t2-a.mp4 (animatics)"
+  since: 2026-07-30
+  kind: script
+  verdict_hint: approve 003a / approve 003b / approve with conditions / neither because X
+
+- what: Guards register — five rounds render them solemn, not "silly harmless bureaucrats"
+  url: /review/ep2-picks/consistency-0812
+  since: 2026-08-12
+  kind: decision
+  verdict_hint: accept solemn-but-consistent, or chase silly via pose and expression staging
+
+- what: Guards haired casting (A = r5 s1, B = r5 s2) — confirm as the frozen reference
+  url: /review/ep2-picks/consistency-0812
+  since: 2026-08-12
+  kind: sheet
+  verdict_hint: confirm / recast because X
+
+- what: Beat 04 script length — faces survive 3s of motion, the beat is written 6s
+  url: /review/ep2-picks/motion-0812
+  since: 2026-08-12
+  kind: decision
+  verdict_hint: split into two shots / trim the beat / re-time the VO

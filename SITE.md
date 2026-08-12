@@ -148,3 +148,15 @@ Posting or announcing on the founder's accounts, spending money, credential chan
 taste-axis scores and trunk/graft calls, governance changes, opening money rails.
 A site session will be tempted by the first one — building a share button is fine,
 pressing it is not.
+
+## The review inbox (/review/inbox)
+
+The founder must always be able to SEE what awaits him without asking in
+chat (his order, 2026-08-12). `review/inbox.yaml` is the data; the page is
+`review/inbox/index.html`, regenerated from it by `review/inbox/regen.py`.
+The contract: any lane landing a founder-facing artifact appends an inbox
+entry AND regenerates the page IN THE SAME COMMIT as the artifact. The
+steward marks entries resolved with the founder's verdict verbatim; resolved
+entries fold into the page's history, never deleted. The /status glance can
+count open entries from the yaml; the yaml is the truth, the page is its
+render, and the two travel in one commit so they cannot drift.
