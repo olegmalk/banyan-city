@@ -5,6 +5,10 @@
   "outputDirectory": "_site",
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    { "source": "/fork", "destination": "/create", "permanent": false },
+    { "source": "/contribute", "destination": "/create", "permanent": false }
+  ],
   "framework": null,
   "git": {
     "deploymentEnabled": {
