@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ep2 wave 2 — the identity-frozen wave and its fixes, 12 Aug 2026</title>
+<style>
+  :root {
+    --bg: #17181a;
+    --panel: #1f2124;
+    --line: #33363b;
+    --ink: #eceef1;
+    --muted: #9aa0a8;
+    --accent: #c8b273;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    padding: 0 24px 96px;
+  }
+  .wrap { max-width: 1020px; margin: 0 auto; }
+
+  header.top { padding: 40px 0 20px; border-bottom: 1px solid var(--line); }
+  header.top h1 { margin: 0 0 6px; font-size: 27px; letter-spacing: -0.01em; font-weight: 650; }
+  header.top .sub { color: var(--muted); font-size: 14.5px; margin: 0; max-width: 78ch; }
+
+  .pending {
+    margin: 22px 0 0;
+    padding: 14px 18px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    border-radius: 5px;
+  }
+  .pending h2 {
+    margin: 0 0 8px; font-size: 12px; letter-spacing: 0.09em;
+    text-transform: uppercase; color: var(--accent); font-weight: 650;
+  }
+  .pending ul { margin: 0; padding-left: 19px; color: var(--muted); font-size: 14.5px; }
+  .pending li { margin: 5px 0; }
+  .pending li b { color: var(--ink); font-weight: 600; }
+  .pending p { margin: 0 0 8px; color: var(--muted); font-size: 14.5px; }
+
+  section.round { padding: 46px 0 8px; border-bottom: 1px solid var(--line); }
+  section.round:last-of-type { border-bottom: 0; }
+
+  .beatline { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .beatno {
+    font-variant-numeric: tabular-nums; font-size: 12.5px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted); font-weight: 650;
+  }
+  .beatline h2 { margin: 0; font-size: 23px; font-weight: 650; letter-spacing: -0.01em; }
+
+  .should { margin: 14px 0 0; font-size: 17px; line-height: 1.5; max-width: 74ch; }
+  .should .lbl {
+    display: block; font-size: 11.5px; letter-spacing: 0.09em; text-transform: uppercase;
+    color: var(--muted); font-weight: 650; margin-bottom: 4px;
+  }
+
+  blockquote {
+    margin: 18px 0 0; padding: 12px 0 12px 18px;
+    border-left: 3px solid var(--line);
+    color: var(--muted); font-size: 15.5px; font-style: italic; max-width: 74ch;
+  }
+  blockquote .who {
+    display: block; font-style: normal; font-size: 11.5px; letter-spacing: 0.09em;
+    text-transform: uppercase; color: #6f757d; font-weight: 650; margin-bottom: 6px;
+  }
+
+  .grid {
+    margin: 26px 0 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+  }
+  figure { margin: 0; }
+  figure a { display: block; line-height: 0; border-radius: 4px; overflow: hidden; background: #000; }
+  figure img { width: 100%; height: auto; display: block; }
+  figcaption {
+    margin-top: 7px; font-size: 12.5px; color: var(--muted);
+    font-variant-numeric: tabular-nums; letter-spacing: 0.04em;
+  }
+  figcaption b { color: var(--ink); font-weight: 600; letter-spacing: 0; }
+
+  .norender {
+    margin: 0; padding: 16px 18px; border: 1px dashed var(--line); border-radius: 4px;
+    color: var(--muted); font-size: 14.5px;
+  }
+  .norender b { color: var(--ink); font-weight: 600; }
+
+  .obs {
+    margin: 26px 0 0; padding: 13px 16px;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 5px;
+    font-size: 15px; line-height: 1.55; max-width: 82ch;
+  }
+  .obs .lbl {
+    display: block; font-size: 11.5px; letter-spacing: 0.09em; text-transform: uppercase;
+    color: var(--muted); font-weight: 650; margin-bottom: 5px;
+  }
+
+  .prov { margin: 14px 0 0; font-size: 12.5px; color: #6f757d; line-height: 1.5; }
+
+  section.calls { padding: 46px 0 8px; }
+  section.calls h2 { font-size: 21px; margin: 0 0 6px; font-weight: 650; }
+  section.calls > p.lead { color: var(--muted); font-size: 15px; margin: 0 0 6px; max-width: 78ch; }
+  .call {
+    margin: 22px 0 0; padding: 15px 18px;
+    background: var(--panel); border: 1px solid var(--line);
+    border-left: 3px solid var(--accent); border-radius: 5px;
+  }
+  .call h3 { margin: 0 0 7px; font-size: 16.5px; font-weight: 650; }
+  .call p { margin: 0 0 8px; font-size: 15px; line-height: 1.55; max-width: 80ch; }
+  .call p:last-child { margin-bottom: 0; }
+  .call .ask { color: var(--accent); font-weight: 600; }
+
+  footer.foot { padding: 40px 0 0; color: #6f757d; font-size: 13px; line-height: 1.6; }
+
+  @media (max-width: 620px) {
+    body { padding: 0 16px 64px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>Episode 2 — the identity-frozen wave, and the round that tried to fix it</h1>
+  <p class="sub">Sixteen beats rendered overnight on the rtx5090 with the goblin and the guards frozen to one description, then re-rendered where a fault could be named and attributed. Four seeds per round. Each beat below shows the first generation, the fix generation under it, and one line on whether the named fault actually cleared. Click any sheet for full size.</p>
+</header>
+
+<div class="pending">
+  <h2>Before you start</h2>
+  <p><b>The two frozen identities are provisional and yours to veto this morning.</b> They were written by the steward under your 01:5x delegation — <i>&ldquo;clothing - whatever, guards - whatever … things that aren't in the script you can decide&rdquo;</i> — against a laptop about 35 minutes from dying, and every round on this page was rendered against them:</p>
+  <ul>
+    <li><b>Goblin:</b> green skin, bald head, patchwork cloak. Bald is your ruling; the cloak is the script's own clothing (beats 02 and 08 stage him &ldquo;in a patchwork cloak&rdquo;). Chosen off a sample where two of four frames were inspected, not four — the time box is recorded rather than smoothed over.</li>
+    <li><b>Guards:</b> two round guard men in plain brown tunics, silly harmless bureaucrats with round soft bodies and bare heads, both faces clearly visible, one holding a bark clipboard. The tunic sheet was picked on register fit; the robe and vest sheets were never fully compared.</li>
+    <li>Nothing here is ranked, picked or promoted. Seeds appear in filename order. The verdicts are yours.</li>
+  </ul>
+</div>
+
+<section class="round">
+  <div class="beatline">
+    <span class="beatno">Beat 01 · style probe, not a fix round</span>
+    <h2>Cold Open</h2>
+  </div>
+
+  <p class="should">
+    <span class="lbl">What the shot should show</span>
+    A two-leaf sapling alone in a green field, and on the thinnest branch a green nub swelling into a single fig — the fig growing on screen is the only thing in frame that moves.
+  </p>
+
+  <blockquote>
+    <span class="who">The prediction, written before the render (commit 043e376c)</span>
+    &ldquo;The plate's style was never carried by words … This round starts from s2 and the plate is nowhere in it, so the only channel that could move style toward the plate family is the same text channel already measured to lose. I therefore expect a clean sweep of &lsquo;still not the plate look&rsquo; and no middle.&rdquo;
+  </blockquote>
+
+  <div class="grid">
+    <figure><a href="sheets/wave2-b01-styleprobe.jpg" target="_blank" rel="noopener"><img src="sheets/wave2-b01-styleprobe.jpg" alt="Beat 01 — the init and the plate reference in column one, then img2img strength 0.25, 0.40 and 0.55 in two seeds"></a><figcaption><b>the probe, with both poles on it</b> — column 1 is the frame you called &ldquo;really good&rdquo; (the init) above the plate-style reference the probe is aiming at; columns 2–4 are strength 0.25 / 0.40 / 0.55, one seed per row</figcaption></figure>
+  </div>
+
+  <p class="obs">
+    <span class="lbl">Observed</span>
+    All six arms keep the init's composition and its soft green daylight, and none of them moves toward the plate reference's dark warm backlight — at 0.55 what changes is a redrawn background hill and a reshaped leaf, not the style. Separately, and against the prediction's own wording: the object at the top of the stem is a veined <i>leaf</i> in the init and a veined leaf in all six arms, so there is no fig anywhere in this probe.
+  </p>
+
+  <p class="prov">animagine-xl-3.1 img2img · 832×1216 · 40 steps · guidance 7.5 · seeds 20260720 / 20261720 · $0.00 · init <code>farm-out/ep2-b01-t2i-fig/01-cold-open-wave1-s2.png</code>, plate ref <code>farm-out/ep2-b01-brightbase-figmatte/</code> · sheet rebuildable with <code>review/ep2-picks/build_styleprobe_sheet.py</code></p>
+</section>
+
+<section class="round">
+  <div class="beatline">
+    <span class="beatno">Beat 02</span>
+    <h2>The Sprint</h2>
+  </div>
+
+  <p class="should">
+    <span class="lbl">What the shot should show</span>
+    The scavenger skidding in and diving behind the sapling — wide enough that the dive reads, and the sapling actually in frame.
+  </p>
+
+  <blockquote>
+    <span class="who">The fixer's diagnosis, committed last night</span>
+    &ldquo;Every frame sews the cloak's patchwork INTO THE CHARACTER … The bald head he ruled for is present, but it arrives as Frankenstein surgery.&rdquo; And: &ldquo;No frame puts a stem between the camera and the goblin.&rdquo;
+  </blockquote>
+
+  <div class="grid">
+    <figure><a href="sheets/wave2-b02.jpg" target="_blank" rel="noopener"><img src="sheets/wave2-b02.jpg" alt="Beat 02 first generation, four seeds"></a><figcaption><b>first generation</b> — seeds s0–s3</figcaption></figure>
+    <figure><a href="sheets/wave2-b02-r2.jpg" target="_blank" rel="noopener"><img src="sheets/wave2-b02-r2.jpg" alt="Beat 02 fix generation r2, four seeds"></a><figcaption><b>fix generation (r2)</b> — added <code>no scars, no stitched skin</code> to the negative and moved the sapling stem into the first clause</figcaption></figure>
+  </div>
+
+  <p class="obs">
+    <span class="lbl">Observed, comparing the two</span>
+    The named fault cleared: every crown in the fix generation is unbroken green — no graft, no suture, no seam — where the first generation sewed all four, and the cloak keeps its patchwork, so naming skin did not negate what the positive asserts. The second fault moved but did not clear: a distinct sapling stem stands between him and the camera in two of the four (s1, s2) where the first generation had none in any.
+  </p>
+
+  <p class="prov">animagine-xl-3.1 · 832×1216 · 40 steps · guidance 7.5 · seeds 20260721 / 20261721 / 20262721 / 20263721 · $0.00 · frames in <code>farm-out/ep2-b02-idfix/</code> and <code>farm-out/ep2-b02-idfix-r2/</code>, full prompt in the .yaml beside each PNG</p>
+</section>
+
+<section class="round">
+  <div class="beatline">
+    <span class="beatno">Beat 03</span>
+    <h2>Bad Cover</h2>
+  </div>
+
+  <p class="should">
+    <span class="lbl">What the shot should show</span>
+    Him crouched behind a stem that hides about a sixth of him — the joke is the size mismatch, so we need both him and how little tree there is.
+  </p>
+
+  <blockquote>
+    <span class="who">The fixer's diagnosis, committed last night</span>
+    &ldquo;s3 draws the whole skull dome cream-white above a green face … This is HIS NAMED BEAT-03 FAULT — &lsquo;making the goblin compeltely white&rsquo; — returning in a localised form … The ban reached the model and did not bind, because the model keeps the FACE green and pales only the CRANIUM.&rdquo;
+  </blockquote>
+
+  <div class="grid">
+    <figure><a href="sheets/wave2-b03.jpg" target="_blank" rel="noopener"><img src="sheets/wave2-b03.jpg" alt="Beat 03 first generation, four seeds"></a><figcaption><b>first generation</b> — seeds s0–s3</figcaption></figure>
+    <figure><a href="sheets/wave2-b03-r2.jpg" target="_blank" rel="noopener"><img src="sheets/wave2-b03-r2.jpg" alt="Beat 03 fix generation r2, four seeds"></a><figcaption><b>fix generation (r2)</b> — the one round that answered the pale crown with an affirmative, <code>his bare scalp green</code>, and sent no skin ban at all</figcaption></figure>
+  </div>
+
+  <p class="obs">
+    <span class="lbl">Observed, comparing the two</span>
+    Read across all four frames the named fault did not clear: s0, s2 and s3 still put a cream dome over a green face, and only s1's skull is green throughout. What did change is the stitching — s1's suture line is gone — and s1's eyes come back blank white with square red pupils. Worth flagging because the wave-level conclusion in the ledger (&ldquo;the affirmative holds the colour&rdquo;) was drawn from two of these four frames, not four.
+  </p>
+
+  <p class="prov">animagine-xl-3.1 · 832×1216 · 40 steps · guidance 7.5 · $0.00 · the fix frames were published into <code>farm-out/ep2-b03-idfix/</code> on the results branch — the baseline directory — so the first-generation sheet above is built from the copy that survives on <code>main</code>. See the last record in <code>wave2-faults-fixer.yaml</code>; this is a merge hazard, not a rendering one.</p>
+</section>
+
+<section class="round">
+  <div class="beatline">
+    <span class="beatno">Beat 04</span>
+    <h2>The Footnote</h2>
+  </div>
+
+  <p class="should">
+    <span class="lbl">What the shot should show</span>
+    Close on his face holding his breath — cheeks puffed, eyes darting, ears twitching at every sound.
+  </p>
+
+  <blockquote>
+    <span class="who">The fixer's diagnosis, committed last night</span>
+    &ldquo;This beat is a CLOSE-UP, so the fault that reads as a small patch elsewhere fills the frame here … At close-up size he reads as a sewn doll rather than a goblin.&rdquo; The named fix was the beat-02 ban propagated verbatim, with nothing else changed.
+  </blockquote>
+
+  <div class="grid">
+    <figure><a href="sheets/wave2-b04.jpg" target="_blank" rel="noopener"><img src="sheets/wave2-b04.jpg" alt="Beat 04 first generation, four seeds"></a><figcaption><b>first generation</b> — seeds s0–s3</figcaption></figure>
+    <figure><a href="sheets/wave2-b04-r2.jpg" target="_blank" rel="noopener"><img src="sheets/wave2-b04-r2.jpg" alt="Beat 04 fix generation r2, four seeds"></a><figcaption><b>fix generation (r2)</b> — <code>no scars, no stitched skin</code>, staging untouched</figcaption></figure>
+  </div>
+
+  <p class="obs">
+    <span class="lbl">Observed, comparing the two</span>
+    Half of the named fault cleared and half did not: the crown stitching drops from heavy sutures in all four to two faint marks in s0, a shortened seam in s1, X marks in s2 and nothing in s3 — while the cream dome over the upper skull is present in all four and unchanged from the first generation. The ban was confirmed sent in the frame sidecars, so this is the lever falling short, not a delivery failure.
+  </p>
+
+  <p class="prov">animagine-xl-3.1 · 832×1216 · 40 steps · guidance 7.5 · $0.00 · frames in <code>farm-out/ep2-b04-idfix/</code> and <code>farm-out/ep2-b04-idfix-r2/</code></p>
+</section>
+
+<section class="round">
+  <div class="beatline">
+    <span class="beatno">Beat 05</span>
+    <h2>The Patrol</h2>
+  </div>
+
+  <p class="should">
+    <span class="lbl">What the shot should show</span>
+    Two guards jog into an empty morning field and stop to scan it — round harmless shapes, one carrying a clipboard made of bark.
+  </p>
+
+  <blockquote>
+    <span class="who">The fixer's diagnosis, committed last night</span>
+    &ldquo;NO ARMOR in any frame, 4/4 — the thing he rejected outright is gone.&rdquo; But: &ldquo;s0 and s2 are extreme bird's-eye looking down on their scalps; s3 is an over-the-shoulder from behind … the overhead prior is what &lsquo;two boys in a field&rsquo; gives this checkpoint when no camera height is stated.&rdquo;
+  </blockquote>
+
+  <div class="grid">
+    <figure><a href="sheets/wave2-b05.jpg" target="_blank" rel="noopener"><img src="sheets/wave2-b05.jpg" alt="Beat 05 first generation, four seeds"></a><figcaption><b>first generation</b> — seeds s0–s3</figcaption></figure>
+    <figure><a href="sheets/wave2-b05-r2.jpg" target="_blank" rel="noopener"><img src="sheets/wave2-b05-r2.jpg" alt="Beat 05 fix generation r2, four seeds"></a><figcaption><b>fix generation (r2)</b> — <code>no high angle, no from above</code> plus <code>eye-level</code>, paid for out of the winter tier; the armor ban was left untouched</figcaption></figure>
+  </div>
+
+  <p class="obs">
+    <span class="lbl">Observed, comparing the two</span>
+    The named fault mostly cleared — three of the four now look at the guards from eye level (only s0 still shoots down at their scalps), and the animal-eared non-person that stood in for the second guard in s3 is gone. Against that, s3's rear guard now arrives in a riveted breastplate with pauldrons and metal bracers, even though the armor ban was carried into this round unchanged and the first generation had no armor in any frame.
+  </p>
+
+  <p class="prov">animagine-xl-3.1 · 832×1216 · 40 steps · guidance 7.5 · $0.00 · frames in <code>farm-out/ep2-b05-idfix/</code> and <code>farm-out/ep2-b05-idfix-r2/</code></p>
+</section>
+
+<footer class="foot">
+  <p>Every frame here is $0 — animagine-xl-3.1 on the rtx5090, no provider spend. The raw PNGs stay in <code>farm-out/</code> and on <code>farm-results-rtx5090</code>; their model licence keeps them off the site, so the page carries baked sheets rebuildable with <code>review/ep2-picks/build_wave_sheets.py</code>.</p>
+  <p>Nothing on this page is a pick, a rank or a promotion to canon. The steward's readings are of what is measurably in the image; the verdicts are yours.</p>
+</footer>
+
+</div>
+</body>
+</html>

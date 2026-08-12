@@ -10301,3 +10301,221 @@
     subject of the shot. s1 is the odd seed out: hands clasped and empty, looking
     up at nothing.
   outcome: null
+
+# ============================================================================
+# THE FIX ROUNDS (r2), FOLDED IN FROM SIDECARS AND SCORED — 2026-08-12 morning.
+# Each r2 prediction was written to `pipeline/jobs/*.prediction.yaml` instead of
+# here because the ledger was dirty (` M`) when the round was staged and
+# appending would have raced a sibling lane. The predictions below are the
+# sidecar records VERBATIM — they are not re-worded now that the frames exist —
+# and each is followed by an observation read off the baked sheets on
+# review/ep2-picks/morning-0812-wave2.html. The sidecars are deleted in the same
+# commit that folds them, so there is one copy, not two.
+#
+# `outcome:` stays null on every record. An observation says whether a predicate
+# is true in the image; the verdict is R4's and he has not ruled.
+# ============================================================================
+
+- id: ep2-b01-styleprobe-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b01-styleprobe-0812
+  predicates_observed: >-
+    composition still reads as s2 at i25 2/2 HIT; style unmoved at i25 2/2 HIT;
+    still t2i not plate at i40 2/2 HIT; none of the six reads as plate-family 6/6
+    HIT; composition visibly redrawn at i55 >=1/2 HIT (s1 only, a new background
+    hill and a reshaped leaf); stem inflation confined to i55 HIT (no inflation in
+    any arm); fig present at i25 2/2 and at i40 >=1/2 MISS; fig lost or degraded at
+    i55 >=1/2 UNSCORABLE.
+  observed: >-
+    The predicted clean sweep happened: text did not move the style off the init at
+    any strength. The three fig predicates fail for a reason the prediction did not
+    anticipate — the object on the stem is a veined LEAF, in all six arms and in the
+    init they were made from, so there was never a fig in this probe to keep or lose.
+  outcome: null
+
+- id: ep2-b02-idfix-r2-0812
+  kind: prediction
+  folded_from: pipeline/jobs/ep2-b02-idfix-r2-0812.prediction.yaml (verbatim)
+  written: 2026-08-12, the fixer lane, before enqueue. Box dry 69/77, anchor intact, negative 77 -> sent 77 with no NEGWARN.
+  answers: >-
+    The two faults read off farm-out/ep2-b02-idfix/ — a stitched/grafted scalp and
+    stitch-scarred cheeks in 4/4, and the tiny sapling he cowers behind absent in 4/4.
+  predicates:
+  - bald 4/4
+  - green skin 4/4
+  - patchwork cloak >=3/4
+  - one goblin 4/4
+  - no stitches or grafts on the scalp >=3/4
+  - no stitch-scars on the face >=3/4
+  - a single thin sapling stem between camera and goblin >=2/4
+  - hands at his chest, sapling not grabbed or uprooted 4/4 (the grab-tier ban was RETIRED to pay for the new bans; this predicate is the test of that trade)
+  - bright daylight, not dark 4/4
+  falsifiable_by: >-
+    Any frame that still sews a patch or suture line onto his head falsifies the
+    skin ban. Any round where the stem is absent in 3 or 4 frames falsifies the
+    early-affirmative lever for this beat, and beat 02 then goes to
+    review/ep2-picks/wave2-needs-founder.md as a model limit rather than to a
+    third round.
+  consumer: morning page, identity-frozen wave.
+  outcome: null
+
+- id: ep2-b02-idfix-r2-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b02-idfix-r2-0812
+  predicates_observed: >-
+    bald 4/4 HIT; green skin 4/4 HIT; patchwork cloak >=3/4 HIT (4/4, s1 and s3
+    keep visible patched panels); one goblin 4/4 HIT; no stitches or grafts on the
+    scalp >=3/4 HIT (4/4, every crown unbroken); no stitch-scars on the face >=3/4
+    HIT; sapling stem between camera and goblin >=2/4 HIT (exactly 2/4, s1 and s2);
+    hands at chest, nothing uprooted 4/4 HIT; bright daylight 4/4 HIT.
+  observed: >-
+    Every predicate true, and the only one that landed on its threshold rather than
+    above it is the sapling. The ban worked without collateral: naming SKIN removed
+    the grafts while the cloak the positive asserts kept its patchwork.
+  outcome: null
+
+- id: ep2-b03-idfix-r2-0812
+  kind: prediction
+  folded_from: pipeline/jobs/ep2-b03-idfix-r2-0812.prediction.yaml (verbatim; the sidecar was never committed)
+  written: 2026-08-12 ~04:4x before enqueue, terse. Dry 75/77 anchor intact.
+  predicates: [green scalp (no pale cranium) >=3/4, bald 4/4, cloak >=3/4, one goblin 4/4, no house 4/4]
+  consumer: morning page, iteration loop.
+  outcome: null
+
+- id: ep2-b03-idfix-r2-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b03-idfix-r2-0812
+  predicates_observed: >-
+    green scalp (no pale cranium) >=3/4 MISS — 1/4; only s1's skull is green, while
+    s0, s2 and s3 keep a cream dome over a green face. bald 4/4 HIT; cloak >=3/4
+    HIT; one goblin 4/4 HIT; no house 4/4 HIT (s3 is open woodland, not a building).
+  observed: >-
+    THIS CORRECTS A WAVE-LEVEL CLAIM. The record that called the `green scalp`
+    affirmative the lever that holds the crown colour was written from two of these
+    four frames; read across all four it does not hold. What the round did clear is
+    s1's suture line, and s1's eyes came back blank white with square red pupils.
+  outcome: null
+
+- id: ep2-b04-idfix-r2-0812
+  kind: prediction
+  folded_from: pipeline/jobs/ep2-b04-idfix-r2-0812.prediction.yaml (verbatim)
+  written: 2026-08-12, the fixer lane, before enqueue. Box dry 66/77 positive, anchor intact, negative 77 -> sent 77.
+  answers: >-
+    The consistency half of his beat-04 sentence: a cream dome over the upper skull
+    4/4, X-stitches across the crown 4/4, cheek X marks 4/4, all at close-up size.
+  kind_of_claim: >-
+    This is a PROPAGATION prediction, so it is stronger than the beat-02 one it
+    rests on. Beat 02 already measured this exact ban on this checkpoint tonight and
+    got 4/4. If beat 04 does NOT clear, the propagation is wrong and the ban is
+    beat-shaped rather than recipe-shaped — which is a result worth having.
+  predicates:
+  - unbroken green crown, no suture line and no seam 4/4
+  - no cream or tan dome over the skull 4/4
+  - no X marks on the cheeks >=3/4
+  - patchwork cloak still reads as patchwork >=3/4 (the ban names skin; if the cloak goes plain, the wording discipline failed)
+  - background still an open grassy field, no house 4/4 (his named fault must not regress when `no architecture` retires)
+  - bald 4/4, green skin 4/4, one goblin 4/4
+  - the close-up staging survives: face filling the frame, huge eyes, large ears 4/4
+  falsifiable_by: >-
+    Any frame that still sews the crown falsifies the propagation. A cloak that
+    loses its patchwork falsifies the claim that naming SKIN spares what the
+    positive asserts. A house or wall reappearing falsifies retiring `no
+    architecture` as free.
+  consumer: morning page, identity-frozen wave.
+  outcome: null
+
+- id: ep2-b04-idfix-r2-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b04-idfix-r2-0812
+  predicates_observed: >-
+    unbroken green crown 4/4 MISS — marks remain on s0 (two faint), s1 (a shortened
+    seam) and s2 (X marks); s3 alone is clean. no cream or tan dome 4/4 MISS — 0/4,
+    the dome is present in every frame and unchanged from the first generation. no X
+    marks on the cheeks >=3/4 MISS — 2/4 free. patchwork cloak >=3/4 HIT; open field
+    no house 4/4 HIT; bald, green skin, one goblin 4/4 HIT; close-up staging 4/4 HIT.
+  observed: >-
+    The propagation is falsified on its own terms, and the falsification splits the
+    fault in two: the ban reached the sutures and reduced them everywhere, and it did
+    not touch the colour of the scalp at close-up size. The sidecars confirm `scars`
+    and `stitched skin` were both delivered, so this is the lever falling short.
+  outcome: null
+
+- id: ep2-b04-idfix-r3-0812
+  kind: prediction
+  folded_from: pipeline/jobs/ep2-b04-idfix-r3-0812.prediction.yaml (verbatim)
+  written: 2026-08-12, the fixer lane, before enqueue, AFTER reading the r2 frames that falsified this lane's previous prediction.
+  answers: >-
+    A pale scalp that survived the skin ban on this beat. The r2's sidecar confirms
+    `scars` and `stitched skin` were both delivered to the model, so this is a
+    measured insufficiency of the lever, not a delivery failure.
+  the_claim: >-
+    That the AFFIRMATIVE holds what the NEGATIVE could not. `green scalp` cleared
+    the dome on beat 03 with no skin ban at all; the ban cleared the sutures on
+    beat 02 with no affirmative. This round sends both and expects both gone.
+  predicates:
+  - the scalp is GREEN, no cream or tan dome, 4/4
+  - no sutures, seams or grafts on the crown 4/4
+  - no X marks on the cheeks >=3/4
+  - patchwork cloak still reads as patchwork >=3/4
+  - the staging is unchanged from the r2 (the positive gains two words and loses none)
+  falsifiable_by: >-
+    A pale scalp surviving BOTH levers together would mean this beat's shot size
+    defeats prompt-level fixes altogether, and the answer moves to the frozen
+    definition itself — already the founder-facing recommendation in
+    wave2-needs-founder.md, and strongly reinforced by that outcome.
+  consumer: morning page, identity-frozen wave.
+  not_rendered: >-
+    NO r3 FRAMES EXIST. `origin/farm-results-rtx5090` carries no
+    farm-out/ep2-b04-idfix-r3/ directory as of 2026-08-12 morning, so this
+    prediction is unscored rather than hit or missed. Its premise also needs
+    re-reading first: it rests on beat 03's affirmative having worked, and the
+    beat-03 observation above measures that claim at 1/4.
+  outcome: null
+
+- id: ep2-b05-idfix-r2-0812
+  kind: prediction
+  folded_from: pipeline/jobs/ep2-b05-idfix-r2-0812.prediction.yaml (verbatim)
+  written: 2026-08-12, the fixer lane, before enqueue. Box dry 76/77 positive, anchor intact, negative 75 -> sent 75.
+  answers: >-
+    The camera, which sat directly overhead in s0 and s2 and behind the guards in
+    s3, taking "both faces clearly visible" down with it.
+  predicates:
+  - eye-level or near-eye-level camera, not looking down on their scalps, >=3/4
+  - both guards drawn as PEOPLE 4/4 (the s3 brown blob with animal ears does not recur)
+  - both faces visible >=3/4
+  - no armor, no helmet 4/4 -- his ruling must not regress while the negative is being rebalanced
+  - plain brown tunics 4/4, bare heads 4/4
+  - a clipboard present 4/4
+  - warm green field, no snow and no winter 4/4 -- `frost`, `ice` and `pine forest` were retired to pay for the camera ban, so this predicate is the test of that trade
+  falsifiable_by: >-
+    Another overhead frame falsifies the camera ban on this beat. Any armor, or any
+    snow, falsifies the claim that the winter tier and the ruling terms were safe to
+    rebalance around.
+  not_under_test: >-
+    Body type. s1 gave tall muscular men and s2 near-chibi infants against a
+    sentence asking for round soft bureaucrats. Deliberately left alone so the
+    camera result stays attributable; it is R4's axis and it is logged for him.
+  consumer: morning page, identity-frozen wave.
+  outcome: null
+
+- id: ep2-b05-idfix-r2-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b05-idfix-r2-0812
+  predicates_observed: >-
+    eye-level camera >=3/4 HIT — 3/4 (s1, s2, s3); s0 still looks down on their
+    scalps. both guards drawn as PEOPLE 4/4 HIT — the animal-eared blob does not
+    recur. both faces visible >=3/4 HIT (4/4). no armor, no helmet 4/4 MISS — s3's
+    rear guard wears a riveted breastplate, pauldrons and metal bracers. plain brown
+    tunics 4/4 MISS — s2 is olive-green and s3's rear figure is armoured. bare heads
+    4/4 HIT; clipboard 4/4 HIT; warm green field, no snow 4/4 HIT.
+  observed: >-
+    The lever it was fired for worked; the ruling it was written to protect did not
+    survive. The armor ban was carried into this round untouched and the first
+    generation had no armor in any of its four frames, so armour arriving here is a
+    regression the negative did not prevent, on the one axis he ruled outright.
+  outcome: null
