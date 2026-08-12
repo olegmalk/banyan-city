@@ -1,0 +1,131 @@
+# EPISODE 2, BEAT 14 — MATCH THE REFERENCE TO THE SHOT SIZE. $0.
+# 2026-08-12, character-consistency lane. One variable: what the reference contains.
+#
+# ── TWO BEATS FAILED IN OPPOSITE DIRECTIONS AND TOGETHER THEY NAME THE RULE. On the
+# whole-figure reference, beat 03 held the creature 8 of 8 and LOST ITS STAGING — the
+# draft asks him to crouch behind a sapling and every frame is a neutral standing
+# figure. Beat 14 did the reverse: it kept its own intimate low close-up and LOST THE
+# CREATURE — dark teal, round pink eyes, no pointed ears, no coat, nothing of the
+# reference in it.
+#
+# ── WHY THAT IS ONE FINDING AND NOT TWO FAILURES. A reference transfers what it
+# contains, and a whole-figure crop contains a face about twenty pixels across. Ask it
+# for a close-up and there is no face in it to transfer; ask a standing pose to crouch
+# and the pose it does contain wins. So the rule is MATCH THE REFERENCE SCOPE TO THE
+# BEAT'S SHOT SIZE, and this job tests exactly that on the beat that failed hardest.
+#
+# ── THE REFERENCE IS ROUND 1'S OWN HEAD CROP, BYTE-IDENTICAL, in all four slots
+# (sha256 a1d9b5c9…). Not a new crop, so there is no new crop decision to argue about:
+# it is the picture that held the FACE at ~3/4 in the very first conditioning round.
+# Everything else is held at the failing round's values — same beat, arm, window,
+# scale, seeds.
+#
+# ── AND THE BEAT PASS IS STOPPED UNTIL THIS ANSWERS. Beats 4, 8, 13, 15, 19 and 20
+# are written and dry-run and deliberately NOT fired. Six more beats on a reference
+# that is right for wide shots and wrong for close-ups is the K-recipe mistake with a
+# different noun, and my own metric agreeing with me is not a sample.
+#
+# ── NOT A PICK, NOT CANON. Provisional under his delegated evaluation grant.
+#
+# $0 — local GPU on the rtx5090, no provider, nothing published, nothing assembled.
+id: ep2-b14-ipa-headref-0812
+task: ep2-b14-ipa-headref-0812
+node: 002b-first-citizen
+beat: 14
+runner: box
+needs_gpu: true
+priority: 49
+max_attempts: 1
+owner: character-consistency lane, 2026-08-12 (consistency mandate, shot-size rule test)
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03`, read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the render
+  gate itself reads. Neither `approval_condition` touches beat 14. This is a
+  mechanism test on an approved node, not an episode assembly.'
+consumer: >-
+  review/ep2-picks/consistency-0812.html, the per-beat rows. Provisional candidates
+  for beat 14 under the frozen reference, for his one review pass.
+success: >-
+  Sixteen PNGs at C:\banyan-farm\goblin-ipa-0812\out-b14-headref with sidecars written
+  at render time (7.2). Success is readable comparable cells — NOT that this beat
+  is good. A beat where the frozen reference fails is the most useful cell here.
+why: >-
+  Almost every beat of this episode has the goblin in it and he could not approve any
+  of them because the goblin changed between them. Two beats now hold from one
+  reference; beat 14 is the next one that has to.
+est_minutes: 14
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '14'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-head-0812
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b14-headref
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '14'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-head-0812
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b14-headref
+  - --arm
+  - window4
+  - --task
+  - ep2-b14-ipa-headref-0812
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b14-ipa-headref-0812"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/goblin-ipa-0812/out-b14-headref/*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b14-ipa-headref-0812.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 16 else 1)
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b14-headref\14-the-defense-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b14-headref\14-the-defense-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b14-headref\14-the-defense-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b14-headref\14-the-defense-ipa-r3-w015-s0.png

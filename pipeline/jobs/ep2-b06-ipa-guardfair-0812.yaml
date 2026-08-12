@@ -1,0 +1,139 @@
+# EPISODE 2, BEAT 06 — THE FAIR GUARD TEST. $0.
+# 2026-08-12, character-consistency lane. The rerun the last round said it needed.
+#
+# ── WHAT THE UNFAIR ONE MEASURED. `ep2-b06-ipa-guardref-0812` drew 16 frames from the
+# two cast guards and produced neither man, losing their bald heads to hair in ~14 of
+# 16. That was called before it ran: the sampler could only send beat 06's ORIGINAL
+# draft, which asks for MISMATCHED ARMOUR and never says bald, so the words fought the
+# picture over the clothes and gave it nothing on the head.
+#
+# ── WHAT CHANGED. `--draft-key` shipped today, so the tunic-and-bald wording that was
+# already written — `authored_b06_idfix_r2` — can finally reach the sampler. ONE thing
+# differs from the unfair round: the draft. Same refs, same arm, same window, same
+# scale, same seeds, same out shape.
+#
+# ── THE QUESTION THIS ANSWERS IS A LAW, NOT A BEAT. The unfair round produced the
+# most useful sentence of the day: at this strength a reference can CONFIRM the model's
+# prior for a noun and cannot OVERTURN it — the goblin's baldness held 16/16 with
+# `bald` nowhere in that prompt, because a goblin boy is hairless before anyone asks,
+# while a guard man is a haired soldier. If the word `bald` in the prompt now lets the
+# picture through, the law holds and the recipe for every guard beat is "reference plus
+# a prompt that does not contradict it". If the guards are STILL not the cast men with
+# the words on their side, the references are the problem and no wording saves them.
+#
+# ── PAIRED WITH THE UNFAIR ROUND ON THE PAGE, deliberately, as one contrast.
+#
+# ── NOT A PICK, NOT CANON. Provisional under his delegated evaluation grant.
+#
+# $0 — local GPU on the rtx5090, no provider, nothing published, nothing assembled.
+id: ep2-b06-ipa-guardfair-0812
+task: ep2-b06-ipa-guardfair-0812
+node: 002b-first-citizen
+beat: 6
+runner: box
+needs_gpu: true
+priority: 49
+max_attempts: 1
+owner: character-consistency lane, 2026-08-12 (consistency mandate, the fair guard rerun)
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03`, read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the render
+  gate itself reads. Neither `approval_condition` touches beat 06. A mechanism test
+  on an approved node, not an episode assembly, and explicitly not a beat candidate.'
+consumer: >-
+  review/ep2-picks/consistency-0812.html, guards row, and the go/no-go for the six
+  guard beats. A face that holds while the garment is contested releases them once
+  the wording is settled; a face that does not says the guard references need
+  rebuilding rather than re-prompting.
+success: >-
+  Sixteen PNGs at C:\banyan-farm\goblin-ipa-0812\out-b06-guardfair\06-the-clipboard-ipa-r{0,1,2,3}-w015-s{0,1,2,3}.png
+  with sidecars written at render time (7.2). Success is comparable readable cells —
+  NOT that identity held, and NOT that the tunic survived.
+why: >-
+  Six guard beats are blocked behind a reference nobody has ever conditioned on. The
+  references now exist and the gate now opens; until one beat is drawn from them,
+  the guards half of his mandate has produced sheets and no mechanism.
+est_minutes: 14
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '6'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-charref-guards-0812
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b06-guardfair
+  - --draft-key
+  - authored_b06_idfix_r2
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '6'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-charref-guards-0812
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b06-guardfair
+  - --draft-key
+  - authored_b06_idfix_r2
+  - --arm
+  - window4
+  - --task
+  - ep2-b06-ipa-guardfair-0812
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b06-ipa-guardfair-0812"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/goblin-ipa-0812/out-b06-guardfair/*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b06-ipa-guardfair-0812.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 16 else 1)
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b06-guardfair\06-the-clipboard-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b06-guardfair\06-the-clipboard-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b06-guardfair\06-the-clipboard-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b06-guardfair\06-the-clipboard-ipa-r3-w015-s0.png

@@ -11636,3 +11636,65 @@
     the mechanism worth more than eight more beats of frames.
   consumer: review/ep2-picks/consistency-0812.html, per-beat rows, for his one pass.
   outcome: null
+
+- id: ep2-frozen-ref-beatpass-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-frozen-ref-beatpass-0812
+  predicates_observed: >-
+    the creature is the same creature in every beat >=3/4 SPLIT — beat 03 HIT 8/8 (the
+    most consistent set of the day), beat 14 MISS 0/8 (dark teal, round pink eyes, no
+    pointed ears, no coat, nothing of the reference in it); coat-hem reads better on
+    close beats and worse on wide ones NOT AS PREDICTED — see below; beats lose staging
+    before identity PARTLY WRONG, and the exception is the whole finding.
+  observed: >-
+    THE TWO BEATS FAILED IN OPPOSITE DIRECTIONS AND THAT IS ONE RULE, NOT TWO FAILURES.
+    Beat 03 kept the creature perfectly and threw its staging away — the draft asks him
+    to crouch behind a sapling and all eight frames are a neutral standing figure, the
+    reference's own pose. Beat 14 kept its intimate low close-up and threw the creature
+    away entirely. A whole-figure crop contains a face about twenty pixels across: ask
+    it for a close-up and there is no face in it to give, ask its standing pose to
+    crouch and the pose it does contain wins. MATCH THE REFERENCE SCOPE TO THE BEAT'S
+    SHOT SIZE.
+  decision: >-
+    BEAT PASS STOPPED at two beats. Specs for 4, 8, 13, 15, 19 and 20 are written and
+    dry-run and deliberately not fired. Six more beats on a reference that is right for
+    wide shots and wrong for close-ups is the K-recipe mistake with a different noun,
+    and a metric agreeing with me is not a sample.
+  outcome: null
+
+- id: ep2-b14-ipa-headref-0812
+  kind: prediction
+  written: 2026-08-12, before enqueue. One variable — the reference's scope.
+  predicates: [the creature returns on beat 14 >=3/4 where the whole-figure reference
+    scored 0/4, the intimate low close-up SURVIVES (the head crop is itself a close-up,
+    so pose and framing should stop fighting), the COAT is absent or wrong since the
+    reference no longer contains one]
+  basis: >-
+    Beat 03 and beat 14 failed in opposite directions on the same reference. The head
+    crop is round 1's own bytes (sha256 a1d9b5c9…), the picture that held the face at
+    ~3/4 in the first conditioning round, and beat 14 is the beat that failed hardest.
+  falsifiable_by: >-
+    The creature still absent. That would mean the close-up framing itself defeats
+    conditioning regardless of what the reference contains, and the beat list would
+    have to be split by shot size with the close-ups going to a different mechanism.
+  consumer: the go/no-go for the six unfired beats.
+  outcome: null
+
+- id: ep2-b06-ipa-guardfair-0812
+  kind: prediction
+  written: 2026-08-12, before enqueue. One variable — the draft.
+  predicates: [bare head >=3/4 now that the prompt says bald AND the picture is bald
+    (it was ~2/16 when only the picture said so), plain brown tunic >=3/4, the face
+    reads as one of the two cast guards >=2/4, the cast men are still distinguishable
+    from each other]
+  basis: >-
+    `--draft-key` shipped today, so the tunic-and-bald wording can reach the sampler and
+    the unfair round can be rerun with only the draft changed. The law the unfair round
+    produced predicts this: a reference can confirm the model's prior and not overturn
+    it, so `bald` in the words should let the bald picture through.
+  falsifiable_by: >-
+    The cast guards still absent with the words on their side. Then the references are
+    the problem rather than the wording, and no draft rescues them.
+  consumer: the guards walk, and the unfair/fair contrast on his page.
+  outcome: null
