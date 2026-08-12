@@ -1,0 +1,16 @@
+#### job ep3-charref-magistrate-0812-1786479900 attempt 1 start 2026-08-12T21:46:53Z
+
+==== step measure START 2026-08-12T21:46:56Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\wave-goblin-prep\\render_wave_sample.py", "--harness", "C:\\banyan-farm\\wave-goblin-prep", "--root", "C:\\banyan-farm\\wave-goblin-prep\\repo", "--beat", "16", "--goblin-def", "green skin, bald head", "--variant", "authored_ep3_charref_magistrate", "--dry"]
+C:\banyan-farm\venv\Lib\site-packages\transformers\tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+Traceback (most recent call last):
+  File "C:\banyan-farm\wave-goblin-prep\render_wave_sample.py", line 257, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\banyan-farm\wave-goblin-prep\render_wave_sample.py", line 193, in main
+    if wg.GOBLIN_SLOT not in authored and d["kind"] != "guard":
+                                          ~^^^^^^^^
+KeyError: 'kind'
+==== step measure END rc=1 2026-08-12T21:46:58Z ====
+#### job ep3-charref-magistrate-0812-1786479900 finished rc=1 2026-08-12T21:46:58Z
