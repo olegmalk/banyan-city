@@ -875,3 +875,4 @@
 19:56:48Z DONE task=ep2-b19-overhead-0812-1786475381 rc=0 artifacts=2
 19:59:37Z STARTED task=ep3-003b-b01-dialect-r2-0812-1786474330 attempt=1 on box-runner
 20:03:58Z DONE task=ep3-003b-b01-dialect-r2-0812-1786474330 rc=0 artifacts=8
+20:07:09Z STARTED task=ep2-b18-plantneg-0812-1786475814 attempt=1 on box-runner
