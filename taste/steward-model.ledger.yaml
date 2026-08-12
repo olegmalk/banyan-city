@@ -12768,3 +12768,40 @@
     round had already rendered and cost nothing extra — same token budget, same job, no
     additional round — and it turns out to de-risk exactly the clip that came back blank.
   outcome: null
+
+- id: ep2-b03-motion-0812-scored
+  kind: scoring
+  date: 2026-08-12
+  scores: ep2-b03-motion-0812
+  verdict: FAIL, and for a reason that indicts the recipe's own style header.
+  observed: >-
+    A CAMERA TRIPOD IS IN THE SHOT. From frame 15 a full photographic tripod with a camera
+    head stands in the middle of frame, and by frame 90 the goblin has ducked down behind
+    it. The beat is "he is crouched behind a trunk"; the model needed something to hide him
+    behind, and the nearest available noun was one I put there myself.
+  the_cause_is_my_positive_prompt: >-
+    Every job in this family opens "2D anime, hand-drawn cel animation, locked-off static
+    camera on a fixed tripod, the framing never moves". That phrase is meant as a CAMERA
+    INSTRUCTION and the model read it as SCENE CONTENT. A sentence describing the
+    apparatus can be rendered as the apparatus. It has been sitting in every prompt this
+    lane has shipped today, including the b04 clip the founder liked and the b15 probe,
+    and neither of those drew it — so it is not deterministic, it is opportunistic: beat 03
+    is the one beat that ASKS for an object to hide behind.
+  what_did_work_here: >-
+    Identity holds — pale yellow-green, bald, long ears, red eyes, the coat. The background
+    appeared again (sky, cloud bank, field), second confirmation of the b15 finding. And he
+    does crouch: the action itself happened. The beat still fails, because there is no
+    trunk and there IS a tripod.
+  the_fix_and_why_i_am_not_applying_it_mid_wave: >-
+    Fix is two-sided: say the camera behaviour without naming hardware ("static locked
+    framing, the frame never moves" instead of "on a fixed tripod"), and ban tripod, camera,
+    camera equipment and film equipment in the negative. I am NOT retro-fitting the four
+    unrendered beats with it: none of them asks him to hide behind anything, the risk to
+    them is low, and changing the recipe mid-wave would break comparability with b15 and b03
+    for no measured gain. Beat 03 gets its own r2 with the fix once the wave drains — one
+    sample, named defect.
+  the_habit: >-
+    A prompt has two registers — instructions about the camera and descriptions of the world
+    — and the model does not know which is which. Anything phrased as a physical object can
+    be drawn as one. Fourth thing today inherited unexamined from a working recipe.
+  outcome: null
