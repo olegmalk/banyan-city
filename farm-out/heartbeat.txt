@@ -884,3 +884,4 @@
 20:25:34Z DONE task=ep2-b19-under-0812-1786479147 rc=0 artifacts=2
 20:25:39Z box-runner idle ready=0 failed=5
 20:29:03Z STARTED task=ep2-b12-motion-0812-1786479746 attempt=1 on box-runner
+20:35:22Z DONE task=ep2-b12-motion-0812-1786479746 rc=0 artifacts=2
