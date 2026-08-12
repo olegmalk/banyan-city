@@ -11435,3 +11435,55 @@
   consumer: refs-charref-guards-0812 on the box, without which no guard beat can be
     conditioned at all.
   outcome: null
+
+- id: ep2-charref-guards-r3-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-charref-guards-r3-0812
+  predicates_observed: >-
+    EXACTLY ONE man per frame 4/4 HIT — the count is solved; usable turnaround >=3/4
+    HIT (4/4, full-length front and BACK, standing on a plain ground); a face with
+    features rather than a blank mannequin >=3/4 HIT (4/4); not a floor-length robe
+    >=2/4 HIT (3/4 — s0/s1/s2 end above the ankle over trousers and boots, s3 is a
+    floor-length robe); silly harmless bureaucrat register >=2/4 MISS (0/4), exactly
+    as predicted. Bare heads 4/4, no armour 4/4, a clipboard in 3/4.
+  observed: >-
+    Dropping the pair ask fixed two faults with one change. The count went 0/8 to 4/4
+    the moment `turnaround` stopped fighting `two men`, and the blank mannequin faces
+    of r2 did not survive solo scale — which supports the reason I gave for NOT adding
+    a face tag: r2's empty faces were eight tiny figures crowding one frame, not a
+    missing term. What the fix did not buy is the register. `silly harmless
+    bureaucrats` has now scored 0/4 in three consecutive rounds; these are austere,
+    solemn, faintly military men. On this evidence the phrase does not bind in this
+    dialect and the register needs a different channel, not another round.
+  not_scored: >-
+    Every frame gives front and BACK rather than front and side. A back view carries
+    no face, so each seed yields one conditionable view, not two.
+  outcome: null
+
+- id: ep2-charref-guards-pick-0812
+  kind: steward_decision_under_delegation
+  written: >-
+    2026-08-12, under his grant "do some evaluation ... so i dont need to keep
+    reviewing so much" (ep2-consistency-mandate-0812). PROVISIONAL — his veto stands,
+    and this replaces the deliberate NONE of ep2-charref-pick-0812.
+  guard_a: ep2-charref-guards-r3-0812 seed s0 — farm-out/ep2-charref-guards-r3-0812/06-the-clipboard-wave1-s0.png
+  guard_b: ep2-charref-guards-r3-0812 seed s2 — farm-out/ep2-charref-guards-r3-0812/06-the-clipboard-wave1-s2.png
+  reasons: >-
+    The script's guards are a mismatched pair, so four seeds of a solo turnaround is a
+    casting call and two of them get cast. s0 and s2 are the two that carry every
+    frozen fact at once — bare head, plain brown garment ending above the ankle over
+    trousers and boots, a clipboard in hand, a face with features — and they are
+    visibly two different men: s0 longer-faced and leaner, s2 rounder and softer,
+    which is also the closer read on `round guard men`.
+  rejected_and_why: >-
+    s1 is the strongest drawing in the round and the least bureaucratic — a lean stern
+    man in a mandarin-collar coat with a belt medallion, reading military, and holding
+    no clipboard. s3 is the one floor-length robe, the drift the tunic was frozen to
+    prevent.
+  open_for_him: >-
+    The register. Three rounds have asked for silly harmless bureaucrats and drawn
+    solemn men 0/4 every time; these two are cast on the frozen FACTS, not on his
+    tone. If the tone is what matters more, the pick is wrong and the phrase is not
+    the channel to fix it.
+  outcome: null
