@@ -10519,3 +10519,172 @@
     generation had no armor in any of its four frames, so armour arriving here is a
     regression the negative did not prevent, on the one axis he ruled outright.
   outcome: null
+
+- id: ep2-b06-idfix-r2-0812
+  kind: prediction
+  folded_from: pipeline/jobs/ep2-b06-idfix-r2-0812.prediction.yaml (verbatim)
+  written: 2026-08-12, the fixer lane, before enqueue. Box dry 76/77 positive, anchor intact, negative 77 -> sent 77, no NEGWARN.
+  answers: >-
+    An interior in 4/4 — windows in s0, s2 and s3, a brown wall in s1 — against a
+    beat whose sentence named no setting and whose negative had no walls ban.
+  predicates:
+  - outdoors in a grassy field 4/4
+  - no window, no wall, no interior architecture 4/4
+  - daylight rather than the sepia room >=3/4 (this is the SYMPTOM test — the palette is not separately treated, so if the field arrives and the frames stay sepia, the palette is its own fault and the next round owns it)
+  - the clipboard still fills the lower third >=3/4 (the staging must survive the setting clause)
+  - bald 4/4, plain brown tunic >=3/4, no armor and no helmet 4/4
+  falsifiable_by: >-
+    Any indoor frame falsifies the early-affirmative-plus-walls-ban lever on this
+    beat. Losing the clipboard framing would say the setting clause was bought at
+    the staging's expense, which is the cost this payment was chosen to avoid.
+  not_under_test: >-
+    The guard's hard angular face. His ratified "silly harmless bureaucrat" wording
+    is deliberately NOT added here — beat 05 sends it and still drew a muscular man
+    — so it stays a founder-facing note, not a silent second variable.
+  consumer: morning page, identity-frozen wave.
+  outcome: null
+
+- id: ep2-b06-idfix-r2-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b06-idfix-r2-0812
+  predicates_observed: >-
+    outdoors in a grassy field 4/4 HIT; no window, no wall, no interior 4/4 HIT;
+    daylight rather than sepia >=3/4 HIT (4/4, green daylight throughout); clipboard
+    still fills the lower third >=3/4 HIT (4/4); bald 4/4 HIT; plain brown tunic
+    >=3/4 HIT; no armor, no helmet 4/4 HIT.
+  observed: >-
+    Every predicate true, and the symptom test came back the way the prediction
+    hoped: the sepia went out with the walls, so the palette was the room and not a
+    second fault. The cleanest single result in the wave, on the beat whose cause was
+    an omission visible in its own prompt.
+  outcome: null
+
+- id: ep2-b07-idfix-r2-0812
+  kind: prediction
+  folded_from: pipeline/jobs/ep2-b07-idfix-r2-0812.prediction.yaml (verbatim)
+  written: 2026-08-12, the fixer lane, before enqueue. Box dry 75/77 positive, anchor intact, negative 74 -> sent 74.
+  answers: >-
+    A partner the recipe was itself banning, an arm pointing down the lens in 4/4,
+    and an off-white tunic on a guard whose ratified costume is plain brown.
+  predicates:
+  - a second figure's shoulder or arm at the frame edge >=2/4 (this is the honest number — retiring the ban REMOVES the impossibility, it does not guarantee the model draws the partner; anything above 0/4 falsifies the ban as the sole cause)
+  - the pointing arm goes AWAY off-frame, not at the camera, >=3/4
+  - a pointing finger rather than a closed fist >=3/4
+  - the tunic reads brown, not white or grey, >=3/4
+  - no crowd 4/4 -- `no crowd` was kept when `no people in background` retired, and this is the test that keeping it was enough
+  - open sunny field 4/4, no armor 4/4, bald 4/4 (must not regress; none of these were touched)
+  falsifiable_by: >-
+    A partner still absent in 4/4 says the ban was not what was suppressing him and
+    the clause itself is too weak — a real result, and cheaper to learn than to
+    assume. A crowd appearing says `no people in background` was load-bearing after
+    all and the contradiction should have been resolved in the positive instead.
+  not_under_test: >-
+    The guard's hard muscular build, deliberately, for the third beat running.
+  consumer: morning page, identity-frozen wave.
+  outcome: null
+
+- id: ep2-b07-idfix-r2-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b07-idfix-r2-0812
+  predicates_observed: >-
+    a second figure at the frame edge >=2/4 MISS — 0/4, no partner in any frame.
+    pointing arm goes AWAY >=3/4 MISS — 1/4 (s2 only); s0, s1 and s3 still point down
+    the lens. pointing finger rather than fist >=3/4 HIT. tunic reads brown >=3/4 HIT
+    (4/4). no crowd 4/4 HIT. open sunny field 4/4 HIT; no armor 4/4 HIT; bald 4/4 HIT.
+  observed: >-
+    The prediction's own falsifier fires: the partner is absent in 4/4, so the
+    contradiction was real but was not the only thing suppressing him, and the
+    positive clause is too weak on its own. Keeping `no crowd` while retiring `no
+    people in background` cost nothing. s0 adds an unexplained black camera body.
+  outcome: null
+
+- id: ep2-b08-idfix-r2-0812
+  kind: prediction
+  folded_from: pipeline/jobs/ep2-b08-idfix-r2-0812.prediction.yaml (verbatim)
+  written: 2026-08-12, the fixer lane, before enqueue. Box dry 75/77 positive, anchor intact, negative 74 -> sent 74. Two earlier recipes failed the gate and were not sent.
+  answers: >-
+    Two overhead frames that between them hold this beat's worst failure — s1
+    drawing the goblin as a green egg with a face — on a beat with one token of
+    headroom to spend.
+  predicates:
+  - eye-level or near-eye-level camera, not looking down on their scalps, >=3/4
+  - the goblin is drawn as a CHARACTER, not a sphere or an egg, 4/4
+  - both figures readable as a two-shot >=3/4
+  - the goblin's skull stays clean — green, no cream dome, no sutures — 4/4. THIS IS THE CONTROL PREDICATE: beat 08 is the only beat sending no `patchwork cloak` in its definition, and if its skulls stay clean while the cloak-carrying beats need a ban to get there, the definition is implicated
+  - no armor, no helmet 4/4; sunny field 4/4 (`no building` and `no interior` retired, `no house` kept — this is the test of that trade)
+  falsifiable_by: >-
+    Another overhead frame falsifies the camera lever on this beat. A sphere-goblin
+    surviving an eye-level camera says the belly wording, not the framing, is what
+    produces it — which would move the fix to the positive next time.
+  not_under_test: >-
+    The near-black tunic (3/4) and the fact that nobody points at a belly (0/4).
+    Both are real, both are unaffordable here, and both are logged for the founder
+    rather than quietly attempted.
+  consumer: morning page, identity-frozen wave.
+  outcome: null
+
+- id: ep2-b08-idfix-r2-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b08-idfix-r2-0812
+  predicates_observed: >-
+    eye-level camera >=3/4 HIT — 3/4; s0 still looks down. the goblin is a CHARACTER
+    not a sphere 4/4 MISS — the egg-with-a-face is gone, but s0 keeps a large
+    featureless pale sphere between the figures. both figures readable as a two-shot
+    >=3/4 MISS — s1 draws two goblins plus the guard. skull clean, green, no dome, no
+    sutures 4/4 HIT — THE CONTROL PREDICATE HOLDS. no armor 4/4 HIT; sunny field 4/4 HIT.
+  observed: >-
+    The prediction's stated falsifier applies: a sphere survived an eye-level camera,
+    so the belly wording and not the framing is producing it. The control predicate is
+    the result worth keeping — the one goblin definition without `patchwork cloak` has
+    clean skulls in both of its generations, with no skin ban ever sent.
+  outcome: null
+
+- id: ep2-b09-idfix-r2-0812
+  kind: prediction
+  folded_from: pipeline/jobs/ep2-b09-idfix-r2-0812.prediction.yaml (verbatim)
+  written: 2026-08-12, the fixer lane, before enqueue. Box dry 72/77 positive, anchor intact, negative 77 -> sent 77.
+  answers: >-
+    Three bald heads in the grass (s1), a severed head below the guard (s3), a
+    brown sphere behind his skull (s2), and a distended balloon head in 4/4.
+  kind_of_claim: >-
+    This round tests a MECHANISM, not just a beat. If moving `round` off its
+    adjacency with `bald` deflates the head, then "whatever sits next to `bald
+    head` lands on the skull" is a real property of this checkpoint — and it
+    independently corroborates the reading that `patchwork cloak` in the goblin
+    DEFINITION is what sews the goblin's scalp (wave2-needs-founder.md §1). That
+    would matter far beyond beat 09.
+  predicates:
+  - exactly one head in frame 4/4
+  - no disembodied or severed heads 4/4
+  - the head is human-proportioned, not a sphere or balloon, >=3/4
+  - the body is visibly round and soft — `round` must still land, just on the right target — >=2/4
+  - face clearly visible 4/4, bald 4/4, plain brown tunic >=3/4, no armor 4/4
+  - sunny grassy field 4/4
+  falsifiable_by: >-
+    Heads still inflating after `round` has been moved away from `bald` falsifies
+    the adjacency mechanism on this beat, and weakens (does not kill) the same
+    reading of `patchwork` in the definition. Extra heads surviving an explicit ban
+    would say the fault is structural to the close-up framing, not lexical.
+  consumer: morning page, identity-frozen wave.
+  outcome: null
+
+- id: ep2-b09-idfix-r2-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b09-idfix-r2-0812
+  predicates_observed: >-
+    exactly one head in frame 4/4 HIT; no disembodied or severed heads 4/4 HIT; head
+    human-proportioned, not a sphere or balloon, >=3/4 HIT (4/4); body visibly round
+    and soft >=2/4 MISS — the builds read adult and firm, so `round` did not land on
+    the body either; face clearly visible 4/4 HIT; bald 4/4 HIT; plain brown tunic
+    >=3/4 HIT; no armor 4/4 HIT; sunny grassy field 4/4 HIT.
+  observed: >-
+    The mechanism test passes on its main claim: moving `round` off its adjacency
+    with `bald` deflated the skull and the explicit ban took the loose heads with it.
+    It half fails on the other side — the word did not reappear on the body — so the
+    adjacency was moved away from harm rather than redirected to use. s3 has him
+    biting a green gourd.
+  outcome: null
