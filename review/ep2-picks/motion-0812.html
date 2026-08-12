@@ -96,6 +96,10 @@
   <p>So instead of ten clips I queued <strong>one</strong>, for beat 04 — the only beat whose own shot is a
   face close-up, which is the one thing this mechanism reliably produces. Animating the other nine would
   mean rendering a character sheet and calling it an episode.</p>
+  <p><strong>That one clip then failed too, and it failed in a way worth knowing about.</strong> The camera
+  stayed locked, which is the thing you rejected this morning and is now fixed. But his face came apart
+  over the six seconds — marks accumulating on the forehead, both eyes dissolving by the end. Scored in
+  full below, against the prediction I wrote before rendering it.</p>
 </div>
 
 <section>
@@ -160,17 +164,58 @@
   </figure>
 
   <div id="clip">
-    <p class="muted"><strong>The clip is rendering now</strong> — <code>ep2-b04-motion-0812</code>, 145
-    frames at 24fps (6.04s), guidance 2.0, camera defects named in the negative. It will appear here when
-    it lands off the box.</p>
+    <video controls preload="metadata" playsinline src="/review/ep2-picks/motion-0812/04-the-footnote-LTX-motion-0812.mp4"></video>
+    <p class="muted" style="margin-top:10px"><code>ep2-b04-motion-0812</code> — 704x1280, 145 frames,
+    24fps, 6.04s, guidance 2.0, seed 20260806, $0. Verified against the box's manifest before I watched it.</p>
+  </div>
+</section>
+
+<section>
+  <h2 class="t">And it fails — I called this one wrong</h2>
+  <p class="lede">I wrote the prediction before queueing it, so here is the honest scoring. Two of four
+  predicates held. The one that mattered did not.</p>
+
+  <figure>
+    <img src="/review/ep2-picks/motion-0812/clip-strip.jpg" alt="Eight frames sampled across the clip, showing marks accumulating on the forehead.">
+    <figcaption>Every 18th frame. The framing never moves — that part worked.</figcaption>
+  </figure>
+
+  <figure>
+    <img src="/review/ep2-picks/motion-0812/face-drift.jpg" alt="First, middle and last frame at full resolution, showing stippled marks appearing above the eyebrows and the eyes degrading into brown smears.">
+    <figcaption>The same face at frame 0, frame 24 and frame 144, full size. A stipple of dashed marks
+    grows in above each eyebrow and thickens the whole way through — and by the last frame both eyes have
+    come apart into brown smears. <strong>He is not the same drawing at the end that he was at the
+    start.</strong></figcaption>
+  </figure>
+
+  <table>
+    <tr><th>What I predicted</th><th>What happened</th></tr>
+    <tr><td>The camera does not move</td><td class="v ok">HELD — no pan, no tilt, no drift. Naming the defects in the negative works.</td></tr>
+    <tr><td>Mouth stays shut, cheeks stay puffed</td><td class="v ok">HELD</td></tr>
+    <tr><td>The face stays the same goblin for 145 frames</td><td class="v no">FAILED — stipple from ~frame 18, eyes gone by 144</td></tr>
+    <tr><td>The ears twitch</td><td class="v no">COULD NOT — see below, my error</td></tr>
+  </table>
+
+  <div class="callout">
+    <h2>My mistake, separately from the model's</h2>
+    <p>The init is 832x1216 and the render is 704x1280 — a much narrower shape — so the cover-crop sliced
+    86 pixels off each side and <strong>took his ear tips with it</strong>. I argued on this very page
+    against a push-in because it would crop the ears, and then cropped them myself in the aspect
+    conversion. That wants a pad instead of a crop. It is a real fix but it is not <em>the</em> fix,
+    because it does nothing about the face coming apart.</p>
   </div>
 
+  <p>By my own written falsification clause this is bigger than beat 04: <q>the face re-drawing itself
+  mid-clip would mean i2v cannot carry a close-up at all.</q> Before I hand you that as a conclusion I am
+  testing the one part of it that does not need your direction — the melt is <em>progressive</em>, so a
+  73-frame (3.04s) version of the identical clip is rendering now with duration as the only variable. If
+  the face is intact at 73, close-ups survive by being cut short and that is a production lever. If it is
+  already smeared, close-ups need a different engine.</p>
+
   <div class="verdict">
-    <h3>Your verdict on the clip</h3>
-    <p>What I am watching for: whether the face stays the same goblin for all 145 frames. An extreme
-    close-up gives LTX the most surface to drift on and gives you the least room to miss it. If the face
-    re-draws itself mid-clip, that is not a beat 04 problem — it means i2v cannot carry a close-up at all
-    and every close-up in the episode needs a different plan.</p>
+    <h3>Your verdict</h3>
+    <p>Worth saying plainly: this is one sample and it is a negative result, so nothing was scaled off it.
+    The clip above is the whole output of phase 2.</p>
     <span class="line"></span>
     <p>&nbsp;</p>
   </div>

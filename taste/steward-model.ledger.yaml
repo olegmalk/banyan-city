@@ -12135,3 +12135,83 @@
     sheet problem.
   consumer: his page, guards row, and whether the six guard beats can be walked.
   outcome: null
+
+- id: ep2-b04-motion-0812-scored
+  kind: scoring
+  date: 2026-08-12
+  scores: ep2-b04-motion-0812
+  predicates_observed: >-
+    camera does not move HIT — no pan, no tilt, no drift across 145 frames, which is the
+    defect he rejected this morning and it is fixed; mouth shut and cheeks puffed HIT;
+    THE FACE STAYS THE SAME GOBLIN — MISS, and this is the predicate that mattered; ears
+    twitch UNTESTABLE, my own error.
+  observed: >-
+    THE FACE RE-DRAWS ITSELF, PROGRESSIVELY. From about frame 18 a stipple of dashed
+    marks grows in above each eyebrow and thickens frame over frame; by frame 144 both
+    eyes have collapsed into brown smears. Verified at full resolution on frames 0, 24
+    and 144, not off the contact strip. The intended performance — darting eyes,
+    twitching ears — never arrives; the only visible change in the clip IS the
+    degradation. So the negative-prompt lever works on camera motion and does nothing for
+    subject integrity, which are separate problems and were being treated as one.
+  my_own_error: >-
+    The init is 832x1216 and the render is 704x1280, so the cover-crop sliced 86px off
+    each side and took his EAR TIPS. I argued against a push-in on that exact page
+    because it would crop the ears, then cropped them myself in the aspect conversion. It
+    wants a pad, not a crop. Not fixed in the follow-up on purpose: two variables at once
+    makes neither attributable.
+  what_this_opens: >-
+    My own falsification clause said a mid-clip re-draw means i2v cannot carry a close-up
+    at all. Before that goes to him as a conclusion, the one part of it that needs no
+    direction from him is being measured: the melt is PROGRESSIVE, so
+    ep2-b04-motion-short-0812 re-renders the identical clip at 73 frames with duration as
+    the only variable. Intact at 73 means close-ups survive by being cut short, which is a
+    production lever. Already smeared at 73 means close-ups need another engine.
+  not_scaled: >-
+    One sample, negative result, nothing built on it. No second beat was animated.
+  outcome: null
+
+- id: ep2-b04-motion-short-0812
+  kind: prediction
+  written: 2026-08-12, before enqueue. ONE AXIS — duration, nothing else.
+  predicates: [at frame 72 the eyes are still drawn as eyes and not smears, the forehead
+    stipple is present but visibly lighter than it is at frame 144 of the long clip, the
+    camera still does not move]
+  basis: >-
+    The defect accumulates monotonically in the 145-frame clip rather than appearing at
+    once, which is what a per-step drift away from the init looks like — each denoise
+    pass reconditions on the previous frame and the error compounds. Half the frames
+    should carry visibly less of it. If it does NOT scale with length then the cause is
+    not accumulation and my reading of the long clip is wrong.
+  falsifiable_by: >-
+    Frame 72 of the short clip looking as bad as frame 144 of the long one. That kills the
+    cut-it-shorter lever outright and makes the close-up problem structural.
+  consumer: review/ep2-picks/motion-0812.html and the direction he is being asked for.
+  outcome: null
+
+- id: ep2-b02-train-r1-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b02-train-r1-0812
+  predicates_observed: >-
+    NO hallucinated extra creatures in any of the 16 cells HIT — zero, against the old
+    frame's small creature on the ground and its console-like slab in two more; identity
+    holds 4/4 on both crops HIT (pale yellow-green, bald, long ears, red eyes, his coat,
+    and no tusks anywhere now that the definition is his); the coat-hem rows read as a
+    MEDIUM shot HIT and match the staged draft better than the whole-figure rows; the
+    sapling is still absent HIT (not scored, his compositing question); the cowering pose
+    is NOT recovered HIT — he stands facing camera, though `hands to his chest` does
+    survive in two of the whole-figure cells.
+  observed: >-
+    BOTH FAULTS HE NAMED ARE GONE. "Hallucinating a lot" was the neighbouring head views
+    still sitting in the corners of the old crops, plus a prompt demanding tusks the
+    reference never had; the connectivity-cut reference and his own definition remove
+    both, and nothing invented appears in sixteen cells. "Not being consistent" is gone
+    with it — the creature is the same creature across every cell and both crops.
+  what_is_left_is_not_what_he_named: >-
+    The pose. He stands facing camera instead of cowering behind the stem, which is the
+    staging wall already written up for him and already escalated as a direction he has
+    to give. Rounds 2 and 3 of the three he authorised are therefore NOT being spent on
+    it: the only untried lever is adapter strength, the wall is his to unblock, and
+    burning rounds on a question already in front of him would be answering it for him.
+    One real defect at 1 of 16 (whole-s3's eyes come back black) is not worth a round.
+  outcome: null
