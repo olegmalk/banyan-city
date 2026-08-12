@@ -901,6 +901,42 @@ beats:
     # style anchor drops and `check()` refuses to draw; an earlier, longer draft of
     # this text lost `very aesthetic` to the budget and would have faulted. Measured
     # at ~64 estimated tokens with nothing dropped before it was written here.
+    # -- `authored_b04_train_r1` -- 2026-08-12, on his beat-04 near-pass: "the beat 04
+    # beats are actually pretty good, only problem is it looks like he's holding
+    # something which is confusing." Plus, on the motion clip off it, "the background is
+    # blank."
+    #
+    # THE HELD OBJECT WAS DIAGNOSED BEFORE IT WAS BANNED, and it is two different faults
+    # in two of the four frames. s0 has both hands gripping the rim of a dark rounded
+    # vessel — a real invented prop. s2 has a blank white placard across the lower frame
+    # with two clawed hands on its edge — that is a SIGN with its text banned, not a
+    # prop. s1 is a cream scarf and s3 is the coat's own toggle, and neither is anything
+    # he is holding. So the ban is written for what was actually there: object, item,
+    # sign, placard.
+    #
+    # AND THE PROMPT ITSELF SAID `holding`. The wave-1 line is "HOLDING his breath with
+    # cheeks puffed", so the one strong verb in the sentence is the one he objected to
+    # seeing drawn. The intent is untouched — beats.json still reads "close on his face
+    # holding his breath" — but the words sent to the model now describe the RESULT,
+    # `cheeks puffed tight`, and never name the action. `empty hands` states the fix
+    # affirmatively as well, because a negative alone has to fight a verb.
+    #
+    # THE SETTING GOES FIRST because the background came back blank. Beat 04's wave-1
+    # draft names no location at all, and the reference it is conditioned on is a
+    # character sheet on white paper — so nothing in either channel was asking for the
+    # field, and the sheet's own ground won by default. `in a blurred sunny grassy field`
+    # sits early, where compress() cannot drop it and where it competes for the
+    # background rather than trailing behind the subject.
+    #
+    # The crop stays the head crop: beat 04 is the face-filling close-up and the framing
+    # rule says the reference's scope chooses the shot.
+    authored_b04_train_r1: >-
+      A small goblin boy, {{GOBLIN}}, solo, in a blurred sunny grassy field, his face
+      filling the frame, cheeks puffed tight, huge eyes darting, enormous ears
+      twitching, empty hands. Slow push-in, close-up, soft morning light, cinematic
+      lighting, detailed, newest, masterpiece, best quality, very aesthetic No girl, no
+      child, no held object, no item in hand, no sign, no placard. No photorealism, no
+      3D render look. 9:16 vertical, no text.
     authored_charref_goblin: >-
       A small goblin boy, {{GOBLIN}}, character reference sheet, multiple views,
       front view, side view, three quarter view, red eyes, simple background,

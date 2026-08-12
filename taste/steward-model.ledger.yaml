@@ -12413,3 +12413,77 @@
     close-up with the clipboard filling the lower third, and these are fuller standing
     shots, which is the same staging wall the goblin walk hit.
   outcome: null
+
+- id: ep2-references-accepted-0812
+  kind: founder_verdict
+  written: 2026-08-12, on receipt.
+  founder_verdict_verbatim: "i accept the references on the consistency page."
+  founder_verdict_date: 2026-08-12
+  reconciliation, because an acceptance can silently re-approve a thing he rejected: >-
+    CASE B APPLIED — the page already showed the HAIRED r5 casting when he accepted. The
+    guards section was rewritten in commit 0acfccf7 (17:04) and the beat-06 re-proof
+    added in 1ee7d33a, both pushed before this verdict arrived. The bald r3 sheet is
+    still on that page, but only as labelled history explaining where the count fix came
+    from, and the text beside it says in his own terms that the bald was the steward's
+    and is rejected. So this is recorded as FULL acceptance: the goblin reference, the
+    guards reference APPROACH, and the re-cast haired guard pair.
+  what_it_does_not_cover: >-
+    The frames. He accepted references, and the staging wall — a consistent character
+    standing still on almost every beat — is untouched and still waiting on his
+    direction in wave2-needs-founder.md.
+  outcome: null
+
+- id: ep2-b04-nearpass-0812
+  kind: founder_verdict
+  written: 2026-08-12, on receipt.
+  founder_verdict_verbatim: "the beat 04 beats are actually pretty good, only problem is
+    it looks like he's holding something which is confusing. for the other beats it
+    doesnt say what they're supposed to show.."
+  founder_verdict_date: 2026-08-12
+  what_it_rules: >-
+    HIS FIRST POSITIVE ON A CONDITIONED CHARACTER BEAT, with one named fault. Plus a
+    permanent presentation rule: a sheet must carry, burnt into the image, what the shot
+    is supposed to show — he opens sheets off disk, not only through the page.
+  scored_against_my_prediction: >-
+    I predicted beat 04 would keep its face-filling framing and drift on eye colour, and
+    scored it a HIT on both. What I did not score at all was the thing he saw. Neither my
+    predicate list nor my read of the sheet mentioned the hands, because I was measuring
+    identity and he was watching the picture.
+  outcome: null
+
+- id: ep2-sheet-intent-rule-0812
+  kind: process
+  date: 2026-08-12
+  rule: >-
+    Every sheet this lane bakes from now on carries its intent IN THE IMAGE: beat number,
+    beat title, and the one-sentence `shows` line, read from review/ep2-picks/beats.json
+    rather than retyped so a sheet and the page cannot drift. A beat with no `shows` line
+    is not bakeable — say what the shot is for, or do not bake it.
+  why_it_is_his_and_not_a_preference: >-
+    "for the other beats it doesnt say what they're supposed to show.." He reviews sheets
+    off disk. A title reading `BEAT 04 r0..r3 w015` names the recipe, which is what the
+    steward needed, and says nothing about whether the picture is right, which is what he
+    needs.
+  outcome: null
+
+- id: ep2-b04-train-r1-0812
+  kind: prediction
+  written: 2026-08-12, before enqueue. His two named faults, one sample.
+  predicates: [no held object in any of the 16 cells — no vessel, no placard, no sign;
+    the background is a blurred grassy field rather than sheet-white in >=3/4; the
+    face-filling close-up he liked SURVIVES both changes; identity holds 4/4]
+  basis: >-
+    The held object was diagnosed rather than assumed: s0 grips the rim of a vessel and
+    s2 grips a blank white placard (a sign with its text banned), while s1 is a scarf and
+    s3 the coat's own toggle. And the prompt itself said `holding` — "holding his breath"
+    — so the one strong verb in the sentence was the thing he objected to seeing drawn.
+    The blank background has the same cause as everything else today: the reference is a
+    sheet on white paper, beat 04's draft names no location, so nothing in either channel
+    asked for the field. The setting now goes early where compress() cannot drop it.
+  falsifiable_by: >-
+    The field arriving and the close-up leaving with it. Setting words compete for the
+    frame, and if stating the location early pulls the camera back off his face, then
+    background and framing cannot both be had from the prompt side and the background
+    becomes a compositing question like the sapling.
+  consumer: the motion init for beat 04's re-clip — the pipeline-critical still right now.
+  outcome: null

@@ -1,0 +1,150 @@
+# EPISODE 2, BEAT 04 — HIS NEAR-PASS, WITH THE TWO THINGS HE NAMED. One sample, $0.
+# 2026-08-12, character-consistency lane.
+#
+# ── HIS WORDS, AND THEY ARE THE FIRST POSITIVE ON A CONDITIONED CHARACTER BEAT: "the
+# beat 04 beats are actually pretty good, only problem is it looks like he's holding
+# something which is confusing." And on the motion clip cut from it: "the background is
+# blank." So this round changes exactly what he named and leaves what he liked alone.
+#
+# ── THE HELD OBJECT WAS DIAGNOSED BEFORE IT WAS BANNED. Enlarging the lower third of
+# all four frames: s0 has both hands gripping the rim of a dark rounded vessel — an
+# invented prop. s2 has a blank white placard across the frame with two clawed hands on
+# its edge — that is a SIGN whose text was banned, not a prop. s1 is a cream scarf and
+# s3 is the coat's own toggle, and he is holding neither. Two of four, two different
+# faults, and the ban is written for what was actually there rather than for the
+# complaint: object, item, sign, placard.
+#
+# ── THE PROMPT ITSELF SAID `holding`. Wave-1's line is "HOLDING his breath with cheeks
+# puffed" — the one strong verb in the sentence is the thing he objected to seeing
+# drawn. The beat's INTENT is untouched (beats.json still reads "close on his face
+# holding his breath"); the words sent to the model now describe the result, `cheeks
+# puffed tight`, and never name the action. `empty hands` states it affirmatively too,
+# because a negative on its own has to fight a verb that is still in the positive.
+#
+# ── THE BLANK BACKGROUND HAS A CAUSE AND IT IS NOT THE BEAT'S FAULT. Beat 04's wave-1
+# draft names no location at all, and the reference it conditions on is a character
+# sheet on white paper. Neither channel was asking for a field, so the sheet's ground
+# won by default — the same "a reference imposes what it contains" that this lane has
+# measured all day, now visible in the background as well as the pose. `in a blurred
+# sunny grassy field` goes EARLY, where compress() cannot drop it.
+#
+# ── THE CROP IS UNCHANGED: the head crop, because beat 04 is the face-filling close-up
+# and the framing rule says the reference's scope chooses the shot. That is also the
+# half of the last round he liked, so it does not move.
+#
+# ── THIS STILL IS PIPELINE-CRITICAL: its output is the motion init for beat 04's
+# re-clip.
+#
+# ── MEASURED BEFORE QUEUED: positive 76/77, style anchor present, nothing dropped, no
+# faults, and `DRY OK` asserted present rather than inferred from the absence of an
+# error string — the check that let a faulted job through earlier today.
+#
+# $0 — local GPU on the rtx5090, no provider, nothing published, nothing assembled.
+id: ep2-b04-train-r1-0812
+task: ep2-b04-train-r1-0812
+node: 002b-first-citizen
+beat: 4
+runner: box
+needs_gpu: true
+priority: 49
+max_attempts: 1
+owner: character-consistency lane, 2026-08-12 (his beat-04 near-pass, one sample)
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03`, read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the render
+  gate itself reads. Neither `approval_condition` touches beat 04. This is a
+  mechanism test on an approved node, not an episode assembly.'
+consumer: >-
+  review/ep2-picks/consistency-0812.html, and the go/no-go for the remaining goblin
+  beats. The same creature in two beats from one reference releases the beat-by-beat
+  pass; a different creature says the mechanism holds a beat and not a character,
+  which is the more important thing to find out early.
+success: >-
+  Sixteen PNGs at C:\banyan-farm\goblin-ipa-0812\out-b04-train-r1\04-the-footnote-ipa-r{0,1,2,3}-w015-s{0,1,2,3}.png
+  with their provenance sidecars written at render time (7.2). Success is readable
+  comparable cells — NOT that identity held. "He is a different goblin in beat 17"
+  is a successful run of this job and the more valuable of the two answers.
+why: >-
+  He cannot approve beats because the characters change between them. Every
+  measurement so far has been within one beat, which is the one thing he did not
+  complain about.
+est_minutes: 14
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '4'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-head-0812
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b04-train-r1
+  - --draft-key
+  - authored_b04_train_r1
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '4'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-head-0812
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b04-train-r1
+  - --draft-key
+  - authored_b04_train_r1
+  - --arm
+  - window4
+  - --task
+  - ep2-b04-train-r1-0812
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b04-train-r1-0812"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/goblin-ipa-0812/out-b04-train-r1/*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b04-train-r1-0812.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 16 else 1)
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b04-train-r1\04-the-footnote-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b04-train-r1\04-the-footnote-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b04-train-r1\04-the-footnote-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b04-train-r1\04-the-footnote-ipa-r3-w015-s0.png
