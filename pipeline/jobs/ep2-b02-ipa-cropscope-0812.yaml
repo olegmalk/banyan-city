@@ -1,0 +1,154 @@
+# EPISODE 2, BEAT 02 — HOW MUCH OF THE CHARACTER MUST THE REFERENCE CONTAIN? $0.
+# 2026-08-12, character-consistency lane, iteration 1 of the 3 allowed under his
+# consistency mandate (`ep2-consistency-mandate-0812`).
+#
+# ── WHAT ROUND 1 FOUND (`ep2-b02-ipa-charref-0812-observed`). A REFERENCE TRANSFERS
+# WHAT IT CONTAINS. Three head crops (r0/r1/r2) locked the face — round skull, red
+# eyes, long ears — and let the costume roam across all four seeds: hoodie, black
+# shirt, tunic, jacket. The body crop (r3) did the exact opposite, reproducing the
+# reference's yellow-green toggled duffle coat in 4 of 4 — the strongest single
+# transfer in the round — while its faces went harsh and adult. Bald held 16/16 and
+# the pale green held 16/16 either way.
+#
+# ── SO THE KNOB IS SCOPE, NOT SCALE, AND THE EVIDENCE SAYS SO. Nothing in round 1
+# suggests the adapter pushed too gently: a whole coat arrived intact at scale 0.6.
+# What failed is that no single reference contained a whole character. This round is
+# a LADDER of exactly that one variable — head, head+shoulders, head-to-coat-hem,
+# whole standing figure — so the answer comes back as a curve instead of a verdict.
+# Beat, arm, window (15%), scale (0.6), seeds, prompt and SOURCE FRAME are all held
+# at round 1's values.
+#
+# ── r0 IS A BYTE-IDENTICAL CONTROL. It is round 1's front-head crop, copied rather
+# than re-cut, so its cells should reproduce round 1's r0 row. If they do not, the
+# run is not comparable and nothing else in it can be read.
+#
+# ── THE PADDING IS WHAT MAKES THE LADDER REAL, AND IT IS THE ONE THING I ADDED.
+# `square()` (goblin_ipa_sample.py:234) CENTRE-CROPS a reference to a square before
+# CLIP sees it, so a 480x1182 whole-figure crop would arrive as its middle 480x480 —
+# a coat with no head and no boots, which is the opposite of what the rung is
+# testing. Rungs 1-3 are therefore padded to square on the sheet's own white ground,
+# which makes square() a no-op instead of a silent amputation. Round 1's r3 crop was
+# 565x645 and lost ~40px top and bottom to this; that is recorded here because it
+# means round 1's body rung was slightly tighter than its filename claimed.
+#
+# ── THE TWO FRAME FAULTS ARE PAINTED OUT, NOT CROPPED OUT. The pick record
+# (`ep2-charref-pick-0812`) cropped away a blob head bottom-left and a TAN-skinned
+# small head bottom-right — the only colour break in the frame and the one thing
+# that could drag the palette. A whole-figure crop wide enough to keep the
+# character's own hands re-admits slivers of both, so below the coat hem everything
+# outside x 240..560 is painted white. The figure's legs and boots live inside
+# x 280..540, so nothing of him is touched. Stated rather than hidden.
+#
+# ── WHAT THIS ROUND CANNOT ANSWER. Cross-beat consistency, which is his actual
+# complaint. Sixteen cells of ONE beat cannot say the creature will match in beat 07.
+# That is the next job after this one, and it is why this one has to be cheap.
+#
+# ── NOT A PICK, NOT CANON. Provisional under his delegated evaluation grant; his
+# morning veto stands over all of it.
+#
+# $0 — local GPU on the rtx5090, no provider, nothing published, nothing assembled.
+id: ep2-b02-ipa-cropscope-0812
+task: ep2-b02-ipa-cropscope-0812
+node: 002b-first-citizen
+beat: 2
+runner: box
+needs_gpu: true
+priority: 49
+max_attempts: 1
+owner: character-consistency lane, 2026-08-12 (consistency mandate, conditioning iteration 1 of 3)
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03`, read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the render
+  gate itself reads. Neither `approval_condition` touches beat 02. This is a
+  mechanism test on an approved node, not an episode assembly.'
+consumer: >-
+  review/ep2-picks/consistency-0812.html, and the go/no-go for the remaining
+  character beats. A rung that holds face AND costume together releases the
+  beat-by-beat pass; a ladder that holds neither sends iteration 2 to scale with the
+  best rung from this one.
+success: >-
+  Sixteen PNGs at C:\banyan-farm\goblin-ipa-0812\out-b02-cropscope\02-the-sprint-ipa-r{0,1,2,3}-w015-s{0,1,2,3}.png
+  with their provenance sidecars written at render time (7.2). Success is that the
+  cells are comparable and the r0 control reproduces round 1 — NOT that identity
+  held. "Scope buys nothing" is a successful run of this job.
+why: >-
+  Round 1 proved a reference can put a specific coat on a character in 4 of 4 and a
+  specific face on him in ~3 of 4, but never both at once, because no reference it
+  was given contained both. Until one does, no beat can be conditioned into
+  something he can approve.
+est_minutes: 14
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '2'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-charref-goblin-scope-0812
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b02-cropscope
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '2'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-charref-goblin-scope-0812
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b02-cropscope
+  - --arm
+  - window4
+  - --task
+  - ep2-b02-ipa-cropscope-0812
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b02-ipa-cropscope-0812"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/goblin-ipa-0812/out-b02-cropscope/*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b02-ipa-cropscope-0812.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 16 else 1)
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b02-cropscope\02-the-sprint-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b02-cropscope\02-the-sprint-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b02-cropscope\02-the-sprint-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b02-cropscope\02-the-sprint-ipa-r3-w015-s0.png
