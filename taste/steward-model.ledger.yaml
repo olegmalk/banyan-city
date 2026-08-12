@@ -14412,3 +14412,69 @@
     two-shot with more frame for a stray seedling, so if it still multiplies then geometry
     works only at close-up scale.
   outcome: null
+
+- id: main-went-red-on-my-push-0812
+  kind: incident
+  date: 2026-08-12
+  what_happened: >-
+    I ran build_site and qa_local, saw them FAIL, and the commit and push in the same shell
+    call ran anyway because I had chained them as separate lines instead of gating the commit
+    on the exit code. Main was red for several minutes with my commit on top. Commit 5c5999d0.
+  my_own_rule_says_otherwise: >-
+    CLAUDE.md: "Run tests as their own step and read the exit code BEFORE committing — piping
+    to tail masks failures (this bit twice on 2026-07-19)." I have run that gate correctly
+    perhaps twenty times tonight and then broke it by putting build, QA, commit and push in
+    one bash call. The gate is only a gate if the commit cannot run when it fails.
+  what_was_actually_broken_and_whose_it_was: >-
+    Two things, neither of them my content. (1) A TRANSIENT FileNotFoundError writing
+    _site/sapling/004-shade-shots.html — did not recur on two subsequent runs; another lane
+    was writing genome files while my build read them. (2) THE REAL ONE: the ep3 lane filed
+    an inbox entry pointing at /review/ep3-cast-0813 and never committed the page. Their page
+    and its eight images existed UNTRACKED on disk from 04:22. My inbox regen rendered their
+    entry into the committed index.html, so their latent bug shipped through my commit.
+  what_i_changed_in_their_lane_and_why: >-
+    Committed their finished page and its images, then found a second fault: THEIR IMAGE
+    PATHS WERE RELATIVE, and build_site resolves pages under review/ as if served at /review,
+    so "farmer-s0.png" pointed at /review/farmer-s0.png. Rewrote all eight to absolute
+    /review/ep3-cast-0813/... — the same form my own page uses. Mechanical, no content
+    touched. Told them exactly what changed.
+  the_two_rules_out_of_it: >-
+    (1) NEVER put build, QA, commit and push in one shell call — gate the commit on the exit
+    code or run them as separate calls and read the result. (2) Regenerating a shared file
+    makes another lane's unpublished work YOUR problem: review/inbox.yaml entries pointing at
+    uncommitted pages are latent breakages that fire on whoever regenerates next.
+  outcome: null
+
+- id: shared-worktree-concurrent-build-race-0812
+  kind: process
+  date: 2026-08-12
+  subject: "two lanes running build_site.py in one working directory race on _site/, and the loser sees
+    a crash that reads exactly like a broken repo"
+  what_happened: >-
+    Asked to check whether main was red, I ran the gates and got `OSError: [Errno 66] Directory not
+    empty: _site/sapling` out of `shutil.rmtree(OUT)` at build_site.py:3145, and QA-GATE FAIL with eight
+    review pages reported as "tracked, but build_site.py wrote no _site/...". It reproduced on a second
+    run, so it was not a flake. It was also not a bug: the files in `_site/sapling` were timestamped
+    within the same minute, i.e. ANOTHER LANE'S BUILD WAS WRITING THAT TREE WHILE MINE TRIED TO DELETE
+    IT. Waiting and re-running gave build 0, 87 pages link-checked, QA-GATE PASS routes=45.
+  why_it_is_worth_writing_down: >-
+    The failure mode impersonates a real breakage in the most alarming possible way — it names eight
+    load-bearing pages as missing from the build. A lane that trusts it will either "fix" build_site's
+    rmtree, delete `_site` out from under a peer mid-run, or report main as broken when it is green.
+    All three are worse than waiting twenty seconds.
+  the_tell: >-
+    Mtimes inside `_site` within the last minute, and the crash landing in rmtree rather than anywhere
+    that writes. Check those before concluding anything. `_site` is a gitignored build artifact, so the
+    temptation to just delete it is strong and it is exactly the wrong move while a peer is building.
+  the_family_this_belongs_to: >-
+    Third shared-worktree concurrency trap recorded today. The others: test_pipeline.py failing on a
+    YAML parse of farm-queue.yaml because a peer was writing it mid-read (passed unchanged on re-run),
+    and the staged-but-uncommitted ep3 cast page that broke a peer's push because an inbox entry pointed
+    at a page not yet in the tree. Same root: one filesystem, several writers, no locking. The rule that
+    covers all three is RE-RUN BEFORE YOU BELIEVE A RED, and check for a concurrent writer before you
+    fix anything.
+  main_was_green_the_whole_time: >-
+    Verified against CI rather than my own tree: the `pages` failure was on ONE commit and the next
+    commit cleared it. Local gate output is not evidence about main's state when the local tree has
+    several writers in it.
+  outcome: null
