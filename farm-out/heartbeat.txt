@@ -851,3 +851,4 @@
 17:44:04Z STARTED task=ep2-b20-object-0812-1786464923 attempt=1 on box-runner
 17:49:28Z DONE task=ep2-b20-object-0812-1786464923 rc=0 artifacts=2
 17:52:42Z STARTED task=ep2-b17-initcrop-0812-1786470349 attempt=1 on box-runner
+18:02:08Z DONE task=ep2-b17-initcrop-0812-1786470349 rc=0 artifacts=2
