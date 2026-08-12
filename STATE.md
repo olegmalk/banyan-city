@@ -7253,3 +7253,21 @@ itself founder-reserved. The definition authorises none of them.
   PROVISIONAL under his delegated evaluation grant; nothing is canon. Page:
   `review/ep2-picks/consistency-0812/`; ledger ids `ep2-charref-guards-r3-0812*`,
   `ep2-b02-ipa-*`, `ep2-b06-ipa-guardref-0812-observed`, `ep2-b17-ipa-crossbeat-0812*`.
+  **Same day, later — two updates to the entry above.** (a) The guards fork RESUMED
+  and succeeded: `--draft-key` shipped, and beat 06 rerun on the cast guards with
+  `authored_b06_idfix_r2` (tunic + bald) gives bald 8/8 against ~2/16 on the armour
+  draft, plain brown tunic 8/8, bark clipboard 8/8, A and B still two different men.
+  The law from the failure is confirmed rather than overturned: a reference cannot
+  overturn the model's prior for a noun, but the moment the prompt stops contradicting
+  it the picture comes through. Register still 0/4 after four rounds — founder's call.
+  (b) A FOURTH finding, and a correction. THE REFERENCE IMPOSES ITS FRAMING, not only
+  its content: beats 03 and 14 on the whole-figure reference both held the creature and
+  both returned the reference's own standing figure instead of their own staging (a
+  crouch, an intimate low close-up). Rerunning beat 14 on the head crop returns the
+  close-up with identity intact — so the crop choice IS a shot choice, and the beat
+  pass is paused with 4, 8, 13, 15, 19, 20 written and unfired until each beat's crop
+  is chosen for its shot size. The correction: beat 14 was first reported as LOSING the
+  creature; that reading was taken off a contact sheet baked mid-transfer. All five
+  other judged sets were re-verified against the box by sha256 and match. Sheets are
+  now baked only after a fetch exits and hashed against the box before scoring
+  (`ep2-b14-misread-correction-0812`).
