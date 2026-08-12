@@ -880,3 +880,4 @@
 20:11:12Z STARTED task=ep2-b21-stemanchor-0812-1786475815 attempt=1 on box-runner
 20:12:04Z DONE task=ep2-b21-stemanchor-0812-1786475815 rc=0 artifacts=1
 20:15:25Z box-runner idle ready=0 failed=5
+20:19:12Z STARTED task=ep2-b19-under-0812-1786479147 attempt=1 on box-runner
