@@ -11135,3 +11135,12 @@
     is genuinely pinned end to end — clone, harness, init, shots.md, seeds, sampler.
     The two new seeds are 90c09465... and 9993725c....
   outcome: null
+
+- id: ep2-b01-final055-r3-0812
+  kind: correction_and_rerun
+  written: 2026-08-12 ~13:0x. r1 ran while the box was logged out and its
+    publish glob shipped 12 stale styleprobe files from the SHARED out dir -
+    the lead's derive bug; r2 was pulled unclaimed when the fix missed the
+    escaped path form. r3 rebuilt from r1, own dir, byte-checked. The r1
+    prediction (ep2-b01-final055-0812) carries over unchanged.
+  outcome: null
