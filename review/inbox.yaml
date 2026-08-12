@@ -234,3 +234,35 @@
   since: '2026-08-12'
   kind: decision
   verdict_hint: accept some beats having the wrong count / spend on a tool that controls it
+  resolved:
+    date: '2026-08-12'
+    verdict: SOLVED BY GEOMETRY, no tool needed (at least at close-up scale). Describing a frame too tight
+      to hold two produced exactly one fig in both seeds, where an explicit singular and an explicit ban
+      had both been ignored. Counting words do not work; framing does. Being tested now on a wider shot.
+- what: 'Three people carry most of episodes 4-7 and none had ever been drawn. First candidates for the
+    FARMER and the ASSESSOR are on the page, four seeds each, with their defects named - the assessor
+    came back bald without being asked, which is the thing you flagged on the guards. The MAGISTRATE is
+    withheld and the page says why in full: the count tag the pipeline needs for a female character drags
+    this checkpoint''s pinup prior with it and she rendered as a sexualised bust, so I did not put those
+    frames in front of you or spend another round guessing'
+  url: /review/ep3-cast-0813
+  since: 2026-08-13
+  kind: sheet
+  verdict_hint: cast the farmer / cast the assessor / redraw either, and how you want the magistrate approached
+- what: Episode 3's cold open took four rounds and the tree still only stands up in one frame of four,
+    so the 21-still wave is NOT queued. Round 4's s2 is the shot. The world was fixed by giving it its
+    own sentence; the plant was not fixed by wording, which is the same wall the goblin hit before he
+    got a reference - so the sapling is now getting its own reference plate and that, not more prompt-writing,
+    is the gate on the wave
+  url: /review/approvals
+  since: 2026-08-13
+  kind: decision
+  verdict_hint: fine, get the sapling reference first / just render the wave anyway / something else
+- what: 'Three beats (03, 17, 21) will not render the same way twice - after three rounds of wording,
+    their seeds still differ in composition and, on 21, in whether the leaf tilts at all. My read: these
+    are inherently variable and want more takes and your eye rather than a fourth adjective from me. Four
+    takes of each are rendering for you to pick from'
+  url: /review/ep2-picks/motion-0812
+  since: '2026-08-12'
+  kind: clip
+  verdict_hint: pick a take per beat / tell me to keep chasing repeatability

@@ -14375,3 +14375,40 @@
     Eight jobs, every one with its seed twin: warm-temperature fixes for b03, b17 and b21,
     and the tight-frame retry for b18.
   outcome: null
+
+- id: ep2-batch3-0812-scored
+  kind: scoring
+  date: 2026-08-12
+  scores: b18-tight + twin (the geometry-count test), b03/b17/b21 warm pins + twins.
+    8 clips, 8/8 hash-verified.
+  the_headline_reverses_last_night_s_wall: >-
+    GEOMETRY ENFORCES COUNT WHERE WORDS CANNOT. b18-tight came back with EXACTLY ONE FIG in
+    BOTH SEEDS — no branch, no leaves, no second fruit — after the same beat had grown a
+    branchful of figs from a plant clause and after b19 proved an explicit singular plus an
+    explicit ban both get ignored. The fix was not counting harder; it was describing a frame
+    too tight to hold two. So "count is not bindable by language" narrows to: COUNT IS NOT
+    BINDABLE BY COUNTING WORDS, BUT IT IS BINDABLE BY FRAMING. The founder decision softens
+    from "buy a tool" to "use geometry where the shot allows it".
+  the_colour_pins_are_not_a_clean_win_and_i_will_not_call_them_one: >-
+    b21 — palette stabilised, both seeds warm cream. GOOD. b17 — closer than before, still
+    visibly different. PARTIAL. b03 — STILL DIVERGES badly: golden sunset at one seed, pale
+    blue-grey at the other, and the composition differs too (standing behind the sapling
+    versus bent low in tall grass). So an explicit temperature plus bans helped two of three
+    and failed one. One clear improvement, one partial, one failure.
+  what_is_left_is_not_colour: >-
+    b03's seeds differ in COMPOSITION and b21's differ in WHETHER THE TILT HAPPENS AT ALL —
+    the described action occurs at one seed and not the other. Those are not palette problems
+    and a fourth adjective will not touch them.
+  so_the_recommendation_is_a_workflow_answer_not_a_wording_one: >-
+    Three rounds have been spent stabilising these beats and each improved something without
+    making the seeds agree. The honest conclusion is that they are INHERENTLY SEED-VARIABLE,
+    and the answer to a variable process is more samples and a human pick, not another word.
+    Two extra seeds queued for each, making four takes to choose between — the pattern he
+    already endorsed. Labelled in the job headers as a workflow answer to a wording problem I
+    could not solve, so nobody later reads it as a fix.
+  also_queued: >-
+    ep2-b19-geo + twin, moving the geometry lever to the other beat that miscounts. Honest
+    limit stated in its header: b18 is an extreme close-up of one object and b19 is a
+    two-shot with more frame for a stray seedling, so if it still multiplies then geometry
+    works only at close-up scale.
+  outcome: null
