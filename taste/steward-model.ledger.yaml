@@ -12724,3 +12724,47 @@
     then cropped them myself in the aspect conversion and only noticed when the finished
     clip had no ears to twitch.
   outcome: null
+
+- id: ep2-b04-train-r1-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b04-train-r1-0812
+  predicates_observed: >-
+    no held object in any cell HIT 4/4 — the vessel rim and the blank placard are both
+    gone; s0 is two closed EMPTY fists, s1 a crossed collar with no hands in frame, s2 no
+    hands and no object, s3 the hoodie's own drawstring and toggle. Background is a
+    blurred grassy field >=3/4 HIT — clear grass in s0, s2, s3 and grass texture at the
+    edges of s1, against a near-white ground before. The face-filling close-up SURVIVES
+    both changes HIT 4/4, which is what falsification would have looked like and did not.
+    Identity holds 4/4, with the eye colour still drifting off the reference's red —
+    amber in two and green in one.
+  observed: >-
+    BOTH FAULTS HE NAMED ARE FIXED IN ONE ROUND, and the diagnosis is what did it rather
+    than the ban. The prompt's own verb was the problem — wave-1 said "HOLDING his
+    breath" — so removing the word and stating `empty hands` mattered at least as much as
+    the four negative terms. The background needed no new mechanism either: beat 04 named
+    no location at all, so the reference's white paper won by default, and putting the
+    field early was enough.
+  still_open: >-
+    Eye colour. Red in the approved reference, amber-to-green in the frames, across every
+    beat-04 round so far. Nobody has complained about it and it is not being chased.
+  outcome: null
+
+- id: ep2-motion-paints-background-tension-0812
+  kind: observation
+  date: 2026-08-12
+  what_the_lead_reported: >-
+    The b15 motion probe found the motion model PAINTS IN a background unprompted — a
+    blank character-sheet still became field, treeline and dawn sky by frame 17 — and
+    concluded that background-bearing stills may be unnecessary spend for beats headed
+    to a clip.
+  the_tension, worth naming before it becomes a rule: >-
+    The founder's own words on the beat-04 motion clip were "the background is blank."
+    That clip was cut from a blank still and the motion did NOT paint it in. So on the
+    evidence available, background painting in motion is beat-dependent rather than
+    reliable — b15 got one and b04 did not.
+  what_i_am_doing_with_it: >-
+    Adopting the guidance and not authoring further background-focused rounds. The b04
+    round had already rendered and cost nothing extra — same token budget, same job, no
+    additional round — and it turns out to de-risk exactly the clip that came back blank.
+  outcome: null
