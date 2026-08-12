@@ -833,3 +833,4 @@
 16:05:58Z box-runner idle ready=0 failed=4
 16:16:03Z box-runner idle ready=0 failed=4
 16:21:46Z STARTED task=ep2-b03-object-0812-1786464910 attempt=1 on box-runner
+16:30:43Z DONE task=ep2-b03-object-0812-1786464910 rc=0 artifacts=2
