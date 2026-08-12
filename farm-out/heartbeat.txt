@@ -941,3 +941,4 @@
 22:54:52Z DONE task=ep2-b19-disambB-0812-1786485786 rc=0 artifacts=2
 22:54:57Z STARTED task=ep2-b21-stable-0812-1786485447 attempt=1 on box-runner
 23:01:19Z DONE task=ep2-b21-stable-0812-1786485447 rc=0 artifacts=2
+23:01:25Z STARTED task=ep2-b21-stableB-0812-1786485452 attempt=1 on box-runner
