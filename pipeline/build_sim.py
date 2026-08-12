@@ -2537,12 +2537,33 @@ def build(out_dir: Path):
                        '<p class="mono">Claimed by whichever named machine polls '
                        'the queue next; nothing here waits on a person.</p>' + q_rows)
     else:
-        box_note = (' The render box also keeps its own on-disk queue between '
-                    'pushes — its last idle report above is the only honest '
-                    'reading of that.' if depth else "")
-        queued_html = ('<h3>⏭ Queued for a machine <span class="count">0</span></h3>'
-                       '<p class="notice">Nothing in the shared queue file is '
-                       'waiting for a machine.' + box_note + '</p>')
+        # The render box's own on-disk queue replaced the shared file as the
+        # production queue (2026-08-10); a supervisor writes a measured
+        # snapshot of it. Prefer that with its own timestamp — a zero from the
+        # shared file alone reads as "idle" during a fully-loaded night.
+        bq = {}
+        try:
+            import yaml as _yaml
+            with open("pipeline/measured/box-queue.yaml", encoding="utf-8") as fh:
+                bq = _yaml.safe_load(fh) or {}
+        except Exception:
+            bq = {}
+        if bq.get("measured_at"):
+            n_ready = int(bq.get("ready", 0))
+            n_running = int(bq.get("running", 0))
+            queued_html = (f'<h3>⏭ Queued for a machine <span class="count">'
+                           f'{n_ready + n_running}</span></h3>'
+                           f'<p class="notice">The render box’s own queue: '
+                           f'{n_running} rendering, {n_ready} waiting · '
+                           f'measured {_e(str(bq["measured_at"]))}. The shared '
+                           f'queue file has nothing runnable.</p>')
+        else:
+            box_note = (' The render box also keeps its own on-disk queue between '
+                        'pushes — its last idle report above is the only honest '
+                        'reading of that.' if depth else "")
+            queued_html = ('<h3>⏭ Queued for a machine <span class="count">0</span></h3>'
+                           '<p class="notice">Nothing in the shared queue file is '
+                           'waiting for a machine.' + box_note + '</p>')
     if hand_q:
         queued_html += (
             f'<p class="mono">{len(hand_q)} more '

@@ -2565,46 +2565,20 @@ backlog:
     it is currently trusting a detector with 0 of 3 recall on the only case we
     can check.
 
-# THE 5090 HOLDS A CLAIM FOR A RUN THAT IS ALREADY FINISHED. Read this before
-# believing GPU-CLAIM.txt on that box — the claim line is stale BY EVIDENCE, and
-# this entry is the evidence trail.
-- id: rtx5090-release-stale-redraw2-claim-1786290000
-  runner: manual
-  worker: rtx5090
-  needs: []
-  gate: hardware
-  gate_ref: >-
-    rtx5090 (192.168.3.157, ssh alias `rtx5090`, user artvn) is OFF THE NETWORK —
-    100% ICMP packet loss AND `ssh -o ConnectTimeout=10` returning "Operation
-    timed out" on port 22, both at 17:55 on 2026-08-09. Not a worker fault and
-    not a login fault: the host does not answer at all.
-    THE OUTAGE STARTED AFTER 17:16, NOT AT 13:30 as this lane was told —
-    the r4 stills landed locally at 17:15:59 and 17:16:06, which is a file
-    transfer off that box, so it was reachable then. Correcting it because the
-    wrong start time makes the outage look like it predates the run and invites
-    the next reader to doubt that the outputs came from the 5090 at all.
-    Separately, the `telemetry: rtx5090 ... (1441 min)` line pushed to
-    farm-results-rtx5090 at 17:50 is WORKER-heartbeat staleness, not
-    reachability — this run was a hand-run that took its own id and left the
-    queue alone, so farm_worker wrote no heartbeats while it held the card.
-    Clearing this gate means the box pings again; per the box-operations note a
-    worker restart after that still needs a human login.
-  window: any
-  est_minutes: 5
-  cmd: >-
-    on the box, (1) overwrite C:\banyan-farm\GPU-CLAIM.txt with RELEASED, (2)
-    `schtasks /Delete /TN banyan-redraw2 /F`, (3) `schtasks /Query /TN
-    banyan-redraw2` and confirm it reports the task does not exist, (4) confirm
-    the card reads 0% / 0 MiB. Report all four, not just the delete.
-  why: >-
-    GPU-CLAIM.txt on the 5090 still reads CLAIMED by `beat06-14-r4-0809`, and
-    that run is DONE: it exited rc=0, its eight stills and eight sidecars were
-    pulled to node 001 and committed in bb8d983, and the review key addressing
-    them went in at 8bfe053. So the next claimant will read a live claim for work
-    that finished hours ago and either wait for nothing or take the card while
-    believing it is stealing it. Same for the scheduled task `banyan-redraw2`,
-    which is still registered with nothing left to do — the 2026-08-08 wave left
-    exactly this pair of artifacts behind and STATE.md had to record the cleanup
-    separately (`banyan-b16drift` deleted, GPU-CLAIM released). TREAT THE CLAIM
-    LINE AS STALE, not as a lock: the consumer of this entry is whoever next
-    wants the 5090, and what they get from it is permission to proceed.
+# CLOSED 2026-08-09 15:38Z — the 5090's stale claim and `banyan-redraw2` are both
+# gone, and the entry that asked for them removed was filed on a premise that was
+# already false. `rtx5090-release-stale-redraw2-claim-1786290000` said
+# GPU-CLAIM.txt read CLAIMED by `beat06-14-r4-0809`; the file's mtime on the box
+# is 17:16 box local (13:16Z) and its first line reads "RELEASED ... Schtask
+# banyan-redraw2 deleted" — the run cleaned up after itself as its stills were
+# pulled at 17:15:59-17:16:06, and the lane that filed this could not reach the
+# box to check (ssh `Operation timed out` at 17:55). Recorded because the
+# correction matters more than the delete: the claim was never stale-and-held,
+# it was stale-in-a-report.
+# All four steps of that entry verified against the BOX tonight, not a report:
+# (1) GPU-CLAIM.txt reads RELEASED, (2) + (3) `schtasks /Query /TN banyan-redraw2`
+# reports the task does not exist, (4) the card reads 0% / 0 MiB. A sequencing
+# note was appended to GPU-CLAIM.txt telling the overnight lanes to take the card
+# one at a time and to overwrite the file with CLAIMED before touching the GPU.
+# Claimed on the check-in log as the ruling requires: STARTED 15:29:00Z, DONE
+# 15:38:35Z on `farm-results-hand`.
