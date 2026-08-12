@@ -784,3 +784,4 @@
 12:17:32Z box-runner idle ready=0 failed=3
 12:23:53Z STARTED task=ep2-charref-guards-r4-0812-1786537425 attempt=1 on box-runner
 12:27:27Z DONE task=ep2-charref-guards-r4-0812-1786537425 rc=0 artifacts=8
+12:27:38Z box-runner idle ready=0 failed=3
