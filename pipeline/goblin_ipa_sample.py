@@ -58,7 +58,10 @@ for _stream in (sys.stdout, sys.stderr):
         pass
 
 BEAT = 4
-GOBLIN_DEF = "green skin, tusks"
+# The founder's definition, frozen 2026-08-12: bald is his ruling ("you're
+# giving the goblin hair which isnt right"), and `tusks` was retired — the
+# ledger (ep2-goblin-definition-0810) records it was never his word.
+GOBLIN_DEF = "green skin, bald head"
 IPA_REPO = "h94/IP-Adapter"
 IPA_SUBFOLDER = "sdxl_models"
 IPA_WEIGHT = "ip-adapter-plus_sdxl_vit-h.safetensors"
@@ -351,7 +354,11 @@ def main() -> int:
                     help="dir holding render_wave_goblin.py and wave-drafts.yaml")
     ap.add_argument("--root", required=True, help="repo checkout with pipeline/sd_prompt.py")
     ap.add_argument("--refs", required=True,
-                    help="dir holding 04-the-footnote-wave1-s0..3.png")
+                    help="dir holding <ref-prefix>-s0..3.png")
+    ap.add_argument("--ref-prefix", default="04-the-footnote-wave1",
+                    help="filename prefix of the four reference frames in "
+                         "--refs; default keeps the historic beat-04 names so "
+                         "every existing job is byte-identical")
     ap.add_argument("--out", required=True)
     ap.add_argument("--task", default=None)
     # Seeds were four, hardcoded, because every arm so far was an A/B against
@@ -444,7 +451,7 @@ def main() -> int:
         print("   positive prompt UNCHANGED, 0 tokens added to it", flush=True)
 
     refs_dir = Path(a.refs).resolve()
-    refs = [refs_dir / f"04-the-footnote-wave1-s{i}.png" for i in range(4)]
+    refs = [refs_dir / f"{a.ref_prefix}-s{i}.png" for i in range(4)]
     missing = [r.name for r in refs if not r.exists()]
     if missing:
         print(f"!! reference frames missing: {missing}. This run is an A/B "

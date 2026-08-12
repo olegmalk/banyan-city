@@ -60,10 +60,15 @@ import argparse
 import sys
 from pathlib import Path
 
-# Beats whose wave-1 draft carries the {{GOBLIN}} slot (wave-drafts.yaml,
-# `kind: goblin`). A beat without the goblin in it cannot answer an identity
-# question about the goblin, so it is refused rather than rendered.
-GOBLIN_BEATS = (2, 3, 4, 14, 15, 17, 19, 20)
+# Beats whose draft carries the character being conditioned. A beat without
+# that character in it cannot answer an identity question about them, so it is
+# refused rather than rendered. 8 and 13 joined the goblin list when their
+# blocks gained the slot (2026-08-11/12); the guard list exists because the
+# founder's consistency mandate (2026-08-12, "you need to create proper
+# character consistency") covers the guards too — the reference is whatever
+# --refs holds, no longer only beat 04's goblin frames.
+GOBLIN_BEATS = (2, 3, 4, 8, 13, 14, 15, 17, 19, 20)
+GUARD_BEATS = (5, 6, 7, 8, 9, 10, 11)
 
 
 def main() -> int:
@@ -74,12 +79,17 @@ def main() -> int:
     ap.add_argument("--sampler-dir", default=None,
                     help="directory holding goblin_ipa_sample.py; defaults to "
                          "this file's own directory")
+    ap.add_argument("--character", choices=("goblin", "guard"),
+                    default="goblin",
+                    help="which character the reference in --refs depicts; "
+                         "gates which beats may be conditioned")
     known, rest = ap.parse_known_args()
 
-    if known.beat not in GOBLIN_BEATS:
-        print(f"!! beat {known.beat} is not one of the goblin beats "
-              f"{GOBLIN_BEATS} — its draft carries no goblin, so nothing it "
-              f"drew could answer whether the goblin holds. Refusing.",
+    allowed = GOBLIN_BEATS if known.character == "goblin" else GUARD_BEATS
+    if known.beat not in allowed:
+        print(f"!! beat {known.beat} is not one of the {known.character} "
+              f"beats {allowed} — its draft has no {known.character}, so "
+              f"nothing it drew could answer whether they hold. Refusing.",
               flush=True)
         return 30
 
