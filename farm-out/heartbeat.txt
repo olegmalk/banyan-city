@@ -729,3 +729,4 @@
 08:54:17Z DONE task=ep2-b01-final055-r3-0812-1786524688 rc=0 artifacts=4
 08:58:23Z STARTED task=ep2-charref-goblin-0812-1786525095 attempt=1 on box-runner
 09:01:29Z DONE task=ep2-charref-goblin-0812-1786525095 rc=0 artifacts=8
+09:04:05Z STARTED task=ep2-b01-figgrow-055-0812-1786525295 attempt=1 on box-runner
