@@ -11594,3 +11594,45 @@
     conditioning knobs get turned, because knobs are not what this is about. It goes
     to him with the confound named, not with a fourth round attached.
   outcome: null
+
+- id: ep2-b17-ipa-crossbeat-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-b17-ipa-crossbeat-0812
+  predicates_observed: >-
+    the beat-17 creature is recognisably the beat-02 creature >=3/4 HIT — 16/16, pale
+    yellow-green, bald, long pointed ears, red eyes, his own toggled coat; coat-hem rung
+    beats whole figure on face fidelity HIT (r0/r1 give large bright-eyed faces, r2/r3
+    smaller and narrower-eyed); costume holds >=3/4 despite the draft asking for a
+    patchwork cloak HIT 4/4; no extra goblins in any cell HIT — the connectivity cut
+    fixed the fault the ladder exposed.
+  observed: >-
+    THE MECHANISM CARRIES A CHARACTER, NOT JUST A BEAT. Two beats with nothing in common
+    compositionally, one set of reference bytes, and the same creature came out of both.
+    That is the thing he said blocked him. The garment result is also different in kind
+    from the tusk one: the prompt said patchwork cloak, the picture said toggled coat,
+    and what came back was a toggled coat WITH patches and stitching — a blend, not a
+    winner. So a reference and a prompt fight only when they name incompatible things
+    (tusks or no tusks); where they name compatible ones they merge.
+  incidental_check: >-
+    Slots s0/s1 hold identical bytes and so do s2/s3, and each pair rendered identical
+    frames. A free determinism check, and it passed.
+  outcome: null
+
+- id: ep2-frozen-ref-beatpass-0812
+  kind: prediction
+  written: 2026-08-12, before enqueueing beats 03 and 14. NOT a new recipe.
+  predicates: [the creature is the same creature in every beat of the pass >=3/4 per
+    beat, the coat-hem rung reads better than the whole figure on close beats and worse
+    on wide ones, beats whose own text names something the reference cannot show (a
+    prop, a pose, another character) lose the staging before they lose the identity]
+  basis: >-
+    Beats 02 and 17 held on these exact bytes with the arm, window, scale and seeds
+    frozen. Each further beat is a new sample of a settled recipe, not a new recipe, so
+    they are queued two at a time to keep the card busy and judged one at a time.
+  falsifiable_by: >-
+    Any beat where the creature is not recognisable. That stops the pass immediately —
+    it would mean identity survives some framings and not others, which is a property of
+    the mechanism worth more than eight more beats of frames.
+  consumer: review/ep2-picks/consistency-0812.html, per-beat rows, for his one pass.
+  outcome: null
