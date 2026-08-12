@@ -870,3 +870,4 @@
 19:31:56Z box-runner up pid=3388 host=MSI
 19:35:19Z STARTED task=ep2-b19-overhead-0812-1786475381 attempt=1 on box-runner
 19:42:01Z box-runner up pid=9716 host=MSI
+19:44:50Z FAIL task=ep2-b19-overhead-0812-1786475381 rc=93 step=interrupted
