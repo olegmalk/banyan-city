@@ -13,11 +13,14 @@
 # defects named in the negative at guidance 2.0.
 #
 # LENGTH IS CAPPED AT 121 FRAMES AND THAT IS A MEASURED DECISION, not the beat sheet's.
-# The b04 pair measured drift scaling with requested length -- clean at 73, both eyes
-# destroyed at 145 -- and the cold open re-painted its entire field at 233. Rendering a
-# six-second beat at a length already measured to fail would be spending the card to
-# reproduce a known defect. Beats shorter than five seconds keep their own length; beat
-# 14 is written as six and is capped, which makes it a trim or a two-shot at edit time.
+# The b04 pair is the evidence and it is the only evidence: same init, same seed, same
+# prompt, 73 frames keeps his eyes intact and 145 destroys them. That was measured ON A
+# FACE IN EXTREME CLOSE-UP, and every beat in this wave is a character beat with a visible
+# face, so it transfers. (An earlier draft of this header also cited the cold open
+# re-painting its field at 233 frames. That clause is WITHDRAWN -- the amber field is in
+# b01's own prompt, so the model was obeying the text, not drifting. See ledger
+# ep2-duration-law-0812-SCOPED.) Beats under five seconds keep their own length; beat 14 is
+# written as six and is capped, which makes it a trim or a two-shot at edit time.
 #
 # NOT IN THIS WAVE: beat 02 (identity fails outright, his own note), beat 06 (the guard
 # is bald and he vetoed that today), beat 08 (a single-character reference suppresses the

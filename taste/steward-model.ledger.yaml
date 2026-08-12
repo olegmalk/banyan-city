@@ -12596,3 +12596,39 @@
     Zero. Six jobs pulled from ready unclaimed, no attempts spent, no GPU time. Caught
     because the wave sat behind a peer's job long enough for me to look again.
   outcome: null
+
+- id: ep2-duration-law-0812-SCOPED
+  kind: correction
+  date: 2026-08-12
+  corrects: ep2-b01-figgrow-055-r3-0812-scored, key `third_confirmation_of_the_length_rule`
+  status: OVER-CLAIMED — narrowed. Second time today I generalised past my evidence.
+  what_i_claimed: >-
+    That the cold open was a THIRD confirmation of a length law — "clean at 73, a face
+    destroyed at 145, a field replaced at 233" — on the grounds that both cold-open rounds
+    abandon the init's soft green field for amber dried grass by about frame 99.
+  why_it_is_wrong: >-
+    THE AMBER IS IN THE PROMPT. b01's positive says the sapling is "standing in tall grass
+    under low warm amber light" — so the field turning amber is the model OBEYING THE TEXT,
+    not drifting from the init. The init happened to be soft green; the clip moves toward
+    what the words asked for. I read obedience as damage because I was looking for a third
+    data point and one was available in the right shape. I also never varied length on this
+    beat, so it cannot be evidence about length either way — r2 and r3 are both 233 frames
+    and I only compared them to each other.
+  what_actually_survives: >-
+    ONE measurement, single-variable and real: beat 04, same init, same seed, same prompt,
+    73 frames vs 145 frames, where 73 keeps his eyes intact and 145 destroys them and
+    stipples the forehead. That is measured ON A FACE IN EXTREME CLOSE-UP, which is the most
+    drift-sensitive content there is, and it says nothing yet about plants, wide shots or
+    anything without a face. The lead is right to flag the over-generalisation.
+  what_the_121_cap_still_rests_on: >-
+    The cap on the six-beat wave stands, because it never needed the cold open: those beats
+    are all CHARACTER beats with a visible face, which is exactly the content the b04 pair
+    measured. The wave yaml headers cite the cold open as supporting evidence and that
+    clause is now withdrawn; the b04 pair alone justifies the cap.
+  the_habit: >-
+    Twice today: instrumentation, and now this. Both times I found a real pattern and then
+    reached for the largest claim it would bear instead of the smallest one that fit. The
+    check that would have caught this one is trivial and I own it going forward — before
+    calling an observed change a DEFECT, grep the prompt for it. The model doing what the
+    text said is the first hypothesis, not the last.
+  outcome: null
