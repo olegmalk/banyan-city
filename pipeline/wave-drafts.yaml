@@ -870,6 +870,79 @@ beats:
 
 
 
+    # -- `authored_charref_goblin` -- THE CHARACTER REFERENCE, 2026-08-12. -------
+    # HIS ORDER, VERBATIM: "have you even made a character reference for the goblin
+    # and for the guards? make, and let me review. because these characters change
+    # too much through beats otherwise." (ledger `ep2-charref-order-0812`.)
+    #
+    # WHAT MAKES THIS DIFFERENT FROM THE `_sheet` VARIANTS ABOVE. Those drew the
+    # goblin STANDING IN A FIELD, one candidate per costume — a beat frame with the
+    # staging removed. He looked at them and still asked whether a reference exists,
+    # which is the answer: a single pose in a location is a candidate, not a
+    # reference. This variant asks for the thing an artist means by the word — the
+    # SAME character drawn from several angles on a blank ground, so the identity is
+    # what the picture is ABOUT rather than a by-product of the shot.
+    #
+    # THE COUNT TAG STAYS `1boy` AND THAT IS CORRECT, NOT A LOOPHOLE. `_tag_from_clause`
+    # reads the first comma-clause only, `A small goblin boy` -> `1boy`, which matches
+    # what beat 4 declares, so the harness's assertion passes. It is also the honest
+    # tag: one character, drawn three times, is one character. `multiple views` is the
+    # tag that carries the repetition, and it is the Danbooru name for exactly this.
+    #
+    # SIMPLICITY IS THE BRIEF, so the bans are the load-bearing half. `no scars, no
+    # stitches` answers "overcomplicated with scars"; `no heterochromia` is the
+    # Danbooru name for the varying eye colours he named, and `red eyes` is asserted
+    # once in the positive so there is ONE answer instead of a per-seed lottery.
+    # `no hair, no wig` keeps his 08-12 bald ruling. Nothing here invents an
+    # attribute: the slot carries the frozen identity and this variant carries only
+    # the sheet.
+    #
+    # BUDGET, MEASURED NOT GUESSED. Both sentences must survive compress() or the
+    # style anchor drops and `check()` refuses to draw; an earlier, longer draft of
+    # this text lost `very aesthetic` to the budget and would have faulted. Measured
+    # at ~64 estimated tokens with nothing dropped before it was written here.
+    authored_charref_goblin: >-
+      A small goblin boy, {{GOBLIN}}, character reference sheet, multiple views,
+      front view, side view, three quarter view, red eyes, simple background,
+      white background. Full body, flat even lighting, cinematic lighting,
+      detailed, newest, masterpiece, best quality, very aesthetic No girl, no
+      child, no scars, no stitches, no heterochromia, no hair, no wig, no armor,
+      no jewelry, no ornament, no long eyelashes, no lipstick, no dark, no night.
+      No photorealism, no 3D render look. 9:16 vertical, no text.
+    # -- `authored_charref_goblin_r2` -- THE RESEARCHED DIALECT, 2026-08-12. -----
+    # r1 above was drafted from this repo's own habits while an external research
+    # agent was still reading. It rendered (rc=0, four frames) and it is kept as the
+    # control column, because the r2 changes are worth nothing if nobody can see what
+    # they changed. What the research came back with, from Danbooru tag pages and the
+    # cagliostrolab model card rather than from our comments:
+    #   * `character sheet`, `model sheet`, `character design` are DEAD tokens — zero
+    #     posts, so r1 spent the word `character` on nothing. `reference sheet`,
+    #     `multiple views` and `turnaround` are the tags that carry post counts.
+    #   * `solo` actively FIGHTS multi-view. r1 already omitted it; r2 keeps it out on
+    #     purpose, and this comment is why nobody should add it back.
+    #   * the count tag stays `1boy` — `multiple views` counts distinct CHARACTERS,
+    #     not figures — so the harness assertion is correct as it stands.
+    #   * a multi-view ask on an anime checkpoint degrades into COMIC PANELS, so
+    #     `comic, comic panels, speech bubble` are the community's standard guards,
+    #     with `different characters, different outfits` against the swap and
+    #     `multiple boys` against a second goblin walking in.
+    #
+    # WHAT THE NEW BANS COST, SAID OUT LOUD. r1's negative was already full at 77/77,
+    # so the seven new terms are PAID FOR by dropping `jewelry, ornament, long
+    # eyelashes, lipstick, dark, night`. The first four were the female-reading guard;
+    # `girl` and the species tier's `female goblin` still carry that job, which is the
+    # measured lever anyway (r9). The lighting pair is unnecessary on a white ground.
+    # So r2 is NOT a one-variable delta on r1 — it is the researched recipe, and it is
+    # labelled that way on his page rather than pretending to an ablation.
+    authored_charref_goblin_r2: >-
+      A small goblin boy, {{GOBLIN}}, reference sheet, multiple views, turnaround,
+      front view, side view, three quarter view, standing, red eyes, simple
+      background, white background. Full body, flat even lighting, cinematic
+      lighting, detailed, newest, masterpiece, best quality, very aesthetic No
+      girl, no child, no scars, no stitches, no heterochromia, no hair, no wig, no
+      armor, no comic, no comic panels, no speech bubble, no different characters,
+      no different outfits, no dynamic pose, no multiple boys. No photorealism, no
+      3D render look. 9:16 vertical, no text.
   5:
     slug: the-patrol
     kind: guard
@@ -1187,6 +1260,54 @@ beats:
       dominant. No photorealism, no 3D render look. 9:16 vertical, no text.
 
 
+    # -- `authored_charref_guards` -- THE GUARD REFERENCE, 2026-08-12. -----------
+    # The guards half of `ep2-charref-order-0812`, and the third time he has asked:
+    # "should probably setup a character for the guards, take your time doing that"
+    # (2026-08-11) went as far as the `_sheet_` costume rows, and the identity-frozen
+    # wave then measured what the words alone bought — `no armor` held 4/4 across six
+    # guard beats while the CHARACTER did not, filling the vacuum with a grim adult
+    # man, disembodied heads on beat 09 and a topless bodybuilder on beat 10
+    # (`ep2-idfix-wave2-r2-wave-reading-0812`). A picture is the channel words missed.
+    #
+    # THE GARMENT IS NOT RE-OPENED. `plain brown tunics` is the frozen guards identity
+    # (`ep2-frozen-identities-0812`) and it is passed through untouched, as is his
+    # ratified register — `silly harmless bureaucrats`, bare heads, the bark
+    # clipboard. This variant adds the SHEET and nothing else, so if he rejects it he
+    # is rejecting the reference, not a fourth costume he never asked for.
+    #
+    # `2boys` derives from `Two round guard men` exactly as every beat-05 draft does,
+    # and here it is literally true: the guards are a PAIR, and a reference that
+    # separated them would lose the only thing that makes them read as two of a kind.
+    authored_charref_guards: >-
+      Two round guard men in plain brown tunics, character reference sheet,
+      multiple views, front view, side view, silly harmless bureaucrats, bare
+      heads, a bark clipboard, simple background, white background. Full body,
+      flat even lighting, cinematic lighting, detailed, newest, masterpiece, best
+      quality, very aesthetic No girl, no child, no armor, no helmet, no scars,
+      no weapon, no hood, no dark, no night. No photorealism, no 3D render look.
+      9:16 vertical, no text.
+    # -- `authored_charref_guards_r2` -- THE RESEARCHED DIALECT, 2026-08-12. -----
+    # Same research as `authored_charref_goblin_r2` (see beat 4 for the findings and
+    # the sources): `reference sheet, multiple views, turnaround, standing` are the
+    # tags that carry weight, `character sheet` is a dead token, and the comic-panel
+    # guards are standard. TWO DIFFERENCES from the goblin's r2, both deliberate:
+    #   * `multiple boys` is NOT banned here. The guards are a pair; banning it would
+    #     forbid the subject, which is the mistake `check()`'s own selfneg rule exists
+    #     to catch.
+    #   * nothing had to be sold to buy the new bans — this beat's negative sits at
+    #     59/77 because `kind: guard` sends no fusion tier, so the whole ban set fits
+    #     with the female-reading guards left intact.
+    # The frozen guards identity (tunics, bureaucrat register, bare heads, clipboard)
+    # is passed through untouched, exactly as in r1.
+    authored_charref_guards_r2: >-
+      Two round guard men in plain brown tunics, reference sheet, multiple views,
+      turnaround, front view, side view, standing, silly harmless bureaucrats, bare
+      heads, a bark clipboard, simple background, white background. Full body, flat
+      even lighting, cinematic lighting, detailed, newest, masterpiece, best
+      quality, very aesthetic No girl, no child, no armor, no helmet, no scars, no
+      weapon, no hood, no comic, no comic panels, no speech bubble, no different
+      characters, no different outfits, no dynamic pose. No photorealism, no 3D
+      render look. 9:16 vertical, no text.
   6:
     slug: the-clipboard
     kind: guard

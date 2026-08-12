@@ -11185,3 +11185,34 @@
     <=2/4, silly harmless register rather than grim soldier >=2/4]
   consumer: review/SHEETS/char-refs-0812.html, guards row.
   outcome: null
+
+- id: ep2-charref-r2-0812
+  kind: prediction
+  written: 2026-08-12, before enqueue, after an EXTERNAL research pass (Danbooru tag
+    pages + the cagliostrolab model card) corrected the tag dialect r1 was drafted
+    in. Box dry green both: goblin 66/77 pos, 74/77 neg; guards 71/77 pos, 72/77 neg.
+  covers: [ep2-charref-goblin-r2-0812, ep2-charref-guards-r2-0812]
+  what_changed: >-
+    `character sheet` out (a dead token, zero posts), `reference sheet, multiple
+    views, turnaround, standing` in; comic-panel guards added to the negative
+    (`comic, comic panels, speech bubble`) with `different characters, different
+    outfits` against the swap and `multiple boys` on the goblin only. On the goblin
+    this was paid for by selling `jewelry, ornament, long eyelashes, lipstick, dark,
+    night`, since that negative was already full at 77/77.
+  predicted_verdict: better sheets than r1, and still not a face-locked turnaround
+  basis: >-
+    The research's own finding is that text-only SDXL holds OUTFIT and silhouette
+    across views at roughly 65-75% and does not hold FACES, and that a locked
+    turnaround needs ControlNet or FaceID, which we have not staged. So the tags
+    should buy the composition and the comic-panel guards should buy the layout,
+    while the thing he actually complained about — the face changing — is predicted
+    to survive into these frames. If that is what the pixels show, the honest
+    recommendation is that his pick selects a face and the reference is then BUILT
+    from it by IP-Adapter, which this repo already has running.
+  predicates: [r2 shows two or more clean views >=3/4 on the goblin, no comic panels
+    or speech bubbles 4/4 (this is the new ban's own test), outfit consistent across
+    views within a frame >=3/4, FACE consistent across views within a frame <=2/4,
+    guards keep the bureaucrat register >=2/4, r2 reads as more of a reference sheet
+    than r1 on the goblin (a comparison, scored on the pair, not a ranking of taste)]
+  consumer: review/SHEETS/char-refs-0812.html — r1 and r2 both on the page, labelled.
+  outcome: null

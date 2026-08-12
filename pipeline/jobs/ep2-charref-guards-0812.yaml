@@ -1,0 +1,154 @@
+# EPISODE 2 — THE GUARD CHARACTER REFERENCE. One sample, four seeds, $0.
+# 2026-08-12, character-reference lane. The guards half of `ep2-charref-order-0812`.
+#
+# ── THE THIRD ASK, AND THE FIRST ONE ANSWERED IN THE RIGHT CHANNEL. "should probably
+# setup a character for the guards, take your time doing that" (2026-08-11) produced
+# the `_sheet_` costume rows, from which `plain brown tunics` was frozen. Then the
+# identity-frozen wave measured what the words actually bought across six guard
+# beats: `no armor` held 4/4 everywhere, and the CHARACTER held nowhere — beat 06
+# went indoors in all four seeds, beat 09 drew disembodied heads in three, beat 10
+# drew a topless bodybuilder (`ep2-idfix-wave2-r2-wave-reading-0812`). Banning armour
+# emptied the slot without filling it. Now: "have you even made a character reference
+# for the goblin and for the guards? make, and let me review."
+#
+# ── THE GARMENT IS NOT RE-OPENED AND NEITHER IS THE REGISTER. `plain brown tunics`,
+# `silly harmless bureaucrats`, bare heads and the bark clipboard are the frozen
+# guards identity (`ep2-frozen-identities-0812`) passed through untouched. This job
+# adds the SHEET and nothing else, so a rejection is a rejection of the reference and
+# not of a fourth costume he never asked for. One thing changes per round; that is
+# the whole reason the wave's r2 rounds could be read at all.
+#
+# ── `2boys` IS THE HONEST TAG HERE. On the goblin sheet the count tag stays at one
+# because one character drawn three times is one character. The guards are genuinely
+# a PAIR — separating them would lose the only thing that makes them read as two of a
+# kind — so this sheet shows both, front and side, and declares two.
+#
+# ── MEASURED BEFORE QUEUED, on the box, with the real CLIP tokenizer:
+#   positive 68/77, nothing dropped, style anchor present, count tag `2boys` matches
+#   the draft, negative 59/77 with room to spare, no faults.
+#   drafts sha256 08e208401260f69a05f1ee6e8ddefd31c99caccb48bbd3aba9379b9ef0847680
+#
+# ── HONEST PRIOR. Same as the goblin sheet's, doubled: nothing in a plain SDXL
+# text2img path forces the front view and the side view to be the same two men, and
+# with two subjects there are twice as many ways for the model to swap someone out.
+# A sheet that comes back with four different bureaucrats is a real result — it says
+# the reference has to be BUILT from an approved frame rather than prompted.
+#
+# ── ITS OWN OUT DIR (`out-charref-guards`), never written by another job — the fix
+# for the shared-directory publish poisoning of commit c123d1bd.
+#
+# $0 — local GPU on the rtx5090, no provider, nothing published, nothing assembled.
+id: ep2-charref-guards-0812
+task: ep2-charref-guards-0812
+node: 002b-first-citizen
+beat: 5
+runner: box
+needs_gpu: true
+priority: 47
+max_attempts: 1
+owner: character-reference lane, 2026-08-12 (his "make, and let me review")
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03`, read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the render
+  gate itself reads. Neither `approval_condition` touches beat 05. This job draws a
+  CHARACTER REFERENCE, not a beat for the episode — it borrows beat 05''s block for
+  its mechanics (kind guard, count tag 2boys, guard negative tier) and its artifacts
+  are named for that slug. Nothing it makes may be carried into any beat before he
+  points at a frame.'
+consumer: >-
+  review/SHEETS/char-refs-0812.html — the page built for his review, guards row. Four
+  seeds side by side in filename order, nothing ranked and nothing recommended.
+success: >-
+  Four PNGs at C:\banyan-farm\wave-goblin-prep\out-charref-guards\05-the-patrol-wave1-s0..3.png
+  with their .yaml provenance sidecars written at render time (7.2), all eight
+  declared as artifacts so a missing one fails rc=92 instead of passing quietly.
+  Whether these are HIS guards is R4's call, not this job's and not a metric's.
+why: >-
+  Six guard beats measured the limit of doing this with words: the ban bound, the
+  character did not. A picture is the channel that is left, and he has now asked for
+  it by name.
+goblin_def: green skin, bald head, patchwork cloak
+goblin_def_source: >-
+  Passed for consistency with every other beat-05 job in this wave and substituted
+  nowhere: beat 05 is `kind: guard` and its draft carries no {{GOBLIN}} slot, so this
+  string reaches no prompt. Recorded here so the sidecar's definition field is not
+  silently different from the guard beats it will be compared against.
+est_minutes: 4
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '5'
+  - --goblin-def
+  - green skin, bald head, patchwork cloak
+  - --variant
+  - authored_charref_guards
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '5'
+  - --goblin-def
+  - green skin, bald head, patchwork cloak
+  - --variant
+  - authored_charref_guards
+  - --out
+  - C:\banyan-farm\wave-goblin-prep\out-charref-guards
+  - --task
+  - ep2-charref-guards-0812
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-charref-guards-0812"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/wave-goblin-prep/out-charref-guards/05-the-patrol-wave1-s*.*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+        print("   ", os.path.basename(f), h[:16])
+    with open(os.path.join(dst, "ep2-charref-guards-0812.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) == 8 else 1)
+artifacts:
+- C:\banyan-farm\wave-goblin-prep\out-charref-guards\05-the-patrol-wave1-s0.png
+- C:\banyan-farm\wave-goblin-prep\out-charref-guards\05-the-patrol-wave1-s1.png
+- C:\banyan-farm\wave-goblin-prep\out-charref-guards\05-the-patrol-wave1-s2.png
+- C:\banyan-farm\wave-goblin-prep\out-charref-guards\05-the-patrol-wave1-s3.png
+- C:\banyan-farm\wave-goblin-prep\out-charref-guards\05-the-patrol-wave1-s0.yaml
+- C:\banyan-farm\wave-goblin-prep\out-charref-guards\05-the-patrol-wave1-s1.yaml
+- C:\banyan-farm\wave-goblin-prep\out-charref-guards\05-the-patrol-wave1-s2.yaml
+- C:\banyan-farm\wave-goblin-prep\out-charref-guards\05-the-patrol-wave1-s3.yaml

@@ -1,0 +1,165 @@
+# EPISODE 2 — THE GOBLIN CHARACTER REFERENCE. One sample, four seeds, $0.
+# 2026-08-12, character-reference lane.
+#
+# ── HIS ORDER, VERBATIM (ledger `ep2-charref-order-0812`): "character consistency?
+# have you even made a character reference for the goblin and for the guards? make,
+# and let me review. because these characters change too much through beats
+# otherwise." The last clause is the specification. The fault being fixed is DRIFT
+# ACROSS BEATS, not any one frame, so what this job owes him is not a better beat —
+# it is a canonical picture that later beats can be conditioned on.
+#
+# ── WHY THE EXISTING SHEETS DID NOT ALREADY ANSWER IT. `ep2-goblin-sheet-*-0812`
+# drew the goblin standing in a sunlit field, one candidate per costume. He saw those
+# and still asked whether a reference exists. That is the answer: a single pose in a
+# location is a candidate for a shot; a reference is the same character from several
+# angles on a blank ground, where identity is the subject rather than a by-product.
+# This job renders the second thing, and it is the first time this repo has asked for
+# one.
+#
+# ── THE ONE SAMPLE RULE. This is a NEW recipe — a composition nothing in this repo
+# has drawn — so it is exactly one job, four seeds, and it stops. Nothing here is
+# carried to another beat, and no beat is re-rendered against it, until he points at
+# a frame. The wave taught this the expensive way: the K recipe went to fifteen beats
+# on the steward's own metric and came back "literally just frozen frames".
+#
+# ── MEASURED BEFORE QUEUED, on the box, with the real CLIP tokenizer:
+#   positive 63/77, nothing dropped, style anchor present, count tag `1boy` matches
+#   the draft's declaration, `female goblin` survived the negative budget, no faults.
+#   drafts sha256 08e208401260f69a05f1ee6e8ddefd31c99caccb48bbd3aba9379b9ef0847680
+# The dry step below re-runs that same check on the box at run time, so a stale
+# drafts file fails for $0 instead of drawing the wrong text (render_wave_sample.py
+# refuses rather than falling back to `authored`).
+#
+# ── HONEST PRIOR, WRITTEN BEFORE THE FRAMES. A plain SDXL checkpoint with no
+# ControlNet and no IP-Adapter has no mechanism that forces the three views to be the
+# same individual — `multiple views` is a composition tag, not an identity
+# constraint. So the most likely failure is not an ugly sheet, it is a handsome sheet
+# showing three cousins. If that is what comes back, the finding is that a reference
+# sheet must be BUILT (one approved frame, then IP-Adapter conditioned views) rather
+# than PROMPTED, and this job bought that answer for three GPU-minutes.
+#
+# ── ITS OWN OUT DIR, ON PURPOSE. `out-charref-goblin` has never been written by any
+# other job. On 2026-08-12 a shared out dir let one job's publish pick up another
+# job's bytes (commit c123d1bd); a fresh directory per job is the cheap fix.
+#
+# $0 — local GPU on the rtx5090, no provider, nothing published, nothing assembled.
+id: ep2-charref-goblin-0812
+task: ep2-charref-goblin-0812
+node: 002b-first-citizen
+beat: 4
+runner: box
+needs_gpu: true
+priority: 47
+max_attempts: 1
+owner: character-reference lane, 2026-08-12 (his "make, and let me review")
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03`, read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the render
+  gate itself reads. Both `approval_conditions` are about beat 01''s fig and beat
+  16''s leaf; neither touches beat 04. This job draws a CHARACTER REFERENCE, not a
+  beat for the episode — it borrows beat 04''s block only for its mechanics (kind
+  goblin, count tag 1boy, species negative tier) and its artifacts are named for that
+  slug. Nothing it makes may be carried into any beat before he points at a frame.'
+consumer: >-
+  review/SHEETS/char-refs-0812.html — the page built for his review, goblin row. Four
+  seeds side by side, in filename order, nothing ranked and nothing recommended. His
+  pick becomes the identity anchor; until then this is four candidates and no more.
+success: >-
+  Four PNGs at C:\banyan-farm\wave-goblin-prep\out-charref-goblin\04-the-footnote-wave1-s0..3.png
+  with their .yaml provenance sidecars written at render time (7.2), all eight
+  declared as artifacts so a missing one fails rc=92 instead of passing quietly.
+  Whether any of them is HIS goblin is R4's call, not this job's and not a metric's.
+why: >-
+  The word-level identity freeze (ep2-frozen-identities-0812) held `bald` 4/4 and
+  `cloak` >=3/4 across ten beats and still left him saying the characters change too
+  much — because words fix attributes and a face is not an attribute. The measured
+  wave reading says the same thing from the other side: `no scars, no stitched skin`
+  is a real lever on stitching and no lever at all on colour. A reference picture is
+  the channel the words cannot reach.
+goblin_def: green skin, bald head
+goblin_def_source: >-
+  The frozen identity minus the cloak, deliberately. `green skin` is his one named
+  attribute ("he is just a simple green goblin, nothing complex", 2026-08-10 ~12:15);
+  BALD is his 2026-08-12 ruling. The patchwork cloak is left OUT of the slot here
+  because a reference sheet should pin the BODY — a costume can be changed per beat
+  without changing who he is, and his complaint on the wave2 frames was
+  overcomplication. If he wants the cloak on the reference he can say so in one word.
+est_minutes: 4
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '4'
+  - --goblin-def
+  - green skin, bald head
+  - --variant
+  - authored_charref_goblin
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\render_wave_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --beat
+  - '4'
+  - --goblin-def
+  - green skin, bald head
+  - --variant
+  - authored_charref_goblin
+  - --out
+  - C:\banyan-farm\wave-goblin-prep\out-charref-goblin
+  - --task
+  - ep2-charref-goblin-0812
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-charref-goblin-0812"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/wave-goblin-prep/out-charref-goblin/04-the-footnote-wave1-s*.*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+        print("   ", os.path.basename(f), h[:16])
+    with open(os.path.join(dst, "ep2-charref-goblin-0812.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) == 8 else 1)
+artifacts:
+- C:\banyan-farm\wave-goblin-prep\out-charref-goblin\04-the-footnote-wave1-s0.png
+- C:\banyan-farm\wave-goblin-prep\out-charref-goblin\04-the-footnote-wave1-s1.png
+- C:\banyan-farm\wave-goblin-prep\out-charref-goblin\04-the-footnote-wave1-s2.png
+- C:\banyan-farm\wave-goblin-prep\out-charref-goblin\04-the-footnote-wave1-s3.png
+- C:\banyan-farm\wave-goblin-prep\out-charref-goblin\04-the-footnote-wave1-s0.yaml
+- C:\banyan-farm\wave-goblin-prep\out-charref-goblin\04-the-footnote-wave1-s1.yaml
+- C:\banyan-farm\wave-goblin-prep\out-charref-goblin\04-the-footnote-wave1-s2.yaml
+- C:\banyan-farm\wave-goblin-prep\out-charref-goblin\04-the-footnote-wave1-s3.yaml
