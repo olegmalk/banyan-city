@@ -1,0 +1,140 @@
+# EPISODE 2, BEAT 02 — DOES THE PICKED REFERENCE CARRY? $0.
+# 2026-08-12, character-reference lane, under his consistency mandate
+# (`ep2-consistency-mandate-0812`: "almost every beat includes the goblin or the
+# guards so i cant approve them, you need to create proper character consistency").
+#
+# ── THE QUESTION. A reference sheet is only worth the beats it can hold. This is the
+# first test of the actual mechanism: condition beat 02 — the beat whose identity
+# drifted worst in the wave — on the provisionally picked goblin reference, and see
+# whether the creature that comes out is the creature in the reference.
+#
+# ── WHAT IS IN THE REFS DIR, AND WHY FOUR VIEWS OF ONE CHARACTER. The four files
+# are crops of ONE frame, `ep2-charref-goblin-0812` seed s0 (the pick recorded in
+# `ep2-charref-pick-0812`): s0 the front head, s1 the three-quarter left, s2 the
+# three-quarter right, s3 the body from shoulders to knees. The `window4` arm draws
+# one cell per reference index at the 15% window and scale 0.6, so this single job
+# answers two things at once — whether the reference carries at all, and WHICH VIEW
+# of it carries best. The precedent for filling the four slots deliberately is the
+# facepick round, which put four identical copies in and got four identical cells;
+# four different views of one character is the same cost and strictly more signal.
+# The body crop keeps two chin fragments of neighbouring heads in its top corners —
+# same character, same palette, stated rather than hidden.
+#
+# ── THE CONFOUND, NAMED BEFORE THE RENDER. `goblin_ipa_sample.py` hardcodes
+# `GOBLIN_DEF = "green skin, tusks"` and this lane may not edit pipeline code, so the
+# PROMPT will ask for tusks while the REFERENCE has none, and the draft it sends is
+# beat 02's original `authored` text rather than the `_idfix_r2` wording. That is not
+# a flaw to apologise for, it is the sharpest available test: if the frames come back
+# tuskless and matching the reference, the reference is beating the prompt, which is
+# exactly the property a consistency mechanism needs. If they come back with tusks,
+# the prompt wins and the mechanism is not yet strong enough to carry a beat.
+#
+# ── NOT A PICK, NOT CANON. The reference itself is provisional under his delegated
+# evaluation grant and his morning veto stands over all of it.
+#
+# $0 — local GPU on the rtx5090, no provider, nothing published, nothing assembled.
+id: ep2-b02-ipa-charref-0812
+task: ep2-b02-ipa-charref-0812
+node: 002b-first-citizen
+beat: 2
+runner: box
+needs_gpu: true
+priority: 49
+max_attempts: 1
+owner: character-reference lane, 2026-08-12 (consistency mandate, proof run 1 of 2)
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`,
+  `approved_by: founder`, `approved_on: 2026-08-03`, read from
+  genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the render
+  gate itself reads. Neither `approval_condition` touches beat 02. This is a
+  mechanism test on an approved node, not an episode assembly.'
+consumer: >-
+  review/ep2-picks/consistency-0812.html — the page he reviews once, where this beat
+  appears as before/after against the reference. Also the go/no-go for the remaining
+  character beats: identity holding in at least 3 of 4 releases them, and anything
+  less sends the conditioning knobs back one variable at a time.
+success: >-
+  Sixteen PNGs at C:\banyan-farm\goblin-ipa-0812\out-b02-charref\02-the-sprint-ipa-r{0,1,2,3}-w015-s{0,1,2,3}.png
+  with their provenance sidecars written at render time (7.2). Success is that the
+  cells are comparable and readable — NOT that identity held. "The reference does not
+  carry" is a successful run of this job and the more valuable of the two answers.
+why: >-
+  Ten beats of word-level identity freeze held `bald` 4/4 and still left him unable
+  to approve a beat. The reference exists to be CONDITIONED ON, and until one beat is
+  drawn from it nothing has been proven — a sheet nobody renders against is a
+  drawing, not a mechanism.
+est_minutes: 14
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '2'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-charref-goblin-0812
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b02-charref
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '2'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-charref-goblin-0812
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b02-charref
+  - --arm
+  - window4
+  - --task
+  - ep2-b02-ipa-charref-0812
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b02-ipa-charref-0812"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/goblin-ipa-0812/out-b02-charref/*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b02-ipa-charref-0812.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 16 else 1)
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b02-charref\02-the-sprint-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b02-charref\02-the-sprint-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b02-charref\02-the-sprint-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b02-charref\02-the-sprint-ipa-r3-w015-s0.png

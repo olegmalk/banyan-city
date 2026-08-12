@@ -11188,9 +11188,10 @@
 
 - id: ep2-charref-r2-0812
   kind: prediction
-  written: 2026-08-12, before enqueue, after an EXTERNAL research pass (Danbooru tag
+  written: >-
+    2026-08-12, before enqueue, after an EXTERNAL research pass (Danbooru tag
     pages + the cagliostrolab model card) corrected the tag dialect r1 was drafted
-    in. Box dry green both: goblin 66/77 pos, 74/77 neg; guards 71/77 pos, 72/77 neg.
+    in. Box dry green both - goblin 66/77 pos, 74/77 neg; guards 71/77 pos, 72/77 neg.
   covers: [ep2-charref-goblin-r2-0812, ep2-charref-guards-r2-0812]
   what_changed: >-
     `character sheet` out (a dead token, zero posts), `reference sheet, multiple
@@ -11296,4 +11297,68 @@
     Whether the guards become TWO single-character references (which is the thing the
     model demonstrably can draw) or stay a pair defined by an approved beat frame.
     Asked on the page; not decided here.
+  outcome: null
+
+- id: ep2-consistency-mandate-0812
+  kind: founder_verdict
+  written: 2026-08-12, on receipt, before any work was done under it.
+  founder_verdict_verbatim: "almost every beat includes the goblin or the guards so
+    i cant approve them, you need to create proper character consistency. ... also,
+    do some evaluation, this is an important skill you'll need to keep working by
+    yourself, especially overnight, so i dont need to keep reviewing so much."
+  founder_verdict_date: 2026-08-12
+  what_it_rules: >-
+    Two things. (1) The blocker is named: he cannot approve BEATS because the
+    characters are not consistent, so the deliverable is a working consistency
+    MECHANISM, not more candidate sheets. (2) EVALUATION IS DELEGATED to the steward
+    as a standing skill — provisional picks and per-beat judging happen without him,
+    so he reviews once instead of continuously. His morning veto stands over
+    everything; nothing frozen under this grant is canon, and R4 is untouched.
+  consumer: the reference pick, the refs freeze, and the IP-Adapter proof-of-identity
+    runs that follow.
+  outcome: null
+
+- id: ep2-charref-pick-0812
+  kind: steward_decision_under_delegation
+  written: 2026-08-12, under his grant "do some evaluation ... so i dont need to keep
+    reviewing so much" (ep2-consistency-mandate-0812). PROVISIONAL — his veto stands.
+  goblin_pick: ep2-charref-goblin-0812 seed s0 (round 1), farm-out/ep2-charref-goblin-0812/04-the-footnote-wave1-s0.png
+  reasons: >-
+    Judged on his named axes — simple, not overcomplicated, no scars, bald, one eye
+    colour — and on one axis the mechanism needs: how much clean FACE the frame gives
+    to crop. s0 is the only candidate in either round carrying THREE large head views
+    (three-quarter left, front, three-quarter right) of one face at usable size,
+    plus a full body. Red eyes in all three heads, no scars, no stitches, bald,
+    simple childlike features, plain white ground. Its two faults are croppable and
+    were cropped out: a blob head bottom-left and a TAN-skinned small head
+    bottom-right, the only colour break in the frame.
+  rejected_and_why: >-
+    r2 s1/s3 are cleaner turnarounds but give one small front face each — less to
+    condition on. r2 s2 has no front view at all. r1 s1/s2 are busts with no full
+    body. r2 s0 is the closest rival and loses only on head size.
+  guards_pick: NONE — withheld deliberately. All 8 guard frames drew ONE man where
+    the script has two, several with blank faces, in a monkish robe rather than the
+    round silly bureaucrat. Picking from that set would freeze a character the
+    script does not describe. One fixed round is queued instead.
+  outcome: null
+
+- id: ep2-b02-ipa-charref-0812
+  kind: prediction
+  written: 2026-08-12, before enqueue. First test of the mechanism, not of a beat.
+  predicates: [the creature reads as the reference creature >=2/4 on the best ref
+    cell, bald 4/4, green skin 4/4, TUSKS ABSENT >=2/4 (the prompt asks for tusks and
+    the reference has none — this predicate is the reference-versus-prompt contest),
+    face view refs (r0/r1/r2) carry identity better than the body ref (r3),
+    beat 02's staging still fails (no sapling stem) — conditioning is not a stager]
+  basis: >-
+    The window arm was measured at w015 to hold identity while letting the beat's own
+    composition through, and the reference is now a purpose-built face rather than a
+    beat frame, which should only help. Where I expect trouble is the tusk contest
+    and colour: the ledger's window arms record green draining as adapter influence
+    rises, and my reference is a pale yellow-green.
+  falsifiable_by: >-
+    Tusks in 3 or 4 frames means the prompt beats the reference and the mechanism
+    cannot carry a beat whose text disagrees with the sheet. That would send the next
+    round to the scale knob, one variable, not to a new reference.
+  consumer: review/ep2-picks/consistency-0812.html, and the go/no-go for the rest.
   outcome: null
