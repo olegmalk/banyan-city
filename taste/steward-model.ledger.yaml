@@ -11144,3 +11144,44 @@
     escaped path form. r3 rebuilt from r1, own dir, byte-checked. The r1
     prediction (ep2-b01-final055-0812) carries over unchanged.
   outcome: null
+
+- id: ep2-charref-goblin-0812
+  kind: prediction
+  written: 2026-08-12, before enqueue, box dry green (pos 63/77, nothing dropped,
+    tag 1boy, `female goblin` survived the negative). A NEW composition — no job in
+    this repo has asked for a turnaround before.
+  predicted_verdict: he picks at most one of the four, and may reject the whole idea
+  basis: >-
+    `multiple views` is a real composition tag, so I expect the SHEET to come out. The
+    part I expect to fail is the part he actually asked for: nothing in a plain SDXL
+    text2img path CONSTRAINS the three views to be one individual — no ControlNet, no
+    IP-Adapter, no reference latent. The model will draw three goblins that share the
+    tags it was given (green, bald, red eyes) and vary in everything it was not asked
+    about, which is precisely the drift he is complaining about, now inside one image.
+    If that happens the finding is architectural: a reference must be BUILT from one
+    approved frame, not prompted, and this job bought that for three GPU-minutes.
+  predicates: [three or more views of the character in frame >=3/4, bald 4/4,
+    green skin 4/4, no scars or stitches anywhere >=3/4, one single eye colour within
+    each frame 4/4, plain white or simple background >=3/4, the views within a frame
+    read as the SAME individual <=2/4 (this is the prediction of FAILURE, and it is
+    the one worth scoring), no girl or child reading 4/4]
+  consumer: review/SHEETS/char-refs-0812.html, goblin row.
+  outcome: null
+
+- id: ep2-charref-guards-0812
+  kind: prediction
+  written: 2026-08-12, before enqueue, box dry green (pos 68/77, nothing dropped,
+    tag 2boys, negative 59/77).
+  predicted_verdict: less likely to land than the goblin sheet
+  basis: >-
+    Two subjects double the identity surface: the front view and the side view must
+    agree about TWO men and about which of them holds the clipboard. The wave already
+    showed this beat's failure mode is a vacuum being filled — ban the armour and a
+    grim adult man walks in — so the risk here is not armour returning, it is the
+    round soft bureaucrat register being replaced by generic men again.
+  predicates: [no armor and no helmet 4/4, both guards bare-headed >=3/4, front and
+    side views both present >=3/4, exactly two men per view >=3/4, one bark clipboard
+    visible >=2/4, the two men in the side view are the SAME two as in the front view
+    <=2/4, silly harmless register rather than grim soldier >=2/4]
+  consumer: review/SHEETS/char-refs-0812.html, guards row.
+  outcome: null
