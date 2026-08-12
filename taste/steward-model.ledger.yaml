@@ -12088,3 +12088,50 @@
     His call to overturn; it is one flag and one re-render.
   consumer: review/ep2-picks/motion-0812.html
   outcome: null
+
+- id: ep2-charref-guards-r5-0812-observed
+  kind: observation
+  date: 2026-08-12
+  scores: ep2-charref-guards-r5-0812
+  predicates_observed: >-
+    visible face — PARTIAL, 2/4 against r4's 1/4. s1 and s2 have faces a viewer could
+    describe; s0's eyes sit under a dark shadow band and s3's head studies are shadowed
+    to nothing. Short hair 4/4, exactly one man per frame 4/4, plain brown tunic 4/4, and
+    no comic panel appeared anywhere despite the ban being sold to pay for the face
+    terms — which is the first direct evidence that ban was not doing anything.
+  observed: >-
+    Banning bangs and hair-over-eyes bought two faces out of four and did not buy the
+    other two, and the two it missed fail in the same specific way: a dark band across
+    the eyes rather than hair covering them. That is a shading habit of this model, not a
+    fringe, so the terms aimed at hair could not reach it.
+  decision: >-
+    CASTING AND STOPPING, not running a sixth round. What the job needs is two men with
+    visible faces and s1 and s2 are exactly that. Guard A = r5 s1, guard B = r5 s2.
+    Their honest weakness: they are distinguishable more by costume — a high buttoned
+    collar versus a V-neck with the clipboard — than by face.
+  register: >-
+    Still solemn. Four rounds now, bald and haired alike, 0/4 every time. Haired did not
+    read sillier, which was the one observation the lead asked for and it is negative.
+  outcome: null
+
+- id: ep2-b06-ipa-guardcast-0812
+  kind: prediction
+  written: 2026-08-12, before enqueue. Re-proving the guards after his ruling.
+  predicates: [short hair present >=3/4 and no bald guard in any cell, plain brown tunic
+    >=3/4, bark clipboard >=3/4, a describable face >=2/4 — capped by the references
+    themselves, which are 2 of 4 on that axis, the two cast men remain distinguishable
+    from each other in their own rows]
+  basis: >-
+    The identical proof already passed on the bald cast: bald 8/8, tunic 8/8, clipboard
+    8/8 with the r2 draft. Both halves moved together here because his ruling moved both
+    — new haired references and `authored_b06_idfix_r3`, which is that same draft with
+    `bald` changed to `short-haired` and nothing else. The prior-confirmation law
+    predicts hair is the easy direction: this model wanted to draw haired guards all
+    along.
+  falsifiable_by: >-
+    The face failing below the references' own 2/4. That would mean conditioning
+    degrades what the reference has rather than carrying it, which nothing so far has
+    shown, and it would make the shadow-band fault a conditioning problem instead of a
+    sheet problem.
+  consumer: his page, guards row, and whether the six guard beats can be walked.
+  outcome: null

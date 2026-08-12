@@ -1485,6 +1485,16 @@ beats:
     # cost six terms and prevented a failure that never occurred in the round without
     # it), and four guard rounds have now produced zero comic panels with and without
     # them. If panels come back, that is the round that re-buys the ban.
+    # -- `authored_b06_idfix_r3` -- 2026-08-12. `authored_b06_idfix_r2` WITH THE BALD
+    # TAKEN OUT, and nothing else. That draft is the one that proved the guards could be
+    # conditioned at all (bald 8/8, tunic 8/8, clipboard 8/8 on the r3 references), but
+    # it says `bald`, and he has ruled that bald is wrong for these men. Re-proving the
+    # cast on a draft that still argues for a scalp he rejected would be measuring the
+    # wrong thing. One word changes: `bald` becomes `short-haired`. The field, the
+    # clipboard filling the lower third, the finger tracing the line, the brow, the
+    # whole lighting tier and the entire negative are r2's, untouched.
+    authored_b06_idfix_r3: >-
+      A round short-haired guard man in a plain brown tunic, in a sunny grassy field, turns over a bark clipboard that fills the lower third of the frame, tracing a line on it with one finger as he reads, brow furrowed. Medium close-up, bright morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No girl, no child, no armor, no helmet, no knight, no house, no interior, no indoors, no dark, no night, no dusk, no sunset, no dim lighting, no moody lighting, no low key, no shadows dominant. No photorealism, no 3D render look. 9:16 vertical, no text.
     authored_charref_guards_r5: >-
       A round guard man in a plain brown tunic, short hair, visible face, reference
       sheet, multiple views, turnaround, front view, side view, standing, silly
