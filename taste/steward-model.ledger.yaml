@@ -12837,3 +12837,52 @@
     hidden, not expensive to check, and already written down by me. Before generalising:
     look for the case in my OWN results that would contradict it.
   outcome: null
+
+- id: ep2-motion-wave-0812-scored
+  kind: scoring
+  date: 2026-08-12
+  scores: ep2-b13-motion-0812, ep2-b14-motion-0812, ep2-b04-motion-r2-0812, and the
+    follow-up call recorded in ep2-b03-motion-0812-scored
+  all_four_hash_verified: yes, against the box sidecars, before any of them was watched.
+  b13_the_shade: >-
+    THE ACTION IS THE BEST IN THE WAVE AND THE PROP RUINS IT. He genuinely sinks, draws his
+    knees up, wraps his arms round them and tucks his head down until the face is gone —
+    that is "folds into shade, knees up around his ears" almost exactly as written. The
+    background painted itself again (sky, cloud, grass). And he is doing all of it SITTING
+    ON A TRIPOD STOOL. No sapling, no shade to fold into. Fail on the prop, but the
+    blocking is proof the recipe can act.
+  b14_the_defense: >-
+    FAIL, two ways. The tripod is there again, a full camera-on-tripod standing beside him.
+    And the ACTION DID NOT HAPPEN: the beat is "his hands picking at the dirt" and he stands
+    with his arms at his sides, lifting a hand occasionally. The excuse was supposed to live
+    in the hands and the hands do nothing. Third fault, smaller: his eyes drift from red to
+    pink/magenta across the clip.
+  b04_r2: >-
+    PARTIAL, and it settles two things. HIS NAMED FAULT IS FIXED — there is a blurred grassy
+    field behind the whole clip, and both fists are in frame. THE LENGTH RESULT TRANSFERS TO
+    A NEW INIT — at 73 frames the face is stable end to end, eyes intact at frame 63, no
+    stipple, which is what the b04 73-vs-145 pair predicted. NO TRIPOD, because this is the
+    one job I had already stripped the phrase from. But the head BALLOONS: between frame 0
+    and frame 9 the cranium inflates into a huge dome and the ears flatten into dark wedges,
+    and it holds that way for the rest of the clip. Stable, and stably wrong. Not shippable.
+    Suspected cause is my own "a bald DOMED head" in the positive amplified at close-up
+    scale — untested, so it stays a suspicion.
+  the_natural_experiment_i_did_not_design: >-
+    THE TRIPOD PHRASE IS THE CAUSE, AND THE FIX IS PROVEN BY ACCIDENT. Three of three clips
+    carrying "locked-off static camera on a fixed tripod" in the positive drew a tripod —
+    b03 (stands in the field, he hides behind it), b13 (he sits on it), b14 (it stands beside
+    him). The one clip I had already stripped the phrase from, b04 r2, has none. 3/3 versus
+    0/1 on the only variable that differs.
+  where_i_was_wrong_and_it_cost_renders: >-
+    On seeing b03 I judged the tripod risk "confined to beats that ask him to hide behind
+    something" and let the rest of the wave run rather than re-queue it. b13 and b14 then
+    both drew it. That reasoning was a story about WHY the model did something, offered as
+    grounds for not spending five minutes on a fix — and I had already been corrected twice
+    today for exactly that move. Two renders wasted, which is the first actual GPU cost of
+    my over-generalising today rather than a claim that could be retracted for free.
+  acted_on: >-
+    b19 and b20 pulled from ready before rendering and re-queued without the phrase; b03 r2
+    authored and queued with it removed and tripod/camera/equipment/stool banned. b13, b14
+    need the same retry once the queue drains. b04 r2's head-balloon is a separate fault and
+    gets its own sample, not a bundled fix.
+  outcome: null

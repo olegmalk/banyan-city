@@ -1,14 +1,3 @@
-# THE REVIEW INBOX — data behind /review/inbox. CONTRACT (SITE.md): any lane
-# landing a founder-facing artifact appends an entry here IN THE SAME COMMIT
-# as the artifact, then regenerates review/inbox/index.html to match. The
-# steward marks entries resolved with the founder's verdict verbatim. Open
-# entries newest-first on the page; resolved fold below as history.
-- what: The goblin motion wave — six clips, one per beat, each sheet says what it should show
-  url: /review/ep2-picks/motion-0812
-  since: 2026-08-12
-  kind: clip
-  verdict_hint: per clip — good / redo because X
-  note: landing — clips appear as rendered; b03 already carries the tripod finding
 - what: Cold open fig - in both motion rounds the fig grows detached from the sapling; your prior word
     for the STILL was "inpaint" (2026-08-10), and your 002b condition wants growth SEEN - the clip needs
     one ruling that satisfies both
@@ -61,3 +50,11 @@
   since: '2026-08-12'
   kind: decision
   verdict_hint: inpaint the sapling in deliberately / composition LoRA / accept 2-of-4 seeds and pick
+- what: 'Episode 2 motion wave - first clips of the goblin actually moving. 4 of 7 back: beat 04 re-clipped
+    (your background note fixed, but his head balloons), beat 13 (best acting in the wave, sitting on
+    a tripod), beats 03 and 14 (a camera tripod is in the shot - my prompt put it there). Retries queued;
+    beats 17, 19, 20 still rendering'
+  url: /review/ep2-picks/motion-0812
+  since: '2026-08-12'
+  kind: clip
+  verdict_hint: is a goblin who acts but has no sapling worth cutting / hold until the staging is solved
