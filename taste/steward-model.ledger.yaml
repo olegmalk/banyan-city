@@ -12694,3 +12694,33 @@
     will be corrected in the repo copies with the discrepancy stated rather than silently
     overwritten.
   outcome: null
+
+- id: fix-note-cover-crop-should-pad-0812
+  kind: fix_note
+  date: 2026-08-12
+  for: whoever builds or edits the next crop step. NOT fixed here — pipeline code is not
+    this lane's to change, and the note is the deliverable.
+  one_line: >-
+    cover_crop.py CENTRE-CROPS to reach the target aspect, and on a portrait character
+    plate that eats the ears.
+  the_numbers: >-
+    Every ipa plate is 832x1216 (aspect 0.684). Every LTX render is 704x1280 (aspect 0.550).
+    Cover-crop scales by max(704/832, 1280/1216) = 1.0526, giving 876x1280, then takes the
+    centre 704 — so 86 pixels come off EACH SIDE. On these plates the ears reach the frame
+    edge, so 86px is exactly the ear tips. Measured, not estimated: the b04 job log prints
+    "cover-crop scale=1.0526 -> 876x1280, centre box (86,0)".
+  why_it_matters_beyond_tidiness: >-
+    The long ears are one of the four features the founder's approved goblin is defined by
+    (pale yellow-green, bald, LONG EARS, red eyes). A crop that silently removes a defining
+    feature makes every downstream identity judgement wrong in the same direction, and the
+    clip cannot show an ear twitch that is not in frame.
+  the_fix: >-
+    PAD, do not crop, when the source is narrower in aspect than the target: scale by
+    min(W/sw, H/sh) and letterbox the remainder rather than scaling by max() and slicing.
+    Better still, make it a flag — `--fit cover|contain` — so the caller decides, because
+    cover is right for backgrounds and wrong for characters.
+  how_i_found_it: >-
+    Badly. I argued in writing against a push-in on beat 04 because it would crop his ears,
+    then cropped them myself in the aspect conversion and only noticed when the finished
+    clip had no ears to twitch.
+  outcome: null
