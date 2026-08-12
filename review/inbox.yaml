@@ -50,10 +50,10 @@
   since: '2026-08-12'
   kind: decision
   verdict_hint: inpaint the sapling in deliberately / composition LoRA / accept 2-of-4 seeds and pick
-- what: Episode 2 motion wave - the goblin moving. Beat 13's retry is nearly a finished shot (sinks, knees
-    to chest, arms wrapped); beat 17 does its whole beat (brushes off, turns to go); beat 03's retry hides
-    him behind a bush; beat 04 re-clipped with your background fixed but his head balloons. Still no sapling
-    in any clip - that is the one open fault. Beats 19 and 20 rendering
+- what: 'Episode 2 motion - the goblin moving, and THE SAPLING PROBLEM MAY BE SOLVED. Naming the sapling
+    in the motion prompt put one there (nobody had ever asked). Beat 19''s fig falls and bounces off his
+    head; beat 13 folds up exactly as written; beat 17 does its whole beat. Open: beat 04''s head balloons,
+    beat 14''s eyes are pink. Beat 20 is the last render'
   url: /review/ep2-picks/motion-0812
   since: '2026-08-12'
   kind: clip

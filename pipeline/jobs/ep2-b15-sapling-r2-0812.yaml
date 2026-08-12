@@ -1,0 +1,135 @@
+# r2 2026-08-12. The probe answered YES and one word is now in the way of the answer.
+#
+# r1 RESULT: naming the sapling in the motion prompt PRODUCED A SAPLING. A single leafy
+# plant, beside him, at roughly his own scale, in every frame -- and crucially NOT the bed
+# of generic seedlings that was the predicted failure and that the stills lane kept
+# getting. He still tipped his head back and talked. All five predicates hit.
+#
+# THE CONFOUND IS MINE AND I BUILT IT ON PURPOSE. r1 kept "on a fixed tripod" for
+# single-variable discipline, and the tripod duly came back -- entangled with the new
+# plant, so the sapling reads as foliage mounted on a three-legged stand. The measured
+# 3-of-5 vs 0-of-4 rate says that phrase is the cause, so this run removes it, adds stake
+# and plant support to the ban so the plant is not handed a substitute prop, and changes
+# NOTHING ELSE. Same init, same sha, same seed, same 121 frames, same sapling sentence.
+#
+# WHAT IT DECIDES: if a clean single sapling stands beside him with no scaffolding, then
+# the five sapling-blocked beats are NOT blocked on the founder's still-side tool choice
+# at all -- they are unblocked by a sentence, and 02/03/13/15/19/20 can each be re-run with
+# their own object named. That is the largest thing still open in this episode.
+#
+# ALSO FIXED, NOT A VARIABLE: the publish path. Every job derived in this lane today kept
+# its PARENT's bare courier directory, because the renames matched "<id>-0812" and the
+# publish dst has no -0812 in it. r1 published into ep2-b15-action-probe. Nothing was lost
+# -- both manifests coexist -- but it is wrong and it stops here.
+id: ep2-b15-sapling-r2-0812
+task: ep2-b15-sapling-r2-0812
+node: 002b-first-citizen
+beat: 15
+runner: box
+priority: 19
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: ep2 motion lane, 2026-08-12
+consumer: 'review/ep2-picks/motion-0812.html and needs-founder §2 — whether the five sapling-blocked beats are blocked on a tool choice or on a sentence nobody wrote.'
+success: 'A 704x1280 mp4, 121 frames, with ONE clean sapling standing beside him in open ground -- no tripod, no stake, no three-legged stand under it -- while he tips his head back, looks up at it and talks. The failure worth reporting is the plant needing a support to exist: if removing the tripod also removes the sapling, then what r1 drew was scaffolding with leaves and not a plant at all.'
+why: r1 proved the sapling can be summoned by naming it; this removes the one word standing between that answer and a usable shot.
+est_minutes: 8
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b15-sapling-r2-0812\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"--out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw, nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b15-sapling-r2-0812\b15-motion-prompt.txt: '2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: a small goblin standing in a field — pale yellow-green skin, a bald domed head, long pointed ears, red eyes, a patched hooded coat. A SINGLE SMALL SAPLING STANDS BESIDE HIM — one slender stem with two big leaves, one plant and not a patch of them, taller than he is. HE TIPS HIS HEAD BACK AND LOOKS UP AT THAT SAPLING, raising his chin to look up at its leaves above him, and then he talks to it — his mouth opening and closing as he speaks upward, his ears shifting as he tilts. His feet stay planted where they are and his body stays in the same place in frame; the movement is his head going back, his eyes going up, and his mouth speaking. Soft morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.'
+  C:\banyan-farm\ep2-b15-sapling-r2-0812\b15-negative.txt: camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, stool, stake, plant support, face morphing, distorted face, warped face, changing facial features, extra eyes, extra ears, hair, walking, running, stepping, changing position, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text
+  C:\banyan-farm\ep2-b15-sapling-r2-0812\b15-jobs-encode.json: "[{\"beat\": 4,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b15-sapling-r2-0812\\\\b15-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\\ep2-b15-sapling-r2-0812\\\\b15-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b15-sapling-r2-0812\\\\b15-negative.txt\"}]"
+  C:\banyan-farm\ep2-b15-sapling-r2-0812\b15-jobs-render.json: "[{\"beat\": 4,\n  \"seed\": 20260806,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b15-sapling-r2-0812\\\\b15-embeds.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\\ep2-b15-sapling-r2-0812\\\\b15-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b15-sapling-r2-0812\\\\15-good-listener-LTX-sapling-r2-0812.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b15-sapling-r2-0812\cover_crop.py
+  - --src
+  - C:\banyan-farm\goblin-ipa-0812\out-b15-frozen\15-good-listener-ipa-r0-w015-s1.png
+  - --sha256
+  - 5ee95e40fc1e29f58c874383c9573339877ac6fd46d751e20fd8311b7c9262ef
+  - --out
+  - C:\banyan-farm\ep2-b15-sapling-r2-0812\b15-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b15-sapling-r2-0812\b15-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b15-sapling-r2-0812\b15-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b15-sapling-r2-0812
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b15-sapling-r2-0812\bench-b15-sapling-r2.jsonl
+  - --bench-label
+  - ep2-b15-sapling-r2-0812
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b15-sapling-r2"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/ep2-b15-sapling-r2-0812/15-good-listener-LTX-sapling-r2-0812.mp4*")
+                 + glob.glob("C:/banyan-farm/ep2-b15-sapling-r2-0812/b15-init-704x1280.png")
+                 + glob.glob("C:/banyan-farm/ep2-b15-sapling-r2-0812/bench-b15-sapling-r2.jsonl"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b15-sapling-r2-0812.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 2 else 1)
+artifacts:
+- C:\banyan-farm\ep2-b15-sapling-r2-0812\15-good-listener-LTX-sapling-r2-0812.mp4
+- C:\banyan-farm\ep2-b15-sapling-r2-0812\b15-init-704x1280.png

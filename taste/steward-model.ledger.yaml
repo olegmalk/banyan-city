@@ -13015,3 +13015,54 @@
     kept its colour fault. More usefully: the phrase removal is now supported by nine
     clips rather than by the one I originally waved at.
   outcome: null
+
+- id: ep2-b15-sapling-probe-0812-scored
+  kind: scoring
+  date: 2026-08-12
+  scores: ep2-b15-sapling-probe-0812
+  verdict: FIVE OF FIVE PREDICATES HIT. Naming the sapling produced a sapling.
+  predicates_observed: >-
+    a single readable sapling in frame with him HIT — one leafy plant, beside him, at
+    roughly his own scale, present in every frame from 15 on; he still tips his head back
+    and speaks HIT; same goblin HIT, pale yellow-green, long ears, red eyes; camera locked
+    HIT; and the predicted FAILURE MODE DID NOT OCCUR — it is one plant, not the bed of
+    generic seedlings the stills lane kept getting and that I named up front as the thing
+    that would kill this route.
+  what_it_answers: >-
+    The five sapling-blocked beats are NOT necessarily blocked on the founder's still-side
+    tool choice. The stills cannot put a sapling next to him under a single-figure
+    IP-adapter; the motion stage, which has no such adapter, will put one there for the
+    price of naming it. That is the largest thing this lane has moved today and it cost one
+    sentence — a sentence that was missing from all thirteen prompts because I never wrote it.
+  the_confound_is_mine_and_deliberate: >-
+    r1 kept "on a fixed tripod" for single-variable discipline and the tripod came back,
+    ENTANGLED with the new plant: the sapling reads as foliage on a three-legged stand. So
+    the answer is real but the picture is not usable. r2 removes the phrase, adds stake and
+    plant support to the ban so the plant is not handed a substitute prop, and changes
+    nothing else. If the sapling survives without scaffolding, 02/03/13/15/19/20 each get
+    re-run with their own object named.
+  the_general_finding_with_its_denominator: >-
+    OBJECTS NAMED IN A MOTION PROMPT HAVE APPEARED 2 OF 2 TIMES — the sapling here, and
+    beat 19's falling fig, which not only appeared but performed. Two is a small
+    denominator and I am writing it as two, not as a law. But both are objects the STILLS
+    stage could not produce, which is the interesting part.
+  outcome: null
+
+- id: ep2-b19-motion-0812-scored
+  kind: scoring
+  date: 2026-08-12
+  scores: ep2-b19-motion-0812
+  verdict: PASS, and the strongest action in the whole set.
+  observed: >-
+    THE BEAT HAPPENS PHYSICALLY. A dark fig sits on his head at frame 15, is in the air
+    above him at 30, back on his head at 45, falling past his face at 60, on the ground by
+    75-90. "The fig falls, bounces off his head and lands in the grass at his feet" — that
+    is the shot, and it is the first time this lane has produced an OBJECT that moves
+    through a trajectory rather than a character who moves. No tripod (phrase already
+    stripped). Real trees in the background treeline, which the beat asks for as "the tree
+    and the scavenger in one frame". Identity holds, camera locked.
+  faults: >-
+    He does not visibly flinch at the knock — the face stays neutral through the bounce.
+    And the trees are a background treeline rather than the sapling the fig fell from, so
+    the causal link between stem and fig is not on screen.
+  outcome: null
