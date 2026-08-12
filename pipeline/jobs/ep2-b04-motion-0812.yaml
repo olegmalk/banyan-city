@@ -1,0 +1,141 @@
+# 2026-08-12. His order: "do your on evaluation, character consistency, then
+# generate video clips." I did the evaluation first (416 files hash-verified
+# against the box, thirteen contact sheets read by eye) and it changed how many
+# clips this phase can honestly produce.
+#
+# THE WALK HOLDS THE CHARACTER AND LOSES THE BEAT. Across ten conditioned beats
+# the goblin is the approved one — pale yellow-green, bald, long ears, red eyes,
+# patched coat — and the STAGING is gone: beats 03, 08, 13, 14, 15, 17, 19 and 20
+# are front-facing standing character-sheet portraits on blank white. No sapling
+# in 15, no falling fig in 19, no fig in his hands in 20, one character in 08
+# where the beat needs two. Beat 02, the one he named, is the worst: fangs, a
+# dog-shaped creature, duplicated goblins, style swinging between flat cartoon
+# and cel.
+#
+# BEAT 04 IS THE EXCEPTION AND IT IS NOT LUCK. Its shot IS a face close-up
+# ("Close on his face holding his breath"), so the portrait bias the mechanism
+# has and the framing the beat wants are the same picture. It is the only beat
+# in the pass that clears identity AND staging, so it is the only beat that gets
+# a clip. Animating the other eleven would be rendering a standing portrait and
+# calling it a beat -- the exact "do not scale an unapproved result" the ONE
+# SAMPLE rule names.
+#
+# CAMERA: shots.md asks for a "slow push-in". I am holding the camera locked and
+# saying so out loud. The face already fills the frame, so a push-in has nowhere
+# to go but into his ears -- the feature carrying most of the identity -- and his
+# last motion verdict today was a camera move he rejected ("its just.. making the
+# camera go down in the clip"). Locked-off at guidance 2.0 with the defects NAMED
+# in the negative is the recipe with a measured result behind it. If he wants the
+# push-in, it is one flag and one re-render.
+id: ep2-b04-motion-0812
+task: ep2-b04-motion-0812
+node: 002b-first-citizen
+beat: 4
+runner: box
+priority: 19
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: ep2 motion lane, 2026-08-12
+consumer: 'review/ep2-picks/motion-0812.html — the first motion clip cut from the conditioned goblin walk, and the single beat of ten whose staging survived the conditioning. His look decides whether any of the rest gets one.'
+success: 'A 704x1280 mp4 at C:\banyan-farm\ep2-b04-motion-0812\04-the-footnote-LTX-motion-0812.mp4, 145 frames (6.04s at 24fps), in which the goblin holds his breath: cheeks stay puffed, eyes dart left and right, ears twitch. The camera does not move and the face does not morph -- it stays the same goblin for all 145 frames. The failure worth reporting is face instability: LTX melting or re-drawing the face mid-clip on an extreme close-up would say i2v cannot carry a close-up beat at all, which is a bigger finding than this one clip. Read by eye. No metric is run.'
+why: Ten beats were conditioned; one kept its staging. This is that one, and it is also the hardest case for i2v (a face filling the frame, where any drift is unmissable).
+est_minutes: 9
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b04-motion-0812\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"--out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw, nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b04-motion-0812\b04-motion-prompt.txt: '2D anime, hand-drawn cel animation, locked-off static camera on a fixed tripod, the framing never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: an extreme close-up of a small goblin''s face filling the frame — pale yellow-green skin, a bald domed head, long pointed ears, large red-orange eyes, a cream scarf at his collar. He is holding his breath: his cheeks stay puffed and still, his eyes dart left and right and back again, and his long ears twitch and flick at small sounds. Only his eyes and his ears move. His head does not turn, his mouth stays shut, and the framing never changes. Soft morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.'
+  C:\banyan-farm\ep2-b04-motion-0812\b04-negative.txt: camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, face morphing, distorted face, warped face, changing facial features, head turning, extra eyes, extra ears, hair, mouth opening, talking, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text
+  C:\banyan-farm\ep2-b04-motion-0812\b04-jobs-encode.json: "[{\"beat\": 4,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b04-motion-0812\\\\b04-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\\ep2-b04-motion-0812\\\\b04-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b04-motion-0812\\\\b04-negative.txt\"}]"
+  C:\banyan-farm\ep2-b04-motion-0812\b04-jobs-render.json: "[{\"beat\": 4,\n  \"seed\": 20260806,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b04-motion-0812\\\\b04-embeds.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\\ep2-b04-motion-0812\\\\b04-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b04-motion-0812\\\\04-the-footnote-LTX-motion-0812.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b04-motion-0812\cover_crop.py
+  - --src
+  - C:\banyan-farm\goblin-ipa-0812\out-b04-frozen\04-the-footnote-ipa-r0-w015-s1.png
+  - --sha256
+  - d7971ceb880b7b36a90996fd9b74ece345220b9fbef90bbb76c0f1581ec73c8d
+  - --out
+  - C:\banyan-farm\ep2-b04-motion-0812\b04-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b04-motion-0812\b04-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b04-motion-0812\b04-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '145'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b04-motion-0812
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b04-motion-0812\bench-b04-motion.jsonl
+  - --bench-label
+  - ep2-b04-motion-0812
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b04-motion"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/ep2-b04-motion-0812/04-the-footnote-LTX-motion-0812.mp4*")
+                 + glob.glob("C:/banyan-farm/ep2-b04-motion-0812/b04-init-704x1280.png")
+                 + glob.glob("C:/banyan-farm/ep2-b04-motion-0812/bench-b04-motion.jsonl"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b04-motion-0812.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 2 else 1)
+artifacts:
+- C:\banyan-farm\ep2-b04-motion-0812\04-the-footnote-LTX-motion-0812.mp4
+- C:\banyan-farm\ep2-b04-motion-0812\b04-init-704x1280.png

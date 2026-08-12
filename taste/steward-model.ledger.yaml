@@ -12021,3 +12021,70 @@
     round 2 goes to the beat's own text instead of the conditioning.
   consumer: his page, and the answer to "train that".
   outcome: null
+
+- id: ep2-walk-evaluation-0812
+  kind: evaluation
+  written: 2026-08-12, after hash-verifying 416 files against the box and reading
+    thirteen contact sheets by eye. Mine under his standing delegation; his veto stands.
+  observed: >-
+    IDENTITY HOLDS, STAGING DOES NOT, and the split is clean. The approved goblin — pale
+    yellow-green, bald, long ears, red eyes, patched coat — is recognisably the same
+    creature in nine of ten beats. The beats are not there: 03, 08, 13, 14, 15, 17, 19
+    and 20 are front-facing standing character-sheet portraits on blank white. Beat 15
+    has no sapling and the beat is "both of them in the frame". Beat 19 has no tree and
+    no falling fig. Beat 20 has empty hands and no branch. Beat 08 needs a guard pointing
+    at the goblin's belly and contains one character. Beat 13 is the closest miss — its
+    r2 group is genuinely crouched and folded — but there is no trunk and no shade to
+    fold into. Beat 02, the one he named, is the worst in the pass and he is right about
+    it: fangs, a dog-shaped creature, two-to-four duplicated goblins in one frame, style
+    swinging between flat cartoon and cel. Beat 06's guard is a lanky bald human, which
+    he vetoed today.
+  the_one_exception: >-
+    BEAT 04 PASSES BOTH AXES, and not by luck. Its shot IS a face close-up ("Close on his
+    face holding his breath"), so the portrait the mechanism insists on drawing and the
+    framing the beat asks for are the same picture. Pick: r0-w015-s1, sha
+    d7971ceb880b7b36a90996fd9b74ece345220b9fbef90bbb76c0f1581ec73c8d — puffed cheek with
+    a visible breath puff, darting eyes, ears out, no crown graft (s3 has one, s2's
+    composition is broken).
+  defect_found_in_the_pass: >-
+    THE ROUND AXIS IS PARTLY INERT AND NOBODY HAS REPORTED IT. r0..r3 swap the IP-adapter
+    reference (04-the-footnote-wave1-s0..s3). In ten of thirteen dirs the outputs are
+    BYTE-IDENTICAL across different references: r0==r1 and r2==r3 (8 distinct of 16), and
+    in b04-frozen and b14-headref all four rounds are one image (4 distinct of 16). Four
+    references collapse to two outcomes, or to one. Only b02-charref, b02-cropscope and
+    b06-guardfair produced 16 distinct. Every sidecar in all thirteen dirs also records
+    the SAME four reference filenames at scale 0.6 and a 15% window, including the dirs
+    named cropscope, charref, headref and crossbeat. So roughly half this pass's GPU time
+    rendered duplicates, and any conclusion phrased as "0/4 at each round" was reading
+    the same file two or four times. This does not change the staging verdict — identical
+    images stage identically — but it does mean the prior lane's "three levers measured"
+    rests on sidecars that cannot distinguish the three. Reported, not fixed: pipeline
+    code is not this lane's scope.
+  consumer: review/ep2-picks/motion-0812.html and the ep2-bNN-motion-0812 job set, which
+    is now ONE job instead of ten.
+  outcome: null
+
+- id: ep2-b04-motion-0812
+  kind: prediction
+  written: 2026-08-12, before enqueue. ONE clip, because one beat passed.
+  predicates: [the face stays the same goblin for all 145 frames with no melt or
+    re-draw, the camera does not move (no push-in, no drift), the ears twitch and the
+    eyes move, the mouth stays shut, the puffed cheeks do not deflate into a talking
+    mouth]
+  basis: >-
+    The r2 skeleton fixed today's rejected pan by naming the camera defect in the
+    negative at guidance 2.0, where the distilled path actually runs an uncond pass and
+    the negative is live. Same recipe, same seed. The new risk this init adds is that it
+    is an EXTREME close-up: a face filling the frame gives LTX the most surface to drift
+    on and gives a viewer the least room to miss it.
+  falsifiable_by: >-
+    The face re-drawing itself mid-clip. That would not be a beat-04 problem — it would
+    say i2v cannot carry a close-up at all, and every close-up beat in the episode needs
+    a different plan.
+  deviation_declared: >-
+    shots.md asks for a "slow push-in" and I am holding the camera LOCKED. The face
+    already fills the frame, so a push-in only crops the ears — the feature carrying most
+    of the identity — and his most recent motion verdict today rejected a camera move.
+    His call to overturn; it is one flag and one re-render.
+  consumer: review/ep2-picks/motion-0812.html
+  outcome: null
