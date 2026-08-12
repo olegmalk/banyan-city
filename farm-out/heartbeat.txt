@@ -911,3 +911,4 @@
 21:46:24Z DONE task=ep3-003b-b01-dialect-r3-0812-1786479782 rc=0 artifacts=8
 21:46:33Z STARTED task=ep3-charref-assessor-0812-1786479898 attempt=1 on box-runner
 21:46:39Z FAIL task=ep3-charref-assessor-0812-1786479898 rc=4 step=measure
+21:46:43Z STARTED task=ep3-charref-farmer-0812-1786479897 attempt=1 on box-runner
