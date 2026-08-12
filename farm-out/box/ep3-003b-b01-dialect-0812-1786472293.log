@@ -1,0 +1,26 @@
+#### job ep3-003b-b01-dialect-0812-1786472293 attempt 1 start 2026-08-12T18:27:25Z
+
+==== step measure START 2026-08-12T18:27:28Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\wave-goblin-prep\\render_wave_sample.py", "--harness", "C:\\banyan-farm\\wave-goblin-prep", "--root", "C:\\banyan-farm\\wave-goblin-prep\\repo", "--beat", "1", "--goblin-def", "green skin, bald head", "--variant", "authored_ep3_003b_b01_dialect", "--dry"]
+C:\banyan-farm\venv\Lib\site-packages\transformers\tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+Token indices sequence length is longer than the specified maximum sequence length for this model (97 > 77). Running this sequence through the model will result in indexing errors
+
+== beat 01 cold-open [guard] — cold open / one fig, few leaves
+   AUTHORED: A small green bald goblin with long pointed ears, red eyes and a patchwork cloak cradles a ripe fig in both clawed hands beside a 55cm sapling with two oversized leaves and one bare side-branch, dawn field. Static camera, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No tusk, no fang, no hair, no man, no woman, no girl, no boy, no mature tree, no thick trunk, no many leaves, no lush foliage, no dark, no night, no dusk. No photorealism, no 3D render look. 9:16 vertical, no text.
+   POS: 1other, a small green bald goblin with long pointed ears, red eyes and a patchwork cloak cradles a ripe fig in both clawed hands beside a 55cm sapling with two oversized leaves and one bare side-branch, dawn field. Static camera, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+   NEG(sent): photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, mature tree, large tree, thick trunk, full canopy, forest, bush, shrubbery, tusk, fang, hair, man, woman, girl, boy, many leaves, lush foliage, dark, night, dusk, photorealism
+   positive tokens (real CLIP): 69/77   headroom for the goblin definition: 8
+   negative tokens: recipe 75 -> sent 72 (budget 77)
+   count tag: '1other' (draft declares '')
+   STYLE ANCHOR PRESENT: True
+   'text' negated: True
+   scale negatives: True   'tall tree' removed: 1
+   person singulars in negative: ['woman', 'girl', 'boy']
+   NEGWARN: !! negative prompt over CLIP's 77-token budget; deduplicated: mature tree, thick trunk, text; DROPPED: realistic skin texture, jpeg artifacts, deformed, extra limbs
+   !! COUNT TAG is '1other', draft declares ''
+   !! peopled beat negates its own subject: ['boy', 'man'] — the person-singulars block belongs on plant-only plates only
+
+!! FAULTS — nothing drawn: COUNT TAG is '1other', draft declares ''; peopled beat negates its own subject: ['boy', 'man'] — the person-singulars block belongs on plant-only plates only
+==== step measure END rc=1 2026-08-12T18:27:30Z ====
+#### job ep3-003b-b01-dialect-0812-1786472293 finished rc=1 2026-08-12T18:27:30Z
