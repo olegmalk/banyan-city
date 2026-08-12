@@ -58,3 +58,19 @@
   since: '2026-08-12'
   kind: clip
   verdict_hint: is a goblin who acts but has no sapling worth cutting / hold until the staging is solved
+- what: Episode 1 scene 6 - the one shot in the PUBLISHED episode that is not yours. You refused
+    that round flat ("none of the beat 6 images will work") and named two ways out, tall grass or
+    no ground; both are now drawn, sixteen frames on one sheet
+  url: /review/index.html#item-10
+  since: '2026-08-07'
+  kind: sheet
+  verdict_hint: name a frame / name an arm / neither, because X
+- what: Staging direction - conditioning a beat on a PICTURE of the character fixed his identity and
+    froze him into the reference's standing pose. A motion pass can act the beat out of that still
+    without his face drifting, but it flattens the show's look and cannot conjure a sapling that was
+    never drawn
+  url: /review/ep2-picks/consistency-0812/
+  since: '2026-08-12'
+  kind: decision
+  verdict_hint: a consistent character standing still is an acceptable BASE, movement added after /
+    the drawing itself has to carry the staging

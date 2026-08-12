@@ -194,6 +194,50 @@ check_true("a log that could not be read never prints a zero",
            "not read" in S.summary_strip(dict(view, unread=["farm-results-hand"]),
                                          now))
 
+
+# ---- the author has to be able to FIND what is waiting on him -----------------
+# Roman, 2026-08-12: "i cannot find things to review on banyan.city/status." The
+# inbox page had been live for hours; nothing on the page he lands on pointed at
+# it. The link is the fix, so the link is what these guard — a strip that builds
+# fine while carrying no route to the inbox is the exact regression.
+print("\nthe glance carries the author's own inbox, and the way into it")
+rev = S.summary_strip(dict(view, review_open=7), now)
+check_true("the strip links to the review inbox", 'href="review/inbox"' in rev)
+check_true("and prints how many are open", ">7<" in rev)
+check_true("in words a stranger can read", "waiting on the author" in rev)
+check_true("the author's cell comes before the visitor's questions",
+           rev.index('href="review/inbox"') < rev.index("the studio"))
+check_true("an empty inbox still offers the way in",
+           'href="review/inbox"' in S.summary_strip(dict(view, review_open=0), now))
+check_true("an unreadable inbox prints no count, and never a zero",
+           "not read" in S.summary_strip(dict(view, review_open=None), now))
+
+# Fail-soft, the box-queue rule one file over: missing or malformed comes back
+# None so the tile says so in words. A build that dies here takes the whole site
+# down over a yaml nobody deploys.
+with tempfile.TemporaryDirectory() as td:
+    real = S.REPO
+    try:
+        S.REPO = Path(td)
+        check("no inbox yaml at all reads as unknown, not zero",
+              S.review_inbox_open(), None)
+        (Path(td) / "review").mkdir()
+        (Path(td) / "review/inbox.yaml").write_text("- what: x\n  kind: ]\n[")
+        check("unparseable reads as unknown too", S.review_inbox_open(), None)
+        (Path(td) / "review/inbox.yaml").write_text("nope: a mapping")
+        check("the wrong shape reads as unknown too", S.review_inbox_open(), None)
+        (Path(td) / "review/inbox.yaml").write_text(
+            "- what: a\n- what: b\n  resolved:\n    date: '2026-08-12'\n")
+        check("a resolved entry is not waiting on anyone", S.review_inbox_open(), 1)
+    finally:
+        S.REPO = real
+
+# The count on the tile and the count on the page it links to are the same test
+# applied to the same file, so they cannot drift — that is why the tile reads the
+# yaml and not the rendered html.
+check_true("the real inbox yaml is readable by this build",
+           isinstance(S.review_inbox_open(), int))
+
 print()
 if FAILS:
     print(f"✗ {len(FAILS)} failure(s)")

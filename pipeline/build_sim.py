@@ -1132,6 +1132,33 @@ def read_box_queue() -> dict:
         return {}
 
 
+def review_inbox_open():
+    """How many entries in `review/inbox.yaml` are still unanswered, or None.
+
+    Roman, 2026-08-12: "i cannot find things to review on banyan.city/status."
+    The inbox page had been live for hours and nothing on the page he lands on
+    pointed at it. SITE.md makes that yaml the canonical list of what awaits
+    him, so the count belongs at the top of this page and the link belongs with
+    it.
+
+    An entry is open until it carries `resolved:` — the same test regen.py
+    applies, so the tile and the page it links to cannot disagree about the
+    number. Missing, unreadable or the wrong shape all come back None, exactly
+    as read_box_queue() refuses, and the caller says so in words. Zero is the
+    one answer this must never invent: "nothing waiting" tells him to stop
+    looking, which is the failure being fixed.
+    """
+    try:
+        import yaml as _yaml
+        with open(REPO / "review/inbox.yaml", encoding="utf-8") as fh:
+            doc = _yaml.safe_load(fh)
+        if not isinstance(doc, list):
+            return None
+        return sum(1 for e in doc if isinstance(e, dict) and not e.get("resolved"))
+    except Exception:
+        return None
+
+
 def box_queue_eta(bq: dict):
     """The queue's depth in TIME, worked out at BUILD time and never stored.
 
@@ -1427,6 +1454,27 @@ def founder_gate_map(backlog: list, pending_ids: list) -> dict:
         if p:
             out[p].append(b)
     return out
+
+
+def review_pointer(n_open) -> str:
+    """One line handing the section below it over to the canonical list.
+
+    Two lists of founder calls exist and only one is canonical. SITE.md gives
+    that title to `review/inbox.yaml`; this section renders
+    `pipeline/pending-founder.yaml`, which is the older, public, written-for-a-
+    stranger subset — the calls that have machine work parked behind them, with
+    the queue entries naming their ids in `gate_ref`. Neither can simply absorb
+    the other, so the page says which is complete instead of letting a reader
+    assume the first list he meets is all of it.
+    """
+    if n_open:
+        head = (f'<b>{n_open} thing{"s" if n_open != 1 else ""}</b> are waiting '
+                'in all' if n_open != 1 else '<b>1 thing</b> is waiting in all')
+    else:
+        head = 'The full list of what is waiting'
+    return (f'{head} — this section shows only the calls with queued machine '
+            'work parked behind them. The complete list, and the one the author '
+            'answers from, is <a href="review/inbox">the review inbox &rarr;</a>')
 
 
 def waiting_html(inbox: list, backlog: list, now=None) -> str:
@@ -2354,6 +2402,11 @@ def summary_strip(view: dict, now) -> str:
     last day, and where the show is. Bandwidth and disk trivia came off it —
     the founder's own ruling on the disk tile, extended by both audits.
 
+    GAINED A CELL AT THE FRONT 2026-08-12: what is waiting on the author, and
+    the link to the inbox holding it. Every other cell is written for a
+    stranger; that one is written for the only reader who arrives with work to
+    do, which is why it goes first rather than last.
+
     Honesty rule unchanged: this is a snapshot with its instant printed on it,
     never a claim of "live". `view` carries only log-derived facts:
       last_activity  newest dated line across every machine and ledger log
@@ -2370,6 +2423,31 @@ def summary_strip(view: dict, now) -> str:
     fin, live, unread = view["fin"], view["live"], view["unread"]
     last, inbox = view["last_activity"], view["inbox"]
     hero, tot, ep2 = view["hero"], view["tot"], view.get("ep2")
+
+    # --- cell 0: what is waiting on the author, and WHERE HE CLICKS TO SEE IT.
+    # Added 2026-08-12 on his "i cannot find things to review on
+    # banyan.city/status". It leads the row rather than joining the end of it
+    # because he is the one reader who arrives with a job to do, and the four
+    # cells after it answer a visitor's questions, not his. The count comes
+    # from review_inbox_open() — the yaml SITE.md makes canonical — so it can
+    # never drift from the page it links to.
+    nrev = view.get("review_open")
+    if nrev:
+        review_cell = (f'<a class="sx" href="review/inbox"><span class="sn">{nrev}'
+                       f'</span><span class="sl">thing{"s" if nrev != 1 else ""} '
+                       'waiting on the author · the review inbox — every open '
+                       'call in one list, with what answering it would '
+                       'unblock</span></a>')
+    elif nrev == 0:
+        review_cell = ('<a class="sx" href="review/inbox"><span class="sn zero">0'
+                       '</span><span class="sl">waiting on the author — the review '
+                       'inbox is empty, so nothing published is held up by a call '
+                       'only he can make</span></a>')
+    else:
+        review_cell = ('<a class="sx" href="review/inbox"><span class="sn none">not '
+                       'read</span><span class="sl">the review inbox’s list '
+                       'could not be read this build, so no count is claimed — the '
+                       'inbox itself is still there</span></a>')
 
     # --- cell 1: is production alive? Keyed to LAST ACTIVITY, not to
     # this-second job state — "nothing this minute" over a working night is the
@@ -2459,7 +2537,8 @@ def summary_strip(view: dict, now) -> str:
     return (
         '<div class="strip rise">'
         '<p class="sh">At a glance</p>'
-        f'<div class="sgrid">{alive_cell}{made_cell}{queue_cell}{show_cell}</div>'
+        f'<div class="sgrid">{review_cell}{alive_cell}{made_cell}{queue_cell}'
+        f'{show_cell}</div>'
         f'<p class="sfoot">A snapshot as of <b>{now.strftime("%H:%M")} UTC, '
         f'{now.strftime("%d %b")}</b> — the moment this page was built and the '
         'machines\u2019 own logs were last read. Nothing here claims to be '
@@ -2521,6 +2600,9 @@ def build(out_dir: Path):
     # contradict the section it links to, and two reads of one file eventually
     # do.
     boxq = box_queue_eta(read_box_queue())
+    # ONE read for the glance at the top and the pointer beside the waiting
+    # list, for the same reason as the box snapshot above it.
+    review_open = review_inbox_open()
     last_activity = max((m["history"][0][0] for m in records if m["history"]),
                         default=None)
 
@@ -2529,7 +2611,7 @@ def build(out_dir: Path):
         "fin": fin, "live": live, "unread": logs_unread(),
         "last_activity": last_activity, "by_id": by_id, "hero": hero,
         "tot": tot, "ep2": data.next_episode(), "inbox": inbox,
-        "boxq": boxq}, now)
+        "boxq": boxq, "review_open": review_open}, now)
 
     # --- the grove: 15 leaves, each one an actual scene you can go look at.
     leaves = ""
@@ -2891,6 +2973,7 @@ everything else runs on the family's own machines for free</p>
 taste, and what gets published. The rest of the city keeps moving while they wait, but the
 jobs listed under each one cannot start until it is made, and the number in front of each is
 how long it has been sitting there.</p>
+<p class="notice" style="margin:.2rem 0 .7rem">{review_pointer(review_open)}</p>
 {waiting_html(inbox, backlog, now)}
 
 <h2>The machines</h2>
