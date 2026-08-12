@@ -167,6 +167,13 @@
   kind: clip
   verdict_hint: push it broader (one more job, then the same recipe to beats 06 and 07) / it still reads
     wrong, which makes it a casting question and yours
+  resolved:
+    date: '2026-08-12'
+    verdict: 'you made him look more like just a normal civilian than a guard, and the video doesnt have
+      him jogging at all, just looking around, basically. (Both faults were in my prompt, not the model:
+      it never said "jog" and it did say "he stays standing in the same spot", and the only thing saying
+      guard was the noun. Fix round ep2-b05-jog-uniform-0812 queued.)'
+
 - what: EPISODE 2 - THE MORNING READ. Four beats look ready to cut (13, 14, 15, 18) and beat 19 now lands
     its fig on his head. THE GUARD RULING UNBLOCKS SIX BEATS (05/06/07/09/10/11) and is the biggest thing
     waiting on you. Three beats (03, 17, 21) will not render the same way twice - four takes each are

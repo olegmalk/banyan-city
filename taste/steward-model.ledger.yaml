@@ -14585,3 +14585,50 @@
     A captioned sheet and an inbox entry. Nothing queued, no GPU spent, and the ask is now answerable
     by him in one look.
   outcome: null
+
+- id: ep2-b05-register-clip-founder-verdict-0812
+  kind: founder_verdict
+  date: 2026-08-12
+  founder_verdict_verbatim: "you made him look more like just a normal civilian than a guard, and the
+    video doesnt have him jogging at all, just looking around, basically."
+  archaeology_before_fixing: >-
+    BOTH FAULTS ARE IN MY OWN PROMPT and neither is a model failure. On the jog: the word `jog` never
+    appears in what I sent, and the sentence I DID send says "He stays standing in the same spot". He is
+    not jogging because I asked him not to. Beat 05's own line is "two guards JOG into an empty morning
+    field and stop to scan it", and when I scoped the test down to one man reading a clipboard I quietly
+    dropped the half of the beat that has the action in it. On the civilian read: the only thing in the
+    prompt saying `guard` was the NOUN. The named CONTENTS were "a plain brown tunic over dark trousers
+    and boots" plus a clipboard, which is a clerk. He described what I asked for.
+  what_it_costs_me_to_admit: >-
+    I reported that clip as "the staging arrived, the register did not". That was half right and the
+    wrong half was flattering: the staging that arrived was the staging I asked for, and the beat's own
+    action was never in the test. He caught in one sentence a gap my own scoring pass missed while I was
+    counting eyebrow movements.
+  outcome: resolved — one fix round authored the same hour.
+
+- id: ep2-b05-jog-uniform-0812
+  kind: prediction
+  written: 2026-08-12, before enqueue. Two clips, one variable apart.
+  predicates: [A JOG IS VISIBLE — legs alternating, knees lifting, the body travelling or driving
+    forward rather than planted, in the first half of the clip; the pull-up-short lands after it; the
+    men read as OFFICIALS rather than civilians on the strength of named objects only — matching
+    tunics, a sash of office, a badge, the bark clipboard — with NO armour anywhere; camera locked;
+    identity holds from the init; brightness holds and the palette does not go dusk as it did last time]
+  the_two_arms: >-
+    A = one man, jog staged. B = identical but the second guard is NAMED. Split deliberately: the jog
+    fix is the thing he asked for and A isolates it, while B tests something this pipeline has never
+    done — the motion stage has added named OBJECTS 7 of 7 and has never been asked to add a named
+    CHARACTER. If B fails and A passes, the fix still lands and the pair becomes a separate problem.
+  deviation_declared_and_it_is_a_costume: >-
+    The sash of office and the badge are MINE, not his. He has rejected armour and ratified "two silly
+    round bureaucrats with visible faces"; nothing in his words says sash or badge. They are the
+    minimal non-armour way I can think of to say `official` in named objects rather than adjectives,
+    which is the channel he told us to use. Flagged here rather than folded into the frozen cast, and
+    the guards sheet already has a live defect from exactly this mistake being made silently
+    (six armour lines carried as if they were his). One word from him removes them.
+  falsifiable_by: >-
+    A jog arriving and the men STILL reading civilian. That would mean costume-by-named-object cannot
+    carry rank on this checkpoint either, and the register question stops being a wording problem in
+    both channels at once.
+  consumer: his morning read, routed by the lead.
+  outcome: null
