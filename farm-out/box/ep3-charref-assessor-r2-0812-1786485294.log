@@ -1,0 +1,25 @@
+#### job ep3-charref-assessor-r2-0812-1786485294 attempt 1 start 2026-08-12T22:02:30Z
+
+==== step measure START 2026-08-12T22:02:33Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\wave-goblin-prep\\render_wave_sample.py", "--harness", "C:\\banyan-farm\\wave-goblin-prep", "--root", "C:\\banyan-farm\\wave-goblin-prep\\repo", "--beat", "7", "--goblin-def", "green skin, bald head", "--variant", "authored_ep3_charref_assessor", "--dry"]
+C:\banyan-farm\venv\Lib\site-packages\transformers\tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+Token indices sequence length is longer than the specified maximum sequence length for this model (79 > 77). Running this sequence through the model will result in indexing errors
+
+== beat 07 confiscate [guard] — confiscate
+   AUTHORED: A thin tall man in dust-grey robes stands facing camera in a warm green grassy morning field, ruler-straight silhouette, a heavy ledger chained at his belt, a worn stub of quill in one hand, a precise humourless face clearly visible. Medium shot, bright morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No girl, no child, no armor, no helmet, no weapon, no dark, no night, no dusk. No photorealism, no 3D render look. 9:16 vertical, no text.
+   POS: 1boy, a thin tall man in dust-grey robes stands facing camera in a warm green grassy morning field, ruler-straight silhouette, a heavy ledger chained at his belt, a worn stub of quill in one hand, a precise humourless face clearly visible
+   NEG(sent): photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, girl, child, armor, helmet, weapon, dark, night, dusk, photorealism, text
+   positive tokens (real CLIP): 56/77   headroom for the goblin definition: 21
+   negative tokens: recipe 57 -> sent 57 (budget 77)
+   count tag: '1boy' (draft declares '1boy')
+   STYLE ANCHOR PRESENT: False
+   'text' negated: True
+   scale negatives: False   'tall tree' removed: 0
+   person singulars in negative: ['girl', 'child']
+   !! STYLE ANCHOR MISSING (`very aesthetic` not in positive)
+   !! POSITIVE DROPPED: Medium shot, bright morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+
+!! FAULTS — nothing drawn: STYLE ANCHOR MISSING (`very aesthetic` not in positive); POSITIVE DROPPED: Medium shot, bright morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.
+==== step measure END rc=1 2026-08-12T22:02:35Z ====
+#### job ep3-charref-assessor-r2-0812-1786485294 finished rc=1 2026-08-12T22:02:35Z
