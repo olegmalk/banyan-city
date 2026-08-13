@@ -1242,3 +1242,4 @@
 20:07:44Z STARTED task=ep3-charref-farmer-r4-0813-1786651239 attempt=1 on box-runner
 20:08:38Z DONE task=ep3-charref-farmer-r4-0813-1786651239 rc=0 artifacts=8
 20:08:45Z STARTED task=ep3-charref-farmer-r4b-0813-1786651240 attempt=1 on box-runner
+20:09:38Z DONE task=ep3-charref-farmer-r4b-0813-1786651240 rc=0 artifacts=8
