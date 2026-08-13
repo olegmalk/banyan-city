@@ -1091,3 +1091,4 @@
 13:15:58Z DONE task=ep2-b02-adult-a-0813-1786626184 rc=0 artifacts=4
 13:16:07Z STARTED task=ep2-b02-adult-b-0813-1786626184 attempt=1 on box-runner
 13:18:57Z DONE task=ep2-b02-adult-b-0813-1786626184 rc=0 artifacts=4
+13:19:02Z box-runner idle ready=0 failed=10
