@@ -1189,3 +1189,4 @@
 17:55:50Z box-runner idle ready=0 failed=11
 18:05:54Z box-runner idle ready=0 failed=11
 18:06:39Z STARTED task=ep2-b01-nocrf-0813-1786644391 attempt=1 on box-runner
+18:15:54Z DONE task=ep2-b01-nocrf-0813-1786644391 rc=0 artifacts=2
