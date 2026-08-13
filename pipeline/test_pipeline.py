@@ -7468,6 +7468,7 @@ def test_the_depth_series_leaves_a_gap_where_it_could_not_look():
     hand whenever telemetry.py changes — four times on the afternoon this was
     written — and a 24-hour series held in memory would almost never be 24 hours.
     """
+    import json
     import tempfile
     import time
 
@@ -7515,6 +7516,29 @@ def test_the_depth_series_leaves_a_gap_where_it_could_not_look():
               all(t >= now - 86400 for t, _d in series))
         check("a row torn by a kill mid-write is skipped, not fatal",
               all(isinstance(d, int) for _t, d in series))
+
+    # THE SHAPE IS A CONTRACT NOW. build_sim's sparkline (status-charts lane,
+    # 6f327a20) draws straight off this array, and it hardens itself by filtering
+    # element-wise and re-sorting rather than trusting the publisher — which is
+    # right for a file a browser fetches off a branch, and is no reason for the
+    # publisher to start emitting something else. Anything that reaches the wire
+    # is a pair of ints, depth never negative, epochs strictly ascending.
+    with tempfile.TemporaryDirectory() as td:
+        csv = Path(td) / "queue-depth.csv"
+        now = time.time()
+        for depth, back in ((3, 1200), (0, 900), (7, 600), (1, 300)):
+            telemetry.depth_history({"ready": depth, "running": 0},
+                                    now=now - back, record=True, path=csv)
+        series = telemetry.depth_history({}, now=now, path=csv)
+        check("every point is a pair",
+              all(isinstance(p, list) and len(p) == 2 for p in series))
+        check("both halves are whole numbers, never floats or strings",
+              all(isinstance(t, int) and isinstance(d, int) for t, d in series))
+        check("a depth is never negative", all(d >= 0 for _t, d in series))
+        check("epochs are strictly ascending, so a chart need not sort",
+              all(series[i][0] < series[i + 1][0] for i in range(len(series) - 1)))
+        check("and it survives a JSON round trip unchanged",
+              json.loads(json.dumps(series)) == series)
 
     # queue_block is what the publish paths send, and the field is OPTIONAL —
     # every reader already survives the whole queue block being absent.
