@@ -7300,10 +7300,14 @@ def test_the_box_publishes_its_own_queue_and_never_a_zero_it_did_not_measure():
             check("our own pid reads as alive", telemetry.process_state(os.getpid()) is True)
             check("a live runner whose pid we cannot query is never reported dead",
                   telemetry.process_state(1) is not False)
-            (root / "runner.lock").write_text(
-                "%d 2026-08-13T09:39:02Z boot=1786500000\n" % os.getpid())
         finally:
             telemetry.boot_id = real_boot
+        # Written with the REAL boot id, for the queue_sample() check below. The
+        # pinned value must not outlive the block: boot_id reads /proc/stat, which
+        # a Linux CI runner HAS and a Mac does not, so a lock left stamped with a
+        # made-up boot passes here and fails there. It did exactly that.
+        (root / "runner.lock").write_text(
+            "%d 2026-08-13T09:39:02Z boot=%d\n" % (os.getpid(), telemetry.boot_id()))
 
         q = telemetry.queue_sample(root=root, now=now)
         check("the runner's liveness rides along with the counts",
