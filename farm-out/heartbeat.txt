@@ -1270,3 +1270,4 @@
 21:28:40Z STARTED task=ep2-b18-plainfig-0813-1786651075 attempt=1 on box-runner
 21:34:58Z DONE task=ep2-b18-plainfig-0813-1786651075 rc=0 artifacts=2
 21:35:05Z STARTED task=ep2-b18-plainfigB-0813-1786651080 attempt=1 on box-runner
+21:41:25Z DONE task=ep2-b18-plainfigB-0813-1786651080 rc=0 artifacts=2
