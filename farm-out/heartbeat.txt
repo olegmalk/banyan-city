@@ -1228,3 +1228,4 @@
 19:44:04Z STARTED task=ep2-b10-patrol-scene-r2-0813-1786649758 attempt=1 on box-runner
 19:45:44Z DONE task=ep2-b10-patrol-scene-r2-0813-1786649758 rc=0 artifacts=2
 19:45:54Z STARTED task=ep2-b10-twoguard-sceneref-0813-1786650203 attempt=1 on box-runner
+19:48:45Z DONE task=ep2-b10-twoguard-sceneref-0813-1786650203 rc=0 artifacts=4
