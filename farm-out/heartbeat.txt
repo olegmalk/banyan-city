@@ -1238,3 +1238,4 @@
 20:00:14Z STARTED task=ep2-b09-world-0813-1786647972 attempt=1 on box-runner
 20:06:31Z DONE task=ep2-b09-world-0813-1786647972 rc=0 artifacts=1
 20:06:38Z STARTED task=ep3-charref-assessor-r4-0813-1786651237 attempt=1 on box-runner
+20:07:36Z DONE task=ep3-charref-assessor-r4-0813-1786651237 rc=0 artifacts=8
