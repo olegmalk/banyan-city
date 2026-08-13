@@ -1802,6 +1802,31 @@ beats:
     #    block verbatim in substance ('a broad squarish silhouette in a straw hat, three
     #    lines for his whole face, permanently unimpressed'), on the guard-sheet shape
     #    that held 4/4. `farmer man` in the first comma-clause so the tag derives 1boy.
+    # DE-AVERAGING THE FARMER, 2026-08-13, on his "you see, the ai is making it look
+    # like a average anime character, dont do that, make him look more like an old
+    # farmer, and make him unique, then, evaluate".
+    #
+    # WHY r2 CAME BACK AVERAGE. Read what it sent: "a sun-cracked farmer man ... broad
+    # squarish build, a wide straw hat, plain work clothes, arms crossed, a permanently
+    # unimpressed face". Every one of those is a CATEGORY, and a category is exactly
+    # what the checkpoint answers with its default handsome man. Nothing in the sentence
+    # could only be him.
+    #
+    # THE FIX IS THE SAME ONE THAT WORKED ON THE PLANT BEATS: specifics in the positive,
+    # and the default banned in the negative. His script's own facts carry the
+    # specificity and are used verbatim rather than invented around — 50s, sun-cracked,
+    # broad squarish, straw hat, and the THREE LINES across the face, which is the one
+    # detail no generic anime farmer has. The negative bans the average directly: the
+    # pretty-boy default, smooth skin, youth.
+    authored_ep3_charref_farmer_r3: >-
+      A weathered farmer in his fifties stands facing camera, leathery
+      sun-browned skin, three deep forehead creases, broad heavy build, grey
+      stubble, a frayed straw hat, arms crossed, unimpressed. Medium shot,
+      bright morning light, cinematic lighting, detailed, newest, masterpiece,
+      best quality, very aesthetic No pretty boy,
+      no bishonen, no handsome young man, no smooth skin, no flawless skin, no
+      idol face, no anime hero, no girl, no child, no armor, no weapon, no dark,
+      no night. No photorealism, no 3D render look. 9:16 vertical, no text.
     authored_ep3_charref_farmer: >-
       A sun-cracked farmer man stands facing camera in a warm green grassy
       morning field, broad squarish build, a wide straw hat, plain work clothes,

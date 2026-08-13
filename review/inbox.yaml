@@ -279,6 +279,13 @@
     25 to 33, because those stills were only passing the gate while nothing could read what drew them.
     Settle the licence first and the provenance repair is one scripted pass; do it the other way round
     and CI stops the site.'
+  resolved:
+    date: '2026-08-13'
+    verdict: we already published episode 1.. well, anyways, save this decision for later, it is not relevant
+      at the moment. (DEFERRED BY YOU, not resolved by ruling. Your earlier "option 1, rule OpenRAIL publish-safe"
+      was never executed — it breaks 21 tests that use animagine as their unpublishable-licence fixture,
+      and it needs the FOUNDER_NARROWED question answered first. The tree is untouched and green; the
+      work is parked exactly as it stands, ledger d15-ruling-implemented-and-held-0813.)
 - what: 'Beat 12 (two leaves against the sky) has a PASSING plate you have never been shown - b12-r4-s2.
     Its round-4 fix worked: the pink ripe fruit that got round 3 rejected is gone in 4 of 4, so is the
     face on it and the city skyline. What it does not do is show TWO leaves, and the leaves are long and
