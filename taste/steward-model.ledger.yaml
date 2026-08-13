@@ -15686,3 +15686,29 @@
     character-sheet plate does not merely void, it rebuilds the world in a foreign style and
     dissolves the character into a silhouette.
   outcome: adopted — the world paragraph goes into every motion prompt from here
+
+- id: ep2-b18-fig-r2-and-b01-cold-r2-and-b02-remake-scored-0813
+  kind: scoring
+  date: 2026-08-13
+  b18_fig_r2: >-
+    SOLVED AT BOTH SEEDS. With the three capitalised "ROUND"s and the fill-frame clause removed,
+    the fig holds a teardrop with a narrow neck for the whole clip at both seeds, and seedA no
+    longer pushes the camera in. The founder's green-balls note is answered by wording.
+  b18_regression_I_caused: >-
+    The fill-frame clause was doing DOUBLE DUTY — it was also what kept a second fruit out of
+    shot. At seedA a second fig now drifts in at the top. The geometry replacement ("the frame is
+    too tight to hold a second fruit") did not hold it alone. Mine to fix; no founder input.
+  b01_cold_r2: >-
+    All three fixes landed at seedA — green daylight instead of amber, a green fig that swells
+    instead of darkening to black, no tripod. This is the strongest cold open we have had.
+    The leaf is still pointed rather than the broad rounded cotyledon the clause asks for, so
+    the leaf half of the shape work is NOT solved and should not be reported as if it were.
+  b02_remake_FAILS_both_seeds: >-
+    The adult plate is right and the staging is perfect — sprint, skid, sapling in frame at the
+    correct size — and the clip is unusable at both seeds. Off a white character-sheet plate the
+    model rebuilds the world in a flat poster style nothing like the plate's cel rendering. seedA
+    reduces the goblin to a faceless dark silhouette; seedB keeps green skin and red eyes but is
+    still a foreign-looking show. This is the wide-beat version of the white-plate law confirmed
+    at both seeds, and it is what beats 02, 03 and 19 will all do until a plate carries a world.
+  what_it_asks_of_the_stills_lane: a plate with a field already drawn in it, for the wide beats.
+  outcome: null

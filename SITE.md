@@ -206,6 +206,20 @@ entries fold into the page's history, never deleted. The /status glance can
 count open entries from the yaml; the yaml is the truth, the page is its
 render, and the two travel in one commit so they cannot drift.
 
+**The page IS the sitting, and it is ordered by who can answer** (founder,
+2026-08-13: "i dont wanna burn tokens, can you put all the things to review in
+the review page?"). Reporting reviewables in chat costs him tokens to read, so
+chat is no longer where reviews are handed over: every reviewable is an entry
+here, with ONE question, ONE link and a `verdict_hint` naming the two or three
+answers he might give. An entry may carry `group:` — `taste` (only he can
+answer: what a thing IS, whether it feels right), `result` (already judged by
+the steward, he overrides or stays silent), `reading` (scripts and approvals
+that unblock work), `pick` (chosen take, veto only). They print in that order
+and an entry with no `group` defaults to `result`, because the ordering is the
+product: he reads top down and stops when he is out of patience, so what only
+he can answer must not sit below what needs nothing from him. An unrecognised
+group falls back to `result` rather than vanishing off the page.
+
 An inbox entry may carry an optional `episode: N` key. It is what puts the
 entry in that episode's gate list in the ETA section below; an entry without
 one is still counted, but is not attributed to an episode by guessing at its
