@@ -1,0 +1,45 @@
+# A licence-clean sapling reference, FOUND but NOT YET USABLE — 2026-08-13.
+#
+# Recorded rather than staged, because the sourcing succeeded and the plumbing
+# does not exist. Kept here so the next attempt starts from a verified asset
+# instead of repeating the search.
+#
+# THE SEARCH, bounded per the founder ("just dont put too much time into it").
+# Wikimedia Commons under a strict CC0/PD filter: three usable-licence hits and
+# none of them a sapling — a top-down tray of brinjal seedlings (CC0, no single
+# stem), a conifer seedling (PD, wrong silhouette), a mature apple tree (CC0).
+# US-government PD (Forest Service, NPS) surfaced libraries but no matching
+# frame. Openverse filtered to CC0 found this one.
+found: Young baobab tree
+author: StockyPics
+source_url: https://www.flickr.com/photos/135371437@N04/22684589475
+image_url: https://live.staticflickr.com/767/22684589475_be9433f623_b.jpg
+licence: CC0 1.0 Public Domain Dedication
+licence_verified: >-
+  Read on the Flickr photo page itself, not taken from the aggregator's
+  metadata — Openverse said CC0 and the source page confirms it.
+sha256_of_fetched_bytes: 8f0c60227c77bdbe27ef58acc3679ffdc64d767523679e2f77350cc50aaaa455
+dimensions: 768x1024 (the _b rendition)
+why_it_fits: >-
+  One plant, not a patch. A thin bare woody stem visible down most of the
+  frame, one clear side-branch fork — which is 003b's "one thin bare
+  side-branch" — leaves gathered at the top, plain speckled wall behind it and
+  nothing else in frame. It is the structural geometry four rounds of wording
+  never produced.
+why_it_is_imperfect: >-
+  Leafier than 003b's two oversized leaves, and the leaves are narrow rather
+  than broad. No soil at the base; the stem runs out of the bottom of frame.
+  Usable as a STRUCTURE reference, not as a literal portrait of our sapling.
+blocked_on: >-
+  THE CONDITIONING PATH CANNOT TAKE IT. `goblin_ipa_beat.py --help` on the box
+  reports exactly three options — --beat, --sampler-dir, and
+  --character {goblin,guard}. There is no --refs, and --character is a closed
+  enum of two values. A sapling is neither a goblin nor a guard, so there is no
+  argument through which this reference reaches the sampler. Making one is a
+  change to a script the ep2 lane is running jobs through tonight.
+fallback_also_unavailable: >-
+  Option (b), a different checkpoint, is not runnable on my own authority
+  either. The only other stills weights named anywhere in this repo are
+  stabilityai/sdxl-turbo and stable-diffusion-v1-5 — neither is an anime
+  checkpoint, so both fail the look he set, and neither has had a licence read
+  for this use. The instruction was to say so rather than add weights.
