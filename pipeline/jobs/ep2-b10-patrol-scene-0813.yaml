@@ -1,0 +1,106 @@
+# 2026-08-13, the stills-drafts lane. THE PATROL PLATE WITH ITS SCENE DRAWN IN.
+# Draft key `authored_b10_scene`; its comment in pipeline/wave-drafts.yaml carries the
+# cast ruling, the token arithmetic, and why one shared single-guard plate cannot serve
+# a 2boys beat. Priority 5: the founder is watching this clip specifically.
+id: ep2-b10-patrol-scene-0813
+task: ep2-b10-patrol-scene-0813
+node: 002b-first-citizen
+beat: 10
+runner: box
+needs_gpu: true
+priority: 5
+max_attempts: 1
+owner: stills-drafts lane, 2026-08-13
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the
+  render gate itself reads. Neither `approval_condition` touches beat 10. This is a mechanism test on
+  an approved node, not an episode assembly.'
+consumer: motion-wave, to re-animate beat 10 off it the moment it passes. That clip is the founder's test
+  article for the whole plate thesis and he is watching it specifically.
+success: Eight PNGs, r0-w010 and r0-w020 at four seeds. Success is a plate that ALREADY CONTAINS the morning
+  field -- grass to the bottom edge, hedge and treeline behind, sky above -- with TWO adult guards in
+  brown tunics and sashes and the blank clipboard back reading in frame. The world is the pass/fail; the
+  cast is the tiebreak between 10% and 20%. If both windows come back white the reference is overriding
+  at every setting and the plate route needs a scene-carrying guard reference first, which is the b03
+  experiment already running.
+why: 'THE FOUNDER on the new beat 10, verbatim: "just.. blank background, and midway it gets drawn? i
+  asked you, why arent you drawing the background in the reference of each beat?" He is describing the
+  arrival artifact exactly: that clip animated the old plain plate with the world written into the MOTION
+  prompt, so the world could only appear mid-clip because it was never in frame one. This draws it into
+  frame one. THE ARM IS `wedge`, NOT `window4`, and that is measured, not preference: ep2-b03-scene-wedge-0813
+  showed the standard 15% window lets the reference own the early structure-forming steps and returns
+  a figure on plain white every time, while at 10% the same words drew grass, treeline and sky. 10% also
+  drifts costume, so this runs 10% AND 20% at four seeds each and the pick is made by eye from eight frames.'
+est_minutes: 8
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '10'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-charref-guards-r5-0812
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b10-patrol-scene
+  - --draft-key
+  - authored_b10_scene
+  - --arm
+  - wedge
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '10'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-charref-guards-r5-0812
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b10-patrol-scene
+  - --draft-key
+  - authored_b10_scene
+  - --arm
+  - wedge
+  - --task
+  - ep2-b10-patrol-scene-0813
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b10-patrol-scene-0813\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/goblin-ipa-0812/out-b10-patrol-scene/*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b10-patrol-scene-0813.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b10-patrol-scene\10-no-form-ipa-r0-w010-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b10-patrol-scene\10-no-form-ipa-r0-w020-s0.png

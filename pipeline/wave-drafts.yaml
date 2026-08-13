@@ -2605,6 +2605,43 @@ beats:
     # the count tag and it is not binding; a stronger positive would cost tokens
     # this beat does not have and would confound the two changes above. Recorded in
     # wave2-faults-fixer.yaml instead.
+    # -- `authored_b10_scene` -- 2026-08-13, the stills-drafts lane, on the founder
+    # watching the new beat 10: "just.. blank background, and midway it gets drawn? i
+    # asked you, why arent you drawing the background in the reference of each beat?"
+    # He is describing the arrival artifact: that clip animated the OLD plain plate with
+    # the world written into the MOTION prompt, so the world had to appear mid-clip
+    # because it was not in frame one. This draft puts it in frame one.
+    #
+    # THE SCENE IS DESCRIBED AS A PLACE, not named. `field` alone gives a flat green
+    # band; this is the motion lane's world paragraph compressed to what CLIP's 77
+    # tokens can hold -- grass, a hedge, a treeline, a sky, each with its own position.
+    # Measured on the box: 75/77 for action+style.
+    #
+    # THE CAST IS THE RULED ONE AND THE OLD WORDS ARE GONE. Every earlier beat-10 draft
+    # says `round guard men` and `silly bureaucrats with round soft bodies`; his ruling
+    # removed the body-type words, so they are not here and they are not in the negative
+    # either -- a denial pile is what swelled the skull on the b02 arm B. What replaces
+    # them is what the approved reference actually shows: adult men, short brown hair,
+    # plain brown tunics with sashes, belly covered by the tunic's own length.
+    #
+    # PAID FOR by `Medium two-shot`, which the b04 result showed is near-weightless as a
+    # trailing tag anyway. The beat's own camera note survives as a SENTENCE instead --
+    # `The blank board fills the frame` -- which is beat 10's whole point and costs the
+    # same three tokens the framing tag was wasting.
+    #
+    # TWO GUARDS, and this is why the shared patrol plate cannot serve this beat: beat
+    # 10 is Guard 2 flipping the clipboard, `tag: 2boys`, and every one of beats
+    # 05/06/07/09/10/11 currently crops from ONE single-guard plate
+    # (out-b05-register-pose\05-the-patrol-ipa-r2-w015-s2.png). That is a population
+    # defect independent of the background one and it was going to bite regardless.
+    authored_b10_scene: >-
+      Two adult guard men in brown tunics and sashes, short brown hair, one holds up the
+      blank back of his bark clipboard toward the other, green summer grass, a hedge and
+      dark treeline behind, pale blue morning sky above. The blank board fills the frame,
+      cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No
+      girl, no child, no armor, no helmet, no knight, no bare chest, no muscular, no white
+      background, no plain background, no character sheet, no dark, no night. No
+      photorealism, no 3D render look. 9:16 vertical, no text.
     authored_b10_idfix_r2: >-
       Two bald guard men in plain brown tunics, in a sunny grassy field,
       silly bureaucrats with round soft bodies, both faces visible, one
