@@ -1099,3 +1099,4 @@
 13:28:13Z STARTED task=ep2-b18-figshapeB-0813-1786627303 attempt=1 on box-runner
 13:34:31Z DONE task=ep2-b18-figshapeB-0813-1786627303 rc=0 artifacts=2
 13:34:38Z STARTED task=ep2-b01-shape-0813-1786627729 attempt=1 on box-runner
+13:43:50Z FAIL task=ep2-b01-shape-0813-1786627729 rc=92 step=artifact-check
