@@ -14666,3 +14666,40 @@
     run. Indentation is now READ FROM THE FILE. Same lesson as the afternoon/after substring
     bug six hours ago: the artifact's shape is a fact to check, not a habit to apply.
   outcome: null
+
+- id: ep2-b05-jog-uniform-0812-observed
+  kind: observation
+  date: 2026-08-13
+  scores: ep2-b05-jog-uniform-a-0812 and -b-0812
+  verdict: >-
+    BOTH HIS FAULTS ANSWERED, and arm B is the one to show him. The jog fires in both arms and the
+    uniform reads in B.
+  the_jog_HIT_both_arms: >-
+    Legs alternating, a boot clear of the ground, knee lifted, tunic and sash swinging with the stride,
+    body travelling — through roughly the first two thirds — then he plants both feet and pulls up
+    short. That is beat 05's own line, "jog into an empty morning field and stop to scan it", on screen
+    for the first time. Attributable by construction: same init, same recipe, same seed as the clip he
+    rejected; the only change was making the jog the dominant clause and banning the standing pose it
+    had lost to. The b03 crouch lever now has a second win on a different beat.
+  the_second_guard_ARRIVED_and_this_is_a_first: >-
+    Arm B names a second guard and he is there — two men jogging from about frame 48, both in frame at
+    the end. THE MOTION STAGE HAS NEVER BEEN ASKED FOR A NAMED CHARACTER BEFORE; named OBJECTS were 7
+    of 7 and this extends the law to people. Worth more than this beat: several ep2 beats want a second
+    figure and nobody knew this was available.
+  the_uniform_PARTIAL_and_B_beats_A: >-
+    In B both men carry a pale diagonal sash across the chest, a wide belt with a buckle and a small
+    brass badge — they read as uniformed officials of somewhere. In A the sash barely reads and he is
+    tunic-plus-belt, which is still close to the civilian he rejected. So the named-object route works
+    but needs the sash to actually be visible, and A shows what happens when it is not.
+  the_predicted_fault_that_happened: >-
+    B's two men are near-identical TWINS — same face, same hair, same costume. I named this risk before
+    the run (one init, one man, two men asked for) and it landed exactly there. It does not touch the
+    jog verdict and it is a separate problem: the pair needs two references or a distinguishing clause.
+  palette_HIT: >-
+    Bright green field, blue sky, white cloud, no dusk anywhere. The brightness bans carried this time,
+    which is the fix for the fault I introduced last round.
+  what_is_still_mine_and_flagged: >-
+    THE SASH AND BADGE ARE STEWARD COSTUME, not his words. They are why B reads official, so if he
+    dislikes them the uniform result goes with them and the beat needs a different non-armour signifier.
+    Said before the render and repeated here rather than allowed to harden into canon.
+  outcome: null

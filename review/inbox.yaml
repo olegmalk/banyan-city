@@ -4,6 +4,7 @@
   url: /review/ep2-picks/motion-0812
   since: 2026-08-12
   kind: decision
+  episode: 2
   verdict_hint: e.g. "tiny fig in frame 1, grows larger" (inpaint start + visible growth), or relax the
     growth condition, or keep trying attached growth
 - what: Episode 3 - two drafted continuations await your read; both animatics play online (003a at this
@@ -11,6 +12,7 @@
   url: /watch/003a-oncall-rotation.html
   since: 2026-07-30
   kind: script
+  episode: 3
   verdict_hint: approve 003a / approve 003b / approve with conditions / neither because X
 - what: Guards register — five rounds render them solemn, not "silly harmless bureaucrats"
   url: /review/ep2-picks/consistency-0812
@@ -35,6 +37,7 @@
   url: /review/ep2-picks/motion-0812
   since: 2026-08-12
   kind: decision
+  episode: 2
   verdict_hint: split into two shots / trim the beat / re-time the VO
 - what: Approve the ready scripts - five scripts (003b, 004, 005, 006a, 007a) are written and unread;
     approving them makes 132 render jobs legal (~33 min of reading)
@@ -47,6 +50,7 @@
   url: /review/ep2-picks/morning-0812-wave2.html
   since: '2026-08-12'
   kind: decision
+  episode: 2
   verdict_hint: reorder the words / move the cloak out of the identity into each beat / leave it and pay
     tokens every beat
 - what: The sapling will not stand next to the goblin - a model limit, not a prompt bug (beats 02,03,13,15,17,19,20);
@@ -80,6 +84,7 @@
   url: /review/index.html#item-10
   since: '2026-08-07'
   kind: sheet
+  episode: 1
   verdict_hint: name a frame / name an arm / neither, because X
 - what: Staging direction - conditioning a beat on a PICTURE of the character fixed his identity and froze
     him into the reference's standing pose. A motion pass can act the beat out of that still without his
@@ -87,6 +92,7 @@
   url: /review/ep2-picks/consistency-0812/
   since: '2026-08-12'
   kind: decision
+  episode: 2
   verdict_hint: a consistent character standing still is an acceptable BASE, movement added after / the
     drawing itself has to carry the staging
 - what: Beat 02 needs a new still before motion can touch it - it is the one beat whose CHARACTER fails
@@ -123,6 +129,7 @@
   url: /review/ep2-picks/motion-0812
   since: '2026-08-12'
   kind: clip
+  episode: 2
   verdict_hint: is beat 13 cuttable as-is / what still bothers you about it
 - what: 'Motion recipe change, for your awareness: an environment PARAGRAPH now joins every prompt (the
     blank-background fix). Side effect being tested next - a described world pushes the character smaller
@@ -130,6 +137,7 @@
   url: /review/ep2-picks/motion-0812
   since: '2026-08-12'
   kind: decision
+  episode: 2
   verdict_hint: fine / keep him larger in frame even if the world shrinks
 - what: Beat 02 - the rerun you asked for had ALREADY RENDERED when you called it broken; it was never
     put on a page. Fangs, the dog-shaped creature and the duplicated goblins are all gone (0 of 16 each),
@@ -138,6 +146,7 @@
   url: /review/ep2-picks/b02-rerun-0812
   since: '2026-08-12'
   kind: sheet
+  episode: 2
   verdict_hint: refB s1 (sprig in frame) / refB s0 (same pose, no sprig) / another cell / none of them
     because X
 - what: 'Motion finding for the morning: naming WHAT IS IN a shot works every time (7 for 7 - figs, saplings,
@@ -147,6 +156,7 @@
   url: /review/ep2-picks/motion-0812
   since: '2026-08-12'
   kind: decision
+  episode: 2
   verdict_hint: no action needed / tell me which beats to re-cut once placement is controlled
 - what: 'Episodes 3, 4, 5, 6A and 7A are approved under the delegation you gave today, and each now has
     a one-minute digest on the approvals page - premise, state change, hook, who is in it, flags. Two
@@ -181,6 +191,7 @@
   url: /review/ep2-picks/motion-0812#read-this-first
   since: '2026-08-12'
   kind: decision
+  episode: 2
   verdict_hint: rule on the guards / pick from the pools / choose the cold-open route
 - what: Stills needed for the three plant beats - 12 (two leaves against the sky), 18 (the fig, stem trembling)
     and 21 (the leaf tilting on purpose). No character in any of them, so no consistency problem; beat
@@ -188,6 +199,7 @@
   url: /review/ep2-picks/motion-0812#where-ep2-stands
   since: '2026-08-12'
   kind: decision
+  episode: 2
   verdict_hint: have the stills lane make these three / leave them
 - what: 'EPISODE 1 AUDIT + a rebuilt cut (v42). Two things were wrong with every cut you have screened:
     the title card said BANYAN CITY (your Sapling ruling landed a day after the last build) and your beat-06
@@ -197,6 +209,7 @@
   url: /review/ep1-audit-0812
   since: '2026-08-12'
   kind: clip
+  episode: 1
   verdict_hint: watch v42 (repo file review/tonight/EP1-PROVISIONAL-v42-bench.mp4 - the licence gate will
     not let it onto the site yet) - beat 06 in context, and 01/11/13 which have never been judged; then
     the four questions on the page (beat 02's loop, beat 05's sapling reveal, beat 07's trim)
@@ -207,6 +220,7 @@
   url: /review/ep1-audit-0812
   since: '2026-08-12'
   kind: decision
+  episode: 1
   verdict_hint: clear D15 by narrowing what we offer reusers / replace the four stills / accept episode
     1 stays screening-only for now
   note_added_2026-08-12: 'These two are ONE decision, not two. I tried to fix the provenance and the build
@@ -221,6 +235,7 @@
   url: /review/ep2-picks/sheets/plates-round2-0812.jpg
   since: '2026-08-12'
   kind: sheet
+  episode: 2
   verdict_hint: b12-r4-s2 is good enough to animate / the leaf shape is wrong and it needs another round
     / pick a different seed
 - what: 'The other two plate beats are fixed and handed to motion. Beat 21 went from 0 of 4 to 4 of 4
@@ -231,6 +246,7 @@
   url: /review/ep2-picks/sheets/plates-round2-0812.jpg
   since: '2026-08-12'
   kind: sheet
+  episode: 2
   verdict_hint: the picks are fine, animate them / fix the leaf shape across all plant beats first (one
     vocabulary change, then re-plate 12, 18, 21 together)
 - what: 'A real limit found: WE CANNOT TELL IT HOW MANY OF SOMETHING TO DRAW. Beat 19 says ''a small sapling'',
@@ -255,6 +271,7 @@
   url: /review/ep3-cast-0813
   since: 2026-08-13
   kind: sheet
+  episode: 3
   verdict_hint: cast the farmer / cast the assessor / redraw either, and how you want the magistrate approached
 - what: Episode 3's cold open took four rounds and the tree still only stands up in one frame of four,
     so the 21-still wave is NOT queued. Round 4's s2 is the shot. The world was fixed by giving it its
@@ -264,6 +281,7 @@
   url: /review/approvals
   since: 2026-08-13
   kind: decision
+  episode: 3
   verdict_hint: fine, get the sapling reference first / just render the wave anyway / something else
 - what: 'Three beats (03, 17, 21) will not render the same way twice - after three rounds of wording,
     their seeds still differ in composition and, on 21, in whether the leaf tilts at all. My read: these
@@ -272,11 +290,13 @@
   url: /review/ep2-picks/motion-0812
   since: '2026-08-12'
   kind: clip
+  episode: 2
   verdict_hint: pick a take per beat / tell me to keep chasing repeatability
 - what: "DECISION NEEDED - episode 3 cannot be drawn and it is not a prompt problem any more. The cold open needs one picture: the goblin beside his little tree. Seven rounds say this checkpoint will not draw that tree. FOUR rounds of rewording put the plant in his hand instead of in the ground (best result 1 frame in 4). THREE rounds of giving the tree its own reference plate, with no goblin in it at all, came back with a PERSON in the picture anyway - a girl in a dress, a green-haired child, a plant-headed humanoid - even after 'no people, no girl, no child' were all negated. The pipeline also forbids negating 'man' and 'boy' on that kind of plate, so the two likeliest intruders cannot be banned at all. Options as I see them: (a) condition the tree on a real reference image the way the goblin was solved - drawn, photographed or sourced, not generated; (b) try a different checkpoint for plant plates; (c) accept roughly 1 usable frame in 4 and cherry-pick, which is ~84 renders for 21 beats; (d) something you see that I do not. The 21-still wave is NOT queued and will not be until you pick"
   url: /review/ep3-cast-0813
   since: 2026-08-13
   kind: decision
+  episode: 3
   verdict_hint: "which route for the tree: a real reference image / a different model / cherry-pick at 1-in-4 / your own answer"
 - what: 'Your sapling-reveal ask ("we should show that he became a sapling earlier") HAS FOUR CANDIDATE
     FRAMES and you have never seen them - they rendered on 11 August and were never scored or paged.
@@ -286,5 +306,17 @@
   url: /review/ep2-picks/sheets/ep1-b05-sapling-reveal-0812.jpg
   since: '2026-08-12'
   kind: sheet
+  episode: 1
   verdict_hint: pick one and I will cut it in as the reveal / none of these read as HIM becoming the
     sapling, so the shot needs re-thinking / the ask is withdrawn
+- what: 'Beat 05 fix round - BOTH faults you named are answered. He JOGS now (legs alternating, boot
+    off the ground, then pulls up short) - that was my prompt''s fault, it never said "jog" and did say
+    "he stays standing in the same spot". And in arm B a SECOND guard arrives and both men wear a sash,
+    belt and badge, so they read as officials rather than civilians. Two clips on the page, B is the one
+    to watch. Known fault: B''s two men are identical twins'
+  url: /review/ep2-picks/b05-register-0812
+  since: '2026-08-13'
+  kind: clip
+  episode: 2
+  verdict_hint: B is the direction, carry on / the sash and badge are wrong (they are MINE, not your
+    words - say so and they go) / the twins have to be fixed before this is usable
