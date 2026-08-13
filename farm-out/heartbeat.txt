@@ -1157,3 +1157,4 @@
 16:37:20Z STARTED task=ep2-b18-countB-0813-1786637873 attempt=1 on box-runner
 16:43:36Z DONE task=ep2-b18-countB-0813-1786637873 rc=0 artifacts=2
 16:43:42Z STARTED task=ep2-b14-adultplate-0813-1786629502 attempt=1 on box-runner
+16:46:37Z DONE task=ep2-b14-adultplate-0813-1786629502 rc=0 artifacts=4
