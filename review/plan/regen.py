@@ -48,6 +48,14 @@ import episode_eta as eta
 MIN_PER_CLIP = 2
 # A one-line route decision he has already seen the evidence for.
 MIN_PER_DECISION = 1
+# Every block carries the same slack, because he asked for it in those words:
+# "assume each part of the schedule can have up to a 30 minute delay". It is
+# printed per row rather than buried once at the top, so no row can be read as
+# a hard time.
+SLACK_MIN = 30
+# The house clock. Commits in this repo are stamped +04:00 and he reads the page
+# in that zone; a schedule in UTC would be a schedule he has to convert.
+TZ = "+04:00"
 
 
 def esc(s):
@@ -89,6 +97,22 @@ def phase(n, who, title, when, howlong, body, items=()):
             f'</span></div><p class="meta">{esc(when)} · {esc(howlong)}</p>'
             f'<p class="body">{body}</p>'
             + (f'<ul class="items">{li}</ul>' if li else "") + "</div>")
+
+
+def table(rows, who):
+    """One schedule table. `who` is 'you' or 'machine' and sets the colour.
+
+    Slack is a COLUMN, not a footnote. He asked for up to half an hour of give
+    on every part; printed once at the top it reads as a disclaimer, printed on
+    each row it reads as what it is — part of the time, on every block.
+    """
+    body = "".join(
+        f'<tr><td class="tw">{w}</td><td class="tl">{esc(l)}</td>'
+        f'<td class="td">{d}</td><td class="ts">+{SLACK_MIN} min</td></tr>'
+        for w, l, d in rows)
+    return (f'<div class="scroll"><table class="sched {who}"><thead><tr>'
+            f'<th>When ({TZ})</th><th>How long</th><th>What</th><th>Slack</th>'
+            f'</tr></thead><tbody>{body}</tbody></table></div>')
 
 
 def build() -> str:
@@ -142,38 +166,45 @@ def build() -> str:
             "the cold-open fig route, the beat 02 init pick, and whether 16 is in or out",
         ])
 
-    p2 = phase(
-        2, "machine", "The card catches up", "the same day, unattended",
-        hours(mach),
-        f'The <b>{fixk}</b> beat{"s" if fixk != 1 else ""} whose fix is known go '
-        f'back on the card at a measured <b>{hours(per_beat)} a beat</b> — the '
-        f'clipboard retries on 06 and 10, the named-second-guard attempt on 08, '
-        f'and whatever your pass sends back. How much comes back is the one thing '
-        f'here nobody has measured, so it is named and not numbered. Nothing in '
-        f'this phase needs anyone awake.',
-        items=[
-            f'a further {hours(cond)} sits behind the {gated} gated beats and '
-            f'runs only if you keep them — a beat that gets cut costs nothing',
-        ] if gated and cond else ())
+    # --- the schedule, which is what he actually asked for -------------------
+    # "figure out what you can do, and figure out what only i can do, then make
+    # a non-strict schedule, assume each part of the schedule can have up to a
+    # 30 minute delay". So: two tables, split by who can do the thing, every row
+    # carrying its own slack. The windows are planning choices and say so; the
+    # one duration inside them that is measured is the fix wave, and it is
+    # pulled from the same rows /status uses rather than typed in here.
+    wave_window = 4 * 60 + 30                     # 16:00 -> 20:30
+    headroom = wave_window - int(mach or 0)
 
-    p3 = phase(
-        3, "you", "Your second pass", "the next morning", "about 15 minutes",
-        'Only what came back. A returning beat is a yes-or-no against a note you '
-        'already wrote, which is why this sitting is short — the reading was done '
-        'in pass one.')
-
-    p4 = phase(
-        4, "machine", "Voice, assembly, and the cut",
-        "straight after pass two", "about an hour, unattended",
-        'Chatterbox voices the approved beats, <code>render_t3</code> assembles '
-        'the captioned 9:16 episode with the Sapling title card, and the finished '
-        'cut lands in your inbox as one thing to watch.')
-
-    p5 = phase(
-        5, "you", "The publish call", "when the cut is in front of you",
-        "about 100 seconds, plus your verdict",
-        'One screening of the whole episode and one word. Publishing is yours '
-        'alone and always has been.')
+    his_rows = [
+        ("now &rarr; 17:00", f"about {sit} min", "Your first pass — the whole "
+         f"batch in one sitting: about {clips} clips and {calls} open calls. "
+         "What is in it is listed under this table."),
+        ("20:30 &rarr; 21:30", "about 15 min", "Your second pass — only the beats "
+         "that came back from the fix wave. A yes-or-no against notes you already "
+         "wrote, which is why it is short."),
+        ("22:00 &rarr; 23:00", "about 5 min", "Screen the cut and make the publish "
+         "call — 100 seconds of episode, then your word. Publishing is yours "
+         "alone and always has been."),
+    ]
+    mach_rows = [
+        ("16:00 &rarr; 20:30", f"{hours(mach)} of work",
+         f"The fix wave — the {fixk} beat{'s' if fixk != 1 else ''} whose fix is "
+         f"known, at a measured {hours(per_beat)} a beat, plus whatever your first "
+         f"pass sends back. This is the one <b>measured</b> figure in either "
+         f"table; the {wave_window // 60} h {wave_window % 60:02d} min window "
+         f"leaves {headroom} min of headroom on top of it."),
+        ("21:30 &rarr; 22:00", "about 30 min",
+         "Voice and assembly — Chatterbox voices the approved beats and "
+         "<code>render_t3</code> cuts the captioned 9:16 episode with the Sapling "
+         "title card. Lands in your inbox as one thing to watch."),
+    ]
+    if gated and cond:
+        mach_rows.append(
+            ("only if you keep them", f"{hours(cond)} of work",
+             f"The {gated} gated beats. This runs only if your calls keep them — "
+             "a beat that gets cut costs nothing, which is why it is not in the "
+             "fix-wave figure above."))
 
     ep3 = phase(
         1, "you", "One photo of a sapling", "two minutes, whenever",
@@ -230,6 +261,30 @@ def build() -> str:
             font-size: .92rem; }}
   .items li {{ margin: .2rem 0; }}
   .note {{ color: #9aa39c; font-size: .92rem; }}
+  h3 {{ font-size: .95rem; margin: 1.4rem 0 .4rem; }}
+  h3.you {{ color: #e8b45c; }} h3.machine {{ color: #8fd6a0; }}
+  .finish {{ border: 1px solid #3a4a3e; border-radius: 10px; background: #161a18;
+             padding: .7rem .9rem; margin: 1rem 0 .4rem; }}
+  .finish b {{ color: #fff; }}
+  .scroll {{ overflow-x: auto; -webkit-overflow-scrolling: touch; }}
+  table.sched {{ border-collapse: collapse; width: 100%; min-width: 34rem;
+                 font-size: .88rem; }}
+  table.sched th {{ text-align: left; font-weight: 600; color: #7d8a80;
+                    font-size: .74rem; text-transform: uppercase;
+                    letter-spacing: .06em; padding: .3rem .6rem .35rem;
+                    border-bottom: 1px solid #2a332d; }}
+  table.sched td {{ padding: .55rem .6rem; border-bottom: 1px solid #20281f;
+                    vertical-align: top; }}
+  table.sched tr:last-child td {{ border-bottom: 0; }}
+  table.sched .tw {{ font: 700 .86rem/1.4 ui-monospace, monospace;
+                     white-space: nowrap; }}
+  table.sched.you .tw {{ color: #e8b45c; }}
+  table.sched.machine .tw {{ color: #8fd6a0; }}
+  table.sched .tl {{ white-space: nowrap; color: #cdd4cd; }}
+  table.sched .td {{ color: #cdd4cd; }}
+  table.sched .ts {{ white-space: nowrap; color: #7d8a80; font-size: .82rem; }}
+  table.sched.you {{ border-left: 3px solid #e8b45c; }}
+  table.sched.machine {{ border-left: 3px solid #8fd6a0; }}
   .verdict {{ border-left: 3px solid #8fd6a0; padding: .1rem 0 .1rem .8rem;
               margin: 1rem 0; color: #cdd4cd; }}
   code {{ background: #0b0e0c; padding: .08rem .3rem; border-radius: 4px;
@@ -251,19 +306,34 @@ how long"</i>.</p>
 
 <p class="verdict">Episode 2 stands at <b>{ep2["ready"]} of {ep2["total"]}</b>
 beats passed, with <b>{waiting}</b> takes waiting on your eye and
-<b>{calls}</b> open calls. The card has <b>{hours(mach)}</b> of rendering left.
-<b>The variable is not the GPU.</b> Every machine phase below runs unattended and
-finishes the same day; the only thing that decides whether episode 2 publishes
-tomorrow evening is when the two passes happen.</p>
+<b>{calls}</b> open calls. The card has <b>{hours(mach)}</b> of
+<b>render time</b> left — that is how long the machine is busy, <i>not</i> how
+long until the episode is finished. It finishes when your three blocks below
+land. <b>The variable is not the GPU.</b></p>
 
 {ep1_line}
 
-<h2>Episode 2 — to published</h2>
-{p1}{p2}{p3}{p4}{p5}
-<p class="note">If both passes land on the day they are described, episode 2 is
-published tomorrow evening. That sentence is a conditional, not a date: nothing
-on the machine side can make it arrive sooner, and nothing here can predict when
-you sit down.</p>
+<h2>Episode 2 — tonight's schedule</h2>
+
+<p class="finish"><b>Finish estimate: tonight, 22:30&ndash;23:30.</b>
+Fallback: tomorrow before noon. Every block below has up to
+{SLACK_MIN} minutes of give, and the estimate already assumes it.</p>
+
+<h3 class="you">What only you can do</h3>
+{table(his_rows, "you")}
+
+<h3 class="machine">What runs without you</h3>
+{table(mach_rows, "machine")}
+
+<p class="note">The two interleave: your first pass by 17:00 hands the fix wave
+its work, the wave finishes by 20:30 and hands your second pass its work, and
+assembly runs while you are away from the desk. Slip one of your blocks by more
+than its {SLACK_MIN} minutes and everything after it slides by the same amount —
+that is the whole mechanism, and it is why the finish estimate is a window
+rather than a time.</p>
+
+<h3>What is in your first pass</h3>
+{p1}
 
 <h2>Episode 3 — trailing episode 2</h2>
 {ep3}{ep3b}{ep3c}{ep3d}

@@ -32,6 +32,30 @@
             font-size: .92rem; }
   .items li { margin: .2rem 0; }
   .note { color: #9aa39c; font-size: .92rem; }
+  h3 { font-size: .95rem; margin: 1.4rem 0 .4rem; }
+  h3.you { color: #e8b45c; } h3.machine { color: #8fd6a0; }
+  .finish { border: 1px solid #3a4a3e; border-radius: 10px; background: #161a18;
+             padding: .7rem .9rem; margin: 1rem 0 .4rem; }
+  .finish b { color: #fff; }
+  .scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table.sched { border-collapse: collapse; width: 100%; min-width: 34rem;
+                 font-size: .88rem; }
+  table.sched th { text-align: left; font-weight: 600; color: #7d8a80;
+                    font-size: .74rem; text-transform: uppercase;
+                    letter-spacing: .06em; padding: .3rem .6rem .35rem;
+                    border-bottom: 1px solid #2a332d; }
+  table.sched td { padding: .55rem .6rem; border-bottom: 1px solid #20281f;
+                    vertical-align: top; }
+  table.sched tr:last-child td { border-bottom: 0; }
+  table.sched .tw { font: 700 .86rem/1.4 ui-monospace, monospace;
+                     white-space: nowrap; }
+  table.sched.you .tw { color: #e8b45c; }
+  table.sched.machine .tw { color: #8fd6a0; }
+  table.sched .tl { white-space: nowrap; color: #cdd4cd; }
+  table.sched .td { color: #cdd4cd; }
+  table.sched .ts { white-space: nowrap; color: #7d8a80; font-size: .82rem; }
+  table.sched.you { border-left: 3px solid #e8b45c; }
+  table.sched.machine { border-left: 3px solid #8fd6a0; }
   .verdict { border-left: 3px solid #8fd6a0; padding: .1rem 0 .1rem .8rem;
               margin: 1rem 0; color: #cdd4cd; }
   code { background: #0b0e0c; padding: .08rem .3rem; border-radius: 4px;
@@ -53,19 +77,34 @@ how long"</i>.</p>
 
 <p class="verdict">Episode 2 stands at <b>0 of 21</b>
 beats passed, with <b>9</b> takes waiting on your eye and
-<b>12</b> open calls. The card has <b>about 3.7 h</b> of rendering left.
-<b>The variable is not the GPU.</b> Every machine phase below runs unattended and
-finishes the same day; the only thing that decides whether episode 2 publishes
-tomorrow evening is when the two passes happen.</p>
+<b>12</b> open calls. The card has <b>about 3.7 h</b> of
+<b>render time</b> left — that is how long the machine is busy, <i>not</i> how
+long until the episode is finished. It finishes when your three blocks below
+land. <b>The variable is not the GPU.</b></p>
 
 <p class="note">Episode 1, for comparison, is at <b>4 of 15</b> beats passed with <b>10</b> takes waiting on your eye and <b>1</b> open call. Its remaining machine work is nothing that is not behind a call — it is waiting on you, not on the card.</p>
 
-<h2>Episode 2 — to published</h2>
-<div class="ph you"><div class="phh"><span class="pn">1</span><b>Your first pass</b><span class="tag">yours</span></div><p class="meta">today, whenever you sit down · about 46 minutes</p><p class="body">Everything the card has finished with goes in front of you in one batch. That is <b>9</b> takes already waiting plus the <b>8</b> now rendering, so about <b>17 clips</b> — at 2 minutes each including a second look — and <b>12</b> open calls, most of them a one-line route you have already seen the evidence for.</p><ul class="items"><li>the six guard clips from the wave you ratified — does the register hold</li><li>the three-seed winners on 13, 14 and 15 — pick or send back</li><li>the four-take pools on 03, 17 and 21, where no two takes match</li><li>the beat 04 widen pair — a framing tradeoff, so it is yours</li><li>beats 19 and 20 with the placement fix in</li><li>the plates for 12, 18 and 21</li><li>the cold-open fig route, the beat 02 init pick, and whether 16 is in or out</li></ul></div><div class="ph machine"><div class="phh"><span class="pn">2</span><b>The card catches up</b><span class="tag">the machine</span></div><p class="meta">the same day, unattended · about 3.7 h</p><p class="body">The <b>8</b> beats whose fix is known go back on the card at a measured <b>28 min a beat</b> — the clipboard retries on 06 and 10, the named-second-guard attempt on 08, and whatever your pass sends back. How much comes back is the one thing here nobody has measured, so it is named and not numbered. Nothing in this phase needs anyone awake.</p><ul class="items"><li>a further about 1.8 h sits behind the 4 gated beats and runs only if you keep them — a beat that gets cut costs nothing</li></ul></div><div class="ph you"><div class="phh"><span class="pn">3</span><b>Your second pass</b><span class="tag">yours</span></div><p class="meta">the next morning · about 15 minutes</p><p class="body">Only what came back. A returning beat is a yes-or-no against a note you already wrote, which is why this sitting is short — the reading was done in pass one.</p></div><div class="ph machine"><div class="phh"><span class="pn">4</span><b>Voice, assembly, and the cut</b><span class="tag">the machine</span></div><p class="meta">straight after pass two · about an hour, unattended</p><p class="body">Chatterbox voices the approved beats, <code>render_t3</code> assembles the captioned 9:16 episode with the Sapling title card, and the finished cut lands in your inbox as one thing to watch.</p></div><div class="ph you"><div class="phh"><span class="pn">5</span><b>The publish call</b><span class="tag">yours</span></div><p class="meta">when the cut is in front of you · about 100 seconds, plus your verdict</p><p class="body">One screening of the whole episode and one word. Publishing is yours alone and always has been.</p></div>
-<p class="note">If both passes land on the day they are described, episode 2 is
-published tomorrow evening. That sentence is a conditional, not a date: nothing
-on the machine side can make it arrive sooner, and nothing here can predict when
-you sit down.</p>
+<h2>Episode 2 — tonight's schedule</h2>
+
+<p class="finish"><b>Finish estimate: tonight, 22:30&ndash;23:30.</b>
+Fallback: tomorrow before noon. Every block below has up to
+30 minutes of give, and the estimate already assumes it.</p>
+
+<h3 class="you">What only you can do</h3>
+<div class="scroll"><table class="sched you"><thead><tr><th>When (+04:00)</th><th>How long</th><th>What</th><th>Slack</th></tr></thead><tbody><tr><td class="tw">now &rarr; 17:00</td><td class="tl">about 46 min</td><td class="td">Your first pass — the whole batch in one sitting: about 17 clips and 12 open calls. What is in it is listed under this table.</td><td class="ts">+30 min</td></tr><tr><td class="tw">20:30 &rarr; 21:30</td><td class="tl">about 15 min</td><td class="td">Your second pass — only the beats that came back from the fix wave. A yes-or-no against notes you already wrote, which is why it is short.</td><td class="ts">+30 min</td></tr><tr><td class="tw">22:00 &rarr; 23:00</td><td class="tl">about 5 min</td><td class="td">Screen the cut and make the publish call — 100 seconds of episode, then your word. Publishing is yours alone and always has been.</td><td class="ts">+30 min</td></tr></tbody></table></div>
+
+<h3 class="machine">What runs without you</h3>
+<div class="scroll"><table class="sched machine"><thead><tr><th>When (+04:00)</th><th>How long</th><th>What</th><th>Slack</th></tr></thead><tbody><tr><td class="tw">16:00 &rarr; 20:30</td><td class="tl">about 3.7 h of work</td><td class="td">The fix wave — the 8 beats whose fix is known, at a measured 28 min a beat, plus whatever your first pass sends back. This is the one <b>measured</b> figure in either table; the 4 h 30 min window leaves 49 min of headroom on top of it.</td><td class="ts">+30 min</td></tr><tr><td class="tw">21:30 &rarr; 22:00</td><td class="tl">about 30 min</td><td class="td">Voice and assembly — Chatterbox voices the approved beats and <code>render_t3</code> cuts the captioned 9:16 episode with the Sapling title card. Lands in your inbox as one thing to watch.</td><td class="ts">+30 min</td></tr><tr><td class="tw">only if you keep them</td><td class="tl">about 1.8 h of work</td><td class="td">The 4 gated beats. This runs only if your calls keep them — a beat that gets cut costs nothing, which is why it is not in the fix-wave figure above.</td><td class="ts">+30 min</td></tr></tbody></table></div>
+
+<p class="note">The two interleave: your first pass by 17:00 hands the fix wave
+its work, the wave finishes by 20:30 and hands your second pass its work, and
+assembly runs while you are away from the desk. Slip one of your blocks by more
+than its 30 minutes and everything after it slides by the same amount —
+that is the whole mechanism, and it is why the finish estimate is a window
+rather than a time.</p>
+
+<h3>What is in your first pass</h3>
+<div class="ph you"><div class="phh"><span class="pn">1</span><b>Your first pass</b><span class="tag">yours</span></div><p class="meta">today, whenever you sit down · about 46 minutes</p><p class="body">Everything the card has finished with goes in front of you in one batch. That is <b>9</b> takes already waiting plus the <b>8</b> now rendering, so about <b>17 clips</b> — at 2 minutes each including a second look — and <b>12</b> open calls, most of them a one-line route you have already seen the evidence for.</p><ul class="items"><li>the six guard clips from the wave you ratified — does the register hold</li><li>the three-seed winners on 13, 14 and 15 — pick or send back</li><li>the four-take pools on 03, 17 and 21, where no two takes match</li><li>the beat 04 widen pair — a framing tradeoff, so it is yours</li><li>beats 19 and 20 with the placement fix in</li><li>the plates for 12, 18 and 21</li><li>the cold-open fig route, the beat 02 init pick, and whether 16 is in or out</li></ul></div>
 
 <h2>Episode 3 — trailing episode 2</h2>
 <div class="ph you"><div class="phh"><span class="pn">1</span><b>One photo of a sapling</b><span class="tag">yours</span></div><p class="meta">two minutes, whenever · two minutes</p><p class="body">Episode 3 has been stuck on a checkpoint that will not draw the tree through seven rounds of prompting. A real reference photo ends it — you already chose that route.</p></div><div class="ph machine"><div class="phh"><span class="pn">2</span><b>Conditioned sample, then the 21 stills</b><span class="tag">the machine</span></div><p class="meta">same day as the photo · about an hour after the sample passes</p><p class="body">One sample first — never a batch off an unapproved recipe — then the full 21-beat still wave.</p></div><div class="ph you"><div class="phh"><span class="pn">3</span><b>The still pass</b><span class="tag">yours</span></div><p class="meta">after the wave · about 15 minutes</p><p class="body">Twenty-one frames, pick or send back. The same shape as episode 2 phase one, one rung earlier.</p></div><div class="ph machine"><div class="phh"><span class="pn">4</span><b>The motion wave</b><span class="tag">the machine</span></div><p class="meta">unattended · a few hours</p><p class="body">Not derived: episode 3 has no beats in the states file yet, so this page has nothing measured to multiply. The moment its beats are scored the figure here becomes a real one, like episode 2's above.</p></div>
@@ -97,5 +136,5 @@ a stated assumption of 2 minutes a clip, not a measurement. How long
 a call takes you to answer, and how many beats come back for another round, are
 the two things nobody here can measure; they are named above and never given a
 number.</p>
-<p>Generated 2026-08-13 11:32Z · states measured 2026-08-13 10:23Z</p>
+<p>Generated 2026-08-13 12:01Z · states measured 2026-08-13 10:23Z</p>
 </footer>

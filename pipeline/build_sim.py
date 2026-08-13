@@ -1778,8 +1778,8 @@ def eta_cell(rows) -> str:
                 f'<span class="sl">left to render on episode {r["number"]}'
                 f'{tail} · what finishing it still waits on</span></a>')
     return (f'<a class="sx" href="#eta"><span class="sn ok">{_e(big)}</span>'
-            f'<span class="sl">of rendering left on episode {r["number"]}'
-            f'{tail} · what finishing it still waits on</span></a>')
+            f'<span class="sl">of render time left on episode {r["number"]}'
+            f'{tail} · not when it finishes — what that waits on</span></a>')
 
 
 def _call_label(what: str, limit: int = 44) -> str:
@@ -1848,18 +1848,33 @@ def _eta_card(r: dict, approx) -> str:
         # than a fourth wrapped line inside one — the first cut of this card ran
         # that tile to four lines and threw the row out of alignment.
         mach = (f'<span class="sn n-mach">{_e(approx(r["machine_minutes"]))}</span>'
-                f'<span class="sl">of rendering left, across {mach_beats} beat'
-                f'{"s" if mach_beats != 1 else ""}'
+                f'<span class="sl">of <b>render time</b> left, across '
+                f'{mach_beats} beat{"s" if mach_beats != 1 else ""}'
                 + (f' · thin estimate, off {r["sample"]} beat'
                    f'{"s" if r["sample"] != 1 else ""}' if r["thin"] else "")
                 + '</span>')
     else:
         mach = ('<span class="sn n-mach">nothing</span>'
                 '<span class="sl">left to render that is not behind a call</span>')
+
+    # THE SENTENCE THAT HAD TO BE SAID OUT LOUD. Roman, 2026-08-13, reading the
+    # first version of this card: "will we be able to finish episode 2 in 1.8
+    # hours?" No — that figure is the card's own working time, and he read it as
+    # time-to-finished, which is precisely the confusion the two-clock design
+    # exists to prevent. The design was right and the label was not: "3.7 h" next
+    # to an episode name reads as an ETA for the episode unless something says
+    # otherwise in plain words. This is that something, and it is not tucked in a
+    # drawer — the drawer is where the explanation was when he misread it.
+    clarify = ('<p class="epwarn"><b>Render time only.</b> This is how long the '
+               'card is busy, <i>not</i> how long until the episode is finished — '
+               'it finishes when your passes land, and those are not on a clock '
+               'anyone here can read. '
+               '<a href="review/plan">The schedule with times is here &rarr;</a></p>')
+
     gated = ""
     if r["conditional_beats"] and r["conditional_minutes"]:
         gated = (f'<p class="epnote">A further <b>{_e(approx(r["conditional_minutes"]))}'
-                 f'</b> of rendering, but only if the {r["conditional_beats"]} '
+                 f'</b> of render time, but only if the {r["conditional_beats"]} '
                  f'gated beat{"s are" if r["conditional_beats"] != 1 else " is"} '
                  'kept — a beat that gets cut costs nothing, so it is not in the '
                  'figure beside it.</p>')
@@ -1892,7 +1907,7 @@ def _eta_card(r: dict, approx) -> str:
             f'</b>{title}<span class="epp">{r["ready"]} of {total} passed</span>'
             f'</div><div class="epbar" role="img" aria-label="{r["ready"]} of '
             f'{total} beats passed">{bar}</div><div class="epkey">{key}</div>'
-            f'<div class="epstats">{stats}</div>{gated}{nxt}</div>')
+            f'<div class="epstats">{stats}</div>{clarify}{gated}{nxt}</div>')
 
 
 # ---- files the reader's browser re-reads ------------------------------------
@@ -3088,6 +3103,12 @@ STRIP_CSS = """
   color: var(--faint); }
 .epstats .sl { display: block; font: 400 .68rem/1.45 var(--sans, inherit);
   color: var(--muted); margin-top: .12rem; }
+/* The render-time-is-not-finish-time sentence. Deliberately louder than
+   .epnote: it is the correction to an actual misreading, not a caveat. */
+.epwarn { margin: .55rem 0 0; padding: .45rem .6rem; border-radius: 8px;
+  border: 1px solid var(--line); background: var(--code-bg);
+  font: 400 .74rem/1.6 var(--sans, inherit); color: var(--muted); }
+.epwarn b { color: var(--ink); }
 .epnote { margin: .5rem 0 0; font: 400 .72rem/1.65 var(--sans, inherit);
   color: var(--faint); }
 .epnote b { color: var(--muted); font-weight: 700; }
