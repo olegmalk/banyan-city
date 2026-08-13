@@ -15522,3 +15522,27 @@
     the wanted leaf shape and int(round()). The second was this. A grep count is a question,
     never an answer.
   outcome: no action needed; fig beats are covered
+
+- id: ep2-samples-were-queued-behind-their-own-batch-0813
+  kind: correction
+  date: 2026-08-13
+  what_i_had_done: >-
+    Queued four decision-gating samples (the fig r2 pair, the b10-world pair) BEHIND twelve
+    bulk sweep clips. The box runner takes ready jobs by priority ascending then name, all
+    sixteen sat at priority 19, so it was effectively enqueue order — and the batch was in
+    front of the sample that was supposed to authorise it. That is ONE SAMPLE BEFORE ANY
+    BATCH inverted, by scheduling rather than by intent, which is how it gets past me.
+  what_made_it_urgent: >-
+    b02-still is holding SEVEN plates and therefore seven of my re-animations on the b10-world
+    result, on the correct asymmetry: seven plates drawn on white are wasted if the void turns
+    out to be plate-borne, against one queue cycle lost if it does not. So the gating pair had
+    become the critical path for the whole remake wave while sitting last in the queue.
+  fix: >-
+    Rewrote the priority field in place on the box (atomic os.replace, the runner only reads
+    it at selection): world pair to 1 and 2, fig r2 pair to 3 and 4. Verified the new run
+    order off the queue itself rather than assuming the edit took. Nothing was cancelled;
+    the twelve sweep clips keep their place behind the samples where they belonged.
+  the_rule_this_leaves: >-
+    A sample only gates a batch if it RUNS before the batch. Queue order is part of the
+    experiment design, not an implementation detail, and priority is the knob.
+  outcome: null
