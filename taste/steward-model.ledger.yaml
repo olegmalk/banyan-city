@@ -14962,3 +14962,57 @@
   ep1_seed_twins_left_unscored: >-
     Deliberately. Their consumer closed with episode 1 today; they stay on the results branch.
   outcome: null
+
+- id: ep2-vo-readiness-0813
+  kind: verification
+  date: 2026-08-13
+  task: generate/verify the full ep2 VO take set before tonight's publish.
+  finding: NO VOICING NEEDED. The set is complete and current.
+  what_i_checked_rather_than_assumed: >-
+    All 21 beats against the script. EIGHTEEN have dialogue and every one of them has BOTH an
+    mp3 and a manifest; the three silent beats (02 the sprint, 19 the drop, 21 the answer)
+    correctly have neither. No mp3 without a manifest, no manifest without an mp3.
+  the_three_checks_that_make_it_a_verification_and_not_a_file_count: >-
+    (1) MEASURED CHUNKS PRESENT — every manifest carries lines[].chunks with real per-phrase
+    start/end times, which is what render_t3 prefers; spot-read beat 06 and its three chunks
+    are timed to the millisecond. (2) NO STUB FILES — every mp3 is substantial, none near
+    zero. (3) TEXT MATCHES THE CURRENT SCRIPT — this was the real risk, because the shot lists
+    drifted off their scripts earlier this week and a re-written line would leave the old
+    voicing silently stale. Compared normalised manifest text against beats.json line by line:
+    18 of 18 match.
+  therefore: >-
+    I did not load the render environment and did not voice anything. Re-voicing takes that
+    are already good was the explicit instruction to avoid, and on publish night the cheapest
+    correct action is the one that spends no time. Engine on record is chatterbox-0.5B, the
+    cycle-003 cast.
+
+- id: ep2-b06-b10-noscale-and-b08-twohander-0813
+  kind: prediction
+  date: 2026-08-13
+  written: before enqueue. Three jobs; the card was empty when I found it.
+  b06_b10: >-
+    The guard wave failed these two the same way — both prompts told the bark board to FILL
+    THE FRAME, and an i2v pass with a locked camera can only obey that by SCALING THE PROP into
+    a slab the size of his torso. Every fill/size clause is removed, the action text is
+    untouched, and giant-clipboard/oversized-prop/board-filling-the-frame go in the negative.
+    Predicate: a hand-sized board, readable, no bigger than his forearm, action intact.
+  b08_and_this_one_is_mine_to_be_embarrassed_about: >-
+    Beat 08 was written off as a MODEL LIMIT — "a single-character reference suppresses the
+    second character, so no prompt puts the guard in" — and left alone for two days. Two things
+    dissolve that. The guard wave holds TWO GUARDS through a whole clip, so two people in one
+    shot is not a capacity limit. And then I grepped my own prompts: EVERY goblin motion prompt
+    this lane has written BANS "second character, duplicate character" in the negative. I put
+    it there to stop the goblin doubling. Beat 08 was never denied its guard by the model — IT
+    WAS DENIED BY ME, in every prompt, for two days. That is the sapling all over again: the
+    thing that was missing was the thing nobody had asked for.
+  the_job: >-
+    The guard is NAMED as a second, visibly distinct person, described as separate ("two
+    different people, not one person twice"), given the beat's action, and the second-character
+    ban is REMOVED. The negative instead bans the failure the twins actually produce — one
+    person, single figure, twins, identical men, clone — because the real risk was never
+    absence, it was the SAME man doubled.
+  falsifiable_by: >-
+    The guard arriving as a second goblin, or not arriving. That confirms the stills lane's
+    reading that two DIFFERENT characters need two references, and hands the beat back to them
+    with a plate to make. Either answer retires a two-day-old wall.
+  outcome: null
