@@ -1,0 +1,134 @@
+# 2026-08-13. THE BALLOON REPRODUCES, SO IT IS SYSTEMATIC, AND NOW IT HAS A FIX WORTH TRYING.
+#
+# I refused to guess at beat 04''s ballooning cranium and wrote down what would unblock it: a
+# second case. The pair rendered — same init, same prompt, seed 20260806 and 20260813 — AND
+# BOTH BALLOON, identically, from about frame 9. So it is not seed luck. It is tied to this
+# init or to the shot scale, and since the seed is excluded the two remaining candidates are
+# the frame and the plate.
+#
+# WHAT THE PAIR DISCRIMINATES, which one case could not: beat 04 is the ONLY beat in the
+# episode whose HEAD FILLS THE FRAME. Every other character beat is a medium or wide and none
+# of them balloons. That is a real difference between the failing cases and the passing ones,
+# which is exactly what I said one observation could never give me.
+#
+# THE LEVER IS THE ONE ALREADY PROVEN TWICE: the camera follows the described contents, and
+# describing a frame changes what fits in it — that is how beat 18 got down to one fig. So
+# this describes a HEAD-AND-SHOULDERS shot with clear space above him and field on both
+# sides, explicitly not filling the frame, and bans the defect by name in the negative.
+#
+# HONEST RISK: his approved note on this beat is "close on his face", and widening trades
+# some of that intimacy for a head that stays the right size. If it works he should see both
+# and choose. If it balloons anyway at head-and-shoulders, the fault is the PLATE and not the
+# framing, and the next move is the stills lane''s, not mine.
+id: ep2-b04-widenB-0813
+task: ep2-b04-widenB-0813
+node: 002b-first-citizen
+beat: 4
+runner: box
+priority: 19
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: ep2 motion lane, 2026-08-12
+consumer: 'review/ep2-picks/motion-0812.html — the re-clip of the one beat he has spoken positively about, on a still that fixes the fault he named.'
+success: 'A 704x1280 mp4, 73 frames, in which his head stays a normal size for the whole clip — no inflation between frames 0 and 9 — with space above him and field either side, in BOTH seeds. The failure worth reporting is ballooning even at head-and-shoulders, which would move the fault from the framing to the plate and hand it to the stills lane.'
+why: The pair proved the balloon is systematic and that beat 04 is the only head-filling frame in the episode; framing is the lever that has twice controlled what fits.
+est_minutes: 5
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b04-widenB-0813\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"--out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw, nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b04-widenB-0813\b04-motion-prompt.txt: '2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: a HEAD-AND-SHOULDERS shot of a small goblin with clear space above his head and grassy field visible on both sides of him — his head takes up only the middle portion of the frame and does NOT fill it. He is a small goblin in a blurred grassy field — pale yellow-green skin, a bald domed head, long pointed ears, large red-orange eyes, both fists raised in front of his chest. His cheeks stay puffed tight and his mouth stays shut. His eyes dart left and right and back again, his long ears twitch and flick at small sounds, and his fists tighten. Only his eyes, his ears and his hands move; his head does not turn and the framing never changes. Soft morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.'
+  C:\banyan-farm\ep2-b04-widenB-0813\b04-negative.txt: huge head, giant head, oversized cranium, swollen skull, balloon head, bobblehead, head filling the frame, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, face morphing, distorted face, warped face, changing facial features, head turning, extra eyes, extra ears, hair, mouth opening, talking, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text
+  C:\banyan-farm\ep2-b04-widenB-0813\b04-jobs-encode.json: "[{\"beat\": 4,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b04-widenB-0813\\\\b04-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\\ep2-b04-widenB-0813\\\\b04-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b04-widenB-0813\\\\b04-negative.txt\"}]"
+  C:\banyan-farm\ep2-b04-widenB-0813\b04-jobs-render.json: "[{\"beat\": 4,\n  \"seed\": 20260813,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b04-widenB-0813\\\\b04-embeds.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\\ep2-b04-widenB-0813\\\\b04-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b04-widenB-0813\\\\04-the-footnote-LTX-widenB-0813.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b04-widenB-0813\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b04-train-r1-0812\04-the-footnote-ipa-r0-w015-s0.png
+  - --sha256
+  - 0047bef67d4815b960b4a7eaa1ae41c66345d33f9dcc54ad014dbd6c45bfcd5a
+  - --out
+  - C:\banyan-farm\ep2-b04-widenB-0813\b04-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b04-widenB-0813\b04-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b04-widenB-0813\b04-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '73'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b04-widenB-0813
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b04-widenB-0813\bench-b04-widenB.jsonl
+  - --bench-label
+  - ep2-b04-widenB-0813
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b04-widenB"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/ep2-b04-widenB-0813/04-the-footnote-LTX-widenB-0813.mp4*")
+                 + glob.glob("C:/banyan-farm/ep2-b04-widenB-0813/b04-init-704x1280.png")
+                 + glob.glob("C:/banyan-farm/ep2-b04-widenB-0813/bench-b04-widenB.jsonl"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b04-widenB-0813.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 2 else 1)
+artifacts:
+- C:\banyan-farm\ep2-b04-widenB-0813\04-the-footnote-LTX-widenB-0813.mp4
+- C:\banyan-farm\ep2-b04-widenB-0813\b04-init-704x1280.png

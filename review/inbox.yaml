@@ -183,7 +183,6 @@
       him jogging at all, just looking around, basically. (Both faults were in my prompt, not the model:
       it never said "jog" and it did say "he stays standing in the same spot", and the only thing saying
       guard was the noun. Fix round ep2-b05-jog-uniform-0812 queued.)'
-
 - what: EPISODE 2 - THE MORNING READ. Four beats look ready to cut (13, 14, 15, 18) and beat 19 now lands
     its fig on his head. THE GUARD RULING UNBLOCKS SIX BEATS (05/06/07/09/10/11) and is the biggest thing
     waiting on you. Three beats (03, 17, 21) will not render the same way twice - four takes each are
@@ -292,59 +291,90 @@
   kind: clip
   episode: 2
   verdict_hint: pick a take per beat / tell me to keep chasing repeatability
-- what: "DECISION NEEDED - episode 3 cannot be drawn and it is not a prompt problem any more. The cold open needs one picture: the goblin beside his sapling. Seven rounds say this checkpoint will not draw that sapling. FOUR rounds of rewording put the sapling in his hand instead of in the ground (best result 1 frame in 4). THREE rounds of giving the sapling its own reference plate, with no goblin in it at all, came back with a PERSON in the picture anyway - a girl in a dress, a green-haired child, a plant-headed humanoid - even after 'no people, no girl, no child' were all negated. The pipeline also forbids negating 'man' and 'boy' on that kind of plate, so the two likeliest intruders cannot be banned at all. Options as I see them: (a) condition the sapling on a real reference image the way the goblin was solved - drawn, photographed or sourced, not generated; (b) try a different checkpoint for plant plates; (c) accept roughly 1 usable frame in 4 and cherry-pick, which is ~84 renders for 21 beats; (d) something you see that I do not. The 21-still wave is NOT queued and will not be until you pick"
+- what: 'DECISION NEEDED - episode 3 cannot be drawn and it is not a prompt problem any more. The cold
+    open needs one picture: the goblin beside his sapling. Seven rounds say this checkpoint will not draw
+    that sapling. FOUR rounds of rewording put the sapling in his hand instead of in the ground (best
+    result 1 frame in 4). THREE rounds of giving the sapling its own reference plate, with no goblin in
+    it at all, came back with a PERSON in the picture anyway - a girl in a dress, a green-haired child,
+    a plant-headed humanoid - even after ''no people, no girl, no child'' were all negated. The pipeline
+    also forbids negating ''man'' and ''boy'' on that kind of plate, so the two likeliest intruders cannot
+    be banned at all. Options as I see them: (a) condition the sapling on a real reference image the way
+    the goblin was solved - drawn, photographed or sourced, not generated; (b) try a different checkpoint
+    for plant plates; (c) accept roughly 1 usable frame in 4 and cherry-pick, which is ~84 renders for
+    21 beats; (d) something you see that I do not. The 21-still wave is NOT queued and will not be until
+    you pick'
   url: /review/ep3-cast-0813
   since: 2026-08-13
   kind: decision
   episode: 3
-  verdict_hint: "which route for the sapling: a real reference image / a different model / cherry-pick at 1-in-4 / your own answer"
+  verdict_hint: 'which route for the sapling: a real reference image / a different model / cherry-pick
+    at 1-in-4 / your own answer'
   resolved:
     date: 2026-08-13
-    verdict: "dont you mean sapling? anyways ill choose: a real reference image."
-
+    verdict: 'dont you mean sapling? anyways ill choose: a real reference image.'
 - what: 'Your sapling-reveal ask ("we should show that he became a sapling earlier") HAS FOUR CANDIDATE
-    FRAMES and you have never seen them - they rendered on 11 August and were never scored or paged.
-    All four are a seedling standing in grass against sky, clean, no defects; s0 and s3 are the
-    strongest. The audit line saying no candidate existed was true of the node and false of the repo:
-    they sit on the results branch, never promoted'
+    FRAMES and you have never seen them - they rendered on 11 August and were never scored or paged. All
+    four are a seedling standing in grass against sky, clean, no defects; s0 and s3 are the strongest.
+    The audit line saying no candidate existed was true of the node and false of the repo: they sit on
+    the results branch, never promoted'
   url: /review/ep2-picks/sheets/ep1-b05-sapling-reveal-0812.jpg
   since: '2026-08-12'
   kind: sheet
   episode: 1
-  verdict_hint: pick one and I will cut it in as the reveal / none of these read as HIM becoming the
-    sapling, so the shot needs re-thinking / the ask is withdrawn
-- what: 'Beat 05 fix round - BOTH faults you named are answered. He JOGS now (legs alternating, boot
-    off the ground, then pulls up short) - that was my prompt''s fault, it never said "jog" and did say
-    "he stays standing in the same spot". And in arm B a SECOND guard arrives and both men wear a sash,
-    belt and badge, so they read as officials rather than civilians. Two clips on the page, B is the one
-    to watch. Known fault: B''s two men are identical twins'
+  verdict_hint: pick one and I will cut it in as the reveal / none of these read as HIM becoming the sapling,
+    so the shot needs re-thinking / the ask is withdrawn
+- what: 'Beat 05 fix round - BOTH faults you named are answered. He JOGS now (legs alternating, boot off
+    the ground, then pulls up short) - that was my prompt''s fault, it never said "jog" and did say "he
+    stays standing in the same spot". And in arm B a SECOND guard arrives and both men wear a sash, belt
+    and badge, so they read as officials rather than civilians. Two clips on the page, B is the one to
+    watch. Known fault: B''s two men are identical twins'
   url: /review/ep2-picks/b05-register-0812
   since: '2026-08-13'
   kind: clip
   episode: 2
-  verdict_hint: B is the direction, carry on / the sash and badge are wrong (they are MINE, not your
-    words - say so and they go) / the twins have to be fixed before this is usable
+  verdict_hint: B is the direction, carry on / the sash and badge are wrong (they are MINE, not your words
+    - say so and they go) / the twins have to be fixed before this is usable
   resolved:
     date: '2026-08-13'
-    verdict: 'and yes, keep going in that direction for the guards. (Ratifies arm B: action as the
-      dominant clause, sash-and-badge official read, second guard named where the script stages two.
-      Six-clip wave authored on it - beats 05twin/06/07/09/10/11. The sash is still MINE and the flag
-      stays live.)'
-
-- what: "A REAL REFERENCE IS THE RIGHT CALL AND THE PHOTO DOES NOT EXIST - could you take it? You chose a real reference image for the sapling; I went looking and CC0/public-domain is close to empty for this subject. Six searches of Wikimedia Commons under a strict CC0-or-public-domain filter returned three usable-licence candidates and not one is a sapling: a top-down tray of dozens of overlapping brinjal seedlings in a plastic tub (CC0, no single stem, no ground line, and it is exactly the bed-of-seedlings failure we already fight), a conifer seedling (public domain, wrong silhouette - ours is a broadleaf with two big leaves), and a mature apple tree (CC0). Everything that actually looks right on Commons is CC BY-SA, which we cannot pass through our own CC BY 4.0 offer. YOUR PHONE WOULD SETTLE IT IN A MINUTE and the licence would be ours outright. What the shot needs: ONE young plant, roughly knee-high, THIN bare stem visible from soil to first leaves, only two or three big broad leaves (a bare-ish one is better than a bushy one - we can prompt leaves on, we cannot prompt them off), growing in plain ground or bare soil, nothing else in frame, shot from standing height at the plant's own level rather than from above, plain background (sky, a wall, bare earth), daylight, portrait orientation. A weed or any random broadleaf seedling is fine - nobody will know the species, we need the SHAPE. If you send one I will stage it as the frozen sapling reference and the conditioned sample runs immediately"
+    verdict: 'and yes, keep going in that direction for the guards. (Ratifies arm B: action as the dominant
+      clause, sash-and-badge official read, second guard named where the script stages two. Six-clip wave
+      authored on it - beats 05twin/06/07/09/10/11. The sash is still MINE and the flag stays live.)'
+- what: 'A REAL REFERENCE IS THE RIGHT CALL AND THE PHOTO DOES NOT EXIST - could you take it? You chose
+    a real reference image for the sapling; I went looking and CC0/public-domain is close to empty for
+    this subject. Six searches of Wikimedia Commons under a strict CC0-or-public-domain filter returned
+    three usable-licence candidates and not one is a sapling: a top-down tray of dozens of overlapping
+    brinjal seedlings in a plastic tub (CC0, no single stem, no ground line, and it is exactly the bed-of-seedlings
+    failure we already fight), a conifer seedling (public domain, wrong silhouette - ours is a broadleaf
+    with two big leaves), and a mature apple tree (CC0). Everything that actually looks right on Commons
+    is CC BY-SA, which we cannot pass through our own CC BY 4.0 offer. YOUR PHONE WOULD SETTLE IT IN A
+    MINUTE and the licence would be ours outright. What the shot needs: ONE young plant, roughly knee-high,
+    THIN bare stem visible from soil to first leaves, only two or three big broad leaves (a bare-ish one
+    is better than a bushy one - we can prompt leaves on, we cannot prompt them off), growing in plain
+    ground or bare soil, nothing else in frame, shot from standing height at the plant''s own level rather
+    than from above, plain background (sky, a wall, bare earth), daylight, portrait orientation. A weed
+    or any random broadleaf seedling is fine - nobody will know the species, we need the SHAPE. If you
+    send one I will stage it as the frozen sapling reference and the conditioned sample runs immediately'
   url: /review/ep3-cast-0813
   since: 2026-08-13
   kind: decision
-  verdict_hint: "send a photo / use one of the three weak CC0 options anyway / different route"
+  verdict_hint: send a photo / use one of the three weak CC0 options anyway / different route
 - what: 'Beat 06 canon promotion is BLOCKED BY THE LICENCE GATE, and it needs your D15 ruling to move.
     I did exactly what you said - copied your picked frame into the canon slot with full provenance and
     both your quotes - and lint refused it: debt 26 against a ratchet of 25. I did not weaken the gate.
-    Your order settles WHICH FRAME is the beat; it does not settle whether we may publish a
-    CreativeML-OpenRAIL++-M frame, and only you can. The same ruling also unblocks 8 canon provenance
-    sidecars stuck behind the same wall'
+    Your order settles WHICH FRAME is the beat; it does not settle whether we may publish a CreativeML-OpenRAIL++-M
+    frame, and only you can. The same ruling also unblocks 8 canon provenance sidecars stuck behind the
+    same wall'
   url: /review/ep1-audit-0812
   since: '2026-08-13'
   kind: decision
   verdict_hint: 'the gate offers three: put CreativeML Open RAIL++-M on the publish-safe list (accepting
-    we pass its use restrictions to reusers) / re-shoot beat 06 on a publish-safe route / narrow what we
-    offer reusers (D13). Say which and the promotion is one command'
+    we pass its use restrictions to reusers) / re-shoot beat 06 on a publish-safe route / narrow what
+    we offer reusers (D13). Say which and the promotion is one command'
+- what: Beat 04's ballooning head is SYSTEMATIC, not luck - it happens at both seeds. It is the only shot
+    in the episode where his head fills the frame, which is the first real clue anyone has had. A head-and-shoulders
+    version is rendering; it trades some of the closeness your note asks for against a head that stays
+    the right size, so you should see both
+  url: /review/ep2-picks/motion-0812
+  since: '2026-08-13'
+  kind: clip
+  verdict_hint: prefer the closer framing with the bad head / the wider one / neither
