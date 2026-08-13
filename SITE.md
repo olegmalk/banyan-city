@@ -220,6 +220,17 @@ product: he reads top down and stops when he is out of patience, so what only
 he can answer must not sit below what needs nothing from him. An unrecognised
 group falls back to `result` rather than vanishing off the page.
 
+**A REVIEW PAGE SHOWS THE CURRENT BEST TAKE OF A BEAT, NEVER THE FIRST PASS.**
+On 2026-08-13 the founder reported beat 10 as having a blank background. It
+did — in the take embedded on the page. The world re-render that fixed it at
+both seeds had landed hours earlier and appeared further down the same page as
+a still, while the superseded clip stayed in the beat's slot. He reviewed a
+defect that no longer existed and spent a verdict on it. So: when a lane
+supersedes a take, it REPLACES the clip in that beat's slot in the same commit
+that lands the new one, and the older take moves to a runner-up or drops off.
+A page that shows a stale take is not merely out of date, it actively wastes
+the one thing the founder's time is for.
+
 **HIS REVIEW ARTIFACT OF RECORD PER EPISODE IS THE FULL ASSEMBLED VIDEO, and
 no script text ever again** (founder, 2026-08-13): "the best way for me to
 review something is by seeing the full video of it... lets not waste time by

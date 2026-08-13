@@ -15958,3 +15958,34 @@
     siblings — the same defect that made b01-shape render its twin's clip, caught this time BEFORE
     enqueue instead of after. Widening it an hour ago paid for itself immediately.
   outcome: null
+
+- id: ep2-founder-verdict-b10-and-my-paging-fault-0813
+  kind: founder-verdict
+  date: 2026-08-13
+  verbatim: '"the beat 10 has a blank background, and has that same problem of low quality.."'
+  half_one_was_never_a_render_fault: >-
+    Beat 10's white void was FIXED at both seeds hours before he looked at it. The world take
+    rebuilt sky, hedge, fence and grass, I scored it, I wrote it up — and I left the OLD noscale
+    take embedded as beat 10's clip on his page, with the fixed version appearing further down the
+    same page as a still inside a discussion about backgrounds. He watched the superseded clip and
+    spent a verdict on a defect that no longer existed.
+  the_rule_that_was_missing: >-
+    A REVIEW PAGE SHOWS THE CURRENT BEST TAKE OF A BEAT, NEVER THE FIRST PASS. When a lane
+    supersedes a take it replaces the clip in that beat's slot in the SAME COMMIT that lands the
+    new one. Written into SITE.md rather than left as a resolution of mine, because the failure
+    was structural: I treated the page as a narrative of the night's work, where each finding gets
+    written where it happened, instead of as a review surface where each beat has one slot holding
+    the best thing we have. Both readings are defensible and only one of them serves him.
+  what_it_actually_cost: >-
+    Not just a wasted verdict — it also means the SECOND half of his sentence is evidence about a
+    clip I already knew was wrong, so I cannot use it cleanly. He may have been reading quality off
+    a take that also had no background.
+  half_two_is_open_and_i_am_not_guessing: >-
+    "That same problem of low quality" is his second quality flag on the same axis today and I
+    still do not have an answer. The beat-18 crf test was inconclusive because I tested a smooth
+    subject; guidance 1.0 is ruled out because it made the picture worse. Beat 10's REBUILT world —
+    hedge, grass blades, fence palings, cloud edges — is dense high-frequency texture and is
+    therefore the right test article, and it is the clip he named. ep2-b10-worldnocrf-0813 is the
+    same job with the crf round-trip removed, one knob, same seed, against the crf-33 world take as
+    control. Queued at priority 1, with the beat-01 grass arm behind it.
+  outcome: null

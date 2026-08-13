@@ -576,6 +576,10 @@
   since: '2026-08-13'
   kind: clip
   verdict_hint: the joke lands / the board still reads wrong
+  resolved:
+    date: '2026-08-13'
+    verdict: >-
+      the beat 10 has a blank background, and has that same problem of low quality..
 - what: 'Beat 08 has both characters in it at last. I had recorded this beat as impossible - a one-character
     reference suppresses the second - and it was never the model: every goblin prompt I wrote banned "second
     character" in the negative, which quietly forbade the one beat that needs a second person'
@@ -606,3 +610,12 @@
   since: '2026-08-13'
   kind: clip
   verdict_hint: all three stand / veto one and say which
+- what: 'Beat 10 again, and you were shown the wrong take - my fault. The blank background you saw
+    was fixed hours before you looked at it; I left the old take embedded as the clip while the fixed
+    one sat further down the same page as a still. The clip is now the fixed take, with sky, hedge,
+    fence and grass. The low-quality half is a separate question I have not answered and will not
+    guess at - a test on this exact beat is rendering now'
+  url: /review/ep2-picks/motion-0812#tonight-2
+  since: '2026-08-13'
+  kind: clip
+  verdict_hint: the background is right now / still not right, and here is what is wrong
