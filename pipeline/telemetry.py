@@ -190,6 +190,15 @@ POSTER_PAIR_OLDER = 7200
 # The other direction is tight: a still published well AFTER the clip belongs to
 # a later take, not this one.
 POSTER_PAIR_NEWER = 300
+
+# How deep the queue has been, one point per publish, for the status page's
+# sparkline. KEPT ON DISK, not in memory: this daemon is restarted by hand
+# whenever telemetry.py changes — four times on the afternoon this was written —
+# and a series held in a process variable would lose its whole day every time,
+# which for a 24-hour chart means it is almost never telling the truth.
+QUEUE_DEPTH_CSV = FARM / "queue-depth.csv"
+DEPTH_WINDOW_HOURS = 24
+DEPTH_MAX_POINTS = 288           # 24h at one publish per 5 min
 PRUNE_SECONDS = 1800
 KEEP_HOURS = 48                      # the rolling CSV on the box
 WINDOW_HOURS = 24                    # what the published summary covers
@@ -549,6 +558,69 @@ def results_sample(out: Path = None, now: float = None, limit: int = RESULTS_MAX
     used = {i["poster"] for i in items if i.get("poster")}
     items = [i for i in items if not (i["kind"] == "image" and i["path"] in used)]
     return {"at": int(now), "branch": COURIER_BRANCH, "items": items[:limit]}
+
+
+def depth_history(q: dict, now: float = None, record: bool = False,
+                  path: Path = None) -> list:
+    """[[epoch, ready+running], ...] over the last 24h, oldest first — the queue's
+    depth over time, for the sparkline on the status page.
+
+    A READING THAT FAILED IS NOT A DEPTH OF ZERO, and this is the one place the
+    distinction is easy to lose: a chart interpolates, so a single 0 written
+    while the queue directory was unreadable draws a clean dip to empty across an
+    outage — a picture of an idle box, which is the exact claim the rest of this
+    file is arranged to never make. Nothing is appended unless the sample
+    actually carries counts, and the gap is left as a gap.
+
+    Kept in its own tiny CSV rather than in memory (see QUEUE_DEPTH_CSV): the
+    daemon is restarted by hand every time this file changes.
+    """
+    path = path or QUEUE_DEPTH_CSV
+    now = now if now is not None else time.time()
+    rows = []
+    try:
+        if path.exists():
+            for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+                parts = line.strip().split(",")
+                if len(parts) != 2:
+                    continue
+                try:
+                    rows.append((int(float(parts[0])), int(float(parts[1]))))
+                except ValueError:
+                    continue          # a row torn by a kill mid-write
+    except OSError as e:
+        log(f"queue depth history unreadable: {e}")
+        return []
+
+    if record and ("ready" in q or "running" in q) and not q.get("error"):
+        rows.append((int(now), int(q.get("ready") or 0) + int(q.get("running") or 0)))
+
+    rows.sort()
+    cut = now - DEPTH_WINDOW_HOURS * 3600
+    rows = [r for r in rows if r[0] >= cut][-DEPTH_MAX_POINTS:]
+
+    if record:
+        try:
+            tmp = path.with_suffix(".csv.tmp")
+            tmp.write_text("".join(f"{t},{d}\n" for t, d in rows), encoding="utf-8")
+            os.replace(tmp, path)     # never leave a half-written history behind
+        except OSError as e:
+            log(f"could not write queue depth history: {e}")
+    return [[t, d] for t, d in rows]
+
+
+def queue_block(now: float = None, record: bool = True) -> dict:
+    """The queue reading as it goes out on the wire, history attached.
+
+    `record` is False for the read-only modes — `--distil` rebuilds the published
+    file from what is already on disk and must not be able to stamp extra points
+    into the history by being run twice.
+    """
+    q = queue_sample(now=now)
+    series = depth_history(q, now=now, record=record)
+    if series:
+        q["depth_series"] = series
+    return q
 
 
 def current_job(root: Path, jid: str) -> dict:
@@ -1080,7 +1152,7 @@ def publish(obj: dict = None) -> str:
     bootstraps a parentless commit carrying only telemetry.json.
     """
     if obj is None:
-        obj = distil(read_rows(), gpu=gpu_name(), queue=queue_sample(),
+        obj = distil(read_rows(), gpu=gpu_name(), queue=queue_block(),
                     power=power_sample(), results=results_sample())
     write_json(obj)
     if not ensure_repo():
@@ -1239,7 +1311,7 @@ def daemon() -> int:
         if now >= next_publish:
             try:
                 got = publish(distil(read_rows(), now=now, gpu=gpu,
-                                       queue=queue_sample(now=now), power=power_sample(),
+                                       queue=queue_block(now=now), power=power_sample(),
                                        results=results_sample(now=now)))
                 log(f"published {'ok ' + got[:8] if got else 'FAILED (will retry)'}")
             except Exception as e:                  # noqa: BLE001
@@ -1274,13 +1346,13 @@ def main() -> int:
         print(json.dumps(sample(), indent=2, sort_keys=True))
         return 0
     if a.distil:
-        obj = distil(read_rows(), gpu=gpu_name(), queue=queue_sample(),
+        obj = distil(read_rows(), gpu=gpu_name(), queue=queue_block(record=False),
                     power=power_sample(), results=results_sample())
         write_json(obj)
         print(f"{JSON_PATH} — {len(obj['t'])} bucket(s), last sample {obj['last_sample']}")
         return 0
     if a.publish_once:
-        obj = distil(read_rows(), gpu=gpu_name(), queue=queue_sample(),
+        obj = distil(read_rows(), gpu=gpu_name(), queue=queue_block(),
                     power=power_sample(), results=results_sample())
         commit = publish(obj)
         print(f"{'pushed ' + commit if commit else 'NOT pushed'} "

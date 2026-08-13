@@ -7454,6 +7454,77 @@ def test_the_box_publishes_what_it_is_making_and_what_it_just_made():
               telemetry.current_job(root, "missing") == {})
 
 
+def test_the_depth_series_leaves_a_gap_where_it_could_not_look():
+    """The rolling queue depth the status page draws a sparkline from.
+
+    A CHART INTERPOLATES, which makes this the easiest place in the file to tell
+    a lie by accident. One 0 written while the queue directory was unreadable
+    draws a clean dip to empty across the whole outage — a picture of an idle box
+    on a night it was fully loaded. A failed reading is therefore not recorded at
+    all and the gap stays a gap; a queue that really is empty is a measurement and
+    is recorded as the zero it is.
+
+    It lives on disk rather than in the daemon, because the daemon is restarted by
+    hand whenever telemetry.py changes — four times on the afternoon this was
+    written — and a 24-hour series held in memory would almost never be 24 hours.
+    """
+    import tempfile
+    import time
+
+    import telemetry
+
+    with tempfile.TemporaryDirectory() as td:
+        csv = Path(td) / "queue-depth.csv"
+        now = time.time()
+        for depth, back in ((2, 900), (5, 600), (3, 300)):
+            telemetry.depth_history({"ready": depth - 1, "running": 1},
+                                    now=now - back, record=True, path=csv)
+        check("each publish adds one point",
+              [d for _t, d in telemetry.depth_history({}, now=now, path=csv)] == [2, 5, 3])
+
+        telemetry.depth_history({"error": "the queue directory is not there"},
+                                now=now - 120, record=True, path=csv)
+        check("a reading that FAILED is a gap, never a dip to zero",
+              len(telemetry.depth_history({}, now=now, path=csv)) == 3)
+
+        telemetry.depth_history({"ready": 0, "running": 0}, now=now - 60,
+                                record=True, path=csv)
+        series = telemetry.depth_history({}, now=now, path=csv)
+        check("a queue that really is empty is measured, and is a zero",
+              len(series) == 4 and series[-1][1] == 0)
+
+        before = len(series)
+        telemetry.depth_history({"ready": 9, "running": 1}, now=now,
+                                record=False, path=csv)
+        check("a read-only rebuild cannot stamp points into the history",
+              len(telemetry.depth_history({}, now=now, path=csv)) == before)
+
+        # It survives the restart that loses an in-memory series.
+        check("the history is read back off disk, not held in the process",
+              len(telemetry.depth_history({}, now=now, path=csv)) == before)
+
+        with csv.open("w", encoding="utf-8") as fh:
+            for i in range(400):
+                fh.write("%d,%d\n" % (int(now - 400 * 300 + i * 300), i % 7))
+            fh.write("%d,99\n" % int(now - 90000))
+            fh.write("this line is torn\n")
+        series = telemetry.depth_history({}, now=now, record=False, path=csv)
+        check("the series is capped at a day of five-minute publishes",
+              len(series) <= telemetry.DEPTH_MAX_POINTS)
+        check("nothing older than the window survives",
+              all(t >= now - 86400 for t, _d in series))
+        check("a row torn by a kill mid-write is skipped, not fatal",
+              all(isinstance(d, int) for _t, d in series))
+
+    # queue_block is what the publish paths send, and the field is OPTIONAL —
+    # every reader already survives the whole queue block being absent.
+    import inspect
+    src = inspect.getsource(telemetry.queue_block)
+    check("the series rides along inside the queue block", "depth_series" in src)
+    check("and is left out entirely when there is no history yet",
+          "if series:" in src)
+
+
 def test_the_dropdown_will_not_render_whatever_a_filename_says():
     """Every string in the dropdown was written by a machine on the render box —
     job ids, node names, and the filenames a render chose for its own output.
@@ -7935,6 +8006,7 @@ def main():
     # AND HE MUST BE ABLE TO SEE WHAT IT IS MAKING.
     test_the_box_publishes_what_it_is_making_and_what_it_just_made()
     test_the_dropdown_will_not_render_whatever_a_filename_says()
+    test_the_depth_series_leaves_a_gap_where_it_could_not_look()
 
     test_every_beat_gets_exactly_one_leaf_and_an_unscored_one_shows_as_missing()
     test_the_beat_states_are_grouped_by_whose_clock_they_are_on()
