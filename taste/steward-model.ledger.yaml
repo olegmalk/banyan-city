@@ -15299,3 +15299,29 @@
     same mistake is a check standing in for a habit: apostrophes get doubled at write time in
     any single-quoted YAML string, and the generated file gets parsed before it is enqueued.
   outcome: null
+
+- id: ep2-b02-adult-0813-observed
+  kind: observation
+  date: 2026-08-13
+  scores: ep2-b02-adult-a-0813 and -b-0813
+  verdict: >-
+    ARM A PASSES AND GATES THE WAVE. The age read moved on the first try: narrower angular skull,
+    longer thinner limbs, sharper features, a gaunt small ADULT where train-r1 drew a round-headed
+    child in a coat. Same creature throughout — green, bald, long ears, the patched coat — so his
+    fence held: "not too much of a major change".
+  arm_b_lost_and_the_way_it_lost_is_the_finding: >-
+    Denying the child read in the negative (childlike proportions, stubby limbs, cute, kawaii) did NOT
+    help and made it worse in the one place that matters: B's crania came back LARGER and more domed,
+    which is the most infantile proportion there is. So on this axis ASSERTION beats DENIAL.
+  why_that_is_worth_more_than_the_beat: >-
+    It is the OPPOSITE of the guards' register result, where assertion lost five rounds and staging
+    won. The two are consistent once stated properly: PROPORTION is a drawable geometric fact and can
+    be asserted; TONE is not a thing in the frame and cannot. That is the rule to carry — assert what
+    can be drawn, stage what cannot, and never negate your way to either.
+  picks: >-
+    A s0 (sha bfe498b9…) and A s2 (sha e9bbc356…). NOT A s1, whose red glowing eyes read sinister rather
+    than older, and NOT A s3, which drifted the costume to a white tunic. Two clean of four.
+  gates_released: >-
+    The plate-remake wave may use arm A's wording. Beats list to be confirmed against motion-wave's
+    kid-read flags; b04 has joined it on their evidence (widen failed at both seeds).
+  outcome: null
