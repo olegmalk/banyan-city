@@ -23,6 +23,12 @@
   kind: script
   episode: 3
   verdict_hint: approve 003a / approve 003b / approve with conditions / neither because X
+  resolved:
+    date: '2026-08-13'
+    verdict: >-
+      the best way for me to review something is by seeing the full video of it... lets not waste 
+      time by having me read the entire script of each episode, lets remove that task, you can rev
+      iew it yourself if you'd like, but im fine with it.
 - what: Guards register — five rounds render them solemn, not "silly harmless bureaucrats"
   url: /review/ep2-picks/consistency-0812
   since: 2026-08-12
@@ -57,6 +63,12 @@
   since: '2026-08-10'
   kind: script
   verdict_hint: 'per script: approved / approved except X / no'
+  resolved:
+    date: '2026-08-13'
+    verdict: >-
+      the best way for me to review something is by seeing the full video of it... lets not waste 
+      time by having me read the entire script of each episode, lets remove that task, you can rev
+      iew it yourself if you'd like, but im fine with it.
 - what: The goblin definition - "patchwork cloak" next to "bald head" sews patches into his skull; the
     only clean beat omits the cloak from the definition
   url: /review/ep2-picks/morning-0812-wave2.html
@@ -212,6 +224,12 @@
   since: 2026-08-12
   kind: decision
   verdict_hint: countersign D22 / take any of the five back / keep or kill the name Jerry
+  resolved:
+    date: '2026-08-13'
+    verdict: >-
+      the best way for me to review something is by seeing the full video of it... lets not waste 
+      time by having me read the entire script of each episode, lets remove that task, you can rev
+      iew it yourself if you'd like, but im fine with it.
 - what: 'Guards register - YOUR DIRECTION WORKS, and the channel is the clip, not the still. In the still
     the staged pose never arrived (16 of 16 stuck in the reference''s own pose - the conditioning holds
     it, which also explains why nine of ten beats came back as standing portraits). In the clip, first

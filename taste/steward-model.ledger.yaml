@@ -15743,3 +15743,38 @@
     positively with the edge escape closed, and the failure named as objects in the negative.
     The shape clause is untouched — it works, so nothing about it changes in the same job.
   outcome: null
+
+- id: NORTH-STAR-cold-viewer-clarity-0813
+  kind: north-star
+  date: 2026-08-13
+  founder_verbatim: >-
+    "the best way for me to review something is by seeing the full video of it... lets not waste
+    time by having me read the entire script of each episode, lets remove that task, you can
+    review it yourself if you'd like, but im fine with it."
+  the_rationale_is_the_important_half: >-
+    He is not saving himself effort. He is saying that reading a script is the WRONG INSTRUMENT
+    for the thing he needs to detect, because a script read is done from working proximity — he
+    already knows who everyone is and what the episode is for, so it cannot show him what a cold
+    viewer sees. His stated worry is that episodes will confuse people who "will be confused and
+    just wanna click off". He understood the episodes only because he was close to them.
+  what_this_elevates: >-
+    COLD-VIEWER CLARITY becomes a standing axis in every steward evaluation, not a note filed once
+    after the series cold-read. The cold-read's findings stop being observations and become
+    criteria: four episodes opening identically, and the series reading as "the same episode three
+    times", are now failures to be caught during evaluation rather than described afterwards.
+  how_it_binds_this_lane: >-
+    A beat is not evaluated only against its own intent line any more. It is also asked whether a
+    viewer with no context could tell this shot from the same shot in another episode, and whether
+    the opening seconds give them a reason not to click off. A clip that serves its beat perfectly
+    and is indistinguishable from three other openings has failed an axis it used to pass.
+  what_it_removes: >-
+    Script reads, approval countersigns and digest asks are off his plate permanently and may not
+    be filed as inbox entries again. Scripts are steward-reviewed. His review artifact of record
+    per episode is the full assembled video, one watch entry per episode when the beats complete.
+  what_it_does_not_remove: >-
+    Per-beat taste calls. A still or a clip asking what a character IS, or whether a shot feels
+    right, is not a script read and remains his — the two taste calls waiting on him tonight (the
+    bare belly, whether the goblin survives a wide shot) are exactly the kind that stay.
+  applied_now: >-
+    Three open inbox entries closed with the quote verbatim; the reading group is empty and no
+    longer prints. Contract written into SITE.md.

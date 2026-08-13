@@ -220,6 +220,18 @@ product: he reads top down and stops when he is out of patience, so what only
 he can answer must not sit below what needs nothing from him. An unrecognised
 group falls back to `result` rather than vanishing off the page.
 
+**HIS REVIEW ARTIFACT OF RECORD PER EPISODE IS THE FULL ASSEMBLED VIDEO, and
+no script text ever again** (founder, 2026-08-13): "the best way for me to
+review something is by seeing the full video of it... lets not waste time by
+having me read the entire script of each episode, lets remove that task, you
+can review it yourself if you'd like, but im fine with it." Scripts are
+steward-reviewed, full stop — this countersigns the D22 delegation rather than
+sitting beside it, and no lane may file a script read, an approval
+countersign, or a digest as an inbox entry again. When an episode's beats
+complete, its assembled T2 or T3 cut goes on the inbox as ONE watch entry.
+Per-beat taste calls stay exactly as they are: a still or a clip asking what a
+thing IS is not a script read and is still his.
+
 An inbox entry may carry an optional `episode: N` key. It is what puts the
 entry in that episode's gate list in the ETA section below; an entry without
 one is still counted, but is not attributed to an episode by guessing at its
