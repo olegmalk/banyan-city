@@ -520,8 +520,11 @@ def results_sample(out: Path = None, now: float = None, limit: int = RESULTS_MAX
         if ext in IMAGE_EXTS:
             posters.setdefault(str(p.parent), (p, mtime))
 
+    # Take more candidates than we need: a still that ends up postering the clip
+    # above it is dropped from the strip below, and the freed slot should go to
+    # the next real result rather than shortening the row.
     items = []
-    for mtime, size, p, ext in files[:limit]:
+    for mtime, size, p, ext in files[:limit * 3]:
         rel = p.relative_to(out.parent).as_posix()      # courier-box/farm-out/x → farm-out/x
         item = {"path": rel, "name": p.name, "at": int(mtime), "bytes": int(size),
                 "kind": "video" if ext in VIDEO_EXTS else "image"}
@@ -537,7 +540,15 @@ def results_sample(out: Path = None, now: float = None, limit: int = RESULTS_MAX
                     and -POSTER_PAIR_NEWER <= (mtime - pair[1]) <= POSTER_PAIR_OLDER):
                 item["poster"] = pair[0].relative_to(out.parent).as_posix()
         items.append(item)
-    return {"at": int(now), "branch": COURIER_BRANCH, "items": items}
+
+    # A still that is already the poster of a clip in this list is not also its
+    # own tile. Without this the strip alternates clip, its own poster, clip, its
+    # own poster — eight tiles showing four things, and on 2026-08-13 the four
+    # beats of one wave all seeded from a single register-pose crop, so the row
+    # read as the same picture over and over.
+    used = {i["poster"] for i in items if i.get("poster")}
+    items = [i for i in items if not (i["kind"] == "image" and i["path"] in used)]
+    return {"at": int(now), "branch": COURIER_BRANCH, "items": items[:limit]}
 
 
 def current_job(root: Path, jid: str) -> dict:

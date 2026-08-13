@@ -7418,6 +7418,10 @@ def test_the_box_publishes_what_it_is_making_and_what_it_just_made():
               "half-copied.png" not in names)
         check("the courier's own text drop is not a result",
               "a-log-tail.png" not in names)
+        # The still is the clip's poster, so it is not ALSO a tile of its own —
+        # otherwise the strip shows each result twice.
+        check("a still used as a poster is not repeated as its own tile",
+              "b05-init-704x1280.png" not in names)
         check("it names the branch the paths are relative to",
               r["branch"] == telemetry.COURIER_BRANCH)
 
