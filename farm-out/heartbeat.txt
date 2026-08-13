@@ -1240,3 +1240,4 @@
 20:06:38Z STARTED task=ep3-charref-assessor-r4-0813-1786651237 attempt=1 on box-runner
 20:07:36Z DONE task=ep3-charref-assessor-r4-0813-1786651237 rc=0 artifacts=8
 20:07:44Z STARTED task=ep3-charref-farmer-r4-0813-1786651239 attempt=1 on box-runner
+20:08:38Z DONE task=ep3-charref-farmer-r4-0813-1786651239 rc=0 artifacts=8
