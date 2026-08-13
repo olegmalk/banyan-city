@@ -1,0 +1,98 @@
+{
+  "id": "ep1-b13-seedB-0813-1786611597",
+  "task": "ep1-b13-seedB-0813-0811",
+  "node": "001-capability-inventory",
+  "beat": 13,
+  "worker": "box-runner",
+  "priority": 23,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "plate",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "-c",
+        "import sys; sys.path.insert(0, r\"C:\\banyan-farm\\banyan-city\\pipeline\")\nfrom plate_prep import prepare_plate\nout, rec = prepare_plate(\n    r\"C:\\banyan-farm\\banyan-city\\genomes\\sapling\\nodes\\001-capability-inventory\\stills\\13-i-always-left.png\",\n    \"704x1280\", r\"C:\\banyan-farm\\v34-r2\", \"13\")\nprint(\"plate\", out); print(rec[\"plate_wxh\"], rec[\"crop_policy\"])\nprint(\"source_sha256\", rec[\"sha256\"])\n"
+      ]
+    },
+    {
+      "name": "encode",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "encode",
+        "--jobs",
+        "C:\\banyan-farm\\v34-r2\\b13-jobs-encode.json"
+      ]
+    },
+    {
+      "name": "render",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "render",
+        "--jobs",
+        "C:\\banyan-farm\\v34-r2\\b13-jobs-render-217.json",
+        "--size",
+        "704x1280",
+        "--frames",
+        "217",
+        "--fps",
+        "24",
+        "--guidance",
+        "1.0",
+        "--distilled-sigmas",
+        "--two-stage",
+        "--image-crf",
+        "33",
+        "--offload",
+        "sequential",
+        "--mode",
+        "production",
+        "--task",
+        "ep1-b13-seedB-0813-0811",
+        "--worker",
+        "rtx5090",
+        "--bench-jsonl",
+        "C:\\banyan-farm\\v34-r2\\bench-b13-217f.jsonl",
+        "--bench-label",
+        "b13-217f-vo-length"
+      ]
+    },
+    {
+      "name": "publish",
+      "allow_fail": true,
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep1-b13-seedB\"\nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/v34-r2/13-i-always-left-LTX-seedB.mp4*\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep1-b13-seedB-0813.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s) ->\", dst)\nraise SystemExit(0 if len(src) >= 1 else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\v34-r2\\13-i-always-left-LTX-seedB.mp4"
+  ],
+  "started_at": "2026-08-13T09:41:08Z",
+  "attempts": 1,
+  "runner_pid": 2748,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-13T09:47:43Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\v34-r2\\13-i-always-left-LTX-seedB.mp4"
+  ]
+}
