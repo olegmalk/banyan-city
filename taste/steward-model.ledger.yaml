@@ -14792,3 +14792,106 @@
     The promotion is one command. The frame, the sidecar text and both quotes are written and tested;
     only the gate stands between them and canon, and the 14/15 counter reads 15/15 the moment it passes.
   outcome: null
+
+- id: ep2-b04-balloon-pair-0813-scored
+  kind: scoring
+  date: 2026-08-13
+  scores: ep2-b04-balloon-pair-0813, read beside the r2 take.
+  verdict: IT REPRODUCES. The balloon is SYSTEMATIC, not seed luck.
+  observed: >-
+    Same init, same prompt, seeds 20260806 and 20260813 — BOTH balloon, identically, from
+    about frame 9: the cranium inflates into a dome and the ears flatten into wedges. Seed is
+    excluded as a cause.
+  what_the_pair_bought_that_one_case_could_not: >-
+    A discriminator. Beat 04 is the ONLY beat in this episode whose HEAD FILLS THE FRAME —
+    every other character beat is a medium or a wide and not one of them balloons. That is a
+    real difference between the failing case and the ten passing ones, and it is exactly what
+    I said a single observation could never give me. Waiting for the second case was correct;
+    the fix it produced took ten minutes to write once the case existed.
+  queued: >-
+    ep2-b04-widen + twin: head-and-shoulders with clear space above him and field either side,
+    explicitly not filling the frame, plus balloon-head/oversized-cranium/bobblehead banned by
+    name. Uses the framing lever that already controlled what fits twice. Honest risk stated
+    in the header: his own note says "close on his face", so widening trades intimacy for a
+    head that stays the right size, and if it balloons anyway the fault is the PLATE and the
+    next move belongs to the stills lane.
+
+- id: ep2-seedC-third-takes-0813-scored
+  kind: scoring
+  date: 2026-08-13
+  scores: b13, b14, b15 seedC — third takes of the three beats I called shippable.
+  verdict: THE ACTION HOLDS ACROSS THREE SEEDS ON ALL THREE. That is what shippable needed.
+  observed: >-
+    b13 folds down with the sapling beside him and a long cast shadow; b14 is crouched with
+    his hands at the ground; b15 tips his chin up, opens his mouth and looks at a sapling to
+    his right. Palette and background dressing vary between takes — b13 runs warmer here, b14
+    cooler — but THE BEAT'S OWN CONTENT is the same in every one. That is the distinction
+    worth holding: these three vary in decoration, the five unstable beats varied in whether
+    the shot happened at all.
+  a_publish_bug_i_should_flag_because_it_is_now_endemic: >-
+    All three seedC clips published into the seedB directories. Their publish dst kept the
+    parent's bare name — the identical defect I hit on my own derived jobs and ledgered as
+    ep2-motion-payload-beat-provenance-0812's sibling. Nothing was lost and I fetched them
+    from the seedB dirs, but this has now bitten two lanes independently, which makes it a
+    template problem rather than a slip: ANY job derived by renaming inherits publish paths
+    that do not contain the id.
+
+- id: ep1-seed-twins-consumerless-0813
+  kind: note
+  date: 2026-08-13
+  what: >-
+    Episode 1 is CLOSED by the founder — "we have already published it dude, we are done".
+    The ep1-b11 and ep1-b13 seed twins I authored last pass therefore have no consumer and
+    are left UNSCORED. Their clips exist; nobody needs them.
+  the_honest_lesson_and_it_is_mine: >-
+    I checked those jobs for everything except whether anyone still wanted the answer. I
+    verified the stills were reachable, that the takes were generative not synthetic, that
+    the recipe twinned cleanly, and I added the missing publish step — careful work on a
+    question that had already been closed. "No work without a consumer" is a rule I have
+    quoted twice today while declining to pad the queue, and I still spent two renders on a
+    published episode. THE CONSUMER CHECK BELONGS FIRST, BEFORE THE FEASIBILITY CHECKS, not
+    after them.
+  outcome: null
+
+- id: d15-ruling-implemented-and-held-0813
+  kind: observation
+  date: 2026-08-13
+  founder_ruling_verbatim: "option 1, rule OpenRAIL publish-safe"
+  status: >-
+    IMPLEMENTED, PROVEN, AND THEN HELD — not shipped. Everything below was built and measured; it is
+    reverted in the tree and re-applying it is mechanical. It is held on a question that is not mine.
+  what_the_implementation_actually_needed_and_the_surprise_in_it: >-
+    `openrail` WAS ALREADY on the publish-safe allowlist. What was not was the SPELLING our own
+    manifests use — `CreativeML Open RAIL++-M`, with a space and a `++` — which the pattern
+    `r"openrail"` never matched. So for weeks the gate denied a licence its own list allowed, and most
+    of the 25-item debt was one string shape rather than an unread licence. Widening the pattern to
+    `r"open[\s-]?rail"` fixes it.
+  the_second_guard_that_fired_and_was_answered_not_bypassed: >-
+    With the licence allowed, the VARIANT guard immediately refused it — `cagliostrolab/animagine-xl-3.1`
+    only ever matched the key `animagine` as a fragment, so it demoted to "unread variant of animagine".
+    That guard is right. It was answered by keying the exact weights that WERE read
+    (`animagine-xl-3-1`; the dot normalises to a hyphen, which cost one wrong attempt), so a future
+    animagine-xl-4 still fails closed. Verified: 3.1 allow, 4.0 unknown.
+  what_it_measured: >-
+    lint 0. Licence debt 25 -> 11, and the gate asked to LOWER the ratchet, not raise it. Beat 06
+    promoted with both dated quotes; eight canon provenance sidecars attached; build_site 0, 87 pages
+    link-checked, QA-GATE PASS routes=45, AND THE SHOT BOARD COUNTER READ 15/15.
+  WHY IT IS HELD: >-
+    It breaks 21 tests, and they are not noise. The suite uses animagine-xl-3.1 as its canonical
+    "unpublishable licence" fixture in 32 places, so every test of the refusal machinery — promotion
+    honesty, composite refusal, withheld frames, the v34 chain — now rests on a false premise. Some
+    want a FIXTURE SWAP to a still-denied licence (f5-tts, CC-BY-NC), which is mechanical and which I
+    proved out on two of them. Others assert facts about REAL tree assets whose correct expectation now
+    flips from refused to publishable, which is not a fixture swap at all. Telling those apart is a
+    deliberate pass, and doing it at speed is indistinguishable from editing tests until they go green.
+  the_thing_I_will_not_decide_alone: >-
+    `lg.FOUNDER_NARROWED` already contains `animagine` and `cagliostrolab` — a NARROWING he made on
+    2026-08-09, the half-measure that let candidate frames show on /review while D15 stayed open. Does
+    a resolved D15 retire that narrowing, or does it survive alongside it? That is a governance
+    question about what we offer reusers, it is his, and nothing in "option 1, rule OpenRAIL
+    publish-safe" answers it.
+  what_is_needed_to_finish: >-
+    One deliberate pass over the 21, per test, with the FOUNDER_NARROWED question answered first
+    because it decides what several of them should assert. Perhaps an hour, and it should not be done
+    on a budget that rewards going green fast.
+  outcome: null
