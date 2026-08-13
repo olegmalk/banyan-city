@@ -7292,6 +7292,14 @@ def test_the_box_publishes_its_own_queue_and_never_a_zero_it_did_not_measure():
             (root / "runner.lock").unlink()
             check("no lock file at all is unknown too, not a dead runner",
                   telemetry.runner_alive(root) is None)
+            # A pid nobody is running is genuinely gone; a pid we merely may not
+            # query is NOT, and collapsing the two put "NOTHING IS DRAINING IT"
+            # on the page while the box was mid-render (2026-08-13).
+            check("a pid that does not exist reads as gone",
+                  telemetry.process_state(999999) is False)
+            check("our own pid reads as alive", telemetry.process_state(os.getpid()) is True)
+            check("a live runner whose pid we cannot query is never reported dead",
+                  telemetry.process_state(1) is not False)
             (root / "runner.lock").write_text(
                 "%d 2026-08-13T09:39:02Z boot=1786500000\n" % os.getpid())
         finally:

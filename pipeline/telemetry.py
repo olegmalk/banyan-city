@@ -585,7 +585,51 @@ def runner_alive(root: Path):
     mine = boot_id()
     if boot and mine and abs(boot - mine) > 120:
         return False                     # written before this boot: a stale lock
-    return bool(pid) and pid_alive(pid)
+    return process_state(pid) if pid else None
+
+
+# OpenProcess failure modes worth telling apart. "No process with that id" is a
+# fact; "you may not ask about that process" is not an answer at all.
+ERROR_ACCESS_DENIED = 5
+ERROR_INVALID_PARAMETER = 87
+STILL_ACTIVE = 259
+
+
+def process_state(pid: int):
+    """True alive / False gone / None could not tell.
+
+    SEPARATE FROM pid_alive() ON PURPOSE, and the difference is the whole point.
+    pid_alive answers a two-way question for the sampler lock, where "I could not
+    query it" must resolve to "not alive" so a sampler always starts. Here the
+    same collapse would put "NOTHING IS DRAINING THE QUEUE" on a public page
+    because one OpenProcess came back denied — and on 2026-08-13 the published
+    reading said the runner was dead while box_runner was three minutes into an
+    LTX take and an interactive probe of the same pid, on the same box, said it
+    was fine. Only ERROR_INVALID_PARAMETER actually means the pid is gone;
+    everything else is this process's ignorance and is published as such, so the
+    page stays quiet instead of raising a false alarm.
+    """
+    if os.name != "nt":
+        try:
+            os.kill(pid, 0)
+            return True
+        except ProcessLookupError:
+            return False
+        except PermissionError:
+            return True                  # it exists; it is simply not ours
+        except OSError:
+            return None
+    try:
+        k32 = ctypes.WinDLL("kernel32", use_last_error=True)
+        h = k32.OpenProcess(0x1000, False, pid)      # QUERY_LIMITED_INFORMATION
+        if not h:
+            return False if ctypes.get_last_error() == ERROR_INVALID_PARAMETER else None
+        code = ctypes.c_ulong()
+        ok = k32.GetExitCodeProcess(h, ctypes.byref(code))
+        k32.CloseHandle(h)
+        return (code.value == STILL_ACTIVE) if ok else None
+    except (AttributeError, OSError):
+        return None
 
 
 # ---------------------------------------------------------------- the rolling CSV
