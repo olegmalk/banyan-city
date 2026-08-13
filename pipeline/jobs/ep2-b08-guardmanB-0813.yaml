@@ -1,0 +1,137 @@
+# 2026-08-13. HIS VERDICT: "the goblin is fine, but the other guy looks like some random kid
+# with a big belly??" That is two failures and I had scored the beat as a pass.
+#
+# KID. My body-type words - round, soft, plump, doughy, pudgy - resolved as an AGE, not a shape.
+# They are the words that describe a child's build, so the model drew a child. The clause bound
+# perfectly; it was the wrong clause. A thing can obey you exactly and still be wrong.
+#
+# RANDOM. He had no identity. He is plateless, made entirely of words, and nothing in my prompt
+# tied him to the cast the other five guard beats animate from, so the model invented a stranger.
+# I scored "two distinct people are in frame" as the win and never asked WHICH people.
+#
+# BARE BELLY. Answered as taste and answered against me: too broad for this show. I should not
+# have paged it as a question - "straining A LITTLE" coming back as a bare gut is an overshot
+# render, and I had already written down that the softener was inert.
+#
+# THE FIX IS NOT NEW WORDING, IT IS WORDING THAT ALREADY WORKS. b06 and b10 rendered this guard as
+# an adult man on this box two hours ago, off the b05-wave description, and the only thing I did
+# to break him was pile my own body adjectives on top. So: that description verbatim, the tunic
+# back over the belly, the age anchored with the same MAN-not-boy lever that separated the passing
+# adult plate from the four that failed, and every round/soft/plump word gone.
+#
+# THE RISK I CANNOT PRICE is the two-body problem - whether one prompt holds the goblin's identity
+# AND the guard's when only the goblin has a reference. If the guard holds and the goblin drifts,
+# or the reverse, the fallback is staging the guard his own reference crop box-side, which is
+# already scoped. Prediction is ledgered before this was queued.
+id: ep2-b08-guardmanB-0813
+task: ep2-b08-guardmanB-0813
+node: 002b-first-citizen
+beat: 8
+runner: box
+priority: 19
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: ep2 motion lane, 2026-08-12
+consumer: 'Beat 08, the one beat written off as impossible. Its joke is a guard pointing at a belly and no clip has ever contained a guard.'
+success: 'A 704x1280 mp4 with two different people in frame, the guard now visibly ROUND AND SOFT — plump, short, doughy, no muscle — jabbing a finger at the goblin''s BELLY at waist height while the goblin looks down at it. The failure worth reporting is the guard staying a lean adult man, which would mean register words fail even on a character conjured entirely by words, and the register problem is bigger than the plates.'
+why: r1 broke the two-character wall; the guard that arrived is the wrong build, and unlike the goblin he has no plate to inherit from, so register words should reach him.
+est_minutes: 6
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b08-guardmanB-0813\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"--out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw, nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b08-guardmanB-0813\b19-motion-prompt.txt: '2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: a small goblin standing in a summer field — pale yellow-green skin, a bald domed head, long pointed ears, red eyes, a patched hooded coat, his belly round and full. A SECOND CHARACTER IS IN THIS SHOT WITH HIM: A UNIFORMED PATROL GUARD, A GROWN MAN — short brown hair, a matching brown patrol tunic that fits him properly and covers him, with a cloth SASH OF OFFICE across his chest and a small brass BADGE pinned on it, a wide belt, dark trousers and boots. He is the same patrol guard who appears in the other guard beats: an adult man on duty, not a boy. He stands a step to the goblin''s right, clearly SEPARATE from him — two different people, not one person twice. THE GUARD LOWERS HIS CLIPBOARD AND POINTS AT THE GOBLIN''S BELLY: his arm comes down and straightens, his index finger extends and JABS TOWARD THE GOBLIN''S ROUND BELLY at the goblin''s waist height — the finger aimed low, at the stomach, not at his face or chest — and holds there, while the goblin looks down at where the finger is aimed. Both of them stay in frame the whole time and neither moves off his mark. Soft morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.'
+  C:\banyan-farm\ep2-b08-guardmanB-0813\b19-negative.txt: boy, child, kid, young boy, teenager, chubby child, bare belly, exposed stomach, bare midriff, shirt riding up, fat, obese, potbelly, one person, single figure, twins, identical men, clone, muscular, athletic, tall lean man, chiselled, soldier, warrior, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, sprout growing from head, plant growing out of head, leaves on his head, branch touching his head, tripod, camera, camera equipment, film equipment, stool, stake, plant support, face morphing, distorted face, warped face, changing facial features, extra eyes, extra ears, hair, walking out of frame, leaving the frame, drifting sideways, moving to a different spot, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text
+  C:\banyan-farm\ep2-b08-guardmanB-0813\b19-jobs-encode.json: "[{\"beat\": 8,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b08-guardmanB-0813\\\\b19-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\\ep2-b08-guardmanB-0813\\\\b19-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b08-guardmanB-0813\\\\b19-negative.txt\"}]"
+  C:\banyan-farm\ep2-b08-guardmanB-0813\b19-jobs-render.json: "[{\"beat\": 8,\n  \"seed\": 20260813,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b08-guardmanB-0813\\\\b19-embeds.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\\ep2-b08-guardmanB-0813\\\\b19-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b08-guardmanB-0813\\\\08-inside-him-LTX-guardmanB-0813.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b08-guardmanB-0813\cover_crop.py
+  - --src
+  - C:\banyan-farm\goblin-ipa-0812\out-b08-frozen\08-inside-him-ipa-r0-w015-s1.png
+  - --sha256
+  - 0ebff2e9751be4145d372f6c4483565bf8e05f3b9f2a1db7ee3e10d3ae909f2d
+  - --out
+  - C:\banyan-farm\ep2-b08-guardmanB-0813\b19-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b08-guardmanB-0813\b19-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b08-guardmanB-0813\b19-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b08-guardmanB-0813
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b08-guardmanB-0813\bench-b08-guardmanB.jsonl
+  - --bench-label
+  - ep2-b08-guardmanB-0813
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b08-guardmanB"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/ep2-b08-guardmanB-0813/08-inside-him-LTX-guardmanB-0813.mp4*")
+                 + glob.glob("C:/banyan-farm/ep2-b08-guardmanB-0813/b19-init-704x1280.png")
+                 + glob.glob("C:/banyan-farm/ep2-b08-guardmanB-0813/bench-b08-guardmanB.jsonl"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b08-guardmanB-0813.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 2 else 1)
+artifacts:
+- C:\banyan-farm\ep2-b08-guardmanB-0813\08-inside-him-LTX-guardmanB-0813.mp4
+- C:\banyan-farm\ep2-b08-guardmanB-0813\b19-init-704x1280.png

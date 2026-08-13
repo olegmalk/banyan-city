@@ -15862,3 +15862,45 @@
     approved. Read together they say whether the old recipe is better and, if it is, which knob
     did it. This compares two genuinely different things, unlike this morning's check.
   outcome: null
+
+- id: ep2-founder-verdict-b08-guard-random-kid-0813
+  kind: founder-verdict
+  date: 2026-08-13
+  verbatim: >-
+    "the goblin is fine, but the other guy looks like some random kid with a big belly??"
+  half_one_the_taste_call_is_answered: >-
+    The bare belly is NOT funny in this show's register. I filed it as an open taste question and
+    he has closed it: too broad. Inbox entry resolved with this quote. The lesson underneath is
+    the one I recorded when it happened and then did not act on — "straining A LITTLE over his
+    belly" produced a bare gut, the softener was inert, and I paged the result as a taste question
+    instead of treating an obviously overshot render as a defect. Some things do not need his eye
+    to be judged wrong.
+  half_two_and_this_is_the_diagnosis_I_missed: >-
+    "RANDOM KID" is two failures, not one. KID: the guard caught the same young prior that has
+    been mauling the goblin all day. My body-type words — round, soft, plump, doughy, pudgy —
+    resolved as YOUNG, because those are the words that describe a child's build. I asked for a
+    shape and the model heard an age. RANDOM: he has no identity at all. He is plateless, made
+    entirely of words, and nothing in my prompt tied him to the approved r5 cast the other five
+    guard beats animate from, so the model invented a stranger. I scored "two distinct people in
+    frame" as the win and never asked WHICH people.
+  what_it_costs_me_to_admit: >-
+    I reported this beat's register clause as PASSING at both seeds, on the grounds that plump,
+    soft and doughy came back plump, soft and doughy. They did. The words bound perfectly and the
+    result is wrong, because I chose words that carry an age I did not want and an identity I
+    never specified. A clause can bind exactly and still be the wrong clause.
+  the_fix_round: >-
+    Drop every round/soft/plump/doughy/pudgy body word — per his standing adjective ruling they
+    are not describing what I actually want. Use instead the b05-wave guard wording that ALREADY
+    renders an adult man on this box (verified tonight in b06 and b10: "a uniformed patrol guard
+    in a summer field — short brown hair, a matching brown patrol tunic with a cloth SASH OF
+    OFFICE across his chest and a small brass BADGE pinned on it, a wide belt, dark trousers and
+    boots"), anchor the age with the same MAN-not-boy lever that separated the passing plate from
+    the four that failed, and put the tunic back over the belly.
+  prediction_written_before_enqueue: >-
+    The guard will come back as an adult man matching the other five guard beats, because that
+    exact wording produced exactly that in b06 and b10 two hours ago and the only thing I did to
+    break it was add my own body-type adjectives on top. The risk I cannot price is the two-body
+    problem: whether ONE prompt can hold the goblin's identity AND the guard's in a single frame
+    when only the goblin has a reference. If the guard drifts while the goblin holds, that is the
+    signal to stage the guard his own reference crop box-side, which is already scoped.
+  outcome: null
