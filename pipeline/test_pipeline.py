@@ -5962,22 +5962,36 @@ def test_the_queue_is_reported_in_time_and_never_guessed():
           live is None or live["est_minutes"] is None
           or live["est_minutes"] >= 0)
 
+    # THE HEADLINE, which moved on 2026-08-14. The founder asked for the queue
+    # at the top of the page, so the summary strip's queue cell became the same
+    # sentence twice and the cell was removed — its number and its two ids now
+    # head the queue's own section. The three facts below are unchanged and are
+    # checked at the number's new address: a time when one can be estimated,
+    # "not read" when no snapshot could be read, and the count with no time at
+    # all when nothing has been measured to multiply it by.
     now = datetime.datetime(2026, 8, 12, 13, 0, tzinfo=datetime.timezone.utc)
     view = {"fin": [], "live": [], "unread": [], "last_activity": None,
             "by_id": {}, "hero": {"number": 1, "watch": "/watch"},
             "tot": {"final": 15, "total": 15}, "ep2": None, "inbox": [],
             "boxq": eta}
-    check("the glance at the top answers it in time, not only in jobs",
-          "~16 min" in bs.summary_strip(view, now))
-    blind = bs.summary_strip({**view, "boxq": None}, now)
+    head = bs.queue_head_html(eta)
+    check("the queue's headline answers it in time, not only in jobs",
+          "~16 min" in head)
+    check("...and it keeps the ids LIVE_JS rewrites",
+          'id="q-tile-n"' in head and 'id="q-tile-l"' in head)
+    blind = bs.queue_head_html(None)
     check("...and with no snapshot to read it says so and prints no time",
           "not read" in blind and "of work queued" not in blind)
-    timeless = bs.summary_strip(
-        {**view, "boxq": bs.box_queue_eta({**snap, "kind_medians": {},
-                                           "kind_median_fallback": 0})}, now)
+    timeless = bs.queue_head_html(
+        bs.box_queue_eta({**snap, "kind_medians": {},
+                          "kind_median_fallback": 0}))
     check("...and with counts but nothing measured it still shows the counts",
           "no job times have been measured" in timeless
           and "of work queued" not in timeless)
+    # And the strip must not have kept a copy: one fact printed twice, a few
+    # hundred pixels apart, is the complaint that moved it.
+    check("the summary strip no longer prints the queue a second time",
+          "of work queued" not in bs.summary_strip(view, now))
 
 
 # ====================================================================== #
@@ -7582,6 +7596,126 @@ def test_the_dropdown_will_not_render_whatever_a_filename_says():
         check(f"LIVE_JS looks up {el}", f'"{el}"' in js)
 
 
+def test_the_queue_is_a_picture_and_the_picture_cannot_lie():
+    """The queue section became blocks on 2026-08-14 ("can you make the queue
+    more visuals and less text?"), and a picture can tell every lie a sentence
+    can while being much harder to check.
+
+    Four of them, and each has a rule here:
+
+      1. A STRIP SHORTER THAN THE COUNT BESIDE IT. The box publishes counts by
+         kind, and a mix that does not add up is ordinary — a reading of a queue
+         that moved while it was being read. Blocks for the jobs the mix does
+         not account for are drawn in the neutral colour rather than left out,
+         because a five-block strip under the numeral 8 is a wrong picture.
+      2. AN IDLE CARD DRAWN OVER A READING NOBODY TOOK. "Empty" and "not read"
+         are different states and only one of them may show the idle block.
+      3. A BEAT NUMBER ON A WAITING BLOCK. Only the running job has a record;
+         inventing a beat for a waiting one is the page making up the fact it
+         exists to report.
+      4. AMBER IN THE STRIP. The colour law is --leaf for the machine's work and
+         --sap for what is waiting on the author. Everything in this queue waits
+         on a card, so an amber block would say the opposite of what is true.
+    """
+    import re as _re
+
+    import build_sim as bs
+
+    # 1. the mix that does not add up
+    blocks, hidden, counts = bs.queue_blocks({"ltx": 3}, ready=5, running=2)
+    check("every job gets a block, even the ones the mix cannot name",
+          len(blocks) == 7 and hidden == 0)
+    check("...and the ones it cannot name are drawn as unknown, not as ltx",
+          counts.get(None) == 4 and counts.get("ltx") == 3)
+    over = bs.queue_blocks({"ltx": 99}, ready=1, running=1)[0]
+    check("...and a mix that over-counts is trimmed to the measured count",
+          len(over) == 2)
+
+    # the running job leads, wears its own kind, and is the only one marked
+    lead, _h, _c = bs.queue_blocks({"ltx": 1, "still": 3}, ready=3, running=1,
+                                   running_kind="ltx")
+    check("the running job is the first block and carries its own kind",
+          lead[0]["running"] and lead[0]["kind"] == "ltx")
+    check("...and it is the only block marked as running",
+          sum(1 for b in lead if b["running"]) == 1)
+
+    # 3. what a block is allowed to say
+    check("a waiting block names a kind and never a beat",
+          bs.queue_block_words({"kind": "ltx", "running": False})
+          == "waiting — a motion take")
+    check("...and a kind the snapshot never named says exactly that",
+          "does not name the kind" in bs.queue_block_words({"kind": None}))
+
+    # 2. empty is a state; unread is a different one
+    idle = bs.queue_strip_html([])
+    check("an empty queue draws the idle block, not a bare zero",
+          "card idle" in idle and "qstrip" in idle)
+    check("...and LIVE_JS will not draw it over a report with no queue block",
+          "if (!wrap || !q) return;" in bs.LIVE_JS)
+
+    # 4. the colour law, in the CSS and in the classes
+    qcss = bs.SIM_CSS[bs.SIM_CSS.index(".qstrip {"):bs.SIM_CSS.index(".qspark {")]
+    check("no block, swatch or bar in the queue picture is amber",
+          "--sap" not in qcss)
+    # `var(--alarm, #e2564d)` is the page's one deliberate literal and predates
+    # this section: --alarm is not defined in site_theme.py, so the fallback is
+    # the colour rather than a spare. Everything else must be a token.
+    check("...and every colour it does use is a theme token",
+          not _re.search(r"#[0-9a-fA-F]{3,8}\b",
+                         _re.sub(r"var\(--alarm,[^)]*\)", "", qcss)))
+
+    # the progress-ish bar is never called progress
+    js = bs.LIVE_JS
+    check("the running job's bar is labelled an estimate, never a completion",
+          "an estimate, not progress" in js
+          and "a measurement of how far through it is" in js)
+    check("...and it is drawn as SVG, like every other picture on this page",
+          '"qnow-svg"' in js and "createElementNS" in js)
+
+    # the strip and its key are built, not spliced
+    check("the redrawn strip never assigns innerHTML", ".innerHTML" not in js)
+    src = (REPO / "pipeline" / "build_sim.py").read_text(encoding="utf-8")
+    # The strip and its key take their ids from a default argument rather than a
+    # literal, so this checks the default — rename it and the JS stops finding
+    # the element, silently, which is the failure the tile taught us about.
+    check("the builder's strip and key keep the ids LIVE_JS looks up",
+          'sid: str = "q-strip"' in src and 'lid: str = "q-legend"' in src)
+    for el in ("q-now", "q-chips"):
+        check(f"the builder emits {el}", f'id="{el}"' in src)
+    for el in ("q-strip", "q-legend", "q-now", "q-chips"):
+        check(f"...and LIVE_JS looks up {el}", f'"{el}"' in js)
+    # One vocabulary, sent over rather than retyped: two spellings of "a motion
+    # take" is exactly the drift this page keeps being bitten by.
+    check("the strip's words are shipped to the browser, not written twice",
+          "QKIND_ONE = {json.dumps(QUEUE_KIND_ONE)}" in src)
+
+
+def test_the_queue_leads_the_page_and_says_so_once():
+    """Roman, 2026-08-14: "shouldnt the queue be at the top?"
+
+    Two things can quietly undo that. The queue can drift back down the page as
+    sections are added above it, and the summary strip can regrow a queue cell —
+    the same number a few hundred pixels from the section itself, which is the
+    duplicated information he keeps asking us to stop printing.
+    """
+    import build_sim as bs
+
+    src = (REPO / "pipeline" / "build_sim.py").read_text(encoding="utf-8")
+    body = src[src.index("<body>"):]
+    for name, marker in (("the queue", "{live_queue}"),
+                         ("the glance strip", "{strip}"),
+                         ("what waits on the author", 'id="waiting"'),
+                         ("the episode cards", "{eta_section}"),
+                         ("the work list", "{production}")):
+        check(f"the page body places {name}", marker in body)
+    order = [body.index(m) for m in ("{live_queue}", "{strip}", 'id="waiting"',
+                                     "{eta_section}", "{production}")]
+    check("the queue is the first section on the page, above the glance strip",
+          order == sorted(order))
+    check("the work list points at the queue rather than repeating it",
+          'href="#queue"' in src)
+
+
 def test_the_status_page_can_actually_find_the_numbers_it_rewrites():
     """The live queue tile is a contract between a builder and a string of JS,
     and nothing but this test holds the two ends together.
@@ -8089,6 +8223,8 @@ def main():
     test_a_rev_parse_that_failed_is_not_a_sha()
     # THE STATUS PAGE MUST GO STALE ON ITS OWN, NOT ON A REMINDER.
     test_the_box_publishes_its_own_queue_and_never_a_zero_it_did_not_measure()
+    test_the_queue_is_a_picture_and_the_picture_cannot_lie()
+    test_the_queue_leads_the_page_and_says_so_once()
     test_the_status_page_can_actually_find_the_numbers_it_rewrites()
     # AND HE MUST BE ABLE TO SEE WHAT IT IS MAKING.
     test_the_box_publishes_what_it_is_making_and_what_it_just_made()

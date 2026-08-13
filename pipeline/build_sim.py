@@ -1301,6 +1301,164 @@ def queue_time_basis(eta: dict) -> str:
     return base + (f", from {eta['sample']}" if eta["sample"] else "")
 
 
+# ---- the queue as a picture ---------------------------------------------------
+# Roman, 2026-08-14: "can you make the queue more visuals and less text?" What
+# stood here was three sentences a reader had to parse to learn a number they
+# could have SEEN — "the render box's own queue: 1 rendering, 3 waiting · an
+# estimated ~5 min of work queued, each queued job timed against others of its
+# kind". Depth is now a row of blocks, one per job; the sentences that survive
+# are one line each, and the methodology sits in a fold.
+#
+# WHAT A BLOCK CAN AND CANNOT SAY. The box publishes COUNTS BY KIND, never a
+# list of the jobs still waiting, so a waiting block knows what kind of work it
+# is and nothing else — no beat, no node, no name. Only the running job has a
+# record, and only the running block's tooltip names one. A beat number invented
+# for a waiting block would be this page making up the very thing it exists to
+# report.
+#
+# AND THEY ARE ALL GREEN. The colour law is the machine's work in --leaf and the
+# author's in --sap, so every block in this strip is a green: a queued render is
+# waiting on a card, not on a person, and an amber block here would say the
+# opposite of what is true. Kinds are separated by the three green steps plus a
+# key underneath, never by hue alone.
+QUEUE_KIND_CSS = {"ltx": "k-ltx", "still": "k-still", "charref": "k-charref",
+                  "inpaint": "k-inpaint"}
+# Singular, for one block's tooltip. charts.KIND_WORDS is the plural set the key
+# uses; each phrase is written once so the strip and its key cannot drift.
+QUEUE_KIND_ONE = {"ltx": "a motion take", "still": "a still frame",
+                  "charref": "a character sheet", "inpaint": "an inpainting pass"}
+QUEUE_UNKNOWN_ONE = "a queued job the snapshot does not name the kind of"
+QUEUE_UNKNOWN_MANY = "of a kind the snapshot does not name"
+QUEUE_BLOCK_CAP = 48   # past this it is a texture, not a count — the rest is words
+# The no-JS floor for the running-job card. A build genuinely cannot know what a
+# card picked up after it ran, so it says that rather than drawing a beat number
+# out of a snapshot that is minutes old by the time anyone loads the page.
+QNOW_BAKED = (
+    '<div class="qnow" id="q-now">'
+    '<p class="mono" id="q-now-note">Which beat the card has on it right now is '
+    'read by your browser from the box’s own five-minute publish. With '
+    'JavaScript off there is nothing here to read — a build cannot know what a '
+    'machine picked up after it ran.</p></div>')
+
+
+def queue_blocks(kinds: dict, ready: int, running: int, running_kind=None,
+                 cap: int = QUEUE_BLOCK_CAP) -> tuple:
+    """(blocks, hidden, counts) for the strip — one entry per queued job.
+
+    The running job leads, then the waiting ones grouped by kind. Jobs the kind
+    counts do not account for are drawn in the neutral colour rather than
+    dropped: a strip shorter than the count printed beside it is a worse picture
+    than an honestly unlabelled block. A mix that does not add up is a reading
+    of a queue that moved while it was being read — ordinary, and not a fault.
+    """
+    jobs = max(0, int(ready or 0)) + max(0, int(running or 0))
+    left = {str(k): max(0, int(v)) for k, v in (kinds or {}).items()
+            if str(v).lstrip("-").isdigit()}
+    n_run = max(0, int(running or 0))
+    blocks = []
+    for i in range(n_run):
+        k = str(running_kind) if (i == 0 and running_kind
+                                  and left.get(str(running_kind))) else None
+        if k is None:
+            k = next((kk for kk, n in sorted(left.items(), key=lambda kv: -kv[1])
+                      if n), None)
+        if k:
+            left[k] -= 1
+        blocks.append({"kind": k, "running": True})
+    for k in sorted(left):
+        blocks.extend({"kind": k, "running": False} for _ in range(left[k]))
+    while len(blocks) < jobs:
+        blocks.append({"kind": None, "running": False})
+    blocks = blocks[:jobs]          # an over-counting mix is trimmed to the count
+    counts = {}
+    for b in blocks:
+        counts[b["kind"]] = counts.get(b["kind"], 0) + 1
+    return blocks[:cap], max(0, len(blocks) - cap), counts
+
+
+def queue_block_class(kind) -> str:
+    if not kind:
+        return "k-unknown"
+    return QUEUE_KIND_CSS.get(str(kind), "k-other")
+
+
+def queue_block_words(b: dict) -> str:
+    """One block's tooltip — what it is, and whether a card has it now."""
+    kind = b.get("kind")
+    what = (QUEUE_KIND_ONE.get(str(kind), f"a {kind} job") if kind
+            else QUEUE_UNKNOWN_ONE)
+    return ("rendering now — " if b.get("running") else "waiting — ") + what
+
+
+def queue_strip_html(blocks: list, hidden: int = 0, sid: str = "q-strip",
+                     extra: str = "",
+                     idle: str = "card idle — nothing queued, nothing rendering"
+                     ) -> str:
+    """The depth, seen rather than read. Empty is a STATE, never a bare zero."""
+    extra = f" {extra}" if extra else ""
+    if not blocks:
+        return (f'<div class="qstrip{extra} empty" id="{sid}">'
+                f'<span class="qidle">{_e(idle)}</span></div>')
+    cells = "".join(
+        f'<span class="qblk {queue_block_class(b.get("kind"))}'
+        + (" run" if b.get("running") else "")
+        + f'" title="{_e(queue_block_words(b))}"></span>' for b in blocks)
+    if hidden:
+        cells += (f'<span class="qblk qplus" title="{hidden} more queued job'
+                  f'{"s" if hidden != 1 else ""}, not drawn">+{hidden}</span>')
+    n, run = len(blocks) + hidden, sum(1 for b in blocks if b.get("running"))
+    label = (f'{n} job{"s" if n != 1 else ""} on the render box, {run} rendering '
+             '— one block each, colour by kind')
+    return (f'<div class="qstrip{extra}" id="{sid}" role="img" '
+            f'aria-label="{_e(label)}">{cells}</div>')
+
+
+def queue_head_html(eta) -> str:
+    """The queue's headline number — the old glance tile, moved not copied.
+
+    It lived in the summary strip until 2026-08-14, when the queue itself went
+    to the top of the page and the cell became the same sentence twice. The ids
+    are the load-bearing part: LIVE_JS rewrites `q-tile-n` and `q-tile-l` from
+    the box's own publish, so what is baked here is the no-JS floor and not the
+    number most readers see.
+    """
+    if eta and eta["est_minutes"] and eta["jobs"]:
+        n, cls = "~" + _e(hours_words(max(1, eta["est_minutes"]))), "sn"
+        lab = ('of work queued on the render box · '
+               + ('an estimate, and a rough one: a median job times the count'
+                  if eta["basis"] == "rough" else
+                  'an estimate, each job timed against past jobs of its kind'))
+    elif eta and eta["jobs"]:
+        n, cls = str(eta["jobs"]), "sn"
+        lab = ('jobs on the render box · no job times have been measured, '
+               'so this page will not say how long that is')
+    elif eta:
+        n, cls = "0", "sn zero"
+        lab = 'nothing queued on the render box as of its last measured snapshot'
+    else:
+        n, cls = "not read", "sn none"
+        lab = ('the render box’s queue snapshot could not be read this build, '
+               'so its depth is not claimed either way')
+    return (f'<span class="{cls}" id="q-tile-n">{n}</span>'
+            f'<span class="sl" id="q-tile-l">{lab}</span>')
+
+
+def queue_legend_html(counts: dict, lid: str = "q-legend") -> str:
+    """The key. Colour alone never carries a difference on this site — the same
+    rule the charts follow, and the reason every block also has a tooltip.
+
+    Always emitted, empty or not: LIVE_JS refills it from a newer reading than
+    the build had, and an element that is not there cannot be refilled. CSS
+    hides it while it is empty.
+    """
+    keys = ""
+    for k, n in sorted(counts.items(), key=lambda kv: (-kv[1], str(kv[0] or "zz"))):
+        word = (charts.KIND_WORDS.get(str(k), str(k)) if k else QUEUE_UNKNOWN_MANY)
+        keys += (f'<span class="qkey"><i class="qsw {queue_block_class(k)}"></i>'
+                 f'{n} {_e(word)}</span>')
+    return f'<div class="qlegend" id="{lid}">{keys}</div>'
+
+
 # ---- the queue's states ------------------------------------------------------
 # The entry-by-entry record LEFT this page in the 2026-08-11 revamp: it was a
 # file dump styled as a page, and its one honest job — "diff me against the
@@ -2560,6 +2718,237 @@ LIVE_JS = """
     svg.setAttribute("aria-label", note.textContent);
   }
 
+  /* ---- the queue as blocks, redrawn from the box's own publish -------------
+     The baked strip is a supervisor snapshot that may be an hour old; this one
+     is the box's five-minute report, and it follows the SAME rules the builder
+     followed. One block per job. The running one ringed. Every fill a green,
+     because the strip is machine work and amber on this page means a person is
+     holding something. A kind the report does not name gets the neutral block
+     rather than being left out — a strip shorter than the count printed beside
+     it is the wrong picture, and an unlabelled block is an honest one.
+
+     WHAT A WAITING BLOCK MAY SAY. The box publishes counts by kind, never the
+     names of the jobs still in the directory, so only the running block's
+     tooltip carries a beat and a job id. Guessing one for a waiting block would
+     be this section inventing the fact it exists to report.
+
+     Nothing here touches innerHTML: every string in the report was written by a
+     machine on the render box, and each reaches the DOM through textContent or
+     setAttribute. */
+  function kindClass(k) { return !k ? "k-unknown" : (QKIND_CSS[k] || "k-other"); }
+  function kindOne(k) {
+    return !k ? QKIND_UNKNOWN_ONE : (QKIND_ONE[k] || ("a " + k + " job"));
+  }
+  function kindMany(k) {
+    return !k ? QKIND_UNKNOWN_MANY : (QKIND_MANY[k] || k);
+  }
+  function clearEl(n) { while (n.firstChild) n.removeChild(n.firstChild); }
+  function queueBlocks(q) {
+    var ready = q.ready || 0, running = q.running || 0, jobs = ready + running;
+    var left = {}, k, i;
+    if (q.kinds) {
+      for (k in q.kinds) if (Object.prototype.hasOwnProperty.call(q.kinds, k)) {
+        if (typeof q.kinds[k] === "number" && q.kinds[k] > 0) {
+          left[k] = Math.floor(q.kinds[k]);
+        }
+      }
+    }
+    var runKind = (q.current && q.current.kind) || null, blocks = [];
+    for (i = 0; i < running; i++) {
+      var pick = (i === 0 && runKind && left[runKind]) ? runKind : null;
+      if (!pick) {
+        var best = null;
+        for (k in left) {
+          if (left[k] > 0 && (best === null || left[k] > left[best])) best = k;
+        }
+        pick = best;
+      }
+      if (pick) left[pick] -= 1;
+      blocks.push({kind: pick, running: true});
+    }
+    var keys = [];
+    for (k in left) if (left[k] > 0) keys.push(k);
+    keys.sort();
+    for (i = 0; i < keys.length; i++) {
+      for (var j = 0; j < left[keys[i]]; j++) {
+        blocks.push({kind: keys[i], running: false});
+      }
+    }
+    while (blocks.length < jobs) blocks.push({kind: null, running: false});
+    return blocks.slice(0, jobs);       /* an over-counting mix is trimmed */
+  }
+  function drawStrip(q, id, legId, cap, mini, idleText) {
+    var wrap = document.getElementById(id);
+    /* NO QUEUE BLOCK IS NOT AN EMPTY QUEUE. A report that carries no queue at
+       all leaves the baked strip exactly where it was — drawing "card idle"
+       over a reading nobody took is the guessed zero this whole page is
+       arranged against, and it would be at its most convincing here. */
+    if (!wrap || !q) return;
+    var leg = legId ? document.getElementById(legId) : null;
+    clearEl(wrap);
+    if (leg) clearEl(leg);
+    var base = "qstrip" + (mini ? " mini" : "");
+    var blocks = q ? queueBlocks(q) : [];
+    if (!blocks.length) {
+      wrap.className = base + " empty";
+      wrap.removeAttribute("role");
+      wrap.removeAttribute("aria-label");
+      wrap.appendChild(el("span", "qidle", idleText));
+      return;
+    }
+    wrap.className = base;
+    var counts = {}, run = 0, i;
+    for (i = 0; i < blocks.length; i++) {
+      counts[blocks[i].kind || ""] = (counts[blocks[i].kind || ""] || 0) + 1;
+      if (blocks[i].running) run++;
+    }
+    var shown = Math.min(blocks.length, cap);
+    for (i = 0; i < shown; i++) {
+      var b = blocks[i];
+      var cell = el("span", "qblk " + kindClass(b.kind) + (b.running ? " run" : ""));
+      var tip = (b.running ? "rendering now — " : "waiting — ") + kindOne(b.kind);
+      if (b.running && q.current) {
+        var named = [];
+        if (q.current.beat || q.current.beat === 0) named.push("beat " + q.current.beat);
+        if (q.current.node) named.push(q.current.node);
+        if (q.current.task) named.push("job " + q.current.task);
+        if (named.length) tip += " · " + named.join(" · ");
+      }
+      cell.setAttribute("title", tip);
+      wrap.appendChild(cell);
+    }
+    var hidden = blocks.length - shown;
+    if (hidden) {
+      var more = el("span", "qblk qplus", "+" + hidden);
+      more.setAttribute("title", hidden + " more queued job" +
+        (hidden === 1 ? "" : "s") + ", not drawn");
+      wrap.appendChild(more);
+    }
+    wrap.setAttribute("role", "img");
+    wrap.setAttribute("aria-label", blocks.length + " job" +
+      (blocks.length === 1 ? "" : "s") + " on the render box, " + run +
+      " rendering — one block each, colour by kind");
+    if (!leg) return;
+    var order = [];
+    for (var kk in counts) {
+      if (Object.prototype.hasOwnProperty.call(counts, kk)) order.push(kk);
+    }
+    order.sort(function (a, b2) {
+      return counts[b2] - counts[a] || (a < b2 ? -1 : 1);
+    });
+    for (i = 0; i < order.length; i++) {
+      var key = order[i] || null, item = el("span", "qkey");
+      item.appendChild(el("i", "qsw " + kindClass(key)));
+      item.appendChild(document.createTextNode(counts[order[i]] + " " + kindMany(key)));
+      leg.appendChild(item);
+    }
+  }
+
+  /* ---- what the card has on it, as a thing to look at ----------------------
+     The beat number is the largest type in the section because it is the fact a
+     reader wants first. The bar under it is ELAPSED AGAINST THIS KIND'S MEDIAN
+     and is labelled as an estimate every time it is drawn: nothing on the box
+     reports how far through a job it is, so a completion percentage here would
+     be invented, and an invented percentage that happens to look plausible is
+     the worst thing this page could publish about a running render. */
+  function drawNow(q) {
+    var wrap = document.getElementById("q-now");
+    /* Same rule as the strip: no queue block, no claim — the baked sentence
+       stands rather than being replaced by "nothing is rendering". */
+    if (!wrap || !q) return;
+    clearEl(wrap);
+    var cur = q.current || {};
+    if (!q.running) {
+      wrap.appendChild(el("p", "mono", "Nothing is rendering on the card right now."));
+      return;
+    }
+    if (!cur.task && !q.running_job) {
+      wrap.appendChild(el("p", "mono", "A job is rendering, but the box's report " +
+        "does not say which, so this page will not name one."));
+      return;
+    }
+    var card = el("div", "qnow-card"), slot = el("div", "qnow-beat");
+    if (cur.beat || cur.beat === 0) {
+      slot.appendChild(el("span", "qnow-n", String(cur.beat)));
+      slot.appendChild(el("span", "qnow-lab", "beat"));
+    } else {
+      slot.appendChild(el("span", "qnow-n", "\\u2014"));
+      slot.appendChild(el("span", "qnow-lab", "no beat"));
+    }
+    card.appendChild(slot);
+
+    var main = el("div", "qnow-main");
+    var head = kindOne(cur.kind || null);
+    head = head.charAt(0).toUpperCase() + head.slice(1);
+    if (cur.node) head += " for " + cur.node;
+    if (cur.attempt) head += " · attempt " + cur.attempt;
+    main.appendChild(el("span", "qnow-t", head));
+
+    var med = BOX_MEDIANS[cur.kind] || BOX_MEDIAN_FALLBACK || 0;
+    var run = cur.started_at
+      ? Math.max(0, Math.round(Date.now() / 1000 - cur.started_at)) : null;
+    if (run !== null && med > 0) {
+      /* SVG rather than a styled div: the same drawing language as the
+         sparkline and the charts, and one less inline style on the page. */
+      var frac = run / 60 / med, over = frac >= 1;
+      var w = Math.max(2, Math.min(100, Math.round(frac * 100)));
+      var svg = svgEl("svg", {"class": "qnow-svg", viewBox: "0 0 100 6",
+                              preserveAspectRatio: "none", role: "img"});
+      svg.appendChild(svgEl("rect", {"class": "qb-track", x: 0, y: 0,
+                                     width: 100, height: 6, rx: 3}));
+      svg.appendChild(svgEl("rect", {"class": "qb-fill" + (over ? " over" : ""),
+                                     x: 0, y: 0, width: w, height: 6, rx: 3}));
+      svg.setAttribute("aria-label", "running " + spanWords(run) + " against a " +
+        hoursWords(Math.round(med)) + " median for this kind — an estimate, not " +
+        "a measurement of how far through it is");
+      main.appendChild(svg);
+    }
+    var bits = [];
+    if (run !== null) bits.push("running " + spanWords(run));
+    if (med > 0) {
+      bits.push("about " + hoursWords(Math.round(med)) + " is typical for this " +
+        "kind on this box — an estimate, not progress");
+    }
+    if (typeof q.running_log_age_sec === "number") {
+      bits.push("last wrote to its log " + words(q.running_log_age_sec));
+    }
+    if (bits.length) main.appendChild(el("span", "qnow-cap", bits.join(" \\u00b7 ")));
+    if (cur.makes && cur.makes.length) {
+      main.appendChild(el("span", "qnow-makes", "making " + cur.makes.join(", ")));
+    }
+    card.appendChild(main);
+    wrap.appendChild(card);
+  }
+
+  /* ---- the box's remaining facts, one badge each --------------------------
+     Each of these used to be a comma in a sentence that ran to four lines. A
+     badge is not decoration here: "nothing is draining the queue" is the single
+     most important thing this section can say, and it was the fifth clause. */
+  function drawChips(d, q) {
+    var wrap = document.getElementById("q-chips");
+    if (!wrap || !q) return;
+    clearEl(wrap);
+    function chip(cls, big, rest) {
+      var c = el("span", "qchip" + (cls ? " " + cls : ""));
+      if (big) c.appendChild(el("b", null, big));
+      c.appendChild(document.createTextNode((big ? " " : "") + rest));
+      wrap.appendChild(c);
+    }
+    if (typeof q.done_24h === "number") chip("good", String(q.done_24h), "finished in 24 h");
+    if (typeof q.done_today === "number") chip("good", String(q.done_today), "finished today");
+    if (typeof q.failed === "number" && q.failed > 0) {
+      chip("bad", String(q.failed), "sitting failed");
+    }
+    if (q.runner_alive === false) {
+      chip("bad", null, "nothing is draining this queue — the box's runner is not running");
+    }
+    var pw = d && d.power;
+    if (pw && pw.ac === false) {
+      chip("bad", typeof pw.battery_pct === "number" ? pw.battery_pct + "%" : null,
+        "on battery — it renders well below the speed those medians were measured at");
+    }
+  }
+
   function readBoxQueue() {
     if (!document.getElementById("q-tile-n") && !document.getElementById("q-notice")) return;
     function grab(u) {
@@ -2572,10 +2961,14 @@ LIVE_JS = """
         lastTel = d;
         renderPeek();            /* no-op unless the fold is already open */
         var q = d && d.queue;
-        /* BEFORE the count checks below, which throw. The depth chart has its
-           own honest answer for a missing queue block and should give it
+        /* BEFORE the count checks below, which throw. The pictures each have
+           their own honest answer for a missing queue block and should give it
            rather than inheriting the tile's "live refresh unavailable". */
         drawDepth(q);
+        drawNow(q);
+        drawChips(d, q);
+        drawStrip(q, "q-strip", "q-legend", QBLOCK_CAP, false,
+                  "card idle — nothing queued, nothing rendering");
         if (!q) throw new Error("the box is publishing vitals but not yet its queue");
         if (q.error) throw new Error("the box could not read its own queue: " + q.error);
         if (typeof q.ready !== "number" && typeof q.running !== "number") {
@@ -2603,9 +2996,12 @@ LIVE_JS = """
            thing we actually know — but loses the styling that says "current"
            and carries how old it is in the same breath. */
         if (jobs && est && est.minutes) {
+          /* The "N rendering, M waiting" clause came off this label on
+             2026-08-14: the blocks under it say the same thing without being
+             read, and the founder's standing complaint is the page printing
+             one fact twice. */
           boxSay("~" + hoursWords(Math.max(1, est.minutes)), fresh ? "sn" : "sn none",
-                 "of work queued on the render box · " + running + " rendering, " +
-                 ready + " waiting · " + (est.basis === "rough"
+                 "of work queued on the render box · " + (est.basis === "rough"
                    ? "an estimate, and a rough one: a median job times the count"
                    : "an estimate, each job timed against past jobs of its kind") +
                  " · " + whenShort,
@@ -2619,33 +3015,17 @@ LIVE_JS = """
                  "nothing queued on the render box, " + whenShort, null, null);
         }
 
-        /* the work list */
-        var bits = "The render box’s own queue, read by your browser: " + running +
-                   " rendering, " + ready + " waiting";
+        /* THE CAPTION, and it is one line now (Roman, 2026-08-14: "can you make
+           the queue more visuals and less text?"). Everything that used to be
+           strung onto this sentence has a picture of its own above it: the
+           depth is the strip, the running job is the card, the failures, the
+           day's finished count, a dead runner and a card on battery are badges.
+           What survives in words is what no picture on this page can carry —
+           whether the time is an estimate, and how old the reading is. */
+        var bits = running + " rendering, " + ready + " waiting";
         if (jobs && est && est.minutes) {
-          bits += " · an estimated ~" + hoursWords(Math.max(1, est.minutes)) +
-                  (est.basis === "rough"
-                    ? ", roughly: a median job times the count"
-                    : ", each job timed against past jobs of its kind");
-        }
-        if (typeof q.failed === "number" && q.failed > 0) {
-          /* a corpse in failed/ is invisible to any count of what is waiting */
-          bits += " · " + q.failed + " sitting failed";
-        }
-        if (typeof q.done_24h === "number") {
-          bits += " · " + q.done_24h + " finished in the last 24 h";
-        }
-        if (q.running_job && typeof q.running_log_age_sec === "number") {
-          bits += " · the running job last wrote to its log " + words(q.running_log_age_sec);
-        }
-        if (q.runner_alive === false) {
-          bits += " · NOTHING IS DRAINING IT: the box's runner is not running";
-        }
-        var pw = d.power;
-        if (pw && pw.ac === false) {
-          bits += " · the box is on BATTERY" +
-                  (typeof pw.battery_pct === "number" ? " at " + pw.battery_pct + "%" : "") +
-                  ", where it renders well below the speed those medians were measured at";
+          bits += " · ~" + hoursWords(Math.max(1, est.minutes)) +
+                  (est.basis === "rough" ? ", roughly estimated" : ", estimated");
         }
         bits += " · " + when + ".";
         boxSay(null, null, null, String(jobs), bits);
@@ -2738,6 +3118,109 @@ SIM_CSS = """
    what goes here is a sentence explaining why there is no number */
 .noage { color: var(--faint); }
 .livemark { font: 500 .76rem/1.6 var(--mono); color: var(--faint); }
+/* ---- the queue, drawn (Roman, 2026-08-14: "more visuals and less text").
+   One block per queued job, the running one ringed and breathing, so depth is
+   SEEN rather than read off a sentence.
+
+   EVERY FILL IS A GREEN, and that is the load-bearing part. The site's colour
+   law is --leaf for the machine's own work and --sap for what is waiting on the
+   author; a queued render waits on a card, never on a person, so an amber block
+   in this strip would say the opposite of what is true. Kinds are told apart by
+   the three green steps AND by the key underneath AND by each block's tooltip —
+   never by hue alone, which is the same rule the charts follow.
+
+   The blocks are rem-sized and the row wraps, so a queue eight deep is one line
+   on a laptop and two on a phone without a breakpoint. ---- */
+.qstrip { display: flex; flex-wrap: wrap; align-items: flex-end; gap: .3rem;
+  margin: .55rem 0 .45rem; }
+.qblk { display: block; width: .8rem; height: 1.45rem; border-radius: 3px;
+  border: 1px solid transparent; background: var(--leaf-dim); }
+.qblk.k-ltx, .qsw.k-ltx { background: var(--leaf-deep); }
+.qblk.k-still, .qsw.k-still { background: var(--leaf-dim); }
+.qblk.k-charref, .qsw.k-charref { background: var(--leaf); }
+.qblk.k-inpaint, .qsw.k-inpaint { background: var(--leaf-deep); opacity: .55; }
+.qblk.k-other, .qblk.k-unknown, .qsw.k-other, .qsw.k-unknown {
+  background: var(--line); }
+/* the one a card actually has on it: taller, ringed, and breathing */
+.qblk.run { height: 1.95rem; border-color: var(--leaf);
+  box-shadow: 0 0 0 2px var(--leaf-dim); animation: qpulse 1.9s ease-in-out infinite; }
+@keyframes qpulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+.qblk.qplus { width: auto; padding: 0 .35rem; background: none; border: 0;
+  font: 600 .68rem/1.45rem var(--mono); color: var(--faint); }
+/* EMPTY IS A STATE, not a bare zero — the founder's standing rule about numbers
+   nobody measured, applied to a picture. */
+.qstrip.empty { margin-bottom: .35rem; }
+.qidle { font: 600 .72rem/1.5 var(--mono); color: var(--faint);
+  border: 1px dashed var(--line); border-radius: 7px; padding: .3rem .6rem; }
+.qlegend { display: flex; flex-wrap: wrap; gap: .05rem .85rem; margin: 0 0 .3rem; }
+.qlegend:empty { display: none; }
+.qkey { display: inline-flex; align-items: center; gap: .32rem;
+  font: 500 .68rem/1.6 var(--mono); color: var(--muted); }
+.qsw { display: inline-block; width: .58rem; height: .58rem; border-radius: 2px;
+  background: var(--leaf-dim); }
+.qcap { font: 500 .72rem/1.5 var(--mono); color: var(--muted); margin: 0; }
+.qsub { font: 600 .72rem/1.5 var(--mono); color: var(--muted); margin: .7rem 0 0;
+  text-transform: uppercase; letter-spacing: .06em; }
+.qsub .count { color: var(--leaf); }
+/* ---- the queue's own section, first thing on the page (Roman, 2026-08-14:
+   "shouldnt the queue be at the top?"). It is the only live section here, so it
+   gets the panel treatment the snapshots below do not: a reader should be able
+   to tell at a glance which part of this page is still moving. ---- */
+.qsec { margin: 1rem 0 1.4rem; padding: .9rem 1rem 1rem;
+  border: 1px solid var(--line); border-radius: 14px;
+  background: linear-gradient(180deg, var(--panel-2), var(--panel));
+  box-shadow: var(--shadow); }
+.qsec > h2 { margin-top: 0; }
+.qsec .chead { margin: -.2rem 0 .5rem; }
+/* The headline number — the glance tile's markup, in its new home, and GREEN
+   where the tile was amber. In the strip it was one cell among five and took
+   the strip's house colour; here it heads a section that is entirely the
+   machine's work, and the colour law says that is --leaf. */
+.qhead .sn { display: block; font: 700 1.9rem/1.15 var(--mono); color: var(--leaf); }
+.qhead .sn.none { font-size: .9rem; font-weight: 600; color: var(--faint); }
+.qhead .sn.zero { color: var(--faint); }
+.qhead .sl { display: block; font: 500 .7rem/1.45 var(--mono); color: var(--muted); }
+
+/* ---- what the card has on it, as a thing to look at rather than read ----
+   The beat number is the biggest type in the section because it is the one fact
+   a reader wants; the bar under it is ELAPSED AGAINST THIS KIND'S MEDIAN and is
+   never called progress. Nothing on the box reports how far through a job it
+   is, so a percentage would be invented. ---- */
+.qnow { margin: .5rem 0 .2rem; }
+.qnow .mono { display: block; margin: 0; }
+.qnow-card { display: flex; align-items: center; gap: .75rem; padding: .55rem .7rem;
+  border: 1px solid var(--line); border-left: 3px solid var(--leaf);
+  border-radius: 10px;
+  background: linear-gradient(180deg, var(--panel-2), var(--panel)); }
+.qnow-beat { flex: 0 0 auto; min-width: 3rem; text-align: center; }
+.qnow-n { display: block; font: 700 1.9rem/1 var(--mono); color: var(--leaf);
+  font-variant-numeric: tabular-nums; }
+.qnow-lab { display: block; font: 600 .56rem/1.7 var(--mono); color: var(--faint);
+  letter-spacing: .1em; text-transform: uppercase; }
+.qnow-main { flex: 1 1 auto; min-width: 0; }
+.qnow-t { display: block; font: 600 .86rem/1.4 var(--body); color: var(--ink); }
+.qnow-svg { display: block; width: 100%; height: 6px; margin: .4rem 0 .3rem; }
+.qnow-svg .qb-track { fill: var(--line-soft); }
+.qnow-svg .qb-fill { fill: var(--leaf); }
+/* past the median the fill is the deeper green, not amber: running long is the
+   machine's business too, and amber on this page means a person is holding it */
+.qnow-svg .qb-fill.over { fill: var(--leaf-deep); }
+.qnow-cap, .qnow-makes { display: block; font: 500 .68rem/1.45 var(--mono);
+  color: var(--muted); }
+.qnow-makes { color: var(--faint); word-break: break-word; }
+
+/* ---- the box's remaining facts as badges, one number each ---------------- */
+.qchips { display: flex; flex-wrap: wrap; gap: .3rem; margin: .4rem 0 0; }
+.qchips:empty { display: none; }
+.qchip { font: 600 .66rem/1 var(--mono); color: var(--muted); padding: .32rem .52rem;
+  border: 1px solid var(--line); border-radius: 999px; }
+.qchip b { color: var(--ink); font-weight: 700; }
+.qchip.good { border-color: var(--leaf-deep); color: var(--leaf); }
+.qchip.good b { color: var(--leaf); }
+.qchip.bad { border-color: var(--alarm, #e2564d); color: var(--alarm, #e2564d); }
+.qchip.bad b { color: var(--alarm, #e2564d); }
+.qmeth { margin: .5rem 0 0; }
+
 /* ---- the queue's depth over the last day. Drawn by the reader's browser, so
    it must look deliberate while empty and must never reflow the page around
    itself when the line arrives — hence the fixed aspect on the svg. The stroke
@@ -3437,35 +3920,16 @@ def summary_strip(view: dict, now) -> str:
     # The ids are load-bearing: LIVE_JS.readBoxQueue() overwrites this cell from
     # the box's own five-minute publish, so what is baked here is the no-JS
     # floor, not the number most readers see.
-    eta = view.get("boxq")
-    if eta and eta["est_minutes"] and eta["jobs"]:
-        q_n = "~" + _e(hours_words(max(1, eta["est_minutes"])))
-        q_cls = "sn"
-        q_l = (f'of work queued on the render box \u00b7 '
-               f'{eta["running"]} rendering, {eta["ready"]} waiting \u00b7 '
-               + ('an estimate, and a rough one: a median job times the count'
-                  if eta["basis"] == "rough" else
-                  'an estimate, each job timed against past jobs of its kind'))
-    elif eta and eta["jobs"]:
-        q_n, q_cls = str(eta["jobs"]), "sn"
-        q_l = ('jobs on the render box \u00b7 no job times have been measured, '
-               'so this page will not say how long that is')
-    elif eta:
-        q_n, q_cls = "0", "sn zero"
-        q_l = 'nothing queued on the render box as of its last measured snapshot'
-    else:
-        q_n, q_cls = "not read", "sn none"
-        q_l = ('the render box\u2019s queue snapshot could not be read this '
-               'build, so its depth is not claimed either way')
-    queue_cell = (f'<a class="sx" href="#worklist" id="q-tile">'
-                  f'<span class="{q_cls}" id="q-tile-n">{q_n}</span>'
-                  f'<span class="sl" id="q-tile-l">{q_l}</span></a>')
-
+    # --- and NO queue cell. It said "~42 min of work queued" a few hundred
+    # pixels under a section that now says the same thing in blocks, at the top
+    # of the page where the founder asked for it (2026-08-14). One fact printed
+    # twice is his standing complaint; the cell's number and label moved whole
+    # into queue_head_html() and kept their ids.
     return (
         '<div class="strip rise">'
         '<p class="sh">At a glance</p>'
         f'<div class="sgrid">{review_cell}{eta_cell(view.get("eta_rows"))}'
-        f'{alive_cell}{made_cell}{queue_cell}{show_cell}</div>'
+        f'{alive_cell}{made_cell}{show_cell}</div>'
         f'<p class="sfoot">A snapshot as of <b>{now.strftime("%H:%M")} UTC, '
         f'{now.strftime("%d %b")}</b> — the moment this page was built and the '
         'machines\u2019 own logs were last read. Nothing here claims to be '
@@ -3710,6 +4174,7 @@ def build(out_dir: Path):
                      'logged; writing and code work never checks in here, so a '
                      'day of that still reads 0.</p>')
 
+    q_meth = ""
     if machine_q:
         q_rows = ""
         for t in merge_queue(machine_q):
@@ -3730,36 +4195,72 @@ def build(out_dir: Path):
         # snapshot of it. Prefer that with its own timestamp — a zero from the
         # shared file alone reads as "idle" during a fully-loaded night.
         if boxq:
-            # HOW LONG THAT IS, in time (Roman, 2026-08-12). The estimate says
-            # what it is made of in the same breath it is given: a count the
-            # supervisor measured times a median off the box's own finished
-            # jobs. Where the median is missing the sentence says the page
-            # cannot time the queue — it never falls back to a guess.
+            # THE DEPTH AS BLOCKS, then ONE line of words (Roman, 2026-08-14:
+            # "can you make the queue more visuals and less text?"). What is
+            # baked here is the no-JS floor off the supervisor's own snapshot —
+            # LIVE_JS redraws the same strip, key and line from the box's
+            # five-minute publish, which is newer than any build.
+            blocks, hidden, kcounts = queue_blocks(
+                boxq["kinds"], boxq["ready"], boxq["running"])
+            # HOW LONG THAT IS, in time (Roman, 2026-08-12) — now a clause on
+            # the one caption rather than a sentence of its own. Where no median
+            # has been measured the caption stays silent about time; it never
+            # falls back to a guess. The basis moved into the fold below.
             words = queue_time_words(boxq)
             if words and boxq["jobs"]:
-                timing = (f' · an estimated ~{_e(words)}, '
-                          f'{_e(queue_time_basis(boxq))}')
+                timing = f' · ~{_e(words)}, estimated'
             elif boxq["jobs"]:
-                timing = (' · how long that is in time is not estimated here: '
-                          'no median job time has been measured off the box’s '
-                          'own finished jobs')
+                timing = " · not timed: no median measured yet"
             else:
                 timing = ""
             # Same ids as the glance tile's: the browser rewrites both from the
             # box's own publish, and what is baked is the no-JS floor.
-            queued_html = (f'<h3>⏭ Queued for a machine <span class="count" '
-                           f'id="q-count">{boxq["jobs"]}</span></h3>'
-                           f'<p class="notice" id="q-notice">The render box’s own '
-                           f'queue: {boxq["running"]} rendering, {boxq["ready"]} '
-                           f'waiting{timing} · measured {_e(boxq["measured_at"])}. '
-                           f'The shared queue file has nothing runnable.</p>')
+            # A SUBHEAD, not a second section title. "⏭ Queued for a machine"
+            # was an h3 when this lived five screens down inside the work list;
+            # at the top of the page, under a section already called "The
+            # queue", it was the same words twice. The count keeps its id —
+            # LIVE_JS rewrites it — and it may not go inside #q-notice, whose
+            # textContent the same function overwrites wholesale.
+            queued_html = (QNOW_BAKED
+                           + f'<p class="qsub"><span class="count" '
+                           f'id="q-count">{boxq["jobs"]}</span> on the box</p>'
+                           + queue_strip_html(blocks, hidden)
+                           + queue_legend_html(kcounts)
+                           + f'<p class="qcap" id="q-notice">'
+                           f'{boxq["running"]} rendering, {boxq["ready"]} '
+                           f'waiting{timing} · measured '
+                           f'{_e(boxq["measured_at"])}.</p>')
+            meth = (
+                '<p>The blocks are the render box’s own on-disk queue, one per '
+                'job, newest reading the box published. It reports how many '
+                'jobs are waiting and <b>what kinds</b> they are — never their '
+                'names — so only the block a card is actually running can say '
+                'which beat it belongs to. The shared queue file has nothing '
+                'runnable, which is why nothing here is waiting on a person.</p>')
+            if words and boxq["jobs"] and queue_time_basis(boxq):
+                meth += (f'<p>The time is an estimate, not a measurement: '
+                         f'{_e(queue_time_basis(boxq))}. A queue that fails a '
+                         'job or picks up a slower one will not match it.</p>')
+            elif boxq["jobs"]:
+                meth += ('<p>How long that is in time is not estimated here: no '
+                         'median job time has been measured off the box’s own '
+                         'finished jobs, and a made-up minute is worse than '
+                         'none.</p>')
+            q_meth = ('<details class="drawer qmeth"><summary>Where these '
+                      'blocks come from, and what the estimate is worth'
+                      '</summary><div class="drawer-body">' + meth
+                      + '</div></details>')
         else:
             box_note = (' The render box also keeps its own on-disk queue between '
                         'pushes — its last idle report above is the only honest '
                         'reading of that.' if depth else "")
-            queued_html = ('<h3>⏭ Queued for a machine <span class="count" '
-                           'id="q-count">0</span></h3>'
-                           '<p class="notice" id="q-notice">Nothing in the shared '
+            q_meth = ''
+            queued_html = (QNOW_BAKED
+                           + '<p class="qsub"><span class="count" '
+                           'id="q-count">0</span> on the box</p>'
+                           + queue_strip_html([])
+                           + queue_legend_html({})
+                           + '<p class="qcap" id="q-notice">Nothing in the shared '
                            'queue file is waiting for a machine.' + box_note + '</p>')
     # WHAT THE CARD IS MAKING, behind a fold (Roman, 2026-08-13: "you should make
     # it so you can see exactly what is being generated on the status page and see
@@ -3769,6 +4270,13 @@ def build(out_dir: Path):
     # fetched a dozen of those on load would spend megabytes on every visitor who
     # never asked. The baked state is the honest no-JS one — this cannot be
     # rendered at build time, because the whole point is that it is current.
+    # THE REST OF THE BOX'S FACTS AS BADGES, not as more clauses on the caption.
+    # Finished today, failures sitting in failed/, a runner that is not draining
+    # the queue, a card on battery: each is one number or one warning, and each
+    # was a comma in a sentence nobody read to the end. Baked empty on purpose —
+    # every one of them is a live reading, and a badge with a build-time number
+    # in it would be the stale-meter bug wearing a new shape.
+    queued_html += '<div class="qchips" id="q-chips"></div>'
     # QUEUE DEPTH OVER THE LAST DAY. Baked empty, exactly like the infra meter
     # and the live tile: the history lives in the box's own telemetry publish
     # and arrives in the reader's browser, so a build has nothing to draw and
@@ -3782,6 +4290,7 @@ def build(out_dir: Path):
         'publish. With JavaScript off there is nothing here to read — the '
         'history is not built into this page, because it would be stale the '
         'moment it was.</p></div>')
+    queued_html += q_meth
     queued_html += (
         '<details class="peek" id="q-peek">'
         '<summary>Look inside — what the card is making right now</summary>'
@@ -3798,6 +4307,26 @@ def build(out_dir: Path):
             'person, to run by hand — machine-facing detail this page leaves to '
             f'<a href="https://github.com/{GH}/blob/main/pipeline/farm-queue.yaml">'
             'the queue file itself</a>.</p>')
+
+    # --- THE QUEUE GOES FIRST (Roman, 2026-08-14: "shouldnt the queue be at the
+    # top?"). It is the only section on this page that updates itself while you
+    # look at it — everything below is a snapshot with a build stamp on it — and
+    # it is the one he opens the page to see. It used to sit inside the work
+    # list, five screens down, under a summary strip, an episode player and a
+    # tree.
+    #
+    # THE HEADLINE NUMBER IS THE OLD GLANCE TILE, moved rather than copied. The
+    # strip at the top had a queue cell saying "~42 min of work queued" directly
+    # above a section saying the same thing; duplicated information is the
+    # founder's standing complaint, so the cell is gone from the strip and its
+    # two ids live here. LIVE_JS rewrites them exactly as before — the contract
+    # that test holds is the id, not the address.
+    live_queue = (
+        '<section class="qsec rise" id="queue">'
+        '<h2>⏭ The queue — what the render box is doing now</h2>'
+        '<p class="chead">Live — everything below this box is a snapshot.</p>'
+        f'<div class="qhead">{queue_head_html(boxq)}</div>'
+        f'{queued_html}</section>')
 
     counts = strip_counts(queue, backlog, records)
     blocked_total = sum(v["est"] or 0 for v in map(backlog_entry_view, backlog))
@@ -3836,6 +4365,8 @@ def build(out_dir: Path):
     work_chart = charts.work_days_html(read_work_daily())
     production = (
         '<h2 id="worklist">🏭 The work list</h2>'
+        '<p class="chead">What the machines have already done. The queue itself '
+        '— the live part — is <a href="#queue">at the top of this page</a>.</p>'
         + (f'<p class="chead">How hard the render box has worked, day by day</p>'
            f'{work_chart}' if work_chart else "")
         + '<details class="drawer"><summary>Where every line in this section '
@@ -3848,7 +4379,7 @@ def build(out_dir: Path):
         'the page was built. With JavaScript on, your browser re-reads the queue '
         'file itself and says here whether it has changed since.</p>'
         '</div></details>'
-        f'{onmach}{done_html}{queued_html}{planned_html}'
+        f'{onmach}{done_html}{planned_html}'
         f'<p class="whyfoot">The shared queue file holds {total_entries} '
         f'entr{"y" if total_entries == 1 else "ies"} at build time'
         + (f' ({_e(state_bits)})' if state_bits else "") + '. The file is the '
@@ -3930,10 +4461,21 @@ def build(out_dir: Path):
 <div class="rise">
 <p class="eyebrow">Banyan City · {PAGE_NAME}</p>
 <h1>{PAGE_NAME.title()}</h1>
-<p class="lede">{data.PITCH}</p>
 </div>
 
+{live_queue}
+
+<p class="lede rise">{data.PITCH}</p>
+
 {strip}
+
+<h2 id="waiting">🕰 Waiting on the author</h2>
+<p style="margin:.2rem 0 .4rem;color:var(--muted)">These are calls only the author can make —
+taste, and what gets published. The rest of the city keeps moving while they wait, but the
+jobs listed under each one cannot start until it is made, and the number in front of each is
+how long it has been sitting there.</p>
+<p class="notice" style="margin:.2rem 0 .7rem">{review_pointer(review_open)}</p>
+{waiting_html(inbox, backlog, now)}
 
 {eta_section}
 
@@ -3959,14 +4501,6 @@ everything else runs on the family's own machines for free</p>
 <div class="drawer-body">{scene_list_html(rows)}</div></details>
 
 {production}
-
-<h2 id="waiting">🕰 Waiting on the author</h2>
-<p style="margin:.2rem 0 .4rem;color:var(--muted)">These are calls only the author can make —
-taste, and what gets published. The rest of the city keeps moving while they wait, but the
-jobs listed under each one cannot start until it is made, and the number in front of each is
-how long it has been sitting there.</p>
-<p class="notice" style="margin:.2rem 0 .7rem">{review_pointer(review_open)}</p>
-{waiting_html(inbox, backlog, now)}
 
 <h2>The machines</h2>
 <ul class="machlist" id="machlist">{machlist}</ul>
@@ -4004,6 +4538,14 @@ var BOX_TEL = {json.dumps(BOX_TEL_URL)}, BOX_TEL_LEGACY = {json.dumps(BOX_TEL_UR
     BOX_MEDIANS = {json.dumps(boxq["medians"] if boxq else {})},
     BOX_MEDIAN_FALLBACK = {json.dumps(boxq["fallback"] if boxq else None)},
     BOX_BAKED = {json.dumps(boxq["measured_at"] if boxq else "the build")};
+/* The strip's vocabulary, sent over from Python so the baked blocks and the
+   redrawn ones cannot end up with two spellings of the same kind. */
+var QKIND_CSS = {json.dumps(QUEUE_KIND_CSS)},
+    QKIND_ONE = {json.dumps(QUEUE_KIND_ONE)},
+    QKIND_MANY = {json.dumps(charts.KIND_WORDS)},
+    QKIND_UNKNOWN_ONE = {json.dumps(QUEUE_UNKNOWN_ONE)},
+    QKIND_UNKNOWN_MANY = {json.dumps(QUEUE_UNKNOWN_MANY)},
+    QBLOCK_CAP = {int(QUEUE_BLOCK_CAP)};
 var BUILT_AT = {int(now.timestamp())};
 var BUILT_QUEUE = {json.dumps({"tasks": [str(t.get("id")) for t in queue],
                                "backlog": [str(b.get("id")) for b in backlog]})};
