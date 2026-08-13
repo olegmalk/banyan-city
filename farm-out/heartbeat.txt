@@ -1145,3 +1145,4 @@
 16:07:46Z STARTED task=ep2-b20-shapeB-0813-1786627752 attempt=1 on box-runner
 16:13:10Z DONE task=ep2-b20-shapeB-0813-1786627752 rc=0 artifacts=2
 16:13:17Z STARTED task=ep2-b13-adult-0813-1786628209 attempt=1 on box-runner
+16:16:12Z DONE task=ep2-b13-adult-0813-1786628209 rc=0 artifacts=4
