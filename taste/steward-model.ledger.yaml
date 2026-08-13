@@ -15904,3 +15904,57 @@
     when only the goblin has a reference. If the guard drifts while the goblin holds, that is the
     signal to stage the guard his own reference crop box-side, which is already scoped.
   outcome: null
+
+- id: ep2-crf-AB-inconclusive-and-my-test-subject-was-wrong-0813
+  kind: scoring
+  date: 2026-08-13
+  verdict: >-
+    THE CRF HYPOTHESIS IS NOT CONFIRMED, and the test I designed could not have confirmed it.
+    Three arms, same seed, same init, one knob apart. At 1:1 native pixels on the conditioning
+    frame the three are nearly identical — crf 33 is at most a marginal softening of the fig's
+    rim. Nothing here explains "a lot worse".
+  my_error_in_the_design: >-
+    Beat 18 is a smooth fig on a smooth wall. It has almost no fine texture, and fine texture is
+    the ONLY place an x264 round-trip at CRF 33 can show. I picked the beat because its content
+    was stable, which is a reason to trust the comparison and no reason at all to think the
+    comparison could detect the thing being tested. A null result off a subject that cannot carry
+    the signal is not evidence of absence.
+  what_the_ab_DID_settle_and_it_is_useful: >-
+    GUIDANCE 1.0 IS WORSE, not better. The firstera arm — the recipe he approved — deformed the
+    fig by f118, its stem splitting in two, with more debris drifting through frame. So "go back
+    to the old recipe wholesale" is ruled out, and the guidance half of the diff is not the
+    answer either. That is a real result and it points away from a simple revert.
+  re_asked_properly: >-
+    ep2-b01-nocrf-0813. Beat 01 is a field of grass blades, flower specks and leaf edges —
+    thousands of high-frequency details, which is what compression eats first. Same seed, same
+    init, same prompt as ep2-b01-cold-r2-0813 which is already rendered and serves as the crf-33
+    control. Guidance held at 2.0 because the beat-18 arm already ruled reverting it out.
+  what_i_owe_the_founder_if_this_is_null_too: >-
+    An honest "the knobs do not explain it" and then the candidates that are not knobs — his first
+    examples were ep1 clips off v34 PLATES, while everything tonight is built on ipa generations,
+    which is where nearly every other quality question today has landed. I will not reach for that
+    story until the textured crf test has answered, per the inert-vs-outvoted law.
+  outcome: null
+
+- id: ep2-adult-plates-on-the-MAN-draft-scored-0813
+  kind: scoring
+  date: 2026-08-13
+  verdict: >-
+    THE ONE WORD DID IT. Beat 13's plate re-run on "A small goblin MAN" comes back narrow-faced,
+    angular-jawed and sceptical at four seeds, where the identical recipe reading "boy" failed at
+    four. Beats 14 and 15 pass too. BEAT 04 FAILS AGAIN — one seed is the round-eyed child read
+    with blush marks, the other has odd scribbled marks on the face. It is the face close-up with
+    nothing else in frame, which is exactly why the stills lane called it the strongest test.
+  my_picks_with_reasons: >-
+    b13 s1 (the most angular face and a wry set to the mouth), b14 s1 (stern, sharp claws, no
+    softness in the jaw), b15 s0 (narrow face with a scowl; s1 is blander and rounder). Beat 04:
+    NONE — neither seed is usable and it needs another plate round, not a pick.
+  re_animations_queued: >-
+    ep2-b13/b14/b15-remake-0813 + twins, off those exact plates, hash-asserted in the crop step.
+    Each carries the world paragraph, because these plates are still character sheets on white and
+    a white plate is what makes the model invent a world and a style of its own.
+  the_check_that_earned_itself: >-
+    The widened collision check caught all three twins sharing a publish destination with their
+    siblings — the same defect that made b01-shape render its twin's clip, caught this time BEFORE
+    enqueue instead of after. Widening it an hour ago paid for itself immediately.
+  outcome: null
