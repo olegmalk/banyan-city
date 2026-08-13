@@ -1,0 +1,110 @@
+# 2026-08-13, the stills-drafts lane. Beat 10 off a reference that ALREADY has two guards
+# and a field, at the identity-preserving 15%% window. Answers count and world together.
+id: ep2-b10-twoguard-sceneref-0813
+task: ep2-b10-twoguard-sceneref-0813
+node: 002b-first-citizen
+beat: 10
+runner: box
+needs_gpu: true
+priority: 6
+max_attempts: 1
+owner: stills-drafts lane, 2026-08-13
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the
+  render gate itself reads. Neither `approval_condition` touches beat 10. This is a mechanism test on
+  an approved node, not an episode assembly.'
+consumer: motion-wave, who is holding the beat-10 two-guard fix and the reworded world paragraph to land
+  in one job once a scene-carrying plate exists.
+success: 'Sixteen PNGs. Pass needs BOTH: two guards in frame, and the field around them. The cast wording
+  is the open question, not the count -- those reference frames are BALD, which is the read the founder
+  rejected, and the draft asks for short brown hair. The adapter is off after step 6 and the remaining
+  34 steps are text-conditioned, so hair is exactly the kind of late detail the words should win. If they
+  come back bald, the reference is dictating cast as well as composition and the guards need a purpose-built
+  two-figure reference in the ruled cast. REFERENCE QUALITY IS NOT UNIFORM and was read by eye before
+  staging: s1 is the strong frame (two adults, treeline, sky), s0 is acceptable top-down, s2 unread, s3
+  is KNOWN BAD -- oversized round heads, the chibi read -- so its four cells are expected junk and are
+  not evidence against the recipe.'
+why: 'BOTH of beat 10''s requirements at once, off a reference that already satisfies both. Round 1 failed
+  the world AND the cast: motion-wave hash-verified all four seeds and found plain gradient in s0/s1/s2,
+  a framed picture-in-picture inset in s3, and ONE guard throughout. The count failure is the same mechanism
+  as the background one -- the adapter owns the early structure-forming steps and refs-charref-guards-r5-0812
+  is a SINGLE guard on white, so it imposes one figure the way it imposed the white. Words asking for
+  two cannot beat it there. ep2-guards-sheet-tunic-0812 already contains what is needed: TWO adult guards
+  standing in a green field with a treeline and sky, tunics, sashes, bellies covered. Those four frames
+  are staged as refs-guards-twoinfield-0813 and conditioned at the identity-preserving 15% window, which
+  ep2-b03-sceneref-0813 proved carries a reference''s world through intact.'
+est_minutes: 14
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '10'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-guards-twoinfield-0813
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b10-twoguard-sceneref
+  - --draft-key
+  - authored_b10_scene
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '10'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-guards-twoinfield-0813
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b10-twoguard-sceneref
+  - --draft-key
+  - authored_b10_scene
+  - --arm
+  - window4
+  - --task
+  - ep2-b10-twoguard-sceneref-0813
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b10-twoguard-sceneref-0813\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/goblin-ipa-0812/out-b10-twoguard-sceneref/*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b10-twoguard-sceneref-0813.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b10-twoguard-sceneref\10-no-form-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b10-twoguard-sceneref\10-no-form-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b10-twoguard-sceneref\10-no-form-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b10-twoguard-sceneref\10-no-form-ipa-r3-w015-s0.png
