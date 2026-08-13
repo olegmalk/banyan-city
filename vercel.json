@@ -6,8 +6,16 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
-    { "source": "/fork", "destination": "/create", "permanent": false },
-    { "source": "/contribute", "destination": "/create", "permanent": false }
+    {
+      "source": "/fork",
+      "destination": "/create",
+      "permanent": false
+    },
+    {
+      "source": "/contribute",
+      "destination": "/create",
+      "permanent": false
+    }
   ],
   "framework": null,
   "git": {
@@ -23,5 +31,16 @@
   "ignoreCommand": "bash pipeline/vercel-ignore-build.sh",
   "github": {
     "silent": true
-  }
+  },
+  "headers": [
+    {
+      "source": "/(review|status|pulse)(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=0, must-revalidate"
+        }
+      ]
+    }
+  ]
 }
