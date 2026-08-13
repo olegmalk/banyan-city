@@ -179,6 +179,7 @@ RESULTS_MAX = 8                  # newest media files published on the page
 RESULTS_WALK_CAP = 6000          # stop walking rather than stat a runaway tree
 IMAGE_EXTS = (".png", ".jpg", ".jpeg", ".webp", ".gif")
 VIDEO_EXTS = (".mp4", ".webm", ".mov")
+POSTER_PAIR_SECONDS = 300        # a clip and its still ride out on one publish step
 PRUNE_SECONDS = 1800
 KEEP_HOURS = 48                      # the rolling CSV on the box
 WINDOW_HOURS = 24                    # what the published summary covers
@@ -507,7 +508,7 @@ def results_sample(out: Path = None, now: float = None, limit: int = RESULTS_MAX
     posters = {}
     for mtime, _size, p, ext in files:
         if ext in IMAGE_EXTS:
-            posters.setdefault(str(p.parent), p)
+            posters.setdefault(str(p.parent), (p, mtime))
 
     items = []
     for mtime, size, p, ext in files[:limit]:
@@ -515,9 +516,15 @@ def results_sample(out: Path = None, now: float = None, limit: int = RESULTS_MAX
         item = {"path": rel, "name": p.name, "at": int(mtime), "bytes": int(size),
                 "kind": "video" if ext in VIDEO_EXTS else "image"}
         if item["kind"] == "video":
-            poster = posters.get(str(p.parent))
-            if poster is not None and poster != p:
-                item["poster"] = poster.relative_to(out.parent).as_posix()
+            pair = posters.get(str(p.parent))
+            # Published in the SAME step as the clip, not merely in the same
+            # folder. These directories get reused between runs, so "the newest
+            # image in here" can be a leftover from a previous take — and a
+            # poster is read as a frame OF the video under it. One publish step
+            # copies both within a second or two; POSTER_PAIR_SECONDS is loose
+            # enough for a slow copy and far tighter than a stale round.
+            if pair is not None and pair[0] != p and abs(pair[1] - mtime) <= POSTER_PAIR_SECONDS:
+                item["poster"] = pair[0].relative_to(out.parent).as_posix()
         items.append(item)
     return {"at": int(now), "branch": COURIER_BRANCH, "items": items}
 

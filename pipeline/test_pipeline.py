@@ -7396,6 +7396,20 @@ def test_the_box_publishes_what_it_is_making_and_what_it_just_made():
         check("a video is paired with the still beside it, so the strip shows a picture",
               r["items"][0].get("poster") ==
               "farm-out/ep2-b05twin-wave-0813/b05-init-704x1280.png")
+        # These directories get reused between rounds, so an image that is merely
+        # in the same folder can be a leftover from a previous take — and a
+        # poster is read as a frame OF the clip beneath it.
+        d2 = out / "reused-dir"
+        d2.mkdir()
+        (d2 / "new-take.mp4").write_bytes(b"v" * 100)
+        (d2 / "last-rounds-frame.png").write_bytes(b"i" * 100)
+        os.utime(d2 / "new-take.mp4", (now - 30, now - 30))
+        os.utime(d2 / "last-rounds-frame.png", (now - 90000, now - 90000))
+        stale = telemetry.results_sample(out=out, now=now)
+        take = [i for i in stale["items"] if i["name"] == "new-take.mp4"][0]
+        check("a clip is not postered with a frame from a previous round",
+              "poster" not in take)
+
         check("sidecars and checksums are not results",
               not any(n.endswith((".yaml", ".sha256")) for n in names))
         check("a zero-byte file is a copy in progress, not a result",
