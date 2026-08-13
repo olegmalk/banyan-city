@@ -1295,3 +1295,4 @@
 23:46:06Z STARTED task=ep2-b09-closeB-0813-1786663614 attempt=1 on box-runner
 23:52:22Z DONE task=ep2-b09-closeB-0813-1786663614 rc=0 artifacts=1
 23:52:28Z STARTED task=ep2-b21-hold-0813-1786663569 attempt=1 on box-runner
+23:58:44Z DONE task=ep2-b21-hold-0813-1786663569 rc=0 artifacts=2
