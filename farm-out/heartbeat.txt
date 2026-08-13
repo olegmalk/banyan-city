@@ -1028,3 +1028,4 @@
 07:23:35Z box-runner idle ready=0 failed=10
 07:33:38Z box-runner idle ready=0 failed=10
 07:39:34Z STARTED task=ep2-b05-jog-uniform-a-0812-1786519971 attempt=1 on box-runner
+08:23:37Z DONE task=ep2-b05-jog-uniform-a-0812-1786519971 rc=0 artifacts=1
