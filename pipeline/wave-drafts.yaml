@@ -2624,6 +2624,20 @@ beats:
     # them is what the approved reference actually shows: adult men, short brown hair,
     # plain brown tunics with sashes, belly covered by the tunic's own length.
     #
+    # -- REVISED 2026-08-13 after ep2-b10-patrol-scene-0813 came back WITHOUT the scene at
+    # BOTH windows: 10% and 20% both drew a single guard on plain cream, no grass, no
+    # treeline, no sky. That is the opposite of beat 03, where 10% drew the whole world
+    # from the same kind of clause -- and the difference is WHERE the scene sat. On beat 03
+    # the sentence was short and the scene reached the model early; here it trailed a long
+    # cast-plus-action clause and never got weight. compress()'s own comment says it:
+    # "CLIP weights early tokens most heavily... whatever leads becomes the composition".
+    # So the scene now sits immediately after the cast and ahead of the action, which is
+    # the only change. THE COUNT TAG SURVIVES IT and that was the constraint: the scene
+    # cannot lead the SENTENCE, because _tag_from_clause reads the first comma-clause and
+    # `Green summer grass` would derive no tag against the declared `2boys`. So it is
+    # folded into the cast's own verb -- `stand in green summer grass` -- and the tag still
+    # reads 2boys. Verified on the box, not assumed.
+    #
     # PAID FOR by `Medium two-shot`, which the b04 result showed is near-weightless as a
     # trailing tag anyway. The beat's own camera note survives as a SENTENCE instead --
     # `The blank board fills the frame` -- which is beat 10's whole point and costs the
@@ -2635,9 +2649,9 @@ beats:
     # (out-b05-register-pose\05-the-patrol-ipa-r2-w015-s2.png). That is a population
     # defect independent of the background one and it was going to bite regardless.
     authored_b10_scene: >-
-      Two adult guard men in brown tunics and sashes, short brown hair, one holds up the
-      blank back of his bark clipboard toward the other, green summer grass, a hedge and
-      dark treeline behind, pale blue morning sky above. The blank board fills the frame,
+      Two adult guard men in brown tunics and sashes stand in green summer grass, a hedge
+      and dark treeline behind, pale blue morning sky above, one holding up the blank back
+      of his bark clipboard toward the other. The blank board fills the frame,
       cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No
       girl, no child, no armor, no helmet, no knight, no bare chest, no muscular, no white
       background, no plain background, no character sheet, no dark, no night. No
@@ -3494,8 +3508,20 @@ beats:
     #    it -- which is the pattern this whole wave is documenting.
     # ADULT PROPORTIONS + SHAPE PINS, 2026-08-13, beat 19 of the remake wave. Wording
     # that PASSED on beat 02: proportions ASSERTED, only four denial terms (arm B proved
-    # a denial pile swells the skull), and the fig shape matched word-for-word to the
-    # motion lane's sweep so the fix cannot wash out between stages.
+    # a denial pile swells the skull).
+    # -- PURPLE FIG, 2026-08-13. Founder, R4, verbatim: "btw, can you make it a purple
+    # fig? would be more recognisable". Deep purple-violet over most of it, GREEN only at
+    # the narrow neck. This is a frozen fact for the fig now, in the same class as the
+    # goblin's MAN-not-boy: a green fig is a defect wherever it appears.
+    # THE GEOMETRY PAID FOR THE COLOUR, and that is motion-wave's own finding rather than
+    # a budget accident: they spent the evening trying to make a green fig recognisable by
+    # SHAPE -- teardrop, neck, ribbing, dimple -- and a fig has no unique silhouette, so
+    # none of it held. It has an unmistakable COLOUR instead. So `teardrop-shaped` and
+    # `with a narrow neck` come out and the purple goes in, and the neck survives only
+    # because it is where the green lives. `no round ball, no apple` -- the two
+    # counter-SHAPES -- are replaced by `no green fig, no green fruit, no unripe green`,
+    # the defect that can actually occur now. Coordinated with motion-wave in the same
+    # round on purpose: a purple fig animated off a green-fig plate is worse than either.
     # Derived from authored_b19_idfix_r2. THE FIG IS THE BEAT and it was absent in 4 of
     # 4, so it gets the motion lane's own shape clause -- `a small teardrop-shaped fig
     # with a narrow neck`, the wording under test in ep2-b01-shape-a2/cold-r2 -- rather
@@ -3513,12 +3539,13 @@ beats:
     # `two-leaf`. DRY OK, STYLE ANCHOR PRESENT, count tag 1boy, 74/77 positive as sent.
     authored_b19_adult: >-
       A small goblin man, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo,
-      as a teardrop-shaped fig with a narrow neck drops from the sapling beside
+      as a deep purple-violet fig, green at its neck, drops from the sapling beside
       him and bounces off his head.
       Wide shot, amber afternoon, cinematic lighting, detailed, newest,
       masterpiece, best quality, very aesthetic No girl, no chibi, no big head, no round
-      baby face, no toddler, no child, no cartoon, no round ball, no apple, no dark, no
-      night. No photorealism, no 3D render look. 9:16 vertical, no text.
+      baby face, no toddler, no child, no cartoon, no green fig, no green fruit, no
+      unripe green, no dark, no night. No photorealism, no 3D render look. 9:16 vertical,
+      no text.
     authored_b19_idfix_r2: >-
       A small goblin boy, {{GOBLIN}}, solo, in a sunny grassy field, as a
       ripe fig drops from a tiny sapling standing tall, rooted beside him,
@@ -3635,7 +3662,13 @@ beats:
     # Derived from authored_b20_idfix_r2. This beat holds the fig UP TO CAMERA, so it is
     # the one place the shape is unmissable and the one place it failed hardest -- a
     # glowing orb in 4 of 4. It gets the motion lane's clause verbatim (`a small
-    # teardrop-shaped fig with a narrow neck`, less its `small`) and `no round ball`
+    # -- PURPLE FIG, 2026-08-13, the same canon change as beat 19 and for the same reason;
+    # beat 19's comment carries the founder's wording and why the shape words paid for it.
+    # This beat holds the fig UP TO CAMERA, so it is the one place the colour is unmissable
+    # and the one place `matte` earns its two tokens -- the fault here was a GLOWING orb in
+    # 4 of 4, and matte is the direct denial of glow. `Warm amber afternoon light` loses
+    # its `light` to pay: 78/77 with it, 76 without, measured on the box.
+    # The superseded shape note: `no round ball`
     # beside the orb ban,
     # because an orb and a ball are the same wrong shape under two names. `huge eyes`
     # drops to `eyes`: `huge` is a child-proportion word and it was in the sentence
@@ -3645,11 +3678,11 @@ beats:
     # DRY OK, STYLE ANCHOR PRESENT, count tag 1boy, 76/77 positive as sent.
     authored_b20_adult: >-
       A small goblin man, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo,
-      raises a teardrop-shaped fig with a narrow neck in both hands like evidence, eyes
-      widening, looking up at a bare branch above. Warm amber afternoon light,
+      raises a deep purple-violet fig, green at its neck, matte, in both hands like
+      evidence, looking up at a bare branch above. Warm amber afternoon,
       cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No
       girl, no chibi, no big head, no round baby face, no toddler, no child, no glowing
-      eyes, no glowing orb, no round ball, no dark, no night. No photorealism, no 3D
+      eyes, no glowing orb, no green fig, no green fruit, no dark, no night. No photorealism, no 3D
       render look. 9:16 vertical, no text.
     authored_b20_idfix_r2: >-
       A small goblin boy, {{GOBLIN}}, solo, in a sunny grassy field, raises a
