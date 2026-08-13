@@ -2,6 +2,26 @@
 # Read by build_sim.py (read_box_queue / box_queue_eta) for the status page's
 # "Queued for a machine" section and the queue cell in the glance at the top.
 #
+# THIS FILE IS NOW THE FALLBACK, NOT THE LIVE PATH (2026-08-13). Roman: "why is
+# the banyan.city/status only updating when i freaking remind you about it??" —
+# and the answer was this file, which changes only when a supervisor session
+# hand-commits it, so `measured_at` was in practice a record of the last time
+# somebody was nagged. The box now publishes its own queue every five minutes as
+# a `queue` block inside telemetry.json on farm-telemetry-rtx5090
+# (pipeline/telemetry.py), and the reader's browser fetches that and rewrites
+# both the tile and the section (build_sim.LIVE_JS, readBoxQueue). Freshness
+# costs no session, no commit and no deploy.
+#
+# What is still read from HERE, and why it belongs here rather than on the box:
+#   kind_medians / kind_median_fallback — the minutes-per-kind the live counts
+#   are multiplied by. They are measured across days of finished jobs and do not
+#   move in five minutes, so baking them into the page is correct; the browser
+#   does live count x baked median, which is the same arithmetic box_queue_eta()
+#   does at build time so the two can never disagree.
+# The counts below remain the no-JS floor and the reading the page falls back to
+# whenever the fetch fails. A tick updating them is still useful — it is just no
+# longer the only thing standing between the founder and a fresh number.
+#
 # WHAT A TICK REWRITES, and it is only these:
 #   measured_at   UTC stamp of the reading. NO STAMP, NO CLAIM — the page says
 #                 "not read" rather than print a zero it did not measure.

@@ -47,6 +47,23 @@ Runs ON the box, detached, as scheduled task `banyan-telemetry`
   survives the transition. A missing or stale file still reads as "no recent
   telemetry" and the page says so.
 
+- **it carries the QUEUE as well as the vitals, since 2026-08-13.** Roman: "why
+  is the banyan.city/status only updating when i freaking remind you about it??"
+  The queue numbers on the status page came from `pipeline/measured/box-queue.yaml`,
+  a file only a supervisor session ever rewrote — so the page was fresh exactly as
+  often as someone remembered to nag, and the depth it printed was however many
+  hours old that was. The box knows its own queue every second of the day and was
+  already publishing to a branch on a five-minute pulse; the fix is to put the
+  numbers in the pulse and let the reader's own browser fetch them
+  (`build_sim.LIVE_JS`). Freshness then costs no Claude, no commit and no deploy.
+
+  The queue block is OPTIONAL and every reader must survive its absence: an old
+  published file has none, and a box whose queue directory has gone missing
+  publishes vitals with `queue.error` set rather than dropping the pulse. It is
+  sampled at publish time only (once per five minutes, not once per ten seconds)
+  because it is a statement of current state, not a series — nothing about it
+  belongs in the CSV.
+
 Operating it on the box (the three files that make it a service):
 
     C:\banyan-farm\telemetry.py        this file, scp'd from pipeline/telemetry.py
@@ -75,6 +92,7 @@ Modes:
 """
 
 import argparse
+import calendar
 import ctypes
 import json
 import os
@@ -88,6 +106,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import repo_slug  # noqa: E402  one source for "which repo is this"
 
 FARM = Path(os.environ.get("BANYAN_FARM", r"C:\banyan-farm"))
+# The box's own on-disk queue — box_runner.py owns it, this only ever LISTS it.
+# Same default root the runner uses (box_runner.DEFAULT_ROOT), spelled again
+# rather than imported: box_runner lives in the repo checkout the farm worker
+# switches branches under, and this file is deliberately importable from
+# nothing but the stdlib.
+QUEUE_ROOT = Path(os.environ.get("BANYAN_QUEUE", r"C:\banyan-queue"))
 CSV_PATH = FARM / "telemetry.csv"
 JSON_PATH = FARM / "telemetry.json"
 LOG_PATH = FARM / "telemetry.log"
@@ -115,6 +139,26 @@ COMMIT_PREFIX = "telemetry: "
 
 SAMPLE_SECONDS = 10
 PUBLISH_SECONDS = 300                # 5 minutes, per the ask
+# heartbeats.jsonl is append-only for the life of the queue. We want its LAST
+# line; reading the whole file every five minutes is work the box would be doing
+# instead of rendering, so we seek to the end and read back this far.
+HEARTBEAT_TAIL_BYTES = 65536
+
+# argv fingerprint → kind, and it must stay identical to box_job_minutes.KINDS,
+# because the medians the page multiplies these counts by were measured per kind
+# BY that script. A kind named here and not there multiplies a live count by a
+# median of something else. Copied rather than imported for the stdlib-only rule
+# above, and test_pipeline pins the two lists together so the copy cannot drift.
+# Order matters: first hit wins, and LTX leads because a motion job also crops
+# and publishes.
+QUEUE_KINDS = (("ltx_i2v", "ltx"), ("goblin_ipa_beat", "charref"),
+               ("render_wave_sample", "still"), ("inpaint_fruit", "inpaint"),
+               ("runpod_render", "still"))
+# A mix is only worth publishing if it accounts for every queued job (build_sim's
+# box_queue_eta rejects one that does not add up). Past this many job files we
+# stop opening them and publish counts alone — a queue this deep has bigger news
+# in it than its exact composition, and the page's fallback estimate is honest.
+QUEUE_KIND_MAX_FILES = 200
 PRUNE_SECONDS = 1800
 KEEP_HOURS = 48                      # the rolling CSV on the box
 WINDOW_HOURS = 24                    # what the published summary covers
@@ -247,6 +291,249 @@ def sample(now: float = None) -> dict:
     return row
 
 
+class _SYSTEM_POWER_STATUS(ctypes.Structure):
+    _fields_ = [("ACLineStatus", ctypes.c_ubyte), ("BatteryFlag", ctypes.c_ubyte),
+                ("BatteryLifePercent", ctypes.c_ubyte), ("SystemStatusFlag", ctypes.c_ubyte),
+                ("BatteryLifeTime", ctypes.c_ulong), ("BatteryFullLifeTime", ctypes.c_ulong)]
+
+
+def power_sample() -> dict:
+    """Mains or battery, and how much of the battery is left.
+
+    This is a laptop with a 5090 in it and it renders on battery when someone has
+    unplugged it, at a fraction of the speed — on 2026-08-13 the queue was draining
+    slowly for exactly that reason and nothing outside the room could see why. A
+    depth estimate is built from medians measured on mains, so "on battery" is the
+    single most useful piece of context the page can carry next to it.
+
+    `GetSystemPowerStatus`, not `Win32_Battery`: the WMI class needs a subprocess
+    running wmic or powershell (both slower than everything else in this file put
+    together, and wmic is deprecated out of current Windows), where this is one
+    kernel32 call through ctypes and stays inside the stdlib rule.
+
+    Every field has an explicit "unknown" encoding in the API and each one maps to
+    None here — a desktop with no battery reports 255/unknown, and a page that
+    read that as 0% would announce a flat battery on a machine that has none.
+    """
+    out = {"ac": None, "battery_pct": None, "battery_minutes": None}
+    if os.name != "nt":
+        return out
+    try:
+        st = _SYSTEM_POWER_STATUS()
+        if not ctypes.windll.kernel32.GetSystemPowerStatus(ctypes.byref(st)):
+            return out
+    except (AttributeError, OSError) as e:
+        log(f"GetSystemPowerStatus unavailable: {e}")
+        return out
+    if st.ACLineStatus in (0, 1):                     # 255 == the driver does not know
+        out["ac"] = bool(st.ACLineStatus)
+    if st.BatteryLifePercent <= 100:                  # 255 == unknown
+        out["battery_pct"] = int(st.BatteryLifePercent)
+    if st.BatteryLifeTime != 0xFFFFFFFF:              # -1 == unknown / on mains
+        out["battery_minutes"] = int(st.BatteryLifeTime // 60)
+    return out
+
+
+# ---------------------------------------------------------------- the box's queue
+
+def _iso_to_unix(s):
+    """'2026-08-13T09:12:00Z' → unix seconds, or None.
+
+    `calendar.timegm`, never `time.mktime`: box_runner writes these stamps in UTC
+    and mktime would read them as box-local, which on this machine is four hours
+    out and would have every heartbeat arriving from the future.
+    """
+    try:
+        return calendar.timegm(time.strptime(str(s).strip(), "%Y-%m-%dT%H:%M:%SZ"))
+    except (ValueError, TypeError):
+        return None
+
+
+def _mtime(path):
+    try:
+        return path.stat().st_mtime
+    except OSError:
+        return None
+
+
+def last_heartbeat(path: Path):
+    """(event, unix_ts) off the last usable line of heartbeats.jsonl, else (None, None).
+
+    Read backwards from the end and tolerant of two kinds of junk, both of which
+    are normal rather than exceptional: the first line in the window is usually a
+    fragment, because the seek lands mid-line, and the last line can be a torn
+    write, because the runner is appending to this file while we read it. Neither
+    is worth a log line, let alone an exception.
+    """
+    try:
+        size = path.stat().st_size
+        with path.open("rb") as fh:
+            if size > HEARTBEAT_TAIL_BYTES:
+                fh.seek(size - HEARTBEAT_TAIL_BYTES)
+            chunk = fh.read()
+    except OSError:
+        return None, None
+    for line in reversed(chunk.decode("utf-8", "replace").splitlines()):
+        line = line.strip()
+        if not line.startswith("{"):
+            continue
+        try:
+            rec = json.loads(line)
+        except ValueError:
+            continue
+        if isinstance(rec, dict):
+            return (str(rec.get("event") or "") or None), _iso_to_unix(rec.get("ts"))
+    return None, None
+
+
+def job_kind(spec: dict) -> str:
+    """One word for what a queued job IS, off the scripts its steps actually run.
+
+    Read from argv, never from the job id: ids are written by whoever filed the
+    job and drift into nicknames, while the argv is what will run. Same rule and
+    same table as box_job_minutes.job_kind, which is where the per-kind medians
+    this feeds come from.
+    """
+    try:
+        blob = " ".join(" ".join(s.get("argv") or []) for s in spec.get("steps") or [])
+    except (AttributeError, TypeError):
+        return "other"
+    for needle, kind in QUEUE_KINDS:
+        if needle in blob:
+            return kind
+    return "other"
+
+
+def queue_kinds(root: Path, files: list) -> dict:
+    """{kind: count} over the given (subdir, name) job files, or {} if it cannot
+    be made complete.
+
+    All-or-nothing on purpose. The page multiplies each kind by its own median
+    and falls back to a rough figure when the mix does not account for every
+    queued job, so a PARTIAL mix is worse than none: it would silently price a
+    queue as though the jobs it failed to read were not in it.
+    """
+    if len(files) > QUEUE_KIND_MAX_FILES:
+        return {}
+    out = {}
+    for sub, name in files:
+        try:
+            with (root / sub / name).open(encoding="utf-8", errors="replace") as fh:
+                spec = json.load(fh)
+        except (OSError, ValueError):
+            return {}          # a job we could not read — the mix is incomplete
+        if not isinstance(spec, dict):
+            return {}
+        k = job_kind(spec)
+        out[k] = out.get(k, 0) + 1
+    return out
+
+
+def queue_sample(root: Path = None, now: float = None) -> dict:
+    """What the box's own queue looks like right now. Never raises.
+
+    STRICTLY READ-ONLY, like everything else in this file: four `listdir`s, a few
+    `stat`s and a tail read. It claims nothing, locks nothing and creates nothing
+    — note that it does NOT `makedirs` the subdirectories the way box_runner does,
+    because a missing `ready/` is a fact worth publishing and not one to quietly
+    repair from a process that does not own the queue.
+
+    The counts are a sample of a directory that another process is renaming files
+    within, so `ready` and `running` can disagree by one job with each other and
+    with the truth: a job caught mid-claim is in neither listing, or in both. That
+    is a one-job error on a number the page prints as an estimate anyway, and the
+    alternative — taking the runner's lock to read consistently — would be this
+    daemon reaching into a render's critical path, which is the one thing it must
+    never do.
+
+    `error` is set and the counts left absent when the queue root is unreadable.
+    Absent, not zero: "0 waiting" is what an idle box looks like, and publishing
+    that because a directory vanished is the whole class of failure the status
+    page is built to avoid.
+    """
+    root = Path(root) if root else QUEUE_ROOT
+    now = now if now is not None else time.time()
+    q = {"at": int(now), "root": str(root)}
+    if not root.is_dir():
+        q["error"] = "the queue directory is not there"
+        return q
+
+    def listing(sub):
+        try:
+            return [n for n in os.listdir(root / sub) if n.endswith(".json")]
+        except OSError:
+            return None
+
+    ready, running = listing("ready"), listing("running")
+    done, failed = listing("done"), listing("failed")
+    if ready is None and running is None and done is None and failed is None:
+        q["error"] = "the queue directory could not be listed"
+        return q
+    if ready is not None:
+        q["ready"] = len(ready)
+    if failed is not None:
+        q["failed"] = len(failed)
+    if running is not None:
+        q["running"] = len(running)
+        if running:
+            # One at a time by construction (box_runner is sequential), so the
+            # first is the one. The id is the job filename without .json — the
+            # same id the courier's sidecars and the heartbeats carry.
+            jid = sorted(running)[0][:-5]
+            q["running_job"] = jid
+            # THE LIVENESS SIGNAL. A job sitting in running/ says only that
+            # something claimed it; the log's last write says the render is still
+            # producing. A running job whose log has been silent for an hour is
+            # the shape of the stall this box has had before, and it is invisible
+            # to any count of files.
+            age = _mtime(root / "running" / (jid + ".log"))
+            q["running_log_age_sec"] = max(0, int(now - age)) if age else None
+    if ready is not None and running is not None:
+        # WHAT is queued, not just how much — the page prices a motion take at
+        # five minutes and a still at one, so the mix is the difference between
+        # an estimate and a guess. Running jobs are counted whole, the same
+        # upward bias box-queue.yaml's header owns up to.
+        mix = queue_kinds(root, [("ready", n) for n in ready]
+                          + [("running", n) for n in running])
+        if mix and sum(mix.values()) == len(ready) + len(running):
+            q["kinds"] = mix
+    if done is not None:
+        # Two windows on purpose. `done_today` is what a person means and it is
+        # measured against the BOX's local midnight, so it inherits whatever the
+        # box's clock believes; `done_24h` is a difference between two readings
+        # of that same clock and so survives it being wrong. The page prefers the
+        # rolling one for that reason.
+        lt = time.localtime(now)
+        midnight = time.mktime((lt.tm_year, lt.tm_mon, lt.tm_mday, 0, 0, 0, 0, 0, -1))
+        today = day = 0
+        for name in done:
+            m = _mtime(root / "done" / name)
+            if m is None:
+                continue
+            if m >= midnight:
+                today += 1
+            if m >= now - 86400:
+                day += 1
+        q["done_today"], q["done_24h"] = today, day
+
+    event, at = last_heartbeat(root / "heartbeats.jsonl")
+    if event:
+        q["last_event"] = event
+    if at:
+        q["last_event_at"] = at
+
+    # Is anything draining the queue at all? A queue with jobs in it and no live
+    # runner is the difference between "busy" and "abandoned", and the counts
+    # alone read identically in both cases.
+    try:
+        pid = int((root / "runner.lock").read_text(encoding="utf-8",
+                                                   errors="replace").strip() or 0)
+        q["runner_alive"] = bool(pid) and pid_alive(pid)
+    except (OSError, ValueError):
+        q["runner_alive"] = None
+    return q
+
+
 # ---------------------------------------------------------------- the rolling CSV
 
 def csv_line(row: dict) -> str:
@@ -328,8 +615,16 @@ def _r(v, nd=1):
 
 
 def distil(rows: list, now: float = None, window_hours: float = WINDOW_HOURS,
-           bucket_seconds: int = BUCKET_SECONDS, gpu: str = "") -> dict:
+           bucket_seconds: int = BUCKET_SECONDS, gpu: str = "",
+           queue: dict = None, power: dict = None) -> dict:
     """CSV rows → the compact object the page draws. Pure: no disk, no network.
+
+    `queue` and `power` are HANDED IN, sampled by the caller, for the same reason
+    `gpu` is: this function is the one piece of the daemon that can be tested
+    against a list of numbers, and it keeps that property only by touching
+    nothing. Both are optional and are omitted from the output when absent rather
+    than published empty — see queue_sample() on why a missing reading must never
+    surface as a zero.
 
     Arrays, not objects, and one array per series: 1,440 minute-buckets of six
     numbers is ~40 KB of JSON, where a list of dicts is four times that for the
@@ -367,7 +662,13 @@ def distil(rows: list, now: float = None, window_hours: float = WINDOW_HOURS,
                 return _r(r[key] / 1024, nd)
         return None
 
-    return {
+    def last_of(key, nd=1):
+        for r in reversed(rows):
+            if r.get(key) is not None:
+                return _r(r[key], nd)
+        return None
+
+    out = {
         "schema": 1,
         "host": HOST,
         "gpu_name": gpu or "",
@@ -388,6 +689,19 @@ def distil(rows: list, now: float = None, window_hours: float = WINDOW_HOURS,
                    "c": "mean commit charge, GB", "null": "no sample in that bucket"},
         "t": t, "u": u, "up": up, "v": v, "r": ram, "c": com,
     }
+    # The newest single readings, beside the series. The page's queue tile wants
+    # "what is the card doing right now" and should not have to walk 1,440
+    # buckets backwards past the nulls to find out.
+    gpu_w, gpu_u = last_of("gpu_power_w"), last_of("gpu_util", 0)
+    if gpu_w is not None:
+        out["gpu_power_w"] = gpu_w
+    if gpu_u is not None:
+        out["gpu_util_now"] = int(gpu_u)
+    if queue:
+        out["queue"] = queue
+    if power and any(v is not None for v in power.values()):
+        out["power"] = power
+    return out
 
 
 def write_json(obj: dict, path: Path = None) -> Path:
@@ -494,7 +808,7 @@ def publish(obj: dict = None) -> str:
     bootstraps a parentless commit carrying only telemetry.json.
     """
     if obj is None:
-        obj = distil(read_rows(), gpu=gpu_name())
+        obj = distil(read_rows(), gpu=gpu_name(), queue=queue_sample(), power=power_sample())
     write_json(obj)
     if not ensure_repo():
         return ""
@@ -651,7 +965,8 @@ def daemon() -> int:
             next_sample = max(now + 1, next_sample + SAMPLE_SECONDS)
         if now >= next_publish:
             try:
-                got = publish(distil(read_rows(), now=now, gpu=gpu))
+                got = publish(distil(read_rows(), now=now, gpu=gpu,
+                                       queue=queue_sample(now=now), power=power_sample()))
                 log(f"published {'ok ' + got[:8] if got else 'FAILED (will retry)'}")
             except Exception as e:                  # noqa: BLE001
                 log(f"publish failed: {e}")
@@ -685,12 +1000,12 @@ def main() -> int:
         print(json.dumps(sample(), indent=2, sort_keys=True))
         return 0
     if a.distil:
-        obj = distil(read_rows(), gpu=gpu_name())
+        obj = distil(read_rows(), gpu=gpu_name(), queue=queue_sample(), power=power_sample())
         write_json(obj)
         print(f"{JSON_PATH} — {len(obj['t'])} bucket(s), last sample {obj['last_sample']}")
         return 0
     if a.publish_once:
-        obj = distil(read_rows(), gpu=gpu_name())
+        obj = distil(read_rows(), gpu=gpu_name(), queue=queue_sample(), power=power_sample())
         commit = publish(obj)
         print(f"{'pushed ' + commit if commit else 'NOT pushed'} "
               f"— {len(obj['t'])} bucket(s) in {JSON_PATH}")

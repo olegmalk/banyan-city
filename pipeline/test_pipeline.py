@@ -7217,6 +7217,142 @@ def test_a_rev_parse_that_failed_is_not_a_sha():
     check("a successful one yields the sha", telemetry.rev(ok) == "deadbeef")
 
 
+def test_the_box_publishes_its_own_queue_and_never_a_zero_it_did_not_measure():
+    """The freshness fix, pinned at the point where it can rot silently.
+
+    Roman, 2026-08-13: "why is the banyan.city/status only updating when i
+    freaking remind you about it??" The queue tile printed
+    measured/box-queue.yaml, which changes only when a session hand-commits it,
+    so the page was exactly as fresh as the last nag. The box now publishes its
+    queue in its five-minute telemetry pulse and the reader's browser draws it.
+
+    What must not rot: a reading that FAILED must never come back as a queue that
+    is EMPTY. Those two are one keystroke apart in every direction here — a
+    missing directory, an unreadable job file, a listdir that raised — and they
+    render as opposite claims: "the box is idle, nothing is waiting" versus "we
+    could not see". The first is the lie the whole status page is arranged
+    against.
+    """
+    import json as _json
+    import os
+    import tempfile
+    import time
+
+    import box_job_minutes
+    import telemetry
+
+    # The medians the page multiplies live counts by were measured PER KIND by
+    # box_job_minutes. If the two tables drift, a live count gets multiplied by
+    # the median of something else and the page prints a confident wrong hour.
+    check("the box's queue kinds are box_job_minutes' kinds, exactly",
+          list(telemetry.QUEUE_KINDS) == [tuple(k) for k in box_job_minutes.KINDS])
+
+    def job(*argv):
+        return _json.dumps({"steps": [{"argv": list(argv)}]})
+
+    with tempfile.TemporaryDirectory() as td:
+        root = Path(td)
+        for sub in ("ready", "running", "done", "failed"):
+            (root / sub).mkdir()
+        now = time.time()
+        (root / "ready" / "job-a.json").write_text(job("py", "ltx_i2v.py"))
+        (root / "ready" / "job-b.json").write_text(job("py", "render_wave_sample.py"))
+        (root / "running" / "job-r.json").write_text(job("py", "ltx_i2v.py"))
+        lg = root / "running" / "job-r.log"
+        lg.write_text("rendering")
+        os.utime(lg, (now - 120, now - 120))
+        (root / "failed" / "job-x.json").write_text("{}")
+        (root / "done" / "job-d.json").write_text("{}")
+        (root / "heartbeats.jsonl").write_text(
+            '{"event":"runner_up","ts":"2026-08-13T08:00:00Z"}\n'
+            '{"event":"job_start","job":"job-r","ts":"2026-08-13T09:00:00Z"}\n')
+
+        q = telemetry.queue_sample(root=root, now=now)
+        check("it counts what is waiting", q["ready"] == 2)
+        check("it counts what is rendering", q["running"] == 1)
+        check("a corpse in failed/ is counted, not hidden", q["failed"] == 1)
+        check("it names the running job", q["running_job"] == "job-r")
+        check("the running job's log age is the liveness signal, in seconds",
+              118 <= q["running_log_age_sec"] <= 122)
+        check("the kind mix accounts for every queued job",
+              q["kinds"] == {"ltx": 2, "still": 1})
+        check("the last heartbeat comes back as an event", q["last_event"] == "job_start")
+        check("its stamp is parsed as UTC, not as box-local time",
+              q["last_event_at"] == 1786611600)
+
+        # A job file it cannot read means the MIX is incomplete. A partial mix
+        # would price the queue as though the unreadable jobs were not in it, so
+        # the whole mix goes rather than the page quoting a short hour.
+        (root / "ready" / "job-c.json").write_text("{ this is not json")
+        q2 = telemetry.queue_sample(root=root, now=now)
+        check("one unreadable job suppresses the whole kind mix", "kinds" not in q2)
+        check("but the counts it could take are still published", q2["ready"] == 3)
+
+    # THE REFUSAL. No queue directory is not an empty queue.
+    with tempfile.TemporaryDirectory() as td:
+        gone = telemetry.queue_sample(root=Path(td) / "not-there", now=time.time())
+        check("a missing queue directory reports an error", bool(gone.get("error")))
+        for k in ("ready", "running", "done_today", "failed"):
+            check(f"and does not invent {k}", k not in gone)
+
+    # distil() stays pure and omits what it was not handed — an old published
+    # file has no queue block and every reader has to survive that.
+    rows = [{"ts": int(time.time()), "gpu_util": 12.0, "gpu_power_w": 40.5}]
+    bare = telemetry.distil(rows, gpu="x")
+    check("no queue block unless one was sampled", "queue" not in bare)
+    check("no power block unless one was sampled", "power" not in bare)
+    check("the newest power draw rides along for the tile",
+          bare.get("gpu_power_w") == 40.5)
+    blank = telemetry.distil(rows, power={"ac": None, "battery_pct": None,
+                                          "battery_minutes": None})
+    check("an all-unknown power reading is not published as a reading",
+          "power" not in blank)
+
+
+def test_the_status_page_can_actually_find_the_numbers_it_rewrites():
+    """The live queue tile is a contract between a builder and a string of JS,
+    and nothing but this test holds the two ends together.
+
+    build_sim bakes `id="q-tile-n"`, `id="q-count"` and friends into the HTML;
+    LIVE_JS looks those ids up and rewrites them. Rename one — the sort of thing
+    a tidy-up does without a second thought — and there is no error anywhere:
+    getElementById returns null, the JS quietly does nothing, and the page goes
+    back to printing a hand-committed number from hours ago. Which is the exact
+    bug this was written to fix, restored in silence.
+    """
+    import build_sim
+
+    js = build_sim.LIVE_JS
+    for el in ("q-tile-n", "q-tile-l", "q-count", "q-notice"):
+        check(f"LIVE_JS looks up {el}", f'"{el}"' in js)
+
+    src = (REPO / "pipeline" / "build_sim.py").read_text(encoding="utf-8")
+    for el in ("q-tile-n", "q-tile-l", "q-count", "q-notice"):
+        check(f"the builder emits an element with id {el}",
+              f'id="{el}"' in src)
+
+    # It must read the branch telemetry actually publishes to, with the same
+    # legacy fallback every other reader carries.
+    import telemetry
+    check("the tile fetches the box's telemetry branch",
+          telemetry.BRANCH in build_sim.BOX_TEL_URL)
+    check("and falls back to where the vitals used to live",
+          telemetry.LEGACY_BRANCH in build_sim.BOX_TEL_URL_LEGACY)
+    check("it reads the file telemetry.py actually publishes",
+          build_sim.BOX_TEL_URL.endswith("/" + telemetry.PUBLISH_PATH))
+    check("the tile's constants reach the page",
+          "BOX_TEL =" in src and "BOX_MEDIAN_FALLBACK =" in src)
+
+    # Ages must be computed against the READER's clock. The committing laptop's
+    # clock drifted a full day in August; a stamp taken from the build would have
+    # had the page reporting tomorrow's queue as though it were now.
+    check("the live queue ages its reading off the fetched file's own stamp",
+          "Date.now() / 1000 - q.at" in js)
+    # And a dead fetch keeps the baked numbers rather than blanking the tile.
+    check("a failed live read says so and keeps the built-in numbers",
+          "Live refresh unavailable" in js and "BOX_BAKED" in js)
+
+
 def main():
     import tempfile
     test_beat_duration_from_timecode()
@@ -7419,6 +7555,9 @@ def main():
     test_the_courier_and_the_telemetry_daemon_own_different_branches()
     test_every_reader_falls_back_to_where_the_vitals_used_to_be()
     test_a_rev_parse_that_failed_is_not_a_sha()
+    # THE STATUS PAGE MUST GO STALE ON ITS OWN, NOT ON A REMINDER.
+    test_the_box_publishes_its_own_queue_and_never_a_zero_it_did_not_measure()
+    test_the_status_page_can_actually_find_the_numbers_it_rewrites()
     print()
     if FAILURES:
         print(f"✗ {len(FAILURES)} failure(s): {', '.join(FAILURES)}")

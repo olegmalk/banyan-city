@@ -1749,6 +1749,23 @@ def episode_eta_html() -> str:
 # vitals re-read keys on (TELEMETRY_STALE_MINUTES, at the top of the file).
 QUEUE_URL = f"{RAW}/main/pipeline/farm-queue.yaml"
 
+# THE QUEUE TILE'S LIVE SOURCE (2026-08-13). Roman: "why is the banyan.city/status
+# only updating when i freaking remind you about it??" — the tile's numbers came
+# from pipeline/measured/box-queue.yaml, which changes only when a supervisor
+# session hand-commits it, so "measured 4 h ago" was really "last nagged 4 h ago".
+# The box itself knows its queue every second and already publishes to its own
+# branch every five minutes (pipeline/telemetry.py), so the reader's browser
+# fetches THAT and rewrites the numbers. No session, no commit, no deploy in the
+# freshness path. The yaml stays as the no-JS floor, and the medians the estimate
+# multiplies by still come from it — those are measured over days, not minutes.
+BOX_BRANCH = "farm-results-rtx5090"
+BOX_TEL_URL = f"{RAW}/{telemetry_branch(BOX_BRANCH)}/telemetry.json"
+BOX_TEL_URL_LEGACY = f"{RAW}/{BOX_BRANCH}/telemetry.json"
+# Older than this and the queue block is a historical record, not a reading: the
+# page keeps showing it but stops calling it live and says how old it is. Three
+# missed publishes, the same rule TELEMETRY_STALE_MINUTES applies to the vitals.
+BOX_QUEUE_STALE_MINUTES = TELEMETRY_STALE_MINUTES
+
 
 # Plain string, not an f-string: JavaScript, full of braces. INFRA_* are emitted
 # beside it by build().
@@ -1808,10 +1825,17 @@ INFRA_JS = """
 # BUILT_AT and BUILT_QUEUE are emitted next to it by build().
 LIVE_JS = """
 /* ---- the page keeps up with the farm after the deploy ------------------------
-   Three files, all of them ours, all fetched by the reader's own browser off
+   Four files, all of them ours, all fetched by the reader's own browser off
    raw.githubusercontent (Access-Control-Allow-Origin: *, verified): each
-   machine's check-in log, each machine's vitals, and the work queue. No
-   library, no external code, no request to any host but GitHub's raw CDN.
+   machine's check-in log, each machine's vitals, the shared work queue, and the
+   render box's own queue depth. No library, no external code, no request to any
+   host but GitHub's raw CDN.
+
+   This is the whole freshness mechanism for the queue numbers. A static page
+   cannot update itself and this site does not rebuild on a timer, so anything
+   that has to be current has to be fetched by the reader — the alternative,
+   which is what the queue tile did until 2026-08-13, is a number that is as old
+   as the last time a person remembered to run a session.
 
    The honesty rules the rest of the page runs on apply here too:
      * a fetch that fails says so in words and changes nothing else;
@@ -2016,6 +2040,159 @@ LIVE_JS = """
       });
   }
 
+  /* ---- the render box's own queue, live ---------------------------------- */
+  /* THE FIX FOR "why is the status only updating when i remind you about it".
+     The tile below used to print pipeline/measured/box-queue.yaml, a file that
+     changed only when a session hand-committed it, so its "measured" stamp was
+     really a record of the last time somebody was nagged. The box publishes its
+     own queue every five minutes; this reads that.
+
+     WHAT IS LIVE AND WHAT IS NOT. The COUNTS come off the box. The MEDIANS the
+     estimate multiplies them by are baked into the page, because they are
+     measured over days of finished jobs and do not move in five minutes. So a
+     live count times a slow median — the same arithmetic box_queue_eta() does at
+     build time, deliberately, so the two cannot disagree about what a queue of
+     two LTX takes means.
+
+     FOUR WAYS IT DECLINES, and none of them blanks the tile: the fetch fails,
+     the file has no queue block (an old publish, or the daemon has not been
+     restarted onto the new code yet), the box could not read its own queue, or
+     the reading is older than BOX_STALE. The first three keep the baked numbers
+     and say the live path is unavailable; the last shows the numbers and says
+     how old they are instead of calling them current. */
+  function estimate(q) {
+    /* → {minutes, basis} or null. Mirrors box_queue_eta(): per-kind when the mix
+       accounts for every job, a rough count × pooled median otherwise, and
+       NOTHING when there is no median to multiply by. */
+    var jobs = (q.ready || 0) + (q.running || 0);
+    if (!jobs) return {minutes: 0, basis: "none"};
+    var kinds = q.kinds, total = 0, counted = 0, k;
+    if (kinds) {
+      for (k in kinds) if (Object.prototype.hasOwnProperty.call(kinds, k)) {
+        counted += kinds[k];
+        total += kinds[k] * (BOX_MEDIANS[k] || BOX_MEDIAN_FALLBACK || 0);
+      }
+      /* a mix that does not add up is a reading of a queue that has moved */
+      if (counted === jobs && total > 0) return {minutes: Math.round(total), basis: "kinds"};
+    }
+    if (BOX_MEDIAN_FALLBACK) {
+      return {minutes: Math.round(jobs * BOX_MEDIAN_FALLBACK), basis: "rough"};
+    }
+    return null;
+  }
+  function hoursWords(min) {
+    /* build_sim.hours_words, to the character — the baked copy and the live copy
+       of this sentence have to read the same or the tile flickers between two
+       spellings of the same number. */
+    if (!min) return "";
+    return min < 90 ? min + " min" : "about " + (min / 60).toFixed(1) + " h";
+  }
+  function boxSay(nText, nCls, lText, count, notice) {
+    var n = document.getElementById("q-tile-n"), l = document.getElementById("q-tile-l");
+    if (n && nText !== null) { n.textContent = nText; n.className = nCls; }
+    if (l && lText !== null) l.textContent = lText;
+    var c = document.getElementById("q-count");
+    if (c && count !== null) c.textContent = count;
+    var p = document.getElementById("q-notice");
+    if (p && notice !== null) p.textContent = notice;
+  }
+  function boxStale(why) {
+    /* Never blank, never a guess: the baked numbers stand and the page says the
+       live path is down and how old what you are looking at therefore is. */
+    var p = document.getElementById("q-notice");
+    if (p) {
+      p.textContent = p.textContent.replace(/\\s*Live refresh[^]*$/, "") +
+        " Live refresh unavailable (" + why + "); these are the numbers as of " +
+        BOX_BAKED + ", when this copy was built.";
+    }
+  }
+  function readBoxQueue() {
+    if (!document.getElementById("q-tile-n") && !document.getElementById("q-notice")) return;
+    function grab(u) {
+      return fetch(u + "?_=" + bust(), {cache: "no-store"})
+        .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); });
+    }
+    grab(BOX_TEL)
+      .catch(function () { return grab(BOX_TEL_LEGACY); })
+      .then(function (d) {
+        var q = d && d.queue;
+        if (!q) throw new Error("the box is publishing vitals but not yet its queue");
+        if (q.error) throw new Error("the box could not read its own queue: " + q.error);
+        if (typeof q.ready !== "number" && typeof q.running !== "number") {
+          throw new Error("the queue reading carries no counts");
+        }
+        var ready = q.ready || 0, running = q.running || 0, jobs = ready + running;
+        /* AGE OFF THE FILE'S OWN STAMP AGAINST THE READER'S CLOCK. Not the
+           committing laptop's — that drifted a day in August and would have had
+           the page reporting tomorrow's queue. */
+        var age = Math.max(0, Math.round(Date.now() / 1000 - q.at));
+        var fresh = age <= BOX_STALE * 60;
+        /* THE FRESHNESS GOES ON THE TILE, not only in the paragraph below it.
+           The complaint that produced all of this was about the tile, and a
+           reader who has to scroll to a work list to find out how old a number
+           is will read the number as now. Short form on the tile, the full
+           sentence in the section. */
+        var whenShort = "measured " + words(age) +
+                        (fresh ? "" : ", and the box has stopped publishing");
+        var when = fresh ? "measured " + words(age) + " by the box itself"
+                         : "measured " + words(age) + " — the box has stopped " +
+                           "publishing, so this is the last reading, not a current one";
+        var est = estimate(q);
+
+        /* the glance tile. A stale reading keeps its number — it is the last
+           thing we actually know — but loses the styling that says "current"
+           and carries how old it is in the same breath. */
+        if (jobs && est && est.minutes) {
+          boxSay("~" + hoursWords(Math.max(1, est.minutes)), fresh ? "sn" : "sn none",
+                 "of work queued on the render box · " + running + " rendering, " +
+                 ready + " waiting · " + (est.basis === "rough"
+                   ? "an estimate, and a rough one: a median job times the count"
+                   : "an estimate, each job timed against past jobs of its kind") +
+                 " · " + whenShort,
+                 null, null);
+        } else if (jobs) {
+          boxSay(String(jobs), fresh ? "sn" : "sn none",
+                 "jobs on the render box · no job times have been measured, so " +
+                 "this page will not say how long that is · " + whenShort, null, null);
+        } else {
+          boxSay("0", fresh ? "sn zero" : "sn none",
+                 "nothing queued on the render box, " + whenShort, null, null);
+        }
+
+        /* the work list */
+        var bits = "The render box’s own queue, read by your browser: " + running +
+                   " rendering, " + ready + " waiting";
+        if (jobs && est && est.minutes) {
+          bits += " · an estimated ~" + hoursWords(Math.max(1, est.minutes)) +
+                  (est.basis === "rough"
+                    ? ", roughly: a median job times the count"
+                    : ", each job timed against past jobs of its kind");
+        }
+        if (typeof q.failed === "number" && q.failed > 0) {
+          /* a corpse in failed/ is invisible to any count of what is waiting */
+          bits += " · " + q.failed + " sitting failed";
+        }
+        if (typeof q.done_24h === "number") {
+          bits += " · " + q.done_24h + " finished in the last 24 h";
+        }
+        if (q.running_job && typeof q.running_log_age_sec === "number") {
+          bits += " · the running job last wrote to its log " + words(q.running_log_age_sec);
+        }
+        if (q.runner_alive === false) {
+          bits += " · NOTHING IS DRAINING IT: the box's runner is not running";
+        }
+        var pw = d.power;
+        if (pw && pw.ac === false) {
+          bits += " · the box is on BATTERY" +
+                  (typeof pw.battery_pct === "number" ? " at " + pw.battery_pct + "%" : "") +
+                  ", where it renders well below the speed those medians were measured at";
+        }
+        bits += " · " + when + ".";
+        boxSay(null, null, null, String(jobs), bits);
+      })
+      .catch(function (e) { boxStale(e.message); });
+  }
+
   function refresh() {
     var lis = document.querySelectorAll("#machlist li[data-branch]");
     for (var i = 0; i < lis.length; i++) {
@@ -2023,6 +2200,7 @@ LIVE_JS = """
       if (lis[i].getAttribute("data-tel")) readVitals(lis[i]);
     }
     readQueue();
+    readBoxQueue();
   }
   tick();
   setInterval(tick, 20000);
@@ -2665,31 +2843,33 @@ def summary_strip(view: dict, now) -> str:
     # it and says so. No snapshot, or no median to multiply it by, and the cell
     # states which of the two is missing rather than printing a plausible
     # number.
+    #
+    # The ids are load-bearing: LIVE_JS.readBoxQueue() overwrites this cell from
+    # the box's own five-minute publish, so what is baked here is the no-JS
+    # floor, not the number most readers see.
     eta = view.get("boxq")
     if eta and eta["est_minutes"] and eta["jobs"]:
-        queue_cell = (f'<a class="sx" href="#worklist"><span class="sn">~'
-                      f'{_e(hours_words(max(1, eta["est_minutes"])))}</span>'
-                      f'<span class="sl">of work queued on the render box \u00b7 '
-                      f'{eta["running"]} rendering, {eta["ready"]} waiting \u00b7 '
-                      + ('an estimate, and a rough one: a median job times '
-                         'the count' if eta["basis"] == "rough" else
-                         'an estimate, each job timed against past jobs of '
-                         'its kind')
-                      + '</span></a>')
+        q_n = "~" + _e(hours_words(max(1, eta["est_minutes"])))
+        q_cls = "sn"
+        q_l = (f'of work queued on the render box \u00b7 '
+               f'{eta["running"]} rendering, {eta["ready"]} waiting \u00b7 '
+               + ('an estimate, and a rough one: a median job times the count'
+                  if eta["basis"] == "rough" else
+                  'an estimate, each job timed against past jobs of its kind'))
     elif eta and eta["jobs"]:
-        queue_cell = (f'<a class="sx" href="#worklist"><span class="sn">'
-                      f'{eta["jobs"]}</span><span class="sl">jobs on the '
-                      'render box \u00b7 no job times have been measured, so this '
-                      'page will not say how long that is</span></a>')
+        q_n, q_cls = str(eta["jobs"]), "sn"
+        q_l = ('jobs on the render box \u00b7 no job times have been measured, '
+               'so this page will not say how long that is')
     elif eta:
-        queue_cell = ('<a class="sx" href="#worklist"><span class="sn zero">0'
-                      '</span><span class="sl">nothing queued on the render '
-                      'box as of its last measured snapshot</span></a>')
+        q_n, q_cls = "0", "sn zero"
+        q_l = 'nothing queued on the render box as of its last measured snapshot'
     else:
-        queue_cell = ('<a class="sx" href="#worklist"><span class="sn none">not '
-                      'read</span><span class="sl">the render box\u2019s queue '
-                      'snapshot could not be read this build, so its depth is '
-                      'not claimed either way</span></a>')
+        q_n, q_cls = "not read", "sn none"
+        q_l = ('the render box\u2019s queue snapshot could not be read this '
+               'build, so its depth is not claimed either way')
+    queue_cell = (f'<a class="sx" href="#worklist" id="q-tile">'
+                  f'<span class="{q_cls}" id="q-tile-n">{q_n}</span>'
+                  f'<span class="sl" id="q-tile-l">{q_l}</span></a>')
 
     return (
         '<div class="strip rise">'
@@ -2964,19 +3144,22 @@ def build(out_dir: Path):
                           'own finished jobs')
             else:
                 timing = ""
-            queued_html = (f'<h3>⏭ Queued for a machine <span class="count">'
-                           f'{boxq["jobs"]}</span></h3>'
-                           f'<p class="notice">The render box’s own queue: '
-                           f'{boxq["running"]} rendering, {boxq["ready"]} waiting'
-                           f'{timing} · measured {_e(boxq["measured_at"])}. The '
-                           f'shared queue file has nothing runnable.</p>')
+            # Same ids as the glance tile's: the browser rewrites both from the
+            # box's own publish, and what is baked is the no-JS floor.
+            queued_html = (f'<h3>⏭ Queued for a machine <span class="count" '
+                           f'id="q-count">{boxq["jobs"]}</span></h3>'
+                           f'<p class="notice" id="q-notice">The render box’s own '
+                           f'queue: {boxq["running"]} rendering, {boxq["ready"]} '
+                           f'waiting{timing} · measured {_e(boxq["measured_at"])}. '
+                           f'The shared queue file has nothing runnable.</p>')
         else:
             box_note = (' The render box also keeps its own on-disk queue between '
                         'pushes — its last idle report above is the only honest '
                         'reading of that.' if depth else "")
-            queued_html = ('<h3>⏭ Queued for a machine <span class="count">0</span></h3>'
-                           '<p class="notice">Nothing in the shared queue file is '
-                           'waiting for a machine.' + box_note + '</p>')
+            queued_html = ('<h3>⏭ Queued for a machine <span class="count" '
+                           'id="q-count">0</span></h3>'
+                           '<p class="notice" id="q-notice">Nothing in the shared '
+                           'queue file is waiting for a machine.' + box_note + '</p>')
     if hand_q:
         queued_html += (
             f'<p class="mono">{len(hand_q)} more '
@@ -3174,6 +3357,11 @@ is the spend guard working, not the page failing. The whole repo IS the show —
 <script>
 var TEL_STALE = {TELEMETRY_STALE_MINUTES};
 var RAW_BASE = {json.dumps(RAW)}, QUEUE_URL = {json.dumps(QUEUE_URL)};
+var BOX_TEL = {json.dumps(BOX_TEL_URL)}, BOX_TEL_LEGACY = {json.dumps(BOX_TEL_URL_LEGACY)},
+    BOX_STALE = {int(BOX_QUEUE_STALE_MINUTES)},
+    BOX_MEDIANS = {json.dumps(boxq["medians"] if boxq else {})},
+    BOX_MEDIAN_FALLBACK = {json.dumps(boxq["fallback"] if boxq else None)},
+    BOX_BAKED = {json.dumps(boxq["measured_at"] if boxq else "the build")};
 var BUILT_AT = {int(now.timestamp())};
 var BUILT_QUEUE = {json.dumps({"tasks": [str(t.get("id")) for t in queue],
                                "backlog": [str(b.get("id")) for b in backlog]})};
