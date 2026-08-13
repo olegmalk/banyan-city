@@ -214,10 +214,22 @@ def _sapling_canopy(ep: dict, cx: float, cy: float, side: int, board: str) -> tu
             tilt = -26 + ((i * 37) % 53)
             href = f'{board}#beat-{n:02d}' if (board and n) else board
             title = _beat_title(ep, n, css, note)
+            # AN INVISIBLE HIT RECT OVER THE WHOLE CELL. Measured on a 320px
+            # phone the leaf itself is 17 × 7 CSS pixels — a fine mark and a
+            # hopeless finger target. The rect takes the full cell, which
+            # nearly doubles the tappable height, and it also gives the hover
+            # tooltip somewhere to live in the gaps between leaves. Thirty-six
+            # marks in a 280px canopy cannot each reach the 24px ideal; that is
+            # what the table view underneath is for, and it carries every value
+            # the leaves do.
+            hit_x = row_x + c * CELL_W
+            hit_y = y0 + r * CELL_H
             body = (f'<title>{_e(title)}</title>'
                     f'<path class="lf lf-{css}" d="{LEAF_PATH}" '
                     f'transform="translate({lx:.1f} {ly:.1f}) rotate({tilt} '
-                    f'{LEAF_W / 2:.1f} {LEAF_H / 2:.1f})"/>')
+                    f'{LEAF_W / 2:.1f} {LEAF_H / 2:.1f})"/>'
+                    f'<rect class="lfhit" x="{hit_x:.1f}" y="{hit_y:.1f}" '
+                    f'width="{CELL_W:.1f}" height="{CELL_H:.1f}"/>')
             marks.append(f'<a class="lfa" href="{_e(href)}">{body}</a>' if href
                          else f'<g class="lfa">{body}</g>')
 
@@ -717,6 +729,9 @@ table.ctab tbody tr:last-child th, table.ctab tbody tr:last-child td {
 /* Never scored: hollow, so it reads as an absence at a glance. */
 .sap-svg .lf-unk { fill: none; stroke: var(--line); stroke-width: 1.2; }
 .sap-svg .lfa { cursor: pointer; }
+/* The finger's target, not the eye's: a transparent rect the size of the whole
+   grid cell, sitting over the leaf it belongs to. */
+.sap-svg .lfhit { fill: transparent; }
 .sap-svg .lfa:hover .lf, .sap-svg .lfa:focus-visible .lf {
   stroke: var(--ink); stroke-width: 1.6; }
 .sap-svg .lfa:focus-visible { outline: none; }
