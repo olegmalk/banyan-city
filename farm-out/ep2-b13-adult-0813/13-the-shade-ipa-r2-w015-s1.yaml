@@ -55,6 +55,6 @@ prompt: >-
 negative_prompt: >-
   text, mature tree, large tree, girl, chibi, big head, round baby face, toddler, child, scars, stitched skin, white hair, night, dusk, photorealism, leaf on head, plant girl, alraune, monster girl, flower on head, head wreath, hair ornament, leaf hair ornament, plant hair, female goblin, elf
 colour_anchor_negative: none (negative byte-identical to arm 1)
-render_seconds: 9.5
+render_seconds: 9.4
 founder_verdict: null
 scored: false
