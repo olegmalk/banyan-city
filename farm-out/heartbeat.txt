@@ -1251,3 +1251,4 @@
 20:30:15Z DONE task=ep2-b01-purpleB-0813-1786651472 rc=0 artifacts=2
 20:30:24Z STARTED task=ep2-b05-twoguard-0813-1786651723 attempt=1 on box-runner
 20:37:00Z DONE task=ep2-b05-twoguard-0813-1786651723 rc=0 artifacts=1
+20:37:09Z STARTED task=ep2-b05-twoguardB-0813-1786651727 attempt=1 on box-runner
