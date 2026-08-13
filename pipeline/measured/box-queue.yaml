@@ -64,16 +64,25 @@
 # has already rendered — at most one job. It is an upper bound on the wait,
 # which is the direction to be wrong in.
 #
-# HOW THE MEDIANS WERE MEASURED (2026-08-12, `python3 pipeline/box_job_minutes.py`):
+# HOW THE MEDIANS WERE MEASURED (2026-08-13, `python3 pipeline/box_job_minutes.py`):
 # from the per-job sidecars farm-out/box/<id>.json on origin/farm-results-rtx5090,
-# which carry `started_at` and `finished_at` written by the runner — 248 of 248
+# which carry `started_at` and `finished_at` written by the runner — 350 of 350
 # jobs have both. NOT from the step logs: the courier tail-truncates those at
 # 200 lines and 135 of 252 have lost the start line they open with, and the
 # jobs that overflow 200 lines are the long chatty ones, so a median off what
 # survives is biased fast. Pooled, "the median job" is not a real quantity — it
 # moves between ~1 and ~5 min on window choice alone. Per kind it is steady,
-# which is why the page multiplies per kind: ltx n=95 (3.9–9.2), still n=99,
-# charref n=23, inpaint n=4, other n=27.
+# which is why the page multiplies per kind: ltx n=178 (3.9–44.9), still n=115,
+# charref n=26, inpaint n=4, other n=27.
+#
+# NOTHING REFRESHES THESE ON ITS OWN, and on 2026-08-13 that showed. The counts
+# above went live five-minutely via telemetry.json the moment Roman asked why the
+# page only updated when he reminded us; the MEDIANS underneath them stayed on
+# their 12 Aug reading, and by the 13th the ltx figure was 4.8 against a measured
+# 5.7 — so every hour this page published for episode 2 was ~19% short, and the
+# pooled fallback was 2.9 against 4.3. Re-run the command above whenever the
+# record grows a day; it takes four seconds and it is the only thing that moves
+# these numbers.
 measured_at: 2026-08-13 08:19Z
 ready: 1
 running: 1
@@ -84,9 +93,9 @@ queued_kinds:
 kind_medians:
   charref: 2.9
   inpaint: 2.0
-  ltx: 4.8
+  ltx: 5.7
   other: 0.9
   still: 0.9
-kind_median_fallback: 2.9
-median_from: the 259 jobs the box finished 10 - 12 Aug
-median_measured_at: 2026-08-12
+kind_median_fallback: 4.3
+median_from: the 350 jobs the box finished 10 – 13 Aug
+median_measured_at: 2026-08-13

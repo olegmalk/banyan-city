@@ -263,7 +263,10 @@ def sapling_svg(eps: list, boards: dict) -> tuple:
         widths.append(cols * CELL_W)
     half = max(widths) / 2.0
     gap = 16.0
-    cx = 20.0 + gap + max(widths)
+    # 30 rather than 20: the episode labels are pinned to the inner canopy edge
+    # and flow outward, so the margin has to hold whatever overhangs a narrow
+    # canopy. Measured against the longest label the format can produce.
+    cx = 30.0 + gap + max(widths)
     W = cx * 2.0
     H = 46.0 + TIER_H * n_eps
     ground = H - 18.0
@@ -289,12 +292,15 @@ def sapling_svg(eps: list, boards: dict) -> tuple:
             f'Q{cx + side * (gap * 0.9):.1f} {by - 1:.1f} {ax:.1f} {ay:.1f}"/>')
         cnt = _counts(ep["beats"], int(ep.get("total_beats") or len(ep["beats"])))
         total = sum(cnt.values())
-        # Anchored to the canopy's OUTER edge, away from the trunk. Centred
-        # under the foliage, episode 1's label ran straight through the trunk.
-        lx = (c_cx - w / 2.0) if side < 0 else (c_cx + w / 2.0)
+        # THE LABEL GROWS AWAY FROM THE TRUNK, never toward it. It is pinned to
+        # the canopy edge NEAREST the trunk and flows outward, so a label wider
+        # than its canopy — which "EP 1 · 4/15 passed" is, under a four-column
+        # limb — runs into the empty margin instead of through the trunk. Pinned
+        # the other way it did exactly that, and the bigger type made it obvious.
+        lx = (c_cx + w / 2.0) if side < 0 else (c_cx - w / 2.0)
         labels.append(
-            f'<text class="epl" x="{lx:.1f}" y="{cy + h / 2 + 10:.1f}" '
-            f'text-anchor="{"start" if side < 0 else "end"}">EP '
+            f'<text class="epl" x="{lx:.1f}" y="{cy + h / 2 + 11:.1f}" '
+            f'text-anchor="{"end" if side < 0 else "start"}">EP '
             f'{_e(ep.get("number"))} · {cnt["done"]}/{total} passed</text>')
         summary.append({"number": ep.get("number"), "title": ep.get("title"),
                         "counts": cnt, "total": total,
@@ -419,7 +425,7 @@ def sapling_html(eps: list, boards: dict) -> str:
 # tail is in the tooltip and in the table, never in a fourth colour nobody can
 # separate.
 
-WORK_H = 132.0          # viewBox height
+WORK_H = 140.0          # viewBox height
 WORK_PLOT_TOP = 14.0
 WORK_BASE = 96.0        # the baseline every bar stands on
 WORK_LEFT = 4.0
@@ -546,15 +552,15 @@ def work_days_html(doc: dict) -> str:
         # The value on top of the bar. Four bars is few enough that every one
         # can be labelled without the chart turning into a wall of digits.
         top_y = WORK_BASE - plot_h * mins / ceil_m
-        labels.append(f'<text class="wkv" x="{cx:.2f}" y="{top_y - 3.2:.2f}" '
+        labels.append(f'<text class="wkv" x="{cx:.2f}" y="{top_y - 4:.2f}" '
                       f'text-anchor="middle">{_e(_hrs(mins))}</text>')
         short = str(d.get("date") or "")[-2:].lstrip("0") or "?"
         day_lab = short if len(days) > 7 else f'{short} {_month(d.get("date"))}'
-        ticks.append(f'<text class="wkx" x="{cx:.2f}" y="{WORK_BASE + 9:.2f}" '
+        ticks.append(f'<text class="wkx" x="{cx:.2f}" y="{WORK_BASE + 12:.2f}" '
                      f'text-anchor="middle">{_e(day_lab)}</text>')
         if d.get("partial"):
             ticks.append(f'<text class="wkx dim" x="{cx:.2f}" '
-                         f'y="{WORK_BASE + 17:.2f}" text-anchor="middle">'
+                         f'y="{WORK_BASE + 21:.2f}" text-anchor="middle">'
                          'so far</text>')
 
     # One gridline, at the ceiling, and the baseline. Solid hairlines a shade
@@ -596,10 +602,29 @@ def work_days_html(doc: dict) -> str:
         'that ate the most of that day.')
     foot = ""
 
+    # WHERE THE DATA IS THIN, THE CHART SAYS SO. The box's per-job records begin
+    # on 10 Aug and nothing before that is recoverable, so for the first fortnight
+    # this is a chart of a handful of bars — which is worth drawing (the shape is
+    # already load-bearing) but is not worth letting a reader mistake for a
+    # settled rhythm. The note removes itself once there is a week of it.
+    thin = (f'<p class="cnote">Only {len(days)} day'
+            f'{"s" if len(days) != 1 else ""} of it so far — the box began '
+            'writing per-job records on 10 Aug and nothing before that is '
+            'recoverable, so this is a rhythm still forming, not one to read '
+            'a trend off.</p>' if len(days) < 7 else "")
+    # THE DENSE VIEW LIVES AT /pulse, AND STAYS THERE. Roman took the
+    # minute-by-minute telemetry charts off this page on 2026-08-11 — "it has
+    # too much unnecessary stuff, its hard to understand whats going on from a
+    # glance" — and they moved to their own page. This chart is deliberately the
+    # story-level one: four numbers a person can hold. The link is how a reader
+    # who wants the per-minute view gets there, instead of it being rebuilt here.
+    deep = ('<p class="cnote">Minute-by-minute — GPU load, memory, queue depth '
+            'as they happened — lives on <a href="pulse.html">the pulse page</a>. '
+            'This chart is the day-level shape only.</p>')
     return (f'<figure class="wkfig">{svg}'
             f'<div class="wk-key">{key}</div>'
             f'<figcaption class="ccap">{caption}</figcaption></figure>'
-            + _work_table(doc, top_kinds, stamp) + foot)
+            + thin + deep + _work_table(doc, top_kinds, stamp) + foot)
 
 
 _MONTHS = ("Jan", "Feb", "Mar", "Apr", "May", "Jun",
@@ -716,7 +741,7 @@ table.ctab tbody tr:last-child th, table.ctab tbody tr:last-child td {
   stroke-linecap: round; opacity: .55; }
 .sap-svg .soil { fill: none; stroke: var(--line); stroke-width: 1.6;
   stroke-linecap: round; }
-.sap-svg .epl { font: 700 5px/1 var(--mono); letter-spacing: .04em;
+.sap-svg .epl { font: 700 6px/1 var(--mono); letter-spacing: .04em;
   fill: var(--faint); }
 /* The 2px surface-coloured stroke is the gap between neighbouring leaves. It is
    what stops a dense canopy reading as one blob, and it is drawn in the page's
@@ -761,7 +786,7 @@ table.ctab tbody tr:last-child th, table.ctab tbody tr:last-child td {
    1 / .72 / .5 passes the ordinal checks (monotone lightness, adjacent ΔL ≥
    .06, faintest step above the surface) against both surfaces. ---- */
 .wkfig { margin: .2rem 0 .4rem; padding: 0; }
-.wk-svg { display: block; width: 100%; max-width: 40rem; height: auto;
+.wk-svg { display: block; width: 100%; max-width: 32rem; height: auto;
   margin: 0 auto; }
 .wk-svg .wk { fill: var(--leaf); }
 .wk-svg .w1 { opacity: 1; }
@@ -770,10 +795,10 @@ table.ctab tbody tr:last-child th, table.ctab tbody tr:last-child td {
 .wk-svg .wkbar:hover .wk { fill: var(--sap); }
 .wk-svg .wkgrid { stroke: var(--line-soft); stroke-width: .8; }
 .wk-svg .wkaxis { stroke: var(--line); stroke-width: .8; }
-.wk-svg .wkv { font: 700 6.6px/1 var(--mono); fill: var(--ink);
+.wk-svg .wkv { font: 700 9px/1 var(--mono); fill: var(--ink);
   font-variant-numeric: tabular-nums; }
-.wk-svg .wkx { font: 500 6px/1 var(--mono); fill: var(--faint); }
-.wk-svg .wkx.dim { font-size: 5.2px; }
+.wk-svg .wkx { font: 500 8.5px/1 var(--mono); fill: var(--faint); }
+.wk-svg .wkx.dim { font-size: 7.2px; }
 .wk-key { display: flex; flex-wrap: wrap; justify-content: center;
   gap: .1rem .8rem; margin: .55rem 0 0;
   font: 400 .72rem/1.8 var(--sans, inherit); color: var(--muted); }
