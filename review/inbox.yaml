@@ -336,3 +336,15 @@
   since: 2026-08-13
   kind: decision
   verdict_hint: "send a photo / use one of the three weak CC0 options anyway / different route"
+- what: 'Beat 06 canon promotion is BLOCKED BY THE LICENCE GATE, and it needs your D15 ruling to move.
+    I did exactly what you said - copied your picked frame into the canon slot with full provenance and
+    both your quotes - and lint refused it: debt 26 against a ratchet of 25. I did not weaken the gate.
+    Your order settles WHICH FRAME is the beat; it does not settle whether we may publish a
+    CreativeML-OpenRAIL++-M frame, and only you can. The same ruling also unblocks 8 canon provenance
+    sidecars stuck behind the same wall'
+  url: /review/ep1-audit-0812
+  since: '2026-08-13'
+  kind: decision
+  verdict_hint: 'the gate offers three: put CreativeML Open RAIL++-M on the publish-safe list (accepting
+    we pass its use restrictions to reusers) / re-shoot beat 06 on a publish-safe route / narrow what we
+    offer reusers (D13). Say which and the promotion is one command'

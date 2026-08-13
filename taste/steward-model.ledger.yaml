@@ -14754,3 +14754,41 @@
     crouches and not on pointing, reading or walking away, which would be worth more than the wave.
   consumer: his batch screening; nothing published, nothing promoted.
   outcome: null
+
+- id: ep1-b06-promotion-blocked-by-gate-0813
+  kind: observation
+  date: 2026-08-13
+  founder_instruction_verbatim: "so then make it canon/approved"
+  context: >-
+    He learned that episode 1 reads 14 canon stills of 15 because beat 06's frame — his own pick of
+    2026-08-10, "this one is good enough lets not overthink it, use that" — was never promoted, the
+    licence gate having refused it.
+  what_I_did: >-
+    Executed the promotion exactly as ordered and honestly. Copied the picked frame byte-for-byte into
+    `stills/06-too-blue.png` (sha 6e44d328…, identical to takes/06-too-blue-r8d-step3-s0.png) with a
+    full sidecar: the source's own provenance verbatim including its reconstruction caveat, both of his
+    dated quotes, and a licence field stating the truth — same CreativeML Open RAIL++-M debt class as
+    the published siblings 09/12/15, D15 STILL OPEN, `publishable: false`.
+  THE GATE REFUSED, and I did not touch it: >-
+    `lint_genome.py` exit 1. Licence debt ROSE to 26 against a ratchet of 25, with the new violation
+    named as `stills/06-too-blue.png.meta.yaml: cagliostrolab/animagine-xl-3.1 ... not on the
+    publish-safe allowlist`. Reverted rather than push a red main — lint runs BEFORE build_site in the
+    deploy, so a red lint stops the whole site rather than just a badge. The tree is clean and back to
+    debt 25, lint 0.
+  WHAT THE GATE DEMANDS, in its own words, and it is a three-way choice that is his: >-
+    "classify it in pipeline/licence_gate.py or replace the asset", plus its own standing prohibition
+    "Never raise LICENCE_DEBT to make this pass". So: (1) RULE ON D15 — put CreativeML Open RAIL++-M on
+    the publish-safe allowlist, which means deciding we can honestly pass its use restrictions on to
+    reusers under our CC BY 4.0 offer, and which would also unblock the eight canon provenance sidecars
+    that are stuck behind the same wall; or (2) REPLACE THE FRAME — re-shoot beat 06 on a publish-safe
+    route so the canon slot fills with an asset that can ship; or (3) NARROW WHAT WE OFFER REUSERS, the
+    D13/D15 escape the gate names for the Google-Flow debt.
+  the_distinction_that_matters_and_why_I_did_not_resolve_it_for_him: >-
+    His order is an R4 act about WHICH FRAME IS THE BEAT, and it is unambiguous. It is not a licence
+    ruling, and licence is not R4 — it is governance and it is reserved. A frame can be his canon pick
+    and still be unpublishable; both were true of this one the moment he picked it. Promoting it by
+    classifying the model myself would have answered a reserved question with a lint edit.
+  what_is_ready_the_moment_he_rules: >-
+    The promotion is one command. The frame, the sidecar text and both quotes are written and tested;
+    only the gate stands between them and canon, and the 14/15 counter reads 15/15 the moment it passes.
+  outcome: null
