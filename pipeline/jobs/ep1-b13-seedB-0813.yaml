@@ -1,0 +1,183 @@
+# 2026-08-13. SEED TWIN for an episode-1 beat that has exactly ONE take and no verdict.
+#
+# WHY: my seed test on episode 2 found FIVE of nine beats that looked solved were one lucky
+# roll — the second seed disagreed on the plant, the light or the action. Every episode-1
+# beat with a single take is in that same unknown state, and he is about to review them. A
+# twin turns a coin-flip into stability data before he spends attention on it.
+#
+# ONE VARIABLE: the seed. Same plate from the same tracked still, same prompt, same frame
+# count, same guidance. I verified the still is REACHABLE ON THE BOX before authoring — the
+# check that has caught two broken jobs this week.
+#
+# ONE ADDITION THAT IS NOT A VARIABLE: A PUBLISH STEP. The original has none, so its output
+# strands on the box and cannot be fetched or hash-verified — the defect that hid the cold
+# open from him for hours. The twin publishes; the original's clip is already in the v37 cut.
+#
+# I ALSO GOT THIS FILE'S SHAPE WRONG ONCE: episode-1 jobs indent their `steps:` list by two
+# spaces and my episode-2 jobs do not, so my first publish block broke the YAML. Indentation
+# is now read from the file rather than assumed.
+
+id: ep1-b13-seedB-0813
+task: ep1-b13-seedB-0813-0811
+node: 001-capability-inventory
+beat: 13
+runner: box
+needs_gpu: true
+priority: 23       # lower runs first — the worst loop of the three goes first
+max_attempts: 1
+sample: false      # 217f is under the 313f Roman approved - see the run-copy note
+owner: queue-depth lane, 2026-08-11 (run copy, after Roman's b08 verdict)
+
+consumer: >-
+  the episode-1 cut he is being asked to pass — `v6-verdict` in
+  pipeline/pending-founder.yaml, the item that gates posting anywhere. Beat 13's
+  picture plays 3.44 times under its line, the worst remaining repetition in the
+  cut now that beat 08 has a fix. It is also the beat where the long-clip recipe
+  has the best chance of looking good, so his verdict on this clip answers two
+  things at once: whether beat 13 is fixed, and whether long ambient landscape
+  clips are worth doing at all.
+
+success: >-
+  A 704x1280 mp4 at C:\banyan-farm\v34-r2\13-i-always-left-LTX-seedB.mp4 with 217
+  decoded frames (9.042s), conditioned on the canon still, in which the grass
+  waves and the clouds drift continuously for the whole nine seconds and the
+  landscape stays the same landscape: the road stays in the same place running to
+  the same horizon, the horizon keeps the same height, NO TREE and no plant and
+  no figure and no building appears at any point, and there is no second scene.
+  The specific thing to look for over this length is whether the motion stays
+  continuous or settles into a cycle — a clip that repeats a wave pattern is the
+  same defect at a smaller scale and is worth reporting as such. A completed clip
+  that reads static is a real result too. By eye, beside the 2.542s clip it
+  replaces. No metric is run.
+
+why: >-
+  It is the worst loop left in episode 1 and the shot whose content is closest to
+  what continuous ambient motion is actually good at.
+
+est_minutes: 8   # plate <1min; encode ~2min (Gemma load dominates); render ~4.7min
+                 # from this box's own measurements (145f = 214s, 385f = 436s ->
+                 # ~80s + 0.925s/frame -> ~281s at 217 frames). Not a stall.
+needs: [cuda, vram20, video-venv]
+
+payload:
+  # Skeleton is b07-prompt.txt in shape. Content is beat 13's landscape. Verbs are
+  # CONTINUOUS and directional, never one-shot: beat 04's rejected clip traced to
+  # a "twitch once" clause the model cycled over 385 frames, and a one-shot
+  # instruction is how you get a loop inside a long clip. The anti-zoom terms are
+  # KEPT — they were in force on beat 04 when the camera move Roman praised
+  # appeared, so dropping them here would change a second variable.
+  C:\banyan-farm\v34-r2\b13-prompt.txt: |-
+    2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, anime key art. the wind moves continuously across the field in one steady direction so the tall grass bends and ripples in long travelling waves that never stop, the clouds drift slowly and continuously across the pale sky in that same direction and keep their shapes, the light shifts very gently over the fields. small ambient motion only, the dirt road stays exactly where it is and runs to the same point on the horizon, the horizon keeps the same height in frame, the composition is identical in every frame, framing locked, no zoom, no push-in, no camera rise, living scene. Subject already in frame: no human, no person, no man, no woman, no boy, no girl, no hand, no face, no tree, no plant, no building, an empty dirt road running straight away to a pale horizon, windswept grass fields on both sides of it, drifting clouds, a wide empty melancholic landscape.
+
+  # Series negative plus this beat's own terms. At guidance 1.0 none of it is
+  # read — recorded for provenance (§7.2), not for effect.
+  C:\banyan-farm\v34-r2\b13-negative.txt: |-
+    tree, sapling, plant, sprout, stem, leaf, foliage, bush, shrubbery, forest, human, person, man, woman, boy, girl, hand, arm, foot, face, crowd, animal, bird, insect, vehicle, car, building, house, new object appearing, photorealism, 3D render look, text, 静态, 静止, frozen frame, still image, no motion, photorealistic, photograph, live action, film still, 3D render, CGI, octane, depth of field bokeh, scene change, shot change, cut to another angle, second scene, new camera angle, different location, split screen, montage
+
+  C:\banyan-farm\v34-r2\b13-jobs-encode.json: |-
+    [{"beat": 13,
+      "embeds": "C:\\banyan-farm\\v34-r2\\b13-embeds.pt",
+      "prompt_file": "C:\\banyan-farm\\v34-r2\\b13-prompt.txt",
+      "negative_file": "C:\\banyan-farm\\v34-r2\\b13-negative.txt"}]
+
+  C:\banyan-farm\v34-r2\b13-jobs-render-217.json: |-
+    [{"beat": 13,
+      "seed": 20260914,
+      "embeds": "C:\\banyan-farm\\v34-r2\\b13-embeds.pt",
+      "init": "C:\\banyan-farm\\v34-r2\\13-704x1280.png",
+      "out": "C:\\banyan-farm\\v34-r2\\13-i-always-left-LTX-seedB.mp4"}]
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: "1"
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: "1"
+  HF_HUB_DOWNLOAD_TIMEOUT: "60"
+  HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+  # No 704x1280 plate exists for beat 13 (v34-r2 holds only 04, 06, 07), so the
+  # plate step runs. Source verified present in the box checkout at
+  # ...\001-capability-inventory\stills\13-i-always-left.png. prepare_plate does
+  # the cover-centre crop (plate_prep.py:55) — the v34-motion-0810 series went in
+  # RAW and is stretched 24.4% vertically, the confound recorded in
+  # ep1-b14-v34-motion-r3.yaml. This job does not repeat it.
+  - name: plate
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - -c
+      - |
+        import sys; sys.path.insert(0, r"C:\banyan-farm\banyan-city\pipeline")
+        from plate_prep import prepare_plate
+        out, rec = prepare_plate(
+            r"C:\banyan-farm\banyan-city\genomes\sapling\nodes\001-capability-inventory\stills\13-i-always-left.png",
+            "704x1280", r"C:\banyan-farm\v34-r2", "13")
+        print("plate", out); print(rec["plate_wxh"], rec["crop_policy"])
+        print("source_sha256", rec["sha256"])
+  - name: encode
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+      - --stage
+      - encode
+      - --jobs
+      - C:\banyan-farm\v34-r2\b13-jobs-encode.json
+  - name: render
+    argv:
+      - C:\banyan-video\venv\Scripts\python.exe
+      - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+      - --stage
+      - render
+      - --jobs
+      - C:\banyan-farm\v34-r2\b13-jobs-render-217.json
+      - --size
+      - 704x1280
+      - --frames
+      - "217"
+      - --fps
+      - "24"
+      - --guidance
+      - "1.0"
+      - --distilled-sigmas
+      - --two-stage
+      - --image-crf
+      - "33"
+      - --offload
+      - sequential
+      - --mode
+      - production
+      - --task
+      - ep1-b13-seedB-0813-0811
+      - --worker
+      - rtx5090
+      - --bench-jsonl
+      - C:\banyan-farm\v34-r2\bench-b13-217f.jsonl
+      - --bench-label
+      - b13-217f-vo-length
+
+  - name: publish
+    allow_fail: true
+    argv:
+      - C:\banyan-farm\venv\Scripts\python.exe
+      - -c
+      - |
+        import glob, hashlib, os, shutil
+        dst = "C:/banyan-farm/courier-box/farm-out/ep1-b13-seedB"
+        os.makedirs(dst, exist_ok=True)
+        src = sorted(glob.glob("C:/banyan-farm/v34-r2/13-i-always-left-LTX-seedB.mp4*"))
+        lines = []
+        for f in src:
+            shutil.copy2(f, dst)
+            c = os.path.join(dst, os.path.basename(f))
+            with open(c, "rb") as fh:
+                h = hashlib.sha256(fh.read()).hexdigest()
+            lines.append(h + "  " + os.path.basename(f))
+        with open(os.path.join(dst, "ep1-b13-seedB-0813.sha256"), "w", newline="\n") as fh:
+            fh.write("\n".join(lines) + "\n")
+        print("published", len(src), "file(s) ->", dst)
+        raise SystemExit(0 if len(src) >= 1 else 1)
+
+artifacts:
+  - C:\banyan-farm\v34-r2\13-i-always-left-LTX-seedB.mp4

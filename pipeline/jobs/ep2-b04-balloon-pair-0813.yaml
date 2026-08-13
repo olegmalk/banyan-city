@@ -1,0 +1,128 @@
+# 2026-08-13. THE PAIR I SAID I NEEDED BEFORE I COULD HAVE A HYPOTHESIS.
+#
+# Beat 04's r2 fixed his named fault — the background is there — and then the CRANIUM
+# BALLOONED between frames 0 and 9, ears flattening. I refused to queue a fix and said why:
+# my only candidate ("a bald DOMED head") appears in five other prompts that did NOT balloon,
+# so it does not discriminate, and a sample without a hypothesis is padding. I wrote that it
+# unblocks "if a second ballooned close-up ever gives me a pair".
+#
+# THIS IS THAT SECOND CASE AND IT COSTS ONE RENDER. Same init, same sha, same prompt, same 73
+# frames — seed 20260806 to 20260813, nothing else.
+#
+# IT ANSWERS EITHER WAY, which is what makes it worth the card and not padding:
+#   balloons again   -> systematic, tied to this init or this shot scale, and I finally have
+#                       two cases to diff into a real hypothesis.
+#   does not balloon -> it was SEED LUCK, and the only character clip he has spoken well of
+#                       is one reroll from usable.
+id: ep2-b04-balloon-pair-0813
+task: ep2-b04-balloon-pair-0813
+node: 002b-first-citizen
+beat: 4
+runner: box
+priority: 19
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: ep2 motion lane, 2026-08-12
+consumer: 'review/ep2-picks/motion-0812.html — the re-clip of the one beat he has spoken positively about, on a still that fixes the fault he named.'
+success: 'A 704x1280 mp4, 73 frames, read beside the r2 take. ONE question: does the head balloon again at a different seed. Either answer closes the item — reproduction gives me the pair I need for a hypothesis, absence means seed luck and beat 04 is one reroll from usable.'
+why: I declined to guess at this fault for want of a second case; this is the second case and it is one render.
+est_minutes: 5
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b04-balloon-pair-0813\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"--out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\nif not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\nwith open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n        h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw, nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W, top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d, centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b04-balloon-pair-0813\b04-motion-prompt.txt: '2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: a close-up of a small goblin''s face in a blurred grassy field — pale yellow-green skin, a bald domed head, long pointed ears, large red-orange eyes, both fists raised in front of his chest. His cheeks stay puffed tight and his mouth stays shut. His eyes dart left and right and back again, his long ears twitch and flick at small sounds, and his fists tighten. Only his eyes, his ears and his hands move; his head does not turn and the framing never changes. Soft morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.'
+  C:\banyan-farm\ep2-b04-balloon-pair-0813\b04-negative.txt: camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, face morphing, distorted face, warped face, changing facial features, head turning, extra eyes, extra ears, hair, mouth opening, talking, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text
+  C:\banyan-farm\ep2-b04-balloon-pair-0813\b04-jobs-encode.json: "[{\"beat\": 4,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b04-balloon-pair-0813\\\\b04-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\\ep2-b04-balloon-pair-0813\\\\b04-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b04-balloon-pair-0813\\\\b04-negative.txt\"}]"
+  C:\banyan-farm\ep2-b04-balloon-pair-0813\b04-jobs-render.json: "[{\"beat\": 4,\n  \"seed\": 20260813,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b04-balloon-pair-0813\\\\b04-embeds.pt\",\n  \"init\": \"C:\\\\banyan-farm\\\\ep2-b04-balloon-pair-0813\\\\b04-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b04-balloon-pair-0813\\\\04-the-footnote-LTX-balloonpair-0813.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b04-balloon-pair-0813\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b04-train-r1-0812\04-the-footnote-ipa-r0-w015-s0.png
+  - --sha256
+  - 0047bef67d4815b960b4a7eaa1ae41c66345d33f9dcc54ad014dbd6c45bfcd5a
+  - --out
+  - C:\banyan-farm\ep2-b04-balloon-pair-0813\b04-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b04-balloon-pair-0813\b04-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b04-balloon-pair-0813\b04-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '73'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b04-balloon-pair-0813
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b04-balloon-pair-0813\bench-b04-balloonpair.jsonl
+  - --bench-label
+  - ep2-b04-balloon-pair-0813
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b04-balloon-pair"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/ep2-b04-balloon-pair-0813/04-the-footnote-LTX-balloonpair-0813.mp4*")
+                 + glob.glob("C:/banyan-farm/ep2-b04-balloon-pair-0813/b04-init-704x1280.png")
+                 + glob.glob("C:/banyan-farm/ep2-b04-balloon-pair-0813/bench-b04-balloonpair.jsonl"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b04-balloon-pair-0813.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    raise SystemExit(0 if len(src) >= 2 else 1)
+artifacts:
+- C:\banyan-farm\ep2-b04-balloon-pair-0813\04-the-footnote-LTX-balloonpair-0813.mp4
+- C:\banyan-farm\ep2-b04-balloon-pair-0813\b04-init-704x1280.png

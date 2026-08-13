@@ -14632,3 +14632,37 @@
     both channels at once.
   consumer: his morning read, routed by the lead.
   outcome: null
+
+- id: ep1-seed-twins-and-b04-pair-0813
+  kind: prediction
+  date: 2026-08-13
+  written: before enqueue, in one bulk authoring pass.
+  three_queued_one_declined: >-
+    ep1-b11-seedB, ep1-b13-seedB and ep2-b04-balloon-pair. BEAT 01 OF EPISODE 1 IS DECLINED
+    and the reason is not laziness: its take came from task f15-b01-1785804000, a Wan
+    TI2V-5B render with NO JOB YAML in the repo — only a provenance sidecar. Twinning it
+    would mean reconstructing a different pipeline's job from a meta file and guessing the
+    parts the sidecar does not record. That is authoring on a reconstruction I cannot verify,
+    which is how you get a job that fails at step one. It needs whoever owns the ep1 wan
+    recipe, not me.
+  why_the_ep1_twins_are_earned: >-
+    Both beats have exactly ONE take and no founder verdict, and my own seed test found five
+    of nine episode-2 beats that looked solved were one lucky roll. Every single-take beat is
+    in that unknown state. He is about to review episode 1; a twin turns a coin-flip into
+    stability data before he spends attention on it.
+  why_the_b04_pair_is_the_best_job_in_the_batch: >-
+    I refused to chase the head-balloon and wrote down exactly what would unblock it — "a
+    SECOND ballooned close-up to compare against". This is that second case for one render,
+    and it cannot come back uninformative: balloons again means systematic and I finally have
+    two cases to diff; does not balloon means seed luck and the only character clip he has
+    spoken well of is one reroll from usable.
+  two_defects_fixed_while_authoring_not_variables: >-
+    The ep1 jobs have NO PUBLISH STEP, so their output strands on the box unfetchable — the
+    same defect that hid the cold open from him. Both twins publish. And I verified all three
+    inits are REACHABLE ON THE BOX before authoring rather than after.
+  and_i_broke_the_yaml_once_by_assuming: >-
+    Episode-1 jobs indent their `steps:` list by two spaces; my episode-2 jobs do not. My
+    first publish block used my own convention and produced invalid YAML. Caught by the dry
+    run. Indentation is now READ FROM THE FILE. Same lesson as the afternoon/after substring
+    bug six hours ago: the artifact's shape is a fact to check, not a habit to apply.
+  outcome: null
