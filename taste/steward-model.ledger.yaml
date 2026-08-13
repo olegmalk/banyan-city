@@ -16067,3 +16067,33 @@
     wrote down as an aside, and did not let outweigh my satisfied predicate. That is the whole
     error in one sentence.
   outcome: null
+
+- id: ep2-every-entry-gets-its-own-anchor-0813
+  kind: correction
+  date: 2026-08-13
+  founder_verbatim: '"they still point to the same link."'
+  what_was_wrong: >-
+    Twenty-one inbox entries pointed into one page that had about a dozen anchors, so entries
+    shared targets — four landed on the same section, two more on another. He clicks an entry
+    about one clip and gets a wall holding four other results, then has to hunt for the thing the
+    entry named. I had "fixed" this once by splitting two entries, which treated a structural
+    problem as a typo, and he came straight back with the same complaint.
+  the_fix: >-
+    Every entry now has its OWN anchor on the page — twenty-one unique ids placed on the specific
+    heading or figure of the thing that entry is about — and every entry's url deep-links to it.
+    Resolved entries included: they stay visible to him, and a resolved entry with a shared link
+    is the same defect with a longer half-life.
+  two_bugs_the_placement_itself_produced: >-
+    Two of my anchors shared a needle, so both landed on the picks heading and one of them was
+    semantically wrong. Five more silently missed because the headings they targeted use different
+    markup than I assumed. Both were caught by asserting each needle matches EXACTLY ONCE and by
+    counting duplicate ids afterwards, rather than by trusting that a replace had done what I
+    meant. Insertion by text match needs the same uniqueness assertion as any other edit.
+  what_is_not_fixed_and_is_not_mine: >-
+    Eight urls are still shared by two or three entries, and all of them point at OTHER lanes'
+    pages — consistency-0812, approvals, ep3-cast-0813, b05-register, ep1-audit. The same defect
+    exists there and the same fix applies, but those pages belong to other lanes. Passed up rather
+    than reached into.
+  contract: SITE.md — an entry linking to a section instead of its own artifact is a defect, and
+    it is verified against the LIVE page by counting duplicate hrefs, not against the build.
+  outcome: null

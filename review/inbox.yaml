@@ -1,7 +1,7 @@
 - what: Cold open fig - in both motion rounds the fig grows detached from the sapling; your prior word
     for the STILL was "inpaint" (2026-08-10), and your 002b condition wants growth SEEN - the clip needs
     one ruling that satisfies both
-  url: /review/ep2-picks/motion-0812
+  url: /review/ep2-picks/motion-0812#e-fig-cold-open
   since: 2026-08-12
   kind: decision
   episode: 2
@@ -48,7 +48,7 @@
     verdict: i accept the references on the consistency page. (full acceptance incl. the haired cast -
       ledger ep2-references-accepted-0812; register stays open separately)
 - what: Beat 04 script length — faces survive 3s of motion, the beat is written 6s
-  url: /review/ep2-picks/motion-0812#hard-limit
+  url: /review/ep2-picks/motion-0812#e-b04-duration
   since: 2026-08-12
   kind: decision
   episode: 2
@@ -96,7 +96,7 @@
     it in the motion prompt puts one there (nobody had ever written the word). Beat 19''s fig falls and
     bounces off his head, beat 13 folds up exactly as written, beat 17 does its whole beat. Open faults:
     beat 04''s head balloons, beat 14''s eyes go pink, beat 20 raises its arms too far'
-  url: /review/ep2-picks/motion-0812
+  url: /review/ep2-picks/motion-0812#e-sapling-set
   since: '2026-08-12'
   kind: clip
   verdict_hint: which of these are cuttable as-is / what to fix first
@@ -150,7 +150,7 @@
     and got a flat one; a sample naming depth, wildflowers, a treeline, haze and raking light is rendering
     on beat 17. If wording does not fill the frame, the answer is a painted background plate, which is
     a different lane's job and your call
-  url: /review/ep2-picks/motion-0812
+  url: /review/ep2-picks/motion-0812#e-fig-features
   since: '2026-08-12'
   kind: decision
   verdict_hint: wait for the sample / commission background plates now / accept the plain field
@@ -164,7 +164,7 @@
     of shade, and he folds into it exactly as written. Beat 03's size-mismatch joke also reads for the
     first time (a tree far too thin to hide him), though he stands instead of crouching; retry queued.
     Beat 14 also now passes - its pink eyes turned out to be in the starting frame, not the motion
-  url: /review/ep2-picks/motion-0812#the-picks
+  url: /review/ep2-picks/motion-0812#e-pick-b21
   since: '2026-08-12'
   kind: clip
   episode: 2
@@ -172,7 +172,7 @@
 - what: 'Motion recipe change, for your awareness: an environment PARAGRAPH now joins every prompt (the
     blank-background fix). Side effect being tested next - a described world pushes the character smaller
     in frame, so shot scale needs a clause of its own'
-  url: /review/ep2-picks/motion-0812
+  url: /review/ep2-picks/motion-0812#e-recipe-world
   since: '2026-08-12'
   kind: decision
   episode: 2
@@ -200,7 +200,7 @@
     a whole landscape), but naming WHERE THE CAMERA STANDS does nothing. Shot size appears to come from
     the starting frame instead, and that test is running. Also: named objects arrive but land in odd places
     (a branch over his head like antlers, a sprout out of his skull)'
-  url: /review/ep2-picks/motion-0812
+  url: /review/ep2-picks/motion-0812#e-cutekid
   since: '2026-08-12'
   kind: decision
   episode: 2
@@ -247,7 +247,7 @@
     its fig on his head. THE GUARD RULING UNBLOCKS SIX BEATS (05/06/07/09/10/11) and is the biggest thing
     waiting on you. Three beats (03, 17, 21) will not render the same way twice - four takes each are
     on the page for you to pick from. Cold-open fig still needs your route decision
-  url: /review/ep2-picks/motion-0812#read-this-first
+  url: /review/ep2-picks/motion-0812#e-morning-read
   since: '2026-08-12'
   kind: decision
   episode: 2
@@ -260,7 +260,7 @@
 - what: Stills needed for the three plant beats - 12 (two leaves against the sky), 18 (the fig, stem trembling)
     and 21 (the leaf tilting on purpose). No character in any of them, so no consistency problem; beat
     12 has no plate at all and 18/21 have only old unvetted ones. Cheapest remaining work in the episode
-  url: /review/ep2-picks/motion-0812#where-ep2-stands
+  url: /review/ep2-picks/motion-0812#e-stills-needed
   since: '2026-08-12'
   kind: decision
   episode: 2
@@ -338,7 +338,7 @@
     singular, and bans ''row of saplings'' in the negative, and still draws several. Colour we CAN now
     control. Number we cannot - if the last workaround (describing a frame too tight to hold two) also
     fails, count needs a tool rather than a prompt and that is your call'
-  url: /review/ep2-picks/motion-0812#hard-limit
+  url: /review/ep2-picks/motion-0812#e-count-limit
   since: '2026-08-12'
   kind: decision
   verdict_hint: accept some beats having the wrong count / spend on a tool that controls it
@@ -377,7 +377,7 @@
     their seeds still differ in composition and, on 21, in whether the leaf tilts at all. My read: these
     are inherently variable and want more takes and your eye rather than a fourth adjective from me. Four
     takes of each are rendering for you to pick from'
-  url: /review/ep2-picks/motion-0812
+  url: /review/ep2-picks/motion-0812#e-not-repeatable
   since: '2026-08-12'
   kind: clip
   episode: 2
@@ -486,7 +486,7 @@
     a head that stays the right size, so you should see both — UPDATE 2026-08-13: you also said of this
     character "you''re making the goblin look like a cute little kid... lets remake him". The remake is
     running; this entry stays open only for the widened-pair look, which is genuinely still your eye.'
-  url: /review/ep2-picks/motion-0812
+  url: /review/ep2-picks/motion-0812#e-b04-head
   since: '2026-08-13'
   kind: clip
   verdict_hint: prefer the closer framing with the bad head / the wider one / neither
@@ -536,7 +536,7 @@
     bureaucrat instead of a soldier and the words produced exactly that - but "his tunic straining A LITTLE
     over his belly" came back as a bare exposed gut at both seeds. The softener did nothing. Is that funny
     in the register of this show, or does it tip into slapstick?
-  url: /review/ep2-picks/motion-0812#tonight-2
+  url: /review/ep2-picks/motion-0812#e-bureaucrat
   group: taste
   since: '2026-08-13'
   kind: decision
@@ -549,7 +549,7 @@
     red eyes, at the other he is a dark silhouette with no face. I know the cause and the fix (the plate
     is drawn on white, so the model invents the whole world and him with it) - what I cannot judge for
     you is whether the seed that DOES keep him is still the character'
-  url: /review/ep2-picks/motion-0812#b02-remake
+  url: /review/ep2-picks/motion-0812#e-b02-remake
   group: taste
   since: '2026-08-13'
   kind: clip
@@ -557,7 +557,7 @@
 - what: The figs are fixed - a teardrop with a narrow neck instead of a green ball, holding at BOTH seeds.
     Same beat as the botched test, with the three shouted "ROUND"s taken out of my own prompt. Your green-balls
     note is answered
-  url: /review/ep2-picks/motion-0812#fig-fixed
+  url: /review/ep2-picks/motion-0812#e-fig-noanswer
   since: '2026-08-13'
   kind: clip
   verdict_hint: that is a fig, done / still not right, and here is what is wrong with it
@@ -569,14 +569,14 @@
     fig swelling green on the stem. Three faults in one prompt, all mine: I had asked for amber light
     in a beat whose note says GREEN, told the fig to DARKEN so it came out nearly black, and left in the
     tripod phrase I proved gets drawn as furniture'
-  url: /review/ep2-picks/motion-0812#tonight
+  url: /review/ep2-picks/motion-0812#e-coldopen-r2
   since: '2026-08-13'
   kind: clip
   verdict_hint: good, that is the open / the look is off and here is how
 - what: The giant clipboard is gone and beat 10 now plays its whole joke - he flips the board round and
     the back of it is blank. The cause was one clause of mine telling the board to fill the frame, which
     a locked camera can only obey by growing the prop
-  url: /review/ep2-picks/motion-0812#tonight-2
+  url: /review/ep2-picks/motion-0812#e-clipboard
   since: '2026-08-13'
   kind: clip
   verdict_hint: the joke lands / the board still reads wrong
@@ -586,7 +586,7 @@
 - what: 'Beat 08 has both characters in it at last. I had recorded this beat as impossible - a one-character
     reference suppresses the second - and it was never the model: every goblin prompt I wrote banned "second
     character" in the negative, which quietly forbade the one beat that needs a second person'
-  url: /review/ep2-picks/motion-0812#tonight
+  url: /review/ep2-picks/motion-0812#e-b08-twohander
   since: '2026-08-13'
   kind: clip
   verdict_hint: two-hander works / the pairing reads wrong
@@ -598,7 +598,7 @@
     the opposite and was wrong at both seeds. Written harder, the same beat built a full world, sky and
     hedge and fence, with the character and the drawing untouched. Nothing to decide; recorded because
     I told you the opposite this morning
-  url: /review/ep2-picks/motion-0812#tonight-2
+  url: /review/ep2-picks/motion-0812#e-backgrounds
   since: '2026-08-13'
   kind: decision
   verdict_hint: noted / you are wrong again, the backgrounds still look empty to me
@@ -608,7 +608,7 @@
 - what: Three picked shots waiting only for a veto - beats 03 (BAD COVER), 17 (GOODBYE) and 21 (THE ANSWER).
     Each shows the take I chose large with the runners-up small underneath. You do not need to pick; I
     have picked. Say nothing and they stand
-  url: /review/ep2-picks/motion-0812#the-picks
+  url: /review/ep2-picks/motion-0812#e-pick-b03
   group: pick
   since: '2026-08-13'
   kind: clip
@@ -618,7 +618,7 @@
     sat further down the same page as a still. The clip is now the fixed take, with sky, hedge, fence
     and grass. The low-quality half is a separate question I have not answered and will not guess at -
     a test on this exact beat is rendering now
-  url: /review/ep2-picks/motion-0812#tonight-2
+  url: /review/ep2-picks/motion-0812#e-backgrounds-fix
   since: '2026-08-13'
   kind: clip
   verdict_hint: the background is right now / still not right, and here is what is wrong

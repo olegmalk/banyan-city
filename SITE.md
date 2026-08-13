@@ -220,6 +220,17 @@ product: he reads top down and stops when he is out of patience, so what only
 he can answer must not sit below what needs nothing from him. An unrecognised
 group falls back to `result` rather than vanishing off the page.
 
+**EVERY INBOX ENTRY DEEP-LINKS TO ITS OWN ARTIFACT, NEVER TO A SECTION THAT
+CONTAINS IT** (founder, 2026-08-13: "they still point to the same link"). An
+entry whose link lands the reader on a section holding four other results is a
+DEFECT, not a shortcut: he clicks it, sees a wall, and has to hunt for the
+thing the entry was about. So each paged result carries its own `id` — one per
+entry, on the heading or figure of that specific clip — and the entry's `url`
+targets that id. This applies to RESOLVED entries too; they stay visible on the
+page and a resolved entry with a stale or shared link is the same defect with a
+longer half-life. Verify by fetching the LIVE page and counting duplicate
+hrefs, never by trusting the local build.
+
 **A REVIEW PAGE SHOWS THE CURRENT BEST TAKE OF A BEAT, NEVER THE FIRST PASS.**
 On 2026-08-13 the founder reported beat 10 as having a blank background. It
 did — in the take embedded on the page. The world re-render that fixed it at
