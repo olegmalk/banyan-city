@@ -16224,3 +16224,39 @@
     ANY before/after claim gets built as one image before it is reported, never as two viewings.
     If I cannot put them adjacent, I do not get to say one is better than the other.
   outcome: null
+
+- id: LAW-composition-is-the-references-in-the-plate-route-but-NOT-in-motion-0813
+  kind: law
+  date: 2026-08-13
+  their_finding: >-
+    plate-drafts: the count failure and the white ground are ONE failure. In the goblin_ipa_beat
+    plate route the adapter owns steps 0-5, the structure-forming ones, and the reference
+    (refs-charref-guards-r5-0812) is a SINGLE guard on white — so it imposes one figure exactly the
+    way it imposes the white ground. How many people are in frame is COMPOSITION, and composition
+    belongs to the reference, not the words. A draft asking for two cannot win an argument the
+    words are not in.
+  it_explains_my_own_results: >-
+    The picture-in-a-picture I found in their s3 is that failing differently — the model satisfying
+    "world" without touching the handed-down layout, so it drew the world as a framed picture
+    hanging inside the character sheet. And it is the same mechanism under the b02 and b03 style
+    rebuilds I scored: a white character-sheet reference imposes a composition, and everything the
+    words add gets built around it.
+  WHERE_IT_DOES_NOT_HOLD_AND_THIS_IS_MINE_TO_ADD: >-
+    It is true of the IPA PLATE route. It is NOT true of the LTX MOTION route, and I have the
+    counter-example already rendered. ep2-b08-bureaucrat's init is ONE figure — I opened it: a
+    single goblin, alone, on a pale ground — and both seeds came back with TWO visibly distinct
+    people, the goblin and a separate uniformed guard with his own hair, tunic, sash and clipboard.
+    The words added a second character to a single-character plate. Different pipeline, different
+    rule: no adapter owns the early steps in i2v, so composition is negotiable there.
+  why_it_matters_practically: >-
+    Their two-guard reference carries a live risk — the frames are BALD and bald is the read the
+    founder rejected for the guards. If it comes back bald, the reference dictates cast as well as
+    composition and beat 10 looks blocked. IT IS NOT BLOCKED. The fallback is a single-guard SCENE
+    plate plus a motion prompt naming two guards, which is precisely what b08 already did. So the
+    plate only has to deliver the WORLD; the second guard can come from my side.
+  the_general_form: >-
+    Ask which stage owns the thing you are trying to change. Composition, count and ground are the
+    reference's in the plate route and the prompt's in motion. Late detail — hair, skin colour,
+    palette — is the prompt's in both. A rule discovered in one route is not a rule about the
+    model.
+  outcome: null
