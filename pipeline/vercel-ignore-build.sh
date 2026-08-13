@@ -147,6 +147,11 @@ SITE_INPUTS=(
   # box's vitals over time — from the cache below.
   pipeline/build_pulse.py
   pipeline/site_theme.py
+  # the /status page's inline-SVG charts — the sapling tree and the render
+  # box's per-day work bars — and the ONE definition of what each beat state
+  # is coloured, which build_sim's ETA bars read too. Change it and the page's
+  # pictures change with no other file touched, exactly like site_theme.py.
+  pipeline/charts.py
   pipeline/licence_gate.py
   # every github.com / raw.githubusercontent link the site emits is built from
   # the slug this resolves. It is a build input in the strictest sense: change

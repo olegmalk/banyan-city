@@ -40,6 +40,34 @@ Page builders worth knowing in `build_site.py`: `page()` (the shell every page
 uses), `render_node_page()`, `node_card()`, `chips()`, `trunk_chain()`,
 `live_videos()`, `audio_credits()`.
 
+## The charts (`pipeline/charts.py`)
+
+Added 2026-08-13 on the founder's "more cool charts and less boring worklike,
+not just to make it fun but also make it much easier to understand". Inline SVG
+only — the CSP allows no CDN, so a chart library would render a blank rectangle
+on his phone rather than fail loudly. Two rules that are not style opinions:
+
+1. **`STATE_STYLE` / `STATE_ORDER` is the ONE definition of what a beat state
+   looks like**, and `build_sim._eta_card()` reads it rather than keeping its
+   own copy. Green is the machine's business, amber is the author's. The order
+   groups by whose clock, which is also why the bar is legible: in pipeline
+   order the two dark shades were adjacent segments at ΔE 11.1, below where
+   colour alone can carry a difference.
+2. **Every colour is a `var(--…)` from `site_theme.py`, never a hex literal** —
+   that is the only reason the charts follow a reader's light/dark setting, and
+   a test fails the build if a literal appears.
+
+Each chart ships a legend, per-mark tooltips, an `aria-label`, and a table view,
+so no value is reachable by colour or hover alone. Each returns `""` rather than
+an empty picture when its file cannot be read: a work chart with no bars would
+publish an idle farm on a failed read.
+
+The work chart's data is `pipeline/measured/box-work-daily.yaml`, written by
+`python3 pipeline/box_work_daily.py --write` off the box's per-job sidecars on
+`farm-results-rtx5090` — a deploy checkout has no farm branches, same reason
+`eta.yaml` exists. **Re-run it when you want the bars to move**; nothing else
+updates that file.
+
 ## Two rules that are not style opinions
 
 **1. `publishable()` decides what reaches the site, and it is a licence gate.**

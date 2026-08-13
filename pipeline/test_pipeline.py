@@ -7531,6 +7531,202 @@ def test_the_status_page_can_actually_find_the_numbers_it_rewrites():
           "Live refresh unavailable" in js and "BOX_BAKED" in js)
 
 
+# ---------------------------------------------------------------------------
+# THE STATUS PAGE'S CHARTS (pipeline/charts.py), added 2026-08-13 with them.
+#
+# Roman asked for charts that make the page easier to understand. A chart is a
+# claim made in geometry, and geometry fails silently — a bar drawn from the
+# wrong field, or a series that changes colour between two bars, looks exactly
+# as convincing as a correct one. These pin the claims the pictures make that a
+# reader cannot check by eye, plus the refusals.
+# ---------------------------------------------------------------------------
+
+def _fake_progress():
+    """Two episodes, one of which has a beat nobody has scored."""
+    return [
+        {"number": 1, "title": "One", "total_beats": 4, "beats": [
+            {"n": 1, "state": "done", "note": "he passed it"},
+            {"n": 2, "state": "candidate-awaiting-founder", "note": ""},
+            {"n": 3, "state": "fix-known", "note": ""}]},          # beat 4 absent
+        {"number": 2, "title": "Two", "total_beats": 2, "beats": [
+            {"n": 1, "state": "blocked-decision", "note": ""},
+            {"n": 2, "state": "never-rendered", "note": ""}]},
+    ]
+
+
+def test_every_beat_gets_exactly_one_leaf_and_an_unscored_one_shows_as_missing():
+    """The canopy's denominator is the episode's beat count, not its file rows.
+
+    THE FAILURE THIS FORBIDS: episode 1 has four beats and three lines in the
+    states file. Drawing three leaves would make the picture agree with the
+    file and disagree with the show — and it would agree by SHRINKING, so an
+    episode nobody had scored would render as a small, tidy, fully-green tree.
+    The unscored beat gets a hollow leaf and is counted as unknown.
+    """
+    import charts
+
+    svg, summary = charts.sapling_svg(_fake_progress(),
+                                      {1: "b1.html", 2: "b2.html"})
+    check("one leaf per beat of every episode, six in all",
+          svg.count('<path class="lf ') == 6)
+    ep1 = next(s for s in summary if s["number"] == 1)
+    check("the beat with no line in the file is drawn, and drawn as missing",
+          ep1["counts"]["unk"] == 1 and "lf-unk" in svg)
+    check("...and the episode's own total is what the canopy counts against",
+          ep1["total"] == 4 and sum(ep1["counts"].values()) == 4)
+    check("the two states the card owns share one shade, as the ETA bar has "
+          "always merged them",
+          ep1["counts"]["mach"] == 1
+          and next(s for s in summary if s["number"] == 2)["counts"]["mach"] == 1)
+    check("a leaf links to its own beat on its own episode's board",
+          'href="b1.html#beat-01"' in svg and 'href="b2.html#beat-02"' in svg)
+    check("...and carries the reason on file where there is one",
+          "he passed it" in svg)
+    check("no episodes, no tree — never an empty picture of a healthy show",
+          charts.sapling_html([], {}) == "" and charts.sapling_svg([], {})[0] == "")
+
+
+def test_the_beat_states_are_grouped_by_whose_clock_they_are_on():
+    """The bar and the tree stack green-then-amber, and both read one table.
+
+    This is a legibility fix pinned as a fact. In pipeline order the two dark
+    shades (leaf-deep, sap-deep) were adjacent segments, and they are ΔE 11.1
+    apart for a normal-vision reader — below where colour alone can carry a
+    difference. Grouped by clock they are never neighbours, and the bar reads
+    as one green block and one amber block, which is the argument the colour is
+    there to make. Reordering STATE_ORDER back would silently undo it.
+    """
+    import build_sim as bs
+    import charts
+
+    order = list(charts.STATE_ORDER)
+    check("the machine's two states come first, then the author's two",
+          order == ["done", "mach", "look", "gate"])
+    check("...so the two dark shades are never neighbours in the bar",
+          abs(order.index("mach") - order.index("gate")) > 1)
+    check("build_sim's ETA bar reads that order rather than keeping its own",
+          "charts.STATE_ORDER" in
+          (REPO / "pipeline" / "build_sim.py").read_text(encoding="utf-8"))
+
+    row = {"total": 6, "counted": 6, "machine_minutes": 60, "thin": False,
+           "sample": 5, "conditional_minutes": 0, "conditional_beats": 0,
+           "decisions": [], "number": 9, "title": "T", "node": "n",
+           "review_url": "", "measured_at": "", "decisions_untagged": 0,
+           "ready": 1, "awaiting_founder": 2, "needs_render": 2,
+           "per_beat_minutes": 30.0, "rounds": {}, "window": "",
+           "states_read_from": "",
+           "counts": {"done": 1, "candidate-awaiting-founder": 2,
+                      "fix-known": 1, "blocked-decision": 1,
+                      "never-rendered": 1}}
+    card = bs._eta_card(row, lambda m: f"{m} min")
+    check("and the bar it draws puts them in that order too",
+          card.index("b-done") < card.index("b-mach") < card.index("b-look")
+          < card.index("b-gate"))
+
+
+def test_a_kind_keeps_its_shade_on_a_day_the_other_kinds_are_missing():
+    """Colour follows the series, never its position in one bar.
+
+    THE BUG THIS CAUGHT, before it shipped: the stack numbered its shades by
+    index within each bar, so on a day with no still frames the "everything
+    else" slab slid from the third step to the second — the same series drawn
+    as two different greens in two neighbouring bars. A reader who learns
+    "faintest is the tail" has to keep being right about it.
+    """
+    import charts
+
+    doc = {"kinds": ["ltx", "still", "other"], "measured_at": "2026-08-13",
+           "days": [
+               # No ties: ltx is the biggest by machine time, still is
+               # second, other is the tail — and day one has no still frames
+               # at all, which is the case that used to repaint the tail.
+               {"date": "2026-08-10", "jobs": 2, "failed": 0, "minutes": 130,
+                "partial": False, "by_kind": {"ltx": 100, "other": 30}},
+               {"date": "2026-08-11", "jobs": 3, "failed": 0, "minutes": 210,
+                "partial": False,
+                "by_kind": {"ltx": 100, "still": 80, "other": 30}}]}
+    out = charts.work_days_html(doc)
+    bars = out.split('<g class="wkbar">')[1:]
+    check("the day missing a kind still draws its tail in the tail's shade",
+          "w3" in bars[0] and "w2" not in bars[0])
+    check("...and the day with every kind draws the same tail the same way",
+          "w3" in bars[1] and "w2" in bars[1])
+    check("the biggest kind by machine time is the one at the foot",
+          bars[1].index("w1") < bars[1].index("w2"))
+
+
+def test_a_bar_is_as_tall_as_its_minutes_and_a_part_day_says_so():
+    """Height is the measured minutes against a whole-hour ceiling.
+
+    And the newest day is nearly always half-finished, so it is labelled rather
+    than left to read as the day the farm stopped.
+    """
+    import re
+
+    import charts
+
+    doc = {"kinds": ["ltx"], "measured_at": "2026-08-13", "days": [
+        {"date": "2026-08-10", "jobs": 4, "failed": 0, "minutes": 120,
+         "partial": False, "by_kind": {"ltx": 120}},
+        {"date": "2026-08-11", "jobs": 2, "failed": 1, "minutes": 60,
+         "partial": True, "by_kind": {"ltx": 60}}]}
+    out = charts.work_days_html(doc)
+    plot = charts.WORK_BASE - charts.WORK_PLOT_TOP
+    # Every bar's top comes off its rounded data-end: "...V<top>a<r> <r>...".
+    tops = [float(v) for v in re.findall(r"V(\d+\.\d+)a", out)]
+    check("a two-hour day against a two-hour ceiling reaches the top gridline",
+          len(tops) == 2
+          and abs(tops[0] - (charts.WORK_PLOT_TOP + charts.BAR_R)) < 0.01)
+    check("the half-day bar is drawn exactly half as tall",
+          abs((tops[1] - tops[0]) - plot / 2) < 0.01)
+    check("a day still running is labelled, not published as a collapse",
+          "so far" in out)
+    check("the hours are said in hours, and short days stay in minutes",
+          charts._hrs(533) == "8.9 h" and charts._hrs(45) == "45 min"
+          and charts._hrs(1200) == "20 h")
+    check("no days, no chart — an unread file is never an idle farm",
+          charts.work_days_html({}) == ""
+          and charts.work_days_html({"days": []}) == "")
+
+
+def test_the_charts_fetch_nothing_and_claim_nothing_they_cannot_read():
+    """No external request, no literal colour, and a table view for every chart.
+
+    The published site's CSP allows no CDN, no font host and no script host, so
+    a chart library or a webfont would not fail loudly — it would render a blank
+    rectangle on the founder's phone. And every colour comes from a theme custom
+    property, which is the only reason the pictures follow a reader's light/dark
+    setting at all; one hex literal in here is a colour that does not know which
+    theme it is in, and it would break in one mode only.
+    """
+    import re as _re
+
+    import charts
+
+    src = (REPO / "pipeline" / "charts.py").read_text(encoding="utf-8")
+    check("the chart module reaches for nothing off this machine",
+          not _re.search(r"https?://", charts.CHART_CSS)
+          and "@import" not in charts.CHART_CSS
+          and "urllib" not in src and "requests" not in src)
+    check("every colour in the chart CSS is a theme token, never a hex literal",
+          not _re.search(r"#[0-9a-fA-F]{3,8}\b", charts.CHART_CSS))
+
+    tree = charts.sapling_html(_fake_progress(), {1: "b.html", 2: "c.html"})
+    work = charts.work_days_html(
+        {"kinds": ["ltx"], "measured_at": "x", "days": [
+            {"date": "2026-08-10", "jobs": 1, "failed": 0, "minutes": 30,
+             "partial": False, "by_kind": {"ltx": 30}}]})
+    for name, out in (("the tree", tree), ("the work chart", work)):
+        check(f"{name} carries a table view of the same numbers",
+              "<table" in out and "</table>" in out)
+        check(f"...and {name} keeps a legend, so identity is never colour alone",
+              "-key" in out)
+        check(f"...and {name} has an aria-label carrying the whole finding",
+              'role="img"' in out and 'aria-label="' in out)
+    check("the work chart names the date it was measured",
+          "Measured" in work)
+
+
 def main():
     import tempfile
     test_beat_duration_from_timecode()
@@ -7739,6 +7935,12 @@ def main():
     # AND HE MUST BE ABLE TO SEE WHAT IT IS MAKING.
     test_the_box_publishes_what_it_is_making_and_what_it_just_made()
     test_the_dropdown_will_not_render_whatever_a_filename_says()
+
+    test_every_beat_gets_exactly_one_leaf_and_an_unscored_one_shows_as_missing()
+    test_the_beat_states_are_grouped_by_whose_clock_they_are_on()
+    test_a_kind_keeps_its_shade_on_a_day_the_other_kinds_are_missing()
+    test_a_bar_is_as_tall_as_its_minutes_and_a_part_day_says_so()
+    test_the_charts_fetch_nothing_and_claim_nothing_they_cannot_read()
     print()
     if FAILURES:
         print(f"✗ {len(FAILURES)} failure(s): {', '.join(FAILURES)}")

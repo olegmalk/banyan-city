@@ -101,6 +101,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "pipeline"))
 import build_commit  # noqa: E402  one source for "which commit built this"
+import charts  # noqa: E402  the page's pictures, and the one beat-state palette
 import repo_slug  # noqa: E402  one source for "which repo is this"
 from site_theme import THEME_CSS  # noqa: E402  the one visual language
 
@@ -1151,6 +1152,24 @@ def read_box_queue() -> dict:
         return {}
 
 
+def read_work_daily() -> dict:
+    """The box's per-day machine time, or {} — same contract as read_box_queue.
+
+    Written by `pipeline/box_work_daily.py` off the farm branch, because a
+    deploy checkout has no farm branches to read. Empty means the chart is not
+    drawn at all; a work chart with no bars would publish an idle farm on a
+    failed read, which is the most misleading picture this page could show.
+    """
+    try:
+        import yaml as _yaml
+        with open(REPO / "pipeline/measured/box-work-daily.yaml",
+                  encoding="utf-8") as fh:
+            doc = _yaml.safe_load(fh) or {}
+        return doc if isinstance(doc, dict) else {}
+    except Exception:
+        return {}
+
+
 def review_inbox_open():
     """How many entries in `review/inbox.yaml` are still unanswered, or None.
 
@@ -1795,14 +1814,24 @@ def _eta_card(r: dict, approx) -> str:
     total = max(1, int(r["total"]))
     c = r["counts"]
     mach_beats = c["fix-known"] + c["never-rendered"]
-    segs = [("b-done", c["done"], "passed"),
-            ("b-look", c["candidate-awaiting-founder"], "waiting for your look"),
-            ("b-mach", mach_beats, "the card’s to do"),
-            ("b-gate", c["blocked-decision"], "waiting on a decision"),
-            ("b-unk", total - r["counted"], "no state on file")]
-    bar = "".join(f'<i class="{cls}" style="width:{100.0 * n / total:.4g}%"></i>'
+    # SEGMENT ORDER COMES FROM charts.STATE_ORDER, and that is a fix, not
+    # tidying. The order used to follow the pipeline — passed, waiting for your
+    # look, the card's to do, waiting on a decision — which put the two DARK
+    # shades side by side, and they are genuinely hard to tell apart (ΔE 11.1
+    # for a normal-vision reader, 5.2 under deuteranopia, both below the
+    # thresholds where colour alone can be trusted). Grouped by whose clock the
+    # beat is on, the bar reads as one green block and one amber block, which is
+    # the argument this bar exists to make, and the worst adjacent pair goes to
+    # ΔE 35.6. Same colours, same numbers, one reordering — and the tree above
+    # now reads off the same table, so the two cannot drift.
+    counts = {"done": c["done"], "mach": mach_beats,
+              "look": c["candidate-awaiting-founder"],
+              "gate": c["blocked-decision"], "unk": total - r["counted"]}
+    segs = [(k, counts[k], charts.STATE_LABEL[k])
+            for k in list(charts.STATE_ORDER) + ["unk"]]
+    bar = "".join(f'<i class="b-{cls}" style="width:{100.0 * n / total:.4g}%"></i>'
                   for cls, n, _ in segs if n > 0)
-    key = "".join(f'<span class="k-{cls[2:]}">{n} {_e(lab)}</span>'
+    key = "".join(f'<span class="k-{cls}">{n} {_e(lab)}</span>'
                   for cls, n, lab in segs if n > 0)
 
     # --- the three numbers, in the order he acts on them. Machine first: it is
@@ -2619,7 +2648,11 @@ h3 .count, .bgroup .count { display: inline-block; font: 700 .68rem/1 var(--mono
 /* ---- the growth meter: two file-existence facts per scene, nothing else ---- */
 .growbar { height: 12px; max-width: 420px; margin: .7rem auto .35rem; overflow: hidden;
   border: 1px solid var(--line); border-radius: 999px; background: var(--code-bg); }
-.growbar i { display: block; height: 100%; background: var(--sap); border-radius: 999px; }
+/* GREEN, not amber. Since the ETA bars and the tree above it took amber to mean
+   "this one is the author's to answer", a full-width amber growth meter under
+   the tree read as "97% is waiting on you" — the opposite of what it counts,
+   which is steps already finished. */
+.growbar i { display: block; height: 100%; background: var(--leaf); border-radius: 999px; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; } }
 """
 
@@ -3020,7 +3053,13 @@ STRIP_CSS = """
   color: var(--leaf); font-variant-numeric: tabular-nums; }
 .epbar { display: flex; height: 10px; border-radius: 999px; overflow: hidden;
   border: 1px solid var(--line); background: var(--code-bg); }
-.epbar i { display: block; height: 100%; }
+/* A 2px gap in the page's own surface colour between neighbouring segments —
+   not a border around each one. Two fills that touch read as one fill with a
+   colour change in the middle; two fills with the background showing between
+   them read as two counts, which is what they are. */
+.epbar i { display: block; height: 100%;
+  box-shadow: 2px 0 0 0 var(--code-bg); }
+.epbar i:last-child { box-shadow: none; }
 .epbar .b-done { background: var(--leaf); }
 .epbar .b-look { background: var(--sap); }
 .epbar .b-mach { background: var(--leaf-deep); }
@@ -3333,20 +3372,28 @@ def build(out_dir: Path):
     # the section rather than publishing an ETA it cannot support.
     eta_section = episode_eta_html(eta_rows)
 
-    # --- the grove: 15 leaves, each one an actual scene you can go look at.
-    leaves = ""
-    for r in rows:
-        if r["final"] and r["animations"]:
-            cls, glyph, stage = "grown", "🍃", "fully grown — frame approved and animated"
-        elif r["final"]:
-            cls, glyph, stage = "grown still", "🌿", "frame approved — not yet animated"
-        elif r["candidates"]:
-            cls, glyph, stage = ("pick", "🌱", f'sprouting — {r["candidates"]} frames '
-                                 "wait for the author's pick")
-        else:
-            cls, glyph, stage = "bud", "🍃", "a bud — waiting for a render"
-        leaves += (f'<a class="leaf {cls}" href="{_e(hero["board"])}#beat-{r["num"]:02d}" '
-                   f'title="Scene {r["num"]:02d} — {_e(r["name"])} · {_e(stage)}">{glyph}</a>')
+    # --- THE SAPLING. The show is called Sapling and the page that shows it
+    # being made used to draw it as fifteen emoji in a five-wide grid — one
+    # episode's stills, one glyph each, and nothing about the series. The tree
+    # in charts.py is the same idea done as a chart: one leaf per beat of every
+    # episode, coloured by that beat's measured state, linked to that beat's
+    # place on its shot board, with the reason on file in its tooltip. Same
+    # file as the ETA cards below, so the picture and the hours cannot disagree.
+    #
+    # The emoji grove said "frame approved / animated", which is a DIFFERENT
+    # fact and not one the tree carries — that is why the growth meter and the
+    # per-scene drawer below both stay exactly as they were.
+    ep_boards = {int(hero["number"]): hero["board"]}
+    nxt = data.next_episode()
+    if nxt and nxt.get("board"):
+        ep_boards[int(nxt["number"])] = nxt["board"]
+    try:
+        import episode_eta as _eta
+        sapling = charts.sapling_html(_eta.read_progress(), ep_boards)
+    except Exception:
+        # Fails to nothing, like the ETA section it reads with. A tree drawn
+        # from a read that failed would be a picture of our own bug.
+        sapling = ""
     done = tot["final"] == tot["total"]
     pct = round(100 * grow["done"] / grow["total"]) if grow["total"] else 0
     grove_caption = (f'Episode {hero["number"]} — '
@@ -3589,16 +3636,27 @@ def build(out_dir: Path):
         f"{counts[k]} {QSTATES[k][1].lower()}"
         for k in ("runnable", "running", "done", "failed", "waiting", "blocked",
                   "planned") if counts[k])
+    # CHART FIRST, PROSE IN A FOLD. The section used to open with two
+    # paragraphs about where its numbers come from, which is the right
+    # information in the wrong order — a reader arrives asking "has the machine
+    # been working?" and had to read 90 words of provenance before anything
+    # answered them. The bars answer it in one look; the provenance is one click
+    # down and has lost not a word.
+    work_chart = charts.work_days_html(read_work_daily())
     production = (
         '<h2 id="worklist">🏭 The work list</h2>'
-        '<p style="margin:.2rem 0 .6rem;color:var(--muted)">What the machines '
-        'were on when last heard, what shipped in the last day, and what is '
-        'queued or held. Every line comes from a machine\'s own dated check-in '
-        'log or from the shared queue file — never a guess, and never a claim '
-        'about this exact minute.</p>'
+        + (f'<p class="chead">How hard the render box has worked, day by day</p>'
+           f'{work_chart}' if work_chart else "")
+        + '<details class="drawer"><summary>Where every line in this section '
+        'comes from</summary><div class="drawer-body">'
+        '<p>What the machines were on when last heard, what shipped in the last '
+        'day, and what is queued or held. Every line comes from a machine\'s '
+        'own dated check-in log or from the shared queue file — never a guess, '
+        'and never a claim about this exact minute.</p>'
         '<p class="livemark" id="q-live">This is the work queue as this copy of '
         'the page was built. With JavaScript on, your browser re-reads the queue '
         'file itself and says here whether it has changed since.</p>'
+        '</div></details>'
         f'{onmach}{done_html}{queued_html}{planned_html}'
         f'<p class="whyfoot">The shared queue file holds {total_entries} '
         f'entr{"y" if total_entries == 1 else "ies"} at build time'
@@ -3670,7 +3728,7 @@ def build(out_dir: Path):
 <meta name="twitter:description" content="{_e(DESC)}">
 <meta name="twitter:image" content="{CANONICAL}/og.png">
 <title>Banyan City — {PAGE_NAME}</title>
-<style>{THEME_CSS}{SIM_CSS}{STRIP_CSS}</style>
+<style>{THEME_CSS}{SIM_CSS}{STRIP_CSS}{charts.CHART_CSS}</style>
 </head>
 <body>
 <main>
@@ -3698,10 +3756,9 @@ def build(out_dir: Path):
 everything else runs on the family's own machines for free</p>
 </div>
 
-<h2 class="rise">The episode, growing</h2>
+<h2 class="rise" id="tree">🌱 The Sapling, beat by beat</h2>
 <div class="grove rise">
-  <div class="canopy">{leaves}</div>
-  <div class="trunky"><a href="{_e(hero["page"])}" title="Episode {hero["number"]}">🌳</a></div>
+  {sapling}
   {growbar}
   <div class="label">{grove_caption}</div>
 </div>

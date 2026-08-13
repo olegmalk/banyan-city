@@ -1,0 +1,23 @@
+# What the render box did, per day — WRITTEN BY pipeline/box_work_daily.py.
+# Do not hand-edit: re-run the script instead, or the page publishes a
+# number nothing measured.
+#
+# Source: the per-job sidecars farm-out/box/<id>.json on
+# origin/farm-results-rtx5090, written by the box's own runner. `minutes` is the sum of
+# (finished_at - started_at) over the jobs that FINISHED that day, so a job
+# spanning midnight puts all of its minutes on the second day. It is busy
+# time, not GPU utilisation.
+#
+# `partial: true` marks a day that was still running when this was measured.
+# The status page labels that bar 'so far' rather than letting half a day
+# read as a drop in output.
+measured_at: 2026-08-13 11:38Z
+branch: origin/farm-results-rtx5090
+window: 2026-08-10 – 2026-08-13
+jobs_total: 350
+kinds: [ltx, still, charref, other, inpaint]
+days:
+  - {date: 2026-08-10, jobs: 96, failed: 1, minutes: 353, partial: false, by_kind: {ltx: 297, other: 42, charref: 14, inpaint: 0}}
+  - {date: 2026-08-11, jobs: 119, failed: 1, minutes: 249, partial: false, by_kind: {ltx: 165, still: 76, inpaint: 7, other: 1}}
+  - {date: 2026-08-12, jobs: 104, failed: 7, minutes: 533, partial: false, by_kind: {ltx: 410, charref: 89, still: 34}}
+  - {date: 2026-08-13, jobs: 31, failed: 1, minutes: 248, partial: true, by_kind: {ltx: 245, still: 3}}
