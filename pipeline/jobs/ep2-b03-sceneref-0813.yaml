@@ -1,0 +1,107 @@
+# 2026-08-13, the stills-drafts lane. The founder's own route, tested: the scene baked into
+# the REFERENCE, conditioned at the identity-preserving 15% window. See `why`.
+id: ep2-b03-sceneref-0813
+task: ep2-b03-sceneref-0813
+node: 002b-first-citizen
+beat: 3
+runner: box
+needs_gpu: true
+priority: 15
+max_attempts: 1
+owner: stills-drafts lane, 2026-08-13
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the
+  render gate itself reads. Neither `approval_condition` touches beat 02. This is a mechanism test on
+  an approved node, not an episode assembly.'
+consumer: Nobody animates this. It decides whether the founder's route -- the scene baked into the reference
+  -- gives a world WITHOUT paying the identity the 10% window costs.
+success: 'Sixteen PNGs. The question is whether the world SURVIVES at 15%: grass, treeline and sky present,
+  as they are in the reference, while the costume and skin come back closer to the frozen facts than the
+  10% frames did. That result would mean scene-carrying references are the fix and the whole wave can
+  be rebuilt this way at no cost to consistency. If the world vanishes and the plate returns to white,
+  the reference does not carry background through the adapter at all, and the only remaining route is
+  the 10% window with its identity bill -- which is a founder tradeoff, not a steward one.'
+why: 'THE FOUNDER, verbatim: "why arent you putting the background in the reference itself?" This does
+  exactly that. ep2-b03-scene-wedge-0813 settled that the WINDOW is the variable: at the standard 15%
+  the reference owns the early structure-forming steps and every plate came back a standing figure on
+  white; at 10% the same words drew the beat''s whole world -- tall grass, a treeline, blue sky -- and
+  the crouch with it. But 10% also drifted the costume off the patched hooded coat and the skin toward
+  yellow, which is the identity he has spent days demanding. So the knob works and charges for it. This
+  run keeps the identity-preserving 15% window and changes the REFERENCE instead: the four 10% frames,
+  which already contain the scene, are staged as refs-goblin-scene-0813 and conditioned at w015. Same
+  draft, same arm, same seeds as the white control -- the reference is the only variable.'
+est_minutes: 14
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '3'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-scene-0813
+  - --ref-prefix
+  - 03-bad-cover-scene
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b03-sceneref
+  - --draft-key
+  - authored_b03_scene
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '3'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-scene-0813
+  - --ref-prefix
+  - 03-bad-cover-scene
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b03-sceneref
+  - --draft-key
+  - authored_b03_scene
+  - --arm
+  - window4
+  - --task
+  - ep2-b03-sceneref-0813
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b03-sceneref-0813\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/goblin-ipa-0812/out-b03-sceneref/*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b03-sceneref-0813.sha256\"),\
+    \ \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b03-sceneref\03-bad-cover-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b03-sceneref\03-bad-cover-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b03-sceneref\03-bad-cover-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b03-sceneref\03-bad-cover-ipa-r3-w015-s0.png
