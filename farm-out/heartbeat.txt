@@ -1230,3 +1230,4 @@
 19:45:54Z STARTED task=ep2-b10-twoguard-sceneref-0813-1786650203 attempt=1 on box-runner
 19:48:45Z DONE task=ep2-b10-twoguard-sceneref-0813-1786650203 rc=0 artifacts=4
 19:48:55Z STARTED task=ep2-b04-knob-window-0813-1786650534 attempt=1 on box-runner
+19:51:47Z DONE task=ep2-b04-knob-window-0813-1786650534 rc=0 artifacts=4
