@@ -1,0 +1,25 @@
+#### job ep3-sapling-reference-0812-1786490604 attempt 1 start 2026-08-13T00:21:49Z
+
+==== step measure START 2026-08-13T00:21:52Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\wave-goblin-prep\\render_wave_sample.py", "--harness", "C:\\banyan-farm\\wave-goblin-prep", "--root", "C:\\banyan-farm\\wave-goblin-prep\\repo", "--beat", "1", "--goblin-def", "green skin, bald head", "--variant", "authored_ep3_sapling_reference", "--dry"]
+C:\banyan-farm\venv\Lib\site-packages\transformers\tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+Token indices sequence length is longer than the specified maximum sequence length for this model (79 > 77). Running this sequence through the model will result in indexing errors
+
+== beat 01 cold-open [guard] — cold open / one fig, few leaves
+   AUTHORED: A single slender sapling grows alone from bare earth in a green morning field, one thin curved stem, two big leaves, one bare side twig, knee high, whole plant in frame, no people. Medium shot, bright morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No man, no boy, no girl, no child, no mature tree, no forest. No photorealism, no 3D render look. 9:16 vertical, no text.
+   POS: A single slender sapling grows alone from bare earth in a green morning field, one thin curved stem, two big leaves, one bare side twig, knee high, whole plant in frame. Medium shot, bright morning light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+   NEG(sent): photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, mature tree, large tree, thick trunk, full canopy, forest, bush, shrubbery, people, man, boy, girl, child, photorealism
+   positive tokens (real CLIP): 62/77   headroom for the goblin definition: 15
+   negative tokens: recipe 72 -> sent 69 (budget 77)
+   count tag: '' (draft declares '')
+   STYLE ANCHOR PRESENT: True
+   'text' negated: True
+   scale negatives: True   'tall tree' removed: 1
+   person singulars in negative: ['girl', 'boy', 'child']
+   NEGWARN: !! negative prompt over CLIP's 77-token budget; deduplicated: mature tree, forest, text
+   !! peopled beat negates its own subject: ['boy', 'man'] — the person-singulars block belongs on plant-only plates only
+
+!! FAULTS — nothing drawn: peopled beat negates its own subject: ['boy', 'man'] — the person-singulars block belongs on plant-only plates only
+==== step measure END rc=1 2026-08-13T00:21:54Z ====
+#### job ep3-sapling-reference-0812-1786490604 finished rc=1 2026-08-13T00:21:54Z

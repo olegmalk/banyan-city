@@ -967,3 +967,4 @@
 00:20:46Z STARTED task=ep3-charref-assessor-r3-0812-1786490603 attempt=1 on box-runner
 00:21:43Z DONE task=ep3-charref-assessor-r3-0812-1786490603 rc=0 artifacts=8
 00:21:49Z STARTED task=ep3-sapling-reference-0812-1786490604 attempt=1 on box-runner
+00:21:54Z FAIL task=ep3-sapling-reference-0812-1786490604 rc=1 step=measure
