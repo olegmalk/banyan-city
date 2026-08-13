@@ -3249,8 +3249,9 @@ def build(out_dir: Path):
     player = (f'<figure class="phone"><video controls playsinline preload="metadata" '
               f'poster="{_e(hero["poster"])}" src="{_e(hero["video"])}"></video>'
               f'<figcaption>Episode {hero["number"]} · “{_e(hero["title"])}” — '
-              f'the working cut — {tot["final"]}/{tot["total"]} scene frames approved, '
-              f'awaiting the author’s pass</figcaption></figure>'
+              f'the working cut — {tot["final"]}/{tot["total"]} beat STILLS carry the '
+              f'author’s pick; the motion over them is a separate clock — see '
+              f'“When is an episode finished”</figcaption></figure>'
               ) if hero["video"] else (
         f'<p><a class="btn" href="{_e(hero["watch"])}">▶ Watch episode {hero["number"]} &rarr;</a></p>')
 
