@@ -1150,3 +1150,4 @@
 16:19:11Z DONE task=ep2-b04-adultplate-0813-1786629504 rc=0 artifacts=4
 16:19:21Z STARTED task=ep2-b02-world-0813-1786637861 attempt=1 on box-runner
 16:25:00Z DONE task=ep2-b02-world-0813-1786637861 rc=0 artifacts=2
+16:25:05Z STARTED task=ep2-b02-worldB-0813-1786637865 attempt=1 on box-runner
