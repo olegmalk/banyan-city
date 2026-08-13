@@ -16324,3 +16324,57 @@
     round showed the feature clause backfires. Beats 19 and 20 also carry a fig and stay
     unauthored; both have the goblin in frame.
   outcome: null
+
+- id: CRF-MEASURED-DIRECTLY-and-I-burned-four-renders-not-needing-a-gpu-0814
+  kind: finding
+  date: 2026-08-14
+  the_measurement_at_last: >-
+    The crf question is a pure image operation and needed NO MODEL AT ALL. Running the real
+    beat-10 plate through libx264 at CRF 33 and back with ffmpeg — exactly what _crf_roundtrip
+    does — gives: MAX CHANNEL DELTA 158 of 255, MEAN 2.94, and 8.46% of subpixels differing by
+    more than 8. The difference map shows it is all RINGING ALONG THE INK LINES, which on
+    flat-cel art is the one thing our style is made of.
+  what_that_changes: >-
+    It is a bigger number than the 60/255 I measured off beat 01's rendered frame, and it is
+    honest in a way that one was not. It is still visually near-invisible at 1:1 on a still, so I
+    am not upgrading it to "the cause" of his complaint — but "measurable ringing on every ink
+    edge" is a more plausible contributor than I concluded earlier, and I am recording that my
+    earlier "marginal" verdict was measured with a bad instrument.
+  the_instrument_error_and_it_is_the_expensive_one: >-
+    I compared FRAME 0 OF THE RENDERED CLIPS and called it "the conditioning still". It is not —
+    frame 0 of the output is itself generated, so every comparison I ran mixed compression damage
+    with content divergence. Beat 10 made it obvious: the two "frame 0"s have the guard's hands in
+    different positions. Same seed, same init, different picture.
+  WHAT_IT_COST: >-
+    FOUR GPU RENDERS — b18-nocrf, b18-firstera, b01-nocrf, b10-worldnocrf — on a question two
+    seconds of ffmpeg answers exactly. I reached for the pipeline I had been living in instead of
+    asking what the cheapest instrument for the question was. The b18-firstera arm did earn its
+    slot (it ruled out guidance 1.0), so three of the four were waste.
+  the_law: >-
+    BEFORE SPENDING THE CARD ON A COMPARISON, ASK WHETHER THE QUESTION IS ABOUT THE MODEL AT ALL.
+    A knob that transforms an input can be measured on the input. Only questions about what the
+    MODEL does with that input need the model.
+  recipe_unchanged: >-
+    image-crf stays 33. The reason is unchanged and independent of the magnitude: removing it
+    changes the conditioning latent, so it does not sharpen a clip, it gives a different clip.
+
+- id: ep2-b05-b06-world-takes-scored-0814
+  kind: scoring
+  date: 2026-08-14
+  b06_PASSES: >-
+    The best beat 06 we have and close to a finished take: full world with sky, cloud, hedge,
+    treeline and grass, the guard reading a hand-sized bark board at chest height, on-model flat
+    cel linework, static frame. Residual is the world still ARRIVING — a white burst around f20
+    before it settles by f40 — which is the white plate, not the wording. My pick: seedA.
+  b05_FAILS_on_count: >-
+    The world half passed — sky, hedge, fence, grass. The beat is "TWO guards jog into an empty
+    morning field" and the clip runs ONE guard from f20 to f80, with a second only appearing near
+    f100. The count arrives late, which is the same shape as the world arriving late: the model
+    adding a thing partway through rather than starting with it.
+  fix_queued: >-
+    ep2-b05-twoguard + twin, stating the pair as a FRAME-ONE FACT rather than an action — both men
+    in the shot from the first frame and both staying — which is the wording that worked on beat
+    10, resting on the b08 result that in LTX motion the prompt CAN put a second character in
+    frame. Negative gains the failure itself: one man alone, lone guard, second person arriving
+    late.
+  outcome: null
