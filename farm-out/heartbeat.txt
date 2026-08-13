@@ -972,3 +972,4 @@
 00:27:51Z STARTED task=ep3-sapling-reference-r2-0812-1786494072 attempt=1 on box-runner
 00:28:43Z DONE task=ep3-sapling-reference-r2-0812-1786494072 rc=0 artifacts=8
 00:29:20Z STARTED task=ep2-b19-geo-0812-1786494162 attempt=1 on box-runner
+00:35:44Z DONE task=ep2-b19-geo-0812-1786494162 rc=0 artifacts=2
