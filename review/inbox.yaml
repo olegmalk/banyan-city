@@ -292,12 +292,16 @@
   kind: clip
   episode: 2
   verdict_hint: pick a take per beat / tell me to keep chasing repeatability
-- what: "DECISION NEEDED - episode 3 cannot be drawn and it is not a prompt problem any more. The cold open needs one picture: the goblin beside his little tree. Seven rounds say this checkpoint will not draw that tree. FOUR rounds of rewording put the plant in his hand instead of in the ground (best result 1 frame in 4). THREE rounds of giving the tree its own reference plate, with no goblin in it at all, came back with a PERSON in the picture anyway - a girl in a dress, a green-haired child, a plant-headed humanoid - even after 'no people, no girl, no child' were all negated. The pipeline also forbids negating 'man' and 'boy' on that kind of plate, so the two likeliest intruders cannot be banned at all. Options as I see them: (a) condition the tree on a real reference image the way the goblin was solved - drawn, photographed or sourced, not generated; (b) try a different checkpoint for plant plates; (c) accept roughly 1 usable frame in 4 and cherry-pick, which is ~84 renders for 21 beats; (d) something you see that I do not. The 21-still wave is NOT queued and will not be until you pick"
+- what: "DECISION NEEDED - episode 3 cannot be drawn and it is not a prompt problem any more. The cold open needs one picture: the goblin beside his sapling. Seven rounds say this checkpoint will not draw that sapling. FOUR rounds of rewording put the sapling in his hand instead of in the ground (best result 1 frame in 4). THREE rounds of giving the sapling its own reference plate, with no goblin in it at all, came back with a PERSON in the picture anyway - a girl in a dress, a green-haired child, a plant-headed humanoid - even after 'no people, no girl, no child' were all negated. The pipeline also forbids negating 'man' and 'boy' on that kind of plate, so the two likeliest intruders cannot be banned at all. Options as I see them: (a) condition the sapling on a real reference image the way the goblin was solved - drawn, photographed or sourced, not generated; (b) try a different checkpoint for plant plates; (c) accept roughly 1 usable frame in 4 and cherry-pick, which is ~84 renders for 21 beats; (d) something you see that I do not. The 21-still wave is NOT queued and will not be until you pick"
   url: /review/ep3-cast-0813
   since: 2026-08-13
   kind: decision
   episode: 3
-  verdict_hint: "which route for the tree: a real reference image / a different model / cherry-pick at 1-in-4 / your own answer"
+  verdict_hint: "which route for the sapling: a real reference image / a different model / cherry-pick at 1-in-4 / your own answer"
+  resolved:
+    date: 2026-08-13
+    verdict: "dont you mean sapling? anyways ill choose: a real reference image."
+
 - what: 'Your sapling-reveal ask ("we should show that he became a sapling earlier") HAS FOUR CANDIDATE
     FRAMES and you have never seen them - they rendered on 11 August and were never scored or paged.
     All four are a seedling standing in grass against sky, clean, no defects; s0 and s3 are the
@@ -320,3 +324,8 @@
   episode: 2
   verdict_hint: B is the direction, carry on / the sash and badge are wrong (they are MINE, not your
     words - say so and they go) / the twins have to be fixed before this is usable
+- what: "A REAL REFERENCE IS THE RIGHT CALL AND THE PHOTO DOES NOT EXIST - could you take it? You chose a real reference image for the sapling; I went looking and CC0/public-domain is close to empty for this subject. Six searches of Wikimedia Commons under a strict CC0-or-public-domain filter returned three usable-licence candidates and not one is a sapling: a top-down tray of dozens of overlapping brinjal seedlings in a plastic tub (CC0, no single stem, no ground line, and it is exactly the bed-of-seedlings failure we already fight), a conifer seedling (public domain, wrong silhouette - ours is a broadleaf with two big leaves), and a mature apple tree (CC0). Everything that actually looks right on Commons is CC BY-SA, which we cannot pass through our own CC BY 4.0 offer. YOUR PHONE WOULD SETTLE IT IN A MINUTE and the licence would be ours outright. What the shot needs: ONE young plant, roughly knee-high, THIN bare stem visible from soil to first leaves, only two or three big broad leaves (a bare-ish one is better than a bushy one - we can prompt leaves on, we cannot prompt them off), growing in plain ground or bare soil, nothing else in frame, shot from standing height at the plant's own level rather than from above, plain background (sky, a wall, bare earth), daylight, portrait orientation. A weed or any random broadleaf seedling is fine - nobody will know the species, we need the SHAPE. If you send one I will stage it as the frozen sapling reference and the conditioned sample runs immediately"
+  url: /review/ep3-cast-0813
+  since: 2026-08-13
+  kind: decision
+  verdict_hint: "send a photo / use one of the three weak CC0 options anyway / different route"
