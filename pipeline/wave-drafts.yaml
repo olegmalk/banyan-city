@@ -674,6 +674,28 @@ beats:
     # face stays green - so the `pale skin` ban cannot catch it. The counter
     # is affirmative and names the exact part: "green scalp", three tokens,
     # paid from headroom. Everything else identical to field_solo_r2.
+    # ADULT PROPORTIONS + SHAPE PINS, 2026-08-13, beat 3 of the remake wave. Wording
+    # that PASSED on beat 02: proportions ASSERTED, only four denial terms (arm B proved
+    # a denial pile swells the skull), and the leaf shape matched word-for-word to the
+    # motion lane's sweep so the fix cannot wash out between stages.
+    # Derived from authored_b03_idfix_r2; nothing else in it moved except the leaf
+    # clause, which gains `broad round cotyledon leaves` -- the sapling is in frame on
+    # this beat and beat 15's adult draft pins it with those same four words.
+    # `green scalp` STAYS: it is beat 03's own measured fix for the pale cranium
+    # (0fa4da58), it is an affirmative rather than a denial, and it costs three tokens.
+    # BUDGET, MEASURED ON THE BOX'S CLIP, NOT ESTIMATED: 76/77 for action+style, which
+    # is where b13 and b14 sit. `pencil-thin` -> `thin` (b02's own word) and `beside it`
+    # sold to buy the leaf clause. Both are scenery; the frozen facts, MAN, the
+    # proportion clause and `green scalp` are untouched. DRY OK, STYLE ANCHOR PRESENT,
+    # count tag 1boy, 75/77 positive as sent.
+    authored_b03_adult: >-
+      A small goblin man, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo,
+      green scalp, crouches behind a tiny sapling's thin stem, broad round
+      cotyledon leaves above, face visible. Medium shot, morning light,
+      cinematic lighting, detailed, newest, masterpiece, best quality, very
+      aesthetic No girl, no chibi, no big head, no round baby face, no toddler, no child,
+      no house, no indoors, no pale skin, no dark, no night. No photorealism, no 3D
+      render look. 9:16 vertical, no text.
     authored_b03_idfix_r2: >-
       A small goblin boy, {{GOBLIN}}, solo, green scalp, crouches in an open
       grassy field behind the pencil-thin stem of a tiny sapling that hides
@@ -1135,6 +1157,54 @@ beats:
     # a denial pile swells the skull), and the fig and leaf shapes matched word-for-word
     # to the motion lane's sweep so the fix cannot wash out between stages.
     # Derived from authored_b04_train_r1; nothing else in it moved.
+    # -- `authored_b04_adult_r2` -- 2026-08-13, the stills-drafts lane. THE THIRD
+    # ATTEMPT AT THIS BEAT, WRITTEN AFTER OPENING THE SECOND ONE'S FRAMES rather than
+    # off its verdict. `ep2-b04-adultplate-0813` on farm-results-rtx5090, r0-s0, r0-s1,
+    # r1-s2, r2-s3, all four opened:
+    #  * NOT ONE OF THE FOUR IS A CLOSE-UP. All four are full-body or torso-up standing
+    #    poses on white, facing camera, arms hanging, hands in frame. `face filling the
+    #    frame` and `Close-up` were both sent and neither bound. This is the fault
+    #    nobody had named yet, and on THIS beat it is the whole beat: 04 is the face.
+    #  * THE CHILD READ IS THE SKULL, not blush. Every one of the four has a smooth egg
+    #    dome of a cranium far wider than the jaw. `narrow angular skull` lost and `no
+    #    big head` lost with it. r0-s1 adds rosy cheeks on top, which is the seed that
+    #    got read as the cute child, but it is the second fault and not the first.
+    #  * THE "SCRIBBLES" ARE LINE-ART CONVENTIONS, and they have names. s0 has red
+    #    emphasis strokes fanned around the head and a crosshatch across the nose; s2
+    #    has the same crosshatch plus sweat drops and motion arcs; s1 has motion arcs by
+    #    the ears. That crosshatch IS the anime blush convention drawn in line rather
+    #    than colour. So `blush, motion lines, emphasis lines, sweat drop` bans the
+    #    thing that is actually on the paper, where `tattoos` bans something no seed
+    #    ever drew -- it is dropped for that reason, and `face markings, scribbles`
+    #    kept as the catch-all the brief asked for.
+    #
+    # TWO VARIABLES, AND SAYING SO. (1) The framing word moves OUT of the trailing tag
+    # and INTO the action clause. sd_prompt's own compress() comment records the
+    # measurement: as a trailing tag framing "has almost no weight -- on 2026-07-26 all
+    # four SDXL test beats came back as extreme macro crops regardless of what they
+    # asked for", and _SHOT only hoists a prompt that OPENS `Vertical 9:16 <shot>,`,
+    # which no draft in this wave does. So the tail placement this beat has failed
+    # twice with was never going to bind, and a third run of it would be re-buying a
+    # known answer. (2) The negative gains the line-art block above. Both are needed
+    # and the control already exists on the branch -- the same draft without either.
+    # PAID FOR by dropping `empty hands`, `no held object` and `no item in hand`: the
+    # invented prop those three were written for (2026-08-12) is absent in all four
+    # frames, and in an extreme close-up of a face there should be no hands in frame to
+    # hold anything. The frozen facts, the proportion clause and `MAN` are untouched.
+    # THE COUNT TAG IS CHECKED, NOT ASSUMED: `A small goblin man` still heads the
+    # sentence, so _tag_from_clause still derives `1boy`.
+    # BUDGET, MEASURED ON THE BOX'S CLIP: 74/77 for action+style -- the roomiest of the
+    # five, because dropping `empty hands` and the two held-object bans paid for both
+    # the framing clause and the line-art block. DRY OK, STYLE ANCHOR PRESENT, count tag
+    # 1boy, 73/77 positive as sent.
+    authored_b04_adult_r2: >-
+      A small goblin man, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo,
+      his gaunt narrow face filling the frame, extreme close-up, cheeks puffed, eyes
+      darting, ears twitching. Soft morning light, cinematic lighting, detailed, newest,
+      masterpiece, best quality, very aesthetic No girl, no chibi, no big head, no round
+      baby face, no toddler, no child, no blush, no rosy cheeks, no doll face, no motion
+      lines, no emphasis lines, no sweat drop, no face markings, no scribbles. No
+      photorealism, no 3D render look. 9:16 vertical, no text.
     authored_b04_adult: >-
       A small goblin man, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo, face
       filling the frame, cheeks puffed, eyes darting, ears twitching, empty hands. Close-up,
@@ -3086,6 +3156,31 @@ beats:
     # RECORDED, NOT FIXED: the sapling is uprooted and carried as a cut sprig in
     # 3/4 against "rooted in the grass" -- and note this beat's negative ALREADY
     # sends `uprooted plant`, which did not bind. Founder-facing.
+    # ADULT PROPORTIONS + SHAPE PINS, 2026-08-13, beat 17 of the remake wave. Wording
+    # that PASSED on beat 02: proportions ASSERTED, only four denial terms (arm B proved
+    # a denial pile swells the skull), and the leaf shape matched word-for-word to the
+    # motion lane's sweep so the fix cannot wash out between stages.
+    # Derived from authored_b17_idfix_r2. Two changes beyond the proportion clause and
+    # both are budget, not taste: the sapling gains `broad round cotyledon leaves`
+    # (beat 15's wording, and this beat's three-of-four fault was the sapling coming
+    # back as a leafy staff in his hand, so its SHAPE is the thing under test), and
+    # `no mature tree` and `no dusk` come out because both are already in the house
+    # negative -- fit_negative deduplicates them and the tokens were buying nothing.
+    # `no uprooted plant` stays: it is the ban written for this beat's own fault.
+    # BUDGET, MEASURED ON THE BOX'S CLIP: 75/77 for action+style. Three sales, all
+    # scenery: `pushes himself up to standing` -> `stands up`, `Static camera` ->
+    # `Medium shot` (a STILL has no camera motion, so the first bought nothing and the
+    # second buys a shot size), and `rooted in the grass` -> `rooted`, which keeps the
+    # word that fights the uprooting and drops the ground it was standing on.
+    # DRY OK, STYLE ANCHOR PRESENT, count tag 1boy, 74/77 positive as sent.
+    authored_b17_adult: >-
+      A small goblin man, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo,
+      stands up, brushes dust off his cloak, turning away from a tiny sapling with
+      broad round cotyledon leaves rooted.
+      Medium shot, afternoon, cinematic lighting, detailed, newest, masterpiece,
+      best quality, very aesthetic No girl, no chibi, no big head, no round baby face, no
+      toddler, no child, no uprooted plant, no glowing eyes, no dark, no night. No
+      photorealism, no 3D render look. 9:16 vertical, no text.
     authored_b17_idfix_r2: >-
       A small goblin boy, {{GOBLIN}}, solo, pushes himself up to standing,
       wipes dust off his patchwork cloak, and turns away from a tiny sapling
@@ -3322,6 +3417,33 @@ beats:
     #    hair` and `alraune` are all in the sent negative and none of them bound.
     #    One more thing landing on the skull, and one more ban that did not reach
     #    it -- which is the pattern this whole wave is documenting.
+    # ADULT PROPORTIONS + SHAPE PINS, 2026-08-13, beat 19 of the remake wave. Wording
+    # that PASSED on beat 02: proportions ASSERTED, only four denial terms (arm B proved
+    # a denial pile swells the skull), and the fig shape matched word-for-word to the
+    # motion lane's sweep so the fix cannot wash out between stages.
+    # Derived from authored_b19_idfix_r2. THE FIG IS THE BEAT and it was absent in 4 of
+    # 4, so it gets the motion lane's own shape clause -- `a small teardrop-shaped fig
+    # with a narrow neck`, the wording under test in ep2-b01-shape-a2/cold-r2 -- rather
+    # than `a ripe fig`, which named a ripeness the frames could not draw and no shape
+    # at all. `no round ball, no apple` are the two counter-shapes that clause exists to
+    # exclude and they replace `no white fruit, no pale fruit`, which banned a COLOUR
+    # the beat never came back wrong on. `no cartoon` stays: 4 of 4 were flat chibi.
+    # The sapling is left as plain `the sapling` rather than gaining the cotyledon
+    # clause -- this beat is deliberately WIDE (the gate flagged a scale jump), the
+    # plant is small in frame, and every token goes to the fig, which is the thing that
+    # vanished. BUDGET, MEASURED ON THE BOX'S CLIP: 75/77 for action+style, the tightest
+    # rewrite of the five because three things share this frame. Sold: `in a sunny
+    # grassy field` (the wide shot and `amber afternoon` already place it), `lands in
+    # the grass` (the bounce is the event; the landing is beat 20's), `small`, and
+    # `two-leaf`. DRY OK, STYLE ANCHOR PRESENT, count tag 1boy, 74/77 positive as sent.
+    authored_b19_adult: >-
+      A small goblin man, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo,
+      as a teardrop-shaped fig with a narrow neck drops from the sapling beside
+      him and bounces off his head.
+      Wide shot, amber afternoon, cinematic lighting, detailed, newest,
+      masterpiece, best quality, very aesthetic No girl, no chibi, no big head, no round
+      baby face, no toddler, no child, no cartoon, no round ball, no apple, no dark, no
+      night. No photorealism, no 3D render look. 9:16 vertical, no text.
     authored_b19_idfix_r2: >-
       A small goblin boy, {{GOBLIN}}, solo, in a sunny grassy field, as a
       ripe fig drops from a tiny sapling standing tall, rooted beside him,
@@ -3431,6 +3553,29 @@ beats:
     # negate what the positive asserts.
     #
     # RECORDED, NOT FIXED: the skull is inflated toward chibi, s2 worst.
+    # ADULT PROPORTIONS + SHAPE PINS, 2026-08-13, beat 20 of the remake wave. Wording
+    # that PASSED on beat 02: proportions ASSERTED, only four denial terms (arm B proved
+    # a denial pile swells the skull), and the fig shape matched word-for-word to the
+    # motion lane's sweep so the fix cannot wash out between stages.
+    # Derived from authored_b20_idfix_r2. This beat holds the fig UP TO CAMERA, so it is
+    # the one place the shape is unmissable and the one place it failed hardest -- a
+    # glowing orb in 4 of 4. It gets the motion lane's clause verbatim (`a small
+    # teardrop-shaped fig with a narrow neck`, less its `small`) and `no round ball`
+    # beside the orb ban,
+    # because an orb and a ball are the same wrong shape under two names. `huge eyes`
+    # drops to `eyes`: `huge` is a child-proportion word and it was in the sentence
+    # while the frames came back a child, which makes it the cheapest thing to sell.
+    # BUDGET, MEASURED ON THE BOX'S CLIP: 77/77 for action+style, exactly where b13,
+    # b14 and b20's own negative sit. Nothing further was sold and nothing needed to be.
+    # DRY OK, STYLE ANCHOR PRESENT, count tag 1boy, 76/77 positive as sent.
+    authored_b20_adult: >-
+      A small goblin man, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo,
+      raises a teardrop-shaped fig with a narrow neck in both hands like evidence, eyes
+      widening, looking up at a bare branch above. Warm amber afternoon light,
+      cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic No
+      girl, no chibi, no big head, no round baby face, no toddler, no child, no glowing
+      eyes, no glowing orb, no round ball, no dark, no night. No photorealism, no 3D
+      render look. 9:16 vertical, no text.
     authored_b20_idfix_r2: >-
       A small goblin boy, {{GOBLIN}}, solo, in a sunny grassy field, raises a
       ripe fig in both hands in front of him like evidence, huge eyes widening

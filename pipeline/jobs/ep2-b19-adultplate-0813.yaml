@@ -1,0 +1,96 @@
+# 2026-08-13, the stills-drafts lane. Adult-goblin plate for beat 19, the same
+# window4 recipe and the same beat-04 references as the b02/b13/b14/b15 plates that
+# came back adult -- ONLY the beat and its draft change. Draft key `authored_b19_adult`
+# in pipeline/wave-drafts.yaml; its comment carries the reasoning and the evidence.
+id: ep2-b19-adultplate-0813
+task: ep2-b19-adultplate-0813
+node: 002b-first-citizen
+beat: 19
+runner: box
+needs_gpu: true
+priority: 49
+max_attempts: 1
+owner: stills-drafts lane, 2026-08-13 (the remake wave, motion-wave tier 2)
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the
+  render gate itself reads. Neither `approval_condition` touches beat 19. This is a mechanism test on
+  an approved node, not an episode assembly.'
+consumer: motion-wave, which re-animates each pair as it lands.
+success: Sixteen PNGs with sidecars. The first question is whether a fig exists at all — it was 0 of 4
+  — and the second whether it is a teardrop rather than a ball. The age read is third here, because a
+  beat with no fig in it cannot be animated whatever he looks like.
+why: 'motion-wave tier 2 — beat 19''s re-animation is blocked on this plate. It was the worst-drifted
+  beat of the five: no fig in any of four, and four of four flat chibi. The fig now carries the motion
+  lane''s own teardrop clause word-for-word, so a fix that lands here cannot wash out at the motion stage.
+  Wording is the arm-A recipe that passed on b02.'
+est_minutes: 14
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '19'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-frozen-0812
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b19-adultplate
+  - --draft-key
+  - authored_b19_adult
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '19'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-frozen-0812
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b19-adultplate
+  - --draft-key
+  - authored_b19_adult
+  - --arm
+  - window4
+  - --task
+  - ep2-b19-adultplate-0813
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b19-adultplate-0813\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/goblin-ipa-0812/out-b19-adultplate/*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b19-adultplate-0813.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b19-adultplate\19-the-drop-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b19-adultplate\19-the-drop-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b19-adultplate\19-the-drop-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b19-adultplate\19-the-drop-ipa-r3-w015-s0.png
