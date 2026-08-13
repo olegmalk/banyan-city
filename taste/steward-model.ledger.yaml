@@ -16260,3 +16260,38 @@
     palette — is the prompt's in both. A rule discovered in one route is not a rule about the
     model.
   outcome: null
+
+- id: ep2-purple-fig-scored-colour-worked-features-backfired-0813
+  kind: scoring
+  date: 2026-08-13
+  against_my_ledgered_prediction: >-
+    I predicted "colour beats every feature clause combined". HALF RIGHT, and the wrong half is
+    mine. Colour did the identity work: both purple seeds read unmistakably as FRUIT, where every
+    green take read as a ball, a balloon or a lamp. That is the largest single improvement all
+    evening and it cost one word of his.
+  but_it_still_fails_the_stranger_test: >-
+    Neither seed would have a stranger say "fig". seedA reads as a small PUMPKIN or gourd; seedB
+    as a damaged plum. So the answer is not yet delivered and I am not reporting the colour win as
+    if it were.
+  why_and_it_is_the_feature_clause_i_added: >-
+    Every feature came back rendered LITERALLY and at full strength. "Fine vertical ribbing"
+    became deep pronounced flutes, which is what makes seedA a gourd — and the ribs also dragged
+    the silhouette back to a sphere, undoing the teardrop that was already solved. "A small dark
+    dimple, an eye" became a spiral target. "A faint pale bloom" became a crusty white patch that
+    reads as mould. Three features, three objects, three defects.
+  the_pattern_this_is_the_third_instance_of: >-
+    A NOUN IN A PROMPT IS DRAWN AT FULL STRENGTH AND A MODIFIER ON IT IS INERT. "Straining A
+    LITTLE over his belly" gave a bare gut. "FINE vertical ribbing" gave flutes. "A FAINT pale
+    bloom" gave mould. The adjective I use to keep a feature subtle does nothing; the noun always
+    arrives at maximum. So a feature I want understated must be OMITTED, not softened — there is
+    no dial between absent and shouted.
+  count_regressed_again_at_seedA: >-
+    Extra figs drifting in frame despite the count clause inherited from the count job. Second
+    time this beat has lost count at seedA specifically. Noted, not chased in the same round.
+  r2_queued_as_the_clean_test_of_my_own_prediction: >-
+    ep2-b18-plainfig + twin. Purple and teardrop only; ribbing, dimple, woody stem and colour
+    gradient all DELETED; skin asserted smooth and plain; and every shape the features produced
+    goes in the negative — ribbed, fluted, pumpkin, gourd, spiral, target, white patch. If a
+    stranger calls that a fig, colour was the whole answer and I spent the evening on the wrong
+    axis twice: first geometry, then features.
+  outcome: null
