@@ -86,6 +86,10 @@
   kind: sheet
   episode: 1
   verdict_hint: name a frame / name an arm / neither, because X
+  resolved:
+    date: '2026-08-13'
+    verdict: we have already published it dude, we are done. lets move on to episode 2. (Scene 6 never
+      got your pick and the episode shipped without it. Closed unread by your ruling.)
 - what: Staging direction - conditioning a beat on a PICTURE of the character fixed his identity and froze
     him into the reference's standing pose. A motion pass can act the beat out of that still without his
     face drifting, but it flattens the show's look and cannot conjure a sapling that was never drawn
@@ -149,6 +153,10 @@
   episode: 2
   verdict_hint: refB s1 (sprig in frame) / refB s0 (same pose, no sprig) / another cell / none of them
     because X
+  resolved:
+    date: '2026-08-13'
+    verdict: we have already published it dude, we are done. lets move on to episode 2. (Beat 02's rerun
+      frames stay in the repo, unpicked. Closed by your ruling.)
 - what: 'Motion finding for the morning: naming WHAT IS IN a shot works every time (7 for 7 - figs, saplings,
     a whole landscape), but naming WHERE THE CAMERA STANDS does nothing. Shot size appears to come from
     the starting frame instead, and that test is running. Also: named objects arrive but land in odd places
@@ -212,6 +220,11 @@
   verdict_hint: watch v42 (repo file review/tonight/EP1-PROVISIONAL-v42-bench.mp4 - the licence gate will
     not let it onto the site yet) - beat 06 in context, and 01/11/13 which have never been judged; then
     the four questions on the page (beat 02's loop, beat 05's sapling reveal, beat 07's trim)
+  resolved:
+    date: '2026-08-13'
+    verdict: we have already published it dude, we are done. lets move on to episode 2. (The v42 fixes
+      (SAPLING title card, your beat-06 zoom-out) remain in the repo UNSCREENED by your choice, and the
+      published cut is untouched — your earlier word already grandfathered the old card.)
 - what: 'Episode 1 cannot be PUBLISHED yet regardless of taste, and it is not about the edit: the stills
     under beats 06, 09, 12 and 15 are refused by the licence gate (CreativeML Open RAIL++-M never cleared
     for redistribution - the standing D15 debt). Separately, 0 of 29 approved stills carry provenance
@@ -323,6 +336,10 @@
   episode: 1
   verdict_hint: pick one and I will cut it in as the reveal / none of these read as HIM becoming the sapling,
     so the shot needs re-thinking / the ask is withdrawn
+  resolved:
+    date: '2026-08-13'
+    verdict: we have already published it dude, we are done. lets move on to episode 2. (The four sapling-reveal
+      frames stay on the results branch, unpicked. Closed by your ruling.)
 - what: 'Beat 05 fix round - BOTH faults you named are answered. He JOGS now (legs alternating, boot off
     the ground, then pulls up short) - that was my prompt''s fault, it never said "jog" and did say "he
     stays standing in the same spot". And in arm B a SECOND guard arrives and both men wear a sash, belt
@@ -370,6 +387,11 @@
   verdict_hint: 'the gate offers three: put CreativeML Open RAIL++-M on the publish-safe list (accepting
     we pass its use restrictions to reusers) / re-shoot beat 06 on a publish-safe route / narrow what
     we offer reusers (D13). Say which and the promotion is one command'
+  resolved:
+    date: '2026-08-13'
+    verdict: we have already published it dude, we are done. lets move on to episode 2. (Beat 06's canon
+      promotion had episode 1 as its only consumer, so it closes with it. The LICENCE question itself
+      is not closed — D15 hygiene continues in the entry above this one.)
 - what: Beat 04's ballooning head is SYSTEMATIC, not luck - it happens at both seeds. It is the only shot
     in the episode where his head fills the frame, which is the first real clue anyone has had. A head-and-shoulders
     version is rendering; it trades some of the closeness your note asks for against a head that stays

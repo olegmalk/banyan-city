@@ -14895,3 +14895,32 @@
     because it decides what several of them should assert. Perhaps an hour, and it should not be done
     on a budget that rewards going green fast.
   outcome: null
+
+- id: ep1-closed-by-publication-0813
+  kind: founder_verdict
+  date: 2026-08-13
+  founder_verdict_verbatim: "we have already published it dude, we are done. lets move on to episode 2."
+  what_it_closes: >-
+    Episode 1, by publication rather than by completion. Five inbox entries retired unread by his
+    choice: scene 6's sheet, beat 02's rerun frames, the ep1 audit and v42, the four sapling-reveal
+    candidates, and beat 06's canon promotion. None of them were answered; they were overtaken.
+  what_stays_in_the_repo_unscreened_and_that_is_his_call: >-
+    The v42 cut — the SAPLING title card and his own beat-06 zoom-out — is built, committed and now
+    permanently unscreened. The published episode keeps the BANYAN CITY card, which his earlier word
+    already grandfathered ("we mixed em up before but its fine, just fix it for the future"). The cut
+    was NOT swapped. Worth writing down because a later reader will find a better cut sitting beside a
+    shipped worse one and assume somebody forgot.
+  what_does_NOT_close: >-
+    D15 licence hygiene. Its inbox entry stays open. "We published it" is a statement about episode 1's
+    status, not a licence ruling, and the gate work stands on its own.
+  the_ep1_seed_twin_outputs_are_moot_and_stay_unscored: >-
+    Renders that landed for beat-05's reveal and the ep1 twins have no consumer now. They stay on the
+    results branch, unscored, deliberately — scoring them would be work for a closed episode. Said
+    plainly rather than left as a gap someone re-opens later.
+  a_premise_I_could_not_execute: >-
+    I was asked to set every ep1 beat to closed-by-publication in `episode-progress.yaml`. THERE IS NO
+    SUCH FILE in the tree. I did not create one to satisfy the instruction — inventing a status file
+    that nothing reads would be worse than the gap. The ETA card's one-line change was also left alone:
+    `build_sim.py` has another lane writing it right now, and a second writer is how tonight's other
+    breakages happened.
+  outcome: resolved
