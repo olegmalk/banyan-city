@@ -54,12 +54,13 @@
 # moves between ~1 and ~5 min on window choice alone. Per kind it is steady,
 # which is why the page multiplies per kind: ltx n=95 (3.9–9.2), still n=99,
 # charref n=23, inpaint n=4, other n=27.
-measured_at: 2026-08-12 02:51Z
-ready: 0
-running: 0
-done_today: 49
+measured_at: 2026-08-13 08:19Z
+ready: 1
+running: 1
+done_today: 51
 source: ssh rtx5090 dir C:\banyan-queue (supervisor tick)
-queued_kinds: {}
+queued_kinds:
+  ltx: 2
 kind_medians:
   charref: 2.9
   inpaint: 2.0
@@ -68,4 +69,4 @@ kind_medians:
   still: 0.9
 kind_median_fallback: 2.9
 median_from: the 259 jobs the box finished 10 - 12 Aug
-median_measured_at: 2026-08-12 02:51Z
+median_measured_at: 2026-08-13 08:19Z
