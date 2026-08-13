@@ -15816,3 +15816,49 @@
     reading the printed output instead of trusting the "PROBLEMS: none" line I had just printed.
     The check now compares payload dirs AND publish dsts across every job in the batch.
   outcome: null
+
+- id: ep2-quality-drift-REAL-two-knobs-differ-from-the-first-example-0813
+  kind: finding
+  date: 2026-08-13
+  founder_verbatim: >-
+    "why do the animated clips you make now feel.. different? it seems like their quality is a lot
+    worse than the first example of ltx you gave me, and im not talking about resolution."
+  why_my_earlier_check_found_nothing: >-
+    Because I diffed against the wrong baseline. This morning I compared tonight against the
+    PRAISED ERA of 08-12 and found the recipe identical knob for knob, and concluded the drift was
+    plates and my palette wording. His baseline is older than that — the FIRST LTX clips he was
+    ever shown, 08-10 and 08-11 — and the recipe I treated as constant was not yet constant then.
+    A drift check is only as good as the baseline it picks, and I picked mine from my own memory
+    of what he liked rather than from what he actually said.
+  the_argv_diff_off_the_box_sidecars: >-
+    The 313-frame b08 clip he approved, finished 2026-08-11T04:26 —
+    "--size 704x1280 --frames 313 --fps 24 --steps 8 --guidance 1.0 --distilled-sigmas --two-stage".
+    Every job tonight —
+    "--size 704x1280 --frames 121 --fps 24 --guidance 2.0 --distilled-sigmas --two-stage
+    --image-crf 33 --offload sequential --mode production".
+  what_actually_differs_on_the_image_path: >-
+    TWO knobs. (1) --image-crf 33 was ADDED where it had been absent, and absent means 0, and 0
+    BYPASSES. What it does: round-trip the conditioning still through libx264 at CRF 33 and back
+    to PNG before the still is VAE-encoded. Every clip tonight is conditioned on a COMPRESSED COPY
+    of its plate. (2) --guidance 1.0 -> 2.0. Everything else is noise: --steps 8 is the parser
+    default so passing it or not is byte-identical, and --offload and --mode are memory management
+    and bookkeeping that touch no pixel.
+  the_crf_is_not_a_blunder: >-
+    Upstream's media_io does exactly this at DEFAULT_IMAGE_CRF=33, deliberately, because a clean
+    PNG is out of the distribution the model trained on. It was adopted for fidelity to upstream.
+    But nothing in the ledger shows it was ever A/B'd against the era he is remembering, and it is
+    exactly the kind of change that would read as "worse quality, and not resolution" — softer,
+    mushier detail carried into every frame from a degraded conditioning image.
+  the_story_i_did_not_need_and_which_is_dead_anyway: >-
+    "His first examples were slow single-subject shots and tonight's are dense action beats."
+    Knobs first, per the inert-vs-outvoted law — and the knobs really do differ, so the story is
+    not needed. It is also false on its own terms: his approved example was 313 FRAMES, longer
+    than tonight's 121, so "the new clips are longer and degrade" has the sign backwards.
+  the_ab_now_running: >-
+    Three arms on beat 18, same seed 20260806, same init, one knob apart. CONTROL
+    ep2-b18-count-0813 (crf 33, guidance 2.0) is already rendered. ep2-b18-nocrf-0813 removes the
+    crf and holds guidance at 2.0, isolating the conditioning-still compression. 
+    ep2-b18-firstera-0813 removes the crf AND returns guidance to 1.0, which is the recipe he
+    approved. Read together they say whether the old recipe is better and, if it is, which knob
+    did it. This compares two genuinely different things, unlike this morning's check.
+  outcome: null
