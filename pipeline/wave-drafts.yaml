@@ -1326,6 +1326,84 @@ beats:
       lighting, detailed, newest, masterpiece, best quality, very aesthetic No girl, no
       child, no held object, no item in hand, no sign, no placard. No photorealism, no
       3D render look. 9:16 vertical, no text.
+    # -- `authored_goblin_design_d1..d6` -- 2026-08-14. THE REFERENCE ITSELF WAS REJECTED.
+    # Founder on the 08-12 sheet: "thats the cute goblin again.. i'd rather him not be
+    # cute." So the sheet he once approved IS the cute design, which retro-explains every
+    # failed adult round this week: the reference is the ceiling and no wording outranks
+    # it. The restaging proposal is dead and the design has to actually change.
+    #
+    # SIX GENUINELY DIFFERENT TAKES, not one face with six adjective sets. Each has its
+    # own bone structure and build: a heavy stooped peasant, a corded scrapper, a hunched
+    # old-timer, a long-jawed trickster, a square-jawed survivor, a hollow-templed
+    # ascetic. If they come back as one face wearing six descriptions, that is itself the
+    # finding and it is the answer to whether this checkpoint can draw a non-cute goblin.
+    #
+    # THE ANTI-CUTE LEVER IS STRUCTURAL, NOT TONAL, because tone words have lost every
+    # time this week (MAN over boy was modest; every knob arm that fought cute produced
+    # more of it; the guards' register words lost to the checkpoint's prior). What is
+    # asserted instead is geometry the model can actually draw: `head one seventh his
+    # height` -- a ratio, not an adjective, and the thing the lead correctly identified as
+    # never having moved -- plus `long skull` and `small eyes`, which attack the two
+    # features that carry the cute read. The tonal denials go in the NEGATIVE where they
+    # cost nothing: chibi, child, big eyes, baby face, doll, cute, moe.
+    #
+    # FROZEN FACTS ARE BYTE-IDENTICAL ACROSS ALL SIX and are not what pays for anything:
+    # pale yellow-green skin, bald, long pointed ears, red eyes, patched hooded coat.
+    # They are his canon; only the bone structure and build are open.
+    #
+    # BUDGET: 74-77 of 77, measured. The scaffolding was trimmed to afford the design
+    # words -- `flat even lighting` sold from the tail, `of his` from the ratio -- and the
+    # frozen facts and the multi-view spec were never candidates for the cut, because the
+    # six-view finding says views are worth more than we knew and a design that lands
+    # becomes its own conditioning set.
+    # d1 -- weathered peasant
+    authored_goblin_design_d1: >-
+      A small goblin man reference sheet, front side and three-quarter views, heavy brow, hollow cheeks, stooped, head one
+      seventh his height, long skull, small eyes, pale yellow-green skin, bald, long
+      pointed ears, red eyes, patched hooded coat. Full body, white background,
+      masterpiece, best quality, very aesthetic No chibi, no child, no big eyes, no baby
+      face, no doll, no cute, no moe, no girl. No photorealism, no 3D render look. 9:16
+      vertical, no text.
+    # d2 -- wiry scrapper
+    authored_goblin_design_d2: >-
+      A small goblin man reference sheet, front side and three-quarter views, corded arms, sharp cheekbones, head one
+      seventh his height, long skull, small eyes, pale yellow-green skin, bald, long
+      pointed ears, red eyes, patched hooded coat. Full body, white background,
+      masterpiece, best quality, very aesthetic No chibi, no child, no big eyes, no baby
+      face, no doll, no cute, no moe, no girl. No photorealism, no 3D render look. 9:16
+      vertical, no text.
+    # d3 -- gnarled old-timer
+    authored_goblin_design_d3: >-
+      A small goblin man reference sheet, front side and three-quarter views, deep-creased face, hunched back, head one
+      seventh his height, long skull, small eyes, pale yellow-green skin, bald, long
+      pointed ears, red eyes, patched hooded coat. Full body, white background,
+      masterpiece, best quality, very aesthetic No chibi, no child, no big eyes, no baby
+      face, no doll, no cute, no moe, no girl. No photorealism, no 3D render look. 9:16
+      vertical, no text.
+    # d4 -- sharp-featured trickster
+    authored_goblin_design_d4: >-
+      A small goblin man reference sheet, front side and three-quarter views, long jaw, thin lips, slit eyes, head one
+      seventh his height, long skull, small eyes, pale yellow-green skin, bald, long
+      pointed ears, red eyes, patched hooded coat. Full body, white background,
+      masterpiece, best quality, very aesthetic No chibi, no child, no big eyes, no baby
+      face, no doll, no cute, no moe, no girl. No photorealism, no 3D render look. 9:16
+      vertical, no text.
+    # d5 -- hard-bitten survivor
+    authored_goblin_design_d5: >-
+      A small goblin man reference sheet, front side and three-quarter views, square jaw, flattened nose, thick brow, head one
+      seventh his height, long skull, small eyes, pale yellow-green skin, bald, long
+      pointed ears, red eyes, patched hooded coat. Full body, white background,
+      masterpiece, best quality, very aesthetic No chibi, no child, no big eyes, no baby
+      face, no doll, no cute, no moe, no girl. No photorealism, no 3D render look. 9:16
+      vertical, no text.
+    # d6 -- ascetic
+    authored_goblin_design_d6: >-
+      A small goblin man reference sheet, front side and three-quarter views, hollow temples, very long skull, tight mouth, head one
+      seventh his height, long skull, small eyes, pale yellow-green skin, bald, long
+      pointed ears, red eyes, patched hooded coat. Full body, white background,
+      masterpiece, best quality, very aesthetic No chibi, no child, no big eyes, no baby
+      face, no doll, no cute, no moe, no girl. No photorealism, no 3D render look. 9:16
+      vertical, no text.
     authored_charref_goblin: >-
       A small goblin boy, {{GOBLIN}}, character reference sheet, multiple views,
       front view, side view, three quarter view, red eyes, simple background,
