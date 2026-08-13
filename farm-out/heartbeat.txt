@@ -1285,3 +1285,4 @@
 23:04:45Z box-runner idle ready=0 failed=11
 23:14:48Z box-runner idle ready=0 failed=11
 23:23:43Z STARTED task=ep2-goblin-freeze-w015-0814-1786663415 attempt=1 on box-runner
+23:26:38Z DONE task=ep2-goblin-freeze-w015-0814-1786663415 rc=0 artifacts=4
