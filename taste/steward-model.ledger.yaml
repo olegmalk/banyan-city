@@ -15385,3 +15385,115 @@
     made it.
   first_use: ep2-b02-adultplate + twin, using their exact four-term negative and nothing else.
   outcome: null
+
+- id: ep2-b18-figshape-r1-INVALID-0813
+  kind: scoring
+  date: 2026-08-13
+  verdict: >-
+    NO VERDICT IS AVAILABLE. The sample was invalid and the confound was mine, again, in the
+    same shape as the tripod and the second-character ban.
+  what_landed: >-
+    seedA inflated the fig into a spotted sphere and pushed the camera in until it burst the
+    frame. seedB held a teardrop with a narrow neck for all 121 frames. Byte-verified against
+    the box manifest before either was opened.
+  the_confound: >-
+    The r1 prompt carried the teardrop clause AND, downstream in the same paragraph, "ONE
+    SINGLE ROUND GREEN FIG" three times in capitals plus "a round fruit, not a leaf". I wrote
+    the fix and the defect into one prompt. My own archaeology that morning was that twenty-five
+    live prompts still say "round" — and then I left four of them in the sample that was
+    supposed to test the cure.
+  what_can_still_be_read_off_it: >-
+    seedB held the teardrop DESPITE three shouted contradictions. That is weak positive
+    evidence for the clause, not against it. The honest statement is that the clause has not
+    been tested yet.
+  second_defect_same_prompt: >-
+    "THE FRAME IS FILLED EDGE TO EDGE ... so close to the lens that nothing else fits" is the
+    identical prop-inflation driver I removed from b06 and b10 the same morning, and it is
+    what pushed seedA's camera in. I fixed it in two prompts and not in the third.
+  fixed_in: ep2-b18-figshape-r2-0813 + r2B — four exact-phrase removals (never a substring
+    sweep; deleting the substring "noon" once turned "afternoon" into "after"), fill-frame
+    clause replaced by the geometry that DID bind count at both seeds ("the frame is too
+    tight to hold a second fruit"). "NOT a round ball" stays; that one is the ban.
+  the_sweep_is_NOT_contaminated_and_I_checked_before_pulling_it: >-
+    My first instinct was to yank the twelve queued sweep jobs. Grepping them first showed
+    every "round" in them is either the deliberate ban, the WANTED leaf shape ("BROAD AND
+    ROUNDED ... soft round tips"), or int(round()) inside the crop script. The sweep is clean
+    and stays queued. Eleven jobs were nearly cancelled on a count I had not read.
+  outcome: null
+
+- id: ep2-b08-bureaucrat-scored-0813
+  kind: scoring
+  date: 2026-08-13
+  verdict: >-
+    Register clause PASSES at both seeds. The beat still FAILS, for a reason the clause was
+    never asked to fix.
+  what_worked: >-
+    Two visibly distinct people are in frame at both seeds, confirming again that the
+    two-character wall was my own negative-prompt ban and not a model limit. The guard is
+    plump, soft-shouldered and doughy at both seeds — proportion asserted positively with a
+    four-term negative, exactly the arm-A recipe. Assertion-beats-denial now holds on the
+    motion side too, for body type.
+  what_overshot: >-
+    "tunic straining a little over his belly" produced a BARE exposed gut at seedB and a
+    torso-sized brown sack at seedA. The moderator "a little" did nothing. Proportion words
+    are strong enough that they need no intensifier and no permission to exaggerate.
+  what_still_fails: >-
+    The goblin is the cute-kid read the founder killed — pale mint hood, eyes closed the whole
+    clip, no long ears, no red eyes. At seedA the point never fires: the two of them appear to
+    hold hands from f40 on. seedB does point, at belly height, as asked.
+  disposition: >-
+    Beat 08 goes to the remake wave and stays LAST in the stills lane's tier order, which is
+    where they put it. Nothing here changes that; it adds that the guard half is solved and
+    only the goblin half is waiting on a plate.
+  outcome: superseded by the remake wave
+
+- id: ep2-b06-b10-noscale-scored-0813
+  kind: scoring
+  date: 2026-08-13
+  verdict: PROP INFLATION IS SOLVED. Two unrelated defects surfaced underneath it.
+  against_the_prediction: >-
+    Predicted "a hand-sized board, readable, no bigger than his forearm, action intact".
+    That is what came back at both beats. b10 fires its whole beat cleanly — the board comes
+    up, turns, and the back of it is blank, which is the entire point of beat 10. b06 holds
+    the board at reading height with marks appearing on it. Removing every fill/size clause
+    was the whole fix.
+  defect_one_b06: >-
+    The first forty frames are a white-out dissolve. The figure smears into fog around f20 and
+    a completely different scene resolves at f40 — green field, hedge, blue sky, heavier
+    linework. Unusable as-is, and it is not a prompt-content failure: it is the clip travelling
+    from a white-void plate to a described world and paying for the trip in the first second.
+  defect_two_b10: >-
+    No world at all. 121 frames of white void with a tuft of grass under his boots.
+  outcome: prop fix adopted; both defects escalated to the controlled pair below
+
+- id: ep2-world-paragraph-does-not-control-background-0813
+  kind: finding
+  date: 2026-08-13
+  the_control: >-
+    b06-noscale and b10-noscale are an accidental controlled pair and a very clean one. Same
+    init, byte-identical (sha 1439b117ad490d23d919fb327de81e3b40f82e2babf035d0d2926843011a6296,
+    verified by hashing both published copies). Same seed 20260806. Same style line, same
+    framing line, same "he stays large in frame" clause, and the SAME world sentence — "A
+    green summer field behind, a dark treeline on the horizon." The only text that differs
+    between them is the action sentence.
+  the_result: b06 built the whole field. b10 stayed white for 121 frames.
+  what_it_kills: >-
+    The world paragraph does not control whether the background appears. I have been treating
+    "name the world and it arrives" as established since the blank-background verdict; an
+    identical sentence produced a world once and nothing the other time, so whatever governs
+    this, it is not the presence of world words.
+  two_readings_left: >-
+    Either the world paragraph is merely WEAK and a stronger one binds it, or the background
+    lives in the PLATE and no wording reaches it. The second would put his blank-backgrounds
+    verdict on the stills lane, and it is the same shape as this morning's goblin result,
+    where the age-read turned out to be plate-borne and unreachable by adjectives.
+  prediction: >-
+    Written into the header of ep2-b10-world-0813 before the job was enqueued; entered here
+    about ten minutes after, which is the wrong order and is recorded as such. I expect the
+    void to SURVIVE the strongest world paragraph I know how to write, because the b06/b10
+    control already shows word-strength is not the axis — b10 had the same words b06 obeyed.
+    If it survives, wording is ruled out and the background is the stills lane's.
+  test: ep2-b10-world-0813 + worldB — world asserted as filling the frame, named at ground,
+    middle distance and sky, with white/blank/isolated-on-white in the negative. One variable;
+    the action sentence and the fill-frame removal are untouched.
+  outcome: null
