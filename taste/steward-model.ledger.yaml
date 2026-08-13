@@ -15620,3 +15620,41 @@
     negative already bans "photorealism, 3D render look, photorealistic, photograph". Those bans
     are losing to something. Not chased tonight; recorded so it is not rediscovered.
   outcome: null
+
+- id: ep2-world-IS-reachable-by-words-prediction-wrong-0813
+  kind: scoring
+  date: 2026-08-13
+  verdict: >-
+    MY PREDICTION WAS WRONG. I predicted the white void would survive the strongest world
+    paragraph I could write. It did not. Beat 10 seedA built a complete world — blue sky with
+    cloud, a dark hedge, a wooden fence, a grass field — with the character and the cel style
+    fully intact. Backgrounds ARE reachable by wording.
+  what_the_stronger_paragraph_added: >-
+    Over the sentence that failed: the world asserted as FILLING the frame rather than merely
+    existing "behind", named at three depths (grass to the bottom edge, hedge and treeline in
+    the middle distance, sky at the top), and white/blank/isolated-on-white/character-sheet in
+    the negative. One of those is doing the work; the experiment does not say which.
+  the_cost_that_remains: >-
+    The world does not start present, it ARRIVES — as a circular iris opening from f0 to about
+    f40, the same visible transition as b06's white dissolve wearing a different shape. Roughly
+    the first second and a half of every such clip is a reveal artifact. So a plate that already
+    carries a world is still better; it is no longer NECESSARY.
+  the_third_data_point_and_it_is_the_dangerous_one: >-
+    ep2-b02-adultplate, off b02-still's adult plate — a character sheet on white — did not void
+    and did not dissolve. It REBUILT EVERYTHING: a flat poster-style world with thick outlines,
+    nothing like the plate's cel rendering, and the goblin reduced to a dark silhouette running
+    in the mid-distance with his pale green skin, his ears and his face all gone. The staging is
+    perfect (sprint, skid, dive, sapling in frame, wide) and the identity is destroyed.
+  the_law_this_leaves: >-
+    A WHITE PLATE LEAVES THE WORLD UNDETERMINED AND THE MODEL RESOLVES IT DIFFERENTLY EVERY
+    TIME — void (b10 r1), dissolve (b06), iris reveal (b10 r2), or a wholesale restyle that
+    takes the character with it (b02). The severity tracks how much the beat asks for: a
+    standing medium shot survives it, a WIDE FULL-BODY ACTION beat does not, because rebuilding
+    the world at that scale means re-inventing the character inside it too.
+  seed_status: seedA only. worldB is rendering; no law is final until it agrees.
+  what_i_must_correct: >-
+    I told b02-still to spend their scarce 77 CLIP tokens on backgrounds over shape pins if it
+    came to a choice. That advice is now backwards for their medium and close beats and I have
+    to say so before anyone authors on it. It still holds for the WIDE beats — 03, 19 and the
+    b02 remake — where a white plate is not a cosmetic problem.
+  outcome: null
