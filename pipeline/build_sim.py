@@ -2423,6 +2423,137 @@ LIVE_JS = """
     body.appendChild(strip);
   }
 
+  /* ---- the queue's own depth, over the last day -------------------------
+     `queue.depth_series` is [[epoch, ready+running], ...], appended once per
+     publish and trimmed to 24 h, and it arrives in the SAME telemetry object
+     the tile above already fetched — so this costs no extra request. It is
+     drawn here rather than at build time for the obvious reason: a build has
+     no history to draw and would bake a picture that stopped moving.
+
+     THE GAPS ARE THE POINT AND THE LINE MUST NOT CROSS THEM. A reading that
+     FAILED is never recorded — no point at all, rather than a zero — because a
+     zero written while the queue directory was unreadable draws a clean dip to
+     empty across an outage, which is a picture of an idle box on a night it was
+     full. So the series is cut into runs wherever two readings sit further
+     apart than DEPTH_GAP, and each run is its own path. A zero that IS in the
+     series is a real measurement of a real empty queue and is drawn.
+
+     And it is a STEP, not a slope: a reading is the depth until the next one
+     replaces it, so the line holds its value and then jumps. Sloping between
+     two samples would draw jobs arriving one at a time when in fact eight
+     landed at once. */
+  var DEPTH_MIN_POINTS = 4;   /* under this it is readings, not a shape */
+  var DEPTH_GAP = 750;        /* 2.5 publish intervals — beyond this, a break */
+  var SVGNS = "http://www.w3.org/2000/svg";
+
+  function svgEl(tag, attrs) {
+    var n = document.createElementNS(SVGNS, tag);
+    for (var k in attrs) { if (attrs.hasOwnProperty(k)) n.setAttribute(k, attrs[k]); }
+    return n;
+  }
+  function spanWords(sec) {
+    /* A LENGTH, not an age — words() answers "how long ago" and says "just
+       now" under 90 s, which is nonsense as the width of a chart. */
+    if (sec < 5400) return Math.max(1, Math.round(sec / 60)) + " min";
+    if (sec < 129600) return (sec / 3600).toFixed(1) + " h";
+    return Math.round(sec / 86400) + " days";
+  }
+  function depthRuns(pts) {
+    var runs = [], cur = [];
+    for (var i = 0; i < pts.length; i++) {
+      if (cur.length && pts[i][0] - cur[cur.length - 1][0] > DEPTH_GAP) {
+        runs.push(cur); cur = [];
+      }
+      cur.push(pts[i]);
+    }
+    if (cur.length) runs.push(cur);
+    return runs;
+  }
+  function drawDepth(q) {
+    var wrap = document.getElementById("q-spark");
+    var note = document.getElementById("q-spark-note");
+    if (!wrap || !note) return;
+    var old = wrap.querySelector("svg");
+    if (old) wrap.removeChild(old);
+
+    var pts = (q && q.depth_series) || null;
+    if (!Object.prototype.toString.call(pts).match(/Array/)) {
+      /* OPTIONAL FIELD, and absent for real reasons: an older publish, a box
+         with no history yet, a queue block that is missing entirely. Words,
+         never an empty chart — a flat line at zero is a claim. */
+      note.textContent = "The box is not publishing queue history yet, so " +
+        "there is no depth to draw. It starts keeping one on its next publish.";
+      return;
+    }
+    /* Trust nothing about the shape of a file fetched off a branch. */
+    var clean = [];
+    for (var i = 0; i < pts.length; i++) {
+      var p = pts[i];
+      if (p && typeof p[0] === "number" && typeof p[1] === "number" && p[1] >= 0) {
+        clean.push(p);
+      }
+    }
+    clean.sort(function (a, b) { return a[0] - b[0]; });
+    if (clean.length < DEPTH_MIN_POINTS) {
+      note.textContent = "The box has published " + clean.length + " queue " +
+        "reading" + (clean.length === 1 ? "" : "s") + " so far — it keeps one " +
+        "every five minutes, and a few more make a shape worth drawing.";
+      return;
+    }
+
+    var t0 = clean[0][0], t1 = clean[clean.length - 1][0];
+    var span = Math.max(1, t1 - t0);
+    /* The real peak and the scale are two different numbers. A day on which
+       the queue was empty at every single reading has a real peak of ZERO, and
+       saying "never more than one job waiting" about it — which an all-in-one
+       vmax did — describes a queue that had work in it. The scale still needs a
+       floor of 1 so the flat line has somewhere to sit. */
+    var peak = 0;
+    for (i = 0; i < clean.length; i++) { if (clean[i][1] > peak) peak = clean[i][1]; }
+    var vmax = Math.max(1, peak);
+    /* 4..294 rather than the full width: the newest-reading dot has a radius
+       and would hang over the edge of its own viewBox at either end. */
+    var X = function (t) { return 4 + 290 * (t - t0) / span; };
+    var Y = function (v) { return 34 - 30 * (v / vmax); };
+
+    var svg = svgEl("svg", {"class": "qspark-svg", viewBox: "0 0 300 40",
+                            preserveAspectRatio: "none", role: "img"});
+    svg.appendChild(svgEl("line", {"class": "qs-base", x1: 2, y1: 34, x2: 298, y2: 34}));
+    var runs = depthRuns(clean), breaks = runs.length - 1;
+    for (var r = 0; r < runs.length; r++) {
+      var run = runs[r], d = "";
+      for (i = 0; i < run.length; i++) {
+        var x = X(run[i][0]), y = Y(run[i][1]);
+        d += (i ? "H" + x.toFixed(1) + "V" + y.toFixed(1)
+                : "M" + x.toFixed(1) + " " + y.toFixed(1));
+      }
+      /* Hold the last reading out to its own x only; never out to "now",
+         which would claim a measurement nobody took. */
+      if (run.length === 1) d += "h1.5";
+      svg.appendChild(svgEl("path", {"class": "qs-ln", d: d}));
+    }
+    var lastP = clean[clean.length - 1];
+    svg.appendChild(svgEl("circle", {"class": "qs-dot", cx: X(lastP[0]).toFixed(1),
+                                     cy: Y(lastP[1]).toFixed(1), r: 2.2}));
+    wrap.insertBefore(svg, note);
+
+    var age = Math.max(0, Math.round(Date.now() / 1000 - lastP[0]));
+    var deep = peak === 0 ? "empty every time it looked"
+             : peak === 1 ? "never more than one job waiting"
+             : "deepest " + peak + " jobs";
+    /* THREE LINES ON A PHONE, not six. The first cut spelled out the publish
+       cadence and the CDN arithmetic in full under a 44px chart, which is the
+       page's old habit of answering with a paragraph. The caveats are real and
+       kept; they are just said once and short. */
+    note.textContent = "Queue depth, " + clean.length + " readings over " +
+      spanWords(span) + " — " + deep + " · newest " + words(age) + "." +
+      (breaks ? " The line breaks " + breaks + " time" + (breaks === 1 ? "" : "s") +
+                " where the box published nothing; this page will not guess " +
+                "across a gap." : "") +
+      " A reading can be up to ten minutes behind the box.";
+    svg.setAttribute("aria-label", note.textContent);
+  }
+
   function readBoxQueue() {
     if (!document.getElementById("q-tile-n") && !document.getElementById("q-notice")) return;
     function grab(u) {
@@ -2435,6 +2566,10 @@ LIVE_JS = """
         lastTel = d;
         renderPeek();            /* no-op unless the fold is already open */
         var q = d && d.queue;
+        /* BEFORE the count checks below, which throw. The depth chart has its
+           own honest answer for a missing queue block and should give it
+           rather than inheriting the tile's "live refresh unavailable". */
+        drawDepth(q);
         if (!q) throw new Error("the box is publishing vitals but not yet its queue");
         if (q.error) throw new Error("the box could not read its own queue: " + q.error);
         if (typeof q.ready !== "number" && typeof q.running !== "number") {
@@ -2597,6 +2732,22 @@ SIM_CSS = """
    what goes here is a sentence explaining why there is no number */
 .noage { color: var(--faint); }
 .livemark { font: 500 .76rem/1.6 var(--mono); color: var(--faint); }
+/* ---- the queue's depth over the last day. Drawn by the reader's browser, so
+   it must look deliberate while empty and must never reflow the page around
+   itself when the line arrives — hence the fixed aspect on the svg. The stroke
+   is non-scaling so a sparkline stretched to 300 units wide by 40 tall keeps an
+   even 1.6px line instead of a hairline that fattens horizontally. ---- */
+.qspark { margin: .5rem 0 0; }
+.qspark-svg { display: block; width: 100%; height: 44px; overflow: visible; }
+.qspark-svg .qs-base { stroke: var(--line); stroke-width: 1;
+  vector-effect: non-scaling-stroke; }
+.qspark-svg .qs-ln { fill: none; stroke: var(--leaf); stroke-width: 1.6;
+  stroke-linejoin: round; stroke-linecap: round;
+  vector-effect: non-scaling-stroke; }
+.qspark-svg .qs-dot { fill: var(--sap); stroke: var(--bg); stroke-width: 1;
+  vector-effect: non-scaling-stroke; }
+.qspark .mono { margin: .25rem 0 0; display: block; }
+
 /* ---- "what the card is making right now" — the fold over the live view.
    Everything in here arrives from the box after the page has loaded, so it must
    look deliberate while empty and must never reflow the page around it. ---- */
@@ -3612,6 +3763,19 @@ def build(out_dir: Path):
     # fetched a dozen of those on load would spend megabytes on every visitor who
     # never asked. The baked state is the honest no-JS one — this cannot be
     # rendered at build time, because the whole point is that it is current.
+    # QUEUE DEPTH OVER THE LAST DAY. Baked empty, exactly like the infra meter
+    # and the live tile: the history lives in the box's own telemetry publish
+    # and arrives in the reader's browser, so a build has nothing to draw and
+    # would bake a picture that stopped moving. The sentence below is the
+    # honest no-JavaScript floor, and drawDepth() replaces it with either a
+    # sparkline or a plainer sentence about why there is not one yet.
+    queued_html += (
+        '<div class="qspark" id="q-spark">'
+        '<p class="mono" id="q-spark-note">How deep this queue has been over '
+        'the last day is read by your browser from the box’s own five-minute '
+        'publish. With JavaScript off there is nothing here to read — the '
+        'history is not built into this page, because it would be stale the '
+        'moment it was.</p></div>')
     queued_html += (
         '<details class="peek" id="q-peek">'
         '<summary>Look inside — what the card is making right now</summary>'

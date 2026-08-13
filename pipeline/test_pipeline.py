@@ -7798,6 +7798,69 @@ def test_the_charts_fetch_nothing_and_claim_nothing_they_cannot_read():
           "Measured" in work)
 
 
+def test_the_queue_depth_line_refuses_to_cross_a_gap_it_did_not_measure():
+    """The sparkline's four refusals, each pinned because each is invisible.
+
+    A chart is a claim in geometry and geometry fails quietly. These four are
+    the ways this one could lie while still looking like a chart:
+
+      1. CROSSING A GAP. A failed reading is never written to depth_series —
+         no point at all, rather than a zero — because a zero recorded while
+         the queue directory was unreadable draws a clean dip to empty across
+         an outage: a picture of an idle box on a night it was full. The series
+         is therefore cut into runs and each is its own path.
+      2. SLOPING BETWEEN SAMPLES. A reading is the depth until the next one
+         replaces it. Sloping would draw jobs arriving one at a time when eight
+         landed at once, so the path steps (H then V) and never diagonals.
+      3. DRAWING AN ABSENCE. The field is optional — an old publish, a box with
+         no history, a missing queue block — and a flat line at zero is a
+         claim. Absent means words.
+      4. IMPLYING "NOW". The box publishes every five minutes and raw's CDN
+         holds each copy for five more, so the newest point can be ten minutes
+         old. Age comes off the point's own epoch against the READER's clock,
+         never off the build stamp.
+    """
+    import build_sim as bs
+
+    js = bs.LIVE_JS
+    check("a break is declared at more than two and a half publish intervals",
+          "DEPTH_GAP = 750" in js and "DEPTH_GAP" in js)
+    check("...and the series is cut into runs on it, not drawn as one line",
+          "depthRuns" in js and "runs.push(cur)" in js)
+    check("the line steps and never slopes between two readings",
+          '"H" + x.toFixed(1) + "V" + y.toFixed(1)' in js)
+    check("a missing series is words, never an empty chart",
+          "not publishing queue history yet" in js)
+    check("...and so is a series too short to have a shape",
+          "DEPTH_MIN_POINTS = 4" in js
+          and "make a shape worth drawing" in js)
+    check("a queue that was empty at every reading is not called 'never more "
+          "than one'",
+          "empty every time it looked" in js)
+    check("the newest reading is aged against the reader's own clock",
+          "Date.now() / 1000 - lastP[0]" in js)
+    check("...and the page says how far behind the box that can be",
+          "ten minutes behind the box" in js)
+    check("the chart is built with createElementNS, never innerHTML",
+          "createElementNS" in js)
+    check("a stretched sparkline keeps an even stroke",
+          "non-scaling-stroke" in bs.SIM_CSS)
+    check("the drawn line carries an aria-label of the same sentence",
+          'svg.setAttribute("aria-label", note.textContent)' in js)
+
+    src = (REPO / "pipeline" / "build_sim.py").read_text(encoding="utf-8")
+    for el in ("q-spark", "q-spark-note"):
+        check(f"the builder emits {el}", f'id="{el}"' in src)
+        check(f"...and LIVE_JS looks up {el}", f'"{el}"' in js)
+    check("the baked copy says the history is not built into the page",
+          "not built into this page" in src)
+    # It must run BEFORE the count checks throw, or a box publishing vitals
+    # with no queue block would leave the chart showing the no-JS sentence
+    # forever instead of its own honest one.
+    check("the depth chart is drawn before the tile's count checks can throw",
+          js.index("drawDepth(q);") < js.index("carries no counts"))
+
+
 def main():
     import tempfile
     test_beat_duration_from_timecode()
@@ -8013,6 +8076,7 @@ def main():
     test_a_kind_keeps_its_shade_on_a_day_the_other_kinds_are_missing()
     test_a_bar_is_as_tall_as_its_minutes_and_a_part_day_says_so()
     test_the_charts_fetch_nothing_and_claim_nothing_they_cannot_read()
+    test_the_queue_depth_line_refuses_to_cross_a_gap_it_did_not_measure()
     print()
     if FAILURES:
         print(f"✗ {len(FAILURES)} failure(s): {', '.join(FAILURES)}")
