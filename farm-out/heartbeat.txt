@@ -1073,3 +1073,4 @@
 11:55:32Z STARTED task=ep2-b08-twohander-0813-1786621748 attempt=1 on box-runner
 12:01:46Z DONE task=ep2-b08-twohander-0813-1786621748 rc=0 artifacts=2
 12:01:52Z STARTED task=ep2-b10-noscale-0813-1786621744 attempt=1 on box-runner
+12:08:05Z DONE task=ep2-b10-noscale-0813-1786621744 rc=0 artifacts=1
