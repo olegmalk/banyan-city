@@ -1035,3 +1035,4 @@
 09:39:02Z box-runner up pid=2748 host=MSI
 09:39:08Z FAIL task=ep2-b04-balloon-pair-0813-1786611603 rc=93 step=interrupted
 09:39:13Z box-runner waiting for GPU: GPU-CLAIM.txt held: HELD by founder-pause at 2026-08-13 battery-save; runner must wait failed=11
+09:41:08Z STARTED task=ep1-b13-seedB-0813-1786611597 attempt=1 on box-runner
