@@ -16097,3 +16097,39 @@
   contract: SITE.md — an entry linking to a section instead of its own artifact is a defect, and
     it is verified against the LIVE page by counting duplicate hrefs, not against the build.
   outcome: null
+
+- id: CANON-the-fig-is-purple-0813
+  kind: canon
+  date: 2026-08-13
+  authority: R4 — the founder. Taste and canon are his and this is both.
+  verbatim: '"btw, can you make it a purple fig? would be more recognisable"'
+  the_canon: >-
+    THE FIG IS PURPLE FROM HERE. Deep purple-violet skin, greener toward the neck where it meets
+    the stem, matte with a faint pale bloom. This joins the FROZEN FACTS for the fig object: no
+    lane reverts it to green, and "green fig" is now a defect wherever it appears, the same class
+    of error as the goblin's "boy".
+  why_it_is_the_better_answer_than_mine: >-
+    I spent the evening trying to make a green fig recognisable by SHAPE — teardrop, neck, then
+    ribbing and a dimple and a woody stem — and he solved it with one word. A fig has no unique
+    silhouette; a teardrop is also a bud, a bulb, a balloon, a drop of water. It does have an
+    unmistakable COLOUR. Recognisability was a colour problem the whole time and I was answering
+    it with geometry, which is the same mistake as scoring outline instead of identity, one level
+    up: I kept refining the axis I had chosen instead of asking whether it was the right axis.
+  prediction_recorded_before_the_render: >-
+    Colour will do more for the stranger test than every feature clause combined. If a purple fig
+    passes "would someone call this a fig" while the featured green one did not, the feature
+    clause was never the lever and I will say so rather than claiming both worked.
+  the_ripple_i_am_not_deciding: >-
+    002b's approved script and the published ep1/ep2 stills show a GREEN fig, and the fig that
+    falls in 002b is the same fruit. Whether purple applies retroactively to already-published
+    shots or only from here is his call, not mine — it touches published work and canon
+    continuity, both R4. Filed on his inbox as one line and left there.
+  sweep_status: >-
+    No job currently queued or running mentions a fig, so nothing in flight needed pulling. The
+    two fig-features samples had already rendered by the time the ruling arrived, so the slot was
+    spent on green rather than saved; they are still worth scoring for whether the FEATURE clause
+    binds, which is information the purple round inherits either way. The 22 files that mention a
+    green fig are SPENT job records and are not edited — that was settled earlier today; the
+    sweep is over live authoring and the plate side, and the plate lane has to move in the same
+    round because a purple fig on a green-fig plate is worse than either.
+  outcome: null
