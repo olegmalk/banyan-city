@@ -1136,12 +1136,11 @@ beats:
     # to the motion lane's sweep so the fix cannot wash out between stages.
     # Derived from authored_b04_train_r1; nothing else in it moved.
     authored_b04_adult: >-
-      A small goblin boy, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo, in a
-      blurred sunny grassy field, his face filling the frame, cheeks puffed tight, huge eyes
-      darting, enormous ears twitching, empty hands. Slow push-in, close-up, soft morning
-      light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
-      No girl, no chibi, no big head, no round baby face, no toddler, no child, no held
-      object, no item in hand, no sign, no placard. No photorealism, no 3D render look. 9:16
+      A small goblin boy, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo, face
+      filling the frame, cheeks puffed, eyes darting, ears twitching, empty hands. Close-up,
+      soft morning light, cinematic lighting, detailed, newest, masterpiece, best quality,
+      very aesthetic No girl, no chibi, no big head, no round baby face, no toddler, no
+      child, no held object, no item in hand. No photorealism, no 3D render look. 9:16
       vertical, no text.
     authored_b04_train_r1: >-
       A small goblin boy, {{GOBLIN}}, solo, in a blurred sunny grassy field, his face
@@ -2813,12 +2812,12 @@ beats:
     # to the motion lane's sweep so the fix cannot wash out between stages.
     # Derived from authored_staged; nothing else in it moved.
     authored_b14_adult: >-
-      A small goblin boy, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo, from
-      front, his clawed fingers picking at loose dirt and flicking pebbles aside, his whole
-      face in frame above them, eyes glancing away embarrassed. Intimate low close-up,
-      shallow green grass background, cinematic lighting, detailed, newest, masterpiece,
-      best quality, very aesthetic No girl, no chibi, no big head, no round baby face, no
-      toddler, no child. No photorealism, no 3D render look. 9:16 vertical, no text.
+      A small goblin boy, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo,
+      clawed fingers picking at dirt and flicking pebbles, face above them, eyes glancing
+      away embarrassed, green field and treeline behind. Low close-up, cinematic lighting,
+      detailed, newest, masterpiece, best quality, very aesthetic No girl, no chibi, no big
+      head, no round baby face, no toddler, no child. No photorealism, no 3D render look.
+      9:16 vertical, no text.
     authored_b14_idfix_r3: >-
       A small goblin boy, {{GOBLIN}}, solo, green scalp, his clawed fingers
       picking at loose dirt and flicking pebbles aside, his face glancing away
@@ -2964,14 +2963,12 @@ beats:
     # to the motion lane's sweep so the fix cannot wash out between stages.
     # Derived from authored_b15_idfix_r2; nothing else in it moved.
     authored_b15_adult: >-
-      A small goblin boy, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo, in a
-      sunny grassy field, tips his head back talking up at a tiny sapling with broad rounded
-      cotyledon leaves standing tall beside him, its two oversized leaves hanging above him,
-      his face visible. Warm midday light, cinematic lighting, detailed, newest,
-      masterpiece, best quality, very aesthetic No girl, no chibi, no big head, no round
-      baby face, no toddler, no child, no scars, no stitched skin, no house, no indoors, no
-      houseplant, no dark, no night, no dim lighting, no moody lighting. No photorealism, no
-      3D render look. 9:16 vertical, no text.
+      A small goblin boy, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo,
+      talks up at a tiny sapling with broad round cotyledon leaves beside him, green field
+      behind. Warm midday light, cinematic lighting, detailed, newest, masterpiece, best
+      quality, very aesthetic No girl, no chibi, no big head, no round baby face, no
+      toddler, no child, no house, no indoors, no houseplant, no dark, no night. No
+      photorealism, no 3D render look. 9:16 vertical, no text.
     authored_b15_idfix_r2: >-
       A small goblin boy, {{GOBLIN}}, solo, in a sunny grassy field, tips his
       head back talking up at a tiny sapling standing tall beside him, its two

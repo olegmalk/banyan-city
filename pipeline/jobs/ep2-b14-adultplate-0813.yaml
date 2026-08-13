@@ -1,0 +1,91 @@
+id: ep2-b14-adultplate-0813
+task: ep2-b14-adultplate-0813
+node: 002b-first-citizen
+beat: 14
+runner: box
+needs_gpu: true
+priority: 49
+max_attempts: 1
+owner: stills lane, 2026-08-13 (the remake wave, motion-wave tier 1)
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the
+  render gate itself reads. Neither `approval_condition` touches beat 02. This is a mechanism test on
+  an approved node, not an episode assembly.'
+consumer: motion-wave, which re-animates each pair as it lands.
+success: Sixteen PNGs with sidecars. Success is readable comparable cells, NOT that he reads adult. "Still
+  a child" on this beat would say the b02 result does not transfer, which is the thing worth knowing before
+  the remaining four are queued.
+why: motion-wave tier 1 — passes on three seeds, picked, only the child proportions stand between it and
+  done. Wording is the arm-A recipe that passed on b02; trimmed to fit 77 CLIP tokens by selling scenery
+  adjectives, never the proportion clause or his frozen facts.
+est_minutes: 14
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '14'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-frozen-0812
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b14-adultplate
+  - --draft-key
+  - authored_b14_adult
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '14'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-frozen-0812
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b14-adultplate
+  - --draft-key
+  - authored_b14_adult
+  - --arm
+  - window4
+  - --task
+  - ep2-b14-adultplate-0813
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b14-adultplate-0813\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/goblin-ipa-0812/out-b14-adultplate/*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b14-adultplate-0813.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b14-adultplate\14-the-defense-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b14-adultplate\14-the-defense-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b14-adultplate\14-the-defense-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b14-adultplate\14-the-defense-ipa-r3-w015-s0.png
