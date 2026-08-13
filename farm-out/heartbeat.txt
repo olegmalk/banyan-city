@@ -1267,3 +1267,4 @@
 21:22:08Z DONE task=ep2-b12-ladder-0813-1786650478 rc=0 artifacts=2
 21:22:16Z STARTED task=ep2-b12-ladderB-0813-1786650483 attempt=1 on box-runner
 21:28:33Z DONE task=ep2-b12-ladderB-0813-1786650483 rc=0 artifacts=2
+21:28:40Z STARTED task=ep2-b18-plainfig-0813-1786651075 attempt=1 on box-runner
