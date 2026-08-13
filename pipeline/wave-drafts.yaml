@@ -1130,6 +1130,19 @@ beats:
     #
     # The crop stays the head crop: beat 04 is the face-filling close-up and the framing
     # rule says the reference's scope chooses the shot.
+    # ADULT PROPORTIONS + SHAPE PINS, 2026-08-13, beat 4 of the remake wave. Wording
+    # that PASSED on beat 02: proportions ASSERTED, only four denial terms (arm B proved
+    # a denial pile swells the skull), and the fig and leaf shapes matched word-for-word
+    # to the motion lane's sweep so the fix cannot wash out between stages.
+    # Derived from authored_b04_train_r1; nothing else in it moved.
+    authored_b04_adult: >-
+      A small goblin boy, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo, in a
+      blurred sunny grassy field, his face filling the frame, cheeks puffed tight, huge eyes
+      darting, enormous ears twitching, empty hands. Slow push-in, close-up, soft morning
+      light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+      No girl, no chibi, no big head, no round baby face, no toddler, no child, no held
+      object, no item in hand, no sign, no placard. No photorealism, no 3D render look. 9:16
+      vertical, no text.
     authored_b04_train_r1: >-
       A small goblin boy, {{GOBLIN}}, solo, in a blurred sunny grassy field, his face
       filling the frame, cheeks puffed tight, huge eyes darting, enormous ears
@@ -2684,6 +2697,18 @@ beats:
     # four spare tokens have a better claim from the proven ban. If the skulls come
     # back clean and the frames are still murky, the dark block is the next
     # purchase and this comment is where it was named.
+    # ADULT PROPORTIONS + SHAPE PINS, 2026-08-13, beat 13 of the remake wave. Wording
+    # that PASSED on beat 02: proportions ASSERTED, only four denial terms (arm B proved
+    # a denial pile swells the skull), and the fig and leaf shapes matched word-for-word
+    # to the motion lane's sweep so the fix cannot wash out between stages.
+    # Derived from authored_b13_idfix_r2; nothing else in it moved.
+    authored_b13_adult: >-
+      A small goblin boy, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo, sits
+      hugging his knees in the small patch of shade beside a tiny two-leaf seedling rooted
+      in the grass. Static camera, medium shot, bright midday sunlight, cinematic lighting,
+      detailed, newest, masterpiece, best quality, very aesthetic No girl, no chibi, no big
+      head, no round baby face, no toddler, no child, no scars, no stitched skin, no white
+      hair, no night, no dusk. No photorealism, no 3D render look. 9:16 vertical, no text.
     authored_b13_idfix_r2: >-
       A small goblin boy, {{GOBLIN}}, solo, sits hugging his knees in the small
       patch of shade beside a tiny two-leaf seedling rooted in the grass. Static
@@ -2782,6 +2807,18 @@ beats:
     # has a measured result behind each half.
     #
     # PAID FOR: `green scalp` is three tokens against 73 in the positive, which fits without touching the staging -- the clawed fingers, the loose dirt and the embarrassed face are all unchanged, as is the light the previous lane fixed.
+    # ADULT PROPORTIONS + SHAPE PINS, 2026-08-13, beat 14 of the remake wave. Wording
+    # that PASSED on beat 02: proportions ASSERTED, only four denial terms (arm B proved
+    # a denial pile swells the skull), and the fig and leaf shapes matched word-for-word
+    # to the motion lane's sweep so the fix cannot wash out between stages.
+    # Derived from authored_staged; nothing else in it moved.
+    authored_b14_adult: >-
+      A small goblin boy, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo, from
+      front, his clawed fingers picking at loose dirt and flicking pebbles aside, his whole
+      face in frame above them, eyes glancing away embarrassed. Intimate low close-up,
+      shallow green grass background, cinematic lighting, detailed, newest, masterpiece,
+      best quality, very aesthetic No girl, no chibi, no big head, no round baby face, no
+      toddler, no child. No photorealism, no 3D render look. 9:16 vertical, no text.
     authored_b14_idfix_r3: >-
       A small goblin boy, {{GOBLIN}}, solo, green scalp, his clawed fingers
       picking at loose dirt and flicking pebbles aside, his face glancing away
@@ -2921,6 +2958,20 @@ beats:
     # two attempts at that limit on beats 02 and 03 and neither fixed it, so a
     # third would be spending GPU to re-learn a known answer. It goes to the
     # founder in wave2-needs-founder.md instead.
+    # ADULT PROPORTIONS + SHAPE PINS, 2026-08-13, beat 15 of the remake wave. Wording
+    # that PASSED on beat 02: proportions ASSERTED, only four denial terms (arm B proved
+    # a denial pile swells the skull), and the fig and leaf shapes matched word-for-word
+    # to the motion lane's sweep so the fix cannot wash out between stages.
+    # Derived from authored_b15_idfix_r2; nothing else in it moved.
+    authored_b15_adult: >-
+      A small goblin boy, {{GOBLIN}}, lean and wiry, narrow angular skull, adult, solo, in a
+      sunny grassy field, tips his head back talking up at a tiny sapling with broad rounded
+      cotyledon leaves standing tall beside him, its two oversized leaves hanging above him,
+      his face visible. Warm midday light, cinematic lighting, detailed, newest,
+      masterpiece, best quality, very aesthetic No girl, no chibi, no big head, no round
+      baby face, no toddler, no child, no scars, no stitched skin, no house, no indoors, no
+      houseplant, no dark, no night, no dim lighting, no moody lighting. No photorealism, no
+      3D render look. 9:16 vertical, no text.
     authored_b15_idfix_r2: >-
       A small goblin boy, {{GOBLIN}}, solo, in a sunny grassy field, tips his
       head back talking up at a tiny sapling standing tall beside him, its two
