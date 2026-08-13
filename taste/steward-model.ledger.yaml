@@ -15144,3 +15144,51 @@
     kept open deliberately must say why in its own text.
   count: 14 open -> 10 open.
   outcome: resolved
+
+- id: ep2-b08-twohander-0813-scored
+  kind: scoring
+  date: 2026-08-13
+  verdict: THE WALL IS GONE. Two genuinely different people in one frame.
+  observed: >-
+    The goblin — pale green, bald, long ears, hooded coat — and a VISIBLY DISTINCT GUARD:
+    brown hair, brown tunic, cloth sash, clipboard in hand, his own body. Separate, both fully
+    in frame, the guard's arm reaching toward the goblin. Not a doubled goblin, not a clone.
+  what_it_retires: >-
+    "A single-character reference suppresses the second character, so no prompt puts the guard
+    in" — recorded two days ago as a MODEL LIMIT and left alone. It was never the model's. MY
+    OWN NEGATIVE banned "second character, duplicate character" in every goblin prompt I wrote,
+    to stop the goblin doubling, and beat 08 is the one beat that needs a second person.
+    Deleting my own ban was the entire fix. Two days of a beat written off because nobody
+    asked whether the prohibition was ours.
+  what_is_left: >-
+    The guard came out a LEAN ADULT HUMAN rather than the ratified silly round bureaucrat, the
+    point is not clearly at the belly, and the goblin's eyes are shut. Unblocked, not finished.
+  queued: >-
+    ep2-b08-bureaucrat + twin: the guard described as plump, short, doughy, soft-shouldered,
+    no muscle, tunic straining over his belly; muscular/athletic/tall-lean/soldier banned; and
+    the point now JABS at the belly at waist height, explicitly not at face or chest.
+
+- id: ep2-b13-adult-register-0813-scored
+  kind: scoring
+  date: 2026-08-13
+  verdict: MISS at both seeds. The register did not move.
+  observed: >-
+    Both takes came back essentially unchanged from the take before them — round head, big
+    eyes, still reading young. "Wiry, weathered, lean, scrappy, hard bony skull, SHORT not
+    YOUNG, never a child" in the positive plus child/baby-face/chibi/cute/big-round-eyes in the
+    negative changed the age-read by approximately nothing. The fold still works.
+  what_it_actually_establishes_and_this_is_the_valuable_part: >-
+    THE KID-READ DOES NOT RESPOND TO WORDING AT THIS STAGE, SO IT IS IN THE PLATE. His note was
+    "the character reference is good, just the generations" — and the plates I animate ARE
+    generations, ipa outputs, not the reference. The childish proportions are baked in before
+    motion ever sees them. So "remake him" lands on the STILLS LANE regenerating plates with
+    adult proportions, not on another adjective from me.
+  what_i_am_therefore_NOT_doing: >-
+    NOT re-running the passed takes with the register clause. It demonstrably changes nothing;
+    doing it on publish night would burn the card to produce identical clips and let a
+    re-render stand in for a fix. Two seeds say so, not one.
+  a_contrast_worth_watching: >-
+    The b08 guard is conjured ENTIRELY BY WORDS with no plate of his own. If register wording
+    reshapes him where it failed on the plate-bound goblin, that is direct confirmation the
+    kid-read is plate-borne. The bureaucrat retry tests it for free.
+  outcome: null
