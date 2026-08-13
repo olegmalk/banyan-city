@@ -179,7 +179,17 @@ RESULTS_MAX = 8                  # newest media files published on the page
 RESULTS_WALK_CAP = 6000          # stop walking rather than stat a runaway tree
 IMAGE_EXTS = (".png", ".jpg", ".jpeg", ".webp", ".gif")
 VIDEO_EXTS = (".mp4", ".webm", ".mov")
-POSTER_PAIR_SECONDS = 300        # a clip and its still ride out on one publish step
+# How far apart a clip and the still it is postered with may sit. `shutil.copy2`
+# preserves the SOURCE mtime, so the two do NOT land together: the init frame is
+# stamped before the render began and the clip after it ended, which across the
+# box's own published rounds on 2026-08-13 measured 5.3 - 6.4 min for a normal
+# take and 44 min for a slow one. The first cut of this allowed 5 min and paired
+# nothing at all. Two hours clears every observed pairing while still refusing an
+# image from a directory reused a day later.
+POSTER_PAIR_OLDER = 7200
+# The other direction is tight: a still published well AFTER the clip belongs to
+# a later take, not this one.
+POSTER_PAIR_NEWER = 300
 PRUNE_SECONDS = 1800
 KEEP_HOURS = 48                      # the rolling CSV on the box
 WINDOW_HOURS = 24                    # what the published summary covers
@@ -523,7 +533,8 @@ def results_sample(out: Path = None, now: float = None, limit: int = RESULTS_MAX
             # poster is read as a frame OF the video under it. One publish step
             # copies both within a second or two; POSTER_PAIR_SECONDS is loose
             # enough for a slow copy and far tighter than a stale round.
-            if pair is not None and pair[0] != p and abs(pair[1] - mtime) <= POSTER_PAIR_SECONDS:
+            if (pair is not None and pair[0] != p
+                    and -POSTER_PAIR_NEWER <= (mtime - pair[1]) <= POSTER_PAIR_OLDER):
                 item["poster"] = pair[0].relative_to(out.parent).as_posix()
         items.append(item)
     return {"at": int(now), "branch": COURIER_BRANCH, "items": items}

@@ -7393,6 +7393,8 @@ def test_the_box_publishes_what_it_is_making_and_what_it_just_made():
         check("its path is the one the branch will serve",
               r["items"][0]["path"] ==
               "farm-out/ep2-b05twin-wave-0813/05-the-patrol.mp4")
+        # The still is stamped BEFORE the clip — copy2 keeps source mtimes, so
+        # the gap is however long the render took (measured 5-7 min on the box).
         check("a video is paired with the still beside it, so the strip shows a picture",
               r["items"][0].get("poster") ==
               "farm-out/ep2-b05twin-wave-0813/b05-init-704x1280.png")
