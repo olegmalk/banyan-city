@@ -15546,3 +15546,41 @@
     A sample only gates a batch if it RUNS before the batch. Queue order is part of the
     experiment design, not an implementation detail, and priority is the knob.
   outcome: null
+
+- id: law-payload-dirs-are-shared-state-0813
+  kind: law
+  date: 2026-08-13
+  the_failure: >-
+    ep2-b01-shape-0813 rendered its TWIN'S clip. Its log says it wrote
+    01-cold-open-LTX-shapeB-0813.mp4 — the twin's filename, off the twin's render json, at
+    the twin's seed — and then failed publish because the artifact it had declared under its
+    own name did not exist.
+  the_mechanism: >-
+    Both twins wrote their payload files into the PARENT's directory,
+    C:\banyan-farm\ep2-b01-figgrow-055-r3, because that directory name carries no substring
+    my id-rename touched. box_enqueue writes payloads at ENQUEUE time, not at run time. The
+    twin was enqueued five seconds after its sibling and overwrote the sibling's prompt,
+    negative and render json before either job started. Two job names, one payload.
+  what_it_nearly_cost: >-
+    Everything the twins exist for. Had the declared-artifact check not fired, I would have
+    had two clips with two names and IDENTICAL content, and would have reported beat 01 as
+    holding at both seeds — the exact false "solved" that seed pairs are there to prevent.
+    Five of nine beats I once called solved turned out to be seed luck; this failure mode
+    manufactures the opposite error and hides it better.
+  the_law: >-
+    A PAYLOAD DIRECTORY IS SHARED STATE. Every derived job needs its own, and the rename that
+    makes a twin must be verified against the payload PATHS, not only against the job id —
+    the id can be unique while the directory is not. Check before enqueue, because after
+    enqueue the earlier job's prompt is already gone.
+  the_check_that_finds_it: >-
+    For every live job, extract the payload directories and look for a directory claimed by
+    more than one job id. Run across all 21 live jobs after this failure: zero further
+    collisions, so b01 was the only pair affected and both halves had already run.
+  fixed_in: >-
+    ep2-b01-shape-a2-0813, same prompt and same seed 20260806, payload directory
+    ep2-b01-shape-a2-0813 which belongs to it alone. Queued at sample priority so beat 01
+    still gets a real pair.
+  recommended_but_not_mine_to_write: >-
+    The durable fix is a guard in box_enqueue that refuses a job whose payload paths collide
+    with an already-queued job's. pipeline code is outside this lane; passed to team-lead.
+  outcome: null
