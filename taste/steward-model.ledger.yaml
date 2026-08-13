@@ -15658,3 +15658,31 @@
     to say so before anyone authors on it. It still holds for the WIDE beats — 03, 19 and the
     b02 remake — where a white plate is not a cosmetic problem.
   outcome: null
+
+- id: ep2-world-paragraph-CONFIRMED-both-seeds-0813
+  kind: scoring
+  date: 2026-08-13
+  verdict: >-
+    CONFIRMED AT BOTH SEEDS. seedB built the same full world — blue sky, cloud, hedge, grass —
+    with the character, the cel style and the beat's action all intact. The strong world
+    paragraph binds the background. My prediction that the void would survive is refuted twice,
+    not once, so this is the recipe working and not a lucky roll.
+  the_recipe_that_binds: >-
+    World asserted as FILLING the frame rather than existing "behind"; named at three depths
+    (grass to the bottom edge, hedge and treeline in the middle distance, sky at the top);
+    white background / blank background / isolated on white / character sheet in the negative.
+    Which of the three does the work is not separated and I am not spending a pair to find out
+    while it works.
+  the_residual_cost: >-
+    In both seeds the world ARRIVES between roughly f20 and f40 rather than being present at
+    f0 — an iris at seedA, a straighter cut at seedB. About a second and a half of every clip
+    opens without its background. Trimming the head is not free because VO sets beat length,
+    so the real remedy is a plate that already carries a world: no longer necessary for the
+    background to EXIST, still worth having for the first second.
+  what_this_does_to_the_stills_lane_guidance: >-
+    Reverses it. I told b02-still to spend scarce CLIP tokens on backgrounds ahead of shape
+    pins; on medium and close beats that is now wrong and the tokens should go to shape pins.
+    It still holds for WIDE beats — 02, 03, 19 — where ep2-b02-adultplate showed a white
+    character-sheet plate does not merely void, it rebuilds the world in a foreign style and
+    dissolves the character into a silhouette.
+  outcome: adopted — the world paragraph goes into every motion prompt from here
