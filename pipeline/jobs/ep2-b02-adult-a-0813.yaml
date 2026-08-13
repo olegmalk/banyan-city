@@ -1,0 +1,92 @@
+id: ep2-b02-adult-a-0813
+task: ep2-b02-adult-a-0813
+node: 002b-first-citizen
+beat: 2
+runner: box
+needs_gpu: true
+priority: 49
+max_attempts: 1
+owner: stills lane, 2026-08-13 (his "lets remake him" — the age read is baked into the plate)
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the
+  render gate itself reads. Neither `approval_condition` touches beat 02. This is a mechanism test on
+  an approved node, not an episode assembly.'
+consumer: review/ep2-picks/b02-rerun-0812 and his pass on the remake.
+success: Sixteen PNGs with sidecars. Success is readable comparable cells, NOT that he reads older. "Same
+  child in a coat" is a successful run and would say the age read is in the REFERENCE, which would make
+  this his call about the reference rather than a wording round.
+why: 'The motion lane proved wording cannot shift the age read at ITS stage (two seeds, full adult vocabulary,
+  zero change), so the childish proportions live in the PLATE. His fence is "not too much of a major change"
+  — the approved reference is untouched and only proportion words move. Arm A: proportions asserted in
+  the positive.'
+est_minutes: 14
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '2'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-frozen-0812
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-authored_b02_adult
+  - --draft-key
+  - authored_b02_adult
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '2'
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-goblin-frozen-0812
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-authored_b02_adult
+  - --draft-key
+  - authored_b02_adult
+  - --arm
+  - window4
+  - --task
+  - ep2-b02-adult-a-0813
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b02-adult-a-0813\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/goblin-ipa-0812/out-authored_b02_adult/*\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b02-adult-a-0813.sha256\"), \"\
+    w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src),\
+    \ \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-authored_b02_adult\02-the-sprint-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-authored_b02_adult\02-the-sprint-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-authored_b02_adult\02-the-sprint-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-authored_b02_adult\02-the-sprint-ipa-r3-w015-s0.png

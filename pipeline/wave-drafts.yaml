@@ -499,6 +499,40 @@ beats:
     #    `_tag_from_clause` still derives `1boy`.
     # This is the ONE r2 the sapling-adjacency limit gets. If the stem is still
     # absent, beat 02 goes to `wave2-needs-founder.md` and the lane moves on.
+    # ADULT PROPORTIONS, 2026-08-13, on his "lets remake him, not too much of a
+    # major change, the character reference is good, just the generations.."
+    #
+    # THE FINDING THIS ANSWERS. The motion lane proved wording cannot shift the age
+    # read at ITS stage — two seeds, full adult vocabulary, zero change — so the
+    # childish proportions are baked into the PLATE and this is where they get fixed.
+    # The approved reference is untouched; only the plate-side sentence moves.
+    #
+    # THE FENCE IS HIS: "not too much of a major change". So this adds PROPORTION
+    # words and nothing else — lean, wiry, an angular skull, a grown creature — and
+    # no ornament, no scars, no age-signalling costume. The frozen facts he ruled
+    # are byte-identical: green skin, bald head, and the r8 species assertion.
+    # Same creature, older read.
+    authored_b02_adult: >-
+      A small goblin man, {{GOBLIN}}, solo, lean and wiry, narrow angular skull,
+      adult, behind a tiny sapling's thin stem in a field, cowers with both hands
+      to his chest, face peeking around the stem. Morning light, cinematic lighting, detailed,
+      newest, masterpiece, best quality, very aesthetic No girl, no child, no
+      chibi, no big head, no round baby face, no toddler, no scars, no dark, no
+      night, no dim lighting, no low key. No photorealism, no 3D render look.
+      9:16 vertical, no text.
+    # ARM B — the same, with the child read pushed into the negative HARDER rather
+    # than the positive elaborated further. One variable apart from arm A, so a
+    # difference between them says whether the age read moves on assertion or on
+    # denial, which is the same question the guards' register asked one level up.
+    authored_b02_adult_neg: >-
+      A small goblin man, {{GOBLIN}}, solo, lean and wiry, narrow angular skull,
+      adult, behind a tiny sapling's thin stem in a field, cowers with both hands
+      to his chest, face peeking around the stem. Morning light, cinematic lighting, detailed,
+      newest, masterpiece, best quality, very aesthetic No girl, no child, no
+      chibi, no big head, no round baby face, no toddler, no childlike
+      proportions, no short stubby limbs, no cute, no kawaii, no scars, no dark,
+      no night, no dim lighting, no low key. No photorealism, no 3D render look.
+      9:16 vertical, no text.
     authored_b02_idfix_r2: >-
       A small goblin boy, {{GOBLIN}}, solo, behind the thin upright stem of a
       tiny sapling in an open field, cowers with both hands to his chest, his
